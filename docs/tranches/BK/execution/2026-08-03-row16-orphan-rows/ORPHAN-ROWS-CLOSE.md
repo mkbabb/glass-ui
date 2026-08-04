@@ -68,8 +68,8 @@ not repeated as fact anywhere in this file.
 | #13 | the 36 LANDED / 40 OWNED / 2 RETIRED split | **UNPROVEN AT THIS SEAT** (78-row re-walk is a second full lane, not a close act) — the ledger stands as pass-1 output owing the Challenge-Law pass, exactly as its own §note says | — |
 | #14 | the three "phantom" waves have bodies on disk | **CONFIRMED** | `BAND-A11Y.md` 359 L · `BAND-DOC-TRUTH.md` 283 L · `BAND-PERF.md` 660 L |
 | #14 | F11/F29 LANDED `34681df9`; F41 LANDED `75c19ead` | **CONFIRMED** | `34681df9` = "land BJ.W-CONFIGURATOR-STD" (2026-07-21) · `75c19ead` = "land BJ.W-STORY-COPY-CANON" (2026-07-21) |
-| #14 | the strikes landed in place at ECOUTE/REGISTRY/WAVES | **CONFIRMED** | `ECOUTE.md:112-137` and `WAVES.md:905-915` read this seat and carry the ⊕ row-#14 blocks |
-| #14 | "the wave's live scope is F25 · F33-goo-morph · A16" | **CORRECTED — see §3.1** | ECOUTE `:127`/`:128` still list **A12** and **A14** as surviving §1a gaps; both are homed at TR **#50** by name (`TERMINAL-ROSTER.md:286`: *"GF-BLOB claims the A14 umbrella's A12 half by name"*). The three-item scope is right; §1a's list needed the same strike |
+| #14 | the strikes landed in place at ECOUTE/REGISTRY/WAVES | **CONFIRMED** | ~~`ECOUTE.md:112-137`~~ **[⊕²⁷ 2026-08-03 micro-cure — bare cite re-pinned. FORM CHOSEN, stated once and used for both cites in this table: **every `ECOUTE.md` cite is SHA-qualified**, `<sha>:ECOUTE.md:n` — `aee47957:` where the claim is about the pin, `6e505703:` where it is about HEAD. No bare cite survives; the `:29-30` rule ("a bare cite is the worktree reading") therefore has nothing left to supersede and the `:17-30` hygiene table needs no widening. This claim is a **HEAD** claim and could never have been pinned: at `aee47957` the row-#14 strikes were uncommitted — detector `git show aee47957:docs/tranches/BJ/addenda/2026-07-24-refinement/ECOUTE.md \| grep -cE '⊕\|~~'` → **0**. Re-pinned to **`6e505703:ECOUTE.md:113-119`** (the `⊕ FALSE-GAP STRIKE (BK row #14 PHANTOM-REPAIR…)` block, verbatim at `:113`) plus **`6e505703:ECOUTE.md:143-144`** (the A12/A14 struck cells). Detector: `git show HEAD:…/ECOUTE.md \| sed -n '113p'` → `**⊕ FALSE-GAP STRIKE (BK row #14 PHANTOM-REPAIR, 2026-08-03 — TR #14's named act, the precondition`.]** and `WAVES.md:905-915` read this seat and carry the ⊕ row-#14 blocks |
+| #14 | "the wave's live scope is F25 · F33-goo-morph · A16" | **CORRECTED — see §3.1** | ECOUTE ~~`:127`/`:128`~~ **[⊕²⁷ 2026-08-03 micro-cure — bare cite re-pinned, SHA-qualified form per the row above. These two bare numbers mis-resolve under the `:29-30` worktree rule: at HEAD/worktree `:127-128` is the **A04-remainder** paragraph, not A12/A14 — detector `git show HEAD:docs/tranches/BJ/addenda/2026-07-24-refinement/ECOUTE.md \| sed -n '127,128p'` → *"and neither is scope. **A04-remainder is DISCHARGED at its own cell**…"*. The claim is a **pin-side** reading of the pre-strike §1a gap list, so it re-pins to **`aee47957:ECOUTE.md:115`** (A12) / **`:116`** (A14) — exactly the values the `:17-30` hygiene table already banks for these rows — detector `git show aee47957:…/ECOUTE.md \| sed -n '115,116p'` → the `**A12 blob greenfield**` and `**A14** (procedural umbrella)` cells verbatim. Their post-strike HEAD home is `6e505703:ECOUTE.md:143`/`:144`.]** still list **A12** and **A14** as surviving §1a gaps; both are homed at TR **#50** by name (`TERMINAL-ROSTER.md:286`: *"GF-BLOB claims the A14 umbrella's A12 half by name"*). The three-item scope is right; §1a's list needed the same strike |
 | #15 | `PROVENANCE-REGISTER.md` banked, 228 L | **CONFIRMED** | `wc -l` |
 | #15 | RED at 1 — the F19 png is on disk and untracked | **CONFIRMED, and narrowed to exactly one file** | `docs/tranches/BJ/feedback` holds **31** entries, `git ls-files` returns **30**; the single untracked member is `F19-metric-badge-overround-grid.png`. Ruled at §6 |
 | #15 | the AY/BD/BJ ask dates and the 54 d / 41 d / 17 d ladder | **UNPROVEN AT THIS SEAT** — the register's own `git log` cites stand; no figure from it is restated here | — |
@@ -311,10 +311,24 @@ seed is the eight `canonicalFamily` buckets above — each maps to a live BK row
 (`behavior.dock` → #47/#48 · `procedural.renderer-parity` → #49/#50/#54 ·
 `design.material-hierarchy` → #22/#68/#86 · `integrity.lineage` → #16/#61 ·
 `motion.single-clock` → #26 · `integrity.dag` → #21 · `architecture.clean-break` → #18/#19 ·
-`demo.scenario-contract` → #40/#55). The arm is **RED until PORT gains its §0 pre-history section**
+`demo.scenario-contract` → #40/#55). ~~The arm is **RED until PORT gains its §0 pre-history section**
 naming the three lineage docs of record the roster itself names: `BC/DEFERRAL-LEDGER.md` ·
 `BD/FOLD-LEDGER.md` · `BD/union/DEFERRED-CENSUS.md`. That PORT edit is not this row's file and is
-routed with its text below (§7, R-3).
+routed with its text below (§7, R-3).~~
+
+**[⊕²⁷ 2026-08-03 micro-cure — self-contradiction struck, same falsifier that discharged R-3.** The
+struck sentence held `+BD-CARRY` RED on a precondition that was **already satisfied at this row's own
+pin**, and it contradicted §7 R-3 at `:518`, which reads DISCHARGED / REPAINTED-green on exactly this
+ground. Detector: `git show aee47957:docs/tranches/BK/PORT.md | sed -n '14p'` →
+`## §0 · PRE-HISTORY — the lineage docs of record (⊕⁴ 2026-07-28, U-01; the pre-BG arm)`, and its body
+at `:16-24` names all three by full path — `docs/tranches/BC/DEFERRAL-LEDGER.md` ·
+`docs/tranches/BD/FOLD-LEDGER.md` · `docs/tranches/BD/union/DEFERRED-CENSUS.md` — and names the
+`+BD-CARRY` arm itself (*"the seed of G-ROW-HOMED's **+BD-CARRY arm** (TR#16, §B.5 — an ARM, seats
++0)"*). §0 is dated ⊕⁴ 2026-07-28, i.e. pre-existing at the pin, not added since. **Corrected reading:
+the `+BD-CARRY` arm is GREEN on its §0 precondition** — its named lineage seed exists and is cited.
+No PORT edit is owed and none is routed; R-3 at `:518` now stands on a repainted arm, which is what
+that entry asserts. What remains open for `+BD-CARRY` is **not** this precondition but R-7's
+21-evidence-dir name→roster-row walk (`:522`), a separate lane.]**
 
 Correction of record: the routing JSON's whole population is **8,509** rows across 41 tranche
 letters (BG 1,517 · BD 1,338 · BC 1,103 · AX 662 · AZ 488 · AY 459 · BB 311 …), all `FOLD` but
@@ -378,21 +392,57 @@ Detector, stated so it re-derives:
   `OPEN-FM-2` (25).
 - **The drop lane C predicted is real and is now specific:** exactly **two** OPEN ids reach the
   roster (`OPEN-P10`, `OPEN-P5` — `grep -oE '\bOPEN-[A-Za-z0-9_-]+' TERMINAL-ROSTER.md`), and
-  ~~exactly one [OPEN id] reaches all of `docs/tranches/BK/` (`OPEN-P10`)~~ **[⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication: TWO reach `docs/tranches/BK/` — `OPEN-P0` + `OPEN-P10` (git grep at pin `aee47957`); the derived 53-of-55 figure stands]**. **53 of 55 OPEN ids are cited by
-  zero BK artifact.**
+  ~~exactly one [OPEN id] reaches all of `docs/tranches/BK/` (`OPEN-P10`)~~ **[⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication: TWO reach `docs/tranches/BK/` — `OPEN-P0` + `OPEN-P10` (git grep at pin `aee47957`); the derived 53-of-55 figure stands]**. ~~**53 of 55 OPEN ids are cited by
+  zero BK artifact.**~~ **[⊕²⁷ 2026-08-03 micro-cure: unpinned and stale — re-derived at HEAD
+  `6e505703` the honest figure is **51 of 55**. Detector, verbatim, over committed BK artifacts and
+  excluding this census file itself (a census that *names* ids must not be read as *citing* them, or
+  the sentence is self-defeating): ids from
+  `grep -rhoE '\bOPEN-[A-Za-z0-9_-]+' docs/tranches/BJ --include='*.md' | sort -u` minus the five
+  malformed tokens listed above → **55**; then per id
+  `git grep -lE "(^|[^A-Za-z0-9_-])${id}([^A-Za-z0-9_-]|$)" HEAD -- docs/tranches/BK | grep -v ORPHAN-ROWS-CLOSE.md`
+  → non-empty for **four**: `OPEN-6` (`execution/2026-08-03-codex-audit/PASS2-ADJUDICATIONS.json` +
+  `execution/2026-08-03-phi3-close/SEXTET-RECLOSE-ADJUDICATION.json`) · `OPEN-P0` · `OPEN-P5` ·
+  `OPEN-P10`. 55 − 4 = **51**. **Divergence recorded, not laundered:** the Φ3 sextet re-close
+  adjudication dictated **52 of 55**, crediting only `OPEN-6` + `OPEN-P0` + `OPEN-P10`; it undercounts
+  by one because `OPEN-P5` also carries in `execution/2026-08-03-phi3-close/CLOSE-ADJUDICATION.json`
+  (*"TR reach = `OPEN-P10`+`OPEN-P5`"*), which is committed at both `d1c8eab8` and HEAD — the same
+  detector run at `d1c8eab8` also returns four. Both reaching hits for `OPEN-6` are **incidental**,
+  not adoptions (PASS2 itself calls its line *"an unrelated OPEN-6 line"*), so the substantive finding
+  — the BJ `OPEN-*` corpus is essentially unread by BK — is **unchanged and if anything stronger**.
+  For completeness on the other reading: counting this file's own §4.4 census as citation, eleven ids
+  reach and the figure would be **44 of 55**; the 51 figure is the load-bearing one.]**
 - **U-51's SECOND clause — the 21-evidence-dir vs 4-landed-waves delta, landed as a sweep input.**
   **[⊕²⁵ 2026-08-03 · Φ3-close residual cure: `TERMINAL-ROSTER.md:166`'s U-51 orders "**+ the
   21-evidence-dir vs 4-landed-waves delta noted as a sweep input**" (= `PROOF-SWEEP.md:457`, "BJ §4
   gaps"). This row's first pass landed the OPEN-id half and dropped this one —
   `grep -c evidence ORPHAN-ROWS-CLOSE.md` → 0 before this cure. Landed now.]** Measured this cure:
-  `ls docs/tranches/BJ/evidence/ | wc -l` → **21** directories, every one named for a wave. Only
+  `ls docs/tranches/BJ/evidence/ | wc -l` → **21** directories, ~~every one named for a wave. Only
   **four** hold real captures, all pinned at **prior** HEADs, three saying *"Left uncommitted"* in
   their own VERDICTS headers — `W-PAGER-DOT-MORPH` (`85089b3b`) · `W-PROGRESS-RIM-REPLACE` ·
   `W-FEEDBACK-MOTION-TUNE` (`19ea4ce1`) · `W-TOAST-DIALOG-PARITY` — and #77's census rules all four
   **STALE-AT-HEAD, credited to no row** (`MOMENTUM-CENSUS.md:193-199`). The other 17 are credited by
-  that census not at all.
+  that census not at all.~~
+  **[⊕²⁷ 2026-08-03 micro-cure — the four-vs-TWELVE measurement, struck here and at its source.** Both
+  struck claims are false at HEAD `6e505703`. **Twelve** dirs hold captures, **72** tracked `png`/`jpg`,
+  and **one** of the 21 is not wave-named. Detectors, verbatim:
+  `git ls-files 'docs/tranches/BJ/evidence/**' | grep -icE '\.(png|jpe?g)$'` → **72**;
+  `git ls-files 'docs/tranches/BJ/evidence/**' | grep -iE '\.(png|jpe?g)$' | awk -F/ '{print $5}' | sort | uniq -c | sort -rn`
+  → `W1-RADIUS-REDRESS` 23 · `W-CONFIGURATOR-STD` 13 · `W2-BLUR-REDRESS` 9 · `W-PAGER-DOT-MORPH` 6 ·
+  `W-RESPONSIVE-AUDIT` 4 · `W-FEEDBACK-MOTION-TUNE` 4 · `W-TOAST-DIALOG-PARITY` 3 ·
+  `W-PROGRESS-RIM-REPLACE` 3 · `W-TYPE-CODEMOD` 2 · `W-REFRACT-LATCH` 2 · `W-PIXEL-FLOOR-CI` 2 ·
+  `W-BOOT-DIET` 1 (**twelve** dirs, piped to `wc -l`); and `ls docs/tranches/BJ/evidence/` → the one
+  non-wave-named entry is **`GESTALT-1-INC-1`**, which holds **0** captures (3 tracked files, all
+  `.txt`/`.css`). All 72 are tracked — `git ls-files --others --exclude-standard 'docs/tranches/BJ/evidence/'`
+  filtered to images → **0** — so *"Left uncommitted"* describes the deltas those captures argued for,
+  not the files. **Corrected reading:** 21 dirs · **12** carry paint · **9** carry none · **72**
+  captures, and #77's STALE-AT-HEAD ruling extends to all twelve on identical ground (a larger stale
+  set is still a stale set). The inherited source is struck in the same ⊕²⁷ sitting at
+  `MOMENTUM-CENSUS.md:193-200`, which now carries this enumeration as its own record.]**
   **The delta, stated so `G-ROW-HOMED` can bite it:** an evidence directory is a *wave-name assertion*
-  — 21 names claim a wave ran, 4 carry paint, 0 of the 4 are creditable at HEAD. Each of the 21 names
+  — 21 names claim a wave ran, ~~4 carry paint, 0 of the 4 are creditable at HEAD~~ **[⊕²⁷ 2026-08-03
+  micro-cure, same item: **12** carry paint (**72** captures), **0 of the 12** creditable at HEAD —
+  same detectors as the bracket above; struck here too because leaving the superseded 4 one line below
+  its own correction is precisely the adjacent-note form this sitting exists to kill]**. Each of the 21 names
   is therefore a homing question of exactly the class row #14 opened at `REGISTRY.md`, and several are
   superseded on their face — `W-REFRACT-LATCH` (subject **DELETE** at TR §A row #2) ·
   `W-PAGER-DOT-MORPH` (→ #40, `01310c9c`) · `W-A11Y-LINKAGE` + `W-A11Y-STATE-REMAINDER` (→ #31) ·
@@ -528,7 +578,13 @@ anchors that **no clone carries**.
 
 **What this row deliberately did NOT do**, each with its reason:
 
-- **No git operation of any kind** (hard wall). Every file below is uncommitted.
+- **No git operation of any kind** (hard wall). ~~Every file below is uncommitted.~~ **[⊕²⁷ 2026-08-03
+  micro-cure — date-fence, not a reversal. True **as written on 2026-08-03 at this seat**; stale at
+  HEAD `6e505703` because the driver has since committed the row's landings. Detector:
+  `git log --oneline -1 -- docs/tranches/BK/execution/2026-08-03-row16-orphan-rows/ORPHAN-ROWS-CLOSE.md`
+  → `1ec024a7 docs(BK/Φ3): remaining band cures …`, and `git ls-files` on this row's dir returns the
+  file. The **claim the sentence makes is about this seat's own conduct** — it performed no git
+  operation — and that remains true; only its present-tense reading of the tree has expired.]**
 - **`TERMINAL-ROSTER.md` untouched** — dirty from a concurrent lane; every TR-side correction is
   quoted verbatim for the pen-holder instead (§2 C-4). Same discipline #12 and #14 used.
 - **No seal minted.** 0/87 stands; CLOSED is the lead's act after the Challenge Law pass (⊕¹¹).

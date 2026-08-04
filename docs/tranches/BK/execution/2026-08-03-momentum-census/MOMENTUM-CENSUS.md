@@ -120,21 +120,21 @@ The question that has no lookup answer (ARCHAEOLOGY `:109`, 07-27, unanswered �
 |---|---|---|
 | **GREEN** (full ladder rest→hover→press→engaged) | **0** | 0% |
 | `AMBER-LADDER-MINUS-ENGAGED` (best reachable) | 10 | 15.9% |
-| `AMBER-PARTIAL` | 16 | 25.4% |
+| `AMBER-PARTIAL` | ~~16~~ **15** | ~~25.4%~~ **23.8%** **[⊕²⁷ 2026-08-03 micro-cure: correction moved ON the cell — the ⊕²⁵ deck flip at `:126` restated the count but left this cell printing the superseded figure and left the share uncorrected anywhere on disk. 15/63 = 23.8%. Detector: `python3 -c "print(f'{100*15/63:.1f}')"` → `23.8`; partition closes 0+10+**15**+18+20 = 63.]** |
 | `RED-MOTION-NO-LADDER` | 18 | 28.6% |
-| `RED-INERT` | 19 | 30.2% |
+| `RED-INERT` | ~~19~~ **20** | ~~30.2%~~ **31.7%** **[⊕²⁷ 2026-08-03 micro-cure: correction moved ON the cell per the ⊕²⁵ deck flip at `:126`; no corrected share existed on disk before this edit. 20/63 = 31.7%. Detector: `python3 -c "print(f'{100*20/63:.1f}')"` → `31.7`; the RED total at `:126` (**38** \| 60.3%) already assumes this **20**, so the un-struck 19 contradicted the line below it — 18+**20** = 38.]** |
 | **RED total** | ~~37 · 58.7%~~ **38** | **60.3%** **[⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication]** deck flip: AMBER-PARTIAL 16→15 · RED-INERT 19→20 · press-live 23→22 · EASE-only 21→20 · NONE 24→25 |
 | hover rung live (local or cohort) | 22 | 34.9% |
-| press rung live (local or cohort) | 23 | 36.5% |
+| press rung live (local or cohort) | ~~23~~ **22** | ~~36.5%~~ **34.9%** **[⊕²⁷ 2026-08-03 micro-cure: correction moved ON the cell per the ⊕²⁵ deck flip at `:126`; no corrected share existed on disk before this edit. 22/63 = 34.9%. Detector: `python3 -c "print(f'{100*22/63:.1f}')"` → `34.9`.]** |
 | ENGAGED rung live | **0** | **0%** |
 | momentum SPRING-class | 18 | 28.6% |
-| momentum EASE-only | 21 | 33.3% |
-| momentum NONE | 24 | 38.1% |
+| momentum EASE-only | ~~21~~ **20** | ~~33.3%~~ **31.7%** **[⊕²⁷ 2026-08-03 micro-cure: correction moved ON the cell per the ⊕²⁵ deck flip at `:126`; no corrected share existed on disk before this edit. 20/63 = 31.7%. Detector: `python3 -c "print(f'{100*20/63:.1f}')"` → `31.7`; momentum partition closes 18+**20**+**25** = 63.]** |
+| momentum NONE | ~~24~~ **25** | ~~38.1%~~ **39.7%** **[⊕²⁷ 2026-08-03 micro-cure: correction moved ON the cell per the ⊕²⁵ deck flip at `:126`; no corrected share existed on disk before this edit. 25/63 = 39.7%. Detector: `python3 -c "print(f'{100*25/63:.1f}')"` → `39.7`; and `:137`'s "45/63 momentum NONE-or-EASE" re-derives only on the corrected pair — **20**+**25** = 45, where the struck 21+24 also summed to 45, so that figure stands unchanged.]** |
 | reach the cohort only by inheritance, owning zero local hover/press bytes | 8 (`command` `dropdown-menu` `popover` `surface` `switch` `select` `dialog` `easing`) | — |
 
 **The one-sentence read:** *breath of life is asserted and 60.3% unpainted; the engagement ladder R-4 ruled must be "real on all" is real on none, because its top rung has no consumer anywhere in `src/`.*
 
-**Divergence from the prior aggregate, stated not laundered.** GESTALT `:46` banks "22/62 breath-INERT" and "31/62 momentum NONE-or-EASE-ONLY". This seat's detector yields **19/63 RED-INERT** and **45/63 momentum NONE-or-EASE** over a different (and stated) instrument: GESTALT's INERT test was per-component paint judgement over the six sweeps; mine is the mechanical presence test in §1, and it credits **cohort inheritance** (`material.css:283-296`), which the GESTALT figure did not separate out. **Neither number is struck**: the two instruments measure different things and both are cited by detector. What does reproduce byte-for-byte this seat: `data-engaged` → 0 · `engageEnvelopes` barrel-only · `Alert.vue` 0/0/0 · `field-control.css` **118 lines, 0 hover / 0 transition / 0 `:active` / 0 animation** (`rg -c ':hover|transition|:active|animation'` → exit 1, no match).
+**Divergence from the prior aggregate, stated not laundered.** GESTALT `:46` banks "22/62 breath-INERT" and "31/62 momentum NONE-or-EASE-ONLY". This seat's detector yields ~~**19/63 RED-INERT**~~ **20/63 RED-INERT** **[⊕²⁷ 2026-08-03 micro-cure: superseded by the ⊕²⁵ deck flip at `:126` (RED-INERT 19→20) and struck here, where it had survived un-corrected; the §3 cell at `:125` now carries the same **20 | 31.7%**. Detector: the §3 breath partition closes only on 20 — 0+10+15+18+**20** = 63 — and the RED total at `:126` (38 | 60.3%) requires it: 18+**20** = 38.]** and **45/63 momentum NONE-or-EASE** over a different (and stated) instrument: GESTALT's INERT test was per-component paint judgement over the six sweeps; mine is the mechanical presence test in §1, and it credits **cohort inheritance** (`material.css:283-296`), which the GESTALT figure did not separate out. **Neither number is struck**: the two instruments measure different things and both are cited by detector. What does reproduce byte-for-byte this seat: `data-engaged` → 0 · `engageEnvelopes` barrel-only · `Alert.vue` 0/0/0 · `field-control.css` **118 lines, 0 hover / 0 transition / 0 `:active` / 0 animation** (`rg -c ':hover|transition|:active|animation'` → exit 1, no match).
 
 **The five-in-one-file finding stands and is now four-in-one-file, corrected.** `_shared/field/field-control.css` is imported by exactly **four** components at HEAD — `input/Input.vue:57` · `textarea/Textarea.vue:56` · `number-field/NumberFieldInput.vue:37` · `tags-input/TagsInput.vue:64`. GESTALT RANK 4's "five field components in one edit" over-counts by one at HEAD (the fifth, `field-surfaces.css`, is imported globally at `src/styles/index.css:216`, not by a field component). The cure remains one edit; the blast radius is four, not five.
 
@@ -190,14 +190,51 @@ The roster row makes #77 the verifier of the suffusion closure across **#27** an
 
 ARCHAEOLOGY `:208` (L1) mandates the **paired-capture** form: 63 rows × {Chrome, Safari-app} × {light, dark} × {desktop, mobile}. Every CAPTURE cell in §2 reads `NONE` because this seat is doc-side by hard wall. **The mechanism half is complete; the paint half is owed.**
 
-What exists on disk is **not** a substitute and is recorded so it is never mistaken for one — four BJ evidence dirs hold real captures, all taken at **prior HEADs**, and three say so in their own headers:
+What exists on disk is **not** a substitute and is recorded so it is never mistaken for one — ~~four BJ evidence dirs hold real captures, all taken at **prior HEADs**, and three say so in their own headers:~~
 
-| dir | pin | its own posture line |
+| ~~dir~~ | ~~pin~~ | ~~its own posture line~~ |
 |---|---|---|
-| `docs/tranches/BJ/evidence/W-PAGER-DOT-MORPH/` | HEAD `85089b3b` (VERDICTS `:2`) | 6 PNGs (carousel/deck rest→morph→rest) |
-| `docs/tranches/BJ/evidence/W-PROGRESS-RIM-REPLACE/` | — | *"Left uncommitted."* (VERDICTS `:6`) |
-| `docs/tranches/BJ/evidence/W-FEEDBACK-MOTION-TUNE/` | HEAD `19ea4ce1` (VERDICTS `:4`) | *"Left uncommitted."* (VERDICTS `:6`) |
-| `docs/tranches/BJ/evidence/W-TOAST-DIALOG-PARITY/` | VERDICTS `:5` | *"Left uncommitted."* |
+| ~~`docs/tranches/BJ/evidence/W-PAGER-DOT-MORPH/`~~ | ~~HEAD `85089b3b` (VERDICTS `:2`)~~ | ~~6 PNGs (carousel/deck rest→morph→rest)~~ |
+| ~~`docs/tranches/BJ/evidence/W-PROGRESS-RIM-REPLACE/`~~ | ~~—~~ | ~~*"Left uncommitted."* (VERDICTS `:6`)~~ |
+| ~~`docs/tranches/BJ/evidence/W-FEEDBACK-MOTION-TUNE/`~~ | ~~HEAD `19ea4ce1` (VERDICTS `:4`)~~ | ~~*"Left uncommitted."* (VERDICTS `:6`)~~ |
+| ~~`docs/tranches/BJ/evidence/W-TOAST-DIALOG-PARITY/`~~ | ~~VERDICTS `:5`~~ | ~~*"Left uncommitted."* (the four above are a **subset**, not the set)~~ |
+
+**[⊕²⁷ 2026-08-03 micro-cure — the four-vs-TWELVE falsehood, struck at its origin.** The sentence and
+table above are false at HEAD and were false when written: **twelve** of the 21 BJ evidence dirs hold
+captures, **72** tracked `png`/`jpg` between them — not four. Re-derived, three commands:
+
+- `ls -d docs/tranches/BJ/evidence/*/ | wc -l` → **21**
+- `git ls-files 'docs/tranches/BJ/evidence/**' | grep -icE '\.(png|jpe?g)$'` → **72**
+- `git ls-files 'docs/tranches/BJ/evidence/**' | grep -iE '\.(png|jpe?g)$' | awk -F/ '{print $5}' | sort | uniq -c | sort -rn` → the twelve:
+
+| dir | tracked png/jpg |
+|---|---|
+| `W1-RADIUS-REDRESS` | 23 |
+| `W-CONFIGURATOR-STD` | 13 |
+| `W2-BLUR-REDRESS` | 9 |
+| `W-PAGER-DOT-MORPH` | 6 |
+| `W-RESPONSIVE-AUDIT` | 4 |
+| `W-FEEDBACK-MOTION-TUNE` | 4 |
+| `W-TOAST-DIALOG-PARITY` | 3 |
+| `W-PROGRESS-RIM-REPLACE` | 3 |
+| `W-TYPE-CODEMOD` | 2 |
+| `W-REFRACT-LATCH` | 2 |
+| `W-PIXEL-FLOOR-CI` | 2 |
+| `W-BOOT-DIET` | 1 |
+| **total** | **72** |
+
+All 72 are **tracked** (`git ls-files --others --exclude-standard 'docs/tranches/BJ/evidence/'` filtered
+to images → **0** untracked), so "Left uncommitted" describes the *deltas those captures argued for*,
+not the capture files. The nine remaining dirs hold **0** images; of the 21 dirs exactly one —
+**`GESTALT-1-INC-1`** — is **not wave-named**, and it holds no captures at all (3 tracked files, all
+`.txt`/`.css`), so "every one named for a wave" is false only on that single dir.
+
+**The census ruling is unchanged and now covers all twelve:** every one is STALE-AT-HEAD relative to
+`5e728369` and credited to no row — a larger stale set is still a stale set, and the paint half stays
+owed to **#10 π-SUITE**. What changes is only the honesty of the measurement. The `:202` ruling
+sentence below reads on the struck four-set; it extends to all twelve on the identical ground.
+`ORPHAN-ROWS-CLOSE.md:388-393` inherits this sentence by citation and is struck in the same ⊕²⁷
+sitting.**]**
 
 **Ruling for this census: those four are STALE-AT-HEAD and credited to no row.** A capture whose delta was left uncommitted proves a state that may not exist at `5e728369`; crediting it would be exactly the [[feedback-live-verify-capture]] inflation. The capture pass belongs to **#10 π-SUITE**, which holds the singleton browser seat alone and is never co-batched (`EXECUTION-DAG-2026-08-03.md:122`) — and it is gated behind #9's detector recovery from the pinned stashes (⊕¹³ᵃ, `:107`).
 

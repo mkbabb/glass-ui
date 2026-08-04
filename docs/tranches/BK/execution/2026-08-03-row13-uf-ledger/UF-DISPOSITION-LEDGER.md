@@ -250,7 +250,19 @@ seating the wave is #16's — this ledger does not mint a wave.
 
 **Owner distribution of the 40 OWNED** (the receiving BK rows, for #16's seating check):
 ~~#47 ×8 · #58 ×7 · #11 ×3 · #69 ×3 · #18 ×2 · #26 ×2 · #89 ×2 · #32 ×2 ·~~ **[⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication]** recounted on this ledger's own OWNED→#n cells: #47 ×8 · #58 ×5 · #11 ×4 (B6+P3+P4+P6) · #69 ×2 · #59 ×2 (F8+F9) · #18 ×2 · #26 ×2 · #89 ×2 · #32 ×1 · #86 · #64 · #72 · #49 · #50 ·
-#53 · #73 · #59 · #38 · #71 · #35 · #79 · #88 · #87 · #23.
+#53 · #73 · ~~#59 ·~~ #38 · #71 · #35 · #79 · #88 · #87 · #23.
+**[⊕²⁷ 2026-08-03 micro-cure: the struck bare `#59` was pre-correction residue — the ⊕²⁵ line above
+already lists `#59 ×2 (F8+F9)`, so leaving it here double-listed the owner and inflated the
+enumeration to **43** slots. Struck; the corrected enumeration sums **42** — multiplied
+8+5+4+2+2+2+2+2+1 = **28**, singles **14**. **And 42 ≠ 40 is correct, not an over-sum:** 42 counts
+owner *slots*, 40 counts OWNED *cells*, and the +2 delta is two documented doublings — **UF-C2's
+double-hop `OWNED → #72 → #47`** (one cell, two slots) and **UF-F9's dual owner `OWNED → #58/#59`**
+(one cell, two slots). Both figures re-derived from the cells themselves, not from this list:
+`grep -cE '^\| UF-[A-Z0-9]+ \| \*\*OWNED' UF-DISPOSITION-LEDGER.md` → **40**; and
+`grep -oE '^\| UF-[A-Z0-9]+ \| \*\*OWNED[^|]*' UF-DISPOSITION-LEDGER.md | sed 's/([^)]*)//g' | grep -oE '#[0-9]+' | sort | uniq -c`
+→ **42** (`#47`×8 · `#58`×5 · `#11`×4 · `#18`/`#26`/`#59`/`#69`/`#89`×2 · fifteen ×1). Parentheticals
+are stripped because they are ∥-notes and UF-F2's `(chassis #58)` aside — not owners; leaving in
+UF-F2's chassis note alone mis-reads 43, and counting every parenthetical `#n` mis-reads 57.]**
 Every one of those numbers is a live roster row in the cursor; **zero UF rows land on a retired row**
 (#36/#37) and **zero** route to #21 or any graph-v3 artifact.
 
