@@ -210,7 +210,7 @@ Before: 2,270 total / 1,057 code. After: Timeline.vue ~540-630 (template ~55, sc
 | liquid grabbed-thumb transport + Slider↔Timeline coordinate co-registration (`thumbAlignment: "contain"` hardcoded, not a prop — the honest gap: the archetypal media/chapter playhead-plus-axis is unserved until it lands) | **W-SLIDER-TRANSPORT** | C-5 narrowed; R16 |
 | `Progress.vue:138` `var(--primary)` fill (same TL-1 disease); ordinal law reusable as `--liquid-fill-tint` default | **W-SLIDER-PROGRESS** | standing |
 | library-wide `.sr-only` (9 sites; the family's 2 local definitions die here) — this lane consumes none | **W-A11Y** | edge dissolved |
-| `--section-color-*` low-chroma retune / ordinal-register rename (the two integers follow automatically) | **token lane** | R20 |
+| `--section-color-*` low-chroma retune / ordinal-register rename (the two integers follow automatically) [⊕³¹ BK#68 2026-08-04: **CLOSED by L-4, both halves REFUSED with grounds** — retune refused on R20's own evidence (canvas-resolved 0/13 fail; separation rides L, not chroma); rename refused at the stated reversal cost (39 decls · 23 `src` var() refs / 5 files · 109 `demo` by `-c`); the two integers are #46's `geometry.ts` constants, never tokens. Owner-reversible at that cost — `CANON.md` §1 L-4] | **token lane** | R20 |
 | `requiredCaseIdentity` SHA re-pin | **C-9 batch at band close** | standing |
 | all speedtest edits (§8) | **speedtest's own tranche, marked addendum** | consumer-updates ruling |
 | the other 188 dead glass surfaces + the S0 prefix trap | **their own waves** | this directory authors zero backdrop-filter |
@@ -1081,7 +1081,7 @@ Everything else survived the cannot-fail scan (each carries a distinct born-RED 
 | saturate/veil direction + `backgroundCanvas` backdrop-observer | DOCK | **BAND-MATERIAL** |
 | W-SLIDER-TRANSPORT (grabbed thumb; `thumbAlignment` hardcoded) · `Progress.vue:138` `var(--primary)` fill | TIMELINE | **W-SLIDER-TRANSPORT / W-SLIDER-PROGRESS** |
 | library-wide `.sr-only` (9 sites) | TIMELINE (edge dissolved) | **W-A11Y** |
-| `--section-color-*` low-chroma retune / ordinal-register rename | TIMELINE | **token lane** (optional) |
+| `--section-color-*` low-chroma retune / ordinal-register rename [⊕³¹ BK#68 2026-08-04: CLOSED by L-4 — both halves REFUSED with grounds; see the `:213` bracket + `CANON.md` §1 L-4] | TIMELINE | **token lane** (optional) |
 | blob pulse overshoot exception + possible named `pulse` row · dock 5s-traverse ratification | BLOB, DOCK | **motion-spring authority** |
 | blur-stamp vs cel-ladder idiom (π-STAMP-PEER) | BLOB | **foundations** |
 | GPU fill budget, aurora + blob co-present (<7%, never measured) | BLOB | **substrate close-battery** |

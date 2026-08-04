@@ -8,7 +8,7 @@ else is a unit case, a π obligation, or an acceptance row retired green. **Born
 from day one** (⊕⁵ SE-7 — seats AND armed conditions both; this list mixes the two and is not a seat
 roster) — live at Φ0: G-CITE-COMMITTED (#4) · the G-GLASS-HAS-FROST prefix arm at 5 (#5) ·
 G-WK-COLORMIX-BUDGET at `morph.css:125` (#6) · DOCK BUDGET at 14 props (#47) · the blob W0 excise
-(#50) · the six tokens 0-on-disk (#68) · eyeglass 0 (#71) · rail →0 (⊕⁵ SE-8: word-boundary
+(#50) · the six tokens 0-on-disk (#68) [⊕³¹ 2026-08-04: SATISFIED-AND-RETIRED at the #68 landing `81e696f8` — the tokens are on disk and their detector is an ordinary `it` in `tests/styles/proportion-register.test.ts`, per the radius-role-canon precedent] · eyeglass 0 (#71) · rail →0 (⊕⁵ SE-8: word-boundary
 `rg -w rail src/components/dock/styles` → 114/102/13 at the seal; re-derived at #72's cut, never
 trusted from a census) · scroll-shrink 0 (#73) · rim consumer 0 (#74) · no-hooks-key (#75). C-13
 wiring is BLOCKING at close — an unwired gate cannot fail.

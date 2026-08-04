@@ -48,9 +48,9 @@ My own artefacts: `/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7
 |---|---|---|---|
 | **4** | concentric residue · inline-mark block inset (badge y) · a cell inside a well | floor 4 | 1, 2, 3, 4, 5 |
 | **8** | atom ↔ glyph · control `xs` · annotation plate (tooltip) · dock cross-inset at plate 56 | control 10 → residue clamps to floor | 6, 7, 8, 8.4, 10 |
-| **12** | a control's own interior (`md`) · field inset · list-row inset | card 16 → **residue exactly 4** | 12, 14, 16 |
-| **20** | **the presented plate** — card, popover, dropdown, context-menu, command, alert, toast · showcase frame | room 24 → **residue exactly 4** | 16, 18.87, 20, 20.35, 24, 30.53 |
-| **32** | **the room plate** — dialog, sheet, drawer, big-dock card · section frame · page gutter | — | 24, 32, 40 |
+| **12** | a control's own interior (`md`) · field inset · list-row inset [⊕³¹ BK#68 2026-08-04: + **the presented plate** — card, popover, dropdown, context-menu, command, alert, toast — per the pairing law below, card r16 pads 12] | card 16 → **residue exactly 4** | 12, 14, 16 |
+| **20** | ~~**the presented plate** — card, popover, dropdown, context-menu, command, alert, toast~~ [⊕³¹ BK#68 2026-08-04: **the room plate** — dialog, sheet, drawer, big-dock card; the role label contradicted the pairing law one line down (`pad(role) = r(role) − 4` → card 16 pads **12**, room 24 pads **20**) — the CWT-3 §3 banked erratum *"§1.1 rung-20 prose label (card)"* applied on the text] · showcase frame | room 24 → **residue exactly 4** | 16, 18.87, 20, 20.35, 24, 30.53 |
+| **32** | ~~**the room plate** — dialog, sheet, drawer, big-dock card ·~~ [⊕³¹ BK#68 2026-08-04: the room plate pads at **20** per the pairing law — the adjacent copy of the rung-20 erratum, swept in the same sitting] section frame · page gutter | — | 24, 32, 40 |
 | **52** | page-section break (block axis only) | — | 40, 48 |
 
 **The pairing law: `pad(role) = r(role) − 4`.** Room 24−20=4 · card 16−12=4 · control 10−8=2→floor. Every rung of the radius series paired with the padding rung one below it yields the 4px floor exactly.
@@ -60,7 +60,7 @@ My own artefacts: `/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7
 | px | role | law |
 |---|---|---|
 | **4** | intra-atom — dot ↔ caption, glyph ↔ label in a tight control | — |
-| **8** | control ↔ glyph · term ↔ value · intra-plate member gap (dock) | `0.5 × control pad-inline` at `md` |
+| **8** | control ↔ glyph · term ↔ value · intra-plate member gap (dock) | ~~`0.5 × control pad-inline` at `md`~~ [⊕³¹ BK#68 2026-08-04: derivation broken by C1's own 4·Fib ruling — control `md` pad-inline is 12, and 0.5 × 12 = 6 ≠ 8 (CWT-3 §3's banked erratum). The VALUE stands as a series member (4·Fib rung 2); only the derivation clause dies] |
 | **12** | **body** — peer ↔ peer, same rank; row ↔ row | `0.5 × shared line-height` |
 | **20** | **family** — item ↔ item; group ↔ group inside a plate; **the separator channel** | — |
 | **32** | **section** — and at this distance **no rule is ever drawn** | — |
