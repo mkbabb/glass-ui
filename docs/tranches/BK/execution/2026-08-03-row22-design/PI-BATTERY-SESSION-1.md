@@ -70,6 +70,9 @@ cast/rim lockstep holds in one computed style**. Frame: `pi5-cel-stamp-lockstep.
   the awake-display environment (the locked-screen black-composite class).
 - **π-3 DONE** (computed both arms + paired cells) · **π-5 DONE** (one frame + lockstep).
 - **π-6** is #67's device matrix — not this seat's.
-- `G-FROST-TRANSMISSION` (F-2): still **armed-not-green** — it closes on π-1 + π-2 together;
+- ~~`G-FROST-TRANSMISSION` (F-2): still **armed-not-green** — it closes on π-1 + π-2 together;
   π-2 is banked, π-1 waits on #56. The #22 SEAL therefore remains open on exactly: #56's
-  backdrop precondition → π-1, plus the challenge-debt lane's verdict.
+  backdrop precondition → π-1, plus the challenge-debt lane's verdict.~~ [⊕³⁵ 2026-08-04:
+  **DELIVERED — see `PI-BATTERY-SESSION-2.md`.** π-1 measured over the landed Q-4 wells both
+  modes (through-plate σ 39.7/41.4 vs field 44.1/40.9) and the grasp-π re-ran on the REAL
+  mechanism at `c24bc2f5` (the register itself, a real mouse-hold). ROW #22 SEALED at ⊕³⁵.]
