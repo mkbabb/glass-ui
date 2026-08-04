@@ -9,6 +9,8 @@
 
 ---
 
+**DETECTOR NOTE (⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication):** the published counts were derived over all files including `README.md` prose; the detector line claiming `*.vue|*.ts|*.css` was inaccurate for rows whose only hits were README examples (deck row 20 flipped on exactly this). Counts otherwise stand as published; a code-only re-derivation across all 63 rows remains open to the band close.
+
 ## §1 · THE RUBRIC (R-4, applied verbatim)
 
 RATIFICATION `:71` rules the idle canon: **material-only at rest; the engagement ladder rest→hover→press→engaged→modal genuinely alive on interaction** — "breath of life is satisfied by the ladder being real on all 62, which is the missing part." Ambient substrate motion is a separate axis (>5s pause obligation) and is **not** scored as breath here.
@@ -63,7 +65,7 @@ RATIFICATION `:71` rules the idle canon: **material-only at rest; the engagement
 | 17 | `constellation` | hover 0 · press 0 · trans 1 · keyf 0 · spring 7 · vel/press-prim 16 · — | NONE | **RED-MOTION-NO-LADDER** |
 | 18 | `dark-mode-toggle` | hover 1 · press 0 · trans 6 · keyf 0 · spring 0 · vel/press-prim 2 · — | NONE | **AMBER-PARTIAL** |
 | 19 | `data-table` | hover 1 · press 0 · trans 1 · keyf 0 · spring 0 · vel/press-prim 0 · specular-cohort | NONE | **AMBER-PARTIAL** |
-| 20 | `deck` | hover 0 · press 1 · trans 1 · keyf 0 · spring 0 · vel/press-prim 0 · — | NONE | **AMBER-PARTIAL** |
+| 20 | `deck` | hover 0 · press 0 · trans 0 · keyf 0 · spring 0 · vel 0 · — | NONE | ~~AMBER-PARTIAL~~ **RED-INERT** **[⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication]** the sole :active hit was `deck/README.md:52` prose (`v-model:active`), not code — flipped under the row's own detector |
 | 21 | `dialog` | hover 0 · press 0 · trans 7 · keyf 3 · spring 12 · vel/press-prim 0 · specular-cohort | NONE | **AMBER-LADDER-MINUS-ENGAGED** |
 | 22 | `dock` | hover 17 · press 22 · trans 55 · keyf 2 · spring 26 · vel/press-prim 44 · specular-cohort | NONE | **AMBER-LADDER-MINUS-ENGAGED** |
 | 23 | `drawer` | hover 1 · press 7 · trans 8 · keyf 0 · spring 1 · vel/press-prim 19 · specular-cohort | NONE | **AMBER-LADDER-MINUS-ENGAGED** |
@@ -121,7 +123,7 @@ The question that has no lookup answer (ARCHAEOLOGY `:109`, 07-27, unanswered �
 | `AMBER-PARTIAL` | 16 | 25.4% |
 | `RED-MOTION-NO-LADDER` | 18 | 28.6% |
 | `RED-INERT` | 19 | 30.2% |
-| **RED total** | **37** | **58.7%** |
+| **RED total** | ~~37 · 58.7%~~ **38** | **60.3%** **[⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication]** deck flip: AMBER-PARTIAL 16→15 · RED-INERT 19→20 · press-live 23→22 · EASE-only 21→20 · NONE 24→25 |
 | hover rung live (local or cohort) | 22 | 34.9% |
 | press rung live (local or cohort) | 23 | 36.5% |
 | ENGAGED rung live | **0** | **0%** |
@@ -130,7 +132,7 @@ The question that has no lookup answer (ARCHAEOLOGY `:109`, 07-27, unanswered �
 | momentum NONE | 24 | 38.1% |
 | reach the cohort only by inheritance, owning zero local hover/press bytes | 8 (`command` `dropdown-menu` `popover` `surface` `switch` `select` `dialog` `easing`) | — |
 
-**The one-sentence read:** *breath of life is asserted and 58.7% unpainted; the engagement ladder R-4 ruled must be "real on all" is real on none, because its top rung has no consumer anywhere in `src/`.*
+**The one-sentence read:** *breath of life is asserted and 60.3% unpainted; the engagement ladder R-4 ruled must be "real on all" is real on none, because its top rung has no consumer anywhere in `src/`.*
 
 **Divergence from the prior aggregate, stated not laundered.** GESTALT `:46` banks "22/62 breath-INERT" and "31/62 momentum NONE-or-EASE-ONLY". This seat's detector yields **19/63 RED-INERT** and **45/63 momentum NONE-or-EASE** over a different (and stated) instrument: GESTALT's INERT test was per-component paint judgement over the six sweeps; mine is the mechanical presence test in §1, and it credits **cohort inheritance** (`material.css:283-296`), which the GESTALT figure did not separate out. **Neither number is struck**: the two instruments measure different things and both are cited by detector. What does reproduce byte-for-byte this seat: `data-engaged` → 0 · `engageEnvelopes` barrel-only · `Alert.vue` 0/0/0 · `field-control.css` **118 lines, 0 hover / 0 transition / 0 `:active` / 0 animation** (`rg -c ':hover|transition|:active|animation'` → exit 1, no match).
 

@@ -1,5 +1,9 @@
 # BG — FINAL (the binding lock document)
 
+> **CLOSE RECORD (2026-08-03):** BG's execution close record is
+> `docs/tranches/BK/execution/2026-08-03-row12-bg-close-reconcile/BG-CLOSE-RECONCILE.md`
+> (the 120-unit walk: 38 LANDED · 8 LANDED-OTHER · 16 MOOT · 43 LIVE · 15 RETIRE; 23 landed-and-never-claimed).
+
 **Status: TRANCHE DEVELOPMENT COMPLETE — all 12 workstreams CONVERGED. This is the develop-ready
 plan, NOT an implementation.** It agglomerates the 12 converged specs (`converge/BG-WS*/SPEC-pass*-converged.md`)
 into ONE master roster + defect map + deferred-fold ledger + execution sequencing. NO `src/` lands

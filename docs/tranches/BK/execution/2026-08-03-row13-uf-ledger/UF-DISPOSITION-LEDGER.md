@@ -249,7 +249,7 @@ seating the wave is #16's — this ledger does not mint a wave.
 | **total** | **78** | 70 findings (A9 B6 C9 D1 E10 F10 G10 H3 I1 J6 K5) + 8 §P directives |
 
 **Owner distribution of the 40 OWNED** (the receiving BK rows, for #16's seating check):
-#47 ×8 · #58 ×7 · #11 ×3 · #69 ×3 · #18 ×2 · #26 ×2 · #89 ×2 · #32 ×2 · #86 · #64 · #72 · #49 · #50 ·
+~~#47 ×8 · #58 ×7 · #11 ×3 · #69 ×3 · #18 ×2 · #26 ×2 · #89 ×2 · #32 ×2 ·~~ **[⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication]** recounted on this ledger's own OWNED→#n cells: #47 ×8 · #58 ×5 · #11 ×4 (B6+P3+P4+P6) · #69 ×2 · #59 ×2 (F8+F9) · #18 ×2 · #26 ×2 · #89 ×2 · #32 ×1 · #86 · #64 · #72 · #49 · #50 ·
 #53 · #73 · #59 · #38 · #71 · #35 · #79 · #88 · #87 · #23.
 Every one of those numbers is a live roster row in the cursor; **zero UF rows land on a retired row**
 (#36/#37) and **zero** route to #21 or any graph-v3 artifact.

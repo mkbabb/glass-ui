@@ -310,7 +310,7 @@ Detector, stated so it re-derives:
   `OPEN-FM-2` (25).
 - **The drop lane C predicted is real and is now specific:** exactly **two** OPEN ids reach the
   roster (`OPEN-P10`, `OPEN-P5` — `grep -oE '\bOPEN-[A-Za-z0-9_-]+' TERMINAL-ROSTER.md`), and
-  exactly **one** reaches all of `docs/tranches/BK/` (`OPEN-P10`). **53 of 55 OPEN ids are cited by
+  ~~exactly one [OPEN id] reaches all of `docs/tranches/BK/` (`OPEN-P10`)~~ **[⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication: TWO reach `docs/tranches/BK/` — `OPEN-P0` + `OPEN-P10` (git grep at pin `aee47957`); the derived 53-of-55 figure stands]**. **53 of 55 OPEN ids are cited by
   zero BK artifact.**
 - **Decision:** the seed is this census — the detector plus the two-of-55 reach figure — landed so
   `G-ROW-HOMED` can see a *specific* OPEN drop rather than a generic one. Per-id re-adjudication is
@@ -415,7 +415,7 @@ anchors that **no clone carries**.
 |---|---|---|---|
 | R-1 | Cursor Φ0/Φ1 `SEALED` cells for #1/#2/#4/#5/#8/#75 contradict ⊕¹²'s void | **pass-2 re-adjudication** (APOTHEOSIS cure order item 10) | §2 C-3; raised by #11, confirmed here, counted by neither burndown entry |
 | R-2 | `TERMINAL-ROSTER.md` §B.4 still says "PROVEN FORGERY" against ⊕¹⁴'s withdrawal | **#61** (replacement clause quoted at §2 C-4) | TR is dirty from a concurrent lane; not edited here |
-| R-3 | PORT needs its §0 pre-history section naming `BC/DEFERRAL-LEDGER.md` · `BD/FOLD-LEDGER.md` · `BD/union/DEFERRED-CENSUS.md` | **PORT** (per `TERMINAL-ROSTER.md:166` and lane C U-01) | the `+BD-CARRY` arm is RED until it lands; the seed is §4.1 |
+| R-3 | ~~PORT needs its §0 pre-history section…~~ **[⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication]** DISCHARGED — `PORT.md` §0 PRE-HISTORY (⊕⁴ 2026-07-28, U-01) already names all three by path; the `+BD-CARRY` arm was held RED on a satisfied precondition and is REPAINTED green on this ground | — | discharged at the Φ3-close adjudication |
 | R-4 | `JUDGMENT-ROSTER.md`'s 16 `DECISION: ____` need back-annotation from `RATIFICATION.md`/TR §B.3 | **#61** | §3.4; the four-instrument SUPERSEDED-banner row already exists in B.4 (⊕⁴ U-42) |
 | R-5 | `WAVES.md:323-330` W-DELETE list orders deletion of `deck`, `carousel`, `metric` — all three overturned | **#61**, with #18 as the live scope citation | §3.2 |
 | R-6 | `G-GOO-MORPH` re-grounded and transferred | **#40** | §3.3; the gate's RED-at-HEAD prose is falsified at `constants.ts:14-16` |
