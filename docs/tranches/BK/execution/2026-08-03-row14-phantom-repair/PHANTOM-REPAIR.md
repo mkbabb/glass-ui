@@ -283,7 +283,9 @@ concurrent lanes are not clobbered:**
   *subject deleted*). Table, detectors and grounds at §5. This row's minted homing rule is **fenced to
   its three repaired names** (§3 bracket) until that pass lands; §5's former "class closed" sentence is
   struck as an overclaim.
-- The four edited files are **untracked-as-modified** at this seat; this row never commits (hard wall).
+- ~~The four edited files are **untracked-as-modified** at this seat; this row never commits (hard wall).~~
+  [2026-08-03 ⊕²⁷ date-fence, per the seal rider: true AT THE SEAT ONLY — the files landed at
+  `adefd768` with cures at `1ec024a7`; the one-cut condition was honored.]
   A committing seat must carry all four in one cut or the ⊕ notes cite each other across a boundary.
 - `ECOUTE.md`'s internal line numbers shifted by the strike preamble (+12 lines before §1a). The three
   cross-file citations that pointed into ECOUTE were re-pinned this seat (`:137`, `:139`, `:374`); any

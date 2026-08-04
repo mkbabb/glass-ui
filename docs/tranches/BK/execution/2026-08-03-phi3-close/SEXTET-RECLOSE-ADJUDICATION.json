@@ -1,0 +1,60 @@
+{
+ "runId": "wf_f05a5f35-8cc",
+ "adjudication": {
+  "rows": [
+   {
+    "row": "#11 W-PROCESS-CURE",
+    "ruling": "HOLD",
+    "outstanding": [
+     "PROCESS-CURE.md:158 (X-1 emitter cell) ships a false detector twice: asserts grep supersedesRosterSha256 over BK *.md \u2192 0 (actual at HEAD: 2 md hits \u2014 the cell itself plus row9-register/REGISTER.md \u2014 and it was \u22651 at write-time, since the grep string sits in the file it greps) and asserts 'the two .json hits' (actual: three \u2014 SCOUT-REPORT.json, SEAT-BINDING.json, ADJUDICATION.json). Strike-and-reword the cell in place; the substantive PRUNED ground survives (REGISTER.md quotes the C19 schema, emits nothing).",
+     "PROCESS-CURE.md:173-175 asserts 'the two live routes resolve at BOTH ends' \u2014 false at HEAD for the Z-6 gate half: ABSENT \u2192 0 in the committed row-9 register (REGISTER.md + SEAT-BINDING.json at HEAD), and row #9's own ADJUDICATION.json books it as an open cure ('the route resolves at one end only'). By \u00a72a's own closing sentence this is the absorbing-sink form X-3 convicts. Strike-in-place with a pointer to #9's cure item, or hold until #9's cure seat lands the vocabulary (it is one of #9's ten adjudicated cures, so the two discharge together).",
+     "Cursor back-annotation owed at EXECUTION-PROGRESS.md:427: #15 was SEALED at 0a0f95cc 21:17 ('all clauses verified, no residue') and received Z-4 + X-4a/X-4e/X-4f (commit-msg hook, stamp emitter, model-trailer enforcement) at 1ec024a7 22:10; the #15 cell mentions none of them (grep 'routed from #11|Z-4|X-4a|X-4e|X-4f' on the cell \u2192 0), so the four emitter obligations have no live executor on the execution authority \u2014 row #9's adjudication independently flags '#15 is not on the list. A sealed row is left waiting on an apparatus that shipped without it.' One-line strike-in-place annotation on the #15 cell naming the inherited clauses (or an explicit re-route to a live row).",
+     "Minor cite drift: PROCESS-CURE.md Z-6 cell cites gates/ROSTER.md:12 for 'an unwired gate cannot fail'; the sentence sits at gates/ROSTER.md:14 at HEAD. One-token fix (L-9's :34 cite is exact)."
+    ]
+   },
+   {
+    "row": "#12 W-BG-CLOSE-RECONCILE",
+    "ruling": "SEAL-CANDIDATE",
+    "outstanding": []
+   },
+   {
+    "row": "#13 UF-LEDGER",
+    "ruling": "HOLD",
+    "outstanding": [
+     "UF-DISPOSITION-LEDGER.md:253 still carries the stale bare '#59' left over from the pre-correction list \u2014 #59 is now listed twice (as '#59 \u00d72 (F8+F9)' in the \u2295\u00b2\u2075 correction at :252 and bare at :253). Strike the :253 token in place. As it stands the corrected enumeration carries 43 owner-slots against 40 OWNED rows (verified: 40 OWNED cells on disk; multiplied entries sum 28 + 15 singles).",
+     "Add the one reconciling clause the 'over-sums' charge demands: the honest slot count is 42 \u2260 40 by two documented doublings (C2's double-hop #72\u2192#47 and F9's dual owner #58/#59). Without it the line still over-sums silently and the residue item is not honestly closed. Both fixes are one edit on one line-pair; everything else in the row re-verified clean (four-cell recount confirmed independently: #47\u00d78 \u00b7 #58\u00d75 \u00b7 #11\u00d74 \u00b7 #69\u00d72 \u00b7 #32\u00d71)."
+    ]
+   },
+   {
+    "row": "#14 PHANTOM-REPAIR",
+    "ruling": "SEAL-CANDIDATE",
+    "outstanding": [
+     "RIDER (driver act at seal, non-blocking): back-annotate R-14A at its receiving end \u2014 the route (full REGISTRY.md disposition-cell re-point \u2192 TR #61 W-DOC-TRUTH) exists only at PHANTOM-REPAIR.md:279 (grep \u2192 1 hit); neither TERMINAL-ROSTER.md:211 nor the cursor's #61 cell (:507, UNSTARTED) carries it, so a #61 seat opening from the roster alone misses its inheritance \u2014 the defect class this same adjudication charged against #68. One line on the cursor's #61 cell at seal-time. Distinguished from #11's hold: #61 is UNSTARTED not SEALED, and no false statement stands in #14's record.",
+     "RIDER (non-blocking): date-fence the stale seat-time claim at PHANTOM-REPAIR.md:286 ('untracked-as-modified... this row never commits') \u2014 true at the seat, false at HEAD (files landed at adefd768; cures at 1ec024a7).",
+     "RIDER (non-blocking): the bridge sentence at :101-102 ('the adjudication's occurrence-level ~120 and this row-level 92 are the same population read by two detectors') names no detector for ~120; measured occurrence counts are 110/102/139. The three load-bearing detectors all re-derive exactly (24 / 92 / 139, re-run this seat); only the harmonizing figure is unfalsifiable \u2014 reword or drop at any future touch."
+    ]
+   },
+   {
+    "row": "#16 W-ORPHAN-ROWS",
+    "ruling": "HOLD",
+    "outstanding": [
+     "16-4 / R-7 \u2014 the hard blocker, whole and grown: ORPHAN-ROWS-CLOSE.md:522 self-declares OPEN the 109-wave EXECUTED-or-SUPERSEDED wave-by-wave reproduction of PORT \u00a71.3, and the \u2295\u00b2\u2075 cure ADDED the 21-evidence-dir name\u2192roster-row walk to the same item. A full follow-on lane on the BG-CLOSE-RECONCILE.md model, not a strike edit; the row is incomplete by its own record until it runs.",
+     "16-1 (half) \u2014 self-contradiction: ORPHAN-ROWS-CLOSE.md:314-317 still paints the +BD-CARRY arm 'RED until PORT gains its \u00a70 pre-history section' and routes to \u00a77 R-3, while R-3 at :518 now reads DISCHARGED/REPAINTED-green (PORT.md:14 \u00a70 verified pre-existing at the pin). Strike :314-317 in place with the same \u2295\u00b2\u2075 falsifier, or the :518 'REPAINTED' stands on no repainted arm.",
+     "16-2 (measurement) \u2014 the landed cure at :388-393 asserts 'Only four hold real captures' and 'every one named for a wave': both false at HEAD. Twelve of the 21 evidence dirs hold 72 png/jpg, all tracked (W1-RADIUS-REDRESS 23 \u00b7 W-CONFIGURATOR-STD 13 \u00b7 W2-BLUR-REDRESS 9 \u00b7 W-PAGER-DOT-MORPH 6 \u00b7 W-FEEDBACK-MOTION-TUNE 4 \u00b7 W-RESPONSIVE-AUDIT 4 \u00b7 W-PROGRESS-RIM-REPLACE 3 \u00b7 W-TOAST-DIALOG-PARITY 3 \u00b7 W-PIXEL-FLOOR-CI 2 \u00b7 W-REFRACT-LATCH 2 \u00b7 W-TYPE-CODEMOD 2 \u00b7 W-BOOT-DIET 1), and GESTALT-1-INC-1 is not wave-named. Re-derive the 21-vs-12 delta at :388-393 AND at the inherited source MOMENTUM-CENSUS.md:193-200 (one strike there cures both rows).",
+     "16-8 (partial) \u2014 two cites survive un-re-pinned contra the cure's own 'every ECOUTE line-cite' rule: :71's bare ECOUTE.md:112-137 (absent from the :17-30 hygiene table; resolves only against today's worktree) and :72's bare :127/:128 (which the adopted bare-cite-means-worktree rule mislabels \u2014 worktree :127-128 is the A04-remainder paragraph; A12/A14 sit at :143-144). Re-pin both to aee47957: or restate as HEAD cites and widen the table.",
+     "Minor strikes at the same sitting: the unpinned trailing sentence at :382 ('53 of 55 OPEN ids are cited by zero BK artifact') is stale at HEAD \u2014 OPEN-6 now reaches BK via 2026-08-03-codex-audit/PASS2-ADJUDICATIONS.json, honest figure 52 of 55; and date-fence :531 ('Every file below is uncommitted' \u2014 landed since). Discharged and re-verified this run: 16-3 (\u00a73.7 UF-J5\u2192#52 homing), 16-5 (two-OPEN-id correction), 16-6 (honest-detector restatement at :56), 16-7 (F19 re-attribution to 138dd6e6, 31/31 tracked), 16-9 (ECOUTE.md:247 distinction)."
+    ]
+   },
+   {
+    "row": "#77 W-MOMENTUM-CENSUS (mechanism half)",
+    "ruling": "HOLD",
+    "outstanding": [
+     "77-1(c) \u2014 six \u00a73 cells print superseded values un-struck while the corrected counts live only in the adjacent note at MOMENTUM-CENSUS.md:126: :123 AMBER-PARTIAL '16 | 25.4%' (\u219215 | 23.8%) \u00b7 :125 RED-INERT '19 | 30.2%' (\u219220 | 31.7%) \u00b7 :128 press-live '23 | 36.5%' (\u219222 | 34.9%) \u00b7 :131 EASE-only '21 | 33.3%' (\u219220 | 31.7%) \u00b7 :132 NONE '24 | 38.1%' (\u219225 | 39.7%) \u00b7 :137 '19/63 RED-INERT' (\u219220/63). No corrected share exists anywhere on disk. Strike-and-correct all six in place with counts AND shares \u2014 the correction must sit ON the false text, not beside it. (77-1(a) detector restatement at :12 and 77-1(b) deck flip at :68 verified DISCHARGED; the deck re-derive confirms RED-INERT.)",
+     "The four-vs-twelve falsehood at its origin: :193 + table :196-200 assert 'four BJ evidence dirs hold real captures' \u2014 twelve hold 72 tracked png/jpg at HEAD (enumeration under #16 item 3). This is the sentence ORPHAN-ROWS-CLOSE.md:388-393 inherits by citation; strike it here once and both rows cure.",
+     "Cursor coherence at EXECUTION-PROGRESS.md:348-349: 'the momentum-census deck row FLIPPED to RED-INERT with the \u00a73 tallies restated' \u2014 the tallies are noted, not restated in the cells; the claim becomes true the moment the six-cell strike above lands (else correct the cursor line). 77-2 is CARVED to #10/the evidence spine per the \u03a63-close DEFINITION ruling (cursor :350-353) and its one doc act \u2014 the stash-gc risk restated at the band close \u2014 is verified landed at cursor :134-138 with both stash refs still resolving; reported, not charged."
+    ]
+   }
+  ],
+  "summary": "\u03a63 sextet re-close adjudication at HEAD d1c8eab8 (advanced past the ledgers' 690bf937 by three commits touching only row-10/75/9 records; sextet files unchanged since 1ec024a7; row-9-register working-tree edits are the live lane's, adjudicated from committed state). RULINGS: #12 SEAL-CANDIDATE (clean \u2014 pointer, 4/0 numstat, 38/8/16/43/15=120 all re-derived); #14 SEAL-CANDIDATE with three non-blocking riders (R-14A one-end route back-annotated at the cursor's #61 cell at seal-time; two stale/unfalsifiable sentences to fence on next touch \u2014 its adjudicated disjunctive residue is fully discharged, all three fence detectors re-derive exactly 24/92/139, and no false statement stands in its record); #11 HOLD (residue items 1-4 clear on their literal text, but the cure record itself is falsified at HEAD in the class it prosecutes: the :158 detector false twice, the :173-175 'both ends' claim contradicted by row #9's own committed ADJUDICATION.json, plus the un-back-annotated routing of four live emitter clauses into #15's sealed cursor cell and a 2-line cite drift \u2014 four strike-in-place edits + one cursor line); #13 HOLD (one stale '#59' token at :253 double-lists the owner and the 43-vs-40 over-sum still lacks its reconciling clause \u2014 one line-pair edit); #16 HOLD (16-1 self-contradiction :314-317 vs :518, 16-2's four-vs-TWELVE capture measurement false at both sites, 16-8's two un-re-pinned cites, and the hard blocker 16-4/R-7: the 109-wave PORT \u00a71.3 walk + 21-dir homing walk, a full follow-on lane); #77-mechanism HOLD (one six-cell strike-with-shares at \u00a73 + the four-vs-twelve origin strike at :193-200, which simultaneously cures #16's inheritance; cursor :349 becomes true when it lands; 77-2 correctly carved to #10, both stash refs verified live). The challenge's four report-errata are confirmed but change no verdict; its omissions A-E are all confirmed on disk and folded into the holds above. Doc-integrity law: every \u2295\u00b2\u2075 correction inspected is strike-in-place with dated brackets, no history rewrite found; the one adjacent-not-on correction (MOMENTUM-CENSUS:126) is exactly what keeps 77-1(c) open. WHAT \u03a63 NOW WAITS ON: not #9 alone. Besides #9 (CURE-REQUIRED, ten cures, cure seat next), \u03a63 waits on the four HOLDs: #11/#13/#77 are each a single-sitting strike-in-place micro-cure batch (and #11's 'both ends' item co-discharges with #9's own ABSENT-vocabulary cure), while #16's R-7 \u2014 the 109-wave + 21-dir walk \u2014 is the ONE substantive non-#9 blocker, a full lane on the BG-CLOSE-RECONCILE model. The driver may mark #12 and #14 SEALED in the cursor citing this run (#14 with its R-14A rider landed in the same edit)."
+ }
+}
