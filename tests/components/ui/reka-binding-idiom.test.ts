@@ -115,9 +115,11 @@ describe("reka binding-idiom render-effect canary", () => {
                 .findAll("[data-slot=tags-input-item-text]")
                 .map((item) => item.text()),
         ).toEqual(["alpha", "beta"]);
-        expect(
-            wrapper.get("[data-slot=tags-input]").attributes("data-slot"),
-        ).toBe("tags-input");
+        // Selected by POSITION, asserted on the attribute: `wrapper.element` is the
+        // mounted `<TagsInput>` root, so this proves the root carries the slot marker.
+        // (The former arm selected BY `[data-slot=tags-input]` and then asserted that
+        // same attribute — a tautology that could not fail.)
+        expect(wrapper.element.getAttribute("data-slot")).toBe("tags-input");
     });
 
     it("Toast: the dismissal rides `onUpdate:open` (NOT the React `onOpenChange`)", async () => {

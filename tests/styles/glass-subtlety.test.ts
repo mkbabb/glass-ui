@@ -58,6 +58,71 @@ const dark = new Map(light);
 for (const [k, v] of declMap(darkArm)) dark.set(k, v);
 const deep = declMap(read("src/styles/tokens/glass-deep.css"));
 
+// The ALPHA half of the same five-rung ladder — its ORDERING invariant.
+// `tests-visual/glass-prune.spec.ts` used to read the five bare rungs back off the
+// painted DOM and assert the band climbed wash → overlay. That spec was unwired (it
+// sat in no runner) and is struck as apparatus; the ASSERTION it carried is real, so
+// it lives here, on the source bytes. Two clauses, because either alone is greenable
+// while the ladder paints out of order: the alpha REGISTER must climb, and each
+// `--glass-bg-*` rung must thread its OWN rung alpha through the shared recipe.
+describe("glass alpha ladder — the rung band climbs wash → overlay", () => {
+    const RUNGS = ["wash", "quiet", "resting", "floating", "overlay"] as const;
+
+    const alpha = (rung: string): number => {
+        const raw = light.get(`--glass-opacity-${rung}`);
+        if (raw === undefined) throw new Error(`no declaration for --glass-opacity-${rung}`);
+        const value = Number.parseFloat(raw);
+        if (!Number.isFinite(value)) {
+            throw new Error(`--glass-opacity-${rung} is not a number: ${raw}`);
+        }
+        return value;
+    };
+
+    it("declares a STRICTLY increasing alpha register", () => {
+        const band = RUNGS.map(alpha);
+        for (let i = 1; i < band.length; i += 1) {
+            expect(
+                band[i],
+                `${RUNGS[i]} (${band[i]}) must sit ABOVE ${RUNGS[i - 1]} (${band[i - 1]})`,
+            ).toBeGreaterThan(band[i - 1]);
+        }
+    });
+
+    it("spans a VISIBLE climb between a translucent floor and a non-opaque ceiling", () => {
+        expect(alpha("overlay") - alpha("wash")).toBeGreaterThan(0.2);
+        expect(alpha("wash")).toBeGreaterThan(0);
+        expect(alpha("overlay")).toBeLessThan(1);
+    });
+
+    it("threads each rung's OWN alpha through the ONE composed bg recipe", () => {
+        // The recipe is `1 - (1 - α) * --glass-level`, monotonic in α at every level,
+        // so a rung composing its own alpha keeps the band ordered at every clarity
+        // setting. A rung reading a NEIGHBOUR's alpha would green the register check
+        // above while painting the ladder out of order.
+        for (const rung of RUNGS) {
+            const bg = light.get(`--glass-bg-${rung}`);
+            expect(bg, `no declaration for --glass-bg-${rung}`).toBeDefined();
+            expect(bg).toContain(`var(--glass-opacity-${rung})`);
+            expect(bg).toContain("var(--glass-level)");
+            for (const other of RUNGS) {
+                if (other === rung) continue;
+                expect(
+                    bg,
+                    `--glass-bg-${rung} must not read ${other}'s alpha`,
+                ).not.toContain(`var(--glass-opacity-${other})`);
+            }
+        }
+    });
+
+    it("keeps ONE register for both arms — the dark arm mints no second ladder", () => {
+        // A dark-arm re-declaration would fork the ordering into two sources; the dark
+        // surface re-tunes through `--card`/`--glass-level`, never a rival alpha band.
+        expect(darkArm).not.toMatch(
+            /--glass-opacity-(?:wash|quiet|resting|floating|overlay)\s*:/,
+        );
+    });
+});
+
 describe("glass blur ladder — the ~15% subtlety recalibration", () => {
     it("resolves the light-arm composed rungs to the recalibrated radii", () => {
         expect(blurRadius(light, "--glass-blur-quiet")).toBe(7);

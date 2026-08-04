@@ -88,6 +88,9 @@ describe("Avatar", () => {
                 "data-image-state": "loading",
             });
             expect(fallbackBefore.attributes("aria-hidden")).toBe("true");
+            // The initials must actually RENDER — hidden-from-AT is only half the
+            // contract; a fallback that paints nothing would green on aria-hidden alone.
+            expect(fallbackBefore.text()).toBe("AL");
             expect(wrapper.findAll('[role="img"]:not([aria-hidden="true"])')).toHaveLength(1);
             expect(status.mock.calls.map(([value]) => value)).toContain("loading");
 
@@ -97,7 +100,10 @@ describe("Avatar", () => {
             const identityAfter = wrapper.get(".glass-avatar__identity").element;
             expect(wrapper.get("img").attributes("data-image-state")).toBe("error");
             expect(wrapper.get("img").attributes("aria-hidden")).toBe("true");
-            expect(wrapper.get(".glass-avatar__fallback").attributes("aria-hidden")).toBe("true");
+            const fallbackAfter = wrapper.get(".glass-avatar__fallback");
+            expect(fallbackAfter.attributes("aria-hidden")).toBe("true");
+            // The initials SURVIVE the image error — the fallback is what the user reads.
+            expect(fallbackAfter.text()).toBe("AL");
             expect(wrapper.findAll('[role="img"]:not([aria-hidden="true"])')).toHaveLength(1);
             expect(identityAfter).toBe(identityBefore);
             expect(identityAfter.getAttribute("aria-label")).toBe("Ada Lovelace");

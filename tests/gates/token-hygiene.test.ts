@@ -26,12 +26,16 @@
 // PostCSS scans declaration values only: selectors, comments, and at-rule preludes are not
 // declarations, while declarations nested inside at-rules remain in `walkDecls`. CSS or Vue
 // SFC parse failures throw and therefore fail the gate closed rather than returning an empty census.
+// One SURFACE is out of scope as a ruled cut: an SFC contributes its `<style>` blocks only, so a
+// template inline `style="…"` literal is invisible here — disclosed in full at `cssSources` below.
 
 import { readFileSync, readdirSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { parse as parseSfc } from "@vue/compiler-sfc";
 import postcss from "postcss";
 import { describe, expect, it } from "vitest";
+
+import { VAR_FUNCTION, asciiLowerCase } from "../utils/cssSyntax";
 
 // The vitest root is the repo root (`vitest.config.ts` sits there); happy-dom leaves
 // `import.meta.url` non-file, so `process.cwd()` is the house idiom (token-graph.test.ts).
@@ -46,7 +50,6 @@ const LADDER_SOURCES = [
 ];
 
 const RAW_LENGTH = /(?<![\w.-])(\d*\.?\d+)(px|rem|em|ch|vh|vw|vmin|vmax|pt|cm|mm|in|pc|q)\b/i;
-const VAR_FUNCTION = /[vV][aA][rR]\(/;
 const BLUR_FUNCTION = /blur\(([^)]*)\)/gi;
 
 export interface TokenHygieneViolation {
@@ -59,13 +62,27 @@ export interface TokenHygieneViolation {
 const isOffLadder = (value: string): boolean =>
     !VAR_FUNCTION.test(value) && RAW_LENGTH.test(value) && !/^\s*0\s*$/.test(value);
 
-const asciiLowerCase = (value: string): string =>
-    value.replace(/[A-Z]/g, (character) => character.toLowerCase());
-
 const radiusProperty = (property: string): boolean =>
     property === "border-radius" ||
     /^border-(?:(?:top|bottom)-(?:left|right)|(?:start|end)-(?:start|end))-radius$/.test(property);
 
+/**
+ * DISCLOSED NARROWING — an SFC contributes its `<style>` blocks ONLY.
+ *
+ * The scanner became a PostCSS declaration walk to stop grepping lines; PostCSS needs a
+ * stylesheet, and the only stylesheets an SFC declares are `descriptor.styles`. So one
+ * surface the earlier full-text line scanner did reach is now INVISIBLE to this gate: a
+ * raw radius or backdrop blur written into a TEMPLATE inline `style="…"` attribute (or
+ * assembled into one by a `:style` binding, which was never scannable in either shape).
+ * `src/` carries no such literal today, so nothing is being waved through — but the rule
+ * no longer covers that channel, and a future inline `style="border-radius: 12px"` would
+ * ship GREEN. Curing it means parsing template attribute values as declaration lists (a
+ * second, differently-shaped parse); it is a ruled cut, not an oversight.
+ *
+ * Everything else stays in scope: declarations nested inside at-rules are reached by
+ * `walkDecls`, and selectors, comments, and at-rule preludes are deliberately out (per
+ * OPEN-6 rule 5 above).
+ */
 const cssSources = (file: string, text: string): Array<{ css: string; lineOffset: number }> => {
     if (!file.endsWith(".vue")) return [{ css: text, lineOffset: 0 }];
     const parsed = parseSfc(text, { filename: file });

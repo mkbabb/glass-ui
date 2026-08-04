@@ -24,8 +24,10 @@ jobs:
             # belongs in the test job, not in an `npm test` hook: a `pretest` would gate
             # the LIBRARY publish on the DEMO building.
             - run: npm run demo:dist:build
-            - run: npm test
+            # build FIRST: the dist byte gates (public-surface, backdrop-prefix arm (b))
+            # are fail-loud and load-bearing — a test run without dist is not a pass.
             - run: npm run build
+            - run: npm test
 
     # The pixel floor. The device-free vitest oracles pass a BLACK aurora and a
     # FLOODED blob; this job mounts the real components on a real device, reads back

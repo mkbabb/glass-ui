@@ -46,9 +46,9 @@
 /* The press DRIVE scalar. ONE typed 0..1 custom
    property Button.vue writes off the `useLiquidPress` spring (0 released → 1
    pressed, with the ~5% overshoot the spring carries). It is the SINGLE drive the
-   press SQUISH (the `useLiquidFlex` reciprocal X/Y deform), the coupled specular/
-   brightness lift, and the optional `.glass-refract` lens-swell all read — the "one
-   drive, the glass deforms under press" read. Registered typed so a `transition`/
+   press SQUISH (the `useLiquidFlex` reciprocal X/Y deform) and the coupled specular/
+   brightness lift both read — the "one drive, the glass deforms under press" read.
+   Registered typed so a `transition`/
    downstream `calc()` interpolates the VALUE (number), not the text. `inherits:
    true` so the host-written value reaches the `.glass-material::before` pseudo +
    the coupled rules. `initial-value: 0` so an unwired/SSR button is the static

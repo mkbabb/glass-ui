@@ -162,16 +162,7 @@
    AuroraConfig palette, not a CSS @property), so these registrations are dead. Clean
    break, no alias — `proof:no-paper-field` asserts both regs ABSENT. */
 
-/* `--glass-refract` axis — no longer live (the baked-scale note, glass-refract.css).
-   The axis drove the `feDisplacementMap` `scale` by splicing `var(--glass-refract)`
-   between a head/tail `url()` pair. That construction never parsed as a
-   `backdrop-filter` (it emitted three tokens, not one url) AND broke consumer bundlers
-   (the tail `url("'…")` mis-resolved as a file path); a CSS url() string token cannot
-   carry a substituted `var()`, so a dynamic `scale` inside the mandatory single
-   self-contained data-URI is structurally impossible. The `scale` is now BAKED at 28
-   (the resting bend, byte-identical) — no axis, no `@property` reg. */
-
-/* The THIRD disjoint glass axis: the per-INSTANCE
+/* The per-INSTANCE
    CHROMATIC-RIM tint. `--glass-accent` is a complete `<color>` (a consumer DATA
    hue) that OKLab-tints a glass surface's RIM (the `--glass-material-rim` inset
    ring + the per-rung `--glass-border-*`) and the `::before` specular catch-light
@@ -268,8 +259,8 @@
    smoothly. `initial-value: 1` is the resting deep magnitude: a `.glass-deep`
    surface paints at the full Apple-deep register by default; a consumer dials
    `--glass-depth: 0.5` to land it half-way to the calm floating rung. SEPARATE
-   from `--glass-level` (opacity+blur clarity), `--glass-tint-*` (legibility), and
-   `--glass-refract` (lens displacement) — the disjoint depth axis. The deep tier
+   from `--glass-level` (opacity+blur clarity) and `--glass-tint-*` (legibility) —
+   the disjoint depth axis. The deep tier
    COMPOSES `--glass-level` too (the deep blur scales it), so the opaque escape +
    the a11y brackets reach the deep plate through the ONE level path. */
 @property --glass-depth {

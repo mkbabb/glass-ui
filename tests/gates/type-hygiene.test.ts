@@ -40,6 +40,8 @@ import { join, relative } from "node:path";
 import postcss from "postcss";
 import { describe, expect, it } from "vitest";
 
+import { VAR_FUNCTION, asciiLowerCase } from "../utils/cssSyntax";
+
 const REPO_ROOT = process.cwd();
 
 // ── Utility-class arm ──────────────────────────────────────────────────────
@@ -77,16 +79,12 @@ export const scanTypeUtilities = (file: string, text: string): TypeUtilityViolat
 
 const RAW_FONT_SIZE = /(?:^|[\s,(])\d*\.?\d+(?:px|rem|em)\b/i;
 const CAPS_TRACKING = /(?:^|\s)0\.1em(?:\s|$)/i;
-const VAR_FUNCTION = /[vV][aA][rR]\(/;
 // A reference to a @theme key the ramp reset cleared to `initial`. `bridges.css`
 // clears `--text-sm`/`--text-xs`, so any surviving `var(--text-sm)` resolves to
 // a guaranteed-invalid value → the declaration falls back to inherit. Banned
 // across ALL src CSS (not just components) so a dangling reference to a cleared
 // key cannot ship GREEN again — the class of bypass that stranded `.card-description`.
 const CLEARED_VAR = /[vV][aA][rR]\(\s*(--text-(?:sm|xs))\b/g;
-
-const asciiLowerCase = (value: string): string =>
-    value.replace(/[A-Z]/g, (character) => character.toLowerCase());
 
 export interface TypeDeclarationViolation {
     file: string;

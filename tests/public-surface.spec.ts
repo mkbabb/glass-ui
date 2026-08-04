@@ -688,9 +688,21 @@ describe("Row 8 package falsifiers", () => {
 
 });
 
-// Build ACCEPTANCE: these read `dist/`. With no build on disk there is nothing to
-// accept, so they skip rather than lie (or hard-RED on a source-only checkout).
-describe.skipIf(!existsSync("dist"))("Row 8 built-artifact acceptance", () => {
+// Build ACCEPTANCE: these read `dist/`. The arm is LOAD-BEARING — it is the only
+// place the shipped CSS closure and the packed-set drift are asserted — so an absent
+// `dist/` FAILS LOUD with the build command rather than skipping. A skipped
+// acceptance greens an unbuilt (or a regressed) artifact; that is the masking
+// fallback this tranche forbids. Same idiom as the boot-graph build arm
+// (`tests/gates/boot-graph.test.ts`, "fail loud, never skip").
+describe("Row 8 built-artifact acceptance", () => {
+    const built = existsSync("dist");
+    const buildHint =
+        "dist/ is absent — run `npm run build` first; the dist arm is load-bearing";
+
+    it("has a built dist/ to accept", () => {
+        expect(built, buildHint).toBe(true);
+    });
+
     const filesUnder = (directory: string, prefix = ""): string[] =>
         readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
             const name = prefix ? `${prefix}/${entry.name}` : entry.name;
@@ -700,6 +712,7 @@ describe.skipIf(!existsSync("dist"))("Row 8 built-artifact acceptance", () => {
         });
 
     it("ships exactly the style closure plus the three generated members", () => {
+        expect(built, buildHint).toBe(true);
         const closure = collectStyleClosure(process.cwd());
         const sourceRoot = resolve(process.cwd(), "src");
         // src/styles and src/components are copied whole-tree, so the src-relative
@@ -718,6 +731,7 @@ describe.skipIf(!existsSync("dist"))("Row 8 built-artifact acceptance", () => {
     });
 
     it("rejects packed CSS drift against the built artifact", () => {
+        expect(built, buildHint).toBe(true);
         const verifier = pathToFileURL(resolve("scripts/verify-export-types.mjs")).href;
         const probe = `
             import { readdirSync } from "node:fs";
@@ -746,6 +760,7 @@ describe.skipIf(!existsSync("dist"))("Row 8 built-artifact acceptance", () => {
     });
 
     it("keeps raw code-bearing sources out of the built artifact", () => {
+        expect(built, buildHint).toBe(true);
         const files = filesUnder("dist");
         expect(files.filter((file) => /\.vue$/.test(file))).toEqual([]);
         expect(files.filter((file) => /\.(?:ts|tsx|jsx|mts|cts)$/.test(file) && !/\.d\.(?:ts|mts|cts)$/.test(file))).toEqual([]);

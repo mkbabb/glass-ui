@@ -139,19 +139,48 @@ describe("Chip semantic modes", () => {
         expect(style).toContain("--glass-fill-tint: var(--section-color-5)");
     });
 
+    // Mounted with HOSTILE caller attrs — a caller asserting every semantic the component
+    // owns — and driven across all three modes. The component's semantics must stay
+    // authoritative at each step, and the stale ones must CLEAR rather than survive the
+    // transition. The prior body only checked the post-transition attributes on a bare
+    // mount, so component-owns-semantics-against-consumer went untested through the change.
     it("does not retain stale pressed semantics when mode changes", async () => {
+        const hostile = vi.fn();
         const wrapper = mount(Chip, {
+            attrs: {
+                role: "button",
+                tabindex: "0",
+                "aria-pressed": "true",
+                "data-state": "caller-state",
+                onClick: hostile,
+            },
             props: { mode: "selectable", modelValue: true },
             slots: { default: "Mutable" },
         });
 
+        const selectable = wrapper.get("[data-mode]").element;
+        expect(selectable.tagName).toBe("BUTTON");
+        expect(selectable.getAttribute("data-mode")).toBe("selectable");
+        expect(selectable.getAttribute("aria-pressed")).toBe("true");
+        expect(selectable.getAttribute("data-state")).toBe("on");
+
         await wrapper.setProps({ mode: "action", modelValue: undefined });
-        expect(wrapper.element.tagName).toBe("BUTTON");
-        expect(wrapper.attributes("aria-pressed")).toBeUndefined();
-        expect(wrapper.attributes("data-state")).toBeUndefined();
+        const action = wrapper.get("[data-mode]").element;
+        expect(action.tagName).toBe("BUTTON");
+        expect(action.getAttribute("data-mode")).toBe("action");
+        expect(action.getAttribute("aria-pressed")).toBeNull();
+        expect(action.getAttribute("data-state")).toBeNull();
 
         await wrapper.setProps({ mode: "static" });
-        expect(wrapper.element.tagName).toBe("SPAN");
-        expect(wrapper.find("button").exists()).toBe(false);
+        const staticHost = wrapper.get("[data-mode]").element;
+        expect(staticHost.tagName).toBe("SPAN");
+        expect(staticHost.getAttribute("data-mode")).toBe("static");
+        expect(staticHost.getAttribute("role")).toBeNull();
+        expect(staticHost.getAttribute("tabindex")).toBeNull();
+        expect(staticHost.getAttribute("aria-pressed")).toBeNull();
+        expect(staticHost.getAttribute("data-state")).toBeNull();
+        expect(staticHost.querySelector("button")).toBeNull();
+        // the hostile onClick spy must never have been invoked by mode transitions alone
+        expect(hostile).not.toHaveBeenCalled();
     });
 });

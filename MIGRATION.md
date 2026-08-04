@@ -858,8 +858,9 @@ Machine-locked by `proof:encapsulation` · `motion-axis` arm (M1-M6).
 
 **BI.W-TABS-FACTOR / P092 — `pill` remains the default and the former two-rest-state
 eyeglass path is removed. Clean break, no alias.** A bare `<SegmentedTabs>` paints one
-measured `.glass-lens` indicator inside the pill track; `underline` remains the only other
-material.
+measured ~~`.glass-lens`~~ indicator inside the pill track; `underline` remains the only other
+material. [`.glass-lens` was DELETED at 8.0.0 — see the §8.0.0 delete banner; the indicator
+rides the `.glass-{rung}` blur+tint base.]
 
 - **`<SegmentedTabs eyeglass>` remains deleted.** Drop the old attribute; there is no
   named eyeglass variant.
@@ -1239,26 +1240,32 @@ alignment), `MetricStack.register` (`audacious\|result` display-mode, would brea
 `Toaster.position` (corner anchor), `Drawer.direction` (reka/vaul forward prop). The tone/orientation byte-diff
 rides `W-SYNONYM-RENAMES-DELTA.md` + the B-close gestalt ceremony.
 
-### BI.W-GLASS-DEDUP — `GlassPanel` retires onto `Card` / `<Surface>` / `.glass-resting` (the ONE refraction door)
+### BI.W-GLASS-DEDUP — `GlassPanel` retires onto `Card` / `<Surface>` / `.glass-resting`
+
+> **The refraction half of this entry is STRUCK.** `.glass-lens` / `#glass-refract` are
+> themselves DELETED at 8.0.0 — see the §8.0.0 delete banner ("The `.glass-lens` refraction is
+> DELETED — the class, the filter asset, and both root exports"). Every "re-point onto
+> `.glass-lens`" below is struck; the surviving door is the `.glass-{wash,quiet,resting,floating,overlay}`
+> blur+tint base, with NO refraction successor.
 
 The FAM-10 mechanism-distinctness ruling (UF-B2): `<GlassPanel>` owned NO distinct mechanism — its tier map
 was Card's, its surface was the shared `surface` resolver, and its `useGlassRenderer`/`createGlassFilter`
-JS-canvas `feDisplacementMap` was a SECOND refraction path competing with the house `.glass-lens` /
-`#glass-refract` axis. A slotless glass surface needs no component: `<Surface tier surface>` (or the bare
-`class="glass-resting"` utility) serves the plate case, and `.glass-lens` serves the refraction case. Clean
+JS-canvas `feDisplacementMap` was a SECOND refraction path. A slotless glass surface needs no component:
+`<Surface tier surface>` (or the bare `class="glass-resting"` utility) serves the plate case. Clean
 break, no alias — the component, its subpath, its `/api` type, its tier-proof gate, and the JS-canvas
 refraction builder all retire together.
 
 | Retired (5.0.0) | Survivor | Rename |
 |---|---|---|
-| `GlassPanel` (`@mkbabb/glass-ui/glass-panel`) | `Card` / `<Surface>` / `class="glass-resting"` | `<GlassPanel tier="resting">…</GlassPanel>` → `<Surface tier="resting" surface="glass">…</Surface>` (or the bare `class="glass-resting"` on the plate); a refraction case re-points onto `class="glass-lens"` |
+| `GlassPanel` (`@mkbabb/glass-ui/glass-panel`) | `Card` / `<Surface>` / `class="glass-resting"` | `<GlassPanel tier="resting">…</GlassPanel>` → `<Surface tier="resting" surface="glass">…</Surface>` (or the bare `class="glass-resting"` on the plate); ~~a refraction case re-points onto `class="glass-lens"`~~ (struck — `.glass-lens` deleted at 8.0.0, see the §8.0.0 banner) |
 | `GlassPanelProps` (type, `/api`) | none — retired outright | no successor type; `<Surface>` publishes `SurfaceProps` (the shared tier × surface axis) |
 | `./glass-panel` subpath export | `./card` / root `<Surface>` | delete the import spec; import `Card`/`Surface` from `@mkbabb/glass-ui` (root) or `@mkbabb/glass-ui/card` |
-| `useGlassRenderer` / `createGlassFilter` / `destroyGlassFilter` (the JS-canvas refraction builder) | `.glass-lens` / `#glass-refract` (the ONE declarative refraction door) | a bespoke JS `feDisplacementMap` builder is gone — the refraction is the single `.glass-lens` opt-in on the SOTA-degrade ladder |
+| `useGlassRenderer` / `createGlassFilter` / `destroyGlassFilter` (the JS-canvas refraction builder) | ~~`.glass-lens` / `#glass-refract` (the ONE declarative refraction door)~~ → none (struck — deleted at 8.0.0, see the §8.0.0 banner); the `.glass-{rung}` blur+tint base | ~~the refraction is the single `.glass-lens` opt-in on the SOTA-degrade ladder~~ — a bespoke JS `feDisplacementMap` builder is gone, and so is the declarative successor: there is NO refraction path |
 | `.glass-card` (co-selector alias) | `.glass-resting` | fold the alias onto `.glass-resting` (pure co-selector; byte-identical) |
 
 Byte-diff: every GlassPanel-slot demo now mounting `<Surface>` / `class="glass-resting"` is 0-delta at the
-shared tier rungs (GlassPanel's tier map ≡ Card's); any refraction demo re-points `.glass-lens`. Cross-repo:
+shared tier rungs (GlassPanel's tier map ≡ Card's); ~~any refraction demo re-points `.glass-lens`~~ (struck —
+`.glass-lens` deleted at 8.0.0, see the §8.0.0 banner; a refraction demo has no successor). Cross-repo:
 the glass-panel usage (5 sites / 2 repos — **atlas ×3**, **sci-report ×2**) rides the `^5.0.0` peer-bump ask
 (`docs/tranches/BI/coordination/asks-and-consumes.md` row 8, filed by `BI.W-FACTOR-ASKS`). The
 `composables/glass/index.ts` keyframes.js-binds-`/glass-panel` claim was RE-PROBED read-only at HEAD — no live

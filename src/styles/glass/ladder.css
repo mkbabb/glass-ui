@@ -21,11 +21,15 @@
        injects the `-webkit-backdrop-filter:` pair into the SHIPPED
        `dist/styles/*.css` as a LAST pass (the source stays unprefixed, so
        the Lightning dedup never sees both forms; the build emits the pair
-       after the cascade is assembled). This GUARANTEES the prefix reaches
-       dist/ regardless of the consumer's autoprefixer/browserslist — a
-       Safari ≤17 engine (webkit-form-only) paints the blur instead of
-       silently dropping the unprefixed rule. Verified by
-       `proof:webkit-backdrop` (count-parity over the shipped dist). */
+       after the cascade is assembled). The pair therefore reaches the
+       LIBRARY'S OWN shipped CSS without depending on a consumer's
+       autoprefixer/browserslist. Scope, stated honestly: that covers
+       `dist/**` only — CSS a consumer's own Tailwind build compiles from
+       our `@utility` sources carries whatever legs that pipeline authors.
+       The live guard is
+       `tests/styles/backdrop-prefix-normalization.test.ts`
+       (G-GLASS-HAS-FROST arm (b)): every `-webkit-backdrop-filter` in the
+       built dist must have an unprefixed sibling in the same rule. */
     /* Every rung's background composes the adaptive-tint recipe
        (`color-mix(in oklab, <rung bg>, var(--glass-tint-source) var(--glass-tint-
        strength))`). With the default `--glass-tint-strength: 0%` the mix is a

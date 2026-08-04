@@ -145,8 +145,11 @@ function unpairedIn(css: string, file: string): string[] {
     return unpaired;
 }
 
-describe.skipIf(!existsSync(DIST))("G-GLASS-HAS-FROST arm (b) — the shipped dist bytes", () => {
+describe("G-GLASS-HAS-FROST arm (b) — the shipped dist bytes", () => {
+    const built = existsSync(DIST);
+    const buildHint = "dist/ is absent — run `npm run build` first; the dist arm is load-bearing and a skipped run is not a pass";
     it("ships every backdrop-filter as an adjacent -webkit-/standard pair", () => {
+        expect(built, buildHint).toBe(true);
         const files = distCssFiles(DIST);
         expect(files.length).toBeGreaterThan(0);
         const unpaired = files.flatMap((file) => unpairedIn(readFileSync(file, "utf-8"), file));
