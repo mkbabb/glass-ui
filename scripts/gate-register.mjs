@@ -184,15 +184,102 @@ const scan = (source) => {
 export const CALL_FORM =
     /(^|[^.\w$])(it|test)(\.(each|fails|only|concurrent|sequential)(\([\s\S]*?\))?)*\(\s*$/;
 
+// ── BLOCK-LEVEL suppression (round-3 cure #1) ─────────────────────────────────────────
+//
+// `CALL_FORM` reads the ONE call its title sits in and cannot see the block above it. So a
+// `describe.skip(` / `.todo(` / `.skipIf(` wrapping a whole file left every rostered row
+// inside it scored BOUND with zero violations — measured pre-cure at HEAD `e2b7a0b5`:
+// `tests/styles/token-graph.test.ts`'s outer describe demoted to `describe.skip(` returned
+// `drift:[reka.tags-input.value-binding] violations:0`, i.e. the register saw nothing. The
+// runner executes NONE of those cases, so under PASS/FAIL/ABSENT all of them are ABSENT:
+// the same scoring lie the strict call form forbids, one nesting level up.
+//
+// `.only` is the identical species read the other way: one live `.only` anywhere makes
+// every case WITHOUT it runtime-ABSENT, while the register scored the siblings bound.
+//
+// Both are resolved BY EXTENT, never by a file-wide flag, so a skipped block cannot
+// condemn a sibling block that still runs. `.skipIf(cond)` is suppressed unconditionally
+// because `cond` is not statically knowable: the register may not score BOUND a case it
+// cannot prove the runner reaches. Failing toward ABSENT is the only direction ⊕²⁵ allows.
+const BLOCK_SUPPRESSOR = /(?:^|[^.\w$])(?:describe|suite)\.(?:skip|todo|skipIf|runIf)\b/g;
+const ONLY_HOST = /(?:^|[^.\w$])(?:describe|suite)\.only\b/g;
+const ANY_ONLY = /(?:^|[^.\w$])(?:describe|suite|it|test)\.only\b/g;
+
+/**
+ * The extent of a call — and of a CURRIED pair, `describe.skipIf(cond)(title, fn)` — from
+ * the first `(` after the modifier to the `)` closing the last chained group. Parens inside
+ * string literals do not count. Unbalanced source fails CLOSED (extent runs to EOF), so a
+ * truncated file suppresses rather than silently binds.
+ */
+const callExtent = (code, inString, from) => {
+    let i = from;
+    let end = -1;
+    for (;;) {
+        while (i < code.length && /\s/.test(code[i])) i += 1;
+        if (code[i] !== "(") return end < 0 ? from : end;
+        let depth = 0;
+        let closed = -1;
+        for (let j = i; j < code.length; j += 1) {
+            if (inString[j]) continue;
+            if (code[j] === "(") depth += 1;
+            else if (code[j] === ")") {
+                depth -= 1;
+                if (depth === 0) {
+                    closed = j;
+                    break;
+                }
+            }
+        }
+        if (closed < 0) return code.length;
+        end = closed;
+        i = closed + 1;
+    }
+};
+
+const rangesOf = (code, inString, pattern) => {
+    const ranges = [];
+    pattern.lastIndex = 0;
+    let match;
+    while ((match = pattern.exec(code))) {
+        const nameEnd = match.index + match[0].length;
+        // the same words inside a test TITLE are prose, not a call
+        if (inString[nameEnd - 1]) continue;
+        ranges.push([match.index, callExtent(code, inString, nameEnd)]);
+    }
+    return ranges;
+};
+
+const inAnyRange = (ranges, index) =>
+    ranges.some(([start, end]) => index >= start && index <= end);
+
+const hasLiveMatch = (code, inString, pattern) => {
+    pattern.lastIndex = 0;
+    let match;
+    while ((match = pattern.exec(code))) {
+        if (!inString[match.index + match[0].length - 1]) return true;
+    }
+    return false;
+};
+
 export const titleIsRegistered = (source, title) => {
-    const { code } = scan(source);
+    const { code, inString } = scan(source);
+    const suppressed = rangesOf(code, inString, BLOCK_SUPPRESSOR);
+    const onlyHosts = rangesOf(code, inString, ONLY_HOST);
+    const onlyLive = hasLiveMatch(code, inString, ANY_ONLY);
     for (const quote of ['"', "'", "`"]) {
         const needle = `${quote}${title}${quote}`;
         let index = code.indexOf(needle);
         while (index >= 0) {
             // 260 chars is comfortably past the longest `it.each([...])(` table head in
             // the suite; the anchored `$` means only the text abutting the title counts.
-            if (CALL_FORM.test(code.slice(Math.max(0, index - 260), index))) return true;
+            const form = CALL_FORM.exec(code.slice(Math.max(0, index - 260), index));
+            if (
+                form &&
+                !inAnyRange(suppressed, index) &&
+                (!onlyLive || form[0].includes(".only") || inAnyRange(onlyHosts, index))
+            ) {
+                return true;
+            }
             index = code.indexOf(needle, index + 1);
         }
     }
@@ -210,18 +297,34 @@ export const titleIsRegistered = (source, title) => {
 // admitted forms are stated as "live string literal or exported identifier" rather than
 // the narrower "title only" — a narrower rule would have moved a figure by fiat rather
 // than by measurement.
+//
+// BOUNDARY (round-3 cure #3). The hit must be the WHOLE name. `indexOf` and `\b` are both
+// blind to an embedding rename — `-` is a non-word character, so `\bG-RUNG-ONLY\b` matches
+// inside `XX-G-RUNG-ONLY-RETIRED`. Measured pre-cure at HEAD `e2b7a0b5`: renaming every
+// `G-RUNG-ONLY` in `trap-gates.test.ts` to `XX-G-RUNG-ONLY-RETIRED` left `nameIsLive` true
+// and the register green — a phantom binding to a seat nothing carries, under exactly the
+// add-one-retire-one motion §B.5 performs. Name characters are `[A-Za-z0-9_-]`: seat names
+// are dash-joined, so word boundaries are the wrong alphabet for them.
+const NAME_CHAR = /[A-Za-z0-9_-]/;
+
+const isWholeName = (code, name, index) => {
+    const before = index > 0 ? code[index - 1] : "";
+    const after = index + name.length < code.length ? code[index + name.length] : "";
+    return !NAME_CHAR.test(before) && !NAME_CHAR.test(after);
+};
+
 export const nameIsLive = (source, name) => {
     const { code, inString } = scan(source);
     let index = code.indexOf(name);
     while (index >= 0) {
-        if (inString[index]) return true;
+        if (inString[index] && isWholeName(code, name, index)) return true;
         index = code.indexOf(name, index + 1);
     }
     const identifier = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const bounded = `(?<![A-Za-z0-9_-])${identifier}(?![A-Za-z0-9_-])`;
     return (
-        new RegExp(`export\\s+(?:const|let|var|function|class)\\s+${identifier}\\b`).test(
-            code,
-        ) || new RegExp(`export\\s*\\{[^}]*\\b${identifier}\\b`).test(code)
+        new RegExp(`export\\s+(?:const|let|var|function|class)\\s+${bounded}`).test(code) ||
+        new RegExp(`export\\s*\\{[^}]*${bounded}`).test(code)
     );
 };
 
@@ -232,6 +335,15 @@ export const nameIsLive = (source, name) => {
 // at `:57`. A substring resolver cannot detect unenrollment — C-13's own class ("an
 // unwired gate cannot fail") reproduced inside the detector that scopes C-13. An anchor
 // now resolves only against text a RUNNER would execute.
+
+// A `#` opens a shell comment, so only what precedes it is a command a runner executes.
+// One rule for BOTH `run:` forms (round-3 cure #2). Pre-cure only the inline form stripped,
+// and it stripped only a ` #` — measured at HEAD `e2b7a0b5`: relocating ci.yml's two
+// pixel-floor commands into `run: |` with a single `# npm -w tests-visual run
+// gate:pixel-floor:ci` body line left the anchor resolving, `badAnchors:[] violations:0`.
+// C-13's own class ("an unwired gate cannot fail") had simply moved into the standard
+// multi-line Actions idiom. The rule matches `liveCommandText`'s shell branch verbatim.
+const stripShellComment = (line) => line.replace(/(^|\s)#.*$/, "$1").trim();
 
 export const yamlRunValues = (text) => {
     const values = [];
@@ -247,13 +359,14 @@ export const yamlRunValues = (text) => {
                 if (!body.trim()) continue;
                 const bodyIndent = body.length - body.trimStart().length;
                 if (bodyIndent <= indent) break;
-                values.push(body.trim());
+                const live = stripShellComment(body);
+                if (live) values.push(live);
                 i = j;
             }
             continue;
         }
-        // a trailing ` #` in a shell command starts a comment; the anchor may not hide there
-        values.push(inline.replace(/\s#.*$/, "").trim());
+        const live = stripShellComment(inline);
+        if (live) values.push(live);
     }
     return values;
 };

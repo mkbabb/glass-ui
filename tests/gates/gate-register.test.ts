@@ -46,6 +46,8 @@ interface RosterRow {
     currentRegistration: string;
 }
 
+const PINNED_DRIFT_ID = "reka.tags-input.value-binding";
+
 /**
  * A rostered row registered as a plain `it("…")`, so a bite can demote exactly that call
  * form. Never the pinned-drift row.
@@ -53,7 +55,7 @@ interface RosterRow {
 const plainVictim = (): { row: RosterRow; quoted: string; source: string } => {
     const roster = JSON.parse(realIo.read(ROSTER_PATH));
     for (const row of roster.activeVitest as RosterRow[]) {
-        if (row.id === "reka.tags-input.value-binding") continue;
+        if (row.id === PINNED_DRIFT_ID) continue;
         const source = realIo.read(row.sourcePath);
         for (const quote of ['"', "'", "`"]) {
             const quoted = `${quote}${row.currentRegistration}${quote}`;
@@ -61,6 +63,40 @@ const plainVictim = (): { row: RosterRow; quoted: string; source: string } => {
         }
     }
     throw new Error("no plainly-registered rostered row found to demote");
+};
+
+/**
+ * A rostered FILE that wraps its cases in a `describe(` and carries at least two plainly
+ * registered rows — the victim for the BLOCK-level bites (round-3 cure #1). The pinned-drift
+ * row's file is excluded whole, so a block bite never entangles the one declared drift.
+ */
+const blockVictim = (): { rows: RosterRow[]; source: string; sourcePath: string } => {
+    const roster = JSON.parse(realIo.read(ROSTER_PATH));
+    const rows = roster.activeVitest as RosterRow[];
+    const driftPath = rows.find((r) => r.id === PINNED_DRIFT_ID)?.sourcePath;
+    const byPath = new Map<string, RosterRow[]>();
+    for (const row of rows) {
+        if (row.sourcePath === driftPath) continue;
+        const source = realIo.read(row.sourcePath);
+        if (!source.includes("describe(")) continue;
+        const plain = ['"', "'", "`"].some((quote) =>
+            source.includes(`it(${quote}${row.currentRegistration}${quote}`),
+        );
+        if (!plain) continue;
+        byPath.set(row.sourcePath, [...(byPath.get(row.sourcePath) ?? []), row]);
+    }
+    for (const [sourcePath, group] of byPath) {
+        if (group.length >= 2) {
+            return { rows: group, source: realIo.read(sourcePath), sourcePath };
+        }
+    }
+    throw new Error("no rostered file with a describe( block and two plain registrations");
+};
+
+const quoteOf = (source: string, title: string): string => {
+    const quote = ['"', "'", "`"].find((q) => source.includes(`it(${q}${title}${q}`));
+    if (!quote) throw new Error(`no plain registration to demote for: ${title}`);
+    return quote;
 };
 
 describe("the gate register binds (G-GATE-BUDGET)", () => {
@@ -216,6 +252,46 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
         expect(report.titleDrift.map((d: { id: string }) => d.id)).toContain(row.id);
     });
 
+    it("BITE — a `describe.skip(` block leaves every rostered row beneath it ABSENT", () => {
+        // ROUND-3 cure #1. `CALL_FORM` reads one call and cannot see the block above it, so
+        // pre-cure (probe at HEAD `e2b7a0b5`) wrapping this victim's describe scored BOTH
+        // rostered rows BOUND: `drift:[reka.tags-input.value-binding] violations:0`. The
+        // runner executes neither, and ABSENT is never GREEN.
+        const { rows, source, sourcePath } = blockVictim();
+        const clean = verifyGateRegister(realIo).titleDrift.map((d) => d.id);
+        for (const row of rows) expect(clean).not.toContain(row.id);
+
+        for (const modifier of [".skip", ".todo", ".skipIf(true)"]) {
+            const suppressed = source.replaceAll("describe(", `describe${modifier}(`);
+            for (const row of rows) {
+                // the title text is untouched — only the block above it moved
+                expect(suppressed).toContain(row.currentRegistration);
+            }
+            const report = verifyGateRegister(ioWith(sourcePath, suppressed));
+            const drifted = report.titleDrift.map((d: { id: string }) => d.id);
+            for (const row of rows) expect(drifted, modifier).toContain(row.id);
+            expect(
+                report.violations.some((v: string) => v.includes("title drift set moved")),
+                modifier,
+            ).toBe(true);
+        }
+    });
+
+    it("BITE — a live `it.only(` leaves its rostered siblings ABSENT, itself bound", () => {
+        // The same species read the other way: `.only` still RUNS its own case, so it stays
+        // bound — every sibling the runner now skips is ABSENT. Pre-cure both scored BOUND.
+        const { rows, source, sourcePath } = blockVictim();
+        const [only, ...siblings] = rows;
+        const quote = quoteOf(source, only.currentRegistration);
+        const title = `${quote}${only.currentRegistration}${quote}`;
+        const onlyd = source.replace(`it(${title}`, `it.only(${title}`);
+        expect(onlyd).not.toBe(source);
+        const report = verifyGateRegister(ioWith(sourcePath, onlyd));
+        const drifted = report.titleDrift.map((d: { id: string }) => d.id);
+        expect(drifted).not.toContain(only.id);
+        for (const sibling of siblings) expect(drifted).toContain(sibling.id);
+    });
+
     it("BITE — gutting every pixel-floor run step from ci.yml REDs, comment or no comment", () => {
         // The challenger's exact probe: delete the four pixel-floor step lines and the
         // word still survives in the prose comment at ci.yml:57. Pre-cure this yielded
@@ -250,6 +326,54 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
         expect(
             report.violations.some((v: string) =>
                 v.includes("supplemental external.browser.aurora-floor"),
+            ),
+        ).toBe(true);
+    });
+
+    it("BITE — a `#`-commented command inside a `run: |` block scalar REDs the anchor", () => {
+        // ROUND-3 cure #2. Cure #2 stripped comments from the INLINE `run:` form only, so
+        // C-13's class simply relocated into the standard multi-line Actions idiom: pre-cure
+        // (probe at HEAD `e2b7a0b5`) both pixel-floor commands moved into `run: |` with a
+        // single `# npm -w tests-visual run gate:pixel-floor:ci` body line still resolved —
+        // `badAnchors: [] violations: 0`.
+        const ci = realIo.read(".github/workflows/ci.yml");
+        const relocated = ci
+            .split("\n")
+            .map((line) => {
+                const match = line.match(/^(\s*)(- )?run: (.*pixel-floor.*)$/);
+                if (!match) return line;
+                const indent = match[1] + (match[2] ? "  " : "");
+                return `${match[1]}${match[2] ?? ""}run: |\n${indent}  # ${match[3]}`;
+            })
+            .join("\n");
+        expect(relocated).toContain("pixel-floor"); // survives, commented, inside the scalar
+        expect(relocated).toMatch(/run: \|\n\s+# npm .*pixel-floor/);
+        expect(relocated).not.toMatch(/run: [^|\n]*pixel-floor/);
+        const report = verifyGateRegister(ioWith(".github/workflows/ci.yml", relocated));
+        expect(
+            report.badAnchors.some((a: string) =>
+                a.includes(".github/workflows/ci.yml#pixel-floor"),
+            ),
+        ).toBe(true);
+    });
+
+    it("BITE — an EMBEDDING seat rename (`XX-…-RETIRED`) REDs instead of binding", () => {
+        // ROUND-3 cure #3. `indexOf` — and `\b`, since `-` is a non-word character — both
+        // match a seat name inside a longer one. Pre-cure (probe at HEAD `e2b7a0b5`)
+        // renaming every `G-RUNG-ONLY` to `XX-G-RUNG-ONLY-RETIRED` left `nameIsLive` TRUE
+        // and the register green: a phantom binding to a seat nothing carries, under exactly
+        // the add-one-retire-one motion §B.5 performs.
+        const trap = realIo.read("tests/gates/trap-gates.test.ts");
+        const renamed = trap.replaceAll("G-RUNG-ONLY", "XX-G-RUNG-ONLY-RETIRED");
+        expect(renamed).toContain("G-RUNG-ONLY"); // the substring survives inside the new name
+        expect(renamed).not.toMatch(/(?<![A-Za-z0-9_-])G-RUNG-ONLY(?![A-Za-z0-9_-])/);
+        const report = verifyGateRegister(
+            ioWith("tests/gates/trap-gates.test.ts", renamed),
+        );
+        expect(
+            report.violations.some(
+                (v: string) =>
+                    v.includes("seat G-RUNG-ONLY") && v.includes("only in prose"),
             ),
         ).toBe(true);
     });
