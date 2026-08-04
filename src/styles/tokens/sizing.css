@@ -84,6 +84,24 @@
        by --ui-scale at the rung. */
     --control-text:    calc(var(--type-small) * var(--ui-scale));
     --control-text-sm: calc(var(--type-caption) * var(--ui-scale));
+    /* The control LABEL rung. PROPORTION §1.4 states the law as an INVARIANT, not a
+       value: `control label : control value = φ^(−1/4) = 0.886653, at every
+       viewport`. Two independent measurements corroborate it — forms 0.887,
+       navigation-dock 0.881 desktop.
+
+       It is therefore DERIVED from --control-text (the control VALUE rung), never
+       authored as its own px/rem literal: expressed as a ratio it survives the
+       fluid clamp and the --ui-scale comfort factor for free, riding each exactly
+       once by inheriting the no-double-vw reconcile documented above instead of
+       restating it. A literal here would drift out of ratio at the first retune of
+       either input — which is precisely how the 15 scattered alphas §6 collapses
+       came to exist.
+
+       navigation-dock's "label → 1.5× on coarse" is OVERRULED by that invariant: a
+       44px touch target needs 44px of BOX (--touch-target, below), not a 21px
+       label. Type keeps its own clamp; the coarse-pointer answer is box, never
+       type. */
+    --control-label: calc(var(--control-text) * 0.886653);
     /* The control-GLYPH cohort (RED 4 — the glyph grows WITH the box). The
        1rem/0.875rem control-glyph register the `size-4`/`size-3.5` literals
        encode; the un-sized-<svg> CVA rule reads these via
@@ -159,12 +177,72 @@
        Largest rung in the icon ladder; reserved for hero-class glyphs. */
     --icon-hero: 3.5rem;
 
+    /* ═══════════════════════════════════════════════
+       §1.1  THE SPACE SERIES — ONE generator for padding AND gap:
+       4 · 8 · 12 · 20 · 32 · 52 — 4 × Fibonacci. Steps 2.00 / 1.50 / 1.667 / 1.60 /
+       1.625, limit φ. Every rung ≥1.5× its neighbour, so no two are confusable at
+       any size.
+
+       C3 ruled the forked series dead: containers 6·8·12·16 · data-feedback
+       4·8·12·24·40 · navdock 6·12·18·24 — 21 paddings + 18 gaps = 39 values for what
+       6 rungs express. One shared generator is also what makes "weight : gap"
+       statable once; §1.2's gap law (color-radius.css) reads THESE rungs by name.
+
+       NAMED BY RANK — not by px, not by ordinal. Rank is the one thing padding and
+       gap share, and it is the thing the mobile transposition preserves while the
+       value changes. A px name could not survive that transposition; a `--space-3`
+       would collide head-on with Tailwind's own numeric spacing scale, where `p-3`
+       already means 12px.
+
+       | rung    | px | padding role                                    | gap role                                     |
+       |---------|----|-------------------------------------------------|----------------------------------------------|
+       | residue |  4 | concentric residue · inline-mark block inset    | intra-atom — dot ↔ caption                   |
+       | atom    |  8 | atom ↔ glyph · control `xs` · tooltip plate    | control ↔ glyph · term ↔ value               |
+       | body    | 12 | a control's own interior (`md`) · field inset · | peer ↔ peer, same rank; row ↔ row            |
+       |         |    | THE PRESENTED PLATE — card/popover/menu/toast   |                                              |
+       |         |    | (pairs card r16 → residue 4)                    |                                              |
+       | family  | 20 | THE ROOM PLATE — dialog/sheet/drawer ·          | item ↔ item; THE SEPARATOR CHANNEL           |
+       |         |    | showcase frame (pairs room r24 → residue 4)     |                                              |
+       | section | 32 | section frame · page gutter                     | at this distance NO rule is ever drawn       |
+       | page    | 52 | page-section break (block axis only)            | page-section                                 |
+
+       THE PAIRING LAW: `pad(role) = r(role) − 4`. Room 24−20=4 · card 16−12=4 ·
+       control 10−8=2→floor. Every radius rung paired with the padding rung one below
+       it yields the 4px floor exactly.
+
+       The plate labels above are RECONCILED TO THE PAIRING LAW, which is the
+       arithmetic ground: card r16 pads at 12 and room r24 pads at 20, so the
+       presented plate sits on the body rung and the room plate on the family rung.
+       PROPORTION §1.1's own rung-20 role cell says "the presented plate — card…",
+       contradicting its own pairing law one line down — the exact erratum CWT-3 §3
+       banked for the maintainer ("§1.1 rung-20 prose label (card)"). CWT-3 §3 also
+       banked the gap-8 erratum: the "0.5 × control pad-inline at md" derivation
+       broke when C1 struck 16 from the padding series (0.5 × 12 = 6 ≠ 8) — the
+       VALUE stands as a series member (4·Fib rung 2); only the derivation clause is
+       dead, and the gap-role column above states roles, never that derivation.
+
+       THE GAP RATIO: section : family : body = 32 : 20 : 12 = 8 : 5 : 3.
+
+       THIS IS THE LIBRARY REGISTER, and it is the wall the component lanes write
+       against — margins/padding come from these rungs with zero local mints. The
+       demo ladder LAYOUT R3 fences off (`--sp-1…6`, demo-bundle-scoped, never
+       reaching consumers) is NOT aliased, imported, or re-homed here; that would be
+       the legacy-alias form the no-backwards-compat law forbids. The library carries
+       its own. The Tailwind `--spacing-*` bridge in theme/bridges.css is OWED (the
+       block is banked in the row record, routed to the driver) — until it lands,
+       consumers reach the rungs by `var()`, never by pasting the ladder. */
+    --space-residue: 0.25rem; /*  4px */
+    --space-atom:    0.5rem;  /*  8px */
+    --space-body:    0.75rem; /* 12px */
+    --space-family:  1.25rem; /* 20px */
+    --space-section: 2rem;    /* 32px */
+    --space-page:    3.25rem; /* 52px */
+
     /* Golden-ratio spacing rungs — φ² and φ³. Preemptive substrate for the
-       hero-chassis consumers.
-       The 0..4 rungs are not currently named (consumers reach via
-       Tailwind's spacing scale); 5/6 land here because their values fall
-       outside the default ladder and the audacious chassis pattern wants
-       a named handle. */
+       hero-chassis consumers. A DERIVED pair, off the §1.1 series on purpose:
+       they name the audacious chassis' own φ-continuation, not a rank, so they
+       neither extend the six rungs above nor participate in the mobile
+       transposition below. */
     --space-phi-5: 2.618rem; /* φ² */
     --space-phi-6: 4.236rem; /* φ³ */
 
@@ -454,4 +532,45 @@
     --touch-target: 2.75rem; /* 44px */
 
     /* The Configurator density and hierarchy tokens live in sizing-config.css. */
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   §1.1  THE MOBILE TRANSPOSITION — ONE law, ONE block, library-wide.
+
+   PROPORTION §1.1 / LAYOUT C13: at ≤768px EVERY space rung steps down exactly one.
+   52→32, 32→20, 20→12, 12→8, 8→4, 4→4 (the floor absorbs the last step).
+
+   The mobile ladder is therefore the SAME series, shifted one rung — not a rescale.
+   Each mobile value is literally the desktop value of the rung below it, so every
+   step in the mobile ladder is a step OF the generator (1.50/1.667/1.60/1.625) and
+   nothing lands off-series. C13 ruled the alternatives out on exactly this ground:
+   a single 0.860 scalar puts every value off-series (32→27.5); one-rung-down
+   preserves rank distance with ≤6% ratio drift. The sole deviation is the floor,
+   where 8→4 and 4→4 both resolve to 4 and the two smallest rungs coincide.
+
+   TWO FENCES RIDE HERE, both LAYOUT §5:
+     1. `--ui-scale` moves the CONTROL BOX ONLY (height, padding, glyph). It is
+        absent from this block and must stay absent — the box and the space series
+        are separate axes, and multiplying both would double-apply the comfort
+        factor exactly as the no-double-vw reconcile above forbids for type.
+     2. TYPE keeps its own clamp and never rides `--ui-scale`. No type rung appears
+        in this block, deliberately.
+
+   THIS IS THE ONLY WIDTH-CONDITIONAL SPACING DECLARATION IN src/styles, and no
+   other token-layer file may contain one (LAYOUT §5). Component files still carry
+   their own width queries today — dock density's 44.9375rem is RT-3/#47's, the
+   rest retire onto the rungs in #79-#88's sweep — so library-wide satisfaction is
+   those lanes' to deliver. That is what the rank names buy: a
+   component reads `--space-family` once and steps down for free, instead of
+   re-deciding its own spacing at its own breakpoint — which is how the nine ad-hoc
+   transposition factors got minted in the first place. */
+@media (max-width: 768px) {
+    :root {
+        --space-page:    2rem;    /* 52 → 32 */
+        --space-section: 1.25rem; /* 32 → 20 */
+        --space-family:  0.75rem; /* 20 → 12 */
+        --space-body:    0.5rem;  /* 12 →  8 */
+        --space-atom:    0.25rem; /*  8 →  4 */
+        --space-residue: 0.25rem; /*  4 →  4, the floor absorbs */
+    }
 }

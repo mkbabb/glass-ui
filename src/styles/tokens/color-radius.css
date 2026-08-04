@@ -95,6 +95,59 @@
     --border: var(--neutral-4);
     --input: var(--neutral-4);
 
+    /* ═══════════════════════════════════════════════
+       §1.2 / §1.3  THE INK REGISTER — one ink, three stroke alphas, two fill alphas
+
+       PROPORTION §1.2: the divider ink is the warm `rgb(28,25,23)` (== --foreground,
+       `hsl(24 10% 10%)`) at EVERY rung. 1px always — 277 of 277 borders in one
+       category are already 1px; no second weight is minted. What varies is α, and it
+       varies on ONE ratio: seam : edge : perimeter = 1 : 2 : 6.
+
+       These are BARE α SCALARS (<number>), never pre-composed colors. §1.2 names one
+       ink at three alphas, so composition is the reader's job —
+       `color-mix(in oklab, var(--foreground) calc(var(--ink-edge) * 100%), transparent)`
+       or `oklch(from var(--foreground) l c h / var(--ink-edge))`. A colour-valued token
+       here would FORK the ink, which is the exact failure the one-ink register exists
+       to prevent.
+
+       THE GAP LAW — a boundary is drawn only where the gap cannot carry the rank:
+         gap ≥ 32 (--space-section) → NO line, ever
+         gap   20 (--space-family)  → seam
+         gap ≤ 12 (--space-body)    → edge
+       Control perimeter and focus ring are GAP-INDEPENDENT — always 0.48, because
+       WCAG 1.4.11 does not care what is beside them.
+
+       DERIVATIONS, NOT MEMBERS (do NOT mint a token for either — §6 is 6 net):
+         · the "both" fill rung = --fill-hover + --fill-selected = 0.16
+         · the *indicator* = 2px @ 0.24 — the perimeter rung spread over 2px: same ink
+           mass (2 × 0.24 == 0.48), twice the height, because it must be findable
+           along a 1288px run.
+
+       `--border` RETIRES as a divider ink (it stays a SURFACE token above). Tan at
+       α1.0 computes dip 47.5 / contrast 1.28:1 — it fails 3:1 for a control perimeter
+       and is 1.43× the plate edge for a grouping line. It sits between two rungs and
+       belongs to neither; two inks is a second colour system.
+
+       DARK ARM OWED, NOT INVENTED. Every α below is a light-arm Chromium dpr1
+       measurement (§7b item 5: the census is "a light dpr1 floor"), and §7b item 1
+       — "dark mode across `forms` entirely" — is the named owed cell, routed to
+       #10's paired capture. The dark arm therefore INHERITS these scalars rather
+       than carrying a guessed twin: a fabricated dark α would be a value minted
+       against no measurement. */
+    --ink-seam: 0.08;      /* in-content rule · group ↔ group · a FLUSH plate's own edge (break-even 0.0705) */
+    --ink-edge: 0.16;      /* a FLOATING plate's boundary — where a drop shadow sits outside it */
+    --ink-perimeter: 0.48; /* a control's own edge · the focus ring · the selection indicator — 3.0:1 */
+
+    /* §1.3 FILL — the channel the stroke ladder does not cover. Same ink.
+       Where a glyph or a stroke CO-carries the state, these two rungs suffice. Where
+       the fill is the SOLE carrier (segmented indicator, dock active member, toggle
+       on-state) the requirement is not a rung at all: ≥3:1 against the unselected
+       sibling, or it is a lie. Measured before this register: selected tab 1.032:1
+       — BELOW the divider beside it at 1.140:1; selected table row `ink/0.08`,
+       byte-equal to hover. */
+    --fill-hover: 0.05;    /* transient pointer answer */
+    --fill-selected: 0.12; /* persistent state — hover cannot mint it */
+
     --primary: hsl(24 10% 10%);
     --primary-foreground: var(--neutral-0);
     --destructive: hsl(0 72% 50%);
