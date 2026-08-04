@@ -8,9 +8,10 @@ supersedes both arm banks as the design spec of record; the arms remain provenan
 
 **Provenance notes:** `preview/springs.html` (the Fable arm's self-contained curve card) rides as this
 spec's design artifact — its six curves match §1 and were validated against the disk generator (dock-at-disk
-0.218 vs file 0.22 ✓, gentle-at-disk 0.762 vs 0.76 ✓). ⊘ `DESIGN-26-opus.md` in this directory is a
-MIS-BANK — it contains the row-**22** W-FROST return value, not a row-26 artifact; ignore it here (the real
-Opus arm is `SPRING-AUTHORITY.md`). **DesignSync, consulted this seat:** `list_projects` → one writable
+0.218 vs file 0.22 ✓, gentle-at-disk 0.762 vs 0.76 ✓). ⊘ A `DESIGN-26-opus.md` mis-bank (the row-**22**
+W-FROST return value, not a row-26 artifact) was present in this directory at adjudication and has since
+been removed — recorded here as provenance; the real Opus arm is `SPRING-AUTHORITY.md`. **DesignSync,
+consulted this seat:** `list_projects` → one writable
 project ("CSP Solver — Pencil UI", unrelated); no glass-ui design-system project exists. DESIGN-NOW §7's
 ratified ruling stands (both prior arms + this seat concordant): DesignSync is a sync channel for component
 authoring, not a prose-spec instrument — this spec banks as structured design text, nothing faked, no
