@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
     ACCIDENTAL_GLYPHS,
+    CLEF_ADVANCE,
     F_CLEF,
     F_CLEF_DOTS,
     FLAG_DOWN,
@@ -19,33 +20,38 @@ import {
     rhythmOf,
     spell,
     staffPos,
+    type MusicStaffGeometry,
     type MusicStaffNoteEvent,
 } from "@glass/components/music-staff/staffGeometry";
 
-/** Sample path data (M/L/C/V/H) so a glyph is gated on what it draws. */
-function samplePath(d: string): [number, number][] {
+/** Sample path data (M/L/C/V/H) one closed subpath at a time, so a glyph is
+    gated on what it draws AND on which way each subpath winds. */
+function subpathsOf(d: string): [number, number][][] {
     const tokens = d.match(/[MLCVHZ][^MLCVHZ]*/gi) ?? [];
-    const points: [number, number][] = [];
+    const subpaths: [number, number][][] = [];
+    let current: [number, number][] = [];
     let cx = 0, cy = 0, sx = 0, sy = 0;
     for (const token of tokens) {
         const op = token[0].toUpperCase();
         const v = (token.slice(1).match(/-?\d*\.?\d+/g) ?? []).map(Number);
         if (op === "M") {
+            current = [];
+            subpaths.push(current);
             [cx, cy] = v as [number, number];
             sx = cx; sy = cy;
-            points.push([cx, cy]);
+            current.push([cx, cy]);
         } else if (op === "L") {
-            for (let i = 0; i < v.length; i += 2) { cx = v[i]; cy = v[i + 1]; points.push([cx, cy]); }
+            for (let i = 0; i < v.length; i += 2) { cx = v[i]; cy = v[i + 1]; current.push([cx, cy]); }
         } else if (op === "H") {
-            for (const x of v) { cx = x; points.push([cx, cy]); }
+            for (const x of v) { cx = x; current.push([cx, cy]); }
         } else if (op === "V") {
-            for (const y of v) { cy = y; points.push([cx, cy]); }
+            for (const y of v) { cy = y; current.push([cx, cy]); }
         } else if (op === "C") {
             for (let i = 0; i < v.length; i += 6) {
                 const [x1, y1, x2, y2, x, y] = v.slice(i, i + 6);
-                for (let t = 0; t <= 1.0001; t += 0.05) {
+                for (let t = 0.05; t <= 1.0001; t += 0.05) {
                     const u = 1 - t;
-                    points.push([
+                    current.push([
                         u ** 3 * cx + 3 * u * u * t * x1 + 3 * u * t * t * x2 + t ** 3 * x,
                         u ** 3 * cy + 3 * u * u * t * y1 + 3 * u * t * t * y2 + t ** 3 * y,
                     ]);
@@ -54,7 +60,24 @@ function samplePath(d: string): [number, number][] {
             }
         } else if (op === "Z") { cx = sx; cy = sy; }
     }
-    return points;
+    return subpaths;
+}
+
+const samplePath = (d: string): [number, number][] => subpathsOf(d).flat();
+
+/** Nonzero winding at a point — what `fill-rule: nonzero` actually paints. */
+function windingAt(subpaths: [number, number][][], px: number, py: number): number {
+    let winding = 0;
+    for (const points of subpaths) {
+        for (let i = 0; i < points.length; i += 1) {
+            const [x1, y1] = points[i];
+            const [x2, y2] = points[(i + 1) % points.length];
+            const side = (x2 - x1) * (py - y1) - (px - x1) * (y2 - y1);
+            if (y1 <= py) { if (y2 > py && side > 0) winding += 1; }
+            else if (y2 <= py && side < 0) winding -= 1;
+        }
+    }
+    return winding;
 }
 
 function bbox(d: string) {
@@ -74,6 +97,49 @@ const study: MusicStaffNoteEvent[] = [
     { id: "b", midi: 67, beat: 1, beats: 0.5 },
     { id: "c", midi: 71, beat: 1.5, beats: 0.5 },
 ];
+
+/** The corpus the shipped story engraves (demo/stories/display/music-staff.vue):
+    the one that produces a lone secondary beam stubbing leftward. */
+const demoStudy: MusicStaffNoteEvent[] = [
+    { id: "a", midi: 55, beat: 0, beats: 0.5 },
+    { id: "b", midi: 60, beat: 0.5, beats: 0.25 },
+    { id: "c", midi: 64, beat: 0.75, beats: 0.25 },
+    { id: "d", midi: 67, beat: 1, beats: 0.5 },
+    { id: "e", midi: 70, beat: 1.5, beats: 0.25, accidental: "flat" },
+    { id: "f", midi: 67, beat: 1.75, beats: 0.25 },
+    { id: "g", midi: 64, beat: 2, beats: 0.5 },
+    { id: "h", midi: 62, beat: 2.5, beats: 0.5 },
+    { id: "i", midi: 60, beat: 3, beats: 0.75 },
+    { id: "j", midi: 64, beat: 3.75, beats: 0.25 },
+    { id: "k", midi: 67, beat: 4, beats: 2 },
+    { id: "l", midi: 72, beat: 6, beats: 4 },
+];
+
+/** Every beamed stem must END on the beam that joins it — at the STEM's x, not
+    at the head centre half a head-width away. This replaces the old `x2 > x1`
+    invariant, which a leftward secondary stub violates by construction. */
+function expectStemsJoinBeams(geometry: MusicStaffGeometry): void {
+    const EPSILON = 1e-3;
+    const stemAt = (x: number) => geometry.stems.find((stem) => Math.abs(stem.x - x) < EPSILON);
+    expect(geometry.beams.length).toBeGreaterThan(0);
+    for (const beam of geometry.beams) {
+        const direction = Math.sign(beam.x2 - beam.x1);
+        const lead = beam.x1 + direction * METRICS.beamOverhang;
+        expect(stemAt(lead), `beam ${beam.id} starts at no stem`).toBeDefined();
+        if (beam.level === 1) {
+            const trail = beam.x2 - direction * METRICS.beamOverhang;
+            expect(stemAt(trail), `beam ${beam.id} ends at no stem`).toBeDefined();
+            const slope = (beam.y2 - beam.y1) / (beam.x2 - beam.x1);
+            for (const stem of geometry.stems) {
+                if (stem.x < Math.min(beam.x1, beam.x2) - EPSILON) continue;
+                if (stem.x > Math.max(beam.x1, beam.x2) + EPSILON) continue;
+                const beamY = beam.y1 + slope * (stem.x - beam.x1);
+                expect(Math.abs(beamY - stem.y2), `stem ${stem.id} misses beam ${beam.id}`)
+                    .toBeLessThan(EPSILON);
+            }
+        }
+    }
+}
 
 describe("music-staff glyphs", () => {
     // The extents the spec fixes; GLYPH_EXTENT must agree, and the path data
@@ -104,10 +170,94 @@ describe("music-staff glyphs", () => {
         expect(F_CLEF_DOTS.every((dot) => dot.r === 0.24 && dot.x >= 3 && dot.x <= 3.3)).toBe(true);
     });
 
-    it("declares extents that match the drawn paths", () => {
+    it("declares extents that match the drawn paths, path data and nothing else", () => {
         near(bbox(G_CLEF).x1, GLYPH_EXTENT.gClef.x1);
+        near(bbox(F_CLEF).x1, GLYPH_EXTENT.fClef.x1);
         near(bbox(FLAG_UP).y1, GLYPH_EXTENT.flag.y1);
         near(bbox(ACCIDENTAL_GLYPHS.sharp).x1, GLYPH_EXTENT.sharp.x1);
+        // Advance is a second measure, in its own table: the bass clef reads as
+        // far as its detached dots, the treble clef only as far as its outline.
+        expect(CLEF_ADVANCE.treble).toBeCloseTo(GLYPH_EXTENT.gClef.x1, 6);
+        expect(CLEF_ADVANCE.bass)
+            .toBeCloseTo(Math.max(...F_CLEF_DOTS.map((dot) => dot.x + dot.r)), 6);
+        expect(CLEF_ADVANCE.bass).toBeGreaterThan(GLYPH_EXTENT.fClef.x1);
+    });
+
+    // Extents are blind to the inside of a glyph: a subpath that winds against
+    // its neighbours punches a hole exactly where they overlap, and the bbox is
+    // unchanged. These probe what `fill-rule: nonzero` paints.
+    const inked: Record<string, { d: string; points: [string, number, number][] }> = {
+        gClef: {
+            d: G_CLEF,
+            points: [
+                ["spiral eye", G_CLEF_EYE.x, G_CLEF_EYE.y],
+                ["ascender", 1.5, -3.5],
+                ["lower bow", 0.9, 2.3],
+            ],
+        },
+        fClef: {
+            d: F_CLEF,
+            points: [
+                ["ball centre", 0.58, 0.1],
+                ["ball over body", 0.23, -0.31],
+                ["body", 1.6, 1.9],
+            ],
+        },
+        flat: {
+            d: ACCIDENTAL_GLYPHS.flat,
+            points: [["stem", 0.08, -1], ["bowl", 0.45, -0.25]],
+        },
+        sharp: {
+            d: ACCIDENTAL_GLYPHS.sharp,
+            points: [
+                ["upper bar × left stem", 0.285, -0.387],
+                ["upper bar × right stem", 0.755, -0.513],
+                ["lower bar × left stem", 0.285, 0.393],
+                ["lower bar × right stem", 0.755, 0.267],
+                ["stem", 0.285, 1],
+                ["bar", 0.55, -0.45],
+            ],
+        },
+        natural: {
+            d: ACCIDENTAL_GLYPHS.natural,
+            points: [
+                ["upper bar × stem", 0.055, -0.496],
+                ["lower bar × left stem", 0.055, 0.284],
+                ["lower bar × right stem", 0.575, 0.136],
+                ["stem", 0.575, 1],
+            ],
+        },
+        flagUp: { d: FLAG_UP, points: [["body", 0.5, 1]] },
+    };
+
+    it.each(Object.entries(inked))("inks every interior of %s, holes included", (_name, { d, points }) => {
+        const subpaths = subpathsOf(d);
+        for (const [where, x, y] of points) {
+            expect(Math.abs(windingAt(subpaths, x, y)), `${where} is paper, not ink`)
+                .toBeGreaterThan(0);
+        }
+    });
+
+    it("winds every subpath of a glyph the same way, so no overlap cancels", () => {
+        for (const [name, { d }] of Object.entries(inked)) {
+            const subpaths = subpathsOf(d);
+            const xs = subpaths.flat().map((p) => p[0]);
+            const ys = subpaths.flat().map((p) => p[1]);
+            const [x0, x1] = [Math.min(...xs), Math.max(...xs)];
+            const [y0, y1] = [Math.min(...ys), Math.max(...ys)];
+            const holes: string[] = [];
+            for (let i = 0; i < 48; i += 1) {
+                for (let j = 0; j < 48; j += 1) {
+                    const px = x0 + ((x1 - x0) * (i + 0.5)) / 48;
+                    const py = y0 + ((y1 - y0) * (j + 0.5)) / 48;
+                    const inside = subpaths.some((sub) => windingAt([sub], px, py) !== 0);
+                    if (inside && windingAt(subpaths, px, py) === 0) {
+                        holes.push(`${px.toFixed(2)},${py.toFixed(2)}`);
+                    }
+                }
+            }
+            expect(holes, `${name} punches holes at ${holes.slice(0, 3).join(" ")}`).toHaveLength(0);
+        }
     });
 });
 
@@ -240,12 +390,45 @@ describe("engraveMusicStaff", () => {
         expect(new Set(geometry.beams.map((beam) => beam.level))).toEqual(new Set([1, 2]));
         expect(new Set(geometry.stems.map((stem) => stem.up)).size).toBe(1);
         const [primary] = geometry.beams.filter((beam) => beam.level === 1);
-        expect(Math.abs(primary.y2 - primary.y1)).toBeLessThanOrEqual(1.0001);
-        expect([0, 0.25, 0.5, 1].some((rise) => Math.abs(Math.abs(primary.y2 - primary.y1) - rise) < 1e-6)).toBe(true);
+        // The quantized rise is measured stem tip to stem tip; the slab overhangs
+        // both ends, so its own endpoints carry a hair more.
+        const tips = [...geometry.stems].sort((a, b) => a.x - b.x);
+        const rise = tips[tips.length - 1].y2 - tips[0].y2;
+        expect(Math.abs(rise)).toBeLessThanOrEqual(1.0001);
+        expect([0, 0.25, 0.5, 1].some((step) => Math.abs(Math.abs(rise) - step) < 2e-3)).toBe(true);
         for (const stem of geometry.stems) {
             expect(Math.abs(stem.y2 - stem.y1)).toBeGreaterThanOrEqual(METRICS.beamMinStem);
         }
-        expect(geometry.beams.every((beam) => beam.x2 > beam.x1)).toBe(true);
+        expectStemsJoinBeams(geometry);
+    });
+
+    it("joins every beam to the stems it beams, over the corpora that ship", () => {
+        expectStemsJoinBeams(engraveMusicStaff(demoStudy));
+        expectStemsJoinBeams(engraveMusicStaff(LOADING_MOTIF, { loopBeats: LOADING_BEATS }));
+        // The lone secondary stubs LEFT out of its own stem — the case the old
+        // `x2 > x1` invariant declared impossible while the story shipped it.
+        const stub = engraveMusicStaff(demoStudy).beams.find((beam) => beam.id === "j-b2");
+        expect(stub).toBeDefined();
+        expect(stub!.x2).toBeLessThan(stub!.x1);
+        expect(engraveMusicStaff(demoStudy).stems.some((stem) =>
+            Math.abs(stem.x - (stub!.x1 - METRICS.beamOverhang)) < 1e-3)).toBe(true);
+    });
+
+    it("hangs a beam off the stem, never off the head centre", () => {
+        const run = [0, 0.25, 0.5, 0.75].map((beat, index) => ({
+            id: `s${index}`, midi: 67 + index, beat, beats: 0.25,
+        }));
+        const geometry = engraveMusicStaff(run);
+        const [primary] = geometry.beams.filter((beam) => beam.level === 1);
+        const heads = geometry.notes.map((note) => note.x);
+        // The slab reaches past the outermost head centres by the stem attachment,
+        // which is exactly what "the beam touches the stems" means.
+        expect(primary.x1).toBeCloseTo(
+            Math.min(...heads) + METRICS.stemAttachX - METRICS.beamOverhang, 3,
+        );
+        expect(primary.x2).toBeCloseTo(
+            Math.max(...heads) + METRICS.stemAttachX + METRICS.beamOverhang, 3,
+        );
     });
 
     it("keeps a lone flagged note flagged and beams none across a beat boundary", () => {
@@ -274,10 +457,40 @@ describe("engraveMusicStaff", () => {
         expect(geometry.beams.length).toBeGreaterThan(0);
         expect(geometry.readingX).toBeCloseTo(geometry.noteX0 + 0.381966 * geometry.period, 2);
         expect(geometry.contentEnd).toBeCloseTo(geometry.noteX0 + geometry.period * 4, 2);
-        // The reading line is the phase origin: the note on it strikes at zero.
-        const parked = geometry.notes.reduce((best, note) =>
-            (Math.abs(note.x - geometry.readingX) < Math.abs(best.x - geometry.readingX) ? note : best));
-        expect(Math.min(parked.strikePhase, 1 - parked.strikePhase)).toBeLessThan(0.1);
+    });
+
+    // The one gate that has to be direction-aware: a phase and its mirror are
+    // indistinguishable to any test symmetric in φ ↔ 1 − φ, and the shipped
+    // reel fired every note at its mirror image for exactly that reason.
+    it("strikes each note at the instant it crosses the reading line", () => {
+        const geometry = engraveMusicStaff(LOADING_MOTIF, { loopBeats: LOADING_BEATS });
+        const frac = (value: number) => ((value % 1) + 1) % 1;
+        const off: string[] = [];
+        for (const note of geometry.notes) {
+            // The reel carries the note LEFT, so it reaches the parked line here:
+            const crossing = frac((note.x - geometry.readingX) / geometry.period);
+            // The strike keyframe spikes at its own zero, and animation-delay is
+            // −phase · duration, so the note fires at frac(−phase).
+            const firing = frac(-note.strikePhase);
+            if (Math.abs(firing - crossing) > 1e-6) {
+                off.push(`${note.id}: fires ${firing.toFixed(3)}, crosses ${crossing.toFixed(3)}`);
+            }
+        }
+        expect(off).toHaveLength(0);
+        expect(geometry.notes.every((note) => note.strikePhase >= 0 && note.strikePhase < 1)).toBe(true);
+        // Asymmetric by construction: at least one note is off both 0 and 0.5,
+        // so the mirror phase could not satisfy the gate above.
+        expect(geometry.notes.some((note) =>
+            Math.min(note.strikePhase, Math.abs(note.strikePhase - 0.5)) > 0.05)).toBe(true);
+    });
+
+    it("draws one reel copy more than it spans, so the ink never runs dry", () => {
+        const geometry = engraveMusicStaff(LOADING_MOTIF, { loopBeats: LOADING_BEATS });
+        // At the end of a cycle the belt has travelled one whole period left;
+        // what remains inked must still reach the far edge of the engraving.
+        const guaranteed = geometry.noteX0 + geometry.reelCopies * geometry.period;
+        expect(guaranteed).toBeGreaterThanOrEqual(geometry.widthSp);
+        expect(engraveMusicStaff(study).reelCopies).toBe(0);
     });
 
     it("fails explicitly on library input it cannot engrave", () => {

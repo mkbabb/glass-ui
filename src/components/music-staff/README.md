@@ -32,21 +32,35 @@ and reads `progress` as a clip wipe whose leading edge is the playhead.
 `mode="loading"` ignores `notes` and streams one composed phrase past a parked
 reading line, player-piano style: indeterminate by construction, with no
 resident animation frame or timer. A determinate `progress` inks the rules
-behind the reel; `progress` at 1 pauses the transport and seals the score with a
-final barline.
+behind the reel; `progress` at 1 stops the transport, drops `aria-busy`, and
+seals the score with a final barline. The clef is engraved for the composed
+motif, so a `clef` prop in loading mode is a DEV-time error, not a re-engraving.
+
+A loading surface is as wide as the engraving the reel can keep inked — five
+copies of a four-period reel — and no wider: it grows with `--music-staff-space`
+and stops at the width whose every rule carries ink at every instant of the loop.
 
 ## Sizing and tokens
 
 ```
 --music-staff-space        the one size knob (default 0.5rem)
---music-staff-ink
+--music-staff-ink          follows the host's foreground by default
 --music-staff-accent       the blue-pencil editorial line
---music-staff-folio        cream tint injected into the glass rung
+--music-staff-folio        cream tint carried into the glass rung
 --music-staff-loop-duration
 ```
 
-`material="folio"` tints the library's resting glass rung cream through its own
-tint seam. `material="bare"` inherits the host surface's ink and mode.
+None of the five is declared on `.music-staff`: each is read where it is
+consumed, with the default as its `var()` fallback. So any of them can be set on
+an ancestor — the wrapper idiom the library uses everywhere — and it reaches the
+mark. An element declaration would beat that ancestor value, which is why the
+component never writes one.
+
+`material="folio"` biases the library's resting glass rung cream through its own
+tint seam, at a strength inside the ladder's translucent bound: the folio is
+glass carrying a paper hue, not an opaque plate asserting glass, and its grain is
+the rung's own. `material="bare"` drops the rung. The ink follows the host's
+foreground in both, so the notation reads in either colour mode.
 
 ## Accessibility
 

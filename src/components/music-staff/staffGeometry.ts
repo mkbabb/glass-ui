@@ -1,4 +1,4 @@
-import { GLYPH_EXTENT } from "./glyphs";
+import { CLEF_ADVANCE, GLYPH_EXTENT } from "./glyphs";
 
 export type StaffAccidental = "sharp" | "flat" | "natural";
 export type StaffClef = "auto" | "treble" | "bass";
@@ -22,24 +22,40 @@ export interface MusicStaffNoteEvent {
  * Engraving metrics, in staff spaces (sp). One user unit is one staff space, so
  * every number here is a literal engraving measure at any rendered size.
  */
+const STEM_THICKNESS = 0.12;
+const HEAD_HALF_WIDTH = 0.59;
+
 export const METRICS = {
     staffLineThickness: 0.13,
-    stemThickness: 0.12,
+    stemThickness: STEM_THICKNESS,
     ledgerThickness: 0.16,
     ledgerExtension: 0.4,
     stemLength: 3.5,
-    stemAttachX: 0.57,
+    /** The stem rides the head's side, inset by half its own width: 0.53. */
+    stemAttachX: HEAD_HALF_WIDTH - STEM_THICKNESS / 2,
     stemAttachY: 0.168,
     beamThickness: 0.5,
     beamInboard: 0.75,
     beamMinStem: 2.5,
+    /** How far a beam slab reads past the outermost stem it joins. */
+    beamOverhang: STEM_THICKNESS / 2,
     barlineThin: 0.16,
     barlineThick: 0.5,
     barlineGap: 0.4,
     dotRadius: 0.2,
     dotGap: 0.5,
-    headHalfWidth: 0.59,
+    headHalfWidth: HEAD_HALF_WIDTH,
     wholeHalfWidth: 0.844,
+    /** Notehead ellipses — solved to the Bravura bboxes, declared once. */
+    headTilt: -20,
+    blackHeadRx: 0.6,
+    blackHeadRy: 0.485,
+    halfHeadRx: 0.52,
+    halfHeadRy: 0.4,
+    wholeHeadRy: 0.5,
+    wholeCounterRx: 0.42,
+    wholeCounterRy: 0.3,
+    wholeCounterTilt: 55,
     clefX: 0.8,
     clefGap: 1.6,
     tail: 1.6,
@@ -186,6 +202,8 @@ export interface MusicStaffGeometry {
     contentEnd: number;
     /** Reel period, in sp; loading engravings only. */
     period: number;
+    /** Extra `<use>` copies of the ink layer, one per period; loading only. */
+    reelCopies: number;
     /** Parked reading line, in sp; loading engravings only. */
     readingX: number;
     notes: MusicStaffNoteGeometry[];
@@ -219,6 +237,9 @@ const round = (value: number): number => Math.round(value * 1000) / 1000;
 
 const QUANTIZED_RISE = [-1, -0.5, -0.25, 0, 0.25, 0.5, 1] as const;
 
+/** Periods the loading reel spans; it draws REEL_SPAN + 1 copies to stay inked. */
+const REEL_SPAN = 4;
+
 /** Engrave one staff. Every extent below is derived from what is drawn. */
 export function engraveMusicStaff(
     source: readonly MusicStaffNoteEvent[],
@@ -243,7 +264,8 @@ export function engraveMusicStaff(
 
     const clefExtent = clef === "treble" ? GLYPH_EXTENT.gClef : GLYPH_EXTENT.fClef;
     const clefYRel = clef === "treble" ? 3 : 1;
-    const nominalX0 = METRICS.clefX + clefExtent.x1 + METRICS.clefGap;
+    const clefRight = METRICS.clefX + CLEF_ADVANCE[clef];
+    const nominalX0 = clefRight + METRICS.clefGap;
     const barX0 = nominalX0 - METRICS.clefGap / 2;
 
     // Columns: same-beat notes share one x and one stem.
@@ -347,6 +369,9 @@ export function engraveMusicStaff(
         });
         const up = lead.up;
         run.forEach((member) => { member.up = up; });
+        // A beam joins STEMS, so every x below is a stem x — the head centre is
+        // half a head width away, and anchoring there detaches the slab.
+        const stemXOf = (member: typeof head) => member.x + (up ? METRICS.stemAttachX : -METRICS.stemAttachX);
         const tipOf = (member: typeof head) => {
             const edge = up ? Math.max(...member.positions) : Math.min(...member.positions);
             return yOf(edge) + (up ? -METRICS.stemLength : METRICS.stemLength);
@@ -354,12 +379,12 @@ export function engraveMusicStaff(
         const first = run[0], last = run[run.length - 1];
         const rawRise = tipOf(last) - tipOf(first);
         const rise = QUANTIZED_RISE.reduce((a, b) => (Math.abs(b - rawRise) < Math.abs(a - rawRise) ? b : a));
-        const slope = rise / (last.x - first.x);
+        const slope = rise / (stemXOf(last) - stemXOf(first));
         const anchor = run.reduce((best, member) => {
-            const candidate = tipOf(member) - slope * (member.x - first.x);
+            const candidate = tipOf(member) - slope * (stemXOf(member) - stemXOf(first));
             return up ? Math.min(best, candidate) : Math.max(best, candidate);
         }, up ? Infinity : -Infinity);
-        const beamY = (x: number) => anchor + slope * (x - first.x);
+        const beamY = (x: number) => anchor + slope * (x - stemXOf(first));
         const delayMs = Math.max(...run.map((member) => member.delayMs)) + 90;
 
         for (const level of [1, 2, 3] as const) {
@@ -370,26 +395,31 @@ export function engraveMusicStaff(
                 let end = start;
                 while (end + 1 < run.length && run[end + 1].rhythm.flags >= level) end += 1;
                 if (level > 1 && end === start) {
-                    // A lone secondary beam stubs inward from its own stem.
-                    const stub = (start === 0 ? 1 : -1) * 0.9;
+                    // A lone secondary beam stubs inward from its OWN stem.
+                    const stemX = stemXOf(run[start]);
+                    const towards = start === 0 ? 1 : -1;
+                    const x1 = stemX - towards * METRICS.beamOverhang;
+                    const x2 = stemX + towards * 0.9;
                     beams.push({
                         id: `${run[start].column.members[0].id}-b${level}`,
-                        x1: run[start].x, y1: beamY(run[start].x) + inboard,
-                        x2: run[start].x + stub, y2: beamY(run[start].x + stub) + inboard,
+                        x1, y1: beamY(x1) + inboard,
+                        x2, y2: beamY(x2) + inboard,
                         up, level, delayMs,
                     });
                 } else if (end > start || level === 1) {
+                    const x1 = stemXOf(run[start]) - METRICS.beamOverhang;
+                    const x2 = stemXOf(run[end]) + METRICS.beamOverhang;
                     beams.push({
                         id: `${run[start].column.members[0].id}-b${level}`,
-                        x1: run[start].x, y1: beamY(run[start].x) + inboard,
-                        x2: run[end].x, y2: beamY(run[end].x) + inboard,
+                        x1, y1: beamY(x1) + inboard,
+                        x2, y2: beamY(x2) + inboard,
                         up, level, delayMs,
                     });
                 }
                 start = end + 1;
             }
         }
-        run.forEach((member) => { member.tipY = beamY(member.x); });
+        run.forEach((member) => { member.tipY = beamY(stemXOf(member)); });
         index += run.length;
     }
 
@@ -422,7 +452,8 @@ export function engraveMusicStaff(
                 accidentalGlyph: glyph,
                 accidentalX: x - halfWidth - 0.2 - shift - (glyph ? GLYPH_EXTENT[glyph].x1 : 0),
                 revealDelayMs: delayMs,
-                strikePhase: loop === undefined ? 0 : frac((x - readingX) / period),
+                // Rewritten from the EMITTED coordinates in the rounding pass below.
+                strikePhase: 0,
                 pitchName: musicPitchName(note.midi, note.accidental),
                 rhythmName: rhythm.name,
             });
@@ -458,7 +489,10 @@ export function engraveMusicStaff(
     }
 
     const lastX = xs.length ? xs[xs.length - 1] : noteX0;
-    const contentEnd = loop === undefined ? lastX + METRICS.tail : noteX0 + period * 4;
+    // The reel spans REEL_SPAN periods and draws one copy MORE than it spans: the
+    // belt travels a whole period per cycle, so the last copy is what keeps the far
+    // edge inked at the end of the cycle. Ink out to the drawn width, always.
+    const contentEnd = loop === undefined ? lastX + METRICS.tail : noteX0 + period * REEL_SPAN;
     const barlines = loop === undefined
         ? [
             { x: barX0, width: METRICS.barlineThin },
@@ -495,8 +529,17 @@ export function engraveMusicStaff(
 
     // Emitted coordinates are rounded once, here: the SVG carries engraving
     // measures, not floating-point exhaust.
+    const outPeriod = round(period);
+    const outReadingX = round(readingX);
     for (const note of outNotes) {
         note.x = round(note.x);
+        // The reel carries the note LEFT, so it crosses the parked reading line at
+        // frac((x − readingX) / P). The strike keyframe spikes at its own zero and
+        // rides a −phase delay, so it fires at frac(−phase): the phase is the
+        // NEGATED crossing time. Emitting the crossing time directly — as the
+        // shipped reel did — fires every note at its mirror image. Derived from the
+        // emitted x, so the phase and the coordinate can never drift apart.
+        note.strikePhase = loop === undefined ? 0 : frac((outReadingX - note.x) / outPeriod);
         note.y = round(note.y + offset);
         note.dotX = round(note.dotX);
         note.dotY = round(note.dotY + offset);
@@ -527,8 +570,9 @@ export function engraveMusicStaff(
         clefY: round(clefYRel + offset),
         noteX0: round(noteX0),
         contentEnd: round(contentEnd),
-        period: round(period),
-        readingX: round(readingX),
+        period: outPeriod,
+        reelCopies: loop === undefined ? 0 : REEL_SPAN,
+        readingX: outReadingX,
         notes: outNotes,
         stems,
         flags,

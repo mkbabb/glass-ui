@@ -2,78 +2,123 @@ import { expect, test } from "@playwright/test";
 
 const ROUTE = "/display/music-staff";
 
-test("MusicStaff paints a cream folio with settled SVG engraving in both modes", async ({
-    page,
-}) => {
+test("MusicStaff folio paints real backdrop glass in both modes", async ({ page }) => {
     await page.goto(ROUTE, { waitUntil: "networkidle" });
     await page.waitForTimeout(1_500);
 
     const read = async () => page.locator('.music-staff[data-material="folio"]').first()
         .evaluate((staff) => {
-            const viewport = staff.querySelector<HTMLElement>(".music-staff__viewport");
-            const head = staff.querySelector<SVGPathElement>(".music-staff__head:not(.music-staff__head--open)");
+            const window = staff.querySelector<HTMLElement>(".music-staff__window")!;
+            const style = getComputedStyle(window);
             return {
-                background: viewport ? getComputedStyle(viewport).backgroundColor : "",
-                headFill: head ? getComputedStyle(head).fill : "",
-                headFillOpacity: head ? getComputedStyle(head).fillOpacity : "",
-                headAnimation: head ? getComputedStyle(head).animationName : "",
-                noteCount: staff.querySelectorAll("[data-note-id]").length,
-                role: viewport?.getAttribute("role"),
-                shortcuts: viewport?.getAttribute("aria-keyshortcuts"),
+                background: style.backgroundColor,
+                backdrop: style.backdropFilter,
+                // The grain is the ladder's ::after; the component paints no copy.
+                image: style.backgroundImage,
+                beams: staff.querySelectorAll(".music-staff__beam").length,
+                heads: staff.querySelectorAll(".music-staff__head").length,
             };
         });
 
-    const folios = page.locator('.music-staff[data-material="folio"]');
-    expect(await folios.count()).toBeGreaterThanOrEqual(2);
     const light = await read();
-    expect(light.background).toContain("255");
-    expect(light.noteCount).toBeGreaterThan(0);
-    expect(light.headFillOpacity).toBe("1");
-    expect(light.headAnimation).toContain("music-staff-head-in");
-    expect(light.role).toBe("img");
-    expect(light.shortcuts).toBe("ArrowLeft ArrowRight Home End");
+    // The cured paint bug: the rung's backdrop must survive as a real filter.
+    expect(light.backdrop).not.toBe("none");
+    expect(light.background).not.toBe("rgba(0, 0, 0, 0)");
+    expect(light.image).toBe("none");
+    expect(light.heads).toBeGreaterThan(0);
+    expect(light.beams).toBeGreaterThan(0);
 
     await page.evaluate(() => document.documentElement.classList.add("dark"));
     const dark = await read();
-    expect(dark.background).toContain("255");
-    expect(dark.headFillOpacity).toBe("1");
+    expect(dark.backdrop).not.toBe("none");
+    expect(dark.background).not.toBe("rgba(0, 0, 0, 0)");
+    expect(dark.image).toBe("none");
 });
 
-test("MusicStaff mobile viewport preserves horizontal score navigation", async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
+test("MusicStaff loading reel streams while the clef stays parked", async ({ page }) => {
     await page.goto(ROUTE, { waitUntil: "networkidle" });
-    const state = await page.locator('.music-staff[data-material="folio"] .music-staff__viewport')
-        .first()
-        .evaluate((viewport) => ({
-            clientWidth: viewport.clientWidth,
-            scrollWidth: viewport.scrollWidth,
-            overflowX: getComputedStyle(viewport).overflowX,
-            tabindex: viewport.getAttribute("tabindex"),
-        }));
-
-    expect(state.scrollWidth).toBeGreaterThan(state.clientWidth);
-    expect(state.overflowX).toBe("auto");
-    expect(state.tabindex).toBe("0");
-});
-
-test("MusicStaff reduced motion seats a complete static frame", async ({ browser }) => {
-    const context = await browser.newContext({ reducedMotion: "reduce" });
-    const page = await context.newPage();
-    await page.goto(ROUTE, { waitUntil: "networkidle" });
-    const state = await page.locator('.music-staff[data-phase="enter"]')
-        .first()
+    const state = await page.locator('.music-staff[data-mode="loading"]').first()
         .evaluate((staff) => {
-            const line = staff.querySelector<SVGPathElement>(".music-staff__line");
-            const head = staff.querySelector<SVGPathElement>(".music-staff__head");
+            const reel = staff.querySelector<SVGGElement>(".music-staff__reel")!;
+            const note = staff.querySelector<SVGGElement>(".music-staff__note")!;
+            const clef = staff.querySelector<SVGGElement>(".music-staff__clef")!;
+            const window = staff.querySelector<HTMLElement>(".music-staff__window")!;
+            const furniture = staff.querySelector<HTMLElement>(".music-staff__furniture")!;
             return {
-                lineAnimation: line ? getComputedStyle(line).animationName : "",
-                headAnimation: head ? getComputedStyle(head).animationName : "",
-                headFillOpacity: head ? getComputedStyle(head).fillOpacity : "",
+                reelAnimation: getComputedStyle(reel).animationName,
+                reelTiming: getComputedStyle(reel).animationTimingFunction,
+                strike: getComputedStyle(note).animationName,
+                strikeDelay: getComputedStyle(note).animationDelay,
+                clefInsideReel: reel.contains(clef),
+                overflow: getComputedStyle(window).overflow,
+                // The staff furniture is window space: the rules reach the far
+                // edge of the folio, and the reel's ink reaches with them.
+                ruled: furniture.getBoundingClientRect().width
+                    >= window.getBoundingClientRect().width - 1,
+                masked: getComputedStyle(
+                    staff.querySelector<SVGGElement>(".music-staff__transport")!,
+                ).mask,
             };
         });
 
-    expect(state.lineAnimation).toBe("none");
-    expect(state.headAnimation).toBe("none");
-    expect(state.headFillOpacity).toBe("1");
+    expect(state.reelAnimation).toContain("music-staff-reel");
+    expect(state.reelTiming).toBe("linear");
+    expect(state.strike).toContain("music-staff-strike");
+    expect(state.strikeDelay.startsWith("-")).toBe(true);
+    expect(state.clefInsideReel).toBe(false);
+    expect(state.overflow).toBe("hidden");
+    expect(state.ruled).toBe(true);
+    expect(state.masked).toContain("url(");
+});
+
+test("MusicStaff score scale is constant and the engraving never squashes", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(ROUTE, { waitUntil: "networkidle" });
+    const state = await page.locator('.music-staff[data-mode="score"] .music-staff__window')
+        .first()
+        .evaluate((window) => {
+            const svg = window.querySelector<SVGSVGElement>("svg")!;
+            const box = svg.getBoundingClientRect();
+            const view = svg.viewBox.baseVal;
+            const space = parseFloat(
+                getComputedStyle(window).getPropertyValue("--_music-staff-space") || "8",
+            );
+            return {
+                scale: box.width / view.width,
+                space,
+                overflowX: getComputedStyle(window).overflowX,
+                tabindex: window.getAttribute("tabindex"),
+                scrolls: window.scrollWidth > window.clientWidth,
+            };
+        });
+
+    expect(state.scale).toBeCloseTo(state.space, 1);
+    expect(state.overflowX).toBe("auto");
+    expect(state.tabindex).toBe("0");
+    expect(state.scrolls).toBe(true);
+});
+
+test("MusicStaff reduced motion stops the reel but keeps the busy signal", async ({ browser }) => {
+    const context = await browser.newContext({ reducedMotion: "reduce" });
+    const page = await context.newPage();
+    await page.goto(ROUTE, { waitUntil: "networkidle" });
+    const state = await page.locator('.music-staff[data-mode="loading"]').first()
+        .evaluate((staff) => ({
+            reel: getComputedStyle(staff.querySelector(".music-staff__reel")!).animationName,
+            note: getComputedStyle(staff.querySelector(".music-staff__note")!).animationName,
+            line: getComputedStyle(staff.querySelector(".music-staff__line")!).animationName,
+        }));
+
+    expect(state.reel).toBe("none");
+    expect(state.note).toBe("none");
+    expect(state.line).toContain("music-staff-breath");
+
+    const score = await page.locator('.music-staff[data-mode="score"]').first()
+        .evaluate((staff) => ({
+            line: getComputedStyle(staff.querySelector(".music-staff__line")!).animationName,
+            note: getComputedStyle(staff.querySelector(".music-staff__note")!).animationName,
+        }));
+    expect(score.line).toBe("none");
+    expect(score.note).toBe("none");
     await context.close();
 });

@@ -42,9 +42,10 @@ const shown = ref(true);
 const loadingValue = computed(() => loadingProgress.value[0] / 100);
 const scoreValue = computed(() => scoreProgress.value[0] / 100);
 
+// The parent owns the lifecycle: the staff leaves through its own transition and
+// re-enters when that leave has finished — no remount hack, no frame callback.
 function replay(): void {
     shown.value = false;
-    requestAnimationFrame(() => { shown.value = true; });
 }
 </script>
 
@@ -57,10 +58,14 @@ function replay(): void {
             gap="lg"
         >
             <MusicStaff mode="loading" label="Loading the archive" />
+            <!-- A second reel at the same tempo would beat in lockstep with the
+                 first; the loop duration is one public token, so the two phrases
+                 simply run at different tempi. -->
             <MusicStaff
                 mode="loading"
                 label="Restoring the session"
                 :progress="loadingValue"
+                :style="{ '--music-staff-loop-duration': 'calc(11s * var(--motion-tempo))' }"
             />
             <label class="flex max-w-xl flex-col gap-2 text-small text-muted-foreground">
                 Determinate value {{ loadingProgress[0] }}%
@@ -73,12 +78,14 @@ function replay(): void {
             blurb="Notes carry an onset and a sounding length in quarter-note beats; heads, dots, flags, and beams are all derived from that one axis. Spacing is proportional-with-compression, so a run of sixteenths crowds without ever colliding. The blue-pencil wipe reports playback: a half-crossed note is half inked, and the playhead retargets on the spring register whose charter is indicators, progress, and reveals."
             gap="lg"
         >
-            <MusicStaff
-                v-if="shown"
-                :notes="study"
-                label="Engraving mechanics study"
-                :progress="scoreValue"
-            />
+            <Transition name="fade" @after-leave="shown = true">
+                <MusicStaff
+                    v-if="shown"
+                    :notes="study"
+                    label="Engraving mechanics study"
+                    :progress="scoreValue"
+                />
+            </Transition>
             <div class="flex flex-wrap items-center gap-3">
                 <Button @click="replay">Replay the ink</Button>
             </div>

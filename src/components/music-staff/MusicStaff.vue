@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useId } from "vue";
+import { computed, useId, watchEffect } from "vue";
 import {
     ACCIDENTAL_GLYPHS,
     F_CLEF,
@@ -44,7 +44,20 @@ const props = withDefaults(defineProps<MusicStaffProps>(), {
 const uid = useId();
 const inkId = `music-staff-ink-${uid}`;
 const clipId = `music-staff-clip-${uid}`;
+const maskId = `music-staff-mask-${uid}`;
+const fadeId = `music-staff-fade-${uid}`;
 const loading = computed(() => props.mode === "loading");
+
+// The loading surface engraves its own motif, composed for the treble staff; a
+// forced clef re-reads all fourteen notes in the wrong register (in bass, every
+// one of them lands on ledgers). Loud in DEV, per Progress.
+watchEffect(() => {
+    if (!loading.value || props.clef === "auto") return;
+    const message = "[glass-ui] MusicStaff: `clef` does not apply in loading mode — "
+        + "the composed motif is engraved for the treble staff.";
+    if (import.meta.env.DEV) throw new Error(message);
+    console.error(message);
+});
 
 const geometry = computed(() => (loading.value
     ? engraveMusicStaff(LOADING_MOTIF, { clef: props.clef, loopBeats: LOADING_BEATS })
@@ -59,6 +72,12 @@ const playheadX = computed(() => geometry.value.noteX0
 
 const clefPath = computed(() => (geometry.value.clef === "treble" ? G_CLEF : F_CLEF));
 const clefDots = computed(() => (geometry.value.clef === "bass" ? F_CLEF_DOTS : []));
+
+// The reel emerges from behind the initial barline: ink never crosses the parked
+// clef, and neither window edge crops a glyph mid-stroke.
+const FADE = 1.2;
+const gutterX = computed(() => geometry.value.barlines[0].x + METRICS.barlineThin);
+const fadeStop = computed(() => FADE / (geometry.value.widthSp - gutterX.value));
 
 // Center-out: the eye anchors at the middle line, so the draw and the breath
 // both travel outward from it.
@@ -79,7 +98,8 @@ const windowAttrs = computed(() => {
     if (loading.value) {
         return {
             role: "progressbar",
-            "aria-busy": true,
+            // A sealed score is finished: busy is the one thing it is not.
+            ...(sealed.value ? {} : { "aria-busy": true }),
             "aria-label": props.label,
             "aria-valuemin": "0",
             "aria-valuemax": "1",
@@ -93,20 +113,22 @@ const windowAttrs = computed(() => {
     return { role: "img", tabindex: "0", "aria-label": description.value };
 });
 
+// Private consumption vars only. The five public tokens are never declared on
+// this element — an element declaration would beat every ancestor override.
 const rootStyle = computed(() => ({
-    "--music-staff-progress": String(value.value ?? 0),
-    "--music-staff-staff-top": String(geometry.value.staffTop),
-    "--music-staff-period": String(geometry.value.period),
-    "--music-staff-width": String(geometry.value.widthSp),
-    "--music-staff-height": String(geometry.value.heightSp),
+    "--_music-staff-progress": String(value.value ?? 0),
+    "--_music-staff-staff-top": String(geometry.value.staffTop),
+    "--_music-staff-period": String(geometry.value.period),
+    "--_music-staff-width": String(geometry.value.widthSp),
+    "--_music-staff-height": String(geometry.value.heightSp),
 }));
 
 const noteStyle = (note: MusicStaffNoteGeometry) => (loading.value
-    ? { animationDelay: `calc(var(--music-staff-loop-duration) * -${note.strikePhase})` }
-    : { "--music-staff-delay": `calc(${note.revealDelayMs}ms * var(--motion-tempo))` });
+    ? { animationDelay: `calc(var(--_music-staff-loop-duration) * -${note.strikePhase})` }
+    : { "--_music-staff-delay": `calc(${note.revealDelayMs}ms * var(--motion-tempo))` });
 const delayStyle = (delayMs: number) => (loading.value
     ? undefined
-    : { "--music-staff-delay": `calc(${delayMs}ms * var(--motion-tempo))` });
+    : { "--_music-staff-delay": `calc(${delayMs}ms * var(--motion-tempo))` });
 
 const halfWidth = (note: MusicStaffNoteGeometry) => (note.head === "whole"
     ? METRICS.wholeHalfWidth
@@ -124,7 +146,9 @@ function ellipse(cx: number, cy: number, rx: number, ry: number, deg: number): s
         + `C${at(-rx, -ry * K)} ${at(-rx * K, -ry)} ${at(0, -ry)}Z`;
 }
 const wholeHead = (note: MusicStaffNoteGeometry) =>
-    ellipse(note.x, note.y, 0.844, 0.5, 0) + ellipse(note.x, note.y, 0.42, 0.3, 55);
+    ellipse(note.x, note.y, METRICS.wholeHalfWidth, METRICS.wholeHeadRy, 0)
+    + ellipse(note.x, note.y, METRICS.wholeCounterRx, METRICS.wholeCounterRy,
+        METRICS.wholeCounterTilt);
 
 const beamPath = (beam: MusicStaffBeam) => {
     const t = METRICS.beamThickness * (beam.up ? 1 : -1);
@@ -147,6 +171,43 @@ const beamPath = (beam: MusicStaffBeam) => {
             :class="{ 'glass-resting': material === 'folio' }"
             v-bind="windowAttrs"
         >
+            <!-- Staff furniture lives in window space, so the rules span the whole
+                 folio however wide the host is, and the reel can never run dry. -->
+            <div class="music-staff__furniture" aria-hidden="true">
+                <div
+                    v-for="(lineY, index) in geometry.staffLines"
+                    :key="lineY"
+                    class="music-staff__line"
+                    :style="{
+                        '--_music-staff-rule-index': RULE_ORDER[index],
+                        '--_music-staff-y': lineY - METRICS.staffLineThickness / 2,
+                        '--_music-staff-rise': METRICS.staffLineThickness,
+                    }"
+                />
+                <div
+                    v-for="bar in geometry.barlines"
+                    :key="bar.x"
+                    class="music-staff__barline"
+                    :style="{
+                        '--_music-staff-x': bar.x,
+                        '--_music-staff-run': bar.width,
+                        '--_music-staff-y': geometry.staffTop,
+                        '--_music-staff-rise': 4,
+                    }"
+                />
+                <div
+                    v-if="loading"
+                    class="music-staff__reading"
+                    :style="{
+                        '--_music-staff-x': geometry.readingX - 0.05,
+                        '--_music-staff-run': 0.1,
+                        '--_music-staff-y': geometry.staffTop - METRICS.playheadRise,
+                        '--_music-staff-rise': 4 + METRICS.playheadRise * 2,
+                    }"
+                />
+                <div v-if="loading && value !== undefined" class="music-staff__progress-ink" />
+            </div>
+
             <svg :viewBox="geometry.viewBox" aria-hidden="true" focusable="false">
                 <defs>
                     <path :id="`${inkId}-flag-up`" :d="FLAG_UP" />
@@ -167,29 +228,38 @@ const beamPath = (beam: MusicStaffBeam) => {
                             :style="{ transform: `translateX(${playheadX}px)` }"
                         />
                     </clipPath>
+                    <template v-if="loading">
+                        <linearGradient
+                            :id="fadeId"
+                            gradientUnits="userSpaceOnUse"
+                            :x1="gutterX"
+                            y1="0"
+                            :x2="geometry.widthSp"
+                            y2="0"
+                        >
+                            <stop offset="0" stop-color="#000" />
+                            <stop :offset="fadeStop" stop-color="#fff" />
+                            <stop :offset="1 - fadeStop" stop-color="#fff" />
+                            <stop offset="1" stop-color="#000" />
+                        </linearGradient>
+                        <mask
+                            :id="maskId"
+                            maskUnits="userSpaceOnUse"
+                            :x="gutterX"
+                            y="0"
+                            :width="geometry.widthSp - gutterX"
+                            :height="geometry.heightSp"
+                        >
+                            <rect
+                                :x="gutterX"
+                                y="0"
+                                :width="geometry.widthSp - gutterX"
+                                :height="geometry.heightSp"
+                                :fill="`url(#${fadeId})`"
+                            />
+                        </mask>
+                    </template>
                 </defs>
-
-                <g class="music-staff__rules">
-                    <rect
-                        v-for="(lineY, index) in geometry.staffLines"
-                        :key="lineY"
-                        class="music-staff__line"
-                        :style="{ '--music-staff-rule-index': RULE_ORDER[index] }"
-                        x="0"
-                        :y="lineY - METRICS.staffLineThickness / 2"
-                        :width="geometry.widthSp"
-                        :height="METRICS.staffLineThickness"
-                    />
-                    <rect
-                        v-for="bar in geometry.barlines"
-                        :key="bar.x"
-                        class="music-staff__barline"
-                        :x="bar.x"
-                        :y="geometry.staffTop"
-                        :width="bar.width"
-                        :height="4"
-                    />
-                </g>
 
                 <g :transform="`translate(${geometry.clefX} ${geometry.clefY})`">
                     <g class="music-staff__clef">
@@ -204,7 +274,7 @@ const beamPath = (beam: MusicStaffBeam) => {
                     </g>
                 </g>
 
-                <g class="music-staff__transport">
+                <g class="music-staff__transport" :mask="loading ? `url(#${maskId})` : undefined">
                     <g class="music-staff__reel">
                         <g :id="inkId" class="music-staff__layer">
                             <path
@@ -263,9 +333,9 @@ const beamPath = (beam: MusicStaffBeam) => {
                                     :class="{ 'music-staff__head--open': note.head === 'half' }"
                                     :cx="note.x"
                                     :cy="note.y"
-                                    :rx="note.head === 'half' ? 0.52 : 0.6"
-                                    :ry="note.head === 'half' ? 0.4 : 0.485"
-                                    :transform="`rotate(-20 ${note.x} ${note.y})`"
+                                    :rx="note.head === 'half' ? METRICS.halfHeadRx : METRICS.blackHeadRx"
+                                    :ry="note.head === 'half' ? METRICS.halfHeadRy : METRICS.blackHeadRy"
+                                    :transform="`rotate(${METRICS.headTilt} ${note.x} ${note.y})`"
                                 />
                                 <path
                                     v-else
@@ -285,7 +355,7 @@ const beamPath = (beam: MusicStaffBeam) => {
                         </g>
                         <template v-if="loading">
                             <use
-                                v-for="copy in 3"
+                                v-for="copy in geometry.reelCopies"
                                 :key="copy"
                                 :href="`#${inkId}`"
                                 :x="copy * geometry.period"
@@ -294,16 +364,7 @@ const beamPath = (beam: MusicStaffBeam) => {
                     </g>
                 </g>
 
-                <template v-if="loading">
-                    <rect
-                        class="music-staff__reading"
-                        :x="geometry.readingX - 0.05"
-                        :y="geometry.staffTop - METRICS.playheadRise"
-                        width="0.1"
-                        :height="4 + METRICS.playheadRise * 2"
-                    />
-                </template>
-                <template v-else-if="value !== undefined">
+                <template v-if="!loading && value !== undefined">
                     <use
                         :href="`#${inkId}`"
                         class="music-staff__layer music-staff__layer--accent"
@@ -318,6 +379,10 @@ const beamPath = (beam: MusicStaffBeam) => {
                     </g>
                 </template>
             </svg>
+
+            <!-- The seal is the component's own element: the window wears a glass
+                 rung, whose ::before/::after belong to the ladder. -->
+            <div v-if="sealed" class="music-staff__seal" aria-hidden="true" />
         </div>
     </figure>
 </template>
