@@ -48,7 +48,7 @@ The operative reading: **frontend *component* authoring runs the applicable fron
 
 **The fence:** a finding whose subject sits in `ARCHAEOLOGY.md` §2.3 or in `FROST-TABS-REAUDIT.md` §4's cured list is INADMISSIBLE unless it carries a falsifier *at HEAD* — a path, a line, and a command output that contradicts the cure. Absent that, it is closed by citation, and the citation is the whole disposition.
 
-Precedent already ruled under this fence: TR:166 (#16, U-04) retired the AX `DISPOSITION-REGISTER.json` as a machine rather than re-disposition its 23 HELD books, naming S8 as the ground.
+Precedent already ruled under this fence: TR:166 (#16, U-04) retired the AX `DISPOSITION-REGISTER.json` as a machine rather than re-disposition its ~~23~~ [⊕²⁸ 2026-08-04: **21** — the cursor #16 cell's U-04 re-derivation ("23 HELD"→21 enumerated) supersedes the carried figure] HELD books, naming S8 as the ground.
 
 ### L-5 · The 100% numeral is struck
 
@@ -90,7 +90,7 @@ The reason it is load-bearing at this date rather than tidy: ⊕¹² restated th
 
 **Landed at:** this file; the doc-budget arm of `G-NO-EVIDENCE-COMMIT` (`docs/tranches/BK/gates/ROSTER.md:34`) reads against it.
 
-`ECOUTE.md:400` (C-11) is the contradiction: A09 requires in-progress features to get proper tranche/wave addenda — triumvirate, twice challenged, gestalt analysis — while `REFINEMENT.md` Law 5 (`:93`) allots tranche doc lines ≤ 0.25 × the `src` lines the tranche changes. A wave changing 200 source lines gets 50 doc lines, which does not fund a triumvirate. ECOUTE notes the refinement folder was itself over budget by construction with zero source changed.
+~~`ECOUTE.md:400`~~ [⊕²⁸ 2026-08-04: re-pinned — `aee47957:ECOUTE.md:400` IS the C-11 header; at HEAD the strike preamble shifted it to `:470`, and bare `:400` now lands on the 54-of-62 census line] (C-11) is the contradiction: A09 requires in-progress features to get proper tranche/wave addenda — triumvirate, twice challenged, gestalt analysis — while `REFINEMENT.md` Law 5 (`:93`) allots tranche doc lines ≤ 0.25 × the `src` lines the tranche changes. A wave changing 200 source lines gets 50 doc lines, which does not fund a triumvirate. ECOUTE notes the refinement folder was itself over budget by construction with zero source changed.
 
 **The exemption, stated (the instrument ECOUTE asks for):** the doc budget counts **retained** doc lines — the artifacts that survive to the tranche's close and are cited by a row — and **discovery artifacts live outside the counted set**: challenge arms, audit fleets' raw output, journals, and execution-dir evidence are provenance, not corpus. What the budget bites is the *terminal* corpus: PLAN, cursor, roster, gate roster, FINAL, and the banked specs rows cite.
 
@@ -133,7 +133,7 @@ Three corrections, each a codex-era clause that the ⊕ rulings invalidate and t
 | # | site | the codex-era text | correction | authority |
 |---|---|---|---|---|
 | C-1 | `PLAN.md` §3, Conflict record II | "THE FORGERY, excised" | characterization WITHDRAWN in place — owner-authorized delegation, since revoked; the excision stands as prospective routing truth | ⊕¹⁴ (already annotated inline on 2026-08-03; this row confirms it is complete and adds no second copy) |
-| C-2 | `PLAN.md` §6, Graph-iteration rider | mandates cutting "graph schema v3 with typed Vue/TypeScript/CSS edges… an explicit owner manifest… **before product source moves**", each cluster "sealed by a fresh Sol adjudicator (the prospective law, §3)" | **STRUCK.** The graph-v3 arc FALLS ENTIRE (`APOTHEOSIS.md:29`, cluster C: 224,380 lines, 97.6% of the boundary, zero consumers, snapshot-tests-itself, RED in the publish path; deletion costs nothing) and its kill is cure order item 1 (`APOTHEOSIS.md:50-53`). Graph questions return to **row #21 at Φ5**, whose instrument the typed-edge cut is (TR#21 / cursor `:268`). The "fresh Sol adjudicator (the prospective law, §3)" clause dies twice over — the arc is dead, and §3's prospective law is now ⊕¹⁵/⊕¹⁸ | ⊕¹²/⊕¹⁴/⊕¹⁸ + `APOTHEOSIS.md` cluster C |
+| C-2 | `PLAN.md` §6, Graph-iteration rider | mandates cutting "graph schema v3 with typed Vue/TypeScript/CSS edges… an explicit owner manifest… **before product source moves**", each cluster "sealed by a fresh Sol adjudicator (the prospective law, §3)" | **STRUCK.** The graph-v3 arc FALLS ENTIRE (`APOTHEOSIS.md:29`, cluster C: 224,380 lines, 97.6% of the boundary, zero consumers, snapshot-tests-itself, RED in the publish path; deletion costs nothing) and its kill is cure order item 1 (`APOTHEOSIS.md:50-53`). Graph questions return to **row #21 at Φ5**, whose instrument the typed-edge cut is (TR#21 / cursor ~~`:268`~~ [⊕²⁸ 2026-08-04: `:447` — the #21 W-DAG-REDUCE cell; `:268` is mid-⊕²¹ prose]). The "fresh Sol adjudicator (the prospective law, §3)" clause dies twice over — the arc is dead, and §3's prospective law is now ⊕¹⁵/⊕¹⁸ | ⊕¹²/⊕¹⁴/⊕¹⁸ + `APOTHEOSIS.md` cluster C |
 | C-3 | `PLAN.md` §4 | quotes `VALIDATION.md` §4 rules 1–4 only | rules 6–8 quoted in (L-7) | TR:161 (i) |
 
 **Not corrected, deliberately:** `PLAN.md` §3's quoted labor-law block and its 2026-07-28 Conflict record. Both are quotation and immutable history respectively; the live routing law is stated in the rider (L-1/L-3), and `PLAN.md` §2's source-wins clause governs.
@@ -184,9 +184,18 @@ write-time and still false at HEAD `6e505703`. Detectors:
 **Z-4 + X-4a/X-4e/X-4f resolve at both ends** — sent here, received at **#15** (cursor
 `docs/tranches/BK/EXECUTION-PROGRESS.md:427`, ⊕²⁷ back-annotation naming all four clauses);
 **Z-6/item-3's gate half resolves at the sending end only** — sent here, never restated at #9 — which
-is exactly the absorbing-sink form X-3 convicts, now charged against this row by its own §2a. It is
+is exactly the absorbing-sink form X-3 convicts, now charged against this row by its own §2a. ~~It is
 **not** discharged here: it co-discharges with #9's `cures[4]` the moment `REGISTER.md` restates
-PASS · FAIL · ABSENT. One route resolved, one open.]**
+PASS · FAIL · ABSENT. One route resolved, one open.~~]**
+**[⊕²⁸ 2026-08-04, the quartet adjudication: THE CO-DISCHARGE FIRED — Z-6/R-Z6 PAID at `e2b7a0b5`.**
+The ⊕²⁵ ABSENT vocabulary LANDED at the row-9 register: committed `REGISTER.md:19-23` is
+*"§0 · THE STATUS VOCABULARY — ⊕²⁵ LANDS HERE"*, routed from this row's §2a, PASS · FAIL · ABSENT
+restated verbatim, and the detector prints the vocabulary line under every register run. The ⊕²⁷
+bracket above was TRUE AT ITS PIN and failed FORWARD — the very condition it named as its discharge
+trigger was met one commit later. Its two detectors are hereby RE-PINNED to `6e505703` (where both
+genuinely returned 0); at HEAD they return 25 (`REGISTER.md`) and 1 (`SEAT-BINDING.json`) — the
+payment, not a defect. The preceding struck fragment's absorbing-sink reading is overturned by the
+same payment: BOTH routes now resolve at both ends. Z-6 CLOSED.]**
 
 ## §2b · `RECONCILIATION.md:344` §8 item 13 — the FINAL-at-tag law, FOLDED AT #66
 

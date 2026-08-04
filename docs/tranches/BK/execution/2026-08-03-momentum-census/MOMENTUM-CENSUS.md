@@ -231,18 +231,20 @@ not the capture files. The nine remaining dirs hold **0** images; of the 21 dirs
 
 **The census ruling is unchanged and now covers all twelve:** every one is STALE-AT-HEAD relative to
 `5e728369` and credited to no row — a larger stale set is still a stale set, and the paint half stays
-owed to **#10 π-SUITE**. What changes is only the honesty of the measurement. The `:202` ruling
+owed to **#10 π-SUITE**. What changes is only the honesty of the measurement. The ~~`:202`~~ [⊕²⁸ 2026-08-04: the ruling
+sentence directly below this bracket — `:202` was its worktree-era coordinate, now this bracket's
+own opening line] ruling
 sentence below reads on the struck four-set; it extends to all twelve on the identical ground.
-`ORPHAN-ROWS-CLOSE.md:388-393` inherits this sentence by citation and is struck in the same ⊕²⁷
+~~`ORPHAN-ROWS-CLOSE.md:388-393`~~ [⊕²⁸: `:418-445` at HEAD] inherits this sentence by citation and is struck in the same ⊕²⁷
 sitting.**]**
 
-**Ruling for this census: those four are STALE-AT-HEAD and credited to no row.** A capture whose delta was left uncommitted proves a state that may not exist at `5e728369`; crediting it would be exactly the [[feedback-live-verify-capture]] inflation. The capture pass belongs to **#10 π-SUITE**, which holds the singleton browser seat alone and is never co-batched (`EXECUTION-DAG-2026-08-03.md:122`) — and it is gated behind #9's detector recovery from the pinned stashes (⊕¹³ᵃ, `:107`).
+**Ruling for this census: ~~those four are~~ [⊕²⁸ 2026-08-04, the correction ON the ruling per 77-1(c)'s own law: **all twelve capture-bearing dirs are**] STALE-AT-HEAD and credited to no row.** A capture whose delta was left uncommitted proves a state that may not exist at `5e728369`; crediting it would be exactly the [[feedback-live-verify-capture]] inflation. The capture pass belongs to **#10 π-SUITE**, which holds the singleton browser seat alone and is never co-batched (`EXECUTION-DAG-2026-08-03.md:122`) — and it is gated behind #9's detector recovery from the pinned stashes (⊕¹³ᵃ, `:107`).
 
 ---
 
 ## §7 · WHAT THIS ROW DELIVERS, AND WHAT IT DOES NOT
 
-**Delivered:** the 63-row mechanism·capture·verdict table (§2) with every detector stated · the tally read that turns the owner's recurring question into a lookup (§3) · the `useLeadTrail` spread verdict with its disjunction resolved on disk (§4) · the suffusion-closure verification, negative with evidence (§5) · the capture debt named with its owner (§6) · four corrections of record: **63 not 62** · **four not five** field consumers · the GESTALT-vs-this-seat detector divergence stated rather than averaged · the four stale evidence dirs demoted.
+**Delivered:** the 63-row mechanism·capture·verdict table (§2) with every detector stated · the tally read that turns the owner's recurring question into a lookup (§3) · the `useLeadTrail` spread verdict with its disjunction resolved on disk (§4) · the suffusion-closure verification, negative with evidence (§5) · the capture debt named with its owner (§6) · four corrections of record: **63 not 62** · **four not five** field consumers · the GESTALT-vs-this-seat detector divergence stated rather than averaged · the ~~four~~ [⊕²⁸ 2026-08-04: **twelve** — per the ⊕²⁷ origin cure above] stale evidence dirs demoted.
 
 **Not delivered, by hard wall and by scope:** any `src/` byte (no strike, no wiring — §4 routes to #26/#47) · any paint capture (§6, routes to #10) · any edit to another row's files, including the shared DAG and PROGRESS ledgers. **#77's state at HEAD is this file**; `EXECUTION-DAG-2026-08-03.md:88` still reads `unstarted` for #77 and is superseded by this bank at the closer's next cursor write — this seat does not write it.
 

@@ -161,9 +161,9 @@ The whole BI B3 band landed against this family; none of it discharges C1's gree
 
 | id | disposition | evidence | note |
 |---|---|---|---|
-| UF-K1 | **OWNED → #87** (∥ #76) | HEAD read: `src/components/metric/` still carries Metric/MetricCell/MetricRow/MetricStack + `coalesce-metric.ts` | **owner amendment**: metric **LEAVES the DELETE list** (✦³ round 2 item 8, cursor `:266`) — the remedy is the metric-family apotheosis at #87, with keyframes + sci-active migrations riding #76. The "move to speedtest" half is superseded by owner word, not silently dropped |
+| UF-K1 | **OWNED → #87** (∥ #76) | HEAD read: `src/components/metric/` still carries Metric/MetricCell/MetricRow/MetricStack + `coalesce-metric.ts` | **owner amendment**: metric **LEAVES the DELETE list** (✦³ round 2 item 8, cursor ~~`:266`~~ [⊕²⁸ 2026-08-04: `:497`, the #87 W-MARKS cell; `:266` is unrelated prose at HEAD]) — the remedy is the metric-family apotheosis at #87, with keyframes + sci-active migrations riding #76. The "move to speedtest" half is superseded by owner word, not silently dropped |
 | UF-K2 | **LANDED** | `7d281f00` (BI.W-HERO-DEMOTE); HEAD read: `demo/stories/compositions/` has no `hero.vue` | |
-| UF-K3 | **LANDED** | `5de84d05` (BI.W-MATH-PAPER-REMOVE); HEAD read: no `math-paper.vue` | the `paper-backdrop` component survives as a relay row (→ atlas + speedtest, cursor `:266`) — a different subject |
+| UF-K3 | **LANDED** | `5de84d05` (BI.W-MATH-PAPER-REMOVE); HEAD read: no `math-paper.vue` | the `paper-backdrop` component survives as a relay row (→ atlas + speedtest, cursor ~~`:266`~~ [⊕²⁸ 2026-08-04: `:445`, the #18 W-DELETE cell]) — a different subject |
 | UF-K4 | **OWNED → #69** | HEAD read: `demo/stories/compositions/auth-shell.vue` present | "miserable performance" closes on #69's π |
 | UF-K5 | **OWNED → #18** (∥ #56) | HEAD read: compositions is down to 6 stories (auth-shell, chassis, empty-states, form-validation, gate-pattern, settings) | the band already shrank; G-RELAY's walk decides the remainder |
 
@@ -193,7 +193,7 @@ The whole BI B3 band landed against this family; none of it discharges C1's gree
    Glass-7 restructure cut. #71 should be read as *restore + perfect*, and it has a byte source:
    `git cat-file -p 490cc46e^:src/components/tabs/composables/useEyeglassLive.ts`.
 3. **TR#74's gate clause names a token family the rim does not use.** The clause is "rim consumes ≥1
-   `--rainbow-*` rung ∧ width < 4px" (cursor `:309`). UF-D1's rainbow shipped at `ffc90bf9` keyed to
+   `--rainbow-*` rung ∧ width < 4px" (cursor ~~`:309`~~ [⊕²⁸ 2026-08-04: `:488`, the #74 W-RIM-RAINBOW cell; `:309` is the glass-pseudo repo-gate sentence]). UF-D1's rainbow shipped at `ffc90bf9` keyed to
    **`--section-color-*`** (`src/components/scroll-progress-rim/styles.css:55`,
    `ScrollProgressRim.vue:11-14`). As phrased the gate is born-RED on a *naming* artifact while the
    user's ask is satisfied on disk. #74 must either re-phrase to the section-color spectrum or re-key
@@ -221,10 +221,13 @@ globally work."* Two halves, dispositioned separately:
   each a one-line falsifier).
 
 **The stated falsifier for UF-J5(b)** — HEAD reads that ground it: the component is
-`src/components/expandable-container/{ExpandableContainer.vue (210 lines), styles.css, index.ts,
-README.md}`, published as its own subpath (`package.json:375-377`), and its **only** in-repo
+`src/components/expandable-container/{ExpandableContainer.vue ~~(210 lines)~~ [⊕²⁸ 2026-08-04: **220** at HEAD — `6cad2b7e` moved it; 210 was the `adefd768`-era figure], styles.css, index.ts,
+README.md}`, published as its own subpath (`package.json:375-377`), and its ~~**only** in-repo
 references are its own barrel, `src/styles/tokens/sizing.css`, and one demo story
-(`demo/stories/containers/expandable-container.vue`) — **zero library consumers**.
+(`demo/stories/containers/expandable-container.vue`)~~ [⊕²⁸ 2026-08-04: the enumeration was
+incomplete at write-time — `git grep` also returns `demo/stories/manifest.ts` and
+`demo/shell/dock-layer-contexts.ts` (demo-side both). The load-bearing conclusion SURVIVES:
+src-side references remain its own dir + `sizing.css` only] — **zero library consumers**.
 
 > Done means all four: (i) the expand/collapse transition resolves through the ONE spring authority
 > (#26) with no bespoke duration literal in `styles.css` — at HEAD the only transition there is

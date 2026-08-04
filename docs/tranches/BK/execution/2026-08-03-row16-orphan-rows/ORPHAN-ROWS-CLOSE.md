@@ -392,7 +392,7 @@ Detector, stated so it re-derives:
   `OPEN-FM-2` (25).
 - **The drop lane C predicted is real and is now specific:** exactly **two** OPEN ids reach the
   roster (`OPEN-P10`, `OPEN-P5` — `grep -oE '\bOPEN-[A-Za-z0-9_-]+' TERMINAL-ROSTER.md`), and
-  ~~exactly one [OPEN id] reaches all of `docs/tranches/BK/` (`OPEN-P10`)~~ **[⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication: TWO reach `docs/tranches/BK/` — `OPEN-P0` + `OPEN-P10` (git grep at pin `aee47957`); the derived 53-of-55 figure stands]**. ~~**53 of 55 OPEN ids are cited by
+  ~~exactly one [OPEN id] reaches all of `docs/tranches/BK/` (`OPEN-P10`)~~ **[⊕²⁵ 2026-08-03 driver correction, Φ3-close adjudication: TWO reach `docs/tranches/BK/` — `OPEN-P0` + `OPEN-P10` (git grep at pin `aee47957`); ~~the derived 53-of-55 figure stands~~ [⊕²⁸ 2026-08-04: superseded by the ⊕²⁷ re-derivation immediately below — the figure is **51**]]**. ~~**53 of 55 OPEN ids are cited by
   zero BK artifact.**~~ **[⊕²⁷ 2026-08-03 micro-cure: unpinned and stale — re-derived at HEAD
   `6e505703` the honest figure is **51 of 55**. Detector, verbatim, over committed BK artifacts and
   excluding this census file itself (a census that *names* ids must not be read as *citing* them, or
@@ -450,7 +450,7 @@ Detector, stated so it re-derives:
   per-dir name→roster-row walk rides the same follow-on seat as R-7, and the *capture* credit is
   #10's, never this row's.
 - **Decision:** the seed is this census — the detector plus the two-of-55 reach figure, plus the
-  21-vs-4 evidence-dir delta above — landed so
+  ~~21-vs-4~~ [⊕²⁸ 2026-08-04: **21-vs-12** — the ⊕²⁷ twelve-dir cure at `:425-445` governs; its own reason convicts leaving the 4 here] evidence-dir delta above — landed so
   `G-ROW-HOMED` can see a *specific* OPEN drop rather than a generic one. Per-id re-adjudication is
   **explicitly NOT minted**: every OPEN id lives in the BJ refinement corpus that
   `RECONCILIATION` (166 rows / 114 refuted) and `ARCHAEOLOGY` (43/43) already re-audited at HEAD,
@@ -574,7 +574,7 @@ anchors that **no clone carries**.
 | R-9 | #77's capture half | **#10 π-SUITE**, itself behind #9's ⊕¹³ᵃ detector recovery | doc-side wall; #77 is mechanism-COMPLETE / capture-OWED |
 | R-10 | ~~F19 png force-track act~~ **⊕²⁵ DISCHARGED AND RE-ATTRIBUTED** | ~~**#4**~~ → **already performed at `138dd6e6` by row #91's cut** (*"+ F19 png force-tracked per #16 ruling"*) | §6 items 4/5 as amended. Re-measured at HEAD: `docs/tranches/BJ/feedback` **31 on disk / 31 tracked**; the §6 table's `30 tracked / 1 untracked` is honest **at its `aee47957` pin only**. `G-CITE-COMMITTED` is no longer RED on this ground; #15's F-1 discharges with it; #4 inherits no act. The enumerated-never-a-glob rule survives as the standing carve-out law |
 | R-11 | #13's five residuals (#56, #16, #74, #71, #58) incl. UF-J5's four-clause definition of done | seated at their named rows; ~~the **#16** member is UF-J5's *seating*, which §3/§4 discharge by the same rule used throughout — decision + named executing row, never a mint~~ **[⊕²⁵ 2026-08-03 · Φ3-close residual cure: that clause invoked the rule and then **named no executing row** — `grep -rn "expandable"` on this file returned **0**. The #16 member is now genuinely discharged at **§3.7**: UF-J5(b)/`expandable-container` is **HOMED at TR §A row #52 `W-CONFIG-EXPRESS`**, whose spec of record (`PROCEDURAL-APOTHEOSES.md` §CONFIG-EXPRESS `:440`/`:462`/`:482`/`:525`/`:566`) names the component and answers all four of #13's clauses; component fate is **KEEP** (`ECOUTE.md` census row 25 refutes the dialog fold; `CURES.md:41` X8 concurs). Act = #52's cut at Φ5.]** | `UF-DISPOSITION-LEDGER.md` §4 · this file §3.7 |
-| R-12 | 53 of 55 BJ `OPEN-*` ids cited by zero BK artifact | recorded, **not** re-adjudicated (S8 fence) | §4.4 |
+| R-12 | ~~53~~ [⊕²⁸ 2026-08-04: **51** — the file's own ⊕²⁷ re-derivation at §4.4 (four ids reach: OPEN-6/OPEN-P0/OPEN-P5/OPEN-P10), detector re-run at the quartet adjudication] of 55 BJ `OPEN-*` ids cited by zero BK artifact | recorded, **not** re-adjudicated (S8 fence) | §4.4 |
 
 **What this row deliberately did NOT do**, each with its reason:
 

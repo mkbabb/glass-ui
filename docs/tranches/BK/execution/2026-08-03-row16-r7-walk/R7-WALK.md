@@ -437,7 +437,10 @@ This row does **not** edit `PORT.md` — it is another lane's file and the share
 **What a home means here.** ORPHAN-ROWS-CLOSE §4.4 states the delta this walk must bite: *"an
 evidence directory is a wave-name assertion — 21 names claim a wave ran."* A homing is therefore
 `dir-name → the BJ band wave that owns the name → the BK roster row that owns that subject`. The
-middle hop is mechanical:
+middle hop is mechanical [⊕²⁸ 2026-08-04 qualification, adjudication D4: for 17 of 21 — four dirs
+return zero hits in `docs/tranches/BJ/waves/` (`GESTALT-1-INC-1`, `W-A11Y-STATE-REMAINDER`,
+`W1-RADIUS-REDRESS`, `W2-BLUR-REDRESS`) and were homed by the non-mechanical grounds disclosed at
+their rows]:
 
 ```
 grep -rln '<DIR-NAME>' docs/tranches/BJ/waves/
@@ -516,9 +519,9 @@ makes the verdict safe.
 |---|---|---|
 | **16-2** (the "only four hold real captures" / "every one named for a wave" pair) | **CURED, both sites.** `ORPHAN-ROWS-CLOSE.md:419-421` is struck-in-place with the ⊕²⁷ bracket carrying 21/12/72 and the `GESTALT-1-INC-1` exception; `MOMENTUM-CENSUS.md:193-200` carries the same enumeration. Independently re-derived this seat: `git ls-files 'docs/tranches/BJ/evidence/**' \| grep -icE '\.(png\|jpe?g)$'` → **72** across **12** dirs (23·13·9·6·4·4·3·3·2·2·2·1) | none — confirmed, not re-struck |
 | **16-1** (the `+BD-CARRY` "RED until PORT gains §0" self-contradiction) | **CURED.** `ORPHAN-ROWS-CLOSE.md:314-317` is struck; `:330` now reads *"What remains open for `+BD-CARRY` is **not** this precondition but R-7's…"* — i.e. it was routed **to this file**, and §2/§5/§6 above discharge it | none |
-| **the `:382` "53 of 55 OPEN ids"** unpinned sentence | **CURED** at ⊕²⁷ (struck in place with the re-derivation) | none |
-| **PORT.md §1.3 `:76-77`** — *"EXECUTED or SUPERSEDED as a class"* | **FALSE at 2 of 109** | **ONE CORRECTION OWED.** Exact replacement text quoted at §5. `PORT.md` is not this seat's file (shared tree, another lane's pen) |
-| **`ORPHAN-ROWS-CLOSE.md:572`** — R-7's own row, *"#16 (this row), **OPEN**"* | accurate when written; **discharged by this file** | **ONE BACK-ANNOTATION OWED** to whoever holds #16's pen: *"R-7 DISCHARGED 2026-08-03/04 at `docs/tranches/BK/execution/2026-08-03-row16-r7-walk/R7-WALK.md` — 109 walked (105 EXECUTED · 2 SUPERSEDED · 1 MOOT · 1 OPEN) + 21/21 evidence dirs homed, 0 UNHOMED."* |
+| **the ~~`:382`~~ [⊕²⁸ 2026-08-04: `:395` at HEAD — the strike preamble shifted it; a worktree-era cite] "53 of 55 OPEN ids"** unpinned sentence | **CURED** at ⊕²⁷ (struck in place with the re-derivation) | none |
+| **PORT.md §1.3 `:76-77`** — *"EXECUTED or SUPERSEDED as a class"* | **FALSE at 2 of 109** | ~~**ONE CORRECTION OWED.**~~ [⊕²⁸ 2026-08-04: **PAID at `5a8f8a40`** — the driver applied §5's replacement verbatim] Exact replacement text quoted at §5. `PORT.md` is not this seat's file (shared tree, another lane's pen) |
+| **`ORPHAN-ROWS-CLOSE.md:572`** — R-7's own row, *"#16 (this row), **OPEN**"* | accurate when written; **discharged by this file** | ~~**ONE BACK-ANNOTATION OWED**~~ [⊕²⁸ 2026-08-04: **PAID at `5a8f8a40`** — the R-7 row carries the DISCHARGED bracket] to whoever holds #16's pen: *"R-7 DISCHARGED 2026-08-03/04 at `docs/tranches/BK/execution/2026-08-03-row16-r7-walk/R7-WALK.md` — 109 walked (105 EXECUTED · 2 SUPERSEDED · 1 MOOT · 1 OPEN) + 21/21 evidence dirs homed, 0 UNHOMED."* |
 
 ---
 
@@ -571,7 +574,9 @@ awk -F'|' '/^\| `(W|GESTALT)/ {if (match($5,/#[0-9]+/)) print substr($5,RSTART,R
   held; the only file this seat wrote is this one.
 - **`PORT.md`, `ORPHAN-ROWS-CLOSE.md`, `TERMINAL-ROSTER.md`, `EXECUTION-PROGRESS.md` untouched.**
   Both corrections §7 books are quoted verbatim for their pen-holders instead — the discipline #12,
-  #14 and #16 all used.
+  #14 and #16 all used. [⊕²⁸ 2026-08-04 date-fence: true OF THIS SEAT only — the committing driver
+  paid both §7 obligations and edited `PORT.md`/`ORPHAN-ROWS-CLOSE.md`/`EXECUTION-PROGRESS.md` in
+  `5a8f8a40`, the same commit that landed this file. The seat's wall held; the pen-holder acted.]
 - **No seal minted.** 0/87 stands. CLOSED is the lead's act after the Challenge-Law pass.
 - **No percentage stated outside its instrument.** §5's 98.2% is `107/109` from the same table the
   T3 command tallies, not a burndown figure (row #11's law L-6 reserves those for `BURNDOWN.md`).
