@@ -55,9 +55,17 @@ cast/rim lockstep holds in one computed style**. Frame: `pi5-cel-stamp-lockstep.
 
 ## Honest state of the battery
 
-- **π-1 BLOCKED-ON-#56 (Q-4):** `/navigation/tabs` + `/forms/slider` mount no structured
+- ~~**π-1 BLOCKED-ON-#56 (Q-4):** `/navigation/tabs` + `/forms/slider` mount no structured
   backdrop (grep + live check) — the spec's own hard precondition; material π there is
-  inadmissible until #56 lands it. The 5-rung × mode × engine matrix waits.
+  inadmissible until #56 lands it. The 5-rung × mode × engine matrix waits.~~ [⊕³² 2026-08-04:
+  **PRECONDITION LANDED at `7a3dd86c`** — the #56 Q-4 field-well slice (σ 39-43 modeled, both
+  modes, both routes). π-1 now waits only on the cure-cut's COMMIT (a live material read against
+  the sibling lane's half-written glass tree is inadmissible — P0's own clean-tree clause), then
+  runs 5-rung × both-modes on this seat with: the tabs transmission read off
+  `.glass-capsule-track` (never the traveling capsule — its own quiet blur double-blurs the
+  read) · the measured substrate σ re-stated in the manifest (Q-2/A-10; the modeled 39-43 is not
+  the seat of record) · the dark AA-marginal cell captured, findings routed #31/#22 · the
+  card-as-backdrop-root composition kept in the model (correct, not a violation).]
 - **π-2 Chromium arm DONE** (above); the real-`safari-app` arms of π-1/π-4 stay owner-gated on
   the awake-display environment (the locked-screen black-composite class).
 - **π-3 DONE** (computed both arms + paired cells) · **π-5 DONE** (one frame + lockstep).
