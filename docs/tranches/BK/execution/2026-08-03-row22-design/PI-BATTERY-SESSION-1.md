@@ -24,6 +24,14 @@ attribute, the exact precedent of the row-6 pinned-t cell.
 The timed series is COMPUTED-STYLE numeric (in-page `performance.now()` sampling), the honest
 fixed-frame-series form; screenshots cannot time sub-100 ms over the MCP round-trip.
 
+**[⊕³⁰ 2026-08-04 correction, at the challenge-debt verdict: WHAT THIS TRACE MEASURED.** The debt
+pass (F-4/F-B1, `DEBT-ADJUDICATION.json`) proved `grasp.css`'s register has ZERO reachable
+consumers at `4b1a9733` — so this trace exercised **`Slider.vue`'s own scoped `[data-held]`
+recipe** (the smear + cartoon-punch follow-through), NOT the §5 grasp register. Every measured
+number stands (the recipe is real, alive, and A-11's follow-through law holds on it); the
+*attribution* to the grasp register is corrected here. The grasp register's own trace re-runs
+after the cure-cut rewires its topology — π-2 for THAT mechanism is re-owed.]
+
 ## π-3 — dark plate separation (the F-3 falsifier)
 
 `/display/card`, dark-MOUNTED. `--glass-material-rim` top leg computes `hsl(0 0% 100% / 0.08)`
