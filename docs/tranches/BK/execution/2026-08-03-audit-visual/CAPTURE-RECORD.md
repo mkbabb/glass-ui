@@ -30,7 +30,40 @@ ledger-line runaway — row #91's perfection wave).
 `transition-flash-CURED-midframe.jpeg` — 12s-slowed crossfade holds constant dark luminance:
 no brightened double-exposure, no letterbox edge leak, no vertical misalignment. Flash DEAD.
 
-REMAINING OWED (owner-gated): one real-Safari cell covering the oklab 0-alpha veils + the
+~~REMAINING OWED (owner-gated): one real-Safari cell covering the oklab 0-alpha veils + the
 `oklch(from <color-mix var>)` specular form — needs safaridriver enablement (the GUI checkbox);
-Playwright-webkit is NOT admissible for it (engine ≠ shipping app).
+Playwright-webkit is NOT admissible for it (engine ≠ shipping app).~~
+
+## [2026-08-03 ~23:45 ET] The real-Safari cell — COMPUTED HALF DISCHARGED (driver seat)
+
+**The gate was already open** — Remote Automation was enabled; a stale pairing (dead driver on
+:4285, Safari pid 85308 holding it) was masking it, exactly the recorded trap. Cure: kill stale
+drivers, graceful Safari quit, fresh `safaridriver -p 4999` session (Safari **26.4 shipping
+app**, sessionId `40D7C005…`, dev server :5400 at HEAD `690bf937`, mode dark-MOUNTED via
+`vueuse-color-scheme` + asserted in-probe; session closed + driver stopped afterward so no new
+stale pairing).
+
+Engine-computed truths, measured on live elements and probes:
+
+- **oklab 0-alpha veil form:** computes to `oklab(0.3 0.01 -0.02 / 0)` — honest zero-alpha, not
+  opaque-black, not invalid.
+- **`oklch(from color-mix(in oklab, var(--acc) 60%, white) l c h / 0.55)` specular form:**
+  computes to `oklch(0.79 0.132 25 / 0.55)` — the relative-color-over-color-mix chain RESOLVES
+  with exact alpha.
+- **The live control plate** composes `linear-gradient(oklab(0.9 … / 0.12))` veils over
+  `color(srgb … / 0.5)` — the layered form live in the shipping app.
+- **Pinned-t plate lerp, Safari arm:** background alpha **0.38 → 0.44 → 0.50** at t=0/0.5/1 with
+  chroma frozen — the midpoint EXACT, byte-identical to the Chromium proof. The a+b−ab sag is
+  dead on BOTH engines.
+- **π-5 rider (row #10):** `var()` inside `backdrop-filter` RESOLVES (literal `blur(5px)` ✓,
+  var-composed `blur(9px) saturate(1.3)` ✓, live dock-plate token-calc chain
+  `blur(7px) saturate(1.3) brightness(1.14)` ✓).
+
+**PAINT half still owed, ENVIRONMENT-blocked not engine-blocked:** WebDriver screenshots
+returned all-black frames in both modes — the machine's display is locked/asleep at this hour
+and the window does not composite; `caffeinate -u` did not clear it. The two black PNGs were
+DELETED, never banked (a black frame is a compositing artifact, not a Safari paint verdict —
+and per the context-steal lesson, no getContext probing was attempted). The paint pair re-runs
+in any awake-display window; every claim above stands on computed evidence independent of
+compositing.
 
