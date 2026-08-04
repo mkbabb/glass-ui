@@ -75,6 +75,8 @@ census bases and the ≤60 count-guard decomposition for the whole corpus. `PLAN
 `EXECUTION-PROGRESS.md` and every sibling band point here and hold no copy — a second copy is what
 drifted through six stability rounds.*
 
+*[⊕³⁶ 2026-08-04 · #65, which owns §B.5: ~~"This bullet and the keep/newcomer arithmetic that closes it are **THE AUTHORITATIVE STATEMENT** of the keep-band figure, the pinned census bases and the ≤60 count-guard decomposition for the whole corpus."~~ **SUPERSEDED.** The operative acceptance figure is §B.5's — **exactly 60 seats**, user-mandated ceiling [40,60], 194→60 — and `BK/gates/ROSTER.md:5` states the precedence: "in any adjudication §B.5 wins". This bullet's `~45-55` band is the AUDIT's historical input, kept as the record and operative for nothing. S4's own law (an acceptance figure is stated ONCE, at one site) is what forbids two live authority claims for one figure.]*
+
 - `tests/styles/token-graph.test.ts` — token-graph cycle/resolution invariants.
 - `verify:package` = `scripts/verify-export-types.mjs` (`package.json:534`) — packed export resolution.
 - `tests/public-surface.spec.ts` — the authoritative root + per-subpath public-surface lock

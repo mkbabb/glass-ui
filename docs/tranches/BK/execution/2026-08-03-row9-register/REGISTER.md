@@ -38,7 +38,7 @@ It is the value-form of this row's own C-13 blocker (*"an unwired gate cannot fa
 
 | where | the word |
 |---|---|
-| the 51 seat names with no executable (§2.3) | **ABSENT.** Not "unbound-but-probably-fine", not "a reported figure" — the honest word, and strictly stronger than the one the first draft used |
+| the ~~51~~ **50** [⊕³⁶ 2026-08-04 · #65: `unbound:51` → `unbound:50` — RT-7 bound the PROPORTION seat `the CWT-2:1533 tranche-wide register` to `tests/styles/proportion-register.test.ts`. The **word** is unchanged and that is this row's whole point: the other 50 are still **ABSENT**, not "unbound-but-probably-fine".] seat names with no executable (§2.3) | **ABSENT.** Not "unbound-but-probably-fine", not "a reported figure" — the honest word, and strictly stronger than the one the first draft used |
 | ~~E-8's `./styles.css` manifest gate, green when `dist/component-styles.css` is absent (§10)~~ **[⊕²⁷ 2026-08-04 · ROUND-3 cure #5 — RE-SCOPED, the claim was too wide: the artifact edge IS bound, in the same file. See §10 E-8.]** E-8's residue: `public-surface.spec.ts:539`'s manifest-string compare is unguarded **if the sibling built-artifact `describe` ever moves** (§10) | ~~**ABSENT reported as PASS.** The precise defect, in one word~~ **[⊕²⁷ struck — it does not reproduce at file grain.]** **A NARROW COUPLING, not an ABSENT-as-PASS.** The file-grain status when `dist/` is absent is **FAIL**, loudly (`:703`), which is the ⊕²⁵-correct emission |
 | a `.skip`'d / `.todo`'d / commented-out registration (§3) | **ABSENT.** Which is why the detector's matchers were tightened this round: it scored all four forms BOUND, i.e. it *asserted* a status the runner never emitted |
 
@@ -134,10 +134,10 @@ Previously this figure had **no committed detector at all**; the one that produc
 
 Independent corroboration (`grep -rhoE 'G-[A-Z0-9]+(-[A-Z0-9]+)*' tests scripts | sort -u`) returns exactly these 9 §B.5 names and no others. The remaining `G-*` strings the grep finds (`G-2`, `G-PLACEMENT`, `G-PARITY`, `G-NO-STACKED-URL-FILTER`, `G-EASE`, `G-TABINDEX`, `G-ROOT-BARREL-IMPORTS`, `G-INDICATOR`, `G-FALLBACK`, `G-BINDING`, `G-AWARE`) are **lane-local ids — §B.5's own close-battery class, not seats.** They are not counted toward `bound` and must never be.
 
-**The 7 bound:** G-PACK-INSTALL · G-BARREL-EXPLICIT · G-BUNDLE-RATCHET · G-NO-ORPHAN-EXPORT · G-GLASS-HAS-FROST · G-WK-COLORMIX-BUDGET · **G-GATE-BUDGET** (the 7th, and it binds *here* — §3).
+~~**The 7 bound:**~~ **The 8 bound** [⊕³⁶ 2026-08-04 · #65, RT-7 — one ABSENT seat became BOUND; `bound:7` → `bound:8`, `seats:60` byte-identical, nothing minted]**:** G-PACK-INSTALL · G-BARREL-EXPLICIT · G-BUNDLE-RATCHET · G-NO-ORPHAN-EXPORT · G-GLASS-HAS-FROST · G-WK-COLORMIX-BUDGET · **G-GATE-BUDGET** (the 7th, and it binds *here* — §3) · **the CWT-2:1533 tranche-wide register** (PROPORTION, the 8th — bound by **#65** at `tests/styles/proportion-register.test.ts`, `binding:seat-detector`, `gId` null).
 **The 2 arm-only:** G-RUNG-ONLY · G-CSS-REACH-UNION, both named by `tests/gates/trap-gates.test.ts` (§4).
 
-### 2.3 · `unbound:51` = **51 seat names ABSENT from code** — never a failure, never an allowlist, and never a strike list on its own
+### 2.3 · ~~`unbound:51` = **51 seat names ABSENT from code**~~ `unbound:50` = **50 seat names ABSENT from code** — never a failure, never an allowlist, and never a strike list on its own [⊕³⁶ 2026-08-04 · #65: RT-7 bound PROPORTION, the one seat of the 51 that #68's L-1 gave an executable. The caveat this section exists to carry is **unchanged and still binding** on the remaining 50 — ≥5 have live detectors under other titles, and 17 further gate files sit in neither register.]
 
 ~~### 2.3 · `unbound:51` is a REPORTED FIGURE, never a failure~~ **[2026-08-03 cure #5: "reported figure" was the weaker word. Under ⊕²⁵ the honest one is ABSENT — a gate name with no executable is a gate the runner cannot emit any status for.]**
 
@@ -166,7 +166,7 @@ What the detector *does* fail on is a binding that was **claimed and is not ther
 | DOCK | 4 | BUDGET · RUN+MORPH · REACH · STATE |
 | SUBSTRATE | 8 | the blob six · AURORA · G-FF-ONE-LAW |
 | STORY/DOC | 5 | G-TILE-COVERAGE · G-ONE-NAME · G-FIRST-PAINT · G-QUIESCENT · G-DOC-TRUTH |
-| PROPORTION | 1 | the CWT-2:1533 tranche-wide register |
+| PROPORTION | ~~1~~ **0** | ~~the CWT-2:1533 tranche-wide register~~ **BOUND, not struck** [⊕³⁶ 2026-08-04 · #65: this family's one seat left the ABSENT population at RT-7 — bound to `tests/styles/proportion-register.test.ts`, `binding:seat-detector`. **Not a strike and not a movement:** PROPORTION still holds exactly 1 seat at §B.5, `familyCounts.PROPORTION` is still 1, and the budget is still exactly 60. The table's own total falls `51` → `50` with it (`:154`, *"51 seats, by family"*).] |
 | ACCOUNTING | 1 | G-ROW-HOMED |
 | PROCESS | 2 | G-PROVENANCE · G-NO-EVIDENCE-COMMIT |
 | CONFIG | 1 | G-CFG-EXPRESS |

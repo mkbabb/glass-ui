@@ -1,5 +1,7 @@
 # BJ — TERMINAL ROUTINGS (named seams the de-duplication pass would not improvise)
 
+**[⊕³⁶ 2026-08-04 · STRUCK WITH GROUNDS by TR#65 ⊕⁴ U-06 — cite this file for nothing.** R-1…R-7 are dead by supersession: the terminal roster and the fold ledger re-seated every live subject, the register's close condition dies with the strike, and the R-namespace collision with RATIFICATION §2 ends by it. Retained as history only.]
+
 - **Verified model:** `claude-opus-4-8[1m]` (read verbatim from this seat's system context).
 - **Seat:** the DE-DUPLICATION pass, 2026-07-20, under the lead's structural ruling that six
   plateaued stability rounds were caused by duplicated derived data rather than by corpus decay.

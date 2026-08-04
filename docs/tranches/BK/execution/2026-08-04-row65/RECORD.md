@@ -368,7 +368,7 @@ run too.
 
 ---
 
-## §3 · BACK-ANNOTATION PASTE BLOCKS — BANKED, NOT APPLIED (all out of fence)
+## §3 · BACK-ANNOTATION PASTE BLOCKS — BANKED, NOT APPLIED [⊕³⁶ 2026-08-04: blocks (1)-(5),(7),(8) APPLIED by the back-annotation seat, verified green + receipt bound:8 byte-identical; (6) stays banked for the driver/C-9 per its own routing] (all out of fence)
 
 **(1) `docs/tranches/BK/EXECUTION-PROGRESS.md:567` — replace the row 65 STATUS cell:**
 
