@@ -8,11 +8,20 @@
 // suite and proves it can fail.
 //
 // The bites override the injected io IN MEMORY — no disk writes, no fixtures on disk.
-// Four severances, one per check the detector claims to make.
+// One severance per check the detector claims to make.
+//
+// CURE ROUND (verdict CURE-REQUIRED). The adjudicating probe proved four blindnesses that
+// all scored ABSENT registrations as BOUND — `it.skip(`, `it.todo(`, `// it(`, `/* it( */`
+// — and one that scored an UNENROLLED gate as enrolled (every pixel-floor run step deleted
+// from `ci.yml`, the word surviving in the prose comment at `:57`). Under the ⊕²⁵ status
+// vocabulary each of those is ABSENT, and ABSENT is never GREEN. The bites below are the
+// severances that hold the cures: revert `CALL_FORM` to admit `skip|todo`, or drop the
+// comment strip, or put the substring anchor back, and one of them REDs.
 
 import { describe, expect, it } from "vitest";
 import {
     PINNED_ROSTER_SHA256,
+    ROSTER_MD_PATH,
     ROSTER_PATH,
     SEAT_BINDING_PATH,
     SEAT_BUDGET,
@@ -30,6 +39,29 @@ const ioWith = (path: string, content: string) => ({
     read: (target: string) => (target === path ? content : realIo.read(target)),
     exists: realIo.exists,
 });
+
+interface RosterRow {
+    id: string;
+    sourcePath: string;
+    currentRegistration: string;
+}
+
+/**
+ * A rostered row registered as a plain `it("…")`, so a bite can demote exactly that call
+ * form. Never the pinned-drift row.
+ */
+const plainVictim = (): { row: RosterRow; quoted: string; source: string } => {
+    const roster = JSON.parse(realIo.read(ROSTER_PATH));
+    for (const row of roster.activeVitest as RosterRow[]) {
+        if (row.id === "reka.tags-input.value-binding") continue;
+        const source = realIo.read(row.sourcePath);
+        for (const quote of ['"', "'", "`"]) {
+            const quoted = `${quote}${row.currentRegistration}${quote}`;
+            if (source.includes(`it(${quoted}`)) return { row, quoted, source };
+        }
+    }
+    throw new Error("no plainly-registered rostered row found to demote");
+};
 
 describe("the gate register binds (G-GATE-BUDGET)", () => {
     it("every seat and every rostered row resolves to an executable", () => {
@@ -53,6 +85,17 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
 
         // The provenance pin #9/#65 quote.
         expect(report.rosterSha256).toBe(PINNED_ROSTER_SHA256);
+
+        // Figure A is read from its AUTHORITY, not from the register's own copy: §B.5's
+        // heading, its family table and its sum line all re-derive the same 60.
+        expect(report.authority.budget).toBe(SEAT_BUDGET);
+        expect(
+            Object.values(report.authority.families as Record<string, number>).reduce(
+                (a, b) => a + b,
+                0,
+            ),
+        ).toBe(SEAT_BUDGET);
+        expect(report.authority.declaredSum).toBe(SEAT_BUDGET);
 
         // The bijection, stated honestly and never rounded up: 6 seats carried a verbatim
         // executable before this row, G-GATE-BUDGET is the 7th and it binds HERE. Two more
@@ -140,6 +183,111 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
         throw new Error("no quoted registration found to demote");
     });
 
+    it("BITE — an `it.skip(`'d registration is ABSENT, not bound", () => {
+        // Probe-proven pre-cure: `it.skip(` scored BOUND because `CALL_FORM` admitted the
+        // modifier. A skipped case is never executed, so under PASS/FAIL/ABSENT it is
+        // ABSENT — and a register that calls it live reports GREEN for nothing.
+        const { row, quoted, source } = plainVictim();
+        const skipped = source.replace(`it(${quoted}`, `it.skip(${quoted}`);
+        expect(skipped).toContain(quoted); // the title text is untouched
+        const report = verifyGateRegister({
+            read: (target: string) =>
+                target === row.sourcePath ? skipped : realIo.read(target),
+            exists: realIo.exists,
+        });
+        expect(report.titleDrift.map((d: { id: string }) => d.id)).toContain(row.id);
+        expect(
+            report.violations.some((v: string) => v.includes("title drift set moved")),
+        ).toBe(true);
+    });
+
+    it("BITE — a registration commented out with `// it(` is ABSENT, not bound", () => {
+        // The second probe-proven blindness: the whole call survives as text, so a
+        // substring matcher sees a live registration. Comments are stripped before any
+        // match now, so the title is not in the live bytes at all.
+        const { row, quoted, source } = plainVictim();
+        const commented = source.replace(`it(${quoted}`, `// it(${quoted}`);
+        expect(commented).toContain(quoted);
+        const report = verifyGateRegister({
+            read: (target: string) =>
+                target === row.sourcePath ? commented : realIo.read(target),
+            exists: realIo.exists,
+        });
+        expect(report.titleDrift.map((d: { id: string }) => d.id)).toContain(row.id);
+    });
+
+    it("BITE — gutting every pixel-floor run step from ci.yml REDs, comment or no comment", () => {
+        // The challenger's exact probe: delete the four pixel-floor step lines and the
+        // word still survives in the prose comment at ci.yml:57. Pre-cure this yielded
+        // `badAnchors: [] violations: []` — C-13's own class ("an unwired gate cannot
+        // fail") reproduced inside the detector that scopes C-13.
+        const ci = realIo.read(".github/workflows/ci.yml");
+        const gutted = ci
+            .split("\n")
+            .filter((line) => !/^\s*(- name:.*pixel floor|run:.*pixel-floor)/.test(line))
+            .join("\n");
+        expect(gutted).toContain("pixel-floor"); // survives in the comment
+        expect(gutted).not.toMatch(/run:.*pixel-floor/);
+        const report = verifyGateRegister(ioWith(".github/workflows/ci.yml", gutted));
+        expect(
+            report.badAnchors.some((a: string) =>
+                a.includes(".github/workflows/ci.yml#pixel-floor"),
+            ),
+        ).toBe(true);
+    });
+
+    it("BITE — gutting release.sh's pixel-floor commands REDs the supplemental anchor", () => {
+        // C19 anchors `scripts/release.sh` as a BARE PATH, so existsSync alone answered
+        // it. #9's supplemental anchors (SEAT-BINDING.json, routed to #65) bind the
+        // release edge to a real command line — never an allowlist, they can only add.
+        const sh = realIo.read("scripts/release.sh");
+        const gutted = sh
+            .split("\n")
+            .filter((line) => !/^\s*npm .*gate:pixel-floor/.test(line))
+            .join("\n");
+        expect(gutted).toContain("pixel floor"); // the prose comment survives
+        const report = verifyGateRegister(ioWith("scripts/release.sh", gutted));
+        expect(
+            report.violations.some((v: string) =>
+                v.includes("supplemental external.browser.aurora-floor"),
+            ),
+        ).toBe(true);
+    });
+
+    it("BITE — a seat name surviving only in a COMMENT does not count as bound", () => {
+        // The seat side of the same law: `:206` was a bare `includes`, so a seat named in
+        // a header comment scored bound. Demote the arm host's describe title and both
+        // arm-only seats must RED.
+        const trap = realIo.read("tests/gates/trap-gates.test.ts");
+        const demoted = trap.replace(
+            /describe\("trap gates[^\n]*\n/,
+            'describe("trap gates — the B4/B5 arms", () => {\n',
+        );
+        expect(demoted).toContain("G-RUNG-ONLY"); // still there — in comments only
+        const report = verifyGateRegister(ioWith("tests/gates/trap-gates.test.ts", demoted));
+        expect(
+            report.violations.some(
+                (v: string) =>
+                    v.includes("seat G-RUNG-ONLY") && v.includes("only in prose"),
+            ),
+        ).toBe(true);
+    });
+
+    it("BITE — a §B.5 family movement REDs Figure A against its authority", () => {
+        // Before the cure the detector never opened TERMINAL-ROSTER.md: `seats.length ===
+        // 60` and the family tally compared SEAT-BINDING.json to itself. Move a seat at
+        // the authority and the register must notice.
+        const md = realIo.read(ROSTER_MD_PATH);
+        const moved = md.replace("| MOTION | 4 |", "| MOTION | 5 |");
+        expect(moved).not.toBe(md);
+        const report = verifyGateRegister(ioWith(ROSTER_MD_PATH, moved));
+        expect(
+            report.violations.some(
+                (v: string) => v.includes("family MOTION") && v.includes("§B.5 allocates 5"),
+            ),
+        ).toBe(true);
+    });
+
     it("BITE — a seat claiming a binding its file does not carry REDs", () => {
         const seatFile = JSON.parse(realIo.read(SEAT_BINDING_PATH));
         const unbound = seatFile.seats.find(
@@ -151,9 +299,7 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
             ioWith(SEAT_BINDING_PATH, JSON.stringify(seatFile)),
         );
         expect(
-            report.violations.some((v) =>
-                v.includes("does not carry the name"),
-            ),
+            report.violations.some((v) => v.includes("only in prose")),
         ).toBe(true);
     });
 
