@@ -6,7 +6,57 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import { SegmentedTabs, type SegmentedTabOption } from "@glass/components/tabs";
+// The leaf path, not the aurora barrel: the barrel's first line re-exports
+// Aurora.vue and would drag the live component into this route's graph for a
+// backdrop that never arms a device (the AppShell import takes the same leaf).
+import { auroraFallbackGround } from "@glass/components/aurora/composables/auroraFallbackGround";
+import { heroAuroraConfig, type HeroPaletteKey } from "../../chassis/hero/aurora-hero";
 
+// ── The Q-4 specimen substrate (FROST Q-2/Q-4 — the #56 receiver row) ────────
+// A glass pill over a flat page measures NOTHING: a blur radius over a flat field
+// is invisible, so a material π taken on this route is inadmissible by
+// σ-degeneracy. Every pill strip below therefore sits in a FIELD-WELL — the house
+// idiom the configurator gallery already ships (`components/configurator/styles.css`
+// §3: "the well is the COLOURFUL field; the warm-glass capsule frames it"), painted
+// by the same device-free `auroraFallbackGround` raster the aurora preset cards
+// bake (`substrates/aurora/usePresetThumbnails.ts`). It is STATIC — one CPU field
+// sample at setup, no GL context, nothing animating, so nothing for PRM to pause.
+//
+// The paper/underline sections are deliberately NOT welled: that material declares
+// NO plate and NO blur, so it has nothing to transmit and no π to feed.
+//
+// The field is this category's OWN hero palette (hue + chroma KEPT — the
+// per-category identity the manifest declares), with its L band re-registered for a
+// plate. Light folds the pastel hero wash DOWN into a band a 7-11px blur can
+// visibly bite; dark is the house luminous-dark model (`aurora-hero.ts`
+// §shellAuroraConfigDark — low L, warm hue, chroma kept) on a WIDER band, because
+// the page-wide shell wash must stay recessive under prose and a specimen well
+// carries none.
+function plateField(palette: HeroPaletteKey, lo: number, hi: number) {
+    const base = heroAuroraConfig(palette);
+    const span = Math.max(1, base.palette.length - 1);
+    return auroraFallbackGround(
+        {
+            ...base,
+            palette: base.palette.map((stop, i) => ({
+                ...stop,
+                L: lo + ((hi - lo) * i) / span,
+            })),
+        },
+        // 12 × 12 field samples (the preset cards bake 10): finer texels keep real
+        // structure inside a crop the size of one tab strip.
+        { grid: 12 },
+    );
+}
+
+const wellLight = plateField("cat-navigation", 0.58, 0.97);
+const wellDark = plateField("cat-navigation", 0.04, 0.64);
+const wellStyle = {
+    "--well-field": wellLight.backgroundImage,
+    "--well-field-color": wellLight.backgroundColor,
+    "--well-field-dark": wellDark.backgroundImage,
+    "--well-field-color-dark": wellDark.backgroundColor,
+};
 
 // ── Pill (glass) — horizontal ──
 const viewMode = ref("grid");
@@ -102,7 +152,7 @@ const chapterBody: Record<string, string> = {
 </script>
 
 <template>
-    <StoryPage>
+    <StoryPage :style="wellStyle">
 
         <!-- ════ The PILL material (glass) ════ -->
         <StorySection
@@ -113,21 +163,27 @@ const chapterBody: Record<string, string> = {
                 class="glass-card flex flex-col gap-4 rounded-[var(--radius-card)] p-5"
             >
                 <div class="flex flex-wrap items-center gap-3">
-                    <SegmentedTabs
-                        v-model="viewMode"
-                        :options="viewOptions"
-                        aria-label="View mode"
-                    />
+                    <div class="specimen-well">
+                        <div class="grid-bg" aria-hidden="true"></div>
+                        <SegmentedTabs
+                            v-model="viewMode"
+                            :options="viewOptions"
+                            aria-label="View mode"
+                        />
+                    </div>
                     <span class="text-micro text-muted-foreground"
                         >selected: {{ viewMode }}</span
                     >
                 </div>
                 <div class="flex flex-wrap items-center gap-3">
-                    <SegmentedTabs
-                        v-model="priority"
-                        :options="priorityOptions"
-                        aria-label="Priority"
-                    />
+                    <div class="specimen-well">
+                        <div class="grid-bg" aria-hidden="true"></div>
+                        <SegmentedTabs
+                            v-model="priority"
+                            :options="priorityOptions"
+                            aria-label="Priority"
+                        />
+                    </div>
                     <span class="text-micro text-muted-foreground"
                         >selected: {{ priority }}</span
                     >
@@ -147,11 +203,14 @@ const chapterBody: Record<string, string> = {
                     <!-- the drag is the `motion="full"` DEFAULT
                          (the retired `draggable` boolean's successor); a click-only
                          strip opts DOWN via `motion="reduced"`. -->
-                    <SegmentedTabs
-                        v-model="liquidView"
-                        :options="viewOptions"
-                        aria-label="Draggable view mode"
-                    />
+                    <div class="specimen-well">
+                        <div class="grid-bg" aria-hidden="true"></div>
+                        <SegmentedTabs
+                            v-model="liquidView"
+                            :options="viewOptions"
+                            aria-label="Draggable view mode"
+                        />
+                    </div>
                     <span class="text-micro text-muted-foreground"
                         >selected: {{ liquidView }} — drag the pill</span
                     >
@@ -165,13 +224,16 @@ const chapterBody: Record<string, string> = {
             blurb="The same gesture works down a column: the indicator follows the block axis and its soft stretch turns with the layout."
         >
             <div class="glass-card flex gap-5 rounded-[var(--radius-card)] p-5">
-                <SegmentedTabs
-                    v-model="account"
-                    :options="accountOptions"
-                    orientation="vertical"
-                    aria-label="Account settings"
-                    class="shrink-0"
-                />
+                <div class="specimen-well shrink-0">
+                    <div class="grid-bg" aria-hidden="true"></div>
+                    <SegmentedTabs
+                        v-model="account"
+                        :options="accountOptions"
+                        orientation="vertical"
+                        aria-label="Account settings"
+                        class="shrink-0"
+                    />
+                </div>
                 <div class="min-h-32 flex-1 text-small text-muted-foreground">
                     Configure your
                     {{
@@ -232,13 +294,16 @@ const chapterBody: Record<string, string> = {
             blurb="Arrow keys move the focus ring without moving the selected fill. Enter or Space commits the focused panel; click and touch still select directly."
         >
             <div class="glass-card max-w-xl rounded-[var(--radius-card)] p-5">
-                <SegmentedTabs
-                    v-model="reviewTab"
-                    :options="reviewOptions"
-                    semantics="tabs"
-                    activation="manual"
-                    aria-label="Release review"
-                />
+                <div class="specimen-well">
+                    <div class="grid-bg" aria-hidden="true"></div>
+                    <SegmentedTabs
+                        v-model="reviewTab"
+                        :options="reviewOptions"
+                        semantics="tabs"
+                        activation="manual"
+                        aria-label="Release review"
+                    />
+                </div>
                 <p class="mt-4 text-small text-muted-foreground">
                     {{ reviewBody[reviewTab] }}
                 </p>
@@ -260,13 +325,16 @@ const chapterBody: Record<string, string> = {
                         aria-label="Scrollable history ranges"
                         tabindex="0"
                     >
-                        <SegmentedTabs
-                            v-model="historyRange"
-                            :options="historyOptions"
-                            semantics="tabs"
-                            aria-label="History range"
-                            class="min-w-max"
-                        />
+                        <div class="specimen-well min-w-max">
+                            <div class="grid-bg" aria-hidden="true"></div>
+                            <SegmentedTabs
+                                v-model="historyRange"
+                                :options="historyOptions"
+                                semantics="tabs"
+                                aria-label="History range"
+                                class="min-w-max"
+                            />
+                        </div>
                     </div>
                     <p class="mt-2 text-caption text-muted-foreground">
                         Selected: {{ historyRange }}
@@ -280,12 +348,15 @@ const chapterBody: Record<string, string> = {
                     <p class="mb-3 text-caption text-muted-foreground">
                         اتجاه من اليمين إلى اليسار
                     </p>
-                    <SegmentedTabs
-                        v-model="rtlView"
-                        :options="rtlOptions"
-                        semantics="tabs"
-                        aria-label="عرض المشروع"
-                    />
+                    <div class="specimen-well">
+                        <div class="grid-bg" aria-hidden="true"></div>
+                        <SegmentedTabs
+                            v-model="rtlView"
+                            :options="rtlOptions"
+                            semantics="tabs"
+                            aria-label="عرض المشروع"
+                        />
+                    </div>
                     <p class="mt-2 text-caption text-muted-foreground">
                         المحدد: {{ rtlView }}
                     </p>
@@ -313,3 +384,56 @@ const chapterBody: Record<string, string> = {
         </StorySection>
     </StoryPage>
 </template>
+
+<style scoped>
+/* ── The Q-4 specimen well ───────────────────────────────────────────────────
+   The structured backdrop the glass reads through. TWO static house layers, both
+   painted BEHIND the specimen — and nothing on the ancestor chain takes a filter,
+   blend, opacity or isolation, so each glass box keeps the page as its backdrop
+   root (the backdrop must sit behind the glass in stacking, never filter an
+   ancestor):
+
+     · the FIELD — the device-free `auroraFallbackGround` raster on the well's own
+       background, sized by the §3 field-well rule's `cover` / `center` / smooth
+       upscale (`components/configurator/styles.css`), so the tiny raster's
+       per-quadrant mean luminance survives the bilinear stretch. It carries the
+       LOW-frequency structure the transmission arm reads.
+     · the RULING — the shipped `.grid-bg` blueprint wash (`chassis/hero/story-hero.css`),
+       its two DOCUMENTED strength knobs dialled up for a plate
+       (`tokens/scale-paper.css` names `--grid-line` / `--grid-line-major` the
+       consumer strength knobs). The pitch rhythm is the shared one, untouched. It
+       carries the HIGH frequency a blur radius can actually destroy. */
+.specimen-well {
+    position: relative;
+    border-radius: var(--radius-card);
+    padding: clamp(0.75rem, 1.5vw, 1.125rem);
+    background-color: var(--well-field-color);
+    background-image: var(--well-field);
+    background-size: cover;
+    background-position: center;
+    image-rendering: auto;
+}
+
+/* Plain `.dark` ancestor — a scoped `:global(.dark)` silently drops from the
+   emitted CSS. */
+.dark .specimen-well {
+    background-color: var(--well-field-color-dark);
+    background-image: var(--well-field-dark);
+}
+
+.specimen-well > .grid-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    --grid-line: color-mix(in srgb, var(--foreground) 18%, transparent);
+    --grid-line-major: color-mix(in srgb, var(--foreground) 42%, transparent);
+}
+
+/* The specimen paints above the ruling plane; the ruling stays in the backdrop. */
+.specimen-well > :not(.grid-bg) {
+    position: relative;
+    z-index: 1;
+}
+</style>
