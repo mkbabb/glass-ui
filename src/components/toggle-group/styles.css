@@ -14,8 +14,8 @@
         justify-content: safe center;
         padding: 0.25rem;
         border-radius: calc(var(--radius-pill) + 0.25rem);
-        background: var(--glass-bg-quiet);
-        backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-quiet));
+        background: var(--glass-plate-quiet);
+        backdrop-filter: var(--glass-blur-quiet);
         box-shadow:
             var(--glass-rim-top),
             var(--glass-rim-bottom),
@@ -68,7 +68,7 @@
     .toggle-group__item[data-variant="outline"] {
         border-color: var(--control-surface-border);
         background: var(--control-surface-bg);
-        backdrop-filter: var(--glass-cell-backdrop-filter, var(--control-surface-blur));
+        backdrop-filter: var(--control-surface-blur);
     }
 
     .toggle-group__item:hover:not(:disabled) {

@@ -161,22 +161,21 @@
     --sheet-descent: clamp(0, calc(var(--stage-t) / 0.85), 1);
     /* the SOLIDIFY fraction — 0 below the commit floor → 1 at full (t=1). */
     --sheet-freeze: clamp(0, calc((var(--stage-t) - 0.85) / 0.15), 1);
-    /* Keep the crown flat (no nested color-mix): the card opacity lerps the overlay
-       role down to the sheet role across the descent — a consumer :root retune of
-       either token still moves it — and `--glass-level` firms it to the opaque
-       accessibility floor. */
-    --sheet-crown-opacity: calc(
-        var(--glass-opacity-overlay)
-            - (var(--glass-opacity-overlay) - var(--glass-opacity-sheet))
-                * var(--sheet-descent)
+    /* Keep the crown flat (no nested color-mix): the crown's INK lerps the overlay
+       rung down to the sheet footprint across the descent — a consumer :root retune of
+       base or step still moves both ends — and `--glass-level` firms it to the opaque
+       accessibility floor through the same machinery every plate uses. */
+    --sheet-crown-ink: calc(
+        var(--glass-veil-overlay)
+            - (var(--glass-veil-overlay) - var(--glass-veil-sheet)) * var(--sheet-descent)
     );
     --sheet-crown: color-mix(
         in srgb,
+        oklch(from var(--glass-veil-ink) l c h / var(--sheet-crown-ink))
+            calc(var(--glass-level) * 100%),
         var(--card)
-            calc((1 - (1 - var(--sheet-crown-opacity)) * var(--glass-level)) * 100%),
-        transparent
     );
-    /* The adaptive darken rides at CONSTANT `--glass-tint-strength` across the whole
+    /* The adaptive darken rides at CONSTANT `--glass-veil-rung` across the whole
        descent. A `(1 - --sheet-descent)` factor would decay the band's earned AA darken
        to ZERO exactly as the crown thins 0.95 → 0.74 — transparency up, legibility down,
        the wrong way round. The 0-alpha leg of every oklab veil below is a warm
@@ -185,12 +184,8 @@
        (premultiplied interpolation is precisely what makes a 0-alpha endpoint
        chroma-inert), so mixing toward it drags the result to BLACK — the hole.
        `--sheet-freeze-card` stays `in srgb` toward `transparent`
-       — the house rung idiom (the `--glass-bg-*` ladder), not an oklab veil. */
-    --sheet-tint-veil: color-mix(
-        in oklab,
-        oklch(0.9 0.05 75 / 0),
-        var(--glass-tint-source) var(--glass-tint-strength)
-    );
+       — the house rung idiom (the `--glass-plate-*` ladder), not an oklab veil. */
+    --sheet-tint-veil: oklch(0.9 0.05 75 / 0);
     --sheet-freeze-card: color-mix(
         in srgb,
         transparent,

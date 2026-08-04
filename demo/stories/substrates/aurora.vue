@@ -172,7 +172,7 @@ const hintText = computed(() => [
 <style scoped>
 /* `prefers-reduced-transparency` honor is canonical: the studio shell composes
  * <Configurator> (via VizStudio) which uses the `glass-floating` substrate, and
- * `src/styles/glass.css`'s PRT @media block lifts every `--glass-opacity-{tier}` to
+ * `src/styles/glass.css`'s PRT @media block drops `--glass-level` to 0, which lifts every rung to
  * 1 (opaque) under reduced-transparency. No demo-local override needed — the
  * substrate carries the contract. */
 </style>

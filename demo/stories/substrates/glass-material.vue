@@ -9,7 +9,7 @@
 //
 // This story BINDS the shipped seams it narrates: the moving catch-light is
 // composed off `useSpecularTracking` (the DRY pointer-write seam), the adaptive
-// tint sets BOTH `--glass-tint-source` + a non-zero `--glass-tint-strength` so
+// tint sets BOTH `--glass-veil-ink` + a non-zero `--glass-veil-rung` so
 // the `color-mix(in oklab, …)` actually bites, the squircle reads on the
 // dialog/sheet register (cards stay round by policy), and the deliberately-subtle
 // rim is shown against an on/off contrast device.
@@ -42,8 +42,8 @@ const rungs = ["wash", "quiet", "resting", "floating", "overlay"] as const;
 const { specularStyle, onPointerMove } = useSpecularTracking();
 
 // A consumer-provided dominant backdrop color drives the adaptive tint. The
-// tint BITES only when BOTH knobs are set — `--glass-tint-source` (the sampled
-// hue) AND a non-zero `--glass-tint-strength` (the ≤30% house ceiling). "none"
+// tint BITES only when BOTH knobs are set — `--glass-veil-ink` (the sampled
+// hue) AND a non-zero `--glass-veil-rung` (the ≤30% house ceiling). "none"
 // resolves strength 0% (the genuine zero-delta default); the aurora samples
 // resolve a non-zero strength so the `color-mix(in oklab, …)` actually biases.
 const tintSamples = [
@@ -195,8 +195,8 @@ const ACCENT_STRENGTH = "48%";
         </StorySection>
 
         <StorySection
-            label="subtle rim — the --glass-edge-light contrast device"
-            blurb="The rim is a deliberately sub-perceptual 0.75px 18%-α white inset ring — subtle by design. Side-by-side: a plate carrying the rim vs the same plate with --glass-edge-light suppressed, over a dark sample where the 0.75px ring reads as a feature, not a missing one."
+            label="subtle rim — the one key-driven contrast device"
+            blurb="The rim is ONE static catch-light on the key-facing edge at 10% α (8% in dark — a dark plate reads because the page behind it is dark, not because the ring is brighter), plus a warm under-shadow grounding the shade edges. Side-by-side: a plate carrying the rim vs the same plate with it suppressed."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap gap-6">
@@ -225,7 +225,7 @@ const ACCENT_STRENGTH = "48%";
 
         <StorySection
             label="glass-accent — the per-instance chromatic rim+glint axis"
-            blurb="The third glass axis (level · tint · accent). A consumer data hue OKLab-tints the surface's rim (silhouette edge) and the ::before catch-light glint — set per instance (--glass-accent: <hue>; --glass-accent-strength: <N%>), so a data-keyed colored hover is a one-line seam. Distinct from the whole-plate tint axis (--glass-tint-source): the accent rides the rim and glint only, never the plate background. Each swatch carries its own series hue; the unset plate beside them stays plain warm-cream glass."
+            blurb="The third glass axis (level · tint · accent). A consumer data hue OKLab-tints the surface's rim (silhouette edge) and the ::before catch-light glint — set per instance (--glass-accent: <hue>; --glass-accent-strength: <N%>), so a data-keyed colored hover is a one-line seam. Distinct from the whole-plate tint axis (--glass-veil-ink): the accent rides the rim and glint only, never the plate background. Each swatch carries its own series hue; the unset plate beside them stays plain warm-cream glass."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <!-- consumer #1 — the data-hue swatch GRID: each cell sets its OWN
@@ -307,8 +307,8 @@ const ACCENT_STRENGTH = "48%";
         </StorySection>
 
         <StorySection
-            label="chromatic edge dispersion + adaptive tint"
-            blurb="A warm/cool oklab fringe rides the rim under prefers-reduced-transparency:no-preference; the tint sets BOTH --glass-tint-source AND a non-zero --glass-tint-strength (≤30%) so the color-mix(in oklab,…) actually biases the surface toward the sampled backdrop hue (default = warm-white zero delta)."
+            label="the plate ink — one chromatic writer"
+            blurb="A plate has exactly one chromatic writer on its body: the veil ink. Re-point --glass-veil-ink and the whole rung follows, at every level and under the earned-darken clamp. There is no second tint axis mixing the same plate toward the same place, and no painted fringe at the edge — chroma at the rim is what saturate() delivers through a real radius."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="mb-4 flex flex-wrap items-center gap-2">
@@ -328,14 +328,13 @@ const ACCENT_STRENGTH = "48%";
                 </div>
                 <div class="flex flex-wrap gap-6">
                     <div
-                        class="glass-floating glass-chromatic flex h-28 w-44 items-center justify-center rounded-card text-small font-medium"
+                        class="glass-floating flex h-28 w-44 items-center justify-center rounded-card text-small font-medium"
                         data-tint-plate
                         :style="{
-                            '--glass-tint-source': tint.source || undefined,
-                            '--glass-tint-strength': tint.strength,
+                            '--glass-veil-ink': tint.source || undefined,
                         }"
                     >
-                        chromatic + tint
+                        veil ink
                     </div>
                 </div>
             </ShowcaseFrame>

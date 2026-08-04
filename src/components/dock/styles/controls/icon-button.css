@@ -66,7 +66,7 @@
             opacity var(--dock-motion-fast),
             /* The box-shadow fade now carries ONLY the focus-visible ring (shared
                `:focus-visible` group in dock.css) + the active-state
-               `--dock-active-shadow` — the hover `--glass-highlight`
+               `--dock-active-shadow` — the hover highlight leg
                specular no longer rides it. */
                 box-shadow var(--dock-motion-fast);
 
@@ -95,12 +95,12 @@
            surface, not a flat `--muted` plate: a translucent card-tinted fill is
            the hover affordance. A consumer retunes the fill via `--dock-icon-hover-bg`.
 
-           The dock control's SECOND specular (the `--glass-highlight`
+           The dock control's SECOND specular (the struck highlight
            hover box-shadow) is RETIRED. The dock-icon-button is a
            member of the unified `.glass-material` group (glass.css), so the moving
            `::before` catch-light is now its SOLE specular owner — one light per
            surface (the §0 "excise or fail" discipline). Stacking the
-           `--glass-highlight` inset box-shadow on the most-hovered, floating
+           inset box-shadow on the most-hovered, floating
            surface was the worst-offending double-light blowout; the card-tinted
            hover fill carries the affordance without a second catch-light, and
            dropping it also removes the `:not(:focus-visible)` specular-vs-ring
@@ -164,7 +164,7 @@
         /* Shared fold — the `<DockIconButton
            :active>` selectable register. The `data-active` hook the component stamps
            reads the rail's "selected reads as glass" tier (`--dock-control-active-bg`,
-           default `--glass-bg-floating` — a GLASS tier ABOVE the rest fill, NEVER a
+           default `--glass-plate-floating` — a GLASS tier ABOVE the rest fill, NEVER a
            saturated brand hue). Distinct from the consumer
            `--dock-active-*` cohort above (a parent-scoped audacious override): this is
            the library's default selected glass, ergonomic sugar over the shipped
@@ -182,7 +182,7 @@
         &[data-active] {
             --glass-capsule-fill: var(
                 --dock-control-active-bg,
-                var(--glass-bg-floating)
+                var(--glass-plate-floating)
             );
             /* Re-assert the capsule fill as the painted background — the base
                `.dock-icon-button { background: transparent }` (same layer, later
@@ -199,7 +199,7 @@
     /* focus-visible ring + disabled paint hoisted to the shared `:where()`
        group in dock.css. The box-shadow fade transition lives on the base
        `.dock-icon-button` rule (it carries the focus-ring + active-shadow fade
-       retired the hover `--glass-highlight` specular), so no
+       retired the hover highlight specular), so no
        per-state transition override is needed. */
 
     /* LIBRARY GLYPH OWNERSHIP. The dock icon-button now sizes its glyph

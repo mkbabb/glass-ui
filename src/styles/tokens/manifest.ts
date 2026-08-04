@@ -19,8 +19,8 @@ export const semanticTokens = {
     ],
     material: [
         "--glass-level", "--glass-depth", "--glass-accent", "--glass-accent-strength",
-        "--glass-opacity-quiet", "--glass-opacity-resting",
-        "--glass-opacity-floating", "--glass-opacity-overlay",
+        "--glass-veil-ink", "--glass-veil-base", "--glass-veil-step",
+        "--glass-saturate",
     ],
     type: [
         "--font-stack-text", "--font-stack-display", "--font-stack-mono",

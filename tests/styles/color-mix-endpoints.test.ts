@@ -15,7 +15,7 @@ import { describe, expect, it } from "vitest";
 // files at this HEAD (51 before the row-6 cure round re-expressed the dock plate as a
 // rung lerp) — components/dock/styles/dock.css (24, the round's own top contributor and
 // the repo's largest single site: the plate's rung lerp, 100% of the 51→75 delta),
-// ladder.css's `--glass-plate-tinted` wrapping every `--glass-bg-*` rung (9), rim.css
+// the ladder's plate recipe over every rung, rim.css
 // (11), surfaces.css (4), shadow.css (4), and 2 in tokens/glass.css itself. It stands
 // pending row-6's Safari π ruling; do not read this file's green as covering it.
 // The `resolvedNested` arm below is therefore a REGRESSION FENCE on the four files the

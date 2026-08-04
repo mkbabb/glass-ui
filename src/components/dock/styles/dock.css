@@ -13,7 +13,7 @@
  *        `--dock-expand-t` (never a two-layer opacity crossfade — that composites
  *        `a + b − ab` and sags mid-morph); adaptive tint is a separate gradient veil.
  *        The shell + adaptive-legibility partials re-point the
- *        inheriting `--dock-surface-blur`/`--glass-tint-*` tokens on `.glass-dock`, so
+ *        inheriting `--dock-surface-blur`/`--glass-veil-*` tokens on `.glass-dock`, so
  *        the self-engage darken and dark-arm glow reach the layers via inheritance, ZERO
  *        re-author. Its VISIBLE
  *        EXTENT morphs via `clip-path: inset(… )` off the ONE plate-scoped `@property
@@ -100,8 +100,8 @@
            One `color-mix` endpoint pair, one border, exact at t=0 and t=1, monotone
            between. Both rungs are FLAT (a single `color-mix` each, tokens/glass.css), so
            the written source nests nothing — LITERALLY. RESOLVED nesting is another
-           matter and is KNOWN-LIVE here: the rungs' producers (`--glass-bg-dock` /
-           `--glass-bg-wash`) are themselves `color-mix` tokens, making this file the
+           matter and is KNOWN-LIVE here: the rungs' producers (`--glass-plate-dock` /
+           `--glass-plate-wash`) are themselves `color-mix` tokens, making this file the
            repo's largest such site (24 of the 75 endpoint contexts). NOT GATED, pending
            row-6's Safari π — tests/styles/color-mix-endpoints.test.ts seats the literal
            invariant only.
@@ -111,11 +111,7 @@
            tint override, and the rung endpoints stay un-mixed with the tint. The 0-alpha
            leg is a warm `oklch(… / 0)`, NEVER bare `transparent` (the WebKit
            black-premultiply hole). */
-        --dock-plate-tint-veil: color-mix(
-            in oklab,
-            oklch(0.9 0.05 75 / 0),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        );
+        --dock-plate-tint-veil: oklch(0.9 0.05 75 / 0);
         background:
             linear-gradient(
                 var(--dock-plate-tint-veil),

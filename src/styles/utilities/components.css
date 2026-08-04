@@ -4,7 +4,7 @@
    cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
 @layer components {
     /* ── Input bar — glassmorphic inline input container ──
-       Composes the canonical `floating` glass rung (--glass-bg-floating
+       Composes the canonical `floating` glass rung (--glass-plate-floating
        ≈ 80% α, --glass-blur-floating ≈ 11px) — same surface read as the
        prior raw composition but routed through the canonical 5-tier
        ladder so PRT / no-backdrop-filter fallbacks propagate cleanly.
@@ -19,7 +19,7 @@
            plate; `bare` opts out via `rounded-none`. */
         border-radius: var(--radius-control);
         border: 1px solid var(--glass-border-floating);
-        background: var(--glass-bg-floating);
+        background: var(--glass-plate-floating);
         backdrop-filter: var(--glass-blur-floating);
 
         padding: 0 0.75rem;

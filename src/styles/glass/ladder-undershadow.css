@@ -12,15 +12,11 @@
        explicit opt-out from the MAXIMAL glass default (dense data, forced-colors,
        a consumer that wants a flat surface). */
     .glass-opaque {
+        /* Level 0 IS the opaque escape: the plate mix resolves 0% ink + 100% `--card`
+           and the blur resolves `blur(0)`, through the SAME machinery every rung
+           uses. There is no second axis left to zero — the earned-darken clamp rides
+           the veil's alpha, and at level 0 that alpha is multiplied out. */
         --glass-level: 0;
-        /* The opaque escape suppresses the adaptive TINT axis
-           too (not just the opacity/blur level). A solid opaque plate has no translucent
-           backdrop to darken-over, so the self-engage tint is meaningless on it; zeroing the
-           strength keeps the opaque escape bucket-INVARIANT (the unset floor and the bright
-           bucket resolve the SAME solid plate — the byte-identity canary). Without this, the
-           scope-7 unconditional content-tier floor (4%) tinted even the solid plate, breaking
-           the opt-out's "flat surface" contract. */
-        --glass-tint-strength: 0%;
     }
 
     /* ── Content-aware under-shadow modifier ──────────────

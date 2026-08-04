@@ -1,11 +1,11 @@
 /* glass/surfaces-pager.css
-   The surfaces tail: the glass pager-pill chassis (.glass-pager-ring + its .dark box-shadow arm) + the chromatic edge-dispersion rim fringe (.glass-chromatic).
+   The surfaces tail: the glass pager-pill chassis (.glass-pager-ring + its .dark box-shadow arm). The `.glass-chromatic` edge-dispersion fringe RETIRED with its token family — chroma at the edge is what the medium delivers through saturate.
    A partial held under the no-god-module 500-line bound; its own @layer components block @import-ed by glass.css IMMEDIATELY AFTER surfaces.css (the tail of the surfaces @layer, unique selectors, source-order-after). */
 @layer components {
     /* ── The glass pager pill chassis (.glass-pager-ring) ──────────
        The ONE pager-CHASSIS ring register: a `--radius-pill` glass-floating pill
-       (the DockRail-chip recipe — `--glass-bg-floating` + `--glass-blur-floating`
-       + `--glass-edge-light`/`--glass-specular` + the soft drop + the `.dark`
+       (the DockRail-chip recipe — `--glass-plate-floating` + `--glass-blur-floating`
+       + the one rim leg + the soft drop + the `.dark`
        box-shadow arm). It encapsulates BOTH the `<PagerDots ring>` dot rail AND
        the `<CarouselPager>` counter (the counter re-registers OFF the opaque
        `bg-card` slab onto this — the dark-slab class dies in the same
@@ -23,25 +23,21 @@
         padding-block: 0.3125rem;
         border-radius: var(--radius-pill);
         /* The element-level oklab TINT seam (NOT the raw
-           pre-substituted `--glass-bg-floating` :root token — the gray-hole
-           substitution-trap). At the `--glass-tint-strength: 0%` default this is the
-           no-op floor (`color-mix(in oklab, X, src 0%) ≡ X` — byte-identical pager pixels
+           pre-substituted `--glass-plate-floating` :root token — the gray-hole
+           substitution-trap). At the `--glass-level: 0` default this is the
+           no-op floor (`X, src 0%) ≡ X` — byte-identical pager pixels
            over a flat page); over a declared/sampled BRIGHT carousel image
            (`@container style(--glass-backdrop: light)`) the pill darkens-toward-ink for a
            real silhouette (the ≤24% clamp keeps it translucent); under `.dark` the
            tint arm LIFTS it toward luminous warm-dark, never a charcoal
            slab. `in oklab` is the glass-tint perceptual family (the in-srgb
-           `--surface-tint-*` brand fence is untouched). The dock `--glass-bg-dock`
+           `--surface-tint-*` brand fence is untouched). The dock `--glass-plate-dock`
            self-re-point precedent applied to the pager chassis. */
-        background: color-mix(
-            in oklab,
-            var(--glass-bg-floating),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        );
-        backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-floating));
+        --glass-veil-tier: var(--glass-veil-floating);
+        @apply glass-plate;
+        backdrop-filter: var(--glass-blur-floating);
         box-shadow:
-            var(--glass-edge-light),
-            var(--glass-specular),
+            var(--glass-material-rim),
             0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 22%, transparent);
         /* §6 EASING DOCTRINE — the surface channel cross-fades on the bezier
            `--ease-standard` (NEVER a spring; a surface prop on a spring is the
@@ -58,21 +54,8 @@
        canonical); shadows/insets stay here. proof:glass DA4 asserts this arm survives. */
     .dark .glass-pager-ring {
         box-shadow:
-            var(--glass-edge-light-dark),
-            var(--glass-specular-dark),
+            var(--glass-material-rim),
             0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 30%, transparent);
     }
 
-    /* ── Chromatic edge dispersion (the polished-glass rim fringe) ──
-       An opt-in `.glass-chromatic` composes the warm/cool oklab fringe OVER the
-       uniform rim (it does NOT replace it — the rim still rides each rung's
-       box-shadow). The fringe is a transparency garnish, so it composes ONLY
-       under `prefers-reduced-transparency: no-preference` and drops under
-       `reduce` (handled by the bracket below). The fringe lands as a dedicated
-       inset box-shadow pair on the material surface so it adds onto the rim. */
-    @media (prefers-reduced-transparency: no-preference) {
-        .glass-chromatic {
-            box-shadow: var(--glass-edge-dispersion), var(--glass-material-rim);
-        }
-    }
 }

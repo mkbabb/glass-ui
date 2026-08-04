@@ -181,11 +181,7 @@ const emit = defineEmits<{
     border-radius: var(--radius-pill);
     /* §3 root-cause #2 (dormant-tint) CURE — the warm floor, both modes,
        enrolled in the ambient seam (no-op at the default 0% strength). */
-    background: color-mix(
-        in oklab,
-        var(--glass-bg-resting),
-        var(--glass-tint-source, transparent) var(--glass-tint-strength, 0%)
-    );
+    background: var(--glass-plate-resting);
     /* §3 root-cause #1 (flat-field) CURE — REAL transmission (build owns the
        -webkit- prefix into dist per the glass.css single-source policy). */
     backdrop-filter: var(--glass-blur-floating);

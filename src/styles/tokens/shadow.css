@@ -34,8 +34,11 @@
     --shadow-dock:           0 0 20px color-mix(in srgb, var(--shadow-color) 14%, transparent);
     --shadow-dock-collapsed: 0 0 12px color-mix(in srgb, var(--shadow-color) 12%, transparent);
 
-    /* The material rim remains a reusable shadow layer for finite glass plates. */
-    --glass-material-rim:    0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 5%, transparent);
+    /* `--glass-material-rim` is NOT declared here. It was — as a non-inset dark 0.5px
+       ring — while glass/rim.css declared the same name as the directional inset
+       catch-light, so which rim a surface got depended on whether it happened to be in
+       the material group. Twenty-two files outside that group silently took this one.
+       ONE declaration now, in rim.css, where the rim is designed. */
 
     /* ── The cartoon register's OWN warm-brown cel ink ──────
        Decoupled from `--shadow-color` so a consumer retunes the cast without

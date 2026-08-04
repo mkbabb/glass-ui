@@ -376,7 +376,7 @@ const fillStyle = computed(() => ({
     position: absolute;
     inset: 0;
     border-radius: var(--radius-pill);
-    background: var(--glass-bg-floating);
+    background: var(--glass-plate-floating);
     backdrop-filter: var(--glass-blur-floating);
     -webkit-backdrop-filter: var(--glass-blur-floating);
     /* the keyed rim + the bold layered-offset cartoon cast (the cast offsets

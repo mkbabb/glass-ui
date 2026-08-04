@@ -285,9 +285,9 @@
        layer (dock.css), so the tier change fades on the plate itself
        (the box keeps the box-shadow elevation above; the plate carries the glass). */
     .glass-dock.collapsed:hover .dock-plate {
-        --dock-plate-collapsed-bg: var(--glass-bg-wash);
+        --dock-plate-collapsed-bg: var(--glass-plate-wash);
         --dock-plate-collapsed-border: var(--glass-border-floating);
-        --dock-plate-expanded-bg: var(--glass-bg-wash);
+        --dock-plate-expanded-bg: var(--glass-plate-wash);
         --dock-plate-expanded-border: var(--glass-border-floating);
     }
 
@@ -310,9 +310,9 @@
     /* The held-tier surface lift retargets both plate endpoints of the ONE lerped
        layer (dock.css), so the tier change fades on the plate itself. */
     .glass-dock[data-held] .dock-plate {
-        --dock-plate-collapsed-bg: var(--glass-bg-floating);
+        --dock-plate-collapsed-bg: var(--glass-plate-floating);
         --dock-plate-collapsed-border: var(--glass-border-floating);
-        --dock-plate-expanded-bg: var(--glass-bg-floating);
+        --dock-plate-expanded-bg: var(--glass-plate-floating);
         --dock-plate-expanded-border: var(--glass-border-floating);
         transition:
             background var(--duration-fast) var(--ease-standard),

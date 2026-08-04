@@ -45,7 +45,7 @@
        WCAG-2.5.5 44px touch floor survives as a `max(…, --control-floor)` clamp
        inside the scaled control-size (the coarse block lifts `--control-floor` to
        `--touch-target`, so a sub-1 scale cannot drop a control under the target).
-       Coordinates with the `--glass-level` + the `--glass-tint-*` — SEPARATE
+       Coordinates with the `--glass-level` + the `--glass-veil-*` — SEPARATE
        axes (size vs material vs legibility); a control is comfortably-sized AND
        glass AND legible, three orthogonal knobs. */
     --ui-scale: 1;
@@ -299,22 +299,22 @@
 
     /* The dock-control family reads a real GLASS register
        on hover/active, NOT a same-hue `--card` mix at an alpha adjacent to the dock's
-       own `--glass-bg-dock` substrate (a sub-1%-ΔL no-op — the loud Q3 tell: "nothing
+       own `--glass-plate-dock` substrate (a sub-1%-ΔL no-op — the loud Q3 tell: "nothing
        on hover, something on click"). Both legs now point at NAMED glass tiers a
        measurable step ABOVE the dock's 42%-opacity substrate:
-         • hover  → `--glass-bg-resting` (the 65% glass plate) — the control surface
+         • hover  → `--glass-plate-resting` (the 65% glass plate) — the control surface
                     WAKES as a brighter glass tier on hover, reading the blurred dock
-                    substrate through it. The +ΔL above `--glass-bg-dock` is perceptible
+                    substrate through it. The +ΔL above `--glass-plate-dock` is perceptible
                     BEFORE click; the specular gleam + scale ride alongside (one register).
-         • active → `--glass-bg-floating` (the 80% glass plate) — a tier ABOVE hover,
+         • active → `--glass-plate-floating` (the 80% glass plate) — a tier ABOVE hover,
                     the keyframes-dock "selected element reads as glass" model the user
                     named: the selected tile is a glass tier that shows the
                     substrate through it, NOT the flat `--surface-tint-12` ink wash. The
                     active ≠ hover register is the glass-tier step, not an alpha nudge.
        This is a REGISTER change (substrate→glass-tier), not a magnitude knob. The
        per-control `--dock-icon-hover-bg` override still wins if a consumer set it. */
-    --dock-control-hover-bg: var(--glass-bg-resting);
-    --dock-control-active-bg: var(--glass-bg-floating);
+    --dock-control-hover-bg: var(--glass-plate-resting);
+    --dock-control-active-bg: var(--glass-plate-floating);
 
     /* The small-tile specular override. The 40px dock-control
        tile is a fraction of a card's plate, so the global `--glass-specular-size`
@@ -341,7 +341,7 @@
     --dock-layer-rail-bg: transparent;
     --dock-layer-rail-divider: color-mix(in srgb, var(--border) 40%, transparent);
     --dock-layer-rail-hover: color-mix(in srgb, var(--accent) 30%, transparent);
-    --dock-layer-rail-active: var(--glass-bg-floating);
+    --dock-layer-rail-active: var(--glass-plate-floating);
     /* The switcher-rail TAB is a COMPACT square, distinct from
        the 40px dock CONTROL. A fallback chain to `var(--dock-control-size,
        1.75rem)` resolves to the full 40px control, so a 3-tab column rail stands
@@ -378,7 +378,7 @@
        The brand-red (`--viz-fourier`) interactive register is retired
        (hover/active/selected/pressed) in favour of the iOS-glassy luminance-lift:
        a translucent material-lift plate (`--dock-control-active-bg`, already the
-       `--glass-bg-floating` tier — C4-INV-1, UNCHANGED) + a brighter-material
+       `--glass-plate-floating` tier — C4-INV-1, UNCHANGED) + a brighter-material
        accent that lifts LUMINANCE, never a saturated brand hue.
 
        `--dock-selected-accent` is the SINGLE retint knob for the selected
@@ -411,12 +411,12 @@
 
     /* The iOS press-DARKEN. Press today scales only
        (`--scale-press-dock`, C4-INV-4); iOS lands "darken + shrink". This token
-       is a tier BELOW resting — `--glass-bg-resting` mixed ~7% toward `--foreground`
+       is a tier BELOW resting — `--glass-plate-resting` mixed ~7% toward `--foreground`
        — read on the dock control `:active` alongside the scale-press so a press
-       lands the brief glass-darken. Auto-flips with `--foreground`/`--glass-bg-resting`. */
+       lands the brief glass-darken. Auto-flips with `--foreground`/`--glass-plate-resting`. */
     --dock-control-press-bg: color-mix(
         in oklab,
-        var(--glass-bg-resting),
+        var(--glass-plate-resting),
         var(--foreground) 7%
     );
 

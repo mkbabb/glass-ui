@@ -77,7 +77,7 @@ describe("DialogContent graded backdrop halo", () => {
 
         // The plate: blur token + the overlay saturate companion.
         expect(form2).toMatch(
-            /backdrop-filter:\s*blur\(var\(--glass-halo-blur\)\)\s*saturate\(var\(--glass-saturate-overlay\)\)/,
+            /backdrop-filter:\s*blur\(var\(--glass-halo-blur\)\)\s*saturate\(var\(--glass-saturate\)\)/,
         );
         // The intersect product of an x + a y double-ramp — core (full-black hold)
         // and bloom (the fade band) as centre-distances, on BOTH axes.
@@ -91,9 +91,9 @@ describe("DialogContent graded backdrop halo", () => {
         // The cross-engine floor: plain blur()+saturate under a mask, NEVER url().
         expect(form2).not.toContain("url(");
 
-        // The dim rides the proven `--glass-bg-overlay` mix, NOT `--overlay-scrim`.
+        // The dim rides the proven `--glass-plate-overlay` mix, NOT `--overlay-scrim`.
         expect(form2).toContain(
-            "color-mix(in oklab, var(--glass-bg-overlay) 50%, transparent)",
+            "color-mix(in oklab, var(--glass-plate-overlay) 50%, transparent)",
         );
         expect(form2).not.toContain("--overlay-scrim");
     });
@@ -104,7 +104,7 @@ describe("DialogContent graded backdrop halo", () => {
         )?.[0];
         expect(darkArm).toBeTruthy();
         expect(darkArm).toContain(
-            "color-mix(in oklab, var(--glass-bg-overlay) 40%, transparent)",
+            "color-mix(in oklab, var(--glass-plate-overlay) 40%, transparent)",
         );
         // The whole FORM 2 dim register is per-mode arms, no light-dark() fragment.
         const form2Region = placementStyles.slice(

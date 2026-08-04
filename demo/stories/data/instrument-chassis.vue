@@ -158,7 +158,7 @@ const reserves: InstrumentChassisReserve[] = ["none", "stage", "inspector", "bot
     border-radius: 50%;
     background:
         radial-gradient(circle, transparent 54%, var(--surface-tint-8) 55% 56%, transparent 57%),
-        var(--glass-bg-wash);
+        var(--glass-plate-wash);
 }
 
 .instrument-demo__needle {
@@ -177,7 +177,7 @@ const reserves: InstrumentChassisReserve[] = ["none", "stage", "inspector", "bot
     min-block-size: 12rem;
     place-items: center;
     border-radius: var(--radius-card);
-    background: var(--glass-bg-wash);
+    background: var(--glass-plate-wash);
     color: var(--muted-foreground);
 }
 

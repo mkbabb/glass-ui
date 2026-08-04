@@ -8,12 +8,11 @@
    opacity+blur clobbers. The level-0 path resolves solid `--card` + `blur(0)`
    through the SAME machinery (the opacity seam → 1, the blur seam → 0), so every
    glass surface — current and future — flattens with no per-rung enumeration. The
-   grain + highlight kills stay (they sit off the level axis). */
+   grain kill stays (it sits off the level axis). */
 @media (prefers-reduced-transparency: reduce) {
     :root {
         --glass-level: 0;
         --glass-grain-opacity: 0;
-        --glass-highlight: 0 0 0 0 transparent;
     }
 }
 
@@ -22,19 +21,14 @@
    replaces the five per-rung opacity clobbers: every rung firms up toward solid
    for AA while keeping a hint of the glass register. ONE knob, every rung.
 
-   The Clear↔Tinted user-escape (Apple's iOS-26.2 analog) COORDINATES the
-   two axes here: the OPACITY axis rides the `--glass-level` (firm up toward solid)
-   AND the TINT axis biases toward ink — `--glass-tint-source` → the warm-ink +
-   `--glass-tint-strength` → the AA floor, the same darken the automatic bright
-   bucket applies, now reached by the explicit "more contrast" user request. The two
-   axes stay DISTINCT (level = opacity+blur, tint = darken) but share the bracket so
-   a high-contrast user gets BOTH a firmer plate and the ink-tint legibility lift —
-   one coordinated escape, not two parallel forks. */
+   ONE axis reaches it now. `--glass-level: 0.3` lerps every plate 70% of the way to
+   solid `--card` AND drops the blur to 30% of its rung — the firmer plate and the
+   legibility lift are the same move, because the plate is ink over the card escape
+   and the level IS the mix. The separate tint-darken this bracket used to add was a
+   second writer pushing the same plate the same direction. */
 @media (prefers-contrast: more) {
     :root {
         --glass-level: 0.3;
-        --glass-tint-source: var(--glass-tint-ink);
-        --glass-tint-strength: var(--glass-tint-strength-aa);
         /* Definition is the MID rung of the SAME
            a11y ladder `--glass-level: 0.3` rides: an explicit "more contrast" request
            lifts every glass surface to the DEFINED tier library-wide (a read-carrying
@@ -59,16 +53,14 @@
 
    COORDINATES WITH — the same `--glass-level: 0` opaque escape the reduced-
    transparency / high-contrast brackets ride. Setting the ONE clarity knob to 0
-   collapses the `--glass-bg-*` opacity recipe to solid `--card` + `blur(0)` through
+   collapses the plate recipe to solid `--card` + `blur(0)` through
    the SAME machinery (no parallel solid recipe), so the platform sees opaque plates
-   it maps to `Canvas`. The grain + highlight kills match the reduce bracket (they
-   sit off the level axis). The tint axis is moot under WHC (the user's palette
-   supersedes the ink-darken) but harmless — the opaque plate is system-painted. */
+   it maps to `Canvas`. The grain kill matches the reduce bracket (it sits off the
+   level axis). */
 @media (forced-colors: active) {
     :root {
         --glass-level: 0;
         --glass-grain-opacity: 0;
-        --glass-highlight: 0 0 0 0 transparent;
     }
 
     /* Every glass-material ladder rung relied on `backdrop-filter` + an inset

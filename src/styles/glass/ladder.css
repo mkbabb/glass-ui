@@ -5,12 +5,14 @@
    See docs/precepts/design-idioms.md §cohesion-aware partials. */
 @layer components {
     /* ── Five-tier surface ladder (visual only, no geometry) ──
-       Tier semantics, alpha-monotonic:
-         wash      ~0.30α  + light blur      (was `subtle`)
-         quiet     ~0.50α  + medium blur     (the missing rung)
-         resting   ~0.65α  + canonical blur  (was `default`; the consumer plate)
-         floating  ~0.80α  + heavier blur    (was `elevated`)
-         overlay   ~0.95α  + heaviest blur   (NEW; modal-over-modal) */
+       One medium, five thicknesses. The ink and radius per rung are declared in the
+       token home (tokens/glass.css §8); the tier binding is in glass/veil.css beside
+       the recipe that paints it.
+         wash      10px · ink .06 / .10   content
+         quiet     14px · ink .10 / .14   content
+         resting   16px · ink .14 / .18   content (the consumer plate)
+         floating  20px · ink .18 / .22   chrome
+         overlay   22px · ink .22 / .26   chrome */
 
     /* The five-rung surface ladder declares the unprefixed
        `backdrop-filter` only IN SOURCE. Authoring both forms manually here
@@ -30,66 +32,17 @@
        `tests/styles/backdrop-prefix-normalization.test.ts`
        (G-GLASS-HAS-FROST arm (b)): every `-webkit-backdrop-filter` in the
        built dist must have an unprefixed sibling in the same rule. */
-    /* Every rung's background composes the adaptive-tint recipe
-       (`color-mix(in oklab, <rung bg>, var(--glass-tint-source) var(--glass-tint-
-       strength))`). With the default `--glass-tint-strength: 0%` the mix is a
-       no-op = byte-identical to the un-tinted rung; a consumer biases the surface
-       toward a sampled backdrop hue by setting `--glass-tint-source` + a
-       strength ≤30%. oklab is the mwg-preferred tint space for the TINT mix here
-       (NEVER an `oklch(from …)` lightness-shift in the GLASS-TINT mix). The
-       `oklch(from var(--foreground) …)` relative-color recipe DID land its first
-       live consumer — the dark `--surface-tint-*` arm
-       (`tokens/dark-arm.css`), where the tolerant α-mix absorbs the small high-L
-       chroma (the gamut-map caveat documented + pinned under the gamut edge there).
-       That is the INK derivation, separate from THIS glass-tint mix space. */
-
-    /* The DRY plate-tint recipe, DECLARED ONCE.
-       The five-rung surface ladder each composed the SAME element-level oklab tint
-       INLINE (5 byte-identical `color-mix(in oklab, var(--glass-bg-<rung>),
-       var(--glass-tint-source) var(--glass-tint-strength))` pastes). The recipe is
-       the adaptive-legibility seam — the rung bg mixed TOWARD the sampled/ink
-       `--glass-tint-source` at the continuous `--glass-tint-strength`; at the `0%`
-       rest default the mix is a no-op (`color-mix(…, X, transparent 0%) ≡ X`),
-       byte-identical to the raw rung bg.
-
-       Factored to ONE declaration: each rung sets only its own `--glass-bg-rung`
-       (the per-rung bg indirection — the EXACT `--glass-border-rung` →
-       `--glass-border-accent` pattern rim.css already runs for the border half) and
-       reads `background: var(--glass-plate-tinted)`. `--glass-plate-tinted` resolves
-       its `var(--glass-bg-rung)` / `--glass-tint-source` / `--glass-tint-strength`
-       at the rung element where it is composed (a custom property substitutes its
-       var() refs against the SAME element's other customs), so the per-rung bg AND
-       the per-element re-points (the `:where()` content-tier + overlay-band tint
-       cascades below) reach it unchanged — net-neutral, dist byte-isomorphic. This
-       single home is the ONE place a later wave adds the
-       bias outer-leg, instead of N pastes.
-
-       `--glass-plate-tinted` is the LADDER-RUNG spelling
-       of the ONE tint recipe; its applied-at-the-element twin for NON-ladder surfaces
-       is `@utility glass-fill` (glass/surfaces.css, reading `--glass-fill-rung`). Same
-       oklab seam, two delivery seams: the ladder rungs read the token, a Card /
-       button / dock surface APPLIES the utility. A NON-ladder surface never re-spells
-       the `color-mix(in oklab, …)` — it composes `glass-fill`; the `--glass-bg-*-tinted`
-       pre-composed tokens + the `:root --glass-bg-dock` inline tint are the substitution-
-       trap forms the utility supersedes (their DELETE is the sibling-gate-coordinated
-       atomic step). */
-    .glass-wash,
-    .glass-quiet,
-    .glass-resting,
-    .glass-floating,
-    .glass-overlay {
-        --glass-plate-tinted: color-mix(
-            in oklab,
-            var(--glass-bg-rung),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        );
-    }
+    /* Every rung is the SAME medium at a different THICKNESS. The plate paint comes
+       from `@utility glass-plate` (glass/veil.css) — one recipe, composed at the
+       element, reading the rung's tier token declared beside it. A rung's own rule
+       therefore carries exactly what is genuinely per-rung: its blur, its border ink,
+       its shadow stack. There is no second chromatic axis mixing the plate toward the
+       same ink the veil already writes. */
 
     .glass-wash {
         position: relative;
-        --glass-bg-rung: var(--glass-bg-wash);
-        background: var(--glass-plate-tinted);
-        backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-wash));
+        @apply glass-plate;
+        backdrop-filter: var(--glass-blur-wash);
         /* The rung border ink feeds the accent-composed
            `--glass-border-accent` (rim group above); byte-identical at 0%. */
         --glass-border-rung: var(--glass-border-wash);
@@ -106,14 +59,13 @@
          quiet   → `--glass-under-shadow-quiet`   (0 2px 8px -1px α0.04)
          resting → `--glass-under-shadow-default` (0 4px 16px -2px α0.08)
          floating→ `--glass-under-shadow-vivid`   (0 8px 32px -4px α0.12)
-       `.glass-wash` is sub-perceptual; `.glass-overlay` is modal-heavy
+       `.glass-wash` is the thinnest rung; `.glass-overlay` is modal-heavy
        — neither composes an under-shadow rung (Y4/Y6/Y7 SLIM retention).
        Spine tier wires its own rung at instrument-chassis.css. */
     .glass-quiet {
         position: relative;
-        --glass-bg-rung: var(--glass-bg-quiet);
-        background: var(--glass-plate-tinted);
-        backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-quiet));
+        @apply glass-plate;
+        backdrop-filter: var(--glass-blur-quiet);
         --glass-border-rung: var(--glass-border-quiet);
         border: 1px solid var(--glass-border-accent);
         box-shadow:
@@ -124,9 +76,8 @@
 
     .glass-resting {
         position: relative;
-        --glass-bg-rung: var(--glass-bg-resting);
-        background: var(--glass-plate-tinted);
-        backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-resting));
+        @apply glass-plate;
+        backdrop-filter: var(--glass-blur-resting);
         --glass-border-rung: var(--glass-border-resting);
         border: 1px solid var(--glass-border-accent);
         box-shadow:
@@ -137,23 +88,19 @@
 
     /* The floating tier carries the full-perimeter rim (the
        catch-light that "defines the silhouette", WWDC25 sess. 219). The rim now
-       comes from the unified `--glass-material-rim` (= `--glass-edge-light`) so
-       it shares ONE source with the rest of the ladder; it rides INSIDE the
-       box-shadow stack so it composes with the under-shadow floor + the lift. */
+       comes from the unified `--glass-material-rim` so it shares ONE source with the
+       rest of the ladder; it rides INSIDE the box-shadow stack so it composes with the
+       under-shadow floor + the lift. */
     .glass-floating {
-        /* Engage the bright-backdrop bucket BY DEFAULT on
-           the overlay band: a floating surface floats over WHATEVER the consumer
-           painted (frequently a light/near-white app surface — the canonical G2
-           case), so the library opts its own overlay-band glass in at its own root
-           via the SELF-CONTAINER reach below (`.glass-floating { --glass-backdrop }`
-           + `:where(.glass-floating) > * `-less: the rung re-points its OWN tint
-           through the companion self-rule, not only the ancestor @container). `dark`
-           (the :root default at tokens.css) stays the explicit per-surface override a
-           dark-substrate consumer dials in on an ancestor. */
+        /* Engage the bright-backdrop bucket BY DEFAULT on the overlay band: a floating
+           surface floats over WHATEVER the consumer painted (frequently a light/
+           near-white app surface — the canonical G2 case), so the library opts its own
+           overlay-band glass in at its own root. `dark` (the :root default at
+           tokens.css) stays the explicit per-surface override a dark-substrate consumer
+           dials in on an ancestor. */
         --glass-backdrop: light;
         position: relative;
-        --glass-bg-rung: var(--glass-bg-floating);
-        background: var(--glass-plate-tinted);
+        @apply glass-plate;
         backdrop-filter: var(--glass-blur-floating);
         --glass-border-rung: var(--glass-border-floating);
         border: 1px solid var(--glass-border-accent);
@@ -168,8 +115,7 @@
            (see .glass-floating). */
         --glass-backdrop: light;
         position: relative;
-        --glass-bg-rung: var(--glass-bg-overlay);
-        background: var(--glass-plate-tinted);
+        @apply glass-plate;
         backdrop-filter: var(--glass-blur-overlay);
         --glass-border-rung: var(--glass-border-overlay);
         border: 1px solid var(--glass-border-accent);
@@ -178,23 +124,23 @@
 
     /* ── Adaptive legibility: the bright-backdrop bucket (the iOS-26/27
        "locally darken the glass over light content" move; G2) ──────────────────
-       When a consumer sets `--glass-backdrop: light` on any ancestor (a near-white
-       card surface, a pale aurora bleed, a bright data grid), the `@container
-       style()` read engages here and LIFTS the tint toward ink: `--glass-tint-
-       strength` climbs from the `0%` rest default to the bounded AA floor
-       (`--glass-tint-strength-aa`, ≤24% — translucent floor preserved) and `--glass-
-       tint-source` re-points from `var(--card)` to the warm-ink `--glass-tint-ink`.
-       Both are INHERITING custom properties the rungs' `background:` composite
-       already reads, so re-pointing them on the material group re-resolves the
-       EXISTING `color-mix(in oklab, <rung bg>, …)` toward ink — ZERO new compositing
-       seam, the literal darken-over-light recipe. The `.glass-*::before` specular
-       `plus-lighter` gleam is untouched (it composes ON the darkened plate;
-       the darkening is the orthogonal oklab-tint axis). No `@supports` wrapper:
-       style queries introduce no new `container-type` value (every element is a
-       style container by default), so an engine without style-query support parses
-       the unknown at-rule as invalid, drops the block, and keeps the zero-delta
-       glass (the graceful degradation — the surface keeps its un-darkened base
-       glass; see utilities.css §density for the same precedent). */
+       THE TINT AXIS IS GONE. It mixed every rung toward `--glass-veil-ink` — the warm
+       near-black `--foreground` — while the veil already writes warm near-black ink at
+       the rung's own alpha. Two chromatic writers, one plate, one direction: the plate
+       darkened twice and neither writer could be reasoned about alone. The veil is the
+       one writer now, and the observer-driven refinement rides ITS alpha (the clamp in
+       `@utility glass-plate`, glass/veil.css): calm backdrop → exactly the rung's ink,
+       measured-bright backdrop → up to two more rungs of it, ceiling included.
+
+       What the bucket still drives is the INK ON the plate, not the plate. When a
+       consumer/shell declares `--glass-backdrop: light` on an ancestor, the muted body
+       register lifts to the full warm ink: the muted L40 tier cannot clear 4.5:1 on a
+       darkened translucent plate, because darkening moves the plate TOWARD muted's own
+       luminance. That is a foreground decision and it belongs here.
+
+       No `@supports` wrapper: style queries introduce no new `container-type` value, so
+       an engine without style-query support drops the unknown at-rule and keeps the
+       un-lifted register. */
     @container style(--glass-backdrop: light) {
         .glass-material,
         .glass-wash,
@@ -203,155 +149,24 @@
         .glass-floating,
         .glass-overlay,
         .glass-card {
-            --glass-tint-source: var(--glass-tint-ink);
-            --glass-tint-strength: var(--glass-tint-strength-aa);
-            /* The --muted-foreground lift moves HERE, into the
-               declared/sampled BRIGHT condition. The muted L40 tier cannot clear 4.5:1 on a
-               translucent FULL-AA-darkened plate (darkening moves the plate toward muted's
-               own luminance), so it lifts to the full ink ONLY where the plate actually
-               darkens — NOT on the calm-light unconditional floor (where it stays the muted
-               register, the slides caption read). */
             --muted-foreground: var(--foreground);
         }
     }
 
-    /* SELF-ENGAGE the overlay band by default. The
-       `@container style()` rule above queries an ANCESTOR (CSS style queries never
-       self-match — verified on Chrome 148), so the `.glass-floating { --glass-backdrop:
-       light }` default we set on the rung would NOT darken the rung's OWN surface, only
-       its descendants. AND the `:root` library default is `--glass-backdrop: dark`
-       (tokens.css), so a `@container style(--glass-backdrop: dark)` revert would ALWAYS
-       fire (every element has the dark :root as an ancestor) — it cannot distinguish an
-       explicit consumer `dark` from the default. So the overlay band self-engages
-       UNCONDITIONALLY as the library default: a floating/overlay surface floats over
-       WHATEVER the consumer painted (frequently a light/near-white app surface — the
-       canonical G2 case the user reported), so darkening the translucent plate toward
-       the warm-ink is the correct default. This re-points the tint tokens DIRECTLY on
-       the overlay-band surfaces (`.glass-floating` / `.glass-overlay` — the Dialog/
-       Sheet/Popover/DropdownMenu/HoverCard/Command/Tooltip/Toast/Select-content band),
-       engaging the SAME oklab tint axis (zero new compositing seam). Over a DARK page
-       the darken is sub-perceptual (warm-ink over an already-dark plate is a small
-       shift); a dark-substrate consumer who wants the pristine plate sets
-       `--glass-tint-strength: 0%` on the band or uses `.glass-opaque`. The in-srgb
-       `--surface-tint-*` family is never touched (this edits only the in-oklab glass
-       tint axis).
-
-       The self-engage now EXTENDS to the plain CONTENT
-       tiers (`.glass-card`/`.glass-resting`/`.glass-quiet`/`.glass-wash`), not just
-       the overlay band. The glass-first MAXIMAL default makes content-on-glass-
-       over-a-bright-backdrop the common case, so every content tier self-darkens over
-       light WITHOUT consumer opt-in — closing the C5-7 asymmetry (the content tiers
-       would otherwise paint near-invisible over light on every route). The muted body
-       register lifts to the full warm-ink under the engaged plate: the muted L40 tier
-       cannot clear 4.5:1 on a translucent darkened plate (darkening moves the plate
-       TOWARD muted's own luminance), so the low-contrast muted register resolves to
-       the legible dark ink (clears ~10:1) — a token re-point on the same inheriting
-       axis as the tint. */
-    /* The OVERLAY band (.glass-floating/.glass-overlay — Dialog/Sheet/Popover/DropdownMenu/
-       HoverCard/Command/Tooltip/Toast/Select-content) keeps the FULL unconditional AA darken
-       + the muted lift: it floats over WHATEVER the consumer painted (frequently a light/
-       near-white app surface — the canonical G2 case), so darkening toward the warm-ink is
-       the correct DEFAULT over an UNKNOWN surface. Over a DARK page this becomes the
-       luminous-dark LIFT (the dark-arm re-tunes --glass-tint-strength-aa to 12% — the plate
-       lifts off the deep page). A dark-substrate consumer who wants the pristine plate sets
-       `--glass-tint-strength: 0%`. */
-    :where(.glass-floating, .glass-overlay) {
-        --glass-tint-source: var(--glass-tint-ink);
-        /* The adaptive-reconcile fold (CONTINUOUS half):
-           the OVERLAY band SPECIFICALLY JOINS the continuous observer driver, the SAME
-           clamp the content tiers get. The dropdown/Dialog/Popover/Select-content plate
-           FLOORS to warm-cream when the measured backdrop is calm/dark, and darkens
-           CONTINUOUSLY only under a measured bright backdrop — NOT the binary `@container`
-           bucket jump, NOT a blanket unconditional darken (the retired 4.0.x 20% slab).
-           The `` pre-fix already closed the UNCONDITIONAL-darken half (the band
-           floored by default); THIS is the continuous earned-darken half. The MEASURED AA
-           bar (the overlay plate clears 4.5:1 WHILE α < 0.86) is GLASS-LEGIBILITY-
-           MEASURED's roster addition — the driver here, the bar there, no double-ownership. */
-        --glass-tint-strength: clamp(
-            var(--glass-tint-strength-floor),
-            calc(
-                var(--glass-tint-strength-floor) +
-                (var(--glass-tint-strength-aa) - var(--glass-tint-strength-floor)) *
-                max(0, (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee)) / (1 - var(--glass-backdrop-luma-knee)))
-            ),
-            var(--glass-tint-strength-aa)
-        );
-        /* The overlay band's muted caption keeps the on-glass MUTED
-           register on a CALM modal (the SAME `--on-glass-muted` the content tiers read on
-           their calm path — legible-AND-subordinate against the composited glass fill),
-           NOT an UNCONDITIONAL lift to full `--foreground` that blackened the caption on a
-           cream modal over a light page. The bright-bucket lift (@container --glass-
-           backdrop:light below) moves `--muted-foreground` to the contrast ink in LOCKSTEP
-           with `--foreground` only where the plate ACTUALLY darkens to AA — so a busy-
-           backdrop modal goes full ink, a calm modal keeps the muted register. */
-        --muted-foreground: var(--on-glass-muted);
-        --muted-foreground-strong: var(--on-glass-muted-strong);
-    }
-
-    /* The plain CONTENT tiers self-engage the SUB-PERCEPTUAL
-       FLOOR unconditionally, NOT the full AA darken (the gray-slab fix). Over a
-       calm LIGHT page the floor (--glass-tint-strength-floor: 4%) is a silhouette whisper —
-       the translucent cream card stays warm (L ≈ 0.94), no gray slab. Over a DARK page the
-       floor re-resolves to the luminous-dark lift (12% in the dark arm — the plate lifts off
-       the deep page, the desired register). The FULL AA darken engages on these tiers ONLY
-       under the declared/sampled BRIGHT signal (the @container --glass-backdrop:light bucket
-       above — where the muted lift also lives now). NO unconditional --muted-foreground lift
-       here: on the calm-light floor the caption keeps the muted register (the slides read).
-       A consumer opts a light-page card out via `--glass-tint-strength: 0%` on an ancestor.
-
-       The THIRD-STATE on-glass FOREGROUND re-point lands HERE,
-       BESIDE the seam (the SAME cascade context, the SAME content-tier set, NOT a new
-       competing layer). The calm-light floor keeps the page-muted --neutral-5 as declared —
-       but the muted ink is calibrated against the CANVAS, and on a TRANSLUCENT content
-       plate (the glass-first common case) it composites toward the lifted backdrop and
-       its contrast COLLAPSES (1.15-3.29:1 measured in dark). The re-point targets the
-       muted register at the COMPOSITED glass fill: --muted-foreground → --on-glass-muted
-       (+ the -strong twin), a register BETWEEN the page-muted and the bright-bucket full
-       ink (legible-AND-subordinate; the caption stays quieter than body --foreground).
-       This is NOT a fork of --glass-tint-* — it READS the seam context and expresses the
-       third state; it NEVER re-declares --glass-tint-ink/-strength-* (the
-       frozen bound). The BA bright-bucket lift (@container --glass-backdrop:light above,
-       --muted-foreground → --foreground) STILL WINS where the plate darkens — the
-       @container conditional overrides this unconditional :where() when it engages, so a
-       darkened plate goes full ink; this calm re-point is the calm-plate case ONLY. The
-       overlay band (:where(.glass-floating, .glass-overlay) above) is a DISJOINT selector
-       set (it keeps the full-ink lift), so neither path collides. The values auto-flip per
-       mode (the on-glass rungs carry their own light/dark per-mode arms in tokens). */
-    :where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) {
-        --glass-tint-source: var(--glass-tint-ink);
-        /* The CONTINUOUS observer-driven darken (the dead-knob
-           closed). The strength is no longer a flat floor: it is a clamp that
-           READS the observer's measured `--glass-backdrop-luma` and lerps from the calm
-           warm-cream floor toward the ≤24% AA ceiling as the backdrop brightens past the
-           `--glass-backdrop-luma-knee` (the iOS-27 dynamic-range shift, apple-ios27.md
-           §1.5). Over a calm/dark backdrop (luma ≤ knee, the `max(0, …)` ramp → 0) the
-           clamp resolves EXACTLY `--glass-tint-strength-floor` (the GLASS-IDENTITY calm
-           identity, byte-equal); rising luma ramps the lift CONTINUOUSLY; the clamp floors
-           at the 4% identity and ceilings at the bounded AA — never an unconditional 20%
-           slab (the grey-slab is the OPPOSITE of this earned, measured track).
-
-           THE BAND-DRIVER DECISION (reconciled to ONE):
-           the declarative `@container --glass-backdrop: light` bucket below is THE BAND
-           DRIVER (a consumer/shell writes `--glass-backdrop: light` on an ancestor where
-           it KNOWS the backdrop is bright — the AA darken then reaches every descendant
-           content tier), and this CONTINUOUS `--glass-backdrop-luma` clamp is the DYNAMIC
-           REFINEMENT layer that engages WHERE A LUMA WRITER FIRES — the dock (its own
-           `useGlassBackdropLuminance` observer, wired ON) and any band surface a consumer
-           wires the observer to. On a content-tier Card with no wired observer + no
-           ancestor bucket, `--glass-backdrop-luma` reads the registered initial 0 → the
-           clamp resolves the calm floor (the honest calm identity — a plate over an
-           UNKNOWN backdrop stays warm, never a false darken). The bucket is the band
-           driver, the clamp is the refinement — no double-ownership (the clamp does
-           NOT retire the bucket as the driver). */
-        --glass-tint-strength: clamp(
-            var(--glass-tint-strength-floor),
-            calc(
-                var(--glass-tint-strength-floor) +
-                (var(--glass-tint-strength-aa) - var(--glass-tint-strength-floor)) *
-                max(0, (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee)) / (1 - var(--glass-backdrop-luma-knee)))
-            ),
-            var(--glass-tint-strength-aa)
-        );
+    /* The content tiers and the overlay band both read the ON-GLASS muted register at
+       rest. The page-muted ink is calibrated against the OPAQUE canvas; on a
+       translucent plate it composites toward the lifted backdrop and its contrast
+       collapses (1.15-3.29:1 measured in dark). `--on-glass-muted` is the register
+       BETWEEN page-muted and full ink — legible AND subordinate. The bright-bucket lift
+       above still wins where it engages, in lockstep with `--foreground`. */
+    :where(
+        .glass-card,
+        .glass-resting,
+        .glass-quiet,
+        .glass-wash,
+        .glass-floating,
+        .glass-overlay
+    ) {
         --muted-foreground: var(--on-glass-muted);
         --muted-foreground-strong: var(--on-glass-muted-strong);
     }

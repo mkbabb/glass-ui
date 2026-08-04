@@ -1,0 +1,100 @@
+/* glass/veil.css
+   The INK-VEIL register — the plate paint, composed AT the element.
+
+   The token home (tokens/glass.css) declares the ladder: one ink, one base, one step,
+   five derived rungs. This file declares the ONE recipe that turns a rung into paint,
+   plus the observer-driven refinement that lets a measured-bright backdrop earn more
+   ink than the rung's own.
+
+   WHY IT IS A UTILITY AND NOT A TOKEN. A `:root`-composed plate color bakes `:root`'s
+   `--glass-level` and `--glass-backdrop-luma`, so an ancestor that re-points either one
+   cannot reach a descendant reading the already-resolved value — the substitution trap
+   this library has hit at dock scale twice. Composed at the element, every input
+   resolves where the surface paints. The `:root` `--glass-plate-{rung}` colors in
+   tokens/glass.css are the SAME recipe's value form, for the sites that structurally
+   need a `<color>` (a `color-mix()` endpoint, a gradient stop, a Tailwind `bg-()`
+   arbitrary value). ONE recipe, two delivery seams — the `--glass-veil` /
+   `@utility glass-plate` idiom this cascade already speaks.
+
+   A partial of the glass.css cascade; @import-ed BEFORE ladder.css (the rungs apply
+   the utility), its own @layer components. */
+
+/* ── @utility glass-plate — the plate, at the element ────────────────────────────
+   A surface sets its rung (`--glass-veil-tier: var(--glass-veil-quiet)`) and composes
+   `glass-plate`. Unset, the tier resolves `resting` — the consumer plate, the honest
+   default for a surface that asked for glass without saying which.
+
+   THE EARNED DARKEN. `--glass-veil-rung` is the tier's own ink, clamped upward by the
+   measured backdrop luminance: at or below the knee the clamp resolves EXACTLY the
+   rung's own ink (the calm identity — a plate over an unknown backdrop never falsely
+   darkens), and past the knee it earns up to TWO more rungs of ink, ceiling included.
+   Unsampled surfaces read the registered `--glass-backdrop-luma` initial 0 and sit on
+   the floor. This is the ONE chromatic writer on the plate body: there is no second
+   tint axis mixing the same plate toward the same ink.
+
+   `--glass-veil` is published as a nestable VALUE token so a consumer composing the
+   plate INSIDE a bigger mix (the capsule's warm floor, a tone-tinted feedback panel)
+   reads it without re-spelling the recipe. */
+@utility glass-plate {
+    --glass-veil-rung: clamp(
+        var(--glass-veil-tier, var(--glass-veil-resting)),
+        calc(
+            var(--glass-veil-tier, var(--glass-veil-resting)) + 2 *
+                var(--glass-veil-step) *
+                max(
+                    0,
+                    (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee)) /
+                        (1 - var(--glass-backdrop-luma-knee))
+                )
+        ),
+        calc(
+            var(--glass-veil-tier, var(--glass-veil-resting)) + 2 *
+                var(--glass-veil-step)
+        )
+    );
+    --glass-veil: color-mix(
+        in srgb,
+        oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-rung))
+            calc(var(--glass-level) * 100%),
+        var(--card)
+    );
+    background: var(--glass-veil);
+}
+
+@layer components {
+    /* The five calm rungs name their tier here, in ONE table, so the ladder reads as a
+       ladder in source. Each rung's own rule (ladder.css) applies `glass-plate` and
+       carries its blur, border and shadow — the tier is the only thing that varies
+       between them, and it is the only thing declared here. */
+    .glass-wash {
+        --glass-veil-tier: var(--glass-veil-wash);
+        --glass-grasp-radius: var(--glass-blur-wash-radius);
+        --glass-grasp-rest-filter: var(--glass-blur-wash);
+    }
+    .glass-quiet {
+        --glass-veil-tier: var(--glass-veil-quiet);
+        --glass-grasp-radius: var(--glass-blur-quiet-radius);
+        --glass-grasp-rest-filter: var(--glass-blur-quiet);
+    }
+    /* `.glass-card` binds RESTING. It rode `quiet` while quiet and resting shared a
+       radius and differed by a brightness lift — two names, one material, and the
+       convenience shorthand landed on the thinner of the twins. The rungs are distinct
+       now (14px/.10 vs 16px/.14) and the card is the consumer plate: resting is what it
+       always meant. */
+    .glass-card,
+    .glass-resting {
+        --glass-veil-tier: var(--glass-veil-resting);
+        --glass-grasp-radius: var(--glass-blur-resting-radius);
+        --glass-grasp-rest-filter: var(--glass-blur-resting);
+    }
+    .glass-floating {
+        --glass-veil-tier: var(--glass-veil-floating);
+        --glass-grasp-radius: var(--glass-blur-floating-radius);
+        --glass-grasp-rest-filter: var(--glass-blur-floating);
+    }
+    .glass-overlay {
+        --glass-veil-tier: var(--glass-veil-overlay);
+        --glass-grasp-radius: var(--glass-blur-overlay-radius);
+        --glass-grasp-rest-filter: var(--glass-blur-overlay);
+    }
+}

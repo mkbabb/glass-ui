@@ -75,7 +75,7 @@
        56° warm-amber family, L held within ±0.001, chroma off the gray floor,
        chroma-only at constant L). The contrast contract holds (the dark ink over the L4 page
        stays ≥ the body floor). EVERY dark var(--foreground) consumer (body copy, the lifted
-       muted register, --glass-tint-ink, the cartoon shadow, the configurator divider, the
+       muted register, --glass-veil-ink, the cartoon shadow, the configurator divider, the
        dock-selected-accent, the --surface-tint-* relative-color recipe below) re-resolves
        warm in lockstep, zero per-site edit. LOCKSTEP light-dark.css:92 (the §2c discipline —
        both mode arms warm together or the FOUC/enhancement split paints two inks). */
@@ -217,69 +217,32 @@
     --constellation-edge-floor:          0;
     --constellation-edge-accent-alpha:   0.34;
 
-    /* Glass opacity + grain for dark — the per-tier canonical alpha, DARK arm. The SAME named `--glass-opacity-{tier}` register as
-       the light arm (tokens/glass.css), per-mode — the dark identity. Five-tier
-       ladder, alpha-monotonic; each rung lifts ~0.08 from its light counterpart so
-       the dark surfaces carry comparable read-weight against the deeper canvas. A
-       consumer reads these named tokens; a divergent register stays a consumer preset.
-       Machine-locked by `proof:card-tier-alpha` (the dark-arm-present + monotonic +
-       lift-over-light asserts). */
-    --glass-opacity-wash:     0.38;
-    --glass-opacity-quiet:    0.58;
-    --glass-opacity-resting:  0.72;
-    --glass-opacity-floating: 0.88;
-    --glass-opacity-overlay:  0.96;
-    --glass-opacity-chassis:  0.36;
-    /* The dialog dark register lifts ~0.08 over the light arm
-       (0.68 → 0.76) for read-weight over the deep canvas, mirroring the dark opacity
-       ladder (it sits between dark `resting` 0.72 and `floating` 0.88 — see-through
-       but legible over the deep page). The SAME named token as the light arm, per-
-       mode; the composed `--glass-bg-dialog` (glass.css :root) re-resolves from it
-       automatically per mode. */
-    --glass-opacity-dialog:   0.76;
-    --glass-grain-opacity: 0.045;
-    /* Re-calibrated to the JND floor for the CORRECTED coarse
-       tooth + SCREEN blend (std ≥ 3.86 dark): screen on the ink pole BITES HARD so it
-       needs LESS alpha (the honest inversion the measurements force — the opacity
-       ladder light→dark 0.22→0.16 ≈ ×1/√φ, dark steps DOWN). Was 0.11 on the
-       self-cancelling soft-light arm. */
-    --paper-grain-opacity: 0.16;
-    --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);
+    /* The dark arm mints NO second alpha ladder. Nine hand-tuned dark opacities used
+       to mirror nine light ones, and the two registers could drift apart without
+       either being wrong on its own. The ink pair above is the whole dark arm now:
+       one ink, one base, and every rung follows.
 
-    /* The dark arm of the adaptive --glass-tint-* seam (the
-       SAME seam, NO third fork). The self-engage block (glass/ladder.css) re-points
-       --glass-tint-source → --glass-tint-ink at --glass-tint-strength-aa. In LIGHT that is
-       a darken-over-bright; in DARK --glass-tint-ink resolves the light-cream --foreground,
-       so the SAME re-point becomes a gentle LIFT toward a luminous translucent dark (the
-       MIRROR of the light darken — the plate lifts OFF the deep page rather than dying into
-       it). Applying the light 20% strength in dark over-washes (the wrong-direction —
-       it flattens the silhouette toward cream). The dark arm re-declares the BOUNDED
-       strength to a gentle luminous-dark lift (12%) — over-light's 20% is a light-mode
-       concern (the bright bucket never engages in dark — there is no white backdrop). The
-       --glass-tint-ink token stays var(--foreground) (the light cream is the correct LIFT
-       ink in dark); only the STRENGTH re-tunes. The unconditional content-tier floor
-       (--glass-tint-strength-floor, light-mode-calm) is NOT re-declared here — in dark the
-       self-engage uses the AA arm directly (the luminous-dark lift is the desired default,
-       not a sub-perceptual silhouette). */
-    --glass-tint-strength-aa: 12%;
-    /* The dark §2c dock-ink lockstep (the MIRROR of the light
-       darken). In dark the dock tint is a LIFT toward a luminous warm-cream (L 0.90,
-       C 0.045) — `oklch(from var(--foreground) …)` extracts the dark foreground's warm
-       hue/chroma and lifts L (the dark `--foreground` is the light cream, so this stays a
-       luminous lift). The dark `--glass-tint-strength-aa` stays 12% (FROZEN). The dock self-engage reads this dock-scoped ink in BOTH modes. */
-    --glass-tint-ink-dock: oklch(from var(--foreground) 0.90 0.045 h);
-    /* The unconditional content-tier self-engage (glass/ladder.css) reads
-       --glass-tint-strength-floor. In LIGHT that is the 4% sub-perceptual silhouette (the
-       calm-light card stays warm); in DARK the content tiers WANT the full luminous-dark
-       lift as the default (the plate lifts off the deep page — the desired register, not a
-       sub-perceptual edge), so the floor re-resolves to the AA lift here. ONE token, two
-       mode arms — the content-tier self-engage needs no mode branch. */
-    --glass-tint-strength-floor: 12%;
+       Grain, DARK arm. A multiply blend on a near-black canvas needs LESS alpha than
+       on cream — the honest inversion the measurements force. */
+    --paper-grain-opacity: 0.16;
+
+    /* ── The veil's DARK arm ────────────────────────────────────────────────────
+       Two lines carry the whole dark ladder. The INK goes DEEPER (not lighter): a dark
+       plate that lifts toward cream flattens its own silhouette into the page, and the
+       rung must DIM in both modes for the ladder to be one ladder. The BASE moves +1
+       step — the measured dark resting delta — and every rung follows it, because the
+       rungs are arithmetic on the base.
+
+       (The state veils are the exception, and they are governed elsewhere: a grasp or
+       selection veil moves AWAY from the plate, which in dark means lighter. That is a
+       STATE law, not the medium's.) */
+    --glass-veil-ink:  oklch(0.17 0.03 70);
+    --glass-veil-base: 0.18;
 
     /* The surface-aware FOREGROUND register, DARK arm (the N13
        whisper collapse where it bites hardest). The dark page-muted --neutral-5 (L62,
        "AA: 7.64:1 vs page") COLLAPSES over the lifted luminous-dark plate (the L16 card
-       at the 12% --glass-tint-strength-floor composites the bright backdrop UP — the
+       at the 12% --glass-veil-rung composites the bright backdrop UP — the
        measured 1.15-3.29:1). The on-glass muted rung lifts BRIGHTER (the mirror of the
        light arm's darkening) so it clears AA over the composited dark plate WHILE
        staying subordinate to the L90 --foreground ink (the quiet-subordinate hierarchy
@@ -333,28 +296,22 @@
     --hairline-catch-light: inset 0 0.5px 0 0 rgb(255 255 255 / 0.05);
     --hairline-under-shadow: 0 0.5px 0 0 rgb(0 0 0 / 0.06);
 
-    /* Specular + curvature — softened for dark backdrops. Disco-grain stays
-       at the same opacity ceiling; the dark grain blend already lifts it. */
-    --glass-specular: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.30);
-    /* The full-perimeter rim remaps to its dark weight inside
-       `.dark` (mirroring the `--glass-specular` remap above). The lit token
-       resolves to the `-dark` alpha on the deeper canvas. */
-    --glass-edge-light: var(--glass-edge-light-dark);
+    /* No `--glass-edge-light` re-point here. The name is a pure indirection onto
+       `--glass-material-rim`, whose legs are re-declared below — so the dark rim
+       reaches it without a second per-mode write to keep in sync. */
 
-    /* The DIRECTIONAL rim dark arm (plain per-mode pair, NEVER
-       light-dark() round an inset — MEMORY: the inset-shadow trap). The top
-       catch-light lifts to 0.40 (the dark plate's fill barely separates from the deep
-       page, so the rim is the PRIMARY silhouette device — dark glass glows where light
-       passes; mirrors the --glass-edge-light-dark 0.18→0.22 lift). The bottom warm
-       under-shadow holds at 6% — the shadow grounds the plate in BOTH modes. */
-    /* The dark rim rides the SAME `--glass-key-{lit,shade}-{x,y}`
-       sign tokens (inherited from :root — not re-declared here) so the dark plate's
-       lit edge agrees with the cartoon cast's key in both modes. The top/lit catch
-       lifts to 0.40 (the dark silhouette device); the key-facing side stop a touch
-       brighter (0.24). The shade under-shadow holds warm at 6%/4%. */
-    --glass-rim-top:
-        inset 0 var(--glass-key-lit-y) 0 hsl(0 0% 100% / 0.40),
-        inset var(--glass-key-lit-x) 0 0 hsl(0 0% 100% / 0.24);
+    /* The rim's DARK leg — plain per-mode pair, NEVER a `light-dark()` round an inset
+       (an inset fragment inside `light-dark()` computes the WHOLE box-shadow to `none`
+       and the rim silently vanishes).
+
+       0.08, BELOW the light arm's 0.10. This inverts the shipped dark-brighter
+       doctrine, and deliberately: the old 0.40 made the rim the brightest thing on a
+       near-black page, which is a bright ring, not a silhouette. A dark plate separates
+       because the page behind it is dark and the plate's own ink is deeper still — the
+       rim only has to say where the edge is. The under-shadow holds warm at 6%/4% and
+       does the grounding in both modes. The key sign tokens are inherited from :root,
+       not re-declared, so the lit edge agrees with the cartoon cast in both modes. */
+    --glass-rim-top: inset 0 var(--glass-key-lit-y) 0 hsl(0 0% 100% / 0.08);
     --glass-rim-bottom:
         inset 0 var(--glass-key-shade-y) 0 color-mix(in srgb, var(--foreground) 6%, transparent),
         inset var(--glass-key-shade-x) 0 0 color-mix(in srgb, var(--foreground) 4%, transparent);
@@ -365,12 +322,13 @@
        canvas (11%) so the sunken well still reads against the near-black page. */
     --tab-track-recess-ink: color-mix(in srgb, var(--foreground) 11%, transparent);
 
-    /* The chromatic-fringe + adaptive-tint dark arm. The fringe drops
-       to a lower-luminance warm/cool pair on the deep canvas; `--glass-tint-
-       source` auto-flips with `--card` (no override needed — the default already
-       resolves the dark card). */
-    --glass-fringe-warm: oklch(0.78 0.07 40 / 0.18);
-    --glass-fringe-cool: oklch(0.74 0.06 230 / 0.14);
+    /* The capsule's warm floor, DARK peer. The light arm's `oklch(0.88 0.1 75)` is a
+       near-white cream: painted on a lozenge over a near-black page it is a lamp, not a
+       warm floor, and the fill's ΔL against the field runs far past the light arm's.
+       The dark peer keeps the HUE and the chroma that make the floor a floor, at a
+       lightness that belongs on the deep canvas. */
+    --glass-capsule-warm: oklch(0.42 0.06 75);
+
     /* The curvature sheen is genuinely SOFTER on the deep canvas (the
        prior dark arm re-declared the overlay BYTE-IDENTICAL to light, so it read
        HARDER over the dark substrate — an unsoftened-dark defect). The `:root`

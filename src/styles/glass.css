@@ -44,6 +44,9 @@
    decoration attr rules win over the base rung by source order; BEFORE the
    squircle override): */
 @import "./glass/material.css";
+/* The ink-veil register — the plate recipe + the earned-darken clamp the rungs
+   apply. BEFORE ladder.css: the rungs `@apply glass-plate`. */
+@import "./glass/veil.css";
 @import "./glass/ladder.css";
 /* The .glass-opaque level-0 escape + the content-aware under-shadow
    modifier, a partial held under the no-god-module 500-line bound; its
@@ -63,9 +66,11 @@
    with its sole class-consumer at components/chip/; the @import rung is unchanged. */
 @import "../components/chip/accent-tone.css";
 @import "./glass/rim.css";
+/* The GRASP register — the material's answer to the hand. AFTER rim.css (it reads the
+   rung recipes and the one saturate); its own @layer components. */
+@import "./glass/grasp.css";
 @import "./glass/surfaces.css";
-/* The .glass-pager-ring pager-pill chassis + the .glass-chromatic
-   edge-dispersion rim fringe, a partial held under the 500-line
+/* The .glass-pager-ring pager-pill chassis, a partial held under the 500-line
    bound; its own @layer components block @import-ed IMMEDIATELY AFTER surfaces.css and
    BEFORE control-surfaces.css (the surfaces @layer tail, unique selectors,
    source-order-after). */
@@ -77,7 +82,7 @@
 @import "./glass/control-surfaces.css";
 /* The ONE shared glassy register (`.glass-capsule` +
    `.glass-capsule-track` + `.glass-capsule-hover`) the tabs/dock-tab/buttons/chips/
-   cards consumers compose. @import-ed AFTER surfaces.css (so the `--glass-bg-floating-
+   cards consumers compose. @import-ed AFTER surfaces.css (so the `--glass-plate-floating-
    tinted` seam + the `--glass-rim-*`/`--glass-shadow-floating` tokens resolve) and
    BEFORE the consuming recipes (segmented-tabs.css et al, imported by index.css). */
 @import "./glass/glass-capsule.css";

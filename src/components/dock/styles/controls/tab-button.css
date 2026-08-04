@@ -128,14 +128,14 @@
     .dock-icon-button[data-tier="secondary"] {
         background: color-mix(in srgb, var(--card) 50%, transparent);
         border: 1px solid var(--glass-border-quiet);
-        box-shadow: var(--border-hairline), var(--glass-highlight);
+        box-shadow: var(--border-hairline);
     }
 
     .dock-tab-button[data-tier="secondary"]:hover:not(:disabled):not([aria-disabled="true"]),
     .dock-icon-button[data-tier="secondary"]:hover:not(:disabled):not([aria-disabled="true"]) {
         background: color-mix(in srgb, var(--card) 65%, transparent);
         box-shadow:
-            var(--glass-specular),
+            var(--glass-rim-top),
             0 0.5px 0 0 rgb(0 0 0 / 0.06);
     }
 }

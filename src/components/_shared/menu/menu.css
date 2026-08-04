@@ -1,11 +1,13 @@
 /* Imported after utilities.css so menu state wins at equal specificity. */
 @layer components {
+    /* A menu ROW is not a lens. It carries a hover FILL and nothing else — no
+       `backdrop-filter`, no rung — because the open menu's own plate is the one backdrop
+       sample for that visual body, and a row-level filter inside it would be a plate
+       nested in a plate for the width of one line of text. (The token home used to
+       describe the row as "the quiet tier"; it never resolved a tier.) The fill reads
+       the quiet rung's plate colour so the row still belongs to the ladder. */
     .glass-menu-row {
-        --menu-row-bg: color-mix(
-            in oklab,
-            var(--glass-bg-quiet),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        );
+        --menu-row-bg: var(--glass-plate-quiet);
         --menu-row-lift: -1px;
         min-block-size: max(2rem, var(--touch-target, 2.75rem));
         transition: translate var(--spring-smooth-duration) var(--spring-smooth);
@@ -39,7 +41,8 @@
     font-family: var(--dropdown-menu-font, inherit);
     padding: var(--panel-padding);
 
-    --glass-bg-rung: var(--dropdown-menu-bg, var(--glass-bg-floating));
+    --glass-veil-tier: var(--glass-veil-floating);
+    background: var(--dropdown-menu-bg, var(--glass-veil));
     --glass-border-rung: var(--dropdown-menu-border, var(--glass-border-floating));
     box-shadow: var(
         --dropdown-menu-shadow,

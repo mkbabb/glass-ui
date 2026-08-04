@@ -53,7 +53,7 @@
 
        The composition is IDENTICAL to the retired `:root` form — same endpoints
        (`--glass-blur-floating-radius` depth-0 floor / `--glass-blur-deep-radius`
-       depth-1 ceiling, `--glass-saturate-floating` / `--glass-saturate-deep`), same
+       depth-1 ceiling, `--glass-saturate` / `--glass-saturate-deep`), same
        `* var(--glass-level)` clarity scale (so the opaque escape + the a11y brackets
        reach the deep plate through the ONE level path; at `--glass-level: 0` the deep
        blur resolves blur(0)). Only the DECLARING SELECTOR moved (:root → .glass-deep).
@@ -71,8 +71,8 @@
             );
         --glass-saturate-deep-active:
             calc(
-                var(--glass-saturate-floating)
-                + (var(--glass-saturate-deep) - var(--glass-saturate-floating))
+                var(--glass-saturate)
+                + (var(--glass-saturate-deep) - var(--glass-saturate))
                 * var(--glass-depth)
             );
         --glass-blur-deep:

@@ -38,16 +38,16 @@
     }
 
     .button[data-emphasis="primary"] {
-        --glass-bg-rung: var(--glass-bg-floating);
-        --glass-capsule-fill: var(--glass-plate-tinted);
-        backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-deep));
+        --glass-veil-tier: var(--glass-veil-floating);
+        --glass-capsule-fill: var(--glass-plate-floating);
+        backdrop-filter: var(--glass-blur-deep);
         font-weight: 650;
     }
 
     .button[data-emphasis="secondary"] {
-        --glass-bg-rung: var(--glass-bg-quiet);
-        --glass-capsule-fill: var(--glass-plate-tinted);
-        backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-resting));
+        --glass-veil-tier: var(--glass-veil-quiet);
+        --glass-capsule-fill: var(--glass-plate-quiet);
+        backdrop-filter: var(--glass-blur-resting);
     }
 
     .button[data-emphasis="quiet"],

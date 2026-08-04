@@ -44,7 +44,7 @@ const engine = computed(
     padding: 0.3rem 0.65rem;
     color: var(--muted-foreground);
     line-height: 1.2;
-    backdrop-filter: var(--glass-cell-backdrop-filter, blur(10px));
+    backdrop-filter: blur(10px);
 }
 
 .renderer-status__dot {

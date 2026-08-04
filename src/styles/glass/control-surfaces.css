@@ -39,14 +39,14 @@
            the `glass-wash` gray — the no-gray control-family seam). The register reads
            the same `--glass-*` ladder, so `--glass-level`/the bright bucket retune
            the whole form family in lockstep (--control-surface-border defaults to the
-           `--glass-border-floating` 15%α rung, --control-surface-bg to `--glass-bg-quiet`,
+           `--glass-border-floating` 15%α rung, --control-surface-bg to `--glass-plate-quiet`,
            --control-surface-blur to `--glass-blur-quiet`). */
         border: 1.5px solid var(--control-surface-border);
         background: var(--control-surface-bg);
         /* The control's REAL glass blur — the shared register's quiet-tier radius
            (the same `--control-surface-blur` pairs with `--control-surface-bg`); the
            `--glass-level` knob clarifies it in lockstep with every surface. */
-        backdrop-filter: var(--glass-cell-backdrop-filter, var(--control-surface-blur));
+        backdrop-filter: var(--control-surface-blur);
         padding: 0 calc(1rem * var(--ui-scale));
         /* The font reads the `--control-pill-text` seam,
            DEFAULTING to `--control-text` (byte-identical at unset). The `sm` rung
@@ -78,7 +78,7 @@
     .control-surface {
         background: var(--control-surface-bg);
         border: 1px solid var(--control-surface-border);
-        backdrop-filter: var(--glass-cell-backdrop-filter, var(--control-surface-blur));
+        backdrop-filter: var(--control-surface-blur);
     }
     .control-surface:hover:not(:disabled, [data-disabled]) {
         background: var(--control-surface-bg-hover);
@@ -118,7 +118,7 @@
        a long valid form is not a wall of green. */
     .input-pill:where(:user-invalid, [aria-invalid="true"]) {
         border-color: var(--destructive);
-        background: color-mix(in srgb, var(--destructive) 8%, var(--glass-bg-quiet));
+        background: color-mix(in srgb, var(--destructive) 8%, var(--glass-plate-quiet));
     }
     .input-pill:where(:user-valid) {
         border-color: var(--success);

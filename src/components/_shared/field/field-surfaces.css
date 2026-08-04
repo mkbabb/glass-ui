@@ -91,67 +91,35 @@
        rule). The rim travels with the control on the SHARED bezier (the pill/control-
        surface already transition box-shadow on `--ease-standard`). */
 
-    /* Keep the plate's compatible base, adaptive tint, and warm capsule floor as
-       separate flat paint layers; the existing rim, blur, and shadow stack remains
-       authoritative. */
+    /* The menu plate is the OVERLAY rung's own veil with the capsule's warm floor over
+       it — two layers, both flat, both reading the ONE recipe. The adaptive-tint layer
+       is GONE (the veil already carries the earned darken; a second layer pushing the
+       same plate the same way is the double-writer the material law forbids), and so is
+       the `--select-plate-alpha` solidity knob with its own per-mode fork: a menu that
+       needs more body needs a heavier RUNG, and the dark arm already carries one more
+       step of ink at every rung. `prefers-reduced-transparency` reaches it through
+       `--glass-level`, like every other plate. */
     [data-slot="select-content"],
     [data-slot="combobox-list"] {
-        /* Select plate alpha seam; consumers may re-solidify at 1. */
-        --select-plate-alpha: 0.9;
-        background:
-            linear-gradient(
-                color-mix(
-                    in oklab,
-                    transparent,
-                    var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
-                ),
-                color-mix(
-                    in oklab,
-                    transparent,
-                    var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
-                )
-            ),
-            linear-gradient(
-                color-mix(
-                    in oklab,
-                    transparent,
-                    var(--glass-tint-source) var(--glass-tint-strength)
-                ),
-                color-mix(
-                    in oklab,
-                    transparent,
-                    var(--glass-tint-source) var(--glass-tint-strength)
-                )
+        --glass-veil-tier: var(--glass-veil-overlay);
+        @apply glass-plate;
+        background-image: linear-gradient(
+            color-mix(
+                in oklab,
+                oklch(0.9 0.05 75 / 0),
+                var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
             ),
             color-mix(
-                in srgb,
-                var(--card)
-                    calc(
-                        (1 - (1 - var(--glass-opacity-floating))
-                            * var(--glass-level))
-                            * var(--select-plate-alpha) * 100%
-                    ),
-                transparent
-            );
+                in oklab,
+                oklch(0.9 0.05 75 / 0),
+                var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
+            )
+        );
         /* Add the static cartoon under-stamp beneath the floating stack. */
         box-shadow:
             var(--glass-material-rim), var(--glass-under-shadow-vivid),
             var(--glass-shadow-floating), var(--shadow-cartoon-lg);
     }
-    .dark [data-slot="select-content"],
-    .dark [data-slot="combobox-list"] {
-        /* Plain dark arm; keep more body without a light-dark() fragment. */
-        --select-plate-alpha: 0.94;
-    }
-    @media (prefers-reduced-transparency: reduce) {
-        [data-slot="select-content"],
-        [data-slot="combobox-list"],
-        .dark [data-slot="select-content"],
-        .dark [data-slot="combobox-list"] {
-            --select-plate-alpha: 1;
-        }
-    }
-
     /* ── .glass-field-portal — the portal-local warm field (route identity) ──
        The menu portals to <body>, OUTSIDE the route's field, so its `backdrop-filter`
        has nothing warm to transmit. A clipped menu-local layer BEHIND the plate (z -1,

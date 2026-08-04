@@ -10,8 +10,8 @@
          (a) the moving-specular `::before` catch-light (folded here from
              glass-specular-track.css — that file now keeps only the thin
              `.glass-specular-track` ALIAS + the brackets that point HERE),
-         (b) the `--glass-edge-light` full-perimeter rim (moved off the
-             floating-only block so EVERY rung carries it),
+         (b) the key-driven rim (moved off the floating-only block so EVERY
+             rung carries it),
          (c) the pointer interaction-light hooks (the `--specular-*`
              `@property` channel mapped from the consumer's --mouse-x/--mouse-y
              write).
@@ -48,23 +48,14 @@
         position: relative;
     }
 
-    /* One backdrop sample per visual plate. A canonical plate seeds its direct
-       content subtree with the private nested-cell value; inheritance carries it
-       through structural wrappers. Cell/control recipes consume this value, while
-       the plate itself does not. Floating/overlay descendants therefore remain
-       independent lenses, and a portaled overlay inherits nothing from its trigger. */
-    :where(
-            .glass-wash,
-            .glass-quiet,
-            .glass-resting,
-            .glass-floating,
-            .glass-overlay,
-            .glass-card,
-            .glass-dock
-        )
-        > * {
-        --glass-cell-backdrop-filter: none;
-    }
+    /* The nested-cell blanket is GONE. A `backdrop-filter: none` forced onto every
+       direct child of a plate made the rungs structurally unreachable inside any plate:
+       a cell recipe resolved `none` and the frost died wherever glass was actually
+       composed. A property whose only value is a kill-switch is not a mechanism.
+       Nested filtering plates compose bounded in quadrature (√(r₁²+r₂²)), so a legal
+       nesting is a bounded optical cost, not a runaway; the successor discipline is a
+       DEPTH bound (nested filtering-plate depth ≤ 2), asserted in tests/styles, not a
+       blanket suppression that kills the primary to avoid it. */
 
     /* ── The ONE paint-box clip register ───────────
        Content glass and `.glass-card` share this one paint-containment register,
@@ -103,28 +94,22 @@
         contain: paint;
     }
 
-    /* (b) The rim — UNIFORM across all rungs (ONE `--glass-edge-light` token,
-       not a per-rung family). It rides the material group as a
-       dedicated `::after` inset ring so it composes alongside (not inside) each
-       tier's own shadow recipe. The `::after` grain overlay already claims the
-       five rungs' `::after`; the rim is folded INTO that same overlay's
-       box-shadow below (the grain `::after` gets the rim inset ring) so no
-       pseudo-element collides.
+    /* (b) The rim — UNIFORM across all rungs, ONE declaration for the whole tree
+       (`--glass-material-rim`, rim.css). It rides the material group so it composes
+       alongside (not inside) each tier's own shadow recipe. The `::after` grain
+       overlay already claims the five rungs' `::after`; the rim is folded INTO that
+       same overlay's box-shadow below so no pseudo-element collides.
 
-       ── `--glass-edge-light` IS A WHOLE BOX-SHADOW LAYER, NEVER A COLOR ──
-       `--glass-edge-light` resolves to a COMPLETE box-shadow layer (the token is
-       `inset 0 0 0 0.75px hsl(0 0% 100% / 0.18)` — geometry + color, glass-fx.css:70;
-       the `.dark` arm re-points it to `--glass-edge-light-dark`). It is consumed as a
-       WHOLE LAYER inside a `box-shadow:` list — `box-shadow: var(--glass-edge-light),
-       <other layers>` (surfaces.css:203/371, stack-rail.css:176). The MISUSE is
-       NESTING it as a COLOR inside another shadow — `inset 0 0 0 1px
-       var(--glass-edge-light)` — which expands to `inset 0 0 0 1px inset 0 0 0 0.75px
-       hsl(…)`: an INVALID shadow value → the WHOLE `box-shadow` declaration DROPS →
-       NO rim, NO drop-shadow (worst in dark, where the rim is the silhouette device).
-       THE RULE: read `--glass-edge-light` as a whole `box-shadow` layer, NEVER nested
-       inside another shadow's geometry. To compose the rim's COLOR (e.g. accent-tint
-       it) use `--glass-rim-ink`/`--glass-material-rim` (rim.css — the COLOR seam),
-       NOT `--glass-edge-light` (the LAYER token). */
+       ── THE RIM TOKENS ARE WHOLE BOX-SHADOW LAYERS, NEVER COLORS ──
+       `--glass-material-rim` (and `--glass-edge-light`, the seam name that resolves
+       it) carry COMPLETE box-shadow layers — geometry AND color. They are consumed as
+       whole layers in a comma-joined list: `box-shadow: var(--glass-material-rim),
+       <other layers>`. The MISUSE is nesting one as a COLOR inside another shadow's
+       geometry — `inset 0 0 0 1px var(--glass-edge-light)` — which expands to
+       `inset 0 0 0 1px inset 0 …`: an INVALID shadow value, so the WHOLE `box-shadow`
+       declaration DROPS and the surface loses its rim AND its drop-shadow. Worst in
+       dark, where the rim is the silhouette device. To compose the rim's COLOR (an
+       accent tint), re-point the leg's own ink; do not rebuild the layer here. */
 
     /* (a)+(c) The moving-specular `::before` catch-light — the iOS-26
        illuminate-from-within behaviour. A masked radial-gradient glow rides the
@@ -216,55 +201,31 @@
             hsl(40 35% 92%),
             var(--glass-accent) var(--glass-accent-strength)
         );
-        --glass-specular-glint: oklch(from var(--glass-specular-core) l c h / 0.55);
         --glass-specular-disc: oklch(from var(--glass-specular-core) l c h / 0.5);
-        background:
-            conic-gradient(
-                from 0deg at 50% 50%,
-                transparent 0deg,
-                var(--glass-specular-glint) 18deg,
-                transparent 60deg,
-                transparent 360deg
-            ),
-            radial-gradient(
-                ellipse var(--glass-specular-size, 36%)
-                    var(--glass-specular-size, 36%) at var(--specular-x, 50%)
-                    var(--specular-y, 50%),
-                var(--glass-specular-disc) 0%,
-                transparent 70%,
-                transparent 100%
-            );
-        /* Static neutral hairline: raw warm cream, no accent/ambient pickup or
-           animation track. It supplements the primary edge at the calmer blur. */
-        box-shadow: inset 0 0 0 var(--glass-specular-hairline-width, 0.75px)
-            color-mix(
-                in srgb,
-                hsl(40 35% 92%) var(--glass-specular-hairline-ink, 70%),
-                transparent
-            );
-        /* The 0.07 rest floor lights the hairline; hover/active clear it. */
-        opacity: max(
-            var(--specular-intensity, 0),
-            var(--glass-specular-rest-hairline, 0.07)
+        /* ONE layer: the pointer-tracked disc. The static conic rim glint, the cream
+           hairline box-shadow and the 0.07 rest floor are STRUCK — three white legs on
+           a pseudo whose whole job is the moving catch-light, and the plate already
+           carries exactly one static specular leg (the rim, rim.css). The four knobs
+           those legs read (`--glass-specular-hairline-width`, `-hairline-ink`,
+           `-rest-hairline`, `--glass-edge-glint-band`) were literals wearing token
+           names: read with a fallback, declared nowhere. They die with their legs. */
+        background: radial-gradient(
+            ellipse var(--glass-specular-size, 36%) var(--glass-specular-size, 36%) at
+                var(--specular-x, 50%) var(--specular-y, 50%),
+            var(--glass-specular-disc) 0%,
+            transparent 70%,
+            transparent 100%
         );
-        /* The mask layers UNION (they composite into ONE mask for the element — they do
-           not pair with the background layers): the outer `--glass-edge-glint-band` ring
-           that bounds the conic to a THICKNESS rim, plus the disc's own-radius clip. */
-        mask-image:
-            radial-gradient(
-                circle closest-side at 50% 50%,
-                transparent calc(100% - var(--glass-edge-glint-band, 22%)),
-                black calc(100% - calc(var(--glass-edge-glint-band, 22%) * 0.5)),
-                black 100%
-            ),
-            radial-gradient(
-                ellipse var(--glass-specular-size, 36%)
-                    var(--glass-specular-size, 36%) at var(--specular-x, 50%)
-                    var(--specular-y, 50%),
-                black 0%,
-                black 60%,
-                transparent 100%
-            );
+        /* Rest intensity is 0: an unwired plate paints NOTHING here. */
+        opacity: var(--specular-intensity, 0);
+        /* The disc's own-radius clip — the sole mask now the conic band is gone. */
+        mask-image: radial-gradient(
+            ellipse var(--glass-specular-size, 36%) var(--glass-specular-size, 36%) at
+                var(--specular-x, 50%) var(--specular-y, 50%),
+            black 0%,
+            black 60%,
+            transparent 100%
+        );
         /* `plus-lighter` (additive but HDR-clamped, Safari 16.4+), NOT
            `screen` (a non-linear lightener that lifts the whole tile
            toward white — the muddy-card defect). A non-supporting engine degrades to

@@ -23,52 +23,24 @@
        self-declaration cannot self-darken. This `:where(.glass-dock)` rule is the genuine
        UNCONDITIONAL self-engage — mirroring the overlay band's `ladder.css:169` —
        re-pointing the INHERITING tint tokens DIRECTLY on the dock root so the
-       shell (`--glass-bg-dock`), chassis-strip, and held/open tiers (which compose
-       the oklab tint AT THE ELEMENT — the substitution-vs-inheritance-safe targets)
-       darken toward warm-ink in lockstep. `--dock-fg-on-aurora` re-points to the
-       warm-ink here too — ONE reconciled path, the foreground twin folded in (it
-       reaches the dock CONTROLS' glyph/label color). Over a DARK page the darken is
-       sub-perceptual; a dark-substrate consumer opts out via `--glass-tint-strength:
-       0%` on the dock root. The plate keeps the adaptive darken as a SEPARATE gradient
-       veil over the ONE lerped surface layer (dock.css) — never mixed into the rung
-       endpoints, so a descendant tint override still reaches it. The muted body
+       shell (`--glass-plate-dock`), chassis-strip, and held/open tiers darken through
+       the veil clamp in lockstep. `--dock-fg-on-aurora` re-points here too — ONE
+       reconciled path, the foreground twin folded in (it reaches the dock CONTROLS'
+       glyph/label color). A dark-substrate consumer opts out via `--glass-level` on
+       the dock root. The muted body
        register lifts to the full warm-ink under the engaged plate (the muted L40
        tier cannot clear 4.5:1 on a translucent darkened plate — darkening moves the
        plate TOWARD muted's own luminance; the low-contrast muted register is
        inappropriate over a busy glass plate, so it resolves to the legible dark
        ink, which clears ~10:1). */
     :where(.glass-dock) {
-        /* The dock self-engage reads the warm-CHROMATIC dock ink
-           (glass-fx.css), NOT the frozen global `--glass-tint-ink` (the
-           whole-system register). So the darken-over-light RAISES chroma toward a warm
-           material (H ≈ 62°, C ≈ 0.016 at AA) rather than dropping L with chroma flat (the
-           gray dock). ONE dock tint source, ONE global ink — file-line-disjoint. */
-        --glass-tint-source: var(--glass-tint-ink-dock);
-        /* The dock JOINS the continuous observer driver (the
-           literal G2 surface: "darken DYNAMICALLY like iOS 27"). The dock's own
-           `useGlassBackdropLuminance` observer samples the threaded `:background-canvas`
-           (aurora/blob) and WRITES `--glass-backdrop-luma`; this clamp READS it and lerps
-           the plate from the warm-cream floor toward the ≤24% AA ceiling as the field
-           brightens past the knee — deepening over a bright bleed, lifting translucent over
-           a dark trough (the SAME clamp the content/overlay tiers get — ONE axis/driver/
-           signal; the discrete `@container` bucket RETIRED). Calm (luma ≤ knee) → floor. */
-        --glass-tint-strength: clamp(
-            var(--glass-tint-strength-floor),
-            calc(
-                var(--glass-tint-strength-floor) +
-                    (var(--glass-tint-strength-aa) - var(--glass-tint-strength-floor)) *
-                    max(
-                        0,
-                        (
-                                var(--glass-backdrop-luma, 0) -
-                                    var(--glass-backdrop-luma-knee)
-                            ) /
-                            (1 - var(--glass-backdrop-luma-knee))
-                    )
-            ),
-            var(--glass-tint-strength-aa)
-        );
-        --dock-fg-on-aurora: var(--glass-tint-ink);
+        /* The plate's own earned darken now rides the veil clamp (`@utility
+           glass-plate`, glass/veil.css), which reads the SAME `--glass-backdrop-luma`
+           this dock's observer writes — so the dock keeps the continuous
+           darken-over-bright it had, through the one chromatic writer instead of a
+           second one layered on top. What stays here is the FOREGROUND half, which is
+           genuinely dock-local: the control glyph/label ink over an unknown field. */
+        --dock-fg-on-aurora: var(--foreground);
         --muted-foreground: var(--foreground);
     }
 
@@ -79,9 +51,7 @@
        cascades to nested glass through this block). */
     @container style(--glass-backdrop: light) {
         .glass-dock {
-            --glass-tint-source: var(--glass-tint-ink);
-            --glass-tint-strength: var(--glass-tint-strength-aa);
-            --dock-fg-on-aurora: var(--glass-tint-ink);
+            --dock-fg-on-aurora: var(--foreground);
         }
     }
 
@@ -115,10 +85,7 @@
        surface is allocated. */
     .glass-dock[data-backdrop-mode="static"] {
         --glass-level: 0;
-        --glass-tint-strength: 0%;
         --glass-backdrop-luma: 0;
-        --glass-ambient-hue: transparent;
-        --glass-ambient-strength: 0%;
     }
 
     .glass-dock[data-backdrop-mode="static"] .dock-plate {

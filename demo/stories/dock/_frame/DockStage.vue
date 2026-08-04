@@ -73,7 +73,7 @@ watchEffect(() =>
 // to the shared field, not to an individual dock
 // one: N docks over the SAME aurora read the SAME luma (+ ambient hue). This ONE observer
 // samples the field (drawImage + getImageData, ≤ 4 Hz, 32×32) at the `.dock-stage` scope
-// and writes `--glass-backdrop-luma`, `--glass-backdrop`, `--glass-ambient-*` there;
+// and writes `--glass-backdrop-luma` and `--glass-backdrop` there;
 // every staged GlassDock INHERITS them via the registered inheriting @property cascade and
 // STANDS DOWN its own per-dock observer (the `shared: true` observer stamps the
 // `data-glass-backdrop-shared` marker the docks' `.closest` coverage-check reads). 12

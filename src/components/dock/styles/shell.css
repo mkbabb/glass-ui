@@ -28,7 +28,7 @@
            the dock reads the unified resting material, there is no dock-own rung. */
         /* Re-anchor the dock's saturate at 1.2 now the
            UNIFIED PLATE TINT is the PRIMARY anti-gray. Riding the
-           content-tier `--glass-saturate-resting` (1.4) through the resting peer would
+           content-tier `--glass-saturate` (1.4) through the resting peer would
            over-correct to a "metallic" gray (real
            liquid glass concentrates light ~1.1-1.25×). The plate-tint self-engage
            (dock/adaptive-legibility.css) is now the PRIMARY anti-gray device, so saturate
@@ -38,8 +38,8 @@
            THE SUBSTITUTION-VS-INHERITANCE RETUNE PATH (the recurring trap, honoured): the
            `:root` `--glass-blur-resting` composes its `saturate(var(--glass-saturate-
            resting))` AT `:root` — the inner `var()` is fixed at 1.4 there, so re-declaring
-           the `--glass-saturate-resting` KNOB on a descendant does NOT re-resolve the
-           inherited composed blur (the exact --glass-bg-{tier}/--glass-opacity-{tier}
+           the `--glass-saturate` KNOB on a descendant does NOT re-resolve the
+           inherited composed blur (the exact --glass-plate-{tier}/--glass-veil-{tier}
            documented trap). So the dock RE-DECLARES the COMPOSED `--glass-blur-resting`
            here — the SAME recipe (the `--glass-blur-resting-radius` 7px primitive ×
            `--glass-level`, so the `prefers-reduced-transparency` → `--glass-level: 0`
@@ -106,7 +106,7 @@
         /* The dock self-darkens over light backdrops by
            default via the UNCONDITIONAL `:where(.glass-dock)` self-engage rule in
            dock/morph.css (mirroring the overlay band's `ladder.css:169`): it re-points
-           the inheriting `--glass-tint-source`/`--glass-tint-strength` directly on the
+           the inheriting `--glass-veil-ink`/`--glass-veil-rung` directly on the
            dock root, so the shell + chassis + held/open tiers darken toward warm-ink
            with NO consumer opt-in (a dock floats over arbitrary — frequently light —
            page content). `--glass-backdrop: light` is KEPT here so a consumer's
@@ -115,9 +115,9 @@
            never self-match, so this declaration alone is inert for the dock's OWN
            plate — the self-engage rule, not this token, darkens the dock). */
         --glass-backdrop: light;
-        --dock-plate-collapsed-bg: var(--glass-bg-wash);
+        --dock-plate-collapsed-bg: var(--glass-plate-wash);
         --dock-plate-collapsed-border: var(--glass-border-floating);
-        --dock-plate-expanded-bg: var(--glass-bg-dock, var(--glass-bg-resting));
+        --dock-plate-expanded-bg: var(--glass-plate-dock, var(--glass-plate-resting));
         --dock-plate-expanded-border: var(--glass-border-dock, var(--glass-border-resting));
         /* `contain: layout style` — the restyle-scope axes ONLY; `paint` is NOT in the
            value and `.glass-dock` is NOT a clip aperture.
@@ -162,7 +162,7 @@
            MOVED off `.glass-dock` onto the L0 `.dock-plate` (dock/dock.css), which owns
            the ONE backdrop lens + its `clip-path` visible-extent morph. The box is now
            STRUCTURAL (layout + the drop-shadow elevation below); the plate is the surface.
-           The `--dock-surface-blur` + `--glass-tint-*` tokens re-pointed on `.glass-dock`
+           The `--dock-surface-blur` + `--glass-veil-*` tokens re-pointed on `.glass-dock`
            by the shell + adaptive-legibility partials INHERIT to the plate, so the
            self-engage darken + the dark-arm glow reach it with ZERO re-author. The
            collapsed↔expanded surface INTERP is retargeted onto `.dock-plate` in
@@ -383,7 +383,7 @@
     /* The vertical dock's expanded rung is the dock/wash pair. The plate layers read
        these endpoint variables; the box remains structural. */
     .glass-dock.vertical {
-        --dock-plate-expanded-bg: var(--glass-bg-dock, var(--glass-bg-wash));
+        --dock-plate-expanded-bg: var(--glass-plate-dock, var(--glass-plate-wash));
         --dock-plate-expanded-border: var(--glass-border-dock, var(--glass-border-wash));
     }
 

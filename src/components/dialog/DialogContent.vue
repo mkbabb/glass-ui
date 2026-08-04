@@ -410,27 +410,15 @@ watch(
     { flush: "sync" },
 );
 
-// The dialog uses the dedicated see-through glass rung:
-// liquid glass: drop the modal plate from the floating tier (0.80 — "NOT glassy at
-// all") to the SEE-THROUGH `--glass-bg-dialog` register (0.68). The α-band probe
-// the alpha band is distinct
-// physics — Δ plate-α 0.12 vs floating, ΔL 0.06–0.10 over a busy/dark page (>> 2%)
-// → KEEP the rung — and this reads it through ONE DOOR. The floating rung composes
-// its plate from an internal `--glass-bg-rung` slot (glass/ladder.css: `.glass-
-// floating { --glass-bg-rung: var(--glass-bg-floating) } → --glass-plate-tinted →
-// background`), so the dialog scope re-points that slot onto the NAMED `--glass-bg-
-// dialog` rung directly — NO `--glass-bg-floating: var(--glass-bg-dialog)` double-
-// name re-declaration (the named-duplicate wart the prune kills; `--glass-bg-
-// floating` keeps meaning `floating` on this scope). Byte-identical plate α to the
-// retired re-declaration (both resolve `--glass-bg-rung` → the dialog bg). The
-// floating tier's edge/rim/under-shadow LIFT survives (the private tier resolver
-// below keeps the class). Rides the DEFAULT `glass` surface; `surface="opaque"`
-// still reaches `--glass-level:0` (the dialog rung's own calc zeroes through
-// unchanged). `--glass-bg-dialog` is now a plain opacity footprint — the adaptive
-// bright-bucket darken reaches the modal through the ladder's element-level tint,
-// not through a root-baked oklab wrapper on this token.
+// The dialog rides the floating tier's LIFT (edge, rim, under-shadow) at its OWN
+// ink: one step above resting, one below floating. It is the iOS-27 control-centre
+// modal — see-through enough that the page reads behind it, occluding enough to be a
+// modal. The rung is re-pointed through the ONE seam the ladder itself uses
+// (`--glass-veil-tier`, read by `@utility glass-plate`), so the dialog gets a named
+// footprint without a second plate recipe or a double-named token. `surface="opaque"`
+// still reaches `--glass-level: 0` — the same machinery, zeroed.
 const plateStyle: CSSProperties = {
-    "--glass-bg-rung": "var(--glass-bg-dialog)",
+    "--glass-veil-tier": "var(--glass-veil-dialog)",
 } as CSSProperties;
 
 const contentStyle = computed<CSSProperties>(() => ({

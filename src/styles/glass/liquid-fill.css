@@ -25,7 +25,7 @@
      · --liquid-fill-shadow    — the under-shadow leg (the glass-thickness floor).
 
    @layer components, @import-ed in glass.css AFTER the glass-capsule register (so
-   the `--glass-bg-*`/`--glass-*-rim`/`--glass-under-shadow-*`/`--glass-capsule-warm`
+   the `--glass-plate-*`/`--glass-*-rim`/`--glass-under-shadow-*`/`--glass-capsule-warm`
    tokens resolve) and BEFORE the consuming slider/progress recipes.
 
    Compositor-only + Safari-native by construction (the §7 floor): the blur routes
@@ -51,10 +51,7 @@
         );
         /* The blur routes the `--glass-blur-quiet` rung (the ~2px-equivalent radius
            that SCALES by `--glass-level`), not a literal blur off the level knob. */
-        backdrop-filter: var(
-            --glass-cell-backdrop-filter,
-            var(--liquid-fill-blur, var(--glass-blur-quiet))
-        );
+        backdrop-filter: var(--liquid-fill-blur, var(--glass-blur-quiet));
         /* The unified edge rim reads the cylinder's curvature; the under-shadow
            lays the glass-thickness floor at the leading edge. */
         box-shadow:

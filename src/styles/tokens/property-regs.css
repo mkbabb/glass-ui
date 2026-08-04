@@ -171,8 +171,8 @@
    --glass-accent-strength: <N%>` on the instance), not a hand-threaded
    `border-color` + inline catch-light per consumer.
 
-   DISTINCT-not-fork of the `--glass-tint-source` (the WHOLE-PLATE BACKGROUND
-   legibility darken toward `--glass-tint-ink`): the accent is the RIM+GLINT
+   DISTINCT-not-fork of the `--glass-veil-ink` (the WHOLE-PLATE BACKGROUND
+   legibility darken toward `--glass-veil-ink`): the accent is the RIM+GLINT
    chromatic DECORATION axis (toward a consumer DATA hue, per-instance), it NEVER
    writes the cohort and NEVER tints the plate background. Three disjoint glass
    axes: LEVEL (opacity+blur) · TINT (whole-plate legibility) · ACCENT
@@ -190,7 +190,7 @@
      provable no-op when unset (`color-mix(in oklab, X, <accent> 0%)` === X). The
      consumer-set ceiling is a WHISPER at the rim, not a flooded plate — the demo
      specimens engage ~40-55% (the rim/glint reads the hue while the warm-cream core
-     + the AA legibility survive; the `--glass-tint-strength-aa` ≤24% bounding
+     + the AA legibility survive; the `--glass-veil-rung` ≤24% bounding
      precedent, lifted here because the accent rides the THIN rim/glint not the
      whole plate). A malformed override CLAMPS to 0% (the typed fail-safe). */
 @property --glass-accent {
@@ -207,7 +207,7 @@
 
 /* The GLASS-FIRST single knob. `--glass-level` is the ONE clarity
    scalar threaded through BOTH glass ladders at their single sites (the
-   `--glass-bg-*` opacity recipe + the `--glass-blur-*` radii). It is a typed,
+   `--glass-plate-*` opacity recipe + the `--glass-blur-*` radii). It is a typed,
    INHERITING <number> so a host setting it on any ancestor retunes every
    descendant glass surface (the @container-free cascade path) — and so it
    animates smoothly rather than snapping. The level acts as a clarity multiplier
@@ -218,7 +218,7 @@
      • level >1 — clearer (more transparent + more diffuse) in lockstep.
    Glass is the DEFAULT surface register for EVERY band (USER-DECIDED MAXIMAL);
    the opaque level-0 rung is the explicit opt-out; over-light
-   legibility rides the SEPARATE `--glass-tint-*` axis (the `--glass-backdrop` probe
+   legibility rides the SEPARATE `--glass-veil-*` axis (the `--glass-backdrop` probe
    lifts the tint toward ink — level = opacity+blur, tint = darken-over-light, the
    two axes coordinate but never collapse: the a11y Clear↔Tinted escape rides
    level-up here AND tint-toward-ink under `prefers-contrast: more`). */
@@ -231,7 +231,7 @@
 /* The OBSERVER's measured backdrop relative-luminance, now
    LOAD-BEARING. `useGlassBackdropLuminance` WRITES `--glass-backdrop-luma` (0..1) on
    the glass target; the content/overlay/dock `:where()` rules READ it on the RHS of the
-   `--glass-tint-strength` clamp (glass/ladder.css, dock/morph.css) — the continuous
+   `--glass-veil-rung` clamp (glass/ladder.css, dock/morph.css) — the continuous
    driver that lifts the calm 4% floor toward the ≤24% AA ceiling as the measured
    backdrop brightens past the knee (the iOS-27 dynamic-range shift; apple-ios27.md §1.5).
    Registered as a typed INHERITING `<number>` (the `--glass-level`/`--progress-crescendo`
@@ -259,7 +259,7 @@
    smoothly. `initial-value: 1` is the resting deep magnitude: a `.glass-deep`
    surface paints at the full Apple-deep register by default; a consumer dials
    `--glass-depth: 0.5` to land it half-way to the calm floating rung. SEPARATE
-   from `--glass-level` (opacity+blur clarity) and `--glass-tint-*` (legibility) —
+   from `--glass-level` (opacity+blur clarity) and `--glass-veil-*` (legibility) —
    the disjoint depth axis. The deep tier
    COMPOSES `--glass-level` too (the deep blur scales it), so the opaque escape +
    the a11y brackets reach the deep plate through the ONE level path. */
@@ -277,7 +277,7 @@
    true` (a host dials definition on any ancestor); `initial-value: 0` is fully
    TRANSMISSIVE (content default, ladder byte-untouched); `.glass-defined`
    (glass/defined.css) + `prefers-contrast: more` set it to 1. SEPARATE from
-   `--glass-level`/`--glass-depth`/`--glass-tint-*`. */
+   `--glass-level`/`--glass-depth`/`--glass-veil-*`. */
 @property --glass-definition {
     syntax: "<number>";
     inherits: true;

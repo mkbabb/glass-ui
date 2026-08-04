@@ -112,7 +112,7 @@ function togglePlay() {
              fields and the pause-toggle's duplicate renderer fold into the shared field. -->
         <!-- the 10 per-dock `:background-canvas` bindings COLLAPSE
              onto DockStage's ONE shared per-route backdrop-luminance observer: every staged
-             dock inherits `--glass-backdrop-luma` / `--glass-backdrop` / `--glass-ambient-*`
+             dock inherits `--glass-backdrop-luma` / `--glass-backdrop`
              from the stage scope (the registered inheriting @property cascade) + stands down
              its own getImageData readback (12 → 1). -->
         <DockStage :paused="bgPaused">

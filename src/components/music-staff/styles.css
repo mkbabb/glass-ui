@@ -45,14 +45,14 @@
         max-inline-size: calc(var(--_music-staff-space) * var(--_music-staff-width));
     }
 
-    /* The folio is the glass ladder's resting rung biased cream through its own
-       designed tint seam — genuine glass, at a strength inside the ladder's
-       documented translucent bound, not a near-opaque plate asserting glass. The
-       rung's own ::after is the sole writer of the paper grain; a second copy here
-       would paint the same texture at forty times the ladder's opacity. */
+    /* The folio biases the ONE chromatic writer the plate has — the veil ink — toward
+       the folio hue at the resting rung. It does NOT add a second cream layer over the
+       rung: a plate carries exactly one plate-tint writer, and painting cream over
+       glass is the additive read this material is built to refuse. The rung's own
+       ::after is the sole writer of the paper grain; a second copy here would paint the
+       same texture at forty times the ladder's opacity. */
     .music-staff[data-material="folio"] .music-staff__window {
-        --glass-tint-source: var(--_music-staff-folio);
-        --glass-tint-strength: 24%;
+        --glass-veil-ink: oklch(from var(--_music-staff-folio) 0.34 c h);
         border-radius: var(--radius-panel);
         color: var(--_music-staff-ink);
     }

@@ -14,7 +14,7 @@ import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
 // `backdropMode: "live"` dock (the surface the user reported unreadable over light, and the
 // one most often over a live/bright backdrop). It REFINES the declarative bucket +
 // the Arm-1 self-engage (both stay the floor); a dark-substrate consumer opts out via
-// `--glass-tint-strength: 0%` on the dock or `backdropMode: "static"`. Imported
+// `--glass-level: 0` on the dock or `backdropMode: "static"`. Imported
 // directly (NOT via the glass barrel) — the composable is demo-private (path B): the
 // dock is the binary consumer #1, the public barrel seat awaits a 2nd binary consumer
 // (docs/consumer-evidence/use-glass-backdrop-luminance.md names the booked trigger).

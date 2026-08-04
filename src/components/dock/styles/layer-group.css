@@ -278,11 +278,11 @@
         opacity: 0;
         border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
         /* The travelling indicator paints the glass-register
-           `--dock-layer-rail-active` (defaults to `--glass-bg-floating`, the
+           `--dock-layer-rail-active` (defaults to `--glass-plate-floating`, the
            "selected reads as glass" register). The inline fallback is the SAME
            glass tier — NOT the saturated `--primary 15%` warm-red mix. This token
            rule is the sole paint (no baked plate utility to inherit). */
-        background: var(--dock-layer-rail-active, var(--glass-bg-floating));
+        background: var(--dock-layer-rail-active, var(--glass-plate-floating));
         transition:
             width var(--duration-fast) var(--spring-snappy),
             height var(--duration-fast) var(--spring-snappy),

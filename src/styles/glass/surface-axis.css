@@ -1,7 +1,7 @@
 /* glass/surface-axis.css — the ONE shared {glass·veil·opaque} surface-decoration
    axis.
 
-   The house minted `--glass-level` (the opacity knob) and `--glass-tint-*`
+   The house minted `--glass-level` (the opacity knob) and `--glass-veil-*`
    (the legibility seam) as SHARED inheriting axes, but left the
    {glass·veil·opaque} surface-DECORATION choice as a per-component one-off
    (`<Card>` had the only true axis; `<Dialog>` a binary string; everyone else
@@ -11,10 +11,10 @@
 
      glass   — the resolved tier's plain glass rung (IDENTITY; no rule needed —
                the bare tier paints).
-     veil    — the borderless/rimless text-legibility plate: the `--glass-bg-quiet`
+     veil    — the borderless/rimless text-legibility plate: the `--glass-plate-quiet`
                fill + blur with the box border AND rim STRIPPED (the boxed look
-               reads as a dividing line on a text plate). Reads `--glass-bg-quiet`
-               + the `--glass-tint-*` seam through the SAME `--glass-*` ladder,
+               reads as a dividing line on a text plate). Reads `--glass-plate-quiet`
+               + the `--glass-veil-*` seam through the SAME `--glass-*` ladder,
                so `--glass-level` / the bright-bucket darken retune it in lockstep
                with every glass surface — NO veil-local recipe fork.
      opaque   — the `--glass-level:0` solid-card escape (the `.glass-opaque` rung):
@@ -34,41 +34,27 @@
     }
 
     /* ── veil — the borderless text-legibility plate ──────────────────────────
-       The alpha is composed at the element so the named calibration survives
-       custom-property substitution. Clarity is one overrideable filter value;
-       dark mode changes only the measured alpha and brightness inputs. */
+       A text plate with the box border AND rim stripped (a boxed look reads as a
+       dividing line under text). It is the quiet rung's own material — same ink, same
+       radius, same one saturate — with the edge taken off, so `--glass-level` and the
+       earned darken retune it in lockstep with every other plate. No veil-local recipe
+       fork, and no brightness leg: it darkens toward the ink in BOTH modes, like the
+       ladder it belongs to. Dark carries one step more ink, exactly as the rungs do. */
     [data-surface="veil"] {
-        --veil-alpha: 44.3%;
-        --veil-brightness: 1.02;
-        --veil-color: color-mix(
-            in oklab,
-            var(--card),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        );
-        --veil-bg: color-mix(
-            in srgb,
-            var(--veil-color) var(--veil-alpha),
-            transparent
-        );
+        --glass-veil-tier: var(--glass-veil-quiet);
+        @apply glass-plate;
         --veil-clarity: blur(
                 calc(var(--glass-blur-quiet-radius) * var(--glass-level))
             )
-            saturate(var(--glass-saturate-quiet))
-            brightness(var(--veil-brightness));
+            saturate(var(--glass-saturate));
         --veil-border: none;
         --veil-shadow: none;
         --veil-feather: none;
 
-        background: var(--veil-bg);
         backdrop-filter: var(--veil-clarity);
         border: var(--veil-border);
         box-shadow: var(--veil-shadow);
         mask-image: var(--veil-feather);
-    }
-
-    :where(.dark) [data-surface="veil"] {
-        --veil-alpha: 56%;
-        --veil-brightness: 1.16;
     }
 
     /* ── opaque — the solid-card escape ───────────────────────────────────────
@@ -77,22 +63,21 @@
        edge/rim/under-shadow (a solid plate with a glass edge, not a bare div).
 
        THE SUBSTITUTION-VS-INHERITANCE TRAP (the recurring dock-scale
-       class, live-found in the π readback): the `--glass-bg-*` tier tokens bake
+       class, live-found in the π readback): the `--glass-plate-*` tier tokens bake
        `var(--glass-level)` at their `:root` DECLARATION (where level=1), so a
        DESCENDANT element's `--glass-level: 0` does NOT re-resolve the `:root`-baked
-       `--glass-bg-floating` — the plate stayed translucent (α 0.8, NOT solid). The
+       `--glass-plate-floating` — the plate stayed translucent (α 0.8, NOT solid). The
        `.glass-opaque` class works only when `--glass-level` is set at `:root` (the
        cohesion fixture's pattern); a PER-ELEMENT opaque surface (the whole point of
        `surface="opaque"`) needs the solid plate composed AT THE ELEMENT. So the
        opaque rung sets the SOLID `--card` background + `blur(0)` DIRECTLY (the
        level-0 endpoint resolved here, not via the baked token) — AND still flips the
-       `--glass-level: 0` / `--glass-tint-strength: 0%` knobs so a NESTED glass
+       `--glass-level: 0` / `--glass-level: 0` knobs so a NESTED glass
        descendant + any consumer reading the level scalar see the opaque register
        coherently. The adaptive TINT axis is zeroed (a solid plate has no
        translucent backdrop to darken-over — the bucket-INVARIANT contract). */
     [data-surface="opaque"] {
         --glass-level: 0;
-        --glass-tint-strength: 0%;
         /* The SOLID --card plate composed at the element via the house color-mix
            idiom (`--card` over transparent at 0% transparent = fully solid --card)
            — functionally `var(--card)`, expressed as the cohesion-sanctioned mix

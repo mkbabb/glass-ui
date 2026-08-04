@@ -38,12 +38,12 @@
        plate counted TWICE. Zeroed, the stack is EXACTLY one plate over one floor (the
        calibration target). Each family maps --glass-defined-plate to its OWN fill token
        so the floor sits under the fill it actually paints; a bare `.glass-*` rung +
-       .glass-defined falls back to the ladder-rung plate (--glass-plate-tinted). */
+       .glass-defined falls back to the rung's own composed veil (--glass-veil). */
     .glass-defined,
     .input-pill,
     .control-surface {
         --glass-definition: 1;
-        /* The substitution-vs-inheritance fix (the --dock-scale re-declare / --glass-bg-dock
+        /* The substitution-vs-inheritance fix (the --dock-scale re-declare / --glass-plate-dock
            pre-substituted-seam precedent — CLAUDE.md "The substitution-vs-inheritance trap").
            --glass-floor-fill + --glass-border-defined are composed at :root, where
            --glass-definition is 0 — and a custom property's inner var() substitutes at the
@@ -67,8 +67,8 @@
         background-color: transparent;
         background-image:
             linear-gradient(
-                var(--glass-defined-plate, var(--glass-plate-tinted)),
-                var(--glass-defined-plate, var(--glass-plate-tinted))
+                var(--glass-defined-plate, var(--glass-veil)),
+                var(--glass-defined-plate, var(--glass-veil))
             ),
             linear-gradient(var(--glass-floor-fill), var(--glass-floor-fill));
         border-color: var(--glass-border-defined);

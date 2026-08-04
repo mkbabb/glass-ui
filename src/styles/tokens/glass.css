@@ -10,223 +10,112 @@
    (the dist is byte-isomorphic). */
 :root {
     /* ═══════════════════════════════════════════════
-       §8  GLASSMORPHISM — Five-tier surface ladder
+       §8  GLASS — ONE medium, five thicknesses
 
-       Tier semantics, alpha-monotonic:
-         wash      ~0.30α  + light blur
-         quiet     ~0.50α  + medium blur
-         resting   ~0.65α  + canonical blur  (the consumer plate)
-         floating  ~0.80α  + heavier blur
-         overlay   ~0.95α  + heaviest blur   (modal-over-modal)
+       THE MATERIAL LAW. Occlusion is bought with RADIUS. Legibility is bought with
+       INK. Neither is ever bought with alpha, and brightness is not an axis. Glass is
+       a tone compressor — `L_out = floor + g·L_in`, hue preserved; the warm-cream read
+       arrives by TRANSMISSION of the warm field through `saturate()`, never by painted
+       cream. A rung is a THICKNESS of the same glass, never a different material.
 
-       There is no four-tier `subtle | default | medium | elevated`
-       ladder. No legacy aliases.
+       The five calm rungs are one ink base + one step + five radii:
+
+         rung      radius   ink α (light/dark)   band
+         ────────  ──────   ──────────────────   ───────
+         wash       10px      .06 / .10          content
+         quiet      14px      .10 / .14          content
+         resting    16px      .14 / .18          content   (the consumer plate)
+         floating   20px      .18 / .22          chrome
+         overlay    22px      .22 / .26          chrome
+
+       The content band tops at .14/.18 — both under the 0.20 ceiling the 80%-structure-
+       kept transmission target needs. The chrome band claims OCCLUSION, and buys it by
+       BLUR, never by paint. No legacy aliases, no four-tier `subtle|default|medium|
+       elevated` ladder.
        ═══════════════════════════════════════════════ */
 
-    /* ── Per-tier alpha — the CANONICAL named opacity register ──
-       Each `--glass-opacity-{tier}` IS the library's canonical alpha for that tier —
-       a NAMED, documented input to the ONE compose recipe below, NOT a magic number
-       a consumer re-pins. The values here are the library IDENTITY: the warm-cream
-       glass ladder, alpha-monotonic (wash < quiet < resting < floating < overlay), with
-       the dock (0.42) + chassis (0.28) carrying their own footprint-calibrated rungs.
-       The dark arm (tokens/dark-arm.css) lifts each ~0.08 for read-weight over the
-       deeper canvas — the SAME named tokens, per-mode (the plain per-mode pair idiom).
+    /* ── The INK — the one chromatic writer on the plate body ──
+       A warm near-black. The plate DARKENS toward it; it never lightens toward cream
+       (a painted cream veil is the additive read this register replaces). Plain
+       per-mode pair — the dark arm re-declares it deeper in tokens/dark-arm.css, so
+       the rung DIMS in BOTH modes (`sign(ΔL*) < 0` at every rung).
+       Band: L ∈ [0.24, 0.32], C ≤ 0.045, h = the foreground hue. */
+    --glass-veil-ink: oklch(0.28 0.035 70);
 
-       A consumer that wants the LIBRARY register reads these named tokens (or composes
-       a `<Card tier>` rung) and re-pins NOTHING; a consumer whose surface needs a
-       divergent composited luminance (the dark-AA register: instrument 0.72 /
-       document 0.78) keeps that as a NAMED preset IN ITS OWN repo (presets-in-consumers)
-       — the library default is its identity, the consumer preset is the consumer's.
+    /* ── The LADDER — one base, one step, five derived rungs ──
+       Every rung is `base ± n·step`; there are no hand alphas. A consumer retunes the
+       WHOLE ladder by moving base (the register's weight) or step (its separation),
+       and the monotone ordering is a property of the arithmetic, not of five values
+       that happen to climb. The dark arm moves base alone (+0.04, the measured dark
+       resting delta) — one line, the whole ladder follows.
 
-       THE SUBSTITUTION-VS-INHERITANCE SEAM (the recurring trap, recorded). The composed
-       `--glass-bg-{tier}` below is declared HERE at `:root`, so a custom-property
-       substitution resolves at THIS element — overriding `--glass-opacity-{tier}` on a
-       DESCENDANT does NOT re-compose the inherited `--glass-bg-{tier}` (the value is
-       already resolved). A consumer that needs a per-scope tier alpha therefore RE-DECLARES
-       the composed `--glass-bg-{tier}` on the scope (the same recipe, the pinned alpha) —
-       the documented retune path, mirroring the dock's own `--glass-bg-dock` self-re-point.
-       The named alpha is the canonical INPUT; the per-scope `--glass-bg-*` re-declaration is
-       the sanctioned consumer pin. (The `--glass-level` recipe MECHANISM below is the
-       seam — UNTOUCHED by this register; this canonicalizes the alpha INPUTS only.)
-       Machine-locked by `proof:card-tier-alpha`. */
-    /* Opacity primitives — the per-tier canonical alpha (light arm). */
-    --glass-opacity-wash:     0.30;
-    --glass-opacity-quiet:    0.50;
-    --glass-opacity-resting:  0.65;
-    --glass-opacity-floating: 0.80;
-    --glass-opacity-overlay:  0.95;
+       THE SUBSTITUTION-VS-INHERITANCE SEAM (recorded, unchanged in kind). The composed
+       `--glass-plate-{rung}` colors below resolve at THIS `:root`, so re-pointing
+       `--glass-veil-base` on a DESCENDANT does not re-compose an inherited plate color.
+       A per-scope retune composes the plate AT the element — `@utility glass-plate`
+       (glass/veil.css) is that seam, and it is what every ladder rung uses. */
+    --glass-veil-base: 0.14;
+    --glass-veil-step: 0.04;
 
-    /* Blur primitives. The radii here feather the dock + meter card to a
-       barely-perceptible diffusion that lets the substrate behind it bleed
-       through cleanly while keeping hero typography crisp at meter scale.
-       The resting blur sits at 7px so a glass plate reads as a diffusion
-       without consumer-side override.
+    --glass-veil-wash:     calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
+    --glass-veil-quiet:    calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+    --glass-veil-resting:  var(--glass-veil-base);
+    --glass-veil-floating: calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+    --glass-veil-overlay:  calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
 
-       The ladder dialed back ~15-20% UNIFORMLY (the
-       user's "a hair too much" over-diffusion): quiet 10→8, resting 12→10,
-       floating 16→13, overlay 15→13, dock 11→9; wash stays 1px (sub-perceptual).
-       A second ~15% integer-rounded pull then followed: quiet/resting 8→7,
-       floating/overlay 13→11 (across the wider ::backdrop/stage/side-sheet census,
-       and the immersive stage scrim 16→14); the deep ceiling holds 16px. The overlay
-       role is 11px at EVERY DPR — the former 2dppx→17px restore is KILLED (below). The
-       calm default is no longer terminal.
-       The pull is proportional (it preserves tier separation) and keeps every
-       rung under the 15px budget ceiling — the backdrop's structure reads a hair
-       more through the plate while the glass still reads unmistakably as glass.
-       The radius axis ONLY: `--glass-level` + every `saturate()`/`brightness()`
-       companion below are UNTOUCHED (the dark-recipe saturate/
-       brightness companions preserved — radius-only, the gate's B3 assert).
+    /* ── THICKNESS — five in-band radii, one calibration anchor ──
+       The rung IS the radius. `wash` at 1px was a rung wearing a name: a 1px blur is
+       sub-perceptual, so the bottom of the ladder read as no glass at all. The band is
+       [10, 22] — 10px is the least radius that reads as a lens, 22px the ceiling past
+       which cost climbs faster than the read improves (`backdrop-filter` is the
+       library's most expensive idiom and the radius is its dominant cost). `resting`
+       at 16px is the calibration host: the grasp register (glass/grasp.css) derives
+       its 26px from it at ×1.625.
 
-       The resting rung pulls 10→8→7 to mint the ONE unified
-       7px glass material: the dock + the default-Card (`--glass-blur-quiet`) + the
-       menu-row (the quiet tier) all resolve the SAME `blur(7px)` RADIUS LEG (the
-       resolved-radius peer lock, proof:glass-cal). Ordinary Buttons consume this
-       resting material; primary Buttons consume the shared deep register. Radius-only —
-       the per-rung saturate()/brightness() companions stay (the saturate-revert is a
-       later paint, not this collapse). */
+       Monotone, five literals, one band. Every radius is multiplied by the ONE
+       `--glass-level` clarity scalar — level 1 paints the rung, level 0 paints
+       `blur(0)` (the opaque escape), level > 1 goes thicker. There is NO device-
+       conditional rung: a CSS blur radius covers MORE device pixels at higher DPR,
+       not fewer, so a `min-resolution` restore inverts the hierarchy for nothing.
 
-    /* ══ THE MATERIAL ONTOLOGY — FIVE calm roles, THREE magnitudes, ONE opt-in
-       deep continuum, ONE private stage effect ══
-       (BJ.W-BLUR-LADDER canon; the token source is the canon, not design-idioms.md
-       — avoids the BAND-COLOCATION Precept-F duplication. Sibling waves cite THIS
-       table.) The glass material is THREE SEPARATE concepts — do NOT call every name
-       a "rung":
+       Raw off-ladder `blur(Npx)` is forbidden (tests/gates token-hygiene enforces);
+       the deep tier (tokens/glass-deep.css) is a SEPARATE opt-in continuum ABOVE this
+       calm set, and the immersive Drawer scrim is a private stage effect BESIDE it —
+       neither is a sixth rung. */
+    --glass-blur-wash-radius:     10px;
+    --glass-blur-quiet-radius:    14px;
+    --glass-blur-resting-radius:  16px;
+    --glass-blur-floating-radius: 20px;
+    --glass-blur-overlay-radius:  22px;
 
-         family        semantic roles                    std magnitude(s)  composition truth
-         ────────────  ────────────────────────────────  ────────────────  ──────────────────────────
-         calm          wash·quiet·resting·floating·       1px · 7px · 11px  FIVE role recipes across
-                       overlay                                              THREE distinct standard
-                                                                            magnitudes. Equal-radius
-                                                                            roles differ by brightness,
-                                                                            dark-arm recipe, alpha, or
-                                                                            component context — those
-                                                                            do NOT mint a new magnitude.
-         deep          opt-in `.glass-deep` on a base     continuum 11→16   three grade defaults resolve
-                       role                               px                ~12.75/14.5/16px, saturate
-                                                                            1.6→1.8. NOT the calm
-                                                                            ladder's sixth rung.
-         stage effect  the immersive Dialog/Drawer scrim  fixed 14px @ L1   a scene-SEPARATION sample,
-                       (drawer/styles.css)                                  NOT a glass surface recipe.
+    /* ── CHROMA — ONE value, mode-invariant ──
+       Saturation is a property of the MEDIUM, not of the rung or the mode. Ten hand
+       values (five light, five dark) said the opposite and said it inconsistently: a
+       thicker plate does not de-saturate what passes through it. The warm-cream read
+       of this library is TRANSMISSION of the warm field through this one term.
+       Tunable in [1.40, 1.60] — any move adjudicates on the Safari arm first, where
+       the saturate term diverges most. */
+    --glass-saturate: 1.5;
+    /* The grasp register's own term (glass/grasp.css): a held plate opens, and what
+       comes forward comes forward with more chroma, not less. */
+    --glass-saturate-grasp: 1.75;
 
-       So the CALM set is FIVE named role recipes over THREE distinct standard blur
-       magnitudes (1/7/11) — NOT "six rungs at four values". Deep is a SEPARATE opt-in
-       continuum ABOVE the calm set; the immersive scrim is a private stage effect
-       BESIDE it. Only the calm three magnitudes + deep continuum are glass surfaces.
-
-       COLLISION 1 — quiet == resting radius (7px). RULED INTENTIONAL: the ONE unified
-       7px base RADIUS LEG (dock + default-Card + menu-row resolve the same 7px, the
-       resolved-radius peer lock). They stay DISTINCT composed roles — quiet carries the
-       brightness(1.02) lift, resting is the flat canonical plate. Equal-radius, sharing
-       a 7px leg — NOT one material. (The rename-to-4 read, OPEN-2a, is DECLINED at the
-       systematic tier; a design-tier re-rule stays Sol's.)
-
-       COLLISION 2 — floating == overlay radius (11px) at standard density. The shared
-       floating/overlay light/standard-DPR blur RECIPE; they diverge by role and by the
-       dark-arm brightness companion (floating 1.10 vs overlay 1.06, dark-arm-glass.css)
-       — distinct by role and dark luminance, not by a standard-density perceptual step.
-
-       DPI — there is NO device-conditional blur rung. The overlay role is 11px at EVERY
-       DPR. The former `@media (min-resolution: 2dppx)` writer that lifted overlay to 17px
-       is KILLED: it inverted the hierarchy (a calm overlay outgrew the 16px deep ceiling),
-       broke the owner's uniform-subtlety direction, and carried no perceptual/performance
-       warrant (a CSS blur radius maps over MORE device pixels at higher DPR, not fewer).
-       Reintroduction is a later born-RED proposal that must earn its evidence, not a defer.
-
-       SATURATE — the shipped per-role saturate values (wash/quiet/resting 1.4,
-       floating/overlay 1.6, declared below) are PROVISIONAL CURRENT inputs, NOT ratified
-       material identity. `proof:glass-legibility` reads resolved background alpha/warmth/
-       contrast, not `backdrop-filter` saturation, so it cannot ratify them; they are held
-       pending a structured-substrate paint comparison (a routed Sol ruling). Do NOT repaint
-       them blindly here. The deep-tier saturate 1.8 (glass-deep.css) is the upper bound;
-       no calm role exceeds it.
-
-       ONE BACKDROP SAMPLE PER BODY — one intended backdrop sample per visual body; every
-       blur choice is a NAMED role input (raw off-ladder `blur(Npx)` is forbidden,
-       BAND-GATES W3 `token-hygiene` enforces) and every accessibility-bearing recipe reads
-       the shared `--glass-level` clarity axis. The immersive stage scrim is a private
-       stage-effect role in drawer/styles.css (fixed 14px × `--glass-level`) — it consumes
-       a private token, NOT a calm or deep rung, and CommandDialog cannot request it. */
-    --glass-blur-wash-radius:     1px;
-    --glass-blur-quiet-radius:    7px;
-    --glass-blur-resting-radius:  7px;
-    --glass-blur-floating-radius: 11px;
-    /* Clamped from 24px into the 8–15px budget band. A blur radius
-       past ~20px is exponentially costlier (`backdrop-filter` is glass-ui's most
-       expensive idiom — the radius is the dominant cost). 15px is the band
-       ceiling; dialed the overlay rung to 13px (off 15), then to 11px, so the
-       whole ladder pulls back in proportion. 11px at EVERY DPR — there is no
-       device-conditional restore (the former 2dppx→17px writer is KILLED; a denser
-       backing store does NOT lower a CSS-px blur's device-pixel footprint). */
-    --glass-blur-overlay-radius:  11px;
-    /* The `--glass-blur-dock` chain (radius + composite +
-       `--glass-saturate-dock` + the `--blur-dock` @theme bridge) is RETIRED (clean
-       break, no alias). The dock now paints blur via `--dock-surface-blur:
-       var(--glass-blur-resting)` (the unified 7px material),
-       so its own rung token was orphaned. */
-
-    /* ── Per-rung SATURATE — the CANONICAL named saturate register (
-       LEGIBILITY-MEASURED, the cross-consumer fold) ───────────────────────
-       The saturate term is the LOAD-BEARING glass knob (research/apple-glass.md §4:
-       the apple.com nav rides `saturate(1.8)` — the highest term, blur moderate).
-       Each `--glass-saturate-{tier}` is the library's canonical saturation for that
-       rung — a NAMED, `:root`-overridable input the composed `--glass-blur-{tier}`
-       reads THROUGH, the SAME substitution-vs-redeclaration discipline as the
-       `--glass-opacity-{tier}` alpha register above. A `:root { --glass-saturate-
-       quiet: … }` override re-resolves the rung's saturation with ZERO recipe edit
-       (the "dark cards" chronic + the apple-glass saturate-as-load-bearing
-       lever). The values here (wash/quiet/resting 1.4, floating/overlay 1.6) are the
-       PROVISIONAL CURRENT token defaults — NOT ratified material identity — so the
-       composed blur is UNCHANGED at these defaults (proof:glass-cal / proof:card-tier-
-       alpha stay GREEN by construction). They are held pending a structured-substrate
-       paint comparison (a routed Sol ruling); `proof:glass-legibility` reads background
-       alpha/warmth/contrast, not filter saturation, so it does not ratify them. The
-       deep-tier `--glass-saturate-deep` 1.8 ceiling (glass-deep.css) is the upper bound;
-       no rung saturate exceeds it. The dark arm (tokens/dark-arm.css) re-declares this
-       register with the MATERIAL luminosity lift — the SAME named tokens, per-mode (the
-       plain per-mode pair idiom). The brightness() companions stay baked (this fold mints
-       ONLY the saturate knob). */
-    --glass-saturate-wash:     1.4;
-    --glass-saturate-quiet:    1.4;
-    --glass-saturate-resting:  1.4;
-    --glass-saturate-floating: 1.6;
-    --glass-saturate-overlay:  1.6;
-    /* `--glass-saturate-dock` RETIRED with the `--glass-blur-dock`
-       chain (its sole reader). The dock reads `--glass-saturate-resting` through the
-       `--glass-blur-resting` peer now. */
-
-    /* Each blur radius is scaled by the ONE `--glass-level` scalar (in
-       lockstep with the opacity seam above): level=1 byte-identical; level=0 →
-       blur(0) (the clean solid floor with the opacity); level>1 → more diffusion.
-       The per-rung `saturate()` companion reads the named `--glass-saturate-{tier}`
-       knob; `brightness()` stays baked (the level
-       scales the RADIUS, not the saturation — the calm light-concentration). */
-    --glass-blur-wash:     blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(var(--glass-saturate-wash));
-    /* The `quiet` rung reads `saturate(var(--glass-saturate-quiet))`
-       (1.4 at the current default) + `brightness(1.02)` so the lower ladder reads
-       with the same saturation life as `resting`+ (Apple: Liquid Glass concentrates
-       light, it does not desaturate). The `brightness(1.02)` is the small lift the
-       spec names — it lands `quiet` between bare `wash` and `resting`.
-       The `prefers-reduced-transparency: reduce` bracket at glass.css maps
-       `--glass-blur-quiet: none`, so this whole chain drops with the blur. */
-    --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(var(--glass-saturate-quiet)) brightness(1.02);
-    --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting));
-    /* The floating/overlay backdrop saturate sits at 1.6, the
-       upper transmissive rung (still under the deep 1.8 ceiling); wash/quiet/
-       resting sit at 1.4. These are PROVISIONAL CURRENT values, held pending a
-       structured-substrate paint comparison — not ratified identity (the earlier
-       ~1.05/1.18/1.2 prose was a stale bake; these are what currently paints). */
-    --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating));
-    --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate-overlay));
-    /* The composed `--glass-blur-dock` token RETIRED (orphaned by
-       the `--dock-surface-blur: var(--glass-blur-resting)` re-point).
-       The dock reads the unified 7px resting material; there is no dock-own blur rung. */
+    /* The composed rung recipes. Radius × the level scalar + the one saturate term.
+       NO brightness leg: the ink is the single writer on the L axis, and two writers
+       on one axis is how a ladder stops being monotone. (The grasp carrier keeps its
+       measured `brightness(0.96)` — that is a STATE register, not a rung.) */
+    --glass-blur-wash:     blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate));
 
     /* ── The graded-backdrop halo cohort (the `data-backdrop="graded"` opt-in) ──
        ONE box-following masked plate that swaps the immersive Dialog's flat
        full-viewport scrim for a frost-near / sharp-far bloom (the intersect
        double-ramp product; radial STRUCK). The immersive Dialog + the
        ENGAGE-AFFORD slider modal are the two opt-in consumers; `:root`-overridable
-       per presets-in-consumers. The dim rides the proven `--glass-bg-overlay` mix
+       per presets-in-consumers. The dim rides the proven `--glass-plate-overlay` mix
        (per-mode arms, placement.css), NOT `--overlay-scrim`.
        - `--glass-halo-blur`  : the halo plate radius (18-20px sweet spot; 11 reads
          too close to the modal's own plate, 34 is unnecessarily heavy).
@@ -238,94 +127,56 @@
     --glass-halo-core:  13rem;
     --glass-halo-bloom: 7rem;
 
-    /* Dock-specific opacity (0.42) — lighter than `resting` (0.65) so the dock
-       reads as a translucent overlay rather than a panel, backdrop bleed
-       visible through it. Consumed by `.glass-dock` via `--glass-bg-dock`. The
-       value holds the surface register against the tightened 11px blur so the
-       dock reads as painted chrome, not a frosted ghost. */
-    /* The dock base alpha lifts 0.42 → 0.50 (margin-insurance for
-       the warm-chromatic darken: the base composite chroma closes a notch before any tint
-       engages). Stays the lightest chrome tier (below resting 0.65), mode-invariant. */
-    --glass-opacity-dock: 0.50;
-
-    /* Dialog-specific opacity (0.68) —. The iOS-27 control-
-       center modal register: SEE-THROUGH frosted glass that reveals the page
-       beneath, NOT the floating-tier near-opaque slab (0.80 read as "NOT glassy
-       at all"). 0.68 sits between `resting` (0.65 — transparent enough to read
-       through) and `floating` (0.80 — opaque enough for AA legibility against
-       the bright bucket), so the modal floats with the FLOATING-tier lift (edge/
-       rim/under-shadow) while reading at the RESTING-tier transparency. The
-       LIBRARY iOS-modal identity (presets-in-consumers — a consumer retunes
-       `--glass-bg-dialog` via :root). The α-band probe
-       DECIDED this is genuinely-distinct physics (Δ plate-α 0.12 vs floating; ΔL
-       0.06–0.10 over a busy/dark page → KEEP). Consumed by DialogContent.vue, which
-       re-points the internal `--glass-bg-rung` compose slot onto `--glass-bg-dialog`
-       on the dialog scope (the ONE-DOOR read — NOT the retired `--glass-bg-floating:
-       var(--glass-bg-dialog)` double-name re-declaration). */
-    --glass-opacity-dialog: 0.68;
-
-    /* Sheet-specific opacity (0.74) —. The iOS-27 bottom-
-       sheet register: SEE-THROUGH frosted glass whose lifted crown reveals the
-       page/album grid beneath, NOT the near-opaque overlay slab (0.95 read as "not
-       glassy"). 0.74 sits BETWEEN the dialog 0.68 (transparent enough that the
-       backdrop reads through) and the overlay 0.95 (opaque enough for AA body text
-       against a busy grid) — a sheet is content-bearing, so it sits a hair above the
-       dialog. This is an OPACITY primitive with no composed `--glass-bg-*` rung: the
-       Drawer crown composes its own plate from it inline (drawer/styles.css), lerping
-       the overlay role down to this one across the descent, so there is nothing left
-       for a rung to say. Presets-in-consumers — a consumer retunes it via :root. */
-    --glass-opacity-sheet: 0.74;
+    /* ── OFF-LADDER FOOTPRINTS — integer offsets, zero raw alphas ──
+       A surface whose footprint differs from a card's declares its distance from the
+       resting rung in STEPS, never in a hand-picked alpha. Four exist; each states why
+       its footprint moves it, and the whole set re-tunes with base/step like the rest.
+         chassis  −2  a 64rem plate reads far heavier than a card at the same ink
+         dock     −1  the sharpest glass in the library — chrome over an unknown field
+                      must let that field through (owner edict)
+         dialog   +1  the iOS-27 control-centre modal: see-through, still occluding
+         sheet    +2  content-bearing over a busy grid; the Drawer crown lerps the
+                      overlay rung down to it across the descent (drawer/styles.css) */
+    --glass-veil-chassis: calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
+    --glass-veil-dock:    calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+    --glass-veil-dialog:  calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+    --glass-veil-sheet:   calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
 
     /* Dock foreground over an animated backdrop. A dock floating over an
-       aurora/animated surface (`value.js` dock-over-aurora, a slides routed
-       control, bbnf) sits on a mid-luminance, shifting field where the muted
-       default fg can drop below contrast. This token is the dock control's
-       foreground base — a complete `hsl()` color consumed via `var()`; for the
-       muted icon weight the control mixes it down with `--opacity-icon-muted`.
-       Defaults to `var(--foreground)` so the dock paints byte-identically to
-       today; a consumer overrides it per-backdrop (e.g. a near-white over a
-       dark aurora) without touching library source.
-
-       This is the FOREGROUND half of the adaptive story, now reconciled
-       INTO the `--glass-backdrop` probe (not a third fork): under the bright bucket
-       (`@container style(--glass-backdrop: light)` in dock.css) it re-points toward
-       the contrast-clearing ink, and an `@supports (color: contrast-color(…))`
-       block flips it natively on supporting engines. The `var(--foreground)`
-       default keeps the zero-delta rest state. */
+       aurora/animated surface sits on a mid-luminance, shifting field where the muted
+       default fg can drop below contrast. This token is the dock control's foreground
+       base — a complete `hsl()` color consumed via `var()`; for the muted icon weight
+       the control mixes it down with `--opacity-icon-muted`. Defaults to
+       `var(--foreground)`; a consumer overrides it per-backdrop (e.g. a near-white
+       over a dark aurora) without touching library source. Under the bright bucket
+       (`@container style(--glass-backdrop: light)`, dock.css) it re-points toward the
+       contrast-clearing ink, and an `@supports (color: contrast-color(…))` block flips
+       it natively on supporting engines. */
     --dock-fg-on-aurora: var(--foreground);
 
-    /* Chassis-specific opacity. Looser than `default` (0.50) so the
-       <InstrumentChassis> surface reads as glass-over-aurora at its
-       64rem-wide footprint; the default tier stays calibrated for cards.
-       Mirrors the dock-tier pattern (own opacity primitive + composed bg).
-       Light 0.28 sits in the gap between dock (0.32) and a hypothetical
-       wash tier; dark 0.36 mirrors the +0.08 step the dock takes from
-       `glass-bg-medium` (0.65) down to its own 0.32. */
-    --glass-opacity-chassis: 0.28;
+    /* ── THE PLATE — one flat mix per rung, zero nested color-mix ──
+       The plate is the INK at the rung's alpha, lerped against the solid `--card`
+       escape on the ONE `--glass-level` clarity scalar:
+         level 1   → the ink at the rung's own alpha (the glass identity)
+         level 0.3 → the firmer, mostly-solid plate `prefers-contrast: more` rides
+         level 0   → solid `--card` (the opaque escape, reduced-transparency + WHC)
+       ONE machinery, no parallel solid recipe, one `color-mix` deep (the Safari
+       nested-color-mix hole is unreachable by construction). `in srgb` is correct
+       here: this is a PLATE (an alpha of a surface color), and the oklab/srgb fence
+       is tint-vs-plate.
 
-    /* Composed backgrounds — : the opacity is threaded through the ONE
-       `--glass-level` clarity scalar. Each rung's effective alpha is
-       `1 - (1 - <rung-opacity>) * --glass-level`: at level=1 it collapses to the
-       hand-tuned `<rung-opacity>` (byte-identical); at level=0 it resolves `1`
-       (solid `--card` — the opaque escape); at level>1 it goes clearer. ONE
-       expression, the same seven rungs. */
-    --glass-bg-wash:     color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-wash)) * var(--glass-level)) * 100%), transparent);
-    --glass-bg-quiet:    color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-quiet)) * var(--glass-level)) * 100%), transparent);
-    --glass-bg-resting:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-resting)) * var(--glass-level)) * 100%), transparent);
-    --glass-bg-floating: color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-floating)) * var(--glass-level)) * 100%), transparent);
-    --glass-bg-overlay:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-overlay)) * var(--glass-level)) * 100%), transparent);
-    /* Plain opacity footprints: component surfaces own adaptive tint as a separate
-       flat paint layer, so a root-time zero-strength substitution cannot swallow a
-       descendant tint override or recreate a nested endpoint during composition. */
-    --glass-bg-dock:     color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dock)) * var(--glass-level)) * 100%), transparent);
-    --glass-bg-chassis:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-chassis)) * var(--glass-level)) * 100%), transparent);
-    /* The dialog plate keeps the 0.68 iOS-27 control-center opacity register
-       (see `--glass-opacity-dialog`).
-       DialogContent.vue re-points the internal `--glass-bg-
-       rung` slot onto `--glass-bg-dialog` on the dialog scope (the ONE-DOOR read —
-       NOT a `--glass-bg-floating` double-name alias) so the floating edge/rim/under-
-       shadow LIFT survives the transparency drop. */
-    --glass-bg-dialog:   color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dialog)) * var(--glass-level)) * 100%), transparent);
+       These resolve at `:root`, so they bake THIS scope's `--glass-level` — the
+       documented seam. A surface needing a per-scope retune composes the plate AT the
+       element instead: `@utility glass-plate` (glass/veil.css) is the applied twin of
+       this recipe, and every ladder rung takes that path. */
+    --glass-plate-wash:     color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-wash))     calc(var(--glass-level) * 100%), var(--card));
+    --glass-plate-quiet:    color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-quiet))    calc(var(--glass-level) * 100%), var(--card));
+    --glass-plate-resting:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-resting))  calc(var(--glass-level) * 100%), var(--card));
+    --glass-plate-floating: color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-floating)) calc(var(--glass-level) * 100%), var(--card));
+    --glass-plate-overlay:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-overlay))  calc(var(--glass-level) * 100%), var(--card));
+    --glass-plate-dock:     color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-dock))     calc(var(--glass-level) * 100%), var(--card));
+    --glass-plate-chassis:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-chassis))  calc(var(--glass-level) * 100%), var(--card));
+    --glass-plate-dialog:   color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-dialog))   calc(var(--glass-level) * 100%), var(--card));
 
     /* ── The recessed WELL rung (value.js P3 ADMIT) ──────────
        A SEATED field register: the `--card` plate stepped a whisper DARKER toward the
@@ -342,10 +193,10 @@
     /* ── The per-INSTANCE PLATE-FILL tint axis (`--glass-fill-tint`
        / `--glass-fill-strength`) ──────────────────────────────────────────────────
        The THIRD per-instance chromatic axis (BESIDE the rim `--glass-accent` and the
-       whole-plate legibility `--glass-tint-source`): `--glass-fill-tint` tints the
+       whole-plate legibility `--glass-veil-ink`): `--glass-fill-tint` tints the
        plate BACKGROUND BODY toward a consumer DATA hue, so a glass surface reads as
        COLORED GLASS (a green chip, a violet facet) without re-declaring the composed
-       `--glass-bg-*` token. DISTINCT-not-fork of `--glass-accent` (which tints only the
+       `--glass-plate-*` token. DISTINCT-not-fork of `--glass-accent` (which tints only the
        RIM + the `::before` specular CORE — file-line-disjoint): the fill writes the
        plate body, the accent writes the rim; a chip may carry BOTH. The mix is `in
        oklab` (the perceptual glass-tint family — NOT the in-srgb `--surface-tint-*`
@@ -354,7 +205,7 @@
        never a replacement). At the `@property` defaults (transparent + 0%) the body is
        byte-identical to today (`color-mix(in oklab, X, transparent 0%)` ≡ X — the no-op
        floor). `<GlassChip :tone>` is the first-class consumer (
-       component) — the fill is read on the surface, never written into a `--glass-bg-*`
+       component) — the fill is read on the surface, never written into a `--glass-plate-*`
        token here. The `@property` registration is below (the typed no-op floor). */
 
     /* ── The SHARED per-instance PLATE recipe (the fold
@@ -409,15 +260,15 @@
     /* ── The DEFINED control tier ──────────────
        Glass is the maximal default, but its blur is imperceptible over a
        FLAT page — a bare <Button>/.input-pill reads as a near-gray shape (chroma
-       0.0138, BD GOLDEN, root cause `--glass-tint-strength: 0%`). The DEFINED tier
+       0.0138, BD GOLDEN, root cause `--glass-level: 0`). The DEFINED tier
        gives a CONTROL a read-carrying warm rim + a warm-cream floor over ANY backdrop,
        on the ONE --glass-level/edge machinery (NOT a fork). Both legs read the ONE
        `@property --glass-definition` scalar (property-regs.css; 0 = transmissive,
        1 = defined), so the scalar is genuinely load-bearing (dead-knob-proof). The
-       transmissive --glass-bg-* ladder above is BYTE-UNTOUCHED — a content surface
+       transmissive plate ladder above is UNTOUCHED — a content surface
        stays transmissive; `.glass-defined` (glass/defined.css) engages the floor.
 
-       --glass-floor-fill is an ALPHA-OF-`--card` PLATE leg (this file's own --glass-bg-*
+       --glass-floor-fill is an ALPHA-OF-`--card` PLATE leg (this file's own plate
        compose idiom), NOT a chroma tint — so `in srgb` is CORRECT here (the oklab/srgb
        fence is tint-vs-plate, and this is plate). At definition 0 the floor resolves to
        fully transparent (the no-op floor for a content tier); at definition 1 it is the
@@ -441,10 +292,10 @@
        lands underneath in Batch 1b (it warms the VALUES); this register unifies
        the TIER. The hover lift mixes the rest fill one step toward the resting
        rung so a control brightens on hover in lockstep. */
-    --control-surface-bg:        var(--glass-bg-quiet);
+    --control-surface-bg:        var(--glass-plate-quiet);
     --control-surface-border:    var(--glass-border-floating);
     --control-surface-blur:      var(--glass-blur-quiet);
-    --control-surface-bg-hover:  color-mix(in oklab, var(--glass-bg-quiet), var(--glass-bg-resting) 35%);
+    --control-surface-bg-hover:  color-mix(in oklab, var(--glass-plate-quiet), var(--glass-plate-resting) 35%);
 
     /* The decorative/fx tail (grain/specular/edge-light + the adaptive tint-source/
        backdrop-luma bucket + fringe/curvature/chart-palette + per-tier shadow/spine/
@@ -462,24 +313,15 @@
    an unset surface is byte-identical to today — `color-mix(in oklab, X, <hue> 0%)` ≡ X.
    A malformed override CLAMPS to the initial-value (the typed fail-safe). */
 
-/* The backdrop hue the glass absorbs. `useGlassBackdropLuminance`
-   writes a sampled `oklch()` modal hue here (at a FIXED sub-perceptual chroma — a HUE
-   event, never the backdrop's saturation); a gray backdrop writes `transparent` (the
-   room tints nothing). The `transparent` initial-value is the neutral identity. */
-@property --glass-ambient-hue {
-    syntax: "<color>";
+/* The rung's ink alpha, as it resolves ON a surface. Registered `<number>` so the
+   grasp register can LERP it across a release: an unregistered custom property jumps
+   between its endpoints, which would step the plate's ink in one frame while the
+   filters cross-fade over ~180ms. The `initial-value` is the resting rung's ink, so an
+   unset surface resolves the consumer plate. */
+@property --glass-veil-rung {
+    syntax: "<number>";
     inherits: true;
-    initial-value: transparent;
-}
-
-/* The opt-in ambient bias knob — the EXISTING `--glass-tint-source` self-engage
-   re-point biases toward `--glass-ambient-hue` at this strength (bounded ≤ 8% in the
-   cascade — sub-perceptual under the `--glass-tint-strength-aa` bound). `0%`
-   default is the no-op floor (the un-biased `--glass-tint-ink`); the dock wires it on. */
-@property --glass-ambient-strength {
-    syntax: "<percentage>";
-    inherits: true;
-    initial-value: 0%;
+    initial-value: 0.14;
 }
 
 /* The per-INSTANCE PLATE-FILL tint. A complete `<color>` data hue

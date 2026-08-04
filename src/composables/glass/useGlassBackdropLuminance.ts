@@ -1,7 +1,7 @@
 // Sample the painted field beneath glass and adapt its tint for legibility. Static
 // surfaces use an `elementsFromPoint` stack walk; live surfaces downsample a known
 // background canvas because browsers do not expose composited backdrop-filter pixels.
-// The observer writes WCAG luminance, a light/dark bucket, and a bounded ambient hue.
+// The observer writes WCAG luminance and a light/dark bucket.
 // Live sampling is capped at 4 Hz, pauses offscreen or when hidden, and collapses to
 // one sample under reduced motion. Static surfaces sample at mount and resize settle.
 
@@ -62,7 +62,7 @@ export interface UseGlassBackdropLuminanceOptions {
      * mark this as the SHARED per-ROUTE observer. It stamps
      * `GLASS_BACKDROP_SHARED_ATTR` on its target (the route/stage scope) so descendant
      * glass surfaces (docks) DETECT the coverage and STAND DOWN — inheriting the route's
-     * `--glass-backdrop-luma`, `--glass-backdrop`, `--glass-ambient-*` via the cascade
+     * `--glass-backdrop-luma`, `--glass-backdrop` via the cascade
      * rather than each mounting its own readback loop (12 per-dock observers over ONE
      * aurora → ONE per-route readback). Default false: a per-SURFACE observer, which
      * stands down when a shared ancestor covers it and self-samples as the honest floor
@@ -98,7 +98,6 @@ export type GlassBackdropSample =
           mode: "live" | "static";
           source: "canvas" | "elements";
           luma: number;
-          ambientHue: string;
           sampledAt: number;
           targetRect: GlassBackdropTargetRect;
       }
@@ -125,17 +124,12 @@ export interface GlassBackdropTargetRect {
  * the custom properties use.
  */
 export const GLASS_BACKDROP_SHARED_ATTR = "data-glass-backdrop-shared";
-// The bounded ambient-bias strength the observer WRITES when it samples a real (non-
-// transparent) modal hue — the companion write-strength knob material.css names "the
-// observer's target owns". At 8%, it remains below the 20% tint-strength bound.
-// A transparent gray/null sample keeps the 0% identity.
-const AMBIENT_STRENGTH_ENGAGED = "8%";
 
 /**
  * The sampled-luminance observer. Wire it on a glass surface (the dock root, a
  * content-glass panel) to write a dynamic backdrop-luminance signal that refines the
  * declarative bucket. Default on for Dock; a dark-substrate consumer
- * opts out by setting `--glass-tint-strength: 0%` on the surface (the declarative floor
+ * opts out by setting `--glass-level: 0` on the surface (the declarative floor
  * stays the guarantee — the observer only refines).
  *
  * @param target the glass surface element ref to sample under + write the tokens on
@@ -248,24 +242,10 @@ export function useGlassBackdropLuminance(
             mode,
             source: mode === "live" ? "canvas" : "elements",
             luma: value,
-            ambientHue: result.ambientHue,
             sampledAt,
             targetRect: targetRect(el),
         };
         el.style.setProperty("--glass-backdrop-luma", value.toFixed(3));
-        // DEAD-PENDING-#22∥#68: the ambient channel below has ZERO paint readers at HEAD (its
-        // only one was the specular ambient endpoint); #22∥#68 owns deleting the writers.
-        // the ambient hue (a complete `oklch()` at a FIXED
-        // sub-perceptual chroma, or `transparent` for a gray null) the plate's tint
-        // cascade biases toward at the opt-in `--glass-ambient-strength`. A gray backdrop
-        // writes `transparent` — the room tints nothing (the correct null identity).
-        el.style.setProperty("--glass-ambient-hue", result.ambientHue);
-        // A real modal hue engages the bounded catch-light bias; a gray or null
-        // sample keeps the zero-strength identity.
-        el.style.setProperty(
-            "--glass-ambient-strength",
-            result.ambientHue === "transparent" ? "0%" : AMBIENT_STRENGTH_ENGAGED,
-        );
         // Stamp the first successful write so consumers can distinguish an unsampled
         // observer from a genuinely calm backdrop. This never affects layout.
         el.setAttribute("data-backdrop-sampled", "");
@@ -298,8 +278,6 @@ export function useGlassBackdropLuminance(
             targetRect: targetRect(el),
         };
         el.style.removeProperty("--glass-backdrop-luma");
-        el.style.removeProperty("--glass-ambient-hue");
-        el.style.removeProperty("--glass-ambient-strength");
         el.style.removeProperty("--glass-backdrop-sampled");
         if (writeBucket) el.style.removeProperty("--glass-backdrop");
         el.removeAttribute("data-backdrop-sampled");

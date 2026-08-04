@@ -187,7 +187,7 @@ function onSegmentClick(seg: TimelineSegment) {
        lane (independence). A warm-glass fill + the keyed rim + a
        `.shadow-cartoon-sm` cast (the cast offsets DOWN, opposite the upper
        key-light, so it coheres with the one key). Warm, not gray. */
-    background: var(--glass-bg-floating);
+    background: var(--glass-plate-floating);
     backdrop-filter: var(--glass-blur-quiet);
     -webkit-backdrop-filter: var(--glass-blur-quiet);
     border: 1.5px solid var(--glass-border-accent);
@@ -256,7 +256,7 @@ function onSegmentClick(seg: TimelineSegment) {
     background: color-mix(
         in oklab,
         var(--accent, var(--foreground)) 55%,
-        var(--glass-bg-floating)
+        var(--glass-plate-floating)
     );
 }
 
@@ -264,7 +264,7 @@ function onSegmentClick(seg: TimelineSegment) {
     background: color-mix(
         in oklab,
         var(--success, var(--foreground)) 60%,
-        var(--glass-bg-floating)
+        var(--glass-plate-floating)
     );
 }
 

@@ -106,13 +106,13 @@
     pointer-events: none;
     background: linear-gradient(
         var(--sheet-edge-direction),
-        color-mix(in oklab, var(--glass-bg-overlay) 10%, transparent) 0,
-        color-mix(in oklab, var(--glass-bg-overlay) 16%, transparent) 40px,
-        color-mix(in oklab, var(--glass-bg-overlay) 34%, transparent) 120px,
-        color-mix(in oklab, var(--glass-bg-overlay) 34%, transparent) 100%
+        color-mix(in oklab, var(--glass-plate-overlay) 10%, transparent) 0,
+        color-mix(in oklab, var(--glass-plate-overlay) 16%, transparent) 40px,
+        color-mix(in oklab, var(--glass-plate-overlay) 34%, transparent) 120px,
+        color-mix(in oklab, var(--glass-plate-overlay) 34%, transparent) 100%
     );
     backdrop-filter: blur(calc(34px * var(--glass-level)))
-        saturate(var(--glass-saturate-overlay));
+        saturate(var(--glass-saturate));
     mask-image: linear-gradient(
         var(--sheet-edge-direction),
         rgb(0 0 0 / 0.325) 0,
@@ -153,13 +153,13 @@
  * product of two ramps = a soft rounded pool concentric with the modal radius.
  * `mask-image` is Baseline; the `-webkit-mask-*` arm is source-authored (only the
  * `backdrop-filter` pair is build-injected). No `url()` filter — the cross-engine
- * floor. The dim rides the proven `--glass-bg-overlay` mix (per-mode arms below). */
+ * floor. The dim rides the proven `--glass-plate-overlay` mix (per-mode arms below). */
 :where([data-backdrop="graded"] > [data-slot="glass-graded-halo"]) {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    backdrop-filter: blur(var(--glass-halo-blur)) saturate(var(--glass-saturate-overlay));
-    background: color-mix(in oklab, var(--glass-bg-overlay) 50%, transparent);
+    backdrop-filter: blur(var(--glass-halo-blur)) saturate(var(--glass-saturate));
+    background: color-mix(in oklab, var(--glass-plate-overlay) 50%, transparent);
     -webkit-mask-image:
         linear-gradient(
             to right,
@@ -198,7 +198,7 @@
  * inline declaration (the inset-shadow-collapse trap). Light ~50% for de-emphasis
  * parity with dark ~40%. */
 .dark :where([data-backdrop="graded"] > [data-slot="glass-graded-halo"]) {
-    background: color-mix(in oklab, var(--glass-bg-overlay) 40%, transparent);
+    background: color-mix(in oklab, var(--glass-plate-overlay) 40%, transparent);
 }
 
 @media (prefers-reduced-transparency: reduce), (forced-colors: active) {

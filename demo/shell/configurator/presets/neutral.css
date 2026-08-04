@@ -62,13 +62,15 @@
     --shadow-card:        var(--shadow-sm);
 
     /* ═══════════════════════════════════════════════
-       Glass — no grain, soft opacities
-       ═══════════════════════════════════════════════ */
+       Glass — no grain
+       ═══════════════════════════════════════════════
+       The four `--glass-opacity-*` slots this preset used to write are STRUCK. They
+       retired into the ink-veil ladder and had been steering nothing since: the preset
+       has been shipping without them taking effect, so removing them changes no pixel.
+       A preset that wants a heavier or lighter plate now moves `--glass-veil-base`
+       (and `--glass-veil-step`) — ONE write retunes all five rungs, monotone
+       preserved. */
     --glass-grain-opacity: 0;
-    --glass-opacity-subtle:   0.30;
-    --glass-opacity-default:  0.50;
-    --glass-opacity-medium:   0.65;
-    --glass-opacity-elevated: 0.80;
 }
 
 .dark {

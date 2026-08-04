@@ -1,63 +1,59 @@
 /* glass/rim.css
-   The per-INSTANCE chromatic rim/accent group (the rim-ink +
-   --glass-material-rim ring + the per-rung --glass-border-accent border, light +
-   dark arms).
-   A partial held under the no-god-module bound (the
-   five-rung surface ladder + the bright-bucket @container + the calm-tier re-point
-   + the contrast-color ink-flip + the opaque escape + the under-shadow modifier + the
-   grain ::after stay in ladder.css). @import-ed by glass.css in cascade order
-   IMMEDIATELY AFTER ladder.css — the SAME @layer components; the rim/accent group is
-   the SOLE writer of --glass-material-rim/--glass-border-accent (the rungs read those
-   + --glass-rim-ink as custom properties resolved at use-time on the SAME elements, so
-   the cascade order is invariant), and the bright-bucket is DELIBERATELY
-   kept in ladder.css (moving it past the contrast-color @supports block would invert
-   their same-specificity source-order tie on supporting engines — a behaviour change the
-   byte-isomorphism bound forbids). The dist is byte-isomorphic. */
+   The rim group: the ONE `--glass-material-rim` declaration + the per-rung
+   `--glass-border-accent` border, light and dark arms.
+
+   A partial held under the no-god-module bound (the five-rung surface ladder + the
+   bright-bucket @container + the calm-tier re-point + the contrast-color ink-flip +
+   the opaque escape + the under-shadow modifier + the grain ::after stay in
+   ladder.css). @import-ed by glass.css IMMEDIATELY AFTER ladder.css, the SAME
+   @layer components: this file is the SOLE writer of
+   `--glass-material-rim`/`--glass-border-accent`, which the rungs read as custom
+   properties resolved at use-time on the SAME elements, so the cascade order is
+   invariant. The bright-bucket is DELIBERATELY kept in ladder.css (moving it past the
+   contrast-color @supports block would invert their same-specificity source-order tie
+   on supporting engines). */
 @layer components {
-    /* (b) The unified rim — `--glass-edge-light` full-perimeter inset ring on
-       EVERY material surface. The rim is on the material
-       group — NOT only the floating/overlay tiers' box-shadow stack — so
-       wash/quiet/resting/card/dock-control all carry the same
-       silhouette catch-light from ONE token. The rim is its OWN `box-shadow`
-       declaration on the material group so it composes uniformly without
-       perturbing each tier's elevation recipe (the floating/overlay tiers drop
-       their now-redundant inline `--glass-edge-light` layer below). The alpha is
-       deliberately low so the rim never eats AA legibility over a busy
-       backdrop. */
-    /* ── The per-INSTANCE chromatic-RIM tint ───────────────
-       The THIRD disjoint glass axis (LEVEL · TINT · ACCENT). The rim is TWO
-       resolved things — the `--glass-material-rim` inset RING (= `--glass-edge-
-       light`, an inset box-shadow) and the per-rung `--glass-border-*` BORDER —
-       and BOTH must carry the accent hue so the rim reads as ONE accent silhouette,
-       not a half-tinted edge.
+    /* ── The per-INSTANCE chromatic-RIM accent ─────────────────────────────────────
+       The rim is TWO resolved things — the `--glass-material-rim` inset legs and the
+       per-rung `--glass-border-*` BORDER — and the accent must reach both, or the rim
+       reads as a half-tinted edge rather than one accent silhouette.
 
-       The composition is `color-mix(in oklab, <current rim color>, var(--glass-
-       accent) var(--glass-accent-strength))` — the PERCEPTUAL oklab mix the
-       glass-tint seam + the static `<Chip>` plate already speak (NOT in-srgb — the
-       in-srgb fence is the `--surface-tint-*` brand-overlay family, a SEPARATE
-       axis this never touches). At the resting `--glass-accent-strength: 0%` (the
-       `@property` default) + `--glass-accent: transparent` (the neutral identity)
-       the mix resolves byte-identical to today's rim (the no-op floor).
+       Only the BORDER half composes here. A `box-shadow` value cannot be
+       `color-mix()`-ed whole, so the legs carry the accent by re-pointing their own
+       ink, not by being rebuilt at this seam. Each rung's `border-color` reads
+       `--glass-border-accent`, which mixes the accent onto the `--glass-border-rung`
+       ink the rung sets locally — ONE derived token carrying the accent across the
+       band.
 
-       The RING: a box-shadow value cannot be `color-mix`-ed whole, so the rim ring
-       is REBUILT here as `inset 0 0 0 0.75px <mixed-color>` — the SAME 0.75px inset
-       geometry the `--glass-edge-light` token paints, only its COLOR
-       stop composing the accent. At 0% strength the color resolves to the
-       `--glass-edge-light` base ink (`hsl(0 0% 100% / 0.18)` light / 0.22 dark —
-       read via `--glass-rim-ink`) so the ring is byte-identical to
-       `var(--glass-edge-light)`. The `.dark` arm re-points `--glass-rim-ink` to the
-       dark base so the dark rim composes off `--glass-edge-light-dark`.
+       The mix is `color-mix(in oklab, …)` — the PERCEPTUAL family the glass seam and
+       the static `<Chip>` plate already speak, NOT in-srgb (the in-srgb fence is the
+       `--surface-tint-*` brand-overlay family, a separate axis this never touches). At
+       the resting `--glass-accent-strength: 0%` + `--glass-accent: transparent` the mix
+       resolves the un-mixed rung ink — the no-op floor.
 
-       The BORDER: each rung's `border-color` reads `--glass-border-accent`, which
-       composes the accent onto the rung's own `--glass-border-*` ink. The rung
-       borders are re-pointed at their declarations (the `border: 1px solid
-       var(--glass-border-accent)`) so ONE derived token carries the accent across
-       the band; `--glass-border-accent` reads the per-rung `--glass-border-rung`
-       the rung sets locally, mixed with the accent.
+       This axis NEVER touches the plate BACKGROUND (the `--glass-veil-ink` cohort):
+       the accent is rim decoration, not the whole-plate legibility darken. One
+       chromatic writer pair per plate — veil ink + rim ink — and these are the rim's
+       half. */
+    /* ── THE ONE RIM ──────────────────────────────────────────────────────────────
+       `--glass-material-rim` is declared HERE and nowhere else. Every glass surface in
+       the library reads this name — the ladder rungs, the card, the pager pill, the
+       liquid fill, the capsule, the atom, a Switch, an Avatar, the timelines — and it
+       must resolve to the same rim on all of them. It is declared at `:root` for that
+       reason: a rim composed on the material group alone left every surface outside
+       that group resolving whatever else happened to carry the name.
 
-       This axis NEVER touches the plate BACKGROUND (the `--glass-tint-source`
-       cohort) — the accent is the rim+glint chromatic DECORATION, not the
-       whole-plate legibility darken (the distinct-axis-not-fork fence). */
+       The rim is ONE static leg plus the shade. The lit catch rides the key-facing top
+       edge, the warm under-shadow grounds the opposite edges, and which edge is which
+       comes from the `--glass-key-{lit,shade}-{x,y}` sign pair — so the rim and the
+       cartoon cast agree on one light source. Plain per-mode arms via `--glass-rim-top`
+       / `--glass-rim-bottom` (glass-fx.css light, dark-arm.css dark): NEVER a
+       `light-dark()` around an inset fragment, which computes the whole box-shadow to
+       `none` and takes the rim with it. */
+    :root {
+        --glass-material-rim: var(--glass-rim-top), var(--glass-rim-bottom);
+    }
+
     .glass-material,
     .glass-wash,
     .glass-quiet,
@@ -67,56 +63,17 @@
     .glass-card,
     .glass-specular-track,
     .dock-icon-button {
-        /* The rim ring is DIRECTIONAL: the top catch-light
-           (`--glass-rim-top`, glass-fx.css) carries the white-α ink
-           (0.30 light / 0.40 dark — the dark arm
-           re-points it via dark-arm.css), and the bottom under-shadow
-           (`--glass-rim-bottom`) grounds the plate. The accent
-           still mixes ONTO the top catch-light ink so the chromatic rim reads on the
-           lit edge; at 0% strength the mix resolves byte-identical to the bare
-           `--glass-rim-top`. `--glass-rim-ink` is the resolved top-ink stop (kept as
-           the accent-compose seam — the `.dark` arm below re-points it). */
-        --glass-rim-ink: hsl(0 0% 100% / 0.30);
-        /* The LIT catch is now KEY-DRIVEN: the accent-mixed
-           catch-light rides the key-facing edges (`--glass-key-lit-y` top +
-           `--glass-key-lit-x` side, the upper-right cel key) so the accent reads on
-           the LIT edge that agrees with the cartoon cast's light source — not a flat
-           top-only halo. The side stop carries the same accent-mixed ink at the rim's
-           own 0.18-class weight (via `--glass-rim-ink`-derived mix). The SHADE half is
-           the key-driven `--glass-rim-bottom` two-stop under-shadow. At 0% accent
-           strength the mix resolves byte-compatible to the bare key-driven rim (the
-           no-op floor). The moving-specular `::before` catch-light + the grain
-           `::after` are UNTOUCHED (both occupied). */
-        --glass-material-rim:
-            inset 0 var(--glass-key-lit-y) 0
-                color-mix(in oklab, var(--glass-rim-ink), var(--glass-accent) var(--glass-accent-strength)),
-            inset var(--glass-key-lit-x) 0 0
-                color-mix(in oklab, hsl(0 0% 100% / 0.18), var(--glass-accent) var(--glass-accent-strength)),
-            var(--glass-rim-bottom);
-        /* the per-rung border ink, accent-composed. `--glass-border-rung` is set by
-           each rung at its own declaration (it reads the rung's `--glass-border-*`
-           token); the accent mixes onto it so the BORDER half of the rim carries the
-           same hue as the RING. At 0% strength === the un-mixed rung ink. */
+        /* The per-rung border ink, accent-composed. `--glass-border-rung` is set by each
+           rung at its own declaration; the accent mixes onto it so the BORDER half of
+           the rim carries the per-instance hue (a `<Card :data-hue>`, a metal class).
+           Composed AT the element — that is what makes a per-instance accent reach it.
+           At 0% strength it resolves the un-mixed rung ink. */
         --glass-border-accent: color-mix(
             in oklab,
             var(--glass-border-rung, var(--glass-border)),
             var(--glass-accent) var(--glass-accent-strength)
         );
     }
-    .dark .glass-material,
-    .dark .glass-wash,
-    .dark .glass-quiet,
-    .dark .glass-resting,
-    .dark .glass-floating,
-    .dark .glass-overlay,
-    .dark .glass-card,
-    .dark .glass-specular-track,
-    .dark .dock-icon-button {
-        /* The dark top catch-light ink is the lifted 0.40 stop
-           (mirroring the dark `--glass-rim-top`, dark-arm.css) so the accent composes
-           off the dark silhouette device: dark glass needs a
-           brighter rim to read over the deep canvas. */
-        --glass-rim-ink: hsl(0 0% 100% / 0.40);
-    }
+
 
 }

@@ -2,7 +2,7 @@
 //
 // The observer HOST keeps only the reactive wiring (the useRAFLoop/useIntersectionPause/
 // useResizeObserver composition, the reusable downsample-canvas lifecycle, and the
-// `--glass-backdrop-*`, `--glass-ambient-*` writes on the target). The two SAMPLERS
+// `--glass-backdrop-*` writes on the target). The two SAMPLERS
 // live HERE as pure functions the observer COMPOSES:
 //   - `sampleStatic`   — the `elementsFromPoint` stack-walk of the painted background
 //                        LAYER (the static page case), un-wrapping `var(--token)`
@@ -10,28 +10,17 @@
 //   - `sampleAnimated` — the downsampled `drawImage + getImageData` read of a known
 //                        background `<canvas>` under the surface's bounding box (the
 //                        aurora/blob live-field case).
-// Both reduce their pixels to a WCAG relative luminance AND the ambient-hue histogram
-// (the FREE rider over the SAME getImageData pass). The reusable 2D context is passed
+// Both reduce their pixels to a WCAG relative luminance. The reusable 2D context is passed
 // IN by the observer — the leaf owns NO canvas lifecycle, NO closure state, NO rAF, NO
 // reactivity: a pure sampling family (the single-home of the sampling/OKLab math).
 
 import { resolveTokenColor } from "../dom/useResolveTokenColor";
 import { isCanvas, relLuminance, parseRgb, compositeOver } from "./backdropSampleMath";
-// the ambient-hue histogram (accumulate/resolve + the value.js
-// color source) lives in the colocated leaf; the sampler COMPOSES it (the ONE color
-// source).
-import {
-    makeHueHistogram,
-    accumulateHuePixel,
-    resolveAmbientHue,
-} from "./ambientHueHistogram";
 
-/** The per-sample result — the luminance AND the ambient hue (the FREE rider). */
+/** The per-sample result — the luminance, the one signal the cascade reads. */
 export interface SampleResult {
     /** WCAG relative luminance of the sampled backdrop (0..1). */
     luma: number;
-    /** A complete `oklch()` ambient-hue string, or `transparent` for a gray null. */
-    ambientHue: string;
 }
 
 /**
@@ -53,7 +42,7 @@ export const SAMPLE_DOWNSAMPLE = 32;
 // rendered a frame AND kept its drawing buffer (`preserveDrawingBuffer`). An
 // unrendered, composited-and-cleared, software-raster-fallback field reads
 // fully-transparent (mean alpha ≈ 0); compositing THAT over the underlay yields only
-// the underlay's own luma + a `transparent` ambient hue — the "witness fires but the
+// the underlay's own luma — the "witness fires but the
 // value is a lie" state (the field contributed nothing). Below this mean-alpha floor
 // the readback is not a
 // valid sample: `sampleAnimated` returns null and the live caller writes `unavailable`
@@ -130,8 +119,7 @@ export function normalizeToRgb(
 
 /**
  * Sample the ANIMATED backdrop: downsample the resolved source canvas under the
- * surface's bounding box → mean relative luminance + the ambient-hue histogram (a FREE
- * rider over the SAME pixel pass). Returns null if no source, an all-transparent
+ * surface's bounding box → mean relative luminance. Returns null if no source, an all-transparent
  * (unrendered) field, or a tainted canvas — the live caller writes `unavailable` on a
  * null; it NEVER falls to the static stack-walk (that coalescing is forbidden).
  *
@@ -183,7 +171,6 @@ export function sampleAnimated(
         let sum = 0;
         let alphaSum = 0;
         let n = 0;
-        const hist = makeHueHistogram();
         for (let i = 0; i < data.length; i += 4) {
             // Composite the translucent aurora pixel over the REAL page underlay
             // (source-over) — a dark page and a light page under the same field
@@ -198,9 +185,6 @@ export function sampleAnimated(
             );
             sum += relLuminance(r, g, b);
             alphaSum += a;
-            // the hue histogram, a FREE rider in the SAME loop
-            // (no second getImageData, no second canvas, no second pass).
-            accumulateHuePixel(hist, r, g, b, a);
             n++;
         }
         // An all-transparent readback carries no painted field content and is not a
@@ -208,7 +192,7 @@ export function sampleAnimated(
         // the static stack-walk — forbidden) rather than a degenerate luma ≈ 1.0
         // with a transparent hue.
         if (n === 0 || alphaSum / n < FIELD_ALPHA_FLOOR) return null;
-        return { luma: sum / n, ambientHue: resolveAmbientHue(hist) };
+        return { luma: sum / n };
     } catch {
         // fail-loud: a tainted/cross-origin canvas throws on getImageData; the null
         // return SURFACES the miss to the caller, which writes `unavailable` (never the
@@ -279,8 +263,7 @@ export function resolveUnderlayRgb(
 
 /**
  * Sample the STATIC backdrop: reduce the resolved backdrop (`resolveBackdropRgba`) to
- * relative luminance + the ambient hue (the single resolved background color binned the
- * SAME way). The reusable 2D context is passed in.
+ * relative luminance. The reusable 2D context is passed in.
  */
 export function sampleStatic(
     el: HTMLElement,
@@ -290,12 +273,7 @@ export function sampleStatic(
     return rgba ? staticResult(rgba) : null;
 }
 
-/** A single resolved backdrop color → the luma + the ambient hue (binned alone). */
+/** A single resolved backdrop color → its relative luminance. */
 function staticResult(rgba: [number, number, number, number]): SampleResult {
-    const hist = makeHueHistogram();
-    accumulateHuePixel(hist, rgba[0], rgba[1], rgba[2], rgba[3]);
-    return {
-        luma: relLuminance(rgba[0], rgba[1], rgba[2]),
-        ambientHue: resolveAmbientHue(hist),
-    };
+    return { luma: relLuminance(rgba[0], rgba[1], rgba[2]) };
 }

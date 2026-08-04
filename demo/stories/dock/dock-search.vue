@@ -376,7 +376,7 @@ function onKeydown(e: KeyboardEvent) {
     overflow-y: auto;
     border-radius: var(--radius-card);
     border: 1px solid var(--border);
-    background: color-mix(in oklab, var(--glass-bg-quiet), transparent 30%);
+    background: color-mix(in oklab, var(--glass-plate-quiet), transparent 30%);
     backdrop-filter: blur(var(--glass-blur-quiet-radius, 8px));
     padding: 0.5rem;
 }

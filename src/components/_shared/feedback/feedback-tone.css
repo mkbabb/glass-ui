@@ -9,7 +9,7 @@
 
    This file mints the tone register ONCE. Every feedback tone reads as COLORED GLASS:
    a tinted-glass wash (the rung bg mixed a BOUNDED % toward the tone, the SAME
-   `color-mix(in oklab, <rung bg>, <tint> <strength>)` seam the `--glass-tint-*`
+   `color-mix(in oklab, <rung bg>, <tint> <strength>)` seam the `--glass-veil-*`
    legibility lift and the `--veil-bg` plate already run — ZERO new compositing path) +
    a tone-keyed rim + a full-chroma glyph. The backdrop STILL shows through (α stays
    translucent, the π floor < ~0.92). The body ink stays `--foreground` /
@@ -23,14 +23,14 @@
    colors). A consumer recalibrates the tone weight with ONE override.
 
    THE RUNG: the register reads `--feedback-tone-rung` (default the floating-chrome rung
-   `--glass-bg-floating`, the Toast overlay register). Alert RE-POINTS it to
-   `--glass-bg-wash` on its own surface (a content panel rides wash, not floating — the
+   `--glass-plate-floating`, the Toast overlay register). Alert RE-POINTS it to
+   `--glass-plate-wash` on its own surface (a content panel rides wash, not floating — the
    register difference is correct; only the tone SOURCE unifies, not the rung). The rung
-   reads `--glass-bg-*` DIRECTLY (the same tokens the glass arm routes), so
+   reads `--glass-plate-*` DIRECTLY (the same tokens the glass arm routes), so
    the tone tint rides ON the glass surface — a re-point, not a fork.
 
    THE SUBSTITUTION TRAP (the recurring dock-scale class): `--feedback-tone-rung`
-   resolves the `--glass-bg-floating` token, which BAKES `var(--glass-level)` at its
+   resolves the `--glass-plate-floating` token, which BAKES `var(--glass-level)` at its
    `:root` declaration (level=1). A descendant `--glass-level: 0` does NOT re-resolve the
    baked rung — but that is the CORRECT register here: a feedback surface IS translucent
    glass by design; the `opaque`/level-0 escape is the `[data-surface]`
@@ -46,7 +46,7 @@
         --feedback-tone-strength: 18%;
         /* The rung the tint mixes over — the floating-chrome Toast register.
            Alert re-points it to the wash rung on its own surface. */
-        --feedback-tone-rung: var(--glass-bg-floating);
+        --feedback-tone-rung: var(--glass-plate-floating);
         /* The rim weight — a tone-keyed border, a thin tinted rim (not a loud edge). */
         --feedback-tone-border-strength: 40%;
     }

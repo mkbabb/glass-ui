@@ -27,15 +27,15 @@
  * primitive, NO normals, NO specular term: a warm raster cannot read metallic
  * (KS-PAPER R2). All periods divide the 140px tile evenly → seamless repeat.
  *
- * THE DEMOTED feTurbulence — `--paper-grain-relief` (default `none`): the
- * procedural noise survives ONLY as a capability-gated ENHANCEMENT, layered
- * ABOVE the raster in the same `background-image` stack, NEVER load-bearing. It
- * is a WARM-DUOTONE feTurbulence (the grey noise mapped umber→ecru through an
- * `feComponentTransfer` `table` ramp) with NO `feDiffuseLighting`/lighting term
- * (the metallic primitive is retired) at a partial layer alpha — a subtle warm
- * fiber grain, never the sheen. sRGB-pinned, deterministic seed. Gated behind
- * `@supports (backdrop-filter: blur(1px))` (the library's capable-engine probe)
- * so a lean engine paints the always-warm raster alone.
+ * THE feTurbulence RELIEF — `--paper-grain-relief` (default `none`): the procedural
+ * noise is an ENHANCEMENT layered ABOVE the raster in the same `background-image`
+ * stack, NEVER load-bearing. It is a WARM-DUOTONE feTurbulence (the grey noise mapped
+ * umber→ecru through an `feComponentTransfer` `table` ramp) with NO
+ * `feDiffuseLighting`/lighting term (the metallic primitive is retired) at a partial
+ * layer alpha — a subtle warm fiber grain, never the sheen. sRGB-pinned, deterministic
+ * seed. It is NOT gated on an engine-class proxy: the old
+ * `@supports (backdrop-filter: blur(1px))` wrapper tested one feature to decide about
+ * an unrelated one, which is a browser-class sniff wearing a capability query.
  *
  * THE BLEND LAW (UNTOUCHED — the physically-true move): `multiply` (light — ink
  * sinks into the paper's pits → darken) / `screen` (dark — fiber catches light →
@@ -82,18 +82,19 @@
     --paper-grain-relief: none;
 }
 
-/* feTurbulence DEMOTED — the warm-duotone fine-grain relief, gated behind the
-   library's capable-engine probe (`backdrop-filter`) and layered ABOVE the
-   raster. NO `feDiffuseLighting`/lighting term (the metallic primitive is
-   retired): the grey fractalNoise is mapped umber→ecru through an
-   `feComponentTransfer` `table` ramp and painted at a PARTIAL layer alpha, so it
-   reads as a subtle warm fiber grain over the raster, never a brushed-metal
-   sheen. sRGB-pinned, deterministic seed. On a lean engine the block is skipped
-   and the always-warm raster paints alone. */
-@supports (backdrop-filter: blur(1px)) {
-    :root {
-        --paper-grain-relief: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='r' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='table' tableValues='0.31 0.96'/%3E%3CfeFuncG type='table' tableValues='0.25 0.9'/%3E%3CfeFuncB type='table' tableValues='0.15 0.78'/%3E%3CfeFuncA type='linear' slope='0.42' intercept='0.12'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
-    }
+/* The warm-duotone fine-grain relief, layered ABOVE the raster. NO
+   `feDiffuseLighting`/lighting term (the metallic primitive is retired): the grey
+   fractalNoise is mapped umber→ecru through an `feComponentTransfer` `table` ramp and
+   painted at a PARTIAL layer alpha, so it reads as a subtle warm fiber grain over the
+   raster, never a brushed-metal sheen. sRGB-pinned, deterministic seed.
+
+   The `@supports (backdrop-filter: blur(1px))` wrapper is STRUCK. `backdrop-filter`
+   support has nothing to do with whether an engine can render an SVG filter — it was an
+   ENGINE-CLASS PROXY, gating one feature on an unrelated one, and on the target engines
+   it was true unconditionally. A capability test standing in for "is this a modern
+   browser" is the masking-fallback shape: the primary works in paint or it fails loud. */
+:root {
+    --paper-grain-relief: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='r' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='table' tableValues='0.31 0.96'/%3E%3CfeFuncG type='table' tableValues='0.25 0.9'/%3E%3CfeFuncB type='table' tableValues='0.15 0.78'/%3E%3CfeFuncA type='linear' slope='0.42' intercept='0.12'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
 }
 
 @utility paper-underpaint {
