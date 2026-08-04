@@ -5,10 +5,21 @@ import { describe, expect, it } from "vitest";
 // ─────────────────────────────────────────────────────────────────────────────
 // BK #68 W-TOKEN-CANON — the PROPORTION register's executable.
 //
-// A UNIT CASE, not a gate seat. The gate budget is exactly 60 and intake is CLOSED
-// (J-4); the PROPORTION family already holds this row's seat, and this file is that
-// seat's executable under the §B.5 classification law's second class. It mints NO
-// `G-*` id and must never be added to `scripts/gate-register.mjs`.
+// ~~A UNIT CASE, not a gate seat.~~ The gate budget is exactly 60 and intake is
+// CLOSED (J-4); the PROPORTION family already holds this row's seat, and this file
+// is that seat's executable. It mints NO `G-*` id and must never be added to
+// `scripts/gate-register.mjs`.
+//
+// [2026-08-04 · BK #65, RT-7 — BOUND. The "unit case" half of that sentence is
+// struck: the file was authored while the seat read `binding:"none"`, so the
+// register scored the PROPORTION seat ABSENT and C-13 ("an unwired gate cannot
+// fail") blocked #68's seal. Seat movement is #65's alone; the seat is now
+// `binding:"seat-detector"` → this path in `SEAT-BINDING.json`. NOTHING is minted:
+// the seat pre-existed at §B.5, the budget is still exactly 60, and the seat stays
+// non-`G-*` and out of `gate-register.mjs`'s code — the binding is DATA. The name
+// is carried in the live `describe` title below and NOT in this comment, because
+// `nameIsLive` refuses prose: a seat narrated in a header is the "claimed but not
+// there" binding the register REDs on.]
 //
 // It proves the six ADDED tokens of PROPORTION §6 and the §1.1 space series against
 // SOURCE (happy-dom runs no cascade, so a token's OUTCOME is read from its
@@ -85,7 +96,7 @@ const SERIES = [
     ["--space-page", 3.25, 52],
 ] as const;
 
-describe("PROPORTION §6 — the six ADDED tokens", () => {
+describe("the CWT-2:1533 tranche-wide register — PROPORTION §6, the six ADDED tokens", () => {
     it("lands all six under src/styles/tokens, at their register values", () => {
         // The tier-3 wall (J-6). Four lanes write marked literals against these and
         // three lane gates cannot green without them, which is why #68 is Φ4-FIRST.

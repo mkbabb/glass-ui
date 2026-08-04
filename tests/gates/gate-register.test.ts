@@ -136,9 +136,15 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
         // The bijection, stated honestly and never rounded up: 6 seats carried a verbatim
         // executable before this row, G-GATE-BUDGET is the 7th and it binds HERE. Two more
         // are named by their arms only and are deliberately NOT counted as bound.
-        expect(report.seats.bound).toBe(7);
+        // [2026-08-04 · BK #65, RT-7 — ~~bound 7 / unbound 51~~ → 8 / 50. #65 bound the
+        // PROPORTION seat ("the CWT-2:1533 tranche-wide register") to the executable #68
+        // landed, `tests/styles/proportion-register.test.ts`; C-13 blocked #68's seal on
+        // exactly that. Seat movement is #65's alone. NOTHING minted: `seats.total` is
+        // still 60, `armOnly` still 2, and the sum below still closes on the budget — one
+        // ABSENT seat became BOUND, which is the only figure that may move on a binding.]
+        expect(report.seats.bound).toBe(8);
         expect(report.seats.armOnly).toBe(2);
-        expect(report.seats.unbound).toBe(51);
+        expect(report.seats.unbound).toBe(50);
         expect(report.seats.bound + report.seats.armOnly + report.seats.unbound).toBe(
             SEAT_BUDGET,
         );

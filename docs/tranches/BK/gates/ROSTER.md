@@ -42,6 +42,19 @@ Seat movement is #65's alone (add-one-retire-one, every movement named against t
 baseline; this cut's movements — RETIRE HAIRLINE · ADD G-RELAY · RESTORE G-NO-ORPHAN-EXPORT — are
 named at TR §B.5, net 60); no lane bumps this roster solo. Intake is CLOSED (J-4).
 
+**2026-08-04 · #65 opens for its two routed duties — RT-7 and the register drift. NO MOVEMENT.**
+The **PROPORTION** seat (§B.5's `the CWT-2:1533 tranche-wide register`) is **BOUND** to
+`tests/styles/proportion-register.test.ts` — #68's landed executable, 18 cases, the seat name carried
+in the live `describe` title the runner prints. A binding is not a movement: budget still **exactly
+60**, PROPORTION still 1, intake still CLOSED, nothing minted, and the seat stays non-`G-*` (the
+binding is data, in `SEAT-BINDING.json`; `gate-register.mjs`'s code is untouched). Receipt from
+`node scripts/gate-register.mjs`, verbatim, pre → post: `bound:7 … unbound:51` → `bound:8 …
+unbound:50`, every other figure byte-identical. **C-13 clears for this seat** — the #68 seal-block
+(RT-7) is discharged. The one register DRIFT (`reka.tags-input.value-binding`) is **adjudicated on
+the bytes** — the ROSTER title drifted, the executable is honest — and its byte-cut is **batched to
+the C-9 one-SHA-pin at band close** per this row's own spec of record. Record + recipes:
+`docs/tranches/BK/execution/2026-08-04-row65/RECORD.md`.
+
 ⊕⁴ Quotation re-synced 2026-07-28 after the perfection fold named two ARMS at TR §B.5 —
 **+BD-CARRY** on G-ROW-HOMED (U-01) and **+clock-fence** on G-SPRING-ONE-JOB (U-39). Arms, not
 seats: the sum line is byte-unchanged, the budget stays exactly 60, and §B.5 wins on any divergence.
