@@ -228,9 +228,8 @@
        demo ladder LAYOUT R3 fences off (`--sp-1…6`, demo-bundle-scoped, never
        reaching consumers) is NOT aliased, imported, or re-homed here; that would be
        the legacy-alias form the no-backwards-compat law forbids. The library carries
-       its own. The Tailwind `--spacing-*` bridge in theme/bridges.css is OWED (the
-       block is banked in the row record, routed to the driver) — until it lands,
-       consumers reach the rungs by `var()`, never by pasting the ladder. */
+       its own, and consumers reach it through the Tailwind `--spacing-*` bridge
+       (theme/bridges.css) — never by pasting the ladder. */
     --space-residue: 0.25rem; /*  4px */
     --space-atom:    0.5rem;  /*  8px */
     --space-body:    0.75rem; /* 12px */

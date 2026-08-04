@@ -21,8 +21,8 @@ either a ratification of a name already on disk, or a refusal recorded with its 
 | # | item | class | verdict |
 |---|---|---|---|
 | L-1 | the six ADDED tokens (PROPORTION §6) | LAND | **LANDED** — 6/6 on disk, light arm; dark arm OWED, not invented |
-| L-2 | `--type-admin-label` clean break (atlas A-7) | LAND | **HELD — OUT OF FENCE.** Routed to the driver, latched born-RED |
-| L-3 | the library space series (LAYOUT:233) | LAND | **LANDED** (register + mobile law); the `@theme` bridge ROUTED, out of fence |
+| L-2 | `--type-admin-label` clean break (atlas A-7) | LAND | **HELD — OUT OF FENCE.** Routed to the driver, latched born-RED [⊕³¹ 2026-08-04: **DISCHARGED BY THE DRIVER** in the commit after the row cut — all four sites dead, latch flipped `it.fails`→`it`] |
+| L-3 | the library space series (LAYOUT:233) | LAND | **LANDED** (register + mobile law); the `@theme` bridge ROUTED, out of fence [⊕³¹ 2026-08-04: **bridge LANDED by the driver** — the banked block, verbatim, after `--spacing-phi-6` in `theme/bridges.css`] |
 | L-4 | `--section-color-*` retune / rename | RULE | **REFUSED ×2**, both defaults stated with grounds and reversal cost |
 | L-5 | the row record | LAND | this file |
 | R-1 | A-15's `--glass-veil-*` rename | RATIFY | **RATIFIED** — the A-15 arm's condition is SATISFIED (seat ABSENT until #65 binds) |
@@ -174,8 +174,8 @@ The raw layer is complete and self-consistent; the bridge is one additive block 
 driver:
 
 ```css
-    /* The §1.1 space series → p-*/gap-*/m-* utilities. Rank names, not ordinals:
-       `--spacing-3` would collide with Tailwind's numeric scale. */
+    /* The §1.1 space series → the p- / gap- / m- utilities. Rank names, not
+       ordinals: `--spacing-3` would collide with Tailwind's numeric scale. */
     --spacing-residue: var(--space-residue);
     --spacing-atom:    var(--space-atom);
     --spacing-body:    var(--space-body);
@@ -183,6 +183,12 @@ driver:
     --spacing-section: var(--space-section);
     --spacing-page:    var(--space-page);
 ```
+
+[⊕³¹ 2026-08-04: the block as first banked wrote the comment `p-*/gap-*/m-*` — the `*/` after
+`p-` terminates a CSS comment early, and the landed block red'd postcss in three suites
+(stacked-url-filter · color-mix-endpoints · public-surface style closure) before the driver
+caught it at the landing battery and rewrote the comment without the trap. The `--spacing-*`
+declarations themselves landed verbatim.]
 
 ### L-4 · `--section-color-*` — RULED, both halves REFUSED
 
@@ -265,7 +271,7 @@ in the same cut: `pad(role) = r(role) − 4`.
 | **RT-5** | PROPORTION C2 — `pad-block = pad-inline × 1.272`, **STRUCK** but LIVE | `rg -o '1\.272' src demo` = **20**, of which **8 are live pad-block multipliers**: `DialogContent.vue:228,273` · `PopoverContent.vue:64` · `SelectContent.vue:117` · `TooltipContent.vue:49` · `Toast.vue:108` · `DrawerHeader.vue:19` · `DrawerFooter.vue:19` · `card/styles.css:5` (+ `auth-shell.vue:118`, demo) | **#79-#88 per-lane** (#38/#89 overlay family, #79 card) — component files, one owner per file per cut | the tier-3 lanes, writing against L-3's register |
 | **RT-6** | PROPORTION §4 radius-by-role (25 names → 7 roles + 2 relay) and §6's remaining DELETE list (17 radius names · halo · surface-tint · shadow-soft/elevated · dock-h · grain) | — | **#23 · #22 · #47 · #18/#87** by their own TR cells | their cuts |
 | **RT-7** | binding the PROPORTION seat to L-1's executable | `SEAT-BINDING.json` PROPORTION row is `binding:"none"`, `gId:null`; register prints `bound:7` | **#65 alone** (seat movement is #65's alone; #9 SEALED 2026-08-04 — a sealed row receives nothing) | now that L-1 has landed — **BLOCKS this row's seal** (C-13: an unwired gate cannot fail) |
-| **RT-8** | L-2 (the `--type-admin-label` break) and L-3's `@theme` bridge | fence collision, §1 above — both recipes pre-verified and banked | **the driver** | immediately |
+| **RT-8** | L-2 (the `--type-admin-label` break) and L-3's `@theme` bridge | fence collision, §1 above — both recipes pre-verified and banked | **the driver** | immediately [⊕³¹ 2026-08-04: **BOTH DISCHARGED** in the driver's follow-up commit — the four-site break + the bridge block, detectors at 0/landed, latch flipped] |
 
 **Deliberate non-act.** `src/styles/tokens/manifest.ts` was **not** touched. Publishing the new tokens is a
 public-surface act (it moves `semanticTokens`, which `tests/public-surface.spec.ts` and `token-graph.test.ts`
@@ -360,7 +366,7 @@ author can copy. Float-safe throughout (`0.16 / 0.08` is `1.9999999999999998` in
 | no `--sp-N` in the token layer | LAYOUT R3 — the demo ladder is not aliased |
 | `--space-phi-*` absent from the mobile arm | the φ pair is off the rank series |
 | zero `--glass-bg-` / `--glass-ambient` / `--radius-concentric` in CSS | R-1 · R-2 · R-3 |
-| **`it.fails`** — `--type-admin-label` sites | L-2, held out of fence; flips when the driver lands it |
+| **`it.fails`** — `--type-admin-label` sites | L-2, held out of fence; flips when the driver lands it [⊕³¹: landed, FLIPPED to `it`] |
 
 ---
 
@@ -445,8 +451,8 @@ the strike-in-place text is banked here rather than applied. Two paste-ready cel
 |---|---|---|
 | dark-arm α for the five ink/fill scalars | §7b item 1 — *"dark mode across `forms` entirely"*; all five are light-arm dpr1 measurements (§7b item 5). #10's cell gains a banked line naming this capture (§6 below) so the route is receivable | **#10**'s paired capture |
 | `safari-app` on every row of this register | PROPORTION `:5` / `:12` — *"`safari-app` is OWED on every row"*; this cut is source-verified, Chromium-grounded | the Safari seat |
-| L-2's three-site break | fence, not judgement | the driver |
-| L-3's `--spacing-*` bridge | fence, not judgement | the driver |
+| L-2's three-site break | fence, not judgement | the driver [⊕³¹: **DISCHARGED**] |
+| L-3's `--spacing-*` bridge | fence, not judgement | the driver [⊕³¹: **DISCHARGED**] |
 | PROPORTION seat → executable binding | seat movement is #65's alone (#9 SEALED — receives nothing). **BLOCKS the seal** (C-13) | **#65 alone** |
 | dist-demo rebuild (`boot-graph` staleness, outside this row's verify gate) | building mid-write of the sibling cure lane would snapshot a half-written tree | the driver, at the seal |
 

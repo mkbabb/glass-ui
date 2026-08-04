@@ -24,7 +24,6 @@
        are out of the codemod figure and a blanket clear would break them. */
     --text-sm: initial;
     --text-xs: initial;
-    --text-admin-label: var(--type-admin-label);
     --text-micro:       var(--type-micro);
     --text-caption:     var(--type-caption);
     --text-small:       var(--type-small);
@@ -292,6 +291,15 @@
        utilities. φ² and φ³ rungs for hero/chassis padding ladder. */
     --spacing-phi-5: var(--space-phi-5);
     --spacing-phi-6: var(--space-phi-6);
+
+    /* The §1.1 space series → the p- / gap- / m- utilities. Rank names, not
+       ordinals: `--spacing-3` would collide with Tailwind's numeric scale. */
+    --spacing-residue: var(--space-residue);
+    --spacing-atom:    var(--space-atom);
+    --spacing-body:    var(--space-body);
+    --spacing-family:  var(--space-family);
+    --spacing-section: var(--space-section);
+    --spacing-page:    var(--space-page);
 
     /* Icon-size ladder bridge → `size-icon-*`/`h-icon-*`/`w-icon-*`
        utilities. Consumers can compose via `class="size-icon-2xl"` etc.

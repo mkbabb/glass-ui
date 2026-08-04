@@ -288,18 +288,11 @@ describe("#68 Φ4 ratifications", () => {
 });
 
 describe("#68 L-2 — the --type-admin-label clean break", () => {
-    // BORN-RED. `it.fails` PASSES while the deletion is outstanding and REDS the moment
-    // it lands — the flip is the receipt. Do not "fix" this by relaxing the assertion.
-    //
-    // HELD OUT OF THIS CUT BY THE EDIT FENCE, not by judgement. Two of the three sites
-    // (`src/styles/typography/{scale,semantic}.css`) and the bridge
-    // (`src/styles/theme/bridges.css`) sit outside this seat's fence
-    // (`src/styles/tokens/**`). Half-landing it — deleting the declaration while
-    // `@utility text-admin-label` still reads it — is precisely the masking-fallback
-    // class, so the whole item is ROUTED to the driver with the cut recipe banked in
-    // the row record. Latched here so the deletion collects itself rather than
-    // surviving as prose.
-    it.fails(
+    // Born `it.fails` while the deletion was fence-blocked; the driver landed the
+    // whole break (declaration + @utility block + bridge line + prose mention) in
+    // the commit after the row cut, and the flip to `it` is the receipt. From here
+    // this arm keeps the name dead — a re-mint at any site reds it.
+    it(
         "deletes --type-admin-label at all three sites, with zero callers (atlas A-7)",
         () => {
             const sites = ["src", "demo", "tests"]
