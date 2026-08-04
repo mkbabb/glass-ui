@@ -73,8 +73,13 @@ r16) + 2 declined (r13 r15) + 1 closed lineage (r17).
 
 ### §1.3 The BI wave corpus — 111 files ✦ (`docs/tranches/BI/waves/`), class disposition
 
-109 waves (111 − W-ENGAGE-AFFORD ported − W-SLIDER-ENGAGE superseded in place, §1.2) — **EXECUTED
-or SUPERSEDED as a class.** Grounds: the BI execution history through the 7.0.0 cut discharged the
+109 waves (111 − W-ENGAGE-AFFORD ported − W-SLIDER-ENGAGE superseded in place, §1.2) — ~~**EXECUTED
+or SUPERSEDED as a class.**~~ **[R-7 walk, 2026-08-03/04: the class claim is reproduced wave-by-wave at
+`docs/tranches/BK/execution/2026-08-03-row16-r7-walk/R7-WALK.md` and holds for **107 of 109** —
+105 EXECUTED, 2 SUPERSEDED. The two exceptions: `BI.W-MS9-DIFFERENTIAL-CLOSE` is **MOOT** (its
+whole body was the born-RED differential gate; `grep -c '"proof:' package.json` → 0), and
+`BI.W-DOCK-DEVICE` is **OPEN** (0 landing commits; the visible-Safari.app/Metal device runs never
+ran; owner **#10 π-SUITE** via EXEC-STATE §OWED row 5).]** Grounds: the BI execution history through the 7.0.0 cut discharged the
 landed set; every surviving target was re-audited AT HEAD by the refinement corpus (the 12-lens
 audit → ROUND-1-FINDINGS · the 166-candidate RECONCILIATION sweep, 114 refuted · ARCHAEOLOGY 43/43)
 and re-specced by the terminal specs (CWT/CWT-2/CWT-3 · GREENFIELD-TERMINAL · PROCEDURAL-LEDGER ·
