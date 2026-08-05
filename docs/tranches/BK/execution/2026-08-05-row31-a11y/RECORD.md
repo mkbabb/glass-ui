@@ -376,6 +376,13 @@ intact.
 Each mutation is reverted from a scratch copy of the cured bytes and `shasum -c`-compared (never
 `git checkout` — the tree is shared and holds an uncommitted cut).
 
+[⊕⁴⁶ 2026-08-05 · the law above was written AFTER a breach, and the record should say so: the
+M20 restore ran `git checkout -- src/components/dropdown-menu/styles.css`, wiping that file's
+uncommitted cure to HEAD. The seat disclosed it immediately, reconstructed the cure (comment +
+`:focus-visible` rule + base-rule deletion), and verified by `git diff --stat` (+25/−4), the 8/8
+focus-visible battery, and the dist bytes; every later mutation restored from the scratch copy.
+The landing commit body carries the same disclosure.]
+
 | | mutation | bites |
 |---|---|---|
 | M1 | light `--success-foreground` back to white ink | §1 |
