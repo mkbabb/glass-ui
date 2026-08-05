@@ -131,7 +131,12 @@ const states: EmptyState[] = [
                     >
                         <component :is="state.icon" class="size-6" aria-hidden="true" />
                     </Chip>
-                    <h3 class="text-heading">{{ state.title }}</h3>
+                    <!-- h2, not h3 (A11Y W1-F). The page's only other heading is the
+                         StoryPage chassis h1, so an h3 here skipped a level and the
+                         outline read h1 → h3 with nothing between. These cards ARE the
+                         page's top-level sections; the level says so. `text-heading`
+                         carries the size, so nothing about the paint changes. -->
+                    <h2 class="text-heading">{{ state.title }}</h2>
                     <p
                         class="text-small text-muted-foreground max-w-xs leading-relaxed"
                     >

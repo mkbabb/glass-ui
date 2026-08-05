@@ -118,6 +118,14 @@ function markPointerInput(): void {
 // tabindex="-1"> (the new page's top).
 const routeAnnounce = ref("");
 
+// The ONE "put focus in the page body" act, shared by the two callers that need it:
+// the route-settle watch below (which cures the atomic swap stranding focus at
+// <body>) and the skip link (W1-E). Two mechanisms for one intent is how the shell
+// ends up with two disagreeing definitions of "the top of the page".
+function focusMain(): void {
+    mainEl.value?.focus({ preventScroll: true });
+}
+
 watch(
     () => route.path,
     () => {
@@ -125,11 +133,20 @@ watch(
         routeAnnounce.value = String(route.meta?.title ?? "");
         showRouteFocus.value = pendingRouteInput === "keyboard";
         pendingRouteInput = null;
-        void nextTick(() => {
-            mainEl.value?.focus({ preventScroll: true });
-        });
+        void nextTick(focusMain);
     },
 );
+
+// THE SKIP LINK (A11Y W1-E). Its target is the SAME <main tabindex="-1"> the settle
+// watch focuses, reached through the same call — the href carries the semantic
+// contract AT announces, the handler carries the move. The default is prevented
+// because the native jump would write `#demo-main` into a history-mode SPA URL to
+// perform a focus move the shell already owns; nothing is lost, since the native
+// behaviour for a `tabindex="-1"` target IS exactly `focus()`.
+function onSkipToContent(): void {
+    mainEl.value?.scrollTo({ top: 0 });
+    focusMain();
+}
 
 // The per-route warm-field hue feeds the single shell `<Aurora>`. `warmFieldHue`
 // derives the number from the route's category via the ONE documented `categoryHue`
@@ -225,6 +242,20 @@ onMounted(() => {
         @keydown.capture="markKeyboardInput"
         @pointerdown.capture="markPointerInput"
     >
+        <!-- THE SKIP LINK (A11Y W1-E) — FIRST tabbable in the shell, and it has to be
+             first in the DOM to be first in the tab order. Without it a keyboard user
+             tabs the entire persistent SidebarDock on every first load; the
+             route-settle focus move covers navigations and covers first load not at
+             all, which is precisely when a visitor arrives. Hidden until focused (the
+             `sr-only` / `focus:not-sr-only` pair) so it costs the pointer user
+             nothing, then paints as a real control at the rail's own inset. -->
+        <a
+            href="#demo-main"
+            class="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-4 focus-visible:z-50 focus-visible:rounded-pill focus-visible:bg-card focus-visible:px-4 focus-visible:py-2 focus-visible:text-small focus-visible:font-medium focus-visible:text-foreground focus-visible:shadow-[var(--focus-ring-shadow)]"
+            data-shell-region="skip-to-content"
+            @click.prevent="onSkipToContent"
+            >Skip to content</a
+        >
         <!-- Fixed vertical sidebar rail dock (off-canvas below the mobile breakpoint —
              see dock-nav.css; the BottomDock owns the off-canvas Sheet trigger).
              The shell dock is a static vertical sidebar rail. -->
@@ -254,6 +285,7 @@ onMounted(() => {
                  watch move focus here, so the atomic keyed swap doesn't strand focus
                  at <body> + keyboard tab order resets to the new page. -->
             <main
+                id="demo-main"
                 ref="mainEl"
                 tabindex="-1"
                 :data-route-focus="showRouteFocus ? 'keyboard' : null"

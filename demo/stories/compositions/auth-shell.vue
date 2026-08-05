@@ -119,7 +119,12 @@ const highlights = [
             >
                 <div class="flex flex-col gap-2">
                     <span class="text-small text-muted-foreground">Sign in</span>
-                    <h3 class="text-heading">Welcome back</h3>
+                    <!-- h2, not h3 (A11Y W1-F). This composition authors its own h1
+                         (the split-panel brand headline, `hero-title="false"` above);
+                         the form panel is the page's second region, so h3 skipped a
+                         level with no h2 anywhere in the outline. Size is unchanged —
+                         `text-heading` owns it. -->
+                    <h2 class="text-heading">Welcome back</h2>
                     <p class="text-small text-muted-foreground">
                         New here?
                         <a
