@@ -144,62 +144,21 @@
  * page and the surface (the overlay child, z below the surface / above the page),
  * pointer-events:none, that REPLACES the flat immersive scrim (Δ0 plate count).
  *
- * The box-following bloom-frame is the INTERSECT of an x double-ramp and a y
- * double-ramp (mask-composite: intersect / -webkit- source-in) — NOT four additive
- * half-planes (which flood the viewport) and NOT a radial ellipse (which cannot hug
- * a rounded-rect). Each axis holds full-black to `--glass-halo-core` from the centre
- * and eases to transparent over the `--glass-halo-bloom` band; the product alpha is
- * 1 over the surface and falls to 0 in the bloom band around it, its corner the
- * product of two ramps = a soft rounded pool concentric with the modal radius.
- * `mask-image` is Baseline; the `-webkit-mask-*` arm is source-authored (only the
- * `backdrop-filter` pair is build-injected). No `url()` filter — the cross-engine
- * floor. The dim rides the proven `--glass-plate-overlay` mix (per-mode arms below). */
-:where([data-backdrop="graded"] > [data-slot="glass-graded-halo"]) {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    backdrop-filter: blur(var(--glass-halo-blur)) saturate(var(--glass-saturate));
-    background: color-mix(in oklab, var(--glass-plate-overlay) 50%, transparent);
-    -webkit-mask-image:
-        linear-gradient(
-            to right,
-            transparent calc(50% - var(--glass-halo-core) - var(--glass-halo-bloom)),
-            black calc(50% - var(--glass-halo-core)),
-            black calc(50% + var(--glass-halo-core)),
-            transparent calc(50% + var(--glass-halo-core) + var(--glass-halo-bloom))
-        ),
-        linear-gradient(
-            to bottom,
-            transparent calc(50% - var(--glass-halo-core) - var(--glass-halo-bloom)),
-            black calc(50% - var(--glass-halo-core)),
-            black calc(50% + var(--glass-halo-core)),
-            transparent calc(50% + var(--glass-halo-core) + var(--glass-halo-bloom))
-        );
-    -webkit-mask-composite: source-in;
-    mask-image:
-        linear-gradient(
-            to right,
-            transparent calc(50% - var(--glass-halo-core) - var(--glass-halo-bloom)),
-            black calc(50% - var(--glass-halo-core)),
-            black calc(50% + var(--glass-halo-core)),
-            transparent calc(50% + var(--glass-halo-core) + var(--glass-halo-bloom))
-        ),
-        linear-gradient(
-            to bottom,
-            transparent calc(50% - var(--glass-halo-core) - var(--glass-halo-bloom)),
-            black calc(50% - var(--glass-halo-core)),
-            black calc(50% + var(--glass-halo-core)),
-            transparent calc(50% + var(--glass-halo-core) + var(--glass-halo-bloom))
-        );
-    mask-composite: intersect;
-}
-
-/* Dim per-mode arms — plain `.dark` ancestor, never the per-mode fold into one
- * inline declaration (the inset-shadow-collapse trap). Light ~50% for de-emphasis
- * parity with dark ~40%. */
-.dark :where([data-backdrop="graded"] > [data-slot="glass-graded-halo"]) {
-    background: color-mix(in oklab, var(--glass-plate-overlay) 40%, transparent);
-}
+ * THE RECIPE NO LONGER LIVES HERE. FORM 2 WAS the gradient-blur focus primitive,
+ * built once and left private inside the Dialog. It is now the SHARED
+ * `.glass-focus-veil` (styles/glass/focus-veil.css, MOTION-CANON §5) that every
+ * engaged surface composes, and this arm is a one-line BINDING of it: `ModalOverlay`
+ * puts the class on the same `data-slot="glass-graded-halo"` child. Geometry, mask,
+ * dim and tokens transfer unchanged — the centred modal is exactly the veil's
+ * `--veil-x`/`--veil-y` 50% default — so the paint is byte-identical bar the §5 clock
+ * the shared class now supplies (opacity in behind the geometry, out with it).
+ *
+ * Nothing overrides the class here. The veil's `position: fixed` resolves against the
+ * viewport, which for a child of a `fixed inset-0` overlay is the same box `absolute`
+ * used to resolve, and the overlay already isolates, so the veil's `z-index: -1` puts
+ * it under the surface exactly where the un-z-indexed child sat in source order.
+ * FORM 1 (the side sheet's per-edge graded edge, above) is a plate-local material, not
+ * a veil, and keeps its own rules on the same slot name. */
 
 @media (prefers-reduced-transparency: reduce), (forced-colors: active) {
     :where([data-slot="glass-graded-halo"]) {

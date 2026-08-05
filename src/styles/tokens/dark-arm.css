@@ -239,6 +239,13 @@
     --glass-veil-ink:  oklch(0.17 0.03 70);
     --glass-veil-base: 0.18;
 
+    /* The FOCUS-VEIL dim, DARK arm (glass/focus-veil.css; the light arm is the plain
+       per-mode pair in tokens/glass.css). A plain `.dark` re-declaration, never a
+       `light-dark()` fold — the dim is one leg of a per-mode pair and the fold is the
+       trap that computes the whole declaration away. Dark needs LESS veil than light to
+       read the same de-emphasis over an already-dark page: 40% against light's 50%. */
+    --glass-focus-veil-dim: color-mix(in oklab, var(--glass-plate-overlay) 40%, transparent);
+
     /* The surface-aware FOREGROUND register, DARK arm (the N13
        whisper collapse where it bites hardest). The dark page-muted --neutral-5 (L62,
        "AA: 7.64:1 vs page") COLLAPSES over the lifted luminous-dark plate (the L16 card

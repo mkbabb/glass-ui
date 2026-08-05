@@ -89,6 +89,32 @@
     initial-value: 50%;
 }
 
+/* ── The FOCUS-VEIL centre (glass/focus-veil.css) ────────────────────────────────
+   • --veil-x / --veil-y (percentage) — the viewport-space centre the veil's two
+     mask ramps are built around. The names are MOTION-CANON §5's own, kept verbatim:
+     they collide with nothing (the plate's ink register is `--glass-veil-*`, a
+     different prefix) and they match this file's unprefixed per-element live-channel
+     idiom — `--specular-x`, `--specular-y`, `--flex-vel`, `--cast-travel`.
+
+   The registration is what makes the centre INTERPOLATE: an unregistered percentage
+   var() in a gradient stop snaps between samples, so a veil that follows a moving
+   control would step. `inherits: false` for the same per-surface-ownership reason the
+   specular pair carries — a veil is owned by the one element that paints it, and an
+   inheriting centre would push one engaged control's pool onto every descendant.
+   `50%` is the centred-modal rest, so an unwritten veil is the viewport-centred plate
+   the Dialog has always painted. */
+@property --veil-x {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 50%;
+}
+
+@property --veil-y {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 50%;
+}
+
 @property --specular-intensity {
     syntax: "<number>";
     inherits: false;

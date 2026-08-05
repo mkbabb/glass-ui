@@ -69,6 +69,12 @@
 /* The GRASP register — the material's answer to the hand. AFTER rim.css (it reads the
    rung recipes and the one saturate); its own @layer components. */
 @import "./glass/grasp.css";
+/* The FOCUS VEIL — the gradient-blur focus primitive (MOTION-CANON §5). The grasp
+   register is the material's answer to the hand; this is the WORLD's answer to the same
+   hand, so the two engagement registers sit adjacent. Its selector (`.glass-focus-veil`)
+   is unique to the file, so the rung is cascade-order-invariant; its own @layer
+   components. */
+@import "./glass/focus-veil.css";
 @import "./glass/surfaces.css";
 /* The .glass-pager-ring pager-pill chassis, a partial held under the 500-line
    bound; its own @layer components block @import-ed IMMEDIATELY AFTER surfaces.css and

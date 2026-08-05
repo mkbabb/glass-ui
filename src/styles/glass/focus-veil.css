@@ -1,0 +1,173 @@
+/* glass/focus-veil.css
+   The FOCUS VEIL — the gradient-blur focus primitive (MOTION-CANON §5).
+
+   ONE fixed full-viewport plate, `pointer-events: none`, sitting between the world and
+   the engaged control: uniform `backdrop-filter` under the INTERSECT product of an x
+   double-ramp and a y double-ramp centred on the engaged element. Content directly
+   behind the control is fully diffused; the bloom band restores legibility outward;
+   beyond it nothing is touched. The engaged control sits ABOVE the veil and stays
+   perfectly crisp.
+
+   IT WAS ALREADY BUILT, HIDDEN INSIDE THE DIALOG. `dialog/placement.css` FORM 2 was
+   this exact geometry, `data-backdrop="graded"`-private and hard-centred at 50%. This
+   file is that plate lifted out and generalised: the centre becomes `--veil-x`/`--veil-y`
+   (registered, so it interpolates; 50% default = the centred-modal case byte-for-byte),
+   the core becomes a per-axis half-extent a consumer writes from its own rect, and the
+   five values become the `--glass-focus-veil-*` cohort in tokens/glass.css. The Dialog
+   now BINDS this class instead of re-spelling the recipe.
+
+   UNIFORM BLUR UNDER A GRADED MASK — NEVER A GRADED RADIUS. The archive's pixel study
+   of the reference read the radius itself grading with distance and proposed N stacked
+   `backdrop-filter` bands to approximate it. That construction is REJECTED (NOVELTIES
+   §13): stacked full-viewport backdrop samples are the single most expensive thing this
+   library can paint, for a fidelity gain nobody has measured. ONE plate ships. If the
+   paired capture judges the single-plate read insufficient, ONE additional band is the
+   bounded escalation and the ceiling is two — an escalation, not a deliverable.
+
+   ONLY OPACITY ANIMATES. The blur radius field is STATIC. An animated `backdrop-filter`
+   radius re-samples the whole viewport every frame; the veil's entire motion budget is
+   one opacity channel:
+     · IN  — `--duration-normal` (300ms), LAGGING the geometry by `--duration-instant`
+             (100ms, rank +6). The veil is always behind the geometry going in.
+     · OUT — `--duration-fast` (200ms), together with the geometry, NO lag.
+   The asymmetry is carried by the two rules below, never by a JS clock: a transition
+   reads its timing from the state it lands IN, so the engaged rule owns the in-clock and
+   the base rule owns the out-clock. `@starting-style` supplies the from-0 the in-ramp
+   needs, because a veil that is MOUNTED ONLY WHILE ENGAGED has no prior computed style
+   to transition from. (A resident full-viewport `backdrop-filter` at rest is not
+   acceptable on any engine — that mount law is why the ramp needs @starting-style at
+   all.) There is no `prefers-reduced-motion` arm here: the universal PRM fallback
+   already collapses every transition to instant, and a second local arm would be a
+   parallel clock.
+
+   THE CROSS-ENGINE FLOOR. Plain `blur()` + `saturate()` under a `mask-image`; no `url()`
+   filter, no engine branch. The `-webkit-mask-*` arm is SOURCE-AUTHORED (only the
+   `backdrop-filter` pair is build-injected), and `-webkit-mask-composite: source-in` is
+   the legacy spelling of `mask-composite: intersect` — the same product, not a fallback.
+
+   A partial of the glass.css cascade; its own @layer components. */
+
+@layer components {
+    .glass-focus-veil {
+        position: fixed;
+        inset: 0;
+        /* ONE RUNG UNDER THE ENGAGED CONTROL. The control raises to `--z-overlay` for
+           exactly as long as the plate is mounted, so `--z-overlay - 1` states "z
+           between the world and the engaged control" as one fact off one token: over
+           every world band (content 10 · controls 20 · bar 30 · header 35 · dock 40 ·
+           panel 45), under the control at 50.
+
+           `position: fixed` resolves against the VIEWPORT only while no ancestor
+           carries `backdrop-filter`, `transform`, `filter`, `contain: paint` or
+           `will-change: transform`. Any one of those becomes this plate's containing
+           block and collapses it to that ancestor's box — the frost lands on the host's
+           own siblings and the world it exists to quiet is untouched, silently. In a
+           glass library such ancestors are ordinary (the Configurator's own aside
+           carries `backdrop-filter`), so a consumer that mounts the veil from inside its
+           own tree MUST portal it to `<body>`: the Slider teleports, the Dialog's
+           overlay is already a portal child. */
+        z-index: calc(var(--z-overlay) - 1);
+        pointer-events: none;
+
+        backdrop-filter: blur(var(--glass-focus-veil-blur))
+            saturate(var(--glass-saturate));
+        background: var(--glass-focus-veil-dim);
+
+        /* The box-following bloom-frame is the INTERSECT of an x double-ramp and a y
+           double-ramp — NOT four additive half-planes (which flood the viewport) and NOT
+           a radial ellipse (which cannot hug a rounded rect). Each axis holds full-black
+           out to its core from the centre and eases to transparent over the bloom band;
+           the product alpha is 1 over the control and 0 outside the bloom, its corner the
+           product of two ramps = a soft rounded pool concentric with the control. */
+        -webkit-mask-image:
+            linear-gradient(
+                to right,
+                transparent
+                    calc(
+                        var(--veil-x) - var(--glass-focus-veil-core-x) -
+                            var(--glass-focus-veil-bloom)
+                    ),
+                black calc(var(--veil-x) - var(--glass-focus-veil-core-x)),
+                black calc(var(--veil-x) + var(--glass-focus-veil-core-x)),
+                transparent
+                    calc(
+                        var(--veil-x) + var(--glass-focus-veil-core-x) +
+                            var(--glass-focus-veil-bloom)
+                    )
+            ),
+            linear-gradient(
+                to bottom,
+                transparent
+                    calc(
+                        var(--veil-y) - var(--glass-focus-veil-core-y) -
+                            var(--glass-focus-veil-bloom)
+                    ),
+                black calc(var(--veil-y) - var(--glass-focus-veil-core-y)),
+                black calc(var(--veil-y) + var(--glass-focus-veil-core-y)),
+                transparent
+                    calc(
+                        var(--veil-y) + var(--glass-focus-veil-core-y) +
+                            var(--glass-focus-veil-bloom)
+                    )
+            );
+        -webkit-mask-composite: source-in;
+        mask-image:
+            linear-gradient(
+                to right,
+                transparent
+                    calc(
+                        var(--veil-x) - var(--glass-focus-veil-core-x) -
+                            var(--glass-focus-veil-bloom)
+                    ),
+                black calc(var(--veil-x) - var(--glass-focus-veil-core-x)),
+                black calc(var(--veil-x) + var(--glass-focus-veil-core-x)),
+                transparent
+                    calc(
+                        var(--veil-x) + var(--glass-focus-veil-core-x) +
+                            var(--glass-focus-veil-bloom)
+                    )
+            ),
+            linear-gradient(
+                to bottom,
+                transparent
+                    calc(
+                        var(--veil-y) - var(--glass-focus-veil-core-y) -
+                            var(--glass-focus-veil-bloom)
+                    ),
+                black calc(var(--veil-y) - var(--glass-focus-veil-core-y)),
+                black calc(var(--veil-y) + var(--glass-focus-veil-core-y)),
+                transparent
+                    calc(
+                        var(--veil-y) + var(--glass-focus-veil-core-y) +
+                            var(--glass-focus-veil-bloom)
+                    )
+            );
+        mask-composite: intersect;
+
+        /* THE OUT CLOCK — with the geometry, no lag. */
+        opacity: 0;
+        transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    /* THE IN CLOCK — behind the geometry by one rank-6 beat. */
+    .glass-focus-veil[data-engaged] {
+        opacity: 1;
+        transition: opacity var(--duration-normal) var(--ease-standard)
+            var(--duration-instant);
+    }
+
+    @starting-style {
+        .glass-focus-veil[data-engaged] {
+            opacity: 0;
+        }
+    }
+}
+
+/* The veil is a translucency affordance and nothing else — under reduced transparency or
+   forced colors it carries no information to lose, so it is removed outright rather than
+   substituted. */
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+    .glass-focus-veil {
+        display: none;
+    }
+}

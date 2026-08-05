@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
     computed,
+    nextTick,
     onBeforeUnmount,
     onMounted,
     ref,
@@ -194,6 +195,84 @@ function onGraspReleaseEnd(event: TransitionEvent): void {
     if (event.propertyName === "opacity" && !isHeld.value) grasping.value = false;
 }
 
+// ── The FOCUS VEIL mount (glass/focus-veil.css) ──────────────────────────────────
+// The headline consumer of the gradient-blur focus primitive: while this slider is
+// held, the world behind it frosts and the slider stays crisp. The veil rides the
+// SAME lifecycle as the grasp carriers above — mounted the frame the hold begins,
+// unmounted on the release fade's own `transitionend` — because a resident
+// full-viewport `backdrop-filter` at rest is not acceptable on any engine. It is the
+// grasp register's outward half: the carriers open the material under the finger, the
+// veil quiets everything that is not.
+//
+// The centre is VIEWPORT-space, so it is written whenever the control moves against
+// the viewport — never per frame. One `getBoundingClientRect` gives the centre
+// (`--veil-x`/`--veil-y`, registered percentages) and the control's own half-extents
+// (`--glass-focus-veil-core-x/-y`), which is what §5 means by "JS-written from the
+// control's half-extent". A slider does not move under its OWN drag, so the drag loop
+// stays layout-read-free; a PAGE SCROLL during a live hold does move it, and a centre
+// taken once would leave the pool burning a hole where the control no longer is. The
+// re-take rides a capture-phase `scroll` listener on `window` — `scroll` does not
+// bubble from a scroller, capture still reaches it, so one listener covers every
+// scroller — passive because the write never cancels the scroll, and alive exactly as
+// long as the grasp. `--veil-x`/`--veil-y` are registered `<percentage>` props, so the
+// pool interpolates with the page instead of snapping.
+const focusVeilRef = useTemplateRef<HTMLElement>("focusVeilRef");
+
+function writeVeilCentre(): void {
+    const host = getRootEl();
+    const veil = focusVeilRef.value;
+    if (!host || !veil) return;
+    const rect = host.getBoundingClientRect();
+    veil.style.setProperty(
+        "--veil-x",
+        `${((rect.left + rect.width / 2) / window.innerWidth) * 100}%`,
+    );
+    veil.style.setProperty(
+        "--veil-y",
+        `${((rect.top + rect.height / 2) / window.innerHeight) * 100}%`,
+    );
+    veil.style.setProperty("--glass-focus-veil-core-x", `${rect.width / 2}px`);
+    veil.style.setProperty("--glass-focus-veil-core-y", `${rect.height / 2}px`);
+}
+
+function trackViewport(on: boolean): void {
+    if (typeof window === "undefined") return;
+    // Remove-then-add is idempotent: a re-grab mid-release must not leave two.
+    window.removeEventListener("scroll", writeVeilCentre, true);
+    if (on)
+        window.addEventListener("scroll", writeVeilCentre, {
+            passive: true,
+            capture: true,
+        });
+}
+
+watch(grasping, async (open) => {
+    if (!open) {
+        trackViewport(false);
+        return;
+    }
+    await nextTick();
+    writeVeilCentre();
+    trackViewport(true);
+});
+onBeforeUnmount(() => trackViewport(false));
+
+// The ENGAGED RAISE, inline. The veil is a `<body>` child, so the crisp control has to
+// clear it in the ROOT stacking context: the root takes `--z-overlay` (50) for exactly
+// as long as the plate is mounted, one rung over the plate's own
+// `calc(var(--z-overlay) - 1)`. It is an INLINE declaration and not a
+// `[data-focus-veil]` rule because a scoped `.glass-slider[data-focus-veil]` selector
+// ties on specificity with any single-class descendant rule a host writes over its own
+// children — a host that stacks its specimens is exactly that — and source order then
+// decides the raise away silently. Inline has no tie to lose. `data-focus-veil` stays
+// on the root as the state marker a consumer can style from. Both drop with the grasp,
+// so a slider at rest is byte-identical to before.
+const hostStyle = computed<Record<string, string> | undefined>(() => {
+    const raised = grasping.value && graspable.value;
+    if (!raised) return motionAxis.hostStyle.value;
+    return { ...(motionAxis.hostStyle.value ?? {}), zIndex: "var(--z-overlay)" };
+});
+
 /* The never-nameless floor's DX signal. reka's
    SliderThumbImpl names the thumb `$attrs['aria-label'] || getLabel(index, count)`,
    and getLabel returns UNDEFINED for a single-thumb slider (it only mints
@@ -233,10 +312,32 @@ onMounted(() => {
         :data-held="isHeld || undefined"
         :data-touch-active="isTouchActive || undefined"
         :data-inverted="props.inverted || undefined"
+        :data-focus-veil="(grasping && graspable) || undefined"
         :data-motion="motionAxis.dataMotion.value"
-        :style="motionAxis.hostStyle.value"
+        :style="hostStyle"
         v-bind="forwarded"
     >
+        <!--
+            The focus veil — the world's half of the grasp, TELEPORTED to `<body>`.
+            `position: fixed` resolves against the viewport only while no ancestor
+            carries `backdrop-filter`/`transform`/`filter`/`contain: paint`, and a
+            slider's ordinary home is a glass plate that carries exactly those — left
+            nested, the plate collapses to that ancestor's box and frosts the slider's
+            own siblings instead of the world. As a body child it always covers the
+            page, one rung under `--z-overlay`, which this root takes INLINE while the
+            grasp is live so the control stays crisp above it. `data-engaged` carries
+            the §5 clock: it drops on release, the veil fades out with the geometry, and
+            the SAME `transitionend` that unmounts the grasp carriers unmounts it.
+        -->
+        <Teleport to="body">
+            <span
+                v-if="grasping && graspable"
+                ref="focusVeilRef"
+                class="glass-focus-veil"
+                :data-engaged="isHeld || undefined"
+                aria-hidden="true"
+            />
+        </Teleport>
         <SliderTrack class="slider-track glass-track-well">
             <span
                 v-if="marks.length"

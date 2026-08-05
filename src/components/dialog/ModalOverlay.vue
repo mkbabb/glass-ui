@@ -94,8 +94,18 @@ onScopeDispose(() => {
         <!-- The graded box-following halo — ONE plate that REPLACES the flat scrim
              (blur + dim dropped above; drawer/styles.css gates the stage arms off).
              Full-viewport child, z below the surface / above the page, non-interactive.
-             Geometry + intersect mask live in placement.css (FORM 2). -->
-        <span v-if="isGraded" data-slot="glass-graded-halo" aria-hidden="true" />
+             This IS the shared focus veil (styles/glass/focus-veil.css): the centred
+             modal is the veil's own `--veil-x`/`--veil-y` 50% rest, so the Dialog
+             composes the class and writes no centre. `data-engaged` is static — the
+             halo exists only while the graded dialog is open, and the overlay's own
+             fade carries the exit. -->
+        <span
+            v-if="isGraded"
+            class="glass-focus-veil"
+            data-slot="glass-graded-halo"
+            data-engaged
+            aria-hidden="true"
+        />
         <slot />
     </DialogOverlay>
 </template>

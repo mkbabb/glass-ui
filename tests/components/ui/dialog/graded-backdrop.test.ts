@@ -12,8 +12,17 @@ import {
 import type { Backdrop } from "@glass/components/_shared/axes";
 
 const placementStyles = readFileSync("src/components/dialog/placement.css", "utf8");
-const glassTokens = readFileSync("src/styles/tokens/glass.css", "utf8");
 const drawerStyles = readFileSync("src/components/drawer/styles.css", "utf8");
+
+// BK #24 W-GRADIENT-BLUR: FORM 2's recipe is no longer Dialog-private. It WAS the
+// gradient-blur focus primitive, built once and hidden here; it now lives at
+// `styles/glass/focus-veil.css` as `.glass-focus-veil` and this component BINDS it.
+// So this file asserts the BINDING and the Dialog-side behaviour, and the recipe's own
+// invariants (one plate · intersect double-ramp · opacity-only clock · the token cohort ·
+// the plain `.dark` dim arm) are asserted once, at their new home, by
+// `tests/styles/focus-veil.test.ts` — the G-RUNG-ONLY GRADIENT-BLUR arm. Restating them
+// here would be the duplicated-derived-data class.
+const veilStyles = readFileSync("src/styles/glass/focus-veil.css", "utf8");
 
 function mountCentred(backdrop: Backdrop) {
     const value = ref<Backdrop>(backdrop);
@@ -69,51 +78,45 @@ describe("DialogContent graded backdrop halo", () => {
         wrapper.unmount();
     });
 
-    it("FORM 2 resolves the halo tokens via the INTERSECT double-ramp product", () => {
-        const form2 = placementStyles.match(
-            /\[data-backdrop="graded"\]\s*>\s*\[data-slot="glass-graded-halo"\][\s\S]*?mask-composite:\s*intersect;\s*}/,
-        )?.[0];
-        expect(form2).toBeTruthy();
+    it("BINDS the shared focus veil — the recipe left the component entire", () => {
+        // The Dialog-private FORM 2 recipe is GONE from placement.css. Not aliased, not
+        // wrapped — the whole `[data-backdrop="graded"] >` arm, its mask, its dim arm and
+        // the `--glass-halo-*` cohort it read are struck, with no compatibility shim.
+        expect(placementStyles).not.toContain('[data-backdrop="graded"] >');
+        expect(placementStyles).not.toContain("mask-composite: intersect");
+        expect(placementStyles).not.toContain("--glass-halo-");
 
-        // The plate: blur token + the overlay saturate companion.
-        expect(form2).toMatch(
-            /backdrop-filter:\s*blur\(var\(--glass-halo-blur\)\)\s*saturate\(var\(--glass-saturate\)\)/,
-        );
-        // The intersect product of an x + a y double-ramp — core (full-black hold)
-        // and bloom (the fade band) as centre-distances, on BOTH axes.
-        expect(form2).toMatch(/linear-gradient\(\s*to right,/);
-        expect(form2).toMatch(/linear-gradient\(\s*to bottom,/);
-        expect(form2).toContain("var(--glass-halo-core)");
-        expect(form2).toContain("var(--glass-halo-bloom)");
-        expect(form2).toMatch(/mask-composite:\s*intersect/);
-        // The source-authored WebKit arm (only backdrop-filter is build-injected).
-        expect(form2).toMatch(/-webkit-mask-composite:\s*source-in/);
-        // The cross-engine floor: plain blur()+saturate under a mask, NEVER url().
-        expect(form2).not.toContain("url(");
-
-        // The dim rides the proven `--glass-plate-overlay` mix, NOT `--overlay-scrim`.
-        expect(form2).toContain(
-            "color-mix(in oklab, var(--glass-plate-overlay) 50%, transparent)",
-        );
-        expect(form2).not.toContain("--overlay-scrim");
+        // What replaced it: the shared class, carrying the same geometry against the
+        // veil's own centre (50% by default — the centred modal's own case).
+        expect(veilStyles).toMatch(/\.glass-focus-veil\s*{/);
+        expect(veilStyles).toMatch(/mask-composite:\s*intersect/);
     });
 
-    it("dims per-mode via a plain .dark arm — light ~50% / dark ~40%, never light-dark()", () => {
-        const darkArm = placementStyles.match(
-            /\.dark\s+:where\(\[data-backdrop="graded"\][\s\S]*?}/,
-        )?.[0];
-        expect(darkArm).toBeTruthy();
-        expect(darkArm).toContain(
-            "color-mix(in oklab, var(--glass-plate-overlay) 40%, transparent)",
+    it("puts the shared class on the SAME halo child, marked engaged", async () => {
+        const wrapper = mountCentred("graded");
+        await nextTick();
+        await nextTick();
+
+        const halo = document.querySelector<HTMLElement>(
+            '[data-backdrop="graded"] > [data-slot="glass-graded-halo"]',
         );
-        // The whole FORM 2 dim register is per-mode arms, no light-dark() fragment.
-        const form2Region = placementStyles.slice(
-            placementStyles.indexOf('[data-backdrop="graded"]'),
-        );
-        expect(form2Region).not.toContain("light-dark(");
+        expect(halo).not.toBeNull();
+        // The binding: one class, no second element, no wrapper.
+        expect(halo!.classList.contains("glass-focus-veil")).toBe(true);
+        // Static `data-engaged` — the halo exists only while the graded dialog is open,
+        // and the overlay's own fade carries the exit.
+        expect(halo!.hasAttribute("data-engaged")).toBe(true);
+        // The Dialog writes NO centre: the veil's registered 50%/50% rest IS the
+        // centred modal, so the geometry transfers byte-for-byte.
+        expect(halo!.style.getPropertyValue("--veil-x")).toBe("");
+        expect(halo!.style.getPropertyValue("--veil-y")).toBe("");
+
+        wrapper.unmount();
     });
 
     it("disables the halo under reduced-transparency AND forced-colors (a11y)", () => {
+        // FORM 1 (the side sheet's per-edge graded edge) keeps its own arm here; FORM 2
+        // inherits the same suppression from the shared class at its own home.
         const a11y = placementStyles.match(
             /@media\s*\(prefers-reduced-transparency:\s*reduce\),\s*\(forced-colors:\s*active\)\s*{[\s\S]*?}/,
         )?.[0];
@@ -121,12 +124,9 @@ describe("DialogContent graded backdrop halo", () => {
         expect(a11y).toMatch(
             /\[data-slot="glass-graded-halo"\][\s\S]*?display:\s*none/,
         );
-    });
-
-    it("mints the bounded --glass-halo-* cohort (blur / core / bloom)", () => {
-        expect(glassTokens).toMatch(/--glass-halo-blur:\s*20px;/);
-        expect(glassTokens).toMatch(/--glass-halo-core:\s*13rem;/);
-        expect(glassTokens).toMatch(/--glass-halo-bloom:\s*7rem;/);
+        expect(veilStyles).toMatch(
+            /@media\s*\(prefers-reduced-transparency:\s*reduce\),\s*\(forced-colors:\s*active\)[\s\S]*?\.glass-focus-veil[\s\S]*?display:\s*none/,
+        );
     });
 
     it("keeps the side-sheet graded edge byte-stable at 34px (the row-10 value)", () => {

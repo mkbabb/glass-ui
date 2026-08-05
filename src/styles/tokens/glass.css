@@ -110,22 +110,40 @@
     --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate));
     --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate));
 
-    /* ── The graded-backdrop halo cohort (the `data-backdrop="graded"` opt-in) ──
-       ONE box-following masked plate that swaps the immersive Dialog's flat
-       full-viewport scrim for a frost-near / sharp-far bloom (the intersect
-       double-ramp product; radial STRUCK). The immersive Dialog + the
-       ENGAGE-AFFORD slider modal are the two opt-in consumers; `:root`-overridable
-       per presets-in-consumers. The dim rides the proven `--glass-plate-overlay` mix
-       (per-mode arms, placement.css), NOT `--overlay-scrim`.
-       - `--glass-halo-blur`  : the halo plate radius (18-20px sweet spot; 11 reads
-         too close to the modal's own plate, 34 is unnecessarily heavy).
-       - `--glass-halo-core`  : the half-extent out to which the frost holds full
-         (≈ the surface half-extent, measured from the surface/viewport centre).
-       - `--glass-halo-bloom` : the transition band beyond the core out to which the
-         frost eases to the sharp page (~100-120px). */
-    --glass-halo-blur:  20px;
-    --glass-halo-core:  13rem;
-    --glass-halo-bloom: 7rem;
+    /* ── The FOCUS-VEIL cohort (glass/focus-veil.css, `.glass-focus-veil`) ──────
+       ONE fixed full-viewport plate, uniform blur under an intersect double-ramp
+       mask centred on the ENGAGED element — frost at the control, monotone falloff,
+       far context untouched. It is the generalisation of the box-following halo that
+       used to live private inside the Dialog: the same product-of-two-ramps geometry,
+       lifted out of `placement.css`, re-centred off `--veil-x`/`--veil-y` instead of
+       a hard 50%, and published as one class every engaged surface composes.
+       `:root`-overridable per presets-in-consumers.
+
+       THE PREFIX, and why it is not the spec's. MOTION-CANON §5 spells this cohort
+       `--glass-veil-*`. That prefix is now the INK-VEIL PLATE REGISTER (glass/veil.css:
+       `--glass-veil-ink/-base/-step/-tier/-rest/-rung` + the five rungs + the composed
+       `--glass-veil` itself) — the plate's own paint, an entirely different register
+       that landed after §5 was written. Two unrelated registers under one prefix is the
+       G-ONE-NAME class, so the cohort takes the `--glass-focus-veil-*` prefix its own
+       file and class already carry. Mechanism, values and provenance are §5's, verbatim.
+
+       - `--glass-focus-veil-blur`   : the plate radius, BOUND to the ladder's floating
+         rung rather than to an off-ladder literal (§5's own binding). It resolves 20px
+         at HEAD — §5's parenthetical "= 11px" was written against the pre-#22 ladder and
+         is a stale resolution, not a second value; the token is the authority.
+       - `--glass-focus-veil-core-x/-y` : the half-extents out to which the frost holds
+         full, from the veil centre. JS-written from the engaged control's own
+         half-extent; the 13rem default is the centred-modal case.
+       - `--glass-focus-veil-bloom`  : the transition band beyond the core out to which
+         the frost eases to the sharp page (~100-120px).
+       - `--glass-focus-veil-dim`    : the centre-weighted dim. Rides the proven
+         `--glass-plate-overlay` mix, NOT `--overlay-scrim`; per-mode arms (light ~50%
+         for de-emphasis parity with the dark ~40% in tokens/dark-arm.css). */
+    --glass-focus-veil-blur:   var(--glass-blur-floating-radius);
+    --glass-focus-veil-core-x: 13rem;
+    --glass-focus-veil-core-y: 13rem;
+    --glass-focus-veil-bloom:  7rem;
+    --glass-focus-veil-dim: color-mix(in oklab, var(--glass-plate-overlay) 50%, transparent);
 
     /* ── OFF-LADDER FOOTPRINTS — integer offsets, zero raw alphas ──
        A surface whose footprint differs from a card's declares its distance from the
