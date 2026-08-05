@@ -379,3 +379,35 @@
     inherits: true;
     initial-value: 1;
 }
+
+/* THE DOT-RING PAIR — BK #28 W-FEEDBACK-MOTION.
+   `_shared/feedback/dot-ring.css` drives both; neither is a knob, both are STATE.
+
+   • --dot-ring-phase — the redistribution angle. It is the ONLY thing the ring's
+     keyframe moves: bead k's radius scales as sqrt(1 + c·e·cos(phase + k·2π/7)), so a
+     linear sweep of one angle rotates the size inequality around a ring whose beads
+     never leave their seats. Registered as `<angle>` because an unregistered custom
+     property interpolates as TEXT — the phase would jump 0turn → 1turn on one frame
+     and the "spinner" would be a single silent step.
+
+   • --dot-ring-extent — the fission scalar, 0 (fused to one glow) → 1 (ring open).
+     Registered as `<number>` for the same reason and transitioned on the host; the
+     beads read it THREE times — the travel along the spoke, the sqrt(7) fusion swell,
+     and the gate on the inequality inside the envelope. The third is the one that
+     makes the fused end ONE glow carrying exactly the ring's total bead area at every
+     phase; without it the union at extent 0 is the largest bead alone.
+
+   Both `inherits: true`: the host carries one animation and one transition, and seven
+   beads observe them. Seven animations of one property each would be seven timelines
+   free to drift; one timeline observed seven times cannot. */
+@property --dot-ring-phase {
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 0turn;
+}
+
+@property --dot-ring-extent {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}

@@ -102,6 +102,13 @@
  *                              Toast / Alert consume it. Loads after cards.css (it reads
  *                              the same `--glass-plate-*` rung tokens cards.css/the
  *                              ladder mint).
+ *  7b. components/_shared/feedback/dot-ring.css — the shared work-in-flight register:
+ *                              `.glass-dot-ring` + `.glass-dot-ring-bead`, seven beads
+ *                              whose unequal sizes rotate at conserved total area
+ *                              (BK #28 / EXEMPLARS-CODEX §B3). InfiniteScroll and
+ *                              EasingPicker consume it. Loads beside feedback-tone.css
+ *                              — same `_shared/feedback` register, same layer, and it
+ *                              reads only the spring/duration token families.
  *   8. floating-panel.css    — retired: the
  *                              `.floating-panel` fixed-overlay recipe had ZERO
  *                              consumers; the still-live `.dropdown-menu-content`
@@ -178,6 +185,7 @@
 @import "../components/dock/styles/controls.css";
 @import "../components/card/styles.css";
 @import "../components/_shared/feedback/feedback-tone.css";
+@import "../components/_shared/feedback/dot-ring.css";
 @import "./transitions.css";
 @import "./animations.css";
 @import "./viz-reveal.css";

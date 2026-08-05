@@ -393,6 +393,71 @@ Where the exemplar's choice conflicts with warm cream paper, deft rounding, and 
 
 ---
 
+## 10. THE LIQUID VOLUME *(the O-18 amendment — added 2026-08-05 at BK #28 W-FEEDBACK-MOTION, the roster's named owner)*
+
+**Provenance.** `IMG_1880.HEIC`, an owner design sketch that COMPONENT-WAVES-TERMINAL:1301 (O-18)
+found cited nowhere: three stacked diagrams — a flat pill on an x-axis; the same pill with x+y;
+then an ellipse with x+y+z. A hand derivation of a capsule acquiring dimensions. O-18 reads it,
+against our own two-lobe goo and `IMG_2287/2288`, as the owner's note on the **liquid volume**
+shared by slider / pager-dots / blob, and files it as **a directive, not a defect and not a
+target** — which is why it lands here as a law and not as a wave's acceptance row.
+
+> **THE LAW.** A liquid body has a QUANTITY, and motion may move it, split it, stretch it or
+> re-seat it — but never spend it. Whatever the shape does, the measure the sketch's axes name
+> is the invariant: **extent** on x, **area** on x+y, **volume** on x+y+z. Deformation is free;
+> creation and destruction are not.
+
+**What it forbids, concretely.** A goo that pinches off and leaves less than it started with. A
+worm that stretches without thinning. A bead ring that fades beads in and out to fake a rotation.
+Each is the same defect — an animation that spends the body to buy the motion — and each reads as
+cheap for the same reason: the eye tracks quantity, and quantity that leaks reads as a drawing
+rather than as a substance.
+
+**Which axis a surface is on is a decision, and it is stated per consumer, never averaged.**
+
+| surface | rung | the conserved measure |
+|---|---|---|
+| slider loupe / capsule | **x** | the capsule's own extent — it lengthens under the finger and does not gain body |
+| pager-dots worm · dock fission · **the dot-ring** | **x+y** | AREA. The worm thins as it stretches; the ring's seven beads redistribute at constant total |
+| blob family | **x+y+z** | the volume the depth cap and the separation gate already argue about |
+
+**The first citizen, and it is checkable.** BK #28's dot-ring (`_shared/feedback/dot-ring.css`) is
+the x+y rung expressed as an identity rather than as a timing. Bead k's radius scales as
+`sqrt(1 + c·e·cos(φ + k·2π/7))` — φ the phase, e the fission extent — so total area goes as
+`Σ(1 + c·e·cos(φ + k·2π/7)) = 7 + c·e·0` — the seven unit vectors at the 7th roots of unity
+summing to zero for **every** φ, and the extent riding inside the envelope so the sum is
+independent of it too. The ring cannot leak mass at any instant, at any inequality depth, at any
+point in the travel.
+
+Across the fission the conserved quantity has to be named exactly, because two different measures
+are in play and only one of them is an invariant. **The TOTAL bead area is the invariant**, and
+the extent gate is what carries it home: at `e = 0` the seven beads are not merely coincident but
+EQUAL — every scale is `sqrt(7)` — so their union is that total exactly, and the same at every
+phase. Ungated, the fused union would be the LARGEST bead alone, `(1 + c·cos_max(φ))×` the total:
+over by 21–24% and swinging with the phase. **The open ring's UNION is not the invariant and must
+not be quoted as one**: tangency pins the bead at MEAN size, so super-mean neighbours overlap and
+the union runs a little under the total — a property of the packing, counted once, not a leak.
+Measured in live Chromium on the shipped register, host box **20.00 px** (the `--icon-lg` rung, so
+400 px² of box in total):
+
+| cell | φ = 0turn | φ = 0.0714turn |
+|---|---|---|
+| ring total, extent 1 (the invariant) | 188.249 px² | 188.248 px² |
+| fused union, extent 0 | 188.248 px² (= 0.999996 of the total) | 188.248 px² (= 1.000000) |
+| open union, extent 1 | 186.219 px² (= 0.98922) | 186.138 px² (= 0.98879) |
+
+`tests/styles/feedback-motion.test.ts` is the standing check — it reads the swell factor and the
+extent gate out of the shipped register and holds the fused-union identity at every phase. The
+*mechanism* dividend is worth naming: coincident discs of conserved area separating **is** the
+metaball silhouette, so the "goo" read that EXEMPLARS-CODEX §B3 asks for arrives with **no
+`filter: url()` at all**, which §8 forbids anyway.
+
+**Relation to §9.7.** This is not the halftone. §9.7 refuses Google's dot-matrix ARRIVAL — a
+screen of dots as a materialization texture — and that fence holds unchanged. The liquid volume
+is a conservation law about a body, and the dot-ring is one body, briefly in seven pieces.
+
+---
+
 ## APPENDIX — THE ORDERED WORK
 
 1. `springPresets.ts`: six rows, `settleBand` field, renames, corrected comments.

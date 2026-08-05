@@ -1,0 +1,271 @@
+/* _shared/feedback/dot-ring.css
+   THE DOT-RING — the library's ONE work-in-flight affordance.
+
+   BK #28 W-FEEDBACK-MOTION. Spec of record: TERMINAL-ROSTER #28 → EXEMPLARS-CODEX
+   §B3 (EXC-17a), verbatim: "nucleate → one hard dot → 7-dot ring of deliberately
+   unequal sizes, the inequality redistributing between frames → brighten → re-fuse
+   to one glow → hand off … the same luminous mass is impact flash, then pilot light,
+   then spinner — NOTHING CREATED, NOTHING DESTROYED; the specular highlight IS the
+   spinner." Its `in our language` column is the whole design brief: "goo beads in our
+   palette, hue per bead, slow redistribution; blob-family kinship explicit; FILTER-FREE."
+
+   WHAT IT REPLACES. Two library surfaces carried a borrowed CSS-framework spinner —
+   a transparent-topped border ring on a rotate utility (InfiniteScroll) and a rotating
+   lucide glyph (EasingPicker). A rotating C-shape is the one loading idiom every
+   framework ships; it says nothing about this library's material, and the codex's
+   design-language law ("never a trite or lifeless recreation") forbids keeping it.
+   The retired utility's name is deliberately not spelled anywhere in `src/` — a dead
+   class quoted in prose is the thing the standing lock in
+   `tests/styles/feedback-motion.test.ts` is looking for.
+
+   THE MECHANISM, AND WHY IT IS ONE EXPRESSION AND NOT A SCORE.
+   Seven beads ride a circle. Their sizes are unequal, and the inequality ROTATES —
+   that rotation is the whole of the motion. There is no spinning geometry: every bead
+   holds its angular seat forever and only its MASS travels, which is exactly B3's
+   "the specular highlight IS the spinner" read.
+
+   Bead k's radius scales as  sqrt(1 + c·e·cos(φ + k·2π/7)),  φ the animated phase and
+   e the fission extent. Area goes as the square, so the ring's total area is
+
+       Σ_k (1 + c·e·cos(φ + k·2π/7))  =  7 + c·e·Σ_k cos(φ + k·2π/7)  =  7,
+
+   the sum of unit vectors at the seven 7th-roots of unity being zero for EVERY φ, and
+   the extent riding INSIDE the envelope so the identity is independent of it too.
+   "Nothing created, nothing destroyed" is therefore not a description of this
+   animation — it is an identity it cannot violate at any instant, on any frame, at
+   any inequality depth, at any point in the travel. That is the one property worth
+   gating and `tests/styles/feedback-motion.test.ts` gates it.
+
+   THE INEQUALITY DEPTH IS THE HOUSE PROPORTION. `--dot-ring-inequality` = (φ−1)/(φ+1)
+   = √5 − 2, the unique depth at which the OPEN ring's envelope puts the largest bead's
+   AREA at exactly φ× the smallest's — so the envelope's DIAMETER ratio is √φ = 1.272×,
+   the same sqrt-phi constant the overlay padding ladder already rides (`Toast.vue`'s
+   `--overlay-pad-block`). Those two extremes bound the envelope over the cycle; they
+   are not co-observable on one frame, because seven is odd and no two seats are
+   antipodal. The ring is deliberately unequal in the library's own proportion and in
+   no other.
+
+   EVERY LENGTH DERIVES FROM THE BOX. Nothing here is a pixel. The bead diameter is
+   fixed by the tangency condition — at mean size the neighbours just touch, which is
+   the largest ring that is still a ring of beads and not a ring of overlaps — and the
+   ring radius follows as 1/(2·sin(π/7)) BEAD DIAMETERS, a pure number. Sizing the
+   host (`size-5`, `size-4`, anything) is the whole of the sizing API.
+
+   FILTER-FREE, AS ORDERED. No `filter`, no `filter: url()` goo. MOTION-CANON §8 names
+   `filter: url()` FORBIDDEN ("the prime Safari suspect … no new primitive may use
+   it"), and the blob-family kinship B3 asks for is carried by the mass-conservation
+   law and the bead palette, never by an SVG goo pass. The channels are `scale` and
+   `translate` longhands only — §8's "safest channel we have; keep everything on it".
+
+   THE TWO CLOCKS, BOTH NAMED, NEITHER MINTED.
+     · FISSION/FUSION rides `dock`, TRAVEL's row: `--spring-dock-duration` in on the
+       `--spring-dock` curve, `--spring-dock-exit-duration` out on `--exit-curve`.
+       The exit reader belongs to the row that entered (BK #26's law), and it is a
+       bezier, never a spring — MOTION-CANON §7, "an exit must not overshoot past gone".
+     · REDISTRIBUTION rides `--duration-xl` (1s), the ambient rung. MOTION-CANON §4
+       REST bounds any sustained loop at "period ≥1s, ~10× slower than any gesture
+       beat"; 1s is that floor exactly, and it is a token, so the tempo cannot drift
+       from the ambient family by hand-editing this file. */
+
+@layer components {
+    /* The host. It carries the phase animation and the extent transition; the beads
+       read both by inheritance, so seven elements move on ONE animation and ONE
+       transition rather than seven of each. Both custom properties are registered
+       (`tokens/property-regs.css`) — an unregistered property would interpolate as
+       text and the ring would jump between states instead of fissioning. */
+    .glass-dot-ring {
+        position: relative;
+        display: inline-block;
+        aspect-ratio: 1;
+        /* The default box is the icon ladder's spinner rung. A consumer sizing the
+           host with a utility (`size-4`, `size-5`) overrides it from the later
+           utilities layer — the whole sizing API, and Tailwind-first. */
+        inline-size: var(--icon-lg);
+
+        /* PUBLIC INPUTS — the three knobs, each a ratio or a token, never a pixel. */
+        --dot-ring-tint: currentColor;
+        --dot-ring-inequality: 0.2360679775;
+        --dot-ring-spin: var(--duration-xl);
+
+        /* DERIVED — the tangency geometry. `--_dot-ring-pitch` is sin(π/7), the half
+           angle between neighbours; at mean size the bead diameter is 2·pitch·R, and
+           the largest bead (sqrt(1+c) over mean) must still clear the host edge, which
+           pins R and hence the diameter. Written as one expression so the two can
+           never drift apart. */
+        --_dot-ring-pitch: sin(180deg / 7);
+        --_dot-ring-radius: calc(
+            50% / (1 + var(--_dot-ring-pitch) * sqrt(1 + var(--dot-ring-inequality)))
+        );
+        --_dot-ring-bead: calc(2 * var(--_dot-ring-pitch) * var(--_dot-ring-radius));
+
+        /* THE REDISTRIBUTION. One linear sweep of the phase; linear because a
+           rotation that eases is a rotation that reports a beginning and an end, and
+           work in flight has neither. */
+        animation: glass-dot-ring-redistribute var(--dot-ring-spin) linear infinite;
+
+        /* THE RING IS THE RESTING STATE, and presence is the whole state machine. A
+           dot-ring exists exactly while work is in flight, so it needs no `active`
+           prop and no `data-state`: mounting IS the fission, unmounting IS the
+           re-fusion. `dock` is TRAVEL's row and both legs are travel — seven beads
+           leaving a hole, then returning to it. */
+        --dot-ring-extent: 1;
+        transition: --dot-ring-extent var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    /* NUCLEATE → FISSION. Without the starting rect the ring is simply present on the
+       frame it mounts and there is no fission at all — the beads must be given a fused
+       hole to leave. */
+    @starting-style {
+        .glass-dot-ring {
+            --dot-ring-extent: 0;
+        }
+    }
+
+    /* RE-FUSE → HAND OFF. The Vue `<Transition name="glass-dot-ring">` contract, in TWO
+       arms, and the split is a hard constraint rather than a preference. Vue measures a
+       leave on the TRANSITIONED ELEMENT ALONE — `whenTransitionEnds` reads
+       `getTransitionInfo(el)` and resolves immediately when that element declares no
+       transition — and the consumer wraps the ROW that holds the ring, so a clock that
+       lives only on a descendant is a clock Vue cannot see: the row is removed about two
+       frames after the leave class lands, whatever the descendant declares. So the ROOT
+       arm carries the fade AND is the measurable clock, and the descendant arm draws the
+       mass home inside it. Both read the same exit reader, so they end on one frame.
+
+       B3's hand-off has two legal endings and both are here: a ring inside a surface
+       with room re-fuses and fades (these arms), and a ring inside a trigger hands off
+       to whatever lands in its place — EasingPicker's Check glyph IS that token, which
+       is why that consumer takes no <Transition> at all.
+
+       The mass draws home on `dock`'s OWN exit reader (BK #26: an exit reads the row
+       that entered) and on `--exit-curve`, a bezier — MOTION-CANON §7, "never a
+       spring; an exit must not overshoot past gone". The opacity leg is fade-led per
+       the same §: a glow that re-fuses and then vanishes on a frame boundary reports a
+       cut rather than a completion. */
+    .glass-dot-ring-leave-active {
+        transition: opacity var(--spring-dock-exit-duration) var(--exit-curve);
+    }
+
+    .glass-dot-ring-leave-active .glass-dot-ring {
+        transition: --dot-ring-extent var(--spring-dock-exit-duration) var(--exit-curve);
+    }
+
+    .glass-dot-ring-leave-to {
+        opacity: 0;
+    }
+
+    .glass-dot-ring-leave-to .glass-dot-ring {
+        --dot-ring-extent: 0;
+    }
+
+    /* THE SPOKE. It exists for one reason and it is a hard one: the individual
+       transform properties compose in the FIXED order translate → rotate → scale, so a
+       bead carrying both `rotate` and `translate` is translated in the UNROTATED frame
+       and then spun about its own centre — seven beads stacked on one radius, which is
+       what the first paint of this register actually did. Rotating a parent puts the
+       rotation OUTSIDE the translation, which is the only composition that seats a
+       bead at an angle. It is a wrapper earning its node. */
+    .glass-dot-ring-spoke {
+        position: absolute;
+        inset: 0;
+        rotate: calc(var(--dot-ring-k) * (1turn / 7));
+    }
+
+    /* A bead. Centred on its spoke by margin rather than by `translate` — the translate
+       channel is spent on the fission travel and a property cannot carry two jobs. */
+    .glass-dot-ring-bead {
+        position: absolute;
+        inset-inline-start: 50%;
+        inset-block-start: 50%;
+        inline-size: var(--_dot-ring-bead);
+        block-size: var(--_dot-ring-bead);
+        margin-inline-start: calc(var(--_dot-ring-bead) / -2);
+        margin-block-start: calc(var(--_dot-ring-bead) / -2);
+        border-radius: var(--radius-pill);
+
+        /* HUE PER BEAD, and it mints no hue figure. The advance is the ring's OWN
+           angular pitch (360/7) scaled by its OWN inequality depth — the same two
+           numbers the geometry already rides — so the seven beads span ~73° of hue: a
+           chromatic drift across one luminous mass, which is what glass does at an
+           edge, and not a seven-colour wheel, which is what a borrowed loader does.
+           An achromatic tint disperses by nothing at all, honestly and visibly.
+           The advance is UNITLESS on purpose: relative-colour `h` resolves to a
+           <number> of degrees, so `calc(h + 12deg)` is a type error that invalidates
+           the whole declaration and paints the bead transparent — which is exactly how
+           this register's first paint failed. */
+        background: oklch(
+            from var(--dot-ring-tint) l c
+            calc(h + var(--dot-ring-k) * (360 / 7) * var(--dot-ring-inequality))
+        );
+
+        /* THE TRAVEL ALONG THE SPOKE. The bead slides out to the ring radius as the
+           extent opens. `100%` in `translate` resolves against the bead's OWN width,
+           and the ring radius is exactly 1/(2·sin(π/7)) bead diameters, so this is the
+           radius expressed in the one unit that makes it a pure number. */
+        translate: calc(
+                100% / (2 * var(--_dot-ring-pitch)) * var(--dot-ring-extent)
+            )
+            0;
+
+        /* THE MASS. Two factors, one channel.
+
+           The first is the inequality envelope, and the extent rides INSIDE it: bead k
+           carries sqrt(1 + c·e·cos(φ + k·2π/7)), so Σ_k (1 + c·e·cos(…)) = 7 for every
+           φ and every e. The gate is what makes the fused end ONE glow: at e = 0 all
+           seven beads are the same size and coincident, so their union is exactly the
+           ring's total area, at every phase. Ungated, the union at e = 0 would be the
+           LARGEST bead alone — (1 + c·cos_max(φ))× the total, and swinging with φ.
+
+           The second is the FUSION factor: at extent 0 every bead swells by sqrt(7),
+           and one disc of radius sqrt(7)·r̄ has the area of seven of radius r̄. The
+           OPEN ring's union runs a little under that total because tangency pins the
+           bead at MEAN size and super-mean neighbours therefore overlap — a property
+           of the packing, not a leak: the total is conserved, the overlap is counted
+           once. */
+        scale: calc(
+            sqrt(
+                    1 + var(--dot-ring-inequality) * var(--dot-ring-extent) *
+                        cos(
+                            var(--dot-ring-phase) + var(--dot-ring-k) * (1turn / 7)
+                        )
+                ) *
+                (1 + (sqrt(7) - 1) * (1 - var(--dot-ring-extent)))
+        );
+    }
+
+    /* PRM: the motion stops, the REPORT does not. The ring lands fissioned and the
+       redistribution parks — a static unequal ring still says "in flight", which is
+       the terminal-parity the ladder's PRM arm asks for. Parking the phase rather
+       than hiding the ring is the difference between reduced motion and lost state. */
+    @media (prefers-reduced-motion: reduce) {
+        .glass-dot-ring {
+            animation: none;
+            transition: none;
+        }
+
+        /* A media query carries no specificity, so the arm above — (0,1,0), and matching
+           the RING — cannot reach the leave arms, which match the WRAPPER at (0,1,0) and
+           the ring at (0,2,0) in this same layer. Each is silenced on a selector that
+           ties it and wins on order. Silencing the wrapper's clock is what makes the
+           leave instant here: with nothing to measure Vue resolves on the spot, and the
+           ring goes when the work goes rather than travelling home. */
+        .glass-dot-ring-leave-active,
+        .glass-dot-ring-leave-active .glass-dot-ring {
+            transition: none;
+        }
+    }
+
+    /* Forced colours strip the tint; the geometry is the whole signal there. */
+    @media (forced-colors: active) {
+        .glass-dot-ring-bead {
+            background: CanvasText;
+        }
+    }
+}
+
+/* The one keyframe. It moves a single registered angle and nothing else — no
+   geometry, no opacity, no percentage stops to drift out of step with a token. */
+@keyframes glass-dot-ring-redistribute {
+    to {
+        --dot-ring-phase: 1turn;
+    }
+}

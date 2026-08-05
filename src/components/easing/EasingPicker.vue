@@ -19,8 +19,9 @@
 // hue NEVER enters a library token, and the primitive is self-sufficient
 // standalone).
 import { computed, onUnmounted, ref, useId, useTemplateRef, watch } from "vue";
-import { Check, Copy, LoaderCircle, Play, RotateCcw, Square } from "@lucide/vue";
+import { Check, Copy, Play, RotateCcw, Square } from "@lucide/vue";
 import { Button } from "../button";
+import DotRing from "../_shared/feedback/DotRing.vue";
 import {
     Select,
     SelectContent,
@@ -481,7 +482,16 @@ const stepsModel = computed<number[]>({
                         data-testid="easing-copy"
                         @click="copy"
                     >
-                        <LoaderCircle v-if="copyState === 'pending'" class="size-4 animate-spin" aria-hidden="true" />
+                        <!-- The house work-in-flight mark (BK #28) in place of the
+                             rotating glyph. NO <Transition> here, deliberately: the
+                             ring hands off to the Check, and a check landing IS the
+                             hand-off B3 names — there is no glow to fade into nothing.
+                             (It is also the only shape this trigger can take: a
+                             <Transition> schedules a rAF-shim timer under fake timers,
+                             and this component's contract asserts it leaves none.)
+                             The trigger's own aria-label and the status line below own
+                             the announcement, so the ring stays silent. -->
+                        <DotRing v-if="copyState === 'pending'" class="size-4" />
                         <Check v-else-if="copyState === 'copied'" class="size-4 text-(--easing-curve-accent)" aria-hidden="true" />
                         <Copy v-else class="size-4" aria-hidden="true" />
                     </button>
