@@ -191,6 +191,23 @@ fallback; index.css:1 layer order):
 |----|------|-----------|-------------------|--------------|
 | AUTH-1 | `transitions.css:120-130` | `.fade-*`/`.tab-fade-*`/`.pane-swap-*`/`.metric-swap-*` -active/-leave | opacity fade / 0.1s | `9e04f749…` |
 | AUTH-2 | `transitions.css:132-140` | `.pane-swap-*`/`.metric-swap-*` -active | `transition-property: opacity` / 0.15s | `d3f21adf…` |
+| AUTH-3 | `glass/dissolve.css:266-279` | `.glass-vaporize[data-state="closed"]` + its `> *` | `animation-name` (the three material channels / the reduced ink) + `animation-duration: var(--vap-clock)` | `c3333028…` |
+
+**[AMENDED 2026-08-05 — BK #30 W-DISSOLVE cure, CURE-3.]** AUTH-3 is the vaporize dismissal's own
+reduced-motion exit, and it needs BOTH halves of the escape for two different reasons: `!important`
+so that `glass/reveal.css`'s UNLAYERED PRM `animation-name: glass-reveal-out-reduced` (an unlayered
+NORMAL declaration, which beats a layered one at any specificity) stops capturing the vaporize root,
+and LAYERED so the universal `animation-duration: 0.01ms !important` does not then snap the
+surviving channels to a frame. Without it the shipped paint was: root `animation-name:
+glass-reveal-out-reduced` at `1e-05s`, backdrop pinned at rest — the surface simply VANISHED, which
+is the masking class this band forbids and the exact opposite of the contract `dissolve.css` states
+in prose. What survives is material and fade, never transform: the recipe is transform-free by
+construction, so there is no vestibular channel to snap; what the carve removes is the ink's blur
+ramp. Its clock is not a minted figure — it is `--vap-clock`, the dismissal's one duration.
+Hash detector, verbatim:
+`sed -n '/@media (prefers-reduced-motion: reduce)/,$p' src/styles/glass/dissolve.css | shasum -a 256`.
+Armed at `tests/styles/dissolve.test.ts` ("owns the root's OWN reduced-motion exit"), which reads
+this register's path out of `a11y-overrides.css`'s own pointer and reds if the row goes missing.
 
 Subordinate (dead-in-effect, unchanged): `animations.css:300-305`
 `.glass-top-layer[popover], dialog.glass-top-layer` — its non-`!important`

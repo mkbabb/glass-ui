@@ -411,3 +411,51 @@
     inherits: true;
     initial-value: 0;
 }
+
+/* ── THE VAPORIZE CHANNELS (BK #30 W-DISSOLVE) ─────────────────────────────────
+   `IOS27-ARCHIVE.md` §4b measures the Control-Centre dismissal as a DESYNCHRONISED
+   three-channel release of the backdrop filter itself — saturation, dim and blur, each
+   landing on its own stop, sat : dim : blur = 1 : 1.36 : 1.72. Three landings means
+   three animations, and three animations means the two channels that share ONE
+   `backdrop-filter` declaration have to reach it through separate custom properties.
+   A bare `var()` in a filter function SNAPS between keyframes; only a registered
+   property interpolates. That is the whole reason these two exist — the archive says it
+   outright ("`--vap-*` must be `@property`-registered or the interpolation will not
+   run"), and it is the difference between the effect and a two-step flicker.
+
+   The DIM channel needs no registration and does not get one. It releases the panel's
+   own paint — plate, rim and cast — and `background-color`, `border-color` and
+   `box-shadow` all interpolate natively (the last one against `none` by spec, which is
+   what lets ONE keyframe release ANY rung's shadow stack without restating it). A
+   registered scalar there would buy a Houdini dependency and a second expression of the
+   ladder's own tokens, so the recipe animates the properties directly.
+
+   `inherits: false` on both: the release happens on the dismissing surface, and a
+   descendant with its own glass must not inherit a half-released backdrop. The initial
+   values are the NEUTRAL end — `saturate(1)` and `blur(0)` are identity — so an
+   unbound element that somehow resolves them paints no filter rather than a wrong one.
+   The rest values the animation starts from are bound on `.glass-vaporize` itself
+   (`styles/glass/dissolve.css`), off the rung's own tokens. */
+@property --vap-saturate {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 1;
+}
+
+@property --vap-blur {
+    syntax: "<length>";
+    inherits: false;
+    initial-value: 0px;
+}
+
+/* The ink's blur peak — half the dismissing element's own block size (TR#30's
+   amendment). Registered as a `<length>` and `inherits: true` for one reason: it is
+   computed ONCE, on the surface, and read by every child the ink keyframe runs on. Left
+   unregistered it would be substituted as text and re-resolve `1lh` against each child's
+   own line box, so a caption and a title would blur by different amounts in the same
+   dissolve. `initial-value: 0px` is the no-blur rest. */
+@property --vap-ink-blur {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0px;
+}

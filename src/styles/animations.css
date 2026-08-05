@@ -304,3 +304,128 @@
         transition-duration: var(--duration-fast);
     }
 }
+
+/* ── THE VAPORIZE (BK #30 W-DISSOLVE) ───────────────────────────────────────
+ *
+ * The mechanism of record is `IOS27-ARCHIVE.md` §4b: the Control-Centre dismissal is a
+ * DESYNCHRONISED three-channel release of the backdrop filter, with the element's own ink
+ * dropped first. Saturation lands at 184ms, dim at 250ms, blur at 317ms — 1 : 1.36 : 1.72,
+ * monotone, ease-out, and zero overshoot on any channel. For ~130ms in the middle the
+ * backdrop is fully saturated and still heavily blurred: colour with no form. That gap IS
+ * the effect, and it exists only because the three clocks differ.
+ *
+ * THESE ARE KEYFRAMES, NOT TRANSITIONS, AND THAT IS NOT A STYLE CHOICE. CWT F-11 (`:1343`)
+ * measured the archive's own snippet against our stack: it is `transition`-based and CANNOT
+ * paint through reka's `usePresence`, which gates the portaled-overlay unmount on
+ * `getComputedStyle(node).animationName` and has no `transitionend` path. A transition-only
+ * dismissal is torn down in ~11ms, under one frame, before it paints. The `.glass-reveal`
+ * exit above rides a keyframe for exactly this reason; so does this.
+ *
+ * FOUR ANIMATIONS, ONE CLOCK, ONE DIRECTION. Three run on the surface (two backdrop
+ * channels + the panel's own paint), one on its ink, and every one of them is spent over
+ * the SAME travel. The desynchronisation is carried by the stop each channel LANDS on —
+ * saturation at 1/1.72 of the travel, the panel's paint at 1.36/1.72, blur at the end —
+ * with each channel pinned from its landing through 100%. That is the same three measured
+ * numbers, painting the same gap, with one property the durations could never have: the
+ * three animations end together. `glass/dissolve.css` states why that is mandatory (reka's
+ * `usePresence` unmounts a presence-gated root on the FIRST `animationend` it sees, so the
+ * shortest clock on the root would BE the element's lifetime).
+ *
+ * Neither backdrop keyframe writes a `0%`: the implicit `from` is the element's own
+ * cascaded rest, so the release starts from whatever rung the surface actually wears and
+ * this file states no rung's values.
+ */
+
+/* Saturation — first home, at 1 / 1.72 of the travel, and held there to the end. The
+ * landing and the pin are ONE declaration: a channel whose stops end early does not hold
+ * its value, it interpolates back to the underlying one (see the ink's note below). */
+@keyframes glass-vaporize-saturate {
+    58.14%,
+    100% {
+        --vap-saturate: 1;
+    }
+}
+
+/* Blur — last home, at the full travel, which is what makes the backdrop outlive the
+ * panel: it is still releasing for 1 − 1.36/1.72 of the travel after the plate has gone. */
+@keyframes glass-vaporize-blur {
+    to {
+        --vap-blur: 0px;
+    }
+}
+
+/* The panel's own paint — plate, rim and cast — landing between the two, at 1.36 / 1.72,
+ * and held to the end.
+ * `box-shadow: none` is the load-bearing line: css-backgrounds-3 interpolates a shadow
+ * list against `none` as the same list with transparent colours and zeroed lengths, so ONE
+ * keyframe releases ANY rung's stack — three layers on `.glass-floating`, one on
+ * `.glass-wash` — without this file restating a single shadow. */
+@keyframes glass-vaporize-panel {
+    79.07%,
+    100% {
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none;
+    }
+}
+
+/* The ink. Two of TR#30's four amendments live here.
+ *
+ * BLUR LEADS THE FADE, at half the element's own block size. The lead is not a new figure:
+ * the blur peaks at 40% / 1.72 of the travel — the ink's collapse point divided by the
+ * SAME ratio by which the saturation leads the blur. The mechanism's one ratio, spent
+ * twice, rather than a second lead nobody measured.
+ *
+ * THE COLLAPSE DIES AT 40% OF TRAVEL, WITH ITS ALPHA FLOORED AT 0.30. The floor is where
+ * the collapse ENDS, not where the ink stops: the stills that measured it were measuring
+ * an element that was then removed. Here the residue evaporates with the panel — alpha
+ * reaches 0 exactly where the dim channel lands (1.36 / 1.72 of the travel), so nothing is
+ * left standing on a transparent plate for the blur channel's remaining beat.
+ *
+ * The stops are derived, never chosen: `dissolveGrammar.ts` holds the three constants and
+ * `tests/styles/dissolve.test.ts` reds if any stop here drifts from the arithmetic.
+ *
+ * THE 100% STOP IS LOAD-BEARING, AND IT COST A LIVE FRAME TO FIND. A property that stops
+ * appearing in the keyframe list does NOT hold its last value — css-animations-1 synthesises
+ * an implicit 100% keyframe from the element's UNDERLYING value, so an `opacity` whose last
+ * stop is 79.07% interpolates back up to 1 over the remaining fifth of the travel and the
+ * dead toast comes back. Measured on the paused animation before the cure: alpha 0 at
+ * 79.1%, 0.556 at 84%, 1.000 at 100%, with the blur decaying the same way. Both channels
+ * are pinned at the end explicitly. */
+@keyframes glass-vaporize-ink {
+    0% {
+        opacity: 1;
+        filter: blur(0);
+    }
+    23.256% {
+        filter: blur(var(--vap-ink-blur));
+    }
+    40% {
+        opacity: var(--vap-ink-floor);
+    }
+    79.07% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+        filter: blur(var(--vap-ink-blur));
+    }
+}
+
+/* The reduced-motion ink: the fade on the same two stops, ZERO blur frames. The vaporize
+ * is transform-free by construction, so nothing here translates or scales under any
+ * setting; what the carve removes is the blur ramp. */
+@keyframes glass-vaporize-ink-reduced {
+    0% {
+        opacity: 1;
+    }
+    40% {
+        opacity: var(--vap-ink-floor);
+    }
+    79.07% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}

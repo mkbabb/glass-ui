@@ -34,11 +34,19 @@ const ariaLabel = computed(
                 // ink stays `--foreground`; the close glyph reads the SAME warm ink on
                 // every variant (the base `text-foreground/50 hover:text-foreground`),
                 // never a palette-red slab-era override.
-                'focus-ring absolute right-2 top-2 rounded-button p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 group-hover:opacity-100',
+                // The CORNER-STRADDLING form (IOS27-ARCHIVE §3, adjudicated by CWT
+                // O-10): centre on the corner point, ~70% of the disc floating free,
+                // flat and opaque, no ring and no glass. §3 keeps two grammars and never
+                // mixes them — corner-straddling opaque for destructive removal, inset
+                // and chromeless for a content-owned dismissal — and a toast's × is the
+                // first. The always-visible mark replaces the hover-revealed ghost: an
+                // affordance that only exists under a pointer has no existence at all on
+                // touch, which is where notifications are dismissed.
+                'glass-corner-affordance focus-ring',
                 props.class,
             )
         "
     >
-        <X class="h-4 w-4" aria-hidden="true" />
+        <X class="h-3 w-3" aria-hidden="true" />
     </RekaToastClose>
 </template>

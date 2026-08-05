@@ -42,6 +42,7 @@
 // be a felt change asserted rather than seen.
 
 import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
+import { FRAME_MS } from "../../../composables/motion/core/constants";
 import { useReducedMotion } from "../../../composables/motion/core/useReducedMotion";
 import { WORM_LEAD_RESPONSE, WORM_LEAD_DAMPING, WORM_TRAIL_TAU_S } from "../constants";
 
@@ -183,7 +184,8 @@ export function useLeadTrail(options: UseLeadTrailOptions = {}): UseLeadTrail {
     }
 
     function step(now: number): void {
-        const dtMs = lastNow ? Math.min(now - lastNow, MAX_DT_MS) : 1000 / 60;
+        // First tick has no previous timestamp to difference: assume one frame.
+        const dtMs = lastNow ? Math.min(now - lastNow, MAX_DT_MS) : FRAME_MS;
         lastNow = now;
         const dt = dtMs / 1000;
 

@@ -1,0 +1,279 @@
+/* glass/dissolve.css
+   The `.glass-vaporize` dismissal + the corner-affordance family — BK #30 W-DISSOLVE.
+
+   THE OWNER'S ASK, VERBATIM (WAVES:662): the "notification vaporizing and dissolving
+   effect… should be re-deployed in our own facilities", and the close affordance that sits
+   ON the corner border, partially outside the element. Both live here because they are one
+   idea: `EXEMPLARS-CODEX` LAW 13 (ANCHOR HONESTY) rules that the corner an affordance sits
+   on IS the vanishing point the element already uses, so the surface that dies and the mark
+   that ends it share a corner or the composition is lying about where the thing went.
+
+   WHAT THE VAPORIZE IS, AND WHAT IT IS NOT. `IOS27-ARCHIVE.md` §4b measured the Control
+   Centre dismissal channel by channel and found: not mask erosion, not per-particle
+   scatter, not displacement. It is a DESYNCHRONISED THREE-CHANNEL RELEASE OF THE BACKDROP
+   FILTER ITSELF, with the element's own ink dropped first — saturation restored at 184ms,
+   dim at 250ms, blur at 317ms, monotone ease-out, zero overshoot on any channel. For the
+   ~130ms the clocks are apart the backdrop is fully saturated and still heavily blurred:
+   colour with no form. That is the whole effect, and it is far cheaper than particles.
+
+   RATIOS PRESERVED, ABSOLUTES OURS (the archive's own instruction). This file states no
+   duration. It spends ONE clock — `--exit-overlay-duration`, which #26's generator derives
+   from the `panel` row's own settle — and the measured ratio 1 : 1.36 : 1.72 is spent as
+   the STOP each channel lands on, inside the keyframes (`animations.css`). A dismissal
+   that stated its own milliseconds could outlast the arrival it reverses; this one cannot.
+
+   IT IS TRANSFORM-FREE (TR#30, amendment 1). Nothing here writes `transform`, `scale`,
+   `translate` or `rotate` except to NEUTRALISE a co-composed recipe's end-state. The
+   surface does not shrink, tuck, or fly — it stops being a surface. That is also why the
+   recipe needs no reduced-motion spatial carve: there is nothing spatial to carve.
+
+   IT COMPOSES WITH `.glass-reveal` RATHER THAN REPLACING IT. A surface wearing both blooms
+   in on the reveal register and vaporizes out on this one — the enter and the exit are
+   different acts and the corpus says so ("open fade-leads-position; dismiss
+   position-leads-then-fade-kills"). @import-ed AFTER reveal.css inside the same
+   `@layer components` so the exit legs below win at equal specificity. */
+
+@layer components {
+    .glass-vaporize {
+        /* ── The one clock, and where the ratio is spent ─────────────────────────────
+           ONE duration reaches every channel. The 1 : 1.36 : 1.72 ratio is spent inside
+           the keyframes, as the stop each channel LANDS on (`animations.css`), never as
+           three durations here — see the end-time constraint on the closed rule below. */
+        --vap-clock: var(--exit-overlay-duration);
+        --vap-curve: var(--exit-curve);
+
+        /* ── Where the release STARTS ────────────────────────────────────────────────
+           The rung's own rest, read off the ladder's tokens, never restated as figures. A
+           surface on a different rung re-points these two and the recipe follows it; the
+           default is the floating rung every overlay-band surface already wears. */
+        --vap-rest-blur: calc(var(--glass-blur-floating-radius) * var(--glass-level));
+        --vap-rest-saturate: var(--glass-saturate);
+        --vap-blur: var(--vap-rest-blur);
+        --vap-saturate: var(--vap-rest-saturate);
+
+        /* ── The ink (TR#30, amendments 2 and 3) ────────────────────────────────────
+           The blur peaks at half the element's own block size and LEADS the fade; the
+           fade's collapse dies at 40% of travel with its alpha floored at 0.30. `1lh` is
+           the honest default for an element whose height CSS cannot ask for: it is the
+           ink's own line box, exact for a single-line row and an understatement for a
+           taller one — never a guessed pixel box. A host that knows its height sets
+           `--vap-height` and the ratio follows it. */
+        --vap-height: 1lh;
+        --vap-ink-blur: calc(0.5 * var(--vap-height));
+        --vap-ink-floor: 0.3;
+    }
+
+    .glass-vaporize[data-state="closed"] {
+        /* The two backdrop channels reach ONE declaration through two registered
+           properties — the only way two clocks can drive one `backdrop-filter`. */
+        backdrop-filter: blur(var(--vap-blur)) saturate(var(--vap-saturate));
+
+        /* Three animations, ONE END-TIME, one direction, no overshoot. Saturation lands
+           first, the panel's own paint next, blur last — which IS the amendment that the
+           backdrop outlives the panel: the blur channel runs on for 1 − 1.36/1.72 of the
+           travel after the plate, rim and cast have landed.
+
+           THE SHARED CLOCK IS A HARD CONSTRAINT, NOT A TIDINESS. This root is
+           presence-gated: reka's `usePresence` (`Presence/usePresence.js`) dispatches
+           ANIMATION_END on the FIRST `animationend` whose name appears anywhere in the
+           node's computed `animation-name` list, and unmounts there. Three unequal
+           durations would therefore make the SHORTEST channel the element's real
+           lifetime — the surface torn out mid-release with its shadow still cast and its
+           backdrop still blurred, which is the exact pop the recipe exists to prevent.
+           The desynchronisation the mechanism needs lives in the keyframe STOPS instead:
+           each channel lands on its ratio and is pinned from there to 100%, so the three
+           end together and every channel has finished when the node goes. `both` so the
+           released end holds until reka unmounts. */
+        animation:
+            glass-vaporize-saturate var(--vap-clock) var(--vap-curve) both,
+            glass-vaporize-panel var(--vap-clock) var(--vap-curve) both,
+            glass-vaporize-blur var(--vap-clock) var(--vap-curve) both;
+
+    }
+
+    /* ── The neutralisers (amendment 1, and the reason a co-composed reveal cannot
+       break this recipe) ───────────────────────────────────────────────────────────────
+       `.glass-reveal[data-state="closed"]` carries STATIC end-state values — a squished
+       `scale`, `opacity: 0`, a `filter` blur — as its non-supporting-engine floor.
+       Statics apply on the first frame, so a surface wearing both recipes would snap
+       invisible and squished before this animation drew anything. Restoring them is not
+       defensive dressing: `opacity: 1` is what lets the panel die by its own channels
+       instead of by a group alpha (an `opacity < 1` element composites its
+       backdrop-filter result at that alpha, which would collapse all three channels onto
+       one clock and destroy the effect), and `scale`/`translate: none` is amendment 1
+       stated where it can be checked.
+
+       THE FOUR SIDE ARMS ARE THE SPECIFICITY, NOT A SIDE EFFECT. The reveal's closed
+       state re-states `translate` once more per side (`glass/reveal.css`,
+       `.glass-reveal[data-state="closed"][data-side="…"]`) at (0,3,0). A bare
+       `.glass-vaporize[data-state="closed"]` is (0,2,0) and LOSES to it — a Popover,
+       Tooltip or Sheet taking this recipe would slide on its way out with every arm
+       green, because an arm that reads a declaration cannot see it outranked. Each side
+       is answered at its own specificity, and source order (this file @import-ed after
+       reveal.css) settles the tie. */
+    .glass-vaporize[data-state="closed"],
+    .glass-vaporize[data-state="closed"][data-side="top"],
+    .glass-vaporize[data-state="closed"][data-side="bottom"],
+    .glass-vaporize[data-state="closed"][data-side="left"],
+    .glass-vaporize[data-state="closed"][data-side="right"] {
+        opacity: 1;
+        scale: none;
+        translate: none;
+        filter: none;
+    }
+
+    /* The ink — one animation on the full travel, blur-led, dying at 40% and evaporating
+       with the panel. Direct children only: the ink is what the surface CONTAINS, and a
+       nested glass surface releases on its own recipe, not on its host's. */
+    .glass-vaporize[data-state="closed"] > * {
+        animation: glass-vaporize-ink var(--vap-clock) var(--vap-curve) both;
+    }
+
+    /* ── THE CORNER AFFORDANCE ─────────────────────────────────────────────────────────
+       `IOS27-ARCHIVE.md` §3, adjudicated by CWT O-10 (`:1293`) against the "badge inside
+       the icon box with a dark ring" reading: the disc's diameter is 0.42 × a square host's
+       edge, its centre sits ON the corner point nudged inward by ~6.5% of its own
+       diameter, and about 70% of it floats free — the owner's "outside of the element
+       partially, sitting on the corner border", measured.
+
+       IT IS THE ONE ELEMENT IN THIS LANGUAGE THAT IS NOT GLASS, and that is deliberate.
+       §3 sampled across its boundary and found 74 → 91 in four device pixels: no shadow,
+       no stroke, no ring, no halo, no glass. Separation is achieved ENTIRELY by value
+       contrast. Making it glass would destroy it, so the recipe writes the absences out
+       rather than trusting a host not to add them.
+
+       TWO GRAMMARS, NEVER MIXED (§3, "the contrasting form"). Corner-straddling and opaque
+       = system-owned status or destructive removal. Inset, low-contrast, chromeless =
+       content-owned dismissal. This recipe is the FIRST only; a card's or a chip's dismiss
+       does not take it. */
+    .glass-corner-host {
+        /* A non-square host names its own diameter; the default is the glyph ladder's
+           largest rung, which is the size a dismiss mark reads at. */
+        --corner-affordance-size: var(--icon-xl);
+        /* §3's CSS form: `-(d/2) + 0.065·d`, i.e. the centre on the corner point, nudged
+           in by 6.5% of the diameter. One expression, both axes.
+
+           MINUS THE HOST'S OWN BORDER, which is not pedantry — an absolutely positioned
+           child resolves its insets against the PADDING box, and §3 measures against the
+           element's corner POINT (its border box). On a 1px-rimmed rung and a 24px disc
+           that one pixel moves the centre from 6.5% to 10.7% of the diameter inward,
+           which is outside the measured nudge. Measured live on the toast before the
+           knob existed: centre at (2.56, 2.56) instead of (1.56, 1.56). The default is
+           `0px` because most hosts have no rim; a rimmed host declares its own. */
+        --corner-affordance-host-border: 0px;
+        --corner-affordance-offset: calc(
+            (0.065 - 0.5) * var(--corner-affordance-size) -
+                var(--corner-affordance-host-border)
+        );
+        position: relative;
+        /* §3: "the parent must not clip". A host that clips has no corner affordance, it
+           has a half-disc. */
+        overflow: visible;
+    }
+
+    /* LAW 13 — ANCHOR HONESTY. The corner an affordance sits on is the vanishing point the
+       element already uses, so the host's own bloom origin IS that corner. This out-ranks
+       `.glass-reveal`'s popper origin by specificity, which is the intended order: a
+       surface that carries a corner mark is anchored by that mark. */
+    .glass-corner-host[data-corner="top-left"] {
+        transform-origin: left top;
+    }
+    .glass-corner-host[data-corner="top-right"] {
+        transform-origin: right top;
+    }
+    .glass-corner-host[data-corner="bottom-left"] {
+        transform-origin: left bottom;
+    }
+    .glass-corner-host[data-corner="bottom-right"] {
+        transform-origin: right bottom;
+    }
+
+    .glass-corner-affordance {
+        position: absolute;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        inline-size: var(--corner-affordance-size);
+        block-size: var(--corner-affordance-size);
+        border-radius: 50%;
+        /* The four absences §3 measured. */
+        border: 0;
+        box-shadow: none;
+        backdrop-filter: none;
+        /* Flat and opaque, separating by VALUE. The chroma arm is a knob, not the default:
+           the high-chroma fill belongs to the status badge (system-owned), and a dismiss
+           mark that shouts destructive-red on every toast would be the shadcn palette
+           residual by another route. */
+        background-color: var(--corner-affordance-fill, var(--foreground));
+        color: var(--corner-affordance-ink, var(--background));
+    }
+
+    .glass-corner-host[data-corner="top-left"] > .glass-corner-affordance {
+        inset-block-start: var(--corner-affordance-offset);
+        inset-inline-start: var(--corner-affordance-offset);
+    }
+    .glass-corner-host[data-corner="top-right"] > .glass-corner-affordance {
+        inset-block-start: var(--corner-affordance-offset);
+        inset-inline-end: var(--corner-affordance-offset);
+    }
+    .glass-corner-host[data-corner="bottom-left"] > .glass-corner-affordance {
+        inset-block-end: var(--corner-affordance-offset);
+        inset-inline-start: var(--corner-affordance-offset);
+    }
+    .glass-corner-host[data-corner="bottom-right"] > .glass-corner-affordance {
+        inset-block-end: var(--corner-affordance-offset);
+        inset-inline-end: var(--corner-affordance-offset);
+    }
+}
+
+/* The coarse-pointer hit expansion (G-COARSE-TARGET). A 24px disc is a legible mark and an
+   illegal target; the painted geometry is §3's and does not move, so the TARGET grows
+   instead — a transparent child inset NEGATIVELY to `--touch-target` on both axes. Unlayered
+   and outside the `@layer components` block for the same reason the reduced-motion carve
+   below is: an a11y floor answers to the medium, not to a cascade layer a consumer can
+   re-order. */
+@media (pointer: coarse) {
+    .glass-corner-affordance::after {
+        content: "";
+        position: absolute;
+        inset: calc((var(--corner-affordance-size) - var(--touch-target)) / 2);
+    }
+}
+
+/* ── REDUCED-MOTION CARVE ──────────────────────────────────────────────────────────────
+ * The vaporize is transform-free, so there is no spatial channel to snap: what this carve
+ * removes is the ink's BLUR ramp, which is a visual-motion trigger without being a
+ * vestibular one. The three material channels and the fade SURVIVE — a dismissal that
+ * simply vanished would be a worse answer for a motion-sensitive reader than one that
+ * releases calmly, and WCAG 2.3.3 asks for the motion to go, not the meaning.
+ *
+ * LAYERED `!important` IS THE ONLY FORM THAT DELIVERS THAT CONTRACT, and it takes both
+ * halves to clear the two rules standing between it and the paint:
+ *   · `glass/reveal.css`'s own PRM carve is UNLAYERED, and an unlayered NORMAL
+ *     declaration beats a layered one at any specificity — its `animation-name:
+ *     glass-reveal-out-reduced` captures this root unless the counter-declaration is
+ *     `!important` (important beats normal within an origin, layer notwithstanding);
+ *   · `utilities/a11y-overrides.css`'s universal instant fallback is `animation-duration:
+ *     0.01ms !important`, and an unlayered `!important` yields only to a LAYERED
+ *     `!important` (CSS Cascade L5 reverses layer order for important declarations;
+ *     `index.css:1` declares the order).
+ * Take one half and the surface vanishes on the wrong keyframe or on a 0.01ms one. This
+ * is the documented escape (`utilities/a11y-overrides.css:32-39`), and this carve is the
+ * enumerated + hashed AUTH-3 row of the §PRM-AUTHORIZED-SET it points at
+ * (`docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md`): two exact selectors, producer-owned,
+ * never inferred from a wildcard. The root keeps the SAME three names it runs otherwise —
+ * the material release is what survives, so there is one exit name set, not two. */
+@layer components {
+    @media (prefers-reduced-motion: reduce) {
+        .glass-vaporize[data-state="closed"] {
+            animation-name:
+                glass-vaporize-saturate, glass-vaporize-panel,
+                glass-vaporize-blur !important;
+            animation-duration: var(--vap-clock) !important;
+        }
+        .glass-vaporize[data-state="closed"] > * {
+            animation-name: glass-vaporize-ink-reduced !important;
+            animation-duration: var(--vap-clock) !important;
+        }
+    }
+}

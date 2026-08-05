@@ -39,6 +39,12 @@ export * from "./useViewTransition";
 // `src/styles/view-transition.css` + the `--route-*` registers.
 export * from "../route/routeGrammar";
 export * from "../route/useRouteTransition";
+// The typed EXIT-DIALECT table + the vaporize's measured constants — the source the
+// `.glass-vaporize` recipe (`src/styles/glass/dissolve.css`) is mirrored from, and the
+// only place the sat:dim:blur ratio and the corner-affordance geometry are written down.
+// Pure data and pure functions: no `vue`, no `@mkbabb/keyframes.js`, no `@vueuse/core`,
+// so it ships on the engine-free `/motion-core` surface beside the route grammar.
+export * from "../dissolve/dissolveGrammar";
 // v-reveal entrance directive. Dependency-free (`vue` type-only —
 // no `@mkbabb/keyframes.js`, no `@vueuse/core`), so it ships on the engine-free
 // `/motion-core` surface AND is re-exported from the root barrel below.

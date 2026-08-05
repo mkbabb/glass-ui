@@ -38,17 +38,31 @@ function toastRootProps(toast: QueuedToast) {
     return rootProps;
 }
 
-// Exit-complete slot release. `.glass-reveal` runs the exit as a keyframe
-// (`glass-reveal-out`, or `glass-reveal-out-reduced` under reduced/off motion) that
-// reka's `usePresence` awaits; its `animationend` bubbles to the ToastRoot (this
-// native listener falls through to it). When it fires for the reveal-out keyframe on
-// the root itself — never a descendant animation, hence the `target === currentTarget`
-// guard — the dismissed toast has finished receding, so we drop it from the queue and
-// free its `TOAST_LIMIT` slot. This is the whole removal path: no deferred timer.
-const REVEAL_OUT_KEYFRAMES = new Set(["glass-reveal-out", "glass-reveal-out-reduced"]);
+// Exit-complete slot release. A dismissed toast leaves on `.glass-vaporize`
+// (`glass/dissolve.css`): three keyframes — the two backdrop channels and the panel's
+// own paint — sharing ONE end-time, which reka's `usePresence` awaits and which the
+// reduced-motion carve keeps by name. Their `animationend` bubbles to the ToastRoot
+// (this native listener falls through to it). When one fires for a root exit keyframe
+// on the root itself — never a descendant's ink animation, hence the `target ===
+// currentTarget` guard — the surface has finished releasing, so we drop the entry from
+// the queue and free its `TOAST_LIMIT` slot. This is the whole removal path: no
+// deferred timer.
+//
+// THE SET MUST BE THE RECIPE'S OWN NAMES. A guard naming a keyframe the root does not
+// run admits nothing, `removeToast` is never reached, and dismissed toasts squat their
+// slots until they evict live ones — with the queue suite green over a fabricated
+// event. `tests/components/toast.queue.test.ts` reads both this set and the shipped
+// `animation-name` list out of the stylesheet and reds when they drift apart. All three
+// end on the same frame, so the first one through does the removal and the other two
+// find nothing to remove.
+const VAPORIZE_ROOT_KEYFRAMES = new Set([
+    "glass-vaporize-saturate",
+    "glass-vaporize-panel",
+    "glass-vaporize-blur",
+]);
 function onToastExitComplete(id: string, event: AnimationEvent) {
     if (event.target !== event.currentTarget) return;
-    if (!REVEAL_OUT_KEYFRAMES.has(event.animationName)) return;
+    if (!VAPORIZE_ROOT_KEYFRAMES.has(event.animationName)) return;
     removeToast(id);
 }
 

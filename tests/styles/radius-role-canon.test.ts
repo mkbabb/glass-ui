@@ -467,9 +467,16 @@ describe("7. this wave's role bindings", () => {
     });
 
     it("Toast wears the card role — never less rounded than what it floats over", () => {
+        // [2026-08-05 · BK #30 W-DISSOLVE] The anchor was `overflow-hidden rounded-card`.
+        // `overflow-hidden` was STRUCK from Toast at that cut — the close mark now
+        // straddles the corner (IOS27-ARCHIVE §3) and a clipping parent paints half a
+        // disc — so the prefix was an incidental neighbour, never this arm's claim. The
+        // claim is the RADIUS ROLE and it is unchanged: card, never panel, in either
+        // direction. Anchored on the utility itself so the next neighbour edit does not
+        // masquerade as a radius regression.
         const toast = read("src/components/toast/Toast.vue");
-        expect(toast).toMatch(/overflow-hidden rounded-card /);
-        expect(toast).not.toMatch(/overflow-hidden rounded-panel /);
+        expect(toast).toMatch(/[\s'"]rounded-card[\s'"]/);
+        expect(toast).not.toMatch(/[\s'"]rounded-panel[\s'"]/);
     });
 
     it("Dialog close ✕ wears the pill role (the settlement's pill row names it)", () => {

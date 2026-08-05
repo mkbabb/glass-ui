@@ -17,3 +17,11 @@ export const SNAP_THRESHOLD = {
     dom: 0.05,
     domProgress: 0.5,
 } as const;
+
+/**
+ * One frame at 60fps, in milliseconds. The display's own beat, which is why it is
+ * shared rather than derived twice: an integrator's first-frame `dt` (before there is
+ * a previous timestamp to difference) and a "this outlives that by N frames" floor are
+ * the same number for the same reason. Anything that means "one frame" reads this.
+ */
+export const FRAME_MS = 1000 / 60;

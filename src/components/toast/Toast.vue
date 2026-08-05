@@ -78,6 +78,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
         :data-tone="tone"
         :data-surface="surface"
         data-reveal="overlay"
+        data-corner="top-left"
         v-bind="forwarded"
         :class="
             cn(
@@ -104,13 +105,30 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
                 // `translate-x` (with `transition-none` during the active move); the reveal's own
                 // `translate` leg springs the cancel/settle back.
                 // The overlay-band golden padding ladder (inline anchor --spacing(6),
-                // block axis sqrt-phi *1.272); `pr-8` STAYS (close-button clearance).
+                // block axis sqrt-phi *1.272) is the ONLY inline padding: the close mark
+                // straddles the corner rather than sitting inside the box, so the
+                // right-hand clearance an inset × needed is struck with it (below).
                 // Toast wears the CARD role (16px), not the panel rung (12px). A toast
                 // is a presented plate floating ABOVE the card band; at `rounded-panel` it
                 // sat on a 16px card at 0.75:1 — the more elevated surface the LESS
                 // rounded, the exact inversion the radius canon exists to forbid. Both are
                 // 16 now, and they move together off `--radius-card`.
-                'glass-reveal [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-card px-(--overlay-pad-inline) py-(--overlay-pad-block) pr-8 data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-(--reka-toast-swipe-end-x) data-[swipe=move]:translate-x-(--reka-toast-swipe-move-x) data-[swipe=move]:transition-none',
+                // The DISMISSAL is the vaporize (BK #30): the toast enters on the
+                // overlay reveal register and leaves by releasing its backdrop in three
+                // desynchronised channels while its ink drops first. WAVES:662 names
+                // notification dismissal as that wave's own consumer, and this is the
+                // library's notification. The two recipes compose — `.glass-reveal`
+                // owns the bloom, `.glass-vaporize` owns the death.
+                //
+                // `overflow-hidden` is STRUCK, and `pr-8` with it. The close mark now
+                // straddles the top-left corner (IOS27-ARCHIVE §3), so a clipping
+                // parent would paint half a disc, and the right-hand clearance that
+                // existed for an inset × is dead padding once the × is not inset.
+                // The rung's own 1px rim, declared where it is known: the corner offset is
+                // measured against the border box and an absolute child resolves against
+                // the padding box, so the host states its border or the mark sits a pixel
+                // too far in on both axes.
+                'glass-reveal glass-vaporize glass-corner-host [--corner-affordance-host-border:1px] [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] group pointer-events-auto relative flex w-full items-center justify-between space-x-4 rounded-card px-(--overlay-pad-inline) py-(--overlay-pad-block) data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-(--reka-toast-swipe-end-x) data-[swipe=move]:translate-x-(--reka-toast-swipe-move-x) data-[swipe=move]:transition-none',
                 // The body text stays --foreground (legibility); the tinted-glass wash + the
                 // tone-keyed rim + the full-chroma glyph carry the semantic. Toggling on the
                 // tone register only for a NON-neutral tone keeps `neutral` the un-toned

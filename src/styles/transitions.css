@@ -104,18 +104,22 @@
      *   • ENTRANCE — the @starting-style bloom (transform-origin center → the surface
      *     coalesces from its own seed), on the overlay spring + its 2%-settle clock.
      *   • DWELL — no motion (the READING window; default 5000ms via use-toast.ts).
-     *   • EXIT — the `glass-reveal-out` keyframe reka's `usePresence` awaits, on the
-     *     `--exit-overlay-duration` no-overshoot `--ease-out` — fade-led and
-     *     asymmetric per law 8. Its `animationend` is ALSO the queue-slot release signal
-     *     (`Toaster.vue`'s `onToastExitComplete` → `removeToast`): a dismissed toast frees
-     *     its `TOAST_LIMIT` slot the frame it stops painting, no deferred timer.
+     *   • EXIT — NOT the reveal's: the toast leaves on `.glass-vaporize`
+     *     (`glass/dissolve.css`), the three-channel backdrop release reka's `usePresence`
+     *     awaits, on the SAME `--exit-overlay-duration` no-overshoot `--ease-out` — the
+     *     enter and the dismiss are different acts. Its `animationend` is ALSO the
+     *     queue-slot release signal (`Toaster.vue`'s `onToastExitComplete` →
+     *     `removeToast`): a dismissed toast frees its `TOAST_LIMIT` slot the frame it
+     *     stops painting, no deferred timer.
      *
      * The swipe-drag gesture is PRESERVED — reka drives the `translate-x` (with
      * `transition-none` during the active move); the reveal's own `translate` leg springs
      * the cancel/settle back. `tw-animate-css` stays a shipped optionalPeer for the other
      * overlays' animate-in paths, but the Toast no longer depends on it. PRM is honoured
-     * by `.glass-reveal`'s own reduced-motion carve (glass/reveal.css) — scale/translate/
-     * blur snap, the fade survives. This block IS the closure for the toast contract row.
+     * per act: the entrance by `.glass-reveal`'s carve (glass/reveal.css — scale/translate/
+     * blur snap, the fade survives), the dismissal by `.glass-vaporize`'s (dissolve.css —
+     * the ink's blur ramp goes, the material release and the fade survive). This block IS
+     * the closure for the toast contract row.
      */
 
     /* ── Reduced motion: preserve fades, remove transform/scale motion ── */
