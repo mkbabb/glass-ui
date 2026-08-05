@@ -1,10 +1,10 @@
 // Pure sheet-motion helpers — the side sheet's spring translate + the scrim's
-// position-synced opacity. Extracted so the surface (DialogContent) and the scrim
-// (ModalOverlay) read ONE source, and both pure fns are unit-pinnable.
+// position-synced opacity. One source for the surface (SheetContent) and the scrim
+// (ModalOverlay); both pure fns are unit-pinnable.
 
 import type { Placement } from "../_shared/axes";
 
-/** The four slide placements (a `center` modal is the non-slide path). */
+/** The four slide placements (a `center` modal is Dialog's non-slide path). */
 export type SidePlacement = Exclude<Placement, "center">;
 
 /**

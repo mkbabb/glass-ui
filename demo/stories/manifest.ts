@@ -611,13 +611,13 @@ export const CATEGORIES: Category[] = [
                 "containers",
                 "dialog",
                 "Dialog",
-                "Glass + opaque variants, a confirm-dialog, and the native top-layer opt-in — a real dialog element with commandfor and the glass-top-layer entry grammar.",
+                "The dismissal grammar — free, deliberate and locked on one plate, with the locked rung's rebuff — plus the shared surface axis and the non-modal arm.",
             ),
             s(
                 "containers",
                 "sheet",
                 "Sheet",
-                "Side-placed dialog surfaces with modal focus, dismissal, and placement semantics.",
+                "The four anchored edges, the shared surface axis, and the scroll region — SheetContent, the side surface's own component.",
             ),
             s(
                 "containers",
@@ -899,12 +899,6 @@ export const CATEGORIES: Category[] = [
                 "Skeleton",
                 "Neutral loading placeholders for text, avatars, and cards, with motion reduced when requested.",
             ),
-            s(
-                "feedback",
-                "confirm-dialog",
-                "Confirm Dialog",
-                "A Dialog composition for explicit confirmation, destructive emphasis, pending state, and focus restoration.",
-            ),
         ],
     },
     {
@@ -1020,12 +1014,6 @@ export const CATEGORIES: Category[] = [
                 "form-validation",
                 "Form Validation",
                 "Native constraint validation, the aria-invalid bridge, linked errors, and Textarea content sizing.",
-            ),
-            s(
-                "compositions",
-                "gate-pattern",
-                "Gate Pattern",
-                "A contained, on-demand preview of the non-dismissable access-modal idiom — a glass-card frame shows the gate, and Open the modal demo opens the real modal that refuses esc, scrim, and close, with the widened invalid ring and shake feedback, closing only on the correct key. A blessed composition, not a component.",
             ),
             // The five demo kinds (stage · specimen · interaction · matrix · composition)
             // side by side — one product with natural variation, not N spec-sheets.

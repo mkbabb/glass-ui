@@ -67,12 +67,15 @@ describe("W1-E — the shell offers a skip link before it offers the dock", () =
 });
 
 describe("W1-F — no composition skips a heading level", () => {
+    // The LIVE composition set. `gate-pattern` left the tree at BK #38 (W-DIALOG
+    // discharged RT-18C by deleting the story it duplicated the dismissal grammar in);
+    // a name kept here after its file is deleted reds this gate on an ENOENT, which
+    // says nothing about heading outlines.
     const COMPOSITIONS = [
         "auth-shell",
         "chassis",
         "empty-states",
         "form-validation",
-        "gate-pattern",
         "settings",
     ];
 

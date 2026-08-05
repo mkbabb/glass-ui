@@ -159,13 +159,15 @@
  *                             bracket CVA class so the bound SHIPS in dist/glass-ui.css
  *                             regardless of consumer JIT reach. A structural utility
  *                             never depends on a content scan.
- *  17. components/dialog/placement.css — precompiled Dialog
- *                             side-slide positioning (the `[data-slot="dialog-content"]
- *                             [data-placement]` position/inset/size rules — the Sheet
- *                             fold) — the overlay-band emission INVERSE: moved off the
- *                             dead CVA geometry utilities that broke the configurator
- *                             drawer so the positioning SHIPS regardless of consumer JIT
- *                             reach.
+ *  17. components/sheet/styles.css — precompiled side-sheet positioning (the
+ *                             `[data-slot="sheet-content"][data-side]` position/inset/
+ *                             size rules) plus its per-edge graded material: moved off
+ *                             the dead CVA geometry utilities that broke the
+ *                             configurator drawer so the positioning SHIPS regardless of
+ *                             consumer JIT reach.
+ *  17b. components/dialog/styles.css — THE ONE DIALOG LANE: the centred plate's room,
+ *                             proportion, ✕ and rebuff, every space value a named rung
+ *                             so tokens/sizing.css §1.1 transposes the whole plate.
  *
  *  18. accessibility.css     — terminal reduced-transparency/contrast/motion,
  *                              forced-colors, and coarse-input adaptations.
@@ -222,13 +224,13 @@
    (unlayered, unique selectors, source-order-after — byte-isomorphic). */
 @import "../components/tabs/styles/drag.css";
 @import "../components/_shared/field/field-surfaces.css";
-/* Overlay-band Dialog side-slide structural positioning,
-   precompiled (the emission INVERSE, terminalized onto Dialog `placement` — the Sheet
-   fold): a [data-slot="dialog-content"][data-placement] rule so the side sheet's
-   position/inset/size ships in dist/glass-ui.css regardless of a consumer's Tailwind
-   content-scan reach, replacing dead CVA geometry utilities. `:where()` wrapping lets
-   a consumer sizing utility still win. */
-@import "../components/dialog/placement.css";
+/* The side sheet's structural positioning + per-edge graded material, precompiled: a
+   [data-slot="sheet-content"][data-side] rule so the geometry ships regardless of a
+   consumer's Tailwind content-scan reach, replacing dead CVA geometry utilities.
+   `:where()` wrapping lets a consumer sizing utility still win. */
+@import "../components/sheet/styles.css";
+/* THE ONE DIALOG LANE — the centred plate's room, proportion, ✕ and rebuff. */
+@import "../components/dialog/styles.css";
 /* The static numeric-readout family. */
 @import "../components/metric/styles.css";
 /* The finite notation ribbon: warm folio material plus SVG glyph draw-in.

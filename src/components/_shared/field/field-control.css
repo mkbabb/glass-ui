@@ -34,19 +34,13 @@
         border-radius: var(--radius-pill);
     }
 
-    /* F7 = ADOPT the field rung for the DIALOG-nested single-line input (the
-       "Rename workspace" Slug pill vs the round dialog shell). Inside a modal the
-       stadium pill's scale-invariant geometry visibly disagrees with the soft-rect
-       surface; the 16px field rung nests concentrically and reads coherent. Scoped
-       to the modal context (`[data-slot="dialog-content"]`, minted on every dialog
-       + side-sheet content node): the base single-line input KEEPS the pill, as do
-       the modal Save/Cancel CTAs (the iOS capsule idiom). Reverses the AW.W25
-       keep-the-pill policy (theme/radius.css) for the modal input only. Textarea
-       already reads `--radius-field`, so only single-line inputs change. */
-    [data-slot="dialog-content"] .field-control[data-kind="input"] {
-        border-radius: var(--radius-field);
-    }
-
+    /* The former modal-scoped `[data-slot="dialog-content"] .field-control[data-kind=
+       "input"] { border-radius: var(--radius-field) }` override is DELETED. It was the
+       operative producer of the concentric INVERSION: a 16px input inside a 16px plate
+       across a 24px inset, so the inner corner was never smaller than the outer and the
+       nesting read backwards. A roled child never takes the relay — the field is a
+       CONTROL, it keeps its control silhouette, and concentricity is the container's job
+       (the --radius-ctx / --radius-inset relay, theme/radius.css). */
     .field-control[data-kind="textarea"] {
         min-block-size: max(5lh, calc(5rem * var(--ui-scale)));
         border-radius: var(--radius-field);

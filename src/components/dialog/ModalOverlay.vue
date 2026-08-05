@@ -1,87 +1,66 @@
 <script setup lang="ts">
-import {
-    computed,
-    onScopeDispose,
-    ref,
-    watch,
-    type HTMLAttributes,
-} from "vue";
+import { type HTMLAttributes } from "vue";
 import { DialogOverlay } from "reka-ui";
 import { cn } from "../_shared/class-names";
-import type { Backdrop } from "../_shared/axes";
-import { useOptionalDialogStageContext } from "./dialogStageContext";
-import { scrimOpacity } from "./sheet-motion";
+import { scrimOpacity } from "../sheet/motion";
 
-/** Canonical Dialog scrim with one enter/exit recipe and a real intensity axis. */
-
+/**
+ * The modal scrim — DIM ONLY.
+ *
+ * The `backdrop-filter` leg is gone. It measurably BRIGHTENED the page it was meant to
+ * recede: +5.1% at the core and +31.3% below the plate in light, +76.0% in dark, because
+ * a wash blur pulls bright neighbours into every sampled pixel. A scrim that raises the
+ * luminance of what it occludes is not a scrim, and no amount of re-inking fixes a
+ * mechanism whose sign is wrong. Dimming is the whole job.
+ *
+ * The α token is NOT this component's to mint — it belongs to the scrim register, and
+ * this seat supplies measurement only.
+ *
+ * THE FOCUS VEIL IS GEOMETRY, so it is a decision the CALLER makes, not a constant.
+ * `.glass-focus-veil` (styles/glass/focus-veil.css, MOTION-CANON §5) is a centre-weighted
+ * frost mask: a fixed `--glass-focus-veil-core-x/-y` 13rem core plus a 7rem bloom, sited
+ * at `--veil-x`/`--veil-y`'s 50% rest. A CENTRED plate sits inside that core and IS the
+ * definitional focus event. A SIDE SHEET does not: the engaged surface is anchored at an
+ * edge, so an unconditional veil paints a ~640×640 frost pool in the middle of the
+ * viewport with nothing engaged inside it — the pool measured against a 384-wide sheet at
+ * the far right of a 1440 viewport. Slide-gating cannot save it either, because the sheet
+ * drives `slideT` and the centre-path plate leaves it null.
+ *
+ * So the veil takes an explicit boolean and `DialogContent` is its ONE passer. This is not
+ * the retired graded-overlay opt-in coming back — that one gated a private brightening
+ * recipe and is gone with its tokens. This selects between two geometries that both
+ * already exist and cannot both be right for one component.
+ */
 interface ModalOverlayProps {
     class?: HTMLAttributes["class"];
     /**
-     * Scrim intensity. `glass` reads `--overlay-scrim`; `clear` reads
-     * `--overlay-scrim-subtle`; `dim` reads `--overlay-scrim-strong`.
-     */
-    scrim?: "glass" | "clear" | "dim";
-    /**
-     * The backdrop axis. `scrim` (default) is today's flat full-viewport scrim,
-     * byte-identical. `graded` swaps it for ONE masked box-following halo child
-     * (`data-slot="glass-graded-halo"`) — the flat blur + dim drop and the halo is
-     * the sole plate (the `--stage-t` scrim/immersive arms are gated off in
-     * drawer/styles.css). The centred immersive Dialog opts in.
-     */
-    backdrop?: Backdrop;
-    /**
-     * A side sheet's live slide position (0 open → 1 dismissed). When set, the scrim
-     * drops its `sheet-animate` fade keyframe and drives `opacity` off this SAME scalar
-     * so it can never desync from the surface through an interrupt. `null` (center
-     * dialog + the `off` side path) keeps the keyframe fade.
+     * A sheet's live slide position (0 open → 1 dismissed). When set, the scrim drops
+     * its `sheet-animate` fade keyframe and drives `opacity` off this SAME scalar so it
+     * can never desync from the surface through an interrupt.
      */
     slideT?: number | null;
     /** Hold the scrim mounted through the spring exit (mirrors the content forceMount). */
     forceMount?: boolean;
+    /**
+     * Paint the centre-weighted focus veil. TRUE only where the engaged surface sits at
+     * the veil's own centre — i.e. the centred modal. An edge-anchored surface passes
+     * nothing and gets the dim alone.
+     */
+    veil?: boolean;
 }
 
 const props = withDefaults(defineProps<ModalOverlayProps>(), {
-    scrim: "glass",
-    backdrop: "scrim",
     slideT: null,
-});
-
-const isGraded = computed(() => props.backdrop === "graded");
-
-const scrimClass = {
-    glass: "bg-overlay-scrim",
-    clear: "bg-overlay-scrim-subtle",
-    dim: "bg-overlay-scrim-strong",
-} as const;
-
-const stageContext = useOptionalDialogStageContext();
-const overlayAnchorEl = ref<HTMLElement | null>(null);
-let registeredScrim: HTMLElement | null = null;
-watch(
-    overlayAnchorEl,
-    (anchor) => {
-        if (!stageContext) return;
-        registeredScrim = anchor?.parentElement ?? null;
-        stageContext.scrimEl.value = registeredScrim;
-    },
-    { immediate: true, flush: "post" },
-);
-onScopeDispose(() => {
-    if (stageContext?.scrimEl.value === registeredScrim)
-        stageContext.scrimEl.value = null;
+    veil: false,
 });
 </script>
 
 <template>
     <DialogOverlay
         :force-mount="props.forceMount"
-        :data-backdrop="isGraded ? 'graded' : undefined"
         :class="
             cn(
-                isGraded
-                    ? 'fixed inset-0 z-overlay'
-                    : 'fixed inset-0 z-overlay [backdrop-filter:var(--glass-blur-wash)]',
-                isGraded ? '' : scrimClass[props.scrim],
+                'fixed inset-0 z-overlay bg-overlay-scrim',
                 props.slideT == null ? 'sheet-animate' : '',
                 props.class,
             )
@@ -90,22 +69,7 @@ onScopeDispose(() => {
             props.slideT == null ? undefined : { opacity: scrimOpacity(props.slideT) }
         "
     >
-        <span ref="overlayAnchorEl" hidden />
-        <!-- The graded box-following halo — ONE plate that REPLACES the flat scrim
-             (blur + dim dropped above; drawer/styles.css gates the stage arms off).
-             Full-viewport child, z below the surface / above the page, non-interactive.
-             This IS the shared focus veil (styles/glass/focus-veil.css): the centred
-             modal is the veil's own `--veil-x`/`--veil-y` 50% rest, so the Dialog
-             composes the class and writes no centre. `data-engaged` is static — the
-             halo exists only while the graded dialog is open, and the overlay's own
-             fade carries the exit. -->
-        <span
-            v-if="isGraded"
-            class="glass-focus-veil"
-            data-slot="glass-graded-halo"
-            data-engaged
-            aria-hidden="true"
-        />
+        <span v-if="props.veil" class="glass-focus-veil" data-engaged aria-hidden="true" />
         <slot />
     </DialogOverlay>
 </template>

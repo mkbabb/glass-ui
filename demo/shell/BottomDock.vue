@@ -6,7 +6,7 @@
 // route scroll never displaces it. It carries
 // the in-category story tabs (the DockControl (shape="tab") set) PLUS the prev/next +
 // prev/next-category controls that today live only as keyboard shortcuts, AND a
-// mobile-only category trigger hosting the off-canvas SidebarDock in a left-placement <Dialog>.
+// mobile-only category trigger hosting the off-canvas SidebarDock in a left-side <SheetContent>.
 //
 // Active-story affordance uses the NCSU-red underline/pill and `tap-squish` on
 // press; DockControl (shape="tab") auto-activates its `.is-active` state when the rendered
@@ -25,14 +25,15 @@ import {
     DockSeparator,
     GlassDock,
 } from "@glass/components/dock";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@glass/components/dialog";
+// The shell mounts SHEETS, never the centred plate. Deep-import the root and the three
+// text atoms so the dialog BARREL does not drag `DialogContent` — and its lucide ✕ — into
+// the eager boot graph for a surface that can never show either.
+import Dialog from "@glass/components/dialog/Dialog.vue";
+import DialogDescription from "@glass/components/dialog/DialogDescription.vue";
+import DialogHeader from "@glass/components/dialog/DialogHeader.vue";
+import DialogTitle from "@glass/components/dialog/DialogTitle.vue";
+import { DialogTrigger } from "reka-ui";
+import SheetContent from "@glass/components/sheet/SheetContent.vue";
 import {
     Tooltip,
     TooltipContent,
@@ -129,8 +130,8 @@ const hasNext = computed(() =>
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
-                        <DialogContent
-                            placement="left"
+                        <SheetContent
+                            side="left"
                             class="demo-bottom-dock__sheet w-fit max-w-[18rem]"
                         >
                             <DialogHeader class="sr-only">
@@ -143,7 +144,7 @@ const hasNext = computed(() =>
                                 :show-tooltips="false"
                                 @navigate="sheetOpen = false"
                             />
-                        </DialogContent>
+                        </SheetContent>
                     </Dialog>
                 </div>
             </template>

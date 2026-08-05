@@ -38,11 +38,13 @@ onBeforeUnmount(() => {
         snapContext.scrimEl.value = null;
 });
 
-// ONE scrim recipe, both branches. The non-modal branch adds `pointer-events-none` (the
-// live-behind page stays interactive) as a utility, never an inline style.
-const scrimClass = computed(() =>
-    cn("fixed inset-0 z-overlay [backdrop-filter:var(--glass-blur-wash)]", props.class),
-);
+// ONE scrim recipe, both branches — DIM ONLY. The `backdrop-filter` wash is deleted
+// with the modal scrim's: a wash blur pulls bright neighbours into every sampled pixel,
+// so the "backdrop" measurably BRIGHTENED the page it was meant to recede (+5.1% core /
+// +31.3% below-plate in light, +76.0% in dark). Dimming is the whole job. The non-modal
+// branch adds `pointer-events-none` (the live-behind page stays interactive) as a
+// utility, never an inline style.
+const scrimClass = computed(() => cn("fixed inset-0 z-overlay", props.class));
 // The utility is folded INTO the merge, last — not appended as a second class list.
 // tailwind-merge then resolves it against a consumer's `pointer-events-auto` in
 // `props.class` with this one authoritative (the inline style it replaced was

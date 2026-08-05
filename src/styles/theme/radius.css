@@ -19,7 +19,6 @@
    ─ icon / single tap-target      50% / --radius-pill  circle   round    single tap-target
    ─ control / field / mode / cta  --radius-control  stadium  round       primary action = pill
    ─ multi-line field / stepper    --radius-field    16px     soft-rect   a box is not a stadium
-   ─ dialog-nested single input    --radius-field    16px     soft-rect   nests concentric (F45/F7)
    ─ content card / popover        --radius-card     16px     squircle@lg content container (R28-40)
    ─ alert                         --radius-card     16px     round       a presented plate — the
                                    (rounded-card)                         same rank as the card,
@@ -27,7 +26,18 @@
    ─ toast                         --radius-card     16px     round       floats ABOVE the card
                                    (rounded-card)                         band; never LESS rounded
                                                                           than what it floats over
-   ─ dialog                        --radius-dialog   16px     round       matches the card (F48)
+   ─ dialog / sheet surface        --radius-3xl      24px     round       the ROOM role. PROPORTION
+                                                                          :233 binds room to
+                                                                          "dialog, sheet, drawer"
+                                                                          BY NAME, and room = 1.5 ×
+                                                                          card with r − pad = 4 IS
+                                                                          the consistency F48 asked
+                                                                          for. The surfaces read the
+                                                                          rung directly; the
+                                                                          `--radius-dialog` ALIAS
+                                                                          still binds card and its
+                                                                          re-point is the batched
+                                                                          roster cut's
    ─ panel / configurator          --radius-panel    12px     squircle    group box, not a pill
    ─ dock shape="rounded"          --radius-card     16px     round       a plate silhouette; a
                                                                           ROLE bind, not a rung
@@ -106,6 +116,12 @@
     --radius-lg:      var(--radius);
     --radius-card:    var(--radius-2xl);
     --radius-panel:   var(--radius-xl);
+    /* The dialog SURFACE is a ROOM (24), not a card — `dialog/styles.css` and
+       `sheet/styles.css` read the room rung directly. This ALIAS still binds card, and
+       moving it is not W-DIALOG's byte: two active register seats state the card bind by
+       predicate, so the re-point is the batched roster cut's (W-GATE-COLLAPSE), routed
+       with grounds. Until then the alias governs its other readers (the configurator
+       relay, the demo preset knob, the radii story) and the modal surfaces do not. */
     --radius-dialog:  var(--radius-card);
     /* Media-tile corner rung (Skeleton / Avatar-square / Command input). This is
        the true role of the rung formerly misnamed `--radius-input`: its consumers
@@ -117,9 +133,9 @@
     /* Form-radius unification. `--radius-field` is the non-pill field
        rung the multi-line / stepper form atoms (Textarea, NumberFieldInput)
        resolve so a multi-line box stops inheriting the `9999px` stadium pill;
-       single-line controls (Input, SelectTrigger) keep the pill — EXCEPT the
-       DIALOG-nested Input, which rides this field rung too (F7: the modal-scoped
-       `_shared/field/field-control.css` override). `--radius-control`
+       single-line controls (Input, SelectTrigger) keep the pill — INCLUDING inside a
+       dialog: the former modal-scoped `field-control.css` override was the operative
+       producer of the concentric inversion and is deleted. `--radius-control`
        is the semantic control-corner rung that retires the raw `rounded-sm` (4px)
        on Checkbox + base Tabs onto a softer, named radius. One geometry language
        across the form family — token + class only, no new primitive. */
@@ -213,10 +229,11 @@
        dead token). A consumer wanting a squircle card mints its own alias and adds
        the surface to squircle.css's @supports block. */
     --corner-shape-bigdock: superellipse(var(--corner-k-squircle));
-    /* `--corner-shape-dialog` RETIRED (F6 = A'): the centered dialog rounds to
-       MATCH THE CARD (`--radius-dialog` binds `--radius-card`) — the superellipse
-       is imperceptible at the 16px dialog radius, so the dialog leaves the squircle
-       set for the plain round contract, on Chrome and Safari alike. The SHEET keeps
+    /* `--corner-shape-dialog` RETIRED (F6 = A'): the centred dialog stays on the plain
+       ROUND contract, on Chrome and Safari alike, so one modal silhouette ships to every
+       engine rather than two. (The earlier "imperceptible at the 16px dialog radius"
+       ground moved when the surface took the 24px room rung; the retirement stands on
+       the cross-engine ground alone.) The SHEET keeps
        its squircle (`--corner-shape-sheet` below — the coarse-pointer side slide).
        A consumer wanting the Chrome dialog squircle re-adds `--corner-shape-dialog`
        in its own preset and the surface to squircle.css's @supports block. */

@@ -157,6 +157,9 @@ export {
     type DataTableSort,
     type DataTableStatus,
 } from "./components/data-table";
+// `DialogTrigger`/`DialogClose` re-export reka's own primitives directly. The two
+// house SFCs that wrapped them forwarded props and nothing else, behind a justification
+// that argued a `.ts` file cannot do a 1-line re-export — inside a `.ts` file.
 export {
     Dialog,
     DialogClose,
@@ -166,12 +169,11 @@ export {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-    type DialogCloseProps,
     type DialogContentProps,
     type DialogDescriptionProps,
+    type DialogDismiss,
     type DialogProps,
     type DialogTitleProps,
-    type DialogTriggerProps,
 } from "./components/dialog";
 // Drawer is off the root barrel because it uses the house `useDrawerSnap` engine
 // (a `@mkbabb/keyframes.js` SpringProgress consumer), so
@@ -284,10 +286,12 @@ export {
     type SelectValueSlotProps,
 } from "./components/select";
 export { Separator, type SeparatorProps } from "./components/separator";
-// `ui/sheet` retired; Sheet's side-slide folded onto
-// `<DialogContent placement=top|right|bottom|left>` (same reka DialogRoot + FocusScope;
-// the slide is paint, not mechanism). Reach `Dialog` (`@mkbabb/glass-ui/dialog`); snap-
-// detent physics stays `Drawer`'s. Clean break, no alias.
+// The side sheet is its own component again. It shares reka's DialogRoot + FocusScope
+// with Dialog — compose `<Dialog>` around `<SheetContent side>` — but a centred plate and
+// an edge-anchored surface are different geometry, different material and different
+// motion, and one component carrying both meant eleven `isCenter` forks. Snap-detent
+// physics stays `Drawer`'s. The `./sheet` subpath rides the batched export cut.
+export { SheetContent, type SheetContentProps } from "./components/sheet";
 export { Skeleton } from "./components/skeleton";
 export { Slider, type SliderProps, type SliderSize, type SliderVariant } from "./components/slider";
 export { Switch, type SwitchProps } from "./components/switch";

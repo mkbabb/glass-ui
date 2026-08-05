@@ -22,8 +22,7 @@ export * from "./progress";
 export * from "./radio-group";
 export * from "./select";
 export * from "./separator";
-// `sheet` RETIRED — folded onto `<DialogContent placement>`
-// (see src/index.ts for the rationale). Clean break, no alias.
+export * from "./sheet";
 export * from "./skeleton";
 export * from "./slider";
 export * from "./switch";

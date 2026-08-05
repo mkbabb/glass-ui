@@ -1,12 +1,10 @@
 // Dialog center-spring focus-return (W1-C).
 //
-// A centered `springPreset` dialog keeps its content mounted-but-inert through the
+// A centred dialog keeps its content mounted-but-inert through the
 // exit spring (`closingInert` + the spring mount-hold). At the LOGICAL close focus is
 // stranded inside the animating-out content; the focus-handoff watch must pull it back
-// to the trigger. At HEAD the watch guarded `sideSpringLive` ONLY, so a centered spring
-// dialog never invoked the restore (RED), AND the focus-anchor was rendered for side
-// sheets only — so even a widened guard could not resolve the center content to test
-// containment (the anchor un-gate is load-bearing).
+// to the trigger. The anchor's presence is load-bearing: without it the watch cannot
+// resolve the live content root to test containment.
 //
 // We assert the watch INVOKES the trigger's focus at logical close (a `{flush:"sync"}`
 // same-tick call). happy-dom's `inert` does not stop reka's FocusScope from re-capturing
@@ -25,7 +23,7 @@ import {
     DialogDescription,
     DialogTitle,
     DialogTrigger,
-} from "@glass/components/dialog/index";
+} from "@glass/components/dialog";
 
 function mountDialog(open: ReturnType<typeof ref<boolean>>) {
     const Host = defineComponent({
@@ -38,7 +36,7 @@ function mountDialog(open: ReturnType<typeof ref<boolean>>) {
                         h(DialogTrigger, { class: "test-trigger" }, () => "open"),
                         h(
                             DialogContent,
-                            { springPreset: "panel", class: "test-dialog" },
+                            { class: "test-dialog" },
                             () => [
                                 h(DialogTitle, { class: "sr-only" }, () => "Test dialog"),
                                 h(DialogDescription, { class: "sr-only" }, () => "Focus-return fixture."),
@@ -57,8 +55,8 @@ function mountDialog(open: ReturnType<typeof ref<boolean>>) {
     });
 }
 
-describe("DialogContent — center-spring focus-return (W1-C)", () => {
-    it("invokes the trigger's focus when a centered spring dialog logically closes", async () => {
+describe("DialogContent — focus-return (W1-C)", () => {
+    it("invokes the trigger's focus when the dialog logically closes", async () => {
         const open = ref(true);
         const wrapper = mountDialog(open);
         await nextTick();
@@ -69,9 +67,12 @@ describe("DialogContent — center-spring focus-return (W1-C)", () => {
         const inside = document.querySelector(".test-inside") as HTMLElement | null;
         expect(trigger, "trigger rendered").not.toBeNull();
         expect(inside, "an element inside the content rendered").not.toBeNull();
-        // The center-spring path is live and the focus-anchor is rendered on it (the
-        // un-gate): both load-bearing preconditions for the watch's containment test.
-        expect(dialogEl!.getAttribute("data-spring")).toBe("panel");
+        // The spring path is live and the focus-anchor is rendered on it: both
+        // load-bearing preconditions for the watch's containment test. AMENDED by
+        // W-DIALOG — the spring is UNCONDITIONAL now (the `springPreset` opt-in that
+        // used to arm it is deleted), so the precondition is that the plate carries a
+        // spring style at all rather than that it advertises a chosen register.
+        expect(dialogEl!.style.opacity).not.toBe("");
         expect(dialogEl!.querySelectorAll("span[hidden]").length).toBeGreaterThan(0);
 
         // Strand focus inside the (about-to-close) content — the exit-spring window.

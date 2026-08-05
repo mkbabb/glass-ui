@@ -16,9 +16,12 @@
 // keeps the class on an element it never renders (`v-if="false"`) still reads as composed.
 // The render-level detectors are named, not restated here — the Slider's own mounted arm
 // below (which mounts, grasps, and requires the plate in the document), and, for the
-// Dialog, `tests/components/ui/dialog/graded-backdrop.test.ts:95-115`, which mounts the
-// graded dialog and requires the class on the rendered halo child. Restating either here
-// would be the duplicated-derived-data class this tranche strikes.
+// Dialog, `tests/components/dialog/ModalOverlay.test.ts`, whose three veil clauses mount
+// the scrim and require the class present for the centred plate and ABSENT by default
+// (`tests/components/sheet/sheet-graded-edge.test.ts` holds the side-sheet half — the
+// veil's core is fixed at the viewport centre, so it is a geometry the caller selects,
+// not a constant). Restating any of them here would be the duplicated-derived-data class
+// this tranche strikes.
 //
 // BORN-RED, MEASURED — not asserted. Every arm here was run against a pristine
 // `git archive HEAD` tree at the row's start (HEAD 571626cc, before any byte of this cut)
@@ -66,7 +69,10 @@ const glassCascade = stripComments(read("src/styles/glass.css"));
 // dock → #47 GF-DOCK), and one owner per file per cut is the standing law. §5's own
 // floor is "≥2 required", which these two meet.
 const consumers: readonly [string, string][] = [
-    ["src/components/dialog/ModalOverlay.vue", "the graded Dialog backdrop"],
+    // W-DIALOG made this one UNCONDITIONAL: the opt-in knob that used to gate it is
+    // deleted, and a centred modal IS the definitional focus event — it sits at the
+    // veil's own 50% rest, so the overlay composes the class and writes no centre.
+    ["src/components/dialog/ModalOverlay.vue", "the modal scrim's focus veil"],
     ["src/components/slider/Slider.vue", "the engaged Slider (F49/F50)"],
 ];
 
@@ -187,13 +193,19 @@ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — applied at its named consumers", 
     });
 
     it("the Dialog BINDS the shared class instead of re-spelling the recipe", () => {
-        const placement = stripComments(read("src/components/dialog/placement.css"));
-        // FORM 2's private recipe is gone from the component; FORM 1's per-edge graded
-        // edge (a plate-local material, not a veil) stays where it is.
-        expect(placement).not.toContain('[data-backdrop="graded"] >');
-        expect(placement).not.toContain("mask-composite: intersect");
-        expect(placement).not.toContain("--glass-halo-");
-        expect(placement).toContain("blur(calc(34px * var(--glass-level)))");
+        // The private FORM-2 recipe is gone from the component tree entirely — and so is
+        // the `placement.css` that once held it, since W-DIALOG split the side surface
+        // into its own component. What survives there is FORM 1, the sheet's per-edge
+        // graded EDGE, which is a plate-local material and not a veil.
+        const sheet = stripComments(read("src/components/sheet/styles.css"));
+        expect(sheet).not.toContain("mask-composite: intersect");
+        expect(sheet).not.toContain("--glass-halo-");
+        expect(sheet).toContain("blur(calc(34px * var(--glass-level)))");
+
+        const overlay = read("src/components/dialog/ModalOverlay.vue");
+        expect(overlay).toContain("glass-focus-veil");
+        expect(overlay).not.toContain("--glass-halo-");
+        expect(overlay).not.toContain("mask-composite");
     });
 
     // THE RENDER-LEVEL DETECTOR. It mounts a real Slider, grasps it, and reads the

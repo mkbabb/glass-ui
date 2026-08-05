@@ -360,7 +360,6 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
                 { storyId: "settings", label: "Settings" },
                 { storyId: "configurator", label: "Configurator" },
                 { storyId: "form-validation", label: "Form Validation" },
-                { storyId: "gate-pattern", label: "Gate Pattern" },
             ],
         },
     ],

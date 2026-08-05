@@ -1,0 +1,185 @@
+/* sheet/styles.css — the side sheet's structural positioning + its per-edge graded
+ * material, precompiled.
+ *
+ * SEEDED BY W-DIALOG (cut 1) out of the retired `dialog/placement.css`: the side arm
+ * is its own component now (`<SheetContent side>`), so the geometry rides
+ * `[data-slot="sheet-content"]` and a centred Dialog can never inherit a rule written
+ * for an edge-anchored surface.
+ *
+ * WHY PRECOMPILED. Position/inset/size/z-index is load-bearing GEOMETRY that DIES in
+ * any consumer whose Tailwind content-scan does not reach glass-ui's compiled dist
+ * (the configurator-drawer break). It ships as a plain attribute-selector rule so it
+ * is emitted unconditionally, never JIT-scanned.
+ *
+ * EMISSION, stated truthfully: this partial is `@import`ed by `styles/index.css`, so
+ * the rules ship in `dist/styles/index.css`. `dist/component-styles.css` is generated
+ * from the build's own ordered style closure (`scripts/gen-component-styles.mjs`) and
+ * carries only the members its `hasComponentStyles` probe selects — this file is not
+ * one of them, by that generator's doctrine, and that is not a gap.
+ *
+ * SPECIFICITY — the rules are wrapped in `:where()` (0,0,0). The library ships the
+ * DEFAULT positioning; a consumer's own sizing utility (a `.w-full`/`.h-full` class at
+ * 0,1,0) WINS, so the sheet stays consumer-overridable.
+ *
+ * PHYSICAL properties (width/height/top/right/bottom/left) on purpose: a consumer's
+ * physical sizing override resolves cleanly by SPECIFICITY against the same property
+ * name — no logical-vs-physical cascade ambiguity.
+ */
+:where([data-slot="sheet-content"]) {
+    position: fixed;
+    z-index: var(--z-modal);
+}
+
+/* One stable inner region owns intrinsic flow; `scroll` adds bounds and overflow to
+ * that region only, so toggling it never reparents focusable content or moves the
+ * graded sampler with the scrollport. */
+:where([data-slot="sheet-content"] > [data-slot="sheet-content-region"]) {
+    display: grid;
+    align-content: start;
+    gap: var(--space-body);
+}
+
+:where([data-slot="sheet-content"][data-scroll] > [data-slot="sheet-content-region"]) {
+    min-block-size: 0;
+    max-block-size: calc(100dvh - 2 * var(--space-family));
+    overflow-y: auto;
+}
+
+:where(
+    [data-slot="sheet-content"][data-side="left"] > [data-slot="sheet-content-region"],
+    [data-slot="sheet-content"][data-side="right"] > [data-slot="sheet-content-region"]
+) {
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    min-block-size: 0;
+}
+
+:where(
+    [data-slot="sheet-content"][data-side="left"]
+        > [data-slot="sheet-content-region"]
+        > :only-child,
+    [data-slot="sheet-content"][data-side="right"]
+        > [data-slot="sheet-content-region"]
+        > :only-child
+) {
+    min-block-size: 0;
+}
+
+/* The per-edge graded edge. One fixed 34px backdrop sample is mask-graded from 13/40
+ * opacity at the viewport-facing edge to full depth 120px inward: the near-sharp crown
+ * → deep-frost field without animating a blur radius. The glass host's flat backdrop
+ * sample is removed on this arm, so the decorative child is the sole sampler rather
+ * than a nested plate. Ordinary blur() + mask-image is Safari-safe: no url() filter,
+ * parallel clock, or Drawer coupling. Opaque and veil sheets keep their own material
+ * and render no band. */
+:where([data-slot="sheet-content"][data-surface="glass"]) {
+    isolation: isolate;
+    backdrop-filter: none;
+}
+
+:where([data-slot="sheet-content"] > [data-slot="glass-graded-halo"]) {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+        var(--sheet-edge-direction),
+        color-mix(in oklab, var(--glass-plate-overlay) 10%, transparent) 0,
+        color-mix(in oklab, var(--glass-plate-overlay) 16%, transparent) 40px,
+        color-mix(in oklab, var(--glass-plate-overlay) 34%, transparent) 120px,
+        color-mix(in oklab, var(--glass-plate-overlay) 34%, transparent) 100%
+    );
+    backdrop-filter: blur(calc(34px * var(--glass-level)))
+        saturate(var(--glass-saturate));
+    mask-image: linear-gradient(
+        var(--sheet-edge-direction),
+        rgb(0 0 0 / 0.325) 0,
+        rgb(0 0 0 / 0.45) 40px,
+        black 120px,
+        black 100%
+    );
+}
+
+:where([data-slot="sheet-content"][data-side="top"]) > [data-slot="glass-graded-halo"] {
+    --sheet-edge-direction: to top;
+}
+:where([data-slot="sheet-content"][data-side="bottom"])
+    > [data-slot="glass-graded-halo"] {
+    --sheet-edge-direction: to bottom;
+}
+:where([data-slot="sheet-content"][data-side="left"])
+    > [data-slot="glass-graded-halo"] {
+    --sheet-edge-direction: to left;
+}
+:where([data-slot="sheet-content"][data-side="right"])
+    > [data-slot="glass-graded-halo"] {
+    --sheet-edge-direction: to right;
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+    :where([data-slot="glass-graded-halo"]) {
+        display: none;
+    }
+}
+
+/* Top/bottom sheets span the full width and anchor to their edge. */
+:where([data-slot="sheet-content"][data-side="top"]) {
+    left: 0;
+    right: 0;
+    top: 0;
+}
+:where([data-slot="sheet-content"][data-side="bottom"]) {
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* Left/right sheets span the full height, 3/4 width, capped at the sm bound. */
+:where([data-slot="sheet-content"][data-side="left"]) {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 75%;
+}
+:where([data-slot="sheet-content"][data-side="right"]) {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 75%;
+}
+@media (min-width: 40rem) {
+    :where([data-slot="sheet-content"][data-side="left"]),
+    :where([data-slot="sheet-content"][data-side="right"]) {
+        max-width: 24rem;
+    }
+}
+
+/* The sheet plate's own proportion — the space rungs, so the mobile transposition
+ * (tokens/sizing.css §1.1) steps every one of them down for free — and the ROOM corner
+ * on the two INNER edges only (PROPORTION:233 binds room to "dialog, sheet, drawer" by
+ * name; the anchored edges are flush with the viewport and take no corner). */
+:where([data-slot="sheet-content"]) {
+    padding-inline: var(--space-family);
+    padding-block: var(--space-family);
+}
+
+:where([data-slot="sheet-content"][data-side="top"]) {
+    border-end-start-radius: var(--radius-3xl);
+    border-end-end-radius: var(--radius-3xl);
+}
+:where([data-slot="sheet-content"][data-side="bottom"]) {
+    border-start-start-radius: var(--radius-3xl);
+    border-start-end-radius: var(--radius-3xl);
+}
+:where([data-slot="sheet-content"][data-side="left"]) {
+    border-start-end-radius: var(--radius-3xl);
+    border-end-end-radius: var(--radius-3xl);
+}
+:where([data-slot="sheet-content"][data-side="right"]) {
+    border-start-start-radius: var(--radius-3xl);
+    border-end-start-radius: var(--radius-3xl);
+}

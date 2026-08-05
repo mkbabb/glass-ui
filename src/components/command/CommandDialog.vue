@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import Command from "./Command.vue";
-import { Dialog, DialogContent } from "../dialog";
+import Dialog from "../dialog/Dialog.vue";
+import DialogContent from "../dialog/DialogContent.vue";
 import { provideCommandDialogContext } from "./dialogContext";
 import type { CommandDialogEmits, CommandDialogProps } from "./types";
 
@@ -22,7 +23,17 @@ const dialogProps = computed(() => {
 
 <template>
     <Dialog v-bind="dialogProps" @update:open="emit('update:open', $event)">
-        <DialogContent :surface="props.surface" class="command-dialog__content">
+        <!-- `deliberate` — no built-in ✕. The palette's own search field owns the top-right
+             of the plate, and the shipped ✕ painted 27px INSIDE it; no padding axis can fix
+             that, because the ✕ is positioned off the plate's pad and the field's pad is
+             already 0. Dropping the ✕ is the only remedy the geometry allows, and it hands
+             initial focus to the input where a palette wants it. Esc and outside-press
+             still dismiss. -->
+        <DialogContent
+            :surface="props.surface"
+            dismiss="deliberate"
+            class="command-dialog__content"
+        >
             <Command
                 :model-value="props.modelValue"
                 class="command-dialog__command"

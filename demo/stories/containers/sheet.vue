@@ -4,13 +4,13 @@ import StorySection from "../../chassis/section/StorySection.vue";
 import {
     Dialog,
     DialogClose,
-    DialogContent,
     DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@glass/components/dialog";
+import { SheetContent } from "@glass/components/sheet";
 import { Button } from "@glass/components/button";
 import { Surface } from "@glass/components/surface";
 import { Input } from "@glass/components/input";
@@ -20,9 +20,9 @@ import { Textarea } from "@glass/components/textarea";
 // reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
 
-// the Sheet side-slide FOLDED onto `<DialogContent placement>`
+// the side sheet is its own component: `<SheetContent side>`
 // (same reka DialogRoot + FocusScope; the slide is paint, not mechanism). The four
-// non-center placements are the retired Sheet sides.
+// sides are the anchored edges.
 type SidePlacement = "top" | "right" | "bottom" | "left";
 const sides: readonly SidePlacement[] = ["top", "right", "bottom", "left"] as const;
 
@@ -36,14 +36,14 @@ const surfaces: readonly SheetSurface[] = ["glass", "veil", "opaque"] as const;
         <StorySection heading="Four sides" gap="lg">
             <p class="text-small text-muted-foreground">
                 Each trigger opens its own side sheet — identical body, different
-                <code class="font-mono text-micro">placement</code> prop.
+                <code class="font-mono text-micro">side</code> prop.
             </p>
             <div class="flex flex-wrap gap-3">
                 <Dialog v-for="side in sides" :key="side">
                     <DialogTrigger as-child>
                         <Button class="capitalize"> Open {{ side }} </Button>
                     </DialogTrigger>
-                    <DialogContent :placement="side" scroll>
+                    <SheetContent :side="side" scroll>
                         <DialogHeader>
                             <DialogTitle class="capitalize">
                                 {{ side }} sheet
@@ -75,7 +75,7 @@ const surfaces: readonly SheetSurface[] = ["glass", "veil", "opaque"] as const;
                                 <Button>Save changes</Button>
                             </DialogClose>
                         </DialogFooter>
-                    </DialogContent>
+                    </SheetContent>
                 </Dialog>
             </div>
         </StorySection>
@@ -102,7 +102,7 @@ const surfaces: readonly SheetSurface[] = ["glass", "veil", "opaque"] as const;
                             {{ s }} sheet
                         </Button>
                     </DialogTrigger>
-                    <DialogContent placement="right" :surface="s">
+                    <SheetContent side="right" :surface="s">
                         <DialogHeader>
                             <DialogTitle class="capitalize">
                                 {{ s }} surface
@@ -122,17 +122,17 @@ const surfaces: readonly SheetSurface[] = ["glass", "veil", "opaque"] as const;
                                 <Button>Close</Button>
                             </DialogClose>
                         </DialogFooter>
-                    </DialogContent>
+                    </SheetContent>
                 </Dialog>
                 <Dialog>
                     <DialogTrigger as-child>
                         <Button emphasis="quiet" disabled>Disabled trigger</Button>
                     </DialogTrigger>
-                    <DialogContent placement="right">
+                    <SheetContent side="right">
                         <DialogHeader>
                             <DialogTitle>Never reached</DialogTitle>
                         </DialogHeader>
-                    </DialogContent>
+                    </SheetContent>
                 </Dialog>
             </Surface>
         </StorySection>

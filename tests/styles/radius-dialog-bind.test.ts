@@ -3,9 +3,18 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 // happy-dom runs no CSS cascade, so the radius aliases are resolved from source:
-// follow each `var(--x)` chain to its terminal literal. The bind's payoff is a
-// one-source guarantee (the dialog corner can never drift from the card), so the
-// assertions read the alias GRAPH, not a repainted pixel.
+// follow each `var(--x)` chain to its terminal literal. The assertions read the alias
+// GRAPH, not a repainted pixel.
+//
+// SCOPE NOTE (W-DIALOG). The dialog SURFACE is a ROOM (24) now — `dialog/styles.css` and
+// `sheet/styles.css` read `--radius-3xl` directly, per PROPORTION:233, which binds room
+// to "dialog, sheet, drawer" BY NAME. The `--radius-dialog` ALIAS still binds card and
+// still governs its other readers (the configurator relay, the demo preset knob, the
+// radii story), so the two register seats below (`radius.dialog.card-bind`,
+// `radius.context.card-relay`) remain TRUE of the token graph they were authored for.
+// Retiring this file and re-pointing the alias is ONE act, it costs the batched roster
+// pin reserved to band close, and it is routed to W-GATE-COLLAPSE with its grounds —
+// spending that pin here would falsify the pinned roster sha for one file.
 
 const read = (rel: string): string => readFileSync(join(process.cwd(), rel), "utf8");
 
@@ -91,22 +100,32 @@ describe("dialog corner shape — the A' round fork (dialog only)", () => {
     });
 });
 
-describe("dialog inner controls — the F7 field rung (adopt for the modal input)", () => {
-    it("re-points the modal single-line input onto the 16px field rung", () => {
+describe("dialog inner controls — the concentric inversion, cured by subtraction", () => {
+    // W-DIALOG deleted the modal-scoped `[data-slot="dialog-content"]
+    // .field-control[data-kind="input"] { border-radius: var(--radius-field) }` override.
+    // It was the OPERATIVE producer of the F45 inversion: a 16px input inside a 16px
+    // plate across a 24px inset, so the inner corner was never smaller than the outer and
+    // the nesting read backwards. A roled child never takes the relay.
+    it("carries no modal-scoped radius override on the single-line input", () => {
         const modal = borderRadiusIn(
             fieldControl,
             /\[data-slot="dialog-content"\]\s+\.field-control\[data-kind="input"\]\s*\{([^}]*)\}/,
         );
-        expect(modal).toBe("var(--radius-field)");
-        // The field rung is the soft 16px rounded-rect, not the stadium pill.
-        expect(resolve(radius, "--radius-field")).toBe("1rem");
+        expect(modal).toBeUndefined();
     });
 
-    it("keeps the stadium pill on the base (non-modal) single-line input + CTAs", () => {
+    it("keeps the stadium pill on the single-line input at every scope", () => {
         const base = borderRadiusIn(
             fieldControl,
             /(?:^|\n)\s*\.field-control\[data-kind="input"\]\s*\{([^}]*)\}/,
         );
         expect(base).toBe("var(--radius-pill)");
+    });
+
+    it("keeps the plate strictly rounder than the control it contains", () => {
+        // The plate takes the ROOM rung (24) and the control the pill; the inversion is
+        // impossible by construction once the override is gone.
+        expect(resolve(radius, "--radius-3xl")).toBe("1.5rem");
+        expect(resolve(radius, "--radius-card")).toBe("1rem");
     });
 });

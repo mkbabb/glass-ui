@@ -42,7 +42,8 @@ export type Motion = (typeof MOTIONS)[number]; // default "full"; PRM > prop > d
 // TONES / PLACEMENTS / TRIGGERS join the four grammar unions so the Kronecker
 // factorization has a HOME for the concepts a `variant` map must NOT smuggle: a tone
 // (success/warning/info/destructive — proof:variant-residual moves them off `variant`
-// onto `tone`), a surface placement (Sheet's side-slide folds onto Dialog `placement`),
+// onto `tone`), a surface placement (the anchored-edge axis: `SheetContent side`, and
+// any floating surface that sites itself against one),
 // and an overlay trigger (HoverPopover/HoverCard/ContextMenu fold onto ONE Popover
 // `trigger`). A private tone/placement/trigger-shaped union anywhere else in src/ is
 // forbidden by construction — proof:encapsulation's axes-ext arm greps for a re-mint.
@@ -51,7 +52,10 @@ export type Motion = (typeof MOTIONS)[number]; // default "full"; PRM > prop > d
 export const TONES = ["neutral", "success", "warning", "info", "destructive"] as const;
 export type Tone = (typeof TONES)[number]; // default "neutral"
 
-/** The overlay-placement axis — Sheet's side-slide + Dialog center fold onto ONE placement. */
+/** The overlay-placement axis — ONE union for every surface that sites itself against an
+ * edge or the centre. `center` is the Dialog's rest and is excluded by the two consumers
+ * that only ever anchor: `SidePlacement` (sheet/motion.ts) and `FloatingSide`
+ * (_shared/floating.ts). */
 export const PLACEMENTS = ["center", "top", "right", "bottom", "left"] as const;
 export type Placement = (typeof PLACEMENTS)[number]; // default "center"
 

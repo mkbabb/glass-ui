@@ -52,10 +52,10 @@
  * writes BOTH `--glass-drawer-t` (the sheet's per-element translate) AND `--stage-t`
  * (the scene scalar, on each reader root) in the SAME call — atomically, never
  * separately, so the two can never desync on a drag-cancel / fling-overshoot /
- * interrupted snap. A plain modal (Dialog/Command) flips `--stage-t` 0→1 on
- * `--spring-present` at open (DialogContent.vue, scoped to the same reader roots); the
- * close-write removes the inline value so the registered property reverts to its
- * `initial-value: 0` (the stale-latch fix). EVERY consumer `clamp(0, …, 1)`-bounds it
+ * interrupted snap. It is the ONLY writer now: the plain-modal flip (DialogContent) went
+ * out with W-DIALOG's stage deletion. The close-write removes the inline value so the
+ * registered property reverts to its `initial-value: 0` (the stale-latch fix). EVERY
+ * consumer `clamp(0, …, 1)`-bounds it
  * (a `--ease-cartoon-punch` fling can overshoot >1 — the page-scale / radius / scrim
  * must not run past their endpoints). */
 @property --stage-t {
@@ -69,17 +69,13 @@
  *
  * The drawer's single writer (useDrawerSnap) drives `--stage-t` per frame (NO
  * transition — the spring IS the clock) and REMOVES the inline value on close → each
- * reader root reverts to `initial-value: 0`. The centered modal (DialogContent) has no
- * detent, so it FLIPS `--stage-t` 0→1 on open via the `data-stage-flip` marker written
- * onto each reader root (off `:root`); this rule owns the FLIP
- * TRANSITION (the anchored-entrance row, curve and clock together) so the value
- * glides 0→1 rather than snapping. Scoped to
- * `[data-stage-flip]` so it fires ONLY during the modal flip — the drawer's per-frame
- * scalar writes carry no marker, so the spring never double-smooths the drag. */
-[data-stage-scrim][data-stage-flip],
-[data-stage-wrapper][data-stage-flip] {
-    transition: --stage-t var(--spring-present-duration) var(--spring-present);
-}
+ * reader root reverts to `initial-value: 0`.
+ *
+ * The `[data-stage-flip]` transition rule that sat here is DELETED with its only
+ * writer: it existed for DialogContent's one-shot 0→1 modal flip, and W-DIALOG deleted
+ * the whole stage — `[data-stage-wrapper]` had zero receivers repo-wide and ~150 lines
+ * drove one attribute for nothing. The drawer's per-frame writes never carried the
+ * marker, so its paint is untouched. */
 
 :root {
     /* Detent grammar knobs — overridable per-consumer */
@@ -333,11 +329,12 @@
  * `[data-stage-scrim]` (DrawerOverlay.vue) and reads the scalar written directly on
  * that scrim root.
  *
- * `:not([data-backdrop="graded"])` — a graded-backdrop Dialog swaps the whole flat
- * scrim for the box-following halo (placement.css FORM 2), so the flat dim drops
- * there. Drawer never sets `data-backdrop`, so its paint is byte-identical.
+ * The `:not([data-backdrop="graded"])` guards are DELETED with the Dialog `backdrop`
+ * prop that was their only writer — a condition that can never again be false is a
+ * masking no-op, not a guard. Drawer never set `data-backdrop`, so its paint is
+ * byte-identical either way.
  */
-[data-stage-scrim]:not([data-backdrop="graded"]) {
+[data-stage-scrim] {
     background: color-mix(
         in srgb,
         var(--overlay-scrim-ink)
@@ -383,13 +380,10 @@
  * plate) and NO second opacity axis. The scrim fades in over its `animate="fade"` enter,
  * so the fixed blur reads as coalescing, never a pop. Default OFF.
  *
- * RECEIVERS: Dialog (production-demonstrated, dialog.vue) and Drawer (public + tested,
- * one demonstrated story state). CommandDialog is NOT a receiver — it forwards
- * `DialogProps`, never `DialogContentProps`, so it cannot request the stage.
- *
- * `:not([data-backdrop="graded"])` — the graded-backdrop Dialog replaces this flat
- * immersive plate with the masked halo (Δ0 plate count); Drawer never opts in, so
- * its paint is byte-identical.
+ * RECEIVER: Drawer, and only Drawer. Dialog was the second receiver and is no longer
+ * one — W-DIALOG deleted the whole `stage` enum, whose `[data-stage-wrapper]` had zero
+ * receivers repo-wide. The `:not([data-backdrop="graded"])` guard went with the Dialog
+ * `backdrop` prop that was its only writer.
  */
 [data-stage-scrim] {
     /* The private immersive stage depth — a fixed 14px at level 1, scaled by the
@@ -399,7 +393,7 @@
     --stage-immersive-blur: blur(calc(var(--stage-immersive-blur-radius) * var(--glass-level)));
 }
 
-[data-stage-scrim][data-stage-immersive]:not([data-backdrop="graded"]) {
+[data-stage-scrim][data-stage-immersive] {
     backdrop-filter: var(--stage-immersive-blur);
 }
 

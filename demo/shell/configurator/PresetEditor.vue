@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted } from "vue";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-} from "@glass/components/dialog";
+// The shell mounts SHEETS, never the centred plate. Deep-import the root and the three
+// text atoms so the dialog BARREL does not drag `DialogContent` — and its lucide ✕ — into
+// the eager boot graph for a surface that can never show either.
+import Dialog from "@glass/components/dialog/Dialog.vue";
+import DialogDescription from "@glass/components/dialog/DialogDescription.vue";
+import DialogHeader from "@glass/components/dialog/DialogHeader.vue";
+import DialogTitle from "@glass/components/dialog/DialogTitle.vue";
+import SheetContent from "@glass/components/sheet/SheetContent.vue";
 import { Slider } from "@glass/components/slider";
 import { Switch } from "@glass/components/switch";
 import {
@@ -145,7 +146,7 @@ function effectiveFont(slot: keyof FontSlots): string {
          `glass-ui-demo:toggle-configurator` window event — both still functional)
          + the dock gear, so there is no in-component DialogTrigger. -->
     <Dialog v-model:open="open">
-        <DialogContent placement="right" class="glass-resting w-full sm:max-w-md p-0">
+        <SheetContent side="right" class="glass-resting w-full sm:max-w-md p-0">
             <div class="flex h-full flex-col">
                 <DialogHeader
                     class="px-(--configurator-pad-inline) pt-6 pb-4 border-b"
@@ -370,6 +371,6 @@ function effectiveFont(slot: keyof FontSlots): string {
                     </Button>
                 </div>
             </div>
-        </DialogContent>
+        </SheetContent>
     </Dialog>
 </template>

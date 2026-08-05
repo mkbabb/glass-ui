@@ -74,7 +74,8 @@ const uiRuntimeExports = [
     "RadioGroup",
     "Select",
     "Separator",
-    // Sheet folded onto <DialogContent placement> (clean break).
+    // `Sheet` (the reka wrapper family) stays off this list: the side surface ships as
+    // the single `SheetContent` root key below, composed inside `<Dialog>`.
     "Skeleton",
     "Slider",
     "Switch",
@@ -179,6 +180,10 @@ const rootRuntimeExports = [
     "SelectSeparator",
     "SelectTrigger",
     "SelectValue",
+    // The side sheet is its own component again (BK #38): `SheetContent` is a ROOT
+    // barrel key. The `./sheet` package subpath is a separate byte and rides the one
+    // batched export cut (RT-38D → #65) — this list is the root surface, not the map.
+    "SheetContent",
     "TableBody",
     "TableCaption",
     "TableCell",

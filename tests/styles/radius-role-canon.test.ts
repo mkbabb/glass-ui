@@ -480,9 +480,31 @@ describe("7. this wave's role bindings", () => {
     });
 
     it("Dialog close ✕ wears the pill role (the settlement's pill row names it)", () => {
-        const dialog = read("src/components/dialog/DialogContent.vue");
-        expect(dialog).toMatch(/RekaDialogClose[\s\S]{0,320}rounded-pill/);
-        expect(dialog).not.toMatch(/RekaDialogClose[\s\S]{0,320}rounded-sm/);
+        // The bind is unchanged; only its ADDRESS moved. W-DIALOG folded the dialog's
+        // five CSS lanes into one partial, so the ✕'s corner is a declaration in
+        // `dialog/styles.css` rather than a utility on the SFC's class string. The role
+        // claim — pill, never the 4px floor — is what this pins, and it still bites.
+        const close = strip(read("src/components/dialog/styles.css")).match(
+            /:where\(\[data-slot="dialog-close"\]\)\s*\{([^}]*)\}/,
+        );
+        expect(close, "the ✕ rule exists").not.toBeNull();
+        expect(close![1]).toMatch(/border-radius:\s*var\(--radius-pill\);/);
+        expect(close![1]).not.toMatch(/--radius-(?:xs|sm)\b/);
+    });
+
+    it("Dialog plate wears the ROOM role, and the pad leaves the 4px residue", () => {
+        // PROPORTION:233 binds room to "dialog, sheet, drawer" BY NAME; the pairing law
+        // is `pad(role) = r(role) − 4`, so room 24 pads 20 — which is `--space-family`,
+        // exactly. Both surfaces read the rung, not the `--radius-dialog` alias, whose
+        // re-point is the batched roster cut's byte.
+        const plate = strip(read("src/components/dialog/styles.css")).match(
+            /:where\(\[data-slot="dialog-content"\]\)\s*\{([^}]*)\}/,
+        );
+        expect(plate, "the plate rule exists").not.toBeNull();
+        expect(plate![1]).toMatch(/border-radius:\s*var\(--radius-3xl\);/);
+        expect(plate![1]).toMatch(/padding-inline:\s*var\(--space-family\);/);
+        expect(plate![1]).toMatch(/padding-block:\s*var\(--space-family\);/);
+        expect(px(resolveAlias(RADIUS_DECLS, "--radius-3xl"))).toBe(ROLE_PX.room);
     });
 
     it("dock shape=rounded is the CARD role, never the off-series 12px rung", () => {

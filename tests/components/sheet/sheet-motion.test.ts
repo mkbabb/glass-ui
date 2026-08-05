@@ -7,25 +7,28 @@
 // LONGHAND on the surface and an opacity synced from the SAME scalar on the scrim.
 //
 // These units pin the derivation surface: the two pure helpers (R1's longhand
-// bug + the clamp) and the DialogContent arming gate (side slides via the spring;
-// the `slide-*`/`sheet-animate` keyframes are gone; center is untouched). The
-// interruption trace + momentum are native debt on the V8 sweep.
+// bug + the clamp) and SheetContent's arming (it slides via the spring; the
+// `slide-*`/`sheet-animate` keyframes are gone). The interruption trace + momentum are
+// native debt on the V8 sweep.
+//
+// AMENDED by W-DIALOG: the side surface is `SheetContent` again, so the `placement`
+// fork and the `springPreset` routing clauses die with the props they exercised — a
+// sheet has no centre branch to gate, and MOTION-CANON gives the surface ONE curve.
+// The scrim-sync + keyframe-deletion clauses are the substance and they stay.
 
 import { mount } from "@vue/test-utils";
 import { defineComponent, h, nextTick } from "vue";
 import { describe, expect, it, vi } from "vitest";
 
-import { sheetSlideTransform, scrimOpacity } from "@glass/components/dialog/sheet-motion";
-// The exact module DialogContent imports `useSpringMount` from — spied to witness the
-// consumer's `springPreset` reaching the spring mount (no hand number, no ignored prop).
+import { sheetSlideTransform, scrimOpacity } from "@glass/components/sheet/motion";
 import * as springMountModule from "@glass/composables/motion/spring/useSpringMount";
+import { SheetContent } from "@glass/components/sheet";
 import {
     Dialog,
-    DialogContent,
     DialogDescription,
     DialogTitle,
     DialogTrigger,
-} from "@glass/components/dialog/index";
+} from "@glass/components/dialog";
 
 describe("sheetSlideTransform — a translate LONGHAND, never a transform fn", () => {
     it("emits an off-edge longhand pair per placement at p=1", () => {
@@ -70,22 +73,15 @@ describe("scrimOpacity (position → clamped opacity)", () => {
     });
 });
 
-function mountDialog(opts: {
-    placement?: "center" | "top" | "right" | "bottom" | "left";
-    springPreset?: "present" | "panel" | "bloom";
-}) {
+function mountSheet(opts: { side?: "top" | "right" | "bottom" | "left" } = {}) {
     const Host = defineComponent({
         setup() {
             return () =>
                 h(Dialog, { open: true }, () => [
                     h(DialogTrigger, () => "open"),
                     h(
-                        DialogContent,
-                        {
-                            class: "test-sheet",
-                            ...(opts.placement ? { placement: opts.placement } : {}),
-                            ...(opts.springPreset ? { springPreset: opts.springPreset } : {}),
-                        },
+                        SheetContent,
+                        { class: "test-sheet", ...(opts.side ? { side: opts.side } : {}) },
                         () => [
                             h(DialogTitle, { class: "sr-only" }, () => "Sheet"),
                             h(DialogDescription, { class: "sr-only" }, () => "Sheet motion fixture."),
@@ -104,9 +100,9 @@ function mountDialog(opts: {
 const content = () => document.querySelector(".test-sheet") as HTMLElement | null;
 const scrim = () => document.querySelector(".bg-overlay-scrim") as HTMLElement | null;
 
-describe("DialogContent arming gate — side vs center (SHEET-INTERRUPTIBLE-MOTION)", () => {
-    it("a side sheet slides via the spring translate longhand; the slide-*/sheet-animate keyframes are gone", async () => {
-        const wrapper = mountDialog({ placement: "right" });
+describe("SheetContent arming (SHEET-INTERRUPTIBLE-MOTION)", () => {
+    it("slides via the spring translate longhand; the slide-*/sheet-animate keyframes are gone", async () => {
+        const wrapper = mountSheet({ side: "right" });
         await nextTick();
         await nextTick();
         const el = content();
@@ -118,9 +114,9 @@ describe("DialogContent arming gate — side vs center (SHEET-INTERRUPTIBLE-MOTI
         expect(el!.style.translate).toMatch(/%/);
         expect(el!.style.animation).toBe("none");
 
-        // The keyframe path is deleted from the side surface.
+        // The keyframe path is deleted from the surface.
         expect(el!.className).not.toMatch(/slide-in-from|slide-out-to|sheet-animate/);
-        // ...and the side sheet never composes the center bloom recipe.
+        // ...and it never composes the centred plate's bloom recipe.
         expect(el!.className).not.toContain("glass-reveal");
 
         // The scrim reads the same scalar → opacity inline, no fade keyframe.
@@ -131,49 +127,20 @@ describe("DialogContent arming gate — side vs center (SHEET-INTERRUPTIBLE-MOTI
         wrapper.unmount();
     });
 
-    it("a preset-less center dialog is untouched: glass-reveal path, no side spring, no data-spring", async () => {
-        const wrapper = mountDialog({ placement: "center" });
-        await nextTick();
-        await nextTick();
-        const el = content();
-        expect(el).not.toBeNull();
-        expect(el!.className).toContain("glass-reveal");
-        expect(el!.style.translate).toBeFalsy(); // no spring style on the preset-less center path
-        expect(el!.getAttribute("data-spring")).toBeNull();
-        // The center scrim keeps its fade keyframe (slideT null).
-        expect(scrim()!.className).toContain("sheet-animate");
-        wrapper.unmount();
-    });
-
-    it("preset routing: the consumer's springPreset reaches the spring mount — a distinct register, not a hand number", async () => {
+    it("rides ONE curve — the spring mount takes the panel row on every side", async () => {
         const spy = vi.spyOn(springMountModule, "useSpringMount");
         try {
-            // The named preset propagates verbatim to the spring mount.
-            const bloom = mountDialog({ placement: "left", springPreset: "bloom" });
-            expect(spy).toHaveBeenCalledWith(
-                expect.objectContaining({ preset: "bloom" }),
-            );
-            await nextTick();
-            await nextTick();
-            const el = content();
-            expect(el).not.toBeNull();
-            // ...and the side sheet still slides via the spring longhand, keyframes gone.
-            expect(el!.style.translate).toMatch(/%/);
-            expect(el!.className).not.toMatch(/slide-in-from|slide-out-to|sheet-animate/);
-            bloom.unmount();
-
-            // A DIFFERENT preset reaches it distinctly: an unset springPreset routes the
-            // Dialog-family default `panel` — the fired deploy, never a frozen literal. Witnesses that the
-            // arg tracks the prop rather than a hardcoded register.
-            spy.mockClear();
-            const fallback = mountDialog({ placement: "left" });
-            expect(spy).toHaveBeenCalledWith(
-                expect.objectContaining({ preset: "panel" }),
-            );
-            expect(spy).not.toHaveBeenCalledWith(
-                expect.objectContaining({ preset: "bloom" }),
-            );
-            fallback.unmount();
+            for (const side of ["top", "right", "bottom", "left"] as const) {
+                spy.mockClear();
+                const wrapper = mountSheet({ side });
+                expect(spy).toHaveBeenCalledWith(
+                    expect.objectContaining({ preset: "panel" }),
+                );
+                await nextTick();
+                await nextTick();
+                expect(content()!.style.translate).toMatch(/%/);
+                wrapper.unmount();
+            }
         } finally {
             spy.mockRestore();
         }
