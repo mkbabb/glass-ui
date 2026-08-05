@@ -54,6 +54,9 @@
  * plate, not on the header. */
 :where([data-slot="dialog-content"]:has([data-slot="dialog-close"]))
     :where([data-slot="dialog-header"]) {
+    /* Touch-target-derived, series-EXEMPT (sizing.css §1.1's stated exception): the
+     * gutter must clear the 44px ✕ at every viewport, and the space series
+     * transposes below 44 at mobile — 48 here is geometry, not a rung. */
     padding-inline-end: calc(var(--touch-target) + var(--space-atom));
 }
 
@@ -70,8 +73,10 @@
 }
 
 /* Description ink is `--foreground`, not `--muted-foreground`: at 18.608px the text is
- * below the 18.66px large-text bound, so it owes the full 4.5:1 and the muted ink
- * measured 3.92:1 on this plate. */
+ * below the 18.66px large-text bound, so it owes the full 4.5:1. π-38 P8 measured the
+ * PAINTED plate (18% brown over the α0.50 scrim through blur(20px) saturate(1.5)) at
+ * 3.295:1 against even `--foreground` in light — the leg passes on the ink-identity
+ * arm alone; no token-level figure describes this plate's paint. */
 :where([data-slot="dialog-description"]) {
     font-size: var(--type-body);
     line-height: var(--type-leading-body);

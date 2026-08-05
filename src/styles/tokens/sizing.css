@@ -560,6 +560,10 @@
    a single 0.860 scalar puts every value off-series (32→27.5); one-rung-down
    preserves rank distance with ≤6% ratio drift. The sole deviation is the floor,
    where 8→4 and 4→4 both resolve to 4 and the two smallest rungs coincide.
+   ONE stated exception rides outside the series: lengths derived from
+   `--touch-target` (an a11y constant, 44px at every viewport) — a gutter that must
+   clear the target cannot ride a rung that transposes below it (52 → 32 at mobile),
+   so `calc(--touch-target + <rung>)` is series-exempt geometry, not a space rung.
 
    TWO FENCES RIDE HERE, both LAYOUT §5:
      1. `--ui-scale` moves the CONTROL BOX ONLY (height, padding, glyph). It is
