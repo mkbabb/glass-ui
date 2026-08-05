@@ -9,6 +9,10 @@ function identityTile(category: Category) {
 </script>
 
 <template>
+    <!-- No window key: `planNav` keys zoom and collapse on the DEEPER of the two paths,
+         and `/` is never the deeper one, so a key here could never be selected. The
+         catalog's continuity objects are its preview cards, which declare the section
+         paths they open. -->
     <article class="optical-bench mx-auto w-full max-w-6xl">
         <StoryHero
             background="paper"

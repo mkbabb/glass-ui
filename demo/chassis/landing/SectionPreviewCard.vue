@@ -20,8 +20,11 @@ const authoredTile = computed(() =>
 </script>
 
 <template>
+    <!-- The card is the WINDOW for the path it opens: the same element the route
+         grammar names going in and lands back into coming out. -->
     <TransitionRouteLink
         :to="to"
+        :data-route-window="to"
         :class="
             cn(
                 'section-preview-card glass-resting focus-ring',
@@ -53,7 +56,7 @@ const authoredTile = computed(() =>
             </div>
         </div>
 
-        <span class="text-subheading text-foreground">{{ title }}</span>
+        <span data-route-label class="text-subheading text-foreground">{{ title }}</span>
         <p v-if="blurb" class="text-small text-muted-foreground">{{ blurb }}</p>
     </TransitionRouteLink>
 </template>

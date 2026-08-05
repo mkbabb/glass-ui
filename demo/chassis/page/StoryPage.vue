@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed, inject } from "vue";
+import { useRoute } from "vue-router";
 import { TooltipProvider } from "@glass/components/tooltip";
 import StoryBodyRenderer from "../body/StoryBodyRenderer.vue";
 import StoryHeader from "../hero/StoryHeader.vue";
 import StoryHero from "../hero/StoryHero.vue";
+import TransitionRouteLink from "../TransitionRouteLink.vue";
 import { STORY_NESTED_KEY } from "../family/story-nested";
 import { useStoryNavigation } from "../useStoryNavigation";
 import type { StoryBody } from "../body/story-body";
@@ -21,6 +23,7 @@ const props = withDefaults(defineProps<StoryPageProps>(), {
 });
 
 const nested = inject(STORY_NESTED_KEY, false);
+const route = useRoute();
 const { current } = useStoryNavigation();
 
 const title = computed(() => current.value?.story.title ?? "");
@@ -41,9 +44,14 @@ const variant = computed<"hero" | "page">(() =>
         <StoryBodyRenderer v-if="props.body?.kind === 'sections'" :body="props.body" />
     </div>
 
+    <!-- The article is this story's WINDOW: the route grammar flies the tapped card onto
+         this rect, and flies it back off the same one. §9.5's "stops at the content
+         column's gutter" is not a rule we enforce here — it is what naming the ARTICLE
+         rather than `<main>` means. -->
     <article
         v-else
         class="story-page-article mx-auto w-full"
+        :data-route-window="route.path"
         :data-variant="variant"
         :style="{
             maxInlineSize:
@@ -55,12 +63,28 @@ const variant = computed<"hero" | "page">(() =>
         <TooltipProvider :delay-duration="250">
             <!-- Ordinary stories keep identity quiet: one title, one lede. -->
             <header v-if="variant === 'page'">
+                <!-- The return leg. Without it the grammar's `collapse` class is
+                     unreachable from any story — an unbuilt constant behind a green
+                     gate — and a reader who arrived by tapping a cell has no way back
+                     to the section but the browser's own button. -->
+                <TransitionRouteLink
+                    v-if="current"
+                    :to="`/${current.category.id}`"
+                    class="focus-ring interactive-item transition-control text-small text-muted-foreground inline-flex w-fit items-center gap-1 hover:text-foreground"
+                >
+                    <span aria-hidden="true">&#8592;</span>
+                    {{ current.category.title }}
+                </TransitionRouteLink>
                 <StoryHeader
                     :blurb="blurb"
                     class="story-hero-cluster"
                     :data-depth="depth"
                 >
-                    <h1 v-if="title" class="story-hero-title story-chrome-title">
+                    <h1
+                        v-if="title"
+                        data-route-label
+                        class="story-hero-title story-chrome-title"
+                    >
                         {{ title }}
                     </h1>
                 </StoryHeader>

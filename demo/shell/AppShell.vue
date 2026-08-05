@@ -228,8 +228,18 @@ onMounted(() => {
         <!-- Fixed vertical sidebar rail dock (off-canvas below the mobile breakpoint —
              see dock-nav.css; the BottomDock owns the off-canvas Sheet trigger).
              The shell dock is a static vertical sidebar rail. -->
+        <!-- PERSISTENT CHROME IS NOT THE WORLD. The route grammar's `zoom`/`collapse`
+             classes recede the root snapshot — blur, dim and travel — and the rail and
+             the footer dock sit inside it, so without a name of their own they ghost
+             against their own unmoved copies for the length of the flight. Naming them
+             lifts both out of BOTH root snapshots: they are the continuity object
+             GREENFIELD-TERMINAL R-D says the dock already is, and they simply stay put.
+             This is the consumer naming its own chrome; the LIBRARY still names no dock,
+             and R-D's rejection of View Transitions as the dock's own collapse mechanism
+             is untouched — nothing here animates a dock. -->
         <nav
             class="demo-sidebar-rail"
+            style="view-transition-name: gl-shell-rail; view-transition-class: gl-route-chrome"
             aria-label="Category navigation"
             data-shell-region="category-navigation"
         >
@@ -267,7 +277,9 @@ onMounted(() => {
             <!-- Shell-anchored story navigation. It remains fixed relative to the
                  viewport because only <main> scrolls, while participating in flex
                  layout keeps route controls outside its hit-test plane. -->
-            <BottomDock />
+            <BottomDock
+                style="view-transition-name: gl-shell-footer; view-transition-class: gl-route-chrome"
+            />
         </div>
     </div>
 

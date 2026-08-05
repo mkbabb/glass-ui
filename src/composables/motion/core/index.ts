@@ -31,6 +31,14 @@ export * from "./useYieldToMain";
 // `/motion-core` surface — and, being heavy-peer-free, it is also root-barrel
 // safe (re-exported from the root barrel below for broad reach).
 export * from "./useViewTransition";
+// The typed ROUTE grammar over that substrate — `routeGrammar` (the table) +
+// `routeTransition` (the mutation owner that names the ONE participating window and
+// types the transition). Same dependency profile as the substrate it wraps: no `vue`,
+// no `@mkbabb/keyframes.js`, no `@vueuse/core`, and no router — so it ships on the
+// engine-free `/motion-core` surface beside it. The paired CSS is the grammar block in
+// `src/styles/view-transition.css` + the `--route-*` registers.
+export * from "../route/routeGrammar";
+export * from "../route/useRouteTransition";
 // v-reveal entrance directive. Dependency-free (`vue` type-only —
 // no `@mkbabb/keyframes.js`, no `@vueuse/core`), so it ships on the engine-free
 // `/motion-core` surface AND is re-exported from the root barrel below.

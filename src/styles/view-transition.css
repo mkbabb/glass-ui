@@ -42,27 +42,276 @@
     animation-timing-function: var(--vt-ease, var(--spring-present));
 }
 
-/* Route snapshots are the sole route-motion writer. Typed-capable engines get a
- * restrained nav settle; callback-only Safari keeps its native root crossfade. */
-/* The root pair cross-fades under `plus-lighter`: alpha conservation demands a
- * LINEAR clock on both halves (a spring curve makes the pair sum ≠ 1 mid-flight —
- * the white flash). The spring stays on transform-bearing NAMED groups. */
+/* ═══ THE TYPED ROUTE GRAMMAR ═══════════════════════════════════════════════════
+ *
+ * Four nav classes, one mechanism each. The TABLE is
+ * `composables/motion/route/routeGrammar.ts`; the REGISTERS are
+ * `tokens/motion-registers.css`; this is the recipe body and it states no clock, no
+ * curve and no magnitude of its own. `routeTransition()` types the transition and names
+ * the ONE window that participates, so every rule below forks on a type the mechanism
+ * put there.
+ *
+ *   route     nothing is continuous — the whole transition is the root cross-fade.
+ *   zoom      forward into the tapped cell: inhale, extent morph, world recedes.
+ *   lateral   sibling to sibling: the coordinated push at the parallax ratio.
+ *   collapse  back out: ease-in, opacity cut at the last tenth, world recovers last.
+ *
+ * ALPHA IS CONSERVED IN EVERY CLASS, and that is the whole of G-NO-FLASH. The root pair
+ * cross-fades under `plus-lighter`, so the two halves must sum to 1 at every t: identical
+ * durations, a LINEAR clock on both, and complementary keyframes. A spring curve on
+ * either half makes the sum dip below 1 mid-flight, and a sum below 1 over a light page
+ * IS the white flash. Springs stay on the transform-bearing NAMED groups, where alpha is
+ * not the channel carrying the picture.
+ *
+ * THE DOCK IS NOT IN THIS GRAMMAR, BY RULING. GREENFIELD-TERMINAL R-D (:257) measured
+ * F06's "flash the screen" as UNREPRODUCED — `main` opacity flat 1.000, zero blank frames
+ * — and ruled the dock's own route change a deliberate ≤1-frame cut whose continuity
+ * object is the dock seat already open on the destination. So no rule here names a dock
+ * selector and no dock element is ever given a window name; the dock rides inside the
+ * root snapshot like any other unnamed chrome. */
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
     /* The snapshots are element-sized; without this the shorter of the pair
        letterboxes against the page during the fade. */
     block-size: 100%;
 }
-html:active-view-transition-type(route)::view-transition-old(root),
-html:active-view-transition-type(route)::view-transition-new(root) {
-    animation-duration: var(--spring-present-duration);
+
+/* The conserved pair — one rule, every class. */
+html:active-view-transition-type(route, zoom, lateral, collapse)::view-transition-old(root),
+html:active-view-transition-type(route, zoom, lateral, collapse)::view-transition-new(root) {
     animation-timing-function: linear;
 }
-html:active-view-transition-type(route)::view-transition-old(root) {
+html:active-view-transition-type(route, zoom, lateral, collapse)::view-transition-old(root) {
     animation-name: gl-vt-route-out;
 }
-html:active-view-transition-type(route)::view-transition-new(root) {
+html:active-view-transition-type(route, zoom, lateral, collapse)::view-transition-new(root) {
     animation-name: gl-vt-route-in;
+}
+
+/* ── route — the cut. The root pair IS the transition; no world moves, because there is
+   no window in front of it for a world to sit behind. */
+html:active-view-transition-type(route)::view-transition-old(root),
+html:active-view-transition-type(route)::view-transition-new(root) {
+    animation-duration: var(--route-route-clock);
+}
+
+/* ── The world, wherever a window travels. Its alpha rides the world clock in every
+   class that has one, which is what puts the world's finish after the foreground's. */
+html:active-view-transition-type(zoom, lateral)::view-transition-old(root),
+html:active-view-transition-type(zoom, lateral)::view-transition-new(root) {
+    animation-duration: var(--route-world-clock);
+}
+html:active-view-transition-type(collapse)::view-transition-old(root),
+html:active-view-transition-type(collapse)::view-transition-new(root) {
+    animation-duration: var(--route-world-exit-clock);
+}
+
+/* zoom — RECEDE, all three channels together (MOTION-CANON §3(d)): the world blurs,
+   dims and travels while it leaves. The FOCUS PUNCH-OUT costs nothing extra: the window
+   and its label are named, so they are lifted OUT of this snapshot and the blur reaches
+   every sibling but not the hero. `brightness` carries the dim so chroma survives and so
+   the alpha channel stays free for the conserved fade. */
+html:active-view-transition-type(zoom)::view-transition-old(root) {
+    animation-name: gl-vt-route-out, gl-route-recede;
+    animation-duration: var(--route-world-clock), var(--route-world-clock);
+    animation-timing-function: linear, var(--route-world-spring);
+    animation-fill-mode: both, both;
+}
+
+/* collapse — the world we are returning to recovers LAST, starting only once the window
+   is gone (the codex's backdrop un-blurring after the card has left). `backwards` fill is
+   what holds it blurred through the delay instead of flashing clear and then blurring. */
+html:active-view-transition-type(collapse)::view-transition-new(root) {
+    animation-name: gl-vt-route-in, gl-route-recover;
+    animation-duration: var(--route-world-exit-clock), var(--route-world-exit-clock);
+    animation-delay: 0s, var(--route-collapse-clock);
+    animation-timing-function: linear, var(--ease-out);
+    animation-fill-mode: both, backwards;
+}
+
+/* lateral — the world trails the content at the parallax ratio. `--route-direction` is
+   written by the mechanism (+1 forward, −1 back, 0 unknown), so an unknown direction
+   degrades to a pure cross-fade rather than to a guessed push. */
+html:active-view-transition-type(lateral)::view-transition-old(root) {
+    animation-name: gl-vt-route-out, gl-route-world-push-out;
+    animation-duration: var(--route-world-clock), var(--route-world-clock);
+    animation-timing-function: linear, var(--route-world-spring);
+    animation-fill-mode: both, both;
+}
+html:active-view-transition-type(lateral)::view-transition-new(root) {
+    animation-name: gl-vt-route-in, gl-route-world-push-in;
+    animation-duration: var(--route-world-clock), var(--route-world-clock);
+    animation-timing-function: linear, var(--route-world-spring);
+    animation-fill-mode: both, both;
+}
+
+/* ── The window — the ONE element that participates. The group carries the rect, so the
+   extent morph is the group's animation and nothing else's; `panel`'s intrinsic mid-clock
+   peak is what makes the arrival read as a landing bloom rather than as a slide.
+
+   REVEALED BY CLIP (§9.6, and §9.5's "stops at the content column's gutter"). A snapshot
+   is laid out at the group's inline size with its own natural aspect, so a tall page
+   flying into a short cell paints far outside the rect it is supposedly travelling to.
+   Clipping the group is the canon's own answer — the destination is complete and the
+   window uncovers it — and it is the difference between a page arriving and a page
+   spilling. */
+::view-transition-group(gl-route-window) {
+    overflow: clip;
+}
+
+html:active-view-transition-type(zoom)::view-transition-group(gl-route-window) {
+    animation-duration: var(--route-zoom-clock);
+    animation-timing-function: var(--route-zoom-spring);
+}
+html:active-view-transition-type(lateral)::view-transition-group(gl-route-window) {
+    animation-duration: var(--route-lateral-clock);
+    animation-timing-function: var(--route-lateral-spring);
+}
+html:active-view-transition-type(collapse)::view-transition-group(gl-route-window) {
+    animation-duration: var(--route-collapse-clock);
+    animation-timing-function: var(--route-collapse-spring);
+}
+
+/* The window's own pair is conserved too. `lateral` cross-fades over its whole clock,
+   because two sibling articles are equals replacing one another and both must be seen
+   travelling. `zoom` does NOT: I4 measures the artwork→surface crossfade at ~42ms, the
+   inhale's own window, and the reason is visible the moment it is authored otherwise —
+   a source snapshot held at ×1.57 while the group scales it another 1.8× paints a
+   3×-magnified ghost of the cell across the arriving page for the rest of the flight.
+   The handover is the inhale; what flies the remaining distance is the destination. */
+html:active-view-transition-type(zoom, lateral)::view-transition-old(gl-route-window),
+html:active-view-transition-type(zoom, lateral)::view-transition-new(gl-route-window) {
+    animation-timing-function: linear;
+}
+html:active-view-transition-type(zoom)::view-transition-old(gl-route-window),
+html:active-view-transition-type(zoom)::view-transition-new(gl-route-window) {
+    animation-duration: var(--route-inhale-clock);
+}
+html:active-view-transition-type(lateral)::view-transition-old(gl-route-window),
+html:active-view-transition-type(lateral)::view-transition-new(gl-route-window) {
+    animation-duration: var(--route-lateral-clock);
+}
+html:active-view-transition-type(zoom)::view-transition-new(gl-route-window) {
+    animation-name: gl-vt-route-in;
+}
+
+/* lateral moves the window itself: the two sibling articles occupy the SAME rect, so the
+   group has no travel to interpolate and the push has to be authored. Content by
+   `--route-slide`, world by an eighth of it — the 1:8 the codex measured. */
+html:active-view-transition-type(lateral)::view-transition-new(gl-route-window) {
+    animation-name: gl-vt-route-in, gl-route-slide-in;
+    animation-duration: var(--route-lateral-clock), var(--route-lateral-clock);
+    animation-timing-function: linear, var(--route-lateral-spring);
+    animation-fill-mode: both, both;
+}
+
+/* THE INHALE — the tapped body acknowledges the tap before it becomes anything else.
+   It rides the old snapshot, which is the source rect, and it holds: the conserved fade
+   takes the swollen source away over the rest of the flight while the group carries the
+   rect to its destination. */
+html:active-view-transition-type(zoom)::view-transition-old(gl-route-window) {
+    animation-name: gl-vt-route-out, gl-route-inhale;
+    animation-duration: var(--route-inhale-clock), var(--route-inhale-clock);
+    animation-timing-function: linear, var(--ease-out);
+    animation-fill-mode: both, forwards;
+}
+html:active-view-transition-type(lateral)::view-transition-old(gl-route-window) {
+    animation-name: gl-vt-route-out, gl-route-slide-out;
+    animation-duration: var(--route-lateral-clock), var(--route-lateral-clock);
+    animation-timing-function: linear, var(--route-lateral-spring);
+    animation-fill-mode: both, both;
+}
+
+/* THE OPACITY CUT — the return holds its picture and then cuts, rather than dissolving.
+   The `90%` is the table's `opacityCutAt`, spelt here because a `@keyframes` selector
+   cannot read a custom property; `route-motion.test.ts` binds the two.
+
+   THE CUT IS A PAIR, AND IT HAS TO BE. A held-opaque departure over an ordinarily
+   fading arrival sums to 1.9 under `plus-lighter` — the same defect G-NO-FLASH names,
+   pointed the other way, and it paints as a magnified double exposure rather than as a
+   white frame, which is why it survives a gate that only reads the root. The arrival is
+   therefore held at ZERO for exactly as long as the departure is held at one, and the
+   two swap inside the last tenth: conserved at every t, and a cut is what it reads as. */
+html:active-view-transition-type(collapse)::view-transition-old(gl-route-window) {
+    animation-name: gl-route-cut;
+    animation-duration: var(--route-collapse-clock);
+    animation-timing-function: var(--route-collapse-spring);
+    animation-fill-mode: both;
+}
+html:active-view-transition-type(collapse)::view-transition-new(gl-route-window) {
+    animation-name: gl-route-cut-in;
+    animation-duration: var(--route-collapse-clock);
+    animation-timing-function: var(--route-collapse-spring);
+    animation-fill-mode: both;
+}
+
+/* AN UNMATCHED WINDOW RIDES THE ROOT PAIR. Every rule above clocks the window on the
+   HANDOVER — the inhale's 42ms, the lateral's push, the cut's last tenth — and a handover
+   clock is only correct when there is something to hand over from. A half with no partner
+   is composited over the ROOT pair instead of against a twin, so on its own clock it
+   reaches α=1 while the root pair is still conserving to 1, and the rect it covers sums to
+   ~1.9: the same additive defect the cut pair was cured for, arriving through the door the
+   mechanism cannot close. `routeTransition` declines to name a destination whose source
+   named nothing, which shuts the reversible direction; the mirror — a captured source
+   whose destination never resolved — cannot be un-named after the snapshot, and is shut
+   here.
+
+   The physics is :230-235's, restated for one half: over the unmatched rect the sum is
+   `α_root-other-half + α_window`, which is 1 at every t iff the window rides the ROOT
+   pair's own keyframe on the ROOT pair's own clock. That clock is per class, so these
+   forks are too. `:only-child` is the runtime's own word for "this pair has one half" —
+   the same selector the `.gl-list-item` group uses two rules below. */
+html:active-view-transition-type(zoom, lateral)::view-transition-old(gl-route-window):only-child {
+    animation-name: gl-vt-route-out;
+    animation-duration: var(--route-world-clock);
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+}
+html:active-view-transition-type(zoom, lateral)::view-transition-new(gl-route-window):only-child {
+    animation-name: gl-vt-route-in;
+    animation-duration: var(--route-world-clock);
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+}
+html:active-view-transition-type(collapse)::view-transition-old(gl-route-window):only-child {
+    animation-name: gl-vt-route-out;
+    animation-duration: var(--route-world-exit-clock);
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+}
+html:active-view-transition-type(collapse)::view-transition-new(gl-route-window):only-child {
+    animation-name: gl-vt-route-in;
+    animation-duration: var(--route-world-exit-clock);
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+}
+
+/* ── PERSISTENT CHROME. A rail, a footer dock, a shell header — anything present in BOTH
+   states and replaced by neither. Left unnamed it rides the root snapshot and therefore
+   recedes, blurs and dims against its own unmoved copy; named without this class it
+   cross-fades on the UA's own quarter-second while its contents swap. A consumer adds
+   `view-transition-class: gl-route-chrome` beside its unique name and gets the grammar's
+   own handover clock: resolve fast, then hold still. It is the continuity object, and
+   continuity is the whole of its job. */
+::view-transition-group(.gl-route-chrome),
+::view-transition-old(.gl-route-chrome),
+::view-transition-new(.gl-route-chrome) {
+    animation-duration: var(--route-inhale-clock);
+    animation-timing-function: linear;
+}
+
+/* LABEL-DROPS-FIRST — the label is its own name so it can leave before the body it sits
+   on, and it leaves inside the inhale's own window. */
+html:active-view-transition-type(zoom, lateral, collapse)::view-transition-old(gl-route-label) {
+    animation-name: gl-vt-route-out;
+    animation-duration: var(--route-inhale-clock);
+    animation-timing-function: linear;
+}
+html:active-view-transition-type(zoom, lateral, collapse)::view-transition-new(gl-route-label) {
+    animation-name: gl-vt-route-in;
+    animation-duration: var(--route-inhale-clock);
+    animation-timing-function: linear;
 }
 
 /* Added / removed members — the `:only-child` trick from the group guide: a
@@ -85,10 +334,93 @@ html:active-view-transition-type(route)::view-transition-new(root) {
 
 @keyframes gl-vt-slide-in  { from { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
 @keyframes gl-vt-slide-out { to   { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
-/* Root carries NO translate — the rise belongs to a named sub-element group, and
- * a root-wide translate breaks the `plus-lighter` overlap. */
+/* The conserved pair. Root carries NO translate in these two: the rise belongs to a
+ * named sub-element group, and a root-wide translate inside the ALPHA keyframe breaks the
+ * `plus-lighter` overlap. The route grammar's world channels below therefore travel in
+ * their OWN keyframes, which touch `translate` and `filter` and never `opacity`. */
 @keyframes gl-vt-route-in  { from { opacity: 0; } }
 @keyframes gl-vt-route-out { to   { opacity: 0; } }
+
+/* ── The route grammar's channels. Not one of them writes `opacity`. ── */
+
+/* RECEDE — §3(d)'s three channels, together, on the departing world. */
+@keyframes gl-route-recede {
+    from {
+        filter: blur(0) brightness(1);
+        translate: 0 0;
+    }
+    to {
+        filter: blur(var(--route-world-blur)) brightness(var(--route-world-dim));
+        translate: 0 calc(-1 * var(--route-world-travel));
+    }
+}
+
+/* RECOVER — the same three, run backwards, on the world being returned to. */
+@keyframes gl-route-recover {
+    from {
+        filter: blur(var(--route-world-blur)) brightness(var(--route-world-dim));
+        translate: 0 calc(-1 * var(--route-world-travel));
+    }
+    to {
+        filter: blur(0) brightness(1);
+        translate: 0 0;
+    }
+}
+
+/* The parallax pair — the world moves at an eighth of the content, in the direction the
+ * mechanism wrote. At `--route-direction: 0` both legs are zero and the class degrades to
+ * the conserved cross-fade, which is the honest read of "we do not know which way". */
+@keyframes gl-route-world-push-out {
+    to {
+        translate: calc(var(--route-direction, 0) * -1 * var(--route-world-slide)) 0;
+    }
+}
+@keyframes gl-route-world-push-in {
+    from {
+        translate: calc(var(--route-direction, 0) * var(--route-world-slide)) 0;
+    }
+}
+@keyframes gl-route-slide-out {
+    to {
+        translate: calc(var(--route-direction, 0) * -1 * var(--route-slide)) 0;
+    }
+}
+@keyframes gl-route-slide-in {
+    from {
+        translate: calc(var(--route-direction, 0) * var(--route-slide)) 0;
+    }
+}
+
+/* THE INHALE — ×1.57 in 42ms, razor sharp and z-lifted (the group is above the root pair
+ * by construction, so the lift is free). */
+@keyframes gl-route-inhale {
+    to {
+        scale: var(--route-inhale-scale);
+    }
+}
+
+/* THE OPACITY CUT — held, then cut at the last tenth. `90%` is `ROUTE_CONSTANTS.
+ * opacityCutAt`; a keyframe selector cannot read a custom property, so this is its one
+ * site and the mirror test binds it to the table. */
+@keyframes gl-route-cut {
+    0%,
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+/* Its conserving twin — held at zero for exactly as long, and the pair sums to 1. */
+@keyframes gl-route-cut-in {
+    0%,
+    90% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 
 /* Keep the non-transitioned UI interactive while the snapshot animates. */
 ::view-transition { pointer-events: none; }

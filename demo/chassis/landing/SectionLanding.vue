@@ -19,7 +19,9 @@ function tileFor(story: Story) {
 </script>
 
 <template>
-    <article class="mx-auto w-full max-w-6xl">
+    <!-- The section landing is the WINDOW for its own path — the card on the catalog
+         flies onto this rect and back off it. -->
+    <article :data-route-window="route.path" class="mx-auto w-full max-w-6xl">
         <StoryHero
             v-if="category && landing"
             :background="landing.background"

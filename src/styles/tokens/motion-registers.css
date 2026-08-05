@@ -27,6 +27,20 @@
    Toast rides `enter-overlay` too (F20 parity) — the same spring/scale/exit contract
    as the Dialog; there is no separate materialization fork.
 
+   ── The ROUTE registers — the same table shape, one row per nav class ────────
+   | register        | spring row | clock                  |
+   |-----------------|------------|------------------------|
+   | route           | present    | duration               |  the chrome-only cut: nothing is continuous, so the whole transition is the alpha-conserving root cross-fade.
+   | zoom            | panel      | duration               |  forward into the tapped cell: the extent morph, whose intrinsic peak IS the landing bloom.
+   | lateral         | dock       | duration               |  sibling to sibling: the coordinated push.
+   | collapse        | (bezier)   | panel exit-duration    |  back out: `--ease-in`, never a spring, on the exit reader of the row it reverses.
+
+   This block is a MIRROR of `composables/motion/route/routeGrammar.ts`, not a second
+   register — `tests/styles/route-motion.test.ts` derives it from the TS rows and reds
+   on any drift, exactly as the `--engage-*` block below mirrors `engageEnvelopes.ts`.
+   Retune a class by editing the TABLE. The recipe body that binds these by
+   `:active-view-transition-type()` is `styles/view-transition.css`.
+
    ── The exit register ────────────────────────────────────────────────────────
    An exit is 0.6 × the ENTRY of the SAME job, so it is a RATIO of the entering
    row's own settle — `--spring-<row>-exit-duration`, generated beside the entry
@@ -72,6 +86,58 @@
     --enter-tooltip-scale: 0.97;
     --enter-tooltip-blur: 0px;
     --enter-tooltip-slide: 0px;
+
+    /* ── THE ROUTE REGISTERS — one row per nav class (the table above) ──────────
+       Four classes, four curve/clock pairs, and not one spring figure restated. The
+       WORLD channel is shared: every class that moves a window recedes the world it
+       left on the ONE row whose job that is, so the recede's clock is written once
+       here rather than per class. */
+    --route-route-spring: var(--spring-present);
+    --route-route-clock: var(--spring-present-duration);
+    --route-zoom-spring: var(--spring-panel);
+    --route-zoom-clock: var(--spring-panel-duration);
+    --route-lateral-spring: var(--spring-dock);
+    --route-lateral-clock: var(--spring-dock-duration);
+    /* An exit is never a spring (§7), and it rides the exit reader of the row it
+       reverses — `zoom`'s — so a recede cannot outlast the arrival it undoes. */
+    --route-collapse-spring: var(--ease-in);
+    --route-collapse-clock: var(--spring-panel-exit-duration);
+    --route-world-spring: var(--spring-world);
+    --route-world-clock: var(--spring-world-duration);
+    --route-world-exit-clock: var(--spring-world-exit-duration);
+
+    /* ── The route grammar's measured constants ──
+       Four figures, from EXEMPLARS-CODEX I4/I4b. Each is carried at exactly TWO sites in
+       `src/` — the `ROUTE_CONSTANTS` table and this mirror of it — and
+       `route-motion.test.ts` censuses every stylesheet under `src/` plus every module on
+       the `composables/motion` surface, comments and string literals stripped, and reds
+       on a third site or on a `--route-*` token declared in a second file. They are corpus
+       measurements, not derivations — there is no table to re-derive them from, which is
+       why they are fenced here instead of spelt inline at the recipe. */
+    --route-inhale-scale: 1.57;
+    --route-inhale-clock: 42ms;
+    --route-parallax: 0.125;
+    /* The fourth — the opacity hold's end — has no token: a `@keyframes` selector cannot
+       read a custom property, so it is spelt at its ONE keyframe in `view-transition.css`
+       and bound to the table there. */
+
+    /* The RECEDE's two remaining channels (§3(d): translateY + blur + dim, all three).
+       Blur binds the ladder's FLOATING rung, `--glass-blur-floating-radius` — 20px, which
+       is the corpus's own measured figure, reached by naming a rung rather than by
+       spelling a radius (raw `blur(Npx)` is forbidden, glass.css). The rung above it,
+       `--glass-blur-overlay-radius` at 22px, is the ladder's top and belongs to overlay
+       surfaces; a world receding behind a window is not one. The dim is the corpus's ~45%
+       drop, on `brightness` so chroma survives (§9 item 1) and so the alpha channel stays
+       free for the cross-fade. Travel is the parallax ratio over the block viewport — the
+       same 1:8 that governs the lateral push, spent once. */
+    --route-world-blur: var(--glass-blur-floating-radius);
+    --route-world-dim: 0.55;
+    --route-world-travel: calc(var(--route-parallax) * 100lvb);
+    /* The lateral pair, and the whole of "parallax ~1:8": the content offsets by an
+       eighth of the inline viewport — a nudge, never a carousel (I4b: "the neighbours do
+       not move") — and the world behind it by an eighth of THAT. */
+    --route-slide: calc(var(--route-parallax) * 100lvi);
+    --route-world-slide: calc(var(--route-parallax) * var(--route-slide));
 
     /* ── Named exit clock ──
        The overlay register's recede reads the exit clock DERIVED from the row it
