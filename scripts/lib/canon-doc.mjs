@@ -53,7 +53,6 @@ export const CANON_HOMES = Object.freeze({
     "component:dock": "src/components/dock/README.md",
     "component:easing": "src/components/easing/README.md",
     "component:handmark": "src/components/handmark/README.md",
-    "component:instrument-chassis": "src/components/instrument-chassis/README.md",
 });
 
 /** Resolve a canon key to an ABSOLUTE path. Throws on unknown key (fail-explicit). */

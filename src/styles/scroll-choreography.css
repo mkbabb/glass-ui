@@ -4,8 +4,8 @@
  * Cascade rung AFTER scroll-driven.css. glass-ui owns the native scroll-driven
  * SUBSTRATE (scroll-driven.css `scroll()`/`view()` + the `--demo-main-progress`
  * named timeline + the `supportsCssTimeline` harden) but composes none of the
- * CHOREOGRAPHY — the page-load BUILD, the section CASCADE, the scroll-PINNED
- * fixed-stage-advances-time reveals + the smooth-scroll register. The award-winners
+ * CHOREOGRAPHY — the page-load BUILD, the section CASCADE + the smooth-scroll
+ * register. The award-winners
  * hand-roll these on Lenis+GSAP (a 20-40KB JS dependency); glass-ui ships the
  * NATIVE register — the platform now ships `scroll()`/`view()`/`timeline-scope`
  * natively, off the compositor at 60fps (the no-net-dep fence; the 2026
@@ -16,12 +16,6 @@
  *   .scroll-cascade — the orchestrated section cascade (per-child view() timeline,
  *                     the implicit stagger [NO setTimeout], the spring-clocked
  *                     coupled transform+opacity build).
- *   .scroll-pin     — the fixed-stage-advances-time scroll-pinned register
- *                     (position: sticky stage; the stage's internal phases advance
- *                     against a spring-damped `--pin-t` the keyframes.js scroll spine
- *                     `useScrollPin` writes per scroll tick — EVERY engine, no
- *                     `animation-timeline`. The dead `--gl-pin` named scroll-timeline
- * is EXCISED).
  *   .smooth-scroll  — the native scroll-behavior: smooth opt-in (PRM-gated,
  *                     zero runtime — a smooth-scroll under reduce is a vestibular
  *                     concern, so the smooth interpolation is dropped under PRM).
@@ -30,11 +24,9 @@
  * the whole register sits under `@media (prefers-reduced-motion: no-preference)`
  * so under PRM no scroll/build animation attaches at all and content renders in
  * its terminal state (the `from` keyframe never applies because the animation
- * never binds; the .scroll-pin stage shows its terminal phase, no sweep). The
- * `view()`-cascade recipe sits under a second `@supports (animation-timeline: …)`
- * gate so a non-supporting engine gets the STATIC cascade layout. The .scroll-pin
- * register needs NO `@supports` gate — its `--pin-t` is JS-written by `useScrollPin`
- * on every engine; under PRM the composable zeroes the scrub (1:1, no drift).
+ * never binds). The `view()`-cascade recipe sits under a second
+ * `@supports (animation-timeline: …)` gate so a non-supporting engine gets the
+ * STATIC cascade layout.
  *
  * COMPOSITOR-ONLY (the proof:no-layout-animation floor): every
  * @keyframes step + transition animates ONLY transform/translate/scale/opacity/
@@ -50,11 +42,7 @@
  * The liquid-weight scroll tokens.
  *
  * The `--ease-scroll-spring` is the compositor spring-scrub the cascade rides
- * (ZERO JS). The pin-phase fractions are the calc-friendly window bounds the
- * `--pin-t` recipes read (a NUMBER, not the `%` the dead `animation-range` used).
- * All golden-proportioned (1/φ family). The liquid-weight scrub itself is a JS-side
- * param of `useScrollScene`/`useScrollPin` (the φ-derived defaults live in the
- * composables, PRM → 0 inside them). The cartoon-punch deps
+ * (ZERO JS), golden-proportioned (1/φ family). The cartoon-punch deps
  * (`--motion-weight`/`--ease-cartoon-punch`/`--shadow-cartoon-md`) SHIP today and are
  * consumed via `var(…, fallback)` so the recipes stay GREEN. */
 :root {
@@ -64,12 +52,6 @@
        arm was COLLAPSED — both targets parse
        `linear()`, so the spring twin is the sole source. */
     --ease-scroll-spring: var(--spring-gentle);
-    /* The pin reveal/expand windows as 0..1 fractions (the `--pin-t` recipes read
-       a NUMBER for the calc, not the `%` the dead timeline used). 1/φ² + 0.9. */
-    --scroll-pin-phase-reveal-end-frac: 0.382;
-    --scroll-pin-phase-expand-end-frac: 0.9;
-    /* The volume-preserving squash depth — 1 − 1/φ⁴. */
-    --scroll-pin-squash-floor: 0.944;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -79,7 +61,7 @@
  * update, with no per-child `--i` stagger or Vue leave window.
  * The `gl-page-build`/`gl-page-build-fade` keyframes + the `--scroll-build-rise`/
  * `--scroll-build-step` tokens are deleted with it (clean break, no alias). The
- * `.scroll-cascade`/`.scroll-pin`/`.smooth-scroll` registers below are UNTOUCHED —
+ * `.scroll-cascade`/`.smooth-scroll` registers below are UNTOUCHED —
  * they are scroll-driven, not the mount-driven page entrance.
  * ─────────────────────────────────────────────────────────────────────────── */
 
@@ -175,106 +157,11 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
- * .scroll-pin — the fixed-stage-advances-time scroll-pinned register, RE-INVENTED
- * on a JS-written `--pin-t`.
- *
- * WHY NOT A NAMED SCROLL-TIMELINE: binding the phase reveals to a
- * named `scroll-timeline: --gl-pin` declared on `.scroll-pin` + `timeline-scope:
- * --gl-pin` is dead. A named scroll-timeline measures the DECLARING element's OWN scroll
- * progress — but `.scroll-pin` is `overflow: visible` with zero internal scroll
- * extent, so it is NOT a scroll port: `--gl-pin`'s `currentTime` stays permanently
- * `null` and the bound `gl-pin-reveal` animation parks at its `from` keyframe
- * forever (dead on EVERY engine, including those that fully support the native
- * feature — structural deadness, not a Safari degrade).
- *
- * THE FIX (every engine, no `animation-timeline`, no `@supports` gate): the stage
- * is plain `position: sticky` + `contain: layout paint` (bounded recalc); the
- * phases read a SPRING-DAMPED `--pin-t ∈ [0, 1]` that `useScrollPin` (the
- * keyframes.js scroll spine — `SpringProgress` over the ONE `createScrollReader`)
- * writes off the REAL scroll port per coalesced tick. The reveal arrives with
- * inertia, overshoots (ζ ≈ 0.85), then settles — the cartoon-slam felt register.
- * Works on Safari 15+ with no timeline primitive.
- *
- * Liquid weight is the DEFAULT here (the §L4 no-stiff-snap law): `useScrollPin`'s
- * `SpringProgress` keeps converging AFTER the finger lifts. PRM zeroes the scrub
- * (the pin scrub → 0 under reduce inside the composable) so `--pin-t` tracks
- * scroll 1:1 with no interpolated drift — the vestibular floor.
- * ─────────────────────────────────────────────────────────────────────────── */
-
-/* The typed pin progress register — `inherits: true` so the sticky stage + the
-   phase children read the `--pin-t` written on the `.scroll-pin` container; a typed
-   `@property` makes the calc cheaper + lets an optional native cosmetic-parallax leg
-   composite it. Registered OUTSIDE the PRM gate (a custom property is inert — it only
-   drives motion through the recipes below, which ARE PRM-gated). */
-@property --pin-t {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 0;
-}
-
-.scroll-pin {
-    position: relative;
-    block-size: var(--scroll-pin-stage-height, 320vh);
-}
-
-.scroll-pin-stage {
-    position: sticky;
-    inset-block-start: 0;
-    /* Bounded main-thread recalc — the `--pin-t` write is a style recalc on this
-       isolated subtree, NOT a reflow (translate/scale/opacity don't reflow). */
-    contain: layout paint;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    /* Phase 1 — the reveal. Reads `--pin-t` mapped across the reveal window
-       (0 .. --scroll-pin-phase-reveal-end-frac). The lift + squash ride the
-       compositor longhands (`translate`/`scale` — NEVER the `transform` shorthand,
-       which would fold a centering translate; the longhands stack independently).
-       The squash floor is volume-preserving (a hair of squash on entry). */
-    .scroll-pin-stage .scroll-pin-phase-reveal {
-        --t: clamp(
-            0,
-            calc(var(--pin-t, 0) / var(--scroll-pin-phase-reveal-end-frac, 0.382)),
-            1
-        );
-        opacity: var(--t);
-        translate: 0 calc((1 - var(--t)) * var(--scroll-pin-lift, 2.5rem));
-        scale: calc(
-            var(--scroll-pin-squash-floor, 0.944) +
-                (1 - var(--scroll-pin-squash-floor, 0.944)) * var(--t)
-        );
-        /* will-change scoped to the active phase — added while the pin is in range,
-           never the full 320vh lifetime (the audit's transient-promotion rule). */
-        will-change: transform, opacity;
-    }
-
-    /* Phase 2 — the settle/drift. Reads the reveal-end..expand-end window of
-       `--pin-t`; a gentle compositor drift as the reader continues past, never a
-       layout move. */
-    .scroll-pin-stage .scroll-pin-phase-settle {
-        --t: clamp(
-            0,
-            calc(
-                (var(--pin-t, 0) - var(--scroll-pin-phase-reveal-end-frac, 0.382)) /
-                    (
-                        var(--scroll-pin-phase-expand-end-frac, 0.9) -
-                            var(--scroll-pin-phase-reveal-end-frac, 0.382)
-                    )
-            ),
-            1
-        );
-        opacity: 1;
-        translate: 0 calc(var(--t) * -1 * var(--scroll-pin-lift, 2.5rem));
-        scale: calc(1 + 0.02 * var(--t));
-    }
-}
-
-/* ─────────────────────────────────────────────────────────────────────────────
  * .smooth-scroll — the native smooth-scroll opt-in.
  *
  * The native `scroll-behavior: smooth` (CSS-first, zero runtime — NOT a JS rAF
  * momentum loop, which IS Lenis and is the fence). An OPT-IN class the scroller
- * (`<main>`, a `.scroll-pin` container) applies. PRM-GATED: under
+ * (`<main>`, a sticky stage) applies. PRM-GATED: under
  * `prefers-reduced-motion: reduce` the smooth interpolation is DROPPED and the
  * jump-scroll is correct (a smooth-scroll over an anchor-jump is a vestibular
  * concern). A consumer wanting Lenis-grade momentum brings it in THEIR app (the

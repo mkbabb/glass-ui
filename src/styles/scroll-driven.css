@@ -10,15 +10,15 @@
  *                           The `useScrollProgress` composable replacement.
  *   [data-scroll-reveal]  — fade + lift on entry, one `view()` timeline PER
  *                           child (the stagger is implicit — no setTimeout
- *                           cascade). The `useStaggerReveal` composable
- *                           replacement.
+ *                           cascade). It replaced the JS stagger composable
+ *                           outright; there is no JS writer left on this axis.
  *
  * DUAL-PATH with a SINGLE writer (no double-run): when the engine supports
  * `animation-timeline`, the CSS here owns the visual axis and the composables
  * gate their listener/observer machinery OFF (so CSS and JS never both write
  * the same target). When the engine does NOT support it, this block is skipped
  * by `@supports` and the composable is the sole writer. See the gate at the top
- * of `useScrollProgress.ts` / `useStaggerReveal.ts`.
+ * of `useScrollProgress.ts` (the reveal axis has no surviving JS writer).
  *
  * Baseline: `scroll-driven-animations` = Newly Available → adopt CSS as
  * primary, keep the composable as the ≤ 20-LOC feature-detected fallback.
@@ -27,6 +27,20 @@
  * `prefers-reduced-motion: no-preference`, so under PRM no scroll animation
  * attaches at all and content renders in its terminal state (the `from`
  * keyframe is never applied because the animation never binds).
+ *
+ * MEMBERSHIP, read off the tree (BK.#18 W-DELETE, §1.1 whole-repo walk run this
+ * seat). This cut deleted `demo/stories/motion/scroll/ScrollNativeBody.vue`, the
+ * repo's ONLY markup writer of both selectors — so the in-repo SPECIMEN is gone.
+ * Both registers nevertheless carry LIVE CROSS-REPO writers, which is the class
+ * that binds (RATIFICATION §1.1):
+ *   .scroll-progress     → fourier-analysis `web/src/components/paper/PaperView.vue:314`
+ *                          (`class="paper-progress-bar scroll-progress"`).
+ *   [data-scroll-reveal] → speedtest `src/components/survey/SurveyWizard.vue:88`
+ *                          (the FadingScroll host; its `:641` cascade table names
+ *                          `[data-scroll-reveal] > *` by rule).
+ * So NEITHER register is dead and neither is carried out here. What IS owed is the
+ * missing in-repo specimen — routed with the dead-selector census (BK RT-18B → #19).
+ * Reach is read off the tree, never off this comment.
  */
 
 /* ── Scroll progress (scroll() timeline) — drives a 0..1 scaleX bar.
@@ -60,7 +74,7 @@
     }
 }
 
-/* ── View-driven entry (view() timeline) — the useStaggerReveal replacement.
+/* ── View-driven entry (view() timeline) — the sole reveal writer.
  * Each child of a `[data-scroll-reveal]` scroller fades + lifts on entry. The
  * stagger is implicit in the per-element view-timeline (each child owns its
  * own timeline), so NO setTimeout cascade is needed. Horizontal scrollers add

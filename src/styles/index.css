@@ -120,8 +120,8 @@
  *                              primary over the JS-composable fallback.
  *  10a'. scroll-choreography.css — the scroll-choreography register
  *                              (.scroll-build page-build / .scroll-cascade
- *                              section-cascade / .scroll-pin scroll-pinned + the
- *                              native .smooth-scroll opt-in) on the native
+ *                              section-cascade + the native .smooth-scroll
+ *                              opt-in) on the native
  *                              scroll()/view()/timeline-scope substrate; NO
  *                              Lenis/GSAP dependency.
  *  10a''. scroll-chrome.css  — the scroll-driven floating-
@@ -143,9 +143,6 @@
  *                              `@layer components` hover/highlight rules source-
  *                              order-win over `.interactive-item:hover` (same layer
  *                              + specificity) — the cascade-trap-safe placement.
- *  12. components/instrument-chassis/styles.css — physical sleeve +
- *                              private region grooves. Loaded after utilities so
- *                              component-local recipes can override.
  *  13. components/drawer/styles.css — detented bottom-sheet grammar (glass
  *                             sheet surface + peek handle + snap-stop rules).
  *  15. components/tabs/styles/* — SegmentedTabs overflow/indicator grammar.
@@ -177,7 +174,6 @@
 @import "./glass-specular-track.css";
 @import "./paper.css";
 @import "../components/dark-mode-toggle/dark-mode-toggle.css";
-@import "../components/header-ribbon/styles.css";
 @import "../components/dock/styles/index.css";
 @import "../components/dock/styles/controls.css";
 @import "../components/card/styles.css";
@@ -201,7 +197,6 @@
 @import "../components/_shared/menu/menu.css";
 @import "../components/button/styles.css";
 @import "../components/configurator/styles.css";
-@import "../components/instrument-chassis/styles.css";
 /* hover-popover.css deleted: <HoverPopover> folded onto the
    sealed <Popover trigger="hover"> union; its content rides the shared
    glass-floating + glass-reveal recipe, so the bespoke .hover-popover-panel
@@ -230,21 +225,16 @@
 /* The thin, radius-following masked scroll-progress band. */
 @import "../components/scroll-progress-rim/styles.css";
 
-/* The hero-scale earned-gold completion seal: a one-shot
-   gold-draw mark (a `stroke-dashoffset` wipe on the 4 `@property` motion tokens
-   `--seal-draw`/`--seal-scale`/`--seal-glint`/`--seal-ink`, registered in
-   tokens/property-regs.css). The ink reads the earned-gold register; the glint
-   composes the metal-glow catch-light. One-shot, PRM-gated,
-   compositor-only — the feedback-surface partial. */
-@import "../components/completion-seal/styles.css";
-
 /* The self-drawing arrival register (`.draw-rule` /
    `[data-draw-in]`). A hairline / divider / underline draws ITSELF in via
    `transform: scaleX(0→1)` (or a `clip-path: inset()` wipe) on the NO-OVERSHOOT
    arrival ease `--ease-out-expo`, at `--draw-in-duration = calc(0.52s * --motion-
    tempo)` — categorically NOT a spring (a rule that overshoots past its own end reads
-   as jitter). It replaces the ad-hoc, too-bouncy masthead divider; the demo
-   masthead rule + CompletionSeal + HandMark are its consumers. Compositor-only,
+   as jitter). It codifies the arrival law a hairline/divider/underline draws on.
+   MEMBERSHIP TODAY IS ZERO: `.draw-rule`/`[data-draw-in]` carry no src/demo
+   call-site (no demo masthead element exists, and HandMark keeps its OWN
+   `draw-on` dashoffset/clip-path recipe — it does not compose this register).
+   The reach is read off the tree, never off this comment. Compositor-only,
    PRM-static. */
 @import "./draw-in.css";
 

@@ -72,7 +72,7 @@ export interface UseScrollSceneOptions {
     dampingFraction?: number;
     /** The element the damped value is written onto as a custom property (when bound). */
     bindEl?: MaybeRefOrGetter<HTMLElement | null>;
-    /** The custom property name to write the damped 0..1 onto (e.g. `--pin-t`). */
+    /** The custom property name to write the damped 0..1 onto (e.g. `--scene-t`). */
     property?: string;
     /** Honor `prefers-reduced-motion: reduce` (scrub → 0, snap 1:1). Default true. */
     respectReducedMotion?: boolean;

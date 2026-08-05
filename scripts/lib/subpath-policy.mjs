@@ -66,9 +66,8 @@ export const COMPONENT_CLASS = {
     "tags-input": "INTERNAL", textarea: "INTERNAL",
     // INTERNAL (1)
     "infinite-scroll": "INTERNAL",
-    // PUBLISH (30) — the custom/glass-native set.
-    "animated-digit": "PUBLISH", aurora: "PUBLISH",
-    "completion-seal": "PUBLISH",
+    // PUBLISH (25) — the custom/glass-native set.
+    aurora: "PUBLISH",
     // BI.W-CHIP-FOLD: the one explicit-mode <Chip> family.
     chip: "PUBLISH",
     // BI.W-DIALOG-PLACEMENT demoted confirm-dialog to a consumer Dialog preset.
@@ -79,11 +78,10 @@ export const COMPONENT_CLASS = {
     "fading-scroll": "PUBLISH", "fourier-field": "PUBLISH",
     blob: "PUBLISH", handmark: "PUBLISH",
     // BI.W-OVERLAY-UNION retired hover-popover (folded onto <Popover trigger="hover">).
-    "header-ribbon": "PUBLISH",
-    "instrument-chassis": "PUBLISH", "labeled-field": "PUBLISH",
+    "labeled-field": "PUBLISH",
     metric: "PUBLISH",
     "music-staff": "PUBLISH",
-    "pager-dots": "PUBLISH", "paper-backdrop": "PUBLISH",
+    "pager-dots": "PUBLISH",
     search: "PUBLISH", "scroll-progress-rim": "PUBLISH",
     // BI.W-SPEEDTEST-ONLY-PAIR: scrolling-text RETIRED (speedtest-only; the ask-row offers the mechanism).
     "sortable-list": "PUBLISH",

@@ -5,9 +5,9 @@
    THE LAW: a rule drawing itself NEVER overshoots past full width. Draw-in is a
    SPATIAL channel on the NO-OVERSHOOT arrival ease `--ease-out-expo` (REUSED from the
    §6 easing table, scheme-spring.css — never re-minted; a duplicate alias reds
-   proof:animation-coherence), categorically NOT a spring. The masthead divider rides
-   this register, NOT the bouncy `--ease-cartoon-punch` (+22% overshoot) (a rule that strikes past
-   its own end and springs back reads as jitter, not craft).
+   proof:animation-coherence), categorically NOT a spring. A divider that adopts this
+   register rides `--ease-out-expo`, NOT the bouncy `--ease-cartoon-punch` (+22% overshoot)
+   (a rule that strikes past its own end and springs back reads as jitter, not craft).
 
    Compositor-only: the draw rides `transform: scaleX()` (the DEFAULT) OR a `clip-path:
    inset()` wipe — NEVER `width`/`inline-size` (proof:no-layout-animation holds by
@@ -24,10 +24,12 @@
    gap engine) the rule is STATIC — the opacity is kept, `scaleX` snaps to 1, zero
    motion frames.
 
-   The register NAMES the shared arrival law; it does NOT re-author the two hero-scale
-   draw MEMBERS — CompletionSeal's gold `--seal-draw` stroke-dashoffset wipe and
-   HandMark's `draw-on` (dashoffset / clip-path) both keep their OWN recipes; they are
-   recorded as members (the ≥2-consumer evidence). */
+   The register NAMES the shared arrival law; it does NOT re-author the hero-scale
+   draw MEMBER — HandMark's `draw-on` (dashoffset / clip-path) keeps its OWN recipe
+   and is NOT a member here. MEMBERSHIP TODAY IS ZERO: the `.draw-rule` /
+   `[data-draw-in]` selectors carry zero src/demo/tests call-sites, and no "demo
+   masthead rule" member exists (that claim was FALSE and is struck). Stated so the
+   register's reach is read off the tree, never off this comment. */
 
 :root {
     /* The draw-in clock — a hairline draws itself in <base> × tempo. */

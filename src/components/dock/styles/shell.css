@@ -467,8 +467,7 @@
        component RETIRED; with the `variant` discriminant gone and no
        live `variant="instrument-strip"` call-site in src/ or demo/, the chassis
        paint has zero consumers. The cross-repo consumer dashboard cockpit
-       re-pins in its own migration (recorded in MIGRATION.md). A consumer needing
-       the chassis surface composes `<InstrumentChassis>` directly. */
+       re-pins in its own migration (recorded in MIGRATION.md). */
 
     .glass-dock:where(.fixed) {
         z-index: var(--z-dock);

@@ -37,7 +37,6 @@ import {
     BellRing,
     Loader,
     Waypoints,
-    Wand2,
     Type as TypeIcon,
     Frame,
     Wrench,
@@ -338,15 +337,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
                 { storyId: "countup", label: "Count-up" },
                 { storyId: "typewriter", label: "Typewriter" },
                 { storyId: "underline", label: "Underline" },
-                { storyId: "animated-digit", label: "Animated Digit" },
             ],
-        },
-        {
-            id: "entrance",
-            label: "Entrance",
-            icon: Wand2 as LucideIcon,
-            accent: "var(--section-color-7)",
-            entries: [{ storyId: "reveal", label: "v-reveal" }],
         },
     ],
     compositions: [

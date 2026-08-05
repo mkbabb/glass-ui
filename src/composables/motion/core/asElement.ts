@@ -7,7 +7,7 @@ import type { ComponentPublicInstance } from "vue";
 // root) has a NON-element `$el`, so this returns null rather than a bad element.
 //
 // This is the ONE home for the resolver. It lives in engine-free `core/` because the
-// keyframes-free `/motion-core` leaves (useScrollChrome, useScrollPin) cannot import from
+// keyframes-free `/motion-core` leaves (useScrollChrome, useScrollTrigger) cannot import from
 // the keyframes-bearing `useElementMorph` without pulling the engine onto that subpath —
 // the SCC boundary that would otherwise force three duplicate copies. `useElementMorph`
 // re-exports this symbol so the public `/motion` `asElement` is unchanged.

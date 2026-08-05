@@ -721,12 +721,6 @@ export const CATEGORIES: Category[] = [
             ),
             s(
                 "navigation",
-                "header-ribbon",
-                "Header Ribbon",
-                "Glass command band — a persistent action row pinned to a viewport corner, expanded and operable from first paint, at left or right placement. Shipped /header-ribbon.",
-            ),
-            s(
-                "navigation",
                 "toc-tracking",
                 "ToC Tracking",
                 "A table of contents that tracks the deepest-visible section, follows with a damped highlight, warms then scrolls to a target on click, and progressively renders long lists. One home, no second engine.",
@@ -874,12 +868,6 @@ export const CATEGORIES: Category[] = [
                     background: "grid",
                 },
             ),
-            s(
-                "data",
-                "instrument-chassis",
-                "Instrument Chassis",
-                "One landmark-neutral physical sleeve for a stage, optional inspector, and explicit actions.",
-            ),
         ],
     },
     {
@@ -917,12 +905,6 @@ export const CATEGORIES: Category[] = [
                 "Confirm Dialog",
                 "A Dialog composition for explicit confirmation, destructive emphasis, pending state, and focus restoration.",
             ),
-            s(
-                "feedback",
-                "completion-seal",
-                "Completion Seal",
-                "A one-shot gold seal that draws itself on to crown a finished, celebrated moment — with a soft metallic catch-light.",
-            ),
         ],
     },
     {
@@ -939,17 +921,6 @@ export const CATEGORIES: Category[] = [
             ),
             s(
                 "motion",
-                "tempo",
-                "Motion Tempo",
-                "Slow or quicken the interface's motion rhythm without flattening the distinct character of dialogs, menus, and dock transitions.",
-                {
-                    // A calm blueprint wash (the one-GL-per-route fence — the tempo demo
-                    // spends no GL context; the glass overlays POP over the static grid).
-                    background: "grid",
-                },
-            ),
-            s(
-                "motion",
                 "curve-gallery",
                 "Motion Lab",
                 "Compare the shared spring characters, reverse them mid-flight, and author accessible easing curves with immediate visual feedback.",
@@ -958,12 +929,6 @@ export const CATEGORIES: Category[] = [
                     // another GL context alongside the constellation.
                     background: "grid",
                 },
-            ),
-            s(
-                "motion",
-                "reveal",
-                "v-reveal",
-                "Dependency-free entrance directive — sets the [data-reveal] hook + --d stagger step the CSS reads.",
             ),
             s(
                 "motion",
@@ -987,18 +952,9 @@ export const CATEGORIES: Category[] = [
             ),
             s(
                 "motion",
-                "scroll",
-                "Scroll",
-                "The native scroll-driven register — the scroll() timeline, the reader edge-fade system, and the choreography recipes (build · cascade · pin) on ONE page in dependency order.",
-                {
-                    background: "constellation",
-                },
-            ),
-            s(
-                "motion",
                 "text-motion",
                 "Text Motion",
-                "The type & number motion family — Typewriter, AnimatedDigit, and Countup on ONE page, sectioned by the family switcher.",
+                "The type & number motion family — Typewriter and Countup on ONE page, sectioned by the family switcher.",
                 {
                     background: "constellation",
                 },

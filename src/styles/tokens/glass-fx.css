@@ -45,8 +45,8 @@
        passes THROUGH it, not from what is painted on it. */
 
     /* Hairline-accent — 0.5px catch-light + under-shadow pair.
-       Single token composes the canonical 2-stop hairline used by dock,
-       instrument-chassis. The `.hairline-accent` utility
+       Single token composes the canonical 2-stop hairline used by dock.
+       The `.hairline-accent` utility
        (utilities.css §hairline) adopts these via `box-shadow:`. */
     --hairline-catch-light: inset 0 0.5px 0 0 rgb(255 255 255 / 0.06);
     --hairline-under-shadow: 0 0.5px 0 0 rgb(0 0 0 / 0.04);
@@ -247,9 +247,9 @@
        library-wide; a per-surface override clips the gleam tighter/wider. */
     --glass-specular-size: 36%;
 
-    /* Chassis curvature illusion — a subtle radial gradient at the chassis
+    /* Chassis curvature illusion — a subtle radial gradient at a plate's
        top centre that lifts the surface without committing to literal 3D.
-       Composed into <InstrumentChassis>'s background stack. Built on the
+       Built on the
        warm-cream house identity (`hsl(40 30% 96%)`, L < 100% so the warm
        hue survives — mirroring the moving gleam), the alpha routed through the
        SINGLE overridable `--glass-curvature-intensity` knob (0.02 default), and

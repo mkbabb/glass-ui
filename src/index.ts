@@ -69,8 +69,7 @@
 //   - vueuse-bearing internals (sidebar, infinite-scroll);
 //   - large composite chassis with nested composables (dock, aurora,
 //     configurator domain helpers); OR
-//   - vertical/themed substrate (paper-backdrop, search,
-//     animated-digit, metric, tabs).
+//   - vertical/themed substrate (search, metric, tabs).
 // Consumers of those packages explicitly opt into them via subpath, keeping
 // the root barrel's transitive-import graph tight.
 

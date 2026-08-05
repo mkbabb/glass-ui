@@ -211,8 +211,8 @@ onMounted(() => {
     />
     <!-- Grain is a per-surface opt-in. The shell
          field is the recessive <Aurora> above; a
-         surface that wants tactile paper composes `paper-grain-overlay` or mounts its
-         own <PaperBackdrop>). No universal grain plane rides over the whole page. -->
+         surface that wants tactile paper composes `paper-grain-overlay` or mounts
+         `.paper-underpaint` itself). No universal grain plane rides over the whole page. -->
 
     <!-- `data-paper-field` belongs on the content ancestor of
          <main> (NOT the fixed Aurora sibling). The `cards.css` opaque-fallback

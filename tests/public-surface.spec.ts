@@ -24,13 +24,11 @@ import * as ExpandableContainerSurface from "@glass/components/expandable-contai
 import * as Forms from "@glass/forms";
 import * as HandMarkSurface from "@glass/components/handmark";
 import * as InfiniteScrollSurface from "@glass/components/infinite-scroll";
-import * as InstrumentChassisSurface from "@glass/components/instrument-chassis";
 import * as Keyboard from "@glass/composables/keyboard";
 import * as LabeledFieldSurface from "@glass/components/labeled-field";
 import * as MetricSurface from "@glass/components/metric";
 import * as Motion from "@glass/composables/motion";
 import * as MotionCore from "@glass/composables/motion/core";
-import * as PaperBackdropSurface from "@glass/components/paper-backdrop";
 import * as PopoverSurface from "@glass/components/popover";
 import * as ProgressSurface from "@glass/components/progress";
 import * as Search from "@glass/components/search";
@@ -283,7 +281,6 @@ const subpathRuntimeExports = [
     { subpath: "aurora", surface: Aurora, name: "Aurora" },
     { subpath: "aurora", surface: Aurora, name: "useAurora" },
     { subpath: "status-dot", surface: StatusDotSurface, name: "StatusDot" },
-    { subpath: "paper-backdrop", surface: PaperBackdropSurface, name: "PaperBackdrop" },
     { subpath: "handmark", surface: HandMarkSurface, name: "HandMark" },
     // ToggleChip + SelectableChip FOLDED onto the ONE <Chip>
     // (shape × tone; clean break, no alias). Chip ships subpath-ONLY (/chip, OFF the
@@ -364,11 +361,6 @@ const retiredSubpathRuntimeMembers = [
 ] as const;
 
 const exactSubpathRuntimeSurfaces = [
-    {
-        subpath: "instrument-chassis",
-        surface: InstrumentChassisSurface,
-        names: ["InstrumentChassis"],
-    },
     {
         subpath: "surface",
         surface: SurfacePackage,

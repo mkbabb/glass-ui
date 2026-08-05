@@ -12,8 +12,8 @@
    editing library source. */
 :root {
     /* SCROLL-DRIVEN (scroll-driven.css). Values mirror the JS-fallback composable
-       defaults (`useScrollProgress` / `useStaggerReveal`) so the native CSS path and
-       the fallback path read identically — no visual seam at the `@supports` boundary.
+       default (`useScrollProgress`) so the native CSS path and the fallback path
+       read identically — no visual seam at the `@supports` boundary.
        `--scroll-progress-scroller` is RETIRED (clean break,
        no alias): the recipe reads a FULL-value `--scroll-progress-timeline` (default
        `scroll(nearest block)`), never a `<dashed-ident>` fragment inside `scroll()`. */
@@ -21,7 +21,7 @@
     --scroll-reveal-range-end: 60%;
 
     /* The scroll-CHOREOGRAPHY register knobs (the page-build /
-       section-cascade / scroll-pinned recipes in scroll-choreography.css). These
+       section-cascade recipes in scroll-choreography.css). These
        EXTEND the --scroll-reveal-* substrate above; the existing three are READ-ONLY
        (the cascade COMPOSES them, it never re-tunes them). All distances are
        compositor (transform) channels; the clocks are the per-spring settle clocks
@@ -45,16 +45,6 @@
     --scroll-cascade-rise: 1.25rem;
     --scroll-cascade-range-end: 45%;
     --scroll-cascade-column-stagger: 6%;
-    /* .scroll-pin — the fixed-stage-advances-time scroll-pinned register. The stage
-       height is the Nvh temporal space the sticky stage advances its phases across.
-       The phase windows the stage's internal phases key off (grid-reveal 0..reveal-end,
-       expand reveal-end..expand-end, settle expand-end..100% — the Codrops phased-
-       sequence shape) live in scroll-choreography.css as the `-frac` numerators
-       (`--scroll-pin-phase-reveal-end-frac` 0.382 / `--scroll-pin-phase-expand-end-frac`
-       0.9), the form the calc()s consume. */
-    --scroll-pin-stage-height: 320vh;
-    --scroll-pin-lift: 2.5rem;
-
     /* TOP-LAYER (animations.css §TOP-LAYER). The `@starting-style` entry/exit
        grammar for native `<dialog>` / `[popover]` glass surfaces. The backdrop dim
        uses the house alpha-derivative `color-mix(in srgb, var(--background) Npct,

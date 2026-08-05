@@ -2,7 +2,6 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { PaperBackdrop } from "@glass/components/paper-backdrop";
 
 const sections = [
     [
@@ -24,13 +23,13 @@ const sections = [
     <StoryPage>
         <StorySection
             label="shared content field"
-            blurb="PaperBackdrop mounts the library paper-underpaint recipe once. The route owns context through inherited paper variables; the component introduces no second material system."
+            blurb="The `.paper-underpaint` recipe mounts once. The route owns context through inherited paper variables; nothing introduces a second material system."
         >
             <ShowcaseFrame
                 pad="none"
                 class="paper-field-example relative overflow-hidden"
             >
-                <PaperBackdrop />
+                <div class="paper-underpaint" aria-hidden="true" />
                 <article class="relative mx-auto max-w-prose px-8 py-12 sm:px-12 sm:py-16">
                     <header class="space-y-3 pb-8">
                         <p class="text-label text-muted-foreground">Paper as content field</p>

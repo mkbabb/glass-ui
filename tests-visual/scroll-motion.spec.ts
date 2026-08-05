@@ -3,7 +3,7 @@
 // DELTA). proof:scroll-motion proves the recipe SOURCE; THIS spec proves the painted
 // RENDER — the AZ P-1 source-green/visually-broken gap is the close-class failure this
 // tranche exists to fix, so the live readback of the page-build frame-series + the
-// section-cascade scroll-through + the scroll-pinned phase sweep + the PRM single-paint
+// section-cascade scroll-through + the PRM single-paint
 // is the binding truth, never the source diff alone.
 //
 // THE BINDING ARMS (the clause-7 readback):
@@ -16,13 +16,11 @@
 //       a spring-clocked coupled build keyed off its OWN view() timeline (the implicit
 //       stagger, no setTimeout). Read back: the .scroll-cascade children resolve an
 //       animation-timeline (view()) + the coupled transform+opacity recipe.
-//   (c) THE SCROLL-PINNED phase sweep — scrolling through the .scroll-pin showcase advances
-//       the sticky stage's internal phases (the fixed-stage-advances-time read). Read back:
-//       the .scroll-pin-stage resolves position: sticky + the named --gl-pin timeline link;
-//       scrolling the container changes the stage phase's computed transform.
+//   (c) THE SCROLL-PINNED phase sweep — DELETED at BK.#18 W-DELETE with the whole
+//       `.scroll-pin` register + `useScrollPin` (see the strike at the arm site below).
 //   (d) THE PRM static-layout — under emulated `prefers-reduced-motion: reduce`, the
-//       page-build is a single-paint terminal state (no animation binds), the cascade shows
-//       the static terminal sections, the scroll-pin shows its terminal phase (no sweep).
+//       page-build is a single-paint terminal state (no animation binds) and the cascade
+//       shows the static terminal sections.
 //
 // At ≥2 viewports, BOTH modes. The capture lands at the W-SCROLL-MOTION-DELTA dir. The
 // page-build/cascade/pin demonstration surface is /motion/scroll-choreography (the canonical
@@ -114,31 +112,16 @@ test("section-cascade — .scroll-cascade children ride a view() timeline + coup
     expect(ridesTimeline).toBe(true);
 });
 
-// ── (c) the scroll-pinned — sticky stage + named timeline link ────────────────────────
-test("scroll-pinned — .scroll-pin-stage is sticky + the phase advances with scroll", async ({
-    page,
-}) => {
-    await page.goto(ROUTE, { waitUntil: "networkidle" });
+// ── (c) the scroll-pinned — DELETED at BK.#18 W-DELETE ────────────────────────────────
+// Arm (c) asserted `.scroll-pin-stage` sticky + the named `--gl-pin` timeline link. The
+// WHOLE `.scroll-pin` register (`@property --pin-t`, `.scroll-pin`, `.scroll-pin-stage`,
+// both phase recipes, the 5 tokens) and `useScrollPin` were carried out at BK.#18 with
+// their sole importer — there is no subject left to read back. Its `test.skip(!pin, "the
+// .scroll-pin showcase is not on this route")` guard could never again be false, so the
+// arm would have survived as a PERMANENT SILENT PASS — the masking class. Deleted rather
+// than skipped: a gate with no subject is ABSENT, never GREEN (⊕²⁵ status vocabulary).
 
-    const pin = await page.evaluate(() => {
-        const stage = document.querySelector(".scroll-pin-stage") as HTMLElement | null;
-        const container = document.querySelector(".scroll-pin") as HTMLElement | null;
-        if (!stage || !container) return null;
-        const cs = getComputedStyle(stage);
-        return {
-            position: cs.position,
-            // The container declares the named timeline (the fixed-stage-advances-time link).
-            timelineName: getComputedStyle(container).getPropertyValue("scroll-timeline-name"),
-        };
-    });
-
-    test.skip(!pin, "the .scroll-pin showcase is not on this route");
-    expect(pin!.position).toBe("sticky");
-    // The named timeline is declared (or the @supports gate left it unset on a non-support
-    // engine — the static read). Either is correct; we assert sticky as the binding floor.
-});
-
-// ── (d) the PRM static-layout — no build/cascade/pin animation under reduce ───────────
+// ── (d) the PRM static-layout — no build/cascade animation under reduce ───────────────
 test("PRM — under reduce the page-build is a single-paint terminal state (no transform frames)", async ({
     page,
 }) => {
@@ -173,7 +156,7 @@ for (const vp of VIEWPORTS) {
             await page.screenshot({
                 path: `${VISUAL_DIR}/W-SCROLL-MOTION-${mode ? "dark" : "light"}-${vp.name}-build.png`,
             });
-            // Scroll through to exercise the section-cascade + the scroll-pin sweep.
+            // Scroll through to exercise the section-cascade.
             await page.evaluate(() => {
                 const main = document.querySelector(".demo-main-scroller");
                 if (main) main.scrollTop = main.scrollHeight * 0.5;
