@@ -185,8 +185,16 @@ Trace: gate `radius-role-canon.test.ts:481-496`.
 so that cell now fences the defect instead of the design. Struck in place, dated, with the re-pinned
 cell stated: the same three docks (`rail.vue:120`, `layers.vue:170,245`) read **16px resolved
 through `var(--radius-card)`**, a ROLE bind, so the cell re-reads whatever the card corner resolves
-to. The Chromium capture stays OWED and is a π-row, never a blocker (the ruling's own words: *"the π
+to. The Chromium capture ~~stays OWED~~ and is a π-row, never a blocker (the ruling's own words: *"the π
 row updates, it does not block"*).
+
+[⊕ 2026-08-05 · the Chromium capture is **DISCHARGED** — driver browser seat, live Chromium (CDP)
+against the dev server at `:5400`, `/dock/rail`. Default tokens: the `shape-rounded` dock computes
+`border-radius: 16px` resolved through `--radius-card: 1rem` (the pill docks on the same page hold
+`9999px`, untouched). Neutral preset sheet applied (`presets/neutral.css`, whose `:53` maps
+`--radius-card: var(--radius-xl)` = `12px`): the same dock re-computes **12px**. Both cells a PASS
+per the re-pinned ROLE-bind reading. Cells: `cells/pi-shape-hold-default-16px.jpeg` ·
+`cells/pi-shape-hold-neutral-12px.jpeg`.]
 
 Trace: `COMPONENT-WAVES-TERMINAL.md:758` (strike-in-place bracket).
 
