@@ -240,6 +240,14 @@ onBeforeUnmount(() => {
             @focusin="onRailFocusIn"
             @focusout="onRailFocusOut"
         >
+            <!-- ~~`:title="layer.label"`~~ [2026-08-05 · A11Y O-8] STRUCK. The dock
+                 family's label affordance is the library's own `<Tooltip side="right">`
+                 — the rail story wraps every entry in one, and `controls/touch-floor.css`
+                 records it as the family's documented tooltip. A native `title` on the
+                 same control paints the BROWSER's unstyled square-cornered rect over the
+                 styled one, on the browser's own delay, occluding the control it
+                 describes. The accessible name is untouched: `aria-label` is what AT
+                 reads here and `title` was never the name. -->
             <button
                 v-for="(layer, idx) in layers"
                 :key="layer.id"
@@ -250,7 +258,6 @@ onBeforeUnmount(() => {
                 :tabindex="selection.rovingTabindex(idx)"
                 v-bind="selection.itemAttrs(layer.id)"
                 :aria-controls="railPanelId(layer.id)"
-                :title="layer.label"
                 :aria-label="layer.label ?? layer.id"
                 @click="selection.select(layer.id, idx)"
             >

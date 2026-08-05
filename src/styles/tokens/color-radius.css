@@ -42,7 +42,7 @@
     --neutral-2: hsl(34 28% 90%);   /* L 90 — chip / tab-inactive bg (warm, gamut-bound C≈0.013) */
     --neutral-3: hsl(33 30% 82%);   /* L 82 — hover / highlight bg (warm, C≈0.025) */
     --neutral-4: hsl(32 26% 70%);   /* L 70 — subtle border (warm, C≈0.036) */
-    --neutral-5: hsl(30 22% 40%);   /* L 40 — muted text (warm, C≈0.043; WCAG AA: 5.21:1 vs page / 4.90:1 vs muted) */
+    --neutral-5: hsl(30 22% 40%);   /* L 40 — muted text (warm, C≈0.043; WCAG AA: 5.21:1 vs page / ~~4.90:1~~ 4.89:1 vs muted [2026-08-05: re-derived]) */
     /* Strong-muted text rung. One principled ladder step
        (10 L darker, the 5→6 cadence above) past muted text toward
        --foreground (L10). Sits at the 1/3 point of the L40→L10 muted→primary
@@ -50,8 +50,9 @@
        assertive as primary. By-COLOUR per the canon (a neutral step, not an
        alpha mute). — re-saturated onto the warm identity in
        lockstep with the ladder (hsl 28 24% — OKLab H 62°, C≈0.038, the warm
-       register; L held at 30). WCAG AA: 7.88:1 vs L98 page / 7.43:1 vs L95
-       muted (cf. neutral-5's 5.21:1) — comfortably above the 4.5:1 body floor. */
+       register; L held at 30). WCAG AA: ~~7.88:1~~ 7.89:1 vs L98 page /
+       ~~7.43:1~~ 7.41:1 vs L95 muted [2026-08-05: both re-derived] (cf.
+       neutral-5's 5.21:1) — comfortably above the 4.5:1 body floor. */
     --neutral-6: hsl(28 24% 30%);   /* L 30 — strong-muted text (secondary register, warm) */
 
     --background: var(--neutral-0);
@@ -338,10 +339,24 @@
     --delete:        oklch(0.597 0.198 25.5);
 
     /* Semantic foregrounds — text/glyph atop --success/--warning/--info plates.
-       Warning carries a
-       dark glyph because the amber plate is too luminous for white. */
-    --success-foreground: var(--neutral-0);
+       INK POLARITY IS DERIVED, NEVER CHOSEN (A11Y W3-A). For each tone the ink is
+       whichever polarity computes the HIGHER WCAG ratio against that tone's own
+       authored value; the tone itself moves only when neither polarity clears 4.5.
+       Warning was the only pair already obeying it; success and info shipped white
+       ink on plates too luminous to carry it and computed 2.21 and 3.49 — both under
+       the 4.5 body floor, on solid opaque fills. Measured at the authored values,
+       the warm-ink `hsl(24 10% 10%)` (the same literal warning and the dark
+       `--primary-foreground` already speak — no new ink minted):
+         success  dark ink 7.60  ·  white ink 2.21
+         warning  dark ink 8.19  ·  white ink 2.05
+         info     dark ink 4.82  ·  white ink 3.49   ← the tranche's thinnest pair
+       So all three take dark ink and NO HUE MOVES: the plates are the library's
+       identity and a contrast defect is not a licence to retune them. Destructive
+       keeps white ink because red is the one dark-ceiling hue here — white ink 4.70
+       beats dark ink 3.58 at `hsl(0 72% 50%)`. Every figure re-derivable by
+       `tests/styles/contrast-computed.test.ts`, which reads THESE bytes. */
+    --success-foreground: hsl(24 10% 10%);
     --warning-foreground: hsl(24 10% 10%);
-    --info-foreground:    var(--neutral-0);
+    --info-foreground:    hsl(24 10% 10%);
 
 }

@@ -56,12 +56,13 @@
     --neutral-2: hsl(28 14% 16%);  /* L 16 — chip / tab-inactive (warm, C≈0.014) */
     --neutral-3: hsl(30 18% 22%);  /* L 22 — hover / highlight (warm, C≈0.022) */
     --neutral-4: hsl(30 16% 34%);  /* L 34 — subtle border (warm, C≈0.029) */
-    --neutral-5: hsl(34 14% 62%);  /* L 62 — muted text (warm, C≈0.026; WCAG AA: 7.64:1 vs page) */
+    --neutral-5: hsl(34 14% 62%);  /* L 62 — muted text (warm, C≈0.026; WCAG AA: ~~7.64:1~~ 7.70:1 vs page [2026-08-05: re-derived]) */
     /* Strong-muted text. Same principled ladder step as
        light, mirrored: 10 L LIGHTER than muted (62→72) toward --foreground
        (L90), the 1/3 point of the L62→L90 muted→primary gap. By-colour.
        Re-saturated onto the warm identity (hsl 36 14% — OKLab
-       C≈0.019, warm). WCAG AA: 10.29:1 vs L4 page (cf. neutral-5's 7.64:1). */
+       C≈0.019, warm). WCAG AA: ~~10.29:1~~ 10.25:1 vs L4 page (cf. neutral-5's
+       ~~7.64:1~~ 7.70:1) [2026-08-05: both re-derived]. */
     --neutral-6: hsl(36 14% 72%);  /* L 72 — strong-muted text (secondary register, warm) */
 
     /* --background / --card-foreground / --popover-foreground / --muted /
@@ -104,11 +105,28 @@
     --primary: oklch(0.739 0.134 318.1);
     --primary-foreground: hsl(24 10% 10%);
     /* The `.dark` class fallback floor, in LOCKSTEP with the light-dark()
-       enhancement arm above (§2c). Same lifted `hsl(0 80% 60%)` so a
-       @supports-split engine and a class-toggle engine paint the SAME dark red
-       (4.60:1 as ink over --card / 5.03:1 as a plate vs page). */
-    --destructive: hsl(0 80% 60%);
-    --destructive-foreground: hsl(48 10% 90%);
+       enhancement arm above (§2c), so a @supports-split engine and a class-toggle
+       engine paint the SAME dark red.
+
+       THE SECOND LIFT (A11Y W3-A), and why the first one did not finish the job.
+       `--destructive` holds TWO jobs on one value: it is the error INK
+       (`Label.vue`'s required marker, `LabeledField.vue`'s error message) and it is
+       the destructive PLATE (`button/styles.css`'s tone). The previous lift to
+       `hsl(0 80% 60%)` was made for the ink job and its comment claimed 4.60:1 over
+       `--card` — but 4.60 is the ratio of the DARK INK over that red, not of that red
+       over the card. The pair it named computes 3.67:1, so the ink job never cleared
+       and the false figure sat in the record on both arms for the whole interval.
+       No other tone carries two jobs, which is why this is the only tone that MOVES
+       while the other three are cured by ink polarity alone. Measured at
+       `oklch(0.702 0.184 27.5)` — the light arm's own hue (`hsl(0 72% 50%)` is
+       oklch h 27.5), at the chroma the dark success rung already speaks:
+         as ink over --card / --popover  4.85   (floor 4.5, was 3.67)
+         as ink over the page            6.88
+         as a plate under the warm ink   6.08   (floor 4.5, was 3.07 under off-white)
+       The ink flips with the other three: a plate this luminous cannot carry
+       off-white. */
+    --destructive: oklch(0.702 0.184 27.5);
+    --destructive-foreground: hsl(24 10% 10%);
     /* The dark arm of the house focus-accent register
        (off the shadcn `--ring` token; the value is byte-identical to the
        dark `--ring` mid-tone). */
@@ -159,13 +177,23 @@
     --info:          oklch(0.713 0.138 259.5);
     --delete:        oklch(0.644 0.170 23.1);
 
-    /* Semantic foregrounds — off-white over dark plates. Mirrors the
-       `--destructive-foreground` dark pattern (hsl 48 10% 90%). The warning
-       glyph stays dark-on-amber; the dark amber rung is luminous enough that
-       a darker glyph still reads (matches light-mode behaviour). */
-    --success-foreground: hsl(48 10% 96%);
+    /* Semantic foregrounds. The premise this block used to carry — "off-white over
+       dark plates" — was FALSE OF ITS OWN ARM: the dark arm LIFTS every tone so it
+       reads against a near-black page, so a dark-arm tone is not a dark plate, it is
+       the MOST luminous plate in the library. Off-white ink on it computed 1.58
+       (success) and 2.36 (info), the two worst pairs in the tranche, while the arm's
+       own warning row had been dark-on-amber all along. Ink polarity is derived from
+       the plate (A11Y W3-A), so all four dark tones now take the warm ink — which is
+       the same literal `--primary-foreground` already speaks one screen up, over the
+       equally-lifted dark violet:
+         success  dark ink 10.21  ·  off-white 1.58
+         warning  dark ink  9.47  ·  off-white 1.70
+         info     dark ink  6.82  ·  off-white 2.36
+         destructive (lifted below) dark ink 6.08  ·  off-white 2.65
+       LOCKSTEP light-dark.css §semantic. */
+    --success-foreground: hsl(24 10% 10%);
     --warning-foreground: hsl(24 10% 10%);
-    --info-foreground:    hsl(48 10% 96%);
+    --info-foreground:    hsl(24 10% 10%);
 
     /* The DRY-collapse. The dark `--cartoon-ink:` re-declaration
        is DELETED — the `:root` in-gamut pin (shadow.css) cascades through the dark
@@ -248,7 +276,8 @@
 
     /* The surface-aware FOREGROUND register, DARK arm (the N13
        whisper collapse where it bites hardest). The dark page-muted --neutral-5 (L62,
-       "AA: 7.64:1 vs page") COLLAPSES over the lifted luminous-dark plate (the L16 card
+       AA 7.70:1 vs page [2026-08-05: re-derived from ~~7.64~~]) COLLAPSES over the
+       lifted luminous-dark plate (the L16 card
        at the 12% --glass-veil-rung composites the bright backdrop UP — the
        measured 1.15-3.29:1). The on-glass muted rung lifts BRIGHTER (the mirror of the
        light arm's darkening) so it clears AA over the composited dark plate WHILE

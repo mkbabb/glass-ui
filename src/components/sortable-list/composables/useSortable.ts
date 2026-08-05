@@ -3,7 +3,7 @@ import { computed, nextTick, onScopeDispose, shallowRef } from "vue";
 import { createDragController } from "./dragController";
 import { instances } from "./dropResolver";
 import { createGhostRenderer, isNonZeroRadius } from "./ghostRenderer";
-import { targetIsHandle } from "./touchGate";
+import { eventTargetIsGrip, targetIsHandle } from "./touchGate";
 import { computeDropClasses } from "./transitionTiming";
 import type {
     InstanceHandle,
@@ -119,7 +119,12 @@ export function useSortable<T>(options: SortableOptions<T>): UseSortableReturn {
                 controller.beginPointer(id, event);
             },
             onKeydown: (event) => {
-                if (!disabled.value) controller.onKeydown(id, event);
+                if (disabled.value) return;
+                // The SAME grip constraint the pointer path enforces one branch up
+                // (G-KEY-SCOPE) — a delegated row handler may not consume a key that
+                // belongs to the control the key was pressed in.
+                if (!eventTargetIsGrip(event, handleSelector)) return;
+                controller.onKeydown(id, event);
             },
         };
 

@@ -435,6 +435,60 @@ onMounted(() => {
     --slider-thumb-size: 1.5rem;
 }
 
+/* ── The coarse-pointer OPERABLE TARGET floor (A11Y W2-F · G-COARSE-TARGET) ──
+   WHAT THE OPERABLE TARGET ACTUALLY IS, because the prior citation had it wrong.
+   RU-33 booked this as a WCAG 2.5.5 regression — a 44px halo "lost" from the thumb —
+   and the sibling counter-measurement (value.js, `339.4 × 24` CSS px) overruled it:
+   the target a pointer acquires here is the TRACK, not any thumb glyph. On the
+   standard recipe there IS no thumb glyph to measure — `.slider-thumb` ships
+   `width: 0; opacity: 0` and the grab IS the track (see the invisible-thumb block
+   below); on the spectrum recipe the 12×24 glyph is a HANDLE drawn on a track that
+   is draggable along its whole length. So 2.5.5's 44px is overruled, the slider is
+   EXONERATED at 24×24 on the rung that was measured, and what is owed is the floor
+   sized to the measurement rather than to the citation.
+   THE THREE RUNGS, DERIVED FROM THE AUTHORED BYTES ABOVE (the root is a flex row
+   whose block-size is its tallest child): sm `0.75rem` = **12px**, md `1.25rem` =
+   **20px**, lg `1.75rem` = **28px**. Two of three fall under 24, which is the honest
+   finding the counter-measurement did NOT cover: it measured one rung (spectrum md,
+   thumb `1rem × 1.5` = 24px — the `× 24` of `339.4 × 24`, reproduced here from the
+   bytes) and that rung is exactly the one that already clears.
+   THE MECHANISM is the ROOT's own block-size, and the choice is deliberate. The dock
+   family's answer to the same floor is a transparent `::after` hit-slop
+   (`dock/styles/controls/touch-floor.css`), which is right for a `<button>` with
+   nothing inside that owns events — but the slider root contains a thumb that must
+   keep receiving its own pointer capture for the drag, and a pseudo painted after its
+   siblings would sit over it. The root paints NOTHING (it is a bare flex row; the
+   track/fill/thumb carry every pixel) and centres its children, so the floor moves no
+   pixel the slider itself draws: the track keeps its authored 12/20/28px, still
+   centred, and the acquired region is the root itself — which is the element reka's
+   pointer handler is bound to. What DOES move is the root's own box in its parent's
+   flow, on whichever axis sat under the floor; that is the cost of a target that is
+   really THERE, and the overhanging-slop alternative pays it in stolen neighbour taps
+   instead. `max()` is SELF-LIMITING: lg (28px) resolves to its own height, a no-op,
+   so the floor can never shrink a target nor over-grow one — and on a horizontal
+   slider the inline axis is already the full track (the 339.4 of the measurement),
+   where it is a no-op again. The axis that needs the floor swaps with the
+   orientation, which is the next paragraph.
+   Coarse pointers only: a mouse acquires a 12px bar precisely.
+   BOTH AXES, because the narrow one swaps with the orientation: a horizontal slider
+   is `inline-size: 100%` and its short axis is BLOCK, while `[data-orientation=
+   "vertical"]` sets `width: var(--slider-track-height)` and `height:
+   var(--slider-vertical-size, 12rem)` — so the vertical rung's 12/20/28px axis is
+   INLINE, and a block-only floor would have left the vertical slider exactly as thin
+   as the finding says a target may not be. The same `max()` is a no-op on whichever
+   axis is already long (12rem beats the floor; so does a full-width track), so one
+   rule floors both orientations without a `[data-orientation]` fork. */
+@media (pointer: coarse) {
+    .glass-slider {
+        --slider-target-floor: max(
+            var(--slider-track-height, 0.375rem),
+            var(--slider-touch-target, 1.5rem)
+        );
+        min-block-size: var(--slider-target-floor);
+        min-inline-size: var(--slider-target-floor);
+    }
+}
+
 /* ── Shared geometry — size axis lifts via CSS vars set by the [data-size] rules ──
    The recessed GROOVE (position/overflow/pill-radius/recessed-bg) is COMPOSED
    from the shared `.glass-track-well` register (template class); the track owns
@@ -531,12 +585,22 @@ onMounted(() => {
 }
 
 /* D5 — keyboard focus rings the TRACK, not the invisible thumb.
-   The reka `<SliderRoot>` (the `.glass-slider` root) receives focus-within when
+   The reka `<SliderRoot>` (the `.glass-slider` root) receives focus when
    its mounted-but-invisible `<SliderThumb>` takes keyboard focus; the ring rises
    on the .slider-track (the visible surface the user pulls) via the ONE button
    focus register (`--focus-ring-shadow`, the token-first focus axis). Standard-
-   only: the spectrum recipe focus-rings its own VISIBLE thumb (below). */
-.glass-slider:not([data-variant="spectrum"]):focus-within .slider-track {
+   only: the spectrum recipe focus-rings its own VISIBLE thumb (below).
+
+   ~~`:focus-within`~~ [2026-08-05 · A11Y W2-E] — `:focus-within` matches on POINTER
+   focus too, so grabbing the track with a mouse painted the KEYBOARD ring; the
+   spectrum sibling two rules down already used `:focus-visible` and the two halves
+   of one component disagreed about what a focus ring means. `:has(:focus-visible)`
+   is the same relationship `:focus-within` expresses, restricted to the visible-focus
+   heuristic the engine already computes — the thumb is the focusable descendant, the
+   track is the painted surface, and neither moves. No `:focus-within` fallback pairs
+   with it: on the target engines `:has()` resolves, and a fallback here would paint
+   the pointer ring the cure exists to remove. */
+.glass-slider:not([data-variant="spectrum"]):has(:focus-visible) .slider-track {
     box-shadow: var(--focus-ring-shadow);
 }
 
@@ -623,7 +687,9 @@ onMounted(() => {
     box-shadow: inset 0 0 0 1px var(--destructive);
 }
 
-.glass-slider[data-invalid]:focus-within .slider-track {
+/* The invalid arm rides the SAME focus predicate as the valid one (W2-E) — two
+   registers of one ring cannot disagree about when the ring is owed. */
+.glass-slider[data-invalid]:has(:focus-visible) .slider-track {
     box-shadow:
         var(--focus-ring-shadow),
         inset 0 0 0 1px var(--destructive);

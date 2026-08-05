@@ -11,8 +11,13 @@ const VARIANT = {
 } as const;
 const TONE = {
     neutral: "",
-    destructive:
-        "bg-destructive text-destructive-foreground dark:bg-[hsl(0_70%_45%)]",
+    // The dark plate is the TOKEN, not a literal: `--destructive` is the one
+    // two-job token (error ink + destructive plate) and its dark arm is sized to
+    // clear both — 6.08:1 under the warm ink this tone now wears. An arbitrary
+    // `dark:bg-[…]` plate wins the cascade over `bg-destructive` while still
+    // wearing `text-destructive-foreground`, so it holds a contrast figure no
+    // token gate can measure (this one shipped at 2.98:1 once the ink derived).
+    destructive: "bg-destructive text-destructive-foreground",
     success: "bg-success text-success-foreground",
     warning: "bg-warning text-warning-foreground",
     info: "bg-info text-info-foreground",

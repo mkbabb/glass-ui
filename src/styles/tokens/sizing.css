@@ -532,6 +532,18 @@
        dock floor and the general floor can be retuned independently. */
     --touch-target: 2.75rem; /* 44px */
 
+    /* The Slider's coarse-pointer floor — WCAG 2.5.8 (AA) 24px, deliberately NOT
+       the 2.5.5 44px above it. The operable target on a slider is the TRACK, not a
+       thumb glyph (the standard `.slider-thumb` ships `width: 0`), and the sibling
+       counter-measurement of the acquired region (339.4 × 24 CSS px) overruled the
+       2.5.5 citation on exactly that ground — so 44px here would grow a control
+       past the target that was measured. Read by the `@media (pointer: coarse)`
+       rule in `slider/Slider.vue`, which `max()`es it against the rung's own
+       `--slider-track-height`: this knob can only raise a rung that sits under it,
+       never shrink one. A distinct token from `--touch-target` because the two
+       floors answer different success criteria. */
+    --slider-touch-target: 1.5rem; /* 24px */
+
     /* The Configurator density and hierarchy tokens live in sizing-config.css. */
 }
 

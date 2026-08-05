@@ -114,15 +114,29 @@
            hue, oklab chroma 0.134; decoupled from the achromatic cream). LOCKSTEP dark-arm.css:59. */
         --primary:                 light-dark(hsl(24 10% 10%), oklch(0.739 0.134 318.1));
         --primary-foreground:      light-dark(var(--neutral-0), hsl(24 10% 10%));
-        /* Dark-arm lift. The stock shadcn dark `hsl(0 62.8% 30.6%)`
-           (L≈30.6) was a saturated-PLATE value used AS INK over `--card` by the
-           Alert destructive variant — 1.75:1 over card (illegible) / 1.91:1 vs the
-           page. Lifted to `hsl(0 80% 60%)`: 4.60:1 as text over `--card` (clears the
-           4.5 body floor) AND 5.03:1 as a plate vs the dark page (clears the 3.0
-           graphic floor). The light arm is UNCHANGED (already 4.70:1). Lockstep with
-           the `.dark` fallback floor below (§2c). */
-        --destructive:             light-dark(hsl(0 72% 50%), hsl(0 80% 60%));
-        --destructive-foreground:  light-dark(var(--neutral-0), hsl(48 10% 90%));
+        /* Dark-arm lift, SECOND CUT (A11Y W3-A). The stock shadcn dark
+           `hsl(0 62.8% 30.6%)` (L≈30.6) was a saturated-PLATE value used AS INK over
+           `--card` by the Alert destructive variant — ~~1.75:1~~ **1.39:1** over card
+           (illegible either way) [2026-08-05: re-derived against these bytes; the
+           1.75 figure is not true of the pair it names].
+           ~~Lifted to `hsl(0 80% 60%)`: 4.60:1 as text over `--card` (clears the 4.5
+           body floor) AND 5.03:1 as a plate vs the dark page.~~ [2026-08-05 · both
+           figures re-derived and STRUCK: `hsl(0 80% 60%)` computes **3.67:1** over
+           `--card`, not 4.60 — 4.60 is the ratio of the dark ink OVER that red, the
+           reciprocal pair — and **5.20:1** vs the page, not 5.03. The first lift was
+           sized against a transposed pair, so the ink job it was made for never
+           cleared.] Lifted again to `oklch(0.702 0.184 27.5)` — the light arm's own
+           hue — which clears BOTH of this token's jobs at once: **4.85:1** as ink over
+           `--card`/`--popover`, **6.88:1** as ink over the page, **6.08:1** as a plate
+           under the warm ink. The ink flips off-white → warm with the other three
+           tones (ink polarity is derived from the plate, never chosen). The light arm
+           is UNCHANGED: cream ink 4.70:1 on the plate (the ink is `--neutral-0`, not
+           pure white — that pair would read 4.89), and as ink it reads 4.70 over the
+           page / 4.53 over `--card` [2026-08-05: the old cell quoted 4.70 as the CARD
+           figure; 4.70 is the PAGE figure and 4.53 is the card one — both stated now].
+           Lockstep with the `.dark` fallback floor below (§2c). */
+        --destructive:             light-dark(hsl(0 72% 50%), oklch(0.702 0.184 27.5));
+        --destructive-foreground:  light-dark(var(--neutral-0), hsl(24 10% 10%));
         /* The light-dark() arm of the house focus-accent
            register (off the shadcn `--ring`; both halves byte-identical). */
         --focus-ring-color:        light-dark(hsl(24 10% 10%), hsl(48 10% 70%));
@@ -168,10 +182,14 @@
         --info:          light-dark(oklch(0.626 0.186 259.6), oklch(0.713 0.138 259.5));
         --delete:        light-dark(oklch(0.597 0.198 25.5),  oklch(0.644 0.170 23.1));
 
-        /* Semantic foregrounds (warning-foreground is identical both modes
-           → stays a single light-mode declaration, no light-dark() needed) */
-        --success-foreground: light-dark(var(--neutral-0), hsl(48 10% 96%));
-        --info-foreground:    light-dark(var(--neutral-0), hsl(48 10% 96%));
+        /* Semantic foregrounds. ~~success/info split the arms; warning-foreground is
+           identical both modes → stays a single light-mode declaration.~~
+           [2026-08-05 · A11Y W3-A: all three now resolve to the SAME warm ink in both
+           arms — ink polarity is derived from the plate, and both arms' plates are
+           luminous — so the split collapses and success/info join warning as single
+           light-mode declarations (`color-radius.css` §semantic-foregrounds). Nothing
+           is declared here that a `light-dark()` would not paint identically; a
+           re-fork would be an indirection with no arm behind it.] */
 
         /* Gold family */
         --gold:       light-dark(oklch(0.751 0.147 84.2), oklch(0.784 0.143 86.0));

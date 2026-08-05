@@ -1,8 +1,9 @@
 /**
- * Sortable touch-gesture resolver + pointer-capture optimization.
+ * Sortable input gate + pointer-capture optimization.
  *
  * `targetIsHandle` gates whether a pointerdown starts a drag (the grip
- * constraint). `acquirePointerCapture` is the optimization layer: a successful
+ * constraint); `eventTargetIsGrip` applies the SAME constraint to the delegated
+ * keydown. `acquirePointerCapture` is the optimization layer: a successful
  * `setPointerCapture` routes move/up events to the captured element, but it is
  * NOT the drag's primary path — the document `pointermove`/`pointerup` listeners
  * carry the drag unconditionally. Capture failure is surfaced rather than
@@ -22,6 +23,37 @@ export function targetIsHandle(
     if (handleSelector === null) return true;
     if (!(target instanceof Element)) return false;
     return target.closest(handleSelector) !== null;
+}
+
+/**
+ * The GRIP TEST for a delegated handler (G-KEY-SCOPE).
+ *
+ * The row's `keydown` is bound on the `<li>`, so EVERY key pressed anywhere inside
+ * the row arrives here — and the controller consumes Space and Enter with
+ * `preventDefault()`. Only `pointerdown` was asking whether the event started at the
+ * grip; `keydown` consumed unconditionally, so a nested `<input>` inside a sortable
+ * row could not type a space, and any nested `<button>` had its own Space activation
+ * swallowed by the row. A delegated handler must not consume a key the focused
+ * control owns; the pointer path already knew that and the key path did not.
+ *
+ * ONE predicate for both modes, because "what counts as the grip" is one question:
+ *   • a handle selector is declared → the grip is the handle (the pointer rule,
+ *     verbatim), so only a key that starts at the handle drives the drag;
+ *   • no handle selector (`null`, the documented drag-from-anywhere contract) → the
+ *     ROW ITSELF is the grip, so the event must start on the row and not on a
+ *     descendant that owns its own keys.
+ *
+ * The `null` branch takes nothing away that worked: with no handle and no author-set
+ * `tabindex` the row is not focusable, so a row-targeted keydown could only ever have
+ * arrived from a focusable DESCENDANT — which is the case this closes. A row the
+ * consumer makes focusable keeps its keyboard drag, on the row.
+ */
+export function eventTargetIsGrip(
+    event: Pick<Event, "target" | "currentTarget">,
+    handleSelector: string | null,
+): boolean {
+    if (handleSelector !== null) return targetIsHandle(event.target, handleSelector);
+    return event.target === event.currentTarget;
 }
 
 /** Dev-warn the capture-unavailable path exactly once per process. */
