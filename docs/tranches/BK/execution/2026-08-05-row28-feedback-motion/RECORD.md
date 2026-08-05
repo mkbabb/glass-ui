@@ -294,7 +294,7 @@ cure: the root-level leave clock and the PRM leave-arm cascade).
 - the ripple/splash lock **NOT born-RED** — both detectors already read 0 at HEAD; it is a
   KEEP-DEAD regression lock, and calling it born-RED would be the inflation class.
 
-**Mutation battery — 10 planted, 10 BITE**, each restored byte-exact:
+**Mutation battery — ~~10 planted, 10 BITE~~ [⊕⁴³ 2026-08-05: thirteen planted, thirteen BITE — M11–M13 joined at the cure cut; the header missed the count the table below already carried]**, each restored byte-exact:
 
 | # | mutation | result |
 |---|---|---|
