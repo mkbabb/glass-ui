@@ -50,15 +50,18 @@ export const COMPONENT_CLASS = {
     badge: "PUBLISH", button: "PUBLISH", card: "PUBLISH", collapsible: "PUBLISH",
     command: "PUBLISH", "data-table": "PUBLISH",
     dialog: "PUBLISH", drawer: "PUBLISH", "dropdown-menu": "PUBLISH",
+    // BK.W-DIALOG re-seeded `sheet` as its own component (the side surface split back
+    // out of `<DialogContent placement>`). INTERNAL for now — it is reached via the root
+    // barrel; its `./sheet` package subpath rides the ONE batched export cut.
+    sheet: "INTERNAL",
     label: "PUBLISH",
     "number-field": "PUBLISH", popover: "PUBLISH",
     progress: "PUBLISH", select: "PUBLISH", separator: "PUBLISH",
-    // BI.W-DIALOG-PLACEMENT retired sheet (folded onto <DialogContent placement>).
     // BI.W-SURFACE-EXTRACT — the extracted bare (tier × decoration) glass plate.
     surface: "PUBLISH",
     slider: "PUBLISH", switch: "PUBLISH", toast: "PUBLISH", "toggle-group": "PUBLISH",
     tooltip: "PUBLISH",
-    // INTERNAL (12) — reached via the root barrel / a curated subpath / substrate.
+    // INTERNAL (13, sheet above) — reached via the root barrel / a curated subpath / substrate.
     _shared: "INTERNAL", accordion: "INTERNAL", alert: "INTERNAL", avatar: "INTERNAL",
     carousel: "INTERNAL", checkbox: "INTERNAL", input: "INTERNAL",
     "radio-group": "INTERNAL",
