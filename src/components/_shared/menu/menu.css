@@ -10,28 +10,88 @@
         --menu-row-bg: var(--glass-plate-quiet);
         --menu-row-lift: -1px;
         min-block-size: max(2rem, var(--touch-target, 2.75rem));
-        transition: translate var(--spring-dock-duration) var(--spring-dock);
+        /* THE FULL LEG SET IS LOAD-BEARING, and this rule is where it is decided.
+           `transition` is a SHORTHAND: it RESETS the property list. This rule sits in
+           the same `@layer components` at the same 0-1-0 specificity as
+           `.interactive-item` (utilities/base.css) and is imported AFTER it by the
+           source-order design stated at styles/index.css — so on every row that composes
+           BOTH (menuRowClass.ts, the four DropdownMenu items, CommandItem) this list is
+           the one that paints, and any leg missing here is a leg with zero frames
+           whatever base.css declares. Carrying the coherent set is the same cure
+           `.button`/`.tap-squish` already carry against the same trap (see base.css
+           §tap-squish, the live-readback RED that left every button transitioning only
+           `scale`): both classes hold the full set, so whichever wins the cascade the
+           surface still cross-fades.
+           The clocks are the ladder's and are not minted here: the LIGHT legs ride
+           `control-engage`'s RELEASE (the cooling — its ATTACK belongs to the hover rule
+           below, because a transition reads its clock from the state it lands IN), the
+           lift rides the dock spring it has always ridden, and `scale` rides the shared
+           spatial vocabulary `.interactive-item:active` writes into. */
+        transition:
+            background-color var(--engage-control-engage-release) var(--ease-standard),
+            color var(--engage-control-engage-release) var(--ease-standard),
+            border-color var(--engage-control-engage-release) var(--ease-standard),
+            box-shadow var(--engage-control-engage-release) var(--ease-standard),
+            translate var(--spring-dock-duration) var(--spring-dock),
+            scale var(--spring-press-duration) var(--transition-liquid-spatial);
         translate: 0 0;
     }
 
-    .glass-menu-row:hover:not([data-disabled]),
+    /* The NON-POINTER engaged states. Keyboard highlight changes paint without
+       restarting the pointer lift, so these carry no `translate` value of their own —
+       only the ATTACK clock, because this is the state they land IN. */
     .glass-menu-row:focus:not([data-disabled]),
     .glass-menu-row[data-highlighted]:not([data-disabled]),
     .glass-menu-row[data-state="open"]:not([data-disabled]) {
         background: var(--menu-row-bg);
         color: var(--accent-foreground);
+        transition:
+            background-color var(--engage-control-engage-attack) var(--ease-standard),
+            color var(--engage-control-engage-attack) var(--ease-standard),
+            border-color var(--engage-control-engage-attack) var(--ease-standard),
+            box-shadow var(--engage-control-engage-attack) var(--ease-standard),
+            translate var(--spring-dock-duration) var(--spring-dock),
+            scale var(--spring-press-duration) var(--transition-liquid-spatial);
     }
 
-    /* Keyboard highlight changes paint without restarting the pointer lift. */
-    .glass-menu-row:hover:not([data-disabled]) {
-        translate: 0 var(--menu-row-lift);
+    /* G7 HOVER GUARD at the menu-row seat. `:hover` latches on a coarse pointer and
+       stays latched until something else is tapped, so an unguarded hover rung paints a
+       tapped row as permanently pointed-at. The touch answer here is `[data-highlighted]`
+       above — reka sets and CLEARS it on pointer interaction, so a touch still gets the
+       fill and never keeps it. (It is NOT `.tap-squish:active`: not one of the six rows
+       that compose `.interactive-item` composes `.tap-squish`.) The lift is pointer-only
+       by the same law, and lives here rather than in the group above so a keyboard
+       highlight never moves the row. */
+    @media (hover: hover) {
+        .glass-menu-row:hover:not([data-disabled]) {
+            background: var(--menu-row-bg);
+            color: var(--accent-foreground);
+            translate: 0 var(--menu-row-lift);
+            transition:
+                background-color var(--engage-control-engage-attack)
+                    var(--ease-standard),
+                color var(--engage-control-engage-attack) var(--ease-standard),
+                border-color var(--engage-control-engage-attack) var(--ease-standard),
+                box-shadow var(--engage-control-engage-attack) var(--ease-standard),
+                translate var(--spring-dock-duration) var(--spring-dock),
+                scale var(--spring-press-duration) var(--transition-liquid-spatial);
+        }
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .glass-menu-row {
+        /* PRM retires the SPATIAL legs and KEEPS the light. A bare `transition: none`
+           kills both, which erases the state report along with the motion — suppressing
+           motion may not remove the acknowledgement. Same direction `.tap-squish`'s own
+           PRM arm takes: the transform retires, the light answers. The lift is
+           neutralized by its token, so the spatial legs are simply not listed. */
         --menu-row-lift: 0px;
-        transition: none;
+        transition:
+            background-color var(--engage-control-engage-release) var(--ease-standard),
+            color var(--engage-control-engage-release) var(--ease-standard),
+            border-color var(--engage-control-engage-release) var(--ease-standard),
+            box-shadow var(--engage-control-engage-release) var(--ease-standard);
     }
 }
 

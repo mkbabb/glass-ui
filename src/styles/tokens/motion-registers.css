@@ -80,4 +80,43 @@
     --exit-overlay-duration: var(--spring-panel-exit-duration);
     /* The exit curve — no-overshoot ease-out; never overshoot past gone. */
     --exit-curve: var(--ease-out);
+
+    /* ── THE ENGAGEMENT ENVELOPES — the LIGHT channel's clocks ──────────────────
+       The CSS projection of `composables/motion/engage/engageEnvelopes.ts`, one pair
+       per role, values verbatim from that table. It is a MIRROR, not a second
+       register: `tests/styles/engage-ladder.test.ts` derives this block from the TS
+       rows and reds on any drift, exactly as `springTokenMirror` does for the spring
+       curves. Tune an envelope by editing the TABLE.
+
+       WHAT THESE ARE FOR. Without a light vocabulary in CSS a shared interactive surface
+       has nothing to reach for but the nearest generic duration, and the nearest generic
+       duration (`--duration-fast`, 0.2s) sits OUTSIDE the shipped acknowledge budget
+       (`ACKNOWLEDGE_WINDOW_MS`, 150ms). Named clocks make that checkable: a light leg on
+       a generic duration is a visible defect rather than an invisible one.
+       HOW FAR A RE-POINT ACTUALLY REACHES IS THE CASCADE'S TO DECIDE, never this block's.
+       `transition` is a shorthand, so a consumer whose co-composed class resets the
+       property list paints ITS list — the legs must be carried at whichever rule WINS
+       (utilities/base.css §interactive-item and components/_shared/menu/menu.css both
+       carry the coherent set for exactly that reason).
+
+       A CSS TRANSITION DURATION IS NOT A TIME CONSTANT, and the mapping is deliberately
+       conservative. These values are the table's τ; a `transition-duration: var(--engage-
+       *-attack)` therefore COMPLETES at τ, which is strictly sooner than the
+       first-order envelope's own t90 (τ·ln10). The budget is met a fortiori, and the
+       gate checks the arithmetic against `engageAttackT90Ms()` rather than against a
+       remembered millisecond figure.
+
+       RELEASES ARE SLOWER THAN ATTACKS, BY CHARTER. That is the light channel's
+       asymmetry and it is the OPPOSITE of the spatial one (`--spring-*-exit-duration`
+       is 0.6 × its entry). A drain that cuts reads as never-seen; a spatial exit that
+       lingers reads as the thing refusing to leave. `ENGAGE_LADDER`'s `LADDER_EXIT_LAW`
+       is where the two directions are ruled, so neither gate argues with the other. */
+    --engage-press-drain-attack: 55ms;
+    --engage-press-drain-release: 120ms;
+    --engage-medium-exit-attack: 55ms;
+    --engage-medium-exit-release: 160ms;
+    --engage-control-engage-attack: 60ms;
+    --engage-control-engage-release: 180ms;
+    --engage-signal-decay-attack: 40ms;
+    --engage-signal-decay-release: 220ms;
 }

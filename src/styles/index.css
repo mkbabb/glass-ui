@@ -193,7 +193,12 @@
    `.glass-menu-row` `@layer components` hover/highlight rules source-order-WIN
    over `.interactive-item:hover` (utilities/base.css, same layer + specificity) —
    the cascade-trap-safe placement, mirroring glass/surface-axis.css's "import
-   AFTER ladder.css" discipline. */
+   AFTER ladder.css" discipline.
+   THE PRICE OF WINNING: `transition` is a shorthand, so whichever of the two files
+   wins also RESETS the property list. menu.css therefore carries the coherent leg set
+   (light + lift + scale) rather than the lift alone — see its own §transition note.
+   A leg added to `.interactive-item` and not to `.glass-menu-row` does not paint on a
+   menu row. */
 @import "../components/_shared/menu/menu.css";
 @import "../components/button/styles.css";
 @import "../components/configurator/styles.css";

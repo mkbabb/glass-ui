@@ -126,24 +126,82 @@
     }
 
     /* ── Interactive item (hover bg + focus ring + active scale) ── */
+    /* THE LIGHT LEGS RIDE THE ENGAGEMENT ENVELOPE, NEVER A GENERIC DURATION.
+       `control-engage` is the envelope row whose rider IS this surface ("the engagement
+       wash and bloom on a control surface, cooling well after the finger leaves"), so
+       the clock comes from the register that owns the light channel rather than from
+       whatever generic duration sits nearest. A generic clock here lands outside the
+       published acknowledge budget (`ACKNOWLEDGE_WINDOW_MS`, 150ms) on the one recipe
+       most of the library's interactive surfaces compose.
+
+       THE ASYMMETRY IS CARRIED BY WHICH RULE OWNS WHICH CLOCK, never by a JS timer: a
+       transition reads its timing from the state it lands IN, so the `:hover` rule owns
+       the ATTACK (the answer) and this base rule owns the RELEASE (the cooling). That is
+       the light channel's charter direction — release outlives attack — and it is
+       deliberately the opposite of the spatial leg's, whose `--spring-*-exit-duration`
+       is 0.6 × its entry. `ENGAGE_LADDER.LADDER_EXIT_LAW` rules the two directions so
+       neither gate argues with the other.
+
+       TWO CONTROL CHANNELS, AND THEY ARE NOT INTERCHANGEABLE. The same surface legs are
+       clocked by an ATTACK channel and a RELEASE channel, by design:
+         · ATTACK — `--duration-control` (0.12s) at `@utility transition-control`
+           (utilities/btn.css) and `--engage-control-engage-attack` at this seat. Both
+           must land inside `ACKNOWLEDGE_WINDOW_MS`. That is exactly what btn.css's
+           strike of the 0.2s calm clock forbids, and that strike binds the ATTACK
+           channel ONLY — it is not an argument against a slower release.
+         · RELEASE — `--engage-control-engage-release`, deliberately SLOWER than its
+           attack by `LADDER_EXIT_LAW.light`. A release pulled down to the attack beat
+           reads as a cut, which is the defect the envelope table exists to forbid.
+       Neither figure is minted here: the attack beat is scheme-motion.css's, the
+       envelope pair is `engageEnvelopes.ts`'s.
+
+       A CO-COMPOSED CLASS CAN STILL RESET THIS LIST. `transition` is a shorthand: a
+       class composed alongside this one, in the same layer at equal-or-higher
+       specificity, REPLACES the whole property list rather than merging with it. Every
+       such recipe therefore carries the coherent set — `.tap-squish` / `.button` below,
+       and `.glass-menu-row` (components/_shared/menu/menu.css), which wins over this
+       rule by the import order stated at styles/index.css. A leg added here and not
+       there does not paint on the six menu/command rows that compose both. */
     .interactive-item {
         /* identity base */
         scale: 1;
         border-radius: var(--radius-lg);
         user-select: none;
         transition:
-            background-color var(--duration-fast) var(--ease-standard),
-            color var(--duration-fast) var(--ease-standard),
-            border-color var(--duration-fast) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard),
+            background-color var(--engage-control-engage-release) var(--ease-standard),
+            color var(--engage-control-engage-release) var(--ease-standard),
+            border-color var(--engage-control-engage-release) var(--ease-standard),
+            box-shadow var(--engage-control-engage-release) var(--ease-standard),
             /* The SPATIAL scale leg rides the
                spring-derived `--transition-liquid-spatial` DEFAULT (the inversion:
                weight is now the vocabulary, not a per-site --motion-weight opt-in;
                was the bare `--ease-standard` bezier). `.motion-calm` opts back out. */
             scale var(--spring-press-duration) var(--transition-liquid-spatial);
     }
-    .interactive-item:hover {
-        background-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    /* G7 HOVER GUARD — "hover does not exist on a coarse pointer, or it is a bug on
+       mobile, which is first-class". On touch `:hover` latches on tap and STAYS
+       latched until something else is tapped, so an unguarded hover rung paints a
+       control as permanently pointed-at.
+       THE TOUCH ANSWER IS THE CONSUMER'S, AND THE GUARD MAY NOT INVENT ONE. Where a
+       consumer composes `.tap-squish`, its press rung is that answer and is deliberately
+       left outside the guard. Where it does not, the consumer owes its own: none of the
+       six shipped rows that compose `.interactive-item` compose `.tap-squish` — they
+       compose `.glass-menu-row`, whose touch answer is reka's `[data-highlighted]`
+       (set AND cleared on pointer interaction, so it cannot latch), guarded on this same
+       law at components/_shared/menu/menu.css. An `.interactive-item` consumer with
+       neither has NO coarse-pointer acknowledgement; that rung is the component rows'
+       to land, and the library-wide census stays visibly RED until they do. */
+    @media (hover: hover) {
+        .interactive-item:hover {
+            background-color: color-mix(in srgb, var(--accent) 50%, transparent);
+            transition:
+                background-color var(--engage-control-engage-attack)
+                    var(--ease-standard),
+                color var(--engage-control-engage-attack) var(--ease-standard),
+                border-color var(--engage-control-engage-attack) var(--ease-standard),
+                box-shadow var(--engage-control-engage-attack) var(--ease-standard),
+                scale var(--spring-press-duration) var(--transition-liquid-spatial);
+        }
     }
     .interactive-item:focus-visible {
         outline: none;
@@ -199,12 +257,27 @@
     .tap-squish {
         /* identity base */
         scale: 1;
+        /* The surface legs are the LIGHT channel and read its register's clock
+           (`control-engage` RELEASE, the cooling), never a generic duration.
+           WHAT THIS DOES NOT BUY, STATED SO NOBODY READS IT AS BOUGHT: `.tap-squish`
+           declares no `:active` light clock of its own, so the clock governing a
+           press-time colour change here is this base rule's — the RELEASE leg, which by
+           `LADDER_EXIT_LAW.light` is deliberately the SLOWER of the two and therefore
+           sits OUTSIDE `ACKNOWLEDGE_WINDOW_MS` (150ms). Under PRM, where the press
+           transform retires (the ruling four paragraphs up) and the cross-fade is the
+           whole acknowledgement, that is the constraint that binds: the press's answer
+           is a release-clocked fade, not an attack-clocked one. Closing it means giving
+           the press rung its OWN `:active` light rule on the press envelope
+           (`press-drain`, whose attack is the fastest in the register) — that is the
+           press row's cut, and this row's own bracket forbids rewiring `press-drain`
+           here. What the re-point does buy is the POINTER path: the attack clock on the
+           `:hover` rule above, inside the window. */
         transition:
-            background-color var(--duration-fast) var(--ease-standard),
-            border-color var(--duration-fast) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard),
-            color var(--duration-fast) var(--ease-standard),
-            opacity var(--duration-fast) var(--ease-standard),
+            background-color var(--engage-control-engage-release) var(--ease-standard),
+            border-color var(--engage-control-engage-release) var(--ease-standard),
+            box-shadow var(--engage-control-engage-release) var(--ease-standard),
+            color var(--engage-control-engage-release) var(--ease-standard),
+            opacity var(--engage-control-engage-release) var(--ease-standard),
             /* The scale leg reads the shared
                `--transition-liquid-spatial` vocabulary token (it resolves to
                `--spring-press`) on that row's OWN clock — the clock fence: a spring

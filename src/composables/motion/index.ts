@@ -87,3 +87,20 @@ export {
     type EngageEnvelopeRow,
     type EngageRole,
 } from "./engage/engageEnvelopes";
+
+// The LADDER is the third member of that same reading: springs give a rung its rect,
+// envelopes give it its light, and this table says which rung takes which — plus the
+// guards (single lead, channel budget, pointer-fine, singleton) that MOTION-CANON §4
+// listed as checkable but gave nothing to check. It cites both roots by name and
+// restates no figure from either.
+export {
+    ENGAGE_LADDER,
+    CHANNEL_BUDGET,
+    HOVER_GEOMETRY_BUDGET,
+    LADDER_EXIT_LAW,
+    engageRung,
+    rungsForEnvelope,
+    type EngageRungRow,
+    type EngageRungName,
+    type EngageChannel,
+} from "./engage/engageLadder";
