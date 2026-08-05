@@ -90,9 +90,13 @@ export default defineConfig({
         },
         {
             // AY.W-SCALE2 — the coarse/touch project: hasTouch + isMobile so
-            // `@media (pointer: coarse)` MATCHES (the touch-hit-area ::before
-            // overlay emits its 44px geometry here, NOT at fine pointer). An
-            // iPhone-class 390×844 viewport, the SAME ANGLE launch args.
+            // `@media (pointer: coarse)` MATCHES and the touch-only branches of the
+            // dock/sortable/pager specs run for real. An iPhone-class 390×844
+            // viewport, the SAME ANGLE launch args. NOTE (BK #19): the 44px WCAG
+            // coarse floor has NO mechanism behind it at HEAD — `touch-hit-area`
+            // composed nothing and went out with the shim purge, and its spec went
+            // with it rather than assert an unowned floor. `G-COARSE-TARGET` (≡A6) is
+            // **#31 W-A11Y**'s to author, mechanism first.
             name: "coarse-touch",
             use: {
                 ...devices["Desktop Chrome"],

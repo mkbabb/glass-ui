@@ -11,7 +11,7 @@ import {
     type OklchStop,
     type WarpMode,
 } from "../constants/presets";
-import { gamutMapStop } from "./color";
+import { gamutMapStop } from "../../../composables/color";
 
 /** The motion field classifier. */
 export type AuroraMotionAtom = "still" | "breathing" | "drifting";

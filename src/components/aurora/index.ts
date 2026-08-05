@@ -69,14 +69,19 @@ export {
     type AuroraZoneArrangement,
 } from "./composables/atoms-fields";
 export {
-    cssToOklch,
     deriveAurora,
     flattenPalette,
     hexToOklchStop,
-    oklchStopToHex,
-    oklchToLinear,
     paletteToCssGradient,
 } from "./composables/color";
+// The shared color primitives ship from their OWN home; the aurora barrel names them
+// here so `/aurora` keeps a complete surface, but no module in between holds a
+// pass-through copy of them (BK #19 W-SHIM-PURGE).
+export {
+    cssToOklch,
+    oklchStopToHex,
+    oklchToLinear,
+} from "../../composables/color";
 // The luminance-faithful headless fallback ground (the
 // field-sampled nuclei-glow surface for the software-raster / capture substrate;
 // reuses oklchToLinear — ONE color source). `sampleAuroraField` is the per-pixel

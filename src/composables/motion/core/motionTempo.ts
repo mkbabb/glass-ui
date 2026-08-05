@@ -22,7 +22,7 @@
 // `--ui-scale` (GEOMETRY): three registered inheriting scalars, never folded.
 
 /** The identity tempo — no time scaling (the `@property` initial-value). */
-export const MOTION_TEMPO_IDENTITY = 1;
+const MOTION_TEMPO_IDENTITY = 1;
 
 /**
  * Read the effective `--motion-tempo` off `el` (or `:root` when omitted). Returns a

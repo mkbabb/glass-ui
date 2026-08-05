@@ -45,7 +45,7 @@ export interface AffectPoint {
 }
 
 /** The five named moods as POINTS in the {valence, arousal} circumplex. */
-export const MOOD_AVA: Record<BlobMood, AffectPoint> = {
+const MOOD_AVA: Record<BlobMood, AffectPoint> = {
     idle: { valence: 0.0, arousal: 0.35 },
     happy: { valence: 0.8, arousal: 0.6 },
     curious: { valence: 0.3, arousal: 0.5 },

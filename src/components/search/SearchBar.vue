@@ -27,12 +27,8 @@ import { computed, ref, useAttrs, type Component } from "vue";
 import { Search } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
 import type { Surface } from "../_shared/axes";
-import {
-    type ControlSize,
-    type SearchVariant,
-    controlSizeClass,
-    searchFieldVariants,
-} from "./searchVariants";
+import { controlSizeClass } from "../_shared/control-size";
+import { type ControlSize, type SearchVariant, searchFieldVariants } from "./searchVariants";
 
 defineOptions({ inheritAttrs: false });
 

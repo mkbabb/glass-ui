@@ -2,7 +2,6 @@
 import { computed, useAttrs } from "vue";
 import { ComboboxContent as RekaComboboxContent } from "reka-ui";
 import { cn } from "../_shared/class-names";
-import { floatingContentAttrs } from "../_shared/floating";
 import type { ComboboxListEmits } from "../_shared/selection";
 import { useOptionalCommandDialogContext } from "./dialogContext";
 import type { CommandListProps } from "./types";
@@ -12,7 +11,7 @@ defineOptions({ name: "CommandList", inheritAttrs: false });
 const props = withDefaults(defineProps<CommandListProps>(), { surface: "glass" });
 const emit = defineEmits<ComboboxListEmits>();
 const attrs = useAttrs();
-const forwardedAttrs = computed(() => floatingContentAttrs(attrs));
+const forwardedAttrs = computed(() => ({ ...attrs }));
 const commandDialog = useOptionalCommandDialogContext();
 
 function handleEscape(event: KeyboardEvent): void {

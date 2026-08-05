@@ -41,7 +41,7 @@ export function fillFor(seg: TimelineSegment): number {
 }
 
 /** Resolve a segment's positive weight; defaults to 1. */
-export function segmentWeight(seg: TimelineSegment): number {
+function segmentWeight(seg: TimelineSegment): number {
     return typeof seg.weight === "number" && seg.weight > 0 ? seg.weight : 1;
 }
 

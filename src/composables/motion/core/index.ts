@@ -12,7 +12,9 @@
 // transitive, identical symbols. Bearing leaves import DAMPING/SNAP_THRESHOLD
 // directly from this domain, so both surfaces ship it.
 export * from "./constants";
-// useStagger has external consumers (speedtest ×2). It is Vue-only, engine-free,
+// useStagger has external consumers — ×3, re-measured on the §1.1 walk at BK #19:
+// speedtest `useResultReveal.ts:36` + `ResultStack.vue:171`, muster
+// `useVerdictMoment.ts:60`, all off `/motion-core`. It is Vue-only, engine-free,
 // and vueuse-free, so it ships on /motion-core.
 export * from "../reveal/useStagger";
 export * from "../scroll/useScrollProgress";

@@ -8,7 +8,7 @@
  * Cap the backing-store resolution at 2× — the single biggest VRAM/fill lever
  * after offscreen parking. Consumed by Aurora and Blob backing-store sizing.
  */
-export const AV_DPR_MAX = 2;
+const AV_DPR_MAX = 2;
 
 /**
  * The Aurora decorative-wash DPR ceiling, distinct from the focal Blob's
@@ -22,15 +22,7 @@ export const AV_DPR_MAX = 2;
  * reads this sub-cap. This is the CPU-side backing-store DIMENSION only; it never
  * reaches the shader.
  */
-export const AV_AURORA_DPR_MAX = 1.5;
-
-/**
- * The maximum animated metaball nuclei (the goo-blob body + its satellites, or
- * an aurora field's count). The goo-blob shader hard-caps satellites at 4; this
- * is the authored-config soft cap (body + ≤2 satellites is the budget-safe
- * register, ≤3 the ceiling). A preset above this is clamped at upload.
- */
-export const AV_MAX_BLOBS = 3;
+const AV_AURORA_DPR_MAX = 1.5;
 
 /**
  * The maximum palette colors a budget-safe field mixes per frame. Aurora's
@@ -39,15 +31,6 @@ export const AV_MAX_BLOBS = 3;
  * cheap. Above this the gradient cost grows without perceptible richness.
  */
 export const AV_MAX_COLORS = 4;
-
-/**
- * The drift-loop duration band, in seconds. An animation that loops faster than
- * {@link AV_LOOP_DURATION_MIN_S} reads as nervous (and never lets the eye rest →
- * no battery reprieve); slower than {@link AV_LOOP_DURATION_MAX_S} reads as
- * static. The 8–15s band is the SOTA-named budget-safe drift window.
- */
-export const AV_LOOP_DURATION_MIN_S = 8;
-export const AV_LOOP_DURATION_MAX_S = 15;
 
 /** Clamp a numeric value into an inclusive `[min, max]` band. */
 export function clampBudget(value: number, min: number, max: number): number {

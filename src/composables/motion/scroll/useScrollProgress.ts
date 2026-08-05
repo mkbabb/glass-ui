@@ -1,7 +1,6 @@
 // Scroll-driven 0..1 progress for an element entering/exiting the viewport.
 import { onBeforeUnmount, onMounted, ref, unref, watch } from "vue";
 import type { MaybeRef, Ref } from "vue";
-import { supportsScrollTimeline } from "./supportsCssTimeline";
 
 interface ScrollProgressConfig {
     /** Element whose vertical position maps to 0..1. */
@@ -14,47 +13,28 @@ interface ScrollProgressConfig {
      * bottom, 1 when target top reaches viewport top.
      */
     trackExit?: boolean;
-    /**
-     * Keep the returned ref live even when CSS scroll timelines are available.
-     * Use this only when JavaScript consumes the value directly (for example a
-     * shader uniform); CSS-authored progress should keep the default compositor
-     * path and attach no reader.
-     */
-    reactive?: boolean;
     /** Attach the reader only while this source is truthy. */
     enabled?: MaybeRef<boolean>;
 }
-
-/**
- * True when the engine supports native scroll-driven animations. When this holds,
- * the `.scroll-progress` CSS recipe (scroll-driven.css)
- * owns the visual axis on the compositor, so this composable becomes the inert
- * (non-attaching) path: NO `scroll`/`resize` listeners, NO `ResizeObserver`.
- * This is the dual-path-with-a-single-writer rule (no double-run). A consumer
- * that genuinely reads the number in JavaScript may opt into `reactive` mode;
- * the native CSS path remains primary for CSS-authored progress.
- */
-const NATIVE_SCROLL_TIMELINE = supportsScrollTimeline();
 
 /**
  * Map a target element's scroll position in the viewport to a reactive
  * `Ref<number>` in [0, 1]. Drives things like scroll-linked typography
  * axes, parallax depth, or progress indicators.
  *
- * On an engine with native scroll-driven animations, the listener +
- * `ResizeObserver` machinery does NOT attach — prefer the `.scroll-progress`
- * CSS recipe (scroll-driven.css), which runs the same 0..1 axis on the
- * compositor. This composable is the feature-detected fallback (the sole writer
- * when the native feature is absent); `computeProgress()` still runs once on
- * mount for a correct initial value. `reactive: true` is the explicit exception
- * for a non-CSS consumer such as a shader uniform.
+ * THE READER ALWAYS ATTACHES. The prior form gated the whole machine behind a
+ * module-load `supportsScrollTimeline()` probe, so on a supporting engine the
+ * returned ref froze at its mount value while reading alive at every call site —
+ * a silent inert arm, not a fallback (its ONE consumer opted out of it with
+ * `reactive: true`, which is how the arm survived untested in both directions).
+ * A CSS-authored axis belongs in the `.scroll-progress` recipe and never calls
+ * this composable at all; a caller who wants the NUMBER gets the number.
  */
 export function useScrollProgress(
     options: ScrollProgressConfig,
 ): Ref<number> {
     const { offset = 0, trackExit = false } = options;
     const progress = ref(0);
-    const needsReader = options.reactive === true || !NATIVE_SCROLL_TIMELINE;
 
     let rafId = 0;
     let resizeObserver: ResizeObserver | null = null;
@@ -88,7 +68,7 @@ export function useScrollProgress(
     }
 
     function start(): void {
-        if (!mounted || listening || !needsReader || !isEnabled()) return;
+        if (!mounted || listening || !isEnabled()) return;
         listening = true;
         computeProgress();
         window.addEventListener("scroll", schedule, { passive: true });
@@ -114,8 +94,7 @@ export function useScrollProgress(
 
     onMounted(() => {
         mounted = true;
-        if (needsReader) start();
-        else if (isEnabled()) computeProgress();
+        start();
     });
 
     watch(
@@ -131,12 +110,8 @@ export function useScrollProgress(
     watch(
         () => isEnabled(),
         (enabled) => {
-            if (enabled) {
-                if (needsReader) start();
-                else computeProgress();
-            } else {
-                stop();
-            }
+            if (enabled) start();
+            else stop();
         },
     );
 

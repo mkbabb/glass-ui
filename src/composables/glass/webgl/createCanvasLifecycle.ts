@@ -33,15 +33,14 @@ export type CanvasSuspendReason =
     | "manual";
 
 // The backing-store sizer and its `BackingSize`/`DprPolicy` types live in the
-// colocated `backingSize` leaf. Re-exported here so every consumer reaches them through the
-// lifecycle unchanged (webgpu/index imports `sizeBacking`; useWebGLCanvas/useWebGPUCanvas
-// import the types). The sizer is pure CSS-geometry with ZERO closure state — the
-// schedule + park + reveal machinery live in this file + the `visibility` leaf.
+// colocated `backingSize` leaf and ship from THERE — this module consumes the sizer and
+// holds no re-export of it (BK #19 W-SHIM-PURGE). The sizer is pure CSS-geometry with
+// ZERO closure state — the schedule + park + reveal machinery live in this file + the
+// `visibility` leaf.
 import { watch } from "vue";
 import { useReducedMotion } from "../../motion/core/useReducedMotion";
 import { sizeBacking, type BackingSize, type DprPolicy } from "./backingSize";
 import { createCanvasVisibility } from "./visibility";
-export { sizeBacking };
 export type { BackingSize, DprPolicy };
 
 /** The per-frame hooks a backend's `buildContext` returns to the lifecycle core. */
@@ -68,28 +67,20 @@ export interface CanvasLifecycleOptions {
     /**
      * Upload the backing geometry to the viewport/uniforms.
      *
-     * The leaf measures and sizes the backing store via
-     * `sizeBacking`, the ONE sizer) and passes the freshly-computed `BackingSize` here so
-     * the consumer can never re-derive a wrong one. When the leaf owns sizing (`dprPolicy`
-     * provided) the buffer is already correct on entry — the consumer body is UPLOAD-ONLY,
-     * shrinking to `gl.viewport(0,0,s.w,s.h)`, `uploadResolution` (a WGPU swap-chain leg
-     * is a no-op — it auto-resizes to the backing the leaf set).
-     *
-     * Procedural scenes, including Canvas2D, pass `dprPolicy` and use this upload-only
-     * size. The optional argument remains only for direct legacy WebGL/WebGPU callers
-     * that omit a DPR policy.
+     * The leaf measures and sizes the backing store via `sizeBacking` (the ONE sizer)
+     * and passes the freshly-computed `BackingSize` here, so the consumer can never
+     * re-derive a wrong one. The buffer is ALWAYS correct on entry — the consumer body
+     * is UPLOAD-ONLY, shrinking to `gl.viewport(0,0,s.w,s.h)`/`uploadResolution` (a WGPU
+     * swap-chain leg is a no-op — it auto-resizes to the backing the leaf set).
      */
-    resize: (s?: BackingSize) => void;
+    resize: (s: BackingSize) => void;
     /**
-     * The consumer's DPR policy, handed to the leaf's `sizeBacking`. When PRESENT the
-     * leaf owns backing-store measurement and sizing, and the live
-     * `BackingSize` rides every `resize` call. When ABSENT the leaf falls back to the
-     * legacy behaviour (the consumer's `resize()` self-measures) — the migration seam.
-     *
-     * Procedural scenes use the present branch. The absent branch remains for direct
-     * legacy WebGL/WebGPU callers.
+     * The consumer's DPR policy, handed to the leaf's `sizeBacking`. REQUIRED: the leaf
+     * owns backing-store measurement and sizing, and the live `BackingSize` rides every
+     * `resize` call. There is no self-measuring arm — a caller that cannot state a DPR
+     * policy cannot state a backing size either.
      */
-    dprPolicy?: DprPolicy;
+    dprPolicy: DprPolicy;
     /**
      * Bind/unbind backend-specific context-loss/restore listeners. `rebuild` re-runs
      * `buildContext` on a fresh context + resumes the loop (the self-heal); the backend
@@ -147,7 +138,7 @@ export interface CanvasLifecycleHandle {
      * SYNCHRONOUSLY, decoupled from the (async) context acquire. The WebGPU backend
      * calls this BEFORE `armAsync`'s device request so the canvas is sharp from frame 0
      * while the device resolves behind it (the ≤6s blurry-flash close). Idempotent: a
-     * no-op once `arm()` has run it. A no-op when no `dprPolicy` was supplied (legacy).
+     * no-op once `arm()` has run it.
      */
     presize: () => void;
     suspend: (reason?: CanvasSuspendReason) => void;
@@ -207,19 +198,13 @@ export function createCanvasLifecycle(
     const dprPolicy = options.dprPolicy;
     const composeIntersectionPark = options.composeIntersectionPark ?? false;
 
-    // Leaf-owned sizing. When `dprPolicy` is
-    // present the leaf MEASURES + sizes the backing (the ONE sizer) and hands the live
-    // `BackingSize` to the consumer's upload-only `resize(s)`. When absent, the legacy
-    // path runs (the consumer self-measures in its own `resize()`). ONE function, every
-    // call-site (presize, RO, CV-reveal, IO-reveal, wake) routes through it so the
-    // backing can NEVER drift to the 300×150 default behind a stuck consumer closure.
+    // Leaf-owned sizing, ALWAYS: the leaf MEASURES + sizes the backing (the ONE sizer)
+    // and hands the live `BackingSize` to the consumer's upload-only `resize(s)`. ONE
+    // function, every call-site (presize, RO, CV-reveal, IO-reveal, wake) routes through
+    // it so the backing can NEVER drift to the 300×150 default behind a stuck consumer
+    // closure.
     function sizeAndUpload(): void {
-        if (dprPolicy !== undefined) {
-            const s = sizeBacking(canvas, dprPolicy);
-            options.resize(s);
-        } else {
-            options.resize();
-        }
+        options.resize(sizeBacking(canvas, dprPolicy));
     }
     const resize = sizeAndUpload;
 

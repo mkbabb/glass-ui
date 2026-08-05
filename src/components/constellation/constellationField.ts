@@ -12,7 +12,6 @@
 // consumes. Zero deck-domain content lives here.
 
 import {
-    stepWell,
     warpStep,
     warpSettled,
     setWarpTarget,
@@ -21,9 +20,9 @@ import {
 } from "./constellationInteraction";
 
 // The reference width the `k` scale factor is keyed to (CSS px) lives in the
-// feature-dir constants home; re-exported here for the package barrel path.
-export { BASE_WIDTH } from "./constants";
+// feature-dir constants home and ships from THERE (BK #19 W-SHIM-PURGE).
 import { NODE_R_MIN, NODE_R_SPREAD } from "./constants";
+import { stepWell } from "./constellationWell";
 
 // The SHARED field/palette/warp/wander/well/pinned-drift/props TYPE shapes live
 // in the co-located `./constellationTypes`. The step functions below

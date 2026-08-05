@@ -48,7 +48,7 @@ import type { Motion } from "./axes";
  * only clamp DOWN — PRM forces `full`/`reduced` → `reduced` (never an escalation),
  * `off` is preserved (the prop went below PRM, which is legal).
  */
-export function resolveMotion(
+function resolveMotion(
     motion: Motion | undefined,
     prefersReducedMotion = readReducedMotion(),
 ): Motion {

@@ -28,7 +28,7 @@ export const FOURIER_PHASOR_BYTES = 16;
 //   c0   : vec4<f32>  off  0  (headT, trailArc, _pad, _pad)
 //   ints : vec4<i32>  off 16  (harmonicN, epicycleArmN, sampleCount, phasorCount)
 //   total: 32 bytes
-export const FOURIER_COMPUTE_UNIFORM_BYTES = 32;
+const FOURIER_COMPUTE_UNIFORM_BYTES = 32;
 
 const C_OFF = { c0: 0, ints: 4 } as const;
 
@@ -77,7 +77,7 @@ export function packFourierComputeUniforms(
 //   ints    : vec4<i32>  off  64  (sampleCount, armCount, stopCount, _pad)
 //   palette : array<vec4<f32>, 4>  off 80  (linear-sRGB rgb + _pad)
 //   total   : 80 + 4*16 = 144 bytes
-export const FOURIER_RENDER_UNIFORM_BYTES = 80 + MAX_FOURIER_STOPS * 16;
+const FOURIER_RENDER_UNIFORM_BYTES = 80 + MAX_FOURIER_STOPS * 16;
 
 const R_OFF = { r0: 0, r1: 4, r2: 8, r3: 12, ints: 16, palette: 20 } as const;
 

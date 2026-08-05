@@ -10,8 +10,6 @@ export interface ToggleGroupContext {
 
 const ctx = createOptionalContext<ToggleGroupContext>("glass-ui:toggle-group");
 
-export const TOGGLE_GROUP_KEY = ctx.KEY;
-
 export function provideToggleGroupContext(context: ToggleGroupContext): void {
     ctx.provide(context);
 }

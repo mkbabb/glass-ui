@@ -153,5 +153,4 @@ export function useSortable<T>(options: SortableOptions<T>): UseSortableReturn {
     };
 }
 
-export { isNonZeroRadius };
 export type { SortableId, SortableContainerBinding, UseSortableReturn } from "./types";

@@ -8,7 +8,7 @@ import {
 } from "reka-ui";
 import type { Surface } from "../_shared/axes";
 import { cn } from "../_shared/class-names";
-import { floatingContentAttrs, type FloatingPlacementProps } from "../_shared/floating";
+import type { FloatingPlacementProps } from "../_shared/floating";
 import type { DismissableContentEmits } from "../_shared/interaction";
 import { useOptionalDockContext } from "../dock/composables/dockContext";
 import { usePopoverUnion } from "./popoverContext";
@@ -43,7 +43,7 @@ const forwardedAttrs = computed(() => {
         role: _role,
         "aria-modal": _ariaModal,
         ...forwarded
-    } = floatingContentAttrs(attrs);
+    } = attrs;
     return forwarded;
 });
 const placementProps = computed(() => ({

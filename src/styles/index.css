@@ -225,19 +225,6 @@
 /* The thin, radius-following masked scroll-progress band. */
 @import "../components/scroll-progress-rim/styles.css";
 
-/* The self-drawing arrival register (`.draw-rule` /
-   `[data-draw-in]`). A hairline / divider / underline draws ITSELF in via
-   `transform: scaleX(0→1)` (or a `clip-path: inset()` wipe) on the NO-OVERSHOOT
-   arrival ease `--ease-out-expo`, at `--draw-in-duration = calc(0.52s * --motion-
-   tempo)` — categorically NOT a spring (a rule that overshoots past its own end reads
-   as jitter). It codifies the arrival law a hairline/divider/underline draws on.
-   MEMBERSHIP TODAY IS ZERO: `.draw-rule`/`[data-draw-in]` carry no src/demo
-   call-site (no demo masthead element exists, and HandMark keeps its OWN
-   `draw-on` dashoffset/clip-path recipe — it does not compose this register).
-   The reach is read off the tree, never off this comment. Compositor-only,
-   PRM-static. */
-@import "./draw-in.css";
-
 /* Accessibility is a terminal product mode, not a mid-cascade patch. This one
    import owns reduced transparency/contrast/motion, forced colors, and coarse
    target adaptation after every material and component recipe. */

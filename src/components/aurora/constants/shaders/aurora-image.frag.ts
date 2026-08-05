@@ -35,8 +35,8 @@ const NL = "\n";
 // bounded-tap witness). 3 rings × 8 angular taps = 24 stratified samples; the DISSOLVE
 // is carried by the kernel RADIUS (`mix(uBlurMin, uBlurMax, zone)`), never the tap count,
 // so a "dramatically dissolved" zone reads as a heavy bokeh over 24 taps at field scale.
-export const IMAGE_BLUR_RINGS = 3;
-export const IMAGE_BLUR_SECTORS = 8;
+const IMAGE_BLUR_RINGS = 3;
+const IMAGE_BLUR_SECTORS = 8;
 
 export const IMAGE_FRAGMENT_SRC =
     /* glsl */ `#version 300 es

@@ -4,4 +4,8 @@ export {
     type UseWatercolorBlobOptions,
     type WatercolorBlob,
 } from "./useWatercolorBlob";
-export { mulberry32, hashString, randomRadii, radiiToCSS } from "./prng";
+export { randomRadii, radiiToCSS } from "./prng";
+export {
+    mulberry32,
+    hashString,
+} from "../../composables/glass/procedural/prng";

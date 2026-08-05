@@ -13,33 +13,34 @@
  *                           cascade). It replaced the JS stagger composable
  *                           outright; there is no JS writer left on this axis.
  *
- * DUAL-PATH with a SINGLE writer (no double-run): when the engine supports
- * `animation-timeline`, the CSS here owns the visual axis and the composables
- * gate their listener/observer machinery OFF (so CSS and JS never both write
- * the same target). When the engine does NOT support it, this block is skipped
- * by `@supports` and the composable is the sole writer. See the gate at the top
- * of `useScrollProgress.ts` (the reveal axis has no surviving JS writer).
+ * THESE RECIPES ARE THE WHOLE AXIS — there is no JS twin gating itself off behind
+ * them (BK #19 W-SHIM-PURGE). The prior arrangement called itself "dual-path with a
+ * single writer": `useScrollProgress` re-derived `supportsScrollTimeline()` at module
+ * load and, when it held, attached NOTHING — so the composable's ref froze at its
+ * mount value while reading alive at every call site. That is an inert arm, not a
+ * fallback, and its one consumer opted out of it. The composable now always attaches
+ * and is simply a DIFFERENT instrument: a caller who wants the NUMBER in JS asks for
+ * the number; a caller who wants the compositor axis writes the class here and no JS
+ * runs at all. The reveal axis has no JS writer in either direction.
  *
- * Baseline: `scroll-driven-animations` = Newly Available → adopt CSS as
- * primary, keep the composable as the ≤ 20-LOC feature-detected fallback.
+ * Baseline: `scroll-driven-animations` = Newly Available.
  *
  * Reduced-motion is the OUTER gate: the whole `@supports` block sits under
  * `prefers-reduced-motion: no-preference`, so under PRM no scroll animation
  * attaches at all and content renders in its terminal state (the `from`
  * keyframe is never applied because the animation never binds).
  *
- * MEMBERSHIP, read off the tree (BK.#18 W-DELETE, §1.1 whole-repo walk run this
- * seat). This cut deleted `demo/stories/motion/scroll/ScrollNativeBody.vue`, the
- * repo's ONLY markup writer of both selectors — so the in-repo SPECIMEN is gone.
- * Both registers nevertheless carry LIVE CROSS-REPO writers, which is the class
- * that binds (RATIFICATION §1.1):
+ * MEMBERSHIP, read off the tree. #18 deleted `ScrollNativeBody.vue`, the repo's only
+ * markup writer of both selectors, and routed the missing specimen to #19 as RT-18B;
+ * #19 PAID it — `demo/stories/motion/scroll.vue` mounts BOTH registers alongside the
+ * `useScrollScene` spine, so the axis has one in-repo specimen showing all three
+ * writers at once. The live cross-repo writers that kept both registers off the dead
+ * list in the first place (RATIFICATION §1.1) stand:
  *   .scroll-progress     → fourier-analysis `web/src/components/paper/PaperView.vue:314`
  *                          (`class="paper-progress-bar scroll-progress"`).
  *   [data-scroll-reveal] → speedtest `src/components/survey/SurveyWizard.vue:88`
  *                          (the FadingScroll host; its `:641` cascade table names
  *                          `[data-scroll-reveal] > *` by rule).
- * So NEITHER register is dead and neither is carried out here. What IS owed is the
- * missing in-repo specimen — routed with the dead-selector census (BK RT-18B → #19).
  * Reach is read off the tree, never off this comment.
  */
 

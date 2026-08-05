@@ -9,7 +9,7 @@ import {
     effectiveCap,
     writeVelocityWeight,
 } from "../../../composables/motion/core/writeVelocityWeight";
-import { DEFAULT_INDICATOR_MAX_STRETCH } from "../constants";
+import { DEFAULT_INDICATOR_MAX_STRETCH } from "../../../composables/motion/morph/useSelectionIndicator";
 import type { SegmentedTabOption } from "../SegmentedTabs.vue";
 
 /**

@@ -24,7 +24,7 @@
  */
 
 /** The shared decode options — the ONE normalised `createImageBitmap` flag set. */
-export const IMAGE_DECODE_OPTIONS: ImageBitmapOptions = {
+const IMAGE_DECODE_OPTIONS: ImageBitmapOptions = {
     premultiplyAlpha: "none",
     colorSpaceConversion: "none",
 };
@@ -52,7 +52,7 @@ export type ImageInputSource = UploadableImageSource | Blob | string;
  * single decode home — a consumer NEVER re-spells `createImageBitmap` with its own
  * (divergent) options.
  */
-export function decodeImageBitmap(blob: Blob): Promise<ImageBitmap> {
+function decodeImageBitmap(blob: Blob): Promise<ImageBitmap> {
     return createImageBitmap(blob, IMAGE_DECODE_OPTIONS);
 }
 
@@ -85,7 +85,7 @@ export function placeholderImageSource(): ImageData {
 }
 
 /** The intrinsic pixel dimensions of an uploadable source (both legs size the texture from it). */
-export function imageSourceDimensions(src: UploadableImageSource): {
+function imageSourceDimensions(src: UploadableImageSource): {
     width: number;
     height: number;
 } {

@@ -164,12 +164,11 @@ export function useAurora(
         () => !cssOnly && getCfg().interactivity?.scroll === true,
     );
     // Composables must register during setup, not after asynchronous GPU arm.
-    // Aurora consumes the numeric value in shader time, so it requests the live
-    // reader even on browsers where CSS timelines exist.
+    // Aurora consumes the numeric value in shader time — the reader always attaches
+    // (BK #19 struck the inert CSS-primary arm this call used to opt out of).
     const scrollProgress = useScrollProgress({
         target: canvasRef,
         trackExit: true,
-        reactive: true,
         enabled: scrollEnabled,
     });
     stopScrollWatch = watch(

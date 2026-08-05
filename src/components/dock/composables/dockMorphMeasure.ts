@@ -1,6 +1,6 @@
 import { onScopeDispose, watch, type Ref } from "vue";
 
-export function getSize(el: HTMLElement, axis: "horizontal" | "vertical"): number {
+function getSize(el: HTMLElement, axis: "horizontal" | "vertical"): number {
     // Endpoints are layout border boxes. `getBoundingClientRect()` includes the dock's
     // live scale and can expose one stale transformed frame as the morph flag clears.
     return axis === "vertical" ? el.offsetHeight : el.offsetWidth;

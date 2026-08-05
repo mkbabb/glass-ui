@@ -7,17 +7,29 @@ export {
     buildEdges,
     appendPointerWeb,
     parallaxNodePos,
-    BASE_WIDTH,
 } from "./constellationField";
+// Every tuning constant ships from its OWN home (`constants`), the algorithms from
+// theirs — no module holds a re-export of a neighbour's symbol to freeze a barrel
+// path (BK #19 W-SHIM-PURGE).
 export {
     DEFAULT_K_FLOOR,
     DEFAULT_PARALLAX,
+    BASE_WIDTH,
     MAX_NODES,
     MAX_DEGREE,
     E_MAX,
+    DEFAULT_WELL_CONFIG,
+    DEFAULT_WANDER_IDLE,
+    DEFAULT_WANDER_JITTER,
+    WARP_RESPONSE,
+    WARP_ZETA,
+    DEFAULT_PINNED_DRIFT_FRAC,
+    DEFAULT_PINNED_DRIFT_DUR,
+    DEFAULT_PINNED_DRIFT_IDLE,
+    DEFAULT_PINNED_DRIFT_JITTER,
 } from "./constants";
+export { stepWell } from "./constellationWell";
 export {
-    stepWell,
     nearestNode,
     readInteractionConfig,
     warpStep,
@@ -27,23 +39,11 @@ export {
     pickWanderTarget,
     stepPinnedDrift,
     makePinnedDrift,
-    DEFAULT_WELL_CONFIG,
-    DEFAULT_WANDER_IDLE,
-    DEFAULT_WANDER_JITTER,
-    DEFAULT_PINNED_DRIFT_FRAC,
-    DEFAULT_PINNED_DRIFT_DUR,
-    DEFAULT_PINNED_DRIFT_IDLE,
-    DEFAULT_PINNED_DRIFT_JITTER,
-    WARP_RESPONSE,
-    WARP_ZETA,
     fireBurst,
     BURST_FIRE_THRESHOLD,
 } from "./constellationInteraction";
-export {
-    kVisOf,
-    readPalette,
-    DEFAULT_PALETTE,
-} from "./constellationRender";
+export { kVisOf, readPalette } from "./constellationRender";
+export { DEFAULT_PALETTE } from "./constants";
 export type {
     ConstellationNode,
     ConstellationEdge,

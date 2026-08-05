@@ -404,9 +404,8 @@ onMounted(() => {
     display: block;
     /* INVISIBLE: the thumb has no own paint — width collapses to 0 and opacity to
        0 so nothing renders over the fill edge. The value-follow inset still
-       positions this zero-box at the value point (reka owns the inline inset), so
-       the 44px coarse hit-halo (.touch-hit-area ::before) still centres on the
-       handle for the touch-target floor. The grab IS the track. */
+       positions this zero-box at the value point (reka owns the inline inset).
+       The grab IS the track. */
     width: 0;
     height: var(--slider-track-height, 0.375rem);
     opacity: 0;
@@ -420,15 +419,6 @@ onMounted(() => {
         var(--slider-thumb-spring, var(--spring-smooth));
 }
 
-/* The coarse `touch-hit-area` ::before halo (44×44 tap-target)
-   must NOT swallow the thumb's own pointer-capture: reka's slider drag routes
-   through the thumb/root, and a `pointer-events: auto` overlay would become the
-   event target and break `setPointerCapture` (the silent drag regression the
-   wave names). Override the utility's `::before` pointer-events to `none` on the
-   thumb ONLY — the 44px GEOMETRY still satisfies the touch-target readback
-   (getComputedStyle reads min-width/height, not pointer-events), while the
-   pointer falls through to the thumb so the drag still tracks. No new token —
-   the overlay still reads `var(--touch-target)` via the utility. */
 /* Hover brightens the TRACK FILL (there is no knob to halo) — the continuous
    glass cylinder lifts its edge rim so the grab affordance reads on the track.
    Standard-only: the spectrum recipe halos its own VISIBLE thumb (below). */

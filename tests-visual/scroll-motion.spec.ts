@@ -18,13 +18,13 @@
 //       animation-timeline (view()) + the coupled transform+opacity recipe.
 //   (c) THE SCROLL-PINNED phase sweep — DELETED at BK.#18 W-DELETE with the whole
 //       `.scroll-pin` register + `useScrollPin` (see the strike at the arm site below).
+//       Its route const was dead too and is re-pointed at BK #19 (RT-18G).
 //   (d) THE PRM static-layout — under emulated `prefers-reduced-motion: reduce`, the
 //       page-build is a single-paint terminal state (no animation binds) and the cascade
 //       shows the static terminal sections.
 //
 // At ≥2 viewports, BOTH modes. The capture lands at the W-SCROLL-MOTION-DELTA dir. The
-// page-build/cascade/pin demonstration surface is /motion/scroll-choreography (the canonical
-// demo). LOCAL-ONLY (real-GPU/CDP dev-box, the AY W-LIVE1 split), backstopped on CI by
+// page-build/cascade demonstration surface is the `/motion/scroll` register specimen. LOCAL-ONLY (real-GPU/CDP dev-box, the AY W-LIVE1 split), backstopped on CI by
 // proof:live-verified-ledger — never re-run server-side.
 
 import { test, expect } from "@playwright/test";
@@ -36,7 +36,12 @@ const VISUAL_DIR = fileURLToPath(
     new URL("../docs/tranches/BB/audit/visual", import.meta.url),
 );
 
-const ROUTE = "/motion/scroll-choreography";
+// The route this spec reads back. `"/motion/scroll-choreography"` was PRE-EXISTING ROT
+// — the manifest never carried that id, so every arm here navigated a 404 while the
+// suite stayed unwired and nobody noticed (BK #18 named it, #19 carries it out). The
+// scroll-choreography recipes (`.scroll-cascade` + the section build) paint on any
+// StoryPage; the scroll-register specimen is the page that mounts them deliberately.
+const ROUTE = "/motion/scroll";
 
 const VIEWPORTS = [
     { name: "mobile", width: 390, height: 844 },

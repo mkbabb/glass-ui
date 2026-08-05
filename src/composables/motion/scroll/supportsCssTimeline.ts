@@ -33,9 +33,17 @@ function supportsTimelineValue(validValue: string, garbageValue: string): boolea
     );
 }
 
+// THE ONE PROBE, evaluated once. Consumers used to each mint their OWN module-load
+// `const NATIVE_SCROLL_TIMELINE = supportsScrollTimeline()` — three independent
+// ladders over one capability, each frozen at ITS module's load moment. The memo
+// lives here so the capability has exactly one evaluation and one home (BK #19
+// W-SHIM-PURGE); callers call the function.
+let scrollTimelineMemo: boolean | undefined;
+
 /** Genuine support for a `scroll()` timeline (the `.scroll-progress` recipe). */
 export function supportsScrollTimeline(): boolean {
-    return supportsTimelineValue("scroll()", "gl-not-a-real-timeline");
+    scrollTimelineMemo ??= supportsTimelineValue("scroll()", "gl-not-a-real-timeline");
+    return scrollTimelineMemo;
 }
 
 /**

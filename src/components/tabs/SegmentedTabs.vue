@@ -13,17 +13,21 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../select";
-// The one traveling-indicator writer lives in
-// `composables/motion/morph/useSelectionIndicator`; the dock, SegmentedTabs, and
-// ToggleGroup share it. The pill indicator always measures via JS, so
+// THE ONE SELECTION ENGINE. `useSelectionGroup` assembles the selection model, the
+// roving machine, and the ONE traveling-indicator writer; the dock control run and
+// SegmentedTabs are the same strip wearing different chrome. This SFC used to compose
+// `useSelectionIndicator` + `useTabRovingFocus` DIRECTLY — the engine's own doc claimed
+// it as a consumer while the import graph said otherwise, so the claim governed nothing
+// (BK #19 W-SELECTION-ONE). `<ToggleGroup type="single">` is the THIRD strip by shape
+// but NOT yet by composition: it delegates roving to reka's `ToggleGroupRoot` and
+// composes neither house part, so it does not trip the ONE-SELECTION arm. Its adoption
+// needs the C-1 `SelectionOption["value"]` widening and is BK #84's — until then the
+// engine's consumer set is TWO, stated. The pill indicator always measures via JS, so
 // Chrome and Safari paint the same pixels by construction.
-import { useSelectionIndicator } from "../../composables/motion/morph/useSelectionIndicator";
+import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
 import { useTabDragMorph } from "./composables/useTabDragMorph";
 import { useTabResponsive } from "./composables/useTabResponsive";
-import {
-    useTabRovingFocus,
-    type TabActivation,
-} from "./composables/useTabRovingFocus";
+import type { TabActivation } from "./composables/useTabRovingFocus";
 // Motion weight is the sole drag-enrichment axis.
 import type { Motion } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
@@ -186,11 +190,42 @@ const { responsiveCfg, stripValue, stripOptions, mobileAriaLabel, showMobileSele
 
 // The rendered strip owns one coherent selection projection. When a responsive
 // desktop subset excludes the mobile-selected value, its enabled fallback drives
-// ARIA, indicator paint, and roving focus together.
-const activeValues = computed<string[]>(() =>
-    stripValue.value == null ? [] : [stripValue.value],
-);
-const isActive = (value: string) => activeValues.value.includes(value);
+// ARIA, indicator paint, and roving focus together. The projection is expressed as a
+// WRITABLE ref so the ONE engine consumes it as its model unchanged: reads resolve
+// the strip's fallback, writes land on the real `v-model`.
+const stripModel = computed<string | undefined>({
+    get: () => stripValue.value ?? undefined,
+    set: (v) => {
+        if (v != null) model.value = v;
+    },
+});
+
+// ── THE ONE SELECTION ENGINE ───────────────────────────────────────────
+//
+// Model + roving machine (exactly-one-tabstop, axis-derived arrows, Home/End, wrap,
+// disabled-skip, manual/automatic activation) + the ONE traveling-indicator writer +
+// the recenter call, assembled once. The press squish rides `onSelect`, so it fires on
+// the pointer AND keyboard commit paths through the same `select`.
+const selection = useSelectionGroup<SegmentedTabOption>({
+    options: stripOptions,
+    model: stripModel,
+    role: computed(() => (isTabsSemantic.value ? "tablist" : "group")),
+    vertical: isVertical,
+    activation: computed(() => props.activation),
+    containerRef,
+    indicatorRef,
+    buttonRefs,
+    onSelect: (_value, idx) => {
+        const btn = buttonRefs.value[idx];
+        if (btn) animatePress(btn);
+    },
+});
+
+// The elastic travel-squish fires INSIDE the engine's `select` on every commit; the
+// underline SLIDES (a hairline does not deform), gated inside the indicator writer.
+const { select, rovingTabindex, singleSliderStyle } = selection;
+const onStripKeydown = selection.onKeydown;
+const isActive = (value: string) => selection.isSelected(value);
 
 // Function refs are index-aligned to the rendered options. Clear stale entries
 // before a responsive subset or option list changes shape.
@@ -198,19 +233,6 @@ onBeforeUpdate(() => {
     buttonRefs.value = [];
 });
 
-// ── JS-measured indicator + travel-squish (package-private composable) ──
-
-const indicatorModel = computed<string | undefined>(() => stripValue.value);
-
-const { singleSliderStyle, squishOnTravel } = useSelectionIndicator({
-    containerRef,
-    indicatorRef,
-    buttonRefs,
-    options: stripOptions,
-    model: indicatorModel,
-    activeValues,
-    vertical: isVertical,
-});
 
 // ── Liquid tab motion ───────────────────────────────────────────────────
 //
@@ -256,41 +278,10 @@ function animatePress(btn: HTMLElement) {
     );
 }
 
-// ── Selection handler ──
-
-function select(value: string, idx: number) {
-    const option = stripOptions.value[idx];
-    if (option?.disabled) return;
-
-    const btn = buttonRefs.value[idx];
-    if (btn) animatePress(btn);
-
-    // The elastic travel-squish fires on EVERY selection (anchor + JS engines);
-    // the underline SLIDES (no squish — a hairline does not deform), gated inside
-    // the composable by the underline early-return.
-    squishOnTravel(idx);
-    model.value = value;
-}
-
 // The mobile Select speaks the single-string model.
 function onMobileUpdate(value: unknown) {
     if (typeof value === "string") model.value = value;
 }
-
-// ── Roving-tabindex keyboard contract ──────────────────────────────────
-//
-// The WAI-ARIA roving machine keeps exactly one tabstop, derives arrows from the axis,
-// wraps, skips disabled options, and separates focus from selection in manual mode.
-// It is never gated behind pointer motion; committed activation still passes through
-// the SFC's one selection path.
-const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
-    stripOptions,
-    stripValue,
-    isVertical,
-    activation: computed(() => props.activation),
-    buttonRefs,
-    select,
-});
 </script>
 
 <template>

@@ -123,7 +123,7 @@ export const WARP_ID = {
 
 // Oil-stroke sub-modes. `crayon` is a first-class medium (MEDIUM_ID), not an
 // longer a stroke mode, so the union has no `crayon` member to Exclude.
-export const STROKE_MODE_ID = {
+const STROKE_MODE_ID = {
     oil: 0,
     knife: 1,
     chunky: 3,
@@ -140,7 +140,7 @@ export const AURORA_CATCH_LIGHT_ANCHOR: OklchStop = { L: 0.985, C: 0.0125, h: 77
  * (derived through the shared `warmCatchLight` helper). Omitted = the canonical aurora
  * warm-white from `AURORA_CATCH_LIGHT_ANCHOR`.
  */
-export function resolveLightColor(
+function resolveLightColor(
     lightColor: [number, number, number] | OklchStop | undefined,
 ): [number, number, number] {
     if (lightColor === undefined) {
@@ -168,7 +168,7 @@ export function resolveMediumId(cfg: AuroraConfig): number {
  * The `uStrokeMode` integer for a config. `strokeMode` is total over
  * `STROKE_MODE_ID` (no `crayon` special-case), so this is a direct map.
  */
-export function resolveStrokeModeId(cfg: AuroraConfig): number {
+function resolveStrokeModeId(cfg: AuroraConfig): number {
     return STROKE_MODE_ID[cfg.strokeMode];
 }
 

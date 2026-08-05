@@ -11,9 +11,10 @@
    view-transition.css — every visual knob a token so a consumer retunes without
    editing library source. */
 :root {
-    /* SCROLL-DRIVEN (scroll-driven.css). Values mirror the JS-fallback composable
-       default (`useScrollProgress`) so the native CSS path and the fallback path
-       read identically — no visual seam at the `@supports` boundary.
+    /* SCROLL-DRIVEN (scroll-driven.css). These are the recipes' OWN knobs — the
+       registers have no JS twin to stay in step with (BK #19 struck
+       `useScrollProgress`'s inert CSS-primary arm; the composable is now simply a
+       different instrument, not a fallback path).
        `--scroll-progress-scroller` is RETIRED (clean break,
        no alias): the recipe reads a FULL-value `--scroll-progress-timeline` (default
        `scroll(nearest block)`), never a `<dashed-ident>` fragment inside `scroll()`. */

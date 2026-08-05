@@ -16,11 +16,8 @@
 // barrel (the SCC-trap discipline).
 
 import { type ComponentPublicInstance, type Ref } from "vue";
-import {
-    asElement,
-    useElementMorph,
-    type ElementMorphPreset,
-} from "../morph/useElementMorph";
+import { asElement } from "../core/asElement";
+import { useElementMorph, type ElementMorphPreset } from "../morph/useElementMorph";
 
 /** The reveal spring register — `snappy` (the quick app-open default) or `bouncy` (the
  *  emphatic large-dialog bloom). */

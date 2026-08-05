@@ -36,8 +36,13 @@ function makeCanvas(glStub: object | null) {
         removeEventListener: vi.fn(),
         width: 0,
         height: 0,
+        getBoundingClientRect: () => ({ width: 100, height: 50 }),
         clientWidth: 100,
         clientHeight: 50,
+        // `dprPolicy` is REQUIRED at the leaf (BK #19 W-SHIM-PURGE killed the
+        // self-measuring arm), so the ONE sizer always runs — the stub owns a real
+        // laid-out border box for it to read.
+        getBoundingClientRect: () => ({ width: 100, height: 50 }),
         parentElement: null,
     } as unknown as HTMLCanvasElement;
 }
@@ -57,8 +62,13 @@ function makeRestorableCanvas(makeGl: () => object) {
         removeEventListener: vi.fn(),
         width: 0,
         height: 0,
+        getBoundingClientRect: () => ({ width: 100, height: 50 }),
         clientWidth: 100,
         clientHeight: 50,
+        // `dprPolicy` is REQUIRED at the leaf (BK #19 W-SHIM-PURGE killed the
+        // self-measuring arm), so the ONE sizer always runs — the stub owns a real
+        // laid-out border box for it to read.
+        getBoundingClientRect: () => ({ width: 100, height: 50 }),
         parentElement: null,
     } as unknown as HTMLCanvasElement;
     function dispatch(type: string, e: any = {}) {

@@ -29,12 +29,11 @@ export interface WebGPUCanvasFrame {
     /** Demand-gate: is there live motion to render next frame? `false` → park. */
     shouldContinue: () => boolean;
     /**
-     * Upload the backing geometry.: when a `dprPolicy` is
-     * supplied the leaf sizes the backing + passes the live `BackingSize` here (the
-     * WGSL swap chain auto-tracks the backing, so the consumer body shrinks to an aspect
-     * upload). The arg is optional so a legacy self-measuring consumer keeps compiling.
+     * Upload the backing geometry: the leaf sizes the backing + passes the live
+     * `BackingSize` here (the WGSL swap chain auto-tracks the backing, so the consumer
+     * body is an aspect upload).
      */
-    resize: (s?: BackingSize) => void;
+    resize: (s: BackingSize) => void;
     /** Frame time from elapsed seconds — the consumer owns frozen/reduced-motion. */
     time?: (elapsedSec: number) => number;
     /** Release per-instance GPU resources (pipelines/buffers/bind groups). Runs on dispose + before a restore re-setup. */
@@ -58,12 +57,11 @@ export interface WebGPUCanvasOptions {
      */
     respectReducedMotion?: boolean;
     /**
-     * The consumer's DPR policy. When present the
-     * leaf sizes the backing SYNCHRONOUSLY at mount (via `presize`, BEFORE the async
-     * device acquire — the ≤6s blurry-flash close) and hands the live `BackingSize` to
-     * `resize(s)`. When ABSENT the legacy path runs (the consumer self-measures).
+     * The consumer's DPR policy. REQUIRED: the leaf sizes the backing SYNCHRONOUSLY at
+     * mount (via `presize`, BEFORE the async device acquire — the ≤6s blurry-flash
+     * close) and hands the live `BackingSize` to `resize(s)`.
      */
-    dprPolicy?: DprPolicy;
+    dprPolicy: DprPolicy;
     /** Compose the leaf IO park. Default `false`; see createCanvasLifecycle. */
     composeIntersectionPark?: boolean;
     /** `rootMargin` for the leaf IO park. */

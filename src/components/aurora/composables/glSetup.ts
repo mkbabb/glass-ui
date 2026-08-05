@@ -114,7 +114,7 @@ export interface GlProgram {
  * Compile + link the shader pair, build the full-screen triangle (one draw covers
  * the viewport), and resolve the uniform location cache. Leaves the program bound.
  */
-export function createGlProgram(
+function createGlProgram(
     gl: WebGL2RenderingContext,
     vertexSrc: string,
     fragmentSrc: string,
@@ -172,8 +172,8 @@ export function createAuroraGLSetup(
             ? armWebGL2ImageTexture(gl, program, deps.imageCoordinator)
             : null;
 
-        const resize = (size?: BackingSize): void => {
-            gl.viewport(0, 0, size?.w ?? gl.canvas.width, size?.h ?? gl.canvas.height);
+        const resize = (size: BackingSize): void => {
+            gl.viewport(0, 0, size.w, size.h);
             gl.useProgram(program);
         };
         const uploadConfig = createUniformBridge(

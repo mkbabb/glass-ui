@@ -16,11 +16,11 @@ export type {
 } from "./useSpecularTracking";
 export { vSpecular } from "./vSpecular";
 // The Canvas2D lifecycle substrate (park/freeze/dispose parallel to
-// the WebGL substrate). published it on `/canvas` under the contract
-// name `useCanvas2D` (+ the `useCanvasLifecycle` alias) and added
-// `resolveCanvasColor` (the shared `light-dark()`→`rgb()` Canvas2D resolver).
+// the WebGL substrate). Published on `/canvas` under the ONE contract
+// name `useCanvas2D`, plus `resolveCanvasColor` (the shared
+// `light-dark()`→`rgb()` Canvas2D resolver).
 // Constellation + FourierField compose it.
-export { useCanvas2D, useCanvasLifecycle, resolveCanvasColor } from "./canvas2d";
+export { useCanvas2D, resolveCanvasColor } from "./canvas2d";
 export type {
     Canvas2DFrame,
     Canvas2DHandle,

@@ -7,13 +7,13 @@
 //     family of real-twin polylines (the SVG <polyline> grid, not a 10-row stub).
 //   · SPRING-PLAYGROUND-LIVE — dragging the response/ζ slider CHANGES the linear()
 //     readout (a runtime observation, not a static witness).
-//   · SCROLL-VT-DEMO — the scroll/VT story renders the capability badges + the
-//     .gl-list-item reorder list.
+//   · SCROLL-REGISTER — the specimen story mounts both native registers
+//     (`.scroll-progress` + `[data-scroll-reveal]`) AND the `useScrollScene` spine.
 //   · PURPLE-IDENTITY — the dominant motion accent (the plot stroke + the driven dot)
 //     resolves to the violet --viz-legendre family (oklch ~317.5°), NOT warm-red.
 //
 // THE BINDING ASSERTION IS THE getComputedStyle READBACK + the slider-drag observation.
-// Captures the before/after DELTA pair (gallery, springs, scroll-vt, bezier) light+dark
+// Captures the before/after DELTA pair (gallery, springs, scroll, bezier) light+dark
 // to docs/tranches/AZ/audit/visual/ (the ledger DELTA the close cites).
 
 import { test, expect } from "@playwright/test";
@@ -169,28 +169,30 @@ test.describe("motion-demo (π lane — the robust /motion render, fail-CLOSED)"
         expect(after).toContain("linear(");
     });
 
-    // ── SCROLL-VT-DEMO: the scroll/VT story renders the facilities ────────────────
-    // BG.W-DEMO-DUP-MERGE (F7.3) — the native scroll register merged onto /motion/scroll
-    // (the ScrollNativeBody section); the facilities render there.
-    test("the scroll/VT story renders the capability badges + the reorder list", async ({ page }) => {
+    // ── SCROLL-REGISTER DEMO: the specimen page mounts all three writers ─────────
+    // #18 deleted the merged scroll/VT story whole (route + `ScrollNativeBody`), which
+    // left this arm navigating a route that no longer existed and asserting a
+    // View-Transition reorder list that went with it. #19 rebuilt the SPECIMEN at
+    // `/motion/scroll` (RT-18B + RT-18H(b)) — the two CSS registers plus the
+    // `useScrollScene` spine — so the arm is re-trued to what the page now IS: the
+    // reorder-list clause is struck with its subject, not re-pointed at a stand-in.
+    test("the scroll-register story mounts both native registers + the JS spine", async ({ page }) => {
         await page.setViewportSize({ width: 1280, height: 900 });
         await page.goto("/motion/scroll", { waitUntil: "networkidle" });
 
         const text = await page.locator("body").innerText();
-        expect(text).toContain("scroll() timeline");
-        expect(text).toContain("view() timeline");
+        expect(text).toContain("scroll-progress");
+        expect(text).toContain("data-scroll-reveal");
+        expect(text).toContain("useScrollScene");
 
-        // the .scroll-progress bar exists; the .gl-list-item reorder list renders.
         await expect(page.locator(".scroll-progress")).toBeAttached();
         await expect(page.locator("[data-scroll-reveal]")).toBeAttached();
-        const rotate = page.getByRole("button", { name: /rotate order/i });
-        await expect(rotate).toBeVisible();
-        // a click drives the View-Transition reorder without error.
-        await rotate.click();
-        await page.waitForTimeout(200);
+        // The spine WRITES its damped value — the property is present on its host,
+        // which no native timeline can produce.
+        await expect(page.locator('[style*="--scene-t"]')).toBeAttached();
     });
 
-    // ── G-CLOSE: capture the DELTA pair (gallery, springs, scroll-vt, bezier) ──────
+    // ── G-CLOSE: capture the DELTA pair (gallery, springs, scroll, bezier) ────────
     for (const dark of [false, true]) {
         const mode = dark ? "dark" : "light";
         test(`G-CLOSE — capture the motion-suite DELTA (${mode})`, async ({ page }) => {
@@ -222,11 +224,11 @@ test.describe("motion-demo (π lane — the robust /motion render, fail-CLOSED)"
             await page.waitForTimeout(250);
             await page.screenshot({ path: `${VISUAL_DIR}W-MOTION-SUITE-springs-after-${mode}.png`, fullPage: false });
 
-            // the scroll/VT story (F7.3 — merged onto /motion/scroll, native register)
+            // the scroll-register specimen (#19 — both CSS registers + the JS spine)
             await page.goto("/motion/scroll", { waitUntil: "networkidle" });
             await setDark(page, dark);
             await page.waitForTimeout(250);
-            await page.screenshot({ path: `${VISUAL_DIR}W-MOTION-SUITE-scroll-vt-${mode}.png`, fullPage: false });
+            await page.screenshot({ path: `${VISUAL_DIR}W-MOTION-SUITE-scroll-${mode}.png`, fullPage: false });
         });
     }
 

@@ -63,39 +63,12 @@ export type Trigger = (typeof TRIGGERS)[number]; // default "click"
 export const BACKDROPS = ["scrim", "graded"] as const;
 export type Backdrop = (typeof BACKDROPS)[number]; // default "scrim" (byte-identical no-op floor)
 
-// ── THE PAIRED-EDIT META-ARRAYS (proof:encapsulation reads these; NOT exported —
-// the membership fence keeps the module's EXPORT surface pure axis vocabulary, so
-// these self-describing const arrays are internal). Adding an axis is a PAIRED edit:
-// mint the tuple + its type AND list it here, or the gate's axes-ext arm reds the
-// inconsistency. `AXIS_TUPLES` ≡ every exported `const … as const` tuple name;
-// `AXIS_TYPE_NAMES` ≡ every derived-union type name; `ALLOWED_EXPORTS` ≡ the WHOLE
-// admissible export set (tuples + types).
-const AXIS_TUPLES = [
-    "SIZES",
-    "ORIENTATIONS",
-    "MOTIONS",
-    "SURFACES",
-    "SURFACE_TIERS",
-    "TONES",
-    "PLACEMENTS",
-    "TRIGGERS",
-    "BACKDROPS",
-] as const;
-const AXIS_TYPE_NAMES = [
-    "Size",
-    "Orientation",
-    "Motion",
-    "Surface",
-    "SurfaceTier",
-    "Tone",
-    "Placement",
-    "Trigger",
-    "Backdrop",
-] as const;
-const ALLOWED_EXPORTS = [
-    ...AXIS_TUPLES,
-    ...AXIS_TYPE_NAMES,
-] as const;
-void AXIS_TUPLES;
-void AXIS_TYPE_NAMES;
-void ALLOWED_EXPORTS;
+// THE PAIRED-EDIT META-ARRAYS ARE GONE (BK #19 W-SHIM-PURGE). Three hand-maintained
+// `const` manifests of this module's own export names (`AXIS_TUPLES` ·
+// `AXIS_TYPE_NAMES` · `ALLOWED_EXPORTS`) were held alive by `void x;` statements —
+// a suppression that reads as a use to BOTH the unused check and the bundler's DCE,
+// so the dead data shipped as evaluated runtime bytes in `dist/axes.js`. They were
+// self-referential derived data with ZERO readers: the gate their comment named
+// ("proof:encapsulation reads these") does not exist. The MEMBERSHIP FENCE stated at
+// the head of this file is the invariant, and it is asserted against the SOURCE —
+// never against a manifest of the source kept by hand beside it.

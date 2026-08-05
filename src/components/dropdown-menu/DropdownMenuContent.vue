@@ -2,7 +2,6 @@
 import { computed, useAttrs, type HTMLAttributes } from "vue";
 import type { Surface } from "../_shared/axes";
 import type { FloatingPlacementProps } from "../_shared/floating";
-import { floatingContentAttrs } from "../_shared/floating";
 import type {
     FocusOutsideEvent,
     PointerDownOutsideEvent,
@@ -39,7 +38,7 @@ defineSlots<{ default?: () => unknown }>();
 
 const attrs = useAttrs();
 const forwardedAttrs = computed(() => {
-    const { loop: _loop, ...forwarded } = floatingContentAttrs(attrs);
+    const { loop: _loop, ...forwarded } = attrs;
     return forwarded;
 });
 

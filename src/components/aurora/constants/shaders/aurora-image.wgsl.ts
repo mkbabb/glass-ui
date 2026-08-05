@@ -24,8 +24,8 @@ import {
 // The fixed zone-blur kernel geometry (the bounded-tap witness — a compile-time constant
 // loop bound). 3 rings × 8 sectors = 24 stratified taps; the DISSOLVE is carried by the
 // kernel RADIUS, never the tap count (mirrors aurora-image.frag.ts).
-export const IMAGE_BLUR_RINGS_WGSL = 3;
-export const IMAGE_BLUR_SECTORS_WGSL = 8;
+const IMAGE_BLUR_RINGS_WGSL = 3;
+const IMAGE_BLUR_SECTORS_WGSL = 8;
 
 export const AURORA_IMAGE_WGSL = /* wgsl */ `
 const MAX_NUCLEI: i32 = 8;

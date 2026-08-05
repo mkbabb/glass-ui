@@ -6,7 +6,7 @@ import {
 } from "reka-ui";
 import type { Surface } from "../_shared/axes";
 import { cn } from "../_shared/class-names";
-import { floatingContentAttrs, type FloatingPlacementProps } from "../_shared/floating";
+import type { FloatingPlacementProps } from "../_shared/floating";
 import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
 
 export interface TooltipContentProps extends FloatingPlacementProps {
@@ -34,7 +34,7 @@ const emit = defineEmits<TooltipContentEmits>();
 defineSlots<{ default?: () => unknown }>();
 
 const attrs = useAttrs();
-const forwardedAttrs = computed(() => floatingContentAttrs(attrs));
+const forwardedAttrs = computed(() => ({ ...attrs }));
 const placementProps = computed(() => ({
     side: props.side,
     sideOffset: props.sideOffset,

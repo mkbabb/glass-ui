@@ -1,6 +1,6 @@
 /* utilities/a11y-overrides.css
-   The accessibility + capability tail — reduced motion, forced-colors focus,
-   and the size-agnostic touch-hit-area utility. LAST in cascade.
+   The accessibility + capability tail — reduced motion and forced-colors focus.
+   LAST in cascade.
    A partial of the utilities.css cascade; @import-ed by utilities.css in
    cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
 /* ── Reduced motion: INSTANT global fallback (no resurrection) ────────────────
@@ -117,67 +117,5 @@ html.no-transition *:not([data-allow-motion])::after {
     .hairline-accent,
     .glass-dock {
         border: 1px solid CanvasText;
-    }
-}
-
-/* ── @utility touch-hit-area ──────────────────────────────────
-   The hit-target is DECOUPLED from the visual size: a 16px Checkbox stays
-   16px visually, but on a COARSE pointer it acquires a ≥44px pointer-receptive
-   hit-rect via a centred `::before` overlay (WCAG 2.5.5). The six sub-44 form
-   atoms (Switch / Checkbox / RadioGroupItem / Slider-thumb / TagsInput-delete /
-   MultiSelect-remove-X) compose this ONE shared utility — DRY, one source, ≥2
-   consumers — instead of per-atom `min-h-[44px]` balloons.
-
-   DIVERGENCE-WITH-RATIONALE from the timeline precedent (ContinuousMarkers.vue
-   `.continuous-dot::before`, SegmentedTimeline `.boundary-dot::before`): the
-   timeline uses a FIXED symmetric `inset: calc((--touch-target - dot-size)/-2)`
-   — exact ONLY because its dot is a KNOWN fixed square. Our atoms are NOT square
-   and NOT a known size (a 24×44 Switch, a 16px Checkbox, a ~7px-wide Slider cap),
-   so a single symmetric inset would under/over-shoot one axis. This utility uses
-   the size-AGNOSTIC centred-min-size form: `min-width/min-height: var(--touch-
-   target)` + `top/left:50%` + `translate:-50% -50%` floors BOTH dimensions at
-   44px for ANY visual size, the generalization the timeline's known-square inset
-   cannot do.
-
-   COARSE-ONLY (the fine-pointer-byte-identical invariant, STRICTER than the
-   timeline whose `::before` exists at fine pointer too): the DEFAULT (fine)
-   path declares NO overlay box — `::before` has no `content`, so its min-width/
-   height resolve to `auto`/0 and the composited rect equals the bare visual box
-   (the fine-pointer-identical invariant). Only the nested `@media
-   (pointer: coarse)` block mints the `content:""` + the 44px overlay.
-
-   NO new floor token (D4): the overlay reads `var(--touch-target)`. */
-@utility touch-hit-area {
-    position: relative;
-
-    @media (pointer: coarse) {
-        &::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            translate: -50% -50%;
-            min-width: var(--touch-target, 2.75rem);
-            min-height: var(--touch-target, 2.75rem);
-            /* The swallow-fix (the §F headline binding bug).
-               An absolutely-positioned `::before` over the atom with
-               `pointer-events: auto` becomes the topmost hit target across the
-               whole 44px box and INTERCEPTS the real pointer event before it
-               reaches the host's listener — reka's RadioGroupItem / Checkbox /
-               Switch / SliderRoot bind their toggle/drag handler on the HOST
-               button (Radio.vue `onClick`), and the swallowing overlay was the
-               root of "radios don't work" (a synthetic .click() on the host
-               still fired, but a real coarse tap landed on the pseudo and
-               no-op'd). `pointer-events: none` frees the pointer to fall
-               through to the host so the tap reaches reka on EVERY input path,
-               while the 44px GEOMETRY still satisfies the WCAG-2.5.5 readback
-               (getComputedStyle reads min-width/height, not pointer-events —
-               the hit FLOOR is the box, never a pointer-swallowing overlay).
-               The same integrity discipline `useDockClickIntegrity` applies to
-               the dock + the Slider's own `.slider-thumb.touch-hit-area::before`
-               override already discovered — now ONE source for
-               the whole six-atom hit-area family. */
-            pointer-events: none;
-        }
     }
 }

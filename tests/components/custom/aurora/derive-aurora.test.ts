@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest";
 
 import { convertColor, oklch } from "@mkbabb/value.js/color";
 
-import { deriveAurora, cssToOklch, oklchToLinear } from "@glass/components/aurora/composables/color";
+import { deriveAurora } from "@glass/components/aurora/composables/color";
+import { cssToOklch, oklchToLinear } from "@glass/composables/color";
 import type { AuroraHarmony } from "@glass/components/aurora/composables/color";
 import { MAX_STOPS } from "@glass/components/aurora/constants/presets";
 import type { OklchStop } from "@glass/components/aurora/constants/presets";

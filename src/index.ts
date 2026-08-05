@@ -33,8 +33,7 @@
 //   RegisteredShortcut, ShortcutCombo,
 //   ShortcutEventType
 //   Carousel, CarouselContent,                 @mkbabb/glass-ui/carousel      @vueuse/core
-//   CarouselItem, CarouselNext, CarouselPager,
-//   CarouselPrevious,
+//   CarouselItem, CarouselPager,
 //   useCarousel, CarouselApi
 //   useSpring, useSpringMount, useLiquidPress, @mkbabb/glass-ui/motion        @mkbabb/keyframes.js
 //   useAnimatedNumber, useAnimatedNumberMap,
@@ -457,7 +456,6 @@ export {
     createSpecularWriter,
     resolveCanvasColor,
     useCanvas2D,
-    useCanvasLifecycle,
     useSpecularTracking,
     vSpecular,
     type Canvas2DFrame,
@@ -541,12 +539,12 @@ export {
     auroraCursorMapping,
     constellationWellMapping,
     snapshotField,
-    FOURIER_BIAS_GAIN,
-    FOURIER_FOLLOW_LEAN,
-    BLOB_LEAD_K,
-    BLOB_STRETCH_GAIN,
-    BLOB_STRETCH_MAX,
-    AURORA_CURSOR_RADIUS,
+    // The six per-mapping tuning DEFAULTS (`FOURIER_BIAS_GAIN` · `FOURIER_FOLLOW_LEAN` ·
+    // `BLOB_LEAD_K` · `BLOB_STRETCH_GAIN` · `BLOB_STRETCH_MAX` · `AURORA_CURSOR_RADIUS`)
+    // are NOT on this barrel (BK #19 W-DEAD-EXPORT). Each is the default an options bag
+    // already exposes as an overridable field, so publishing the literal beside the
+    // function it defaults gives a consumer a SECOND way to say the same thing and a
+    // way to drift from it. Zero sites, in-repo or cross-repo, ever read them.
     type PointerFieldSnapshot,
     type FourierLeanGeometry,
     type FourierLeanOptions,

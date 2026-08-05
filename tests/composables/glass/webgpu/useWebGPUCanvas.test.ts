@@ -24,9 +24,9 @@ import { createGpuSubstrate } from "@glass/composables/glass/webgpu/useGpuSubstr
 import type { RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
 import {
     createWebGPUCanvas,
-    WebGPUInitError,
     __resetSharedGpuDeviceForTest,
 } from "@glass/composables/glass/webgpu/useWebGPUCanvas";
+import { WebGPUInitError } from "@glass/composables/glass/webgpu/webgpuDevice";
 import { RESTORE_DEBOUNCE_MS } from "@glass/composables/glass/webgl/createCanvasLifecycle";
 
 let rafQueue: Array<() => void>;
@@ -41,6 +41,10 @@ function makeCanvas(getCtx: (id: string) => unknown) {
         height: 0,
         clientWidth: 120,
         clientHeight: 60,
+        // `dprPolicy` is REQUIRED at the leaf (BK #19 W-SHIM-PURGE killed the
+        // self-measuring arm), so the ONE sizer always runs — the stub owns a real
+        // laid-out border box for it to read.
+        getBoundingClientRect: () => ({ width: 120, height: 60 }),
         parentElement: null,
     } as unknown as HTMLCanvasElement;
 }

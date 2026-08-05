@@ -34,8 +34,8 @@ import { test, expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
 import { resolveScene } from "./pi-manifest.ts";
 
-// The SplitChars family page (folds typewriter · split-chars · animated-digit · countup
-// under <FamilyTabs>). Resolved by STORY id against the manifest source-of-truth, so a
+// The SplitChars family page (folds typewriter · split-chars · countup under
+// <FamilyTabs>; `animated-digit` was deleted whole at BK #18). Resolved by STORY id against the manifest source-of-truth, so a
 // later IA prune that re-homes the motion band tracks the id rather than driving a dead
 // route.
 const TEXT_MOTION = resolveScene("motion", "text-motion");

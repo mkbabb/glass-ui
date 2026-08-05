@@ -104,7 +104,7 @@ export function isSoftwareWebGPUAdapter(adapter: GPUAdapter): boolean {
  * homed in this device-acquisition-support leaf beside the typed
  * failure signal it throws. The substrate re-imports + re-exports it.
  */
-export const WEBGPU_ACQUIRE_TIMEOUT_MS = 6000;
+const WEBGPU_ACQUIRE_TIMEOUT_MS = 6000;
 
 /**
  * Race a WebGPU acquisition promise against a timeout. On a hang the timeout wins and

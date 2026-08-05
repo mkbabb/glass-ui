@@ -157,8 +157,8 @@ export function createFourierGLSetup(
         }
 
         // upload-only (the leaf sized the backing store).
-        function resize(s?: BackingSize): void {
-            gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
+        function resize(s: BackingSize): void {
+            gl.viewport(0, 0, s.w, s.h);
         }
 
         function frame(timeSec: number): void {

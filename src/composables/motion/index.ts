@@ -36,6 +36,9 @@ export * from "./morph/useDragMorph";
 // bloom and drag declare endpoints/configuration rather than minting runners.
 // Keyframes-bearing → the heavy-peer `/motion` barrel, NOT /motion-core.
 export * from "./morph/useElementMorph";
+// `asElement` ships from its OWN home — never a re-export shim held on a
+// neighbouring module to freeze a barrel path (BK #19 W-SHIM-PURGE).
+export { asElement } from "./core/asElement";
 // iOS-style bloom-from-source-rect open primitive. A thin wrapper over
 // `useElementMorph`: an explicit source→surface FLIP
 // blooming FROM the trigger (scale+fade+filter-blur-settle), compositor-only + PRM-snap.
@@ -51,9 +54,14 @@ export * from "./reveal/useLiquidReveal";
 // discipline). Compositor-only + PRM-seats.
 export * from "./morph/useDockCtaReceive";
 export * from "./number/useAnimatedNumber";
-// `useAnimatedNumberMap` is distinct from the scalar helper and has external
-// consumers in downstream apps (speedtest `useMetricResult`, muster
-// `RankedVerdict`). It is keyframes-bearing because it composes `useAnimatedNumber`.
+// `useAnimatedNumberMap` is distinct from the scalar helper. Zero in-repo consumers,
+// which is why the reduction census reached for it — and the §1.1 whole-repo walk
+// REFUTED the premise (BK #19, re-measured this cut): speedtest
+// `features/speedtest/composables/useMetricResult.ts:33`,`:115` +
+// `components/dashboard/charts/MetricGaugeCards.vue:66` and muster
+// `components/verdict/RankedVerdict.vue:42` all import it live off `/motion`. Existence
+// ⇒ relay, never ⇒ silent delete. Keyframes-bearing because it composes
+// `useAnimatedNumber`.
 export * from "./number/useAnimatedNumberMap";
 
 // The semantic spring register is Glass-owned pure data. Engine primitives stay

@@ -44,21 +44,21 @@ export const FLAG_DOWN =
     + "C0.74 -2.56 0.82 -2.04 0.69 -1.58C0.55 -1.06 0.3 -0.66 0 -0.4Z";
 
 /** Flat: stem above the pitch line, bowl belly on and below it. */
-export const ACCIDENTAL_FLAT =
+const ACCIDENTAL_FLAT =
     "M0 -1.75L0.17 -1.78L0.17 0.66L0 0.7Z"
     + "M0.15 -0.45C0.55 -0.62 0.8 -0.2 0.66 0.16C0.55 0.46 0.3 0.6 0.1 0.68"
     + "C0.36 0.4 0.52 0.14 0.44 -0.08C0.38 -0.26 0.24 -0.28 0.15 -0.1Z";
 
 /** Sharp: two stems, two oblique bars rising to the right. Bars wind with the
     stems, so a crossing is doubled ink, never a punched square. */
-export const ACCIDENTAL_SHARP =
+const ACCIDENTAL_SHARP =
     "M0.23 -1.18L0.34 -1.18L0.34 1.4L0.23 1.4Z"
     + "M0.7 -1.4L0.81 -1.4L0.81 1.18L0.7 1.18Z"
     + "M0 -0.16L0 -0.46L1.04 -0.74L1.04 -0.44Z"
     + "M0 0.62L0 0.32L1.04 0.04L1.04 0.34Z";
 
 /** Natural: offset stems joined by two oblique bars, same winding throughout. */
-export const ACCIDENTAL_NATURAL =
+const ACCIDENTAL_NATURAL =
     "M0 -1.35L0.11 -1.35L0.11 0.44L0 0.44Z"
     + "M0.52 -0.34L0.63 -0.34L0.63 1.35L0.52 1.35Z"
     + "M0 -0.34L0 -0.62L0.63 -0.8L0.63 -0.52Z"

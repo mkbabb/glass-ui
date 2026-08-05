@@ -26,16 +26,10 @@ import {
 
 // The CONFIG-DEFAULT constants (the warp spring + gravity-well + wander cadence
 // defaults the `--constellation-*` tokens override) live in the feature-dir constants
-// home; re-exported here for the package barrel path. The algorithm-LOCAL physics
-// tuning below (the well cool/ramp rates, the dt-clamp, the settle band) stays
-// INTERNAL — it travels with the algorithm, not the package config surface.
-export { DEFAULT_WANDER_IDLE, DEFAULT_WANDER_JITTER, DEFAULT_WELL_CONFIG, WARP_RESPONSE, WARP_ZETA };
-export {
-    DEFAULT_PINNED_DRIFT_FRAC,
-    DEFAULT_PINNED_DRIFT_DUR,
-    DEFAULT_PINNED_DRIFT_IDLE,
-    DEFAULT_PINNED_DRIFT_JITTER,
-};
+// home and ship from THERE — this module consumes them and holds no barrel-freezing
+// re-export (BK #19 W-SHIM-PURGE). The algorithm-LOCAL physics tuning below (the well
+// cool/ramp rates, the dt-clamp, the settle band) stays INTERNAL — it travels with the
+// algorithm, not the package config surface.
 
 /**
  * Read the NUMERIC interaction-tuning tokens (the warp spring + the gravity-well
@@ -75,9 +69,7 @@ export function readInteractionConfig(canvas: HTMLCanvasElement): {
 }
 
 // The gravity-well FORCE (the WELL_* tuning consts + stepWell) lives in the sibling
-// constellationWell.ts leaf (the no-god-module re-drain); re-exported below so the field
-// engine + the package barrel reach `stepWell` through this module unchanged.
-export { stepWell } from "./constellationWell";
+// constellationWell.ts leaf (the no-god-module re-drain) and ships from THERE.
 
 // ── Focal node and warp spring ───────────────────────────────────────────────
 // The design thesis: drift and warp are THE SAME mechanic — "spring the focal

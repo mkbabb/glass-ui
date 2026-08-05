@@ -2,9 +2,6 @@ import { ref, watch, onUnmounted, readonly, type Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
 import { PULSE_OMEGA, PULSE_ZETA, REST_EPS, TRAIL_N } from "../constants";
 
-/** Compile-time trail length — re-exported from the co-located shape budget (`../constants`). */
-export { TRAIL_N };
-
 /** A single trail sample — a decaying-radius metaball source the shader smin-merges. */
 export interface TrailSample {
     x: number;

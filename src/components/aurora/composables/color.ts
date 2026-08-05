@@ -2,7 +2,7 @@ import { MAX_STOPS } from "../constants/presets";
 
 // The canonical color core is value.js's Ottosson primitives. The shared runtime
 // helpers live in the `/color` leaf, which Aurora and Blob both consume. Aurora
-// imports the leaf core for its own composers and re-exports it. Aurora-domain
+// imports the leaf core for its own composers. Aurora-domain
 // composers below (deriveAurora, the gamut-mapper, the palette bake) keep
 // sourcing their math from value.js DIRECTLY — that is still ONE source
 // (value.js), not a reimplementation.
@@ -20,15 +20,8 @@ import {
 } from "@mkbabb/value.js/color";
 import { colorValue } from "../../../composables/color/value";
 
-// Re-export the shared color core from the leaf ( hoist — surface preserved).
-// `gamutMapStop` is re-exported so the aurora-domain consumers (atoms.ts's chroma
-// bracket) funnel their gamut-safety through the ONE aurora color surface.
-export {
-    cssToOklch,
-    oklchStopToHex,
-    oklchToLinear,
-    gamutMapStop,
-} from "../../../composables/color";
+// The shared color core ships from `composables/color`, reached directly (BK #19
+// W-SHIM-PURGE struck the pass-through that held these four names on this path).
 export type { OklchStop } from "../../../composables/color";
 
 // Harmony vocabulary: deriveHue, gamutMapStop, and the harmony union.

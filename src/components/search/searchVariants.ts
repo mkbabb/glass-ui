@@ -33,5 +33,4 @@ export function searchFieldVariants(options: SearchVariants = {}): string {
     );
 }
 
-export { controlSizeClass };
 export type { ControlSize };

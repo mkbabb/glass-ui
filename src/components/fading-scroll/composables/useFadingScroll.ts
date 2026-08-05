@@ -19,7 +19,8 @@
 import { onBeforeUnmount, onMounted, ref, unref } from "vue";
 import type { MaybeRef, Ref } from "vue";
 import { useResizeObserver } from "../../../composables/dom/useResizeObserver";
-import { NATIVE_SCROLL_TIMELINE, SNAP_TOLERANCE } from "../constants";
+import { supportsScrollTimeline } from "../../../composables/motion/scroll/supportsCssTimeline";
+import { SNAP_TOLERANCE } from "../constants";
 
 type RtlScrollType = "negative" | "positive-ascending" | "positive-descending";
 
@@ -105,7 +106,7 @@ export function useFadingScroll(
 
     // The composable is the ACTIVE writer only when the native timeline is
     // absent. On a supporting engine `active` is false and nothing attaches.
-    const active = ref(!NATIVE_SCROLL_TIMELINE);
+    const active = ref(!supportsScrollTimeline());
 
     let rafId = 0;
     let resizeStop: (() => void) | null = null;

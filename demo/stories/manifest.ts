@@ -932,6 +932,12 @@ export const CATEGORIES: Category[] = [
             ),
             s(
                 "motion",
+                "scroll",
+                "Scroll Register",
+                "The one scroll axis with all three of its writers on one page: the compositor `.scroll-progress` bar, the implicit `[data-scroll-reveal]` cascade, and the liquid-weight `useScrollScene` spine that lags the finger and settles after it lifts.",
+            ),
+            s(
+                "motion",
                 "deck",
                 "Deck",
                 "A full-viewport presentation with keyboard paging, a spoken slide position, and a compact window of page dots.",

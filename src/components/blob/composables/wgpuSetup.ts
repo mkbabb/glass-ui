@@ -142,8 +142,8 @@ export function createBlobWGPUSetup(
         // quality axis); WGPU's swap chain auto-resizes to the backing on the next
         // `getCurrentTexture`, and `frame()` reads `canvas.width/height` directly, so the
         // WGSL leg has nothing to upload — the closure is an intentional no-op.
-        function resize(s?: BackingSize): void {
-            if (s) onResize(s);
+        function resize(s: BackingSize): void {
+            onResize(s);
         }
 
         function frame(timeSec: number): void {

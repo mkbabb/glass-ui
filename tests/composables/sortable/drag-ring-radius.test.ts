@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { isNonZeroRadius } from "@glass/components/sortable-list/composables/useSortable";
+import { isNonZeroRadius } from "@glass/components/sortable-list/composables/ghostRenderer";
 
 /**
  * harden — the drag-ghost gold ring traces the dragged content's

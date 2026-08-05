@@ -18,7 +18,6 @@ import {
 } from "../../../composables/motion/pointer/pointerFieldMappings";
 import {
     appendPointerWeb,
-    BASE_WIDTH,
     buildEdges,
     refitField,
     seedField,
@@ -36,14 +35,19 @@ import {
     warpTo as warpFieldTo,
 } from "../constellationInteraction";
 import {
-    DEFAULT_PALETTE,
     drawEdges,
     drawNodes,
     drawPointer,
     drawRipples,
     readPalette,
 } from "../constellationRender";
-import { DEFAULT_PARALLAX, E_MAX, MAX_NODES } from "../constants";
+import {
+    BASE_WIDTH,
+    DEFAULT_PALETTE,
+    DEFAULT_PARALLAX,
+    E_MAX,
+    MAX_NODES,
+} from "../constants";
 import { createConstellationField } from "./createConstellationField";
 import {
     canvas2DRenderer,

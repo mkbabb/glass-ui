@@ -8,8 +8,8 @@ import {
     DEFAULT_WELL_CONFIG,
     DEFAULT_WANDER_IDLE,
     DEFAULT_WANDER_JITTER,
-    makePinnedDrift,
-} from "../constellationInteraction";
+} from "../constants";
+import { makePinnedDrift } from "../constellationInteraction";
 import type {
     ConstellationField,
     ConstellationWander,

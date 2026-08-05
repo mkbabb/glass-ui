@@ -41,6 +41,7 @@ import {
     type BackingSize,
     type DprPolicy,
 } from "../webgl/createCanvasLifecycle";
+import { sizeBacking } from "../webgl/backingSize";
 
 export type { BackingSize, DprPolicy } from "../webgl/createCanvasLifecycle";
 // Typed initialization failures, adapter classification, and acquisition timing live
@@ -50,12 +51,8 @@ import {
     WebGPUInitError,
     isSoftwareWebGPUAdapter,
     withAcquireTimeout,
-    WEBGPU_ACQUIRE_TIMEOUT_MS,
 } from "./webgpuDevice";
 import { describeWebGPUAdapter } from "./rendererStatus";
-// Re-export so the picker + the package barrel reach them through this substrate
-// unchanged (the barrel re-exports from "./useWebGPUCanvas").
-export { WebGPUInitError, WEBGPU_ACQUIRE_TIMEOUT_MS } from "./webgpuDevice";
 // The public type surface lives in `webgpuCanvasTypes.ts` and is re-exported so
 // `useGpuSubstrate` and the barrel reach it through this substrate unchanged.
 export type {
@@ -284,7 +281,7 @@ export function createWebGPUCanvas(
      */
     function probePipeline(): void {
         try {
-            frameHooks?.resize();
+            frameHooks?.resize(sizeBacking(canvas, options.dprPolicy));
             frameHooks?.frame(0);
         } catch {
             // A consumer-`frame` JS throw is not a GPU validation signal — the validation
@@ -427,8 +424,8 @@ export function createWebGPUCanvas(
         // so without this the canvas sat at the un-laid-out 300×150 default for the whole
         // acquire window (the live blurry-flash / stuck-canvas). `presize()` runs the ONE
         // sizer + starts the leaf RO now; the device then resolves behind a sharp,
-        // correctly-sized, transparent surface. Idempotent (a no-op once `arm()` re-runs
-        // it; a no-op when no `dprPolicy` was supplied).
+        // correctly-sized, transparent surface. Idempotent (a no-op once the backing is
+        // sized, so `arm()` re-running it costs nothing).
         lifecycle.presize();
         acquiring = (async () => {
             try {

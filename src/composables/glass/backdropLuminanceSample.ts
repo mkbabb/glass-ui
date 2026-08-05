@@ -98,7 +98,7 @@ export function resolveSourceCanvas(
  * returned null on a `color(srgb …)`/`oklch(…)` backdrop and wrote NOTHING — the static
  * floor was a DEAD channel. The static floor is now writer-true over ANY backdrop.
  */
-export function normalizeToRgb(
+function normalizeToRgb(
     css: string,
     ctx: CanvasRenderingContext2D | null,
 ): [number, number, number, number] | null {
@@ -212,7 +212,7 @@ export function sampleAnimated(
  * The SINGLE stack-walk of record — the static sampler reduces it to a luma+hue, the
  * animated sampler reads it as the compositing underlay (`resolveUnderlayRgb`).
  */
-export function resolveBackdropRgba(
+function resolveBackdropRgba(
     el: HTMLElement,
     ctx: CanvasRenderingContext2D | null,
 ): [number, number, number, number] | null {

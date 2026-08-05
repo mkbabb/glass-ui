@@ -13,7 +13,6 @@ export function kVisOf(field: ConstellationField): number {
     return Math.max(field.k, field.kFloor ?? DEFAULT_K_FLOOR);
 }
 
-export { DEFAULT_PALETTE };
 
 /** Resolve the neutral palette and legibility weights from the canvas tokens. */
 export function readPalette(canvas: HTMLCanvasElement): ConstellationPalette {

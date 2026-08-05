@@ -148,18 +148,21 @@ describe("Popover trigger contract", () => {
         wrapper.unmount();
     });
 
-    it("filters retired root, trigger, and positioning props at runtime", () => {
+    // BK #19 W-SHIM-PURGE. The prior contract ran a 38-entry `RETIRED_FLOATING_ATTRS`
+    // deny-list over `$attrs` on six floating surfaces, so a consumer writing
+    // `as-child`, `sticky`, or `collision-padding` got NO error, NO warning, and NO
+    // effect — a silent migration shim. The deny-list is GONE: `$attrs` forwards
+    // untouched, so a retired prop either lands visibly on reka or errors there. What
+    // the component still owns are the attrs it consumes ITSELF (role/aria-modal), and
+    // those are stripped at the destructure, not by a list of names to swallow.
+    it("forwards positioning props to reka instead of swallowing them, and still owns its own attrs", () => {
         setCoarsePointer(false);
         const Host = defineComponent({
             components: { Popover, PopoverContent, PopoverTrigger },
             data: () => ({
                 contentAttrs: {
-                    as: "section",
-                    asChild: true,
                     "aria-modal": "true",
                     collisionPadding: 99,
-                    forceMount: true,
-                    role: "card",
                     sticky: "always",
                 },
                 rootAttrs: { modal: true },
@@ -181,15 +184,21 @@ describe("Popover trigger contract", () => {
         const trigger = wrapper.get('[aria-haspopup="dialog"]');
         const content = wrapper.getComponent(RekaPopoverContent);
 
+        // The component's OWN props still resolve (these are declared props, never
+        // pass-through attrs).
         expect(root.props("modal")).toBe(false);
         expect(trigger.element.tagName).toBe("BUTTON");
         expect(trigger.attributes("type")).toBe("button");
+        // `role`/`aria-modal` are consumed by PopoverContent itself — its own dialog
+        // semantics win over a caller override.
         expect(wrapper.get('[role="dialog"]').attributes("aria-modal")).toBeUndefined();
+        // …and the formerly-denied positioning props now REACH reka. The bite: under
+        // the deny-list both of these read `undefined` here while the caller believed
+        // they had taken effect.
         expect(content.props()).toMatchObject({
             avoidCollisions: true,
-            collisionPadding: undefined,
-            forceMount: false,
-            sticky: undefined,
+            collisionPadding: 99,
+            sticky: "always",
         });
     });
 });

@@ -25,8 +25,8 @@
 // the morph, the seat is a static reserve + a content fade).
 
 import { readonly, ref, type ComponentPublicInstance, type Ref } from "vue";
+import { asElement } from "../core/asElement";
 import {
-    asElement,
     prefersReducedMotion,
     useElementMorph,
     type ElementMorphPreset,

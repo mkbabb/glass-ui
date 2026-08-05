@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, toRef, useAttrs, useId, type HTMLAttributes } from "vue";
 import { useWatercolorBlob } from "./useWatercolorBlob";
-import { hashString } from "./prng";
+import { hashString } from "../../composables/glass/procedural/prng";
 
 defineOptions({ inheritAttrs: false });
 

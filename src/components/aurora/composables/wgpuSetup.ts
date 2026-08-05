@@ -191,7 +191,7 @@ export function createAuroraWGPUSetup(
         // upload-only. The LEAF sizer already set the backing
         // store (round(gBCR × resolveAuroraWashDpr), the call-site dprPolicy); the WGPU
         // swap chain auto-resizes to it on the next frame, so the WGSL leg is a no-op.
-        function resize(_s?: BackingSize): void {}
+        function resize(_s: BackingSize): void {}
 
         function frame(timeSec: number): void {
             // FEED the shared pointer field one tick (the one-loop
@@ -375,7 +375,7 @@ function setupImageWGPU(
 
     const scratch = createAuroraImageWGPUScratch();
 
-    function resize(_s?: BackingSize): void {}
+    function resize(_s: BackingSize): void {}
 
     function frame(timeSec: number): void {
         const tempo = getReducedMotion() ? 0 : 1;

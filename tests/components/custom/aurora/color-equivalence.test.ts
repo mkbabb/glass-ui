@@ -9,13 +9,12 @@ import {
 } from "@mkbabb/value.js/color";
 import { parseCssColor } from "@mkbabb/value.js/css";
 
+import { hexToOklchStop, flattenPalette } from "@glass/components/aurora/composables/color";
 import {
-    oklchToLinear,
-    oklchStopToHex,
-    hexToOklchStop,
     cssToOklch,
-    flattenPalette,
-} from "@glass/components/aurora/composables/color";
+    oklchStopToHex,
+    oklchToLinear,
+} from "@glass/composables/color";
 import type { OklchStop } from "@glass/components/aurora/constants/presets";
 
 /**

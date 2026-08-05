@@ -15,7 +15,7 @@ export const DRAWER_SNAP = { response: 0.32, dampingFraction: 0.8 } as const;
  * consumer supplies no `snapPoints`. Side drawers use a full slide with no detents;
  * `resolveDefaultSnapPoints` therefore returns `[]` for either side axis.
  */
-export const BOTTOM_SHEET_LADDER: readonly number[] = [0.12, 0.5, 1];
+const BOTTOM_SHEET_LADDER: readonly number[] = [0.12, 0.5, 1];
 
 /**
  * Resolve the live-behind default snap ladder from `direction`. A

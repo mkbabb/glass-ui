@@ -195,9 +195,9 @@ export function useMetaballRenderer(
 
                 // upload-only: the leaf already sized the backing
                 // (round(gBCR × blobDprPolicy)); the closure only uploads the viewport.
-                function resize(s?: BackingSize) {
-                    if (s) simulation.recordBackingSize(s);
-                    gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
+                function resize(s: BackingSize) {
+                    simulation.recordBackingSize(s);
+                    gl.viewport(0, 0, s.w, s.h);
                 }
 
                 function drawFrame(timeSec: number) {

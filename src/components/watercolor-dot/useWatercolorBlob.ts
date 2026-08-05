@@ -1,5 +1,6 @@
 import { ref, watch, type Ref } from "vue";
-import { mulberry32, hashString, randomRadii, radiiToCSS } from "./prng";
+import { randomRadii, radiiToCSS } from "./prng";
+import { mulberry32, hashString } from "../../composables/glass/procedural/prng";
 // the animate-mode wobble rides the library's ONE rAF loop
 // (`useRAFLoop`), NEVER a hand-rolled self-scheduling `requestAnimationFrame(tick)`.
 // The loop parks the frame schedule when the tab is backgrounded (`pauseWhenHidden`)

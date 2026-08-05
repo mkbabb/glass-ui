@@ -88,13 +88,11 @@ export interface WebGLCanvasFrame {
     /** Demand-gate: is there live motion to render next frame? `false` → park. */
     shouldContinue: () => boolean;
     /**
-     * Upload the backing geometry to the viewport/uniforms.:
-     * when a `dprPolicy` is supplied the leaf MEASURES + sizes the backing and passes
-     * the live `BackingSize` here (the consumer body shrinks to
-     * `gl.viewport(0,0,s.w,s.h)`); the arg is optional so a legacy self-measuring
-     * consumer keeps compiling until it adopts the leaf sizer.
+     * Upload the backing geometry to the viewport/uniforms. The leaf MEASURES + sizes
+     * the backing and passes the live `BackingSize` here, so the consumer body is
+     * upload-only (`gl.viewport(0,0,s.w,s.h)`).
      */
-    resize: (s?: BackingSize) => void;
+    resize: (s: BackingSize) => void;
     /** Frame time from elapsed seconds — the consumer owns frozen/reduced-motion. */
     time?: (elapsedSec: number) => number;
     /** Delete GL resources (program/buffers/VAO). Runs on dispose + before a restore re-setup. */
@@ -116,12 +114,11 @@ export interface WebGLCanvasOptions {
      */
     respectReducedMotion?: boolean;
     /**
-     * The consumer's DPR policy. When present the
-     * leaf owns the backing-store measurement + sizing (the ONE sizer, sized
-     * synchronously at mount before any acquire) and hands the live `BackingSize` to
-     * `resize(s)`. When ABSENT the legacy path runs (the consumer self-measures).
+     * The consumer's DPR policy. REQUIRED: the leaf owns the backing-store measurement
+     * + sizing (the ONE sizer, sized synchronously at mount before any acquire) and
+     * hands the live `BackingSize` to `resize(s)`.
      */
-    dprPolicy?: DprPolicy;
+    dprPolicy: DprPolicy;
     /** Compose the leaf IO park. Default `false`; see createCanvasLifecycle. */
     composeIntersectionPark?: boolean;
     /** `rootMargin` for the leaf IO park. */

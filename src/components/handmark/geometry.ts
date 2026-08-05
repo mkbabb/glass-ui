@@ -46,8 +46,6 @@ import type { HandShape, MarkBox } from "./types";
 // top-level pencil-boil import would block that). Re-exported so the /handmark barrel
 // surface + the measuring gate read the SAME symbol (never a symbol-presence regex —
 // the discipline).
-export { naturalUnderlinePoints } from "./noise";
-export { VB_W, VB_H, UNDERLINE_GAP };
 
 /** A shape maps to one or more centerlines (open polylines) or one closed ring. */
 export interface ShapeGeom {

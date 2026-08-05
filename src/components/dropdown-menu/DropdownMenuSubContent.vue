@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, useAttrs, type HTMLAttributes } from "vue";
 import { cn } from "../_shared/class-names";
-import { floatingContentAttrs } from "../_shared/floating";
 import type { DismissableContentEmits } from "../_shared/interaction";
 import { useMenuPart } from "./useMenuTrigger";
 
@@ -31,7 +30,7 @@ const forwardedAttrs = computed(() => {
         align: _align,
         loop: _loop,
         ...forwarded
-    } = floatingContentAttrs(attrs);
+    } = attrs;
     return forwarded;
 });
 const SubContentComp = useMenuPart("SubContent");

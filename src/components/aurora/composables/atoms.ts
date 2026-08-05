@@ -35,7 +35,8 @@ import {
     type AuroraMedium,
     type OklchStop,
 } from "../constants/presets";
-import { deriveAurora, oklchStopToHex, type AuroraHarmony } from "./color";
+import { deriveAurora, type AuroraHarmony } from "./color";
+import { oklchStopToHex } from "../../../composables/color";
 // Pure field mappings and their literal classifiers live in one cycle-free leaf;
 // this module retains the consumer schema and resolve/config composition.
 import {

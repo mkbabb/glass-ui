@@ -246,7 +246,7 @@ export function createFourierWGPUSetup(
 
         // upload-only. The LEAF sized the backing store; the WGPU
         // swap chain auto-resizes to it — no-op.
-        function resize(_s?: BackingSize): void {}
+        function resize(_s: BackingSize): void {}
 
         function frame(timeSec: number): void {
             onFrame?.(timeSec);

@@ -40,7 +40,7 @@ export function isNonZeroRadius(radius: string): boolean {
  * lives on an inner child). Returns `null` when nothing in the subtree is rounded
  * — caller leaves the ghost radius untouched.
  */
-export function resolveVisibleRadius(source: HTMLElement): string | null {
+function resolveVisibleRadius(source: HTMLElement): string | null {
     const own = getComputedStyle(source).borderRadius;
     if (isNonZeroRadius(own)) return own;
     for (const el of source.querySelectorAll<HTMLElement>("*")) {

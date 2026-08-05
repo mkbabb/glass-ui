@@ -8,6 +8,14 @@
        component's default as its var() fallback; everything the component writes
        for itself is `--_music-staff-*`. */
     .music-staff {
+        /* The centre-out rule/bar draw clock. Was `--draw-in-duration`, published on a
+           `:root` in `styles/draw-in.css` beside a `.draw-rule`/`[data-draw-in]`
+           register whose membership was ZERO on every engine; BK #19 struck the dead
+           register and re-homed its one live datum HERE, on its ONE consumer. The
+           arrival ease stays `--ease-out-expo` — a rule that overshoots past its own
+           end reads as jitter, so this channel is categorically not a spring — and the
+           base is co-scaled by the ONE governing `--motion-tempo` axis (P7 one-clock). */
+        --_music-staff-draw-duration: calc(0.52s * var(--motion-tempo));
         --_music-staff-space: var(--music-staff-space, 0.5rem);
         --_music-staff-ink: var(
             --music-staff-ink,
@@ -185,16 +193,16 @@
     }
 
     @media (prefers-reduced-motion: no-preference) {
-        /* Rules draw centre-out on the shared draw-in clock; a rule never
+        /* Rules draw centre-out on the component's own draw clock; a rule never
            overshoots, so it rides expo, never a spring. */
         .music-staff__line {
             animation:
-                music-staff-rule-wipe var(--draw-in-duration) var(--ease-out-expo)
+                music-staff-rule-wipe var(--_music-staff-draw-duration) var(--ease-out-expo)
                     calc(28ms * var(--_music-staff-rule-index) * var(--motion-tempo)) both;
         }
 
         .music-staff__barline {
-            animation: music-staff-bar-wipe var(--draw-in-duration) var(--ease-out-expo)
+            animation: music-staff-bar-wipe var(--_music-staff-draw-duration) var(--ease-out-expo)
                 calc(120ms * var(--motion-tempo)) both;
         }
 
@@ -202,7 +210,7 @@
            the middle line. In loading mode the reel is the engagement instead. */
         .music-staff[data-mode="score"] .music-staff__line {
             animation:
-                music-staff-rule-wipe var(--draw-in-duration) var(--ease-out-expo)
+                music-staff-rule-wipe var(--_music-staff-draw-duration) var(--ease-out-expo)
                     calc(28ms * var(--_music-staff-rule-index) * var(--motion-tempo)) both,
                 music-staff-breath 5.2s var(--ease-standard)
                     calc(260ms * var(--_music-staff-rule-index)) infinite alternate;
@@ -210,7 +218,7 @@
 
         .music-staff__clef {
             animation:
-                music-staff-bar-wipe var(--draw-in-duration) var(--ease-out-expo)
+                music-staff-bar-wipe var(--_music-staff-draw-duration) var(--ease-out-expo)
                     calc(120ms * var(--motion-tempo)) both,
                 music-staff-clef-settle var(--spring-smooth-duration) var(--spring-smooth)
                     calc(300ms * var(--motion-tempo)) both;
@@ -281,7 +289,7 @@
         }
 
         .music-staff[data-sealed] .music-staff__seal {
-            animation: music-staff-seal-wipe var(--draw-in-duration) var(--ease-out-expo) both;
+            animation: music-staff-seal-wipe var(--_music-staff-draw-duration) var(--ease-out-expo) both;
         }
     }
 

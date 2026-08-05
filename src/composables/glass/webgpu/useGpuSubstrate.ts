@@ -19,11 +19,11 @@ export type { BackingSize, DprPolicy } from "../webgl/createCanvasLifecycle";
 import {
     createWebGPUCanvas,
     supportsWebGPU,
-    WebGPUInitError,
     type WebGPUCanvasFrame,
     type WebGPUCanvasHandle,
     type WebGPUCanvasOptions,
 } from "./useWebGPUCanvas";
+import { WebGPUInitError } from "./webgpuDevice";
 import {
     describeWebGL2Adapter,
     pendingRenderer,
@@ -31,8 +31,6 @@ import {
     type RendererStatus,
 } from "./rendererStatus";
 export type { RendererStatus, RendererEngine } from "./rendererStatus";
-
-export { supportsWebGPU };
 
 /** Which backend the picker resolved. */
 export type GpuBackend = "webgpu" | "webgl2";
@@ -51,13 +49,11 @@ export interface GpuSubstrateOptions {
     setupGL: WebGLCanvasOptions["setup"];
     /**
      * The consumer's DPR policy: a flat multiplier
-     * or a box-aware resolver). When PRESENT the leaf owns the backing-store measurement
+     * or a box-aware resolver). REQUIRED: the leaf owns the backing-store measurement
      * + sizes it SYNCHRONOUSLY at mount (the ONE sizer; before the async acquire on the
-     * WebGPU path), handing the live `BackingSize` to each `setup`'s `resize(s)`. When
-     * ABSENT the legacy path runs (the consumer self-measures) — the per-viz adoption
-     * seam, identical on both backends.
+     * WebGPU path), handing the live `BackingSize` to each `setup`'s `resize(s)`.
      */
-    dprPolicy?: DprPolicy;
+    dprPolicy: DprPolicy;
     /**
      * Compose the leaf IntersectionObserver park so a consumer inherits the
      * off-screen IO-park ORed with content-visibility, no per-viz `useIntersectionPause`
@@ -124,7 +120,7 @@ export interface GpuSubstrateHandle {
      * canvas is in the DOM so the field is sharp from frame 0 while the device resolves
      * (the ≤6s blurry-flash close). `armAsync` already calls it internally on both legs;
      * exposed so a consumer can presize even earlier (e.g. immediately on mount, before
-     * the awaited `armAsync`). A no-op when no `dprPolicy` was supplied (legacy).
+     * the awaited `armAsync`). Idempotent — a no-op once the backing is already sized.
      */
     presize: () => void;
     suspend: (
@@ -329,8 +325,8 @@ export function createGpuSubstrate(
     function presize(): void {
         if (disposed) return;
         // Size the backing on whichever leg is live,
-        // decoupled from the acquire. Idempotent on both legs (a no-op once armed, when
-        // no dprPolicy). On the WebGPU leg this sizes BEFORE the device request so the
+        // decoupled from the acquire. Idempotent on both legs (a no-op once the backing
+        // is sized). On the WebGPU leg this sizes BEFORE the device request so the
         // canvas is sharp during the cold acquire window.
         webgpu?.presize();
         webgl2?.presize();

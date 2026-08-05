@@ -20,8 +20,8 @@
 // two: scope the pass-through to the TAPPED ELEMENT'S IDENTITY.
 //
 // THE GUARD. A capture-phase `pointerdown` on the dock root records the element
-// under the pointer at press time (`pressTarget`) and whether the dock was
-// collapsed then (`pressedWhileCollapsed`). The subsequent capture-phase `click`:
+// under the pointer at press time (`pressTarget`) and whether the press BEGAN
+// mid-morph (`pressedDuringMorph`). The subsequent capture-phase `click`:
 //   • if the dock is mid-morph (`[data-morphing]` armed) OR within the settle
 //     ENVELOPE after a collapsed→expanded flip (`MORPH_SETTLE_MS` floor), AND
 //   • the click's target identity DIFFERS from `pressTarget` (and pressTarget is
@@ -76,11 +76,6 @@ export function useDockClickIntegrity(
     // The element under the pointer at the most recent pointerdown — the identity the
     // pass-through is scoped to. Null when no press is in flight.
     let pressTarget: EventTarget | null = null;
-    // Was the dock collapsed at press time? A press-while-collapsed is the tap-to-
-    // expand case (the touch manifestation); a press-while-expanded that still races a
-    // morph is the fine-pointer manifestation — both are guarded, this only records
-    // the provenance for the settle-window arming.
-    let pressedWhileCollapsed = false;
     // Was the box ACTIVELY morphing at the most recent pointerdown? A press that
     // begins mid-morph is a race by construction (the approach-hover already swapped
     // the layer, but the layout is still moving), so its click defers even when the
@@ -172,7 +167,6 @@ export function useDockClickIntegrity(
     function onPointerDownCapture(event: PointerEvent): void {
         clearPressKeepalive();
         pressTarget = event.target;
-        pressedWhileCollapsed = !visualExpanded.value;
         // A press that BEGINS while the box is still morphing is a race by
         // construction (the approach-hover already swapped the layer, but the layout
         // is unstable — the control under the finger is mid-flight). Recorded so the
@@ -187,7 +181,6 @@ export function useDockClickIntegrity(
     function onPointerCancelCapture(): void {
         clearPressKeepalive();
         pressTarget = null;
-        pressedWhileCollapsed = false;
         pressedDuringMorph = false;
     }
 
@@ -236,7 +229,6 @@ export function useDockClickIntegrity(
             pressTarget = null;
             return;
         }
-        void pressedWhileCollapsed;
         // (b) THE FINE-POINTER RACE. A press that BEGAN mid-morph is a race even when
         // identity matches: the approach-hover swapped the layer under the stationary
         // pointer BEFORE the press, so identity "matches" a control the user never

@@ -9,8 +9,8 @@
 
 import type { SortableId } from "./types";
 
-export const DROP_ABOVE_CLASS = "is-sortable-drop-above";
-export const DROP_BELOW_CLASS = "is-sortable-drop-below";
+const DROP_ABOVE_CLASS = "is-sortable-drop-above";
+const DROP_BELOW_CLASS = "is-sortable-drop-below";
 export const DRAG_GHOST_CLASS = "sortable-drag-ghost";
 export const SOURCE_DRAGGING_CLASS = "is-sortable-dragging";
 
@@ -30,7 +30,7 @@ export const SOURCE_DRAGGING_CLASS = "is-sortable-dragging";
  * `rowIndex` is the row's current index in the list; pass `< 0` (not found) to
  * receive the all-false result.
  */
-export function flagsFor(
+function flagsFor(
     rowIndex: number,
     drop: number,
     listLength: number,

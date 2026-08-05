@@ -75,10 +75,8 @@ interface MorphFrame {
 
 // The component/element → root-element resolver lives in engine-free `core/asElement`
 // (one home; the SCC boundary blocks the /motion-core leaves from importing this
-// keyframes-bearing module). Imported for local use and re-exported so the public
-// `/motion` symbol is unchanged.
+// keyframes-bearing module).
 import { asElement } from "../core/asElement";
-export { asElement };
 
 export function lockSpatialTransition(el: HTMLElement): () => void {
     const previous = el.style.transitionProperty;

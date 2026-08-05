@@ -13,9 +13,13 @@
 // THE DUAL-PATH SINGLE-WRITER. On a native-scroll-timeline engine the continuous
 // `progress` ramp rides `scroll()`/`view()` on the compositor (the
 // `.scroll-progress` CSS recipe writes `@property --scroll-t` — ZERO JS); the JS
-// `progress` writer attaches NOTHING (the `useScrollProgress.ts:80` early-return
-// precedent — the two never both write). The discrete crossing events CANNOT ride a
-// CSS scroll-timeline (a timeline drives a property, it does not emit an event), so
+// `progress` value is then NOT WRITTEN (`trackProgress && !supportsScrollTimeline()`
+// gates the two write sites, `:195` and `:275` — the two never both write). The
+// READER still attaches on every engine, because the events need it: this is a
+// per-value write fence, NOT the inert-arm shape #19 killed in `useScrollProgress`
+// (which attached nothing at all and handed back a ref that froze while reading
+// alive). The discrete crossing events CANNOT ride a CSS scroll-timeline (a
+// timeline drives a property, it does not emit an event), so
 // the JS reader's rAF tick evaluates the triggers on EVERY engine (native or
 // fallback) over the SAME `createScrollReader` tick — never a second listener. This
 // is the legitimate JS-on-a-native-engine case: the ramp is native, the EVENTS are
@@ -98,15 +102,6 @@ export interface UseScrollTriggerReturn {
     /** Force a re-read + re-evaluate every trigger (post-resize/layout). */
     recalculate: () => void;
 }
-
-/**
- * True when the engine supports native scroll-driven animations. On a supporting
- * engine the `.scroll-progress` CSS recipe owns the continuous `progress` axis on
- * the compositor (writing `@property --scroll-t`), so the JS `progress` writer
- * attaches NOTHING — the dual-path single-writer. The discrete crossing events run
- * the JS rAF tick on EVERY engine (events can't ride a CSS timeline).
- */
-const NATIVE_SCROLL_TIMELINE = supportsScrollTimeline();
 
 function clamp01(v: number): number {
     return v < 0 ? 0 : v > 1 ? 1 : v;
@@ -197,7 +192,7 @@ export function useScrollTrigger(
         // only write `progress.value` on the fallback engine. Under PRM the JS ramp
         // snaps to the nearest endpoint (the interpolation drops; the discrete state
         // stays correct).
-        if (trackProgress && !NATIVE_SCROLL_TIMELINE) {
+        if (trackProgress && !supportsScrollTimeline()) {
             const extent = reader.extent();
             const raw = extent > 0 ? pos / extent : 0;
             progress.value = reduced.value ? Math.round(clamp01(raw)) : clamp01(raw);
@@ -258,9 +253,10 @@ export function useScrollTrigger(
         lastTime = now;
     }
 
-    function tick(r: ScrollReader): void {
+    // The reader hands its own snapshot to every tick; this trigger evaluates off the
+    // element's live rect instead, so the parameter is unread by design.
+    function tick(_reader: ScrollReader): void {
         evaluate(typeof performance !== "undefined" ? performance.now() : Date.now());
-        void r;
     }
 
     function recalculate(): void {
@@ -276,7 +272,7 @@ export function useScrollTrigger(
             passed.set(triggerId(t, i), pos >= px);
         }
         lastPos = pos;
-        if (trackProgress && !NATIVE_SCROLL_TIMELINE) {
+        if (trackProgress && !supportsScrollTimeline()) {
             const extent = reader.extent();
             const raw = extent > 0 ? pos / extent : 0;
             progress.value = reduced.value ? Math.round(clamp01(raw)) : clamp01(raw);

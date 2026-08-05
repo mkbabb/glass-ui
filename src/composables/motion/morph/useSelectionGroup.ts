@@ -3,8 +3,8 @@ import {
     useSelectionIndicator,
     type SelectionOption,
 } from "./useSelectionIndicator";
-// The roving machine is composed directly (the dock is
-// SegmentedTabs/ToggleGroup wearing chrome; ONE roving machine, never re-forked).
+// The roving machine is composed directly (the dock is SegmentedTabs wearing
+// different chrome; ONE roving machine, never re-forked).
 // `useTabRovingFocus` imports `vue` only (engine-FREE + vueuse-FREE), so pulling it
 // into the `/motion-core`-eligible engine keeps the keyframes/vueuse fence.
 import {
@@ -14,10 +14,15 @@ import {
 
 /**
  * useSelectionGroup is the library's single headless selection engine. The dock
- * control run, `<SegmentedTabs>`, and
- * `<ToggleGroup type="single">` are the SAME thing — a roving-focus selection
- * strip with a traveling indicator. This composable assembles that ONE engine
- * from the shared parts, reka-free and engine-free so it
+ * control run and `<SegmentedTabs>` are the SAME thing — a roving-focus selection
+ * strip with a traveling indicator — and both compose it (BK #19 W-SELECTION-ONE
+ * made SegmentedTabs the second; the arm at `tests/gates/overfit-structure.test.ts`
+ * forbids a third assembly). `<ToggleGroup type="single">` is the same strip BY
+ * SHAPE but not yet by composition: it delegates roving to reka's `ToggleGroupRoot`
+ * and composes neither house part. Adopting it needs the C-1
+ * `SelectionOption["value"]` widening (`useSelectionIndicator.ts:35` — `string` vs
+ * `SelectionValue`) and is **BK #84's**; until it lands, the engine's consumer set
+ * is TWO, and this doc says two. The assembly, reka-free and engine-free so it
  * ships on `/motion-core`:
  *
  *   • the SELECTION MODEL — `single` (a `string`) | `multiple` (a `string[]`),
@@ -27,7 +32,7 @@ import {
  *     tabstop, axis-derived arrows, Home/End, wrap, disabled-skip);
  *   • the ONE TRAVELING-INDICATOR WRITER — `useSelectionIndicator` (the
  *     center-anchored ResizeObserver measure + the `--stretch` squish), so the
- *     dock/tabs/toggle-group indicator is Safari-identical by construction;
+ *     dock and tabs indicator is Safari-identical by construction;
  *   • the RECENTER CALL — `el.scrollIntoView({inline:'nearest', block:'nearest'})`
  *     on every select, so a selection past the fold pulls itself into view.
  *
@@ -71,6 +76,13 @@ export interface UseSelectionGroupParams<O extends SelectionOption> {
     indicatorRef?: Ref<HTMLElement | null>;
     /** Per-option item refs, index-aligned to `options`. */
     buttonRefs: Ref<HTMLElement[]>;
+    /**
+     * A per-commit side effect the CALLER owns, fired on every committed selection
+     * (pointer AND keyboard) before the model write — e.g. SegmentedTabs' press
+     * squish on the pressed button. The engine stays the one selection path; a
+     * caller that needs a local flourish hangs it here rather than forking `select`.
+     */
+    onSelect?: (value: string, idx: number) => void;
 }
 
 export interface UseSelectionGroupReturn {
@@ -165,6 +177,8 @@ export function useSelectionGroup<O extends SelectionOption>(
     function select(value: string, idx: number) {
         const option = options.value[idx];
         if (option?.disabled) return;
+
+        params.onSelect?.(value, idx);
 
         if (modeRef.value === "multiple") {
             const cur = Array.isArray(model.value) ? [...model.value] : [];

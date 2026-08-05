@@ -36,14 +36,6 @@ const TONES = ["0", "2", "3", "4", "5", "7", "8", "11"] as const;
 
 const rowSeeds = [
     [
-        "FuzzySearch overlay",
-        "component",
-        "Keyboard navigation, modal expansion, and highlighted fuzzy result labels.",
-        "wired",
-        "Search",
-        ["FuzzySearch", "keyboard"],
-    ],
-    [
         "SearchBar query rail",
         "component",
         "Compact input bar with a baked-in icon for filtering catalogue rows.",
@@ -439,13 +431,16 @@ const searchState = useFuzzySearch<SearchableItem>({
     },
 });
 
-// The live SearchBar drives the query AND opens the overlay once the field is typed
-// into — the rail and the command palette read the same reactive state.
+// The live SearchBar drives the query. ONE field on this route (BK #19, O-17 D-19):
+// the page used to call `searchState.open()` on every keystroke to raise a fuzzy-search
+// OVERLAY that carried its own input — two stacked search fields, one of them a
+// duplicate of the other. The overlay component is gone from the package surface, so
+// the call raised nothing and only the `isOpen` flag moved; the catalogue below is the
+// result surface and it needs no second field to drive it.
 const query = computed({
     get: () => searchState.query.value,
     set: (value: string) => {
         searchState.query.value = value;
-        if (value.trim()) searchState.open();
     },
 });
 

@@ -30,18 +30,12 @@ export {
 } from "./brush";
 
 // ── the shape mappers (pure; SPEC §3) ──
-export {
-    shapeGeom,
-    serialize,
-    boilLines,
-    // EXPORTED so the measuring gate samples the REAL φ-incommensurate value-noise
-    // point-set (the boil voice) — never a symbol-presence regex.
-    naturalUnderlinePoints,
-    VB_W,
-    VB_H,
-    UNDERLINE_GAP,
-    type ShapeGeom,
-} from "./geometry";
+export { shapeGeom, serialize, boilLines, type ShapeGeom } from "./geometry";
+// EXPORTED so the measuring gate samples the REAL φ-incommensurate value-noise
+// point-set (the boil voice) — never a symbol-presence regex. Each ships from its
+// OWN home; no module holds a re-export of a neighbour's symbol (BK #19 W-SHIM-PURGE).
+export { naturalUnderlinePoints } from "./noise";
+export { VB_W, VB_H, UNDERLINE_GAP } from "./constants";
 
 // ── the ink + grain stages (pure; SPEC §4) ──
 export { ink, type SVGFragment } from "./ink";

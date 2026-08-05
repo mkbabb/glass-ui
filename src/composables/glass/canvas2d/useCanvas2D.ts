@@ -115,8 +115,7 @@ const DEFAULT_ROOT_MARGIN = "200px";
  * `useWebGLCanvas`, a thin Canvas2D backend over the shared
  * `createCanvasLifecycle` core. Returns an imperative {@link Canvas2DHandle} (the
  * same handle idiom the WebGL twin uses — an imperative canvas seam is NOT a
- * ref-bundle). `useCanvasLifecycle` is the alias-of-record for the lifecycle-only
- * framing; both name the same factory.
+ * ref-bundle).
  */
 export function useCanvas2D(options: Canvas2DOptions): Canvas2DHandle {
     const {
@@ -205,7 +204,7 @@ export function useCanvas2D(options: Canvas2DOptions): Canvas2DHandle {
             dprPolicy,
             composeIntersectionPark: true,
             intersectionRootMargin: rootMargin,
-            resize: (size) => resizeTo(size!),
+            resize: (size) => resizeTo(size),
             // NO bindContextEvents — a 2D context cannot be lost the WebGL way, so
             // the core's self-heal-on-restore machinery stays unused (correct).
         });
@@ -258,10 +257,3 @@ export function useCanvas2D(options: Canvas2DOptions): Canvas2DHandle {
     };
 }
 
-/**
- * Alias-of-record for {@link useCanvas2D} — the lifecycle-only framing (the
- * park/freeze/dispose machinery, paralleling the WebGL substrate's
- * `createCanvasLifecycle`). Same factory, same handle; reach for this name when
- * the lifecycle (not the 2D drawing) is the consumer's emphasis.
- */
-export const useCanvasLifecycle = useCanvas2D;

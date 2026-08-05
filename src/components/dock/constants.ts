@@ -14,12 +14,6 @@ export const DOCK_SPRING = {
 } as const;
 
 /**
- * The shape-morph squish cap — mirrors `--dock-morph-max-stretch` (density.css). The
- * iOS-27 register.
- */
-export const DOCK_MORPH_MAX_STRETCH = 1.14;
-
-/**
  * The OPEN-DISMISSABLE-LAYER probe for the dock's Escape guard (`GlassDock.vue`).
  *
  * `[data-dismissable-layer]` is reka's own marker, stamped by `DismissableLayer` — the

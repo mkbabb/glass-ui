@@ -28,7 +28,6 @@ import {
 import SelectScrollDownButton from "./SelectScrollDownButton.vue";
 import SelectScrollUpButton from "./SelectScrollUpButton.vue";
 import { cn } from "../_shared/class-names";
-import { floatingContentAttrs } from "../_shared/floating";
 import { useOptionalDockContext } from "../dock/composables/dockContext";
 // Thread the SHARED {glass·veil·opaque} surface axis + the
 // φ --overlay-pad-* ladder onto the Select listbox (the overlay golden uniformity).
@@ -55,7 +54,7 @@ const forwardedAttrs = computed(() => {
         "body-lock": _bodyLockKebab,
         position: _position,
         ...forwarded
-    } = floatingContentAttrs(attrs);
+    } = attrs;
     return forwarded;
 });
 const placementProps = computed(() => ({

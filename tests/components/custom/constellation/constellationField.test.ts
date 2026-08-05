@@ -17,7 +17,6 @@ import {
     type ConstellationWell,
 } from "@glass/components/constellation/constellationField";
 import {
-    stepWell,
     nearestNode,
     warpStep,
     warpTo,
@@ -26,11 +25,14 @@ import {
     pickWanderTarget,
     stepPinnedDrift,
     makePinnedDrift,
+} from "@glass/components/constellation/constellationInteraction";
+import { stepWell } from "@glass/components/constellation/constellationWell";
+import {
     DEFAULT_WELL_CONFIG,
     WARP_RESPONSE,
     WARP_ZETA,
-} from "@glass/components/constellation/constellationInteraction";
-import { DEFAULT_PALETTE } from "@glass/components/constellation/constellationRender";
+} from "@glass/components/constellation/constants";
+import { DEFAULT_PALETTE } from "@glass/components/constellation/constants";
 
 /** A complete `ConstellationField` (focalIndex + warp) */
 function makeField(
@@ -803,7 +805,7 @@ describe("the generalized constellation field engine", () => {
 // The kVis floor — the two-axis split: SIZES floor at
 // kVis = max(k, kFloor) while TRUE k keeps positions/reach. Byte-identical
 // at/above kFloor·BASE_WIDTH by construction (kVis === k there).
-import { BASE_WIDTH } from "@glass/components/constellation/constellationField";
+import { BASE_WIDTH } from "@glass/components/constellation/constants";
 import { DEFAULT_K_FLOOR } from "@glass/components/constellation/constants";
 import { kVisOf } from "@glass/components/constellation/constellationRender";
 

@@ -19,7 +19,7 @@ export interface SpringProjection {
     readonly peak: number;
 }
 
-export const SPRING_TOKEN_SAMPLE_COUNT = 48;
+const SPRING_TOKEN_SAMPLE_COUNT = 48;
 
 const SETTLE_BAND = 0.02;
 const SETTLE_TICK_DT = 0.0005;
