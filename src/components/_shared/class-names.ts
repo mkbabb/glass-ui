@@ -138,7 +138,43 @@ const RULES: ReadonlyArray<readonly [string, RegExp]> = [
     ["ring-width", /^ring(?:-\d+|-0|)$/],
 
     // ── Borders / radius ─────────────────────────────────────────
-    ["rounded", /^rounded(?:-(?:none|sm|md|lg|xl|2xl|3xl|full|t|r|b|l|tl|tr|bl|br))?$/],
+    // ONE bucket per CSS longhand group the utility writes, and an OPEN value
+    // segment. The prior single rule enumerated only shadcn's size ladder
+    // (`none|sm|md|lg|xl|2xl|3xl|full` + bare sides), which had two holes:
+    //   1. every ROLE utility Tailwind emits from a `--radius-*` theme key
+    //      (`rounded-card`, `rounded-pill`, `rounded-panel`, `rounded-dialog`,
+    //      `rounded-tab`, `rounded-dock-card`, `rounded-media`, `rounded-xs`, …)
+    //      matched nothing, so it never conflicted — a consumer's `rounded-card`
+    //      and a recipe's `rounded-panel` BOTH survived `cn()` and the winner was
+    //      decided by stylesheet order, not call order. That is the O-7 defect:
+    //      the override silently no-ops. Same for arbitrary values
+    //      (`rounded-[6px]`) and the v4 var shorthand (`rounded-(--radius-card)`).
+    //   2. `rounded-t-lg` matched nothing either (the old rule accepted a bare
+    //      side, never side + value).
+    // Per-corner/per-side buckets are required, NOT one radius bucket: the
+    // corner longhands are disjoint from the shorthand's other corners, so
+    // `rounded-card rounded-t-none` must keep BOTH tokens. Order is
+    // corner (2 letters) → side (1 letter) → shorthand, because `^rounded-t…`
+    // would otherwise swallow `rounded-tl-…`. Role names that merely START with a
+    // side letter are safe by construction: the side rules require `-` or
+    // end-of-token right after the letter, so `rounded-tab`, `rounded-tooltip`,
+    // `rounded-badge`, `rounded-lg` and `rounded-sm` all fall through to the
+    // shorthand bucket, which is correct — they set all four corners.
+    ["rounded-ss", /^rounded-ss(?:-.+)?$/],
+    ["rounded-se", /^rounded-se(?:-.+)?$/],
+    ["rounded-ee", /^rounded-ee(?:-.+)?$/],
+    ["rounded-es", /^rounded-es(?:-.+)?$/],
+    ["rounded-tl", /^rounded-tl(?:-.+)?$/],
+    ["rounded-tr", /^rounded-tr(?:-.+)?$/],
+    ["rounded-br", /^rounded-br(?:-.+)?$/],
+    ["rounded-bl", /^rounded-bl(?:-.+)?$/],
+    ["rounded-s", /^rounded-s(?:-.+)?$/],
+    ["rounded-e", /^rounded-e(?:-.+)?$/],
+    ["rounded-t", /^rounded-t(?:-.+)?$/],
+    ["rounded-r", /^rounded-r(?:-.+)?$/],
+    ["rounded-b", /^rounded-b(?:-.+)?$/],
+    ["rounded-l", /^rounded-l(?:-.+)?$/],
+    ["rounded", /^rounded(?:-.+)?$/],
 
     // ── Layout ────────────────────────────────────────────────────
     [

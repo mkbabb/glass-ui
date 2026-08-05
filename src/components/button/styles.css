@@ -10,7 +10,20 @@
         gap: calc(0.375rem * var(--ui-scale));
         padding-inline: calc(1rem * var(--ui-scale));
         border: 0;
-        border-radius: var(--radius-pill);
+        /* The stadium bound, resolved against the CONTROL RUNG rather than the
+           box. `--radius-pill` (9999px) is clamped by the engine to half the
+           ACTUAL block-size, so a button whose label wraps to two lines grows a
+           balloon: the curvature tracks the content instead of the control. The
+           corner is half the control rung `--button-size` (which the size arms
+           re-point to `--control-h-xs/sm/lg`), so a single-line button is
+           byte-identical to the stadium it was, and a wrapped or multi-line button
+           keeps single-line curvature. A narrower-than-tall box (the icon arm)
+           still reads a circle: the engine's own radius scaling clamps the corner
+           to half the short edge, which is the resolved-corner precedent.
+           A bare `min(9999px, …)` is REFUSED: it couples the corner to a second
+           token to re-derive a clamp the engine already applies (GF-DOCK §STRIKE —
+           `from: 50%` IS the resolved corner). */
+        border-radius: calc(var(--button-size) / 2);
         color: var(--foreground);
         font: inherit;
         font-size: var(--control-text);

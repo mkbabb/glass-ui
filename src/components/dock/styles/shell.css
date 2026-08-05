@@ -395,8 +395,14 @@
         border-radius: var(--radius-pill);
     }
 
+    /* `shape="rounded"` is the CARD ROLE, not a 12px literal rung. The dock's
+       finite-corner posture is the same rank as a presented plate, and the corner
+       is bound to `--radius-card` so it moves with the card canon instead of
+       drifting on `--radius-xl` — the off-series 12 the proportion settlement
+       strikes. This is a ROLE bind, never a re-tuned number: retuning
+       `--radius-card` retunes the rounded dock with it. */
     .glass-dock.vertical.shape-rounded {
-        border-radius: var(--radius-xl);
+        border-radius: var(--radius-card);
     }
 
     /* The VERTICAL big-dock CARD radius MORPHS on the
@@ -421,7 +427,7 @@
        horizontal dock. Scoped to `:not(.vertical)` so the vertical dock (which owns
        its own radius above) is untouched. */
     .glass-dock:not(.vertical).shape-rounded {
-        border-radius: var(--radius-xl);
+        border-radius: var(--radius-card);
     }
 
     /* The big-dock CARD shell — a FINITE concentric radius above 2xl, below pill.

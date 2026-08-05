@@ -40,7 +40,9 @@ export interface DockProps {
     /**
      * Corner treatment.
      *   `"pill"`    — the stadium silhouette (default).
-     *   `"rounded"` — a finite rounded radius (`--radius-xl`).
+     *   `"rounded"` — the finite CARD-role corner (`--radius-card`): a plate
+     *                 silhouette, distinct from both the stadium and the big-dock
+     *                 shell. Bound to the role, never to a literal rung.
      *   `"card"`    — a finite concentric big-dock shell
      *                 radius (`--dock-card-radius`, default `--radius-3xl`)
      *                 ABOVE 2xl, below pill — does NOT collapse to a stadium.

@@ -21,12 +21,30 @@
    ─ multi-line field / stepper    --radius-field    16px     soft-rect   a box is not a stadium
    ─ dialog-nested single input    --radius-field    16px     soft-rect   nests concentric (F45/F7)
    ─ content card / popover        --radius-card     16px     squircle@lg content container (R28-40)
+   ─ alert                         --radius-card     16px     round       a presented plate — the
+                                   (rounded-card)                         same rank as the card,
+                                                                          never shadcn's rounded-lg
+   ─ toast                         --radius-card     16px     round       floats ABOVE the card
+                                   (rounded-card)                         band; never LESS rounded
+                                                                          than what it floats over
    ─ dialog                        --radius-dialog   16px     round       matches the card (F48)
    ─ panel / configurator          --radius-panel    12px     squircle    group box, not a pill
+   ─ dock shape="rounded"          --radius-card     16px     round       a plate silhouette; a
+                                                                          ROLE bind, not a rung
    ─ sheet / bigdock               --radius-3xl      24px     squircle    large glass overlay
    ─ slider track                  --radius-pill     capsule  round       tall capsule
    ─ media tile (skeleton/avatar/  --radius-media    10px     soft-rect   media/tile surface —
      command)                      (= --radius)                           NOT the Input pill
+
+   THE BUTTON STADIUM BOUND. A stadium is `h/2` OF THE CONTROL RUNG, not of the box.
+   `--radius-pill` (9999px) is clamped by the engine to half the ACTUAL block-size,
+   so a control whose label wraps grows a balloon — the curvature tracks the content
+   instead of the control. Any control that can wrap resolves its corner against its
+   own control rung (`.button` → `calc(var(--button-size) / 2)`, where --button-size
+   IS `--control-h-{xs,sm,md,lg}`); single-line is byte-identical to the stadium it
+   replaces, and wrapped/multi-line keeps single-line curvature. A `min(9999px, …)`
+   bound is REFUSED — it couples the corner to a second token to re-derive a clamp
+   the engine already applies.
 
    THE NESTING LAW (boundary-sharing, not an absolute silhouette ban). Concentric
    subtraction applies when two painted surfaces SHARE A BOUNDARY: an inner plate
@@ -59,6 +77,17 @@
    fields fell back to 0px instead of the ruled 16px. Static keeps the whole
    canon present so a receiver's `var(--radius-field)` always resolves. */
 @theme static {
+    /* THE ROOT OF THE LADDER, and its provenance stated once. `0.625rem` (10px) is
+       shadcn's literal default, carried verbatim; it is the CONTROL rung — a box you
+       type in, press, or read as an annotation, ≈0.25 × h at h=40. Five names
+       collapse onto it (`--radius-lg`, `--radius-media`, `--radius-button`,
+       `--radius-tooltip` via `-lg`, and the root itself), which is why the value is
+       declared HERE exactly once and every one of them is a `var()` alias — retuning
+       the control corner is a one-line act. NOTE the shadcn inheritance in the NAME,
+       not the value: `--radius-lg` is 10px here, where Tailwind's own `lg` rung is
+       8px. The de-shadcn RENAME of this root is a public-surface act (it sits in
+       `tokens/manifest.ts`) and is routed to the export owner; the VALUE and its role
+       are ratified as they stand. */
     --radius: 0.625rem;
     --radius-xs: 4px;
     --radius-sm: 4px;

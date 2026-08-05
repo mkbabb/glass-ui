@@ -10,10 +10,25 @@
         overscroll-behavior-inline: contain;
     }
 
+    /* The single-select track is a CONCENTRIC PAIR with its own segments, and it
+       derives — it does not restate. The track publishes its inner pad on the
+       shipped Law-1 relay channel `--radius-inset` and its resolved corner on
+       `--radius-ctx`; `padding` and the outer corner both read that ONE number, so
+       a consumer retuning the pad keeps the pair concentric instead of silently
+       breaking it (the pad used to be written twice — once as `padding`, once
+       hard-coded inside the radius `calc()`). The segments keep their own PILL role
+       rung (law B: a role-bearing child takes its role, never the relay), and the
+       derivation is exact for a stadium pair: outer = inner + inset. No token is
+       minted — `--radius-inset`/`--radius-ctx` are the relay channels
+       `theme/radius.css` already declares, published here for the first time on
+       this surface. */
     .toggle-group[data-type="single"] {
+        --radius-inset: 0.25rem;
+        --radius-ctx: calc(var(--radius-pill) + var(--radius-inset));
+
         justify-content: safe center;
-        padding: 0.25rem;
-        border-radius: calc(var(--radius-pill) + 0.25rem);
+        padding: var(--radius-inset);
+        border-radius: var(--radius-ctx);
         background: var(--glass-plate-quiet);
         backdrop-filter: var(--glass-blur-quiet);
         box-shadow:

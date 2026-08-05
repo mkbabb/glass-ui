@@ -481,7 +481,7 @@ const contentStyle = computed<CSSProperties>(() => ({
            reads so the X clears the heading and breathes with the pad. -->
             <RekaDialogClose
                 v-if="props.showClose"
-                class="focus-ring absolute right-(--overlay-pad-inline) top-(--overlay-pad-block) rounded-sm opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-accent-foreground"
+                class="focus-ring absolute right-(--overlay-pad-inline) top-(--overlay-pad-block) rounded-pill opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-accent-foreground"
             >
                 <X class="w-4 h-4" aria-hidden="true" />
                 <span class="sr-only">Close</span>

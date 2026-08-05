@@ -105,7 +105,12 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
                 // `translate` leg springs the cancel/settle back.
                 // The overlay-band golden padding ladder (inline anchor --spacing(6),
                 // block axis sqrt-phi *1.272); `pr-8` STAYS (close-button clearance).
-                'glass-reveal [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-panel px-(--overlay-pad-inline) py-(--overlay-pad-block) pr-8 data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-(--reka-toast-swipe-end-x) data-[swipe=move]:translate-x-(--reka-toast-swipe-move-x) data-[swipe=move]:transition-none',
+                // Toast wears the CARD role (16px), not the panel rung (12px). A toast
+                // is a presented plate floating ABOVE the card band; at `rounded-panel` it
+                // sat on a 16px card at 0.75:1 — the more elevated surface the LESS
+                // rounded, the exact inversion the radius canon exists to forbid. Both are
+                // 16 now, and they move together off `--radius-card`.
+                'glass-reveal [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-card px-(--overlay-pad-inline) py-(--overlay-pad-block) pr-8 data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-(--reka-toast-swipe-end-x) data-[swipe=move]:translate-x-(--reka-toast-swipe-move-x) data-[swipe=move]:transition-none',
                 // The body text stays --foreground (legibility); the tinted-glass wash + the
                 // tone-keyed rim + the full-chroma glyph carry the semantic. Toggling on the
                 // tone register only for a NON-neutral tone keeps `neutral` the un-toned

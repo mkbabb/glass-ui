@@ -1,6 +1,7 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { cn } from "@glass/components/_shared/class-names";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // BJ MATERIAL W1 — the ordinary (non-`it.fails`) radius-role gate.
@@ -100,7 +101,7 @@ const declaredRungs = (): string[] => {
     return [...set].sort();
 };
 
-describe("1. vocabulary — every rung is classified (executable inventory ⟺ radius.css)", () => {
+describe("G-RADIUS-ROLE 1. vocabulary — every rung is classified (executable inventory ⟺ radius.css)", () => {
     const declared = declaredRungs();
 
     it("classifies every declared radius/corner rung — an unclassified rung fails", () => {
@@ -297,5 +298,332 @@ describe("5. residue flip — the two segmented raw radii are gone", () => {
         const seg = strip(read("src/components/tabs/styles/segmented.css"));
         expect(seg).not.toMatch(/border-radius:\s*0\.3125rem/);
         expect(seg).not.toMatch(/border-radius:\s*0\.25rem/);
+    });
+});
+
+// ═════════════════════════════════════════════════════════════════════════════
+// W-RADIUS-ROLE — the ROLE SPINE and this wave's bindings.
+//
+// The proportion settlement's terminal table collapses the radius vocabulary to
+// SEVEN roles (cell 0 · floor 4 · tick 6 · control 10 · card 16 · room 24 · pill
+// h/2) plus TWO relay channels. This suite enforces the collapse's INVARIANT —
+// every live rung belongs to exactly one role, and every member of a role
+// resolves to that role's ONE value — WITHOUT performing the rename, which is a
+// joint act of five roster rows and is refused here with grounds (see §7).
+// A rung that drifts off its role's value fails; a new rung with no role fails.
+// ═════════════════════════════════════════════════════════════════════════════
+
+/** Every `--token: value;` in a sheet, comments stripped. */
+const declMap = (css: string): Map<string, string> => {
+    const map = new Map<string, string>();
+    for (const m of strip(css).matchAll(/(--[\w-]+)\s*:\s*([^;{}]+);/g)) {
+        map.set(m[1]!, m[2]!.replace(/\s+/g, " ").trim());
+    }
+    return map;
+};
+
+/** Follow a `var(--x)` alias chain to its terminal (non-`var`) value. */
+const resolveAlias = (map: Map<string, string>, token: string): string => {
+    let cur = token;
+    const seen = new Set<string>();
+    while (map.has(cur) && !seen.has(cur)) {
+        seen.add(cur);
+        const value = map.get(cur)!;
+        const alias = value.match(/^var\(\s*(--[\w-]+)\s*\)$/);
+        if (!alias) return value;
+        cur = alias[1]!;
+    }
+    return map.get(cur) ?? cur;
+};
+
+/** `12px` / `0.75rem` → px number (root font-size 16). Spelling-independent, so
+ *  two names at one value can never hide behind two different units. */
+const px = (value: string): number => {
+    const m = value.match(/^(-?[\d.]+)(px|rem)$/);
+    if (!m) return Number.NaN;
+    return m[2] === "rem" ? Number(m[1]) * 16 : Number(m[1]);
+};
+
+const RADIUS_DECLS = declMap(radius);
+
+type RadiusRole = "floor" | "tick" | "control" | "card" | "room" | "pill" | "relay";
+
+/** §4's role spine, keyed to the names that carry each role ON DISK. `cell` (0)
+ *  has no token by construction — it is the absence of a silhouette. */
+const ROLE_OF: Readonly<Record<string, RadiusRole>> = Object.freeze({
+    "--radius-xs": "floor",
+    "--radius-sm": "floor",
+    "--radius-floor": "floor",
+    "--radius-md": "tick",
+    "--radius": "control",
+    "--radius-lg": "control",
+    "--radius-media": "control",
+    "--radius-button": "control",
+    "--radius-tooltip": "control",
+    "--radius-2xl": "card",
+    "--radius-card": "card",
+    "--radius-dialog": "card",
+    "--radius-field": "card",
+    "--radius-3xl": "room",
+    "--radius-dock-card": "room",
+    "--radius-pill": "pill",
+    "--radius-control": "pill",
+    "--radius-badge": "pill",
+    "--radius-dock": "pill",
+    "--radius-tab": "pill",
+    "--radius-ctx": "relay",
+    "--radius-inset": "relay",
+});
+
+/** The role values, verbatim from the settlement's terminal table. */
+const ROLE_PX: Readonly<Record<Exclude<RadiusRole, "relay">, number>> = Object.freeze({
+    floor: 4,
+    tick: 6,
+    control: 10,
+    card: 16,
+    room: 24,
+    pill: 9999,
+});
+
+/** The 12px rung the role spine has no seat for. Named, not hidden. */
+const OFF_ROLE_12 = ["--radius-xl", "--radius-panel", "--radius-strip"] as const;
+
+/** Every paintable source file under `src/`, repo-relative. A census, not a list —
+ *  a fourth squircle fork added anywhere is found without editing this suite. */
+const srcFiles = (dir = "src", out: string[] = []): string[] => {
+    for (const entry of readdirSync(join(process.cwd(), dir), { withFileTypes: true })) {
+        const rel = `${dir}/${entry.name}`;
+        if (entry.isDirectory()) srcFiles(rel, out);
+        else if (/\.(css|vue|ts)$/.test(entry.name)) out.push(rel);
+    }
+    return out;
+};
+
+/** `[start, end]` character ranges of every `@supports (corner-shape: superellipse(2))`
+ *  block body, by brace matching. Comments must already be stripped. */
+const supportsRanges = (src: string): Array<[number, number]> => {
+    const ranges: Array<[number, number]> = [];
+    const opener = /@supports\s*\(\s*corner-shape:\s*superellipse\(2\)\s*\)\s*\{/g;
+    let m: RegExpExecArray | null;
+    while ((m = opener.exec(src)) !== null) {
+        let depth = 1;
+        let i = m.index + m[0].length;
+        for (; i < src.length && depth > 0; i += 1) {
+            if (src[i] === "{") depth += 1;
+            else if (src[i] === "}") depth -= 1;
+        }
+        ranges.push([m.index, i]);
+    }
+    return ranges;
+};
+
+describe("6. the role spine — 7 roles, and every member of a role is ONE value", () => {
+    const radiusRungs = declaredRungs().filter((t) => t.startsWith("--radius"));
+
+    it("assigns every live radius rung to a role (a new rung with no role fails)", () => {
+        const roleless = radiusRungs.filter(
+            (t) => !(t in ROLE_OF) && !OFF_ROLE_12.includes(t as never),
+        );
+        expect(roleless).toEqual([]);
+    });
+
+    it("declares every rung the role spine names (deleting one silently fails)", () => {
+        const missing = Object.keys(ROLE_OF).filter((t) => !radiusRungs.includes(t));
+        expect(missing).toEqual([]);
+    });
+
+    for (const [role, value] of Object.entries(ROLE_PX)) {
+        it(`collapses the ${role} role onto exactly ${value}px`, () => {
+            const members = Object.entries(ROLE_OF)
+                .filter(([, r]) => r === role)
+                .map(([t]) => t);
+            expect(members.length).toBeGreaterThan(0);
+            const measured = members.map((t) => [t, px(resolveAlias(RADIUS_DECLS, t))]);
+            expect(measured).toEqual(members.map((t) => [t, value]));
+        });
+    }
+
+    it("keeps the relay channels at their identity defaults (ctx = card, inset = 0)", () => {
+        expect(px(resolveAlias(RADIUS_DECLS, "--radius-ctx"))).toBe(ROLE_PX.card);
+        expect(px(resolveAlias(RADIUS_DECLS, "--radius-inset"))).toBe(0);
+    });
+
+    // BORN-RED. The role spine has no 12px rung: the settlement rules `--radius-strip`
+    // and annotation-`--radius-panel` down to control 10 and plate-`--radius-panel` up
+    // to card 16 — one name, two values, so it cannot land at the token. The rename is
+    // the joint act refused at §7; this latch is the residual, and it flips to an
+    // ordinary `it` when the last 12px rung is re-seated by its owning row.
+    it.fails("has no off-role 12px rung left (OWED — the panel/strip re-seat)", () => {
+        const live = OFF_ROLE_12.filter((t) => RADIUS_DECLS.has(t));
+        expect(live).toEqual([]);
+    });
+});
+
+describe("7. this wave's role bindings", () => {
+    it("Alert wears the card role, not shadcn's rounded-lg", () => {
+        const alert = read("src/components/alert/index.ts");
+        expect(alert).toContain("rounded-card");
+        expect(alert).not.toMatch(/["' ]rounded-lg[ "']/);
+    });
+
+    it("Toast wears the card role — never less rounded than what it floats over", () => {
+        const toast = read("src/components/toast/Toast.vue");
+        expect(toast).toMatch(/overflow-hidden rounded-card /);
+        expect(toast).not.toMatch(/overflow-hidden rounded-panel /);
+    });
+
+    it("Dialog close ✕ wears the pill role (the settlement's pill row names it)", () => {
+        const dialog = read("src/components/dialog/DialogContent.vue");
+        expect(dialog).toMatch(/RekaDialogClose[\s\S]{0,320}rounded-pill/);
+        expect(dialog).not.toMatch(/RekaDialogClose[\s\S]{0,320}rounded-sm/);
+    });
+
+    it("dock shape=rounded is the CARD role, never the off-series 12px rung", () => {
+        const shell = strip(read("src/components/dock/styles/shell.css"));
+        for (const sel of [
+            "\\.glass-dock\\.vertical\\.shape-rounded",
+            "\\.glass-dock:not\\(\\.vertical\\)\\.shape-rounded",
+        ]) {
+            const body = rule(shell, sel);
+            expect(body).toBeDefined();
+            expect(body).toContain("border-radius: var(--radius-card)");
+            expect(body).not.toContain("--radius-xl");
+        }
+        // the prop doc moves with the paint — a doc that still says 12 is a lie
+        const props = read("src/components/dock/composables/useDockShellProps.ts");
+        expect(props).toContain("--radius-card");
+        expect(props).not.toContain("`--radius-xl`");
+    });
+
+    it("Button resolves its stadium against the control rung, and refuses min()", () => {
+        const body = rule(read("src/components/button/styles.css"), "\\.button");
+        expect(body).toBeDefined();
+        // half the CONTROL rung, not half the box
+        expect(body).toContain("border-radius: calc(var(--button-size) / 2)");
+        expect(body).not.toContain("border-radius: var(--radius-pill)");
+        // --button-size IS the control cohort, so the bound tracks the size arms
+        expect(body).toContain("--button-size: var(--control-h-md)");
+        // the refused mechanism, kept refused
+        expect(strip(read("src/components/button/styles.css"))).not.toMatch(
+            /border-radius:\s*min\(/,
+        );
+    });
+
+    it("ToggleGroup derives its concentric pair from ONE published inset", () => {
+        const track = rule(
+            read("src/components/toggle-group/styles.css"),
+            '\\.toggle-group\\[data-type="single"\\]',
+        );
+        expect(track).toBeDefined();
+        expect(track).toContain("--radius-inset: 0.25rem");
+        expect(track).toContain("--radius-ctx: calc(var(--radius-pill) + var(--radius-inset))");
+        // pad and corner read the SAME number — the pad is never written twice
+        expect(track).toContain("padding: var(--radius-inset)");
+        expect(track).toContain("border-radius: var(--radius-ctx)");
+        expect(track).not.toContain("calc(var(--radius-pill) + 0.25rem)");
+        // the segment keeps its own role rung (law B), it does not read the relay
+        const item = rule(read("src/components/toggle-group/styles.css"), "\\.toggle-group__item");
+        expect(item).toContain("border-radius: var(--radius-pill)");
+    });
+
+    it("mints no radius token to do any of it", () => {
+        // the inventory is the bijection with radius.css (suite 1); the role spine
+        // adds no name of its own, so these two sets stay identical.
+        const inventoried = Object.keys(RADIUS_ROLE_INVENTORY).filter((t) =>
+            t.startsWith("--radius"),
+        );
+        const spined = [...Object.keys(ROLE_OF), ...OFF_ROLE_12];
+        expect([...spined].sort()).toEqual([...inventoried].sort());
+    });
+});
+
+describe("8. O-7 — a role utility that cannot conflict is a silent no-op", () => {
+    it("dedupes ROLE radius utilities, not just the shadcn size ladder", () => {
+        // Before the bucket widening these BOTH survived and stylesheet order —
+        // not call order — decided the corner. That is the O-7 defect.
+        expect(cn("rounded-panel", "rounded-card")).toBe("rounded-card");
+        expect(cn("rounded-card", "rounded-pill")).toBe("rounded-pill");
+        expect(cn("rounded-dock-card", "rounded-none")).toBe("rounded-none");
+        expect(cn("rounded-card", "rounded-[6px]")).toBe("rounded-[6px]");
+        expect(cn("rounded-card", "rounded-(--radius-panel)")).toBe(
+            "rounded-(--radius-panel)",
+        );
+    });
+
+    it("keeps the shadcn ladder behaviour it always had", () => {
+        expect(cn("rounded-md", "rounded-lg")).toBe("rounded-lg");
+        expect(cn("rounded", "rounded-full")).toBe("rounded-full");
+    });
+
+    it("keeps per-corner longhands DISJOINT from the shorthand", () => {
+        // a side/corner utility writes different longhands — collapsing them into
+        // one bucket would eat the shorthand and square three corners
+        expect(cn("rounded-card", "rounded-t-none")).toBe("rounded-card rounded-t-none");
+        expect(cn("rounded-t-card", "rounded-t-none")).toBe("rounded-t-none");
+        expect(cn("rounded-tl-card", "rounded-t-none")).toBe(
+            "rounded-tl-card rounded-t-none",
+        );
+        expect(cn("rounded-b-dialog", "rounded-b-card")).toBe("rounded-b-card");
+    });
+
+    it("does not mistake a role name for a side (tab/tooltip/badge/lg/sm)", () => {
+        // `rounded-t` must not swallow `rounded-tab`; if it did, a tab radius and a
+        // top-corner radius would fight and one would vanish.
+        expect(cn("rounded-tab", "rounded-t-none")).toBe("rounded-tab rounded-t-none");
+        expect(cn("rounded-tooltip", "rounded-t-none")).toBe(
+            "rounded-tooltip rounded-t-none",
+        );
+        expect(cn("rounded-badge", "rounded-b-none")).toBe("rounded-badge rounded-b-none");
+        expect(cn("rounded-lg", "rounded-l-none")).toBe("rounded-lg rounded-l-none");
+        expect(cn("rounded-sm", "rounded-s-none")).toBe("rounded-sm rounded-s-none");
+    });
+
+    it("scopes by variant prefix like every other bucket", () => {
+        expect(cn("rounded-card", "md:rounded-pill")).toBe("rounded-card md:rounded-pill");
+        expect(cn("md:rounded-card", "md:rounded-pill")).toBe("md:rounded-pill");
+    });
+});
+
+describe("9. U-29 — the squircle fork register (the Safari floor, accepted)", () => {
+    // ACCEPTANCE, recorded executably: the superellipse is a PROGRESSIVE tier over a
+    // `border-radius` round CONTRACT, it exists at exactly three registered sites, and
+    // every one states its round fallback. Safari/Firefox paint the round contract —
+    // that IS the sanctioned floor, not a masked failure. A FOURTH unregistered fork,
+    // or a fork without a round arm underneath it, fails here.
+    const FORKS = [
+        "src/styles/glass/squircle.css",
+        "src/components/slider/Slider.vue",
+        "src/components/dock/styles/shell.css",
+    ] as const;
+
+    it("registers exactly three corner-shape forks across the whole of src", () => {
+        const found = srcFiles().filter((rel) =>
+            /@supports\s*\(\s*corner-shape:\s*superellipse\(2\)\s*\)/.test(strip(read(rel))),
+        );
+        expect(found.sort()).toEqual([...FORKS].sort());
+    });
+
+    it("gates every corner-shape declaration behind @supports — never as the contract", () => {
+        for (const rel of srcFiles()) {
+            const src = strip(read(rel));
+            const gated = supportsRanges(src);
+            // exclude the `@supports (corner-shape: …)` condition text itself
+            const declarations = [...src.matchAll(/(?<!@supports\s?\()\bcorner-shape\s*:/g)]
+                .map((m) => m.index!)
+                .filter((i) => !/@supports\s*\($/.test(src.slice(Math.max(0, i - 12), i)));
+            const ungated = declarations.filter(
+                (i) => !gated.some(([a, b]) => i > a && i < b),
+            );
+            expect([rel, ungated.length]).toEqual([rel, 0]);
+        }
+    });
+
+    it("keeps ONE squircle exponent vocabulary across all three", () => {
+        for (const rel of FORKS) {
+            const src = read(rel);
+            if (!/corner-shape:\s*var\(/.test(src)) continue;
+            expect(src).toMatch(/corner-shape:\s*var\(--corner-shape-[\w-]+\)/);
+        }
+        expect(decl(radius, "--corner-k-squircle")).toBe("2");
     });
 });
