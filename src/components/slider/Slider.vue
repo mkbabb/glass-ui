@@ -515,9 +515,9 @@ onMounted(() => {
     box-shadow: none;
     /* The press-give still rides the transform channel (the `:active` scale below
        gives the WHOLE track a felt squish via the focus ring + range, not a visible
-       knob). Per §6 the transform leg rides `--spring-smooth`. */
+       knob). Per the easing doctrine the transform leg rides `--spring-press`. */
     transition: transform var(--duration-fast)
-        var(--slider-thumb-spring, var(--spring-smooth));
+        var(--slider-thumb-spring, var(--spring-press));
 }
 
 /* Hover brightens the TRACK FILL (there is no knob to halo) — the continuous
@@ -555,7 +555,7 @@ onMounted(() => {
     transform: scale(1.02, 0.94);
     transform-origin: var(--slider-range-origin);
     transition: transform var(--duration-fast)
-        var(--slider-thumb-spring, var(--spring-smooth));
+        var(--slider-thumb-spring, var(--spring-press));
 }
 
 /* OVERLAPPING-ACTION SMEAR (pull): while dragging fast, the fill STRETCHES along

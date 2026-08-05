@@ -16,7 +16,7 @@
 
 import type { ComputedRef, Ref } from "vue";
 import { nextTick, onMounted, watch } from "vue";
-import { useLeadTrail, type LeadTrailEdges } from "../../../composables/motion/morph/useLeadTrail";
+import { useLeadTrail, type LeadTrailEdges } from "./useLeadTrail";
 import { useLiquidFlex } from "../../../composables/motion/spring/useLiquidFlex";
 import { useResizeObserver } from "../../../composables/dom/useResizeObserver";
 import {

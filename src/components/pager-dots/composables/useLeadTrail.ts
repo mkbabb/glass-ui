@@ -29,19 +29,25 @@
 // SINGLE shared reduced-motion authority.
 //
 // VUE-ONLY (off the SCC trap): imports `vue` only — no `@vueuse/core`, no
-// `@mkbabb/keyframes.js` — so it ships on the engine-free `/motion-core` subpath AND
-// the root barrel (the `usePointerVelocityField` / `useLiquidFlex` precedent). The
-// integrator is hand-rolled; no spring engine is introduced.
+// `@mkbabb/keyframes.js`. The integrator is hand-rolled; no spring engine is introduced.
+//
+// COLOCATED, and the export was the overfit rather than the mechanism: this module had
+// exactly ONE consumer — the pager worm beside it — while standing as a root-barrel
+// export, and its constants were a THIRD set of spring numbers living anonymously
+// inside a public composable. Moved here, both barrel exports die (clean break, no
+// alias) and the pair becomes a NAMED per-primitive register in `constants.ts` beside
+// `PAGER_NECK_GIRTH` — the seam `springPresets.ts` sanctions, which an anonymous
+// literal in a root-exported composable was not. The pair is UNCHANGED: the worm is
+// paint-verified goo, and re-pointing it at a table row without a paired capture would
+// be a felt change asserted rather than seen.
 
 import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
-import { useReducedMotion } from "../core/useReducedMotion";
+import { useReducedMotion } from "../../../composables/motion/core/useReducedMotion";
+import { WORM_LEAD_RESPONSE, WORM_LEAD_DAMPING, WORM_TRAIL_TAU_S } from "../constants";
 
-// Pager-owned lead response and damping for the hand-rolled spring — NOT a
-// keyframes `SpringProgress` (the SCC-trap + keyframes-free fence).
-const LEAD_RESPONSE = 0.68; // 2π/response = the natural frequency
-const LEAD_DAMPING = 0.64;
-// The trailing follower's time constant (~270ms) — the LAG that mints the elongation.
-const TRAIL_TAU_S = 0.27;
+const LEAD_RESPONSE = WORM_LEAD_RESPONSE;
+const LEAD_DAMPING = WORM_LEAD_DAMPING;
+const TRAIL_TAU_S = WORM_TRAIL_TAU_S;
 // Semi-implicit Euler sub-steps: the stiff dock spring needs a fine `h` for stability.
 const SUBSTEPS = 8;
 // Settled bands: within these px / px-per-second the worm has re-formed → park.

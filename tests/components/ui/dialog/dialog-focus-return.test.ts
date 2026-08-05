@@ -38,7 +38,7 @@ function mountDialog(open: ReturnType<typeof ref<boolean>>) {
                         h(DialogTrigger, { class: "test-trigger" }, () => "open"),
                         h(
                             DialogContent,
-                            { springPreset: "smooth", class: "test-dialog" },
+                            { springPreset: "panel", class: "test-dialog" },
                             () => [
                                 h(DialogTitle, { class: "sr-only" }, () => "Test dialog"),
                                 h(DialogDescription, { class: "sr-only" }, () => "Focus-return fixture."),
@@ -71,7 +71,7 @@ describe("DialogContent — center-spring focus-return (W1-C)", () => {
         expect(inside, "an element inside the content rendered").not.toBeNull();
         // The center-spring path is live and the focus-anchor is rendered on it (the
         // un-gate): both load-bearing preconditions for the watch's containment test.
-        expect(dialogEl!.getAttribute("data-spring")).toBe("smooth");
+        expect(dialogEl!.getAttribute("data-spring")).toBe("panel");
         expect(dialogEl!.querySelectorAll("span[hidden]").length).toBeGreaterThan(0);
 
         // Strand focus inside the (about-to-close) content — the exit-spring window.

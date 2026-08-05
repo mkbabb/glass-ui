@@ -21,7 +21,7 @@ import {
     type SpringPresetName,
 } from "@glass/composables/motion/spring/springPresets";
 
-const preset = ref<SpringPresetName>("snappy");
+const preset = ref<SpringPresetName>("press");
 const activePreset = computed(() => springPreset(preset.value));
 const progress = ref(0);
 const velocity = ref(0);

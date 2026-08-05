@@ -496,19 +496,6 @@ export {
     type UseLiquidFlexReturn,
 } from "./composables/motion/spring/useLiquidFlex";
 
-// Two-edge lead/trail integrator behind the liquid dot morph
-// worm. A spring LEAD edge + a damped TRAIL follower share ONE rAF; their gap is the
-// worm's elongation and the trail catching the lead is the emergent release. Imports
-// `vue` only — engine-FREE + vueuse-FREE (a hand-rolled integrator, no spring engine),
-// so it is root-barrel safe per the `useLiquidFlex` precedent; also reachable via
-// `@mkbabb/glass-ui/motion-core`.
-export {
-    useLeadTrail,
-    type LeadTrailEdges,
-    type UseLeadTrail,
-    type UseLeadTrailOptions,
-} from "./composables/motion/morph/useLeadTrail";
-
 // Shared visualization pointer-physics field (pointer position +
 // derived velocity + the ACCEL term). The viz renderer FEEDS it via its frame `tick`
 // (NO own rAF — the one-loop discipline); under PRM it freezes (`tick(0)`). Imports

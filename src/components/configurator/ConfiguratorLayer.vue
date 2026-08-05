@@ -139,7 +139,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
             </div>
             <!-- The chevron rides the shared
                  `transition-disclosure` register (btn.css): the `rotate` longhand on
-                 `--spring-snappy-duration` + the weighty `--ease-cartoon-punch` arrival.
+                 `--spring-present-duration` + the weighty `--ease-cartoon-punch` arrival.
                  A scoped `transition: transform …` would transition the WRONG property
                  (Tailwind's `rotate-180` writes `rotate`, not `transform`, so it would SNAP);
                  the chevron shares the register the Accordion + Select carets use. -->
@@ -196,15 +196,17 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
 /*
  * Section-reveal MOTION. The
  * `grid-template-rows: 0fr ↔ 1fr` reveal machinery is the
- * recursion-free CSS-only pattern. Its timing is the enter register —
- * the fast snappy spring (`--spring-snappy`) at `--duration-fast`. The
- * height axis is a layout property; the snappy `linear()` overshoot reads as
- * a quick settle (sub-perceptual peak), not a sluggish linear ramp. The
+ * recursion-free CSS-only pattern. Its timing is the travel register —
+ * `--spring-dock` on its OWN `--spring-dock-duration` clock (the clock fence: a
+ * disclosure is coordinated extent under pointer intent, and a spring replayed over
+ * a generic wall clock is the curve compressed). The height axis is a layout
+ * property; the row lands dead, which reads as a quick settle rather than a
+ * sluggish linear ramp. The
  * chevron rotation is owned by the shared `transition-disclosure` register
  * (`btn.css`); no scoped chevron transition survives here.
  */
 .configurator-layer-region {
-    transition: grid-template-rows var(--duration-fast) var(--spring-snappy);
+    transition: grid-template-rows var(--spring-dock-duration) var(--spring-dock);
 }
 @media (prefers-reduced-motion: reduce) {
     .configurator-layer-region {

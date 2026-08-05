@@ -98,7 +98,7 @@ describe("Springs story", () => {
         // SpringProjection owner, not a re-sampled copy): named stage from its
         // default preset, playground stage from its default response/damping pair.
         const namedPeak = Number(readVar(stages[0].attributes("style"), "--preview-peak"));
-        expect(namedPeak).toBeCloseTo(springProjection(springPreset("smooth")).peak, 6);
+        expect(namedPeak).toBeCloseTo(springProjection(springPreset("press")).peak, 6);
 
         const playgroundPeak = Number(
             readVar(stages[1].attributes("style"), "--preview-peak"),
@@ -150,11 +150,11 @@ describe("Springs story", () => {
         await button.trigger("click");
         expect(button.attributes("aria-disabled")).toBe("true");
 
-        const smooth = wrapper
+        const namedRow = wrapper
             .findAll("button")
-            .find((candidate) => candidate.text().trim() === "smooth");
-        expect(smooth).toBeTruthy();
-        await smooth!.trigger("click");
+            .find((candidate) => candidate.text().trim() === "press");
+        expect(namedRow).toBeTruthy();
+        await namedRow!.trigger("click");
         await nextTick();
 
         expect(button.attributes("aria-label")).toBe("Copy linear() stops");

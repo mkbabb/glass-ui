@@ -16,11 +16,11 @@ const doctrine: { kind: string; easing: string }[] = [
     },
     {
         kind: "Transform — hover / press / active",
-        easing: "--spring-smooth (the one interactive scale register)",
+        easing: "--spring-press (the one interactive scale register)",
     },
     {
         kind: "Enter (mount / popover / dialog in)",
-        easing: "--spring-bouncy / --spring-snappy",
+        easing: "--spring-panel (the one row that rebounds) / --spring-present",
     },
     {
         kind: "Exit (unmount / close)",

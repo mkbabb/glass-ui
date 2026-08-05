@@ -47,8 +47,8 @@ export function generateBlock() {
         // BI.W-SPRING-PARITY (FAM-18/M1) — the linear() sample horizon MUST equal
         // the paired `--spring-<name>-duration` clock (the SAME 2%-settle seconds),
         // or the CSS `transition` replays a curve normalized over the wrong span.
-        // Default `maxDuration` is `4 × response` (~1.9s for snappy) while the
-        // duration token is the ~0.4s settle — a ~4.8× mismatch that front-loads
+        // Default `maxDuration` is `4 × response` while the duration token is the
+        // row's own settle — a several-fold mismatch that front-loads
         // the whole trajectory into the first ~10–16% of the clock (the measured
         // ~5× CSS-vs-JS t90 compression). Passing the settle seconds here re-times
         // the curve so CSS_t90 == JS SpringProgress t90 (<1ms, all presets).
@@ -139,6 +139,23 @@ export function generateDurationBlock() {
     return [...settleLines, ...readerLines].join("\n");
 }
 
+// BK #26 W-SPRING-RETUNE — the per-spring EXIT clock, generated beside the entry one.
+//
+// An exit is 0.6 × the ENTRY of the same job: the departure is the same motion read
+// backwards and hurried, so it is a RATIO of the row's own settle, never a shared
+// literal. One flat `0.15s` served every overlay before this — a second authority in
+// seconds, wrong in both directions (it dragged a press and clipped a deploy).
+// The clamp keeps the ratio perceptible at both ends of the table; `--motion-tempo`
+// scales the whole clock OUTSIDE the clamp, exactly as the `-duration` reader does,
+// so the 0.6 entry:exit ratio survives every tempo. The exit CURVE is never a spring
+// (an exit must not overshoot past gone) — that stays the bezier its register names.
+export function generateExitDurationBlock() {
+    return PRESETS.map(
+        (preset) =>
+            `    --spring-${preset.name}-exit-duration: calc(clamp(0.12s, var(--spring-${preset.name}-settle) * 0.6, 0.25s) * var(--motion-tempo));`,
+    ).join("\n");
+}
+
 // BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the interactive-spatial transition DEFAULT.
 //
 // `--transition-liquid-spatial` is the curve the base interactive-atom recipes
@@ -151,7 +168,7 @@ export function generateDurationBlock() {
 // the exemplar pattern) — a hand-edit to some off-register value is restored on re-run.
 // The `.motion-calm` opt-out (scheme-motion.css) + the PRM carve re-alias it to the
 // no-overshoot bezier; the EFFECTS legs keep their own `--ease-standard` (P1 split).
-export const INTERACTIVE_SPATIAL_SPRING = "smooth";
+export const INTERACTIVE_SPATIAL_SPRING = "press";
 
 export function generateInteractiveSpatialBlock() {
     return `    --transition-liquid-spatial: var(--spring-${INTERACTIVE_SPATIAL_SPRING});`;
@@ -165,11 +182,10 @@ export function generateInteractiveSpatialBlock() {
 export const BLOCK_START_MARKER =
     "    /* ═══════════════════════════════════════════════\n       EASING — Spring curves via linear()";
 // The name alternation is DERIVED from the PRESETS table, never enumerated by hand: a
-// hand list is a second roster that drifts the moment a row is minted (BG.W-SPRING-
-// REGISTER-TIDY drained the per-component `timeline-*` rows; BI.W-REGISTER-TABLE added
-// `transient`; IOS27-MICRO W-1 adds `panel` + `orb-drop` — three chances to forget one
-// of two alternations). Derived, the gen WRITE and the sync gate READ cannot disagree
-// with the table or with each other.
+// hand list is a second roster that drifts the moment a row is minted or renamed — and
+// the eight-to-six collapse renamed two rows and deleted four in one cut, which is
+// four chances to forget one of three alternations. Derived, the gen WRITE and the
+// sync gate READ cannot disagree with the table or with each other.
 const NAME_ALTERNATION = PRESETS.map((preset) =>
     preset.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
 ).join("|");
@@ -186,6 +202,15 @@ export const SPRING_LINES_RE = new RegExp(
 // split) — the one-time conversion + idempotent re-runs both match.
 export const SPRING_DURATION_LINES_RE = new RegExp(
     `(    --spring-(?:${NAME_ALTERNATION})-(?:settle|duration): [^;\\n]+;\\n?)+`,
+    "m",
+);
+// BK #26 — the EXIT clock block. A SEPARATE contiguous group after the entry block:
+// `-exit-duration` cannot be swallowed by SPRING_DURATION_LINES_RE (its alternation
+// is anchored on `-settle:`/`-duration:` immediately after the row name), so the two
+// anchors partition the emitted lines with no overlap and no ordering assumption
+// beyond "each block is contiguous".
+export const SPRING_EXIT_DURATION_LINES_RE = new RegExp(
+    `(    --spring-(?:${NAME_ALTERNATION})-exit-duration: [^;\\n]+;\\n?)+`,
     "m",
 );
 // IOS27-MICRO W-1 (SPEC-SPINE-CONDUCTOR §9 row 2, CHARTER R-4) — the header MIRROR
@@ -233,6 +258,12 @@ export function regenerate(source) {
                 `--spring-*-duration lines may have moved or are missing from the EASING block.`,
         );
     }
+    if (!SPRING_EXIT_DURATION_LINES_RE.test(source)) {
+        throw new Error(
+            `Spring EXIT-duration block matched nothing — the existing ` +
+                `--spring-*-exit-duration lines may have moved or are missing from the EASING block.`,
+        );
+    }
     if (!MIRROR_LINES_RE.test(source)) {
         throw new Error(
             `Header MIRROR block matched nothing — the generated (response, ζ) ` +
@@ -248,6 +279,7 @@ export function regenerate(source) {
 
     const block = generateBlock() + "\n";
     const durationBlock = generateDurationBlock() + "\n";
+    const exitDurationBlock = generateExitDurationBlock() + "\n";
     const mirrorBlock = generateMirrorBlock() + "\n";
     const interactiveSpatialBlock = generateInteractiveSpatialBlock() + "\n";
     // The replacements are idempotent when the PRESETS table is unchanged — a
@@ -256,6 +288,7 @@ export function regenerate(source) {
     return source
         .replace(MIRROR_LINES_RE, mirrorBlock)
         .replace(SPRING_LINES_RE, block)
+        .replace(SPRING_EXIT_DURATION_LINES_RE, exitDurationBlock)
         .replace(SPRING_DURATION_LINES_RE, durationBlock)
         .replace(INTERACTIVE_SPATIAL_LINE_RE, interactiveSpatialBlock);
 }
@@ -264,7 +297,7 @@ export function main() {
     writeFileSync(tokensPath, regenerate(readFileSync(tokensPath, "utf8")));
 
     console.log(
-        `regen-spring-tokens: rewrote ${PRESETS.length} --spring-* curves + ${PRESETS.length} --spring-*-settle clocks + ${PRESETS.length} tempo-scaled --spring-*-duration readers + the --transition-liquid-spatial default in`,
+        `regen-spring-tokens: rewrote ${PRESETS.length} --spring-* curves + ${PRESETS.length} --spring-*-settle clocks + ${PRESETS.length} tempo-scaled --spring-*-duration readers + ${PRESETS.length} --spring-*-exit-duration readers + the --transition-liquid-spatial default in`,
         tokensPath,
     );
     for (const preset of PRESETS) {

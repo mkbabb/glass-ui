@@ -16,10 +16,10 @@
     /* `--animate-floating-panel-in` RETIRED with floating-panel.css
        (its sole consumer). The `floating-panel-in` @keyframes is deleted too. */
     --animate-tooltip-in: tooltip-in var(--duration-fast) var(--ease-out);
-    --animate-fade-in: fade-in var(--duration-normal) var(--spring-smooth);
-    --animate-scale-in: scale-in var(--duration-normal) var(--spring-smooth);
-    --animate-slide-up: slide-up var(--duration-normal) var(--spring-smooth);
-    --animate-dock-in: dock-in var(--duration-panel) var(--spring-snappy) both;
+    --animate-fade-in: fade-in var(--spring-present-duration) var(--spring-present);
+    --animate-scale-in: scale-in var(--spring-present-duration) var(--spring-present);
+    --animate-slide-up: slide-up var(--spring-present-duration) var(--spring-present);
+    --animate-dock-in: dock-in var(--spring-dock-duration) var(--spring-dock) both;
     /* ── Shimmer family: documented duration offset ──────────────────────────
        The shimmer ladder is intentionally non-paired-by-name:
        - `--animate-shimmer` reads `--duration-shimmer-fast` (3s) — fast loop

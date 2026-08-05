@@ -84,7 +84,7 @@ const sizeClass = computed(() => {
         <RekaSelectIcon as-child>
             <!-- The chevron rides the ONE `transition-disclosure`
            register (btn.css): the `rotate` longhand on the spring's own settle clock
-           `--spring-snappy-duration` + the weighty `--ease-cartoon-punch` arrival, PRM
+           `--spring-present-duration` + the weighty `--ease-cartoon-punch` arrival, PRM
            re-aliased to non-overshoot. Folded onto the shared register so the
            Accordion + Configurator
            carets settle on the SAME clock+curve (one register, no re-declaration). -->

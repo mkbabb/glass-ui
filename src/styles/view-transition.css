@@ -35,18 +35,18 @@
 /* Shared group class — consumers add `view-transition-class: gl-list-item` on
  * each tracked element plus a unique `view-transition-name` per element. */
 ::view-transition-group(.gl-list-item) {
-    /* The duration fallback rides the bouncy spring's
-       OWN settle clock (`--spring-bouncy-duration`) so the default VT bounce
-       plays at its physical settle; a consumer still overrides via `--vt-duration`. */
-    animation-duration: var(--vt-duration, var(--spring-bouncy-duration));
-    animation-timing-function: var(--vt-ease, var(--spring-bouncy));
+    /* The duration fallback rides the arrival row's OWN settle clock
+       (`--spring-present-duration`) so the default view transition plays at its
+       physical settle; a consumer still overrides via `--vt-duration`. */
+    animation-duration: var(--vt-duration, var(--spring-present-duration));
+    animation-timing-function: var(--vt-ease, var(--spring-present));
 }
 
 /* Route snapshots are the sole route-motion writer. Typed-capable engines get a
  * restrained nav settle; callback-only Safari keeps its native root crossfade. */
 /* The root pair cross-fades under `plus-lighter`: alpha conservation demands a
  * LINEAR clock on both halves (a spring curve makes the pair sum ≠ 1 mid-flight —
- * the white flash). `--spring-snappy` stays on transform-bearing NAMED groups. */
+ * the white flash). The spring stays on transform-bearing NAMED groups. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
     /* The snapshots are element-sized; without this the shorter of the pair
@@ -55,7 +55,7 @@
 }
 html:active-view-transition-type(route)::view-transition-old(root),
 html:active-view-transition-type(route)::view-transition-new(root) {
-    animation-duration: var(--spring-snappy-duration);
+    animation-duration: var(--spring-present-duration);
     animation-timing-function: linear;
 }
 html:active-view-transition-type(route)::view-transition-old(root) {

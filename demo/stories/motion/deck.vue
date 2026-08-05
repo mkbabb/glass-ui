@@ -5,7 +5,7 @@
 // dots rendered DIRECTLY by `<PagerDots pattern="group" :ring="false">` over PagerDots'
 // ONE pagerWindow oracle via the group aria axis (role="group"/aria-current). `/deck` is
 // purely headless — it owns no dot wrapper; the deck is consumer #2 of PagerDots direct.
-// The story's real slide transition reads canonical `--spring-smooth` directly; the
+// The story's real slide transition reads canonical `--spring-dock` directly; the
 // aria-live announcer surfaces "Slide N of M" per step. A focused control inside a slide
 // gets Space/digit (NOT hijacked). The dot-morph worm is PagerDots' ONE metaball engine
 // (usePagerWorm/useLeadTrail) — the deck ships no second goo engine.
@@ -45,7 +45,7 @@ const index = computed({
         >
             <div class="flex flex-col gap-6" tabindex="0">
                 <!-- The deck stage — one slide active at a time, the rest slid out + faded
-                     on the canonical --spring-smooth spatial spring. -->
+                     on the canonical --spring-dock spatial spring. -->
                 <div class="deck-demo-stage glass-quiet rounded-card">
                     <section
                         v-for="(s, i) in slides"
@@ -165,7 +165,7 @@ const index = computed({
     padding: 2rem;
     /* The story-owned slide transition uses the canonical calm spatial spring directly. */
     transition:
-        transform var(--spring-smooth-duration) var(--spring-smooth),
+        transform var(--spring-dock-duration) var(--spring-dock),
         opacity var(--duration-fast) var(--ease-out);
 }
 .deck-demo-slide[data-state="inactive"] {

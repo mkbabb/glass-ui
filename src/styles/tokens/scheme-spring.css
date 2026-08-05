@@ -20,95 +20,48 @@
        `linear()` stops; this is the single source of truth tying each
        (response, ζ) pair to its serialized curve.
 
-       iOS-style (response, dampingFraction) values are calibrated toward the
-       weighty, gooey, inertial pole: every overshoot is in [0%,10%] and gentle ζ is
-       exactly 1.0 — both fences asserted by the mirror gate, never by this prose.
+       LAW 0 — a row's first peak `M = exp(-ζπ/√(1-ζ²))` ships iff `M > settleBand`,
+       because the emitted curve is normalized over that band's settle horizon. So a
+       row either bounces visibly or lands dead; between the two lies a peak arriving
+       in the last fifth of the clock — a late tick, the worst read. A register text
+       promising a rebound its own band cannot ship is a text to DELETE, never a
+       damping to lower. Exactly one row rebounds, and it is the fired deploy.
+
+       LAW 0b — the band is a property of the job's AMPLITUDE, not a constant: two
+       percent of a press's scale delta is invisible, two percent of a long stroke is
+       plainly visible. Each row carries its own `settleBand`, fed to BOTH the curve
+       horizon and the clock, so curve/clock parity survives the split.
+
+       ── The job table ──
        The rows below are GENERATED from the `SPRING_PRESETS` table in springPresets.ts
        (the no-second-authority root): response and ζ are the row's own, `settle` is the
-       numeric 2%-band clock, `overshoot` is the PEAK the emitted `linear()` curve
-       actually reaches across its own settle horizon (so a spring whose analytic peak
-       falls beyond that horizon documents +0.0% — the curve it ships is monotone), and
-       the register text is the row's `comment`. Do not hand-edit a figure here:
-         smooth:   (0.58s, ζ=0.80, settle 0.35s, overshoot +0.0%) — Patient entrances, fades, and scale-ins with a quiet sense of weight.
-         snappy:   (0.48s, ζ=0.74, settle 0.44s, overshoot +3.2%) — Quick, weighty control movement for indicators, progress, and reveals.
-         bouncy:   (0.60s, ζ=0.60, settle 0.57s, overshoot +9.5%) — Playful emphasis for dialogs, success moments, and the completion seal.
-         gentle:   (0.82s, ζ=1.00, settle 0.76s, overshoot +0.0%) — A calm, patient arrival with no overshoot.
-         dock:     (0.35s, ζ=0.82, settle 0.22s, overshoot +0.0%) — A brisk liquid morph for the dock and its coordinated contents.
-         press:    (0.20s, ζ=0.80, settle 0.12s, overshoot +0.0%) — A responsive press with a subtle rebound and continuous interruption.
-         panel:    (0.40s, ζ=0.71, settle 0.38s, overshoot +4.2%) — A fired presentation deploy — both axes one spring, intrinsic 4-5% overshoot, text born blurred condensing ~190ms, the rim flare celebrating the data (+0.5s/+0.85s).
-         orb-drop: (0.22s, ζ=1.00, settle 0.20s, overshoot +0.0%) — The invocation drop — a dead critically-damped landing; the energy is the light build.
+       numeric band clock, `overshoot` is the PEAK the emitted `linear()` curve actually
+       reaches across its own settle horizon (so a monotone curve documents +0.0%), and
+       the register text is the row's `comment` — its ONE job. This IS the which-easing-
+       fits-which-job table: six rows, six jobs, no prose roster beside it to drift.
+       Do not hand-edit a figure here:
+         press:   (0.20s, ζ=0.80, settle 0.12s, overshoot +0.0%) — A responsive press that lands dead. The liveliness is the squish, and the light is the acknowledgement.
+         present: (0.22s, ζ=1.00, settle 0.20s, overshoot +0.0%) — The anchored materialization — a menu, plate, toast, or orb born from its anchor: front-loaded attack, monotone decay, dead landing.
+         dock:    (0.30s, ζ=0.88, settle 0.21s, overshoot +0.0%) — The coordinated travel — member FLIP, the selection lens, indicator glide: fast attack, dead landing.
+         panel:   (0.40s, ζ=0.71, settle 0.45s, overshoot +4.2%) — The fired deploy — the long axis of an anisotropic stroke, the extent morph; the one row whose rebound is intrinsic, arriving mid-clock.
+         bloom:   (0.42s, ζ=0.90, settle 0.37s, overshoot +0.0%) — The room-sized growth — a surface expanding to fill a sheet or a screen: big, patient, dead-landing.
+         world:   (0.48s, ζ=1.00, settle 0.57s, overshoot +0.0%) — The world's recession — under-layer travel and scroll choreography, critically damped; a world that rings reads as an earthquake.
 
-       Note on the +0.0% rows: `smooth`/`press`/`dock`/`orb-drop` ship a
-       MONOTONE curve. Their analytic peak (~+1.5% at ζ=0.80) falls past the 2%-band
-       settle horizon the token is normalized over, so it is not in the emitted
-       `linear()` at all. A row whose register text promises a rebound and whose
-       generated overshoot reads +0.0% is a row to RE-TUNE, not to re-word here — the
-       mirror gate is the only thing entitled to state the figure.
-
-       ── Which easing fits which job ──
-       This rule keeps animation easing from forking. It formalizes the
-       `transitions.css` idiom (enter=spring,
-       exit=bezier) as the house rule every recipe reaches for.
-
-       The table embodies the spatial-vs-effects split: a SPATIAL channel
-       (the box MOVES/RESHAPES — position, SIZE,
-       rotation, corners) rides a `--spring-<name>` (overshoot = physicality);
-       an EFFECTS channel (the surface RE-TINTS — color, opacity, box-shadow)
-       rides a bezier `--ease-*` (a colour cross-fade reads as a wobble on a
-       spring). Each row below is tagged [SPATIAL] (spring) or [EFFECTS]
-       (bezier) so the rule is legible, not implicit:
-
-         | Transition kind                                  | Tier      | Easing                   |
-         |--------------------------------------------------|-----------|--------------------------|
-         | Surface props (bg, border, color, box-shadow,    | [EFFECTS] | `--ease-standard` (bezier|
-         |   opacity)                                       |           |   — a colour cross-fade  |
-         |                                                  |           |   reads as a wobble on a |
-         |                                                  |           |   spring)                |
-         | Transform — hover/press/active (scale, translate,| [SPATIAL] | `--spring-smooth` (the   |
-         |   rotate)                                         |           |   ONE button/interactive |
-         |                                                  |           |   scale register) or     |
-         |                                                  |           |   `--spring-snappy`      |
-         | Size / morph (dock V↔H, indicator size-          | [SPATIAL] | `--spring-dock` /        |
-         |   correction, reveal source-rect bloom)          |           |   `--spring-snappy`,     |
-         |                                                  |           |   expressed as a         |
-         |                                                  |           |   COMPOSITOR transform   |
-         |                                                  |           |   — NEVER an             |
-         |                                                  |           |   animated width/height  |
-         | Enter (mount, popover open, dialog in, reveal)   | [SPATIAL] | `--spring-bouncy` /      |
-         |                                                  |           |   `--spring-snappy`      |
-         | Bold decelerating arrival (reveal draw-on,       | [SPATIAL] | `--ease-out-expo`        |
-         |   big-distance settle)                           |           |   (cubic-bezier(.16,1,   |
-         |                                                  |           |   .3,1); the house expo) |
-         | Exit (unmount, close)                            | [EFFECTS] | `--ease-out` /           |
-         |                                                  |           |   `--ease-standard`      |
-         |                                                  |           |   (bezier, NO overshoot —|
-         |                                                  |           |   an exit must never     |
-         |                                                  |           |   overshoot past gone)   |
-         | Position-tracked (specular pointer follow)       | [EFFECTS] | `--ease-standard`        |
-
-       The bold arrival ease is the existing `--ease-out-expo` (alias →
-       `--motion-ease-out-expo` = `cubic-bezier(0.16, 1, 0.3, 1)`, the house
-       expo; JavaScript consumers import the `easeOutExpo` twin from value.js)
-       — not a new token. It is not re-minted because the curve already has its
-       canonical token row.
-
-       The BUTTON family (`.button` / `.tap-squish`) UNIFIES its `scale`
-       transform leg onto ONE register —
-       `--spring-smooth` — so hover + press read as one motion language (the
-       hover lift is the restrained `--scale-hover-btn` = 1.05, not the 1.08
-       `--scale-hover`). Springs read alive on TRANSFORM and ENTER (overshoot =
-       physicality); a spring on a COLOR or an EXIT reads as a wobble/hesitation.
-       `--ease-apple` remains the platform-native bezier in the public motion
-       catalogue; interactive transforms use `--spring-smooth`.
+       The SPATIAL/EFFECTS split is the one rule the table does not state for itself: a
+       SPATIAL channel (the box MOVES or RESHAPES — position, size, rotation, corners)
+       rides a `--spring-<name>`, where overshoot reads as physicality; an EFFECTS
+       channel (the surface RE-TINTS — color, opacity, box-shadow) rides a bezier
+       `--ease-*`, because a colour cross-fade on a spring reads as a wobble. Enter is
+       a spring, exit is a bezier — an exit must never overshoot past gone, which is
+       why `--spring-<name>-exit-duration` re-times an exit without re-curving it.
+       `--ease-apple` remains the platform-native bezier in the public catalogue.
        ═══════════════════════════════════════════════ */
-    --spring-smooth: linear(0, 0.00287 2.041%, 0.01102 4.082%, 0.02379 6.122%, 0.04057 8.163%, 0.06079 10.204%, 0.08395 12.245%, 0.10956 14.286%, 0.13721 16.327%, 0.16649 18.367%, 0.19705 20.408%, 0.22858 22.449%, 0.26077 24.490%, 0.29338 26.531%, 0.32617 28.571%, 0.35893 30.612%, 0.39149 32.653%, 0.42368 34.694%, 0.45536 36.735%, 0.48642 38.776%, 0.51676 40.816%, 0.54628 42.857%, 0.57492 44.898%, 0.60262 46.939%, 0.62933 48.980%, 0.65501 51.020%, 0.67965 53.061%, 0.70322 55.102%, 0.72571 57.143%, 0.74713 59.184%, 0.76748 61.224%, 0.78677 63.265%, 0.80501 65.306%, 0.82223 67.347%, 0.83844 69.388%, 0.85367 71.429%, 0.86796 73.469%, 0.88132 75.510%, 0.89379 77.551%, 0.90541 79.592%, 0.91621 81.633%, 0.92623 83.673%, 0.93549 85.714%, 0.94404 87.755%, 0.95190 89.796%, 0.95912 91.837%, 0.96574 93.878%, 0.97177 95.918%, 0.97726 97.959%, 1);
-    --spring-snappy: linear(0, 0.00652 2.041%, 0.02458 4.082%, 0.05211 6.122%, 0.08725 8.163%, 0.12834 10.204%, 0.17392 12.245%, 0.22268 14.286%, 0.27350 16.327%, 0.32540 18.367%, 0.37757 20.408%, 0.42929 22.449%, 0.47998 24.490%, 0.52916 26.531%, 0.57646 28.571%, 0.62156 30.612%, 0.66426 32.653%, 0.70440 34.694%, 0.74187 36.735%, 0.77662 38.776%, 0.80866 40.816%, 0.83800 42.857%, 0.86471 44.898%, 0.88887 46.939%, 0.91058 48.980%, 0.92996 51.020%, 0.94713 53.061%, 0.96223 55.102%, 0.97539 57.143%, 0.98677 59.184%, 0.99649 61.224%, 1.00471 63.265%, 1.01156 65.306%, 1.01716 67.347%, 1.02166 69.388%, 1.02516 71.429%, 1.02778 73.469%, 1.02964 75.510%, 1.03082 77.551%, 1.03142 79.592%, 1.03153 81.633%, 1.03122 83.673%, 1.03057 85.714%, 1.02963 87.755%, 1.02847 89.796%, 1.02713 91.837%, 1.02566 93.878%, 1.02410 95.918%, 1.02249 97.959%, 1);
-    --spring-bouncy: linear(0, 0.00706 2.041%, 0.02686 4.082%, 0.05738 6.122%, 0.09674 8.163%, 0.14321 10.204%, 0.19517 12.245%, 0.25116 14.286%, 0.30987 16.327%, 0.37010 18.367%, 0.43083 20.408%, 0.49115 22.449%, 0.55028 24.490%, 0.60757 26.531%, 0.66248 28.571%, 0.71458 30.612%, 0.76353 32.653%, 0.80908 34.694%, 0.85107 36.735%, 0.88940 38.776%, 0.92404 40.816%, 0.95502 42.857%, 0.98241 44.898%, 1.00631 46.939%, 1.02688 48.980%, 1.04428 51.020%, 1.05870 53.061%, 1.07035 55.102%, 1.07945 57.143%, 1.08621 59.184%, 1.09087 61.224%, 1.09364 63.265%, 1.09474 65.306%, 1.09439 67.347%, 1.09278 69.388%, 1.09011 71.429%, 1.08656 73.469%, 1.08230 75.510%, 1.07749 77.551%, 1.07226 79.592%, 1.06675 81.633%, 1.06106 83.673%, 1.05531 85.714%, 1.04958 87.755%, 1.04394 89.796%, 1.03846 91.837%, 1.03320 93.878%, 1.02820 95.918%, 1.02348 97.959%, 1);
-    --spring-gentle: linear(0, 0.00653 2.041%, 0.02415 4.082%, 0.05029 6.122%, 0.08283 8.163%, 0.12000 10.204%, 0.16036 12.245%, 0.20272 14.286%, 0.24614 16.327%, 0.28983 18.367%, 0.33320 20.408%, 0.37576 22.449%, 0.41716 24.490%, 0.45712 26.531%, 0.49544 28.571%, 0.53199 30.612%, 0.56669 32.653%, 0.59948 34.694%, 0.63037 36.735%, 0.65936 38.776%, 0.68650 40.816%, 0.71183 42.857%, 0.73542 44.898%, 0.75735 46.939%, 0.77768 48.980%, 0.79650 51.020%, 0.81390 53.061%, 0.82995 55.102%, 0.84474 57.143%, 0.85835 59.184%, 0.87086 61.224%, 0.88235 63.265%, 0.89288 65.306%, 0.90253 67.347%, 0.91136 69.388%, 0.91944 71.429%, 0.92682 73.469%, 0.93356 75.510%, 0.93970 77.551%, 0.94531 79.592%, 0.95041 81.633%, 0.95506 83.673%, 0.95929 85.714%, 0.96313 87.755%, 0.96663 89.796%, 0.96980 91.837%, 0.97268 93.878%, 0.97530 95.918%, 0.97767 97.959%, 1);
-    --spring-dock: linear(0, 0.00311 2.041%, 0.01189 4.082%, 0.02560 6.122%, 0.04354 8.163%, 0.06507 10.204%, 0.08963 12.245%, 0.11668 14.286%, 0.14575 16.327%, 0.17642 18.367%, 0.20830 20.408%, 0.24105 22.449%, 0.27436 24.490%, 0.30796 26.531%, 0.34160 28.571%, 0.37509 30.612%, 0.40823 32.653%, 0.44087 34.694%, 0.47286 36.735%, 0.50410 38.776%, 0.53449 40.816%, 0.56395 42.857%, 0.59241 44.898%, 0.61982 46.939%, 0.64616 48.980%, 0.67138 51.020%, 0.69548 53.061%, 0.71845 55.102%, 0.74029 57.143%, 0.76100 59.184%, 0.78060 61.224%, 0.79911 63.265%, 0.81655 65.306%, 0.83295 67.347%, 0.84833 69.388%, 0.86273 71.429%, 0.87618 73.469%, 0.88872 75.510%, 0.90038 77.551%, 0.91120 79.592%, 0.92123 81.633%, 0.93049 83.673%, 0.93903 85.714%, 0.94688 87.755%, 0.95408 89.796%, 0.96067 91.837%, 0.96669 93.878%, 0.97216 95.918%, 0.97712 97.959%, 1);
     --spring-press: linear(0, 0.00284 2.041%, 0.01090 4.082%, 0.02354 6.122%, 0.04014 8.163%, 0.06017 10.204%, 0.08311 12.245%, 0.10850 14.286%, 0.13590 16.327%, 0.16495 18.367%, 0.19528 20.408%, 0.22657 22.449%, 0.25855 24.490%, 0.29095 26.531%, 0.32354 28.571%, 0.35613 30.612%, 0.38852 32.653%, 0.42057 34.694%, 0.45213 36.735%, 0.48309 38.776%, 0.51333 40.816%, 0.54279 42.857%, 0.57137 44.898%, 0.59903 46.939%, 0.62572 48.980%, 0.65141 51.020%, 0.67605 53.061%, 0.69965 55.102%, 0.72219 57.143%, 0.74366 59.184%, 0.76407 61.224%, 0.78343 63.265%, 0.80175 65.306%, 0.81906 67.347%, 0.83537 69.388%, 0.85070 71.429%, 0.86509 73.469%, 0.87857 75.510%, 0.89116 77.551%, 0.90290 79.592%, 0.91382 81.633%, 0.92395 83.673%, 0.93333 85.714%, 0.94200 87.755%, 0.94999 89.796%, 0.95733 91.837%, 0.96406 93.878%, 0.97020 95.918%, 0.97581 97.959%, 1);
-    --spring-panel: linear(0, 0.00700 2.041%, 0.02640 4.082%, 0.05598 6.122%, 0.09370 8.163%, 0.13777 10.204%, 0.18657 12.245%, 0.23869 14.286%, 0.29289 16.327%, 0.34810 18.367%, 0.40342 20.408%, 0.45807 22.449%, 0.51142 24.490%, 0.56294 26.531%, 0.61222 28.571%, 0.65896 30.612%, 0.70291 32.653%, 0.74392 34.694%, 0.78191 36.735%, 0.81683 38.776%, 0.84869 40.816%, 0.87756 42.857%, 0.90350 44.898%, 0.92664 46.939%, 0.94710 48.980%, 0.96503 51.020%, 0.98058 53.061%, 0.99394 55.102%, 1.00525 57.143%, 1.01469 59.184%, 1.02244 61.224%, 1.02865 63.265%, 1.03348 65.306%, 1.03709 67.347%, 1.03962 69.388%, 1.04121 71.429%, 1.04199 73.469%, 1.04207 75.510%, 1.04156 77.551%, 1.04057 79.592%, 1.03919 81.633%, 1.03749 83.673%, 1.03555 85.714%, 1.03344 87.755%, 1.03120 89.796%, 1.02890 91.837%, 1.02657 93.878%, 1.02425 95.918%, 1.02196 97.959%, 1);
-    --spring-orb-drop: linear(0, 0.00629 2.041%, 0.02330 4.082%, 0.04860 6.122%, 0.08016 8.163%, 0.11629 10.204%, 0.15561 12.245%, 0.19697 14.286%, 0.23945 16.327%, 0.28231 18.367%, 0.32495 20.408%, 0.36689 22.449%, 0.40777 24.490%, 0.44732 26.531%, 0.48534 28.571%, 0.52169 30.612%, 0.55626 32.653%, 0.58902 34.694%, 0.61994 36.735%, 0.64904 38.776%, 0.67633 40.816%, 0.70186 42.857%, 0.72570 44.898%, 0.74790 46.939%, 0.76853 48.980%, 0.78768 51.020%, 0.80541 53.061%, 0.82182 55.102%, 0.83696 57.143%, 0.85094 59.184%, 0.86381 61.224%, 0.87565 63.265%, 0.88654 65.306%, 0.89653 67.347%, 0.90570 69.388%, 0.91411 71.429%, 0.92181 73.469%, 0.92885 75.510%, 0.93529 77.551%, 0.94117 79.592%, 0.94655 81.633%, 0.95145 83.673%, 0.95592 85.714%, 0.95999 87.755%, 0.96371 89.796%, 0.96708 91.837%, 0.97016 93.878%, 0.97296 95.918%, 0.97550 97.959%, 1);
+    --spring-present: linear(0, 0.00629 2.041%, 0.02330 4.082%, 0.04860 6.122%, 0.08016 8.163%, 0.11629 10.204%, 0.15561 12.245%, 0.19697 14.286%, 0.23945 16.327%, 0.28231 18.367%, 0.32495 20.408%, 0.36689 22.449%, 0.40777 24.490%, 0.44732 26.531%, 0.48534 28.571%, 0.52169 30.612%, 0.55626 32.653%, 0.58902 34.694%, 0.61994 36.735%, 0.64904 38.776%, 0.67633 40.816%, 0.70186 42.857%, 0.72570 44.898%, 0.74790 46.939%, 0.76853 48.980%, 0.78768 51.020%, 0.80541 53.061%, 0.82182 55.102%, 0.83696 57.143%, 0.85094 59.184%, 0.86381 61.224%, 0.87565 63.265%, 0.88654 65.306%, 0.89653 67.347%, 0.90570 69.388%, 0.91411 71.429%, 0.92181 73.469%, 0.92885 75.510%, 0.93529 77.551%, 0.94117 79.592%, 0.94655 81.633%, 0.95145 83.673%, 0.95592 85.714%, 0.95999 87.755%, 0.96371 89.796%, 0.96708 91.837%, 0.97016 93.878%, 0.97296 95.918%, 0.97550 97.959%, 1);
+    --spring-dock: linear(0, 0.00382 2.041%, 0.01450 4.082%, 0.03097 6.122%, 0.05224 8.163%, 0.07746 10.204%, 0.10587 12.245%, 0.13678 14.286%, 0.16961 16.327%, 0.20383 18.367%, 0.23897 20.408%, 0.27465 22.449%, 0.31051 24.490%, 0.34627 26.531%, 0.38167 28.571%, 0.41651 30.612%, 0.45060 32.653%, 0.48380 34.694%, 0.51599 36.735%, 0.54708 38.776%, 0.57700 40.816%, 0.60570 42.857%, 0.63315 44.898%, 0.65931 46.939%, 0.68419 48.980%, 0.70779 51.020%, 0.73011 53.061%, 0.75118 55.102%, 0.77103 57.143%, 0.78968 59.184%, 0.80717 61.224%, 0.82354 63.265%, 0.83883 65.306%, 0.85309 67.347%, 0.86636 69.388%, 0.87869 71.429%, 0.89012 73.469%, 0.90069 75.510%, 0.91046 77.551%, 0.91947 79.592%, 0.92776 81.633%, 0.93538 83.673%, 0.94237 85.714%, 0.94877 87.755%, 0.95461 89.796%, 0.95993 91.837%, 0.96478 93.878%, 0.96918 95.918%, 0.97317 97.959%, 1);
+    --spring-panel: linear(0, 0.00971 2.041%, 0.03623 4.082%, 0.07594 6.122%, 0.12565 8.163%, 0.18258 10.204%, 0.24431 12.245%, 0.30881 14.286%, 0.37435 16.327%, 0.43949 18.367%, 0.50310 20.408%, 0.56427 22.449%, 0.62228 24.490%, 0.67665 26.531%, 0.72702 28.571%, 0.77319 30.612%, 0.81507 32.653%, 0.85266 34.694%, 0.88606 36.735%, 0.91541 38.776%, 0.94092 40.816%, 0.96281 42.857%, 0.98134 44.898%, 0.99679 46.939%, 1.00944 48.980%, 1.01957 51.020%, 1.02746 53.061%, 1.03337 55.102%, 1.03756 57.143%, 1.04026 59.184%, 1.04171 61.224%, 1.04211 63.265%, 1.04164 65.306%, 1.04048 67.347%, 1.03877 69.388%, 1.03665 71.429%, 1.03423 73.469%, 1.03162 75.510%, 1.02890 77.551%, 1.02614 79.592%, 1.02340 81.633%, 1.02073 83.673%, 1.01816 85.714%, 1.01573 87.755%, 1.01345 89.796%, 1.01134 91.837%, 1.00941 93.878%, 1.00766 95.918%, 1.00609 97.959%, 1);
+    --spring-bloom: linear(0, 0.00596 2.041%, 0.02229 4.082%, 0.04690 6.122%, 0.07797 8.163%, 0.11396 10.204%, 0.15355 12.245%, 0.19561 14.286%, 0.23922 16.327%, 0.28358 18.367%, 0.32804 20.408%, 0.37207 22.449%, 0.41524 24.490%, 0.45721 26.531%, 0.49773 28.571%, 0.53658 30.612%, 0.57362 32.653%, 0.60877 34.694%, 0.64197 36.735%, 0.67319 38.776%, 0.70243 40.816%, 0.72973 42.857%, 0.75512 44.898%, 0.77866 46.939%, 0.80042 48.980%, 0.82049 51.020%, 0.83893 53.061%, 0.85583 55.102%, 0.87129 57.143%, 0.88539 59.184%, 0.89822 61.224%, 0.90986 63.265%, 0.92040 65.306%, 0.92991 67.347%, 0.93849 69.388%, 0.94620 71.429%, 0.95311 73.469%, 0.95928 75.510%, 0.96480 77.551%, 0.96970 79.592%, 0.97405 81.633%, 0.97790 83.673%, 0.98130 85.714%, 0.98428 87.755%, 0.98690 89.796%, 0.98919 91.837%, 0.99118 93.878%, 0.99291 95.918%, 0.99440 97.959%, 1);
+    --spring-world: linear(0, 0.01048 2.041%, 0.03795 4.082%, 0.07740 6.122%, 0.12490 8.163%, 0.17739 10.204%, 0.23251 12.245%, 0.28847 14.286%, 0.34393 16.327%, 0.39792 18.367%, 0.44975 20.408%, 0.49894 22.449%, 0.54522 24.490%, 0.58842 26.531%, 0.62849 28.571%, 0.66545 30.612%, 0.69939 32.653%, 0.73041 34.694%, 0.75866 36.735%, 0.78431 38.776%, 0.80753 40.816%, 0.82850 42.857%, 0.84738 44.898%, 0.86435 46.939%, 0.87957 48.980%, 0.89319 51.020%, 0.90538 53.061%, 0.91625 55.102%, 0.92593 57.143%, 0.93455 59.184%, 0.94222 61.224%, 0.94902 63.265%, 0.95506 65.306%, 0.96040 67.347%, 0.96514 69.388%, 0.96932 71.429%, 0.97302 73.469%, 0.97629 75.510%, 0.97917 77.551%, 0.98171 79.592%, 0.98395 81.633%, 0.98592 83.673%, 0.98766 85.714%, 0.98918 87.755%, 0.99052 89.796%, 0.99170 91.837%, 0.99273 93.878%, 0.99364 95.918%, 0.99444 97.959%, 1);
 
     /* ── Per-spring duration clock ───────────────────────────────────────────────
        Generated from `scripts/regen-spring-tokens.mjs` — DO NOT hand-edit.
@@ -126,42 +79,44 @@
        rest). The JS spring engines read the SAME `--motion-tempo` (motionTempo.ts)
        and scale `response *= tempo`, so CSS_t90 == JS_t90 at any tempo.
 
-       Each `--spring-<name>-settle` is the spring's OWN 2%-band settle time —
-       the TRUE NUMERIC settle (tick the `SpringProgress` step response until
-       |1−x| last exits ±2%), derived from the SAME (response, ζ) PRESETS table
-       the `--spring-*` `linear()` curves above derive from — never a hand value.
-       (It supersedes the analytic underdamped-envelope approximation
-       `-ln(0.02)/(ζ·ωₙ)`, which UNDER-estimates near-critical/critical ζ: the
-       polynomial `(1+ωₙt)e^(−ωₙt)` tail the pure exponential misses — gentle
-       ζ=1.0 analytic 0.51s vs numeric 0.76s.)
+       Each `--spring-<name>-settle` is the spring's OWN settle time over its OWN
+       `settleBand` (LAW 0b) — the TRUE NUMERIC settle (tick the `SpringProgress` step
+       response until |1−x| last exits the band), derived from the SAME (response, ζ)
+       PRESETS table the `--spring-*` `linear()` curves above derive from — never a hand
+       value. It supersedes the analytic underdamped-envelope approximation, which
+       under-estimates near-critical ζ: the pure exponential misses the polynomial tail,
+       and sampling a curve over the short analytic span leaves its penultimate stop
+       visibly short of 1 — an endpoint snap.
 
        The numeric settle is load-bearing because
        the SAME settle seconds is ALSO the `maxDuration` fed to `springLinearStops`
        for the `--spring-*` curves above, so the emitted curve and this clock share
        ONE horizon — a CSS `transition` replaying the curve over this clock lands
-       CSS_t90 == the physical JS SpringProgress t90 (≤0.1ms, all six). Before the
-       fix the curve was sampled over `springLinearStops`'s default `4×response`
-       (~1.9s for snappy) while this clock was the ~0.4s settle — a ~4.8× mismatch
-       that front-loaded the whole trajectory into the first ~10–16% of the clock
-       (a ~50ms pop + a dead-flat tail). These clocks re-time UNDER each register to
-       its own settle without changing which spring fits which
-       job: a `transition` pairs `--spring-<name>` with `--spring-<name>-duration`. */
-    --spring-smooth-settle: 0.35s;
-    --spring-snappy-settle: 0.44s;
-    --spring-bouncy-settle: 0.57s;
-    --spring-gentle-settle: 0.76s;
-    --spring-dock-settle: 0.22s;
+       CSS_t90 == the physical JS SpringProgress t90. Before the fix the curve was
+       sampled over `springLinearStops`'s default `4×response` while this clock was the
+       settle — a several-fold mismatch that front-loaded the whole trajectory into the
+       first sixth of the clock (a pop, then a dead-flat tail). These clocks re-time
+       UNDER each register to its own settle without changing which spring fits which
+       job: a `transition` pairs `--spring-<name>` with `--spring-<name>-duration`, and
+       its EXIT pairs the same curve with `--spring-<name>-exit-duration`. */
     --spring-press-settle: 0.12s;
-    --spring-panel-settle: 0.38s;
-    --spring-orb-drop-settle: 0.2s;
-    --spring-smooth-duration: calc(var(--spring-smooth-settle) * var(--motion-tempo));
-    --spring-snappy-duration: calc(var(--spring-snappy-settle) * var(--motion-tempo));
-    --spring-bouncy-duration: calc(var(--spring-bouncy-settle) * var(--motion-tempo));
-    --spring-gentle-duration: calc(var(--spring-gentle-settle) * var(--motion-tempo));
-    --spring-dock-duration: calc(var(--spring-dock-settle) * var(--motion-tempo));
+    --spring-present-settle: 0.2s;
+    --spring-dock-settle: 0.21s;
+    --spring-panel-settle: 0.45s;
+    --spring-bloom-settle: 0.37s;
+    --spring-world-settle: 0.57s;
     --spring-press-duration: calc(var(--spring-press-settle) * var(--motion-tempo));
+    --spring-present-duration: calc(var(--spring-present-settle) * var(--motion-tempo));
+    --spring-dock-duration: calc(var(--spring-dock-settle) * var(--motion-tempo));
     --spring-panel-duration: calc(var(--spring-panel-settle) * var(--motion-tempo));
-    --spring-orb-drop-duration: calc(var(--spring-orb-drop-settle) * var(--motion-tempo));
+    --spring-bloom-duration: calc(var(--spring-bloom-settle) * var(--motion-tempo));
+    --spring-world-duration: calc(var(--spring-world-settle) * var(--motion-tempo));
+    --spring-press-exit-duration: calc(clamp(0.12s, var(--spring-press-settle) * 0.6, 0.25s) * var(--motion-tempo));
+    --spring-present-exit-duration: calc(clamp(0.12s, var(--spring-present-settle) * 0.6, 0.25s) * var(--motion-tempo));
+    --spring-dock-exit-duration: calc(clamp(0.12s, var(--spring-dock-settle) * 0.6, 0.25s) * var(--motion-tempo));
+    --spring-panel-exit-duration: calc(clamp(0.12s, var(--spring-panel-settle) * 0.6, 0.25s) * var(--motion-tempo));
+    --spring-bloom-exit-duration: calc(clamp(0.12s, var(--spring-bloom-settle) * 0.6, 0.25s) * var(--motion-tempo));
+    --spring-world-exit-duration: calc(clamp(0.12s, var(--spring-world-settle) * 0.6, 0.25s) * var(--motion-tempo));
 
     /* ── Interactive-spatial transition default ─────────────────────────────────
        Generated from `scripts/regen-spring-tokens.mjs` — DO NOT hand-edit.
@@ -173,8 +128,8 @@
        not a per-site `--motion-weight` checklist — NOT a bare `--ease-standard`
        bezier with ZERO weight.
 
-       Spring-DERIVED — an alias to the canon interactive scale register (`smooth`,
-       the single button/interactive scale spring). It is
+       Spring-DERIVED — an alias to the canon interactive scale register (`press`, the
+       touch answer, which is the ONE button/interactive scale spring). It is
        GENERATED here so the "which spring is the interactive-spatial default" mapping
        lives in the single motion-token source and follows the same generated pattern as
        the `--spring-*` curves; re-run the generator rather than hand-editing it.
@@ -184,7 +139,7 @@
        as a wobble); this token is SPATIAL-only. `.motion-calm` (scheme-motion.css) is
        the EXPLICIT opt-out (→ var(--ease-standard)); the PRM carve re-aliases it the
        same way (no overshoot under reduce — the vestibular floor). */
-    --transition-liquid-spatial: var(--spring-smooth);
+    --transition-liquid-spatial: var(--spring-press);
 
     /* --pager-worm-max-stretch: the dot-worm velocity-swell cap,
        read LITERALLY by the two-edge worm's `useLiquidFlex` squish (usePagerWorm.ts). The
@@ -209,7 +164,6 @@
     --motion-ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
 
     --ease-apple: var(--motion-ease-apple);
-    --ease-spring: var(--spring-snappy);
     --ease-decelerate: var(--ease-out);
     --ease-accelerate: var(--ease-in);
 
@@ -226,7 +180,7 @@
    as `--ease-cartoon-punch`'s PRM re-alias + the `.motion-calm` opt-out).
 
    It lives here because the base default
-   `:root { --transition-liquid-spatial: var(--spring-smooth) }` (above) and this PRM
+   `:root { --transition-liquid-spatial: var(--spring-press) }` (above) and this PRM
    re-alias both target `:root`, so they carry EQUAL specificity — at a MATCH (reduce
    active) the later source-order declaration wins. scheme-spring.css is imported last among
    the token partials (tokens.css, immediately after scheme-motion.css), so a PRM re-alias

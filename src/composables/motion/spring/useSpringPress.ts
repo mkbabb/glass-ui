@@ -14,23 +14,23 @@ import { ref } from "vue";
 import { useSpring, type UseSpringOptions, type SpringRef } from "./useSpring";
 import { springPreset } from "./springPresets";
 
-// The press defaults read the `press` SPRING_PRESETS row (the iOS interactive tap,
-// response 0.2 / ζ 0.8) — the one source, never a local
-// literal. The row answers the press in the sub-200ms iOS window with a hair of
-// inertial carry + a tiny alive rebound (+1.5%), drift-proof (a retune edits the
-// table row, this default re-derives).
+// The press defaults read the `press` SPRING_PRESETS row — the one source, never a
+// local literal. The row answers the finger inside the tap window and lands DEAD: its
+// liveliness is the volume-preserving squish and the light that follows, never a
+// positional rebound (LAW 0). Drift-proof — a retune edits the table row and this
+// default re-derives.
 const PRESS = springPreset("press");
 
 export interface UseSpringPressOptions extends UseSpringOptions {
     /**
-     * Spring `response`. Default `0.2s` — the `press` SPRING_PRESETS row (the iOS
-     * interactive tap): the sub-200ms iOS tap-press window, faster than the generic
-     * `useSpring` 0.5s so the feedback lands with a hair of inertial carry.
+     * Spring `response` — defaults to the `press` row's own, the tap-press window:
+     * faster than the generic `useSpring` bare default so the feedback lands with a
+     * hair of inertial carry.
      */
     response?: number;
     /**
-     * Spring `dampingFraction`. Default `0.8` — the `press` row's ζ: a tiny
-     * sub-perceptual rebound (+1.5%, springy/alive) that does NOT ring.
+     * Spring `dampingFraction` — defaults to the `press` row's own ζ, which lands the
+     * press dead rather than ringing.
      */
     dampingFraction?: number;
 }

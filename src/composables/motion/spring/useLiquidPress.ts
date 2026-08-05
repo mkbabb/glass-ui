@@ -11,7 +11,7 @@
 //     `"linear"` law) for the volume-preserving X/Y reciprocal deform, AND writes the
 //     SAME spring value as a 0..1 `--press-t` (or a consumer-named) custom property the
 //     surface CSS reads for a sub-perceptual brightness/specular leg — ONE drive, both
-//     legs, on the SAME `--spring-snappy`-class clock.
+//     legs, on the SAME `--spring-press` clock — the row that owns the touch answer.
 //   • PRM-INSTANT — `useSpring`'s `respectReducedMotion` (the kf `SpringProgress` PRM
 //     snap) snaps the value to its endpoint with zero in-between transform frames, so
 //     under reduce the press FUNCTIONS (the scale arrives, the gesture confirms) with

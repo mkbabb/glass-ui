@@ -73,31 +73,28 @@
     /* ONE iOS-spring vocabulary: every spring-flavored transition reads
        a governed `--spring-*` register. The legacy apple-spring cubic-bezier
        (+27.5% overshoot) was a SECOND authority beside the regen `--spring-*`
-       cohort; it is EXCISED. Its emphatic-overshoot register maps to the playful
-       `--spring-bouncy` (the closest `linear()` overshoot stop-set), so the VT
+       cohort; it is EXCISED. The default view transition is an ARRIVAL, so it maps
+       to `--spring-present` — the anchored materialization — and the VT
        default + the cards/top-layer transitions share one spring primitive
        (CPU + GPU sample the same curve). No cubic-bezier fallback seed survives —
        the `linear()` spring degrades to `ease` where `linear()` is unsupported. */
-    --vt-ease: var(--spring-bouncy);
+    --vt-ease: var(--spring-present);
     --vt-rise: 8px;
 
     /* The dock layer-swap morph timing, minted ONCE so
        both engine paths are timing-IDENTICAL: the FLIP fallback (via
        `--dock-motion-resize`), the native View-Transition group (its
        `animation-timing-function`), AND the runtime SpringProgress driver
-       consume this same source curve. Retires the 
-       fork where the VT path ran `--vt-ease` (apple-spring, +27.5% overshoot)
-       while the FLIP ran the snappy spring. `--vt-ease` still defaults the
-       other VT recipes (`.gl-list-item`).
+       consume this same source curve. `--vt-ease` defaults the OTHER VT recipes
+       (`.gl-list-item`) and must never re-curve the dock morph — a second curve on
+       this job is the fork this token exists to forbid (collapse/expand, V↔H and
+       fission all share the one register).
 
-       The WEIGHTY iOS-27 re-tune. `--spring-dock` is now the
-       slow inertial gooey-morph register: (0.56s, ζ=0.58), an audacious overshoot
-       ~+11% then a deliberate settle over the 0.6s analytic clock — the
-       liquid-weight law (collapse/expand + V↔H + fission all share it) — NOT a
-       tight (0.32, 0.7) near-critical snap (~+4.6%). The runtime
-       driver's DOCK_SPRING const DERIVES from the `dock` PRESETS row via
-       `springPreset("dock")` (the no-second-authority fence — ONE table row, the
-       CSS token + the JS-driven morph + the const all flow from it). */
+       The runtime driver's DOCK_SPRING const DERIVES from the table row via
+       `springPreset("dock")` — the no-second-authority fence: ONE row, and the CSS
+       token, the JS-driven morph and the const all flow from it. The pair, the clock
+       and the peak are stated by that row and by the generated mirror, nowhere
+       else — including here. */
     --dock-resize-spring: var(--spring-dock);
 
     /* Dock-control press micro-feedback spring. A TRANSFORM-ONLY
@@ -108,18 +105,14 @@
        `--duration-fast var(--ease-standard)`. The duration pairs with
        `--duration-fast`; consumers retune the whole feel via this one token.
 
-       The register is `--spring-smooth`, the §6 easing-doctrine
-       transform-press register (tokens.css §2: transform hover/press/active →
-       `--spring-smooth`/`--spring-snappy`, NEVER `--spring-bouncy`; a press must
-       settle, never overshoot into a visible bounce). A `--spring-bouncy`
-       ROOT default would be off-doctrine; there is NO per-surface re-point fork in
-       dock-controls.css — the exact per-surface fork the
-       doctrine kills. The ROOT token IS the doctrine register, so any consumer of
-       `--dock-press-spring` inherits the correct smooth register.
+       The register is `--spring-press`, the touch answer: a press must settle, never
+       overshoot into a visible bounce, and the row that owns the press job is the only
+       row entitled to it. There is NO per-surface re-point fork in dock-controls.css —
+       the exact fork the doctrine kills. The ROOT token IS the register, so any
+       consumer of `--dock-press-spring` inherits it.
 
-       The duration leg re-times off the generic
-       `--duration-fast` (0.2s) onto `--spring-smooth-duration` (0.36s, the
-       smooth spring's OWN 2%-band envelope settle), so the press transform plays
-       at its physical settle rather than a generic clock. */
-    --dock-press-spring: var(--spring-smooth-duration) var(--spring-smooth);
+       The duration leg re-times off the generic `--duration-fast` onto the row's own
+       `--spring-press-duration` (the clock fence), so the press transform plays at its
+       physical settle rather than a generic clock. */
+    --dock-press-spring: var(--spring-press-duration) var(--spring-press);
 }

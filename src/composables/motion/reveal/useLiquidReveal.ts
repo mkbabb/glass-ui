@@ -3,7 +3,7 @@
 // A top-layer surface (a dialog from its button, the dock from its collapsed pill)
 // MATERIALIZES as glass coalescing — it SCALES + FADES + DECONGESTS (a filter blur(4px)→0
 // "light-bending modulation") FROM its trigger's rect onto its own settled rect, on a
-// snappy/bouncy spring with the canonical iOS overshoot. It blooms FROM the source; it
+// `bloom` spring — big, patient, dead-landing. It blooms FROM the source; it
 // never flies in on a flat fixed-bezier zoom-95.
 //
 // This is a thin wrapper over `useElementMorph` (the one compositor
@@ -19,9 +19,10 @@ import { type ComponentPublicInstance, type Ref } from "vue";
 import { asElement } from "../core/asElement";
 import { useElementMorph, type ElementMorphPreset } from "../morph/useElementMorph";
 
-/** The reveal spring register — `snappy` (the quick app-open default) or `bouncy` (the
- *  emphatic large-dialog bloom). */
-export type LiquidRevealPreset = ElementMorphPreset;
+/** The reveal spring register — `bloom` (the room-sized growth, the default: a surface
+ *  expanding to fill a sheet or a screen IS this row's one job) or `panel` (the emphatic
+ *  fired deploy, the one row that rebounds). */
+export type LiquidRevealPreset = Extract<ElementMorphPreset, "bloom" | "panel">;
 
 export interface UseLiquidRevealOptions {
     /**
@@ -32,7 +33,7 @@ export interface UseLiquidRevealOptions {
      * immediately; no invented geometry substitutes for a missing trigger.
      */
     trigger?: Ref<HTMLElement | ComponentPublicInstance | null>;
-    /** The spring register (default `snappy`). */
+    /** The spring register (default `bloom`). */
     preset?: LiquidRevealPreset;
     /** The starting filter-blur radius in px (the decongest start). Default 4. */
     blur?: number;
@@ -55,7 +56,7 @@ export interface UseLiquidRevealReturn {
  *
  * @example
  * ```ts
- * const { reveal, conceal } = useLiquidReveal(surfaceRef, { trigger: triggerRef, preset: "bouncy" })
+ * const { reveal, conceal } = useLiquidReveal(surfaceRef, { trigger: triggerRef, preset: "panel" })
  * watch(open, (o) => (o ? reveal() : conceal()))
  * ```
  */
@@ -66,7 +67,7 @@ export function useLiquidReveal(
     const engine = useElementMorph(surface, {
         source: options.trigger ?? "self",
         destination: "self",
-        preset: options.preset ?? "snappy",
+        preset: options.preset ?? "bloom",
         respectReducedMotion: options.respectReducedMotion,
         channels: { opacity: true, blur: options.blur ?? 4 },
     });

@@ -254,7 +254,7 @@ const { dragEnabled, drag } = useTabDragMorph({
 });
 
 // ── Button press animation (Web Animations API) ──
-// The press rides the control register (`--spring-snappy`), one
+// The press rides the travel register (`--spring-dock`), one
 // settle-into squish (no double-spring overshoot past the rest scale). Honors
 // reduced-motion.
 
@@ -266,7 +266,7 @@ function animatePress(btn: HTMLElement) {
         return;
     }
     btn.getAnimations().forEach((a) => a.cancel());
-    const easing = readToken("--spring-snappy", "ease");
+    const easing = readToken("--spring-dock", "ease");
     const press = readToken("--scale-press-btn", "0.97");
     btn.animate(
         [

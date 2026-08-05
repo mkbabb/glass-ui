@@ -31,8 +31,8 @@
 //
 // The squish rides the SHARED `useLiquidFlex` `"tanh"` velocity register (the
 // metaball/morph-showcase law), capped at the live `--tab-indicator-max-stretch`
-// getter (≤1.08, the anti-taffy-pull bar). The spring is the iOS-canonical `snappy`
-// preset (response 0.48 / ζ 0.74), never a new clock.
+// getter (≤1.08, the anti-taffy-pull bar). The spring is the coordinated-travel `dock`
+// row, read from the table, never a new clock.
 //
 // COMPOSITOR-ONLY. The follow maps the spring's live position onto a
 // `transform: translate` on the morph axis — NEVER `inline-size`/`left`/`top`/
@@ -171,10 +171,10 @@ export function useDragMorph<V = string>(
     const dragging = ref(false);
     const position = ref(0);
 
-    // The spring physics core uses the iOS-canonical `snappy` preset
-    // (response 0.48 / ζ 0.74), never a new clock. `respectReducedMotion` snaps to
+    // The spring physics core uses the coordinated-travel `dock` row, read from
+    // the table, never a new clock. `respectReducedMotion` snaps to
     // target with zero in-between frames under PRM (the instant-snap half).
-    const { response, dampingFraction } = springPreset("snappy");
+    const { response, dampingFraction } = springPreset("dock");
     // The gesture spring is LAZY — created on the first `reattach` that finds a real
     // element (the dock `ensureSpring` precedent). A `useDragMorph` host that never
     // mounts a draggable element (a `DockLayerGroup` with `draggable:false`/

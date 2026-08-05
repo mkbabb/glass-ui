@@ -30,15 +30,15 @@ export interface UseSpringOptions {
     /**
      * Angular period of oscillation in seconds. Roughly: how long the spring
      * takes to swing through one cycle if undamped. Default 0.5 — this
-     * primitive's own bare default, NOT a named preset (the `smooth` preset is
-     * 0.58; pass `springPreset("smooth")` for that).
+     * primitive's own bare default, NOT a named preset (pass
+     * `springPreset("<row>")` to ride the table).
      */
     response?: number;
     /**
      * Damping ratio ζ. `1` is critically damped (fastest settle, no
      * overshoot); `< 1` rings (overshoots target); `> 1` is overdamped
      * (sluggish, monotone). Default 0.86 — this primitive's own bare default,
-     * NOT a named preset (the `smooth` preset's ζ is 0.8).
+     * NOT a named preset (pass `springPreset("<row>")` to ride the table).
      */
     dampingFraction?: number;
     /** Starting position. Default 0. */

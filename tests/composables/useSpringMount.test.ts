@@ -25,7 +25,7 @@ function mountHost(opts: {
         setup() {
             const sm = useSpringMount({
                 open,
-                preset: "snappy",
+                preset: "panel",
                 dismissThreshold: opts.dismissThreshold,
                 onDismiss: opts.onDismiss,
                 respectReducedMotion: opts.respectReducedMotion,

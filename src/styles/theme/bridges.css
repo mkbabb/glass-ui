@@ -345,20 +345,18 @@
     /* ═══════════════════════════════════════════════
        Easing → ease-* utilities
        ═══════════════════════════════════════════════ */
-    --ease-spring-smooth: var(--spring-smooth);
-    --ease-spring-snappy: var(--spring-snappy);
-    --ease-spring-bouncy: var(--spring-bouncy);
-    --ease-spring-gentle: var(--spring-gentle);
-    /* The minted iOS interactive press register's @theme alias
-       (the documented public register the consumers reach by name; the JS path
-       reads it via useLiquidPress + --glass-btn-press-t). */
-    --ease-spring-press: var(--spring-press);
+    /* The `--ease-spring-*` @theme family is GONE — six declarations with zero
+       readers in this repo or any consumer, one of which (`--ease-spring`) was
+       declared twice in two files: a literal second authority inside the very
+       vocabulary that exists to have one, minting six dead Tailwind utilities into
+       every consumer's CSS. A recipe that wants a spring by utility name reaches
+       the token directly (`ease-(--spring-press)`); a consumer that earns the
+       utilities re-mints them in its own tranche. */
     --ease-standard: var(--motion-ease-standard);
     --ease-out: var(--motion-ease-out);
     --ease-in: var(--motion-ease-in);
     --ease-out-expo: var(--motion-ease-out-expo);
     --ease-apple: var(--motion-ease-apple);
-    --ease-spring: var(--spring-snappy);
     --ease-decelerate: var(--motion-ease-out);
     --ease-accelerate: var(--motion-ease-in);
 

@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ref } from "vue";
 import { useDockCtaReceive } from "@glass/composables/motion/morph/useDockCtaReceive";
+import { springPreset } from "@glass/composables/motion/spring/springPresets";
 import { mountComposable } from "../../utils/mountComposable";
 
 function rect(x: number, y: number, width: number, height: number): DOMRect {
@@ -123,22 +124,30 @@ describe("useDockCtaReceive observables", () => {
             useDockCtaReceive(ref(cta), { dockControl: ref(target) }),
         );
 
+        // The clock is DERIVED from the register the receive rides — the runner's
+        // horizon is `response * 4`, and the default register is the coordinated-travel
+        // `dock` row. A frozen millisecond literal here would be a second authority on
+        // the spring table, wrong the moment the row is retuned (it was).
+        const horizonMs = springPreset("dock").response * 4 * 1000;
         result.receive();
         frames.shift()?.(100);
-        clock = 2920;
-        frames.shift()?.(2020);
+        clock = 1000 + horizonMs;
+        frames.shift()?.(100 + horizonMs);
         await Promise.resolve();
         await Promise.resolve();
 
         expect(result.observables.value).toMatchObject({
             phase: "completed",
             path: "fine",
-            latencyMs: 1920,
+            latencyMs: horizonMs,
             withinBand: true,
         });
         expect(result.observables.value.travelPx).toBeGreaterThan(16);
         expect(result.observables.value.scaleRatio).toBeGreaterThan(0.2);
-        expect(result.observables.value.latencyBandMs).toEqual([1728, 2304]);
+        expect(result.observables.value.latencyBandMs).toEqual([
+            horizonMs * 0.9,
+            horizonMs * 1.2,
+        ]);
         unmount();
     });
 });

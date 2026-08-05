@@ -30,8 +30,8 @@
    `--stretch` is the JS-written travel-squish scalar (1 at rest); the indicator
    pairs it reciprocally (stretch X, compress Y →
    volume-preserving). The glide + squish read ONE clock — `--tab-indicator-duration`
-   (= `--spring-snappy-duration`, the calibrated snappy settle, ~0.34s)
-   — so the channels cannot desync and the generic-300ms sub-pixel tail is gone.
+   (= `--spring-dock-duration`, the travel row's own settle)
+   — so the channels cannot desync and the generic wall-clock tail is gone.
    ════════════════════════════════════════════════════════════════════════ */
 
 /* ── The PILL track (the glass material — DEFAULT) ── */
@@ -141,10 +141,10 @@
    `width` writes; animate those alongside the squish scale on one calibrated clock. */
 .segmented-indicator--js {
     transition:
-        translate var(--tab-indicator-duration) var(--spring-snappy),
-        width var(--tab-indicator-duration) var(--spring-snappy),
-        height var(--tab-indicator-duration) var(--spring-snappy),
-        scale var(--tab-indicator-duration) var(--spring-snappy),
+        translate var(--tab-indicator-duration) var(--spring-dock),
+        width var(--tab-indicator-duration) var(--spring-dock),
+        height var(--tab-indicator-duration) var(--spring-dock),
+        scale var(--tab-indicator-duration) var(--spring-dock),
         opacity var(--duration-fast) ease;
 }
 
@@ -276,8 +276,8 @@
     .segmented-tabs--underline::before {
         /* control register — the glide + the squish on the ONE calibrated clock. */
         transition:
-            inset var(--tab-indicator-duration) var(--spring-snappy),
-            scale var(--tab-indicator-duration) var(--spring-snappy);
+            inset var(--tab-indicator-duration) var(--spring-dock),
+            scale var(--tab-indicator-duration) var(--spring-dock);
     }
 }
 

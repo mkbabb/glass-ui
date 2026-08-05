@@ -15,11 +15,11 @@
 @utility scale-on-hover {
     /* Individual-transform identity base. Transition the `scale`
        longhand (not `transform`) so the hover scale animates.
-       doctrine — the `scale` transform leg rides `--spring-smooth`
-       (the settle register), NOT the bezier `--ease-standard` (a transform on a
+       doctrine — the `scale` transform leg rides `--spring-press`
+       (the touch answer), NOT the bezier `--ease-standard` (a transform on a
        bezier reads mechanical; springs read alive on transform). */
     scale: 1;
-    transition: scale var(--spring-smooth-duration) var(--spring-smooth);
+    transition: scale var(--spring-press-duration) var(--spring-press);
 
     &:hover {
         scale: var(--scale-hover);
@@ -52,22 +52,20 @@
 
 /* ── Disclosure chevron register ────────────────
    ONE canonical chevron-rotate gesture — the SAME settle clock + arrival curve
-   across EVERY disclosure caret (Accordion / Select / Configurator). The three
-   diverged: Accordion rode a flat `transition-transform duration-200` bezier
-   (zero weight), Select the snappy-clock cartoon-punch, Configurator a scoped
-   `--duration-fast` snappy on the WRONG property (a `transition: transform`
-   never covers the `rotate` Tailwind v4's `rotate-*` writes, so its chevron
-   SNAPPED). This register collapses them onto ONE (substitution over
-   re-declaration): the `rotate` property (the longhand the toggle actually
-   writes), the spring's OWN settle clock `--spring-snappy-duration` (the
-   per-spring-duration doctrine, not a generic `--duration-*`), and
-   the weighty `--ease-cartoon-punch` arrival (the liquid-weight "morph more on
-   move" register — a small quick control that still carries inertia). PRM:
+   across EVERY disclosure caret (Accordion / Select / Configurator) — ONE register
+   by substitution, never a per-caret re-declaration. Three constraints hold it:
+   the animated property MUST be the `rotate` LONGHAND (Tailwind v4's `rotate-*`
+   writes `rotate`, which a `transition: transform` never covers — a caret timed on
+   `transform` flips with zero frames); the clock MUST be the arrival row's OWN
+   settle clock `--spring-present-duration` (the per-spring-duration doctrine, not a
+   generic `--duration-*`); and the arrival is the weighty `--ease-cartoon-punch`
+   (the liquid-weight "morph more on move" register — a small quick control that
+   still carries inertia). PRM:
    `--ease-cartoon-punch` self-re-aliases to the no-overshoot `--ease-standard`
    under `prefers-reduced-motion: reduce` (scheme-motion.css), so the caret still
    flips its state with zero overshoot frames — the vestibular floor. */
 @utility transition-disclosure {
-    transition: rotate var(--spring-snappy-duration) var(--ease-cartoon-punch);
+    transition: rotate var(--spring-present-duration) var(--ease-cartoon-punch);
 }
 
 /* ── Sheet/drawer slide-out animation grammar ──

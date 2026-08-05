@@ -21,7 +21,7 @@ import {
     DialogTrigger,
 } from "@glass/components/dialog/index";
 
-type PresetValue = "smooth" | "snappy" | "bouncy" | "gentle";
+type PresetValue = "present" | "panel" | "bloom";
 
 function mountDialog(springPreset?: PresetValue) {
     const Host = defineComponent({
@@ -72,31 +72,31 @@ describe("DialogContent — spring entrance", () => {
         wrapper.unmount();
     });
 
-    it("emits data-spring=\"smooth\" when springPreset=\"smooth\"", async () => {
-        const wrapper = mountDialog("smooth");
+    it("emits data-spring=\"present\" when springPreset=\"present\"", async () => {
+        const wrapper = mountDialog("present");
         await nextTick();
         await nextTick();
         const portal = findDialog();
         expect(portal).not.toBeNull();
-        expect(portal!.getAttribute("data-spring")).toBe("smooth");
+        expect(portal!.getAttribute("data-spring")).toBe("present");
         // Spring path SUPPRESSES the default .glass-reveal recipe (the useSpringMount
         // inline transform is the sole entrance source).
         expect(portal!.className).not.toContain("glass-reveal");
         wrapper.unmount();
     });
 
-    it("emits data-spring=\"bouncy\" when springPreset=\"bouncy\" is passed", async () => {
-        const wrapper = mountDialog("bouncy");
+    it("emits data-spring=\"bloom\" when springPreset=\"bloom\" is passed", async () => {
+        const wrapper = mountDialog("bloom");
         await nextTick();
         await nextTick();
         const portal = findDialog();
         expect(portal).not.toBeNull();
-        expect(portal!.getAttribute("data-spring")).toBe("bouncy");
+        expect(portal!.getAttribute("data-spring")).toBe("bloom");
         wrapper.unmount();
     });
 
     it("writes an inline transform + opacity + animation override under springPreset", async () => {
-        const wrapper = mountDialog("smooth");
+        const wrapper = mountDialog("panel");
         await nextTick();
         await nextTick();
         const portal = findDialog();

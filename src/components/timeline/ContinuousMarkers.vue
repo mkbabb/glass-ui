@@ -381,11 +381,11 @@ function onPopoverOpenChange(seg: TimelineSegment, open: boolean) {
    pop settles the dot releases the transform so the hover scale (and
    any future transform) is unobstructed. */
 .continuous-dot[data-completed] {
-    /* The check-lands pop is a crisp one-beat morph,
-       so it rides --spring-snappy (~+6.8% overshoot gives the single pop). The
-       inline cubic-bezier fallback is excised — no hand-rolled spring literal. */
-    animation: continuous-dot-pop var(--duration-normal, 0.3s)
-        var(--spring-snappy);
+    /* The check-lands pop is a crisp one-beat morph, so it rides --spring-dock on
+       its OWN clock (the clock fence). No inline bezier, no hand fallback — a
+       literal beside a spring reader is a second authority. */
+    animation: continuous-dot-pop var(--spring-dock-duration)
+        var(--spring-dock);
 }
 
 @keyframes continuous-dot-check-draw {

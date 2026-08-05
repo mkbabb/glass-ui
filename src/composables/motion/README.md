@@ -18,7 +18,7 @@ Engine primitives come directly from their authority:
 ```ts
 import { NumericAnimation, SpringProgress } from "@mkbabb/keyframes.js";
 
-const preset = springPreset("snappy");
+const preset = springPreset("dock");
 const spring = new SpringProgress(preset);
 ```
 

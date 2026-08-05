@@ -32,10 +32,10 @@ import {
     type ElementMorphPreset,
 } from "./useElementMorph";
 
-/** The receive spring register — `snappy` (the crisp absorb default) or `bouncy` (the
- *  emphatic land-with-overshoot). Matches `useLiquidReveal`'s register so the two seams
- *  read as ONE family. */
-export type DockCtaReceivePreset = ElementMorphPreset;
+/** The receive spring register — `dock` (coordinated travel, the crisp absorb default)
+ *  or `panel` (the emphatic land-with-overshoot). A CTA flying into a dock control IS
+ *  coordinated travel, so it rides the same row the members do. */
+export type DockCtaReceivePreset = Extract<ElementMorphPreset, "dock" | "panel">;
 
 export type DockCtaReceivePath = "fine" | "coarse" | "reduced-motion" | "no-target";
 export type DockCtaReceivePhase =
@@ -92,7 +92,7 @@ export interface UseDockCtaReceiveOptions {
      * fires immediately.
      */
     dockControl: Ref<HTMLElement | ComponentPublicInstance | null>;
-    /** The spring register (default `snappy`). */
+    /** The spring register (default `dock`). */
     preset?: DockCtaReceivePreset;
     /** The ending congest blur radius in px (the CTA dissolves into the glass). Default 4. */
     blur?: number;
@@ -240,7 +240,7 @@ export function useDockCtaReceive(
     const engine = useElementMorph(cta, {
         source: "self",
         destination: options.dockControl,
-        preset: options.preset ?? "snappy",
+        preset: options.preset ?? "dock",
         respectReducedMotion: options.respectReducedMotion,
         channels: { opacity: true, blur: options.blur ?? 4 },
         onSettled: settled,

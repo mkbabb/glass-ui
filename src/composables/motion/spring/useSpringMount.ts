@@ -32,16 +32,18 @@ import {
 } from "vue";
 import { useSpring, type SpringRef } from "./useSpring";
 
-import { springPreset } from "./springPresets";
+import { springPreset, type SpringPresetName } from "./springPresets";
 
-/** Named iOS spring presets the mount register exposes (the dock register is not a mount enter). */
-export type SpringPreset = "smooth" | "snappy" | "bouncy" | "gentle";
+/** The registers a mount ENTER may ride — DERIVED from the one table, never re-typed.
+ *  A centred plate presents, a fired sheet deploys, a full-screen surface blooms;
+ *  travel and touch are not mount enters. */
+export type SpringPreset = Extract<SpringPresetName, "present" | "panel" | "bloom">;
 
 // The (response, ζ) pairs are single-sourced in `springPresets.ts`
 // (the SAME table `scripts/regen-spring-tokens.mjs` solves the CSS `--spring-*`
 // `linear()` strings from). This local table is the mount-relevant projection of
 // the shared rows — drift-proof by construction (no hand-kept second copy).
-const MOUNT_PRESETS: readonly SpringPreset[] = ["smooth", "snappy", "bouncy", "gentle"];
+const MOUNT_PRESETS: readonly SpringPreset[] = ["present", "panel", "bloom"];
 const SPRING_PRESETS: Record<SpringPreset, { response: number; dampingFraction: number }> =
     Object.fromEntries(
         MOUNT_PRESETS.map((name) => {
@@ -107,7 +109,7 @@ export interface SpringMountRef {
  * SpringProgress.
  */
 export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
-    const preset = SPRING_PRESETS[options.preset ?? "smooth"];
+    const preset = SPRING_PRESETS[options.preset ?? "panel"];
     // Always seat the spring AT the off-screen position (1) and let the
     // mount watch drive the target → 0 transition on the first frame. This
     // makes the entrance read consistently — without this, an already-open

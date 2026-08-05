@@ -32,7 +32,7 @@ const {
     observables,
 } = useDockCtaReceive(ctaRef, {
     dockControl: targetRef,
-    preset: "snappy",
+    preset: "dock",
     onReceived: () => {
         received.value = true;
     },
@@ -237,15 +237,15 @@ function revealNow() {
 
 /* The target dock control flashes a glass luminance-lift the moment the CTA lands —
    the "received" hand-off acknowledgement. Compositor-safe (opacity/transform on a
-   pseudo, NOT a layout property); rides the snappy spring clock. */
+   pseudo, NOT a layout property); rides the travel register's own clock. */
 .cta-receive-target {
     position: relative;
 }
 
 .cta-receive-target--lit {
     transition:
-        transform var(--spring-snappy-duration) var(--spring-snappy),
-        box-shadow var(--spring-snappy-duration) var(--ease-out);
+        transform var(--spring-dock-duration) var(--spring-dock),
+        box-shadow var(--spring-dock-duration) var(--ease-out);
     transform: scale(1.06);
     box-shadow: 0 0 0 2px var(--dock-selected-accent, transparent);
 }

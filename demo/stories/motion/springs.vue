@@ -89,7 +89,7 @@ function setPreviewProgress(element: HTMLElement | null, progress: number): void
 }
 
 const card = shallowRef<HTMLElement | null>(null);
-const preset = ref<PresetId>("smooth");
+const preset = ref<PresetId>("press");
 
 const presetRow = computed(() => springPreset(preset.value));
 const presetProjection = computed(() => springProjection(presetRow.value));
@@ -170,10 +170,10 @@ const seedPresets = computed<ConfiguratorPreset<PresetId>[]>(() =>
 );
 const activeSeed = computed(() => matchingPreset.value?.name);
 
-// The @reset hook — back to the shipped `smooth` seed (the born default of the
+// The @reset hook — back to the shipped `press` seed (the born default of the
 // authoring pair), stopping any in-flight preview.
 function resetPlayground(): void {
-    loadPlaygroundPreset("smooth");
+    loadPlaygroundPreset("press");
 }
 
 // The <Configurator> select-preset event carries the chip key as a bare string;

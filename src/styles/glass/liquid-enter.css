@@ -19,7 +19,7 @@
 
    THE FOUR CHANNELS (the spatial/effects split):
      1. SPATIAL bloom — `translate:` rise (the LONGHAND, composes with a centering
-        transform) on the snappy spring.
+        transform) on the anchored-entrance spring.
      2. SQUISH volume — the reciprocal `scale:` LONGHAND, born wide+flat (vol-preserving
         sx·sy ≈ 1), settles square. NEVER a `transform: scale()` shorthand because it
         REPLACES a base centering `transform: translate(-50%,-50%)` → a centered dialog
@@ -52,18 +52,18 @@
         --lq-stretch-x: 1.06;
         --lq-stretch-y: 0.945;
         /* The register's OWN clock — the 1/φ overlap stagger keys off THIS so the
-           "launch beat N+1 as beat N hits 62%" holds on the cel/bouncy clock too
-           rather than being hardcoded to the snappy duration. */
-        --lq-enter-duration: var(--spring-snappy-duration);
+           "launch beat N+1 as beat N hits 62%" holds on the CEL register's clock too
+           rather than being hardcoded to any one duration token. */
+        --lq-enter-duration: var(--spring-present-duration);
     }
 
-    /* ── Base register (the graceful floor on the bouncy/snappy spring) ──
+    /* ── Base register (the graceful floor, on the anchored-entrance spring) ──
        A 2-stop squish-grow: the spring's `linear()` overshoot interior supplies the
        calibrated iOS bounce. ONE `scale:` longhand (the squish), ONE `translate:`
        longhand (the rise) — NO `transform:` shorthand. */
     @media (prefers-reduced-motion: no-preference) {
         .liquid-enter {
-            animation: gl-liquid-enter var(--lq-enter-duration) var(--spring-snappy)
+            animation: gl-liquid-enter var(--lq-enter-duration) var(--spring-present)
                 both;
             /* The 1/φ overlap — the per-beat delay is the spring settle × 1/φ ≈ 0.618,
                so beat N+1 launches as beat N reaches ~62% (Disney follow-through /
@@ -118,7 +118,7 @@
     @media (prefers-reduced-motion: no-preference) {
         .liquid-enter.is-cel {
             animation: gl-cel-slam var(--lq-enter-duration)
-                var(--ease-cartoon-punch, var(--spring-bouncy)) both;
+                var(--ease-cartoon-punch, var(--spring-present)) both;
         }
 
         @keyframes gl-cel-slam {
@@ -173,7 +173,7 @@
     @media (prefers-reduced-motion: no-preference) {
         .liquid-enter.is-cel > .cartoon-cast {
             animation: gl-cast-lag var(--lq-enter-duration)
-                var(--ease-cartoon-punch, var(--spring-snappy)) both;
+                var(--ease-cartoon-punch, var(--spring-present)) both;
             /* the LATE arrival — the shadow trails the cel a beat behind */
             animation-delay: calc(0.006s + 0.06s * var(--motion-weight, 0.618));
         }

@@ -46,12 +46,12 @@
  * (`--motion-weight`/`--ease-cartoon-punch`/`--shadow-cartoon-md`) SHIP today and are
  * consumed via `var(…, fallback)` so the recipes stay GREEN. */
 :root {
-    /* The spring-shaped compositor cascade ease — the `--spring-gentle` twin
-       (ζ ≈ 0.85, a `springLinearStops` `linear()` stop-set), which SHIPS
-       unconditionally (scheme-motion.css). The Safari < 17.2 `--ease-out` degrade
+    /* The spring-shaped compositor cascade ease — `--spring-world`, the row that
+       owns substrate travel and scroll choreography (a `springLinearStops`
+       `linear()` stop-set), which SHIPS unconditionally. The Safari `--ease-out` degrade
        arm was COLLAPSED — both targets parse
        `linear()`, so the spring twin is the sole source. */
-    --ease-scroll-spring: var(--spring-gentle);
+    --ease-scroll-spring: var(--spring-world);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -104,9 +104,10 @@
 
                The easing is the spring-shaped
                `--ease-scroll-spring` (a `springLinearStops` `linear()` twin of
-               `--spring-gentle`, ζ ≈ 0.85) — each card's scroll-scrubbed entrance
-               reads with spring WEIGHT (a hair of overshoot at the end of its
-               range), ZERO JS (the platform carries it on the compositor). The
+               `--spring-world`) — each card's scroll-scrubbed entrance reads with
+               spring WEIGHT, ZERO JS (the platform carries it on the compositor);
+               the row is critically damped, because a world that overshoots reads
+               as an earthquake. The
                Safari-degrade-to-cel-slam arm lives in the entrance-reveal scope. */
             animation: gl-cascade-build auto var(--ease-scroll-spring, linear) both;
             animation-timeline: view(block);

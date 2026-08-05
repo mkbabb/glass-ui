@@ -45,7 +45,7 @@
     .pane-swap-enter-active {
         transition:
             opacity var(--duration-normal) var(--ease-out),
-            transform var(--spring-smooth-duration) var(--spring-smooth);
+            transform var(--spring-present-duration) var(--spring-present);
     }
     .pane-swap-leave-active {
         transition:
@@ -65,7 +65,7 @@
     .metric-swap-enter-active {
         transition:
             opacity var(--duration-normal) var(--ease-out),
-            transform var(--spring-smooth-duration) var(--spring-smooth);
+            transform var(--spring-present-duration) var(--spring-present);
     }
     .metric-swap-leave-active {
         transition:
@@ -78,9 +78,12 @@
         transform: translateY(0.375rem) scale(0.95);
     }
 
-    /* ── Dock entrance utility ── */
+    /* ── Dock entrance utility ──
+       ONE keyframe, ONE row: this class and `--animate-dock-in` (theme/literals.css)
+       drive the same `dock-in` keyframe, so they must read the same curve and the same
+       clock — a fork here would be one job owned twice. */
     .dock-in {
-        animation: dock-in var(--spring-snappy-duration) var(--spring-snappy) both;
+        animation: dock-in var(--spring-dock-duration) var(--spring-dock) both;
         transform-origin: center bottom;
     }
 
@@ -90,7 +93,7 @@
      * ONE overlay register — `.glass-reveal[data-reveal="overlay"]` — the SAME
      * spring/transition contract the Dialog/Sheet/Popover ride (F20: the toast enters
      * exactly like the refined dialog; scale-from 0.94 + decongest-blur + fade on the
-     * `--spring-snappy` overlay clock). It blooms FROM its own centre (law 18: an overlay
+     * `--enter-overlay-clock`). It blooms FROM its own centre (law 18: an overlay
      * GROWS from a seed), NOT the retired slide-in-from-viewport-edge, and there is no
      * bespoke transient register. The reka `tw-animate-css` data-state choreography
      * (`data-[state=open]:animate-in` / `animate-out` / `slide-in-from-*-full` /
@@ -102,7 +105,7 @@
      *     coalesces from its own seed), on the overlay spring + its 2%-settle clock.
      *   • DWELL — no motion (the READING window; default 5000ms via use-toast.ts).
      *   • EXIT — the `glass-reveal-out` keyframe reka's `usePresence` awaits, on the
-     *     `--exit-overlay-duration` (150ms) no-overshoot `--ease-out` — fade-led and
+     *     `--exit-overlay-duration` no-overshoot `--ease-out` — fade-led and
      *     asymmetric per law 8. Its `animationend` is ALSO the queue-slot release signal
      *     (`Toaster.vue`'s `onToastExitComplete` → `removeToast`): a dismissed toast frees
      *     its `TOAST_LIMIT` slot the frame it stops painting, no deferred timer.

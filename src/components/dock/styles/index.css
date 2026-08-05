@@ -162,9 +162,9 @@
         /* The FLIP-fallback timing. `--dock-resize-spring` (the
            `--spring-dock` linear()) is the single source curve the native
            View-Transition path ALSO consumes, so the morph is timing-identical
-           across engines. The duration leg re-times off
-           the generic `--duration-normal` (0.3s) onto `--spring-dock-duration`
-           (0.28s, the dock spring's OWN 2%-band envelope settle). */
+           across engines. The duration leg re-times off the generic
+           `--duration-normal` onto `--spring-dock-duration`, the row's OWN settle
+           — the clock fence. */
         --dock-motion-resize: var(--spring-dock-duration) var(--dock-resize-spring);
     }
 

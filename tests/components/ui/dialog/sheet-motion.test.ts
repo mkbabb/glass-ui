@@ -72,7 +72,7 @@ describe("scrimOpacity (position → clamped opacity)", () => {
 
 function mountDialog(opts: {
     placement?: "center" | "top" | "right" | "bottom" | "left";
-    springPreset?: "smooth" | "snappy" | "bouncy" | "gentle";
+    springPreset?: "present" | "panel" | "bloom";
 }) {
     const Host = defineComponent({
         setup() {
@@ -149,9 +149,9 @@ describe("DialogContent arming gate — side vs center (SHEET-INTERRUPTIBLE-MOTI
         const spy = vi.spyOn(springMountModule, "useSpringMount");
         try {
             // The named preset propagates verbatim to the spring mount.
-            const snappy = mountDialog({ placement: "left", springPreset: "snappy" });
+            const bloom = mountDialog({ placement: "left", springPreset: "bloom" });
             expect(spy).toHaveBeenCalledWith(
-                expect.objectContaining({ preset: "snappy" }),
+                expect.objectContaining({ preset: "bloom" }),
             );
             await nextTick();
             await nextTick();
@@ -160,20 +160,20 @@ describe("DialogContent arming gate — side vs center (SHEET-INTERRUPTIBLE-MOTI
             // ...and the side sheet still slides via the spring longhand, keyframes gone.
             expect(el!.style.translate).toMatch(/%/);
             expect(el!.className).not.toMatch(/slide-in-from|slide-out-to|sheet-animate/);
-            snappy.unmount();
+            bloom.unmount();
 
             // A DIFFERENT preset reaches it distinctly: an unset springPreset routes the
-            // Dialog-family default `smooth`, never a frozen literal. Witnesses that the
+            // Dialog-family default `panel` — the fired deploy, never a frozen literal. Witnesses that the
             // arg tracks the prop rather than a hardcoded register.
             spy.mockClear();
-            const smooth = mountDialog({ placement: "left" });
+            const fallback = mountDialog({ placement: "left" });
             expect(spy).toHaveBeenCalledWith(
-                expect.objectContaining({ preset: "smooth" }),
+                expect.objectContaining({ preset: "panel" }),
             );
             expect(spy).not.toHaveBeenCalledWith(
-                expect.objectContaining({ preset: "snappy" }),
+                expect.objectContaining({ preset: "bloom" }),
             );
-            smooth.unmount();
+            fallback.unmount();
         } finally {
             spy.mockRestore();
         }

@@ -15,7 +15,9 @@ import { springPreset, type SpringPresetName } from "../spring/springPresets";
 
 /** A measured endpoint, or the morphed surface's own settled box. */
 export type MorphEndpoint = Ref<HTMLElement | ComponentPublicInstance | null> | "self";
-export type ElementMorphPreset = Extract<SpringPresetName, "snappy" | "bouncy">;
+/** The registers the FLIP runner drives: coordinated travel (the default), the fired
+ *  deploy, and the room-sized bloom its `useLiquidReveal` leaf defaults to. */
+export type ElementMorphPreset = Extract<SpringPresetName, "dock" | "panel" | "bloom">;
 
 export interface MorphChannels {
     opacity?: boolean;
@@ -116,7 +118,7 @@ export function useElementMorph(
     const respectPRM = options.respectReducedMotion !== false;
     const opacityOn = options.channels?.opacity !== false;
     const blurPx = Math.max(0, options.channels?.blur ?? 0);
-    const { response, dampingFraction } = springPreset(options.preset ?? "snappy");
+    const { response, dampingFraction } = springPreset(options.preset ?? "dock");
     const easing = springTimingFunction({ response, dampingFraction });
 
     const playing = ref(false);

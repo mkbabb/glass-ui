@@ -58,10 +58,11 @@
         opacity: var(--cta-seat-ghost-opacity, 0.35);
 
         /* The FLIP reveal register — a PLAIN opacity transition on --ease-out
-           (no-overshoot). Default duration tracks the snappy spring envelope so the
-           reveal reads as the same family as the morph that lands the CTA. */
+           (no-overshoot). Its default duration tracks the anchored-entrance row's own
+           settle so the reveal reads as the same family as the morph that lands the
+           CTA. */
         transition: opacity
-            var(--cta-seat-reveal-duration, var(--spring-snappy-duration))
+            var(--cta-seat-reveal-duration, var(--spring-present-duration))
             var(--ease-out);
     }
 
@@ -71,7 +72,7 @@
     [data-cta-pending] > * {
         opacity: var(--cta-seat-ghost-opacity, 0.35);
         transition: opacity
-            var(--cta-seat-reveal-duration, var(--spring-snappy-duration))
+            var(--cta-seat-reveal-duration, var(--spring-present-duration))
             var(--ease-out);
     }
 

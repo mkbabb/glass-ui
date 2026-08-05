@@ -27,10 +27,11 @@ const backgroundEdits = ref(0);
 
 // The center-dialog spring register knob — flip the named `springPreset` live
 // and reopen to eye-judge each curve's scale bloom (the dock controls story's
-// interaction-flip precedent). `springPreset` is the existing public prop; the
-// four names are the only registers the center bloom accepts.
-const springOptions = ["smooth", "snappy", "bouncy", "gentle"] as const;
-const dialogSpring = ref<(typeof springOptions)[number]>("bouncy");
+// interaction-flip precedent). `springPreset` is the existing public prop; these
+// three are the only registers a mount ENTER accepts (a plate presents, a sheet
+// deploys, a full-screen surface blooms).
+const springOptions = ["present", "panel", "bloom"] as const;
+const dialogSpring = ref<(typeof springOptions)[number]>("panel");
 function cycleSpring() {
     const i = springOptions.indexOf(dialogSpring.value);
     dialogSpring.value = springOptions[(i + 1) % springOptions.length];
@@ -312,8 +313,9 @@ function guardConfirmDismiss(event: Event) {
                     The centered dialog's entrance rides the named JS spring set by
                     <code class="font-mono text-micro">springPreset</code>. Flip the register
                     and reopen to eye-judge each curve's scale bloom —
-                    <strong>bouncy</strong> overshoots most (the canonical dialog
-                    entrance), <strong>gentle</strong> settles with none.
+                    <strong>panel</strong> is the one row that rebounds (the canonical
+                    dialog entrance), <strong>present</strong> arrives dead on a
+                    shorter clock, <strong>bloom</strong> dead on a longer one.
                 </p>
                 <div class="flex flex-wrap items-center gap-3">
                     <Button emphasis="quiet" @click="cycleSpring">

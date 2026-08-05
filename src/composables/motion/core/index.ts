@@ -43,13 +43,6 @@ export * from "../reveal/vReveal";
 // root barrel. ≥2 consumers: useSelectionIndicator (the tabs-indicator squish),
 // useLiquidPress, useDragMorph, usePagerWorm (the pager-dots worm), and ScrubberTimeline.
 export * from "../spring/useLiquidFlex";
-// Two-edge lead/trail integrator behind the liquid dot morph
-// worm. A spring LEAD edge + a damped TRAIL follower share ONE rAF; their gap is the
-// worm's elongation and the trail catching the lead is the emergent release-at-arrival
-// (no timer). Imports `vue` only — engine-FREE + vueuse-FREE (hand-rolled integrator,
-// no spring engine), so it ships on the `/motion-core` surface AND the root barrel
-// (the `useLiquidFlex` precedent).
-export * from "../morph/useLeadTrail";
 // Shared viz-pointer-physics field (pointer position +
 // derived velocity + the ACCEL term), fed by the renderer's frame `tick` (NO own
 // rAF), frozen under PRM (`tick(0)`). Imports `vue` only — engine-FREE + vueuse-FREE,

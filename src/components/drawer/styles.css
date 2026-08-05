@@ -53,7 +53,7 @@
  * (the scene scalar, on each reader root) in the SAME call — atomically, never
  * separately, so the two can never desync on a drag-cancel / fling-overshoot /
  * interrupted snap. A plain modal (Dialog/Command) flips `--stage-t` 0→1 on
- * `--spring-snappy` at open (DialogContent.vue, scoped to the same reader roots); the
+ * `--spring-present` at open (DialogContent.vue, scoped to the same reader roots); the
  * close-write removes the inline value so the registered property reverts to its
  * `initial-value: 0` (the stale-latch fix). EVERY consumer `clamp(0, …, 1)`-bounds it
  * (a `--ease-cartoon-punch` fling can overshoot >1 — the page-scale / radius / scrim
@@ -72,12 +72,13 @@
  * reader root reverts to `initial-value: 0`. The centered modal (DialogContent) has no
  * detent, so it FLIPS `--stage-t` 0→1 on open via the `data-stage-flip` marker written
  * onto each reader root (off `:root`); this rule owns the FLIP
- * TRANSITION (a snappy spring) so the value glides 0→1 rather than snapping. Scoped to
+ * TRANSITION (the anchored-entrance row, curve and clock together) so the value
+ * glides 0→1 rather than snapping. Scoped to
  * `[data-stage-flip]` so it fires ONLY during the modal flip — the drawer's per-frame
  * scalar writes carry no marker, so the spring never double-smooths the drag. */
 [data-stage-scrim][data-stage-flip],
 [data-stage-wrapper][data-stage-flip] {
-    transition: --stage-t var(--spring-snappy-duration, 0.4s) var(--spring-snappy, ease);
+    transition: --stage-t var(--spring-present-duration) var(--spring-present);
 }
 
 :root {

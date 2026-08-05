@@ -152,7 +152,7 @@
        and reveals; its overshoot is the weight the old flat playhead lacked. */
     .music-staff__playhead,
     .music-staff__clip-edge {
-        transition: transform var(--spring-snappy-duration) var(--spring-snappy);
+        transition: transform var(--spring-dock-duration) var(--spring-dock);
     }
 
     /* Determinate loading: the rules ink up in window space behind the reel. */
@@ -220,7 +220,7 @@
             animation:
                 music-staff-bar-wipe var(--_music-staff-draw-duration) var(--ease-out-expo)
                     calc(120ms * var(--motion-tempo)) both,
-                music-staff-clef-settle var(--spring-smooth-duration) var(--spring-smooth)
+                music-staff-clef-settle var(--spring-present-duration) var(--spring-present)
                     calc(300ms * var(--motion-tempo)) both;
             transform-box: fill-box;
             transform-origin: center;
@@ -285,7 +285,7 @@
         .music-staff[data-sealed] .music-staff__note { animation: none; }
 
         .music-staff[data-sealed] .music-staff__transport {
-            animation: music-staff-settle var(--spring-bouncy-duration) var(--spring-bouncy) both;
+            animation: music-staff-settle var(--spring-panel-duration) var(--spring-panel) both;
         }
 
         .music-staff[data-sealed] .music-staff__seal {

@@ -15,51 +15,53 @@
    because the parity-fixed curve reaches ~90% by ~mid-clock, not a truncated timer.
 
    ── The register table ──────────────────────────────────────────────────────
-   | register        | spring          | clock (settle) | scale-from | blur  | rise  |
-   |-----------------|-----------------|----------------|------------|-------|-------|
-   | enter-overlay   | snappy          | 0.44s          | 0.94       | 6px   | 0.5rem|  Dialog/Sheet/Popover — the .glass-reveal DEFAULT. Blur is the dominant overlay channel; t90 ~212ms/+3.2% (iOS 130-370ms materialize band).
-   | enter-menu      | smooth          | 0.35s (tight)  | 0.96       | 2px   | 0.5rem|  dropdown/select/combobox/command — a refined, shared bounce; t90 ~239ms/+0.2%.
-   | enter-tooltip   | ease-out-expo   | 0.2s (fastest) | 0.97       | 0     | 0     |  tooltip/hover-card — NO overshoot, fastest decelerating arrival.
+   Each register names a ROLE and binds the spring row that owns that role's job;
+   the pairs, clocks and peaks live in the ONE table (springPresets.ts) and are
+   stated nowhere here.
+   | register        | spring row | scale-from | blur  | rise  |
+   |-----------------|------------|------------|-------|-------|
+   | enter-overlay   | panel      | 0.94       | 6px   | 0.5rem|  Dialog/Sheet/Popover — the .glass-reveal DEFAULT and the FIRED DEPLOY: the one row whose rebound is intrinsic. Blur is the dominant overlay channel.
+   | enter-menu      | present    | 0.96       | 2px   | 0.5rem|  dropdown/select/combobox/command — the anchored materialization, born from its anchor and landing dead.
+   | enter-tooltip   | (bezier)   | 0.97       | 0     | 0     |  tooltip/hover-card — an annotation has no mass, so it takes `--ease-out-expo`, not a spring.
 
    Toast rides `enter-overlay` too (F20 parity) — the same spring/scale/exit contract
-   as the Dialog; there is no separate transient register.
+   as the Dialog; there is no separate materialization fork.
 
-   ── The exit register (tighten 200ms → 150ms) ────────────────────────────────
-   Named exit clocks on the no-overshoot `--ease-out`; a closing surface must
-   never overshoot past gone. Minted as their own tokens, not a retune of the
-   shared `--duration-fast` (0.2s) — re-timing that would re-time everything, and
-   this closes the reveal.css comment-vs-value drift (the comment claimed ≤150ms
-   while `--duration-fast` = 0.2s). The `.glass-reveal` exit reads `--exit-overlay-
+   ── The exit register ────────────────────────────────────────────────────────
+   An exit is 0.6 × the ENTRY of the SAME job, so it is a RATIO of the entering
+   row's own settle — `--spring-<row>-exit-duration`, generated beside the entry
+   clock — never a shared literal in seconds. One flat number served every overlay
+   before this, and it was wrong in both directions: it dragged a press and clipped
+   a deploy. The CURVE stays the no-overshoot `--ease-out`: a closing surface must
+   never overshoot past gone. The `.glass-reveal` exit reads `--exit-overlay-
    duration`.
 
    ── press / morph / cascade — NAMES over shipped recipes (zero paint change) ──
    These names point at their existing source tokens; no unused alias is minted:
-     · press   → `--spring-press` (0.12s tap; useLiquidPress + --glass-btn-press-t)
+     · press   → `--spring-press` (the tap; useLiquidPress + --glass-btn-press-t)
      · morph   → `--spring-dock` / `--spring-dock-duration` (the dock box morph)
      · cascade → the `.scroll-cascade` / `--scroll-cascade-*` recipe
 
    ── Mid-duration spring decision ─────────────────────────────────────────────
-   A value.js consumer surfaced a spring-clock gap: press (0.12s tap) ↔
-   snappy (0.44s) with a ~0.3s-settle gap, framed as "mint a ~0.3s preset OR bless
-   snappy". DECISION: NEITHER new preset NOR bless-snappy. The ~0.3s-settle register
-   ALREADY EXISTS — `--spring-smooth` (0.35s, the SETTLE / enter-menu clock). A
-   press-adjacent consumer composes the existing register: the tap on `--spring-press`
-   (0.12s), the mid-settle on `--spring-smooth` (0.35s). Minting a 7th INTERACTIVE
-   preset for one value.js consumer fails the two-consumer bar;
-   "bless snappy" is rejected because 0.44s reads sluggish for a press-adjacent
-   interaction. */
+   A value.js consumer surfaced a spring-clock gap between the tap and the slowest
+   register, framed as "mint a mid preset OR bless the slow one". DECISION: neither.
+   A press-adjacent consumer COMPOSES the rows it already has — the tap on
+   `--spring-press`, the mid-settle on `--spring-dock`, the row that owns
+   coordinated travel. Minting a seventh row for one consumer fails the
+   two-consumer bar, and blessing a row for a job it does not own is exactly the
+   duplicate-job defect the six-row table exists to end. */
 :root {
     /* ── enter-overlay — the .glass-reveal DEFAULT (Dialog / Sheet / Popover / Toast) ── */
-    --enter-overlay-spring: var(--spring-snappy);
-    --enter-overlay-clock: var(--spring-snappy-duration);
+    --enter-overlay-spring: var(--spring-panel);
+    --enter-overlay-clock: var(--spring-panel-duration);
     --enter-overlay-scale: 0.94;
     /* Blur is the dominant overlay channel — 4px → 6px. */
     --enter-overlay-blur: 6px;
     --enter-overlay-slide: 0.5rem;
 
     /* ── enter-menu — dropdown / select / combobox / command ── */
-    --enter-menu-spring: var(--spring-smooth);
-    --enter-menu-clock: var(--spring-smooth-duration);
+    --enter-menu-spring: var(--spring-present);
+    --enter-menu-clock: var(--spring-present-duration);
     --enter-menu-scale: 0.96;
     --enter-menu-blur: 2px;
     --enter-menu-slide: 0.5rem;
@@ -71,8 +73,11 @@
     --enter-tooltip-blur: 0px;
     --enter-tooltip-slide: 0px;
 
-    /* ── Named exit clock: tighten the reveal exit 200ms → 150ms ── */
-    --exit-overlay-duration: 0.15s;
+    /* ── Named exit clock ──
+       The overlay register's recede reads the exit clock DERIVED from the row it
+       enters on, so it stays proportionate to that arrival and states no figure of
+       its own. */
+    --exit-overlay-duration: var(--spring-panel-exit-duration);
     /* The exit curve — no-overshoot ease-out; never overshoot past gone. */
     --exit-curve: var(--ease-out);
 }

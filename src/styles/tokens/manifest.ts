@@ -42,7 +42,8 @@ export const semanticTokens = {
     ],
     motion: [
         "--duration-fast", "--duration-normal", "--duration-slow",
-        "--spring-smooth", "--spring-snappy", "--spring-bouncy",
+        "--spring-press", "--spring-present", "--spring-dock",
+        "--spring-panel", "--spring-bloom", "--spring-world",
         "--ease-standard", "--ease-out",
     ],
     interaction: [

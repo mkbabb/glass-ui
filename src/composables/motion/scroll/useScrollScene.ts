@@ -36,6 +36,12 @@ import {
 } from "vue";
 import { createScrollReader, type ScrollReader, type ScrollSource } from "./scrollReader";
 import { useReducedMotion } from "../core/useReducedMotion";
+import { springPreset } from "../spring/springPresets";
+
+// The scene's spring register IS the table's substrate-travel row — its response and
+// its damping, read from the one table rather than restated. A literal here was a
+// second spring authority hiding in a default parameter.
+const WORLD = springPreset("world");
 
 /** The smoother register — a pure-lag low-pass (`SmoothProgress`) or an overshooting
  *  spring (`SpringProgress`). The FELT reveal wants the spring (it overshoots, then
@@ -66,8 +72,9 @@ export interface UseScrollSceneOptions {
     /** The smoother register (default `smooth` — the pure-lag low-pass). */
     register?: ScrollSceneRegister;
     /**
-     * For the `spring` register: the damping ratio ζ. < 1 overshoots (the felt slam),
-     * 0.85 ≈ the `--spring-gentle` identity. Default 0.85. Ignored for `smooth`.
+     * For the `spring` register: the damping ratio ζ. < 1 overshoots (the felt slam).
+     * Defaults to the `world` row's own damping — the substrate-travel register —
+     * read from the table rather than restated. Ignored for `smooth`.
      */
     dampingFraction?: number;
     /** The element the damped value is written onto as a custom property (when bound). */
@@ -126,7 +133,7 @@ export function useScrollScene(options: UseScrollSceneOptions): UseScrollSceneRe
     const {
         scrub = 0.618,
         register = "smooth",
-        dampingFraction = 0.85,
+        dampingFraction = WORLD.dampingFraction,
         property,
         respectReducedMotion = true,
     } = options;
@@ -141,7 +148,7 @@ export function useScrollScene(options: UseScrollSceneOptions): UseScrollSceneRe
     const smoother =
         register === "spring"
             ? new SpringProgress({
-                  response: 0.5,
+                  response: WORLD.response,
                   dampingFraction,
                   initial: 0,
                   respectReducedMotion: false,

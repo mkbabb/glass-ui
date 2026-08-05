@@ -140,7 +140,7 @@
                spring-derived `--transition-liquid-spatial` DEFAULT (the inversion:
                weight is now the vocabulary, not a per-site --motion-weight opt-in;
                was the bare `--ease-standard` bezier). `.motion-calm` opts back out. */
-            scale var(--duration-fast) var(--transition-liquid-spatial);
+            scale var(--spring-press-duration) var(--transition-liquid-spatial);
     }
     .interactive-item:hover {
         background-color: color-mix(in srgb, var(--accent) 50%, transparent);
@@ -174,13 +174,12 @@
        tracks the canonical `--scale-press` (0.96) too (
        press canon — NOT a deeper `0.92`; ONE source).
 
-       doctrine — the `scale` register is reconciled onto
-       `--spring-smooth` (was `--spring-snappy`), the ONE button/interactive
-       scale register the §6 easing doctrine records and the gate asserts
-       across `.button`/`.tap-squish`. At
-       ζ=0.86 `--spring-smooth` settles a press crisply with a sub-perceptual
-       (~0.5%) peak — no visible bounce — so press still reads alive while
-       hover reads as a smooth glide on the SAME spring.
+       doctrine — the `scale` register is the ONE button/interactive scale
+       register `--spring-press`, reached through `--transition-liquid-spatial`
+       and asserted by the gate across `.button`/`.tap-squish`. The row lands
+       DEAD by construction (LAW 0): a press's liveliness is the squish and the
+       light that answers it, never a positional rebound — so press and hover
+       read as one motion language on the SAME spring.
 
        The transition lists the SURFACE legs (bg/border/box-shadow/color/
        opacity) on the bezier `--ease-standard` alongside the spring `scale`
@@ -207,10 +206,11 @@
             color var(--duration-fast) var(--ease-standard),
             opacity var(--duration-fast) var(--ease-standard),
             /* The scale leg reads the shared
-               `--transition-liquid-spatial` vocabulary token (byte-identical at the
-               default — it resolves to `--spring-smooth` — but now `.motion-calm`
-               opts the press out of overshoot in lockstep with the atoms above). */
-            scale var(--duration-fast) var(--transition-liquid-spatial);
+               `--transition-liquid-spatial` vocabulary token (it resolves to
+               `--spring-press`) on that row's OWN clock — the clock fence: a spring
+               replayed over a foreign span is the curve compressed. `.motion-calm`
+               opts the press out of overshoot in lockstep with the atoms above. */
+            scale var(--spring-press-duration) var(--transition-liquid-spatial);
         transform-origin: center center;
     }
     .tap-squish:not([data-press-armed]):active {

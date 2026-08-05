@@ -119,7 +119,7 @@ const springActive = computed(
 
 // The centered modal flips `--stage-t` 0→1 on open (the
 // drawer drives it per-frame; a dialog has no detent, so it transitions the ONE scalar
-// on `--spring-snappy`, scoped to the reader roots). The
+// on `--spring-present`, scoped to the reader roots). The
 // `stage` enum gates the page-wrapper recede; PRM degrades `scale`/`immersive` → `dim`.
 const resolvedStage = computed(() => {
     const base = props.stage;
@@ -313,7 +313,7 @@ const radiusCtxStyle: CSSProperties = {
 const springMount = springActive.value
     ? useSpringMount({
           open: dialogRoot.open,
-          preset: props.springPreset ?? "smooth",
+          preset: props.springPreset ?? "panel",
       })
     : null;
 

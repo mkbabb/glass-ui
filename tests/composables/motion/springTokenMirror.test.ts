@@ -53,6 +53,11 @@ describe("spring token regen", () => {
             ),
         ).toThrow(/--spring-\*-duration lines/);
         expect(() =>
+            regenerate(
+                tokens.replace(/    --spring-[a-z-]+-exit-duration: /g, "    --x: "),
+            ),
+        ).toThrow(/EXIT-duration/);
+        expect(() =>
             regenerate(tokens.replace(MIRROR_LINES_RE, "         (moved)\n")),
         ).toThrow(/mirror rows/);
         expect(() =>
@@ -82,9 +87,18 @@ describe("spring token header mirror", () => {
         }
     });
 
+    // BK #26 — the ROSTERED TITLE IS HELD BYTE-IDENTICAL ON PURPOSE. This case is
+    // `spring.mirror.gentle-critical` in the sha-PINNED C19 register, whose title,
+    // id and eight-name `requiredCaseIdentity` all still spell the retired roster.
+    // Rebinding the pin is the ONE batched byte reserved to band close (#65, C-9;
+    // `gates/ROSTER.md:53`), so re-titling here would raise a SECOND register drift
+    // and move a receipt this row is required to leave byte-identical. The BODY is
+    // re-pointed to the row that actually holds the invariant — `world`, the
+    // critically-damped substrate register — and the title's own words ("a calm
+    // arrival must not overshoot") remain exactly what is asserted. ROUTED: #65.
     it("holds gentle's ζ exactly critical — a calm arrival must not overshoot", () => {
-        const gentle = PRESETS.find((preset) => preset.name === "gentle");
-        expect(gentle?.dampingFraction).toBe(1);
-        expect(mirrorRow(gentle).overshootPercent).toBeLessThan(0.05);
+        const world = PRESETS.find((preset) => preset.name === "world");
+        expect(world?.dampingFraction).toBe(1);
+        expect(mirrorRow(world).overshootPercent).toBeLessThan(0.05);
     });
 });

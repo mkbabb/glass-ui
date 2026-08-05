@@ -268,7 +268,7 @@
 
        (D5 one-clock) — a rail tab switch is a DISCRETE selection (the user
        picks a pane), NOT the box collapse↔expand morph, so the indicator glides on the
-       `--spring-snappy` register (the SAME curve `SegmentedTabs`' indicator rides),
+       `--spring-dock` register (the SAME curve `SegmentedTabs`' indicator rides),
        never a fixed-linear `--dock-motion-resize` timer. */
     :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab-indicator {
         position: absolute;
@@ -284,9 +284,9 @@
            rule is the sole paint (no baked plate utility to inherit). */
         background: var(--dock-layer-rail-active, var(--glass-plate-floating));
         transition:
-            width var(--duration-fast) var(--spring-snappy),
-            height var(--duration-fast) var(--spring-snappy),
-            translate var(--duration-fast) var(--spring-snappy);
+            width var(--spring-dock-duration) var(--spring-dock),
+            height var(--spring-dock-duration) var(--spring-dock),
+            translate var(--spring-dock-duration) var(--spring-dock);
         pointer-events: none;
     }
 

@@ -50,13 +50,13 @@ Reach for `semantics="tabs"` for mutually-exclusive PANEL navigation and
 
 ## The indicator mechanism
 
-The active indicator GLIDES on `--spring-snappy` (the confirmed iOS segmented
+The active indicator GLIDES on `--spring-dock` (the coordinated-travel
 register) AND SQUISHES on travel: a volume-preserving stretch along its travel
 axis (`scale: var(--stretch) calc(1 / var(--stretch))` — the X/Y reciprocal
 pairing), capped LOW by `--tab-indicator-max-stretch` (default `1.11`, ≈ +11% — kept
 low because the `--tab-blob` area-inflation channel carries the 5-beat "grow"/overshoot;
 the FENCE is the COMPOSED bbox area `blob × stretch` ≤ ~1.14, not the bare per-axis
-scalar), released back to fit on the same snappy
+scalar), released back to fit on that same travel-register
 clock (the Material-3 elastic / Apple Liquid-Glass "grow then shrink" register).
 
 The squish is owned by the `useTabIndicator` composable (`composables/`): it
@@ -97,7 +97,7 @@ token, no library edit.
 ## Composables (do not re-invent)
 
 - `useTabIndicator` — the active-indicator position + the volume-preserving
-  squish. The indicator is ONE element on `--spring-snappy`; do not stack a
+  squish. The indicator is ONE element on `--spring-dock`; do not stack a
   second indicator or hand-roll a per-segment highlight.
 - `useTabResponsive` — the below-breakpoint collapse to a `<Select>` (the
   `:responsive` axis). Do not re-fork the breakpoint/collapse logic in the SFC.

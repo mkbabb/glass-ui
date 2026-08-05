@@ -2,8 +2,8 @@
  *
  * A linear stadium track sits inset along the host's block-end (horizontal) or
  * inline-end (vertical) edge; a spectrum fill-pill grows from the leading edge to
- * the progress fraction, its VISIBLE WIDTH sprung by --spring-snappy (the codex
- * indicators/progress preset). Discrete progress renders its remaining positions
+ * the progress fraction, its VISIBLE WIDTH sprung by --spring-dock (the
+ * coordinated-travel row every indicator rides). Discrete progress renders its remaining positions
  * as dots that crossfade out as the pill swallows them — never an angular sweep,
  * so it reads true on any host silhouette (the conic-on-a-rectangle break retires).
  *
@@ -54,10 +54,9 @@
     border-radius: inherit;
     background: var(--scroll-progress-rim-spectrum, var(--section-color-7));
     /* spring the width: the clip reveal is the pill's visible length, animated on
-     * --spring-snappy; a growing reveal, never a translated fixed-width thumb */
+     * --spring-dock; a growing reveal, never a translated fixed-width thumb */
     clip-path: inset(0 100% 0 0 round var(--radius-pill));
-    transition: clip-path var(--spring-snappy-duration, 0.44s)
-        var(--spring-snappy, ease-out);
+    transition: clip-path var(--spring-dock-duration) var(--spring-dock);
 }
 
 .scroll-progress-rim[data-orientation="horizontal"] .scroll-progress-rim__fill {
@@ -91,8 +90,7 @@
         --value-mark-color,
         color-mix(in srgb, var(--foreground) 34%, transparent)
     );
-    transition: opacity var(--spring-snappy-duration, 0.44s)
-        var(--spring-snappy, ease-out);
+    transition: opacity var(--spring-dock-duration) var(--spring-dock);
 }
 
 .scroll-progress-rim[data-orientation="horizontal"] .scroll-progress-rim__dot {

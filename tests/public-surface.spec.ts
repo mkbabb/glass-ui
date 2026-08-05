@@ -222,7 +222,6 @@ const rootRuntimeExports = [
     "useConfiguratorState",
     "useDragVelocity",
     "useIdleReady",
-    "useLeadTrail",
     "useLiquidFlex",
     "useOptionalConfiguratorSize",
     "usePointerVelocityField",

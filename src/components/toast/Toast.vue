@@ -90,7 +90,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
                 resolveSurfaceClass('floating'),
                 // The toast MATERIALIZES on the ONE overlay register
                 // (`data-reveal=overlay`: scale-from 0.94 + decongest-blur + fade on the
-                // `--spring-snappy` overlay clock) — the SAME spring/transition contract the
+                // `--enter-overlay-clock`) — the SAME spring/transition contract the
                 // Dialog/Sheet/Popover ride (F20: the toast enters exactly like the refined
                 // dialog, no bespoke transient fork). It blooms FROM its own centre (law 18: an
                 // overlay GROWS from a seed, never slides in from a viewport edge), NOT the

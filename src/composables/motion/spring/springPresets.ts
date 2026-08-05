@@ -1,5 +1,5 @@
 // The glass-ui named-spring (response, dampingFraction) pairs — THE single
-// source of the iOS-canonical register vocabulary.
+// source of the register vocabulary.
 //
 // This module is the no-second-authority root. The CSS token generator and every
 // Glass JS consumer read this same table; a consumer needing an engine primitive
@@ -9,17 +9,28 @@
 // regen script + sync gate consume it with no build step; the library TypeScript
 // imports it through the `/motion` barrel. Value.js-free + keyframes-free (pure
 // data) — it adds no peer edge wherever it is reached.
+//
+// LAW 0 — a row's first peak `M = exp(-ζπ/√(1-ζ²))` appears in the shipped curve
+// iff `M > settleBand`, because the emitted `linear()` is normalized over that
+// band's settle horizon. There is no tiny-rebound region: a row bounces visibly
+// or lands dead, and a peak that arrives in the last fifth of the clock is a late
+// tick — the worst read of the three. A row whose text promises a rebound its own
+// band cannot ship is a text to delete, never a damping to lower.
+//
+// LAW 0b — the band is a property of the job's AMPLITUDE, not a constant. Two
+// percent of a press's scale delta is invisible; two percent of a long stroke is
+// plainly visible. Small-amplitude rows generate over `0.02`, room-sized ones over
+// `0.005`, and `settleBand` carries that per row into both the curve horizon and
+// the clock, so curve/clock parity survives the split.
 
 /** A glass-ui named-spring preset name. */
 export type SpringPresetName =
-    | "smooth"
-    | "snappy"
-    | "bouncy"
-    | "gentle"
-    | "dock"
     | "press"
+    | "present"
+    | "dock"
     | "panel"
-    | "orb-drop";
+    | "bloom"
+    | "world";
 
 /** One named-spring row: the analytic (response, dampingFraction) pair + its register doc. */
 export interface SpringPresetRow {
@@ -29,122 +40,101 @@ export interface SpringPresetRow {
     readonly response: number;
     /** Damping fraction ζ (1 = critical; <1 overshoots). */
     readonly dampingFraction: number;
+    /** LAW 0b — the settle band the emitted `linear()` and `-settle` clock normalize over. */
+    readonly settleBand: 0.02 | 0.005;
     /** The register this curve serves (the doc-table derives from this one string). */
     readonly comment: string;
 }
 
 /**
- * iOS-canonical (response, dampingFraction) pairs. The names match the `--spring-*`
- * CSS tokens AND the CSS consumers that read `var(--spring-smooth)` etc. directly, so
- * they MUST stay stable across retunes — only the `(response, ζ)` pair and the emitted
- * curves change. Each row's `comment` describes the register it serves (the doc-table
- * on /motion/springs derives from that one string):
+ * The six rows. Every row owns exactly ONE job; no job is owned twice; no row
+ * ships without a rider. The names match the `--spring-*` CSS tokens AND the CSS
+ * consumers that read `var(--spring-press)` etc. directly, so a rename is a
+ * clean break across the library and its consumers, never an alias.
  *
- *   SETTLE  → smooth  — patient entrances, fades, scale-ins (no overshoot read).
- *   CONTROL → snappy  — crisp position morphs: tab underline glide, progress fill,
- *                       the continuous-marker pop, the generic crisp settle.
- *   PLAYFUL → bouncy  — deliberate emphatic one-shots ONLY: the bouncy toggle press,
- *                       dialog/success entrances. Largest overshoot.
- *   GENTLE  → gentle  — critically-damped slow settles (the patient end of the ladder).
- *   DOCK    → dock    — the dock expand/collapse morph AND everything inside it.
- *   PRESS   → press   — the iOS interactive tap-press: a sub-200ms answer, a tiny alive
- *                       rebound.
- *   PANEL   → panel   — the fired presentation deploy: both axes ONE spring, an
- *                       intrinsic overshoot that is NOT velocity-bought.
- *   ORB-DROP → orb-drop — the invocation drop: a dead critically-damped landing whose
- *                       energy is the light build that follows, never a bounce.
+ * Exactly one row rebounds and it is the fired deploy — the measured corpus
+ * ceiling is a clip edge, and a celebration's liveliness belongs to the LIGHT
+ * channel (engageEnvelopes), never to a geometry bounce.
  *
- * PANEL and ORB-DROP are the two-registers-two-intents split: a deployed panel is
- * underdamped because a fired surface that lands dead reads inert, while an invoked orb
- * IS critical because its liveliness belongs to the light channel. One is never the
- * other's tuning.
- *
- * The whole table sits at the iOS weighty-inertial pole: longer `response` (weight) +
- * through-body damping toward critically-damped-with-a-touch-of-overshoot, while keeping
- * the perceptual arrival audacious. The invariant fences:
- *   · every overshoot ∈ [0%,10%] — the "touch of overshoot" band (>10% reads too springy).
- *   · every non-gentle settle is at least as long as the calm baseline (the inertia floor);
- *     nothing gets faster (faster = the mechanical-snap defect).
- *   · t90 (the 90%-arrival fraction of the response clock) is NOT a single tight band —
- *     it varies materially by preset (snappy arrives earlier than smooth/press). The
- *     inertia is carried by the `response`/ζ pair below, not by a t90 fence.
- *   · gentle ζ stays exactly 1.0: a calm arrival must not overshoot.
+ * Every figure describing these rows is GENERATED — the register mirror in
+ * scheme-spring.css is emitted from this table by scripts/regen-spring-tokens.mjs.
+ * Nothing here states a settle, a peak, or a clock in prose.
  */
 export const SPRING_PRESETS: readonly SpringPresetRow[] = [
-    {
-        name: "smooth",
-        response: 0.58,
-        dampingFraction: 0.8,
-        comment:
-            "Patient entrances, fades, and scale-ins with a quiet sense of weight.",
-    },
-    {
-        name: "snappy",
-        response: 0.48,
-        dampingFraction: 0.74,
-        comment:
-            "Quick, weighty control movement for indicators, progress, and reveals.",
-    },
-    {
-        name: "bouncy",
-        response: 0.6,
-        dampingFraction: 0.6,
-        comment:
-            "Playful emphasis for dialogs, success moments, and the completion seal.",
-    },
-    {
-        name: "gentle",
-        response: 0.82,
-        dampingFraction: 1.0,
-        comment:
-            "A calm, patient arrival with no overshoot.",
-    },
-    {
-        // The row is named for DOCK landings, so it centers on dock events rather than
-        // on the cross-surface mean: response 0.35 at ζ 0.82 sits inside every measured
-        // dock-arrival bracket. ζ=0.82 is the corpus union center: the measured damping
-        // ratios cluster tightly across surfaces while the damped frequency does not.
-        // A popover enter that reads dead under this row takes a per-consumer response
-        // override at the presets-in-consumers seam; the table never forks.
-        name: "dock",
-        response: 0.35,
-        dampingFraction: 0.82,
-        comment:
-            "A brisk liquid morph for the dock and its coordinated contents.",
-    },
     {
         name: "press",
         response: 0.2,
         dampingFraction: 0.8,
+        settleBand: 0.02,
         comment:
-            "A responsive press with a subtle rebound and continuous interruption.",
+            "A responsive press that lands dead. The liveliness is the squish, and the light is the acknowledgement.",
     },
     {
-        // response 0.40 is the only value reproducing the measured (ζ=0.71, f_d≈1.76Hz)
-        // fit. Panel is the ONE class whose overshoot is intrinsic, not velocity-bought.
+        name: "present",
+        response: 0.22,
+        dampingFraction: 1.0,
+        settleBand: 0.02,
+        comment:
+            "The anchored materialization — a menu, plate, toast, or orb born from its anchor: front-loaded attack, monotone decay, dead landing.",
+    },
+    {
+        // The pair is centred on the measured dock-arrival brackets: the damping
+        // sits inside all three, and the response is what makes the damping free —
+        // the clock lands where the shipped one did while the attack gets faster.
+        name: "dock",
+        response: 0.3,
+        dampingFraction: 0.88,
+        settleBand: 0.02,
+        comment:
+            "The coordinated travel — member FLIP, the selection lens, indicator glide: fast attack, dead landing.",
+    },
+    {
+        // The ONE row whose overshoot is intrinsic rather than velocity-bought. The
+        // pair reproduces the measured anisotropic stroke; the band is what places
+        // the peak mid-clock instead of hiding it past the horizon (LAW 0b).
         name: "panel",
         response: 0.4,
         dampingFraction: 0.71,
+        settleBand: 0.005,
         comment:
-            "A fired presentation deploy — both axes one spring, intrinsic 4-5% overshoot, text born blurred condensing ~190ms, the rim flare celebrating the data (+0.5s/+0.85s).",
+            "The fired deploy — the long axis of an anisotropic stroke, the extent morph; the one row whose rebound is intrinsic, arriving mid-clock.",
     },
     {
-        // ζ=1.0 is measured critical — the extent pins dead at the arrival frame. The
-        // response is [DESIGN] inside the measured flight bracket.
-        name: "orb-drop",
-        response: 0.22,
-        dampingFraction: 1.0,
+        // The empty cell in (response, ζ) space: long response AND high damping.
+        // Without it the fired deploy's rebound lands on a room-sized plate, where
+        // an intrinsic overshoot reads as wobble rather than as physicality.
+        name: "bloom",
+        response: 0.42,
+        dampingFraction: 0.9,
+        settleBand: 0.005,
         comment:
-            "The invocation drop — a dead critically-damped landing; the energy is the light build.",
+            "The room-sized growth — a surface expanding to fill a sheet or a screen: big, patient, dead-landing.",
+    },
+    {
+        // ζ stays exactly 1.0 and now has a reason rather than a preference.
+        name: "world",
+        response: 0.48,
+        dampingFraction: 1.0,
+        settleBand: 0.005,
+        comment:
+            "The world's recession — under-layer travel and scroll choreography, critically damped; a world that rings reads as an earthquake.",
     },
 ] as const;
 //
-// PER-COMPONENT REGISTERS (presets-in-consumers) — the 3 ScrubberTimeline legs
-// (head/fill/press) are NOT global SPRING_PRESETS rows. They were once folded into the
-// global table for ONE consumer, which bloated the generated CSS with extra curves and
-// clocks. They now live LOCAL to ScrubberTimeline.vue
-// as documented per-primitive defaults (JS-only, no CSS `--spring-*` token) — the
-// per-primitive-default seam, NOT a second register TABLE.
+// PER-PRIMITIVE REGISTERS (presets-in-consumers) — the census, OPEN.
+// A pair may sit outside this table only as a per-primitive default: JS-only (no CSS
+// `--spring-*` token), documented at its ONE consumer, never a second register TABLE.
+// Every such form on disk:
+//   · the ScrubberTimeline head/fill/press legs (ScrubberTimeline.vue);
+//   · the pager worm's lead pair + trail tau (pager-dots/constants.ts), colocated
+//     with its one consumer;
+//   · the blob pinch-snap pulse — an impulse response, not a transition register;
+//   · the blob pointer-follow pair (blob/composables/useBlobPointer.ts);
+//   · DRAWER_SNAP (drawer/constants.ts);
+//   · `useSpring`'s bare-primitive default (motion/spring/useSpring.ts).
+// The last three are RECORDED, not ratified — their disposition is BK RT-26F, which
+// is a design-seat ruling. Any new entry takes that same ruling, never a drive-by
+// literal.
 
 /** Lookup one Glass semantic spring preset by name. */
 export function springPreset(name: SpringPresetName): SpringPresetRow {
