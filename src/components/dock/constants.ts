@@ -18,7 +18,7 @@ export const DOCK_SPRING = {
  *
  * `[data-dismissable-layer]` is reka's own marker, stamped by `DismissableLayer` — the
  * single primitive that owns Escape→dismiss. It is therefore EXACTLY the set of hosted
- * layers entitled to eat an Escape (Dialog/Drawer/Popover/Menu/Select/Combobox/
+ * layers entitled to eat an Escape (Dialog/Sheet/Popover/Menu/Select/Combobox/
  * HoverCard/NavigationMenu/Tooltip content), and it excludes the disclosure primitives
  * that merely stamp `data-state="open"` (Accordion, Collapsible) — those handle no
  * Escape, so they must NOT swallow the dock's collapse.

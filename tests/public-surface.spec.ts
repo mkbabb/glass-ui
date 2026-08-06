@@ -18,7 +18,6 @@ import * as Dark from "@glass/composables/dark";
 import * as DataTableSurface from "@glass/components/data-table";
 import * as DialogSurface from "@glass/components/dialog";
 import * as Dock from "@glass/components/dock";
-import * as DrawerSurface from "@glass/components/drawer";
 import * as DropdownMenuSurface from "@glass/components/dropdown-menu";
 import * as ExpandableContainerSurface from "@glass/components/expandable-container";
 import * as Forms from "@glass/forms";
@@ -242,14 +241,8 @@ const rootRuntimeExports = [
 ] as const;
 
 const subpathRuntimeExports = [
-    // Drawer moved OFF the root barrel to the /drawer subpath
-    // (keyframes-bearing heavy component, dock/aurora isolation pattern).
-    { subpath: "drawer", surface: DrawerSurface, name: "Drawer" },
-    { subpath: "drawer", surface: DrawerSurface, name: "DrawerContent" },
-    { subpath: "drawer", surface: DrawerSurface, name: "DrawerHeader" },
-    { subpath: "drawer", surface: DrawerSurface, name: "DrawerFooter" },
-    { subpath: "drawer", surface: DrawerSurface, name: "DrawerTitle" },
-    { subpath: "drawer", surface: DrawerSurface, name: "DrawerDescription" },
+    // `./drawer` RETIRED with its directory (BK #39): the family was a placement plus a
+    // scalar, and both are props on `<SheetContent>` now — `detents` and `detent`.
     { subpath: "search", surface: Search, name: "useFuzzySearch" },
     // The `ProgressiveSidebar` SFC is gone; the `./sidebar` subpath now
     // surfaces composables only.
@@ -346,8 +339,6 @@ const retiredSubpathRuntimeMembers = [
     { subpath: "carousel", surface: CarouselSurface, name: "GlassCarouselPager" },
     { subpath: "dialog", surface: DialogSurface, name: "DialogScrollContent" },
     { subpath: "data-table", surface: DataTableSurface, name: "DataTablePagination" },
-    { subpath: "drawer", surface: DrawerSurface, name: "DrawerOverlay" },
-    { subpath: "drawer", surface: DrawerSurface, name: "DrawerPortal" },
     { subpath: "progress", surface: ProgressSurface, name: "ProgressDefault" },
     { subpath: "progress", surface: ProgressSurface, name: "ProgressGradient" },
     { subpath: "progress", surface: ProgressSurface, name: "ProgressLiquid" },

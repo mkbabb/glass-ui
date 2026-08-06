@@ -13,6 +13,7 @@ import ModalOverlay from "./ModalOverlay.vue";
 import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
+import { scrimOpacity } from "../sheet/motion";
 import type { DismissableContentEmits } from "../_shared/interaction";
 
 /**
@@ -105,7 +106,9 @@ const closingInert = computed(() =>
 // CO-TERMINATION, not a re-timed exit. Scrim and plate read the SAME live scalar, so
 // they cannot desync through an interrupt and they land together; the exit stays
 // fade-led at 150ms, which is already correct, and the plate mints no literal.
-const scrimSlideT = computed(() => (live.value ? springMount.position.value : null));
+const scrimAlpha = computed(() =>
+    live.value ? scrimOpacity(springMount.position.value) : null,
+);
 const scrimForceMount = computed(() =>
     live.value ? springMount.present.value || dialogRoot.open.value : undefined,
 );
@@ -180,7 +183,7 @@ const contentClass = computed(() =>
         <!-- `veil` is passed HERE and nowhere else: the centred plate sits inside the
              focus veil's own fixed core, which is the only geometry that mask is true
              for. `sheet/SheetContent.vue` composes the same scrim and passes none. -->
-        <ModalOverlay veil :slide-t="scrimSlideT" :force-mount="scrimForceMount" />
+        <ModalOverlay veil :opacity="scrimAlpha" :force-mount="scrimForceMount" />
         <RekaDialogContent
             v-bind="{ ...forwarded, ...$attrs, inert: closingInert }"
             :force-mount="contentForceMount"

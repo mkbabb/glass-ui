@@ -30,6 +30,63 @@
     z-index: var(--z-modal);
 }
 
+/* ── THE DETENT IS A SIZE ──────────────────────────────────────────────────────────
+ *
+ * `--detent-t` is the fraction of the anchored axis the sheet occupies, and the sheet
+ * takes its BLOCK-SIZE (or inline-size, on a side edge) from it while staying pinned to
+ * its edge. Nothing translates.
+ *
+ * The alternative — the shipped one — gave the sheet `height: 100%` and translated it by
+ * `(1 − t)·100%`. Every consequence of that followed from one fact: the box was always
+ * viewport-tall, so at any rung below full its bottom sat below the fold, and a footer
+ * pinned with `mt-auto` went with it. The primary action was off-screen at three of the
+ * four shipped rungs, and nothing scrolled it back — the sheet declared
+ * `overflow-y: visible`. Sizing it instead puts the action on the visible edge at every
+ * rung by construction, makes `0` a legal rung (so a dismiss has somewhere to land), and
+ * leaves the frost sampling a stationary box.
+ *
+ * The honest cost is that `block-size` animates on layout rather than on the compositor.
+ * It is paid for with `contain: layout paint` on an out-of-flow element — the containment
+ * that keeps the work inside the sheet's own subtree — and the fps budget is the
+ * falsifier, not a fallback: there is no second geometry waiting behind this one.
+ *
+ * NO MASKING FALLBACK: the registered initial is `0`, the DISMISSED state. An unwritten
+ * scalar collapses the sheet to nothing and the dead writer is visible in one glance; a
+ * `1` initial would seat it full-open and hide exactly that failure. */
+@property --detent-t {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+:where([data-slot="sheet-content"][data-detents]) {
+    contain: layout paint;
+}
+
+/* THE LIVE-BEHIND LAYER CONTRACT. `<Dialog :modal="false">` is reka's own non-modal arm
+ * — it renders no overlay at all, so the page behind keeps focus and pointer events —
+ * and the one thing the library owes it is a band: a sheet sharing the page's
+ * interactive layer must never cover persistent dock chrome. There is no second mode
+ * enum for this, and the previous family's `mode="live-behind"` (which bundled
+ * `modal:false` with a stage and a ladder default) is not replaced by another name. */
+:where([data-slot="sheet-content"][data-modal="false"]) {
+    z-index: calc(var(--z-dock) - 1);
+}
+
+/* A drag is a gesture on the sheet, so the browser's own scroll/zoom gestures stand
+ * down on the surfaces that carry it — and only on those. */
+:where(
+    [data-slot="sheet-content"][data-detents] > [data-slot="sheet-detent-handle"],
+    [data-slot="sheet-content"][data-detents] [data-slot="dialog-header"]
+) {
+    touch-action: none;
+}
+
+:where([data-slot="sheet-content"][data-dragging]) {
+    cursor: grabbing;
+    user-select: none;
+}
+
 /* One stable inner region owns intrinsic flow; `scroll` adds bounds and overflow to
  * that region only, so toggling it never reparents focusable content or moves the
  * graded sampler with the scrollport. */
@@ -64,6 +121,150 @@
         > :only-child
 ) {
     min-block-size: 0;
+}
+
+/* ── A REAL SCROLL REGION (the detented arm) ───────────────────────────────────────
+ *
+ * Three rows: the header, the body, the footer. The two chrome rows are intrinsic and
+ * PINNED; the body is the only thing that scrolls, and its chaining is contained so a
+ * pull past its top drags the sheet instead of the page behind it. What shipped was a
+ * bare `<slot/>` with `overflow-y: visible`, which is why nothing could rescue a footer
+ * the geometry had already pushed below the fold. */
+:where([data-slot="sheet-content"][data-detents] > [data-slot="sheet-content-region"]) {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    align-content: stretch;
+    block-size: 100%;
+    min-block-size: 0;
+    gap: var(--space-body);
+}
+
+:where(
+    [data-slot="sheet-content"][data-detents]
+        > [data-slot="sheet-content-region"]
+        > :not([data-slot="dialog-header"]):not([data-slot="dialog-footer"])
+) {
+    min-block-size: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+/* THE SEAM. A pinned row over a scrolling one needs its bound drawn, or the content
+ * slides under chrome that gives no sign it is chrome. One hairline of the plate's own
+ * warm ink at the two joins, and only on the detented arm — a plain sheet has nothing
+ * pinned and earns no line.
+ *
+ * THE INK IS α 0.08, the spec's own figure (CWT-2 §3.4), spelled as TWO veil steps.
+ * `--glass-veil-step` is 0.04 and it is the register the whole plate ladder is built
+ * from (`glass.css:58` — every rung is `base ± n·step`), so `calc(step * 2)` mints
+ * nothing and stays true if the register ever moves. A bare `var(--glass-veil-step)`
+ * halved the spec silently, which is a divergence with no record; parsimony never
+ * required it, because the doubling is as token-pure as the single. */
+:where(
+    [data-slot="sheet-content"][data-detents]
+        > [data-slot="sheet-content-region"]
+        > [data-slot="dialog-header"]
+) {
+    padding-block-end: var(--space-body);
+    border-block-end: 1px solid
+        oklch(from var(--glass-veil-ink) l c h / calc(var(--glass-veil-step) * 2));
+}
+
+:where(
+    [data-slot="sheet-content"][data-detents]
+        > [data-slot="sheet-content-region"]
+        > [data-slot="dialog-footer"]
+) {
+    padding-block-start: var(--space-body);
+    border-block-start: 1px solid
+        oklch(from var(--glass-veil-ink) l c h / calc(var(--glass-veil-step) * 2));
+}
+
+/* THE ✕ GUTTER — the same reservation the plate makes, on the surface that is not the
+ * plate. The control's own recipe is shared (one unscoped `[data-slot="dialog-close"]`
+ * rule in `dialog/styles.css`); the reservation cannot be, because it is `:has()`-scoped
+ * to the host that renders the button and the sheet is a different host — and here the
+ * header is a GRANDCHILD, since the region owns the flow.
+ *
+ * SCOPED OFF THE DETENTED ARM, by the plate's own law that a gutter reserved against a
+ * button that is not there is dead inline space. On a detented sheet the ✕ shares its
+ * row with the 44px grip handle above the region, so it never reaches the header at all;
+ * reserving 52px there would be dead space on every rung. */
+:where(
+    [data-slot="sheet-content"]:not([data-detents]):has([data-slot="dialog-close"])
+)
+    :where([data-slot="dialog-header"]) {
+    /* Touch-target-derived, series-EXEMPT (sizing.css §1.1's stated exception) — the
+     * gutter must clear the 44px ✕ at every viewport, and the space series transposes
+     * below 44 at mobile. The plate names the identical geometry for the identical
+     * reason. */
+    padding-inline-end: calc(var(--touch-target) + var(--space-atom));
+}
+
+/* ── THE GRIP ──────────────────────────────────────────────────────────────────────
+ *
+ * The mark IS the ladder: its inline-size lerps across the rung range, so where the
+ * sheet sits is legible without reading anything, at rest and mid-drag alike. The host
+ * is the 44px operable target the `role=slider` names; the grip is the quiet mark inside
+ * it. The lerp rides `--spring-dock` rather than an ease — a ladder read-out that snaps
+ * linearly is the one part of a liquid surface that would read as a switch. */
+:where([data-slot="sheet-content"][data-detents] > [data-slot="sheet-detent-handle"]) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: var(--touch-target);
+    cursor: grab;
+}
+
+:where([data-slot="sheet-detent-handle"] > [data-slot="sheet-detent-grip"]) {
+    display: block;
+    /* The rung read-out: SECTION wide at the peek, one FAMILY rung wider at full. Both
+       are named space rungs, so the mobile transposition steps the mark down with
+       everything else and no width query is authored here. */
+    inline-size: calc(
+        var(--space-section) + var(--space-family) * clamp(0, var(--detent-t), 1)
+    );
+    block-size: calc(var(--space-atom) / 2);
+    border-radius: var(--radius-pill);
+    background-color: currentcolor;
+    /* THE SECOND LEG. The mark's idle α rides the rung as well as its width — quiet at
+       the peek, firm at full, the same direction the plate congeals — so the read-out
+       varies on BOTH channels and neither can be mistaken for decoration of the other.
+       The span is HALF the distance from the idle floor to the engaged α, spelled with
+       the two values this rule set already carries: engagement (hover / focus / drag)
+       keeps its full headroom at every rung, and nothing is minted to say so. */
+    opacity: calc(0.45 + ((0.85 - 0.45) / 2) * clamp(0, var(--detent-t), 1));
+    transition:
+        opacity var(--spring-dock-duration) var(--spring-dock),
+        inline-size var(--spring-dock-duration) var(--spring-dock);
+}
+
+/* Proximity is answered by the HANDLE's own region, never by the plate. */
+@media (hover: hover) {
+    :where([data-slot="sheet-detent-handle"]:hover > [data-slot="sheet-detent-grip"]) {
+        opacity: 0.85;
+    }
+}
+
+:where([data-slot="sheet-detent-handle"]:focus-visible) {
+    outline: none;
+}
+
+:where(
+    [data-slot="sheet-detent-handle"]:focus-visible > [data-slot="sheet-detent-grip"],
+    [data-slot="sheet-content"][data-dragging] [data-slot="sheet-detent-grip"]
+) {
+    opacity: 0.85;
+}
+
+:where([data-slot="sheet-detent-handle"]:focus-visible > [data-slot="sheet-detent-grip"]) {
+    box-shadow: 0 0 0 3px var(--focus-ring-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :where([data-slot="sheet-detent-grip"]) {
+        transition: none;
+    }
 }
 
 /* The per-edge graded edge. One fixed 34px backdrop sample is mask-graded from 13/40
@@ -156,6 +357,27 @@
     :where([data-slot="sheet-content"][data-side="right"]) {
         max-width: 24rem;
     }
+}
+
+/* The detented arm's size, authored AFTER the resting side geometry it supersedes: a
+ * detented sheet's extent along its anchored axis is the rung, and the fixed 75%/24rem
+ * of a plain side sheet would otherwise win on source order and pin the box at one
+ * width while the scalar moved underneath it. */
+:where(
+    [data-slot="sheet-content"][data-detents][data-side="bottom"],
+    [data-slot="sheet-content"][data-detents][data-side="top"]
+) {
+    block-size: calc(clamp(0, var(--detent-t), 1) * 100dvh);
+    max-block-size: 100dvh;
+}
+
+:where(
+    [data-slot="sheet-content"][data-detents][data-side="left"],
+    [data-slot="sheet-content"][data-detents][data-side="right"]
+) {
+    width: calc(clamp(0, var(--detent-t), 1) * 100dvw);
+    max-width: 100dvw;
+    height: 100%;
 }
 
 /* The sheet plate's own proportion — the space rungs, so the mobile transposition

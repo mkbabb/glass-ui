@@ -175,12 +175,6 @@ export {
     type DialogProps,
     type DialogTitleProps,
 } from "./components/dialog";
-// Drawer is off the root barrel because it uses the house `useDrawerSnap` engine
-// (a `@mkbabb/keyframes.js` SpringProgress consumer), so
-// it is now a keyframes-BEARING heavy component that must NOT inline its optional
-// peer into the vueuse-free root bundle. It ships via the `/drawer` subpath
-// (`@mkbabb/glass-ui/drawer`) — the dock/aurora substrate-isolation pattern; see
-// MIGRATION.md. (clean break, no alias.)
 export {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -289,8 +283,10 @@ export { Separator, type SeparatorProps } from "./components/separator";
 // The side sheet is its own component again. It shares reka's DialogRoot + FocusScope
 // with Dialog — compose `<Dialog>` around `<SheetContent side>` — but a centred plate and
 // an edge-anchored surface are different geometry, different material and different
-// motion, and one component carrying both meant eleven `isCenter` forks. Snap-detent
-// physics stays `Drawer`'s. The `./sheet` subpath rides the batched export cut.
+// motion, and one component carrying both meant eleven `isCenter` forks. It also
+// carries the DETENTS the drawer family used to be: `<SheetContent :detents>` is a
+// ladder of sizes, so the surface that was a placement plus a scalar is a prop on the
+// surface it duplicated. The `./sheet` subpath rides the batched export cut.
 export { SheetContent, type SheetContentProps } from "./components/sheet";
 export { Skeleton } from "./components/skeleton";
 export { Slider, type SliderProps, type SliderSize, type SliderVariant } from "./components/slider";

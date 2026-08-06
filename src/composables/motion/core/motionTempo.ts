@@ -8,8 +8,8 @@
 // `duration ∝ response` (ωₙ = 2π/response), scaling the CSS clock by tempo ≡ scaling
 // response by tempo — so the M1 CSS==JS parity holds at ANY tempo (G2).
 //
-// Element-scoped: pass the morphing element to honour a loud-scope re-pin (the dock /
-// drawer surfaces re-pin `--motion-tempo: 1` on their own scope, scheme-motion.css);
+// Element-scoped: pass the morphing element to honour a loud-scope re-pin (the deck
+// surface re-pins `--motion-tempo: 1` on its own scope, scheme-motion.css);
 // omit it for the global `:root` tempo (the element-agnostic spring engines). This is
 // the site-local `getComputedStyle` getter seam `effectiveCap`/`writeVelocityWeight`
 // already establish for `--motion-weight` (the sister magnitude scalar).

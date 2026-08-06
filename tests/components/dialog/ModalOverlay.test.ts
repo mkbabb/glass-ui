@@ -13,14 +13,14 @@ const DialogHost = defineComponent({
     },
 });
 
-const SlideHost = defineComponent({
+const AlphaHost = defineComponent({
     props: {
-        slideT: { type: Number as unknown as PropType<number | null>, default: null },
+        alpha: { type: Number as unknown as PropType<number | null>, default: null },
     },
     setup(props) {
         return () =>
             h(DialogRoot, { open: true }, () =>
-                h(ModalOverlay, { slideT: props.slideT, forceMount: true }),
+                h(ModalOverlay, { opacity: props.alpha, forceMount: true }),
             );
     },
 });
@@ -60,12 +60,13 @@ describe("ModalOverlay", () => {
         wrapper.unmount();
     });
 
-    // The scrim opacity is driven from the surface's
-    // live slide scalar (position → 1−p), so the two never desync through an interrupt.
-    it("drives opacity from slideT and drops the sheet-animate fade keyframe when set", () => {
-        const wrapper = mount(SlideHost, {
+    // The scrim holds NO law: its surface computes the alpha off the SAME live scalar
+    // it reads itself (`scrimOpacity` on the slide, `scrimDetentOpacity` on the rung),
+    // so the two never desync through an interrupt and the scrim carries one knob.
+    it("paints the alpha it is handed and drops the sheet-animate fade keyframe", () => {
+        const wrapper = mount(AlphaHost, {
             attachTo: document.body,
-            props: { slideT: 0.25 },
+            props: { alpha: 0.75 },
         });
         const overlay = document.querySelector("[data-state]") as HTMLElement;
         expect(overlay).not.toBeNull();
@@ -96,10 +97,10 @@ describe("ModalOverlay", () => {
         wrapper.unmount();
     });
 
-    it("keeps the sheet-animate fade keyframe and no opacity override when slideT is null (center path intact)", () => {
-        const wrapper = mount(SlideHost, {
+    it("keeps the sheet-animate fade keyframe and no opacity override when the alpha is null", () => {
+        const wrapper = mount(AlphaHost, {
             attachTo: document.body,
-            props: { slideT: null },
+            props: { alpha: null },
         });
         const overlay = document.querySelector("[data-state]") as HTMLElement;
         expect(overlay).not.toBeNull();

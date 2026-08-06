@@ -2,7 +2,6 @@
 import { type HTMLAttributes } from "vue";
 import { DialogOverlay } from "reka-ui";
 import { cn } from "../_shared/class-names";
-import { scrimOpacity } from "../sheet/motion";
 
 /**
  * The modal scrim — DIM ONLY.
@@ -34,11 +33,16 @@ import { scrimOpacity } from "../sheet/motion";
 interface ModalOverlayProps {
     class?: HTMLAttributes["class"];
     /**
-     * A sheet's live slide position (0 open → 1 dismissed). When set, the scrim drops
-     * its `sheet-animate` fade keyframe and drives `opacity` off this SAME scalar so it
-     * can never desync from the surface through an interrupt.
+     * The scrim's live opacity, driven off the SAME scalar its surface reads so the two
+     * can never desync through an interrupt. When set, the scrim drops its
+     * `sheet-animate` fade keyframe and takes this value instead.
+     *
+     * The scrim holds NO law of its own: a slide-dismissed surface hands it
+     * `scrimOpacity(position)` and a detented one hands it `scrimDetentOpacity(rung)`
+     * (both `sheet/motion.ts`). One knob, and the law lives with the geometry it
+     * describes rather than in the component that merely paints it.
      */
-    slideT?: number | null;
+    opacity?: number | null;
     /** Hold the scrim mounted through the spring exit (mirrors the content forceMount). */
     forceMount?: boolean;
     /**
@@ -50,7 +54,7 @@ interface ModalOverlayProps {
 }
 
 const props = withDefaults(defineProps<ModalOverlayProps>(), {
-    slideT: null,
+    opacity: null,
     veil: false,
 });
 </script>
@@ -61,13 +65,11 @@ const props = withDefaults(defineProps<ModalOverlayProps>(), {
         :class="
             cn(
                 'fixed inset-0 z-overlay bg-overlay-scrim',
-                props.slideT == null ? 'sheet-animate' : '',
+                props.opacity == null ? 'sheet-animate' : '',
                 props.class,
             )
         "
-        :style="
-            props.slideT == null ? undefined : { opacity: scrimOpacity(props.slideT) }
-        "
+        :style="props.opacity == null ? undefined : { opacity: props.opacity }"
     >
         <span v-if="props.veil" class="glass-focus-veil" data-engaged aria-hidden="true" />
         <slot />

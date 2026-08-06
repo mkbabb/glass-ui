@@ -46,13 +46,15 @@ export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..
 
 // --- src/components/<dir> ---
 export const COMPONENT_CLASS = {
-    // PUBLISH (21) — the shadcn-shaped set.
+    // PUBLISH (20) — the shadcn-shaped set.
     badge: "PUBLISH", button: "PUBLISH", card: "PUBLISH", collapsible: "PUBLISH",
     command: "PUBLISH", "data-table": "PUBLISH",
-    dialog: "PUBLISH", drawer: "PUBLISH", "dropdown-menu": "PUBLISH",
+    dialog: "PUBLISH", "dropdown-menu": "PUBLISH",
     // BK.W-DIALOG re-seeded `sheet` as its own component (the side surface split back
-    // out of `<DialogContent placement>`). INTERNAL for now — it is reached via the root
-    // barrel; its `./sheet` package subpath rides the ONE batched export cut.
+    // out of `<DialogContent placement>`), and BK.W-DIALOG-DETENT folded `drawer` into
+    // it: a detent is a size on this surface, so `./drawer` retires with its directory.
+    // INTERNAL for now — it is reached via the root barrel; its `./sheet` package
+    // subpath rides the ONE batched export cut.
     sheet: "INTERNAL",
     label: "PUBLISH",
     "number-field": "PUBLISH", popover: "PUBLISH",

@@ -250,15 +250,20 @@
    `--motion-tempo` (property-regs.css, initial 1.0 identity) is the global motion
    TIME knob — a consumer sets `:root { --motion-tempo: 0.85 }` (the "options for
    longer" clause) and every utility-UI spring clock + JS response tightens
-   in lockstep. Drawer and deck remain deliberately fixed cinematic episodes; Dock is
+   in lockstep. The deck remains a deliberately fixed cinematic episode; Dock is
    interactive utility chrome and therefore inherits the effective tempo. `:where()`
-   keeps the fixed surfaces' specificity at 0 so a consumer's explicit per-instance
+   keeps the fixed surface's specificity at 0 so a consumer's explicit per-instance
    override still wins. At the 1.0 identity default this is a byte-no-op; it engages
    ONLY when a consumer scales tempo globally.
 
+   The sheet is NOT on this list, and that is a decision: its detent engine reads the
+   effective tempo at construction (`motionTempo()`), so a consumer who slows the
+   library slows the sheet's arrival with it. The one surface that used to be pinned
+   here pinned itself against its own engine's read.
+
    ⟂ `--motion-weight` (magnitude) ⟂ `--ui-scale` (geometry) — the three scalars stay
    disjoint (the NAMING FENCE). */
-:where(.glass-drawer, .liquid-stage) {
+:where(.liquid-stage) {
     --motion-tempo: 1;
 }
 

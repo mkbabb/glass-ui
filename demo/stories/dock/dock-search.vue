@@ -56,7 +56,7 @@ const SECTION_TITLES = [
     "Card padding ladder",
     "Scroll choreography",
     "Fading scroll",
-    "Drawer modes",
+    "Sheet detents",
     "Sortable list",
     "Virtual windowing",
 ];

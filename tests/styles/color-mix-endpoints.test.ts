@@ -18,8 +18,9 @@ import { describe, expect, it } from "vitest";
 // the ladder's plate recipe over every rung, rim.css
 // (11), surfaces.css (4), shadow.css (4), and 2 in tokens/glass.css itself. It stands
 // pending row-6's Safari π ruling; do not read this file's green as covering it.
-// The `resolvedNested` arm below is therefore a REGRESSION FENCE on the four files the
-// de-nesting cured, nothing wider — and `inspect()` recurses UNBOUNDED, not "one hop".
+// The `resolvedNested` arm below is therefore a REGRESSION FENCE on the files the
+// de-nesting cured that still exist — three of the original four; `drawer/styles.css`
+// left with its family at BK #39 — and `inspect()` recurses UNBOUNDED, not "one hop".
 
 type StyleSource = { id: string; css: string };
 type Call = { name: string; args: string[] };
@@ -124,9 +125,12 @@ describe("gate:G-WK-COLORMIX-BUDGET — color-mix endpoint structure", () => {
         const report = analyze(styles);
         expect(report.literalNested).toEqual([]);
 
+        // BK #39 (2026-08-06): `components/drawer/styles.css` struck from this table —
+        // the file was deleted whole with the drawer family, and a per-file clause whose
+        // subject does not exist filters to `[]` and passes VACUOUSLY. A deleted subject
+        // is ABSENT, not green (⊕²⁵); the fence is three files now, not four.
         for (const file of [
             join(root, "components/dock/styles/morph.css"),
-            join(root, "components/drawer/styles.css"),
             join(root, "styles/glass/material.css"),
             join(root, "components/_shared/field/field-surfaces.css"),
         ])

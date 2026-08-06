@@ -203,7 +203,6 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             entries: [
                 { storyId: "dialog", label: "Dialog" },
                 { storyId: "sheet", label: "Sheet" },
-                { storyId: "drawer", label: "Drawer" },
             ],
         },
         {

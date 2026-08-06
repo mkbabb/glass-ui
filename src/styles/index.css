@@ -150,8 +150,6 @@
  *                              `@layer components` hover/highlight rules source-
  *                              order-win over `.interactive-item:hover` (same layer
  *                              + specificity) — the cascade-trap-safe placement.
- *  13. components/drawer/styles.css — detented bottom-sheet grammar (glass
- *                             sheet surface + peek handle + snap-stop rules).
  *  15. components/tabs/styles/* — SegmentedTabs overflow/indicator grammar.
  *  16. components/_shared/field/field-surfaces.css — precompiled field/list surfaces
  *                             collision-bound (the `[data-slot="select-content"]`
@@ -161,10 +159,10 @@
  *                             never depends on a content scan.
  *  17. components/sheet/styles.css — precompiled side-sheet positioning (the
  *                             `[data-slot="sheet-content"][data-side]` position/inset/
- *                             size rules) plus its per-edge graded material: moved off
- *                             the dead CVA geometry utilities that broke the
- *                             configurator drawer so the positioning SHIPS regardless of
- *                             consumer JIT reach.
+ *                             size rules), the DETENT geometry (a rung is a size, not a
+ *                             translate), the grip, the scroll region and its per-edge
+ *                             graded material: geometry ships regardless of consumer
+ *                             JIT reach.
  *  17b. components/dialog/styles.css — THE ONE DIALOG LANE: the centred plate's room,
  *                             proportion, ✕ and rebuff, every space value a named rung
  *                             so tokens/sizing.css §1.1 transposes the whole plate.
@@ -216,7 +214,6 @@
    sealed <Popover trigger="hover"> union; its content rides the shared
    glass-floating + glass-reveal recipe, so the bespoke .hover-popover-panel
    substrate is dead. (clean break, no alias.) */
-@import "../components/drawer/styles.css";
 @import "../components/tabs/styles/segmented.css";
 /* The SegmentedTabs additive decoration tail (the .glass-drag-lift
    pull affordance), a partial held under

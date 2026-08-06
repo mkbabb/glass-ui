@@ -111,7 +111,7 @@ export function useSpring(
     // `settle * --motion-tempo`). `duration ∝ response`, so scaling response by tempo
     // keeps CSS_t90 == JS_t90 at any tempo (P7, G2). Read once at construction off
     // `:root` (this base primitive is element-agnostic; the element-bearing engines —
-    // useDrawerSnap — read off their own scope). At the 1.0 identity default this is
+    // the sheet's detent engine — read off their own scope). At the 1.0 identity this is
     // `response * 1`, byte-identical. `useSpringPress` composes this, so it inherits
     // the tempo through the ONE construction site (no double-application).
     const spring = shallowRef(

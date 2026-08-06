@@ -617,13 +617,7 @@ export const CATEGORIES: Category[] = [
                 "containers",
                 "sheet",
                 "Sheet",
-                "The four anchored edges, the shared surface axis, and the scroll region — SheetContent, the side surface's own component.",
-            ),
-            s(
-                "containers",
-                "drawer",
-                "Drawer",
-                "Detented side and bottom drawers with reversible motion and optional live-behind content.",
+                "The four anchored edges, the detent ladder with its integrated fling, the shared surface axis and the scroll region.",
             ),
             s(
                 "containers",

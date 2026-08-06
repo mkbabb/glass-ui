@@ -206,7 +206,7 @@ function dispatchShortcut(
     // walk lands on the top-most live overlay first: it consumes and returns, a
     // second Escape pops the next. A collapsed container holds no handler. This
     // makes the house `registerShortcut` path MATCH the reka DismissableLayer
-    // stack (Dialog/Sheet/Drawer/Popover) rather than shadow it. All other keys
+    // stack (Dialog/Sheet/Popover) rather than shadow it. All other keys
     // keep the forward first-registered-wins order (unchanged).
     const order = isEscapeEvent(e)
         ? [...shortcuts].reverse()

@@ -322,41 +322,13 @@ describe("glass blur ladder — five in-band radii, one calibration anchor", () 
     });
 });
 
-// The private immersive stage scrim is a scene-SEPARATION effect, not a calm/deep
-// glass rung: fixed 14px at --glass-level:1, MULTIPLIED by the shared clarity scalar
-// (so the a11y brackets flatten it), radius INDEPENDENT of the per-frame --stage-t,
-// and blur-only (no saturation term). Source-substituted the same way the ladder is.
-describe("immersive stage scrim — private stage effect, 14px × --glass-level", () => {
-    const drawer = read("src/components/drawer/styles.css");
-    const scrimMap = declMap(drawer);
-
-    it("declares the private radius token at a fixed 14px", () => {
-        expect(scrimMap.get("--stage-immersive-blur-radius")).toBe("14px");
-    });
-
-    it("multiplies the radius by the shared --glass-level clarity axis", () => {
-        // 14px at level 1, 4.2px at level 0.3, 0px at level 0 — resolved from source.
-        expect(blurRadius(scrimMap, "--stage-immersive-blur")).toBe(14);
-        const flatLvl = flatten(scrimMap, scrimMap.get("--stage-immersive-blur")!);
-        expect(scrimMap.get("--stage-immersive-blur")).toContain("var(--glass-level)");
-        expect(flatLvl).toMatch(/blur\(\s*calc\(\s*14px\s*\*\s*1\s*\)\s*\)/);
-    });
-
-    it("keeps the radius OFF the per-frame --stage-t clock and free of saturation", () => {
-        const decl = scrimMap.get("--stage-immersive-blur")!;
-        expect(decl).not.toContain("--stage-t");
-        expect(decl).not.toContain("saturate");
-        expect(decl).not.toContain("brightness");
-    });
-
-    it("consumes NO calm/deep rung — it is not the deep endpoint", () => {
-        // The immersive backdrop-filter reads the private token, never --glass-blur-deep-*.
-        const rule = /\[data-stage-scrim\]\[data-stage-immersive\][^{]*\{[^}]*\}/.exec(drawer);
-        expect(rule).not.toBeNull();
-        expect(rule![0]).toContain("var(--stage-immersive-blur)");
-        expect(rule![0]).not.toContain("--glass-blur-deep-radius");
-    });
-});
+// The immersive stage scrim is GONE, and its describe block with it. It was the last
+// `backdrop-filter` on any scrim in the library, and it died with `drawer/styles.css`:
+// the family that opted into it retired, and the measurement W-DIALOG took on the other
+// two scrim blurs — a wash pulls bright neighbours into every sampled pixel, so the
+// "backdrop" BRIGHTENED what it was meant to recede — applies to a fixed 14px sample
+// exactly as it applied to the resting ones. A test whose subject file no longer exists
+// is ABSENT, not green, so it leaves rather than being re-pointed at something else.
 
 // ── The material's structural invariants ──────────────────────────────────────────
 // These are the claims the medium rests on. Each one had a live counter-example in the

@@ -1,9 +1,8 @@
 // Spring-driven mount + optional drag-dismiss state machine.
 //
-// Runtime kernel behind <DialogContent>'s
-// centered `springPreset` entrance and <DrawerContent>'s snap-detent drag physics
-// (the drag-dismiss gesture remains Drawer's mechanism, never the folded Dialog
-// `placement` paint axis). The component owns its
+// Runtime kernel behind <DialogContent>'s centered entrance and <SheetContent>'s
+// slide (the DETENT arm is its own engine — `sheet/detents/use.ts` — because a rung is
+// a size and this kernel drives a dismiss position). The component owns its
 // open Ref
 // (via reka-ui's DialogContext); this composable owns the *position* (0 =
 // fully mounted, 1 = fully dismissed) and the pointer-drag pipe that re-seats

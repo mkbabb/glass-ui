@@ -10,7 +10,6 @@ export * from "./collapsible";
 export * from "./command";
 export * from "./data-table";
 export * from "./dialog";
-export * from "./drawer";
 export * from "./dropdown-menu";
 // `./hover-card` RETIRED (folds onto `<Popover trigger="hover">`).
 export * from "./input";

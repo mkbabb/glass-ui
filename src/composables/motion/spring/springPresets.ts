@@ -130,11 +130,12 @@ export const SPRING_PRESETS: readonly SpringPresetRow[] = [
 //     with its one consumer;
 //   · the blob pinch-snap pulse — an impulse response, not a transition register;
 //   · the blob pointer-follow pair (blob/composables/useBlobPointer.ts);
-//   · DRAWER_SNAP (drawer/constants.ts);
 //   · `useSpring`'s bare-primitive default (motion/spring/useSpring.ts).
-// The last three are RECORDED, not ratified — their disposition is BK RT-26F, which
+// The last two are RECORDED, not ratified — their disposition is BK RT-26F, which
 // is a design-seat ruling. Any new entry takes that same ruling, never a drive-by
-// literal.
+// literal. `DRAWER_SNAP` was the third and is DISCHARGED BY SUBTRACTION: the sheet's
+// detent engine names `bloom` and `dock` from this table, so the private seventh
+// register died with the file that held it rather than being ratified into one.
 
 /** Lookup one Glass semantic spring preset by name. */
 export function springPreset(name: SpringPresetName): SpringPresetRow {

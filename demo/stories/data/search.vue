@@ -182,18 +182,18 @@ const rowSeeds = [
     [
         "Sheet side panel",
         "container",
-        "Edge drawer row with controlled open state and action footer.",
+        "Edge-anchored row with controlled open state and action footer.",
         "proof",
         "Containers",
         ["sheet", "panel"],
     ],
     [
-        "Drawer bottom panel",
+        "Sheet detent ladder",
         "container",
-        "Mobile-style drawer row with handle, footer, and snap motion.",
+        "Bottom sheet resting at a rung, with the grip, the footer and the fling.",
         "proof",
         "Containers",
-        ["drawer", "mobile"],
+        ["sheet", "detents", "mobile"],
     ],
     [
         "Popover anchored surface",

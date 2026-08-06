@@ -11,7 +11,7 @@
 // WHY A TABLE AND NOT FIVE STYLESHEETS. Four of the five dialects belong to surfaces this
 // row does not own: the auto-expiry corner-tuck and the corner-anchored miniaturize are
 // the toast's (#34 W-TOAST, CWT §TOAST), the flicked return-to-anchor is a gesture the
-// drawer detent row owns (#39), and the in-place row dissolve was FOLDED INTO the vaporize
+// sheet detent row owns (#39), and the in-place row dissolve was FOLDED INTO the vaporize
 // by TR#30's own amendment list ("blur-leads-fade at 0.5×height/floor 0.30"). Writing all
 // five as CSS here would author four recipes with no consumer and pre-empt three rows'
 // rulings. So the table names them, each with the row that owns it, and this cut builds
@@ -64,7 +64,7 @@ export const DISSOLVE_DIALECTS: readonly DissolveDialectRow[] = [
         built: false,
         owner: "#39 W-DIALOG-DETENT",
         comment:
-            "Thrown off the top, re-entering from the anchor blurred, re-sharpening mid-flight and blurring out again — blur = k·|v| in both directions. A velocity-coupled profile no static recipe can produce, so it belongs to the row that owns the gesture.",
+            "Thrown off the top, re-entering from the anchor blurred, re-sharpening mid-flight and blurring out again — blur = k·|v| in both directions. A velocity-coupled profile no static recipe can produce, so it belongs to the row that owns the gesture. RECEIVED AND RULED at #39 (RT-30C, 2026-08-06), and the ruling splits the dialect: its MOTION ships — `sheet/detents/projection.ts` integrates the release velocity over the catching spring's own settle horizon, so a throw that projects short is carried back to its anchor and one that projects past the first rung resolves onto 0 and dismisses. Its INK is REFUSED here on three grounds, none of them scheduling: (1) `blur = k·|v|` puts a per-frame `filter` over the whole plate during exactly the drag-and-settle window that is this row's own falsifier — the detent is a SIZE, so the box already animates on layout, and P7's fps budget is the price that bought that geometry; spending it twice, before it has once been measured, is the second cost the row refused to pay. (2) The surface's own exit is that same spring reversed to 0; a velocity-coupled blur composed onto it is two exits on one clock — the identical ground RT-30D was refused on at this row. (3) `k` has no mechanism of record: the archive measures the vaporize's channels, not this one, and #30's own law is that a dialect with no measurement is NAMED, never authored from a guess. The row that revives it owes the measurement first.",
     },
     {
         dialect: "miniaturize",
