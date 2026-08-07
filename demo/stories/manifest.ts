@@ -440,7 +440,7 @@ export const CATEGORIES: Category[] = [
                 "substrates",
                 "blob",
                 "Blob",
-                "WebGL2 metaball droplet on the shared substrate (injected color resolver) — the lit static register, the pointer-reactive interaction hero, the mood + seed-palette model, and the pause seam. Shipped /blob + /watercolor-dot.",
+                "WebGL2 metaball droplet on the shared substrate (injected color resolver) — the pointer-reactive interaction hero, the mood + seed-palette model, and the pause seam. Shipped /blob.",
                 {
                     // A Blob is a CONTAINED creature, not a page-field — the page
                     // presents its studio over a calm paper wash (the

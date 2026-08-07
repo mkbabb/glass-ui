@@ -1,16 +1,19 @@
 // AZ.W-BLOB-PAGE — the TRUE blob-page defect's π lane (born-RED at HEAD pre-fix).
 //
 // RE-ATTRIBUTION (the wave's §0 RE-GROUND): the GL renderer is NOT re-opened — the
-// bead is crisp (refuted C6-1 / F2-R3-9-pixelation). The defect surface is THREE TRUE
-// things this spec measures on the LIVE /substrates/blob page:
-//   1. SWATCH-EDGE-CRISP — the static WatercolorDot SVG swatch edge flung isolated
-//      dark specks into the light margin at high DPR (the "pixelated / low-res"
-//      reading lived HERE, in the CSS-px feTurbulence, not in the GL bead). Measured
-//      at MAX CONTRAST: the largest static swatch is forced pure black (the shipped
-//      filter unchanged) and the fling-speck count is asserted below the floor. The
-//      old sRGB/4-octave/scale-1.5/non-stitched filter read 7 specks on a black swatch
-//      (ground c6-blob-07-black-2x.png); the device-px linearRGB/6-octave/stitch fix
-//      reads 0.
+// bead is crisp (refuted C6-1 / F2-R3-9-pixelation). The defect surface was THREE TRUE
+// things; ~~THREE~~ ONE survives on the LIVE /substrates/blob page:
+//   1. [BK #55 · 2026-08-07] SWATCH-EDGE-CRISP — STRUCK WITH ITS SUBJECT. It measured the
+//      static WatercolorDot SVG swatch edge at MAX CONTRAST (the largest swatch forced
+//      pure black) and asserted the fling-speck count below the floor — the "pixelated /
+//      low-res" reading lived in that CSS-px feTurbulence, not in the GL bead (old
+//      sRGB/4-octave/scale-1.5/non-stitched filter: 7 specks, ground
+//      c6-blob-07-black-2x.png; the device-px linearRGB/6-octave/stitch fix: 0).
+//      `WatercolorDot` RELOCATED to value.js at BK #55, so the swatch, its filter and
+//      `[data-testid="watercolor-swatch"]` are all absent from this repo: the arm had no
+//      subject left to measure. Its tunables, `largestSwatch`, `flingSpecks` and `luma`
+//      go out with it (nothing else consumed them). The device-px filter recipe survives
+//      in the record, not in a probe that can never fail.
 //   2. SATELLITES-SEPARATE — the page-default bead's satellites orbited INSIDE the body
 //      (orbitRadius 0.17 < bodyRadius 0.22), so the orbit show was invisible (single
 //      connected component every frame, silhouette CV ≈ 0.026 perimeter-only). The
@@ -19,29 +22,30 @@
 //      (silhouette CV peaks ≈ 0.10, ≈3.7× baseline) AND a fully-separated satellite
 //      component appears (peak connected-component count = 2). The four-side
 //      containment HOLDS (worst-edge paint fraction = 0.000).
-//   3. HERO-FIRST IA — the page LEADS with the living GL <Blob> hero, the static
-//      WatercolorDot swatch row DEMOTED below it (a DOM-order assertion).
+//   3. [BK #55 · 2026-08-07] HERO-FIRST IA — STRUCK WITH ITS SUBJECT. It asserted the page
+//      LEADS with the living GL <Blob> hero and DEMOTES the static WatercolorDot swatch
+//      row below it (a DOM-order comparison of the first `goo-blob-canvas` against the
+//      first `[data-testid="watercolor-swatch"]`). With the swatch row gone from
+//      /substrates/blob there is no second term: the comparison is undefined, not
+//      passing. The C6-4 inverted-IA defect it locked is DISCHARGED BY SUBTRACTION — the
+//      GL hero is now the page's only blob surface, so nothing can precede it. NOT
+//      re-pointed at a stand-in (#18 arm-(c); ⊕²⁵: an unwired gate is ABSENT, never GREEN).
 //
 // Runner-truth: this spec LOADS :5199, so proof:blob-page is auto-detected
 // LIVE_VERIFIED_LOCAL_ONLY. The device-free GL-fence is the SEPARATE
-// proof:blob-page-fence (ci-tagged) — this spec carries the three visual π bites only.
+// proof:blob-page-fence (ci-tagged) — this spec carries the ~~three~~ ONE surviving
+// visual π bite only.
 
 import { test, expect } from "@playwright/test";
-import type { Locator } from "@playwright/test";
 import { PNG } from "pngjs";
 import { PI_TARGETS } from "./pi-manifest.ts";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 // ── tunables (live-set against the real device) ────────────────────────────────
-// SWATCH-EDGE: fling-speck = a dark edge pixel with ≥3 of its 4 distance-5 neighbours
-// in the light field (an isolated fleck flung off the contour into the margin). The
-// old filter read 7 on a black swatch; the fix reads 0. Ceiling 3 admits a stray AA
-// fleck while REDding the old coarse displacement.
-const SPECK_DARK_T = 100;
-const SPECK_LIGHT_T = 140;
-const SPECK_NBR_DIST = 5;
-const FLING_SPECK_MAX = 3;
+// [BK #55 · 2026-08-07] The four SWATCH-EDGE tunables (SPECK_DARK_T · SPECK_LIGHT_T ·
+// SPECK_NBR_DIST · FLING_SPECK_MAX) went out with arm 1 — they had exactly one consumer,
+// `flingSpecks`, which had exactly one consumer, the struck SWATCH-EDGE-CRISP test.
 // SATELLITES: the silhouette deviation (per-angle radius CV) the orbit-outside-body
 // geometry drives. Baseline (orbit INSIDE body, 0.17 < body 0.22) peaks ≈ 0.026
 // (perimeter-only pinch, single component every frame). The orbit-just-outside-body fix
@@ -67,9 +71,6 @@ const SIDE_MARGIN_MAX = 0.6; // four-side containment ceil (the satellite-overfl
 
 test.setTimeout(180_000);
 
-function luma(d: Buffer, i: number): number {
-    return 0.299 * d[i]! + 0.587 * d[i + 1]! + 0.114 * d[i + 2]!;
-}
 function modalBg(png: PNG): [number, number, number] {
     const { data } = png;
     const counts = new Map<number, number>();
@@ -85,25 +86,9 @@ function diff(d: Buffer, i: number, bg: [number, number, number]): number {
     return Math.abs(d[i]! - bg[0]) + Math.abs(d[i + 1]! - bg[1]) + Math.abs(d[i + 2]! - bg[2]);
 }
 
-/** Isolated dark fling-specks in the light margin (the D1 coarse-edge defect). */
-function flingSpecks(png: PNG): number {
-    const { width: w, height: h, data } = png;
-    const D = SPECK_NBR_DIST;
-    let s = 0;
-    for (let y = D; y < h - D; y++)
-        for (let x = D; x < w - D; x++) {
-            const i = (y * w + x) * 4;
-            if (luma(data, i) >= SPECK_DARK_T) continue;
-            const nb = [
-                luma(data, (y * w + x - D) * 4),
-                luma(data, (y * w + x + D) * 4),
-                luma(data, ((y - D) * w + x) * 4),
-                luma(data, ((y + D) * w + x) * 4),
-            ].filter((v) => v > SPECK_LIGHT_T).length;
-            if (nb >= 3) s++;
-        }
-    return s;
-}
+/** [BK #55 · 2026-08-07] `flingSpecks` (the isolated dark fling-speck count in the light
+ *  margin, the D1 coarse-edge witness) and its `luma` helper are DELETED with arm 1 — the
+ *  WatercolorDot swatch they measured relocated to value.js. */
 
 /** Connected-component count of painted regions (4-connectivity, min-area filtered). */
 function components(png: PNG, bg: [number, number, number]): number {
@@ -175,17 +160,10 @@ function worstSideMargin(png: PNG, bg: [number, number, number]): number {
     return Math.max(L, R, T, B);
 }
 
-async function largestSwatch(page: import("@playwright/test").Page): Promise<Locator> {
-    const swatches = page.locator('[data-testid="watercolor-swatch"]');
-    await swatches.first().waitFor({ state: "visible", timeout: 20_000 });
-    const n = await swatches.count();
-    let best = swatches.first(), bestW = 0;
-    for (let i = 0; i < n; i++) {
-        const box = await swatches.nth(i).boundingBox();
-        if (box && box.width > bestW) { bestW = box.width; best = swatches.nth(i); }
-    }
-    return best;
-}
+/** [BK #55 · 2026-08-07] `largestSwatch` (widest `[data-testid="watercolor-swatch"]`) is
+ *  DELETED with arm 1 — the selector has zero producers repo-wide, so the helper's 20s
+ *  `waitFor({ state: "visible" })` could only ever time out. The `Locator` type import it
+ *  was the sole user of goes with it. */
 
 /** Mask the viewport-fixed shell-dock chrome before a pixel measurement. The
  *  W-RAIL3 floating facet carousel rides the sidebar dock's midline OVER page
@@ -200,26 +178,9 @@ async function maskShellChrome(page: import("@playwright/test").Page): Promise<v
 }
 
 test.describe("blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)", () => {
-    // The static WatercolorDot swatch edge renders a clean DEVICE-PX contour with no
-    // coarse flung speckle, measured at MAX CONTRAST (the largest swatch forced black).
-    test.describe(() => {
-        test.use({ deviceScaleFactor: 3 });
-        test("SWATCH-EDGE-CRISP — no coarse flung speckle on the device-px swatch edge", async ({ page }) => {
-            await page.goto(PI_TARGETS.blob.path);
-            await maskShellChrome(page);
-            const sw = await largestSwatch(page);
-            // Force the shipped swatch to pure black (the FILTER unchanged) — the max-
-            // contrast case the D1 coarse displacement flung specks into.
-            await sw.evaluate((el) => { (el as HTMLElement).style.backgroundColor = "#000000"; });
-            await page.waitForTimeout(300);
-            const png = PNG.sync.read(await sw.screenshot());
-            const specks = flingSpecks(png);
-            expect(
-                specks,
-                `WatercolorDot black-swatch fling-speck count ${specks} exceeds the device-px-crisp ceiling ${FLING_SPECK_MAX} — the SVG turbulence filter flung isolated dark specks into the light margin (the coarse low-res-reading edge D1; the old sRGB/4-octave/scale-1.5/non-stitched filter read 7, the device-px linearRGB/6-octave/stitch fix reads 0)`,
-            ).toBeLessThanOrEqual(FLING_SPECK_MAX);
-        });
-    });
+    // [BK #55 · 2026-08-07] The `deviceScaleFactor: 3` SWATCH-EDGE-CRISP describe is
+    // DELETED here — see the header's arm 1. Its subject (the static WatercolorDot swatch
+    // and its feTurbulence filter) relocated to value.js at BK #55.
 
     // The page-default bead's satellites orbit OUTSIDE the body skin: the metaball
     // pseudopod/neck show reads (silhouette CV ≫ the swallowed-orbit baseline) AND/OR a
@@ -279,26 +240,9 @@ test.describe("blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)", 
         });
     });
 
-    // The page LEADS with the living GL <Blob> hero; the static WatercolorDot swatch
-    // row is DEMOTED below it (a DOM-order assertion).
-    test("HERO-FIRST IA — the first interactive blob surface in DOM order is the GL hero, not the static swatch row", async ({ page }) => {
-        await page.goto(PI_TARGETS.blob.path);
-        await maskShellChrome(page);
-        await page.locator('canvas[data-testid="goo-blob-canvas"]').first().waitFor({ state: "visible", timeout: 20_000 });
-        await page.locator('[data-testid="watercolor-swatch"]').first().waitFor({ state: "attached", timeout: 20_000 });
-        // The DOCUMENT order of the first GL canvas vs the first static swatch. The GL
-        // hero must come FIRST (Node.DOCUMENT_POSITION_FOLLOWING = 4 means the swatch
-        // follows the canvas).
-        const heroBeforeStatic = await page.evaluate(() => {
-            const canvas = document.querySelector('canvas[data-testid="goo-blob-canvas"]');
-            const swatch = document.querySelector('[data-testid="watercolor-swatch"]');
-            if (!canvas || !swatch) return null;
-            // 4 = DOCUMENT_POSITION_FOLLOWING (swatch follows canvas in document order)
-            return (canvas.compareDocumentPosition(swatch) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
-        });
-        expect(
-            heroBeforeStatic,
-            `the living GL <Blob> hero does NOT lead the page in DOM order — the static WatercolorDot swatch row still precedes it (the C6-4 inverted IA: a fresh viewer reads the static swatches as "the blobs"). Re-order so the GL hero leads.`,
-        ).toBe(true);
-    });
+    // [BK #55 · 2026-08-07] The HERO-FIRST IA test is DELETED here — see the header's
+    // arm 3. It compared the first `goo-blob-canvas` against the first
+    // `[data-testid="watercolor-swatch"]` in document order; the swatch row left the page
+    // with the component, so the comparison has one term and the C6-4 inverted-IA defect
+    // is discharged by subtraction.
 });

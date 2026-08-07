@@ -92,7 +92,9 @@ export const COMPONENT_CLASS = {
     "sortable-list": "PUBLISH",
     "status-dot": "PUBLISH", tabs: "PUBLISH",
     timeline: "PUBLISH", typewriter: "PUBLISH",
-    "watercolor-dot": "PUBLISH",
+    // BK #55 WATERCOLOR-RELOCATE: watercolor-dot RELOCATED to value.js (its sole
+    // consumer, 11 importing files) as `WatercolorSwatch` — swatch/palette-slot
+    // vocabulary is a color library's, never this one's.
 };
 
 // --- src/composables/<subtree> ---

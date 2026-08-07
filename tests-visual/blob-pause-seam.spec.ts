@@ -15,8 +15,13 @@
 //      the substrate rAF, so the frames stop changing (inter-frame diff → ~0); clicking
 //      again RESUMES (the frames change again). Born-RED: the dead seam never parked.
 //   2. MULTI-INSTANCE CONTEXT BOUND — the re-cast blob stories hold a BOUNDED number of
-//      live WebGL2 contexts (the WatercolorDot static-register routing). Born-RED: the
-//      pre-wave stories mounted 5 (goo-blob) + 2 (blob-mood) GL blobs, hitting the cap.
+//      live WebGL2 contexts. Born-RED: the pre-wave stories mounted 5 (goo-blob) + 2
+//      (blob-mood) GL blobs, hitting the cap.
+//      [BK #55 · 2026-08-07] The parenthetical read "the WatercolorDot static-register
+//      routing". `WatercolorDot` RELOCATED to value.js at BK #55 and is absent from this
+//      library, so it can no longer be the thing the bound is explained by. The BOUND
+//      ITSELF IS UNTOUCHED and still bites: the assertion counts live
+//      `goo-blob-canvas` contexts and has never referenced the departed component.
 //   3. README-vs-CODE defineExpose CONSISTENCY — every method the README "Exposed"
 //      table lists appears in Blob.vue's defineExpose (or the prop/emit surface).
 //      Born-RED: the table listed pause()/resume() that the expose OMITTED.
@@ -127,17 +132,22 @@ test.describe("blob-integration (π lane — the WCAG-2.2.2 pause seam + context
         ).toBeGreaterThan(0.05);
     });
 
-    test("the re-cast blob stories hold a BOUNDED number of live WebGL2 contexts (the WatercolorDot routing)", async ({
+    test("the re-cast blob stories hold a BOUNDED number of live WebGL2 contexts", async ({
         page,
     }) => {
-        // Count the live goo-blob GL canvases on each blob story. The re-cast routes the
-        // static register to WatercolorDot (zero GL context) and reserves Blob for
-        // the interactive/lit hero(es), so no single story mounts an unbounded count.
+        // Count the live goo-blob GL canvases on each blob story. Blob is reserved for the
+        // interactive/lit hero(es), so no single story mounts an unbounded count.
         const CAP = 6; // comfortably under the ~8 Chromium per-page cap
         // AY.W-BLOB2 — the consolidated `substrates/blob` page is the ONE blob story (the
         // interaction + mood + static stories folded into it); it mounts exactly TWO live
-        // GL contexts (the interaction + mood heroes), the static register routed to
-        // WatercolorDot (zero GL). The prior three separate routes collapsed onto it.
+        // GL contexts (the interaction + mood heroes). The prior three separate routes
+        // collapsed onto it.
+        // [BK #55 · 2026-08-07] The title and both comments named a "static register
+        // routed to WatercolorDot (zero GL)" as the reason the count stays bounded. That
+        // component RELOCATED to value.js at BK #55 and its two StorySections were struck
+        // from `/substrates/blob`, so the static register no longer exists on this page at
+        // all — the page is simply the two GL heroes. The CAP and the assertion are
+        // unchanged and still bite; only the dead explanation is struck.
         for (const path of [PI_TARGETS.blob.path]) {
             await page.goto(path);
             await page
@@ -149,7 +159,7 @@ test.describe("blob-integration (π lane — the WCAG-2.2.2 pause seam + context
                 .count();
             expect(
                 count,
-                `${path} mounts ${count} live <Blob> GL contexts — exceeds the bound ${CAP} (route the static register to WatercolorDot; reserve Blob for the interactive hero — the per-page WebGL context cap)`,
+                `${path} mounts ${count} live <Blob> GL contexts — exceeds the bound ${CAP} (reserve Blob for the interactive hero — the per-page WebGL context cap)`,
             ).toBeLessThanOrEqual(CAP);
         }
     });

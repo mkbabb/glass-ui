@@ -9,20 +9,37 @@
 // + the glass-tier hover the icons grid has. The library `--section-color` tokens
 // are NOT demo color (they ARE library tokens — D6 fence).
 //
-// The section-ramp stops render as the living WatercolorDot voice: each stop is a
-// seeded organic pastel blob (the shipped
-// `<WatercolorDot>` primitive, REUSED not re-forked — no demo-local blob), sized well
-// above the retired 96px flat chip, laid out with a HAND-LAID vertical stagger (a
-// fixed per-stop block-offset — the irregular read the user named, never a flat
-// aligned row), animating LIVE on the rebuilt useRAFLoop (`animate`) and entering ON
-// SCROLL via the EXISTING `.scroll-cascade--columns` register (KISS — no demo-local
-// @keyframes). The 13-stop ramp IS the content (the reference-class one-color-event
-// exemption, the progress phase-bus precedent), so every stop carries its full
-// `--section-color-N` chroma; the mono-caption labels stay ink.
+// The section-ramp stops render as the library's OWN hand voice: each stop is its index
+// PAINTED in its own hue — `<HandMark brush="highlighter" shape="highlight">`, the shipped
+// mark engine REUSED not re-forked (no demo-local blob, no demo-local @keyframes). The
+// mark and the caption FUSE: the numeral IS the label and the hand-painted swipe behind
+// it IS the swatch, so a stop reads as one hand-made object instead of a chip stacked
+// over a mono line.
+//
+// TWO measured knobs, both load-bearing, both found by LOOKING (the first cut shipped
+// neither and painted a thin dirty smear):
+//   • the slot is a `w-24` inline-block. HandMark is a TEXT-mark engine — the band
+//     thickness is `brush.weight` in a viewBox whose HEIGHT is derived from the box
+//     ASPECT, so a bare narrow numeral (29×50, aspect 0.58) computes a hairline. A
+//     96×53.3 box (aspect 1.80, viewBox 0 0 100 55.501) lands the band at 25.49px —
+//     half the box, a real swipe.
+//   • `:overrides="{ opacity: 0.72 }"` over the highlighter's shipped 0.38. The ramp IS
+//     the content (the reference-class one-color-event exemption, the progress phase-bus
+//     precedent), so a stop must carry a legible `--section-color-N`, not a wash. 0.38
+//     multiply is tuned for marking a word on a page, not for BEING the specimen.
+// Measured live at 1280 in both arms: 13 marks, 13 paths, 13 distinct oklch fills.
+//
+// Laid out with the HAND-LAID vertical stagger (a fixed per-stop block-offset — the
+// irregular read the user named, never a flat aligned row) and entering ON SCROLL via
+// the EXISTING `.scroll-cascade--columns` register.
+//
+// [BK #55 WATERCOLOR-RELOCATE] the ramp used to mount `<WatercolorDot>`; the component
+// RELOCATED to value.js (its sole consumer) — swatch/palette-slot vocabulary is a color
+// library's. The ramp rebuilds from the library's own primitives, as the row rules.
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { WatercolorDot } from "@glass/components/watercolor-dot";
+import { HandMark } from "@glass/components/handmark";
 import { cn } from "@glass/components/_shared/class-names";
 
 // Core surface/semantic roles exposed as Tailwind utilities via @theme.
@@ -45,9 +62,6 @@ const core: { name: string; cssVar: string; utility: string }[] = [
 
 // The 13-stop chapter palette maps --section-color-0..12 to bg-section-N.
 const rainbow = Array.from({ length: 13 }, (_, i) => i);
-
-// The 120px WatercolorDot reads as a hand-painted mark rather than a token cell.
-const SWATCH_SIZE = "7.5rem"; // 120px
 
 // Hand-laid block-offset per stop (rem), fixed for capture determinism. Adjacent
 // stops carry DISTINCT offsets — the irregular hand-laid zigzag the user named, not
@@ -73,11 +87,11 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
 <template>
     <StoryPage>
         <!-- THE RAINBOW — PROMOTED to the focal moment, leading the pane. Each of the
-             13 stops is a living WatercolorDot seeded blob (≥112px, the watercolor
-             voice the user asked back), laid out with a hand-laid vertical stagger and
-             popping in on the `.scroll-cascade--columns` register (the
-             column-stagger spring-clocked build — the focal pop-entrance, no
-             demo-local @keyframes). The blobs are LARGER than the buried chip. -->
+             13 stops is its index painted in its own hue (the library's own HandMark
+             engine — the hand voice glass-ui actually owns), laid out with a hand-laid
+             vertical stagger and popping in on the `.scroll-cascade--columns` register
+             (the column-stagger spring-clocked build — the focal pop-entrance, no
+             demo-local @keyframes). The mark carries the label; nothing is stacked. -->
         <StorySection label="Foundations · Color" heading="Section ramp · 13 stops">
             <p class="text-small max-w-prose text-muted-foreground">
                 The chapter palette — <code class="fira-code">--section-color-0..12</code>,
@@ -90,16 +104,21 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
                 <div
                     v-for="i in rainbow"
                     :key="i"
-                    class="flex flex-col items-center gap-2"
+                    class="flex flex-col items-center"
                     :style="{ '--col': i, marginBlockStart: `${STAGGER_REM[i]}rem` }"
                 >
-                    <WatercolorDot
-                        :color="`var(--section-color-${i})`"
-                        :seed="`section-ramp-${i}`"
-                        animate
-                        :style="{ width: SWATCH_SIZE, height: SWATCH_SIZE }"
-                    />
-                    <span class="text-mono-small text-muted-foreground">{{ i }}</span>
+                    <span class="text-display-2 font-display leading-none text-foreground">
+                        <HandMark
+                            brush="highlighter"
+                            shape="highlight"
+                            :color="`var(--section-color-${i})`"
+                            :seed="i + 1"
+                            :overrides="{ opacity: 0.72 }"
+                            ><span class="inline-block w-24 text-center">{{
+                                i
+                            }}</span></HandMark
+                        >
+                    </span>
                 </div>
             </div>
         </StorySection>
