@@ -1,6 +1,6 @@
-export { default as GlassTimeline } from "./GlassTimeline.vue";
+export { default as Timeline } from "./Timeline.vue";
 export type {
+    TimelineProps,
     TimelineSegment,
-    TimelineSegmentGradient,
     TimelineSegmentState,
 } from "./types";

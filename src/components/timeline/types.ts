@@ -1,60 +1,60 @@
 /**
- * Timeline primitive types — segmented + continuous variants.
+ * Timeline — ONE normalized reporting axis.
  *
- * The default `scrubber` variant
- * (single-track YouTube-style scrubber) keeps its original numeric model;
- * `segmented` renders adjacent gradient bands with hover/click dots;
- * `continuous` renders one pill rail with N absolute-positioned
- * region children. Both array-variants consume the same `TimelineSegment[]`
- * data shape — only the rendering geometry differs.
+ * N ordered spans on the unit interval, each with a lifecycle state, a fill
+ * fraction and an ordinal jewel hue, whose end boundaries are addressable
+ * marks. The whole is one number published three ways (`defineExpose`, the
+ * `#detail` scope, `--timeline-value`).
+ *
+ * `role="progressbar"`, never `role="slider"` — a timeline REPORTS. The
+ * commanding surface is `<Slider :marks>` (the playhead-with-ticks case).
  */
 
-/** Per-segment lifecycle. Drives fill + dot states. */
+/** Per-span lifecycle. Drives fill extent + mark glyph — never a hue swap. */
 export type TimelineSegmentState = "pending" | "active" | "completed";
 
-/**
- * Gradient endpoints. Either a raw CSS expression (linear-gradient(...))
- * or a `{ from, to }` token pair the primitive expands into a 90deg
- * left-to-right linear-gradient. Accepts CSS color, color-mix(...), or
- * `var(--token)` references.
- */
-export interface TimelineSegmentGradient {
-    from: string;
-    to: string;
-}
-
 export interface TimelineSegment {
-    /** Stable identifier emitted on hover/click. Must be unique per timeline. */
+    /** Stable identity. Emitted on `select` / `hover`; unique per timeline. */
     key: string;
-    /** Display name. Surfaces in the boundary-dot tooltip. */
+    /** Display name. Read in the mark's accessible name and the `#detail` scope. */
     label: string;
-    /** Lifecycle state — drives fill percentage + dot affordance. */
-    state: TimelineSegmentState;
+    /** Lifecycle. Default `"pending"`. */
+    state?: TimelineSegmentState;
     /**
-     * Optional progress within the segment (0..1). When omitted, falls
-     * back to: 1 for `completed`, 0 for `pending`, 0.5 for `active`.
-     * Reduced-motion consumers may pin this to `1`/`0` to suppress mid-
-     * segment animation while retaining final-state visibility.
+     * The span's END boundary on the unit axis, 0..1, CUMULATIVE. Clamped
+     * monotone non-decreasing — never sorted (a typo must stay visible, not
+     * silently reorder the narrative). Omitted spans take an equal share of the
+     * axis remaining between their pinned neighbours; all-omitted is the equal
+     * split.
+     */
+    at?: number;
+    /**
+     * Progress WITHIN the span, 0..1. Defaults: `pending` 0, `completed` 1.
+     *
+     * `active` with `progress` OMITTED is the INDETERMINATE state — a phase
+     * underway with unknown progress. It paints no fill and no cap; the
+     * specular flow is its SOLE carrier.
      */
     progress?: number;
-    /**
-     * Per-segment gradient. Either a `{from, to}` pair (default 90deg
-     * left-to-right) or a raw CSS gradient string the primitive consumes
-     * verbatim. Falls back to a section-tone via the
-     * `--timeline-segment-default-gradient` token when omitted.
-     */
-    gradient?: TimelineSegmentGradient | string;
-    /**
-     * Optional payload surfaced via the `hover` / `click` events. Common
-     * shapes: formatted value strings ("145.3 Mbps"), per-phase metric
-     * objects, or `null` for pending segments.
-     */
+    /** Overrides the ordinal hue for this span. Any CSS `<color>`. */
+    accent?: string;
+    /** Opaque payload. Returned via `select` / `hover` and the `#detail` scope. */
     value?: unknown;
+}
+
+export interface TimelineProps {
+    segments?: TimelineSegment[];
+    /** The key of the span the consumer considers current. `aria-current="step"`. */
+    current?: string;
     /**
-     * Optional relative weight for the `continuous` variant region width
-     * (default `1` — equal share). Per-segment widths are computed as
-     * `weight / sum(weights)`. Ignored by the `segmented` variant (which
-     * uses CSS flex distribution via `--timeline-segment-flex`).
+     * The accessible name of the reporting axis — `aria-label` on the
+     * `role="progressbar"` track.
+     *
+     * It has to be a PROP: the track owns no text content, and a fallthrough
+     * `aria-label` lands on the root, which is `role="group"`. Without it the
+     * bar announces a number with nothing attached to it (axe
+     * `aria-progressbar-name`). No name is invented when it is omitted — an
+     * invented one would be a lie.
      */
-    weight?: number;
+    label?: string;
 }

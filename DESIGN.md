@@ -231,8 +231,8 @@ The rule has two parts:
 **Worked example — timeline vs. dock drift.** Timeline is the model:
 
 ```
-tokens.css     §16 TIMELINE      ← --timeline-dot-size, --timeline-scrubber-height, …
-GlassTimeline.vue (scoped)       ← reads var(--timeline-dot-size) etc.; no literals
+tokens.css   §16 TIMELINE      ← --timeline-track-h (ONE knob, on the rank series)
+Timeline.vue (scoped)          ← reads var(--timeline-track-h); no literals
 ```
 
 The pre-Q3 dock was the violation:
@@ -245,7 +245,7 @@ utilities.css  (density rungs)   ← --dock-tab-h-*, --dock-label-size  ← SPLI
 
 W3 Lane A consolidated the density assignments under `src/components/dock/styles/`, making dock match the timeline shape.
 
-**Forward reference — W4 token promotions.** The timeline dot-fill tokens (`--timeline-dot-fill`, `--timeline-dot-stroke`) that land in W4 are required to follow this rule: they define in tokens.css under the relevant `§<feature>` block, and the feature stylesheet or SFC reads them. No new tokens may be assigned inside utilities.css or a secondary feature file.
+**Forward reference — W4 token promotions.** [2026-08-07 · BK #46] ~~The timeline dot-fill tokens (`--timeline-dot-fill`, `--timeline-dot-stroke`) that land in W4~~ — **STRUCK.** `--timeline-dot-fill` shipped and is deleted with the whole dot register at 8.0.0; `--timeline-dot-stroke` never reached disk at all. The RULE they were an example of stands unchanged and is stated without them: a token defines in the token file under its `§<feature>` block and the feature stylesheet or SFC reads it. No new tokens may be assigned inside utilities.css or a secondary feature file.
 
 ---
 
@@ -1236,13 +1236,13 @@ The canonical mechanism for letting a consumer retint or reshape a primitive's i
 
 **Worked example—Metric ledger geometry.** `MetricStack` owns the shared responsive grid and each `MetricRow` reads it through subgrid. Product-specific phase tint and animation stay outside the static metric family, so no internal selector or compatibility token is required.
 
-**Worked example—Timeline continuous-fill opacity.** `<ContinuousTimeline>` reads `var(--timeline-continuous-fill-opacity, 1)` on its internal `.continuous-region-fill` selector. The consumer sets the variable on the wrapping context (`.timeline-wrap { --timeline-continuous-fill-opacity: 0.74; }`) and the cascade flows into the primitive's internal selectors. Replaces the prior `:deep(.continuous-region-fill) { opacity: ... }` workaround.
+**Worked example—Timeline groove thickness.** `<Timeline>` reads `var(--timeline-track-h)` on its `.tl__track` selector. The consumer sets the variable on the wrapping context (`.timeline-wrap { --timeline-track-h: 0; }` collapses the groove to a bare marker strip) and the cascade flows into the primitive's internal selectors — no `:deep()` reach, and one knob rather than a private dialect of fourteen. [2026-08-07 · BK #46] ~~the `--timeline-continuous-fill-opacity` example~~ struck with its variant.
 
 **When the cascade pattern fails (and `:deep` is genuinely warranted):**
 
 - The primitive doesn't yet declare the cascading token. **Fix the primitive**—add the token + DESIGN.md row + a CHANGELOG entry; the consumer's `:deep` is a symptom, not a solution.
 - The property must address a structural slot (e.g., a specific child's `grid-template-rows`). **Add a slot-class prop** (per the `ScrollPaneHeader` precedent)—that's the cascade analogue for class-based overrides.
-- The override needs to traverse a portal boundary (e.g., reka-ui's `HoverCardPortal`). **Use a non-scoped `<style>` block** in the primitive's SFC that targets the portaled class (the `.timeline-popover` precedent in `ContinuousTimeline.vue`).
+- The override needs to traverse a portal boundary (e.g., reka-ui's `HoverCardPortal`). **Use a non-scoped `<style>` block** in the primitive's SFC that targets the portaled class (the `.dropdown-menu__content` precedent). [2026-08-07 · BK #46] ~~the `.timeline-popover` precedent~~ — struck: the timeline's portal surface is gone, and with it the family's only cross-component DAG edge.
 
 The acceptance bar for adding a new custom-property cascade is two-fold: (a) the override is single-property (a token, not a structural rewrite), and (b) the primitive has at least one consumer demonstrating the override path. Product-only state does not qualify merely because a former consumer exposed it.
 
@@ -1250,135 +1250,114 @@ The acceptance bar for adding a new custom-property cascade is two-fold: (a) the
 
 ## Timeline Primitive
 
-`<GlassTimeline>` is the canonical primitive for time-axis displays: scrubbing, multi-phase progress, and per-section status indication. Three variants form an orthogonal taxonomy. **Note**: the `timeline` slider variant in the table above is a _separate_ primitive (a `<Slider>` with the timeline visual treatment for video-style scrubbing); `<GlassTimeline>` is a standalone Vue component with its own variant enum.
+`<Timeline>` is ONE normalized reporting axis: N ordered spans on the unit interval, each with a
+lifecycle state, a fill fraction and an ordinal jewel hue, whose end boundaries are addressable
+marks. It is `role="progressbar"` and **never** `role="slider"` — a timeline REPORTS. The
+commanding playhead-with-ticks surface is `<Slider :marks>`, which already exists; stacking a
+scrubber on this axis would mint a second coordinate system for one job.
 
-### `variant="scrubber"` (default; pre-Z baseline)
-
-Single-track normalized 0..1 scrubber with full keyboard a11y: `role="slider"` + arrow-key step (0.01) + shift-arrow step (0.1). Optional tooltip caret via `:label` prop. Pointer + keyboard models converge on the same `update:modelValue` event surface.
-
-```vue
-<GlassTimeline v-model="position" label="0:23 / 4:12" />
-```
-
-### `variant="segmented"` (Z.W2.T1)
-
-Adjacent gradient bands—N rectangles in a row, one per phase, with boundary dots emitting `hover` + `click` events. Per-segment gradient (either `{from, to}` pair or raw CSS gradient string), lifecycle state (`pending | active | completed`), and optional payload surface via the events. Used by multi-phase progress UIs where each phase is conceptually independent.
+[2026-08-07 · BK #46 GF-TIMELINE] ~~The three-variant taxonomy (`scrubber` · `segmented` ·
+`continuous`), the `GlassTimeline` dispatcher, the `#popoverContent` slot, the stitched rail
+gradient, the `weight` distributor, the `TimelineSegmentGradient` pair and the fourteen
+`--timeline-*` tokens~~ — **STRUCK, all of it.** Five SFCs and 2,270 lines wore five costumes for
+one job. What replaced them is below; the library-wide doc-truth sweep is #61 W-DOC-TRUTH's.
 
 ```vue
-<GlassTimeline
-    variant="segmented"
-    :segments="phases"
-    @hover="onPhaseHover"
-    @click="onPhaseClick"
-/>
-```
-
-### `variant="continuous"` (AA.W1.T1)
-
-ONE rounded-pill rail substrate with N absolute-positioned region children spanning prev-boundary → current-boundary. Same `TimelineSegment[]` data shape as `segmented`—only the rendering geometry differs. Visual: 1 pill with N internal gradient regions + optional seam dividers at boundaries + boundary dots overlaid at each region's right edge. Used by multi-phase progress UIs where the phases are conceptually one progression bar (the speedtest ping → download → upload pipeline is the canonical consumer).
-
-```vue
-<GlassTimeline
-    variant="continuous"
-    :segments="phases"
-    @hover="onPhaseHover"
-    @click="onPhaseClick"
-/>
+<Timeline :segments="phases" current="build" @select="onSelect">
+    <template #detail="{ segment, source }">…</template>
+</Timeline>
 ```
 
 ### `TimelineSegment` data shape
 
 ```ts
 interface TimelineSegment {
-    key: string; // stable id; emitted on hover/click
-    label: string; // display name; surfaces in dot aria-label
-    state: "pending" | "active" | "completed"; // lifecycle—drives fill + dot affordance
-    progress?: number; // 0..1, overrides state-default fill
-    gradient?: { from: string; to: string } | string; // `{from,to}` pair or raw CSS gradient
-    value?: unknown; // hover/click event payload
-    weight?: number; // continuous-variant width share (default 1)
+    key: string;      // stable id; emitted on select/hover
+    label: string;    // display name; read into the mark's accessible name
+    state?: TimelineSegmentState;  // "pending" (default) | "active" | "completed"
+    at?: number;      // the span's END boundary, 0..1, CUMULATIVE
+    progress?: number;// within-span 0..1; omitted on `active` means INDETERMINATE
+    accent?: string;  // overrides the ordinal hue
+    value?: unknown;  // opaque payload, returned via select/hover and #detail
 }
 ```
 
-`weight` is only honoured by the `continuous` variant (region widths are computed as `weight / sum(weights)`); the `segmented` variant distributes via CSS flex (`--timeline-segment-flex`).
+### The partition
 
-### `#detail` slot — continuous variant only (AI.W1-δ)
+- `at` is an **end** boundary, cumulative, and is **clamped monotone non-decreasing — never
+  sorted**. Keys, labels and states travel with `at`, so a sort turns one typo into a silently
+  reordered narrative; the clamp preserves author order and renders the violation visible (a
+  zero-width span with its mark stacked on its neighbour's).
+- An omitted `at` takes an equal share of the axis its pinned neighbours leave. All-omitted is
+  the plain equal split.
+- A trailing remainder (`Σwidth < 1`) is an **open axis**: the groove paints it, no span owns
+  it, no mark sits on it. The aggregate normalizes over the OWNED axis, so a process scoped to
+  94% of the bar still reports 100% when all of ITS phases complete.
+- Zero-width and coincident spans are legal.
 
-The `continuous` variant emits an optional `#detail` scoped slot rendered as a sibling of the rail wrap. The primitive owns the effective-segment resolution (`hovered ?? current` — hover trumps current; the current-phase reading restores on hover-leave) so consumers do not re-derive the binding per render. Slot payload:
+### The indeterminate state
 
-```ts
-{
-    segment: TimelineSegment | null; // the effective segment (hovered ?? current; null when idle)
-    source: "hovered" | "current" | "idle";
-    currentKey: string | null; // the original currentSegmentKey prop (null when unset)
-    hoveredKey: string | null; // the transient hovered marker key (null when no hover)
-}
-```
+`{ state: "active" }` with `progress` omitted is a phase underway with unknown progress. It
+paints **no fill and no cap**; the specular flow in its span is the state's SOLE carrier. That
+is what makes the flow the library's one lawful idle loop rather than decoration: kill it and
+the span becomes pixel-identical to `pending`. Fabricating a `0.5` (or a `0`) in its place
+paints a running phase as something it is not.
 
-Consumers own the choreography. The canonical shape is a Vue `<Transition mode="out-in">` keyed on the segment's stable `key`, swapping the active-segment body with an idle placeholder:
+### One number, three doors
 
-```vue
-<GlassTimeline
-    variant="continuous"
-    :segments="phases"
-    :current-segment-key="active.key"
-    ...
->
-  <template #detail="{ segment, source }">
-    <Transition name="phase-detail" mode="out-in">
-      <div v-if="segment" :key="`detail-${segment.key}`" :data-source="source">
-        <span class="phase-detail-label">{{ segment.label }}</span>
-        <span class="phase-detail-value">{{ segment.value }}</span>
-        <span class="phase-detail-state">{{ segment.state }}</span>
-      </div>
-      <div v-else key="detail-idle" class="phase-detail-idle">
-        Waiting…
-      </div>
-    </Transition>
-  </template>
-</GlassTimeline>
-```
+`defineExpose({ value })` (a `ComputedRef<number>`), the `#detail` scope's `value`, and
+`--timeline-value` on the root all carry the same span-weighted aggregate. Three, because each
+reaches a reader the others cannot: a slot prop is unreachable from a consumer's script, and a
+CSS variable is reachable only by polling `getComputedStyle`.
 
-**Two-keyed-children shape (load-bearing)**: Vue's `<Transition mode="out-in">` requires the two branches to be siblings of the `<Transition>` element, not a single `v-if` block. A naive refactor to one `v-if` inside the Transition silently breaks the fade-swap on segment-key change. The two-branch shape (`v-if="segment"` + `v-else` idle) is the canonical recipe — replicate it verbatim.
+### `#detail` slot
 
-**Variant scope**: continuous-only per option γ (post-RD-3 §3). The scrubber + segmented variants do not carry the `#detail` slot. Consumers needing a similar surface on those variants must compose their own panel; the slot's payload shape (`{ segment, source, currentKey, hoveredKey }`) is the recommended pattern to copy.
+Scope: `{ segment, source, current, hovered, value, progress }`, where `segment` is the
+effective span (`hovered ?? current`) and `source` is `"hovered" | "current" | "idle"`. The
+primitive owns the resolution and the entry choreography — the detail is carried ALONG the axis
+(a signed one-rung nudge on the same spring the fill rides), not cross-faded, so no consumer
+`<Transition>` recipe is load-bearing any more.
 
-**Height reservation**: the mount carries `min-height: var(--timeline-detail-min-height, 1.25rem)` so idle ↔ active transitions do not reflow the surrounding layout. Consumers override via the cascade (`.timeline-wrap { --timeline-detail-min-height: 4rem; }`).
+### Paint
+
+- The groove COMPOSES `.glass-track-well` (the register's third consumer) and authors its own
+  `background` at **host − 4% L**, which is that register's own written invitation. Plus one
+  top-only inset ink edge at the `--ink-edge` rung.
+- **ZERO `backdrop-filter`** is authored in the directory — not as a value, not as a reset.
+- **The ordinal hue law**: span *i* without an `accent` takes
+  `--section-color-((2 + 4i) mod 13)`. `gcd(4, 13) = 1`, so all thirteen stops are visited
+  before a repeat. The two integers are `geometry.ts` constants, never tokens (BK #68 L-4).
+- Each `.tl__span` is its own **clip box** — `.glass-track-well` clips the track's ends only,
+  and without the span clip the fill translates straight into its neighbours.
+
+### Motion
+
+Everything that travels rides `springPreset("dock")`, read by name. Three expressions share ONE
+cap — the existing `--scale-hover` token, read from the live cascade per frame: the meniscus
+stretch, the mark swell as the front crosses a milestone, and the mark hover scale. No motion
+scalar is minted. The one idle loop is the specular flow, hosted on the track (a non-interactive
+reporting substrate); the marks are interactive members and carry **zero** loops.
 
 ### Tokens (`§16 TIMELINE`)
 
-| Token                                  | Default          | Use                                                                                          |
-| -------------------------------------- | ---------------- | -------------------------------------------------------------------------------------------- |
-| `--timeline-scrubber-height`           | `0.5rem`         | Scrubber-variant rail height                                                                 |
-| `--timeline-segmented-height`          | `0.625rem`       | Segmented-variant rail height                                                                |
-| `--timeline-continuous-height`         | `0.75rem`        | Continuous-variant rail height                                                               |
-| `--timeline-dot-size`                  | `0.875rem`       | Boundary dot diameter (segmented + continuous; pointer: fine)                                |
-| `--timeline-dot-size-touch`            | `1.25rem`        | Boundary dot diameter under `@media (pointer: coarse)`                                       |
-| `--timeline-touch-target`              | `44px`           | WCAG 2.5.5 target-size floor for the dot `::before` hit-area (AC.W6d F2.I-04)                |
-| `--timeline-segment-flex`              | `1 1 0`          | Per-cell flex distribution (segmented)                                                       |
-| `--timeline-continuous-seam-opacity`   | `0.25`           | Continuous inter-region 1px divider opacity (`0` to suppress)                                |
-| `--timeline-continuous-seam-color`     | `color-mix(...)` | Seam tint (composes from opacity by default)                                                 |
-| `--timeline-segment-default-gradient`  | wash → mid wash  | Fallback gradient when `segment.gradient` is omitted                                         |
-| `--timeline-segment-gradient-ping`     | (chart-ping)     | Per-phase canonical default—`ping`                                                           |
-| `--timeline-segment-gradient-download` | (chart-download) | Per-phase canonical default—`download`                                                       |
-| `--timeline-segment-gradient-upload`   | (chart-upload)   | Per-phase canonical default—`upload`                                                         |
-| `--timeline-segment-gradient-jitter`   | (chart-jitter)   | Per-phase canonical default—`jitter`                                                         |
-| `--timeline-detail-min-height`         | `1.25rem`        | Continuous `#detail` slot mount min-height (idle ↔ active transition reflow guard; AI.W1-δ) |
+| Token                 | Default              | Use                                                      |
+| --------------------- | -------------------- | -------------------------------------------------------- |
+| `--timeline-track-h`  | `var(--space-body)`  | Groove thickness. 12px fine, 8px at ≤768px off the rank series. `0` gives a bare marker strip; the marks are decoupled and survive it. |
 
 ### A11y contract
 
-- **Scrubber**: `role="slider"` + `aria-valuemin/max/now` + keyboard arrow-key step. `aria-valuenow` is always rendered as a numeric attribute (the binding coerces via `Number(modelValue ?? 0)`; AA.W1.T2 / A4 §S-16 fix). Defaults to `0` when `modelValue` is `undefined` or `null`.
-- **Segmented**: `role="group"` on the wrapper, per-dot `<button>` with composed `aria-label` (`"{label}: {state}"`). Per-segment payload surfaces via the `hover` + `click` events.
-- **Continuous**: `role="group"` on the wrapper, plus an **Option C structural split** (AB.W2.T4 / A4 §nested-interactive) under the wrapper:
-    - `.continuous-track[role="progressbar"]` with `aria-valuemin="0"`, `aria-valuemax=N`, `aria-valuenow` derived from completed-segment-count + fractional active progress (rounded to 2 decimals). The rail is **non-interactive**—it carries no focusable descendants, satisfying axe `nested-interactive` (serious; WCAG 2.0 A—4.1.2). Each region renders a `.continuous-region-fill` child that paints the per-phase gradient up to the inline `--continuous-fill-width` (load-bearing: the var actually paints, it is not merely computed; W3 will lean on this substrate for the phase-bus echo).
-    - `.continuous-markers[role="list"]` carries the interactive `<button class="continuous-dot">` markers as `<li role="listitem">` siblings. Each button has composed `aria-label` (`"{label}: {state}"`), per-segment data hooks (`data-state`, `data-current`, `data-completed`), and a `<Popover trigger="hover">` wrap that surfaces `{ label, value, description, state }` on hover (color-coded via the segment's gradient endpoint).
-    - The `currentSegmentKey?: string` prop stamps `data-current="true"` on the matching marker so consumers (panel rendering, W3 raised-rivet styling) can distinguish active phase from transient hovered phase without DOM surgery. Hover affects only the floating popover; the data-current marker survives hover-leave.
-
-The continuous variant's event surface adds `hoverEnd` (mirror of `hover`) so consumers can blend hover-over-current in panels via `effective = hovered ?? current`. The events fire from the Popover's debounced `update:open` cadence (configured through `openDelay` + `closeDelay`), eliminating the pointer-skim flicker the raw `@mouseenter`/`@mouseleave` model produced when the popover content overlapped the trigger.
-
-All variants respect `prefers-reduced-motion: reduce` by collapsing band / region / dot transitions to `0.01ms`.
-
-**Target-size compliance (AC.W6d F2.I-04—WCAG 2.5.5 AAA)**: each interactive dot (segmented + continuous) paints at 14px visible diameter under `pointer: fine` but grows an invisible `::before` halo extending the pointer hit-area to 44 × 44 (`inset: -15px` against the 14px box: `14 + 15 + 15 = 44`). Under `@media (pointer: coarse)` the visible dot promotes to `--timeline-dot-size-touch` (default 20px) and the halo's inset recomputes via `calc((var(--timeline-touch-target) - var(--timeline-dot-size-touch)) / -2)` so the total hit-area stays at 44 × 44 across the lifted geometry. Consumers that override the touch token receive a halo that tracks the override automatically.
+- `role="group"` on the root (named by a fallthrough `aria-label`), `role="progressbar"` on the
+  track with `aria-valuemin/max/now` plus **`aria-valuetext`** — which is where the
+  indeterminate state surfaces as prose, because it has no number.
+- The marks are a **sibling** `<ul role="list">`, not descendants of the progressbar: the axe
+  `nested-interactive` closure holds by construction rather than by rule.
+- One **roving tab stop** over the marks (←/→ walk, Home/End jump, Enter/Space select via the
+  native button). Seven focusables became one.
+- Each mark is a `<button data-control-target>` whose hit box inflates and whose painted disc
+  does not — 24px at fine (WCAG 2.5.8), 44px on a coarse pointer (2.5.5) from the one shared
+  rule.
+- Coarse density is a stated **contract, not machinery**: the 44px guarantee holds for marks
+  ≥44px apart; denser, DOM order resolves pointer hits and the keyboard path stays complete.
 
 ---
 

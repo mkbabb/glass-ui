@@ -13,6 +13,19 @@ dropped the whole value at paint, and the runtime latch that worked around that 
 required a per-app bootstrap call. Consumers delete the `armGlassRefract()` call and
 drop `.glass-lens`; the `.glass-{rung}` blur+tint base is unchanged.
 
+### Changed — the timeline family collapses 5 → 1, `GlassTimeline` → `Timeline`
+
+The `scrubber` / `segmented` / `continuous` dispatcher and its four private children are
+deleted; `./timeline` now exports one `<Timeline>` — a single normalized reporting axis,
+`role="progressbar"` and never `role="slider"`. `variant="scrubber"` has no replacement
+by design: the commanding playhead-with-ticks surface is `<Slider :marks>`. Props
+`variant` / `modelValue` / `currentSegmentKey` / `ariaLabel` / `disablePopover` are gone,
+`current` and `accent`/`at` arrive, `label` is repurposed from the scrubber's tooltip
+caret to the bar's accessible name, `click` becomes `select`, `hoverEnd` folds into
+`hover(null)`, and `TimelineSegmentGradient` is deleted while `TimelineProps` is
+exported. The fourteen `--timeline-*` dot/seam/gradient tokens collapse to one
+`--timeline-track-h`. `MIGRATION.md` §8.0.0 carries the full per-surface table.
+
 ## 7.0.0 (2026-07-17)
 
 ### Export-map delta (the authoritative 6.x → 7.0 migration surface)

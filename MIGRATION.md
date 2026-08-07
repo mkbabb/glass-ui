@@ -99,6 +99,71 @@ except Chromium, so the lived read is unchanged off-Chromium.
 | `supportsBackdropRefract` (root barrel) | none — no capability branch remains |
 | `.glass-lens` class + `src/styles/glass-refract.css` | the `.glass-{wash,quiet,resting,floating,overlay}` base |
 
+**The timeline family collapses five SFCs into one: `GlassTimeline` → `Timeline`.**
+The `./timeline` subpath survives; everything inside it is new. `GlassTimeline` was a
+dispatcher over three structurally-distinct variants (`scrubber` / `segmented` /
+`continuous`) that forked one job — report progress along an axis — into three
+coordinate systems, three a11y stories and three paint recipes. `<Timeline>` is ONE
+normalized reporting axis: N ordered spans on the unit interval, `role="progressbar"`
+and never `role="slider"`. The commanding playhead-with-ticks surface a `scrubber`
+consumer wants is `<Slider :marks>`, which already exists and already speaks the
+keyboard contract; there is no drop-in replacement for `variant="scrubber"` and none is
+offered, because a timeline reports and a slider commands.
+
+`ScrubberTimeline`, `SegmentedTimeline`, `ContinuousTimeline`, `ContinuousRail` and
+`ContinuousMarkers` were never exported — only the dispatcher was public — so the
+export delta is the one rename plus the type delta below.
+
+_Runtime + type exports on `./timeline`_
+
+| Classification | Symbol |
+| --- | --- |
+| renamed at 8.0 | `GlassTimeline` → `Timeline` |
+| removed at 8.0 | `TimelineSegmentGradient` (the per-segment gradient dialect died with the segmented variant) |
+| added at 8.0 | `TimelineProps` (a consumer typing a wrapper needs it) |
+| retained | `TimelineSegment`, `TimelineSegmentState` |
+
+_Props_
+
+| Classification | Prop |
+| --- | --- |
+| removed at 8.0 | `variant`, `modelValue`, `currentSegmentKey`, `ariaLabel`, `disablePopover` |
+| repurposed at 8.0 | `label` — was the scrubber's tooltip caret text; it is now the accessible NAME of the bar (`aria-label` on the `role="progressbar"` track). Same spelling, different job: re-read every site that passed it |
+| added at 8.0 | `current` (the key of the current span, replacing `currentSegmentKey`) |
+| retained | `segments` |
+
+`ariaLabel`'s old comma-joined-segment-labels fallback is gone with it: an invented name
+is a lie, so an unnamed bar stays unnamed and `label` is how you name it.
+
+_Emits and slots_
+
+| Classification | Surface |
+| --- | --- |
+| removed at 8.0 | `update:modelValue`, `scrubStart`, `scrubEnd` (scrubber-only — move to `<Slider>`), `hoverEnd`, `#popoverContent` |
+| renamed at 8.0 | `click` → `select` |
+| changed at 8.0 | `hover` emits `{ key, segment }` on enter and `null` on leave (one event, not a pair); `#detail` survives with a new scope — `{ segment, source, current, hovered, value, progress }` |
+
+_`TimelineSegment` shape_
+
+| Classification | Field |
+| --- | --- |
+| removed at 8.0 | `gradient` (a span's paint is one colour, not a ramp), `weight` |
+| added at 8.0 | `at` — the span's END boundary on the unit axis, CUMULATIVE, clamped monotone non-decreasing and never sorted; omitted spans take an equal share of the remainder between pinned neighbours. It replaces `weight`'s relative distribution. `accent` — a CSS `<color>` overriding the span's ordinal hue |
+| changed at 8.0 | `state` is now OPTIONAL (defaults `"pending"`). `progress` omitted on an `active` span is INDETERMINATE — it paints no fill and no cap and surfaces as prose in `aria-valuetext`, where the old primitive fabricated `0.5` |
+
+_CSS custom properties (`tokens/scale-paper.css` §16)_
+
+| Classification | Property |
+| --- | --- |
+| removed at 8.0 | `--timeline-continuous-height`, `--timeline-dot-size`, `--timeline-dot-size-touch`, `--timeline-touch-target`, `--timeline-segment-flex`, `--timeline-dot-fill`, `--timeline-dot-blur`, `--timeline-dot-ring`, `--timeline-dot-tint-current`, `--timeline-dot-tint-completed`, `--timeline-dot-check-color`, `--timeline-continuous-seam-opacity`, `--timeline-continuous-seam-color`, `--timeline-segment-default-gradient` |
+| added at 8.0 | `--timeline-track-h` (the ONE knob; `var(--space-body)`, so 12px at fine and 8px at ≤768px, and `0` is the bare marker-strip case) |
+
+`--timeline-continuous-height` → `--timeline-track-h` is a rename, not a re-point: the
+old name encoded a variant taxonomy that no longer exists. The value is unchanged at
+fine. Every dot/seam/gradient knob is deleted outright — the mark is a `--card` disc
+with a one-ink perimeter and the span is its accent, so there is nothing left for them
+to tune.
+
 ## 7.0.0 (2026-07-17)
 
 The packed public map changes from 82 to 74 export keys. It removes
@@ -561,7 +626,7 @@ subpath)` is the 5.0.0 target".]
 | `Surface` | type | `/axes` |
 | `TaperSpec` | type | `/handmark` |
 | `TimelineSegment` | type | `/timeline` |
-| `TimelineSegmentGradient` | type | `/timeline` |
+| `TimelineSegmentGradient` | type | removed 8.0.0 — the per-segment gradient dialect died with the segmented variant; a span's paint is its `accent` (/timeline) |
 | `TimelineSegmentState` | type | `/timeline` |
 | `TimingFunction` | type | removed 7.0.0 — import from `@mkbabb/keyframes.js`; /motion no longer re-exports kf primitives |
 | `ToastType` | type | removed 7.0.0 — use the `Toast` row types on /toast (`ToastProps` / `ToastOptions`) |

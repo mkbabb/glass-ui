@@ -286,64 +286,25 @@
 
     /* ═══════════════════════════════════════════════
        §16 TIMELINE
-       Timeline primitive tokens. All three variants (scrubber +
-       segmented + continuous) compose these. Both segmented + continuous
-       arrays carry the same `TimelineSegment[]` data shape; only the
-       rendering geometry differs. See DESIGN.md `## Timeline Primitive`.
+
+       ONE token, because the component has one knob. The <Timeline> is one
+       normalized reporting axis, not a variant family, so there is no dot
+       register, no seam register, no per-variant height and no default
+       gradient to declare — every one of those died with the five SFCs that
+       forked one job into five costumes.
+
+       The name is honest now: the old `--timeline-continuous-height` encoded a
+       variant taxonomy that no longer exists. A rename is a break, taken as one.
+
+       The VALUE is the body rung, not a literal: at fine it resolves 12px —
+       byte-identical to the height that shipped — and it steps to 8px at ≤768px
+       from the ONE width-conditional declaration in `tokens/sizing.css`, so the
+       mobile rung costs no second media query. A consumer still overrides it
+       outright; `--timeline-track-h: 0` is the bare marker-strip case (the 20px
+       marks are decoupled from the knob and survive it).
        ═══════════════════════════════════════════════ */
 
-    /* Rail thickness */
-    --timeline-continuous-height: 0.75rem;    /* 12px — ONE pill, N regions */
-
-    /* Geometry — shared across all variants */
-    --timeline-dot-size: 0.875rem;            /* 14px — boundary dot diameter (pointer: fine) */
-    --timeline-dot-size-touch: 1.25rem;       /* 20px — boundary dot diameter (pointer: coarse) */
-    --timeline-touch-target: 44px;            /* WCAG 2.5.5 target-size floor.
-                                                 The `::before` halo around each dot extends to
-                                                 this dimension so finger-precision users meet
-                                                 the (target-size: 44×44 minimum) clause without
-                                                 the visible dot growing to that footprint at
-                                                 pointer: fine. */
-    --timeline-segment-flex: 1 1 0;           /* per-cell flex distribution (segmented) */
-
-    /* Boundary-dot glass knobs (promoted from
-       ContinuousTimeline.vue SFC fallbacks; minted these as a
-       private dialect). The continuous-variant dot is a GLASS primitive:
-       a translucent tinted fill over a backdrop blur with a hairline
-       ring. These knobs let consumers retune the resting glass + the
-       per-state tints without a `:deep()` reach.
-         fill            — resting translucent fill
-         blur            — backdrop blur tier behind the dot
-         ring            — hairline glass ring (border-color)
-         tint-current    — wash colour for the active-phase dot
-         tint-completed  — wash colour for the completed-phase dot
-         check-color     — completion-tick stroke (defaults to the
-                           completed tint) */
-    --timeline-dot-fill: var(--surface-tint-12);
-    --timeline-dot-blur: var(--glass-blur-quiet);
-    --timeline-dot-ring: var(--glass-border-floating);
-    --timeline-dot-tint-current: var(--accent, var(--foreground));
-    --timeline-dot-tint-completed: var(--success, var(--foreground));
-    --timeline-dot-check-color: var(--timeline-dot-tint-completed);
-
-    /* Continuous-variant specific — seam dividers between regions.
-       Set `--timeline-continuous-seam-opacity: 0` to suppress the
-       inter-region 1px dividers entirely. Default `0.25` reads as a
-       subtle hairline; the `--timeline-continuous-seam-color` knob lets
-       consumers override the seam tint independently of opacity. */
-    --timeline-continuous-seam-opacity: 0.25;
-    --timeline-continuous-seam-color: color-mix(
-        in srgb,
-        var(--foreground) calc(var(--timeline-continuous-seam-opacity) * 100%),
-        transparent
-    );
-
-    /* Per-segment default gradient used when a segment omits its own paint. */
-    --timeline-segment-default-gradient: linear-gradient(
-        90deg,
-        var(--surface-tint-15),
-        var(--surface-tint-25)
-    );
+    --timeline-track-h: var(--space-body);
 
     /* ═══════════════════════════════════════════════
        §19 TABLE DENSITY
