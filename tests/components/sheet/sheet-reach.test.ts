@@ -51,17 +51,15 @@ function rules(css: string, pattern: RegExp): string[] {
 describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the edge", () => {
     it("sizes the anchored axis off the rung scalar on BOTH axes", () => {
         const css = read("src/components/sheet/styles.css");
-        const block = rules(
-            css,
-            /\[data-detents\]\[data-side="(bottom|top)"\]/,
-        ).join("\n");
+        const block = rules(css, /\[data-detents\]\[data-side="(bottom|top)"\]/).join(
+            "\n",
+        );
         expect(block, "top/bottom detent arm must size its block axis").toMatch(
             /block-size:\s*calc\([^;]*--detent-t/,
         );
-        const inline = rules(
-            css,
-            /\[data-detents\]\[data-side="(left|right)"\]/,
-        ).join("\n");
+        const inline = rules(css, /\[data-detents\]\[data-side="(left|right)"\]/).join(
+            "\n",
+        );
         expect(inline, "left/right detent arm must size its inline axis").toMatch(
             /(width|inline-size):\s*calc\([^;]*--detent-t/,
         );
@@ -71,7 +69,10 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the 
         const sfc = read("src/components/sheet/SheetContent.vue");
         // The detented branch of the spring style publishes the scalar and returns.
         const branch = /if\s*\(detented\.value\)\s*return\s*\{([^}]*)\}/.exec(sfc);
-        expect(branch, "the detented arm must have its own style branch").not.toBeNull();
+        expect(
+            branch,
+            "the detented arm must have its own style branch",
+        ).not.toBeNull();
         expect(branch![1]).toContain("--detent-t");
         expect(branch![1]).not.toContain("translate");
         expect(branch![1]).not.toContain("transform");
@@ -84,10 +85,9 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the 
 
     it("restores neither `height: 100%` nor `mt-auto` on the detented block axis", () => {
         const css = read("src/components/sheet/styles.css");
-        const block = rules(
-            css,
-            /\[data-detents\]\[data-side="(bottom|top)"\]/,
-        ).join("\n");
+        const block = rules(css, /\[data-detents\]\[data-side="(bottom|top)"\]/).join(
+            "\n",
+        );
         expect(block).not.toMatch(/(block-size|height)\s*:\s*100%/);
         const sfc = read("src/components/sheet/SheetContent.vue");
         expect(sfc).not.toContain("mt-auto");
@@ -170,6 +170,42 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the 
         );
     });
 
+    // THE ROOT IS TWO ROWS, and that is the whole of P1's cause. The region used to take
+    // `block-size: 100%` — the WHOLE content box — while sitting below the 44px grip
+    // handle in normal flow, so the flow ran exactly one handle past the sheet's own edge
+    // and carried the footer with it (measured: footer `bottom` 923 against a 900px
+    // viewport at EVERY rung, with `contain: paint` destroying 24 of its 53px). The
+    // remainder row is what the region always meant.
+    it("gives the detented root its own two rows, so the region is the REMAINDER", () => {
+        const css = read("src/components/sheet/styles.css");
+        const root = rulesWhere(
+            css,
+            (selector) =>
+                selector.includes('[data-slot="sheet-content"][data-detents]') &&
+                !selector.includes(">") &&
+                !selector.includes("[data-side") &&
+                !selector.includes("[data-modal"),
+        ).join("\n");
+        // the remainder row's own MINIMUM is the floor clause's; what this one locks is
+        // that the handle has a row of its own and the region is what is left over.
+        expect(root, "the detented root must own the handle/region split").toMatch(
+            /grid-template-rows:\s*auto\s+minmax\([^,]+,\s*1fr\)/,
+        );
+        expect(root).toMatch(/display:\s*grid/);
+        expect(root).toMatch(/contain:\s*layout paint/);
+
+        const region = rulesWhere(
+            css,
+            (selector) =>
+                selector.includes("[data-detents]") &&
+                selector.includes('[data-slot="sheet-content-region"]') &&
+                !selector.includes(":not("),
+        ).join("\n");
+        expect(region, "the region may never claim the whole content box").not.toMatch(
+            /block-size:\s*100%/,
+        );
+    });
+
     it("pins the header and the footer and scrolls only the body, chaining contained", () => {
         const css = read("src/components/sheet/styles.css");
         const region = rulesWhere(
@@ -179,15 +215,193 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the 
                 selector.includes('[data-slot="sheet-content-region"]') &&
                 !selector.includes(":not("),
         ).join("\n");
+        // The header row yields FIRST where the rung cannot afford it (`minmax(0, auto)`
+        // against the body's own floor), and `align-content: end` keeps the last row's
+        // end on the region's end — so what a short rung loses is the crown, never the
+        // action.
         expect(region, "the detented region owns the three-row grammar").toMatch(
-            /grid-template-rows:\s*auto\s+minmax\(0,\s*1fr\)\s+auto/,
+            /grid-template-rows:\s*minmax\(0,\s*auto\)\s+minmax\([^,]+,\s*1fr\)\s+auto/,
         );
+        expect(region).toMatch(/align-content:\s*end/);
         const body = rules(
             css,
             /:not\(\[data-slot="dialog-header"\]\):not\(\[data-slot="dialog-footer"\]\)/,
         ).join("\n");
         expect(body).toMatch(/overflow-y:\s*auto/);
         expect(body).toMatch(/overscroll-behavior:\s*contain/);
+    });
+
+    // ── π-39 CURE II ──────────────────────────────────────────────────────────────
+    //
+    // R2-1. A CLAMP IS NOT A FIT. The cure that made P1's figure green also made it
+    // UNFALSIFIABLE: `overflow: hidden` + `align-content: end` pins the footer's
+    // `rect.bottom` to the region's end whether or not one pixel of the action paints, so
+    // the measured bar passed with the footer 0% visible. At the shipped 0.12 peek the
+    // primary action was 45% clipped on a 900 viewport and 81% clipped on a real 780 one.
+    // The ruling is a FLOOR: a resting rung can never be smaller than the smallest honest
+    // sheet — the chrome, in the tokens the chrome is built from, so it transposes one rung
+    // down at mobile for free.
+    //
+    // It is NOT `min-content`, and that is the subtlety: under an intrinsic constraint a
+    // `1fr` row resolves to its item's MAX-content contribution and an `auto` row to the
+    // header's, so `min-content` reads the sheet's NATURAL height — 447.23 on a 780
+    // viewport, which floors rungs 0.25 AND 0.4 onto one box and destroys the ladder it was
+    // meant to protect. The floor owes the ACTION, not the content: the crown is absent
+    // from the sum by intent, and the body is in it for exactly one line.
+    it("floors a resting rung at the smallest honest sheet, in tokens", () => {
+        const css = read("src/components/sheet/styles.css");
+        const block = rules(css, /\[data-detents\]\[data-side="(bottom|top)"\]/).join(
+            "\n",
+        );
+        const floor = /min-block-size:\s*calc\(([\s\S]*?)\);/.exec(block)?.[1];
+        expect(
+            floor,
+            "the detented block arm must floor at its own chrome",
+        ).toBeTruthy();
+
+        expect(floor, "the grip's row and the action's own target").toContain(
+            "var(--touch-target)",
+        );
+        expect(floor, "the region's gutters").toContain("var(--space-body)");
+        expect(floor, "the plate's own padding").toContain("var(--space-family)");
+        expect(floor, "the seams it draws").toContain("var(--sheet-seam-width)");
+        expect(floor, "the body's last line").toContain("1lh");
+        expect(
+            floor!
+                .replace(/var\(--[\w-]+\)|1lh/g, "")
+                .match(/\d+(px|rem|em|%|dvh|vh)/g),
+            "no bare length may stand in for a chrome row",
+        ).toBeNull();
+
+        // …and the seam the floor counts is the seam the chrome actually draws.
+        const seams = rules(css, /\[data-slot="dialog-(header|footer)"\]/).join("\n");
+        expect(seams).toMatch(/border-block-(start|end):\s*var\(--sheet-seam-width\)/);
+
+        // The remainder row keeps a ZERO minimum on purpose: an intrinsic one would make
+        // the region's own natural height a hard floor on the track, and the rung would
+        // overflow the sheet it is supposed to fit inside.
+        const root = rulesWhere(
+            css,
+            (selector) =>
+                selector.includes('[data-slot="sheet-content"][data-detents]') &&
+                !selector.includes(">") &&
+                !selector.includes("[data-side") &&
+                !selector.includes("[data-modal"),
+        ).join("\n");
+        expect(root, "the remainder track may not carry an intrinsic minimum").toMatch(
+            /grid-template-rows:\s*auto\s+minmax\(0,\s*1fr\)/,
+        );
+    });
+
+    // R2-2. THE YIELD ORDER, AGAINST ITS OWN COMMENT. "A short rung loses the CROWN, never
+    // the action" — but the `1fr` body yielded FIRST and WHOLLY: at the demo's own t=0.25
+    // the body measured 0px and not one content row rendered. The header is the crown; it
+    // must go before the body loses its last line.
+    it("yields the crown before the body — the body keeps a line at every rung", () => {
+        const css = read("src/components/sheet/styles.css");
+        const region = rulesWhere(
+            css,
+            (selector) =>
+                selector.includes("[data-detents]") &&
+                selector.includes('[data-slot="sheet-content-region"]') &&
+                !selector.includes(":not("),
+        ).join("\n");
+        const rows = /grid-template-rows:\s*([^;]+);/.exec(region)?.[1] ?? "";
+        const [header, body] = [
+            /^minmax\(0,\s*auto\)/.test(rows.trim()),
+            /minmax\(1lh,\s*1fr\)/.test(rows),
+        ];
+        expect(header, "the header row must be able to reach zero").toBe(true);
+        expect(body, "the body row must never yield its last line").toBe(true);
+    });
+
+    // R2-3. The `scroll` prop was silently DEAD on the detented arm: the cure's
+    // `overflow: hidden` sits at the same (0,0,0) specificity LATER in source than
+    // `[data-scroll] > region { overflow-y: auto }`, so it won by order alone. With the
+    // floor above, the region can no longer overflow its own tracks and the clip has
+    // nothing left to hide — so it goes, and the scroll arm is reachable again.
+    it("leaves the `scroll` arm reachable on a detented sheet", () => {
+        const css = read("src/components/sheet/styles.css");
+        // the REGION's own rule — not the chrome rules that hang off it, since the header
+        // clips its own overflow by design and that clip is the crown yielding.
+        const region = rulesWhere(
+            css,
+            (selector) =>
+                selector.includes("[data-detents]") &&
+                selector.includes('[data-slot="sheet-content-region"]') &&
+                !selector.includes(":not(") &&
+                !selector.includes('[data-slot="dialog-'),
+        ).join("\n");
+        expect(
+            region,
+            "the detented region may not clip its own scrollport",
+        ).not.toMatch(/overflow:\s*hidden/);
+        const scrollArm = rulesWhere(
+            css,
+            (selector) =>
+                selector.includes("[data-scroll]") &&
+                selector.includes('[data-slot="sheet-content-region"]'),
+        ).join("\n");
+        expect(scrollArm).toMatch(/overflow-y:\s*auto/);
+    });
+
+    // R2-4. THE FILE'S OWN HEADER PROMISES (0,0,0) EVERYWHERE so a consumer's utility
+    // wins. A compound written `:where(host) > child` computes (0,1,0) and ships layout at
+    // a specificity the header says it never uses.
+    it("keeps every sampler rule at (0,0,0), the specificity its own header promises", () => {
+        const css = read("src/components/sheet/styles.css");
+        const bare = css.replace(/\/\*[\s\S]*?\*\//g, "");
+        const re = /([^{}]+)\{[^{}]*\}/g;
+        const offenders: string[] = [];
+        let match: RegExpExecArray | null;
+        while ((match = re.exec(bare)) !== null) {
+            const selector = match[1]!.trim();
+            if (!selector.includes('[data-slot="glass-graded-halo"]')) continue;
+            if (!selector.startsWith(":where(")) offenders.push(selector);
+            // a combinator OUTSIDE the `:where()` is the (0,1,0) tell
+            else if (/\)\s*[>+~]/.test(selector)) offenders.push(selector);
+        }
+        expect(offenders, "sampler rules must be fully wrapped in :where()").toEqual(
+            [],
+        );
+    });
+
+    // The sampler's box must not be a function of the rung. It was `inset: 0` inside a box
+    // whose extent IS `--detent-t`, so a drag re-derived a viewport-wide backdrop-filter
+    // region on every frame. Each side pins the box to the edge its ramp is anchored at and
+    // releases the opposite inset, so the surplus runs off-screen behind the anchored edge.
+    //
+    // [π-39 CURE II · R2-4] The released inset is PHYSICAL now. The box's side names, its
+    // ramp directions and its placements were already physical; releasing a LOGICAL one
+    // among them put the ramp ±865px off its own edge under `direction: rtl`.
+    it("holds the graded sampler's box CONSTANT across the rung range", () => {
+        const css = read("src/components/sheet/styles.css");
+        const sideBox = (side: string): string =>
+            rulesWhere(
+                css,
+                (selector) =>
+                    selector.includes(`[data-detents][data-side="${side}"]`) &&
+                    selector.includes('[data-slot="glass-graded-halo"]'),
+            ).join("\n");
+
+        for (const [side, extent, released] of [
+            ["bottom", /height:\s*100dvh/, /bottom:\s*auto/],
+            ["top", /height:\s*100dvh/, /top:\s*auto/],
+            ["left", /width:\s*100dvw/, /left:\s*auto/],
+            ["right", /width:\s*100dvw/, /right:\s*auto/],
+        ] as const) {
+            const box = sideBox(side);
+            expect(box, `${side}: the sampler needs a constant extent`).toMatch(extent);
+            expect(box, `${side}: the surplus must run away from the viewport`).toMatch(
+                released,
+            );
+            expect(box, `${side}: the sampler's box may not read the rung`).not.toMatch(
+                /--detent-t/,
+            );
+            expect(box, `${side}: the released inset must be PHYSICAL`).not.toMatch(
+                /inset-(block|inline)-(start|end)/,
+            );
+        }
     });
 
     it("keeps the footer a row of the flow — never absolute, never margin-pushed", () => {

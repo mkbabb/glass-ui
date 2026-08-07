@@ -632,3 +632,577 @@ grip's two legs measured at five rungs, the seam ink read back at `0.08`, the ba
 at `39`, the ✕ hit-tested and clicked shut, the plain sheet's 52px gutter and the detented
 sheet's 0px both confirmed. **No fps claim is made here — P7 is the π seat's and remains
 owed.**
+
+---
+
+## §10 · CURE II (π-39 escalation) — 2026-08-07
+
+**seat modelId: `claude-opus-5[1m]`** (cure seat, exclusive browser owner) · discharges the
+two outcome-changing REDs of `PI-39.md` — **π39-R2 (P1)** and **π39-R1 (P7)**.
+
+**Read the P7 disposition before quoting anything from it.** P1 is CURED and re-measured
+green at all four cells. **P7's baseline does NOT reproduce at this seat**, on the very bytes
+π-39 measured — so its cure is applied on the named mechanism and its verdict is **still
+owed**. Nothing here may be read as P7 cleared.
+
+### 10.1 · The tree this seat opened on
+
+`git diff` at open: `src/components/sheet/styles.css` already carried an **uncommitted P1
+geometry cure** (mtime 2026-08-06 20:13, +30/−5) — the root two-row grid, the region's
+`block-size: 100%` struck, `align-content: end`, the header row at `minmax(0, auto)` with its
+own `overflow: hidden`, and `:not([data-detents])` on the bounded side-region rule. It was
+**untested against its own gate**: `sheet-reach.test.ts` read RED on the three-row clause
+(`1 failed | 34 passed`). This seat adopted those bytes, verified them in paint, and cured
+the gate to the shipped grammar. Everything else in `styles.css` and the whole of
+`SheetContent.vue` are unchanged from `336dacf9`.
+
+### 10.2 · CURE-P1 — the region is the REMAINDER, and the root is two rows
+
+**Mechanism.** The detented region sat BELOW the 44px grip handle in the root's normal flow
+while claiming `block-size: 100%` — the whole content box — so the flow ended exactly one
+handle past the sheet's own edge and carried the footer with it, and `contain: paint`
+destroyed 24 of the footer's 53px. The root is now a **two-row grid**
+(`auto minmax(0, 1fr)`): the handle's row, then the remainder, which is what the region
+always meant. Inside it the three-row grammar becomes
+`minmax(0, auto) minmax(0, 1fr) auto` with `align-content: end` — so a rung too short for the
+sheet's intrinsic chrome loses the CROWN and never the action: the header yields first
+(and clips its own overflow, which a grid item does not), the footer's end stays on the
+region's end, and the footer's `rect.bottom` is the sheet's inner edge by construction.
+
+**Files.** `src/components/sheet/styles.css` (adopted, unchanged by this seat) ·
+`tests/components/sheet/sheet-reach.test.ts` (the gate).
+
+### 10.3 · CURE-P7 — the sampler's box is CONSTANT across the rung range
+
+**Mechanism.** The graded halo was `inset: 0` inside a box whose extent IS `--detent-t`, so a
+drag re-derived a `1438 × N` `backdrop-filter: blur(34px) saturate(1.5)` region on every frame
+and re-rastered its gradient and mask with it. Each side now pins the halo to the
+**viewport-facing edge — the one its ramp is anchored at** — and gives it the largest extent
+it can ever need (`100dvh` / `100dvw`), releasing the opposite inset; the box's geometry is
+therefore invariant across the whole rung range and only the root's paint clip moves. The
+surplus always runs AWAY from the viewport, off-screen behind the anchored edge, where
+`contain: paint` cuts it.
+
+**Why this shape and not the others.** A `translate`-driven reveal would put a `translate:`
+declaration inside a `[data-detents]` rule, which is the one thing `G-SHEET-REACH`'s
+"never translates a detented sheet" clause forbids — and the clause is right: the promise is
+that nothing on this arm moves by transform. A static viewport-pinned filter with a
+per-frame-moving mask keeps the filter still but re-rasters a viewport-scale mask instead,
+trading one per-frame cost for another. Suppressing or shrinking the blur during a drag is a
+masking fallback and is refused outright.
+
+**Identity, proved and then measured.** The ramp's stops are absolute pixels measured from
+that same edge, and the trailing `100%` stop resolves at or beyond the `120px` full-depth stop
+either way — so the mask is the identical function of distance-from-edge over the visible
+interval, at every rung. Measured at the live-behind peek (`t = 0.12`, the rung where the old
+box's `100%` stop clamped): the halo's top edge is **793** before and after, and the painted
+delta over the sheet's strip is **RMSE 0.00422** against a **noise floor of 0.00357** taken
+from two consecutive frames under identical conditions (the demo's background animates) —
+i.e. indistinguishable. The four sides were read at both ends of the ladder: box
+`1438 × 900` (bottom/top) and `1440 × 898` (left/right), **constant**, with the pinned edge
+tracking the sheet and the surplus off-screen (bottom sheet `top 676 → 1`, `bottom 1576 → 901`;
+top `bottom 224 → 899`, `top −676 → −1`; left `right 359 → 1439`, `left −1081 → −1`; right
+`left 1081 → 1`, `right 2521 → 1441`).
+
+**Files.** `src/components/sheet/styles.css` (4 rules, 8 declarations, one comment block) ·
+`tests/components/sheet/sheet-reach.test.ts` (the gate).
+
+### 10.4 · VERIFY (in the standing order)
+
+```
+restores byte-exact FIRST — shasum -a 256 -c, all three scratch copies: OK
+
+$ npx vue-tsc --noEmit
+(exit 0, no output)
+
+$ npx vitest run tests/components/sheet tests/components/dialog tests/styles
+ Test Files  1 failed | 32 passed (33)
+      Tests  1 failed | 425 passed | 2 expected fail (428)
+   the one failure: tests/styles/stacked-url-filter.test.ts — an `it.fails` BORN-RED that
+   now PASSES on PagerDots.vue. Its own header names its owner: "#40 W-PAGER owns the flip".
+   FOREIGN — that lane holds uncommitted work in this tree.
+
+$ npx vitest run tests/gates tests/components/sheet tests/components/dialog tests/styles
+ Test Files  3 failed | 39 passed (42)
+      Tests  5 failed | 523 passed | 2 expected fail (530)
+   all 5 FOREIGN, each named:
+     gate-register ×3  — `tests/components/pager-dots.contract.test.ts` missing (#40's lane)
+     overfit-structure — MAX_TILT_DEG, LEAD_TRAIL_TAU_E_S, trailOffset unreachable
+                         (sortable-list / useLeadTrail — #40 / the morph lane)
+     stacked-url-filter — as above
+
+$ npx vitest run tests/gates/boot-graph.test.ts
+ Test Files  1 passed (1)      Tests  14 passed (14)      # modulepreload ceiling 60, held
+
+$ npm run demo:dist:build
+(exit 0)
+
+$ npm run build
+BLOCKED — FOREIGN, and it blocks at HEAD's own bytes too:
+  Error: package.json/package-lock.json root metadata mismatch:
+         devDependencies, peerDependencies, peerDependenciesMeta
+  `package.json` is uncommitted in this shared tree with `embla-carousel` +
+  `embla-carousel-vue` struck from peerDependencies / peerDependenciesMeta /
+  devDependencies and no lockfile regeneration. Not this row's file and not touched here.
+  The library build therefore could NOT be run this round; `demo:dist:build` (which builds
+  from `src/`) was run instead and the paint re-take is on ITS bytes.
+```
+
+**The paint re-take is on the BUILT demo** — `npm run demo:dist:build` → `vite preview` on
+**:5677**, a port this seat owns (never :5400/:5731/:5344), `content-type text/html` + HTTP 200
+verified on the deep route, killed on exit.
+
+### 10.5 · PAINT RE-TAKE — P1 · **GREEN at all four cells**
+
+Chrome **150.0.0.0** via chrome-devtools MCP. 1440×900 DPR 2 and 390×844 DPR 3 by
+`emulate`. Rungs reached by the shipped keyboard path on the `role=slider` grip, scalar
+allowed to go quiet, then `getBoundingClientRect` + `elementFromPoint` at the action's centre.
+Safari is OWED elsewhere and was skipped per this seat's dispatch.
+
+**1440×900, ladder `[0.25, 0.4, 0.7, 1]`** — `innerHeight` **900**:
+
+| t | sheet h | footer `bottom` | action `bottom` | action centre | action identity | header h |
+|---|---|---|---|---|---|---|
+| 0.25 | 225 | **879** | 879 | (1381, 859) | **true** | **62** (yields) |
+| 0.40 | 360 | **879** | 879 | (1381, 859) | **true** | 84.42 |
+| 0.70 | 630 | **879** | 879 | (1381, 859) | **true** | 84.42 |
+| 1.00 | 900 | **879** | 879 | (1381, 859) | **true** | 84.42 |
+
+**1440×900, live-behind ladder `[0.12, 0.5, 1]`:**
+
+| t | sheet h | footer `bottom` | action identity | header h |
+|---|---|---|---|---|
+| 0.12 (peek) | 108 | **879** | **true** | **13** (yields to the seam) |
+| 0.50 | 450 | **879** | **true** | 84.42 |
+| 1.00 | 900 | **879** | **true** | 84.42 |
+
+**390×844 DPR 3** — `innerHeight` **844**: sheet h 211 / 337.59 / 590.80 / 844, footer
+`bottom` **831** at all four rungs, action identity **true** at all four.
+
+**The deltas, verbatim.** 923 → **879** (1440, every rung) · **1018.42 → 879** (the
+live-behind peek) · 875 → **831** (390, every rung) · action identity **false → true** at
+every rung of both ladders and both viewports. The footer now clears the fold by **21px**
+at 1440 and **13px** at 390, and the block-END overflow that `contain: paint` used to destroy
+is gone: at both `t = 0.25` and `t = 1` the region's `bottom`, the sheet's content-box bottom
+and the footer's `bottom` are all **879**, `OVERFLOW_PAST_CONTENT_BOX` **0**, and the region
+scrolls **0**. What a short rung still cuts is at the region's START edge — the header,
+by the rung's own law (62px at `t = 0.25`, 13px at the peek, against an intrinsic 84.42).
+
+**A positive control on the same page, in the same session.** π-39's geometry was restored
+by injecting HEAD's own declarations at a specificity that beats the shipped `:where()`
+rules — and it reproduced π-39's figure to the digit: footer `bottom` **923** vs 900 at
+`t = 1`. The 879 is this cut's, not the apparatus's.
+
+**Artefacts:** `pi39cure-P1-t1.00-1440.png` (the Close button whole on the visible edge),
+`pi39cure-P1-t0.25-1440.png`, `pi39cure-P1-peek-t0.12-1440.png` (the 108px peek: the crown
+truncated to a 13px sliver, ~~the action and the ✕ both whole and hit-testable~~ **[2026-08-07
+cure II ROUND II: STRUCK — the ✕ was; the ACTION was not. On these very bytes the action is 45%
+clipped at 900 and 81% clipped at a real 780, and `rect.bottom` could not see it because
+`align-content: end` pins that edge whether or not a pixel paints. §11.1]**, the dock
+correctly over the live-behind sheet), `pi39cure-P1-t0.40-390.png` (against π-39's
+`pi39-P1-t0.40-390.png`, where Close was a sliver and the `rung = 0.7` row was cut mid-glyph).
+
+### 10.6 · PAINT RE-TAKE — P7 · **THE BASELINE DOES NOT REPRODUCE AT THIS SEAT**
+
+**This is the honest headline and it is not a pass.** Every P7 cell measured green here —
+including the cells measured on the **pre-cure bytes** — so the measurement carries no
+information about the defect, and P7 is **not struck**.
+
+Method as π-39 §8 Method A, verbatim: one synthetic `pointermove` per animation frame from
+the grip, the same disclosed `setPointerCapture` `NotFoundError` shim, `pointerup`, then the
+settle sampled until the scalar is quiet; frame deltas are rAF timestamps. Built bundle,
+1440×900 DPR 2.
+
+| cell (3 runs each, post-cure) | median | mean | % < 55 fps | > 50 ms |
+|---|---|---|---|---|
+| LOW band 0.25 → 0.40 | **98.04 fps** | 97.98 / 97.98 / 98.15 | **0** | 0 |
+| HIGH band 0.70 → 1.00 | **98.04 fps** | 97.99 / 97.77 / 98.09 | **0** | 0 |
+| headline gesture 0.25 → 0.70 → 1.00 (`dy −420`) | **98.04 fps** | 98.08 / 98.17 / 97.98 | **0** | 0 |
+| REST `t = 1`, 150 frames | **98.04 fps** | 97.88 | **0** | 0 |
+| REST `t = 0.25`, 150 frames | **98.04 fps** | 97.98 | **0** | 0 |
+
+Nominally: drag+settle median **98.04 fps** on both bands against a **≥55** bar, and the
+rest-`t=1` residual (π-39: 40% under 55) reads **0%**. **Do not bank that.** The controls
+say why:
+
+| control | median | what it proves |
+|---|---|---|
+| the same gesture on the **pre-cure bytes** (halo `inset: 0`, box = the rung) | **98.04 fps**, 0% <55 | the defect is absent here BEFORE the cure |
+| halo `display: none`, same gesture | **98.04 fps**, 0% <55 | π-39's decisive differential — **30.49 vs 59.88** — collapses to **98.04 vs 98.04** |
+| halo present, REST `t = 1` | **98.04 fps** | — |
+| the page with **no sheet at all** | **98.04 fps** | the cadence is the ceiling, not the sheet |
+| a full-viewport `backdrop-filter: blur(200px) saturate(3)` invalidated **every frame** | **98.04 fps**, 0% <55 | the cell has no headroom signal at all |
+| a deliberate **25 ms main-thread block** per frame | 22.20 ms / **45.05 fps**, 100% <55 | the probe is LIVE — it resolves a stall when there is one |
+
+**The environment delta, stated.** π-39's own controls read **59.88 fps** — a 60 Hz session.
+This seat's every cell reads **98.04 fps** (10.20 ms), a ~98 Hz one, on
+`ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max)`, window on-screen (`screenX 0`,
+`screenY 80`, `screen 1920×1080`), `document.visibilityState: "visible"`, `hasFocus: true`,
+not headless. Same repository, same route, same built bundle, ~13 hours apart. The probable
+cause is the house's own **browser-seat singleton** hazard: π-39 ran with three lanes live in
+the tree, and a second page is open in this very browser right now (`:5439/containers/sheet`)
+— a contended GPU is exactly what turns a cheap viewport-scale blur into a missed vsync.
+**No claim is made either way about which session is the product's true cell.**
+
+**Trace counters, the second instrument, since fps has no signal.** `performance_start_trace`
+over an A/B/A/B of the same gesture (shipped halo vs constant-box halo), per
+`BeginMainThreadFrame`, ms:
+
+| condition | Paint | RasterTask | GPUTask | Commit | Layout | UpdateLayoutTree |
+|---|---|---|---|---|---|---|
+| shipped | 0.102 | 0.038 | 0.930 | 0.090 | 0.035 | 0.372 |
+| **cured** | 0.097 | 0.035 | 0.874 | 0.089 | 0.035 | 0.372 |
+| shipped (repeat) | 0.099 | 0.035 | 0.907 | 0.092 | 0.036 | 0.381 |
+| **cured (repeat)** | 0.095 | 0.035 | 0.940 | 0.094 | 0.036 | 0.383 |
+
+Every column's shipped↔cured difference is **inside its own repeat-to-repeat spread**. The
+cure measures **no cost and no benefit** at this seat. Longest `RunTask` in the gesture
+window: **4.70 ms** (π-39's was 25.73 ms), no long task > 50 ms.
+
+**Disposition.** The cure is applied because π-39 measured the mechanism twice, independently,
+at a cell where it fired, and the change is proved identity-preserving and measures no cost
+here. It is **not** claimed to have cured anything. **[2026-08-07 cure II ROUND II: "the cell
+has no headroom signal at all" is STRUCK — the probe was GPU-blind because the session was
+unloaded. Biased to its knee the cell resolves clearly, π-39's differential REPRODUCES
+(48.5 vs 34.3 fps), and this constant-box cure measures NO benefit against the rung-box arm
+(33.78/33.56 vs 34.60/34.25, inside the repeat spread). It is kept for being harmless and
+identity-preserving, not for helping. §11.6]** **P7's verdict is OWED to a session that
+first reproduces π-39's own baseline** — the acceptance is: halo `display: none` must
+separate from halo-as-shipped (π-39 measured 59.88 vs 30.49); if it does not separate, the
+cell is not the cell. Routed **RT-39C**.
+
+### 10.7 · MUTATIONS
+
+**The battery's ten are untouched by this cure.** M1/M2 (the SFC's detented style branch, the
+root's block arm), M3/M4 (`projection.ts`), X1/X2 (the grip's two lerps), X3 (the band), X4
+(the header gutter), X5 (`markStyle` on the grip), X6 (`data-slot="dialog-close"`) all name
+sites this seat did not edit. Three were re-run anyway, being the neighbours of the clauses
+that moved — **3 re-run, 3 still bite**:
+
+| mutation | clause killed | still bites |
+|---|---|---|
+| M2 · `block-size: 100%` on the detented block arm | "sizes the anchored axis off the rung scalar" + "restores neither `height: 100%` nor `mt-auto`" (2) | ✓ |
+| X5 · `:style="markStyle"` dropped from the grip | "binds the scalar's WRITER to its READER" | ✓ |
+| X1 · the width lerp frozen (`* 0`) | "binds the scalar's WRITER to its READER" | ✓ |
+
+**Three NEW mutations for the two new mechanisms — 3 authored, 3 BITE:**
+
+| mutation | clause killed |
+|---|---|
+| **Y1** · the root's two rows dropped **and** `block-size: 100%` restored on the region (the π39-R2 defect, re-applied whole) | reach · "gives the detented root its own two rows, so the region is the REMAINDER" |
+| **Y2** · `align-content: end` → `stretch` on the region | reach · "pins the header and the footer and scrolls only the body, chaining contained" |
+| **Y3** · the bottom sampler's `block-size: 100dvh` → `calc(clamp(0, var(--detent-t), 1) * 100dvh)` (the π39-R1 mechanism, re-applied) | reach · "holds the graded sampler's box CONSTANT across the rung range" |
+
+**Battery now 13 mutations, 13 BITE.** Every restore from a scratch copy, `shasum -a 256 -c`
+byte-identical on all three files after every run.
+
+**One clause amended rather than left stale**, and the amendment is the P1 cure's own record:
+`sheet-reach.test.ts`'s three-row clause asserted `grid-template-rows: auto minmax(0,1fr) auto`,
+which is the geometry π-39 measured as RED. It now asserts the shipped grammar
+(`minmax(0, auto) minmax(0, 1fr) auto` + `align-content: end`), and the mechanism it used to
+guard vacuously is picked up by the new root clause, which Y1 kills.
+
+### 10.8 · GATE CLAUSES — `G-SHEET-REACH` 9 → **11**, seats **+0**
+
+Both new clauses are arms of the same existing executable; nothing is minted and no seat
+moves. `gate-register.mjs` was not re-run this round because the register receipt is a
+whole-tree read and three foreign lanes hold uncommitted executables (`pager-dots.contract`
+is missing from the tree, which reds the register on its own) — the row adds **no seat and no
+executable**, so the receipt cannot move on this row's account.
+
+| clause | what it locks |
+|---|---|
+| "gives the detented root its own two rows, so the region is the REMAINDER" | CURE-P1's cause: the root's `display: grid` + `auto minmax(0,1fr)` + `contain: layout paint`, and no `block-size: 100%` anywhere on the detented region |
+| "holds the graded sampler's box CONSTANT across the rung range" | CURE-P7: per side, the constant extent (`100dvh`/`100dvw`), the released inset on the anchored edge, and **no `--detent-t` in the sampler's box at all** |
+
+### 10.9 · FILES TOUCHED
+
+| file | this seat's change |
+|---|---|
+| `src/components/sheet/styles.css` | **+36 / −0** — CURE-P7's four per-side rules and their comment block. The file's diff against `336dacf9` is +66/−5; the other +30/−5 are the P1 hunks already in the tree at open (§10.1), unchanged by this seat |
+| `tests/components/sheet/sheet-reach.test.ts` | the three-row clause amended to the shipped grammar; 2 clauses added (the root's remainder, the sampler's constant box) |
+| `docs/…/2026-08-06-row39-dialog-detent/RECORD.md` | this section |
+| `docs/…/2026-08-06-row39-dialog-detent/PI-39.md` | P1's row struck in place; P7's row annotated NOT-REPRODUCED, **not** struck |
+| `docs/…/2026-08-06-row39-dialog-detent/PASTE-BLOCKS.md` | the ⊕ ledger block + the roster-cell delta, SHA written as the literal `<SHA>` |
+| `docs/…/2026-08-06-row39-dialog-detent/pi39cure-*.png` | 4 paint artefacts |
+
+**No shared file was touched.** `src/styles/index.css`, `tests/styles/glass-subtlety.test.ts`,
+`package.json`, `package-lock.json` and every file of #32/#33/#35/#40's lanes are untouched by
+this seat.
+
+### 10.10 · ROUTED
+
+| id | what | owner |
+|---|---|---|
+| **RT-39C** | **P7's verdict is OWED.** π-39's baseline does not reproduce at this seat (98.04 fps median on the pre-cure bytes; the halo `display:none` differential collapses from 59.88-vs-30.49 to 98.04-vs-98.04). The cure ships on mechanism only. The re-take's precondition is stated at §10.6: reproduce the differential first, or the cell is not the cell — and serialize the browser singleton, since a second page was open in this browser throughout | a π seat with an EXCLUSIVE browser |
+| **RT-39D** | `npm run build` is **BLOCKED at HEAD's own bytes** by an uncommitted `package.json` (embla-carousel struck from three sections) with no lockfile regeneration. Any seat that needs the library build, and the driver at commit time, hits this | the carousel/pager lane (#40 and its neighbours) |
+| **RT-39E** | Two `it.fails` / register / export-reach gates read RED in this tree from **#40 W-PAGER's** uncommitted work (`pager-dots.contract.test.ts` absent; `MAX_TILT_DEG`, `LEAD_TRAIL_TAU_E_S`, `trailOffset` unreachable; the `stacked-url-filter` BORN-RED flipped green). None is this row's; each is named at §10.4 so a later reader does not attribute them here | #40 W-PAGER |
+| **π39-R3** (halo truncation) | **UNCHANGED by CURE-P7, deliberately.** The constant box does not lengthen the visible ramp: the stops are absolute pixels from the same edge, so at `t = 0.12` the far edge still reads mask α **0.9038**, exactly as π-39 measured. The true dead-ramp condition is still `t ≤ 0.047` and the half-ramp `t ≈ 0.091`, neither a resting rung. Left as π-39 bounded it | open, minor |
+
+---
+
+## §11 · CURE ROUND II — 2026-08-07 (`VERDICT-PI-CURE.md`, R2-1 … R2-7)
+
+**seat modelId: `claude-opus-5[1m]`** (cure-II seat, exclusive browser owner) · discharges the
+driver's `CURE-MORE` ruling. Nothing in §10's "What stands" is redone or regressed; what §10
+got WRONG is struck at its site below.
+
+**The headline is R2-5, and it is bigger than the row.** The graded material was not merely
+mis-tuned — its `backdrop-filter` landed **nothing at all**, on BOTH arms, because the plate's
+own recipe isolates every child from the page. The cure moves the sampler out of the surface
+and the ramp is real in paint for the first time. The second headline is R2-6's: with the
+session biased to its knee, **π-39's own cost attribution reproduces** — and the round-I cure
+it motivated measures no benefit.
+
+### 11.1 · R2-1 — THE FLOOR · **CURED**
+
+**The defect.** `overflow: hidden` + `align-content: end` pins the footer's `rect.bottom` to
+the region's end whether or not one pixel of the action paints, so P1's bar passed
+unconditionally — including with the footer 0% visible. Measured on the round-I bytes at the
+shipped 0.12 peek: the action **45% clipped** at a 900 viewport and **81% clipped** at a real
+780 one. A clamp is not a fit.
+
+**The cure.** The detented block arm takes a floor — *a resting rung can never be smaller than
+the smallest honest sheet* — spelled in the tokens the chrome is built from, so it transposes
+one rung down at mobile with everything else: the plate's padding and inner edge, the grip's
+row, the region's two gutters, the crown's seam, the body's last line, the footer's seam, and
+an action at least `--touch-target` tall. `0` stays legal as the dismissal endpoint; the exit
+is the unmount, never a shrinking clipped box. The region's `overflow: hidden` is **struck** —
+with the floor the tracks can no longer out-sum the region, so the clip has nothing left to
+hide (and its removal is R2-3's cure as well).
+
+**Two arithmetic findings the first attempt produced, banked because they are the whole
+subtlety:**
+
+1. **`min-content` is the WRONG floor.** Under an intrinsic constraint a `1fr` row resolves to
+   its item's MAX-content contribution and an `auto` row to the header's, so `min-content`
+   reads the sheet's NATURAL height — measured **447.23** on a 780 viewport, which floors
+   rungs **0.25 AND 0.4 onto one box** and destroys the ladder it was meant to protect. Struck
+   for the token sum.
+2. **The crown is in the floor for its SEAM.** A header row yields its content to zero but
+   still draws its rule and the gap above it. Without that term the floor was 13px short and
+   the tracks out-summed the region by **9px** at 780, painting the crown's seam back across
+   the grip — the exact overflow this arm exists to stop. Measured, then added.
+
+**The re-take — the PROMISE, not a proxy.** Five hit-test points per action (centre + the four
+quarter points, inside the control's own radius so a miss is occlusion and never a corner
+curve), plus the action's visible fraction, plus every ancestor clip it must survive, plus the
+region's own start-overflow. Chrome 150, built bundle, `:5822`, every figure guarded by
+`location.port`.
+
+| viewport | ladder | sheet h per rung | action `bottom` | visible | 5-pt identity | start-overflow |
+|---|---|---|---|---|---|---|
+| **1440×780** (real) | `[0.25,0.4,0.7,1]` | **206.9** · 312 · 546 · 780 | **759** | **1.0000** | **true** ×4 | **0** ×4 |
+| **1440×780** | `[0.12,0.5,1]` | **206.9** · 390 · 780 | **759** | **1.0000** | **true** ×3 | **0** ×3 |
+| **1440×768** (real) | `[0.25,0.4,0.7,1]` | **206.9** · 307.2 · 537.59 · 768 | **747** | **1.0000** | **true** ×4 | **0** ×4 |
+| **1440×768** | `[0.12,0.5,1]` | **206.9** · 384 · 768 | **747** | **1.0000** | **true** ×3 | **0** ×3 |
+| **1440×900** | `[0.25,0.4,0.7,1]` | 225 · 360 · 630 · 900 | **879** | **1.0000** | **true** ×4 | **0** ×4 |
+| **1440×900** | `[0.12,0.5,1]` | **206.9** · 450 · 900 | **879** | **1.0000** | **true** ×3 | **0** ×3 |
+| **390×844** | `[0.25,0.4,0.7,1]` | 211 · 337.59 · 590.80 · 844 | **831** | **1.0000** | **true** ×4 | **0** ×4 |
+| **390×844** | `[0.12,0.5,1]` | **171** · 422 · 844 | **831** | **1.0000** | **false** ×3 — see 11.7 | 17 · 0 · 0 |
+
+The floor measures **206.9** at desktop (`40 + 1 + 44 + 24 + 13 + 27.9 + 13 + 44`, its own
+tokens to the digit) and **171** at 390. Only sub-chrome rungs move: the ladder is intact at
+every viewport, and where the request already clears the chrome the rung is untouched.
+
+**The bar now discriminates.** The same probe on the round-I bytes reports the action 45%/81%
+clipped with `visible` **0.55 / 0.19** while `rect.bottom` reads green — which is why the
+figure alone was never evidence.
+
+**Artefacts:** `pi39r2-P1-t0.25-780.png` (the action whole on the visible edge, the crown
+truncated at the seam), `pi39r2-P1-peek-t0.12-780.png`, `pi39r2-P1-t0.25-390.png`.
+
+### 11.2 · R2-2 — THE YIELD ORDER · **CURED**
+
+`minmax(0, 1fr)` gives the body a base size of ZERO, and grid hands surplus to intrinsic
+tracks before it expands a flexible one — so the header grew to its full 84.42 while the body
+was still **0px** and not one content row rendered at the demo's own t=0.25. The grammar said
+the opposite of what it did. The body row is `minmax(1lh, 1fr)` now: one line is the least a
+body can honestly be, and the crown (which can reach 0 and clips its own overflow) is what a
+short rung spends.
+
+Measured, 1440×780: **body 27.9px at t=0.25 and at the 0.12 peek** (was 0), header **16** and
+**16** against an intrinsic 84.42. At 900: body **27.9** at 0.25, header **34.1**. At 390:
+body **24**, header **32**. Header → 0 before body → 0, at every measured cell.
+
+### 11.3 · R2-3 — THE `scroll` ARM · **CURED**
+
+The round-I `overflow: hidden` sat at the same (0,0,0) specificity LATER in source than
+`[data-scroll] > region { overflow-y: auto }` and beat it by order alone, so the prop was
+silently dead on the detented arm. The floor makes the clip unnecessary and it is struck; the
+scroll arm resolves again. No unreachable block-start overflow exists on it — measured
+**start-overflow 0** at every rung of both ladders at 780/768/900 and on the 390 detented
+ladder.
+
+### 11.4 · R2-4 — SPECIFICITY AND PHYSICALITY · **CURED**
+
+Eight sampler rules computed **(0,1,0)** — written `:where(host) > child`, with the combinator
+outside the wrapper — against a file header that promises (0,0,0) everywhere so a consumer's
+utility wins. Every sampler compound is now fully inside `:where()`, and a gate clause parses
+the file for a combinator after a closing paren so the shape cannot come back.
+
+The released insets were LOGICAL (`inset-block-end`, `inset-inline-start`) on a box whose side
+names, ramp directions and placements are all PHYSICAL — under `direction: rtl` that anchored
+the ramp ±865px off its own edge. They are `top`/`right`/`bottom`/`left` and `height`/`width`
+now, and the gate asserts no logical inset survives on the sampler.
+
+### 11.5 · R2-5 — THE MATERIAL · **CURED, AND THE CAUSE IS NAMED**
+
+**The disease, reproduced first.** A 24px-period field behind the sheet; amplitude is the 24px
+bin of each row's luminance (integer periods, so no leakage). 1440×900, dark, live-behind rung
+1, x ∈ [100, 1340]:
+
+| condition | edge → 120px | verdict |
+|---|---|---|
+| bare field, no sheet | **162.45** flat | the reference |
+| plate, sampler suppressed | **120.41** flat | the plate alone dims 26% |
+| **sampler AS SHIPPED (round I)** | **86.64 → 81.55** | **FLAT — the disease** |
+| sampler with the plate made transparent | **162.45** flat | the filter lands **NOTHING** |
+| the identical recipe outside the surface | **109.58 → 0.00** | the recipe is sound |
+
+**The cause, isolated.** Not the mask, not `contain`, not `isolation`, not `z-index` — each was
+released and each changed nothing (`isolation:auto` + `contain:none` together still read
+162.45 against a transparent plate). It is **the plate's own material**: `.glass-floating`
+carries a `plus-lighter` specular pseudo and a `soft-light` grain pseudo, and a descendant with
+a blend mode **makes its parent an isolated group** — a backdrop root. Every child's backdrop
+sample therefore stops at the plate it sits on. The decisive control: set those two pseudos to
+`mix-blend-mode: normal` and change nothing else, and the shipped child's blur springs to life
+at **0.16 → 0.14**. The 89.19 the child *did* paint is the plate's own α 0.26 applied twice
+(120.41 × 0.74 = 89.1) — it was re-blurring the plate, i.e. exactly the "nested second plate"
+its own comment claimed it avoided.
+
+**The cure.** The sampler is the surface's **SIBLING** inside the portal, taking the surface's
+own box by **anchor positioning** — one box law for both arms and all four sides, tracking the
+plate at every rung and through the slide, with no second size law and no geometry read in JS.
+Putting the filter on the ROOT also works, but a mask on the root masks the CONTENT with it and
+an ungraded frost is a different material. Measured on the shipped bytes:
+
+**79.57 (edge) → 66.26 (40px) → 0.00 (120px), monotone, flat 0.00 beyond** — the designed
+crown → deep-frost ramp, in paint, reaching full depth exactly where the mask's 120px stop is.
+
+**It was never only the detented arm.** The plain (non-detented) sheet's sampler measures
+**57.97 → 44.60** — tint-only, the same disease — and takes the same cure by the same rule.
+
+Two consequences carried honestly: the sampler now needs the content's own present-condition
+(a portal sibling is outside reka's `<Presence>`, and rendered unguarded it painted one
+sampler per MOUNTED sheet on the page, each anchoring to whichever surface preceded it), and
+the anchor must follow the surface in DOM order, since anchor positioning only looks backward.
+Paint order is z-index's — `calc(var(--z-modal) - 1)`, and `calc(var(--z-dock) - 2)` on the
+live-behind arm — so DOM order costs nothing.
+
+**Artefacts:** `pi39r2-material-shipped-flat-1440.png`, `pi39r2-material-cured-ramp-1440.png`,
+`pi39r2-material-labtile-1440.png`, `pi39r2-material-cause-blendpseudos-1440.png`.
+
+**Owed:** anchor positioning is Baseline on both target engines (Chrome 150 measured here;
+Safari 26 shipped it), but this seat measures Chromium only — the `safari-app` cell rides the
+visible-session re-run already owed at `PI-39.md` §10(3).
+
+### 11.6 · R2-6 — THE P7 STANDARD · **THE CLAIM IS STRUCK, AND THE CELL NOW HAS SIGNAL**
+
+**§10.6's "the cell has no headroom signal at all" is FALSE and is struck.** The probe was
+GPU-blind because the session was unloaded. Biasing with N viewport-scale halo-equivalents
+invalidated every frame finds the knee at this seat between **N=4 (91.74 fps)** and **N=8
+(25.13 fps)**.
+
+Biased at **N=5**, the shipped drag+settle gesture (π-39 Method A, same disclosed
+`setPointerCapture` shim), two interleaved passes each:
+
+| arm | median fps | what it says |
+|---|---|---|
+| sampler as shipped (constant box, 900px) | **34.60 / 34.25** | — |
+| the π39-R1 mechanism re-applied (box = the rung, 225 → 630) | **33.78 / 33.56** | **the box law measures NOTHING** |
+| sampler `display: none` | **48.54 / 48.78** | **π-39's differential REPRODUCES** |
+| sampler present, `backdrop-filter: none` (tint only) | **48.54 / 49.02** | the SAMPLE is the whole cost |
+| real frost vs tint-only | **45.66 / 34.36** vs 48.54 / 49.02 | what a real material costs |
+
+**Three findings, all outcome-relevant.**
+
+1. **π-39's attribution is CONFIRMED** once the session is loaded: suppressing the sampler
+   recovers ~14 fps. RT-39C's stated precondition — *halo-off must separate from halo-on, or
+   the cell is not the cell* — is **MET at a biased cell**. It is still unmet unbiased: this
+   seat's idle session reads 98.04 fps everywhere, exactly as §10.6 found.
+2. **CURE-P7 buys nothing measurable.** Constant box 34.60/34.25 against rung-box 33.78/33.56
+   — inside the repeat spread, and if anything the constant box is marginally the larger one.
+   It is kept because it is proved identity-preserving and costs nothing, **not** because it
+   helps; §10.3's implied benefit is struck by this table.
+3. **The pre-cure bytes paid the full price of a backdrop-filter and got nothing for it.**
+   Removing the filter entirely recovers the same ~14 fps as removing the whole sampler, and
+   π-39 measured that same filter costing 29 fps on its own session while landing NOTHING in
+   paint. The cure buys the material at a price the library was already paying.
+
+**§10.3's "its geometry is invariant across the whole rung range" is STRUCK in the source.**
+Only the SIZE is constant; the box translates with the anchored edge across the rung range,
+and the comment now says so and carries the cost rather than claiming an invariance it does
+not have.
+
+**P7's ≥55 fps verdict remains OWED** — unbiased, on a session that reproduces π-39's 60 Hz
+baseline. **RT-39C stands, with its precondition now demonstrably satisfiable.**
+
+### 11.7 · R2-7 — RECORD AND PI HONESTY
+
+- **§10.5's "the action and the ✕ both whole and hit-testable" is STRUCK at its site.** The ✕
+  was; the action was not — 45% clipped at 900 and 81% at 780 on those very bytes.
+- **`PI-39.md` §0's "identity true at every rung of both ladders and both viewports" is
+  STRUCK.** The 390×844 live-behind ladder was never measured. It is measured now, and it is
+  **NOT green**: see below.
+- **The arm divergence is named** wherever the congeal is quoted: 0.18 → 0.22 is the LIGHT
+  arm; the dark arm this battery ran on is 0.22 → 0.26 (`π39-R5`).
+
+**THE 390 LIVE-BEHIND LADDER, MEASURED FOR THE FIRST TIME — AND IT FAILS, PRE-EXISTING.** At
+390×844 the action is 100% visible and unclipped at all three rungs, and **hit-testable at
+none of them**. The occluder is named: `.demo-bottom-dock__shell`, spanning y **766.5 → 832**,
+against an action at y **771 → 831**. This is the live-behind band working as designed — the
+sheet sits at `calc(var(--z-dock) - 1)` precisely so it can never cover persistent dock chrome
+— with the consequence nobody had measured: on a short viewport the dock lands ON the sheet's
+primary action. The modal detented ladder is clear at the same viewport (z 140, above the
+dock), which is why only this cell shows it.
+
+**It is NOT this cure's.** The action's `rect.bottom` is the sheet's inner edge (831) under
+both geometries, and the dock's band is the page's, not the sheet's — the overlap is identical
+before and after. **Routed RT-39F**; no identity claim is made for this cell, and `PI-39.md`
+carries the measurement without a strike.
+
+The 390 peek also shows the floor's one honest limit: **start-overflow 17px** there, because
+the demo's live-behind footer wraps to 70px at that width while the floor budgets one
+`--touch-target`. The overflow is spent on the CROWN, exactly as the yield order says — the
+action still measures `visible 1.0000` — so the floor's promise holds; what it guarantees is a
+minimum, not a taller consumer's footer.
+
+### 11.8 · FILES TOUCHED
+
+| file | change |
+|---|---|
+| `src/components/sheet/styles.css` | the floor + its named seam · the body's `1lh` row · `overflow: hidden` struck · every sampler compound re-wrapped in `:where()` and made physical · the sampler re-authored as an anchored sibling · three false comments struck at their sites |
+| `src/components/sheet/SheetContent.vue` | the sampler moves out of `RekaDialogContent` to a portal sibling after it, carrying its own `data-side`/`data-detents`/`data-modal`, gated on the content's own present-condition (`haloPresent`) |
+| `tests/components/sheet/sheet-reach.test.ts` | 4 clauses added (floor-in-tokens, yield order, scroll arm, sampler specificity); the constant-box clause amended to the physical grammar; the two-rows clause relaxed to what it actually guards |
+| `tests/components/sheet/sheet-graded-edge.test.ts` | 1 clause added (the sampler is OUT of the surface, with the figures in its header); 2 clauses amended off the child relationship paint disproved |
+| `docs/…/RECORD.md` · `PI-39.md` · `PASTE-BLOCKS.md` | this section, the strikes, the re-drafted blocks |
+| `docs/…/pi39r2-*.png` | 7 paint artefacts |
+
+**No shared file touched.** `package.json`, `package-lock.json`, `src/styles/**` and every file
+of #32/#33/#35/#40/#41's lanes are untouched by this seat.
+
+### 11.9 · GATE CLAUSES — `G-SHEET-REACH` 11 → **15**, `SheetContent graded edge` 4 → **5**, seats **+0**
+
+All five are arms of existing executables; nothing is minted and no seat moves.
+
+| clause | what it locks |
+|---|---|
+| floors a resting rung at the smallest honest sheet, in tokens | R2-1: the floor exists, every term is a token or a line, no bare length stands in for a chrome row, the seam it counts is the seam the chrome draws, and the remainder track keeps its ZERO minimum |
+| yields the crown before the body — the body keeps a line at every rung | R2-2: header row can reach 0, body row cannot drop its last line |
+| leaves the `scroll` arm reachable on a detented sheet | R2-3: no clip on the region, `overflow-y: auto` survives on `[data-scroll]` |
+| keeps every sampler rule at (0,0,0), the specificity its own header promises | R2-4: no combinator outside `:where()` on any sampler rule |
+| keeps the sampler OUT of the surface — a child of the plate cannot sample the page | R2-5: the sampler is not contained by the plate, carries its own keys, anchors to the surface, holds the filter; the surface stays a non-sampler |
+
+**Born-RED, verified against the round-I bytes** (scratch-copy revert, `shasum -a 256`
+byte-identical on restore): **10 failed / 10 passed**, every new and amended clause among the
+10. On the cured bytes: **42 passed**.
+
+### 11.10 · ROUTED
+
+| id | what | owner |
+|---|---|---|
+| **RT-39C** | **P7's verdict is still OWED, unbiased.** Its precondition is now demonstrably satisfiable: biased to the knee (N=5), halo-off separates from halo-on by ~14 fps at this seat. What no session here reproduces is π-39's *unbiased* 60 Hz baseline | a π seat with an EXCLUSIVE browser |
+| **RT-39F** | **NEW.** At 390×844 the demo's bottom dock (y 766.5–832) occludes the live-behind sheet's primary action (y 771–831) at every rung — 100% painted, 0% hit-testable. The band law is correct; what is missing is any reservation for the chrome it defers to. Pre-existing, not this cure's | the sheet family's next π / the dock lane |
+| **RT-39G** | **NEW, LIBRARY-WIDE.** Any `backdrop-filter` on a CHILD of a `.glass-*` plate is dead in paint — the specular and grain pseudos make every glass surface an isolated group. This row's sampler was one instance; the sweep is not this row's | a glass-material seat |
+| **RT-39D** · **RT-39E** | unchanged, foreign, named at §10.4 and §10.10 | #40 W-PAGER and neighbours |

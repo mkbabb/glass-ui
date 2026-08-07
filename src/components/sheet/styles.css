@@ -59,8 +59,23 @@
     initial-value: 0;
 }
 
+/* THE DETENTED ROOT IS TWO ROWS, and it has to be: the grip's 44px target, then whatever
+ * the rung leaves. A region given `block-size: 100%` resolves that percentage against the
+ * WHOLE content box while sitting BELOW the handle, so the flow ran exactly one handle
+ * past the sheet's own edge and took the footer with it — 923 against a 900 viewport at
+ * every rung, and the containment below clipped the evidence. `minmax(0, 1fr)` is the
+ * remainder, which is what the region always meant — and the `0` is deliberate: an
+ * intrinsic minimum here would make the region's own natural height a hard floor on the
+ * track, and the rung would overflow the sheet it is supposed to fit inside. What keeps
+ * the chrome whole is the sheet's own floor (below), not this track. */
 :where([data-slot="sheet-content"][data-detents]) {
+    /* The hairline the plate's inner edge and the region's two seams all draw. Named once
+       because the FLOOR below has to count it, and a floor with a bare `2px` in it is a
+       magic number that stops being true the moment the seam moves. */
+    --sheet-seam-width: 1px;
     contain: layout paint;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
 }
 
 /* THE LIVE-BEHIND LAYER CONTRACT. `<Dialog :modal="false">` is reka's own non-modal arm
@@ -103,8 +118,10 @@
 }
 
 :where(
-    [data-slot="sheet-content"][data-side="left"] > [data-slot="sheet-content-region"],
-    [data-slot="sheet-content"][data-side="right"] > [data-slot="sheet-content-region"]
+    [data-slot="sheet-content"][data-side="left"]:not([data-detents])
+        > [data-slot="sheet-content-region"],
+    [data-slot="sheet-content"][data-side="right"]:not([data-detents])
+        > [data-slot="sheet-content-region"]
 ) {
     display: flex;
     flex-direction: column;
@@ -130,11 +147,28 @@
  * pull past its top drags the sheet instead of the page behind it. What shipped was a
  * bare `<slot/>` with `overflow-y: visible`, which is why nothing could rescue a footer
  * the geometry had already pushed below the fold. */
+/* THE REGION IS THE REMAINDER — never `block-size: 100%`, which is the whole content box
+ * and one handle too tall (above).
+ *
+ * `align-content: end` is the rung's own law, not a nicety: the last row's end stays on the
+ * region's end at every rung, so the footer's `rect.bottom` is the sheet's inner edge by
+ * construction. At any rung that fits, the `1fr` row has already eaten the free space and
+ * this declaration cannot move anything.
+ *
+ * THE YIELD ORDER, and it is the CROWN that yields. The grammar used to say so and do the
+ * opposite: `minmax(0, 1fr)` gives the body a base size of ZERO, and grid hands surplus to
+ * intrinsic tracks before it expands a flexible one — so the header grew to its full
+ * intrinsic height while the body was still 0px and NOT ONE content row rendered at the
+ * demo's own t=0.25. `1lh` is the body's floor — one line is the least a body can honestly
+ * be — so the header (which can reach 0 and clips its own overflow) is what a short rung
+ * spends. The floor above is stated against this same minimum, so the tracks can never sum
+ * past the region and there is nothing left to clip: the region does NOT hide its
+ * overflow, which is what silently killed the `scroll` arm — an `overflow: hidden` at the
+ * same (0,0,0) specificity, later in source, beat `[data-scroll]`'s own `overflow-y`. */
 :where([data-slot="sheet-content"][data-detents] > [data-slot="sheet-content-region"]) {
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
-    align-content: stretch;
-    block-size: 100%;
+    grid-template-rows: minmax(0, auto) minmax(1lh, 1fr) auto;
+    align-content: end;
     min-block-size: 0;
     gap: var(--space-body);
 }
@@ -165,8 +199,17 @@
         > [data-slot="sheet-content-region"]
         > [data-slot="dialog-header"]
 ) {
+    /* The header row is `minmax(0, auto)`: it takes its intrinsic height wherever the rung
+     * affords it and YIELDS FIRST where the rung does not. It clips its own overflow
+     * because a grid item does not.
+     *
+     * What that clip actually cuts, measured rather than assumed: at 1440×780, rung 0.25,
+     * the row is 16px and the TITLE is bisected — not merely the description truncated, as
+     * this comment used to claim. The crown yielding is the law; which glyphs it costs is
+     * the rung's arithmetic, and the seam is drawn at whatever height is left. */
+    overflow: hidden;
     padding-block-end: var(--space-body);
-    border-block-end: 1px solid
+    border-block-end: var(--sheet-seam-width) solid
         oklch(from var(--glass-veil-ink) l c h / calc(var(--glass-veil-step) * 2));
 }
 
@@ -176,7 +219,7 @@
         > [data-slot="dialog-footer"]
 ) {
     padding-block-start: var(--space-body);
-    border-block-start: 1px solid
+    border-block-start: var(--sheet-seam-width) solid
         oklch(from var(--glass-veil-ink) l c h / calc(var(--glass-veil-step) * 2));
 }
 
@@ -190,9 +233,7 @@
  * button that is not there is dead inline space. On a detented sheet the ✕ shares its
  * row with the 44px grip handle above the region, so it never reaches the header at all;
  * reserving 52px there would be dead space on every rung. */
-:where(
-    [data-slot="sheet-content"]:not([data-detents]):has([data-slot="dialog-close"])
-)
+:where([data-slot="sheet-content"]:not([data-detents]):has([data-slot="dialog-close"]))
     :where([data-slot="dialog-header"]) {
     /* Touch-target-derived, series-EXEMPT (sizing.css §1.1's stated exception) — the
      * gutter must clear the 44px ✕ at every viewport, and the space series transposes
@@ -257,7 +298,9 @@
     opacity: 0.85;
 }
 
-:where([data-slot="sheet-detent-handle"]:focus-visible > [data-slot="sheet-detent-grip"]) {
+:where(
+    [data-slot="sheet-detent-handle"]:focus-visible > [data-slot="sheet-detent-grip"]
+) {
     box-shadow: 0 0 0 3px var(--focus-ring-color);
 }
 
@@ -267,23 +310,52 @@
     }
 }
 
-/* The per-edge graded edge. One fixed 34px backdrop sample is mask-graded from 13/40
- * opacity at the viewport-facing edge to full depth 120px inward: the near-sharp crown
- * → deep-frost field without animating a blur radius. The glass host's flat backdrop
- * sample is removed on this arm, so the decorative child is the sole sampler rather
- * than a nested plate. Ordinary blur() + mask-image is Safari-safe: no url() filter,
- * parallel clock, or Drawer coupling. Opaque and veil sheets keep their own material
- * and render no band. */
+/* ── THE GRADED EDGE — BESIDE THE SURFACE, NEVER INSIDE IT ─────────────────────────
+ *
+ * One fixed 34px backdrop sample is mask-graded from 13/40 opacity at the viewport-facing
+ * edge to full depth 120px inward: the near-sharp crown → deep-frost field without
+ * animating a blur radius. Ordinary blur() + mask-image, so no url() filter, no parallel
+ * clock. Opaque and veil sheets keep their own material and render no band.
+ *
+ * WHY IT IS NOT A CHILD OF THE PLATE, AND THE FIGURE THAT SAYS SO. As a child this
+ * sampler's `backdrop-filter` landed NOTHING and what painted was a masked gradient tint
+ * wearing the computed style of frost. The cause is the plate's OWN material: the glass
+ * recipe carries a `plus-lighter` specular pseudo and a `soft-light` grain pseudo, and a
+ * descendant with a blend mode makes its parent an ISOLATED GROUP — a backdrop root — so
+ * a child samples the plate it sits on and can never reach the page. Measured as the 24px
+ * bin of each row's luminance over a 24px-period field behind the sheet (1440×900, dark,
+ * live-behind rung 1), amplitude at the edge → at the ramp's 120px full depth:
+ *
+ *     bare field, no sheet                          162.45
+ *     plate, no sampler                             120.41
+ *     sampler AS A CHILD                86.64 →  81.55   FLAT — the disease
+ *     …plate's blend pseudos normalised   0.16 →   0.14   the cause, isolated
+ *     sampler AS A SIBLING               79.57 →   0.00   the ramp, in paint
+ *
+ * `contain: none`, `isolation: auto` and `z-index: 0` were each released and each changed
+ * nothing: the isolation is the plate's own and no child escapes it. Putting the filter on
+ * the ROOT works, but a mask on the root masks the CONTENT with it and an ungraded frost is
+ * a different material. So the sampler is the surface's SIBLING and takes the surface's own
+ * box by anchor positioning — one box law for both arms and all four sides, tracking the
+ * plate at every rung and through the slide, with no second size law to keep in step and no
+ * geometry read in JS. The surface stays a non-sampler, as its own comment always claimed. */
+:where([data-slot="sheet-content"]) {
+    anchor-name: --glass-sheet-edge;
+}
+
 :where([data-slot="sheet-content"][data-surface="glass"]) {
-    isolation: isolate;
     backdrop-filter: none;
 }
 
-:where([data-slot="sheet-content"] > [data-slot="glass-graded-halo"]) {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: inherit;
+:where([data-slot="glass-graded-halo"]) {
+    position: fixed;
+    position-anchor: --glass-sheet-edge;
+    top: anchor(top);
+    right: anchor(right);
+    bottom: anchor(bottom);
+    left: anchor(left);
+    /* one rung under the surface it grades, so the plate is never sampled through it */
+    z-index: calc(var(--z-modal) - 1);
     pointer-events: none;
     background: linear-gradient(
         var(--sheet-edge-direction),
@@ -303,20 +375,73 @@
     );
 }
 
-:where([data-slot="sheet-content"][data-side="top"]) > [data-slot="glass-graded-halo"] {
+/* The live-behind band, one rung under the surface — which is itself one under the dock. */
+:where([data-slot="glass-graded-halo"][data-modal="false"]) {
+    z-index: calc(var(--z-dock) - 2);
+}
+
+/* The ramp's axis and the plate's own two inner corners, per edge. The radii are the
+ * SURFACE's — the sampler is its shape, so it takes the same logical longhands rather than
+ * a second set that could diverge from it under `direction: rtl`. */
+:where([data-slot="glass-graded-halo"][data-side="top"]) {
     --sheet-edge-direction: to top;
+    border-end-start-radius: var(--radius-3xl);
+    border-end-end-radius: var(--radius-3xl);
 }
-:where([data-slot="sheet-content"][data-side="bottom"])
-    > [data-slot="glass-graded-halo"] {
+:where([data-slot="glass-graded-halo"][data-side="bottom"]) {
     --sheet-edge-direction: to bottom;
+    border-start-start-radius: var(--radius-3xl);
+    border-start-end-radius: var(--radius-3xl);
 }
-:where([data-slot="sheet-content"][data-side="left"])
-    > [data-slot="glass-graded-halo"] {
+:where([data-slot="glass-graded-halo"][data-side="left"]) {
     --sheet-edge-direction: to left;
+    border-start-end-radius: var(--radius-3xl);
+    border-end-end-radius: var(--radius-3xl);
 }
-:where([data-slot="sheet-content"][data-side="right"])
-    > [data-slot="glass-graded-halo"] {
+:where([data-slot="glass-graded-halo"][data-side="right"]) {
     --sheet-edge-direction: to right;
+    border-start-start-radius: var(--radius-3xl);
+    border-end-start-radius: var(--radius-3xl);
+}
+
+/* THE SAMPLER'S SIZE IS CONSTANT ON THE DETENTED ARM — and only its SIZE.
+ *
+ * A backdrop sample is re-derived whenever the box it is taken over changes, and on this
+ * arm that box IS the rung, so a drag re-filters a region of a new size on every frame of
+ * the gesture and the sample's own gradient and mask re-raster with it. Pinning the box to
+ * the VIEWPORT-FACING edge — the one the ramp is anchored at — and giving it the largest
+ * extent it can ever need holds the SIZE constant across the whole rung range.
+ *
+ * THE BOX STILL TRANSLATES, and the record carries that cost rather than claiming an
+ * invariance it does not have: the pinned edge tracks the sheet, so the box moves ~810px
+ * across the rung range even though it never changes size. A screen-fixed sampler with the
+ * reveal on the mask channel alone would hold both, and it is not free either — it re-rasters
+ * a viewport-scale mask instead. What is banked here is the size, measured.
+ *
+ * The painted ramp is unchanged at every rung: the stops are absolute pixels measured from
+ * that same edge, and the trailing `100%` stop resolves at or beyond the 120px full-depth
+ * stop either way, so the mask is the identical function of distance-from-edge over the
+ * visible interval. The surplus always runs AWAY from the viewport, off-screen behind the
+ * anchored edge, where the viewport itself cuts it.
+ *
+ * PHYSICAL, per this file's lines 24-26: the side names, the ramp directions and the
+ * placements are all physical, and releasing a LOGICAL inset among them anchored the ramp
+ * ±865px off its own edge under `direction: rtl`. */
+:where([data-slot="glass-graded-halo"][data-detents][data-side="bottom"]) {
+    height: 100dvh;
+    bottom: auto;
+}
+:where([data-slot="glass-graded-halo"][data-detents][data-side="top"]) {
+    height: 100dvh;
+    top: auto;
+}
+:where([data-slot="glass-graded-halo"][data-detents][data-side="left"]) {
+    width: 100dvw;
+    left: auto;
+}
+:where([data-slot="glass-graded-halo"][data-detents][data-side="right"]) {
+    width: 100dvw;
+    right: auto;
 }
 
 @media (prefers-reduced-transparency: reduce), (forced-colors: active) {
@@ -363,11 +488,53 @@
  * detented sheet's extent along its anchored axis is the rung, and the fixed 75%/24rem
  * of a plain side sheet would otherwise win on source order and pin the box at one
  * width while the scalar moved underneath it. */
+/* THE FLOOR — a resting rung can never be smaller than the smallest honest sheet.
+ *
+ * The rung is a REQUEST. Below the sheet's own chrome it cannot be honoured, and the
+ * shipped answer was to honour it anyway and cut what did not fit: at the 0.12 peek the
+ * primary action was 45% clipped on a 900 viewport and 81% clipped on a real 780 one,
+ * while the measured bar read GREEN, because a clipped row still reports its rect. A
+ * clamp is not a fit.
+ *
+ * The floor is the CHROME, spelled in the same tokens the chrome is built from, so it
+ * transposes one rung down at mobile with everything else and no number is invented here:
+ * the plate's padding and inner edge, the grip's row, the region's two gutters, the two
+ * seams with their gaps, the body's last line, and an action at least operable.
+ *
+ * THE CROWN IS IN IT FOR ITS SEAM AND NOTHING ELSE. A short rung takes the header's
+ * CONTENT to zero — that is the yield the grammar promises — but a header row still draws
+ * its rule and the gap above it, and a floor that forgets those is 13px short: the tracks
+ * then out-sum the region and the crown's seam paints back across the grip, which is the
+ * very overflow this arm exists to stop. Measured at 780 before the term was added: region
+ * 108.9 against 117.9 of rows.
+ *
+ * IT IS NOT `min-content`, and that is the whole subtlety: under an intrinsic constraint a
+ * `1fr` row resolves to its item's MAX-content contribution and an `auto` row to the
+ * header's, so `min-content` reads the sheet's NATURAL height — 447.23 on a 780 viewport,
+ * which floors rungs 0.25 AND 0.4 to the same box and destroys the ladder it was meant to
+ * protect. The floor owes the action, not the content: the crown still yields (it is
+ * absent from this sum by intent), the body still keeps one line, and the rungs above the
+ * chrome are untouched.
+ *
+ * `0` remains legal as the DISMISSAL endpoint: the rung scalar still resolves onto it, the
+ * engine still requests the close, and the exit is the unmount — never a shrinking clipped
+ * box. The INLINE axis takes no floor this round; a narrow side rung clips along a
+ * different axis and rides the sheet family's next π. */
 :where(
     [data-slot="sheet-content"][data-detents][data-side="bottom"],
     [data-slot="sheet-content"][data-detents][data-side="top"]
 ) {
     block-size: calc(clamp(0, var(--detent-t), 1) * 100dvh);
+    min-block-size: calc(
+        /* the plate: its own padding, and the one inner edge it draws */ 2 *
+            var(--space-family) + var(--sheet-seam-width) +
+            /* the grip's operable row */ var(--touch-target) +
+            /* the region's two gutters */ 2 * var(--space-body) +
+            /* the crown's seam — its content yields, its rule does not */
+            var(--space-body) + var(--sheet-seam-width) + /* the body's last line */
+            1lh + /* the footer's seam, and an action at least operable */
+            var(--space-body) + var(--sheet-seam-width) + var(--touch-target)
+    );
     max-block-size: 100dvh;
 }
 

@@ -159,6 +159,15 @@ const held = computed(() =>
 const contentForceMount = computed(() =>
     live.value ? held.value || dialogRoot.open.value : props.forceMount,
 );
+// THE SAMPLER'S PRESENCE IS THE SURFACE'S. It is a portal sibling now, so reka's own
+// `<Presence>` around the content no longer covers it: rendered unguarded it would paint
+// one sampler per MOUNTED SHEET on the page, open or not, and each would anchor to
+// whichever surface happened to precede it. This is the content's own present-condition,
+// spelled once — `forceMount` while the spring holds the exit, `open` otherwise.
+const haloPresent = computed(
+    () =>
+        props.surface === "glass" && (contentForceMount.value || dialogRoot.open.value),
+);
 // A closing sheet is inert (non-interactive, untabbable, out of the a11y tree) while it
 // animates out, so the mounted-but-closing window is never tabbable.
 const closingInert = computed(() =>
@@ -297,14 +306,6 @@ const contentStyle = computed<CSSProperties>(() => ({
             <!-- Hidden anchor — the focus-handoff watch resolves the live content root
                  via `closest`, never a Presence-transient `$el`. -->
             <span ref="contentAnchorEl" hidden />
-            <!-- One noninteractive, mask-graded backdrop sample. The host's flat blur is
-                 disabled for this glass-only arm in styles.css, so this is not a nested
-                 second plate. -->
-            <span
-                v-if="props.surface === 'glass'"
-                data-slot="glass-graded-halo"
-                aria-hidden="true"
-            />
             <!-- THE ✕ — the fifth of the merge's five affordances (CWT-2 §4 A7), and it
                  is the SIBLING'S control, not a second one: the 44px target, the inset
                  capsule, the hover/press split and the focus ring are authored once in
@@ -371,5 +372,27 @@ const contentStyle = computed<CSSProperties>(() => ({
                 <slot />
             </div>
         </RekaDialogContent>
+        <!-- ONE NONINTERACTIVE, MASK-GRADED BACKDROP SAMPLE — and it is the surface's
+             SIBLING, not its child, because a child of this plate CANNOT SAMPLE THE PAGE.
+             The glass recipe carries a `plus-lighter` specular pseudo and a `soft-light`
+             grain pseudo, and a descendant with a blend mode makes its parent an isolated
+             group: every child's backdrop sample stops at the plate it sits on, so the
+             filter landed nothing and a masked gradient tint painted in its place while
+             computed style read `blur(34px) saturate(1.5)` the whole time. The figures and
+             the isolation ladder are at `styles.css`; the cure is measured, not inferred.
+
+             It is authored AFTER the surface so the surface is an acceptable anchor for it
+             (anchor positioning only looks BACKWARD in tree order) — the box is the
+             surface's own, at every rung and through the slide, with no second size law.
+             Paint order is z-index's, one rung under the surface, so DOM order costs
+             nothing. The host's flat blur stays off: this is the sole sampler. -->
+        <span
+            v-if="haloPresent"
+            data-slot="glass-graded-halo"
+            :data-side="props.side"
+            :data-detents="detented ? '' : undefined"
+            :data-modal="dialogRoot.modal.value ? undefined : 'false'"
+            aria-hidden="true"
+        />
     </RekaDialogPortal>
 </template>
