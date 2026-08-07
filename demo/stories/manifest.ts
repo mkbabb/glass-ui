@@ -839,7 +839,7 @@ export const CATEGORIES: Category[] = [
                 "data",
                 "timeline",
                 "Timeline",
-                "Continuous and segmented timelines with semantic events, selection, and proportional markers.",
+                "One normalized reporting axis — phase spans, addressable marks, and the indeterminate state.",
             ),
             s(
                 "data",
