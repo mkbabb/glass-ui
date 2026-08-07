@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onUnmounted } from "vue";
 
-import type { SortableId } from "./composables/types";
-import {
-    provideSortableItemContext,
-    useSortableContext,
-} from "./context";
+import { provideSortableItemContext, useSortableContext } from "./context";
+import type { SortableId } from "./types";
 
 const props = withDefaults(
     defineProps<{
@@ -20,31 +17,25 @@ const binding = sortable.registerItem(props.id, () => props.disabled);
 const label = computed(() => sortable.getItemLabel(props.id));
 const isBeingDragged = computed(() => sortable.dragId.value === props.id);
 
+// The registration is EVICTED on unmount. Without this the instance's element map
+// grew for the life of the list and a remounted row could keep a dead binding.
+onUnmounted(binding.release);
+
 provideSortableItemContext({ id: props.id, label, binding });
 </script>
 
 <template>
     <li
         :ref="binding.ref"
-        :class="[
-            'sortable-item',
-            binding.class.value,
-            { 'is-sortable-dragging': isBeingDragged },
-        ]"
+        class="sortable-item"
         v-bind="binding.dataAttrs"
         :aria-disabled="disabled || undefined"
         :data-disabled="disabled || undefined"
         @pointerdown="binding.onPointerdown"
         @keydown="binding.onKeydown"
     >
-        <slot :is-being-dragged="isBeingDragged" />
+        <div class="sortable-item__content">
+            <slot :is-being-dragged="isBeingDragged" />
+        </div>
     </li>
 </template>
-
-<style scoped>
-.sortable-item {
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-</style>

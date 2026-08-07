@@ -8,7 +8,6 @@ import {
     SortableItem,
     SortableHandle,
 } from "@glass/components/sortable-list";
-import { Card, CardContent } from "@glass/components/card";
 
 interface Task {
     id: string;
@@ -59,206 +58,115 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
 <template>
     <StoryPage>
         <!--
-            F14 responsive audit (BJ.W-RESPONSIVE-AUDIT): the two single-column
-            list demos each wasted the full desktop measure (F13). They are
-            parallel specimens, so they pair 2-up at ≥md and stack single-file at
-            mobile — the horizontal space is used, the 390px column is preserved.
+            THE ROW IS THE COMPONENT'S NOW, not the story's. Six call sites used to
+            invent four row treatments, four grips, three radii and three paddings
+            between them, because `SortableItem` shipped a `user-select` rule and
+            nothing else. Every one of those inventions is deleted here: the story
+            supplies CONTENT and the library supplies the surface.
+
+            F13's receipt is the two-pole row — a trailing element in the default slot
+            makes the row span its measure instead of hugging a label at the left edge,
+            which is what left 74.9% of the box empty at 1440 and 81.2% at 1920. The
+            `md:grid-cols-2` page wrapper is correct at the PAGE grain and stays.
         -->
         <div class="grid items-start gap-6 md:grid-cols-2">
             <StorySection heading="Single list" blurb="Drag the grip to reorder.">
-                <Card size="sm" surface="veil">
-                    <CardContent>
-                        <SortableList
-                            :items="tasks"
-                            :get-id="(t) => t.id"
-                            :get-label="(t) => t.label"
-                            label="Tasks"
-                            class="flex flex-col gap-2"
-                            @reorder="tasks = $event"
-                        >
-                            <SortableItem
-                                v-for="t in tasks"
-                                :key="t.id"
-                                :id="t.id"
-                                class="flex items-center gap-3 rounded-md border border-border/70 bg-background px-3 py-2.5"
-                            >
-                                <SortableHandle
-                                    class="text-muted-foreground hover:text-foreground"
-                                    :aria-label="`Reorder ${t.label}`"
-                                >
-                                    <span class="fira-code leading-none">⋮⋮</span>
-                                </SortableHandle>
-                                <span
-                                    class="h-2 w-2 rounded-full"
-                                    :style="{
-                                        background: `var(--section-color-${t.tone})`,
-                                    }"
-                                />
-                                <span class="text-small">{{ t.label }}</span>
-                            </SortableItem>
-                        </SortableList>
-                    </CardContent>
-                </Card>
+                <SortableList
+                    :items="tasks"
+                    :get-id="(t) => t.id"
+                    :get-label="(t) => t.label"
+                    label="Tasks"
+                    @reorder="tasks = $event"
+                >
+                    <SortableItem v-for="t in tasks" :key="t.id" :id="t.id">
+                        <SortableHandle>
+                            <GripVertical :size="16" />
+                        </SortableHandle>
+                        <span>{{ t.label }}</span>
+                        <span
+                            class="size-2 rounded-full"
+                            :style="{ background: `var(--section-color-${t.tone})` }"
+                        />
+                    </SortableItem>
+                </SortableList>
             </StorySection>
 
             <StorySection
                 heading="Handle-only"
                 blurb="Only the grip button starts a drag — the row body stays selectable text."
             >
-                <Card size="sm" surface="veil">
-                    <CardContent>
-                        <SortableList
-                            :items="handleOnlyTasks"
-                            :get-id="(t) => t.id"
-                            :get-label="(t) => t.label"
-                            label="Handle-only tasks"
-                            handle-selector="[data-sortable-handle]"
-                            class="flex flex-col gap-2"
-                            @reorder="handleOnlyTasks = $event"
-                        >
-                            <SortableItem
-                                v-for="t in handleOnlyTasks"
-                                :key="t.id"
-                                :id="t.id"
-                                :disabled="t.id === 'h3'"
-                                class="flex items-center gap-3 rounded-md border border-border/70 bg-background px-3 py-2.5"
-                            >
-                                <SortableHandle
-                                    type="button"
-                                    class="rounded-md border border-border bg-card p-1.5 text-muted-foreground transition-colors hover:text-foreground"
-                                    :aria-label="`Drag ${t.label}`"
-                                >
-                                    <GripVertical class="size-4" />
-                                </SortableHandle>
-                                <span
-                                    class="h-2 w-2 rounded-full"
-                                    :style="{
-                                        background: `var(--section-color-${t.tone})`,
-                                    }"
-                                />
-                                <span class="text-small">{{ t.label }}</span>
-                            </SortableItem>
-                        </SortableList>
-                    </CardContent>
-                </Card>
+                <SortableList
+                    :items="handleOnlyTasks"
+                    :get-id="(t) => t.id"
+                    :get-label="(t) => t.label"
+                    label="Handle-only tasks"
+                    handle-selector="[data-sortable-handle]"
+                    @reorder="handleOnlyTasks = $event"
+                >
+                    <SortableItem
+                        v-for="t in handleOnlyTasks"
+                        :key="t.id"
+                        :id="t.id"
+                        :disabled="t.id === 'h3'"
+                    >
+                        <SortableHandle>
+                            <GripVertical :size="16" />
+                        </SortableHandle>
+                        <span>{{ t.label }}</span>
+                        <span
+                            class="size-2 rounded-full"
+                            :style="{ background: `var(--section-color-${t.tone})` }"
+                        />
+                    </SortableItem>
+                </SortableList>
             </StorySection>
         </div>
 
         <StorySection
             heading="Cross-list"
-            blurb='Drop between columns — the three lists share group="kanban".'
+            blurb='Drop between columns — the three lists share group="kanban". An empty
+                column grows to the size of what it is about to receive.'
         >
             <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <!-- Todo -->
-                <Card size="sm" surface="veil">
-                    <CardContent class="flex flex-col gap-2">
-                        <header class="flex items-center justify-between px-1">
-                            <span class="text-small">Todo</span>
-                            <span class="text-mono-small text-muted-foreground">
-                                {{ todo.length }}
-                            </span>
-                        </header>
-                        <SortableList
-                            group="kanban"
-                            label="Todo"
-                            :items="todo"
-                            :get-id="(c) => c.id"
-                            :get-label="(c) => c.title"
-                            class="flex min-h-24 flex-col gap-2"
-                            @reorder="todo = $event as KanbanCard[]"
-                            @insert="
-                                (i, item) =>
-                                    (todo = insertAt(todo, i, item as KanbanCard))
-                            "
+                <div v-for="column in [
+                    { name: 'Todo', tone: '2', list: todo, set: (v: KanbanCard[]) => (todo = v) },
+                    { name: 'Doing', tone: '5', list: doing, set: (v: KanbanCard[]) => (doing = v) },
+                    { name: 'Done', tone: '4', list: done, set: (v: KanbanCard[]) => (done = v) },
+                ]" :key="column.name" class="flex flex-col gap-2">
+                    <header class="flex items-center justify-between px-1">
+                        <span :class="`text-small text-section-${column.tone}`">
+                            {{ column.name }}
+                        </span>
+                        <span class="text-mono-small text-muted-foreground">
+                            {{ column.list.length }}
+                        </span>
+                    </header>
+                    <SortableList
+                        group="kanban"
+                        :label="column.name"
+                        :items="column.list"
+                        :get-id="(c) => c.id"
+                        :get-label="(c) => c.title"
+                        @reorder="column.set($event as KanbanCard[])"
+                        @insert="
+                            (i, item) =>
+                                column.set(
+                                    insertAt(column.list, i, item as KanbanCard),
+                                )
+                        "
+                    >
+                        <SortableItem
+                            v-for="c in column.list"
+                            :key="c.id"
+                            :id="c.id"
                         >
-                            <SortableItem
-                                v-for="c in todo"
-                                :key="c.id"
-                                :id="c.id"
-                                class="rounded-md border border-border/70 bg-background p-3 text-small shadow-cartoon-sm"
-                            >
-                                <SortableHandle class="mr-2 text-muted-foreground"
-                                    >⋮⋮</SortableHandle
-                                >
-                                {{ c.title }}
-                            </SortableItem>
-                        </SortableList>
-                    </CardContent>
-                </Card>
-
-                <!-- Doing -->
-                <Card size="sm" surface="veil" class="border-section-5/40">
-                    <CardContent class="flex flex-col gap-2">
-                        <header class="flex items-center justify-between px-1">
-                            <span class="text-small text-section-5">Doing</span>
-                            <span class="text-mono-small text-muted-foreground">
-                                {{ doing.length }}
-                            </span>
-                        </header>
-                        <SortableList
-                            group="kanban"
-                            label="Doing"
-                            :items="doing"
-                            :get-id="(c) => c.id"
-                            :get-label="(c) => c.title"
-                            class="flex min-h-24 flex-col gap-2"
-                            @reorder="doing = $event as KanbanCard[]"
-                            @insert="
-                                (i, item) =>
-                                    (doing = insertAt(doing, i, item as KanbanCard))
-                            "
-                        >
-                            <SortableItem
-                                v-for="c in doing"
-                                :key="c.id"
-                                :id="c.id"
-                                class="rounded-md border border-border/70 bg-background p-3 text-small shadow-cartoon-sm"
-                            >
-                                <SortableHandle class="mr-2 text-muted-foreground"
-                                    >⋮⋮</SortableHandle
-                                >
-                                {{ c.title }}
-                            </SortableItem>
-                        </SortableList>
-                    </CardContent>
-                </Card>
-
-                <!-- Done -->
-                <Card size="sm" surface="veil" class="border-section-4/40">
-                    <CardContent class="flex flex-col gap-2">
-                        <header class="flex items-center justify-between px-1">
-                            <span class="text-small text-section-4">Done</span>
-                            <span class="text-mono-small text-muted-foreground">
-                                {{ done.length }}
-                            </span>
-                        </header>
-                        <SortableList
-                            group="kanban"
-                            label="Done"
-                            :items="done"
-                            :get-id="(c) => c.id"
-                            :get-label="(c) => c.title"
-                            class="flex min-h-24 flex-col gap-2"
-                            @reorder="done = $event as KanbanCard[]"
-                            @insert="
-                                (i, item) =>
-                                    (done = insertAt(done, i, item as KanbanCard))
-                            "
-                        >
-                            <SortableItem
-                                v-for="c in done"
-                                :key="c.id"
-                                :id="c.id"
-                                class="rounded-md border border-border/70 bg-background p-3 text-small opacity-70 shadow-cartoon-sm"
-                            >
-                                <SortableHandle class="mr-2 text-muted-foreground"
-                                    >⋮⋮</SortableHandle
-                                >
-                                <span class="line-through">{{ c.title }}</span>
-                            </SortableItem>
-                        </SortableList>
-                    </CardContent>
-                </Card>
+                            <SortableHandle>
+                                <GripVertical :size="16" />
+                            </SortableHandle>
+                            <span>{{ c.title }}</span>
+                        </SortableItem>
+                    </SortableList>
+                </div>
             </div>
         </StorySection>
     </StoryPage>

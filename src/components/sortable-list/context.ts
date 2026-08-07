@@ -1,11 +1,7 @@
 import type { ComputedRef } from "vue";
 
 import { createStrictContext } from "../../composables/context";
-import type {
-    SortableId,
-    SortableRowBinding,
-    UseSortableReturn,
-} from "./composables/types";
+import type { SortableId, SortableRowBinding, UseSortableReturn } from "./types";
 
 const list = createStrictContext<UseSortableReturn>(
     "glass-ui:sortable-list",

@@ -1,0 +1,244 @@
+/* SortableList — the continuous list, its grip, and the lifted plate.
+   ONE CSS lane for the whole component (the three SFCs read this file and author no
+   `<style>` block of their own; 7.0.0 spread four lanes across three components, two
+   of them library-global classes declared inside an unscoped SFC block).
+
+   EVERY BOX VALUE IS A SERIES TOKEN. Nothing here is a literal: the plate is
+   `--radius-card`, the frame and the row rhythm are `--space-body` (which transposes
+   one rung down at ≤768 on its own), the strokes are the `--ink-*` ladder, the fills
+   are the `--fill-*` pair, and every clock is a generated `--spring-*` reader. The
+   7.0.0 row was off-series on every axis it had — pad 10/12, r6 (the checkbox's tick
+   rung), gap 8, a retired tan `--border` at 1.28:1 — because it had no stylesheet at
+   all and six call sites had each invented one. */
+
+@layer components {
+    /* ── the plate ──────────────────────────────────────────────────────────────
+       A grouped list is ONE surface with rules inside it, not a stack of little
+       cards: `--ink-edge` is the FLOATING plate's boundary, `--ink-seam` is the
+       in-content rule between its cells, and the two are different rungs of the same
+       ladder. The frame's inline padding is the row's inline padding — declared once,
+       on the plate, so the seam runs between the frame's own edges (the iOS grouped
+       inset) instead of being drawn twice at two different insets. */
+    /* THE LIFT SWELL, DERIVED — the press rung mirrored about unity. `--scale-press`
+       (0.96) is the canonical iOS press; a lift is that same acknowledgement read in
+       the other direction, so the swell is `2 − press` exactly and MOVES when the rung
+       moves. Typing 1.04 anywhere would be a second figure for a rung that already has
+       a token. Declared on BOTH roots because the ghost is body-appended and inherits
+       nothing from the list it came from — one derivation, two scopes, zero copies. */
+    :where(.sortable-list, .sortable-ghost) {
+        --sortable-lift: calc(2 - var(--scale-press));
+    }
+
+    .sortable-list {
+        list-style: none;
+        margin: 0;
+        padding-block: 0;
+        padding-inline: var(--space-body);
+        border: 1px solid oklch(from var(--foreground) l c h / var(--ink-edge));
+        border-radius: var(--radius-card);
+        /* The plate's corner clips its first and last flush cells. */
+        overflow: clip;
+        /* The armed empty list grows to the size of what it is about to receive —
+           the vacancy law computes the figure, so nothing is minted for it. */
+        min-block-size: var(--sortable-vacancy-block, 0px);
+        transition:
+            min-block-size var(--spring-dock-duration) var(--spring-dock),
+            padding-block-end var(--spring-dock-duration) var(--spring-dock),
+            background-color var(--spring-press-duration) var(--spring-press);
+    }
+
+    /* A list that is about to receive says so with the SELECTED fill — the same rung
+       a lifted row wears, because "this is where it goes" is one state.
+
+       AND IT OPENS ROOM. `min-block-size` reaches an EMPTY receiver only: a populated
+       one is already taller than one pitch, so the floor is inert there and the row the
+       arrival displaces runs straight into the plate's own `overflow: clip`. The armed
+       list opens exactly one pitch of block room at its end instead — the same figure,
+       on the same curve the rows travel on, and it costs nothing when the list is empty
+       because the min-block-size floor already covers that height. */
+    .sortable-list[data-sortable-armed] {
+        background-color: oklch(from var(--foreground) l c h / var(--fill-selected));
+        padding-block-end: var(--sortable-vacancy-block, 0px);
+    }
+
+    /* ── the row ────────────────────────────────────────────────────────────────
+       A flush cell: no silhouette of its own, so no radius and no gap. The seam is
+       the in-content rule; the plate boundary is a different rung and lives above. */
+    .sortable-item {
+        position: relative;
+        padding-block: var(--space-body);
+        /* THE ROW'S OWN CLOCK. Parting and closing are the same mechanism read in two
+           directions, so the transition is unconditional and the controller only ever
+           writes (or clears) a transform. Compositor-only. */
+        transition: transform var(--spring-dock-duration) var(--spring-dock);
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .sortable-item + .sortable-item {
+        border-block-start: 1px solid
+            oklch(from var(--foreground) l c h / var(--ink-seam));
+    }
+
+    /* Two poles when there are two things to distribute, one left-packed child when
+       there is one. `justify-content` buys the whole F13 horizontal cure for one
+       declaration and zero API — the 7.0.0 row left 74.9% of its box empty at 1440 and
+       81.2% at 1920, and grew worse with the viewport. */
+    .sortable-item__content {
+        display: flex;
+        align-items: center;
+        gap: var(--space-body);
+        justify-content: flex-start;
+        /* ONE size for the row. `--text-body` is a fluid clamp, so §1.4's mobile rung
+           arrives through the token rather than through a second breakpoint — and the
+           four-size split the six call sites had invented dies with it. */
+        font-size: var(--text-body);
+    }
+
+    /* ONE content child: it IS the row, so it fills the measure. */
+    .sortable-item__content:not(
+            :has(> :not([data-sortable-handle]) ~ :not([data-sortable-handle]))
+        )
+        > :not([data-sortable-handle]) {
+        flex: 1;
+    }
+
+    /* TWO OR MORE: they become poles — and THE GRIP IS NOT A POLE. `justify-content`
+       distributes every flex item, the `order: -1` grip included, so `space-between`
+       over three items stands the label in the middle third and the rule contradicts
+       its own comment. The free space belongs BETWEEN the content children: the ones
+       that follow another content child take it as a leading auto margin, the grip
+       keeps its place at the head, and `justify-content: flex-start` above stands. Same
+       predicate as the single-child rule, read the other way — and with the sibling
+       combinator carrying the "two or more" the `:has()` wrapper is redundant. */
+    .sortable-item__content
+        > :not([data-sortable-handle])
+        ~ :not([data-sortable-handle]) {
+        margin-inline-start: auto;
+    }
+
+    .sortable-item__content > [data-sortable-handle] {
+        order: -1;
+        flex: none;
+    }
+
+    /* ── rest, hover, lift ──────────────────────────────────────────────────────
+       Rest is not nothing: the grip reads grabbable before the grab (the shared
+       `.glass-drag-grabbable` register, composed on the handle), the row answers the
+       pointer, and no idle loop runs — breath is a floor, not a loop. */
+    @media (hover: hover) {
+        .sortable-item:hover {
+            background-color: oklch(from var(--foreground) l c h / var(--fill-hover));
+        }
+    }
+
+    /* The keyboard lift is IN PLACE: same material promotion, one copy, no clone. A
+       clone has no pointer to follow — it would hang static while the rows part
+       beneath it. `.glass-floating` is composed by the controller; the swell is here. */
+    .sortable-item[data-sortable-lifted] {
+        z-index: 1;
+        background-color: oklch(from var(--foreground) l c h / var(--fill-selected));
+        scale: var(--sortable-lift);
+        transition:
+            transform var(--spring-dock-duration) var(--spring-dock),
+            scale var(--spring-press-duration) var(--spring-press),
+            background-color var(--spring-press-duration) var(--spring-press);
+    }
+
+    /* THE VACANCY. The lifted row's slot is the indicator, so the row itself paints
+       nothing while it is in the air — one spatial account, and the row is rendered
+       exactly once. */
+    .sortable-item[data-sortable-vacancy] {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* A cancel is a reversal, not a proposal: the vacancy closes on the shorter row. */
+    .sortable-list[data-sortable-closing] .sortable-item {
+        transition-duration: var(--spring-press-duration);
+        transition-timing-function: var(--spring-press);
+    }
+
+    /* ── the grip ───────────────────────────────────────────────────────────────
+       32 = the glyph plus its own padding on both sides, a pill because §4 binds the
+       "grip" role to the stadium. The coarse floor arrives through the existing
+       `[data-control-target]` responsive block (44), which is why no 44 appears here. */
+    .sortable-handle {
+        --sortable-grip-glyph: var(--icon-md);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: calc(var(--sortable-grip-glyph) + var(--space-atom) * 2);
+        block-size: calc(var(--sortable-grip-glyph) + var(--space-atom) * 2);
+        border-radius: var(--radius-pill);
+        color: oklch(from var(--foreground) l c h / var(--ink-perimeter));
+        transition:
+            color var(--spring-press-duration) var(--spring-press),
+            scale var(--spring-press-duration) var(--spring-press);
+    }
+
+    @media (hover: hover) {
+        .sortable-handle:hover {
+            color: var(--foreground);
+        }
+    }
+
+    .sortable-handle:active {
+        scale: var(--scale-press);
+    }
+
+    /* The ONE house focus register — never a second ring minted beside it. */
+    .sortable-handle:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring-shadow);
+    }
+
+    .sortable-handle:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    /* ── the ghost ──────────────────────────────────────────────────────────────
+       Two elements, two jobs. The PLATE owns the follow (one `translate3d`, never
+       transitioned — a spring between a finger and the thing it holds is the one
+       thing MOTION-CANON §4:334 forbids). The ROW inside owns the promotion (swell +
+       velocity tilt) on the press curve. The material swap IS the lift: a flush cell
+       becomes a floating glass plate, and the frost is the proven receiver — if it
+       ever stops resolving this fails loudly rather than degrading to a flat card. */
+    .sortable-ghost {
+        z-index: 9999;
+        pointer-events: none;
+        border-radius: 0;
+        overflow: clip;
+        transition:
+            border-radius var(--spring-press-duration) var(--spring-press),
+            box-shadow var(--spring-press-duration) var(--spring-press),
+            backdrop-filter var(--spring-press-duration) var(--spring-press),
+            opacity var(--spring-press-exit-duration) var(--spring-press);
+    }
+
+    .sortable-ghost[data-lift] {
+        border-radius: var(--radius-card);
+    }
+
+    /* The landing cross-fade: the row is already home underneath. */
+    .sortable-ghost[data-done] {
+        opacity: 0;
+    }
+
+    .sortable-ghost__row {
+        /* The frame's inline padding lives on the plate, and the ghost has no plate —
+           so the clone carries the SAME rung rather than losing it. */
+        padding-inline: var(--space-body);
+        transition: scale var(--spring-press-duration) var(--spring-press);
+    }
+
+    .sortable-ghost[data-lift] .sortable-ghost__row {
+        scale: var(--sortable-lift);
+    }
+
+    /* The ghost is a clone: it must never re-run the original's own live clocks. */
+    .sortable-ghost__row * {
+        animation-play-state: paused;
+    }
+}

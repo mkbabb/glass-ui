@@ -117,6 +117,12 @@ describe("SortableList transaction contract", () => {
             clientX: 10,
             clientY: 10,
         });
+        // The gesture must EARN the transaction before there is one to cancel: a press
+        // that never travels is a click, and the stationary-tap case below holds that
+        // half. Cross the slop, then have the system take the pointer away.
+        document.dispatchEvent(
+            new PointerEvent("pointermove", { pointerId: 1, clientX: 10, clientY: 40 }),
+        );
         document.dispatchEvent(new PointerEvent("pointercancel", { pointerId: 1 }));
         await nextTick();
 

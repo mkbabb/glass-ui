@@ -17,10 +17,13 @@ const accessibleLabel = computed(
 </script>
 
 <template>
+    <!-- `.glass-drag-grabbable` is the SHARED rest affordance (grab cursor +
+         `touch-action: none`), composed here rather than forked — the register's home
+         move out of `tabs/styles/` is W-TABS's, and this component only consumes it. -->
     <button
         v-bind="attrs"
         :type="type"
-        class="sortable-handle"
+        class="sortable-handle glass-drag-grabbable"
         data-sortable-handle
         data-control-target
         :disabled="item.binding.disabled.value"
@@ -29,24 +32,3 @@ const accessibleLabel = computed(
         <slot />
     </button>
 </template>
-
-<style scoped>
-.sortable-handle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: grab;
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-.sortable-handle:active {
-    cursor: grabbing;
-}
-
-.sortable-handle:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-}
-</style>

@@ -11,16 +11,16 @@ export interface SortableOptions<T> {
     onInsert?: (index: number, item: unknown) => void;
     group?: string;
     handleSelector?: string | null;
-    axis?: "x" | "y";
 }
 
 export interface SortableRowBinding {
     ref: (el: unknown) => void;
     dataAttrs: Record<string, string>;
-    class: ComputedRef<Record<string, boolean>>;
     disabled: ComputedRef<boolean>;
     onPointerdown: (event: PointerEvent) => void;
     onKeydown: (event: KeyboardEvent) => void;
+    /** Release the row's registration — called from the row's unmount. */
+    release: () => void;
 }
 
 export interface SortableContainerBinding {
@@ -33,9 +33,7 @@ export interface UseSortableReturn {
     container: SortableContainerBinding;
     isDragging: ComputedRef<boolean>;
     dragId: ComputedRef<SortableId | null>;
-    dragPosition: ComputedRef<{ x: number; y: number } | null>;
     dropIndex: ComputedRef<number | null>;
-    pointerCaptureActive: ComputedRef<boolean>;
     announcement: ComputedRef<string>;
     getItemLabel: (id: SortableId) => string;
 }
@@ -48,6 +46,15 @@ export interface InstanceHandle {
     getId: (item: unknown) => SortableId;
     getElements: () => Map<SortableId, Element | null>;
     setExternalDropIndex: (index: number | null) => void;
+    /** The travelling subject's block size, so a receiving list can size its vacancy. */
+    setExternalSubjectBlock: (block: number | null) => void;
+    /**
+     * Where a subject arriving at `index` comes to rest, in viewport coordinates — the
+     * endpoint of the release flight. The RECEIVER answers it because the receiver owns
+     * the gap; the releasing list has already closed behind the subject. `null` while
+     * this list is unarmed or unmounted.
+     */
+    getVacancyOrigin: (index: number) => { x: number; y: number } | null;
     acceptExternal: (index: number, item: unknown) => void;
     focusItem: (id: SortableId) => void;
 }
