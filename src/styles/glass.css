@@ -86,6 +86,13 @@
    AFTER surfaces.css and BEFORE surface-axis.css (same @layer components, same
    source order — the dist is byte-isomorphic). */
 @import "./glass/control-surfaces.css";
+/* The ONE binary-control register (`.control-bit` + its face/mark) the
+   checkbox/switch/radio-group triad composes — the sibling of control-surfaces.css
+   (line/block TEXT surfaces) on the other side of the C-5 split: two registers, one
+   token law. @import-ed IMMEDIATELY AFTER it, same @layer components, so the three
+   shell sheets (loaded with their SFCs, after this root) keep their per-role residue
+   at equal specificity by source order. */
+@import "./glass/control-bit.css";
 /* The ONE shared glassy register (`.glass-capsule` +
    `.glass-capsule-track` + `.glass-capsule-hover`) the tabs/dock-tab/buttons/chips/
    cards consumers compose. @import-ed AFTER surfaces.css and BEFORE the consuming
@@ -125,13 +132,6 @@
 @import "./glass/track-well.css";
 @import "./glass/value-marks.css";
 @import "./glass/surface-axis.css";
-@import "./glass/material-roles.css";
-@import "./glass/reveal.css";
-/* The UNIVERSAL `.liquid-enter` mount recipe
-   (the four coupled channels as @keyframes-on-mount + the `.is-cel` cel-slam + the
-   lagging cartoon cast). @import-ed AFTER reveal.css (it extends the same
-   `--lq-enter-*` channel substrate the `.glass-reveal` TRANSITION floor speaks). */
-@import "./glass/liquid-enter.css";
 /* The OVERLAY PLATE register — the portalled listbox/panel material, its collision
    bound, its boundary ink and the warm portal field. @import-ed AFTER ladder.css
    (and after surface-axis.css, which decorates the same plates) because it
@@ -141,6 +141,13 @@
    rules, never utilities — a portalled surface's material may not depend on a
    consumer's content scan. */
 @import "./glass/overlay-plate.css";
+@import "./glass/material-roles.css";
+@import "./glass/reveal.css";
+/* The UNIVERSAL `.liquid-enter` mount recipe
+   (the four coupled channels as @keyframes-on-mount + the `.is-cel` cel-slam + the
+   lagging cartoon cast). @import-ed AFTER reveal.css (it extends the same
+   `--lq-enter-*` channel substrate the `.glass-reveal` TRANSITION floor speaks). */
+@import "./glass/liquid-enter.css";
 /* The `.glass-vaporize` DISMISSAL + the corner-affordance family (BK #30 W-DISSOLVE).
    @import-ed AFTER reveal.css because it is that recipe's counterpart, not its rival: a
    surface wearing both blooms in on `.glass-reveal` and vaporizes out on this one, and the

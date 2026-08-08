@@ -1,5 +1,5 @@
 import type { HTMLAttributes, TextareaHTMLAttributes } from "vue";
-import type { ControlSize } from "../_shared/control-size";
+import type { ControlSize } from "../_shared/control";
 
 export type TextareaResize = "vertical" | "horizontal" | "both" | "none" | "content";
 

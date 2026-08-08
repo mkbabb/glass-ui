@@ -21,7 +21,7 @@
         /* The height reads the `--control-pill-h` element-
            override seam, DEFAULTING to the cohort `--control-h-md` so a bare
            control keeps its default size. The shared `controlSizeClass(size)`
-           (_shared/control-size.ts) re-points the seam per rung
+           (_shared/control.ts) re-points the seam per rung
            (sm→`--control-h-sm`, lg→`--control-h-lg`), so the `size` prop retunes
            the field height WITHOUT a recipe fork — ONE substitution rung, the
            cohort is still the source. */

@@ -147,6 +147,29 @@ const alphaOf = (raw: string | undefined): number =>
           ? Number.parseFloat(raw) / 100
           : Number.parseFloat(raw);
 
+/* THE ONE-INK IDIOM, taught to the resolver rather than worked around.
+ * `tokens/color-radius.css` §1.2 declares the ink register as BARE α SCALARS and
+ * names the composition its readers must use, verbatim:
+ *   `color-mix(in oklab, var(--foreground) calc(var(--ink-edge) * 100%), transparent)`
+ * A resolver that only understands a literal `48%` cannot measure anything painted
+ * that way — and everything the register governs is painted that way. So the mix
+ * weight is read as EITHER a literal percentage OR that scalar-times-100% form, with
+ * the scalar pulled from the same scope as every other token. The gate reads the
+ * shipped alpha; it never restates it. */
+const percentOf = (arg: string, scope: Scope): number | undefined => {
+    const literal = arg.match(/\s([\d.]+)%$/);
+    if (literal) return Number(literal[1]) / 100;
+    const scaled = arg.match(/\scalc\(\s*var\(\s*(--[\w-]+)\s*\)\s*\*\s*100%\s*\)$/);
+    if (!scaled) return undefined;
+    const declared = scope[scaled[1]];
+    if (declared === undefined) throw new Error(`unresolved scalar: ${scaled[1]}`);
+    return Number.parseFloat(declared);
+};
+const stripPercent = (arg: string): string =>
+    arg
+        .replace(/\s[\d.]+%$/, "")
+        .replace(/\scalc\(\s*var\(\s*--[\w-]+\s*\)\s*\*\s*100%\s*\)$/, "");
+
 export function resolveColour(expression: string, scope: Scope, depth = 0): Colour {
     if (depth > 16) throw new Error(`var() cycle resolving: ${expression}`);
     const expr = expression
@@ -187,15 +210,16 @@ export function resolveColour(expression: string, scope: Scope, depth = 0): Colo
     const mix = expr.match(/^color-mix\(\s*in\s+[\w-]+\s*,\s*([\s\S]+)\)$/);
     if (mix) {
         const [first, second] = splitTopLevel(mix[1]);
-        const firstPct = first.match(/\s([\d.]+)%$/);
-        const secondPct = second.match(/\s([\d.]+)%$/);
-        const a = resolveColour(first.replace(/\s[\d.]+%$/, ""), scope, depth + 1);
-        const b = resolveColour(second.replace(/\s[\d.]+%$/, ""), scope, depth + 1);
-        const wa = firstPct
-            ? Number(firstPct[1]) / 100
-            : secondPct
-              ? 1 - Number(secondPct[1]) / 100
-              : 0.5;
+        const firstPct = percentOf(first, scope);
+        const secondPct = percentOf(second, scope);
+        const a = resolveColour(stripPercent(first), scope, depth + 1);
+        const b = resolveColour(stripPercent(second), scope, depth + 1);
+        const wa =
+            firstPct !== undefined
+                ? firstPct
+                : secondPct !== undefined
+                  ? 1 - secondPct
+                  : 0.5;
         const wb = 1 - wa;
         // CSS `color-mix()` interpolates PREMULTIPLIED, which is why a mix toward
         // `transparent` darkens nothing — it only thins.
@@ -368,25 +392,57 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
             "--secondary",
             "--muted",
         ];
+        /* ~~`--control-ring`~~ [2026-08-08 · BK #83 W-CONTROL-BIT: the SUBJECT MOVED,
+         * the floor did not. The token is deleted — it was a colour-valued ink at a
+         * hand-set alpha sitting beside the bare-scalar one-ink register, i.e. the fork
+         * `color-radius.css` §1.2 exists to forbid — and its only two readers are now
+         * the ONE `.control-bit` register, which composes the PERIMETER rung. These
+         * three cases follow the thing they measure rather than being deleted with the
+         * name: the boundary that identifies an unchecked control still owes 3:1, and
+         * it is still measured on every surface a checks atom sits on, in both arms.
+         * The composition below is READ OFF THE REGISTER, not restated here, so the
+         * gate cannot drift from what paints.] */
+        const REGISTER = "src/styles/glass/control-bit.css";
+        const perimeterEdge = (): string => {
+            const source = read(REGISTER);
+            const match = source.match(
+                /--control-bit-ink:\s*(color-mix\([\s\S]*?\n {8}\));/,
+            );
+            if (!match) throw new Error("control-bit.css declares no --control-bit-ink");
+            return match[1].replace(/\s+/g, " ");
+        };
+
         for (const [arm, scope] of ARMS) {
-            it(`--control-ring clears ${NON_TEXT_FLOOR}:1 on every surface a checks atom sits on [${arm}]`, () => {
+            it(`the control-bit perimeter clears ${NON_TEXT_FLOOR}:1 on every surface a checks atom sits on [${arm}]`, () => {
                 for (const surface of CHECK_SURFACES) {
-                    const measured = ratio("var(--control-ring)", `var(${surface})`, scope);
+                    const measured = ratio(perimeterEdge(), `var(${surface})`, scope);
                     expect(
                         measured,
-                        `--control-ring over ${surface} [${arm}] computed ${round(measured)}:1`,
+                        `--control-bit-ink over ${surface} [${arm}] computed ${round(measured)}:1`,
                     ).toBeGreaterThanOrEqual(NON_TEXT_FLOOR);
                 }
             });
         }
 
-        it("--control-ring is read by BOTH checks atoms (one register, not two literals)", () => {
+        it("the perimeter is declared ONCE and read by all three bits (one register, not three literals)", () => {
+            // the retired fork is gone from its declaration site and from every reader
+            expect(read(SCALE_PAPER)).not.toMatch(/^\s*--control-ring\s*:/m);
             for (const file of [
                 "src/components/checkbox/styles.css",
+                "src/components/switch/styles.css",
                 "src/components/radio-group/styles.css",
             ]) {
-                expect(read(file)).toMatch(/border:\s*1px solid var\(--control-ring\)/);
+                /* Comments stripped: this lane's sheets carry their derivations in
+                 * prose, including the arithmetic of the very border the register
+                 * owns, and a gate that reads the record of a cure as the defect
+                 * convicts the explanation instead of the code. */
+                const css = read(file).replace(/\/\*[\s\S]*?\*\//g, "");
+                expect(css).not.toMatch(/var\(--control-ring\)/);
+                // no shell re-declares an edge: the register owns the only one
+                expect(css).not.toMatch(/border:\s*1px solid/);
             }
+            expect(read(REGISTER)).toMatch(/border:\s*1px solid var\(--control-bit-edge\)/);
+            expect(read(REGISTER)).toMatch(/--control-bit-edge:\s*var\(--control-bit-ink\)/);
         });
     });
 

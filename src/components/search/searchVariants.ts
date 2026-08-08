@@ -2,7 +2,7 @@ import { joinClassValues, type ClassValue } from "../_shared/class-names";
 import {
     type ControlSize,
     controlSizeClass,
-} from "../_shared/control-size";
+} from "../_shared/control";
 
 // The `variant` axis is binary: component-owned plate vs bare parent ownership.
 //   inline / floating — the complete component-owned `.input-bar` glass chrome (the

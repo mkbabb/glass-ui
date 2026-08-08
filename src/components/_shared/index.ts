@@ -1,2 +1,2 @@
-export { controlSizeClass } from "./control-size";
-export type { ControlSize } from "./control-size";
+export { controlSizeClass } from "./control";
+export type { ControlSize } from "./control";

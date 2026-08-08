@@ -10,6 +10,15 @@
    `--glass-rim-bottom` pair `.glass-capsule` reads, so `--glass-key` re-points BOTH
    the capsule and the control edge from ONE handle (cel coherence).
 
+   ~~ONE register shared by the Select trigger and its sibling form controls.~~
+   [2026-08-08 · BK #83 W-CONTROL-BIT: the Checkbox composed this class on a 16px box
+   and has been re-seated onto the `.control-bit` register (styles/glass/
+   control-bit.css), which composes the SAME `--glass-rim-top`/`--glass-rim-bottom`
+   pair directly. On-disk readers of this class are now **1** — `SelectTrigger` — and
+   the relocation into `styles/glass/` is #82 W-FIELD's cut (C-5), not this one's. The
+   count is corrected here rather than left to be re-discovered; the file's home and
+   the wider docstring sweep stay routed to #82 and #61.]
+
    Compose the keyed edge UNDER any control-owned ring or shadow: a control with
    its OWN box-shadow (the Switch thumb, the invalid ring on the pill) layers that
    first, then the rim — the rim is the resting silhouette, the ring is the overlay,

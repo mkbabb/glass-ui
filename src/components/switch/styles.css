@@ -1,110 +1,66 @@
 @layer components {
+    /* THE SWITCH'S ENTIRE RESIDUE — a track's geometry and a thumb's travel. The
+     * material, the target, the press, the focus, the invalid arm, the disabled arm
+     * and the forced-colors arm are all `.control-bit`'s, composed.
+     *
+     * THE GEOMETRY IS KEPT BYTE-FOR-BYTE (ADJ-1), and the arithmetic is why. The
+     * register puts a 1px perimeter on the face exactly where `.glass-wash` used to
+     * put `border: 1px solid` (ladder.css:49), so with pad 1:
+     *     rest inset  = border 1 + pad 1                    = 2
+     *     checked far = 44 − 1 − 1 − 20 (thumb) − 20 (travel) = 2
+     * symmetric, and concentric for free because the face is flex-centred on its
+     * cross axis. PROPORTION derivation #3 — `pad = (track − thumb)/2 − border` =
+     * (24 − 20)/2 − 1 = 1 — is the SHIPPED byte, not a correction to it. Seven
+     * external `<Switch>` sites keep their paint. */
     .switch {
-        --switch-height: 1.5rem;
-        --switch-width: 2.75rem;
-
-        position: relative;
-        display: inline-grid;
-        flex: none;
-        place-items: center;
-        inline-size: var(--switch-width);
-        block-size: var(--switch-height);
-        min-inline-size: var(--touch-target, 2.75rem);
-        min-block-size: var(--touch-target, 2.75rem);
-        padding: 0;
-        border: 0;
-        border-radius: var(--radius-pill);
-        background: transparent;
-        color: inherit;
-        cursor: pointer;
+        --control-bit-face-inline: 2.75rem; /* 44 */
+        --control-bit-face-block: 1.5rem; /* 24 */
+        --control-bit-face-pad: 0.0625rem; /* 1 — it IS the law, see above */
     }
 
-    .switch[data-size="sm"] {
-        --switch-height: 1.25rem;
-        --switch-width: 2.375rem;
-    }
-
-    .switch[data-size="lg"] {
-        --switch-height: 1.75rem;
-        --switch-width: 3.125rem;
-    }
-
-    .switch:disabled {
-        cursor: not-allowed;
-        opacity: var(--opacity-disabled);
-    }
-
-    .switch:focus-visible {
-        outline: none;
-    }
-
-    .switch__track {
-        display: inline-flex;
-        align-items: center;
-        inline-size: var(--switch-width);
-        block-size: var(--switch-height);
-        padding: 0.0625rem;
-        border-radius: var(--radius-pill);
-    }
-
-    .switch[data-state="checked"] .switch__track {
-        background-color: var(--control-checked-bg);
-    }
-
-    .switch[data-invalid] .switch__track {
-        box-shadow:
-            var(--glass-material-rim),
-            var(--glass-shadow-wash),
-            var(--invalid-ring);
-    }
-
-    .switch:focus-visible .switch__track {
-        box-shadow:
-            var(--glass-material-rim),
-            var(--glass-shadow-wash),
-            var(--focus-ring-shadow);
-    }
-
-    .switch[data-invalid]:focus-visible .switch__track {
-        box-shadow:
-            var(--glass-material-rim),
-            var(--glass-shadow-wash),
-            var(--focus-ring-shadow),
-            var(--invalid-ring);
+    /* A track seats its thumb at the inline START and moves it; the register's
+     * default centring is for a 1:1 bit holding a glyph. This one line is the whole
+     * difference, and it is what makes `travel == thumb == 20` exact. */
+    .switch .control-bit__face {
+        justify-content: start;
     }
 
     .switch__thumb {
         display: block;
-        inline-size: calc(var(--switch-height) - 0.25rem);
-        block-size: calc(var(--switch-height) - 0.25rem);
+        /* THE ONE OBJECT (ADJ-2) — the thumb Ø and the checkbox/radio face Ø are the
+         * same 20px token. It also equals the face's content box:
+         * 24 − 2 × (pad 1 + border 1) = 20. */
+        inline-size: var(--control-bit-size);
+        block-size: var(--control-bit-size);
         border-radius: var(--radius-pill);
         background-color: var(--card);
         box-shadow: var(--shadow-md);
         pointer-events: none;
-        position: relative;
-        z-index: 2;
         translate: 0;
+        /* The travel rides the DOCK spring. The canon-deleted preset this used to read
+         * bought 0.63px of overshoot on a 20px travel (ζ0.74) on a 0.44s settle — 2.1×
+         * the control channel: sub-pixel excursion on a perceptible clock, the worst of
+         * both. Its name is deliberately not spelled here; a retired register name in
+         * `src` is a retired register name (G-SPRING-ONE-JOB), and a comment is not an
+         * exemption. No manufactured stretch
+         * rides with it: `--lq-stretch-x` on a 20px thumb is 1.2px, and minting a 1.25
+         * to make it visible is a value invented against no law (R12, routed to
+         * MOTION-CANON LAW-0c). Honest travel on a correct clock. */
         transition: translate var(--spring-dock-duration) var(--spring-dock);
     }
 
+    /* travel = face inline − face block = 44 − 24 = 20 = the thumb. */
     .switch[data-state="checked"] .switch__thumb {
-        translate: calc(var(--switch-width) - var(--switch-height));
+        translate: calc(var(--control-bit-face-inline) - var(--control-bit-face-block));
     }
 
     .switch:dir(rtl)[data-state="checked"] .switch__thumb {
-        translate: calc(var(--switch-height) - var(--switch-width));
+        translate: calc(var(--control-bit-face-block) - var(--control-bit-face-inline));
     }
 
     @media (prefers-reduced-motion: reduce) {
         .switch__thumb {
             transition: none;
-        }
-    }
-
-    @media (forced-colors: active) {
-        .switch:focus-visible {
-            outline: 2px solid Highlight;
-            outline-offset: 2px;
         }
     }
 }

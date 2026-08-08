@@ -17,8 +17,10 @@ export {
     type UseUserInvalidAriaOptions,
     type UseUserInvalidAriaReturn,
 } from "./composables/dom/useUserInvalidAria";
-// The shared control-size union the form register (Input/Switch/Textarea/
-// NumberFieldInput) threads as `size?` — the published home for the type the dropped
+// The shared control-size union the form register (Input/Textarea/NumberFieldInput/
+// SearchBar) threads as `size?` — Switch left the axis at BK #83 W-CONTROL-BIT (a
+// role's corner is fixed by its role, so a size rung breaks `r = 0.30 × face`; zero
+// external sites passed it) — the published home for the type the dropped
 // `/api` discovery layer pinned (MIGRATION.md 5.0.0 /api-fold: `ControlSize` → `/forms`).
 // Type-only re-export of the `_shared` source (the form-family shared home).
 export type { ControlSize } from "./components/_shared";

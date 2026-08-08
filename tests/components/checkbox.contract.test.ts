@@ -8,24 +8,29 @@ afterEach(() => {
 });
 
 describe("Checkbox", () => {
+    /* The glyph pair is CONTENT and the mark's presence is STATE-INDEPENDENT (#83
+     * W-CONTROL-BIT, ADJ-6 + D4). Before the mark was force-mounted, "no glyph in the
+     * DOM" was how an unchecked box was recognised — which is the same fact as "the
+     * mark can never be animated in", the defect the cut closes. So the assertion
+     * moves off glyph PRESENCE and onto the two things that are still true: the mark
+     * node exists at every state (so the entrance has something to transition), and
+     * the Minus/Check choice tracks indeterminate-vs-not. */
     it.each([
-        [false, "unchecked", false, false],
-        [true, "checked", true, false],
-        ["indeterminate", "indeterminate", false, true],
-    ] as const)(
-        "renders %s as a distinct %s state",
-        (modelValue, state, hasCheck, hasDash) => {
-            const wrapper = mount(Checkbox, { props: { modelValue } });
-            const root = wrapper.get('[role="checkbox"]');
+        [false, "unchecked", false],
+        [true, "checked", false],
+        ["indeterminate", "indeterminate", true],
+    ] as const)("renders %s as a distinct %s state", (modelValue, state, hasDash) => {
+        const wrapper = mount(Checkbox, { props: { modelValue } });
+        const root = wrapper.get('[role="checkbox"]');
 
-            expect(root.attributes("data-state")).toBe(state);
-            expect(root.attributes("aria-checked")).toBe(
-                modelValue === "indeterminate" ? "mixed" : String(modelValue),
-            );
-            expect(root.find(".lucide-check").exists()).toBe(hasCheck);
-            expect(root.find(".lucide-minus").exists()).toBe(hasDash);
-        },
-    );
+        expect(root.attributes("data-state")).toBe(state);
+        expect(root.attributes("aria-checked")).toBe(
+            modelValue === "indeterminate" ? "mixed" : String(modelValue),
+        );
+        expect(root.find(".control-bit__mark").exists()).toBe(true);
+        expect(root.find(".lucide-minus").exists()).toBe(hasDash);
+        expect(root.find(".lucide-check").exists()).toBe(!hasDash);
+    });
 
     it("owns interaction while Reka owns the tri-state model", async () => {
         const wrapper = mount(
@@ -37,7 +42,11 @@ describe("Checkbox", () => {
         );
         const root = wrapper.get('[role="checkbox"]');
 
-        await wrapper.get(".checkbox__seat").trigger("click");
+        /* The seat IS the host now (#83 ADJ-3). `.checkbox__seat` was an
+         * absolutely-positioned 44×44 span overhanging a 16px box, so this line used
+         * to be the only way to click where a user actually clicks; the host's own
+         * border box is that region today. */
+        await root.trigger("click");
         expect(root.attributes("aria-checked")).toBe("true");
         await root.trigger("click");
         expect(root.attributes("aria-checked")).toBe("false");

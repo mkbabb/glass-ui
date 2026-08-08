@@ -1,7 +1,7 @@
 export { default as SearchBar } from "./SearchBar.vue";
 // The field-chrome variant CVA + its `/api` type surface (the
 // SFCs cannot re-export a type, so the CVA home is the type source). The size axis
-// rides the shared `controlSizeClass` (imported from its `_shared/control-size` home).
+// rides the shared `controlSizeClass` (imported from its `_shared/control` home).
 export { searchFieldVariants } from "./searchVariants";
 export type { SearchVariant, SearchVariants } from "./searchVariants";
 export { useFuzzySearch } from "./composables/useFuzzySearch";

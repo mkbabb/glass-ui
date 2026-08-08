@@ -1,115 +1,32 @@
 @layer components {
+    /* THE RADIO GROUP'S ENTIRE RESIDUE — the group's axis and the dot. The item's
+     * target, press, focus, invalid, disabled, forced-colors, material and corner are
+     * all `.control-bit`'s, composed.
+     *
+     * GAP 0 IS THE PITCH (ADJ-3). The shipped rhythm was an 18px face plus a derived
+     * 26px gap = 44px; an in-flow 44px seat reproduces it exactly at gap 0, with the
+     * derivation, the seat span, the negative margins and the tiling law all
+     * dissolved. The roving-focus axis (orientation / dir / loop) is Reka's and is
+     * genuinely role-specific — it is the only thing here a checkbox would not want. */
     .radio-group {
-        --radio-face: 1.125rem;
-        --radio-seat: var(--touch-target, 2.75rem);
-        --radio-seat-offset: calc((var(--radio-seat) - var(--radio-face)) / -2);
-
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: calc(var(--radio-seat) - var(--radio-face));
+        gap: 0;
     }
 
     .radio-group[data-orientation="horizontal"] {
         flex-flow: row wrap;
     }
 
-    .radio-group__item {
-        display: inline-grid;
-        flex: none;
-        place-items: center;
-        inline-size: var(--radio-seat);
-        block-size: var(--radio-seat);
-        margin: var(--radio-seat-offset);
-        padding: 0;
-        border: 0;
-        border-radius: 50%;
-        background: transparent;
-        color: var(--primary-foreground);
-        cursor: pointer;
-        appearance: none;
-        touch-action: manipulation;
-    }
-
-    .radio-group__face {
-        display: inline-grid;
-        place-items: center;
-        inline-size: var(--radio-face);
-        block-size: var(--radio-face);
-        border: 1px solid var(--control-ring);
-        border-radius: 50%;
-        background: color-mix(in srgb, var(--glass-plate-wash) 72%, transparent);
-        scale: 1;
-        transition:
-            scale var(--spring-press-duration) var(--transition-liquid-spatial),
-            background-color var(--duration-fast) var(--ease-standard),
-            border-color var(--duration-fast) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard);
-    }
-
-    .radio-group__item[data-state="checked"] .radio-group__face {
-        border-color: var(--control-checked-bg);
-        background: var(--control-checked-bg);
-    }
-
-    .radio-group__indicator {
+    /* The dot composes `.control-bit__mark`, so its entrance is the register's. The
+     * `50%` spelling this file used three times against a `9999px` elsewhere — two
+     * struck spellings of one stadium (PROPORTION §4) — is now spelled once, on the
+     * register's `--control-bit-radius` default. */
+    .radio-group__dot {
         inline-size: 0.5rem;
         block-size: 0.5rem;
-        border-radius: 50%;
-        background: currentColor;
-    }
-
-    .radio-group[data-invalid] .radio-group__face,
-    .radio-group[aria-invalid="true"] .radio-group__face,
-    .radio-group__item[aria-invalid="true"] .radio-group__face {
-        border-color: var(--destructive);
-        box-shadow: var(--invalid-ring);
-    }
-
-    .radio-group__item:focus-visible {
-        outline: none;
-    }
-
-    .radio-group__item:focus-visible .radio-group__face {
-        box-shadow: var(--focus-ring-shadow);
-    }
-
-    .radio-group[data-invalid] .radio-group__item:focus-visible .radio-group__face,
-    .radio-group__item[aria-invalid="true"]:focus-visible .radio-group__face {
-        box-shadow: var(--focus-ring-shadow), var(--invalid-ring);
-    }
-
-    .radio-group__item:active .radio-group__face {
-        scale: var(--scale-press);
-    }
-
-    .radio-group__item:disabled {
-        cursor: not-allowed;
-        opacity: var(--opacity-disabled);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .radio-group__item:active .radio-group__face {
-            scale: 1;
-        }
-    }
-
-    @media (forced-colors: active) {
-        .radio-group__face {
-            border-color: ButtonText;
-            background: Canvas;
-            box-shadow: none;
-        }
-
-        .radio-group__item[data-state="checked"] .radio-group__face {
-            border-color: Highlight;
-            background: Highlight;
-            color: HighlightText;
-        }
-
-        .radio-group__item:focus-visible .radio-group__face {
-            outline: 2px solid Highlight;
-            outline-offset: 2px;
-        }
+        border-radius: var(--radius-pill);
+        background-color: currentcolor;
     }
 }

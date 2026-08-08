@@ -86,32 +86,31 @@
 
     /* The selection-control STATE register (the `--focus-ring-shadow`
        / `--invalid-ring` precedent: one named register, read everywhere — never a
-       per-control magic literal). The checks family (Checkbox + RadioGroupItem) reads
-       these TWO tokens so a re-tint is ONE edit, library-wide.
+       per-control magic literal). The checks family (Checkbox + Switch +
+       RadioGroupItem) reads it so a re-tint is ONE edit, library-wide.
 
-       • `--control-ring` — the UNCHECKED outline. Post- the general glass
-         rim is ≤4% warm-ink (`--glass-border-resting`), which reads as a near-invisible
-         hairline on a 16px circle — too faint to tell a rest radio from its siblings. So
-         the selection atoms are the NAMED exception (recorded in the fences):
-         a warm-ink outline that reads as a DEFINED circle at 16px
-         without re-introducing the dark `--primary` hairline. Warm-ink-derived (no gray).
-         ~~a slightly-stronger ~12%~~ [2026-08-05 · A11Y G-CONTRAST-COMPUTED: 12% was
-         the right INTENT sized by eye and it missed by a factor of 2.3 — it computes
-         **1.28:1** against the page, against the 3.0 floor WCAG 1.4.11 sets for the
-         boundary that identifies a control. For an UNCHECKED box that boundary is the
-         whole control: there is nothing else to see. The alpha is now DERIVED, not
-         estimated — swept against every surface a checks atom sits on (`--background`,
-         `--card`, `--popover`, `--secondary`, `--muted`) in both arms, the arithmetic
-         floor is **48%** (worst surface 3.01) and the shipped value takes the next
-         even rung for headroom: **50%** → worst surface **3.18** light
-         (`--secondary`), **3.98** dark (`--card`/`--popover`). Still half-strength ink,
-         so the fence this comment records — no dark `--primary` hairline — holds.]
+       ~~`--control-ring` — the UNCHECKED outline, a warm-ink hairline the selection
+       atoms carried as the NAMED exception to the ≤4% general glass rim, re-derived
+       from 12% (1.28:1 — it missed the 3.0 floor by 2.3×) to 50% at #31 W-A11Y,
+       2026-08-05.~~ [2026-08-08 · BK #83 W-CONTROL-BIT: DELETED. The token had
+       exactly two readers — the Checkbox face and the RadioGroupItem face — and both
+       are now the ONE `.control-bit` register (styles/glass/control-bit.css), which
+       reads the perimeter rung `--ink-perimeter` (0.48) off the one-ink register
+       (tokens/color-radius.css §1.2) instead. A colour-valued ink at a hand-set alpha
+       beside a scalar ink register is the FORK §1.2 exists to forbid, and #31's own
+       sweep is what makes the swap safe rather than lossy: its arithmetic floor was
+       48% (worst surface 3.01) and 0.48 IS that floor. What the swap gives up is #31's
+       even-rung HEADROOM (worst surface 3.18 light → ~3.01) — stated, not absorbed:
+       if a control perimeter wants more than the floor, the rung moves for every
+       control at once at #68, which is the whole point of a single ink register. The
+       deletion is recorded here rather than in place because this block is the one
+       source of record for the pair.]
+
        • `--control-checked-bg` — the SELECTED glass-tinted fill. The recipe is minted
          ONCE here (the anti-paste bite: a second inline `color-mix(... --primary 88% ...)`
          literal on a checks atom reds — the recipe IS the token). Mirrors the
          glass-`--primary` over the floating tier the Checkbox already speaks, so the ring
          goes outline → filled glass disc (a real material step), warm-not-saturated. */
-    --control-ring: color-mix(in srgb, var(--foreground) 50%, transparent);
     --control-checked-bg: color-mix(in srgb, var(--primary) 88%, var(--glass-plate-floating));
 
     /* ═══════════════════════════════════════════════

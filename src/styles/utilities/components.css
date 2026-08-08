@@ -26,7 +26,7 @@
         /* The height reads the shared `--control-pill-h`
            element-override seam (the SAME rung `.input-pill` reads), DEFAULTING to
            `--control-h-sm` so a bare search bar is byte-identical to the
-           2.25rem pill. `controlSizeClass(size)` (_shared/control-size.ts) re-points
+           2.25rem pill. `controlSizeClass(size)` (_shared/control.ts) re-points
            the seam per rung (sm→`--control-h-xs`-ish via the cohort, lg→`--control-h-lg`),
            so the SearchBar/FuzzySearch `size` prop retunes the field height WITHOUT a
            recipe fork — ONE substitution rung, the cohort is still the source. */

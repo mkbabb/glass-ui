@@ -1,0 +1,400 @@
+/* ── .control-bit — THE BINARY-CONTROL REGISTER (checkbox · switch · radio) ────
+   BK #83 W-CONTROL-BIT. Spec of record: BJ addenda 2026-07-24-refinement
+   COMPONENT-WAVES-TERMINAL-3.md §LANE binary-triad (tri-fold adjudicated).
+
+   WHAT THIS FILE IS FOR, stated as the lane's own thesis: the triad independently
+   re-solved the same nine problems — target, press, focus, invalid, disabled,
+   forced-colors, radius, clock, material — and shipped TWENTY-EIGHT answers where
+   there should be NINE. The LOC delta is a consequence; the answers collapse is the
+   deliverable. Every law below is declared exactly once and composed three times.
+
+   THE SHAPE (§3.1) — the host is the SEAT, the face is the PAINT, the mark is the
+   STATE:
+
+     <XRoot class="control-bit tap-squish" data-invalid=…>
+       <span class="control-bit__face" aria-hidden="true">
+         <XIndicator force-mount class="control-bit__mark" aria-hidden="true">…
+       </span>
+     </XRoot>
+
+   THE SEAT IS IN FLOW (ADJ-3). The switch already shipped it and the other two did
+   not: the checkbox painted an unpainted absolute 44×44 span bleeding 14px past a
+   16px box (so `getBoundingClientRect` LIED — it read 16×16), and the radio used
+   −13px margins plus a derived tiling gap that the shipped demo route ALREADY broke
+   (gap-6 = 24px against an 18px effective layout box → 42px pitch under a 44px seat
+   = a 2px overlap on the page that documents the component). A correctness
+   invariant a consumer utility silently breaks is not an invariant. In flow, the
+   overlap is impossible by construction — and the dividend is exact: 18 + 26 = 44,
+   so an in-flow seat at gap 0 reproduces the shipped radio pitch to the pixel.
+
+   ONE OBJECT SIZE (ADJ-2). 20px, not 18 and not 16, because only 20 satisfies
+   PROPORTION's own stated tick law `r = 0.30 × h` EXACTLY (0.30 × 20 = 6; 0.30 × 18
+   = 5.4), 20 is a member of the space series `4·8·12·20·32·52`, the seat residue
+   (44 − 20)/2 = 12 lands on the body-gap rung, and 20 is already the shipped switch
+   thumb Ø — so ONE `--control-bit-size` serves the checkbox face, the radio face and
+   the switch thumb. PROPORTION §4's tick row `h=18` is corrected to `h=20` at source
+   by this lane; the `radius.css:107-116` tombstone's own arithmetic (6/16 = 0.38)
+   was always evidence against the FACE, never against the rung.
+
+   THE SWITCH SILHOUETTE IS KEPT BYTE-FOR-BYTE (ADJ-1), and this register is built to
+   keep it. `.glass-wash` carried `border: 1px solid` (ladder.css:49), so the shipped
+   44×24 track with `padding: 1px` was ALREADY symmetric at every size: rest inset
+   from the outer edge = border 1 + pad 1 = 2, checked far inset = 44 − 1 − 1 − 20 −
+   20 = 2. The register therefore keeps a 1px perimeter border on the face, and the
+   arithmetic survives the material cut unchanged. The competing 48×24/pad-2
+   re-derivation is REFUSED (§REJECTED R3): it omits the border term and is
+   asymmetric 3-vs-1 by its own construction.
+
+   NO `backdrop-filter` ANYWHERE IN THE LANE (D7/K9). A computed blur(7px) on a 16px
+   box and a blur(1px) on a 24px track are both sub-perceptual and both cost a
+   compositor layer per control. The bit reads by INK and FILL. This is a declaration
+   removal, not a mask.
+
+   NO TRANSITION TARGETS THE HOST (ADJ-4 / G-BIT-ONE). `.tap-squish`
+   (utilities/base.css) is the library's declared press register and its own
+   doc-block names the exact cascade bug the checkbox re-committed: a 4-leg
+   `transition` shorthand on the host with no `scale` leg CLOBBERS the utility's, so
+   the squish landed in 0ms. The structural cure is not a longer shorthand — it is
+   that face, mark and thumb are DIFFERENT ELEMENTS with their own transitions, so a
+   clobber is impossible. Composing `.tap-squish` is the shell's job; declaring press
+   timing is nobody's but the register that owns it.
+
+   TOKENS MINTED: NONE. This register consumes `--ink-perimeter` / `--fill-hover` /
+   `--fill-selected` (tokens/color-radius.css §1.2-1.3, landed by #68), the
+   `--glass-rim-top`/`--glass-rim-bottom` pair, `--control-checked-bg` (3 readers,
+   all in this lane) and `--touch-target`. Two SEAMS are marked in place below and
+   routed rather than minted here. */
+
+@layer components {
+    .control-bit {
+        /* THE ONE OBJECT (ADJ-2) — face Ø for the checkbox and the radio, thumb Ø
+           for the switch. A shell that is not a 1:1 bit re-points the two face axes
+           below; nothing re-points this. */
+        --control-bit-size: 1.25rem; /* 20 */
+        /* THE CORNER IS NOT DECLARED HERE, and the deletion is the cure (2026-08-08).
+           A `--control-bit-radius` default on THIS host and the checkbox's re-point on
+           ITS host are both (0,1,0) selectors in the same `@layer components`, so the
+           winner was decided by stylesheet source order alone — this register is
+           @import-ed from `styles/glass.css`, the shell sheet arrives with its SFC, and
+           D1's whole headline (a checkbox is a TICK, silhouette-distinct from a radio's
+           disc) therefore rode bundler ordering rather than the cascade. The register's
+           own fallback idiom removes the tie outright: the ROLE declares the corner or
+           it does not, and `var(--control-bit-radius, var(--radius-pill))` on the face
+           (below) is the disc/stadium every non-declaring member wears. One
+           declaration, no collision, no order dependence. */
+
+        /* SEAM (routed, not minted) — PROPORTION A10's recess: the field is RAISED
+           where it must be RECESSED (measured field L 236.77 vs page L 230.5 =
+           +6.2), and the ruled cure is `fill = host − 4% L`. Written here as the
+           host-relative 4% ink veil the law describes: in the LIGHT arm `--foreground`
+           IS the warm near-black pole, so a 4% step toward it is 4% L down from
+           whatever is behind it — measured oklab L* 0.9853 → 0.9584 on the page and
+           0.9739 → 0.9471 on the card, ΔL* −0.027 both.
+           IT DOES NOT COMPOSE IN THE DARK ARM, and the sentence that used to claim it
+           composed "on card, glass and page alike" is struck [2026-08-08, cure round].
+           `--foreground` inverts with the mode: dark it is hsl(30 14% 90%), a CREAM,
+           and a 4% step toward cream over a near-black host RAISES the face — measured
+           L* 0.1456 → 0.1875 on the page (+0.0419) and 0.2949 → 0.3251 on the card
+           (+0.0302). The recess painted as a LIFT, which is A10's own defect wearing
+           the cure's name. The dark pole is re-pointed below.
+           The NAME (`--control-recess` proposed) belongs to the token wave, not to a
+           component lane: spec §9 item 1 routes it to #68, and the batch's
+           unlanded-token ruling (CWT-3 TF-1) is explicit that a terminal writes the
+           literal with a marked seam and the token wave re-points it. Binding a name
+           that resolves to nothing is the defect that ruling exists to forbid. R83-1
+           carries one amendment out of this round: `--control-recess` must be a
+           PER-ARM pair, not one value — no single ink recesses over both a page at
+           L* 0.15 and a page at L* 0.99, and the token that tries is this defect
+           re-minted at library scope. */
+        --control-bit-fill: color-mix(in oklab, var(--foreground) 4%, transparent);
+        /* The PERIMETER rung — a control's own edge AND its focus ring, 0.48, 3.0:1
+           (tokens/color-radius.css §1.2). This retires `--control-ring`, whose only
+           two readers were the two faces this register replaces. It was a
+           COLOUR-VALUED ink at a hand-set alpha sitting beside the one-ink register,
+           which is the fork §1.2 exists to forbid; when it shipped at 12% it
+           composited 1.277:1 (checkbox) / 1.278:1 (radio) against a 3:1 requirement
+           and NEITHER unchecked mark was findable.
+           THE HEADROOM DELTA, MEASURED RATHER THAN ABSORBED. #31 W-A11Y re-derived
+           that alpha to 50% on 2026-08-05 — arithmetic floor 48%, next even rung for
+           headroom. The perimeter rung is 0.48, the floor itself, so reading it gives
+           some of that back. Both inks re-composited over all five surfaces a checks
+           atom sits on, in both arms, by G-CONTRAST-COMPUTED's own resolver:
+             light  background 3.322→3.132 · card/popover 3.291→3.105 ·
+                    secondary  3.184→**3.011** (the worst cell) · muted 3.272→3.089
+             dark   background 4.486→4.213 · card/popover 3.984→3.791 ·
+                    secondary  4.063→3.862 · muted 4.367→4.131
+           Ten cells, ten still over the WCAG 1.4.11 3.0 bar, and the worst one clears
+           it by 0.011. That margin is thin and it is deliberate: a component lane does
+           not get to keep a private stronger ink because it likes the cushion. If 0.48
+           is short of what a control perimeter wants, the RUNG moves and every control
+           moves with it — #68's cut, not a checkbox's. The gate's §3 cases now measure
+           this composition, read off this file, so the two cannot drift apart. */
+        --control-bit-ink: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--ink-perimeter) * 100%),
+            transparent
+        );
+        /* The face's CURRENT edge — the perimeter ink at rest, the checked fill when
+           checked. The focus ring never reads this: an indicator drawn in the fill it
+           sits on is not an indicator. */
+        --control-bit-edge: var(--control-bit-ink);
+
+        /* THE SEAT (ADJ-3) — in flow, margin box == border box, ≥44 on both axes.
+           `max()` rather than `min-inline-size` so a wide face (the switch track)
+           sizes the host instead of overflowing it. */
+        display: inline-grid;
+        place-items: center;
+        flex: none;
+        inline-size: max(
+            var(--touch-target),
+            var(--control-bit-face-inline, var(--control-bit-size))
+        );
+        block-size: max(
+            var(--touch-target),
+            var(--control-bit-face-block, var(--control-bit-size))
+        );
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--primary-foreground);
+        cursor: pointer;
+        appearance: none;
+        touch-action: manipulation;
+    }
+
+    /* THE RECESS'S DARK ARM (A10, cure round 2026-08-08) — a PLAIN `.dark` ancestor
+       override, this library's one mechanism for a per-mode COLOR that is not a
+       `:root` token (glass/grain-overlay.css, glass/glass-chip.css,
+       glass/overlay-plate.css and glass/surfaces-pager.css all carry the same shape).
+       NEVER `:global()` — a `:global(.dark) .x` inside a scoped block drops silently
+       from the emitted sheet, the house's thrice-recurring trap — and no `light-dark()`
+       here either: `darkModeSyncScript()` stamps the class at parse time and it tracks
+       `prefers-color-scheme`, so the class IS the mode.
+       THE POLE IS THE VEIL RECIPE'S, TAKEN TO ITS LIMIT. glass/veil.css darkens a
+       plate by compositing `--glass-veil-ink`, and tokens/dark-arm.css states the law
+       the ink obeys: "The INK goes DEEPER (not lighter): a dark plate that lifts
+       toward cream flattens its own silhouette into the page." The dark veil ink is
+       oklch(0.17 0.03 70) — ABOVE the L* 0.1456 page floor, so it cannot recess
+       against the page. The pole is therefore that ink's own limit, `oklch(0 0 0)`,
+       the spelling `--glass-under-shadow-*` already uses for a pure-ink leg
+       (tokens/glass-fx.css). Darkening toward black scales the host's channels and
+       leaves its HUE untouched, so the warm identity survives the recess — the one
+       thing a grey-mixed well would lose.
+       THE ALPHA IS SOLVED, NOT PICKED. 14% reproduces the light arm's recess on the
+       surface a checks atom actually sits on: `--card` host L* 0.2949 → face
+       L* 0.2683, ΔL* −0.0265 against the light arm's −0.0268. On the PAGE the delta
+       is smaller, and the arithmetic says why rather than the number being massaged:
+       the dark page is hsl(24 9% 4%) = L* 0.1456, and oklab's steep near-black slope
+       leaves only L* 0.1456 → 0.1406, ΔL* −0.0050. RECESSED in both — matched where
+       there is room to match. The floor is a fact about the page, not a defect in the
+       rung, and it is the reason R83-1 goes to #68 as a per-arm pair. */
+    .dark .control-bit {
+        --control-bit-fill: oklch(0 0 0 / 0.14);
+    }
+
+    /* The indicator leaves the host entirely: the host suppresses the UA ring and
+       the FACE carries the whole recipe (below). Focus that lands on the seat rather
+       than the paint indicates a 44px void. */
+    .control-bit:focus-visible {
+        outline: none;
+    }
+
+    .control-bit:is([data-state="checked"], [data-state="indeterminate"]) {
+        --control-bit-fill: var(--control-checked-bg);
+        --control-bit-edge: var(--control-checked-bg);
+    }
+
+    /* DISABLED IS INK, NOT OPACITY (A4). `opacity` dims the whole stack including the
+       geometry, and the demo route then wrapped each disabled cluster in a second
+       `opacity-60` for an effective ~0.30 — the component's own disabled arm had
+       never actually been visible on its own page. Dim ≠ shrink: the GEOMETRY stays
+       at full alpha, the INKS soften.
+       SPEC CWT-3:728's "geometry and border at full alpha" CLAUSE IS REFUSED, on the
+       measurement rather than on taste [2026-08-08, cure round]. Holding the border
+       at full alpha left an UNCHECKED disabled bit painting byte-identically to an
+       enabled one: the mark is force-mounted at `opacity: 0` until `[data-state]`
+       says otherwise, so softening `--control-bit-mark-ink` alone changed no painted
+       pixel, and the entire disabled arm reduced to `cursor: not-allowed` — a state a
+       pointer can feel and an eye cannot see. That is a strict regression from the
+       `opacity: 0.5` this register retired, and it was invisible on the row's own π
+       route because all four `/forms/checks` disabled specimens are unchecked, so the
+       one arm the rung did paint was the one arm nothing displayed. The border now
+       softens with the ink at the same 45%; the box, the corner and the 44px seat do
+       not move. The checked arm's rung below is (0,3,0) against this (0,2,0) and
+       still re-points both properties to the state colour. */
+    .control-bit:is(:disabled, [data-disabled]) {
+        --control-bit-mark-ink: color-mix(
+            in oklab,
+            var(--primary-foreground) 45%,
+            transparent
+        );
+        --control-bit-edge: color-mix(
+            in oklab,
+            var(--control-bit-ink) 45%,
+            transparent
+        );
+        cursor: not-allowed;
+    }
+
+    .control-bit:is(:disabled, [data-disabled]):is(
+            [data-state="checked"],
+            [data-state="indeterminate"]
+        ) {
+        --control-bit-fill: color-mix(
+            in oklab,
+            var(--control-checked-bg) 45%,
+            transparent
+        );
+        --control-bit-edge: color-mix(
+            in oklab,
+            var(--control-checked-bg) 45%,
+            transparent
+        );
+    }
+
+    .control-bit__face {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--control-bit-face-inline, var(--control-bit-size));
+        block-size: var(--control-bit-face-block, var(--control-bit-size));
+        padding: var(--control-bit-face-pad, 0);
+        border: 1px solid var(--control-bit-edge);
+        /* The corner, declared ONCE, with the disc as the `var()` fallback rather than
+           as a host default — see the deletion note on `.control-bit` above. A shell
+           that owns a role corner (the checkbox's tick rung) sets
+           `--control-bit-radius`; every member that does not gets the stadium here,
+           and no source-order tie decides between them. */
+        border-radius: var(--control-bit-radius, var(--radius-pill));
+        background-color: var(--control-bit-fill);
+        /* The resting rim, composed as the two shared tokens rather than hand-copied
+           (the `.glass-control-edge` fork the checkbox used to carry). These two legs
+           are BYTE-IDENTICAL under focus below — a focus indicator may not replace
+           the resting material, which is exactly what `box-shadow` delivery did on
+           all three members. */
+        box-shadow: var(--glass-rim-top), var(--glass-rim-bottom);
+        /* Longhand legs on the FACE element. The host declares none, so no shorthand
+           anywhere in this lane can clobber `.tap-squish`'s scale leg. */
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            outline-color var(--duration-fast) var(--ease-standard);
+    }
+
+    /* ENGAGEMENT (D8) — the lane shipped ZERO hover rules across all three members
+       (`grep hover` → 0), the exact inverse of the 39 UNGUARDED hovers K13 convicts
+       elsewhere. Both rungs answer on FILL rather than on scale, and that is a
+       derivation, not a preference: `--lq-stretch-x` on a 20px object is 1.2px and
+       4% of a 20px painted face is 0.8px, so a bit is below the scale channel's
+       legible floor and the fill channel is the only one that can carry the answer.
+       Guarded on `(hover: hover)` (K13/G7) — an unguarded hover latches on tap and
+       paints a control as permanently pointed-at; `.tap-squish` is the coarse
+       pointer's answer and every shell composes it. Both rungs mix ON TOP of the
+       current fill, so the checked arm engages without losing its state. */
+    @media (hover: hover) {
+        .control-bit:not(:disabled, [data-disabled]):hover .control-bit__face {
+            background-color: color-mix(
+                in oklab,
+                var(--foreground) calc(var(--fill-hover) * 100%),
+                var(--control-bit-fill)
+            );
+        }
+    }
+
+    .control-bit:not(:disabled, [data-disabled]):active .control-bit__face {
+        background-color: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--fill-selected) * 100%),
+            var(--control-bit-fill)
+        );
+    }
+
+    /* FOCUS — PROPORTION A1 verbatim, ON THE FACE: a 2px perimeter-ink outline at
+       offset 2 PLUS the 8px @15% glow leg. `outline` is a channel nothing else in
+       this cascade competes for, so the ring sits BESIDE the material instead of
+       replacing it — the switch used to re-list `--glass-material-rim,
+       --glass-shadow-wash` on three separate focus rules purely because box-shadow
+       delivery forced it to. The two rim legs here are byte-identical to the resting
+       rule above; that identity is a gate clause, not a coincidence. */
+    .control-bit:focus-visible .control-bit__face {
+        outline: 2px solid var(--control-bit-ink);
+        outline-offset: 2px;
+        box-shadow:
+            var(--glass-rim-top),
+            var(--glass-rim-bottom),
+            0 0 8px color-mix(in oklab, var(--foreground) 15%, transparent);
+    }
+
+    /* INVALID — ONE grammar (K26). The lane shipped FOUR, and the checkbox's was
+       unreachable through its own typed surface: it keyed `[aria-invalid="true"]`
+       while exposing no `invalid` prop, so nothing in the library or the demo ever
+       set it. The ancestor arm serves RadioGroup's root `invalid` with zero
+       threading through the item. Declared AFTER the focus rule so the destructive
+       recolour reaches the outline at equal specificity. */
+    :is(.control-bit[data-invalid], [data-invalid] .control-bit) .control-bit__face {
+        border-color: var(--destructive);
+        outline-color: var(--destructive);
+    }
+
+    /* THE MARK (D4) — always mounted, state-keyed. The defect it cures: both
+       indicators were mounted ON state, so the only checked-state motion anywhere in
+       the triad was a fill cross-fade and the mark itself simply APPEARED. A
+       force-mounted node can be transitioned; a node that does not exist cannot.
+       `@starting-style` is refused for the same reason (R9) — it is insertion-only
+       and a force-mounted mark never re-inserts.
+       Compositor-only properties, and the scale leg rides the shared
+       `--transition-liquid-spatial` spring vocabulary on the press register's own
+       clock — the clock fence: a spring replayed over a foreign span is the curve
+       compressed. */
+    .control-bit__mark {
+        display: grid;
+        place-items: center;
+        color: var(--control-bit-mark-ink, var(--primary-foreground));
+        scale: 0.6;
+        opacity: 0;
+        transition:
+            scale var(--spring-press-duration) var(--transition-liquid-spatial),
+            opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    .control-bit:is([data-state="checked"], [data-state="indeterminate"])
+        .control-bit__mark {
+        scale: 1;
+        opacity: 1;
+    }
+
+    /* ONE reduced-motion arm for the whole triad (the radio hand-rolled its own).
+       The mark still resolves its state — the entrance becomes a static swap. */
+    @media (prefers-reduced-motion: reduce) {
+        .control-bit__mark {
+            scale: 1;
+            transition: opacity var(--duration-fast) var(--ease-standard);
+        }
+    }
+
+    /* ONE forced-colors block for the whole triad (there were three). */
+    @media (forced-colors: active) {
+        .control-bit__face {
+            border-color: ButtonText;
+            background-color: Canvas;
+            box-shadow: none;
+        }
+
+        .control-bit:is([data-state="checked"], [data-state="indeterminate"])
+            .control-bit__face {
+            border-color: Highlight;
+            background-color: Highlight;
+        }
+
+        .control-bit__mark {
+            color: HighlightText;
+        }
+
+        .control-bit:focus-visible .control-bit__face {
+            outline: 2px solid Highlight;
+            outline-offset: 2px;
+            box-shadow: none;
+        }
+    }
+}

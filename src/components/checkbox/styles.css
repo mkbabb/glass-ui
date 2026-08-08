@@ -1,66 +1,21 @@
 @layer components {
+    /* THE CHECKBOX'S ENTIRE RESIDUE — the corner, and nothing else. Everything a
+     * checkbox used to declare for itself (target, press, focus, invalid, disabled,
+     * forced-colors, material, clock) is the `.control-bit` register's, composed.
+     *
+     * THE TICK RUNG. `r = 0.30 × h` at h = 20 is 6 EXACTLY (PROPORTION §4; its `h=18`
+     * row is corrected to h=20 by this lane's ADJ-2, at which point the law and the
+     * rung agree without rounding). This is the silhouette law D1 convicts: with
+     * `--radius-control` resolving to `--radius-pill`, a checkbox was a CIRCLE and
+     * therefore silhouette-identical to an unchecked radio — many-of-N and one-of-N
+     * indistinguishable at rest, which is the one thing the two shapes exist to say.
+     *
+     * SEAM (routed, not minted): PROPORTION §8:329 books `--radius-md` → `--radius-tick`
+     * as a value-unchanged RENAME, and spec §9 item 1 routes it to the token wave
+     * (#68). `--radius-md` has readers outside this lane, so renaming it here would be
+     * a library-wide cut wearing a component lane's fence. The rung is read; the name
+     * is owed. */
     .checkbox {
-        position: relative;
-        display: inline-grid;
-        flex: none;
-        place-items: center;
-        inline-size: 1rem;
-        block-size: 1rem;
-        padding: 0;
-        border: 1px solid var(--control-ring);
-        border-radius: var(--radius-control);
-        color: var(--primary-foreground);
-        cursor: pointer;
-        appearance: none;
-        touch-action: manipulation;
-        transition:
-            background-color var(--duration-fast) var(--ease-standard),
-            border-color var(--duration-fast) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard),
-            opacity var(--duration-fast) var(--ease-standard);
-    }
-
-    .checkbox__seat {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        inline-size: var(--touch-target, 2.75rem);
-        block-size: var(--touch-target, 2.75rem);
-        border-radius: var(--radius-pill);
-        translate: -50% -50%;
-    }
-
-    .checkbox__indicator {
-        display: grid;
-        place-items: center;
-        inline-size: 100%;
-        block-size: 100%;
-    }
-
-    .checkbox:is([data-state="checked"], [data-state="indeterminate"]) {
-        border-color: var(--control-checked-bg);
-        background: var(--control-checked-bg);
-    }
-
-    .checkbox[aria-invalid="true"] {
-        border-color: var(--destructive);
-        box-shadow: var(--invalid-ring);
-    }
-
-    .checkbox:is(:disabled, [data-disabled]) {
-        opacity: var(--opacity-disabled);
-        cursor: not-allowed;
-    }
-
-    @media (forced-colors: active) {
-        .checkbox {
-            border-color: ButtonText;
-        }
-
-        .checkbox:is([data-state="checked"], [data-state="indeterminate"]) {
-            border-color: Highlight;
-            background: Highlight;
-            color: HighlightText;
-        }
+        --control-bit-radius: var(--radius-md); /* 6 — the tick corner */
     }
 }

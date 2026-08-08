@@ -14,9 +14,14 @@ describe("Switch", () => {
         expect(wrapper.emitted("update:modelValue")).toEqual([[true]]);
     });
 
-    it("projects semantic size and invalid state", () => {
+    /* The `size` axis is DELETED (#83 W-CONTROL-BIT, R11): a role's corner is fixed by
+     * its role, so a size rung breaks `r = 0.30 × face` at two of three stops, and
+     * `--control-h-*` resolve 36/40/44 rather than the uniform 44 the axis was
+     * defended with. Zero external sites passed it. What survives is the state axis,
+     * and it is now the ONE grammar every member of the triad stamps. */
+    it("projects invalid state through the one shared control grammar", () => {
         const wrapper = mount(Switch, {
-            props: { modelValue: true, size: "lg", invalid: true },
+            props: { modelValue: true, invalid: true },
         });
         const control = wrapper.get('[role="switch"]');
 
@@ -24,8 +29,8 @@ describe("Switch", () => {
             "aria-checked": "true",
             "aria-invalid": "true",
             "data-invalid": "true",
-            "data-size": "lg",
         });
+        expect(control.attributes("data-size")).toBeUndefined();
     });
 
     it("does not update while disabled", async () => {

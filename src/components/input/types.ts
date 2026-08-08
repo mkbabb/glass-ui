@@ -1,5 +1,5 @@
 import type { HTMLAttributes, InputHTMLAttributes } from "vue";
-import type { ControlSize } from "../_shared/control-size";
+import type { ControlSize } from "../_shared/control";
 
 export interface InputProps {
     autocomplete?: string;
