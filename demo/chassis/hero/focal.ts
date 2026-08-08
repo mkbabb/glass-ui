@@ -57,7 +57,7 @@ export const SELF_STAGES_GL: ReadonlySet<string> = new Set([
     // Controls and overflow wrap DockStage to demonstrate a dock over a live field.
     "dock/controls",
     "dock/overflow",
-    "dock/rail",
+    "dock/vertical",
     // The auth-shell composition mounts its own
     // route-representative GL field (the purple→tomato brand-panel <Aurora>) OUTSIDE the
     // `background` channel, so the recessive shell aurora stands down: the brand aurora is

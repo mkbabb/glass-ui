@@ -4,8 +4,8 @@ export { default as DockLayerGroup } from "./DockLayerGroup.vue";
 export { default as DockLayer } from "./DockLayer.vue";
 // Thin controlled face-swap core. The
 // two-child opacity overlap on the per-face `--dock-t` + measure-once peak reserve +
-// focus-transfer-on-dissolve. `<DockLayerGroup>` COMPOSES it where a rail exists; the
-// controlled-no-rail 5-pane case (a consumer) consumes it DIRECTLY (no selection engine).
+// focus-transfer-on-dissolve. `<DockLayerGroup>` COMPOSES it where a switcher exists; the
+// controlled-no-switcher 5-pane case (a consumer) consumes it DIRECTLY (no selection engine).
 // The crossfade context helpers stay INTERNAL (the composables barrel) — only the
 // component + its discovery types publish on `/dock` (the dockLayerContext precedent).
 export { default as DockCrossfade } from "./DockCrossfade.vue";

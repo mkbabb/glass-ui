@@ -7,6 +7,65 @@ rename or import re-point per call site.
 
 ## 8.0.0
 
+**The dock's "rail" vocabulary is struck; the layer-switcher renames and the
+hairline is built.** `rail` meant a VERTICALLY-ORIENTED DOCK in the dock band's own
+identifiers (`--dock-rail-padding` was the vertical dock's padding, `--dock-rail-extend-length`
+its reach, `--dock-rail-accent-*` its selected bar) while the owner's standing
+correction is that a rail is a *hairline inside* a horizontal or vertical dock. Three
+things now carry three names: a vertical dock is `<GlassDock orientation="vertical">`,
+the in-dock tab strip is the **layer switcher**, and the line across the dock is the
+**hairline**. Clean break, no aliases.
+
+_Props — `<DockLayerGroup>`_
+
+| removed at 8.0 | replacement |
+| --- | --- |
+| `show-rail` / `showRail` | `show-switcher` / `showSwitcher` — same boolean, same `true` default |
+| `rail-position` / `railPosition` | `switcher-position` / `switcherPosition` — same `"start" \| "end"`, same `"start"` default |
+
+_Classes and attributes_
+
+| removed at 8.0 | replacement |
+| --- | --- |
+| `.dock-layer-rail` | `.dock-layer-switcher` |
+| `.dock-layer-group.rail-start` / `.rail-end` | `.switcher-start` / `.switcher-end` (emitted by the component; a consumer never writes them) |
+| `.dock-separator--anchor` | `.dock-hairline` — and it now PAINTS; the old modifier was declared in no stylesheet |
+| `data-rail-anchor` | `data-dock-hairline` — likewise; the old attribute was read by nothing |
+
+_CSS custom properties_
+
+| Classification | Property |
+| --- | --- |
+| removed at 8.0 | `--dock-layer-rail-bg`, `--dock-layer-rail-divider`, `--dock-layer-rail-hover`, `--dock-layer-rail-active`, `--dock-layer-rail-gap`, `--dock-layer-rail-padding`, `--dock-layer-rail-glyph`, `--dock-rail-active-accent`, `--dock-rail-padding`, `--dock-rail-extend-length`, `--dock-rail-accent-width`, `--dock-rail-accent-gap`, `--dock-rail-accent-inset` |
+| added at 8.0, declared with a library default (`tokens/sizing.css`) | `--dock-layer-switcher-{bg,hover,active}`, `--dock-hairline` |
+| added at 8.0 as a CONSUMER HANDLE — the name is read with an inline fallback and declared nowhere in `src/`, exactly as its predecessor was | `--dock-layer-switcher-{gap,padding,glyph,glyph-active}`, `--dock-vertical-{padding,extend-length}`, `--dock-vertical-accent-{width,gap,inset}` |
+
+`--dock-layer-rail-divider` does **not** rename one-to-one: it folds into
+`--dock-hairline`, which is now the ONE hairline colour for the whole dock band —
+`.dock-separator`, `.dock-hairline`, and the layer switcher's divider edge all read it.
+A consumer that retinted the switcher divider retints every dock hairline with the one
+token. The value moved with the fold, and this is the cut's only paint delta:
+`color-mix(in srgb, var(--border) 40%, transparent)` →
+`color-mix(in srgb, var(--foreground) 15%, transparent)` (`--surface-tint-15`, which
+`tokens/dark-arm.css` re-resolves warm in dark). `.dock-separator`'s own paint is
+byte-unchanged; only its source became a name.
+
+_Internal renames a deep-importer would feel_
+
+`composables/dockRailContext.ts` → `composables/dockSwitcherContext.ts`;
+`DockRailContext` → `DockSwitcherContext`; `provideDockRailContext` /
+`useDockRailContext` → `provideDockSwitcherContext` / `useDockSwitcherContext`;
+`DOCK_RAIL_KEY` → `DOCK_SWITCHER_KEY` (injection key string
+`"glass-ui:dock-rail-tablist"` → `"glass-ui:dock-switcher-tablist"`). None of these were
+on a published export map; a consumer reaching them was deep-importing.
+
+_New behaviour_
+
+`<DockSeparator anchor>` was a prop with no effect — it stamped markers for a slot that
+existed in no file. It now promotes the separator to the dock hairline: one 1px rule
+spanning the dock's cross extent (`align-self: stretch` + the cross-axis size), inside a
+horizontal OR a vertical dock. The plain `<DockSeparator>` is unchanged.
+
 **The Slider/Progress track seam is typed and split; the generic `--track-bg`
 knob and `.value-mark(s)` selectors are removed.** The Slider `.slider-track` and
 the Progress `.progress-rail` now COMPOSE two shared registers — the recessed

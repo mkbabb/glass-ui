@@ -1,8 +1,8 @@
-// The dock rail APG a11y contract (proof:dock-a11y-contract).
+// The dock layer-switcher APG a11y contract (proof:dock-a11y-contract).
 //
-// The rail carries the APG tabs contract (role=tablist/tab + aria-selected + roving
+// The switcher carries the APG tabs contract (role=tablist/tab + aria-selected + roving
 // tabindex + Arrow/Home/End + a travelling indicator). retired the reka
-// `ui/tabs` substrate; the rail is now driven by the library's ONE headless selection
+// `ui/tabs` substrate; the switcher is now driven by the library's ONE headless selection
 // engine `useSelectionGroup` (roving + role-per-mode ARIA + the ONE traveling-indicator
 // writer, Safari-identical). This test asserts the RENDERED roles/attributes — NOT just
 // mount success — per the glass-ui-binding-verification discipline: a stale binding
@@ -25,7 +25,7 @@ import DockCrossfade from "@glass/components/dock/DockCrossfade.vue";
  * wrapping a `<DockLayerGroup>` with two `<DockLayer>` panes. The group's
  * `active` v-model starts at "a".
  */
-async function mountRail(withThirdFace = false) {
+async function mountSwitcher(withThirdFace = false) {
     const active = ref("a");
     const Host = defineComponent({
         setup() {
@@ -66,7 +66,7 @@ async function mountRail(withThirdFace = false) {
     const wrapper = mount(Host, { attachTo: document.body });
     // Expand the dock so the `.dock-layer--full` (which holds the DockLayerGroup)
     // is interactive; flush so the registered layers (DockLayer onMounted) make
-    // `layers.length > 1` and the rail's `v-if` paints.
+    // `layers.length > 1` and the switcher's `v-if` paints.
     const dockVm = wrapper.findComponent(GlassDock).vm as unknown as {
         expand: () => void;
     };
@@ -76,21 +76,21 @@ async function mountRail(withThirdFace = false) {
     return { wrapper, active };
 }
 
-describe("dock rail a11y contract (APG tabs)", () => {
+describe("dock switcher a11y contract (APG tabs)", () => {
     beforeEach(() => vi.useFakeTimers());
     afterEach(() => vi.useRealTimers());
 
-    it("1. ROLES — rail is role=tablist with role=tab triggers", async () => {
-        const { wrapper } = await mountRail();
+    it("1. ROLES — the switcher is role=tablist with role=tab triggers", async () => {
+        const { wrapper } = await mountSwitcher();
         const tablist = wrapper.find('[role="tablist"]');
         expect(tablist.exists()).toBe(true);
-        expect(tablist.classes()).toContain("dock-layer-rail");
+        expect(tablist.classes()).toContain("dock-layer-switcher");
         const tabs = wrapper.findAll('[role="tab"]');
         expect(tabs).toHaveLength(2);
         for (const t of tabs) expect(t.classes()).toContain("dock-layer-tab");
     });
 
-    it("inherits a vertical dock as a horizontal switcher rail", async () => {
+    it("inherits a vertical dock as a horizontal switcher", async () => {
         const active = ref("a");
         const wrapper = mount(defineComponent({
             setup: () => () =>
@@ -119,7 +119,7 @@ describe("dock rail a11y contract (APG tabs)", () => {
     });
 
     it("2. SELECTED-NOT-PRESSED — aria-selected on the active tab; NO aria-pressed anywhere", async () => {
-        const { wrapper } = await mountRail();
+        const { wrapper } = await mountSwitcher();
         const tabs = wrapper.findAll('[role="tab"]');
         // Exactly one selected, and it is the first (active = "a").
         const selected = tabs.filter(
@@ -128,12 +128,12 @@ describe("dock rail a11y contract (APG tabs)", () => {
         expect(selected).toHaveLength(1);
         expect(tabs[0].attributes("aria-selected")).toBe("true");
         expect(tabs[1].attributes("aria-selected")).toBe("false");
-        // The hand-rolled TOGGLE attr must be GONE from the whole rail.
+        // The hand-rolled TOGGLE attr must be GONE from the whole switcher.
         expect(wrapper.find('[aria-pressed]').exists()).toBe(false);
     });
 
     it("3. ROVING-TABINDEX — exactly one tab is the tab stop (0), the others -1", async () => {
-        const { wrapper } = await mountRail();
+        const { wrapper } = await mountSwitcher();
         // reka's RovingFocus seats the tab stop on the active item when focus
         // ENTERS the group (the APG single-tab-stop contract — the group is one
         // stop; arrow keys move WITHIN it). Simulate the Tab-in (focus the active
@@ -152,11 +152,11 @@ describe("dock rail a11y contract (APG tabs)", () => {
     });
 
     it("4. KEYBOARD — ArrowDown/Home/End move selection (reka APG handler)", async () => {
-        // The DEFAULT (horizontal-group) rail is a COLUMN of stacked
-        // tabs, so reka's orientation is now "vertical" (the rail's visual axis), and
+        // The DEFAULT (horizontal-group) switcher is a COLUMN of stacked
+        // tabs, so reka's orientation is now "vertical" (the switcher's visual axis), and
         // the APG keyboard for a vertical tablist is Up/Down (the correct mapping for
-        // a column rail). A vertical-group ROW rail uses Left/Right.
-        const { wrapper } = await mountRail();
+        // a column switcher). A vertical-group ROW switcher uses Left/Right.
+        const { wrapper } = await mountSwitcher();
         const tabs = wrapper.findAll('[role="tab"]');
         await tabs[0].trigger("focus");
         await tabs[0].trigger("keydown", { key: "ArrowDown" });
@@ -172,28 +172,28 @@ describe("dock rail a11y contract (APG tabs)", () => {
         expect(home[0].attributes("aria-selected")).toBe("true");
     });
 
-    it("5. FOCUS-VISIBLE — rail tab carries the .dock-layer-tab class (the dock.css focus-ring selector)", async () => {
-        const { wrapper } = await mountRail();
+    it("5. FOCUS-VISIBLE — switcher tab carries the .dock-layer-tab class (the dock.css focus-ring selector)", async () => {
+        const { wrapper } = await mountSwitcher();
         // jsdom/happy-dom paint no :focus-visible; assert the structural class the
-        // dock.css `.dock-layer-rail [role="tab"]:focus-visible` rule targets.
+        // dock.css `.dock-layer-switcher [role="tab"]:focus-visible` rule targets.
         const tabs = wrapper.findAll('[role="tab"]');
         expect(tabs.length).toBeGreaterThan(0);
         for (const t of tabs) expect(t.classes()).toContain("dock-layer-tab");
     });
 
-    it("6. KEEP-OPEN — focusing a rail tab calls keepOpen; leaving the rail calls release", async () => {
-        const { wrapper } = await mountRail();
+    it("6. KEEP-OPEN — focusing a switcher tab calls keepOpen; leaving the switcher calls release", async () => {
+        const { wrapper } = await mountSwitcher();
         const tablist = wrapper.find('[role="tablist"]');
         const dockVm = wrapper.findComponent(GlassDock).vm as unknown as Record<
             string,
             unknown
         >;
 
-        // focusin on the rail acquires the keep-open token (dock stays expanded).
+        // focusin on the switcher acquires the keep-open token (dock stays expanded).
         await tablist.trigger("focusin");
         expect(dockVm.isHeld).toBe(true);
 
-        // focusout with relatedTarget OUTSIDE the rail releases it.
+        // focusout with relatedTarget OUTSIDE the switcher releases it.
         const outside = document.createElement("button");
         document.body.appendChild(outside);
         await tablist.trigger("focusout", { relatedTarget: outside });
@@ -202,7 +202,7 @@ describe("dock rail a11y contract (APG tabs)", () => {
     });
 
     it("7. ARIA-HIDDEN — the inactive .dock-face carries aria-hidden=true", async () => {
-        const { wrapper } = await mountRail();
+        const { wrapper } = await mountSwitcher();
         const hosts = wrapper.findAll(".dock-face");
         expect(hosts).toHaveLength(2);
         const active = hosts.find((h) => h.classes().includes("is-active"));
@@ -212,8 +212,8 @@ describe("dock rail a11y contract (APG tabs)", () => {
     });
 
     it("8. TRAVELLING-INDICATOR — the .dock-layer-tab-indicator rides the ONE selection-indicator writer", async () => {
-        const { wrapper } = await mountRail();
-        // The reka `ui/tabs` substrate is retired; the rail is driven
+        const { wrapper } = await mountSwitcher();
+        // The reka `ui/tabs` substrate is retired; the switcher is driven
         // by the ONE headless selection engine `useSelectionGroup`, and the travelling
         // indicator is a PLAIN `.dock-layer-tab-indicator` element carrying the
         // `useSelectionIndicator` writer's inline style (Safari-identical, no anchor
@@ -227,7 +227,7 @@ describe("dock rail a11y contract (APG tabs)", () => {
     });
 
     it("keeps entering and leaving faces co-present until the spring settles", async () => {
-        const { wrapper, active } = await mountRail();
+        const { wrapper, active } = await mountSwitcher();
 
         active.value = "b";
         await nextTick();
@@ -266,7 +266,7 @@ describe("dock rail a11y contract (APG tabs)", () => {
     });
 
     it("preserves the partially entered face across a distinct third switch", async () => {
-        const { wrapper, active } = await mountRail(true);
+        const { wrapper, active } = await mountSwitcher(true);
 
         active.value = "b";
         await nextTick();
@@ -309,7 +309,7 @@ describe("dock rail a11y contract (APG tabs)", () => {
        never re-homed. Uses real timers so the `await nextTick()` + `.focus()` lands. */
     it("9. FOCUS-ORPHAN — focus is re-homed to the revealed active host after a swap", async () => {
         vi.useRealTimers();
-        const { wrapper, active } = await mountRail();
+        const { wrapper, active } = await mountSwitcher();
 
         // Focus a control inside the active pane (pane "a").
         const paneABtn = wrapper.find(".pane-a-btn").element as HTMLButtonElement;
@@ -344,18 +344,18 @@ describe("dock rail a11y contract (APG tabs)", () => {
     });
 });
 
-// The tab↔panel linkage (W2-A dock leg). The rail's role=tab buttons must
+// The tab↔panel linkage (W2-A dock leg). The switcher's role=tab buttons must
 // `aria-controls` the matching `.dock-face`, and each face must be a
 // `role="tabpanel"` with a stable id + `aria-labelledby` back to its tab — the APG
 // tablist↔tabpanel pair, modelled on SegmentedTabs' `option.controls` precedent.
-// RED before the fix: the rail buttons carry no `aria-controls` and the faces carry
+// RED before the fix: the switcher buttons carry no `aria-controls` and the faces carry
 // no `role="tabpanel"`/`id`/`aria-labelledby`.
-describe("dock rail tab↔panel linkage (APG tablist↔tabpanel)", () => {
+describe("dock switcher tab↔panel linkage (APG tablist↔tabpanel)", () => {
     beforeEach(() => vi.useFakeTimers());
     afterEach(() => vi.useRealTimers());
 
     it("10. LINKAGE — each tab aria-controls its tabpanel face; each face aria-labelledby its tab", async () => {
-        const { wrapper } = await mountRail();
+        const { wrapper } = await mountSwitcher();
         const tabs = wrapper.findAll('[role="tab"]');
         const panels = wrapper.findAll('[role="tabpanel"]');
         expect(tabs).toHaveLength(2);
@@ -374,8 +374,8 @@ describe("dock rail tab↔panel linkage (APG tablist↔tabpanel)", () => {
         }
     });
 
-    it("11. NO-DANGLE — a DockLayer in a bare DockCrossfade (no rail) is NOT a tabpanel", async () => {
-        // The controlled-no-rail case (a consumer composes <DockCrossfade> directly):
+    it("11. NO-DANGLE — a DockLayer in a bare DockCrossfade (no switcher) is NOT a tabpanel", async () => {
+        // The controlled-no-switcher case (a consumer composes <DockCrossfade> directly):
         // there is no tablist, so a face must NOT become a tabpanel — a dangling
         // aria-labelledby to a tab that does not exist is worse than no role.
         const wrapper = mount(

@@ -11,7 +11,7 @@ export type DockLayout = "linear" | "grid";
  *
  *  - `"morph"` (the default) — POSTURE only. "Something is open and the dock must
  *    not idle-collapse under it": an armed search field, an open popover, a
- *    focused rail tab. It suppresses the collapse timer and nothing else. It is
+ *    focused switcher tab. It suppresses the collapse timer and nothing else. It is
  *    NOT a hand, and it never engages the grasp optic (glass/grasp.css) — a
  *    search field left open for a minute is not a minute-long touch.
  *  - `"grasp"` — a live POINTER HOLD on a descendant control (`useDockHold`'s

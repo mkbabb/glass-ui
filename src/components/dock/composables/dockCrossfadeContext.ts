@@ -8,9 +8,9 @@ import { DOCK_LAYER_GROUP_LABEL } from "../constants";
  * `<DockCrossfade:active>` provides this; each face host (`<DockLayer>`) registers
  * its id + label + icon + host element on mount. The crossfade slot owns ONE face
  * registry.
- * A switcher rail (where one exists — `<DockLayerGroup>`) reads `faces` for its chip
- * run; the controlled-no-rail 5-pane case (a consumer) consumes `<DockCrossfade>`
- * DIRECTLY and reads only `activeId`/`leavingId` (no rail, no selection engine).
+ * A switcher (where one exists — `<DockLayerGroup>`) reads `faces` for its chip
+ * run; the controlled-no-switcher 5-pane case (a consumer) consumes `<DockCrossfade>`
+ * DIRECTLY and reads only `activeId`/`leavingId` (no switcher, no selection engine).
  *
  * The context is DISTINCT from `DockContext` (a `<DockCrossfade>` need not live inside
  * a `<GlassDock>`) and from the plate collapse orchestrator — the
@@ -47,8 +47,8 @@ export interface DockCrossfadeContext {
     /** The face currently dissolving out, or `null`. READ-ONLY to faces. */
     leavingId: Readonly<Ref<string | null>>;
     /**
-     * The registered face descriptors in registration order — the switcher rail's
-     * chip source (a `<DockLayerGroup>` reads this; the controlled-no-rail case
+     * The registered face descriptors in registration order — the switcher's
+     * chip source (a `<DockLayerGroup>` reads this; the controlled-no-switcher case
      * ignores it).
      */
     faces: Readonly<Ref<DockFaceDescriptor[]>>;

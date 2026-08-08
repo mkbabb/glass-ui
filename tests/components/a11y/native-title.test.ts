@@ -7,7 +7,7 @@
 // The two sites, both in the dock family, whose documented label affordance IS the
 // library's `<Tooltip side="right">` (recorded at
 // `dock/styles/controls/touch-floor.css`):
-//   · `DockLayerGroup.vue` rail tabs — the rail story wraps every entry in a Tooltip;
+//   · `DockLayerGroup.vue` switcher tabs — the switcher story wraps every entry in a Tooltip;
 //   · `DockBackgroundToggle.vue` — `demo/shell/SidebarDock.vue` wraps the whole dock
 //     control set in one.
 // Both carried `:title` AND `:aria-label`, so the native rect painted over the styled
@@ -39,8 +39,8 @@ describe("O-8 — a control that carries a <Tooltip> renders no native title", (
         ).toBeUndefined();
     });
 
-    it("the rail tab template stamps no title either", () => {
-        // Rendering the rail needs the whole dock layer context; the assertion that
+    it("the switcher tab template stamps no title either", () => {
+        // Rendering the switcher needs the whole dock layer context; the assertion that
         // matters is that the attribute is not authored, and the sibling site above
         // proves the rendered form of the same strike.
         const template = read("src/components/dock/DockLayerGroup.vue").replace(

@@ -739,13 +739,13 @@ export const CATEGORIES: Category[] = [
                 "dock",
                 "layers",
                 "Dock Layers",
-                "DockLayerGroup drill-in — named panes with an optional switcher rail, crossfade + size FLIP between layers, collapse-while-switching, and the vertical-overflow case.",
+                "DockLayerGroup drill-in — named panes with an optional layer switcher, crossfade + size FLIP between layers, collapse-while-switching, and the vertical-overflow case.",
             ),
             s(
                 "dock",
-                "rail",
+                "vertical",
                 "Vertical Dock",
-                'The vertical GlassDock navigation column — an active-item accent, tap-squish press, and anchored tooltips. ONE orientation axis (no variant): a vertical dock is orientation="vertical", and it carries the same collapse/morph/shrink machinery a horizontal dock does. The only "rail" left in the dock band is the layer-switcher rail inside a DockLayerGroup.',
+                'The vertical GlassDock navigation column — an active-item accent, tap-squish press, and anchored tooltips. ONE orientation axis (no variant): a vertical dock is orientation="vertical", and it carries the same collapse/morph/shrink machinery a horizontal dock does. The in-dock tab strip beside it is the layer switcher of a DockLayerGroup.',
             ),
             // the "Vertical ↔ Horizontal Morph" showcase is
             // DEFINITION-ABSENT (the V↔H goo morph retired decided-terminal — the platform

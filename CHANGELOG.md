@@ -2,6 +2,27 @@
 
 ## 8.0.0 (unreleased — accruing; `MIGRATION.md` §8.0.0 is the complete break list)
 
+### Changed — the dock's "rail" vocabulary is struck; the hairline is built
+
+`rail` named a vertically-oriented dock throughout the dock band's identifiers, which is
+the opposite of what a rail is: a hairline that sits inside a horizontal or vertical
+dock. Three things get three names. A vertical dock is `orientation="vertical"`; the
+in-dock tab strip is the **layer switcher** (`show-rail` → `show-switcher`,
+`rail-position` → `switcher-position`, `.dock-layer-rail` → `.dock-layer-switcher`, the
+seven `--dock-layer-rail-*` tokens → `--dock-layer-switcher-*`); the vertical dock's own
+geometry tokens drop the noun (`--dock-rail-padding` → `--dock-vertical-padding`,
+`--dock-rail-extend-length` → `--dock-vertical-extend-length`, `--dock-rail-accent-*` →
+`--dock-vertical-accent-*`). No aliases.
+
+### Added — `--dock-hairline`, and `<DockSeparator anchor>` finally does something
+
+The dock painted two 1px rules from two different colours; it now paints both from one
+`--dock-hairline` token (the switcher divider's paint moves onto the separator's
+`--surface-tint-15` rung — the cut's only paint delta). And `anchor`, which until now
+stamped a marker class and attribute that no stylesheet and no code read, promotes the
+separator to `.dock-hairline`: one rule spanning the dock's cross extent, in a
+horizontal or a vertical dock.
+
 ### Removed — the `.glass-lens` refraction, entire
 
 `armGlassRefract` and `supportsBackdropRefract` are gone from the root barrel with no

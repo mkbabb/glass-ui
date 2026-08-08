@@ -14,12 +14,12 @@
 /* ── The CONTENT-side anti-collision gutter ───────────────────
    `--dock-content-safe-inset` is the structural CONTENT-side counterpart to the
    dock-collision SEAT fix (+ own the chip-fan
-   SEAT — the chips fan off-canvas into the rail's dead gutter, chipOverMain:false on
+   SEAT — the chips fan off-canvas into the vertical dock's dead gutter, chipOverMain:false on
    EVERY route by topology). This token reserves a guaranteed safe-inset gutter on the
    CONTENT column so the page-title band is structurally clear of any chip reach even
    on a route added WITHOUT a per-route audit (the anti-gameability the gestalt gate
-   wants). It is keyed to the dock reach (`--dock-rail-extend-length`, the rail's
-   beyond-edge overrun) so the content gutter tracks the dock geometry in lockstep,
+   wants). It is keyed to the dock reach (`--dock-vertical-extend-length`, the vertical
+   dock's beyond-edge overrun) so the content gutter tracks the dock geometry in lockstep,
    and it rides `--dock-scale` transitively through that reach token.
 
    THE DE-OVERLOAD IS BINDING (distinct geometry concerns, distinct tokens):
@@ -32,7 +32,7 @@
    gutter is the RESERVE, the gutter-fan lands the chips in it (ONE gutter, two
    consumers). NEVER re-point this AT --dock-control-safe-inset (the de-overload). */
 :root {
-    --dock-content-safe-inset: var(--dock-rail-extend-length, 2.5rem);
+    --dock-content-safe-inset: var(--dock-vertical-extend-length, 2.5rem);
 
     /* ── The arbitrary-shape morph tokens ─────────────────
        The dock morph is not locked to circle↔pill: the shape is a SCALAR
@@ -43,7 +43,7 @@
        collapsed-perfect-circle ↔ expanded-pill identity (CLAUDE.md `aspect-ratio: 1` +
        `--radius-dock` 9999px), so the common case needs no consumer override; a consumer
        sets these to morph to an arbitrary silhouette (a wide bar, a teardrop, a tall
-       rail). Clean break (MEMORY: no backwards compat) — the circle/pill endpoints
+       column). Clean break (MEMORY: no backwards compat) — the circle/pill endpoints
        ARE these token DEFAULTS, no `--dock-radius-legacy`. */
 
     /* The corner profile span — the `from`-radius (the collapsed perfect circle, a

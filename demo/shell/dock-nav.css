@@ -81,10 +81,9 @@
 }
 
 /* The contained rail paints the library's default topology; the demo adds no
-   re-seat of the slot.
-   The topology (stack-rail.css): at REST the stack is ENTIRELY
-   CONTAINED in the dock box (zero gutter presence — just the core + the `--dock-rail-hairline`
-   line), and the fan is TRANSIENT (crossing the trailing edge only on hover/focus). The
+   re-seat of the slot. [BK #72 · 2026-08-08] The topology sentence that stood here is
+   STRUCK, not amended: it cited `stack-rail.css`, a file in no tree of this repo, for a
+   `--dock-hairline` line nothing in `demo/` paints. The
    demo does not override the slot — the library default paints, and the transient
    fan reach is cleared from the content side by `--dock-content-safe-inset` (the
    `.demo-main-scroller` scroll-padding below), NOT by re-seating the whole rail. The library
@@ -99,7 +98,7 @@
    register at the root); it consumes the neutral default and only widens the
    accent BAR geometry. `tap-squish` press feedback stays composed in markup. */
 .demo-sidebar-item.is-active {
-    --dock-rail-accent-width: var(--demo-nav-rail-accent-w);
+    --dock-vertical-accent-width: var(--demo-nav-rail-accent-w);
 }
 
 /* ── Bottom-bar shell anchoring ────────────────────────────────────────────

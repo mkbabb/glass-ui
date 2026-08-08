@@ -2,7 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from "vue";
 import type { Component } from "vue";
 import { useDockCrossfadeContext } from "./composables/dockCrossfadeContext";
-import { useDockRailContext } from "./composables/dockRailContext";
+import { useDockSwitcherContext } from "./composables/dockSwitcherContext";
 
 /**
  * DockLayer is a named content pane (a face) inside DockCrossfade or DockLayerGroup.
@@ -17,7 +17,7 @@ import { useDockRailContext } from "./composables/dockRailContext";
 const props = defineProps<{
     /** Stable identifier — referenced by the crossfade's `active` id. */
     id: string;
-    /** Human-readable label; used for tooltip + the switcher rail glyph. */
+    /** Human-readable label; used for tooltip + the switcher glyph. */
     label?: string;
     /** Optional icon: a Vue component, or a raw string (rendered as text). */
     icon?: Component | string;
@@ -38,7 +38,7 @@ onMounted(() => {
     }
 });
 
-// Re-register on id/label/icon change (a `v-for` re-key) so the crossfade + rail track
+// Re-register on id/label/icon change (a `v-for` re-key) so the crossfade + switcher track
 // the live descriptor.
 watch(
     () => [props.id, props.label, props.icon] as const,
@@ -61,16 +61,16 @@ const isActive = computed(() => ctx.activeId.value === props.id);
 const isLeaving = computed(() => ctx.leavingId.value === props.id);
 
 // The tablist↔tabpanel linkage (W2-A). A face becomes a `role="tabpanel"` ONLY inside a
-// rendered switcher rail (`<DockLayerGroup>` with `showRail && >1 face`). In the
-// controlled-no-rail `<DockCrossfade>` case the rail context is absent, so the face
+// rendered switcher (`<DockLayerGroup>` with `showSwitcher && >1 face`). In the
+// controlled-no-switcher `<DockCrossfade>` case the switcher context is absent, so the face
 // carries no panel role — no dangling `aria-labelledby` to a non-existent tab.
-const rail = useDockRailContext();
-const isTabpanel = computed(() => rail?.isTablist.value ?? false);
+const switcher = useDockSwitcherContext();
+const isTabpanel = computed(() => switcher?.isTablist.value ?? false);
 const panelId = computed(() =>
-    isTabpanel.value ? rail!.panelId(props.id) : undefined,
+    isTabpanel.value ? switcher!.panelId(props.id) : undefined,
 );
 const panelLabelledBy = computed(() =>
-    isTabpanel.value ? rail!.tabId(props.id) : undefined,
+    isTabpanel.value ? switcher!.tabId(props.id) : undefined,
 );
 </script>
 

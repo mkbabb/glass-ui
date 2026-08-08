@@ -36,7 +36,7 @@ import { useDockTouchGate } from "./composables/useDockTouchGate";
 import { useDockOverflowFit } from "./composables/useDockOverflowFit";
 
 /* The attrs contract — the `.glass-dock-frame` shell is STRUCTURAL chrome
-   (the rail's non-clipping positioning context), never the consumer's surface.
+   (the switcher's non-clipping positioning context), never the consumer's surface.
    Fall-through attrs (class, data-testid, aria-*, the container styles every
    gate + consumer targets via `.glass-dock[...]`) belong on the `.glass-dock`
    root exactly as before the frame existed — `inheritAttrs: false` + an explicit
@@ -408,7 +408,7 @@ defineExpose({
             The PERSISTENT region. The `#persistent` slot is a root
             flex SIBLING of the morph-region, in-flow in BOTH collapsed AND expanded,
             NEVER `:inert`, NEVER a crossfade pane. It is the iOS Now-Playing /
-            Stage-Manager idiom done STRUCTURALLY: a stable always-present rail beside
+            Stage-Manager idiom done STRUCTURALLY: a stable always-present region beside
             the expand-on-demand content region, so a consumer keeps a control visible
             while collapsed WITHOUT hand-duplicating it into both the `#default` and
             `#collapsed` slots. It rides the root padding/radius morph (it inherits the

@@ -1,7 +1,7 @@
 /* tokens/sizing.css
    §10 sizing — the --ui-scale doctrine, control-height/font/glyph cohorts,
    dropdown/carousel/stack-overlap, the dock geometry cascade (--dock-scale +
-   collapsed-pill + rail hairline + active-state ladder + iOS register + touch
+   collapsed-pill + switcher hairline + active-state ladder + iOS register + touch
    floor), the Configurator density + HIERARCHY
    vocabulary, the single-column stage floor, the section tonal step, the
    component-font override.
@@ -405,29 +405,39 @@
        via the family-scoped override below; the global card/panel size is untouched. */
     --dock-control-specular-size: 22%;
 
-    /* The layer-switcher rail is a HAIRLINE register, not a
+    /* The layer switcher is a HAIRLINE register, not a
        fused tinted gutter. The `--surface-tint-8` filled plate (the "heavy dark
-       blob column") is gone: `--dock-layer-rail-bg` defaults TRANSPARENT
-       so the rail box paints no fill, and the single `--dock-layer-rail-divider`
-       hairline becomes the only visible rail edge — a thin rule between the
+       blob column") is gone: `--dock-layer-switcher-bg` defaults TRANSPARENT
+       so the switcher box paints no fill, and the single `--dock-hairline`
+       hairline becomes the only visible switcher edge — a thin rule between the
        switcher column and the dock body (the iOS-grade hairline switcher).
        The hover/active affordance stays a translucent GLASS tint: the active
-       indicator reads `--dock-layer-rail-active`, defaulting to the glass-floating
+       indicator reads `--dock-layer-switcher-active`, defaulting to the glass-floating
        tier (the keyframes-dock "selected reads as glass" register), NOT a
        saturated `--primary 15%` warm-red mix — the exact accent defers to
-       the root register (the rail keeps a glass tint here, never
+       the root register (the switcher keeps a glass tint here, never
        bakes a brand-red the de-red wave has to undo). */
-    --dock-layer-rail-bg: transparent;
-    --dock-layer-rail-divider: color-mix(in srgb, var(--border) 40%, transparent);
-    --dock-layer-rail-hover: color-mix(in srgb, var(--accent) 30%, transparent);
-    --dock-layer-rail-active: var(--glass-plate-floating);
-    /* The switcher-rail TAB is a COMPACT square, distinct from
+    --dock-layer-switcher-bg: transparent;
+    /* THE ONE HAIRLINE (BK #72, G-ONE-NAME). The dock band painted two different
+       1px rules from two different colours: `.dock-separator` off `--surface-tint-15`
+       and the layer switcher's divider off `color-mix(--border 40%)`. One thing, one
+       name: both now read `--dock-hairline`, and the value taken is the dock's OWN
+       tint rung — `--surface-tint-*` is the ladder `dark-arm.css` re-resolves warm in
+       dark by derivation, where `--border` is a shadcn bridge the band is walking off.
+       PAINT DELTA, stated: the switcher divider moves
+       `color-mix(in srgb, var(--border) 40%, transparent)` →
+       `color-mix(in srgb, var(--foreground) 15%, transparent)`; the separator's own
+       paint is byte-unchanged and only its SOURCE became a name. */
+    --dock-hairline: var(--surface-tint-15);
+    --dock-layer-switcher-hover: color-mix(in srgb, var(--accent) 30%, transparent);
+    --dock-layer-switcher-active: var(--glass-plate-floating);
+    /* The switcher TAB is a COMPACT square, distinct from
        the 40px dock CONTROL. A fallback chain to `var(--dock-control-size,
-       1.75rem)` resolves to the full 40px control, so a 3-tab column rail stands
+       1.75rem)` resolves to the full 40px control, so a 3-tab column switcher stands
        ~140px tall — a giant pill of dead space. A dedicated tighter tab size
-       (1.75rem = 28px, density-scaled) keeps the rail a compact icon column the
-       indicator travels cleanly, and the dock grows only as tall as the rail needs.
-       Consumers retune the rail-tab size via this one handle. */
+       (1.75rem = 28px, density-scaled) keeps the switcher a compact icon column the
+       indicator travels cleanly, and the dock grows only as tall as the switcher needs.
+       Consumers retune the switcher-tab size via this one handle. */
     --dock-layer-tab-size: calc(1.75rem * var(--dock-scale));
 
     /* Dock active-state ladder
@@ -464,7 +474,8 @@
        affordance: it defaults to a translucent foreground-over-transparent
        "brighter material" lift, so it auto-FLIPS with `--foreground` (dark mode
        resolves a light luminance-lift over the dark plate — the iOS read). The
-       rail leading-edge accent BAR (`dock-controls.css` `::before`) consumes it;
+       vertical-dock leading-edge accent BAR
+       (`dock/styles/controls/touch-floor.css` `::before`) consumes it;
        the selected GLYPH stays `--foreground` warm-ink (arm-a — the glyph never
        carries the accent token, only the bar does). A consumer retints the whole
        selected affordance through this ONE token (token-first); red survives only

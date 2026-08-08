@@ -3,7 +3,7 @@
  * This partial owns the dock's
  * STATIC structural surface: the `.glass-dock` root + the single-axis
  * `overflow: clip` morph aperture, the paper-grain `::after`, the vertical-root
- * column layout, the shape/variant plates (rail · instrument-strip · the
+ * column layout, the shape/variant plates (vertical · instrument-strip · the
  * horizontal shape-rounded/card + the squircle), the position helpers, and
  * the `#persistent` / vertical three-region body. The dynamic single-scalar
  * morph chrome lives in dock/morph.css; the density × `--dock-scale` cascade in
@@ -56,7 +56,7 @@
             )
             saturate(1.2);
         --dock-surface-blur: var(--glass-blur-resting);
-        /* Vertical-rail max-block + horizontal max-inline caps
+        /* Vertical-dock max-block + horizontal max-inline caps
            live as semantic tokens (defaults in `tokens.css`). When
            content exceeds the cap, the appropriate axis container
            scrolls with a mask-fade. Consumers override per-instance by
@@ -236,7 +236,7 @@
     }
 
     /* The vertical-dock max-block-size + internal-scroll CONTRACT.
-       A vertical rail caps at `--dock-max-block-size` (the `.vertical` rule), but
+       A vertical dock caps at `--dock-max-block-size` (the `.vertical` rule), but
        at rest the `overflow: visible` above let over-cap content SPILL — forcing a
        consumer (bbnf-buddy ToolsLayer) to hand-anchor a max-height + scroll. Ship
        the contract here: at rest a vertical column scrolls its OWN block axis when
@@ -309,7 +309,7 @@
        Same recipe (the `--paper-clean-texture` overlay + the `.dark` soft-light arm),
        byte-identical. */
 
-    /* Vertical rails grow-to-fit then clamp at `--dock-max-block-size` (the
+    /* Vertical docks grow-to-fit then clamp at `--dock-max-block-size` (the
        contract). At rest a capped column scrolls its OWN block axis
        internally (the `.vertical.always-expanded:not([data-morphing])` port above)
        so a consumer setting `--dock-max-block-size` gets a viewport-anchored
@@ -338,7 +338,7 @@
            shell above; the cross axis stays visible there. */
         padding: var(--dock-padding-block, 0.375rem);
         border-radius: var(--radius-dock);
-        /* The stale "a vertical rail is ALWAYS-EXPANDED
+        /* The stale "a vertical dock is ALWAYS-EXPANDED
            (no collapse↔expand morph)" assumption is RETIRED (it was false since
            vertical-collapse shipped: `alwaysExpanded` defaults FALSE, so a vertical
            dock genuinely collapses its `block-size`). The vertical plate's
@@ -350,7 +350,7 @@
            arm is the second-clock smell the single-scalar rebuild forbids — the
            `--dock-expand-t` interp is the single authority). KEPT: the DECORATIVE
            hover-scale + press-squish (the individual `scale`/`transform`) and the
-           box-shadow fade — interaction polish on the rail, NOT the morph chrome. */
+           box-shadow fade — interaction polish on the vertical dock, NOT the morph chrome. */
         transition:
             box-shadow var(--dock-motion-standard),
             transform var(--dock-motion-resize),
@@ -358,12 +358,12 @@
     }
 
     /* The morph writes `scale` from the dock spring every frame; do not re-ease that
-       value through the vertical rail's separate at-rest hover transition. */
+       value through the vertical dock's separate at-rest hover transition. */
     .glass-dock.vertical[data-morphing] {
         transition-property: box-shadow, transform;
     }
 
-    /* The rail polish transition is COMPOSITOR-PROMOTED
+    /* The vertical-dock polish transition is COMPOSITOR-PROMOTED
        only while its hover/press/held state is ARMED (the transform/scale legs ride
        the compositor channel; `will-change: transform` hints the layer for the
        gesture). NEVER a resting `will-change` (a permanent promotion pins a wasted
@@ -371,20 +371,20 @@
        the hint lives on the `:hover`/`:active`/`[data-held]` armed selectors and is
        cleared the instant the state releases. PRM keeps no pinned layer either — the
        universal a11y carve strips the spatial transform under reduce, and a
-       non-animating rail needs no promotion. */
+       non-animating dock needs no promotion. */
     .glass-dock.vertical:hover,
     .glass-dock.vertical:active,
     .glass-dock.vertical[data-held] {
         will-change: transform;
     }
 
-    /* The vertical dock's surface plate. "Rail-ness" is
+    /* The vertical dock's surface plate. "Vertical-ness" is
        `orientation="vertical"` + a shape/density choice, not a variant. */
     .glass-dock.vertical {
-        padding: var(--dock-rail-padding, var(--dock-padding-inline, 0.5rem));
+        padding: var(--dock-vertical-padding, var(--dock-padding-inline, 0.5rem));
     }
 
-    /* NO vertical re-point of the plate endpoints. The rail's expanded rung was
+    /* NO vertical re-point of the plate endpoints. The vertical dock's expanded rung was
        re-declared here as the dock/wash pair — the SAME `--glass-veil-dock` /
        `--glass-border-dock` the horizontal dock already reads, differing only in a
        fallback that cannot fire (both tokens are declared at `:root`, tokens/glass.css).
@@ -463,8 +463,8 @@
     }
 
     /* The `instrument-strip` chassis-strip variant is RETIRED
-       (the ≥2-consumer bar). It carried the vocabulary of the InstrumentRail
-       component RETIRED; with the `variant` discriminant gone and no
+       (the ≥2-consumer bar). It carried the vocabulary of the retired
+       instrument-strip component; with the `variant` discriminant gone and no
        live `variant="instrument-strip"` call-site in src/ or demo/, the chassis
        paint has zero consumers. The cross-repo consumer dashboard cockpit
        re-pins in its own migration (recorded in MIGRATION.md). */

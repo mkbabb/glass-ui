@@ -10,18 +10,18 @@ import DockStage from "./_frame/DockStage.vue";
 type LayerId = "root" | "assets" | "layers" | "libs";
 
 // The drill-in group OWNS the `root` pane + three drill-in panes — it opens on
-// `root`. The switcher-rail group has NO `root` pane (it shows the three layers
+// `root`. The switcher group has NO `root` pane (it shows the three layers
 // directly), so it MUST init to a layer that EXISTS in its set — `assets` — or no
 // pane matches `active` and the dock collapses to an empty stub (the B6 break: the
-// shared `root` ref left the rail group with no active pane). Each group gets its
+// shared `root` ref left the switcher group with no active pane). Each group gets its
 // own ref scoped to its own pane set.
 const activeLayer = ref<LayerId>("root");
 const switcherLayer = ref<Exclude<LayerId, "root">>("assets");
-const railLayer = ref<LayerId>("assets");
+const verticalLayer = ref<LayerId>("assets");
 
 /* The collapsible nested showcase: a layer group inside a collapsible (not
    always-expanded) GlassDock, so a collapse-while-switching gesture exercises
-   the morph. Two panes + a switcher rail so panes can swap while the dock
+   the morph. Two panes + a switcher so panes can swap while the dock
    collapses/expands. */
 const nestedLayer = ref<LayerId>("assets");
 
@@ -46,8 +46,8 @@ const layers = [
     { id: "libs" as const, label: "Libraries", icon: Library, blurb: "shared component kits" },
 ];
 
-/* The CONTROLLED-NO-RAIL case (X3): the thin <DockCrossfade:active> consumed directly
-   (the 5-pane pattern), driven by an external strip — no switcher rail, no
+/* The CONTROLLED-NO-SWITCHER case (X3): the thin <DockCrossfade:active> consumed directly
+   (the 5-pane pattern), driven by an external strip — no switcher, no
    selection engine. Faces of genuinely differing height exercise the peak reserve. */
 const controlled = ref("assets");
 const controlledPanes = [
@@ -84,7 +84,7 @@ function back() {
                 <GlassDock :background-canvas="backgroundCanvas" always-expanded fit-content>
                     <DockLayerGroup
                         v-model:active="activeLayer"
-                        :show-rail="false"
+                        :show-switcher="false"
                         data-testid="dock-layer-drill-group"
                     >
                         <DockLayer id="root" label="Root">
@@ -127,12 +127,12 @@ function back() {
             </div>
         </StorySection>
 
-        <StorySection heading="Switcher rail — pull-to-switch" gap="md">
+        <StorySection heading="Layer switcher — pull-to-switch" gap="md">
             <p class="text-small text-muted-foreground">
-                Pass <code class="rounded bg-muted px-1">show-rail</code> to render the built-in switcher.
-                Each <code class="rounded bg-muted px-1">DockLayer</code>'s icon + label populates the rail.
-                With <code class="rounded bg-muted px-1">motion="full"</code> the rail is pull-to-switch:
-                drag along the rail axis and fling to the nearest layer; click and Arrow-key
+                Pass <code class="rounded bg-muted px-1">show-switcher</code> to render the built-in switcher.
+                Each <code class="rounded bg-muted px-1">DockLayer</code>'s icon + label populates the switcher.
+                With <code class="rounded bg-muted px-1">motion="full"</code> the switcher is pull-to-switch:
+                drag along the switcher axis and fling to the nearest layer; click and Arrow-key
                 navigation remain available at every motion setting.
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
@@ -140,7 +140,7 @@ function back() {
                     <DockLayerGroup
                         v-model:active="switcherLayer"
                         motion="full"
-                        data-testid="dock-layer-rail-group"
+                        data-testid="dock-layer-switcher-group"
                     >
                         <DockLayer
                             v-for="l in layers"
@@ -158,7 +158,7 @@ function back() {
             </div>
         </StorySection>
 
-        <StorySection heading="Rail-hosted layer stack" gap="md">
+        <StorySection heading="Vertical-dock-hosted layer stack" gap="md">
             <p class="text-small text-muted-foreground">
                 A layer group inside a <code class="rounded bg-muted px-1">GlassDock orientation="vertical"</code>
                 inherits the dock's vertical orientation without a duplicate prop.
@@ -168,13 +168,13 @@ function back() {
                     orientation="vertical"
                     always-expanded
                     shape="rounded"
-                    aria-label="Rail layer dock"
-                    data-testid="dock-rail-layer-host"
+                    aria-label="Vertical layer dock"
+                    data-testid="dock-vertical-layer-host"
                 >
                     <DockLayerGroup
-                        v-model:active="railLayer"
-                        :show-rail="false"
-                        data-testid="dock-rail-layer-group"
+                        v-model:active="verticalLayer"
+                        :show-switcher="false"
+                        data-testid="dock-vertical-layer-group"
                     >
                         <DockLayer
                             v-for="l in layers"
@@ -187,8 +187,8 @@ function back() {
                                 v-for="candidate in layers"
                                 :key="candidate.id"
                                 :aria-label="candidate.label"
-                                :aria-pressed="railLayer === candidate.id"
-                                @click="railLayer = candidate.id"
+                                :aria-pressed="verticalLayer === candidate.id"
+                                @click="verticalLayer = candidate.id"
                             >
                                 <component :is="candidate.icon" />
                             </DockControl>
@@ -201,7 +201,7 @@ function back() {
         <StorySection heading="Collapse while switching layers" gap="md">
             <p class="text-small text-muted-foreground">
                 A layer group inside a <strong>collapsible</strong> dock. Hover to expand;
-                switch panes via the rail. The shell geometry and face dissolve use the same
+                switch panes via the switcher. The shell geometry and face dissolve use the same
                 Dock spring authority on separate size and opacity channels, so neither
                 channel double-drives the other.
             </p>
@@ -276,10 +276,10 @@ function back() {
             </div>
         </StorySection>
 
-        <StorySection heading="Controlled — no rail" gap="md">
+        <StorySection heading="Controlled — no switcher" gap="md">
             <p class="text-small text-muted-foreground">
                 The thin <code class="rounded bg-muted px-1">&lt;DockCrossfade :active&gt;</code>
-                core consumed DIRECTLY — a controlled 4-pane crossfade with NO switcher rail.
+                core consumed DIRECTLY — a controlled 4-pane crossfade with NO switcher.
                 An external strip drives <code class="rounded bg-muted px-1">active</code>;
                 the faces cross-dissolve and the box holds the tallest face, so panes of
                 differing height never jump.

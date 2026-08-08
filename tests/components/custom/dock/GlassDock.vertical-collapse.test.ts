@@ -33,7 +33,7 @@ describe("GlassDock vertical collapse", () => {
         });
     }
 
-    it("a vertical dock is COLLAPSIBLE by default — it starts collapsed (the old rail force-pin is gone)", () => {
+    it("a vertical dock is COLLAPSIBLE by default — it starts collapsed (the old always-expanded force-pin is gone)", () => {
         const wrapper = mountVertical();
         const root = wrapper.get(".glass-dock");
         // The `.glass-dock` div is the component's SINGLE root — its mounted element IS
@@ -114,7 +114,7 @@ describe("GlassDock vertical collapse", () => {
         wrapper.unmount();
     });
 
-    it("an always-expanded vertical dock opts OUT of collapse (the static nav-rail look)", () => {
+    it("an always-expanded vertical dock opts OUT of collapse (the static nav-column look)", () => {
         const wrapper = mountVertical({ alwaysExpanded: true });
         const root = wrapper.get(".glass-dock");
         expect(root.classes()).toContain("vertical");

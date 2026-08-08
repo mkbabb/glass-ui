@@ -120,7 +120,7 @@
        Parallel to the `.dock-scroll-{x,y}` hooks the
        `overflow="scroll"` member emits, `overflow="wrap"` emits this class.
        (HORIZONTAL-ONLY — GlassDock.vue guards the emit on
-       `orientation !== 'vertical'`; a vertical rail grows-to-fit + clamps via
+       `orientation !== 'vertical'`; a vertical dock grows-to-fit + clamps via
        `--dock-max-block-size`, its own overflow story.)
 
        The reflow is INTRINSIC: `flex-wrap: wrap` is ALWAYS-ON (no viewport MQ),

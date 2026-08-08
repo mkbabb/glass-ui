@@ -249,7 +249,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             accent: "var(--section-color-2)",
             entries: [
                 { storyId: "overview", label: "Overview" },
-                { storyId: "rail", label: "Vertical Dock" },
+                { storyId: "vertical", label: "Vertical Dock" },
             ],
         },
         {

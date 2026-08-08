@@ -27,7 +27,7 @@ export * from "./slider";
 export * from "./switch";
 export * from "./table";
 // `ui/Tabs` retired from the public barrel (the standardized family is
-// `SegmentedTabs`). The reka substrate stays INTERNAL for the dock-rail consumer
+// `SegmentedTabs`). The reka substrate stays INTERNAL for the dock switcher consumer
 // only (`DockLayerGroup.vue`); see src/index.ts for the full rationale.
 export * from "./tags-input";
 export * from "./textarea";

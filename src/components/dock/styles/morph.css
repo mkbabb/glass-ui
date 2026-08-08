@@ -41,7 +41,7 @@
        DROPPED here. A collapsing VERTICAL dock now derives the same in-flight
        expand-t (the box-size arm `layers.css` already morphs `block-size` on
        `--dock-morph-t`; this gives the chrome the matching directional scalar). The
-       earlier "a vertical rail is ALWAYS-EXPANDED" assumption is retired since
+       earlier "a vertical dock is ALWAYS-EXPANDED" assumption is retired since
        vertical-collapse shipped — `alwaysExpanded` defaults false (GlassDock.vue),
        so a genuinely-collapsing vertical dock gets its chrome on the ONE clock. */
     .glass-dock.expanded,
@@ -251,7 +251,7 @@
     .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent > * {
         place-self: center;
     }
-    /* Floor the collapsed glyph at the 16px-min the rail glyph
+    /* Floor the collapsed glyph at the 16px-min the switcher glyph
        carries (never a sliver inside an inline-flex column). */
     .glass-dock.collapsed .dock-persistent svg,
     .glass-dock.collapsed .dock-layer--summary svg {

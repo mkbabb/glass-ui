@@ -2,7 +2,7 @@
  * body (D13-a /).
  *
  * A partial held under the no-god-module 500-line
- * bound. This partial owns the always-present `.dock-persistent` rail beside the
+ * bound. This partial owns the always-present `.dock-persistent` region beside the
  * expand-on-demand morph region (the iOS Now-Playing / Stage-Manager idiom done
  * STRUCTURALLY) + the vertical dock's column layer-stack. The `.glass-dock` structural
  * skeleton (root + morph aperture + shape plates + position helpers) stays in shell.css.
@@ -17,7 +17,7 @@
        idiom done STRUCTURALLY). The `#persistent` slot lives in-flow as a root flex
        SIBLING of the morph-region (`.dock-layers`) in BOTH collapsed AND expanded —
        NEVER `:inert` and NEVER a crossfade pane.
-       It is a stable always-present rail beside the expand-on-demand content region,
+       It is a stable always-present region beside the expand-on-demand content region,
        so a consumer keeps a control visible while collapsed WITHOUT hand-duplicating
        it into both the `#default` and `#collapsed` slots. The region co-laid by the
        root flex/grid; the morph scalar `--dock-morph-t` co-drives only its chrome

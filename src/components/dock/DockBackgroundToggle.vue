@@ -57,7 +57,7 @@ function toggle() {
 
 <template>
     <!-- ~~`:title="label"`~~ [2026-08-05 · A11Y O-8] STRUCK — same class as the layer
-         rail. Every shipped consumer of this control wraps it in the library's own
+         switcher. Every shipped consumer of this control wraps it in the library's own
          `<Tooltip>` (`demo/shell/SidebarDock.vue` wraps its whole dock control set),
          so the native `title` painted the browser's raw rect over ours. `aria-label`
          below is and was the accessible name. -->

@@ -163,13 +163,13 @@
 
         /* Shared fold — the `<DockIconButton
            :active>` selectable register. The `data-active` hook the component stamps
-           reads the rail's "selected reads as glass" tier (`--dock-control-active-bg`,
+           reads the vertical dock's "selected reads as glass" tier (`--dock-control-active-bg`,
            default `--glass-plate-floating` — a GLASS tier ABOVE the rest fill, NEVER a
            saturated brand hue). Distinct from the consumer
            `--dock-active-*` cohort above (a parent-scoped audacious override): this is
            the library's default selected glass, ergonomic sugar over the shipped
            register so a selectable dock control needs no hand-rolled active paint. The
-           glyph/label firm to the full warm-ink, mirroring the rail's `.is-active`.
+           glyph/label firm to the full warm-ink, mirroring the vertical dock's `.is-active`.
 
            The selected pill now COMPOSES the shared
            `.glass-capsule` register (the component adds the `.glass-capsule` class when

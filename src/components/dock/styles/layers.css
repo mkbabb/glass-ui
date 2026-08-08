@@ -10,7 +10,7 @@
  * `.is-active` / `.is-leaving` 3-state crossfade + hit-test contract (the
  * a11y-006 anchor), the per-child reveal stagger (the `--dock-stagger-*` ramp),
  * and the `layout="grid"` 2D tile-grid arrangement. The `.dock-layer-group` /
- * rail / stack live in dock/layer-group.css; the overflow strategies in
+ * switcher / stack live in dock/layer-group.css; the overflow strategies in
  * dock/overflow.css.
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
@@ -201,11 +201,11 @@
        single-row content pane's intrinsic height already equals
        `--dock-layer-height` (the controls + line-height sum to it), so `min-height`
        is byte-identical for the common case. But a horizontal dock hosting a COLUMN
-       switcher-rail (`<DockLayerGroup>` with `show-rail`) lays the rail out as a
+       switcher (`<DockLayerGroup>` with `show-switcher`) lays the switcher out as a
        stack of tabs taller than one row — a fixed `height` would clip the
-       rail's lower tabs + the active indicator BELOW the dock floor. The floor lets the pane
-       block-size to the rail's natural column height so the dock grows to contain
-       the whole rail. The cross axis keeps `nowrap`. */
+       switcher's lower tabs + the active indicator BELOW the dock floor. The floor lets the pane
+       block-size to the switcher's natural column height so the dock grows to contain
+       the whole switcher. The cross axis keeps `nowrap`. */
     .glass-dock:not(.vertical) .dock-layer {
         white-space: nowrap;
         min-height: var(--dock-layer-height, 2.5rem);

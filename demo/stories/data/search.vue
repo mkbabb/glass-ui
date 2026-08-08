@@ -148,12 +148,12 @@ const rowSeeds = [
         ["command", "palette"],
     ],
     [
-        "Dock rail navigation",
+        "Vertical dock navigation",
         "navigation",
-        "Vertical GlassDock rail row with tooltip-backed icon buttons.",
+        "Vertical GlassDock nav column with tooltip-backed icon buttons.",
         "consumer",
         "Navigation",
-        ["rail", "icons"],
+        ["vertical", "icons"],
     ],
     [
         "Sidebar progressive panels",

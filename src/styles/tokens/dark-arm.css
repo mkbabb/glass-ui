@@ -310,8 +310,8 @@
        has had). The OUTER mix STAYS color-mix(in srgb, … N%, transparent) — the
        SAME 12-rung α ladder + the SAME in-srgb interpolation space the light arm uses (the
        fence holds — the oklch(from …) is the INK SOURCE, not the tint mix space).
-       This re-resolves every --surface-tint-* consumer (chip backplates, the dock-rail
-       divider, the spine, the timeline dot) in lockstep, zero per-site edit. The 0.975 lift
+       This re-resolves every --surface-tint-* consumer (chip backplates, the dock hairline
+       and separator, the spine) in lockstep, zero per-site edit. The 0.975 lift
        sits well under the sRGB gamut edge (the css-relative-color book's "browsers don't
        gamut-map yet" caveat does not bite — at 0.975 the small high-L chroma resolves clean;
        lift→1.0 drifts the hue, so 0.975 is the calibrated pin). The css-relative-color

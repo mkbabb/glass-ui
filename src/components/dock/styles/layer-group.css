@@ -1,20 +1,22 @@
-/* Dock layer-group and switcher rail styles.
+/* Dock layer-group and switcher styles.
  * (carve).
  *
  * This partial owns the
  * `<DockLayerGroup>` family: the `<DockSeparator>` orientation+layout-aware
  * paint (vertical hairline · horizontal rule · grid section-break), the
- * `.dock-spacer`, the `.dock-layer-group` flex axes, the `.dock-layer-rail`
- * layer-switcher rail (the rail-bg plate + the axis-aware travelling
+ * `.dock-spacer`, the `.dock-layer-group` flex axes, the `.dock-layer-switcher`
+ * layer switcher (the switcher plate + the axis-aware travelling
  * `.dock-layer-tab-indicator`).
  *
- * NOTE: this `.dock-layer-rail` is the LAYER-SWITCHER rail inside a
- * `<DockLayerGroup>` — the in-dock switcher tab strip. 
- * de-overloaded the "rail" noun: the `GlassDock variant="rail"` vertical-nav
- * variant is GONE (a vertical nav column is now `orientation="vertical"`), and
- * `<InstrumentRail>` retired at AY. `.dock-layer-rail` is the ONLY surviving
- * "rail" in the dock band; the noun is otherwise free (reserved for the
- * beyond-dock facility).
+ * THE THREE NOUNS, one thing each (the E29 correction — a vertical dock is a
+ * `.glass-dock.vertical`, and the noun it was wrongly given is gone from the band):
+ *   · `.dock-layer-switcher` — the in-dock tab strip that picks a `<DockLayer>` face.
+ *   · `.dock-separator`      — the short group divider between item groups.
+ *   · `.dock-hairline`       — the SPANNING rule, the anchored separator's register:
+ *                              one line across the dock's cross extent, inside a
+ *                              horizontal OR vertical dock.
+ * Both painted rules read the ONE `--dock-hairline` colour; there is no second
+ * hairline name in the band.
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
  * carve is isomorphic (same layer, same source order → ZERO visual delta). */
@@ -25,9 +27,11 @@
        carries the orientation contract the bare class could not. It demarcates dock
        item GROUPS (transport | navigation | settings) for affordance hierarchy. The
        paint is PERPENDICULAR to the layout axis:
-         - row dock (horizontal, the default)   → a VERTICAL 1px hairline
-         - column dock (vertical / rail)         → a HORIZONTAL 1px rule, cross-extent
-         - grid dock (`layout="grid"`)           → a full-row SECTION BREAK
+         - row dock (horizontal, the default)   → a VERTICAL 1px rule
+         - column dock (vertical)               → a HORIZONTAL 1px rule
+         - grid dock (`layout="grid"`)          → a full-row SECTION BREAK
+       …each `--dock-separator-height` long. `anchor` promotes the same element to
+       `.dock-hairline`, which spans the dock's cross extent instead (below).
        The component sets `data-orientation` from `useOptionalDockContext`; the
        dock-root ancestor class (`.glass-dock.vertical` / `.layout-grid`) drives the
        perpendicular paint so the same primitive reads correctly at every layout. */
@@ -36,11 +40,13 @@
         width: 1px;
         height: var(--dock-separator-height);
         margin: 0 0.375rem;
-        background: var(--surface-tint-15);
+        background: var(--dock-hairline);
     }
 
-    /* Column (vertical) dock — a HORIZONTAL hairline across the column's cross
-       extent (a 1px-WIDE vertical sliver does not divide a stack). */
+    /* Column (vertical) dock — a HORIZONTAL rule (a 1px-WIDE vertical sliver does
+       not divide a stack). [BK #72] It is `--dock-separator-height` LONG; the comment
+       here used to call it "cross-extent", which it has never been — `.dock-hairline`
+       below is the form that actually spans. */
     .glass-dock.vertical .dock-separator,
     .dock-layer-group.vertical .dock-separator,
     .dock-separator[data-orientation="vertical"] {
@@ -60,6 +66,60 @@
         align-self: center;
     }
 
+    /* ── THE HAIRLINE INSIDE THE DOCK. A hairline that sits INSIDE the horizontal
+       or vertical dock — the construct ARCHAEOLOGY E29 records the owner asking for
+       ≥2× (his sentence is quoted in BK #72's RECORD, not repeated here: this file is
+       where a reader learned the REJECTED meaning, and quoting it back would re-teach
+       it). BUILT at this cut. Before it, `<DockSeparator anchor>` stamped a marker
+       attribute and a modifier class for a slot that existed in no file, and BOTH
+       were read by exactly zero selectors and zero code — a prop with no effect,
+       which is the five-builds-zero-components history this row closes.
+
+       The hairline is a REGISTER of the separator, never a second component: same
+       1px rule, same one `--dock-hairline` colour, but it SPANS the dock's cross
+       extent instead of floating at `--dock-separator-height` (half the dock, in a
+       row dock) with a gap either side. That span is the whole difference between "a
+       divider between two items" and "a line across the dock", and it is the thing
+       the owner named. `align-self: stretch` is stated with the size on each arm because
+       the flex parents that CENTRE — `.glass-dock` (shell.css) and `.dock-layer`
+       (layers.css) — would otherwise resolve `100%` against a centred, content-sized
+       box. `.dock-layer-group` already stretches its children, so there the keyword is
+       a no-op belt and the size declaration is what carries the span.
+
+       No motion is introduced: the hairline is static chrome that inherits the dock's
+       own padding/radius morph through its parent — it never animates on its own
+       clock (the ONE-clock discipline).
+
+       THE TWO ARMS DO NOT WIN THE SAME WAY. The row arm is (0,4,0) — two `:not()`
+       classes on top of the root and the target — and beats every `.dock-separator`
+       layout rule (the most specific of those is (0,3,0)) on SPECIFICITY. The column arm
+       is (0,3,0): it TIES `.glass-dock.vertical .dock-separator` and wins only because it
+       is declared AFTER it. Declared before (the first draft) the column arm silently
+       lost — the row arm would not have. The grid dock is excluded from the row arm: its
+       section break already spans (`grid-column: 1 / -1`), and `height: 100%` there would
+       stretch a full-row rule to the row's height.
+
+       THE ROOT IS EITHER BOX. `<DockLayerGroup>` is a layout root in its own right —
+       every internal rule in this partial anchors at `:where(.glass-dock,
+       .dock-layer-group)`, the separator's own column arm already names
+       `.dock-layer-group.vertical`, and the component always stamps its axis class — so a
+       group used OUTSIDE a dock spans its hairline exactly as one inside a dock does.
+       `:is()` and not `:where()`: the arms must keep the specificities above, and a
+       zero-specificity anchor loses to the very separator rules they exist to override.
+       When a group's axis disagrees with its dock's the row arm's (0,4,0) is what
+       resolves; the library ships no cross-axis group. */
+    :is(.glass-dock, .dock-layer-group):not(.vertical):not(.layout-grid) .dock-hairline {
+        align-self: stretch;
+        height: 100%;
+        margin-block: 0;
+    }
+
+    :is(.glass-dock, .dock-layer-group).vertical .dock-hairline {
+        align-self: stretch;
+        width: 100%;
+        margin-inline: 0;
+    }
+
     .dock-spacer {
         @apply flex-1;
     }
@@ -76,7 +136,7 @@
         align-items: stretch;
     }
 
-    .dock-layer-group.horizontal.rail-end {
+    .dock-layer-group.horizontal.switcher-end {
         flex-direction: row-reverse;
     }
 
@@ -85,99 +145,83 @@
         align-items: stretch;
     }
 
-    .dock-layer-group.vertical.rail-end {
+    .dock-layer-group.vertical.switcher-end {
         flex-direction: column-reverse;
     }
 
-    /* The rail is a HAIRLINE register, not a fused plate. The
+    /* The switcher edge is a HAIRLINE register, not a fused plate. The
        `--surface-tint-8` filled plate + `--radius-md` rounded background
-       (the "heavy dark blob column") are gone: the rail box paints NO fill
-       (`--dock-layer-rail-bg` defaults transparent at §sizing) and carries no
+       (the "heavy dark blob column") are gone: the switcher box paints NO fill
+       (`--dock-layer-switcher-bg` defaults transparent at §sizing) and carries no
        rounded plate background. The single `border-right` hairline — re-keyed to
-       the tunable `--dock-layer-rail-divider` token — is the only visible rail
+       the tunable `--dock-hairline` token — is the only visible switcher
        edge: a thin rule between the switcher column and the dock body. The
-       hover/active affordance reads the `--dock-layer-rail-{hover,active}` glass
-       tints, so the whole rail ladder is tunable from §sizing. */
-    /* The switcher-rail internal parts carry
+       hover/active affordance reads the `--dock-layer-switcher-{hover,active}` glass
+       tints, so the whole switcher ladder is tunable from §sizing. */
+    /* The switcher internal parts carry
        the dock-root ANCESTRY anchor (`:where(.glass-dock, .dock-layer-group)`, specificity
        0,0,0) so a consumer element with a coincidental `.dock-layer-*` class OUTSIDE a dock
        is never painted/repositioned. Every internal part here lives under `.dock-layer-group`
        (a standalone `<DockLayerGroup>` too) — byte-identical match, same cascade/source order.
        The `.dock-layer-group`-keyed rules ABOVE stay bare (the component-root identity). */
-    :where(.glass-dock, .dock-layer-group) .dock-layer-rail {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-switcher {
         display: flex;
         flex-direction: column;
         flex-shrink: 0;
         /* `align-self: start` (not the group's `stretch`
-           default) so the column rail reports its OWN intrinsic content height
+           default) so the column switcher reports its OWN intrinsic content height
            (the stacked tabs) to the group's cross-axis sizing rather than being
-           stretched to the group's content-row height. Under `stretch` the rail's
+           stretched to the group's content-row height. Under `stretch` the switcher's
            height resolved to the group height, which was the single content-row
-           height — circular: the rail's 3 tall tabs overflowed a 40px rail and the
+           height — circular: the switcher's 3 tall tabs overflowed a 40px switcher and the
            lower tabs + the indicator fell below the dock floor (the B6 break). With
-           `align-self: start` the rail demands its natural column height, the group
-           grows to it, and the dock grows to contain the whole rail. The
+           `align-self: start` the switcher demands its natural column height, the group
+           grows to it, and the dock grows to contain the whole switcher. The
            `min-height: max-content` belt makes the demand explicit — a row-flex
            child's cross-size can otherwise resolve to the (smaller) container row
-           height even under `align-self: start`; `max-content` floors the rail at
+           height even under `align-self: start`; `max-content` floors the switcher at
            its stacked-tab content height so the chain (group → pane → dock) grows
            to fit. */
         align-self: start;
         min-height: max-content;
-        gap: var(--dock-layer-rail-gap, 0.125rem);
-        padding: var(--dock-layer-rail-padding, 0.125rem);
-        background: var(--dock-layer-rail-bg, transparent);
-        border-right: 1px solid
-            var(
-                --dock-layer-rail-divider,
-                color-mix(in srgb, var(--border) 40%, transparent)
-            );
+        gap: var(--dock-layer-switcher-gap, 0.125rem);
+        padding: var(--dock-layer-switcher-padding, 0.125rem);
+        background: var(--dock-layer-switcher-bg, transparent);
+        border-right: 1px solid var(--dock-hairline);
     }
 
-    .dock-layer-group.vertical .dock-layer-rail {
+    .dock-layer-group.vertical .dock-layer-switcher {
         flex-direction: row;
         border-right: none;
-        border-bottom: 1px solid
-            var(
-                --dock-layer-rail-divider,
-                color-mix(in srgb, var(--border) 40%, transparent)
-            );
+        border-bottom: 1px solid var(--dock-hairline);
     }
 
-    .dock-layer-group.horizontal.rail-end .dock-layer-rail {
+    .dock-layer-group.horizontal.switcher-end .dock-layer-switcher {
         border-right: none;
-        border-left: 1px solid
-            var(
-                --dock-layer-rail-divider,
-                color-mix(in srgb, var(--border) 40%, transparent)
-            );
+        border-left: 1px solid var(--dock-hairline);
     }
 
-    .dock-layer-group.vertical.rail-end .dock-layer-rail {
+    .dock-layer-group.vertical.switcher-end .dock-layer-switcher {
         border-bottom: none;
-        border-top: 1px solid
-            var(
-                --dock-layer-rail-divider,
-                color-mix(in srgb, var(--border) 40%, transparent)
-            );
+        border-top: 1px solid var(--dock-hairline);
     }
 
-    /* The rail is a reka-ui Tabs contract. The travelling
+    /* The switcher is a reka-ui Tabs contract. The travelling
        `.dock-layer-tab-indicator` (the reka TabsIndicator) now carries the
-       active affordance; the rail is `position: relative` so the indicator's
-       absolute placement is rail-local. */
-    :where(.glass-dock, .dock-layer-group) .dock-layer-rail {
+       active affordance; the switcher is `position: relative` so the indicator's
+       absolute placement is switcher-local. */
+    :where(.glass-dock, .dock-layer-group) .dock-layer-switcher {
         position: relative;
     }
 
-    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-switcher .dock-layer-tab {
         position: relative;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        /* `flex-shrink: 0` so the stacked tabs in the column rail
-           hold their full size and the rail demands its natural content height (no
-           tab squish). With the rail's `align-self: start` this makes the rail report
+        /* `flex-shrink: 0` so the stacked tabs in the column switcher
+           hold their full size and the switcher demands its natural content height (no
+           tab squish). With the switcher's `align-self: start` this makes the switcher report
            its true column height to the group's cross-axis sizing, growing the dock
            to contain all the tabs + the travelling indicator (the B6 un-clip). */
         flex-shrink: 0;
@@ -193,7 +237,7 @@
            ~78% for the unselected read while staying ≥4.5:1 over the dock substrate.
            The selected tab flips to the full register below. */
         color: var(
-            --dock-layer-rail-glyph,
+            --dock-layer-switcher-glyph,
             color-mix(
                 in srgb,
                 var(--dock-fg-on-aurora, var(--foreground)) 78%,
@@ -210,20 +254,20 @@
             color var(--dock-motion-fast);
     }
 
-    /* Floor the rail glyph. The `size-4` (16px) icon class on the
+    /* Floor the switcher glyph. The `size-4` (16px) icon class on the
        lucide component does not survive the column inline-flex: with no concrete
        `width`/`flex-shrink`, the un-floored SVG collapsed to a 4px sliver
        This rule floors BOTH axes to 1rem (16px) and pins
        `flex-shrink: 0` so the glyph never re-squishes inside the flex tab. */
-    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab svg {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-switcher .dock-layer-tab svg {
         width: 1rem;
         height: 1rem;
         flex-shrink: 0;
     }
 
-    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab:hover {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-switcher .dock-layer-tab:hover {
         background: var(
-            --dock-layer-rail-hover,
+            --dock-layer-switcher-hover,
             color-mix(in srgb, var(--accent) 30%, transparent)
         );
         color: var(--dock-fg-on-aurora, var(--foreground));
@@ -234,22 +278,22 @@
        BACKGROUND is RETIRED — the travelling indicator carries that affordance.
        The selected glyph reads the full warm-ink register (the
        nav-glyph contrast canon), deferring the exact accent to the
-       root via `--dock-rail-active-accent` (defaults to the dock foreground, NOT
+       root via `--dock-layer-switcher-glyph-active` (defaults to the dock foreground, NOT
        a saturated brand `--primary`). */
     :where(.glass-dock, .dock-layer-group)
-        .dock-layer-rail
+        .dock-layer-switcher
         .dock-layer-tab[aria-selected="true"] {
         color: var(
-            --dock-rail-active-accent,
+            --dock-layer-switcher-glyph-active,
             var(--dock-fg-on-aurora, var(--foreground))
         );
     }
 
     /* The dock control focus-ring contract does not cover
-       `.dock-layer-tab` (the rail tab is not in the `.dock-icon-button` family).
+       `.dock-layer-tab` (the switcher tab is not in the `.dock-icon-button` family).
        The roving tabindex means only the active tab is in the tab order; a
        focus-visible tab paints the shared dock ring. */
-    :where(.glass-dock, .dock-layer-group) .dock-layer-rail [role="tab"]:focus-visible {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-switcher [role="tab"]:focus-visible {
         box-shadow: var(--focus-ring-shadow);
         outline: none;
     }
@@ -259,18 +303,18 @@
        NOT the retired reka `--reka-tabs-indicator-*` path. The writer emits the
        travel-axis size + a center-anchored `translate` + `opacity` as an INLINE style
        on this element (Chrome ≡ Safari by construction — one code path, no anchor
-       branch). The DEFAULT (horizontal-group) rail is a COLUMN of stacked tabs, so the
+       branch). The DEFAULT (horizontal-group) switcher is a COLUMN of stacked tabs, so the
        indicator travels the BLOCK (Y) axis: the base rule fixes the CROSS-axis size
        (width) + the resting look; the inline writer fills height + translateY. The
-       `.vertical` group's ROW rail overrides the cross axis (height) and the writer
+       `.vertical` group's ROW switcher overrides the cross axis (height) and the writer
        fills width + translateX. The active-tab plate reads the tunable
-       `--dock-layer-rail-active` rung.
+       `--dock-layer-switcher-active` rung.
 
-       (D5 one-clock) — a rail tab switch is a DISCRETE selection (the user
+       (D5 one-clock) — a switcher tab switch is a DISCRETE selection (the user
        picks a pane), NOT the box collapse↔expand morph, so the indicator glides on the
        `--spring-dock` register (the SAME curve `SegmentedTabs`' indicator rides),
        never a fixed-linear `--dock-motion-resize` timer. */
-    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab-indicator {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-switcher .dock-layer-tab-indicator {
         position: absolute;
         left: 0;
         top: 0;
@@ -278,11 +322,11 @@
         opacity: 0;
         border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
         /* The travelling indicator paints the glass-register
-           `--dock-layer-rail-active` (defaults to `--glass-plate-floating`, the
+           `--dock-layer-switcher-active` (defaults to `--glass-plate-floating`, the
            "selected reads as glass" register). The inline fallback is the SAME
            glass tier — NOT the saturated `--primary 15%` warm-red mix. This token
            rule is the sole paint (no baked plate utility to inherit). */
-        background: var(--dock-layer-rail-active, var(--glass-plate-floating));
+        background: var(--dock-layer-switcher-active, var(--glass-plate-floating));
         transition:
             width var(--spring-dock-duration) var(--spring-dock),
             height var(--spring-dock-duration) var(--spring-dock),
@@ -290,10 +334,10 @@
         pointer-events: none;
     }
 
-    /* The `.vertical` group's rail is a ROW of tabs (flex-direction: row), so the
+    /* The `.vertical` group's switcher is a ROW of tabs (flex-direction: row), so the
        indicator travels the INLINE (X) axis. The cross axis (height) is the base
        size; the writer fills width + translateX. */
-    .dock-layer-group.vertical .dock-layer-rail .dock-layer-tab-indicator {
+    .dock-layer-group.vertical .dock-layer-switcher .dock-layer-tab-indicator {
         width: auto;
         height: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
     }

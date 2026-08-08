@@ -13,9 +13,9 @@ import { useOptionalDockContext } from "./composables/dockContext";
  * it reads the dock `orientation`/`layout` via `useOptionalDockContext()` and the
  * dock-root ancestor class (`.glass-dock.vertical`, `.layout-grid`) drives the
  * PERPENDICULAR paint (dock.css) —
- *   - row dock (horizontal, default) → a vertical 1px hairline
- *   - column dock (vertical, rail)  → a horizontal 1px rule (cross-extent)
- *   - grid dock (`layout="grid"`)     → a full-row section break (grid-column: 1, -1)
+ *   - row dock (horizontal, default) → a vertical 1px rule
+ *   - column dock (vertical)         → a horizontal 1px rule
+ *   - grid dock (`layout="grid"`)    → a full-row section break (grid-column: 1, -1)
  *
  * It is a thin oriented `<div>` (KISS); `data-orientation` is the explicit axis
  * marker (so the perpendicular paint resolves even when used inside a
@@ -27,25 +27,30 @@ import { useOptionalDockContext } from "./composables/dockContext";
  * landmark without it being interactive (it has no four-state contract — a flex
  * gap rule, not a control).
  *
- * the `anchor` prop is the seam-locator (direction (b)): an
- * anchored separator stamps `data-rail-anchor`, which the enclosing `<GlassDock>`
- * reads to seat the `#rail` line AT this divider's measured offset (the divider IS
- * the rail's anchor seam — one primitive folds 's section-divider model and
- * 's anchor-at-the-divider). The exposed measurable seam offset is the painted
- * position of this element within the dock-frame; GlassDock's seam read consumes it.
+ * `anchor` promotes this separator to THE HAIRLINE — the line ARCHAEOLOGY E29
+ * records the owner asking for ≥2×: a hairline that sits INSIDE the horizontal or
+ * vertical dock. It is the same primitive and
+ * the same one `--dock-hairline` colour; what changes is the SPAN — the anchored
+ * form stretches across the cross extent of its LAYOUT ROOT instead of floating at
+ * `--dock-separator-height` with a gap either side. The layout root is a `.glass-dock`
+ * or a `<DockLayerGroup>` on its own (both arms are in layer-group.css, and the group
+ * is a root here exactly as it is for every other rule in that partial). With neither
+ * ancestor there is no cross extent to span and the anchored form paints as the plain
+ * divider — the same befitting-silent standalone render, stated rather than promised.
+ *
+ * [BK #72] Until this cut `anchor` stamped a marker attribute and a modifier class
+ * for a slot that existed in no file, and both
+ * markers were read by exactly zero selectors and zero code — a prop that did
+ * nothing. It does something now. A dock takes at most one hairline (one line across
+ * a dock is the point of it); nothing enforces that but nothing needs to.
  */
 const props = withDefaults(
     defineProps<{
         /**
-         * the seam-locator affordance (direction (b): the
-         * separator IS the rail's anchor). When `anchor` is set the separator stamps a
-         * `data-rail-anchor` marker so the enclosing `<GlassDock>` can read THIS
-         * divider's measured offset within the dock-frame and seat the `#rail` line at
-         * it (the divider and the rail unify into one primitive — the user's "where the
-         * dividing line is"). NO geometry side-effect on the separator itself; it is the
-         * SAME thin oriented hairline either way, just flagged as the rail's seam. A
-         * dock with at most one anchored separator is the contract (the first marked
-         * wins; the rail reads one seam offset).
+         * Promote this separator to the dock hairline: one 1px rule spanning the
+         * cross extent of its layout root — a `.glass-dock` or a standalone
+         * `<DockLayerGroup>` — in a row OR a column. Off by default: the plain
+         * separator is the short group divider.
          */
         anchor?: boolean;
     }>(),
@@ -71,10 +76,10 @@ const ariaOrientation = computed(() =>
 <template>
     <div
         class="dock-separator"
-        :class="{ 'dock-separator--anchor': anchor }"
+        :class="{ 'dock-hairline': anchor }"
         role="separator"
         :data-orientation="dataOrientation"
-        :data-rail-anchor="anchor || undefined"
+        :data-dock-hairline="anchor || undefined"
         :aria-orientation="ariaOrientation"
     />
 </template>

@@ -178,7 +178,7 @@ export function useDragMorph<V = string>(
     // The gesture spring is LAZY — created on the first `reattach` that finds a real
     // element (the dock `ensureSpring` precedent). A `useDragMorph` host that never
     // mounts a draggable element (a `DockLayerGroup` with `draggable:false`/
-    // `showRail:false`) mints ZERO SpringProgress, so the gesture spring never counts
+    // `showSwitcher:false`) mints ZERO SpringProgress, so the gesture spring never counts
     // against the one-morph-engine-per-dock rule.
     // `ensureSpring` also arms the per-frame mirror (`subscribe`) + the rAF lifecycle
     // (`play`) — both deferred to first gesture-arm, NOT setup.

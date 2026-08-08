@@ -21,7 +21,7 @@ export {
     type DockContext,
     type DockOrientation,
 } from "./dockContext";
-// The face registry provided by DockCrossfade, consumed by DockLayer and the switcher rail.
+// The face registry provided by DockCrossfade, consumed by DockLayer and the switcher.
 export {
     provideDockCrossfadeContext,
     useDockCrossfadeContext,

@@ -1,6 +1,6 @@
 // Type-only negative fixture (zero-runtime) proving the dock
 // crossfade context exposes its face-id refs as `Readonly<Ref<…>>`, so a `<DockLayer>`
-// child (or the switcher rail) READS but never WRITES the crossfade-owned state (the ONE
+// child (or the switcher) READS but never WRITES the crossfade-owned state (the ONE
 // registry lives on the caller's `active` model).
 //
 // This fixture uses `expectTypeOf` ONLY — no `@ts-expect-error` directive — because

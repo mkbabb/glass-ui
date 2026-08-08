@@ -21,9 +21,9 @@ import {
  * focus-holding face transfers focus to its successor, else the body
  * (un-inert-before-focus is load-bearing).
  *
- * Faces register through the crossfade context (`<DockLayer>` children). Where a rail
+ * Faces register through the crossfade context (`<DockLayer>` children). Where a switcher
  * exists, `useSelectionGroup` (the switcher run) drives `:active` — the composing
- * `<DockLayerGroup>` case. The controlled-no-rail 5-pane case (a consumer) consumes this
+ * `<DockLayerGroup>` case. The controlled-no-switcher 5-pane case (a consumer) consumes this
  * DIRECTLY: a no-selection face-swap does NOT route through a selection engine (the
  * roving machine + indicator + selection model are all inert in that mode; don't
  * abstract them over a case that never selects).
@@ -48,7 +48,7 @@ const rootEl = ref<HTMLElement | null>(null);
 // ── The face registry — the crossfade slot OWNS it (the FOLD destination for the
 //    retired DockLayerGroup register/unregister machinery). A Map keyed by id keeps
 //    registration idempotent; the reactive re-assign on every mutation triggers the
-//    `faces` computed (the rail source) + a peak re-measure. ──
+//    `faces` computed (the switcher source) + a peak re-measure. ──
 const registry = ref<Map<string, DockFaceRegistration>>(new Map());
 
 const faces = computed<DockFaceDescriptor[]>(() =>
@@ -246,8 +246,8 @@ onBeforeUnmount(() => {
     settleCrossfade = null;
 });
 
-// The switcher rail (a composing `<DockLayerGroup>`) reads the registered face
-// descriptors off this expose; the controlled-no-rail case ignores it.
+// The switcher (a composing `<DockLayerGroup>`) reads the registered face
+// descriptors off this expose; the controlled-no-switcher case ignores it.
 defineExpose({ faces });
 </script>
 

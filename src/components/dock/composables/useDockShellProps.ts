@@ -94,7 +94,7 @@ export interface DockProps {
      * dock's inline axis reads `.dock-scroll-x` unconditionally (the CSS
      * `overflow-x: auto` scrolls ONLY when the row exceeds
      * `--dock-max-inline-size`; under the cap nothing scrolls), and a vertical
-     * rail's block axis scrolls via the unconditional cap-derived shell rule
+     * vertical dock's block axis scrolls via the unconditional cap-derived shell rule
      * (`--dock-max-block-size` is the sole knob). No prop, no unreachable
      * controls.
      */
@@ -194,7 +194,7 @@ export function useDockShellProps(props: DockProps): DockShellProps {
        the port is inert (nothing scrolls). The `overflow="wrap"` register is the
        one EXCEPTION: a wrap dock's over-cap strategy is intrinsic flex REFLOW
        (`.dock-overflow-wrap`), not a scroll — so it wears no scroll port. A
-       VERTICAL rail folds into the unconditional cap-derived rule in shell.css
+       VERTICAL dock folds into the unconditional cap-derived rule in shell.css
        (the `.vertical…:not([data-morphing])` at-rest port), so it wears NO class
        — returning `null` keeps the `.glass-dock.vertical` scroll story in ONE
        home (shell.css), never a second `.dock-scroll-y` opt-in. */
