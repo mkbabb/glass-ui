@@ -1285,6 +1285,22 @@ B-close gestalt ceremony). No cross-repo ContextMenu consumer in the round-2b ro
 
 ### BI.W-MULTISELECT-FOLD — MultiSelect folds onto `<Combobox multiple>`
 
+> [BK #81 W-PICKER, 2026-08-08 — **STRUCK IN PLACE, survivor column false.** This
+> section, `src/index.ts` and `src/components/index.ts` all named `<Combobox>` (and
+> `<ComboboxAnchor>` / `<ComboboxList>` / `<ComboboxItem>`) as the survivor. **No
+> such component has ever existed in this library**, at any version — detector:
+> `rg -n "export .*\bCombobox\b" src/index.ts src/forms.ts` → 0 matches; the only
+> `Combobox*` symbols on disk are reka-ui imports inside `components/command/` and
+> the prop TYPES in `_shared/selection.ts`. The honest retirement is: **`ui/multi-
+> select` retired, no replacement.** The mechanism does ship — reka's `ComboboxRoot`
+> is `<Command>`'s substrate, and `multiple` now genuinely reaches it through
+> `<Command>`'s attribute forward (landed this row) — so a multi-select is a
+> composition a consumer builds, not a component the library hands over. The
+> "machine-locked by `proof:fold-delete` (survivor Combobox `multiple` capability
+> present)" clause could never have held; the surviving pin is
+> `tests/components/select.contract.test.ts`'s `"multiple" extends keyof
+> SelectProps → false`, which is real and stays.]
+
 The Kronecker fold (D-FACTOR PASS-1 §B): `MultiSelect` was a `Popover` + `Command`
 composition over the SAME Combobox-family mechanism (a filtered listbox with a
 selection model) — no distinct mechanism, so it folds onto `<Combobox multiple>`. reka's

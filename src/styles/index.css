@@ -151,12 +151,12 @@
  *                              order-win over `.interactive-item:hover` (same layer
  *                              + specificity) — the cascade-trap-safe placement.
  *  15. components/tabs/styles/* — SegmentedTabs overflow/indicator grammar.
- *  16. components/_shared/field/field-surfaces.css — precompiled field/list surfaces
- *                             collision-bound (the `[data-slot="select-content"]`
- *                             max-height rule) — moved off the dead arbitrary-
- *                             bracket CVA class so the bound SHIPS in dist/glass-ui.css
- *                             regardless of consumer JIT reach. A structural utility
- *                             never depends on a content scan.
+ *  16. components/_shared/field/field-surfaces.css — the `.glass-control-edge`
+ *                             register (the keyed warm control rim). The portalled
+ *                             list surfaces that used to share this file — the
+ *                             listbox plate, its collision bound and the warm
+ *                             portal field — are the OVERLAY register and live at
+ *                             glass/overlay-plate.css.
  *  17. components/sheet/styles.css — precompiled side-sheet positioning (the
  *                             `[data-slot="sheet-content"][data-side]` position/inset/
  *                             size rules), the DETENT geometry (a rung is a size, not a

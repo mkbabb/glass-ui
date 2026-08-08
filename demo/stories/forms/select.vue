@@ -101,7 +101,7 @@ const body: StoryBody = {
         },
         {
             heading: "Viz-basis fills",
-            blurb: "Items inherit the fourier/chebyshev/legendre dot color.",
+            blurb: "The selected mark takes the row's own ink — set `color`, the dot follows.",
             size: "sm",
             specimens: [
                 field(
@@ -109,14 +109,18 @@ const body: StoryBody = {
                     "Orthogonal basis",
                     "Pick a basis",
                     [
+                        // The indicator paints `currentColor`, so the tint handle is
+                        // the platform's own: whatever `color` the row resolves is
+                        // what the dot is. A second custom property naming the same
+                        // thing could only ever disagree with it.
                         item("fourier", "Fourier", {
-                            style: { "--select-dot-color": "var(--viz-fourier)" },
+                            style: { color: "var(--viz-fourier)" },
                         }),
                         item("chebyshev", "Chebyshev", {
-                            style: { "--select-dot-color": "var(--viz-chebyshev)" },
+                            style: { color: "var(--viz-chebyshev)" },
                         }),
                         item("legendre", "Legendre", {
-                            style: { "--select-dot-color": "var(--viz-legendre)" },
+                            style: { color: "var(--viz-legendre)" },
                         }),
                     ],
                     { modelValue: "basis" },

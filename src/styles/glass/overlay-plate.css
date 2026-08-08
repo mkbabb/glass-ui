@@ -1,0 +1,186 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   THE OVERLAY PLATE REGISTER — the material every portalled listbox and panel
+   paints, stated once, in precompiled CSS.
+
+   WHY PRECOMPILED, AND NOT UTILITIES. A portalled surface's material used to be
+   authored as Tailwind utilities on the component. Those compile into a
+   `dist/*.js` render-function chunk, and no consumer's content scan reaches a
+   render chunk — so in every consumer the rules simply were not there. The
+   collision bound is the case that was measured: `getComputedStyle(content)
+   .maxHeight` read `"none"` and a 16-item dropdown rendered 745px tall inside a
+   900px viewport. Everything in this file is a plain attribute-selector or class
+   rule, so it ships in `dist/glass-ui.css` whatever the consumer's JIT does.
+
+   ONE PLATE, ONE OWNER. The component composes the RUNG (`.glass-floating` — the
+   blur, the base shadow stack, the backdrop bucket). This file states only what a
+   rung cannot know it is: that it is an overlay (the veil tier), that it stands
+   over a warm field (the floor, the portal spine), how tall it may grow, where it
+   blooms from, and what its boundary ink is.
+
+   A partial of the glass.css cascade; its own `@layer components`.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
+    /* ── The listbox plate ──────────────────────────────────────────────────
+       The overlay rung's veil with the capsule's warm floor over it — two flat
+       layers, both reading the ONE recipe. There is no adaptive-tint layer and no
+       `--select-plate-alpha` solidity knob: the veil already carries the earned
+       darken, and a second layer pushing the same plate the same way is the
+       double-writer the material law forbids. A menu that needs more body needs a
+       heavier RUNG. `prefers-reduced-transparency` reaches this plate through
+       `--glass-level`, like every other. */
+    [data-slot="select-content"] {
+        --glass-veil-tier: var(--glass-veil-overlay);
+
+        /* THE INSET IS THE LAW'S ONE INPUT. A rounded box inside a rounded box is
+           concentric only when outer = inner + inset — so the option corner is not
+           a taste, it is `--radius-card` (16) minus the inset the viewport actually
+           pads by (4), and it is written as that subtraction so retuning either end
+           keeps the two concentric instead of silently breaking them. The former
+           hand-set 10 implied an inset of 6 the same listbox never had. */
+        --overlay-viewport-inset: 4px;
+        --overlay-option-radius: calc(
+            var(--radius-card) - var(--overlay-viewport-inset)
+        );
+        background-image: linear-gradient(
+            color-mix(
+                in oklab,
+                oklch(0.9 0.05 75 / 0),
+                var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
+            ),
+            color-mix(
+                in oklab,
+                oklch(0.9 0.05 75 / 0),
+                var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
+            )
+        );
+
+        /* THE BOUNDARY IS ONE INK, and it is the library's own figure for the edge
+           of a floating plate: `--ink-edge` (0.16, color-radius.css §ink — the
+           rung where a drop shadow sits outside the boundary). The rung's generic
+           accent border is overridden here rather than composed beside, so exactly
+           one declaration decides what this edge looks like. */
+        border: 1px solid
+            color-mix(
+                in oklab,
+                var(--foreground) calc(var(--ink-edge) * 100%),
+                transparent
+            );
+
+        /* The static cartoon under-stamp beneath the floating stack. */
+        box-shadow:
+            var(--glass-material-rim), var(--glass-under-shadow-vivid),
+            var(--glass-shadow-floating), var(--shadow-cartoon-lg);
+
+        /* THE COLLISION BOUND. `--overlay-max-block` is the family's comfortable
+           ceiling; reka's measured `--reka-popper-available-height` tightens it on
+           a short viewport, and when reka has not measured yet the ceiling stands
+           alone. The plate clips; the viewport inside is the only scroll owner,
+           which is what keeps reka's active-option scrolling correct. */
+        max-height: min(
+            var(--overlay-max-block),
+            var(--reka-popper-available-height, var(--overlay-max-block))
+        );
+        overflow: hidden;
+
+        /* THE BLOOM ANCHOR. Reka writes the measured anchor edge into this custom
+           on every popper-positioned content node; reading it here means the
+           spring-clocked scale-in of `.glass-reveal` grows FROM the trigger rather
+           than from the box's own centre, so an off-centre trigger opens without a
+           lateral settle. Authored as a utility it never emitted at all. */
+        transform-origin: var(--reka-select-content-transform-origin);
+    }
+
+    /* The scroll port pads by the inset the law reads, and the rows it holds take
+       the corner that inset implies. Both are precompiled for the same reason the
+       plate is: a portalled surface may not depend on a consumer's content scan. */
+    [data-slot="select-viewport"] {
+        padding: var(--overlay-viewport-inset);
+    }
+    [data-slot="select-viewport"] [role="option"] {
+        border-radius: var(--overlay-option-radius);
+    }
+
+    /* ── .glass-field-portal — the portal-local warm field (route identity) ──
+       The menu portals to `<body>`, OUTSIDE the route's field, so its
+       `backdrop-filter` has nothing warm to transmit. A clipped menu-local layer
+       BEHIND the plate (z -1, and carrying NO `backdrop-filter` of its own — glass
+       cannot sample glass, avoided by construction) paints a 3-stop warm spine
+       keyed to `--field-h`. `inset: 0` clips it INSIDE, so the blur bends it
+       THROUGH the plate as real L-variance rather than leaking a halo around the
+       box. `--field-h` is a documented custom property: set it on any ancestor to
+       re-key the spine; unset it falls to 48, the forms terracotta, so a bare
+       Select still reads warm. */
+    .glass-field-portal {
+        position: relative;
+    }
+    .glass-field-portal::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        border-radius: inherit;
+        background:
+            radial-gradient(
+                70% 60% at 24% 22%,
+                oklch(0.92 0.08 var(--field-h, 48) / 0.55),
+                transparent 72%
+            ),
+            radial-gradient(
+                64% 58% at 82% 80%,
+                oklch(0.88 0.07 calc(var(--field-h, 48) + 18) / 0.5),
+                transparent 70%
+            ),
+            radial-gradient(
+                60% 62% at 60% 40%,
+                oklch(0.9 0.06 calc(var(--field-h, 48) - 14) / 0.48),
+                transparent 74%
+            );
+    }
+    /* DARK arm (PLAIN per-mode ancestor, never `:global()` or `light-dark()`) — the
+       dark field stops lift to a real glow band (L ~0.22–0.30, higher chroma) so
+       the field reads in dark instead of washing out into near-black. */
+    .dark .glass-field-portal::before {
+        background:
+            radial-gradient(
+                70% 60% at 24% 22%,
+                oklch(0.3 0.1 var(--field-h, 48) / 0.55),
+                transparent 72%
+            ),
+            radial-gradient(
+                64% 58% at 82% 80%,
+                oklch(0.26 0.09 calc(var(--field-h, 48) + 18) / 0.5),
+                transparent 70%
+            ),
+            radial-gradient(
+                60% 62% at 60% 40%,
+                oklch(0.28 0.08 calc(var(--field-h, 48) - 14) / 0.48),
+                transparent 74%
+            );
+    }
+    /* Honest-degraded arm — an engine without `oklch()` gets an hsl warm spine,
+       never a gray one. */
+    @supports not (color: oklch(0.9 0.08 48)) {
+        .glass-field-portal::before {
+            background: radial-gradient(
+                70% 60% at 24% 22%,
+                hsl(var(--field-h, 48) 60% 88% / 0.5),
+                transparent 72%
+            );
+        }
+        .dark .glass-field-portal::before {
+            background: radial-gradient(
+                70% 60% at 24% 22%,
+                hsl(var(--field-h, 48) 45% 26% / 0.55),
+                transparent 72%
+            );
+        }
+    }
+}
+
+/* PRM is colour-static here — the field, the floor and the cartoon stamp are
+   PAINT, not motion, so they REMAIN under `prefers-reduced-motion: reduce`
+   (un-graying and selection legibility need no motion). The reveal and chevron
+   motion legs live in their own recipes (glass/reveal.css, menu.css); this file
+   introduces no motion to gate. */

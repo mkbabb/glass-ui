@@ -20,18 +20,13 @@ const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 </script>
 
 <template>
-    <!-- / DESHADCN census — the divider hairline reads the WARM
-       ink, not the neutral shadcn `bg-muted` slab (the residual the census names
-       for the select band). `color-mix(in srgb, var(--foreground) N%, transparent)`
-       is the warm-hairline identity (re-tints under .dark via --foreground, the same
-       seam the menu-section `--border-hairline` reads). Clean break, no alias. -->
+    <!-- The hairline reads the family's ONE divider ink (`.glass-menu-divider`,
+       _shared/menu/menu.css) rather than spelling its own percentage — the select
+       band and the command palette used to disagree by 4 points on the same line
+       inside the same plate. The negative inline margin bleeds it to the plate's
+       inner edge past the 4px viewport inset. -->
     <RekaSelectSeparator
         v-bind="forwardedAttrs"
-        :class="
-            cn(
-                '-mx-1 my-1 h-px bg-[color-mix(in_srgb,var(--foreground)_12%,transparent)]',
-                props.class,
-            )
-        "
+        :class="cn('glass-menu-divider -mx-1 my-1', props.class)"
     />
 </template>

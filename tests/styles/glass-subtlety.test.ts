@@ -599,13 +599,26 @@ describe("glass material — the structural invariants", () => {
                 rungClass.test(source) || /resolveSurfaceClass\(/.test(source),
             );
         }
-        // The hop is load-bearing, and this is the assertion that it stayed wired: the
-        // named habitat (`<Command>` inside `<DialogContent>`, neither stylesheet
-        // mentioning the other) resolves to a real depth-2 nest. Without the hop both
-        // tags read as depth 0 and the whole walk is decorative.
+        // The hop is load-bearing, and these are the assertions that it stayed wired.
+        // Two components whose rung is reachable ONLY through the hop — DialogContent
+        // resolves its through `resolveSurfaceClass`, SelectContent names one on a reka
+        // tag — so if the hop breaks, both flip and the walk goes decorative.
         expect(componentPlate.get("DialogContent"), "DialogContent no longer resolves as a plate")
             .toBe(true);
-        expect(componentPlate.get("Command"), "Command no longer resolves as a plate").toBe(true);
+        expect(componentPlate.get("SelectContent"), "SelectContent no longer resolves as a plate")
+            .toBe(true);
+        // [BK #81 W-PICKER, 2026-08-08 — the pin above used to read
+        // `componentPlate.get("Command") === true`, naming `<Command>` inside
+        // `<DialogContent>` as the library's one real depth-2 nest. That nest is GONE:
+        // `<Command>` composed `glass-floating` unconditionally, so inside a
+        // CommandDialog it was a plate sampling a plate — one blur reading the blur
+        // beneath it. The root is a chassis now and the host owns the material, so the
+        // former pin is inverted into an assertion of the cure. Measured at the cut: no
+        // file under `src/` reaches depth 2 through the hop at all.]
+        expect(
+            componentPlate.get("Command"),
+            "Command re-acquired a rung class — the CommandDialog plate-in-a-plate is back",
+        ).toBe(false);
 
         const offenders: string[] = [];
         for (const file of vueFiles) {

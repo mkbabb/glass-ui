@@ -91,9 +91,19 @@
    demo tree). Scoped to the `.vue` SFCs + the size/variant `.ts` helpers and AWAY
    from `composables/` + `*.glsl.ts`/`*.wgsl.ts` so the dev candidate-extractor never
    trips on a shader template literal (the `Missing opening (` trap index.css §EMISSION
-   narrates). */
+   narrates).
+
+   THE `_shared` GLOB IS RECURSIVE, and the one character is load-bearing: the
+   single-level form never reached `_shared/menu/rowClass.ts`, so the Select and
+   Command indicator gutter had no rule in the demo at all. Widening `_shared` to
+   a recursive glob is safe; blanket-widening the whole `components` tree the same
+   way is NOT — the shader template literals named just above live under
+   `components/blob/shaders/`, and `_shared` contains no shader file.
+   (Written without a glob star adjacent to a slash on purpose: that two-character
+   sequence closes a CSS comment, and Tailwind then reads the rest of this
+   paragraph as a declaration.) */
 @source "../src/components/**/*.vue";
-@source "../src/components/_shared/*.ts";
+@source "../src/components/_shared/**/*.ts";
 @source "../src/components/**/*Variants.ts";
 /* Scan the CVA maps in each component's index.ts too. A
    component's cva() variant/tone map lives in index.ts, NOT the .vue render, so

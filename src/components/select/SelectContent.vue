@@ -7,8 +7,6 @@ import type { PointerDownOutsideEvent } from "../_shared/interaction";
 export interface SelectContentProps extends FloatingPlacementProps {
     class?: HTMLAttributes["class"];
     surface?: Surface;
-    /** Hue re-emitted onto the portalled field, in CSS degrees. */
-    fieldHue?: number;
 }
 
 export interface SelectContentEmits {
@@ -25,14 +23,9 @@ import {
     SelectPortal as RekaSelectPortal,
     SelectViewport as RekaSelectViewport,
 } from "reka-ui";
-import SelectScrollDownButton from "./SelectScrollDownButton.vue";
-import SelectScrollUpButton from "./SelectScrollUpButton.vue";
+import SelectScrollButton from "./SelectScrollButton.vue";
 import { cn } from "../_shared/class-names";
 import { useOptionalDockContext } from "../dock/composables/dockContext";
-// Thread the SHARED {glass·veil·opaque} surface axis + the
-// φ --overlay-pad-* ladder onto the Select listbox (the overlay golden uniformity).
-// Default `glass` is the bare `glass-floating` plate.
-import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
 
 defineOptions({
     name: "SelectContent",
@@ -48,16 +41,15 @@ const props = withDefaults(defineProps<SelectContentProps>(), {
 });
 const emit = defineEmits<SelectContentEmits>();
 const attrs = useAttrs();
-const forwardedAttrs = computed(() => {
-    const {
-        bodyLock: _bodyLock,
-        "body-lock": _bodyLockKebab,
-        position: _position,
-        ...forwarded
-    } = attrs;
-    return forwarded;
-});
-const placementProps = computed(() => ({
+
+/* The placement contract is the component's, so it is spread LAST — that is what
+ * makes it a contract, and it is why there is no local three-key attribute
+ * denylist here any more. A denylist that exists only to stop a consumer from
+ * winning an argument the spread order already settles is a second authority on
+ * the same question. (The library-wide retired-attribute list is W-OVERLAY's one
+ * home; this component owes it nothing.) */
+const rootAttrs = computed(() => ({
+    ...attrs,
     position: "popper" as const,
     side: props.side,
     sideOffset: props.sideOffset,
@@ -67,33 +59,24 @@ const placementProps = computed(() => ({
     collisionPadding: 16,
 }));
 const dockContext = useOptionalDockContext();
-
-// Re-emit the route's warm-field hue onto the portalled menu.
-// Only writes `--field-h` when the consumer supplies it (a bare Select inherits the
-// select.css `--field-h: 48` floor); `data-field-palette` is a paint-inert marker.
-const fieldStyle = computed(() =>
-    props.fieldHue != null ? { "--field-h": String(props.fieldHue) } : undefined,
-);
 </script>
 
 <template>
     <RekaSelectPortal>
         <!--
-      The collision-bound moved OUT of the dead
-      arbitrary-bracket class `[max-height:var(--reka-popper-available-height,60dvh)]`
-      (which compiled only into a dist/*.js chunk no consumer content-scan reaches)
-      into the PRECOMPILED `[data-slot="select-content"]` rule in src/styles/select.css
-      — it now SHIPS in dist/glass-ui.css regardless of consumer JIT reach, so a 16-item
-      dropdown bounds inside the viewport with SelectViewport owning scroll in EVERY
-      consumer. The `origin-(--reka-select-content-transform-origin)` STAYS:
-      once the box is
-      bounded the `.glass-reveal` spring-clocked scale-in (off the
-      retired `popover-animate` bezier zoom-95) no longer sweeps an unbounded column,
-      and the scale origin tracks reka's measured anchor edge for non-center triggers
-      (the panel blooms from the trigger edge with no lateral settle).
+      THE PLATE IS PRECOMPILED, and it has to be. Every rule that decides how this
+      listbox looks and how tall it may grow — the collision bound, the overlay
+      veil, the 1px perimeter ink, the warm portal field, the scale origin — lives
+      in `styles/glass/overlay-plate.css` as plain attribute-selector CSS keyed on
+      `[data-slot="select-content"]`. A Tailwind utility here would compile only
+      into a `dist/*.js` render chunk that no consumer content-scan reaches; a
+      precompiled rule ships in `dist/glass-ui.css` whatever the consumer's JIT
+      does. SelectContent clips at the bound and SelectViewport is the only
+      vertical scroll owner, which is what keeps reka's active-option scrolling
+      correct (one scroll port, never nested).
     -->
         <RekaSelectContent
-            v-bind="{ ...placementProps, ...forwardedAttrs }"
+            v-bind="rootAttrs"
             :data-glass-dock-portal="dockContext?.id ? '' : undefined"
             :data-glass-dock-owner="dockContext?.id"
             :data-surface="props.surface"
@@ -102,38 +85,35 @@ const fieldStyle = computed(() =>
             data-slot="select-content"
             :class="
                 cn(
-                    'relative z-popover min-w-(--overlay-min-width) overflow-hidden rounded-panel border text-popover-foreground glass-reveal origin-(--reka-select-content-transform-origin)',
+                    'relative z-popover min-w-(--overlay-min-width) overflow-hidden rounded-card text-popover-foreground glass-reveal',
                     'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
-                    resolveSurfaceClass('floating'),
-                    // The portal escapes the route's field to <body>, so the
-                    // menu carries its OWN clipped warm field. `.glass-field-portal` (select.css)
-                    // paints a 3-stop warm spine keyed to `--field-h` BEHIND the plate so the
-                    // floating `backdrop-filter` finally has warm chroma to bend (the un-gray
-                    // amplifier — the floor in select.css is the guarantee). The route re-emits
-                    // its own `--field-h` via the `:style` below; absent that it floors to 48
-                    // (forms terracotta) so a bare Select still reads warm.
-                    'glass-field-portal',
-                    '[--overlay-pad-inline:--spacing(1)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)]',
+                    'glass-floating glass-field-portal',
                     props.class,
                 )
             "
-            :style="fieldStyle"
             @close-auto-focus="emit('closeAutoFocus', $event)"
             @escape-key-down="emit('escapeKeyDown', $event)"
             @pointer-down-outside="emit('pointerDownOutside', $event)"
         >
-            <SelectScrollUpButton />
+            <SelectScrollButton direction="up" />
+            <!-- The viewport is the scroll port AND the fade port: one element, so the
+                 edge feather reads the SAME scroll state reka scrolls. Its inset and
+                 the option corner derived from it are precompiled together in
+                 glass/overlay-plate.css — the law lives beside the plate it measures
+                 against, not in a utility here. -->
             <RekaSelectViewport
                 data-slot="select-viewport"
+                data-fade-start
+                data-fade-end
                 :class="
                     cn(
-                        'max-h-[inherit] overflow-y-auto px-(--overlay-pad-inline) py-(--overlay-pad-block) h-(--reka-select-trigger-height) w-full min-w-(--reka-select-trigger-width)',
+                        'fading-scroll fading-scroll--y max-h-[inherit] w-full min-w-(--reka-select-trigger-width)',
                     )
                 "
             >
                 <slot />
             </RekaSelectViewport>
-            <SelectScrollDownButton />
+            <SelectScrollButton direction="down" />
         </RekaSelectContent>
     </RekaSelectPortal>
 </template>

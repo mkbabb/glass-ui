@@ -110,11 +110,12 @@ function execute(id: string, closeDialog = false) {
                 dialog below.
             </p>
             <div class="mx-auto w-full max-w-lg">
-                <Command
-                    v-model="selected"
-                    :open="!dialogOpen"
-                    class="rounded-[var(--radius-card)] border border-border/50 bg-card/70 shadow-lg backdrop-blur"
-                >
+                <!-- The host owns the material: `<Command>` is a chassis, so a
+                     standalone palette composes a rung by name. The former stack —
+                     an arbitrary radius bracket, a `border-border/50` hairline, a
+                     `bg-card/70` fill and a bare `backdrop-blur` — was four
+                     hand-rolled halves of one recipe the library already ships. -->
+                <Command v-model="selected" :open="!dialogOpen" class="glass-floating">
                     <CommandInput
                         v-model="query"
                         placeholder="Type to search commands, files, settings…"

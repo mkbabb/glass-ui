@@ -143,6 +143,15 @@ export {
     CommandList,
     CommandSeparator,
     CommandShortcut,
+    type ComboboxEmptyProps,
+    type ComboboxGroupProps,
+    type ComboboxInputEmits,
+    type ComboboxInputProps,
+    type ComboboxItemEmits,
+    type ComboboxItemProps,
+    type ComboboxListEmits,
+    type ComboboxSeparatorProps,
+    type ComboboxValue,
     type CommandDialogEmits,
     type CommandDialogProps,
     type CommandEmits,
@@ -221,9 +230,12 @@ export {
 // substrate stays, imported by the sealed `<Popover trigger="hover">` union). The
 // HoverCard component + subpath fold onto ONE `Popover`. (clean break, no alias.)
 export { Label, type LabelProps, type LabelRequirement } from "./components/label";
-// `ui/multi-select` retired. A MultiSelect is a
-// Popover+Command composition over the same Combobox-family mechanism, so it folds
-// onto `<Combobox multiple>` (array v-model + chips-in-trigger). (clean break, no alias.)
+// `ui/multi-select` retired; no replacement. A MultiSelect was a Popover+Command
+// composition over the Combobox-family mechanism, and the library ships that
+// mechanism as `<Command>` — but there has never been a `<Combobox>` component
+// here, so the note this line used to carry pointed at a component that does not
+// exist. Build the composition, or pass `multiple` through to reka's ComboboxRoot
+// via `<Command>`'s attribute forward. (clean break, no alias.)
 export {
     NumberField,
     NumberFieldContent,
@@ -264,6 +276,7 @@ export {
     SelectGroup,
     SelectItem,
     SelectLabel,
+    SelectScrollButton,
     SelectSeparator,
     SelectTrigger,
     SelectValue,
@@ -276,10 +289,10 @@ export {
     type SelectItemSelectEvent,
     type SelectLabelProps,
     type SelectProps,
+    type SelectScrollButtonProps,
     type SelectSeparatorProps,
     type SelectTriggerProps,
     type SelectValueProps,
-    type SelectValueSlotProps,
 } from "./components/select";
 export { Separator, type SeparatorProps } from "./components/separator";
 // The side sheet is its own component again. It shares reka's DialogRoot + FocusScope

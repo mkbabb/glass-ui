@@ -28,9 +28,8 @@ import {
     SelectItemText as RekaSelectItemText,
 } from "reka-ui";
 import { cn } from "../_shared/class-names";
-import { menuRowClass, type MenuRowIndicator } from "../_shared/menu/menuRowClass";
+import { rowClass, type MenuRowIndicator } from "../_shared/menu/rowClass";
 import { fixedHostAttrs } from "../_shared/primitive";
-import { isSelectionValue } from "../_shared/selection";
 
 defineOptions({ name: "SelectItem", inheritAttrs: false });
 
@@ -39,15 +38,17 @@ const emit = defineEmits<SelectItemEmits>();
 const attrs = useAttrs();
 const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 
+/* No scalar guard here. `value` is a declared `SelectionValue` prop and reka
+ * echoes it straight back on `select` — the guard could only fire if reka handed
+ * back something it was never given, which is a reka bug and not a state this
+ * component can be in. A throw on an unreachable branch is a landmine, not
+ * honesty; the reachable seam (`Select`'s own `update:modelValue`) keeps its. */
 function selectItem(
     event: CustomEvent<{
         originalEvent: PointerEvent | KeyboardEvent;
         value?: unknown;
     }>,
 ): void {
-    if (!isSelectionValue(event.detail.value)) {
-        throw new TypeError("[glass-ui] SelectItem received a non-scalar value.");
-    }
     emit("select", event as SelectItemSelectEvent);
 }
 
@@ -63,25 +64,22 @@ const indicator = computed<MenuRowIndicator>(() =>
         :value="props.value"
         :disabled="props.disabled"
         :text-value="props.textValue"
-        :class="cn(menuRowClass(indicator), props.class)"
+        :class="cn(rowClass(indicator), props.class)"
         @select="selectItem"
     >
-        <!-- Reka's aria-selected remains the semantic state; this mark is decorative. -->
+        <!-- Reka's aria-selected remains the semantic state; this mark is decorative.
+             The mark sits on the LOGICAL start edge, inside the `ps-7` gutter the row
+             class reserves — so it can never land on top of the label, and an RTL
+             listbox mirrors both together. The ink is `currentColor`: the item's own
+             `color` IS the consumer's tint handle, so a second name for it
+             (`--select-dot-color`) only let two authorities disagree. -->
         <span
             v-if="indicator !== 'none'"
             aria-hidden="true"
-            class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center"
+            class="absolute start-2 flex h-3.5 w-3.5 items-center justify-center"
         >
             <RekaSelectItemIndicator>
-                <span
-                    class="inline-block w-2 h-2 rounded-pill"
-                    style="
-                        background-color: var(
-                            --select-dot-color,
-                            var(--glass-accent, currentColor)
-                        );
-                    "
-                ></span>
+                <span class="inline-block w-2 h-2 rounded-pill bg-current"></span>
             </RekaSelectItemIndicator>
         </span>
 

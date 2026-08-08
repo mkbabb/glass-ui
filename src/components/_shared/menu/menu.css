@@ -15,7 +15,7 @@
            the same `@layer components` at the same 0-1-0 specificity as
            `.interactive-item` (utilities/base.css) and is imported AFTER it by the
            source-order design stated at styles/index.css — so on every row that composes
-           BOTH (menuRowClass.ts, the four DropdownMenu items, CommandItem) this list is
+           BOTH (rowClass.ts, the four DropdownMenu items, CommandItem) this list is
            the one that paints, and any leg missing here is a leg with zero frames
            whatever base.css declares. Carrying the coherent set is the same cure
            `.button`/`.tap-squish` already carry against the same trap (see base.css
@@ -92,6 +92,25 @@
             color var(--engage-control-engage-release) var(--ease-standard),
             border-color var(--engage-control-engage-release) var(--ease-standard),
             box-shadow var(--engage-control-engage-release) var(--ease-standard);
+    }
+}
+
+/* ── .glass-menu-divider — the ONE divider ink in the menu family ──────────────
+   A rule BETWEEN rows of the same panel is an in-content seam, and the library
+   already has exactly one figure for that: `--ink-seam` (0.08, color-radius.css
+   §ink — break-even 0.0705, so it reads and does not shout). Select's separator
+   spelled 12%, Command's read `var(--border)`, and the two disagreed on the same
+   line inside the same plate. One class, one ink, both compose it — and because
+   the ink is a `color-mix` on `--foreground` it re-tints under `.dark` through the
+   same channel every other warm hairline reads. */
+@layer components {
+    .glass-menu-divider {
+        block-size: 1px;
+        background: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--ink-seam) * 100%),
+            transparent
+        );
     }
 }
 

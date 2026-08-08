@@ -1,203 +1,28 @@
-/* Shared field and portaled list surface styles.
- * Select content collision bounds remain precompiled.
- *
- * THE DEFECT: SelectContent.vue authored its
- * collision-bound as a Tailwind ARBITRARY-BRACKET utility
- *   [max-height:var(--reka-popper-available-height,60dvh)]
- * which is correct in SOURCE but compiles ONLY into a `dist/*.js` render-function
- * chunk no consumer content-scan reaches (and the P9 emitComponentUtilities
- * safelist rejects fully-arbitrary bracket tokens by construction). So in every
- * consumer the bound NEVER painted — `getComputedStyle(content).maxHeight === "none"`
- * — and a 16-item dropdown rendered 745px tall, overflowing a 900px viewport by
- * 125px (the value.js U-DROPDOWN capture, the binding RED evidence).
- *
- * THE FIX: move the bound to a PRECOMPILED rule that ships in `dist/glass-ui.css`
- * regardless of consumer JIT reach — it is a plain attribute-selector rule, not a
- * Tailwind utility, so it always emits. The cap is the kf donor's default
- * `min(24rem, 60dvh)` (kf design-idioms.css `--easing-dropdown-max-h`; the U8
- * bounded-scroll reference), TIGHTENED by reka's measured
- * `--reka-popper-available-height` on a short viewport via the inner `min()`.
- * SelectContent clips at that bound while SelectViewport owns the vertical scroll.
- * Keeping the viewport as the only scroll owner preserves Reka's active-option
- * visibility and scroll-button behavior without nested scrollports.
- *
- * --select-content-max-h is the ONE retint knob (a consumer widens/narrows the cap
- * by overriding it on any ancestor). The default folds reka's available-height in:
- * when reka reports a height (popper measured), the bound is the MIN of that and
- * the 24rem/60dvh ceiling, so the panel never exceeds the viewport AND never grows
- * past the comfortable ceiling.
- */
+/* ── .glass-control-edge — the keyed warm control rim (the cream-on-cream fix) ──
+   The form controls read `.control-surface` / `.input-pill` (control-surfaces.css)
+   which carry a border + fill but `box-shadow: none` — so over a warm cream field
+   the trigger's 1.5px border melts and the control reads as a flat cream smudge.
+   This register adds the SHIPPED keyed two-stop directional rim (the bright top/
+   right catch-light + the faint warm bottom/left under-shadow, `--glass-key` upper-
+   right) so the control reads as a lifted glass plate with a defined warm edge over
+   the field. ONE register shared by the Select trigger and its sibling form
+   controls. Composed, never re-declared: the rim is the SAME `--glass-rim-top` /
+   `--glass-rim-bottom` pair `.glass-capsule` reads, so `--glass-key` re-points BOTH
+   the capsule and the control edge from ONE handle (cel coherence).
 
-:root {
-    /* The comfortable ceiling — the kf donor default. */
-    --select-content-max-h: min(24rem, 60dvh);
-}
+   Compose the keyed edge UNDER any control-owned ring or shadow: a control with
+   its OWN box-shadow (the Switch thumb, the invalid ring on the pill) layers that
+   first, then the rim — the rim is the resting silhouette, the ring is the overlay,
+   and the pill's own rule wins by source order. The rim travels with the control on
+   the shared bezier (`.control-surface` already transitions box-shadow on
+   `--ease-standard`).
 
-[data-slot="select-content"] {
-    /* The collision-bound: the comfortable ceiling, tightened by reka's measured
-       available height on a short viewport. `--reka-popper-available-height` is
-       written by reka-ui's popper-positioner; on a tall viewport it exceeds the
-       ceiling (so the ceiling wins) and on a short one it clamps the panel to the
-       space below the trigger (so the panel bottoms inside the viewport). When reka
-       has not yet measured, the fallback is the ceiling alone. */
-    max-height: min(
-        var(--select-content-max-h),
-        var(--reka-popper-available-height, var(--select-content-max-h))
-    );
-    /* The bounded plate clips; SelectViewport is the only vertical scroll owner. */
-    overflow: hidden;
-}
-
-/* ════════════════════════════════════════════════════════════════════════
-   The welling WARM-GLASS listbox + the
-   keyed warm control EDGE. The Select is the REFERENCE consumer of the shared
-   field + capsule + accent + reveal union — every leg COMPOSES a shipped/sibling
-   register, ZERO new component, ZERO fork.
-
-   The three legs that live HERE (the consumer side):
-     · .glass-control-edge — the keyed two-stop warm rim every form control reads
-       so it has a DEFINED edge over the field (fixes the trigger box-shadow:none
-       cream-on-cream melt). Composes the SHIPPED `--glass-rim-top`/`--glass-rim-
-       bottom` keyed pair (the `--glass-key` upper-right cel key) — NOT a select-
-       private border, NOT a re-minted rim.
-     · the menu plate WARM FLOOR + α-drop — the menu reads the SHIPPED warm-capsule
-       floor (`--glass-capsule-warm` at `--glass-capsule-warm-floor`, the proven
-       meanChroma ≥ 0.02 source) so it is warm-cream even over a flat page, AND the
-       plate α drops so the warmed source + the portal field TRANSMIT.
-     · the portal warm FIELD — a clipped menu-local layer carrying the route's
-       `--field-h` (re-emitted on the portal root) so the menu transmits its route
-       identity even where the page field is faint behind the body plate.
-   ════════════════════════════════════════════════════════════════════════ */
+   THE PORTALLED LIST SURFACES ARE NO LONGER HERE. The listbox plate, its collision
+   bound and the warm portal field moved to `styles/glass/overlay-plate.css` — they
+   are the OVERLAY register, shared with the menu and panel families, and a file
+   named for field controls was never their home. */
 @layer components {
-    /* ── .glass-control-edge — the keyed warm control rim (the cream-on-cream fix) ──
-       The form controls read `.control-surface` / `.input-pill` (control-surfaces.css)
-       which carry a border + fill but `box-shadow: none` — so over a warm cream field
-       the trigger's 1.5px border melts and the control reads as a flat cream smudge.
-       This register adds the SHIPPED keyed two-stop directional rim (the bright top/
-       right catch-light + the faint warm bottom/left under-shadow, `--glass-key` upper-
-       right) so the control reads as a lifted glass plate with a defined warm edge over
-       the field. ONE register shared by the Select trigger and sibling form controls —
-       the DRY bar cleared by construction. Composed (not re-declared): the rim is the
-       SAME `--glass-rim-top`/
-       `--glass-rim-bottom` pair `.glass-capsule` reads, so `--glass-key` re-points BOTH
-       the capsule and the control edge from ONE handle (cel coherence). */
     .glass-control-edge {
         box-shadow: var(--glass-rim-top), var(--glass-rim-bottom);
     }
-    /* Compose the keyed edge UNDER any control-owned ring/shadow: a control with its
-       OWN box-shadow (the Switch thumb, the focus ring on the pill) layers its shadow
-       FIRST, then the rim — the rim is the resting silhouette, the ring is the focus
-       overlay (the pill's `:focus-visible` box-shadow wins by source order + its own
-       rule). The rim travels with the control on the SHARED bezier (the pill/control-
-       surface already transition box-shadow on `--ease-standard`). */
-
-    /* The menu plate is the OVERLAY rung's own veil with the capsule's warm floor over
-       it — two layers, both flat, both reading the ONE recipe. The adaptive-tint layer
-       is GONE (the veil already carries the earned darken; a second layer pushing the
-       same plate the same way is the double-writer the material law forbids), and so is
-       the `--select-plate-alpha` solidity knob with its own per-mode fork: a menu that
-       needs more body needs a heavier RUNG, and the dark arm already carries one more
-       step of ink at every rung. `prefers-reduced-transparency` reaches it through
-       `--glass-level`, like every other plate. */
-    [data-slot="select-content"],
-    [data-slot="combobox-list"] {
-        --glass-veil-tier: var(--glass-veil-overlay);
-        @apply glass-plate;
-        background-image: linear-gradient(
-            color-mix(
-                in oklab,
-                oklch(0.9 0.05 75 / 0),
-                var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
-            ),
-            color-mix(
-                in oklab,
-                oklch(0.9 0.05 75 / 0),
-                var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
-            )
-        );
-        /* Add the static cartoon under-stamp beneath the floating stack. */
-        box-shadow:
-            var(--glass-material-rim), var(--glass-under-shadow-vivid),
-            var(--glass-shadow-floating), var(--shadow-cartoon-lg);
-    }
-    /* ── .glass-field-portal — the portal-local warm field (route identity) ──
-       The menu portals to <body>, OUTSIDE the route's field, so its `backdrop-filter`
-       has nothing warm to transmit. A clipped menu-local layer BEHIND the plate (z -1,
-       NO backdrop-filter on it — glass-cannot-sample-glass avoided by construction)
-       paints a 3-stop warm spine keyed to the route's `--field-h` (re-emitted on the
-       portal root via `data-field-palette` → `--field-h`). `inset: 0` (clipped INSIDE
-       — the blur bends it THROUGH the plate as real L-variance, NOT an `inset:-20%`
-       halo leaking around the box). Defaults to `--field-h: 48` (forms terracotta)
-       when the route does not re-emit, so a bare Select still reads warm. */
-    .glass-field-portal {
-        position: relative;
-    }
-    .glass-field-portal::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        pointer-events: none;
-        border-radius: inherit;
-        background:
-            radial-gradient(
-                70% 60% at 24% 22%,
-                oklch(0.92 0.08 var(--field-h, 48) / 0.55),
-                transparent 72%
-            ),
-            radial-gradient(
-                64% 58% at 82% 80%,
-                oklch(0.88 0.07 calc(var(--field-h, 48) + 18) / 0.5),
-                transparent 70%
-            ),
-            radial-gradient(
-                60% 62% at 60% 40%,
-                oklch(0.9 0.06 calc(var(--field-h, 48) - 14) / 0.48),
-                transparent 74%
-            );
-    }
-    /* DARK arm (PLAIN per-mode, not :global()/light-dark()) — the dark field stops lift
-       to a real glow band (oklch L ~0.22–0.30, higher chroma) so the field-thesis is met
-       in dark, not a wash lost in near-black. */
-    .dark .glass-field-portal::before {
-        background:
-            radial-gradient(
-                70% 60% at 24% 22%,
-                oklch(0.3 0.1 var(--field-h, 48) / 0.55),
-                transparent 72%
-            ),
-            radial-gradient(
-                64% 58% at 82% 80%,
-                oklch(0.26 0.09 calc(var(--field-h, 48) + 18) / 0.5),
-                transparent 70%
-            ),
-            radial-gradient(
-                60% 62% at 60% 40%,
-                oklch(0.28 0.08 calc(var(--field-h, 48) - 14) / 0.48),
-                transparent 74%
-            );
-    }
-    /* honest-degraded arm — engines without oklch() get an hsl warm spine, never gray. */
-    @supports not (color: oklch(0.9 0.08 48)) {
-        .glass-field-portal::before {
-            background: radial-gradient(
-                70% 60% at 24% 22%,
-                hsl(var(--field-h, 48) 60% 88% / 0.5),
-                transparent 72%
-            );
-        }
-        .dark .glass-field-portal::before {
-            background: radial-gradient(
-                70% 60% at 24% 22%,
-                hsl(var(--field-h, 48) 45% 26% / 0.55),
-                transparent 72%
-            );
-        }
-    }
 }
-
-/* ── PRM is colour-static here — the field + floor + edge + cartoon shadow are PAINT,
-   not motion, so they REMAIN under `prefers-reduced-motion: reduce` (un-gray and
-   selection-legibility need no motion). The reveal/pour/chevron motion legs
-   live in their own home recipes (reveal.css / menu.css) — this consumer file
-   introduces no motion to gate. */

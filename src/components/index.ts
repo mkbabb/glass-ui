@@ -14,7 +14,7 @@ export * from "./dropdown-menu";
 // `./hover-card` RETIRED (folds onto `<Popover trigger="hover">`).
 export * from "./input";
 export * from "./label";
-// `./multi-select` RETIRED (folds onto `<Combobox multiple>`).
+// `./multi-select` RETIRED; no replacement (there is no `<Combobox>` component).
 export * from "./number-field";
 export * from "./popover";
 export * from "./progress";

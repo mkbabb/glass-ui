@@ -5,7 +5,12 @@ import type { ComboboxValue } from "../_shared/selection";
 
 export interface CommandProps {
     modelValue?: ComboboxValue;
+    /** Controlled disclosure. Leave unset and the palette owns its own state. */
     open?: boolean;
+    /** Initial disclosure for the uncontrolled arm. An inline palette shows its
+     *  list, so this is `true` — but as a starting value reka can move off, never
+     *  the pinned literal `open` used to be. */
+    defaultOpen?: boolean;
     disabled?: boolean;
     class?: HTMLAttributes["class"];
     surface?: Surface;

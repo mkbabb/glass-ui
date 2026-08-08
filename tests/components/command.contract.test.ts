@@ -140,12 +140,12 @@ async function settleDialog() {
 }
 
 describe("Command contract", () => {
-    it("keeps its optional uncontrolled model scalar at runtime", async () => {
-        const Host = defineComponent({
+    const modelHost = (rootAttrs: string) =>
+        defineComponent({
             components: { Command, CommandGroup, CommandItem, CommandList },
-            setup: () => ({ updates: ref<Array<string | number | null>>([]) }),
+            setup: () => ({ updates: ref<unknown[]>([]) }),
             template: `
-                <Command multiple @update:model-value="updates.push($event)">
+                <Command ${rootAttrs} @update:model-value="updates.push($event)">
                     <CommandList>
                         <CommandGroup heading="Commands">
                             <CommandItem value="first">First command</CommandItem>
@@ -154,17 +154,56 @@ describe("Command contract", () => {
                 </Command>
             `,
         });
-        const wrapper = mount(Host, { attachTo: document.body });
+
+    it("keeps its optional uncontrolled model scalar at runtime", async () => {
+        const wrapper = mount(modelHost(""), { attachTo: document.body });
         mounted.push(wrapper);
         const option = wrapper.get<HTMLElement>('[role="option"]');
 
         await option.trigger("click");
         await nextTick();
 
-        expect((wrapper.vm as unknown as { updates: string[] }).updates).toEqual([
+        expect((wrapper.vm as unknown as { updates: unknown[] }).updates).toEqual([
             "first",
         ]);
         expect(option.attributes("aria-selected")).toBe("true");
+    });
+
+    /* [BK #81 W-PICKER, 2026-08-08 — the case above used to pass `multiple` on the
+     * root while asserting a SCALAR emission, and it passed for the wrong reason:
+     * `Command` declared `inheritAttrs: false` with no attrs bind, so `multiple`
+     * (and eleven other reka `ComboboxRoot` props) were written by the consumer,
+     * accepted by Vue, and silently dropped. The scalar arm is now genuinely
+     * scalar — no `multiple` — and the forward gets its own case, which is the only
+     * thing that can tell a working forward from a sink.] */
+    it("forwards undeclared reka root props — `multiple` reaches the model", async () => {
+        const wrapper = mount(modelHost("multiple"), { attachTo: document.body });
+        mounted.push(wrapper);
+        const option = wrapper.get<HTMLElement>('[role="option"]');
+
+        await option.trigger("click");
+        await nextTick();
+
+        // An array, not a scalar: reka's multi-select arm is live. The widened
+        // runtime guard must let this through — a throw on a legal reachable state
+        // would be a landmine planted by the very cure that made it reachable.
+        expect((wrapper.vm as unknown as { updates: unknown[] }).updates).toEqual([
+            ["first"],
+        ]);
+        expect(option.attributes("aria-selected")).toBe("true");
+    });
+
+    it("BITE — the widened guard still refuses a genuinely non-scalar entry", () => {
+        const wrapper = mount(Command, { attachTo: document.body });
+        mounted.push(wrapper);
+        const root = wrapper.findComponent({ name: "ComboboxRoot" });
+
+        expect(() => root.vm.$emit("update:modelValue", { not: "scalar" })).toThrow(
+            TypeError,
+        );
+        expect(() => root.vm.$emit("update:modelValue", [{ not: "scalar" }])).toThrow(
+            TypeError,
+        );
     });
 
     it("leaves inline focus with the caller", async () => {

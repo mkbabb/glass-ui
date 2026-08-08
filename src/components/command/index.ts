@@ -14,3 +14,18 @@ export type {
     CommandListProps,
     CommandProps,
 } from "./types";
+/* The Combobox-family prop/emit types this subpath's own components DECLARE. They
+   lived in `_shared/`, unreachable from any published entry, so five of the nine
+   members had a public component and a private prop type — a consumer could mount
+   `<CommandItem>` and not name what it takes. */
+export type {
+    ComboboxEmptyProps,
+    ComboboxGroupProps,
+    ComboboxInputEmits,
+    ComboboxInputProps,
+    ComboboxItemEmits,
+    ComboboxItemProps,
+    ComboboxListEmits,
+    ComboboxSeparatorProps,
+    ComboboxValue,
+} from "../_shared/selection";

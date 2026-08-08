@@ -4,7 +4,11 @@
     height: 100%;
     flex-direction: column;
     overflow: hidden;
-    border-radius: var(--radius-panel);
+    /* The palette is a PLATE, so it takes the plate rung — the same
+       `--radius-card` 16 the Select listbox and the menu family read. It used to
+       take `--radius-panel` 12, which made the one corner a consumer sees at the
+       same time as a dropdown disagree with it by 4px. */
+    border-radius: var(--radius-card);
     color: var(--popover-foreground);
 }
 
@@ -16,7 +20,10 @@
 .command__input-wrapper {
     display: flex;
     align-items: center;
-    border-block-end: 1px solid var(--border);
+    /* The seam under the search field is the SAME in-content ink as the divider
+       between groups (`--ink-seam` 0.08) — it is the same kind of line. */
+    border-block-end: 1px solid
+        color-mix(in oklab, var(--foreground) calc(var(--ink-seam) * 100%), transparent);
     padding-inline: 0.75rem;
 }
 
@@ -37,7 +44,7 @@
 .command__input {
     /* No border-radius: this is a transparent, borderless RekaComboboxInput with no
        painted plate or clip of its own. The Command panel owns the outer corner
-       (`--radius-panel`) and clips the composition; the wrapper owns the divider. A
+       (`--radius-card`) and clips the composition; the wrapper owns the divider. A
        radius here is paint-dead and only mints latent coupling. If a future change
        gives this input a painted plate, it must choose an explicit field/control role
        then — it must not inherit the media-tile rung by accident. */
@@ -66,11 +73,21 @@
 }
 
 .command__list {
+    /* The bound is the family's ONE measure (`--overlay-max-block`, offsets.css),
+       which now resolves `min(24rem, 60dvh)` — a comfortable ceiling that a short
+       viewport tightens. It used to be a bare `60vh`, which on mobile measures
+       against the *largest* viewport and so let the list run under the URL bar. */
     max-height: var(--overlay-max-block);
+    /* The BLOCK axis is `.fading-scroll--y`'s (utilities/base-misc.css) — the list
+       composes it for the edge feather, and that class already declares
+       `overflow-y: auto`. Re-declaring it here was a same-value duplicate: one
+       authority per axis, so only the inline axis this component actually owns is
+       stated. */
     overflow-x: hidden;
-    overflow-y: auto;
     scrollbar-gutter: stable;
-    padding: var(--panel-padding);
+    /* The plate pad — one axis, `--overlay-pad` 12, shared with the menu family.
+       `--panel-padding`'s 6 was a fourth number off the space series. */
+    padding: var(--overlay-pad);
 }
 
 .command__group {
@@ -80,45 +97,37 @@
 }
 
 .command__group-label {
-    padding: 0.375rem 0.5rem;
+    padding: 0.25rem 0.5rem;
     color: var(--muted-foreground);
     font-size: var(--dropdown-text-secondary);
     font-weight: 500;
 }
 
-.command__item {
-    position: relative;
-    display: flex;
-    width: 100%;
-    align-items: center;
-    padding: 0.375rem 0.5rem;
-    cursor: default;
-    outline: none;
-    color: inherit;
-    font-size: var(--dropdown-text);
-    user-select: none;
-}
-
-.command-dialog__content .command__item {
-    padding-block: 0.75rem;
-}
-
+/* `.command__item` carries NO geometry: the row register is `rowClass()`
+   (_shared/menu/rowClass.ts), the same one SelectItem reads. What survives here is
+   the dialog scale-up hook and the disabled arm's pointer treatment — and even the
+   disabled arm's opacity/cursor come from the row class, so this rule states only
+   what a class list cannot. */
 .command__item[data-disabled] {
     pointer-events: none;
-    cursor: not-allowed;
-    opacity: var(--opacity-disabled);
 }
 
 .command__empty {
-    padding-block: 1.5rem;
+    /* 20, on the space series. The former 24 was the one number in this file that
+       belonged to no rung. */
+    padding-block: 1.25rem;
     text-align: center;
     font-size: var(--dropdown-text);
 }
 
+/* The separator's LINE is `.glass-menu-divider`'s (_shared/menu/menu.css) — the
+   family's one divider ink, composed at the element. This rule owns only the
+   bleed, which is geometry this panel's inset decides and the shared class
+   cannot. Re-declaring `background` here would beat the shared class outright:
+   this file ships UNLAYERED via `<style src>`, so anything it states wins over
+   every `@layer components` rule in the sheet regardless of specificity. */
 .command__separator {
-    height: 1px;
     margin-inline: -0.25rem;
-    background: var(--border);
 }
 
 .command__shortcut {

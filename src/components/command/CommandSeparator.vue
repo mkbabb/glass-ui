@@ -16,7 +16,7 @@ const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
     <RekaComboboxSeparator
         v-bind="forwardedAttrs"
         data-slot="command-separator"
-        :class="cn('command__separator', props.class)"
+        :class="cn('glass-menu-divider command__separator', props.class)"
     >
         <slot />
     </RekaComboboxSeparator>
