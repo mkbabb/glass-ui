@@ -50,7 +50,7 @@ for (const [k, v] of declMap(read("demo/shell/configurator/presets/neutral.css")
 }
 
 const squircle = read("src/styles/glass/squircle.css");
-const fieldControl = read("src/components/_shared/field/field-control.css");
+const fieldControl = read("src/components/_shared/field/control.css");
 
 // The border-radius declared inside the FIRST rule whose selector block matches
 // `re` — parses the CSS text (happy-dom runs no cascade, so the geometry OUTCOME

@@ -164,10 +164,15 @@ const rootRuntimeExports = [
     "DropdownMenuSubContent",
     "DropdownMenuSubTrigger",
     "DropdownMenuTrigger",
-    "NumberFieldContent",
-    "NumberFieldDecrement",
-    "NumberFieldIncrement",
+    // [2026-08-08 · BK #82 W-FIELD] `NumberFieldContent` retired with the wrapper
+    // node it rendered and the two byte-twin steppers folded into one
+    // `NumberFieldStep direction=`. This is the LANE's own component retirement, not
+    // a bump of the subpath surface: the four `./input`/`./textarea`/`./checkbox`/
+    // `./radio-group` mints and the `./forms` retirement remain the ONE batched
+    // export-surface cut's (CWT-3 §2 C-10), and `regen-exports.mjs` still reproduces
+    // exportKeys 66/66 EXACT.
     "NumberFieldInput",
+    "NumberFieldStep",
     "PopoverContent",
     "PopoverTrigger",
     "RadioGroupItem",
@@ -175,17 +180,17 @@ const rootRuntimeExports = [
     "SelectGroup",
     "SelectItem",
     "SelectLabel",
-    "SelectSeparator",
-    "SelectTrigger",
-    "SelectValue",
-    // The side sheet is its own component again (BK #38): `SheetContent` is a ROOT
-    // barrel key. The `./sheet` package subpath is a separate byte and rides the one
     // [BK #81 W-PICKER] `SelectScrollUpButton` + `SelectScrollDownButton` were two
     // SFCs reachable from neither barrel — the listbox's scroll affordance could not
     // be restyled or replaced at all. ONE component keyed by `direction`, published
     // here and on `./select`. A types-and-one-component addition to an existing
     // surface, not a subpath mint: C-10's batched export cut is untouched.
     "SelectScrollButton",
+    "SelectSeparator",
+    "SelectTrigger",
+    "SelectValue",
+    // The side sheet is its own component again (BK #38): `SheetContent` is a ROOT
+    // barrel key. The `./sheet` package subpath is a separate byte and rides the one
     // batched export cut (RT-38D → #65) — this list is the root surface, not the map.
     "SheetContent",
     "TableBody",
@@ -335,15 +340,15 @@ const subpathRuntimeExports = [
     { subpath: "select", surface: SelectSurface, name: "SelectItem" },
     { subpath: "select", surface: SelectSurface, name: "SelectTrigger" },
     { subpath: "select", surface: SelectSurface, name: "SelectValue" },
+    // [BK #81 W-PICKER] The two ends of the listbox were two SFCs, neither
+    // reachable from the barrel — so a consumer could not restyle or replace the
+    // scroll affordance at all. ONE component keyed by `direction`, published.
+    { subpath: "select", surface: SelectSurface, name: "SelectScrollButton" },
     { subpath: "data-table", surface: DataTableSurface, name: "DataTable" },
 ] as const;
 
 const retiredSubpathRuntimeMembers = [
     { subpath: "card", surface: CardSurface, name: "ScrollCard" },
-    // [BK #81 W-PICKER] The two ends of the listbox were two SFCs, neither
-    // reachable from the barrel — so a consumer could not restyle or replace the
-    // scroll affordance at all. ONE component keyed by `direction`, published.
-    { subpath: "select", surface: SelectSurface, name: "SelectScrollButton" },
     { subpath: "card", surface: CardSurface, name: "ScrollCardHeader" },
     // 0 external importers across the twelve-repo census; one in-repo site; the
     // body was four grid placements against a `:has()` fork in the header.

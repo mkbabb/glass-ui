@@ -1,0 +1,325 @@
+/* _shared/field/control.css — THE ONE FIELD REGISTER.
+
+   `.field-control` is the geometry + material + type + state of every line/block
+   TEXT surface in the library: Input · Textarea · NumberFieldInput · TagsInput
+   (CWT-3 §2 C-5 — the `.control-bit` register owns the BITS, this one owns the
+   text surfaces; both consume the same token law). It composes
+   `.glass-control-edge` (glass/control-edge.css) for its resting silhouette and
+   composes nothing else.
+
+   THREE LAWS, each closing a defect by construction rather than by discipline:
+
+   1 · LONGHANDS ONLY. This file previously wrote `border:` and `background:`
+       shorthands, which reset `border-color`/`background-image` and so silently
+       cancelled every channel `.glass-defined` composed onto the same element —
+       a plate register the field carried in four class lists and never painted.
+       `.glass-defined` is struck from those lists (a plate is not a well: its
+       plate-over-floor image stack is a third transmissivity kill under a fill
+       ruled transmissive), and the shorthands are gone, so no future composition
+       can be cancelled by a reset the author did not see.
+
+   2 · BOX-SHADOW APPENDS, NEVER REPLACES. No rule in this file declares
+       `box-shadow`. The rim is declared exactly ONCE, in `.glass-control-edge`,
+       whose list ends in two consumer-owned slots — `--control-edge-inner` (the
+       well) and `--control-edge-ring` (the overlay ring) — that default to a
+       zero-alpha leg. Focus and invalid re-point a slot; they cannot delete the
+       silhouette. (HEAD's focus rule replaced the rim outright: legs went 2 → 2 →
+       1 and the resting material vanished at the moment the user engaged it.)
+       Both `.field-control` and `.glass-control-edge` are (0,1,0) in the same
+       `@layer components`, one arriving with the SFC and one from the root sheet,
+       so a second `box-shadow` here would be resolved by bundler source order and
+       nothing else — the collision class #83 convicted at CURE-4.
+
+   3 · THE RING LIVES ON `outline`. Focus arrives as a real 2px outline at the
+       perimeter rung with a 2px offset, so it cannot be defeated by a
+       `box-shadow: none` anywhere downstream, plus the house A1 halo in the ring
+       slot. `outline: none` — which this file shipped, on the one element in a
+       form a keyboard user must be able to find — is gone. */
+@layer components {
+    .field-control {
+        /* ── THE SIZE THREAD ──
+           ONE mechanism. `data-size` re-points this height and nothing else:
+           the font is invariant (see THE TYPE RUNG) and the padding is a
+           constant, so `sm`/`md`/`lg` differ in exactly one resolved value and
+           NumberField's stepper clearance reads it off this same element. */
+        --field-control-height: var(--control-h-md);
+
+        /* ── THE ONE INK ──
+           A control's own edge is the PERIMETER rung (`--ink-perimeter`, 0.48 —
+           tokens/color-radius.css §1.2, the 3.0:1 rung landed by #68). HEAD wrote
+           1.5px at 0.05, a composited boundary mass of 0.075 against the 0.48 the
+           ladder rules — 6.4× short, and a HALF-PIXEL stroke on top of it. One
+           rung, one width: −0.5px of stroke buys 6.4× of mass. */
+        --field-control-ink: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--ink-perimeter) * 100%),
+            transparent
+        );
+
+        /* ── THE WELL ──
+           The inner lip that makes a text surface read as a RECESS rather than a
+           plate. It rides the SEAM rung at rest (`--ink-seam`, 0.08 — "a flush
+           plate's own edge") and the EDGE rung on hover (`--ink-edge`, 0.16), so
+           the deepening is a step ALONG the landed ink ladder rather than the
+           0.06 → 0.10 pair the spec drafted before that ladder existed. */
+        --field-control-well: var(--ink-seam);
+        --control-edge-inner: inset 0 1px 2px
+            color-mix(
+                in oklab,
+                var(--foreground) calc(var(--field-control-well) * 100%),
+                transparent
+            );
+
+        /* ── THE FILL ──
+           The shared control REST register handle. It resolves `--input-on-glass`,
+           which is OPAQUE at HEAD (α 1.0, `tokens/on-glass-fg.css:37`) — so the
+           `backdrop-filter` below is currently inert and the field sits ~6 L
+           ABOVE the page where A10 rules a recess. SEAM, NOT A WORKAROUND: the
+           token's transmissive re-anchor is #22 W-FROST's cut and is the second
+           half of a two-part kill (the first, `material.css`'s nested-cell
+           blanket, has already landed). This lane does not re-derive the fill
+           locally — that is two mechanisms tracking one value, the exact class
+           T-5 refused — so gate G-F2 ships KNOWN-RED with its owner named. */
+        --control-surface-bg: var(--input-on-glass);
+
+        /* ── THE CLOCK ──
+           Liquid weight on every channel the field can change. `--spring-press`
+           is the house press curve (a `linear()` spring, not a bezier), settling
+           in `--duration-control` (0.12s). The invalid rung re-points BOTH below.
+           This register had NO transition, NO `:hover` and NO media query at all:
+           the values were dropped when the pill register was re-homed and the
+           de-animation shipped as a refactor. */
+        --field-control-duration: var(--duration-control);
+        --field-control-ease: var(--spring-press);
+
+        display: block;
+        inline-size: 100%;
+        max-inline-size: 100%;
+        min-inline-size: 0;
+
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--field-control-ink);
+        background-color: var(--control-surface-bg);
+        backdrop-filter: var(--control-surface-blur);
+
+        /* 12px, the space series' third rung (16 was off it). The ≤768px
+           transposition to 8 is below — this file's first media query. */
+        padding-inline: calc(0.75rem * var(--ui-scale));
+        color: var(--foreground);
+        caret-color: currentColor;
+
+        /* ── THE TYPE RUNG ──
+           The fluid clamp ALONE. `--control-text` is `--type-small × --ui-scale`,
+           and the second factor escapes the clamp the first one exists to impose:
+           16.40px at 1440 fine becomes 24.60px at coarse, past the clamp's own
+           20px ceiling and off every rung of the ladder. The field reads the
+           bounded rung directly so its type is invariant across `sm`/`md`/`lg`
+           AND across `--ui-scale` — comfort scales the BOX, not the letterform.
+           The shared `--control-text{,-sm}` cure is library-wide and routed to
+           the PROPORTION adoption wave; this is the lane's local re-point. */
+        font: inherit;
+        font-size: var(--type-small);
+
+        /* The ring's RESTING colour, at ZERO alpha. `outline-color`'s initial
+           value is `currentColor` — fully opaque `--foreground` — so without
+           this the transition below ran the ring from opaque INK down to the
+           0.48 rung: the ring flashed in at full mass and faded back (measured
+           mid-flight at 0.571). Interpolation is premultiplied, so a zero-alpha
+           start fades IN without passing through a colour. */
+        outline-color: transparent;
+
+        transition:
+            background-color var(--field-control-duration)
+                var(--field-control-ease),
+            border-color var(--field-control-duration) var(--field-control-ease),
+            box-shadow var(--field-control-duration) var(--field-control-ease),
+            outline-color var(--field-control-duration) var(--field-control-ease),
+            backdrop-filter var(--field-control-duration)
+                var(--field-control-ease);
+    }
+
+    /* ── GEOMETRY, per kind ──
+       Two geometries, four shells, and the radius rungs are #23 W-RADIUS-ROLE's
+       to name: a single-line field keeps the stadium (`--radius-pill`, clamped by
+       the engine to half its own block-size), a multi-line box does not (a box is
+       not a stadium — `--radius-field`). This lane's spec drafted "10px
+       everywhere"; the landed 7-role spine — which §9 routes this exact question
+       to — ruled otherwise and deleted the third fork (a dialog-ancestry override
+       with a nine-line apologia) on the way. The spine wins; nothing here
+       re-litigates it. */
+    .field-control[data-kind="input"] {
+        block-size: var(--field-control-height);
+        border-radius: var(--radius-pill);
+    }
+
+    .field-control[data-kind="textarea"] {
+        /* ── GROWTH ──
+           `field-sizing: content` is the DEFAULT, not a prop, and the ceiling is
+           one `:root` token. The FLOOR is the half that has to be BUILT rather
+           than named: under `field-sizing: content` the engine sizes to the
+           content box and never consults `rows` at all — measured at this cut,
+           `rows` 1 / 3 / 8 all render a single line, while the same textarea
+           WITHOUT `field-sizing` honours `rows="3"`. A register that says "the
+           floor is rows" and then leaves the attribute alone ships a floor that
+           does not exist, which is exactly what HEAD's blanket
+           `min-block-size: max(5lh, …)` was replaced by.
+           So `Textarea.vue` stamps the attribute's value into `--field-rows` and
+           the floor is computed from it: N line boxes, plus this rule's own
+           `padding-block` on both sides, plus the register's own `border-width`
+           on both sides — the box is `border-box`, and WITHOUT the border term
+           the floor lands 2px under the N-line box, so an empty `rows="3"` would
+           step 2px taller the moment its third line arrived. Every term is read
+           off this file; none is a remembered literal. The default is 2 — the
+           HTML default `rows` a bare `<textarea>` carries — so an author who
+           names nothing gets the platform's own answer. Typed `attr()` would
+           read the attribute directly and is REFUSED: Safari does not support
+           it, and a floor that exists on one engine is not a floor. `resize`
+           remains purely the drag handle. */
+        field-sizing: content;
+        min-block-size: calc(
+            var(--field-rows, 2) * 1lh + 2 * (0.75rem * var(--ui-scale)) + 2px
+        );
+        max-block-size: var(--textarea-content-max);
+        border-radius: var(--radius-field);
+        padding-block: calc(0.75rem * var(--ui-scale));
+        line-height: var(--type-leading-body);
+        overflow: auto;
+    }
+
+    .field-control[data-size="sm"] {
+        --field-control-height: var(--control-h-sm);
+    }
+
+    .field-control[data-size="lg"] {
+        --field-control-height: var(--control-h-lg);
+    }
+
+    .field-control::placeholder {
+        color: var(--muted-foreground);
+    }
+
+    /* ── HOVER — the well deepens by one ink rung, the blur by one radius rung.
+       Guarded on a real pointer: a hover answer that fires on a touch tap is a
+       stuck state. The blur leg rides the same W-FROST fence as the fill (an
+       opaque fill makes any backdrop radius inert); the WELL is the leg that
+       paints today, so the affordance is real and not a promise. */
+    @media (hover: hover) {
+        .field-control:hover:not(
+                [data-state="disabled"],
+                [data-state="readonly"]
+            ) {
+            --field-control-well: var(--ink-edge);
+            --control-surface-blur: var(--glass-blur-floating);
+        }
+    }
+
+    /* ── FOCUS — an outline, not a shadow swap. The ring is the perimeter rung at
+       full mass with a 2px offset (so it reads OUTSIDE the border rather than
+       recolouring it), the border keeps its resting ink, and the A1 halo lands in
+       the ring slot. Nothing about the resting silhouette moves. */
+    .field-control:focus-visible {
+        outline: var(--focus-ring-width) solid var(--field-control-ink);
+        outline-offset: 2px;
+        --control-edge-ring: 0 0 8px
+            color-mix(in srgb, var(--focus-ring-color) 15%, transparent);
+    }
+
+    /* ── INVALID — ONE grammar. The `:is()` is a single selector serving all three
+       trigger paths: native constraint validation (`:user-invalid`), the `invalid`
+       prop, and a bare `aria-invalid` attribute (both of the latter reach
+       `[data-state="invalid"]` through the chassis). The lane shipped three
+       grammars and the family four. The 2px width bump is struck — a boundary that
+       changes WIDTH on validity reflows the text inside it — and the ring APPENDS
+       in the overlay slot instead of replacing the rim. The arrival is the one
+       rung on a bezier: an error must not bounce. */
+    .field-control:is(:user-invalid, [data-state="invalid"]) {
+        --field-control-duration: var(--duration-fast);
+        --field-control-ease: var(--ease-out);
+        --control-surface-bg: color-mix(
+            in srgb,
+            var(--destructive) 8%,
+            var(--input-on-glass)
+        );
+        --control-edge-ring: var(--invalid-ring);
+        border-color: var(--destructive);
+    }
+
+    .field-control:is(:user-invalid, [data-state="invalid"]):focus-visible {
+        outline-color: var(--destructive);
+        --control-edge-ring:
+            var(--invalid-ring),
+            0 0 8px color-mix(in srgb, var(--destructive) 15%, transparent);
+    }
+
+    /* ── READONLY — a surface you can select but not author. The fill steps one
+       rung further down and the CARET goes transparent: HEAD left a blinking
+       insertion point in a field that refuses every keystroke, which is the
+       clearest possible false affordance a text control can paint. */
+    .field-control[data-state="readonly"] {
+        --control-surface-bg: color-mix(
+            in oklab,
+            var(--input-on-glass),
+            var(--muted) 18%
+        );
+        caret-color: transparent;
+        cursor: text;
+    }
+
+    /* ── DISABLED — dim, do not shrink (A4). `opacity: 0.5` on the host took the
+       geometry, the perimeter and the placeholder down together, so a disabled
+       field lost its BOUNDARY as well as its authority — it stopped reading as a
+       field at all. The box, the border width and the corner are untouched at full
+       alpha; only the two inks soften, and the fill loses its chroma. */
+    .field-control[data-state="disabled"] {
+        --field-control-ink: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--ink-perimeter) * 45%),
+            transparent
+        );
+        --control-surface-bg: color-mix(
+            in oklab,
+            var(--input-on-glass),
+            var(--muted) 40%
+        );
+        color: color-mix(in oklab, var(--foreground) 45%, transparent);
+        cursor: not-allowed;
+    }
+
+    /* ── THE DRAG HANDLE — `resize` is the handle and only the handle now that
+       growth is the register's default; `content` left the union (it conflated
+       two axes and left `rows` dead). Default is `vertical`. */
+    .field-control[data-kind="textarea"][data-resize="none"] {
+        resize: none;
+    }
+
+    .field-control[data-kind="textarea"][data-resize="horizontal"] {
+        resize: horizontal;
+    }
+
+    .field-control[data-kind="textarea"][data-resize="both"] {
+        resize: both;
+    }
+
+    .field-control[data-kind="textarea"][data-resize="vertical"] {
+        resize: vertical;
+    }
+
+    /* The register's first media query. Inline padding transposes 12 → 8 where
+       the viewport is the scarce axis. */
+    @media (width <= 768px) {
+        .field-control {
+            padding-inline: calc(0.5rem * var(--ui-scale));
+        }
+    }
+
+    /* PRM. The engagement rungs still ARRIVE — a focus ring that never paints is
+       an accessibility defect, not a courtesy — they just arrive at once. Paired
+       with the live arm above deliberately: a reduce arm that passes on a tree
+       with no transitions at all proves nothing. */
+    @media (prefers-reduced-motion: reduce) {
+        .field-control {
+            --field-control-duration: 0.01ms;
+        }
+    }
+}

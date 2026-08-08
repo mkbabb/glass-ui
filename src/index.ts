@@ -236,15 +236,17 @@ export { Label, type LabelProps, type LabelRequirement } from "./components/labe
 // here, so the note this line used to carry pointed at a component that does not
 // exist. Build the composition, or pass `multiple` through to reka's ComboboxRoot
 // via `<Command>`'s attribute forward. (clean break, no alias.)
+// `NumberFieldContent` retired with the wrapper node it existed to render (sole
+// child on 5 of 5 mounts; the root IS the grid now), and `NumberFieldIncrement` /
+// `NumberFieldDecrement` folded into ONE `NumberFieldStep direction=` — they were
+// byte-twins modulo four tokens. Clean break, no alias: six-repo census, zero
+// external consumers.
 export {
     NumberField,
-    NumberFieldContent,
-    NumberFieldDecrement,
-    NumberFieldIncrement,
     NumberFieldInput,
-    type NumberFieldDecrementProps,
-    type NumberFieldIncrementProps,
+    NumberFieldStep,
     type NumberFieldProps,
+    type NumberFieldStepProps,
 } from "./components/number-field";
 export {
     Popover,

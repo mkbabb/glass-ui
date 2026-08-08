@@ -118,8 +118,7 @@ function clearSummaryWhenValid(): void {
                         <Textarea
                             :id="controlId"
                             v-model="bio"
-                            resize="content"
-                            placeholder="A short introduction…"
+                                                        placeholder="A short introduction…"
                         />
                     </template>
                 </LabeledField>

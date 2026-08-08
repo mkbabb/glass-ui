@@ -93,6 +93,13 @@
    shell sheets (loaded with their SFCs, after this root) keep their per-role residue
    at equal specificity by source order. */
 @import "./glass/control-bit.css";
+/* The keyed two-stop control RIM (`.glass-control-edge`) the field register, the
+   Select trigger and the toggle items all compose — the third member of the C-5
+   register cluster, @import-ed IMMEDIATELY AFTER control-bit.css (same @layer
+   components). It moved here from `components/_shared/field/field-surfaces.css` at
+   BK #82: six element consumers across three families is not a field's private
+   file. */
+@import "./glass/control-edge.css";
 /* The ONE shared glassy register (`.glass-capsule` +
    `.glass-capsule-track` + `.glass-capsule-hover`) the tabs/dock-tab/buttons/chips/
    cards consumers compose. @import-ed AFTER surfaces.css and BEFORE the consuming

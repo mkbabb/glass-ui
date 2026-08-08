@@ -515,6 +515,19 @@ export const CATEGORIES: Category[] = [
                 "Inputs",
                 "Text, email, and password fields with clear focus, invalid, disabled, and read-only states.",
             ),
+            // The multi-line half of the field register, given a DEDICATED route.
+            // It had none before: the SFC rendered only as a FamilyTabs member
+            // inside `/forms/inputs`, so the one shell whose growth, floor,
+            // ceiling and handle are all its own could not be addressed, deep-
+            // linked or shot on its own — which is what a paint cell needs (BK
+            // #82). It stays a family member there as well; this adds the route,
+            // it does not move the story.
+            s(
+                "forms",
+                "textarea",
+                "Textarea",
+                "The multi-line field: content sizing floored at rows line boxes and capped by one token, with the drag handle as its own separate axis.",
+            ),
             s(
                 "forms",
                 "checks",

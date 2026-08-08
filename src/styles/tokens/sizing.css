@@ -110,6 +110,18 @@
     --ui-glyph:    calc(1rem     * var(--ui-scale));
     --ui-glyph-sm: calc(0.875rem * var(--ui-scale));
 
+    /* The multi-line field's growth CEILING. Textarea sizes to its content by
+       default (`field-sizing: content`), floored at `rows` line boxes — via the
+       `--field-rows` stamp, since `field-sizing` ignores the attribute itself —
+       and capped here, so the one knob a consumer needs to pin a fixed-height
+       textarea is a one-line override of this token — not a prop, and not a
+       `resize` enum member pretending to be a sizing axis. It had ONE reader and
+       ZERO declarations before this cut: a fallback pretending to be a token.
+       Stated in `lh` deliberately — the cap is twelve LINES of whatever type the
+       field carries, and a custom property's units resolve at the element that
+       uses it, so `lh` reads the textarea's own line box, never `:root`'s. */
+    --textarea-content-max: 12lh;
+
     /* ── The picker-family type-scale ───────────────────────────
        ONE governed two-rung scale the WHOLE shadcn picker family (Select /
        DropdownMenu / Combobox / ContextMenu / Command / MultiSelect) reads, so the

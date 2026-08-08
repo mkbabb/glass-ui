@@ -3,18 +3,17 @@ import { describe, expect, it } from "vitest";
 import { nextTick } from "vue";
 import {
     NumberField,
-    NumberFieldContent,
-    NumberFieldDecrement,
-    NumberFieldIncrement,
     NumberFieldInput,
+    NumberFieldStep,
 } from "@glass/components/number-field";
 
+// [2026-08-08 · BK #82 W-FIELD] `NumberFieldContent` retired with the wrapper node
+// it rendered (sole child at 5 of 5 mounts — the root IS the grid), and the two
+// byte-twin steppers folded into ONE `NumberFieldStep direction=`.
 const components = {
     NumberField,
-    NumberFieldContent,
-    NumberFieldDecrement,
-    NumberFieldIncrement,
     NumberFieldInput,
+    NumberFieldStep,
 };
 
 describe("NumberField contract", () => {
@@ -32,9 +31,7 @@ describe("NumberField contract", () => {
                         :step="0.1"
                         :format-options="{ minimumFractionDigits: 1, maximumFractionDigits: 1 }"
                     >
-                        <NumberFieldContent>
-                            <NumberFieldInput aria-describedby="amount-help" />
-                        </NumberFieldContent>
+                        <NumberFieldInput aria-describedby="amount-help" />
                     </NumberField>
                     <p id="amount-help">Use tenths.</p>
                 </form>
@@ -64,11 +61,9 @@ describe("NumberField contract", () => {
             data: () => ({ value: 2 }),
             template: `
                 <NumberField v-model="value" :min="0" :max="4" :step="2">
-                    <NumberFieldContent>
-                        <NumberFieldDecrement />
-                        <NumberFieldInput />
-                        <NumberFieldIncrement />
-                    </NumberFieldContent>
+                    <NumberFieldStep direction="decrement" />
+                    <NumberFieldInput />
+                    <NumberFieldStep direction="increment" />
                 </NumberField>
             `,
         });
@@ -110,14 +105,12 @@ describe("NumberField contract", () => {
                     aria-describedby="quantity-error"
                     :format-options="{ maximumFractionDigits: 0 }"
                 >
-                    <NumberFieldContent>
-                        <NumberFieldDecrement />
-                        <NumberFieldInput
-                            aria-label="Quantity"
-                            aria-describedby="quantity-error"
-                        />
-                        <NumberFieldIncrement />
-                    </NumberFieldContent>
+                    <NumberFieldStep direction="decrement" />
+                    <NumberFieldInput
+                        aria-label="Quantity"
+                        aria-describedby="quantity-error"
+                    />
+                    <NumberFieldStep direction="increment" />
                 </NumberField>
                 <p id="quantity-error">Enter a quantity.</p>
             `,
@@ -125,12 +118,15 @@ describe("NumberField contract", () => {
 
         const root = wrapper.get('[data-slot="number-field"]');
         const input = wrapper.get('[role="spinbutton"]');
-        expect(root.attributes("aria-invalid")).toBe("true");
+        // ARIA validity/requirement live on the SPINBUTTON only. They used to be
+        // stamped on this root as well — a `div` with no role, so the state was
+        // announced on nothing and duplicated on the widget that did carry it.
+        expect(root.attributes("aria-invalid")).toBeUndefined();
+        expect(root.attributes("aria-required")).toBeUndefined();
         expect(input.attributes("aria-invalid")).toBe("true");
         expect(input.attributes("aria-required")).toBe("true");
         expect(input.attributes("aria-describedby")).toBe("quantity-error");
         expect(input.classes()).toContain("field-control");
-        expect(input.classes()).not.toContain("input-pill");
         expect(input.attributes("data-state")).toBe("disabled");
         expect(input.attributes("aria-label")).toBe("Quantity");
         expect(input.attributes("inputmode")).toBe("numeric");
@@ -143,19 +139,19 @@ describe("NumberField contract", () => {
         );
     });
 
-    it("recognizes every native aria-invalid value on the root and input", () => {
+    it("recognizes every native aria-invalid value, on the spinbutton", () => {
         const wrapper = mount({
             components,
             template: `
                 <NumberField aria-invalid="grammar">
-                    <NumberFieldContent><NumberFieldInput /></NumberFieldContent>
+                    <NumberFieldInput />
                 </NumberField>
             `,
         });
 
-        expect(wrapper.get('[data-slot="number-field"]').attributes("aria-invalid")).toBe(
-            "grammar",
-        );
+        expect(
+            wrapper.get('[data-slot="number-field"]').attributes("aria-invalid"),
+        ).toBeUndefined();
         expect(wrapper.get('[role="spinbutton"]').attributes("aria-invalid")).toBe(
             "grammar",
         );

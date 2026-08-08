@@ -151,12 +151,12 @@
  *                              order-win over `.interactive-item:hover` (same layer
  *                              + specificity) — the cascade-trap-safe placement.
  *  15. components/tabs/styles/* — SegmentedTabs overflow/indicator grammar.
- *  16. components/_shared/field/field-surfaces.css — the `.glass-control-edge`
- *                             register (the keyed warm control rim). The portalled
- *                             list surfaces that used to share this file — the
- *                             listbox plate, its collision bound and the warm
- *                             portal field — are the OVERLAY register and live at
- *                             glass/overlay-plate.css.
+ *  16. (vacated) — `.glass-control-edge` left `components/_shared/field/
+ *                             field-surfaces.css` for glass/control-edge.css at BK
+ *                             #82 (six consumers across three families), and the
+ *                             portalled list surfaces that used to share that file
+ *                             left for glass/overlay-plate.css at #81. The file is
+ *                             DELETED; both registers are @import-ed from glass.css.
  *  17. components/sheet/styles.css — precompiled side-sheet positioning (the
  *                             `[data-slot="sheet-content"][data-side]` position/inset/
  *                             size rules), the DETENT geometry (a rung is a size, not a
@@ -221,7 +221,6 @@
    the 500-line bound; imported immediately after it
    (unlayered, unique selectors, source-order-after — byte-isomorphic). */
 @import "../components/tabs/styles/drag.css";
-@import "../components/_shared/field/field-surfaces.css";
 /* The side sheet's structural positioning + per-edge graded material, precompiled: a
    [data-slot="sheet-content"][data-side] rule so the geometry ships regardless of a
    consumer's Tailwind content-scan reach, replacing dead CVA geometry utilities.

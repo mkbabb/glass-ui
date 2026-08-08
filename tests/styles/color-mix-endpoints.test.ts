@@ -132,7 +132,10 @@ describe("gate:G-WK-COLORMIX-BUDGET — color-mix endpoint structure", () => {
         for (const file of [
             join(root, "components/dock/styles/morph.css"),
             join(root, "styles/glass/material.css"),
-            join(root, "components/_shared/field/field-surfaces.css"),
+            // BK #82 (2026-08-08): the `.glass-control-edge` register relocated to
+            // `styles/glass/control-edge.css`; the clause follows the subject rather
+            // than passing vacuously on an absent path.
+            join(root, "styles/glass/control-edge.css"),
         ])
             expect(report.resolvedNested.filter((entry) => entry.startsWith(`${file}:`))).toEqual([]);
     });

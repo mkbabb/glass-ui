@@ -42,9 +42,9 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                                     class="grid grid-cols-[1fr_auto] items-center gap-3"
                                 >
                                     <Label for="w">Width</Label>
-                                    <Input id="w" default-value="8" class="w-20" />
+                                    <Input id="w" model-value="8" class="w-20" />
                                     <Label for="h">Height</Label>
-                                    <Input id="h" default-value="4" class="w-20" />
+                                    <Input id="h" model-value="4" class="w-20" />
                                 </div>
                             </div>
                         </PopoverContent>

@@ -2,7 +2,7 @@
 import { TagsInputRoot, useForwardPropsEmits } from "reka-ui";
 import { computed, type HTMLAttributes, provide, useAttrs } from "vue";
 import { cn } from "../_shared/class-names";
-import { isAriaInvalid } from "../_shared/field/fieldControl";
+import { isAriaInvalid } from "../_shared/field/control";
 import type { Direction, FormFieldProps } from "../_shared/primitive";
 import { tagsInputContextKey } from "./context";
 
@@ -55,11 +55,11 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
         v-bind="forwarded"
         :data-state="state"
         :aria-invalid="invalid || undefined"
-        :class="cn('tags-input field-control glass-defined', props.class)"
+        :class="cn('tags-input field-control glass-control-edge', props.class)"
     >
         <slot />
     </TagsInputRoot>
 </template>
 
-<style src="../_shared/field/field-control.css"></style>
+<style src="../_shared/field/control.css"></style>
 <style src="./styles.css"></style>

@@ -328,7 +328,7 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
             [".input-pill::placeholder", "src/styles/glass/control-surfaces.css"],
             [
                 ".field-control::placeholder",
-                "src/components/_shared/field/field-control.css",
+                "src/components/_shared/field/control.css",
             ],
             [".input-bar-field::placeholder", "src/styles/utilities/components.css"],
             [".tags-input__input::placeholder", "src/components/tags-input/styles.css"],

@@ -34,6 +34,13 @@ const password = ref("");
 const search = ref("");
 const telephone = ref("");
 const website = ref("");
+// The five text-shaped natives the type union used to forbid. They carry a caret,
+// a placeholder and a text baseline, so they belong to this register; `number`
+// (NumberField's), `range` (Slider's), `file`/`color` (non-text chrome) and
+// `hidden` (unpainted) remain fenced out, and the fence is the design.
+const due = ref("2026-08-14");
+const remindAt = ref("09:30");
+const publishAt = ref("2026-08-14T09:30");
 </script>
 
 <template>
@@ -171,6 +178,32 @@ const website = ref("");
                         inputmode="url"
                         autocomplete="url"
                         placeholder="https://example.com"
+                    />
+                </ShowcaseFrame>
+            </div>
+        </StorySection>
+
+        <StorySection
+            label="temporal types"
+            blurb="Date, time, datetime-local, month and week are text-shaped natives and now type-check. The fence still holds: number, range, file, color and hidden are other components' geometry or non-text chrome."
+        >
+            <div class="grid gap-4 md:grid-cols-3">
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-date">Due date</Label>
+                    <Input id="input-date" v-model="due" type="date" />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-time">Reminder</Label>
+                    <Input id="input-time" v-model="remindAt" type="time" />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="input-datetime">Publish at</Label>
+                    <Input
+                        id="input-datetime"
+                        v-model="publishAt"
+                        type="datetime-local"
                     />
                 </ShowcaseFrame>
             </div>

@@ -14,14 +14,24 @@
             box-shadow var(--duration-fast) var(--ease-standard);
     }
 
+    /* The shell composes `.glass-control-edge`, so its engaged states speak into
+       that register's RING SLOT instead of re-declaring the whole `box-shadow`
+       list. Re-declaring is what deleted the rim: measured at rest the shell
+       carries 5 legs (rim ×3 · well · the zero-alpha ring), and a whole-list
+       `box-shadow: var(--invalid-ring)` took it to 1 — the resting silhouette
+       vanished at the exact moment the user engaged the control. Through the slot
+       the ring APPENDS and every other leg is untouched, because the rim is
+       declared exactly once, library-wide (glass/control-edge.css). No rule that
+       targets this shell may declare `box-shadow` again; the CHIP's own active
+       ring below is a different element and is not composed on the register. */
     .tags-input:where([aria-invalid="true"], [data-invalid]) {
         border-color: var(--destructive);
-        box-shadow: var(--invalid-ring);
+        --control-edge-ring: var(--invalid-ring);
     }
 
     .tags-input:focus-within:not([aria-invalid="true"], [data-invalid]) {
         border-color: var(--color-accent-opaque, var(--focus-ring-color));
-        box-shadow: var(--focus-ring-shadow);
+        --control-edge-ring: var(--focus-ring-shadow);
     }
 
     .tags-input__input {

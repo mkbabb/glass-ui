@@ -17,8 +17,17 @@ const resizeModes: readonly { value: TextareaResize; label: string }[] = [
     { value: "vertical", label: "Vertical" },
     { value: "both", label: "Both axes" },
     { value: "none", label: "Fixed" },
-    { value: "content", label: "Content sized" },
 ];
+
+// The growth cel's own copy. Content sizing is no longer a `resize` member — it is
+// what every textarea does — so the specimen that proves it is a `rows` floor with
+// more lines than the floor. The floor itself is the `--field-rows` stamp, not the
+// attribute: `field-sizing: content` ignores `rows` outright, so these two frames
+// are also the falsifier for that — an empty `rows="3"` that renders one line is
+// the stamp gone.
+const grown = ref(
+    "This field is floored at three rows and sized to its content above that.\nA second line.\nA third line.\nA fourth, past the floor.",
+);
 </script>
 
 <template>
@@ -93,7 +102,7 @@ const resizeModes: readonly { value: TextareaResize; label: string }[] = [
 
         <StorySection
             label="resize contract"
-            blurb="Resize is an explicit component axis. Content sizing grows to a bounded ceiling; fixed fields remain scrollable so narrow content stays reachable."
+            blurb="Resize is the drag handle and only the drag handle. Growth is the register's default — floored at rows line boxes, capped by --textarea-content-max — so the handle no longer doubles as a sizing axis."
         >
             <div class="grid gap-4 md:grid-cols-2">
                 <ShowcaseFrame
@@ -105,12 +114,25 @@ const resizeModes: readonly { value: TextareaResize; label: string }[] = [
                     <Textarea
                         :id="`textarea-${mode.value}`"
                         :resize="mode.value"
-                        :model-value="
-                            mode.value === 'content'
-                                ? 'This field grows with its lines.\nAdd another line to see the bounded content-sized path.'
-                                : 'The native resize handle follows the declared axis.'
-                        "
+                        model-value="The native resize handle follows the declared axis."
                     />
+                </ShowcaseFrame>
+            </div>
+        </StorySection>
+
+        <StorySection
+            label="rows is the floor"
+            blurb="Every textarea sizes to its content. `rows` sets the floor it starts from and finally means what it says — it used to be dead under a blanket 5-line minimum, and `field-sizing: content` ignores the attribute outright, so the value is stamped into --field-rows and the floor is computed from it. The ceiling is one token, --textarea-content-max."
+        >
+            <div class="grid gap-4 md:grid-cols-2">
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="textarea-rows-empty">rows=&quot;3&quot; · empty</Label>
+                    <Textarea id="textarea-rows-empty" rows="3" placeholder="Three rows tall at rest." />
+                </ShowcaseFrame>
+
+                <ShowcaseFrame class="flex flex-col gap-3">
+                    <Label for="textarea-rows-grown">rows=&quot;3&quot; · grown past the floor</Label>
+                    <Textarea id="textarea-rows-grown" v-model="grown" rows="3" />
                 </ShowcaseFrame>
             </div>
         </StorySection>

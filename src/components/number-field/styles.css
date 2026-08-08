@@ -1,35 +1,40 @@
 @layer components {
+    /* The root IS the grid. It used to be a one-column grid with a `gap` and a
+       single child — a wrapper `<NumberFieldContent>` that existed to hold this
+       exact template on 5 of 5 mounts, so the gap separated nothing and the extra
+       node bought nothing. One element, one grid. */
     .number-field {
-        display: grid;
-        gap: 0.375rem;
-    }
-
-    .number-field__content {
         display: grid;
         grid-template-columns: auto minmax(0, 1fr) auto;
         align-items: center;
     }
 
-    .number-field__content > * {
+    .number-field > * {
         grid-row: 1;
     }
 
     .number-field__input {
-        --field-control-height: var(--control-h-lg);
         grid-column: 1 / -1;
         font-family: var(--font-mono);
         font-variant-numeric: tabular-nums;
         text-align: center;
     }
 
-    .number-field__content:has(> .number-field__step--decrement)
-        > .number-field__input {
-        padding-inline-start: calc(var(--control-h-lg) + 0.25rem);
+    /* THE CLEARANCE, self-syncing and cross-file-coupling-free. It reads
+       `--field-control-height` — declared by `.field-control` on THIS SAME
+       element and re-pointed there by `data-size` — so the room made for a
+       stepper is by construction the room the stepper occupies (an `iconOnly`
+       Button is square on its own `--control-h-*` rung, the same cohort). HEAD
+       hard-coded `--control-h-lg` in both directions, on an input that also
+       hard-pinned itself to `lg`: two hand-kept copies of one value, which is the
+       desync class rather than a fix for it. The 0.25rem is the space series'
+       first rung. */
+    .number-field:has(> .number-field__step--decrement) > .number-field__input {
+        padding-inline-start: calc(var(--field-control-height) + 0.25rem);
     }
 
-    .number-field__content:has(> .number-field__step--increment)
-        > .number-field__input {
-        padding-inline-end: calc(var(--control-h-lg) + 0.25rem);
+    .number-field:has(> .number-field__step--increment) > .number-field__input {
+        padding-inline-end: calc(var(--field-control-height) + 0.25rem);
     }
 
     .number-field__step {
@@ -45,7 +50,10 @@
         grid-column: 3;
     }
 
-    .number-field__input[data-state="invalid"] {
-        border-width: 2px;
-    }
+    /* The `[data-state="invalid"] { border-width: 2px }` arm is GONE. It was this
+       family's fourth invalid grammar and the only one that changed a BORDER
+       WIDTH, so an invalid number field reflowed its own text by a pixel on each
+       side at the moment it became invalid. The one grammar lives in the register
+       (`_shared/field/control.css`), where validity recolours and appends a ring
+       and never moves a box. */
 }

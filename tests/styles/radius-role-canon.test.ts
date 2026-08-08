@@ -272,7 +272,7 @@ describe("3. exact W1 bindings", () => {
     });
 
     it("keeps the real Input on the stadium pill, never on the tile rung", () => {
-        const field = strip(read("src/components/_shared/field/field-control.css"));
+        const field = strip(read("src/components/_shared/field/control.css"));
         expect(field).toMatch(
             /\.field-control\[data-kind="input"\]\s*\{[^}]*border-radius:\s*var\(--radius-pill\)/,
         );

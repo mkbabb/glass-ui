@@ -21,10 +21,8 @@ import { describe, expect, it } from "vitest";
 
 import {
     NumberField,
-    NumberFieldContent,
-    NumberFieldDecrement,
-    NumberFieldIncrement,
     NumberFieldInput,
+    NumberFieldStep,
 } from "@glass/components/number-field";
 import {
     Carousel,
@@ -44,18 +42,14 @@ describe("decorative-icon sweep — icons in named controls are aria-hidden", ()
         const wrapper = mount({
             components: {
                 NumberField,
-                NumberFieldContent,
-                NumberFieldDecrement,
-                NumberFieldIncrement,
                 NumberFieldInput,
+                NumberFieldStep,
             },
             template: `
                 <NumberField :model-value="2">
-                    <NumberFieldContent>
-                        <NumberFieldDecrement />
-                        <NumberFieldInput />
-                        <NumberFieldIncrement />
-                    </NumberFieldContent>
+                    <NumberFieldStep direction="decrement" />
+                    <NumberFieldInput />
+                    <NumberFieldStep direction="increment" />
                 </NumberField>
             `,
         });

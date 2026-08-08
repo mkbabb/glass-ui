@@ -1,0 +1,56 @@
+/* glass/control-edge.css — `.glass-control-edge`, the keyed two-stop control rim.
+
+   THE REGISTER. A control's resting SILHOUETTE: the bright key-facing catch-light
+   (`--glass-rim-top`) over the faint warm under-shadow (`--glass-rim-bottom`), the
+   SAME pair `.glass-capsule` reads, so `--glass-key` re-points every keyed edge in
+   the library from ONE handle. Composed, never re-declared.
+
+   THE COMPOSITION LAW, DELIVERED BY CONSTRUCTION. The rim is the RESTING
+   silhouette; a well and a ring are OVERLAYS. CWT-3 §2 C-7 rules that a shared
+   utility can only REPLACE a `box-shadow` list, so a consumer wanting to APPEND
+   had to re-list the rim in its own rule — and a consumer that re-lists can also
+   forget to, which is exactly how the field register's focus rule came to delete
+   the rim it was supposed to sit on (legs 2 → 2 → 1).
+
+   The list therefore ends in two consumer-owned SLOTS, each defaulting to a
+   zero-alpha leg that paints nothing:
+
+     --control-edge-inner   the inner lip / well — an inset leg, under the rim
+     --control-edge-ring    the overlay ring — focus halo, invalid ring, or both
+
+   A consumer re-points a slot from any rule at any specificity and the rim is
+   untouched, because the rim is declared exactly ONCE, here. Nothing downstream
+   can delete it, and `--glass-key` still moves every keyed edge from one handle.
+   (This is #83's CURE-4 idiom — the register states the value, the role either
+   speaks into a slot or inherits, and there is no equal-specificity tie for
+   bundler source order to break.)
+
+   MEMBERSHIP, measured on disk at this cut (BK #82 W-FIELD, the C-5 relocation) —
+   6 element consumers, not the "≥8" the file's former home claimed and not the 1
+   its docstring was corrected to at #83 (that count predated #84's toggle items and
+   this row's four field shells):
+
+     .field-control  ← input · textarea · number-field input · tags-input  (4)
+     SelectTrigger                                                          (1)
+     ToggleGroupItem                                                        (1)
+
+   HOME. Lived in a now-deleted sheet under `components/_shared/field/` — a file
+   named for field controls that also held the portalled listbox surfaces (#81
+   moved those to `glass/overlay-plate.css`) and a rim that was never a field's
+   alone; naming that sheet here would itself be a dead cite. A register
+   six components across three families compose is a `styles/glass/` register.
+   @import-ed from `glass.css` immediately after `control-bit.css`: the C-5 cluster
+   (text surfaces · bits · the shared edge) in one place, same `@layer components`.
+   The source-order move is SAFE by census, not by hope — no element composes both
+   `.glass-capsule` (the only other `(0,1,0)` box-shadow rule downstream) and
+   `.glass-control-edge`; the three that compose `.glass-capsule-hover` collide only
+   at `:hover`, which outranks both. */
+@layer components {
+    .glass-control-edge {
+        box-shadow:
+            var(--glass-rim-top),
+            var(--glass-rim-bottom),
+            var(--control-edge-inner, 0 0 #0000),
+            var(--control-edge-ring, 0 0 #0000);
+    }
+}

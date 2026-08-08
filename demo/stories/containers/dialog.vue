@@ -67,7 +67,7 @@ function submitKey() {
                         </DialogHeader>
                         <div class="grid gap-2">
                             <Label for="ws-name">Workspace name</Label>
-                            <Input id="ws-name" default-value="Field Notes" />
+                            <Input id="ws-name" model-value="Field Notes" />
                         </div>
                         <DialogFooter>
                             <DialogClose as-child>

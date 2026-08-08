@@ -36,8 +36,8 @@ const forwardedAttrs = computed(() => {
 <template>
     <!-- The trigger composes the SHARED control register over the warm field:
        `.control-surface` (the bg/border REST register, control-surfaces.css) +
-       `.glass-control-edge` (the keyed two-stop warm rim, _shared/field/
-       field-surfaces.css — it fixes the `box-shadow: none` cream-on-cream melt, so
+       `.glass-control-edge` (the keyed two-stop warm rim,
+       glass/control-edge.css — it fixes the `box-shadow: none` cream-on-cream melt, so
        the trigger reads as a lifted glass plate with a defined warm edge over the
        field) + `.glass-capsule-hover` (the shipped specular-lift hover/press step,
        glass-capsule.css — the "ready to open" lift a flat cream pill lacks).

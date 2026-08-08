@@ -126,7 +126,7 @@
     /* Media-tile corner rung (Skeleton / Avatar-square / Command input). This is
        the true role of the rung formerly misnamed `--radius-input`: its consumers
        are media/tile surfaces, NOT the Input — which reads `--radius-pill` (the
-       stadium) per `_shared/field/field-control.css`. Renamed clean-break (no
+       stadium) per `_shared/field/control.css`. Renamed clean-break (no
        legacy alias) so retuning tile rounding never silently reshapes the Input. */
     --radius-media:   var(--radius);
     --radius-button:  var(--radius);
@@ -134,7 +134,7 @@
        rung the multi-line / stepper form atoms (Textarea, NumberFieldInput)
        resolve so a multi-line box stops inheriting the `9999px` stadium pill;
        single-line controls (Input, SelectTrigger) keep the pill — INCLUDING inside a
-       dialog: the former modal-scoped `field-control.css` override was the operative
+       dialog: the former modal-scoped `field/control.css` override was the operative
        producer of the concentric inversion and is deleted. `--radius-control`
        is the semantic control-corner rung that retires the raw `rounded-sm` (4px)
        on Checkbox + base Tabs onto a softer, named radius. One geometry language

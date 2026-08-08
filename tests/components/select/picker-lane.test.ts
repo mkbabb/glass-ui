@@ -66,7 +66,14 @@ const LANE = [
     ),
     "src/components/command/styles.css",
     "src/components/_shared/menu/menu.css",
-    "src/components/_shared/field/field-surfaces.css",
+    // [2026-08-08 · BK #82 W-FIELD] `_shared/field/field-surfaces.css` is DELETED,
+    // not renamed-in-place: #81 moved the portalled list surfaces out to
+    // `glass/overlay-plate.css` and #82 moved the remaining `.glass-control-edge`
+    // register out to `glass/control-edge.css` (six consumers, three families). The
+    // lane's stake in that register — the Select trigger composes it — follows the
+    // register to its new home rather than staying pinned to an absent file, which
+    // would have filtered to `[]` and passed vacuously (⊕²⁵).
+    "src/styles/glass/control-edge.css",
     "src/styles/glass/overlay-plate.css",
 ];
 

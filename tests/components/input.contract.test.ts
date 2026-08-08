@@ -13,11 +13,15 @@ describe("Input contract", () => {
         });
 
         expect(wrapper.element.tagName).toBe("INPUT");
-        expect(wrapper.classes()).toEqual([
-            "field-control",
-            "glass-defined",
-            "consumer-class",
-        ]);
+        // [2026-08-08 · BK #82 W-FIELD] The class-equality assertion that used to
+        // stand here certified `glass-defined` — a register whose every channel the
+        // field's own shorthands reset, so the class was on the element and inert
+        // on all ~57 fields. Asserting a class list is not asserting a material;
+        // the register's composition is now the W-FIELD battery's own clause
+        // (`tests/components/field/forms-seam.test.ts`, G-F1), which reads the
+        // sheet. What survives here is the CONSUMER contract: a caller's class is
+        // merged, never dropped.
+        expect(wrapper.classes()).toContain("consumer-class");
         expect(wrapper.attributes()).toMatchObject({
             "data-consumer": "field",
             "data-kind": "input",
@@ -60,13 +64,16 @@ describe("Input contract", () => {
         expect((wrapper.element as HTMLInputElement).value).toBe("ada@example.com");
     });
 
-    it("preserves controlled and default-value editing", async () => {
+    it("preserves controlled and uncontrolled editing on ONE model", async () => {
         const controlled = mount(Input, { props: { modelValue: "before" } });
         await controlled.setValue("after");
         expect(controlled.emitted("update:modelValue")?.at(-1)).toEqual(["after"]);
 
-        const uncontrolled = mount(Input, { props: { defaultValue: "draft" } });
-        expect((uncontrolled.element as HTMLInputElement).value).toBe("draft");
+        // `defaultValue` is gone with `useVModel`: `defineModel` holds local state
+        // when no `v-model` is bound, so an uncontrolled field is the SAME
+        // mechanism at rest and needs no second prop to seed it.
+        const uncontrolled = mount(Input);
+        expect((uncontrolled.element as HTMLInputElement).value).toBe("");
         await uncontrolled.setValue("revised");
         expect(uncontrolled.emitted("update:modelValue")?.at(-1)).toEqual(["revised"]);
     });

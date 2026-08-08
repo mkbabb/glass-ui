@@ -312,11 +312,11 @@ describe("gate:orphan-CSS-partial — every src/ partial is reachable from a pub
     });
 
     // WATCH-B of the acceptance pair: a partial referenced by a REACHABLE, EXPORTED SFC stays
-    // rescued (GREEN). `field-control.css` is pulled by `<style src=` from Input.vue, itself
+    // rescued (GREEN). `_shared/field/control.css` is pulled by `<style src=` from Input.vue, itself
     // transitively reachable from the `/forms`+root entries — the reach gate must keep it.
     it("self-test bite — a reachable exported SFC keeps its partial GREEN", () => {
         const liveSfc = join(SRC, "components", "input", "Input.vue");
-        const liveCss = join(SRC, "components", "_shared", "field", "field-control.css");
+        const liveCss = join(SRC, "components", "_shared", "field", "control.css");
         expect(reach.has(liveSfc), "the exported SFC is reachable").toBe(true);
         const rescued = rescuedReferences(new Map([[liveCss, [liveSfc]]]), reach);
         expect(rescued.has(liveCss), "the reach gate rescues the live partial").toBe(true);
@@ -329,7 +329,7 @@ describe("gate:orphan-CSS-partial — every src/ partial is reachable from a pub
         // Channel 2 must carry REAL weight. The exemplar is channel-1-unreachable yet rescued
         // by a reachable SFC — with the `<style src=` arm broken the gate would report the
         // 18-SFC false-RED set.
-        const exemplar = join(SRC, "components", "_shared", "field", "field-control.css");
+        const exemplar = join(SRC, "components", "_shared", "field", "control.css");
         expect(closure.has(exemplar), "the exemplar is genuinely channel-1-unreachable").toBe(false);
         expect(reachable.has(exemplar), "channel 2 rescues it").toBe(true);
         const rescued = rescuedReferences(refMap, reach);

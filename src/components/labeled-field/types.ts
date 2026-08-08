@@ -1,4 +1,4 @@
-import type { InputProps } from "../input";
+import type { InputNativeAttrs, InputProps } from "../input";
 import type { LabelRequirement } from "../label";
 import type { SliderProps } from "../slider";
 import type { SwitchProps } from "../switch";
@@ -37,7 +37,16 @@ export interface LabeledFieldSlotProps {
     required: boolean;
 }
 
-export type LabeledInputProps = Omit<InputProps, "class"> & LabeledFieldCommonProps;
+// `InputNativeAttrs` is re-stated here on purpose. Input keeps the native
+// form/constraint surface OUT of its runtime props (`/* @vue-ignore *\/` — they ride
+// `$attrs` to the element), and a wrapper cannot forward what it never received: a
+// LabeledInput that stopped DECLARING `required`/`placeholder`/`name` would let them
+// fall through to the labeled-field ROOT instead of reaching the control. The wrapper
+// declares them, `controlProps` hands them to Input, and Input's own `$attrs` path
+// puts them on the element.
+export type LabeledInputProps = Omit<InputProps, "class"> &
+    InputNativeAttrs &
+    LabeledFieldCommonProps;
 
 export type LabeledSliderProps = Omit<SliderProps, "class" | "modelValue"> &
     LabeledFieldCommonProps & { modelValue: number };

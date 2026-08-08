@@ -53,7 +53,7 @@ const note = ref("");
         <StorySection label="disabled state">
             <ShowcaseFrame class="flex max-w-md flex-col gap-3">
                 <Label for="label-disabled" disabled>Archived field</Label>
-                <Input id="label-disabled" disabled default-value="No longer editable" />
+                <Input id="label-disabled" disabled model-value="No longer editable" />
             </ShowcaseFrame>
         </StorySection>
 

@@ -85,8 +85,7 @@ const enabled = ref(true);
                                 :id="controlId"
                                 v-model="bio"
                                 :aria-describedby="describedBy"
-                                resize="content"
-                                placeholder="Summarize this revision…"
+                                                                placeholder="Summarize this revision…"
                             />
                         </template>
                     </LabeledField>

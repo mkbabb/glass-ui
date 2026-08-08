@@ -2,7 +2,8 @@
 import { NumberFieldRoot, useForwardPropsEmits } from "reka-ui";
 import { computed, type HTMLAttributes, provide, useAttrs } from "vue";
 import { cn } from "../_shared/class-names";
-import { useFieldControlState } from "../_shared/field/fieldControl";
+import type { ControlSize } from "../_shared/control";
+import { useFieldControlState } from "../_shared/field/control";
 import type { FormFieldProps, PrimitiveProps } from "../_shared/primitive";
 import { numberFieldContextKey } from "./context";
 
@@ -19,10 +20,12 @@ export interface NumberFieldProps extends PrimitiveProps, FormFieldProps {
     id?: string;
     /** App-driven invalid state; locale parsing and native form behavior stay Reka-owned. */
     invalid?: boolean;
+    /** The one size rung. Threads to the spinbutton and to both steppers. */
+    size?: ControlSize;
     class?: HTMLAttributes["class"];
 }
 
-const props = defineProps<NumberFieldProps>();
+const props = withDefaults(defineProps<NumberFieldProps>(), { size: "md" });
 const emits = defineEmits<{
     "update:modelValue": [value: number];
 }>();
@@ -31,21 +34,22 @@ const attrs = useAttrs();
 defineOptions({ inheritAttrs: false });
 
 const delegatedProps = computed(() => {
-    const { class: _, invalid: __, ...delegated } = props;
+    const { class: _, invalid: __, size: ___, ...delegated } = props;
     return delegated;
 });
 const { ariaInvalid, forwardedAttrs } = useFieldControlState(props, attrs);
 const required = computed(() => props.required === true);
-const rootAttrs = computed(() => ({
-    ...forwardedAttrs.value,
-    "aria-invalid": ariaInvalid.value,
-    "aria-required": required.value || undefined,
-}));
+const size = computed(() => props.size);
 
-provide(numberFieldContextKey, { ariaInvalid, required });
+// `aria-invalid` and `aria-required` are NOT stamped here. This root renders a
+// plain `div` with no role, and ARIA validity/requirement states belong on the
+// widget that carries the role — the spinbutton. They travel down the context and
+// land on NumberFieldInput, which is also the element a screen reader's forms mode
+// stops on. The root keeps only the forwarded attrs a caller aimed at it.
+provide(numberFieldContextKey, { ariaInvalid, required, size });
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
-const bindings = computed(() => ({ ...forwarded.value, ...rootAttrs.value }));
+const bindings = computed(() => ({ ...forwarded.value, ...forwardedAttrs.value }));
 </script>
 
 <template>
