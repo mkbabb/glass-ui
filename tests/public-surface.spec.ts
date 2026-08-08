@@ -283,7 +283,7 @@ const subpathRuntimeExports = [
         name: "ScrollProgressRim",
     },
     { subpath: "sortable-list", surface: SortableListSurface, name: "SortableList" },
-    { subpath: "timeline", surface: TimelineSurface, name: "GlassTimeline" },
+    { subpath: "timeline", surface: TimelineSurface, name: "Timeline" },
     {
         subpath: "expandable-container",
         surface: ExpandableContainerSurface,
