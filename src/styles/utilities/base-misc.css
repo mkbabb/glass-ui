@@ -260,11 +260,12 @@
    reads "empty," not "filled," and the D1 grey-plate regression cannot re-enter
    through the placeholder.
 
-   THE FENCE (binding both ways): this is the RECTANGULAR-placeholder register.
-   The `WatercolorDot variant="ghost"` (the seeded-blob SILHOUETTE traced as a
-   dashed stroke — the empty-PALETTE-slot affordance) is a DISTINCT register;
-   neither forks the other. .ghost-slot is never applied to a blob-silhouette
-   slot, and the watercolor ghost never adopts this rectangle recipe. */
+   THE ONE PLACEHOLDER REGISTER. [BK #55] the fence used to bind two ways —
+   this rectangle against `WatercolorDot variant="ghost"`, the seeded-blob
+   silhouette that carried the empty-PALETTE-slot affordance. That component
+   RELOCATED to value.js, so the second side is gone and this recipe is the
+   library's only placeholder. A future blob-silhouette slot mints its own
+   register; it never forks this rectangle. */
 @utility ghost-slot {
     border: 1px dashed color-mix(in srgb, var(--foreground) 22%, transparent);
     border-radius: var(--radius-card);
