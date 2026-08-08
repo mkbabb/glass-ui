@@ -121,6 +121,15 @@
    `.cartoon-cast`). */
 @import "./glass/glass-chip.css";
 @import "./glass/glass-atom.css";
+/* The INERT-MARK register (`mark.css`) — the ONE declaration set the six inert
+   marks (badge · separator · label · avatar · skeleton · status-dot) share: the
+   `backdrop-filter: none` law, the no-stretch law, the one stadium rung, and the
+   one engagement (a STATE change, never a hover). @import-ed IMMEDIATELY AFTER
+   glass-atom.css because `.badge-atom` is the register's one glass-composing
+   consumer and both must resolve in the same `@layer components`. Every selector
+   in it is `:where()` (specificity 0), so a member's own sheet always wins its
+   own channel — the register states the floor, never the answer. */
+@import "./glass/mark.css";
 /* The ONE shared liquid-fill register (`.glass-liquid-fill`):
    the warm glass-cylinder fill the Slider's `.slider-range` AND
    `<Progress variant="liquid">` COMPOSE (fewer-sharper-primitives).

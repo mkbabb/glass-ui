@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, type HTMLAttributes, useAttrs } from "vue";
 import { cn } from "../_shared/class-names";
+import { fixedHostAttrs } from "../_shared/primitive";
 
 defineOptions({ inheritAttrs: false });
 
@@ -8,10 +9,16 @@ const props = defineProps<{
     class?: HTMLAttributes["class"];
 }>();
 
+// CONTRACT FENCE, not a convenience strip (S8). `MIGRATION.md:121` is the
+// published record: "Use the single decorative reserved-shape recipe. Put
+// `aria-busy` and the loading name on the owning REGION." A skeleton is one tile
+// of a reserved shape; N of them in a loading card must announce ONCE, from the
+// region, not N times from the tiles. Letting a caller's `role`/`aria-*` land
+// here silently re-opens that record.
 const attrs = useAttrs();
 const hostAttrs = computed(() =>
     Object.fromEntries(
-        Object.entries(attrs).filter(
+        Object.entries(fixedHostAttrs(attrs)).filter(
             ([name]) => name !== "role" && !name.startsWith("aria-"),
         ),
     ),
@@ -28,11 +35,23 @@ const hostAttrs = computed(() =>
 </template>
 
 <style scoped>
+/* A-9 — THE FILL RESOLVES THROUGH THE ONE-INK LAW. `--muted` is a SURFACE token
+   (a plate you put content on); a skeleton is a MARK standing in for content,
+   and the register's law is that a mark's ink comes off the
+   `--ink-{seam,edge,perimeter}` ladder. The reserved shape is an in-content
+   stand-in, so it reads the in-content rung, `--ink-seam` — the same figure the
+   separator paints, which is correct: they are the same kind of quiet mark on
+   the same plate. The shimmer/tinted-surface variant stays DECLINED (S2's four
+   falsifiers). */
 .skeleton {
     position: relative;
     overflow: hidden;
     isolation: isolate;
-    background: var(--muted);
+    background: color-mix(
+        in oklab,
+        var(--foreground) calc(var(--ink-seam) * 100%),
+        transparent
+    );
 }
 
 /* The DEFAULT tile radius lives on @layer components so a caller's public shape
@@ -46,49 +65,49 @@ const hostAttrs = computed(() =>
     }
 }
 
-.skeleton::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        105deg,
-        transparent 24%,
-        color-mix(in oklab, var(--foreground) 10%, transparent) 48%,
-        transparent 72%
-    );
-}
+/* ── THE BREATH — F24 closed at its MECHANISM, not at its clock (S2) ───────────
+   The travelling band is gone entirely: the `::after` gradient, the
+   `skeleton-scan` keyframes, the `will-change`, and the no-op
+   `prefers-reduced-transparency` branch (whose body was byte-identical to the
+   base rule it "overrode").
 
+   WHY THE BAND COULD NOT BE TUNED. Two independent defects, and each one alone
+   is fatal to the mechanism:
+
+     · `ease-in-out` on an INFINITE ONE-WAY loop. The band spends 71.3% of every
+       cycle parked off the box, and it decelerates to zero velocity right at the
+       wrap seam — so the eye sees a stall, a jump, and a long dead pause. Easing
+       a one-way loop is exactly the shipped defect; only an `alternate` cycle can
+       carry an ease honestly.
+     · TRAVEL SCALES WITH OWN WIDTH. The band crosses 220% of its own inline-size
+       in a FIXED clock, so a 213px chip ran at 157 px/s and a 1246px block at 914
+       px/s — 5.8× apart, on the same route, in the same loading state. Retuning
+       the clock moves both numbers and keeps the ratio; pinning the band's width
+       mints a token on no series. Both mutations are named in G4 and both stay
+       RED.
+
+   WHAT REPLACES IT. An opacity breathe: compositor-only, width-INVARIANT by
+   type (opacity has no geometry to scale), on an `alternate` cycle so the canon
+   ease reads as weight in both directions, and moving through 100% of its cycle
+   instead of 71% dead. Five declarations, zero tokens minted. It pairs with the
+   status-dot pulse as the register's two — and only two — rest carriers. */
 @media (prefers-reduced-motion: no-preference) {
-    .skeleton::after {
-        transform: translate3d(-110%, 0, 0);
-        /* The looping band-pass scan rides the FAST skeleton rung
-           (--duration-shimmer-fast, 3s), NOT the 5s brand-metal one-pass sweep
-           clock (--duration-shimmer) — Δ-F24-1. */
-        animation: skeleton-scan var(--duration-shimmer-fast) ease-in-out infinite;
-        will-change: transform;
-    }
-}
-
-@keyframes skeleton-scan {
-    to {
-        transform: translate3d(110%, 0, 0);
-    }
-}
-
-@media (prefers-reduced-transparency: reduce) {
     .skeleton {
-        background: var(--muted);
+        animation: skeleton-breathe 1.1s var(--ease-standard) infinite alternate;
+    }
+}
+
+@keyframes skeleton-breathe {
+    to {
+        opacity: 0.55;
     }
 }
 
 @media (forced-colors: active) {
     .skeleton {
+        animation: none;
         background: CanvasText;
         opacity: 0.18;
-    }
-
-    .skeleton::after {
-        display: none;
     }
 }
 </style>

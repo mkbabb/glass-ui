@@ -36,7 +36,6 @@ describe("Avatar", () => {
     });
 
     it("announces one stable identity while hiding image and initials duplicates", async () => {
-        const status = vi.fn();
         const originalDescriptor = Object.getOwnPropertyDescriptor(window, "Image");
         const probes: ControlledImage[] = [];
         class ControlledImage extends EventTarget {
@@ -60,10 +59,7 @@ describe("Avatar", () => {
             props: { label: "Ada Lovelace", size: "md", shape: "square" },
             slots: {
                 default: () => [
-                    h(AvatarImage, {
-                        src: "/controlled-ada.png",
-                        onLoadingStatusChange: status,
-                    }),
+                    h(AvatarImage, { src: "/controlled-ada.png" }),
                     h(AvatarFallback, null, { default: () => "AL" }),
                 ],
             },
@@ -72,9 +68,9 @@ describe("Avatar", () => {
             await flushPromises();
             expect(probes).toHaveLength(1);
 
-            const identityBefore = wrapper.get(".glass-avatar__identity").element;
+            const identityBefore = wrapper.get(".avatar__identity").element;
             const imageBefore = wrapper.get("img");
-            const fallbackBefore = wrapper.get(".glass-avatar__fallback");
+            const fallbackBefore = wrapper.get(".avatar__fallback");
             expect(wrapper.attributes()).toMatchObject({
                 "data-identity": "labelled",
                 "data-shape": "square",
@@ -85,32 +81,33 @@ describe("Avatar", () => {
             expect(imageBefore.attributes()).toMatchObject({
                 alt: "",
                 "aria-hidden": "true",
-                "data-image-state": "loading",
             });
+            // BORN-RED at HEAD (D20). `data-image-state` published a four-state
+            // machine that NO stylesheet keyed and NO consumer read, six repos
+            // deep; the `loadingStatusChange` emit had zero listeners in the same
+            // census. HEAD reading: `data-image-state="loading"` on this element,
+            // and the emit firing into nothing.
+            expect(imageBefore.attributes("data-image-state")).toBeUndefined();
             expect(fallbackBefore.attributes("aria-hidden")).toBe("true");
             // The initials must actually RENDER — hidden-from-AT is only half the
             // contract; a fallback that paints nothing would green on aria-hidden alone.
             expect(fallbackBefore.text()).toBe("AL");
             expect(wrapper.findAll('[role="img"]:not([aria-hidden="true"])')).toHaveLength(1);
-            expect(status.mock.calls.map(([value]) => value)).toContain("loading");
+            expect(wrapper.emitted()).not.toHaveProperty("loadingStatusChange");
 
             probes[0]!.dispatchEvent(new Event("error"));
             await flushPromises();
 
-            const identityAfter = wrapper.get(".glass-avatar__identity").element;
-            expect(wrapper.get("img").attributes("data-image-state")).toBe("error");
+            const identityAfter = wrapper.get(".avatar__identity").element;
+            expect(wrapper.get("img").attributes("data-image-state")).toBeUndefined();
             expect(wrapper.get("img").attributes("aria-hidden")).toBe("true");
-            const fallbackAfter = wrapper.get(".glass-avatar__fallback");
+            const fallbackAfter = wrapper.get(".avatar__fallback");
             expect(fallbackAfter.attributes("aria-hidden")).toBe("true");
             // The initials SURVIVE the image error — the fallback is what the user reads.
             expect(fallbackAfter.text()).toBe("AL");
             expect(wrapper.findAll('[role="img"]:not([aria-hidden="true"])')).toHaveLength(1);
             expect(identityAfter).toBe(identityBefore);
             expect(identityAfter.getAttribute("aria-label")).toBe("Ada Lovelace");
-            expect(status.mock.calls.map(([value]) => value).slice(-2)).toEqual([
-                "loading",
-                "error",
-            ]);
         } finally {
             wrapper.unmount();
             if (originalDescriptor) Object.defineProperty(window, "Image", originalDescriptor);
@@ -125,7 +122,7 @@ describe("Avatar", () => {
                 default: () => h(AvatarFallback, null, { default: () => "ℱ" }),
             },
         });
-        const identity = wrapper.get(".glass-avatar__identity");
+        const identity = wrapper.get(".avatar__identity");
 
         expect(wrapper.attributes("data-identity")).toBe("decorative");
         expect(identity.attributes("aria-hidden")).toBe("true");
@@ -161,7 +158,7 @@ describe("Avatar", () => {
                     }),
             },
         });
-        const identity = wrapper.get(".glass-avatar__identity");
+        const identity = wrapper.get(".avatar__identity");
         const status = wrapper.get('[data-slot="avatar-status"]');
 
         expect(identity.attributes("aria-labelledby")).toBe("member-name");
@@ -169,5 +166,34 @@ describe("Avatar", () => {
         expect(status.get('[role="img"]').attributes("aria-label")).toBe(
             "Grace Hopper is online",
         );
+    });
+
+    // BORN-RED at HEAD (D21, the reka silent-no-op class). `delayMs`/`delay-ms`
+    // were destructured OUT of the forwarded attrs, so a caller wrote
+    // `<AvatarFallback :delay-ms="600">`, got no type error, no warning, and no
+    // delay — the initials still flashed before a fast image resolved. It is
+    // reka's own prop and it does a real thing. HEAD reading: the attribute
+    // absent from the rendered fallback.
+    it("forwards the fallback delay instead of silently swallowing it", async () => {
+        vi.useFakeTimers();
+        try {
+            const wrapper = mount(Avatar, {
+                props: { decorative: true },
+                slots: {
+                    default: () =>
+                        h(AvatarFallback, { "delay-ms": 600 }, { default: () => "AL" }),
+                },
+            });
+
+            // The delay is REAL: the initials are held back so a fast image never
+            // flashes them. HEAD swallowed the prop, so this read "AL" at t=0.
+            expect(wrapper.text()).not.toContain("AL");
+
+            vi.advanceTimersByTime(600);
+            await flushPromises();
+            expect(wrapper.text()).toContain("AL");
+        } finally {
+            vi.useRealTimers();
+        }
     });
 });

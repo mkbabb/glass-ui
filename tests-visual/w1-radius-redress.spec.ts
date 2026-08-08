@@ -420,21 +420,21 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
         await page.goto("/display/atoms", { waitUntil: "networkidle" });
 
         // Reveal the Avatar family via the atoms family switcher, then WAIT for the
-        // mounted marker (`.glass-avatar` present) — no fixed sleep for the mount.
+        // mounted marker (`.avatar` present) — no fixed sleep for the mount.
         const avatarTab = page
             .getByRole("button", { name: "Avatar", exact: true })
             .or(page.getByRole("tab", { name: "Avatar", exact: true }))
             .first();
         if (await avatarTab.count()) await avatarTab.click();
-        await page.locator(".glass-avatar").first().waitFor({ state: "attached" });
+        await page.locator(".avatar").first().waitFor({ state: "attached" });
         await expect
-            .poll(async () => page.locator(".glass-avatar").count())
+            .poll(async () => page.locator(".avatar").count())
             .toBeGreaterThan(0);
 
         const probe = await page.evaluate(() => {
-            const avs = [...document.querySelectorAll(".glass-avatar")] as HTMLElement[];
+            const avs = [...document.querySelectorAll(".avatar")] as HTMLElement[];
             const rows = avs.map((a) => {
-                const id = a.querySelector(".glass-avatar__identity") as HTMLElement | null;
+                const id = a.querySelector(".avatar__identity") as HTMLElement | null;
                 const cs = id ? getComputedStyle(id) : null;
                 return {
                     shape: a.getAttribute("data-shape"),

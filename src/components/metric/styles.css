@@ -1,17 +1,38 @@
-@layer components {
-    :where(.metric, .metric-cell, .metric-row) {
-        min-inline-size: 0;
-        color: var(--foreground);
-    }
+/* ════════════════════════════════════════════════════════════════════════
+   Metric — the numeric-readout atom + its two layout composers
+   (BK #87 W-MARKS · SL-2)
 
+   ONE ATOM, FOUR POSTURES. `inline` · `stacked` · `cell` · `row`. The `cell`
+   posture is what `MetricCell.vue` was a whole component for; the `row` posture
+   is what `MetricRow.vue` was. Both re-implemented the atom's readout markup
+   verbatim, so the family carried three copies of one thing.
+
+   ZERO LOCAL TYPE MINTS. The label rides `--control-label` (PROPORTION §6's
+   budgeted ratio rung — the same rung `<Label>` reads, and for the same reason:
+   a metric label IS the annotation on a value). Every other size is a canonical
+   `--type-*` series rung. Nothing here invents a scale.
+
+   ONE INK. The loading plate reads `--ink-seam` off the one-ink ladder, not
+   `--surface-tint-15` (a brand-overlay token on a different axis entirely).
+
+   REST IS STILL (#27's rest rung). A display atom at rest reports its state
+   truthfully and runs no idle animation — so `loading` is a plate and an
+   `aria-busy`, never a shimmer. The register's only two rest carriers are
+   skeleton's breath and status-dot's pulse.
+   ════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
     .metric {
         display: inline-grid;
         grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+        min-inline-size: 0;
         align-items: baseline;
+        color: var(--foreground);
         gap: 0.125rem 0.5rem;
     }
 
-    .metric[data-orientation="stacked"] {
+    .metric[data-posture="stacked"],
+    .metric[data-posture="cell"] {
         grid-template-columns: minmax(0, 1fr);
     }
 
@@ -23,7 +44,7 @@
     }
 
     .metric__label {
-        font-size: var(--type-micro);
+        font-size: var(--control-label);
         font-weight: 550;
         letter-spacing: var(--type-tracking-wide);
         text-transform: uppercase;
@@ -61,12 +82,34 @@
         line-height: 1;
     }
 
+    /* THE DELTA — status INK on neutral material, never a bespoke green/red and
+       never a coloured plate (#33's feedback-tint seam applied at its ink half).
+       The house tokens `--success` / `--destructive` are the same two the rest of
+       the library already means by up and down; `flat` is muted, because zero
+       change is not an event. */
+    .metric__delta {
+        flex: none;
+        color: var(--muted-foreground);
+        font-family: var(--font-mono);
+        font-size: var(--type-caption);
+        font-variant-numeric: tabular-nums lining-nums;
+        line-height: 1;
+    }
+
+    .metric__delta[data-polarity="up"] {
+        color: var(--success);
+    }
+
+    .metric__delta[data-polarity="down"] {
+        color: var(--destructive);
+    }
+
     .metric[data-size="sm"] .metric__value {
         font-size: var(--type-small);
     }
 
     .metric[data-size="lg"] .metric__value,
-    .metric-cell .metric__value {
+    .metric[data-posture="cell"] .metric__value {
         font-size: var(--type-title);
     }
 
@@ -74,49 +117,43 @@
         font-size: var(--type-display-3);
     }
 
-    :where(.metric, .metric-cell, .metric-row)[data-empty] .metric__value {
+    .metric[data-empty] .metric__value {
         color: var(--muted-foreground);
     }
 
-    :where(.metric, .metric-cell, .metric-row)[data-loading] .metric__value {
+    .metric[data-loading] .metric__value {
         color: transparent;
         border-radius: var(--radius-sm);
-        background: var(--surface-tint-15);
+        background: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--ink-seam) * 100%),
+            transparent
+        );
     }
 
-    :where(.metric, .metric-cell, .metric-row)[data-loading] .metric__unit {
+    .metric[data-loading] .metric__unit,
+    .metric[data-loading] .metric__delta {
         visibility: hidden;
     }
 
-    .metric-cell {
+    /* ── The CELL posture — the plate that used to be its own component ────────── */
+    .metric[data-posture="cell"] {
         display: grid;
         align-content: start;
-        gap: 0.375rem;
         padding: clamp(0.75rem, 2cqi, 1rem);
-        border: 1px solid var(--glass-border-wash);
+        border: 1px solid oklch(from var(--foreground) l c h / var(--ink-edge));
         border-radius: var(--radius-card);
         background: var(--glass-plate-wash);
-        backdrop-filter: var(--glass-blur-wash);
-    }
-
-    .metric-cell__heading {
-        display: flex;
-        min-inline-size: 0;
-        align-items: center;
         gap: 0.375rem;
     }
 
-    .metric-cell__icon {
-        flex: none;
-        color: var(--muted-foreground);
-    }
-
+    /* ── The two layout composers — placement only, zero visual authority ──────── */
     .metric-stack {
         container: metric-stack / inline-size;
         display: grid;
         grid-template-columns: minmax(7rem, 1fr) minmax(0, auto);
-        gap: 0.75rem 1.25rem;
         inline-size: 100%;
+        gap: 0.75rem 1.25rem;
     }
 
     .metric-stack[data-density="compact"] {
@@ -131,27 +168,30 @@
         padding-block: 0.25rem;
     }
 
-    .metric-row__term {
+    /* The ROW posture spreads its own parts across the stack's subgrid: the label
+       (and any context) take the term column, the reading takes the value column. */
+    .metric-row > .metric[data-posture="row"] {
         display: grid;
-        min-inline-size: 0;
-        gap: 0.125rem;
+        grid-column: 1 / -1;
+        grid-template-columns: subgrid;
     }
 
-    .metric-row > .metric__reading {
+    .metric[data-posture="row"] > .metric__reading {
         justify-self: end;
     }
 
-    .metric-row .metric__context {
-        grid-column: auto;
+    .metric[data-posture="row"] > .metric__context {
+        grid-column: 1;
     }
 
     @container metric-stack (max-width: 24rem) {
-        .metric-row {
+        .metric-row,
+        .metric-row > .metric[data-posture="row"] {
             grid-template-columns: minmax(0, 1fr);
             gap: 0.25rem;
         }
 
-        .metric-row > .metric__reading {
+        .metric[data-posture="row"] > .metric__reading {
             justify-self: start;
         }
     }

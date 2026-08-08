@@ -53,8 +53,8 @@ const HARNESS = `
   </div>
 
   <!-- avatar: square identity → media; circle identity → pill -->
-  <div id="av-square" class="glass-avatar" data-shape="square" data-size="md"><div class="glass-avatar__identity"></div></div>
-  <div id="av-circle" class="glass-avatar" data-shape="circle" data-size="md"><div class="glass-avatar__identity"></div></div>
+  <div id="av-square" class="avatar" data-shape="square" data-size="md"><div class="avatar__identity"></div></div>
+  <div id="av-circle" class="avatar" data-shape="circle" data-size="md"><div class="avatar__identity"></div></div>
 
   <!-- search: inline → control pill + plate; floating/bare recipes applied from source -->
   <div id="bar-inline" class="input-bar" style="width:280px"><span>inline</span></div>
@@ -190,8 +190,8 @@ test.describe("W1 radius redress — bundled-WebKit static-cascade discovery (ro
                     },
                     command: { input: rad("cmd-input"), panel: rad("cmd-panel") },
                     avatar: {
-                        square: radChild("av-square", ".glass-avatar__identity"),
-                        circle: radChild("av-circle", ".glass-avatar__identity"),
+                        square: radChild("av-square", ".avatar__identity"),
+                        circle: radChild("av-circle", ".avatar__identity"),
                     },
                     search: {
                         inline: plateOf(inlineBar),

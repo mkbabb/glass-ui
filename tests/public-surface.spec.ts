@@ -77,6 +77,13 @@ const uiRuntimeExports = [
     // the single `SheetContent` root key below, composed inside `<Dialog>`.
     "Skeleton",
     "Slider",
+    // [2026-08-08 · BK #87 W-MARKS] StatusDot reaches the ROOT barrel. It shipped
+    // publicly while being absent from BOTH barrels — findable only through its
+    // `./status-dot` subpath, which is how all seven of its external importers
+    // reach it. The subpath is unchanged; this ends the third public-surface
+    // grammar.
+    "STATUS_DOT_STATES",
+    "StatusDot",
     "Switch",
     "Table",
     // `ui/Tabs` (the reka wrapper family) LEFT the public root barrel
@@ -374,7 +381,19 @@ const exactSubpathRuntimeSurfaces = [
     {
         subpath: "metric",
         surface: MetricSurface,
-        names: ["Metric", "MetricCell", "MetricRow", "MetricStack"],
+        // [2026-08-08 · BK #87 W-MARKS · SL-2] `MetricCell` LEAVES this list. A
+        // cell is a POSTURE of the one readout (`<Metric posture="cell">`), not a
+        // second component; three of the family's four members had been
+        // re-implementing one readout. `coalesceMetric` and `metricPolarity` join
+        // it — the family's one data-shaping seam is published with the family,
+        // not re-derived at each call site.
+        names: [
+            "Metric",
+            "MetricRow",
+            "MetricStack",
+            "coalesceMetric",
+            "metricPolarity",
+        ],
     },
     {
         subpath: "labeled-field",

@@ -4,6 +4,8 @@ import type { MetricStackProps } from "./types";
 
 defineOptions({ name: "MetricStack" });
 
+// The other PURE LAYOUT COMPOSER: the container grid its rows share, plus the one
+// density axis. It paints nothing.
 withDefaults(defineProps<MetricStackProps>(), { density: "default" });
 </script>
 

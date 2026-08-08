@@ -2,6 +2,7 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import type { StoryBody, SpecimenSpec } from "../../chassis/body/story-body";
 import { Badge } from "@glass/components/badge";
+import { StatusDot } from "@glass/components/status-dot";
 import { cn } from "@glass/components/_shared/class-names";
 import { BadgeCheck } from "@lucide/vue";
 
@@ -37,12 +38,17 @@ const vizBadges = [
     { cls: "bg-viz-legendre text-white", token: "legendre", label: "legendre" },
 ];
 
-const leadingDot = [
-    { dot: "bg-viz-fourier", label: "Active" },
-    { dot: "bg-viz-chebyshev", label: "Syncing" },
-    { dot: "bg-muted-foreground", label: "Idle" },
-    { dot: "bg-destructive", label: "Error" },
-];
+// The leading mark is `<StatusDot>`, which is what this page's own semantic-tones
+// blurb has told the reader to use since it was written. It used to hand-roll four
+// `rounded-full` divs painted from the VIZ palette — a basis-function colour ramp
+// standing in for semantics — which meant the demo taught the opposite of the
+// library. Every state below is a real `StatusDotState` with its own silhouette.
+const leadingMark = [
+    { state: "active", label: "Active" },
+    { state: "online", label: "Syncing" },
+    { state: "idle", label: "Idle" },
+    { state: "error", label: "Error" },
+] as const;
 
 // One BadgeCheck-and-label specimen at a given size (the optical-centering row).
 const verified = (size: string): SpecimenSpec => ({
@@ -88,16 +94,14 @@ const body: StoryBody = {
             })),
         },
         {
-            label: "with leading dot",
-            specimens: leadingDot.map((d) => ({
+            label: "with leading status mark",
+            blurb: "The compact state mark is StatusDot — every state carries its own silhouette, so the row survives monochrome and forced-color modes.",
+            specimens: leadingMark.map((d) => ({
                 component: Badge,
                 props: { variant: "outline", class: "gap-1.5" },
                 slots: {
                     default: [
-                        {
-                            component: "span",
-                            props: { class: `h-1.5 w-1.5 rounded-full ${d.dot}` },
-                        },
+                        { component: StatusDot, props: { state: d.state } },
                         d.label,
                     ],
                 },
@@ -105,10 +109,15 @@ const body: StoryBody = {
         },
         {
             label: "size axis",
+            blurb: "Type by ROLE on the canonical series (caption · control-label · control-value); pad on the spacing series, off the --ui-scale scalar. The single-character specimens sit on the circular floor at EVERY rung — the floor is the badge's own box height, and the inline pad is ceilinged at the slack that floor leaves over one character, which is what makes it bind. The two-character specimen grows off the floor.",
             specimens: [
-                { component: Badge, props: { size: "sm" }, slots: { default: "sm · text-micro" } },
-                { component: Badge, props: { size: "md" }, slots: { default: "md · text-small (default)" } },
-                { component: Badge, props: { size: "lg" }, slots: { default: "lg · text-base" } },
+                { component: Badge, props: { size: "sm" }, slots: { default: "sm · caption" } },
+                { component: Badge, props: { size: "md" }, slots: { default: "md · control-label (default)" } },
+                { component: Badge, props: { size: "lg" }, slots: { default: "lg · control-value" } },
+                { component: Badge, props: { size: "sm" }, slots: { default: "1" } },
+                { component: Badge, props: { size: "md" }, slots: { default: "7" } },
+                { component: Badge, props: { size: "lg" }, slots: { default: "9" } },
+                { component: Badge, props: { size: "lg" }, slots: { default: "12" } },
             ],
         },
         {
@@ -137,24 +146,16 @@ const body: StoryBody = {
         },
         {
             label: "semantic tones",
-            blurb: "Compose --success / --warning / --info plates with their --*-foreground glyph counterparts. Pair with StatusDot when a compact noncolor state mark is useful.",
-            specimens: [
-                ...semanticTones.map((tone) => ({
-                    component: Badge,
-                    props: { tone },
-                    slots: { default: tone },
-                })),
-                ...semanticTones.map((tone) => ({
-                    component: Badge,
-                    props: { tone, class: "gap-1.5" },
-                    slots: {
-                        default: [
-                            { component: "span", props: { class: "size-1.5 rounded-full bg-current" } },
-                            ` ${tone} with dot`,
-                        ],
-                    },
-                })),
-            ],
+            blurb: "Compose --success / --warning / --info plates with their --*-foreground glyph counterparts. The compact noncolor state mark is StatusDot — see the leading-mark row above.",
+            // The four "<tone> with dot" twins are GONE. They repeated the four
+            // specimens beside them to demonstrate a hand-rolled `rounded-full` dot
+            // that this library ships a component for, and that component now
+            // appears one section up with its real states.
+            specimens: semanticTones.map((tone) => ({
+                component: Badge,
+                props: { tone },
+                slots: { default: tone },
+            })),
         },
         {
             label: "baseline alignment in text-small context",

@@ -1,88 +1,136 @@
+/* ════════════════════════════════════════════════════════════════════════
+   Avatar — the identity mark (BK #87 W-MARKS §3.2/§3.7)
+
+   THE LAYER SEAM, and why it is now a SEAM instead of a blanket. This whole
+   sheet used to sit inside `@layer components`, which put the avatar's TYPE
+   and BOX rules in the same low-priority layer as its shape rules — so an
+   unlayered demo rule outranked the md fallback's font-size and the page
+   painted TWO different md type sizes at once (14.384 on four specimens,
+   20.352 on a fifth). Skeleton documents the correct split at its own
+   `:38-47` and this sheet violated it. Only the SHAPE seam is layered now, for
+   Skeleton's exact reason: a caller's public shape utility (`rounded-full`,
+   `rounded-card`) is merged onto this element from the utilities layer and
+   must win. Everything else is unlayered and beats a page rule that is not
+   trying to re-shape the mark.
+
+   THE φ LADDER (§3.2). `sm` IS the control rung — an avatar sits beside a
+   control and must agree with it — and `md`/`lg` are φ and φ² of that rung. The
+   shipped ladder was 60/64/128: one rung riding `--ui-scale` and two frozen at
+   literals, which is a 1.067 ratio between sm and md at coarse pointer — two
+   sizes a user cannot tell apart, and a THIRD that cannot collapse with them
+   because it is a constant. Riding `--control-h-md` is legal here under §1.1
+   because this is a BOX, not type: the scalar exists to grow boxes.
+
+   Only `lg` actually moves (8rem/128 → 104.7); `md` was already within 1% of
+   φ·sm, so the ladder is mostly a derivation of what was there. Default stays
+   `sm`, and the coarse collapse is impossible by construction because all
+   three rungs are now one expression.
+
+   THE STATUS SLOT IS AN em SEAM (S15/D34). Both design arms proposed the slot
+   set `--feedback-mark-size: calc(avatar/4)` on itself — a NO-OP, because
+   `.status-dot` declares that same property ON ITSELF and an element's own
+   declaration beats any inherited value. What the slot can set that a child
+   cannot override away is `font-size`, and StatusDot's rungs are now in `em`.
+   So: slot font-size = avatar/2, an `sm` mark = 0.5em = avatar/4 EXACTLY, by
+   composition of two laws already adopted, with zero new machinery. The fixed
+   `0.875rem` floor dies with it.
+   ════════════════════════════════════════════════════════════════════════ */
+
+.avatar {
+    --avatar-size: var(--control-h-md);
+    position: relative;
+    display: inline-grid;
+    inline-size: var(--avatar-size);
+    block-size: var(--avatar-size);
+    vertical-align: middle;
+    isolation: isolate;
+}
+
+.avatar[data-size="md"] {
+    --avatar-size: calc(var(--control-h-md) * 1.618);
+}
+
+.avatar[data-size="lg"] {
+    --avatar-size: calc(var(--control-h-md) * 2.618);
+}
+
+.avatar__identity,
+.avatar__image,
+.avatar__fallback {
+    inline-size: 100%;
+    block-size: 100%;
+}
+
+.avatar__identity {
+    display: grid;
+    overflow: hidden;
+    place-items: center;
+    /* C9 — ELEVATION EARNS THE EDGE. An avatar carries `--shadow-sm`, which puts
+       it on the floating side of the one-ink ladder: `--ink-edge` (0.16) is a
+       floating plate's boundary, and that is what a drop shadow declares this to
+       be. `--glass-border-wash` was a fourth spelling of a line the ladder
+       already answers. */
+    border: 1px solid oklch(from var(--foreground) l c h / var(--ink-edge));
+    background: var(--glass-plate-wash);
+    color: var(--foreground);
+    box-shadow: var(--glass-material-rim), var(--shadow-sm);
+}
+
+.avatar__image,
+.avatar__fallback {
+    grid-area: 1 / 1;
+}
+
+.avatar__image {
+    object-fit: cover;
+}
+
+.avatar__fallback {
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--secondary) 82%, transparent);
+    font-size: var(--type-caption);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1;
+    user-select: none;
+}
+
+.avatar[data-size="md"] .avatar__fallback {
+    font-size: var(--type-subheading);
+}
+
+.avatar[data-size="lg"] .avatar__fallback {
+    font-size: var(--type-display-2);
+}
+
+.avatar__status {
+    position: absolute;
+    inset-inline-end: -0.125rem;
+    inset-block-end: -0.125rem;
+    z-index: 1;
+    display: grid;
+    /* THE SEAM (S15). Everything the mark measures is now `em` off this one
+       declaration: an `sm` StatusDot renders 0.5em = --avatar-size/4 → 10/16/26
+       across the φ ladder. No `min-*` floor, no padding pad — the mark sizes
+       itself and this box is exactly as big as the mark it holds. */
+    font-size: calc(var(--avatar-size) / 2);
+    place-items: center;
+    background: var(--background);
+    box-shadow: 0 0 0 1px oklch(from var(--foreground) l c h / var(--ink-edge));
+}
+
+/* ── THE SHAPE SEAM — the ONLY layered rules (Skeleton's model) ─────────────── */
 @layer components {
-    .glass-avatar {
-        --avatar-size: var(--control-h-md);
-        position: relative;
-        display: inline-grid;
-        flex: none;
-        inline-size: var(--avatar-size);
-        block-size: var(--avatar-size);
-        vertical-align: middle;
-        isolation: isolate;
+    .avatar[data-shape="circle"] .avatar__identity {
+        border-radius: var(--mark-stadium, var(--radius-pill));
     }
 
-    .glass-avatar[data-size="md"] {
-        --avatar-size: 4rem;
-    }
-
-    .glass-avatar[data-size="lg"] {
-        --avatar-size: 8rem;
-    }
-
-    .glass-avatar__identity,
-    .glass-avatar__image,
-    .glass-avatar__fallback {
-        inline-size: 100%;
-        block-size: 100%;
-    }
-
-    .glass-avatar__identity {
-        display: grid;
-        overflow: hidden;
-        place-items: center;
-        border: 1px solid var(--glass-border-wash);
-        background: var(--glass-plate-wash);
-        color: var(--foreground);
-        box-shadow: var(--glass-material-rim), var(--shadow-sm);
-    }
-
-    .glass-avatar[data-shape="circle"] .glass-avatar__identity {
-        border-radius: var(--radius-pill);
-    }
-
-    .glass-avatar[data-shape="square"] .glass-avatar__identity {
+    .avatar[data-shape="square"] .avatar__identity {
         border-radius: var(--radius-media);
     }
 
-    .glass-avatar__image,
-    .glass-avatar__fallback {
-        grid-area: 1 / 1;
-    }
-
-    .glass-avatar__image {
-        object-fit: cover;
-    }
-
-    .glass-avatar__fallback {
-        display: grid;
-        place-items: center;
-        background: color-mix(in srgb, var(--secondary) 82%, transparent);
-        font-size: var(--type-caption);
-        font-weight: var(--font-weight-semibold);
-        letter-spacing: var(--tracking-tight);
-        line-height: 1;
-        user-select: none;
-    }
-
-    .glass-avatar[data-size="md"] .glass-avatar__fallback {
-        font-size: var(--type-subheading);
-    }
-
-    .glass-avatar[data-size="lg"] .glass-avatar__fallback {
-        font-size: var(--type-display-2);
-    }
-
-    .glass-avatar__status {
-        position: absolute;
-        inset-inline-end: -0.125rem;
-        inset-block-end: -0.125rem;
-        z-index: 1;
-        display: grid;
-        min-inline-size: 0.875rem;
-        min-block-size: 0.875rem;
-        place-items: center;
-        padding: 0.125rem;
-        border-radius: var(--radius-pill);
-        background: var(--background);
-        box-shadow: 0 0 0 1px var(--glass-border-wash);
+    .avatar__status {
+        border-radius: var(--mark-stadium, var(--radius-pill));
     }
 }

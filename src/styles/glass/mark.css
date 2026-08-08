@@ -1,0 +1,141 @@
+/* ════════════════════════════════════════════════════════════════════════
+   mark.css — THE INERT-MARK REGISTER (BK #87 W-MARKS §3.1)
+
+   The six members — badge · separator · label · avatar · skeleton ·
+   status-dot — are the library's entire inert-mark register: non-interactive
+   atoms that ANNOTATE a neighbour. They were already, by omission, the right
+   answer (measured at the wave: zero `:hover`/`:focus`/`:active` rules, zero
+   `backdrop-filter`, across all six). This file makes the omission LAW, and it
+   is SUBTRACTIVE — the fragments each member spelled for itself (the `flex:
+   none` repeat ×4, the two stadium spellings, the two ad-hoc state
+   cross-fades) collapse here.
+
+   THE LAWS, and why each is stated rather than left to omission:
+
+   (1) A MARK SAMPLES NOTHING. `backdrop-filter: none` is the one glass claim
+       that is ENGINE-INVARIANT (EXEC-STATE's sixth-Écoute (d): no
+       engine-conditional glass), so it is the one that can be stated as a
+       rule and gated identically in Chromium and in Safari. Every other glass
+       channel reads differently per engine and belongs to a material role,
+       never to a mark.
+
+   (2) A MARK NEVER STRETCHES. It is sized by the type or the control it
+       annotates, never by the box it happens to land in.
+
+   (3) ONE STADIUM SPELLING. `--radius-pill`. The `50%` circle and the
+       `rounded-full` utility (which computes `1.67772e+07px` in Chromium and
+       `3.4e38px` in Safari — twenty orders apart on the identical
+       declaration) are both retired at the member sheets; this is the rung
+       they retire ONTO.
+
+   (4) ENGAGEMENT IS A STATE CHANGE, NEVER A HOVER. K13's falsifier stands: a
+       hover affordance on a non-interactive mark is a lie that sticks after a
+       tap on touch. What a mark DOES carry is the transition between its own
+       states — a badge changing tone, a dot changing state.
+
+       ON THE CURVE, stated because the spec named a preset that is not on
+       disk. §3.1 asks for a `springPreset(…)` row "read from springPresets.ts
+       at implementation time, never a remembered literal" — and the row it
+       names is a RETIRED register: the table read at implementation time has
+       six rows (press · present · dock · panel · bloom · world) and that name
+       is not among them. It is not written out here either, because
+       `G-SPRING-ONE-JOB` greps `src/` for every retired register name and
+       REDS on the string — a gate finding the spec's own citation is the
+       cleanest possible receipt that the substitution below was owed. The
+       name is recorded in this row's RECORD, which is where a strike belongs.
+
+       What replaces it: the mirror's own clause, `scheme-spring.css:52-56` —
+       an EFFECTS transition (a colour cross-fade) rides `--ease-*`, "because
+       a colour cross-fade on a spring reads as a wobble". A mark's state
+       change is TWO channels, so it takes two curves. The ink cross-fades on
+       the canon ease; the silhouette's scale — the only geometry channel a
+       mark moves — rides `press`, the table's fastest dead-landing row, which
+       is what the retired name was reaching for.
+
+   (5) THE TWO REST CARRIERS ARE SKELETON'S BREATH AND STATUS-DOT'S PULSE, and
+       they live at their own members because each is one member's silhouette.
+       Both are compositor-only, both breathe on an EASE across an `alternate`
+       or decaying cycle (never a `linear` conveyor — weightless by
+       construction under the liquid-weight edict), and both still under
+       reduced motion. No third carrier: everything else in this register is
+       still, and the stillness is the design.
+
+   (6) A FLOOR A PAD CAN EAT IS NOT A FLOOR (A-22). A mark that carries a COUNT
+       is a circle, not a squashed lozenge, so the badge's circular floor is its
+       own BOX HEIGHT — one content line (`1lh`) plus the two block legs. Spelled
+       as a `min-inline-size` ALONE that floor is INERT, and the first cut shipped
+       it inert: the natural width of a one-character badge is that character
+       plus TWO INLINE legs, and at the md rung the legs (12px each) exceed the
+       whole slack the floor leaves, so the floor never bound and the "circle"
+       was whatever the pad decided (measured at the cure: md `7` resolved
+       32.49 × 23.99, ratio 1.354; sm's near-circle was a px-2 coincidence at
+       1.024; only lg bound). A floor therefore comes WITH ITS PRECONDITION: the
+       inline leg may not exceed the slack the floor leaves over ONE CHARACTER
+       CELL (`1ch` — the "0" advance, which is the glyph a count is made of).
+       The rung asks for a leg and the register hands back the leg the floor can
+       afford — a REQUEST and a CEILING rather than a literal, so no retune of
+       the type ladder can silently un-bind the floor a second time.
+
+   ONE INK. Every line a mark paints resolves to the `--ink-{seam,edge,
+   perimeter}` ladder (color-radius.css §ink) — never `--border`, never
+   `--surface-tint-15`, never an adjective-chosen local alpha. `--separator-ink`
+   (0.22, "chosen by adjective") died with this wave.
+
+   @layer components, @import-ed by glass.css IMMEDIATELY AFTER glass-atom.css
+   (the badge consumer) so the register and its one styled consumer resolve in
+   the same layer. Every selector is `:where()` — specificity 0 — so a member's
+   own sheet always wins its own channel; this file states the floor, never the
+   answer.
+   ════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
+    /* (1) LAW: a mark samples nothing. */
+    :where(.badge-atom, .separator, .label, .avatar, .skeleton, .status-dot) {
+        backdrop-filter: none;
+    }
+
+    /* (2) LAW: a mark never stretches. */
+    :where(.badge-atom, .avatar, .separator, .status-dot) {
+        flex: none;
+    }
+
+    /* (3) LAW: one stadium spelling, published as the register's own rung so a
+       member names the register rather than re-spelling the token. */
+    :where(.badge-atom, .avatar, .status-dot) {
+        --mark-stadium: var(--radius-pill);
+    }
+
+    /* (4) LAW: the one engagement is the state change (§3.1's two channels). */
+    :where(.badge-atom, .feedback-mark) {
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            scale var(--spring-press-duration) var(--spring-press);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.badge-atom, .feedback-mark) {
+            transition: none;
+        }
+    }
+
+    /* (6) LAW: a floor a pad can eat is not a floor (A-22). The badge is the one
+       member with a text box, so it is the one member that can eat its own
+       floor. The rung states its legs as REQUESTS (the size class sets
+       `--mark-pad-{block,inline}` from the spacing series; the values below are
+       the default rung, md); the register states the BOX. */
+    :where(.badge-atom) {
+        --mark-pad-block: 0.25rem;
+        --mark-pad-inline: 0.75rem;
+        /* the badge's own box height: one content line + the two block legs */
+        --mark-floor: calc(1lh + var(--mark-pad-block) * 2);
+
+        min-inline-size: var(--mark-floor);
+        padding-block: var(--mark-pad-block);
+        padding-inline: min(
+            var(--mark-pad-inline),
+            calc((var(--mark-floor) - 1ch) / 2)
+        );
+    }
+}

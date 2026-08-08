@@ -69,7 +69,7 @@ test("capture union CSS", async ({ page }) => {
                 ) as HTMLElement | undefined;
                 t?.click();
             });
-            await page.locator(".glass-avatar").first().waitFor({ state: "attached" });
+            await page.locator(".avatar").first().waitFor({ state: "attached" });
             await waitForStyleSheetsStable(page);
         }
         const rules = await page.evaluate(() => {

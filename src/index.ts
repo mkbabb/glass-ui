@@ -307,6 +307,17 @@ export { Separator, type SeparatorProps } from "./components/separator";
 export { SheetContent, type SheetContentProps } from "./components/sheet";
 export { Skeleton } from "./components/skeleton";
 export { Slider, type SliderProps, type SliderSize, type SliderVariant } from "./components/slider";
+// StatusDot reaches the ROOT barrel. It was absent from both barrels while all
+// seven of its external importers reached it through the `./status-dot` subpath —
+// which is a component that ships publicly and cannot be found the way every other
+// component in the library is found. The subpath is kept (it is what those seven
+// import); this line ends the third public-surface grammar.
+export {
+    StatusDot,
+    STATUS_DOT_STATES,
+    type StatusDotSize,
+    type StatusDotState,
+} from "./components/status-dot";
 export { Switch, type SwitchProps } from "./components/switch";
 export {
     Table,

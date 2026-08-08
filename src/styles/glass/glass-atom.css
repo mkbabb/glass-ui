@@ -1,8 +1,13 @@
 /* ════════════════════════════════════════════════════════════════════════
    .glass-atom — : the ONE shared warm-glass register
-   the small atoms (Badge-glass · slider fill · the `+N`
-   chip) consume in two registers (loud opaque identity vs quiet transmissive
-   glass).
+   the small atoms (slider fill · the `+N` chip) consume for a quiet
+   transmissive body.
+
+   BADGE IS NO LONGER ONE OF THEM (BK #87 W-MARKS §3.5(6)). A badge is an inert
+   MARK, and a mark samples nothing; the `surface="glass"` axis that composed
+   `.glass-capsule .glass-atom` onto a badge is deleted. `.badge-atom` below is
+   now purely the loud opaque identity pill and its edge, and it composes this
+   file's register only for the `--glass-material-rim` read.
 
    CONSUME-ONLY — declares ZERO own glass tokens (the no-fork fence, Fence 1).
    It COMPOSES:
@@ -98,73 +103,67 @@
     }
 
     /* ════════════════════════════════════════════════════════════════════════
-       .badge-atom — the Badge consumer of the register (loud + quiet).
+       .badge-atom — the Badge consumer of the register.
 
-       The LOUD register (the default opaque identity pill): the family signature
-       WITHOUT the glass body — the keyed warm rim (the defined edge and the
-       `border-transparent` melt fix). The badge applies `.badge-atom` on EVERY
-       variant (the CVA base); `surface="glass"` ALSO applies `.glass-capsule .glass-atom`
-       for the quiet transmissive body.
+       ONE REGISTER, ONE EDGE MECHANISM. The `surface="glass"` axis is GONE (BK
+       #87 §3.5(6)): a badge is an INERT MARK, and the register law is that a
+       mark samples nothing — `.glass-capsule` paints a real `backdrop-filter`
+       (`glass-capsule.css:64,84`), so the quiet register was a member of this
+       family violating the family's own law. It also shipped BROKEN: the tint
+       map keyed `[data-variant]`, an attribute the default never wrote, so
+       `.badge-atom--glass[data-variant="default"]` was structurally
+       unreachable. Zero demo mounts; one cross-repo mount, relayed. The
+       `--badge-glass-strength` knob and the seven-rule tint map died with it.
        ════════════════════════════════════════════════════════════════════════ */
     .badge-atom {
-        /* The DEFINED EDGE — the SHIPPED keyed two-stop rim (re-pointed by
+        /* THE DEFINED EDGE — the SHIPPED keyed two-stop rim (re-pointed by
            `--glass-key`) as the pill's silhouette, so a sand `secondary` no longer
            melts into a cream panel (the live `border-transparent` melt). It is a
-           box-shadow rim, NOT a `border` (the base CVA retired the `border`
-           keyword), so it adds zero layout box + reads warm. */
+           box-shadow rim, NOT a `border`, so it adds zero layout box + reads warm —
+           and as of BK #87 that comment is TRUE on every variant, not just this one
+           (`--outline` carried a real `border` beside it, +2.00px at every rung).
+
+           ON THE READ, stated because §3.5(3) asked for a LOCAL declaration with a
+           top leg ≤0.12: the ground for going local was D15, two live definitions of
+           `--glass-material-rim` decided by ancestry. That fork is DEAD at HEAD —
+           `tokens/shadow.css:37` records its strike and `glass/rim.css:54` is now the
+           sole declaration, top leg 0.10 light / 0.08 dark, already inside the ≤0.12
+           ceiling. Forking a badge-local copy of a rim that is finally single-sourced
+           would be the per-site paste the settlement exists to kill (S6's own
+           reasoning, applied to the rim instead of the specular). The read stays. */
         box-shadow: var(--glass-material-rim);
     }
 
-    /* `outline` variant — the rim reads a louder warm-ink edge (it IS the edge). */
+    /* `outline` variant — ONE edge mechanism. The `border` is gone: it occupied
+       +2.00px of layout box at every rung (a 19.82px default beside a 21.82px
+       outline), which is what the base's own comment above says a badge edge must
+       never do. An INSET ring paints the same 1px line in the same place and takes
+       zero box, so outline and filled are the same height by construction. The ink
+       is the PERIMETER rung (`--ink-perimeter`, the one-ink ladder) — this line IS
+       the badge's own edge, not an in-content seam.
+
+       Per-mode arms only where a mode arm is needed: this is a plain inset fragment
+       in a plain `box-shadow` list, never inside `light-dark()`, which computes the
+       WHOLE box-shadow to `none` and would take the rim with it. */
     .badge-atom--outline {
-        box-shadow: var(--glass-material-rim);
-        border: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
+        box-shadow:
+            var(--glass-material-rim),
+            inset 0 0 0 1px
+                color-mix(
+                    in oklab,
+                    var(--foreground) calc(var(--ink-perimeter) * 100%),
+                    transparent
+                );
     }
 
-    /* The QUIET glass register — retire the opaque `bg-*` plate so the warm-glass
-       `.glass-capsule` body + the `.glass-atom` tinted `background-image` paint the
-       surface (no double-fill). The variant `bg-*` utility sets `background-color`;
-       this resets it to transparent so the capsule fill + the data-hue tint win.
-       The text color (the variant's `text-*`) is kept — the label still reads. */
-    .badge-atom--glass {
-        background-color: transparent !important;
-        /* The quiet capsule tints toward the variant's SEMANTIC hue via the shared
-           `--glass-fill-tint` axis — colored glass, never a
-           forked tint. The strength is a calm stop (the body ink stays legible).
-           A consumer overrides `--glass-fill-tint` per-instance for a bespoke hue. */
-        --glass-fill-strength: var(--badge-glass-strength, 16%);
-    }
-    /* Per-axis glass tint — the data hue the quiet body mixes toward. 
-       RENAMES: the STYLE plate keys off `[data-variant]` (default/secondary/outline),
-       the SEMANTIC hue off `[data-tone]` (destructive/success/warning/info — a tone
-       is not a style). A set tone's rule follows the variant rule in source order, so
-       a `tone` capsule's hue wins the cascade — byte-identical to the former
-       per-`variant` tint map. `secondary`/`outline` are the calm/neutral routes. */
-    .badge-atom--glass[data-variant="default"] {
-        --glass-fill-tint: var(--primary);
-    }
-    .badge-atom--glass[data-variant="secondary"] {
-        --glass-fill-tint: var(--glass-capsule-warm);
-    }
-    .badge-atom--glass[data-variant="outline"] {
-        --glass-fill-tint: var(--glass-capsule-warm);
-    }
-    .badge-atom--glass[data-tone="destructive"] {
-        --glass-fill-tint: var(--destructive);
-    }
-    .badge-atom--glass[data-tone="success"] {
-        --glass-fill-tint: var(--success);
-    }
-    .badge-atom--glass[data-tone="warning"] {
-        --glass-fill-tint: var(--warning);
-    }
-    .badge-atom--glass[data-tone="info"] {
-        --glass-fill-tint: var(--info);
-    }
-
+    /* prefers-contrast: more — the SAME inset spelling, floored louder. It used to
+       be a `border`, which meant the contrast arm silently ADDED the +2.00px box the
+       base had removed — the defect concealing itself under the accessibility arm. */
     @media (prefers-contrast: more) {
         .badge-atom {
-            border: 1px solid color-mix(in srgb, var(--foreground) 28%, transparent);
+            box-shadow:
+                var(--glass-material-rim),
+                inset 0 0 0 1px color-mix(in oklab, var(--foreground) 28%, transparent);
         }
     }
 }

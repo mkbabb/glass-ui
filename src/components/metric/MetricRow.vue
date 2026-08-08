@@ -1,38 +1,20 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import { cn } from "../_shared/class-names";
-import { coalesceMetric } from "./coalesce-metric";
 import type { MetricRowProps } from "./types";
 
 defineOptions({ name: "MetricRow" });
 
-const props = withDefaults(defineProps<MetricRowProps>(), { loading: false });
-const reading = computed(() =>
-    coalesceMetric(props.value, props.placeholder, props.loading),
-);
+// A PURE LAYOUT COMPOSER — zero visual authority of its own. It owns subgrid
+// placement inside a `<MetricStack>` and nothing else: no type, no ink, no
+// spacing of its own, no readout. It used to render a whole metric (its own
+// `coalesceMetric` call, its own value/unit markup), which is why the family had
+// three copies of one readout. The readout is `<Metric posture="row">`; this is
+// where it sits.
+defineProps<MetricRowProps>();
 </script>
 
 <template>
-    <div
-        :class="cn('metric-row', $props.class)"
-        :data-empty="reading.empty || undefined"
-        :data-loading="reading.loading || undefined"
-        :aria-busy="reading.loading || undefined"
-    >
-        <span class="metric-row__term">
-            <span class="metric__label"><slot name="label">{{ label }}</slot></span>
-            <span v-if="$slots.context || context" class="metric__context">
-                <slot name="context">{{ context }}</slot>
-            </span>
-        </span>
-        <span class="metric__reading">
-            <span class="metric__value">
-                <slot v-if="!reading.loading" name="value">{{ reading.display }}</slot>
-                <template v-else>{{ reading.display }}</template>
-            </span>
-            <span v-if="$slots.unit || unit" class="metric__unit">
-                <slot name="unit">{{ unit }}</slot>
-            </span>
-        </span>
+    <div :class="cn('metric-row', $props.class)">
+        <slot />
     </div>
 </template>

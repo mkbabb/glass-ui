@@ -240,4 +240,49 @@ describe("gate:token-hygiene — radius/backdrop-blur literals off the ladder", 
             ),
         ).toEqual([]);
     });
+    // ── BK #87 W-MARKS · the ONE-INK arm (§5 G3, folded here per §5's own routing:
+    //    "Ink rows → tests/gates/token-hygiene.test.ts". No seat minted; this is an
+    //    ARM under the existing `gate:token-hygiene` seat.)
+    //
+    // DETECTOR: `--separator-ink` has zero references anywhere in `src/`.
+    // HEAD reading: `git grep -c -- "--separator-ink" HEAD -- src` →
+    //   `HEAD:src/components/separator/Separator.vue:2`
+    //   `HEAD:src/styles/tokens/color-radius.css:2`
+    // Five divider implementations wore five inks — 0.22 · 0.12 · tan 0.70 · tan
+    // 1.00 · 0.15 — and none of them was on the ladder the library had already
+    // published. 0.22 was chosen by adjective ("visible-but-whisper"), which is the
+    // defect class this gate's own §ink block exists to end. BORN-RED.
+    //
+    // THE MUTATION THAT BITES: re-spell it as a local `--divider-ink` in one
+    // component and this still REDS, because the arm asserts the LADDER is what a
+    // divider resolves to, not that one name is absent.
+    it("BK #87 — every divider ink resolves to the one-ink ladder", () => {
+        // Comments are stripped first. This wave's own prose NAMES the token it
+        // struck — a strike that does not say what it struck is one nobody can
+        // audit later — so a raw grep would fire on the explanation of the cure.
+        const code = (rel: string): string =>
+            readFileSync(join(REPO_ROOT, rel), "utf8")
+                .replace(/\/\*[\s\S]*?\*\//g, "")
+                .replace(/^\s*\/\/.*$/gm, "");
+        const sources = sourceFiles(SRC).map((path) => relative(REPO_ROOT, path));
+        const offenders = sources.filter((rel) => /--separator-ink/.test(code(rel)));
+
+        expect(offenders).toEqual([]);
+
+        // The three rungs are declared, once, where the ladder lives.
+        const ladder = readFileSync(join(SRC, "styles/tokens/color-radius.css"), "utf8");
+        for (const rung of ["--ink-seam", "--ink-edge", "--ink-perimeter"]) {
+            expect(ladder).toMatch(new RegExp(`^\\s*${rung}:`, "m"));
+        }
+
+        // And the two marks that paint a line resolve onto it.
+        for (const rel of [
+            "src/components/separator/Separator.vue",
+            "src/components/skeleton/Skeleton.vue",
+        ]) {
+            expect(readFileSync(join(REPO_ROOT, rel), "utf8")).toContain(
+                "var(--ink-seam)",
+            );
+        }
+    });
 });

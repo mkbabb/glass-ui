@@ -7,6 +7,77 @@ rename or import re-point per call site.
 
 ## 8.0.0
 
+**`StatusDot`'s 7.0.0 cut is written down — two majors late.** The 7.0.0 rewrite
+replaced this component's entire API and shipped no migration rows at all, while
+`v-bind="$attrs"` made every retired prop a silent no-op: the call sites kept
+type-checking, kept rendering, and quietly lost their meaning. The rows are owed to
+anyone still on the old shape, so they are written here now rather than left
+unrecorded.
+
+_Props — `<StatusDot>` (retired in 7.0.0, recorded here)_
+
+| Retired | Replacement |
+| --- | --- |
+| `variant`, `color` | `state` — one axis of seven: `active \| idle \| online \| success \| warning \| error \| unknown`. Each paints its own silhouette AND its own tone, so the signal survives monochrome. Retint one instance by overriding `--feedback-state-color` on the mark. |
+| `pulse` | `motion` — `"full"` (default) breathes the live `active` state; `"off"` opts down. Liveness is an axis of this component, never a second component. Reduced motion always wins. |
+| `size="xs"` | `size="sm"` — the ladder is `sm \| md \| lg`. |
+| `label` as VISIBLE TEXT | `label` is the accessible name only (`aria-label`); it renders nothing. **This is a silent visual regression no type error catches** — a dot that used to print its word beside itself now prints nothing. Put the word in your own markup and keep `label` for the accessible identity, or omit `label` when that adjacent text already names the state. |
+| `.status-dot__dot`, `.status-dot__pulse`, `.status-dot__fill` | Deleted. The mark is one element, `.feedback-mark`, with its silhouette on `::before`/`::after`. |
+
+_This cut (8.0.0)_
+
+- `StatusDot` now also exports from the **root** barrel (`@mkbabb/glass-ui`). The
+  `./status-dot` subpath is unchanged; nothing needs re-pointing.
+- The size rungs are `em`, not `rem` — byte-identical at a root font-size of 16, and
+  now tracking the line the mark sits in. A caller who set an explicit
+  `--feedback-mark-size` is unaffected.
+- An unhandled state paints the `unknown` mark rather than the live one.
+- `FeedbackSize` is `StatusDotSize` at its source (`states.ts`, formerly
+  `feedback.ts`). The exported name is unchanged.
+
+**The inert-mark register lands: badge · separator · label · avatar · skeleton ·
+status-dot.** Six components, one law — a mark samples nothing
+(`backdrop-filter: none`), never authors a hover affordance, paints one divider ink
+off the `--ink-{seam,edge,perimeter}` ladder, and spells one stadium radius.
+
+- **`<Badge surface="glass">` is deleted**, with `--badge-glass-strength` and the
+  `.badge-atom--glass` tint map. A badge is an inert mark; the quiet register
+  composed `.glass-capsule`, which paints a real `backdrop-filter`. It also shipped
+  broken — the tint map keyed `[data-variant]`, an attribute the default never
+  wrote. Use the `tone` axis for semantic colour.
+- **Badge type and pad rungs moved.** Type is now by role on the canonical series
+  (`--type-caption` / `--control-label` / `--control-text`) and the pad is on the
+  spacing series, off the `--ui-scale` scalar. `wrap-anywhere` is gone (a badge does
+  not wrap); glyphs are `1em`; a one-character badge floors circular.
+- **`.glass-avatar` → `.avatar`, `.glass-label` → `.label`** (and the BEM children:
+  `.glass-avatar__identity` → `.avatar__identity`, and so on). Neither component has
+  ever carried glass. Clean break — re-point any selector that targeted them.
+- **The avatar size ladder is φ-derived**: `sm` is the control rung
+  (`--control-h-md`), `md` is φ of it, `lg` is φ². Only `lg` moves — `8rem`/128px →
+  ~104.7px.
+- **`AvatarImage` drops `data-image-state`, the `loadingStatusChange` emit and the
+  `AvatarImageStatus` type** — a four-state machine with zero readers and zero
+  listeners across six repos. `<AvatarFallback :delay-ms>` now works; it was
+  silently swallowed.
+- **`--separator-ink` is deleted.** Separators paint `--ink-seam` (0.08). Retint
+  from the ladder, not from a per-component token.
+- **The skeleton's travelling shimmer is replaced by an opacity breathe.** The band
+  eased a one-way loop (71% of every cycle parked off-box) and travelled 220% of its
+  own width in a fixed clock, so its speed varied 5.8× with the box. No API change;
+  a consumer that overrode `skeleton-scan` should drop the override.
+
+_Metric — one atom, two composers_
+
+- **`MetricCell` is deleted; it is `<Metric posture="cell">`.** A cell is a posture
+  of one readout, not a second component. Its `icon` / `iconSize` /
+  `iconStrokeWidth` props are gone with it — put the glyph in your own heading.
+- **`MetricRow` is now a pure layout composer.** It takes a slot, not metric props:
+  `<MetricRow><Metric posture="row" label="…" :value="…" /></MetricRow>`.
+- **`<Metric orientation>` is `<Metric posture>`** — `inline | stacked | cell | row`.
+- **New**: `delta` + `polarity` (status ink on the neutral material, never a coloured
+  plate), `compact` (locale-aware compact numbers through `coalesceMetric`), and
+  `coalesceMetric` / `metricPolarity` are exported from `./metric`.
+
 **The dock's "rail" vocabulary is struck; the layer-switcher renames and the
 hairline is built.** `rail` meant a VERTICALLY-ORIENTED DOCK in the dock band's own
 identifiers (`--dock-rail-padding` was the vertical dock's padding, `--dock-rail-extend-length`
@@ -750,8 +821,8 @@ subpath)` is the 5.0.0 target".]
 | `MetricBadgeLabelPosition` | type | removed 7.0.0 — /metric-badge folded into /metric |
 | `MetricBadgeProps` | type | removed 7.0.0 — /metric-badge folded into /metric; compose `Metric` in `./badge` |
 | `MetricBadgeSize` | type | removed 7.0.0 — /metric-badge folded into /metric; use `MetricSize` (/metric) |
-| `MetricCellAppearance` | type | removed 7.0.0 — /metric-cell consolidated into /metric (`MetricCell`) |
-| `MetricCellProps` | type | `/metric` |
+| `MetricCellAppearance` | type | removed 7.0.0 — /metric-cell consolidated into /metric [CORRECTION 2026-08-08: the trailing "(`MetricCell`)" pointer is STRUCK — it named the symbol that absorbed the subpath, and `MetricCell` is itself removed at 8.0.0; the surviving destination is `Metric` (/metric)] |
+| `MetricCellProps` | type | removed 8.0.0 — `MetricCell` folds into the one `Metric` atom; use `MetricProps` (/metric) and set `posture="cell"` [CORRECTION 2026-08-08: previously read "`/metric`", asserting the type LIVE on that subpath — `src/components/metric/types.ts` declares no such type] |
 | `MetricRowProps` | type | `/metric` |
 | `MetricStackProps` | type | `/metric` |
 | `MotionCurve` | type | removed 7.0.0 — /motion-curves retired; import easing math from `@mkbabb/value.js/easing` |

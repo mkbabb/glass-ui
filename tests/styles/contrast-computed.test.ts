@@ -463,10 +463,16 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
         }
 
         it("the error-ink consumers really do read the token this table measures", () => {
-            for (const file of [
-                "src/components/label/Label.vue",
-                "src/components/labeled-field/LabeledField.vue",
-            ]) {
+            // [2026-08-08 · BK #87 W-MARKS · D13] `Label.vue` LEAVES this list. It
+            // never carried an error; it painted a PRISTINE required field's
+            // asterisk in the exact error red, so a form that nobody had touched
+            // yet read as a form full of errors — and the requirement was
+            // simultaneously invisible to AT, because the glyph was `aria-hidden`
+            // and Label cannot set `aria-required` on a control it does not own.
+            // The annotation is `--muted-foreground` on both arms now.
+            // `LabeledField.vue:113` is the real error-ink consumer and still
+            // holds this table's floor; it stays.
+            for (const file of ["src/components/labeled-field/LabeledField.vue"]) {
                 expect(read(file)).toMatch(/color:\s*var\(--destructive\)/);
             }
         });

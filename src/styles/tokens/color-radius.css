@@ -180,15 +180,13 @@
        `--border` (which is `var(--neutral-4)`, light-dark()-resolved). */
     --border-soft: color-mix(in srgb, var(--border) 45%, transparent);
 
-    /* The warm separator hairline ink. A rule reads as
-       WARM material, not a grey `--border` line (floor): the
-       split-rule segments + un-labelled hairline both paint `--separator-ink`.
-       It is a `color-mix` off `--foreground` (`light-dark()`-resolved, so it
-       auto-darks warm in both modes — the warm-ink hairline, not `--neutral-4`
-       grey). 22% is a visible-but-whisper rule (crisper than `--border-soft`'s
-       45%-of-grey; this one is foreground-derived so it carries the warm hue
-       directly). A consumer retints every separator from this single rung. */
-    --separator-ink: color-mix(in srgb, var(--foreground) 22%, transparent);
+    /* `--separator-ink` (0.22) DIED at BK #87 W-MARKS. It was the fifth divider
+       ink on a library that had already published a three-rung ladder, and its
+       22% was chosen by adjective ("visible-but-whisper") rather than derived —
+       the exact defect class the §ink block above exists to end. A separator is
+       an IN-CONTENT rule between subjects, so it reads `--ink-seam` (0.08) like
+       every other in-content seam; a flush plate edge reads `--ink-edge` (0.16).
+       Zero external consumers at the strike (re-verified at the wave). */
 
     /* Tokenized scrollbar thumb + track. Minted in the color
        block so the `scrollbar-color` / `::-webkit-scrollbar-thumb` rungs read a

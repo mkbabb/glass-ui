@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
-import { type BadgeVariants, badgeVariants } from './'
+import { computed, type HTMLAttributes } from 'vue'
+import { BADGE_AXIS_DEFAULTS, type BadgeVariants, badgeVariants } from './'
 import { cn } from '../_shared/class-names'
 
 const props = defineProps<{
@@ -13,25 +13,30 @@ const props = defineProps<{
    */
   tone?: BadgeVariants['tone']
   size?: BadgeVariants['size']
-  /**
-   * the register split. `loud` (default) is the opaque
-   * saturated identity pill; `glass` is the quiet transmissive `.glass-atom`
-   * capsule tinted via `--glass-fill-tint`. A status badge stays loud (information,
-   * not a sticker); `secondary`/`outline` placements may route quiet.
-   */
-  surface?: BadgeVariants['surface']
   class?: HTMLAttributes['class']
 }>()
+
+// TRUTH IN DOM. The stamps carry the RESOLVED axis, from the SAME defaulting the
+// class map applies — not the raw prop. `:data-variant="variant"` wrote nothing at
+// all on 22 of 39 shipped badges (an unset prop stamps `undefined`, which Vue
+// omits), so an attribute-keyed rule for the default variant was structurally
+// unreachable while a reader of the DOM saw a badge with no variant. One source
+// (`BADGE_AXIS_DEFAULTS`), two consumers (the class map and these stamps), so the
+// two can never disagree again.
+const resolved = computed(() => ({
+  variant: props.variant ?? BADGE_AXIS_DEFAULTS.variant,
+  tone: props.tone ?? BADGE_AXIS_DEFAULTS.tone,
+  size: props.size ?? BADGE_AXIS_DEFAULTS.size,
+}))
 </script>
 
 <template>
   <div
     data-slot="badge"
-    :data-variant="variant"
-    :data-tone="tone"
-    :data-size="size"
-    :data-surface="surface === 'glass' ? 'glass' : undefined"
-    :class="cn(badgeVariants({ variant, tone, size, surface }), props.class)"
+    :data-variant="resolved.variant"
+    :data-tone="resolved.tone"
+    :data-size="resolved.size"
+    :class="cn(badgeVariants({ variant, tone, size }), props.class)"
   >
     <slot />
   </div>

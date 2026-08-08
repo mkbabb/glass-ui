@@ -253,9 +253,8 @@ const sizes = ["sm", "md", "lg"] as const;
     margin-inline-start: -0.625rem;
 }
 
-.avatar-group :deep(.glass-avatar__identity) {
-    box-shadow:
-        0 0 0 2px var(--background),
-        var(--shadow-sm);
-}
+/* The `:deep()` rim override is GONE with the layer split. It existed because the
+   component's whole sheet sat in `@layer components`, so this unlayered demo rule
+   could — and did — outrank the avatar's own identity box-shadow. Overlapping
+   group members read as overlapping without a demo-authored ring. */
 </style>

@@ -7,23 +7,23 @@ import { Separator } from "@glass/components/separator";
 
 <template>
     <StoryPage>
-        <StorySection label="horizontal · semantic">
+        <!-- ONE PLATE. These were two ~620px twin plates painting an identical
+             hairline; the whole delta between them is in the accessibility tree,
+             where a plate cannot show it. The delta is now stated in copy, which
+             is the only place it was ever visible. -->
+        <StorySection label="horizontal · semantic vs decorative">
             <ShowcaseFrame class="flex flex-col gap-4">
                 <p class="text-small text-foreground">Identity</p>
                 <Separator />
                 <p class="text-small text-muted-foreground">
-                    A semantic boundary separates adjacent subjects.
+                    A semantic boundary separates adjacent subjects — it carries
+                    <code>role="separator"</code> into the accessibility tree.
                 </p>
-            </ShowcaseFrame>
-        </StorySection>
-
-        <StorySection label="horizontal · decorative">
-            <ShowcaseFrame class="flex flex-col gap-4">
-                <p class="text-small text-foreground">Two details in one subject</p>
                 <Separator decorative />
                 <p class="text-small text-muted-foreground">
-                    This hairline groups visually without entering the accessibility
-                    tree.
+                    The decorative arm paints the identical hairline and groups
+                    visually only; it takes <code>role="none"</code> and never
+                    reaches the tree. Same ink, same box, different contract.
                 </p>
             </ShowcaseFrame>
         </StorySection>
