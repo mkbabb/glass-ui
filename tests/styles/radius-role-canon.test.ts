@@ -146,7 +146,7 @@ describe("2. clean break — dead names absent from source/manifest/live docs; l
             "src/components/skeleton/Skeleton.vue",
             "src/components/avatar/styles.css",
             "src/components/command/styles.css",
-            "src/components/sortable-list/SortableList.vue",
+            "src/components/sortable-list/styles.css",
             "src/styles/glass/squircle.css",
         ]) {
             const bare = strip(read(rel));
@@ -197,9 +197,21 @@ describe("3. exact W1 bindings", () => {
         expect(body).not.toContain("border-radius");
     });
 
-    it("Sortable drop indicator → --radius-pill, never 999px or another token", () => {
-        const s = read("src/components/sortable-list/SortableList.vue");
-        expect(s).toContain("border-radius: var(--radius-pill)");
+    // [2026-08-05 · BK #41 W-SORTABLE] ~~Sortable drop indicator → --radius-pill~~ —
+    // STRUCK WITH ITS SUBJECT. The drop indicator was a gold shimmer BAR drawn as a
+    // pseudo-element on a row, and the wave deleted it: the vacancy is the indicator
+    // now, so there is no insertion mark to give a corner to. What survives of the case
+    // is the role binding it was really testing — the GRIP is a stadium (§4 binds the
+    // "grip" role to the pill) and the plate is the card rung — so the assertion moves
+    // to the two live corners rather than being deleted outright.
+    it("Sortable grip → --radius-pill and the list plate → --radius-card, no literals", () => {
+        const s = strip(read("src/components/sortable-list/styles.css"));
+        expect(rule(s, "\\.sortable-handle")).toContain(
+            "border-radius: var(--radius-pill)",
+        );
+        expect(rule(s, "\\.sortable-list")).toContain(
+            "border-radius: var(--radius-card)",
+        );
         expect(s).not.toContain("999px");
     });
 
