@@ -3045,6 +3045,205 @@ and it is REFUSED as the visual-suite lane's per §9's *"this wave repairs
 `easing-primitive.spec.ts` only"*, escalated in the record rather than quietly fixed.
 The procession opens on a **re-scout**, never on an assumed next.
 
+⊕⁶³ **#87 W-MARKS LANDS (2026-08-08, `74dfab18`)** — the tier-3 band's seventh lane, the
+"terminal of terminals", and the one where six components stopped being six
+accidents that happened to agree. **THE REGISTER IS THE FINDING**: badge ·
+separator · label · avatar · skeleton · status-dot were ALREADY, by omission, the
+right answer — measured zero `:hover`/`:focus`/`:active` rules and zero
+`backdrop-filter` across all six — and a thing that is true by omission is one
+nobody can defend. `mark.css` (~106 lines, every selector `:where()` so a member
+always wins its own channel) states the four laws and is SUBTRACTIVE of the
+fragments each member spelled for itself.
+
+**THE HEADLINE IS A RECORD, NOT A CURE.** D1: `490cc46e` replaced StatusDot's
+entire API — `variant`/`color`/`pulse`/`size="xs"` and a VISIBLE-TEXT `label` — and
+wrote zero MIGRATION rows, for two majors, while Avatar's and Skeleton's smaller
+cuts sat at `:118,120,121`. `v-bind="$attrs"` made every retired prop a silent
+no-op, so the call sites kept type-checking and kept rendering and quietly lost
+their meaning; the `label` row is a silent VISUAL regression no type error catches.
+No DAG row named it. One bench found it. **The standing form: a component whose
+props flow through `$attrs` cannot fail loudly, so its breaking changes are
+invisible to every tool except the record — and the record was empty.**
+
+**FOUR C-SEVERITY DEFECTS, AND TWO OF THEM ARE SPECIFICITY.** D2's labelled
+separator was pinned 1246 × 1.00 with its 18.70px label hanging 8.84px outside its
+own role-bearing a11y box, because `.separator[data-orientation=horizontal]` is
+(0,2,0) and `.separator-labelled` is (0,1,0) — the cure is not a new declaration
+but the SAME declaration spelled at (0,2,0). D3's vertical arm painted 1.00 × 0.00
+in both engines because `block-size: 100%` on a flex child of an indefinite parent
+resolves `auto`, and `auto` on an empty div is zero: the declaration meant "match
+my siblings" and percentage-of-indefinite cannot say that; `align-self: stretch`
+can. D4 (F24) was closed at its MECHANISM after two prior diagnoses had both been
+wrong — an `ease-in-out` on an INFINITE ONE-WAY loop parks the band off-box 71.3%
+of the cycle with a zero-velocity seam stall, and travel is 220% of own width in a
+fixed clock (157 vs 914 px/s, 5.8× on one route). **A gate had been binding that
+band's CLOCK. It could have passed forever**: retuning moves both figures and never
+the ratio. It is struck dead-by-subject and replaced by rows that bind the travel
+term. D9: `active` — the state the component's own README headlines — had NO RULE,
+and the base default painted the live `--info` blue, so the state whose name is
+liveness rendered as the unhandled default AND any 8th state would ship looking
+alive. The base now paints `unknown`.
+
+**THE ADJUDICATOR'S CATCH IS THE BEST LINE IN THE LANE (S15/D34).** BOTH design
+foremen proposed the avatar status slot set `--feedback-mark-size: calc(avatar/4)`.
+It is a **no-op**: `.status-dot` declares that property ON ITSELF, and an element's
+own declaration beats any inherited value. The cure is to change the CHANNEL — the
+slot sets `font-size: calc(var(--avatar-size)/2)` and the mark's rungs move from
+`rem` to `em`, so an `sm` mark is `0.5em` = avatar/4 EXACTLY, by composition of two
+laws already adopted, with zero new machinery. **The standing form: when a custom
+property will not inherit, the inherited property you actually want is usually
+`font-size`.**
+
+**THREE SUBSTITUTIONS, EACH WITH A FALSIFIER ON RECORD.** (1) §3.1 asks for
+`springPreset("snappy")` "read from the table at implementation time, never a
+remembered literal" — and the table has six rows and no such name. It is worse than
+absent: it is RETIRED, and the first draft of `mark.css` merely QUOTED the spec's
+citation in a comment, whereupon `G-SPRING-ONE-JOB` RED'd on the string. **A gate
+catching the spec's own citation is the cleanest receipt a substitution can have.**
+The mirror's own clause resolves it (`scheme-spring.css:52-56`: a colour cross-fade
+on a spring reads as a wobble), so the state change takes TWO curves — ink on the
+canon ease, silhouette `scale` on `press`. (2) §3.5(3)'s badge-local rim is
+REFUSED-AS-CURED: its ground was D15's two live `--glass-material-rim` definitions,
+and that fork died upstream (`tokens/shadow.css:37` records the strike, `rim.css:54`
+is sole, top leg 0.10/0.08 — inside the ≤0.12 ceiling). Forking a local copy of a
+finally-single-sourced rim is the per-site paste S6 refused for the specular.
+(3) `MetricRow`-as-slot costs the consumer a wrapper element, and that is the
+ruling: a composer that forwards metric props into a `<Metric>` it renders is not a
+layout composer, it is the fourth copy of the readout wearing a new name.
+
+**GATES: ZERO SEATS MINTED, RECEIPT BYTE-IDENTICAL** (`seats:60 … bound:8 …
+unbound:50 … violations:1`, the one violation being #40's uncommitted file move,
+pre-existing). Nine born-RED source rows in `tests/styles/mark-register.test.ts`,
+each quoting its HEAD reading; the ONE-INK arm folded under the existing
+`gate:token-hygiene` seat per §5's own routing; `status-dot.contract.test.ts`
+REWRITTEN because its six rows mirrored the template back at itself and could not
+have caught either defect the component owns; and **−460 lines** of visual spec
+DELETED not repaired (one had shipped D2 AND D3 through two majors). One arm is
+declared BORN-GREEN in its own comment — the no-hover fence — rather than dressed
+as a cure.
+
+**THE DETECTOR LESSON, FIVE BITES IN ONE SEAT.** Every source detector must strip
+comments before it scans. This wave's prose NAMES what it struck — `wrap-anywhere`,
+`50%`, `block-size: 100%`, `badge-atom--glass`, `skeleton-scan` — because a strike
+that does not say what it struck is one nobody can audit later. Five rows greened
+only after a `stripComments` pass. **The standing form: a detector that greps a
+file which documents its own history is measuring the documentation.**
+
+**FENCE. 46 tracked files, +1527/−1166**, plus 3 untracked adds (`mark.css` 141 ·
+`states.ts` 27 · `mark-register.test.ts` 253) — the ⊕⁶² `-U0`-cannot-see-untracked
+blind spot, named in advance this time rather than rediscovered. **And the row's
+first draft published the fence it had not derived**: it read "every file this row
+touched is NEW to the working diff, zero overlap, no per-hunk split needed
+anywhere — the first row in this band where that is true", which is FALSE.
+Re-derived per file at the cure: 80 baseline files, **79 byte-identical, exactly ONE
+mutated — `src/index.ts`**, where this row's 11-line StatusDot barrel hunk (`+310,11`)
+sits beside a foreign lane's five `ToggleGroup` type strikes (`-365`, `-368,4`; RT-84E
+→ #65). `45 / +1516` is the NEW-FILES-ONLY stat, and it cannot see an overlap by
+construction. **The standing form: a derivation that answers "what is new" cannot
+answer "what is untouched", and a fence sentence written from the first is an
+assumption wearing a receipt.**
+
+**THE CURE ROUND (2026-08-08), FOUR CURES, ALL EXECUTED — AND THEIR THROUGH-LINE IS
+ONE THING: A CLAIM PUBLISHED AHEAD OF ITS MECHANISM.** The adjudicator ruled
+CURE-REQUIRED on a lane whose substance stood entirely. **A-22's circular floor was
+the shipped byte among them, and it was INERT** — `min-inline-size: <box height>`
+spelled beside a bare `px-3` can never bind, because a one-glyph badge's natural
+width is that glyph plus TWO INLINE LEGS: binding needed `glyph < 1lh − 16px` at md,
+which no glyph satisfies, and sm's near-circle was a `px-2` coincidence (measured:
+md `7` at 32.49 × 23.99, ratio 1.354). The demo said the specimens sat on the floor;
+the suite asserted the class STRING that named it — **the exact mirror class this
+row's own record condemns, in this row's own suite, guarding the one law it invented.**
+The cure BINDS it: a floor now ships with its PRECONDITION, both `mark.css` law (6) at
+`:where()` specificity 0 — the rung states its two legs as REQUESTS, the register
+states the box and ceilings the inline leg at the slack the floor leaves over `1ch`.
+Live at every rung: sm/md/lg one-glyph all **ratio 1.0000** (23.820² · 23.992² ·
+34.031²), the two-glyph control byte-identical, lg's own leg uncapped at 12 → 12.
+**The standing form: a floor and the pad that can eat it are ONE law, and stating
+half of it ships an inert declaration that reads like a cure.** The other three are
+record: the fence above; `MIGRATION.md:825` listing `MetricCellProps` LIVE on a
+subpath whose `types.ts` declares no such type (struck in place, dated, → `MetricProps`
++ `posture="cell"`); and three figures restated at their measured value — the avatar
+φ ladder in ONE viewport frame (it mixed desktop literals with a coarse `sm`), the
+"the name does not appear in `src/`" universal narrowed to the gate's own detector
+(the WORD appears six times, adjectivally), and **the TR's −789 gate-line credit
+reconciled**: it was scored on a diffstat's DELETION column alone, and the delivered
+transaction is `tests-visual` +10/−470 against +557/−134 of rewritten contract suites
+and +253 of new register battery — **net +216**. A strike whose mechanism is re-bound
+elsewhere is not a saving.
+
+**DRIVER DISCLOSURE (the cut itself, `74dfab18` — 52 files, +2918/−1168 with the
+row's own doc corpus included; the code/test fence above, 46 / +1527 / −1166, is the
+subset and the two figures are not in conflict).** Six things the implement seat could
+not have banked, because they happened at the fence.
+
+**(1) `src/index.ts` SPLIT 1 OF 3 HUNKS.** The row's own **11-line StatusDot barrel
+block** rides `74dfab18`; the **two ToggleGroup type-strike hunks** (`-365`, `-368,4`,
+five names) stay foreign and unstaged — **RT-84E → #65**, the third row running to fence
+around them (⊕⁶¹ staged 4 of 6 on this same file for the same reason). **The per-hunk
+split CURE-87-3 said was needed IS the split that was taken** — the re-derived fence
+sentence and the executed staging agree, which is the whole point of re-deriving it.
+
+**(2) THE FENCE METHOD IS NOW ROUTINE, INCLUDING ITS BLIND SPOT.** Derivation is
+**final-minus-baseline** (`/tmp/bk-row-baseline-1786206754.diff`), with the
+**untracked-blind-spot class excluded BY PATH** — the ⊕⁶² lesson applied as procedure
+rather than rediscovered as a defect. **Rider sweep clean: every signature in the cut is
+this row's own**, so `74dfab18` carries no completion rider — the first tier-3 lane where
+that is true.
+
+**(3) CURE-87-1 BOUND, AND THE SQUARES ARE THE RECEIPT.** Live at 1440×900 the one-glyph
+box measures **23.820² · 23.992² · 34.031²** at sm/md/lg, **ratio 1.0000 at all three**,
+and **lg's 12px request rides UNCAPPED (12 → 12)** — the ceiling proving it is a ceiling
+and not a retune. The one cost is stated rather than absorbed: **md's multi-glyph
+specimen loses 8.50px of masking pad**, and measured against the routed type cure the
+sm/md separation RETURNS — **the pad had been masking the typography wave's own defect**,
+which is where it is routed. A bonus fell out of the same rewrite: the old spelling put
+the floor itself on the **fragile value-bracket emit path**, and the box is now more
+robust for having the box stated in the register instead.
+
+**(4) DRIVER VERIFY AT COMMIT (B-D6).** `vue-tsc` **0** · badge lane **7/7** · subset
+**11 failed | 1508 passed | 5 expected fail (1524)**, **all eleven FOREIGN** (**#40 ×10 +
+#7 ×1**) · gate receipt **byte-identical**: `seats:60 active:48 reserved:5 worstCase:53
+remaining:7 external:11 bound:8 armOnly:2 unbound:50 drift:1 rosterSha256:dc05df91
+violations:1` · `npm run demo:dist:build` **green** · `regen-exports.mjs` **EXACT**.
+**`npm run build` was NOT run** — **#40's baseline `package.json`/lock blocker stands
+REFUSED**, per (11) of ⊕⁶² and this row's own §8; greening it here would absorb another
+lane's edit into this fence.
+
+**(5) ROUTES MINTED AT THE CUT.** **π is owed to #10** and the debt is now specific: the
+badge floor's aspect is a TRUE cell (a claim that shipped inert once already), the
+separator stretch, the avatar φ ladder **and its `em` seam**, StatusDot's pill/orbit, and
+the metric postures — `code_state=landed`, `evidence_state=owed`. The **`mark.css:83`
+`flex:none` + `nowrap` overflow observation** goes to the **marks family owner at next
+touch** (consumers can override through `:where()` by construction, which is why it is an
+observation and not a defect). The **sm/md type-separation defect** goes to the
+**typography wave**, already routed by the row at (3). The build blocker is unchanged and
+stays **#40's**.
+
+**(6) THE PROCESSION AS THE DRIVER READS IT AT THIS CUT.** With #87 landed, Φ5's
+remaining frontier is the **JOINT #86 + #88** cut — they take `track-well.css` **JOINTLY**
+per C-1, and **#86 additionally carries #89's `resolve.ts` move** — and then **#89**,
+whose sever precedes **#47**'s first build. **The joint cut needs a WIDER workflow than
+the standing quartet**: two rows, one adjudication, and neither selectable alone. The
+driver will author it. The five foreign lanes still sitting UNCOMMITTED in this working
+tree — **#32 · #33 · #35 · #40 · #71** — each still need their own seats.
+
+**Φ5 procession: next = re-scout.** #87 discharges nothing another row was waiting
+on. **#86 and #88 still cut `track-well.css` JOINTLY** (C-1), and #86 additionally
+carries #89's `resolve.ts` move — so the joint pair is the frontier and neither is
+selectable alone; **#89** remains the overlay family's convergence row and its sever
+precedes #47's first build. #21 stays gated on `#17` (Φ4-UNSTARTED), #22 is
+CURE-CUT, #25 stays on its rides-clause, #42/#44/#45/#47/#48/#52 behind their DAG
+edges, #49/#50/#51/#53 ASK-gated, #58/#73 on ASK g11, #67 on the owner's R-7
+footage, #74 inside #88's cut. **STANDING BLOCKER, ESCALATED NOT WORKED AROUND**:
+`npm run build` is RED at HEAD on an uncommitted `package.json`/`package-lock.json`
+root-metadata mismatch (devDependencies · peerDependencies · peerDependenciesMeta),
+present in this row's step-0 baseline. `dist/` therefore cannot regenerate — it is
+from Aug 6, eight rows stale — and two `tests/public-surface.spec.ts` rows stay RED
+behind it. It is a foreign lane's and greening it here would absorb that lane's edit
+into another row's fence. **The 8.0.0 close cannot run `--run release` until it is
+reconciled** (the 4.0.0 lesson, restated at a new hinge). The procession opens on a
+**re-scout**, never on an assumed next.
+
 **Φ5 procession: next = re-scout** — #21 stays gated (`#17` hard, and #17 is Φ4-UNSTARTED); ~~#24
 LANDED this date, so the next unstarted in TR order is **#25 W-FIELD-WELL** (which lands its well
 law THROUGH #82's cut per TR#25's §B.7 keying — check #82 before opening it).~~ [⊕⁴¹ 2026-08-05 ·
@@ -3204,7 +3403,7 @@ procession still opens on a **re-scout**, never on an assumed next.]
 | 84 | W-TOGGLE-ROW | Φ5 | ⊕⁶⁰ **LANDED 2026-08-08** at `60a64339` ~~UNSTARTED~~ — **the deepest cut of the tier-3 batch, and it lands with its own hard precondition RE-DERIVED RATHER THAN TRUSTED.** reka retires from the component entirely; `useSelectionGroup` is adopted through a new **item registry** (`toggleGroupContext.ts` → `context.ts`, C-14, DOM-ordered by `compareDocumentPosition` because `onMounted` is child-first and arrows must walk the order the eye reads); the group **paints nothing** in either cardinality — the `[data-type="single"]` track (a byte-copy of `.glass-capsule-track`), the library's ONE cross-namespace token reach (`--tab-track-recess-ink`), the `10003px` corner, `safe center`, `scroll-padding-inline`/`overscroll-behavior-inline` and `vertical-align` all die together — and **`flex-wrap: wrap`** retires the 59% clip and 17 consumer overrides in one declaration. Role-per-mode ARIA arrives from the engine (`radiogroup`/`radio`/ `aria-checked` vs `group`/`aria-pressed`, where before **both** cardinalities said `group` + `aria-pressed` on 20 of 21 live external mounts), activation is **mode-derived** (TF-2 — flat `automatic` would have arrows toggle every item they crossed in `multiple`), and `data-orientation` is stamped from this component's own prop so **D-13 is impossible by construction**. `invalid` lands (D-16, the prop did not exist); the on-state drops from four carriers to ink + weight + an assisting 0.12 fill, and **striking `--shadow-sm` kills D-9's (0,2,0)↔(0,2,0) tie with the focus ring outright**. Public surface: 9 exported names → **4**, clean break, zero aliases. **⊕⁷ o19 A-18 BUILT** — `<ToggleGroupItem>` gains an `#indicator` slot INSIDE the pill carrying `{ selected }`, so a consumer-painted mark inherits the hover lift and press squish and **zero motion authority leaves the library** (#55 stands, no watercolor byte returns, the loupe grammar stays #35/#32/#71/#26's). **⊕⁷ atlas A-6 DISCHARGED BY SUBTRACTION**: with the track deleted there is no concentric pair on this surface to derive and `--radius-concentric` was never minted — zero tokens minted by this row. **Gate seats +0** (3 born-RED lane gates ride the tier-3 acceptance class per CWT-3 §5/`:1871`; receipt byte-identical pre+post at `seats:60 … bound:8 … unbound:50 … violations:1`, the standing `violations:1` being **#40's** un-repointed `pager-dots.contract.test.ts` move, refused as another row's to green). Battery **10/10** (the 9 lane cases + CURE-84-A's) with **6/6 mutation bites**; tsc 0; subset **11 failed \| 1468 passed \| 5 xfail, all 11 foreign** (#40 ×10, the uncommitted carousel lane ×1) — the twelfth was `boot-graph`'s dist staleness, which was **never foreign**: a row that writes `src/` owes the rebuild, and `npm run demo:dist:build` at the cure round retires it 14/14. π DRIVER-MEASURED LIVE at `:5400`, four cells banked: **P1** 5/5 groups `scrollWidth == clientWidth`, wrap specimen 5 visible/5 mounted in 3 rows (was 3 of 5 invisible, 328px hidden), gap 8→4 at 402 · **P2** group `0px`/`rgba(0,0,0,0)`/`none`/`none` light AND dark, item `9999px`, zero `10003px` · **P3** `parity: true` against a bare `.control-surface .glass-control-edge` probe on all four properties · **P4** 0.12/600 vs 0/500 both modes with `box-shadow` byte-identical across states · **P5** the focused-AND-selected pill resolves `outline: 2px … / 0.48` offset 2 · **P6** roles correct, **1 tabstop per group on 4 of 5** — the fifth is the fully DISABLED group and correctly has **0** (measured `["-1","-1"]`; the roving machine skips disabled options, so a group with none enabled has no tabstop to give) · **P9** both demo overrides retired and rendering. **THREE SPEC FIGURES CORRECTED ON MEASUREMENT** (never asserted from the table): the 323-line baseline is **336** (`styles.css` grew 15 at #23's landing, which post-dates CWT-3); D-5's *"`+ 0.25rem` ×2 live"* is **0 literal + 1 relay-spelled** site (#23 moved the spelling; the computed sentinel was unchanged, so the defect was live); and **TF-9's ground is stale** — `Checkbox.vue` no longer composes the DAG-4.12 quartet (#83 re-seated it onto `.control-bit` on 2026-08-08), though the ruling stands on its merits since `.control-surface` declares no `box-shadow`. **C-1 LANDED HERE AS DISCLOSED INHERITED RESIDUE**: the `SelectionOption["value"]` widening its owner **#19 closed without** is on disk, measured absent at HEAD, and executed **by derivation** — `SelectionOption.value: SelectionValue`, `model: Ref<O["value"] \| O["value"][] \| undefined>`, `useTabRovingFocus<V = string>` — **type-only, zero runtime bytes, zero breakage** for the two existing consumers (a flat widening was impossible: `Ref<T>` is invariant and a callback parameter contravariant). **CURE-84-1, caught on live paint and cured in the same cut**: `props.disabled ?? group.disabled.value` short-circuited because **Vue casts an absent Boolean prop to `false`, not `undefined`**, so a disabled GROUP left every item live (`button.disabled === false`, opacity 1, `pointer-events: auto`, measured) — no type and no static gate could see it, only the browser. **THE ROW WENT THROUGH A RATIFIED CURE ROUND BEFORE LANDING** (adjudicator Fable, `CURE-REQUIRED`; six cures, all executed): **CURE-84-A**, the same defect class ONE LINE UP from CURE-84-1 — `value: props.value` froze the item's identity at setup beside a `disabled` that was already a live getter, so an item whose value changed after mount **painted the new identity and committed the old one**; cured to a getter, born-RED measured against the pre-cure bytes (`expected 'a' to be 'b'`) then GREEN. **CURE-84-B**, the lane's own D-21 conviction class written fresh: *"the measure no-ops"* was FALSE at three claim sites — the indicator's `ResizeObserver` attaches unconditionally and `updateSingleSlider` measures into a style nobody reads; corrected everywhere, HEAD's accurate `squish/` half restored, the economization **routed** (RT-84O → **#71**) rather than taken inside another row's engine. **CURE-84-C**, `styles.css` named a `0.05` literal that is not in the sheet: corrected to the two that are, and the unselected-hover rung disclosed as a **deviation by composition** (the register's `--control-surface-bg-hover` delivers it, `[data-disabled]` guard and all) with RT-84N's caveat that `--control-surface-bg` itself computes to `rgba(0,0,0,0)` in light. **CURE-84-D/E/F**: four figures struck with dates, `glass-panel.vue` cut back to a **one-line** diff (`0 1` at `--numstat`, the ten formatter-only lines reverted to HEAD bytes), and value.js + RT-84O + RT-84P (the π remainder — the `safari-app` column, P7's coarse half, P8 whole, P4's contrast ratio → **#10**) routed. Record: `docs/tranches/BK/execution/2026-08-08-row84-toggle-row/RECORD.md`. | TR#84 → CWT-3 §LANE toggle-group | lane gates; hard behind #19's `SelectionOption` widening |
 | 85 | W-EASING | Φ5 | **LANDED + CURED** (⊕⁶² 2026-08-08, `1bc09dde`; `code_state=landed`; `evidence_state=owed` — 7 π rows browser-only + P11 now genuinely owed, §4/§11) ~~UNSTARTED~~ | TR#85 → CWT-3 §LANE easing; record `execution/2026-08-08-row85-easing/RECORD.md` (cure round §11) | 11→**7** close-battery rows, all born-RED with verbatim detectors, in `tests/components/easing.contract.test.ts` — **zero seats minted, register receipt byte-identical**. `EasingCurve.vue` published on `./easing` (the addressability split) · `EasingConfigurator.vue` + `composables/` DELETED · props 7→4 · the CONSTANT frame `-0.1 -0.1 1.2 1.2` with the analytic excursion clause · the staircase CONSTRUCTED (≤2n+1 commands) not sampled · both `.glass-card` appliers deleted per C-4, plate = `.glass-resting` · `data-testid`→`data-slot` · REDUCTION:90 DEMOTE STRUCK · X19 rider DISCHARGED (#26 landed, table is 6 rows). Consumer addenda AUTHORED: `coordination/glass-outbound-2026-08-08-easing-consumer-addenda.md`. **CURE ROUND (all 7 + 2 minors, §11):** the `data-pinned` float-identity false positive KILLED (8/30 presets, 5.55e-17) · the staircase BOUND in node (3 clauses, each kills the 241-command polyline) · the two ADD affordances IMPLEMENTED (wipe-on sweep + `.tap-squish` handles, one-frame PRM arms, `data-drawing` seam) with the `stroke-dashoffset` arm REFUSED on a pixel-counted measurement · TS2339 cleared from the release typecheck · the false "foreign port" story corrected in spec + record + gate · §9's whole-file fence stat corrected by dated bracket (+939/−931). **DRIVER VERIFY (B-D6):** `vue-tsc` 0 · lane 33/33 · subset 11 failed \| 1498 passed \| 5 expected fail (1514), all eleven FOREIGN (#40 ×10 + #7 ×1) · receipt byte-identical `violations:1` (#40's, not claimed) · `demo:dist:build` green · `regen-exports` EXACT. ROUTED: tests-visual unwired to any npm script (the 7.0.0 RED-BY-ROT class) → **#66** with #9/#65 · the `data-reparse-ok` dead seam + the `--ink-*` rung divergence → **#68** · the absent `EasingCurve`/`EasingPicker` public-surface pins → **#65** (RT-84E companion) · the pager-dots 13-vs-12 morph flake → **#40** (RT-19G class) · the 11 consumer-file addenda ride the outbound doc, **#76** relays |
 | 86 | W-SURFACE-MATERIAL | Φ5 | UNSTARTED | TR#86 → CWT-3 §LANE surface-material | lane gates; C-1/C-2/C-3/C-9 per §B.7 |
-| 87 | W-MARKS | Φ5 | UNSTARTED | TR#87 → CWT-3 §LANE display-atoms + round 2 item 8 | lane gates; absorbs #36's separator register (J-3); −789 gate lines; StatusDot MIGRATION rows; ✦³ + the metric-family apotheosis (spec authored pre-go at the perfection pass; keyframes/sci migrations ride #76) |
+| 87 | W-MARKS | Φ5 | **LANDED + CURED** (⊕⁶³ 2026-08-08, `74dfab18`; `code_state=landed`; `evidence_state=owed` — §6's 17 π rows are browser rows, Chromium + safari-app, 2 safari-MANDATORY; the adjudicator's four cures executed at the same cut, record §9) ~~UNSTARTED~~ | TR#87 → CWT-3 §LANE display-atoms + round 2 item 8 (SL-2); record `execution/2026-08-05-row87-marks/RECORD.md` | **THE INERT-MARK REGISTER**: six members, one law — `mark.css` states `backdrop-filter: none` (the ONE engine-invariant glass claim), no-stretch, one stadium rung, and ONE engagement (a STATE change, never a hover — K13). **The headline is D1**: StatusDot's 7.0.0 cut shipped with ZERO migration rows for two majors while `v-bind="$attrs"` made every retired prop a silent no-op, and the `label` visible-text→`aria-label` row is a silent VISUAL regression no type error catches — the rows are now written. Four C-severity defects close: D2 (a labelled separator pinned 1246×1.00 by a (0,2,0) clamp its (0,1,0) class could not beat — the un-clamp is now spelled at (0,2,0), which IS the cure), D3 (`block-size:100%` on an indefinite parent resolves `auto`→0 → `align-self: stretch`), D4 (F24 closed at its MECHANISM: an ease on a one-way loop parked 71.3% of the cycle off-box while travel scaled with own width, 157 vs 914 px/s → a width-invariant opacity breathe on an `alternate` cycle), D9 (`active` had NO rule for two majors, and the base default painted the LIVE `--info` blue so an 8th state would ship as live → base re-points to the `unknown` paint). **Five laws replace thirteen literals**: the avatar φ ladder (60/64/128 = 1.067 → 60/97/157 exact, `sm` IS the control rung), the status-slot **font-size** seam (S15/D34 — both design arms' `--feedback-mark-size` seam was a NO-OP because the mark's own declaration beats inheritance; `em` rungs make the composition exact), em dot rungs, the badge annotation type register (off `--ui-scale` per §1.1) and `1em` glyphs. **Five inks → one ladder**: `--separator-ink` (0.22, chosen by adjective) DIES. `surface="glass"` DELETED (a mark samples nothing; the tint map keyed an attribute the default never wrote, so it was broken-as-shipped). `.glass-avatar`→`.avatar`, `.glass-label`→`.label` (D29). **Metric SL-2 apotheosis**: `MetricCell` FOLDS to `<Metric posture="cell">`, `MetricRow` becomes a pure layout composer, `delta`+`polarity` (status ink, never a plate) and A-21 compact formatting land in the one seam. **Gates: zero seats minted, register receipt byte-identical**; 9 born-RED source rows in `tests/styles/mark-register.test.ts`, the ONE-INK arm folded under the existing `gate:token-hygiene` seat, `status-dot.contract.test.ts` REWRITTEN (its six template-mirror rows could not have caught either defect it owns), and **−460 lines** of visual spec DELETED not repaired. **THE DETECTOR LESSON (5 bites in one seat)**: a source detector must strip comments — this wave's own prose names what it struck, so a raw grep fires on the explanation of the cure. **THREE SUBSTITUTIONS, all recorded**: `springPreset("snappy")` does not exist and is a RETIRED name — `G-SPRING-ONE-JOB` RED'd on the spec's own citation quoted in a comment, which is the receipt; §3.5(3)'s local badge rim is REFUSED-AS-CURED (D15's dual definition died upstream, `shadow.css:37` records it); `MetricRow`-as-slot costs consumer verbosity and that is the ruling. **BLOCKED, foreign**: `npm run build` is RED on an uncommitted `package.json`/lock mismatch, so `dist/` cannot regenerate and 2 `public-surface` rows stay RED — refused as another row's. **CURE ROUND 2026-08-08 (adjudicator CURE-REQUIRED, four cures, all executed — record §9)**: **A-22 BOUND, the ratified branch** — the circular floor SHIPPED INERT (a floor spelled as a bare `min-inline-size` beside a bare `px-3` can never bind: one glyph's natural width is that glyph plus TWO inline legs, so md needed `glyph < 1lh−16px` and sm's near-circle was a `px-2` coincidence), and it now ships WITH its precondition as `mark.css` law (6) — the rung states its legs as REQUESTS, the register ceilings the inline leg at the slack the floor leaves over `1ch`. Live at 1440×900: sm `1` 24.398×23.820 → **23.820²**, md `7` 32.492×23.992 → **23.992²**, lg `9` → **34.031²**, all ratio 1.0000, with the two-glyph `12` control byte-identical and lg's leg uncapped (12→12) — the ceiling proving it is a ceiling, not a retune. **The class-string mirror the row's own §4 condemns is gone from its own suite**: `badge.contract.test.ts:84-86` asserted that a string was present while the box it named did nothing, and is replaced by a node assertion reading the cascade (born-RED reproduced against the pre-cure bytes). Three record cures ride with it: **the §8 fence universal was FALSE** — `src/index.ts` IS the one baseline-dirty file this row mutated (80 baseline · 79 byte-identical · 1 overlap), so the fence is **46 files / +1527 / −1166** and one per-hunk split IS needed (`+310,11` this row's StatusDot hunk; the five foreign `ToggleGroup` strikes stay foreign, RT-84E → #65); `MIGRATION.md:825` listed `MetricCellProps` LIVE on `/metric` when `metric/types.ts` declares no such type (struck in place, dated, → `MetricProps` + `posture="cell"`, and `:824`'s dangling `(MetricCell)` pointer with it); and the avatar φ ladder, the "not in src/" universal, and the TR's **−789 gate-line credit** are all restated at their measured value (the credit was scored on a diffstat's DELETION column alone: delivered is `tests-visual` +10/−470 against +557/−134 of rewritten contract suites and +253 of new register battery, **net +216**). **The through-line of all four: a claim published ahead of its mechanism** — and every one of them read as true to anyone who did not run the detector. |
 | 88 | W-PROGRESS-SEAM | Φ5 | UNSTARTED | TR#88 → CWT-3 §LANE progress | lane gates; carries #74; atlas DockCrest π10 BLOCKS the 8.0.0 adopt |
 | 89 | W-OVERLAY | ⊕² Φ5 (K-9; moved from Φ6) | UNSTARTED (⊕² spec_state = sealed) | TR#89 → **`CURES.md` §2 (SPEC OF RECORD)**; CWT-3 §7.2 + DAG §4.1 the priors | ⊕² SEATED — the four blocked terminals (#81/#86/#82/#47-sever) UNBLOCK; 20 assertions, all ARMS, zero mints; `══ {#81, #86, #82, #47-sever}`, after #68, joint with #86's `resolve.ts` move; the sever precedes #47's first build commit |
 
