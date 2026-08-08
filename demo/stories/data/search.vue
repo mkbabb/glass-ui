@@ -100,12 +100,12 @@ const rowSeeds = [
         ["sortable", "handle"],
     ],
     [
-        "Timeline scrubber",
+        "Timeline axis",
         "data",
-        "Release event row driven by normalized position and active event labels.",
+        "Phase spans on one normalized axis with addressable boundary marks.",
         "consumer",
         "Data",
-        ["timeline", "scrubber"],
+        ["timeline", "progress"],
     ],
     [
         "Infinite feed sentinel",
