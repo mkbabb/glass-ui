@@ -403,6 +403,11 @@ What follows is that output RESTRICTED to the paths this row owns outright — t
                               15 M + 1 D  =  16 files  456  327
 ```
 
+**[CORRECTION 2026-08-08, post-landing: the 456/327 above is the PRE-FOLD figure. As landed
+at `70dc0f06` the same 16 paths measure +462/−333 — the +6/−6 is the driver's
+`glass-capsule.css` twin-citation fold (§8 row 3), which takes that file from 16/15 to
+22/21. Staged total 21 code files +845/−343 (462 + 355 new test + 28 shares; 333 + 10).]**
+
 ### The FOUR shared-dirty files, and how to split them
 
 The first pass said **two**. It is **four**. C2 makes it three by reclassifying
