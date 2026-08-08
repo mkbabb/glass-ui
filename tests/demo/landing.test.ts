@@ -45,7 +45,9 @@ describe("demo landing semantics", () => {
         expect(wrapper.findAll("h1")).toHaveLength(1);
         expect(wrapper.get("h1").text()).toBe("Glass UI");
         expect(wrapper.findAll(".optical-bench-signature")).toHaveLength(0);
-        expect(wrapper.findAll('[data-testid="watercolor-swatch"]')).toHaveLength(0);
+        // [BK #55] the `watercolor-swatch` guard is STRUCK — its only producer
+        // (`WatercolorDot`) relocated to value.js at this cut, so the assertion
+        // became unfalsifiable. This cut created that deadness and carries it out.
         expect(wrapper.findAll("a")).toHaveLength(CATEGORIES.length);
         expect(wrapper.get('a[href="/forms"]').text()).toBe("Forms");
         expect(wrapper.text()).not.toContain("/forms");
