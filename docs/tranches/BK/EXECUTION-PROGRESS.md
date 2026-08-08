@@ -1889,6 +1889,107 @@ their lanes. **#32 · #33 · #34 · #35 · #40 · #71 STILL SIT UNCOMMITTED IN T
 The cursor alone cannot show a lane that has not committed (⊕⁴⁸), so the next scout re-derives
 from the DAG **and** `git status`, never from this block's list.
 
+⊕⁵⁵ **#72 W-RAIL-RENAME-THEN-BUILD LANDS (2026-08-08, `d4063dda`) — CURED before the cut.**
+The rename half and the build half in one commit, because neither alone is the wave. **THE
+STRIKE**: `rail` named a VERTICALLY-ORIENTED DOCK throughout the band's identifiers — the exact
+inversion of the correction ARCHAEOLOGY E29 records the owner making ≥4× — and the noun covered
+three unrelated referents at once. Three things, three names: the in-dock tab strip is the
+**layer switcher** (`show-rail`→`show-switcher`, `rail-position`→`switcher-position`,
+`.dock-layer-rail`→`.dock-layer-switcher`, seven `--dock-layer-rail-*`→`--dock-layer-switcher-*`,
+`dockRailContext.ts`→`dockSwitcherContext.ts` with its injection-key STRING, seventeen
+component-local identifiers); the vertical dock is `orientation="vertical"`
+(`--dock-rail-{padding,extend-length,accent-*}`→`--dock-vertical-*`); the hairline is §BUILD. No
+aliases. `--dock-rail-active-accent` was the G-ONE-NAME breach in miniature — the SWITCHER TAB's
+selected glyph wearing the vertical dock's prefix, one name over two registers. **CENSUS
+RE-DERIVED AT THE CUT, NEVER TRUSTED (the J-10 law this row once violated)**: TR's own
+word-boundary detector `rg -w rail src/components/dock/styles` gives **115 occ / 103 lines / 13
+files → 0/0/0**, reproducing J-7 exactly and refuting ⊕⁵'s 114/102/13 in the opposite direction
+from what ⊕⁵ assumed; a SECOND detector exists because the first is blind to camelCase
+(`rg -w rail` cannot see `showRail`) — **D2, the identifier arm, 25 files → 0** across the whole
+band. **THE BUILD**: `<DockSeparator anchor>` stamped `data-rail-anchor` +
+`.dock-separator--anchor` for a `#rail` slot that existed in NO file, and both markers were read
+by **zero** selectors and **zero** code — a prop that did nothing, describing a facility never
+built (E29's "five builds, zero surviving components", sitting in the tree as an API). `anchor`
+now promotes the separator to `.dock-hairline`: the same primitive and the same ONE colour,
+SPANNING its layout root's cross extent instead of floating at `--dock-separator-height`. Both
+arms root at `:is(.glass-dock, .dock-layer-group)` — the layer group is a layout root in its own
+right everywhere else in that partial, and an arm naming only `.glass-dock` made a standalone
+group + `anchor` a paint NO-OP. The two arms do NOT win the same way, and the record says so:
+the row arm is **(0,4,0)** and beats every `.dock-separator` layout rule on SPECIFICITY, the
+column arm is (0,3,0) and TIES `.glass-dock.vertical .dock-separator`, winning on SOURCE ORDER
+alone (declared before it, the column arm silently lost). **ONE HAIRLINE COLOUR**: the band
+painted two 1px rules from two sources (`--surface-tint-15` and a `--border 40%` literal); they
+collapse onto **`--dock-hairline`**, declared once, read by the separator, the hairline and all
+four switcher divider edges — that collapse IS the G-ONE-NAME arm. **ONE PAINT DELTA, stated**:
+the switcher divider moves onto `--surface-tint-15`, the dock's own tint rung, which
+`dark-arm.css:313` already CLAIMED it rode and did not — the comment was false and is corrected
+in this cut. `.dock-separator`'s own paint is byte-unchanged. **LIVE CONSUMER**:
+`demo/stories/dock/sections.vue` gains *The hairline*, two live docks (row + column) carrying
+`<DockSeparator anchor />` at `data-testid="dock-hairline-{row,column}"`, so #10 has something to
+shoot. **GATE seats +0** — `TERMINAL-ROSTER:337` already seats the arm under G-ONE-NAME;
+`tests/styles/dock-name-canon.test.ts` ships as an ordinary test file, **7 cases, BORN-RED
+`7 failed | 0 passed (7)` on the pre-edit bytes** with case 1 REPORTING the census figure quoted
+above (the gate's own output, not a hand count), **6 mutations all biting and all restored
+byte-exact**. `SEAT-BINDING.json` untouched, register receipt **byte-identical** pre→post.
+**CURED BEFORE THE CUT (CURE-ORDER-72, 8 cures):** three survivors of the row's own target class
+struck (`railLayer` in `dock/layers.vue`, `showRail:false` in `useDragMorph.ts:181`, the "Dock
+rail navigation" fixture in `data/search.vue`) — and the gate WIDENED to catch them, born-RED
+proved on the pre-C1 bytes (`1 failed | 6 passed (7)`, case 4 naming `useDragMorph.ts`) then
+GREEN at `7 passed (7)`; D2 hardened with the SCREAMING_CASE arm (`DOCK_RAIL_KEY` matched neither
+of its first two arms). **FIVE BLIND-RENAME MISATTRIBUTIONS** fixed, where `rail`→`switcher`
+handed a VERTICAL-DOCK referent to the tab strip (`density.css` ×2 · `shell.css:387` ·
+`touch-floor.css` ×3 · `icon-button.css` ×2) — **and a sixth, `morph.css:254`, VERIFIED CORRECT
+and left alone** rather than falsified to satisfy a checklist. **THREE FALSE CLAIMS STRUCK IN THE
+ROW'S OWN RECORD**: the "(0,3,0) for both arms" cascade note; "`.dock-layer-group` centres its
+children" (it is `align-items: stretch`); and the §9 diffstat, which **did not reproduce for
+anyone** — re-derived with a stated detector **D3**, whose PATH arm is load-bearing because the
+189-line deletion `demo/stories/dock/rail.vue` never says the word in its body. D3 on the
+pre-cure bytes returns **43 / +529 / −945** (both challengers exactly); the landing cut is
+**45 tracked files (+564/−958) + 4 new + 3 renames**, of which **+49/−2 are FOREIGN lines in
+three HUNK-MIXED files the driver splits at commit** (`MIGRATION.md`, `CHANGELOG.md`,
+`src/components/dock/index.ts`) — so the row's own bytes are **+515/−956**. **THE TWO SPLIT
+HUNKS LANDED AS RIDERS IMMEDIATELY BEFORE THE CUT, and together they are exactly the +49/−2**:
+`48368ad2` (**#57** completion-class — the `LabeledSelect` 8.0.0 booking `a025d99f`'s scoped add
+missed, `MIGRATION.md` hunk 2 **+37** and `CHANGELOG.md` hunk 2 **+9**) and `ab907571` (**#46**
+completion-class — the stale `GlassTimeline` prose in the dock barrel, swept after `9bc8d25f`'s
+deletion, `src/components/dock/index.ts` hunk 2 **+3/−2**). With both riders out of the way
+`d4063dda` carries the row's own bytes and nothing else, and it re-derives at HEAD to the digit:
+**45 tracked +515/−956 + 4 new**. §7's "the ONE thing taken" clause from `#59`'s `dock-nav.css`
+was itself refuted by the diff: a second hunk had gone in, and it carried a sentence citing
+`stack-rail.css`, **a file that exists in no tree of this repo**, for a `--dock-hairline` line
+nothing in `demo/` paints — STRUCK. `MIGRATION.md`'s "added at 8.0" row listed eleven names as
+added when only four are DECLARED in `src/`; it is now two rows, defaults vs consumer handles.
+**VERIFY at the cut**: `vue-tsc --noEmit` exit 0, no output · `tests/styles tests/components
+tests/gates` **11 failed | 1416 passed | 5 expected fail (1432)** across 6 failing files, every
+one FOREIGN — the pre-edit baseline's twelve minus the dist-freshness arm `demo:dist:build`
+greens (the ⊕⁵⁴ precedent), i.e. #40's pager/carousel lane, its deleted
+`pager-dots.contract.test.ts` in `gate-register`, its untracked `useLeadTrail.ts` in
+`overfit-structure`, and `stacked-url-filter` born-RED by its own title; Δ row-own = **+7 passed,
++0 failed**, exactly the arm's seven cases · `node scripts/gate-register.mjs` **byte-identical
+pre→post**, `seats:60 active:48 reserved:5 worstCase:53 remaining:7 external:11 bound:8 armOnly:2
+unbound:50 drift:1 rosterSha256:dc05df91 violations:1` — the one **violation:1** is #40's
+uncommitted deletion of `pager-dots.contract.test.ts`, recorded and not this row's to reach (the
+⊕⁵¹/⊕⁵³ precedent). **#47 GF-DOCK's stated hard precondition is DISCHARGED by this landing**
+(and with it #42's and #48's chain). π **NOT CLAIMED** — the span in both orientations, light and
+dark, and the divider delta are owed to **#10** at its serialized browser seat, with the
+`sections.vue` testids as its subjects. ROUTED: `--dock-vertical-{padding,extend-length}`
+declared nowhere → **#47** (the dock reach; §8 finding 1) · one surviving `DockRail-chip` PROSE
+mention in `glass/surfaces-pager.css` → **#40** (the pager register §7 refuses; a mention is not
+a G-RELAY read, and this row does not reach into another lane's file) · `demo/shell/dock-nav.css`
+line 94's dead `src/styles/dock-controls.css` cite → the lane that owns that file. Record:
+`docs/tranches/BK/execution/2026-08-08-row72-rail-rename-then-build/RECORD.md`.
+
+**Φ5 procession: next = re-scout.** #72 DISCHARGES **#47 GF-DOCK**'s hard precondition
+(`EXECUTION-DAG:72` — *"none; HARD-PRECEDES #47's first build commit"*), but #47 does NOT open by
+this landing alone: it still carries **#89's sever, the #7 fence, and ASK g11**, and #42
+(`EXECUTION-DAG:53`) and #48 (dep #47 W7) sit behind #47 in turn. Everything else is unmoved —
+#21 stays gated on #17 (Φ4-UNSTARTED), #25 on its own rides-clause, #44 behind #43's cut, #45 on
+#52 on #35, #49/#50/#51/#53 ASK-gated, #56 behind "after lane cuts", #58 on ASK g11 with #73 on
+its chassis, #67 on the owner's R-7 footage. **#32 · #33 · #34 · #35 · #40 · #71 STILL SIT
+UNCOMMITTED IN THIS WORKING TREE** — ten of this cut's eleven foreign failures trace to #40
+alone. The cursor alone cannot show a lane that has not committed (⊕⁴⁸), so the next scout
+re-derives from the DAG **and** `git status`, never from this block's list.
+
 **Φ5 procession: next = re-scout** — #21 stays gated (`#17` hard, and #17 is Φ4-UNSTARTED); ~~#24
 LANDED this date, so the next unstarted in TR order is **#25 W-FIELD-WELL** (which lands its well
 law THROUGH #82's cut per TR#25's §B.7 keying — check #82 before opening it).~~ [⊕⁴¹ 2026-08-05 ·
@@ -2023,7 +2124,7 @@ procession still opens on a **re-scout**, never on an assumed next.]
 | 44 | W-TAGS-FIELD | Φ5/6 | UNSTARTED | TR#44 → CWT-2 §TAGS-INPUT | G-T13 (re-pin register fold); ⊕² #43 BANKED — the hard block LIFTS; LAND sequenced behind #43's cut |
 | 45 | W-CONSTELLATION | Φ5 | UNSTARTED | TR#45 → CWT-2 :1279-1443 + PROCEDURAL §4 | G-CON-SURFACE-GRAIN(c) (re-pin fold); after #52; slides R7 vehicle |
 | 46 | GF-TIMELINE | Φ5 | ⊕⁵¹ **LANDED 2026-08-07** at `9bc8d25f` ~~UNSTARTED~~ — **the 5→1 collapse, CURED IN THE SAME CUT** after a CURE-REQUIRED Φ5 adjudication (C1…C5 + six riders). Five SFCs / 1,948 lines → ONE `<Timeline>`, **2,282 → 996 total / 582 code**, G-RELAY walked at the cut (3 hits, all corrected comments, **0 dangling importers**); tokens **14 declared + 2 phantom → ONE** (`--timeline-track-h: var(--space-body)`, so the mobile rung is free from `sizing.css` §1.1's one permitted width query); `springPreset("dock")` read **BY NAME**, which is why #26's 2026-08-05 retune cost this row nothing; ONE cap for all three motion expressions read live off `--scale-hover` with `NO_TOKEN_CAP` in LOCKSTEP; fill travels `translateX` in two clip boxes, `will-change: width` **0 in this directory**. **C1 (disqualifying alone): the PRM settle release was STRUCTURALLY DEAD** — `useSpring.ts` seeds `isSettled` true and re-assigns it true-over-true on the snap path, so an EDGE watch never fired while `onValue` stretched the cap and latched `crossing`; **cured consumer-side, `useSpring.ts` NOT edited** (dock/sheet/sortable ride it) by watching the settled STATE, `watch([travel.value, travel.isSettled], …)`. **Born-RED at the pre-cure bytes: `expected 1.0451919642276981 to be 1` — exactly `1 + tanh(0.4·1.6)·(1.08−1)` — and `expected […] to have a length of +0 but got 1`;** both GREEN, and the source-text case that passed on the broken code is DELETED. **C2: the coarse 44px floor was dead** — the shared `[data-control-target]` is (0,1,0) and a scoped `.tl__mark[data-v-*]` is (0,2,0) on the same two properties; re-declared in the component's own `(pointer: coarse)` arm off the SAME `--touch-target`, mark + list, the `slider/styles.css:85-94` precedent. **Proved in emitted-CSS/unit terms ONLY; the 390×844 coarse PAINT cell is #10 π-SUITE's.** **C3: `role="progressbar"` had no accessible name** and the demo's `aria-label` was a fallthrough landing on the `role="group"` root — `TimelineProps.label` → `aria-label` on the track, no name invented when omitted; born-RED `expected undefined to be 'Release timeline'`. **C4: 8.0.0's break list omitted the timeline entirely** — `MIGRATION.md` §8.0.0 now books the rename, the type delta, props/emits/slots (**`label` REPURPOSED** from the scrubber's tooltip caret), the `TimelineSegment` shape and the 14-removed/1-added token table; `:564` marked `removed 8.0.0`; `CHANGELOG.md` matched. **C5/§6.7: the one TR clause not executed is NAMED** — `useAnisotropicExtent` is minted ONCE at #67 W-2, *"never re-mint"*, and is **0 on disk**; the clip-path clause is unexecutable as written and the adoption question is ROUTED to W-2's consumer walk. Riders: `onMarkLeave`'s emit moved inside its guard · `data-crossing` **BOUND** (`will-change` gated to the crossing window) rather than deleted · `0.05+0.12=0.16` → **0.17** here **and at `color-radius.css:122`, fixed not routed** · `DESIGN.md:248` struck in place, dated · record nits (ContinuousMarkers **440**, Timeline.vue **689** pre-cure, §5's ΔRGB pair labelled LIGHT with the DARK pair beside it). **Gates: ZERO minted, receipt BYTE-IDENTICAL across all three cuts** — `seats:60 … rosterSha256:dc05df91 violations:1`, the one violation being #40's uncommitted deletion of `pager-dots.contract.test.ts`. Verify: **vue-tsc 0** · row suites **37/37 twice** · 14 failures, **11 unchanged-foreign, 2 `public-surface` FOREIGN (RT-39D's lock/manifest split + six unbuilt deck/carousel partials), 1 `boot-graph` this seat's and left RED by design — the driver's `npm run demo:dist:build` greens it**. **π-46 partly OWED**: an honest Chromium DELTA is banked (three PNGs, canvas-resolved photometry, zero console errors/warnings); the real-Safari + coarse + void-gated cells are **#10's**. Record: `docs/tranches/BK/execution/2026-08-05-row46-gf-timeline/RECORD.md` §9. ROUTED: π battery → **#10** · speedtest edits → its own tranche · grabbed-thumb transport → **#37 RETIRED-UNBUILT** (fourier-field rides a plain Slider — a stated temporary regression on ONE route, **not** a masking fallback) · `Progress.vue:138` → **W-SLIDER-PROGRESS** · `.sr-only` → **#31** (this lane consumes zero) · SHA re-pin → **C-9** · DESIGN.md sweep → **#61** · `useAnisotropicExtent` → **#67 W-2** · the Σwidth denominator → **one OWNER ruling owed**, pinned by T-PART-2. | TR#46 → GREENFIELD-TERMINAL:20-226 | 0 gates minted; obligations ship as unit cases (37/37); T-PART-2 pin; Σwidth RULED (§1.5) |
-| 47 | GF-DOCK W1-W9 | Φ5 | UNSTARTED | TR#47 → GREENFIELD-TERMINAL:227-349 | DOCK ×4: BUDGET born-RED (14 props vs ≤6) · RUN+MORPH · REACH · STATE; #72 hard-precedes first build commit; after #6/#26/#7-fence |
+| 47 | GF-DOCK W1-W9 | Φ5 | UNSTARTED — **still gated** [⊕⁵⁵ 2026-08-08: the #72 edge is spent, the row is not open] | TR#47 → GREENFIELD-TERMINAL:227-349 | DOCK ×4: BUDGET born-RED (14 props vs ≤6) · RUN+MORPH · REACH · STATE; ~~#72 hard-precedes first build commit~~ **[⊕⁵⁵ 2026-08-08: the hard precondition is DISCHARGED by #72's landing (`d4063dda`) — but the row STAYS GATED on #89's sever + the #7 fence + ASK g11, and #42 (`EXECUTION-DAG:53`) + #48 (dep #47 W7) sit behind it in turn; it also RECEIVES #72's §8-1 route, `--dock-vertical-{padding,extend-length}` declared nowhere in `src/` (the dock reach)]**; after #6/#26/#7-fence |
 | 48 | W-DOCK-FISSION | Φ5 | UNSTARTED | TR#48 → WAVES:701 | G-FISSION-EXISTS = acceptance ("built, not gated"); after #47 W7 |
 | 49 | GF-AURORA | Φ5 | UNSTARTED | TR#49 → GREENFIELD-TERMINAL:350-572 + PROCEDURAL §3.2 | AURORA seat (3 arms + amplitude-aware demand); interactivity default ON, PRM-guarded; V-A95 rider π-REVERSE-DRAG; DUSK/DAWN capture row (ASK.md g3) |
 | 50 | GF-BLOB | Φ5 | UNSTARTED (⊕² spec_state = sealed) | TR#50 + TR§B.1 → ⊕² **`DESIGN-NOW.md` §blob-physics (SPEC OF RECORD; the charter reconciled, the 0.380 bar dead)** | blob six ⊕² re-authored born-RED at DESIGN-NOW §5 (G-SEPARATION latched-event form · G-CHAOS λ≥0.25 undriven); W0 GL-excise (⊕² blob-scoped 72/11 → 0; repo-wide 239/44 = #54's register; 1,439 LOC); technicolor default; ⊕² drive 0.90 / calm 0.30 / drive\* 0.3381; depth cap 2; r7 A/B FIRST capture (ASK.md g1) |
@@ -2037,7 +2138,7 @@ procession still opens on a **re-scout**, never on an assumed next.]
 | 59 | W-LAYOUT | Φ5/6 | ⊕⁵⁴ **LANDED-IN-PART 2026-08-07** at `80f3455f` ~~UNSTARTED~~ — The chassis spine. **SHELL GRID**: `h-screen` + flex + the inner wrapper all three deleted for `"rail main"/"rail dock"` at **`100dvh`**; the dock is an in-flow ROW, so `scroll-padding-block-start` dies and occlusion is impossible by construction — **dock below the fold on 0 of 92 routes @390, shell exactly `100dvh` on all 92**. `scroll-padding-inline-start` KEPT and CONDITIONED (its record ties it to the rail's transient fan; the §9 probe is owed). **SEAT LAW**: `(width > 48rem) and (orientation: landscape)`, strict `>`, `+ (height <= 30rem)` sheds the dock. **FOUR MEASURES** in a new `demo/chassis/layout.css` (140 ln), each with its derivation; `--article-max` = 2× the seat threshold. **CEL FIELD** replaces flex-col — **76 of 92 story pages were `display:flex` (1-up everywhere); 80 of 92 now render >1 track**; `StorySection` gains the one new API `span?: "cel" \| "full"`. **LADDER**: six `:root` rungs, ONE `@media (width <= 768px)` arm, gate-asserted as the only width-conditional spacing block in `demo/`. **K4 was worse than specified** — `--story-article-w` is declared nowhere on disk, so every ordinary story had NO article cap. **TWO DEFECTS THE PAINT FOUND**: §4's binding 852×393 cell was derived against an 88px rail against a real 99px one and fell to 1-up by **three pixels** (rail rung `--sp-3`→`--sp-2` → **2-up, 2 × 338.56px measured**); and `contain: inline-size` zeroes a container's min-content, which **collapsed StorySection to 0px in a flex row** (`/data/search` measured `w:0`) — cured by ONE chassis `min-inline-size: min(var(--measure-cel), 100%)`. **K18 NOT DECLARED, and that is the finding**: no inline-size container exists in either target rail's ancestry, so the wrap-arm could never match — routed with its subject. KILLED: `max-w-6xl` ×2 · both landing grids + `sm:col-span-2`→`data-span` · 5 chassis clamps (the 4 CatalogLanding ones were ALREADY GONE) · the off-series pad/gap maps, props kept · `responsive` on the family switcher → mounted strip in `<FadingScroll>` (load-bearing: 458px strip in a 350px column) · the sortable-list wrapper · 2 story medias ARM-INVERTED to `@container`, numerals unchanged · 4 of 7 raw-`vh` onto one `--stage-block` · three `max-w-*` literals onto the measures. **PAINT DELTA-CAPTURED against a live `git archive a025d99f` tree**: every §4 prediction confirmed — 768 the cured B1 cell, 2560 **exactly 4-up at 369px** with frame symmetric **38.1%** vs G3's 42%, 1440 3 × 416px; **zero page-level horizontal overflow on all 92 routes @1440**. π NOT CLAIMED — Chromium structural only; §9's battery owed to #10. **Gates seats +0, receipt byte-identical pre/post**; the 4 LAYOUT seats stay ABSENT (C-13 is #9/#65's) and `tests/styles/layout-canon.test.ts` sits under them, **23 cases + 3 `it.fails`, born-RED RUN not asserted (23 failed at the pre-cut bytes)**. Verify vue-tsc 0, suites at the pre-edit baseline (12 foreign failures), +23 passed +3 expected-fail row-own. ROUTED: K7's triage (**73 hits / 33 files** re-derived at adjudication; chassis+shell at 0 behind the one enumerated exemption) → #59's remaining half, ORDERED behind the container this cut creates · K10/K14 + K15's last 3 `vh` → #59 behind the lanes holding those files uncommitted, all three held RED by `it.fails` · §9 → #10 · §11 LIB-SEAM → #76 · `/motion/deck` @390 → #40 · four in-cel density overflows → #56. Adjudication: single-challenger under the org spend wall, driver-ruled, 0 code defects, 5 documentary cures applied — `docs/tranches/BK/execution/2026-08-07-row59-layout/VERDICT-59.md`; record `docs/tranches/BK/execution/2026-08-07-row59-layout/RECORD.md` | TR#59 → LAYOUT.md (`b1e9fa31`) | G1 (+G2 +viewport-fit arms) · G-MEASURE-LAW · G6 · G-FORK-CENSUS; `viewport-fit=cover` first |
 | 67 | IOS27-EXEC W-1..W-7 | Φ5 | UNSTARTED | TR#67 → `IOS27-MICRO/FINAL/FINAL.md` (W-0 banked `1d0c17c6`) | —(W-1 ⊂ #26 · W-2 before GF-DOCK kernel · T1/T9/T5 after spring; W-5 un-parked, reversible-in-total; ⊕² codex deltas folded; + R-7 OWED-CAPTURE ×3 (owner: the owner) + both device-fps cells + loupe L-3 — every other arm proceeds) |
 | 71 | W-EYEGLASS | Φ5 | UNSTARTED | TR#71 → ARCHAEOLOGY §R-4 + RATIFICATION §4 | born-RED: `rg -i 'eyeglass\|loupe' src demo` → 0; inside #32's cut, T-C ordering |
-| 72 | W-RAIL-RENAME-THEN-BUILD | Φ5 | UNSTARTED | TR#72 → ARCHAEOLOGY §4 N2 (E29) | G-ONE-NAME rail arm; census 115 occ/103 lines/13 files (J-7) → 0; hard-precedes #47 |
+| 72 | W-RAIL-RENAME-THEN-BUILD | Φ5 | ⊕⁵⁵ **SEALED 2026-08-08** at `d4063dda` ~~UNSTARTED~~ — the rename half and the build half in ONE commit, **CURED before the cut** (CURE-ORDER-72, 8 cures). **THREE REFERENTS, THREE NAMES**: layer switcher (props, classes, seven tokens, the context file + its injection-key STRING, 17 local identifiers) · vertical dock (`--dock-vertical-*`) · hairline. No aliases; `--dock-rail-active-accent` was the breach in miniature, the switcher tab's glyph wearing the vertical dock's prefix. **CENSUS RE-DERIVED AT THE CUT** (the J-10 law): D1 = TR's own `rg -w rail src/components/dock/styles` → **115 occ / 103 lines / 13 files → 0/0/0**, reproducing J-7 and refuting ⊕⁵'s 114/102/13 in the opposite direction; D2, the identifier arm D1 is blind to (`rg -w rail` cannot see `showRail`), **25 files → 0** band-wide. **THE BUILD**: `anchor` stamped a class and an attribute read by **zero** selectors and **zero** code for a `#rail` slot in **no** file — a prop that did nothing; it now promotes `DockSeparator` to `.dock-hairline`, spanning its layout root's cross extent, both arms rooted at `:is(.glass-dock, .dock-layer-group)` so a standalone group is not a paint no-op. Row arm **(0,4,0)** wins on specificity, column arm (0,3,0) on source order — the two do not win the same way and the comment now says which. **ONE COLOUR**: two rival 1px sources collapse onto `--dock-hairline`; ONE stated paint delta, the switcher divider onto `--surface-tint-15`, the rung `dark-arm.css:313` falsely claimed it already rode. LIVE at `demo/stories/dock/sections.vue` (`dock-hairline-row` + `dock-hairline-column`). **Seats +0**, `tests/styles/dock-name-canon.test.ts` an ordinary test file, born-RED `7 failed \| 0 passed (7)` → `7 passed (7)`, **6 mutations all biting, all restored byte-exact**, receipt byte-identical. CURES: 3 survivors of the row's own target class struck with the gate WIDENED around them (born-RED `1 failed \| 6 passed (7)` → `7 passed (7)`) · D2 hardened for SCREAMING_CASE · **5 blind-rename misattributions fixed and a 6th (`morph.css:254`) VERIFIED CORRECT and left alone** · three FALSE claims struck in the row's own record (the cascade figure, the centring claim, the diffstat). **Diffstat re-derived with a stated detector D3** whose PATH arm is load-bearing (`demo/stories/dock/rail.vue`'s 189-line deletion never says the word in its body): landing cut **45 tracked (+564/−958) + 4 new + 3 renames**, of which **+49/−2 FOREIGN** in three hunk-mixed files — split out as the two riders `48368ad2` (**#57** completion, `MIGRATION.md` +37 / `CHANGELOG.md` +9) and `ab907571` (**#46** completion, `dock/index.ts` +3/−2) — so **the row's own bytes are +515/−956**, re-derived at HEAD to the digit. Verify: vue-tsc 0 · `tests/styles tests/components tests/gates` **11 failed \| 1416 passed \| 5 expected fail (1432)**, all eleven FOREIGN (ten #40's, one #7/#40's) · receipt `violations:1` = #40's uncommitted `pager-dots.contract.test.ts` deletion. π **NOT CLAIMED** → **#10**. ROUTED: `--dock-vertical-{padding,extend-length}` declared nowhere → **#47** · one `DockRail-chip` prose mention in the pager register → **#40** · `dock-nav.css:94`'s dead cite → that file's lane. **#47's hard precondition DISCHARGED.** Record `docs/tranches/BK/execution/2026-08-08-row72-rail-rename-then-build/RECORD.md` | TR#72 → ARCHAEOLOGY §4 N2 (E29) | G-ONE-NAME rail arm; census 115 occ/103 lines/13 files (J-7) → 0; hard-precedes #47 |
 | 73 | W-SCROLL-SHRINK | Φ5/6 | UNSTARTED | TR#73 → ARCHAEOLOGY §R-5 + §4 N4 | born-RED: 0 sites; in #58's chassis, after #59 |
 | 74 | W-RIM-RAINBOW | Φ5 | UNSTARTED | TR#74 → ARCHAEOLOGY §R-6 + CWT-3 §W-PROGRESS-SEAM | scoped gate (J-9): rim consumes ≥1 `--rainbow-*` rung ∧ width < 4px; inside #88's cut |
 | 79 | W-CARD-MATERIAL | Φ5 | UNSTARTED | TR#79 → CWT-3 §LANE card | lane gates, close-battery class (CWT-3 §5); C-2/C-3/C-4 per §B.7; after #68 |

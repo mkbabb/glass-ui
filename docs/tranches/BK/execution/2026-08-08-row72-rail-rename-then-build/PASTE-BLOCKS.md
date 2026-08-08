@@ -3,7 +3,7 @@
 Authored by the CURE seat (2026-08-08) with CURE-ORDER-72 C5 + C7 already folded in — the two
 refuted claims (*"only the mandatory G-RELAY … was taken"* and *"42 files (+528/−944)"*) do not
 appear below in any form. Both blocks are OUT of the executing seat's fence; the driver pastes
-them at the landing commit and substitutes the real SHA for `<SHA>`.
+them at the landing commit and substitutes the real SHA for the `<SHA>` placeholder.
 
 **THE ⊕-INDEX IS DERIVED AT COMMIT TIME FROM THE CURSOR'S TAIL — NEVER BANKED AS A CONSTANT.**
 At this seat the tail is **⊕⁵⁴** (#59, `EXECUTION-PROGRESS.md:1787`), so **⊕⁵⁵** below is the
@@ -12,10 +12,43 @@ re-indexes if a lane landed in between.
 
 ---
 
+## POST-LANDING — what actually shipped (back-annotation seat, 2026-08-08)
+
+The row landed at **`d4063dda`**, and `<SHA>` is substituted to it in **both paste blocks below**
+so the banked copy is not a placeholder. **The cursor tail was re-read at paste and was still ⊕⁵⁴**
+(`EXECUTION-PROGRESS.md:1787`) — no lane landed in between, so the banked **⊕⁵⁵** is the derived
+index, not a carried one. Three things were ADDED to block A at paste and are not in the banked
+body below, so the difference is stated rather than left to a reader's diff:
+
+1. **The two riders.** `48368ad2` (**#57** completion-class — the `LabeledSelect` 8.0.0 booking:
+   `MIGRATION.md` hunk 2 **+37**, `CHANGELOG.md` hunk 2 **+9**) and `ab907571` (**#46**
+   completion-class — the stale `GlassTimeline` prose in the dock barrel:
+   `src/components/dock/index.ts` hunk 2 **+3/−2**) landed immediately before the cut. Together
+   they are **exactly** §9's `+49/−2` foreign, i.e. the three hunk splits §9 routed to the
+   DRIVER, executed. `d4063dda` therefore carries the row's own bytes and nothing else.
+2. **The at-HEAD diffstat re-derivation.** `git show --numstat --no-renames d4063dda`, less the
+   three record artefacts and the four new files, gives **45 tracked files, +515 / −956** — §9's
+   row-own figure reproduced to the digit, deletions included.
+3. **The driver's at-commit VERIFY.** §6's `12 failed | 1415 passed | 5 expected fail` is the
+   PRE-CURE measurement and §6 itself rules it superseded; the at-commit battery is
+   **`11 failed | 1416 passed | 5 expected fail (1432)`** over 6 failing files, the same set minus
+   the dist-freshness arm `demo:dist:build` greens (the ⊕⁵⁴ precedent). Re-run at this seat and
+   reproduced exactly. Receipt likewise re-run and byte-identical: `seats:60 active:48 reserved:5
+   worstCase:53 remaining:7 external:11 bound:8 armOnly:2 unbound:50 drift:1
+   rosterSha256:dc05df91 violations:1`.
+
+Both census detectors were also re-derived at this seat against `d4063dda^` → `d4063dda`:
+**D1 = 115 occ / 103 lines / 13 files → 0/0/0** and **D2 = 25 files → 0**. Both reproduce §2
+exactly. Block B additionally names the two riders inside the diffstat clause and carries the
+same verify line; its unescaped-pipe count is unchanged at **0**, so `TERMINAL-ROSTER.md` row 72
+still carries its 6 structural pipes.
+
+---
+
 ## A · `docs/tranches/BK/EXECUTION-PROGRESS.md` — append to the ledger
 
 ```
-⊕⁵⁵ **#72 W-RAIL-RENAME-THEN-BUILD LANDS (2026-08-08, `<SHA>`) — CURED before the cut.**
+⊕⁵⁵ **#72 W-RAIL-RENAME-THEN-BUILD LANDS (2026-08-08, `d4063dda`) — CURED before the cut.**
 The rename half and the build half in one commit, because neither alone is the wave. **THE
 STRIKE**: `rail` named a VERTICALLY-ORIENTED DOCK throughout the band's identifiers — the exact
 inversion of the correction ARCHAEOLOGY E29 records the owner making ≥4× — and the noun covered
@@ -97,5 +130,5 @@ structural pipes** at `TERMINAL-ROSTER.md:222` and must still carry 6 after the 
 block below contains no raw `|`.
 
 ```
- ⊕⁵⁵ **LANDED 2026-08-08 (`<SHA>`; record `docs/tranches/BK/execution/2026-08-08-row72-rail-rename-then-build/RECORD.md`).** Rename AND build in one commit. **CENSUS RE-DERIVED AT THE CUT with both detectors stated in the executable**: TR's own `rg -w rail src/components/dock/styles` = **115 occ / 103 lines / 13 files → 0/0/0** (reproducing J-7, refuting ⊕⁵'s 114/102/13 in the opposite direction), plus **D2**, the identifier arm the word-boundary detector is blind to (`rg -w rail` cannot see `showRail`), **25 files → 0** band-wide. **THREE NOUNS, THREE NAMES**: layer switcher (props, classes, seven tokens, the context file + its injection-key STRING, 17 local identifiers) · vertical dock (`--dock-vertical-*`) · hairline. No aliases. `--dock-rail-active-accent` was the breach in miniature — the switcher tab's glyph wearing the vertical dock's prefix. **THE BUILD**: `anchor` stamped a class and an attribute read by **zero** selectors and **zero** code for a `#rail` slot in **no** file; it now promotes the separator to `.dock-hairline`, spanning its layout root's cross extent, both arms rooted at `:is(.glass-dock, .dock-layer-group)` so a standalone group is not a paint no-op. Row arm **(0,4,0)**, wins on specificity; column arm (0,3,0), wins on source order — the two do not win the same way and the comment now says which. **ONE COLOUR**: two rival 1px sources collapse onto `--dock-hairline`; ONE paint delta, the switcher divider onto `--surface-tint-15`, the rung `dark-arm.css:313` falsely claimed it already rode. LIVE at `demo/stories/dock/sections.vue` (two docks, `dock-hairline-row` + `dock-hairline-column`). **Seats +0**, arm = an ordinary test file, **BORN-RED 7 failed / 0 passed** with case 1 reporting the census, **6 mutations biting, all restored byte-exact**, receipt byte-identical. **CURED BEFORE THE CUT**: 3 survivors struck with the gate widened around them (born-RED proved, then GREEN) · D2 hardened for SCREAMING_CASE · 5 blind-rename misattributions fixed and a 6th VERIFIED CORRECT and left alone · the record's cascade figure, its centring claim and its diffstat all struck as FALSE. **Diffstat re-derived with a stated detector D3** whose PATH arm is load-bearing (the 189-line `dock/rail.vue` deletion never says the word in its body): pre-cure **43 / +529 / −945**, matching both challengers and refuting `42 / +528 / −944`; landing cut **45 files (+564/−958) + 4 new + 3 renames**, **+49/−2 of it FOREIGN in three hunk-mixed files the driver splits**. §7's "ONE thing taken" from `#59`'s `dock-nav.css` was refuted by its own diff — the extra hunk carried a sentence citing `stack-rail.css`, a file in no tree, STRUCK. **#47's hard precondition DISCHARGED.** π NOT CLAIMED → **#10**. ROUTED: `--dock-vertical-{padding,extend-length}` declared nowhere → **#47** · one `DockRail-chip` prose mention in the pager register → **#40**.
+ ⊕⁵⁵ **LANDED 2026-08-08 (`d4063dda`; record `docs/tranches/BK/execution/2026-08-08-row72-rail-rename-then-build/RECORD.md`).** Rename AND build in one commit. **CENSUS RE-DERIVED AT THE CUT with both detectors stated in the executable**: TR's own `rg -w rail src/components/dock/styles` = **115 occ / 103 lines / 13 files → 0/0/0** (reproducing J-7, refuting ⊕⁵'s 114/102/13 in the opposite direction), plus **D2**, the identifier arm the word-boundary detector is blind to (`rg -w rail` cannot see `showRail`), **25 files → 0** band-wide. **THREE NOUNS, THREE NAMES**: layer switcher (props, classes, seven tokens, the context file + its injection-key STRING, 17 local identifiers) · vertical dock (`--dock-vertical-*`) · hairline. No aliases. `--dock-rail-active-accent` was the breach in miniature — the switcher tab's glyph wearing the vertical dock's prefix. **THE BUILD**: `anchor` stamped a class and an attribute read by **zero** selectors and **zero** code for a `#rail` slot in **no** file; it now promotes the separator to `.dock-hairline`, spanning its layout root's cross extent, both arms rooted at `:is(.glass-dock, .dock-layer-group)` so a standalone group is not a paint no-op. Row arm **(0,4,0)**, wins on specificity; column arm (0,3,0), wins on source order — the two do not win the same way and the comment now says which. **ONE COLOUR**: two rival 1px sources collapse onto `--dock-hairline`; ONE paint delta, the switcher divider onto `--surface-tint-15`, the rung `dark-arm.css:313` falsely claimed it already rode. LIVE at `demo/stories/dock/sections.vue` (two docks, `dock-hairline-row` + `dock-hairline-column`). **Seats +0**, arm = an ordinary test file, **BORN-RED 7 failed / 0 passed** with case 1 reporting the census, **6 mutations biting, all restored byte-exact**, receipt byte-identical. **CURED BEFORE THE CUT**: 3 survivors struck with the gate widened around them (born-RED proved, then GREEN) · D2 hardened for SCREAMING_CASE · 5 blind-rename misattributions fixed and a 6th VERIFIED CORRECT and left alone · the record's cascade figure, its centring claim and its diffstat all struck as FALSE. **Diffstat re-derived with a stated detector D3** whose PATH arm is load-bearing (the 189-line `dock/rail.vue` deletion never says the word in its body): pre-cure **43 / +529 / −945**, matching both challengers and refuting `42 / +528 / −944`; landing cut **45 files (+564/−958) + 4 new + 3 renames**, **+49/−2 of it FOREIGN in three hunk-mixed files the driver splits**. §7's "ONE thing taken" from `#59`'s `dock-nav.css` was refuted by its own diff — the extra hunk carried a sentence citing `stack-rail.css`, a file in no tree, STRUCK. **#47's hard precondition DISCHARGED.** π NOT CLAIMED → **#10**. ROUTED: `--dock-vertical-{padding,extend-length}` declared nowhere → **#47** · one `DockRail-chip` prose mention in the pager register → **#40**.
 ```
