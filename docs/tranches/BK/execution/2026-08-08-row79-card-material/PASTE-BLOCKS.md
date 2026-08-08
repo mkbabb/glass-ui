@@ -66,9 +66,9 @@ rosterSha256:dc05df91 violations:1` — the violation is #40's.
 
 **FOUND BESIDE THE ORDER — four items, recorded, none silently fixed.** (1) **`npm run build` is
 RED and cannot be greened from inside this row's fence**: an uncommitted `package.json`/lockfile
-`embla-carousel*` disagreement aborts `verifyExportTypes`, leaving `dist/` stale — **#32's bytes,
+`embla-carousel*` disagreement aborts `verifyExportTypes`, leaving `dist/` stale — ~~**#32's bytes,
 DRIVER-CONFIRMED**, where RECORD §9 names "the carousel lane" (#40); both attributions stand,
-neither averaged, and the two whole-tree `public-surface.spec.ts` failures are both downstream of
+neither averaged~~ **[RULED 2026-08-08, driver: #40 W-PAGER's bytes — the ✦³ DECK-APOTHEOSIS widening owns the deck/carousel rework and the embla removal; #32 is W-TABS; RECORD §9 was right]**, and the two whole-tree `public-surface.spec.ts` failures are both downstream of
 it. (2) **`MIGRATION.md:1270` instructs consumers to put `card-scroll-host` on the `<Card>`** —
 the exact placement CURE-1 forbids, a LIVE wrong instruction sitting in a historical 5.0.0 section
 this lane's fence does not open → **#61**. (3) **The cure pass's glide-flip contract case was BORN
@@ -111,8 +111,8 @@ acceptance class); register receipt byte-identical pre→post. π NOT CLAIMED �
 (`/display/card` void baseline **unchanged at 299**: the `CardAction` −1 and the scroll-viewport +1
 cancel), P6 BLOCKED on **#3**. **DRIVER NOTE**: `npm run build` cannot go green while an uncommitted lane's
 `package.json`/lockfile disagree over `embla-carousel*` — `verifyExportTypes` aborts and the two
-`tests/public-surface.spec.ts` failures in the whole-tree battery are both downstream of it (**#32's bytes, DRIVER-CONFIRMED at the back-annotation**; RECORD §9 names the carousel lane,
-#40 — both stand).
+`tests/public-surface.spec.ts` failures in the whole-tree battery are both downstream of it (~~**#32's bytes, DRIVER-CONFIRMED at the back-annotation**; RECORD §9 names the carousel lane,
+#40 — both stand~~ **[RULED 2026-08-08, driver: #40 W-PAGER's bytes — the ✦³ DECK-APOTHEOSIS widening owns the deck/carousel rework and the embla removal; #32 is W-TABS; RECORD §9 was right]**).
 **FENCE re-derived at the back-annotation**: 18 tracked **+527/−450** + 2 new (`card/scroll.css` 175 · `tests/components/card/Card.test.ts` 268) + `src/styles/index.css` **+3/−2**, the one import re-point split out by index surgery inside the cut — **no completion riders**; staged total **21 code files, +973/−452**. Verify, re-run this seat: `vue-tsc` exit 0, no output · subset battery **11 failed \| 1419 passed \| 5 xfail (1435)**, every failure FOREIGN · `tests/components/card` **11 passed (11)** · receipt byte-identical, `violations:1` = #40's. The cure pass's glide-flip case was **BORN FALSE-GREEN and RE-ARMED** (a `nextTick()` settles the `scrollRoot` binding; it now fails against a restored unconditional `glide.value = true`). `MIGRATION.md:1270`'s live wrong instruction — `card-scroll-host` on the `<Card>`, the placement CURE-1 forbids — is routed **#61**, not edited here.
 Record: `docs/tranches/BK/execution/2026-08-08-row79-card-material/RECORD.md` (cure pass §10b —
 `CURE-ORDER-79.md`, 8/8 executed).
