@@ -443,6 +443,10 @@ measured **before** this seat wrote a byte; the row's share is the difference.
 | `demo/…/AuroraColorSection.vue` | 5 | 2 | **3** | aurora lane |
 | `tests/styles/radius-role-canon.test.ts` | 40 | 2 | **38** | **#35** (the slider `FORKS` line) |
 
+**[2026-08-08 ⊕⁶⁰ · the table omitted a SIXTH row-owned file: useTabRovingFocus.ts, 24
+changed lines all this row's C-1 genericization — caught at the driver's pre-commit sweep,
+rides 60a64339 itself; no rider needed]**
+
 Staging is per-hunk index surgery at `-U0`, the #80 precedent. Untracked and not counted
 by `--stat`: `src/components/toggle-group/context.ts` (**+53 new**) and the four π cells.
 
