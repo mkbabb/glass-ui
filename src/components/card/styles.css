@@ -1,36 +1,222 @@
-/* Card owns structure and Card-only decoration. Surface owns every plate material. */
+/* Card owns structure, proportion and — on the selectable arm — its own
+   engagement register. Surface owns every plate material. */
+
+/* The selectable card's state FILL, registered so it interpolates. A bare custom
+   property in a gradient jumps between endpoints; registered, the fill glides on
+   the light channel's own envelope. `inherits: false` — a card never pushes its
+   state onto a nested card. (The `@property --fade-start` in utilities/base.css
+   is the precedent: a component's typed property rides its own recipe file.)
+   The VALUES are the register's — `--fill-hover` / `--fill-selected`
+   (tokens/color-radius.css §1.3); nothing is minted here. */
+@property --card-fill {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: transparent;
+}
+
 @layer components {
+    /* ── PROPORTION (PROPORTION §1.1) ─────────────────────────────────────────
+       ONE pad, inline == block. `r : pad = 16 : 12` — the pairing law, residue
+       exactly one rung (4). Two gaps and only two: INTRA-group (title ↔
+       description, footer member ↔ member) and GROUP ↔ GROUP (header ↔ content ↔
+       footer).
+
+       The √φ GENERATOR IS GONE. Six declarations multiplied one seed by 1.272 /
+       1.618 / 2.618 and painted 30.528 on thirteen elements, 18.8677 on three,
+       9.1673 on seven — not one of them a rung of the six-rung series, and no
+       two of them reachable from each other by the series' own step.
+
+       THE SIZE LAW (PROPORTION C13). `sm` is ONE RUNG DOWN the series, never a
+       scalar — and the ≤768 transposition (tokens/sizing.css §1.1) is the SAME
+       operator on the same series. A ratio applied on top of either is exactly
+       what puts a value off-series (0.86 × 12 = 10.32), which is why C13 ruled
+       "one rung down, all rungs" against the scalar. TYPE takes no part in
+       either: no type rung appears in sizing.css's arm and none appears below. */
     .card {
-        --card-pad-inline: calc(var(--spacing) * 6);
-        --card-pad-block: calc(var(--card-pad-inline) * 1.272);
-        --card-pad-section-gap: var(--card-pad-block);
-        --card-pad-footer: calc(var(--card-pad-block) / 1.618);
-        --card-pad-title-gap: calc(var(--card-pad-inline) / 2.618);
+        --card-pad: var(--space-body); /* 12 */
+        --card-gap: var(--space-atom); /* 8 — intra-group */
+        --card-group-gap: var(--space-body); /* 12 — group ↔ group */
+        border-radius: var(--radius-card); /* 16 */
+        color: var(--card-foreground);
     }
 
     .card[data-size="sm"] {
-        --card-pad-inline: calc(var(--spacing) * 4);
+        --card-pad: var(--space-atom); /* 8 */
+        --card-gap: var(--space-residue); /* 4 */
+        --card-group-gap: var(--space-atom); /* 8 */
     }
 
+    /* ── EDGE — one ink, two arms, keyed on the elevation the plate declares.
+       A FLOATING plate's boundary is `--ink-edge` (0.16); a FLUSH plate's own
+       edge is `--ink-seam` (0.08). The rung's own `--glass-border-resting` paints
+       4% in BOTH arms, so elevation carried no boundary discrimination at all —
+       a card that says "I am raised" and a card that says "I am flush" drew the
+       same line. EXACTLY TWO boundary channels: this ink and the ONE white rim
+       leg the ladder composes (`--glass-material-rim`, glass/rim.css). The rung
+       ink is re-pointed, never the accent seam — `--glass-border-accent`
+       (glass/rim.css) still mixes a consumer's `--glass-accent` onto it. */
+    .card {
+        --glass-border-rung: oklch(from var(--foreground) l c h / var(--ink-seam));
+    }
+
+    .card[data-shadow] {
+        --glass-border-rung: oklch(from var(--foreground) l c h / var(--ink-edge));
+    }
+
+    /* ── CAST — the role shadow COMPOSES; it never substitutes.
+       `[data-material][data-shadow]` (glass/material-roles.css, (0,2,0)) replaced
+       the rung's whole stack with the single role leg, so the DEFAULT card — the
+       one plate in the library that declares itself elevated — resolved one leg
+       and zero white channels: the elevated card was the deader material. The
+       list is stated ONCE here and composed twice (the focus rule appends to it),
+       and it is scoped to the resting rung because that is the rung `elevated`
+       resolves to; every other rung keeps the ladder's own stack untouched.
+       (W-SURFACE-MATERIAL deletes material-roles.css whole, which cures the
+       substitution for every non-card Surface a fortiori — C-2.) */
+    .card {
+        --card-cast-rung: var(--glass-shadow-resting);
+        --card-cast:
+            var(--glass-material-rim), var(--glass-under-shadow-default),
+            var(--card-cast-rung), var(--shadow-card);
+        /* The lift and the edge are the two channels that move; both are light,
+           neither is spatial, so both ride the light clock. `.card[role="option"]`
+           restates the whole coherent list rather than patching a duration —
+           a shorthand is a shorthand. */
+        transition:
+            box-shadow var(--engage-control-engage-release) var(--ease-standard),
+            border-color var(--engage-control-engage-release) var(--ease-standard);
+    }
+
+    .card.glass-resting[data-shadow] {
+        box-shadow: var(--card-cast);
+    }
+
+    /* ── DESCENDANT FOCUS — the group lifts ONE rung while the control inside it
+       is being operated by KEYBOARD (`:has(:focus-visible)`, never pointer).
+       This is the second half of `.glass-card`'s split (C-4): the material half
+       folds onto `.glass-resting` (#86), the focus-elevation half re-homes here,
+       keyed on `.card`, with no `:where(.glass-card, .card)` widening. `:has()`
+       is Baseline on the target set, so it is the sole mechanism — the legacy
+       `.is-focus-within` class fallback had no toggler on disk and does not
+       travel.
+
+       ONE LEG MOVES, not the list: `--card-cast-rung` is the ladder's own next
+       rung (resting → floating), substituted into the cast stated once above, so
+       the lift cannot fork the stack and the focus-ring composition still
+       appends to the same `--card-cast`.
+
+       THE EDGE lifts seam → edge, which is the elevated arm a flush card does
+       not otherwise wear; an already-elevated card is already there and this is
+       a no-op for it. It does NOT go on to `--ink-perimeter` (0.48): the
+       register reserves that rung for a CONTROL's own edge and the focus ring,
+       and a group that merely CONTAINS a focused control must not out-shout the
+       control's own ring. (`.glass-card`'s predecessor lifted 4% → 5%, a step
+       under the noise floor — it declared an intent it never painted.) The
+       declaration sits after `.card[data-shadow]`, whose specificity it ties. */
+    .card:has(:focus-visible) {
+        --card-cast-rung: var(--glass-shadow-floating);
+        --glass-border-rung: oklch(from var(--foreground) l c h / var(--ink-edge));
+    }
+
+    /* ── ENGAGEMENT — the register the card advertised and never wore.
+       `.glass-card` (glass/surfaces.css) owns a focus/hover composition under a
+       comment asserting that `<Card>` "owns its own hover composition"; `<Card>`
+       has never emitted that class, and the module carries zero hover and zero
+       focus rules. The engagement half of `.glass-card` re-homes HERE, keyed on
+       the card itself (C-4: the class splits by halves and dies; the material
+       half folds onto `.glass-resting`). No `:where(.glass-card, .card)` widening.
+
+       The arm is the SELECTABLE card only. An inert content group is not a
+       control and gets no pointer answer — which is what "the plate stays
+       static; the control owns activation" meant all along.
+
+       THE FILL CARRIES THE STATE, the accent rim is a locator (atlas's own
+       contract comment: "the ring, not the slab"). The fill rides a gradient
+       rather than `background-color` because the plate's colour IS the
+       `background` the veil recipe writes — a state that clobbers it would erase
+       the material to paint 5% of ink. */
+    .card[role="option"] {
+        cursor: pointer;
+        scale: 1;
+        background-image: linear-gradient(var(--card-fill), var(--card-fill));
+        transition:
+            --card-fill var(--engage-control-engage-release) var(--ease-standard),
+            box-shadow var(--engage-control-engage-release) var(--ease-standard),
+            border-color var(--engage-control-engage-release) var(--ease-standard),
+            /* the SPATIAL leg rides the press spring, never the light clock */
+            scale var(--spring-press-duration) var(--transition-liquid-spatial);
+    }
+
+    /* The ring is an `outline`: a `box-shadow` ring loses to
+       `button/styles.css`'s (0,4,0) rule on any card that contains a button, and
+       a ring that the thing it rings can delete is not a ring. The glow leg is
+       legal here because this rule owns the COMPLETE resting list (C-7) — it
+       appends to `--card-cast` instead of replacing it. */
+    .card[role="option"]:focus-visible {
+        outline: 2px solid oklch(from var(--foreground) l c h / var(--ink-perimeter));
+        outline-offset: 2px;
+    }
+
+    .card.glass-resting[role="option"][data-shadow]:focus-visible {
+        box-shadow: var(--card-cast), 0 0 8px oklch(from var(--foreground) l c h / 0.15);
+    }
+
+    /* Persistent state. `--fill-selected` (0.12) is a rung hover cannot mint. */
+    .card[role="option"][data-selected="true"] {
+        --card-fill: oklch(from var(--foreground) l c h / var(--fill-selected));
+    }
+
+    /* HOVER IS BRACKETED. On a coarse pointer `:hover` latches on tap and stays
+       latched, painting a card as permanently pointed-at. */
+    @media (hover: hover) {
+        /* The ATTACK channel. `transition` is a shorthand, so the whole coherent
+           list is restated rather than duration-patched — a bare
+           `transition-duration` here would drag the SPATIAL press leg onto the
+           light clock, and the two channels are not interchangeable. */
+        .card[role="option"]:hover {
+            --card-fill: oklch(from var(--foreground) l c h / var(--fill-hover));
+            transition:
+                --card-fill var(--engage-control-engage-attack) var(--ease-standard),
+                box-shadow var(--engage-control-engage-attack) var(--ease-standard),
+                border-color var(--engage-control-engage-attack) var(--ease-standard),
+                scale var(--spring-press-duration) var(--transition-liquid-spatial);
+        }
+
+        /* Both at once is the register's own DERIVATION (§1.3: hover + selected =
+           0.17), not a third rung and not a minted token. */
+        .card[role="option"][data-selected="true"]:hover {
+            --card-fill: oklch(
+                from var(--foreground) l c h / calc(var(--fill-hover) + var(--fill-selected))
+            );
+        }
+    }
+
+    /* Press is the SHIPPED vocabulary — `--scale-press-sm` (0.97) on the spatial
+       spring leg, the same rung the button and slider recipes consume. No
+       literal, no composable, no per-atom press token. */
+    .card[role="option"]:active {
+        scale: var(--scale-press-sm);
+    }
+
+    /* ── ANATOMY ─────────────────────────────────────────────────────────────── */
     .card-header {
         display: grid;
         grid-template-columns: minmax(0, 1fr);
-        gap: var(--card-pad-title-gap);
-        padding: var(--card-pad-block) var(--card-pad-inline) 0;
-        container-type: inline-size;
-        container-name: card-header;
+        gap: var(--card-gap);
+        padding: var(--card-pad) var(--card-pad) 0;
     }
 
-    .card-header:has(> [data-slot="card-action"]) {
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: start;
-    }
-
+    /* TYPE rides the ONE ratio (PROPORTION §1.4: `--type-body` is rung 0 and every
+       rung is `body × φ^(n/4)`), derived from the one fluid value rather than
+       re-typed — so the interval holds at the clamp floor, through the fluid arm
+       and at the ceiling. Title = rung +2 (√φ above body, 23.67 at 1440);
+       description = rung −1 (16.50). `--type-heading` was 25.888 — a φ rung of a
+       DIFFERENT ladder, one the card's own body text does not sit on. */
     .card-title {
         min-width: 0;
-        font-size: var(--type-heading);
+        font-size: calc(var(--type-body) * 1.272);
         font-weight: var(--font-weight-semibold);
-        line-height: var(--type-leading-heading);
+        line-height: var(--type-leading-body);
         letter-spacing: var(--tracking-tight);
         overflow-wrap: anywhere;
     }
@@ -38,21 +224,13 @@
     .card-description {
         min-width: 0;
         color: var(--muted-foreground-strong);
-        font-size: var(--type-small);
-        line-height: var(--leading-normal);
+        font-size: calc(var(--type-body) / 1.127838);
+        line-height: var(--type-leading-body);
         overflow-wrap: anywhere;
     }
 
-    .card-action {
-        grid-column: 2;
-        grid-row: 1 / span 2;
-        align-self: start;
-        justify-self: end;
-    }
-
     .card-content {
-        padding: var(--card-pad-section-gap) var(--card-pad-inline)
-            var(--card-pad-block);
+        padding: var(--card-group-gap) var(--card-pad) var(--card-pad);
     }
 
     .card-content:has(+ .card-footer) {
@@ -63,46 +241,20 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: calc(var(--card-pad-footer) / 1.618);
-        padding: var(--card-pad-footer) var(--card-pad-inline) var(--card-pad-block);
-    }
-
-    .paper-grid {
-        background-image: var(--paper-grid-texture);
-        background-repeat: repeat;
-        background-size:
-            calc(var(--paper-grid-texture-size) * 4)
-                calc(var(--paper-grid-texture-size) * 4),
-            calc(var(--paper-grid-texture-size) * 4)
-                calc(var(--paper-grid-texture-size) * 4),
-            var(--paper-grid-texture-size) var(--paper-grid-texture-size),
-            var(--paper-grid-texture-size) var(--paper-grid-texture-size);
-        background-blend-mode: multiply;
-    }
-
-    :where(.dark) .paper-grid {
-        background-blend-mode: screen;
-    }
-
-    [data-variant="selection"] {
-        --selection-accent-strength: 16%;
-        --selection-accent-strength-selected: 28%;
-        --glass-accent-strength: var(--selection-accent-strength);
-    }
-
-    [data-variant="selection"][data-selected="true"] {
-        --glass-accent-strength: var(--selection-accent-strength-selected);
+        gap: var(--card-gap);
+        padding: var(--card-group-gap) var(--card-pad) var(--card-pad);
     }
 }
 
+/* `cartoon-surface` is a public STATIC decoration and outlives the `cartoon`
+   prop that wrapped it: a class in the `utilities` layer beats `@layer
+   components` wholesale, so a class-borne cartoon cast REPLACES the soft cast by
+   cascade — one shadow grammar per plate, enforced by construction, with no prop
+   silently zeroing another. EXCLUSIVITY: it is the plate's whole cast; do not
+   compose it with a surface that wants the soft cast as well.
+   Its re-home out of this file is W-COLOCATION's (§9 ROUTED). */
 @utility cartoon-surface {
     position: relative;
     border-width: 2px;
     box-shadow: var(--shadow-cartoon-md);
-}
-
-@media (prefers-reduced-transparency: reduce) {
-    .paper-grid {
-        background-image: none;
-    }
 }

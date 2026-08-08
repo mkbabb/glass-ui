@@ -29,8 +29,7 @@ export const semanticTokens = {
     ],
     space: [
         "--ui-scale", "--control-h-sm", "--control-h-md", "--control-h-lg",
-        "--overlay-pad-inline", "--overlay-pad-block", "--card-pad-inline",
-        "--card-pad-block",
+        "--overlay-pad-inline", "--overlay-pad-block", "--card-pad",
     ],
     radius: [
         "--radius", "--radius-sm", "--radius-xl", "--radius-2xl",

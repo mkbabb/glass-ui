@@ -119,7 +119,7 @@ const groups: Record<string, Group> = {
                         {{ groups.account.blurb }}
                     </p>
                 </div>
-                <Card material="content" :size="cardSize">
+                <Card tier="quiet" :size="cardSize">
                     <CardContent
                         class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))]"
                     >
@@ -150,7 +150,7 @@ const groups: Record<string, Group> = {
                         {{ groups.appearance.blurb }}
                     </p>
                 </div>
-                <Card material="content" :size="cardSize">
+                <Card tier="quiet" :size="cardSize">
                     <CardContent
                         :class="
                             cn(
@@ -232,7 +232,7 @@ const groups: Record<string, Group> = {
                         {{ groups.notifications.blurb }}
                     </p>
                 </div>
-                <Card material="content" :size="cardSize">
+                <Card tier="quiet" :size="cardSize">
                     <CardContent
                         class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))]"
                     >
@@ -270,7 +270,7 @@ const groups: Record<string, Group> = {
                         {{ groups.accessibility.blurb }}
                     </p>
                 </div>
-                <Card material="content" :size="cardSize">
+                <Card tier="quiet" :size="cardSize">
                     <CardContent
                         class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))]"
                     >

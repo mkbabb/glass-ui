@@ -1,0 +1,175 @@
+/* A discrete scroll threshold changes real Card geometry once per crossing. The
+   Card spacing ladder remains the sole proportional authority; the state only
+   selects its full or half step.
+
+   NOTHING HERE TRANSITIONS A LAYOUT PROPERTY. The shipped register animated
+   `padding-block-start` and `font-size` on a `contain: layout style paint` host,
+   which reflows the whole subtree on every frame of the crossing. The geometry
+   now FLIPS at the threshold — instantly, once — and the continuity is carried by
+   two compositor channels: a scale glide on the title and opacity on the
+   backplate. */
+@layer components {
+    /* The scroll owner for `<CardHeader shrink>` — absorbed from
+       utilities/base-misc.css, where it sat as a bare `contain` with no
+       affordance at all: 207px of content scrolled out of sight behind a welded
+       `scrollbar-hidden` on the card, with nothing to say more remained.
+
+       NEVER ON THE PLATE. This class goes on an element INSIDE the `<Card>` —
+       the viewport carrying the header and the content — and never on the
+       `<Card>` itself. The rule below writes a MASK, and a mask clips the
+       element's WHOLE rendering: worn by the plate it dissolves the plate's own
+       bottom edge over the ramp's length and clips `--card-cast` away with it,
+       so the one plate that declares itself elevated paints no cast at the edge
+       the feather touches. Worn by an inner viewport it feathers exactly what it
+       is for — the content running out of sight — and the plate stays crisp.
+       (This was the contract from the class's first cut: "apply to the scroll
+       wrapper inside a `<Card>`".)
+
+       THE FEATHER is the ONE edge-fade register (utilities/base-misc.css
+       §FADING-SCROLL): the same registered ramp custom, the same
+       `--fade-scroll-width` (16px) public knob, the same keyframe. Only the mask
+       shape is restated — that register's own idiom, stated three times in its
+       own file for its three axes.
+
+       THE TRAILING EDGE ONLY. A mask is fixed to the padding box, not to the
+       scrolled content, so a leading ramp would feather the STICKY header this
+       host exists to carry — the one element that must stay crisp. The trailing
+       edge is where the hidden content actually is, and it is the edge that has
+       something to say. At rest the ramp is 0px, so the edge is SHARP and the
+       feather opens only once there is genuinely more below. */
+    .card-scroll-host {
+        contain: layout style paint;
+        overflow-y: auto;
+        mask-image: linear-gradient(
+            to bottom,
+            black calc(100% - var(--fade-end)),
+            transparent 100%
+        );
+    }
+
+    @supports (animation-timeline: scroll()) {
+        .card-scroll-host {
+            animation: gl-fade-end-out linear both;
+            animation-timeline: scroll(self block);
+            animation-range: calc(100% - var(--fade-scroll-width)) 100%;
+        }
+    }
+
+    .card-header--shrink {
+        position: relative;
+        isolation: isolate;
+    }
+
+    /* The backplate. It carried its OWN `backdrop-filter` inside the card's own
+       glass — a nested backdrop root reading the rung token directly, so the
+       cell-suppression seam never reached it and the header blurred a plate that
+       was already blurred. It is now a plain fill of the plate's RESOLVED colour:
+       `--glass-veil` is what `@utility glass-plate` computed on this card,
+       inherited, so the backplate can never disagree with the plate it sits on. */
+    .card-header--shrink::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 calc(var(--card-gap) * -1);
+        z-index: -1;
+        border-radius: inherit;
+        background: var(--glass-veil);
+        mask-image: linear-gradient(
+            to bottom,
+            black calc(100% - var(--card-gap)),
+            transparent
+        );
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--duration-normal) var(--ease-standard);
+    }
+
+    /* Title type: the shrink pair is rungs +6 → +4 of the ONE type ratio
+       (PROPORTION §1.4), 38.29 → 30.10 at 1440. The shipped pair was
+       53.28 → 41.888 — the ratio between them was right (1/√φ) and both ends
+       were off the ladder. Both rungs derive from `--type-body`, so the interval
+       survives the clamp at every viewport. */
+    .card-header--shrink > [data-slot="card-title"] {
+        font-size: calc(var(--type-body) * 2.058);
+        transform-origin: 0 50%;
+    }
+
+    .card-header--shrink[data-condensed="true"] {
+        padding-block-start: var(--card-gap);
+    }
+
+    .card-header--shrink[data-condensed="true"]::before {
+        opacity: 1;
+    }
+
+    .card-header--shrink[data-condensed="true"] > [data-slot="card-title"] {
+        font-size: calc(var(--type-body) * 1.618);
+    }
+
+    /* THE GLIDE. The box is already correct the instant the threshold is crossed;
+       the glyphs travel to it on the compositor from the size they just left —
+       √φ in, 1/√φ out, the same ratio the two rungs are apart. `data-shrink-glide`
+       is set on the FIRST crossing only, so a card that mounts already-condensed
+       does not play an entrance nobody asked for. */
+    @keyframes card-title-condense {
+        from {
+            scale: 1.272;
+        }
+        to {
+            scale: 1;
+        }
+    }
+
+    @keyframes card-title-release {
+        from {
+            scale: 0.786151;
+        }
+        to {
+            scale: 1;
+        }
+    }
+
+    .card-header--shrink[data-shrink-glide][data-condensed="true"]
+        > [data-slot="card-title"] {
+        animation: card-title-condense var(--duration-normal) var(--ease-standard);
+    }
+
+    .card-header--shrink[data-shrink-glide][data-condensed="false"]
+        > [data-slot="card-title"] {
+        animation: card-title-release var(--duration-normal) var(--ease-standard);
+    }
+
+    /* The description LEAVES, it does not vanish mid-transition. `display: none`
+       cut the fade at frame zero; `visibility` + `allow-discrete` lands the
+       discrete leg at the END of a real fade.
+
+       WHAT `aria-live` ACTUALLY BUYS. The header is a polite live region, and a
+       live region announces ADDITIONS. The condense REMOVES the description from
+       the a11y tree, and no shipping screen reader announces a removal — the
+       departure is silent by construction. What the attribute earns is the
+       RETURN trip: on release the description re-enters the tree inside a live
+       region and is read. That asymmetry is the honest contract; the alternative
+       — narrating "description hidden" on every threshold crossing — is scroll
+       noise, not information. */
+    .card-header--shrink > [data-slot="card-description"] {
+        transition:
+            opacity var(--duration-normal) var(--ease-standard),
+            visibility var(--duration-normal) var(--ease-standard);
+        transition-behavior: allow-discrete;
+    }
+
+    .card-header--shrink[data-condensed="true"] > [data-slot="card-description"] {
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .card-header--shrink::before,
+        .card-header--shrink > [data-slot="card-description"] {
+            transition: none;
+        }
+
+        .card-header--shrink[data-shrink-glide] > [data-slot="card-title"] {
+            animation: none;
+        }
+    }
+}

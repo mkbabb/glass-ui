@@ -126,7 +126,6 @@ const rootRuntimeExports = [
     "AvatarFallback",
     "AvatarImage",
     "CONFIGURATOR_SIZE_KEY",
-    "CardAction",
     "CardContent",
     "CardDescription",
     "CardFooter",
@@ -336,6 +335,9 @@ const subpathRuntimeExports = [
 const retiredSubpathRuntimeMembers = [
     { subpath: "card", surface: CardSurface, name: "ScrollCard" },
     { subpath: "card", surface: CardSurface, name: "ScrollCardHeader" },
+    // 0 external importers across the twelve-repo census; one in-repo site; the
+    // body was four grid placements against a `:has()` fork in the header.
+    { subpath: "card", surface: CardSurface, name: "CardAction" },
     { subpath: "carousel", surface: CarouselSurface, name: "GlassCarouselPager" },
     { subpath: "dialog", surface: DialogSurface, name: "DialogScrollContent" },
     { subpath: "data-table", surface: DataTableSurface, name: "DataTablePagination" },

@@ -56,6 +56,34 @@ behind it. `LabeledField` + `<Select>` is the replacement and it is ~30 lines at
 site. `LabeledField`, `LabeledInput`, `LabeledSlider`, and `LabeledSwitch` are unchanged.
 `MIGRATION.md` §8.0.0 carries the worked composition.
 
+### Changed — `<Card>` sheds 6 props, 3 types and 1 component; `selected` is the state
+
+`cartoon` / `grid` / `metal` each wrote a class a caller can write (`cartoon-surface`,
+`paper-grid`, `metal-{gold,silver,bronze}-border` — all three utilities survive
+unchanged); `variant` / `dataHue` / `dataHueStrength` / `selected` were one state wearing
+four props, and `selected` is now the whole signal by PRESENCE — present makes the card an
+option (`role="option"`, tab stop, `aria-selected`, pointer, hover/selected fill, press,
+focus ring), absent leaves it inert prose; `material` is severed because the card IS the
+elevated role, which is Surface's own default. `CardTier`, `CardVariant` and `CardMetal`
+leave `./card` (the key stays: `CardProps` / `CardSize` and the six components remain), and
+`CardAction` is deleted with its `:has()` grid fork. The six-declaration √φ padding
+generator is gone — `--card-pad-inline` / `--card-pad-block` / `--card-pad-section-gap` /
+`--card-pad-footer` / `--card-pad-title-gap` collapse to one `--card-pad` on the space
+series. `MIGRATION.md` §8.0.0 carries the per-prop table and the paint deltas.
+
+### Fixed — the elevated card painted one shadow leg and no edge discrimination
+
+`[data-material][data-shadow]` REPLACED the glass rung's whole `box-shadow` with the single
+role leg, so the one plate in the library that declares itself elevated resolved one shadow
+and zero white channels; the rung stack is now stated once as `--card-cast` and composes.
+The plate edge painted foreground 4% whether the card was flush or raised — it is now
+`--ink-seam` (0.08) flush and `--ink-edge` (0.16) elevated, and a card lifts one rung while
+a descendant holds keyboard focus. The module carried zero hover and zero focus rules under
+a comment asserting that `<Card>` "owns its own hover composition"; it owns one now. And
+`.card-scroll-host` — which carries `overflow-y` and a trailing feather mask — belongs on an
+element INSIDE the plate, never on the `<Card>`, where the mask dissolved the plate's own
+bottom edge and clipped its cast.
+
 ## 7.0.0 (2026-07-17)
 
 ### Export-map delta (the authoritative 6.x → 7.0 migration surface)

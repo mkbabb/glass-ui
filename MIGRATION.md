@@ -260,6 +260,80 @@ one never had: options that carry `{ value, label }` pairs, so the value stays t
 contract and the label is what the reader sees, with no second lookup table kept alive
 to name the options a second time.
 
+
+**`Card` sheds six props, three types and one component; `selected` replaces the
+selection trio, and the decorations become the classes they always were.** Card owns
+proportion, anatomy and — when `selected` is present — engagement; every material axis
+is Surface's. `cartoon` / `grid` / `metal` wrote a class a caller can write; `variant` /
+`dataHue` / `dataHueStrength` / `selected` were one state wearing four props; `material`
+is severed because the card IS the elevated role, which is Surface's own default. Clean
+break, no aliases.
+
+_Props — `<Card>`_
+
+| removed at 8.0 | replacement |
+| --- | --- |
+| `cartoon` | `class="cartoon-surface"` — the public utility the prop wrapped, unchanged. It is the plate's WHOLE cast (it wins the cascade wholesale from the `utilities` layer); do not compose it with a surface that also wants the soft cast |
+| `grid` | `class="paper-grid"` — the utility re-homed beside the paper tooth (`styles/paper.css`); it reads the same `--paper-grid-*` cohort |
+| `metal` (`"gold" \| "silver" \| "bronze"`) | `class="metal-gold-border"` / `metal-silver-border` / `metal-bronze-border` — the three `metal-*-border` utilities (`styles/utilities/metal.css`) survive unchanged, class-borne |
+| `variant` (`"default" \| "selection" \| "interactive"`) | `selected` — PRESENCE is the signal. `selected` present makes the card an option (`role="option"`, a tab stop, `aria-selected`, pointer, hover/selected fill, press, focus ring); absent, the card is inert prose. `selected="false"` is an UNSELECTED option, not an inert card |
+| `dataHue` / `dataHueStrength` | `--glass-accent` written on the element by the caller — a per-instance rim hue is a CSS custom property, not a prop pair |
+| `material` | none — severed. `<Card>` is the elevated role; pass `tier` / `surface` / `deep` for the plate axes, or reach for `<Surface>` directly when you want a different role |
+| `shadow`, `tier`, `surface`, `deep`, `grain`, `specular`, `size`, `as` | retained (`size` is Card's; the rest are Surface's, forwarded). `grain` no longer defaults to `true` on Card — it takes Surface's own default |
+
+_Runtime + type exports on `./card`_
+
+| Classification | Symbol |
+| --- | --- |
+| removed at 8.0 | `CardTier` (type), `CardVariant` (type), `CardMetal` (type), `CardAction` (component) |
+| retained | `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`, `CardProps`, `CardSize` |
+
+`CardTier` was already folded onto the shared `surface` axis at 5.0.0 (§`BI.W-SURFACE-EXTRACT`
+below) and survives as `SurfaceProps["tier"]` / `SurfaceTier` (`@mkbabb/glass-ui/axes`) — the
+`/card` re-export is what 8.0 drops. `CardVariant` dies with the `variant` prop: the trio it
+enumerated is the one `selected` boolean. `CardMetal` dies with `metal`: the three
+`metal-*-border` utilities are the surviving surface and a class name needs no union. `CardAction`
+is deleted outright — a positioned slot wrapper with no external importer, and the
+`.card-header:has(> [data-slot="card-action"])` grid fork goes with it; put the control in
+`<CardFooter>`, or place it yourself inside `<CardHeader>`.
+
+_`<CardHeader shrink>` — the scroll host is INSIDE the plate_
+
+`.card-scroll-host` now carries `overflow-y` and a trailing feather mask, and a mask clips
+the element's whole rendering. Put it on an element INSIDE the `<Card>` — the viewport that
+holds the header and the content — never on the `<Card>` itself, where it dissolves the
+plate's own bottom edge and clips its cast away with it:
+
+```vue
+<Card>
+    <div class="card-scroll-host" tabindex="0" style="max-block-size: 20rem">
+        <CardHeader shrink>…</CardHeader>
+        <CardContent>…</CardContent>
+    </div>
+</Card>
+```
+
+_CSS custom properties_
+
+| Classification | Property |
+| --- | --- |
+| removed at 8.0 | `--card-pad-inline`, `--card-pad-block`, `--card-pad-section-gap`, `--card-pad-footer`, `--card-pad-title-gap` — the six-declaration √φ generator that multiplied one seed by 1.272 / 1.618 / 2.618 and landed on no rung of the space series |
+| added at 8.0 (`--card-pad` is the published `space`-domain member, `tokens/manifest.ts`) | `--card-pad` — ONE pad, inline == block: `--space-body` (12), `--space-atom` (8) at `size="sm"`. Two gaps and only two: `--card-gap` (intra-group, 8/4) and `--card-group-gap` (group ↔ group, 12/8) |
+
+`--card-pad` is declared on `.card` and nowhere else. A node that is not a card never
+inherits it, so a `var(--card-pad, …)` written on a non-card reads as a relay and is a
+literal — write the series token you mean (`--space-body` / `--space-family` /
+`--space-section`).
+
+_Paint deltas a consumer will see without changing a line_
+
+The default elevated card gains its full rung stack (the role shadow no longer REPLACES the
+ladder's box-shadow, it composes with it), the plate edge gains elevation discrimination
+(`--ink-seam` 0.08 flush / `--ink-edge` 0.16 elevated, where both arms painted 4%), a card
+lifts one rung while a descendant holds keyboard focus, `grain` no longer defaults on, and
+every padding/gap/type rung is re-derived on the canonical series (title
+`--type-body × 1.272`, description `÷ 1.127838`, content rung 0).
+
 ## 7.0.0 (2026-07-17)
 
 The packed public map changes from 82 to 74 export keys. It removes
@@ -529,9 +603,9 @@ old name (the census table below gives each one's branch home or removal version
 
 ```ts
 // 5.0.0 — the /api discovery layer is gone; import each symbol from its owning subpath
-- import type { AuroraConfig, CardTier } from "@mkbabb/glass-ui/api";
+- import type { AuroraConfig, BadgeVariants } from "@mkbabb/glass-ui/api";
 + import type { AuroraConfig } from "@mkbabb/glass-ui/aurora";
-+ import type { CardTier } from "@mkbabb/glass-ui/card";
++ import type { BadgeVariants } from "@mkbabb/glass-ui/badge";
 ```
 
 Of the 203 symbols, 141 remain exported on a current-branch public subpath (the fold is a
@@ -608,10 +682,10 @@ subpath)` is the 5.0.0 target".]
 | `Canvas2DHandle` | type | `/canvas` |
 | `Canvas2DOptions` | type | `/canvas` |
 | `Canvas2DSuspendReason` | type | `/canvas` |
-| `CardMetal` | type | `/card` |
+| `CardMetal` | type | removed 8.0.0 — the `metal` prop dies; the three `metal-{gold,silver,bronze}-border` utilities survive class-borne and a class name needs no union |
 | `CardSurface` | type | removed 7.0.0 — Card decoration folds onto `CardVariant` (/card) + the `Surface` axis (/axes) |
-| `CardTier` | type | `/card` |
-| `CardVariant` | type | `/card` |
+| `CardTier` | type | removed 8.0.0 from `/card` — already folded onto the shared `surface` axis at 5.0.0; use `SurfaceProps["tier"]` / `SurfaceTier` (/axes) |
+| `CardVariant` | type | removed 8.0.0 — the `variant` trio is the one `selected` boolean (presence, not truth) |
 | `CelebrationBurstPreset` | type | removed 5.0.0 — dead-composable sweep; `useCelebrationBurst` retired (0 consumers) |
 | `ClickDelegateOptions` | type | `/sidebar` |
 | `CompletionSealProps` | type | `/completion-seal` |

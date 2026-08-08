@@ -2,7 +2,7 @@
    The @layer components FORM/INTERACTION TAIL — depth-text,
    preserve-3d, ios input fix, fading-scroll (scroll-state-driven edge fade) +
    the @supports (animation-timeline: scroll()) native path, deferred-section,
-   card-scroll-host, gold-shimmer, kbd.
+   gold-shimmer, kbd.
    this partial holds the post-tap-squish tail so
    each partial stays under the no-god-module 500-line bound. @import-ed by
    utilities.css IMMEDIATELY AFTER base.css — two adjacent same-`@layer
@@ -178,12 +178,6 @@
     .deferred-section--cached {
         content-visibility: hidden;
         contain-intrinsic-size: auto var(--deferred-section-size, 30rem);
-    }
-
-    /* Scroll owner for the discrete <CardHeader shrink> state. It paints no
-       affordance of its own and isolates the sticky header from outer layout. */
-    .card-scroll-host {
-        contain: layout style paint;
     }
 
     /* ── Stable scroll gutter — the no-shift discipline for overlay-hosting

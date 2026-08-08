@@ -191,8 +191,9 @@
 @import "./viz-reveal.css";
 @import "./scroll-driven.css";
 @import "./scroll-choreography.css";
-/* Component-owned real-box contraction for <CardHeader shrink>. */
-@import "../components/card/card-scroll.css";
+/* Component-owned real-box contraction for <CardHeader shrink>, and the scroll
+   owner + edge feather it requires. */
+@import "../components/card/scroll.css";
 @import "./scroll-chrome.css";
 @import "./view-transition.css";
 @import "./utilities.css";

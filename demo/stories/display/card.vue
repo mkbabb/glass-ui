@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import CodeBlock from "../../chassis/code/CodeBlock.vue";
@@ -6,7 +7,6 @@ import CardExample from "../../examples/CardExample.vue";
 import cardExampleSource from "../../examples/CardExample.vue?raw";
 import {
     Card,
-    CardAction,
     CardContent,
     CardDescription,
     CardFooter,
@@ -16,6 +16,11 @@ import {
 import { Button } from "@glass/components/button";
 
 const rows = Array.from({ length: 8 }, (_, index) => `Timeline entry ${index + 1}`);
+const chosen = ref("balanced");
+const plans = [
+    { id: "balanced", title: "Balanced", blurb: "The fill carries the state." },
+    { id: "vivid", title: "Vivid", blurb: "The rim is a locator, not the state." },
+];
 </script>
 
 <template>
@@ -25,7 +30,7 @@ const rows = Array.from({ length: 8 }, (_, index) => `Timeline entry ${index + 1
             blurb="Card supplies proportion and anatomy. Surface supplies material; Button supplies command behavior."
         >
             <div class="card-board">
-                <Card material="content" :shadow="false">
+                <Card tier="quiet" :shadow="false">
                     <CardHeader>
                         <CardTitle>Content</CardTitle>
                         <CardDescription
@@ -48,7 +53,8 @@ const rows = Array.from({ length: 8 }, (_, index) => `Timeline entry ${index + 1
                         >
                     </CardHeader>
                     <CardContent
-                        >Shadow and grain are explicit Surface facilities.</CardContent
+                        >The cast composes with the rung it sits on; it never
+                        replaces it.</CardContent
                     >
                 </Card>
 
@@ -63,20 +69,7 @@ const rows = Array.from({ length: 8 }, (_, index) => `Timeline entry ${index + 1
                     <CardFooter><Button size="sm">Open report</Button></CardFooter>
                 </Card>
 
-                <Card variant="selection" selected data-hue="oklch(0.72 0.14 78)">
-                    <CardHeader>
-                        <CardTitle>Selected</CardTitle>
-                        <CardDescription
-                            >State reads at the rim, without flooding the
-                            plate.</CardDescription
-                        >
-                    </CardHeader>
-                    <CardContent
-                        >Gold is earned only by the selected state.</CardContent
-                    >
-                </Card>
-
-                <Card size="sm" cartoon>
+                <Card size="sm" class="cartoon-surface">
                     <CardHeader>
                         <CardTitle>Dense</CardTitle>
                         <CardDescription
@@ -84,8 +77,21 @@ const rows = Array.from({ length: 8 }, (_, index) => `Timeline entry ${index + 1
                         >
                     </CardHeader>
                     <CardContent
-                        >Cartoon is a static Card decoration, not a material
-                        axis.</CardContent
+                        >Cartoon is a public utility class, not a Card prop — the
+                        cast belongs to the plate that wants it.</CardContent
+                    >
+                </Card>
+
+                <Card tier="quiet" class="paper-grid">
+                    <CardHeader>
+                        <CardTitle>Ruled</CardTitle>
+                        <CardDescription
+                            >The engineering grid is a paper utility.</CardDescription
+                        >
+                    </CardHeader>
+                    <CardContent
+                        >`paper-grid` lives beside the paper tooth in
+                        `styles/paper.css`, not behind a Card prop.</CardContent
                     >
                 </Card>
 
@@ -93,14 +99,11 @@ const rows = Array.from({ length: 8 }, (_, index) => `Timeline entry ${index + 1
                     <CardHeader>
                         <CardTitle
                             >A deliberately long heading that wraps without displacing
-                            its action</CardTitle
+                            its footer</CardTitle
                         >
                         <CardDescription
                             >Descriptions retain their column and remain readable at
                             narrow widths.</CardDescription
-                        >
-                        <CardAction
-                            ><Button emphasis="quiet" size="sm">More</Button></CardAction
                         >
                     </CardHeader>
                     <CardFooter>
@@ -112,19 +115,48 @@ const rows = Array.from({ length: 8 }, (_, index) => `Timeline entry ${index + 1
         </StorySection>
 
         <StorySection
+            heading="Selectable cards"
+            blurb="`selected` present makes the card an option: role, tab stop, aria-selected, pointer, and the fill that carries the state. Absent, the card stays inert prose."
+        >
+            <div class="card-board" role="listbox" aria-label="Plan">
+                <Card
+                    v-for="plan in plans"
+                    :key="plan.id"
+                    :selected="chosen === plan.id"
+                    @click="chosen = plan.id"
+                    @keydown.enter.prevent="chosen = plan.id"
+                    @keydown.space.prevent="chosen = plan.id"
+                >
+                    <CardHeader>
+                        <CardTitle>{{ plan.title }}</CardTitle>
+                        <CardDescription>{{ plan.blurb }}</CardDescription>
+                    </CardHeader>
+                    <CardContent>Hover, tab to it, and press it.</CardContent>
+                </Card>
+            </div>
+        </StorySection>
+
+        <StorySection
             heading="Shrinkable header"
             blurb="Scroll the activity card to compact its heading while the content remains readable and reachable."
         >
-            <Card class="card-scroll-host card-scroll-example" tabindex="0">
-                <CardHeader shrink class="card-scroll-example__header">
-                    <CardTitle>Recent activity</CardTitle>
-                    <CardDescription
-                        >Scroll this region to collapse the heading.</CardDescription
-                    >
-                </CardHeader>
-                <CardContent class="card-scroll-example__rows">
-                    <p v-for="row in rows" :key="row">{{ row }}</p>
-                </CardContent>
+            <Card>
+                <!-- The scroll host is an element INSIDE the plate, never the
+                     plate itself: it wears `overflow-y` and the trailing feather
+                     mask, and a mask on the <Card> would dissolve the plate's own
+                     bottom edge and clip the cast away with it. -->
+                <div class="card-scroll-host card-scroll-example" tabindex="0">
+                    <CardHeader shrink class="card-scroll-example__header">
+                        <CardTitle>Recent activity</CardTitle>
+                        <CardDescription
+                            >Scroll this region to collapse the
+                            heading.</CardDescription
+                        >
+                    </CardHeader>
+                    <CardContent class="card-scroll-example__rows">
+                        <p v-for="row in rows" :key="row">{{ row }}</p>
+                    </CardContent>
+                </div>
             </Card>
         </StorySection>
 
@@ -150,9 +182,11 @@ const rows = Array.from({ length: 8 }, (_, index) => `Timeline entry ${index + 1
     max-inline-size: 20rem;
 }
 
+/* `overflow-y` comes with `.card-scroll-host` — a scroll owner that does not
+   scroll is not one. Only the ceiling is the story's, and it sits on the
+   VIEWPORT inside the plate, not on the plate. */
 .card-scroll-example {
     max-block-size: 20rem;
-    overflow-y: auto;
 }
 
 .card-scroll-example__header {

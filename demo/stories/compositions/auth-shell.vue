@@ -114,8 +114,15 @@ const highlights = [
                 </ul>
             </div>
 
+            <!-- `--card-pad` is declared on `.card`; this panel is not one and never
+                 inherits it, so a `var(--card-pad, …)` here can only ever resolve
+                 its fallback — a token reference that reads as a relay and is a
+                 literal. The panel pad is written directly, on the series:
+                 `--space-section` (32) is the rung the old frozen 30.528 was
+                 reaching for, and it carries the ≤768 transposition to 20 that a
+                 literal never had. -->
             <div
-                class="flex flex-col justify-center gap-[calc(1.5rem_+_var(--density-gap,0rem))] bg-card/70 p-[calc(var(--card-pad-block,calc(--spacing(6)_*_1.272))_+_var(--density-pad,0rem))] backdrop-blur-sm lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
+                class="flex flex-col justify-center gap-[calc(1.5rem_+_var(--density-gap,0rem))] bg-card/70 p-[calc(var(--space-section)_+_var(--density-pad,0rem))] backdrop-blur-sm lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
             >
                 <div class="flex flex-col gap-2">
                     <span class="text-small text-muted-foreground">Sign in</span>

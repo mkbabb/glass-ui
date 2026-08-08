@@ -109,17 +109,13 @@ export { Badge, badgeVariants, type BadgeVariants } from "./components/badge";
 export { Button, type ButtonEmphasis, type ButtonProps, type ButtonSize } from "./components/button";
 export {
     Card,
-    CardAction,
     CardContent,
     CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
-    type CardMetal,
     type CardProps,
     type CardSize,
-    type CardTier,
-    type CardVariant,
 } from "./components/card";
 export { Checkbox, type CheckboxProps } from "./components/checkbox";
 export {

@@ -152,6 +152,60 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
+   The ENGINEERING-GRID register — the paper stratum's geometric arm.
+   ───────────────────────────────────────────────────────────────────────
+   It reads the `--paper-grid-*` cohort declared in tokens/scale-paper.css and
+   belongs beside the paper tooth, not inside a component: it was authored in
+   `card/styles.css` behind a `grid` prop with ONE setter in twelve repos, and a
+   consumer who wants ruled paper writes the class. Blend mode flips per arm —
+   multiply darkens the ruling into a light sheet, screen lifts it out of a dark
+   one; a single mode makes the ruling vanish in whichever arm it is wrong for.
+
+   IN THE LAYER, where it has always lived (`card/styles.css`'s own
+   `@layer components` before the move). A decoration class does NOT escalate out
+   of the cascade to win a fight: unlayered would put this above every component
+   register in the library, and the one register it actually collides with is
+   `<Card>`'s state fill — `.card[role="option"]` (0,2,0) writes the same
+   `background-image` slot to carry hover/selected. In-layer that collision
+   resolves by ordinary specificity (the state fill wins on a card that is BOTH
+   ruled and selectable); unlayered it would resolve by escalation, and the state
+   — the functional half — would be the one silently erased. No site combines
+   them today; the seam is latent and routed (#62, beside the `cartoon-surface`
+   re-home — the plate has exactly one `background-image` slot and both `::before`
+   and `::after` are already spoken for by glass/material.css and
+   glass/grain-overlay.css, so a decoration/state slot contract is that owner's
+   call, not a card-local `:not()`).
+   ═══════════════════════════════════════════════════════════════════════ */
+@layer components {
+    .paper-grid {
+        background-image: var(--paper-grid-texture);
+        background-repeat: repeat;
+        background-size:
+            calc(var(--paper-grid-texture-size) * 4)
+                calc(var(--paper-grid-texture-size) * 4),
+            calc(var(--paper-grid-texture-size) * 4)
+                calc(var(--paper-grid-texture-size) * 4),
+            var(--paper-grid-texture-size) var(--paper-grid-texture-size),
+            var(--paper-grid-texture-size) var(--paper-grid-texture-size);
+        background-blend-mode: multiply;
+    }
+
+    .dark .paper-grid {
+        background-blend-mode: screen;
+    }
+
+    /* The ruling is a transmissive enhancement — it rides the same PRT arm as
+       the tooth. It lives HERE, in the layer, and not in the unlayered PRT block
+       below, which exists for the two `@utility` registers (a components-layer
+       rule cannot override a utilities-layer one). */
+    @media (prefers-reduced-transparency: reduce) {
+        .paper-grid {
+            background-image: none;
+        }
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
    The WARM COLORFUL FIELD register is RETIRED here.
    ───────────────────────────────────────────────────────────────────────
    The `.paper-field` CSS plane (the per-route four-layer technicolor CEL +

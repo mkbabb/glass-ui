@@ -73,7 +73,7 @@ onUpdated(() => {
 
 <template>
     <Card
-        material="content"
+        tier="quiet"
         :shadow="false"
         :class="cn('story-code-block', props.class)"
     >
