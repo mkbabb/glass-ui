@@ -4,10 +4,7 @@ import { SpringProgress } from "@mkbabb/keyframes.js";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { Button } from "@glass/components/button";
-import {
-    EasingConfigurator,
-    type EasingPickerValue,
-} from "@glass/components/easing";
+import { EasingPicker, type EasingPickerValue } from "@glass/components/easing";
 import {
     Select,
     SelectContent,
@@ -74,8 +71,7 @@ function move(): void {
 }
 
 const overlayKey = ref(0);
-const bezier = ref<EasingPickerValue>();
-const steps = ref<EasingPickerValue>();
+const curve = ref<EasingPickerValue>();
 
 onBeforeUnmount(disposeSpring);
 </script>
@@ -185,32 +181,19 @@ onBeforeUnmount(disposeSpring);
             </div>
         </StorySection>
 
-        <!-- The curve authoring surfaces adopt the ONE configurator anatomy
-             (BJ.W-CONFIGURATOR-STD G-CFG-5): BOTH editors are now
-             <EasingConfigurator> (picker seated in a <ConfiguratorLayer>/
-             <ConfiguratorRow>), reading the shared card grammar instead of one
-             carded + one bare. `items-start` stops the shorter editor's stage
-             from stretching to its sibling's height and painting an empty
-             bottom void (the F31 over-height defect). -->
+        <!-- ONE editor. Two panels stood here — a bezier register beside a steps
+             register — and the comparison they advertised was the thing they could
+             not do: each fitted its own frame to its own curve, so the two plots
+             rendered 9% apart on the same screen, and the shorter one carried ~45% of
+             its row as empty plate (F31). Both readings now sit in ONE constant
+             frame, the inactive one held back as a ghost, and the residue has nowhere
+             left to be. -->
         <StorySection
             heading="Authoring boundary"
             level="title"
-            blurb="Shape a reusable curve with keyboard-accessible controls and compare continuous and stepped timing side by side."
+            blurb="Shape a reusable curve with keyboard-accessible controls; the mode you are not editing stays on the plot as a ghost."
         >
-            <div class="grid items-start gap-6 lg:grid-cols-2">
-                <EasingConfigurator
-                    v-model="bezier"
-                    label="Continuous timing"
-                    :name="bezier?.css"
-                    mode="bezier"
-                />
-                <EasingConfigurator
-                    v-model="steps"
-                    label="Discrete timing"
-                    :name="steps?.css"
-                    mode="steps"
-                />
-            </div>
+            <EasingPicker v-model="curve" label="Authored easing curve" />
         </StorySection>
     </StoryPage>
 </template>

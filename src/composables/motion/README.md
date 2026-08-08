@@ -27,9 +27,9 @@ their `--spring-*` and `--ease-*` tokens; JavaScript consumers read
 `SPRING_PRESETS` or import an upstream callable directly.
 
 `@mkbabb/glass-ui/motion-core` contains the engine-free helpers. The published
-`@mkbabb/glass-ui/easing` family is the separate authoring boundary:
-`EasingPicker` and `EasingConfigurator` own accessible Vue chrome while value.js
-owns their curve math.
+`@mkbabb/glass-ui/easing` family is the separate authoring boundary: `EasingCurve`
+displays a curve and `EasingPicker` authors one, both accessible Vue chrome, while
+value.js owns their curve math.
 
 Source leaves are grouped by mechanism under `spring/`, `scroll/`, `number/`,
 `reveal/`, `pointer/`, `morph/`, and `core/`. Those directories are internal;

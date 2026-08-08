@@ -1,25 +1,31 @@
 <script setup lang="ts">
-// The ONE published curve-authoring component (the C-3 fold
-// landed). The two demo editors (BezierEditor / StepsEditor) re-home onto this; the
-// donor editors (EasingEditor/EasingCurveCanvas) stay in the keyframes.js demo (the cross-repo
-// fence) and is the DESIGN REFERENCE for the props-in/events-out, state-shape-
-// agnostic shape.
+// `<EasingPicker>` — the curve EDITOR: `<EasingCurve>` plus a handle overlay, one
+// control row, and a `v-model` carrying the authored curve.
 //
-// Curve math belongs to value.js. The component owns a bounded editor-local
-// normalized one-shot preview, distinct from reusable physical/keyframes playback.
-// This SFC re-implements no curve math.
+// ONE EDITOR, TWO STROKES. The active mode is drawn in full ink and the other mode's
+// curve is held back as a ghost, so both readings sit in the SAME frame instead of in
+// two panels that used to render 9% apart while the page invited comparison. There is
+// exactly ONE plot, ONE print of the literal, and ONE column: the second panel was
+// where the void lived, and it no longer exists to hold one.
 //
-// The canvas chrome is Tailwind utilities + token custom-properties (the tailwind-
-// first law; the BezierEditor/StepsEditor idiom carried in), NEVER raw pasted CSS.
-// The curve strokes `--motion-accent` — the motion family's single color event;
-// the root folds it into the component-local `--easing-curve-accent` with the
-// library's OWN `--viz-legendre` violet twin as the fallback, so every accent
-// site reads the bare `(--easing-curve-accent)` shorthand while the consumer can
-// still override `--motion-accent` from any ancestor (the ppmycota fence: a demo
-// hue NEVER enters a library token, and the primitive is self-sufficient
-// standalone).
-import { computed, onUnmounted, ref, useId, useTemplateRef, watch } from "vue";
+// The frame is constant (`VIEW_BOX`) and the overlay shares it, so the two SVGs map
+// pixel-for-pixel by construction — no measured sync, no CTM that moves under a
+// dragging finger. Handles past the frame pin to its edge along their own leader
+// while the authored value keeps going, and the curve's own excursion is REPORTED
+// (`data-curve-clipped` + the crossed edge in accent), never silently cropped.
+//
+// Curve math is value.js; this SFC re-implements none of it.
+import {
+    computed,
+    onUnmounted,
+    ref,
+    useId,
+    useTemplateRef,
+    watch,
+    type HTMLAttributes,
+} from "vue";
 import { Check, Copy, Play, RotateCcw, Square } from "@lucide/vue";
+import { cn } from "../_shared/class-names";
 import { Button } from "../button";
 import DotRing from "../_shared/feedback/DotRing.vue";
 import {
@@ -30,63 +36,53 @@ import {
     SelectValue,
 } from "../select";
 import { Slider } from "../slider";
+import { SegmentedTabs, type SegmentedTabOption } from "../tabs";
 import { useClipboard } from "../../composables/dom/useClipboard";
-import {
-    useEasingPicker,
-    type EasingPickerMode,
-    type EasingPickerValue,
-    type JumpTerm,
-} from "./composables/useEasingPicker";
+import EasingCurve, { type EasingStroke } from "./EasingCurve.vue";
+import { useEasingPicker, type EasingPickerValue, type JumpTerm } from "./usePicker";
 import {
     COPY_ATTEMPT_TIMEOUT_MS,
     COPY_FEEDBACK_MS,
-    HANDLE_HIT_RADIUS,
-    HANDLE_HIT_RADIUS_TOUCH,
-    SVG_FLIP,
+    CUSTOM_PRESET,
+    HANDLE_HIT_RADIUS_PX,
+    HANDLE_HIT_RADIUS_TOUCH_PX,
+    MAX_OVERSHOOT,
     STEP_COUNT_MAX,
     STEP_COUNT_MIN,
+    SVG_FLIP,
+    VIEW_BOX,
 } from "./constants";
+
+/** `card` seats the editor on the resting rung; `bare` renders no plate at all —
+ *  the escape a consumer used to buy with `backdrop-filter: none` and `!important`. */
+export type EasingSurface = "card" | "bare";
 
 const props = withDefaults(
     defineProps<{
-        /** The curve-authoring mode — `"bezier"` (draggable cubic-bezier) or
-         *  `"steps"` (the steppedEase staircase). */
-        mode?: EasingPickerMode;
-        /** The initial bezier preset key. */
-        preset?: string;
-        /** The initial step count. */
-        steps?: number;
-        /** The initial step jump term. */
-        term?: JumpTerm;
-        /** Show the copy-the-literal readout affordance (default true). */
-        readout?: boolean;
-        /** Show the playback travel-dot control (default true). */
+        /** The initial authored curve. Any subset; the rest takes the family default. */
+        initial?: Partial<EasingPickerValue>;
+        /** Show the playback transport and its travelling dot (default true). */
         playback?: boolean;
-        /** A11y label for the canvas. */
+        /** A11y label for the plot. */
         label?: string;
+        /** The material the editor sits on. */
+        surface?: EasingSurface;
+        class?: HTMLAttributes["class"];
     }>(),
     {
-        mode: "bezier",
-        preset: undefined,
-        steps: undefined,
-        term: undefined,
-        readout: true,
+        initial: undefined,
         playback: true,
         label: "Easing curve",
+        surface: "card",
+        class: undefined,
     },
 );
 
 // The v-model is the full authored-curve payload (mode + css literal + the live
-// value.js callable + raw params) — props-in/events-out, state-shape-agnostic (the
-// kf EasingEditor reference shape).
+// value.js callable + raw params) — props-in/events-out, state-shape-agnostic.
 const model = defineModel<EasingPickerValue>();
 
-const picker = useEasingPicker({
-    initialMode: props.mode,
-    initialPreset: props.preset,
-    initialSteps: props.steps,
-    initialTerm: props.term,
-});
+const picker = useEasingPicker({ initial: props.initial });
 
 const {
     mode,
@@ -103,9 +99,11 @@ const {
     reparseOk,
     value,
     handlesSvg,
+    handlePins,
+    leaderAnchors,
     bezierPathD,
     stepPathD,
-    viewBox,
+    excursion,
     progress,
     playing,
     playbackState,
@@ -114,15 +112,6 @@ const {
     cancelTravel,
     stopTravel,
 } = picker;
-
-// Keep the composable mode in lockstep with the prop (a parent flipping
-// :mode="steps" re-points the editor — the two donor arms on ONE primitive).
-watch(
-    () => props.mode,
-    (m) => {
-        mode.value = m;
-    },
-);
 
 function sameValue(
     left: EasingPickerValue | undefined,
@@ -181,54 +170,124 @@ function applyModel(next: EasingPickerValue | undefined): void {
 watch(model, applyModel, { deep: true, immediate: true });
 watch(value, writeModel, { immediate: true });
 
-// ── bezier drag (self-contained pointer-capture, no external seam) ─────────────
-const svgEl = useTemplateRef<SVGSVGElement>("svgEl");
+// ── the plot ──────────────────────────────────────────────────────────────────
+// Both curves, always. The active one is the subject; the other is the same page's
+// other reading, held back — which is what a side-by-side comparison was for, minus
+// the second frame that never agreed with the first.
+const strokes = computed<EasingStroke[]>(() =>
+    mode.value === "steps"
+        ? [
+              { d: bezierPathD.value, tone: "ghost" },
+              { d: stepPathD.value, tone: "ink" },
+          ]
+        : [
+              { d: stepPathD.value, tone: "ghost" },
+              { d: bezierPathD.value, tone: "ink" },
+          ],
+);
+
+const travel = computed<number | null>(() =>
+    props.playback && playbackState.value !== "idle" ? easingFn.value(progress.value) : null,
+);
+
+// ── the handle overlay (self-contained pointer capture, no external seam) ──────
+const overlayEl = useTemplateRef<SVGSVGElement>("overlayEl");
 const handleInstructionsId = useId();
 const dragIndex = ref<0 | 1 | null>(null);
 
-function pointerToSvg(ev: PointerEvent): { x: number; y: number } {
-    const svg = svgEl.value;
-    if (!svg) return { x: 0, y: 0 };
-    const ctm = svg.getScreenCTM();
-    if (!ctm) return { x: 0, y: 0 };
-    const inv = ctm.inverse();
-    const sx = inv.a * ev.clientX + inv.c * ev.clientY + inv.e;
-    const sy = inv.b * ev.clientX + inv.d * ev.clientY + inv.f;
+function pointerToCurve(ev: PointerEvent): { x: number; y: number } | null {
+    const ctm = overlayEl.value?.getScreenCTM();
+    if (!ctm) return null;
+    const inverse = ctm.inverse();
+    const sx = inverse.a * ev.clientX + inverse.c * ev.clientY + inverse.e;
+    const sy = inverse.b * ev.clientX + inverse.d * ev.clientY + inverse.f;
     return { x: sx, y: SVG_FLIP(sy) };
+}
+
+/** Hit testing happens in CSS PIXELS against the painted pin — you grab what you
+ *  see, and the target never shrinks with the frame. */
+function nearestHandle(ev: PointerEvent): 0 | 1 | null {
+    const ctm = overlayEl.value?.getScreenCTM();
+    if (!ctm) return null;
+    const radius =
+        ev.pointerType === "touch" ? HANDLE_HIT_RADIUS_TOUCH_PX : HANDLE_HIT_RADIUS_PX;
+    let found: 0 | 1 | null = null;
+    let best = Infinity;
+    handlePins.value.forEach((pin, index) => {
+        const px = ctm.a * pin.x + ctm.c * pin.y + ctm.e;
+        const py = ctm.b * pin.x + ctm.d * pin.y + ctm.f;
+        const distance = Math.hypot(px - ev.clientX, py - ev.clientY);
+        if (distance < radius && distance < best) {
+            best = distance;
+            found = index as 0 | 1;
+        }
+    });
+    return found;
 }
 
 function onDown(ev: PointerEvent): void {
     if (mode.value !== "bezier") return;
-    const { x, y } = pointerToSvg(ev);
-    const r = ev.pointerType === "touch" ? HANDLE_HIT_RADIUS_TOUCH : HANDLE_HIT_RADIUS;
-    const hs = [
-        { x: points.value[0], y: points.value[1] },
-        { x: points.value[2], y: points.value[3] },
-    ];
-    let idx: 0 | 1 | null = null;
-    let best = Infinity;
-    for (let i = 0; i < 2; i++) {
-        const d = Math.hypot(hs[i]!.x - x, hs[i]!.y - y);
-        if (d < r && d < best) {
-            best = d;
-            idx = i as 0 | 1;
-        }
-    }
-    if (idx === null) return;
+    const index = nearestHandle(ev);
+    if (index === null) return;
     ev.preventDefault();
-    dragIndex.value = idx;
+    dragIndex.value = index;
     (ev.currentTarget as Element).setPointerCapture(ev.pointerId);
 }
 
 function onMove(ev: PointerEvent): void {
     if (dragIndex.value === null) return;
-    const { x, y } = pointerToSvg(ev);
-    setHandle(dragIndex.value, x, y);
+    const point = pointerToCurve(ev);
+    if (point) setHandle(dragIndex.value, point.x, point.y);
 }
 
 function onUp(): void {
     dragIndex.value = null;
 }
+
+// ── the draw-on sweep — a new curve INKS ITSELF IN rather than teleporting ─────
+// The plot's engagement affordance, and the reason it is not decoration: this editor
+// redraws the same square for every curve it is asked to show, so without the sweep a
+// preset change and a no-op are the same event to the eye. `EasingCurve` owns the
+// mechanism (a `clip-path` wipe — see the measurement in that file for why the
+// dashoffset arm is dead under `vector-effect`); this owns the CLOCK, because only the
+// editor knows the difference between a new curve arriving and a curve being edited.
+//
+// PRM, the arm that matters: no sweep is armed at all. `drawn` never leaves `true`,
+// so a reduced-motion reader gets the finished plot on the SAME frame the curve
+// changes — one frame, no spatial travel — instead of a fast version of the travel.
+const drawn = ref(true);
+let drawFrame = 0;
+
+function sweep(): void {
+    if (drawFrame) cancelAnimationFrame(drawFrame);
+    drawFrame = 0;
+    if (reducedMotion.value) {
+        drawn.value = true;
+        return;
+    }
+    drawn.value = false;
+    // TWO frames, and the second one is not padding. A transition interpolates from
+    // the last COMMITTED computed style, and rAF callbacks run BEFORE style
+    // recalculation — so flipping back on the very next callback lands the un-drawn
+    // and drawn states in one recalculation and the browser has nothing to sweep
+    // from. Measured, not reasoned: the first cut of this did exactly that and
+    // painted a dead 0px → 0px while `data-drawing` flickered correctly for one
+    // frame. The intervening paint is what makes the sweep exist.
+    drawFrame = requestAnimationFrame(() => {
+        drawFrame = requestAnimationFrame(() => {
+            drawFrame = 0;
+            drawn.value = true;
+        });
+    });
+}
+
+watch([mode, preset, steps, term], () => {
+    // A drag is a continuous edit of ONE curve, not the arrival of a new one, and the
+    // first pointermove of every drag writes `custom` to `preset`. Re-inking under the
+    // finger would fight the gesture it is supposed to answer.
+    if (dragIndex.value !== null) return;
+    sweep();
+});
 
 function onHandleKeydown(index: 0 | 1, ev: KeyboardEvent): void {
     const offset = index * 2;
@@ -242,6 +301,8 @@ function onHandleKeydown(index: 0 | 1, ev: KeyboardEvent): void {
         case "ArrowRight": nextX += step; break;
         case "ArrowDown": nextY -= step; break;
         case "ArrowUp": nextY += step; break;
+        case "PageDown": nextY -= 0.25; break;
+        case "PageUp": nextY += 0.25; break;
         case "Home": nextX = 0; break;
         case "End": nextX = 1; break;
         default: return;
@@ -250,14 +311,33 @@ function onHandleKeydown(index: 0 | 1, ev: KeyboardEvent): void {
     setHandle(index, nextX, nextY);
 }
 
-// ── copy state ────────────────────────────────────────────────────────────────
+// ── the mode switch ───────────────────────────────────────────────────────────
+const MODE_OPTIONS: SegmentedTabOption[] = [
+    { label: "Bezier", value: "bezier" },
+    { label: "Steps", value: "steps" },
+];
+const modeModel = computed<string>({
+    get: () => mode.value,
+    set: (next) => {
+        mode.value = next === "steps" ? "steps" : "bezier";
+    },
+});
+
+// reka's SliderRoot v-models a number[]; this bridges the array ↔ the scalar ref.
+const stepsModel = computed<number[]>({
+    get: () => [steps.value],
+    set: (next) => {
+        steps.value = next[0] ?? steps.value;
+    },
+});
+
+// ── the literal chip (THE copy control — the one print) ───────────────────────
 const readoutEl = useTemplateRef<HTMLElement>("readoutEl");
 const { status: copyStatus, copy: writeLiteral } = useClipboard({
     resetMs: COPY_FEEDBACK_MS,
     timeoutMs: COPY_ATTEMPT_TIMEOUT_MS,
 });
 
-// The instrument's data-copy-state vocabulary, mapped from the shared owner.
 type CopyState = "idle" | "pending" | "copied" | "failed";
 const copyState = computed<CopyState>(() => {
     switch (copyStatus.value) {
@@ -283,7 +363,6 @@ function selectLiteral(): void {
     range.selectNodeContents(el);
     selection.removeAllRanges();
     selection.addRange(range);
-    el.focus();
 }
 
 const copyMessage = computed(() => ({
@@ -293,140 +372,164 @@ const copyMessage = computed(() => ({
     failed: "Clipboard unavailable. Select the full literal to copy manually.",
 })[copyState.value]);
 
-const playbackLabel = computed(() => {
-    const noun = mode.value === "steps" ? "staircase" : "curve";
-    if (playing.value) return `Restart ${noun}`;
-    if (playbackState.value === "complete") return `Replay ${noun}`;
-    return mode.value === "steps" ? "Climb the staircase" : "Trace the curve";
+const copyLabel = computed(() => {
+    switch (copyState.value) {
+        case "failed":
+            return "Retry copy curve literal";
+        case "copied":
+            return "Copied";
+        case "pending":
+            return "Copying curve literal";
+        default:
+            return "Copy curve literal";
+    }
 });
+
+// ── the transport — ONE vocabulary, ONE source ────────────────────────────────
+// The control's label and the status region read the SAME computed, so a second
+// verb cannot be introduced on one side without the other. FIVE vocabularies lived
+// here — two mode-specific verb phrases, a restart word, a replay-plus-noun, and a
+// three-state preview line — for one control with three states. These are the three
+// words that remain, and the list of what they replaced is in the wave record, not
+// in the file that is supposed to have stopped saying them.
+const transport = computed<"Preview" | "Cancel" | "Replay">(() =>
+    playing.value ? "Cancel" : playbackState.value === "complete" ? "Replay" : "Preview",
+);
+
+function onTransport(): void {
+    if (playing.value) cancelTravel();
+    else playTravel();
+}
 
 onUnmounted(() => {
     stopTravel();
-});
-
-// The bezier canvas viewBox (clamps overshoot) vs the steps canvas frame (a 0/1
-// unit box with a gentle pad).
-const canvasViewBox = computed(() =>
-    mode.value === "bezier"
-        ? `0 ${viewBox.value.minY} 1 ${viewBox.value.height}`
-        : "-0.05 -0.1 1.1 1.2",
-);
-
-// The `n`-count control is the dogfooded glass-ui <Slider> (the affordance-mapped
-// scrubber, not a raw <input type="range">). reka's SliderRoot v-models a
-// number[], so this bridges the array ↔ the scalar `steps` ref the composable owns.
-const stepsModel = computed<number[]>({
-    get: () => [steps.value],
-    set: (v) => {
-        steps.value = v[0] ?? steps.value;
-    },
+    if (drawFrame) cancelAnimationFrame(drawFrame);
 });
 </script>
 
 <template>
     <div
-        class="grid items-start gap-4 lg:grid-cols-[1fr_18rem]"
+        data-slot="easing-picker"
+        :class="
+            cn(
+                'flex flex-col gap-3',
+                props.surface === 'card' && 'glass-resting rounded-card p-3',
+                props.class,
+            )
+        "
         :data-mode="mode"
+        :data-preset="preset"
+        :data-surface="props.surface"
         :data-copy-state="copyState"
         :data-playback-state="playbackState"
+        :data-curve-clipped="excursion.clipped ? '' : undefined"
         :data-reduced-motion="reducedMotion ? '' : undefined"
-        data-testid="easing-picker"
-        style="--easing-curve-accent: var(--motion-accent, var(--viz-legendre))"
+        :data-drawing="drawn ? undefined : ''"
     >
-        <!-- the editable curve canvas (bezier draggable / steps staircase) -->
-        <div class="glass-card relative overflow-hidden rounded-card p-3">
+        <!-- the plot + the handle overlay, sharing ONE constant frame -->
+        <div class="relative">
+            <EasingCurve
+                :strokes="strokes"
+                :progress="progress"
+                :travel="travel"
+                :clipped="excursion.clipped"
+                :drawn="drawn"
+                :label="label"
+            />
+
             <span :id="handleInstructionsId" class="sr-only">
-                Left and Right change x from 0 to 1. Up and Down change y from -0.6 to 1.6. Hold Shift for larger steps.
+                Left and Right change x from 0 to 1. Up and Down change y from -0.6 to
+                1.6. Hold Shift for larger steps; Page Up and Page Down step further.
             </span>
+
             <svg
-                ref="svgEl"
-                class="block w-full touch-none select-none"
-                :viewBox="canvasViewBox"
+                v-if="mode === 'bezier'"
+                ref="overlayEl"
+                data-slot="easing-handles"
+                class="absolute inset-0 block size-full touch-none select-none"
+                :viewBox="VIEW_BOX"
                 preserveAspectRatio="xMidYMid meet"
-                style="aspect-ratio: 1; block-size: clamp(200px, 38cqi, 320px); margin-inline: auto"
-                :aria-label="label"
-                role="group"
                 @pointerdown="onDown"
                 @pointermove="onMove"
                 @pointerup="onUp"
                 @pointercancel="onUp"
             >
-                <!-- bounding box + diagonal reference -->
-                <rect x="0" y="0" width="1" height="1" fill="none" class="stroke-border" stroke-width="0.012" />
-                <line x1="0" y1="1" x2="1" y2="0" class="stroke-muted-foreground/30" stroke-width="0.006" stroke-dasharray="0.02 0.015" />
-                <line v-for="v in [0.25, 0.5, 0.75]" :key="'gx' + v" :x1="v" y1="0" :x2="v" y2="1" class="stroke-border/40" stroke-width="0.006" />
-                <line v-for="v in [0.25, 0.5, 0.75]" :key="'gy' + v" x1="0" :y1="v" x2="1" :y2="v" class="stroke-border/40" stroke-width="0.006" />
-
-                <!-- axis labels -->
-                <text x="0.05" y="0.95" class="fill-muted-foreground/60" style="font-size: 0.05px; font-family: var(--font-mono)" text-anchor="start">0</text>
-                <text x="0.95" y="0.12" class="fill-muted-foreground/60" style="font-size: 0.05px; font-family: var(--font-mono)" text-anchor="end">1</text>
-
-                <!-- BEZIER: handle lines + draggable handles -->
-                <template v-if="mode === 'bezier'">
-                    <line :x1="0" :y1="1" :x2="handlesSvg[0]!.x" :y2="handlesSvg[0]!.y" class="stroke-muted-foreground/50" stroke-width="0.02" stroke-dasharray="0.03 0.02" />
-                    <line :x1="1" :y1="0" :x2="handlesSvg[1]!.x" :y2="handlesSvg[1]!.y" class="stroke-muted-foreground/50" stroke-width="0.02" stroke-dasharray="0.03 0.02" />
-                    <path :d="bezierPathD" fill="none" class="stroke-(--easing-curve-accent)" stroke-width="0.035" stroke-linecap="round" />
-                </template>
-
-                <!-- STEPS: the sampled staircase (the REAL value.js steppedEase twin) -->
-                <template v-else>
-                    <path :d="stepPathD" fill="none" class="stroke-(--easing-curve-accent)" stroke-width="0.025" stroke-linejoin="miter" stroke-linecap="butt" />
-                </template>
-
-                <!-- endpoints (fixed) -->
-                <circle cx="0" cy="1" r="0.018" class="fill-muted-foreground/50" />
-                <circle cx="1" cy="0" r="0.018" class="fill-muted-foreground/50" />
-
-                <!-- bezier draggable handles -->
-                <template v-if="mode === 'bezier'">
-                    <circle
-                        v-for="index in ([0, 1] as const)"
-                        :key="index"
-                        :cx="handlesSvg[index]!.x"
-                        :cy="handlesSvg[index]!.y"
-                        r="0.04"
-                        class="fill-foreground stroke-background focus:outline-none focus-visible:stroke-(--easing-curve-accent) focus-visible:[stroke-width:0.045]"
-                        stroke-width="0.02"
-                        style="cursor: move"
-                        role="slider"
-                        tabindex="0"
-                        :aria-label="`Bezier control point ${index + 1}`"
-                        :aria-valuemin="0"
-                        :aria-valuemax="1"
-                        :aria-valuenow="points[index * 2]"
-                        :aria-valuetext="`x ${points[index * 2]!.toFixed(3)}, y ${points[index * 2 + 1]!.toFixed(3)}`"
-                        :aria-describedby="handleInstructionsId"
-                        @keydown="onHandleKeydown(index, $event)"
-                    />
-                </template>
-
-                <!-- travelling dot (the playback arm) -->
+                <!-- the leaders, truthful: each stops where its handle paints -->
+                <line v-for="(pin, index) in handlePins" :key="'leader' + index" :x1="leaderAnchors[index]!.x" :y1="leaderAnchors[index]!.y" :x2="pin.x" :y2="pin.y" class="stroke-muted-foreground/50" stroke-width="1" stroke-dasharray="4 3" vector-effect="non-scaling-stroke" />
+                <!-- THE PRESS ANSWER. `.tap-squish` is composed, not re-derived: the
+                     `--scale-press` rung, the `--spring-press` clock and the
+                     transform-origin all arrive from the one house register. Two
+                     things are this lane's to add. `transform-box: fill-box` — an SVG
+                     element transforms about the VIEW BOX by default, so the utility's
+                     `center center` would squish the handle toward the middle of the
+                     plot instead of its own centre. And `data-press-armed`, the house
+                     marker for "JS owns the scale": a pointer-captured drag suppresses
+                     `:active` outright, so the CSS leg would be a mechanism that never
+                     fires — the drag state IS the press truth here. PRM keeps the
+                     press but drops the travel: the scale lands on one frame. -->
                 <circle
-                    v-if="playback && playbackState !== 'idle'"
-                    :cx="progress"
-                    :cy="1 - easingFn(progress)"
-                    r="0.03"
-                    class="fill-(--easing-curve-accent)"
-                    data-testid="easing-travel-dot"
+                    v-for="(pin, index) in handlePins"
+                    :key="'handle' + index"
+                    :cx="pin.x"
+                    :cy="pin.y"
+                    r="0.04"
+                    :class="[
+                        'focus-ring tap-squish fill-foreground stroke-background',
+                        '[transform-box:fill-box] motion-reduce:transition-none',
+                        dragIndex === index
+                            ? 'cursor-grabbing scale-(--scale-press)'
+                            : 'cursor-grab',
+                    ]"
+                    stroke-width="2"
+                    vector-effect="non-scaling-stroke"
+                    data-press-armed=""
+                    :data-pressed="dragIndex === index ? '' : undefined"
+                    role="slider"
+                    tabindex="0"
+                    :data-pinned="
+                        handlesSvg[index]!.y !== pin.y || handlesSvg[index]!.x !== pin.x
+                            ? ''
+                            : undefined
+                    "
+                    :aria-label="`Bezier control point ${index + 1}`"
+                    :aria-valuemin="-MAX_OVERSHOOT"
+                    :aria-valuemax="1 + MAX_OVERSHOOT"
+                    :aria-valuenow="points[index * 2 + 1]"
+                    :aria-valuetext="`x ${points[index * 2]!.toFixed(3)}, y ${points[index * 2 + 1]!.toFixed(3)}`"
+                    :aria-describedby="handleInstructionsId"
+                    @keydown="onHandleKeydown(index as 0 | 1, $event)"
                 />
             </svg>
         </div>
 
-        <!-- the controls column -->
-        <div class="flex flex-col gap-4">
-            <!-- BEZIER preset dropdown -->
-            <div v-if="mode === 'bezier'" class="flex flex-col gap-2">
-                <span class="text-mono-caption text-muted-foreground">Preset</span>
-                <Select :model-value="preset" @update:model-value="(v) => selectPreset(String(v))">
-                    <!-- (proof:a11y EasingPicker arm) — the preset
-                         combobox carries a real accessible name. The visible "Preset"
-                         caption above is a bare <span> (not a <label for>), so without
-                         this the SelectTrigger's name was only its selected value — the
-                         R→S→T chronic. The Jump-term trigger (steps mode) is already named. -->
-                    <SelectTrigger aria-label="Easing preset">
+        <!-- ONE control row, height-invariant across both modes -->
+        <div
+            data-slot="easing-controls"
+            class="flex flex-wrap items-center gap-2 [&>*]:min-h-10"
+        >
+            <SegmentedTabs
+                v-model="modeModel"
+                :options="MODE_OPTIONS"
+                aria-label="Curve mode"
+                class="shrink-0"
+            />
+
+            <div v-if="mode === 'bezier'" class="flex min-w-40 flex-1 items-center">
+                <Select
+                    :model-value="preset"
+                    @update:model-value="(v) => selectPreset(String(v))"
+                >
+                    <SelectTrigger aria-label="Easing preset" class="w-full">
                         <SelectValue placeholder="Pick a curve" />
                     </SelectTrigger>
                     <SelectContent>
+                        <!-- The live-edited curve is a real entry, so the control is
+                             never a placeholder while a curve is loaded. `"custom"`
+                             is not one of value.js's 30 catalogue keys, and every
+                             drag writes it. -->
+                        <SelectItem v-if="preset === CUSTOM_PRESET" :value="CUSTOM_PRESET">
+                            Custom
+                        </SelectItem>
                         <SelectItem v-for="name in presetNames" :key="name" :value="name">
                             {{ name }}
                         </SelectItem>
@@ -434,95 +537,90 @@ const stepsModel = computed<number[]>({
                 </Select>
             </div>
 
-            <!-- STEPS n + term controls -->
-            <template v-else>
-                <div class="flex flex-col gap-2">
-                    <span class="text-mono-caption text-muted-foreground">Steps (n) — {{ steps }}</span>
-                    <!-- the dogfooded glass-ui <Slider> (the affordance-mapped
-                         scrubber) drives the live value.js steppedEase(n, term) -->
-                    <Slider
-                        v-model="stepsModel"
-                        :min="STEP_COUNT_MIN"
-                        :max="STEP_COUNT_MAX"
-                        :step="1"
-                        aria-label="Step count"
-                        data-testid="easing-steps-n"
-                    />
-                </div>
-                <div class="flex flex-col gap-2">
-                    <span class="text-mono-caption text-muted-foreground">Jump term</span>
-                    <Select :model-value="term" @update:model-value="(v) => (term = String(v) as JumpTerm)">
-                        <SelectTrigger aria-label="Jump term">
-                            <SelectValue placeholder="Pick a jump term" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem v-for="t in terms" :key="t" :value="t">
-                                {{ t }}
-                            </SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-            </template>
+            <div v-else class="flex min-w-40 flex-1 items-center gap-2">
+                <Slider
+                    v-model="stepsModel"
+                    :min="STEP_COUNT_MIN"
+                    :max="STEP_COUNT_MAX"
+                    :step="1"
+                    aria-label="Step count"
+                    class="min-w-16 flex-1"
+                />
+                <Select
+                    :model-value="term"
+                    @update:model-value="(v) => (term = String(v) as JumpTerm)"
+                >
+                    <SelectTrigger aria-label="Jump term" class="w-36 shrink-0">
+                        <SelectValue placeholder="Jump term" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem v-for="t in terms" :key="t" :value="t">
+                            {{ t }}
+                        </SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
 
-            <!-- The complete re-parseable readout + copy. Both modes round-trip
-                 through value.js parseTimingFunction. -->
-            <div
-                v-if="readout"
-                class="glass-card flex flex-col gap-2 rounded-card px-3 py-2"
+            <!-- THE LITERAL CHIP IS THE COPY CONTROL. One print of the literal in the
+                 whole editor, and it is the thing you click to take it. -->
+            <Button
+                emphasis="quiet"
+                class="min-w-0 gap-2"
+                :aria-label="copyLabel"
+                :aria-disabled="copyState === 'pending' || undefined"
                 :data-reparse-ok="reparseOk"
-                data-testid="easing-readout"
+                @click="copy"
             >
-                <div class="flex items-center gap-2">
-                    <code ref="readoutEl" tabindex="0" class="min-w-0 flex-1 break-all text-micro text-foreground select-text">{{ readoutLiteral }}</code>
-                    <button
-                        type="button"
-                        class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-(--surface-tint-8) hover:text-foreground aria-disabled:cursor-wait aria-disabled:opacity-disabled"
-                        :aria-disabled="copyState === 'pending' || undefined"
-                        :aria-label="copyState === 'failed' ? 'Retry copy curve literal' : copyState === 'copied' ? 'Copied' : copyState === 'pending' ? 'Copying curve literal' : 'Copy curve literal'"
-                        data-testid="easing-copy"
-                        @click="copy"
-                    >
-                        <!-- The house work-in-flight mark (BK #28) in place of the
-                             rotating glyph. NO <Transition> here, deliberately: the
-                             ring hands off to the Check, and a check landing IS the
-                             hand-off B3 names — there is no glow to fade into nothing.
-                             (It is also the only shape this trigger can take: a
-                             <Transition> schedules a rAF-shim timer under fake timers,
-                             and this component's contract asserts it leaves none.)
-                             The trigger's own aria-label and the status line below own
-                             the announcement, so the ring stays silent. -->
-                        <DotRing v-if="copyState === 'pending'" class="size-4" />
-                        <Check v-else-if="copyState === 'copied'" class="size-4 text-(--easing-curve-accent)" aria-hidden="true" />
-                        <Copy v-else class="size-4" aria-hidden="true" />
-                    </button>
-                </div>
-                <div v-if="copyState !== 'idle'" class="flex flex-wrap items-center justify-between gap-2 text-mono-caption">
-                    <span role="status" aria-live="polite" :class="copyState === 'failed' ? 'text-destructive' : 'text-muted-foreground'">
-                        {{ copyMessage }}
-                    </span>
-                    <Button v-if="copyState === 'failed'" class="shrink-0 px-3 py-1" data-testid="easing-select-literal" @click="selectLiteral">
-                        Select literal
-                    </Button>
-                </div>
-            </div>
+                <code ref="readoutEl" class="min-w-0 truncate text-micro select-text">{{
+                    readoutLiteral
+                }}</code>
+                <DotRing v-if="copyState === 'pending'" class="size-4 shrink-0" />
+                <Check v-else-if="copyState === 'copied'" class="size-4 shrink-0" aria-hidden="true" />
+                <Copy v-else class="size-4 shrink-0" aria-hidden="true" />
+            </Button>
 
-            <!-- the playback travel control -->
-            <div v-if="playback" class="flex flex-wrap items-center gap-2">
-                <Button class="w-fit" data-testid="easing-playback" @click="playTravel">
-                    <RotateCcw v-if="playing || playbackState === 'complete'" aria-hidden="true" />
+            <template v-if="playback">
+                <Button class="shrink-0" @click="onTransport">
+                    <Square v-if="playing" aria-hidden="true" />
+                    <RotateCcw v-else-if="playbackState === 'complete'" aria-hidden="true" />
                     <Play v-else aria-hidden="true" />
-                    {{ playbackLabel }}
+                    {{ transport }}
                 </Button>
-                <Button v-if="playing" class="w-fit" data-testid="easing-cancel" @click="cancelTravel">
-                    <Square aria-hidden="true" />
-                    Cancel preview
-                </Button>
-                <span class="text-mono-caption text-muted-foreground" role="status" aria-live="polite">
-                    {{ playbackState === "playing" ? "Preview playing" : playbackState === "complete" ? "Preview complete" : "Preview idle" }}
+                <!-- Always mounted. It used to be `v-if`'d out at idle, so the first
+                     state change was announced into a region that did not exist. -->
+                <span
+                    data-slot="easing-transport-status"
+                    role="status"
+                    aria-live="polite"
+                    class="text-mono-caption text-muted-foreground"
+                >
+                    {{ transport }}
                 </span>
-            </div>
+            </template>
+        </div>
 
-            <slot name="footer" :value="value" />
+        <!-- The clipboard's own channel — a DIFFERENT subject from the transport, so
+             it gets its own region rather than being folded into a vocabulary it does
+             not belong to. Always mounted and empty at rest: a live region that
+             appears with its first message announces nothing. -->
+        <span
+            data-slot="easing-copy-status"
+            role="status"
+            aria-live="polite"
+            class="sr-only"
+        >
+            {{ copyMessage }}
+        </span>
+
+        <!-- The visible half of a copy FAILURE, with the manual path. -->
+        <div
+            v-if="copyState === 'failed'"
+            class="flex flex-wrap items-center gap-2 text-mono-caption text-destructive"
+        >
+            {{ copyMessage }}
+            <Button emphasis="quiet" size="sm" class="shrink-0" @click="selectLiteral">
+                Select literal
+            </Button>
         </div>
     </div>
 </template>

@@ -121,8 +121,8 @@
  *    is the ONE hairline between them (no doubled rule).
  *  - A section PRECEDED by a sibling (`+ …`, i.e. not-first) squares its top corners
  *    and its top margin collapses to 0 (the grouped-list join).
- *  - A LONE section (no siblings — e.g. a standalone <EasingConfigurator>, or a
- *    section that is its own group) keeps the full concentric card above. */
+ *  - A LONE section (no siblings — a single <ConfiguratorLayer>, or a section that
+ *    is its own group) keeps the full concentric card above. */
 .configurator-layer:has(+ .configurator-layer) {
     border-end-start-radius: 0;
     border-end-end-radius: 0;
