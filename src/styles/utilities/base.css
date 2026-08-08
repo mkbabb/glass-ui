@@ -109,11 +109,34 @@
         }
     }
 
-    /* ── Focus ring — auto-activates on :focus-visible ── */
+    /* ── Focus ring — auto-activates on :focus-visible ──
+       THE INDICATOR LEAVES `box-shadow`, AND STOPS REWRITING GEOMETRY. Two facts made
+       the shadow form unfixable rather than merely weak. (1) `box-shadow` is also how
+       half this library paints its rim and its lift, so on every surface that carries
+       one the ring did not sit beside the material — it REPLACED it, and on every
+       surface that paints its own shadow at equal specificity the ring lost outright
+       and the cell had no indicator at all. `outline` is a channel nothing else in the
+       cascade competes for, so the indicator now exists on every cell without costing
+       any of them their material. (2) the `border-radius: var(--radius-pill)` write
+       was a GEOMETRY mutation on focus: a dialog ✕, a toast action and a chip cell arm
+       all snapped from their own corner to a stadium the moment they were tabbed to.
+       A focus indicator may not restate the element's shape.
+
+       The ink is the PERIMETER rung (`--ink-perimeter`, 0.48 — a control's own edge,
+       the focus ring, the selection indicator; 3.0:1), which clears the 3:1 bar alone.
+       The retired `--focus-ring-shadow` recipe carried a 0.30 ring measuring 1.91:1
+       plus an 8px bloom whose whole job was rescuing it — the bloom is gone with the
+       thing it was rescuing, and its own mass spread over 8px was sub-edge (1.17:1)
+       anyway. `--focus-ring-shadow` itself SURVIVES for its component-lane readers;
+       retiring it is each lane's own act, not this one's. */
     .focus-ring:focus-visible {
-        outline: none;
-        border-radius: var(--radius-pill);
-        box-shadow: var(--focus-ring-shadow);
+        outline: var(--focus-ring-width) solid
+            color-mix(
+                in oklab,
+                var(--foreground) calc(var(--ink-perimeter) * 100%),
+                transparent
+            );
+        outline-offset: 2px;
     }
 
     /* ── Hairline-accent — 0.5px catch-light + under-shadow pair ──
@@ -203,9 +226,17 @@
                 scale var(--spring-press-duration) var(--transition-liquid-spatial);
         }
     }
+    /* The same inversion, for the same reason: `.interactive-item` declares its own
+       `box-shadow` transition leg, so a ring living on that property fought the row's
+       own surface cross-fade. One indicator recipe, two composers. */
     .interactive-item:focus-visible {
-        outline: none;
-        box-shadow: var(--focus-ring-shadow);
+        outline: var(--focus-ring-width) solid
+            color-mix(
+                in oklab,
+                var(--foreground) calc(var(--ink-perimeter) * 100%),
+                transparent
+            );
+        outline-offset: 2px;
     }
     .interactive-item:active {
         /* Fold the residual literal press scale onto the canonical
@@ -227,8 +258,8 @@
        squish idiom; the press scales to `--scale-press` (0.96, the
        canonical iOS `.regular` control rung). I keep this as a single
        canonical rung — NOT a 3-rung ladder. The one outlier I leave
-       alone is the button `0.97` (`--scale-press-btn`), which consumes
-       its own slightly-softer token directly. The dock control now
+       alone is the button `0.97` (`--scale-press-sm`), which consumes
+       that rung by name. The dock control now
        tracks the canonical `--scale-press` (0.96) too (
        press canon — NOT a deeper `0.92`; ONE source).
 

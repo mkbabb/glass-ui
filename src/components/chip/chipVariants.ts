@@ -3,7 +3,7 @@ import { joinClassValues, type ClassValue } from "../_shared/class-names";
 const BASE =
     "glass-chip glass-capsule accent-tone inline-flex items-center justify-center font-sans text-muted-foreground select-none";
 const INTERACTIVE =
-    "glass-chip--interactive glass-capsule-hover focus-ring cursor-pointer outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-disabled";
+    "glass-chip--interactive glass-capsule-hover focus-ring cursor-pointer disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-disabled";
 const SIZE = {
     sm: "gap-1 px-2.5 py-1 text-caption",
     md: "gap-1.5 px-3.5 py-1.5 text-small",

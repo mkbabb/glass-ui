@@ -267,7 +267,10 @@ function animatePress(btn: HTMLElement) {
     }
     btn.getAnimations().forEach((a) => a.cancel());
     const easing = readToken("--spring-dock", "ease");
-    const press = readToken("--scale-press-btn", "0.97");
+    // The press rung by NAME, with no literal standing behind it: a hand-copied
+    // "0.97" beside the token that declares 0.97 is a second authority free to
+    // disagree with the first, and it is the shape that hides a token going missing.
+    const press = readToken("--scale-press-sm", "");
     btn.animate(
         [
             { transform: "scale(1)" },

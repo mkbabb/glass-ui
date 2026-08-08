@@ -28,11 +28,23 @@
     /* Promote to its own compositor layer for the 1:1 follow (the translate write
        is compositor-only; the hint keeps the plate off the main-thread paint). */
     will-change: transform;
-    /* The grabbed-state catch-light COMPOSES the SHARED
-       specular-lift step declared ONCE in glass/glass-capsule.css (the
-       `.glass-capsule-hover:hover, .glass-drag-lift { --glass-specular }` group), NOT
-       a parallel `--glass-specular` fork. This block carries only the grabbing-distinct
-       bits (the grab cursor + the `will-change` hint). */
+    /* NO catch-light rides this class, and the citation that said one did is gone with
+       the group it cited. BK #80 DELETED `glass/glass-capsule.css`'s
+       `.glass-capsule-hover:hover, .glass-drag-lift { --glass-specular }` step: the
+       host-level `--specular-intensity` write was doubly dead (registered
+       `inherits: false` at tokens/property-regs.css, AND glass/material.css declares
+       that property ON the `::before`), and its live replacement
+       `--glass-specular-intensity-hover` is declared on `.glass-capsule-hover:hover`
+       alone. `.glass-drag-lift` sits in no specular group now.
+       Nor does the state cohort rescue it. material.css's active rung keys on the
+       ATTRIBUTE `[data-dragging]` — which this class never sets (the library's sole
+       `data-dragging` writer is `sheet/SheetContent.vue`) — AND on a host class from
+       its `::before` list; the SegmentedTabs indicator carries `.glass-capsule`, which
+       is not in that list, so the host has no `::before` to light at all. A grabbed
+       lozenge therefore reads by cursor + geometry, deliberately. Giving it a gleam
+       means putting `.glass-capsule` into material.css's cohorts, which is the glass
+       register wave's row, not this file's. This block carries only the
+       grabbing-distinct bits (the grab cursor + the `will-change` hint). */
 }
 
 /* ════════════════════════════════════════════════════════════════════════

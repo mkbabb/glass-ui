@@ -106,7 +106,13 @@ export {
     type AvatarSize,
 } from "./components/avatar";
 export { Badge, badgeVariants, type BadgeVariants } from "./components/badge";
-export { Button, type ButtonEmphasis, type ButtonProps, type ButtonSize } from "./components/button";
+export {
+    Button,
+    type ButtonEmphasis,
+    type ButtonProps,
+    type ButtonSize,
+    type ButtonTone,
+} from "./components/button";
 export {
     Card,
     CardContent,

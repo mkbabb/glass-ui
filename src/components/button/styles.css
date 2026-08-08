@@ -1,15 +1,53 @@
+/* components/button/styles.css — BK #80 W-BUTTON.
+   Spec of record: CWT-3 §LANE button §3-§4.
+
+   ONE OWNER PER CHANNEL, KEYED ON ONE ATTRIBUTE. This file declares no
+   `backdrop-filter` and no bare `--glass-capsule-fill`: the material is
+   `.glass-capsule`'s, and every rule here re-points a RUNG the register already
+   reads. `[data-emphasis]` owns the plate (which rung, how thick, how heavy the
+   label); `[data-tone]` owns the HUE and nothing else; `[data-size]` owns the box.
+   A cell is the product of the three and no rule keys on two of them at once —
+   which is how the HEAD form ended up with a primary-destructive and a
+   secondary-destructive that were pixel-identical modulo one font-weight.
+
+   THE CHANNEL SEAMS, so the product above resolves without a matrix of compound
+   selectors. Three carry a HUE and belong to `[data-tone]`: `--button-tone` (the
+   command's hue at full strength, which the fills and the engaged ink read),
+   `--button-accent` (the link-shaped hue the text arm rests on), `--button-quiet-ink`
+   (the receded hue the chromeless arms rest on). Two carry a ROLE and belong to
+   `[data-emphasis]`: `--button-ink` (the label) and `--button-edge` (the perimeter).
+   Tone re-points the three hues in ONE rule; emphasis picks which hue each role
+   reads; the cascade does the product, and no selector names two axes.
+
+   NOTHING IS MINTED. Pads and gaps read the §1.1 rank series (`--space-atom` 8 /
+   `--space-body` 12 / `--space-residue` 4), so the mobile transposition — 12→8, 8→4,
+   4→4 — arrives from the ONE width query in `tokens/sizing.css` and this file carries
+   no breakpoint of its own. Fills read `--fill-hover` / `--fill-selected`, the edge
+   reads `--ink-perimeter`, the press reads `--scale-press-sm`, the tone reads
+   `--feedback-tone-strength` — the same knob a destructive Alert reads, which is what
+   makes the two read as one grammar rather than two calibrations. */
 @layer components {
     .button {
         --button-size: var(--control-h-md);
+        /* The channel seams. */
+        --button-tone: var(--foreground);
+        --button-accent: var(--primary);
+        --button-quiet-ink: var(--muted-foreground);
+        --button-ink: var(--button-tone);
+        --button-edge: transparent;
         display: inline-flex;
         min-inline-size: 0;
         max-inline-size: 100%;
         min-block-size: var(--button-size);
         align-items: center;
         justify-content: center;
-        gap: calc(0.375rem * var(--ui-scale));
-        padding-inline: calc(1rem * var(--ui-scale));
-        border: 0;
+        gap: var(--space-atom);
+        padding-inline: var(--space-body);
+        /* ONE geometry for every cell. The edge is present and transparent at rest so
+           a toned command re-points its COLOUR alone — an edge that exists only on the
+           toned arm makes the toned box 2px narrower in its content than the neutral
+           box beside it, at the same `size`. */
+        border: 1px solid var(--button-edge);
         /* The stadium bound, resolved against the CONTROL RUNG rather than the
            box. `--radius-pill` (9999px) is clamped by the engine to half the
            ACTUAL block-size, so a button whose label wraps to two lines grows a
@@ -19,12 +57,14 @@
            byte-identical to the stadium it was, and a wrapped or multi-line button
            keeps single-line curvature. A narrower-than-tall box (the icon arm)
            still reads a circle: the engine's own radius scaling clamps the corner
-           to half the short edge, which is the resolved-corner precedent.
+           to half the short edge, which is the resolved-corner precedent — and it is
+           the `icon / single tap-target → 50%` row of the radius role spine, so the
+           icon arm mints no corner of its own.
            A bare `min(9999px, …)` is REFUSED: it couples the corner to a second
            token to re-derive a clamp the engine already applies (GF-DOCK §STRIKE —
            `from: 50%` IS the resolved corner). */
         border-radius: calc(var(--button-size) / 2);
-        color: var(--foreground);
+        color: var(--button-ink);
         font: inherit;
         font-size: var(--control-text);
         font-weight: 500;
@@ -36,8 +76,24 @@
         touch-action: manipulation;
         user-select: none;
         scale: 1;
-        --scale-press: var(--scale-press-btn);
-        --glass-specular-intensity-hover: var(--glass-specular-btn-hover);
+        --scale-press: var(--scale-press-sm);
+        /* THE MERGED LIST, AUTHORED RATHER THAN ACCIDENTAL. `transition` is a
+           shorthand: `.tap-squish` (utilities) and `.glass-capsule-hover` (glass) tie
+           at (0,1,0) and the later import replaces the whole list, so on HEAD the
+           button's authored surface legs were simply gone and hover moved `scale` and
+           nothing else. `.button` is imported after both, so it declares the coherent
+           set ONCE and wins deliberately, mirroring `.tap-squish`'s legs so a
+           library-wide re-point of either clock flows through here unchanged. Deleting
+           the `scale` leg from the loser (the other candidate cure) resurrects nothing
+           — it leaves `scale` with no transition on every `.tap-squish` consumer in
+           the library. */
+        transition:
+            background-color var(--engage-control-engage-release) var(--ease-standard),
+            border-color var(--engage-control-engage-release) var(--ease-standard),
+            box-shadow var(--engage-control-engage-release) var(--ease-standard),
+            color var(--engage-control-engage-release) var(--ease-standard),
+            opacity var(--engage-control-engage-release) var(--ease-standard),
+            scale var(--spring-press-duration) var(--transition-liquid-spatial);
     }
 
     .button > svg {
@@ -50,106 +106,139 @@
         block-size: var(--ui-glyph);
     }
 
-    .button[data-emphasis="primary"] {
-        --glass-veil-tier: var(--glass-veil-floating);
-        --glass-capsule-fill: var(--glass-plate-floating);
-        backdrop-filter: var(--glass-blur-deep);
-        font-weight: 650;
+    /* The in-flight mark rides the glyph rung, so it occupies the label slot a leading
+       icon would and inherits the label ink through `currentColor`. */
+    .button > .button-mark {
+        flex: none;
+        inline-size: var(--ui-glyph);
     }
 
-    /* Secondary is the QUIET rung, on both axes. It read quiet ink under a resting
-       kernel — one rung's paint and another's thickness, which is the monotone-dilution
-       law broken at the surface while the token table still proves it. */
+    /* ── The emphasis ladder — three channels, one rung each ──────────────────
+       PRIMARY is the FLOATING rung (the capsule's own register default, warm floor and
+       earned darken intact) made THICK: `.glass-deep` re-points the rung's blur onto
+       the deep LERP, and `--glass-depth` must be declared HERE because the tier map
+       keys on the ladder classes this host deliberately does not carry — without it the
+       registered `initial-value: 1` paints the MENU ceiling on a button.
+       SECONDARY is the QUIET rung on BOTH axes, ink and thickness. Reading quiet ink
+       under a floating kernel is the monotone-dilution law broken at the surface while
+       the token table still proves it holds. */
+    .button[data-emphasis="primary"] {
+        --glass-depth: var(--glass-depth-content);
+        font-weight: 600;
+    }
+
     .button[data-emphasis="secondary"] {
         --glass-veil-tier: var(--glass-veil-quiet);
-        --glass-capsule-fill: var(--glass-plate-quiet);
-        backdrop-filter: var(--glass-blur-quiet);
+        --glass-blur-floating: var(--glass-blur-quiet);
     }
 
+    /* ── Tone TINTS; it never replaces ────────────────────────────────────────
+       The fill is the emphasis's own composed plate mixed toward the tone at the ONE
+       shared strength — the identical seam a destructive Alert runs, so the two read as
+       one grammar and not two calibrations, and the plate stays COLORED GLASS (the
+       backdrop survives; α is nowhere near opaque). The mix is SINGLE-LEVEL by
+       necessity: a `color-mix` endpoint that is itself a `color-mix` drops the whole
+       declaration in Safari, so the tone REPLACES the warm floor as the plate's chroma
+       source rather than stacking on it — which is the right answer anyway, a
+       destructive command carrying destructive chroma instead of cream.
+
+       The edge takes the perimeter rung at the tone's own hue, in place of the fourth
+       boundary ink the HEAD form minted beside the capsule's rim; the label takes the
+       full-chroma tone; and `--shadow-sm` is gone, because the capsule's rim and lift
+       ARE the elevation channel and a second one beside it is a second owner. */
+    .button[data-tone="destructive"] {
+        --button-tone: var(--destructive);
+        --button-accent: var(--destructive);
+        --button-quiet-ink: var(--destructive);
+        --button-edge: color-mix(
+            in oklab,
+            var(--destructive) calc(var(--ink-perimeter) * 100%),
+            transparent
+        );
+        --glass-capsule-fill: color-mix(
+            in oklab,
+            var(--glass-veil),
+            var(--destructive) var(--feedback-tone-strength)
+        );
+    }
+
+    /* ── The chromeless pair — a SUBTRACTION, so it lands after what it subtracts ──
+       No material at all: the answer is fill and ink, and the fill rungs are the
+       library's own two (`--fill-hover` transient, `--fill-selected` persistent — a
+       press is the transient rung's own next step, never a third literal). */
     .button[data-emphasis="quiet"],
     .button[data-emphasis="text"] {
+        --button-edge: transparent;
+        --button-ink: var(--button-quiet-ink);
         background: transparent;
         box-shadow: none;
-        color: var(--muted-foreground);
-    }
-
-    .button[data-emphasis="quiet"]:hover:not(:disabled, [aria-disabled="true"]) {
-        background: color-mix(in oklab, var(--foreground) 8%, transparent);
-        color: var(--foreground);
     }
 
     .button[data-emphasis="text"] {
-        padding-inline: calc(0.25rem * var(--ui-scale));
-        color: var(--primary);
+        --button-ink: var(--button-accent);
+        padding-inline: var(--space-residue);
         text-underline-offset: 0.25em;
     }
 
-    .button[data-emphasis="text"]:hover:not(:disabled, [aria-disabled="true"]) {
-        text-decoration: underline;
+    /* Hover is fenced behind a fine pointer: on a coarse one `:hover` latches on tap
+       and stays latched, painting a command as permanently pointed-at. The coarse
+       answer is the press rung below, which every arm carries. */
+    @media (hover: hover) {
+        .button[data-emphasis="quiet"]:hover:not(:disabled, [aria-disabled="true"]) {
+            --button-ink: var(--button-tone);
+            background: color-mix(
+                in oklab,
+                var(--button-tone) calc(var(--fill-hover) * 100%),
+                transparent
+            );
+        }
+
+        .button[data-emphasis="text"]:hover:not(:disabled, [aria-disabled="true"]) {
+            text-decoration: underline;
+        }
     }
 
-    .button[data-tone="success"] {
-        --button-tone: var(--success);
-        --button-tone-ink: var(--success-foreground);
+    /* The press answers on EVERY carrier, not only the glass ones: the glass arms take
+       the gleam LERP at the foot of this file, the quiet arm steps its fill from the
+       transient rung to the persistent one, the text arm gains the transient fill under
+       its accent. One drive, three carriers. */
+    .button[data-emphasis="quiet"]:active:not(:disabled, [aria-disabled="true"]) {
+        background: color-mix(
+            in oklab,
+            var(--button-tone) calc(var(--fill-selected) * 100%),
+            transparent
+        );
     }
 
-    .button[data-tone="warning"] {
-        --button-tone: var(--warning);
-        --button-tone-ink: var(--warning-foreground);
+    .button[data-emphasis="text"]:active:not(:disabled, [aria-disabled="true"]) {
+        background: color-mix(
+            in oklab,
+            var(--button-accent) calc(var(--fill-hover) * 100%),
+            transparent
+        );
     }
 
-    .button[data-tone="info"] {
-        --button-tone: var(--info);
-        --button-tone-ink: var(--info-foreground);
-    }
-
-    .button[data-tone="destructive"] {
-        --button-tone: var(--destructive);
-        --button-tone-ink: var(--destructive-foreground);
-    }
-
-    .button:not([data-tone="neutral"]) {
-        border: 1px solid color-mix(in oklab, var(--button-tone) 72%, var(--foreground));
-        background: var(--button-tone);
-        box-shadow: var(--shadow-sm);
-        color: var(--button-tone-ink);
-    }
-
-    .button[data-emphasis="quiet"]:not([data-tone="neutral"]),
-    .button[data-emphasis="text"]:not([data-tone="neutral"]) {
-        border-color: transparent;
-        background: transparent;
-        box-shadow: none;
-        color: var(--button-tone);
-    }
-
-    .button[data-emphasis="quiet"]:not([data-tone="neutral"]):hover:not(
-            :disabled,
-            [aria-disabled="true"]
-        ),
-    .button[data-emphasis="text"]:not([data-tone="neutral"]):hover:not(
-            :disabled,
-            [aria-disabled="true"]
-        ) {
-        background: color-mix(in oklab, var(--button-tone) 10%, transparent);
-    }
-
+    /* ── The box axis — four rungs, two pads, one gap pair, three type faces ── */
     .button[data-size="xs"] {
         --button-size: var(--control-h-xs);
-        gap: calc(0.25rem * var(--ui-scale));
-        padding-inline: calc(0.5rem * var(--ui-scale));
+        gap: var(--space-residue);
+        padding-inline: var(--space-atom);
         font-size: var(--control-text-sm);
     }
 
     .button[data-size="sm"] {
         --button-size: var(--control-h-sm);
-        padding-inline: calc(0.75rem * var(--ui-scale));
+        gap: var(--space-residue);
+        padding-inline: var(--space-atom);
+        font-size: var(--control-text-sm);
     }
 
     .button[data-size="lg"] {
         --button-size: var(--control-h-lg);
-        gap: calc(0.5rem * var(--ui-scale));
-        padding-inline: calc(1.25rem * var(--ui-scale));
+        /* lg is the third type face. The 0.6% delta off the φ^(1/4) rung from md is the
+           W-SEARCH ruling's own, carried rather than re-derived: one library, one
+           answer, and a Button lg beside a Search lg may not disagree. */
+        font-size: var(--type-body);
     }
 
     .button[data-icon-only] {
@@ -159,21 +248,31 @@
         padding: 0;
     }
 
+    /* ── Disabled — DIM, and dim is not desaturate ────────────────────────────
+       The blanket `opacity` is gone: it dimmed the geometry, the rim and the edge along
+       with the label, which is how a disabled command stopped reading as a command at
+       all. The box keeps its full-alpha silhouette and the INK alone recedes, losing
+       its chroma with it so a disabled destructive stops shouting. `pointer-events:
+       none` is gone too — it was suppressing the `not-allowed` cursor and any `title`
+       the consumer attached, i.e. suppressing the two affordances that explain the
+       state; the native `disabled` attribute already blocks activation, and the
+       component's guard covers every non-native host. */
     .button:disabled,
     .button[aria-disabled="true"] {
-        opacity: var(--opacity-disabled);
+        --button-ink: oklch(from var(--foreground) l 0 h / var(--opacity-disabled));
         cursor: not-allowed;
     }
 
-    .button:disabled {
-        pointer-events: none;
-    }
-
+    /* Reachable at last: on HEAD this sat under `:disabled { pointer-events: none }`,
+       which no cursor can resolve through. */
     .button[data-loading] {
         cursor: progress;
     }
 
-    .button.glass-wash:active::before {
+    /* The press-coupled gleam, re-keyed onto the `::before` seat this host actually
+       carries. It rides the ONE `--glass-btn-press-t` spring drive, so the catch-light
+       tracks the squish frame-for-frame instead of snapping between two CSS states. */
+    .button.glass-specular-track:active::before {
         --specular-intensity: calc(
             var(--glass-specular-intensity-hover) +
                 (
@@ -182,11 +281,5 @@
                 ) *
                 var(--glass-btn-press-t)
         );
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .button {
-            transition: none;
-        }
     }
 }

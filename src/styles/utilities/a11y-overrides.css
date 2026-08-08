@@ -71,22 +71,34 @@ html.no-transition *:not([data-allow-motion])::after {
 }
 
 /* ── Forced-colors focus + silhouette rung (· generalized) ────
-   Windows High Contrast / forced-colors mode STRIPS `box-shadow` — so the
-   glass focus rings (box-shadow + `outline: none`) vanish, leaving keyboard
+   Windows High Contrast / forced-colors mode STRIPS `box-shadow` — so a
+   box-shadow focus ring (paired with `outline: none`) vanishes, leaving keyboard
    users with no visible focus. Restore a real `outline` keyed to the system
-   `Highlight` color (outline survives forced-colors; box-shadow does not). The
-   box-shadow ring stays the primary in normal mode (it carries the glass
-   aesthetic) — these two are mutually exclusive by media query, NOT a parallel
-   path.
+   `Highlight` color (outline survives forced-colors; box-shadow does not).
+
+   TWO CLASSES OF ENTRY SIT IN THE SELECTOR LIST BELOW, and the distinction is
+   worth keeping straight. `.focus-ring` / `.interactive-item` now paint an
+   OUTLINE in normal mode too (BK #80 inverted them off `box-shadow`), so for
+   those two this block only RE-KEYS the ink to the system palette — there is
+   nothing to rescue. Every other entry still carries a box-shadow ring in normal
+   mode and is here for the original reason. Retiring the remaining box-shadow
+   rings is each component lane's own act; until then, one block covers both
+   classes and the geometry is identical either way, so a user cannot tell which
+   entry they tabbed onto.
 
    The focus-survival selector set is GENERALIZED to the broader
    interactive surface: the dock CONTROLS (`.dock-icon-button` / `.dock-tab-button`
-   / `.dock-select-trigger` / `.dock-dropdown-trigger`) + the pill button base
-   (`.button`) all carry a box-shadow focus ring (dock.css / utilities.css) that
-   vanishes under WHC just like the original five. This is the SAME `Highlight`
-   outline rung extended to cover them — ONE block, ONE path (the glass-language
-   structure-survival skin for the tier panes / StatusDot / floating surfaces lives
-   co-located with the ladder it skins, in glass.css).
+   / `.dock-select-trigger` / `.dock-dropdown-trigger`) carry a box-shadow focus ring
+   (dock/styles/controls/*) that vanishes under WHC just like the original five. This
+   is the SAME `Highlight` outline rung extended to cover them — ONE block, ONE path
+   (the glass-language structure-survival skin for the tier panes / StatusDot /
+   floating surfaces lives co-located with the ladder it skins, in glass.css).
+
+   `.button` is deliberately NOT an entry, and this block no longer claims it is: the
+   pill button base declares no focus rule of its own at all (`grep -c focus`
+   components/button/styles.css = 0) — it composes `.focus-ring`, so the FIRST entry
+   in the list already covers it, and after BK #80's inversion what it composes is an
+   `outline`, which forced-colors never strips in the first place.
 
    `forced-color-adjust: none` is deliberately NOT used — glass-ui's glassmorphic
    chrome is decorative and yields to the user's forced palette (css forced-colors

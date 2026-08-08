@@ -1,46 +1,78 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { MoreHorizontal, Save, Trash2 } from "@lucide/vue";
-import { Button } from "@glass/components/button";
-import { StatusDot } from "@glass/components/status-dot";
+import { Button, type ButtonEmphasis, type ButtonTone } from "@glass/components/button";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 
 const activations = ref(0);
+const saving = ref(false);
+
+const EMPHASES: readonly ButtonEmphasis[] = ["primary", "secondary", "quiet", "text"];
+const TONES: readonly ButtonTone[] = ["neutral", "destructive"];
+
+function save(): void {
+    saving.value = true;
+    window.setTimeout(() => (saving.value = false), 2400);
+}
 </script>
 
 <template>
     <StoryPage>
         <StorySection
-            heading="Command hierarchy"
-            blurb="One command contract, ordered by emphasis. Tone describes intent without minting another appearance axis."
+            heading="Emphasis × tone"
+            blurb="Emphasis owns the plate, tone owns the hue. Every cell of the product is mounted, because a matrix is the only honest way to show that two axes stay independent."
         >
             <ShowcaseFrame tier="field" pad="lg">
-                <div class="flex flex-wrap items-center gap-3">
-                    <Button data-scenario="button-primary" emphasis="primary">
-                        Primary action
-                    </Button>
-                    <Button data-scenario="button-default">Default action</Button>
-                    <Button emphasis="quiet">Quiet action</Button>
-                    <Button emphasis="text">Text action</Button>
-                    <Button data-scenario="button-destructive" tone="destructive">
-                        <Trash2 aria-hidden="true" />
-                        Delete
-                    </Button>
+                <div class="grid gap-3" style="grid-template-columns: auto repeat(4, minmax(0, 1fr))">
+                    <span aria-hidden="true" />
+                    <span
+                        v-for="emphasis in EMPHASES"
+                        :key="`head-${emphasis}`"
+                        class="text-small text-muted-foreground"
+                    >
+                        {{ emphasis }}
+                    </span>
+                    <template v-for="tone in TONES" :key="tone">
+                        <span class="text-small text-muted-foreground self-center">
+                            {{ tone }}
+                        </span>
+                        <Button
+                            v-for="emphasis in EMPHASES"
+                            :key="`${tone}-${emphasis}`"
+                            :data-scenario="`button-${tone}-${emphasis}`"
+                            :emphasis="emphasis"
+                            :tone="tone"
+                        >
+                            <Trash2 v-if="tone === 'destructive'" aria-hidden="true" />
+                            {{ tone === "destructive" ? "Delete" : "Save" }}
+                        </Button>
+                    </template>
                 </div>
             </ShowcaseFrame>
         </StorySection>
 
         <StorySection
-            heading="Native state"
-            blurb="Disabled and loading commands suppress native activation. Icon-only commands remain square, named controls."
+            heading="In flight, and out of service"
+            blurb="Loading and disabled are different facts and paint differently. A loading command keeps its focus seat, reports aria-busy, and shows the library's one work-in-flight mark; a disabled command keeps its full-alpha silhouette and recedes in ink alone."
         >
             <div class="flex flex-wrap items-center gap-3">
                 <Button data-scenario="button-disabled" disabled>Disabled</Button>
-                <Button data-scenario="button-loading" loading>
-                    <StatusDot state="active" size="lg" />
-                    Saving
+                <Button
+                    data-scenario="button-disabled-destructive"
+                    tone="destructive"
+                    disabled
+                >
+                    Disabled delete
+                </Button>
+                <Button
+                    data-scenario="button-loading"
+                    emphasis="primary"
+                    :loading="saving"
+                    @click="save"
+                >
+                    {{ saving ? "Saving" : "Save with a delay" }}
                 </Button>
                 <Button
                     data-scenario="button-icon"
@@ -50,16 +82,12 @@ const activations = ref(0);
                 >
                     <MoreHorizontal aria-hidden="true" />
                 </Button>
-                <Button size="sm">
-                    <Save aria-hidden="true" />
-                    Save
-                </Button>
             </div>
         </StorySection>
 
         <StorySection
-            heading="Keyboard, touch, and reduced motion"
-            blurb="The same native button accepts Enter, Space, click, and coarse taps. Reduced motion keeps state feedback while removing travel."
+            heading="Keyboard, touch, and the linked command"
+            blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material."
         >
             <div class="grid gap-4 sm:grid-cols-2">
                 <ShowcaseFrame caption="Keyboard and touch" pad="sm">
@@ -84,15 +112,18 @@ const activations = ref(0);
                         </p>
                     </div>
                 </ShowcaseFrame>
-                <ShowcaseFrame caption="Reduced-motion contract" pad="sm">
-                    <div class="flex flex-col items-start gap-3">
-                        <Button data-scenario="button-prm" emphasis="primary">
-                            Motion-aware action
+                <ShowcaseFrame caption="As-child" pad="sm">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <Button data-scenario="button-as-child" as-child>
+                            <a href="#emphasis-tone">A link that commands</a>
                         </Button>
-                        <p class="text-small text-muted-foreground">
-                            Under reduced motion, focus, tone, and illumination remain;
-                            hover and press travel do not.
-                        </p>
+                        <Button
+                            data-scenario="button-as-child-disabled"
+                            as-child
+                            disabled
+                        >
+                            <a href="#emphasis-tone">Suppressed</a>
+                        </Button>
                     </div>
                 </ShowcaseFrame>
             </div>
@@ -100,11 +131,14 @@ const activations = ref(0);
 
         <StorySection
             heading="Size"
-            blurb="One ordinal scale; icon geometry is separate."
+            blurb="One ordinal scale, four rungs, three type faces; icon geometry is separate."
         >
             <div class="flex flex-wrap items-center gap-3">
                 <Button size="xs">Extra small</Button>
-                <Button size="sm">Small</Button>
+                <Button size="sm">
+                    <Save aria-hidden="true" />
+                    Small
+                </Button>
                 <Button>Medium</Button>
                 <Button size="lg">Large</Button>
             </div>

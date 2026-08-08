@@ -40,7 +40,9 @@ describe("G-FOCUS-VISIBLE — every library-rendered trigger shows keyboard focu
             .not.toBeNull();
         // The ONE house focus register, not a second ring minted beside it.
         expect(rule![1]).toMatch(/box-shadow:\s*var\(--focus-ring-shadow\)/);
-        // …paired with `outline: none`, exactly as `.focus-ring` pairs them.
+        // …paired with `outline: none`, since the ring rides `box-shadow` here.
+        // (`.focus-ring` itself no longer does — BK #80 inverted the shared utility
+        // onto `outline`; retiring THIS component's box-shadow ring is its lane's.)
         expect(rule![1]).toMatch(/outline:\s*none/);
     });
 

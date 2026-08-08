@@ -44,7 +44,7 @@ export interface UseLiquidPressOptions extends UseSpringPressOptions {
      * The uniform press SHRINK depth — the contraction the press scale reaches at
      * `t=1` (the iOS uniform shrink the reciprocal squish deforms AROUND). The X axis
      * reads `shrink·stretch`, the Y axis `shrink/stretch` (the volume preserved on the
-     * travel axis). Default 0.03 (the button `--scale-press-btn` 0.97 magnitude — the
+     * travel axis). Default 0.03 (the button `--scale-press-sm` 0.97 magnitude — the
      * JS path AGREES with the CSS `.tap-squish active:scale` floor). A calmer surface
      * (the dock control's no-overshoot tap register) passes a smaller depth.
      */

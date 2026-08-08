@@ -12,8 +12,10 @@
 
     /* Press-scale rungs. `--scale-press` (0.96) is the canonical iOS Liquid
        Glass press value every primitive reaches for unless it has a documented
-       reason (DESIGN.md §L3); `--scale-press-btn` aliases the slightly-softer
-       `--scale-press-sm` (0.97) the button + slider recipes consume.
+       reason (DESIGN.md §L3); `--scale-press-sm` (0.97) is the slightly-softer rung
+       the button + slider recipes consume, and they read it by NAME. One name per
+       rung: a per-component alias in front of a shared rung is a second name for one
+       value, free to be re-pointed under a consumer who thinks it reads the rung.
 
        Press canon. `--scale-press-dock` references the
        canonical `--scale-press` (0.96) — ONE source for the
@@ -23,7 +25,6 @@
        press overrides `--scale-press-dock` on the dock instance. */
     --scale-press-dock: var(--scale-press);
     --scale-press-sm: 0.97;
-    --scale-press-btn: var(--scale-press-sm);
 
     /* The SegmentedTabs travel-squish cap. The active indicator
        (segmented/pill slider OR the underline rule) STRETCHES along its travel

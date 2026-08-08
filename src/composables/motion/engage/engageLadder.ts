@@ -40,7 +40,7 @@
 //      materialization — a menu, plate, toast, or orb born from its anchor") is
 //      `present`, and that is what MODAL binds.
 //   2. §4's HOVER rung names `--scale-hover-btn (1.05)`. No such token exists on
-//      disk (`--scale-press-btn` does; `--scale-hover-btn` does not). The ladder does
+//      disk (`--scale-press-sm` does; `--scale-hover-btn` does not). The ladder does
 //      not mint it: a per-component hover scale is the component row's (#80 W-BUTTON),
 //      and what the LADDER owns is the BUDGET the component must sit inside —
 //      `HOVER_GEOMETRY_BUDGET` below, which the shipped `--scale-hover` (1.08)

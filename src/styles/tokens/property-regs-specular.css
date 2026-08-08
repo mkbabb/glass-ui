@@ -24,13 +24,13 @@
     --glass-specular-intensity-rest: 0;
     --glass-specular-intensity-hover: 0.1;
     --glass-specular-intensity-active: 0.16;
-    /* The BUTTON-SCOPED hover gleam bump. The lit glass
-       button should read a notch brighter at the grazing edge than the global
-       hover whisper (0.10). `.button` re-points its own
-       `--glass-specular-intensity-hover` to this knob (surfaces.css), so ONLY the
-       button lifts — the global cohort above is UNTOUCHED. A consumer retints the
-       button gleam from this ONE override. */
-    --glass-specular-btn-hover: 0.14;
+    /* The CAPSULE-SCOPED hover gleam bump. A lit warm-glass lozenge reads a notch
+       brighter at the grazing edge than the global hover whisper (0.10). The rung is
+       the CAPSULE's, not one component's: `.glass-capsule-hover` re-points its own
+       `--glass-specular-intensity-hover` to this knob (glass/glass-capsule.css), so
+       every capsule composer lifts together and the global cohort above is UNTOUCHED.
+       A consumer retints the capsule gleam from this ONE override. */
+    --glass-specular-capsule-hover: 0.14;
 }
 
 /* Over the deep canvas `plus-lighter` still lifts, so the dark arm runs a touch
@@ -38,9 +38,9 @@
 .dark {
     --glass-specular-intensity-hover: 0.08;
     --glass-specular-intensity-active: 0.12;
-    /* The button bump rides a touch softer in dark too (the dark hover is 0.08;
-       the button reads ~0.11, still a notch above the global whisper). */
-    --glass-specular-btn-hover: 0.11;
+    /* The capsule bump rides a touch softer in dark too (the dark hover is 0.08;
+       a capsule reads ~0.11, still a notch above the global whisper). */
+    --glass-specular-capsule-hover: 0.11;
 }
 
 /* The press DRIVE scalar. ONE typed 0..1 custom

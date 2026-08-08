@@ -25,7 +25,7 @@
    shadow built off a PLAIN per-mode token pair (NEVER a `light-dark()` fragment —
    an inset-shadow leg inside light-dark() computes the WHOLE box-shadow to `none`,
    the binding MEMORY lesson). The hover lift is a `scale` + `--glass-specular`
-   step (the SHARED specular-lift primitive `.glass-drag-lift` also composes).
+   step, factored once on `.glass-capsule-hover` below.
    ════════════════════════════════════════════════════════════════════════ */
 
 @layer components {
@@ -88,11 +88,11 @@
     /* ── .glass-capsule-hover — the SHARED specular-lift primitive ──
        The two-channel glass hover (specular catch-light lift + a hair of scale) +
        the press-snap, on the FAST bezier clock (hover is a bezier ease, not a
-       spring), volume-preserving, compositor-only. This is the SAME specular-lift
-       idiom `.glass-drag-lift` carries — factored here ONCE; `.glass-drag-lift`
-       re-composes `--glass-specular`-step + `will-change` rather than forking a
-       parallel block. The non-selected pill + the buttons greenfield compose this
-       wholesale: glass at rest + specular-lift on hover + press-snap on active. */
+       spring), volume-preserving, compositor-only. Factored here ONCE — the
+       specular step lives on this class alone (`.glass-drag-lift` carries no
+       `::before`, so a specular arm there painted nothing and was struck).
+       The non-selected pill + the buttons greenfield compose this wholesale:
+       glass at rest + specular-lift on hover + press-snap on active. */
     .glass-capsule-hover {
         /* The SPATIAL leg (scale) rides the weighty cartoon-punch curve (the
            liquid-weight-universal mandate — a hover lift carries inertia/overshoot,
@@ -104,22 +104,23 @@
             scale var(--duration-fast) var(--ease-cartoon-punch),
             --specular-intensity var(--duration-fast) var(--ease-standard);
     }
-    /* The SHARED specular-lift step — declared ONCE here, COMPOSED by both the hover
-       register AND the drag-lift (C7: one declaration of the
-       `--glass-specular` catch-light step, never a parallel fork). `.glass-drag-lift`
-       (segmented-tabs.css) re-points its grabbed-state catch-light onto THIS step
-       rather than re-declaring `--glass-specular`; it adds only its distinct grabbing
-       bits (the grab cursor + the `will-change` compositor hint). The 
-       sub-perceptual catch — a hair brighter at the specular edge, disco-FREE. */
-    .glass-capsule-hover:hover,
-    .glass-drag-lift {
-        /* Drive the REAL gleam-opacity channel (`--specular-intensity`, read by the
-           moving-specular `::before` at material.css opacity) — not the dead
-           `--glass-specular` name. Composes with the material hover system; fires for
-           both the :hover register AND the grabbed `.glass-drag-lift` class. */
-        --specular-intensity: 0.14;
-    }
+    /* THE CAPSULE'S HOVER GLEAM RUNG, and the one seat from which it can be reached.
+       `--specular-intensity` is registered `inherits: false` (`tokens/property-regs.css`
+       — the registration's own comment says why: "a hovered parent must not push its
+       specular onto a child"), and `material.css` declares that property ON the
+       `::before` in every state rule it owns. A host-level `--specular-intensity: 0.14`
+       here therefore reached nothing, a priori, under a comment asserting it drove "the
+       REAL gleam-opacity channel" — it is struck, both arms, rather than left as a
+       literal that reads live and paints nothing.
+
+       What replaces it reaches by the only path there is: `--glass-specular-intensity-
+       hover` is UNREGISTERED, so it inherits into the pseudo, and material.css's hover
+       rule reads it. The rung is the capsule's own — a lit warm-glass lozenge reads a
+       notch brighter at the grazing edge than the global whisper — so it is declared
+       once here, for every capsule composer, rather than re-declared by each of them.
+       The dark arm rides softer; both live at `tokens/property-regs-specular.css`. */
     .glass-capsule-hover:hover {
+        --glass-specular-intensity-hover: var(--glass-specular-capsule-hover);
         /* the 1.5% press-ready lift (the lift is hover-only; the drag-lift carries no
            scale of its own — the translate/squish are the morph primitive's writes) */
         scale: 1.015;
