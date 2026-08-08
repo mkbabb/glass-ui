@@ -164,6 +164,43 @@ fine. Every dot/seam/gradient knob is deleted outright — the mark is a `--card
 with a one-ink perimeter and the span is its accent, so there is nothing left for them
 to tune.
 
+
+**`LabeledSelect` is REMOVED from `@mkbabb/glass-ui/labeled-field` — it was a preset,
+and it was the one import that made this subpath drag the whole overlay chain.** The
+field family ships the anatomy (`LabeledField`) and the three adapters that add no
+taxonomy of their own; a select adapter cannot be written without an `items` array, and
+an `items` array is a caller's data shape, not a composition primitive. Importing
+`./labeled-field` no longer pulls `./select` and everything behind it (popover, portal,
+dismissable layer) into the graph.
+
+| Classification | Symbol |
+| --- | --- |
+| removed at 8.0 | `LabeledSelect` (component), `LabeledSelectProps` (type) |
+| retained | `LabeledField`, `LabeledInput`, `LabeledSlider`, `LabeledSwitch`, `LabeledFieldProps`, `LabeledFieldCommonProps`, `LabeledFieldSlotProps`, `LabeledFieldLayout`, `LabeledFieldErrorLive`, `LabeledInputProps`, `LabeledSliderProps`, `LabeledSwitchProps` |
+
+The subpath itself is unchanged. There is no drop-in replacement by design; the
+replacement is the composition the anatomy already exposes, and it is the whole diff:
+
+```vue
+<LabeledField label="Curve hue" description="…" v-slot="{ controlId, labelledBy, describedBy }">
+    <Select :model-value="value" @update:model-value="value = String($event)">
+        <SelectTrigger :id="controlId" :aria-labelledby="labelledBy" :aria-describedby="describedBy">
+            <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+            <SelectGroup>
+                <SelectItem v-for="o in options" :key="o.value" :value="o.value">{{ o.label }}</SelectItem>
+            </SelectGroup>
+        </SelectContent>
+    </Select>
+</LabeledField>
+```
+
+A caller who wants the wrapper back owns thirty lines of it — and gains what the removed
+one never had: options that carry `{ value, label }` pairs, so the value stays the
+contract and the label is what the reader sees, with no second lookup table kept alive
+to name the options a second time.
+
 ## 7.0.0 (2026-07-17)
 
 The packed public map changes from 82 to 74 export keys. It removes

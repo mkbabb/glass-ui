@@ -26,6 +26,15 @@ caret to the bar's accessible name, `click` becomes `select`, `hoverEnd` folds i
 exported. The fourteen `--timeline-*` dot/seam/gradient tokens collapse to one
 `--timeline-track-h`. `MIGRATION.md` §8.0.0 carries the full per-surface table.
 
+### Removed — `LabeledSelect` leaves `./labeled-field` (the subpath stays)
+
+`LabeledSelect` and `LabeledSelectProps` are gone from `@mkbabb/glass-ui/labeled-field`
+with no drop-in: a select adapter needs an `items` array, an `items` array is a preset,
+and that one import made the field subpath drag `./select` and the whole overlay chain
+behind it. `LabeledField` + `<Select>` is the replacement and it is ~30 lines at the call
+site. `LabeledField`, `LabeledInput`, `LabeledSlider`, and `LabeledSwitch` are unchanged.
+`MIGRATION.md` §8.0.0 carries the worked composition.
+
 ## 7.0.0 (2026-07-17)
 
 ### Export-map delta (the authoritative 6.x → 7.0 migration surface)
