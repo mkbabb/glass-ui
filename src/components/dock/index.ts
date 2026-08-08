@@ -43,8 +43,9 @@ export type { UseDockStateOptions, UseDockStateReturn, DockState } from "./compo
 // canonical DI primitives so consumers can migrate from the retired
 // old string keys (`"dockKeepOpen"` / `"dockRelease"`) to the typed-key
 // helpers without reaching for the deep-import path. fourier-analysis's 2
-// silent `inject<...>("dockKeepOpen", null)` sites at SliderControl.vue + GlassTimeline.vue
-// (which silently no-op without it; a functional regression on scrub gestures)
+// silent `inject<...>("dockKeepOpen", null)` sites at SliderControl.vue + its own
+// timeline surface (which silently no-op without it; a functional regression on scrub
+// gestures — the library-side `GlassTimeline.vue` that once shared the defect is gone)
 // migrate via `useOptionalDockContext()` once this re-export ships.
 export {
     DOCK_CONTEXT_KEY,
