@@ -180,6 +180,12 @@ const rootRuntimeExports = [
     "SelectValue",
     // The side sheet is its own component again (BK #38): `SheetContent` is a ROOT
     // barrel key. The `./sheet` package subpath is a separate byte and rides the one
+    // [BK #81 W-PICKER] `SelectScrollUpButton` + `SelectScrollDownButton` were two
+    // SFCs reachable from neither barrel — the listbox's scroll affordance could not
+    // be restyled or replaced at all. ONE component keyed by `direction`, published
+    // here and on `./select`. A types-and-one-component addition to an existing
+    // surface, not a subpath mint: C-10's batched export cut is untouched.
+    "SelectScrollButton",
     // batched export cut (RT-38D → #65) — this list is the root surface, not the map.
     "SheetContent",
     "TableBody",
@@ -334,6 +340,10 @@ const subpathRuntimeExports = [
 
 const retiredSubpathRuntimeMembers = [
     { subpath: "card", surface: CardSurface, name: "ScrollCard" },
+    // [BK #81 W-PICKER] The two ends of the listbox were two SFCs, neither
+    // reachable from the barrel — so a consumer could not restyle or replace the
+    // scroll affordance at all. ONE component keyed by `direction`, published.
+    { subpath: "select", surface: SelectSurface, name: "SelectScrollButton" },
     { subpath: "card", surface: CardSurface, name: "ScrollCardHeader" },
     // 0 external importers across the twelve-repo census; one in-repo site; the
     // body was four grid placements against a `:has()` fork in the header.
