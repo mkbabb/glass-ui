@@ -39,16 +39,6 @@ export interface LabeledFieldSlotProps {
 
 export type LabeledInputProps = Omit<InputProps, "class"> & LabeledFieldCommonProps;
 
-export interface LabeledSelectProps extends LabeledFieldCommonProps {
-    modelValue: string;
-    items: readonly string[];
-    open?: boolean;
-    placeholder?: string;
-    invalid?: boolean;
-    disabled?: boolean;
-    required?: boolean;
-}
-
 export type LabeledSliderProps = Omit<SliderProps, "class" | "modelValue"> &
     LabeledFieldCommonProps & { modelValue: number };
 

@@ -6,7 +6,6 @@ import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import {
     LabeledField,
     LabeledInput,
-    LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
 } from "@glass/components/labeled-field";
@@ -15,11 +14,8 @@ import { Textarea } from "@glass/components/textarea";
 const name = ref("");
 const email = ref("not-an-address");
 const bio = ref("");
-const choice = ref("Balanced");
-const choiceOpen = ref(false);
 const intensity = ref(64);
 const enabled = ref(true);
-const choices = ["Quiet", "Balanced", "Vivid"];
 </script>
 
 <template>
@@ -64,17 +60,10 @@ const choices = ["Quiet", "Balanced", "Vivid"];
 
         <StorySection
             label="control adapters"
-            blurb="Thin adapters share the same field anatomy while Input, Select, Slider, and Switch retain their own behavior and paint."
+            blurb="Thin adapters share the same field anatomy while Input, Slider, and Switch retain their own behavior and paint. There is no select adapter — an items array is a preset, not a composition — so a select is written the way every other uncovered control is: through the direct slot beside these three."
         >
             <ShowcaseFrame pad="lg">
                 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <LabeledSelect
-                        v-model="choice"
-                        v-model:open="choiceOpen"
-                        :items="choices"
-                        label="Atmosphere"
-                        description="Sets the starting visual intensity."
-                    />
                     <LabeledSlider
                         v-model="intensity"
                         :min="0"

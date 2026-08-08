@@ -362,13 +362,7 @@ const exactSubpathRuntimeSurfaces = [
     {
         subpath: "labeled-field",
         surface: LabeledFieldSurface,
-        names: [
-            "LabeledField",
-            "LabeledInput",
-            "LabeledSelect",
-            "LabeledSlider",
-            "LabeledSwitch",
-        ],
+        names: ["LabeledField", "LabeledInput", "LabeledSlider", "LabeledSwitch"],
     },
     {
         subpath: "command",

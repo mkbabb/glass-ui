@@ -5,10 +5,10 @@ import { Card, CardContent } from "@glass/components/card";
 import { Separator } from "@glass/components/separator";
 import {
     LabeledInput,
-    LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
 } from "@glass/components/labeled-field";
+import LabeledSelect from "../../chassis/field/LabeledSelect.vue";
 import { cn } from "@glass/components/_shared/class-names";
 
 const displayName = ref("Mike Babb");
@@ -160,40 +160,25 @@ const groups: Record<string, Group> = {
                         "
                     >
                         <LabeledSelect
-                            :model-value="theme"
-                            :open="themeOpen"
+                            v-model="theme"
+                            v-model:open="themeOpen"
                             :items="themeOptions"
                             label="Theme"
                             description="Controls the overall colour and contrast."
-                            @update:model-value="
-                                (v: string) =>
-                                    (theme = v as (typeof themeOptions)[number])
-                            "
-                            @update:open="(v: boolean) => (themeOpen = v)"
                         />
                         <LabeledSelect
-                            :model-value="bodyFont"
-                            :open="bodyFontOpen"
+                            v-model="bodyFont"
+                            v-model:open="bodyFontOpen"
                             :items="fontOptions"
                             label="Body font"
                             description="Typeface used for long-form reading."
-                            @update:model-value="
-                                (v: string) =>
-                                    (bodyFont = v as (typeof fontOptions)[number])
-                            "
-                            @update:open="(v: boolean) => (bodyFontOpen = v)"
                         />
                         <LabeledSelect
-                            :model-value="density"
-                            :open="densityOpen"
+                            v-model="density"
+                            v-model:open="densityOpen"
                             :items="densityOptions"
                             label="Density"
                             description="Padding scale for every container."
-                            @update:model-value="
-                                (v: string) =>
-                                    (density = v as (typeof densityOptions)[number])
-                            "
-                            @update:open="(v: boolean) => (densityOpen = v)"
                         />
                         <LabeledSlider
                             v-model="baseSize"

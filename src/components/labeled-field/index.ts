@@ -1,6 +1,5 @@
 export { default as LabeledField } from "./LabeledField.vue";
 export { default as LabeledInput } from "./LabeledInput.vue";
-export { default as LabeledSelect } from "./LabeledSelect.vue";
 export { default as LabeledSlider } from "./LabeledSlider.vue";
 export { default as LabeledSwitch } from "./LabeledSwitch.vue";
 export type {
@@ -10,7 +9,6 @@ export type {
     LabeledFieldProps,
     LabeledFieldSlotProps,
     LabeledInputProps,
-    LabeledSelectProps,
     LabeledSliderProps,
     LabeledSwitchProps,
 } from "./types";

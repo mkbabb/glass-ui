@@ -28,6 +28,11 @@ without styling the control.
 on narrow viewports. The default layout is stacked. No mode adds a divider, control paint, hidden
 label, tooltip trigger, or trailing action.
 
-`LabeledInput`, `LabeledSelect`, `LabeledSlider`, and `LabeledSwitch` are thin typed adapters for
-their respective controls. They share the same `label`, `description`, `requirement`, state, layout,
-and error contract and add no visual taxonomy of their own.
+`LabeledInput`, `LabeledSlider`, and `LabeledSwitch` are thin typed adapters for their respective
+controls. They share the same `label`, `description`, `requirement`, state, layout, and error
+contract and add no visual taxonomy of their own.
+
+There is no `LabeledSelect`: an `items` array is a preset, not a composition, and it was the one
+import that made this subpath drag the whole overlay chain behind it. Compose `<LabeledField>` with
+`<Select>` — the slot hands you every id the anatomy owns, and the demo keeps a ~30-line worked
+example of exactly that.

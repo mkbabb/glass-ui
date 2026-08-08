@@ -545,14 +545,14 @@ export const CATEGORIES: Category[] = [
                 "Chip",
                 "Explicit static, selectable, action, and removable semantics over pill, cell, and icon geometry.",
             ),
-            // the LabeledField family (parent SFC + 4
-            // wrappers over Input · Select · Slider · Switch): a single forms
-            // family, not a composed scene.
+            // the LabeledField family (parent SFC + 3 wrappers over Input ·
+            // Slider · Switch — a select is a preset and lives in the demo, BK
+            // #57): a single forms family, not a composed scene.
             s(
                 "forms",
                 "labeled-field",
                 "Labeled Field",
-                "Parent SFC + 4 wrappers with a real label, persistent supplemental description, and keyboard-reachable help trigger.",
+                "Parent SFC + 3 wrappers with a real label, persistent supplemental description, and keyboard-reachable help trigger.",
             ),
         ],
     },

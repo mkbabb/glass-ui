@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 import {
     LabeledField,
     LabeledInput,
-    LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
     type LabeledFieldSlotProps,
@@ -167,14 +166,6 @@ describe("LabeledField contract", () => {
             mount(LabeledInput, {
                 props: { description: "Input help.", label: "Input", modelValue: "" },
             }),
-            mount(LabeledSelect, {
-                props: {
-                    description: "Select help.",
-                    items: ["Alpha"],
-                    label: "Select",
-                    modelValue: "Alpha",
-                },
-            }),
             mount(LabeledSlider, {
                 props: {
                     description: "Slider help.",
@@ -192,7 +183,7 @@ describe("LabeledField contract", () => {
                 },
             }),
         ];
-        const selectors = ["input", '[role="combobox"]', '[role="slider"]', '[role="switch"]'];
+        const selectors = ["input", '[role="slider"]', '[role="switch"]'];
 
         cases.forEach((wrapper, index) => {
             const label = wrapper.get("label");

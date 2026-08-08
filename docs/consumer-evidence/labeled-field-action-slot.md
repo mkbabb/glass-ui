@@ -15,7 +15,9 @@ action-slot the AX row booked HIGH and never built.
 
 ## What it is
 
-A `<LabeledField>` (and its `LabeledInput`/`LabeledSelect`/`LabeledSlider`/`LabeledSwitch`
+A `<LabeledField>` (and its `LabeledInput`/~~`LabeledSelect`~~ [BK #57, 2026-08-07:
+`LabeledSelect` REMOVED from the subpath — an `items` array is a preset and it dragged the
+overlay chain; it lives in the demo now, `MIGRATION.md` §8.0.0]/`LabeledSlider`/`LabeledSwitch`
 wrappers) gains an `#action` slot + a `horizontal` layout axis so a labeled control can
 carry a TRAILING action affordance (a clear / reveal / copy / edit button) beside the
 field. KISS: it is a `<slot name="action">` in a flex row, NOT a new component —
