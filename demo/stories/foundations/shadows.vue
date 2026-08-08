@@ -31,7 +31,7 @@ const shadows: { cls: string; label: string }[] = [
              so the `.shadow-stage` paints a mid-tone backing in dark (transparent in
              light, where the cream page already reads the shadows). The cells pop in
              on the scroll-cascade; the stage perception-correction is PRESERVED. -->
-        <StorySection heading="Elevation">
+        <StorySection span="full" heading="Elevation">
             <div
                 class="shadow-stage scroll-cascade grid grid-cols-2 gap-8 rounded-card px-4 py-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
             >

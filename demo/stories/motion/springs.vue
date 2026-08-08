@@ -380,7 +380,7 @@ watch(playStops, invalidateCopy);
             blurb="Tune response and damping, then play the custom curve. Seed from a named register up top; the inspector reads its measured settling time and projected shape."
         >
             <Configurator
-                class="h-[min(64vh,520px)]"
+                class="story-stage"
                 :presets="seedPresets"
                 :active-preset="activeSeed"
                 @select-preset="onSeedPreset"

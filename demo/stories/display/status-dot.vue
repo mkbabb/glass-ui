@@ -156,8 +156,23 @@ const announced = ref<StatusDotState>("online");
     font-size: var(--type-caption);
 }
 
+/* ARM-INVERTED (base = narrow). The old `@media (max-width: 36rem)` arm was
+   unreachable from inside a cel: a cel is 21rem wide on a 1440px window, so the
+   narrow form would never have applied where it is actually needed and the WIDE
+   form would have applied where it does not fit. Base is the stacked form; the row
+   arrives from the CONTAINER. The 36rem numeral is unchanged — it was always a
+   measurement of this row, and it now measures the row instead of the window. */
 .status-identities {
-    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+@container (inline-size > 36rem) {
+    .status-identities {
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 .status-actions,
@@ -182,10 +197,4 @@ const announced = ref<StatusDotState>("online");
     color: var(--foreground);
 }
 
-@media (max-width: 36rem) {
-    .status-identities {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-}
 </style>

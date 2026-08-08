@@ -41,9 +41,13 @@ const props = withDefaults(
         scrollMode?: ConfiguratorScrollMode;
         /**
          * The studio height envelope — the fixed-height frame the stage flexes
-         * inside. bumped the default from `min(78vh,720px)`
-         * to `min(86vh,880px)` — the "core chosen aurora space larger" read (the studio
-         * canvas grows). Pass a tighter rung for a smaller viz.
+         * inside. The default is `story-stage`, i.e. the ONE `--stage-block`
+         * token: `min(62svh, 44rem)`, the golden major of the SMALL viewport
+         * (`svh`, not `vh`, so a mobile toolbar cannot make the stage taller than
+         * the screen), capped so 4K portrait does not run away. Eight stories used
+         * to spell eight different envelopes — 86vh/880, 78vh/720, 72vh/600,
+         * 70vh/560, 64vh/520, 60vh — for one intent. Pass a class only for a viz
+         * whose aspect genuinely differs.
          */
         heightClass?: string;
         /** Forwarded class string for the <Configurator> root (merged via cn). */
@@ -51,7 +55,7 @@ const props = withDefaults(
     }>(),
     {
         scrollMode: "auto",
-        heightClass: "h-[min(86vh,880px)]",
+        heightClass: "story-stage",
         galleryPlacement: "aside",
     },
 );

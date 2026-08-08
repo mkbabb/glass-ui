@@ -48,17 +48,17 @@ const variant = computed<"hero" | "page">(() =>
          this rect, and flies it back off the same one. §9.5's "stops at the content
          column's gutter" is not a rule we enforce here — it is what naming the ARTICLE
          rather than `<main>` means. -->
+    <!-- ONE article width, not two. The old inline `:style` branched between
+         `--story-article-w` (declared nowhere on disk, so it resolved to the
+         initial value and the cap was silently absent on every ordinary story) and
+         `--story-page-max-inline` (72rem). An inline style also outranks any sheet,
+         so the article's width was unreachable from CSS by construction. The
+         article law in `layout.css` caps it once at `--article-max`. -->
     <article
         v-else
-        class="story-page-article mx-auto w-full"
+        class="story-article w-full"
         :data-route-window="route.path"
         :data-variant="variant"
-        :style="{
-            maxInlineSize:
-                variant === 'page'
-                    ? 'var(--story-article-w)'
-                    : 'var(--story-page-max-inline)',
-        }"
     >
         <TooltipProvider :delay-duration="250">
             <!-- Ordinary stories keep identity quiet: one title, one lede. -->
@@ -90,10 +90,13 @@ const variant = computed<"hero" | "page">(() =>
                 </StoryHeader>
             </header>
 
+            <!-- THE CEL FIELD. The inline `gap` binding is gone: an inline style
+                 wins over the sheet, so the field's own gap could never apply while
+                 it was there — the field would have been a grid with a
+                 flex-column's rhythm. -->
             <section
                 v-if="variant === 'page'"
-                class="story-cels flex flex-col"
-                :style="{ gap: 'var(--story-page-section-gap)' }"
+                class="story-cels"
                 :class="props.contentClass"
             >
                 <slot />
@@ -118,11 +121,7 @@ const variant = computed<"hero" | "page">(() =>
                     <slot name="title-ornament" />
                 </template>
 
-                <section
-                    class="story-sections flex flex-col"
-                    :style="{ gap: 'var(--story-page-section-gap)' }"
-                    :class="props.contentClass"
-                >
+                <section class="story-sections" :class="props.contentClass">
                     <slot />
                 </section>
             </StoryHero>

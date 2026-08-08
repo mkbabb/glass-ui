@@ -467,7 +467,7 @@ function formatScore(score: number): string {
 
 <template>
     <StoryPage>
-        <div class="flex flex-wrap items-end justify-between gap-4">
+        <div data-span="full" class="flex flex-wrap items-end justify-between gap-4">
             <StorySection label="Search package" heading="Fuzzy search" />
             <div class="flex flex-wrap gap-2">
                 <Badge variant="outline">{{ searchItems.length }} rows</Badge>

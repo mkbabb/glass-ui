@@ -21,7 +21,7 @@ function tileFor(story: Story) {
 <template>
     <!-- The section landing is the WINDOW for its own path — the card on the catalog
          flies onto this rect and back off it. -->
-    <article :data-route-window="route.path" class="mx-auto w-full max-w-6xl">
+    <article :data-route-window="route.path" class="optical-bench w-full">
         <StoryHero
             v-if="category && landing"
             :background="landing.background"
@@ -32,7 +32,7 @@ function tileFor(story: Story) {
         >
             <section
                 :aria-label="`${category.title} stories`"
-                class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6"
+                class="story-field mt-(--sp-4)"
             >
                 <SectionPreviewCard
                     v-for="(story, idx) in category.stories"

@@ -105,10 +105,16 @@ function renderNode(node: SpecimenSpec, scope: StoryScope): VNode {
 // The reading-measure cap the specimen wrap-row reads off the section `size` — a
 // bare row never balloons past its declared measure (an Input row stays `sm`, a
 // Badge row wraps free). `fluid`/unset is uncapped (the section owns the width).
+//
+// The three rungs ARE the three measures now. `max-w-sm`/`max-w-2xl`/`max-w-prose`
+// (24rem / 42rem / 65ch) were three more literal widths in a demo whose only legal
+// widths are the four derived ones — and 42rem in particular was a number with no
+// law behind it. `sm` is one cel, `md` is the aristotelian major φ·cel, `prose` is
+// Bringhurst's line.
 const SIZE_MAX_W: Record<string, string> = {
-    sm: "max-w-sm",
-    md: "max-w-2xl",
-    prose: "max-w-prose",
+    sm: "max-w-(--measure-cel)",
+    md: "max-w-(--measure-wide)",
+    prose: "max-w-(--measure-prose)",
 };
 
 export default defineComponent({

@@ -166,7 +166,7 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
              color violates proportion); the grid gains the calm wash read-through
              (the ShowcaseFrame quiet tier) + the glass-tier hover lift the icons
              grid carries. -->
-        <StorySection heading="Core roles">
+        <StorySection span="full" heading="Core roles">
             <div
                 class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
             >

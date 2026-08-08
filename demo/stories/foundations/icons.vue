@@ -135,7 +135,7 @@ const pops: { icon: Component; section: number }[] = [
         <!-- THE MONOCHROME GRID — the supporting reference. The grid cells gain the
              calm wash read-through + the glass-tier hover lift; the glyphs stay ink
              (the monochrome proportion held — no color event here). -->
-        <StorySection heading="Lucide reference">
+        <StorySection span="full" heading="Lucide reference">
             <div
                 class="scroll-cascade grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8"
             >

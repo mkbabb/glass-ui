@@ -2,9 +2,12 @@
     --story-paper-wash: color-mix(in srgb, var(--card) 70%, transparent);
     --story-hero-cpl: 7;
     --story-hero-est-lines: 2;
-    --story-page-max-inline: 72rem;
-    --story-page-section-gap: clamp(1.5rem, 3vw, 2.5rem);
-    --story-page-header-gap: 0.5rem;
+    /* `--story-page-max-inline` (72rem) and `--story-page-section-gap` are GONE:
+       the article law owns the cap (`--article-max`) and the cel field owns the
+       gap (`--sp-5`/`--sp-4`). A `clamp(…, 3vw, …)` gap is a tenth transposition
+       factor wearing a fluid-typography costume — it disagrees with the ladder at
+       every width between its two ends. */
+    --story-page-header-gap: var(--sp-2);
     --chrome-title-rung: var(--type-display-1);
 }
 
@@ -50,7 +53,7 @@
 .story-hero-bleed-content {
     position: relative;
     z-index: 1;
-    padding: clamp(1.25rem, 3vw, 3rem) clamp(1rem, 2.5vw, 2.5rem);
+    padding: var(--sp-6) var(--sp-5);
 }
 
 .story-hero-bleed-content[data-live="true"] {
@@ -70,7 +73,7 @@
 
 .story-hero-title {
     max-inline-size: min(14ch, 100%);
-    margin-block-end: clamp(1.5rem, 3vw, 2.5rem);
+    margin-block-end: var(--sp-5);
     margin-inline-start: -0.035em;
     overflow-wrap: break-word;
     color: var(--foreground);
@@ -121,7 +124,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--story-page-header-gap);
-    margin-block-end: clamp(1.5rem, 3vw, 2.5rem);
+    margin-block-end: var(--sp-5);
 }
 
 .story-hero-cluster .story-hero-title {

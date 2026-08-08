@@ -25,28 +25,53 @@
        the gold-CTA family), never on an interactive state. */
     /* The left-edge accent rule width on the active sidebar category. */
     --demo-nav-rail-accent-w: 3px;
-    /* Bottom-dock viewport inset (adds the iOS safe-area gutter). */
-    --demo-nav-bottom-inset: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    /* Bottom-dock viewport inset (adds the iOS safe-area gutter — live only now
+       that `index.html` carries `viewport-fit=cover`; before that this `env()`
+       resolved 0 on every device and the inset was a rung wearing a safe-area
+       costume). The rung is `--sp-3`, so the narrow-short tightening the seat law
+       asks for arrives from the LADDER's own step-down (0.75rem → 0.5rem at
+       ≤768px) rather than from a second, disagreeing media block. */
+    --demo-nav-bottom-inset: calc(var(--sp-3) + env(safe-area-inset-bottom, 0px));
 }
 
-/* Narrow: single content column with category navigation in the bottom trigger.
-   Compact retains that action; Wide moves the same action to the rail. */
+/* ── THE SHELL GRID ────────────────────────────────────────────────────────
+   Two columns, two rows, one topology. The rail spans both rows (it is the tall
+   seat); `main` scrolls and `dock` does not. `100dvh` — not `100vh` — because the
+   dynamic mobile toolbar makes `vh` measure the LARGEST viewport, which underflows
+   the dock by the toolbar's height for exactly as long as the toolbar is showing.
+   `overflow: clip` (not `hidden`) because `clip` does not create a scroll
+   container, so nothing here can silently become a second scroller. */
 .demo-app-shell {
-    --demo-shell-content-pad-block: 1.5rem;
-    --demo-shell-content-pad-inline: 1rem;
-    --demo-shell-dock-pad-inline: 0.5rem;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-areas:
+        "rail main"
+        "rail dock";
+    block-size: 100dvh;
+    overflow: clip;
 }
 
-/* ── Sidebar fixed-rail occupancy ──────────────────────────────────────────
-   The desktop fixed-rail column. The rail dock itself sizes to content; this
-   the nav landmark reserves the column gutter and centres the dock. */
+/* ── Sidebar rail occupancy ────────────────────────────────────────────────
+   The rail column. The rail dock itself sizes to content; this nav landmark
+   reserves the column gutter and centres the dock. Seated by the SEAT LAW below —
+   `display: none` is the base arm because portrait, at any width, has no rail. */
 .demo-sidebar-rail {
-    flex-shrink: 0;
+    grid-area: rail;
     display: none;
     flex-direction: column;
     align-items: center;
     min-height: 0;
-    padding: 1rem 0.75rem;
+    /* The INLINE rung is `--sp-2`, one below the block rung, and it is load-bearing
+       arithmetic rather than taste. §4's binding census cell is 852×393 landscape:
+       the field needs `2 × --measure-cel + --sp-4` = 692px, and it gets
+       `852 − rail − 2 × --sp-5`. The spec derived that against an 88px rail; the
+       rail on disk is a 75px dock plus its gutter, so at `--sp-3` (12px a side) the
+       column is 99px and the field lands on 689 — THREE PIXELS SHORT, and the cell
+       silently falls to 1-up. Measured, not assumed. At `--sp-2` the column is 91px
+       and the field is 697, clearing 692 with 5px of slack; 1440 is unaffected
+       (3-up either way, since 4 cels need 1404 and the article carries 1285). */
+    padding: var(--sp-4) var(--sp-2);
 }
 
 /* The off-canvas Sheet host body needs no extra chrome — the SidebarDock fills
@@ -82,13 +107,13 @@
    height therefore shortens <main> before hit testing, while only <main> scrolls
    and the dock remains viewport-anchored. */
 .demo-bottom-dock {
+    grid-area: dock;
     position: relative;
-    flex: 0 0 auto;
     min-width: 0;
     z-index: var(--z-dock);
     display: flex;
     justify-content: center;
-    padding: 0 var(--demo-shell-dock-pad-inline) var(--demo-nav-bottom-inset);
+    padding: 0 var(--sp-2) var(--demo-nav-bottom-inset);
     pointer-events: none;
 }
 .demo-bottom-dock__shell {
@@ -103,35 +128,51 @@
    in-category facets re-home on the rail's floating carousel strip. The active-story
    weight cue rode that tab run, so its rule is buried with it (no dead orphan). */
 
-/* Compact: the off-canvas category action remains primary, with more reading room. */
-@media (min-width: 30rem) {
-    .demo-app-shell {
-        --demo-shell-content-pad-block: 2rem;
-        --demo-shell-content-pad-inline: 1.5rem;
-        --demo-shell-dock-pad-inline: 0.75rem;
-    }
-}
+/* ── THE SEAT LAW ──────────────────────────────────────────────────────────
+   The rail seats along the ABUNDANT axis, which is why width alone could never
+   decide it: 810 (tablet portrait) and 852 (landscape phone) are 42px apart and
+   want opposite answers. Portrait's abundant axis is block, so portrait's nav
+   belongs in the dock row and tablet portrait gets its full width back for the cel
+   field. Landscape phone gets the rail (88px = 9.4% of 932) and sheds the dock
+   (68px = 18% of Safari's 378px of block). Desktop keeps both.
 
-/* Wide: category navigation moves to the visible rail; the equivalent bottom
-   trigger leaves both the paint and focus order. */
-@media (min-width: 48rem) {
-    .demo-app-shell {
-        --demo-shell-content-pad-block: 2.5rem;
-        --demo-shell-content-pad-inline: 2rem;
-    }
-
+   The `>` is STRICT: at exactly 768px an inclusive `>=` handed the viewport a rail
+   AND the mobile ladder rungs in the same frame — a coincidence, not a design. */
+@media (width > 48rem) and (orientation: landscape) {
     .demo-sidebar-rail {
         display: flex;
     }
 
+    /* The rail carries category navigation, so the bottom dock's equivalent
+       trigger leaves both the paint and the focus order. */
     .demo-shell-category-menu {
+        display: none;
+    }
+
+    /* The rail covers the unsafe leading edge, so the scroller stops paying the
+       safe-area gutter a second time. */
+    .demo-main-scroller {
+        padding-inline-start: var(--sp-5);
+    }
+}
+
+/* Landscape phone: the dock's 68px is 18% of the scarce axis and the rail already
+   carries nav. Shedding it is the whole reason the seat law reads height at all. */
+@media (width > 48rem) and (orientation: landscape) and (height <= 30rem) {
+    .demo-bottom-dock {
         display: none;
     }
 }
 
 .demo-main-scroller {
-    padding-block: var(--demo-shell-content-pad-block);
-    padding-inline: var(--demo-shell-content-pad-inline);
+    grid-area: main;
+    padding-block: var(--sp-5);
+    /* `max(rung, env())` is the whole safe-area idiom: the rung is the floor, the
+       notch is the exception. Live only now that the viewport meta carries
+       `viewport-fit=cover` — before that both `env()`s computed 0 and this was a
+       symmetric rung with extra syntax. */
+    padding-inline: max(var(--sp-5), env(safe-area-inset-left, 0px))
+        max(var(--sp-5), env(safe-area-inset-right, 0px));
     /* No-shift discipline: this route scroller hosts the
        portaled picker overlays (Select / DropdownMenu); reka's body scroll-lock
        removes a classic (space-taking) scrollbar on open, and WITHOUT a reserved
@@ -143,20 +184,20 @@
        (presets-in-consumers); the durable library utility is in utilities/base-misc.css.
        Baseline-newly-available (Chrome 94+ / Firefox 97+ / Safari 18.2+). */
     scrollbar-gutter: stable;
-    /* Content-side anti-collision gutter. The `<main>` route
-       column reserves the library `--dock-content-safe-inset` gutter (keyed to the
-       dock rail reach) on the SCROLL axes so the page-title band is structurally clear
-       of any dock-chip reach even on a route added WITHOUT a per-route audit (the
-       anti-gameability the gestalt gate wants): `scroll-padding-block-start` keeps a
-       scroll-snap/anchor jump from parking the title under the dock chrome; the
-       leading `scroll-padding-inline-start` reserves the dead inline band the fixed
-       SidebarDock rail sits beside. This is the CONTENT-side half of the
-       dock-collision close — the SEAT half (chipOverMain:false on EVERY route by
-       topology) pairs with the rail seat; the two close the collision
-       from BOTH sides on the SAME dead gutter (ONE gutter, two consumers — the reserve
-       + the fan). It NEVER widens the SEAT's gutter-fan or the symmetric `px-*` page
-       padding (a scroll-axis reserve, not a layout-box padding clobber). */
-    scroll-padding-block-start: var(--dock-content-safe-inset, 2.5rem);
+    /* `scroll-padding-block-start` is GONE. It existed to keep a scroll-snap or
+       anchor jump from parking the page title under dock chrome that overlapped
+       the content — and under the shell grid nothing overlaps the content: the
+       dock is a row, the rail is a column, and `100dvh` closed the toolbar
+       underflow that made the reserve look necessary at all.
+
+       `scroll-padding-inline-start` SURVIVES, conditioned and not by preference:
+       the doc-record above ties it to the rail's TRANSIENT hover/focus FAN
+       crossing the trailing edge, not to the bottom dock — and the fan is a
+       live mechanism, so the reserve is load-bearing until the §9 fan-open probe
+       says otherwise. Probe clean → this line dies with this comment; probe dirty
+       → GF-DOCK (#47) owns the reserve and re-homes it onto the rail seat. The
+       probe is OWED, so the line stays: deleting it on the assumption the probe
+       is clean would be a guess dressed as a cut. */
     scroll-padding-inline-start: var(--dock-content-safe-inset, 2.5rem);
 }
 

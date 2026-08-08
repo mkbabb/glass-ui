@@ -6,7 +6,14 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- `viewport-fit=cover` is the switch that makes `env(safe-area-inset-*)`
+             resolve to anything but 0. Without it every `max(rung, env(...))` in the
+             demo chassis computes the rung and the notch/home-indicator gutters are
+             inert — the shell reads correct on a desktop and clips on a phone. -->
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
         <meta
             name="description"
             content="Glassmorphic design system — Vue 3.5 components, glass tokens, motion primitives."

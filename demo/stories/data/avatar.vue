@@ -150,11 +150,42 @@ const sizes = ["sm", "md", "lg"] as const;
 </template>
 
 <style scoped>
+/* ARM-INVERTED (base = narrow). The 3-up arm was a `@media (min-width)` in
+   disguise — it lived as the BASE with a `max-width` override, which made the
+   desktop form unreachable from inside a 21rem cel and the mobile form
+   unreachable from a full-span section on a phone. One column is the base; the
+   three arrive from the CONTAINER. The 42rem numeral is unchanged: it always
+   measured this row of specimens, and now it measures the row rather than the
+   window it happened to sit in. */
 .avatar-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-    padding: 1.25rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-4);
+    padding: var(--sp-4);
+}
+
+.avatar-sizes {
+    flex-wrap: wrap;
+}
+
+.avatar-group-panel {
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+@container (inline-size > 42rem) {
+    .avatar-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .avatar-sizes {
+        flex-wrap: nowrap;
+    }
+
+    .avatar-group-panel {
+        align-items: center;
+        flex-direction: row;
+    }
 }
 
 .avatar-specimen,
@@ -194,13 +225,13 @@ const sizes = ["sm", "md", "lg"] as const;
 .avatar-status-row,
 .avatar-group-panel,
 .avatar-sizes {
-    padding: 1.25rem;
+    padding: var(--sp-4);
 }
 
 .avatar-sizes {
     display: flex;
     align-items: end;
-    gap: 1.5rem;
+    gap: var(--sp-5);
 }
 
 .avatar-sizes .avatar-specimen {
@@ -208,7 +239,7 @@ const sizes = ["sm", "md", "lg"] as const;
 }
 
 .avatar-group-panel {
-    margin-block-start: 1rem;
+    margin-block-start: var(--sp-4);
 }
 
 .avatar-group {
@@ -226,20 +257,5 @@ const sizes = ["sm", "md", "lg"] as const;
     box-shadow:
         0 0 0 2px var(--background),
         var(--shadow-sm);
-}
-
-@media (max-width: 42rem) {
-    .avatar-grid {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .avatar-sizes {
-        flex-wrap: wrap;
-    }
-
-    .avatar-group-panel {
-        align-items: flex-start;
-        flex-direction: column;
-    }
 }
 </style>

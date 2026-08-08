@@ -59,7 +59,7 @@ function scrollToTarget() {
 
 <template>
     <StoryPage>
-        <div class="flex flex-wrap items-end justify-between gap-4">
+        <div data-span="full" class="flex flex-wrap items-end justify-between gap-4">
             <StorySection
                 label="Virtual section window"
                 :heading="`${TOTAL}-section document — only the window renders`"

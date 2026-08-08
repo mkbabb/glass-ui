@@ -28,11 +28,11 @@ const authoredTile = computed(() =>
         :class="
             cn(
                 'section-preview-card glass-resting focus-ring',
-                'flex flex-col gap-3 rounded-card border border-[var(--glass-border-quiet)] p-4 lg:p-5',
-                lead && 'sm:col-span-2',
+                'flex flex-col gap-(--sp-3) rounded-card border border-[var(--glass-border-quiet)] p-(--sp-4)',
                 props.class,
             )
         "
+        :data-span="lead ? 'full' : null"
     >
         <!-- The thumbnail is paint, never a second interactive subtree. -->
         <div class="section-preview-card-preview" inert aria-hidden="true">

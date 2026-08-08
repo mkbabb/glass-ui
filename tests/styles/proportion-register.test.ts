@@ -318,3 +318,92 @@ describe("#68 L-2 — the --type-admin-label clean break", () => {
         },
     );
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// [2026-08-05 · BK #41 W-SORTABLE] THE PER-COMPONENT ROW, seats +0.
+//
+// CWT-2 §5's fold ruling collapses sortable G-8 ("plate r16, edge ink/0.16, row pad
+// 12, seam ink/0.08, grip pill"), tags G-T11, dialog G-DLG-ROOM's series clauses and
+// pager π14's gate-shaped half into THIS register as per-component rows — "ONE
+// tranche-wide PROPORTION invariant", −4 local gates. This is a ROW of the seat above,
+// not a seat: it mints no `G-*` id and adds nothing to `scripts/gate-register.mjs`.
+//
+// RED at HEAD: `sortable-list` had no stylesheet at all. `SortableItem.vue`'s style
+// block was `user-select` and nothing else, so six call sites had each invented a row —
+// four treatments, four grips, three radii, three paddings — and the one the DEMO
+// shipped was off-series on every axis it had: pad 10/12, r6 (the checkbox's TICK
+// rung), gap 8, and a retired tan `--border` at 1.28:1 for the divider.
+//
+// Every assertion below reads the COMPONENT for a token name and the REGISTER for that
+// token's value; neither side re-types the other's number.
+// ─────────────────────────────────────────────────────────────────────────────
+describe("the CWT-2:1533 tranche-wide register — per-component rows", () => {
+    const sortable = strip(read("src/components/sortable-list/styles.css"));
+    const ruleFor = (selector: string): string => {
+        const m = sortable.match(
+            new RegExp(`\\n\\s*${selector}\\s*\\{([\\s\\S]*?)\\n\\s*\\}`),
+        );
+        return m ? m[1] : "";
+    };
+
+    it("sortable · the plate is the CARD rung and its boundary is --ink-edge", () => {
+        const plate = ruleFor("\\.sortable-list");
+        expect(plate).toMatch(/border-radius:\s*var\(--radius-card\)/);
+        expect(plate).toMatch(/border:\s*1px solid[\s\S]*?var\(--ink-edge\)/);
+        // a FLOATING plate's boundary, read from the register rather than restated
+        expect(num(decl(colorRadius, "--ink-edge"))).toBe(INK.edge);
+    });
+
+    it("sortable · rows are FLUSH CELLS — the seam is the in-content rung, not the edge", () => {
+        // §4:228: a cell has no silhouette of its own, so no radius and no gap; the
+        // rule BETWEEN cells is a different ladder rung from the plate's boundary, and
+        // drawing them at the same α is what makes a grouped list read as a stack of
+        // little cards.
+        const row = ruleFor("\\.sortable-item");
+        expect(row).not.toMatch(/border-radius/);
+        const seam = ruleFor("\\.sortable-item \\+ \\.sortable-item");
+        expect(seam).toMatch(/var\(--ink-seam\)/);
+        expect(num(decl(colorRadius, "--ink-seam"))).toBe(INK.seam);
+        // and the two rungs are genuinely different — 2× apart, by the register
+        expect(close(INK.edge / INK.seam, 2)).toBe(true);
+    });
+
+    it("sortable · the row rhythm is --space-body, which transposes on its own", () => {
+        // §1.1's mobile transposition moves every rung down one; a component that reads
+        // the token gets the ≤768 arm for free and cannot forget it. A px literal here
+        // would be a second, un-transposing rhythm.
+        expect(ruleFor("\\.sortable-item")).toMatch(
+            /padding-block:\s*var\(--space-body\)/,
+        );
+        expect(ruleFor("\\.sortable-list")).toMatch(
+            /padding-inline:\s*var\(--space-body\)/,
+        );
+        const [, rem, px] = SERIES.find(([token]) => token === "--space-body")!;
+        expect(num(decl(desktopArm, "--space-body"))).toBe(rem);
+        expect(rem * 16).toBe(px);
+    });
+
+    it("sortable · the PAIRING LAW holds — pad = r − 4, residue exactly one rung", () => {
+        // §1.1:51's "list-row inset": pad 12 ↔ card 16. Computed from the two
+        // declarations, so it reds if either moves without the other.
+        const pad = num(decl(desktopArm, "--space-body")) * 16;
+        const cardRef = decl(read("src/styles/theme/radius.css"), "--radius-card")!;
+        expect(cardRef).toContain("--radius-2xl");
+        const card = num(decl(read("src/styles/theme/radius.css"), "--radius-2xl")) * 16;
+        expect(card - pad).toBe(num(decl(desktopArm, "--space-residue")) * 16);
+    });
+
+    it("sortable · the state fills are the FILL pair, and hover ≠ selected", () => {
+        expect(sortable).toMatch(/var\(--fill-hover\)/);
+        expect(sortable).toMatch(/var\(--fill-selected\)/);
+        expect(num(decl(colorRadius, "--fill-hover"))).toBe(FILL.hover);
+        expect(num(decl(colorRadius, "--fill-selected"))).toBe(FILL.selected);
+    });
+
+    it("sortable · the retired inks are GONE — no tan --border, no gold register", () => {
+        // §1.2 retired `--border` as a divider ink (α1.0 computes 1.28:1) and the gold
+        // belongs to the metal/earned register, not to a transient drag hint.
+        expect(sortable).not.toMatch(/var\(--border\b/);
+        expect(sortable).not.toMatch(/--color-gold/);
+    });
+});

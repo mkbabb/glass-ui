@@ -20,13 +20,18 @@ const props = withDefaults(defineProps<ShowcaseFrameProps>(), {
 });
 const slots = useSlots();
 
+/* The six pads re-map onto the ladder — the PROPS are kept (a caller asking for
+   `lg` is asking a design question, not a pixel question), the VALUES stop being
+   off-series. `p-4`/`p-6`/`p-10` (1rem/1.5rem/2.5rem) sat on none of the six rungs
+   and, being static Tailwind utilities, none of them transposed: a frame kept its
+   desktop padding on a 390px phone while the page around it stepped down. */
 const PAD_CLASS: Record<Pad, string> = {
     none: "p-0",
-    xs: "p-3",
-    sm: "p-4",
-    md: "p-5",
-    lg: "p-6",
-    xl: "p-10",
+    xs: "p-(--sp-2)",
+    sm: "p-(--sp-3)",
+    md: "p-(--sp-4)",
+    lg: "p-(--sp-5)",
+    xl: "p-(--sp-6)",
 };
 
 const padClass = computed(() => PAD_CLASS[props.pad]);
@@ -70,13 +75,13 @@ const hasCaption = computed(() => Boolean(props.caption || slots.caption));
 
 <style scoped>
 .showcase-frame--captioned {
-    --showcase-caption-gap: 0.75rem;
+    --showcase-caption-gap: var(--sp-3);
     padding-block-end: var(--showcase-caption-gap);
 }
 
 .showcase-frame-caption {
     margin-block-start: var(--showcase-caption-gap);
-    padding-inline: 1.25rem;
+    padding-inline: var(--sp-4);
     color: var(--muted-foreground);
     font-family: var(--font-mono);
     font-size: var(--type-mono-caption);

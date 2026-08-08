@@ -67,67 +67,72 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
             F13's receipt is the two-pole row — a trailing element in the default slot
             makes the row span its measure instead of hugging a label at the left edge,
             which is what left 74.9% of the box empty at 1440 and 81.2% at 1920. The
-            `md:grid-cols-2` page wrapper is correct at the PAGE grain and stays.
+            The 2-up page wrapper is ABSORBED: the two parallel single-list sections
+            are cel-field items now, so they pack 2-up exactly when two cels fit and
+            fall to one file when they do not — the same arrangement, without a `md:`
+            breakpoint asking the viewport about a column it never measured.
         -->
-        <div class="grid items-start gap-6 md:grid-cols-2">
-            <StorySection heading="Single list" blurb="Drag the grip to reorder.">
-                <SortableList
-                    :items="tasks"
-                    :get-id="(t) => t.id"
-                    :get-label="(t) => t.label"
-                    label="Tasks"
-                    @reorder="tasks = $event"
-                >
-                    <SortableItem v-for="t in tasks" :key="t.id" :id="t.id">
-                        <SortableHandle>
-                            <GripVertical :size="16" />
-                        </SortableHandle>
-                        <span>{{ t.label }}</span>
-                        <span
-                            class="size-2 rounded-full"
-                            :style="{ background: `var(--section-color-${t.tone})` }"
-                        />
-                    </SortableItem>
-                </SortableList>
-            </StorySection>
-
-            <StorySection
-                heading="Handle-only"
-                blurb="Only the grip button starts a drag — the row body stays selectable text."
+        <StorySection heading="Single list" blurb="Drag the grip to reorder.">
+            <SortableList
+                :items="tasks"
+                :get-id="(t) => t.id"
+                :get-label="(t) => t.label"
+                label="Tasks"
+                @reorder="tasks = $event"
             >
-                <SortableList
-                    :items="handleOnlyTasks"
-                    :get-id="(t) => t.id"
-                    :get-label="(t) => t.label"
-                    label="Handle-only tasks"
-                    handle-selector="[data-sortable-handle]"
-                    @reorder="handleOnlyTasks = $event"
-                >
-                    <SortableItem
-                        v-for="t in handleOnlyTasks"
-                        :key="t.id"
-                        :id="t.id"
-                        :disabled="t.id === 'h3'"
-                    >
-                        <SortableHandle>
-                            <GripVertical :size="16" />
-                        </SortableHandle>
-                        <span>{{ t.label }}</span>
-                        <span
-                            class="size-2 rounded-full"
-                            :style="{ background: `var(--section-color-${t.tone})` }"
-                        />
-                    </SortableItem>
-                </SortableList>
-            </StorySection>
-        </div>
+                <SortableItem v-for="t in tasks" :key="t.id" :id="t.id">
+                    <SortableHandle>
+                        <GripVertical :size="16" />
+                    </SortableHandle>
+                    <span>{{ t.label }}</span>
+                    <span
+                        class="size-2 rounded-full"
+                        :style="{ background: `var(--section-color-${t.tone})` }"
+                    />
+                </SortableItem>
+            </SortableList>
+        </StorySection>
 
         <StorySection
+            heading="Handle-only"
+            blurb="Only the grip button starts a drag — the row body stays selectable text."
+        >
+            <SortableList
+                :items="handleOnlyTasks"
+                :get-id="(t) => t.id"
+                :get-label="(t) => t.label"
+                label="Handle-only tasks"
+                handle-selector="[data-sortable-handle]"
+                @reorder="handleOnlyTasks = $event"
+            >
+                <SortableItem
+                    v-for="t in handleOnlyTasks"
+                    :key="t.id"
+                    :id="t.id"
+                    :disabled="t.id === 'h3'"
+                >
+                    <SortableHandle>
+                        <GripVertical :size="16" />
+                    </SortableHandle>
+                    <span>{{ t.label }}</span>
+                    <span
+                        class="size-2 rounded-full"
+                        :style="{ background: `var(--section-color-${t.tone})` }"
+                    />
+                </SortableItem>
+            </SortableList>
+        </StorySection>
+
+        <!-- `span="full"` because the kanban pins its OWN field: three drop columns
+             that must read as one board. A section carrying its own multi-column
+             arrangement is not a cel — it is the row. -->
+        <StorySection
+            span="full"
             heading="Cross-list"
             blurb='Drop between columns — the three lists share group="kanban". An empty
                 column grows to the size of what it is about to receive.'
         >
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div class="story-field">
                 <div v-for="column in [
                     { name: 'Todo', tone: '2', list: todo, set: (v: KanbanCard[]) => (todo = v) },
                     { name: 'Doing', tone: '5', list: doing, set: (v: KanbanCard[]) => (doing = v) },

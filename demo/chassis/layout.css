@@ -1,0 +1,140 @@
+/*
+ * layout.css — THE ONE LAYOUT. Demo-private; it does not touch `src/styles/`
+ * (R3: the ladder never reaches a consumer — library adoption of a spacing series
+ * is its own wave).
+ *
+ * One fluid chassis: a `100dvh` shell grid with an orientation-aware nav seat, a
+ * capped article whose only legal widths are four derived measures, a self-packing
+ * cel field that turns surplus width into columns instead of line-length, and a
+ * single six-rung spacing ladder with exactly one mobile transposition.
+ *
+ * The threshold ledger this file is allowed to contain, in total:
+ *   width  {48rem, 768px} · height {30rem} · orientation ×1.
+ * `48rem` and `orientation` are the SEAT law (dock-nav.css); `768px` is the ladder's
+ * ONE transposition; `30rem` is the short-viewport arm, shared by the seat law and
+ * the stage token. No other file in `demo/` may carry a width-conditional spacing
+ * block — that singleton is the gate.
+ */
+
+:root {
+    /* ── THE LADDER (§5) ────────────────────────────────────────────────────
+       Six rungs, hierarchy 8:5:3 desktop. Declared on `:root` rather than on the
+       shell so it reaches TELEPORTED overlays (Sheet / Dialog / Toaster portal to
+       <body>, outside `.demo-app-shell`); a ladder an overlay cannot see is a
+       ladder with a second, silent definition. */
+    --sp-1: 0.25rem;
+    --sp-2: 0.5rem;
+    --sp-3: 0.75rem;
+    --sp-4: 1.25rem;
+    --sp-5: 2rem;
+    --sp-6: 3.25rem;
+
+    /* ── THE FOUR MEASURES (§2), each with its derivation ───────────────────
+       Nothing in the demo may cap an inline size with a literal; these four are
+       the only legal widths, and each carries its law rather than a taste. */
+
+    /* Bringhurst's ideal line. */
+    --measure-prose: 66ch;
+
+    /* The largest cel min that is still ≥2-up at EVERY ≥768 census cell under the
+       seat law. Binding constraint 852×393 landscape: rail on, main = 852 − 88 −
+       64 = 700, so c ≤ (700 − 20)/2 = 340px. 21rem = 336px clears it. Accepted
+       seam: 769–772px on classic-scrollbar machines is 1-up (a 4px band with no
+       census cell in it). In-cel prose ≈ 42ch, above the 40ch floor. */
+    --measure-cel: 21rem;
+
+    /* φ · cel — the aristotelian major, for panel-bearing sections that pin their
+       own field rather than joining the cel run. */
+    --measure-wide: 34rem;
+
+    /* 2 × the 48rem seat threshold: content stops growing at twice the width where
+       nav earns a rail. Constrained to the 4-up band [4c+3g, 5c+4g) = [87.75,
+       110)rem ✓ — at the cap four cels stretch to 369px ≈ 46ch. */
+    --article-max: 96rem;
+
+    /* ── THE HEIGHT LAW (§2) ────────────────────────────────────────────────
+       ONE stage token replaces every story-local `vh` envelope. 62svh is the
+       golden major of the short viewport (1/φ = 61.8%); 44rem caps svh runaway on
+       4K portrait. */
+    --stage-block: min(62svh, 44rem);
+}
+
+/* THE ONE TRANSPOSITION. Mobile is not shrunken desktop: the ladder steps down one
+   rung and the hierarchy re-reads 5:3:2. `--sp-1` does not move — a hairline gap is
+   a hairline gap at every size. This is the ONLY width-conditional spacing block in
+   `demo/`; a second one is the mutation that bites G6. */
+@media (width <= 768px) {
+    :root {
+        --sp-2: 0.25rem;
+        --sp-3: 0.5rem;
+        --sp-4: 0.75rem;
+        --sp-5: 1.25rem;
+        --sp-6: 2rem;
+    }
+}
+
+/* The short arm keys on the SAME 30rem height the seat law uses to shed the dock —
+   one height threshold in the whole demo. 78svh of a 393px-tall viewport leaves
+   ≥86px of chrome, which is the row of controls a stage always needs beneath it. */
+@media (height <= 30rem) {
+    :root {
+        --stage-block: min(78svh, 44rem);
+    }
+}
+
+/* ── THE ARTICLE LAW (§2) ───────────────────────────────────────────────────
+   Two declarations, no bleed grid. The article caps the THING; the prose rule caps
+   the LINE. Ultra-wide grows things, never lines. `:where()` keeps the paragraph
+   cap at zero specificity so any composition can opt out with a plain class. */
+.story-article,
+.optical-bench {
+    max-inline-size: var(--article-max);
+    margin-inline: auto;
+}
+
+.story-article :where(p) {
+    max-inline-size: var(--measure-prose);
+    text-wrap: pretty;
+}
+
+/* ── THE CEL FIELD (§2) ─────────────────────────────────────────────────────
+   Surplus width becomes COLUMNS, not line-length. `min(--measure-cel, 100%)` is
+   what keeps the track from overflowing a container narrower than one cel — the
+   auto-fit idiom's only real trap. `align-items: start` stops a short section from
+   stretching to its row's tallest sibling.
+
+   Row-major source order is preserved and `dense` is deliberately absent: a reader
+   follows the page's argument, and `dense` reorders it to fill holes. */
+.story-cels,
+.story-sections,
+.story-field {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--measure-cel), 100%), 1fr));
+    gap: var(--sp-5) var(--sp-4);
+    align-items: start;
+}
+
+/* DESCENDANT, not child. `StoryBodyRenderer` renders its sections under a
+   `display: contents` wrapper, so the sections ARE the grid items but they are not
+   the grid's children; `grid-column` is inert on a non-item, which makes the
+   descendant selector both correct and safe. */
+.story-article [data-span="full"],
+.optical-bench [data-span="full"] {
+    grid-column: 1 / -1;
+}
+
+/* THE WRAP ARM (§2 kill #18) is NOT declared here, and the omission is the
+   finding. It is specified as `@container (inline-size >= 40rem)` re-keying the two
+   permanent horizontal FadingScroll rails (blob mood rail · aurora preset gallery)
+   to wrap when their column has the room — and at HEAD neither rail has an
+   inline-size container ANYWHERE in its ancestry (the whole-repo census is
+   `container-type: inline-size` ×6, none of them in the studio chain). The arm
+   would therefore never match, and a rule that never matches is a fallback hiding
+   a dead primary. Its container is the studio fork's, which is kill #10/#14's cut,
+   which lives in a file this seat may not touch. ROUTED with its subject. */
+
+/* The one stage envelope. Every story that used to spell `h-[min(70vh,560px)]` in
+   its own dialect reads this instead. */
+.story-stage {
+    block-size: var(--stage-block);
+}

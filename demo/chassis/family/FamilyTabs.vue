@@ -18,6 +18,7 @@ import {
     SegmentedTabs,
     type SegmentedTabOption,
 } from "@glass/components/tabs";
+import { FadingScroll } from "@glass/components/fading-scroll";
 import { STORY_NESTED_KEY } from "./story-nested";
 
 export interface FamilyMember {
@@ -53,18 +54,25 @@ const activeMember = computed<FamilyMember | undefined>(
 </script>
 
 <template>
-    <div class="story-family flex flex-col gap-6">
+    <div class="story-family flex flex-col gap-(--sp-5)">
         <!-- The family switcher — the library's own SegmentedTabs, paper material.
-             `responsive` collapses it to a <Select> on a narrow viewport (a long
-             family list must not overflow the mobile shell). -->
-        <SegmentedTabs
-            v-model="active"
-            :options="options"
-            variant="underline"
-            responsive
-            :aria-label="ariaLabel ?? 'Family members'"
-            class="story-family__switcher self-start"
-        />
+             The `responsive` arm is GONE: it swapped the mounted strip for a
+             <Select> below a viewport width, which is a SECOND DOM tree for one
+             control (the fork rubric's flat prohibition) and a different
+             interaction model besides — a reader who learned to swipe the strip on
+             a tablet finds a dropdown on a phone. The strip stays mounted at every
+             width and scrolls under the FadingScroll the tab run already ships;
+             the library-side retirement of `useTabResponsive` is the LIB-SEAM
+             batch's (§11), and reaches consumers through their own addenda. -->
+        <FadingScroll axis="x" class="story-family__switcher-port">
+            <SegmentedTabs
+                v-model="active"
+                :options="options"
+                variant="underline"
+                :aria-label="ariaLabel ?? 'Family members'"
+                class="story-family__switcher"
+            />
+        </FadingScroll>
         <!-- The active member's body, rendered bare (STORY_NESTED_KEY provided). Keyed
              on `active` so switching members remounts a fresh instance (clean local
              state and a fresh entrance) rather than reusing one across families. -->
@@ -73,3 +81,18 @@ const activeMember = computed<FamilyMember | undefined>(
         </div>
     </div>
 </template>
+
+<style scoped>
+/* The port the retired `responsive` arm's <Select> used to stand in for. A family
+   with seven members is 458px of strip on a 350px phone column — measured at
+   `/display/atoms` — and the strip is the RIGHT control, so what it needs is room
+   to scroll, not a different control. `w-fit` on the inner strip keeps the
+   underline run hugging its tabs instead of stretching across the port. */
+.story-family__switcher-port {
+    min-inline-size: 0;
+}
+
+.story-family__switcher {
+    inline-size: fit-content;
+}
+</style>

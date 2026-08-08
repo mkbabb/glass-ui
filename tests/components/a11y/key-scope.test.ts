@@ -23,7 +23,6 @@ import {
     SortableItem,
     SortableHandle,
 } from "@glass/components/sortable-list";
-import { eventTargetIsGrip } from "@glass/components/sortable-list/composables/touchGate";
 
 type Row = { id: string; label: string };
 
@@ -96,7 +95,7 @@ describe("G-KEY-SCOPE — a delegated row handler only consumes keys that start 
 
         expect(event.defaultPrevented).toBe(false);
         // and no drag was lifted by it
-        expect(wrapper.find(".sortable-item.is-sortable-dragging").exists()).toBe(false);
+        expect(wrapper.find(".sortable-item[data-sortable-lifted]").exists()).toBe(false);
     });
 
     it("a Space typed on the HANDLE still lifts the row (the cure takes nothing away)", async () => {
@@ -113,7 +112,7 @@ describe("G-KEY-SCOPE — a delegated row handler only consumes keys that start 
         await wrapper.vm.$nextTick();
 
         expect(event.defaultPrevented).toBe(true);
-        expect(wrapper.find(".sortable-item.is-sortable-dragging").exists()).toBe(true);
+        expect(wrapper.find(".sortable-item[data-sortable-lifted]").exists()).toBe(true);
     });
 
     it("Escape typed in a nested field is not stolen mid-drag either", async () => {
@@ -123,7 +122,7 @@ describe("G-KEY-SCOPE — a delegated row handler only consumes keys that start 
             new KeyboardEvent("keydown", { key: " ", bubbles: true, cancelable: true }),
         );
         await wrapper.vm.$nextTick();
-        expect(wrapper.find(".sortable-item.is-sortable-dragging").exists()).toBe(true);
+        expect(wrapper.find(".sortable-item[data-sortable-lifted]").exists()).toBe(true);
 
         const escape = new KeyboardEvent("keydown", {
             key: "Escape",
@@ -135,21 +134,38 @@ describe("G-KEY-SCOPE — a delegated row handler only consumes keys that start 
         expect(escape.defaultPrevented).toBe(false);
     });
 
-    it("the pointer path and the key path ask the SAME question", () => {
-        // The predicate is shared rather than re-implemented, so the two input modes
-        // cannot drift into two different definitions of "the grip". Both branches of
-        // `eventTargetIsGrip` are exercised here because the `null` branch is the one
-        // with no consumer in the shipped default.
-        const row = { nodeName: "LI" } as unknown as EventTarget;
-        const child = { nodeName: "INPUT" } as unknown as EventTarget;
+    it("the pointer path and the key path ask the SAME question", async () => {
+        // ONE predicate, both input modes, asserted through the component rather than
+        // against a hand-made EventTarget: the `null` (drag-from-anywhere) branch is
+        // the one with no consumer in the shipped default, so it is the one a unit
+        // fake would most easily get wrong. With no handle declared the ROW is the
+        // grip — a key that starts on a focusable descendant is not the row's to take.
+        const { wrapper } = mountList(null);
 
+        const fromField = new KeyboardEvent("keydown", {
+            key: " ",
+            bubbles: true,
+            cancelable: true,
+        });
+        wrapper.find("input.row-field").element.dispatchEvent(fromField);
+        await wrapper.vm.$nextTick();
         expect(
-            eventTargetIsGrip({ target: row, currentTarget: row }, null),
-            "no handle declared ⇒ the row itself is the grip",
-        ).toBe(true);
-        expect(
-            eventTargetIsGrip({ target: child, currentTarget: row }, null),
+            fromField.defaultPrevented,
             "no handle declared ⇒ a descendant that owns its own keys is NOT the grip",
         ).toBe(false);
+        expect(wrapper.find(".sortable-item[data-sortable-lifted]").exists()).toBe(false);
+
+        const fromRow = new KeyboardEvent("keydown", {
+            key: " ",
+            bubbles: true,
+            cancelable: true,
+        });
+        wrapper.find("li.sortable-item").element.dispatchEvent(fromRow);
+        await wrapper.vm.$nextTick();
+        expect(
+            fromRow.defaultPrevented,
+            "no handle declared ⇒ the row itself is the grip",
+        ).toBe(true);
+        expect(wrapper.find(".sortable-item[data-sortable-lifted]").exists()).toBe(true);
     });
 });

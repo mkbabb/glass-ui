@@ -68,7 +68,7 @@ function reset() {
 
 <template>
     <StoryPage>
-        <div class="flex items-end justify-between gap-4">
+        <div data-span="full" class="flex flex-wrap items-end justify-between gap-(--sp-4)">
             <StorySection label="Infinite scroll" heading="Event feed" />
             <Button size="sm" @click="reset">Reset</Button>
         </div>

@@ -118,6 +118,10 @@
    does not fork a second source critical/deferred block. */
 @import "../src/styles/index.css";
 @import "./chassis/hero/story-hero.css";
+/* THE ONE LAYOUT — the ladder, the four measures, the article law, the cel field.
+   Imported AFTER story-hero.css so the chassis rungs win over anything the hero
+   sheet still declares on `:root`. */
+@import "./chassis/layout.css";
 /* The retired liquid-morph, fission, Siri, and orientation-goo demo surfaces
    (`liquid-morph.css`, `liquid-playground`, `dock-gallery`, `morph-showcase`,
    `siri-island`) are DEFINITION-ABSENT (the whole goo-dock spectacle retired

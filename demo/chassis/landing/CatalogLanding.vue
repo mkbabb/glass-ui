@@ -13,7 +13,7 @@ function identityTile(category: Category) {
          and `/` is never the deeper one, so a key here could never be selected. The
          catalog's continuity objects are its preview cards, which declare the section
          paths they open. -->
-    <article class="optical-bench mx-auto w-full max-w-6xl">
+    <article class="optical-bench w-full">
         <StoryHero
             background="paper"
             title="Glass UI"
@@ -21,10 +21,11 @@ function identityTile(category: Category) {
             hero-scale="4"
             depth="D0"
         >
-            <section
-                aria-label="Component categories"
-                class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6"
-            >
+            <!-- `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3` asked the VIEWPORT how
+                 many cards fit in a column it has never measured. The cel field
+                 asks the column itself, so the catalog packs 1→2→3→4 across the
+                 same widths without naming a single breakpoint. -->
+            <section aria-label="Component categories" class="story-field">
                 <SectionPreviewCard
                     v-for="category in CATEGORIES"
                     :key="category.id"

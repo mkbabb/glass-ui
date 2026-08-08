@@ -237,8 +237,8 @@ describe("G-SPRING-ONE-JOB · the clock-fence arm — a spring owns its own cloc
     //     `dark-mode-toggle.css:76-77`, all correctly paired.
     //   · a FALLBACK clock — `TIMEISH` requires `var(--x)` to close immediately, so
     //     `var(--duration-normal, 0.3s)` matches nothing and the leg drops out of
-    //     scope entirely. This row's `ContinuousMarkers.vue` site was that shape and
-    //     was found by hand, NOT by this arm.
+    //     scope entirely. That row's `ContinuousMarkers.vue` site was that shape and
+    //     was found by hand, NOT by this arm (the file itself died at BK #46).
     //   · a curve ALIAS other than `--transition-liquid-spatial`: only that one
     //     indirection resolves, so `--ease-scroll-spring` · `--vt-ease` ·
     //     `--dock-resize-spring` · `--enter-overlay-spring` · `--enter-menu-spring`

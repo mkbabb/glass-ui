@@ -236,8 +236,16 @@ onMounted(() => {
          suppressor is a DESCENDANT selector reading this attr, so it must sit above
          the cards. Set only while the shell field is active (a focal route's own
          field needs no suppression). -->
+    <!-- THE SHELL GRID. `h-screen` + `flex` + an inner flex-column wrapper were
+         three mechanisms describing one two-by-two topology, and `100vh` is the
+         wrong unit on a phone with a dynamic toolbar — it measures the LARGEST
+         viewport, so the dock underflows by the toolbar's height for the whole
+         time the toolbar is showing. The grid states the topology once
+         (`"rail main" / "rail dock"`) and `100dvh` measures what is actually
+         visible; the dock is an in-flow grid row, so occluding the content is
+         impossible by construction rather than by a reserved spacer. -->
     <div
-        class="demo-app-shell relative flex h-screen overflow-hidden text-foreground"
+        class="demo-app-shell relative text-foreground"
         :data-paper-field="shellFieldActive ? '' : null"
         @keydown.capture="markKeyboardInput"
         @pointerdown.capture="markPointerInput"
@@ -277,42 +285,43 @@ onMounted(() => {
             <SidebarDock />
         </nav>
 
-        <div class="flex min-h-0 min-w-0 flex-1 flex-col">
-            <!-- `<main>` owns route scroll. BottomDock is the adjacent shell footer,
-                 so its actual block-size reserves the interaction-safe region without
-                 a guessed route spacer.
-                 `tabindex="-1"` lets the route-settle
-                 watch move focus here, so the atomic keyed swap doesn't strand focus
-                 at <body> + keyboard tab order resets to the new page. -->
-            <main
-                id="demo-main"
-                ref="mainEl"
-                tabindex="-1"
-                :data-route-focus="showRouteFocus ? 'keyboard' : null"
-                class="demo-main-scroller smooth-scroll relative flex-1 min-h-0 min-w-0 overflow-y-auto"
-            >
-                <!-- Screen-reader route-change announcement. The
-                     atomic keyed swap has no skeleton `aria-busy`, so this polite live
-                     region is the only route-change signal AT receives; the route-settle
-                     watch writes the new page title. -->
-                <p class="sr-only" aria-live="polite" role="status">
-                    {{ routeAnnounce }}
-                </p>
-                <!-- The route mutation is wrapped by the demo's native View Transition
-                     owner. This keyed node carries no local animation, so native snapshots
-                     and the immediate unsupported/reduced path never compete. -->
-                <RouterView v-slot="{ Component }">
-                    <component :is="Component" :key="route.path" />
-                </RouterView>
-            </main>
+        <!-- `<main>` owns route scroll. BottomDock is the adjacent shell grid ROW,
+             so its actual block-size shortens <main> without a guessed route
+             spacer. The flex-column wrapper that used to hold the two is gone —
+             the grid's own `"rail main" / "rail dock"` areas say the same thing
+             once, and one topology stated twice is one topology that can disagree
+             with itself.
+             `tabindex="-1"` lets the route-settle watch move focus here, so the
+             atomic keyed swap doesn't strand focus at <body> + keyboard tab order
+             resets to the new page. -->
+        <main
+            id="demo-main"
+            ref="mainEl"
+            tabindex="-1"
+            :data-route-focus="showRouteFocus ? 'keyboard' : null"
+            class="demo-main-scroller smooth-scroll relative min-h-0 min-w-0 overflow-y-auto"
+        >
+            <!-- Screen-reader route-change announcement. The
+                 atomic keyed swap has no skeleton `aria-busy`, so this polite live
+                 region is the only route-change signal AT receives; the route-settle
+                 watch writes the new page title. -->
+            <p class="sr-only" aria-live="polite" role="status">
+                {{ routeAnnounce }}
+            </p>
+            <!-- The route mutation is wrapped by the demo's native View Transition
+                 owner. This keyed node carries no local animation, so native snapshots
+                 and the immediate unsupported/reduced path never compete. -->
+            <RouterView v-slot="{ Component }">
+                <component :is="Component" :key="route.path" />
+            </RouterView>
+        </main>
 
-            <!-- Shell-anchored story navigation. It remains fixed relative to the
-                 viewport because only <main> scrolls, while participating in flex
-                 layout keeps route controls outside its hit-test plane. -->
-            <BottomDock
-                style="view-transition-name: gl-shell-footer; view-transition-class: gl-route-chrome"
-            />
-        </div>
+        <!-- Shell-anchored story navigation, the grid's `dock` row. It never
+             scrolls with the content because only <main> scrolls, and it cannot
+             occlude the content because an in-flow row has nothing to occlude. -->
+        <BottomDock
+            style="view-transition-name: gl-shell-footer; view-transition-class: gl-route-chrome"
+        />
     </div>
 
     <!-- the in-situ V↔H dock-morph stage is DEFINITION-ABSENT
