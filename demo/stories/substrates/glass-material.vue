@@ -151,7 +151,6 @@ const ACCENT_STRENGTH = "48%";
                 <div class="flex flex-wrap items-center gap-6">
                     <div
                         class="relative h-28 w-56 overflow-hidden rounded-card"
-                        data-material="content"
                     >
                         <canvas
                             ref="liveCanvas"
@@ -165,7 +164,6 @@ const ACCENT_STRENGTH = "48%";
                             ref="liveCardEl"
                             data-glass-sample="live"
                             class="glass-card relative flex size-full flex-col items-center justify-center gap-1 rounded-card px-3 text-center text-small font-medium"
-                            data-material="functional"
                         >
                             <span>live canvas sample</span>
                             <span class="text-mono-small text-muted-foreground">

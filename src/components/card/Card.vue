@@ -13,14 +13,20 @@ export type CardSize = "sm" | "md";
  *
  * `material` is SEVERED (DAG, via `_shared/surface`): the card is the elevated
  * role by construction, which is Surface's own default, so the axis added a knob
- * and no capacity. `cartoon` / `grid` / `metal` / `variant` / `dataHue` /
+ * and no capacity. `shadow` is CARD's own — Surface went three-prop and the
+ * card is the one component with a real elevation grammar, so it stamps its own
+ * `data-shadow` for the edge keying instead of routing the flag through a
+ * primitive that no longer reads it. `grain` and `specular` are gone from the
+ * whole library. `cartoon` / `grid` / `metal` / `variant` / `dataHue` /
  * `dataHueStrength` are struck: three of them wrote a class a consumer can write
  * (`cartoon-surface`, `paper-grid`), and `variant`+`dataHue`+`selected` were one
  * state wearing three props. A per-instance rim hue is `--glass-accent`, written
  * by the consumer on the element.
  */
-export interface CardProps extends Omit<SurfaceProps, "material"> {
+export interface CardProps extends SurfaceProps {
     size?: CardSize;
+    /** The opt-in elevation. Card owns this axis; Surface no longer has one. */
+    shadow?: boolean;
     /** Presence makes the card an option: role, tabindex, aria-selected, states. */
     selected?: boolean;
 }
@@ -47,10 +53,8 @@ const selectable = computed(() => props.selected !== undefined);
         :tier="tier"
         :surface="surface"
         :deep="deep"
-        :shadow="shadow"
-        :grain="grain"
-        :specular="specular"
         :as="as"
+        :data-shadow="shadow || undefined"
         :data-size="size"
         :data-selected="selected ? 'true' : undefined"
         :role="selectable ? 'option' : undefined"

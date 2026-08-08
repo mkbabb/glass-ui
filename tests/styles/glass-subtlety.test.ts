@@ -223,8 +223,14 @@ describe("glass blur ladder — five in-band radii, one calibration anchor", () 
         );
     });
 
-    it("HOLDS the deep ceiling as a SEPARATE opt-in continuum", () => {
-        expect(deep.get("--glass-blur-deep-radius")).toBe("16px");
+    it("HOLDS the deep tier as a SEPARATE opt-in continuum — a BOOST on the rung", () => {
+        /* The absolute `--glass-blur-deep-radius: 16px` endpoint is RETIRED: it was
+           written against an 11px calm floating rung, and once the calm ladder moved
+           to 20/22px the "deep" decoration THINNED the surfaces it decorates. The
+           axis is now the +5px delta it always encoded, added to the rung's own
+           radius, so `deep > plain` survives any calm-ladder retune. */
+        expect(deep.get("--glass-blur-deep-boost")).toBe("5px");
+        expect(deep.get("--glass-blur-deep-radius")).toBeUndefined();
     });
 
     it("has NO device-conditional overlay-radius writer (the 2dppx arm is KILLED)", () => {
@@ -574,8 +580,10 @@ describe("glass material — the structural invariants", () => {
         // sees a bare component name and counts nothing — which is how the arm read a
         // max depth of 1 against a bound of 2 and could never fail. A component counts
         // if its own comment-stripped source names a rung class OR calls the library's
-        // one surface resolver (`resolveSurfaceClass`, which returns `glass-${tier}` by
-        // construction) — that is where a computed class like `DialogContent`'s
+        // one surface resolver (`surfaceClass`, which returns `glass-${tier}` by
+        // construction — RE-KEYED at BK #86, where the resolver relocated to
+        // `_shared/surface/resolve.ts` and lost its `resolve` prefix) — that is where
+        // a computed class like `DialogContent`'s
         // `contentClass` actually resolves its rung, and no render is needed to read it.
         //
         // THE SCOPE, HONESTLY, both ways. It is ONE hop: a plate contributed two
@@ -596,12 +604,12 @@ describe("glass material — the structural invariants", () => {
             const source = stripSfc(readFileSync(file, "utf8"));
             componentPlate.set(
                 file.replace(/^.*\//, "").replace(/\.vue$/, ""),
-                rungClass.test(source) || /resolveSurfaceClass\(/.test(source),
+                rungClass.test(source) || /\bsurfaceClass\(/.test(source),
             );
         }
         // The hop is load-bearing, and these are the assertions that it stayed wired.
         // Two components whose rung is reachable ONLY through the hop — DialogContent
-        // resolves its through `resolveSurfaceClass`, SelectContent names one on a reka
+        // resolves its through `surfaceClass`, SelectContent names one on a reka
         // tag — so if the hop breaks, both flip and the walk goes decorative.
         expect(componentPlate.get("DialogContent"), "DialogContent no longer resolves as a plate")
             .toBe(true);

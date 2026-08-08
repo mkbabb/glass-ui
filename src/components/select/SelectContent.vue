@@ -80,7 +80,6 @@ const dockContext = useOptionalDockContext();
             :data-glass-dock-portal="dockContext?.id ? '' : undefined"
             :data-glass-dock-owner="dockContext?.id"
             :data-surface="props.surface"
-            data-material="overlay"
             data-reveal="menu"
             data-slot="select-content"
             :class="

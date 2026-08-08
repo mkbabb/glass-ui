@@ -126,7 +126,7 @@ html.no-transition *:not([data-allow-motion])::after {
     /* Structural edges borne ONLY by box-shadow (the hairline catch-light + the
        dock SHELL pill edge) also vanish — restore a real border so the silhouette
        survives. CanvasText is the system text/border color. The `.glass-dock`
-       shell is OUT of the glass-material group BY DESIGN (it hand-rolls a parallel
+       shell is OUT of the material group BY DESIGN (it hand-rolls a parallel
        surface — see glass.css), so it keeps its WHC edge HERE; the five-rung ladder
        + `.glass-card` get their WHC border from the co-located glass-language skin
        in glass.css (one source per surface family, no double-declaration). */

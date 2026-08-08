@@ -98,7 +98,7 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
                 </DropdownMenu>
             </div>
 
-            <Surface material="content" surface="veil" class="flex flex-col gap-3 p-5">
+            <Surface tier="quiet" surface="veil" class="flex flex-col gap-3 p-5">
                 <div class="flex items-center justify-between">
                     <span class="text-small capitalize"
                         >{{ panelLayout }} layout</span
@@ -154,7 +154,7 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
                 edge, and a disabled trigger never opens.
             </p>
             <Surface
-                material="content"
+                tier="quiet"
                 surface="veil"
                 class="flex flex-wrap items-center gap-3 p-5"
             >

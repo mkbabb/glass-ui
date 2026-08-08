@@ -12,7 +12,7 @@ import { useSpringMount } from "../../composables/motion/spring/useSpringMount";
 import ModalOverlay from "../dialog/ModalOverlay.vue";
 import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
-import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
+import { surfaceClass } from "../_shared/surface/resolve";
 import {
     scrimDetentOpacity,
     scrimOpacity,
@@ -102,7 +102,7 @@ const SIDE_BORDER: Record<SidePlacement, string> = {
 };
 
 const contentClass = computed(() =>
-    cn(SIDE_BORDER[props.side], resolveSurfaceClass("floating"), props.class),
+    cn(SIDE_BORDER[props.side], surfaceClass("floating"), props.class),
 );
 
 const dialogRoot = injectDialogRootContext();
@@ -294,7 +294,6 @@ const contentStyle = computed<CSSProperties>(() => ({
             :style="contentStyle"
             :data-surface="props.surface"
             data-slot="sheet-content"
-            data-material="overlay"
             :data-side="props.side"
             :data-modal="dialogRoot.modal.value ? undefined : 'false'"
             :data-detents="detented ? '' : undefined"

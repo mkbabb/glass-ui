@@ -7,7 +7,7 @@ import { useReducedMotion } from "../motion/core/useReducedMotion";
  *
  * On pointer-move it writes the cursor position (`--mouse-x`/`--mouse-y`, as
  * percentages of the host box) onto the host's inline style; the unified
- * `.glass-material::before` recipe (`glass.css`) MAPS that host write onto its
+ * material-group `::before` recipe (`glass.css`) MAPS that host write onto its
  * typed `--specular-x`/`--specular-y` channel and paints the travelling glow.
  *
  * VOCAB: `--mouse-x`/`--mouse-y` is the HOST WRITE this seam

@@ -67,6 +67,27 @@
         inset-block-end: auto;
     }
 
+    /* The family's ONE "passed" law. A checkpoint the value has reached is
+       SWALLOWED — set by every composer when `mark.position <= fraction`.
+       The alternative it replaces was never a behaviour, it was an accident:
+       the Progress fill carries `z-index: 1` over a z-indexless mark, so a
+       passed checkpoint under an opaque fill was already occluded, while the
+       liquid variant ghosted the same dot through its glass. One encoding, one
+       declared crossfade, on the coordinated-travel pair. */
+    .glass-value-mark[data-consumed] {
+        opacity: 0;
+    }
+
+    .glass-value-mark {
+        transition: opacity var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .glass-value-mark {
+            transition: none;
+        }
+    }
+
     /* The dot — centred on the zero-thickness line, direction-agnostic. */
     .glass-value-mark::before {
         content: "";

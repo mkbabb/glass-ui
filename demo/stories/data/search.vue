@@ -482,7 +482,7 @@ function formatScore(score: number): string {
             heading="Live search"
             blurb="Type to filter the 200-row catalogue. The rail and the overlay stay in sync as you type, and screen readers hear the running result count."
         >
-            <Surface material="content" surface="veil" class="flex flex-col gap-4 p-5">
+            <Surface tier="quiet" surface="veil" class="flex flex-col gap-4 p-5">
                 <SearchBar
                     v-model="query"
                     size="lg"

@@ -67,7 +67,13 @@
  *                              .glass-{wash,quiet,resting,floating,overlay}
  *                              5-rung ladder + .glass-card / -pill / -btn.
  *                              Consumes tokens (1) + theme aliases (3).
- *  4a. glass-specular-track.css — the pointer-anchored moving specular rung.
+ *  4a. track-well.css       — the ONE shared groove register (`.track-well`).
+ *                              A cross-component SHAPE (position/overflow/pill
+ *                              radius + the top-only recess ink), NOT a material:
+ *                              it declares no backdrop-filter, which is why the
+ *                              `glass-` prefix left with it when the register
+ *                              moved up out of glass/ (BK #86+#88, C-1).
+ *  4b. glass-specular-track.css — the pointer-anchored moving specular rung.
  *                              A `.glass-specular-track` opt-in paints
  *                              a masked radial catch-light tracking the pointer
  *                              (@property-animated, reduced-motion-static, var()
@@ -182,6 +188,7 @@
 @import "./paper.css";
 @import "../components/dark-mode-toggle/dark-mode-toggle.css";
 @import "../components/dock/styles/index.css";
+@import "./track-well.css";
 @import "../components/dock/styles/controls.css";
 @import "../components/card/styles.css";
 @import "../components/_shared/feedback/feedback-tone.css";

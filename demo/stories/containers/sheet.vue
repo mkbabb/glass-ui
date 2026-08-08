@@ -214,7 +214,7 @@ const votes = ref(0);
                 <code class="font-mono text-micro">Button</code> variant anchors it.
             </p>
             <Surface
-                material="content"
+                tier="quiet"
                 surface="veil"
                 class="flex flex-wrap items-center gap-3 p-5"
             >

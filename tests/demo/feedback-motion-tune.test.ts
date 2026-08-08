@@ -34,14 +34,17 @@ describe("Progress demo loop driver — re-homed off setInterval (F22 / J7)", ()
         expect(PROGRESS_STORY).toMatch(/cancelAnimationFrame/);
     });
 
-    // (a) CANON PERIOD — the loop breathes on the canon indeterminate-sweep tempo
-    // (--motion-duration-progress-indeterminate = 4s, the R3b 4000ms engagement exemplar),
-    // read from the token layer, never a component-local literal.
-    it("sources the loop period from the canon --motion-duration-progress-indeterminate token", () => {
-        expect(PROGRESS_STORY).toContain("--motion-duration-progress-indeterminate");
-        expect(MOTION_TOKENS).toMatch(
-            /--motion-duration-progress-indeterminate:\s*4s/,
-        );
+    // (a) CANON PERIOD — the loop breathes on the library's ONE indeterminate clock
+    // (--duration-shimmer-fast = 3s, the token the flow band itself rides), read from
+    // the token layer, never a component-local literal. AMENDED at BK #88: the
+    // fourth clock this used to pin (--motion-duration-progress-indeterminate) died
+    // with the gradient sweep, and its 4000ms literal fallback died with it — a
+    // literal minted BY a strike is a masking fallback the strike created.
+    it("sources the loop period from the canon --duration-shimmer-fast token", () => {
+        expect(PROGRESS_STORY).toContain("--duration-shimmer-fast");
+        expect(PROGRESS_STORY).not.toMatch(/:\s*4000\b/);
+        expect(MOTION_TOKENS).toMatch(/--duration-shimmer-fast:\s*3s/);
+        expect(MOTION_TOKENS).not.toMatch(/--motion-duration-progress-\w+\s*:/);
     });
 });
 

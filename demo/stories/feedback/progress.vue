@@ -11,7 +11,8 @@ import { GlassDock } from "@glass/components/dock";
 
 const determinate = ref(42);
 const segmentProgress = [1, 0.72, 0.35, 0] as const;
-const progressVariants = ["default", "gradient", "liquid"] as const;
+const progressVariants = ["default", "liquid"] as const;
+const progressSizes = ["sm", "md", "lg"] as const;
 const rimStates = [0, 50, 100] as const;
 const rimWidths = ["1px", "4px", "12px"] as const;
 const rimAxes = [
@@ -23,15 +24,16 @@ const rimAxes = [
 const animated = ref(0);
 let raf: number | undefined;
 
-// The loop breathes on the canon indeterminate-sweep tempo
-// (--motion-duration-progress-indeterminate = 4s, the R3b 4000ms engagement
-// exemplar) — read from the token layer, never a component-local literal.
+// The loop breathes on the library's ONE indeterminate clock
+// (--duration-shimmer-fast = 3s, the same token the flow band rides) — read
+// from the token layer, never a component-local literal. The retired
+// --motion-duration-progress-indeterminate took its 4000ms fallback with it: a
+// literal minted BY a strike is a masking fallback the strike itself created.
 function loopPeriodMs(): number {
     const raw = getComputedStyle(document.documentElement).getPropertyValue(
-        "--motion-duration-progress-indeterminate",
+        "--duration-shimmer-fast",
     );
-    const seconds = Number.parseFloat(raw);
-    return Number.isFinite(seconds) && seconds > 0 ? seconds * 1000 : 4000;
+    return Number.parseFloat(raw) * 1000;
 }
 
 function startAnimated(): void {
@@ -72,13 +74,15 @@ onUnmounted(stopAnimated);
                     </p>
                     <div class="flex items-center gap-2">
                         <Button
-                            class="h-7 px-2 text-micro"
+                            class="min-h-11 min-w-11 px-3 text-micro"
+                            aria-label="Decrease by ten"
                             @click="determinate = Math.max(0, determinate - 10)"
                         >
                             −10
                         </Button>
                         <Button
-                            class="h-7 px-2 text-micro"
+                            class="min-h-11 min-w-11 px-3 text-micro"
+                            aria-label="Increase by ten"
                             @click="determinate = Math.min(100, determinate + 10)"
                         >
                             +10
@@ -119,25 +123,44 @@ onUnmounted(stopAnimated);
         <StorySection label="animated (loop)">
             <Progress
                 :model-value="animated"
-                :style="{ '--progress-fill': 'var(--viz-fourier)' }"
+                :style="{ '--progress-fill': 'var(--viz-legendre)' }"
                 aria-label="Looping progress demonstration"
             />
         </StorySection>
 
         <StorySection label="indeterminate">
             <p class="font-mono text-micro text-muted-foreground">
-                <code>indeterminate</code> removes the numeric value and the rail sweeps
-                to signal unknown duration. It becomes static under
-                <code>prefers-reduced-motion</code>.
+                <code>:model-value="null"</code> is indeterminate — reka's own door,
+                and the only one. The numeric value leaves the AX tree and a specular
+                FLOW band sweeps the groove on the library's one shimmer clock. Under
+                <code>prefers-reduced-motion</code> the band parks mid-sweep at its
+                floor alpha: the state survives at reduced amplitude, never as a static
+                ramp pretending to be a quantity.
             </p>
-            <Progress indeterminate />
+            <div class="grid gap-4">
+                <Progress :model-value="null" aria-label="Indeterminate progress" />
+                <div class="flex h-32 justify-center">
+                    <Progress
+                        :model-value="null"
+                        orientation="vertical"
+                        aria-label="Indeterminate vertical progress"
+                    />
+                </div>
+            </div>
         </StorySection>
 
         <StorySection label="sizes">
             <div class="grid gap-4">
-                <Progress :model-value="62" class="h-1.5" />
-                <Progress :model-value="62" />
-                <Progress :model-value="62" class="h-6" />
+                <div v-for="size in progressSizes" :key="size" class="grid gap-1">
+                    <span class="font-mono text-micro text-muted-foreground">
+                        {{ size }}
+                    </span>
+                    <Progress
+                        :model-value="62"
+                        :size="size"
+                        :aria-label="`Size ${size} at 62 percent`"
+                    />
+                </div>
             </div>
         </StorySection>
 
@@ -167,21 +190,8 @@ onUnmounted(stopAnimated);
                     orientation="vertical"
                     :model-value="62"
                     :marks="[25, 50, 75]"
-                    :aria-label="`Vertical ${variant} progress`"
+                    :aria-label="`Vertical ${variant} progress at 62 percent`"
                 />
-            </div>
-        </StorySection>
-
-        <!-- Gradient paint over the shared progress geometry and semantics. -->
-        <StorySection label="gradient variant">
-            <p class="font-mono text-micro text-muted-foreground">
-                <code>variant="gradient"</code> adds the lifecycle motion grammar and
-                optional indeterminate sweep (a slow left-to-right pan, retired under
-                <code>prefers-reduced-motion</code>).
-            </p>
-            <div class="grid gap-4">
-                <Progress variant="gradient" :model-value="determinate" />
-                <Progress variant="gradient" indeterminate />
             </div>
         </StorySection>
 
@@ -196,10 +206,15 @@ onUnmounted(stopAnimated);
                 rides <code>--progress-fill</code> (or <code>--liquid-fill-tint</code>).
             </p>
             <div class="grid gap-4">
-                <Progress variant="liquid" :model-value="determinate" />
+                <Progress
+                    variant="liquid"
+                    :model-value="determinate"
+                    aria-label="Liquid fill, default tint"
+                />
                 <Progress
                     variant="liquid"
                     :model-value="72"
+                    aria-label="Liquid fill, legendre tint"
                     :style="{ '--progress-fill': 'var(--viz-legendre)' }"
                 />
             </div>
@@ -238,7 +253,7 @@ onUnmounted(stopAnimated);
                         <span class="px-3 font-mono text-micro">Expanded</span>
                         <template #collapsed>
                             <span
-                                class="size-2 rounded-full bg-foreground/60"
+                                class="size-2 rounded-pill bg-foreground/60"
                                 aria-hidden="true"
                             />
                         </template>
@@ -250,7 +265,7 @@ onUnmounted(stopAnimated);
                     />
                 </div>
                 <div
-                    class="relative grid size-16 place-items-center rounded-full bg-card/40"
+                    class="relative grid size-16 place-items-center rounded-pill bg-card/40"
                 >
                     <span class="font-mono text-micro tabular-nums">65%</span>
                     <ScrollProgressRim
@@ -295,7 +310,7 @@ onUnmounted(stopAnimated);
                 </div>
             </div>
 
-            <div class="glass-card relative rounded-card px-4 py-3 pb-5">
+            <div class="glass-resting relative rounded-card px-4 py-3 pb-5">
                 <ScrollProgressRim
                     :value="2.07"
                     :max="4"

@@ -338,7 +338,7 @@ onMounted(() => {
                 aria-hidden="true"
             />
         </Teleport>
-        <SliderTrack class="slider-track glass-track-well">
+        <SliderTrack class="slider-track track-well">
             <span
                 v-if="marks.length"
                 class="glass-value-marks"

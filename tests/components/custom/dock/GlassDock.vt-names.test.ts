@@ -27,13 +27,14 @@ describe("GlassDock transition identity", () => {
             .findAll(".dock-id-probe")
             .map((el) => el.attributes("data-dock-id"));
 
-        expect(
-            wrapper
-                .findAll(".glass-dock")
-                .every(
-                    (dock) => dock.attributes("data-material") === "functional",
-                ),
-        ).toBe(true);
+        /* `data-material="functional"` is GONE from the dock (BK #86 cure round):
+           the `[data-material]` role-shadow grammar it keyed was deleted whole at
+           C-2, so the stamp read to nothing for a whole major. What this case
+           actually needs is that both docks mounted as docks. */
+        expect(wrapper.findAll(".glass-dock")).toHaveLength(2);
+        for (const dock of wrapper.findAll(".glass-dock")) {
+            expect(dock.attributes("data-material")).toBeUndefined();
+        }
 
         expect(ids).toHaveLength(2);
         // Both well-formed (useId() returned a non-empty value — the real

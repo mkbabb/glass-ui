@@ -8,7 +8,7 @@ import type {
 } from "../_shared/interaction";
 import { cn } from "../_shared/class-names";
 import { useOptionalDockContext } from "../dock/composables/dockContext";
-import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
+import { surfaceClass } from "../_shared/surface/resolve";
 import { useMenuPart, useMenuTrigger } from "./useMenuTrigger";
 
 export interface DropdownMenuContentProps extends FloatingPlacementProps {
@@ -75,7 +75,7 @@ const dockContext = useOptionalDockContext();
             :class="
                 cn(
                     'dropdown-menu-content dropdown-menu__content glass-reveal',
-                    resolveSurfaceClass('floating'),
+                    surfaceClass('floating'),
                     props.class,
                 )
             "

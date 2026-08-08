@@ -18,7 +18,7 @@
     /* The PAPER grain is its OWN register (~3× the glass grain):
        paper texture is MEANT to READ (the user: "I don't see any paper grain or grit
        anywhere"), not sit at the glass perceptual floor. ONE token retunes paper grit
-       library-wide WITHOUT coarsening the subtle glass-material grain (the split keeps
+       library-wide WITHOUT coarsening the subtle material grain (the split keeps
        glass calm + paper tactile). The dark arm (dark-arm.css) lifts it for soft-light. */
     /* Re-calibrated to the JND floor for the CORRECTED coarse
        tooth + multiply blend (std ≥ 4.5 light, the no-squint floor): multiply on the
@@ -108,7 +108,7 @@
        upper-right key) drives WHICH edge of the existing two-stop directional rim
        reads LIT vs SHADE, in lockstep with the shipped `.shadow-cartoon-*` down-LEFT
        cast (shadow.css `-Npx Npx` → key upper-right). The key is expressed NOT as a
-       `-58deg` angle with sign-inverted cos()/sin() trig (the glass-material sign
+       `-58deg` angle with sign-inverted cos()/sin() trig (the material sign
        trap — banned here), but as two PLAIN per-axis sign tokens the rim stops read
        directly: the LIT catch wraps the key-facing edges (top + right), the SHADE
        under-shadow grounds the opposite edges (bottom + left). A consumer re-points
@@ -128,12 +128,14 @@
        library-wide (the 3 tiers + the dock-wrap vivid consumer all read it). It is a
        RATIO (unitless), multiplied into each tier's Y magnitude to give the X:
        -0.375 = tan 20.56° down-LEFT is the cel-coherent FILL lean the identity sets (cel cast
-       = 45° KEY, under-shadow = 20.56° FILL — one light). The LIBRARY DEFAULT is `0`
-       (straight-down) so the shipped under-shadow is byte-identical (the
-       refactor-not-repaint π holds); a future identity
-       wave sets `-0.375` via this ONE token (presets-in-consumers). The spine rung is
-       INTENTIONALLY-OMNIDIRECTIONAL (an edge-thickness cue, not a cast) — left unleaned. */
-    --glass-key-direction: 0;
+       = 45° KEY, under-shadow = 20.56° FILL — one light). THIS IS THAT IDENTITY WAVE:
+       the value the file's own comment had been naming for two majors is now the
+       declared one, so the rim and the cast finally agree on ONE light source
+       instead of the cast falling straight down under a rim that leans. Four
+       consumers move in lockstep off this single write (the 3 under-shadow tiers +
+       the dock-wrap vivid). The spine rung is INTENTIONALLY-OMNIDIRECTIONAL (an
+       edge-thickness cue, not a cast) — left unleaned. */
+    --glass-key-direction: -0.375;
     /* The two-stop directional rim, now
        KEY-DRIVEN: the bright catch-light `--glass-rim-top` rides the lit (key-facing)
        edges, the faint warm under-shadow `--glass-rim-bottom` rides the shade edges.
@@ -239,7 +241,7 @@
        second, fictional source. Its one site in the tree was a single demo tile.
        Revivable, but not as a default. */
 
-    /* The moving-specular gleam radius (glass.css `.glass-material::
+    /* The moving-specular gleam radius (glass/material.css `::
        before`). The ONE knob that BOUNDS the gleam geometry as a percentage of the
        plate so it can NEVER become a whole-surface disc (an unbounded implicit
        `circle at …` runs its stops to 55–75% of the half-diagonal — a wash on a

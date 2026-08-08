@@ -186,16 +186,13 @@
     /* ═══════════════════════════════════════════════
        §2.C ANIMATION EXPRESSIVENESS
 
-       The audacious press-ripple RETIRED. The retained family is:
-       • Progress lifecycle — the progress bar rides an intake pulse on
-         rising-edge, a crescendo brightening at ≥85%, and a one-shot discharge
-         flash at 100% (the crescendo is the typed `@property --progress-crescendo`).
+       The audacious press-ripple RETIRED, and so is the progress-lifecycle
+       clock family: the intake pulse, the ≥85% crescendo and the fourth
+       indeterminate clock all died with the `gradient` variant. Completion is
+       one variant-independent discharge on `--duration-normal`; the
+       indeterminate FLOW rides `--duration-shimmer-fast` (3s) — ONE
+       indeterminate clock in the library, shared with the Timeline.
        ═══════════════════════════════════════════════ */
-
-    /* Progress lifecycle — typed crescendo + segment-local durations */
-    --motion-duration-progress-intake: 220ms; /* rising-edge pulse */
-    --motion-duration-progress-crescendo: 240ms; /* leading-edge brighten */
-    --motion-duration-progress-indeterminate: 4s; /* indeterminate sweep period */
 
     /* The `btn-audacious` press-ripple knobs
        (`--ripple-radius-max` 12rem, `--motion-duration-ripple` 340ms) DELETED

@@ -1,5 +1,5 @@
 /* glass/material.css
-   The unified.glass-material atom + the shared ::before grain/specular wiring across the glass family — ONE source for the three material atoms.
+   The unified material selector GROUP + the shared ::before specular wiring across the glass family — ONE source for the material atoms.
    A partial of the glass.css cascade; @import-ed by glass.css in cascade
    order, each in its own @layer components (isomorphic to the monolith).
    See docs/precepts/design-idioms.md §cohesion-aware partials. */
@@ -16,7 +16,7 @@
              `@property` channel mapped from the consumer's --mouse-x/--mouse-y
              write).
        The five ladder rungs + `.glass-card` + the `.dock-icon-button` CONTROL
-       compose `.glass-material`, so a Switch thumb, a glass Button, a Dialog,
+       compose the material selector group, so a Switch thumb, a glass Button, a Dialog,
        and a Sheet all read as the SAME material without per-component wiring.
 
        The `.glass-dock` SHELL is OUT of this group BY DESIGN — it hand-rolls a
@@ -33,7 +33,6 @@
 
        The selector GROUP is the single source. Adding a surface to the band
        material is one comma-entry here, not a new opt-in class string. */
-    .glass-material,
     .glass-wash,
     .glass-quiet,
     .glass-resting,
@@ -131,7 +130,6 @@
        surface at the pointer position (--mouse-x/--mouse-y → the typed
        --specular-* channel). Folded VERBATIM from glass-specular-track.css so
        there is exactly ONE specular source. */
-    .glass-material::before,
     .glass-wash::before,
     .glass-quiet::before,
     .glass-resting::before,
@@ -267,8 +265,6 @@
        intensity is 0 so they paint nothing at rest, but a control legitimately carries
        the transition). */
     .glass-specular-track::before,
-    .glass-material:hover::before,
-    .glass-material:active::before,
     .glass-wash:hover::before,
     .glass-wash:active::before,
     .glass-quiet:hover::before,
@@ -292,8 +288,6 @@
             --specular-y var(--duration-fast, 150ms) var(--ease-standard, ease-out),
             opacity var(--duration-normal, 240ms) var(--ease-standard, ease-out);
     }
-
-    .dark .glass-material::before,
     .dark .glass-wash::before,
     .dark .glass-quiet::before,
     .dark .glass-resting::before,
@@ -326,7 +320,6 @@
        SAME rungs the scale-press squish keys off, so material-light fires in
        lockstep with the press across every glass surface. Settles back on leave
        via the opacity transition above. */
-    .glass-material:hover::before,
     .glass-wash:hover::before,
     .glass-quiet:hover::before,
     .glass-resting:hover::before,
@@ -340,7 +333,6 @@
     .dock-dropdown-trigger:hover::before {
         --specular-intensity: var(--glass-specular-intensity-hover, 0.1);
     }
-    .glass-material:active::before,
     .glass-wash:active::before,
     .glass-quiet:active::before,
     .glass-resting:active::before,
@@ -358,7 +350,6 @@
     /* Selected and dragged controls hold the same interaction lens used during
        press. Semantics choose the state attribute; the material owns its paint. */
     :is(
-            .glass-material,
             .glass-wash,
             .glass-quiet,
             .glass-resting,
@@ -388,7 +379,6 @@
        interaction lens through hover, press, or retained state. Content ink is
        untouched; each control continues to own its disabled legibility. */
     :is(
-            .glass-material,
             .glass-wash,
             .glass-quiet,
             .glass-resting,

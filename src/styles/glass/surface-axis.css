@@ -29,9 +29,11 @@
    (specificity 0-1-0, equal to the `.glass-*` classes) win by source order over
    the base rung's border/box-shadow. */
 @layer components {
-    [data-grain="false"]::after {
-        display: none;
-    }
+    /* (the unscoped `[data-grain="false"]::after` kill is RETIRED with the grain
+       register it disabled — K1. It was an ATTRIBUTE-VALUE selector on a string
+       the primitive stamped unconditionally, so `data-grain="false"` shipped on
+       every default mount and reached out of this file to kill any `::after` on
+       any element in the document that happened to carry it.) */
 
     /* ── veil — the borderless text-legibility plate ──────────────────────────
        A text plate with the box border AND rim stripped (a boxed look reads as a

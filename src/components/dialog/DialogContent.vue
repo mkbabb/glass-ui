@@ -12,7 +12,7 @@ import { useSpringMount } from "../../composables/motion/spring/useSpringMount";
 import ModalOverlay from "./ModalOverlay.vue";
 import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
-import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
+import { surfaceClass } from "../_shared/surface/resolve";
 import { scrimOpacity } from "../sheet/motion";
 import type { DismissableContentEmits } from "../_shared/interaction";
 
@@ -171,7 +171,7 @@ const contentStyle = computed<CSSProperties>(() => ({
 const contentClass = computed(() =>
     cn(
         "fixed left-1/2 top-1/2 z-modal",
-        resolveSurfaceClass("floating"),
+        surfaceClass("floating"),
         props.scroll ? "max-h-[calc(100dvh-2rem)] overflow-y-auto" : "",
         props.class,
     ),
@@ -191,7 +191,6 @@ const contentClass = computed(() =>
             :style="contentStyle"
             :data-surface="props.surface"
             data-slot="dialog-content"
-            data-material="overlay"
             :data-dismiss="props.dismiss"
             :data-rebuff="rebuffRung"
             :data-scroll="props.scroll ? '' : undefined"

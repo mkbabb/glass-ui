@@ -95,7 +95,7 @@ function atRuleBody(css: string, head: string): string | null {
 describe("T-CLIP-1 — every span is its own clip box", () => {
     it("`.tl__span` declares `overflow: hidden`", () => {
         // THE MOST LOAD-BEARING DECLARATION IN THE DESIGN, and π cannot see it:
-        // whenever every span is filled the escape is invisible. `.glass-track-well`
+        // whenever every span is filled the escape is invisible. `.track-well`
         // clips the TRACK's ends only, so without this the fill translates
         // straight into its neighbours and TL-1's whole claim is void.
         //
@@ -401,7 +401,7 @@ describe("the reporting axis — role, names, and the axe closure", () => {
 
     it("composes the shared well register and authors no backdrop-filter", () => {
         const wrapper = mount(Timeline, { props: { segments } });
-        expect(wrapper.find(".tl__track").classes()).toContain("glass-track-well");
+        expect(wrapper.find(".tl__track").classes()).toContain("track-well");
         // Not as a value, and not as a reset: the S0 prefix trap cannot reach a
         // directory that never writes the property. (Live bytes — the header
         // comment says the word in order to explain why it is absent.)

@@ -20,7 +20,7 @@ import { Settings, ArrowLeft, RotateCcw, Square } from "@lucide/vue";
 
         <StorySection heading="Sides">
             <Surface
-                material="content"
+                tier="quiet"
                 surface="veil"
                 class="flex flex-wrap items-center gap-6 p-6"
             >
@@ -96,7 +96,7 @@ import { Settings, ArrowLeft, RotateCcw, Square } from "@lucide/vue";
             <!-- The lone trigger is wrapped in the `flex flex-wrap` idiom so it sizes
                  to its content, never balloons to the article width (the flex-col
                  body uses `align-items: stretch`). -->
-            <Surface material="content" surface="veil" class="flex flex-wrap gap-3 p-6">
+            <Surface tier="quiet" surface="veil" class="flex flex-wrap gap-3 p-6">
                 <Popover trigger="hover">
                     <PopoverTrigger as-child>
                         <Button>Save document</Button>
@@ -122,7 +122,7 @@ import { Settings, ArrowLeft, RotateCcw, Square } from "@lucide/vue";
             blurb="Nested cadence — openDelay tunes the open-defer timer."
         >
             <Surface
-                material="content"
+                tier="quiet"
                 surface="veil"
                 class="flex flex-wrap items-center gap-6 p-6"
             >

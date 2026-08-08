@@ -2,7 +2,7 @@
  *
  * The deep-glass register: the maximal iOS-27 Liquid-Glass tier ABOVE the
  * calm default (the Apple `saturate(1.8) blur(20px)` family, landed
- * at the budget-clearing 16px / saturate 1.5; tokens/glass-deep.css). `.glass-deep`
+ * as a +5px-on-the-rung boost / saturate 1.8; tokens/glass-deep.css). `.glass-deep`
  * is the OPT-IN surface — a consumer adds it to a glass surface that wants the
  * thick refractive liquid read (the hero glass, the dock, the CTA); the bare
  * content default is UNCHANGED (the calm default is the user's call).
@@ -11,9 +11,9 @@
  * `.glass-deep` is a DECORATION ON a base `.glass-*` rung, NOT a parallel solid/
  * blur recipe. It mirrors `.glass-opaque` (ladder.css §opaque-escape — which only
  * sets `--glass-level: 0`, a token re-point, never a competing `backdrop-filter`):
- * `.glass-deep` re-points the floating-rung blur token to the deep family
- * (`--glass-blur-floating: var(--glass-blur-deep)`), so the base `.glass-floating`
- * rule's `backdrop-filter: var(--glass-blur-floating)` resolves to the DEEP blur —
+ * `.glass-deep` re-points EVERY rung's blur token to the deep composition
+ * (`--glass-blur-<tier>: var(--glass-blur-deep)`), so the base rung's own
+ * `backdrop-filter: var(--glass-blur-<tier>)` resolves to the DEEP blur —
  * NO cascade fight, NO base-rule edit, the glass edge/rim/under-shadow + the
  * tint axis + the a11y brackets all compose unchanged. The deep tier rides a base
  * rung exactly as `.glass-opaque` does (the CardTier map is `deep →
@@ -34,38 +34,54 @@
  * BEFORE the a11y @media brackets (which still win by the :root level re-point).
  */
 @layer components {
-    /* The deep decoration: COMPUTE the deep LERP here (at the consuming element) +
-       re-point the floating rung's blur token to it.
+    /* The rung's OWN radius, defaulted before the tier map re-points it per rung.
+       Zero-specificity so any rung below wins on source order, and `.glass-card`
+       (which paints `--glass-blur-resting`, glass/surfaces.css) lands on the right
+       one without being enumerated. Without a default a `.glass-deep` composed on a
+       non-rung host would compute an invalid radius and take the whole bridge down
+       with it. */
+    :where(.glass-deep) {
+        --glass-blur-tier-radius: var(--glass-blur-resting-radius);
+    }
+
+    /* The deep decoration: COMPUTE the deep thickness here (at the consuming
+       element) + re-point every rung's blur token to it.
 
        THE FREEZE-FIX (the dual-engine painted dead-knob).
-       The LERP intermediates read `var(--glass-depth)`, a REGISTERED
+       The intermediates read `var(--glass-depth)`, a REGISTERED
        `@property` (`inherits: true; initial-value: 1`). Per the CSS Properties &
        Values API a `var()` to a registered custom property inside ANOTHER custom
        property is eager-substituted with the referenced property's COMPUTED value AT
        THE DECLARING ELEMENT. So these intermediates MUST be declared HERE (on
        `.glass-deep`), NOT at `:root` (tokens/glass-deep.css) — at `:root` the tier
        grade is not yet in scope and `--glass-depth` computes to its `initial-value` 1,
-       freezing the whole calc at the depth-1 endpoint (every deep surface paints the
-       16px / 1.8 ceiling, tier grade inert). The tier map below sets `--glass-depth`
-       per tier ON THE BASE RUNG the `.glass-deep` decoration composes with (same
-       element), so declared here `var(--glass-depth)` resolves to the element's LIVE
-       tier grade and the ladder PAINTS: content ~13px < popover ~14px < menu 16px.
+       freezing the whole calc at the FULL boost (every deep surface paints the
+       depth-1 thickness, tier grade inert). The tier map below sets `--glass-depth`
+       AND `--glass-blur-tier-radius` per tier ON THE BASE RUNG the `.glass-deep`
+       decoration composes with (same element), so declared here both resolve to the
+       element's LIVE rung and the ladder PAINTS:
+       11.75 < 15.75 < 17.75 < 23.5 < 27px.
 
-       The composition is IDENTICAL to the retired `:root` form — same endpoints
-       (`--glass-blur-floating-radius` depth-0 floor / `--glass-blur-deep-radius`
-       depth-1 ceiling, `--glass-saturate` / `--glass-saturate-deep`), same
-       `* var(--glass-level)` clarity scale (so the opaque escape + the a11y brackets
-       reach the deep plate through the ONE level path; at `--glass-level: 0` the deep
-       blur resolves blur(0)). Only the DECLARING SELECTOR moved (:root → .glass-deep).
-       The base `.glass-floating` rule (`backdrop-filter: var(--glass-blur-floating)`)
-       then paints the deep blur — the Apple-deep register, opt-in. */
+       The `* var(--glass-level)` clarity scale is unchanged (so the opaque escape +
+       the a11y brackets reach the deep plate through the ONE level path; at
+       `--glass-level: 0` the deep blur resolves blur(0)). The base rung's own rule
+       (`backdrop-filter: var(--glass-blur-<tier>)`) then paints the deep blur — the
+       Apple-deep register, opt-in. */
     .glass-deep {
+        /* DEEP THICKENS THE RUNG IT DECORATES — it never re-bases it. The
+           predecessor LERPed `--glass-blur-floating-radius` (20px) toward
+           `--glass-blur-deep-radius` (16px), i.e. DOWNWARD, so a deep overlay
+           painted 16px against a plain overlay's 22px and the ladder graded
+           BACKWARDS with prominence (wash/quiet/resting 18.6 > floating 17.2 >
+           overlay 16.0). An absolute depth-1 endpoint cannot express "thicker than
+           whatever this rung is"; a BOOST can. Additive, so `deep ≥ plain` holds on
+           all five rungs by construction and the grade orders WITH prominence:
+           11.75 / 15.75 / 17.75 / 23.5 / 27px. */
         --glass-blur-deep-active-radius:
             calc(
                 (
-                    var(--glass-blur-floating-radius)
-                    + (var(--glass-blur-deep-radius) - var(--glass-blur-floating-radius))
-                    * var(--glass-depth)
+                    var(--glass-blur-tier-radius)
+                    + var(--glass-blur-deep-boost) * var(--glass-depth)
                 )
                 * var(--glass-level)
             );
@@ -78,24 +94,41 @@
         --glass-blur-deep:
             blur(var(--glass-blur-deep-active-radius))
             saturate(var(--glass-saturate-deep-active));
+        /* THE BRIDGE, WIDENED TO ALL FIVE RUNGS. It used to re-point
+           `--glass-blur-floating` ALONE, which was survivable only while `deep`
+           forced every surface onto the floating rung. With `deep` orthogonal —
+           a thickness ON the resolved tier, never a tier jump — a
+           `<Surface tier="overlay" deep>` GRADES to depth 1.0 through the tier
+           map below and then paints `var(--glass-blur-overlay)`, which never
+           reads the composite: the depth would grade and the blur would not
+           follow it, on four of five rungs. One formula, five names, depth the
+           only variable. */
+        --glass-blur-wash: var(--glass-blur-deep);
+        --glass-blur-quiet: var(--glass-blur-deep);
+        --glass-blur-resting: var(--glass-blur-deep);
         --glass-blur-floating: var(--glass-blur-deep);
+        --glass-blur-overlay: var(--glass-blur-deep);
     }
 
-    /* ── The tier-ladder depth MAP ──────────────────────
-       Map --glass-depth onto the tier ladder so the deep register's thickness
-       tracks surface PROMINENCE by construction: the overlay/menu rungs default a
-       HIGHER depth than the content rungs (menu > popover > button). Each rung sets
-       the ONE --glass-depth scalar from its named grade (tokens/glass-deep.css) — a
-       pure per-rung DEFAULT, NOT a new blur recipe. So a deep surface inherits its
-       tier's depth: a `deep` Card (glass-floating glass-deep) resolves the popover
-       grade (~14px), the primary Button resolves
-       the content grade (~13px), a deep overlay/modal reaches the full 16px ceiling
-       — thickness tracks prominence by construction, ZERO new machinery.
+    /* ── The tier-ladder MAP ────────────────────────────
+       Each rung publishes TWO things the deep decoration reads off the same element:
+       its named depth GRADE, and its OWN blur radius. The grade makes thickness track
+       PROMINENCE (menu > popover > button); the radius is what the boost is added TO,
+       which is the half that was missing — the recipe read one hard-coded rung's
+       radius, so four of five rungs graded a depth and then painted a blur derived
+       from somebody else's base.
 
-       No rung reads var(--glass-blur-deep) here — --glass-depth only DRIVES
-       the deep LERP (glass-deep.css), so a NON-deep tier surface is BYTE-UNCHANGED
-       (a plain popover stays the calm 11px; the calm ladder never reads --glass-depth)
-       and only a `.glass-deep`-composed surface consumes the graded depth.
+       The resolved ladder, `tier + 5px x depth`:
+         wash     10 + 1.75 = 11.75   quiet   14 + 1.75 = 15.75
+         resting  16 + 1.75 = 17.75   floating 20 + 3.5 = 23.5
+         overlay  22 + 5    = 27
+       — deep ≥ plain on every rung, monotone WITH prominence. (`.glass-card` takes
+       the `:where(.glass-deep)` default above, which is the resting radius it paints.)
+
+       No rung reads var(--glass-blur-deep) here — the grade and the radius only DRIVE
+       the deep composition, so a NON-deep tier surface is BYTE-UNCHANGED (a plain
+       overlay stays the calm 22px; the calm ladder never reads --glass-depth) and only
+       a `.glass-deep`-composed surface consumes them.
 
        SUBSTITUTION-vs-INHERITANCE (the recorded seam): zero-specificity :where() so
        a consumer overrides the default at the element (`--glass-depth` inline / a
@@ -104,11 +137,25 @@
        cascades in (the per-band twin of the global --glass-depth ancestor dial). */
     :where(.glass-overlay) {
         --glass-depth: var(--glass-depth-menu);
+        --glass-blur-tier-radius: var(--glass-blur-overlay-radius);
     }
     :where(.glass-floating) {
         --glass-depth: var(--glass-depth-popover);
+        --glass-blur-tier-radius: var(--glass-blur-floating-radius);
     }
-    :where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) {
+    :where(.glass-resting) {
+        --glass-depth: var(--glass-depth-content);
+        --glass-blur-tier-radius: var(--glass-blur-resting-radius);
+    }
+    :where(.glass-quiet) {
+        --glass-depth: var(--glass-depth-content);
+        --glass-blur-tier-radius: var(--glass-blur-quiet-radius);
+    }
+    :where(.glass-wash) {
+        --glass-depth: var(--glass-depth-content);
+        --glass-blur-tier-radius: var(--glass-blur-wash-radius);
+    }
+    :where(.glass-card) {
         --glass-depth: var(--glass-depth-content);
     }
 }

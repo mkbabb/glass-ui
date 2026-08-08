@@ -1,6 +1,6 @@
 // The DRY pointer-anchored moving-specular write seam (the single source
-// Card.vue + DockControl.vue share; PRM-aware; the `.glass-material`
-// recipe maps the host `--mouse-x/y` write onto its typed specular channel).
+// Card.vue + DockControl.vue share; PRM-aware; the material-group recipe maps
+// the host `--mouse-x/y` write onto its typed specular channel).
 // `createSpecularWriter` is the single-source position-
 // write core (rAF-coalesce + cached-PRM + cleanup); both `useSpecularTracking` (the
 // Vue `:style`-ref delivery) and `vSpecular` (the tier-root auto-arm directive) wrap

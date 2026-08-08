@@ -19,8 +19,8 @@
    the `scroll(self)` timeline below — an unregistered custom would jump between
    the textual `0px` / `var(--fade-scroll-width)` endpoints rather than feathering.
    `inherits: false`: each scroll port owns its own edge state (an ancestor must
-   never push a fade-width onto an unrelated descendant strip — mirrors the
-   `--progress-crescendo` / `--ripple-radius` non-inheriting registrations).
+   never push a fade-width onto an unrelated descendant strip — the retired
+   `--progress-crescendo` / `--ripple-radius` registrations followed the same rule).
    `initial-value: 0px` = the SHARP floor: an at-rest, no-overflow edge has NO
    feather (the "Shy" defect — the static `.scroll-fade-*` mask half-erased
    the first card's chrome at rest — is structurally impossible because the

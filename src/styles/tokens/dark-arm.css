@@ -289,7 +289,12 @@
     --on-glass-muted:        hsl(34 16% 72%);   /* brighter than the collapsed --neutral-5 L62 (WCAG 7.52:1 / APCA |Lc| 61.7 vs the luminous-dark composited quiet plate; subordinate to --foreground) */
     --on-glass-muted-strong: hsl(36 13% 81%);   /* the -strong rung, one step more present. Held at L81: at L78 the BRIGHTEST on-glass mid-tone plate (the configurator preset-label glass-capsule, composited [100,85,68] L≈0.10) drives the -strong caption to WCAG 4.33 — below AA. L81 clears the whole plate set (configurator 4.68 · shadow-stage 6.89 · texture-panel 6.47 · feedback-tone 6.74 · selected-chip 5.10) while STAYING subordinate to the L90 --foreground ink (L0.634 < L0.794). One register re-point lifts all -strong consumers in lockstep — the DRY register-level fix, NOT a per-site paste. */
     --input-on-glass:        hsl(26 12% 22%);   /* the form-well fill — grounded warm-dark so the L90 input TEXT reads against a stable base (9.3:1) */
-    --progress-track-on-glass: hsl(28 14% 26%); /* the recessed meter track — a warm-dark channel distinct from the fill silhouette */
+    /* (the recessed meter track's dark arm RETIRED — `--track-well-recess` is one
+       derivation off `--background`, declared on `.track-well`/`.track-ground`
+       (styles/track-well.css) and NOT in this token layer, so the dark host's own
+       `--background` is what it reads and no arm is owed here. Re-declaring it in
+       this file would re-fork the law; the seam gate counts the declaration
+       across all of src/styles and holds it at ONE.) */
 
     /* The --surface-tint-* dark arm,
        --foreground-DERIVED. The light family is color-mix(in srgb, var(--foreground) N%,

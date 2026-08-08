@@ -19,7 +19,7 @@ import type { TimelineProps, TimelineSegment } from "./types";
  * serves the playhead-with-ticks case; stacking a scrubber on this axis would
  * mint a second coordinate system for one job.
  *
- * The groove COMPOSES `.glass-track-well` (the register's third consumer) and
+ * The groove COMPOSES `.track-well` (the register's third consumer) and
  * authors its own background, which is the register's own written invitation:
  * "a direct future track-well consumer authors its own `background`; the
  * register mints no shared generic paint knob" (`track-well.css:21-22`).
@@ -292,7 +292,7 @@ defineExpose({ value });
         :style="{ '--timeline-value': String(value), '--tl-dir': String(direction) }"
     >
         <div
-            class="tl__track glass-track-well"
+            class="tl__track track-well"
             role="progressbar"
             :aria-label="props.label"
             :aria-valuemin="0"
@@ -305,12 +305,17 @@ defineExpose({ value });
                 v-for="(seg, i) in list"
                 :key="seg.key"
                 class="tl__span"
+                :class="{ 'track-flow': isIndeterminate(seg) }"
                 aria-hidden="true"
                 :data-state="stateOf(seg)"
                 :data-indeterminate="isIndeterminate(seg) || undefined"
                 :style="spanStyles[i]"
             >
-                <div v-if="!isIndeterminate(seg)" class="tl__fill">
+                <div
+                    v-if="!isIndeterminate(seg)"
+                    class="tl__fill"
+                    :class="{ 'track-flow': stateOf(seg) === 'active' }"
+                >
                     <span
                         v-if="stateOf(seg) === 'active'"
                         class="tl__cap"
@@ -415,14 +420,9 @@ defineExpose({ value });
        `oklch(from …)` is the house relative-colour idiom, so the one expression
        serves both modes off the mode-armed host. */
     background: oklch(from var(--card) calc(l - 0.04) c h);
-    /* One top-only inset ink edge — the ONE ink register at its EDGE rung
-       (`--ink-edge` 0.16), composed rather than re-typed. `--cartoon-ink` is the
-       warm near-black in BOTH modes (its `l` is clamped), so a recess reads
-       shadowed at the top without a per-mode fork and without any `light-dark()`
-       near an inset fragment. The 0-alpha arm is `oklch(0 0 0 / 0)`, never bare
-       `transparent` (the WebKit black-premultiply hole). */
-    box-shadow: inset 0 1px 0
-        color-mix(in oklab, var(--cartoon-ink) calc(var(--ink-edge) * 100%), oklch(0 0 0 / 0));
+    /* (the top-only inset ink edge PROMOTED to `styles/track-well.css` — the
+       register this track composes. It was the third copy of one law; the
+       spelling that moved up is this one, verbatim.) */
 }
 
 .tl__marks {
@@ -453,7 +453,7 @@ defineExpose({ value });
 }
 
 /* ── SPANS — the second clip box ───────────────────────────────────────────────
-   `.glass-track-well` clips the TRACK's ends; it cannot clip a span. Without
+   `.track-well` clips the TRACK's ends; it cannot clip a span. Without
    this one declaration the fill translates straight into its neighbours (both
    engines measured it: 100px into the completed side, 200px from the pending
    side), and TL-1's whole claim — "the bar reads" — is void. */
@@ -509,44 +509,25 @@ defineExpose({ value });
 
    Honest ledger: exactly ONE live animation while a span is active, ZERO
    otherwise — and zero is lawful, because the canon's rest is a floor, not a
-   loop. */
-.tl {
-    /* One rung under the "both" fill (0.05 + 0.12 = 0.17); the amplitude floor
-       is the canon's own ≥0.30-of-peak clamp. Neither number is minted here. */
-    --tl-flow-peak: var(--fill-selected);
-    --tl-flow-floor: 0.3;
-}
+   loop.
 
-.tl__span[data-state="active"] > .tl__fill::after,
-.tl__span[data-indeterminate]::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    mix-blend-mode: plus-lighter;
-    background-image: linear-gradient(
-        90deg,
-        oklch(1 0 0 / 0) 0%,
-        oklch(1 0 0 / var(--tl-flow-peak)) 50%,
-        oklch(1 0 0 / 0) 100%
-    );
-    background-size: 45% 100%;
-    background-repeat: no-repeat;
-    animation: tl-flow var(--duration-shimmer-fast) linear infinite;
-}
-
-@keyframes tl-flow {
-    from {
-        background-position: -50% 0;
-        opacity: var(--tl-flow-floor);
-    }
-    50% {
-        opacity: 1;
-    }
-    to {
-        background-position: 150% 0;
-        opacity: var(--tl-flow-floor);
-    }
+   THE BAND IS NOT AUTHORED HERE. It is `.track-flow` (styles/glass/track-flow.css),
+   COMPOSED by the template: the indeterminate span takes the class directly, the
+   active span's fill takes it on its own box. The local copy that used to live at
+   this spot — the same envelope, the same `plus-lighter`, the same 45% mask, the
+   same `-50% → 150%` sweep and its own `@keyframes tl-flow` — was a second
+   spelling of the register's law inside the very component the register was
+   promoted OUT of. Both clip boxes qualify as hosts (`.tl__span` is
+   `position: absolute; overflow: hidden`; `.tl__fill` is `position: absolute;
+   inset: 0` inside it), so nothing else is owed. The register's own PRM bracket
+   parks the band mid-sweep at the floor, so this file's PRM arm for it goes too. */
+.tl .track-flow {
+    /* The ONE local override: the Timeline's band peaks at the family's selected-
+       fill rung rather than the register's 0.12 specular ceiling — one rung under
+       the "both" fill (0.05 + 0.12 = 0.17). The amplitude FLOOR is the register's
+       (the canon's ≥0.30-of-peak clamp), so it is not restated. Unlayered scoped
+       CSS, so it wins over `@layer components` without a specificity fight. */
+    --track-flow-peak: var(--fill-selected);
 }
 
 /* ── MARKS ─────────────────────────────────────────────────────────────────────
@@ -712,18 +693,12 @@ defineExpose({ value });
 
 /* ── PRM ───────────────────────────────────────────────────────────────────────
    The springs already snap (`respectReducedMotion`), and the release returns the
-   cap to 1. What is left here is the CSS half: the flow parks mid-sweep at its
-   amplitude floor rather than vanishing (the state it carries must survive), the
-   check keeps its drawn end-state, and the detail keeps its opacity arrival
-   without the lateral carry. */
+   cap to 1. What is left here is the CSS half: the check keeps its drawn
+   end-state, and the detail keeps its opacity arrival without the lateral carry.
+   The flow band's PRM arm is the REGISTER's (`track-flow.css`) — it parks the band
+   mid-sweep at the amplitude floor, which is the same behaviour this file used to
+   restate. */
 @media (prefers-reduced-motion: reduce) {
-    .tl__span[data-state="active"] > .tl__fill::after,
-    .tl__span[data-indeterminate]::after {
-        animation: none;
-        background-position: 50% 0;
-        opacity: var(--tl-flow-floor);
-    }
-
     .tl__check path {
         animation: none;
     }

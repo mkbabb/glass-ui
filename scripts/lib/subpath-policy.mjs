@@ -169,13 +169,16 @@ export const CSS_FONT_EXPORTS = {
     // and dark variant, without the component cascade or resolved base tokens.
     "./styles/theme": "./dist/styles/theme.css",
     // BJ.W4-TYPEDSEAM — the component-only entry. `./dist/glass-ui.css` (the raw
-    // SFC bundle) emits the `.glass-track-well`/`.glass-value-mark(s)` classes with
-    // ZERO rules for the shared W4 structure, so an installed consumer importing
-    // this entry lost position/clip/radius/background/marks. The target is now the
-    // GENERATED packed manifest `dist/component-styles.css` (track-well → value-marks
-    // → the SFC bundle, in that exact order); canonical `./styles` still reaches the
-    // partials via `styles/glass.css` and does NOT import the manifest (no duplicate
-    // W4 rule; a consumer needs exactly one style entry).
+    // SFC bundle) emits the `.track-well` / `.track-flow` / `.glass-value-mark(s)`
+    // classes with ZERO rules for the shared structure behind them, so an installed
+    // consumer importing this entry lost groove/clip/radius/flow-band/marks. The
+    // target is the GENERATED packed manifest `dist/component-styles.css`. Its
+    // invariant is the PARTITION, not a sequence: every shared register partial is
+    // folded in and the SFC bundle is LAST (so a component rule can still override a
+    // register). Relative order among the partials is a build artifact — they declare
+    // disjoint selectors. Canonical `./styles` reaches the same partials through its
+    // own cascade and does NOT import the manifest (no duplicate rule; a consumer
+    // needs exactly one style entry).
     "./styles.css": "./dist/component-styles.css",
     "./fonts/*": "./dist/fonts/*",
 };

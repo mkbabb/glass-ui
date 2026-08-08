@@ -35,5 +35,11 @@
     --on-glass-muted:        hsl(30 26% 35%);   /* the muted caption rung over the composited cream plate (5.76:1 vs plate; darker than --neutral-5 L40) */
     --on-glass-muted-strong: hsl(28 28% 28%);   /* the -strong secondary rung, one step more present (7.79:1 vs plate) */
     --input-on-glass:        hsl(36 40% 92%);   /* the form-well fill over glass — grounded warm so the input TEXT (--foreground) reads against a stable base (14.9:1) */
-    --progress-track-on-glass: hsl(34 24% 84%); /* the recessed meter track over glass — a warm channel distinct from the fill silhouette */
+    /* (`--track-well-recess` is NOT declared here. It is a HOST-RELATIVE
+       derivation, and an unregistered custom property substitutes its `var()`
+       references at the element it is DECLARED on — so a `:root` declaration
+       resolves `var(--background)` once against the page and freezes that one
+       colour into every host. It is declared on `.track-well` / `.track-ground`
+       instead, at the composing element, where the host's own `--background` is
+       what it reads: `styles/track-well.css`.) */
 }

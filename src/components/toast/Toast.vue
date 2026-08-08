@@ -3,7 +3,7 @@ import { computed, type HTMLAttributes } from "vue";
 import { ToastRoot, useForwardPropsEmits } from "reka-ui";
 import { cn } from "../_shared/class-names";
 import type { Surface, Tone } from "../_shared/axes";
-import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
+import { surfaceClass } from "../_shared/surface/resolve";
 
 // Tone rides ON glass. The Toast `variant` no longer paints a
 // SOLID `bg-<tone>` token plate over the `glass-floating` base (the opaque-slab
@@ -88,7 +88,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
                 // `bg-background`/`shadow-modal`. This resolves the
                 // base through the private floating-rung resolver — see the script block above
                 // (no quotes/parens detail here: this comment lives inside the binding attr).
-                resolveSurfaceClass('floating'),
+                surfaceClass('floating'),
                 // The toast MATERIALIZES on the ONE overlay register
                 // (`data-reveal=overlay`: scale-from 0.94 + decongest-blur + fade on the
                 // `--enter-overlay-clock`) — the SAME spring/transition contract the

@@ -5,7 +5,7 @@
    The catch-light alpha multiplier at each interaction state, as a SINGLE
    overridable token cohort (was three buried literals across glass.css —
    `0.35` rest floor / `0.6` hover / `0.85` active — and the `.dark` arm's
-   `0.22`). `glass.css`'s `.glass-material::before` rest/hover/active rules READ
+   `0.22`). `glass.css`'s material-group `::before` rest/hover/active rules READ
    these, so the subtle-vs-extreme magnitude is a knob a consumer (or the dark
    arm) retunes ON THE CASCADE — never a re-buried literal. Override on `:root`
    to retune library-wide; the cartoon-shadow override contract is the precedent.
@@ -50,7 +50,7 @@
    brightness lift both read — the "one drive, the glass deforms under press" read.
    Registered typed so a `transition`/
    downstream `calc()` interpolates the VALUE (number), not the text. `inherits:
-   true` so the host-written value reaches the `.glass-material::before` pseudo +
+   true` so the host-written value reaches the material-group `::before` pseudo +
    the coupled rules. `initial-value: 0` so an unwired/SSR button is the static
    rest frame (the no-JS CSS `.tap-squish` scale floor still presses). */
 @property --glass-btn-press-t {

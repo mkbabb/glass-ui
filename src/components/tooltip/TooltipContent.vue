@@ -7,7 +7,7 @@ import {
 import type { Surface } from "../_shared/axes";
 import { cn } from "../_shared/class-names";
 import type { FloatingPlacementProps } from "../_shared/floating";
-import { resolveSurfaceClass } from "../_shared/resolveSurfaceClass";
+import { surfaceClass } from "../_shared/surface/resolve";
 
 export interface TooltipContentProps extends FloatingPlacementProps {
     class?: HTMLAttributes["class"];
@@ -45,7 +45,7 @@ const placementProps = computed(() => ({
 const contentClass = computed(() =>
     cn(
         "z-tooltip overflow-hidden rounded-tooltip border text-popover-foreground glass-reveal",
-        resolveSurfaceClass("floating"),
+        surfaceClass("floating"),
         "[--overlay-pad-inline:--spacing(2)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) text-(length:--tooltip-text)",
         props.class,
     ),
@@ -58,7 +58,6 @@ const contentClass = computed(() =>
             v-bind="{ ...placementProps, ...forwardedAttrs }"
             :aria-label="ariaLabel"
             :data-surface="surface"
-            data-material="overlay"
             data-reveal="tooltip"
             :class="contentClass"
             @escape-key-down="emit('escapeKeyDown', $event)"

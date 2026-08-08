@@ -1,0 +1,97 @@
+/* ════════════════════════════════════════════════════════════════════════
+   .track-well — the ONE shared track GROOVE register.
+
+   The recessed capsule groove a value rides in — the pill-radius, clipped,
+   recessed shape factored ONCE out of the Slider's `.slider-track`, the
+   Progress `.progress-rail` and the Timeline's `.tl__track` so every
+   meter/scrubber consumer COMPOSES it instead of re-forking the
+   position/overflow/radius recipe. ONE groove recipe, N surfaces — the
+   sibling of the `.glass-liquid-fill` register (that owns the FILL; this
+   owns the GROOVE).
+
+   WHY IT LIVES IN `styles/` AND NOT IN `styles/glass/`: the `glass-` prefix
+   promises a MATERIAL, and this register declares none — no backdrop-filter,
+   no blur, no saturate, nothing a `.glass-*` rung composes. It is a genuine
+   cross-component register, which `styles/` is for; the name now states the
+   truth (a groove for a value to ride in). Its `@import` rung is in
+   `styles/index.css`, immediately after `glass.css`.
+
+   THE GROOVE IS INK, NOT A FILL. The register carries the SHAPE plus the one
+   recess signal a groove has by physics: a top-only inset edge (a recess has
+   no top light). It declares NO `background` — the GROUND is the consuming
+   surface's, read from the ONE host-relative derivation `--track-well-recess`,
+   declared BELOW on the composing element itself, so a Slider background image
+   and a Progress colour never collide on one inheriting knob and no shared
+   public paint axis is minted here.
+
+   The surface also owns its own SIZING (height / flex / block-size stay
+   component-scoped — a slider is a grown flex child, a meter is a block,
+   their sizing models legitimately differ, so no shared `--track-height` is
+   minted here).
+
+   `@layer components`; the consuming slider/progress/timeline recipes stay
+   UNLAYERED (Vue scoped), so their sizing + state legs win over this base
+   groove at equal specificity.
+   ════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
+    /* ── THE ONE GROOVE GROUND ────────────────────────────────────────────
+       Declared HERE, ON THE COMPOSING ELEMENT — never at `:root`.
+
+       WHY THE ELEMENT: an unregistered custom property's `var()` references are
+       substituted at the element the property is DECLARED on, and the resulting
+       token stream is what inherits. Declared at `:root`, `var(--background)`
+       resolves ONCE against the page and every host — a card, a dock crest, a
+       tinted panel — paints that same page-derived colour no matter what
+       `--background` it sets for itself. Declared here, the substitution happens
+       at the groove, so the derivation reads the host's OWN inherited
+       `--background` and the token is host-relative in fact, not only in prose.
+       (MEASURED 2026-08-08 on `/feedback/progress`, root-declared: a nested host
+       with `--background: hsl(210 60% 30%)` painted its groove L* 93.77 — the
+       page's value, byte-identical to `:root`'s; and the dock-crest rim painted
+       L* 93.77 over a crest of L* 89.96, i.e. a "recess" 3.8 L* ABOVE its own
+       surround, reading RAISED. Both are cured by the declaring element alone.)
+
+       WHY 0.90: the groove sits at 90% of its host's lightness. That is the
+       depth the retired light literal `hsl(34 24% 84%)` (L* 86.66) already had
+       against `--background` (L* 98.30); 0.96 computed L* 93.77 — ABOVE the
+       composited surround the meter actually sits on (L* 91.0 light / L* 8.66
+       dark on that route), so it read raised rather than recessed. 0.90 lands
+       L* 87.08 light / L* 1.98 dark: at-or-below the surround in BOTH modes off
+       ONE factor, so the dark arm still derives free and no per-mode fork
+       returns.
+
+       `.track-ground` is the ground WITHOUT the groove shape — the seam for a
+       groove-adjacent surface that cannot take `overflow: hidden`. The rim's
+       stadium track is that case (6px dots on a 4px band overflow it by 1px per
+       cross edge), and it composes this rather than re-forking the derivation:
+       one law, one declaration, two shapes. */
+    .track-well,
+    .track-ground {
+        --track-well-recess: oklch(from var(--background) calc(l * 0.9) c h);
+    }
+
+    .track-well {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-pill);
+        /* THE RECESS EDGE — top-only, composed off the ONE ink register at its
+           EDGE rung (`--ink-edge` 0.16) rather than re-typed as a literal. A
+           groove is lit from above, so its near lip catches the ink and its far
+           lip catches nothing; a full-perimeter inset would read as a border,
+           which is the opposite of recessed.
+
+           `--cartoon-ink` is the warm near-black in BOTH modes (its `l` is
+           clamped), so this reads shadowed at the top without a per-mode fork
+           and without any `light-dark()` near an inset fragment. The 0-alpha arm
+           is `oklch(0 0 0 / 0)`, never bare `transparent` — the WebKit
+           black-premultiply hole. (This spelling is the Timeline's, promoted
+           here whole; its local third copy of the same law strikes with it.) */
+        box-shadow: inset 0 1px 0
+            color-mix(
+                in oklab,
+                var(--cartoon-ink) calc(var(--ink-edge) * 100%),
+                oklch(0 0 0 / 0)
+            );
+    }
+}

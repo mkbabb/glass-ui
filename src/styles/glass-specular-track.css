@@ -3,12 +3,12 @@
  *
  * The moving-specular `::before` body (the masked radial catch-light,
  * the rest/hover/active intensity steps, the var() fallback) was FOLDED into the
- * single `.glass-material` mixin in glass.css, where the five ladder rungs +
+ * single material selector group in glass.css, where the five ladder rungs +
  * `.glass-card` + the `.dock-icon-button` control + `.glass-specular-track`
  * compose it from ONE source. There is NO duplicate `::before` body here.
  *
  * `.glass-specular-track` is now a thin ALIAS — it is listed in the
- * `.glass-material` selector GROUP in glass.css, so a `.glass-specular-track`
+ * material selector GROUP in glass.css, so a `.glass-specular-track`
  * element gets the unified material (the `::before` catch-light, the rim, the
  * interaction-light) with zero duplicate paint. This keeps the historical
  * opt-in call sites (Card.vue, any consumer that still reaches for the class)
@@ -16,18 +16,17 @@
  * composition onto the unified mixin, not a dead orphan.
  *
  * This file carries ONLY the reduced-motion + reduced-transparency a11y
- * brackets, pointed at the `.glass-material` group (the canonical specular
+ * brackets, pointed at the material selector group (the canonical specular
  * owner) so the guards cover every band surface, not just the opt-in class.
  */
 
 /* ── Reduced-motion: pin the specular STATIC ───────────────────────────────
    The MANDATORY guard. Under `prefers-reduced-motion: reduce` the catch-light
    paints static at rest position — no pointer-tracking, no transition. The pin
-   covers the unified `.glass-material` group AND the `.glass-specular-track`
+   covers the unified material selector group AND the `.glass-specular-track`
    alias so EVERY band surface (not just the opt-in class) freezes the position
    while keeping the centred catch-light + the warm-cream tint. */
 @media (prefers-reduced-motion: reduce) {
-    .glass-material::before,
     .glass-wash::before,
     .glass-quiet::before,
     .glass-resting::before,
@@ -51,7 +50,6 @@
    flat opaque surface is decoration without substrate, so it drops too — across
    the whole material group. */
 @media (prefers-reduced-transparency: reduce) {
-    .glass-material::before,
     .glass-wash::before,
     .glass-quiet::before,
     .glass-resting::before,

@@ -90,8 +90,7 @@ useGlassBackdropLuminance(stageEl, {
     <div
         ref="stageEl"
         class="dock-stage"
-        data-material="functional"
-        :[GLASS_BACKDROP_SHARED_ATTR]="''"
+            :[GLASS_BACKDROP_SHARED_ATTR]="''"
     >
         <!-- The single shared field behind the whole demo column. Its backing store
              is clamped to the viewport:

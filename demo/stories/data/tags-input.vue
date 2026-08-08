@@ -48,7 +48,7 @@ const skillCount = computed(() => skills.value.length);
             heading="Tokens and keyboard editing"
             blurb="Enter or a comma creates; a nonempty draft is protected; Backspace selects, then removes."
         >
-            <Surface material="content" surface="veil" class="flex flex-col gap-2 p-5">
+            <Surface tier="quiet" surface="veil" class="flex flex-col gap-2 p-5">
                 <Label for="skills-input">Skills</Label>
                 <TagsInput v-model="skills">
                     <TagsInputItem v-for="tag in skills" :key="tag" :value="tag">
@@ -68,7 +68,7 @@ const skillCount = computed(() => skills.value.length);
             heading="Paste many"
             blurb="Comma, semicolon, or space delimited."
         >
-            <Surface material="content" surface="veil" class="flex flex-col gap-2 p-5">
+            <Surface tier="quiet" surface="veil" class="flex flex-col gap-2 p-5">
                 <Label for="paste-input">Bulk tags</Label>
                 <TagsInput
                     v-model="pasted"
@@ -91,7 +91,7 @@ const skillCount = computed(() => skills.value.length);
             heading="Validation"
             blurb="Rejects anything that fails a loose email check."
         >
-            <Surface material="content" surface="veil" class="flex flex-col gap-2 p-5">
+            <Surface tier="quiet" surface="veil" class="flex flex-col gap-2 p-5">
                 <Label for="emails-input">Emails</Label>
                 <TagsInput v-model="emails" :invalid="emailError !== null">
                     <TagsInputItem v-for="tag in emails" :key="tag" :value="tag">

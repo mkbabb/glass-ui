@@ -19,27 +19,34 @@ describe("Card", () => {
 
         expect(wrapper.attributes()).toMatchObject({
             "data-slot": "card",
-            "data-material": "elevated",
-            "data-tier": "resting",
             "data-surface": "glass",
             "data-size": "md",
             "data-shadow": "true",
         });
+        /* `data-material` and `data-tier` left with the primitive's eight-attribute
+           contract (#86): the tier is legible in the CLASS, which is the thing the
+           cascade reads, and `data-material` keyed a grammar that is deleted. */
+        expect(wrapper.attributes("data-material")).toBeUndefined();
+        expect(wrapper.attributes("data-tier")).toBeUndefined();
         expect(wrapper.classes()).toEqual(
             expect.arrayContaining(["card", "glass-resting"]),
         );
     });
 
-    it("forwards the Surface axes it did not sever, and severs `material`", () => {
+    it("forwards the Surface axes it did not sever, and OWNS the shadow", () => {
         const wrapper = mount(Card, {
             props: { tier: "wash", surface: "veil", shadow: true },
         });
 
-        expect(wrapper.attributes("data-tier")).toBe("wash");
+        expect(wrapper.classes()).toContain("glass-wash");
         expect(wrapper.attributes("data-surface")).toBe("veil");
-        // a veil carries no cast — Surface's own arming rule, unchanged
-        expect(wrapper.attributes("data-shadow")).toBeUndefined();
-        // `material` is not a Card prop: the elevated role is Surface's default
+        /* `shadow` is CARD's prop now — Surface went three-prop — and the card
+           stamps the attribute itself. The JS gate that used to swallow it on a
+           veil is gone with the other two silent gates: the CAST rule is scoped
+           to `.card.glass-resting[data-shadow]`, so a veil card resolves no cast
+           by CASCADE, which is where that rule already lived. */
+        expect(wrapper.attributes("data-shadow")).toBe("true");
+        // `material` is not a Card prop, and is no longer a Surface prop either
         expect(Object.keys(Card.props ?? {})).not.toContain("material");
     });
 

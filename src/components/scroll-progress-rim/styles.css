@@ -7,17 +7,26 @@
  * as dots that crossfade out as the pill swallows them — never an angular sweep,
  * so it reads true on any host silhouette (the conic-on-a-rectangle break retires).
  *
- * D-16 divergence (RECORDED, not silently forked). This is an inset EDGE band:
- * host-relative placement, a thin ~4px stadium hugging one silhouette edge. Its
- * geometry genuinely diverges from BAND-MATERIAL W4's standalone control
- * `glass-track-well` (a ~1rem control surface a Slider/Progress own outright), so
- * it does NOT compose that register. It also mints NO new track vocabulary: the
- * recessed groove reads the shared `--progress-track-on-glass` token and the dots
- * read the shared `--value-mark-*` tokens (the same value-marks vocabulary W4
- * formalizes). If W4's registers later admit this edge geometry, adoption is a
- * follow-up cut — not this wave. */
+ * WHY THE TRACK DOES NOT COMPOSE `.track-well`, in one falsifiable line: the
+ * dots are children of `__track`, and 6px dots centred on a 3px band overflow
+ * it by 1.5px per cross edge — the register's `overflow: hidden` would CLIP them.
+ * A visible break beats one saved declaration. (The earlier "D-16 divergence"
+ * record grounded the same refusal in SIZING, which the register's own file
+ * rules component-scoped; the ground was false, the conclusion right.)
+ *
+ * What it DOES compose is everything a groove-adjacent surface can: `.track-ground`
+ * — the register's ground WITHOUT the clipping groove shape, which is what
+ * declares `--track-well-recess` at THIS element so the derivation reads the
+ * host's own `--background` (a dock crest, a card, the page) instead of the
+ * page's — and the `.glass-value-marks` register: dot geometry, the
+ * `--value-mark-*` vocabulary and the family's one `[data-consumed]` swallow
+ * law, none of it re-forked here. */
 .scroll-progress-rim {
-    --scroll-progress-rim-width: 4px;
+    /* 3px, not 4 (#74 J-9). At 4px the band read as a second chrome edge around
+       the host rather than a report ON it; the fill pill carries the signal and
+       the ground only has to be findable. The dots stay 6px — they are the
+       checkpoint read and they deliberately overhang. */
+    --scroll-progress-rim-width: 3px;
     --scroll-progress-rim-inset: 2px;
     --scroll-progress-rim-margin: 8px;
     position: absolute;
@@ -30,7 +39,7 @@
 .scroll-progress-rim__track {
     position: absolute;
     border-radius: var(--radius-pill);
-    background: var(--progress-track-on-glass);
+    background: var(--track-well-recess);
 }
 
 /* horizontal — the pill hugs the block-end edge, inset from the sides so host
@@ -52,7 +61,7 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: var(--scroll-progress-rim-spectrum, var(--section-color-7));
+    background: var(--scroll-progress-rim-spectrum, var(--rainbow-violet));
     /* spring the width: the clip reveal is the pill's visible length, animated on
      * --spring-dock; a growing reveal, never a translated fixed-width thumb */
     clip-path: inset(0 100% 0 0 round var(--radius-pill));
@@ -81,41 +90,14 @@
     );
 }
 
-.scroll-progress-rim__dot {
-    position: absolute;
-    inline-size: var(--value-mark-size, 0.375rem);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: var(
-        --value-mark-color,
-        color-mix(in srgb, var(--foreground) 34%, transparent)
-    );
-    transition: opacity var(--spring-dock-duration) var(--spring-dock);
-}
-
-.scroll-progress-rim[data-orientation="horizontal"] .scroll-progress-rim__dot {
-    inset-block: 0;
-    margin-block: auto;
-    inset-inline-start: var(--dot-position);
-    transform: translateX(-50%);
-}
-
-.scroll-progress-rim[data-orientation="horizontal"]:dir(rtl)
-    .scroll-progress-rim__dot {
-    transform: translateX(50%);
-}
-
-.scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__dot {
-    inset-inline: 0;
-    margin-inline: auto;
-    /* the vertical fill grows from the block-end, so dots read from that edge too */
-    inset-block-end: var(--dot-position);
-    transform: translateY(50%);
-}
+/* The dot recipe is the value-marks register's — the third copy of it in this
+   family is DELETED, not maintained. The register's mechanic (a zero-thickness
+   positioned line whose `::before` centres the disc) is direction-agnostic and
+   measures the vertical axis from the block-end, which is the axis this rim
+   already grows along. */
 
 @media (prefers-reduced-motion: reduce) {
-    .scroll-progress-rim__fill,
-    .scroll-progress-rim__dot {
+    .scroll-progress-rim__fill {
         transition: none;
     }
 }

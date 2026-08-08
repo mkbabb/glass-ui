@@ -8,8 +8,16 @@ import { fileURLToPath } from "node:url";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
+/* The shared component-structure registers a consumer loses if it imports the raw
+   SFC bundle alone: the groove (`.track-well`), the indeterminate flow band
+   (`.track-flow`) and the checkpoint dots (`.glass-value-marks`). Each is emitted
+   as a CLASS by an SFC template but declared in a partial, so the manifest has to
+   fold the partial in. `.track-flow` was missing from this predicate while
+   `Progress`/`Timeline` already emitted the class — the flow band shipped with no
+   rules on `./styles.css`. Comments are stripped first so a mention can never
+   enrol a file. */
 function hasComponentStyles(path) {
-    return /\.glass-(?:track-well|value-marks)\b/.test(
+    return /\.(?:track-well|track-flow|glass-value-marks)\b/.test(
         readFileSync(path, "utf8").replace(/\/\*[\s\S]*?\*\//g, ""),
     );
 }

@@ -79,7 +79,7 @@
            ~40px tiles, a fraction of a card's plate, so the global 36% specular
            radius blooms a tile-filling disc (the finding). The family re-points
            `--glass-specular-size` to the tighter `--dock-control-specular-size` (22%,
-           tokens.css), so the SHARED `.glass-material::before` catch-light recipe
+           tokens.css), so the SHARED material-group `::before` catch-light recipe
            (glass.css) paints a restrained EDGE-catch on the small tile WITHOUT
            forking the recipe — the gleam wakes on hover/active (the cohort's 0.1/0.16
            rungs), sized for the tile. The rest intensity stays 0 (the default-off

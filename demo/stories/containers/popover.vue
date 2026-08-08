@@ -59,7 +59,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                     is unavailable, so the content never becomes pointer-exclusive.
                 </p>
                 <Surface
-                    material="content"
+                    tier="quiet"
                     surface="veil"
                     class="flex min-h-40 items-center justify-center p-5"
                 >
@@ -176,7 +176,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                     of the tab order.
                 </p>
                 <Surface
-                    material="content"
+                    tier="quiet"
                     surface="veil"
                     class="flex flex-wrap items-center gap-3 p-5"
                 >

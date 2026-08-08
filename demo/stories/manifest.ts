@@ -584,7 +584,7 @@ export const CATEGORIES: Category[] = [
                 "display",
                 "surface",
                 "Surface",
-                "Four semantic material roles, three orthogonal decorations, and the deep, grain, and specular facilities on the canonical plate primitive.",
+                "One prominence axis of five rungs, an orthogonal glass/veil/opaque decoration, and a depth knob that thickens the resolved rung — the canonical plate primitive.",
             ),
             // The card page owns its contained live-field examples. Keep the page
             // background static so those examples are the route's only GL contexts.
@@ -898,7 +898,7 @@ export const CATEGORIES: Category[] = [
                 "feedback",
                 "progress",
                 "Progress",
-                "Continuous progress with optional checkpoint marks, indeterminate states, and vertical, gradient, and liquid presentations.",
+                "Continuous progress with optional checkpoint marks, three size rungs, a null-valued indeterminate flow band, and vertical and liquid presentations.",
             ),
             s(
                 "feedback",

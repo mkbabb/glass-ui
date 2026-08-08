@@ -64,31 +64,33 @@ describe("ScrollProgressRim — law-12 fill-pill + dots geometry", () => {
         expect(b).toBeLessThan(c);
     });
 
-    // The dots half of law 12 — discrete positions render as dots, and a dot the
-    // pill has passed is swallowed (its crossfade opacity collapses toward 0) while
-    // a dot ahead of the pill stays lit.
-    it("renders one dot per segment and swallows the passed dots", () => {
+    // The dots half of law 12 — discrete positions render as the family's SHARED
+    // checkpoint marks, and a mark the pill has passed is CONSUMED. AMENDED at BK
+    // #88: the selector follows its moved subject (`.glass-value-mark`, the one
+    // register) and the encoding follows the family's one declared law
+    // (`[data-consumed]`), replacing this component's private fractional-opacity
+    // math. Behaviour-equivalent at the partition level; the crossfade itself
+    // changes from fraction-driven to time-based and is a DECLARED paint delta.
+    it("renders one mark per segment and consumes the passed ones", () => {
         const wrapper = mount(ScrollProgressRim, {
             props: { value: 2.07, max: 4, segments: [1, 0.72, 0.35, 0] },
         });
-        const dots = wrapper.findAll(".scroll-progress-rim__dot");
-        expect(dots).toHaveLength(4);
+        const marks = wrapper.findAll(".glass-value-mark");
+        expect(marks).toHaveLength(4);
 
-        // dot centers at 12.5 / 37.5 / 62.5 / 87.5% — fill is 51.75%, so the first
-        // two are swallowed (opacity → 0) and the last two stay lit (opacity → 1).
-        const opacity = (i: number) =>
-            parseFloat(dots[i].attributes("style")?.match(/opacity:\s*([\d.]+)/)?.[1] ?? "1");
-        expect(opacity(0)).toBeLessThan(0.5);
-        expect(opacity(1)).toBeLessThan(0.5);
-        expect(opacity(2)).toBeGreaterThan(0.5);
-        expect(opacity(3)).toBeGreaterThan(0.5);
+        // mark centres at 12.5 / 37.5 / 62.5 / 87.5% — fill is 51.75%, so the first
+        // two are consumed and the last two stay lit.
+        expect(
+            marks.map((mark) => mark.attributes("data-consumed") !== undefined),
+        ).toEqual([true, true, false, false]);
     });
 
-    it("renders no dots for continuous scroll progress", () => {
+    it("renders no marks for continuous scroll progress", () => {
         const wrapper = mount(ScrollProgressRim, {
             props: { value: 40, max: 100 },
         });
-        expect(wrapper.findAll(".scroll-progress-rim__dot")).toHaveLength(0);
+        expect(wrapper.findAll(".glass-value-mark")).toHaveLength(0);
+        expect(wrapper.find(".glass-value-marks").exists()).toBe(false);
     });
 
     it("preserves the progressbar semantics and clamps to range", () => {

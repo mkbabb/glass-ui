@@ -14,7 +14,9 @@ const main = document.querySelector("main") || document.body;
 const els = [...main.querySelectorAll("*")];
 const vis = els.filter(e => { const r = e.getBoundingClientRect(); return r.width>0 && r.height>0; });
 const cn = e => (typeof e.className === "string" ? e.className : (e.className && e.className.baseVal) || "");
-const G = /glass-(wash|quiet|resting|floating|overlay|card|dock|capsule|chip|track-well|defined|pager-ring|deep|control-edge)/;
+// The groove register dropped its \`glass-\` prefix at BK #86+#88 (it declares no
+// material), so the census matches it by its own name or the census under-counts.
+const G = /(?:glass-(wash|quiet|resting|floating|overlay|card|dock|capsule|chip|defined|pager-ring|deep|control-edge)|\\btrack-well\\b)/;
 const glass = vis.filter(e => G.test(cn(e)));
 const gs = {};
 for (const e of glass) { const s = getComputedStyle(e); const k = cn(e).split(/\\s+/).filter(c=>G.test(c)).join(" ") + " | bf=" + (s.backdropFilter||s.webkitBackdropFilter) + " | r=" + s.borderRadius; gs[k]=(gs[k]||0)+1; }

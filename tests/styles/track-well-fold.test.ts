@@ -16,7 +16,7 @@ describe("track-well / value-marks shared registers", () => {
             props: { modelValue: [40], max: 100, marks: [25, 50, 75], "aria-label": "L" },
         });
 
-        expect(wrapper.get(".slider-track").classes()).toContain("glass-track-well");
+        expect(wrapper.get(".slider-track").classes()).toContain("track-well");
         expect(wrapper.find(".glass-value-marks").exists()).toBe(true);
         expect(wrapper.findAll(".glass-value-mark")).toHaveLength(3);
     });
@@ -26,7 +26,7 @@ describe("track-well / value-marks shared registers", () => {
             props: { modelValue: 40, marks: [25, 50, 75] },
         });
 
-        expect(wrapper.get(".progress-rail").classes()).toContain("glass-track-well");
+        expect(wrapper.get(".progress-rail").classes()).toContain("track-well");
         expect(wrapper.find(".glass-value-marks").exists()).toBe(true);
         expect(wrapper.findAll(".glass-value-mark")).toHaveLength(3);
     });

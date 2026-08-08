@@ -1,0 +1,115 @@
+/* ════════════════════════════════════════════════════════════════════════
+   .track-flow — the ONE indeterminate FLOW band.
+
+   A value that is not known does not get a fabricated value. It gets a
+   SPECULAR SWEEP: a masked light band travelling the groove on the library's
+   one shimmer clock. This register replaces the whole-rail three-stop
+   `color-mix()` gradient that used to fake a determinate ramp — a paint that
+   lied to the eye under reduced motion in both orientations while the AT heard
+   the truth.
+
+   THE LAW (GF-TIMELINE's, adopted verbatim so the two carriers cannot drift):
+     · a `background-position` ENVELOPE, never a spring — a slow LFO; the dock
+       spring is TRAVEL's, and nothing here travels to a destination.
+     · `--duration-shimmer-fast` (3s) — the ONE indeterminate clock.
+     · `plus-lighter` — a light channel ADDS; it never substitutes the ground.
+     · peak α 0.12 (the specular ceiling), amplitude floor 0.30·peak.
+     · under PRM the band PARKS at 50% at floor alpha — the state survives at
+       reduced amplitude. It does not vanish, and it does not become a ramp.
+
+   THE INHERITED FALSIFIER: kill this `::after` and `modelValue: null` becomes
+   pixel-identical to `modelValue: 0`.
+
+   Lives in `glass/` because a plus-lighter specular band IS a light channel —
+   the enumerated carve-out to the namespace law its groove sibling had to
+   leave over (C-1). The class carries no `glass-` prefix because it composes
+   a material rather than declaring one.
+
+   `@layer components`, @import-ed by glass.css immediately after
+   value-marks.css. The host must be a positioned, clipping box — every
+   consumer composes `.track-well`, which is both.
+   ════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
+    .track-flow {
+        --track-flow-peak: 0.12;
+        --track-flow-floor: 0.3;
+    }
+
+    .track-flow::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        mix-blend-mode: plus-lighter;
+        background-image: linear-gradient(
+            90deg,
+            oklch(1 0 0 / 0) 0%,
+            oklch(1 0 0 / var(--track-flow-peak)) 50%,
+            oklch(1 0 0 / 0) 100%
+        );
+        background-size: 45% 100%;
+        background-repeat: no-repeat;
+        animation: track-flow var(--duration-shimmer-fast) linear infinite;
+    }
+
+    /* Vertical hosts sweep the block axis; the same band, transposed. */
+    .track-flow[data-orientation="vertical"]::after {
+        background-image: linear-gradient(
+            0deg,
+            oklch(1 0 0 / 0) 0%,
+            oklch(1 0 0 / var(--track-flow-peak)) 50%,
+            oklch(1 0 0 / 0) 100%
+        );
+        background-size: 100% 45%;
+        animation-name: track-flow-block;
+    }
+
+    @keyframes track-flow {
+        from {
+            background-position: -50% 0;
+            opacity: var(--track-flow-floor);
+        }
+        50% {
+            opacity: 1;
+        }
+        to {
+            background-position: 150% 0;
+            opacity: var(--track-flow-floor);
+        }
+    }
+
+    @keyframes track-flow-block {
+        from {
+            background-position: 0 150%;
+            opacity: var(--track-flow-floor);
+        }
+        50% {
+            opacity: 1;
+        }
+        to {
+            background-position: 0 -50%;
+            opacity: var(--track-flow-floor);
+        }
+    }
+
+    /* PRM parks the band mid-sweep at the floor alpha. The band still PAINTS —
+       an indeterminate state that erases its own signal under reduce is a
+       masking fallback, and the alternative (a static centred ramp) is the
+       determinate lie this register exists to kill.
+
+       BOTH ORIENTATIONS ARE NAMED. The vertical arm above sets `animation-name`
+       at (0,2,0); a bracket that relied on the `animation` SHORTHAND resetting
+       that longhand from (0,1,0) LOSES the cascade on it — a media query adds no
+       specificity — and the vertical band would have kept sweeping under reduce
+       while the horizontal one parked. The arm is stated, not inferred from a
+       shorthand accident. */
+    @media (prefers-reduced-motion: reduce) {
+        .track-flow::after,
+        .track-flow[data-orientation="vertical"]::after {
+            animation: none;
+            background-position: 50% 50%;
+            opacity: var(--track-flow-floor);
+        }
+    }
+}

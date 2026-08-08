@@ -3,7 +3,7 @@
 // This directive is the GLEAM-TRACK primitive of the affordance vocabulary
 // (`docs/precepts/affordance-map.md` — the closed five-primitive
 // set: hover-lift · gleam-track · press-squish · drag-morph · focus-ring). It feeds the
-// host `--mouse-x/y` write; the `.glass-material::before` recipe maps it onto the typed
+// host `--mouse-x/y` write; the material-group `::before` recipe maps it onto the typed
 // `--specular-x/y` channel and reads the `--glass-specular-intensity-{rest,hover,active}`
 // rungs — so the gleam WAKES on hover (intensity rest 0 → hover) and ILLUMINATES under
 // the touch-point on press (→ active), the iOS-27 touch-illumination coupled to the
@@ -27,7 +27,7 @@
 // the in-library Button + dock consumers at birth).
 //
 // The write lands on the directive HOST — the element that owns the material
-// `::before` gleam. Apply `v-specular` on the same node the `.glass-material` /
+// `::before` gleam. Apply `v-specular` on the same node the material group /
 // `glass-specular-track` / `.dock-*` `::before` paints on (the
 // host-geometry rule: the `--mouse-x/y` host write must be the gleam-painting box,
 // not an unrelated ancestor).

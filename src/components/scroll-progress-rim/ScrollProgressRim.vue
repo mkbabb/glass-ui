@@ -1,41 +1,27 @@
 <script setup lang="ts">
 import { computed, type CSSProperties } from "vue";
-import type {
-    ScrollProgressRimOrientation,
-    ScrollProgressRimSegments,
-} from "./types";
+import type { ScrollProgressRimProps } from "./types";
 
 defineOptions({ name: "ScrollProgressRim" });
 
+/* THE SPECTRUM IS THE LIBRARY'S RAINBOW REGISTER (#74 J-9), not a local pick of
+   six route-accent rungs. `--section-color-*` is the DEMO's per-route identity
+   scale — a component that hard-codes six of its indices ships a spectrum that
+   re-tints whenever a route palette moves and that a consumer cannot name. The
+   canonical `--rainbow-*` family (tokens/scale-paper.css) is the one spectrum
+   vocabulary in the library, already the source for `.btn-rainbow` (utilities/
+   btn.css) and the metal sweep (utilities/metal.css); the rim is its third
+   consumer, in ROYGBIV order like both of them. A consumer still overrides the
+   whole band through `stops`. */
 const DEFAULT_STOPS = [
-    "var(--section-color-0)",
-    "var(--section-color-5)",
-    "var(--section-color-4)",
-    "var(--section-color-3)",
-    "var(--section-color-2)",
-    "var(--section-color-7)",
+    "var(--rainbow-red)",
+    "var(--rainbow-orange)",
+    "var(--rainbow-yellow)",
+    "var(--rainbow-green)",
+    "var(--rainbow-blue)",
+    "var(--rainbow-indigo)",
+    "var(--rainbow-violet)",
 ] as const;
-
-// A dot crossfades over this fraction band as the fill-pill's leading edge
-// reaches its center — the "swallow" of law 12, never a hard on/off flip.
-const SWALLOW_BAND = 0.06;
-
-export interface ScrollProgressRimProps {
-    /** Aggregate progress in the same units as `max`. */
-    value: number;
-    /** Aggregate ceiling. @default 1 */
-    max?: number;
-    /**
-     * Optional discrete positions. Each entry renders as a dot; the fill-pill
-     * swallows a dot as it passes. The values seed the aggregate read but the
-     * pill length is always the true `value / max` fraction (never pinned full).
-     */
-    segments?: ScrollProgressRimSegments;
-    /** The fill axis. @default "horizontal" */
-    orientation?: ScrollProgressRimOrientation;
-    /** CSS color anchors for the fill's spectrum. */
-    stops?: readonly string[];
-}
 
 const props = withDefaults(defineProps<ScrollProgressRimProps>(), {
     max: 1,
@@ -68,15 +54,17 @@ const spectrumGradient = computed(() => {
     return `linear-gradient(${axis}, ${body})`;
 });
 
-// One dot per discrete position, at its slot center; a dot the pill has reached
-// crossfades toward 0 (swallowed), a dot ahead stays lit.
-const dots = computed(() => {
+/* One checkpoint per discrete position, at its slot center. A dot the pill has
+   reached is CONSUMED — the family's one passed-encoding, declared once in the
+   value-marks register and set here by the same `position <= fraction` test
+   every composer applies. The fractional `SWALLOW_BAND` crossfade this replaces
+   was a second law living in one component's script. */
+const marks = computed(() => {
     const segments = props.segments;
     if (!segments?.length) return [];
     return segments.map((_, index) => {
         const position = (index + 0.5) / segments.length;
-        const opacity = clamp((position - fraction.value) / SWALLOW_BAND, 0, 1);
-        return { position, opacity };
+        return { position, consumed: position <= fraction.value };
     });
 });
 
@@ -100,17 +88,23 @@ const style = computed<CSSProperties>(
         :aria-valuenow="value"
         :aria-valuemax="max"
     >
-        <span class="scroll-progress-rim__track" aria-hidden="true">
+        <span class="scroll-progress-rim__track track-ground" aria-hidden="true">
             <span class="scroll-progress-rim__fill" />
             <span
-                v-for="(dot, index) in dots"
-                :key="index"
-                class="scroll-progress-rim__dot"
-                :style="{
-                    '--dot-position': `${(dot.position * 100).toFixed(3)}%`,
-                    opacity: dot.opacity.toFixed(3),
-                }"
-            />
+                v-if="marks.length"
+                class="glass-value-marks"
+                :data-orientation="orientation === 'vertical' ? 'vertical' : undefined"
+            >
+                <span
+                    v-for="(mark, index) in marks"
+                    :key="index"
+                    class="glass-value-mark"
+                    :data-consumed="mark.consumed || undefined"
+                    :style="{
+                        '--value-mark-position': `${(mark.position * 100).toFixed(3)}%`,
+                    }"
+                />
+            </span>
         </span>
     </div>
 </template>

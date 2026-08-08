@@ -32,7 +32,26 @@
        `tests/styles/backdrop-prefix-normalization.test.ts`
        (G-GLASS-HAS-FROST arm (b)): every `-webkit-backdrop-filter` in the
        built dist must have an unprefixed sibling in the same rule. */
-    /* Every rung is the SAME medium at a different THICKNESS. The plate paint comes
+    /* EVERY RUNG NOW DECLARES A CORNER AND A CLOCK — the two things a material
+       must have and this one lacked.
+
+       THE CORNER: four rungs are clipped by `contain: paint` (material.css) and
+       NOT ONE declared a `border-radius`, so every clipped plate cut a sharp
+       rectangle out of the material it composed — the structural root of the
+       66-radius census, and the reason a live external consumer documents a
+       corner Surface does not have. `--radius-ctx` is the LAW-A relay channel
+       and it already ships (theme/radius.css, defaulting to `--radius-card`):
+       the rung reads the relay, a context overrides it by cascade, and nothing
+       is minted. Deliberately NOT a per-rung ROLE radius — that binds radius (a
+       role axis) to tier (a prominence axis), and a `quiet` used as a presented
+       card would then corner at control-10 against LAW B.
+
+       THE CLOCK: a material with no transition snaps between states. The house
+       idiom is the PAIR — `--spring-press` is a `linear()` EASING, so it needs
+       `--spring-press-duration` beside it; a bare `var(--spring-press)` in the
+       duration slot is invalid as written.
+
+       Every rung is the SAME medium at a different THICKNESS. The plate paint comes
        from `@utility glass-plate` (glass/veil.css) — one recipe, composed at the
        element, reading the rung's tier token declared beside it. A rung's own rule
        therefore carries exactly what is genuinely per-rung: its blur, its border ink,
@@ -42,6 +61,10 @@
     .glass-wash {
         position: relative;
         @apply glass-plate;
+        border-radius: var(--radius-ctx);
+        transition:
+            background-color var(--spring-press-duration) var(--spring-press),
+            box-shadow var(--spring-press-duration) var(--spring-press);
         backdrop-filter: var(--glass-blur-wash);
         /* The rung border ink feeds the accent-composed
            `--glass-border-accent` (rim group above); byte-identical at 0%. */
@@ -64,6 +87,10 @@
     .glass-quiet {
         position: relative;
         @apply glass-plate;
+        border-radius: var(--radius-ctx);
+        transition:
+            background-color var(--spring-press-duration) var(--spring-press),
+            box-shadow var(--spring-press-duration) var(--spring-press);
         backdrop-filter: var(--glass-blur-quiet);
         --glass-border-rung: var(--glass-border-quiet);
         border: 1px solid var(--glass-border-accent);
@@ -76,6 +103,10 @@
     .glass-resting {
         position: relative;
         @apply glass-plate;
+        border-radius: var(--radius-ctx);
+        transition:
+            background-color var(--spring-press-duration) var(--spring-press),
+            box-shadow var(--spring-press-duration) var(--spring-press);
         backdrop-filter: var(--glass-blur-resting);
         --glass-border-rung: var(--glass-border-resting);
         border: 1px solid var(--glass-border-accent);
@@ -100,6 +131,10 @@
         --glass-backdrop: light;
         position: relative;
         @apply glass-plate;
+        border-radius: var(--radius-ctx);
+        transition:
+            background-color var(--spring-press-duration) var(--spring-press),
+            box-shadow var(--spring-press-duration) var(--spring-press);
         backdrop-filter: var(--glass-blur-floating);
         --glass-border-rung: var(--glass-border-floating);
         border: 1px solid var(--glass-border-accent);
@@ -115,6 +150,10 @@
         --glass-backdrop: light;
         position: relative;
         @apply glass-plate;
+        border-radius: var(--radius-ctx);
+        transition:
+            background-color var(--spring-press-duration) var(--spring-press),
+            box-shadow var(--spring-press-duration) var(--spring-press);
         backdrop-filter: var(--glass-blur-overlay);
         --glass-border-rung: var(--glass-border-overlay);
         border: 1px solid var(--glass-border-accent);
@@ -141,7 +180,6 @@
        an engine without style-query support drops the unknown at-rule and keeps the
        un-lifted register. */
     @container style(--glass-backdrop: light) {
-        .glass-material,
         .glass-wash,
         .glass-quiet,
         .glass-resting,
@@ -221,7 +259,6 @@
            pairing inside a glass card — the SYSTEMIC library-seam fix, not a curve-picker
            one-off). Progressive enhancement only — the declarative darken is the AA floor. */
         @container style(--glass-backdrop: light) {
-            .glass-material,
             .glass-wash,
             .glass-quiet,
             .glass-resting,

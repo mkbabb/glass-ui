@@ -30,7 +30,7 @@ const sizes = ["sm", "md", "lg"] as const;
             heading="Load and fallback"
             blurb="One Reka image path owns loading and failure; the identity name remains stable as pixels resolve or fail."
         >
-            <Surface material="content" surface="veil" class="avatar-grid">
+            <Surface tier="quiet" surface="veil" class="avatar-grid">
                 <figure class="avatar-specimen">
                     <Avatar label="Ada Lovelace" size="md">
                         <AvatarImage :src="portrait" />
@@ -69,7 +69,7 @@ const sizes = ["sm", "md", "lg"] as const;
             heading="Identity policy"
             blurb="Use a direct label, bind a visible entity name, or mark the image decorative. Initials and image alt never duplicate that name."
         >
-            <Surface material="content" surface="veil" class="avatar-grid">
+            <Surface tier="quiet" surface="veil" class="avatar-grid">
                 <figure class="avatar-specimen">
                     <Avatar label="Claude Shannon portrait" size="md" shape="square">
                         <AvatarFallback>CS</AvatarFallback>
@@ -107,7 +107,7 @@ const sizes = ["sm", "md", "lg"] as const;
             heading="Status composition"
             blurb="Avatar positions the existing semantic StatusDot; it does not translate status names or colors itself."
         >
-            <Surface material="content" surface="veil" class="avatar-status-row">
+            <Surface tier="quiet" surface="veil" class="avatar-status-row">
                 <Avatar label="Grace Hopper" size="md">
                     <AvatarFallback>GH</AvatarFallback>
                     <template #status>
@@ -122,7 +122,7 @@ const sizes = ["sm", "md", "lg"] as const;
         </StorySection>
 
         <StorySection heading="Sizes and group">
-            <Surface material="content" surface="veil" class="avatar-sizes">
+            <Surface tier="quiet" surface="veil" class="avatar-sizes">
                 <figure v-for="size in sizes" :key="size" class="avatar-specimen">
                     <Avatar :label="`${size} Ada Lovelace avatar`" :size="size">
                         <AvatarImage :src="portrait" />
@@ -132,7 +132,7 @@ const sizes = ["sm", "md", "lg"] as const;
                 </figure>
             </Surface>
 
-            <Surface material="content" surface="veil" class="avatar-group-panel">
+            <Surface tier="quiet" surface="veil" class="avatar-group-panel">
                 <ul class="avatar-group" aria-label="Compiler research team">
                     <li v-for="member in members" :key="member.id">
                         <Avatar :label="member.name">

@@ -335,7 +335,6 @@ defineExpose({
         ref="dockEl"
         v-bind="$attrs"
         class="glass-dock"
-        data-material="functional"
         :class="[
             orientation,
             `shape-${shape}`,

@@ -140,8 +140,11 @@ horizontal OR a vertical dock. The plain `<DockSeparator>` is unchanged.
 **The Slider/Progress track seam is typed and split; the generic `--track-bg`
 knob and `.value-mark(s)` selectors are removed.** The Slider `.slider-track` and
 the Progress `.progress-rail` now COMPOSE two shared registers — the recessed
-`.glass-track-well` groove and the `.glass-value-marks`/`.glass-value-mark`
-checkpoint-dot layer — and each drives its OWN typed public property. There is no
+`.track-well` groove and the `.glass-value-marks`/`.glass-value-mark`
+checkpoint-dot layer [CORRECTION 2026-08-08: previously read `.glass-track-well`.
+The register left `styles/glass/` for `styles/` and dropped the `glass-` prefix at
+BK #86+#88 — it declares no material (0 `backdrop-filter`, 0 blur, 0 saturate), so
+the prefix promised one it never had. The emitted class is `.track-well`.] — and each drives its OWN typed public property. There is no
 shared inheriting background axis (a Slider `background` and a Progress `<color>`
 are different grammars and must not collide on one knob).
 
@@ -151,13 +154,21 @@ _CSS custom properties_
 | --- | --- |
 | removed at 8.0 | `--slider-track-bg`, `--progress-track` |
 | never published (candidate-only) | `--track-bg` |
-| added at 8.0 | `--glass-slider-track-background` (CSS `background` grammar; falls back `--muted-medium`, spectrum `--secondary`), `--glass-progress-track-color` (CSS `<color>` only; falls back `--progress-track-on-glass`) |
-| retained | `--progress-track-on-glass`, `--value-mark-position`, `--value-mark-size`, `--value-mark-color` |
+| added at 8.0 | `--glass-slider-track-background` (CSS `background` grammar; falls back `--muted-medium`, spectrum `--secondary`), `--glass-progress-track-background` (CSS `background` grammar; falls back to the host-relative groove ground `--track-well-recess`) [CORRECTION 2026-08-08: the second entry previously read `--glass-progress-track-color` (CSS `<color>` only; falls back `--progress-track-on-glass`). That property DIED AT BIRTH at BK #88 — a `<color>`-only grammar enforced by a source grep that cannot see a consumer, shipped with 0 writers across 7 repos — and is replaced with NO alias by `--glass-progress-track-background`. `--progress-track-on-glass` retired with it.] |
+| retained | `--value-mark-position`, `--value-mark-size`, `--value-mark-color` |
+[CORRECTION 2026-08-08: `--progress-track-on-glass` was listed as retained here; it
+is REMOVED at 8.0 with the `<color>` grammar it backed. The groove ground is now the
+one host-relative derivation `--track-well-recess`, declared on `.track-well` /
+`.track-ground`.]
 
 Old Slider writers (`--slider-track-bg: <background>`) move to
 `--glass-slider-track-background`. Old Progress writers (`--progress-track:
-<color>`) move to `--glass-progress-track-color`; a gradient into the Progress
-property is invalid (color grammar only). Both properties inherit, so an ancestor
+<color>`) move to `--glass-progress-track-background`; any `background` value is
+valid there. [CORRECTION 2026-08-08: previously named `--glass-progress-track-color`
+and said "a gradient into the Progress property is invalid (color grammar only)".
+Both are void — the `<color>`-only property never shipped a writer and was struck at
+BK #88; its replacement takes the full `background` grammar, like its Slider
+sibling.] Both properties inherit, so an ancestor
 may style a component population; Progress reads the property (it is never
 assigned on `.progress-rail`), so an inherited override reaches the rail.
 
@@ -167,15 +178,21 @@ _DOM classes (unsupported implementation hooks, listed for completeness)_
 | --- | --- |
 | removed | `.slider-marks`, `.slider-mark`, `.progress-value-marks`, `.progress-value-mark` |
 | never emitted (candidate-only) | `.value-marks`, `.value-mark` |
-| added | `.glass-track-well`, `.glass-value-marks`, `.glass-value-mark` |
+| added | `.track-well`, `.track-flow`, `.glass-value-marks`, `.glass-value-mark` |
+[CORRECTION 2026-08-08: previously read `.glass-track-well`; the groove register
+renamed to `.track-well` at BK #86+#88. `.track-flow` — the one indeterminate flow
+band, composed by Progress and Timeline — is added at the same cut.]
 
 _Package export_
 
 `@mkbabb/glass-ui/styles.css` (the component-only entry) now targets the
 generated `dist/component-styles.css` manifest, which folds the shared
-`track-well.css` + `value-marks.css` structure before the raw SFC bundle so the
-emitted `.glass-track-well`/`.glass-value-mark(s)` classes have their rules on
-this entry. The canonical `@mkbabb/glass-ui/styles` (`dist/styles/index.css`) is
+`track-well.css` + `track-flow.css` + `value-marks.css` structure before the raw
+SFC bundle so the emitted `.track-well`/`.track-flow`/`.glass-value-mark(s)`
+classes have their rules on this entry. [CORRECTION 2026-08-08: previously named
+the emitted classes `.glass-track-well`/`.glass-value-mark(s)` and folded two
+partials; the groove renamed and `track-flow.css` joined the manifest at BK
+#86+#88.] The canonical `@mkbabb/glass-ui/styles` (`dist/styles/index.css`) is
 unchanged and reaches the same partials through its own cascade — import exactly
 ONE style entry, never both.
 
@@ -599,7 +616,7 @@ and `HandMark` remain public. The package export-map delta is exactly the remova
 | `DataTablePagination` | Use `DataTable`'s controlled `page`, `pageSize`, `total`, and `pagination` surface. |
 | `DrawerOverlay`, `DrawerPortal` | Use `DrawerContent`; it owns one overlay and portal boundary. |
 | `DropdownMenuPortal` | Use `DropdownMenuContent`; it owns the portal boundary. |
-| `ProgressDefault`, `ProgressGradient`, `ProgressLiquid` | Use `<Progress variant="default|gradient|liquid">`. |
+| `ProgressDefault`, `ProgressGradient`, `ProgressLiquid` | Use `<Progress variant="default\|liquid">`. [CORRECTION 2026-08-08: previously offered `variant="default|gradient|liquid"`. The `gradient` variant is DELETED at 8.0 with its three `--motion-duration-progress-*` tokens and its `@property --progress-crescendo` — its crescendo reached 95-100% white. Completion is now variant-independent and capped at the 0.12 specular ceiling.] |
 | `ProgressSectioned`, `useProgressGeometry`, `ProgressSegment`, `SectionedCell`, or `<Progress variant="sectioned">` | Use numeric `marks` on continuous Progress for reference checkpoints; own colored lifecycle phases in the product composition. |
 | `SelectScrollUpButton`, `SelectScrollDownButton` | Use `SelectContent`; overflow controls are internal. |
 | `ConstellationExpose.backend()` | Read the exposed `rendererStatus` ref or `@renderer-status`; Constellation now reports `engine: "canvas2d"`. |
