@@ -1,5 +1,6 @@
 import { computed, ref, watch } from "vue";
 import type { ComputedRef, Ref } from "vue";
+import type { SelectionValue } from "../../_shared/selection";
 
 /**
  * The minimal roving option shape reads only `value` + `disabled`, decoupling it
@@ -7,9 +8,16 @@ import type { ComputedRef, Ref } from "vue";
  * headless `useSelectionGroup` can compose it VERBATIM over its generic option
  * type). Any richer option (the tabs' `SegmentedTabOption`) is structurally
  * assignable.
+ *
+ * Generic in the value scalar, defaulting to `string` (BK #84 C-1). The machine
+ * only compares values with `===` and interpolates them into a reset key, so it is
+ * indifferent to which scalar it carries — but a callback parameter is
+ * contravariant, so `select` could not simply be widened in place without breaking
+ * every narrower caller. The type variable is what lets `<ToggleGroup>` pass
+ * `SelectionValue` and `<SegmentedTabs>` keep `string`, from one machine.
  */
-export interface RovingSelectionOption {
-    value: string;
+export interface RovingSelectionOption<V extends SelectionValue = string> {
+    value: V;
     disabled?: boolean;
 }
 
@@ -30,11 +38,11 @@ export type TabActivation = "automatic" | "manual";
  * wraps, and disabled options are skipped. This keyboard contract is never gated by
  * pointer motion.
  */
-export interface UseTabRovingFocusParams {
+export interface UseTabRovingFocusParams<V extends SelectionValue = string> {
     /** The options the strip renders (index-aligned to `buttonRefs`). */
-    stripOptions: ComputedRef<readonly RovingSelectionOption[]>;
+    stripOptions: ComputedRef<readonly RovingSelectionOption<V>[]>;
     /** The value the strip renders (the ONE tabstop anchor). */
-    stripValue: ComputedRef<string | undefined>;
+    stripValue: ComputedRef<V | undefined>;
     /** True for the vertical (block-axis) orientation — flips the arrow axis. */
     isVertical: ComputedRef<boolean>;
     /** Automatic selection-follows-focus or manual Enter/Space activation. */
@@ -42,7 +50,7 @@ export interface UseTabRovingFocusParams {
     /** Per-option button refs, index-aligned to `stripOptions`. */
     buttonRefs: Ref<HTMLElement[]>;
     /** The SFC's selection handler (focus-follows activation → model write + squish). */
-    select: (value: string, idx: number) => void;
+    select: (value: V, idx: number) => void;
 }
 
 export interface UseTabRovingFocusReturn {
@@ -54,8 +62,8 @@ export interface UseTabRovingFocusReturn {
     onStripKeydown: (e: KeyboardEvent) => void;
 }
 
-export function useTabRovingFocus(
-    params: UseTabRovingFocusParams,
+export function useTabRovingFocus<V extends SelectionValue = string>(
+    params: UseTabRovingFocusParams<V>,
 ): UseTabRovingFocusReturn {
     const { stripOptions, stripValue, isVertical, activation, buttonRefs, select } =
         params;

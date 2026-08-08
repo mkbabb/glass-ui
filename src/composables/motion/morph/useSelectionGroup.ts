@@ -17,17 +17,19 @@ import {
  * control run and `<SegmentedTabs>` are the SAME thing — a roving-focus selection
  * strip with a traveling indicator — and both compose it (BK #19 W-SELECTION-ONE
  * made SegmentedTabs the second; the arm at `tests/gates/overfit-structure.test.ts`
- * forbids a third assembly). `<ToggleGroup type="single">` is the same strip BY
- * SHAPE but not yet by composition: it delegates roving to reka's `ToggleGroupRoot`
- * and composes neither house part. Adopting it needs the C-1
- * `SelectionOption["value"]` widening (`useSelectionIndicator.ts:35` — `string` vs
- * `SelectionValue`) and is **BK #84's**; until it lands, the engine's consumer set
- * is TWO, and this doc says two. The assembly, reka-free and engine-free so it
- * ships on `/motion-core`:
+ * forbids a third assembly). `<ToggleGroup>` is the THIRD consumer, adopted at
+ * **BK #84 W-TOGGLE-ROW**: reka retired from that component entirely and it now
+ * feeds this engine from an item registry, taking the role-per-mode ARIA, the
+ * roving machine and the recenter while DECLINING the indicator — `indicatorRef`
+ * omitted, which is the "plain toggle row" the param below already named as a
+ * first-class caller. The C-1 `SelectionOption["value"]` widening landed with it
+ * (`string` → `SelectionValue`), so the engine's consumer set is THREE, and this
+ * doc says three. The assembly, reka-free and engine-free so it ships on
+ * `/motion-core`:
  *
- *   • the SELECTION MODEL — `single` (a `string`) | `multiple` (a `string[]`),
- *     driven off a caller-owned `model` ref (no shadow registry — the ONE
- *     registry discipline);
+ *   • the SELECTION MODEL — `single` (one scalar) | `multiple` (an array of them),
+ *     at the OPTION TYPE's own value (`O["value"]`), driven off a caller-owned
+ *     `model` ref (no shadow registry — the ONE registry discipline);
  *   • the ROVING MACHINE — `useTabRovingFocus` composed VERBATIM (exactly-one-
  *     tabstop, axis-derived arrows, Home/End, wrap, disabled-skip);
  *   • the ONE TRAVELING-INDICATOR WRITER — `useSelectionIndicator` (the
@@ -46,14 +48,20 @@ export type SelectionMode = "single" | "multiple";
 export type SelectionRole = "radiogroup" | "tablist" | "group";
 
 export interface UseSelectionGroupParams<O extends SelectionOption> {
+/** Re-stated for the return type's default only — the identity is `SelectionOption`'s. */
+type SelectionValue = SelectionOption["value"];
+
     /** The selectable options (index-aligned to `buttonRefs`). */
     options: ComputedRef<O[]>;
     /**
      * The caller-owned selection model — the ONE registry (no shadow state). A
-     * `single`-mode group reads/writes a `string`; a `multiple`-mode group a
-     * `string[]`.
+     * `single`-mode group reads/writes one option value; a `multiple`-mode group an
+     * array of them. Keyed to `O["value"]` rather than fixed at `string` (BK #84
+     * C-1), so a caller whose options carry `SelectionValue` keeps its own scalar
+     * end to end and a caller whose options carry `string` sees exactly what it saw
+     * before — the widening is by DERIVATION, so it breaks nothing.
      */
-    model: Ref<string | string[] | undefined>;
+    model: Ref<O["value"] | O["value"][] | undefined>;
     /** `single` (default) | `multiple`. */
     mode?: ComputedRef<SelectionMode> | SelectionMode;
     /**
@@ -69,9 +77,14 @@ export interface UseSelectionGroupParams<O extends SelectionOption> {
     /** The container scroller root (observed by the indicator's ResizeObserver). */
     containerRef: Ref<HTMLElement | null>;
     /**
-     * The traveling-indicator element (the `--stretch` squish target). Omit (or
-     * leave null) for a group with no glide indicator (e.g. a paper-hairline
-     * strip or a plain toggle row) — the squish/measure then no-ops.
+     * The traveling-indicator element (the deform write target). Omit (or leave
+     * null) for a group with no glide indicator at all (a paper-hairline strip, a
+     * plain toggle row) — the SQUISH then no-ops, which is HEAD's accurate half and
+     * is restored here. The MEASURE does not no-op, and BK #84's rewording asserted
+     * that it did: `useSelectionIndicator` attaches its `ResizeObserver`
+     * unconditionally — that is the Safari-identical guarantee — and
+     * `updateSingleSlider` keeps writing a `singleSliderStyle` such a caller never
+     * reads. Economizing it is the indicator writer's own change to make.
      */
     indicatorRef?: Ref<HTMLElement | null>;
     /** Per-option item refs, index-aligned to `options`. */
@@ -82,19 +95,19 @@ export interface UseSelectionGroupParams<O extends SelectionOption> {
      * squish on the pressed button. The engine stays the one selection path; a
      * caller that needs a local flourish hangs it here rather than forking `select`.
      */
-    onSelect?: (value: string, idx: number) => void;
+    onSelect?: (value: O["value"], idx: number) => void;
 }
 
-export interface UseSelectionGroupReturn {
+export interface UseSelectionGroupReturn<V extends SelectionValue = string> {
     /** The active option values (one for `single`, N for `multiple`). */
-    activeValues: ComputedRef<string[]>;
+    activeValues: ComputedRef<V[]>;
     /** True when `value` is currently selected. */
-    isSelected: (value: string) => boolean;
+    isSelected: (value: V) => boolean;
     /**
      * Commit a selection at `idx` — writes the model (toggle in `multiple`),
      * fires the travel-squish, and recenters the item via `scrollIntoView`.
      */
-    select: (value: string, idx: number) => void;
+    select: (value: V, idx: number) => void;
     /** The roving tabindex for option `idx` (`0` for the tabstop, `-1` else). */
     rovingTabindex: (idx: number) => number;
     /** The strip-root keydown handler (axis-derived arrows + Home/End). */
@@ -106,7 +119,7 @@ export interface UseSelectionGroupReturn {
     /** The resolved group `role` (`radiogroup` | `tablist` | `group`). */
     groupRole: ComputedRef<SelectionRole>;
     /** The per-item ARIA attributes for `value`, role-per-mode. */
-    itemAttrs: (value: string) => Record<string, string>;
+    itemAttrs: (value: V) => Record<string, string>;
 }
 
 function unwrap<T>(v: ComputedRef<T> | T | undefined, fallback: T): T {
@@ -118,7 +131,7 @@ function unwrap<T>(v: ComputedRef<T> | T | undefined, fallback: T): T {
 
 export function useSelectionGroup<O extends SelectionOption>(
     params: UseSelectionGroupParams<O>,
-): UseSelectionGroupReturn {
+): UseSelectionGroupReturn<O["value"]> {
     const {
         options,
         model,
@@ -144,13 +157,13 @@ export function useSelectionGroup<O extends SelectionOption>(
 
     // ── The selection model (single string | multiple string[]) ──
 
-    const activeValues = computed<string[]>(() => {
+    const activeValues = computed<O["value"][]>(() => {
         const m = model.value;
         if (m == null) return [];
         return Array.isArray(m) ? m : [m];
     });
 
-    function isSelected(value: string): boolean {
+    function isSelected(value: O["value"]): boolean {
         return activeValues.value.includes(value);
     }
 
@@ -158,7 +171,7 @@ export function useSelectionGroup<O extends SelectionOption>(
     // The indicator tracks the (single) active value; a `multiple` group passes
     // its first-selected as the glide anchor (a multi-toggle carries no single
     // slider — the caller omits `indicatorRef` for it).
-    const indicatorModel = computed<string | undefined>(
+    const indicatorModel = computed<O["value"] | undefined>(
         () => activeValues.value[0],
     );
 
@@ -174,7 +187,7 @@ export function useSelectionGroup<O extends SelectionOption>(
 
     // ── The selection commit (the ONE registry write + recenter + squish) ──
 
-    function select(value: string, idx: number) {
+    function select(value: O["value"], idx: number) {
         const option = options.value[idx];
         if (option?.disabled) return;
 
@@ -202,7 +215,7 @@ export function useSelectionGroup<O extends SelectionOption>(
 
     // ── The roving machine (composed VERBATIM) ──
 
-    const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
+    const { rovingTabindex, onStripKeydown } = useTabRovingFocus<O["value"]>({
         stripOptions: options,
         stripValue: indicatorModel,
         isVertical,
@@ -213,7 +226,7 @@ export function useSelectionGroup<O extends SelectionOption>(
 
     // ── Role-per-mode item attributes (the WAI-ARIA contract) ──
 
-    function itemAttrs(value: string): Record<string, string> {
+    function itemAttrs(value: O["value"]): Record<string, string> {
         const selected = isSelected(value);
         const role = groupRole.value;
         if (role === "radiogroup") {

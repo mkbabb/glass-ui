@@ -18,12 +18,12 @@ import {
 // SegmentedTabs are the same strip wearing different chrome. This SFC used to compose
 // `useSelectionIndicator` + `useTabRovingFocus` DIRECTLY — the engine's own doc claimed
 // it as a consumer while the import graph said otherwise, so the claim governed nothing
-// (BK #19 W-SELECTION-ONE). `<ToggleGroup type="single">` is the THIRD strip by shape
-// but NOT yet by composition: it delegates roving to reka's `ToggleGroupRoot` and
-// composes neither house part, so it does not trip the ONE-SELECTION arm. Its adoption
-// needs the C-1 `SelectionOption["value"]` widening and is BK #84's — until then the
-// engine's consumer set is TWO, stated. The pill indicator always measures via JS, so
-// Chrome and Safari paint the same pixels by construction.
+// (BK #19 W-SELECTION-ONE). `<ToggleGroup>` is the THIRD, adopted at BK #84
+// W-TOGGLE-ROW: reka retired from it, an item registry feeds the same engine, and the
+// C-1 `SelectionOption["value"]` widening landed there. It is a ROW, not a strip — it
+// declines the indicator, and the glide mark stays this component's. The pill
+// indicator always measures via JS, so Chrome and Safari paint the same pixels by
+// construction.
 import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
 import { useTabDragMorph } from "./composables/useTabDragMorph";
 import { useTabResponsive } from "./composables/useTabResponsive";

@@ -550,20 +550,30 @@ describe("7. this wave's role bindings", () => {
         );
     });
 
-    it("ToggleGroup derives its concentric pair from ONE published inset", () => {
-        const track = rule(
-            read("src/components/toggle-group/styles.css"),
-            '\\.toggle-group\\[data-type="single"\\]',
-        );
-        expect(track).toBeDefined();
-        expect(track).toContain("--radius-inset: 0.25rem");
-        expect(track).toContain("--radius-ctx: calc(var(--radius-pill) + var(--radius-inset))");
-        // pad and corner read the SAME number — the pad is never written twice
-        expect(track).toContain("padding: var(--radius-inset)");
-        expect(track).toContain("border-radius: var(--radius-ctx)");
-        expect(track).not.toContain("calc(var(--radius-pill) + 0.25rem)");
-        // the segment keeps its own role rung (law B), it does not read the relay
-        const item = rule(read("src/components/toggle-group/styles.css"), "\\.toggle-group__item");
+    /* ~~ToggleGroup derives its concentric pair from ONE published inset~~
+       [2026-08-08 · BK #84 W-TOGGLE-ROW: AMENDED, not deleted. #23 landed the
+       relay-derived concentric pair on `.toggle-group[data-type="single"]`; #84
+       DELETED that surface entirely — the group paints nothing in either
+       cardinality, so there is no concentric pair here left to derive and no
+       assertion left to make about one. The case is re-pointed at what the
+       subtraction has to keep true, which is the same law read from the other side:
+       the segment's own PILL role rung survives, and the relay channels are gone
+       rather than orphaned on a dead selector. This also discharges the ⊕⁷ atlas A-6
+       rider by subtraction: `--radius-concentric` was never minted, so there is
+       nothing to retire. The relay form itself is unharmed — it is asserted at its
+       live consumers elsewhere in this suite.] */
+    it("ToggleGroup keeps ONE stadium spelling and no concentric relay on a dead surface", () => {
+        const sheet = read("src/components/toggle-group/styles.css");
+        const strippedSheet = strip(sheet);
+        // The track that carried the pair is gone, both spellings with it.
+        expect(strippedSheet).not.toContain('.toggle-group[data-type="single"]');
+        expect(strippedSheet).not.toContain("--radius-ctx");
+        expect(strippedSheet).not.toContain("--radius-inset");
+        // …and the sentinel-producing calc goes with it, in EITHER spelling: the
+        // literal D-5 recorded and the relay #23 re-expressed it as.
+        expect(strippedSheet).not.toMatch(/var\(--radius-pill\)\s*\+/);
+        // The segment keeps its own role rung (law B) — one stadium, one spelling.
+        const item = rule(sheet, "\\.toggle-group__item");
         expect(item).toContain("border-radius: var(--radius-pill)");
     });
 

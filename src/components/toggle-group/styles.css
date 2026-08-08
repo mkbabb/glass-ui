@@ -1,40 +1,41 @@
 @layer components {
+    /* THE GROUP PAINTS NOTHING. No background, no backdrop-filter, no rim, no
+       recess, no corner, no padding — both cardinalities, both orientations. What
+       used to live here was a byte-for-byte copy of `.glass-capsule-track`
+       (glass-capsule.css) keyed on `[data-type="single"]`, so a one-of-N chooser and
+       a set of N toggles were two different materials for a difference no user can
+       perceive; it also carried the library's ONE cross-namespace token reach
+       (`--tab-track-recess-ink`, a tabs token read from here) and both live
+       `calc(var(--radius-pill) + 0.25rem)` sites, which resolve to `10003px` in
+       Chromium and `3.4e38px` in Safari. A consumer that wants a plate under the row
+       mints a Card at r16 in its own tree — which is what seventeen of the
+       twenty-four mounts in the world were already hand-rolling, in the other
+       direction, by re-flattening this one.
+
+       WRAP is the declaration this row exists for. The strip used to be
+       `inline-flex` with no wrap inside an `overflow-x: auto` parent, so its own demo
+       hid 59% of itself (224px shown of 552px, three of five options invisible) under
+       copy promising both edges stayed reachable. A row that wraps has no hidden
+       content to reach. `scroll-padding-inline`, `overscroll-behavior-inline`,
+       `justify-content: safe center` and `vertical-align` all died with the scroller
+       they served. */
     .toggle-group {
-        display: inline-flex;
+        display: flex;
+        flex-wrap: wrap;
         inline-size: fit-content;
         max-inline-size: 100%;
         align-items: center;
-        gap: 0.25rem;
-        vertical-align: middle;
-        scroll-padding-inline: 0.25rem;
-        overscroll-behavior-inline: contain;
+        /* the member rung; ONE ladder transposition at the coarse/narrow step.
+           Literal + MARKED SEAM: re-points to the spacing cohort when PROPORTION §6's
+           ADDED tokens land — they resolve to nothing on disk today, and binding an
+           unresolvable name is the defect this lane was convicted of. */
+        gap: 8px;
     }
 
-    /* The single-select track is a CONCENTRIC PAIR with its own segments, and it
-       derives — it does not restate. The track publishes its inner pad on the
-       shipped Law-1 relay channel `--radius-inset` and its resolved corner on
-       `--radius-ctx`; `padding` and the outer corner both read that ONE number, so
-       a consumer retuning the pad keeps the pair concentric instead of silently
-       breaking it (the pad used to be written twice — once as `padding`, once
-       hard-coded inside the radius `calc()`). The segments keep their own PILL role
-       rung (law B: a role-bearing child takes its role, never the relay), and the
-       derivation is exact for a stadium pair: outer = inner + inset. No token is
-       minted — `--radius-inset`/`--radius-ctx` are the relay channels
-       `theme/radius.css` already declares, published here for the first time on
-       this surface. */
-    .toggle-group[data-type="single"] {
-        --radius-inset: 0.25rem;
-        --radius-ctx: calc(var(--radius-pill) + var(--radius-inset));
-
-        justify-content: safe center;
-        padding: var(--radius-inset);
-        border-radius: var(--radius-ctx);
-        background: var(--glass-plate-quiet);
-        backdrop-filter: var(--glass-blur-quiet);
-        box-shadow:
-            var(--glass-rim-top),
-            var(--glass-rim-bottom),
-            inset 0 1px 2px var(--tab-track-recess-ink);
+    @media (width <= 768px) {
+        .toggle-group {
+            gap: 4px;
+        }
     }
 
     .toggle-group[data-orientation="vertical"] {
@@ -42,8 +43,18 @@
         align-items: stretch;
     }
 
+    /* THE ITEM DECLARES GEOMETRY AND TYPE ONLY. Fill, border and blur are
+       `.control-surface`'s; the resting rim is `.glass-control-edge`'s; the hover
+       specular + press-snap are `.glass-capsule-hover`'s; the focus ring is
+       `.focus-ring`'s `outline`. This file authors ZERO border values and ZERO
+       backdrop-filter, by construction — that is what G-TOGGLE-REGISTER asserts. */
     .toggle-group__item {
         --toggle-group-item-size: var(--control-h-md);
+        /* The F-3 reconciliation: `.tap-squish` and `.glass-capsule-hover` both write
+           a press scale, and this one declaration is what makes them agree on 0.96
+           instead of racing 0.96 against 0.97. It is load-bearing — do not remove it
+           because it looks like a lone token restatement. */
+        --scale-press: var(--scale-press-sm);
 
         display: inline-flex;
         flex: none;
@@ -53,49 +64,63 @@
         justify-content: center;
         gap: 0.5rem;
         padding-inline: 0.75rem;
-        border: 1px solid transparent;
+        /* ONE spelling of the stadium. The old `calc(var(--radius-pill) + 0.25rem)`
+           pair upstairs is what made this component the sole author of the ×32
+           `10003px` census; the role rung is the whole answer here. */
         border-radius: var(--radius-pill);
-        background: transparent;
         color: var(--muted-foreground);
         font: inherit;
         font-size: var(--control-text);
         font-weight: 500;
         line-height: 1;
-        white-space: nowrap;
         cursor: pointer;
         appearance: none;
         touch-action: manipulation;
         user-select: none;
-        --scale-press: var(--scale-press-sm);
     }
 
-    .toggle-group__item[data-size="sm"] {
+    .toggle-group[data-size="sm"] .toggle-group__item {
         --toggle-group-item-size: var(--control-h-sm);
-        padding-inline: 0.625rem;
+        padding-inline: 0.5rem;
         font-size: var(--control-text-sm);
     }
 
-    .toggle-group__item[data-size="lg"] {
+    .toggle-group[data-size="lg"] .toggle-group__item {
         --toggle-group-item-size: var(--control-h-lg);
         padding-inline: 1.25rem;
     }
 
-    .toggle-group__item[data-variant="outline"] {
-        border-color: var(--control-surface-border);
-        background: var(--control-surface-bg);
-        backdrop-filter: var(--control-surface-blur);
-    }
+    /* THE ON-STATE CARRIES ON INK AND WEIGHT, AND ASSISTS WITH FILL. It used to be a
+       four-carrier slab: an opaque `--accent` fill, a 28%-α `--primary` border, a
+       `--shadow-sm`, and the ink. The shadow was the real defect — it tied the focus
+       ring at (0,2,0) against (0,2,0), so which one a focused-and-selected pill
+       showed was decided by bundle order. `box-shadow` is the ring's property here,
+       and the resting rim's; a selected state does not get to spend it.
 
-    .toggle-group__item:hover:not(:disabled) {
-        background: var(--control-surface-bg-hover);
-        color: var(--foreground);
-    }
+       0.12 and 0.16 are the ONLY two fill literals in this sheet, both with a MARKED
+       SEAM (as the gap above), and the 0.12 is licensed only because ink and weight
+       co-carry: fill alone cannot make the distinction against a 1.53 L* noise floor.
 
+       A THIRD literal — CWT-3 §3.5's unselected hover at 0.05 — is NOT written here,
+       and that is a DEVIATION BY COMPOSITION rather than an omission. Unselected hover
+       arrives from the register: `.control-surface:hover:not(:disabled,
+       [data-disabled])` reads `--control-surface-bg-hover`
+       (glass/control-surfaces.css:83-85), which mixes the resting plate 35% toward the
+       next rung AND carries the `[data-disabled]` guard the lane's old copied hover
+       rule was missing. Spelling 0.05 here would re-fork the register this cut spent
+       its whole budget composing. THE CAVEAT, and it is why RT-84N is open:
+       `--control-surface-bg` itself computes to `rgba(0, 0, 0, 0)` in light at HEAD,
+       so the register's rest fill — and by derivation the hover mix above it — is
+       carrying less than §3.5 assumed. That is #82 W-FIELD's register to answer, not
+       this lane's to patch locally with a literal. */
     .toggle-group__item[data-state="on"] {
-        border-color: color-mix(in oklab, var(--primary) 28%, transparent);
-        background: var(--accent);
-        color: var(--accent-foreground);
-        box-shadow: var(--shadow-sm);
+        background-color: color-mix(in oklab, var(--foreground) 12%, transparent);
+        color: var(--foreground);
+        font-weight: 600;
+    }
+
+    .toggle-group__item[data-state="on"]:hover:not(:disabled) {
+        background-color: color-mix(in oklab, var(--foreground) 16%, transparent);
     }
 
     .toggle-group__item:disabled {
@@ -104,14 +129,20 @@
         pointer-events: none;
     }
 
+    /* The one invalid grammar, stamped by `controlStateAttrs` on the group and
+       reaching the items by descent — the same two attributes every other control in
+       the library carries, so an app-driven validity has one answer everywhere. */
+    .toggle-group[data-invalid] .toggle-group__item {
+        border-color: var(--destructive);
+    }
+
     .toggle-group__item > svg {
         flex: none;
         pointer-events: none;
     }
 
     @media (forced-colors: active) {
-        .toggle-group[data-type="single"],
-        .toggle-group__item[data-variant="outline"] {
+        .toggle-group__item {
             border: 1px solid ButtonText;
             background: Canvas;
             box-shadow: none;

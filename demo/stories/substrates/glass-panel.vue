@@ -47,7 +47,6 @@ const deepOn = () => axes.value.includes("deep");
                 <ToggleGroup
                     v-model="axes"
                     type="multiple"
-                    class="flex-wrap"
                     aria-label="Glass modifiers"
                 >
                     <ToggleGroupItem value="deep">.glass-deep</ToggleGroupItem>

@@ -13,6 +13,11 @@ import {
 // (the load-bearing local detail) is fed via `squish(frac)` under the `"linear"` law.
 import { useLiquidFlex } from "../spring/useLiquidFlex";
 import { effectiveCap, writeVelocityWeight } from "../core/writeVelocityWeight";
+// The library's ONE scalar selection identity, imported `type`-only so it is erased
+// at emit — `/motion-core` still ships zero component-tree BYTES (BK #84 C-1). The
+// alternative was a second spelling of `string | number` living here, which the
+// grammar law forbids outright.
+import type { SelectionValue } from "../../../components/_shared/selection";
 
 /**
  * useSelectionIndicator is the library's single traveling-indicator writer. The dock
@@ -40,13 +45,27 @@ import { effectiveCap, writeVelocityWeight } from "../core/writeVelocityWeight";
  * `vertical` param only selects the transient squish axis.
  *
  * Generic over the minimal `SelectionOption` shape (`value` + optional
- * `disabled`), so it is decoupled from any consumer's option type — the
- * `/motion-core` home carries no component-tree import.
+ * `disabled`), so it is decoupled from any consumer's option type. ~~the
+ * `/motion-core` home carries no component-tree import.~~
+ * [2026-08-08 · BK #84 C-1: it carries exactly one, `import type { SelectionValue }`,
+ * and the claim is restated at the level that is actually load-bearing — no
+ * component-tree RUNTIME import. A `type` import is erased at emit, so the
+ * `/motion-core` chunk's bytes are unchanged; what changed is that the scalar
+ * identity is now named once in the library instead of respelled here.]
  */
 
-/** The minimal option shape the indicator measures against. */
+/**
+ * The minimal option shape the indicator measures against.
+ *
+ * `value` is the library's `SelectionValue` (BK #84 C-1). It used to be `string`,
+ * which is why `<ToggleGroup>` — whose public value has been `string | number`
+ * since it shipped — could not compose this engine without narrowing its own
+ * surface. Widening here rather than narrowing there is the direction C-1 ruled:
+ * the engine only ever compares the value with `===` and interpolates it into a
+ * reset key, so it never needed the narrower type in the first place.
+ */
 export interface SelectionOption {
-    value: string;
+    value: SelectionValue;
     disabled?: boolean;
 }
 
@@ -87,10 +106,10 @@ export interface UseSelectionIndicatorParams<O extends SelectionOption> {
     buttonRefs: Ref<HTMLElement[]>;
     /** The selectable options (re-measure on change). */
     options: ComputedRef<O[]>;
-    /** The active value (re-measure on change). */
-    model: Ref<string | undefined>;
+    /** The active value (re-measure on change), at the option type's own scalar. */
+    model: Ref<O["value"] | undefined>;
     /** The active option values (used by the initial squish seed). */
-    activeValues: ComputedRef<string[]>;
+    activeValues: ComputedRef<O["value"][]>;
     /** True for the vertical (block-axis) orientation. */
     vertical: ComputedRef<boolean>;
 }
@@ -127,7 +146,7 @@ export function useSelectionIndicator<O extends SelectionOption>(
     });
 
     function updateSingleSlider() {
-        const idx = options.value.findIndex((o) => o.value === (model.value as string));
+        const idx = options.value.findIndex((o) => o.value === model.value);
         const container = containerRef.value;
         if (idx < 0) {
             singleSliderStyle.value = {
