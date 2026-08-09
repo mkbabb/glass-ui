@@ -26,10 +26,18 @@
 // `--touch-target`, because 2.5.5 is overruled here and 2.5.8's 24px is what the
 // counter-measurement cleared. Held below against the `var()` fallback that reads it.
 
+// [2026-08-05 · BK #41 W-SORTABLE] THE A6 ARM, seats +0. CWT-2 §5's fold ruling gives
+// this seat sortable's G-6 ("every handle ≥32×32 fine, ≥44×44 coarse") along with the
+// tags/pager/dialog target clauses — "ONE A6 target-size gate", −3 local gates. The
+// sortable arm is the second `describe` below; it is an ARM of this seat, not a seat,
+// and it mints no `G-*` id of its own.
+
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 const SLIDER = "src/components/slider/styles.css";
+const SORTABLE = "src/components/sortable-list/styles.css";
+const RESPONSIVE = "src/styles/utilities/responsive.css";
 const SIZING = "src/styles/tokens/sizing.css";
 const source = readFileSync(SLIDER, "utf8");
 /** Live bytes only — a rule quoted inside a cure note is not a shipped rule. */
@@ -150,5 +158,67 @@ describe("G-COARSE-TARGET — the Slider's operable target clears the measured f
         expect(thumb).not.toBeNull();
         expect(thumb![1]).toMatch(/width:\s*0;/);
         expect(thumb![1]).toMatch(/opacity:\s*0;/);
+    });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// THE SORTABLE ARM (BK #41 W-SORTABLE, CWT-2 §5 fold — G-6 absorbed here).
+//
+// RED at HEAD: the grip was a bare `<button>` with `display:inline-flex` and no size
+// of its own, so it measured 15.28 × 18.61 = 284px² on a fine pointer — under WCAG
+// 2.5.8's 24px minimum, which carries no modality exemption. The coarse floor already
+// worked (the shared `[data-control-target]` block, 15/15 verified), and `README.md`
+// claimed 44 unconditionally, which was true of exactly one of the two pointers.
+//
+// The fine floor is asserted as a DERIVATION, never as the number 32: the grip is a
+// glyph plus its own padding on both sides, so `--icon-md + 2 × --space-atom` is the
+// size, and it moves if either rung moves.
+// ─────────────────────────────────────────────────────────────────────────────
+describe("G-COARSE-TARGET · sortable arm — the grip clears both pointers", () => {
+    const sortable = readFileSync(SORTABLE, "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+    const handleRule = sortable.match(/\n\s*\.sortable-handle\s*\{([\s\S]*?)\n\s*\}/);
+
+    it("the grip sizes itself on BOTH axes — a floor on one axis is not a target", () => {
+        expect(handleRule, `${SORTABLE} declares .sortable-handle`).not.toBeNull();
+        expect(handleRule![1]).toMatch(/inline-size:\s*calc\(/);
+        expect(handleRule![1]).toMatch(/block-size:\s*calc\(/);
+    });
+
+    it("the fine floor is DERIVED from the glyph and its padding, not typed", () => {
+        const inline = handleRule![1].match(/inline-size:\s*calc\(([^;]+)\);/)![1];
+        const block = handleRule![1].match(/\n\s*block-size:\s*calc\(([^;]+)\);/)![1];
+        // Same expression on both axes — a square target, one source.
+        expect(block.replace(/\s+/g, " ")).toBe(inline.replace(/\s+/g, " "));
+        expect(inline).toContain("var(--sortable-grip-glyph)");
+        expect(inline).toContain("var(--space-atom)");
+        // …and it resolves at or above 2.5.8's floor. Computed from the token
+        // declarations, so a rung change reds here rather than shipping a small grip.
+        const sizing = readFileSync(SIZING, "utf8");
+        const glyph =
+            Number(sizing.match(/--icon-md:\s*([\d.]+)rem/)![1]) * 16;
+        const atom = Number(sizing.match(/--space-atom:\s*([\d.]+)rem/)![1]) * 16;
+        expect(glyph + atom * 2).toBeGreaterThanOrEqual(TARGET_FLOOR_PX);
+    });
+
+    it("the coarse floor is the SHARED one — composed, never forked", () => {
+        // The grip wears `[data-control-target]`, so its 44 comes from the one place
+        // every interactive face reads it. A second coarse block inside the component
+        // would be a fork of a floor that already exists.
+        const handleVue = readFileSync(
+            "src/components/sortable-list/SortableHandle.vue",
+            "utf8",
+        );
+        expect(handleVue).toContain("data-control-target");
+        expect(readFileSync(RESPONSIVE, "utf8")).toMatch(
+            /@media \(pointer: coarse\)[\s\S]*\[data-control-target\]/,
+        );
+        expect(sortable).not.toMatch(/@media\s*\(pointer:\s*coarse\)/);
+    });
+
+    it("the README no longer claims 44 unconditionally", () => {
+        // The doc-side half of the same defect: one number stated for two pointers.
+        const readme = readFileSync("src/components/sortable-list/README.md", "utf8");
+        expect(readme).not.toMatch(/44px minimum target/);
+        expect(readme).toMatch(/fine pointer/);
     });
 });
