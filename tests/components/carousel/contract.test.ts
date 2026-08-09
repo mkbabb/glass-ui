@@ -45,7 +45,7 @@ describe("Carousel landmark contract", () => {
         expect(root.attributes("tabindex")).toBeUndefined();
     });
 
-    it("exposes a named carousel region — and its tab stop — when the caller supplies a name", () => {
+    it("exposes a named carousel region — and NO tab stop, because the keys are not here", () => {
         const root = mount(Carousel, { props: { ariaLabel: "Featured work" } }).get(
             '[data-slot="carousel"]',
         );
@@ -53,9 +53,18 @@ describe("Carousel landmark contract", () => {
         expect(root.attributes("role")).toBe("region");
         expect(root.attributes("aria-label")).toBe("Featured work");
         expect(root.attributes("aria-roledescription")).toBe("carousel");
-        // The named region keeps the keyboard tab stop (the over-application guard —
-        // the conditional must not strip the tab stop from a legitimately named region).
-        expect(root.attributes("tabindex")).toBe("0");
+        // [2026-08-08 · #40 W-PAGER completion · STRUCK IN PLACE] This asserted
+        // ~~`tabindex` === "0"`~~ under an "over-application guard" clause: the named
+        // region was to KEEP the tab stop the unnamed one is denied. That clause was
+        // written when the root carried a keydown handler. IT NO LONGER DOES — the ONE
+        // paging keyboard contract lives on the dot rail (`Carousel.vue`'s header;
+        // `PagerDots.vue`, "THE RAIL OWNS THE ONLY PAGING KEYS IN THE LIBRARY"), and the
+        // handler the root used to listen with was unreachable on all five mounts it
+        // shipped in. A container that answers no key is not a tab stop; giving it one
+        // spends a keyboard user's Tab on a dead stop. The tab stop is now denied
+        // UNCONDITIONALLY, so all three cases in this describe agree, and the paging keys
+        // are reached at the rail's own roving-tabindex button.
+        expect(root.attributes("tabindex")).toBeUndefined();
     });
 });
 

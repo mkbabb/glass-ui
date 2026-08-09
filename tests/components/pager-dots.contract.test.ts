@@ -3,65 +3,30 @@ import { defineComponent } from "vue";
 import { describe, expect, it } from "vitest";
 import PagerDots from "@glass/components/pager-dots/PagerDots.vue";
 
-const MultiPager = defineComponent({
-    components: { PagerDots },
-    data: () => ({ active: 0, showRemount: true }),
-    template: `
-        <div>
-            <PagerDots v-for="i in 4" :key="i" :count="4" :active="active" />
-            <div data-remount>
-                <PagerDots v-if="showRemount" :count="3" :active="active" />
-            </div>
-        </div>
-    `,
-});
-
+// The boundary fixture states `pattern="tabs"` EXPLICITLY. It used to ride the prop
+// default, and the default is `"group"` now — the presentation register is the common
+// case and the tablist register is only correct when the caller owns real panels. These
+// two cases assert the tabs register's `aria-selected`, so they name it rather than
+// inheriting whatever the default happens to be.
 const BoundaryPager = defineComponent({
     components: { PagerDots },
     data: () => ({ active: 7, count: 10 }),
-    template: `<PagerDots v-model:active="active" :count="count" :window-fit="5" />`,
+    template: `<PagerDots v-model:active="active" :count="count" :window-fit="5" pattern="tabs" />`,
 });
 
-describe("PagerDots SVG resources", () => {
-    it("keeps filter and clip ids unique per instance and stable across rerender", async () => {
-        const wrapper = mount(MultiPager, { attachTo: document.body });
-        const ids = () =>
-            wrapper
-                .findAll(".pager-dots filter, .pager-dots clipPath")
-                .map((node) => node.attributes("id"));
-        const before = ids();
-
-        expect(before).toHaveLength(10);
-        expect(new Set(before).size).toBe(before.length);
-        for (const pager of wrapper.findAll(".pager-dots")) {
-            const filterId = pager.find("filter").attributes("id");
-            const clipId = pager.find("clipPath").attributes("id");
-            expect(pager.attributes("style")).toContain(`url(#${filterId})`);
-            expect(pager.attributes("style")).toContain(`url(#${clipId})`);
-        }
-
-        await wrapper.setData({ active: 2 });
-        expect(ids()).toEqual(before);
-    });
-
-    it("allocates a fresh namespace on remount and removes definitions on unmount", async () => {
-        const wrapper = mount(MultiPager, { attachTo: document.body });
-        const remountHost = () => wrapper.find("[data-remount]");
-        const first = remountHost().get("filter").element.id;
-
-        await wrapper.setData({ showRemount: false });
-        expect(document.getElementById(first)).toBeNull();
-        await wrapper.setData({ showRemount: true });
-        const second = remountHost().get("filter").element.id;
-        expect(second).not.toBe(first);
-
-        const mountedIds = wrapper
-            .findAll(".pager-dots filter, .pager-dots clipPath")
-            .map((node) => node.element.id);
-        wrapper.unmount();
-        expect(mountedIds.every((id) => document.getElementById(id) === null)).toBe(true);
-    });
-});
+// [2026-08-08 · #40 W-PAGER completion · STRUCK IN PLACE] The `PagerDots SVG resources`
+// describe stood here — two cases pinning per-instance `<filter>`/`<clipPath>` id
+// uniqueness, `url(#…)` reference from the root style, fresh-namespace-on-remount and
+// removal-on-unmount. THE MECHANISM THEY PINNED IS DELETED, not moved: the worm is
+// filterless (PagerDots.vue's own header, "THE WORM IS FILTERLESS"), the SVG
+// blur-and-threshold graph and the Bézier clip are gone, and the component emits no
+// `<filter>`, no `<clipPath>` and no `url(#…)` at all. A resource-lifecycle case over
+// resources that do not exist is a promise, not a detector. THE SUCCESSOR COVERAGE IS
+// REPO-WIDE AND STRONGER: `tests/styles/stacked-url-filter.test.ts`'s stacked case —
+// born-RED on this very component and flipped GREEN by this lane — asserts that NO file
+// in `src/` paints `filter: url(#…)` beside its own backdrop lens. Nothing is dropped
+// silently: the id-collision class it guarded cannot recur without a `url(#…)` first,
+// and that is now a live invariant rather than one component's fixture.
 
 describe("PagerDots boundaries", () => {
     it("clamps selection when a dynamic count shrinks", async () => {

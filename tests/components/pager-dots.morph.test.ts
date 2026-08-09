@@ -19,11 +19,21 @@ import PagerDots from "@glass/components/pager-dots/PagerDots.vue";
 // each — and a planted bridge-kill in usePagerWorm was watched RED against the real
 // component (evidence/W-PAGER-DOT-MORPH/), so the gate is non-vacuous, not theatre.
 //
-// Faithful geometry. happy-dom returns zero rects, so the bed pips are stubbed onto a
+// Faithful geometry. happy-dom returns zero geometry, so the bed pips are stubbed onto a
 // real CELL-px grid and the compositor rAF (setup.ts: rAF → setTimeout(0)) is pumped
 // on fake timers. The worm then measures true painted centers, springs its LEAD edge,
 // lags its TRAIL edge, and paints the neck exactly as it does in the browser — observed
 // through computed style writes (`.goo-neck` opacity, body `translate`), never getContext.
+//
+// [2026-08-08 · #40 W-PAGER completion] THE STUB IS ON THE OFFSET CHANNEL, and that is
+// not a detail. It stubbed `getBoundingClientRect` while the engine it measures reads
+// `offsetLeft`/`offsetWidth` (`worm.ts:120-123`, `PagerDots.vue:169-170`), so the rail
+// measured ZERO: origin 0 and the `DEFAULT_PITCH_PX` fallback of 28. The rest case caught
+// it (`hi` 0 against a painted center of 12); the two travel cases did NOT, because
+// 3 × 28 and 3 × CELL + CELL/2 are both 84 — a coincidence at exactly one index that made
+// a broken harness look green. Stubbing the channel the engine actually reads kills the
+// coincidence: origin is 12 and pitch is CELL by construction, so `centerOf(i)` and the
+// test's own `centerOfIndex(i)` agree at every index for the reason they should.
 
 const CELL = 24; // the bed cell (matches PagerDots `gap-1.5` + the 24px goo-dot cell)
 const DOT = 13; // the resting pip diameter (--pager-dot-size 0.8125rem = 13px)
@@ -40,31 +50,43 @@ interface MorphFrame {
     gap: number;
 }
 
+/** The four offset accessors the rail measures itself with. */
+const OFFSET_KEYS = ["offsetLeft", "offsetTop", "offsetWidth", "offsetHeight"] as const;
+type OffsetKey = (typeof OFFSET_KEYS)[number];
+
+/** A bed pip's index among its siblings; −1 for anything that is not one. */
+const pipIndex = (el: HTMLElement): number =>
+    el.classList.contains("goo-dot") && el.parentElement
+        ? Array.from(el.parentElement.children).indexOf(el)
+        : -1;
+
 /** Stub the bed pips onto a real CELL grid so the worm measures true centers. */
-function installBedRectStub(): void {
-    const rect = (left: number, width: number): DOMRect =>
-        ({
-            left,
-            right: left + width,
-            top: 0,
-            bottom: CELL,
-            width,
-            height: CELL,
-            x: left,
-            y: 0,
-            toJSON() {},
-        }) as DOMRect;
-    (
-        HTMLElement.prototype as unknown as { getBoundingClientRect: () => DOMRect }
-    ).getBoundingClientRect = function (this: HTMLElement): DOMRect {
-        if (this.classList.contains("goo-dot")) {
-            const parent = this.parentElement;
-            const idx = parent ? Array.from(parent.children).indexOf(this) : 0;
-            return rect(idx * CELL, CELL);
-        }
-        if (this.classList.contains("pager-worm-layer")) return rect(0, CELL * 12);
-        return rect(0, 0);
+function installBedOffsetStub(): PropertyDescriptor[] {
+    const saved = OFFSET_KEYS.map(
+        (key) => Object.getOwnPropertyDescriptor(HTMLElement.prototype, key)!,
+    );
+    const value = (el: HTMLElement, key: OffsetKey): number => {
+        const idx = pipIndex(el);
+        if (idx < 0) return 0; // the worm layer and every other host sit at the origin
+        if (key === "offsetLeft") return idx * CELL;
+        if (key === "offsetWidth" || key === "offsetHeight") return CELL;
+        return 0; // offsetTop — one horizontal row
     };
+    for (const key of OFFSET_KEYS)
+        Object.defineProperty(HTMLElement.prototype, key, {
+            configurable: true,
+            get(this: HTMLElement) {
+                return value(this, key);
+            },
+        });
+    return saved;
+}
+
+/** Put the native accessors back — no cross-test leak. */
+function restoreOffsets(saved: PropertyDescriptor[]): void {
+    OFFSET_KEYS.forEach((key, i) =>
+        Object.defineProperty(HTMLElement.prototype, key, saved[i]!),
+    );
 }
 
 /** Read the current worm silhouette off the live DOM (computed-style only). */
@@ -193,14 +215,14 @@ function assertWormSignature(
 }
 
 describe("PagerDots goo-morph signature (BJ.W-PAGER-DOT-MORPH)", () => {
-    const nativeRect = HTMLElement.prototype.getBoundingClientRect;
+    let nativeOffsets: PropertyDescriptor[] = [];
     beforeEach(() => {
         vi.useFakeTimers();
-        installBedRectStub();
+        nativeOffsets = installBedOffsetStub();
     });
     afterEach(() => {
         vi.useRealTimers();
-        HTMLElement.prototype.getBoundingClientRect = nativeRect; // no cross-test leak
+        restoreOffsets(nativeOffsets);
     });
 
     it("is ONE reunited body at rest — no bridge, no gap", async () => {

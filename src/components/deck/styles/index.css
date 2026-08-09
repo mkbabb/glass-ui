@@ -1,0 +1,13 @@
+/* THE WINDOWED-SEQUENCE SUBSTRATE'S STYLESHEETS — optional, tokens-first, and
+   identity-free. Every identity value a real deck needs (a brand red, ink
+   radials, a cream flip, type values) belongs in the CONSUMER's own overlay sheet
+   layered over these data-attributes; nothing in this cascade paints one.
+
+   Load order is load-bearing: the stage mints the geometry tokens the turn reads,
+   the turn mints the state transforms the capture block pins, and the reveal
+   sheet gates itself on the state the turn writes. */
+
+@import "./stage.css";
+@import "./turn.css";
+@import "./capture.css";
+@import "./reveal.css";

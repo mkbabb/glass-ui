@@ -14,8 +14,14 @@ import { describe, expect, it } from "vitest";
 //   2. THE STACKED CASE — G-NO-STACKED-URL-FILTER's own invariant: NO file paints
 //      `filter: url(#…)` alongside a `backdrop-filter` lens of its own (the
 //      SIGABRT-class composite), detected as file-local CO-OCCURRENCE rather than DOM
-//      ancestry — see the case body. Latched BORN-RED via the house `it.fails` idiom
-//      (tests/gates/token-hygiene.test.ts:131 precedent) — #40 W-PAGER owns the flip.
+//      ancestry — see the case body. ~~Latched BORN-RED via the house `it.fails` idiom
+//      (tests/gates/token-hygiene.test.ts:131 precedent) — #40 W-PAGER owns the flip.~~
+//      [2026-08-08 · #40 W-PAGER completion · STRUCK IN PLACE] FLIPPED. The latch was
+//      born-RED on `PagerDots.vue:493` and #40 emptied it by DELETING the mechanism,
+//      not by relocating it: the worm is filterless — no `<filter>`, no `<clipPath>`,
+//      no `url(#…)` anywhere in the component — so the population is empty in `src/`
+//      and the case is a LIVE assertion. `it.fails` here would now be the inverted
+//      form: a green latch over a held invariant reports RED forever.
 //
 // Both read AUTHORED CSS only. The JS inline blur channel (useElementMorph.ts,
 // useLiquidReveal.ts, useDockCtaReceive.ts) is structurally invisible here and is owned
@@ -116,18 +122,18 @@ describe("stacked url() filter — the row #7 unit case", () => {
         expect(offenders).toEqual([]);
     });
 
-    // BORN-RED. `it.fails` PASSES while the invariant is violated and REDS the moment it
-    // holds — the flip is the receipt. Do not "fix" this by relaxing the assertion.
-    it.fails(
-        "no file paints filter: url(#…) co-occurring with its own backdrop-filter lens — BORN-RED on PagerDots.vue:493, #40 W-PAGER owns the flip",
+    // FLIPPED 2026-08-08 at #40 W-PAGER's completion — the born-RED `it.fails` latch REDDED
+    // the moment the invariant held, which is the receipt it was built to emit. LIVE now:
+    // this reds if any file re-introduces the stacked composite. Do not re-latch it.
+    it(
+        "no file paints filter: url(#…) co-occurring with its own backdrop-filter lens — HELD since #40 W-PAGER emptied PagerDots.vue",
         () => {
             // STACKED = the file paints a url() filter in its AUTHORED CSS AND its own
             // markup names a class that declares `backdrop-filter` somewhere in src/.
             // That is FILE-LOCAL CO-OCCURRENCE, not DOM ancestry — the predicate never
-            // proves the filtered element sits under the backdrop element. So a #40 cure
-            // that RELOCATES the worm layer out of the ring's subtree while both stay in
-            // the same SFC leaves this case still "failing": the `it.fails` latch must
-            // then be flipped BY HAND.
+            // proves the filtered element sits under the backdrop element, which is why a
+            // RELOCATION of the worm layer inside the same SFC would never have emptied
+            // it. Nothing was relocated: the filter is deleted.
             // SVG `filter="url(#…)"` PRESENTATION ATTRIBUTES (HandMark.vue:299) are not
             // authored CSS — postcss reads declarations only and never sees them, so the
             // exclusion is structural, not a regex carve. It is NOT an exclusion on
@@ -145,7 +151,7 @@ describe("stacked url() filter — the row #7 unit case", () => {
 
             expect(
                 stacked,
-                "STACKED filter: url(#…) co-occurring with a backdrop lens. PagerDots.vue:493 paints the goo filter on `.pager-worm-layer`, and the same SFC's markup names `.glass-pager-ring`, which declares `backdrop-filter` — file-local co-occurrence, not proven DOM ancestry. #40 W-PAGER owns emptying this; flip the case from `it.fails` to `it` when it does.",
+                "STACKED filter: url(#…) co-occurring with a backdrop lens — the SIGABRT-class composite. The last inhabitant was PagerDots.vue:493 (the goo filter on `.pager-worm-layer` beside the same SFC's `.glass-pager-ring` backdrop lens), emptied at #40 W-PAGER by deleting the filter. Delete the url() filter or move the lens out of the file; do not re-latch this case.",
             ).toEqual([]);
         },
     );

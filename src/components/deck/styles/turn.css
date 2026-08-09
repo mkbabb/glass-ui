@@ -1,0 +1,203 @@
+/* ── THE PAGE TURN — the authored spring-clock travel register ────────────────
+   The library ships no paged turn, and every consumer that needed one built the
+   same one badly. This is that turn, content-free: ten tokens, one composite
+   transform, and the two hard-won details that are invisible until they are
+   missing.
+
+   THE --turn-* TUNING CONTRACT. Override any rung on the stage (or a per-deck
+   theme) and the turn retunes — no rule rewrite, no class fork.
+
+     TOKEN                    CONTROLS
+     --turn-travel            the push distance (a full stage by default)
+     --turn-dur               travel + lift duration; a GOVERNED spring clock
+     --turn-fade              the cross-dissolve; SHORTER than the travel, so the
+                              leaving page is gone before the entering one lands
+     --turn-lift              the entering page's rotateY off its leading edge
+                              (0deg = a flat push and no 3D context at all)
+     --turn-perspective       stage depth (`none` collapses the turn to 2D)
+     --turn-dip-scale         the leaving page's sub-scale dip-under
+     --turn-gutter-hue        the edge-cast base colour, SEPARATE from its alpha
+     --turn-gutter-strength   the edge-cast alpha, a PLAIN number
+     --turn-gutter-width      the cast gradient's width off each edge
+     --turn-scrim             the leaving page's tone dip
+
+   THE ALIAS-FREEZE TRAP, which is the reason hue and alpha are separate tokens
+   and the composed values are declared on the MEMBER rather than on the stage: an
+   unregistered custom property substitutes its `var()` AT THE ELEMENT THAT
+   DECLARES IT and then inherits the substituted value. Compose
+   `--turn-gutter-ink` on the stage and every descendant inherits a FROZEN ink —
+   the mobile retune and the dark arm both write tokens that nothing reads any
+   more. Compose it on the member and each member resolves its own.
+
+   THE VISIBILITY JOIN. `visibility` is discrete: it holds its prior keyword for
+   the whole transition then flips. Joining it to the list at the travel's
+   duration keeps the LEAVING page painted while it slides away; the entering page
+   overrides the delay to zero so it is paintable from frame 0 of its fade instead
+   of snapping visible one frame early. Two rules, and without them the turn has a
+   flicker at each end.
+
+   THE iOS FLAT-PUSH ARM IS NOT OPTIONAL WHEREVER THE TURN SHIPS. iOS WebKit
+   cannot composite a `preserve-3d` element that is simultaneously a scroll
+   container: it flattens the 3D context and drops the scrollable content's paint
+   for the transform's leading frames, so the entering page flashes blank and then
+   snaps in. On the mobile arm the member is a scroll region — so the arm kills the
+   3D outright (`--turn-lift: 0deg`, `--turn-perspective: none`, `transform-style:
+   flat`) and keeps the flat swipe-native push the platform wants there anyway.
+   Ship the turn without this arm and the bug comes back. */
+
+@layer components {
+    .deck-stage[data-register="turn"] {
+        --turn-travel: 100cqi;
+        --turn-dur: var(--spring-world-duration);
+        --turn-fade: var(--duration-normal);
+        --turn-lift: 6deg;
+        --turn-perspective: calc(190 * var(--cqx));
+        --turn-dip-scale: 0.985;
+        --turn-gutter-width: 7cqi;
+        --turn-gutter-strength: 0.2;
+        --turn-scrim: 0.14;
+        --turn-gutter-hue: var(--foreground);
+    }
+
+    .deck-stage[data-register="turn"] .deck-strip {
+        perspective: var(--turn-perspective);
+    }
+
+    .deck-stage[data-register="turn"] .deck-slide {
+        /* COMPOSED HERE, not on the stage — see the alias-freeze trap above. */
+        --turn-gutter-ink: color-mix(
+            in oklab,
+            var(--turn-gutter-hue) calc(var(--turn-gutter-strength) * 100%),
+            transparent
+        );
+        --turn-gutter: linear-gradient(
+            to right,
+            var(--turn-gutter-ink),
+            transparent var(--turn-gutter-width),
+            transparent calc(100% - var(--turn-gutter-width)),
+            var(--turn-gutter-ink)
+        );
+        --turn-scrim-fill: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--turn-scrim) * 100%),
+            transparent
+        );
+
+        border-radius: var(--radius-card);
+        overflow: hidden;
+        isolation: isolate;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform-style: preserve-3d;
+        /* ONE composite transform on the spring clock. */
+        transform: translate3d(var(--turn-x, 0), 0, 0) scale(var(--turn-s, 1))
+            rotateY(var(--turn-r, 0deg));
+        transform-origin: var(--turn-origin, 0% 50%);
+        transition:
+            opacity var(--turn-fade) var(--ease-standard),
+            visibility 0s linear var(--turn-dur),
+            transform var(--turn-dur) var(--spring-world);
+        will-change: opacity, transform;
+    }
+
+    /* PREV — pushed off the leading edge, dipped under. */
+    .deck-stage[data-register="turn"] .deck-slide[data-state="prev"] {
+        --turn-x: calc(var(--turn-travel) * -1);
+        --turn-s: var(--turn-dip-scale);
+    }
+    /* NEXT — waiting off the trailing edge, lifted off its leading edge. */
+    .deck-stage[data-register="turn"] .deck-slide[data-state="next"] {
+        --turn-x: var(--turn-travel);
+        --turn-r: var(--turn-lift);
+    }
+    /* ACTIVE — landed, and paintable from frame 0 (the visibility delay is 0). */
+    .deck-stage[data-register="turn"] .deck-slide[data-state="active"] {
+        --turn-x: 0px;
+        --turn-s: 1;
+        --turn-r: 0deg;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        z-index: var(--deck-z-slide);
+        transition:
+            opacity var(--turn-fade) var(--ease-standard),
+            visibility 0s linear 0s,
+            transform var(--turn-dur) var(--spring-world);
+    }
+
+    /* THE CAST GUTTER — a symmetric dual-edge gradient laid INSIDE the page box.
+       The predecessor was an outer box-shadow on a full-bleed pseudo-element
+       clipped by the member's own `overflow: hidden`, so it bloomed outward into
+       the clip and read in neither mode. Inside the box it is direction-free: the
+       same rule casts on whichever edge is leading. */
+    .deck-stage[data-register="turn"] .deck-slide::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        border-radius: inherit;
+        background: var(--turn-gutter);
+    }
+    /* THE DIP SCRIM — the tone dip the cast cannot carry on the page's own body. */
+    .deck-stage[data-register="turn"] .deck-slide::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        border-radius: inherit;
+        background: var(--turn-scrim-fill);
+        opacity: 1;
+        transition: opacity var(--turn-fade) var(--ease-standard);
+    }
+    .deck-stage[data-register="turn"] .deck-slide[data-state="active"]::after {
+        opacity: 0;
+    }
+
+    /* THE DARK ARM — a cream SHEEN needs more presence than a dark cast, so the
+       alpha rises with the hue flip. Plain `.dark` ancestor: a scoped
+       `:global(.dark)` silently drops from the emitted CSS. */
+    .dark .deck-stage[data-register="turn"],
+    .deck-stage[data-register="turn"] .deck-slide[data-dark] {
+        --turn-gutter-hue: var(--background);
+        --turn-gutter-strength: 0.3;
+    }
+
+    /* ── THE iOS FLAT-PUSH ARM — non-optional wherever the turn ships ───────── */
+    @media (max-aspect-ratio: 1 / 1), (max-height: 480px) {
+        .deck-stage[data-register="turn"] {
+            --turn-lift: 0deg;
+            --turn-perspective: none;
+            --turn-travel: 88cqi;
+            --turn-dur: var(--spring-panel-duration);
+            --turn-fade: var(--duration-fast);
+            --turn-dip-scale: 1;
+            --turn-gutter-width: 9cqi;
+            --turn-gutter-strength: 0.14;
+        }
+        .deck-stage[data-register="turn"] .deck-slide {
+            /* flat, so WebKit composites the scroll region as a plain 2D layer */
+            transform-style: flat;
+            backface-visibility: visible;
+        }
+        .dark .deck-stage[data-register="turn"],
+        .deck-stage[data-register="turn"] .deck-slide[data-dark] {
+            --turn-gutter-strength: 0.22;
+        }
+    }
+
+    /* ── PRM — the turn becomes a cut ───────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+        .deck-stage[data-register="turn"] .deck-slide,
+        .deck-stage[data-register="turn"] .deck-slide[data-state="active"] {
+            --turn-x: 0px;
+            --turn-s: 1;
+            --turn-r: 0deg;
+            transition:
+                opacity var(--duration-fast) var(--ease-out),
+                visibility 0s linear 0s;
+        }
+    }
+}

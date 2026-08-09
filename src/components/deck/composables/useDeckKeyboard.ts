@@ -1,18 +1,36 @@
-import { onBeforeUnmount, onMounted, toValue, type MaybeRefOrGetter } from "vue";
+import {
+    onBeforeUnmount,
+    onMounted,
+    toValue,
+    type MaybeRefOrGetter,
+} from "vue";
 import { CONTROL_SELECTOR } from "../constants";
+import type { DeckAxis } from "../types";
 
-/* useDeckKeyboard — the deck's keyboard contract as a plain `keydown` listener
-   composable (NOT the vueuse-bearing /keyboard registry — keeping /deck vueuse-free
-   per the SCC-trap discipline).
+/* useDeckKeyboard — the substrate's ONE paging contract, in two bindings.
+   Before the fold there were three implementations of this one contract: a global
+   deck listener, a carousel root handler that was unreachable on every mount it
+   shipped in, and the dot rail's roving-tabindex handler. There is one now.
 
-   Arrows / PageUp / PageDown / Home / End are GLOBAL. Space + digit jumps are
-   FOCUS-GUARDED: when a control (button / link / field) is focused they reach that
-   control's native activation instead of being stolen for navigation — the C6
-   correctness fix. The handler is the pure `handleDeckKey` below (DOM-light, so it
-   unit-tests in happy-dom and lifts cleanly). */
+   THE AXIS BEARS. Arrow keys derive from the travel axis (Right/Left horizontal,
+   Down/Up vertical); PageDown/PageUp, Home/End, Space and the digit jumps are
+   axis-free.
 
-/** The minimal move surface the handler drives (a structural subset of DeckCore,
-    so the consumer can pass its `DeckCore` directly). */
+   THE GUARD COVERS EVERY KEY, which is the whole correction. The predecessor
+   consulted its focused-control test for Space and the digits ONLY and let the
+   arrows, Page keys, Home and End fall straight through — so a caret in a focused
+   text field could not move, in both shipping engines, while the deck paged behind
+   it. A navigation key taken from a focused control is theft whichever key it is.
+
+   TWO BINDINGS, ONE HANDLER.
+     · `useDeckKeyboard` binds GLOBALLY (default `window`) — the presentation
+       register, where the deck IS the page.
+     · A rail binds `handleDeckKey` on its own root with `isControl: () => false`
+       — an element-scoped listener over a rail of buttons has nothing to steal,
+       and its wrap/skip policy rides `resolve`.
+   No consumer authors a second key table. */
+
+/** The minimal move surface the handler drives (a structural subset of DeckCore). */
 export interface DeckMoves {
     next(): void;
     prev(): void;
@@ -27,62 +45,68 @@ function defaultIsControl(target: EventTarget | null): boolean {
 }
 
 export interface DeckKeyOptions {
+    /** The travel axis the arrows derive from. Default horizontal. */
+    axis?: MaybeRefOrGetter<DeckAxis>;
     /** Override the focused-control test (defaults to `target.closest(controls)`). */
     isControl?: (target: EventTarget | null) => boolean;
+    /** Digit jumps `1`–`9`. Default true. */
+    digits?: boolean;
 }
 
-/** Handle ONE keydown against the deck. Returns true if it navigated (and called
-    `preventDefault`), false if the key was left for the page/control. */
+/**
+ * Handle ONE keydown against a sequence. Returns true if it navigated (and called
+ * `preventDefault`), false if the key was left for the page or the focused control.
+ */
 export function handleDeckKey(
     e: KeyboardEvent,
     deck: DeckMoves,
     opts: DeckKeyOptions = {},
 ): boolean {
     const isControl = opts.isControl ?? defaultIsControl;
-    const onControl = isControl(e.target);
+    // EVERY key is guarded, not just the ambiguous ones.
+    if (isControl(e.target)) return false;
+
+    const vertical = (toValue(opts.axis) ?? "horizontal") === "vertical";
+    const nextKey = vertical ? "ArrowDown" : "ArrowRight";
+    const prevKey = vertical ? "ArrowUp" : "ArrowLeft";
 
     switch (e.key) {
-        case "ArrowRight":
+        case nextKey:
         case "PageDown":
+        case " ":
             deck.next();
-            e.preventDefault();
-            return true;
-        case "ArrowLeft":
+            break;
+        case prevKey:
         case "PageUp":
             deck.prev();
-            e.preventDefault();
-            return true;
+            break;
         case "Home":
             deck.first();
-            e.preventDefault();
-            return true;
+            break;
         case "End":
             deck.last();
-            e.preventDefault();
-            return true;
-        case " ":
-            if (onControl) return false;
-            deck.next();
-            e.preventDefault();
-            return true;
-        default:
-            if (e.key >= "1" && e.key <= "9" && !onControl) {
-                deck.go(parseInt(e.key, 10) - 1);
-                e.preventDefault();
-                return true;
-            }
-            return false;
+            break;
+        default: {
+            const digit = opts.digits !== false && e.key >= "1" && e.key <= "9";
+            if (!digit) return false;
+            deck.go(parseInt(e.key, 10) - 1);
+            break;
+        }
     }
+    e.preventDefault();
+    return true;
 }
 
 export interface UseDeckKeyboardOptions extends DeckKeyOptions {
-    /** The element the listener binds to. Default `window` (deck-global paging). */
+    /** The element the listener binds to. Default `window` (the presentation register). */
     target?: MaybeRefOrGetter<EventTarget | null | undefined>;
 }
 
-/** Bind the focus-guarded deck keyboard contract to a target (default `window`)
-    for the component lifetime. The `target` may be a ref/getter so a not-yet-mounted
-    element resolves at `onMounted`. */
+/**
+ * Bind the guarded paging contract to a target (default `window`) for the
+ * component lifetime. The `target` may be a ref/getter so a not-yet-mounted
+ * element resolves at `onMounted`.
+ */
 export function useDeckKeyboard(
     deck: DeckMoves,
     opts: UseDeckKeyboardOptions = {},

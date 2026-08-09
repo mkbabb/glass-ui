@@ -1,64 +1,77 @@
-import type { UnwrapRefCarouselApi as CarouselApi, CarouselEmits, CarouselProps } from './interface'
-import { createInjectionState } from '@vueuse/core'
-import emblaCarouselVue from 'embla-carousel-vue'
-import { onMounted, ref } from 'vue'
+import { inject, provide, ref, type InjectionKey, type Ref } from "vue";
+import { useDeck, useDeckSnap, type DeckCore } from "../deck";
+import type { CarouselContext, CarouselEmits, CarouselProps } from "./types";
 
-// The weighty content-snap default. embla's `duration` is its
-// scroll-physics travel parameter (higher = more inertia); the calm-overdamped law (momentum
-// yes, bounce no) reads at 30 — a heavier glide than the embla default (~25) so a
-// programmatic / dot / Next scroll arrives with weight (a drag already carries its own
-// momentum). A consumer `opts.duration` overrides it (the default fills, never forces).
-const CAROUSEL_WEIGHTY_DURATION = 30
+/* The carousel's provide/inject, over the substrate.
+   The tween engine is gone and the surface stayed: the strip is a native
+   scroll-snap container now, so momentum, rubber-banding, trackpad and touch
+   scrubbing and the snap itself are the platform's, correct in both engines and
+   free. What the engine bought — a `duration` number nobody could reason about,
+   a plugin array, an options object, an API handle leaking onto the public
+   surface, and a second motion vocabulary on a paged strip — is not bought any
+   more. `loop` DIES with it: native snap cannot wrap, the core has never wrapped,
+   and this is a named clean break rather than an alias.
 
-const [useProvideCarousel, useInjectCarousel] = createInjectionState(
-  ({
-    opts,
-    orientation,
-    plugins,
-  }: CarouselProps, emits: CarouselEmits) => {
-    const [emblaNode, emblaApi] = emblaCarouselVue({
-      duration: CAROUSEL_WEIGHTY_DURATION,
-      ...opts,
-      axis: orientation === 'horizontal' ? 'x' : 'y',
-    }, plugins)
+   ONE AUTHORITY. `deck.index` is it. The predecessor ran two — the engine's
+   selected snap and the model — and paid for it with a delta guard, two echo
+   watchers and a mirror ref in every chrome element. None of those exist here,
+   because there is nothing for them to reconcile.
 
-    function scrollPrev() {
-      emblaApi.value?.scrollPrev()
-    }
-    function scrollNext() {
-      emblaApi.value?.scrollNext()
-    }
+   THE PROPS ARE READ AT USE, not destructured at creation. Destructuring a props
+   object in a plain `.ts` factory FREEZES every value it takes — no Vue transform
+   applies outside an SFC — so the predecessor's `orientation` was fixed at
+   whatever it was on the first render, silently, forever. */
 
-    const canScrollNext = ref(false)
-    const canScrollPrev = ref(false)
+const CAROUSEL: InjectionKey<CarouselContext> = Symbol("glass-carousel");
 
-    function onSelect(api: CarouselApi) {
-      canScrollNext.value = api?.canScrollNext() || false
-      canScrollPrev.value = api?.canScrollPrev() || false
-    }
+export function useProvideCarousel(
+    props: CarouselProps,
+    emits: CarouselEmits,
+    active: Ref<number>,
+): CarouselContext {
+    const count = ref(0);
+    const viewport = ref<HTMLElement | null>(null);
 
-    onMounted(() => {
-      if (!emblaApi.value)
-        return
+    const deck: DeckCore = useDeck(count, {
+        initial: active.value,
+        // read at use — never destructured into a frozen local
+        axis: () => props.orientation ?? "horizontal",
+        onChange: (to, from) => {
+            active.value = to;
+            emits("change", to, from);
+        },
+    });
 
-      emblaApi.value?.on('init', onSelect)
-      emblaApi.value?.on('reInit', onSelect)
-      emblaApi.value?.on('select', onSelect)
+    // The inertial travel arm. It commits the settled index from the platform's
+    // own snap signal and feeds the continuous channel off the same scroll.
+    useDeckSnap({ strip: viewport, deck });
 
-      emits('init-api', emblaApi.value)
-    })
+    const context: CarouselContext = {
+        deck,
+        viewport,
+        setCount: (n: number) => {
+            count.value = n;
+        },
+        get orientation() {
+            return props.orientation ?? "horizontal";
+        },
+        get projection() {
+            return props.projection ?? "none";
+        },
+        get pattern() {
+            return props.pattern ?? "group";
+        },
+        get panelIds() {
+            return props.panelIds;
+        },
+    };
 
-    return { carouselRef: emblaNode, carouselApi: emblaApi, canScrollPrev, canScrollNext, scrollPrev, scrollNext, orientation }
-  },
-)
-
-function useCarousel() {
-  const carouselState = useInjectCarousel()
-
-  if (!carouselState)
-    throw new Error('useCarousel must be used within a <Carousel />')
-
-  return carouselState
+    provide(CAROUSEL, context);
+    return context;
 }
 
-export { useCarousel, useProvideCarousel, CAROUSEL_WEIGHTY_DURATION }
+export function useCarousel(): CarouselContext {
+    const context = inject(CAROUSEL, null);
+    if (!context) throw new Error("useCarousel must be used within a <Carousel />");
+    return context;
+}

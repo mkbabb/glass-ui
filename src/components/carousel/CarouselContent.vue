@@ -1,142 +1,104 @@
 <script setup lang="ts">
-// Carousel track host: a clean Embla viewport and track.
-//
-// NO content barbell over the slides: a filtered goo body flying far OUTSIDE the
-// card and sweeping the description text every advance (a whole-layer filtered goo
-// cast) is the category error this avoids. The content-barbell composable +
-// its goo tokens are definition-absent (a clean break with no
-// alias, no dormant stub). A metaball-merge is the INDICATOR's job (the pager worm,
-// PagerDots) — the CONTENT is crisp weighty embla scroll, with ZERO filter (the 559px-escape
-// class is structurally unreproducible: there is no filtered layer left to escape).
-//
-// WHAT SHIPS. A clean viewport + track. Programmatic/dot scrolls carry inertia from the
-// weighty embla `duration` (the drag already has momentum) — the calm-overdamped
-// content-snap law (momentum yes, bounce no). An OPTIONAL compositor-only arrival
-// (`:arrival`) scales each slide 0.965→1 + fades it off its distance-from-centre, CLIPPED
-// inside the `overflow-hidden` viewport — transform + opacity ONLY, never a filter, never a
-// layout property (motion-canon P5). The pager worm (PagerDots) is the ONE metaball morph;
-// the drag-scrub that drives it lives in the consumer beside the pager.
-import type { WithClassAsProps } from "./interface";
-import { onBeforeUnmount, ref, watch } from "vue";
+import { onBeforeUnmount, onMounted, watch } from "vue";
 import { cn } from "../_shared/class-names";
 import { useReducedMotion } from "../../composables/motion/core/useReducedMotion";
-import { arrivalDistance } from "./arrival";
 import { useCarousel } from "./useCarousel";
-import type { UnwrapRefCarouselApi } from "./interface";
+import { memberDistance, memberLag, memberScale } from "./projection";
+import type { WithClassAsProps } from "./types";
 
-defineOptions({
-    inheritAttrs: false,
-});
+/* CarouselContent — the strip, on the platform's own scroll-snap.
+   There is no track transform here and no engine holding one: the members ARE the
+   scroll content, `scroll-snap-type: … mandatory` is the snap, and the inertia is
+   the platform's. `scroll-snap-stop: always` is what keeps a fast flick from
+   skipping three members — a tween engine has to re-implement that, and does not.
 
-const props = withDefaults(
-    defineProps<
-        {
-            /**
-             * Opt-in compositor-only arrival: each slide scales 0.965→1 + fades off its
-             * distance from the viewport centre as it scrolls (transform + opacity ONLY,
-             * clipped inside the viewport — no filter, no layout property). Default off.
-             */
-            arrival?: boolean;
-        } & WithClassAsProps
-    >(),
-    { arrival: false },
-);
+   ONE ELEMENT, not two. The engine required a viewport whose ONLY child was a
+   track it could transform; nothing transforms a track any more, so the strip
+   scrolls and lays out the members itself and the wrapper is gone.
 
-const { carouselRef, carouselApi, orientation } = useCarousel();
+   THE PROJECTION IS WRITTEN ON TWO CLOCKS (LAW 1). The SCALE is written here, per
+   scroll frame, off the continuous position the travel arm feeds — the inertial
+   clock. The OPACITY is a CSS transition on `[data-state]` in the stylesheet — a
+   fired clock, on a governed spring. They cannot be collapsed into one `t` by a
+   later edit, because they are not in the same language.
 
-const trackEl = ref<HTMLElement | null>(null);
+   THE INTERIOR LAG (LAW 3) is written on the member's CONTENT node, off the travel
+   velocity, on the same bounded velocity-lag law the pager worm's trail edge runs.
+   A parent transform is not a content lag; it is the housing moving twice.
 
-// ── The OPTIONAL compositor arrival (scale + opacity off scrollProgress) ──────────
-// Standard embla scale-on-scroll: each slide's distance from the nearest snap drives a
-// sub-perceptual scale (1 at centre → 0.965 one slide away) + fade. Written straight onto
-// the slide node's `transform`/`opacity` (compositor-only) — embla transforms the TRACK,
-// so a per-slide transform never collides. PRM → the slides rest at scale 1 (no arrival).
-const ARRIVAL_SCALE_DROP = 0.035; // 1 → 0.965 at one slide away
-const ARRIVAL_FADE_DROP = 0.3; // 1 → 0.7 at one slide away
+   THE PARTICIPATION FLAG (I4b / #29). In `"window"` projection only the ACTIVE
+   member projects and the neighbours do not move. */
+
+const props = defineProps<WithClassAsProps>();
+
+const { deck, viewport, setCount, orientation, projection } = useCarousel();
 const prefersReducedMotion = useReducedMotion();
 
-function applyArrival(): void {
-    const api = carouselApi.value;
-    if (!api) return;
-    const nodes = api.slideNodes();
-    if (!props.arrival || prefersReducedMotion.value) {
+let observer: MutationObserver | null = null;
+
+function members(): HTMLElement[] {
+    const el = viewport.value;
+    return el ? (Array.from(el.children) as HTMLElement[]) : [];
+}
+
+function syncCount(): void {
+    setCount(members().length);
+}
+
+/** Write the travel-clock channel. Compositor properties only. */
+function project(): void {
+    const nodes = members();
+    if (projection === "none" || prefersReducedMotion.value) {
         for (const node of nodes) {
-            node.style.transform = "";
-            node.style.opacity = "";
+            node.style.removeProperty("--member-scale");
+            node.style.removeProperty("--member-lag");
         }
         return;
     }
-    const progress = api.scrollProgress();
-    const snaps = api.scrollSnapList();
-    // Shortest-path across the wrap seam only when embla is actually looping (RU-21 N4).
-    const loop = api.internalEngine().options.loop;
+    const position = deck.position.value;
+    const lag = memberLag(deck.velocity.value);
+    const active = deck.index.value;
     nodes.forEach((node, i) => {
-        const snap = snaps[i] ?? progress;
-        const t = arrivalDistance(snap, progress, snaps.length, loop);
-        node.style.transform = `scale(${(1 - ARRIVAL_SCALE_DROP * t).toFixed(4)})`;
-        node.style.opacity = (1 - ARRIVAL_FADE_DROP * t).toFixed(4);
+        // I4b — in a window expansion the neighbours do not move.
+        const participates = projection === "travel" || i === active;
+        const d = participates ? memberDistance(i, position) : 1;
+        node.style.setProperty("--member-scale", memberScale(d).toFixed(4));
+        node.style.setProperty("--member-lag", participates ? lag.toFixed(4) : "0");
     });
 }
 
-let bound: UnwrapRefCarouselApi | null = null;
-function unbindArrival(): void {
-    if (!bound) return;
-    bound.off("scroll", applyArrival);
-    bound.off("reInit", applyArrival);
-    bound.off("init", applyArrival);
-    bound = null;
-}
-function bindArrival(api: UnwrapRefCarouselApi | null | undefined): void {
-    if (bound === api) return;
-    unbindArrival();
-    if (!api) return;
-    bound = api;
-    api.on("scroll", applyArrival);
-    api.on("reInit", applyArrival);
-    api.on("init", applyArrival);
-    applyArrival();
-}
-watch(carouselApi, (api) => bindArrival(api), { immediate: true });
 watch(
-    [() => props.arrival, prefersReducedMotion],
-    () => applyArrival(),
+    [() => deck.position.value, () => deck.velocity.value, prefersReducedMotion],
+    project,
 );
+watch(() => deck.total.value, project);
+
+onMounted(() => {
+    syncCount();
+    project();
+    const el = viewport.value;
+    if (el && typeof MutationObserver !== "undefined") {
+        observer = new MutationObserver(() => {
+            syncCount();
+            project();
+        });
+        observer.observe(el, { childList: true });
+    }
+});
 onBeforeUnmount(() => {
-    unbindArrival();
+    observer?.disconnect();
+    observer = null;
 });
 </script>
 
 <template>
-    <!-- THE EMBLA VIEWPORT — `carouselRef`; its ONLY child is the scroll track (embla treats
-         the first child as its scroll container). `overflow-hidden` CLIPS the arrival scale
-         inside the card — nothing paints outside the viewport box. -->
     <div
-        ref="carouselRef"
+        ref="viewport"
         data-slot="carousel-content"
-        class="carousel-viewport overflow-hidden"
+        :data-orientation="orientation"
+        :data-projection="projection"
+        :class="cn('carousel-strip', props.class)"
     >
-        <!-- THE CRISP CONTENT — the embla track. No filter, ever. -->
-        <div
-            ref="trackEl"
-            :class="
-                cn(
-                    'carousel-track flex',
-                    orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col',
-                    props.class
-                )
-            "
-            v-bind="$attrs"
-        >
-            <slot />
-        </div>
+        <slot />
     </div>
 </template>
-
-<style scoped>
-.carousel-viewport {
-    position: relative;
-}
-.carousel-track {
-    position: relative;
-}
-</style>

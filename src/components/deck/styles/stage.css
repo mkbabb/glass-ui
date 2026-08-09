@@ -1,0 +1,152 @@
+/* ── THE DECK STAGE — the sequence's room ─────────────────────────────────────
+   Tokens-first and identity-free: every value here is geometry or a rung, and
+   nothing paints an identity. A consumer's palette, its ink radials, its brand
+   red and its type values live in that consumer's own overlay sheet, layered over
+   these data-attributes.
+
+   THE LETTERBOX. `position: fixed; inset: 0; margin: auto` plus an aspect ratio is
+   the whole centring mechanism: the box becomes the largest one of that ratio that
+   fits, in both orientations, with no measurement and no JavaScript. The aspect
+   ratio TRANSFERS the block constraint into an inline one, which is why a tall
+   viewport narrows the stage instead of overflowing it.
+
+   `--cqx` IS THE AUTHORING ANCHOR, and the reason the export path works: one
+   percent of the stage's inline size, published as a length. Geometry stated in
+   `--cqx` is resolution-independent with pixel fidelity — a frame captured at
+   1280 and the same frame at 3840 are the same picture, not two layouts. */
+
+@layer components {
+    .deck-stage {
+        /* the letterbox ratio (a bare number, so `calc()` can divide by it) */
+        --deck-ratio: calc(16 / 9);
+
+        /* THE Z-STRATUM — the documented chrome contract. Three strata, and a
+           consumer's chrome states which one it joins rather than inventing a
+           number that happens to win today. */
+        --deck-z-ground: 0;
+        --deck-z-slide: 1;
+        --deck-z-chrome: 2;
+
+        /* SAFE AREA — canonical names, and the padding is INSIDE: a member's
+           content inset from the notch, never the stage inset from the screen
+           (insetting the stage letterboxes it twice). */
+        --deck-safe-inline: max(env(safe-area-inset-left), env(safe-area-inset-right));
+        --deck-safe-block: max(env(safe-area-inset-top), env(safe-area-inset-bottom));
+
+        /* DOCK CLEARANCE — sized for the EXPANDED dock and never state-reactive:
+           a clearance that shrinks when the dock collapses makes the content jump
+           every time the chrome breathes. */
+        --deck-dock-clearance: calc(var(--touch-target) + var(--space-family));
+
+        position: relative;
+        container-type: inline-size;
+        /* one percent of the stage's own inline size, as a length */
+        --cqx: 1cqi;
+        overflow: clip;
+        border-radius: var(--radius-card);
+    }
+
+    .deck-stage[data-fullscreen] {
+        position: fixed;
+        inset: 0;
+        margin: auto;
+        border-radius: 0;
+    }
+    .deck-stage[data-fullscreen][data-ratio] {
+        aspect-ratio: var(--deck-ratio);
+        inline-size: 100%;
+        max-inline-size: 100%;
+        max-block-size: 100%;
+    }
+    .deck-stage:not([data-fullscreen])[data-ratio] {
+        aspect-ratio: var(--deck-ratio);
+    }
+
+    /* ONE GROUND behind every member. Per-member grounds are on screen TOGETHER
+       for the whole duration of a turn, and the seam between them is the frame
+       that gives the transition away. */
+    .deck-ground {
+        position: absolute;
+        inset: 0;
+        z-index: var(--deck-z-ground);
+        pointer-events: none;
+        transition: opacity var(--spring-world-duration) var(--spring-world);
+    }
+
+    /* ── THE STRIP — the members' container, in one of two registers ────────── */
+    .deck-strip {
+        position: relative;
+        z-index: var(--deck-z-slide);
+        block-size: 100%;
+    }
+
+    /* TURN register — the members STACK and the authored turn moves them. */
+    .deck-stage[data-register="turn"] .deck-strip {
+        display: grid;
+        grid-template-areas: "stack";
+        block-size: 100%;
+        /* the perspective host: the turn is a real rotation, so the vanishing
+           point belongs to the strip and not to each member (per-member
+           perspective gives every slide its own camera). */
+        perspective: calc(120 * var(--cqx));
+        perspective-origin: 50% 50%;
+    }
+    .deck-stage[data-register="turn"] .deck-slide {
+        grid-area: stack;
+    }
+
+    /* SNAP register — the strip SCROLLS and the platform's own snap moves it. */
+    .deck-stage[data-register="snap"] .deck-strip {
+        display: flex;
+        overflow: auto;
+        overscroll-behavior: contain;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+    .deck-stage[data-register="snap"][data-axis="vertical"] .deck-strip {
+        flex-direction: column;
+        scroll-snap-type: y mandatory;
+    }
+    .deck-stage[data-register="snap"] .deck-strip::-webkit-scrollbar {
+        display: none;
+    }
+    .deck-stage[data-register="snap"] .deck-slide {
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+    }
+
+    /* ── THE MEMBER ─────────────────────────────────────────────────────────── */
+    .deck-slide {
+        position: relative;
+        min-inline-size: 0;
+        padding-inline: max(var(--deck-safe-inline), var(--space-section));
+        padding-block: max(var(--deck-safe-block), var(--space-section));
+    }
+
+    /* Chrome sits above both, and says so. */
+    .deck-stage > :where([data-slot="deck-chrome"]) {
+        position: relative;
+        z-index: var(--deck-z-chrome);
+    }
+
+    /* ── THE MOBILE REFLOW ARM ──────────────────────────────────────────────
+       The condition is an OR and both halves are load-bearing: a phone in
+       portrait is caught by the aspect ratio, and a phone in LANDSCAPE — wide,
+       and only a few hundred pixels tall — is caught by nothing but the height.
+       A stage that keeps its 16:9 letterbox there is a two-inch strip of content
+       between two black bands. */
+    @media (max-aspect-ratio: 1 / 1), (max-height: 480px) {
+        .deck-stage[data-fullscreen][data-ratio],
+        .deck-stage:not([data-fullscreen])[data-ratio] {
+            aspect-ratio: auto;
+            block-size: 100%;
+        }
+        .deck-slide {
+            /* one rung down, the whole way (PROPORTION §1.1's transposition) */
+            padding-inline: max(var(--deck-safe-inline), var(--space-family));
+            padding-block: max(var(--deck-safe-block), var(--space-family));
+            overflow-y: auto;
+        }
+    }
+}

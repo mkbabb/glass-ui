@@ -1,0 +1,172 @@
+/* ── THE CAPTURE / SETTLE BLOCK — the deck's other three registers ────────────
+   A deck that can only be presented is half a deck. Print, export and freeze are
+   engine surface, not app policy: each is a different bargain and each has a
+   rediscovery cost that every consumer pays exactly once, painfully.
+
+   EXPORT forces the authoring frame. `--cqx` makes the geometry
+   resolution-independent, which only pays off if the capture frame is fixed: at a
+   forced 1280×720 the whole `cqi` ladder resolves to the numbers the deck was
+   authored against, so a PPTX slide and a PDF page are pixel-faithful rather than
+   "whatever the capture machine's window happened to be".
+
+   FREEZE settles IDENTICALLY BUT DOES NOT FORCE THE FRAME. That distinction is
+   the real engine surface here: freeze is how the LIVE responsive reflow is
+   captured deterministically at an arbitrary viewport — a 390×844 visual check
+   needs everything still and nothing resized.
+
+   PRINT STACKS, and each stacked page must RE-GROUND ITSELF. The stage's single
+   ground layer is one absolutely-positioned viewport-sized box; it cannot back N
+   vertically stacked pages, so a printed deck comes out with one grounded page and
+   a column of transparent ones unless each page paints its own.
+
+   THE TWO PRINT FIXES EVERY CONSUMER REDISCOVERS: an SPA wrapper at `height: 100%`
+   spills one extra blank page, and a page box asked for exactly its own height
+   underruns onto a second sheet — so the member is given `719px` against a 720px
+   page. Both are pinned here so nobody rediscovers them again.
+
+   `!important` IS LOAD-BEARING IN THIS FILE, and only in this file: a capture mode
+   must beat every live transition, inline style and state rule unconditionally, or
+   a mid-turn frame lands in the artefact. */
+
+@layer components {
+    /* ── EXPORT: the forced authoring frame ─────────────────────────────────── */
+    [data-deck-capture="export"] .deck-stage {
+        --deck-export-inline: 1280px;
+        --deck-export-block: 720px;
+        position: relative;
+        inset: auto;
+        margin: 0;
+        aspect-ratio: auto;
+        inline-size: var(--deck-export-inline);
+        block-size: var(--deck-export-block);
+        max-inline-size: none;
+        max-block-size: none;
+        border-radius: 0;
+    }
+    [data-deck-capture="export"] .deck-slide {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    /* ── EXPORT + FREEZE: everything still, nothing mid-turn ────────────────── */
+    [data-deck-capture="export"] .deck-ground,
+    [data-deck-capture="freeze"] .deck-ground,
+    [data-deck-capture="export"] .deck-slide,
+    [data-deck-capture="freeze"] .deck-slide {
+        transition: none !important;
+        animation: none !important;
+    }
+    [data-deck-capture="export"] .deck-slide[data-state="active"],
+    [data-deck-capture="freeze"] .deck-slide[data-state="active"] {
+        /* the resting frame, pinned: no lift, no dip, no travel in a still */
+        --turn-x: 0px !important;
+        --turn-s: 1 !important;
+        --turn-r: 0deg !important;
+    }
+    [data-deck-capture="export"] .deck-slide::before,
+    [data-deck-capture="export"] .deck-slide::after,
+    [data-deck-capture="freeze"] .deck-slide::before,
+    [data-deck-capture="freeze"] .deck-slide::after {
+        opacity: 0 !important;
+        animation: none !important;
+    }
+    [data-deck-capture="export"] [data-reveal],
+    [data-deck-capture="freeze"] [data-reveal],
+    [data-deck-capture="print"] [data-reveal] {
+        opacity: 1 !important;
+        animation: none !important;
+    }
+
+    /* ── PRINT: N stacked pages, each re-grounded ───────────────────────────── */
+    [data-deck-capture="print"] .deck-stage {
+        position: static;
+        display: block;
+        aspect-ratio: auto;
+        inline-size: auto;
+        block-size: auto;
+        overflow: visible;
+    }
+    [data-deck-capture="print"] .deck-strip {
+        display: block;
+        overflow: visible;
+        perspective: none;
+    }
+    [data-deck-capture="print"] .deck-ground {
+        display: none;
+    }
+    [data-deck-capture="print"] .deck-slide {
+        position: relative;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        pointer-events: auto;
+        margin-block: var(--space-family);
+        /* the single stage ground cannot back N stacked pages */
+        background: var(--background);
+    }
+    [data-deck-capture="print"] .deck-slide::before,
+    [data-deck-capture="print"] .deck-slide::after {
+        opacity: 0 !important;
+    }
+}
+
+@media print {
+    @page {
+        size: 1280px 720px;
+        margin: 0;
+    }
+    html,
+    body {
+        overflow: visible !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+    /* the SPA wrapper's full height spills one blank sheet per document */
+    html,
+    body,
+    #app {
+        block-size: auto !important;
+        min-block-size: 0 !important;
+    }
+    .deck-stage {
+        position: static !important;
+        display: block !important;
+        aspect-ratio: auto !important;
+        inline-size: auto !important;
+        block-size: auto !important;
+        overflow: visible !important;
+    }
+    .deck-strip {
+        display: block !important;
+        overflow: visible !important;
+        perspective: none !important;
+    }
+    .deck-ground {
+        display: none !important;
+    }
+    .deck-slide {
+        position: relative !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        /* 719 against a 720 page: exactly its own height underruns onto a second sheet */
+        block-size: 719px !important;
+        overflow: hidden !important;
+        background: var(--background) !important;
+    }
+    .deck-slide::before,
+    .deck-slide::after {
+        opacity: 0 !important;
+    }
+    .deck-slide:not(:last-child) {
+        break-after: page;
+    }
+    .deck-stage .sr-only {
+        display: none !important;
+    }
+}

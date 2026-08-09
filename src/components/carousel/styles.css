@@ -1,0 +1,75 @@
+/* ── THE CAROUSEL REGISTER — a component over the windowed-sequence substrate ──
+   ONE GUTTER TOKEN. The gutter used to be two Tailwind literals in two files —
+   a negative margin on the track and a matching padding on every member — which
+   is a seam that can only ever be correct by coincidence, and a consumer wanting
+   to retune it had to find both. `--carousel-gutter` is the axis's one value, and
+   `gap` is the mechanism, so the two halves cannot disagree.
+
+   THE OPACITY CHANNEL LIVES HERE, and that is the LAW 1 split made structural:
+   the scale is written per scroll frame by the strip (the inertial travel clock)
+   and the fade is this transition on `[data-state]` (a fired clock, the `dock`
+   preset). A later edit cannot accidentally collapse them onto one `t`. */
+
+@layer components {
+    .carousel-strip {
+        /* the peer-item seam: one rung, one place */
+        --carousel-gutter: var(--space-family);
+
+        position: relative;
+        display: flex;
+        gap: var(--carousel-gutter);
+        overflow: auto;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+    .carousel-strip::-webkit-scrollbar {
+        display: none;
+    }
+    .carousel-strip[data-orientation="vertical"] {
+        flex-direction: column;
+        overscroll-behavior-x: auto;
+        overscroll-behavior-y: contain;
+        scroll-snap-type: y mandatory;
+    }
+
+    .carousel-item {
+        flex: 0 0 100%;
+        min-inline-size: 0;
+        scroll-snap-align: start;
+        /* a fast flick advances ONE member; the platform enforces it */
+        scroll-snap-stop: always;
+        /* the travel clock's channel — written per scroll frame by the strip */
+        scale: var(--member-scale, 1);
+        transform-origin: center;
+        /* the FIRED clock's channel — a different property, a different language */
+        opacity: 1;
+        transition: opacity var(--spring-dock-duration) var(--spring-dock);
+    }
+    .carousel-strip[data-projection="travel"] .carousel-item[data-state="prev"],
+    .carousel-strip[data-projection="travel"] .carousel-item[data-state="next"] {
+        opacity: 0.7;
+    }
+
+    /* LAW 3 — the interior lag is the CONTENT's, never the housing's. */
+    .carousel-item-content {
+        translate: calc(var(--member-lag, 0) * 100%) 0;
+    }
+    .carousel-strip[data-orientation="vertical"] .carousel-item-content {
+        translate: 0 calc(var(--member-lag, 0) * 100%);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .carousel-item {
+            scale: 1;
+            opacity: 1;
+            transition: none;
+        }
+        .carousel-item-content {
+            translate: none;
+        }
+        .carousel-strip {
+            scroll-behavior: auto;
+        }
+    }
+}

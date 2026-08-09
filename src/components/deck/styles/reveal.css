@@ -1,0 +1,62 @@
+/* ── THE REVEAL SHEET — the CSS half of `v-reveal`, at last ───────────────────
+   The directive deliberately writes only two hooks (`[data-reveal]` and the `--d`
+   step index) and leaves the animation to the consumer, which is the right call
+   for a directive and leaves every deck consumer writing the same forty lines.
+   This is those forty lines, optional and tokens-first: import it and the hooks
+   animate; do not, and the directive behaves exactly as before.
+
+   IT IS ACTIVE-GATED, which is the whole point. Ungated, every step on every
+   member runs its entrance at mount — so by the time a viewer reaches slide nine
+   its build has already played to an empty room. The animation is scoped to the
+   ACTIVE member, so each member's build runs when that member arrives.
+
+   THE `both` FILL IS LOAD-BEARING. With `forwards` alone a step is fully painted
+   during its own stagger delay and then jumps to its start frame the instant the
+   animation begins — a flash of the finished state before the entrance. `both`
+   applies the FROM frame through the delay, so a step is invisible until its turn.
+
+   THE STEP IS THE CANON'S, not a local literal: `--motion-stagger-default`. */
+
+@layer components {
+    .deck-stage [data-reveal] {
+        animation-fill-mode: both;
+    }
+
+    .deck-stage .deck-slide[data-state="active"] [data-reveal] {
+        animation-name: deck-reveal-rise;
+        animation-duration: var(--duration-normal);
+        animation-timing-function: var(--ease-out);
+        animation-delay: calc(var(--d, 0) * var(--motion-stagger-default));
+    }
+    .deck-stage .deck-slide[data-state="active"] [data-reveal="fade"] {
+        animation-name: deck-reveal-fade;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .deck-stage [data-reveal],
+        .deck-stage .deck-slide[data-state="active"] [data-reveal] {
+            animation: none;
+            opacity: 1;
+        }
+    }
+}
+
+@keyframes deck-reveal-rise {
+    from {
+        opacity: 0;
+        translate: 0 var(--space-body);
+    }
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@keyframes deck-reveal-fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

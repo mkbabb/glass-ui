@@ -18,9 +18,13 @@
     .glass-pager-ring {
         display: inline-flex;
         align-items: center;
-        gap: 0.375rem;
-        padding-inline: 0.625rem;
-        padding-block: 0.3125rem;
+        /* THE ONE RAIL GAP. The chassis and the rail inside it read the same
+           token, so the pill's own gutter and the dot pitch cannot disagree —
+           which is what an 0.375rem literal here and a `gap-1.5` utility on the
+           rail did, to eight pixels at the window edges. Pad 4/8, on-series. */
+        gap: var(--pager-rail-gap, var(--space-residue));
+        padding-inline: var(--space-atom);
+        padding-block: var(--space-residue);
         border-radius: var(--radius-pill);
         /* The element-level oklab TINT seam (NOT the raw
            pre-substituted `--glass-plate-floating` :root token — the gray-hole

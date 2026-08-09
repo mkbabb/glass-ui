@@ -1,52 +1,35 @@
 <script setup lang="ts">
-import type { WithClassAsProps } from "./interface";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed } from "vue";
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
 import { Button } from "../button";
 import { useCarousel } from "./useCarousel";
+import type { WithClassAsProps } from "./types";
+
+/* CarouselPager — chevrons and a counter, over the ONE authority.
+   It held a third mirror of the index and the count, kept in step by a pair of
+   engine listeners plus a mount call, and the counter announced NOTHING: a bare
+   span with no role, so the one live region on the route stayed empty while the
+   number changed under it. The mirror is gone (the core is injected) and the
+   counter is a `role="status"` reading the same source everything else reads. */
 
 const props = withDefaults(
-    defineProps<{
-        /** Show "X / N" counter between chevrons. Defaults to true. */
-        showCounter?: boolean;
-    } & WithClassAsProps>(),
-    {
-        showCounter: true,
-    }
+    defineProps<
+        {
+            /** Show the "X / N" counter between the chevrons. Default true. */
+            showCounter?: boolean;
+        } & WithClassAsProps
+    >(),
+    { showCounter: true },
 );
 
-const { carouselApi, canScrollNext, canScrollPrev, orientation, scrollNext, scrollPrev } =
-    useCarousel();
-
-const selectedIndex = ref(0);
-const slideCount = ref(0);
-
-function syncIndex() {
-    const api = carouselApi.value;
-    if (!api) return;
-    selectedIndex.value = api.selectedScrollSnap();
-    slideCount.value = api.scrollSnapList().length;
-}
-
-watch(
-    carouselApi,
-    (api) => {
-        if (!api) return;
-        syncIndex();
-        api.on("select", syncIndex);
-        api.on("reInit", syncIndex);
-    },
-    { immediate: true }
-);
-
-onMounted(syncIndex);
+const { deck, orientation } = useCarousel();
 
 const PrevIcon = computed(() =>
-    orientation === "vertical" ? ChevronUp : ChevronLeft
+    orientation === "vertical" ? ChevronUp : ChevronLeft,
 );
 const NextIcon = computed(() =>
-    orientation === "vertical" ? ChevronDown : ChevronRight
+    orientation === "vertical" ? ChevronDown : ChevronRight,
 );
 </script>
 
@@ -57,41 +40,44 @@ const NextIcon = computed(() =>
             cn(
                 'inline-flex items-center gap-2',
                 orientation === 'vertical' && 'flex-col',
-                props.class
+                props.class,
             )
         "
     >
         <Button
             emphasis="quiet"
             iconOnly
-            :disabled="!canScrollPrev"
-            :aria-label="orientation === 'vertical' ? 'Previous slide (up)' : 'Previous slide'"
+            :disabled="!deck.canPrev.value"
+            :aria-label="
+                orientation === 'vertical' ? 'Previous slide (up)' : 'Previous slide'
+            "
             data-slot="carousel-pager-prev"
-            @click="scrollPrev"
+            @click="deck.prev()"
         >
             <component :is="PrevIcon" class="size-4" aria-hidden="true" />
         </Button>
 
-        <!-- The counter re-registers OFF the opaque `bg-card` slab
-             onto the shared `.glass-pager-ring` glass pill chassis (the dark
-             `rgb(28,25,23)` slab dies; the dots + counter are ONE register). The
-             ring recipe owns the radius/padding/glass; the counter adds only the
-             mono caption + tabular figures. -->
+        <!-- The counter announces. It shares the rail's glass pill chassis and adds
+             only the mono caption + tabular figures. -->
         <span
-            v-if="showCounter && slideCount > 0"
+            v-if="showCounter && deck.total.value > 0"
             data-slot="carousel-pager-counter"
+            role="status"
+            aria-live="polite"
             class="glass-pager-ring text-mono-caption tabular-nums"
         >
-            {{ selectedIndex + 1 }} / {{ slideCount }}
+            {{ deck.index.value + 1 }} / {{ deck.total.value }}
         </span>
 
         <Button
             emphasis="quiet"
             iconOnly
-            :disabled="!canScrollNext"
-            :aria-label="orientation === 'vertical' ? 'Next slide (down)' : 'Next slide'"
+            :disabled="!deck.canNext.value"
+            :aria-label="
+                orientation === 'vertical' ? 'Next slide (down)' : 'Next slide'
+            "
             data-slot="carousel-pager-next"
-            @click="scrollNext"
+            @click="deck.next()"
         >
             <component :is="NextIcon" class="size-4" aria-hidden="true" />
         </Button>
