@@ -29,11 +29,14 @@
 //     with a traveling indicator, wearing different chrome, and both compose it. No
 //     component assembles roving selection outside it: composing the roving machine
 //     (`useTabRovingFocus`) or the indicator writer (`useSelectionIndicator`) DIRECTLY
-//     from a component is the fork this arm forbids. `<ToggleGroup type="single">` is
-//     the same strip BY SHAPE but composes neither house part (it delegates roving to
-//     reka's `ToggleGroupRoot`), so it does not trip this arm; its adoption needs the
-//     C-1 `SelectionOption["value"]` widening and is **BK #84's**. The engine's
-//     consumer set is TWO until then, and the arm asserts exactly that.
+//     from a component is the fork this arm forbids. `<ToggleGroup>` was the third
+//     strip BY SHAPE and composed neither house part (it delegated roving to reka's
+//     `ToggleGroupRoot`); **BK #84 W-TOGGLE-ROW** adopted it — reka retired from the
+//     component, an item registry feeds the engine, and the C-1
+//     `SelectionOption["value"]` widening landed with it. The engine's consumer set is
+//     THREE, and the floor below is what the arm asserts: the claim needs ≥ 2 to be
+//     falsifiable at all, and a count pinned to the exact number of the day would have
+//     to be edited by every wave that adopts, which is a gate editing itself.
 //
 // ── BORN-RED, FLIPPED IN THE SAME CUT (the RULING-2 "never RED-at-tag" law) ──────────
 // Measured at the pre-cut tree by RUNNING THIS FILE against `git archive HEAD`. The
@@ -397,9 +400,8 @@ describe("gate:G-OVERFIT — ONE-SELECTION arm (one selection engine, no forks)"
         expect(
             offenders,
             `${offenders.length} component(s) fork the selection assembly. \`${SELECTION_ENGINE}\` documents itself as ` +
-                `the ONE engine for the dock run and SegmentedTabs (single-select ToggleGroup is the same strip by ` +
-                `shape but composes neither house part — its adoption is #84's) — either it IS the engine ` +
-                `or the claim is deleted:\n  ${offenders.join("\n  ")}`,
+                `the ONE engine for the dock run, SegmentedTabs and ToggleGroup (adopted at BK #84) — either it IS ` +
+                `the engine or the claim is deleted:\n  ${offenders.join("\n  ")}`,
         ).toEqual([]);
     });
 
