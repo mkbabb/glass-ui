@@ -4429,6 +4429,106 @@ assumed next.
 
 **LINE-CITE DRIFT NOTE — THIS ⊕ MOVED THE CURSOR'S OWN LINE NUMBERS AND SAYS SO, RATHER THAN LEAVING THE NEXT SEAT TO DISCOVER IT.** This block is inserted directly after ⊕⁷³'s own drift note, so **every cursor self-cite BELOW it shifts by +12** and everything at or above it is unmoved. **Unmoved**: `:3650` · `:3659` · `:3761` · `:4276-4277` · `:4281` · `:4285` (the Φ7 procession bracket) · the ⊕⁷² receipt paragraphs at `:4390`/`:4394` · **and the whole ⊕⁷³ block at `:4400`-`:4418`, including its PUBLISH VERDICT line at `:4410`**, which this ⊕ completes and does not move (⊕⁷³'s `:4402` and `:4406` take this ⊕'s dated re-cut brackets IN PLACE, adding no line). **Moved +12**: the row-40 `C20` spelling `:4548` → **`:4560`** and the #65 table row `:4600` → **`:4612`**, both **re-measured on disk after the insert rather than predicted from a paragraph count** — the first draft of this very note said +10 and was wrong by two, which is the drift-note's own failure mode caught by its own discipline. The committed texts carrying pre-insertion numbers are LEFT ALONE — a line cite is a dated statement, and re-numbering committed records to chase an append is the bookkeeping mint ⊕⁷² and ⊕⁷³ both refused.
 
+⊕⁷⁵ **#76 W-CONSUMER-BAND — THE 8.0.0 ADDENDA BATCH IS AUTHORED (2026-08-09, `fbae3b8a`,
+with `777125d2` correcting one of its own claims), and the row is OPEN, not closed.** The
+day after `v8.0.0` reached the registry, the one condition #76 waited on was satisfied,
+and this seat authored the row's outbound half: NINE per-repo addenda on the #85 form
+(eight edge-bearing projects + the constellation-remainder page), the fresh ship-time
+census the row's standing law mandates, and the record + these blocks. [Body as recorded
+in the row cell above; seat-level detail at
+`docs/tranches/BK/execution/2026-08-09-row76-consumer-band/RECORD.md`.]
+
+**THE CENSUS PINS, REPRODUCED HERE SO THE ⊕ CARRIES ITS OWN FIGURES RATHER THAN A POINTER
+TO THEM**: `./forms` **36** edges across 8 roots (34 module-import + 2 string-literal) ·
+`./dropdown-menu` **16** across 6 (13 + 3) · `./sheet` **3** across 2, the REPAIR class ·
+TagsInput **0**, a measured zero across all 18 roots · grain **16** across 4 projects
+(speedtest 7 · bbnf-buddy 7 · atlas 1 · value.js 1, every one homonym-qualified with
+cites) · specular **1** · dead `./api` **3** · the **5** string-literal blind-spot edges.
+The 18 walked roots collapse to **8 edge-bearing projects** over four verified mirror
+pairs (keyframes-v-exec∥keyframes.js · atlas-active∥atlas · sci≡sci-report IDENTICAL-HEAD
+`735ce1c8` · slides-K∥slides), and the **oscilloscope negative control HOLDS at 0**. Every
+figure was reproduced independently at the verify seat off its own read-only walk, not
+re-aggregated from the enumerators' totals. **AND NOT ONE SIBLING BYTE WAS WRITTEN** — the
+foreign-tree fence held at **zero** across all 18 roots, six of them dirty and none of
+them built, installed into, or cleaned; every edit the nine docs name executes in the
+consumer's OWN tranche off its inbound half, per the consumer-updates ruling and the #85
+precedent.
+
+**THE LESSON THIS BATCH BANKS: a headline count can disagree with its own breakdown and
+both can be honest.** RT-89-F's "52 specifier edges" sits beside a 36+16+3 parenthesis
+that sums to 55. The resolution is a CLASS split, not an arithmetic fix: 52 edges BREAK
+at the rename, and the 3 `./sheet` edges were already broken — the specifier resolved
+to nothing pre-8.0.0, so the mint REPAIRS them (row66 §A1). The batch total is 55 = 52
+breaking + 3 repair — and the repair itself is specifier-level only: the new barrel
+ships `SheetContent` + the detent surface, while `Sheet`/`SheetHeader`/`SheetTitle`/
+`SheetDescription` take their `./dialog` twins (`MIGRATION.md:1607`,
+`src/index.ts:302-309`). A consumer reading "it works now" (`MIGRATION.md:22`) against
+a five-symbol import would ship a second break wearing a repair's name; all three sheet
+addenda say so.
+
+**THE SECOND LESSON: the census instrument is a seed, never a verifier.**
+`build-consumer-ledger.mjs` exists (git-tracked at
+`docs/tranches/BJ/audits/2026-07-28-consumer-constellation/`, not `scripts/` —
+CURE-66-4(b)) and carries two named false-negative classes: the `:178`
+`ts.preProcessFile`-on-raw-`.vue` large-SFC drop (the `SpeedtestResults.vue:641` miss)
+and the `:52-63` bare path-segment exclusions (the `"docs"` member dropped a live
+bbnf-lang edge). It is structurally blind to string-literal specifiers — which is
+exactly where five live edges sat (`vi.mock` ×2, `optimizeDeps.include` ×3), one of
+them a silent-mock and three of them pre-bundle failures. The plain-grep recipe with
+per-edge classification is banked at RECORD §5 and is the verify path for every future
+re-census.
+
+**ONE MEASURED DISCHARGE AND ONE SEAT DEFECT, both on the record.** The sci-active
+metric-family migration — carried as ON-7.x BLOCKING since lane B §1.3 — does not
+reproduce at HEAD `735ce1c8`: zero `metric-badge/cell/stack` imports remain and the one
+live edge is already the `./metric` family door, so the cell is corrected by the
+fresh census rather than re-relayed (S-10). And the model-assert law caught what it
+exists to catch, **seven times**: the four enumerator clusters, the author, the
+re-dispatched verify seat (RECORD §0/§11) and — the **SEVENTH instance, at the landing
+itself** — the verify seat that adjudicated the batch before the cut, every one of them
+inheriting `claude-fable-5` against the required `claude-opus-5*`. Cluster C halted
+honestly and its walk was re-run read-only at the authoring seat, then reproduced
+independently at the verify seat — which also caught the batch citing ⊕⁷³'s deleted tag
+(`4e201a3a`) and corrected all nine spots to the ⊕⁷⁴ re-cut (`17a11bc5`, RECORD §11): the
+remembered-literal lesson, recurring within 24 hours of being written down. **The defect
+is the DISPATCH's — one class, seven instances — and it is logged, not laundered.**
+
+**TWO PERFECTIONS LANDED WITH THE BATCH, AND A THIRD WAS CLAIMED THAT WAS NOT IN THE
+TREE — CORRECTED ONE COMMIT LATER AT `777125d2`.** The two that landed: the sci
+`Point.vue:404` dead `:deep(.metric-badge__label)` selector is **NAMED** in the
+constellation-remainder page (the metric-family discharge is real at the import layer,
+and a dead descendant selector still sitting in the SFC is not swept by it — an unnamed
+residue would have read as a clean zero), and the **value.js audit-fixture is qualified
+OUT** of the grain count with its cite (a fixture is not a consumer edge, and counting it
+would have inflated a pinned figure). The third — *"TR:413's stale `:89-90` cite
+bracketed"* — **was in `fbae3b8a`'s message and not in the tree**: the edit had FAILED its
+own count assertion (the cite appears **4×** in `TERMINAL-ROSTER.md`; the script asserted
+**1**) and a **newline-separated** chain committed anyway. That is the
+**claimed-but-absent class, FOURTH occurrence**, and the law it sharpens is exact: **the
+assertion must GATE the chain with `&&` — it may never merely PRECEDE it on a newline**,
+because a newline is a sequencer and not a conditional, and each of these four
+occurrences had a correct assertion sitting one line above a commit that ignored it.
+`777125d2` lands the bracket **line-targeted at `:413` only**; `:63`/`:168`/`:322` quote
+the old cite historically and STAND.
+
+**WHAT THIS ⊕ DOES NOT CLAIM**: no consumer adopt (each executes in its own tranche off
+its inbound half — L2 closes those rows at their adopts, not here), no sibling write
+(the fence held at zero), no build in any dirty tree, and no discharge of the row's
+remaining payload (clampLabel · dock first-tap · LabeledField association ·
+`TooltipContent variant="mono"` · `/deck` seventh-carry · BEAD census ·
+consumer-evidence truth-up). The procession still opens on a re-scout, never on an
+assumed next.
+
+**LINE-CITE DRIFT NOTE, re-measured on disk after the insert and not predicted from a
+paragraph count** (⊕⁷⁴'s own discipline, whose first draft was wrong by two). This block
+is inserted directly after ⊕⁷⁴'s drift note, so everything at or above `:4430` is
+**unmoved** — including the whole ⊕⁷³ block, the ⊕⁷² receipt paragraphs at `:4390`/`:4394`
+and ⊕⁷⁴'s block entire — and everything below shifts by **+100**: the row-40 C20
+spelling `:4560` → **`:4660`** and the #65 table row `:4612` → **`:4712`**. ⊕⁷⁴'s note
+keeps its own pre-insertion numbers, per the standing rule that a line cite is a dated
+statement and re-numbering committed records to chase an append is the bookkeeping mint
+⊕⁷² and ⊕⁷³ both refused.
+
 **Φ5 procession: next = re-scout** — #21 stays gated (`#17` hard, and #17 is Φ4-UNSTARTED); ~~#24
 LANDED this date, so the next unstarted in TR order is **#25 W-FIELD-WELL** (which lands its well
 law THROUGH #82's cut per TR#25's §B.7 keying — check #82 before opening it).~~ [⊕⁴¹ 2026-08-05 ·
@@ -4602,7 +4702,7 @@ procession still opens on a **re-scout**, never on an assumed next.]
 | 62 | W-COLOCATION | Φ6 | UNSTARTED | TR#62 → WAVES:840 + DIRECTORY-SHAPE | G-COLOCATED (+≤500 arm) · G-ONE-NAME (name-token arm); the 8-file carve |
 | 64 | TIER-3 RESIDUAL | Φ6 | UNSTARTED | TR#64 → CWT-3 fold §7 (J-1 re-scope) | —(shadcn-abrogation checklist the standing prelude — ⊕² the finite eight-family ledger with DECLARATION-CLEARED ∥ IDIOM-CLEARED proved separately; `bg-page-audit-roster.md` the index) |
 | 69 | W-PERF | Φ6 | UNSTARTED | TR#69 → RECONCILIATION:85/:196 + FEEDBACK-LEDGER:84 | seats shared with #60; F-6 blur budget owed here; ⊕² + the resting-rung cost (+33 µs/rung, ≈+1.07 ms/frame at 32 plates — zero at rest under §0.S's engage-only mount; this row owns the many-surface ceiling) |
-| 76 | W-CONSUMER-BAND | Φ6/7 | UNSTARTED | TR#76 → TR§C (three sources, ONE batch per repo) | G-RELAY; keyframes S1 FIRST; publish-closes (L2); ⊕² the universe is GENERATED (15 roots · 6 subpaths · 3 mirrors · 1 negative control), never a remembered list; +3 repo rows (words · muster · slides-k); ✦² words rows = adopt/migration evidence (carousel KEEP, A-2); ✦³ muster = PROTOTYPE, counts never bind (SL-3); metric-family migrations (keyframes + **sci-active** ⊕⁴, ON-7.x BLOCKING — lane B §1.3, SL-2); ⊕⁴ the census-instrument false-negative class cured before the ship-time re-run (lane B §3.1 + DECK-RELOCATION §6); ⊕⁷ the 2026-07-29 inbound fold lands here—§C value/atlas/speedtest rows grown (TR ⊕⁷), o19 A-20 recorded at the LIB-SEAM batch, `INBOUND-2026-07-29.md` the single read |
+| 76 | W-CONSUMER-BAND | Φ6/7 | ⊕⁷⁵ **ADDENDA-BATCH AUTHORED 2026-08-09** at `fbae3b8a` (+ `777125d2`, the TR:413 bracket the first message claimed and did not land) ~~UNSTARTED~~ — the row's LIB-SEAM outbound half, authored the day `v8.0.0` went live at the ⊕⁷⁴ re-cut (`17a11bc5`, run `31300577617` SUCCESS), satisfying the `publish-closes (L2)` ordering. **NINE outbound docs** at `docs/tranches/BJ/coordination/glass-outbound-2026-08-09-{atlas,fourier-analysis,keyframes.js,muster,slides,speedtest,value.js,words}-8.0.0-addendum.md` + `…-constellation-remainder-8.0.0.md` (bbnf-buddy · bbnf-lang · sci-report · parse-that/latex-paper text-only · oscilloscope negative-control HOLDS), each on the #85 outbound form: repo branch/dirty/tranche/pin header, the enumerators' file:line edges VERBATIM with sum checks quoted, the string-literal class in its OWN section, actions per row (`./dropdown-menu`→`./menu` · `./forms`→`./input`/`./textarea`/`./checkbox`/`./radio-group` per MIGRATION.md:21, `useUserInvalidAria`→root/`./dom` · `./sheet` RESOLVES as the REPAIR class, **specifier-level** — the barrel ships `SheetContent`+detents only, the other four symbols take `./dialog` twins · grain/specular/TagsInput/`SurfaceSpecular` removals with the `checkUnknownProps` hard-error-vs-silent-no-op warning · the `vue-component-type-helpers ^3.0.3` peer · dead `./api` re-points), **keyframes.js opening with the S1 undeclared-dependency cure as row 1 per the cell** (its mirror DECLARES at `keyframes-v-exec/package.json:77` — the divergence is the finding). **THE FRESH SHIP-TIME CENSUS RAN** (the row's standing law): 55 subpath rows = **52 breaking + 3 sheet-REPAIR** — the ⊕⁷⁴/RT-89-F "52" headline corrected against its own 36+16+3 breakdown — + grain 16 · specular 1 · dead-api 3 · the five string-literal blind-spot edges carried (row66 §A1); 18 roots → 8 edge-bearing projects via four mirror pairs (keyframes-v-exec∥keyframes.js · atlas-active∥atlas · sci≡sci-report IDENTICAL-HEAD `735ce1c8` · slides-K∥slides). **CENSUS CORRECTIONS ON THE RECORD**: sci metric-family measured **DISCHARGED on disk** (0 metric-badge/cell/stack imports; `Point.vue:23` already `./metric` — S-10 supersedes the remembered ON-7.x cell) · speedtest `vite.config.mjs:1042` a live FIFTH chassis literal outside both pinned censuses · dropped-key edges beyond the batch classes stated+routed (`./drawer`/`./completion-seal`/`./paper-backdrop`/`./controls`/`./hover-card`/`./confirm-dialog`). **TWO PERFECTIONS APPLIED AT THE LANDING**: the sci `Point.vue:404` dead `:deep(.metric-badge__label)` selector NAMED (the import-layer discharge does not sweep it) · the value.js audit-fixture qualified OUT of the grain count. **A THIRD WAS CLAIMED AND WAS ABSENT** — `fbae3b8a`'s message said TR:413's stale `:89-90` cite was bracketed; the edit had FAILED its count assertion (the cite appears 4× in TR, the script asserted 1) and a newline-separated chain committed anyway. **Claimed-but-absent class, FOURTH occurrence**; landed line-targeted at `:413` by `777125d2` (`:63`/`:168`/`:322` are historical quotations and STAND), and the law sharpens: **the assertion GATES the chain with `&&`, never merely precedes it on a newline.** **SEAT DEFECT LOGGED**: all four enumerator clusters, the authoring seat, the re-dispatched verify seat AND the landing verify seat (**seven** — six at authoring per RECORD §0/§11, the SEVENTH at the cut) asserted `claude-fable-5` vs the required `claude-opus-5*` (cluster C HALTED; its atlas/sci/negative-control walk re-run read-only at the authoring seat, reproduced independently at the verify seat — RECORD §11, which also corrected the stale first-tag SHA `4e201a3a`→`17a11bc5` per ⊕⁷⁴). **ZERO sibling writes** — the fence held; every edit executes in the consumer's OWN tranche off its inbound half. NOT discharged: clampLabel · dock first-tap · LabeledField association · `TooltipContent variant="mono"` · `/deck` seventh-carry · BEAD census · consumer-evidence truth-up — the row stays OPEN on those + the consumer adopts (L2). Record: `docs/tranches/BK/execution/2026-08-09-row76-consumer-band/RECORD.md` | TR#76 → TR§C (three sources, ONE batch per repo) | G-RELAY; keyframes S1 FIRST — AUTHORED as row 1; publish-closes (L2) — publish DONE, adopts pending; ⊕² the universe is GENERATED — re-generated at this batch (15 roots · 6 subpaths · 3 mirrors · 1 negative control, all re-verified); ✦² words rows = adopt/migration evidence (carousel KEEP, A-2); ✦³ muster = PROTOTYPE, counts never bind (SL-3); metric-family: keyframes row stands, **sci-active measured DISCHARGED at HEAD `735ce1c8`**; ⊕⁴ census-instrument false-negatives cited per the cure (lane B §3.1 + DECK-RELOCATION §6 + CURE-66-4(b)); ⊕⁷ `INBOUND-2026-07-29.md` the single read |
 
 ## Φ7 — the close
 
@@ -4628,15 +4728,20 @@ row's cited spec. Workflows resume via `Workflow{scriptPath, resumeFromRunId}`.
 
 
 **[DRIVER WALL-BANK 2026-08-09, post-⊕⁷⁴ — the org monthly spend limit fired mid-#76.]**
+[⊕⁷⁵ 2026-08-09 · **DISCHARGED — the run resumed and completed.** The author and verify
+seats ran, the batch landed at `fbae3b8a` (+ `777125d2`), and every owed deliverable is on
+disk: the nine addenda, the RECORD, PASTE-BLOCKS and this ⊕. **The resume instruction and
+the owed-deliverables list below are STRUCK as instructions** — they are spent — and the
+paragraph is otherwise kept intact as the wall's own dated record of the state it banked.]
 Row #76 W-CONSUMER-BAND execution state: the scout (charter derived — glass-ui-side
 authoring ONLY, zero sibling writes, the #85 outbound precedent; corrections: 55
 specifiers not 52 with the ./sheet three a REPAIR class · 18 roots collapse to 8
 upstream projects via 4 mirror pairs · grain homonym: sci 0, bbnf-buddy 7 uncounted)
 and ALL FOUR read-only enumerators COMPLETED — their file:line censuses are CACHED in
 workflow run `wf_52b4dcca-98a` (journal at the session workflows dir). The AUTHOR and
-VERIFIER seats died on the spend limit. RESUME IS ONE CALL: Workflow({scriptPath:
+VERIFIER seats died on the spend limit. ~~RESUME IS ONE CALL: Workflow({scriptPath:
 ".../bk-row76-consumer-band-wf_52b4dcca-98a.js", resumeFromRunId: "wf_52b4dcca-98a"})
-— the enumerators replay from cache, only author+verify run live. Deliverables owed:
+— the enumerators replay from cache, only author+verify run live.~~ ~~Deliverables owed:
 9 outbound addenda docs under docs/tranches/BJ/coordination/ + the row RECORD +
-PASTE-BLOCKS + ⊕⁷⁵. Everything before this line is COMMITTED AND PUSHED; 8.0.0 is
+PASTE-BLOCKS + ⊕⁷⁵.~~ Everything before this line is COMMITTED AND PUSHED; 8.0.0 is
 LIVE and needs nothing.
