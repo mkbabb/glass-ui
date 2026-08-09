@@ -257,6 +257,15 @@
 
 /* Ensure Tailwind scans glass-ui's compiled component templates for the utility
    classes they emit (CVA variant classes like text-destructive-foreground,
+/* THE WINDOWED-SEQUENCE SUBSTRATE — the stage's room, the authored page turn, the
+   capture/settle block and the optional reveal sheet. Optional, tokens-first and
+   identity-free: every identity value belongs in a consumer's overlay over these
+   data-attributes. */
+@import "../components/deck/styles/index.css";
+/* The carousel register over that substrate: the ONE gutter token and the FIRED
+   half of the member projection's two-clock split. Loads after the substrate it
+   composes. */
+@import "../components/carousel/styles.css";
    layout utilities like h-full/shrink-0).
 
    The source directive points at `../*.js`, NOT the components-mirror glob
