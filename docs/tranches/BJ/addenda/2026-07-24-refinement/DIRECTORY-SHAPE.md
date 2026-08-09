@@ -206,6 +206,14 @@ demo/stories/display/       atoms.vue badge.vue buttons.tile.vue buttons.vue car
 tests/components/           50 flat files: 43 *.contract.test.ts + 6 *.public-contracts.test-d.ts +
                             carousel.arrival / dialog.confirm-preset / infinite-scroll.announce /
                             pager-dots.morph / toast.queue   [dirs] _shared a11y custom ui
+                            [2026-08-09 · BK #65 W-GATE-COLLAPSE @ 30de3260 — STRIKE IN PLACE:
+                            pager-dots.morph and pager-dots.contract (the latter counted inside
+                            the "43 *.contract.test.ts") LEFT this flat list. RT-40-A re-homed
+                            both, byte-pure, to tests/components/pager-dots/, so [dirs] gains
+                            pager-dots and the flat count reads 47 -> 45 at that cut (measured,
+                            git ls-files). The 50 and the [dirs] set are a 2026-07-24 snapshot
+                            already stale for other rows' reasons; this bracket restates only
+                            #65's act and does not re-baseline the line.]
 tests/composables/          13 flat use*.test.ts + vReveal.test.ts  [dirs] color dark dom glass motion sidebar sortable
 tests/demo/                 13 flat *.test.ts
 tests/styles/               10 files incl. tokenGraphDetector.ts (a non-test helper)
