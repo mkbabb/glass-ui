@@ -98,4 +98,3 @@ provideMenuTrigger(trigger);
     </RekaDropdownMenuRoot>
 </template>
 
-<style src="./styles.css"></style>

@@ -215,7 +215,10 @@
     --z-dock: 40;
     --z-panel: 45;
     --z-overlay: 50;
-    --z-hovercard: 120;
+    /* `--z-hovercard` (120) IS DELETED — zero consumers, whole-census (#89
+       W-OVERLAY, D-16). The hover arm of the popover union has always painted
+       `z-popover`, because a hover preview IS a popover here (one sealed
+       component, two reka roots); a rung nobody stands on is not a rung. */
     --z-tooltip: 120;
     --z-popover: 130;
     --z-modal: 140;

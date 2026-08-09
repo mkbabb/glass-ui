@@ -114,19 +114,16 @@
     }
 }
 
-/* Click and context panels share one consumer-tunable material. */
-.dropdown-menu-content,
-.dropdown-sub-content {
-    font-family: var(--dropdown-menu-font, inherit);
-    padding: var(--panel-padding);
+/* THE UNLAYERED PLATE BLOCK THAT USED TO END THIS FILE IS GONE (#89 W-OVERLAY,
+   D-2/D-3). It re-declared, over a rung that already owns every one of them:
+   `--glass-veil-tier` (`.glass-floating` sets exactly this value), `background`
+   (the rung's `@apply glass-plate`), `--glass-border-rung` (same value again),
+   and the three-part `box-shadow` (byte-for-byte the rung's stack). Four
+   redeclarations and a `--panel-padding` 6 that was a fourth number off the
+   space series, in an UNLAYERED origin so all five outranked the rung.
 
-    --glass-veil-tier: var(--glass-veil-floating);
-    background: var(--dropdown-menu-bg, var(--glass-veil));
-    --glass-border-rung: var(--dropdown-menu-border, var(--glass-border-floating));
-    box-shadow: var(
-        --dropdown-menu-shadow,
-        var(--glass-material-rim),
-        var(--glass-under-shadow-vivid),
-        var(--glass-shadow-floating)
-    );
-}
+   Its four `--dropdown-menu-{font,bg,border,shadow}` consumer knobs died with
+   it, clean break, no alias: the whole-repo census found ZERO consumers, and a
+   tuning hook for a value the rung owns is a second author wearing a knob's
+   costume. A consumer that wants a heavier menu asks for a heavier RUNG.
+   The plate is `styles/glass/overlay-plate.css` now — one block, one layer. */

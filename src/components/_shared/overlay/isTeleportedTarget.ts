@@ -5,6 +5,11 @@
  * `data-glass-dock-portal` and `data-glass-dock-owner`. That keeps click-away
  * logic scoped to the owning dock instead of depending on Reka internals,
  * ARIA roles, or broad class names.
+ *
+ * It lives HERE, beside `overlayContentAttrs()`, because this predicate and that
+ * writer are two halves of one contract: the reader parsed an attribute pair
+ * that five hand-written call sites in five different files were each spelling
+ * for themselves. Sitting in `dock/` it was a reader with no visible writer.
  */
 export function isTeleportedTarget(
     target: EventTarget | null,

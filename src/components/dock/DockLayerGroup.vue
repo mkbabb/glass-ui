@@ -11,6 +11,7 @@ import {
 } from "vue";
 import type { Component } from "vue";
 import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
+import { useHoldToken } from "../_shared/overlay";
 import { useOptionalDockContext } from "./composables/dockContext";
 import { provideDockSwitcherContext } from "./composables/dockSwitcherContext";
 import DockCrossfade from "./DockCrossfade.vue";
@@ -188,28 +189,21 @@ function isComponent(icon: unknown): icon is Component {
 }
 
 /* Keep the dock open while a switcher tab holds focus, so keyboard navigation
-   (Arrow/Home/End) does not trip the idle-collapse timer. A boolean edge keeps the
-   keep-open token reference-counted exactly once. */
-const switcherHolds = ref(false);
+   (Arrow/Home/End) does not trip the idle-collapse timer. The idempotent
+   acquire/release/dispose triple is `_shared/overlay`'s ONE token, not a fourth
+   local copy of it — this seat's job is only deciding WHEN focus is inside. */
+const switcherToken = useHoldToken(() => dock);
 
 function onSwitcherFocusIn() {
-    if (switcherHolds.value) return;
-    switcherHolds.value = true;
-    dock?.keepOpen();
+    switcherToken.acquire();
 }
 
 function onSwitcherFocusOut(e: FocusEvent) {
     const next = e.relatedTarget as Node | null;
     const list = e.currentTarget as HTMLElement | null;
     if (next && list?.contains(next)) return;
-    if (!switcherHolds.value) return;
-    switcherHolds.value = false;
-    dock?.release();
+    switcherToken.release();
 }
-
-onBeforeUnmount(() => {
-    if (switcherHolds.value) dock?.release();
-});
 </script>
 
 <template>

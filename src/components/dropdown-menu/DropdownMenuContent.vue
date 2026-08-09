@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import { computed, useAttrs, type HTMLAttributes } from "vue";
-import type { Surface } from "../_shared/axes";
-import type { FloatingPlacementProps } from "../_shared/floating";
 import type {
     FocusOutsideEvent,
     PointerDownOutsideEvent,
 } from "../_shared/interaction";
-import { cn } from "../_shared/class-names";
-import { useOptionalDockContext } from "../dock/composables/dockContext";
-import { surfaceClass } from "../_shared/surface/resolve";
+import {
+    overlayContentAttrs,
+    useDockParticipation,
+    type FloatingPlacementProps,
+} from "../_shared/overlay";
 import { useMenuPart, useMenuTrigger } from "./useMenuTrigger";
 
 export interface DropdownMenuContentProps extends FloatingPlacementProps {
     class?: HTMLAttributes["class"];
-    surface?: Surface;
 }
 
 export interface DropdownMenuContentEmits {
@@ -31,7 +30,6 @@ const props = withDefaults(defineProps<DropdownMenuContentProps>(), {
     sideOffset: 4,
     align: "start",
     alignOffset: 0,
-    surface: "glass",
 });
 const emit = defineEmits<DropdownMenuContentEmits>();
 defineSlots<{ default?: () => unknown }>();
@@ -59,26 +57,26 @@ const placementProps = computed(() =>
               avoidCollisions: true,
           },
 );
-const dockContext = useOptionalDockContext();
+const dock = useDockParticipation();
+/* ONE CLASS SPELLING. The root used to carry BOTH `dropdown-menu-content` and
+   `dropdown-menu__content` — two names for one element, feeding two different
+   unlayered sheets. Both are gone; the register is `.glass-overlay-plate`, which
+   `overlayContentAttrs` writes. */
+const contentAttrs = computed(() =>
+    overlayContentAttrs({
+        role: "menu",
+        slot: "dropdown-menu-content",
+        dock: dock.portalAttrs.value,
+        class: props.class,
+    }),
+);
 </script>
 
 <template>
     <component :is="PortalComp">
         <component
             :is="ContentComp"
-            v-bind="{ ...placementProps, ...forwardedAttrs }"
-            :data-glass-dock-portal="dockContext?.id ? '' : undefined"
-            :data-glass-dock-owner="dockContext?.id"
-            :data-surface="props.surface"
-            data-slot="dropdown-menu-content"
-            data-reveal="menu"
-            :class="
-                cn(
-                    'dropdown-menu-content dropdown-menu__content glass-reveal',
-                    surfaceClass('floating'),
-                    props.class,
-                )
-            "
+            v-bind="{ ...placementProps, ...forwardedAttrs, ...contentAttrs }"
             @escape-key-down="emit('escapeKeyDown', $event)"
             @pointer-down-outside="emit('pointerDownOutside', $event)"
             @focus-outside="emit('focusOutside', $event)"

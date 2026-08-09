@@ -74,7 +74,19 @@
     .popover-content {
         border-radius: var(--radius-panel);
         color: var(--popover-foreground);
+        /* `outline: none` IS GONE (#89 W-OVERLAY). It was an unconditional
+           suppression on a container reka programmatically FOCUSES on open — so a
+           keyboard user landed on an unmarked plate with nothing to show where
+           they were. The plate now takes the house focus ring, `:focus-visible`
+           only (a pointer-opened panel must not paint the keyboard ring), reading
+           the same `--focus-ring-shadow` register every other indicator reads.
+           `outline: none` survives ONLY paired with the ring that replaces it,
+           exactly as `.focus-ring` pairs them; `utilities/a11y-overrides.css`
+           restores a real outline for engines that drop box-shadows. */
+    }
+    .popover-content:focus-visible {
         outline: none;
+        box-shadow: var(--focus-ring-shadow);
     }
 
     /* ── Scrollbar ── */

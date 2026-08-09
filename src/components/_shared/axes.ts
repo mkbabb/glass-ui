@@ -55,7 +55,7 @@ export type Tone = (typeof TONES)[number]; // default "neutral"
 /** The overlay-placement axis — ONE union for every surface that sites itself against an
  * edge or the centre. `center` is the Dialog's rest and is excluded by the two consumers
  * that only ever anchor: `SidePlacement` (sheet/motion.ts) and `FloatingSide`
- * (_shared/floating.ts). */
+ * (_shared/overlay/placement.ts). */
 export const PLACEMENTS = ["center", "top", "right", "bottom", "left"] as const;
 export type Placement = (typeof PLACEMENTS)[number]; // default "center"
 

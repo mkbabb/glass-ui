@@ -1,6 +1,6 @@
 import { computed, ref, watch, onUnmounted } from "vue";
 import type { ComputedRef, Ref } from "vue";
-import { isTeleportedTarget } from "./isTeleportedTarget";
+import { isTeleportedTarget } from "../../_shared/overlay/isTeleportedTarget";
 import type { DockHoldKind } from "./dockContext";
 import type { DockInteraction } from "./useDockShellProps";
 import { HOVER_INTENT_MS } from "../constants";

@@ -12,7 +12,10 @@ export type { UseDockSearchOptions, UseDockSearchReturn } from "./useDockSearch"
 export { useDockHold } from "./useDockHold";
 export type { UseDockHoldOptions, UseDockHoldReturn } from "./useDockHold";
 
-export { isTeleportedTarget } from "./isTeleportedTarget";
+/* The portal predicate moved to `_shared/overlay/` — beside `overlayContentAttrs`,
+   the writer of the very attribute pair it parses. The dock re-exports it because
+   the dock is where consumers reach for it; the direction is dock → _shared. */
+export { isTeleportedTarget } from "../../_shared/overlay/isTeleportedTarget";
 export {
     provideDockContext,
     useDockContext,

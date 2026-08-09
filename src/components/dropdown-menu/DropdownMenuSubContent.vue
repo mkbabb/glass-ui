@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, useAttrs, type HTMLAttributes } from "vue";
-import { cn } from "../_shared/class-names";
 import type { DismissableContentEmits } from "../_shared/interaction";
+import { overlayContentAttrs, useDockParticipation } from "../_shared/overlay";
 import { useMenuPart } from "./useMenuTrigger";
 
 export interface DropdownMenuSubContentProps {
@@ -35,6 +35,19 @@ const forwardedAttrs = computed(() => {
 });
 const SubContentComp = useMenuPart("SubContent");
 const PortalComp = useMenuPart("Portal");
+
+/* A SUBMENU IS A PORTALLED ROOT TOO, and it emitted no dock stamp at all — so
+   opening a submenu inside a dock-owned menu read as "the pointer left the
+   dock". Same seam as its parent; the family cannot have two answers. */
+const dock = useDockParticipation();
+const contentAttrs = computed(() =>
+    overlayContentAttrs({
+        role: "menu",
+        slot: "dropdown-menu-sub-content",
+        dock: dock.portalAttrs.value,
+        class: props.class,
+    }),
+);
 </script>
 
 <template>
@@ -42,18 +55,10 @@ const PortalComp = useMenuPart("Portal");
     <component :is="PortalComp">
         <component
             :is="SubContentComp"
-            v-bind="forwardedAttrs"
+            v-bind="{ ...forwardedAttrs, ...contentAttrs }"
             :side-offset="sideOffset"
             :align-offset="alignOffset"
             :avoid-collisions="true"
-            data-slot="dropdown-menu-sub-content"
-            data-reveal="menu"
-            :class="
-                cn(
-                    'dropdown-sub-content dropdown-menu__sub-content glass-floating glass-reveal',
-                    props.class,
-                )
-            "
             @escape-key-down="emit('escapeKeyDown', $event)"
             @pointer-down-outside="emit('pointerDownOutside', $event)"
             @focus-outside="emit('focusOutside', $event)"

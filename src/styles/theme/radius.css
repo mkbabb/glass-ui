@@ -91,7 +91,7 @@
        shadcn's literal default, carried verbatim; it is the CONTROL rung — a box you
        type in, press, or read as an annotation, ≈0.25 × h at h=40. Five names
        collapse onto it (`--radius-lg`, `--radius-media`, `--radius-button`,
-       `--radius-tooltip` via `-lg`, and the root itself), which is why the value is
+       and the root itself), which is why the value is
        declared HERE exactly once and every one of them is a `var()` alias — retuning
        the control corner is a one-line act. NOTE the shadcn inheritance in the NAME,
        not the value: `--radius-lg` is 10px here, where Tailwind's own `lg` rung is
@@ -171,7 +171,14 @@
     /* The big-dock card shell's default (comfortable-density) radius.
        The density-scaled --dock-card-radius (dock.css) resolves through this. */
     --radius-dock-card: var(--radius-3xl);
-    --radius-tooltip: var(--radius-lg);
+    /* `--radius-tooltip` IS DELETED — clean break, no alias (#89 W-OVERLAY,
+       D-14). It aliased `--radius-lg` → `--radius`, the raw 0.625rem shadcn
+       root, so the family carried THREE corners: menu/panel 16, plate 12, hint
+       10. A hint is a small plate, not a control: its corner is
+       `--radius-panel`, declared once by the overlay register
+       (glass/overlay-plate.css), and the third value is gone with the token
+       that carried it. Its only reader was the `rounded-tooltip` utility on
+       `TooltipContent`, which the register replaced. */
 
     /* ── The concentric-radius RELAY (Law 1). ──────────────
        The Apple `ConcentricRectangle` grammar (iOS 26) as a plain INHERITED

@@ -1,12 +1,10 @@
 <script lang="ts">
 import type { HTMLAttributes } from "vue";
-import type { Surface } from "../_shared/axes";
-import type { FloatingPlacementProps } from "../_shared/floating";
 import type { PointerDownOutsideEvent } from "../_shared/interaction";
+import type { FloatingPlacementProps } from "../_shared/overlay";
 
 export interface SelectContentProps extends FloatingPlacementProps {
     class?: HTMLAttributes["class"];
-    surface?: Surface;
 }
 
 export interface SelectContentEmits {
@@ -25,7 +23,7 @@ import {
 } from "reka-ui";
 import SelectScrollButton from "./SelectScrollButton.vue";
 import { cn } from "../_shared/class-names";
-import { useOptionalDockContext } from "../dock/composables/dockContext";
+import { useDockParticipation } from "../_shared/overlay";
 
 defineOptions({
     name: "SelectContent",
@@ -37,7 +35,6 @@ const props = withDefaults(defineProps<SelectContentProps>(), {
     sideOffset: 0,
     align: "start",
     alignOffset: 0,
-    surface: "glass",
 });
 const emit = defineEmits<SelectContentEmits>();
 const attrs = useAttrs();
@@ -58,7 +55,10 @@ const rootAttrs = computed(() => ({
     avoidCollisions: true,
     collisionPadding: 16,
 }));
-const dockContext = useOptionalDockContext();
+/* The stamp comes from the ONE module now, not from a hand-copied attribute
+   pair. The listbox PLATE stays #81's (`[data-slot="select-content"]`,
+   glass/overlay-plate.css) — only the portal seam moves here. */
+const dock = useDockParticipation();
 </script>
 
 <template>
@@ -76,10 +76,7 @@ const dockContext = useOptionalDockContext();
       correct (one scroll port, never nested).
     -->
         <RekaSelectContent
-            v-bind="rootAttrs"
-            :data-glass-dock-portal="dockContext?.id ? '' : undefined"
-            :data-glass-dock-owner="dockContext?.id"
-            :data-surface="props.surface"
+            v-bind="{ ...rootAttrs, ...dock.portalAttrs.value }"
             data-reveal="menu"
             data-slot="select-content"
             :class="

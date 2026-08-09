@@ -160,6 +160,15 @@
         opacity: 1;
         filter: blur(0);
     }
+    /* FADE-LED (canon §7). Opacity reaches zero at 60% of the exit clock while the
+     * geometry runs the full 100%. A surface that shrinks and fades on ONE clock
+     * reads as a thing being crushed; a surface whose light goes first and whose
+     * body finishes travelling into its anchor reads as a thing LEAVING. The two
+     * channels are deliberately out of phase, and this stop is the whole of the
+     * asymmetry — no second clock, no second animation. */
+    60% {
+        opacity: 0;
+    }
     to {
         scale: calc(var(--glass-reveal-enter-scale, 0.94) * var(--lq-stretch-x, 1.06))
             calc(var(--glass-reveal-enter-scale, 0.94) * var(--lq-stretch-y, 0.945));

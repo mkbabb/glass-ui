@@ -4,16 +4,14 @@ import {
     TooltipContent as RekaTooltipContent,
     TooltipPortal as RekaTooltipPortal,
 } from "reka-ui";
-import type { Surface } from "../_shared/axes";
-import { cn } from "../_shared/class-names";
-import type { FloatingPlacementProps } from "../_shared/floating";
-import { surfaceClass } from "../_shared/surface/resolve";
+import {
+    overlayContentAttrs,
+    useDockParticipation,
+    type FloatingPlacementProps,
+} from "../_shared/overlay";
 
 export interface TooltipContentProps extends FloatingPlacementProps {
     class?: HTMLAttributes["class"];
-    surface?: Surface;
-    /** Override the text announced through the trigger's description relation. */
-    ariaLabel?: string;
 }
 
 export interface TooltipContentEmits {
@@ -28,7 +26,6 @@ const props = withDefaults(defineProps<TooltipContentProps>(), {
     sideOffset: 4,
     align: "center",
     alignOffset: 0,
-    surface: "glass",
 });
 const emit = defineEmits<TooltipContentEmits>();
 defineSlots<{ default?: () => unknown }>();
@@ -42,24 +39,40 @@ const placementProps = computed(() => ({
     alignOffset: props.alignOffset,
     avoidCollisions: true,
 }));
-const contentClass = computed(() =>
-    cn(
-        "z-tooltip overflow-hidden rounded-tooltip border text-popover-foreground glass-reveal",
-        surfaceClass("floating"),
-        "[--overlay-pad-inline:--spacing(2)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) text-(length:--tooltip-text)",
-        props.class,
-    ),
+
+/* THE HINT PARTICIPATES IN THE DOCK. It emitted no portal stamp at all, so a
+   dock-anchored icon's own tooltip read as "the pointer left the dock" and
+   collapsed the thing the pointer was still pointing at. The hint takes no HOLD
+   — a hint is not a hand and must not pin the dock open — only the stamp, so
+   click-away and pointer-out can tell a dock's own overlay from the page. */
+const dock = useDockParticipation();
+
+/* `z-tooltip` is the per-host rung and stays on the component; everything else
+   the plate is comes from the ONE register. The retired
+   `border text-popover-foreground rounded-tooltip overflow-hidden` utilities
+   were a SECOND boundary author over `.glass-floating`'s rim (the bare `border`
+   resolved to the raw shadcn `--border` ink and painted the 2px black rule the
+   codex stills measured) plus a corner off the dead
+   `--radius-tooltip → --radius-lg → --radius` 0.625rem chain. */
+const contentAttrs = computed(() =>
+    overlayContentAttrs({
+        role: "hint",
+        slot: "tooltip-content",
+        dock: dock.portalAttrs.value,
+        class: ["z-tooltip", props.class],
+    }),
 );
 </script>
 
 <template>
     <RekaTooltipPortal>
+        <!-- NO `aria-label`. The content-side override used to replace the very
+           node the trigger's `aria-describedby` relation reads, so the hint
+           announced text it did not paint. A hint is a DESCRIPTION of its
+           trigger (WCAG 1.4.13): the rendered text is the announcement, and an
+           icon-only trigger labels ITSELF. -->
         <RekaTooltipContent
-            v-bind="{ ...placementProps, ...forwardedAttrs }"
-            :aria-label="ariaLabel"
-            :data-surface="surface"
-            data-reveal="tooltip"
-            :class="contentClass"
+            v-bind="{ ...placementProps, ...forwardedAttrs, ...contentAttrs }"
             @escape-key-down="emit('escapeKeyDown', $event)"
             @pointer-down-outside="emit('pointerDownOutside', $event)"
         >

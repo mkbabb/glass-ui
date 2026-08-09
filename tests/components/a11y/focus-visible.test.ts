@@ -26,17 +26,22 @@ import { describe, expect, it } from "vitest";
 
 const read = (path: string): string => readFileSync(path, "utf8");
 
-const DROPDOWN_CSS = "src/components/dropdown-menu/styles.css";
+/* The menu family's rules moved WHOLE into the layered overlay register at
+   BK #89 W-OVERLAY — `components/dropdown-menu/styles.css` was injected by an
+   SFC `<style src>` and so entered the cascade UNLAYERED, outranking the rung
+   it sat on. The selectors are unchanged; only the origin moved, which is why
+   this gate re-points rather than relaxing. */
+const MENU_CSS = "src/styles/glass/overlay-plate.css";
 const SLIDER = "src/components/slider/Slider.vue";
 const FORCED_COLORS = "src/styles/utilities/a11y-overrides.css";
 
 describe("G-FOCUS-VISIBLE — every library-rendered trigger shows keyboard focus", () => {
     it("DropdownMenuTrigger carries an inherent focus indicator", () => {
-        const css = read(DROPDOWN_CSS);
+        const css = read(MENU_CSS);
         const rule = css.match(
             /\.dropdown-menu__trigger:focus-visible\s*\{([\s\S]*?)\}/,
         );
-        expect(rule, `${DROPDOWN_CSS} declares .dropdown-menu__trigger:focus-visible`)
+        expect(rule, `${MENU_CSS} declares .dropdown-menu__trigger:focus-visible`)
             .not.toBeNull();
         // The ONE house focus register, not a second ring minted beside it.
         expect(rule![1]).toMatch(/box-shadow:\s*var\(--focus-ring-shadow\)/);
@@ -47,7 +52,7 @@ describe("G-FOCUS-VISIBLE — every library-rendered trigger shows keyboard focu
     });
 
     it("it is :focus-visible, never bare :focus — a pointer-opened menu paints no ring", () => {
-        const css = read(DROPDOWN_CSS);
+        const css = read(MENU_CSS);
         expect(css).not.toMatch(/\.dropdown-menu__trigger:focus\b(?!-visible)/);
     });
 
@@ -57,7 +62,7 @@ describe("G-FOCUS-VISIBLE — every library-rendered trigger shows keyboard focu
         // ring on EVERY register while this file paints one on only one of them —
         // which is how a component ends up with less focus than a bare <button>.
         // `outline: none` is allowed only where a ring is painted in its place.
-        const live = read(DROPDOWN_CSS).replace(/\/\*[\s\S]*?\*\//g, "");
+        const live = read(MENU_CSS).replace(/\/\*[\s\S]*?\*\//g, "");
         expect(live).not.toMatch(/\.dropdown-menu__trigger\s*\{[^}]*outline:\s*none/);
     });
 

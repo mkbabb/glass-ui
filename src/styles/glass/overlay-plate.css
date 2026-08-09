@@ -21,6 +21,191 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @layer components {
+    /* ── .glass-overlay-plate — THE ONE OVERLAY REGISTER ────────────────────
+       Three surfaces that are one register used to paint through THREE cascade
+       origins: the unlayered `.dropdown-menu-content` block that used to sit at
+       the tail of `_shared/menu/menu.css`, the whole of
+       `components/dropdown-menu/styles.css` pulled in by an SFC `<style src>`
+       (also unlayered), and Tailwind utilities authored on each component. All
+       three outranked the rung they sat on and re-authored background, border,
+       shadow and padding that `.glass-floating` already owns. They are ONE
+       block now, in ONE layer, and what they re-authored is simply gone.
+
+       THE ROLE RIDES `data-reveal`, the axis that already exists — nothing
+       parallel is minted. `overlayContentAttrs()` (_shared/overlay/content.ts)
+       is the sole writer of both the class and the attribute:
+         hint  → `data-reveal="tooltip"` — an annotation: the tight pad, the
+                 smaller corner, no measure of its own.
+         menu  → `data-reveal="menu"`    — an anchored list: the card corner, the
+                 minimum measure, the collision ceiling, its own scroll.
+         panel → `data-reveal="overlay"` — a body: the card corner, a real
+                 measure that yields on a narrow viewport.
+
+       ONE BOUNDARY AUTHORITY. THE REGISTER — `.glass-overlay-plate` and its
+       three roles — declares no `border` and no `box-shadow`: the rung is the
+       only author of the plate's edge. The tooltip's bare `border` utility and
+       the menu's `border: 1px solid var(--border)` (raw shadcn ink, under the
+       abrogation edict) were the second and third authors, and they painted the
+       2px black rule and the double shadow the codex stills measured. Scoped to
+       the register on purpose, because the FILE declares both further down and
+       neither is a plate boundary: `.dropdown-menu__trigger:focus-visible`
+       paints the focus ring's `box-shadow`, and #81's `[data-slot=
+       "select-content"]` block carries its own `--ink-edge` border plus the
+       cartoon under-stamp.
+
+       RADIUS THROUGH THE RELAY, not over it. The rung paints
+       `border-radius: var(--radius-ctx)`, so the register sets `--radius-ctx`
+       rather than a second `border-radius` — one declaration paints, and the
+       concentric relay (Law 1) still publishes the resolved corner + inset to
+       nested cards instead of being bypassed. */
+    .glass-overlay-plate {
+        --radius-ctx: var(--radius-card);
+        --radius-inset: var(--overlay-pad);
+        padding: var(--overlay-pad);
+        color: var(--popover-foreground);
+        overflow: hidden;
+    }
+
+    /* The MENU role — an anchored list. `--overlay-max-block` is the family's
+       comfortable ceiling; reka's measured `--reka-popper-available-height`
+       tightens it on a short viewport, and when reka has not measured yet the
+       ceiling stands alone. */
+    .glass-overlay-plate[data-reveal="menu"] {
+        min-inline-size: var(--overlay-min-width);
+        max-block-size: min(
+            var(--overlay-max-block),
+            var(--reka-popper-available-height, var(--overlay-max-block))
+        );
+        overflow-y: auto;
+    }
+
+    /* The PANEL role — a body with a real measure. The retired `w-72` was a flat
+       18rem that overflowed a 320px viewport; the measure now yields to the
+       viewport minus its own two pads, so the panel is never wider than the room
+       it has. */
+    .glass-overlay-plate[data-reveal="overlay"] {
+        inline-size: min(21rem, calc(100dvw - 2 * var(--overlay-pad)));
+    }
+
+    /* The HINT role — an annotation. Its pad is the register's
+       `--overlay-pad-hint`, declared ONCE at the token root; the three inline
+       `[--overlay-pad-inline:…]` mints and every √φ block multiplier that rode
+       them are gone (block = inline per role — the ~20px popover pad and the ~5px
+       hint pad they produced were sub-pixel theatre). The corner is
+       `--radius-panel`; the `--radius-tooltip → --radius-lg → --radius`
+       0.625rem shadcn chain died with it. */
+    .glass-overlay-plate[data-reveal="tooltip"] {
+        --radius-ctx: var(--radius-panel);
+        --radius-inset: var(--overlay-pad-hint);
+        padding: var(--overlay-pad-hint);
+        font-size: var(--tooltip-text);
+    }
+
+    /* ── The menu family's INTERIOR ─────────────────────────────────────────
+       Folded verbatim from `components/dropdown-menu/styles.css`, which an SFC
+       `<style src>` used to inject UNLAYERED. Only the plate-material rows were
+       dropped on the way in (border, border-radius, colour, z-index, the
+       collision bound, the `min-width: 8rem` literal) — every one of them is
+       either the rung's or the register's above. The row RECIPES are unchanged:
+       they never fought the rung, they were merely in the wrong origin.
+
+       The class spellings keep the `dropdown` namespace until C-10's batched
+       export cut renames the family (`./menu` mints there, with the four
+       consumer MIGRATION tables); this row's job was the ORIGIN, and the origin
+       is now one. */
+    .dropdown-menu__trigger:focus-visible {
+        /* The trigger's KEYBOARD FOCUS INDICATOR (A11Y · G-FOCUS-VISIBLE). The
+           only focus statement this family carried was a bare `outline: none` —
+           an ACTIVE suppression of the UA ring with nothing painted in its
+           place, on a component that renders a bare `<button>`: 2.4.7 by
+           commission, not omission. `:focus-visible`, never `:focus`, so a
+           pointer-opened menu never paints the keyboard ring; `outline: none`
+           survives only paired with the ring that replaces it, exactly as
+           `.focus-ring` pairs them, and `utilities/a11y-overrides.css` restores
+           a real outline for engines that drop box-shadows. */
+        outline: none;
+        border-radius: var(--radius-control);
+        box-shadow: var(--focus-ring-shadow);
+    }
+
+    .dropdown-menu__item,
+    .dropdown-menu__sub-trigger {
+        position: relative;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        padding-block: 0.375rem;
+        padding-inline: 0.5rem;
+        cursor: default;
+        outline: none;
+        color: inherit;
+        font-size: var(--dropdown-text);
+        user-select: none;
+    }
+
+    .dropdown-menu__item[data-inset],
+    .dropdown-menu__item[data-indicator="wide"] {
+        padding-inline-start: 2rem;
+    }
+
+    .dropdown-menu__item[data-indicator="start"] {
+        padding-inline-start: 1.75rem;
+    }
+
+    .dropdown-menu__item[data-disabled],
+    .dropdown-menu__sub-trigger[data-disabled] {
+        pointer-events: none;
+        cursor: not-allowed;
+        opacity: var(--opacity-disabled);
+    }
+
+    .dropdown-menu__indicator {
+        position: absolute;
+        inset-inline-start: 0.5rem;
+        display: inline-flex;
+        width: 0.875rem;
+        height: 0.875rem;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dropdown-menu__indicator > svg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .dropdown-menu__radio-dot {
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: var(--radius-pill);
+        background: currentColor;
+    }
+
+    .dropdown-menu__label {
+        padding: 0.375rem 0.5rem;
+        color: var(--muted-foreground);
+        font-size: var(--dropdown-text-secondary);
+        font-weight: 600;
+    }
+
+    .dropdown-menu__label[data-inset] {
+        padding-inline-start: 2rem;
+    }
+
+    .dropdown-menu__shortcut {
+        margin-inline-start: auto;
+        font-size: var(--dropdown-text-secondary);
+        letter-spacing: var(--type-tracking-caps);
+        opacity: 0.6;
+    }
+
+    .dropdown-menu__sub-chevron {
+        width: 1rem;
+        height: 1rem;
+        margin-inline-start: auto;
+    }
+
     /* ── The listbox plate ──────────────────────────────────────────────────
        The overlay rung's veil with the capsule's warm floor over it — two flat
        layers, both reading the ONE recipe. There is no adaptive-tint layer and no

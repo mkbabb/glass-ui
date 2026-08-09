@@ -45,6 +45,7 @@ import {
     type Ref,
 } from "vue";
 import type { UseDockStateReturn } from "./useDockState";
+import { useHoldToken } from "../../_shared/overlay";
 import {
     useFuzzySearch,
     type FuzzySearchState,
@@ -240,11 +241,15 @@ export function useDockSearch<T extends SearchableItem = SearchableItem>(
     }
 
     // ── The gesture: arm/disarm (composes the existing state-machine seam) ───────────
-    const isSearchArmed = ref(false);
+    // The armed flag IS the hold token: `_shared/overlay`'s ONE implementation of
+    // acquire-once / release-once / release-on-teardown, which four sites used to
+    // hand-roll separately. `dockState` is the hold target here rather than the
+    // injected context — the search seam drives the dock's state object directly.
+    const searchToken = useHoldToken(() => dockState);
+    const isSearchArmed = searchToken.isHeld;
 
     function armSearch(): void {
         if (isSearchArmed.value) return;
-        isSearchArmed.value = true;
         // A search-arm is a CONSUMER-initiated gesture: open via the imperative
         // `expand()` (operative even in `interaction="manual"`), NOT the environmental
         // `onClickCollapsed()` (suppressed in manual, and it left the "pinned" pole so
@@ -253,17 +258,16 @@ export function useDockSearch<T extends SearchableItem = SearchableItem>(
         // the documented return fires. Then the ref-counted hold keeps the dock open
         // through the search gesture.
         dockState.expand();
-        dockState.keepOpen();
+        searchToken.acquire();
         fuzzy.open();
     }
 
     function disarmSearch(): void {
         if (!isSearchArmed.value) return;
-        isSearchArmed.value = false;
         fuzzy.close();
         // Release the ref-counted hold; the dock's own grace-period timer returns it to
         // the compact PERSISTENT bar (NO extra-tap-to-restore).
-        dockState.release();
+        searchToken.release();
     }
 
     // ── The optional collapse-on-scroll (composes `useScrollChrome`) ────────────────
@@ -280,7 +284,8 @@ export function useDockSearch<T extends SearchableItem = SearchableItem>(
     }
 
     onScopeDispose(() => {
-        if (isSearchArmed.value) dockState.release();
+        // The token releases itself (it registered its own `onScopeDispose`); only
+        // the fetch controller is this seat's to tear down.
         abortController?.abort();
         abortController = null;
     });

@@ -2,6 +2,7 @@
 import { computed, useAttrs } from "vue";
 import { ComboboxContent as RekaComboboxContent } from "reka-ui";
 import { cn } from "../_shared/class-names";
+import { useDockParticipation } from "../_shared/overlay";
 import type { ComboboxListEmits } from "../_shared/selection";
 import type { CommandListProps } from "./types";
 
@@ -18,6 +19,11 @@ const props = withDefaults(defineProps<CommandListProps>(), { surface: "glass" }
 const emit = defineEmits<ComboboxListEmits>();
 const attrs = useAttrs();
 const forwardedAttrs = computed(() => ({ ...attrs }));
+
+/* The third stampless surface (with the hint and the submenu). A dock-anchored
+   command palette's own list read as foreign DOM to the dock's click-away, so
+   scrolling the list could collapse the dock under it. */
+const dock = useDockParticipation();
 </script>
 
 <template>
@@ -26,7 +32,7 @@ const forwardedAttrs = computed(() => ({ ...attrs }));
        wrapper div that used to sit inside is gone: it named nothing, and an extra
        node between a listbox and its options is a node the a11y tree has to walk. -->
     <RekaComboboxContent
-        v-bind="forwardedAttrs"
+        v-bind="{ ...forwardedAttrs, ...dock.portalAttrs.value }"
         data-slot="command-list"
         data-fade-start
         data-fade-end

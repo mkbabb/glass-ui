@@ -1,0 +1,1480 @@
+# FENCE — BK #89 W-OVERLAY  ·  REGENERATED 2026-08-08 (CURE-89-1)
+#
+# DERIVATION: (post-cut worktree) MINUS (the banked step-0 baseline), per file.
+#   baseline tree = `git archive d37aa714` + `git apply --unidiff-zero`
+#                   /tmp/bk-row-baseline-1786231370.diff   (79 files, 6,624 lines)
+#   body          = `diff -u <baseline>/<path> <worktree>/<path>` for every path
+#                   whose two states differ. Zero absorption by construction: the
+#                   left side already carries every baseline hunk, so a file another
+#                   row had already dirtied contributes ONLY this row's delta.
+#
+# WHY REGENERATED: the first cut of this artefact was diffed against a base tree
+#   whose `tests/gates/overfit-structure.test.ts` had been overwritten with the
+#   row's own final copy for the born-RED run, so the file's delta measured zero
+#   and it was dropped from the fence entirely. It is section A's 28th file now,
+#   at its true +81/-0.
+#
+# SECTION A — 28 tracked files MODIFIED:  +627 / -248   (net +379)
+# SECTION B — 3 tracked files DELETED:   160 lines
+# SECTION C — 5 files CREATED (untracked): 269 lines
+# TOTAL NET — +627 - 248 - 160 + 269 = +488
+#
+# ── SECTION A · MODIFIED ─────────────────────────────────────────────────────
+
+--- baseline/src/components/_shared/axes.ts
++++ final/src/components/_shared/axes.ts
+@@ -55,7 +55,7 @@
+ /** The overlay-placement axis — ONE union for every surface that sites itself against an
+  * edge or the centre. `center` is the Dialog's rest and is excluded by the two consumers
+  * that only ever anchor: `SidePlacement` (sheet/motion.ts) and `FloatingSide`
+- * (_shared/floating.ts). */
++ * (_shared/overlay/placement.ts). */
+ export const PLACEMENTS = ["center", "top", "right", "bottom", "left"] as const;
+ export type Placement = (typeof PLACEMENTS)[number]; // default "center"
+ 
+--- baseline/src/components/_shared/menu/menu.css
++++ final/src/components/_shared/menu/menu.css
+@@ -114,19 +114,16 @@
+     }
+ }
+ 
+-/* Click and context panels share one consumer-tunable material. */
+-.dropdown-menu-content,
+-.dropdown-sub-content {
+-    font-family: var(--dropdown-menu-font, inherit);
+-    padding: var(--panel-padding);
++/* THE UNLAYERED PLATE BLOCK THAT USED TO END THIS FILE IS GONE (#89 W-OVERLAY,
++   D-2/D-3). It re-declared, over a rung that already owns every one of them:
++   `--glass-veil-tier` (`.glass-floating` sets exactly this value), `background`
++   (the rung's `@apply glass-plate`), `--glass-border-rung` (same value again),
++   and the three-part `box-shadow` (byte-for-byte the rung's stack). Four
++   redeclarations and a `--panel-padding` 6 that was a fourth number off the
++   space series, in an UNLAYERED origin so all five outranked the rung.
+ 
+-    --glass-veil-tier: var(--glass-veil-floating);
+-    background: var(--dropdown-menu-bg, var(--glass-veil));
+-    --glass-border-rung: var(--dropdown-menu-border, var(--glass-border-floating));
+-    box-shadow: var(
+-        --dropdown-menu-shadow,
+-        var(--glass-material-rim),
+-        var(--glass-under-shadow-vivid),
+-        var(--glass-shadow-floating)
+-    );
+-}
++   Its four `--dropdown-menu-{font,bg,border,shadow}` consumer knobs died with
++   it, clean break, no alias: the whole-repo census found ZERO consumers, and a
++   tuning hook for a value the rung owns is a second author wearing a knob's
++   costume. A consumer that wants a heavier menu asks for a heavier RUNG.
++   The plate is `styles/glass/overlay-plate.css` now — one block, one layer. */
+--- baseline/src/components/command/CommandList.vue
++++ final/src/components/command/CommandList.vue
+@@ -2,6 +2,7 @@
+ import { computed, useAttrs } from "vue";
+ import { ComboboxContent as RekaComboboxContent } from "reka-ui";
+ import { cn } from "../_shared/class-names";
++import { useDockParticipation } from "../_shared/overlay";
+ import type { ComboboxListEmits } from "../_shared/selection";
+ import type { CommandListProps } from "./types";
+ 
+@@ -18,6 +19,11 @@
+ const emit = defineEmits<ComboboxListEmits>();
+ const attrs = useAttrs();
+ const forwardedAttrs = computed(() => ({ ...attrs }));
++
++/* The third stampless surface (with the hint and the submenu). A dock-anchored
++   command palette's own list read as foreign DOM to the dock's click-away, so
++   scrolling the list could collapse the dock under it. */
++const dock = useDockParticipation();
+ </script>
+ 
+ <template>
+@@ -26,7 +32,7 @@
+        wrapper div that used to sit inside is gone: it named nothing, and an extra
+        node between a listbox and its options is a node the a11y tree has to walk. -->
+     <RekaComboboxContent
+-        v-bind="forwardedAttrs"
++        v-bind="{ ...forwardedAttrs, ...dock.portalAttrs.value }"
+         data-slot="command-list"
+         data-fade-start
+         data-fade-end
+--- baseline/src/components/dock/DockLayerGroup.vue
++++ final/src/components/dock/DockLayerGroup.vue
+@@ -11,6 +11,7 @@
+ } from "vue";
+ import type { Component } from "vue";
+ import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
++import { useHoldToken } from "../_shared/overlay";
+ import { useOptionalDockContext } from "./composables/dockContext";
+ import { provideDockSwitcherContext } from "./composables/dockSwitcherContext";
+ import DockCrossfade from "./DockCrossfade.vue";
+@@ -188,28 +189,21 @@
+ }
+ 
+ /* Keep the dock open while a switcher tab holds focus, so keyboard navigation
+-   (Arrow/Home/End) does not trip the idle-collapse timer. A boolean edge keeps the
+-   keep-open token reference-counted exactly once. */
+-const switcherHolds = ref(false);
++   (Arrow/Home/End) does not trip the idle-collapse timer. The idempotent
++   acquire/release/dispose triple is `_shared/overlay`'s ONE token, not a fourth
++   local copy of it — this seat's job is only deciding WHEN focus is inside. */
++const switcherToken = useHoldToken(() => dock);
+ 
+ function onSwitcherFocusIn() {
+-    if (switcherHolds.value) return;
+-    switcherHolds.value = true;
+-    dock?.keepOpen();
++    switcherToken.acquire();
+ }
+ 
+ function onSwitcherFocusOut(e: FocusEvent) {
+     const next = e.relatedTarget as Node | null;
+     const list = e.currentTarget as HTMLElement | null;
+     if (next && list?.contains(next)) return;
+-    if (!switcherHolds.value) return;
+-    switcherHolds.value = false;
+-    dock?.release();
++    switcherToken.release();
+ }
+-
+-onBeforeUnmount(() => {
+-    if (switcherHolds.value) dock?.release();
+-});
+ </script>
+ 
+ <template>
+--- baseline/src/components/dock/composables/index.ts
++++ final/src/components/dock/composables/index.ts
+@@ -12,7 +12,10 @@
+ export { useDockHold } from "./useDockHold";
+ export type { UseDockHoldOptions, UseDockHoldReturn } from "./useDockHold";
+ 
+-export { isTeleportedTarget } from "./isTeleportedTarget";
++/* The portal predicate moved to `_shared/overlay/` — beside `overlayContentAttrs`,
++   the writer of the very attribute pair it parses. The dock re-exports it because
++   the dock is where consumers reach for it; the direction is dock → _shared. */
++export { isTeleportedTarget } from "../../_shared/overlay/isTeleportedTarget";
+ export {
+     provideDockContext,
+     useDockContext,
+--- baseline/src/components/dock/composables/useDockHold.ts
++++ final/src/components/dock/composables/useDockHold.ts
+@@ -1,5 +1,6 @@
+-import { onBeforeUnmount, onMounted, ref } from "vue";
++import { onBeforeUnmount, onMounted } from "vue";
+ import type { Ref } from "vue";
++import { useHoldToken } from "../../_shared/overlay";
+ import { useOptionalDockContext } from "./dockContext";
+ 
+ /**
+@@ -87,25 +88,24 @@
+ 
+     // ONE acquire flag — the single source of truth for whether THIS host holds a
+     // token. The native pointer + touch listeners drive the same flag, so a
+-    // pointer-down then a stray touch (or vice versa) cannot double-acquire. It is
+-    // a `ref` because it IS the host's grasp edge, returned to the consumer: the
+-    // dock token is a side effect of the hand, not its definition, so the flag
+-    // flips with no dock in scope.
+-    const held = ref(false);
++    // pointer-down then a stray touch (or vice versa) cannot double-acquire. The
++    // flag IS the host's grasp edge, returned to the consumer: the dock token is a
++    // side effect of the hand, not its definition, so it flips with no dock in
++    // scope.
++    // A pointer hold is a GRASP: it takes the posture count (no idle-collapse
++    // mid-gesture) and the grasp count (the edge the material answers). The token
++    // DISCIPLINE — acquire once, release once, release on teardown — is
++    // `_shared/overlay`'s, shared with the other three holders; what stood here was
++    // one of four hand-rolled copies of it.
++    const token = useHoldToken(() => dock, "grasp");
++    const held = token.isHeld;
+ 
+     function acquire(): void {
+-        if (!armed() || held.value) return;
+-        held.value = true;
+-        // A pointer hold is a GRASP: it takes the posture count (no idle-collapse
+-        // mid-gesture) and the grasp count (the edge the material answers).
+-        dock?.keepOpen("grasp");
++        if (!armed()) return;
++        token.acquire();
+     }
+ 
+-    function release(): void {
+-        if (!held.value) return;
+-        held.value = false;
+-        dock?.release("grasp");
+-    }
++    const release = token.release;
+ 
+     // Window-scoped release: reka retargets the captured pointer's up/cancel to
+     // the captured element, which bubbles to `window` — so a release wherever the
+--- baseline/src/components/dock/composables/useDockSearch.ts
++++ final/src/components/dock/composables/useDockSearch.ts
+@@ -45,6 +45,7 @@
+     type Ref,
+ } from "vue";
+ import type { UseDockStateReturn } from "./useDockState";
++import { useHoldToken } from "../../_shared/overlay";
+ import {
+     useFuzzySearch,
+     type FuzzySearchState,
+@@ -240,11 +241,15 @@
+     }
+ 
+     // ── The gesture: arm/disarm (composes the existing state-machine seam) ───────────
+-    const isSearchArmed = ref(false);
++    // The armed flag IS the hold token: `_shared/overlay`'s ONE implementation of
++    // acquire-once / release-once / release-on-teardown, which four sites used to
++    // hand-roll separately. `dockState` is the hold target here rather than the
++    // injected context — the search seam drives the dock's state object directly.
++    const searchToken = useHoldToken(() => dockState);
++    const isSearchArmed = searchToken.isHeld;
+ 
+     function armSearch(): void {
+         if (isSearchArmed.value) return;
+-        isSearchArmed.value = true;
+         // A search-arm is a CONSUMER-initiated gesture: open via the imperative
+         // `expand()` (operative even in `interaction="manual"`), NOT the environmental
+         // `onClickCollapsed()` (suppressed in manual, and it left the "pinned" pole so
+@@ -253,17 +258,16 @@
+         // the documented return fires. Then the ref-counted hold keeps the dock open
+         // through the search gesture.
+         dockState.expand();
+-        dockState.keepOpen();
++        searchToken.acquire();
+         fuzzy.open();
+     }
+ 
+     function disarmSearch(): void {
+         if (!isSearchArmed.value) return;
+-        isSearchArmed.value = false;
+         fuzzy.close();
+         // Release the ref-counted hold; the dock's own grace-period timer returns it to
+         // the compact PERSISTENT bar (NO extra-tap-to-restore).
+-        dockState.release();
++        searchToken.release();
+     }
+ 
+     // ── The optional collapse-on-scroll (composes `useScrollChrome`) ────────────────
+@@ -280,7 +284,8 @@
+     }
+ 
+     onScopeDispose(() => {
+-        if (isSearchArmed.value) dockState.release();
++        // The token releases itself (it registered its own `onScopeDispose`); only
++        // the fetch controller is this seat's to tear down.
+         abortController?.abort();
+         abortController = null;
+     });
+--- baseline/src/components/dock/composables/useDockState.ts
++++ final/src/components/dock/composables/useDockState.ts
+@@ -1,6 +1,6 @@
+ import { computed, ref, watch, onUnmounted } from "vue";
+ import type { ComputedRef, Ref } from "vue";
+-import { isTeleportedTarget } from "./isTeleportedTarget";
++import { isTeleportedTarget } from "../../_shared/overlay/isTeleportedTarget";
+ import type { DockHoldKind } from "./dockContext";
+ import type { DockInteraction } from "./useDockShellProps";
+ import { HOVER_INTENT_MS } from "../constants";
+--- baseline/src/components/dropdown-menu/DropdownMenu.vue
++++ final/src/components/dropdown-menu/DropdownMenu.vue
+@@ -98,4 +98,3 @@
+     </RekaDropdownMenuRoot>
+ </template>
+ 
+-<style src="./styles.css"></style>
+--- baseline/src/components/dropdown-menu/DropdownMenuContent.vue
++++ final/src/components/dropdown-menu/DropdownMenuContent.vue
+@@ -1,19 +1,18 @@
+ <script setup lang="ts">
+ import { computed, useAttrs, type HTMLAttributes } from "vue";
+-import type { Surface } from "../_shared/axes";
+-import type { FloatingPlacementProps } from "../_shared/floating";
+ import type {
+     FocusOutsideEvent,
+     PointerDownOutsideEvent,
+ } from "../_shared/interaction";
+-import { cn } from "../_shared/class-names";
+-import { useOptionalDockContext } from "../dock/composables/dockContext";
+-import { surfaceClass } from "../_shared/surface/resolve";
++import {
++    overlayContentAttrs,
++    useDockParticipation,
++    type FloatingPlacementProps,
++} from "../_shared/overlay";
+ import { useMenuPart, useMenuTrigger } from "./useMenuTrigger";
+ 
+ export interface DropdownMenuContentProps extends FloatingPlacementProps {
+     class?: HTMLAttributes["class"];
+-    surface?: Surface;
+ }
+ 
+ export interface DropdownMenuContentEmits {
+@@ -31,7 +30,6 @@
+     sideOffset: 4,
+     align: "start",
+     alignOffset: 0,
+-    surface: "glass",
+ });
+ const emit = defineEmits<DropdownMenuContentEmits>();
+ defineSlots<{ default?: () => unknown }>();
+@@ -59,26 +57,26 @@
+               avoidCollisions: true,
+           },
+ );
+-const dockContext = useOptionalDockContext();
++const dock = useDockParticipation();
++/* ONE CLASS SPELLING. The root used to carry BOTH `dropdown-menu-content` and
++   `dropdown-menu__content` — two names for one element, feeding two different
++   unlayered sheets. Both are gone; the register is `.glass-overlay-plate`, which
++   `overlayContentAttrs` writes. */
++const contentAttrs = computed(() =>
++    overlayContentAttrs({
++        role: "menu",
++        slot: "dropdown-menu-content",
++        dock: dock.portalAttrs.value,
++        class: props.class,
++    }),
++);
+ </script>
+ 
+ <template>
+     <component :is="PortalComp">
+         <component
+             :is="ContentComp"
+-            v-bind="{ ...placementProps, ...forwardedAttrs }"
+-            :data-glass-dock-portal="dockContext?.id ? '' : undefined"
+-            :data-glass-dock-owner="dockContext?.id"
+-            :data-surface="props.surface"
+-            data-slot="dropdown-menu-content"
+-            data-reveal="menu"
+-            :class="
+-                cn(
+-                    'dropdown-menu-content dropdown-menu__content glass-reveal',
+-                    surfaceClass('floating'),
+-                    props.class,
+-                )
+-            "
++            v-bind="{ ...placementProps, ...forwardedAttrs, ...contentAttrs }"
+             @escape-key-down="emit('escapeKeyDown', $event)"
+             @pointer-down-outside="emit('pointerDownOutside', $event)"
+             @focus-outside="emit('focusOutside', $event)"
+--- baseline/src/components/dropdown-menu/DropdownMenuSeparator.vue
++++ final/src/components/dropdown-menu/DropdownMenuSeparator.vue
+@@ -18,11 +18,17 @@
+ </script>
+ 
+ <template>
++    <!-- The hairline reads the family's ONE divider ink (`.glass-menu-divider`,
++       _shared/menu/menu.css), exactly as SelectSeparator and CommandSeparator
++       already do. Its own rule painted `color-mix(in srgb, var(--border) 70%, …)`
++       — the raw shadcn ink under the abrogation edict, and a THIRD spelling of one
++       line inside one family. The geometry is the same 1px at `my-1 -mx-1`; only
++       the ink changed hands. -->
+     <component
+         :is="SeparatorComp"
+         v-bind="forwardedAttrs"
+         as="div"
+         data-slot="dropdown-menu-separator"
+-        :class="cn('dropdown-menu__separator', props.class)"
++        :class="cn('glass-menu-divider -mx-1 my-1', props.class)"
+     />
+ </template>
+--- baseline/src/components/dropdown-menu/DropdownMenuSubContent.vue
++++ final/src/components/dropdown-menu/DropdownMenuSubContent.vue
+@@ -1,7 +1,7 @@
+ <script setup lang="ts">
+ import { computed, useAttrs, type HTMLAttributes } from "vue";
+-import { cn } from "../_shared/class-names";
+ import type { DismissableContentEmits } from "../_shared/interaction";
++import { overlayContentAttrs, useDockParticipation } from "../_shared/overlay";
+ import { useMenuPart } from "./useMenuTrigger";
+ 
+ export interface DropdownMenuSubContentProps {
+@@ -35,6 +35,19 @@
+ });
+ const SubContentComp = useMenuPart("SubContent");
+ const PortalComp = useMenuPart("Portal");
++
++/* A SUBMENU IS A PORTALLED ROOT TOO, and it emitted no dock stamp at all — so
++   opening a submenu inside a dock-owned menu read as "the pointer left the
++   dock". Same seam as its parent; the family cannot have two answers. */
++const dock = useDockParticipation();
++const contentAttrs = computed(() =>
++    overlayContentAttrs({
++        role: "menu",
++        slot: "dropdown-menu-sub-content",
++        dock: dock.portalAttrs.value,
++        class: props.class,
++    }),
++);
+ </script>
+ 
+ <template>
+@@ -42,18 +55,10 @@
+     <component :is="PortalComp">
+         <component
+             :is="SubContentComp"
+-            v-bind="forwardedAttrs"
++            v-bind="{ ...forwardedAttrs, ...contentAttrs }"
+             :side-offset="sideOffset"
+             :align-offset="alignOffset"
+             :avoid-collisions="true"
+-            data-slot="dropdown-menu-sub-content"
+-            data-reveal="menu"
+-            :class="
+-                cn(
+-                    'dropdown-sub-content dropdown-menu__sub-content glass-floating glass-reveal',
+-                    props.class,
+-                )
+-            "
+             @escape-key-down="emit('escapeKeyDown', $event)"
+             @pointer-down-outside="emit('pointerDownOutside', $event)"
+             @focus-outside="emit('focusOutside', $event)"
+--- baseline/src/components/popover/Popover.vue
++++ final/src/components/popover/Popover.vue
+@@ -1,11 +1,11 @@
+ <script setup lang="ts">
+-import { computed, onScopeDispose, ref, watch } from "vue";
++import { computed, ref, watch } from "vue";
+ import {
+     HoverCardRoot as RekaHoverCardRoot,
+     PopoverRoot as RekaPopoverRoot,
+ } from "reka-ui";
+ import type { Trigger } from "../_shared/axes";
+-import { useOptionalDockContext } from "../dock/composables/dockContext";
++import { useDockParticipation } from "../_shared/overlay";
+ import { providePopoverUnion } from "./popoverContext";
+ 
+ export type PopoverTriggerMode = Extract<Trigger, "click" | "hover">;
+@@ -23,6 +23,27 @@
+     closeDelay?: number;
+     /** Hold an ancestor GlassDock open while this surface is visible. */
+     keepDockOpen?: boolean;
++    /**
++     * THE A11Y AXIS — one fact, and the consequences that actually derive from
++     * it.
++     *
++     * `false` (default): non-modal. Focus is never trapped and the page behind
++     * stays operable. `true`: reka's modal discipline — focus trapped, outside
++     * pointers disabled, the page behind inert — and the content stamps
++     * `aria-modal` exactly then, because that is the one attribute this axis can
++     * enforce.
++     *
++     * THE ROLE IS NOT ON THIS AXIS. The click arm keeps reka's `role="dialog"`
++     * whether or not it is modal (`PopoverContent` writes it in its own
++     * template, after `$attrs`, so nothing here could override it), and
++     * `role="group"` belongs to the hover arm alone. A hover preview is never
++     * modal by construction and ignores this prop.
++     *
++     * There used to be NO way to reach the modal state at all: `modal` never
++     * reached `PopoverRoot`, and the content stripped `role`/`aria-modal` off
++     * `$attrs` on the way past.
++     */
++    modal?: boolean;
+ }
+ 
+ export interface PopoverEmits {
+@@ -38,6 +59,7 @@
+     openDelay: 250,
+     closeDelay: 150,
+     keepDockOpen: false,
++    modal: false,
+ });
+ const emit = defineEmits<PopoverEmits>();
+ defineSlots<{ default?: () => unknown }>();
+@@ -62,28 +84,14 @@
+     window.matchMedia("(pointer: coarse)").matches;
+ const usesHoverRoot = computed(() => props.trigger === "hover" && !isCoarsePointer);
+ 
+-providePopoverUnion({ usesHoverRoot });
++providePopoverUnion({ usesHoverRoot, modal: computed(() => props.modal) });
+ 
+-const dock = useOptionalDockContext();
+-let isHeld = false;
+-function releaseDock(): void {
+-    if (!isHeld) return;
+-    dock?.release();
+-    isHeld = false;
+-}
+-watch(
+-    [resolvedOpen, () => props.keepDockOpen],
+-    ([open, keepDockOpen]) => {
+-        if (open && keepDockOpen && dock && !isHeld) {
+-            dock.keepOpen();
+-            isHeld = true;
+-        } else if (!open || !keepDockOpen) {
+-            releaseDock();
+-        }
+-    },
+-    { immediate: true },
+-);
+-onScopeDispose(releaseDock);
++/* THE KEEP-OPEN TOKEN IS THE CONTRACT'S, not this component's. What stood here
++   was the fourth hand-rolled copy of the same six lines — a local `isHeld`, a
++   guarded acquire, a guarded release, and a `onScopeDispose` that had to
++   remember. `useDockParticipation` owns the discipline once, for all four
++   holders, and takes the condition declaratively so the watch disappears too. */
++useDockParticipation({ hold: () => resolvedOpen.value && props.keepDockOpen });
+ </script>
+ 
+ <template>
+@@ -98,10 +106,15 @@
+         <slot />
+     </RekaHoverCardRoot>
+ 
++    <!-- `modal` REACHES reka now. It is what engages the focus trap, the
++       outside-pointer discipline and the background `aria-hidden` — the three
++       behaviours the content's `role="dialog"` + `aria-modal` claim. Announcing
++       a modal the layer does not enforce is worse than not offering one. -->
+     <RekaPopoverRoot
+         v-else
+         data-slot="popover"
+         :open="resolvedOpen"
++        :modal="modal"
+         @update:open="updateOpen"
+     >
+         <slot />
+--- baseline/src/components/popover/PopoverContent.vue
++++ final/src/components/popover/PopoverContent.vue
+@@ -6,19 +6,25 @@
+     PopoverContent as RekaPopoverContent,
+     PopoverPortal as RekaPopoverPortal,
+ } from "reka-ui";
+-import type { Surface } from "../_shared/axes";
+-import { cn } from "../_shared/class-names";
+-import type { FloatingPlacementProps } from "../_shared/floating";
+ import type { DismissableContentEmits } from "../_shared/interaction";
+-import { useOptionalDockContext } from "../dock/composables/dockContext";
++import {
++    overlayContentAttrs,
++    useDockParticipation,
++    type FloatingPlacementProps,
++} from "../_shared/overlay";
+ import { usePopoverUnion } from "./popoverContext";
+ 
+ export interface PopoverContentProps extends FloatingPlacementProps {
+     class?: HTMLAttributes["class"];
+     /** Teleport content to the document body. */
+     portal?: boolean;
+-    surface?: Surface;
+-    /** Accessible name for the hover group or click dialog. */
++    /**
++     * Accessible name. REQUIRED on the HOVER arm — that is the one arm this
++     * component gives `role="group"`, and a group with no name is a landmark
++     * screen readers cannot announce. The click arm is reka's `role="dialog"`
++     * either way, modal or not, and may take its name from a heading inside
++     * instead.
++     */
+     ariaLabel?: string;
+ }
+ 
+@@ -32,20 +38,19 @@
+     align: "center",
+     alignOffset: 0,
+     portal: true,
+-    surface: "glass",
+ });
+ const emit = defineEmits<PopoverContentEmits>();
+ defineSlots<{ default?: () => unknown }>();
+ 
++/* NO ATTRIBUTE STRIP. `$attrs` used to be filtered through a `role` /
++   `aria-modal` destructure, which is precisely how the popover became unable to
++   be modal: the two attributes a modal panel MUST carry were the two the
++   component threw away, while the (now deleted) 38-entry denylist swallowed
++   `trap-focus` and `disable-outside-pointer-events` — the only other route in.
++   The `modal` axis below is the honest cure, so the strip has nothing left to
++   do and is gone: attributes forward whole. */
+ const attrs = useAttrs();
+-const forwardedAttrs = computed(() => {
+-    const {
+-        role: _role,
+-        "aria-modal": _ariaModal,
+-        ...forwarded
+-    } = attrs;
+-    return forwarded;
+-});
++
+ const placementProps = computed(() => ({
+     side: props.side,
+     sideOffset: props.sideOffset,
+@@ -54,75 +59,84 @@
+     avoidCollisions: true,
+ }));
+ 
++/* THE HOVER/CLICK FORK IS A COMPONENT SELECTION, and that is ALL it is. Three
++   near-identical subtrees used to spell the same fifteen bindings three times —
++   once per (hover-root × portal) combination — so the portal stamp appeared
++   three times in one file and a change to any binding had three places to
++   forget. Two ternaries replace them.
++
++   `portal: false` selects NO portal component, not a DISABLED one. The two arms
++   used to disagree about that (the hover arm passed `:disabled`, the click arm
++   dropped the wrapper entirely), and the drop is the correct half: reka's
++   Teleport gates its whole subtree on `useMounted()`, so a "disabled" portal
++   still withholds the content until mount — a wrapper that is not a no-op is not
++   an off switch. */
++const PassThrough = (_props: unknown, { slots }: { slots: Record<string, undefined | (() => unknown)> }) =>
++    slots.default?.();
++
+ const union = usePopoverUnion();
+ const usesHoverRoot = computed(() => union?.usesHoverRoot.value ?? false);
++const PortalComp = computed(() =>
++    !props.portal
++        ? PassThrough
++        : usesHoverRoot.value
++          ? RekaHoverCardPortal
++          : RekaPopoverPortal,
++);
++const ContentComp = computed(() =>
++    usesHoverRoot.value ? RekaHoverCardContent : RekaPopoverContent,
++);
+ 
+-const dockContext = useOptionalDockContext();
+-const dockPortalAttr = computed(() => (dockContext?.id ? "" : undefined));
+-const contentClass = computed(() =>
+-    cn(
+-        "popover-content z-popover w-72 glass-floating [--overlay-pad-inline:1rem] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) glass-reveal",
+-        props.class,
+-    ),
++/* ONE AXIS, DERIVED CONSEQUENCES (§3.5). A hover preview is never modal — it has
++   no dismissal gesture of its own — so the hover arm resolves `false` whatever
++   the root says.
++
++   WHAT THE AXIS OWNS, and what it honestly does not. `aria-modal` is the axis's:
++   it appears exactly when the root is enforcing modality and never otherwise —
++   which is the repair, because the old code STRIPPED it off `$attrs` while the
++   root could not be modal at all, so the two facts could never agree.
++   The ROLE is reka's on the click arm (`PopoverContent` writes `role="dialog"`
++   in its own template, after `$attrs`, so nothing here could override it and
++   pretending otherwise would be a claim with no paint) — and that is correct
++   either way: a click popover is a dialog whether or not it is modal. The hover
++   arm renders no role of its own, so the annotation `group` is stated here, once,
++   where it actually lands. */
++const isModal = computed(() => (union?.modal.value ?? false) && !usesHoverRoot.value);
++const a11yAttrs = computed(() => ({
++    "aria-label": props.ariaLabel,
++    ...(usesHoverRoot.value ? { role: "group" } : {}),
++    ...(isModal.value ? { "aria-modal": "true" } : {}),
++}));
++
++const dock = useDockParticipation();
++const contentAttrs = computed(() =>
++    overlayContentAttrs({
++        role: "panel",
++        slot: "popover-content",
++        dock: dock.portalAttrs.value,
++        class: ["z-popover", props.class],
++    }),
+ );
+ </script>
+ 
+ <template>
+-    <RekaHoverCardPortal v-if="usesHoverRoot" :disabled="!portal">
+-        <RekaHoverCardContent
+-            v-bind="{ ...placementProps, ...forwardedAttrs }"
+-            :data-glass-dock-portal="dockPortalAttr"
+-            :data-glass-dock-owner="dockContext?.id"
+-            :data-surface="surface"
+-            data-reveal="menu"
+-            role="group"
+-            :aria-label="ariaLabel"
+-            :class="contentClass"
++    <component :is="PortalComp">
++        <component
++            :is="ContentComp"
++            v-bind="{
++                ...placementProps,
++                ...attrs,
++                ...a11yAttrs,
++                ...contentAttrs,
++            }"
+             @escape-key-down="emit('escapeKeyDown', $event)"
+             @pointer-down-outside="emit('pointerDownOutside', $event)"
+             @focus-outside="emit('focusOutside', $event)"
+             @interact-outside="emit('interactOutside', $event)"
+-        >
+-            <slot />
+-        </RekaHoverCardContent>
+-    </RekaHoverCardPortal>
+-
+-    <RekaPopoverPortal v-else-if="portal">
+-        <RekaPopoverContent
+-            v-bind="{ ...placementProps, ...forwardedAttrs }"
+-            :data-glass-dock-portal="dockPortalAttr"
+-            :data-glass-dock-owner="dockContext?.id"
+-            :data-surface="surface"
+-            data-reveal="menu"
+-            :aria-label="ariaLabel"
+-            :class="contentClass"
+-            @escape-key-down="emit('escapeKeyDown', $event)"
+-            @pointer-down-outside="emit('pointerDownOutside', $event)"
+-            @focus-outside="emit('focusOutside', $event)"
+-            @interact-outside="emit('interactOutside', $event)"
+             @open-auto-focus="emit('openAutoFocus', $event)"
+             @close-auto-focus="emit('closeAutoFocus', $event)"
+         >
+             <slot />
+-        </RekaPopoverContent>
+-    </RekaPopoverPortal>
+-
+-    <RekaPopoverContent
+-        v-else
+-        v-bind="{ ...placementProps, ...forwardedAttrs }"
+-        :data-glass-dock-portal="dockPortalAttr"
+-        :data-glass-dock-owner="dockContext?.id"
+-        :data-surface="surface"
+-        data-reveal="menu"
+-        :aria-label="ariaLabel"
+-        :class="contentClass"
+-        @escape-key-down="emit('escapeKeyDown', $event)"
+-        @pointer-down-outside="emit('pointerDownOutside', $event)"
+-        @focus-outside="emit('focusOutside', $event)"
+-        @interact-outside="emit('interactOutside', $event)"
+-        @open-auto-focus="emit('openAutoFocus', $event)"
+-        @close-auto-focus="emit('closeAutoFocus', $event)"
+-    >
+-        <slot />
+-    </RekaPopoverContent>
++        </component>
++    </component>
+ </template>
+--- baseline/src/components/popover/popoverContext.ts
++++ final/src/components/popover/popoverContext.ts
+@@ -22,6 +22,16 @@
+      * to the tap-toggle PopoverRoot.
+      */
+     usesHoverRoot: ComputedRef<boolean>;
++    /**
++     * THE ONE A11Y AXIS. `modal` is the single fact a consumer states, and
++     * `role` / `aria-modal` / focus-trapping / outside-pointer-events all DERIVE
++     * from it — the content cannot know it from markup, so the root publishes it
++     * here beside the root flag it already publishes.
++     *
++     * `false` (the default) → a non-modal `group` that never traps focus.
++     * `true` → a `dialog` with `aria-modal`, the page inert behind it.
++     */
++    modal: ComputedRef<boolean>;
+ }
+ 
+ const ctx = createOptionalContext<PopoverUnionContext>("glass-ui:popover-union");
+--- baseline/src/components/select/SelectContent.vue
++++ final/src/components/select/SelectContent.vue
+@@ -1,12 +1,10 @@
+ <script lang="ts">
+ import type { HTMLAttributes } from "vue";
+-import type { Surface } from "../_shared/axes";
+-import type { FloatingPlacementProps } from "../_shared/floating";
+ import type { PointerDownOutsideEvent } from "../_shared/interaction";
++import type { FloatingPlacementProps } from "../_shared/overlay";
+ 
+ export interface SelectContentProps extends FloatingPlacementProps {
+     class?: HTMLAttributes["class"];
+-    surface?: Surface;
+ }
+ 
+ export interface SelectContentEmits {
+@@ -25,7 +23,7 @@
+ } from "reka-ui";
+ import SelectScrollButton from "./SelectScrollButton.vue";
+ import { cn } from "../_shared/class-names";
+-import { useOptionalDockContext } from "../dock/composables/dockContext";
++import { useDockParticipation } from "../_shared/overlay";
+ 
+ defineOptions({
+     name: "SelectContent",
+@@ -37,7 +35,6 @@
+     sideOffset: 0,
+     align: "start",
+     alignOffset: 0,
+-    surface: "glass",
+ });
+ const emit = defineEmits<SelectContentEmits>();
+ const attrs = useAttrs();
+@@ -58,7 +55,10 @@
+     avoidCollisions: true,
+     collisionPadding: 16,
+ }));
+-const dockContext = useOptionalDockContext();
++/* The stamp comes from the ONE module now, not from a hand-copied attribute
++   pair. The listbox PLATE stays #81's (`[data-slot="select-content"]`,
++   glass/overlay-plate.css) — only the portal seam moves here. */
++const dock = useDockParticipation();
+ </script>
+ 
+ <template>
+@@ -76,10 +76,7 @@
+       correct (one scroll port, never nested).
+     -->
+         <RekaSelectContent
+-            v-bind="rootAttrs"
+-            :data-glass-dock-portal="dockContext?.id ? '' : undefined"
+-            :data-glass-dock-owner="dockContext?.id"
+-            :data-surface="props.surface"
++            v-bind="{ ...rootAttrs, ...dock.portalAttrs.value }"
+             data-reveal="menu"
+             data-slot="select-content"
+             :class="
+--- baseline/src/components/tooltip/TooltipContent.vue
++++ final/src/components/tooltip/TooltipContent.vue
+@@ -4,16 +4,14 @@
+     TooltipContent as RekaTooltipContent,
+     TooltipPortal as RekaTooltipPortal,
+ } from "reka-ui";
+-import type { Surface } from "../_shared/axes";
+-import { cn } from "../_shared/class-names";
+-import type { FloatingPlacementProps } from "../_shared/floating";
+-import { surfaceClass } from "../_shared/surface/resolve";
++import {
++    overlayContentAttrs,
++    useDockParticipation,
++    type FloatingPlacementProps,
++} from "../_shared/overlay";
+ 
+ export interface TooltipContentProps extends FloatingPlacementProps {
+     class?: HTMLAttributes["class"];
+-    surface?: Surface;
+-    /** Override the text announced through the trigger's description relation. */
+-    ariaLabel?: string;
+ }
+ 
+ export interface TooltipContentEmits {
+@@ -28,7 +26,6 @@
+     sideOffset: 4,
+     align: "center",
+     alignOffset: 0,
+-    surface: "glass",
+ });
+ const emit = defineEmits<TooltipContentEmits>();
+ defineSlots<{ default?: () => unknown }>();
+@@ -42,24 +39,40 @@
+     alignOffset: props.alignOffset,
+     avoidCollisions: true,
+ }));
+-const contentClass = computed(() =>
+-    cn(
+-        "z-tooltip overflow-hidden rounded-tooltip border text-popover-foreground glass-reveal",
+-        surfaceClass("floating"),
+-        "[--overlay-pad-inline:--spacing(2)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) text-(length:--tooltip-text)",
+-        props.class,
+-    ),
++
++/* THE HINT PARTICIPATES IN THE DOCK. It emitted no portal stamp at all, so a
++   dock-anchored icon's own tooltip read as "the pointer left the dock" and
++   collapsed the thing the pointer was still pointing at. The hint takes no HOLD
++   — a hint is not a hand and must not pin the dock open — only the stamp, so
++   click-away and pointer-out can tell a dock's own overlay from the page. */
++const dock = useDockParticipation();
++
++/* `z-tooltip` is the per-host rung and stays on the component; everything else
++   the plate is comes from the ONE register. The retired
++   `border text-popover-foreground rounded-tooltip overflow-hidden` utilities
++   were a SECOND boundary author over `.glass-floating`'s rim (the bare `border`
++   resolved to the raw shadcn `--border` ink and painted the 2px black rule the
++   codex stills measured) plus a corner off the dead
++   `--radius-tooltip → --radius-lg → --radius` 0.625rem chain. */
++const contentAttrs = computed(() =>
++    overlayContentAttrs({
++        role: "hint",
++        slot: "tooltip-content",
++        dock: dock.portalAttrs.value,
++        class: ["z-tooltip", props.class],
++    }),
+ );
+ </script>
+ 
+ <template>
+     <RekaTooltipPortal>
++        <!-- NO `aria-label`. The content-side override used to replace the very
++           node the trigger's `aria-describedby` relation reads, so the hint
++           announced text it did not paint. A hint is a DESCRIPTION of its
++           trigger (WCAG 1.4.13): the rendered text is the announcement, and an
++           icon-only trigger labels ITSELF. -->
+         <RekaTooltipContent
+-            v-bind="{ ...placementProps, ...forwardedAttrs }"
+-            :aria-label="ariaLabel"
+-            :data-surface="surface"
+-            data-reveal="tooltip"
+-            :class="contentClass"
++            v-bind="{ ...placementProps, ...forwardedAttrs, ...contentAttrs }"
+             @escape-key-down="emit('escapeKeyDown', $event)"
+             @pointer-down-outside="emit('pointerDownOutside', $event)"
+         >
+--- baseline/src/styles/animations.css
++++ final/src/styles/animations.css
+@@ -160,6 +160,15 @@
+         opacity: 1;
+         filter: blur(0);
+     }
++    /* FADE-LED (canon §7). Opacity reaches zero at 60% of the exit clock while the
++     * geometry runs the full 100%. A surface that shrinks and fades on ONE clock
++     * reads as a thing being crushed; a surface whose light goes first and whose
++     * body finishes travelling into its anchor reads as a thing LEAVING. The two
++     * channels are deliberately out of phase, and this stop is the whole of the
++     * asymmetry — no second clock, no second animation. */
++    60% {
++        opacity: 0;
++    }
+     to {
+         scale: calc(var(--glass-reveal-enter-scale, 0.94) * var(--lq-stretch-x, 1.06))
+             calc(var(--glass-reveal-enter-scale, 0.94) * var(--lq-stretch-y, 0.945));
+--- baseline/src/styles/glass/overlay-plate.css
++++ final/src/styles/glass/overlay-plate.css
+@@ -21,6 +21,191 @@
+    ═══════════════════════════════════════════════════════════════════════════ */
+ 
+ @layer components {
++    /* ── .glass-overlay-plate — THE ONE OVERLAY REGISTER ────────────────────
++       Three surfaces that are one register used to paint through THREE cascade
++       origins: the unlayered `.dropdown-menu-content` block that used to sit at
++       the tail of `_shared/menu/menu.css`, the whole of
++       `components/dropdown-menu/styles.css` pulled in by an SFC `<style src>`
++       (also unlayered), and Tailwind utilities authored on each component. All
++       three outranked the rung they sat on and re-authored background, border,
++       shadow and padding that `.glass-floating` already owns. They are ONE
++       block now, in ONE layer, and what they re-authored is simply gone.
++
++       THE ROLE RIDES `data-reveal`, the axis that already exists — nothing
++       parallel is minted. `overlayContentAttrs()` (_shared/overlay/content.ts)
++       is the sole writer of both the class and the attribute:
++         hint  → `data-reveal="tooltip"` — an annotation: the tight pad, the
++                 smaller corner, no measure of its own.
++         menu  → `data-reveal="menu"`    — an anchored list: the card corner, the
++                 minimum measure, the collision ceiling, its own scroll.
++         panel → `data-reveal="overlay"` — a body: the card corner, a real
++                 measure that yields on a narrow viewport.
++
++       ONE BOUNDARY AUTHORITY. THE REGISTER — `.glass-overlay-plate` and its
++       three roles — declares no `border` and no `box-shadow`: the rung is the
++       only author of the plate's edge. The tooltip's bare `border` utility and
++       the menu's `border: 1px solid var(--border)` (raw shadcn ink, under the
++       abrogation edict) were the second and third authors, and they painted the
++       2px black rule and the double shadow the codex stills measured. Scoped to
++       the register on purpose, because the FILE declares both further down and
++       neither is a plate boundary: `.dropdown-menu__trigger:focus-visible`
++       paints the focus ring's `box-shadow`, and #81's `[data-slot=
++       "select-content"]` block carries its own `--ink-edge` border plus the
++       cartoon under-stamp.
++
++       RADIUS THROUGH THE RELAY, not over it. The rung paints
++       `border-radius: var(--radius-ctx)`, so the register sets `--radius-ctx`
++       rather than a second `border-radius` — one declaration paints, and the
++       concentric relay (Law 1) still publishes the resolved corner + inset to
++       nested cards instead of being bypassed. */
++    .glass-overlay-plate {
++        --radius-ctx: var(--radius-card);
++        --radius-inset: var(--overlay-pad);
++        padding: var(--overlay-pad);
++        color: var(--popover-foreground);
++        overflow: hidden;
++    }
++
++    /* The MENU role — an anchored list. `--overlay-max-block` is the family's
++       comfortable ceiling; reka's measured `--reka-popper-available-height`
++       tightens it on a short viewport, and when reka has not measured yet the
++       ceiling stands alone. */
++    .glass-overlay-plate[data-reveal="menu"] {
++        min-inline-size: var(--overlay-min-width);
++        max-block-size: min(
++            var(--overlay-max-block),
++            var(--reka-popper-available-height, var(--overlay-max-block))
++        );
++        overflow-y: auto;
++    }
++
++    /* The PANEL role — a body with a real measure. The retired `w-72` was a flat
++       18rem that overflowed a 320px viewport; the measure now yields to the
++       viewport minus its own two pads, so the panel is never wider than the room
++       it has. */
++    .glass-overlay-plate[data-reveal="overlay"] {
++        inline-size: min(21rem, calc(100dvw - 2 * var(--overlay-pad)));
++    }
++
++    /* The HINT role — an annotation. Its pad is the register's
++       `--overlay-pad-hint`, declared ONCE at the token root; the three inline
++       `[--overlay-pad-inline:…]` mints and every √φ block multiplier that rode
++       them are gone (block = inline per role — the ~20px popover pad and the ~5px
++       hint pad they produced were sub-pixel theatre). The corner is
++       `--radius-panel`; the `--radius-tooltip → --radius-lg → --radius`
++       0.625rem shadcn chain died with it. */
++    .glass-overlay-plate[data-reveal="tooltip"] {
++        --radius-ctx: var(--radius-panel);
++        --radius-inset: var(--overlay-pad-hint);
++        padding: var(--overlay-pad-hint);
++        font-size: var(--tooltip-text);
++    }
++
++    /* ── The menu family's INTERIOR ─────────────────────────────────────────
++       Folded verbatim from `components/dropdown-menu/styles.css`, which an SFC
++       `<style src>` used to inject UNLAYERED. Only the plate-material rows were
++       dropped on the way in (border, border-radius, colour, z-index, the
++       collision bound, the `min-width: 8rem` literal) — every one of them is
++       either the rung's or the register's above. The row RECIPES are unchanged:
++       they never fought the rung, they were merely in the wrong origin.
++
++       The class spellings keep the `dropdown` namespace until C-10's batched
++       export cut renames the family (`./menu` mints there, with the four
++       consumer MIGRATION tables); this row's job was the ORIGIN, and the origin
++       is now one. */
++    .dropdown-menu__trigger:focus-visible {
++        /* The trigger's KEYBOARD FOCUS INDICATOR (A11Y · G-FOCUS-VISIBLE). The
++           only focus statement this family carried was a bare `outline: none` —
++           an ACTIVE suppression of the UA ring with nothing painted in its
++           place, on a component that renders a bare `<button>`: 2.4.7 by
++           commission, not omission. `:focus-visible`, never `:focus`, so a
++           pointer-opened menu never paints the keyboard ring; `outline: none`
++           survives only paired with the ring that replaces it, exactly as
++           `.focus-ring` pairs them, and `utilities/a11y-overrides.css` restores
++           a real outline for engines that drop box-shadows. */
++        outline: none;
++        border-radius: var(--radius-control);
++        box-shadow: var(--focus-ring-shadow);
++    }
++
++    .dropdown-menu__item,
++    .dropdown-menu__sub-trigger {
++        position: relative;
++        display: flex;
++        width: 100%;
++        align-items: center;
++        padding-block: 0.375rem;
++        padding-inline: 0.5rem;
++        cursor: default;
++        outline: none;
++        color: inherit;
++        font-size: var(--dropdown-text);
++        user-select: none;
++    }
++
++    .dropdown-menu__item[data-inset],
++    .dropdown-menu__item[data-indicator="wide"] {
++        padding-inline-start: 2rem;
++    }
++
++    .dropdown-menu__item[data-indicator="start"] {
++        padding-inline-start: 1.75rem;
++    }
++
++    .dropdown-menu__item[data-disabled],
++    .dropdown-menu__sub-trigger[data-disabled] {
++        pointer-events: none;
++        cursor: not-allowed;
++        opacity: var(--opacity-disabled);
++    }
++
++    .dropdown-menu__indicator {
++        position: absolute;
++        inset-inline-start: 0.5rem;
++        display: inline-flex;
++        width: 0.875rem;
++        height: 0.875rem;
++        align-items: center;
++        justify-content: center;
++    }
++
++    .dropdown-menu__indicator > svg {
++        width: 1rem;
++        height: 1rem;
++    }
++
++    .dropdown-menu__radio-dot {
++        display: inline-block;
++        width: 0.5rem;
++        height: 0.5rem;
++        border-radius: var(--radius-pill);
++        background: currentColor;
++    }
++
++    .dropdown-menu__label {
++        padding: 0.375rem 0.5rem;
++        color: var(--muted-foreground);
++        font-size: var(--dropdown-text-secondary);
++        font-weight: 600;
++    }
++
++    .dropdown-menu__label[data-inset] {
++        padding-inline-start: 2rem;
++    }
++
++    .dropdown-menu__shortcut {
++        margin-inline-start: auto;
++        font-size: var(--dropdown-text-secondary);
++        letter-spacing: var(--type-tracking-caps);
++        opacity: 0.6;
++    }
++
++    .dropdown-menu__sub-chevron {
++        width: 1rem;
++        height: 1rem;
++        margin-inline-start: auto;
++    }
++
+     /* ── The listbox plate ──────────────────────────────────────────────────
+        The overlay rung's veil with the capsule's warm floor over it — two flat
+        layers, both reading the ONE recipe. There is no adaptive-tint layer and no
+--- baseline/src/styles/theme/bridges.css
++++ final/src/styles/theme/bridges.css
+@@ -262,7 +262,6 @@
+     --z-index-dock: var(--z-dock);
+     --z-index-panel: var(--z-panel);
+     --z-index-overlay: var(--z-overlay);
+-    --z-index-hovercard: var(--z-hovercard);
+     --z-index-tooltip: var(--z-tooltip);
+     --z-index-popover: var(--z-popover);
+     --z-index-modal: var(--z-modal);
+--- baseline/src/styles/theme/radius.css
++++ final/src/styles/theme/radius.css
+@@ -91,7 +91,7 @@
+        shadcn's literal default, carried verbatim; it is the CONTROL rung — a box you
+        type in, press, or read as an annotation, ≈0.25 × h at h=40. Five names
+        collapse onto it (`--radius-lg`, `--radius-media`, `--radius-button`,
+-       `--radius-tooltip` via `-lg`, and the root itself), which is why the value is
++       and the root itself), which is why the value is
+        declared HERE exactly once and every one of them is a `var()` alias — retuning
+        the control corner is a one-line act. NOTE the shadcn inheritance in the NAME,
+        not the value: `--radius-lg` is 10px here, where Tailwind's own `lg` rung is
+@@ -171,7 +171,14 @@
+     /* The big-dock card shell's default (comfortable-density) radius.
+        The density-scaled --dock-card-radius (dock.css) resolves through this. */
+     --radius-dock-card: var(--radius-3xl);
+-    --radius-tooltip: var(--radius-lg);
++    /* `--radius-tooltip` IS DELETED — clean break, no alias (#89 W-OVERLAY,
++       D-14). It aliased `--radius-lg` → `--radius`, the raw 0.625rem shadcn
++       root, so the family carried THREE corners: menu/panel 16, plate 12, hint
++       10. A hint is a small plate, not a control: its corner is
++       `--radius-panel`, declared once by the overlay register
++       (glass/overlay-plate.css), and the third value is gone with the token
++       that carried it. Its only reader was the `rounded-tooltip` utility on
++       `TooltipContent`, which the register replaced. */
+ 
+     /* ── The concentric-radius RELAY (Law 1). ──────────────
+        The Apple `ConcentricRectangle` grammar (iOS 26) as a plain INHERITED
+--- baseline/src/styles/tokens/offsets.css
++++ final/src/styles/tokens/offsets.css
+@@ -45,18 +45,15 @@
+     /* Canonical popover width (Combobox list + anchor). Lifts the
+        `w-[200px]` arbitrary-value wrap to the `w-popover` @theme utility. */
+     --popover-width: 200px;
+-    /* The ONE panel inner-padding rung (the consumer-verified "the
+-       popover/dropdown content reads TIGHT" finding). The floating-panel +
+-       DropdownMenuContent recipes read THIS token for their inner pad instead of
+-       a hand-set `p-1`/literal, so a consumer retunes every teleported
+-       menu/panel surface from one override. The comfortable default is `0.375rem`
+-       (a half-rung over a 0.25rem tight floor — comfortable both modes
+-       without over-padding a dense menu list). The dead
+-       `--panel-padding-roomy` (1rem) is DELETED here (clean break, no alias): it
+-       had ZERO `var(--panel-padding-roomy)` consumers (the prose-popover register
+-       it claimed to back never read it — PopoverContent paints `p-4` directly), so
+-       it was an orphan declaration the golden-padding cut prunes. */
+-    --panel-padding:       0.375rem;
++    /* `--panel-padding` (0.375rem = 6px) IS DELETED — clean break, no alias
++       (#89 W-OVERLAY). It claimed to be "the ONE panel inner-padding rung" while
++       `--overlay-pad` below claimed the same job at a different number, and 6 is
++       not on the 4·8·12·20·32 space series the rest of the family sits on. Its
++       last two readers went with the same cut: the command list took
++       `--overlay-pad` and the unlayered `.dropdown-menu-content` block that read
++       it is gone. One plate pad, and it is `--overlay-pad`.
++       (Its own dead sibling `--panel-padding-roomy` had already been pruned on
++       the same ground — zero `var()` consumers.) */
+ 
+     /* The token-BACKING of the raw floating-overlay
+        literals (the token-beats-prop seam). Each defaults to the shipped
+@@ -87,6 +84,12 @@
+        different measure (it is what the option radius is derived from: plate 16
+        minus inset 4 = 12) and is stated at its own element. */
+     --overlay-pad: 12px;
++    /* THE HINT'S PAD, declared ONCE. A hint is an annotation, not a body: it
++       takes the tight rung, and it takes it from the register rather than from
++       an inline `[--overlay-pad-inline:--spacing(2)]` mint on the component. 8 is
++       on the same space series as the 12 above; the two are the only two plate
++       pads in the family. */
++    --overlay-pad-hint: 8px;
+     /* The tooltip type rung — the golden quiet caption register (√φ ladder), the
+        token-backing of the bare `text-sm` on TooltipContent (the overlay share of
+        class 3). Defaults to `--type-caption` so the compact tooltip chip reads the
+--- baseline/src/styles/tokens/scheme-motion.css
++++ final/src/styles/tokens/scheme-motion.css
+@@ -215,7 +215,10 @@
+     --z-dock: 40;
+     --z-panel: 45;
+     --z-overlay: 50;
+-    --z-hovercard: 120;
++    /* `--z-hovercard` (120) IS DELETED — zero consumers, whole-census (#89
++       W-OVERLAY, D-16). The hover arm of the popover union has always painted
++       `z-popover`, because a hover preview IS a popover here (one sealed
++       component, two reka roots); a rung nobody stands on is not a rung. */
+     --z-tooltip: 120;
+     --z-popover: 130;
+     --z-modal: 140;
+--- baseline/src/styles/utilities/base.css
++++ final/src/styles/utilities/base.css
+@@ -74,7 +74,19 @@
+     .popover-content {
+         border-radius: var(--radius-panel);
+         color: var(--popover-foreground);
++        /* `outline: none` IS GONE (#89 W-OVERLAY). It was an unconditional
++           suppression on a container reka programmatically FOCUSES on open — so a
++           keyboard user landed on an unmarked plate with nothing to show where
++           they were. The plate now takes the house focus ring, `:focus-visible`
++           only (a pointer-opened panel must not paint the keyboard ring), reading
++           the same `--focus-ring-shadow` register every other indicator reads.
++           `outline: none` survives ONLY paired with the ring that replaces it,
++           exactly as `.focus-ring` pairs them; `utilities/a11y-overrides.css`
++           restores a real outline for engines that drop box-shadows. */
++    }
++    .popover-content:focus-visible {
+         outline: none;
++        box-shadow: var(--focus-ring-shadow);
+     }
+ 
+     /* ── Scrollbar ── */
+--- baseline/tests/components/a11y/focus-visible.test.ts
++++ final/tests/components/a11y/focus-visible.test.ts
+@@ -26,17 +26,22 @@
+ 
+ const read = (path: string): string => readFileSync(path, "utf8");
+ 
+-const DROPDOWN_CSS = "src/components/dropdown-menu/styles.css";
++/* The menu family's rules moved WHOLE into the layered overlay register at
++   BK #89 W-OVERLAY — `components/dropdown-menu/styles.css` was injected by an
++   SFC `<style src>` and so entered the cascade UNLAYERED, outranking the rung
++   it sat on. The selectors are unchanged; only the origin moved, which is why
++   this gate re-points rather than relaxing. */
++const MENU_CSS = "src/styles/glass/overlay-plate.css";
+ const SLIDER = "src/components/slider/styles.css";
+ const FORCED_COLORS = "src/styles/utilities/a11y-overrides.css";
+ 
+ describe("G-FOCUS-VISIBLE — every library-rendered trigger shows keyboard focus", () => {
+     it("DropdownMenuTrigger carries an inherent focus indicator", () => {
+-        const css = read(DROPDOWN_CSS);
++        const css = read(MENU_CSS);
+         const rule = css.match(
+             /\.dropdown-menu__trigger:focus-visible\s*\{([\s\S]*?)\}/,
+         );
+-        expect(rule, `${DROPDOWN_CSS} declares .dropdown-menu__trigger:focus-visible`)
++        expect(rule, `${MENU_CSS} declares .dropdown-menu__trigger:focus-visible`)
+             .not.toBeNull();
+         // The ONE house focus register, not a second ring minted beside it.
+         expect(rule![1]).toMatch(/box-shadow:\s*var\(--focus-ring-shadow\)/);
+@@ -47,7 +52,7 @@
+     });
+ 
+     it("it is :focus-visible, never bare :focus — a pointer-opened menu paints no ring", () => {
+-        const css = read(DROPDOWN_CSS);
++        const css = read(MENU_CSS);
+         expect(css).not.toMatch(/\.dropdown-menu__trigger:focus\b(?!-visible)/);
+     });
+ 
+@@ -57,7 +62,7 @@
+         // ring on EVERY register while this file paints one on only one of them —
+         // which is how a component ends up with less focus than a bare <button>.
+         // `outline: none` is allowed only where a ring is painted in its place.
+-        const live = read(DROPDOWN_CSS).replace(/\/\*[\s\S]*?\*\//g, "");
++        const live = read(MENU_CSS).replace(/\/\*[\s\S]*?\*\//g, "");
+         expect(live).not.toMatch(/\.dropdown-menu__trigger\s*\{[^}]*outline:\s*none/);
+     });
+ 
+--- baseline/tests/components/popover.contract.test.ts
++++ final/tests/components/popover.contract.test.ts
+@@ -95,7 +95,12 @@
+         expect(wrapper.get('[role="group"]').attributes("aria-label")).toBe(
+             "Preview details",
+         );
+-        expect(wrapper.getComponent(HoverCardPortal).props("disabled")).toBe(true);
++        // `portal: false` renders NO portal component. The two arms used to disagree:
++        // the hover arm mounted a `:disabled` HoverCardPortal, the click arm dropped
++        // the wrapper. Reka's Teleport gates its whole subtree on `useMounted()`, so a
++        // "disabled" portal still withholds content until mount — the drop is the arm
++        // that was right, and #89 unified onto it.
++        expect(wrapper.findComponent(HoverCardPortal).exists()).toBe(false);
+     });
+ 
+     it("preserves click placement, dismissal, focus return, and preventable autofocus", async () => {
+@@ -132,6 +137,12 @@
+         const rekaContent = wrapper.getComponent(RekaPopoverContent);
+         expect((wrapper.vm as unknown as { open: boolean }).open).toBe(true);
+         expect(trigger.attributes("aria-expanded")).toBe("true");
++        // BK #89 W-OVERLAY: `modal` is the ONE a11y axis and it defaults FALSE, so a
++        // plain popover announces NO modality. It used to be impossible to say either
++        // way — `aria-modal` was stripped off `$attrs` on the way past while `modal`
++        // never reached the root at all, so the attribute and the behaviour could not
++        // have agreed even by accident.
++        expect(content.attributes("aria-modal")).toBeUndefined();
+         expect(content.attributes("aria-labelledby")).toBe(trigger.attributes("id"));
+         expect(rekaContent.props()).toMatchObject({ align: "start", side: "top" });
+         expect(openAutoFocus).toHaveBeenCalledOnce();
+@@ -148,14 +159,18 @@
+         wrapper.unmount();
+     });
+ 
+-    // BK #19 W-SHIM-PURGE. The prior contract ran a 38-entry `RETIRED_FLOATING_ATTRS`
+-    // deny-list over `$attrs` on six floating surfaces, so a consumer writing
++    // BK #19 W-SHIM-PURGE, extended at BK #89 W-OVERLAY. The prior contract ran a
++    // 38-entry deny-list over `$attrs` on six floating surfaces, so a consumer writing
+     // `as-child`, `sticky`, or `collision-padding` got NO error, NO warning, and NO
+     // effect — a silent migration shim. The deny-list is GONE: `$attrs` forwards
+-    // untouched, so a retired prop either lands visibly on reka or errors there. What
+-    // the component still owns are the attrs it consumes ITSELF (role/aria-modal), and
+-    // those are stripped at the destructure, not by a list of names to swallow.
+-    it("forwards positioning props to reka instead of swallowing them, and still owns its own attrs", () => {
++    // untouched, so a retired prop either lands visibly on reka or errors there.
++    //
++    // The LAST piece of that swallowing was a `role`/`aria-modal` destructure inside
++    // PopoverContent, and #89 deleted it too: those two attributes are now DERIVED
++    // from the `modal` prop rather than thrown away, so `modal` reaches reka (which
++    // is what actually enforces the trap) and the content states the semantics that
++    // match. Nothing filters `$attrs` on this component any more.
++    it("forwards positioning props to reka instead of swallowing them, and derives its own a11y", () => {
+         setCoarsePointer(false);
+         const Host = defineComponent({
+             components: { Popover, PopoverContent, PopoverTrigger },
+@@ -184,14 +199,17 @@
+         const trigger = wrapper.get('[aria-haspopup="dialog"]');
+         const content = wrapper.getComponent(RekaPopoverContent);
+ 
+-        // The component's OWN props still resolve (these are declared props, never
+-        // pass-through attrs).
+-        expect(root.props("modal")).toBe(false);
++        // `modal` is a DECLARED prop on `<Popover>` now, so it reaches reka's root —
++        // the bite is that it used to resolve `false` here no matter what the caller
++        // wrote, which is precisely why a modal popover was unreachable.
++        expect(root.props("modal")).toBe(true);
+         expect(trigger.element.tagName).toBe("BUTTON");
+         expect(trigger.attributes("type")).toBe("button");
+-        // `role`/`aria-modal` are consumed by PopoverContent itself — its own dialog
+-        // semantics win over a caller override.
+-        expect(wrapper.get('[role="dialog"]').attributes("aria-modal")).toBeUndefined();
++        // …and the content states the modality the root now enforces. A caller's raw
++        // `aria-modal` attr no longer decides it either way: the axis does, so the
++        // announcement and the behaviour cannot disagree.
++        const plate = wrapper.get('[role="dialog"]');
++        expect(plate.attributes("aria-modal")).toBe("true");
+         // …and the formerly-denied positioning props now REACH reka. The bite: under
+         // the deny-list both of these read `undefined` here while the caller believed
+         // they had taken effect.
+--- baseline/tests/gates/overfit-structure.test.ts
++++ final/tests/gates/overfit-structure.test.ts
+@@ -418,3 +418,84 @@
+         expect(consumers.length).toBeGreaterThanOrEqual(2);
+     });
+ });
++
++// ── (D) OVERLAY-SEAM — BK #89 W-OVERLAY's arms of the SAME `G-OVERFIT` seat ─────────
++//
++// Two contracts that were each re-implemented once per consumer until this row, and
++// whose whole defect class is duplication rather than absence:
++//
++//   • PORTAL-ONE. A dock-owned overlay marks its TELEPORTED root with
++//     `data-glass-dock-portal` + `data-glass-dock-owner`, and `isTeleportedTarget()`
++//     reads the pair to keep the dock's click-away scoped to its own surfaces. Ten hand
++//     stamps across five sites in three files wrote it — and the tooltip, the submenu
++//     and the command list wrote NOTHING, so a dock-anchored hint collapsed the dock the
++//     instant the pointer moved onto it. One writer, or the reader is guessing.
++//
++//   • ONE-LATCH. The dock's keep-open count is reference-counted, but the TOKEN — take
++//     exactly one, give it back exactly once, including on teardown — was hand-rolled
++//     four times. A leaked token is a dock that never idle-collapses again for the life
++//     of the page, and four copies is four chances to leak it.
++describe("gate:G-OVERFIT — OVERLAY-SEAM arm (BK #89 W-OVERLAY)", () => {
++    const PORTAL_ATTR = "data-glass-dock-portal";
++    const SEAM = "src/components/_shared/overlay/participation.ts";
++
++    it("PORTAL-ONE — the dock-portal stamp has exactly one writer", () => {
++        // A WRITER binds the attribute (`:data-glass-dock-portal="…"`) or spells it in a
++        // returned object. Reading it in a selector is not writing it, so the predicate's
++        // own `closest()` is out of scope by shape, not by an allow-list.
++        const writers = srcFiles
++            .map((f) => relative(REPO_ROOT, f).replace(/\\/g, "/"))
++            .filter((rel) => {
++                const src = read(join(REPO_ROOT, rel));
++                return (
++                    new RegExp(`:${PORTAL_ATTR}\\s*=`).test(src) ||
++                    new RegExp(`["']${PORTAL_ATTR}["']\\s*:`).test(src)
++                );
++            });
++        expect(
++            writers,
++            `the dock-portal stamp is written from ${writers.length} module(s). It is ONE contract with ONE ` +
++                `reader (isTeleportedTarget); every extra writer is a surface that can silently omit it — which ` +
++                `is exactly how the tooltip, the submenu and the command list ended up stampless:\n  ${writers.join("\n  ")}`,
++        ).toEqual([SEAM]);
++    });
++
++    it("PORTAL-ONE — every portalled overlay root actually takes the seam", () => {
++        // The bite the census above cannot see: a component that stamps nothing at all
++        // passes a "one writer" count for free. These four are the portalled roots that
++        // can sit under a dock; each must reach the seam rather than re-spell it.
++        for (const rel of [
++            "src/components/tooltip/TooltipContent.vue",
++            "src/components/dropdown-menu/DropdownMenuSubContent.vue",
++            "src/components/command/CommandList.vue",
++            "src/components/select/SelectContent.vue",
++        ]) {
++            expect(read(join(REPO_ROOT, rel)), `${rel} takes the portal seam`).toMatch(
++                /useDockParticipation\(/,
++            );
++        }
++    });
++
++    it("ONE-LATCH — exactly one keep-open token implementation", () => {
++        // The token is the guarded acquire/release PAIR plus its teardown. Its shape on
++        // disk is a call to the dock context's `keepOpen`; anything else calling it is a
++        // second implementation of the same six lines.
++        const callers = srcFiles
++            .map((f) => relative(REPO_ROOT, f).replace(/\\/g, "/"))
++            .filter((rel) => /\.keepOpen\(/.test(read(join(REPO_ROOT, rel))));
++        expect(
++            callers,
++            `${callers.length} module(s) acquire a dock keep-open token directly. The ref-count is the dock's; the ` +
++                `TOKEN discipline is ONE composable's, and a hand-rolled copy is a leak waiting for the teardown ` +
++                `it forgot:\n  ${callers.join("\n  ")}`,
++        ).toEqual([SEAM]);
++    });
++
++    it("self-test bites — each overlay detector matches its own shape", () => {
++        // A regex that quietly stopped matching would green all three for free.
++        expect(new RegExp(`:${PORTAL_ATTR}\\s*=`).test(`:${PORTAL_ATTR}="x"`)).toBe(true);
++        expect(new RegExp(`:${PORTAL_ATTR}\\s*=`).test(`[${PORTAL_ATTR}]`)).toBe(false);
++        expect(/\.keepOpen\(/.test("dock?.keepOpen('grasp')")).toBe(true);
++        expect(/\.keepOpen\(/.test("// keepOpen is the ref-count")).toBe(false);
++    });
++});
+--- baseline/tests/styles/radius-role-canon.test.ts
++++ final/tests/styles/radius-role-canon.test.ts
+@@ -77,7 +77,6 @@
+     "--radius-badge": "semantic-role",
+     "--radius-dock": "semantic-role",
+     "--radius-dock-card": "semantic-role",
+-    "--radius-tooltip": "semantic-role",
+     // context-relay — the concentric-nesting channel (law 1)
+     "--radius-ctx": "context-relay",
+     "--radius-inset": "context-relay",
+@@ -298,7 +297,6 @@
+             "--radius-dock",
+             "--radius-tab",
+             "--radius-dock-card",
+-            "--radius-tooltip",
+         ]) {
+             expect(hasToken(live, t)).toBe(true);
+         }
+@@ -371,7 +369,6 @@
+     "--radius-lg": "control",
+     "--radius-media": "control",
+     "--radius-button": "control",
+-    "--radius-tooltip": "control",
+     "--radius-2xl": "card",
+     "--radius-card": "card",
+     "--radius-dialog": "card",
+
+# ── SECTION B · DELETED (whole-file removals, bodies not reproduced) ─────────
+#
+#   DELETED    15 lines  src/components/_shared/floating.ts
+#   DELETED    18 lines  src/components/dock/composables/isTeleportedTarget.ts
+#   DELETED   127 lines  src/components/dropdown-menu/styles.css
+
+# ── SECTION C · CREATED (untracked at this HEAD; bodies not reproduced) ──────
+#
+#   CREATED    66 lines  src/components/_shared/overlay/content.ts
+#   CREATED    23 lines  src/components/_shared/overlay/index.ts
+#   CREATED    23 lines  src/components/_shared/overlay/isTeleportedTarget.ts
+#   CREATED   131 lines  src/components/_shared/overlay/participation.ts
+#   CREATED    26 lines  src/components/_shared/overlay/placement.ts
+

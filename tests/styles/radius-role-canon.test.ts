@@ -77,7 +77,6 @@ const RADIUS_ROLE_INVENTORY: Readonly<Record<string, RadiusClass>> = Object.free
     "--radius-badge": "semantic-role",
     "--radius-dock": "semantic-role",
     "--radius-dock-card": "semantic-role",
-    "--radius-tooltip": "semantic-role",
     // context-relay — the concentric-nesting channel (law 1)
     "--radius-ctx": "context-relay",
     "--radius-inset": "context-relay",
@@ -298,7 +297,6 @@ describe("4. canon truth — the executable inventory and the DESIGN.md human ta
             "--radius-dock",
             "--radius-tab",
             "--radius-dock-card",
-            "--radius-tooltip",
         ]) {
             expect(hasToken(live, t)).toBe(true);
         }
@@ -371,7 +369,6 @@ const ROLE_OF: Readonly<Record<string, RadiusRole>> = Object.freeze({
     "--radius-lg": "control",
     "--radius-media": "control",
     "--radius-button": "control",
-    "--radius-tooltip": "control",
     "--radius-2xl": "card",
     "--radius-card": "card",
     "--radius-dialog": "card",

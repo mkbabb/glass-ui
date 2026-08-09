@@ -95,7 +95,12 @@ describe("Popover trigger contract", () => {
         expect(wrapper.get('[role="group"]').attributes("aria-label")).toBe(
             "Preview details",
         );
-        expect(wrapper.getComponent(HoverCardPortal).props("disabled")).toBe(true);
+        // `portal: false` renders NO portal component. The two arms used to disagree:
+        // the hover arm mounted a `:disabled` HoverCardPortal, the click arm dropped
+        // the wrapper. Reka's Teleport gates its whole subtree on `useMounted()`, so a
+        // "disabled" portal still withholds content until mount — the drop is the arm
+        // that was right, and #89 unified onto it.
+        expect(wrapper.findComponent(HoverCardPortal).exists()).toBe(false);
     });
 
     it("preserves click placement, dismissal, focus return, and preventable autofocus", async () => {
@@ -132,6 +137,12 @@ describe("Popover trigger contract", () => {
         const rekaContent = wrapper.getComponent(RekaPopoverContent);
         expect((wrapper.vm as unknown as { open: boolean }).open).toBe(true);
         expect(trigger.attributes("aria-expanded")).toBe("true");
+        // BK #89 W-OVERLAY: `modal` is the ONE a11y axis and it defaults FALSE, so a
+        // plain popover announces NO modality. It used to be impossible to say either
+        // way — `aria-modal` was stripped off `$attrs` on the way past while `modal`
+        // never reached the root at all, so the attribute and the behaviour could not
+        // have agreed even by accident.
+        expect(content.attributes("aria-modal")).toBeUndefined();
         expect(content.attributes("aria-labelledby")).toBe(trigger.attributes("id"));
         expect(rekaContent.props()).toMatchObject({ align: "start", side: "top" });
         expect(openAutoFocus).toHaveBeenCalledOnce();
@@ -148,14 +159,18 @@ describe("Popover trigger contract", () => {
         wrapper.unmount();
     });
 
-    // BK #19 W-SHIM-PURGE. The prior contract ran a 38-entry `RETIRED_FLOATING_ATTRS`
-    // deny-list over `$attrs` on six floating surfaces, so a consumer writing
+    // BK #19 W-SHIM-PURGE, extended at BK #89 W-OVERLAY. The prior contract ran a
+    // 38-entry deny-list over `$attrs` on six floating surfaces, so a consumer writing
     // `as-child`, `sticky`, or `collision-padding` got NO error, NO warning, and NO
     // effect — a silent migration shim. The deny-list is GONE: `$attrs` forwards
-    // untouched, so a retired prop either lands visibly on reka or errors there. What
-    // the component still owns are the attrs it consumes ITSELF (role/aria-modal), and
-    // those are stripped at the destructure, not by a list of names to swallow.
-    it("forwards positioning props to reka instead of swallowing them, and still owns its own attrs", () => {
+    // untouched, so a retired prop either lands visibly on reka or errors there.
+    //
+    // The LAST piece of that swallowing was a `role`/`aria-modal` destructure inside
+    // PopoverContent, and #89 deleted it too: those two attributes are now DERIVED
+    // from the `modal` prop rather than thrown away, so `modal` reaches reka (which
+    // is what actually enforces the trap) and the content states the semantics that
+    // match. Nothing filters `$attrs` on this component any more.
+    it("forwards positioning props to reka instead of swallowing them, and derives its own a11y", () => {
         setCoarsePointer(false);
         const Host = defineComponent({
             components: { Popover, PopoverContent, PopoverTrigger },
@@ -184,14 +199,17 @@ describe("Popover trigger contract", () => {
         const trigger = wrapper.get('[aria-haspopup="dialog"]');
         const content = wrapper.getComponent(RekaPopoverContent);
 
-        // The component's OWN props still resolve (these are declared props, never
-        // pass-through attrs).
-        expect(root.props("modal")).toBe(false);
+        // `modal` is a DECLARED prop on `<Popover>` now, so it reaches reka's root —
+        // the bite is that it used to resolve `false` here no matter what the caller
+        // wrote, which is precisely why a modal popover was unreachable.
+        expect(root.props("modal")).toBe(true);
         expect(trigger.element.tagName).toBe("BUTTON");
         expect(trigger.attributes("type")).toBe("button");
-        // `role`/`aria-modal` are consumed by PopoverContent itself — its own dialog
-        // semantics win over a caller override.
-        expect(wrapper.get('[role="dialog"]').attributes("aria-modal")).toBeUndefined();
+        // …and the content states the modality the root now enforces. A caller's raw
+        // `aria-modal` attr no longer decides it either way: the axis does, so the
+        // announcement and the behaviour cannot disagree.
+        const plate = wrapper.get('[role="dialog"]');
+        expect(plate.attributes("aria-modal")).toBe("true");
         // …and the formerly-denied positioning props now REACH reka. The bite: under
         // the deny-list both of these read `undefined` here while the caller believed
         // they had taken effect.

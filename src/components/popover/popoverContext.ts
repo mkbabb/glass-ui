@@ -22,6 +22,16 @@ interface PopoverUnionContext {
      * to the tap-toggle PopoverRoot.
      */
     usesHoverRoot: ComputedRef<boolean>;
+    /**
+     * THE ONE A11Y AXIS. `modal` is the single fact a consumer states, and
+     * `role` / `aria-modal` / focus-trapping / outside-pointer-events all DERIVE
+     * from it — the content cannot know it from markup, so the root publishes it
+     * here beside the root flag it already publishes.
+     *
+     * `false` (the default) → a non-modal `group` that never traps focus.
+     * `true` → a `dialog` with `aria-modal`, the page inert behind it.
+     */
+    modal: ComputedRef<boolean>;
 }
 
 const ctx = createOptionalContext<PopoverUnionContext>("glass-ui:popover-union");

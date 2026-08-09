@@ -1,5 +1,6 @@
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { onBeforeUnmount, onMounted } from "vue";
 import type { Ref } from "vue";
+import { useHoldToken } from "../../_shared/overlay";
 import { useOptionalDockContext } from "./dockContext";
 
 /**
@@ -87,25 +88,24 @@ export function useDockHold(
 
     // ONE acquire flag — the single source of truth for whether THIS host holds a
     // token. The native pointer + touch listeners drive the same flag, so a
-    // pointer-down then a stray touch (or vice versa) cannot double-acquire. It is
-    // a `ref` because it IS the host's grasp edge, returned to the consumer: the
-    // dock token is a side effect of the hand, not its definition, so the flag
-    // flips with no dock in scope.
-    const held = ref(false);
+    // pointer-down then a stray touch (or vice versa) cannot double-acquire. The
+    // flag IS the host's grasp edge, returned to the consumer: the dock token is a
+    // side effect of the hand, not its definition, so it flips with no dock in
+    // scope.
+    // A pointer hold is a GRASP: it takes the posture count (no idle-collapse
+    // mid-gesture) and the grasp count (the edge the material answers). The token
+    // DISCIPLINE — acquire once, release once, release on teardown — is
+    // `_shared/overlay`'s, shared with the other three holders; what stood here was
+    // one of four hand-rolled copies of it.
+    const token = useHoldToken(() => dock, "grasp");
+    const held = token.isHeld;
 
     function acquire(): void {
-        if (!armed() || held.value) return;
-        held.value = true;
-        // A pointer hold is a GRASP: it takes the posture count (no idle-collapse
-        // mid-gesture) and the grasp count (the edge the material answers).
-        dock?.keepOpen("grasp");
+        if (!armed()) return;
+        token.acquire();
     }
 
-    function release(): void {
-        if (!held.value) return;
-        held.value = false;
-        dock?.release("grasp");
-    }
+    const release = token.release;
 
     // Window-scoped release: reka retargets the captured pointer's up/cancel to
     // the captured element, which bubbles to `window` — so a release wherever the

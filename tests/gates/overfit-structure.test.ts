@@ -416,3 +416,84 @@ describe("gate:G-OVERFIT — ONE-SELECTION arm (one selection engine, no forks)"
         expect(consumers.length).toBeGreaterThanOrEqual(2);
     });
 });
+
+// ── (D) OVERLAY-SEAM — BK #89 W-OVERLAY's arms of the SAME `G-OVERFIT` seat ─────────
+//
+// Two contracts that were each re-implemented once per consumer until this row, and
+// whose whole defect class is duplication rather than absence:
+//
+//   • PORTAL-ONE. A dock-owned overlay marks its TELEPORTED root with
+//     `data-glass-dock-portal` + `data-glass-dock-owner`, and `isTeleportedTarget()`
+//     reads the pair to keep the dock's click-away scoped to its own surfaces. Ten hand
+//     stamps across five sites in three files wrote it — and the tooltip, the submenu
+//     and the command list wrote NOTHING, so a dock-anchored hint collapsed the dock the
+//     instant the pointer moved onto it. One writer, or the reader is guessing.
+//
+//   • ONE-LATCH. The dock's keep-open count is reference-counted, but the TOKEN — take
+//     exactly one, give it back exactly once, including on teardown — was hand-rolled
+//     four times. A leaked token is a dock that never idle-collapses again for the life
+//     of the page, and four copies is four chances to leak it.
+describe("gate:G-OVERFIT — OVERLAY-SEAM arm (BK #89 W-OVERLAY)", () => {
+    const PORTAL_ATTR = "data-glass-dock-portal";
+    const SEAM = "src/components/_shared/overlay/participation.ts";
+
+    it("PORTAL-ONE — the dock-portal stamp has exactly one writer", () => {
+        // A WRITER binds the attribute (`:data-glass-dock-portal="…"`) or spells it in a
+        // returned object. Reading it in a selector is not writing it, so the predicate's
+        // own `closest()` is out of scope by shape, not by an allow-list.
+        const writers = srcFiles
+            .map((f) => relative(REPO_ROOT, f).replace(/\\/g, "/"))
+            .filter((rel) => {
+                const src = read(join(REPO_ROOT, rel));
+                return (
+                    new RegExp(`:${PORTAL_ATTR}\\s*=`).test(src) ||
+                    new RegExp(`["']${PORTAL_ATTR}["']\\s*:`).test(src)
+                );
+            });
+        expect(
+            writers,
+            `the dock-portal stamp is written from ${writers.length} module(s). It is ONE contract with ONE ` +
+                `reader (isTeleportedTarget); every extra writer is a surface that can silently omit it — which ` +
+                `is exactly how the tooltip, the submenu and the command list ended up stampless:\n  ${writers.join("\n  ")}`,
+        ).toEqual([SEAM]);
+    });
+
+    it("PORTAL-ONE — every portalled overlay root actually takes the seam", () => {
+        // The bite the census above cannot see: a component that stamps nothing at all
+        // passes a "one writer" count for free. These four are the portalled roots that
+        // can sit under a dock; each must reach the seam rather than re-spell it.
+        for (const rel of [
+            "src/components/tooltip/TooltipContent.vue",
+            "src/components/dropdown-menu/DropdownMenuSubContent.vue",
+            "src/components/command/CommandList.vue",
+            "src/components/select/SelectContent.vue",
+        ]) {
+            expect(read(join(REPO_ROOT, rel)), `${rel} takes the portal seam`).toMatch(
+                /useDockParticipation\(/,
+            );
+        }
+    });
+
+    it("ONE-LATCH — exactly one keep-open token implementation", () => {
+        // The token is the guarded acquire/release PAIR plus its teardown. Its shape on
+        // disk is a call to the dock context's `keepOpen`; anything else calling it is a
+        // second implementation of the same six lines.
+        const callers = srcFiles
+            .map((f) => relative(REPO_ROOT, f).replace(/\\/g, "/"))
+            .filter((rel) => /\.keepOpen\(/.test(read(join(REPO_ROOT, rel))));
+        expect(
+            callers,
+            `${callers.length} module(s) acquire a dock keep-open token directly. The ref-count is the dock's; the ` +
+                `TOKEN discipline is ONE composable's, and a hand-rolled copy is a leak waiting for the teardown ` +
+                `it forgot:\n  ${callers.join("\n  ")}`,
+        ).toEqual([SEAM]);
+    });
+
+    it("self-test bites — each overlay detector matches its own shape", () => {
+        // A regex that quietly stopped matching would green all three for free.
+        expect(new RegExp(`:${PORTAL_ATTR}\\s*=`).test(`:${PORTAL_ATTR}="x"`)).toBe(true);
+        expect(new RegExp(`:${PORTAL_ATTR}\\s*=`).test(`[${PORTAL_ATTR}]`)).toBe(false);
+        expect(/\.keepOpen\(/.test("dock?.keepOpen('grasp')")).toBe(true);
+        expect(/\.keepOpen\(/.test("// keepOpen is the ref-count")).toBe(false);
+    });
+});
