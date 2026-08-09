@@ -30,30 +30,22 @@
        (segmented/pill slider OR the underline rule) STRETCHES along its travel
        axis as it glides between tabs, then settles to fit — the Material 3
        ELASTIC / Apple Liquid-Glass "controls insist on animating themselves"
-       register. The deform is volume-preserving (stretch X, compress Y in lockstep:
-       `scale: var(--stretch) calc(1 / var(--stretch))`) so it reads as an elastic
-       warp, never a size pump. A consumer dials the elasticity (or to 1 for none)
-       without touching source.
-       The click travel-squish AND the liquid-tab pull-morph read this ONE cap (in
+       register. A consumer dials the elasticity (or to 1 for none) without
+       touching source.
+       The click travel deform AND the liquid-tab pull-morph read this ONE cap (in
        lockstep with the no-token floor DEFAULT_INDICATOR_MAX_STRETCH, the SOLE cap
        source — constant + token never fork); a FAST pull visibly swells the pill so
        the gel-squish READS as liquid — still capped LOW (the anti-taffy-pull bar;
        the pill swells, never taffy-pulls).
-       Re-tuned 1.18 → 1.11. The `--tab-blob` area-inflation
-       channel now carries the "grow" (the 5-beat overshoot), so the per-axis stretch
-       drops: the FENCE is the COMPOSED visible bbox area `blob × stretch` ≤ ~1.14,
-       NOT the bare per-axis scalar. At blob ~1.045 (peak) × stretch ~1.11 (far jump)
-       the composed long-axis peak lands ≤ ~1.16 and the AREA (blob² since the squish
-       is volume-preserving) stays ≤ ~1.14 — lively, not taffy. */
+       THIS IS THE PLAIN-LENGTH CAP, and it is the whole of what a surface gets
+       unless it arms the eyeglass. The old companion area-inflation cap is GONE
+       with its channel: two multiplying scalars needed a composed-area fence to
+       keep them from arguing, and the organ that replaced them is one law with its
+       own geometric fences (a span ceiling and the track's inner edge). A surface
+       that wants the organ declares `--eyeglass-span-max`; see
+       `composables/motion/morph/eyeglass.ts`. */
     --tab-indicator-max-stretch: 1.11;
 
-    /* The area-inflation cap (the 5-beat blob's overshoot peak).
-       The 2nd `useLiquidFlex` channel drives `--tab-blob` toward this on the
-       grow-overshoot beat, then de-inflates to 1 at arrival (shrink-to-fit). Kept
-       LOW (~1.045) so the COMPOSED bbox area (blob × stretch, the volume-preserving
-       squish makes the area ≈ blob²) clears the ≤ ~1.14 anti-taffy fence. A consumer
-       dials it (or to 1 for no inflation) without touching source. */
-    --tab-indicator-blob-max: 1.045;
     /* The indicator's OWN travel clock, re-pointed off the generic
        `--duration-normal` (which dragged a sub-pixel undershoot tail past the
        90%-travel point — the "too slow" read) onto `--spring-dock-duration`, the
