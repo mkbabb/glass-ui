@@ -99,13 +99,22 @@ const selection = useSelectionGroup<{ value: SelectionValue; disabled: boolean }
     buttonRefs,
     /* indicatorRef DELIBERATELY OMITTED — see the header. What that omission actually
      * silences is the travel SQUISH: with no element there is nothing to write
-     * `--stretch` to. It does NOT silence the measure, and saying so would be the
+     * `--stretch` to. ~~It does NOT silence the measure, and saying so would be the
      * same false-comment class this lane was convicted of — the indicator's
      * `ResizeObserver` attaches unconditionally (that is its Safari-identical
      * guarantee) and `updateSingleSlider` keeps running rect measures into a
      * `singleSliderStyle` this component never reads. Economizing that dead measure
      * is the engine's own file to change, not a caller's: routed RT-84O → #71
-     * W-EYEGLASS, which holds 169 of that file's 204 changed lines in flight. */
+     * W-EYEGLASS, which holds 169 of that file's 204 changed lines in flight.~~
+     * [2026-08-08 · BK #71 W-EYEGLASS lands RT-84O: it now silences the measure too.
+     * `updateSingleSlider` returns before its first `getBoundingClientRect()` when
+     * `indicatorRef` is null, so this component's mounts and resizes force no layout
+     * at all. The `ResizeObserver` still attaches unconditionally — the guarantee
+     * #84 named is untouched; what changed is that the observer no longer measures
+     * into nothing. #84's text was accurate at #84's HEAD and is struck rather than
+     * deleted so the routing that produced the fix stays legible. This component is
+     * the shape the economization was written for: three consumers, and it is the
+     * only one that never reads the style.] */
 });
 
 provideToggleGroupContext({

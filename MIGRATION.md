@@ -1186,7 +1186,14 @@ material. [`.glass-lens` was DELETED at 8.0.0 — see the §8.0.0 delete banner;
 rides the `.glass-{rung}` blur+tint base.]
 
 - **`<SegmentedTabs eyeglass>` remains deleted.** Drop the old attribute; there is no
-  named eyeglass variant.
+  named eyeglass variant. [2026-08-08 · BK #71 W-EYEGLASS: still no variant, and that is
+  the point — the eyeglass came back as what `pill` IS, on the owner's ruling that we do
+  not need a million variants that are essentially the same thing. It is a different
+  construct wearing the same name: the pill track arms it by declaring
+  `--eyeglass-span-max`, and the writer answers with `--eyeglass-span` /
+  `--eyeglass-swell` / `--eyeglass-origin`. **None of the three tokens struck below comes
+  back** — proud/settled was a second REST state, this is a transient deform that returns
+  to 1 — so a consumer who removed them has nothing to restore and nothing to re-read.]
 - **The old proud/settled sizing and release controls are deleted.** Remove
   `--eyeglass-proud`, `--eyeglass-settled`, and `--eyeglass-live-t` overrides. The active
   fill matches the selected control instead of reserving or magnifying a second rest state.
