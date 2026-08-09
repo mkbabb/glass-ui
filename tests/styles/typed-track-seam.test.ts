@@ -36,7 +36,7 @@ const stripComments = (css: string) =>
 const W4_STYLE_SOURCES = [
     "styles/track-well.css",
     "styles/glass/value-marks.css",
-    "components/slider/Slider.vue",
+    "components/slider/styles.css",
     "components/progress/Progress.vue",
 ];
 
@@ -99,8 +99,10 @@ describe("W4 typed-seam — generic mark selectors are renamed (§2.1)", () => {
 });
 
 describe("W4 typed-seam — the two typed public inputs, split by grammar (§3.2)", () => {
-    it("Slider `.slider-track` reads --glass-slider-track-background (standard + spectrum)", () => {
-        const vue = src("components/slider/Slider.vue");
+    it("Slider `.slider-track` reads --glass-slider-track-background (scrubber + spectrum)", () => {
+        // The slider's paint left the SFC for THE ONE SLIDER LANE; the seam it reads is
+        // the same one, in the file that now authors every slider pixel.
+        const vue = src("components/slider/styles.css");
         expect(vue).toMatch(
             /background:\s*var\(--glass-slider-track-background,\s*var\(--muted-medium\)\)/,
         );

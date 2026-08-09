@@ -250,7 +250,8 @@
        overlay utility (0-consumer clean break). */
     /* The spectrum slider's track-height thumb reads as a SQUIRCLE
        (the iOS color-picker idiom). It rides the same --corner-k-squircle
-       vocabulary; @supports-gated in Slider.vue over a --radius-* round
+       vocabulary; @supports-gated in [2026-08-08 · BK #35 W-SLIDER:
+       ~~Slider.vue~~ → slider/styles.css] over a --radius-* round
        fallback. A consumer dials it to round (a circular knob) or to soft. */
     --corner-shape-thumb:   superellipse(var(--corner-k-squircle));
 }

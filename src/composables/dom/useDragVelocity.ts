@@ -39,6 +39,13 @@ export interface UseDragVelocityParams {
      */
     host: () => HTMLElement | null;
     /**
+     * A SECOND element that receives the same two writes. A teleported organ (the
+     * slider's loupe) is out of the host's inheritance chain, so it cannot read the
+     * vars off an ancestor — and minting a second velocity pole for it would break the
+     * one-owner law. One writer, two hosts.
+     */
+    mirror?: () => HTMLElement | null;
+    /**
      * The pointer axis the velocity is measured on. Default `"x"` (the horizontal
      * slider). A getter re-reads on an orientation flip.
      */
@@ -108,9 +115,27 @@ export function useDragVelocity(
     // The latest pointermove delta on the active axis (px since the last frame read).
     let frameDelta = 0;
 
-    function setVar(v: number): void {
-        const el = params.host();
-        if (el) el.style.setProperty("--atom-drag-v", `${v}`);
+    // THE TWO TERMS, one measurement.
+    //   `--atom-drag-v` is the SMEAR term: EMA'd hard and clamped at the ceiling, so a
+    //   faster pull cannot rubber-band the fill.
+    //   `--flex-vel` is the library's ONE REGISTERED velocity term (property-regs §18,
+    //   `writeVelocityWeight`'s var). It is the same tanh, taken at the ratified
+    //   V0 = 900 px/s pole through a τ = 100 ms one-pole, and it is NOT clamped — a
+    //   consumer that reads it wants the whole [0,1) range (the loupe's magnification
+    //   backs off across all of it). Two terms, never two engines.
+    const FLEX_V0 = 900;
+    const FLEX_TAU_MS = 100;
+    let flexSmoothed = 0;
+
+    function write(el: HTMLElement | null, smear: number, flex: number): void {
+        if (!el) return;
+        el.style.setProperty("--atom-drag-v", `${smear}`);
+        el.style.setProperty("--flex-vel", flex.toFixed(4));
+    }
+
+    function setVar(v: number, flex = 0): void {
+        write(params.host(), v, flex);
+        write(params.mirror?.() ?? null, v, flex);
     }
 
     // The saturating map: raw px/frame → tanh(gain·|v|), clamped at the ceiling.
@@ -131,10 +156,17 @@ export function useDragVelocity(
         // here we decay the smear toward the live sample so a STOP (no move) bleeds the
         // var back to 0 even while the pointer is still held (a held-still finger is not
         // smearing). One-pole EMA: 0.35 toward the live sample, 0.65 retained.
-        const live = saturate((frameDelta / dt) * 16.7);
+        const perFrame = (frameDelta / dt) * 16.7;
+        const live = saturate(perFrame);
         smoothed = smoothed * 0.65 + live * 0.35;
+        // The registered term rides px/SECOND against V0, on its own τ = 100 ms pole —
+        // a longer memory than the smear's, because magnification that flickers with
+        // frame jitter is worse than one that lags a beat.
+        const flexLive = Math.tanh(Math.abs((perFrame / 16.7) * 1000) / FLEX_V0);
+        const alpha = 1 - Math.exp(-dt / FLEX_TAU_MS);
+        flexSmoothed += (flexLive - flexSmoothed) * alpha;
         frameDelta *= 0.6; // the captured delta decays if no fresh move arrives
-        setVar(Number(smoothed.toFixed(4)));
+        setVar(Number(smoothed.toFixed(4)), flexSmoothed);
         rafId = requestAnimationFrame(frame);
     }
 
@@ -152,7 +184,8 @@ export function useDragVelocity(
         lastT = 0;
         frameDelta = 0;
         smoothed = 0;
-        // PRM: pin the var at 0 and NEVER open the rAF (no smear; the value still
+        flexSmoothed = 0;
+        // PRM: pin the vars at 0 and NEVER open the rAF (no smear; the value still
         // tracks via reka). The no-idle-cost contract is trivially honored.
         if (respectPRM && prefersReducedMotion()) {
             setVar(0);
@@ -178,6 +211,7 @@ export function useDragVelocity(
         // transition off `:active` ending — the var must not strand non-zero).
         smoothed = 0;
         frameDelta = 0;
+        flexSmoothed = 0;
         setVar(0);
     }
 

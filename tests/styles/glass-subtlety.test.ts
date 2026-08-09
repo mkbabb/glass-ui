@@ -859,7 +859,17 @@ describe("grasp register — the material answers the hand", () => {
                     // v-if>` wrappers render nothing, so they are stepped over.
                     for (let i = stack.length - 1; i >= 0; i -= 1) {
                         if (!/\bdata-held\b/.test(stack[i])) continue;
-                        const classes = /\bclass="([^"]*)"/.exec(stack[i])?.[1] ?? "";
+                        // Static `class` UNION the string literals inside a `:class`
+                        // binding. A recipe that applies a register conditionally (the
+                        // slider's fill, which the spectrum variant must not carry)
+                        // still composes it — reading only the static attribute would
+                        // score a live composition as absent.
+                        const staticClasses = /\bclass="([^"]*)"/.exec(stack[i])?.[1] ?? "";
+                        const bound = /:class="([^"]*)"/.exec(stack[i])?.[1] ?? "";
+                        const classes = [
+                            staticClasses,
+                            ...Array.from(bound.matchAll(/'([\w-]+)'/g), (m) => m[1]),
+                        ].join(" ");
                         found.push({
                             file: file.replace(`${process.cwd()}/`, ""),
                             classes: classes.split(/\s+/).filter(Boolean),
@@ -1057,7 +1067,7 @@ describe("grasp register — the material answers the hand", () => {
         // therefore carry the channel itself, off the REGISTER's clock — a shorthand
         // that dropped it would step the ink 0.6 → 1 in one frame under a blur still
         // fading over the dock spring's settle.
-        const slider = stripComments(read("src/components/slider/Slider.vue"));
+        const slider = stripComments(read("src/components/slider/styles.css"));
         const rule =
             /\.glass-slider:not\(:active\):not\(\[data-held\]\)\s+\.slider-range\s*\{([^}]*)\}/.exec(
                 slider,
@@ -1079,6 +1089,11 @@ describe("grasp register — the material answers the hand", () => {
         // The exception is STATED where the doctrine is, not only where it is used.
         expect(grasp).toContain("UNLAYERED");
         expect(grasp).toContain("Slider.vue");
+        // …and it names the file that ACTUALLY carries the two shorthands. The slider's
+        // paint left the SFC for THE ONE SLIDER LANE (BK #35); the `Slider.vue` above
+        // now survives only inside a strike-in-place bracket, so a check that stopped
+        // there would be reading struck text and calling it doctrine.
+        expect(grasp).toContain("slider/styles.css");
     });
 });
 

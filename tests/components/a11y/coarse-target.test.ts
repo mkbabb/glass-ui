@@ -29,7 +29,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
-const SLIDER = "src/components/slider/Slider.vue";
+const SLIDER = "src/components/slider/styles.css";
 const SIZING = "src/styles/tokens/sizing.css";
 const source = readFileSync(SLIDER, "utf8");
 /** Live bytes only — a rule quoted inside a cure note is not a shipped rule. */
@@ -61,7 +61,7 @@ describe("G-COARSE-TARGET — the Slider's operable target clears the measured f
         const media = live.match(
             /@media \(pointer: coarse\)\s*\{([\s\S]*?\n\})\s*\n/,
         );
-        expect(media, "Slider.vue declares a (pointer: coarse) block").not.toBeNull();
+        expect(media, `${SLIDER} declares a (pointer: coarse) block`).not.toBeNull();
         expect(media![1]).toMatch(/\.glass-slider\s*\{/);
         expect(media![1]).toMatch(/min-block-size:/);
     });

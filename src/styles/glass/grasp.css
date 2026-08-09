@@ -51,7 +51,11 @@
    THE EXCEPTIONS, STATED (two): an SFC-scoped block is UNLAYERED, and unlayered author
    declarations beat every `@layer` rule at any specificity. So a consumer that declares
    `transition` on the graspable element from its own scoped block outranks THIS file's
-   release transition and would strand the ink mid-lerp. `Slider.vue` carries exactly
+   release transition and would strand the ink mid-lerp. [2026-08-08 · BK #35 W-SLIDER:
+   ~~`Slider.vue`~~ → `components/slider/styles.css`. The slider's paint left the SFC for
+   THE ONE SLIDER LANE, a partial that is UNLAYERED ON PURPOSE (its own header states
+   the reason), so the outranking mechanism is unchanged and the census below still
+   reads two — only the file that carries them moved.] That file carries exactly
    two such shorthands on the graspable element: the release-window rule
    (`.glass-slider:not(:active):not([data-held]) .slider-range`), which COMPOSES the
    register's ink channel into its own shorthand off the register's clock rather than

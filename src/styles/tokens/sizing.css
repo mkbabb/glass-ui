@@ -561,7 +561,9 @@
        counter-measurement of the acquired region (339.4 × 24 CSS px) overruled the
        2.5.5 citation on exactly that ground — so 44px here would grow a control
        past the target that was measured. Read by the `@media (pointer: coarse)`
-       rule in `slider/Slider.vue`, which `max()`es it against the rung's own
+       rule in [2026-08-08 · BK #35 W-SLIDER: ~~`slider/Slider.vue`~~ →
+       `slider/styles.css`, THE ONE SLIDER LANE — the rule and the `max()` are
+       unchanged, only the file that authors them], which `max()`es it against the rung's own
        `--slider-track-height`: this knob can only raise a rung that sits under it,
        never shrink one. A distinct token from `--touch-target` because the two
        floors answer different success criteria. */
