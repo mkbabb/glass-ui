@@ -6,7 +6,7 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-} from "@glass/components/dropdown-menu";
+} from "@glass/components/menu";
 import type { ShellFacetItem } from "./useShellNavDock";
 
 defineOptions({ inheritAttrs: false });

@@ -4,7 +4,7 @@ import { Check } from "@lucide/vue";
 import type { CheckedState } from "../_shared/selection";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
-import { useMenuPart } from "./useMenuTrigger";
+import { useMenuPart } from "./context";
 
 export interface DropdownMenuCheckboxItemProps {
     modelValue?: CheckedState;
@@ -41,13 +41,13 @@ const ItemIndicatorComp = useMenuPart("ItemIndicator");
         :model-value="modelValue"
         :disabled="disabled"
         :text-value="textValue"
-        data-slot="dropdown-menu-checkbox-item"
+        data-slot="menu-checkbox-item"
         data-indicator="wide"
-        :class="cn('dropdown-menu__item interactive-item glass-menu-row', props.class)"
+        :class="cn('menu__item interactive-item glass-menu-row', props.class)"
         @select="emit('select', $event)"
         @update:model-value="emit('update:modelValue', $event)"
     >
-        <span class="dropdown-menu__indicator">
+        <span class="menu__indicator">
             <component :is="ItemIndicatorComp">
                 <Check aria-hidden="true" />
             </component>

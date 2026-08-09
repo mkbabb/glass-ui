@@ -3,7 +3,7 @@
 // The standing `feedback_glass_ui_binding_verification` memory note: stale reka
 // prop/emit bindings (`:pressed`, `v-model:search-term`, `tag=`) silently no-op
 // — vue-tsc + units MISS them; only a render-effect probe catches them. This
-// spec mounts the at-risk model bindings (Command / TagsInput /
+// spec mounts the at-risk model bindings (Command /
 // Switch / Checkbox) and asserts the RENDERED EFFECT each binding drives (the
 // `data-state` / `aria-pressed` / rendered value), NOT the type. A future reka
 // bump that moves a binding (e.g. the reka Combobox `searchTerm` → input
@@ -19,11 +19,6 @@ import { nextTick } from "vue";
 
 import { Button } from "@glass/components/button/index";
 import { Switch } from "@glass/components/switch/index";
-import {
-    TagsInput,
-    TagsInputItem,
-    TagsInputItemText,
-} from "@glass/components/tags-input/index";
 import { Command, CommandInput } from "@glass/components/command/index";
 import { Toaster, useToast } from "@glass/components/toast";
 
@@ -93,34 +88,13 @@ describe("reka binding-idiom render-effect canary", () => {
         );
     });
 
-    it("TagsInput: item text renders from `value=` (the stale `tag=` idiom is gone)", async () => {
-        const wrapper = mount(
-            {
-                components: { TagsInput, TagsInputItem, TagsInputItemText },
-                template: `
-                    <TagsInput :model-value="['alpha','beta']">
-                        <TagsInputItem v-for="t in ['alpha','beta']" :key="t" :value="t">
-                            <TagsInputItemText />
-                        </TagsInputItem>
-                    </TagsInput>
-                `,
-            },
-            {},
-        );
-        await nextTick();
-        // The item value renders (the modern `value=` binding, not the stale
-        // `tag=`). A stale `tag=` would render empty text.
-        expect(
-            wrapper
-                .findAll("[data-slot=tags-input-item-text]")
-                .map((item) => item.text()),
-        ).toEqual(["alpha", "beta"]);
-        // Selected by POSITION, asserted on the attribute: `wrapper.element` is the
-        // mounted `<TagsInput>` root, so this proves the root carries the slot marker.
-        // (The former arm selected BY `[data-slot=tags-input]` and then asserted that
-        // same attribute — a tautology that could not fail.)
-        expect(wrapper.element.getAttribute("data-slot")).toBe("tags-input");
-    });
+    // [2026-08-09 · BK #66 CLOSE · RT-18A] ~~TagsInput: item text renders from
+    // `value=` (the stale `tag=` idiom is gone)~~ — STRUCK WITH ITS SUBJECT. The case
+    // mounted `TagsInput`/`TagsInputItem`/`TagsInputItemText`; the family is deleted,
+    // so the case cannot compile and the seat has no subject. It is C20's
+    // `activeVitest[6] reka.tags-input.value-binding` (base-product-tooling) and it
+    // leaves the roster with this cut — `active 48 → 46` counting
+    // `activeVitest[45] tags-input.ime-delimiter-guard`, whose whole file goes too.
 
     it("Toast: the dismissal rides `onUpdate:open` (NOT the React `onOpenChange`)", async () => {
         // The stale-reka-binding class (MEMORY feedback_glass_ui_binding_verification):

@@ -1,7 +1,7 @@
 /* glass/control-surfaces.css
    The form-control REST register — the
    `.input-pill` family (Input/Textarea/NumberField), the shared `.control-surface`
-   class (Select default + TagsInput), the validity vocabulary, and the Select
+   class (Select default), the validity vocabulary, and the Select
    trigger resting-border lift. A cohesive sub-concern of surfaces.css (the
    no-god-module re-drain), @import-ed by glass.css in cascade order IMMEDIATELY
    AFTER surfaces.css and BEFORE surface-axis.css — same `@layer components`, same
@@ -34,7 +34,7 @@
            Moved off the srgb `--surface-tint-15` fork onto the glass
            border seam so the pill is ONE glass model with the rest of the ladder.
            Re-pointed onto the SHARED `--control-surface-*`
-           REST register so Input/Textarea/NumberField/Select/Combobox/TagsInput are
+           REST register so Input/Textarea/NumberField/Select/Combobox are
            ONE material at rest (the input rung was the warmer of the two; Select rode
            the `glass-wash` gray — the no-gray control-family seam). The register reads
            the same `--glass-*` ladder, so `--glass-level`/the bright bucket retune
@@ -68,7 +68,7 @@
     }
 
     /* The shared control REST surface class. The
-       NON-pill control families (the Select trigger, the TagsInput root) that do
+       NON-pill control families (the Select trigger) that do
        NOT compose `.input-pill` but want the SAME resting material read this — so
        the whole form band is ONE register at rest (the Select default rode the
        lighter `glass-wash` gray before; this is the no-gray control-family seam).

@@ -49,13 +49,22 @@ export const COMPONENT_CLASS = {
     // PUBLISH (20) — the shadcn-shaped set.
     badge: "PUBLISH", button: "PUBLISH", card: "PUBLISH", collapsible: "PUBLISH",
     command: "PUBLISH", "data-table": "PUBLISH",
-    dialog: "PUBLISH", "dropdown-menu": "PUBLISH",
+    dialog: "PUBLISH",
+    // [2026-08-09 · BK #66 CLOSE · RT-65-C(i)] `dropdown-menu` MOVED → `menu`
+    // (DAG-RULINGS §4.4: same SFC names, one directory, `./menu` subpath,
+    // `./dropdown-menu` gone). The name was wrong in both directions — 28 reka
+    // imports cover BOTH the click and the context arm, and `./context-menu` was
+    // never exported. Clean break, no alias.
+    menu: "PUBLISH",
     // BK.W-DIALOG re-seeded `sheet` as its own component (the side surface split back
     // out of `<DialogContent placement>`), and BK.W-DIALOG-DETENT folded `drawer` into
     // it: a detent is a size on this surface, so `./drawer` retires with its directory.
-    // INTERNAL for now — it is reached via the root barrel; its `./sheet` package
-    // subpath rides the ONE batched export cut.
-    sheet: "INTERNAL",
+    // [2026-08-09 · BK #66 CLOSE · RT-38D] ~~INTERNAL for now — it is reached via the
+    // root barrel; its `./sheet` package subpath rides the ONE batched export cut.~~
+    // The cut landed: `./sheet` MINTS here. Two consumer roots (muster ×2,
+    // speedtest ×1) already import the specifier against a key that did not exist —
+    // the mint repairs a live break rather than adding surface.
+    sheet: "PUBLISH",
     label: "PUBLISH",
     "number-field": "PUBLISH", popover: "PUBLISH",
     progress: "PUBLISH", select: "PUBLISH", separator: "PUBLISH",
@@ -63,12 +72,25 @@ export const COMPONENT_CLASS = {
     surface: "PUBLISH",
     slider: "PUBLISH", switch: "PUBLISH", toast: "PUBLISH", "toggle-group": "PUBLISH",
     tooltip: "PUBLISH",
-    // INTERNAL (13, sheet above) — reached via the root barrel / a curated subpath / substrate.
+    // [2026-08-09 · BK #66 CLOSE · RT-65-C(iii)] THE FOUR MINTS + THE `./forms`
+    // RETIREMENT. `input` · `textarea` · `checkbox` · `radio-group` go
+    // INTERNAL → PUBLISH, and the curated `./forms` barrel RETIRES with them: a
+    // hand-curated union of four components was a second, competing door onto the
+    // same source, and the rule is one subpath per public component. 34 consumer
+    // edges across 8 roots take the four named specifiers instead (MIGRATION.md
+    // §8.0.0; the tables fire at #76 / RT-89-F). `ControlSize` re-homes to
+    // `./input` — Input is the canonical member of the register that threads
+    // `size?` — and `useUserInvalidAria` keeps its root-barrel door, which it
+    // already had.
+    input: "PUBLISH", textarea: "PUBLISH",
+    checkbox: "PUBLISH", "radio-group": "PUBLISH",
+    // INTERNAL (7) — reached via the root barrel / a curated subpath / substrate.
     _shared: "INTERNAL", accordion: "INTERNAL", alert: "INTERNAL", avatar: "INTERNAL",
-    carousel: "INTERNAL", checkbox: "INTERNAL", input: "INTERNAL",
-    "radio-group": "INTERNAL",
+    carousel: "INTERNAL",
     skeleton: "INTERNAL", table: "INTERNAL",
-    "tags-input": "INTERNAL", textarea: "INTERNAL",
+    // [2026-08-09 · BK #66 CLOSE · RT-18A] `tags-input` DELETED with its directory —
+    // no key, no alias. It held no export key to lose (INTERNAL) and no consumer
+    // edge in the 19-root walk.
     // INTERNAL (1)
     "infinite-scroll": "INTERNAL",
     // PUBLISH (25) — the custom/glass-native set.
@@ -128,7 +150,11 @@ export const TIERS = [
 export const CURATED = {
     index: "src/index.ts",
     tokens: "src/styles/tokens.ts",
-    forms: "src/forms.ts",
+    // [2026-08-09 · BK #66 CLOSE · RT-65-C(iii)] ~~`forms: "src/forms.ts"`~~ — the
+    // curated `./forms` barrel RETIRES and `src/forms.ts` is DELETED. Its two halves
+    // land on real doors: Input/Textarea on the newly-PUBLISH `./input` + `./textarea`,
+    // `useUserInvalidAria` on the root barrel it was always also on, `ControlSize` on
+    // `./input`. Clean break, no alias.
     dark: "src/composables/dark/index.ts",
     keyboard: "src/composables/keyboard/index.ts",
     carousel: "src/components/carousel/index.ts",

@@ -54,7 +54,9 @@ const vtRoot = postcss.parse(VIEW_TRANSITION_CSS);
 
 /** Every `@keyframes` in the grammar's own stylesheet, by name. */
 const keyframes = new Map<string, AtRule>();
-vtRoot.walkAtRules("keyframes", (at) => keyframes.set(at.params.trim(), at));
+vtRoot.walkAtRules("keyframes", (at) => {
+    keyframes.set(at.params.trim(), at);
+});
 
 /** Every ordinary rule in the grammar's stylesheet, selector-normalised. */
 const rules: Rule[] = [];
@@ -303,7 +305,9 @@ describe("G-NO-FLASH — the route grammar conserves alpha", () => {
             if (!name.startsWith("gl-route-") && !name.startsWith("gl-vt-route-"))
                 continue;
             const props = new Set<string>();
-            at.walkDecls((decl) => props.add(decl.prop));
+            at.walkDecls((decl) => {
+                props.add(decl.prop);
+            });
             const alpha = props.has("opacity");
             const spatial = ["translate", "scale", "filter", "transform"].some((p) =>
                 props.has(p),
@@ -485,7 +489,9 @@ describe("the route grammar — non-dock, and one window at a time", () => {
         // detector would delete the reason the retirement is legible. The census reads
         // declarations.
         const declared: string[] = [];
-        vtRoot.walkDecls((decl) => declared.push(decl.value));
+        vtRoot.walkDecls((decl) => {
+            declared.push(decl.value);
+        });
         expect(declared.filter((value) => /dock/i.test(value))).toEqual([]);
     });
 

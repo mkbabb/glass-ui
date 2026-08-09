@@ -284,7 +284,7 @@ const VOID_SUPPRESSION_RE = /^\s*void\s+[A-Za-z_$][\w$]*\s*;/gm;
 const DENY_LIST_RE = /RETIRED_[A-Z_]*ATTRS/;
 
 // A BARREL is a module the package PUBLISHES as an entry — a directory `index.ts` or a
-// curated top-level entry (`src/forms.ts`, `src/components/blob/config.ts`). Its whole
+// curated top-level entry (`src/styles/tokens.ts`, `src/components/blob/config.ts`). Its whole
 // job is to name the surface, so gathering names is not a shim there. The set is DERIVED
 // from the same fail-closed entry map `package.json` exports are generated from, never a
 // hand-list — a hand-list would let a shim hide behind an invented exemption.
@@ -367,7 +367,13 @@ describe("gate:G-OVERFIT — NO-SHIM arm (the no-legacy edict, enforced)", () =>
         expect(DENY_LIST_RE.test("const FLOATING_ATTRS = new Set([")).toBe(false);
         // A published ENTRY is out of scope BY CONSTRUCTION, and only by that.
         expect(isBarrel(join(SRC, "components", "search", "index.ts"))).toBe(true);
-        expect(isBarrel(join(SRC, "forms.ts"))).toBe(true);
+        // [2026-08-09 · BK #66 CLOSE · RT-65-C(iii)] ~~`src/forms.ts`~~ — the curated
+        // `./forms` barrel RETIRED and its file is deleted. The bite keeps its job: it
+        // needs a curated top-level entry whose path is NOT an `index.ts`, so that the
+        // `ENTRY_FILES` half of `isBarrel` is proved separately from the `index.ts`
+        // regex above. `src/components/blob/config.ts` is that entry (`./blob-config`),
+        // and it is the other exemplar the comment on `isBarrel` already names.
+        expect(isBarrel(join(SRC, "components", "blob", "config.ts"))).toBe(true);
         expect(isBarrel(join(SRC, "components", "search", "searchVariants.ts"))).toBe(false);
     });
 });
@@ -466,7 +472,7 @@ describe("gate:G-OVERFIT — OVERLAY-SEAM arm (BK #89 W-OVERLAY)", () => {
         // can sit under a dock; each must reach the seam rather than re-spell it.
         for (const rel of [
             "src/components/tooltip/TooltipContent.vue",
-            "src/components/dropdown-menu/DropdownMenuSubContent.vue",
+            "src/components/menu/DropdownMenuSubContent.vue",
             "src/components/command/CommandList.vue",
             "src/components/select/SelectContent.vue",
         ]) {

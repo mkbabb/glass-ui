@@ -13,7 +13,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuShortcut,
     DropdownMenuTrigger,
-} from "@glass/components/dropdown-menu";
+} from "@glass/components/menu";
 
 
 const tone = ref<"warm" | "cool" | "neutral">("warm");

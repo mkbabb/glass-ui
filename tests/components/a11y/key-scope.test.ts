@@ -37,8 +37,16 @@ function mountList(handleSelector?: string | null) {
         defineComponent({
             setup() {
                 return () =>
+                    // [2026-08-09 · BK #66 CLOSE · RT-40-D] `SortableList` is a
+                    // `<script setup generic="T">` SFC. `h()` propagates a `generic=`
+                    // only through TEMPLATE type-checking, so at a render-function
+                    // call site `T` resolves to `unknown` and every `Row`-typed
+                    // callback below mismatched — three TS2769s that made
+                    // `vue-tsc -p tsconfig.test.json` (a `release.yml` step) RED. A TS
+                    // instantiation expression pins `T` at the seam, which keeps every
+                    // callback FULLY checked rather than casting the check away.
                     h(
-                        SortableList,
+                        SortableList<Row>,
                         {
                             items: items.value,
                             getId: (item: Row) => item.id,

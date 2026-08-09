@@ -2,7 +2,7 @@
 import { computed, useAttrs, type HTMLAttributes } from "vue";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
-import { useMenuPart } from "./useMenuTrigger";
+import { useMenuPart } from "./context";
 
 export interface DropdownMenuLabelProps {
     inset?: boolean;
@@ -26,9 +26,9 @@ const LabelComp = useMenuPart("Label");
         :is="LabelComp"
         v-bind="forwardedAttrs"
         as="div"
-        data-slot="dropdown-menu-label"
+        data-slot="menu-label"
         :data-inset="inset ? '' : undefined"
-        :class="cn('dropdown-menu__label', props.class)"
+        :class="cn('menu__label', props.class)"
     >
         <slot />
     </component>

@@ -19,6 +19,16 @@
 // The live GPU render path is exercised by the binding π under a GPU-bearing headless
 // image; here the device is stubbed (jsdom has no real adapter).
 
+// [2026-08-09 · BK #66 CLOSE · RT-40-D] EVERY option literal below passes
+// `dprPolicy: 1`. The leaf declares it REQUIRED (`useWebGLCanvas.ts:117-121` — the
+// consumer owns ONLY the DPR number, the leaf owns the measurement) and these call
+// sites never passed it, so `vue-tsc --noEmit -p tsconfig.test.json` — the SECOND
+// arm of `npm run typecheck`, a `release.yml` step — was RED at HEAD with 17 errors
+// from this pair of files. `1` is the flat multiplier: the stub's border box IS the
+// backing box, so the sizer's arithmetic is the identity and no assertion moves.
+// The same cut removed a duplicated `getBoundingClientRect` key (TS1117) that a
+// prior landing left behind in `makeCanvas`.
+
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createGpuSubstrate } from "@glass/composables/glass/webgpu/useGpuSubstrate";
 import type { RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
@@ -122,6 +132,7 @@ describe("useGpuSubstrate — the transparent picker degrade contract", () => {
         let frames = 0;
         let live = true;
         const substrate = createGpuSubstrate(canvas, {
+            dprPolicy: 1,
             // a viz authors BOTH setups; with no navigator.gpu the GL path is selected
             setupWGPU: () => {
                 throw new Error("setupWGPU must NOT run on the degrade path");
@@ -167,6 +178,7 @@ describe("useGpuSubstrate — the transparent picker degrade contract", () => {
         vi.stubGlobal("navigator", {});
         const canvas = makeCanvas(() => ({ getExtension: () => null }));
         const substrate = createGpuSubstrate(canvas, {
+            dprPolicy: 1,
             setupGL: () => ({
                 frame: vi.fn(),
                 shouldContinue: () => false,
@@ -223,6 +235,7 @@ describe("createWebGPUCanvas — the async device-acquisition prelude", () => {
         let setupCalledWith: { device: unknown; format: unknown } | null = null;
         const statuses: RendererStatus[] = [];
         const substrate = createGpuSubstrate(canvas, {
+            dprPolicy: 1,
             setupWGPU: (device, _ctx, format) => {
                 setupCalledWith = { device, format };
                 return {
@@ -293,6 +306,7 @@ describe("createWebGPUCanvas — the async device-acquisition prelude", () => {
         const canvas = makeCanvas((id) => (id === "webgpu" ? gpuContext : null));
         const statuses: RendererStatus[] = [];
         const substrate = createGpuSubstrate(canvas, {
+            dprPolicy: 1,
             setupWGPU: () => ({
                 frame: vi.fn(),
                 shouldContinue: () => false,
@@ -338,6 +352,7 @@ describe("createWebGPUCanvas — the async device-acquisition prelude", () => {
         const canvas = makeCanvas(() => null);
         const { gpu } = stubWebGPU(canvas);
         const handle = createWebGPUCanvas(canvas, {
+            dprPolicy: 1,
             setup: () => ({
                 frame: vi.fn(),
                 shouldContinue: () => false,
@@ -364,6 +379,7 @@ describe("createWebGPUCanvas — the async device-acquisition prelude", () => {
         vi.stubGlobal("navigator", { gpu });
         const onInitError = vi.fn();
         const handle = createWebGPUCanvas(canvas, {
+            dprPolicy: 1,
             setup: () => ({
                 frame: vi.fn(),
                 shouldContinue: () => false,
@@ -402,6 +418,7 @@ describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker", () 
         const onInitError = vi.fn();
         const statuses: RendererStatus[] = [];
         const substrate = createGpuSubstrate(canvas, {
+            dprPolicy: 1,
             setupWGPU: () => ({
                 frame: vi.fn(),
                 shouldContinue: () => false,
@@ -473,6 +490,7 @@ describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker", () 
         const statuses: RendererStatus[] = [];
         const setupGL = vi.fn();
         const substrate = createGpuSubstrate(canvas, {
+            dprPolicy: 1,
             setupWGPU: () => {
                 throw new Error("shader setup failed");
             },

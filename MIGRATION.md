@@ -7,6 +7,76 @@ rename or import re-point per call site.
 
 ## 8.0.0
 
+**THE EXPORT SURFACE IS RE-CUT — one batched change, six subpath movements, and the
+`R-PUBLIC-8-LEDGER` this section is.** `exports` goes **66 → 70 keys** (`jsSubpaths` 64,
+regenerated exactly from `scripts/lib/subpath-policy.mjs`, `EXACT REPRODUCTION: YES`).
+Clean breaks throughout: no aliases, no deprecation window. Two keys retire, six mint,
+one component is deleted.
+
+_Package subpaths_
+
+| Was | Now | What to do |
+| --- | --- | --- |
+| `@mkbabb/glass-ui/dropdown-menu` | `@mkbabb/glass-ui/menu` | Re-point the specifier. **The fourteen `DropdownMenu*` SFC names are UNCHANGED** — the family's directory and door moved, not its symbols, so a one-line import edit is the whole migration. The old name was wrong in both directions: the same 28 reka imports serve both the click and the context arm, and `./context-menu` was never exported at all. |
+| `@mkbabb/glass-ui/forms` | `@mkbabb/glass-ui/input` · `/textarea` · `/checkbox` · `/radio-group` | Split the import by component. `./forms` was a hand-curated union of four components — a second door onto the same source — and the rule is now stateable: **one subpath per public component, no exceptions in either direction.** |
+| — | `@mkbabb/glass-ui/sheet` | NEW. `SheetContent` and the detent surface were reachable only through the root barrel while the `./sheet` specifier resolved to nothing. If you were importing it, it works now. |
+| `ControlSize` (from `/forms`) | `@mkbabb/glass-ui/input` | The shared `sm \| md \| lg` union the control register threads as `size?`. Input is the canonical member, so `./input` is its one published door. |
+| `useUserInvalidAria` (from `/forms`) | `@mkbabb/glass-ui` (root) | No move — it was **already** on the root barrel, which is now its only door. |
+
+_Deleted — `TagsInput`_
+
+`TagsInput`, `TagsInputInput`, `TagsInputItem`, `TagsInputItemDelete`,
+`TagsInputItemText` and their five prop types are **deleted from the root barrel**, with
+the component directory, its story and its contract test. It was never published on a
+subpath, and the consumer walk (19 roots: 15 closed-universe + 3 operational mirrors + 1
+negative control) found **zero specifier edges and zero symbol edges**. There is no
+replacement: compose `<Chip>` inside a `<LabeledField>` if you need the shape.
+
+_Class + attribute namespace — `.dropdown-menu__*` → `.menu__*`_
+
+If you style the menu family from outside, the selectors renamed with the family:
+`.dropdown-menu__trigger` → `.menu__trigger`, and likewise `__item`, `__sub-trigger`,
+`__indicator`, `__radio-dot`, `__label`, `__shortcut`, `__sub-chevron`. The
+`data-slot` values renamed the same way (`data-slot="dropdown-menu-content"` →
+`"menu-content"`, and so on for all eleven parts). No behaviour changed; only the
+namespace.
+
+_Peer dependencies — `vue-component-type-helpers` is now declared, and the reason is upstream_
+
+| Was | Now | What to do |
+| --- | --- | --- |
+| (undeclared) | `"vue-component-type-helpers": "^3.0.3"` in `peerDependencies` | Usually nothing — if you already have `vue-tsc`, or any toolchain that vendors it, it is on disk and your package manager is satisfied. If you type-check with `skipLibCheck: false` and did NOT have it, this is the peer that was missing. |
+
+**This is a workaround for someone else's packaging defect, stated plainly so it can be
+retired when the defect is.** `reka-ui@2.10.1`'s `dist/index3.d.ts` line 7 does
+`import { ComponentProps } from "vue-component-type-helpers"`, but reka-ui declares that
+package in **neither** `dependencies` **nor** `peerDependencies` — only in its own
+devDependencies, at `^3.0.3`. Detector, verbatim:
+
+```
+node -p "JSON.stringify(require('reka-ui/package.json').dependencies)"                       # → absent
+node -p "require('reka-ui/package.json').devDependencies['vue-component-type-helpers']"      # → ^3.0.3
+```
+
+A dev-only declaration does not travel with an install, so **no consumer of reka-ui
+receives it**, and any consumer typechecking glass-ui's published `.d.ts` closure with
+`skipLibCheck: false` hit `TS2307: Cannot find module 'vue-component-type-helpers'`.
+glass-ui declares it as a peer so the type closure is part of the published contract
+rather than an accident of hoisting. The range matches reka-ui's own usage. When reka-ui
+ships the dependency correctly, this peer can be dropped in one line.
+
+_Release-path note (U-08's substitution, recorded rather than done silently)_
+
+This cut's close battery reads `npm run typecheck` + `npm test` +
+~~`node scripts/verify-governed-invariants.mjs`~~ **`node scripts/gate-register.mjs`** +
+`npm run verify:package` + the wired visual suite. The third command **does not exist**
+and cannot be run — detector, verbatim: `ls scripts/verify-governed-invariants.mjs` →
+`No such file or directory`; `git ls-files scripts/` → 15 files, absent. It was lost with
+the governance stash and `scripts/gate-register.mjs` is its committed successor: it
+re-derives the code-side register, parses the seat budget from its own authority, and
+exits non-zero on any violation.
+
+
 **`StatusDot`'s 7.0.0 cut is written down — two majors late.** The 7.0.0 rewrite
 replaced this component's entire API and shipped no migration rows at all, while
 `v-bind="$attrs"` made every retired prop a silent no-op: the call sites kept
@@ -367,7 +437,9 @@ _Props — `<Card>`_
 | `variant` (`"default" \| "selection" \| "interactive"`) | `selected` — PRESENCE is the signal. `selected` present makes the card an option (`role="option"`, a tab stop, `aria-selected`, pointer, hover/selected fill, press, focus ring); absent, the card is inert prose. `selected="false"` is an UNSELECTED option, not an inert card |
 | `dataHue` / `dataHueStrength` | `--glass-accent` written on the element by the caller — a per-instance rim hue is a CSS custom property, not a prop pair |
 | `material` | none — severed. `<Card>` is the elevated role; pass `tier` / `surface` / `deep` for the plate axes, or reach for `<Surface>` directly when you want a different role |
-| `shadow`, `tier`, `surface`, `deep`, `grain`, `specular`, `size`, `as` | retained (`size` is Card's; the rest are Surface's, forwarded). `grain` no longer defaults to `true` on Card — it takes Surface's own default |
+| `grain` | none — REMOVED from the whole library. Declared on `SurfaceProps` at 7.0.0 (defaulted `true` on Card, `false` on Surface) and gone at 8.0: it armed a `data-grain` attribute for a decoration the glass ladder now paints from its own tokens. Under `vueCompilerOptions.checkUnknownProps` a retained `<Card grain>` is a **hard typecheck error**, not a silent no-op — delete the attribute |
+| `specular` (`SurfaceSpecular` = `"off" \| "subtle" \| "full"`) | none — REMOVED from the whole library, with the `SurfaceSpecular` type (see the `./surface` table below). It set three `--glass-specular-intensity-*` overrides behind a `surface === "glass"` gate; write those custom properties on the element if you want the `"full"` register. `<Card specular="full">` is a hard typecheck error at 8.0 |
+| `shadow`, `tier`, `surface`, `deep`, `size`, `as` | retained. `size` and `shadow` are CARD's own at 8.0 — `shadow` moved off Surface and Card stamps its own `data-shadow`; `tier` / `surface` / `deep` are Surface's, forwarded |
 
 _Runtime + type exports on `./card`_
 
@@ -418,9 +490,31 @@ _Paint deltas a consumer will see without changing a line_
 The default elevated card gains its full rung stack (the role shadow no longer REPLACES the
 ladder's box-shadow, it composes with it), the plate edge gains elevation discrimination
 (`--ink-seam` 0.08 flush / `--ink-edge` 0.16 elevated, where both arms painted 4%), a card
-lifts one rung while a descendant holds keyboard focus, `grain` no longer defaults on, and
-every padding/gap/type rung is re-derived on the canonical series (title
+lifts one rung while a descendant holds keyboard focus, the grain overlay is gone with its
+prop, and every padding/gap/type rung is re-derived on the canonical series (title
 `--type-body × 1.272`, description `÷ 1.127838`, content rung 0).
+
+_`<Surface>` — the plate primitive goes THREE-PROP_
+
+`SurfaceProps` at 8.0 is `tier` / `surface` / `deep` / `class` (plus `as` from
+`PrimitiveProps`). Four props and one type are REMOVED, and every one of them is a
+breaking removal a consumer must delete at the call site: under
+`vueCompilerOptions.checkUnknownProps` (this library's own keystone) a retained attribute
+is a hard error, so nothing here fails silently.
+
+| removed at 8.0 | replacement |
+| --- | --- |
+| `material` (`SurfaceMaterial` = `"content" \| "elevated" \| "functional" \| "overlay"`) | `tier` — the four members were a bijection onto four of the five tiers under a second name, `wash` was unreachable through it, and `tier` beat it anyway. The `MATERIAL_TIERS` map is deleted with it |
+| `shadow` | `<Card shadow>` — the flag survives only where it has a grammar. Surface no longer stamps `data-shadow`; a plate that wants a cast is a `<Card>`, or writes the shadow itself |
+| `grain` | none — the decoration and its `data-grain` attribute are gone from the whole library |
+| `specular` | none — it wrote `--glass-specular-intensity-rest` / `-hover` / `-active` (0.04 / 0.18 / 0.26) behind a `surface === "glass"` gate. Write those three custom properties on the element to get the `"full"` register back; the `v-specular` arming goes with the prop |
+
+_Runtime + type exports on `./surface`_
+
+| Classification | Symbol |
+| --- | --- |
+| removed at 8.0 | `SurfaceMaterial` (type), `SurfaceSpecular` (type) — both declared at 7.0.0, both dead with their props |
+| retained | `Surface`, `SurfaceProps`, `SurfaceDecoration`, `SurfaceTier` |
 
 ## 7.0.0 (2026-07-17)
 
@@ -482,8 +576,14 @@ subpath, with a successor or `none`:
   (`yieldToMain` / `useYieldToMain` take no options and expose no priority enum).
 - `/surface`: `surfaceClass` / `decorationClass` → none (the resolver is now the private
   `resolveSurfaceClass`; compose `<Surface>` and let it own the class).
-- `/card`: `CardSurface` → `CardVariant` + the shared `Surface` axis (`/axes`); `CardSpecular`
-  → `SurfaceSpecular` (`/surface`; `<Card>` forwards `specular` to `<Surface>`);
+- `/card`: `CardSurface` → `CardVariant` + the shared `Surface` axis (`/axes`) [2026-08-09 ·
+  8.0.0 — **THE SUCCESSOR IS DEAD**: `CardVariant` is removed at 8.0 with the `variant` prop
+  it enumerated (§8.0.0 `./card` table). Coming from 6.x, go straight to the `surface` axis
+  and `selected`]; ~~`CardSpecular` → `SurfaceSpecular` (`/surface`; `<Card>` forwards
+  `specular` to `<Surface>`)~~ [2026-08-09 · 8.0.0 — **THE SUCCESSOR IS DEAD**:
+  `SurfaceSpecular` and the `specular` prop are both removed at 8.0, so this row's migration
+  target no longer exists. `CardSpecular` has no successor — write
+  `--glass-specular-intensity-rest` / `-hover` / `-active` on the element];
   `ScrollCardProps` / `ScrollCardHeaderProps` (+ the `ScrollCard` / `ScrollCardHeader`
   components) → the `ScrollCard` family is retired; compose `Card` inside a scroll container.
 - `/command`: `MenuItemVariants` → none (the menu-row treatment is applied internally).

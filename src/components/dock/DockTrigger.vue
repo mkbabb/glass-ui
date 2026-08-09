@@ -8,7 +8,7 @@ import {
 import { ChevronDown } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
 import { vSpecular } from "../../composables/glass";
-import DropdownMenuTrigger from "../dropdown-menu/DropdownMenuTrigger.vue";
+import DropdownMenuTrigger from "../menu/DropdownMenuTrigger.vue";
 
 /**
  * <DockTrigger> — the ONE dock overlay trigger (folds

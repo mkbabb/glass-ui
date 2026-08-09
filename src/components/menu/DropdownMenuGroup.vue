@@ -2,7 +2,7 @@
 import { computed, useAttrs, type HTMLAttributes } from "vue";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
-import { useMenuPart } from "./useMenuTrigger";
+import { useMenuPart } from "./context";
 
 export interface DropdownMenuGroupProps {
     class?: HTMLAttributes["class"];
@@ -23,7 +23,7 @@ const GroupComp = useMenuPart("Group");
         :is="GroupComp"
         v-bind="forwardedAttrs"
         as="div"
-        data-slot="dropdown-menu-group"
+        data-slot="menu-group"
         :class="cn(props.class)"
     >
         <slot />

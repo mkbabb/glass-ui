@@ -12,7 +12,7 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
-} from "@glass/components/dropdown-menu";
+} from "@glass/components/menu";
 
 const mounted: Array<ReturnType<typeof mount>> = [];
 
@@ -104,7 +104,7 @@ describe("DropdownMenu contract", () => {
 
         expect(menus).toHaveLength(1);
         expect(
-            document.body.querySelectorAll('[data-slot="dropdown-menu-content"]'),
+            document.body.querySelectorAll('[data-slot="menu-content"]'),
         ).toHaveLength(1);
         expect(wrapper.element.contains(menus[0]!)).toBe(false);
 
@@ -135,11 +135,11 @@ describe("DropdownMenu contract", () => {
             document.body.querySelectorAll('[role="menu"][data-state="open"]'),
         ).toHaveLength(1);
         expect(
-            document.body.querySelectorAll('[data-slot="dropdown-menu-content"]'),
+            document.body.querySelectorAll('[data-slot="menu-content"]'),
         ).toHaveLength(1);
 
         document.body
-            .querySelector<HTMLElement>('[data-slot="dropdown-menu-content"]')!
+            .querySelector<HTMLElement>('[data-slot="menu-content"]')!
             .dispatchEvent(
                 new KeyboardEvent("keydown", { key: "Escape", bubbles: true }),
             );
@@ -353,7 +353,7 @@ describe("DropdownMenu contract", () => {
         const wrapper = mountMenu();
         const trigger = await openClickMenu(wrapper);
         const subTrigger = document.body.querySelector<HTMLElement>(
-            '[data-slot="dropdown-menu-sub-trigger"]',
+            '[data-slot="menu-sub-trigger"]',
         )!;
         subTrigger.focus();
         subTrigger.dispatchEvent(
@@ -366,11 +366,11 @@ describe("DropdownMenu contract", () => {
             document.body.querySelectorAll('[role="menu"][data-state="open"]'),
         ).toHaveLength(2);
         expect(
-            document.body.querySelectorAll('[data-slot="dropdown-menu-sub-content"]'),
+            document.body.querySelectorAll('[data-slot="menu-sub-content"]'),
         ).toHaveLength(1);
 
         document.body
-            .querySelector<HTMLElement>('[data-slot="dropdown-menu-sub-content"]')!
+            .querySelector<HTMLElement>('[data-slot="menu-sub-content"]')!
             .dispatchEvent(
                 new KeyboardEvent("keydown", { key: "ArrowLeft", bubbles: true }),
             );
@@ -389,7 +389,7 @@ describe("DropdownMenu contract", () => {
     });
 
     it("does not publish a consumer-wrappable portal", async () => {
-        const surface = await import("@glass/components/dropdown-menu");
+        const surface = await import("@glass/components/menu");
         expect(surface).not.toHaveProperty("DropdownMenuPortal");
     });
 });

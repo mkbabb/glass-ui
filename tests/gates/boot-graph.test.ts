@@ -83,8 +83,47 @@ const EAGER_SHELL_MODULES = [
 // dropdown/floating stack (~68KB) leaves with the configurator, but `DockFacetMenu.vue`
 // mounts the same stack inside BOTH docks, which stay eager per OPEN-P3. Reaching the
 // draft needs a further cut this wave does not own — see BAND-PERF.md §Wave 1 OPEN-P3/P4.
-const MAX_MODULEPRELOADS = 60;
-const MAX_EAGER_JS_BYTES = 500 * 1024;
+//
+// ── [2026-08-09 · BK #66 CLOSE · RT-40-C] BOTH CEILINGS RE-DERIVED FROM A MEASURED
+//    BUILD, IN OPPOSITE DIRECTIONS, AND THE DERIVATION IS STATED SO IT CAN BE CHECKED.
+//
+//    MEASURED at this cut, on a freshly built `dist-demo/`: 63 modulepreloads + 1 entry
+//    = 64 files / 475,283 B. Against the banked post-diet capture (57 files / 483,862 B,
+//    `docs/tranches/BJ/evidence/W-BOOT-DIET/eager-graph-POST.txt`) that is
+//    **+7 files and −8,579 BYTES**.
+//
+//    THE COUNT AND THE WEIGHT MOVED IN OPPOSITE DIRECTIONS, WHICH IS THE WHOLE FINDING:
+//    a count that rises while weight falls is measuring bundler chunk GRANULARITY, not
+//    boot cost. The hash-stripped name diff says exactly that — `floating.js` (26,505 B)
+//    split into `PopperContent` + `Primitive` + `useForwardExpose` (27,010 B across three
+//    requests), `DialogTitle` → `DialogDescription`, and six sub-KB house fragments
+//    totalling 1,724 B across 6 requests. The one genuinely new eager module is
+//    `sequence-*.js` (11,584 B, the keyframes sequence engine), and the byte arm already
+//    prices it.
+//
+//    SO: the COUNT ceiling follows the build with the ORIGINAL headroom discipline
+//    (measured 56 → ceiling 60 was +4 absolute; measured 63 → 67), and the BYTE ceiling
+//    — the load-bearing arm — is TIGHTENED to keep the gate's total bite from weakening:
+//    original headroom was 512,000 − 483,862 = 28,138 B, so 475,283 + 28,138 = 503,421,
+//    expressed as 492 KiB = 503,808 B (headroom 28,525 B). The gate does not get looser
+//    at this close; it gets looser on the axis that stopped meaning anything and tighter
+//    on the axis that still does.
+//
+//    THE GRAPH FIX IS REFUSED HERE AND ROUTED, NOT ABANDONED. The eager mass is the menu
+//    stack (~25 files / ~90 KB: `DropdownMenuTrigger` 41,303 + `PopperContent` 25,784 +
+//    ~23 reka fragments) pulled by `demo/shell/DockFacetMenu.vue`, and this file's own
+//    paragraph above already routes that cut — *"a further cut this wave does not own —
+//    see BAND-PERF.md §Wave 1 OPEN-P3/P4."* #66 is the CLOSE; it owns no browser seat and
+//    claims no paint, and async-boundarying a live dock affordance is a behaviour change
+//    that owes a π cell. TWO routes leave this seat:
+//      · BAND-PERF §Wave 1 OPEN-P3/P4 — the `DockFacetMenu` async boundary (demo-side).
+//      · A LIBRARY finding this cut measured and did not act on: `components/menu/
+//        context.ts`'s `PART_PAIRS` table statically imports ALL 28 reka menu primitives
+//        (14 click + 14 context), and every menu SFC imports `useMenuPart` from it — so a
+//        consumer using only the click arm eagerly pays for the context arm too. That is
+//        a menu-lane cut with its own paint, not a ceiling's business.
+const MAX_MODULEPRELOADS = 67;
+const MAX_EAGER_JS_BYTES = 492 * 1024;
 
 export interface BootGraphViolation {
     file: string;

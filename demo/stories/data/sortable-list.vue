@@ -39,7 +39,7 @@ interface KanbanCard {
 
 const todo = ref<KanbanCard[]>([
     { id: "k1", title: "Audit token cascade" },
-    { id: "k2", title: "Write tags-input story" },
+    { id: "k2", title: "Write sortable-list story" },
     { id: "k3", title: "Port math-paper hero" },
 ]);
 const doing = ref<KanbanCard[]>([{ id: "k4", title: "Configurator reset" }]);

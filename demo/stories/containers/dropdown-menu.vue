@@ -17,7 +17,7 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
-} from "@glass/components/dropdown-menu";
+} from "@glass/components/menu";
 import { Button } from "@glass/components/button";
 import { Badge } from "@glass/components/badge";
 import { Surface } from "@glass/components/surface";

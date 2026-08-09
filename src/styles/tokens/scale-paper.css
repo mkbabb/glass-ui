@@ -64,7 +64,7 @@
 
     /* The destructive twin of --focus-ring-shadow. The
        aria-invalid ring is ONE register: every form control (Input/Textarea/
-       NumberField via `.input-pill`, SelectTrigger, ComboboxInput, TagsInput)
+       NumberField via `.input-pill`, SelectTrigger, ComboboxInput)
        reads `box-shadow: var(--invalid-ring)` instead of re-spelling the recipe
        inline. ONE geometry (the SAME `--focus-ring-width`), ONE tint knob
        (`--invalid-ring-tint`, the documented retint axis), resolving

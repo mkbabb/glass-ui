@@ -416,7 +416,19 @@ function runTypeResolverChecks(consumerRoot, pkg, sourceSurface, codeSpecifiers)
     const namespaceImports = codeSpecifiers
         .map((specifier, index) => `import * as publicModule${index} from ${JSON.stringify(specifier)};`)
         .join("\n");
-    writeFileSync(sourcePath, `${rootImports}\n${namespaceImports}\n`, "utf8");
+    // [2026-08-09 · BK #66 CLOSE] The ambient reference is ADDITIVE and deliberate.
+    // `@vueuse/core` declares `@types/web-bluetooth` as its own `dependency` precisely
+    // because `dist/index.d.ts:684-716` names `BluetoothLEScanFilter`,
+    // `BluetoothServiceUUID`, `BluetoothDevice` and `BluetoothRemoteGATTServer` as
+    // GLOBALS; the package is installed in the sandbox but TypeScript's automatic
+    // `@types/*` inclusion does not reach it here, so `skipLibCheck: false` convicted a
+    // peer's `.d.ts` for a gap in the SANDBOX. A triple-slash reference is used rather
+    // than a `types: [...]` compiler option on purpose: `types` RESTRICTS automatic
+    // inclusion to the named list, which would silently drop every other ambient package
+    // and weaken the check in a direction nobody asked for. This adds one and hides
+    // nothing.
+    const ambientReferences = '/// <reference types="web-bluetooth" />';
+    writeFileSync(sourcePath, `${ambientReferences}\n${rootImports}\n${namespaceImports}\n`, "utf8");
     const tsc = resolve(dirname(require_.resolve("typescript")), "../bin/tsc");
     const modes = [
         ["Bundler", "Bundler", "ESNext"],
@@ -596,6 +608,23 @@ function installTarball(tarball, pkg) {
                 .filter(([name]) => name !== "@mkbabb/value.js"),
         );
         consumerDependencies[pencilPeer] = pencilVersion;
+        // [2026-08-09 · BK #66 CURE-66-3] THE SANDBOX INSTALLS THE DECLARED CONTRACT AND
+        // NOTHING ELSE. It was briefly given a hand-injected
+        // `consumerDependencies["vue-component-type-helpers"] = "*"`, and that injection
+        // was a MASK: `reka-ui@2.10.1`'s `dist/index3.d.ts:7` does `import
+        // { ComponentProps } from "vue-component-type-helpers"` while declaring that
+        // package in NEITHER `dependencies` NOR `peerDependencies` — only in its own
+        // devDependencies, at `^3.0.3` (detector: `node -p
+        // "JSON.stringify(require('reka-ui/package.json').dependencies)"` → absent;
+        // `…devDependencies['vue-component-type-helpers']` → "^3.0.3"). No consumer
+        // install gets it from reka-ui, so a sandbox that injected it greened over a real
+        // `skipLibCheck: false` consumer break: the gate would have been the ONLY place
+        // the closure held. The cure is to make the closure the consumer's by CONTRACT —
+        // `vue-component-type-helpers` is a declared peerDependency of glass-ui, so it
+        // reaches this sandbox through the same `pkg.peerDependencies` path as every
+        // other peer (and through a real consumer's package manager the same way). Nothing
+        // is injected here, `skipLibCheck` stays `false`, and the day reka-ui packages its
+        // own dependency correctly the peer can be dropped and this gate is what proves it.
         writeFileSync(resolve(consumerRoot, "package.json"), JSON.stringify({
             name: "glass-ui-installed-consumer",
             private: true,

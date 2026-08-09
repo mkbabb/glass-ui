@@ -4,7 +4,7 @@ import type { SelectionValue } from "../_shared/selection";
 import { isSelectionValue } from "../_shared/selection";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
-import { useMenuPart } from "./useMenuTrigger";
+import { useMenuPart } from "./context";
 
 export interface DropdownMenuRadioGroupProps {
     modelValue?: SelectionValue;
@@ -39,7 +39,7 @@ function updateModelValue(value: unknown): void {
         v-bind="forwardedAttrs"
         as="div"
         :model-value="modelValue"
-        data-slot="dropdown-menu-radio-group"
+        data-slot="menu-radio-group"
         :class="cn(props.class)"
         @update:model-value="updateModelValue"
     >

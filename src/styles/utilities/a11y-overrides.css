@@ -112,9 +112,9 @@ html.no-transition *:not([data-allow-motion])::after {
     .dock-select-trigger:focus-visible,
     .dock-dropdown-trigger:focus-visible,
     /* the library-rendered menu trigger — it carries an INHERENT box-shadow ring
-       (dropdown-menu/styles.css), not an opted-in utility, so it needs the same
+       (glass/overlay-plate.css), not an opted-in utility, so it needs the same
        Highlight restore or it is the one focusable that vanishes under WHC. */
-    .dropdown-menu__trigger:focus-visible,
+    .menu__trigger:focus-visible,
     .dark-mode-toggle-button:focus-visible,
     .field-control:focus-visible,
     .input-pill:focus,

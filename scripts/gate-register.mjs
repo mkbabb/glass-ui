@@ -39,7 +39,12 @@
 //
 // ON THE TITLE DRIFT — REPAIRED, not suppressed. [2026-08-08 · BK #65] The one drifted
 // row, `reka.tags-input.value-binding`, adopts the HEAD title in C20 and
-// `declaredTitleDrift` is `[]`: the register reads `drift:0`. The pinned-set mechanism is
+// `declaredTitleDrift` is `[]`: the register reads `drift:0`. [2026-08-09 · BK #66 CLOSE
+// · RT-18A — that row is GONE from C20 along with the deleted `tags-input` component, so
+// the sentence above is now a statement about how `drift` reached 0, not about a row that
+// exists. `drift:0` is unchanged and the mechanism below is untouched; the reverse-
+// direction bite in `gate-register.test.ts` re-homed onto a surviving row rather than
+// being deleted with its subject.] The pinned-set mechanism is
 // UNCHANGED and both bites stay live — a NEW drift REDs, and a silent repair of a
 // recorded one REDs too. ~~C19 is sha-pinned; the pin is quoted at TERMINAL-ROSTER.md:159
 // and :215, so row #9 may not edit it — #65 owns §B.5 and owns the successor cut. The
@@ -83,8 +88,49 @@ export const ROSTER_MD_PATH =
 // The provenance pin. TERMINAL-ROSTER.md:159 (#9), :215 (#65), §B.5 quote C19's
 // `dc05df91…`; those quotations still describe C19, which is unchanged on disk. This is
 // C20's.
+//
+// [2026-08-09 · BK #66 CLOSE · RT-65-C′] RE-CUT IN PLACE. ~~`154210323fa22cc0…`~~ was C20
+// as #65 wrote it; #66's export cut moves source files under three of its rows, so the
+// roster had to follow and the pin with it. C20 is edited IN PLACE rather than superseded:
+// it is a BK-authored artefact quoted only inside #65's own record, and the
+// never-edit-in-place law was specific to C19 being quoted in committed records outside
+// that fence. C19 stays byte-frozen at `dc05df91…` forever, so that law is permanently
+// satisfied.
+//
+// ~~"this is the SECOND and last movement of this constant"~~ [2026-08-09 · BK #66 CURE-66-1
+// — STRUCK, and the cause is named rather than dressed as a plan]: this constant moved a
+// THIRD time, within the same row, because act 3 below was ASSERTED and not RUN. The two
+// `activeSemanticClassIdDigests` written at the first cut (`28466877…` / `41a2b90e…`) were
+// hand-typed and are not what the roster's own recipe emits. Re-derived here and re-pinned
+// to `a562639a…` / `b1b725f4…`; the roster digest moves `00086bd4…` → `282d05cf…` with it.
+// The recipe is the roster's own (`machineLaw.semanticClassDigestInput`) and was verified
+// at this cure to reproduce HEAD's pinned pair byte-exactly from HEAD's own rows, so the
+// derivation is checked in both directions. No further movement is promised: a promise is
+// what failed here.
+//
+// The four acts behind the new digest, each with its own reason to exist:
+//   1. RT-65-C  — `behavior.dropdown.keyboard-roving-typeahead`.sourcePath →
+//                 `tests/components/menu/contract.test.ts`, and
+//                 `external.types.dropdown-menu`.sourcePath →
+//                 `tests/components/menu/public-contracts.test-d.ts`. The IDs are KEPT:
+//                 a retitle is a drift this row would have to declare, and #65 held the
+//                 same line for the same reason.
+//   2. RT-18A   — `tags-input.ime-delimiter-guard` (whole file deleted) and
+//                 `reka.tags-input.value-binding` (the case cannot compile without the
+//                 component) LEAVE the roster. `active 48 → 46`.
+//   3. counts + `machineLaw.activeSemanticClasses` + both
+//      `activeSemanticClassIdDigests` DERIVED FROM THE ROWS. The counts were derived at
+//      the first cut; the two digests were NOT — they were hand-typed, and CURE-66-1
+//      replaced them with the recipe's actual output. Detector, re-runnable:
+//      `sha256(JSON.stringify(activeVitest.filter(r => r.semanticClass === C).map(r => r.id)))`
+//      over the file on disk must equal each pinned value.
+//   4. RT-65-E  — `machineLaw.countedCeilingExpression` DELETED. It restated §C-1's
+//                 illegal charge outside the `authority` block C-2 authorised deleting:
+//                 duplicated derived data by the convergence law, and not load-bearing —
+//                 `remainingSeats` is computed from `SEAT_BUDGET` below (:544-545,
+//                 measured at CURE-66-1), never from the roster.
 export const PINNED_ROSTER_SHA256 =
-    "154210323fa22cc061ca2c18394cd9bcf7e4465f0b29676c2866c28f10667411";
+    "282d05cf8f931876f6001e42f864100fcc3ab6a19ec1f5e0d75b3ec8d9c72939";
 
 // The declared budget, now itself CHECKED against §B.5's heading, family table and sum
 // line rather than standing as the only independent record of the ceiling.
@@ -210,7 +256,9 @@ export const CALL_FORM =
 // `describe.skip(` / `.todo(` / `.skipIf(` wrapping a whole file left every rostered row
 // inside it scored BOUND with zero violations — measured pre-cure at HEAD `e2b7a0b5`:
 // `tests/styles/token-graph.test.ts`'s outer describe demoted to `describe.skip(` returned
-// `drift:[reka.tags-input.value-binding] violations:0`, i.e. the register saw nothing. The
+// `drift:[reka.tags-input.value-binding] violations:0`, i.e. the register saw nothing (a
+// PRE-CURE probe figure, dated to its own moment — [2026-08-09 · BK #66 CLOSE · RT-18A]
+// that row no longer exists; the probe's finding does). The
 // runner executes NONE of those cases, so under PASS/FAIL/ABSENT all of them are ABSENT:
 // the same scoring lie the strict call form forbids, one nesting level up.
 //

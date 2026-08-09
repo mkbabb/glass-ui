@@ -2,7 +2,7 @@
 import { computed, useAttrs, type HTMLAttributes } from "vue";
 import type { DismissableContentEmits } from "../_shared/interaction";
 import { overlayContentAttrs, useDockParticipation } from "../_shared/overlay";
-import { useMenuPart } from "./useMenuTrigger";
+import { useMenuPart } from "./context";
 
 export interface DropdownMenuSubContentProps {
     sideOffset?: number;
@@ -43,7 +43,7 @@ const dock = useDockParticipation();
 const contentAttrs = computed(() =>
     overlayContentAttrs({
         role: "menu",
-        slot: "dropdown-menu-sub-content",
+        slot: "menu-sub-content",
         dock: dock.portalAttrs.value,
         class: props.class,
     }),

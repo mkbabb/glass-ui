@@ -253,22 +253,11 @@ describe("3. exact W1 bindings", () => {
         expect(demo).not.toContain("<button");
     });
 
-    it("F12 → field container + public Chip child (boundary-sharing, not a pill)", () => {
-        const tags = rule(read("src/components/tags-input/styles.css"), "\\.tags-input");
-        expect(tags).toBeDefined();
-        // the CONTAINER is a near-rect field, never a pill/control stadium
-        expect(tags).toContain("border-radius: var(--radius-field)");
-        expect(tags).not.toContain("--radius-pill");
-        expect(tags).not.toContain("--radius-control");
-        // the child inset is present (gap + padding) and no overflow clips the child
-        expect(tags).toMatch(/gap:/);
-        expect(tags).toMatch(/padding:/);
-        expect(tags).not.toContain("overflow: hidden");
-        // the pill silhouette comes from <Chip>, not a hand-rolled radius on the container
-        const item = read("src/components/tags-input/TagsInputItem.vue");
-        expect(item).toContain("import { Chip }");
-        expect(item).toContain("<Chip");
-    });
+    // [2026-08-09 · BK #66 CLOSE · RT-18A] ~~F12 → field container + public Chip
+    // child (boundary-sharing, not a pill)~~ — STRUCK WITH ITS SUBJECT. The case read
+    // `src/components/tags-input/styles.css` and `TagsInputItem.vue` and nothing else;
+    // the component is deleted, so there is no field container left to assert a role
+    // radius on. Not a rostered seat (C20 carries no row for this file), so seats +0.
 
     it("keeps the real Input on the stadium pill, never on the tile rung", () => {
         const field = strip(read("src/components/_shared/field/control.css"));

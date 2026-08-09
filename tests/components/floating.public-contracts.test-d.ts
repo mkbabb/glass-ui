@@ -33,7 +33,11 @@ type PopoverContract = [
     Assert<Has<"openDelay", PopoverProps>>,
     Assert<Has<"closeDelay", PopoverProps>>,
     Assert<Has<"keepDockOpen", PopoverProps>>,
-    Assert<Lacks<"modal", PopoverProps>>,
+    // [2026-08-09 · BK #66 CLOSE · RT-40-D] ~~Assert<Lacks<"modal", PopoverProps>>~~ — `modal` EXISTS now. It is
+    // THE A11Y AXIS (`Popover.vue:26-44`): there used to be no way to reach the
+    // modal state at all, and the cure was to add the prop, not to keep asserting
+    // its absence.
+    Assert<Has<"modal", PopoverProps>>,
     Assert<Has<"onUpdate:open", InstanceType<typeof Popover>["$props"]>>,
     Assert<Has<"asChild", PopoverTriggerProps>>,
     Assert<Lacks<"as", PopoverTriggerProps>>,
@@ -46,7 +50,9 @@ type PopoverContentContract = [
     Assert<Has<"align", PopoverContentProps>>,
     Assert<Has<"alignOffset", PopoverContentProps>>,
     Assert<Has<"portal", PopoverContentProps>>,
-    Assert<Has<"surface", PopoverContentProps>>,
+    // [2026-08-09 · BK #66 CLOSE · RT-40-D] `surface` retired off the content props with the #89 W-OVERLAY
+    // register fold (see the menu contract for the full grounds). Inverted.
+    Assert<Lacks<"surface", PopoverContentProps>>,
     Assert<Lacks<"role", PopoverContentProps>>,
     Assert<Has<"ariaLabel", PopoverContentProps>>,
     Assert<Lacks<"as", PopoverContentProps>>,
@@ -83,8 +89,11 @@ type TooltipContentContract = [
     Assert<Has<"sideOffset", TooltipContentProps>>,
     Assert<Has<"align", TooltipContentProps>>,
     Assert<Has<"alignOffset", TooltipContentProps>>,
-    Assert<Has<"surface", TooltipContentProps>>,
-    Assert<Has<"ariaLabel", TooltipContentProps>>,
+    // [2026-08-09 · BK #66 CLOSE · RT-40-D] `surface` retired with the register fold; `ariaLabel` retired with it
+    // (`TooltipContentProps` is `FloatingPlacementProps` + `class`, nothing else).
+    // Both invert so a re-mint is caught.
+    Assert<Lacks<"surface", TooltipContentProps>>,
+    Assert<Lacks<"ariaLabel", TooltipContentProps>>,
     Assert<Lacks<"as", TooltipContentProps>>,
     Assert<Lacks<"asChild", TooltipContentProps>>,
     Assert<Lacks<"forceMount", TooltipContentProps>>,

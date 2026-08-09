@@ -331,7 +331,9 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
                 "src/components/_shared/field/control.css",
             ],
             [".input-bar-field::placeholder", "src/styles/utilities/components.css"],
-            [".tags-input__input::placeholder", "src/components/tags-input/styles.css"],
+            // [2026-08-09 · BK #66 CLOSE · RT-18A] the `.tags-input__input::placeholder`
+            // register left with its component. Three registers remain; the token law is
+            // unchanged and still proved on every register that exists.
         ];
 
         function ruleBlock(source: string, selector: string): string | null {

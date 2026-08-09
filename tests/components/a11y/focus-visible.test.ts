@@ -2,7 +2,7 @@
 //
 // THE ASSERTION (ECOUTE §3, verbatim): "Every focusable trigger renders a visible
 // focus indicator." RED at HEAD, and for a stronger reason than absence:
-// `dropdown-menu/styles.css` carried exactly one `.dropdown-menu__trigger` rule and
+// `dropdown-menu/styles.css` carried exactly one `.menu__trigger` rule and
 // it was `outline: none` — the UA ring SUPPRESSED with nothing painted in its place,
 // on a component that renders a bare `<button>`. 2.4.7 by commission, not omission,
 // so a keyboard user tabbing into a menu saw nothing the browser would otherwise
@@ -39,9 +39,9 @@ describe("G-FOCUS-VISIBLE — every library-rendered trigger shows keyboard focu
     it("DropdownMenuTrigger carries an inherent focus indicator", () => {
         const css = read(MENU_CSS);
         const rule = css.match(
-            /\.dropdown-menu__trigger:focus-visible\s*\{([\s\S]*?)\}/,
+            /\.menu__trigger:focus-visible\s*\{([\s\S]*?)\}/,
         );
-        expect(rule, `${MENU_CSS} declares .dropdown-menu__trigger:focus-visible`)
+        expect(rule, `${MENU_CSS} declares .menu__trigger:focus-visible`)
             .not.toBeNull();
         // The ONE house focus register, not a second ring minted beside it.
         expect(rule![1]).toMatch(/box-shadow:\s*var\(--focus-ring-shadow\)/);
@@ -53,24 +53,24 @@ describe("G-FOCUS-VISIBLE — every library-rendered trigger shows keyboard focu
 
     it("it is :focus-visible, never bare :focus — a pointer-opened menu paints no ring", () => {
         const css = read(MENU_CSS);
-        expect(css).not.toMatch(/\.dropdown-menu__trigger:focus\b(?!-visible)/);
+        expect(css).not.toMatch(/\.menu__trigger:focus\b(?!-visible)/);
     });
 
     it("the bare-trigger UA-ring suppression does not come back", () => {
         // The HEAD defect, held as an invariant: an unqualified
-        // `.dropdown-menu__trigger { outline: none }` suppresses the browser's own
+        // `.menu__trigger { outline: none }` suppresses the browser's own
         // ring on EVERY register while this file paints one on only one of them —
         // which is how a component ends up with less focus than a bare <button>.
         // `outline: none` is allowed only where a ring is painted in its place.
         const live = read(MENU_CSS).replace(/\/\*[\s\S]*?\*\//g, "");
-        expect(live).not.toMatch(/\.dropdown-menu__trigger\s*\{[^}]*outline:\s*none/);
+        expect(live).not.toMatch(/\.menu__trigger\s*\{[^}]*outline:\s*none/);
     });
 
     it("the component really renders the class the rule selects", () => {
         // A rule that selects a class no template emits is an indicator that is still
         // absent — the failure mode a CSS-only assert would sail past.
-        expect(read("src/components/dropdown-menu/DropdownMenuTrigger.vue")).toMatch(
-            /dropdown-menu__trigger/,
+        expect(read("src/components/menu/DropdownMenuTrigger.vue")).toMatch(
+            /menu__trigger/,
         );
     });
 
@@ -83,7 +83,7 @@ describe("G-FOCUS-VISIBLE — every library-rendered trigger shows keyboard focu
             /@media \(forced-colors: active\)\s*\{([\s\S]*?)\n    \}/,
         );
         expect(block).not.toBeNull();
-        expect(block![1]).toMatch(/\.dropdown-menu__trigger:focus-visible/);
+        expect(block![1]).toMatch(/\.menu__trigger:focus-visible/);
         expect(block![1]).toMatch(/outline:\s*2px solid Highlight/);
     });
 });

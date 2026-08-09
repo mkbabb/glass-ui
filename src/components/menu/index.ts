@@ -1,4 +1,4 @@
-export type { MenuTrigger } from "./useMenuTrigger";
+export type { MenuTrigger } from "./context";
 
 export {
     default as DropdownMenu,

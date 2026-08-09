@@ -158,10 +158,16 @@ describe("MusicStaff public tokens", () => {
     });
 
     it("writes only private vars inline, in every mode", () => {
-        for (const props of [
+        // [2026-08-09 · BK #66 CLOSE · RT-40-D] the two literals have DIFFERENT shapes, so
+        // the array's element type is a union with `?: undefined` legs that no longer
+        // satisfies `mount`'s props parameter. Annotating the array against the
+        // component's own published props type is the honest statement of intent —
+        // and it now also proves both literals are valid `MusicStaffProps`.
+        const modes: InstanceType<typeof MusicStaff>["$props"][] = [
             { notes, label: "Score" },
-            { label: "Loading", mode: "loading" as const, progress: 0.5 },
-        ]) {
+            { label: "Loading", mode: "loading", progress: 0.5 },
+        ];
+        for (const props of modes) {
             const wrapper = mount(MusicStaff, { props });
             const inline = wrapper.get("figure").attributes("style") ?? "";
             for (const token of PUBLIC) {

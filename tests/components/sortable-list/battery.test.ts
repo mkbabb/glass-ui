@@ -43,7 +43,12 @@
 // `RECORD.md` §1 holds them once, and two copies of a figure is how one goes stale.
 
 import { mount } from "@vue/test-utils";
-import { defineComponent, nextTick, ref } from "vue";
+import {
+    defineComponent,
+    nextTick,
+    ref,
+    type ComponentPublicInstance,
+} from "vue";
 import { afterEach, describe, expect, it } from "vitest";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 
@@ -604,7 +609,15 @@ describe("G-9 GUARD — a gesture earns the transaction before it speaks", () =>
         await nextTick();
 
         expect(wrapper.get("[aria-live]").text()).toBe("");
-        expect(wrapper.findComponent(SortableList).emitted("reorder")).toBeUndefined();
+        // [2026-08-09 · BK #66 CLOSE · RT-40-D] the generic SFC matches VTU's
+        // `FunctionalComponent` overload, which returns `DOMWrapper<Node>` (no
+        // `.emitted`). Naming the instance type selects the wrapper overload that
+        // carries the emit log; the assertion is unchanged.
+        expect(
+            wrapper
+                .findComponent<ComponentPublicInstance>(SortableList)
+                .emitted("reorder"),
+        ).toBeUndefined();
         expect(ghosts()).toHaveLength(0);
         wrapper.unmount();
     });

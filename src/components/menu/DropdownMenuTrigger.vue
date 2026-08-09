@@ -4,7 +4,7 @@ import { injectDropdownMenuRootContext } from "reka-ui";
 import type { PrimitiveProps } from "../_shared/primitive";
 import { fixedHostAttrs } from "../_shared/primitive";
 import { cn } from "../_shared/class-names";
-import { useMenuPart, useMenuTrigger } from "./useMenuTrigger";
+import { useMenuPart, useMenuTrigger } from "./context";
 
 export type DropdownMenuTriggerAction = "click" | "pointerdown";
 
@@ -69,8 +69,8 @@ function onClickCapture(event: MouseEvent): void {
         as="button"
         :as-child="asChild"
         :disabled="disabled"
-        :class="cn('dropdown-menu__trigger', props.class)"
-        data-slot="dropdown-menu-trigger"
+        :class="cn('menu__trigger', props.class)"
+        data-slot="menu-trigger"
         @pointerdown.capture="onPointerDown"
         @pointercancel.capture="suppressTrailingClick = false"
         @click.capture="onClickCapture"

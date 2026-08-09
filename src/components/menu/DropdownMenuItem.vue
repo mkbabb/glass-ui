@@ -2,7 +2,7 @@
 import { computed, useAttrs, type HTMLAttributes } from "vue";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
-import { useMenuPart } from "./useMenuTrigger";
+import { useMenuPart } from "./context";
 
 export interface DropdownMenuItemProps {
     disabled?: boolean;
@@ -38,9 +38,9 @@ const ItemComp = useMenuPart("Item");
         as="div"
         :disabled="disabled"
         :text-value="textValue"
-        data-slot="dropdown-menu-item"
+        data-slot="menu-item"
         :data-inset="inset ? '' : undefined"
-        :class="cn('dropdown-menu__item interactive-item glass-menu-row', props.class)"
+        :class="cn('menu__item interactive-item glass-menu-row', props.class)"
         @select="emit('select', $event)"
     >
         <slot />

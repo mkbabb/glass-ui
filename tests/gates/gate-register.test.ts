@@ -46,16 +46,19 @@ interface RosterRow {
     currentRegistration: string;
 }
 
-const PINNED_DRIFT_ID = "reka.tags-input.value-binding";
-
 /**
  * A rostered row registered as a plain `it("…")`, so a bite can demote exactly that call
- * form. Never the pinned-drift row.
+ * form.
+ *
+ * [2026-08-09 · BK #66 CLOSE · RT-18A] ~~Never the pinned-drift row.~~ The
+ * `PINNED_DRIFT_ID` constant is GONE with its row: C20's `declaredTitleDrift` has been
+ * `[]` since #65 repaired it, and the one row it named (`reka.tags-input.value-binding`)
+ * left the roster when `tags-input` was deleted. A skip-guard against a row that cannot
+ * exist is dead weight that reads as live protection.
  */
 const plainVictim = (): { row: RosterRow; quoted: string; source: string } => {
     const roster = JSON.parse(realIo.read(ROSTER_PATH));
     for (const row of roster.activeVitest as RosterRow[]) {
-        if (row.id === PINNED_DRIFT_ID) continue;
         const source = realIo.read(row.sourcePath);
         for (const quote of ['"', "'", "`"]) {
             const quoted = `${quote}${row.currentRegistration}${quote}`;
@@ -67,16 +70,20 @@ const plainVictim = (): { row: RosterRow; quoted: string; source: string } => {
 
 /**
  * A rostered FILE that wraps its cases in a `describe(` and carries at least two plainly
- * registered rows — the victim for the BLOCK-level bites (round-3 cure #1). The pinned-drift
- * row's file is excluded whole, so a block bite never entangles the one declared drift.
+ * registered rows — the victim for the BLOCK-level bites (round-3 cure #1).
+ *
+ * [2026-08-09 · BK #66 CLOSE · RT-18A] ~~The pinned-drift row's file is excluded whole, so
+ * a block bite never entangles the one declared drift.~~ There is no declared drift and no
+ * pinned-drift row: `declaredTitleDrift` has been `[]` since #65's repair, and the row that
+ * constant named left the roster with the deleted `tags-input` component. The exclusion is
+ * dropped rather than re-pointed — pointing it at an arbitrary survivor would be a fence
+ * around nothing, dressed as care.
  */
 const blockVictim = (): { rows: RosterRow[]; source: string; sourcePath: string } => {
     const roster = JSON.parse(realIo.read(ROSTER_PATH));
     const rows = roster.activeVitest as RosterRow[];
-    const driftPath = rows.find((r) => r.id === PINNED_DRIFT_ID)?.sourcePath;
     const byPath = new Map<string, RosterRow[]>();
     for (const row of rows) {
-        if (row.sourcePath === driftPath) continue;
         const source = realIo.read(row.sourcePath);
         if (!source.includes("describe(")) continue;
         const plain = ['"', "'", "`"].some((quote) =>
@@ -111,12 +118,19 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
         // Figure A — §B.5, exactly 60, user-mandated ceiling.
         expect(report.seats.total).toBe(SEAT_BUDGET);
 
-        // Figure B — recomputed from the C19 arrays, never read off `counts`.
-        expect(report.counts.activeVitest).toBe(48);
+        // Figure B — recomputed from the C20 arrays, never read off `counts`.
+        // [2026-08-09 · BK #66 CLOSE · RT-18A] ~~48 / 53 / 7~~ RE-PINNED, and every moved
+        // figure carries its act. Deleting the `tags-input` component deletes TWO active
+        // rows — `tags-input.ime-delimiter-guard` (its whole contract file goes) and
+        // `reka.tags-input.value-binding` (the case mounts `TagsInput`/`TagsInputItem`/
+        // `TagsInputItemText` and cannot compile without them). #65 §(g) pre-ruled a ONE-row
+        // movement (48→47 / 53→52 / 7→8); it was one seat short, measured here against the
+        // roster itself. `hardReserved` · `conditionalReserved` · `external` are UNMOVED.
+        expect(report.counts.activeVitest).toBe(46);
         expect(report.counts.hardReservedVitest).toBe(4);
         expect(report.counts.conditionalReservedVitest).toBe(1);
-        expect(report.counts.worstCaseCountedSeats).toBe(53);
-        expect(report.counts.remainingSeats).toBe(7);
+        expect(report.counts.worstCaseCountedSeats).toBe(51);
+        expect(report.counts.remainingSeats).toBe(9);
         expect(report.counts.externalEnforcement).toBe(11);
 
         // The provenance pin #9/#65 quote.
@@ -181,17 +195,25 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
             JSON.parse(realIo.read(SEAT_BINDING_PATH)).declaredTitleDrift,
         ).toEqual([]);
 
+        // [2026-08-09 · BK #66 CLOSE · RT-18A] THE REVERSE-DIRECTION PROOF RE-HOMES; IT
+        // IS NOT DELETED. #65 re-authored this arm precisely because an emptied drift set
+        // is the one state that can go vacuous-green, and its counter-proof re-staled
+        // `reka.tags-input.value-binding` — a row this cut deletes with its component. An
+        // arm whose subject dies must find a new subject or admit it stopped proving
+        // anything; deleting it would have re-opened the exact hole #65 closed. So the
+        // stale-title injection now runs over the FIRST SURVIVING active row, chosen from
+        // the roster at run time rather than named as a literal — which also means no
+        // future component deletion can silently hollow this case again.
+        const survivor = (JSON.parse(realIo.read(ROSTER_PATH)).activeVitest as RosterRow[])[0]!;
         const restaled = realIo
             .read(ROSTER_PATH)
             .replace(
-                "TagsInput: item text renders from `value=` (the stale `tag=` idiom is gone)",
-                "TagsInput: the active item resolves `data-[state=active]` (the `tag=` idiom is gone)",
+                JSON.stringify(survivor.currentRegistration).slice(1, -1),
+                "a registration nobody wrote",
             );
         expect(restaled).not.toBe(realIo.read(ROSTER_PATH));
         const reRed = verifyGateRegister(ioWith(ROSTER_PATH, restaled));
-        expect(reRed.titleDrift.map((d) => d.id)).toEqual([
-            "reka.tags-input.value-binding",
-        ]);
+        expect(reRed.titleDrift.map((d) => d.id)).toEqual([survivor.id]);
         expect(reRed.violations.some((v) => v.includes("title drift set moved"))).toBe(
             true,
         );
@@ -219,9 +241,7 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
 
     it("BITE — severing a rostered `it(` title REDs as an undeclared drift", () => {
         const roster = JSON.parse(realIo.read(ROSTER_PATH));
-        const victim = roster.activeVitest.find(
-            (r: { id: string }) => r.id !== "reka.tags-input.value-binding",
-        );
+        const victim = roster.activeVitest[0] as RosterRow;
         const severed = realIo
             .read(victim.sourcePath)
             .replace(victim.currentRegistration, "a title nobody rostered");
@@ -240,9 +260,7 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
         // The difference between "the words appear in the file" and "an executable case
         // asserts this". Demote a real registration to prose and the row must drift.
         const roster = JSON.parse(realIo.read(ROSTER_PATH));
-        const victim = roster.activeVitest.find(
-            (r: { id: string }) => r.id !== "reka.tags-input.value-binding",
-        );
+        const victim = roster.activeVitest[0] as RosterRow;
         const source = realIo.read(victim.sourcePath);
         for (const quote of ['"', "'", "`"]) {
             const needle = `${quote}${victim.currentRegistration}${quote}`;

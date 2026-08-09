@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import { defineComponent, nextTick, ref } from "vue";
+import { defineComponent, nextTick, ref, type ComponentPublicInstance } from "vue";
 import { ComboboxRoot, DialogRoot } from "reka-ui";
 import {
     CommandDialog,
@@ -98,13 +98,24 @@ describe("CommandDialog", () => {
 
         // …and nothing downstream was told it is controlled. `undefined` is the
         // only value reka's passive `useVModel` reads as "nobody owns this".
-        const dialogRoot = wrapper.findComponent(DialogRoot);
+        // [2026-08-09 · BK #66 CLOSE · RT-40-D] reka's roots are `DefineSetupFnComponent`s, so
+        // the bare selector matches VTU's `FunctionalComponent` overload and returns a
+        // `DOMWrapper` with no `.props()`. The explicit type argument selects the
+        // wrapper overload; every assertion below is byte-unchanged.
+        const dialogRoot = wrapper.findComponent<typeof DialogRoot>(DialogRoot);
         expect(dialogRoot.props("open")).toBeUndefined();
         // The two reka defaults an absent-prop cast silently inverted.
         expect(dialogRoot.props("modal")).toBe(true);
         expect(dialogRoot.props("unmountOnHide")).toBe(true);
 
-        const comboboxRoot = wrapper.findComponent(ComboboxRoot);
+        // [2026-08-09 · BK #66 CLOSE · RT-40-D] `ComboboxRoot` is generic over the option
+        // value, so neither the bare selector nor an instantiation expression reaches
+        // VTU's wrapper overload. The instance shape is named for exactly the two
+        // props this case reads — which is also the honest statement of what is under
+        // test: the open axis, not the whole reka surface.
+        const comboboxRoot = wrapper.findComponent<
+            ComponentPublicInstance<{ open?: boolean; defaultOpen?: boolean }>
+        >(ComboboxRoot);
         expect(comboboxRoot.props("open")).toBeUndefined();
         expect(comboboxRoot.props("defaultOpen")).toBe(true);
 

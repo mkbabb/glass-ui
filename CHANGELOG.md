@@ -1,6 +1,46 @@
 # Changelog
 
-## 8.0.0 (unreleased — accruing; `MIGRATION.md` §8.0.0 is the complete break list)
+## 8.0.0 — 2026-08-09
+
+`MIGRATION.md` §8.0.0 is the complete break list.
+
+### Changed — the export surface is re-cut, once, whole
+
+`exports` 66 → 70 keys. `./dropdown-menu` → `./menu` (the fourteen `DropdownMenu*` SFC
+names are unchanged); `./forms` retires into `./input` · `./textarea` · `./checkbox` ·
+`./radio-group`; `./sheet` mints, repairing a specifier that already had importers and
+resolved to nothing. One subpath per public component, in both directions. The
+`.dropdown-menu__*` classes and the `data-slot` values renamed with the family.
+
+### Removed — `TagsInput`
+
+The whole family, its directory, story and contract test. Never published on a subpath;
+zero specifier and zero symbol edges across the 19-root consumer walk. No replacement.
+
+### Fixed — the release path was RED and nobody had measured it
+
+Two `release.yml` steps failed at the tag commit and no seat had run them: `npm run
+typecheck`'s second arm (`vue-tsc -p tsconfig.test.json`) carried **43 type errors**, and
+`npm run verify:package` failed its bundle ratchet. Both are green here. The type errors
+were real contract rot, not noise — retired props (`material`, `variant`, `specular`,
+`surface`, `ariaLabel`, `onLoadingStatusChange`) still asserted as PRESENT by
+`.test-d.ts` files, a required `dprPolicy` option never passed at 15 call sites, and a
+duplicated object key. Every dead assertion was **inverted** rather than deleted, so a
+re-minted prop turns them RED.
+
+### Added — `vue-component-type-helpers` is a declared peer, because reka-ui does not declare it
+
+`reka-ui@2.10.1`'s `dist/index3.d.ts` imports `ComponentProps` from
+`vue-component-type-helpers` while listing that package in neither its `dependencies` nor
+its `peerDependencies` — only in its own devDependencies, at `^3.0.3`. No consumer install
+gets it from reka-ui, so any consumer typechecking glass-ui's published types with
+`skipLibCheck: false` hit `TS2307` on an upstream packaging defect. glass-ui now declares
+`vue-component-type-helpers: ^3.0.3` as a peer so the type closure is part of the contract
+and a package manager resolves it. **If you already vendor it (via `vue-tsc`, for example)
+nothing changes; if you type-check with `skipLibCheck: false` and did not, this is what was
+breaking.** The declaration is a workaround for someone else's packaging and can be dropped
+the day reka-ui ships it correctly.
+
 
 ### Changed — the dock's "rail" vocabulary is struck; the hairline is built
 

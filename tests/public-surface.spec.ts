@@ -18,9 +18,13 @@ import * as Dark from "@glass/composables/dark";
 import * as DataTableSurface from "@glass/components/data-table";
 import * as DialogSurface from "@glass/components/dialog";
 import * as Dock from "@glass/components/dock";
-import * as DropdownMenuSurface from "@glass/components/dropdown-menu";
+import * as MenuSurface from "@glass/components/menu";
 import * as ExpandableContainerSurface from "@glass/components/expandable-container";
-import * as Forms from "@glass/forms";
+import * as InputSurface from "@glass/components/input";
+import * as TextareaSurface from "@glass/components/textarea";
+import * as CheckboxSurface from "@glass/components/checkbox";
+import * as RadioGroupSurface from "@glass/components/radio-group";
+import * as SheetSurface from "@glass/components/sheet";
 import * as HandMarkSurface from "@glass/components/handmark";
 import * as InfiniteScrollSurface from "@glass/components/infinite-scroll";
 import * as Keyboard from "@glass/composables/keyboard";
@@ -90,7 +94,6 @@ const uiRuntimeExports = [
     // (the canonical panel-nav surface is now `<SegmentedTabs variant="underline">`
     // on `@mkbabb/glass-ui/tabs`; the reka substrate stays INTERNAL for the dock-rail
     // consumer only). The retirement is asserted in nonCoreRootRetirements below.
-    "TagsInput",
     "Toast",
     "ToggleGroup",
     "Tooltip",
@@ -174,10 +177,12 @@ const rootRuntimeExports = [
     // [2026-08-08 · BK #82 W-FIELD] `NumberFieldContent` retired with the wrapper
     // node it rendered and the two byte-twin steppers folded into one
     // `NumberFieldStep direction=`. This is the LANE's own component retirement, not
-    // a bump of the subpath surface: the four `./input`/`./textarea`/`./checkbox`/
+    // a bump of the subpath surface: ~~the four `./input`/`./textarea`/`./checkbox`/
     // `./radio-group` mints and the `./forms` retirement remain the ONE batched
     // export-surface cut's (CWT-3 §2 C-10), and `regen-exports.mjs` still reproduces
-    // exportKeys 66/66 EXACT.
+    // exportKeys 66/66 EXACT.~~ [2026-08-09 · BK #66 CLOSE · RT-65-C] THE CUT LANDED, whole and once:
+    // the four mints + `./sheet` + `./menu` in, `./forms` + `./dropdown-menu` out,
+    // `regen-exports.mjs` reproduces exportKeys 70/70 EXACT.
     "NumberFieldInput",
     "NumberFieldStep",
     "PopoverContent",
@@ -207,10 +212,6 @@ const rootRuntimeExports = [
     "TableHead",
     "TableHeader",
     "TableRow",
-    "TagsInputInput",
-    "TagsInputItem",
-    "TagsInputItemDelete",
-    "TagsInputItemText",
     "ToastAction",
     "ToastClose",
     "ToastDescription",
@@ -306,9 +307,17 @@ const subpathRuntimeExports = [
         surface: ExpandableContainerSurface,
         name: "ExpandableContainer",
     },
-    // Vueuse-bearing subpaths
-    { subpath: "forms", surface: Forms, name: "Input" },
-    { subpath: "forms", surface: Forms, name: "Textarea" },
+    // Vueuse-bearing subpaths. [2026-08-09 · BK #66 CLOSE · RT-65-C] `./forms` RETIRED — a curated
+    // union of four components was a second door onto the same source. Each
+    // component now has exactly one subpath, which is the stateable rule.
+    { subpath: "input", surface: InputSurface, name: "Input" },
+    { subpath: "textarea", surface: TextareaSurface, name: "Textarea" },
+    { subpath: "checkbox", surface: CheckboxSurface, name: "Checkbox" },
+    { subpath: "radio-group", surface: RadioGroupSurface, name: "RadioGroup" },
+    { subpath: "radio-group", surface: RadioGroupSurface, name: "RadioGroupItem" },
+    // RT-38D — `./sheet` MINTS. Two consumer roots already import this specifier
+    // against a key that did not exist; the mint repairs a live break.
+    { subpath: "sheet", surface: SheetSurface, name: "SheetContent" },
     { subpath: "carousel", surface: CarouselSurface, name: "useCarousel" },
     { subpath: "dark", surface: Dark, name: "useGlobalDark" },
     // installDarkModeSync (keyframes-free, vueuse-bearing) lives on the /dark
@@ -416,8 +425,12 @@ const exactSubpathRuntimeSurfaces = [
         ],
     },
     {
-        subpath: "dropdown-menu",
-        surface: DropdownMenuSurface,
+        // [2026-08-09 · BK #66 CLOSE · RT-65-C] DAG-RULINGS §4.4 — the directory is
+        // `components/menu/` and the subpath is `./menu`. The SFC NAMES are
+        // deliberately unchanged: the rename was of the family's home and its
+        // door, not of fourteen public symbols.
+        subpath: "menu",
+        surface: MenuSurface,
         names: [
             "DropdownMenu",
             "DropdownMenuCheckboxItem",
@@ -485,6 +498,11 @@ describe("public runtime surface", () => {
         expect(manifest.exports).toHaveProperty("./metric");
         expect(manifest.typesVersions["*"]).toHaveProperty("metric");
         for (const retired of [
+            // [2026-08-09 · BK #66 CLOSE · RT-65-C] the batched export cut's own falsifiers:
+            // the two keys it RETIRED must be gone from both maps, or the "clean
+            // break, no alias" claim is unproven.
+            "dropdown-menu",
+            "forms",
             "notification",
             "color-swatch",
             "focus-scope",

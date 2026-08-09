@@ -3,7 +3,7 @@ import { computed, useAttrs, type HTMLAttributes } from "vue";
 import type { SelectionValue } from "../_shared/selection";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
-import { useMenuPart } from "./useMenuTrigger";
+import { useMenuPart } from "./context";
 
 export interface DropdownMenuRadioItemProps {
     value: SelectionValue;
@@ -38,14 +38,14 @@ const ItemIndicatorComp = useMenuPart("ItemIndicator");
         :value="value"
         :disabled="disabled"
         :text-value="textValue"
-        data-slot="dropdown-menu-radio-item"
+        data-slot="menu-radio-item"
         data-indicator="start"
-        :class="cn('dropdown-menu__item interactive-item glass-menu-row', props.class)"
+        :class="cn('menu__item interactive-item glass-menu-row', props.class)"
         @select="emit('select', $event)"
     >
-        <span class="dropdown-menu__indicator">
+        <span class="menu__indicator">
             <component :is="ItemIndicatorComp">
-                <span class="dropdown-menu__radio-dot"></span>
+                <span class="menu__radio-dot"></span>
             </component>
         </span>
         <slot />

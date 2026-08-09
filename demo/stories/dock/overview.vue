@@ -35,7 +35,7 @@ import {
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
     DropdownMenuSeparator,
-} from "@glass/components/dropdown-menu";
+} from "@glass/components/menu";
 import {
     Select,
     SelectContent,

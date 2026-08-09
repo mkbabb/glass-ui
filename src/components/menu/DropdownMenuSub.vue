@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useForwardPropsEmits } from "reka-ui";
-import { useMenuPart } from "./useMenuTrigger";
+import { useMenuPart } from "./context";
 
 export interface DropdownMenuSubProps {
     open?: boolean;

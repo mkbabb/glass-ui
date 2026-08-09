@@ -108,12 +108,65 @@ describe.skipIf(!existsSync(COMPONENTS))("emitted component utilities", () => {
     // terminal fallback, so a consumer retuning the clock governs the emitted
     // utilities instead of fighting a hardcoded literal. Asserted on emitted BYTES:
     // deleting the `houseAlias` entry in `vite.utility-emit.ts` REDs this.
-    it("routes the emitted transition-duration chain through --duration-fast", () => {
-        const css = readFileSync(COMPONENTS, "utf-8");
-        const durations = [...css.matchAll(/transition-duration:([^;}]*)/g)].map(
-            ([, value]) => value,
+    //
+    // [2026-08-09 · BK #66 CLOSE · RT-40-B — EXECUTED HERE AS A COMPLETION ACT
+    //  ATTRIBUTED TO #85, whose `W-EASING` landing (`1bc09dde`) is what made the
+    //  single arm below RED and left it RED on the release path.]
+    //
+    //  THE ARM WAS OVERFIT TO THE MOMENT IT WAS AUTHORED. It asserted that EVERY
+    //  emitted `transition-duration` contains `var(--duration-fast` — true only while
+    //  the default chain was the sole emission. `EasingCurve.vue:89-90` now also emits
+    //  `.duration-slow` and `.duration-0`, and BOTH are correct:
+    //    · `var(--duration-slow)` is a REAL house token (`tokens/scheme-motion.css:102`,
+    //      0.45s) — the exact opposite of the hardcoded literal this gate exists to
+    //      catch. The curve's draw is deliberately slower than the house fast rung.
+    //    · `0s` is the deliberate UN-draw, and zero is the one duration that cannot be
+    //      a token: a clock has no name for "no time".
+    //  Relaxing to "contains any var()" would have been the mask. Instead the law is
+    //  SPLIT into what it actually means, and the second arm gives the file MORE bite
+    //  than it had: previously any non-default emission was simply forbidden (which is
+    //  why a correct one turned it RED); now a bare literal like `150ms` or `.3s` is
+    //  forbidden BY NAME, which is the defect that was always the point.
+    //
+    //  Two ARMS of an already-seated describe, in its existing file. SEATS +0, zero new
+    //  test files, nothing minted. The source fix was REFUSED with grounds: moving
+    //  `EasingCurve.vue` off Tailwind's duration utilities onto a component stylesheet
+    //  fights the Tailwind-first law and would have re-authored two live contract
+    //  assertions (`easing.contract.test.ts:695`/`:727`) to make a gate stop
+    //  complaining — the tail wagging the dog.
+    const emittedDurations = (): string[] =>
+        [...readFileSync(COMPONENTS, "utf-8").matchAll(/transition-duration:([^;}]*)/g)]
+            .map(([, value]) => value.trim());
+
+    it("routes the emitted DEFAULT transition-duration chain through --duration-fast", () => {
+        // The default chain is the one `houseAlias` governs: it is the emission that
+        // carries `--default-transition-duration`, Tailwind's own axis. THIS is the arm
+        // whose stated bite — delete `houseAlias` in `vite.utility-emit.ts` → RED —
+        // survives the split untouched.
+        const defaults = emittedDurations().filter((value) =>
+            value.includes("--default-transition-duration"),
         );
-        expect(durations.length).toBeGreaterThan(0);
-        for (const value of durations) expect(value).toContain("var(--duration-fast");
+        expect(defaults.length).toBeGreaterThan(0);
+        for (const value of defaults) expect(value).toContain("var(--duration-fast");
+    });
+
+    it("emits no duration LITERAL — every other transition-duration is a house token or 0s", () => {
+        // The whole point of the gate, stated over the whole emission rather than over
+        // the one emission that existed when it was written: a duration in the shipped
+        // bytes is either read from the house clock family or it is the un-draw. A
+        // hardcoded `150ms`/`.3s`/`400ms` is the defect.
+        const others = emittedDurations().filter(
+            (value) => !value.includes("--default-transition-duration"),
+        );
+        // [2026-08-09 · CURE-66-5] NON-VACUITY. A forbidding arm passes trivially over an
+        // empty set: if the emission ever stops carrying non-default durations — a build
+        // regression, a changed regex, a stylesheet that fails to emit at all — `offenders`
+        // is empty for the wrong reason and this case greens over nothing. Assert there is
+        // a subject before judging it.
+        expect(others.length).toBeGreaterThan(0);
+        const offenders = others.filter(
+            (value) => value !== "0s" && !/^var\(--duration-[a-z-]+\)$/.test(value),
+        );
+        expect(offenders).toEqual([]);
     });
 });

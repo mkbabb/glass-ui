@@ -832,12 +832,6 @@ export const CATEGORIES: Category[] = [
             ),
             s(
                 "data",
-                "tags-input",
-                "Tags Input",
-                "Keyboard-editable tags with paste, duplicate prevention, removal, and invalid-state feedback.",
-            ),
-            s(
-                "data",
                 "sortable-list",
                 "Sortable List",
                 "Pointer and keyboard reordering over stable row identities, handles, and announced movement.",

@@ -324,9 +324,15 @@
     /* The warm focus-ring box-shadow bridged to the
        `shadow-focus-ring` utility (--focus-ring-shadow register). The
        `.focus-ring` utility auto-arms on :focus-visible; this bridge lets a
-       surface compose the SAME warm ring on a NON-:focus-visible state (the
-       TagsInputItem reka roving-tabindex `data-[state=active]` selection) via the
-       @theme utility, not a `shadow-[var(--focus-ring-shadow)]` arbitrary wrap. */
+       surface compose the SAME warm ring on a NON-:focus-visible state ~~(the
+       TagsInputItem reka roving-tabindex `data-[state=active]` selection)~~ via the
+       @theme utility, not a `shadow-[var(--focus-ring-shadow)]` arbitrary wrap.
+       [2026-08-09 · BK #66 CLOSE · RT-18A] the one exemplar this bridge ever named is deleted.
+       The bridge itself was ALREADY a zero-consumer alias at HEAD (detector:
+       `git grep -n shadow-focus-ring HEAD -- src demo` → two hits, both in this
+       file), so this cut did not orphan it and does not retire it: a @theme
+       bridge retirement is the token lane's act with its own gate. ROUTED → #68
+       W-TOKEN-CANON. */
     --shadow-focus-ring: var(--focus-ring-shadow);
 
     /* ═══════════════════════════════════════════════

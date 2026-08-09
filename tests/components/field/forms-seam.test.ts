@@ -56,7 +56,6 @@ const SHELLS = [
     "src/components/input/Input.vue",
     "src/components/textarea/Textarea.vue",
     "src/components/number-field/NumberFieldInput.vue",
-    "src/components/tags-input/TagsInput.vue",
 ];
 
 describe("W-FIELD — the forms-seam lane battery", () => {
@@ -244,26 +243,12 @@ describe("W-FIELD — the forms-seam lane battery", () => {
         expect(rim?.[1]).toContain("var(--control-edge-inner");
         expect(rim?.[1]).toContain("var(--control-edge-ring");
 
-        // The law is only a law if it holds on every shell that composes the
-        // register. TagsInput re-declared the WHOLE list at invalid and focus,
-        // which deleted the rim it was sitting on (measured: 5 legs at rest → 1
-        // at invalid, 2 at focus); it speaks into the ring slot now. Any rule
-        // whose SUBJECT is the shell is covered — the chip's own active ring is a
-        // different element, does not compose the register, and is not.
-        const tagsSheet = strip(read("src/components/tags-input/styles.css"));
-        const subjectIsShell = (selector: string) => {
-            const subjects = selector.split(",").map((s) => {
-                const compounds = s.trim().split(/[\s>+~]+/);
-                return compounds[compounds.length - 1] ?? "";
-            });
-            return subjects.some((s) => /\.tags-input(?![\w-])/.test(s));
-        };
-        for (const [, selector, body] of tagsSheet.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
-            if (!subjectIsShell(selector)) continue;
-            expect(body).not.toMatch(/box-shadow:/);
-        }
-        expect(tagsSheet).toMatch(/--control-edge-ring:\s*var\(--invalid-ring\)/);
-        expect(tagsSheet).toMatch(/--control-edge-ring:\s*var\(--focus-ring-shadow\)/);
+        // [2026-08-09 · BK #66 CLOSE · RT-18A] ~~The law is only a law if it holds on
+        // every shell that composes the register. TagsInput re-declared the WHOLE list
+        // at invalid and focus…~~ — STRUCK WITH ITS SUBJECT. The exemplar that carried
+        // this half of the arm (`tags-input/styles.css`) is deleted. The law itself is
+        // unmoved and is still proved above on `control-edge.css`, the register every
+        // surviving shell composes; the three shells in `SHELLS` are asserted whole.
 
         // The misfiled 217-line sheet is gone from the field folder, and the
         // relocated register is imported once from the glass root.

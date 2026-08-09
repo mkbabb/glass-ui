@@ -2,7 +2,7 @@
 import { computed, useAttrs, type HTMLAttributes } from "vue";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
-import { useMenuPart } from "./useMenuTrigger";
+import { useMenuPart } from "./context";
 
 export interface DropdownMenuSeparatorProps {
     class?: HTMLAttributes["class"];
@@ -28,7 +28,7 @@ const SeparatorComp = useMenuPart("Separator");
         :is="SeparatorComp"
         v-bind="forwardedAttrs"
         as="div"
-        data-slot="dropdown-menu-separator"
+        data-slot="menu-separator"
         :class="cn('glass-menu-divider -mx-1 my-1', props.class)"
     />
 </template>

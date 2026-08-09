@@ -2,8 +2,8 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vitest";
 import { defineComponent, h, ref } from "vue";
 
-import DropdownMenu from "@glass/components/dropdown-menu/DropdownMenu.vue";
-import DropdownMenuTrigger from "@glass/components/dropdown-menu/DropdownMenuTrigger.vue";
+import DropdownMenu from "@glass/components/menu/DropdownMenu.vue";
+import DropdownMenuTrigger from "@glass/components/menu/DropdownMenuTrigger.vue";
 import DockTrigger from "@glass/components/dock/DockTrigger.vue";
 
 function mountTrigger(action?: "click" | "pointerdown", dock = false) {

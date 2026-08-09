@@ -65,8 +65,12 @@
    it clips nor collides at rest/focus/removal/wrap/coarse-touch; the outer stays the
    field/container and the child stays the control/tag; and no ancestor overflow shears
    the child's focus ring, remove action, or hit floor. (The old absolute "a pill never
-   nests in a near-rect" was FALSE — TagsInput's `--radius-field` container holding pill
-   `<Chip>` children is its counterexample and the intended role composition.)
+   nests in a near-rect" was FALSE — ~~TagsInput's `--radius-field` container holding pill
+   `<Chip>` children is its counterexample~~ and the intended role composition.
+   [2026-08-09 · BK #66 CLOSE · RT-18A] TagsInput is deleted, so the law keeps its
+   ruling and loses its exemplar; the `per F12` cite above named the
+   `radius-role-canon.test.ts` case that went with the same subject. The law is
+   unchanged — it was never derived from that one component.)
 
    Concentric nesting (law 1) is already implemented as the --radius-ctx /
    --radius-inset / --radius-floor relay below: a container publishes its resolved
@@ -81,10 +85,12 @@
    STATIC: the radius scale is the public corner-override canon (manifest.ts), so
    every rung emits at :root unconditionally. Without `static`, Tailwind v4 tree-
    shakes any alias whose ONLY consumer is a JS-bundled component stylesheet it
-   never scans — `--radius-field` (read by tags-input/styles.css + field/field-
-   control.css, both imported through Vue SFC `<style src>`, NOT the index.css
-   Tailwind cascade) vanished from runtime :root and TagsInput/Textarea/dialog
-   fields fell back to 0px instead of the ruled 16px. Static keeps the whole
+   never scans — `--radius-field` (read by ~~tags-input/styles.css +~~ `_shared/field/
+   control.css`, imported through a Vue SFC `<style src>`, NOT the index.css
+   Tailwind cascade) vanished from runtime :root and ~~TagsInput/~~Textarea/dialog
+   fields fell back to 0px instead of the ruled 16px. [2026-08-09 · BK #66 CLOSE · RT-18A] the
+   tags-input reader is deleted; `_shared/field/control.css:184` is the sole
+   surviving `var(--radius-field)` reader and the `static` keyword still carries it. Static keeps the whole
    canon present so a receiver's `var(--radius-field)` always resolves. */
 @theme static {
     /* THE ROOT OF THE LADDER, and its provenance stated once. `0.625rem` (10px) is

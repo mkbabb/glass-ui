@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { Direction } from "../_shared/primitive";
-import type { MenuTrigger } from "./useMenuTrigger";
+import type { MenuTrigger } from "./context";
 
 interface DropdownMenuBaseProps {
     /** Logical reading direction for roving focus and submenu keys. */
@@ -45,7 +45,7 @@ import {
     ContextMenuRoot as RekaContextMenuRoot,
     DropdownMenuRoot as RekaDropdownMenuRoot,
 } from "reka-ui";
-import { provideMenuTrigger } from "./useMenuTrigger";
+import { provideMenuTrigger } from "./context";
 
 defineOptions({ name: "DropdownMenu", inheritAttrs: false });
 
@@ -75,7 +75,7 @@ provideMenuTrigger(trigger);
 <template>
     <RekaContextMenuRoot
         v-if="trigger === 'context'"
-        data-slot="dropdown-menu"
+        data-slot="menu"
         data-menu-trigger="context"
         :dir="dir"
         :modal="modal"
@@ -86,7 +86,7 @@ provideMenuTrigger(trigger);
 
     <RekaDropdownMenuRoot
         v-else
-        data-slot="dropdown-menu"
+        data-slot="menu"
         data-menu-trigger="click"
         :open="open"
         :default-open="defaultOpen ?? false"

@@ -19,8 +19,8 @@ const forwardedAttrs = computed(() => fixedHostAttrs(attrs));
 <template>
     <span
         v-bind="forwardedAttrs"
-        data-slot="dropdown-menu-shortcut"
-        :class="cn('dropdown-menu__shortcut', props.class)"
+        data-slot="menu-shortcut"
+        :class="cn('menu__shortcut', props.class)"
     >
         <slot />
     </span>

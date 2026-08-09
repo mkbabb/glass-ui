@@ -23,7 +23,7 @@ import type {
     DropdownMenuTriggerAction,
     DropdownMenuTriggerProps,
     MenuTrigger,
-} from "@glass/components/dropdown-menu";
+} from "@glass/components/menu";
 
 type Assert<Condition extends true> = Condition;
 type Equal<Left, Right> =
@@ -71,7 +71,13 @@ type ContentContract = [
     Assert<Has<"sideOffset", DropdownMenuContentProps>>,
     Assert<Has<"align", DropdownMenuContentProps>>,
     Assert<Has<"alignOffset", DropdownMenuContentProps>>,
-    Assert<Has<"surface", DropdownMenuContentProps>>,
+    // [2026-08-09 · BK #66 CLOSE · RT-40-D] ~~Assert<Has<"surface", DropdownMenuContentProps>>~~ — the `surface`
+    // prop is GONE. #89 W-OVERLAY made `.glass-overlay-plate` the ONE overlay
+    // register and put the role on `data-reveal`, written by the single writer
+    // `overlayContentAttrs()`; a per-content material prop was the second author
+    // that cut removed. The assertion INVERTS rather than disappearing, so a
+    // re-minted prop turns this RED instead of sailing past.
+    Assert<Lacks<"surface", DropdownMenuContentProps>>,
     Assert<Has<"class", DropdownMenuContentProps>>,
     Assert<Lacks<"as", DropdownMenuContentProps>>,
     Assert<Lacks<"asChild", DropdownMenuContentProps>>,

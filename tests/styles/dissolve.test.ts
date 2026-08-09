@@ -60,7 +60,9 @@ const dissolveRoot = postcss.parse(DISSOLVE_CSS);
 
 /** Every ordinary rule in the recipe, selector-normalised (whitespace collapsed). */
 const rules: Rule[] = [];
-dissolveRoot.walkRules((rule) => rules.push(rule));
+dissolveRoot.walkRules((rule) => {
+    rules.push(rule);
+});
 
 const normalise = (selector: string): string => selector.replace(/\s+/g, " ").trim();
 
@@ -137,7 +139,9 @@ const keyframeStops = (name: string): Array<{ at: number; decls: Map<string, str
     const stops: Array<{ at: number; decls: Map<string, string> }> = [];
     at.walkRules((rule) => {
         const decls = new Map<string, string>();
-        rule.walkDecls((decl) => decls.set(decl.prop, decl.value.trim()));
+        rule.walkDecls((decl) => {
+            decls.set(decl.prop, decl.value.trim());
+        });
         for (const selector of rule.selector.split(",")) {
             const key = selector.trim();
             const fraction =
@@ -551,7 +555,9 @@ describe("the corner affordance — IOS27-ARCHIVE §3, adjudicated by CWT O-10",
             );
             // Both insets take the SAME offset — the centre is on the corner POINT.
             const values = new Set<string>();
-            placed.walkDecls(/^inset-/, (decl) => values.add(decl.value.trim()));
+            placed.walkDecls(/^inset-/, (decl) => {
+                values.add(decl.value.trim());
+            });
             expect(values).toEqual(new Set(["var(--corner-affordance-offset)"]));
         });
     });

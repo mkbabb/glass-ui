@@ -123,8 +123,15 @@
  *                              reads only the spring/duration token families.
  *   8. floating-panel.css    — retired: the
  *                              `.floating-panel` fixed-overlay recipe had ZERO
- *                              consumers; the still-live `.dropdown-menu-content`
- *                              font/inner-pad rules live in menu.css.
+ *                              consumers; ~~the still-live `.dropdown-menu-content`
+ *                              font/inner-pad rules live in menu.css.~~
+ *                              [2026-08-09 · BK #66 CLOSE · RT-65-C] the class does
+ *                              not exist anywhere in `src` and has not since #89
+ *                              W-OVERLAY folded the family's interior into
+ *                              `glass/overlay-plate.css` under ONE spelling.
+ *                              Detector: `grep -rn 'dropdown-menu-content' src/`
+ *                              → four hits, every one a comment. The menu family
+ *                              is `components/menu/` and its rows are `.menu__*`.
  *   9. transitions.css       — Vue <Transition> classes (fade, tab-fade,
  *                              pane-swap, metric-swap, dock-in).
  *                              Retired unused fade-slide/pop/

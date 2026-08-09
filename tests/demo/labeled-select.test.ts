@@ -29,8 +29,19 @@ afterEach(() => {
     while (mounted.length) mounted.pop()?.unmount();
 });
 
-async function mountOpen(props: Record<string, unknown>) {
-    const wrapper = mount(LabeledSelect, {
+// [2026-08-09 · BK #66 CLOSE · RT-40-D] `Record<string, unknown>` no longer satisfies
+// `mount`'s props parameter (it cannot prove `label`/`modelValue`/`items` are
+// present), which made `vue-tsc -p tsconfig.test.json` — the second arm of
+// `npm run typecheck`, a `release.yml` step — RED. The props type is DERIVED from the
+// component rather than re-typed beside it: `LabeledSelect` is a
+// `<script setup generic="T extends string">` SFC, so its value type is a generic
+// function and a TS instantiation expression pins `T` at the seam. Re-spelling the
+// shape by hand was the first attempt and it is exactly the duplicated-derived-data
+// the convergence law forbids — one source, and it is the component.
+type LabeledSelectProps = Parameters<typeof LabeledSelect<string>>[0];
+
+async function mountOpen(props: LabeledSelectProps) {
+    const wrapper = mount(LabeledSelect<string>, {
         attachTo: document.body,
         global: { stubs: { teleport: false } },
         props,
@@ -84,7 +95,7 @@ describe("LabeledSelect — the demo's labelled-select preset", () => {
     // component: the preset must keep the library anatomy it composes, or the demo
     // teaches an accessible shape the library does not actually produce.
     it("keeps the library field anatomy it composes", () => {
-        const wrapper = mount(LabeledSelect, {
+        const wrapper = mount(LabeledSelect<string>, {
             props: {
                 description: "Select help.",
                 items: ["Alpha"],

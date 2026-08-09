@@ -13,14 +13,14 @@
     }
   },
   "counts": {
-    "activeVitest": 48,
+    "activeVitest": 46,
     "hardReservedVitest": 4,
     "conditionalReservedVitest": 1,
-    "worstCaseCountedSeats": 53,
-    "remainingSeats": 7,
+    "worstCaseCountedSeats": 51,
+    "remainingSeats": 9,
     "externalEnforcement": 11,
-    "baseProductTooling": 31,
-    "componentBehavior": 17,
+    "baseProductTooling": 30,
+    "componentBehavior": 16,
     "preBindingDetectorRedress": 13
   },
   "activeVitest": [
@@ -476,14 +476,6 @@
       "semanticClass": "base-product-tooling"
     },
     {
-      "id": "reka.tags-input.value-binding",
-      "owner": "BJ.W-GATE-COLLAPSE",
-      "predicate": "TagsInput item values render through the current value binding and the family root remains present.",
-      "sourcePath": "tests/components/ui/reka-binding-idiom.test.ts",
-      "currentRegistration": "TagsInput: item text renders from `value=` (the stale `tag=` idiom is gone)",
-      "semanticClass": "base-product-tooling"
-    },
-    {
       "id": "reka.toast.open-update",
       "owner": "BJ.W-GATE-COLLAPSE",
       "predicate": "Toast dismissal reaches the store through update:open and closes the rendered toast.",
@@ -921,7 +913,7 @@
       "id": "behavior.dropdown.keyboard-roving-typeahead",
       "owner": "BJ.W-GATE-COLLAPSE",
       "predicate": "Keyboard-opened menus retain Home, ArrowDown, and typeahead roving-focus behavior.",
-      "sourcePath": "tests/components/dropdown-menu.contract.test.ts",
+      "sourcePath": "tests/components/menu/contract.test.ts",
       "currentRegistration": "preserves keyboard roving focus and typeahead",
       "semanticClass": "component-behavior"
     },
@@ -963,14 +955,6 @@
       "predicate": "Keyboard lift, proposal, and commit preserve focus, narration, and the intended final order.",
       "sourcePath": "tests/components/sortable-list.contract.test.ts",
       "currentRegistration": "lifts, proposes, and commits with stable focus and one reorder",
-      "semanticClass": "component-behavior"
-    },
-    {
-      "id": "tags-input.ime-delimiter-guard",
-      "owner": "BJ.W-GATE-COLLAPSE",
-      "predicate": "A delimiter typed during IME composition remains draft text and does not commit another tag.",
-      "sourcePath": "tests/components/tags-input.contract.test.ts",
-      "currentRegistration": "does not commit a delimiter while an IME composition is active",
       "semanticClass": "component-behavior"
     },
     {
@@ -1086,7 +1070,7 @@
     {
       "id": "external.types.dropdown-menu",
       "predicate": "Dropdown public root and part types retain exact admitted and forbidden props.",
-      "sourcePath": "tests/components/dropdown-menu.public-contracts.test-d.ts",
+      "sourcePath": "tests/components/menu/public-contracts.test-d.ts",
       "enrollment": [
         "package.json#scripts.typecheck",
         "tsconfig.test.json#tests/",
@@ -1162,15 +1146,14 @@
       "externalEnforcement"
     ],
     "activeSemanticClasses": {
-      "base-product-tooling": 31,
-      "component-behavior": 17
+      "base-product-tooling": 30,
+      "component-behavior": 16
     },
-    "countedCeilingExpression": "activeVitest + hardReservedVitest + conditionalReservedVitest <= 60",
     "detectorRedressMustPrecedeBinding": true,
     "detectorRedressSeatCountInvariant": "A required detector redress strengthens its existing semantic seat and never adds a counted seat.",
     "activeSemanticClassIdDigests": {
-      "base-product-tooling": "76e5592586cbdf15a7df592ab2b1a94c09e295ba5a301a15dba80051ccfc7e3a",
-      "component-behavior": "222a1a54d747480b490b409d9668534673343219270a93f5831f2e0ad2a9fe2b"
+      "base-product-tooling": "a562639a3d3b717a5843a9a75403303460a2ab5c5b5f086ff3659affe728cf59",
+      "component-behavior": "b1b725f4ccd997c37c6682e05c42f0e60e56e8a623144fe2736468c2dfc7aa00"
     },
     "semanticClassDigestInput": "SHA-256(JSON.stringify(active row IDs in roster order for each semanticClass))",
     "parserDependencyLaw": {

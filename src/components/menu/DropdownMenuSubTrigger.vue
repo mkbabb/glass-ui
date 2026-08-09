@@ -3,7 +3,7 @@ import { computed, useAttrs, type HTMLAttributes } from "vue";
 import { ChevronRight } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
-import { useMenuPart } from "./useMenuTrigger";
+import { useMenuPart } from "./context";
 
 export interface DropdownMenuSubTriggerProps {
     disabled?: boolean;
@@ -30,15 +30,15 @@ const SubTriggerComp = useMenuPart("SubTrigger");
         as="div"
         :disabled="disabled"
         :text-value="textValue"
-        data-slot="dropdown-menu-sub-trigger"
+        data-slot="menu-sub-trigger"
         :class="
             cn(
-                'dropdown-menu__sub-trigger interactive-item glass-menu-row',
+                'menu__sub-trigger interactive-item glass-menu-row',
                 props.class,
             )
         "
     >
         <slot />
-        <ChevronRight class="dropdown-menu__sub-chevron" aria-hidden="true" />
+        <ChevronRight class="menu__sub-chevron" aria-hidden="true" />
     </component>
 </template>

@@ -10,7 +10,7 @@ export * from "./collapsible";
 export * from "./command";
 export * from "./data-table";
 export * from "./dialog";
-export * from "./dropdown-menu";
+export * from "./menu";
 // `./hover-card` RETIRED (folds onto `<Popover trigger="hover">`).
 export * from "./input";
 export * from "./label";
@@ -29,7 +29,6 @@ export * from "./table";
 // `ui/Tabs` retired from the public barrel (the standardized family is
 // `SegmentedTabs`). The reka substrate stays INTERNAL for the dock switcher consumer
 // only (`DockLayerGroup.vue`); see src/index.ts for the full rationale.
-export * from "./tags-input";
 export * from "./textarea";
 export * from "./toast";
 export * from "./toggle-group";

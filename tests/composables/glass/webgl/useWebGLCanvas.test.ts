@@ -10,6 +10,16 @@
 // — proving the substrate is consumer-agnostic. If the substrate baked aurora's
 // choices, a non-aurora `setup` could not drive it.
 
+// [2026-08-09 · BK #66 CLOSE · RT-40-D] EVERY option literal below passes
+// `dprPolicy: 1`. The leaf declares it REQUIRED (`useWebGLCanvas.ts:117-121` — the
+// consumer owns ONLY the DPR number, the leaf owns the measurement) and these call
+// sites never passed it, so `vue-tsc --noEmit -p tsconfig.test.json` — the SECOND
+// arm of `npm run typecheck`, a `release.yml` step — was RED at HEAD with 17 errors
+// from this pair of files. `1` is the flat multiplier: the stub's border box IS the
+// backing box, so the sizer's arithmetic is the identity and no assertion moves.
+// The same cut removed a duplicated `getBoundingClientRect` key (TS1117) that a
+// prior landing left behind in `makeCanvas`.
+
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createWebGLCanvas } from "@glass/composables/glass/webgl/useWebGLCanvas";
 import { createGpuSubstrate } from "@glass/composables/glass/webgpu/useGpuSubstrate";
@@ -36,7 +46,6 @@ function makeCanvas(glStub: object | null) {
         removeEventListener: vi.fn(),
         width: 0,
         height: 0,
-        getBoundingClientRect: () => ({ width: 100, height: 50 }),
         clientWidth: 100,
         clientHeight: 50,
         // `dprPolicy` is REQUIRED at the leaf (BK #19 W-SHIM-PURGE killed the
@@ -62,7 +71,6 @@ function makeRestorableCanvas(makeGl: () => object) {
         removeEventListener: vi.fn(),
         width: 0,
         height: 0,
-        getBoundingClientRect: () => ({ width: 100, height: 50 }),
         clientWidth: 100,
         clientHeight: 50,
         // `dprPolicy` is REQUIRED at the leaf (BK #19 W-SHIM-PURGE killed the
@@ -148,6 +156,7 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract", () => {
         let live = true;
         const resize = vi.fn();
         const handle = createWebGLCanvas(canvas, {
+            dprPolicy: 1,
             // a DIFFERENT context attr set than aurora's — the substrate forwards it
             contextAttrs: { antialias: true, alpha: false },
             setup: (gl) => {
@@ -208,6 +217,7 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract", () => {
                 getExtension: () => null,
             } as unknown as WebGL2RenderingContext),
             {
+                dprPolicy: 1,
                 setup: () => ({
                     frame: () => {
                         frames += 1;
@@ -242,6 +252,7 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract", () => {
         } as unknown as WebGL2RenderingContext);
         let frames = 0;
         const handle = createWebGLCanvas(canvas, {
+            dprPolicy: 1,
             setup: () => ({
                 frame: () => {
                     frames += 1;
@@ -286,6 +297,7 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract", () => {
         const { canvas, dispatch } = makeRestorableCanvas(() => contexts[setups]!);
         const resize = vi.fn();
         const handle = createWebGLCanvas(canvas, {
+            dprPolicy: 1,
             setup: (gl) => {
                 setups += 1;
                 expect(gl).toBe(setups === 1 ? glA : glB);
@@ -344,6 +356,7 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract", () => {
             () => contexts[contextIndex++]!,
         );
         const substrate = createGpuSubstrate(canvas, {
+            dprPolicy: 1,
             setupGL: () => ({
                 frame: vi.fn(),
                 shouldContinue: () => false,
@@ -379,6 +392,7 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract", () => {
         } as unknown as WebGL2RenderingContext);
         let frames = 0;
         const handle = createWebGLCanvas(canvas, {
+            dprPolicy: 1,
             mode: "capture",
             setup: () => ({
                 frame: () => {
@@ -414,6 +428,7 @@ describe("useWebGLCanvas — the context-loss circuit-breaker", () => {
             return makeGl();
         });
         const handle = createWebGLCanvas(canvas, {
+            dprPolicy: 1,
             setup: () => ({
                 frame: () => {
                     frames += 1;

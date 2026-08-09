@@ -25,7 +25,8 @@
 //
 //   Symbol(s)                                  Subpath                        Peer
 //   -----------------------------------------  -----------------------------  ---------------------
-//   Input, Textarea                            @mkbabb/glass-ui/forms         @vueuse/core
+//   Input                                      @mkbabb/glass-ui/input         @vueuse/core
+//   Textarea                                   @mkbabb/glass-ui/textarea      @vueuse/core
 //   useGlobalDark, installDarkModeSync         @mkbabb/glass-ui/dark          @vueuse/core
 //   useKeyboardShortcuts, registerShortcut,    @mkbabb/glass-ui/keyboard      @vueuse/core
 //   formatCombo, formatComboParts, isMac,
@@ -225,7 +226,7 @@ export {
     type DropdownMenuTriggerAction,
     type DropdownMenuTriggerProps,
     type MenuTrigger,
-} from "./components/dropdown-menu";
+} from "./components/menu";
 // `ui/hover-card` retired as a name (the reka HoverCardRoot
 // substrate stays, imported by the sealed `<Popover trigger="hover">` union). The
 // HoverCard component + subpath fold onto ONE `Popover`. (clean break, no alias.)
@@ -303,7 +304,8 @@ export { Separator, type SeparatorProps } from "./components/separator";
 // motion, and one component carrying both meant eleven `isCenter` forks. It also
 // carries the DETENTS the drawer family used to be: `<SheetContent :detents>` is a
 // ladder of sizes, so the surface that was a placement plus a scalar is a prop on the
-// surface it duplicated. The `./sheet` subpath rides the batched export cut.
+// surface it duplicated. ~~The `./sheet` subpath rides the batched export cut.~~
+// [2026-08-09 · BK #66 CLOSE · RT-38D — the cut landed; `./sheet` is MINTED.]
 export { SheetContent, type SheetContentProps } from "./components/sheet";
 export { Skeleton } from "./components/skeleton";
 export { Slider, type SliderProps, type SliderSize, type SliderVariant } from "./components/slider";
@@ -338,18 +340,12 @@ export {
 // re-points onto the library's ONE headless selection engine `useSelectionGroup`
 // (roving focus + the ONE traveling-indicator writer, Safari-identical), so the
 // reka `--reka-tabs-indicator-*` path is gone. No public barrel re-exported them.
-export {
-    TagsInput,
-    TagsInputInput,
-    TagsInputItem,
-    TagsInputItemDelete,
-    TagsInputItemText,
-    type TagsInputInputProps,
-    type TagsInputItemDeleteProps,
-    type TagsInputItemProps,
-    type TagsInputItemTextProps,
-    type TagsInputProps,
-} from "./components/tags-input";
+// [2026-08-09 · BK #66 CLOSE · RT-18A] The `TagsInput*` family is DELETED — the
+// component, its directory, its story, its contract test and these ten root-barrel
+// keys. Grounds: it was never published on a subpath (INTERNAL), it carried zero
+// specifier and zero symbol edges across the 19-root consumer walk, and the token
+// commentary that named it as a live member of the control band was its only
+// remaining tie to the register. Clean break, no alias (MIGRATION.md §8.0.0).
 export {
     Toast,
     ToastAction,
