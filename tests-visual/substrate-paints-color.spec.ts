@@ -20,12 +20,15 @@
 //            max(R,G,B) over the INTERIOR clears a non-black floor. A blacked
 //            render → mean ≈ 0 → RED. The per-preset hue/chroma parity is W10/W11;
 //            W00 owns ONLY the non-black floor.
-//   BLOB   — BLOB_CONFIG_DEFAULTS: the LOOSE non-flood COVERAGE band ~0.10–0.70 of
-//            the canvas (fraction of pixels DIFFERING from the corner background —
-//            a composited screenshot has no alpha, so the transparent margin reads
-//            as background, and "painted" = "differs from the corner"). Catches BOTH
-//            the flood (→1) AND the blank (→0). W08's TIGHT 0.25–0.6 droplet band is
-//            a strict SUBSET (anything W08 passes, this passes).
+//   BLOB   — BLOB_CONFIG_DEFAULTS: the LOOSE non-flood COVERAGE band 0.10–0.70, read
+//            DIFFERENTIALLY. The verdict is the fraction of interior pixels where the
+//            live composite differs from the SAME region captured with the canvas
+//            hidden — i.e. the canvas's OWN contribution, with the story's ground
+//            subtracted rather than guessed at. Measured on this device: 0.166 live,
+//            0.000 with the canvas dropped from the composite. Catches the blank (→0)
+//            at MIN and the flood at MAX. The metric is NOT W08 blob-render.spec.ts's
+//            composite-vs-modal-colour coverage, so no subset relation is claimed
+//            between the two bands — the numbers are not commensurable.
 //
 // keyframes I-1/I-2 instrument design: the SCENES + preset keys are re-sourced from
 // the manifest (pi-manifest.ts), and each readback is a NAMED-REGION baseline
@@ -62,6 +65,17 @@ import { PI_TARGETS, sourcePresetKeys } from "./pi-manifest.ts";
 //   canvas contributing no pixels — the blank/dead-context class the coverage
 //   floor's lower bound owns. The shader plant is NOT used here: it was measured
 //   NOT to bite the coverage metric, so the honest bite is the one that does.
+//
+//   That plant did not bite either while the floor measured the composite against its
+//   own MODAL COLOUR. The canvas box is 160% of the wrapper and composites the whole
+//   studio stage — badge, config panel, prose, dock — a ground that is nowhere near
+//   uniform, so 0.195 of the interior differed from the modal colour with the canvas
+//   verifiably GONE and the [0.1, 0.7] band passed a dead canvas. A lower bound that
+//   cannot separate dead-canvas from painted-blob is vacuous for precisely the class
+//   it owns, so the readback is now DIFFERENTIAL: the same region is captured with the
+//   canvas hidden, and coverage is measured live-vs-that-baseline. The plant then
+//   pins the live frames ONTO the baseline (its hide outlives the baseline helper's)
+//   and the differential collapses to 0.000 — a real, measured bite.
 type Plant = "black-aurora" | "blob-blank";
 const PI_PLANT = process.env.PI_PLANT ?? "";
 const planted = (kind: Plant): boolean => PI_PLANT === kind || PI_PLANT === "all";
@@ -99,6 +113,77 @@ async function plantBlankBlob(page: Page): Promise<void> {
         content: "canvas.goo-blob-canvas { opacity: 0 !important; }",
     });
     console.log("PLANT blob-blank: canvas dropped from the composite");
+}
+
+/**
+ * The BASELINE half of the blob differential readback: the SAME composited region
+ * with the canvas dropped out of it, i.e. everything the story paints BEHIND (and
+ * over) the canvas. `live − baseline` is then the canvas's own contribution and
+ * nothing else.
+ *
+ * The hide is a style element carrying a UNIQUE id so its removal cannot disturb any
+ * other injected style — in particular NOT `plantBlankBlob`'s (an `addStyleTag` node
+ * with no id). That is load-bearing for the self-test: under the plant the permanent
+ * hide survives this removal, so the live frames keep reading the baseline and the
+ * differential collapses to ~0 — the floor REDs at MIN, which is the bite.
+ * The selector matches on `data-testid`, the locator idiom the spec already uses.
+ *
+ * QUIET GROUND (measured, not assumed). The canvas box is 160% of the wrapper and
+ * composites the whole studio stage — badge, config panel, prose, dock — and at
+ * renderer-ready the page's ENTRANCE reveal is still running: two canvas-hidden reads
+ * 0.7s apart differed over 0.191 of the interior, which a stale baseline would charge
+ * to the canvas (that is exactly the 0.191 the planted arm read before this wait).
+ * The motion is transient — measured 0.000 between hidden reads once settled, and
+ * 0.000 again 2.4s later — so the baseline is taken only after two consecutive hidden
+ * reads agree to within `BLOB_GROUND_QUIET_EPSILON`. A ground that never quiets
+ * hard-fails: a differential against a moving baseline measures the page, not the paint.
+ */
+const BLOB_BASELINE_STYLE_ID = "pi-blob-baseline-hide";
+const BLOB_GROUND_QUIET_EPSILON = 0.002; // settled ground measures 0.000; this is slack
+const BLOB_GROUND_QUIET_TIMEOUT_MS = 30_000;
+
+async function grabBlobBaseline(page: Page, canvas: Locator): Promise<PNG> {
+    await page.evaluate((id) => {
+        const style = document.createElement("style");
+        style.id = id;
+        style.textContent =
+            'canvas[data-testid="goo-blob-canvas"] { opacity: 0 !important; }';
+        document.head.appendChild(style);
+    }, BLOB_BASELINE_STYLE_ID);
+    await page.waitForTimeout(150); // let the compositor land the hide
+
+    let previous = await grab(canvas);
+    let quiet: PNG | null = null;
+    let motion = 1;
+    const deadline = Date.now() + BLOB_GROUND_QUIET_TIMEOUT_MS;
+    while (Date.now() < deadline) {
+        await page.waitForTimeout(300);
+        const next = await grab(canvas);
+        motion = interiorCoverageDiff(
+            next,
+            previous,
+            BLOB_INTERIOR_INSET,
+            COLOR_DIFF_THRESHOLD,
+        );
+        previous = next;
+        if (motion <= BLOB_GROUND_QUIET_EPSILON) {
+            quiet = next;
+            break;
+        }
+    }
+
+    await page.evaluate((id) => {
+        document.getElementById(id)?.remove();
+    }, BLOB_BASELINE_STYLE_ID);
+    await page.waitForTimeout(150); // …and land the restore before the live reads
+
+    if (!quiet) {
+        throw new Error(
+            `blob differential readback: the ground behind the canvas never went quiet (last motion ${motion.toFixed(3)} > ${BLOB_GROUND_QUIET_EPSILON} after ${BLOB_GROUND_QUIET_TIMEOUT_MS}ms). A baseline that moves charges page motion to the canvas — RED, never a silent stale baseline.`,
+        );
+    }
+    console.log(`PI blob baseline groundMotion=${motion.toFixed(3)}`);
+    return quiet;
 }
 
 // ── BJ.W-PIXEL-FLOOR-CI — forcing the WebGL floor path on a GPU-less runner ──
@@ -211,11 +296,18 @@ async function assertLiveWebGLPath(page: Page, canvas: Locator): Promise<void> {
 const AURORA_INTERIOR_INSET = 0.2; // sample the central 60% box (avoid edge fade)
 const AURORA_MEAN_CHANNEL_FLOOR = 8; // interior MEAN max(R,G,B); real ≈237, planted-black ≈0.3
 const BLOB_INTERIOR_INSET = 0.12; // exclude the outer rounded-corner band from coverage
-const BLOB_COVERAGE_MIN = 0.1; // W00 LOOSE floor (W08 narrows to 0.25)
-const BLOB_COVERAGE_MAX = 0.7; // W00 LOOSE ceil (W08 narrows to 0.55)
+// The DIFFERENTIAL band (live composite vs the canvas-hidden baseline). MEASURED on
+// this device, both arms: live 0.166, canvas dropped 0.000 — so 0.1 sits between the
+// two states with the green read 1.66× above it, and the floor is kept where it was
+// rather than widened. (Under the OLD composite-vs-modal-colour measure the same
+// dropped canvas read 0.195 and PASSED this same MIN; the separation is the metric's,
+// not the constant's.) The ceil is unchanged and NOT exercised by the blank plant —
+// the flood class is W08 blob-render.spec.ts's, on its own metric.
+const BLOB_COVERAGE_MIN = 0.1; // W00 LOOSE floor: green 0.166 / blank 0.000
+const BLOB_COVERAGE_MAX = 0.7; // W00 LOOSE ceil (the flood side; W08 narrows to 0.55)
 const BLOB_FRAMES = 6; // read back N frames; verdict over the peak
 const ANTI_FLAKE_RUNS = 3; // 3-run named-region baseline (median verdict)
-const COLOR_DIFF_THRESHOLD = 40; // |ΔR|+|ΔG|+|ΔB| over the modal bg = "painted"
+const COLOR_DIFF_THRESHOLD = 40; // |ΔR|+|ΔG|+|ΔB| live-vs-baseline = "the canvas painted here"
 
 // The aurora 12-preset drive on a real-GPU screenshot pass is well under this, but
 // software-GL degrade + the procedural settle want generous headroom.
@@ -265,37 +357,35 @@ function interiorMeanChannel(png: PNG, inset: number): number {
 }
 
 /**
- * The MODAL background RGB — the most-common 16-step-quantized colour over the whole
- * canvas. For a contained droplet that is the cream field. UNLIKE a 4-corner average
- * it is immune to the rounded-card clip's dark corner pixels (the goo-blob story
- * mounts each canvas in a `rounded-card overflow-hidden` cell, so the literal corners
- * fall OUTSIDE the clip and read dark — a corner-average false-floods even a contained
- * droplet, exactly what W08's blob-render.spec.ts robust metric corrects).
+ * DIFFERENTIAL coverage = fraction of INTERIOR-INSET pixels where the LIVE composite
+ * differs from the CANVAS-HIDDEN baseline by a perceptual threshold. That difference
+ * is, by construction, the canvas's OWN contribution to the composite: everything
+ * else in the region is identical between the two reads.
+ *
+ * This replaces a composite-vs-MODAL-COLOUR measure, which was vacuous for the exact
+ * class the lower bound owns. The story's backdrop behind the canvas is NOT uniform,
+ * so a large share of interior pixels differs from the composite's modal colour with
+ * the canvas fully dropped — measured 0.195 under `PI_PLANT=blob-blank`, i.e. a dead
+ * canvas sailed through a [0.1, 0.7] band. Only the differential can tell
+ * dead-canvas from painted-blob on a non-uniform ground.
+ *
+ * Both reads are the SAME locator screenshot, so the dimensions must match; a
+ * mismatch means the region moved between reads and the difference is meaningless.
+ * That hard-fails rather than resizing — a silent resize would fabricate coverage.
  */
-function modalBackground(png: PNG): [number, number, number] {
-    const { data } = png;
-    const counts = new Map<number, number>();
-    for (let i = 0; i < data.length; i += 4) {
-        const key =
-            ((data[i]! >> 4) << 8) | ((data[i + 1]! >> 4) << 4) | (data[i + 2]! >> 4);
-        counts.set(key, (counts.get(key) ?? 0) + 1);
+function interiorCoverageDiff(
+    live: PNG,
+    base: PNG,
+    inset: number,
+    threshold: number,
+): number {
+    if (live.width !== base.width || live.height !== base.height) {
+        throw new Error(
+            `blob differential readback: live ${live.width}×${live.height} vs baseline ${base.width}×${base.height} — the readback region MOVED between the baseline and the live frame, so the per-pixel difference is meaningless. RED: never resize to force a comparison.`,
+        );
     }
-    let best = 0;
-    let bestKey = 0;
-    for (const [k, c] of counts) if (c > best) ((best = c), (bestKey = k));
-    return [((bestKey >> 8) & 0xf) << 4, ((bestKey >> 4) & 0xf) << 4, (bestKey & 0xf) << 4];
-}
-
-/**
- * Coverage = fraction of INTERIOR-INSET pixels DIFFERING from the MODAL background by a
- * perceptual threshold. The inset excludes the rounded-corner band; the modal bg is
- * clip-robust. A contained droplet leaves a margin (coverage in-band), a flood fills it
- * (→1), a blank paints nothing (→0). W08's TIGHT band (0.25–0.55) is a strict SUBSET of
- * this LOOSE floor, measured on the SAME metric (subset-consistent by construction).
- */
-function interiorCoverage(png: PNG, inset: number, threshold: number): number {
-    const { width: w, height: h, data } = png;
-    const bg = modalBackground(png);
+    const { width: w, height: h, data: L } = live;
+    const B = base.data;
     const x0 = Math.floor(w * inset);
     const y0 = Math.floor(h * inset);
     const x1 = Math.ceil(w * (1 - inset));
@@ -306,9 +396,9 @@ function interiorCoverage(png: PNG, inset: number, threshold: number): number {
         for (let x = x0; x < x1; x++) {
             const i = (y * w + x) * 4;
             const d =
-                Math.abs(data[i]! - bg[0]!) +
-                Math.abs(data[i + 1]! - bg[1]!) +
-                Math.abs(data[i + 2]! - bg[2]!);
+                Math.abs(L[i]! - B[i]!) +
+                Math.abs(L[i + 1]! - B[i + 1]!) +
+                Math.abs(L[i + 2]! - B[i + 2]!);
             if (d > threshold) differ++;
             total++;
         }
@@ -433,6 +523,13 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
 
         await plantBlankBlob(page);
 
+        // The BASELINE, taken ONCE and AFTER the plant: the composite with the canvas
+        // hidden. Order is load-bearing — under `PI_PLANT` the plant's own permanent
+        // hide outlives this helper's scoped one, so live ≡ baseline, the differential
+        // collapses to ~0 and the floor REDs at MIN. On the green run the helper
+        // restores the canvas and the differential IS the droplet.
+        const baseline = await grabBlobBaseline(page, blobCanvas);
+
         // Read N frames per run; the verdict is the PEAK coverage (the droplet
         // breathes/orbits, so coverage oscillates — the peak is the most-filled
         // frame, which must STILL leave a transparent margin).
@@ -440,8 +537,9 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
         for (let run = 0; run < ANTI_FLAKE_RUNS; run++) {
             let peak = 0;
             for (let f = 0; f < BLOB_FRAMES; f++) {
-                const cov = interiorCoverage(
+                const cov = interiorCoverageDiff(
                     await grab(blobCanvas),
+                    baseline,
                     BLOB_INTERIOR_INSET,
                     COLOR_DIFF_THRESHOLD,
                 );
