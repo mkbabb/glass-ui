@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import {
-    LabeledSelect,
-    LabeledSlider,
-} from "@glass/components/labeled-field";
+import { LabeledSlider } from "@glass/components/labeled-field";
+import LabeledSelect from "../../../../chassis/field/LabeledSelect.vue";
 import {
     MAX_NUCLEI,
     type AuroraAtoms,

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import {
-    LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
 } from "@glass/components/labeled-field";
+import LabeledSelect from "../../../../chassis/field/LabeledSelect.vue";
 import type {
     AuroraAtoms,
     AuroraConfig,

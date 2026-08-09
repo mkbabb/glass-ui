@@ -19,10 +19,10 @@ import {
     type ConfiguratorPreset,
 } from "@glass/components/configurator";
 import {
-    LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
 } from "@glass/components/labeled-field";
+import LabeledSelect from "../../chassis/field/LabeledSelect.vue";
 
 interface Cfg {
     medium: string;
@@ -274,7 +274,7 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
                             <LabeledSelect
                                 v-model="cfg.config.medium"
                                 v-model:open="mediumOpen"
-                                :items="mediums as unknown as readonly string[]"
+                                :items="mediums"
                                 label="Medium"
                                 description="Painterly medium — tilts the field's hue triad."
                             />

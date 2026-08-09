@@ -31,10 +31,10 @@ import {
 } from "@glass/components/configurator";
 import {
     LabeledInput,
-    LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
 } from "@glass/components/labeled-field";
+import LabeledSelect from "../../chassis/field/LabeledSelect.vue";
 import {
     deriveBlobPalette,
     oklchStopToHex,
@@ -601,7 +601,7 @@ watch(studioPaused, () => {
                             <LabeledSelect
                                 v-model="studio.config.mood"
                                 v-model:open="moodOpen"
-                                :items="MOODS as unknown as readonly string[]"
+                                :items="MOODS"
                                 label="Mood"
                                 description="The named mood — drives the {valence, arousal} affect model (orbit speed, wobble, sheen)."
                             />
@@ -613,7 +613,7 @@ watch(studioPaused, () => {
                             <LabeledSelect
                                 v-model="studio.config.harmony"
                                 v-model:open="harmonyOpen"
-                                :items="HARMONIES as unknown as readonly string[]"
+                                :items="HARMONIES"
                                 label="Harmony"
                                 description="The color harmony the seed ramps through (deriveBlobPalette)."
                             />
@@ -719,7 +719,7 @@ watch(studioPaused, () => {
                             <LabeledSelect
                                 v-model="studio.config.merge"
                                 v-model:open="mergeOpen"
-                                :items="MERGES as unknown as readonly string[]"
+                                :items="MERGES"
                                 label="Merge variant"
                                 description="quadratic = cheap, slightly creased; circular = a true quarter-circle fillet at the seam (rounder menisci)."
                             />

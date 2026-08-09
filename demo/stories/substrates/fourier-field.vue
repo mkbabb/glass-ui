@@ -36,10 +36,10 @@ import {
     type ConfiguratorPreset,
 } from "@glass/components/configurator";
 import {
-    LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
 } from "@glass/components/labeled-field";
+import LabeledSelect from "../../chassis/field/LabeledSelect.vue";
 import {
     Select,
     SelectContent,
@@ -399,7 +399,7 @@ const rendererStatus = ref<RendererStatus>(pendingRenderer("webgpu"));
                             <LabeledSelect
                                 v-model="studio.config.source"
                                 v-model:open="sourceOpen"
-                                :items="SOURCE_OPTIONS.map((o) => o.value)"
+                                :items="SOURCE_OPTIONS"
                                 label="Source"
                                 description="A generated elliptic spectrum, or a curated shape traced by its own forward DFT (dftFromPoints)."
                             />
@@ -472,7 +472,7 @@ const rendererStatus = ref<RendererStatus>(pendingRenderer("webgpu"));
                             <LabeledSelect
                                 v-model="studio.config.color"
                                 v-model:open="colorOpen"
-                                :items="COLOR_OPTIONS.map((o) => o.value)"
+                                :items="COLOR_OPTIONS"
                                 label="Curve hue"
                                 description="The curve hue — the shipped library viz palette (Fourier warm / Chebyshev cool / Legendre violet)."
                             />

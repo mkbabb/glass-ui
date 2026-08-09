@@ -5,9 +5,9 @@ import { Button } from "@glass/components/button";
 import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
 import {
     LabeledField,
-    LabeledSelect,
     LabeledSlider,
 } from "@glass/components/labeled-field";
+import LabeledSelect from "../../../../chassis/field/LabeledSelect.vue";
 import { SortableList, SortableItem } from "@glass/components/sortable-list";
 import type {
     AuroraAtoms,
