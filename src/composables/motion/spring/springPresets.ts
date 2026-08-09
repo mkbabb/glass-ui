@@ -125,7 +125,9 @@ export const SPRING_PRESETS: readonly SpringPresetRow[] = [
 // A pair may sit outside this table only as a per-primitive default: JS-only (no CSS
 // `--spring-*` token), documented at its ONE consumer, never a second register TABLE.
 // Every such form on disk:
-//   · the ScrubberTimeline head/fill/press legs (ScrubberTimeline.vue);
+//   · [2026-08-07 · BK #46] the ScrubberTimeline head/fill/press legs are GONE with
+//     their SFC — the redesigned Timeline rides `springPreset("dock")` by name on all
+//     three of its expressions and declares no local pair at all;
 //   · the pager worm's lead pair + trail tau (pager-dots/constants.ts), colocated
 //     with its one consumer;
 //   · the blob pinch-snap pulse — an impulse response, not a transition register;
