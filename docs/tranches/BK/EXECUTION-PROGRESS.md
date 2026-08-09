@@ -3525,8 +3525,7 @@ in the record). Verify, re-run after the cure round with `dist-demo` rebuilt fir
 `vue-tsc` clean · **1533 passed / 12 failed / 5 expected-fail, twice consecutively**, every
 one of the 12 attributed off the fence and **none of them this row's** (3 standing · 6 to
 **#40**'s uncommitted pager/carousel lane, censused at 0 import contact · 1 the `#7`
-stacked-`url()` case whose flip #40 owns by its own title · 1 to **#26**'s UNTRACKED
-`useLeadTrail.ts` · 1 the `boot-graph` modulepreload ceiling, 63-vs-60, routed **#66**).
+stacked-`url()` case whose flip #40 owns by its own title · ~~1 to **#26**'s UNTRACKED `useLeadTrail.ts`~~ [2026-08-08 ⊕⁶⁶: #40's on five detectors — RT-40-D] · 1 the `boot-graph` modulepreload ceiling, 63-vs-60, routed **#66**).
 It was 13 at the row's close: the second `boot-graph` failure really was `dist/` staleness
 and greened the moment the demo was rebuilt · register receipt **byte-identical pre+post**
 (`seats:60 … bound:8 … unbound:50 … rosterSha256:dc05df91`, the single pre-existing
@@ -3601,7 +3600,7 @@ tree. **DRIVER VERIFY AT COMMIT (B-D6)**: `vue-tsc` **0** · subset **12 failed 
 passed | 5 expected fail (1550)**, **twice-stable** — **11 FOREIGN** (#40 ×10 + #7 ×1)
 plus `gate:boot-graph` **63-vs-60**, a figure that is **a FUNCTION OF THE BUILD and must be
 re-read after any rebuild** (⊕⁶⁴ measured the same ceiling at 61; **routed #66** either
-way), plus EXPORT-REACH inside **#26**'s pre-existing arm; **THE ROW'S OWN RESIDUAL IS
+way), plus EXPORT-REACH inside ~~**#26**'s~~ [2026-08-08 ⊕⁶⁶: #40's — cured at 85c322dd, RT-40-D] pre-existing arm; **THE ROW'S OWN RESIDUAL IS
 ZERO** · receipt byte-identical `seats:60 active:48 reserved:5 worstCase:53 remaining:7
 external:11 bound:8 armOnly:2 unbound:50 drift:1 rosterSha256:dc05df91 violations:1` ·
 `demo:dist:build` green · `regen-exports` **EXACT**.
