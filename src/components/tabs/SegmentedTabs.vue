@@ -1,11 +1,11 @@
 <script setup lang="ts">
-// SegmentedTabs has two materials, one orientation axis, and one indicator engine.
-// `pill` uses glass; `underline` uses the shared paper ink mark. The indicator
-// transform derives from horizontal or vertical orientation. CSS owns track paint;
-// this SFC owns markup and measured indicator position.
+// SegmentedTabs has two materials, one orientation axis, one indicator engine, and
+// ONE indicator NODE. `pill` is the eyeglass — the glass body that spans its travel;
+// `underline` is the paper ink mark drawn as that same body's edge. Both measure
+// through the same JS writer, so there is no engine branch and no second element to
+// keep in sync. CSS owns paint; this SFC owns markup and the measured position.
 import { ref, computed, onBeforeUpdate, type HTMLAttributes } from "vue";
 import { cn } from "../_shared/class-names";
-import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "../tooltip";
 import {
     Select,
     SelectContent,
@@ -47,7 +47,6 @@ export interface SegmentedTabOption {
     value: string;
     icon?: string;
     disabled?: boolean;
-    tooltip?: string;
     /**
      * The `id` of the tabpanel this option reveals. When set and semantics resolve to
      * `tabs`, it is emitted as the tab's `aria-controls`, completing the APG
@@ -57,7 +56,7 @@ export interface SegmentedTabOption {
     controls?: string;
 }
 
-/** The two materials: `pill` is the default glass-track slider; `underline` is the paper ink hairline. */
+/** The two materials: `pill` is the default glass eyeglass; `underline` is the paper ink hairline. */
 export type SegmentedTabsVariant = "pill" | "underline";
 
 /** The interaction semantic, independent of material. `toggle` exposes a
@@ -95,8 +94,10 @@ export interface SegmentedTabsProps {
     /** Accessible name shared by the desktop strip and responsive Select. */
     ariaLabel?: string;
     /**
-     * The material — `pill` (DEFAULT, the glass-track slider) or `underline`
-     * (the paper ink-hairline rule).
+     * The material — `pill` (DEFAULT, the glass eyeglass) or `underline` (the paper
+     * ink-hairline rule). TWO, and the eyeglass is not a third: it is what `pill`
+     * IS. A "million variants that are essentially the same thing" is the failure
+     * mode this axis exists to refuse.
      */
     variant?: SegmentedTabsVariant;
     /**
@@ -170,10 +171,13 @@ function pillHoverClass(option: SegmentedTabOption): string | false {
     );
 }
 
-// The pill indicator element is present only on the pill material
-// only (the underline paints its indicator as the container `::before` pseudo, no
-// element node). The ONE JS writer measures it on EVERY engine (the CSS-anchor
-// dual path retired — Safari-identical by construction).
+// ONE indicator node, both materials. It used to exist only on the pill, with the
+// underline drawn as a `::before` pseudo position-anchored to `[aria-selected]` —
+// two engines, and the second one had no indicator at all under `semantics="toggle"`
+// (no `anchor-name` is minted, `anchor()` is invalid at computed-value time, and the
+// rule collapsed to a zero-width box). Now the measured node IS the mark: the pill
+// fills it, the underline draws its edge. Safari-identical by construction, because
+// there is nothing left for an engine to differ about.
 
 // ── Responsive collapse ────────────────────────────────────────────────
 //
@@ -215,14 +219,17 @@ const selection = useSelectionGroup<SegmentedTabOption>({
     containerRef,
     indicatorRef,
     buttonRefs,
+    // The material IS the deform policy. The pill is a body of glass with area to
+    // span and swell; the hairline lengthens along its travel and has neither.
+    deform: computed(() => (isUnderline.value ? "mark" : "plate")),
     onSelect: (_value, idx) => {
         const btn = buttonRefs.value[idx];
         if (btn) animatePress(btn);
     },
 });
 
-// The elastic travel-squish fires INSIDE the engine's `select` on every commit; the
-// underline SLIDES (a hairline does not deform), gated inside the indicator writer.
+// The travel deform fires INSIDE the engine's `select` on every commit, on the policy
+// the `deform` param above states.
 const { select, rovingTabindex, singleSliderStyle } = selection;
 const onStripKeydown = selection.onKeydown;
 const isActive = (value: string) => selection.isSelected(value);
@@ -345,83 +352,38 @@ function onMobileUpdate(value: unknown) {
         "
         @keydown="onStripKeydown"
     >
-        <!-- The single shared indicator (pill slider). On the anchor path no
-             inline `:style` (CSS `position-anchor` + `inset` govern it); on the JS
-             fallback the measured `singleSliderStyle`. The underline variant paints
-             its indicator as the container `::before` pseudo, so no element node
-             here. When draggable, the indicator carries the
-             `.glass-drag-grabbable` rest affordance + the `.glass-drag-lift` grabbed
-             state; the shared morph engine owns its compositor offset. -->
+        <!-- THE ONE indicator node — both materials, every engine, always present.
+             `aria-hidden` because it is pure decoration and would otherwise be a
+             non-`tab` element child of a `role="tablist"`. When draggable it carries
+             the `.glass-drag-grabbable` rest affordance + the `.glass-drag-lift`
+             grabbed state; the shared morph engine owns its compositor offset. -->
         <div
-            v-if="!isUnderline"
             ref="indicatorRef"
+            aria-hidden="true"
             :class="[
                 'segmented-indicator',
-                // The measured writer paints the slider on every engine.
+                // The measured writer paints on every engine.
                 'segmented-indicator--js',
-                // The traveling indicator is the selected fill. Its glass material
-                // belongs on this measured box so geometry, clipping, and motion share
-                // one owner and one settled scale.
-                'glass-capsule',
+                // The material composes onto the measured box, so geometry,
+                // clipping, and motion share one owner and one settled scale. The
+                // pill is glass; the underline composes the shared paper ink-mark
+                // register, which this makes its FIRST real class consumer.
+                isUnderline ? 'paper-ink-mark' : 'glass-capsule',
                 dragEnabled && 'glass-drag-grabbable',
                 dragEnabled && drag.dragging.value && 'glass-drag-lift',
             ]"
             :style="singleSliderStyle"
         />
 
-        <!-- Buttons. -->
+        <!-- Buttons. ONE branch — the tooltip fork is gone (a tab whose label needs
+             an explanatory tooltip has the wrong label), so nine duplicated
+             attributes and a three-prop slot cannot diverge. `data-active` is
+             PRESENCE-gated (`|| undefined`), the house emit form; it is the styling
+             hook for both semantics, because `[aria-pressed]` and `[aria-selected]`
+             are two spellings of one state and paint may not know which. The ARIA
+             attributes themselves are untouched. -->
         <template v-for="(option, idx) in stripOptions" :key="option.value">
-            <TooltipProvider v-if="option.tooltip" :delay-duration="200">
-                <Tooltip>
-                    <TooltipTrigger as-child>
-                        <button
-                            type="button"
-                            :ref="
-                                (el) => {
-                                    if (el) buttonRefs[idx] = el as HTMLElement;
-                                }
-                            "
-                            class="segmented-tab"
-                            :role="isTabsSemantic ? 'tab' : undefined"
-                            :tabindex="rovingTabindex(idx)"
-                            v-bind="
-                                isTabsSemantic
-                                    ? {
-                                          'aria-selected': isActive(option.value)
-                                              ? 'true'
-                                              : 'false',
-                                          'aria-controls': option.controls || undefined,
-                                      }
-                                    : {
-                                          'aria-pressed': isActive(option.value)
-                                              ? 'true'
-                                              : 'false',
-                                      }
-                            "
-                            :disabled="option.disabled"
-                            :class="[
-                                option.disabled && 'is-disabled',
-                                pillHoverClass(option),
-                            ]"
-                            @click="select(option.value, idx)"
-                        >
-                            <slot
-                                name="option"
-                                :option="option"
-                                :active="isActive(option.value)"
-                            >
-                                {{ option.label }}
-                            </slot>
-                        </button>
-                    </TooltipTrigger>
-                    <TooltipContent side="bottom" :side-offset="8">
-                        {{ option.tooltip }}
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
-
             <button
-                v-else
                 type="button"
                 :ref="
                     (el) => {
@@ -431,14 +393,19 @@ function onMobileUpdate(value: unknown) {
                 class="segmented-tab"
                 :role="isTabsSemantic ? 'tab' : undefined"
                 :tabindex="rovingTabindex(idx)"
-                v-bind="
-                    isTabsSemantic
+                v-bind="{
+                    // Presence-gated, in the house form the landed emit sites use
+                    // (`DockControl.vue:113`, `PagerDots.vue`): the empty string when
+                    // on, the key absent when off. `data-active=&quot;false&quot;` would make
+                    // `[data-active]` match every tab in the strip.
+                    ...(isActive(option.value) ? { 'data-active': '' } : {}),
+                    ...(isTabsSemantic
                         ? {
                               'aria-selected': isActive(option.value) ? 'true' : 'false',
                               'aria-controls': option.controls || undefined,
                           }
-                        : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }
-                "
+                        : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }),
+                }"
                 :disabled="option.disabled"
                 :class="[option.disabled && 'is-disabled', pillHoverClass(option)]"
                 @click="select(option.value, idx)"

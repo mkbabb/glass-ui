@@ -1,6 +1,7 @@
 import { computed, type ComputedRef, type Ref } from "vue";
 import {
     useSelectionIndicator,
+    type SelectionDeform,
     type SelectionOption,
 } from "./useSelectionIndicator";
 // The roving machine is composed directly (the dock is SegmentedTabs wearing
@@ -47,10 +48,10 @@ import {
 export type SelectionMode = "single" | "multiple";
 export type SelectionRole = "radiogroup" | "tablist" | "group";
 
-export interface UseSelectionGroupParams<O extends SelectionOption> {
 /** Re-stated for the return type's default only — the identity is `SelectionOption`'s. */
 type SelectionValue = SelectionOption["value"];
 
+export interface UseSelectionGroupParams<O extends SelectionOption> {
     /** The selectable options (index-aligned to `buttonRefs`). */
     options: ComputedRef<O[]>;
     /**
@@ -80,13 +81,28 @@ type SelectionValue = SelectionOption["value"];
      * The traveling-indicator element (the deform write target). Omit (or leave
      * null) for a group with no glide indicator at all (a paper-hairline strip, a
      * plain toggle row) — the SQUISH then no-ops, which is HEAD's accurate half and
-     * is restored here. The MEASURE does not no-op, and BK #84's rewording asserted
+     * is restored here. ~~The MEASURE does not no-op, and BK #84's rewording asserted
      * that it did: `useSelectionIndicator` attaches its `ResizeObserver`
      * unconditionally — that is the Safari-identical guarantee — and
      * `updateSingleSlider` keeps writing a `singleSliderStyle` such a caller never
-     * reads. Economizing it is the indicator writer's own change to make.
+     * reads. Economizing it is the indicator writer's own change to make.~~
+     * [2026-08-08 · BK #71 W-EYEGLASS, RT-84O: the change was made, in the file this
+     * text routed it to. `updateSingleSlider` now returns before its first rect read
+     * when `indicatorRef` is null, so such a caller runs ZERO layout. What #84 wrote
+     * was true of #84's HEAD and is false of this one — the `ResizeObserver` still
+     * attaches unconditionally (that guarantee is untouched), and a strip that
+     * appears late is measured on arrival because the indicator is a CHILD of the
+     * container, so the container watcher already covers it.]
      */
     indicatorRef?: Ref<HTMLElement | null>;
+    /**
+     * What the travelling body is made of — `"plate"` (default, the full body and
+     * the eyeglass host), `"mark"` (a hairline: length only), `"none"`. STATED, not
+     * inferred: a multi-toggle group has no single travelling body, and that is a
+     * different fact from a hairline having no area, even though the old null-ref
+     * sentinel spelled both the same way.
+     */
+    deform?: ComputedRef<SelectionDeform>;
     /** Per-option item refs, index-aligned to `options`. */
     buttonRefs: Ref<HTMLElement[]>;
     /**
@@ -169,10 +185,15 @@ export function useSelectionGroup<O extends SelectionOption>(
 
     // ── The ONE traveling-indicator writer ──
     // The indicator tracks the (single) active value; a `multiple` group passes
-    // its first-selected as the glide anchor (a multi-toggle carries no single
-    // slider — the caller omits `indicatorRef` for it).
+    // its first-selected as the glide anchor. A multi-toggle carries no single
+    // travelling body, so it declares `deform: "none"` — the fact stated in the
+    // parameter that means it, rather than smuggled through a null element ref that
+    // already means something else here.
     const indicatorModel = computed<O["value"] | undefined>(
         () => activeValues.value[0],
+    );
+    const deform = computed<SelectionDeform>(() =>
+        params.deform?.value ?? (modeRef.value === "multiple" ? "none" : "plate"),
     );
 
     const { singleSliderStyle, squishOnTravel } = useSelectionIndicator<O>({
@@ -183,6 +204,7 @@ export function useSelectionGroup<O extends SelectionOption>(
         model: indicatorModel,
         activeValues,
         vertical: isVertical,
+        deform,
     });
 
     // ── The selection commit (the ONE registry write + recenter + squish) ──

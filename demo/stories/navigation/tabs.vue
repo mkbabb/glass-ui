@@ -157,7 +157,7 @@ const chapterBody: Record<string, string> = {
         <!-- ════ The PILL material (glass) ════ -->
         <StorySection
             heading="Pill — the glass material (default)"
-            blurb="A quiet glass track with one selected capsule. The measured capsule owns its fill, rim, glide, and transient travel squish; at rest it fits its slot at scale 1."
+            blurb="A quiet glass track with one selected capsule — the eyeglass. On a hop it spans origin and destination, leans into its travel, swells across, and inverts from a pressed well to a lit dome; the whole bar lifts in chroma one frame before it moves. At rest it fits its slot at scale 1."
         >
             <div
                 class="glass-card flex flex-col gap-4 rounded-[var(--radius-card)] p-5"
@@ -249,7 +249,7 @@ const chapterBody: Record<string, string> = {
         <!-- ════ The UNDERLINE material (paper) — horizontal ════ -->
         <StorySection
             heading="Underline — the paper material"
-            blurb="For paper/editorial scenarios. NO plate, NO blur, NO track — just the 2px foreground ink hairline (the shared paper-ink-mark register). It SLIDES (a hairline does not squish). Shown over a paper-grain card, panel-nav role=tablist."
+            blurb="For paper/editorial scenarios. NO plate, NO blur, NO track — just the 2px foreground ink hairline (the shared paper-ink-mark register) on the same measured node the pill fills. It LENGTHENS along its travel and never thickens: a hairline has no body to swell. Shown over a paper-grain card, panel-nav role=tablist."
         >
             <div
                 class="paper-grain-overlay rounded-[var(--radius-card)] border border-border/40 p-5"
@@ -366,6 +366,7 @@ const chapterBody: Record<string, string> = {
 
         <!-- ════ Responsive collapse ════ -->
         <StorySection
+            span="full"
             heading="Responsive — collapses to a Select"
             blurb="Below the breakpoint the strip becomes a <Select>, both driven by one v-model. Narrow the viewport past 640px to see the swap."
         >

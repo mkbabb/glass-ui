@@ -69,6 +69,13 @@
        untouched — `pointer-events` does not gate focus or `keydown`, so the roving
        tabindex contract stays whole (WCAG 2.1.1 alternative intact).
 
+       THE ACTIVE TAB IS `[data-active]`, and that is the whole fix for the defect
+       this rule carried from birth. It keyed `[aria-pressed="true"]`, which a
+       `role="tablist"` strip never emits — it emits `aria-selected` — so on every
+       tabs-semantic strip the forward never fired and the liquid tab was simply
+       dead, silently, while the toggle-semantic strips worked. One state, one
+       spelling, and the two semantics stop being able to disagree about it.
+
      · THE TRAVEL OCCLUSION — once grabbed, the pulled lozenge slides across the
        OTHER buttons; while `.glass-drag-lift` is set (useDragMorph's `dragging`),
        raise the indicator ABOVE the z-10 labels so the traveling pill renders on top
@@ -77,10 +84,12 @@
 
    Compositor-only (z-index + hit-testing, no layout). The REST z-order is UNTOUCHED
    — `.segmented-indicator { z-index: 0 }` still paints behind the labels at rest. */
-.segmented-tabs:not(.segmented-tabs--underline):has(
-        .segmented-indicator.glass-drag-grabbable
-    )
-    .segmented-tab[aria-pressed="true"] {
+/* The `:not(--underline)` guard is gone with the reason for it: drag arms only on
+   the pill (`dragEnabled = !isUnderline`), so an underline indicator never carries
+   `.glass-drag-grabbable` and the `:has()` alone is sufficient. A condition that can
+   never be false is not a guard, it is a comment with a specificity cost. */
+.segmented-tabs:has(.segmented-indicator.glass-drag-grabbable)
+    .segmented-tab[data-active] {
     pointer-events: none;
 }
 
