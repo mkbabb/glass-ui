@@ -28,7 +28,7 @@ import {
 } from "@glass/composables/color";
 import { useGlobalDark } from "@glass/composables/dark";
 import { DockBackgroundToggle } from "@glass/components/dock";
-import { GlassTimeline } from "@glass/components/timeline";
+import { Slider } from "@glass/components/slider";
 import {
     Configurator,
     ConfiguratorLayer,
@@ -360,11 +360,19 @@ const rendererStatus = ref<RendererStatus>(pendingRenderer("webgpu"));
                             >
                                 <DockBackgroundToggle v-model:paused="paused" />
                                 <div class="min-w-0 flex-1">
-                                    <GlassTimeline
-                                        variant="scrubber"
-                                        :model-value="scrubT"
-                                        label="Scrub head_t"
-                                        @update:model-value="onScrub"
+                                    <!-- The transport COMMANDS the head, so it is
+                                         a Slider (role=slider), not a timeline
+                                         (role=progressbar). Note the array
+                                         binding + the unwrap: Slider's value is
+                                         `number[] | null`, and a scalar bound
+                                         here silently paints an empty track. -->
+                                    <Slider
+                                        :model-value="[scrubT]"
+                                        :min="0"
+                                        :max="1"
+                                        :step="0.01"
+                                        aria-label="Scrub head_t"
+                                        @update:model-value="(v) => onScrub(v?.[0] ?? 0)"
                                     />
                                 </div>
                                 <div class="w-28 shrink-0">
