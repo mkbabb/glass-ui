@@ -68,13 +68,25 @@
        + the φ `--overlay-pad-*` ladder are THREADED, not re-minted). */
     /* `min-w-32` = 32 × 0.25rem = 8rem — the dropdown/select/context-menu min-width. */
     --overlay-min-width: 8rem;
-    /* The collision-bounded max-block ceiling the dropdown (`max-h-[60vh]`) +
-       command list (`max-h-[300px]`) read. Defaults to 60vh — the viewport-
-       relative ceiling so a long menu scrolls inside the overlay rather than
-       running off-screen. (The Select precompiled `[data-slot="select-content"]`
-       max-height in select.css is the consumer-reach floor — KEPT,
-       not threaded here; see the census on-the-line row.) */
-    --overlay-max-block: 60vh;
+    /* ONE BOUND, ONE MEASURE. Every portalled list in the family reads this: the
+       dropdown, the command palette, and the Select listbox's precompiled
+       `[data-slot="select-content"]` rule (glass/overlay-plate.css), which used to
+       carry a second, differently-named ceiling of its own.
+       `min(24rem, 60dvh)` is a COMFORTABLE ceiling that a short viewport tightens:
+       24rem is the height past which a menu stops being a menu, and `dvh` — not
+       `vh` — is what makes the mobile arm honest, because `vh` measures against the
+       LARGEST viewport and so let a list run under a retracted URL bar. Reka's
+       measured `--reka-popper-available-height` tightens it further where the
+       positioner reports one. */
+    --overlay-max-block: min(24rem, 60dvh);
+    /* THE PLATE PAD — one axis for every overlay plate, so the panel, the menu and
+       the command list cannot disagree about their own inset. 12 is on the space
+       series; the retiring `--panel-padding` 6 was not, and the φ `×1.272` block
+       multiplier that used to sit beside it produced 5.088px and 20.35px insets —
+       sub-pixel theatre nobody could name. The listbox VIEWPORT's inner 4 is a
+       different measure (it is what the option radius is derived from: plate 16
+       minus inset 4 = 12) and is stated at its own element. */
+    --overlay-pad: 12px;
     /* The tooltip type rung — the golden quiet caption register (√φ ladder), the
        token-backing of the bare `text-sm` on TooltipContent (the overlay share of
        class 3). Defaults to `--type-caption` so the compact tooltip chip reads the
