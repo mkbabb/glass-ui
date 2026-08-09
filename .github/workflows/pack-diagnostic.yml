@@ -1,0 +1,28 @@
+name: pack-diagnostic
+
+# One-off diagnostic for the G-BUNDLE-RATCHET cross-environment delta surfaced at the
+# v8.0.0 tag (CI packed 921,280 B vs the mac-built 922,657 B the ratchet pins). Mirrors
+# release.yml's environment exactly (ubuntu, node 24, npm ci → build) and prints the
+# packed tarball's byte count + full per-file listing so the divergent files can be
+# named. Dispatch-only; deleted once the delta is rooted.
+on: workflow_dispatch
+
+jobs:
+    pack:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+            - run: npm ci
+            - run: npm run build
+            - name: pack and list
+              run: |
+                  npm pack --ignore-scripts --silent
+                  T=$(ls *.tgz)
+                  echo "TARBALL-BYTES:$(wc -c < "$T")"
+                  echo "----LISTING----"
+                  tar -tzvf "$T" | awk '{print $3, $NF}' | sort -k2
