@@ -2,36 +2,19 @@
     "$comment": "BJ TERMINAL-ROSTER row #9 (W-GATE-TRUTH). The missing bijection: §B.5's 60 doc seats bound, one by one, to an executable or honestly declared unbound. Authored by measurement, never by inference. #9 counts; #65 owns §B.5 and owns every strike or rename this file routes to it.",
     "authoredAt": "2026-08-03",
     "head": "85915b2d27b602cdebbbf6638051d76a463a7eeb (cure round; the impl round's pin 0a0f95cc61ec9edbfcec76fa4c8b98b417c334fc went ten commits stale before the adjudication - the register artifacts themselves are committed at 6cf8eb51, which is what satisfies cursor ⊕¹³ᵃ's second condition)",
-    "reVerifiedAt": "2026-08-03 (CURE ROUND, verdict CURE-REQUIRED -> ten cures): every binding re-measured under the STRICT matchers - roster titles must be the first argument of a running `it(`/`test(` call (`.skip`/`.todo` struck, line+block comments stripped before matching) and seat names must appear in a LIVE string literal or an exported identifier, never in prose. Both figures held unchanged under the stricter forms (bound 7 / arm-only 2 / ABSENT 51, drift 1). `G-GATE-BUDGET`'s claim on `scripts/gate-register.mjs` was carried by a header COMMENT before this round; the script now emits its own seat name in its violation messages, so the claim is live rather than narrated. Prior record: 2026-08-03, at HEAD 0a0f95cc - every binding re-measured against the file, family sums re-added, drift re-derived; the detector's title check tightened to the `it(`/`test(` call form (all 47 bindings held).",
+    "reVerifiedAt": "2026-08-08 (BK #65 W-GATE-COLLAPSE - the successor cut): the pin moved to C20 exactly once, the one drift repaired, #9's six supplemental anchors folded, and FIVE seats bound on their cursor routes (RT-32B, RT-71B, RT-26A x2, RT-27A). Every binding re-measured under the STRICT matchers before it was written. The strike-or-name question on the remaining unbound seats was answered by MEASUREMENT: `nameIsLive` over `git ls-files tests scripts` finds a live-name executable for 19 of the 50 unbound at HEAD, one of them (`AURORA` -> scripts/profile-bundle.mjs) a demonstrated false positive; NONE was bound on the scan alone. | 2026-08-03 (CURE ROUND, verdict CURE-REQUIRED -> ten cures): every binding re-measured under the STRICT matchers - roster titles must be the first argument of a running `it(`/`test(` call (`.skip`/`.todo` struck, line+block comments stripped before matching) and seat names must appear in a LIVE string literal or an exported identifier, never in prose. Both figures held unchanged under the stricter forms (bound 7 / arm-only 2 / ABSENT 51, drift 1). `G-GATE-BUDGET`'s claim on `scripts/gate-register.mjs` was carried by a header COMMENT before this round; the script now emits its own seat name in its violation messages, so the claim is live rather than narrated. Prior record: 2026-08-03, at HEAD 0a0f95cc - every binding re-measured against the file, family sums re-added, drift re-derived; the detector's title check tightened to the `it(`/`test(` call form (all 47 bindings held).",
     "seatSource": "docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md §B.5 family table",
     "codeRegister": {
-        "path": "docs/tranches/BJ/addenda/2026-07-21-convergent-hardening/GATE-SEMANTIC-ROSTER-C19.json",
-        "sha256": "dc05df9124024d721ce3a69dca297c237c965fa31921fbae6e0e46bb72257b52",
-        "$comment": "The pin quoted at TERMINAL-ROSTER.md:159 (#9) and :215 (#65) and in §B.5. This file is NEVER edited by row #9; C19's own authority.supersedesRosterSha256 is the successor mechanism and that is #65's call."
+        "path": "docs/tranches/BJ/addenda/2026-07-21-convergent-hardening/GATE-SEMANTIC-ROSTER-C20.json",
+        "sha256": "154210323fa22cc061ca2c18394cd9bcf7e4465f0b29676c2866c28f10667411",
+        "$comment": "[2026-08-08 - BK #65] THE SUCCESSOR CUT. ~~The pin quoted at TERMINAL-ROSTER.md:159 (#9) and :215 (#65) and in §B.5. This file is NEVER edited by row #9; C19's own authority.supersedesRosterSha256 is the successor mechanism and that is #65's call.~~ - #65 made that call. C19 stays BYTE-FROZEN on disk at dc05df91..., so every committed quotation of that digest remains TRUE as a statement about C19 and no strike-bracket is owed at :159/:215/§B.5:333 or in #68's CANON receipt. C20 carries the repaired registration, #9's six supplemental anchors folded into their rows' `enrollment`, and three DELETED `authority` keys. `ROSTER_PATH` + `PINNED_ROSTER_SHA256` in `scripts/gate-register.mjs` moved EXACTLY ONCE, in the commit that carries this file."
     },
     "bindingKinds": {
         "seat-detector": "An executable carries the seat name verbatim AND asserts the seat's own predicate. Counts as BOUND.",
         "arm-only": "An executable names the seat verbatim but only as the host of an ARM (seats +0). Does NOT count as bound; recorded so the count can never be inflated by an arm citing its host.",
         "none": "No executable under tests/ or scripts/ carries this name. UNBOUND. Routed to #65."
     },
-    "declaredTitleDrift": [
-        {
-            "id": "reka.tags-input.value-binding",
-            "sourcePath": "tests/components/ui/reka-binding-idiom.test.ts",
-            "rosterTitle": "TagsInput: the active item resolves `data-[state=active]` (the `tag=` idiom is gone)",
-            "headTitle": "TagsInput: item text renders from `value=` (the stale `tag=` idiom is gone)",
-            "verdict": "STALE IN SUBSTANCE, not a re-word — the roster asserts active-item state resolution, HEAD asserts item text rendering. Two different assertions.",
-            "routedTo": "#65 (owns §B.5 and the C19 successor cut). The sha pin forbids #9 editing C19 in place.",
-            "adjudicatedBy": "#65, 2026-08-04 — ADJUDICATED ON THE BYTES: THE ROSTER SIDE DRIFTED. The executable at HEAD is honest and may not be re-aligned to the roster string. Provenance, three commits: (1) `a1ec4119` (AW W26, 2026-06-07) authored the case with the `data-[state=active]` title over a body that collected the state nodes into an UNUSED `items` binding and ~~asserted only `expect(wrapper.get('[data-slot=tags-input]')).toBeTruthy()`~~ [⊕³⁶ 2026-08-04 · C-3 — BYTE-FALSE, corrected against the commit itself. The birth body carried THREE assertions in that case, verbatim from `git show a1ec4119:tests/components/ui/reka-binding-idiom.test.ts` at its lines 125/126/130: `expect(wrapper.text()).toContain('alpha');` · `expect(wrapper.text()).toContain('beta');` · `expect(wrapper.get('[data-slot=tags-input]')).toBeTruthy();`. The correction STRENGTHENS this verdict rather than weakening it: the value-driven item-text render effect — the effect HEAD asserts, and the effect C19's own `predicate` and `requiredCaseIdentity.keys` ['alpha','beta'] describe — was asserted FROM BIRTH. What the birth body never asserted is the ADVERTISED ACTIVE STATE, and only that: the string `data-[state=active]` occurs in that case's TITLE and nowhere in its body. The drift is therefore narrower and sharper than first written, and it points the same way.] — the title advertised the one assertion the case never made, from birth. (2) C19 was banked (~~`bce78c3e`/`0c80c813`~~ **`0c80c813` alone** [⊕³⁶ 2026-08-04 · C-3 — `bce78c3e` IS A FALSE CITE: that commit never contained C19. Detectors, verbatim: `git ls-tree -r bce78c3e --name-only | grep GATE-SEMANTIC` → no output, exit 1 (empty at the C19 path); `git log --follow --diff-filter=A --format='%H %ad' --date=short -- docs/tranches/BJ/addenda/2026-07-21-convergent-hardening/GATE-SEMANTIC-ROSTER-C19.json` → `0c80c81318ec633e54c43ccd9af68f49c34363f6 2026-08-03`, the SOLE add, and `git log --follow` over that same path returns that one commit and no other. THE NUMBERED CHRONOLOGY IS ALSO OUT OF ORDER ON THE BYTES: `0c80c813` is dated 2026-08-03 12:35:13 -0400 while step (3)'s cure `f3a83c9b` is dated 2026-07-29 12:42:44 -0400 — the banking POST-DATES the cure by five days, so C19 entered the repo already carrying a title that had been struck four days earlier. Untracked authoring may well predate the cure, which is why the step order is kept as the AUTHORING narrative; what is false is the cite and the commit order it implies. The verdict DIRECTION is untouched and reinforced: C19's `predicate` and `requiredCaseIdentity` describe HEAD, and it is now measured that they were committed after HEAD's title was already correct.] copying that stale title into `currentRegistration`, while writing the REAL contract into its own `predicate` ('TagsInput item values render through the current value binding and the family root remains present') and its own `requiredCaseIdentity.keys` ['alpha','beta'] — C19's predicate and case-identity BOTH describe the HEAD executable, not C19's own title. The roster row is internally inconsistent and the title is the inconsistent field. (3) `f3a83c9b` (BK Φ0 surface-salvage, 2026-07-29) cured it on Challenge F's finding, verbatim: 'the TagsInput canary advertised an unasserted active state'; the title was narrowed to the real value-driven rendering contract and the assertions made real (`findAll('[data-slot=tags-input-item-text]').map(text)` toEqual ['alpha','beta']), tightened again at `9be9218b` when the root arm's tautology was struck. REPAIR = C19's `currentRegistration` adopts the HEAD title; the executable is NOT touched. The stale-reka-binding law (feedback_glass_ui_binding_verification) confirms the direction: only a RENDER-EFFECT probe catches a no-op binding, and item text rendering is the render effect the `tag=`→`value=` idiom move actually drives; 'the active item resolves data-[state=active]' names a CSS-variant string, not an effect this spec ever asserted.",
-            "executionDisposition": "BATCHED, NOT LANDED AT THIS SEAT — with grounds, on this row's own spec of record. TR#65's spec-of-record column reads, verbatim: 'one batched SHA pin at band close', Φ7 (the Φ ladder: 'Φ7 consumer addenda → C-9 one SHA batch(#65 intake CLOSED ✦) → C-13 wiring (BLOCKING)'). Cutting C19 for this ONE string spends that pin early and forces a SECOND pin when the rest of the batch lands — #9's six supplemental anchors (this file's `supplementalAnchors`, explicitly 'ROUTED TO #65 for the successor cut'), the remaining 50 strike-or-name decisions on the ABSENT seats, and the third-population disposition. The pin is also quoted in THREE committed records outside #65's edit fence (`TERMINAL-ROSTER.md:159`, `:215`/§B.5:333, and #68's CANON.md receipt); landing the byte here would make all three false on disk with the repair only banked. 'Both figures ship with their detectors or neither ships' cuts against a half-landed pin. The drift therefore stays PINNED and REPORTED (drift:1, both-direction bite intact) and is executed at the C-9 batch.",
-            "successorRecipe": {
-                "preferredMechanism": "C19's own `authority.supersedesRosterSha256` — author the successor roster (C20) carrying this row's repaired `currentRegistration` PLUS the six supplemental anchors folded into their rows' `enrollment` arrays, with `authority.supersedesRosterSha256` = dc05df9124024d721ce3a69dca297c237c965fa31921fbae6e0e46bb72257b52. C19 then stays byte-frozen and every committed quotation of dc05df91… remains TRUE as a statement about C19; only `ROSTER_PATH` + `PINNED_ROSTER_SHA256` in `scripts/gate-register.mjs` move, exactly once. [⊕³⁶ 2026-08-04 · C-2, the cure the adjudication ordered — THE SUCCESSOR CUT ALSO KILLS C19's DEAD BINDING DECLARATION. Routed to #65 by name at `REGISTER.md:338`, verbatim: 'C19's dead `authority.canonicalBinding: \"governedInvariant\" / mode: \"enabled\"` — that machine is exactly what this row quarantined (0 of 9 re-landed). A pinned roster asserting an enabled binding that does not exist is a live doc-truth defect; the successor cut is where it dies'. VERIFIED LIVE AT HEAD before writing this clause. Detector, verbatim: `grep -n 'canonicalBinding' docs/tranches/BJ/addenda/2026-07-21-convergent-hardening/GATE-SEMANTIC-ROSTER-C19.json` → `7:    \"canonicalBinding\": \"governedInvariant\",`; the sibling keys on the two lines beneath it are `8:    \"mode\": \"enabled\",` and `9:    \"maximumCountedSeats\": 60,`. C20 therefore carries THREE `authority` keys DELETED OUTRIGHT and none added: `canonicalBinding` and `mode` (the quarantined governedInvariant machine — a clean break, no re-valued alias, no `mode: \"disabled\"` shim, which would merely re-declare a machine that does not exist), and `maximumCountedSeats` (the field that performed the illegal charge, dead by §C-1's ruling: 60 is the DOC allocation over seat names and may not stand as a ceiling over the CODE census's disjoint population). C20's `authority` declares only what a live machine reads. Bite for the cut: with the keys gone, any consumer that read them fails loudly rather than resolving against a fiction — `grep -rn 'canonicalBinding\\|maximumCountedSeats' scripts/ tests/` returns 0 at HEAD, so nothing live regresses and the deletion is pure doc-truth.]",
-                "inPlaceAlternative": "If the C-9 batch carries nothing but this string, the in-place repair is a single localized delta, measured this seat: exactly ONE occurrence of the stale title in C19, byte delta −9, and the repaired file hashes to 6b97b71fc873161fb08680f8329959eca168aae116b2a395b06ab0ef4640c710. Landing it obliges, in the same commit: `PINNED_ROSTER_SHA256` re-cut in `scripts/gate-register.mjs`; this `declaredTitleDrift` array emptied to [] (check 5 REDs on a silent repair — that is the point of the pin); `codeRegister.sha256` above re-cut; and dated strike-brackets on `TERMINAL-ROSTER.md:159` + `:215`/§B.5:333 and on #68's CANON.md receipt line, none of which are in #65's fence. [⊕³⁶ 2026-08-04 · C-2 — THE SAME THREE-KEY DELETION IS OWED ON THIS PATH TOO, in the same commit: an in-place cut edits C19 itself, so `authority.canonicalBinding` (`\"governedInvariant\"`), `authority.mode` (`\"enabled\"`) and `authority.maximumCountedSeats` (`60`) come OUT of C19's own `authority` block at its lines 7/8/9 — deleted, never re-valued — on the same grounds as the preferred mechanism above. The in-place path is strictly WORSE for this half: it destroys the only frozen witness that C19 ever declared them, so the deletion must be narrated in the commit body with the pre-cut lines quoted verbatim. Two further obligations this path incurs and the successor path does not: the strike-bracket list above grows to FOUR TERMINAL-ROSTER sites (`:159` · `:215` · `:216` · `:333` — see the row record's banked block (3), C-5), and `codeRegister.sha256` in this file is re-cut a SECOND time if the title repair and the authority deletion do not land in one commit. Land both in one commit or take the successor path.]",
-                "doNot": "Do NOT re-align the executable to the roster string. That revives the false-advertising title Challenge F struck and contradicts C19's own predicate and requiredCaseIdentity."
-            },
-            "$comment": "This set is PINNED, not allowlisted: the detector REDs if a second row drifts AND REDs if this row is repaired without updating this record. Suppression in neither direction."
-        }
-    ],
+    "declaredTitleDrift": [],
     "seats": [
         {
             "family": "RELEASE",
@@ -223,25 +206,34 @@
             "family": "MOTION",
             "seat": "G-SPRING-HONEST",
             "gId": "G-SPRING-HONEST",
-            "binding": "none",
-            "paths": [],
-            "note": ""
+            "binding": "seat-detector",
+            "paths": [
+                "tests/styles/spring-authority.test.ts"
+            ],
+            "note": "",
+            "boundAt": "2026-08-08 - BK #65 W-GATE-COLLAPSE, on RT-26A's cursor route. A BINDING IS NOT A MOVEMENT: budget stays exactly 60, nothing minted, the seat name was already in the live bytes of a landed executable and this file only stopped saying it was absent."
         },
         {
             "family": "MOTION",
             "seat": "G-SPRING-ONE-JOB",
             "gId": "G-SPRING-ONE-JOB",
-            "binding": "none",
-            "paths": [],
-            "note": "+clock-fence arm (U-39)."
+            "binding": "seat-detector",
+            "paths": [
+                "tests/styles/spring-authority.test.ts"
+            ],
+            "note": "+clock-fence arm (U-39).",
+            "boundAt": "2026-08-08 - BK #65 W-GATE-COLLAPSE, on RT-26A's cursor route. A BINDING IS NOT A MOVEMENT: budget stays exactly 60, nothing minted, the seat name was already in the live bytes of a landed executable and this file only stopped saying it was absent."
         },
         {
             "family": "MOTION",
             "seat": "G-ENGAGE-RUNG",
             "gId": "G-ENGAGE-RUNG",
-            "binding": "none",
-            "paths": [],
-            "note": "+field-well +PRM arms."
+            "binding": "seat-detector",
+            "paths": [
+                "tests/styles/engage-ladder.test.ts"
+            ],
+            "note": "+field-well +PRM arms.",
+            "boundAt": "2026-08-08 - BK #65 W-GATE-COLLAPSE, on RT-27A's cursor route. A BINDING IS NOT A MOVEMENT: budget stays exactly 60, nothing minted, the seat name was already in the live bytes of a landed executable and this file only stopped saying it was absent."
         },
         {
             "family": "MOTION",
@@ -255,17 +247,23 @@
             "family": "SEAM",
             "seat": "G-TABS-SEAM",
             "gId": "G-TABS-SEAM",
-            "binding": "none",
-            "paths": [],
-            "note": ""
+            "binding": "seat-detector",
+            "paths": [
+                "tests/gates/tabs-seam.test.ts"
+            ],
+            "note": "",
+            "boundAt": "2026-08-08 - BK #65 W-GATE-COLLAPSE, on RT-32B's cursor route. A BINDING IS NOT A MOVEMENT: budget stays exactly 60, nothing minted, the seat name was already in the live bytes of a landed executable and this file only stopped saying it was absent."
         },
         {
             "family": "SEAM",
             "seat": "G-FEEDBACK-TINT-SEAM",
             "gId": "G-FEEDBACK-TINT-SEAM",
-            "binding": "none",
-            "paths": [],
-            "note": ""
+            "binding": "seat-detector",
+            "paths": [
+                "tests/gates/feedback-tint-seam.test.ts"
+            ],
+            "note": "",
+            "boundAt": "2026-08-08 - BK #65 W-GATE-COLLAPSE, on RT-71B's cursor route. A BINDING IS NOT A MOVEMENT: budget stays exactly 60, nothing minted, the seat name was already in the live bytes of a landed executable and this file only stopped saying it was absent."
         },
         {
             "family": "A11Y",
@@ -556,37 +554,7 @@
         "HANDMARK": 2
     },
     "seatBudget": 60,
-    "supplementalAnchors": [
-        {
-            "id": "external.package.export-resolution",
-            "anchor": "scripts/release.sh#verify:package",
-            "why": "C19 anchors `scripts/release.sh` as a BARE PATH, so gutting every command in it still resolved on existsSync alone - the same blindness cure #2 closed for ci.yml. Measured here: release.sh:35 runs `npm run verify:package`."
-        },
-        {
-            "id": "external.package.export-resolution",
-            "anchor": ".github/workflows/release.yml#verify:package",
-            "why": "release.yml:42 runs `npm run verify:package`. C19 anchors the workflow as a bare path only."
-        },
-        {
-            "id": "external.types.* (all 8 type rows - identical enrollment sets)",
-            "anchor": ".github/workflows/ci.yml#typecheck",
-            "why": "ci.yml:21 `run: npm run typecheck` is what actually executes the 8 `.test-d.ts` rows. C19 anchors ci.yml as a bare path."
-        },
-        {
-            "id": "external.types.* (all 8 type rows - identical enrollment sets)",
-            "anchor": ".github/workflows/release.yml#typecheck",
-            "why": "release.yml:38 `run: npm run typecheck`. Bare path at C19."
-        },
-        {
-            "id": "external.types.* (all 8 type rows - identical enrollment sets)",
-            "anchor": "tsconfig.test.json#tests/",
-            "why": "the type rows only typecheck because tsconfig.test.json's `include` carries `tests/`; C19 anchors the file, not the include. Comments are stripped before the match, so the fragment may not hide in the JSONC prologue."
-        },
-        {
-            "id": "external.browser.aurora-floor",
-            "anchor": "scripts/release.sh#gate:pixel-floor",
-            "why": "release.sh:45-46 run `gate:pixel-floor` and `gate:pixel-floor:planted`. This is the anchor that makes the aurora floor's release edge falsifiable: delete those lines and this REDs."
-        }
-    ],
-    "supplementalAnchors$comment": "#9-MEASURED enrollment fragments that C19 does not carry. C19 is sha-pinned (dc05df91...) and #9 may not edit it, so the fragments its bare-path anchors omit are measured here and ROUTED TO #65 for the successor cut. These can only ADD violations - there is no allowlist in this file and none may ever be added."
+    "supplementalAnchors": [],
+    "supplementalAnchors$comment": "[2026-08-08 - BK #65] FOLDED, and that is why this is empty. ~~#9-MEASURED enrollment fragments that C19 does not carry. C19 is sha-pinned (dc05df91...) and #9 may not edit it, so the fragments its bare-path anchors omit are measured here and ROUTED TO #65 for the successor cut.~~ All six now live in C20's own `enrollment` arrays, where check 3 carries them: 27 bare-path anchors were REPLACED by their fragment-bearing form (the bare path is the blindness - keeping it beside the fragment would leave the weaker anchor resolving on existsSync alone). This array stays as the seam the next #9-shaped measurement enrolls through. These can only ADD violations - there is no allowlist in this file and none may ever be added.",
+    "declaredTitleDrift$comment": "[2026-08-08 - BK #65 W-GATE-COLLAPSE] DISCHARGED, not suppressed. The one recorded drift (`reka.tags-input.value-binding`) is REPAIRED in the successor roster C20, which adopts the HEAD title verbatim; the executable was never touched, per this record's own `doNot`. The register reads `drift:0` and BOTH bites stay live - a new drift REDs, and a silent repair of a recorded one REDs too. The full adjudication text, ~8KB of measured provenance across three commits, is BANKED BYTE-IDENTICAL at `docs/tranches/BK/execution/2026-08-08-row65-gate-collapse/banked/declaredTitleDrift-at-4bb46eaa.json` (sha256 a7e9f690f762261d37c838ce17c2860b030b5689c4189bcef99aa8bc377394e9), taken at HEAD 4bb46eaa before the array emptied: a re-homed record needs a witness, not a corroboration."
 }

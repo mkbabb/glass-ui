@@ -2,7 +2,8 @@
 //
 // THE INVARIANT: the two gate registers are BOTH true and BOTH measurable.
 //   Figure A (doc)  — §B.5's exactly-60 seat budget, PARSED FROM §B.5 ITSELF.
-//   Figure B (code) — GATE-SEMANTIC-ROSTER-C19.json's active/reserved/external counts.
+//   Figure B (code) — GATE-SEMANTIC-ROSTER-C20.json's active/reserved/external counts
+//                     (C19's, until BK #65 cut the successor on 2026-08-08).
 // TR#65: "both figures ship with their detectors or neither ships." Until this file
 // existed, figure B had no committed detector at all (the one that produced it was lost
 // with the governance stash, cursor ⊕¹³ᵃ) and the two registers shared ZERO identifiers —
@@ -28,32 +29,49 @@
 // no package.json chain.
 //
 // ON CHECK 2 (counts recomputation), stated honestly rather than flattered. The sha pin
-// freezes C19 byte-for-byte, so today the counts check CANNOT fire without the sha
+// freezes the roster byte-for-byte, so the counts check CANNOT fire without the sha
 // violation firing first — it is DOMINATED by check 1 and it is defense-in-depth, not an
-// independent weight. It is kept because #65 owns the C19 successor cut: the moment the
-// pin is re-cut, this is the only thing that re-derives `counts` from the arrays instead
-// of trusting the stored object. Four checks were claimed to "carry their own weight";
+// independent weight. It was kept for the moment the pin was re-cut, when it is the only
+// thing that re-derives `counts` from the arrays instead of trusting the stored object;
+// that moment came at BK #65 and it paid for itself, C20's counts recomputing green over
+// arrays whose rows had moved. Four checks were claimed to "carry their own weight";
 // three do, and this is the fourth, kept with its dominance declared.
 //
-// ON THE TITLE DRIFT. C19 is sha-pinned; the pin is quoted at TERMINAL-ROSTER.md:159 and
-// :215, so row #9 may not edit it — #65 owns §B.5 and owns the successor cut. The drift
-// is therefore PINNED in SEAT-BINDING.json rather than allowlisted: the detector REDs if
-// a second row drifts AND REDs if the recorded row is repaired without updating the
-// record. Suppression in neither direction; an allowlist only suppresses one way.
+// ON THE TITLE DRIFT — REPAIRED, not suppressed. [2026-08-08 · BK #65] The one drifted
+// row, `reka.tags-input.value-binding`, adopts the HEAD title in C20 and
+// `declaredTitleDrift` is `[]`: the register reads `drift:0`. The pinned-set mechanism is
+// UNCHANGED and both bites stay live — a NEW drift REDs, and a silent repair of a
+// recorded one REDs too. ~~C19 is sha-pinned; the pin is quoted at TERMINAL-ROSTER.md:159
+// and :215, so row #9 may not edit it — #65 owns §B.5 and owns the successor cut. The
+// drift is therefore PINNED in SEAT-BINDING.json rather than allowlisted~~ — that was the
+// pre-successor statement; C19 is still frozen and still quoted truly, the pin now names
+// C20. Suppression in neither direction; an allowlist only suppresses one way.
 //
-// ON `unbound`. 51 of 60 doc seats carry no executable of that name (7 bound + 2 arm-only
-// + 51 = 60). That is a REPORTED FIGURE, not a failure: driving it to zero would mean
-// minting 51 gate names into code, which is precisely the gates-abrogation mandate's
-// forbidden class. The strike-or-rename decision belongs to #65, and #9's own measurement
-// carries the caveat that at least five of the 51 have live detectors under other titles.
+// ON `unbound`. [2026-08-08 · BK #65 — the figures are re-measured at the binding cut;
+// the prose stands, ~~51~~ **45** of 60 doc seats carry no executable of that name
+// (13 bound + 2 arm-only + 45 = 60), and #65's five cursor-named binds are what moved it
+// from 50.] That is a REPORTED FIGURE, not a failure: driving it to zero would mean
+// minting gate names into code, which is precisely the gates-abrogation mandate's
+// forbidden class. #65 RULED the strike-or-name question by MEASUREMENT rather than
+// argument: `nameIsLive` over `git ls-files tests scripts` finds a live-name executable
+// for 19 of the 50 that were unbound at HEAD, of which one (`AURORA`, a one-word seat
+// name matching `scripts/profile-bundle.mjs`) is a demonstrated false positive. Five were
+// bound here on a cursor route; the rest await a per-seat live-title read, and NONE is
+// bound on the scan alone.
 // What this script DOES fail on is a binding that was CLAIMED and is not there — a seat
 // declared bound whose name is absent from the LIVE bytes of its named file.
 
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 
+// BK #65 W-GATE-COLLAPSE, 2026-08-08 — THE SUCCESSOR CUT, and the pin moves EXACTLY
+// ONCE. C19 is not edited: it stays byte-frozen at `dc05df91…`, so every committed
+// quotation of that digest remains TRUE as a statement about C19. C20 carries the
+// repaired `currentRegistration`, the six supplemental anchors folded into their rows'
+// `enrollment`, and three DELETED `authority` keys, with
+// `authority.supersedesRosterSha256` naming the file it succeeds.
 export const ROSTER_PATH =
-    "docs/tranches/BJ/addenda/2026-07-21-convergent-hardening/GATE-SEMANTIC-ROSTER-C19.json";
+    "docs/tranches/BJ/addenda/2026-07-21-convergent-hardening/GATE-SEMANTIC-ROSTER-C20.json";
 export const SEAT_BINDING_PATH =
     "docs/tranches/BK/execution/2026-08-03-row9-register/SEAT-BINDING.json";
 // Figure A's AUTHORITY. Before cure #3 this file was never opened: `seats.length === 60`
@@ -62,9 +80,11 @@ export const SEAT_BINDING_PATH =
 export const ROSTER_MD_PATH =
     "docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md";
 
-// The provenance pin. TERMINAL-ROSTER.md:159 (#9), :215 (#65), §B.5.
+// The provenance pin. TERMINAL-ROSTER.md:159 (#9), :215 (#65), §B.5 quote C19's
+// `dc05df91…`; those quotations still describe C19, which is unchanged on disk. This is
+// C20's.
 export const PINNED_ROSTER_SHA256 =
-    "dc05df9124024d721ce3a69dca297c237c965fa31921fbae6e0e46bb72257b52";
+    "154210323fa22cc061ca2c18394cd9bcf7e4465f0b29676c2866c28f10667411";
 
 // The declared budget, now itself CHECKED against §B.5's heading, family table and sum
 // line rather than standing as the only independent record of the ceiling.
@@ -452,7 +472,7 @@ export function verifyGateRegister(io = defaultIo) {
     // 1 · the sha pin — the figure #9/#65 quote is now backed by a committed detector.
     if (rosterSha256 !== PINNED_ROSTER_SHA256) {
         violations.push(
-            `roster sha256 ${rosterSha256} != pinned ${PINNED_ROSTER_SHA256} — the C19 pin quoted at TERMINAL-ROSTER.md:159/:215 no longer describes the file on disk`,
+            `roster sha256 ${rosterSha256} != pinned ${PINNED_ROSTER_SHA256} — the C20 pin cut at BK #65 no longer describes the file on disk`,
         );
     }
 
@@ -607,11 +627,14 @@ export function verifyGateRegister(io = defaultIo) {
         );
     }
 
-    // 6 · #9's SUPPLEMENTAL anchors. C19's browser rows anchor `scripts/release.sh` as a
-    //     bare path, so gutting its run lines resolves on file existence alone — the same
-    //     blindness cure #2 closes for `ci.yml`. C19 is sha-pinned and #9 may not edit it,
-    //     so the missing fragments are measured HERE and routed to #65 for the successor
-    //     cut. These are measurements, never an allowlist: they can only add violations.
+    // 6 · #9's SUPPLEMENTAL anchors — DISCHARGED BY SUBTRACTION. [2026-08-08 · BK #65]
+    //     C19's browser and type rows anchored `scripts/release.sh`, `ci.yml`,
+    //     `release.yml` and `tsconfig.test.json` as BARE PATHS, so gutting their run lines
+    //     resolved on file existence alone; #9 could not repair them in a sha-pinned file
+    //     and measured them here instead. The successor cut FOLDS all six into C20's own
+    //     `enrollment` arrays as fragment-bearing anchors, so check 3 now carries them and
+    //     `supplementalAnchors` is empty. The loop STAYS — it is the seam the next
+    //     #9-shaped measurement enrolls through, and an empty array costs one iteration.
     for (const row of seatFile.supplementalAnchors ?? []) {
         if (!resolveAnchor(row.anchor, io)) {
             badAnchors.push(`${row.id} -> ${row.anchor} (supplemental, #9-measured)`);

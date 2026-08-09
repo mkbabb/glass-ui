@@ -142,23 +142,59 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
         // exactly that. Seat movement is #65's alone. NOTHING minted: `seats.total` is
         // still 60, `armOnly` still 2, and the sum below still closes on the budget — one
         // ABSENT seat became BOUND, which is the only figure that may move on a binding.]
-        expect(report.seats.bound).toBe(8);
+        // [2026-08-08 · BK #65 W-GATE-COLLAPSE, the C-10 BINDING BATCH — ~~8 / 50~~ →
+        // 13 / 45. FIVE more ABSENT seats became BOUND, each on a cursor route, each to an
+        // executable that was already landed and already carrying the seat name in a live
+        // `describe` title: `G-TABS-SEAM` → `tests/gates/tabs-seam.test.ts` (RT-32B) ·
+        // `G-FEEDBACK-TINT-SEAM` → `tests/gates/feedback-tint-seam.test.ts` (RT-71B) ·
+        // `G-SPRING-HONEST` + `G-SPRING-ONE-JOB` → `tests/styles/spring-authority.test.ts`
+        // (RT-26A, which predicted this exact move) · `G-ENGAGE-RUNG` →
+        // `tests/styles/engage-ladder.test.ts` (RT-27A). A BINDING IS NOT A MOVEMENT and
+        // nothing was minted: `seats.total` is still 60, `armOnly` still 2, the sum still
+        // closes. `G-SPRING-ONE-JOB`'s name is ALSO live in
+        // `tests/styles/feedback-motion.test.ts:202`, which is a close-battery ARM naming
+        // its seated host — it is deliberately NOT in `paths`, because binding a seat to
+        // the arm that cites it is how a register inflates itself.]
+        expect(report.seats.bound).toBe(13);
         expect(report.seats.armOnly).toBe(2);
-        expect(report.seats.unbound).toBe(50);
+        expect(report.seats.unbound).toBe(45);
         expect(report.seats.bound + report.seats.armOnly + report.seats.unbound).toBe(
             SEAT_BUDGET,
         );
     });
 
-    it("holds the ONE roster drift as a pinned record, not an allowlist", () => {
+    it("holds the roster drift set as a pinned record, not an allowlist", () => {
         const report = verifyGateRegister(realIo);
-        // Exactly one active row's title no longer matches HEAD. It is recorded, routed to
-        // #65 (which owns §B.5 and the C19 successor cut), and NOT suppressed: the next
-        // bite proves a second drift REDs, and the equality check means repairing this one
-        // without updating the record REDs too.
-        expect(report.titleDrift.map((d) => d.id)).toEqual([
+        // [2026-08-08 · BK #65 W-GATE-COLLAPSE — ~~exactly one active row's title no longer
+        // matches HEAD~~ → ZERO. The recorded drift was REPAIRED at the successor cut: C20's
+        // `reka.tags-input.value-binding` adopts the HEAD title and `declaredTitleDrift` is
+        // `[]`. The executable was never touched, per the adjudication's own `doNot` — the
+        // ROSTER side was the side that drifted.]
+        //
+        // AN EMPTY SET IS THE ONE STATE THAT CAN GO VACUOUS, so this case does not stop at
+        // asserting emptiness. Both directions are re-proved on the repaired bytes: the
+        // sibling bite below severs an unrelated title and REDs, and the arm here puts the
+        // STALE string back into C20 and REDs the other way. Repair is not suppression only
+        // if breaking the repair still bites.
+        expect(report.titleDrift).toEqual([]);
+        expect(
+            JSON.parse(realIo.read(SEAT_BINDING_PATH)).declaredTitleDrift,
+        ).toEqual([]);
+
+        const restaled = realIo
+            .read(ROSTER_PATH)
+            .replace(
+                "TagsInput: item text renders from `value=` (the stale `tag=` idiom is gone)",
+                "TagsInput: the active item resolves `data-[state=active]` (the `tag=` idiom is gone)",
+            );
+        expect(restaled).not.toBe(realIo.read(ROSTER_PATH));
+        const reRed = verifyGateRegister(ioWith(ROSTER_PATH, restaled));
+        expect(reRed.titleDrift.map((d) => d.id)).toEqual([
             "reka.tags-input.value-binding",
         ]);
+        expect(reRed.violations.some((v) => v.includes("title drift set moved"))).toBe(
+            true,
+        );
     });
 
     // ── mutation bites ────────────────────────────────────────────────────────────────
@@ -318,10 +354,18 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
         ).toBe(true);
     });
 
-    it("BITE — gutting release.sh's pixel-floor commands REDs the supplemental anchor", () => {
-        // C19 anchors `scripts/release.sh` as a BARE PATH, so existsSync alone answered
+    it("BITE — gutting release.sh's pixel-floor commands REDs the FOLDED anchor", () => {
+        // ~~C19 anchors `scripts/release.sh` as a BARE PATH, so existsSync alone answered
         // it. #9's supplemental anchors (SEAT-BINDING.json, routed to #65) bind the
-        // release edge to a real command line — never an allowlist, they can only add.
+        // release edge to a real command line~~ [2026-08-08 · BK #65 — THE MECHANISM
+        // MOVED AND THIS BITE FOLLOWED IT RATHER THAN BEING DELETED. #9 could not repair
+        // a sha-pinned file, so it measured the missing fragments in SEAT-BINDING.json's
+        // `supplementalAnchors` and routed them here. The successor cut FOLDS all six into
+        // C20's own `enrollment` arrays, `supplementalAnchors` is `[]`, and check 3 —
+        // not check 6 — is what carries them now. Left alone, this case would have gone
+        // VACUOUS-GREEN over an empty array, which is precisely the class this file
+        // exists to convict; the assertion is re-pointed at the live message instead.]
+        // Never an allowlist either way: a fold can only add violations.
         const sh = realIo.read("scripts/release.sh");
         const gutted = sh
             .split("\n")
@@ -330,10 +374,38 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
         expect(gutted).toContain("pixel floor"); // the prose comment survives
         const report = verifyGateRegister(ioWith("scripts/release.sh", gutted));
         expect(
-            report.violations.some((v: string) =>
-                v.includes("supplemental external.browser.aurora-floor"),
+            report.badAnchors.some((a: string) =>
+                a.includes("scripts/release.sh#gate:pixel-floor"),
             ),
         ).toBe(true);
+        expect(
+            report.violations.some((v: string) =>
+                v.includes("external external.browser.aurora-floor"),
+            ),
+        ).toBe(true);
+        // and the array it moved OUT of is empty, so the old home cannot claim the bite
+        expect(
+            JSON.parse(realIo.read(SEAT_BINDING_PATH)).supplementalAnchors,
+        ).toEqual([]);
+    });
+
+    it("BITE — dropping `tests/` from tsconfig.test.json REDs all EIGHT folded type rows", () => {
+        // The widest of #9's six measurements and the one that proves the fold is real
+        // rather than decorative: the eight `.test-d.ts` rows only typecheck because
+        // `tsconfig.test.json`'s `include` carries `tests/`, and C19 anchored the FILE
+        // rather than the include. Folded into C20 as `tsconfig.test.json#tests/`, the
+        // fragment must resolve against live JSON with its comments stripped — so a
+        // fragment may not hide in the JSONC prologue either.
+        const tsconfig = realIo.read("tsconfig.test.json");
+        const gutted = tsconfig.split('"tests/').join('"src/');
+        expect(gutted).not.toBe(tsconfig);
+        const report = verifyGateRegister(ioWith("tsconfig.test.json", gutted));
+        const hits = report.violations.filter(
+            (v: string) =>
+                v.includes("tsconfig.test.json#tests/") &&
+                v.includes("enrollment anchor unresolved"),
+        );
+        expect(hits).toHaveLength(8);
     });
 
     it("BITE — a `#`-commented command inside a `run: |` block scalar REDs the anchor", () => {

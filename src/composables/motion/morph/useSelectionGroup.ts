@@ -4,6 +4,12 @@ import {
     type SelectionDeform,
     type SelectionOption,
 } from "./useSelectionIndicator";
+// [2026-08-08 · BK #65, RT-32C] The canonical name, imported rather than respelled.
+// This file carried `type SelectionValue = SelectionOption["value"]` — a local alias
+// that resolved to the same type but made the library's scalar identity read as two
+// declarations, which is the #84 C-1 residue the widening was supposed to end. The
+// sibling `useSelectionIndicator.ts` already reaches the canonical module the same way.
+import type { SelectionValue } from "../../../components/_shared/selection";
 // The roving machine is composed directly (the dock is SegmentedTabs wearing
 // different chrome; ONE roving machine, never re-forked).
 // `useTabRovingFocus` imports `vue` only (engine-FREE + vueuse-FREE), so pulling it
@@ -47,9 +53,6 @@ import {
 
 export type SelectionMode = "single" | "multiple";
 export type SelectionRole = "radiogroup" | "tablist" | "group";
-
-/** Re-stated for the return type's default only — the identity is `SelectionOption`'s. */
-type SelectionValue = SelectionOption["value"];
 
 export interface UseSelectionGroupParams<O extends SelectionOption> {
     /** The selectable options (index-aligned to `buttonRefs`). */

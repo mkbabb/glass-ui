@@ -88,14 +88,29 @@ describe("spring token header mirror", () => {
     });
 
     // BK #26 — the ROSTERED TITLE IS HELD BYTE-IDENTICAL ON PURPOSE. This case is
-    // `spring.mirror.gentle-critical` in the sha-PINNED C19 register, whose title,
-    // id and eight-name `requiredCaseIdentity` all still spell the retired roster.
+    // `spring.mirror.gentle-critical` in the sha-PINNED register, whose title, id
+    // ~~and eight-name `requiredCaseIdentity`~~ still spell the retired roster.
     // Rebinding the pin is the ONE batched byte reserved to band close (#65, C-9;
     // `gates/ROSTER.md:53`), so re-titling here would raise a SECOND register drift
     // and move a receipt this row is required to leave byte-identical. The BODY is
     // re-pointed to the row that actually holds the invariant — `world`, the
     // critically-damped substrate register — and the title's own words ("a calm
     // arrival must not overshoot") remain exactly what is asserted. ROUTED: #65.
+    //
+    // [2026-08-08 · BK #65 W-GATE-COLLAPSE — the routed half is PAID, and the held
+    // half is held on PURPOSE, not on inertia.] RT-26B is discharged: the successor
+    // roster C20 STRIKES `requiredCaseIdentity` from all 20 rows that carried it,
+    // this one included, so the eight retired preset names are gone from the register
+    // and the sentence above is struck where it named them. The field could not be
+    // repaired, only removed — it was verifiable ONLY against a `caseIdentity`
+    // declared by the `governedInvariant` wrapper in this very file (the quarantined
+    // machine, 0 of 9 re-landed; the recipe is at `docs/tranches/BK/recovery/
+    // 2026-07-28-governance-stash/scripts_verify-governed-invariants.mjs:540-545`,
+    // which compares the roster's copy to a second copy of itself and NEVER to the
+    // cases the runner actually executes). Dead data behind a live pin is the one
+    // thing #65's own law forbids. The TITLE and the `id` still say `gentle` and stay
+    // that way: retitling is a drift this row would have to declare, and C20's
+    // `predicate` — the field a reader consults — now names `world` instead.
     it("holds gentle's ζ exactly critical — a calm arrival must not overshoot", () => {
         const world = PRESETS.find((preset) => preset.name === "world");
         expect(world?.dampingFraction).toBe(1);

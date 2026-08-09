@@ -51,5 +51,5 @@ describe("Deck public contract", () => {
 
     // The windowed-pager presentation register (role="group"/aria-current) is no longer
     // a deck-owned component: the deck composes `<PagerDots pattern="group">` directly, so
-    // that contract lives in `pager-dots.contract.test.ts` (the survivor's own home).
+    // that contract lives in `pager-dots/contract.test.ts` (the survivor's own home).
 });
