@@ -2,11 +2,10 @@
 
 A WebGPU-first metaball "creature" for Vue 3.5 — a lit, pulsing, gooey SDF droplet with up to four
 orbiting satellites that merge in, get absorbed, and re-emerge, painted with a perceptually-uniform
-OKLCh color perturbation over glass-ui's warm-cream glass identity. It is the live-GPU sibling of
-[`WatercolorDot`](../watercolor-dot/) (the CSS/SVG dot): the blob is the continuously-animated,
-per-pixel-shaded metaball; the watercolor-dot is the cheap static dot. They are deliberate siblings,
-not redundant — reach for the dot for the ambient/static register, the blob for the interactive/lit
-hero.
+OKLCh color perturbation over glass-ui's warm-cream glass identity. It is the library's ONE
+organic-mass surface: a continuously-animated, per-pixel-shaded metaball for the focal scene.
+The CSS/SVG static sibling it used to pair with, `WatercolorDot`, relocated to value.js at
+BK #55 — swatch vocabulary belongs to a color library.
 
 ## Install
 
@@ -282,9 +281,9 @@ impulse resolves to the substrate's static rest pose. See [Accessibility](#acces
 - **Pause continuously-running backgrounds** — if the blob auto-runs > 5s as a non-essential
   background, wire `v-model:paused` (or `pause()`/`resume()`) to a `DockBackgroundToggle` (WCAG 2.2.2).
   This is binding, not optional.
-- **Reserve `Blob` for the interactive/lit hero; route the static register to `WatercolorDot`** —
-  each Blob owns GPU resources. A grid of ambient thumbnails should use `WatercolorDot`; reserve the
-  live Blob for the focal scene.
+- **Reserve `Blob` for the interactive/lit hero** — each Blob owns GPU resources, and a page has a
+  hard per-page context cap. A grid of ambient thumbnails is painted CSS, never a grid of live
+  contexts; reserve the live Blob for the focal scene.
 - **Decorative by default** — don't bolt an `aria-label` onto the canvas; it carries no information.
   Omit `pressLabel` to mount no hit surface or pointer listeners. Set `pressLabel` only when pressing
   the blob performs a real action; Blob then renders the named native button over its live silhouette.

@@ -1,6 +1,6 @@
 # Procedural surfaces
 
-glass-ui has five retained procedural surfaces. They share lifecycle, color, and
+glass-ui has four retained procedural surfaces. They share lifecycle, color, and
 motion facilities where those semantics are genuinely common; they do not share
 a synthetic renderer or configuration schema.
 
@@ -10,15 +10,15 @@ a synthetic renderer or configuration schema.
 | Blob | `/blob` | WebGPU preferred, supported WebGL2 path |
 | FourierField | `/fourier-field` | WebGPU compute/render, supported WebGL2 path |
 | Constellation | `/constellation` | Canvas2D |
-| WatercolorDot | `/watercolor-dot` | CSS/SVG only |
 
 ## Shared ownership
 
 `createCanvasLifecycle` owns backing-store sizing, DPR policy, tab and content
 visibility, optional intersection parking, reduced motion, scheduling, wake, and
 disposal. `createGpuSubstrate` composes that lifecycle for WebGPU and WebGL2.
-`useCanvas2D` is the proportionate adapter for Constellation. WatercolorDot needs
-no drawing context and remains outside the canvas substrate.
+`useCanvas2D` is the proportionate adapter for Constellation. Every retained
+surface opens a drawing context; the context-free mark that used to sit outside
+the canvas substrate was `WatercolorDot`, relocated to value.js at BK #55.
 
 Every surface keeps one semantic configuration at its component boundary.
 Engine setup modules translate that state into bindings; they do not own
@@ -65,11 +65,6 @@ the current API.
 Constellation intentionally uses one deterministic CPU field and one Canvas2D
 renderer. The consumer `drawOverlay` callback is the ordered final paint pass.
 A GPU port would add complexity without improving its modest vector workload.
-
-### WatercolorDot
-
-WatercolorDot is a seeded CSS/SVG mark. It shares the house PRNG and motion loop
-where useful but opens no Canvas2D, WebGL2, or WebGPU context.
 
 ## Review policy
 
