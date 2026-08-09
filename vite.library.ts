@@ -34,6 +34,5 @@ export const libraryExternal = [
     // BA.W-HANDMARK — the hand-mark family's L1 geometry peer (optional). Externalized
     // so the /handmark chunk imports it rather than bundling the optional peer.
     "@mkbabb/pencil-boil",
-    "embla-carousel-vue",
     "@lucide/vue",
 ];
