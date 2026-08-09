@@ -755,34 +755,52 @@ function installedEvidence({ consumerRoot, installed, pkg, sourceSurface, codeSp
     };
 }
 
-export function ratchetEvidence(repoRoot, tarballBytes, { allowMissingRatchet = false, firstAdoption = false } = {}) {
+// The ratchet's measured quantity is the UNPACKED CONTENT byte total (the sum of every
+// packed file's bytes), NOT the gzipped tarball size. Measured at the v8.0.0 tag: on
+// IDENTICAL content (854 files, per-file sizes equal), the .tgz differed 922,197 B
+// (macOS, node 26) vs 921,280 B (ubuntu, node 24) — a 917 B gzip-implementation drift —
+// so a tarball-byte pin can agree with at most one environment and REDs every other.
+// The unpacked total measured 2,633,353 in BOTH. (The same incident also caught a
+// working-tree-contaminated local pack at 922,657: parked uncommitted API in
+// darkModeSyncScript widened its d.ts 990 → 1,907 — the datum must only ever be bound
+// from a committed-tree build.)
+export function ratchetEvidence(repoRoot, unpackedBytes, { allowMissingRatchet = false, firstAdoption = false } = {}) {
     const path = resolve(repoRoot, ".bundle-ratchet");
     if (!existsSync(path)) {
-        if (firstAdoption || !allowMissingRatchet) throw new Error("G-BUNDLE-RATCHET: .bundle-ratchet is missing; first adoption must bind the immutable tarball byte count");
-        return { path, status: "MISSING", candidateBytes: tarballBytes };
+        if (firstAdoption || !allowMissingRatchet) throw new Error("G-BUNDLE-RATCHET: .bundle-ratchet is missing; first adoption must bind the immutable unpacked content byte count");
+        return { path, status: "MISSING", candidateBytes: unpackedBytes };
     }
     const raw = readFileSync(path, "utf8");
     if (!canonicalRatchetPattern.test(raw)) throw new Error("G-BUNDLE-RATCHET: .bundle-ratchet is not canonical unsigned decimal plus one LF");
     const datum = BigInt(raw.slice(0, -1));
-    const candidate = BigInt(tarballBytes);
+    const candidate = BigInt(unpackedBytes);
     if (firstAdoption && candidate !== datum) {
-        throw new Error(`G-BUNDLE-RATCHET: first-adoption bundle ratchet requires exact equality: ${tarballBytes} !== ${datum}`);
+        throw new Error(`G-BUNDLE-RATCHET: first-adoption bundle ratchet requires exact equality: ${unpackedBytes} !== ${datum}`);
     }
-    if (!firstAdoption && candidate > datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet increase forbidden: ${tarballBytes} > ${datum}`);
+    if (!firstAdoption && candidate > datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet increase forbidden: ${unpackedBytes} > ${datum}`);
     // A SHRINK is as much a rebind as a growth: silent headroom accumulates until
     // the ceiling means nothing (the N-4 defect class). Every movement of the datum
     // is deliberate and owner-worded, so a smaller candidate FAILS LOUD too.
-    if (!firstAdoption && candidate < datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: ${tarballBytes} < ${datum}`);
+    if (!firstAdoption && candidate < datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: ${unpackedBytes} < ${datum}`);
     return {
         path,
         status: "PRESENT",
         mode: firstAdoption ? "first-adoption" : "later-coordinate",
         raw,
         datum: datum.toString(),
-        tarballBytes,
+        unpackedBytes,
         equal: candidate === datum,
         increase: false,
     };
+}
+
+/** The unpacked content total: every regular file's bytes, concatenated and counted.
+ *  `tar -xOzf` streams file contents only (directories contribute zero), so the count
+ *  is gzip-independent and identical wherever the same content packs. */
+export function unpackedContentBytes(tarball) {
+    const result = spawnSync("tar", ["-xOzf", tarball], { maxBuffer: 1024 * 1024 * 256 });
+    if (result.status !== 0) throw new Error(`unpacked-content inspection failed: ${result.stderr?.toString() || "tar error"}`);
+    return result.stdout.length;
 }
 
 export function verifyExportTypes({
@@ -834,7 +852,7 @@ export function verifyExportTypes({
             const packedCssFailures = packedCssSetFailures(cssClosure.files, packedFiles);
             const packedFailures = [...packedClaims.failures, ...packedCssFailures];
             if (packedFailures.length) throw new Error(`Invalid packed artifact:\n${packedFailures.join("\n")}`);
-            ratchet = ratchetEvidence(repositoryRoot, packEvidence.bytes, { allowMissingRatchet, firstAdoption });
+            ratchet = ratchetEvidence(repositoryRoot, unpackedContentBytes(packEvidence.path), { allowMissingRatchet, firstAdoption });
             if (install) {
                 installEvidence = installTarball(packEvidence.path, pkg);
                 temporaryRoots.push(installEvidence.consumerRoot);

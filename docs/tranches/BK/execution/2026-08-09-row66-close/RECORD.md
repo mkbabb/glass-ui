@@ -179,7 +179,7 @@ Measured at HEAD from a pristine `git archive`. Classes, each cured at its cause
 | 6 | postcss walker callbacks returning a value into `false \| void` | Block bodies. |
 | 5 | VTU `findComponent`/`h`/`mount` overload degradation on generic SFCs and reka's `DefineSetupFnComponent`s | Typed at the seam, never cast away: a TS **instantiation expression** (`SortableList<Row>`, `LabeledSelect<string>`) pins the SFC generic and keeps every callback fully checked; `findComponent<ComponentPublicInstance>` / `findComponent<typeof DialogRoot>` select the wrapper overload. `LabeledSelect`'s props type is **DERIVED** (`Parameters<typeof LabeledSelect<string>>[0]`) after a hand-respelled shape was rejected as duplicated derived data. |
 
-#### (b) `verify:package` — `G-BUNDLE-RATCHET` · **REBOUND 903,382 → 922,657, with the delta derived**
+#### (b) `verify:package` — `G-BUNDLE-RATCHET` · **REBOUND 903,382 → 922,657, with the delta derived** [2026-08-09 · SUPERSEDED BY §10 — the 922,657 datum was a working-tree-contaminated measurement AND tarball-byte pinning is gzip-fragile; the ratchet now pins UNPACKED content bytes, datum 2,633,353]
 
 The rebind protocol (⊕¹⁶, `dcc041cb`) says the datum rebinds **only at an owner-worded component addition, in a commit that names the delta — never silently.** The delta is named here so the driver's commit can carry it.
 
@@ -349,7 +349,7 @@ The seven `release.yml` steps, in `release.yml`'s own order (read from the workf
 | 6 | `npm run demo:dist:build` | **0** |
 | 7 | `npm test` — `Test Files 222 passed (222)` · `Tests 1947 passed \| 5 expected fail (1952)` | **0** |
 
-**THE TARBALL REPRODUCES BYTE-IDENTICALLY — sha256 AND byte count, not merely the count**: `e92eea70…` / 922,657 B on the pristine tree equals `e92eea70…` / 922,657 B in the working tree. That is what makes the ratchet rebind a measurement rather than a working-tree artifact, and it is now proved on the hash as well as the size. Step 8, `npm publish --ignore-scripts --access public --provenance`, is the driver's and was not run.
+**THE TARBALL REPRODUCES BYTE-IDENTICALLY — sha256 AND byte count, not merely the count**: `e92eea70…` / 922,657 B on the pristine tree equals `e92eea70…` / 922,657 B in the working tree. ~~That is what makes the ratchet rebind a measurement rather than a working-tree artifact, and it is now proved on the hash as well as the size.~~ [2026-08-09 · FALSE, §10: the rehearsal tree was materialised from git ls-files over the WORKING TREE, so it carried the parked darkModeSyncScript.ts bytes — the "pristine" pack reproduced the contamination, not the commit. Materialise from git archive HEAD, never from the working tree.] Step 8, `npm publish --ignore-scripts --access public --provenance`, is the driver's and was not run.
 
 ---
 
@@ -361,3 +361,29 @@ The seven `release.yml` steps, in `release.yml`'s own order (read from the workf
 4. One owner word disposes of `release/4.3.0` (default: delete; the Δ-set is superseded).
 
 **This seat never tagged, never published, never touched `.npmrc`.**
+
+
+## §10 · POST-TAG ADDENDUM (2026-08-09) — the ratchet fired in CI and was RIGHT, twice
+
+`release.yml` run `31299962514` (the first CI encounter of the ratchet, adopted mid-BK)
+REDed at `G-BUNDLE-RATCHET: 921280 < 922657`. Diagnosis, all figures measured:
+
+- **The 922,657 datum embedded working-tree contamination.** The local pack (and the
+  §8 rehearsal, whose tree was materialised from `git ls-files` over the WORKING tree)
+  carried the parked `darkModeSyncScript.ts` API: its d.ts packed 1,907 B vs the
+  committed 990 B, its chunk 2,544 vs 2,244. CI built the committed source. A datum is
+  only ever bound from a committed-tree build (`git archive`), never the working tree.
+- **Tarball bytes are gzip-fragile even on identical content.** Clean-source packs:
+  mac/node-26 922,197 B vs ubuntu/node-24 921,280 B with per-file listings IDENTICAL
+  (854 files, every size equal) — a 917 B gzip-implementation drift. A .tgz byte pin
+  can agree with at most one environment.
+- **Cure (both causes at the root):** `ratchetEvidence` now measures UNPACKED content
+  bytes (`tar -xOzf | length` — gzip-independent; equals npm pack's `unpackedSize`),
+  measured 2,633,353 in BOTH environments on the committed source; `.bundle-ratchet`
+  rebound 922657 → 2633353 (a SEMANTIC re-scope, owner-worded in the commit, not a
+  headroom move); the evidence key `tarballBytes` renamed `unpackedBytes`; the
+  ratchet-hostile arm of `public-surface.spec.ts` passes unchanged (87/87 — it pins
+  the messages, not the quantity). Verified green off the clean `git archive` copy:
+  `terminal CLEAN · datum 2633353 · unpackedBytes 2633353 · equal true`.
+- The v8.0.0 tag was re-cut on the fix commit; the §5-§8 figures quoting 922,657 /
+  `e92eea70…` describe the contaminated pack and stand as struck historical record.
