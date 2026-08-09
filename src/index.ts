@@ -373,13 +373,8 @@ export {
 export {
     ToggleGroup,
     ToggleGroupItem,
-    type ToggleGroupEmits,
     type ToggleGroupItemProps,
     type ToggleGroupProps,
-    type ToggleGroupSize,
-    type ToggleGroupSlotProps,
-    type ToggleGroupValue,
-    type ToggleGroupVariant,
 } from "./components/toggle-group";
 export {
     Tooltip,
