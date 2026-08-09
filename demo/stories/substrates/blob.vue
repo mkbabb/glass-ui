@@ -1,11 +1,15 @@
 <script setup lang="ts">
 // Blob — one coherent page for the WebGL2 metaball droplet. The interactive,
-// Configurator-driven studio leads; a static WatercolorDot register follows as a
-// supporting companion, with a user-reachable pause control.
+// Configurator-driven studio leads, with a user-reachable pause control.
 //
 // WebGL budget: at most two live Blob contexts at once (the studio hero is the sole
-// stage). Every ambient/static swatch routes to WatercolorDot (no GL context) so the
-// page never approaches the browser's per-page WebGL cap.
+// stage). Every ambient/static swatch is plain painted CSS — no drawing context — so
+// the page never approaches the browser's per-page WebGL cap.
+//
+// [BK #55 WATERCOLOR-RELOCATE] the two supporting `WatercolorDot` sections (the static
+// zero-GL register and the ghost register) are STRUCK: their subject RELOCATED to
+// value.js, and a section whose specimen has left the library documents nothing. The
+// blob page is about `Blob`.
 import { computed, reactive, ref, watch } from "vue";
 import VizStudio from "./_frame/VizStudio.vue";
 import RendererStatusView from "./_frame/RendererStatus.vue";
@@ -16,7 +20,6 @@ import { Blob } from "@glass/components/blob";
 import type { BlobConfig, BlobMood, BlobMerge } from "@glass/components/blob";
 import { BLOB_CONFIG_DEFAULTS } from "@glass/components/blob/types";
 import { MAX_SATS } from "@glass/components/blob/constants";
-import { WatercolorDot } from "@glass/components/watercolor-dot";
 import { DockBackgroundToggle } from "@glass/components/dock";
 import { FadingScroll } from "@glass/components/fading-scroll";
 import {
@@ -38,23 +41,6 @@ import {
     type ColorHarmony,
 } from "@glass/composables/color";
 const rendererStatus = ref<RendererStatus>(pendingRenderer("webgpu"));
-
-// ── Static zero-GL register (WatercolorDot) ─────────────────────────────
-// The lit-droplet look without a WebGL context — a deterministic seeded
-// border-radius morph with an internalized device-pixel turbulence filter. It is
-// the ambient/decorative thumbnail sibling, so the page holds one live Blob context
-// (the interactive studio
-// hero, the lead section) and a grid never exhausts the per-page WebGL context cap.
-// The warm-cream identity palette uses the amber/cream/coral family at roughly
-// 30–70° hue. A consumer brings its own palette; the dot bakes no
-// hue (it takes `color` as a prop) so it is compliant by construction — the warm
-// default is asserted here.
-const dotColors = [
-    "var(--primary)",
-    "oklch(0.72 0.15 55)", // warm amber
-    "oklch(0.66 0.17 35)", // terracotta coral
-    "oklch(0.82 0.1 75)", // pale cream-gold
-];
 
 // ── Configurator-driven blob studio ─────────────────────────────────────
 // The blob showcase USES the library Configurator (preset row + grouped
@@ -631,15 +617,16 @@ watch(studioPaused, () => {
                                 label="Harmony"
                                 description="The color harmony the seed ramps through (deriveBlobPalette)."
                             />
+                            <!-- The derived ramp read back literally: one painted chip
+                                 per stop, no drawing context. A configurator readout
+                                 reports the value; it is not a specimen. -->
                             <ConfiguratorRow label="Stops">
                                 <div class="flex flex-wrap gap-2">
-                                    <WatercolorDot
+                                    <span
                                         v-for="stop in paletteStops"
                                         :key="stop"
-                                        :color="stop"
-                                        :seed="stop"
-                                        animate
-                                        class="h-10 w-10"
+                                        class="h-10 w-10 rounded-full border border-border/60"
+                                        :style="{ background: stop }"
                                     />
                                 </div>
                             </ConfiguratorRow>
@@ -755,59 +742,6 @@ watch(studioPaused, () => {
                         :config="plainConfig"
                         seed="plain"
                         data-testid="goo-blob-plain"
-                    />
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
-
-        <StorySection
-            label="The static zero-GL register — WatercolorDot"
-            blurb="The droplet look WITHOUT a WebGL context — a CSS/SVG pastel swatch: a
-                deterministic seeded border-radius morph with an internalized device-px
-                turbulence filter (per-instance, zero-wiring). This is the SUPPORTING register
-                below the living hero above: route ambient/decorative thumbnails here so a grid
-                never exhausts the per-page WebGL context cap (the live GL bead is reserved for
-                the interactive studio hero)."
-        >
-            <ShowcaseFrame pad="none" class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                <WatercolorDot
-                    v-for="c in dotColors"
-                    :key="c"
-                    :color="c"
-                    :seed="c"
-                    animate
-                    class="aspect-square w-full"
-                />
-            </ShowcaseFrame>
-        </StorySection>
-
-        <StorySection
-            label="The ghost register — WatercolorDot variant=ghost"
-            blurb="The empty-palette-slot / placeholder affordance: the SAME seeded blob
-                silhouette traced as a DASHED outline — an SVG ellipse stroke-dasharray
-                carrying the same wet filter, so the displacement wobbles the dashes INTO the
-                organic outline (a dashed OUTLINE following the silhouette, NOT a solid ring
-                and NOT a CSS dashed rectangle). A ghost of a given color+seed traces the SAME
-                irregular outline the solid swatch of that seed fills — paired here so the
-                silhouette match reads at a glance (solid LEFT, ghost RIGHT of each seed)."
-        >
-            <ShowcaseFrame pad="none" class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                <div
-                    v-for="c in dotColors"
-                    :key="`ghost-${c}`"
-                    class="flex items-center gap-2"
-                    data-testid="watercolor-ghost-pair"
-                >
-                    <WatercolorDot
-                        :color="c"
-                        :seed="c"
-                        class="aspect-square w-1/2"
-                    />
-                    <WatercolorDot
-                        :color="c"
-                        :seed="c"
-                        variant="ghost"
-                        class="aspect-square w-1/2"
                     />
                 </div>
             </ShowcaseFrame>
