@@ -1,5 +1,14 @@
 /* Shared feedback-tone styles for Alert and Toast.
 
+   ~~Both compose `.feedback-tone`.~~ THE CONSUMER SPLIT, and read the rest of this header
+   through it [2026-08-08 · BK #33]: `.feedback-tone` — the tinted PLATE — has exactly ONE
+   shipped consumer, Toast, the floating tier where a louder semantic belongs. Alert
+   composes only the four `.feedback-tone-<name>` registers below, which bind `--tone` and
+   nothing else, and spends that tone on the glyph and the ink over a neutral `.glass-quiet`
+   rung (R-3, neutral glass + status ink — the tinted Alert plate is not built). Everything
+   below about the WASH is therefore Toast's; everything about the four `--tone` registers
+   and the full-chroma glyph is shared.
+
    THE COLLAPSE: Toast and Alert once carried independent tone maps. Toast painted
    solid opaque token plates over a `glass-floating` base; Alert was correct in shape — glass-wash plate
    + tone-on-rim — but HARDCODED its `border-<tone>/40` rim per variant). Three tone
@@ -22,21 +31,26 @@
    `--success` / `--warning` / `--info` / `--destructive` (presets-in-consumers — NO new
    colors). A consumer recalibrates the tone weight with ONE override.
 
-   THE RUNG: the register reads `--feedback-tone-rung` (default the floating-chrome rung
-   `--glass-plate-floating`, the Toast overlay register). Alert RE-POINTS it to
-   `--glass-plate-wash` on its own surface (a content panel rides wash, not floating — the
-   register difference is correct; only the tone SOURCE unifies, not the rung). The rung
-   reads `--glass-plate-*` DIRECTLY (the same tokens the glass arm routes), so
-   the tone tint rides ON the glass surface — a re-point, not a fork.
+   THE RUNG IS THE SURFACE'S OWN PLATE, NOT A SECOND ONE. The tint mixes over
+   `--glass-veil` — the nestable VALUE token `@utility glass-plate` publishes at the
+   element (glass/veil.css:35-37 names "a tone-tinted feedback panel" as one of its two
+   intended consumers, the other being the capsule's warm floor). A `.feedback-tone`
+   surface that composes a rung therefore tints ITS OWN rung: the earned-darken clamp,
+   the tier ink and `--glass-level` all survive INSIDE the mix instead of being replaced
+   by it.
 
-   THE SUBSTITUTION TRAP (the recurring dock-scale class): `--feedback-tone-rung`
-   resolves the `--glass-plate-floating` token, which BAKES `var(--glass-level)` at its
-   `:root` declaration (level=1). A descendant `--glass-level: 0` does NOT re-resolve the
-   baked rung — but that is the CORRECT register here: a feedback surface IS translucent
-   glass by design; the `opaque`/level-0 escape is the `[data-surface]`
-   concern, not a tone-register knob. The tone register composes the tint AT THE ELEMENT
-   off the resolved rung, so the `color-mix` re-resolves whenever `--tone`/`--feedback-
-   tone-strength`/the rung change (the element-level tint discipline). */
+   That is the defect this seam closes, and it was structural, not cosmetic. The register
+   used to mix over a RAW `--feedback-tone-rung` plate token, and because `background` is
+   a single property the tinted result REPLACED the rung's own `background: var(--glass-veil)`
+   wholesale — so every tone arm painted a plate the glass ladder had never touched. The
+   surface claimed a rung and then discarded it. `--feedback-tone-rung` survives as the
+   FALLBACK ONLY, for a hypothetical `.feedback-tone` consumer that composes no rung at
+   all; it is not a re-point seam and nothing in `src/` writes it.
+
+   (Caveat, stated: `--glass-veil` inherits, so a NON-rung `.feedback-tone` nested inside
+   a rung would read the ancestor's plate rather than the fallback. Neither shipped
+   consumer is that shape — Toast composes `.glass-floating`, Alert composes `.glass-quiet`
+   — and a consumer that wants an un-rung tone panel composes a rung.) */
 @layer components {
     :root {
         /* The bounded mix % — the tone wash strength. 18% reads as colored GLASS
@@ -44,8 +58,9 @@
            tipping toward a slab; the toast-glass §A band is ≈12–22%. ONE knob retunes
            all four tones. */
         --feedback-tone-strength: 18%;
-        /* The rung the tint mixes over — the floating-chrome Toast register.
-           Alert re-points it to the wash rung on its own surface. */
+        /* The FALLBACK plate, used only where the surface composes no rung at all and
+           `--glass-veil` is therefore absent. Not a re-point seam: zero writers in
+           `src/`, held by `G-FEEDBACK-TINT-SEAM` arm (b). */
         --feedback-tone-rung: var(--glass-plate-floating);
         /* The rim weight — a tone-keyed border, a thin tinted rim (not a loud edge). */
         --feedback-tone-border-strength: 40%;
@@ -65,7 +80,7 @@
     .feedback-tone {
         background: color-mix(
             in oklab,
-            var(--feedback-tone-rung),
+            var(--glass-veil, var(--feedback-tone-rung)),
             var(--tone) var(--feedback-tone-strength)
         );
         border-color: color-mix(

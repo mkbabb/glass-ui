@@ -24,7 +24,10 @@
    4→4 — arrives from the ONE width query in `tokens/sizing.css` and this file carries
    no breakpoint of its own. Fills read `--fill-hover` / `--fill-selected`, the edge
    reads `--ink-perimeter`, the press reads `--scale-press-sm`, the tone reads
-   `--feedback-tone-strength` — the same knob a destructive Alert reads, which is what
+   `--feedback-tone-strength` — the same knob a destructive ~~Alert~~ Toast reads
+   [2026-08-08 · BK #33: Alert stopped composing `.feedback-tone` under R-3 and now
+   spends its tone on ink alone, so Toast is the register's one remaining plate
+   consumer; the shared-knob claim survives on Toast], which is what
    makes the two read as one grammar rather than two calibrations. */
 @layer components {
     .button {

@@ -214,8 +214,12 @@
        composited TINTED / mid-tone glass plate exactly as it does on the calm content tier —
        but these surfaces are NOT content tiers, so the re-point above never reached them
        (the census measured the raw page-muted at WCAG 3.3-4.27 dark, BELOW AA): the feedback
-       TONE-TINTED plates (`.feedback-tone` — Alert / Toast, the AlertDescription
-       caption + mono labels), the selected-glass capsule CHIPS + overflow PUCKS (`.glass-capsule`
+       TONE-TINTED plates (`.feedback-tone` — ~~Alert / Toast, the AlertDescription
+       caption + mono labels~~ Toast, its one shipped consumer, and its mono labels
+       [2026-08-08 · BK #33: Alert left `.feedback-tone` under R-3 and composes
+       `.glass-quiet`, so `AlertDescription` now takes `--on-glass-muted` from the
+       content-tier `:where()` ABOVE, not the -strong rung here]), the selected-glass
+       capsule CHIPS + overflow PUCKS (`.glass-capsule`
        — selectable/removable chips and tags-input, idle `text-muted-foreground`
        ink). These plates composite BRIGHTER than the calm
        quiet plate (the quiet content plate lands L≈0.28; a tone-tinted / selected chip plate

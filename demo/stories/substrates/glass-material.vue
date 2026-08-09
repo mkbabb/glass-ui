@@ -17,7 +17,13 @@ import { computed, onMounted, onScopeDispose, ref, useTemplateRef } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { useSpecularTracking, Button } from "@glass/index";
+import {
+    useSpecularTracking,
+    Button,
+    Alert,
+    AlertTitle,
+    AlertDescription,
+} from "@glass/index";
 //  Arm 2 — the DEMO exerciser for the sampled-luminance observer
 // (path B: demo-private — the composable is OFF the public glass barrel, imported
 // directly here as the content-glass DEMO mount that exercises the live sampling path;
@@ -27,11 +33,33 @@ import { useSpecularTracking, Button } from "@glass/index";
 // own-story exclusion: it exercises the composable, it does not by
 // itself clear the public ≥2-binary bar.
 import { useGlassBackdropLuminance } from "@glass/composables/glass/useGlassBackdropLuminance";
+import {
+    Info,
+    CircleAlert,
+    TriangleAlert,
+    CircleCheck,
+    Sparkles,
+} from "@lucide/vue";
 
 // The named band surfaces — the five ladder rungs + the card register. Each is
 // a bare `.glass-<rung>` plate (the mixin supplies the `::before` specular + the
 // rim); the floating/overlay rungs are the substrate Dialog/Sheet/Popover ride.
 const rungs = ["wash", "quiet", "resting", "floating", "overlay"] as const;
+
+// The five alert arms, neutral first — `null` is the un-toned surface, which under the
+// ruled identity is the same plate as the other four wearing no status ink.
+//
+// Each arm carries its GLYPH, and that is not decoration here: under neutral-glass +
+// status-ink the glyph IS the status channel, so a specimen row without one shows five
+// identical plates and demonstrates the opposite of what it claims. The first capture of
+// this section proved exactly that and the glyphs are the cure.
+const alertArms = [
+    { tone: null, icon: Sparkles },
+    { tone: "info", icon: Info },
+    { tone: "success", icon: CircleCheck },
+    { tone: "warning", icon: TriangleAlert },
+    { tone: "destructive", icon: CircleAlert },
+] as const;
 
 // The shipped DRY moving-specular seam. ONE instance drives the whole
 // headline band — `specularStyle` (the `--mouse-x/--mouse-y` host write) +
@@ -187,6 +215,52 @@ const ACCENT_STRENGTH = "48%";
                                 {{ backdropSample.reason }}
                             </span>
                         </div>
+                    </div>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <!-- The ALERT specimens live HERE, not only on `/feedback/alert`, and the reason
+             is measurable: that route's substrate has luminance σ ≈ 1.2-1.7 with almost
+             no high-frequency detail, so a plate's blur radius and its tint are both
+             invisible against it. A capture taken there cannot distinguish a 1px rung
+             from a 7px one and reads any material change as "no change needed". This
+             page stages the live Aurora field and is the one place the sampled-luminance
+             observer is wired outside the dock, so it is where the alert's rung and its
+             earned-darken clamp can actually be photographed.
+
+             Five arms, one plate: under the ruled Alert identity the tone is carried by
+             the glyph and the ink, and every tone rides the SAME neutral quiet rung — so
+             these five specimens should differ in ink and in nothing else. -->
+        <StorySection
+            label="alert on a busy substrate — one neutral rung, five status inks"
+            blurb="Every tone shares one neutral quiet plate; the colour is the glyph and the ink. Watch the plate darken as the painterly field brightens behind it — the tint is earned from the measured backdrop, not declared per tone."
+        >
+            <ShowcaseFrame pad="lg" tier="field">
+                <div class="flex flex-col gap-4">
+                    <Alert v-for="arm in alertArms" :key="arm.tone ?? 'neutral'" :tone="arm.tone">
+                        <component :is="arm.icon" />
+                        <AlertTitle>{{ arm.tone ?? "neutral" }}</AlertTitle>
+                        <AlertDescription>
+                            The plate is the quiet rung; the status is the ink.
+                        </AlertDescription>
+                    </Alert>
+
+                    <!-- The NESTED cell. An alert inside a floating host proves two
+                         things in one frame that no isolated capture can: the
+                         one-backdrop-sample-per-plate law (a rung nested in a rung
+                         resolves `--glass-cell-backdrop-filter: none`, so the inner
+                         plate carries no second lens) and the bright-backdrop bucket
+                         engaging through the floating ancestor that declares it. -->
+                    <div class="glass-floating rounded-card p-4">
+                        <Alert tone="info">
+                            <Info />
+                            <AlertTitle>nested in a floating host</AlertTitle>
+                            <AlertDescription>
+                                One backdrop sample per plate — the inner surface takes
+                                no second lens.
+                            </AlertDescription>
+                        </Alert>
                     </div>
                 </div>
             </ShowcaseFrame>

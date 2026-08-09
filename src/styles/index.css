@@ -105,9 +105,15 @@
  *                              `.feedback-tone-{success,warning,info,destructive}`
  *                              tint a glass rung a bounded % toward a house tone
  *                              token on the EXISTING color-mix(in oklab, …) seam.
- *                              Toast / Alert consume it. Loads after cards.css (it reads
- *                              the same `--glass-plate-*` rung tokens cards.css/the
- *                              ladder mint).
+ *                              ~~Toast / Alert consume it.~~ Toast composes `.feedback-tone`,
+ *                              the tinted PLATE, and is its ONE shipped consumer; Alert
+ *                              composes only the four `.feedback-tone-<name>` `--tone`
+ *                              registers and spends the tone on the glyph and the ink
+ *                              [2026-08-08 · BK #33: R-3 ruled neutral glass + status ink
+ *                              — the tinted Alert plate is not built]. Loads after
+ *                              cards.css (it reads the same `--glass-plate-*` rung tokens
+ *                              cards.css/the ladder mint — now only as the no-rung
+ *                              fallback; the live mix base is `--glass-veil`).
  *  7b. components/_shared/feedback/dot-ring.css — the shared work-in-flight register:
  *                              `.glass-dot-ring` + `.glass-dot-ring-bead`, seven beads
  *                              whose unequal sizes rotate at conserved total area
