@@ -3755,6 +3755,502 @@ W-GATE-COLLAPSE** (the C-9 / C-10 / C-20 batched acts) → **#66 CLOSE + 8.0.0**
 build path — NOW UNBLOCKED** by this cut's `npm run build`. The procession still opens on a
 **re-scout**, never on an assumed next.
 
+⊕⁶⁷ **#33 W-ALERT COMPLETES — THE ALERT IS NEUTRAL GLASS AND THE TONE REGISTER STOPS EATING ITS
+OWN SEAM (2026-08-08, `76bfae26`)** — the lane has sat uncommitted in this tree since Aug 5 and five
+consecutive scouts fenced around it on a stale `#22 IN-FLIGHT` read that ⊕⁴⁷ had already struck;
+it is closed. **The headline is a subtraction: the status-tinted PLATE is not built.** R-3 ruled
+neutral glass + status ink, and the implementation obeys it literally — no Alert arm composes
+`.feedback-tone`; each toned arm takes the bare `feedback-tone-<name>` `--tone` register and spends
+the colour on the full-chroma glyph and the ink, over the ONE neutral `.glass-quiet` rung every arm
+now rides. Five arms, one measured plate — which is also the accessible arrangement, because the
+contrast table has one composite to pin against instead of five. **The four
+`[--feedback-tone-rung:var(--glass-plate-wash)]` re-points and all five
+`[backdrop-filter:var(--glass-blur-wash)]` binds leave with it**, and the hand-rolled plate leaves
+with them: `relative`, the bare `border`, the wash background and the wash backdrop are DELETIONS,
+not substitutions, because `.glass-quiet` already supplies every one. **THE SEAM FIX IS THE PART
+THAT OUTLIVES ALERT.** `background` is a single property, so `.feedback-tone`'s `color-mix()` over
+a RAW plate token REPLACED the rung's own background wholesale — every tone arm in the library
+painted a plate the glass ladder had never touched, and every downstream measurement was taken
+against it. The mix base is now `var(--glass-veil, var(--feedback-tone-rung))`: the rung's earned-
+darken clamp, its tier ink and its `--glass-level` survive INSIDE the tint instead of underneath
+it, and the cure lands on **Toast** — the register's one remaining plate consumer — in the same
+byte. **A CHARTER TOKEN DID NOT EXIST AND THE CORRECTION IS STATED, NOT SILENT**: CWT §ALERT
+specifies `--glass-plate-tinted`; `grep -rn -- --glass-plate-tinted src/` returns **0** at this
+HEAD. Its successor is `--glass-veil`, the nestable VALUE token `@utility glass-plate` publishes at
+the element, whose own header (`glass/veil.css:35`) names *"a tone-tinted feedback panel"* as one
+of its two intended consumers — the seam is the charter's, the spelling is the tree's.
+**`G-FEEDBACK-TINT-SEAM` SEATED, 3/3 GREEN, `seats:60` UNMOVED** — it binds a seat that pre-existed
+in `gates/ROSTER.md:25` (family SEAM) and `SEAT-BINDING.json:264`; nothing minted, receipt
+`seats:60 active:48 reserved:5 worstCase:53 remaining:7 external:11 bound:8 armOnly:2 unbound:50
+drift:1 rosterSha256:dc05df91 violations:0`, character-identical. Its arm (b) is the one that
+bites — *no file under `src/` WRITES `--feedback-tone-rung`* — because arm (a) can be satisfied
+while four consumers each override the fallback back into the mix, which is exactly the state this
+cut found and removed. **A-5 CLOSED BY A DIFFERENT ARM THAN THE CHARTER PREDICTED, and that
+correction is the whole of this seat's cross-file work.** The charter routed the muted-ink re-point
+through `ladder.css`'s `:where(.feedback-tone,.glass-capsule)` `-strong` rung; under R-3 Alert never
+composes `.feedback-tone`, so it lands instead on the CONTENT-TIER `:where()` at `ladder.css:199-209`
+which lists `.glass-quiet` — the correct register, one rung softer, which is right because the
+plate is no longer tinted. **That fact falsified three committed comments, each struck in place
+with a dated bracket and none of them a declaration**: `ladder.css:217` (*"`.feedback-tone` — Alert
+/ Toast"*) · `index.css:108` (*"Toast / Alert consume it"* → the consumer SPLIT, with the load-order
+rationale annotated rather than struck because it survives on the no-rung fallback path) ·
+`button/styles.css:27` (*"the same knob a destructive Alert reads"* → Toast, and the one-grammar
+claim the sentence exists to make survives intact). A fourth bracket opens `feedback-tone.css`
+itself, so its 40-line header reads true: the WASH prose is Toast's, the four `--tone` registers
+and the glyph are shared. **THE BREATH IS AN ARRIVAL, NOT A GLEAM.** Alert measured 0 hover / 0
+transition / 0 spring in 77 LOC — genuinely inert under the breath-of-life edict — and the honest
+channel for a surface nobody points at is its mount: `.liquid-enter`, the library's universal
+recipe, zero JS, own reduced-motion arm. In the same breath `[--glass-specular-intensity-hover:0]`
+KILLS the pointer-reactive gleam joining the rung would otherwise hand a `role="alert"`; an alert
+is announced, not operated, and rest stays material-only per the ratified idle canon (the idle axis
+remains W-IDLE-BREATH's). **THE TYPE LADDER WAS INVERTING WITH THE POINTER CLASS.** The root bound
+`--control-text` (= `--type-small` × `--ui-scale`) and the title inherited it while the description
+bound the bare token, so title:body was **1.00 on a mouse and 1.50 on a finger** — a ratio that
+moves with the pointer is not a ladder, and the 24.6px coarse title is what made `line-clamp-1`
+look necessary. Both steps now read the content scale: **1.143 at the floor, 1.134 at 1440, at
+BOTH pointer classes**, and `line-clamp-1` is STRUCK — a truncated title is a lost sentence on a
+surface whose whole job is to say one thing once. Locked by a row into `tests/styles/typography.test.ts`
+(no slot: the invariant is a proportion between two shipped tokens and this file owns proportions),
+which asserts the token CLASS and the absence, not the pixels. **Radius parity per E26 already
+stood** (`rounded-card`, 16px, exact card parity) and is gated FOREIGN by `G-RADIUS-ROLE` at
+`radius-role-canon.test.ts:472`, green against these bytes; `class-names.ts:141`'s inability to see
+role radii stays routed to W-RADIUS-ROLE, uncured, as Card/Toast/Dialog already are. **π IS OWED
+AND THE PAGE IT NEEDS NOW EXISTS.** Cells 5–7 cannot be paid on `/feedback/alert` — that route's
+substrate measures luminance σ 1.17–1.69 with HF 0.003, so a 1→7px blur is literally invisible
+there and a capture would read any material change as "no change needed"; the lane therefore
+stages five alert specimens **plus a nested floating-host cell** on `/substrates/glass-material`,
+the one route where `useGlassBackdropLuminance` is wired outside the dock. **One amendment to the
+charter's DELTA JSON, stated so the capture is not adjudicated against a pre-R-3 expectation**: it
+asks that the with/without-`--glass-backdrop: light` values *"differ in light on all five arms"* —
+under R-3 they differ on the ONE plate, and the five arms are byte-identical to each other in
+`background-color`, differing only in glyph `color` and `--tone`. **AN OPERATIONAL FINDING THE NEXT
+SEAT NEEDS**: `boot-graph.test.ts` carries a staleness leg (*"the dist-demo it measures is NEWER
+than every source it is built from"*), so editing any `src/` byte after `demo:dist:build` reds a
+THIRD test that is pure ordering — the battery runs builds BEFORE vitest or it lies. Verify:
+`vue-tsc` **0**, suite **2 failed | 1543 passed | 5 expected fail** (#66 + #85, both pre-existing,
+and boot-graph's own figure `63 modulepreloads / 477311 B` is byte-identical to the pre-work run —
+this lane adds nothing to the eager graph), `npm run build` **EXIT 0** (the `85c322dd` unblock not
+regressed), `demo:dist:build` **EXIT 0**, `regen-exports` **EXACT**. **ROUTED, not cured here**:
+`--feedback-tone-rung` now has zero writers — keep as fallback or clean-break delete → **#21
+W-DAG-REDUCE**, which charters the `_shared/feedback` consolidation and is gated hard on #17
+(Φ4-UNSTARTED) · `ToastTitle.vue:14`'s identical `text-small font-semibold` utility-weight
+collision, named and unchanged · `G-NO-WHITE-SPECULAR` vs `--glass-material-rim`, which this lane
+moves Alert from exempt INTO, → **W-FROST**'s to scope · WebKit cells 8–9, payable the moment the
+~249 `@supports color-mix` guards are deleted.
+
+**DRIVER DISCLOSURE (⊕⁶⁷ — the per-hunk surgery, the gate that is executable and not yet bound,
+and what the cut did NOT carry).** The cut is **12 files, +859/−54**, and two of them entered
+by HUNK, not by path: `src/styles/index.css` rides **hunk 1-of-6 only** (the §7a Toast/Alert
+bracket) because hunks 2+ are #35's `track-well` relocation and the slider lane's own import,
+and `tests/styles/typography.test.ts` rides **the BK #33 block only**.
+`tests/gates/feedback-tint-seam.test.ts` lands **EXECUTABLE and DELIBERATELY UNBOUND** — the
+same C-10 shape #32's `tabs-seam` takes at ⊕⁶⁹ — so the register receipt is byte-identical
+(`seats:60 active:48 reserved:5 worstCase:53 remaining:7 external:11 bound:8 armOnly:2
+unbound:50 drift:1 rosterSha256:dc05df91 violations:0`, **verbatim, `violations:0` per ⊕⁶⁶'s
+new standing line**) and **the binding is the driver's owed ruling, routed with RT-32B/RT-71B
+to C-10 / #65 / #66**. `demo/stories/substrates/glass-material.vue` carries the five alert
+specimens + the nested floating-host cell **staged, not captured** — π cells 5-7 are **owed to
+#10** on the driver's browser cadence, and the DELTA-JSON amendment above is what they are
+adjudicated against, never the pre-R-3 expectation. **VERIFY AT COMMIT**: `vue-tsc` **0** ·
+battery at the banked **2-both-routed** expectation (`boot-graph` → **#66**,
+`emitted-utility-vars` → **#85**), measured under the builds-before-vitest order law that this
+lane's own record is the first to state. **ROUTES**: `--feedback-tone-rung`'s zero-writer
+keep-or-delete → **#21** (hard-gated on **#17**, Φ4-UNSTARTED) · `ToastTitle.vue:14`'s
+utility-weight collision, named and unchanged · `G-NO-WHITE-SPECULAR` vs `--glass-material-rim`
+→ **W-FROST** · `class-names.ts:141`'s role-radius blindness → **W-RADIUS-ROLE** · WebKit cells
+8-9, payable the moment the ~249 `@supports color-mix` guards are deleted.
+
+⊕⁶⁸ **#35 W-SLIDER LANDS, AND ITS RIDER LANDED FIRST (2026-08-08, `9b4c15d8`, with the
+`f8642704` #40 rider at its head)** — the slider's paint leaves the SFC for **THE ONE SLIDER
+LANE** (`components/slider/styles.css`, 481 ln, **unlayered on purpose** so it outranks the
+`@layer components` well+fill registers it composes), `Slider.vue` **850 → 368**, and the body
+of this entry is the four completion cures the seat found sitting inside an otherwise-finished
+cut. **CURE-1, THE HEADLINE: THE LOUPE'S FOCUS PULL WAS DEAD IN PAINT, AND NO GATE IN THE
+TRANCHE COULD SEE IT.** `.glass-loupe-clone` blurred on `calc(var(--flex-vel, 0) * 0.75px)`,
+but `--flex-vel` is `@property`-registered **`inherits: false`** with **`initial-value: 0`**
+(`tokens/property-regs.css:109-113`, and the registration states why — a per-frame write must
+invalidate exactly ONE element, never a subtree), while `useDragVelocity`'s mirror reaches the
+**lens**. The clone is a CHILD, so the property resolved to its registered initial value — it
+never even reached its own `, 0` fallback — and the blur computed **`blur(0px)` at every
+velocity, always**; the `transition: filter` had nothing to transition, and one of this lane's ⊕²
+ratified constants (the ~120 ms focus pull) was a **proven-live-DEAD** channel: green in
+every battery, invisible without reading the registration. Cured by publishing that same
+substitution **under a name on the lens** (`--loupe-vel: var(--flex-vel, 0)`) and reading THAT
+on the clone — one measurement, one writer, one pole, carried one level down; no second
+velocity engine, no new registered property, no new public token. **`--loupe-k` was never
+affected and that is not luck**: an UNREGISTERED custom property substitutes its `var()`s on
+the element that DECLARES it, so its live value is baked in on the lens before the clone
+inherits the token stream. **CURE-2**: `--loupe-scale` was a literal wearing a token's name —
+nothing in `src`/`demo`/`tests` declares it — which the file's own opening law forbids twelve
+lines in (*"a knob whose only declaration is a fallback is a literal wearing a token's name,
+and nobody can retune a fallback"*); 0.13 is a **ratified** constant and is now written as one.
+**CURE-3, A DECLINE WITH ITS GROUNDS WRITTEN INTO THE FILE.** Three artefacts asserted a
+spectrum loupe that **cannot mount** (`loupeShown` needs `grasping`, which opens only `if (held
+&& graspable)` and `graspable = variant !== "spectrum"`): the `[data-variant="spectrum"]` clone
+rule, the `:data-variant` bind whose only reader was that rule, and a `v-if="graspable"` that
+is **always true** wherever the loupe exists. All three struck, and the spectrum loupe is **NOT
+opened** — opening it strands state: `grasping` is lowered by the grasp carrier's own
+`transitionend` and a spectrum mounts **no carriers**, so the vertical spectrum **this very cut
+adds to the demo** would raise `grasping` with nothing able to lower it, forever. Unreachable
+paint that reads like shipped paint is precisely what gets "fixed" later into that leak, so the
+ground is written where the next seat will meet it. Routed **RT-35A**. **CURE-4, THE
+FILE-MOVE'S DEBT PAID IN DATED BRACKETS**: four committed cross-references named `Slider.vue`
+for paint that had left it — `glass/grasp.css:54` · `tokens/sizing.css:564` ·
+`theme/radius.css:253` · `a11y/coarse-target.test.ts:72`, whose hardcoded assertion message now
+interpolates `${SLIDER}` **so it can never go stale again** — plus one **gate-honesty** fix:
+`glass-subtlety.test.ts` asserted `expect(grasp).toContain("Slider.vue")`, a literal that after
+CURE-4 survives **only inside a strike-through**, so the check would have been reading struck
+text and calling it doctrine; it now additionally requires `grasp` to name the file that
+actually carries the shorthands. **MUTATION M1 BITES**: on a **scratch copy** (`cp`, never `git
+checkout` — the #31 fence lesson) the true path was struck out of the bracket in `grasp.css`
+and `glass-subtlety` went **`1 failed | 35 passed (36)`**; restored from the scratch copy and
+verified **byte-exact by sha256**
+(`8b76de2a8c45b2343870696ebde09316d8cecdd49a88e213ec3f3430e82ba067` before and after), green
+again at **36/36**. **SEATS: MINTED ZERO** — `G-SLIDER-INSCRIBE` owes no seat
+(`BAND-FOLD.md:293` CUT it, absorbed by `G-COARSE-TARGET`, which is exactly what
+`coarse-target.test.ts` already does) and CURE-1 is banked with its **analytic** proof, the
+registration being on disk and quotable, rather than a bespoke one-property detector — the
+contrived class the standing abrogation mandate struck, against a register at its 60 ceiling.
+**The charter was DISCHARGED ON DISK before a byte was edited**: the 621-LOC carve, the
+`glass-scrubber` rename (`standard` at **zero** surviving occurrences in `src`/`demo`/`tests`;
+the consumer that invented the name no longer references it at all), the ⊕² loupe constants
+(k-band **[1.15, 2.60]** · `--s: 3` with the clone transformed DOWN · the 0.13 `present` seed ·
+exit 0.5× entry), the ⊕² rider's provenance (`--flex-vel` written at the ratified `FLEX_V0 =
+900` px/s through a `FLEX_TAU_MS = 100` one-pole — *two terms, never two engines*), **S-C
+discharged DIFFERENTLY AND BETTER** (not by deleting the register's `backdrop-filter`, which
+#22 W-FROST re-authored as the grasp rest-filter seam, but by never composing
+`.glass-liquid-fill` on the spectrum range at all — *a class that is never applied cannot be
+un-applied wrongly*), S2's hover→100% legalized hover-only, A-10 `valueText` excluded from
+`delegatedProps` so it never forwards as an attr, and A-12's ONE forced-colors block. **VERIFY
+(on the working tree, which carries the whole lane)**: `vue-tsc` **0** · battery **2 failed |
+1543 passed | 5 expected fail (1550)**, the banked expectation exactly, **zero added, zero
+subtracted** · receipt byte-identical `seats:60 … drift:1 rosterSha256:dc05df91 violations:0` ·
+`build` **GREEN** · `demo:dist:build` green · `regen-exports` **EXACT**. **A RUNNER LESSON
+BANKED**: `--reporter=basic` no longer resolves on this vitest (*"Failed to load custom
+Reporter from basic"*) **and the process still exits 0 on that startup error** — the
+piped-exit-code trap in a new dress. Read the totals line, never the exit code. Record:
+`docs/tranches/BK/execution/2026-08-08-lane35-completion/RECORD.md`. **ROUTED**: **RT-35A** the
+spectrum loupe, declined with grounds, a design row not a completion item · **RT-35B** the
+`inherits: false` descendant-read class — CURE-1 is ONE instance, and the cohort
+(`--specular-x/y`, `--specular-intensity`, `--veil-x/y`, `--flex-vel`, `--cast-travel`,
+`--cast-spread`, `--vap-saturate`) each wants one writer/reader look → **#65** · device cells
+(the entrance blur sweep ≈2.3→18px under LAW 13's refocus clause, **not** an X-G(1) breach; the
+loupe's mask-over-live-backdrop P-MASK/P-NECK class) → **#67**, and **the rendered focus pull
+is π, stated and not inflated into a live-verified claim** · A-4 rail-species / per-thumb slot:
+DECLINE-AT-8.0.0 stands, owner-revivable.
+
+**THE `f8642704` RIDER — TWELFTH OF ITS CLASS, AND THIS LANE'S HUNK CENSUS IS WHAT FOUND IT.**
+`85c322dd` committed `deck/styles/` and `carousel/styles.css` **but not their `@import`s** in
+`src/styles/index.css`, so both sheets were **DEAD AT HEAD** — the `40efebc9` dead-sheet class
+in its twelfth BK instance. Nine lines, `style(index)`, landed AHEAD of #35's cut because #35
+owns hunks 1-4 of that same file and the driver's per-hunk split is the only reading that could
+surface it. **The lesson is the class, not the nine lines**: a scoped `git add` of a
+component's style directory does not carry the sheet's WIRING, and a stylesheet nobody imports
+passes every gate in the tranche — `regen-exports` is EXACT, the build is green, and the paint
+is absent.
+
+**DRIVER DISCLOSURE (⊕⁶⁸ — THE CUT IS PARTIAL, AND HEAD IS RED BY CONSTRUCTION; MEASURED OFF
+COMMITTED BYTES, NOT INFERRED).** The commit's `vue-tsc 0` was measured on the **working
+tree**, which carries the whole lane; `9b4c15d8` carries **ten files**, and **seven of the
+lane's own paths did not ride it**: `src/composables/dom/useDragVelocity.ts` (**40/6** — the ⊕²
+rider's `mirror` host itself) · `src/styles/glass/grasp.css` · `src/styles/tokens/sizing.css` ·
+`src/styles/theme/radius.css` (the three CURE-4 brackets) ·
+`tests/components/a11y/coarse-target.test.ts` (CURE-4's `${SLIDER}`) ·
+`tests/styles/glass-subtlety.test.ts` (CURE-4's gate-honesty assertion) ·
+`tests/styles/typed-track-seam.test.ts` (the `W4_STYLE_SOURCES` re-point + the scrubber rename
+in the case title). **THREE CONSEQUENCES AT HEAD, EACH READ OFF `git show HEAD:` RATHER THAN
+ARGUED.** **(1) `npm run typecheck` REDs on a clean checkout**: `Slider.vue:85-89` passes
+`mirror: () => loupeRef.value` into `useDragVelocity(params: UseDragVelocityParams)`, and
+HEAD's `UseDragVelocityParams` (`useDragVelocity.ts:33-58`) declares `host` · `axis` · `gain` ·
+`clamp` · `respectReducedMotion` and **no `mirror`, with no index signature** — an excess
+property on an object literal against a typed param. `package.json:472`'s `prepublishOnly` and
+`.github/workflows/release.yml:37-38` both run `npm run typecheck`, so **this is a release-path
+RED, not a lint**. The loupe's velocity mirror is additionally dead at HEAD twice over: no host
+writes it. **(2) Three battery files RED at HEAD by construction**: `git show
+HEAD:src/components/slider/Slider.vue | grep -c 'glass-slider-track-background'` → **0** and
+`slider-touch-target` → **0** (the paint is in the new sheet, committed), while at HEAD
+`tests/styles/typed-track-seam.test.ts:39,102-108`,
+`tests/components/a11y/coarse-target.test.ts:32` and
+`tests/styles/glass-subtlety.test.ts:810,1060` all still read `components/slider/Slider.vue`
+for exactly those bytes. **(3)** `grasp.css`, `sizing.css` and `radius.css` at HEAD still name
+`Slider.vue` for paint that has left it — the doc-truth cure is un-landed with them. **THIS IS
+NOT A RE-LITIGATION OF THE FENCE LAW.** Three of the seven are genuinely shared-dirty
+(`coarse-target.test.ts` carries #41 W-SORTABLE's entire second `describe`; the other two are
+split elsewhere), and the same law that held them back is the law that held
+`focus-visible.test.ts` and `radius-role-canon.test.ts` out of **six** earlier commits before
+they finally rode with their owner in this one. **THE OWED RULING IS WHICH VEHICLE**: a #35
+completion rider in the `f8642704` shape (thirteenth of the class), or #65's batched C-10 cut.
+Until one lands, **the 8.0.0 close cannot run `--run release` off HEAD and read the result as
+the lane's** — and this is the first seat in the tranche where the working-tree measurement and
+HEAD diverge on a **TYPE error** rather than a doc string. Banked as the sharper form of ⊕⁶⁶'s
+own evidence note: **a lane's verify is a claim about the TREE; only a clean-checkout run is a
+claim about the CUT.**
+
+⊕⁶⁹ **#32 W-TABS COMPLETES (2026-08-08, `74ecde5a`) — the lane where the second engine was hiding a
+dead surface.** The body is the row cell; four things belong in the ledger.
+
+**A FALLBACK WAS MASKING A PRIMARY THAT HAD NEVER RUN.** The underline material's `::before`
+indicator was position-anchored to `.segmented-tab[aria-selected="true"]`, and under
+`semantics="toggle"` that selector never matches — no `anchor-name`, `anchor()` invalid at
+computed-value time, the box collapses to zero width. Behind it sat `@supports not
+(position-anchor: --x)`, substituting a static `border-bottom` on the active tab. So the strip
+LOOKED underlined on every engine and the indicator engine was dead on one whole semantic, for as
+long as it shipped. **The general form: an `@supports not` arm that paints a plausible substitute
+cannot distinguish "the engine is absent" from "the engine is present and produces nothing",** and
+it is the second condition that ships. The cure is the one the house law already states — one
+primitive, in paint or failing loud.
+
+**THE SAME SHAPE, ONE LAYER DOWN, IN THE STATE SEAM.** `[aria-pressed]` and `[aria-selected]` are
+two spellings of one fact; every paint rule had to pick one, and `drag.css` picked `aria-pressed`,
+so the liquid-tab travel occlusion was dead on all three `role="tablist"` mounts and alive on the
+toggle mounts. Nothing failed; it just didn't happen on half the surface. `[data-active]`,
+presence-gated (`|| undefined`, the `DockControl.vue:113` house form — `data-active="false"` would
+make `[data-active]` match every tab in the strip), and the two semantics lose the ability to
+disagree.
+
+**A DOC THAT NAMES A GATE THAT DOES NOT EXIST IS WORTH WHAT A SELF-CERTIFYING ONE IS WORTH.** The
+tabs README's §Gates cited `proof:tabs-unified · proof:no-god-module · proof:colocation`; `grep -c
+proof package.json` → **0**. Its colocation map listed two files that are not on disk and omitted
+two that are. Its mechanism section credited a composable with no file. **None of this was
+introduced by the lane — it was true of the README before the lane opened, and the lane is simply
+the first reader who had to use it.** The ≤500-line claim is now stated as a MEASUREMENT (SFC 419,
+leaves 215/172/135) because **no line-bound executable exists anywhere in `tests/`**, and a
+measurement that says so is honest where a gate name that resolves to nothing is not.
+
+**A CHARTER ITEM WITH ZERO BYTES, NAMED RATHER THAN FILLED.** Eight of row 32's nine codex items
+are on disk and gated. The ninth, "dispersion rims", is not: `--glass-rim-top`/`--glass-rim-bottom`
+are achromatic in both legs. A completion seat could have tinted something and called it done. It
+is instead ROUTED — the construction is RULED by row 71 (SE-5: C1's
+`armGlassRefract`/`supportsBackdropRefract` path is dead by #2's Φ0 delete; the eyeglass builds on
+the codex §8 specular-strip substitution) and the codex routes C1 to four rows, so the register's
+home is a shared question. C1's own words are the test to hold it to: *"if it only dims we built a
+highlight, not an eyeglass."*
+
+**THE PROCEDURAL LESSON, MEASURED.** A lane touching any `demo/` source must run `npm run
+demo:dist:build` BEFORE the battery: `gate:boot-graph` carries a staleness arm distinct from its
+eager-graph ceiling, and two blurb edits took the battery to **3 failed | 1542 passed** on
+*"the dist-demo it measures is NEWER than every source it is built from"* — a third failure that
+reads exactly like lane breakage and is not. One rebuild returned it to **2 failed | 1543 passed**,
+twice consecutively.
+
+**#33 · #35 · #71 STILL SIT UNCOMMITTED IN THIS WORKING TREE** alongside #32's own bytes, and #71
+is COUPLED to #32 (`useSelectionGroup` imports `type SelectionDeform` from
+`useSelectionIndicator`) — the roster's "#71 executes inside this cut" is the cheapest staging,
+otherwise #32 carries the one type-export line as disclosed inherited residue on the `40efebc9`
+precedent. #40's bytes are absent (committed `85c322dd`), which is what keeps `npm run build`
+green. The cursor alone cannot show a lane that has not committed; the census is re-taken at each
+cut. [⊕⁶⁹ 2026-08-08 · back-annotation: all three landed within the
+hour — #33 `76bfae26`, #35 `9b4c15d8`, #71 `6c22e22f` — and the sentence is kept rather than
+rewritten, because the staging reasoning it carries is what decided the whole-file
+`useSelectionGroup` cut disclosed below.]
+
+**DRIVER DISCLOSURE (⊕⁶⁹ — the whole-file staging that inverts one attribution, the gate left
+executable, and the retirement that is not whole at HEAD).** The cut is **9 files,
++1265/−265**. **VERIFY AT COMMIT**: `vue-tsc` **0** · the lane's own
+`tests/gates/tabs-seam.test.ts` **26/26** · subset battery **2 failed | 1543 passed | 5
+expected fail (1550)** = the banked expectation exactly, **ZERO added** (`boot-graph` →
+**#66**, `emitted-utility-vars` → **#85**) · `gate-register` byte-identical `seats:60 active:48
+reserved:5 worstCase:53 remaining:7 external:11 bound:8 armOnly:2 unbound:50 drift:1
+rosterSha256:dc05df91 violations:0` · `npm run build` **EXIT 0** (the `85c322dd` unblock not
+regressed) · `demo:dist:build` green · `regen-exports` **EXACT REPRODUCTION: YES** ·
+`public-surface` **83/83**, run because the lane narrows a published type
+(`SegmentedTabOption.tooltip?` struck). **THE ATTRIBUTION INVERSION, DISCLOSED HERE AND AGAIN
+AT ⊕⁷⁰.** `src/composables/motion/morph/useSelectionGroup.ts` was staged **WHOLE (27/5)** in
+this cut, and #71's completion record splits that same file **18/3 to #32 + 9/2 to #71,
+reproducing arithmetically to the line**. The **bytes are correct** — the two shares do not
+compile apart (#32's hunk imports `type SelectionDeform` from #71's engine file) and either
+order was legal — but the **9/2 that ride here are #71's**, including #71's own RT-84O dated
+bracket at `:83`. So a reader who greps `74ecde5a` for `RT-84O` finds **#71's strike inside
+#32's cut**, one commit early: an **early-rider inversion**, where the records' dated brackets
+claim a row the commit title does not. Named at both ends rather than silently absorbed. **THE
+GATE IS EXECUTABLE AND DELIBERATELY NOT BOUND** — `tabs-seam.test.ts` is
+untracked-then-committed with the receipt pinned byte-identical, the same C-10 shape #33's
+`feedback-tint-seam` takes at ⊕⁶⁷ — **RT-32B**, the driver's owed binding ruling (bound 8→9,
+unbound 50→49 when it rides). **THE `--tab-blob` RETIREMENT IS NOT WHOLE AT HEAD**: the sheets
+that WROTE it are committed, but `src/styles/tokens/property-regs.css`'s **16-line `@property
+--tab-blob` deletion did not ride** and sits uncommitted, so at HEAD the registration survives
+with **zero writers** — and its own header still credits `useTabIndicator.ts`, **the composable
+with no file** that RT-32D routes to #61. That is exactly the record collision **RT-32E** names
+(⊕⁶⁴ calls the `@property` deletion *"#32/#35's"*, ⊕⁵⁹/⊕⁶⁰ call `scale-paper.css`'s remaining
+10/18 *"#71's"* — one act, two labels), and it is now a HEAD fact, not only a bookkeeping one.
+π cells stay **owed → #10**, re-run AFTER #22's F-1/F-3/F-4 per T-C. **ROUTES, verbatim from
+the record**: **RT-32A** → **#22 / #71**, the dispersion-rim register, #32 the first consumer,
+C1's falsifier held over it (*"if it only dims we built a highlight, not an eyeglass"*) ·
+**RT-32B** → **driver**, bind `G-TABS-SEAM` at the next batched binding cut · **RT-32C** →
+**#65**, `useSelectionGroup.ts:52` respells the canonical `SelectionValue`
+(`_shared/selection.ts:9`) as a local alias, #84 C-1 residue, one line, not annexed ·
+**RT-32D** → **#61**, `useTabIndicator` still named in prose at `useDragMorph.ts:50,:240` ·
+`useLiquidFlex.ts:3` · `useTabResponsive.ts:12` (the README's two instances are struck at this
+seat) · **RT-32E** → **driver**, the two-label record collision above.
+
+⊕⁷⁰ **#71 W-EYEGLASS LANDS (2026-08-08, `6c22e22f`) — the row that closed a routing, and paid
+for a guard it wrote itself.** The body is the row cell and the record at
+`execution/2026-08-08-lane71-completion/RECORD.md`; three things belong in the ledger.
+
+**RT-84O IS CLOSED, AND THE FIGURE IS MEASURED RATHER THAN ARGUED.** ⊕⁶⁰ separated #84's
+truth from its economization and routed the second here. The pre-change engine took **4**
+`getBoundingClientRect()` calls on mount alone for a caller with no indicator — two per
+pass, two passes (`containerRef`'s post-flush watcher and `onMounted`) — plus two more per
+model change and per `ResizeObserver` callback, into a `singleSliderStyle` nothing could
+paint. It now takes zero, and **the `ResizeObserver` still attaches unconditionally**: #84's
+Safari-identical guarantee is about there being one measure PATH, not about running it into
+nothing. The routing pointed here and not at #84 for a reason worth keeping: the fix was
+unsayable until this lane's `deform` param took the second meaning off `indicatorRef`. **A
+de-overloaded sentinel is not a tidiness win, it is what makes a whole class of
+economization expressible at all.**
+
+**A SAFETY WATCHER WRITTEN AND STRUCK IN THE SAME SEAT, and the strike is the lesson.** The
+guard was first paired with a `watch(indicatorRef, …, { flush: "post" })` so a late-arriving
+indicator would re-measure. A scratch-copy probe (guard IN, watcher OUT) greened every case,
+so the watcher was struck: the indicator is a CHILD of the container in both consumers that
+read the style (`SegmentedTabs.vue:333`/`:361`, `DockLayerGroup.vue:225`/`:266`), so the two
+can only arrive together and the container watcher already covers arrival. **The general
+form: a guard added "just in case" is untested by construction — the case that would prove
+it necessary is the case nobody writes, because writing it is what shows it isn't.** Two
+scratch variants separate a fix from its speculation in about a minute, and the second
+variant is the one seats skip.
+
+**THREE COMMITTED TEXTS EXPIRED WHEN THE ROUTE CLOSED, IN THREE DIFFERENT FILES.**
+`useSelectionGroup.ts:83` (*"Economizing it is the indicator writer's own change to
+make"*), `ToggleGroup.vue:100` (*"It does NOT silence the measure … routed RT-84O → #71"*)
+and `MIGRATION.md:1188` (*"there is no named eyeglass variant"* — still true, and bracketed
+because a consumer now meets `--eyeglass-span-max` in the tabs sheet and needs to know it is
+a different construct wearing the same name, with none of the three struck `--eyeglass-*`
+tokens coming back). All struck with `~~` and dated, never deleted. **This is ⊕⁶⁰'s own
+lesson arriving one row later**: #84's comment was ACCURATE and became false the moment the
+routing it named was executed. **A comment that describes a routed defect has an expiry date
+the routing sets, and the row that closes the route owns striking every site that described
+it** — two of the three here would not be found by any grep for `RT-84O`.
+
+**THE FENCE, per-hunk on the one shared-dirty file, foreign totals taken before a byte.**
+`useSelectionIndicator.ts` 156/46 — **all this row's** (the file is wholly #71's, 169/204 at ⊕⁶⁰;
+this seat added 33) · `useSelectionGroup.ts` 27/5 of which **9/2 are this row's** (two
+`-U0` hunks) and **18/3 are #32's, byte-identical to baseline — the split reproduces
+arithmetically to the line** · `ToggleGroup.vue` 11/2 and `MIGRATION.md` 8/1, both clean at
+baseline, wholly this row's · `tests/composables/motion/useSelectionIndicator.test.ts` 221
+ln, new, **seats +0** (no §B.5 name; sibling of `useElementMorph.test.ts`, not in
+`tests/gates/`). **`segmented.css` (199/131) is #32's by #32's own banked claim, including
+the eyeglass PAINT** — #71 owns the LAW and the WRITER, #32 owns the sheet that arms it, and
+re-claiming it here would double-count a banked census. `scale-paper.css` holds at **10/18**,
+the ⊕⁵⁹ figure, untouched at this seat. **#32 · #33 · #35 STILL SIT UNCOMMITTED IN THIS
+WORKING TREE**; `useSelectionGroup.ts`'s two shares do not compile apart (#32's hunk imports
+`type SelectionDeform` from #71's file), so they land in either order or together. [⊕⁷⁰ 2026-08-08 ·
+back-annotation: the order was #32 FIRST — `74ecde5a` staged the file WHOLE, so this row's 9/2
+rode #32's commit; #33 `76bfae26` and #35 `9b4c15d8` landed before it. The inversion is
+disclosed at ⊕⁶⁹ and below.]
+
+**Φ5 procession: re-scout.** This row closes RT-84O and unblocks no DAG row by itself.
+RT-32A's dispersion-rim register is NOT built and is re-routed with grounds (RT-71A, below).
+
+**RT-71A · THE DISPERSION-RIM REGISTER — still routed, now with a named blocker.** #32
+routed it to "#22 / #71's specular-strip substitution, with #32 as the first consumer";
+**#71's completion seat concurs with #32's three grounds rather than overriding them** — the
+register's home is shared across the codex's four C1 rows (`#32 · #47 W4 · #2 · #22`), a
+completion seat inventing an ungated unmeasured light channel by taste is exactly what
+`eyeglass.ts` refuses in its own header (*"Nothing here is tuned by taste"*) and what the
+no-masking-fallback law forbids, and its paint would land in `segmented.css`, **#32's
+file**. Two things this seat adds rather than leaving to the next: **SE-5's negative is
+VERIFIED on disk** — `rg -n "armGlassRefract|supportsBackdropRefract" src demo` → no output,
+so nothing re-imports what #2's Φ0 removed — and **the substrate the substitution would sit
+on EXISTS**: `--specular-x` / `--specular-y` / `--specular-intensity` are live `@property`
+registrations at `src/styles/tokens/property-regs.css:55,61,93`. **The blocker is
+ownership, not construction: `#22` is CURE-CUT per the cursor, so the register currently has
+no live executing owner.** It needs a seat named or a design loop, and neither is a
+completion seat's to mint.
+
+**RT-71C · `tests/composables/**` is outside the standing verify's subset.** The battery
+every lane reports runs `tests/styles tests/components tests/gates`; `tests/composables` —
+41 files, 222 tests, plus this lane's new case — runs in neither. Green when run
+(`npx vitest run tests/composables` → `41 passed (41)` / `222 passed (222)`), and flagged
+because a suite no standing gate executes is a suite that rots.
+
+**RT-71D · an observed flake, recorded so it is not later read as a lane regression.**
+`tests/components/dropdown-menu.contract.test.ts > keeps the click branch to one portaled
+menu and restores focus on execute` failed on ONE of four battery runs at this seat
+(`expected <body><div data-v-app>…` to be `<button …>`) and passed on the other three,
+including both post-edit runs. #71 touches nothing within reach of it.
+
+**AND AN ORDERING FACT WORTH THE NEXT SEAT'S TIME.** `boot-graph`'s *staleness* arm
+(`dist-demo/index.html is STALE … run npm run demo:dist:build`) fires as a THIRD failure the
+moment any source file is edited and clears only after `npm run demo:dist:build`. A seat that
+reads "3 failed" before rebuilding the dist-demo has read a clock, not a defect.
+
+**DRIVER DISCLOSURE (⊕⁷⁰ — the inversion from the other side, the two strikes that stayed in
+the tree, and the suite no standing gate runs).** The cut is **6 files, +1004/−64**, and it
+carries `eyeglass.ts` (the organ's law: pure geometry, no cascade, no DOM), the writer,
+`scale-paper.css`'s 10/18 residue re-measured **exact against the ⊕⁵⁹ figure**, and the
+engine's first direct coverage. **VERIFY AT COMMIT**: `vue-tsc` **0** · battery **2 failed |
+1543 passed | 5 expected fail (1550)**, both routed (`boot-graph` → **#66**,
+`emitted-utility-vars` → **#85**) · receipt byte-identical `… drift:1 rosterSha256:dc05df91
+violations:0` · `build` GREEN · `demo:dist:build` green · `regen-exports` **EXACT** · **plus
+`npx vitest run tests/composables` → 41 passed (41) / 222 passed (222)**, which is **RT-71C's
+whole point: that suite is OUTSIDE the standing subset** every lane reports, so this lane's new
+221-line case would otherwise be green in a runner nobody runs. **THE ATTRIBUTION INVERSION,
+STATED FROM THIS END**: #71's `useSelectionGroup.ts` share (**9/2**, two `-U0` hunks, including
+the RT-84O bracket at `:83`) **rode `74ecde5a`, #32's commit**, staged whole-file there; bytes
+correct, title wrong, disclosed in the commit body and here. **AND TWO OF THE THREE STRIKES
+THIS ENTRY CLAIMS DID NOT RIDE ANY COMMIT**: `src/components/toggle-group/ToggleGroup.vue`
+(**11/2**) and `MIGRATION.md` (**8/1**) are **still uncommitted at HEAD** — so *"three
+committed texts expired"* is true of the **TREE** and two-thirds true of the **CUT**, and at
+HEAD `ToggleGroup.vue:100` still asserts *"It does NOT silence the measure"* about an engine
+that now does. They ride the same owed vehicle as #35's remainder. **ONE CENSUS CORRECTION**:
+`src/composables/motion/core/index.ts`, which ⊕⁶⁸'s source census listed under #71, is **not
+#71's on its bytes** — the diff is the `ScrubberTimeline` → `Timeline` meniscus-cap prose, the
+timeline-rename class — and it returns to the unattributed pile rather than being claimed.
+**RT-71A · THE DISPERSION-RIM REGISTER STAYS OPEN, NOW WITH A NAMED BLOCKER** — this seat
+**concurs with #32's three grounds rather than overriding them**, adds two facts (SE-5's
+negative **verified on disk**: `rg -n "armGlassRefract|supportsBackdropRefract" src demo` →
+**no output**; and the substrate the substitution would sit on **EXISTS** —
+`--specular-x`/`--specular-y`/`--specular-intensity` are live `@property` registrations at
+`tokens/property-regs.css:55,61,93`) and names the real obstacle: **`#22` is CURE-CUT per the
+cursor, so the register has NO LIVE EXECUTING OWNER.** It needs a seat named or a design loop;
+neither is a completion seat's to mint. **RT-71D**, banked so it is not later read as a
+regression: `dropdown-menu.contract.test.ts > keeps the click branch to one portaled menu and
+restores focus on execute` failed on **one of four** battery runs at this seat and passed on
+the other three including both post-edit runs; #71 touches nothing within reach of it. **AND
+THE ORDERING FACT, now stated by three consecutive lanes**: `boot-graph`'s **staleness** arm
+fires as a THIRD failure the moment any source byte is edited and clears only after `npm run
+demo:dist:build` — *a seat that reads "3 failed" before rebuilding the dist-demo has read a
+clock, not a defect.*
+
+**THE PROCESSION.** **EVERY UNCOMMITTED LANE IS NOW LANDED** — #33 `76bfae26` · #35 `9b4c15d8`
+(+ the `f8642704` rider) · #32 `74ecde5a` · #71 `6c22e22f`, all four adjudicated COMPLETE at
+run `wf_75c2ebde-4e9` — **and three of the four left named bytes behind, which is the first
+thing the next seat must read**. The residual tree is **35 paths**, and it is NOT all foreign
+dirt: **11 carry named-lane bytes that did not ride their own cut** — **7 #35's**
+(`useDragVelocity.ts` · `glass/grasp.css` · `tokens/sizing.css` · `theme/radius.css` ·
+`coarse-target.test.ts` · `glass-subtlety.test.ts` · `typed-track-seam.test.ts`), **2 #71's**
+(`ToggleGroup.vue` · `MIGRATION.md`), **1 #32/#35's** (`property-regs.css`'s `@property
+--tab-blob`, RT-32E) and **1 #40's** (`vite.library.ts` still externalizing
+`embla-carousel-vue`, a clean-break tail of the reconciled lock) — **5 belong to rows already
+banked** (#55's `PROCEDURAL-SUITE.md` · `blob/README.md` · `demo/…/blob.vue`; #46's
+`springPresets.ts`; #84's `overfit-structure.test.ts`), and **19 are the unattributed foreign
+dirt censused at Φ7 open** (aurora ×4 · fourier-field · handmark ×3 · configurator ×2 · demo
+typography · `darkModeSyncScript.ts` · procedural ×2 · `glass/rim.css` ·
+`glass/surface-axis.css` · `engage-ladder.test.ts` · `src/index.ts`'s ToggleGroup type exports
+· `motion/core/index.ts`'s timeline prose). **DRIVER RULINGS OWED, four**: **(i)** the #35/#71
+remainder's vehicle — a completion rider in the `f8642704` shape or #65's batched cut — **which
+is a RELEASE-PATH item, not bookkeeping**, because `npm run typecheck` REDs at HEAD on
+`Slider.vue`'s `mirror` (⊕⁶⁸) and three battery files read a `Slider.vue` the paint has left ·
+**(ii)** **RT-32A / RT-71A** dispersion-rim OWNERSHIP, blocked because #22 is CURE-CUT and the
+register has no live executing owner · **(iii)** **RT-32B / RT-71B** gate binding,
+`G-TABS-SEAM` + `G-FEEDBACK-TINT-SEAM`, both executable and unbound → **C-10** at **#65/#66**,
+where they ride with RT-40-A's pager test re-home, one act, one pin · **(iv)** **RT-32E**'s
+two-label `--tab-blob` record. **π OWED PER LANE**: #33's alert cells 5-7 on the staged
+`/substrates/glass-material` specimens and #32's tabs cells (after #22's F-1/F-3/F-4, T-C) →
+**#10**; #35's device cells — the entrance blur sweep and the loupe's mask-over-live-backdrop —
+→ **#67**; #71 owes none of its own. **THE STANDING RECEIPT IS UNMOVED ACROSS ALL FOUR CUTS**:
+`seats:60 active:48 reserved:5 worstCase:53 remaining:7 external:11 bound:8 armOnly:2
+unbound:50 drift:1 rosterSha256:dc05df91 violations:0`, **verbatim, `violations:0` per ⊕⁶⁶'s
+standing line, `drift:1` still #65's routed row** — **four lanes, zero seats minted, zero
+allowlists, no relaxed assertion**. **THEN THE GATED ROWS**: **#21** (behind **#17**, itself
+Φ4-UNSTARTED) · **#42/#47**'s remaining gates · the ASK-gated **#49-#53 · #58 · #73** ·
+owner-gated **#67**. **THEN Φ7**: **#65 W-GATE-COLLAPSE** (the C-9 / C-10 / C-20 batched acts +
+**RT-40-A** + the `drift:1` repair) → **#66 CLOSE + 8.0.0 on `--run release`** — and the
+close's own lesson from ⊕⁶⁸ is that **`--run release` must be read off a CLEAN CHECKOUT of the
+tag, because every "build GREEN" in this session was a working-tree measurement**. The
+procession still opens on a **re-scout**, never on an assumed next.
+
 **Φ5 procession: next = re-scout** — #21 stays gated (`#17` hard, and #17 is Φ4-UNSTARTED); ~~#24
 LANDED this date, so the next unstarted in TR order is **#25 W-FIELD-WELL** (which lands its well
 law THROUGH #82's cut per TR#25's §B.7 keying — check #82 before opening it).~~ [⊕⁴¹ 2026-08-05 ·
@@ -3875,10 +4371,10 @@ procession still opens on a **re-scout**, never on an assumed next.]
 | 29 | W-ROUTE-MOTION | Φ5 | ⊕⁴⁴ **LANDED 2026-08-05** at `39deaf51` ~~UNSTARTED~~ — the typed grammar given a SUBJECT: `motion/route/routeGrammar.ts` names four classes and the spring row each binds (`route`→`present` · `zoom`→`panel`, whose intrinsic +4.2% peak IS the landing bloom · `lateral`→`dock` · `collapse`→**no spring**, §7's bezier on the exit reader of the row it reverses), minting no figure; mirrored into `motion-registers.css` as a fourth register family under a drift arm; `routeTransition()` on `/motion-core` names the ONE participating window + its label and types the transition. π live: inhale 1→1.57 @42ms · group 450ms on `--spring-panel` · bloom +1.882%w/+3.280%h @63.3% · RECEDE −113.375px = 0.125×907lvb · lateral 180px/22.5px = **exactly 1:8** · both composited pairs sum to **1** in light and dark. TWO paint-only defects cured (the ×1.57 ghost held through the flight → the crossfade rides I4's 42ms handover; the held-CUT pair summing to **1.9** under `plus-lighter` → `gl-route-cut-in`, with the arm widened from the root pair to EVERY pair), plus the group clip (§9.6) and the `gl-route-chrome` persistent-chrome class. **A CURE ROUND then found the same defect one level up: an UNMATCHED window half — the demo's own rail-chip path, live at 1.900 (peak 1.9263 @42ms) — because a widened arm still reads pairs the grammar AUTHORS, not pairs the runtime COMPOSITES.** Cured in both halves: the mechanism declines to name a destination whose source named nothing (degrading to the conserved root cross-fade), and four per-type `:only-child` forks ride an irreversibly-named orphan on the ROOT pair's own keyframe and per-type clock. **Live, both directions, light and dark: `1.000000` at all 21 samples, worst deviation 0.** With it: the advertised constant detector made REAL (every stylesheet under `src/` + every module on the motion surface; it bit the plant its predecessor was blind to), the blur rationale rewritten (the FLOATING rung, 20px, IS the corpus figure; the top rung is 22px), `settleSeconds` taught that only a bare `Ns` is a figure so the collapse cell re-measures at the shipped **0.25s** rather than 0.12s, and four dead artefacts struck (`RouteChannel` + the `window` field + the hardcoded window selector + `CatalogLanding`'s unreachable key). Deviations: the 1.7-2× band REPORTED as 1.267/2.714/2.000 not hit · the +15% corner swell REFUSED (§9 item 4) · the 130ms lag expressed as an ORDER. Born-RED 22/27 pristine; 16/16 mutations bite; seats +0, receipt byte-identical (full receipt elided — quoted at RECORD §9). **VERIFY:** vue-tsc clean · `tests/styles tests/components tests/gates tests/composables` **194 files / 1421 passed + 3 expected fail** across two consecutive clean runs (the glob now NAMES the composables path, where 10 of the 27 arms live) · **full suite 213 / 1599 + 3** · ROOT-barrel public entries **63** unchanged, the `/motion-core` subpath taking **+15 names** (12 values + 3 types), stated rather than folded into the 63. **TWO DISCLOSURES.** (i) **RATCHET:** tarball **906,900** vs datum 903,382 — this row's own **+3,277** over ⊕²¹'s banked 903,623 candidate, **+3,518** over the datum — STATED, never rebound, **→ #66** per ⊕²⁰(d); `npm run verify:package` therefore stands **hard-RED on `G-BUNDLE-RATCHET`** and **the release path is left failing knowingly**, per the 4.0.0 close-lesson (*run `--run release`, not just `--run local`*). (ii) **ONE INTERMITTENT, recorded rather than re-run away:** the four-glob battery's FIRST run failed `tests/components/dropdown-menu.contract.test.ts` on a `setTimeout(…, 30)` focus assertion — load-sensitive, not route-motion (3/3 clean in isolation, 3/3 clean on a pristine `git archive HEAD` tree, and both quoted runs clean). Record: `docs/tranches/BK/execution/2026-08-05-row29-route-motion/RECORD.md` (`39deaf51`) — §3 the nine constants, §5/§5b the two paint defects and the cure round's C-1 α table, §6 the born-RED and mutation batteries, §7 the deviations and the ratchet, §10 the routed residue. **OWED: RT-29A** the G-NO-FLASH register bind → **#65** · **RT-29B** MOTION-CANON §1's panel peak POSITION falsified (the table says 53%; the emitted `--spring-panel` puts its 1.04211 stop at 63.265% and the live group reproduces 63.3%) → **#65** · **RT-29C** the popstate/router seam → **unclaimed** (a PRE-EXISTING boundary — HEAD gives popstate no transition at all — never a regression). | TR#29 → WAVES:654 (F06 re-scoped) + GF-DOCK R-D:257 + EXEMPLARS-CODEX #29 (I4 · I4b) | G-NO-FLASH (non-dock) — 27 arms across `tests/styles/route-motion.test.ts` (17) + `tests/composables/useRouteTransition.test.ts` (10); register BIND routed → #65 (RT-29A). R-D's dock ruling honoured literally: no library rule names a dock, held by a declaration census |
 | 30 | W-DISSOLVE | Φ5 | ⊕⁴⁵ **LANDED 2026-08-05** at `40d7b08f` ~~UNSTARTED~~ — the owner's vaporize BUILT: `.glass-vaporize` releases the backdrop in THREE channels on ONE clock (`glass/dissolve.css` + 5 keyframes + `--vap-saturate`/`--vap-blur`/`--vap-ink-blur` registered), sat:dim:blur = 1:1.36:1.72 spent as the keyframe STOP each channel LANDS on — 58.14% / 79.07% / 100%, each pinned from its landing to the end — out of ONE token (`--exit-overlay-duration`) with **zero durations minted**. The shared end-time is a hard constraint, not tidiness: reka's `usePresence` unmounts a presence-gated root on the FIRST `animationend` in its computed name list, so unequal clocks make the SHORTEST channel the element's lifetime (the cure's pre-state: the toast was torn out at **155.7 ms**, 62% of travel, cast still live and ink at 0.0687). All four amendments PAINT-VERIFIED **from the real dismiss-to-unmount lifecycle** (the shipped app, sampled on the animation's own `currentTime`, unmount observed by MutationObserver — never a paused scrub): transform-free (`none\|none\|none` at every sample) · blur leads the fade (peak 13.625px @ 23.32%, held) · the collapse dies at 40% with alpha **exactly 0.3000**, residue **0 by 80.08%** · the cast is gone at 80.08% while the backdrop is still releasing (`blur(0.445px)`) — **≈49.8ms ≈ 2.99 frames** against the arithmetic floor of 52.33ms ≈ 3.14. **Unmount at 249.0 ms** — full travel, no `animationcancel` on any channel. The panel's plate+rim+**cast** release from ONE keyframe (`box-shadow: none` interpolates any rung's stack). **A LIVE DEFECT WAS CAUGHT AND CURED MID-CUT:** the ink RESURRECTED (alpha 0 @ 79.1% → 0.556 @ 84% → 1.000 @ 100%) because css-animations-1 synthesises an implicit 100% keyframe from the UNDERLYING value — both channels pinned at 100% and a new arm holds it. The corner-affordance family lands with it (§3/O-10): centre ON the corner point, nudge measured **0.06510 × d** against §3's "~6–7%", flat opaque, no ring/shadow/glass, host `overflow: visible`, **LAW 13** bound (`transform-origin` = the mark's own corner). **U-27 DISCHARGED with no revival** — reveal.css's five `backdrop-filter` mentions are all prohibitions, the decongest is `filter`, and a second backdrop leg on the ENTRANCE would duplicate the mechanism the vaporize now owns. The five-dialect table ships EXECUTABLE (`dissolve/dissolveGrammar.ts`) with four dialects named-and-routed rather than authored consumerless. **The toast's queue release is wired to the recipe it actually runs:** `Toaster.vue`'s removal guard names the three vaporize keyframes (it named the retired `glass-reveal-out`, so `removeToast` was unreachable and dismissed toasts squatted `TOAST_LIMIT` slots until they EVICTED live ones — live pre/post: the survivor of four dismissals is evicted by the next toast, then survives it). **The reduced-motion contract is TRUE in paint:** the root owns its own PRM exit through the documented layered-`!important` escape (`§PRM-AUTHORIZED-SET` row **AUTH-3**, hashed) — under `reduce` it ran `glass-reveal-out-reduced` at `1e-05s` with the backdrop pinned at rest (the surface simply vanished); it now runs the same three material channels at `0.25s` and lands `blur(0px) saturate(1)`, ink `0`, cast `none`. The transform neutralisers carry the four `data-side` co-selectors so they OUT-RANK `.glass-reveal[data-state="closed"][data-side=…]` (0,3,0) instead of losing to it. Born-RED `[]` on the pristine tree, receipt taken from the census arm EXTRACTED (the shipped suite reads its stylesheets at module level and cannot run against a tree the partial is absent from); **16 + 9 mutations planted, 25 BITE**, files restored byte-exact. Seats **+0** — the gate cell names none; arms file as close-battery rows against G-COARSE-TARGET/G-SCRIM-NO-BLUR-adjacent standing seats. Verify: vue-tsc clean · `tests/styles tests/components tests/gates` 154 files / 1216 passed + 3 expected fail, **two consecutive clean runs** · full `npx vitest run` 214 files / 1622 passed + 3 expected fail · receipt byte-identical (`seats:60 … bound:8 … unbound:50 … violations:0`, `rosterSha256:dc05df91`). ONE intermittent disclosed: `dropdown-menu.contract.test.ts`'s `setTimeout(…,30)` focus assertion under build load (3/3 clean in isolation) — #29's known one, not this row's. **CURE-REQUIRED at adjudication, CURED in the same cut** (CURE-1 one end-time · CURE-2 the queue guard · CURE-3 the PRM exit + AUTH-3 · CURE-4 the neutraliser specificity · CURE-5 the record corrections; `FRAME_MS` single-sourced to `motion/core/constants.ts`). Record: `docs/tranches/BK/execution/2026-08-05-row30-dissolve/RECORD.md` (§10 is the cure) | TR#30 → WAVES:662 + O-10 + CWT F-11 | —(after #26, satisfied at `d27ec5dc`; **seats +0**) |
 | 31 | W-A11Y (≡BAND-A11Y five) | Φ5 | ⊕⁴⁶ **LANDED 2026-08-05** at `72105fc4` ~~UNSTARTED~~ — census first (10 of 21 items already satisfied at HEAD with traces; 5 subject-gone or another row's; **11 live and built**), then the one class the band named three times without connecting: a contrast figure nobody could check. **Ink polarity is now DERIVED, never chosen** — the ink is whichever polarity measures higher against the tone's own authored value, and **no hue moves**; **five of eight** button tone/ink pairs were sub-4.5 and **four of five cure by ink flip alone**, onto the warm ink warning already spoke (success 2.21→7.60 light / 1.58→10.21 dark, info 3.49→4.82 / 2.36→6.82). The ONE tone with two jobs — `--destructive` is error ink AND destructive plate — was lifted to `oklch(0.702 0.184 27.5)` (the light arm's own hue) because its prior lift was sized against a **transposed pair**: the comment claimed 4.60:1 over `--card`, which is the *reciprocal* ratio; the real figure was **3.67**. Now 4.85 ink/card · 6.88 ink/page · 6.08 plate. **Seven adjudicated cures rode the cut, one clause each** — the badge literal · the struck premise · the minted `2.5` → computed **2.65** with the harvester widened to a two-decimal LAW · `light-dark.css` ENROLLED in §5 (**11→34** held claims) · `7.88`/`7.43` struck to **7.89**/**7.41** · born-RED re-measured ONCE on the pinned method · the stale `dist/` quote re-captured after the both-axes fix. The flip then exposed the ONE hardcoded plate in `src/components/` — `badge/index.ts`'s `dark:bg-[hsl(0_70%_45%)]`, which outranks `bg-destructive` while still wearing `text-destructive-foreground` and so took the new ink on a plate sized for the old: **4.74→2.98**, PASS→FAIL. Literal **DELETED**, the dark badge tracks the token, and live `.dark` paint reads **2.97 → 6.09, FAIL→PASS**, identical to the digit in **BOTH dark paths** (the class arm and the `light-dark()` arm) — §4's LOCKSTEP confirmed in paint, not only in the bytes; the token-gate blindness it exposed routes as **RT-31G → #65** rather than widening §1 in-row. `--control-ring` 12%→**50%**, alpha **derived by sweep** (5 surfaces × 2 arms, floor 48%) against the 1.28:1 it shipped. **Nine false claimed figures struck in place** with dated brackets, and one figure this row itself minted (`off-white 2.5`, computes **2.65**) corrected before shipping — it hid because a two-decimal harvester cannot see a one-decimal claim. **ONE gate, five tables** (`contrast-computed.test.ts`) **absorbing and deleting** `placeholder-contrast.test.ts` per §Gate posture; §5 now holds **thirty-four claimed figures across all four gate-read token files** (**11→34**; `light-dark.css` ENROLLED — the enhancement arm a @supports-split engine actually paints), both polarities of every tone, and demands two decimals; §6 bites the engine (composite proof, throws not skips). `G-KEY-SCOPE` cured with **one predicate for both input modes**; `G-FOCUS-VISIBLE` — the band's "no rule of any kind" premise was FALSE and the truth was stronger: the trigger's only rule was `outline: none`, an **active UA-ring suppression (2.4.7 by commission, not omission)**, now DELETED and replaced by the library's first **inherent** ring, enrolled in the forced-colors restore it could not inherit; W2-E ends the slider's two definitions of "focused". **W2-F: ⊕⁷ honoured exactly** — the slider is EXONERATED (no thumb exists on the standard recipe; 2.5.5's 44px overruled and gate-forbidden), the measured rung is the one that already cleared, and the honest remainder (sm 12 / md 20 px, derived from the bytes) is floored to **24** with a self-limiting `max()` on **both axes**, since the vertical rung's narrow axis is INLINE — caught live, not in spec — with `--slider-touch-target: 1.5rem` **DECLARED** in `tokens/sizing.css` beside the 2.5.5 floors rather than left as a fallback literal (#20's class, not minted here). O-8 struck at both sites; W1-E skip link built onto the shell's one focus path; W1-F two skipped levels cured with no paint change. Born-RED **68/97**, re-measured once with the METHOD PINNED in the RECORD (whole-tree `git archive HEAD` mirror, shipped batteries, node v26.0.0 / vitest 4.1.10, JSON reporter, two identical runs); **23 mutations, 23 BITE**, restores byte-exact from scratch copies rather than `git checkout` — and the seat's **ONE fence breach is DISCLOSED, not buried**: a `git checkout --` during the M20 restore, in a shared tree holding an uncommitted cut, whose bytes were reconstructed and verified, the scratch-copy restore now §8's stated law. **PAINT-VERIFIED paired in the shipped bundle, both arms**, every figure within 0.01 of the arithmetic (a first cell was captured, read and DELETED for inheriting the wrong token scope). Verify: vue-tsc clean · 158 files / **1296 passed + 3 expected fail** three consecutive · full **219 / 1714 + 3** · receipt **byte-identical** (hash elided, §10 holds it), **seats +0** — the **four A11Y seats are ARMED**, all four pre-existing §B.5 at `binding:"none"` and now carrying live detectors under their own names, the re-bind routed **RT-31A → #65**; the one intermittent is **measured** at pristine HEAD at the same 2/6 rate and is #29's known one. Record: `docs/tranches/BK/execution/2026-08-05-row31-a11y/RECORD.md`. OWED: RT-31A seat re-bind → #65 · RT-31B → #47 · RT-31C → #58 · RT-31D → #61 · RT-31E Safari → #10 · RT-31F → #33/#34 (α-order by ABSTENTION) · RT-31G painted-literal detector → #65. | TR#31 → ECOUTE §3 + BAND-A11Y + O-8 | G-COARSE-TARGET · G-CONTRAST-COMPUTED · G-FOCUS-VISIBLE · G-KEY-SCOPE; W2-E/F wave-internal ordering |
-| 32 | W-TABS | Φ5 | UNSTARTED | TR#32 → CWT §TABS + FROST T-A..T-C | G-TABS-SEAM; π cells re-run AFTER #22's F-1/F-3/F-4 (T-C); #71 executes inside this cut |
-| 33 | W-ALERT | Φ5 | UNSTARTED | TR#33 → CWT §ALERT | G-FEEDBACK-TINT-SEAM; hard fence: G-FROST-TRANSMISSION green first; R-3 neutral glass + status ink |
+| 32 | W-TABS | Φ5 | ⊕⁶⁹ **COMPLETED 2026-08-08** at `74ecde5a` ~~UNSTARTED~~ — the family's two engines become one, and the headline is the defect the second engine hid. **ONE INDICATOR NODE, BOTH MATERIALS**: the underline rendered ZERO indicator elements (`v-if="!isUnderline"`) and drew a `::before` position-anchored to `[aria-selected]` — so under `semantics="toggle"` no `anchor-name` was ever minted, `anchor()` was invalid at computed-value time, and the rule collapsed to a zero-width box: **the paper strip had no indicator at all on that semantic, and its `@supports not` arm was a static border standing in for a dead primary.** Now the measured node IS the mark — the pill fills it (`glass-capsule`), the underline draws its edge (`paper-ink-mark`, which this makes the register's FIRST real class consumer after a lifetime of asserting "≥2 consumers at birth" with ZERO). **ONE STATE SEAM**: `[data-active]`, presence-gated, both semantics — the drag bootstrap had keyed `[aria-pressed="true"]`, which a `role="tablist"` strip never emits, so the liquid tab was silently dead on every tabs-semantic mount for as long as it shipped. ARIA untouched: it is the accessibility contract, not the paint hook. **THE EYEGLASS IS THE DEFAULT, NOT A THIRD VARIANT** (#71 executes inside this cut): span 1.6 ceiling · 2:1 lead from ONE `transform-origin` · 1.22 swell · `overflow: visible` as the organ's stated licence · well→dome polarity inversion on the envelope clock · boundary clamp REPORTED not silently floored · the commit cascade at rank +6 = 100ms, the frame reconciling the ladder with the measured band. **THE TOOLTIP FORK DELETED** — nine duplicated attributes and a three-prop slot that could diverge, gone with `SegmentedTabOption.tooltip?`; a tab whose label needs an explanatory tooltip has the wrong label. `--tab-blob` RETIRED whole (the `@property`, the `--tab-indicator-blob-max` token, the composed-area fence that existed only to keep two multiplying scalars from arguing). Gate **G-TABS-SEAM executable, 26/26**, five arms each convicting a defect rather than describing what shipped; both source-scanning arms strip comments FIRST, and the arm proves that strip load-bearing. seats **+0** (the seat is EXECUTABLE but deliberately NOT BOUND — the receipt is pinned byte-identical and the file is untracked; C-10-shaped, routed to the driver). Battery at the banked expectation, **ZERO added**. **THREE DOC-TRUTH STRIKES the code forced**: the tabs README was the declared "SOURCE OF TRUTH for the indicator mechanism" and described a reciprocal-squish law plus a `--tab-blob` channel that no longer resolve anywhere, credited a `useTabIndicator` composable **that does not exist and did not when the paragraph was written**, mapped `constants.ts` + `composables/ useTabIndicator.ts` (**neither on disk**) while omitting `styles/` (**both files on disk**), and cited three `proof:*` gates against a `package.json` whose `proof` count is **0**; handmark's three-underline fence named the math-paper rail a `.paper-ink-mark` consumer that composes nothing; the demo told the reader the hairline "SLIDES (a hairline does not squish)" when `deform: "mark"` lengthens it. **ONE CHARTER ITEM HAS ZERO BYTES AND IS SAID SO RATHER THAN INVENTED**: "dispersion rims" — the rim tokens are achromatic in both legs — ROUTED to #22 / #71's ruled specular-strip substitution (SE-5 kills C1's `armGlassRefract` path), with #32 the first consumer. record `execution/2026-08-08-lane32-completion/RECORD.md` | TR#32 → CWT §TABS + FROST T-A..T-C | G-TABS-SEAM **EXECUTABLE 26/26 at the cut, seats +0, DELIBERATELY UNBOUND — binding rides C-10 (RT-32B)**; π cells re-run AFTER #22's F-1/F-3/F-4 (T-C) → **#10**; #71 executes inside this cut (and #71's 9/2 `useSelectionGroup` share rode THIS commit — the ⊕⁶⁹/⊕⁷⁰ attribution inversion) |
+| 33 | W-ALERT | Φ5 | ⊕⁶⁷ **LANDED 2026-08-08** at `76bfae26` ~~UNSTARTED~~ — **R-3 obeyed literally: the tinted PLATE is not built** — no arm composes `.feedback-tone`; the four `feedback-tone-<name>` registers bind `--tone` and it is spent on glyph + ink over ONE neutral `.glass-quiet` rung. Four `--feedback-tone-rung` re-points + five `--glass-blur-wash` binds DELETED with the hand-rolled plate (`relative`/`border`/wash-bg/wash-backdrop are deletions, not substitutions). **The seam fix outlives Alert**: `.feedback-tone`'s mix base → `var(--glass-veil, var(--feedback-tone-rung))`, so the rung's clamp/ink/`--glass-level` survive INSIDE the tint — lands on **Toast**, the register's one remaining plate consumer, in the same byte. **Charter-token correction stated**: `--glass-plate-tinted` has **0 hits** in `src/` at this HEAD; successor is `--glass-veil`, the nestable plate VALUE `@utility glass-plate` publishes (`glass/veil.css:35` names a tone-tinted feedback panel as its intended consumer). **`G-FEEDBACK-TINT-SEAM` SEATED 3/3, `seats:60` UNMOVED** — pre-existing seat (`gates/ROSTER.md:25`, `SEAT-BINDING.json:264`), nothing minted, `rosterSha256:dc05df91 violations:0` character-identical. **A-5 closes by the CONTENT-TIER `:where()` (`ladder.css:199-209`, `.glass-quiet` → `--on-glass-muted`), not the `-strong` tinted arm the charter predicted** — which falsified three committed comments, struck in place dated (`ladder.css:217` · `index.css:108` · `button/styles.css:27`), plus a header bracket on `feedback-tone.css` itself. **Breath = `.liquid-enter`** (0/0/0 in 77 LOC cured at the ARRIVAL, zero JS, own reduced-motion arm) + `[--glass-specular-intensity-hover:0]` killing the false hover affordance on `role="alert"`; rest material-only, idle axis still W-IDLE-BREATH's. **Type ladder de-inverted**: `--control-text` off the root, both steps on the content scale — **1.00/1.50 by pointer class → 1.143 floor / 1.134 @1440 at both** — and **`line-clamp-1` STRUCK**; locked by a no-slot row into `tests/styles/typography.test.ts`. Radius parity per E26 already stood (`rounded-card` 16px), gated foreign by `G-RADIUS-ROLE` (`radius-role-canon.test.ts:472`, green). **π OWED, staging LANDED**: cells 5–7 are unpayable on `/feedback/alert` (substrate σ 1.17–1.69, HF 0.003 — a 1→7px blur is invisible), so five specimens + a nested floating-host cell ship on `/substrates/glass-material`, the one route with `useGlassBackdropLuminance` wired outside the dock; DELTA JSON amended — under R-3 the five arms are byte-identical in `background-color` and the light/bright-bucket delta is read on the ONE plate. Verify: `vue-tsc` 0 · **2 failed \| 1543 passed \| 5 expected fail** (#66 + #85, boot-graph's `63 modulepreloads / 477311 B` byte-identical to the pre-work run) · build EXIT 0 · `demo:dist:build` EXIT 0 · `regen-exports` EXACT. Record: `docs/tranches/BK/execution/2026-08-08-lane33-completion/`. **ROUTED**: `--feedback-tone-rung` zero-writers keep-or-delete → **#21 W-DAG-REDUCE** (gated hard on #17) · `ToastTitle.vue:14` weight collision, named · `G-NO-WHITE-SPECULAR` vs `--glass-material-rim` → **W-FROST** · `class-names.ts:141` role-radius blindness → **W-RADIUS-ROLE** · WebKit cells 8–9 → the `@supports color-mix` delete | TR#33 → CWT §ALERT | G-FEEDBACK-TINT-SEAM SEATED; hard fence G-FROST-TRANSMISSION DISCHARGED (green on #22's ⊕³⁵ seal); R-3 neutral glass + status ink |
 | 34 | W-TOAST | Φ5 | UNSTARTED | TR#34 → CWT §TOAST | —(after #33) |
-| 35 | W-SLIDER | Φ5 | UNSTARTED | TR#35 → CWT KEEP·AMEND + FROST S-A..S-E | G-SLIDER-INSCRIBE (acceptance, conditional C-13); S-B split with #22; `glass-scrubber` rename at the cut; ⊕² loupe constants CONFIRMED (k-band [1.15, 2.60] · V0 900 px/s · τ 100 ms) with the `--flex-vel` provenance rider; device cells → #67 |
+| 35 | W-SLIDER | Φ5 | ⊕⁶⁸ **LANDED 2026-08-08** at `9b4c15d8` ~~UNSTARTED~~ (with the `f8642704` #40 rider at its head) — the paint leaves the SFC for **THE ONE SLIDER LANE** (`components/slider/styles.css`, 481 ln, **unlayered on purpose** so it outranks the `@layer components` well+fill registers it composes; `@import`-ed at `styles/index.css` with its §17c manifest entry), `Slider.vue` **850 → 368**. **CURE-1, THE HEADLINE — THE LOUPE'S FOCUS PULL WAS DEAD IN PAINT**: `.glass-loupe-clone` blurred on `var(--flex-vel, 0)`, but `--flex-vel` is `@property`-registered `inherits: false` / `initial-value: 0` (`property-regs.css:109-113`, and the registration says why — one element invalidated, never a subtree) while `useDragVelocity`'s mirror reaches the **lens**; on the CHILD clone it resolved to the registered initial, never even reaching its own `, 0` fallback, and computed **`blur(0px)` at every velocity, always** — a ⊕² ratified constant (the ~120 ms pull) proven-live-DEAD, green in every battery. Cured by publishing that substitution **under a name on the lens** (`--loupe-vel`) and reading THAT on the clone: one measurement, one writer, one pole, carried one level down. `--loupe-k` was never affected and that is not luck — an UNREGISTERED property substitutes on the element that DECLARES it. **CURE-2**: `--loupe-scale` was a literal wearing a token's name (zero declarations in `src`/`demo`/`tests`), which the file's own opening law forbids twelve lines in — the ratified **0.13** is written as a constant. **CURE-3**: three artefacts asserted a spectrum loupe that **cannot mount** (`graspable = variant !== "spectrum"`) — the `[data-variant="spectrum"]` clone rule, the `:data-variant` bind whose only reader was that rule, the always-true `v-if="graspable"`; all struck, and the loupe is **NOT opened**, because `grasping` is lowered by the grasp carrier's own `transitionend` and a spectrum mounts **no carriers**, so the vertical spectrum **this very cut demos** would strand it open forever (**RT-35A**, grounds written INTO the file where the next seat meets them). **CURE-4**: four cross-references the file-move falsified, struck in dated brackets (`glass/grasp.css:54` · `tokens/sizing.css:564` · `theme/radius.css:253` · `a11y/coarse-target.test.ts:72`, now interpolating `${SLIDER}` so it can never go stale again), plus a **gate-honesty** fix — `glass-subtlety.test.ts`'s `toContain("Slider.vue")` would have been reading STRUCK TEXT and calling it doctrine. **MUTATION M1 bites**: **1 failed \| 35 passed**, restored from a scratch copy byte-exact by sha256, green at 36/36. **SEATS: MINTED ZERO** — `G-SLIDER-INSCRIBE` owes none (`BAND-FOLD.md:293` CUT it, absorbed by `G-COARSE-TARGET`), and CURE-1 banks its ANALYTIC proof rather than a contrived one-property detector. Charter discharged on disk before a byte: the 621-LOC carve · `glass-scrubber` (**zero** surviving `standard` in `src`/`demo`/`tests`) · the ⊕² loupe constants (k-band [1.15, 2.60] · `--s: 3` · 0.13 seed · exit 0.5× entry) · `--flex-vel` at V0 **900** through τ **100** · **S-C discharged BETTER** (the spectrum range never composes `.glass-liquid-fill` at all) · S2 hover-only 100% · A-10 `valueText` · A-12 the one forced-colors block. Verify (working tree): `vue-tsc` 0 · **2 failed \| 1543 passed \| 5 expected fail (1550)**, both routed (#66 + #85) · receipt byte-identical `violations:0` · build **EXIT 0** · `demo:dist:build` green · `regen-exports` EXACT. **PARTIAL AT HEAD — DISCLOSED, NOT PAPERED**: seven of the lane's own paths did not ride (`useDragVelocity.ts`'s `mirror` host · the three CURE-4 brackets · `coarse-target`/`glass-subtlety`/`typed-track-seam`), so at HEAD **`npm run typecheck` REDs** on `Slider.vue:85-89`'s `mirror` excess property against `UseDragVelocityParams:33-58` and three battery files still read a `Slider.vue` the paint has left; **vehicle ruling owed** (a completion rider or #65's batched cut). Record: `docs/tranches/BK/execution/2026-08-08-lane35-completion/`. **ROUTED**: **RT-35A** the spectrum loupe (a design row, not a completion item) · **RT-35B** the `inherits: false` descendant-read cohort (`--specular-x/y` · `--specular-intensity` · `--veil-x/y` · `--flex-vel` · `--cast-travel` · `--cast-spread` · `--vap-saturate`) → **#65** · device cells (entrance blur sweep under LAW 13's refocus clause, **not** an X-G(1) breach; the loupe's mask-over-live-backdrop P-MASK/P-NECK class) → **#67** | TR#35 → CWT KEEP·AMEND + FROST S-A..S-E | G-SLIDER-INSCRIBE (acceptance, conditional C-13) — **⊕⁶⁸: NO SEAT OWED, CUT at `BAND-FOLD.md:293` and absorbed by G-COARSE-TARGET; seats +0**; S-B split with #22; `glass-scrubber` rename LANDED at the cut; ⊕² loupe constants CONFIRMED (k-band [1.15, 2.60] · V0 900 px/s · τ 100 ms) with the `--flex-vel` provenance rider **and its descendant-read trap cured (CURE-1)**; device cells + the rendered focus pull → #67 |
 | 36 | ~~W-HAIRLINE~~ | — | RETIRED | TR#36 — SUBSUMED by #87 (J-3, disk-verified) | seat retired; row numbered so no citation dangles |
 | 37 | ~~W-SLIDER-TRANSPORT~~ | — | ⊕⁵ RETIRED-UNBUILT (SE-4) | TR#37 — phantom convicted (RECONCILIATION:85); spike precondition = research, barred | the transport gap recorded open at TR#37; #46 ungated; owner-revivable in a later tranche only |
 | 38 | W-DIALOG (cut 1) | Φ5 | ⊕⁴⁷ **LANDED 2026-08-05** at `b155ca4c` (+`abe006af`, π `5c87d46d`) ~~UNSTARTED~~ — the dismissal grammar replaces four knobs with **ONE axis** (`dismiss` = `free` \| `deliberate` \| `locked`), so every confirm-dialog and gate the library used to duplicate falls out of a rung rather than a component and **no `Confirm*`/`Gate*` symbol is minted**; `locked` refuses Esc AND outside-press and the refusal is **PERCEPTIBLE** — the wave's ONE mint, a ≤4px lateral **rebuff** on the PRESS row, **re-armable BY CONSTRUCTION** off an `a`/`b` parity rung, because CSS restarts an animation only when `animation-name` CHANGES. That is the exact latch **DLG-04 died of** (a scoped-CSS class over a PORTALED node, so `animation-name` resolved to `none`, the completion event never fired and the latch never cleared) — the two keyframe bodies are duplicated ON PURPOSE with the reason beside them. PRM keeps the REFUSAL and drops the GEOMETRY. **Proportion is NAMED RUNGS end to end** (24 room · 20/12 family · 12/8 body · 8/4 atom · a real 20px gutter at 393 · footer a row at EVERY viewport) with **the mobile arm authored NOWHERE** — `tokens/sizing.css` §1.1 is the ONE width-conditional spacing declaration in the library and steps every rung down exactly one at ≤768px, so reading the rungs transposes the whole plate for free; `--overlay-pad-*` and the ×1.272 block lift are gone from the dialog, √φ surviving one rung down as the TYPE interval (18.608 → 23.67, both the spec's own figures, DERIVED from ONE fluid value so the ratio holds at the clamp floor, through the fluid arm and at the ceiling). **G-DLG-ROOM's *"font-size identical at both viewports"* CORRECTED IN THE EXECUTABLE with its falsifier** — `--type-body` carries a vw arm and cannot be identical across viewports by construction, so the gate asserts P2's actual content: no type rung appears in §1.1's transposition block. Concentric inversion cured by DELETING `field-control.css:46-48` (a roled child never takes the relay). The ✕ rebuilt DOM-FIRST at 44×44 with three genuinely distinct states and a real focus outline, replacing an `outline: 3px none` that painted nothing and a blanket `opacity-70` that compounded every state into one wash. **THE STAGE DELETED IN TOTO** — `[data-stage-wrapper]` had ZERO receivers repo-wide and ~150 lines drove one attribute for nothing **with prose asserting the opposite**, a masking fallback with a comment; `dialogStageContext.ts` deleted, drawer's `[data-stage-flip]` rule left with its only writer and three `:not([data-backdrop="graded"])` guards left with the prop that was theirs — drawer's paint **byte-identical**. **`sheet/` SEEDED as its own component** (the eleven `isCenter` branches now unconditional; `placement.css` + `sheet-motion.ts` deleted; `_shared/overlay/` NOT minted, that is #89's), **five CSS lanes → ONE**, and `DialogTrigger`/`DialogClose` re-export reka's primitives directly. **Both scrim `backdrop-filter` legs deleted on a MEASUREMENT, not a preference** (`ModalOverlay.vue:83` + `DrawerOverlay.vue:44`) — a wash blur pulls bright neighbours into every sampled pixel, so the "backdrop" measurably **BRIGHTENED** what it occluded: +5.1% core / +31.3% below-plate in light, **+76.0% in dark**; no α is minted here (that byte is the scrim register's) — **RT-30F DISCHARGED in full**. **RT-18C DISCHARGED**: `compositions/gate-pattern.vue` (201) + `feedback/confirm-dialog.vue` (265) deleted with their manifest rows and the `dialog.confirm-preset.test.ts` fixture retired, `/containers/dialog` rewritten around the three `dismiss` rows — manifest `s(` rows **83 → 81**, **π story-index route delta −2**. **THREE REFUSALS, each with a falsifier rather than a silent drop:** `--radius-dialog`'s re-point → **RT-38A/RT-38B → #65** (two ACTIVE register seats state the card bind BY PREDICATE, so repairing them moves `rosterSha256` — the ONE batched pin `gates/ROSTER.md:53` reserves to band close, which #18 already refused to spend for this class; the SURFACE takes the room rung directly and the receipt stays byte-identical) · DLG-10's eight boundary legs → **RT-38C**, the glass lane (they live on the SHARED `.glass-floating` tier, so cutting them here repaints every floating surface and breaches one-owner-per-file; §9 already assigns them) · the `./sheet` package subpath → **RT-38D → #65**; and the focus veil **SURVIVES — as a PARAMETER, not a deletion** (C2). **The boot-graph ceiling was BUSTED MID-CUT AND CURED, NOT RAISED** — splitting one component into two split its rollup chunk and the demo shell eagerly mounts both: **61 modulepreloads against a hard 60**. Two candidate cures were measured and REJECTED ON THE NUMBERS (`defineAsyncComponent` at either shell site made it WORSE, 65 and 68; deep-importing the barrel changed nothing); the cure that worked is inlining the ✕ glyph so the icon module leaves the eager graph of every Dialog consumer — **61 → 60, ceiling untouched**. **2 gates authored, close-battery class, seats +0** (`dialog-room.test.ts` 15 clauses · `dialog-dismiss.test.ts` 9), **22 of 24 born-RED** on a pristine `git archive HEAD` tree with the 2 pre-green named as standing locks, and made to red PER CLAUSE — a module-scope read turns a missing file into one load error and *"no tests"*, which is ABSENT under the ⊕²⁵ vocabulary, not RED. **CURED IN THE SAME CUT after a CURE-REQUIRED adjudication (C1…C6).** **C1 was the blocker and it is the lesson: the row's verify battery could not see the tests the row broke** — four RED in the live tree outside `tests/styles tests/components tests/gates`: `tests/demo/skip-link.a11y.test.ts:75` still named `gate-pattern` (**#31's own W1-F gate, landed two rows earlier**, ENOENT on this cut's story deletion), `demo/shell/dock-layer-contexts.ts:363` still carried the dead `{ storyId: "gate-pattern" }` registry row the manifest cut had missed, and `tests/public-surface.spec.ts` was RED twice (the root barrel now exports `SheetContent` and the literal key list did not — **not RT-38D's byte: that routes the `./sheet` SUBPATH, the root key is this row's own** — and `dist/` still shipped `components/dialog/placement.css` because `npm run build` was never re-run, only `demo:dist:build`). All four cured, `dist/` now carrying `dialog/styles.css` + `sheet/styles.css` with **0 hits for `placement.css`**; **RULED and now this row's own law: a cut that deletes demo stories or touches the root barrel verifies on FULL `npx vitest run`.** **C2: the unconditional focus veil was painting a ~640×640 frost pool at the viewport centre behind every SIDE SHEET** — `ModalOverlay` is the scrim for BOTH surfaces and the veil's core is the FIXED `--glass-focus-veil-core-x/-y: 13rem` at a 50% rest, measured live against a 384-wide sheet at `x 1056` of a 1440×900 page; slide-gating could never have saved it, since the SHEET is the arm that sets `slideT` and the centre path leaves it `null`. The veil now takes an **explicit `veil` boolean** with `DialogContent` its ONE passer and the reason written at both call sites — **PAIRED PAINT, both cells banked**: PRE present at `0,0,1440,900` with `blur(20px) saturate(1.5)`, POST **ABSENT on all four sides** with the dim untouched and the centred plate unaffected on all three `dismiss` rungs. **C3: the RECORD's own false sentences struck in place with dated brackets** — §10's *"no 20px halo blur"* was the load-bearing half of the §STRIKE supersession and is FALSE (`getComputedStyle(veil).backdropFilter` measures **`blur(20px) saturate(1.5)`** via `tokens/glass.css:142` → `:88`, precisely the value `MOTION-CANON.md:95`/`:248` STRUCK in favour of **11px** against its own ≤15px budget band — measured here and routed with the pool-vs-plate geometry as RT-38C, not cut in another owner's file); §2 item 7's *"Entrance UNTOUCHED"* corrected to **curve intended-identical, MECHANISM CHANGED for 100% of consumers** (the spring armed only when `springPreset != null` and `springPreset` had ZERO passers in `src`/`demo`, so every real dialog took the CSS `.glass-reveal` bloom), making **P14 load-bearing**; §0's #22 ground struck to **SEALED at ⊕³⁵, not IN-FLIGHT at ⊕³⁰**; and the ✕'s **1.08 vs §3.3's 1.05** disclosed with its ground (`--scale-hover` is the house rung, §3.4's named `--scale-hover-btn` does not exist in the tree, and minting is forbidden at this row). **C4: the spec-owed origin-rect seam SHIPPED** — `Dialog.vue` declares `origin?: DOMRectReadOnly \| null`, one prop-shaped hole exactly as CWT-2:280/§4-ADD words it, withheld from the reka forward set so a rect can never stringify onto the DOM, its doc-block stating plainly that nothing reads it and that it leaves with the refusal if row 37 refuses the fold. **C5: the 44px ✕ collided with the title and no gutter was reserved** — DLG-03's cure tripled the collision zone from 16px to 44px while adding no reservation; the header now reserves `calc(var(--touch-target) + var(--space-atom))`, `:has()`-scoped to the plate that actually renders a ✕, and live it measures **52px reserved, title 470 → 418 wide, an exact 8px gap to the glyph**, a long title wrapping 42.5px clear, with `deliberate`/`locked` at **0px** and the full 470px width. **C6: five false-prose sites** cured (`components/index.ts:25` · `_shared/axes.ts:44-46`/`:54` · the **user-visible** `demo/stories/containers/sheet.vue:38-40` "placement prop" → `side` · `public-surface.spec.ts:77` · `focus-veil.test.ts:19`'s render-detector cite). **π-38 RUN at `5c87d46d` — 11 PASS · 3 FAIL-DISPOSITIONED · Safari receipted** (`cells/PI-38.md`, 18 cells): P9 exit sync max \|Δop\| **0.0000** over 14 in-flight samples, plate and scrim last mounted at the SAME 40ms sample, **0** post-unmount scaling samples · P5 three consecutive refusals, names `b→a→b`, each a fresh run · P4 44×44 both viewports, 4/4 ±14px HIT, 4 states all Δ>0 · router census **81** off the live router, the **−2** confirmed against the manifest · **P14 parity HOLDS vs the cut** (`b155ca4c` touches no file on the entrance path) **with a finding: the toast was NEVER the `present` row** — it rides `--spring-panel` **byte-exact** (Δ 0.000000000 over 50 stops, peak 1.04211 at 63.265% of 450ms) while `present` is monotone at 200ms and its own register comment names *"a menu, plate, toast, or orb"* → **RT-38G the register mis-naming → #61**. The three FAILs are DISPOSITIONED, not waived: **P6** the C5 gutter computes **48 at 393** (`--touch-target` 44 + `--space-atom` 4), off the 4·8·12·20·32·52 series and on-series at 1440 only by coincidence — taken as the sizing §1.1 **STATED EXCEPTION** for touch-target-derived geometry, the claim scoped at `sizing.css` and at the site · **P7 dark** sign-INVERTED, a bright rim at a local **maximum** +0.0347 one pixel outside the plate at all four heights while light holds its border minimum — **rides RT-38C** with the count · **P10** measurement DELIVERED (−73.0/−73.3% light, −63.7/−65.4% dark, chroma kept 61.4-79.0% — the scrim dims, it does not grey) and the criterion failing on dark text-behind at **2.450:1**, which the leg's own text hands to **§9's wave** as the α conflict to settle. **P8** passes on the ink-identity arm alone (the ink IS `--foreground`, byte-for-byte) with the first arm recorded live-failing in light at **3.295:1** off the painted plate — *lower* than the `3.92` the file attributed to the muted ink it replaced, a token-arithmetic figure that had never met the paint, **corrected at the site**. **P15 Safari NOT run**, receipted as such rather than substituted. **DRIVER RULING at this landing: #22 is SEALED at ⊕³⁵**, which discharges the fences cited for skipping **#32** (its T-C fence is an intra-cut π-ordering the seal satisfies), **#33/#34** (`G-FROST-TRANSMISSION` green) and **#35** (#22 authored the S-B rung) — all four are **selectable**. Verify **FULL, per the row's own law**: `vue-tsc` clean · **`npx vitest run` 217 files / 1727 passed + 3 expected fail**, two consecutive clean · narrow battery **156 / 1310 + 3** on five clean runs · `npm run build` + `npm run demo:dist:build` green at **60** modulepreloads · receipt **byte-identical** (hash elided, §4 holds it), **seats +0** · **4 cure mutations planted, 4 BITE**, every target restored **from a scratch copy** and re-hashed byte-exact, never `git checkout` (the tree is shared). ONE intermittent disclosed and NAMED: `dropdown-menu.contract.test.ts:118`, **#29's known one**, 2/7 under full-suite load and 12/12 green on three isolated runs, already measured at pristine HEAD by row 31 at the same rate. Record: `docs/tranches/BK/execution/2026-08-05-row38-dialog/RECORD.md`. ROUTED: RT-38A/RT-38B/RT-38D → #65 (one batched `rosterSha256` byte at band close) · RT-38C → the glass wave (#86/#22), grown by the 20px-vs-11px blur breach, the 640×640-vs-512×276 pool geometry (2.32×) and P7's dark rim · RT-38E two dangling `placement.css` provenance cites → same lane · RT-38F the zero-importer `src/components/index.ts` barrel → #19 · **RT-38G** the `present`/`panel` register mis-naming → **#61** · RT-30D + RT-30G → #39 · **RT-30F DISCHARGED** · P15 Safari owner-gated. | TR#38 → CWT-2 :170-385 | 2 minted, close-battery class; G-SCRIM-NO-BLUR surface (BJ row 93 findings absorb here, PORT §2.2) |
@@ -3902,7 +4398,7 @@ procession still opens on a **re-scout**, never on an assumed next.]
 | 58 | W-PREVIEW-CARD · W-STORY-TAXONOMY · W-STORY-PROPORTION | Φ5/6 | UNSTARTED | TR#58 → WAVES:737/:768/:773 | G-TILE-COVERAGE · G-ONE-NAME (+B5 arm); live-tile band (4 vs 124); #73 executes in this chassis |
 | 59 | W-LAYOUT | Φ5/6 | ⊕⁵⁴ **LANDED-IN-PART 2026-08-07** at `80f3455f` ~~UNSTARTED~~ — The chassis spine. **SHELL GRID**: `h-screen` + flex + the inner wrapper all three deleted for `"rail main"/"rail dock"` at **`100dvh`**; the dock is an in-flow ROW, so `scroll-padding-block-start` dies and occlusion is impossible by construction — **dock below the fold on 0 of 92 routes @390, shell exactly `100dvh` on all 92**. `scroll-padding-inline-start` KEPT and CONDITIONED (its record ties it to the rail's transient fan; the §9 probe is owed). **SEAT LAW**: `(width > 48rem) and (orientation: landscape)`, strict `>`, `+ (height <= 30rem)` sheds the dock. **FOUR MEASURES** in a new `demo/chassis/layout.css` (140 ln), each with its derivation; `--article-max` = 2× the seat threshold. **CEL FIELD** replaces flex-col — **76 of 92 story pages were `display:flex` (1-up everywhere); 80 of 92 now render >1 track**; `StorySection` gains the one new API `span?: "cel" \| "full"`. **LADDER**: six `:root` rungs, ONE `@media (width <= 768px)` arm, gate-asserted as the only width-conditional spacing block in `demo/`. **K4 was worse than specified** — `--story-article-w` is declared nowhere on disk, so every ordinary story had NO article cap. **TWO DEFECTS THE PAINT FOUND**: §4's binding 852×393 cell was derived against an 88px rail against a real 99px one and fell to 1-up by **three pixels** (rail rung `--sp-3`→`--sp-2` → **2-up, 2 × 338.56px measured**); and `contain: inline-size` zeroes a container's min-content, which **collapsed StorySection to 0px in a flex row** (`/data/search` measured `w:0`) — cured by ONE chassis `min-inline-size: min(var(--measure-cel), 100%)`. **K18 NOT DECLARED, and that is the finding**: no inline-size container exists in either target rail's ancestry, so the wrap-arm could never match — routed with its subject. KILLED: `max-w-6xl` ×2 · both landing grids + `sm:col-span-2`→`data-span` · 5 chassis clamps (the 4 CatalogLanding ones were ALREADY GONE) · the off-series pad/gap maps, props kept · `responsive` on the family switcher → mounted strip in `<FadingScroll>` (load-bearing: 458px strip in a 350px column) · the sortable-list wrapper · 2 story medias ARM-INVERTED to `@container`, numerals unchanged · 4 of 7 raw-`vh` onto one `--stage-block` · three `max-w-*` literals onto the measures. **PAINT DELTA-CAPTURED against a live `git archive a025d99f` tree**: every §4 prediction confirmed — 768 the cured B1 cell, 2560 **exactly 4-up at 369px** with frame symmetric **38.1%** vs G3's 42%, 1440 3 × 416px; **zero page-level horizontal overflow on all 92 routes @1440**. π NOT CLAIMED — Chromium structural only; §9's battery owed to #10. **Gates seats +0, receipt byte-identical pre/post**; the 4 LAYOUT seats stay ABSENT (C-13 is #9/#65's) and `tests/styles/layout-canon.test.ts` sits under them, **23 cases + 3 `it.fails`, born-RED RUN not asserted (23 failed at the pre-cut bytes)**. Verify vue-tsc 0, suites at the pre-edit baseline (12 foreign failures), +23 passed +3 expected-fail row-own. ROUTED: K7's triage (**73 hits / 33 files** re-derived at adjudication; chassis+shell at 0 behind the one enumerated exemption) → #59's remaining half, ORDERED behind the container this cut creates · K10/K14 + K15's last 3 `vh` → #59 behind the lanes holding those files uncommitted, all three held RED by `it.fails` · §9 → #10 · §11 LIB-SEAM → #76 · `/motion/deck` @390 → #40 · four in-cel density overflows → #56. Adjudication: single-challenger under the org spend wall, driver-ruled, 0 code defects, 5 documentary cures applied — `docs/tranches/BK/execution/2026-08-07-row59-layout/VERDICT-59.md`; record `docs/tranches/BK/execution/2026-08-07-row59-layout/RECORD.md` | TR#59 → LAYOUT.md (`b1e9fa31`) | G1 (+G2 +viewport-fit arms) · G-MEASURE-LAW · G6 · G-FORK-CENSUS; `viewport-fit=cover` first |
 | 67 | IOS27-EXEC W-1..W-7 | Φ5 | UNSTARTED | TR#67 → `IOS27-MICRO/FINAL/FINAL.md` (W-0 banked `1d0c17c6`) | —(W-1 ⊂ #26 · W-2 before GF-DOCK kernel · T1/T9/T5 after spring; W-5 un-parked, reversible-in-total; ⊕² codex deltas folded; + R-7 OWED-CAPTURE ×3 (owner: the owner) + both device-fps cells + loupe L-3 — every other arm proceeds) |
-| 71 | W-EYEGLASS | Φ5 | UNSTARTED | TR#71 → ARCHAEOLOGY §R-4 + RATIFICATION §4 | born-RED: `rg -i 'eyeglass\|loupe' src demo` → 0; inside #32's cut, T-C ordering |
+| 71 | W-EYEGLASS | Φ5 | ⊕⁷⁰ **LANDED 2026-08-08** at `6c22e22f` ~~UNSTARTED~~ — the organ was already on disk and gated FOREIGN by #32's `tabs-seam` arm (e); what this **COMPLETION SEAT** (`claude-opus-5[1m]`) closed is **RT-84O**, the dead measure ⊕⁶⁰ routed here. `eyeglass.ts` states the organ's law — pure geometry, no cascade, no DOM — and the writer applies it. **THE FIGURE IS MEASURED, NOT ARGUED**: `updateSingleSlider` returns before its first rect read when `indicatorRef` is null, so a caller with no indicator goes from **4 forced layout reads per mount** (two per pass, two passes: `containerRef`'s post-flush watcher and `onMounted`), plus two more per model change and per `ResizeObserver` callback into a `singleSliderStyle` nothing could paint, to **zero** — and **the `ResizeObserver` still attaches unconditionally**, because #84's Safari-identical guarantee is about there being ONE measure PATH, not about running it into nothing. The routing pointed here and not at #84 for a reason worth keeping: **the fix was unsayable until this lane's `deform` param took the second meaning off `indicatorRef`** — a de-overloaded sentinel is what makes a whole class of economization expressible at all. **A SAFETY WATCHER WRITTEN AND STRUCK IN THE SAME SEAT**: the guard was first paired with a `watch(indicatorRef, …, { flush: "post" })`; a scratch-copy probe (guard IN, watcher OUT) greened every case, because the indicator is a CHILD of the container in **both** consumers that read the style (`SegmentedTabs.vue:333`/`:361`, `DockLayerGroup.vue:225`/`:266`) — *a guard added "just in case" is untested by construction, and the second scratch variant is the one seats skip*. **THREE COMMITTED TEXTS EXPIRED WHEN THE ROUTE CLOSED**, struck with `~~` and dated, never deleted: `useSelectionGroup.ts:83` · `ToggleGroup.vue:100` · `MIGRATION.md:1188` — ⊕⁶⁰'s own lesson one row later, *a comment that describes a routed defect has an expiry date the routing sets*, and two of the three would not be found by any grep for `RT-84O`. The engine took its **first direct coverage** (`tests/composables/motion/useSelectionIndicator.test.ts`, 221 ln), **seats +0** — no §B.5 name, sibling of `useElementMorph.test.ts`, not in `tests/gates/`. **SE-5's negative VERIFIED ON DISK**: `rg -n "armGlassRefract\|supportsBackdropRefract" src demo` → **no output**. **RT-71A — the dispersion-rim register is NOT BUILT**, and this seat **concurs with #32's three grounds rather than overriding them**: the blocker is **OWNERSHIP, not construction** (#22 is CURE-CUT, so the register has no live executing owner), while the substrate it would sit on EXISTS (`--specular-x`/`--specular-y`/`--specular-intensity` at `property-regs.css:55,61,93`). `segmented.css` (199/131) stays **#32's** by #32's own banked claim, including the eyeglass PAINT — **#71 owns the LAW and the WRITER, #32 owns the sheet that arms it** — and `scale-paper.css` holds at **10/18**, the ⊕⁵⁹ figure, untouched. **ATTRIBUTION DISCLOSED AT BOTH ENDS**: this row's **9/2** `useSelectionGroup.ts` share (including its own RT-84O bracket) rode **`74ecde5a`, #32's commit**, staged whole-file — the 27/5 split reproduces arithmetically to the line, the bytes are correct, the title is not (⊕⁶⁹/⊕⁷⁰). **AND TWO OF THE THREE STRIKES DID NOT RIDE ANY COMMIT** — `ToggleGroup.vue` (11/2) and `MIGRATION.md` (8/1) sit uncommitted at HEAD with #35's remainder. Record: `docs/tranches/BK/execution/2026-08-08-lane71-completion/`. **ROUTED**: **RT-71A** dispersion rims → the driver's ownership ruling, with **RT-32A** · **RT-71C** `tests/composables` (41 files / 222 tests) is **outside the standing battery subset**, green when run — a suite no standing gate executes is a suite that rots · **RT-71D** a one-in-four `dropdown-menu.contract` flake, banked so it is not later read as a regression | TR#71 → ARCHAEOLOGY §R-4 + RATIFICATION §4 | born-RED: `rg -i 'eyeglass\|loupe' src demo` → 0; inside #32's cut, T-C ordering — **⊕⁷⁰: gated FOREIGN by G-TABS-SEAM arm (e), seats +0, no own seat minted**; RT-71C the un-run `tests/composables` subset and RT-71D the dropdown flake banked |
 | 72 | W-RAIL-RENAME-THEN-BUILD | Φ5 | ⊕⁵⁵ **SEALED 2026-08-08** at `d4063dda` ~~UNSTARTED~~ — the rename half and the build half in ONE commit, **CURED before the cut** (CURE-ORDER-72, 8 cures). **THREE REFERENTS, THREE NAMES**: layer switcher (props, classes, seven tokens, the context file + its injection-key STRING, 17 local identifiers) · vertical dock (`--dock-vertical-*`) · hairline. No aliases; `--dock-rail-active-accent` was the breach in miniature, the switcher tab's glyph wearing the vertical dock's prefix. **CENSUS RE-DERIVED AT THE CUT** (the J-10 law): D1 = TR's own `rg -w rail src/components/dock/styles` → **115 occ / 103 lines / 13 files → 0/0/0**, reproducing J-7 and refuting ⊕⁵'s 114/102/13 in the opposite direction; D2, the identifier arm D1 is blind to (`rg -w rail` cannot see `showRail`), **25 files → 0** band-wide. **THE BUILD**: `anchor` stamped a class and an attribute read by **zero** selectors and **zero** code for a `#rail` slot in **no** file — a prop that did nothing; it now promotes `DockSeparator` to `.dock-hairline`, spanning its layout root's cross extent, both arms rooted at `:is(.glass-dock, .dock-layer-group)` so a standalone group is not a paint no-op. Row arm **(0,4,0)** wins on specificity, column arm (0,3,0) on source order — the two do not win the same way and the comment now says which. **ONE COLOUR**: two rival 1px sources collapse onto `--dock-hairline`; ONE stated paint delta, the switcher divider onto `--surface-tint-15`, the rung `dark-arm.css:313` falsely claimed it already rode. LIVE at `demo/stories/dock/sections.vue` (`dock-hairline-row` + `dock-hairline-column`). **Seats +0**, `tests/styles/dock-name-canon.test.ts` an ordinary test file, born-RED `7 failed \| 0 passed (7)` → `7 passed (7)`, **6 mutations all biting, all restored byte-exact**, receipt byte-identical. CURES: 3 survivors of the row's own target class struck with the gate WIDENED around them (born-RED `1 failed \| 6 passed (7)` → `7 passed (7)`) · D2 hardened for SCREAMING_CASE · **5 blind-rename misattributions fixed and a 6th (`morph.css:254`) VERIFIED CORRECT and left alone** · three FALSE claims struck in the row's own record (the cascade figure, the centring claim, the diffstat). **Diffstat re-derived with a stated detector D3** whose PATH arm is load-bearing (`demo/stories/dock/rail.vue`'s 189-line deletion never says the word in its body): landing cut **45 tracked (+564/−958) + 4 new + 3 renames**, of which **+49/−2 FOREIGN** in three hunk-mixed files — split out as the two riders `48368ad2` (**#57** completion, `MIGRATION.md` +37 / `CHANGELOG.md` +9) and `ab907571` (**#46** completion, `dock/index.ts` +3/−2) — so **the row's own bytes are +515/−956**, re-derived at HEAD to the digit. Verify: vue-tsc 0 · `tests/styles tests/components tests/gates` **11 failed \| 1416 passed \| 5 expected fail (1432)**, all eleven FOREIGN (ten #40's, one #7/#40's) · receipt `violations:1` = #40's uncommitted `pager-dots.contract.test.ts` deletion. π **NOT CLAIMED** → **#10**. ROUTED: `--dock-vertical-{padding,extend-length}` declared nowhere → **#47** · one `DockRail-chip` prose mention in the pager register → **#40** · `dock-nav.css:94`'s dead cite → that file's lane. **#47's hard precondition DISCHARGED.** Record `docs/tranches/BK/execution/2026-08-08-row72-rail-rename-then-build/RECORD.md` | TR#72 → ARCHAEOLOGY §4 N2 (E29) | G-ONE-NAME rail arm; census 115 occ/103 lines/13 files (J-7) → 0; hard-precedes #47 |
 | 73 | W-SCROLL-SHRINK | Φ5/6 | UNSTARTED | TR#73 → ARCHAEOLOGY §R-5 + §4 N4 | born-RED: 0 sites; in #58's chassis, after #59 |
 | 74 | W-RIM-RAINBOW | Φ5 | **LANDED** (⊕⁶⁴ 2026-08-08, `621b8547`, INSIDE #88's cut — RECORD §11 CURE-6; `code_state=landed`; `evidence_state=owed`) ~~UNSTARTED~~ | TR#74 → ARCHAEOLOGY §R-6 + CWT-3 §W-PROGRESS-SEAM; record `execution/2026-08-08-row86-88-track/RECORD.md` (§11 CURE-6) | Its scoped gate **J-9 is DISCHARGED, not routed**: the rim consumes the canonical `--rainbow-*` register (seven rungs, ROYGBIV — its third consumer beside `.btn-rainbow` and the metal sweep) in place of six hard-coded `--section-color-*` indices from the DEMO's route-identity scale, and the band goes **4px → 3px** (measured `getBoundingClientRect().height` = 3px on `/feedback/progress`). The gate folds into `tests/styles/typed-track-seam.test.ts` — **zero new gate files, SEATS +0**. The driver's own ruling on CURE-8688-6 named the route branch a FALLBACK "only if the rim work needs design adjudication beyond J-9's own clause"; it did not, and the branch taken is stated in RECORD §11. π rides #88's rows → **#10**; `code_state=landed`, `evidence_state=owed`. |
