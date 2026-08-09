@@ -26,22 +26,6 @@
      surviving consumer (the calm CTA register's press is the §6 scale beat).
    ═══════════════════════════════════════════════ */
 
-/* The area-inflation scalar (the 5-beat blob's grow→overshoot
-   →shrink envelope). The 2nd `useLiquidFlex` channel in `useTabIndicator.ts` writes
-   `--tab-blob` every frame (it is NOT added to a CSS `transition` list — the
-   composed `scale` write the indicator already transitions carries the glide). The
-   `@property` registration exists ONLY so the discrete release-frame write
-   (`--tab-blob` snapping back to 1 at arrival) interpolates instead of snap-
-   flickering — the SAME role the `--stretch`/`--glass-accent` registered-scalar
-   precedent serves. `inherits: false` — each indicator owns its own blob (a blobbed
-   parent must not push inflation onto a child). `initial-value: 1` is the safe
-   rest (a non-supporting engine slides without inflation, never broken). */
-@property --tab-blob {
-    syntax: "<number>";
-    inherits: false;
-    initial-value: 1;
-}
-
 /* ═══════════════════════════════════════════════
    §11b POINTER-ANCHORED MOVING SPECULAR
 
