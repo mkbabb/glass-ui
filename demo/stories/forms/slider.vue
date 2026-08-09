@@ -78,7 +78,7 @@ const rangeMarks = [10, 25, 50, 75, 90] as const;
 // Variant × size matrix (2 variants × 3 sizes = 6 cells).
 // Each cell binds an independent reactive value so drag interactions
 // don't cross-couple. Hard gate requires every cell renders.
-const variants: SliderVariant[] = ["standard", "spectrum"];
+const variants: SliderVariant[] = ["scrubber", "spectrum"];
 const sizes: SliderSize[] = ["sm", "md", "lg"];
 
 type MatrixKey = `${(typeof variants)[number]}__${(typeof sizes)[number]}`;
@@ -93,11 +93,11 @@ const matrix = ref<Record<MatrixKey, number[]>>(
 
 <template>
     <StoryPage :style="wellStyle">
-        <!-- Standard — the integrated-cylinder glass slider: the fill is one
+        <!-- Scrubber — the integrated-cylinder glass slider: the fill is one
              continuous glass pill whose rounded leading edge is the grab. With
              label + value readout. -->
         <section class="flex flex-col gap-3">
-            <p class="text-small text-muted-foreground">standard</p>
+            <p class="text-small text-muted-foreground">scrubber</p>
             <div class="flex items-center justify-between">
                 <span class="text-small text-foreground">Volume</span>
                 <span class="text-mono-small text-muted-foreground tabular-nums">
@@ -205,12 +205,13 @@ const matrix = ref<Record<MatrixKey, number[]>>(
                     </div>
                 </div>
                 <div class="grid justify-items-center gap-2">
-                    <span class="text-small text-foreground">Inverted vertical</span>
+                    <span class="text-small text-foreground">Inverted vertical · spectrum</span>
                     <div class="specimen-well">
                         <div class="grid-bg" aria-hidden="true"></div>
                         <Slider
                             v-model="verticalInverted"
                             orientation="vertical"
+                            variant="spectrum"
                             inverted
                             :marks="irregularMarks"
                             aria-label="Inverted vertical checkpoints"

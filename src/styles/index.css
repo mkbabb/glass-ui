@@ -178,6 +178,10 @@
  *  17b. components/dialog/styles.css — THE ONE DIALOG LANE: the centred plate's room,
  *                             proportion, ✕ and rebuff, every space value a named rung
  *                             so tokens/sizing.css §1.1 transposes the whole plate.
+ *  17c. components/slider/styles.css — THE ONE SLIDER LANE: the scrubber's size axis,
+ *                             coarse floor, approach affordance, weight-train and the
+ *                             loupe. UNLAYERED, so it outranks the `@layer components`
+ *                             track-well and liquid-fill registers it composes.
  *
  *  18. accessibility.css     — terminal reduced-transparency/contrast/motion,
  *                              forced-colors, and coarse-input adaptations.
@@ -190,11 +194,11 @@
 @import "./typography.css";
 @import "./theme.css";
 @import "./glass.css";
+@import "./track-well.css";
 @import "./glass-specular-track.css";
 @import "./paper.css";
 @import "../components/dark-mode-toggle/dark-mode-toggle.css";
 @import "../components/dock/styles/index.css";
-@import "./track-well.css";
 @import "../components/dock/styles/controls.css";
 @import "../components/card/styles.css";
 @import "../components/_shared/feedback/feedback-tone.css";
@@ -241,6 +245,10 @@
 @import "../components/sheet/styles.css";
 /* THE ONE DIALOG LANE — the centred plate's room, proportion, ✕ and rebuff. */
 @import "../components/dialog/styles.css";
+/* THE ONE SLIDER LANE — the scrubber's geometry, affordance, weight-train and loupe.
+   UNLAYERED on purpose: it composes the `@layer components` well and fill registers
+   and must outrank them without an `!important`. */
+@import "../components/slider/styles.css";
 /* The static numeric-readout family. */
 @import "../components/metric/styles.css";
 /* The finite notation ribbon: warm folio material plus SVG glyph draw-in.
@@ -249,14 +257,6 @@
 @import "../components/music-staff/styles.css";
 /* The thin, radius-following masked scroll-progress band. */
 @import "../components/scroll-progress-rim/styles.css";
-
-/* Accessibility is a terminal product mode, not a mid-cascade patch. This one
-   import owns reduced transparency/contrast/motion, forced colors, and coarse
-   target adaptation after every material and component recipe. */
-@import "./accessibility.css";
-
-/* Ensure Tailwind scans glass-ui's compiled component templates for the utility
-   classes they emit (CVA variant classes like text-destructive-foreground,
 /* THE WINDOWED-SEQUENCE SUBSTRATE — the stage's room, the authored page turn, the
    capture/settle block and the optional reveal sheet. Optional, tokens-first and
    identity-free: every identity value belongs in a consumer's overlay over these
@@ -266,6 +266,14 @@
    half of the member projection's two-clock split. Loads after the substrate it
    composes. */
 @import "../components/carousel/styles.css";
+
+/* Accessibility is a terminal product mode, not a mid-cascade patch. This one
+   import owns reduced transparency/contrast/motion, forced colors, and coarse
+   target adaptation after every material and component recipe. */
+@import "./accessibility.css";
+
+/* Ensure Tailwind scans glass-ui's compiled component templates for the utility
+   classes they emit (CVA variant classes like text-destructive-foreground,
    layout utilities like h-full/shrink-0).
 
    The source directive points at `../*.js`, NOT the components-mirror glob

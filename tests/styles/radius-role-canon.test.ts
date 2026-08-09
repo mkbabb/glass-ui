@@ -640,7 +640,7 @@ describe("9. U-29 — the squircle fork register (the Safari floor, accepted)", 
     // or a fork without a round arm underneath it, fails here.
     const FORKS = [
         "src/styles/glass/squircle.css",
-        "src/components/slider/Slider.vue",
+        "src/components/slider/styles.css",
         "src/components/dock/styles/shell.css",
     ] as const;
 

@@ -32,7 +32,7 @@ const read = (path: string): string => readFileSync(path, "utf8");
    it sat on. The selectors are unchanged; only the origin moved, which is why
    this gate re-points rather than relaxing. */
 const MENU_CSS = "src/styles/glass/overlay-plate.css";
-const SLIDER = "src/components/slider/Slider.vue";
+const SLIDER = "src/components/slider/styles.css";
 const FORCED_COLORS = "src/styles/utilities/a11y-overrides.css";
 
 describe("G-FOCUS-VISIBLE — every library-rendered trigger shows keyboard focus", () => {
