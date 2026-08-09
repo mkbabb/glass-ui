@@ -40,8 +40,8 @@
 // transcription mirrors THIS chunk (its provenance source of truth);
 // `__tests__/blob-color-equivalence.test.ts` is the 8-assertion 1e-6 gate.
 //
-// This chunk is a pure GLSL string — it imports NO value.js (the blob/watercolor-dot
-// value.js-free invariant rides through it; `proof:blob-value-free` holds).
+// This chunk is a pure GLSL string — it imports NO value.js (the blob value.js-free
+// invariant rides through it; `proof:blob-value-free` holds).
 
 // ── sRGB OETF + inverse ──────────────────────────────────────────────────────
 // The single sRGB transfer. Both shaders splice this; it is the convergence

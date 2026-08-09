@@ -354,7 +354,7 @@ describe("G-ENGAGE-RUNG · acknowledge arm — a rung answers inside its own bud
         // THE SEAM THIS ROW'S CURE LIVES OR DIES AT. `.glass-menu-row` and
         // `.interactive-item` share a layer and a 0-1-0 specificity, and menu.css is
         // imported LAST by the documented design at styles/index.css — so on the six
-        // shipped rows that compose both (menuRowClass.ts, the four DropdownMenu items,
+        // shipped rows that compose both (rowClass.ts, the four DropdownMenu items,
         // CommandItem) the menu row's `transition` SHORTHAND is the list that paints. A
         // leg declared in base.css and absent there has ZERO frames, whatever the
         // re-point above says, and no string check on base.css alone can see it.

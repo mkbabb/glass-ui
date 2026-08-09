@@ -1,8 +1,8 @@
 // Shared seeded, deterministic procedural PRNG leaf — the single source for the
-// byte-identical `mulberry32` + `hashString` that the watercolor-dot and
-// goo-blob both seed their organic shapes from. A dot/blob keyed by
-// `color + seed` reproduces the same shape across mounts. Component-specific
-// derivations (the watercolor border-radius helpers) stay local to their dir.
+// byte-identical `mulberry32` + `hashString` that goo-blob, handmark, constellation
+// and fourier-field all seed their organic shapes from. A shape keyed by
+// `color + seed` reproduces across mounts. Component-specific derivations stay
+// local to their own dir; this leaf holds only the two primitives.
 
 /** Mulberry32 — fast 32-bit seeded PRNG. Returns a `() => number` in [0, 1). */
 export function mulberry32(seed: number): () => number {

@@ -55,7 +55,8 @@ export * from "../reveal/vReveal";
 // the metaball `sa`/`1/sa` squash). Owns no spring/rAF/element — imports `vue` only,
 // so it is engine-FREE + vueuse-FREE and ships on the `/motion-core` surface AND the
 // root barrel. ≥2 consumers: useSelectionIndicator (the tabs-indicator squish),
-// useLiquidPress, useDragMorph, usePagerWorm (the pager-dots worm), and ScrubberTimeline.
+// useLiquidPress, useDragMorph, usePagerWorm (the pager-dots worm), and Timeline
+// (the meniscus cap + the mark swell, one cap for both).
 export * from "../spring/useLiquidFlex";
 // Shared viz-pointer-physics field (pointer position +
 // derived velocity + the ACCEL term), fed by the renderer's frame `tick` (NO own

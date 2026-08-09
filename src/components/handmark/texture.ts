@@ -27,7 +27,7 @@
  * Boil does NOT ship on this register (`ds-crayon-handmark §5.3`).
  *
  * `id` MUST be per-instance (the component's `useId()`) so two marks never collide
- * their <filter> namespaces — the glass-ui WatercolorDot idiom.
+ * their <filter> namespaces — the house per-instance SVG-namespace idiom.
  *
  * The grain sub-seed is derived (`seed ^ 0x85eb`) per SPEC §7, so one top seed
  * re-rolls the grain coherently with the centerline wobble.

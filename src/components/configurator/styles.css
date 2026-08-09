@@ -172,7 +172,7 @@
  * The fix is the discipline: the structural layout lives in SHIPPED
  * CSS as a precompiled rule scoped to `[data-slot="configurator"]`, NEVER
  * load-bearing on a content-scan reach (the SAME mechanism the Select bound got in
- * select.css). Below `lg` the base `grid grid-cols-1` + the mobile row template
+ * glass/overlay-plate.css). Below `lg` the base `grid grid-cols-1` + the mobile row template
  * (emitted fine — a plain utility) keeps the single-column stack: stage above,
  * controls below (a narrow viewport has no room for side-by-side). At `lg`+ this
  * rule sets the two-column geometry off the SAME `--configurator-aside-{min,max}`

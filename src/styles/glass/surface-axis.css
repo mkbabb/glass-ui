@@ -95,15 +95,17 @@
        plate (fill + edge + rim); `.paper-ink-mark` is the opposite — a bare ink
        hairline drawn directly on paper, the math-paper section-rail / underline-
        tab vocabulary. Recorded here (the surface-decoration seam) co-located with
-       the plate axis but DISTINCT from it — the canon note is in CLAUDE.md.
+       the plate axis but DISTINCT from it.
 
-       ≥2 consumers at birth: (1) the math-paper section rail (the `border-l-[3px]`
-       family composes it for a VERTICAL left-edge ink rail); (2) the re-cut
-       underline indicator (a HORIZONTAL 2px ink mark — CONSUMES this seam,
-       a shape gap there triumvirates HERE per the DAG §5 seam rule). The register
-       exposes ONE knob (`--paper-ink-mark-weight`, default 2px) + the ink color;
-       the consumer applies the weight on whichever edge/axis it draws (a left
-       `border-inline-start-width` rail, a bottom `block-size` underline). */
+       ONE class consumer, and saying so is the point: the SegmentedTabs underline
+       indicator, which wears this class on the measured node and draws the weight
+       as that node's edge — horizontal `border-block-end`, vertical
+       `border-inline-start`. It said "≥2 consumers at birth" for a long stretch
+       during which it had ZERO: the math-paper rail was named as a consumer while
+       composing nothing, and the tabs host re-declared both knobs itself instead of
+       wearing the class. A register that exists to be cited is not a register.
+       The knobs are `--paper-ink-mark-weight` (default 2px) and the ink colour; the
+       consumer decides which edge carries them. */
     .paper-ink-mark {
         --paper-ink-mark-weight: 2px;
         --paper-ink-mark-color: var(--foreground);

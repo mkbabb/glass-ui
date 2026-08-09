@@ -56,7 +56,7 @@ const props = withDefaults(defineProps<HandMarkProps>(), {
     jagged: false,
 });
 
-// Per-instance namespaced filter id — the WatercolorDot idiom, sanitised for url(#…).
+// Per-instance namespaced filter id — the house SVG-namespace idiom, sanitised for url(#…).
 const uid = `hm-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
 
 // ── the MEASURED text baseline (the E1 underline anchor; SPEC §6.2) ───────────

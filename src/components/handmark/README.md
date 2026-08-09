@@ -49,8 +49,14 @@ Three distinct underline/ink registers exist; they are NOT the same family and t
 fence is binding in BOTH directions:
 
 1. **`.paper-ink-mark`** (minted by the surface layer, consumed by the tabs family) — the STRAIGHT
-   structural 2px `--foreground` ink hairline: the tab underline indicator + the
-   math-paper section rail. NEVER wobbled, NOT this family.
+   structural 2px `--foreground` ink hairline: the tab underline indicator ~~+ the
+   math-paper section rail~~. NEVER wobbled, NOT this family.
+   [2026-08-08 · BK #32: the rail half struck. It was named a consumer while composing
+   nothing — the register's own header asserted "≥2 consumers at birth" through a
+   stretch in which it had ZERO, and the tabs host re-declared both knobs itself
+   instead of wearing the class. The SegmentedTabs underline indicator is now the
+   register's ONE and first real class consumer (`glass/surface-axis.css:91`). The
+   fence itself is unaffected in both directions.]
 2. **`HandMark shape="underline"`** (this family) — the hand-voice wobble. The
    editorial draw-on underline + the masthead procedural `boil` morphology.
 
