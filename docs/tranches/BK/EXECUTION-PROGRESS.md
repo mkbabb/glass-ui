@@ -4625,3 +4625,18 @@ procession still opens on a **re-scout**, never on an assumed next.]
 
 EXEC-STATE §DURABLE PROCESS → `WORKFLOWS.md` §LIVE RUNS → `PLAN.md` §6 → this cursor → the live
 row's cited spec. Workflows resume via `Workflow{scriptPath, resumeFromRunId}`.
+
+
+**[DRIVER WALL-BANK 2026-08-09, post-⊕⁷⁴ — the org monthly spend limit fired mid-#76.]**
+Row #76 W-CONSUMER-BAND execution state: the scout (charter derived — glass-ui-side
+authoring ONLY, zero sibling writes, the #85 outbound precedent; corrections: 55
+specifiers not 52 with the ./sheet three a REPAIR class · 18 roots collapse to 8
+upstream projects via 4 mirror pairs · grain homonym: sci 0, bbnf-buddy 7 uncounted)
+and ALL FOUR read-only enumerators COMPLETED — their file:line censuses are CACHED in
+workflow run `wf_52b4dcca-98a` (journal at the session workflows dir). The AUTHOR and
+VERIFIER seats died on the spend limit. RESUME IS ONE CALL: Workflow({scriptPath:
+".../bk-row76-consumer-band-wf_52b4dcca-98a.js", resumeFromRunId: "wf_52b4dcca-98a"})
+— the enumerators replay from cache, only author+verify run live. Deliverables owed:
+9 outbound addenda docs under docs/tranches/BJ/coordination/ + the row RECORD +
+PASTE-BLOCKS + ⊕⁷⁵. Everything before this line is COMMITTED AND PUSHED; 8.0.0 is
+LIVE and needs nothing.
