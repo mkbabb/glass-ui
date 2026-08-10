@@ -24,15 +24,43 @@
     --configurator-pad-inline: 1.25rem; /* 20px — the unified section+chrome inline anchor (J10 roominess: widened from 16px so the inspector breathes) */
 }
 
-/* A Configurator is one material envelope around three sibling regions: gallery,
+/* ── §0 · THE SHELL: the material envelope AND the size container ─────────────
+ *
+ * A Configurator is one material envelope around three sibling regions: gallery,
  * live stage, and inspector. Sampling the backdrop on the outer `.glass-floating`
- * root makes a GPU canvas in the stage a descendant of its own filtered compositing
- * group. Keep the root's chromatic fill, rim, grain, and shadow, but move the blur to
+ * shell makes a GPU canvas in the stage a descendant of its own filtered compositing
+ * group. Keep the shell's chromatic fill, rim, grain, and shadow, but move the blur to
  * the two chrome siblings that never contain the live stage. This preserves one
  * sample per visible chrome plate while the stage remains outside every filtered
- * ancestor. Descendant controls still inherit the canonical nested-cell `none`. */
-.configurator {
+ * ancestor. Descendant controls still inherit the canonical nested-cell `none`.
+ *
+ * The shell is ALSO where this component's responsive geometry is measured from.
+ * Every fork below reads `@container (inline-size …)` against this box, because the
+ * question a studio actually asks is "how wide am I", not "how wide is the window" —
+ * and the two answers diverge by a factor of four the moment the studio is dropped
+ * into a story cel. The container is declared HERE, on a box the component owns, and
+ * never inherited from a consumer's ancestry: a query with no container resolves to
+ * the small-viewport arm forever, which is a dead primary wearing a fallback's face.
+ */
+.configurator-shell {
     backdrop-filter: none;
+    container-type: inline-size;
+    /* One definite row, so the grid inside inherits whatever height envelope the
+     * consumer put on the shell (`.story-stage` in the demo) and can still shrink.
+     * `minmax(0, 1fr)`, never `auto`: an auto row lets a percentage-height child
+     * collapse the studio to nothing, which is the same 0×0 failure the inner row
+     * template already guards against one level down. */
+    display: grid;
+    grid-template-rows: minmax(0, 1fr);
+    min-block-size: 0;
+    /* The sliver floor. `container-type: inline-size` carries `contain: inline-size`,
+     * which makes the box's inline size independent of its CONTENTS — so its
+     * min-content contribution is ZERO. In a definite track that is harmless; as a
+     * flex item it is fatal, and `flex-shrink` collapses the whole studio to 0px with
+     * its controls intact and unpaintable. Same hazard, same cure, same reasoning as
+     * `demo/chassis/section/StorySection.vue` — `min()`-guarded so the floor can
+     * still fall below itself inside a phone-width column. */
+    min-inline-size: min(20rem, 100%);
 }
 
 .configurator > .configurator-presets,
@@ -199,8 +227,15 @@
     grid-column: 1;
 }
 
-@media (min-width: 1024px) {
-    /* The DESKTOP TWO-COLUMN geometry. Two columns (stage 1fr | aside band) and
+/* THE FORK. `64rem` is the SAME 1024px this rule has always used — the number does
+ * not move, only what it measures does. It used to be asked of the window, where it
+ * was answering a different question than the one the layout depends on; asked of
+ * the shell it is the studio's own width, which is what decides whether stage and
+ * inspector fit side by side. A studio in a 336px story cel at a 1440px window took
+ * the two-column arm and placed a 400px inspector into a 336px track; it now takes
+ * the stacked arm, and a studio given the whole article still takes the split. */
+@container (inline-size >= 64rem) {
+    /* The WIDE TWO-COLUMN geometry. Two columns (stage 1fr | aside band) and
      * two rows: the gallery row (auto) over the body row (1fr). The placement of
      * the gallery dock is the ONLY thing the `data-gallery` axis swaps. */
     [data-slot="configurator"] {
@@ -245,6 +280,20 @@
         grid-row: 2;
         grid-column: 2;
     }
+
+    /* THE ASIDE SEAM, moved off `lg:border-l`/`lg:border-r`. Stacked, the aside is
+     * divided from the stage by its own `border-t`; split, the seam is vertical and
+     * sits on whichever edge faces the stage. Keeping it in THIS block is the point:
+     * one query decides both that there are two columns and where their seam is, so
+     * a horizontal rule can never be left painting across a vertical split. */
+    [data-slot="configurator"] > .configurator-aside {
+        border-block-start-width: 0;
+        border-inline-start-width: 1px;
+    }
+    [data-slot="configurator"][data-aside-side="left"] > .configurator-aside {
+        border-inline-start-width: 0;
+        border-inline-end-width: 1px;
+    }
 }
 
 /* The gallery-dock chrome divider — the hairline under the up-top dock / the
@@ -256,7 +305,7 @@
 [data-slot="configurator"][data-gallery="aside"] > [data-gallery-dock] {
     border-bottom-width: 1px;
 }
-@media (min-width: 1024px) {
+@container (inline-size >= 64rem) {
     /* The up-top dock carries a bottom hairline; the aside-placed dock carries it
      * too (above the controls). */
     [data-slot="configurator"][data-gallery="top"] > [data-gallery-dock] {
@@ -277,7 +326,12 @@
  * the warm-glass body; this rule sets the card radius + the column flex so the
  * well meets the rounded crown with zero bg leak. */
 .configurator-preset-tile {
-    inline-size: clamp(160px, 22vw, 232px);
+    /* `cqi`, not `vw`. The middle term of a tile clamp is a share of the ribbon the
+     * tile sits in, and the ribbon is the studio — a `vw` term sized the tiles off
+     * the window, so the same studio at the same width grew different tiles
+     * depending on how much of the page it had been given. The floor and ceiling are
+     * unmoved; only the subject of the share is corrected. */
+    inline-size: clamp(160px, 22cqi, 232px);
     border-radius: var(--radius-card);
     /* The capsule fill is a warm-glass PILL by default (--radius-pill); a TILE is
      * a card, so re-point the geometry to the card radius here. The transmissive
@@ -294,7 +348,7 @@
  * clears the ≥72px LARGE-ribbon floor with headroom; the FadingScroll port (the
  * .configurator-gallery-track) still clips the horizontal overflow. */
 [data-slot="configurator"][data-gallery="top"] .configurator-preset-tile {
-    inline-size: clamp(200px, 20vw, 288px);
+    inline-size: clamp(200px, 20cqi, 288px);
 }
 
 /* The §3 field-well — the device-free `auroraFallbackGround` background-image is
@@ -368,9 +422,9 @@
  * grid-COLUMN targets so the aside paints on the LEFT, while the DOM/tab order
  * stays stage→aside (the side is grid-cell PLACEMENT + border-side only, never an
  * `order:`/`row-reverse` that would desync the visual order from the DOM reading
- * order — WCAG 1.3.2/2.4.3 inviolate, the contract). Below `lg` (single
+ * order — WCAG 1.3.2/2.4.3 inviolate, the contract). Below the fork (single
  * column) neither side has meaning. */
-@media (min-width: 1024px) {
+@container (inline-size >= 64rem) {
     /* The flip swaps the two BODY columns (stage ↔ aside) while DOM/tab order stays
      * gallery→stage→aside. The selectors carry `>`-child specificity to match the
      * `data-gallery` placement rules above (which also use `>`); a bare descendant
@@ -387,4 +441,33 @@
         > [data-gallery-dock] {
         grid-column: 1;
     }
+}
+
+/* ── §6 · THE ROOM — `<Configurator expandable>` ──────────────────────────────
+ *
+ * The studio promoted out of its page rect and into the window. The mechanism is
+ * `<ExpandableContainer>`, which already ships the focus trap, the Esc binding, the
+ * body-overflow lock and focus restore; what this block adds is the ROOM'S
+ * PROPORTION, and nothing else.
+ *
+ * Two declarations, both derived:
+ *
+ *  · The gutter is `--space-section` — 32px, stepping to 20px under the ONE width
+ *    query in `tokens/sizing.css` §1.1. The spec called for the 32/20 pair written as
+ *    a literal; a literal here would have meant a SECOND width-conditional block
+ *    inside a library component, which `sizing.css:601-607` forbids by name and which
+ *    is how nine ad-hoc transposition factors were minted the last time. The rank
+ *    delivers the same two numbers and steps down for free.
+ *
+ *  · The shell fills the panel. Expanded, the consumer's height envelope (the demo's
+ *    `.story-stage`, 62svh) is the wrong answer — the room IS the envelope. The
+ *    attribute-qualified selector outranks the consumer's single class, so the
+ *    envelope returns intact on collapse without either side knowing about the other.
+ */
+.configurator-expand-host[data-state="expanded"] > [data-part="panel"] {
+    padding: var(--space-section);
+}
+
+.configurator-expand-host[data-state="expanded"] .configurator-shell {
+    block-size: 100%;
 }

@@ -52,7 +52,15 @@ const peaks: { cls: string; label: string; peg: string; word: string }[] = [
              stays ink so the ladder, the peaks, and the wash never compete). The
              focal word rides the cascade (StoryPage's .scroll-
              cascade host) on its own view() timeline. -->
-        <section class="flex flex-col gap-3">
+        <!-- `data-span="full"` on a PLAIN section, not a StorySection: the cel-field
+             rule is the attribute selector `.story-article [data-span="full"]`
+             (chassis/layout.css), which reads any grid item — StorySection binds the
+             same attribute from its `span` prop. The focal word is
+             `--type-display-audacious`, whose clamp CEILING is 22rem = 352px
+             (typography/scale.css:151); `--measure-cel` is 21rem = 336px
+             (chassis/layout.css:44). The glyph's own font-size exceeds the cel track
+             by 16px, so in the cel run the lead specimen is clipped by construction. -->
+        <section data-span="full" class="flex flex-col gap-3">
             <p class="text-small text-muted-foreground">Foundations · Typography</p>
             <div class="text-display-audacious text-foreground">
                 Aa
@@ -68,8 +76,14 @@ const peaks: { cls: string; label: string; peg: string; word: string }[] = [
         <!-- THE AUDACIOUS PEAKS — the mega/hero/audacious tiers ACTIVATED as real
              specimens (the library is proud of these; the flat table never showed
              them). Each is its own focal word, clipped to the frame so the peak
-             reads as the experience it is. -->
-        <StorySection heading="Audacious peaks">
+             reads as the experience it is.
+
+             `span="full"` because the peaks are LEAD SPECIMENS in the prop's own
+             sense (StorySection.vue:23-32). The measures decide it, not taste:
+             audacious 352px · hero 287px (scale.css:151,146) against
+             `--measure-cel` 336px, and the ShowcaseFrame adds 2 × `--sp-5` of pad.
+             The audacious rung alone overruns the cel track before its frame. -->
+        <StorySection span="full" heading="Audacious peaks">
             <div class="flex flex-col gap-6">
                 <ShowcaseFrame
                     v-for="p in peaks"
@@ -89,8 +103,17 @@ const peaks: { cls: string; label: string; peg: string; word: string }[] = [
 
         <!-- THE GRADED LADDER — a designed rhythm, NOT a label/sample table. The
              label is a quiet mono caption ABOVE its sample (a designed stack), the
-             sample reads ink at full size, the rungs flow over the calm wash. -->
-        <StorySection heading="The graded ladder">
+             sample reads ink at full size, the rungs flow over the calm wash.
+
+             `span="full"` for the same measured reason and one more: the ladder's
+             CONTENT is the interval between rungs, so every rung must be read
+             against its neighbour on the same line-start. `text-display-5` alone
+             computes 6.854rem = 109.7px at its ceiling (scale.css:136), and
+             "Golden" at that size is wider than the 336px cel — the top four rungs
+             would each re-wrap at a different point and the interval would stop
+             being legible. Nothing here is a `<p>`, so the article's 66ch line cap
+             (`.story-article :where(p)`) neither applies nor is lost. -->
+        <StorySection span="full" heading="The graded ladder">
             <ShowcaseFrame tier="quiet" pad="lg">
                 <div class="flex flex-col gap-6">
                     <div

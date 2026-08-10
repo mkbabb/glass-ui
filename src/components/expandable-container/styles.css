@@ -8,6 +8,37 @@
     z-index: var(--z-modal);
     display: flex;
     flex-direction: column;
+    /* The world scrim: background-only, dim without blur. See the template comment
+     * on the root — the scrim is the one surface with no rung on the glass ladder,
+     * and a blurred ancestor is fatal to a live stage inside the panel. */
+    background: var(--overlay-scrim);
+    backdrop-filter: none;
+}
+
+/* THE BIRTH. The expanded panel grows out of the rect it was promoted from: scale
+ * 0.78 → 1 on `--spring-dock`, transform and opacity ONLY, never an animated box.
+ *
+ * One clause of that register is NOT satisfied here and the deviation is stated
+ * rather than papered: "the origin is never hidden". The panel is TELEPORTED — one
+ * mount, moved — which is what lets a live GPU stage survive the promotion instead
+ * of being torn down and rebuilt behind a second canvas. A subtree that moves cannot
+ * also stay, and the alternative (duplicate the stage for the length of the flight)
+ * trades a correct pixel for a wasted context. The scrim covers the origin rect on
+ * the same frame, so nothing is seen to vanish. */
+@keyframes expandable-container-birth {
+    from {
+        opacity: 0;
+        scale: 0.78;
+    }
+    to {
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+.expandable-container[data-state="expanded"] > [data-part="panel"] {
+    animation: expandable-container-birth var(--spring-dock-duration)
+        var(--spring-dock) both;
 }
 
 .expandable-container__chrome {
@@ -27,7 +58,12 @@
     min-block-size: var(--control-h-md);
     place-items: center;
     border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
-    border-radius: var(--radius-button);
+    /* A single square-ish glyph target on a floating plate is the pill's case, not
+     * the button rung's — the same reading `--radius-button`'s own one-consumer
+     * standing was struck on. The box is already ≥44px under a coarse pointer via
+     * the shared `[data-control-target]` floor (`utilities/responsive.css`), so no
+     * second hit-area mechanism is minted here to say the same thing twice. */
+    border-radius: var(--radius-pill);
     background: color-mix(in srgb, var(--card) 70%, transparent);
     color: var(--muted-foreground);
     box-shadow: var(--shadow-sm);
@@ -66,5 +102,21 @@
 @media (prefers-reduced-motion: reduce) {
     .expandable-container [data-part="trigger"] {
         transition: none;
+    }
+
+    /* The spatial leg drops; the arrival still reads. A 0.12s opacity swap is the
+     * house's reduced rung — not `animation: none`, which would have the room appear
+     * with no event at all. */
+    .expandable-container[data-state="expanded"] > [data-part="panel"] {
+        animation: expandable-container-arrive 0.12s linear both;
+    }
+}
+
+@keyframes expandable-container-arrive {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }

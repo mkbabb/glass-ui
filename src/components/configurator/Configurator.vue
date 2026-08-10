@@ -1,6 +1,7 @@
 <script setup lang="ts" generic="T">
 import { computed, type HTMLAttributes } from "vue";
 import { cn } from "../_shared/class-names";
+import { ExpandableContainer } from "../expandable-container";
 import { FadingScroll } from "../fading-scroll";
 import {
     provideConfiguratorSize,
@@ -115,6 +116,25 @@ const props = withDefaults(
          * length to pin the band (`min === max`), or a `[min, max]` pair.
          */
         asideWidth?: string | readonly [min: string, max: string];
+        /**
+         * Mount the studio inside an <ExpandableContainer>: a corner trigger that
+         * promotes the whole instrument to a full-window ROOM and back. The
+         * container already ships focus trap, Esc, body-overflow lock and focus
+         * restore, so this prop wires an affordance rather than a mechanism.
+         *
+         * The subtree is TELEPORTED, never duplicated — one mount, so a live GPU
+         * stage in the `#stage` slot survives the promotion instead of being torn
+         * down and re-created behind a second canvas.
+         *
+         * Expanded, the gallery is forced to `top`: the room has the width for the
+         * full preset ribbon, and spending it on a 400px gutter is the one thing
+         * expansion is for.
+         */
+        expandable?: boolean;
+        /** Accessible name of the expand trigger. */
+        expandLabel?: string;
+        /** Accessible name of the collapse trigger. */
+        collapseLabel?: string;
         /** Optional outer container override. */
         class?: HTMLAttributes["class"];
     }>(),
@@ -123,8 +143,14 @@ const props = withDefaults(
         size: "md",
         asideSide: "right",
         galleryPlacement: "aside",
+        expandable: false,
+        expandLabel: "Expand configurator",
+        collapseLabel: "Collapse configurator",
     },
 );
+
+/** Two-way so a consumer can drive/observe the room from outside the trigger. */
+const expanded = defineModel<boolean>("expanded", { default: false });
 
 // Provide the size to descendant <ConfiguratorRow>s. Rows still accept
 // their own `size` prop; the prop wins over inject (see ConfiguratorRow).
@@ -139,7 +165,22 @@ const emit = defineEmits<{
     (e: "reset"): void;
 }>();
 
-const containerClass = computed(() =>
+/*
+ * THE SHELL — the material plate AND the size container.
+ *
+ * The instrument used to be one box: the plate, the grid and the responsive fork
+ * all on `[data-slot="configurator"]`. The fork keyed on `@media (min-width:
+ * 1024px)`, i.e. on the WINDOW, and the window is not what decides whether a
+ * studio has room for two columns — a studio inside a 336px story cel at a 1440px
+ * window took the two-column arm and painted a 400px inspector into a 336px track.
+ *
+ * An element cannot query ITSELF, so the container and the grid cannot be the same
+ * box. The shell is that second box, and it is the OUTER one deliberately: the
+ * plate, the corner clip and any consumer `class` (height envelope, cast) belong to
+ * the thing that owns the studio's rect, and `[data-slot="configurator"]` keeps its
+ * three region children exactly as before.
+ */
+const shellClass = computed(() =>
     cn(
         // glass-floating is the canonical "studio panel" tier; honors
         // prefers-reduced-transparency via the @media block in glass.css.
@@ -151,8 +192,19 @@ const containerClass = computed(() =>
         // variants); the radius is owned here at the container root so the
         // rounding does not stop one level too high (the stacked
         // ConfiguratorLayer sections inherit a rounded outer clip).
-        "configurator glass-floating rounded-panel border border-border/60 overflow-hidden",
-        // Single column below `lg` (a plain utility — emits reliably). At `lg`+
+        // The shell's own single-row grid is NOT an arbitrary utility here: it lives
+        // beside the container declaration in configurator.css, which is the same
+        // discipline §4 states for the two-column geometry — structural layout ships
+        // as precompiled CSS, never as a bracket that can die in a content scan.
+        "configurator-shell glass-floating rounded-panel border border-border/60 overflow-hidden",
+        props.class,
+    ),
+);
+
+const containerClass = computed(() =>
+    cn(
+        "configurator",
+        // Single column below the fork (a plain utility — emits reliably). Past it
         // the DESKTOP TWO-COLUMN layout (stage 1fr + the aside band) comes from
         // the PRECOMPILED `[data-slot="configurator"]` rule in configurator.css,
         // not a content-scanned arbitrary utility. The
@@ -185,17 +237,45 @@ const containerClass = computed(() =>
         // floor so a percentage/`h-full` stage child cannot collapse to 0 — the
         //  mobile 0×0 fix) → controls (the 1fr remainder, scrolls
         // internally). When no gallery renders the first `auto` row collapses to 0.
-        // At `lg`+ the configurator.css rules reset the template to the two-column
-        // geometry (per `data-gallery`).
+        // Past the fork the configurator.css rules reset the template to the
+        // two-column geometry (per `data-gallery`).
         "grid-rows-[auto_minmax(var(--configurator-stage-min,18rem),auto)_minmax(0,1fr)]",
         "min-h-0",
-        props.class,
     ),
 );
 
-// Inline custom props projected onto the root.
+/*
+ * The expand HOST. `<component :is>` rather than a `v-if`/`v-else` pair, because the
+ * alternative is two copies of the whole studio markup and the copies drift.
+ * Un-expandable, the host is a `display: contents` div: present in the tree, absent
+ * from layout, so the shell's box is unchanged whether the affordance is on or off.
+ */
+const expandHost = computed(() => (props.expandable ? ExpandableContainer : "div"));
+const expandHostClass = computed(() =>
+    props.expandable ? "configurator-expand-host" : "contents",
+);
+const expandHostProps = computed(() =>
+    props.expandable
+        ? {
+              open: expanded.value,
+              "onUpdate:open": (value: boolean) => {
+                  expanded.value = value;
+              },
+              expandLabel: props.expandLabel,
+              collapseLabel: props.collapseLabel,
+          }
+        : {},
+);
+
+/* Expanded, the gallery is forced `top` — see the `expandable` prop docstring. The
+   consumer's own `galleryPlacement` is untouched and returns on collapse. */
+const resolvedGalleryPlacement = computed<ConfiguratorGalleryPlacement>(() =>
+    props.expandable && expanded.value ? "top" : props.galleryPlacement,
+);
+
+// Inline custom props projected onto the SHELL (they inherit to the whole studio).
 //
-// The Configurator root publishes its resolved panel corner
+// The Configurator shell publishes its resolved panel corner
 // (`--radius-panel`, painted by `rounded-panel`)
 // the containerClass paints) as --radius-ctx + its section inset (--configurator-pad-inline)
 // as --radius-inset, so a nested `.configurator-layer` section DERIVES its own corner
@@ -225,12 +305,11 @@ const containerStyle = computed(() => {
 // configurator.css swap grid columns while the source and tab order remain
 // stage→aside. The default `right` placement follows natural source order.
 
-// The aside's vertical/horizontal rules follow the side: on the right the
-// hairline sits on its left edge (`lg:border-l`); flipped left, on its right
-// edge (`lg:border-r`). The mobile top border is side-agnostic.
-const asideBorderClass = computed(() =>
-    props.asideSide === "left" ? "lg:border-r lg:border-l-0" : "lg:border-l",
-);
+// The aside's hairline follows the side — but it is no longer a `lg:border-l` /
+// `lg:border-r` pair here, because those are VIEWPORT utilities and the columns they
+// divide are now decided by the studio's own width. The stacked `border-t` stays on
+// the element; the side rule lives in the same `@container` block that places the
+// columns (configurator.css §4), so the seam and the split can never disagree.
 
 // The controls column uses <FadingScroll axis="y">. The
 // `never` mode does NOT scroll (the host owns overflow — a popover/sheet host),
@@ -242,12 +321,17 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
 </script>
 
 <template>
+    <!-- The expand host: <ExpandableContainer> when `expandable`, otherwise a
+         `display: contents` div that costs nothing. See `expandHost` above. -->
+    <component :is="expandHost" v-bind="expandHostProps" :class="expandHostClass">
+    <!-- THE SHELL — the plate, and the studio's SIZE CONTAINER (configurator.css
+         §0). Everything inside keys on THIS box's inline size, never the window. -->
+    <div :class="shellClass" :style="containerStyle">
     <section
         data-slot="configurator"
         :data-aside-side="asideSide"
-        :data-gallery="galleryPlacement"
+        :data-gallery="resolvedGalleryPlacement"
         :class="containerClass"
-        :style="containerStyle"
     >
         <!-- ── Preset GALLERY ────────────────
              The gallery is a SECTION-level child (no longer trapped inside the
@@ -324,12 +408,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
              OUT to a section-level child (grid-placed); the aside now holds the
              controls body + the optional footer. -->
         <aside
-            :class="
-                cn(
-                    'configurator-aside flex min-h-0 min-w-0 flex-col border-t lg:border-t-0',
-                    asideBorderClass,
-                )
-            "
+            class="configurator-aside flex min-h-0 min-w-0 flex-col border-t"
         >
             <!-- Controls column (layered config body) —
                  the `auto`/`always` scroll modes render the <FadingScroll axis="y">
@@ -379,4 +458,6 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
             </div>
         </aside>
     </section>
+    </div>
+    </component>
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type HTMLAttributes } from "vue";
+import { computed, useId, type HTMLAttributes } from "vue";
 import { RotateCcw } from "@lucide/vue";
 import { Label } from "../label";
 import { cn } from "../_shared/class-names";
@@ -46,7 +46,7 @@ import { useOptionalConfiguratorSize, type ConfiguratorSize } from "./size";
  * interchangeable — they emphasize DIFFERENT features:
  *  - **ConfiguratorRow** (this) — for TOKEN, PRESET controls. Carries the
  *    token-`name` reference, the opt-in `reset` affordance (`canReset`), and the
- *    three-rung `size` axis (local-prop-over-inject). No a11y for/id wiring.
+ *    three-rung `size` axis (local-prop-over-inject).
  *  - **LabeledField** — for form controls. Carries stable label, description,
  *    error, requirement, state, and layout associations without styling the control.
  *
@@ -84,6 +84,24 @@ const emit = defineEmits<{
     (e: "reset"): void;
 }>();
 
+/*
+ * THE LABEL ANCHOR.
+ *
+ * The row's label was a floating `<Label>` with no id: visually attached to the
+ * control beneath it, unattached to it in the accessibility tree. Every slotted
+ * control therefore had to carry its own duplicate name or go unnamed, and the row's
+ * own doc used to say so ("No a11y for/id wiring") as though it were a design.
+ *
+ * `for`/`id` is not available: the row does not own the control and cannot know
+ * which descendant is labelable — a `<Slider>` renders its thumb several levels
+ * down, a swatch group has no single control at all. `aria-labelledby` is the
+ * mechanism that works without that knowledge, so the row mints the id and HANDS IT
+ * OUT: `<ConfiguratorRow #default="{ labelledBy }">` binds it onto whatever the
+ * control actually is. Same name, same shape and same slot-prop vocabulary as
+ * `LabeledField` — one idiom for "the label is up here, the control is yours".
+ */
+const labelId = `${useId()}-label`;
+
 // Prop wins over inject. Inject is a ComputedRef so reactive size
 // swaps (e.g., viewport-driven host) propagate without remount. The
 // optional helper returns `null` when no ancestor `<Configurator>`;
@@ -110,7 +128,10 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
                      sub-label below (the mono `name` span) is the tertiary
                      mono-caption rung — the three-rung label hierarchy reads
                      section → row → token. -->
-                <Label class="truncate text-small font-medium text-foreground">
+                <Label
+                    :id="labelId"
+                    class="truncate text-small font-medium text-foreground"
+                >
                     {{ label }}
                 </Label>
                 <!-- The SECONDARY label (L14 double-label) — a descriptive sans rung
@@ -141,7 +162,7 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
         </div>
         <!-- Establish a definite, shrinkable inline size for the slotted token control. -->
         <div class="flex w-full min-w-0 items-center [&>*]:min-w-0 [&>*]:w-full [&>*]:flex-1">
-            <slot />
+            <slot :labelled-by="labelId" />
         </div>
         <p v-if="description" class="text-micro leading-snug text-muted-foreground/80">
             {{ description }}

@@ -9,7 +9,6 @@
         >
             <div
                 class="expandable-container"
-                :class="{ 'glass-overlay': open }"
                 :data-state="open ? 'expanded' : 'collapsed'"
                 :data-surface="open ? surface : undefined"
                 :role="open ? 'dialog' : undefined"
@@ -101,6 +100,22 @@ import type { Surface } from "../_shared/axes";
 import { FOCUSABLE_SELECTOR } from "../_shared/focus";
 
 defineOptions({ inheritAttrs: false });
+
+/*
+ * THE ROOT CARRIES NO GLASS RUNG, and the omission is the design. This element IS
+ * the world scrim when open, and `.glass-overlay` carries
+ * `backdrop-filter: var(--glass-blur-overlay)` — which would put every expanded
+ * subtree, live GPU stages included, inside a filtered compositing group. That is
+ * precisely what the configurator's material discipline forbids
+ * (`configurator/styles.css` §0: "the stage remains outside every filtered
+ * ancestor"), and the scrim takes no rung on the glass ladder in any case. It paints
+ * `--overlay-scrim` and nothing else; a consumer's own plate paints INSIDE
+ * `[data-part="panel"]`, where it belongs.
+ *
+ * The template below is comment-free on purpose: `<FocusScope as-child>` merges a
+ * SINGLE child vnode, and a template comment is a vnode. One added comment cost this
+ * component its focus trap and its unmount — measured, not theorised.
+ */
 
 const props = withDefaults(
     defineProps<{

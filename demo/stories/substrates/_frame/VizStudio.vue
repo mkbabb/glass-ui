@@ -74,7 +74,13 @@ const configuratorClass = computed(() =>
 
 <template>
     <StoryPage>
-        <StorySection :heading="heading" :label="label" :blurb="blurb">
+        <!-- `span="full"`: a studio is the prop's own "stage" case
+             (StorySection.vue:23-32). Joining the cel run put the whole instrument —
+             stage, gallery and a 300-400px inspector — inside a 21rem (336px) track,
+             which is narrower than the inspector alone. This is the consumer half of
+             the same correction as the configurator's container re-key: the studio
+             asks for the width it needs, and then measures the width it got. -->
+        <StorySection span="full" :heading="heading" :label="label" :blurb="blurb">
             <!-- stage LEFT, controls RIGHT on desktop. The
                  `aside-side="right"` is the <Configurator> default, pinned here so
                  the studio's controls-right placement is a recorded contract the π
@@ -83,6 +89,7 @@ const configuratorClass = computed(() =>
                  arbitrary utility). Below `lg` the controls stack below the stage. -->
             <Configurator
                 :aside-side="'right'"
+                expandable
                 :gallery-placement="galleryPlacement"
                 :scroll-mode="scrollMode"
                 :presets="presets"
