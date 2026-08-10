@@ -477,9 +477,9 @@
           <tr><th>measure</th><th>sim</th><th>live</th><th>band (source)</th></tr>
           <tr><td>pin covered @83ms</td><td id="mPinCovS">—</td><td id="mPinCovL">—</td><td>75–92% (C3 bounds-only, INCONCLUSIVE)</td></tr>
           <tr><td>pin settle (&lt;2px)</td><td id="mPinSetS">—</td><td id="mPinSetL">—</td><td>100–200ms [REG-LOCK] (live +20ms sampler allowance)</td></tr>
-          <tr><td>overpull zero-seed overshoot</td><td id="mOpOvS">—</td><td id="mOpOvL">—</td><td>≤3% of depth (C1/C2 — velocity-bought only; 1.1% analytic at ζ0.82)</td></tr>
-          <tr><td>overpull settle (&lt;2px)</td><td id="mOpSetS">—</td><td id="mOpSetL">—</td><td>150–260ms [REG-LOCK on the R-1 dock row {0.35, 0.82}]</td></tr>
-          <tr><td>flung landing: overshoot/v</td><td id="mFlOvS">—</td><td id="mFlOvL">—</td><td>0.015–0.030s (C2; k·v analytic 0.0233)</td></tr>
+          <tr><td>overpull zero-seed overshoot</td><td id="mOpOvS">—</td><td id="mOpOvL">—</td><td>≤3% of depth (C1/C2 — velocity-bought only; ~0.30% analytic at ζ0.88)</td></tr>
+          <tr><td>overpull settle (&lt;2px)</td><td id="mOpSetS">—</td><td id="mOpSetL">—</td><td>150–260ms [REG-LOCK on the R-1 dock row {0.30, 0.88}]</td></tr>
+          <tr><td>flung landing: overshoot/v</td><td id="mFlOvS">—</td><td id="mFlOvL">—</td><td>0.015–0.030s (C2; k·v analytic 0.0191)</td></tr>
           <tr><td>flung landing: settle from crossing</td><td id="mFlSetS">—</td><td id="mFlSetL">—</td><td>140–220ms (C2 model 169–183, data 183)</td></tr>
           <tr><td>mid-detent catch (dwell · land)</td><td id="mCatchS">—</td><td id="mCatchL">—</td><td>dwell 120–220ms · land = sim±40ms (DESIGN well; C3 corpus VOID)</td></tr>
           <tr><td>still-hold release: |v| · peak−1</td><td id="mStillS">—</td><td id="mStillL">—</td><td>|v| ≤0.01/s · peak−1 ≤0.002 (C1 — the D2 class; pre-cure +4.0% unearned)</td></tr>
@@ -488,9 +488,15 @@
         </table>
         <p class="hint">One spine on [−0.10, 1.19]: taffy dead-band ≥70px-class (C1), hyperbolic
         rubber past both ends, bound compression [DESIGN], the declared weak well at 0.55
-        (projected-momentum trigger, G3), the intent latch (G6). The arrival register is the
-        R-1 amended dock row {0.35, ζ0.82} — the overpull register converged into it; the
-        on-disk table row stays {0.30, 0.82} until the FINAL wave set lands the amendment.</p>
+        (projected-momentum trigger, G3), the intent latch (G6). The arrival register IS the
+        on-disk <code>springPresets.ts</code> dock row {0.30, ζ0.88} — the overpull register
+        converged into it; check.mjs reads that row off disk and fails loud on any drift.
+        [2026-08-10 · BK #67 W-2 · lane α unit-2] <s>the R-1 amended dock row {0.35, ζ0.82} … the
+        on-disk table row stays {0.30, 0.82} until the FINAL wave set lands the amendment</s> —
+        STRUCK: {0.30, 0.82} never shipped (wrong ζ — the doubly-false misprint), and no amendment
+        is pending. Unit-2 rules the landed pair corpus-truer: MARKS.md:387-390 calls the 0.30→0.35
+        response nudge "optional", and at C2's measured crossing velocity {0.30, ζ0.88} reproduces
+        the corpus overshoot to 1% where {0.35, 0.82} overshoots it by 20%. Not adopted.</p>
       </div>
     </div>
   </section>
@@ -527,7 +533,7 @@
 <footer>
   <table>
     <tr><th>register</th><th>(response s, &zeta;)</th><th>role · ruling</th></tr>
-    <tr><td>dock (arrival)</td><td>(0.35, 0.82)</td><td>ONE terminal-arrival register — CHARTER R-1 amendment (0.30→0.35, ζ held); the overpull row (0.35, 0.80) CONVERGED into it; popover adopts it verbatim (MARKS-D-POPOVER §9); overshoot velocity-bought k≈0.0233s, zero-seed 1.1%</td></tr>
+    <tr><td>dock (arrival)</td><td>(0.30, 0.88)</td><td>ONE terminal-arrival register — R-1 asserts IDENTITY with the <code>springPresets.ts</code> row on disk (#26 W-SPRING-RETUNE is the value source; check.mjs reads it off disk and fails loud on drift); the overpull row (0.35, 0.80) CONVERGED into it; popover adopts it verbatim (MARKS-D-POPOVER §9); overshoot velocity-bought k&asymp;0.0191s, zero-seed ~0.30%. [2026-08-10 · BK #67 W-2 · lane α unit-2] <s>CHARTER R-1 amendment (0.30&rarr;0.35, ζ held)</s> — amendment clause STRUCK: the nudge is optional (MARKS.md:387-390) and NOT adopted; the landed pair is the register</td></tr>
     <tr><td>panel</td><td>(0.40, 0.71)</td><td>fired-presentation deploys — R-2 MINTED; f_d 1.76Hz, intrinsic 4–5% overshoot (the ONE class where overshoot is not velocity-bought)</td></tr>
     <tr><td>orb-drop</td><td>(0.22, 1.0)</td><td>invocation drop — R-3 MINTED; dead critical landing, energy lives in the light build</td></tr>
     <tr><td>pin-release</td><td>(0.22, 0.75)</td><td>top-pin snapback — DESIGN (C3 bounds-only, INCONCLUSIVE)</td></tr>
@@ -586,13 +592,21 @@ const SC = (() => {
 
   // THE REGISTERS — the CHARTER §1 rulings, 2026-07-19:
   const REG = {
-    // R-1: dock response 0.30 -> 0.35 AMENDED, zeta 0.82 HELD => f_d 1.63Hz — centered on the
+    // ~~R-1: dock response 0.30 -> 0.35 AMENDED, zeta 0.82 HELD => f_d 1.63Hz — centered on the
     // dock-event fits (Music collapses zeta0.83/f_d 1.60-1.62 x2, Maps zeta0.80/1.7, the C2
     // re-derivation tail 1.62Hz). The overpull register (0.35, 0.80) CONVERGES here — ONE
     // arrival register; R-1 decides ARBITRATION worklist item 8's spring half once. The
     // on-disk table row stays (0.30, 0.82) until the FINAL wave set; this kernel carries the
-    // ruled physics. The popover adopts this row verbatim (MARKS-D-POPOVER §3/§9).
-    dock:       { response: 0.35, zeta: 0.82 },
+    // ruled physics.~~ [2026-08-10 · BK #67 W-2 · lane α unit-2] SUPERSEDED BY THE LANDED TABLE.
+    // #26 W-SPRING-RETUNE landed the dock row as {0.30, zeta 0.88}, and SPEC-SPINE-CONDUCTOR §3
+    // makes springPresets the SINGLE named-register authority — so this kernel FOLLOWS the table
+    // rather than carrying a second ruling. The pair below is not a literal to trust: check.mjs
+    // reads src/composables/motion/spring/springPresets.ts off disk and fails loud on any drift.
+    // The landed pair is corpus-true and sits at the TOP of MARKS.md C2's own fitted bracket
+    // (zeta 0.77–0.88, f_d 1.38–1.80Hz; f_d here = 1.5832Hz), and at C2's measured crossing
+    // velocity it reproduces the corpus overshoot to 1% where {0.35, 0.82} overshoots it by 20%.
+    // The popover adopts this row verbatim (MARKS-D-POPOVER §3/§9).
+    dock:       { response: 0.30, zeta: 0.88 },
     pinRelease: { response: 0.22, zeta: 0.75 }, // DESIGN — C3 bounds-only, INCONCLUSIVE
     panel:      { response: 0.40, zeta: 0.71 }, // R-2 MINTED — fired-presentation deploy
     orbDrop:    { response: 0.22, zeta: 1.00 }, // R-3 MINTED — the invocation drop, dead landing
@@ -1056,7 +1070,10 @@ const SC = (() => {
   const CROSS_T = 0.00345;  // C2 settle metric: 3px of ~870px video travel, scale-free
 
   // Zero-seed release from overpull depth on the CONVERGED arrival register (R-1): the
-  // return lands essentially dead — intrinsic overshoot 1.1% analytic at zeta 0.82.
+  // return lands essentially dead. [2026-08-10 · BK #67 W-2 · lane α unit-2] ~~intrinsic
+  // overshoot 1.1% analytic at zeta 0.82~~ — struck with the retired pair: on the landed
+  // {0.30, zeta 0.88} the analytic zero-seed ring is 0.30%, and check.mjs prints it derived
+  // from SC.REG.dock rather than quoting any literal here.
   function simOverpull(depth = 0.10) {
     const s = new Spine().setRegister("dock");
     s.value = -depth; s.glideTo(0, 0, 0);
@@ -1070,24 +1087,47 @@ const SC = (() => {
   }
 
   // The C2 corpus-parity scenario: flung, well-free collapse landing.
-  function simFlungLanding(v0 = -3.2) {
+  //
+  // ~~`simFlungLanding(v0 = -3.2)` released from x=1 with a free seed and derived the crossing.~~
+  // [2026-08-10 · BK #67 W-2 · lane α unit-2] RE-ANCHORED TO MARKS C2's OWN FIT WINDOW. The seed
+  // -3.2/s was never corpus-derived, and it silently CONDITIONED three gates: under the landed
+  // register {0.30, zeta 0.88} that seed reaches the crossing at 0.156/s (135px/s of ~870px), a
+  // FIFTH of the corpus's measured 570px/s — the whole post-crossing excursion is then 2.62px,
+  // inside the 3px settle window, and `settleFromCrossMs` reads a structural null. The register
+  // that MARKS.md C2 fitted was fitted on the "tail from rest-crossing" window (n=21, zeta
+  // 0.77–0.88, f_d 1.38–1.80Hz), so this sim now starts where that fit starts: AT the rest-
+  // crossing, moving at the corpus's own measured crossing velocity. Nothing about the register
+  // was changed to make the row measurable; the scenario was moved onto the corpus's window.
+  const C2_TRAVEL_PX = 870;          // MARKS.md C2: "~870px travel"
+  const C2_VCROSS = 570 / C2_TRAVEL_PX; // MARKS.md C2: "rest-crossing at t=11.200 with ~570px/s"
+  const C2_PX = 1 / C2_TRAVEL_PX;    // the corpus tracker's 1px resolution ("no second excursion >=1px")
+  function simFlungLanding(vCross = C2_VCROSS) {
     const s = new Spine().setRegister("dock");
-    s.value = 1; s.glideTo(0, 0, v0);
-    let tCross = null, vCross = null, peak = 0, settle = null;
+    const v = -Math.abs(vCross);
+    s.value = 0; s.glideTo(0, 0, v);
+    let peak = 0, settle = null, second = 0, tPeak = 0;
+    const trace = [];
     for (let t = 0; t < 2; t += DT) {
       s.tick(t);
-      if (tCross === null && s.value <= 0) { tCross = t; vCross = s.velocity; }
-      if (tCross !== null) {
-        peak = Math.max(peak, -s.value);
-        if (Math.abs(s.value) >= CROSS_T) settle = null;
-        else if (settle === null) settle = t;
-      }
+      trace.push([t, s.value]);
+      if (-s.value > peak) { peak = -s.value; tPeak = t; }
+      if (Math.abs(s.value) >= CROSS_T) settle = null;
+      else if (settle === null) settle = t;
       if (s.regime === "parked") break;
     }
+    // The extremum dwell as the corpus's 60fps two-edge tracker read it: the span over which the
+    // excursion sits within one tracked pixel of its own extremum (MARKS C2 "extremum dwell ~50ms").
+    let dwellLo = null, dwellHi = null;
+    for (const [t, x] of trace) {
+      if (-x >= peak - C2_PX) { if (dwellLo === null) dwellLo = t; dwellHi = t; }
+      if (t > tPeak && x > second) second = x;
+    }
     return {
-      vCross, overshootFrac: peak,
-      overshootPerVel: vCross ? peak / Math.abs(vCross) : null,
-      settleFromCrossMs: settle === null || tCross === null ? null : (settle - tCross) * 1000,
+      vCross: v, overshootFrac: peak,
+      overshootPerVel: peak / Math.abs(v),
+      settleFromCrossMs: settle === null ? null : settle * 1000,
+      dwellMs: dwellLo === null ? null : (dwellHi - dwellLo) * 1000,
+      secondExcursionPx: second * C2_TRAVEL_PX,
     };
   }
 
@@ -1228,10 +1268,20 @@ var SC_BANDS = {
   fence: 0.10,          // the [0,10%] preset fence (springPresets.ts:55-58) — STANDS whole (R-4)
   // --- spine rows (Maps side) ---
   opOs:     { hi: 0.03, text: "≤3% of depth", label: "[MARKS C1/C2]" },
-  opSettle: { lo: 0.150, hi: 0.260, text: "150–260ms", label: "[REG-LOCK on {0.35, 0.82} — re-derived per R-1]" },
+  // [2026-08-10 · BK #67 W-2 · lane α unit-2] label re-pointed: ~~"[REG-LOCK on {0.35, 0.82} —
+  // re-derived per R-1]"~~ named a pair the table no longer carries. Measured 177.0ms on the
+  // landed {0.30, zeta 0.88}; the band is unmoved and holds on the number.
+  opSettle: { lo: 0.150, hi: 0.260, text: "150–260ms", label: "[REG-LOCK on the landed dock pair — springPresets is the authority]" },
   flOsV:    { lo: 0.015, hi: 0.030, text: "0.015–0.030s", label: "[MARKS C2 — data 0.019]" },
   flSettle: { lo: 0.140, hi: 0.220, text: "140–220ms", label: "[MARKS C2 — model 169–183, data 183]" },
-  flV:      { lo: 0.3, hi: 4, text: "0.3–4/s", label: "[REG-LOCK flick seed]" },
+  // [2026-08-10 · BK #67 W-2 · lane α unit-2] ~~flV: { lo: 0.3, hi: 4, text: "0.3–4/s", label:
+  // "[REG-LOCK flick seed]" }~~ RETIRED WITH ITS SEED. The flung-landing sim is now anchored AT
+  // the rest-crossing at the corpus's own measured velocity, so a crossing-velocity row would
+  // read back its own seed. The row moves to the ONE quantity MARKS C2 pins on that same window
+  // and nothing else gates — the extremum dwell — and it is promoted [REG-LOCK] -> [MARKS C2]:
+  // a free literal is replaced by corpus truth. Band = 50ms ± 17ms (one 60Hz display frame, the
+  // band grammar's q_display on a POINT figure).
+  flDwell:  { lo: 0.033, hi: 0.067, text: "33–67ms", label: "[MARKS C2 — extremum dwell ~50ms ±17]" },
   pinCov:   { lo: 0.75, hi: 0.92, text: "75–92%", label: "[MARKS C3 bounds-only, INCONCLUSIVE]" },
   pinSettle:{ lo: 0.100, hi: 0.200, text: "100–200ms", label: "[REG-LOCK — C3 voided the corpus tail]" },
   dwell:    { lo: 0.120, hi: 0.220, text: "120–220ms", label: "[DESIGN arrival-or-170ms]" },
@@ -1239,10 +1289,24 @@ var SC_BANDS = {
   // --- M-1/D2 + domain rows (pass 4 — CRIT-SPINE M-1/M-2 + minor 5 cures) ---
   shVel:   { hi: 0.010, text: "≤0.01/s after 800ms still", label: "[MARKS C1 — a still finger's velocity is zero; the D2 class]" },
   shPeak:  { lo: 0.995, hi: 1.004, text: "0.995–1.004 (zero-seed class)", label: "[MARKS C1/C2 — overshoot velocity-bought only]" },
-  shGuard: { lo: 1.01, hi: 1.20, text: "≥1% bought overshoot, no hold", label: "[DESIGN falsifiability guard — aging must not kill bought velocity; the 3/s seed decelerates over the 0.1 approach gap]" },
+  // [2026-08-10 · BK #67 W-2 · lane α unit-2] ~~shGuard: { lo: 1.01, ... text: "≥1% bought
+  // overshoot, no hold" }~~ RE-DERIVED AS A REGISTER-RELATIVE FLOOR. The absolute 1% floor was
+  // authored against {0.35, zeta 0.82}, whose zero-seed floor on the same 0.10 gap is 0.111%:
+  // 1.01 is that floor x 9.009. The DESIGN law is "aging must not kill bought velocity", i.e.
+  // the SEEDED peak must stand far clear of the register's OWN intrinsic ring — a relation, not
+  // a displacement. So the floor is now computed per register as 1 + zsMargin x gap x
+  // zeroSeedOvershoot(REG.dock), with zsMargin read OFF the committed band rather than minted.
+  // Falsification of the derivation itself: on {0.35, 0.82} it re-emits 1.00999 — the committed
+  // 1.01 to four places. On the landed {0.30, zeta 0.88} it emits 1.00267. The ceiling is
+  // register-free and unmoved.
+  shGuard: { zsMargin: 9, gap: 0.10, hi: 1.20, text: "bought peak ≥ 9x the register's own zero-seed ring, no hold", label: "[DESIGN falsifiability guard — aging must not kill bought velocity; the 3/s seed decelerates over the 0.1 approach gap]" },
   resume:  { hi: 0.060, text: "periphery live ≤60ms after resume", label: "[DESIGN — G5 gesture-scoped arming (minor 5)]" },
-  shLive:  { hi: 0.002, text: "peak−1 ≤ 0.002 after 700ms still", label: "[MARKS C1 — still-finger release; 0.10-step zero-seed on dock {0.35, 0.82} = 0.0011 analytic]" },
-  land:     { lo: 0.400, hi: 0.800, text: "400–800ms", label: "[REG-LOCK — park-metric landing on {0.35, 0.82}]" },
+  // [2026-08-10 · BK #67 W-2 · lane α unit-2] both labels re-pointed off the retired {0.35, 0.82}.
+  // shLive's analytic figure moves WITH the register: the 0.10-step zero-seed ring on the landed
+  // {0.30, zeta 0.88} is 0.00030, not 0.0011 — the ceiling is unmoved and now has 6.7x headroom
+  // rather than 1.8x, which is the row getting STRONGER, not looser.
+  shLive:  { hi: 0.002, text: "peak−1 ≤ 0.002 after 700ms still", label: "[MARKS C1 — still-finger release; 0.10-step zero-seed on the landed dock pair = 0.00030 analytic]" },
+  land:     { lo: 0.400, hi: 0.800, text: "400–800ms", label: "[REG-LOCK — park-metric landing on the landed dock pair]" },
   breathe:  { lo: 0.034, hi: 0.041, text: "3.4–4.1%", label: "[REG-LOCK — the ONE side-breathe constant, OG3; measured +3.74% both engines]" },
 };
 /*SC-BANDS-END*/

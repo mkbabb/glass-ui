@@ -434,18 +434,73 @@ check row; OG4 — "consume SpringProgress" defined per register (§3).
 
 ## 9. The FINAL-wave-set orders from this spec (EXACT-TEXT class; src untouched until then)
 
-1. `springPresets.ts`: dock row response 0.30 → **0.35** (ζ 0.82 held), + the **panel**
+1. ~~`springPresets.ts`: dock row response 0.30 → **0.35** (ζ 0.82 held)~~, + the **panel**
    {0.40, 0.71} and **orb-drop** {0.22, 1.0} rows with the charter's comment texts (R-2/R-3
    verbatim). Consumers update per the consumer-updates ruling.
+
+   > **[2026-08-10 · BK #67 W-2 · lane α unit-2] The dock half of row 1 is SUPERSEDED AND CLOSED
+   > THE OTHER WAY; the panel/orb-drop halves LANDED.** #26 W-SPRING-RETUNE shipped the dock row
+   > as **{0.30, ζ0.88}** (`springPresets.ts:84-87`, verified on disk this seat) — not 0.35/0.82.
+   > The order is not re-issued, because the landed pair was measured **corpus-truer than the one
+   > this row asks for**. At MARKS.md C2's own measured crossing velocity (570px/s of ~870px), on
+   > C2's own fit window ("tail from rest-crossing", n=21, ζ 0.77–0.88, f_d 1.38–1.80Hz):
+   >
+   > | quantity | MARKS C2 datum | {0.35, ζ0.82} | **{0.30, ζ0.88} (landed)** |
+   > |---|---|---|---|
+   > | peak overshoot | +11px | 13.26px (+20.5%) | **10.88px (−1.1%)** |
+   > | overshoot per crossing vel | 0.02 s (data 0.019) | 0.02327 s | **0.01909 s** |
+   > | settle \|x\|<3px from crossing | 183ms (model 169–183) | 193ms | **161ms** |
+   > | extremum dwell | ~50ms | 43ms | **41ms** |
+   > | second excursion | none ≥1px | 0.0000px | **0.0000px** |
+   > | f_d | tail bracket 1.38–1.80Hz | 1.6353Hz | **1.5832Hz** |
+   >
+   > Every figure produced by `prototypes/spine-conductor/check.mjs` this seat, never quoted. The
+   > register gate no longer names a pair at all: it reads `springPresets.ts` off disk (SPEC §3's
+   > single-named-register-authority law) and reds on drift from either side.
+   >
+   > Rows 2 and 4 are likewise closed without a byte — see their own brackets.
 2. `scheme-spring.css`: ONE regen pass re-deriving the header + curves from
    `SPRING_PRESETS` (the no-second-authority root) — kills the stale "dock: (0.68s,
    ζ=0.64)" comment at `scheme-spring.css:31` and lands the new rows' curves in the same
    stroke (R-4).
+
+   > **[2026-08-10 · BK #67 W-1 residue · lane α unit-2] DONE — nothing owed.** Detector, real
+   > exit code: `node scripts/regen-spring-tokens.mjs --check` → **exit 0**, emitting
+   > `--spring-dock: response=0.3s, ζ=0.88, settle=0.21s`. The refuted `{0.68, 0.64}` header is
+   > gone from `scheme-spring.css`; the generated job table at `:44` carries the landed rows.
+   > This is what retires **DOC-TRUTH T1** by the `FINAL.md:32` seam clause's own first branch.
+
 3. `animations.css` `glass-reveal-out`: the mirrored exit decomposes to the fade-led
    three-clock grammar per §2.5 (keyframes kind preserved for reka's unmount gate).
-4. `useDrawerSnap.ts:361-365`: the velocity-projection cure per §2.8, verbatim formula.
+
+   > **[2026-08-10 · BK #67 W-6 · lane α unit-2] STANDS OPEN, and the byte is REFUSED-ON-FENCE,
+   > not on merit.** The surface is live and unstarted — `src/styles/animations.css:157`
+   > (`@keyframes glass-reveal-out`) with its reduced twin at `:186`, and the mirroring
+   > commentary it must stop being at `src/styles/glass/reveal.css:174,188`. That path is outside
+   > lane α's stated fence (`src/components/dock/**` · IOS27-MICRO surfaces ·
+   > `src/components/search/**` → `src/composables/search/` · docs canon/relay), and three lanes
+   > were writing this tree concurrently while this seat ran. One driver word ("α owns the #67
+   > src surfaces") lands it; the census above is the whole of the scouting it needs.
+
+4. ~~`useDrawerSnap.ts:361-365`: the velocity-projection cure per §2.8, verbatim formula.~~
+
+   > **[2026-08-10 · BK #67 W-6 · lane α unit-2] DISCHARGED BY SUBTRACTION — the surface is
+   > gone.** Detectors, both empty: `find src -name 'useDrawerSnap*'` and
+   > `grep -rn 'useDrawerSnap' src/`. `src/components/drawer/` does not exist either. The drawer's
+   > private register died with it — `springPresets.ts:138` records `DRAWER_SNAP` as *"DISCHARGED
+   > BY SUBTRACTION: the sheet's detent engine names `bloom` and `dock` from this table, so the
+   > private seventh register died with the file that held it rather than being ratified into
+   > one."* There is no velocity-projection cure to apply and no file to apply it to. This row
+   > closes; it is not carried.
+
 5. The `--scrub-t` publication name + channel-var names land with the registry sync (H-4);
    `--gl-t` dies, no alias.
+
+   > **[2026-08-10 · BK #67 W-2 · lane α unit-2] half DONE by subtraction, half born-RED and
+   > UNSTARTED.** `grep -rn -- '--gl-t\b' src/ demo/` → **empty**: the name to kill is already
+   > dead and no alias was left behind, so the clean-break half needs no act. `--scrub-t` is
+   > **0 files in `src/`, 0 in `demo/`** — it publishes with the kernel port, which has not
+   > landed (see the W-2 port-readiness ledger in this unit's RECORD).
 
 ## 10. Honest remainders (worklist items 9–10 — carried, never upgraded)
 

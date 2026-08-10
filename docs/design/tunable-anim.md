@@ -59,13 +59,20 @@ Keep this table in sync with `SPRING_PRESETS` in
 `src/composables/motion/spring/springPresets.ts` — the figures below are a HAND mirror of
 that root; the `--spring-*` curves + `-settle` clocks are the generated mirror.
 
+> [2026-08-10 · BK #67 W-1 residue · DOC-TRUTH T9] the `dock` row read ~~`0.35, 0.82`~~ — a pair
+> this repo has never shipped. #26 W-SPRING-RETUNE landed `{0.30, ζ0.88}`; the generated mirror
+> agrees (`node scripts/regen-spring-tokens.mjs --check` → exit 0, `--spring-dock: response=0.3s,
+> ζ=0.88, settle=0.21s`), so only this HAND mirror was adrift. **T1 (`scheme-spring.css:31`) needs
+> no cure and RETIRES by the `FINAL.md:32` seam clause's own first branch** — the regen emits the
+> prose mirror and it is true. **T5 (`:134`) carries no figure** and is true as written.
+
 | spring | token | default (response, ζ) | bound (overshoot) | re-tune | PRM | live control |
 |---|---|---|---|---|---|---|
 | smooth | `--spring-smooth` | 0.58, 0.80 | ≤0.02 (kept sub-perceptual alive-peak) | table (identity) or `--spring-smooth` override | snap or intensity-scaled | the spring editor preview |
 | snappy | `--spring-snappy` | 0.48, 0.74 | ≤0.08; 90%-travel ∈ [0.55,0.70] of clock | table or override | snap | preview |
 | bouncy | `--spring-bouncy` | 0.60, 0.60 | ∈ [0.12,0.18] (the Apple band) | table or override | snap | preview |
 | gentle | `--spring-gentle` | 0.82, 1.00 | 0 (critically-damped, no overshoot) | table or override | snap | preview |
-| dock | `--spring-dock` | 0.35, 0.82 | ≤0.08 | table (`springPreset("dock")` — ONE row, no fence) | snap | preview |
+| dock | `--spring-dock` | 0.30, 0.88 | ≤0.08 | table (`springPreset("dock")` — ONE row, no fence) | snap | preview |
 | press | `--spring-press` | 0.20, 0.80 (iOS interactiveSpring) | ≤0.08 | table or override | snap (zero transform frames) | preview |
 
 ## Kind 2 — CLOCK (DERIVED-not-tunable)

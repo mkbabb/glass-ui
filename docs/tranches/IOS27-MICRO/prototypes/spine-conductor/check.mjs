@@ -24,6 +24,20 @@ const bm = html.match(/\/\*SC-BANDS-BEGIN\*\/([\s\S]*?)\/\*SC-BANDS-END\*\//);
 if (!bm) { console.error("FAIL: SC-BANDS block not found"); process.exit(1); }
 const B = new Function(`${bm[1]}; return SC_BANDS;`)();
 
+// [2026-08-10 · BK #67 W-2 · lane α unit-2] THE SINGLE NAMED-REGISTER AUTHORITY.
+// SPEC-SPINE-CONDUCTOR §3: "springPresets stays the single named-register authority." The R-1
+// gate below therefore stops asserting a literal pair and asserts IDENTITY WITH THE TABLE ON
+// DISK — the kernel FOLLOWS #26 W-SPRING-RETUNE's landed row, and any future retune reds this
+// battery instead of silently ageing it. No masking fallback: if the table cannot be read or
+// parsed, this throws rather than defaulting.
+const PRESETS_PATH = new URL("../../../../../src/composables/motion/spring/springPresets.ts", import.meta.url);
+function landedPreset(name) {
+  const src = readFileSync(PRESETS_PATH, "utf8");
+  const row = src.match(new RegExp(`name:\\s*"${name}",\\s*response:\\s*([\\d.]+),\\s*dampingFraction:\\s*([\\d.]+),`));
+  if (!row) throw new Error(`springPresets.ts carries no "${name}" row at ${PRESETS_PATH.pathname} — the register authority is unreadable`);
+  return { response: Number(row[1]), zeta: Number(row[2]) };
+}
+
 let failures = 0, gates = 0, infos = 0;
 function check(name, value, lo, hi, note = "") {
   gates++;
@@ -47,10 +61,12 @@ const ms = (s) => Number.isNaN(s) ? NaN : +(s * 1000).toFixed(1);
 console.log("=== The registers — CHARTER R-1/R-2/R-3 + the [0,10%] fence (R-4) ===");
 {
   const d = SC.REG.dock;
-  check("R-1 dock pair (response, ζ)", d.response === 0.35 && d.zeta === 0.82 ? 1 : 0, 1, 1,
-    "[R-1] 0.30→0.35 AMENDED, ζ HELD; overpull register CONVERGED — no second arrival authority");
+  const landed = landedPreset("dock");
+  check("R-1 dock pair (response, ζ)", d.response === landed.response && d.zeta === landed.zeta ? 1 : 0, 1, 1,
+    `[R-1 · springPresets.ts is the authority] kernel {${d.response}, ${d.zeta}} vs landed {${landed.response}, ${landed.zeta}} — #26 W-SPRING-RETUNE is the value source; no second arrival authority`);
   check("R-1 dock f_d (Hz)", SC.fD(d), B.dockFd.lo, B.dockFd.hi, `${B.dockFd.label} ${B.dockFd.text}`);
-  check("R-1 dock zero-seed overshoot", SC.zeroSeedOvershoot(d), 0, B.dockOs.hi, `${B.dockOs.label} — analytic ~1.1%`);
+  check("R-1 dock zero-seed overshoot", SC.zeroSeedOvershoot(d), 0, B.dockOs.hi,
+    `${B.dockOs.label} — analytic ~${(SC.zeroSeedOvershoot(d) * 100).toFixed(2)}% on the landed {${d.response}, ζ${d.zeta}} (derived from SC.REG.dock, never hand-pinned)`);
   check("k·v arrival gain (s)", SC.arrivalGain(d), B.kv.lo, B.kv.hi, `${B.kv.label} — popover attested 0.023–0.025`);
   const p = SC.REG.panel;
   check("R-2 panel f_d (Hz)", SC.fD(p), B.panelFd.lo, B.panelFd.hi, `${B.panelFd.label} — the roster's 0.30-0.35 slip corrected`);
@@ -73,7 +89,13 @@ console.log("=== The registers — CHARTER R-1/R-2/R-3 + the [0,10%] fence (R-4)
 // =====================================================================
 // 2. THE SPINE (Maps side) — F1's battery on the converged register
 // =====================================================================
-console.log("\n=== Overpull return — the CONVERGED arrival register {0.35, ζ0.82} (R-1; C1: no free springback) ===");
+// [2026-08-10 · BK #67 W-2 · lane α unit-2 · CURE] every printed register figure in this battery
+// is now DERIVED from SC.REG.dock (which R-1 above holds identical to springPresets.ts on disk)
+// rather than hand-pinned. ~~The header, the R-1 overshoot note and the still-hold peak note
+// carried the retired {0.35, ζ0.82} pair and its 1.1% / 1.00111 figures~~ — struck: that pair is
+// not the arrival register and printing it reproduced, inside this unit's own console, the exact
+// stale-literal drift the unit prosecutes at T9/T11b. A retune now moves this prose with the table.
+console.log(`\n=== Overpull return — the CONVERGED arrival register {${SC.REG.dock.response}, ζ${SC.REG.dock.zeta}} (R-1; C1: no free springback) ===`);
 {
   const op = SC.sims.overpull(0.10);
   check("zero-seed overshoot (frac of depth)", op.overshootPct, 0, B.opOs.hi, `${B.opOs.label} velocity-bought only`);
@@ -81,10 +103,15 @@ console.log("\n=== Overpull return — the CONVERGED arrival register {0.35, ζ0
 }
 console.log("\n=== Flung landing — corpus parity with C2 (the ONE free spring transient) ===");
 {
-  const fl = SC.sims.flungLanding(-3.2);
+  // [2026-08-10 · BK #67 W-2 · lane α unit-2] ~~SC.sims.flungLanding(-3.2)~~ — the seed is no
+  // longer supplied here. The sim is anchored at the rest-crossing at MARKS C2's own measured
+  // crossing velocity (570px/s of ~870px); see the kernel bracket. `?? NaN` is deliberate: a dead
+  // metric must read NaN and FAIL LOUD, never fall through `null/1000` to a plausible-looking 0.
+  const fl = SC.sims.flungLanding();
   check("overshoot per crossing vel (s)", fl.overshootPerVel, B.flOsV.lo, B.flOsV.hi, B.flOsV.label);
-  check("settle from rest-crossing (ms)", ms(fl.settleFromCrossMs / 1000), B.flSettle.lo * 1000, B.flSettle.hi * 1000, B.flSettle.label);
-  check("crossing velocity sane (/s)", Math.abs(fl.vCross), B.flV.lo, B.flV.hi, B.flV.label);
+  check("settle from rest-crossing (ms)", ms((fl.settleFromCrossMs ?? NaN) / 1000), B.flSettle.lo * 1000, B.flSettle.hi * 1000, B.flSettle.label);
+  check("extremum dwell (ms)", ms((fl.dwellMs ?? NaN) / 1000), B.flDwell.lo * 1000, B.flDwell.hi * 1000, B.flDwell.label);
+  info("second excursion (px of ~870)", +fl.secondExcursionPx.toFixed(4), "[MARKS C2 — \"No second excursion ≥1px\"; derived from the gated rows, reported not gated]");
 }
 console.log("\n=== Pin release (C3: bounds-only, INCONCLUSIVE — register (0.22, 0.75) is DESIGN) ===");
 {
@@ -510,7 +537,7 @@ console.log("\n=== M-1/D2 — park-mid-scrub stale velocity (MARKS C1: a still f
     for (let i = 0; i < 720 && !kern.isParked(); i++) clk.step();
     const peak = Math.max(...peaks);
     check("still hold: geometry peak", peak, B.shPeak.lo, B.shPeak.hi,
-      `${B.shPeak.label} — pre-cure 1.0401; NOTE the park epsilon (|x−t|<0.0015, |v|<0.02) snaps ~0.0004 off the 1.00111 analytic peak — this figure is trajectory+park, not pure trajectory (P4-AGG minor-4 disclosure)`);
+      `${B.shPeak.label} — pre-cure 1.0401; NOTE the park epsilon (|x−t|<0.0015, |v|<0.02) now swallows the WHOLE analytic peak ${(1 + B.shGuard.gap * SC.zeroSeedOvershoot(SC.REG.dock)).toFixed(5)} (${B.shGuard.gap} gap × the landed register's ${(SC.zeroSeedOvershoot(SC.REG.dock) * 100).toFixed(2)}% zero-seed ring, both derived from SC.REG.dock) — the measured figure is trajectory+park, not pure trajectory (P4-AGG minor-4 disclosure)`);
   }
   // (b) the falsifiability guard — NO hold: bought velocity must still buy overshoot
   {
@@ -520,8 +547,13 @@ console.log("\n=== M-1/D2 — park-mid-scrub stale velocity (MARKS C1: a still f
     kern.onFrame(() => peaks.push(kern.get("geometry")));
     kern.release(1, undefined, "dock");
     for (let i = 0; i < 720 && !kern.isParked(); i++) clk.step();
-    check("no hold: velocity still buys overshoot (guard)", Math.max(...peaks), B.shGuard.lo, B.shGuard.hi,
-      `${B.shGuard.label}`);
+    // [2026-08-10 · BK #67 W-2 · lane α unit-2] the floor is derived from the register under
+    // test, never pinned: 1 + zsMargin × gap × the register's OWN zero-seed ring. zsMargin is
+    // read off the committed band (1.01 was exactly 9.009× the {0.35, 0.82} zero-seed floor), so
+    // nothing is minted; on {0.35, 0.82} this rule re-emits 1.00999.
+    const zsFloor = 1 + B.shGuard.zsMargin * B.shGuard.gap * SC.zeroSeedOvershoot(SC.REG.dock);
+    check("no hold: velocity still buys overshoot (guard)", Math.max(...peaks), zsFloor, B.shGuard.hi,
+      `${B.shGuard.label} — floor ${zsFloor.toFixed(5)} = 1 + ${B.shGuard.zsMargin}×${B.shGuard.gap}×${SC.zeroSeedOvershoot(SC.REG.dock).toFixed(6)}`);
   }
   // (c) minor 5 — a mid-gesture park must never re-arm the periphery dead-time gate
   {

@@ -196,21 +196,42 @@ table — every other `(response, ζ)` read derives via `springPreset(name)`:
   SETTLE register's response/ζ), the floor every `useSpring` caller may override.
 - **`useSpringPress`** `(0.25, 0.7)` — the press-squish primitive default (a crisp
   short-response press settle, W-PRESS-UNIFY).
-- **`DOCK_SPRING`** `(0.35, 0.82)` — the dock expand/collapse morph register
-  (`dock/constants.ts`), DERIVED from the `dock` `SPRING_PRESETS` row via
-  `springPreset("dock")` (the no-second-authority fence — ONE table row feeds the CSS
-  token, the JS-driven morph, and the const; not a frozen hand-value).
-- **`DRAWER_SNAP`** `(0.32, 0.8)` — the drawer detent-snap register
-  (`drawer/constants.ts`), the drawer's OWN settle clock.
-- **`TIMELINE_HEAD`** `(0.34, 0.74)` — the `ScrubberTimeline` warm-glass lozenge
-  head-travel default (`ScrubberTimeline.vue` `HEAD_SPRING`) — a per-surface JS-only
-  register; the fast head clock the fill trails (BG.W-SPRING-REGISTER-TIDY).
-- **`TIMELINE_FILL`** `(0.46, 0.82)` — the `ScrubberTimeline` lane-fill trailing default
-  (`ScrubberTimeline.vue` `FILL_SPRING`) — a slower clock than the head so the fill
-  TRAILS the bead (liquid trailing).
-- **`TIMELINE_PRESS`** `(0.22, 0.7)` — the `ScrubberTimeline` grab-anticipation press
-  default (`ScrubberTimeline.vue` `PRESS_SPRING`) — the pointerdown squash feeding the
-  `--scale-press` dip.
+- **`DOCK_SPRING`** — the dock expand/collapse morph register (`dock/constants.ts`),
+  DERIVED from the `dock` `SPRING_PRESETS` row via `springPreset("dock")` (the
+  no-second-authority fence — ONE table row feeds the CSS token, the JS-driven morph,
+  and the const; not a frozen hand-value). **No pair is printed here on purpose:** the
+  row is the table's, and a figure copied beside a derivation is the derivation's first
+  lie. Read it at `springPresets.ts` or from `--spring-dock`.
+
+> [2026-08-10 · BK #67 W-1 residue · DOC-TRUTH T11b] `DOCK_SPRING` was printed as
+> ~~`(0.35, 0.82)`~~ in the same sentence that calls it "not a frozen hand-value" — a pair the
+> table has never carried. #26 W-SPRING-RETUNE's landed row is `{0.30, ζ0.88}`. The figure is
+> STRUCK rather than corrected, because `dock/constants.ts:11-14` already derives it and a second
+> printed copy can only drift again.
+>
+> **Four entries adjacent to it are FALSIFIED on disk by this same seat, and are STRUCK here with
+> their detectors rather than left standing. They are not this wave's to re-author** — the
+> positive rewrite of this §P7 list belongs to **#61 W-DOC-TRUTH**, which already carries #46's
+> routed sweep:
+> - ~~`DRAWER_SNAP (0.32, 0.8)` — `drawer/constants.ts`~~ · detector: `grep -rn 'DRAWER_SNAP' src/`
+>   → one hit, and it is `springPresets.ts:138` recording the register as *"DISCHARGED BY
+>   SUBTRACTION"*. `src/components/drawer/` does not exist.
+> - ~~`TIMELINE_HEAD (0.34, 0.74)` · `TIMELINE_FILL (0.46, 0.82)` · `TIMELINE_PRESS (0.22, 0.7)` —
+>   `ScrubberTimeline.vue`~~ · detector: `find src demo -name 'ScrubberTimeline*'` → empty;
+>   `grep -rn 'HEAD_SPRING\|TIMELINE_HEAD' src/` → empty. `springPresets.ts:128-131` records the
+>   legs as *"GONE with their SFC"*, the redesigned Timeline riding `springPreset("dock")`.
+> - ~~`useSpringPress (0.25, 0.7)`~~ · detector: `useSpringPress.ts:22,77-78` — the default is
+>   `PRESS.response` / `PRESS.dampingFraction` where `const PRESS = springPreset("press")`
+>   `= {0.20, 0.80}`. It is a DERIVED default, not a hand pair, and the printed one is neither.
+> - `useSpring (0.5, 0.86)` is the ONE entry that survives verification: `useSpring.ts:119-120`.
+>
+> One further finding, RECORDED not cured (it is #61's, and it is structural rather than a
+> figure): this §P7 closes by naming itself *"the SINGLE source the `proof:motion-one-clock` gate
+> reads its `OFF_SPINE_ALLOWLIST` + `SPRING_DEFAULTS_ALLOWLIST` against"*. Detector:
+> `grep -rn 'SPRING_DEFAULTS_ALLOWLIST\|OFF_SPINE_ALLOWLIST' scripts/ tests/` → **no hit**, and
+> `scripts/proof-motion-one-clock.mjs` is absent from the tree (it survives only inside
+> `.claude/worktrees/`). The device-free arm this list claims to feed is not on disk;
+> `tests-visual/motion-one-clock.spec.ts` (the π readback arm) is.
 
 A NEW hand-inlined `(response, ζ)` register TABLE (≥2 unsanctioned rows in one file)
 reds M1 — it should be a `SPRING_PRESETS` row read via `springPreset(name)`.
