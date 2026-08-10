@@ -181,6 +181,7 @@ defineExpose({
     pause: api.pause,
     resume: api.resume,
     isArmed: api.isArmed,
+    isSettled: api.isSettled,
     rendererStatus: api.rendererStatus,
 });
 </script>
@@ -192,9 +193,17 @@ defineExpose({
       class (`fixed inset-0`, etc.) lands on this root unobstructed — no
       `relative`/`fixed` collision.
     -->
+    <!--
+      `data-aurora-settled` is the SETTLE BEACON — present once the runtime armed, the
+      current config landed, and the ground→field entrance finished painting over it.
+      Captures wait on this attribute; a wall-clock sleep does not substitute, because
+      inside the entrance the field paints medium-independently and an early frame is
+      identical across every medium with no way to tell from the picture.
+    -->
     <div
         class="aurora-root block h-full w-full overflow-hidden"
         :data-aurora-substrate="resolvedRenderMode"
+        :data-aurora-settled="api.isSettled.value ? '' : undefined"
         :style="{ opacity: clampedOpacityCeiling }"
     >
         <!--

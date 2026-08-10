@@ -52,11 +52,14 @@ function flick(field: ReturnType<typeof usePointerVelocityField>): void {
 
 describe("the master tempo scalar (tick(0)) freezes the interactive field under PRM", () => {
     it("uses one medium-aware predicate for pointer writes and uniforms", () => {
+        // `swirl` is default-ON, so the medium-awareness is read UNDER the opt-out:
+        // with swirl off, `light` alone shapes nothing on smooth (no impasto to
+        // relight) and shapes real paint on a painterly body.
         expect(
             isAuroraPointerEnabled({
                 ...DEFAULT_AURORA_CONFIG,
                 medium: "smooth",
-                interactivity: { light: true },
+                interactivity: { swirl: false, light: true },
             }),
         ).toBe(false);
         expect(
@@ -70,7 +73,7 @@ describe("the master tempo scalar (tick(0)) freezes the interactive field under 
             isAuroraPointerEnabled({
                 ...DEFAULT_AURORA_CONFIG,
                 medium: "oil",
-                interactivity: { light: true },
+                interactivity: { swirl: false, light: true },
             }),
         ).toBe(true);
     });

@@ -11,12 +11,18 @@ export {
     type AuroraRenderMode,
     type ResolveRenderModeOptions,
 } from "./constants/renderMode";
-export { useAurora } from "./composables/useAurora";
+// `AURORA_SETTLE_MS` is the settle beacon's entrance budget — a capture consumer that
+// polls `[data-aurora-settled]` needs the same number for its timeout, and there is one.
+export { useAurora, AURORA_SETTLE_MS } from "./composables/useAurora";
 // Named return shape for useAurora.
 export type { UseAuroraReturn } from "./composables/useAurora";
 export { useCursorInteraction } from "./composables/useCursorInteraction";
 export { createAurora } from "./composables/runtime";
 export type { AuroraRuntimeMode, AuroraRuntimeOptions } from "./composables/runtime";
+// `isAuroraDriftLive` + `AURORA_DRIFT_FLOOR` are deliberately NOT re-exported here.
+// They are the render loops' own demand gate — three internal consumers, no consumer
+// question they answer — and a published export nobody outside can name a use for is
+// the surface bloat the overfit sweep exists to catch.
 export {
     DEFAULT_AURORA_CONFIG,
     PAPER_WASH_GROUND,

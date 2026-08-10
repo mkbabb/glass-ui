@@ -11,15 +11,16 @@
  *
  * `drawFrame` re-sends the per-frame cursor + time uniforms and issues the single
  * full-screen-triangle draw. `needsAnimation` is the demand gate: `false` under
- * reduced-motion (the static frame draws once, then parks), `false` at steady-state (all
- * four drift uniforms 0 AND the field settled — the next frame is pixel-identical), and
- * `true` while drift is live or the field is still easing (engagement, speed, burst,
- * attractor motion above ε).
+ * reduced-motion (the static frame draws once, then parks), `false` at steady-state (no
+ * drift axis above its own amplitude floor AND the field settled — the next frame is
+ * pixel-identical), and `true` while drift is live or the field is still easing
+ * (engagement, speed, burst, attractor motion above ε). The drift half is
+ * `isAuroraDriftLive` — the ONE predicate this loop and both WGSL loops share.
  */
 
 import type { UniformLocations } from "./glSetup";
 import type { AuroraCursorUniforms } from "./uniformBridge";
-import type { AuroraConfig } from "../constants/presets";
+import { isAuroraDriftLive, type AuroraConfig } from "../constants/presets";
 import type { UsePointerVelocityField } from "../../../composables/motion/pointer/usePointerVelocityField";
 import {
     auroraCursorMapping,
@@ -175,13 +176,7 @@ export function createFrameLoop(deps: FrameLoopDeps): FrameLoop {
 
     function needsAnimation(): boolean {
         if (getReducedMotion()) return false;
-        const config = getConfig();
-        const driftLive =
-            config.nucleiDrift !== 0 ||
-            config.paletteDrift !== 0 ||
-            config.breathDepth !== 0 ||
-            config.warpDrift !== 0;
-        if (driftLive) return true;
+        if (isAuroraDriftLive(getConfig())) return true;
         return auroraFieldLive(pointerField);
     }
 

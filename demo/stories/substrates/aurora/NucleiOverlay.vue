@@ -14,11 +14,16 @@ import type { AuroraNucleus } from "@glass/components/aurora";
  * that pattern would eat continuous-swirl updates while hovering a ring.
  * Instead, pointer-events stay on the parent stage wrap; rings are purely
  * visual. Hit-testing is CPU-side in useCursorInteraction.
+ *
+ * The rings carry ONE opacity. A `dimmed` prop used to step it 35→70 with
+ * `medium === "smooth"`, which meant the surface being photographed changed with the
+ * variable under test — three separate measurement seats banked tables off it. There
+ * was never an affordance ground for the step either: the rings label the composition,
+ * and the composition does not move when the deposition body does.
  */
 
 const props = defineProps<{
     nuclei: AuroraNucleus[];
-    dimmed?: boolean;
 }>();
 
 // A nucleus "radius" is a Gaussian falloff sigma, not a hard circle. Visual
@@ -49,11 +54,7 @@ const items = computed(() =>
 </script>
 
 <template>
-    <div
-        class="pointer-events-none absolute inset-0"
-        :class="dimmed ? 'opacity-35' : 'opacity-70'"
-        aria-hidden="true"
-    >
+    <div class="pointer-events-none absolute inset-0 opacity-70" aria-hidden="true">
         <div
             v-for="n in items"
             :key="n.i"

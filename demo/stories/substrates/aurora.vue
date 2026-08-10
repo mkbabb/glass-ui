@@ -64,26 +64,40 @@ const thumbs = usePresetThumbnails({ widthCss: 320, heightCss: 200 });
 const activeLayer = ref<string>("medium");
 const route = useRoute();
 
-onMounted(() => {
-    // the deterministic capture-surfacing param. The C18
-    // capture harness (?capture=/substrates/aurora&mode=X) renders the default smooth
-    // Dawn lead; an &aurmedium=metal|metal-gradient|kuwahara override forces the opt-in
-    // medium so BOTH engines (Chrome + off-screen Safari) render it with ZERO
-    // interaction. The capture boot forwards the outer param onto the route query
-    // (history-mode push drops the outer search string), so the story reads it here.
-    const q = route.query.aurmedium;
-    const forced = typeof q === "string" ? q : undefined;
-    const forcedOpt = forced
-        ? mediumOptions.find((o) => o.value === forced)
-        : undefined;
-    if (forcedOpt) {
-        // The metal variants ride the warm-metal baseline (the folds catch the light);
-        // kuwahara, any other medium forces on the current lead preset.
-        if (forcedOpt.value === "metal" || forcedOpt.value === "metal-gradient")
-            studio.selectPreset("METAL");
-        studio.config.medium = forcedOpt.value;
-    }
+// ── THE PROBE HARNESS ────────────────────────────────────────────────────────────
+// Read during SETUP, not `onMounted`. That ordering is the whole cure for the stale
+// combobox: AuroraConfigDock seeds `reactive(configToAtoms(props.config))` in its own
+// setup, which runs BEFORE this component's mounted hook, so a medium written at mount
+// landed in the shader and never in the door — the control read "Smooth" over a live
+// crayon field, and three measurement seats banked tables against that reading. Writing
+// it here means combobox, config and shader agree by construction; no reseed watcher, no
+// second source of truth.
+//
+// The capture boot forwards the outer params onto the route query (history-mode push
+// drops the outer search string), so the story reads them off `useRoute`.
+const queryParam = (key: string): string | undefined => {
+    const v = route.query[key];
+    return typeof v === "string" ? v : undefined;
+};
 
+// `?probe=1` — clear the chrome painted over the stage so a capture of that region is
+// the field alone. `?engine=webgl2` — pin the real in-app WebGL2 arm (the GL arm is
+// archived from a live page before it is deleted; no browser flag reaches it).
+const probe = queryParam("probe") === "1";
+const forcedEngine = queryParam("engine") === "webgl2" ? ("webgl2" as const) : undefined;
+
+// `&aurmedium=<m>` — the deterministic medium override, so both engines render a named
+// medium with ZERO interaction.
+const forcedMedium = mediumOptions.find((o) => o.value === queryParam("aurmedium"));
+if (forcedMedium) {
+    // The metal variants ride the warm-metal baseline (the folds catch the light);
+    // every other medium forces on the current lead preset.
+    if (forcedMedium.value === "metal" || forcedMedium.value === "metal-gradient")
+        studio.selectPreset("METAL");
+    studio.config.medium = forcedMedium.value;
+}
+
+onMounted(() => {
     const unregLeft = registerShortcut("ArrowLeft", () => studio.cyclePreset(-1), {
         label: "Previous preset",
         group: "Aurora",
@@ -145,7 +159,12 @@ const hintText = computed(() => [
              dragging is reserved for moving a nucleus ring. AuroraStage owns the
              canvas-reaching rounded clip inside VizStudio's aperture. -->
         <template #stage>
-            <AuroraStage :config="studio.config" :interactive="true" />
+            <AuroraStage
+                :config="studio.config"
+                :interactive="true"
+                :probe="probe"
+                :engine="forcedEngine"
+            />
         </template>
 
         <!-- The FULL config schema — the layered Color → Composition → Motion →

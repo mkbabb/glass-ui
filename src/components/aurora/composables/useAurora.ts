@@ -60,8 +60,37 @@ export interface UseAuroraReturn {
      * acquisition and flips only when the backend readiness promise resolves.
      */
     isArmed: Readonly<Ref<boolean>>;
+    /**
+     * The SETTLE BEACON. `true` once the runtime has armed, the current config has been
+     * applied, and the ground→field entrance has finished painting over it.
+     *
+     * `Aurora.vue` publishes it as `data-aurora-settled`; every capture — π, gate, or a
+     * consumer's own — waits on that attribute. A wall-clock sleep is not a substitute:
+     * inside the entrance the field paints medium-INDEPENDENTLY, so an early capture
+     * reads a picture that is identical across every medium and across page loads, with
+     * perfect confidence and no way to tell. Three seats measured that picture.
+     *
+     * Any config change re-opens it — a preset switch has its own entrance. So does a
+     * context LOSS: the field it witnesses is gone, and the restore replays the entrance,
+     * so the beacon never carries its pre-loss stamp across that replay.
+     */
+    isSettled: Readonly<Ref<boolean>>;
     rendererStatus: Readonly<Ref<RendererStatus>>;
 }
+
+/**
+ * How long past the last applied config the field needs before a capture is admissible.
+ *
+ * The entrance is the ground→field CROSSFADE: `.aurora-canvas-layer` transitions opacity
+ * 0→1 over `--duration-slow` (0.45 s) once `isArmed` flips, dissolving the palette-derived
+ * frame-0 ground into the live field. Until that completes a capture reads a blend of the
+ * two, which is what makes it medium-independent. 500 ms clears the 450 ms token with the
+ * margin for the frame the config write lands on.
+ *
+ * The clock is advanced by `requestAnimationFrame`, not `setTimeout`, so a backgrounded
+ * or parked surface never stamps a beacon it has not painted.
+ */
+export const AURORA_SETTLE_MS = 500;
 
 /**
  * Schedule `task` to run once the browser has committed first paint and is
@@ -157,6 +186,39 @@ export function useAurora(
     // on init failure — the placeholder then remains as the unavailable-runtime
     // visual fallback (HA4 §1.5).
     const isArmed = ref(false);
+    // The settle beacon. Opens false, re-opens on every config application, and closes
+    // one entrance later. The `"css"` substrate never arms, so it never settles — there
+    // is no live field there to certify, and stamping the static ground as one would be
+    // the beacon lying about the very thing it exists to witness.
+    const isSettled = ref(false);
+    let settleRaf = 0;
+    let settleDeadline = 0;
+    // `true` once the arm seated the current config and STARTED the first entrance. Until
+    // then a `"ready"` status is the arm's own first readiness, not a restore, and must
+    // not open an entrance ahead of the config application `armRuntime` is about to make.
+    let entranceStarted = false;
+    function scheduleSettle(): void {
+        isSettled.value = false;
+        if (typeof requestAnimationFrame !== "function") return;
+        settleDeadline = performance.now() + AURORA_SETTLE_MS;
+        // One rAF chain, re-aimed by the new deadline — a slider drag re-opens the
+        // beacon without stacking a chain per frame of the drag.
+        if (settleRaf !== 0) return;
+        const step = (now: number): void => {
+            if (now < settleDeadline) {
+                settleRaf = requestAnimationFrame(step);
+                return;
+            }
+            settleRaf = 0;
+            isSettled.value = true;
+        };
+        settleRaf = requestAnimationFrame(step);
+    }
+    function cancelSettle(): void {
+        if (settleRaf !== 0) cancelAnimationFrame(settleRaf);
+        settleRaf = 0;
+        isSettled.value = false;
+    }
     const rendererStatus = shallowRef<RendererStatus>(
         cssOnly ? cssRenderer() : pendingRenderer("webgl2"),
     );
@@ -217,8 +279,19 @@ export function useAurora(
         // replay of the CURRENT config seats it, closing the silently-dropped-change gap.
         runtime.update(getCfg());
         runtime.setScrollProgress(scrollProgress.value);
+        // The entrance starts HERE — at the arm, with the config seated — not at mount.
+        // Everything before this point is acquisition, which paints the ground alone.
+        scheduleSettle();
+        entranceStarted = true;
 
-        stopWatch = watch(getCfg, (next) => runtime.update(next), { deep: true });
+        stopWatch = watch(
+            getCfg,
+            (next) => {
+                runtime.update(next);
+                scheduleSettle();
+            },
+            { deep: true },
+        );
     }
 
     onMounted(() => {
@@ -239,8 +312,23 @@ export function useAurora(
                 initStrategy: "deferred",
                 ...runtimeOptions,
                 onRendererStatus: (status) => {
+                    const ready = status.phase === "ready";
+                    // A RESTORE is a `"ready"` that follows a loss on a surface whose
+                    // entrance had already started — `createGpuSubstrate` publishes
+                    // `pendingRenderer(engine)` on context LOSS and a ready status on
+                    // RESTORE (`useGpuSubstrate.ts` `emitRendererContextState`).
+                    const restored = ready && !isArmed.value && entranceStarted;
                     rendererStatus.value = status;
-                    isArmed.value = status.phase === "ready";
+                    isArmed.value = ready;
+                    // THE NEVER-LIE LAW, on loss→restore. The beacon witnesses a LIVE
+                    // field that has finished entering; a lost context has neither, and
+                    // the restore REPLAYS the ground→field entrance (`isArmed` drops, the
+                    // crossfade re-runs). So the beacon closes WITH the field — cancelling
+                    // any chain in flight — and re-opens on restore, stamping again one
+                    // entrance later. Publishing the pre-loss stamp across a replayed
+                    // entrance is the exact false witness the beacon exists to prevent.
+                    if (!ready) cancelSettle();
+                    else if (restored) scheduleSettle();
                     runtimeOptions.onRendererStatus?.(status);
                 },
             });
@@ -304,6 +392,7 @@ export function useAurora(
     });
 
     onBeforeUnmount(() => {
+        cancelSettle();
         cancelSchedule?.();
         stopArmWatch?.();
         stopWatch?.();
@@ -321,6 +410,7 @@ export function useAurora(
         pause: () => inst?.pause(),
         resume: () => inst?.resume(),
         isArmed: readonly(isArmed),
+        isSettled: readonly(isSettled),
         rendererStatus: readonly(rendererStatus),
     };
 }

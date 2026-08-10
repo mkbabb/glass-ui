@@ -22,8 +22,31 @@ const props = withDefaults(
          * static specimen; the runtime independently disables cursor motion for reduced motion.
          */
         interactive?: boolean;
+        /**
+         * PROBE MODE (`?probe=1`). Clears every chrome layer painted OVER the stage —
+         * the nucleus rings, the renderer badge, the pointer cue — so a capture of this
+         * region is the field and nothing else. It removes OBSERVERS, never the subject:
+         * the canvas, its config and its engine are untouched, which is the whole point
+         * (a probe that changes the picture cannot certify the picture).
+         *
+         * The controls column beside the stage stays mounted — it is not painted over
+         * the field, and the harness reads the medium combobox out of it to prove the
+         * forced medium reached the door as well as the shader.
+         */
+        probe?: boolean;
+        /**
+         * Pin the render backend (`?engine=webgl2`). Forces the real in-app WebGL2 arm
+         * by withholding the WGSL setup from the substrate picker — the GL arm has to be
+         * archived from a live page before it can be deleted, and no browser flag
+         * reaches it.
+         */
+        engine?: "webgl2";
     }>(),
-    { interactive: true },
+    { interactive: true, probe: false },
+);
+
+const runtimeOptions = computed(() =>
+    props.engine === "webgl2" ? { forceBackend: "webgl2" as const } : undefined,
 );
 
 const stageRef = ref<HTMLDivElement | null>(null);
@@ -33,6 +56,7 @@ const reducedMotion = useReducedMotion();
 const pointerAffordanceEnabled = computed(
     () =>
         props.interactive &&
+        !props.probe &&
         !reducedMotion.value &&
         rendererStatus.value.phase === "ready" &&
         rendererStatus.value.engine !== "css" &&
@@ -67,13 +91,16 @@ useCursorInteraction(stageRef, () => props.config, {
         <Aurora
             ref="auroraRef"
             :config="config"
+            :runtime-options="runtimeOptions"
             @renderer-status="rendererStatus = $event"
         />
+        <!-- Everything below paints OVER the field; `?probe=1` clears all of it. -->
         <RendererStatusView
+            v-if="!probe"
             :status="rendererStatus"
             class="pointer-events-none absolute top-3 left-3"
         />
-        <NucleiOverlay :nuclei="config.nuclei" :dimmed="config.medium === 'smooth'" />
+        <NucleiOverlay v-if="!probe" :nuclei="config.nuclei" />
         <div
             v-if="pointerAffordanceEnabled"
             class="pointer-events-none absolute bottom-3 left-3 text-caption text-foreground/50 mix-blend-difference"

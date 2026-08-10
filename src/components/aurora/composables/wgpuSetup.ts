@@ -39,7 +39,7 @@ import {
     uploadImageTextureWebGPU,
     type UploadableImageSource,
 } from "./textureUpload";
-import type { AuroraConfig } from "../constants/presets";
+import { isAuroraDriftLive, type AuroraConfig } from "../constants/presets";
 import type { UsePointerVelocityField } from "../../../composables/motion/pointer/usePointerVelocityField";
 
 export interface AuroraWGPUSetupDeps {
@@ -244,13 +244,7 @@ export function createAuroraWGPUSetup(
 
         function shouldContinue(): boolean {
             if (getReducedMotion()) return false;
-            const config = getConfig();
-            const driftLive =
-                config.nucleiDrift !== 0 ||
-                config.paletteDrift !== 0 ||
-                config.breathDepth !== 0 ||
-                config.warpDrift !== 0;
-            if (driftLive) return true;
+            if (isAuroraDriftLive(getConfig())) return true;
             return auroraFieldLive(pointerField);
         }
 
@@ -422,14 +416,13 @@ function setupImageWGPU(
         device.queue.submit([encoder.finish()]);
     }
 
+    // The image pipeline's own demand gate. It carried a THIRD copy of the drift ladder
+    // that had already diverged from the other two — `breathDepth` was absent, so an
+    // image-source aurora with breath and no drift parked its loop and the breath never
+    // rendered. One predicate now answers for every loop.
     function shouldContinue(): boolean {
         if (getReducedMotion()) return false;
-        const config = getConfig();
-        const driftLive =
-            config.nucleiDrift !== 0 ||
-            config.warpDrift !== 0 ||
-            config.paletteDrift !== 0;
-        if (driftLive) return true;
+        if (isAuroraDriftLive(getConfig())) return true;
         return auroraFieldLive(pointerField);
     }
 

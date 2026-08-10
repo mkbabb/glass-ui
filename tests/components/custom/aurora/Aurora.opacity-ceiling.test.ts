@@ -4,17 +4,23 @@ import { nextTick, type Ref } from "vue";
 
 const auroraState = vi.hoisted(() => ({
     isArmed: undefined as Ref<boolean> | undefined,
+    isSettled: undefined as Ref<boolean> | undefined,
 }));
 
 vi.mock("@glass/components/aurora/composables/useAurora", async () => {
     const { ref } = await vi.importActual<typeof import("vue")>("vue");
     const isArmed = ref(false);
+    // The settle beacon rides the same mocked door as the arm flag — `Aurora.vue`
+    // publishes it as `data-aurora-settled`, so a mock that omits it renders a template
+    // that cannot mount.
+    const isSettled = ref(false);
     const rendererStatus = ref({
         phase: "ready" as const,
         engine: "css" as const,
         adapter: "Static paint",
     });
     auroraState.isArmed = isArmed;
+    auroraState.isSettled = isSettled;
 
     return {
         useAurora: () => ({
@@ -25,6 +31,7 @@ vi.mock("@glass/components/aurora/composables/useAurora", async () => {
             pause: () => undefined,
             resume: () => undefined,
             isArmed,
+            isSettled,
             rendererStatus,
         }),
     };

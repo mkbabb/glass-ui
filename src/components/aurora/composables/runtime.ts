@@ -97,6 +97,20 @@ export interface AuroraRuntimeOptions {
      */
     forceWebGLUnderSoftwareRaster?: boolean;
     /**
+     * Pin the render backend instead of letting the substrate picker choose.
+     *
+     * `"webgl2"` withholds the WGSL setup from `createGpuSubstrate`, which is the ONLY
+     * honest way to reach the WebGL2 arm in-app: the picker's `attemptWebGPU` reads
+     * `supportsWebGPU() && setupWGPU != null`, so a browser flag cannot express this and
+     * `renderMode: "webgl"` is a MODE (animate at all / never), not a backend.
+     *
+     * The capture harness drives it as `?engine=webgl2` so the GL arm can be archived
+     * before it is deleted. There is no `"webgpu"` member: forcing WebGPU on a host
+     * without an adapter would be a masking fallback — the picker already prefers it and
+     * falls loud when it cannot arm.
+     */
+    forceBackend?: "webgl2";
+    /**
      * Reveal-bloom consumer door.
      *
      * The one-shot cold-first-VISIBLE `filter`-bloom (`data-substrate-reveal` →
@@ -175,10 +189,21 @@ export interface AuroraRuntime extends Omit<AuroraInstance, "pause" | "resume"> 
     readonly reducedMotion: boolean;
 }
 
-/** One medium-aware predicate shared by pointer writes and uniform projection. */
+/**
+ * One medium-aware predicate shared by pointer writes and uniform projection.
+ *
+ * `swirl` is the DEFAULT-ON axis: every aurora shapes under the pointer unless its
+ * config says `swirl: false`. Suppression is not this predicate's job — the master
+ * tempo scalar zeroes the field tick under reduced motion and under the background
+ * pause, so a PRM reader never sees the cursor regardless of what this returns.
+ *
+ * `light` stays an explicit opt-in AND stays medium-aware: it steers the impasto light
+ * direction, and the smooth body has no impasto, so `light` alone over `smooth` shapes
+ * nothing and must not arm a pointer path.
+ */
 export function isAuroraPointerEnabled(config: AuroraConfig): boolean {
     return (
-        config.interactivity?.swirl === true ||
+        config.interactivity?.swirl !== false ||
         (config.medium !== "smooth" && config.interactivity?.light === true)
     );
 }
@@ -280,6 +305,10 @@ export function createAurora(
     const unavailableError = wedgeBlocked
         ? new Error("[Aurora] GPU animation is unavailable under software rasterization")
         : null;
+    // `?engine=webgl2` — the real in-app GL arm. Read once here so the substrate options
+    // below read as a single decision rather than a ternary swallowing a shader setup.
+    const forceWebGL2 = options.forceBackend === "webgl2";
+
     let unavailableReported = false;
     function reportUnavailable(): void {
         if (!unavailableError || unavailableReported) return;
@@ -331,7 +360,10 @@ export function createAurora(
         // (cursor/config/reduced-motion) are SHARED with the WebGL2 `setupGL` so the
         // loop is byte-identical across backends. `aurora.frag.ts` stays the
         // byte-untouched WebGL2 fallback.
-        setupWGPU: createAuroraWGPUSetup({
+        // Withheld entirely under `forceBackend: "webgl2"` — the picker's own
+        // `attemptWebGPU` test is `supportsWebGPU() && setupWGPU != null`, so absence
+        // here IS the forcing. Nothing downstream needs a second switch.
+        setupWGPU: forceWebGL2 ? undefined : createAuroraWGPUSetup({
             canvas,
             opaquePresentation: presentation.opaque,
             getCursorScalars,

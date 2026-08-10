@@ -140,8 +140,13 @@ export type WarpMode = "fbm" | "cellular" | "hybrid" | "curl";
  * - `swirl`  — cursor-local warp and luminance lean on both engines.
  * - `amplitude` — sizes the transient burst folded into cursor strength on the CPU.
  * Every axis is suppressed under `prefers-reduced-motion` + the DockBackgroundToggle
- * pause (the master tempo scalar is the single suppression seam). The wispy-sky
- * default carries no `interactivity` (every axis OFF — the default stays static).
+ * pause (the master tempo scalar is the single suppression seam).
+ *
+ * `swirl` is ON by default — a config opts OUT with `swirl: false`. Every aurora is
+ * pointer-shapeable, and a capability parked behind an opt-in flag is a capability the
+ * surface does not have. `light` and `scroll` remain explicit opt-ins: `light` is only
+ * meaningful over a painterly body (smooth has no impasto to relight), and `scroll`
+ * re-times the shader clock against page position, which no surface should inherit.
  */
 export interface AuroraInteractivity {
     light?: boolean;
@@ -294,11 +299,57 @@ export interface AuroraConfig {
     vividness?: number;
 
     /**
-     * Pointer/scroll interactivity opt-in (default OFF — the wispy-sky
-     * default stays static). Omitted = every
-     * axis off. Aliased on `/api` as part of the `AuroraConfig` surface.
+     * Pointer/scroll interactivity. `swirl` is ON unless a config says
+     * `swirl: false` — the pointer shapes every aurora by default, PRM-guarded by the
+     * master tempo scalar. `light` and `scroll` stay explicit opt-ins.
+     * Aliased on `/api` as part of the `AuroraConfig` surface.
      */
     interactivity?: AuroraInteractivity;
+}
+
+/**
+ * The per-axis liveness floor of the drift demand gate.
+ *
+ * The four drift axes do NOT share a domain — nuclei 0..0.05, palette 0..0.04, breath
+ * 0..0.15, warp 0..0.015 — so ONE flat epsilon over raw values would retire whole axes
+ * (any epsilon that reaches `paletteDrift` is above `warpDrift`'s entire range). Each
+ * axis therefore carries its own floor, seeded at 1% of that axis's authored domain.
+ *
+ * The floors are the SHAPE, not the cut. Cutting them where they would actually park a
+ * loop is a PAINT decision and it is `W-AURORA-FIELD`'s (π-FIELD), because the shipped
+ * configs do not separate in config space: the recessive shell field
+ * (`aurora-hero.ts` `nucleiDrift`/`paletteDrift` 0.012) and the focal studio default
+ * (0.015) sit 25% apart on both axes and are identical on the other two. What separates
+ * them is not the drift amplitude but the composited range their palettes can express —
+ * shell chroma ≤ 0.07 over an L span of 0.03 against the studio's C 0.16/0.13/0.095 —
+ * and that term is the field re-founding's to derive, not this gate's to guess.
+ */
+export const AURORA_DRIFT_FLOOR = {
+    nucleiDrift: 0.0005,
+    paletteDrift: 0.0004,
+    breathDepth: 0.0015,
+    warpDrift: 0.00015,
+} as const satisfies Record<
+    "nucleiDrift" | "paletteDrift" | "breathDepth" | "warpDrift",
+    number
+>;
+
+/**
+ * The demand gate over the four drift axes — the ONE predicate the WebGL2 frame loop
+ * and BOTH WGSL loops consume.
+ *
+ * It was three copies of a `!== 0` ladder, and they had already diverged: the image
+ * pipeline's copy omitted `breathDepth`, so an image-source aurora carrying breath and
+ * no drift parked its loop and never rendered the breath. Liveness is an AMPLITUDE
+ * question against each axis's own domain, never a literal comparison against zero.
+ */
+export function isAuroraDriftLive(config: AuroraConfig): boolean {
+    return (
+        Math.abs(config.nucleiDrift) >= AURORA_DRIFT_FLOOR.nucleiDrift ||
+        Math.abs(config.paletteDrift) >= AURORA_DRIFT_FLOOR.paletteDrift ||
+        Math.abs(config.breathDepth) >= AURORA_DRIFT_FLOOR.breathDepth ||
+        Math.abs(config.warpDrift) >= AURORA_DRIFT_FLOOR.warpDrift
+    );
 }
 
 /**
