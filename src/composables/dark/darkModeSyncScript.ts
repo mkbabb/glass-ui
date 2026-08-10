@@ -38,6 +38,25 @@ export interface DarkModeSyncScriptOptions {
      * uses. Override ONLY if a consumer reconfigured the vueuse storage key.
      */
     storageKey?: string;
+    /**
+     * What an ABSENT or `"auto"` stored mode resolves to. `"os"` (the default)
+     * follows `prefers-color-scheme`, which is right for an app. `false`/`true`
+     * resolve DETERMINISTICALLY, which is right for a document that must not flip
+     * with the projector's OS theme — a briefing, a print target, a capture.
+     */
+    defaultDark?: boolean | "os";
+    /**
+     * Honour `?light` / `?dark` in the query string, above storage and above the
+     * default. This is the capture-forcing seam: a screenshot pipeline asks for a
+     * mode in the URL rather than driving a toggle and hoping.
+     */
+    queryOverride?: boolean;
+    /**
+     * Write the RESOLVED mode back to storage, so an absent or `"auto"` value
+     * becomes a concrete `"dark"`/`"light"` at first paint and the runtime
+     * composable and the stamp cannot disagree about what `auto` meant.
+     */
+    normalize?: boolean;
 }
 
 /**
@@ -53,6 +72,31 @@ export interface DarkModeSyncScriptOptions {
  */
 export function darkModeSyncScript(options: DarkModeSyncScriptOptions = {}): string {
     const key = options.storageKey ?? DARK_MODE_STORAGE_KEY;
+    const defaultDark = options.defaultDark ?? "os";
+    // The absent/auto fallback, as one expression the emitted IIFE evaluates. `"os"`
+    // asks the platform; a boolean answers deterministically and asks nothing.
+    //
+    // NO WRAPPING PARENS on the `"os"` arm, deliberately. It substitutes into an `&&`
+    // chain of the same precedence and associativity, so the parens would be inert —
+    // and they would change the DEFAULT emission's bytes, which is not an inert thing
+    // to do: an inline `<head>` script is exactly what a `script-src 'sha256-…'` CSP
+    // pins, and a re-hashed default would be blocked at first paint, silently, in the
+    // one place this module exists to keep correct. The default emission is therefore
+    // BYTE-IDENTICAL across this addition; only an opt-in arm moves bytes, and a
+    // consumer opting in is editing its head script anyway.
+    const fallback =
+        defaultDark === "os"
+            ? `window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches`
+            : String(defaultDark);
+    // The capture-forcing seam: a query parameter outranks storage entirely.
+    const queryArm = options.queryOverride
+        ? `var q=new URLSearchParams(location.search);if(q.has("dark")){d=true;}else if(q.has("light")){d=false;}`
+        : "";
+    // Resolve `auto`/absent into a concrete stored mode so the runtime composable
+    // and this stamp cannot disagree about what `auto` meant.
+    const normalizeArm = options.normalize
+        ? `localStorage.setItem(${JSON.stringify(key)},d?"dark":"light");`
+        : "";
     // The emitted body is an IIFE so it leaks no globals. It mirrors the
     // useGlobalDark runtime contract: storage key → mode string → dark boolean
     // (auto/null/unknown ↦ prefers-color-scheme), then classList + colorScheme.
@@ -62,5 +106,5 @@ export function darkModeSyncScript(options: DarkModeSyncScriptOptions = {}): str
     // a runtime-emitted string, not source control flow.
     return `(function(){try{var m=localStorage.getItem(${JSON.stringify(
         key,
-    )});var d=m==="${DARK_CLASS}"||((m===null||m==="auto")&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);var e=document.documentElement;e.classList.toggle("${DARK_CLASS}",d);e.style.colorScheme=d?"dark":"light";}catch(_){}})();`;
+    )});var d=m==="${DARK_CLASS}"||((m===null||m==="auto")&&${fallback});${queryArm}${normalizeArm}var e=document.documentElement;e.classList.toggle("${DARK_CLASS}",d);e.style.colorScheme=d?"dark":"light";}catch(_){}})();`;
 }

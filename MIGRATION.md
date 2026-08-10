@@ -5,6 +5,68 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
+## 8.1.0 — UNRELEASED (in flight; not on the registry)
+
+**Status, stated so nothing here reads as shipped.** `package.json` declares `8.0.0`
+(detector: `node -p "require('./package.json').version"` → `8.0.0`), and `8.1.0` is the
+next minor this additive change cuts at. Nothing below is breaking; a caller who does
+not opt in has nothing to do.
+
+_`darkModeSyncScript()` gains three options — `defaultDark` · `queryOverride` · `normalize`_
+
+`DarkModeSyncScriptOptions` gains three optional fields beside `storageKey`. **No export
+name is added or moved** — the interface widens, the surface does not (detector:
+`git diff --stat src/composables/dark/index.ts` → unchanged; the root barrel and `/dark`
+still publish `darkModeSyncScript` · `DARK_MODE_STORAGE_KEY` · `DarkModeSyncScriptOptions`
+and nothing else from this module).
+
+| option | default | what it does |
+| --- | --- | --- |
+| `defaultDark?: boolean \| "os"` | `"os"` | What an ABSENT or `"auto"` stored mode resolves to. `"os"` follows `prefers-color-scheme` — right for an app. A boolean resolves deterministically — right for a document that must not flip with the projector's OS theme: a briefing, a print target, a capture. Under a boolean the emitted script asks the platform nothing (it carries no `matchMedia` call at all). |
+| `queryOverride?: boolean` | `false` | Honour `?light` / `?dark` above storage and above the default. The capture-forcing seam: a screenshot pipeline asks for a mode in the URL rather than driving a toggle and hoping. |
+| `normalize?: boolean` | `false` | Write the RESOLVED mode back to storage, so an absent or `"auto"` value becomes a concrete `"dark"`/`"light"` at first paint and the runtime composable cannot disagree with the stamp about what `auto` meant. |
+
+Precedence is **query > storage > default**, in that order and no other.
+
+_The default emission is BYTE-IDENTICAL — deliberately, and it nearly was not_
+
+The emitted `<head>` script is exactly what a `script-src 'sha256-…'` CSP pins, and a
+re-hashed default would be **blocked at first paint, silently** — no type error, no
+runtime error, just the flash the module exists to remove. So the default emission is
+unchanged to the byte:
+
+```
+darkModeSyncScript()   → 300 bytes, sha256-VTba/T+6rX/y5+Gk2oyLaaYBdLf4xSZtXnc7kMYziI8=
+```
+
+That is the same string 8.0.0 emitted. **It was not free**: the first draft of this
+addition wrapped the `"os"` fallback in parentheses that are inert inside the `&&` chain
+they substitute into, and that alone moved the default to **302 bytes /
+`sha256-Ww9UmE068him9LdkxjP90V0vytb88DNBMippYt5AHHk=`**. The parens are gone and a gate
+arm now pins both figures. Only an **opt-in** arm moves the emitted bytes, and a consumer
+opting in is editing its head script anyway — re-hash then, once.
+
+_Two behaviours are RATIFIED rather than left to be discovered_
+
+1. **`normalize` runs AFTER `queryOverride`, so a `?dark` visit PERSISTS into that
+   browser's storage.** This is the order that makes a forced mode survive hydration —
+   the runtime composable re-reads storage, and under the other order it would find
+   `"auto"` and flip the page back, which is the flash again one frame later. The
+   consequence is that the pair is for **capture profiles, never for a shared
+   user-facing origin**: if you expose `?dark`/`?light` to end users and also set
+   `normalize`, a single link permanently changes their stored preference. Enable one or
+   the other there, not both.
+2. **The query flags are PRESENCE flags, so `?dark=false` resolves DARK.** The check is
+   `q.has("dark")` — value-blind by construction. `?dark=0`, `?dark=light` and
+   `?dark=false` all read dark, and `?light&dark` reads dark (the dark arm is read
+   first). A value grammar would be a second, weaker way to say what `?light` already
+   says. If you build these URLs from a boolean, emit the flag or omit it; do not emit
+   it with a value.
+
+Both are held by named arms under the seated `G-NO-FLASH` gate in
+`tests/composables/dark/darkModeSyncScript.test.ts`, so a silent reorder or a swap to a
+value grammar turns the suite RED rather than surprising a consumer.
+
 ## 8.0.0
 
 **THE EXPORT SURFACE IS RE-CUT — one batched change, six subpath movements, and the
