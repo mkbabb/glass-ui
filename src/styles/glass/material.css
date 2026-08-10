@@ -60,7 +60,7 @@
        renders a `glass-floating` root inside a `DialogContent` that resolves to another
        — and a selector-text scan of the stylesheets cannot see it, because neither
        component's rule mentions the other. The arm walks the class nesting of
-       `src/**/*.vue` (tests/styles/glass-subtlety.test.ts) and the π battery counts
+       every Vue source file (tests/styles/glass-subtlety.test.ts) and the π battery counts
        filtering ancestors at runtime. */
 
     /* ── The ONE paint-box clip register ───────────
