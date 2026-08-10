@@ -122,7 +122,6 @@ const hintText = computed(() => [
         heading="Aurora"
         label="procedural painterly gradients · multi-nuclei · four mediums"
         blurb="A WebGPU-first procedural painterly gradient field — multi-nuclei composition, four mediums (smooth · oil · oil-pastel · van-Gogh) + the anisotropic-Kuwahara finish. Move inside the stage to shape the field; drag a nucleus ring to move it, or alt-click to add one. The configurator on the RIGHT drives EVERY axis: the OKLCh palette (the per-stop color editor), the composition (medium · zones · arrangement), the motion register, and the warp/noise. The warm-cream Dawn identity is the default lead; the blue Sky is a named non-default preset. Shipped /aurora."
-        height-class="h-[min(86vh,880px)]"
         scroll-mode="never"
         gallery-placement="top"
     >
