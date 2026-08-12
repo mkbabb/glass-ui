@@ -1,170 +1,72 @@
-/* tokens/sizing.css
-   §10 sizing — the --ui-scale doctrine, control-height/font/glyph cohorts,
-   dropdown/carousel/stack-overlap, the dock geometry cascade (--dock-scale +
-   collapsed-pill + switcher hairline + active-state ladder + iOS register + touch
-   floor), the Configurator density + HIERARCHY
-   vocabulary, the single-column stage floor, the section tonal step, the
-   component-font override.
-   The §9/§10 sizing + offset rungs;
-   @import-ed by tokens.css immediately AFTER offsets.css at the
-   cascade slot — adjacent same-selector :root blocks resolve identically, so the
-   dist is byte-isomorphic. See docs/precepts/design-idioms.md
-   §cohesion-aware partials. */
+/* tokens/sizing.css — §9/§10 sizing + offset rungs.
+   @import-ed by tokens.css immediately AFTER offsets.css; adjacent same-selector
+   :root blocks resolve identically, so the dist is byte-isomorphic. */
 :root {
-    /* ═══════════════════════════════════════════════
-       §10 SIZING
-       ═══════════════════════════════════════════════ */
-    /* ── The ONE comfortable-sizing scale doctrine ──────────────
-       `--ui-scale` is the MASTER comfortable-sizing scalar — ONE unitless knob
-       (registered @property <number>, inherits:true, default the identity 1)
-       every interactive-control magnitude derives through `calc(<base> *
-       var(--ui-scale))`, so a single override grows control HEIGHT + PADDING +
-       GAP + FONT-SIZE + GLYPH in LOCKSTEP, proportion preserved, no per-component
-       hack. The cohorts below (`--control-h-*` heights, `--control-text*` control
-       fonts, `--ui-glyph*` glyphs) are its reading surfaces; the CVA bases + the
-       `.button`/`.input-pill` controls consume them.
+    /* `--ui-scale` is the MASTER comfortable-sizing scalar — one unitless knob
+       (registered @property <number>, inherits:true, identity 1) every
+       interactive-control magnitude derives through `calc(<base> * var(--ui-scale))`,
+       so one override grows control HEIGHT + PADDING + GAP + FONT-SIZE + GLYPH in
+       lockstep. `--dock-scale` and `--dropdown-text` are SPECIALIZATIONS that read
+       this axis, never parallel ladders.
 
-       ONE scale system, not three. The dock (`--dock-scale`) and the dropdown
-       family (`--dropdown-text`) are SPECIALIZATIONS that read this axis:
-       `--dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1))` — the
-       dock multiplies ON TOP of the global comfort axis (its existing geometry
-       `calc` cascade inherits the global axis for free, zero edit). A consumer
-       re-tints the whole library's comfort from ONE `:root { --ui-scale: … }`
-       override (or a scoped region — a dense data-table sets it lower) — the
-       token-first axis.
-
-       EXCLUDED — the φ-DISPLAY ladder (`--type-display-*` / `--type-title` /
-       `--type-heading` / `--type-subheading`): a hero/title is a TYPOGRAPHIC
-       identity, NOT a touch target, so it does NOT grow on the comfort/coarse
-       axis. Only interactive-CONTROL text rides `--ui-scale`. Containers (card /
-       panel radii + paddings) are separate `--radius-*` / `--space-*` axes.
-
-       The desktop default is the IDENTITY (1) — byte-exact preservation, no
-       reflow of shipped consumers. The comfort GROWTH lives at the coarse-pointer
-       default (`--ui-coarse-scale`, §below) + the consumer override. The
-       WCAG-2.5.5 44px touch floor survives as a `max(…, --control-floor)` clamp
-       inside the scaled control-size (the coarse block lifts `--control-floor` to
-       `--touch-target`, so a sub-1 scale cannot drop a control under the target).
-       Coordinates with the `--glass-level` + the `--glass-veil-*` — SEPARATE
-       axes (size vs material vs legibility); a control is comfortably-sized AND
-       glass AND legible, three orthogonal knobs. */
+       EXCLUDED: the φ-DISPLAY ladder (`--type-display-*` / `--type-title` /
+       `--type-heading` / `--type-subheading`). A hero is a TYPOGRAPHIC identity, not
+       a touch target, so it does not grow on the comfort axis. Container radii and
+       paddings are separate `--radius-*` / `--space-*` axes. */
     --ui-scale: 1;
-    /* The global coarse-pointer comfort default — the WHOLE library grows ~1.5×
-       on touch from ONE place (the @media (pointer: coarse) block at §below lifts
-       :root --ui-scale to this). The dock's prior parallel 1.5× becomes the global
-       default it now shares. Public library-default identity — a consumer sets
-       1.3 / 1.75 on :root or a scope. */
+    /* The coarse-pointer comfort default the `@media (pointer: coarse)` block lifts
+       `:root --ui-scale` to. Public library-default identity — consumers set their
+       own on `:root` or a scope. */
     --ui-coarse-scale: 1.5;
-    /* The control-height cohort — the h-7/h-9/h-10/h-11 register (28/36/40/44px)
-       the CVA size rungs encode, each scaled by the master axis. The CVA rungs
-       read these via `h-[var(--control-h-*)]` instead of the raw `h-N` literal.
-       `--control-floor` is the WCAG-2.5.5 clamp seam (0 at desktop, lifted to
-       --touch-target under coarse-pointer); each height is `max(scaled, floor)`. */
+    /* Control-height cohort, 28/36/40/44px, each scaled by the master axis.
+       `--control-floor` is the WCAG-2.5.5 clamp seam: 0 at desktop, lifted to
+       `--touch-target` under coarse-pointer, so a sub-1 scale cannot drop a control
+       under the target. */
     --control-floor: 0px;
     --control-h-xs: max(calc(1.75rem * var(--ui-scale)), var(--control-floor));
     --control-h-sm: max(calc(2.25rem * var(--ui-scale)), var(--control-floor));
     --control-h-md: max(calc(2.5rem  * var(--ui-scale)), var(--control-floor));
     --control-h-lg: max(calc(2.75rem * var(--ui-scale)), var(--control-floor));
-    /* The control-FONT register (RED 3 — the user's "font too small"). A comfort
-       multiplier BETWEEN the static φ-ladder rung and the painted control font,
-       so interactive-control text grows on the comfort axis while the φ-DISPLAY
-       ladder stays a pure typographic scale (display headings do NOT grow on
-       touch). `--control-text` is the workhorse (the `text-sm` register the
-       buttons/inputs/triggers carried); `--control-text-sm` is the quieter rung
-       (the `text-xs` badge/caption register). the `--dropdown-text` IS the
-       picker-family specialization of this register.
-
-       The no-double-vw reconcile: the desktop-fluid viewport base
-       lives ONCE in `--type-small` / `--type-caption` (typography.css §scale — a
-       gentle `clamp(…vw…)` so the control font grows on a wide display); the
-       `--ui-scale` comfort scalar multiplies that FLUID base exactly ONCE HERE. The
-       vw term is applied once (in the rung), the comfort factor once (here) — under
-       the coarse 1.5× the font grows by the comfort factor ONCE, NOT vw×1.5
-       over-scaled. Do NOT inline a second clamp() here, and do NOT multiply the rung
-       by --ui-scale at the rung. */
+    /* THE NO-DOUBLE-VW RECONCILE, the trap on this pair. The desktop-fluid viewport
+       base lives ONCE in `--type-small`/`--type-caption` (typography.css §scale, a
+       gentle `clamp(…vw…)`); the comfort scalar multiplies that fluid base exactly
+       ONCE, here. Do NOT inline a second clamp() and do NOT multiply the rung by
+       `--ui-scale` at the rung — under coarse 1.5× that over-scales as vw×1.5. */
     --control-text:    calc(var(--type-small) * var(--ui-scale));
     --control-text-sm: calc(var(--type-caption) * var(--ui-scale));
-    /* The control LABEL rung. PROPORTION §1.4 states the law as an INVARIANT, not a
-       value: `control label : control value = φ^(−1/4) = 0.886653, at every
-       viewport`. Two independent measurements corroborate it — forms 0.887,
-       navigation-dock 0.881 desktop.
-
-       It is therefore DERIVED from --control-text (the control VALUE rung), never
-       authored as its own px/rem literal: expressed as a ratio it survives the
-       fluid clamp and the --ui-scale comfort factor for free, riding each exactly
-       once by inheriting the no-double-vw reconcile documented above instead of
-       restating it. A literal here would drift out of ratio at the first retune of
-       either input — which is precisely how the 15 scattered alphas §6 collapses
-       came to exist.
-
-       navigation-dock's "label → 1.5× on coarse" is OVERRULED by that invariant: a
-       44px touch target needs 44px of BOX (--touch-target, below), not a 21px
-       label. Type keeps its own clamp; the coarse-pointer answer is box, never
-       type. */
+    /* PROPORTION §1.4 states this as an INVARIANT, not a value:
+       `control label : control value = φ^(−1/4) = 0.886653, at every viewport`. So it
+       is DERIVED from `--control-text` and never authored as its own literal — as a
+       ratio it rides the fluid clamp and the comfort factor exactly once, for free.
+       A 44px touch target needs 44px of BOX (`--touch-target`), never a 21px label. */
     --control-label: calc(var(--control-text) * 0.886653);
-    /* The control-GLYPH cohort (RED 4 — the glyph grows WITH the box). The
-       1rem/0.875rem control-glyph register the `size-4`/`size-3.5` literals
-       encode; the un-sized-<svg> CVA rule reads these via
-       `size-[var(--ui-glyph)]`, KEEPING the `:not([class*=size-])` host-sized-icon
-       escape intact (an explicit `size-9` still wins). */
+    /* The control-GLYPH cohort — the glyph grows WITH the box. The un-sized-`<svg>`
+       CVA rule reads these via `size-[var(--ui-glyph)]`, keeping the
+       `:not([class*=size-])` host-sized-icon escape intact. */
     --ui-glyph:    calc(1rem     * var(--ui-scale));
     --ui-glyph-sm: calc(0.875rem * var(--ui-scale));
 
-    /* The multi-line field's growth CEILING. Textarea sizes to its content by
-       default (`field-sizing: content`), floored at `rows` line boxes — via the
-       `--field-rows` stamp, since `field-sizing` ignores the attribute itself —
-       and capped here, so the one knob a consumer needs to pin a fixed-height
-       textarea is a one-line override of this token — not a prop, and not a
-       `resize` enum member pretending to be a sizing axis. It had ONE reader and
-       ZERO declarations before this cut: a fallback pretending to be a token.
-       Stated in `lh` deliberately — the cap is twelve LINES of whatever type the
-       field carries, and a custom property's units resolve at the element that
-       uses it, so `lh` reads the textarea's own line box, never `:root`'s. */
+    /* The multi-line field's growth ceiling: Textarea sizes to content
+       (`field-sizing: content`), floored at `rows` line boxes via the `--field-rows`
+       stamp, and capped here. Stated in `lh` deliberately — a custom property's units
+       resolve at the element that USES it, so this reads the textarea's own line box,
+       never `:root`'s. */
     --textarea-content-max: 12lh;
 
-    /* ── The picker-family type-scale ───────────────────────────
-       ONE governed two-rung scale the WHOLE shadcn picker family (Select /
-       DropdownMenu / Combobox / ContextMenu / Command / MultiSelect) reads, so the
-       family paints at ONE uniform scale instead of the scattered raw
-       `text-sm`/`text-xs` Tailwind-literal lottery (item rows at `text-sm`,
-       headings/shortcuts at `text-xs`, the two filter inputs at mismatched heights).
-       A consumer re-tints the whole family from ONE override.
-
-       It is a SPECIALIZATION of the control-font register (one scale system, not
-       three): `--dropdown-text` reads `--control-text` (the comfort-scaled `text-sm`)
-       and `--dropdown-text-secondary` reads `--control-text-sm` (the comfort-scaled
-       `text-xs`), so the picker family rides the SAME `--ui-scale` comfort axis as
-       every other control — a `--ui-scale` bump grows the dropdowns too. A consumer
-       wanting the family LARGER than the rest overrides `--dropdown-text` directly
-       (e.g. `var(--type-body)`); the override re-resolves every family surface.
-
-       Scale-contract (which surface reads which rung):
-         • PRIMARY (`--dropdown-text`)   → item rows, triggers, filter inputs, empties.
-         • SECONDARY (`--dropdown-text-secondary`) → section labels, group-headings,
-           keyboard shortcuts (the quieter-than-item caption register; resolves the
-           witness-2 contradiction — the Select/DropdownMenu/ContextMenu labels
-           collapse DOWN to the secondary rung to match the Combobox/Command headings,
-           ONE rung for the section-label role family-wide).
-       `--dropdown-input-height` unifies the two filter-input heights (Combobox was
-       h-10, Command was h-11) onto ONE register — a specialization of the
-       `--control-h-md` so the picker input scales on the comfort axis with the font. */
+    /* The picker-family type-scale: ONE governed two-rung scale the whole picker
+       family (Select / DropdownMenu / Combobox / ContextMenu / Command / MultiSelect)
+       reads, a SPECIALIZATION of the control-font register.
+         • PRIMARY (`--dropdown-text`) → item rows, triggers, filter inputs, empties.
+         • SECONDARY → section labels, group-headings, keyboard shortcuts.
+       `--dropdown-input-height` unifies the two filter-input heights onto one rung. */
     --dropdown-text:           var(--control-text);
     --dropdown-text-secondary: var(--control-text-sm);
     --dropdown-input-height:   var(--control-h-md);
 
-    /* ── The search-family magnitude rungs ───────────────
-       The SearchBar/FuzzySearch compound surfaces read these indirection rungs
-       for the glyph / icon-button / ledger-label magnitudes — so a consumer
-       retunes the WHOLE search family from ONE `:root` override, not a fork of
-       per-element px literals (`w-3.5 h-3.5`, `!h-6 !w-6`, `text-[0.6rem]`). Each
-       DEFAULTS to the existing cohort it replaces, so the bare search surface is
-       unchanged (the substitution-vs-redeclaration discipline — the
-       NAME is search-local, the magnitude stays the `--ui-glyph`/`--control-*`
-       source). NO parallel magnitude ladder: these are aliases onto the cohort.
-         • PRIMARY result label / field font  → `--control-text` (the `text-sm` register).
-         • SECONDARY type-Badge / footnote    → `--control-text-sm` (the `text-xs` register).
-         • the search/clear/expand glyph       → `--ui-glyph-sm` (the chrome 1.4 glyph).
-         • the icon-button hit-box            → `--control-h-xs` (the `h-6`/`h-7`). */
+    /* Search-family magnitude rungs: ALIASES onto the cohorts above, never a parallel
+       ladder — the NAME is search-local, the magnitude stays the `--ui-glyph` /
+       `--control-*` source, so a consumer retunes the family from one override and the
+       bare surface is unchanged. */
     --search-icon-size:           var(--ui-glyph-sm);
     --search-button-size:         var(--control-h-xs);
     --search-result-text:         var(--control-text);
@@ -176,35 +78,21 @@
     --icon-md: 1rem;
     --icon-lg: 1.25rem;
     --icon-xl: 1.5rem;
-    /* 32px rung; spinner glyphs (Loader2) + dense table-row buttons.
-       Naming follows the radius ladder + Tailwind convention (2xl > xl > xxl) —
-       see B6 §2.4 for the naming rationale. */
-    --icon-2xl: 2rem;
-    /* 40px rung; empty-state hero glyph (DashboardMap MapIcon).
-       ζ — rebound from `2.5rem` literal to `var(--size-icon-btn)` so
-       the alignment is contractual single-source-of-truth rather than the
-       coincidental numerical match noted prior. */
+    --icon-2xl: 2rem;   /* 32px — spinner glyphs, dense table-row buttons */
+    /* 40px — bound to `--size-icon-btn` so the alignment is contractual, not a
+       coincidental numeric match. */
     --icon-3xl: var(--size-icon-btn);
-    /* 56px rung; FlowSelector school/home survey-flow picker.
-       Largest rung in the icon ladder; reserved for hero-class glyphs. */
-    --icon-hero: 3.5rem;
+    --icon-hero: 3.5rem; /* 56px — largest rung, hero-class glyphs only */
 
     /* ═══════════════════════════════════════════════
        §1.1  THE SPACE SERIES — ONE generator for padding AND gap:
        4 · 8 · 12 · 20 · 32 · 52 — 4 × Fibonacci. Steps 2.00 / 1.50 / 1.667 / 1.60 /
-       1.625, limit φ. Every rung ≥1.5× its neighbour, so no two are confusable at
-       any size.
-
-       C3 ruled the forked series dead: containers 6·8·12·16 · data-feedback
-       4·8·12·24·40 · navdock 6·12·18·24 — 21 paddings + 18 gaps = 39 values for what
-       6 rungs express. One shared generator is also what makes "weight : gap"
-       statable once; §1.2's gap law (color-radius.css) reads THESE rungs by name.
+       1.625, limit φ. Every rung ≥1.5× its neighbour, so no two are confusable.
 
        NAMED BY RANK — not by px, not by ordinal. Rank is the one thing padding and
-       gap share, and it is the thing the mobile transposition preserves while the
-       value changes. A px name could not survive that transposition; a `--space-3`
-       would collide head-on with Tailwind's own numeric spacing scale, where `p-3`
-       already means 12px.
+       gap share, and it is what the mobile transposition preserves while the value
+       changes. A px name could not survive that transposition, and `--space-3` would
+       collide with Tailwind's own scale where `p-3` already means 12px.
 
        | rung    | px | padding role                                    | gap role                                     |
        |---------|----|-------------------------------------------------|----------------------------------------------|
@@ -212,36 +100,22 @@
        | atom    |  8 | atom ↔ glyph · control `xs` · tooltip plate    | control ↔ glyph · term ↔ value               |
        | body    | 12 | a control's own interior (`md`) · field inset · | peer ↔ peer, same rank; row ↔ row            |
        |         |    | THE PRESENTED PLATE — card/popover/menu/toast   |                                              |
-       |         |    | (pairs card r16 → residue 4)                    |                                              |
        | family  | 20 | THE ROOM PLATE — dialog/sheet/drawer ·          | item ↔ item; THE SEPARATOR CHANNEL           |
-       |         |    | showcase frame (pairs room r24 → residue 4)     |                                              |
+       |         |    | showcase frame                                  |                                              |
        | section | 32 | section frame · page gutter                     | at this distance NO rule is ever drawn       |
        | page    | 52 | page-section break (block axis only)            | page-section                                 |
 
        THE PAIRING LAW: `pad(role) = r(role) − 4`. Room 24−20=4 · card 16−12=4 ·
        control 10−8=2→floor. Every radius rung paired with the padding rung one below
-       it yields the 4px floor exactly.
-
-       The plate labels above are RECONCILED TO THE PAIRING LAW, which is the
-       arithmetic ground: card r16 pads at 12 and room r24 pads at 20, so the
-       presented plate sits on the body rung and the room plate on the family rung.
-       PROPORTION §1.1's own rung-20 role cell says "the presented plate — card…",
-       contradicting its own pairing law one line down — the exact erratum CWT-3 §3
-       banked for the maintainer ("§1.1 rung-20 prose label (card)"). CWT-3 §3 also
-       banked the gap-8 erratum: the "0.5 × control pad-inline at md" derivation
-       broke when C1 struck 16 from the padding series (0.5 × 12 = 6 ≠ 8) — the
-       VALUE stands as a series member (4·Fib rung 2); only the derivation clause is
-       dead, and the gap-role column above states roles, never that derivation.
+       it yields the 4px floor exactly, and it is the pairing law — not the plate
+       labels — that is the arithmetic ground.
 
        THE GAP RATIO: section : family : body = 32 : 20 : 12 = 8 : 5 : 3.
 
-       THIS IS THE LIBRARY REGISTER, and it is the wall the component lanes write
-       against — margins/padding come from these rungs with zero local mints. The
-       demo ladder LAYOUT R3 fences off (`--sp-1…6`, demo-bundle-scoped, never
-       reaching consumers) is NOT aliased, imported, or re-homed here; that would be
-       the legacy-alias form the no-backwards-compat law forbids. The library carries
-       its own, and consumers reach it through the Tailwind `--spacing-*` bridge
-       (theme/bridges.css) — never by pasting the ladder. */
+       THIS IS THE LIBRARY REGISTER, and component lanes write against it with zero
+       local mints. The demo ladder (`--sp-1…6`, demo-bundle-scoped) is NOT aliased or
+       re-homed here; consumers reach these through the Tailwind `--spacing-*` bridge
+       (theme/bridges.css), never by pasting the ladder. */
     --space-residue: 0.25rem; /*  4px */
     --space-atom:    0.5rem;  /*  8px */
     --space-body:    0.75rem; /* 12px */
@@ -249,79 +123,44 @@
     --space-section: 2rem;    /* 32px */
     --space-page:    3.25rem; /* 52px */
 
-    /* Golden-ratio spacing rungs — φ² and φ³. Preemptive substrate for the
-       hero-chassis consumers. A DERIVED pair, off the §1.1 series on purpose:
-       they name the audacious chassis' own φ-continuation, not a rank, so they
-       neither extend the six rungs above nor participate in the mobile
-       transposition below. */
+    /* φ² and φ³ — a DERIVED pair off the series on purpose: they name the audacious
+       chassis' own φ-continuation, not a rank, so they neither extend the six rungs
+       nor participate in the mobile transposition below. */
     --space-phi-5: 2.618rem; /* φ² */
     --space-phi-6: 4.236rem; /* φ³ */
 
     /* Dock geometry — consumers may override locally */
     --dock-h: calc(var(--size-icon-btn) + 0.75rem + 3px);
 
-    /* The dock geometry multiplier. `--dock-scale` threads the WHOLE
-       `.glass-dock[data-size]` geometry cascade (box, padding, gap, tab,
-       tile-min, glyph) via `calc(<base> * --dock-scale)`, so a single knob grows
-       every dock axis in lockstep. The WCAG 2.5.5 44px floor survives as a `max(…,
-       44px)` clamp INSIDE the scaled control-size.
-
-       RECONCILE (D18) — `--dock-scale` is RE-HOMED as a SPECIALIZATION of
-       the global `--ui-scale` comfort axis: `calc(var(--ui-scale) *
-       var(--dock-local-scale, 1))`. The dock now MULTIPLIES on top of the global
-       comfort scalar — its whole existing geometry `calc` chain inherits the global
-       axis for FREE (zero edit to the density cascade; the reconcile is at this ONE
-       definition line). At the desktop identity (`--ui-scale: 1`,
-       `--dock-local-scale: 1`) the dock keeps its default geometry. On coarse-pointer
-       the GLOBAL `:root { --ui-scale: var(--ui-coarse-scale, 1.5) }` block grows the
-       dock WITH the rest of the library — ONE consistent touch scale, not a parallel
-       dock-only 1.5×. `--dock-local-scale` is the dock-local EXTRA multiplier
-       (default 1): a consumer who wants the dock LARGER than the global comfort sets
-       it, and the coarse block lifts it to `--dock-mobile-scale` (default 1, the
-       stack-extra) so the dock can grow an extra notch ON TOP of the global coarse
-       default. `--dock-mobile-scale` is the public library-default identity
-       (presets-in-consumers: a consumer sets 1.3/1.75 on `:root` or a dock scope). */
+    /* `--dock-scale` threads the whole `.glass-dock[data-size]` geometry cascade (box,
+       padding, gap, tab, tile-min, glyph) via `calc(<base> * --dock-scale)`, and is a
+       SPECIALIZATION of the global comfort axis: the dock multiplies ON TOP of
+       `--ui-scale`, so the geometry chain inherits the global axis for free and the
+       reconcile lives at this ONE definition line. `--dock-local-scale` is the
+       dock-local extra multiplier (identity 1). */
     --dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1));
     --dock-local-scale: 1;
-    /* --dock-mobile-scale is the CONSUMER coarse knob — UNSET at :root so the
-       dock-layer coarse default (--dock-coarse-scale, below) is the fallback the
-       coarse block reads; a consumer setting --dock-mobile-scale on ANY ancestor
-       wins the fallback (the knob must reach the geometry cascade, not be
-       shadowed by a hard-pin on .glass-dock[data-size]). The coarse block in
-       dock/overflow.css RE-DECLARES --dock-scale so the descendant --dock-local-scale
-       lift re-flows into it (the substitution-vs-inheritance trap). */
+    /* UNSET at `:root` deliberately, so the dock-layer coarse default below is the
+       fallback the coarse block reads and a consumer setting this on ANY ancestor wins
+       it. A hard pin on `.glass-dock[data-size]` would shadow the knob before it
+       reached the geometry cascade; dock/overflow.css RE-DECLARES `--dock-scale` in
+       the coarse block so the descendant lift re-flows in. */
     --dock-mobile-scale: initial;
-    /* The dock-layer coarse-register default. The dock is a DENSE chrome strip
-       (not a body control), so on touch it floors at a TIGHTER multiplier than the
-       global --ui-coarse-scale 1.5 (which painted an ~80px collapsed pill, ~22% too
-       big — a consumer finding). 0.78 × the 1.5 global ≈ 1.17 effective
-       → a ~60px collapsed pill, the WCAG-2.5.5 44px floor held by the
-       `max(…, --dock-control-floor)` clamp. The consumer knob --dock-mobile-scale
-       overrides this; a consumer who wants the dock to MATCH the global comfort sets
-       --dock-mobile-scale: 1. */
+    /* The dock is a DENSE chrome strip, not a body control, so on touch it floors at a
+       tighter multiplier than the global 1.5 (which painted an ~80px collapsed pill).
+       0.78 × 1.5 ≈ 1.17 effective → a ~60px pill, the 44px floor held by the
+       `max(…, --dock-control-floor)` clamp. `--dock-mobile-scale` overrides this. */
     --dock-coarse-scale: 0.78;
-    /* Library glyph ownership — `.dock-icon-button > svg` reads this so the dock
-       icon glyph scales WITH the box (mirroring `.dark-mode-toggle-button > svg`).
-       A consumer-passed explicit lucide size class still WINS (utility layer >
-       component layer); this is a DEFAULT, not a ceiling.
+    /* The glyph rides the per-DENSITY box, not a flat rem: a RATIO of
+       `--dock-layer-height` (0.5 → a 2rem control gives a 1rem glyph at compact, a
+       2.5rem control gives 1.25rem at comfortable). A consumer-passed explicit size
+       class still wins — this is a default, not a ceiling.
 
-       The glyph rides the per-DENSITY box, not a flat rem.
-       The value.js D5-1 companion trace: `size="lg"` grew the shelf + pad +
-       gap but the glyph stayed 1.25rem (it rode `--dock-scale` only, NOT the
-       per-density `--dock-layer-height` axis density.css scales). Now the glyph is a
-       RATIO of `--dock-layer-height` (`--dock-icon-glyph-ratio`, default 0.5 → a
-       2rem control → a 1rem glyph at compact, a 2.5rem control → 1.25rem at
-       comfortable, lockstep up the rungs). The `--dock-scale` coarse thread is
-       PRESERVED transitively — `--dock-layer-height` already rides it (density.css).
-       The WCAG glyph-floor holds via `max(…, --dock-icon-glyph-floor)` (a 16px floor
-       so a sub-1 density/coarse register can never drop the glyph below the legible
-       minimum). NOTE: `--dock-layer-height` is painted ONLY on `.glass-dock[data-size]`
-       (density.css) — at `:root` it is the inline fallback below, so this `:root`
-       declaration resolves the fallback ladder; density.css RE-RESOLVES `--dock-icon-glyph`
-       inside each `[data-size]` scope so the density-painted height flows in (the
-       substitution-vs-inheritance trap the overflow.css sweep documents). The
-       toggle mirror `.dark-mode-toggle-button > svg` reads the SAME `--dock-icon-glyph`
-       so both glyphs move onto the density axis together. */
+       THE SUBSTITUTION-VS-INHERITANCE TRAP: `--dock-layer-height` is painted only on
+       `.glass-dock[data-size]` (density.css), so this `:root` declaration resolves the
+       inline FALLBACK ladder; density.css RE-RESOLVES `--dock-icon-glyph` inside each
+       `[data-size]` scope so the density-painted height flows in. The 16px floor keeps
+       a sub-1 density or coarse register from dropping the glyph below legibility. */
     --dock-icon-glyph-ratio: 0.5;
     --dock-icon-glyph-floor: 1rem;
     --dock-icon-glyph: max(
@@ -329,244 +168,124 @@
         var(--dock-icon-glyph-floor)
     );
 
-    /* (the dock-glyph fold) — `--dock-control-glyph-size` is
-       the ONE in-dock control-glyph retint knob (the dark-toggle SVG `width`/`height`
-       + the `--dark-mode-toggle-padding` inset BOTH read it), defaulting to the
-       `--dock-scale`-keyed `--dock-icon-glyph` the nav icons paint so the docked
-       toggle is optically uniform out of the box. Like `--dock-icon-glyph` this
-       `:root` declaration resolves the fallback ladder; density.css RE-RESOLVES it
-       inside each `[data-size]` scope and overflow.css RE-DECLARES it in the
-       coarse block, so the density-painted + coarse-scaled `--dock-icon-glyph` flows
-       in (the substitution-vs-inheritance trap closed on all three registers — a
-       `:root`-only knob would freeze at the `:root` `--dock-scale` while the glyph
-       lifts). ONE knob; no per-size literal, no `!important`. */
+    /* The ONE in-dock control-glyph retint knob — the dark-toggle SVG `width`/`height`
+       AND the `--dark-mode-toggle-padding` inset both read it, so the docked toggle is
+       optically uniform out of the box. Same substitution trap as above: density.css
+       and overflow.css RE-RESOLVE it in their scopes, because a `:root`-only knob would
+       freeze at the `:root` `--dock-scale` while the glyph lifts. */
     --dock-control-glyph-size: var(--dock-icon-glyph);
 
-    /* The COLLAPSED-pill floor tokens. Without them the collapsed summary
-       falls to `--dock-layer-height` (the FULL control height, ~2.5rem) for
-       its `min-width` with NO block floor, so the shrunken pill reads as an
-       un-collapsed control row, not a tight proportioned squircle. These two floor
-       tokens (referenced by dock.css's `.collapsed .dock-layer--summary` min-size +
-       the `--dock-pad-collapsed` morph floor) mint a TIGHT proportioned pill: the
-       summary min-size is ≈70% of the full control height (a proportioned dot, not a
-       full-row stub — the ratified default), and the collapsed padding is a step
-       BELOW the expanded `--dock-padding-block` so the collapsed chrome hugs the
-       glyph. The summary carries a SYMMETRIC `min-block-size` (dock.css) keyed to the
-       same token so the pill floors on BOTH axes — a squircle, not a stub. Consumers
-       retune the pill geometry per-instance via these two handles. */
-    /* The collapsed pill is a PERFECT CIRCLE (the user's
-       "circle, not oval" bar). The diameter is the collapsed-summary min-size on
-       BOTH axes; the morph.css `.collapsed .dock-layer--summary` rule LIFTS the
-       `.dock-layer` height-lock (`height: var(--dock-layer-height)`) for the
-       collapsed summary so the pane is square at this token (the locked 40px height
-       against a 28px min-width would otherwise read an oval — 38×50, aspect 0.76).
-       The 0.85× value is a TIGHT proportioned circle a step below the full control
-       (so the collapsed dot reads smaller than an expanded control row) while
-       staying large enough that the centred glyph is not cramped. A consumer
-       retunes the circle diameter via this one handle. */
+    /* The collapsed summary is a PERFECT CIRCLE: this is its diameter on BOTH axes,
+       and morph.css lifts the `.dock-layer` height-lock for the collapsed summary so
+       the pane is square at this token (the locked 40px height against a 28px min-width
+       reads as a 38×50 oval, aspect 0.76). 0.85× is a tight circle a step below the
+       full control, still large enough that the centred glyph is not cramped. */
     --dock-collapsed-summary-min-size: calc(var(--dock-layer-height, 2.5rem) * 0.85);
-    /* The collapsed padding now threads the ONE `--dock-scale` coarse-pointer
-       multiplier DIRECTLY (a flat 0.25rem off the scale would leave the
-       collapsed pad desktop-sized at the 1.5x mobile scale while the
-       box/glyph/min-size grew — a desync the morph then interpolated FROM). The
-       summary min-size already threads `--dock-scale` transitively through
-       `--dock-layer-height` (itself `calc(* --dock-scale)` at every density rung); this
-       lands the collapsed pad on the same thread so the whole collapsed pill scales
-       coherently on touch. The 0.25rem base stays the ratified tight floor. */
+    /* Threads `--dock-scale` DIRECTLY: a flat 0.25rem would leave the collapsed pad
+       desktop-sized at the mobile scale while box, glyph and min-size grew — a desync
+       the morph then interpolates FROM. The summary min-size threads the scale
+       transitively through `--dock-layer-height`; this lands the pad on the same
+       thread. */
     --dock-collapsed-padding: calc(0.25rem * var(--dock-scale));
 
-    /* The native-scroll-track ring-room reserve.
-       `--dock-scroll-safe-inset` is ≥ the focus-ring weight (`--focus-ring-width`, 2px) so
-       a FLUSH first/last item's focus-ring arc renders WHOLE inside the scroll port's
-       PADDED clip box (the port adds this as padding + pulls it back with an equal negative
-       margin, so the dock layout is unchanged — the canonical no-cross-axis-clip scroll-
-       strip idiom; overflow.css). `--dock-scroll-gutter` is the `scroll-padding-inline`
-       recenter gutter so `scrollIntoView` (useSelectionGroup, on every select) lands a
-       selected member with ≥1px port slack, never jammed flush against the port edge. */
+    /* The native-scroll-track ring-room reserve. The safe inset is ≥ the focus-ring
+       weight so a FLUSH first/last item's ring arc renders whole inside the scroll
+       port's padded clip box (the port adds this as padding and pulls it back with an
+       equal negative margin — the no-cross-axis-clip scroll-strip idiom, overflow.css).
+       The gutter is the `scroll-padding-inline` recenter so `scrollIntoView` lands a
+       selected member with ≥1px slack, never jammed flush against the port edge. */
     --dock-scroll-safe-inset: calc(var(--focus-ring-width, 2px) + 1px);
     --dock-scroll-gutter: var(--dock-scroll-safe-inset);
 
-    /* The dock-control family reads a real GLASS register
-       on hover/active, NOT a same-hue `--card` mix at an alpha adjacent to the dock
-       plate's own composed substrate (a sub-1%-ΔL no-op — the loud Q3 tell: "nothing
-       on hover, something on click"). The dock substrate is the element-level
-       `--glass-veil-tier` compose (glass/veil.css; the old `--glass-plate-dock`
-       pre-composed colour is struck). Both legs point at NAMED glass tiers a
-       measurable step ABOVE that substrate:
-         • hover  → `--glass-plate-resting` (the 65% glass plate) — the control surface
-                    WAKES as a brighter glass tier on hover, reading the blurred dock
-                    substrate through it. The +ΔL above the plate substrate is perceptible
-                    BEFORE click; the specular gleam + scale ride alongside (one register).
-         • active → `--glass-plate-floating` (the 80% glass plate) — a tier ABOVE hover,
-                    the keyframes-dock "selected element reads as glass" model the user
-                    named: the selected tile is a glass tier that shows the
-                    substrate through it, NOT the flat `--surface-tint-12` ink wash. The
-                    active ≠ hover register is the glass-tier step, not an alpha nudge.
-       This is a REGISTER change (substrate→glass-tier), not a magnitude knob. The
-       per-control `--dock-icon-hover-bg` override still wins if a consumer set it. */
+    /* Both legs point at NAMED glass tiers a measurable step above the dock's own
+       composed substrate — a same-hue `--card` mix at an adjacent alpha is a sub-1%-ΔL
+       no-op ("nothing on hover, something on click"). Hover wakes as the 65% plate;
+       active is the tier above it, a glass surface the substrate shows through rather
+       than a flat ink wash. A REGISTER change, not a magnitude knob. */
     --dock-control-hover-bg: var(--glass-plate-resting);
     --dock-control-active-bg: var(--glass-plate-floating);
 
-    /* The small-tile specular override. The 40px dock-control
-       tile is a fraction of a card's plate, so the global `--glass-specular-size`
-       (36% of the plate) blooms a disproportionate disc on a hover/active dock tile
-       (the finding). The dock controls scope a TIGHTER radius (22%) so the gleam
-       wakes as a restrained EDGE-catch on the small tile, not a tile-filling bloom —
-       the right resolution of (sized-down on the small surface), not turning the
-       specular off everywhere. Read by the dock-control `::before` recipe (glass.css)
-       via the family-scoped override below; the global card/panel size is untouched. */
+    /* A 40px dock tile is a fraction of a card's plate, so the global 36% specular
+       blooms a tile-filling disc on it. 22% wakes as a restrained edge-catch instead;
+       the global card/panel size is untouched. */
     --dock-control-specular-size: 22%;
 
-    /* The layer switcher is a HAIRLINE register, not a
-       fused tinted gutter. The `--surface-tint-8` filled plate (the "heavy dark
-       blob column") is gone: `--dock-layer-switcher-bg` defaults TRANSPARENT
-       so the switcher box paints no fill, and the single `--dock-hairline`
-       hairline becomes the only visible switcher edge — a thin rule between the
-       switcher column and the dock body (the iOS-grade hairline switcher).
-       The hover/active affordance stays a translucent GLASS tint: the active
-       indicator reads `--dock-layer-switcher-active`, defaulting to the glass-floating
-       tier (the keyframes-dock "selected reads as glass" register), NOT a
-       saturated `--primary 15%` warm-red mix — the exact accent defers to
-       the root register (the switcher keeps a glass tint here, never
-       bakes a brand-red the de-red wave has to undo). */
+    /* The layer switcher is a HAIRLINE register, not a fused tinted gutter: the
+       switcher box paints no fill, and `--dock-hairline` is the only visible switcher
+       edge. The hover/active affordance stays a translucent GLASS tint — the accent
+       defers to the root register rather than baking a brand hue here. */
     --dock-layer-switcher-bg: transparent;
-    /* THE ONE HAIRLINE (BK #72, G-ONE-NAME). The dock band painted two different
-       1px rules from two different colours: `.dock-separator` off `--surface-tint-15`
-       and the layer switcher's divider off `color-mix(--border 40%)`. One thing, one
-       name: both now read `--dock-hairline`, and the value taken is the dock's OWN
-       tint rung — `--surface-tint-*` is the ladder `dark-arm.css` re-resolves warm in
-       dark by derivation, where `--border` is a shadcn bridge the band is walking off.
-       PAINT DELTA, stated: the switcher divider moves
-       `color-mix(in srgb, var(--border) 40%, transparent)` →
-       `color-mix(in srgb, var(--foreground) 15%, transparent)`; the separator's own
-       paint is byte-unchanged and only its SOURCE became a name. */
+    /* THE ONE HAIRLINE (G-ONE-NAME): `.dock-separator` and the switcher divider are
+       one thing with one name, and the value taken is the dock's OWN tint rung —
+       `--surface-tint-*` is the ladder dark-arm.css re-resolves warm in dark by
+       derivation, where `--border` is a shadcn bridge the band walks off. */
     --dock-hairline: var(--surface-tint-15);
     --dock-layer-switcher-hover: color-mix(in srgb, var(--accent) 30%, transparent);
     --dock-layer-switcher-active: var(--glass-plate-floating);
-    /* The switcher TAB is a COMPACT square, distinct from
-       the 40px dock CONTROL. A fallback chain to `var(--dock-control-size,
-       1.75rem)` resolves to the full 40px control, so a 3-tab column switcher stands
-       ~140px tall — a giant pill of dead space. A dedicated tighter tab size
-       (1.75rem = 28px, density-scaled) keeps the switcher a compact icon column the
-       indicator travels cleanly, and the dock grows only as tall as the switcher needs.
-       Consumers retune the switcher-tab size via this one handle. */
+    /* The switcher TAB is a compact square, distinct from the 40px dock CONTROL: at
+       control size a 3-tab column stands ~140px tall, a giant pill of dead space.
+       28px density-scaled keeps the switcher a compact column the indicator travels. */
     --dock-layer-tab-size: calc(1.75rem * var(--dock-scale));
 
-    /* Dock active-state ladder
-       Token-overridable active paint for `.dock-icon-button`. Promoted
-       from hardcoded `background: var(--muted); color: var(--foreground)`
-       per bbnf-buddy O11/c R1: 7 `:deep()` escapes at `ToolsLayer.vue`
-       redefine bg/color/scale/border/shadow on the active variant; the
-       ladder absorbs ~3 of 7 at a stroke. Defaults hold the
-       visual contract (no transform, no border, no shadow) — overrides
-       take effect per-instance via `:root` or a parent scope, e.g.
-       `.tools-layer { --dock-active-scale: 1.2; --dock-active-bg: …; }`.
-       ≥ 2-consumer coverage: bbnf-buddy ToolsLayer (override consumer) +
-       the default-consumer dock.
-
-       Re-pointed off the opaque `--muted` plate onto the glass-
-       correct `--dock-control-active-bg` (a translucent tint a ladder step above
-       hover), so the icon-button active no longer stamps a solid cream rectangle
-       over the dock glass. The active-ladder override consumers still retint
-       per-instance; only the DEFAULT moved to glass-correct. */
+    /* Dock active-state ladder — token-overridable active paint for
+       `.dock-icon-button`. Defaults hold the visual contract (no transform, no border,
+       no shadow); overrides take effect per-instance via `:root` or a parent scope,
+       e.g. `.tools-layer { --dock-active-scale: 1.2; }`. The background is the
+       glass-correct translucent tint a ladder step above hover, never an opaque plate
+       stamping a solid rectangle over the dock glass. */
     --dock-active-bg: var(--dock-control-active-bg);
     --dock-active-color: var(--foreground);
     --dock-active-scale: 1;
     --dock-active-border: none;
     --dock-active-shadow: none;
 
-    /* The iOS-26/27 SELECTED register, at the ROOT.
-       The brand-red (`--viz-fourier`) interactive register is retired
-       (hover/active/selected/pressed) in favour of the iOS-glassy luminance-lift:
-       a translucent material-lift plate (`--dock-control-active-bg`, already the
-       `--glass-plate-floating` tier — C4-INV-1, UNCHANGED) + a brighter-material
-       accent that lifts LUMINANCE, never a saturated brand hue.
-
-       `--dock-selected-accent` is the SINGLE retint knob for the selected
-       affordance: it defaults to a translucent foreground-over-transparent
-       "brighter material" lift, so it auto-FLIPS with `--foreground` (dark mode
-       resolves a light luminance-lift over the dark plate — the iOS read). The
-       vertical-dock leading-edge accent BAR
-       (`dock/styles/controls/touch-floor.css` `::before`) consumes it;
-       the selected GLYPH stays `--foreground` warm-ink (arm-a — the glyph never
-       carries the accent token, only the bar does). A consumer retints the whole
-       selected affordance through this ONE token (token-first); red survives only
-       as static brand INK (the ℱ wordmark / data-viz strokes / the gold-CTA
-       family), never as an interactive register. */
+    /* THE SELECTED register: a luminance lift, never a saturated brand hue. This is
+       the SINGLE retint knob for the selected affordance, defaulting to a translucent
+       foreground-over-transparent "brighter material" so it auto-FLIPS with
+       `--foreground` (dark mode resolves a light lift over the dark plate). Only the
+       vertical-dock leading-edge accent bar consumes it; the selected GLYPH stays
+       `--foreground` warm ink and never carries the accent token. */
     --dock-selected-accent: color-mix(in oklab, var(--foreground) 14%, transparent);
 
-    /* (value.js P5 — the ONE ring contract). `--dock-ring` is
-       THE single ring register EVERY dock control reads for its focus-visible /
-       selection ring — the focus-ring shadow, the selected accent, and the picker
-       triggers collapse onto ONE token (a consumer retunes every dock ring from a
-       single `:root { --dock-ring: … }` override, the `--focus-ring-shadow`
-       token-first axis). Defaults to the shared `--focus-ring-shadow` so the ring
-       is byte-identical to before.
-
-       THE ACTIVE SEAT YIELDS TO CONSUMER INDICATOR CONTENT. A dock control that
-       hosts consumer indicator content in its active seat carries `data-ring-yield`
-       — the dock's own ring/accent defers so the consumer's own indicator reads
-       (the seam value.js's letter-rail ask names). The standalone letter-rail
-       primitive remains declined; consumers compose ordinary controls with
-       `data-ring-yield`. */
+    /* THE ONE RING CONTRACT: every dock control's focus-visible ring, selected accent
+       and picker trigger collapse onto this token, so a consumer retunes every dock
+       ring from a single `:root` override. A dock control hosting consumer indicator
+       content in its active seat carries `data-ring-yield`, and the dock's own
+       ring/accent defers so the consumer's indicator reads. */
     --dock-ring: var(--focus-ring-shadow);
 
-    /* The iOS press-DARKEN. Press today scales only
-       (`--scale-press-dock`, C4-INV-4); iOS lands "darken + shrink". This token
-       is a tier BELOW resting — `--glass-plate-resting` mixed ~7% toward `--foreground`
-       — read on the dock control `:active` alongside the scale-press so a press
-       lands the brief glass-darken. Auto-flips with `--foreground`/`--glass-plate-resting`. */
+    /* The press DARKEN — a tier BELOW resting, read on `:active` alongside the
+       scale-press so a press lands a brief glass-darken rather than scaling alone.
+       Auto-flips with `--foreground` / `--glass-plate-resting`. */
     --dock-control-press-bg: color-mix(
         in oklab,
         var(--glass-plate-resting),
         var(--foreground) 7%
     );
 
-    /* TooltipTrigger does not wrap or resize its slotted control; each
-       interactive trigger owns its target floor. */
-
-    /* Dock touch-target floor. The base value tracks
-       the desktop default (`--size-icon-btn`); the
-       `@media (pointer: coarse)` block at `dock.css` lifts it to the
-       WCAG 2.5.5 floor on touch devices. */
+    /* Dock touch-target floor. The base tracks the desktop default; the
+       `@media (pointer: coarse)` block in dock.css lifts it to the WCAG 2.5.5 floor. */
     --dock-touch-target: 2.75rem; /* 44px */
 
-    /* The dock LABEL-tracks-CONTROL ratio (the
-       dock-oversize chronic close). The `dock-label`
-       (typography/semantic.css) sizes its font as a PROPORTION of the
-       control height — `calc(var(--dock-control-size) * var(--dock-label-ratio))`
-       — so a tighter control (the `[data-preset="cockpit"]` 2.75rem floor with
-       compact chrome) carries a proportionally tighter label, never the fixed
-       `--type-subheading` rung that read OVERSIZE on a tight pill. The default
-       reproduces `--type-subheading` (1.272rem) at the comfortable `2.5rem`
-       control (1.272 / 2.5 = 0.5088) so the bare default is byte-near-identical
-       — opt into the cockpit preset (or override this knob from `:root`/the
-       `[data-preset]` scope) to retune the whole dock label family in ONE write.
-       The explicit `--dock-label-size` knob STILL wins when set (the dock.css
-       audacious-mobile carve precedent, KEPT — the ratio is the FALLBACK). */
+    /* The dock LABEL-tracks-CONTROL ratio: `dock-label` (typography/semantic.css) sizes
+       its font as a PROPORTION of the control height, so a tighter control carries a
+       proportionally tighter label instead of a fixed rung that reads oversize on a
+       tight pill. The default reproduces `--type-subheading` at the comfortable 2.5rem
+       control (1.272 / 2.5 = 0.5088). An explicit `--dock-label-size` still WINS — the
+       ratio is the FALLBACK. */
     --dock-label-ratio: 0.5088;
 
-    /* Canonical WCAG 2.5.5 (44px) touch-target floor for the
-       NON-dock coarse-pointer surfaces (`Button iconOnly`,
-       ExpandableContainer triggers, SegmentedTabs responsive mobile trigger). One
-       named rung the `@media (pointer: coarse)` block in utilities.css reads,
-       retiring the per-consumer one-liner `min-h-[44px]` patches. Equals
-       `--dock-touch-target` numerically; kept as a distinct token so the
-       dock floor and the general floor can be retuned independently. */
+    /* WCAG 2.5.5 floor for the NON-dock coarse-pointer surfaces, read by the
+       `@media (pointer: coarse)` block in utilities.css. Numerically equal to
+       `--dock-touch-target`, kept distinct so the two floors retune independently. */
     --touch-target: 2.75rem; /* 44px */
 
-    /* The Slider's coarse-pointer floor — WCAG 2.5.8 (AA) 24px, deliberately NOT
-       the 2.5.5 44px above it. The operable target on a slider is the TRACK, not a
-       thumb glyph (the standard `.slider-thumb` ships `width: 0`), and the sibling
-       counter-measurement of the acquired region (339.4 × 24 CSS px) overruled the
-       2.5.5 citation on exactly that ground — so 44px here would grow a control
-       past the target that was measured. Read by the `@media (pointer: coarse)`
-       rule in [2026-08-08 · BK #35 W-SLIDER: ~~`slider/Slider.vue`~~ →
-       `slider/styles.css`, THE ONE SLIDER LANE — the rule and the `max()` are
-       unchanged, only the file that authors them], which `max()`es it against the rung's own
-       `--slider-track-height`: this knob can only raise a rung that sits under it,
-       never shrink one. A distinct token from `--touch-target` because the two
-       floors answer different success criteria. */
+    /* The Slider's coarse floor is WCAG 2.5.8 (24px), deliberately NOT the 44px above:
+       the operable target on a slider is the TRACK, not a thumb glyph (the standard
+       `.slider-thumb` ships `width: 0`), and the measured acquired region is
+       339.4 × 24 CSS px — 44px here would grow a control past the target that was
+       measured. `slider/styles.css` `max()`es it against the rung's own
+       `--slider-track-height`, so this knob can only RAISE a rung, never shrink one. */
     --slider-touch-target: 1.5rem; /* 24px */
 
     /* The Configurator density and hierarchy tokens live in sizing-config.css. */
@@ -575,37 +294,28 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    §1.1  THE MOBILE TRANSPOSITION — ONE law, ONE block, library-wide.
 
-   PROPORTION §1.1 / LAYOUT C13: at ≤768px EVERY space rung steps down exactly one.
-   52→32, 32→20, 20→12, 12→8, 8→4, 4→4 (the floor absorbs the last step).
+   At ≤768px EVERY space rung steps down exactly one: 52→32, 32→20, 20→12, 12→8,
+   8→4, 4→4 (the floor absorbs the last step). The mobile ladder is the SAME series
+   shifted one rung, not a rescale — each mobile value is literally the desktop value
+   of the rung below, so every mobile step is a step OF the generator and nothing
+   lands off-series. A single 0.860 scalar puts every value off-series (32→27.5);
+   one-rung-down preserves rank distance with ≤6% ratio drift.
 
-   The mobile ladder is therefore the SAME series, shifted one rung — not a rescale.
-   Each mobile value is literally the desktop value of the rung below it, so every
-   step in the mobile ladder is a step OF the generator (1.50/1.667/1.60/1.625) and
-   nothing lands off-series. C13 ruled the alternatives out on exactly this ground:
-   a single 0.860 scalar puts every value off-series (32→27.5); one-rung-down
-   preserves rank distance with ≤6% ratio drift. The sole deviation is the floor,
-   where 8→4 and 4→4 both resolve to 4 and the two smallest rungs coincide.
-   ONE stated exception rides outside the series: lengths derived from
-   `--touch-target` (an a11y constant, 44px at every viewport) — a gutter that must
-   clear the target cannot ride a rung that transposes below it (52 → 32 at mobile),
-   so `calc(--touch-target + <rung>)` is series-exempt geometry, not a space rung.
+   ONE exception rides outside the series: lengths derived from `--touch-target` (an
+   a11y constant, 44px at every viewport). A gutter that must clear the target cannot
+   ride a rung that transposes below it, so `calc(--touch-target + <rung>)` is
+   series-exempt geometry, not a space rung.
 
-   TWO FENCES RIDE HERE, both LAYOUT §5:
-     1. `--ui-scale` moves the CONTROL BOX ONLY (height, padding, glyph). It is
-        absent from this block and must stay absent — the box and the space series
-        are separate axes, and multiplying both would double-apply the comfort
-        factor exactly as the no-double-vw reconcile above forbids for type.
-     2. TYPE keeps its own clamp and never rides `--ui-scale`. No type rung appears
-        in this block, deliberately.
+   TWO FENCES (LAYOUT §5):
+     1. `--ui-scale` moves the CONTROL BOX ONLY and is absent from this block — it
+        must stay absent, or the comfort factor applies twice, exactly as the
+        no-double-vw reconcile forbids for type.
+     2. TYPE keeps its own clamp and never rides `--ui-scale`; no type rung appears
+        here, deliberately.
 
-   THIS IS THE ONLY WIDTH-CONDITIONAL SPACING DECLARATION IN src/styles, and no
-   other token-layer file may contain one (LAYOUT §5). Component files still carry
-   their own width queries today — dock density's 44.9375rem is RT-3/#47's, the
-   rest retire onto the rungs in #79-#88's sweep — so library-wide satisfaction is
-   those lanes' to deliver. That is what the rank names buy: a
-   component reads `--space-family` once and steps down for free, instead of
-   re-deciding its own spacing at its own breakpoint — which is how the nine ad-hoc
-   transposition factors got minted in the first place. */
+   THIS IS THE ONLY WIDTH-CONDITIONAL SPACING DECLARATION IN src/styles, and no other
+   token-layer file may contain one. Component files still carry their own width
+   queries today, so library-wide satisfaction is those lanes' to deliver. */
 @media (max-width: 768px) {
     :root {
         --space-page:    2rem;    /* 52 → 32 */

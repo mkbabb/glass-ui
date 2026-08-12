@@ -111,9 +111,6 @@
        fast band-pass — the §6 calm register. (`--duration-seal` was never landed;
        this is net-new, NOT a retirement re-point.) */
     --duration-metal: 6s;
-    /* `--duration-sparkle` (600ms) DELETED with the disco
-       recipe retirement: the sparkle-sweep keyframe + its sole `btn-audacious`
-       consumer are gone. */
 
     /* Default CSS stagger; JS-only variants live in styles/tokens.ts. */
     --motion-stagger-default: 80ms;
@@ -186,20 +183,11 @@
     /* ═══════════════════════════════════════════════
        §2.C ANIMATION EXPRESSIVENESS
 
-       The audacious press-ripple RETIRED, and so is the progress-lifecycle
-       clock family: the intake pulse, the ≥85% crescendo and the fourth
-       indeterminate clock all died with the `gradient` variant. Completion is
-       one variant-independent discharge on `--duration-normal`; the
-       indeterminate FLOW rides `--duration-shimmer-fast` (3s) — ONE
-       indeterminate clock in the library, shared with the Timeline.
+       Completion is ONE variant-independent discharge on `--duration-normal`; the
+       indeterminate FLOW rides `--duration-shimmer-fast` — ONE indeterminate clock
+       in the library, shared with the Timeline. A press is the §6 scale beat, never
+       an expanding ink circle.
        ═══════════════════════════════════════════════ */
-
-    /* The `btn-audacious` press-ripple knobs
-       (`--ripple-radius-max` 12rem, `--motion-duration-ripple` 340ms) DELETED
-       with the disco recipe retirement: the ripple was btn-audacious-private and
-       has no surviving consumer (the calm CTA register's press is the §6
-       `--scale-press-sm` scale beat). The `@property --ripple-radius`
-       registration retires with it (property-regs.css). */
 
     /* ═══════════════════════════════════════════════
        §3  Z-INDEX SCALE

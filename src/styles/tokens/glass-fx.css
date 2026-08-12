@@ -1,173 +1,102 @@
-/* tokens/glass-fx.css
-   §8 glass EFFECT knobs — the grain/specular/edge-light + the adaptive tint-source
-   + backdrop-luma bucket + the decorative fringe/curvature/chart-palette + the
-   per-tier shadow/spine/under-shadow/overlay-scrim recipes.
-   A partial held under the no-god-module bound (the
-   §8 opacity/blur/saturate LADDER + composed bg/border + the control-REST register
-   stay in glass.css; this is the contiguous decorative/fx tail). @import-ed by
-   tokens.css in cascade order IMMEDIATELY AFTER glass.css — the carve splits the ONE
-   §8 :root block into two adjacent same-selector :root{} blocks at the same cascade
-   slot (the isomorphism precedent), dist byte-identical. */
+/* tokens/glass-fx.css — §8 glass EFFECT knobs: grain/specular/edge-light, the adaptive
+   tint-source + backdrop-luma bucket, the decorative fringe/curvature/chart-palette, and
+   the per-tier shadow/spine/under-shadow/overlay-scrim recipes. @import-ed by tokens.css
+   IMMEDIATELY AFTER glass.css, whose §8 ladder and control-REST register this partial
+   continues — two adjacent same-selector :root{} blocks at the same cascade slot. */
 :root {
-    /* Shared decorative. Light grain dropped 0.035 → 0.025 —
-       at the chassis scale the original alpha read as crawl over the new
-       lower-alpha chassis bg; the grain's role is texture, not reading,
-       so it sits at the perceptual floor. Dark companion drops 0.06 →
-       0.045 below to keep the soft-light blend alive without stippling. */
+    /* Grain is TEXTURE, not reading, so the glass grain sits at the perceptual floor.
+       The dark companion (dark-arm.css) keeps the soft-light blend alive without
+       stippling. */
     --glass-grain-opacity: 0.025;
-    /* The PAPER grain is its OWN register (~3× the glass grain):
-       paper texture is MEANT to READ (the user: "I don't see any paper grain or grit
-       anywhere"), not sit at the glass perceptual floor. ONE token retunes paper grit
-       library-wide WITHOUT coarsening the subtle material grain (the split keeps
-       glass calm + paper tactile). The dark arm (dark-arm.css) lifts it for soft-light. */
-    /* Re-calibrated to the JND floor for the CORRECTED coarse
-       tooth + multiply blend (std ≥ 4.5 light, the no-squint floor): multiply on the
-       cream pole is GENTLE so it needs MORE alpha — a 0.08 alpha on an
-       overlay blend is mathematically incapable of moving a near-white pixel.
-       The universal grain plane is RETIRED (the shell field
-       is the recessive aurora; grain is now PER-SURFACE opt-in). The opt-in alpha is
-       nudged sub-JND (0.22 → 0.21) for the per-surface register — barely perceptible,
-       so opt-in cards/panels read tactile-but-calm without the full-page wash. */
+    /* PAPER grain is its OWN register (8.4× the glass grain) because paper texture is
+       MEANT to read. ONE token retunes paper grit library-wide without coarsening the
+       subtle material grain — glass calm, paper tactile. Calibrated to the JND floor for
+       the coarse tooth + MULTIPLY blend: multiply on the cream pole is gentle and needs
+       MORE alpha, since a 0.08 alpha on an overlay blend is mathematically incapable of
+       moving a near-white pixel. Grain is PER-SURFACE opt-in, not a full-page wash. */
     --paper-grain-opacity: 0.21;
-    /* The grain ENGAGE clock: a hover/active grain lift cross-fades
-       the grain `::after` OPACITY on this thin ~120ms linear write while the
-       `background-image` stays ALWAYS PRESENT (never a none→image swap — the one-frame
-       decode-and-pop, the T8-F6 disco-grain pop); collapses to 0ms under PRM. */
+    /* The grain ENGAGE clock: a hover/active grain lift cross-fades the grain `::after`
+       OPACITY on this thin linear write while the `background-image` stays ALWAYS
+       PRESENT — never a none→image swap, which is a one-frame decode-and-pop. Collapses
+       to 0ms under PRM. */
     --glass-grain-engage-duration: 120ms;
-    /* `--glass-grain-opacity-disco` (0.08) DELETED with the disco
-       recipe retirement: no surviving consumer once `btn-audacious` + the
-       dock-tab primary phase-grain collapse onto the calm glass register. */
-    /* The top-edge highlight leg (a 0.25α white inset) is STRUCK. It was one of five
-       white legs stacked on a single plate — top-edge highlight, 1.5px specular, the
-       0.75px perimeter ring, the ::before conic glint, the ::before cream hairline —
-       and five sources of white on one surface is not a catch-light, it is a wash. One
-       static leg survives (`--glass-rim-top`, below); the plate's read comes from what
-       passes THROUGH it, not from what is painted on it. */
+    /* NO top-edge highlight leg. It was one of five white legs stacked on a single
+       plate — top-edge highlight, 1.5px specular, the 0.75px perimeter ring, the
+       `::before` conic glint, the `::before` cream hairline — and five sources of white
+       on one surface is a wash, not a catch-light. One static leg survives
+       (`--glass-rim-top`, below); the plate's read comes from what passes THROUGH it,
+       not from what is painted on it. */
 
-    /* Hairline-accent — 0.5px catch-light + under-shadow pair.
-       Single token composes the canonical 2-stop hairline used by dock.
-       The `.hairline-accent` utility
-       (utilities.css §hairline) adopts these via `box-shadow:`. */
+    /* Hairline-accent — the canonical 2-stop 0.5px catch-light + under-shadow pair the
+       `.hairline-accent` utility (utilities.css) adopts via `box-shadow:`. */
     --hairline-catch-light: inset 0 0.5px 0 0 rgb(255 255 255 / 0.06);
     --hairline-under-shadow: 0 0.5px 0 0 rgb(0 0 0 / 0.04);
     --border-hairline: var(--hairline-catch-light), var(--hairline-under-shadow);
 
-    /* The brand-metal catch-light DEFAULTS (the consumer
-       retune seam). The metal-shimmer family (`.metal-{gold,silver,bronze}`,
-       metal.css) halos the text-clip with a `drop-shadow` of the metal's OWN base
-       hue at this radius + strength — the gold reads as LIT metal, not a flat fill.
-       Shared by the loop sweep AND the one-shot headline (the 
-       seal glint reads `--metal-glow-blur`/`--metal-glow-opacity` — the ≥2-consumer
-       register). The defaults are a soft warm WHISPER bounded by the warm-cream
-       identity — a halo radius proportional to the text (0.5em) at a low strength
-       (0.35), NOT a neon bloom (the §6 calm register; the disco family stays gone).
-       A garish high-opacity glow is the consumer's preset choice, never the default;
-       a consumer who wants NO glow sets `--metal-glow-opacity: 0`. */
+    /* The brand-metal catch-light defaults — the consumer retune seam. The
+       metal-shimmer family (metal.css) halos the text-clip with a `drop-shadow` of the
+       metal's OWN base hue at this radius and strength, so the gold reads as LIT metal
+       rather than a flat fill. A halo proportional to the text at a low strength, NOT a
+       neon bloom: a garish glow is a consumer's preset choice, never the default, and a
+       consumer wanting none sets `--metal-glow-opacity: 0`. */
     --metal-glow-blur-default: 0.5em;
     --metal-glow-opacity-default: 0.35;
 
-    /* `--glass-specular` (0.45 light / 0.30 dark) was the BRIGHTEST white in the tree
-       and it painted on interactive moments over surfaces that already carried the rim.
-       Struck with the rest of the stack. The moving catch-light (the pointer-tracked
-       `::before` disc, glass/material.css) is the interaction light now, and it rests
-       at intensity 0. */
-
     /* The rim SEAM for consumers that compose the rim as one layer of their own
-       box-shadow list. It is a PURE INDIRECTION onto `--glass-material-rim` — it
-       declares no white of its own, so there is exactly ONE white ink in the tree and
-       it cannot drift from the leg the ladder paints.
-
-       It used to declare a 0.75px full-perimeter ring at its own alpha (0.18 light,
-       0.22 dark), which made it a SECOND white source: a plate composing both carried
-       an omnidirectional halo over the key-driven leg, at an alpha above the ceiling,
-       BRIGHTER in dark than in light. The full-perimeter form is the non-survivor —
-       four lit edges describe no light source. The directional key-driven pair is what
-       the rim is, and this name now resolves it.
+       box-shadow list. A PURE INDIRECTION onto `--glass-material-rim`: it declares no
+       white of its own, so there is exactly ONE white ink in the tree and it cannot
+       drift from the leg the ladder paints. A full-perimeter ring here would be a SECOND
+       white source, omnidirectional over the key-driven leg — and four lit edges
+       describe no light source.
 
        Resolves a TWO-layer value (lit catch + warm shade). Consumers read it as a whole
-       box-shadow VALUE in a comma-joined list, NEVER nested inside another layer — the
-       same rule the layer token always carried (glass/material.css states it). */
+       box-shadow VALUE in a comma-joined list, NEVER nested inside another layer. */
     --glass-edge-light: var(--glass-material-rim);
 
-    /* The DIRECTIONAL rim register (the iOS-27 glass-thickness
-       physics: light catch-light rims the TOP, a faint warm shadow grounds the
-       BOTTOM, so the plate reads as a physical pane lifted off the page — NEVER a
-       dark full-perimeter ink hairline). This RETIRES the load-bearing dark-rim role
-       of the per-rung `--glass-border-*` (now ≤5% α, glass.css): the silhouette is
-       carved by these two stops, not by the perimeter ink.
-         --glass-rim-top: the catch-light on the key-facing edge. Directional, NOT an
-           omnidirectional white rim RING — four lit edges describe no light source.
-         --glass-rim-bottom: the FAINT warm under-shadow grounding the plate (the
-           warm-ink on the shade edges only, NOT the whole perimeter, at a
-           whisper 6% — riding --foreground so it stays warm-not-grey).
-       Plain per-mode arms — NEVER an inset fragment inside light-dark() (the dark arm
-       re-declares both in dark-arm.css; light-dark() round an inset computes the WHOLE
-       box-shadow to none). The dark arm sits at 0.08, BELOW light, and keeps the same
-       6%/4% warm under-shadow. */
-    /* The cel KEYSTONE. ONE light vector (the 1940s cel
-       upper-right key) drives WHICH edge of the existing two-stop directional rim
-       reads LIT vs SHADE, in lockstep with the shipped `.shadow-cartoon-*` down-LEFT
-       cast (shadow.css `-Npx Npx` → key upper-right). The key is expressed NOT as a
-       `-58deg` angle with sign-inverted cos()/sin() trig (the material sign
-       trap — banned here), but as two PLAIN per-axis sign tokens the rim stops read
-       directly: the LIT catch wraps the key-facing edges (top + right), the SHADE
-       under-shadow grounds the opposite edges (bottom + left). A consumer re-points
-       `--glass-key-lit-x`/`--glass-key-lit-y` to move the key (e.g. upper-LEFT →
-       `1px`/`1px`) and the rim re-reads off it with ZERO new layer, ZERO new conic,
-       ZERO new DOM node. The key's SIGN tokens below are the wired form (the
-       upper-right keystone). */
+    /* THE CEL KEYSTONE. ONE light vector (the upper-right key) drives WHICH edge of the
+       two-stop directional rim reads LIT vs SHADE, in lockstep with the
+       `.shadow-cartoon-*` down-LEFT cast (shadow.css). The key is expressed NOT as an
+       angle with sign-inverted cos()/sin() trig — the material sign trap, banned here —
+       but as two PLAIN per-axis sign tokens the rim stops read directly. A consumer
+       re-points these to move the key (upper-LEFT → `1px`/`1px`) and the rim re-reads off
+       it with ZERO new layer, conic or DOM node. */
     --glass-key-lit-x: -1px; /* the lit catch sits on the RIGHT edge (key-facing) */
     --glass-key-lit-y: 1px; /* …and the TOP edge — the upper-right key */
     --glass-key-shade-x: 1px; /* the under-shadow grounds the LEFT edge */
     --glass-key-shade-y: -1px; /* …and the BOTTOM edge — opposite the key */
-    /* the `--glass-key-direction`
-       under-shadow KEY-LIGHT LEAN. The two-stop rim (above) SELECTS which edge is lit
-       vs shade (edge-select px tokens); this is the DISTINCT cast-RATIO knob for the
-       non-inset under-shadow FILL family (the 3 tiers below), which historically cast
-       STRAIGHT DOWN (X = 0). ONE write leans the whole under-shadow register
-       library-wide (the 3 tiers + the dock-wrap vivid consumer all read it). It is a
-       RATIO (unitless), multiplied into each tier's Y magnitude to give the X:
-       -0.375 = tan 20.56° down-LEFT is the cel-coherent FILL lean the identity sets (cel cast
-       = 45° KEY, under-shadow = 20.56° FILL — one light). THIS IS THAT IDENTITY WAVE:
-       the value the file's own comment had been naming for two majors is now the
-       declared one, so the rim and the cast finally agree on ONE light source
-       instead of the cast falling straight down under a rim that leans. Four
-       consumers move in lockstep off this single write (the 3 under-shadow tiers +
-       the dock-wrap vivid). The spine rung is INTENTIONALLY-OMNIDIRECTIONAL (an
-       edge-thickness cue, not a cast) — left unleaned. */
+    /* The under-shadow KEY-LIGHT LEAN. The rim's px tokens above SELECT which edge is
+       lit; this is the DISTINCT cast-RATIO knob for the non-inset under-shadow FILL
+       family (the three tiers below), and ONE write leans that register library-wide. It
+       is unitless, multiplied into each tier's Y magnitude to give the X:
+       −0.375 = tan 20.56° down-LEFT, so the cel cast (45° KEY) and the under-shadow
+       (20.56° FILL) are ONE light rather than a cast falling straight down under a rim
+       that leans. The spine rung is INTENTIONALLY omnidirectional — an edge-thickness
+       cue, not a cast — and is left unleaned. */
     --glass-key-direction: -0.375;
-    /* The two-stop directional rim, now
-       KEY-DRIVEN: the bright catch-light `--glass-rim-top` rides the lit (key-facing)
-       edges, the faint warm under-shadow `--glass-rim-bottom` rides the shade edges.
-       Which edge each lands on is `--glass-key-{lit,shade}-{x,y}` so the rim and the
-       cartoon cast AGREE on one light source (the cel coherence). At the default
-       upper-right key these resolve byte-compatibly to the shipped top-lit/bottom-shade
-       silhouette (top catch + bottom under-shadow) PLUS the key-facing side stops, so
-       the lit edge reads as a real lit pane corner, not a flat omnidirectional halo.
-       The accent still mixes onto the lit ink in rim.css — at 0%
-       strength byte-identical. Plain per-mode arms — NEVER an inset fragment inside
-       light-dark() (the dark arm re-declares both in dark-arm.css). */
-    /* ONE leg. The side stop is struck: two lit edges on a plate whose light source is
-       a single upper-right key is a halo, not a key. 0.10 light / 0.08 dark — and dark
-       sits BELOW light, inverting the shipped dark-brighter doctrine. A dark plate does
-       not need a brighter rim to read; it needs the page behind it to stay dark, and a
-       0.40 white ring over a near-black canvas is the loudest thing on the screen. */
-    /* THE LEVEL TERM IS THE A11Y PATH — and it is scoped like one. Both legs scale
-       their alpha by `--glass-level`, so the rim dies with the material through the ONE
-       clarity knob the reduced-transparency and forced-colors brackets already set to
-       0, with no per-bracket enumeration and no second list of tokens to keep in sync.
-       A white hairline surviving on a flattened plate is exactly the decoration a
-       reduced-transparency user asked not to be given.
+    /* The two-stop directional rim, KEY-DRIVEN: the bright catch-light rides the lit
+       edges, the faint warm under-shadow rides the shade edges, and which edge each
+       lands on is `--glass-key-{lit,shade}-{x,y}` so the rim and the cartoon cast AGREE
+       on one light source.
 
-       WHAT IT DOES NOT DO — and the claim is bounded here deliberately: these tokens
-       are declared at `:root`, so the `var(--glass-level)` inside them resolves ONCE,
-       in `:root`'s scope. Only a bracket that sets `--glass-level` AT `:root` re-runs
-       them — which is precisely what the a11y brackets do, and why this is the a11y
-       path. An ELEMENT-scoped `--glass-level: 0` (`[data-surface="opaque"]`, a static
-       dock) does NOT re-resolve the rim: that is the substitution-vs-inheritance trap
-       glass/surface-axis.css documents on the plate tokens, and it is why those
-       surfaces keep their rim — a solid plate with a glass edge, which is what they
-       are for. At level 1 both legs are byte-identical to the pinned form. */
+       ONE leg only. Two lit edges on a plate whose light source is a single key is a
+       halo, not a key. The dark arm sits at 0.08, BELOW light: a dark plate does not need
+       a brighter rim to read — it needs the page behind it to stay dark, and a 0.40 white
+       ring over a near-black canvas is the loudest thing on the screen.
+
+       PLAIN PER-MODE ARMS, never a `light-dark()` fragment: an inset leg inside
+       `light-dark()` computes the WHOLE `box-shadow` to `none`, and the rim would
+       silently vanish. The dark arm re-declares both in dark-arm.css.
+
+       THE LEVEL TERM IS THE A11Y PATH, and it is scoped like one. Both legs scale their
+       alpha by `--glass-level`, so the rim dies with the material through the ONE knob
+       the reduced-transparency and forced-colors brackets already set to 0 — no
+       per-bracket enumeration, no second token list to keep in sync. WHAT IT DOES NOT DO,
+       bounded deliberately: these are declared at `:root`, so `var(--glass-level)` inside
+       them resolves ONCE in `:root`'s scope. Only a bracket setting `--glass-level` AT
+       `:root` re-runs them, which is exactly what the a11y brackets do. An ELEMENT-scoped
+       `--glass-level: 0` does NOT re-resolve the rim — the substitution-vs-inheritance
+       trap glass/surface-axis.css documents — which is why those surfaces keep their rim:
+       a solid plate with a glass edge, which is what they are for. */
     --glass-rim-top: inset 0 var(--glass-key-lit-y) 0
         hsl(0 0% 100% / calc(0.1 * var(--glass-level)));
     --glass-rim-bottom:
@@ -175,104 +104,79 @@
             color-mix(in srgb, var(--foreground) calc(6% * var(--glass-level)), transparent),
         inset var(--glass-key-shade-x) 0 0
             color-mix(in srgb, var(--foreground) calc(4% * var(--glass-level)), transparent);
-    /* `--glass-edge-light-dark` (0.22) is DELETED with the full-perimeter ring it
-       weighted. It existed to dial the rim UP on the dark substrate on the theory that
-       a dark plate needs a brighter edge to read; the plate reads because the page
-       behind it is dark and its own ink is deeper still. `--glass-edge-light` resolves
-       `--glass-material-rim`, which already carries its own dark arm at 0.08. */
 
-    /* The `.glass-capsule` warm-floor (C6). `--card` itself
-       is too pale to clear the meanChroma ≥ 0.02 floor (its own OKLab chroma is
-       ~0.015), so the capsule composes a SMALL fixed floor toward an explicitly
-       WARM oklch source — a warm cream/amber that carries real chroma. This is the
-       the black-premultiply-safe form (a warm color, never bare `transparent`). At the 16%
-       floor the painted capsule fill clears chroma ≥ 0.02 with negligible L lift
-       (stays near-white). Mode-invariant warm (the oklch reads warm on both the
-       light cream page and the dark canvas — the warm-floor is a property of the
-       LOZENGE, not the page). It composes in `.glass-capsule`'s fill. */
+    /* The `.glass-capsule` warm floor. `--card` itself is too pale to clear the
+       meanChroma ≥ 0.02 floor (its own OKLab chroma is ~0.015), so the capsule composes a
+       SMALL fixed floor toward an explicitly WARM oklch source carrying real chroma — the
+       black-premultiply-safe form, a warm color and never bare `transparent`. At the 16%
+       floor the painted fill clears chroma ≥ 0.02 with negligible L lift. Mode-invariant:
+       the warm floor is a property of the LOZENGE, not the page. */
     --glass-capsule-warm: oklch(0.88 0.1 75);
     --glass-capsule-warm-floor: 16%;
 
-    /* The `.glass-capsule-track` recess ink (the iOS-27
-       sunken-well inner-top edge). A PLAIN per-mode pair — this light arm + the dark
-       arm in `tokens/dark-arm.css`. NEVER a `light-dark()` fragment: an inset-shadow
-       leg inside `light-dark()` computes the WHOLE `box-shadow` to `none` (the
-       binding MEMORY lesson) and the recess would silently vanish. Bounded warm ink
-       so it darkens the inner-top edge without re-coloring the warm fill (no gray
-       well). */
+    /* The `.glass-capsule-track` recess ink — the sunken-well inner-top edge. A PLAIN
+       per-mode pair (this light arm + the dark arm in tokens/dark-arm.css), NEVER a
+       `light-dark()` fragment: an inset-shadow leg inside `light-dark()` computes the
+       WHOLE `box-shadow` to `none` and the recess would silently vanish. Bounded warm ink,
+       so it darkens the inner-top edge without re-coloring the warm fill. */
     --tab-track-recess-ink: color-mix(in srgb, var(--foreground) 7%, transparent);
 
-    /* ── The backdrop-luminance signal ──────────────────────────────────────────
-       There is NO web API that reads the pixels painted BEHIND a `backdrop-filter`
-       element, so the signal is two things and never one:
+    /* THE BACKDROP-LUMINANCE SIGNAL is two things and never one, because there is NO web
+       API that reads the pixels painted BEHIND a `backdrop-filter` element:
 
-         --glass-backdrop       the DECLARATIVE BUCKET. A consumer/shell sets `light`
-                                on an ancestor where it KNOWS the backdrop is bright.
-                                An inheriting ident, read by `@container style()` on
-                                every glass family. `dark` (or unset) = the calm read.
-                                The bucket drives the INK ON the plate (the muted
-                                register lift), not the plate itself.
+         --glass-backdrop       the DECLARATIVE BUCKET. A consumer/shell sets `light` on
+                                an ancestor where it KNOWS the backdrop is bright. An
+                                inheriting ident read by `@container style()` on every
+                                glass family; `dark` (or unset) is the calm read. The
+                                bucket drives the INK ON the plate, not the plate itself.
          --glass-backdrop-luma  the MEASURED relative luminance (0..1) the
                                 `useGlassBackdropLuminance` observer writes where it is
-                                wired. It drives the plate's OWN ink: the veil clamp
-                                (`@utility glass-plate`, glass/veil.css) earns up to two
-                                extra rungs of ink past the knee, and resolves exactly
-                                the rung's own ink below it.
+                                wired. It drives the plate's OWN ink through the veil
+                                clamp (`@utility glass-plate`, glass/veil.css).
 
-       The bucket is the band driver, the luma is the dynamic refinement, and neither
-       is a second chromatic writer on the plate — there is exactly one, the veil. */
+       The bucket is the band driver, the luma is the dynamic refinement, and neither is a
+       second chromatic writer on the plate — there is exactly one, the veil. */
     --glass-backdrop:           dark;
 
-    /* The ONE retune knob for the continuous observer
-       driver. `--glass-backdrop-luma` (the measured sampled relative-luminance the
-       useGlassBackdropLuminance observer WRITES, registered typed in property-regs.css)
-       is READ on the RHS of the veil clamp (`@utility glass-plate`, glass/veil.css):
-       below this knee the plate resolves EXACTLY the rung's own ink; above it the ink
-       ramps CONTINUOUSLY toward two rungs deeper (the iOS-27 dynamic-range shift). A
-       consumer raising the knee darkens LATER (a brighter backdrop is tolerated before
-       the lift); the ONE override point for the whole adaptive axis. */
+    /* The ONE retune knob for the continuous observer driver: below this knee the plate
+       resolves EXACTLY the rung's own ink; above it the ink ramps CONTINUOUSLY toward two
+       rungs deeper. Raising the knee darkens LATER — a brighter backdrop is tolerated
+       before the lift. */
     --glass-backdrop-luma-knee: 0.6;
     /* The on-glass FOREGROUND register lives in tokens/on-glass-fg.css. */
 
-    /* Edge dispersion RETIRED — the warm/cool fringe pair and the `.glass-chromatic`
-       block that composed them. The question it answered ("where does chroma at the
-       edge come from?") is answered by the medium now: `saturate()` on a real radius
-       delivers the field's own chroma through the plate, so a painted fringe is a
-       second, fictional source. Its one site in the tree was a single demo tile.
-       Revivable, but not as a default. */
+    /* NO edge-dispersion fringe. The question it answered — where does chroma at the
+       edge come from? — is answered by the medium: `saturate()` on a real radius delivers
+       the field's own chroma through the plate, so a painted fringe is a second,
+       fictional source. */
 
-    /* The moving-specular gleam radius (glass/material.css `::
-       before`). The ONE knob that BOUNDS the gleam geometry as a percentage of the
-       plate so it can NEVER become a whole-surface disc (an unbounded implicit
-       `circle at …` runs its stops to 55–75% of the half-diagonal — a wash on a
-       small tile). 36% reads as a tracked edge glint. Override on `:root` to retune
-       library-wide; a per-surface override clips the gleam tighter/wider. */
+    /* The moving-specular gleam radius (glass/material.css `::before`). The ONE knob
+       BOUNDING the gleam geometry as a percentage of the plate so it can NEVER become a
+       whole-surface disc — an unbounded implicit `circle at …` runs its stops to 55–75%
+       of the half-diagonal, a wash on a small tile. 36% reads as a tracked edge glint. */
     --glass-specular-size: 36%;
 
-    /* Chassis curvature illusion — a subtle radial gradient at a plate's
-       top centre that lifts the surface without committing to literal 3D.
-       Built on the
-       warm-cream house identity (`hsl(40 30% 96%)`, L < 100% so the warm
-       hue survives — mirroring the moving gleam), the alpha routed through the
-       SINGLE overridable `--glass-curvature-intensity` knob (0.02 default), and
-       the ellipse held to `transparent 38%` so it reads
-       as a thin top-edge sheen, not a central wash. */
+    /* Chassis curvature illusion — a subtle radial gradient at a plate's top centre that
+       lifts the surface without committing to literal 3D. Built on the warm-cream house
+       identity (L < 100% so the warm hue survives, mirroring the moving gleam), the alpha
+       routed through the single overridable intensity knob, and the ellipse held to
+       `transparent 38%` so it reads as a thin top-edge sheen, not a central wash. */
     --glass-curvature-intensity: 0.02;
     --glass-curvature-overlay: radial-gradient(
         ellipse at 50% -20%,
         hsl(40 30% 96% / var(--glass-curvature-intensity)),
         transparent 38%
     );
-    /* Chart palette aliases — consumers read these for phase tinting.
-       Defaults map to viz-basis hues; consumers can override per app. */
+    /* Chart palette aliases — consumers read these for phase tinting; defaults map to
+       viz-basis hues and consumers override per app. */
     --chart-ping:     var(--viz-chebyshev);
     --chart-download: var(--viz-fourier);
     --chart-upload:   var(--viz-amber);
     --chart-jitter:   var(--viz-legendre);
 
-    /* Shadow per tier — complete box-shadow lists for glass surface classes. Each is
-       elevation ALONE now: the white highlight leg every one of them carried is struck
-       (the plate's one static rim leg is the rim's job, and it is declared once). */
+    /* Shadow per tier — complete box-shadow lists for the glass surface classes. Each is
+       elevation ALONE: the plate's one static rim leg is the rim's job and is declared
+       once. */
     --glass-shadow-wash:     var(--shadow-sm);
     --glass-shadow-quiet:    var(--shadow-md);
     --glass-shadow-resting:  var(--shadow-lg);
@@ -280,50 +184,32 @@
         0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 5%, transparent);
     --glass-shadow-overlay:  var(--shadow-2xl),
         0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 8%, transparent);
-    /* The CAPSULE indirection. Chrome that carries a capsule footprint (the dock's
-       controls, a segmented pill) reads THIS name, and it defaults to the floating
-       rung — so a chrome consumer never resolves a variant, and re-pointing the whole
-       chrome band is one declaration rather than N. The variant instinct this replaces
-       is what produced the per-chrome-surface plate-variant family this wave struck. */
+    /* The CAPSULE indirection. Chrome carrying a capsule footprint (dock controls, a
+       segmented pill) reads THIS name, defaulting to the floating rung — so a chrome
+       consumer never resolves a variant, and re-pointing the whole chrome band is one
+       declaration rather than N. */
     --glass-shadow-capsule:  var(--glass-shadow-floating);
 
-    /* ─────────────────────────────────────────────────────────────
-       SLIM — UNDER-SHADOW recipe rungs
-
-       iOS Liquid Glass surfaces carry a 0.5px
-       dark hairline along the bottom edge (reads as under-shadow /
-       glass thickness). The substrate `--hairline-under-shadow`
-       already publishes one quiet rung; the three-rung ladder here
-       names the retained set — `quiet`, `default`, and `vivid` cover the consumer landings without
-       multiplying tokens per tier. The 3 hand-rolled literals at
-       dock literals retire to these.
-
-       Composes as a NON-INSET box-shadow layer alongside the existing
-       `--glass-shadow-*` recipe (the inset under-shadow stays at the
-       hand-rolled literal where it's load-bearing on chassis-internal
-       surfaces).
-       ───────────────────────────────────────────────────────────── */
-    /* the X cast leans off the ONE `--glass-key-direction` ratio
-       (default 0 → byte-identical straight-down cast; the identity sets -0.375 for the
-       cel-coherent down-left FILL lean). Y/blur/spread/α byte-unchanged. */
+    /* UNDER-SHADOW recipe rungs. A liquid-glass surface carries a 0.5px dark hairline
+       along the bottom edge, reading as under-shadow / glass thickness. Three rungs cover
+       the consumer landings without multiplying tokens per tier. Composes as a NON-INSET
+       box-shadow layer alongside `--glass-shadow-*`; the inset under-shadow stays at the
+       hand-rolled literal where it is load-bearing on chassis-internal surfaces. The X
+       cast leans off the ONE `--glass-key-direction` ratio (0 → a straight-down cast). */
     --glass-under-shadow-quiet:   calc(2px * var(--glass-key-direction)) 2px 8px -1px oklch(0 0 0 / 0.04);
     --glass-under-shadow-default: calc(4px * var(--glass-key-direction)) 4px 16px -2px oklch(0 0 0 / 0.08);
     --glass-under-shadow-vivid:   calc(8px * var(--glass-key-direction)) 8px 32px -4px oklch(0 0 0 / 0.12);
 
-    /* Overlay scrim rungs — substrate-aware modal/dialog backdrop tints.
-       Three weights cover the deployed range: dialog-scroll (subtle),
-       canonical modal (default), full-cover (strong).
+    /* Overlay scrim rungs — three weights covering dialog-scroll (subtle), canonical
+       modal (default) and full-cover (strong).
 
-       The scrim is its OWN identity token, NOT derived
-       from `--shadow-color`. A scrim's role is to RECEDE: it must pin to INK in
-       BOTH modes. The cartoon-shadow family rides `--shadow-color: var(--foreground)`
-       (correct — a shadow re-tints under `.dark` by construction), but a scrim
-       that does the same FLOODS the dark room with a cream fog (a dark
-       overlay riding it paints `srgb(0.91… / 0.5)`, a near-white wash that BRIGHTENS the
-       page at the modal moment). `--overlay-scrim-ink` is a fixed warm near-black
-       (the light-mode `--foreground` value), re-resolved verbatim in `.dark` so
-       the scrim recedes in both modes. Clean break, no alias (no-backwards-compat).
-       The `--shadow-color` / `--shadow-cartoon-*` family is UNTOUCHED. */
+       THE SCRIM IS ITS OWN IDENTITY TOKEN, never derived from `--shadow-color`. A scrim's
+       role is to RECEDE, so it must pin to INK in BOTH modes. The cartoon-shadow family
+       rides `--shadow-color: var(--foreground)` — correct, a shadow re-tints under `.dark`
+       by construction — but a scrim doing the same FLOODS the dark room with a cream fog:
+       a dark overlay riding it paints a near-white wash that BRIGHTENS the page at the
+       modal moment. This ink is a fixed warm near-black, re-resolved verbatim in `.dark`,
+       so the scrim recedes in both modes. The `--shadow-color` family is untouched. */
     --overlay-scrim-ink:     hsl(24 10% 10%);
     --overlay-scrim:         color-mix(in srgb, var(--overlay-scrim-ink) 50%, transparent);
     --overlay-scrim-strong:  color-mix(in srgb, var(--overlay-scrim-ink) 80%, transparent);

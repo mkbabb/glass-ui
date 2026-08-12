@@ -332,16 +332,34 @@ describe("#28's two refusals, made standing locks", () => {
         // the `press-drain` envelope), so a ripple is a second authority over one fact;
         // (2) an expanding ink circle is Material Design's signature, which is the same
         // borrowed-signature objection §9.7 sustains against the halftone; (3) the
-        // typed `--ripple-radius` was already retired with the disco recipe family and
-        // took zero consumers with it (`property-regs.css` records the death).
-        // This case is the lock that keeps it dead.
+        // typed `--ripple-radius` was retired with the disco recipe family and took
+        // zero consumers with it. This case is the lock that keeps it dead.
+        //
+        // [2026-08-10 · BK #17 W-COMMENT-DIET] The third assertion USED TO PIN THE
+        // OBITUARY — `toMatch(/--ripple-radius — gone with the disco recipe/)` against
+        // `property-regs.css`'s prose. A detector whose evidence is a sentence is the
+        // exact inverse of `G-DETECTOR-BLIND`: it reads a comment as a fact, so it
+        // greens on prose and REDs when prose is edited, which is what happened here.
+        // It is re-homed onto the code fact it was standing in for. Strictly stronger:
+        // `--ripple-radius\s*:` above cannot see a `@property --ripple-radius {`
+        // registration, which is the form the token would actually return in.
         expect(grepSrc(/--ripple-radius\s*:/)).toEqual([]);
         expect(grepSrc(/@keyframes\s+[\w-]*(ripple|splash)/i)).toEqual([]);
-        expect(PROPERTY_REGS).toMatch(/--ripple-radius — gone with the disco recipe/);
+        expect(PROPERTY_REGS).not.toMatch(/@property\s+--ripple-radius\b/);
+        expect(grepSrc(/@property\s+--ripple-radius\b/)).toEqual([]);
     });
 });
 
-/** Every `src/` file whose bytes match — the detector, stated once. */
+/**
+ * Every `src/` file whose LIVE bytes match — the detector, stated once.
+ *
+ * [2026-08-10 · BK #17] COMMENT-BLIND, and that is `G-DETECTOR-BLIND` applied to this
+ * file's own detector rather than asserted about someone else's. A raw `grep` over
+ * source counts a mention inside a comment as a live declaration — `scheme-motion.css`
+ * names `@property --ripple-radius` in an obituary, and the un-stripped form convicted
+ * the corpus of carrying a registration that does not exist. Every case here asks "is
+ * this thing DECLARED", so every case must read declarations only.
+ */
 function grepSrc(pattern: RegExp): string[] {
     const { execFileSync } = require("node:child_process") as typeof import("node:child_process");
     // `/usr/bin/grep` is PINNED, not `grep`: the login shell aliases it to `ugrep`,
@@ -359,5 +377,15 @@ function grepSrc(pattern: RegExp): string[] {
         const status = (error as { status?: number }).status;
         if (status !== 1) throw error;
     }
-    return out === "" ? [] : out.split("\n");
+    if (out === "") return [];
+    // grep names the CANDIDATES cheaply; the verdict is taken on comment-stripped
+    // bytes, so a file that only ever mentions the pattern in prose drops out.
+    const { readFileSync } = require("node:fs") as typeof import("node:fs");
+    return out.split("\n").filter((file) => {
+        const live = readFileSync(file, "utf8")
+            .replace(/\/\*[\s\S]*?\*\//g, "")
+            .replace(/<!--[\s\S]*?-->/g, "")
+            .replace(/(^|[^:"'`\\])\/\/.*$/gm, "$1");
+        return new RegExp(pattern.source, pattern.flags.replace("g", "")).test(live);
+    });
 }

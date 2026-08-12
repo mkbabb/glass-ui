@@ -1,56 +1,28 @@
-/* tokens/property-regs.css
-   §18 Houdini @property registrations (progress/specular/glass-level/ui-scale) + §11b the pointer-anchored moving-specular :root/.dark magnitude cohort. LAST — registrations + the magnitude cohort that reads them.
-   A partial of the tokens.css cascade; @import-ed by tokens.css in
-   cascade order. Same :root cascade context as its siblings. */
-/* ═══════════════════════════════════════════════
-   §18 TYPED CSS PROPERTIES — Houdini @property registrations
-   (grammar — adjacent to §2.C tokens above)
+/* tokens/property-regs.css — §18 Houdini @property registrations + §11b the
+   pointer-anchored moving-specular magnitude cohort. LAST in the tokens.css cascade:
+   registrations plus the cohort that reads them. Same :root cascade context as its
+   siblings.
 
-   Typed custom properties register with the CSS Houdini @property
-   API so transitions interpolate VALUES (percentage / length) rather
-   than the textual representation. Unregistered fallback is safe — the
-   `initial-value` provides a sensible default for any consumer that
-   imports this stylesheet on a browser that doesn't yet support the
-   typed @property registration (the cross-fade collapses to the
-   initial value, then re-paints at the new state).
+   Typed custom properties register so transitions interpolate VALUES (percentage /
+   length / angle) rather than the textual representation. The unregistered fallback is
+   safe: `initial-value` is the sensible default on an engine without @property, where
+   the cross-fade collapses to that value and re-paints at the new state.
 
-   Browser support: Chromium 85+, Safari 16.4+, Firefox 128+. The
-   the deployment target sits well within the floor.
+   THE ONE RULE THAT DECIDES `inherits`. A PER-SURFACE live channel is
+   `inherits: false` — a hovered parent must not push its specular, veil centre or
+   velocity onto a child, and a per-frame write must invalidate exactly one element
+   rather than a whole subtree. A CASCADING SCALAR (`--glass-level`, `--ui-scale`,
+   `--motion-weight`, `--motion-tempo`, `--glass-depth`, `--glass-definition`) is
+   `inherits: true`, so a host retunes a sub-tree from any ancestor with no
+   prop-drilling. Every registration below is one or the other, deliberately. */
 
-   • --progress-crescendo — gone with the `gradient` variant it was
-     private to: the crescendo brightened a leading edge to 95-100% white,
-     above the 0.12 specular ceiling, on a variant no other paint shared.
-
-   • --ripple-radius — gone with the disco recipe
-     family: the typed press-ripple was `btn-audacious`-private and has no
-     surviving consumer (the calm CTA register's press is the §6 scale beat).
-   ═══════════════════════════════════════════════ */
-
-/* ═══════════════════════════════════════════════
-   §11b POINTER-ANCHORED MOVING SPECULAR
-
-   The iOS-26 Liquid Glass "light travels around the material /
-   illuminate under your fingertip" behaviour. A masked radial-gradient
-   catch-light rides the surface at (--specular-x, --specular-y), driven
-   by the consumer's pointer-tracked --mouse-x/--mouse-y write. Registered
-   as typed custom properties so the position INTERPOLATES smoothly between
-   pointer samples (a bare unregistered var() snaps; the @property reg lets
-   the engine animate the percentage stop).
-
-   • --specular-x / --specular-y (percentage) — the catch-light centre.
-     `inherits: false` because each glass surface owns its own pointer
-     position (a hovered parent must not push its specular onto a child —
-     the no-glass-on-glass discipline made mechanical).
-
-   • --specular-intensity (number) — the catch-light alpha multiplier.
-     `inherits: false` for the same per-surface-ownership reason; rises on
-     hover/active, settles to its rest floor on leave.
-
-   @property crosses Baseline 2024-07-09. The consumption (the masked
-   radial + the reduced-motion static bracket + the var() fallback) lives
-   in glass-specular-track.css; the registrations live here alongside the
-   other three regs so the typed-property tier has one home.
-   ═══════════════════════════════════════════════ */
+/* §11b POINTER-ANCHORED MOVING SPECULAR — a masked radial-gradient catch-light rides
+   the surface at (--specular-x, --specular-y), driven by the consumer's pointer-tracked
+   --mouse-x/--mouse-y write. Registered so the position INTERPOLATES between pointer
+   samples; a bare unregistered var() snaps. --specular-intensity is the alpha
+   multiplier, rising on hover/active and settling to its rest floor on leave. The
+   consumption (the masked radial + the reduced-motion static bracket) lives in
+   glass-specular-track.css. */
 
 @property --specular-x {
     syntax: "<percentage>";
@@ -64,20 +36,10 @@
     initial-value: 50%;
 }
 
-/* ── The FOCUS-VEIL centre (glass/focus-veil.css) ────────────────────────────────
-   • --veil-x / --veil-y (percentage) — the viewport-space centre the veil's two
-     mask ramps are built around. The names are MOTION-CANON §5's own, kept verbatim:
-     they collide with nothing (the plate's ink register is `--glass-veil-*`, a
-     different prefix) and they match this file's unprefixed per-element live-channel
-     idiom — `--specular-x`, `--specular-y`, `--flex-vel`, `--cast-travel`.
-
-   The registration is what makes the centre INTERPOLATE: an unregistered percentage
-   var() in a gradient stop snaps between samples, so a veil that follows a moving
-   control would step. `inherits: false` for the same per-surface-ownership reason the
-   specular pair carries — a veil is owned by the one element that paints it, and an
-   inheriting centre would push one engaged control's pool onto every descendant.
-   `50%` is the centred-modal rest, so an unwritten veil is the viewport-centred plate
-   the Dialog has always painted. */
+/* The FOCUS-VEIL centre (glass/focus-veil.css): the viewport-space centre the veil's
+   two mask ramps are built around. Registration is what makes the centre INTERPOLATE —
+   an unregistered percentage var() in a gradient stop snaps between samples, so a veil
+   following a moving control would step. `50%` is the centred-modal rest. */
 @property --veil-x {
     syntax: "<percentage>";
     inherits: false;
@@ -96,37 +58,29 @@
     initial-value: 0;
 }
 
-/* The LIVE velocity channel. `useLiquidFlex` writes this
-   per-frame off the SAME saturating velocity term it already computes
-   (`tanh(|ṫ|·k) ∈ [0,1]`); the consumer's `writeVelocityWeight` helper folds it
-   into a transient `--motion-weight: calc(0.618 + 0.382 * var(--flex-vel))` boost
-   so a driver in active fast motion deepens its own squish/punch/shadow-travel and
-   self-extinguishes back to rest as it settles ("elements morph MORE the faster
-   they move"). `inherits: false` is LOAD-BEARING (the subtree-storm bite): a
-   per-frame write invalidates exactly ONE element, never a subtree — an inheriting
-   velocity channel would re-paint every descendant on every frame. `initial-value:
-   0` is the still rest (no boost when unwired). */
+/* The LIVE velocity channel. `useLiquidFlex` writes this per-frame off the saturating
+   velocity term it already computes (`tanh(|ṫ|·k) ∈ [0,1]`); a consumer folds it into a
+   transient `--motion-weight: calc(0.618 + 0.382 * var(--flex-vel))` boost, so a driver
+   in fast motion deepens its own squish and self-extinguishes as it settles.
+   `inherits: false` is LOAD-BEARING — a per-frame write must invalidate exactly ONE
+   element, never a subtree. */
 @property --flex-vel {
     syntax: "<number>";
     inherits: false;
     initial-value: 0;
 }
 
-/* The cartoon cel-cast drive props (H1: proven-live-DEAD
-   without these — the calc chain falls back to initials → no punch). The cast
-   travel/spread READ `--motion-weight × --cartoon-press-t`, so the inert
-   `.cartoon-cast` child plate moves on the compositor as the body presses.
-   • --cartoon-press-t (<number>, inherits:true) — the 0→1 press ramp an explicit
-     punch-capable control writes;
-     inherits so the inert child reads its host's press scalar.
-   • --cast-travel (<length>, inherits:false) / --cast-spread (<number>,
-     inherits:false) — the per-caster derived offset + scale; non-inheriting (each
-     caster owns its own, never bleeds onto a nested cartoon child).
-   • --cartoon-cast-dx/dy (<length>, inherits:true) — the OPT-IN drag-track delta
-     (0 at rest; a future `useCartoonCast` DOM bridge writes them). Inherits so the
-     host can set them for the child. Typed so the gap INTERPOLATES on the
-     compositor; a non-supporting engine snaps rather than eases (the gap still
-     reads). */
+/* The cartoon cel-cast drive props — the cast travel/spread READ
+   `--motion-weight × --cartoon-press-t`, so the inert `.cartoon-cast` child plate moves
+   on the compositor as the body presses. Without these registrations the calc chain
+   falls back to initials and there is no punch.
+     • --cartoon-press-t   the 0→1 press ramp; inherits, so the inert child reads its
+                           host's press scalar.
+     • --cast-travel / --cast-spread  per-caster derived offset + scale; each caster
+                           owns its own and never bleeds onto a nested cartoon child.
+     • --cartoon-cast-dx/dy  the OPT-IN drag-track delta, 0 at rest. Typed so the gap
+                           INTERPOLATES on the compositor; a non-supporting engine snaps
+                           rather than eases, and the gap still reads. */
 @property --cartoon-press-t {
     syntax: "<number>";
     inherits: true;
@@ -157,43 +111,23 @@
     initial-value: 0px;
 }
 
-/* The warm colorful FIELD drive props (`--field-h-raw` /
-   `--field-intensity`) are RETIRED with the `.paper-field` plane.
-   The shell `<Aurora>` field carries the per-route warm hue now (a JS uniform on the
-   AuroraConfig palette, not a CSS @property), so these registrations are dead. Clean
-   break, no alias — `proof:no-paper-field` asserts both regs ABSENT. */
+/* The per-INSTANCE CHROMATIC-RIM tint. `--glass-accent` is a complete `<color>` (a
+   consumer DATA hue) that OKLab-tints a glass surface's RIM — the
+   `--glass-material-rim` inset ring and the per-rung `--glass-border-*` — and the
+   `::before` specular catch-light CORE. A data-keyed colored hover is therefore a
+   one-line seam on the instance, not a hand-threaded `border-color` plus an inline
+   catch-light per consumer.
 
-/* The per-INSTANCE
-   CHROMATIC-RIM tint. `--glass-accent` is a complete `<color>` (a consumer DATA
-   hue) that OKLab-tints a glass surface's RIM (the `--glass-material-rim` inset
-   ring + the per-rung `--glass-border-*`) and the `::before` specular catch-light
-   CORE — so the §F1 data-keyed colored hover (a chart cell whose surface glows
-   with that datum's series hue) is a ONE-LINE seam (`--glass-accent: <hue>;
-   --glass-accent-strength: <N%>` on the instance), not a hand-threaded
-   `border-color` + inline catch-light per consumer.
+   DISTINCT, not a fork, of `--glass-veil-ink` (the whole-plate legibility darken): the
+   accent is the RIM+GLINT chromatic decoration axis and it NEVER tints the plate
+   background. Three disjoint glass axes: LEVEL (opacity+blur) · TINT (whole-plate
+   legibility) · ACCENT (per-instance chromatic rim+glint).
 
-   DISTINCT-not-fork of the `--glass-veil-ink` (the WHOLE-PLATE BACKGROUND
-   legibility darken toward `--glass-veil-ink`): the accent is the RIM+GLINT
-   chromatic DECORATION axis (toward a consumer DATA hue, per-instance), it NEVER
-   writes the cohort and NEVER tints the plate background. Three disjoint glass
-   axes: LEVEL (opacity+blur) · TINT (whole-plate legibility) · ACCENT
-   (per-instance chromatic rim+glint).
-
-   • --glass-accent (<color>) — the consumer data hue. `inherits: true` (the
-     `--glass-level`-style cascading scalar — a host sets it on an ancestor to tint
-     a sub-tree; a consumer sets it per-INSTANCE on the surface). `initial-value:
-     transparent` is the NEUTRAL IDENTITY: a `color-mix(in oklab, X, transparent N)`
-     is byte-identical X at the resting end, so an UNSET surface paints exactly
-     today's warm-ink rim + warm-cream catch-light (the neutral-fallback floor).
-
-   • --glass-accent-strength (<percentage>) — the bounded knob. `inherits: true`
-     (rides the accent down the same sub-tree). `initial-value: 0%` so the mix is a
-     provable no-op when unset (`color-mix(in oklab, X, <accent> 0%)` === X). The
-     consumer-set ceiling is a WHISPER at the rim, not a flooded plate — the demo
-     specimens engage ~40-55% (the rim/glint reads the hue while the warm-cream core
-     + the AA legibility survive; the `--glass-veil-rung` ≤24% bounding
-     precedent, lifted here because the accent rides the THIN rim/glint not the
-     whole plate). A malformed override CLAMPS to 0% (the typed fail-safe). */
+   `transparent` / `0%` are the NEUTRAL IDENTITY, so an unset surface paints the plain
+   warm-ink rim and warm-cream catch-light: `color-mix(in oklab, X, <accent> 0%)` ≡ X.
+   The consumer-set ceiling is a WHISPER at the rim, not a flooded plate (~40-55% reads
+   the hue while the warm core and the AA legibility survive). A malformed override
+   CLAMPS to the initial value — the typed fail-safe. */
 @property --glass-accent {
     syntax: "<color>";
     inherits: true;
@@ -206,175 +140,128 @@
     initial-value: 0%;
 }
 
-/* The GLASS-FIRST single knob. `--glass-level` is the ONE clarity
-   scalar threaded through BOTH glass ladders at their single sites (the
-   `--glass-plate-*` opacity recipe + the `--glass-blur-*` radii). It is a typed,
-   INHERITING <number> so a host setting it on any ancestor retunes every
-   descendant glass surface (the @container-free cascade path) — and so it
-   animates smoothly rather than snapping. The level acts as a clarity multiplier
-   that PRESERVES level=1 (byte-identical to the hand-tuned ladder):
-     • level 1 — the calibrated glass (today's surfaces, unchanged).
-     • level 0 — the OPAQUE escape: solid `--card` + `blur(0)` through the SAME
-                 machinery (the `.glass-opaque` rung + the a11y brackets ride it).
-     • level >1 — clearer (more transparent + more diffuse) in lockstep.
-   Glass is the DEFAULT surface register for EVERY band (USER-DECIDED MAXIMAL);
-   the opaque level-0 rung is the explicit opt-out; over-light
-   legibility rides the SEPARATE `--glass-veil-*` axis (the `--glass-backdrop` probe
-   lifts the tint toward ink — level = opacity+blur, tint = darken-over-light, the
-   two axes coordinate but never collapse: the a11y Clear↔Tinted escape rides
-   level-up here AND tint-toward-ink under `prefers-contrast: more`). */
+/* The GLASS-FIRST single knob: the ONE clarity scalar threaded through BOTH glass
+   ladders at their single sites (the `--glass-plate-*` opacity recipe and the
+   `--glass-blur-*` radii). A clarity multiplier that PRESERVES level 1:
+     • level 1  — the calibrated glass.
+     • level 0  — the OPAQUE escape: solid `--card` + `blur(0)` through the SAME
+                  machinery (the `.glass-opaque` rung and the a11y brackets ride it).
+     • level >1 — clearer (more transparent, more diffuse) in lockstep.
+   Over-light legibility rides the SEPARATE `--glass-veil-*` axis: level = opacity+blur,
+   tint = darken-over-light. The two coordinate but never collapse — the a11y
+   Clear↔Tinted escape rides level-up here AND tint-toward-ink under
+   `prefers-contrast: more`. */
 @property --glass-level {
     syntax: "<number>";
     inherits: true;
     initial-value: 1;
 }
 
-/* The OBSERVER's measured backdrop relative-luminance, now
-   LOAD-BEARING. `useGlassBackdropLuminance` WRITES `--glass-backdrop-luma` (0..1) on
-   the glass target; the ONE clamp that reads it lives in `@utility glass-plate`
-   (glass/veil.css) and composes AT THE ELEMENT, so every surface applying the plate —
-   the five ladder rungs, the card, the dock's L0 plate and its search field — earns the
-   same continuous darken from the same arithmetic. It lifts the rung's own ink by up to
-   two steps as the measured backdrop brightens past the knee (the iOS-27 dynamic-range
-   shift; apple-ios27.md §1.5), ceiling included.
-   Registered as a typed INHERITING `<number>` (the `--glass-level`
-   precedent) so a bare `var()` INTERPOLATES smoothly between sample frames instead of
-   snapping (a per-sample re-paint would flicker the plate). `inherits: true` so the
-   observer's write on the target reaches every descendant glass surface that reads the
-   clamp. `initial-value: 0` is the calm-dark rest: with luma 0 the clamp's luma-ramp is
-   `max(0, …) = 0`, so an unwired surface resolves EXACTLY the floor (the zero-delta calm
-   identity GLASS-IDENTITY pins). This replaces the empty `--glass-backdrop-luma: ;`
-   placeholder declaration (the dead-knob's write-only stub) — the loop now READS. */
+/* The OBSERVER's measured backdrop relative-luminance. `useGlassBackdropLuminance`
+   WRITES this (0..1) on the glass target; the ONE clamp that reads it lives in
+   `@utility glass-plate` (glass/veil.css) and composes AT THE ELEMENT, so every surface
+   applying the plate earns the same continuous darken from the same arithmetic. It
+   lifts the rung's own ink by up to two steps as the measured backdrop brightens past
+   the knee, ceiling included. Registered so a bare `var()` INTERPOLATES between sample
+   frames instead of snapping — a per-sample re-paint would flicker the plate.
+   `initial-value: 0` is the calm-dark rest: the clamp's luma-ramp is `max(0, …) = 0`,
+   so an unwired surface resolves EXACTLY the floor. */
 @property --glass-backdrop-luma {
     syntax: "<number>";
     inherits: true;
     initial-value: 0;
 }
 
-/* The OPT-IN deep-glass DEPTH scalar. `--glass-depth` is the
-   `--glass-level` TWIN for the deep tier: a typed INHERITING <number> so a host
-   sets it on any ancestor to retune the deep tier's depth (the cascading-scalar
-   idiom, distinct from the per-element `inherits: false` specular cohort). The
+/* The OPT-IN deep-glass DEPTH scalar — `--glass-level`'s twin for the deep tier. The
    deep recipe (tokens/glass-deep.css) LERPs both the blur radius AND the saturate
-   between the calm `floating` endpoint (depth 0 ≡ the calm ceiling) and the Apple-
-   deep endpoint (depth 1 ≡ saturate 1.5 / blur 16px), so the deep blur is
-   `--glass-depth`-DRIVEN (the D1 axis assert — never a baked literal) and animates
-   smoothly. `initial-value: 1` is the resting deep magnitude: a `.glass-deep`
-   surface paints at the full Apple-deep register by default; a consumer dials
-   `--glass-depth: 0.5` to land it half-way to the calm floating rung. SEPARATE
-   from `--glass-level` (opacity+blur clarity) and `--glass-veil-*` (legibility) —
-   the disjoint depth axis. The deep tier
-   COMPOSES `--glass-level` too (the deep blur scales it), so the opaque escape +
-   the a11y brackets reach the deep plate through the ONE level path. */
+   between the calm `floating` endpoint (depth 0 ≡ the calm ceiling) and the deep
+   endpoint (depth 1 ≡ saturate 1.5 / blur 16px), so the deep blur is DRIVEN by this
+   axis, never a baked literal. `initial-value: 1` is the resting deep magnitude. The
+   deep tier COMPOSES `--glass-level` too, so the opaque escape and the a11y brackets
+   reach the deep plate through the ONE level path. */
 @property --glass-depth {
     syntax: "<number>";
     inherits: true;
     initial-value: 1;
 }
 
-/* The DEFINED-tier engage scalar (the
-   `--glass-level`/`--glass-depth` TWIN). Glass over a FLAT page reads near-gray (chroma
-   0.0138); the defined tier gives a CONTROL a warm rim + warm-cream floor. BOTH legs
-   read this scalar — the floor-fill α + the `--glass-border-defined` rim α
-   (tokens/glass.css) — so it is genuinely load-bearing (dead-knob-proof). `inherits:
-   true` (a host dials definition on any ancestor); `initial-value: 0` is fully
-   TRANSMISSIVE (content default, ladder byte-untouched); `.glass-defined`
-   (glass/defined.css) + `prefers-contrast: more` set it to 1. SEPARATE from
-   `--glass-level`/`--glass-depth`/`--glass-veil-*`. */
+/* The DEFINED-tier engage scalar. Glass over a FLAT page reads near-gray; the defined
+   tier gives a CONTROL a warm rim and a warm-cream floor. BOTH legs read this scalar —
+   the floor-fill α and the `--glass-border-defined` rim α (tokens/glass.css) — so it is
+   load-bearing rather than a dead knob. `initial-value: 0` is fully TRANSMISSIVE, the
+   content default; `.glass-defined` and `prefers-contrast: more` set it to 1. */
 @property --glass-definition {
     syntax: "<number>";
     inherits: true;
     initial-value: 0;
 }
 
-/* The master comfortable-sizing scalar registered typed. The
-   `<number>` syntax guarantees `calc(<base> * var(--ui-scale))` is always valid (a
-   malformed override CLAMPS to the initial value 1, not an invalidated calc — the
-   fail-safe); `inherits: true` (unlike the per-element specular @property cohort)
-   so a SCOPED override (a dense data-table region) cascades to every descendant
-   control without a per-element set; the type makes it animatable (a density
-   toggle COULD spring it). Mirrors the `--glass-level` registration above (the
-   cascading-scalar idiom), distinct from the per-element specular @property cohort
-   (those are `inherits: false`). */
+/* The master comfortable-sizing scalar, typed. `<number>` guarantees
+   `calc(<base> * var(--ui-scale))` is always valid — a malformed override CLAMPS to 1
+   rather than invalidating the calc — and the type makes it animatable, so a density
+   toggle could spring it. */
 @property --ui-scale {
     syntax: "<number>";
     inherits: true;
     initial-value: 1;
 }
 
-/* The GOVERNING motion scalar (the iOS-27 register-triangle
-   centroid). ONE number co-scales the squash depth, the overshoot share, the
-   anticipation pull-back, and the cartoon-shadow travel so they read as ONE
-   proportioned deformation, never four unrelated tics. Registered with the EXACT
-   `--ui-scale`/`--glass-level` typed cascading-scalar idiom — `inherits: true` is
-   the whole mechanism: a DRIVER ancestor (`.dock`, a celebrating card, a sheet)
-   locally pushes `--motion-weight: 1`; an OBSERVER subtree (`<CarouselContent>`
-   auto-advance, `[data-reorder]` lists) pins `--motion-weight: 0` — everything
-   below reads the local value with zero prop-drilling. `initial-value: 0.618`
-   (1/φ, design.md §L6 golden-proportion law): not 0 (dead), not 1 (manic) —
-   present, alive, never cartoonish-by-default. The `:root` rest decl + the PRM
-   carve live in scheme-motion.css §2 (the Feature-token-home, beside the
-   `--spring-*` clocks it co-governs). A non-supporting engine reads the safe
-   0.618 fallback (the squish still reads, just non-animatable — the same fail-safe
-   `--ui-scale` documents). */
+/* The GOVERNING motion MAGNITUDE scalar. ONE number co-scales the squash depth, the
+   overshoot share, the anticipation pull-back and the cartoon-shadow travel, so they
+   read as ONE proportioned deformation rather than four unrelated tics. Inheritance is
+   the whole mechanism: a DRIVER ancestor pushes `--motion-weight: 1`; an OBSERVER
+   subtree (auto-advancing carousel content, `[data-reorder]` lists) pins 0; everything
+   below reads the local value. `initial-value: 0.618` (1/φ) — not 0 (dead), not 1
+   (manic). The `:root` rest declaration and the PRM carve live in scheme-motion.css §2,
+   beside the `--spring-*` clocks it co-governs. */
 @property --motion-weight {
     syntax: "<number>";
     inherits: true;
     initial-value: 0.618;
 }
 
-/* The GOVERNING motion TIME scalar (the one application
-   point). ONE registered inheriting number co-scales the CSS spring clocks (the
-   `--spring-<name>-duration` reader), the canonical `sheet-animate` panel/scrim
-   enter and exit clocks, and the JS spring RESPONSES (each spring engine reads it via
-   `motionTempo()` and scales `response *= tempo` at construction). Because
-   `duration ∝ response` (ωₙ = 2π/response), scaling the CSS
-   clock by tempo ≡ scaling response by tempo — so the M1 CSS==JS parity holds at ANY
-   tempo (G2). It serves the "options for longer" clause (a global motion
-   time knob a consumer sets on `:root`).
+/* The GOVERNING motion TIME scalar — the one application point. It co-scales the CSS
+   spring clocks, the canonical `sheet-animate` enter/exit clocks, and the JS spring
+   RESPONSES (each engine reads it via `motionTempo()` and scales `response *= tempo` at
+   construction). Because `duration ∝ response` (ωₙ = 2π/response), scaling the CSS clock
+   by tempo ≡ scaling response by tempo, so CSS==JS parity holds at ANY tempo.
 
-   Registered with the EXACT `--ui-scale`/`--motion-weight`/`--glass-level` typed
-   cascading-scalar idiom. The global owner is `:root`: root-computed spring readers,
-   portaled element-local readers, and element-agnostic JS engines all observe that
-   value without a portal bridge. Element-local readers may additionally honor a
-   nearer inherited override; root-computed spring tokens intentionally do not
-   re-resolve through that substitution trap. `initial-value: 1` is the IDENTITY
-   (RATIFIED judgment (c) — the per-
-   register tightening is M1 + REGISTER-TABLE's exit/enter-menu clocks, NOT a global
-   scale): at 1.0 the reader resolves `settle * 1` byte-identical to the flat clock,
-   so the axis is a no-op at rest. A malformed override CLAMPS to the initial 1 (the
-   typed fail-safe; `motionTempo()` mirrors the ≤0 → 1 clamp JS-side).
+   The global owner is `:root`: root-computed spring readers, portaled element-local
+   readers and element-agnostic JS engines all observe that value without a portal
+   bridge. Element-local readers may additionally honor a nearer inherited override;
+   root-computed spring tokens intentionally do NOT re-resolve through that substitution
+   trap. `initial-value: 1` is the IDENTITY, so the axis is a no-op at rest; a malformed
+   override CLAMPS to 1, and `motionTempo()` mirrors the ≤0 → 1 clamp JS-side.
 
-   THE NAMING FENCE — `--motion-tempo` (TIME) ⟂ `--motion-weight` (MAGNITUDE, default
-   0.618) ⟂ `--ui-scale` (GEOMETRY): three registered inheriting scalars, NEVER
-   folded. PRM is orthogonal (tempo × the universal ~0.01ms carve is still ~0; the JS
-   `respectReducedMotion` snap wins at every tempo). */
+   THE NAMING FENCE — `--motion-tempo` (TIME) ⟂ `--motion-weight` (MAGNITUDE) ⟂
+   `--ui-scale` (GEOMETRY): three registered inheriting scalars, NEVER folded. PRM is
+   orthogonal — tempo × the universal ~0.01ms carve is still ~0, and the JS
+   `respectReducedMotion` snap wins at every tempo. */
 @property --motion-tempo {
     syntax: "<number>";
     inherits: true;
     initial-value: 1;
 }
 
-/* THE DOT-RING PAIR — BK #28 W-FEEDBACK-MOTION.
-   `_shared/feedback/dot-ring.css` drives both; neither is a knob, both are STATE.
+/* THE DOT-RING PAIR. `_shared/feedback/dot-ring.css` drives both; neither is a knob,
+   both are STATE.
 
-   • --dot-ring-phase — the redistribution angle. It is the ONLY thing the ring's
-     keyframe moves: bead k's radius scales as sqrt(1 + c·e·cos(phase + k·2π/7)), so a
-     linear sweep of one angle rotates the size inequality around a ring whose beads
-     never leave their seats. Registered as `<angle>` because an unregistered custom
-     property interpolates as TEXT — the phase would jump 0turn → 1turn on one frame
-     and the "spinner" would be a single silent step.
+   • --dot-ring-phase — the redistribution angle, the ONLY thing the ring's keyframe
+     moves: bead k's radius scales as sqrt(1 + c·e·cos(phase + k·2π/7)), so a linear
+     sweep of one angle rotates the size inequality around a ring whose beads never leave
+     their seats. `<angle>` because an unregistered custom property interpolates as TEXT
+     — the phase would jump 0turn → 1turn in one frame and the spinner would be a single
+     silent step.
 
-   • --dot-ring-extent — the fission scalar, 0 (fused to one glow) → 1 (ring open).
-     Registered as `<number>` for the same reason and transitioned on the host; the
-     beads read it THREE times — the travel along the spoke, the sqrt(7) fusion swell,
-     and the gate on the inequality inside the envelope. The third is the one that
-     makes the fused end ONE glow carrying exactly the ring's total bead area at every
-     phase; without it the union at extent 0 is the largest bead alone.
+   • --dot-ring-extent — the fission scalar, 0 (fused to one glow) → 1 (ring open),
+     transitioned on the host. The beads read it THREE times: the travel along the spoke,
+     the sqrt(7) fusion swell, and the gate on the inequality inside the envelope. The
+     third is what makes the fused end ONE glow carrying exactly the ring's total bead
+     area at every phase; without it the union at extent 0 is the largest bead alone.
 
-   Both `inherits: true`: the host carries one animation and one transition, and seven
-   beads observe them. Seven animations of one property each would be seven timelines
-   free to drift; one timeline observed seven times cannot. */
+   Both inherit: the host carries one animation and one transition and seven beads
+   observe them. Seven animations of one property each would be seven timelines free to
+   drift; one timeline observed seven times cannot. */
 @property --dot-ring-phase {
     syntax: "<angle>";
     inherits: true;
@@ -387,30 +274,27 @@
     initial-value: 0;
 }
 
-/* ── THE VAPORIZE CHANNELS (BK #30 W-DISSOLVE) ─────────────────────────────────
-   `IOS27-ARCHIVE.md` §4b measures the Control-Centre dismissal as a DESYNCHRONISED
+/* THE VAPORIZE CHANNELS. The Control-Centre dismissal is a DESYNCHRONISED
    three-channel release of the backdrop filter itself — saturation, dim and blur, each
    landing on its own stop, sat : dim : blur = 1 : 1.36 : 1.72. Three landings means
-   three animations, and three animations means the two channels that share ONE
-   `backdrop-filter` declaration have to reach it through separate custom properties.
-   A bare `var()` in a filter function SNAPS between keyframes; only a registered
-   property interpolates. That is the whole reason these two exist — the archive says it
-   outright ("`--vap-*` must be `@property`-registered or the interpolation will not
-   run"), and it is the difference between the effect and a two-step flicker.
+   three animations, and the two channels that share ONE `backdrop-filter` declaration
+   have to reach it through separate custom properties: a bare `var()` in a filter
+   function SNAPS between keyframes, and only a registered property interpolates. That
+   is the whole reason these two exist.
 
    The DIM channel needs no registration and does not get one. It releases the panel's
    own paint — plate, rim and cast — and `background-color`, `border-color` and
-   `box-shadow` all interpolate natively (the last one against `none` by spec, which is
-   what lets ONE keyframe release ANY rung's shadow stack without restating it). A
-   registered scalar there would buy a Houdini dependency and a second expression of the
-   ladder's own tokens, so the recipe animates the properties directly.
+   `box-shadow` all interpolate natively (the last against `none` by spec, which is what
+   lets ONE keyframe release ANY rung's shadow stack without restating it). A registered
+   scalar there would buy a Houdini dependency and a second expression of the ladder's
+   own tokens.
 
    `inherits: false` on both: the release happens on the dismissing surface, and a
    descendant with its own glass must not inherit a half-released backdrop. The initial
-   values are the NEUTRAL end — `saturate(1)` and `blur(0)` are identity — so an
-   unbound element that somehow resolves them paints no filter rather than a wrong one.
-   The rest values the animation starts from are bound on `.glass-vaporize` itself
-   (`styles/glass/dissolve.css`), off the rung's own tokens. */
+   values are the NEUTRAL end — `saturate(1)` and `blur(0)` are identity — so an unbound
+   element that somehow resolves them paints no filter rather than a wrong one. The rest
+   values the animation starts from are bound on `.glass-vaporize` itself
+   (styles/glass/dissolve.css), off the rung's own tokens. */
 @property --vap-saturate {
     syntax: "<number>";
     inherits: false;
@@ -423,12 +307,11 @@
     initial-value: 0px;
 }
 
-/* The ink's blur peak — half the dismissing element's own block size (TR#30's
-   amendment). Registered as a `<length>` and `inherits: true` for one reason: it is
-   computed ONCE, on the surface, and read by every child the ink keyframe runs on. Left
-   unregistered it would be substituted as text and re-resolve `1lh` against each child's
-   own line box, so a caption and a title would blur by different amounts in the same
-   dissolve. `initial-value: 0px` is the no-blur rest. */
+/* The ink's blur peak — half the dismissing element's own block size. `<length>` and
+   inheriting for one reason: it is computed ONCE, on the surface, and read by every
+   child the ink keyframe runs on. Left unregistered it would be substituted as text and
+   re-resolve `1lh` against each child's own line box, so a caption and a title would
+   blur by different amounts in the same dissolve. */
 @property --vap-ink-blur {
     syntax: "<length>";
     inherits: true;
