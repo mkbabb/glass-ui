@@ -6,7 +6,8 @@
  * var(--dock-scale))` so the ONE `--dock-scale` multiplier grows box+pad+gap+
  * tab+tile in lockstep on touch, with the inner `max(…, --dock-control-floor)`
  * WCAG 2.5.5 clamp. The four rungs (compact · comfortable · spacious · audacious)
- * + the audacious narrow-box `@container` label compression.
+ * ~~+ the audacious narrow-box `@container` label compression~~ —
+ * [2026-08-12 · BK #47 W1 · o19 A-17 G-6, PRODUCER-OR-DELETE: DELETED at the :421 bracket].
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
  * carve is isomorphic (same layer, same source order → ZERO visual delta). */
@@ -415,28 +416,36 @@
         --dock-control-glyph-size: var(--dock-icon-glyph);
     }
 
-    /* Density-audacious narrow-box carve — when the dock's OWN
-       box is narrow the audacious-dock label glyphs compress so the chrome
-       doesn't overflow its host (≤14px below 30rem, 15px 30–45rem). Keyed off
-       the dock's `dock` inline-size container — OPT-IN via the
-       `containerName="dock"` prop (no always-on default, which would
-       break shrink-to-fit), so it fires only for a dock the consumer has
-       width-CONSTRAINED into a host (the 320px sidebar case) where the
-       compression is meaningful and the containment does not collapse the box.
-       A free-floating dock shrink-wraps (box == content) so there is nothing to
-       compress. The var
-       is set on the `.dock-label` descendant (which reads it via
-       `font-size: var(--dock-label-size)`, typography.css). Thresholds keep
-       the 479/719px breakpoint cadence as box widths (30rem ≈ 480px,
-       45rem ≈ 720px at the 16px root). */
-    @container dock (max-width: 29.9375rem) {
-        .glass-dock[data-size="xl"] .dock-label {
-            --dock-label-size: 14px;
-        }
-    }
-    @container dock (min-width: 30rem) and (max-width: 44.9375rem) {
-        .glass-dock[data-size="xl"] .dock-label {
-            --dock-label-size: 15px;
-        }
-    }
+    /* ~~Density-audacious narrow-box carve — when the dock's OWN box is narrow the
+       audacious-dock label glyphs compress so the chrome doesn't overflow its host
+       (≤14px below 30rem, 15px 30–45rem). Keyed off the dock's `dock` inline-size
+       container — OPT-IN via the `containerName="dock"` prop…~~ — [2026-08-10 · BK #47
+       W1 · o19 A-17 G-6, PRODUCER-OR-DELETE: DELETED] The two `@container dock` blocks
+       that stood here are struck as DEAD BY CONSTRUCTION, not retuned.
+
+       THE DETECTOR, verbatim, this seat:
+         `grep -rn "container-type" src/`  → 10 hits, every one PROSE; zero declarations
+                                             in `src/components/dock/**`
+         `grep -rn "containerName|container-name" src demo tests` → 8 hits, every one
+                                             PROSE; `DockProps` (useDockShellProps.ts)
+                                             enumerates 14 members and `containerName`
+                                             is NOT among them
+
+       A `@container <name>` consumer matches only against an ancestor carrying BOTH
+       `container-name: dock` and a `container-type`. The prose above names the producer
+       as a `containerName` prop; that prop was never authored, and shell.css:141-162
+       says so in its own words ("the `dock`-named container is now OPT-IN via the
+       `containerName` prop") while declaring no `container-type` anywhere. So these two
+       queries could not match on any tree that has ever shipped: they are not a
+       feature awaiting a consumer, they are rules with no reachable producer.
+
+       Deleting beats authoring the producer here: `container-type: inline-size` applies
+       `contain: inline-size`, which shell.css:136-147 records as the exact cause of the
+       3.3.0 sliver regression (every horizontal dock collapsed to its padding floor).
+       The producer is the known defect; the consumer is its only caller. Both go.
+
+       ROUTED, not fixed here (out of Lane α's fence): `demo/stories/dock/overview.vue`
+       :447 and :503 TEACH CONSUMERS a `container-name` prop that does not exist. That
+       is a shipped documentation falsehood and it belongs to the marked consumer
+       addendum GF-DOCK §9 already routes the demo edits to. */
 }

@@ -39,23 +39,35 @@
 @import "./controls/touch-floor.css";
 
 @layer components {
-    /* The draggable-item GRAB squish. A grabbed dock item
-       (`.glass-drag-lift`, written by useDockItemDrag while the gesture is in flight)
-       deforms with the volume-preserving `--stretch` register (the SHARED useLiquidFlex
-       "tanh" squish the tab indicator + dock morph already speak — ONE squish source, no
-       forked deformation). The grab follows the pointer via the JS-written `transform:
-       translate` (the compositor follow); this rule adds the gel-squish scale ON the
-       grabbed plate (stretch along the drag axis, compress across — volume-preserving).
-       The dock grabbable cursor + touch-action sit on `.glass-drag-grabbable` (the dock
-       root) via segmented-tabs.css. At rest `--stretch` is unset → 1/1 (no deform). The
-       global PRM gate strips `scale` → no squish under reduce (the gesture still follows).
-       Horizontal docks stretch X / compress Y; vertical stretch Y / compress X. */
-    .glass-dock.dock-items-draggable:not(.vertical) .dock-icon-button.glass-drag-lift {
-        scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
-    }
-    .glass-dock.dock-items-draggable.vertical .dock-icon-button.glass-drag-lift {
-        scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
-    }
+    /* ~~The draggable-item GRAB squish. A grabbed dock item (`.glass-drag-lift`, written
+       by useDockItemDrag while the gesture is in flight) deforms with the
+       volume-preserving `--stretch` register … Horizontal docks stretch X / compress Y;
+       vertical stretch Y / compress X.~~ — [2026-08-10 · BK #47 · R-E, ALL DOCK DRAG
+       STRUCK] The two rules that stood here are DELETED. They are the dock's last drag
+       bytes, and they were already dead.
+
+       THE DETECTOR, verbatim, this seat:
+         `grep -rn "dock-items-draggable" src/ demo/ tests/` → 2 hits, and BOTH were
+              these two selectors. The class had ZERO emitters — no SFC, no story, no
+              test ever wrote it, so neither rule could match on any tree.
+         `grep -rn "useDockItemDrag" src/` → 1 hit, the PROSE above. The composable the
+              comment named as the live writer of `.glass-drag-lift` does not exist.
+
+       So this was a mechanism documented in the present tense, gated on a class nothing
+       sets, driven by a composable that was never on disk. Deleting it is not a
+       behaviour change — no computed style can differ — which is why it lands here
+       rather than waiting on paint.
+
+       GF-DOCK R-E rules the merits independently: ALL drag on the dock is struck (the
+       PASS3 lens, the protrusion/outside-clip layer, and the residual block-axis drag).
+       Under `touch-action: pan-x` the inline gesture belongs to the scroller, and a
+       block-axis drag on a route dock has no named commit semantics. Commit is
+       tap/click/keyboard.
+
+       NOT touched, and deliberately: `.glass-drag-lift` itself is LIVE on the layer
+       SWITCHER (`DockLayerGroup.vue:270`, with `.glass-drag-grabbable` at :230) and its
+       rules live in `src/components/tabs/styles/drag.css`. That is the switcher's drag,
+       not dock-item drag, and it is out of this strike's scope and out of the fence. */
 
     /* Momentum-gated dock-control press spring. The `:active` squish
        toward `--scale-press-dock` settles on a NO-OVERSHOOT spring (Apple,

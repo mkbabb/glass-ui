@@ -35,13 +35,21 @@ import { useDockTouchGate } from "./composables/useDockTouchGate";
 // MutationObserver only — O5/G9).
 import { useDockOverflowFit } from "./composables/useDockOverflowFit";
 
-/* The attrs contract — the `.glass-dock-frame` shell is STRUCTURAL chrome
-   (the switcher's non-clipping positioning context), never the consumer's surface.
-   Fall-through attrs (class, data-testid, aria-*, the container styles every
-   gate + consumer targets via `.glass-dock[...]`) belong on the `.glass-dock`
-   root exactly as before the frame existed — `inheritAttrs: false` + an explicit
-   `v-bind="$attrs"` on the inner dock div keep the frame byte-transparent to
-   every existing selector contract. */
+/* The attrs contract. Fall-through attrs (class, data-testid, aria-*, the container
+   styles every gate + consumer targets via `.glass-dock[...]`) belong on the
+   `.glass-dock` root: `inheritAttrs: false` + an explicit `v-bind="$attrs"` on the dock
+   div is what puts them there.
+
+   ~~the `.glass-dock-frame` shell is STRUCTURAL chrome (the switcher's non-clipping
+   positioning context), never the consumer's surface … keep the frame byte-transparent
+   to every existing selector contract~~ — [2026-08-10 · BK #47 W1] the frame this
+   paragraph is about NO LONGER EXISTS. `styles/dock.css:206` retired the
+   `.glass-dock-frame` `display:contents` frame-escape when the fan/menu/search surfaces
+   became top-layer popovers, and the detector agrees: `grep -rn "glass-dock-frame" src
+   demo tests` → 2 hits this seat, BOTH prose (this comment and the dock.css line that
+   retired it), zero CSS rules and zero rendered elements. `inheritAttrs: false` is
+   therefore load-bearing on its own terms — the single `.glass-dock` root — and not,
+   as written here, a device for keeping a wrapper transparent. */
 defineOptions({ inheritAttrs: false });
 
 /* The prop contract is ONE shape (DockProps, in
