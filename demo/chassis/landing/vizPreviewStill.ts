@@ -9,6 +9,8 @@
 //
 // A demo-private helper — NOT a library export.
 
+import { makeHarmonicFigure, positionsAt } from "@glass/components/fourier-field";
+
 /** The characteristic generator — DISTINCT per viz (a shared pattern → a shared still). */
 export type VizPattern =
     | "nuclei"
@@ -158,37 +160,39 @@ function drawGraph(ctx: CanvasRenderingContext2D, hue: number, rng: () => number
     }
 }
 
-/** fourier-field — a partial-sum harmonic curve + one epicycle circle. */
+/**
+ * fourier-field — the partial sum and one of its own orbits, drawn by the library's own
+ * evaluator rather than a hand-rolled copy of it. The still and the live field therefore
+ * cannot disagree about what the transform draws.
+ */
 function drawEpicycle(ctx: CanvasRenderingContext2D, hue: number, _rng: () => number): void {
     warmFloor(ctx, hue);
     const cx = W * 0.5;
     const cy = H * 0.5;
-    const harm: number[][] = [
-        [1, 20, 0],
-        [3, 8, 1.2],
-        [5, 4, 2.4],
-    ];
+    const scale = 20;
+    const spectrum = makeHarmonicFigure([
+        { index: 1, mag: 1, phase: 0 },
+        { index: 3, mag: 0.4, phase: 1.2 / (2 * Math.PI) },
+        { index: 5, mag: 0.2, phase: 2.4 / (2 * Math.PI) },
+    ]);
     ctx.strokeStyle = warm(hue, 50, 0.85);
     ctx.lineWidth = 1.4;
     ctx.beginPath();
-    let first = true;
-    for (let t = 0; t <= 1.0001; t += 0.005) {
-        let x = cx;
-        let y = cy;
-        for (const [k, amp, ph] of harm) {
-            x += amp * Math.cos(2 * Math.PI * k * t + ph);
-            y += amp * Math.sin(2 * Math.PI * k * t + ph);
-        }
-        if (first) {
-            ctx.moveTo(x, y);
-            first = false;
-        } else ctx.lineTo(x, y);
+    for (let i = 0; i <= 200; i++) {
+        const chain = positionsAt(spectrum, i / 200);
+        const [x, y] = chain[chain.length - 1];
+        const px = cx + x * scale;
+        const py = cy + y * scale;
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
     }
+    ctx.closePath();
     ctx.stroke();
+    // The first orbit, taken from the same chain the curve came from.
     ctx.strokeStyle = warm(hue, 60, 0.3);
     ctx.lineWidth = 0.8;
     ctx.beginPath();
-    ctx.arc(cx, cy, 20, 0, Math.PI * 2);
+    ctx.arc(cx, cy, spectrum[0].amplitude * scale, 0, Math.PI * 2);
     ctx.stroke();
 }
 

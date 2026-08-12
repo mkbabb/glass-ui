@@ -530,8 +530,8 @@ export {
 
 // Route pointer broadcaster (a full-bleed pointer-events:none
 // background viz cannot listen for itself; the ONE capture-phase window listener per
-// route serves them via provide/inject) + the four PURE per-viz pointer-field mappings
-// (fourier draw-bias/lean · blob heavy-pull · aurora cursor · constellation well). Both
+// route serves them via provide/inject) + the three PURE per-viz pointer-field mappings
+// (blob heavy-pull · aurora cursor · constellation well). Both
 // import `vue` only (the mappings are pure) — engine-FREE + vueuse-FREE + root-barrel safe
 // per the `usePointerVelocityField` precedent; also reachable via `@mkbabb/glass-ui/motion-core`.
 export {
@@ -540,21 +540,17 @@ export {
     type UseRoutePointerOptions,
 } from "./composables/motion/pointer/useRoutePointer";
 export {
-    fourierLeanMapping,
     blobPullMapping,
     auroraCursorMapping,
     constellationWellMapping,
     snapshotField,
-    // The six per-mapping tuning DEFAULTS (`FOURIER_BIAS_GAIN` · `FOURIER_FOLLOW_LEAN` ·
-    // `BLOB_LEAD_K` · `BLOB_STRETCH_GAIN` · `BLOB_STRETCH_MAX` · `AURORA_CURSOR_RADIUS`)
+    // The four per-mapping tuning DEFAULTS (`BLOB_LEAD_K` · `BLOB_STRETCH_GAIN` ·
+    // `BLOB_STRETCH_MAX` · `AURORA_CURSOR_RADIUS`)
     // are NOT on this barrel (BK #19 W-DEAD-EXPORT). Each is the default an options bag
     // already exposes as an overridable field, so publishing the literal beside the
     // function it defaults gives a consumer a SECOND way to say the same thing and a
     // way to drift from it. Zero sites, in-repo or cross-repo, ever read them.
     type PointerFieldSnapshot,
-    type FourierLeanGeometry,
-    type FourierLeanOptions,
-    type FourierLeanResult,
     type BlobPullOptions,
     type BlobPullResult,
     type AuroraCursorOptions,

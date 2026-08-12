@@ -229,7 +229,6 @@ const rootRuntimeExports = [
     "constellationWellMapping",
     "createSpecularWriter",
     "createTokenColorCache",
-    "fourierLeanMapping",
     "provideConfiguratorSize",
     "resolveCanvasColor",
     "resolveTokenColor",

@@ -1,15 +1,11 @@
-// The ONE canonical copy of the fourier-field math: pure DFT/epicycle
-// reconstruction plus the procedural elliptic-spectrum generators. No Vue, no
-// DOM — a leaf a test or a worker can import without a render context.
-//
-// math model adopted from fourier-analysis/web/src/lib/{evaluators,bases}.ts
-// (the `evaluateFourier` complex-sum + the `fourierPositionsAt` epicycle chain).
+// The pure Fourier math leaf: the forward DFT, the truncated inverse, the epicycle
+// chain, and the two spectrum generators. No Vue, no DOM — a test or a worker imports it
+// without a render context.
 
 /**
- * One Fourier phasor. `index` is the integer frequency (a counter-rotating pair
- * is `+1` and `-1`); `coefficient` is the complex coefficient `[re, im]`;
- * `amplitude`/`phase` are its polar form (carried for callers that prefer the
- * polar read — the reconstruction uses the rectangular `coefficient`).
+ * One Fourier phasor. `index` is the integer frequency (a counter-rotating pair is `+1`
+ * and `-1`); `coefficient` is the complex coefficient `[re, im]`; `amplitude`/`phase` are
+ * its polar form (the reconstruction uses the rectangular `coefficient`).
  */
 export interface BasisComponent {
     index: number;
@@ -19,8 +15,8 @@ export interface BasisComponent {
 }
 
 /**
- * Build a {@link BasisComponent} from a frequency index and its rectangular
- * coefficient `(re, im)`, deriving the polar `amplitude`/`phase`.
+ * Build a {@link BasisComponent} from a frequency index and its rectangular coefficient,
+ * deriving the polar `amplitude`/`phase`.
  */
 export function comp(index: number, re: number, im: number): BasisComponent {
     return {
@@ -32,14 +28,12 @@ export function comp(index: number, re: number, im: number): BasisComponent {
 }
 
 /**
- * The epicycle chain at parameter `t`: the running tip of each phasor stacked on
- * the last, starting at the origin. `positions[0]` is `[0, 0]`; the final entry
- * is the curve point — the inverse-DFT sum `Σ c_k * exp(2*pi*i*k*t)` at the same
- * `t`. `maxCircles` truncates the chain (draw fewer arms than the spectrum
- * carries).
+ * The epicycle chain at parameter `t`: the running tip of each phasor stacked on the
+ * last, starting at the origin. `positions[0]` is `[0, 0]`; the final entry is the curve
+ * point. `maxCircles` truncates the chain.
  */
 export function positionsAt(
-    components: BasisComponent[],
+    components: readonly BasisComponent[],
     t: number,
     maxCircles?: number,
 ): [number, number][] {
@@ -60,23 +54,14 @@ export function positionsAt(
 }
 
 /**
- * The PARTIAL-SUM curve point at parameter `t` over the FIRST `maxTerms` phasors
- * — the inverse-DFT truncated summation `Σ_{k<maxTerms} c_k * exp(2*pi*i*k*t)`.
- * It is {@link positionsAt} truncated at `maxTerms` and read at the FINAL tip:
- * the single curve POINT (not the whole chain). The truncation axis is the SAME
- * one `positionsAt`'s `maxCircles` arg drives — `maxCircles` reads the whole
- * chain truncated, `partialSumAt` reads only its endpoint — so the studio's
- * N-harmonics slider can draw the assembling chain (`positionsAt(.., N)`) AND the
- * resolving curve point (`partialSumAt(.., t, N)`) off the ONE axis. Sweeping `t`
- * over `[0,1)` and joining the points traces the partial-sum CURVE: at `maxTerms`
- * = 1 a single ellipse, growing toward the full reconstruction as `maxTerms`
- * climbs to `components.length` (the reference's "watch it sum" beauty).
- *
- * `maxTerms` omitted (or ≥ `components.length`) is the full reconstruction — the
- * same point `positionsAt(components, t)` returns at its final tip.
+ * The PARTIAL-SUM curve point at `t` over the first `maxTerms` phasors — the truncated
+ * inverse DFT `Σ_{k<maxTerms} c_k · e^{2πi·k·t}`. It is {@link positionsAt} read at its
+ * final tip without building the chain, so the fit pass and the N axis share one
+ * evaluator. Sweeping `t` over `[0,1)` traces the partial-sum curve: at `maxTerms = 1` a
+ * single ellipse, growing toward the full reconstruction as `maxTerms` climbs.
  */
 export function partialSumAt(
-    components: BasisComponent[],
+    components: readonly BasisComponent[],
     t: number,
     maxTerms?: number,
 ): [number, number] {
@@ -95,26 +80,19 @@ export function partialSumAt(
 }
 
 /**
- * The forward DFT — the inverse of {@link positionsAt}. Takes a closed sequence
- * of `[x, y]` samples around a curve (treated as the complex signal `x + i·y`,
- * uniformly spaced in the parameter `t ∈ [0, 1)`) and returns the
- * {@link BasisComponent} spectrum that {@link positionsAt} reconstructs.
+ * The forward DFT — the inverse of {@link positionsAt}. Takes a closed sequence of
+ * `[x, y]` samples around a curve (the complex signal `x + i·y`, uniformly spaced in
+ * `t ∈ [0, 1)`) and returns the spectrum {@link positionsAt} reconstructs.
  *
- * Frequencies run symmetrically around 0 — `0, +1, -1, +2, -2, …` up to the
- * Nyquist limit — which is the index ordering the epicycle chain wants (the big
- * low-order phasors first). The DC term (`index 0`) is the curve's centroid; the
- * caller can subtract it (draw the chain centered) or keep it (draw at the
- * sampled position).
- *
- * General: any point set drives it (a glyph outline, a hand-traced path, a
- * digitized signature). It is NOT a special case — it is the literal forward
- * transform whose inverse already ships as `positionsAt`.
+ * Frequencies run symmetrically around 0 — `0, +1, -1, +2, -2, …` up to Nyquist. The DC
+ * term (`index 0`) is the curve's centroid; the mint hoists it out as the fit anchor.
+ * Any point set drives it: a glyph outline, a hand-traced path, a digitized signature.
  */
-export function dftFromPoints(points: [number, number][]): BasisComponent[] {
+export function dftFromPoints(points: readonly [number, number][]): BasisComponent[] {
     const N = points.length;
     if (N === 0) return [];
 
-    // The signed-frequency order the epicycle chain consumes: 0, +1, -1, +2, …
+    // The signed-frequency order: 0, +1, -1, +2, …
     const order: number[] = [0];
     const half = Math.floor(N / 2);
     for (let f = 1; f <= half; f++) {
@@ -132,7 +110,6 @@ export function dftFromPoints(points: [number, number][]): BasisComponent[] {
             const angle = (-2 * Math.PI * k * n) / N;
             const cos = Math.cos(angle);
             const sin = Math.sin(angle);
-            // (px + i·py)(cos + i·sin) = (px·cos − py·sin) + i(px·sin + py·cos)
             re += px * cos - py * sin;
             im += px * sin + py * cos;
         }
@@ -141,43 +118,31 @@ export function dftFromPoints(points: [number, number][]): BasisComponent[] {
     return components;
 }
 
-/** Tuning for {@link makeEllipticSpectrum}. */
-export interface EllipticSpectrumOptions {
-    /**
-     * How many smaller higher-order harmonics to layer on top of the dominant
-     * counter-rotating pair (the dominant pair is always present). Default 4.
-     * The `final` preset passes a larger count for a denser, busier curve.
-     */
-    harmonics?: number;
-    /**
-     * Peak magnitude of the higher-order harmonics relative to the dominant
-     * phasor. Smaller keeps the curve a clean, smooth ellipse with a little
-     * character; larger crinkles it. Default ~0.22.
-     */
-    harmonicScale?: number;
-}
-
 /**
- * Emit a procedural elliptic spectrum: a DOMINANT counter-rotating pair (index
- * `+1` and `-1`) of UNEQUAL magnitude — the inequality is what draws a tilted
- * ellipse rather than a circle — plus a few smaller higher-order harmonics with
- * random small magnitudes and phases for character. Lower orders carry more
- * weight (a `1 / order` falloff), so the curve stays large, smooth and
- * few-big-phasor; the `harmonics` knob lifts it to the denser `final` look.
+ * Emit a procedural elliptic spectrum: a DOMINANT counter-rotating pair (index `+1` and
+ * `-1`) of UNEQUAL magnitude — the inequality is what draws a tilted ellipse rather than
+ * a circle — plus higher-order harmonics with a `1/order` falloff.
  *
- * Deterministic in `rng`: the same seeded `() => number` yields the same
- * spectrum, so a frozen frame reproduces exactly.
+ * `richness` ∈ `[0,1]` is the ONE character knob: 0 is a clean ellipse, 1 a crinkled
+ * figure. It drives both how many harmonics are offered and how loud they are; the mint's
+ * paint floor then decides how many of them survive, so the axis maximum is honest
+ * per-seed rather than pinned to a constant.
+ *
+ * Deterministic in `rng`: the same seeded `() => number` yields the same spectrum.
  */
 export function makeEllipticSpectrum(
     rng: () => number,
-    opts: EllipticSpectrumOptions = {},
+    richness = 0.5,
 ): BasisComponent[] {
-    const { harmonics = 4, harmonicScale = 0.22 } = opts;
+    const r = Math.min(Math.max(richness, 0), 1);
+    // The offered harmonic count and their peak magnitude both ride `richness`. The
+    // offer is generous; the paint floor is what truncates it.
+    const offered = 2 + Math.round(r * 22);
+    const harmonicScale = 0.06 + r * 0.34;
 
-    // The dominant counter-rotating pair. Unequal magnitudes => a tilted ellipse
-    // (equal magnitudes would trace a circle). A shared random phase tilts it.
-    const major = 0.62 + rng() * 0.18; // ~0.62..0.80
-    const minor = major * (0.34 + rng() * 0.3); // distinctly smaller — the tilt
+    // The dominant counter-rotating pair. Unequal magnitudes => a tilted ellipse.
+    const major = 0.62 + rng() * 0.18;
+    const minor = major * (0.34 + rng() * 0.3);
     const tilt = rng() * Math.PI * 2;
     const tiltMinus = rng() * Math.PI * 2;
 
@@ -186,10 +151,8 @@ export function makeEllipticSpectrum(
         comp(-1, minor * Math.cos(tiltMinus), minor * Math.sin(tiltMinus)),
     ];
 
-    // Smaller higher-order harmonics for character — alternating outer indices
-    // (+2, -2, +3, -3, …) with a `1 / order` magnitude falloff so the low orders
-    // stay the big, smooth phasors and the high orders only add fine detail.
-    for (let i = 0; i < harmonics; i++) {
+    // Alternating outer indices (+2, -2, +3, -3, …) with a `1/order` magnitude falloff.
+    for (let i = 0; i < offered; i++) {
         const order = 2 + Math.floor(i / 2);
         const index = i % 2 === 0 ? order : -order;
         const mag = (harmonicScale / order) * (0.4 + rng() * 0.6);
@@ -200,32 +163,21 @@ export function makeEllipticSpectrum(
     return components;
 }
 
-// ── The coefficient-driven closed-figure family ─────────
-//
-// A DELIBERATE figure, not a scribble: a few-term INTEGER-index harmonic stack. Because
-// every phasor index is an INTEGER, `exp(2πi·k·t)` has period 1, so the sum CLOSES at t=1
-// by construction (`z(0) === z(1)`) — no arbitrary/irrational term can leave the figure
-// open. Two counter-rotating integer phasors `a·e^{i·2π·p·t} + b·e^{i·2π·q·t}` trace a clean
-// epicycloid/hypotrochoid whose symmetry order is `|p − q|` (the spirograph/fourier-flower
-// family); a third small term adds character without breaking closure. This is the sharp
-// primitive the random `makeEllipticSpectrum` "boring ellipse" is NOT — the same evaluator
-// (`partialSumAt`/`positionsAt`) reconstructs both.
-
 /** One integer-index harmonic term of a {@link FOURIER_FIGURES} recipe (polar form). */
 export interface HarmonicTerm {
-    /** The INTEGER frequency index (a closed figure requires integers — the period-1 fence). */
+    /** The INTEGER frequency index — a closed figure requires integers (the period-1 fence). */
     index: number;
     /** The phasor magnitude (relative; the figure is scale-fit at render). */
     mag: number;
-    /** The phase offset in turns (0..1 — multiplied by 2π; a phase rotates the figure). */
+    /** The phase offset in TURNS (0..1 — multiplied by 2π). */
     phase: number;
 }
 
 /**
- * Build a {@link BasisComponent} spectrum from a closed-figure recipe (a list of integer-index
- * {@link HarmonicTerm}s). The recipe's `phase` is in TURNS; the rectangular coefficient is
- * `mag·(cos, sin)` at `2π·phase`. The result CLOSES (all indices integer) — feed it straight
- * to `partialSumAt`/`positionsAt`.
+ * Build a spectrum from a closed-figure recipe. Because every index is an INTEGER,
+ * `e^{2πi·k·t}` has period 1, so the sum CLOSES at `t = 1` by construction — no term can
+ * leave the figure open. Two counter-rotating integer phasors trace an epicycloid whose
+ * symmetry order is `|p − q|`; a third small term adds character without breaking closure.
  */
 export function makeHarmonicFigure(terms: readonly HarmonicTerm[]): BasisComponent[] {
     return terms.map((t) => {
@@ -235,12 +187,11 @@ export function makeHarmonicFigure(terms: readonly HarmonicTerm[]): BasisCompone
 }
 
 /**
- * The curated FLOWER / closed-epicycle figure catalogue — few-term integer-ratio harmonic
- * stacks, each a deliberate figure (the symmetry order is `|p − q|` for the dominant pair).
- * Selectable/cyclable by key; the LIBRARY beauty register the `boring` random ellipse lacked.
- * The magnitudes stay large + few-phasor so the figure reads bold, not crinkled.
+ * The curated closed-figure catalogue — few-term integer-ratio harmonic stacks, each a
+ * deliberate figure (the symmetry order is `|p − q|` for the dominant pair). Every entry
+ * states its own honest term count: two terms draw a foil, three draw a spirograph.
  */
-export const FOURIER_FIGURES: Record<string, HarmonicTerm[]> = {
+export const FOURIER_FIGURES = {
     // 3-fold deltoid flower (|1 − (−2)| = 3).
     trefoil: [
         { index: 1, mag: 0.72, phase: 0 },
@@ -261,13 +212,13 @@ export const FOURIER_FIGURES: Record<string, HarmonicTerm[]> = {
         { index: 1, mag: 0.68, phase: 0 },
         { index: -5, mag: 0.24, phase: 0 },
     ],
-    // A richer 3-term spirograph — the dominant pair + a small high harmonic for character.
+    // A richer 3-term spirograph — the dominant pair plus one high harmonic.
     spiro: [
         { index: 1, mag: 0.64, phase: 0 },
         { index: -4, mag: 0.28, phase: 0.12 },
         { index: 7, mag: 0.1, phase: 0.33 },
     ],
-};
+} satisfies Record<string, HarmonicTerm[]>;
 
 /** The ordered figure keys (the demo/consumer cycle order). */
-export const FOURIER_FIGURE_KEYS = Object.keys(FOURIER_FIGURES);
+export const FOURIER_FIGURE_KEYS = Object.keys(FOURIER_FIGURES) as (keyof typeof FOURIER_FIGURES)[];

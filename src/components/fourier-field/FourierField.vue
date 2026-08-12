@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted, shallowRef, useTemplateRef, watch } from "vue";
-import type { ColorResolver, OklchStop } from "../../composables/color";
+import type { OklchStop } from "../../composables/color";
 import { cssToOklch } from "../../composables/color";
 import { resolveTokenColor } from "../../composables/dom";
 import { useGlobalDark } from "../../composables/dark";
-import { useRoutePointer } from "../../composables/motion/pointer/useRoutePointer";
 import { mulberry32, hashString } from "../../composables/glass/procedural/prng";
 import {
     makeEllipticSpectrum,
@@ -12,51 +11,57 @@ import {
     FOURIER_FIGURES,
     type BasisComponent,
 } from "./math";
-import type { FourierFieldConfig } from "./constants";
-import { DEFAULT_FOURIER_CONFIG, MAX_PHASORS } from "./constants";
-import { useFourierField } from "./composables/useFourierField";
+import { mintSpectrum, type MintedSpectrum } from "./renderer/mint";
+import {
+    DEFAULT_FOURIER_CONFIG,
+    FOURIER_QUANTUM_COARSE,
+    FOURIER_QUANTUM_FINE,
+    type FourierFieldConfig,
+} from "./constants";
+import { useFourierField } from "./useFourierField";
 import type { RendererStatus } from "../../composables/glass/webgpu/rendererStatus";
 
 const emit = defineEmits<{ rendererStatus: [status: RendererStatus] }>();
 
 /**
- * FourierField — a Fourier epicycle field on the GPU substrate, a
- * sibling primitive to Aurora, GooBlob, and DotFlowField. A chain of rotating circles
- * stacked tip-to-tail draws the reconstructing partial-sum curve; a glowing comet head
- * leads the fading trail. WebGPU-FIRST: the compute pass writes the partial-sum curve +
- * the epicycle chain tips, the fullscreen-fragment render pass composites the SDF field; a
- * WebGL2 GLSL twin is the fallback. It composes `useFourierField` with the
- * `createGpuSubstrate` picker over the ONE canvas lifecycle leaf (offscreen-pause, live-PRM
- * freeze, consumer-owned DPR) and the SHARED `usePointerVelocityField` (the pointer SCRUBS
- * the reconstruction).
+ * FourierField — the drawing machine.
  *
- * The DEFAULT palette is the warm-cream library identity (`--viz-fourier` warm-amber); a
- * demo Teal/cool preset stays demo-LOCAL (presets-in-consumers — never a library token).
+ * Aurora is weather and the blob is a creature; this one is the substrate whose motion is
+ * a CHECKABLE CLAIM. Every frame is the truncated inverse transform of a fixed spectrum,
+ * `Σ c_k·e^{2πikt}`, and a reader can verify it: the rings are the terms, the chain is the
+ * sum, the head is where the parameter currently is. Nothing decorative moves.
  *
- * Visual bundles live in config presets. An ambient-background consumer passes `color` and the
- * `colorResolver` for a thin warm default preserving the recessive look; the studio passes
- * the full `config` + `spectrum` + `getPalette`.
+ * The two payoffs are CLOSURE — every index is an integer, so the figure completes exactly
+ * at `t = 1` — and ASSEMBLY — the spectrum is amplitude-ordered, so every step of the N
+ * axis adds the largest remaining correction rather than the next arbitrary frequency.
+ *
+ * WebGPU only. There is one renderer, because a second one would be a second paint law,
+ * and where WebGPU is absent the field declares it and paints nothing.
  */
 const props = withDefaults(
     defineProps<{
-        /** The full author config (the studio's `useConfiguratorState` model). Defaults to the warm identity. */
+        /** The author config. Defaults to the shipped identity. */
         config?: FourierFieldConfig;
-        /** An explicit CPU-minted spectrum (a curated shape's DFT). When absent, a seeded elliptic spectrum is generated. */
+        /** An explicit spectrum. When absent, the config's `source` decides. */
         spectrum?: readonly BasisComponent[];
-        /** Resolve the curve palette as OKLCh (the studio themes it). When absent, `color`/`config.palette` is used. */
+        /** Resolve the ramp as OKLCh (the studio themes it). Wins over `color`. */
         getPalette?: () => OklchStop[];
-        /** Ambient-consumer color seam — a `var()`/`light-dark()` token or a literal; derives a warm 2-stop palette. */
+        /** Ambient-consumer colour seam — a token or a literal; derives a two-stop ramp. */
         color?: string;
-        /** The color resolver (the GooBlob/Aurora seam) — required when `color` is a `var()` token. */
-        colorResolver?: ColorResolver;
-        /** Extra seed mixed into the generated elliptic spectrum PRNG. Default "". */
+        /** Seed for the generated spectrum. */
         seed?: string;
-        /** Paint ONE static deterministic best-frame and never animate (the capture lever). Default false. */
+        /** Hold the clock. The figure stays live; only time stops. */
         freeze?: boolean;
+        /**
+         * The pointer scrubs and flicks the clock, and the host becomes a real slider.
+         * `false` is the decor mount: no listeners, no role, no tab stop.
+         */
+        interactive?: boolean;
     }>(),
     {
         seed: "",
         freeze: false,
+        interactive: true,
     },
 );
 
@@ -65,72 +70,40 @@ const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 
 const { isDark } = useGlobalDark();
 
-// the route pointer BROADCASTER (the interactive-background standard). A
-// full-bleed `pointer-events:none` field cannot listen for its own pointer; it reads the ONE
-// capture-phase window listener the route provides (StoryHero) and feeds the shared field.
-const route = useRoutePointer();
+const cfg = computed<FourierFieldConfig>(() => props.config ?? DEFAULT_FOURIER_CONFIG);
 
-// The effective config is the passed config or warm-identity default. An ambient consumer
-// without config uses the SUBTLE-INTERACTIVE background register — the field responds to the
-// route pointer (a subtle centroid lean) while the CANVAS stays `pointer-events:none` (the
-// route broadcaster captures at the window, so the field never consumes page hit-testing).
-const cfg = computed<FourierFieldConfig>(() => {
-    const base = props.config ?? DEFAULT_FOURIER_CONFIG;
-    // The FIELD responds (lean/scrub): the studio's config-driven value, or a subtle
-    // route-fed register for the ambient consumer.
-    const interactive = props.config ? base.interactive : true;
-    return { ...base, interactive };
+// ── The spectrum. Minted ONCE per source/seed and never on an N edit. ──
+const minted = computed<MintedSpectrum>(() => {
+    if (props.spectrum && props.spectrum.length > 0) {
+        return mintSpectrum(props.spectrum);
+    }
+    const source = cfg.value.source;
+    if (source !== "elliptic" && !(source in FOURIER_FIGURES)) {
+        throw new Error(
+            `[FourierField] unknown source "${String(source)}". Pass "elliptic", a key of ` +
+                `FOURIER_FIGURES, or an explicit \`spectrum\`.`,
+        );
+    }
+    if (source !== "elliptic") {
+        return mintSpectrum(makeHarmonicFigure(FOURIER_FIGURES[source]));
+    }
+    const rng = mulberry32(hashString(`fourier-field/${props.seed}`));
+    return mintSpectrum(makeEllipticSpectrum(rng, cfg.value.richness));
 });
+const getSpectrum = (): MintedSpectrum => minted.value;
 
-// The CSS `pointer-events:auto` register is ONLY for the STUDIO (which binds its OWN host
-// listeners). The ambient route-fed field keeps `pointer-events:none` — it reads the window
-// broadcaster, never its own listener, so it never occludes the page.
-const hostInteractive = computed(() => !!props.config && cfg.value.interactive);
-// The route-pointer read fed to the ambient field (undefined for the studio — it owns its
-// host listeners, so the route feed would double-write). Viewport-normalized ≈ host-normalized
-// for a full-bleed background field.
-const routePointerRead = props.config
-    ? undefined
-    : () => ({
-          x: route.pointer.value.x,
-          y: route.pointer.value.y,
-          active: route.active.value,
-      });
+/** The summed truth: the term count the frame actually used, over what the mint emitted. */
+const termCount = computed(() => minted.value.terms.length);
+const summedN = computed(() =>
+    Math.max(1, Math.min(Math.round(cfg.value.harmonics), termCount.value)),
+);
+const badge = computed(() => `N ${summedN.value}/${termCount.value}`);
 
-// The active spectrum — the explicit `spectrum` prop (a curated shape DFT) wins; otherwise a
-// seeded elliptic spectrum is generated CPU-side from the config (the ONE spectrum mint —
-// makeEllipticSpectrum runs in JS; the WGSL only SUMS the uploaded phasor table).
-const spectrum = computed<readonly BasisComponent[]>(() => {
-    if (props.spectrum && props.spectrum.length > 0) return props.spectrum;
-    //  B2 — a `source` naming a curated closed-figure recipe generates a
-    // DELIBERATE flower/epicycle figure (integer-index → closes by construction), not the
-    // "boring" random ellipse. The default `source: "elliptic"` keeps the seeded generator.
-    const figure = FOURIER_FIGURES[cfg.value.source];
-    if (figure) return makeHarmonicFigure(figure);
-    const liveSeed = props.freeze ? "fourier-field/frozen" : props.seed || "fourier-field";
-    const rng = mulberry32(hashString(liveSeed + props.seed));
-    return makeEllipticSpectrum(rng, {
-        harmonics: Math.min(cfg.value.harmonics + 4, MAX_PHASORS - 2),
-        harmonicScale: cfg.value.harmonicScale,
-    });
-});
-const getSpectrum = (): readonly BasisComponent[] => spectrum.value;
-
-// Resolve a `var(--token)`/`light-dark()` color to a concrete value before
-// reading it (value.js cannot parse a `var()` wrapper). The host element resolves the
-// cascade through the SHARED un-wrap leaf (`resolveTokenColor` — the ONE
-// getComputedStyle-paint-and-read path the aurora/blob ColorResolver seam uses); the
-// `light-dark()` literal rides the same paint-and-read trick (a `light-dark()` painted on
-// a real CSS property resolves through the cascade), so it is folded into the leaf's
-// scope here. A `var()`/`light-dark()` wrapper that did NOT resolve concretely (the host
-// is not yet mounted — the immediate watch fires in setup() before `hostRef`) is NOT
-// handed to value.js; the caller keeps the warm-identity palette until mount resolves it.
+// ── The ramp. A `var()`/`light-dark()` seam resolves through the cascade at mount. ──
 function resolveColorString(css: string): string {
     if (!css.includes("var(") && !css.includes("light-dark(")) return css;
     const el = hostRef.value;
     if (typeof window === "undefined" || !el) return css;
-    // resolveTokenColor un-wraps a `var()` wrapper; paint-and-read the cascade for a
-    // `light-dark()` wrapper the leaf's `var(`-only guard skips.
     if (css.includes("var(")) return resolveTokenColor(css, el);
     const prev = el.style.color;
     el.style.color = css;
@@ -139,39 +112,31 @@ function resolveColorString(css: string): string {
     return resolved || css;
 }
 
-// The resolved palette — the studio's `getPalette` wins; otherwise derive a warm 2-stop ramp
-// from the ambient `color` seam; otherwise the config palette. Re-resolves on a dark flip
-// (the `isDark` reactive read).
 const resolvedPalette = shallowRef<OklchStop[]>(cfg.value.palette);
 function refreshPalette(): void {
     if (props.getPalette) {
         resolvedPalette.value = props.getPalette();
-        return;
-    }
-    void isDark.value; // the dark-flip retint trigger
-    if (props.color) {
+    } else if (props.color) {
+        void isDark.value; // the dark-flip retint trigger
         const resolved = resolveColorString(props.color);
-        // Guard the value.js parse: an UNRESOLVED `var()`/`light-dark()` wrapper (the
-        // host is not yet mounted) cannot be parsed by value.js (it throws on a `var()`
-        // reference). Keep the warm-identity palette and re-resolve on mount.
+        // An unresolved wrapper cannot be parsed; keep the placeholder until mount.
         if (resolved.includes("var(") || resolved.includes("light-dark(")) return;
         const base = cssToOklch(resolved);
         resolvedPalette.value = [
             { L: Math.max(0.5, base.L), C: Math.max(0.12, base.C), h: base.h },
             { L: Math.min(0.9, base.L + 0.22), C: base.C * 0.4, h: base.h + 18 },
         ];
-        return;
+    } else {
+        resolvedPalette.value = cfg.value.palette;
     }
-    resolvedPalette.value = cfg.value.palette;
+    if (resolvedPalette.value.length === 0) {
+        throw new Error("[FourierField] the palette is empty — there is nothing to paint with.");
+    }
 }
 const getPalette = (): OklchStop[] => resolvedPalette.value;
 
-// Pass a live forward-through config. `cfg` is a `computed<FourierFieldConfig>` over
-// `props.config` plus the interactive override; spreading `cfg.value` would freeze
-// its getters. The proxy forwards every reflection
-// (get/has/ownKeys/getOwnPropertyDescriptor — the setups spread/enumerate `config` in
-// places, so a bare `get`-only Proxy over `{}` would enumerate empty) to `cfg.value`, so
-// the per-frame reads track every configurator edit with NO re-feed wiring.
+// A live forward-through of the config: spreading would freeze the studio's getters, so
+// the proxy forwards every reflection and per-frame reads track every edit with no wiring.
 const renderConfig = new Proxy({} as FourierFieldConfig, {
     get: (_t, key) => Reflect.get(cfg.value, key),
     has: (_t, key) => Reflect.has(cfg.value, key),
@@ -179,47 +144,83 @@ const renderConfig = new Proxy({} as FourierFieldConfig, {
     getOwnPropertyDescriptor: (_t, key) =>
         Reflect.getOwnPropertyDescriptor(cfg.value, key),
 });
-// The comet head is painted by the GPU head quad, not a per-frame CSS restyle.
+
 const renderer = useFourierField(canvasRef, {
     config: renderConfig,
     getSpectrum,
     getPalette,
+    interactive: () => props.interactive,
     freeze: () => props.freeze,
-    // the ambient field reads the route broadcaster (the canvas is
-    // pointer-events:none; the studio owns its host listeners so this is undefined there).
-    routePointer: routePointerRead,
 });
+
 watch(renderer.rendererStatus, (status) => emit("rendererStatus", status), {
     immediate: true,
     flush: "sync",
 });
-
-// Wake a parked loop on a config edit (the blob paletteStops-watcher precedent) so a
-// control change to a quiescent field repaints same-frame.
 watch(() => props.config, () => renderer.wake(), { deep: true });
-
 watch([() => props.color, () => props.getPalette, isDark], refreshPalette, {
     immediate: true,
 });
-// The immediate watch fires in setup() before `hostRef` is mounted, so a `var()`-token
-// `color` cannot resolve the cascade yet (it kept the warm-identity default). Re-resolve
-// once the host element exists — the `var()` un-wrap now reaches a real element.
-onMounted(() => {
-    refreshPalette();
-});
+// The immediate watch runs before the host exists, so a token colour could not resolve the
+// cascade yet. Re-resolve once there is a real element to read it through.
+onMounted(refreshPalette);
 watch(isDark, () => renderer.wake());
-watch(
-    () => props.freeze,
-    () => renderer.wake(),
+watch(() => props.freeze, () => renderer.wake());
+
+// ── The a11y arm. Interactive, the host IS the transport: it commands the parameter, so
+//    it is a slider, and the value it reports is the one the paint used. ──
+const paused = shallowRef(false);
+const valueNow = computed(() => Number(renderer.headTLive.value.toFixed(3)));
+const valueText = computed(
+    () => `${badge.value} · ${Math.round(renderer.headTLive.value * 100)}% through the period`,
 );
+
+function nudge(delta: number): void {
+    renderer.setHeadT(renderer.headT + delta);
+}
+function onKeydown(e: KeyboardEvent): void {
+    if (!props.interactive) return;
+    switch (e.key) {
+        case "ArrowRight":
+            nudge(FOURIER_QUANTUM_FINE);
+            break;
+        case "ArrowLeft":
+            nudge(-FOURIER_QUANTUM_FINE);
+            break;
+        case "ArrowUp":
+            nudge(FOURIER_QUANTUM_COARSE);
+            break;
+        case "ArrowDown":
+            nudge(-FOURIER_QUANTUM_COARSE);
+            break;
+        case "Home":
+            renderer.setHeadT(0);
+            break;
+        case "End":
+            // 0.999, not 1: the period is half-open, and 1 IS 0.
+            renderer.setHeadT(0.999);
+            break;
+        case " ":
+        case "Spacebar":
+            paused.value = !paused.value;
+            if (paused.value) renderer.pause();
+            else renderer.resume();
+            break;
+        default:
+            return;
+    }
+    e.preventDefault();
+}
 
 defineExpose({
     backend: () => renderer.backend,
     pause: renderer.pause,
     resume: renderer.resume,
     wake: renderer.wake,
-    renderAt: renderer.renderAt,
     setHeadT: renderer.setHeadT,
+    /** The live loop parameter. Unwrapped on the exposed proxy, so a transport binds it. */
+    headT: renderer.headTLive,
+    flick: renderer.flick,
     rendererStatus: renderer.rendererStatus,
 });
 </script>
@@ -228,24 +229,28 @@ defineExpose({
     <div
         ref="hostRef"
         class="fourier-field"
-        :class="{ 'fourier-field--interactive': hostInteractive }"
+        :class="{ 'fourier-field--interactive': props.interactive }"
+        :role="props.interactive ? 'slider' : undefined"
+        :tabindex="props.interactive ? 0 : undefined"
+        :aria-label="props.interactive ? 'Fourier reconstruction parameter' : undefined"
+        :aria-valuemin="props.interactive ? 0 : undefined"
+        :aria-valuemax="props.interactive ? 1 : undefined"
+        :aria-valuenow="props.interactive ? valueNow : undefined"
+        :aria-valuetext="props.interactive ? valueText : undefined"
+        @keydown="onKeydown"
     >
         <canvas ref="canvasRef" class="fourier-field-canvas" aria-hidden="true" />
     </div>
 </template>
 
 <style scoped>
-/* The field is decorative background chrome. `content-visibility:auto` lets the
-   substrate's offscreen-park kick in (the contentvisibilityautostatechange listener fires
-   on this host); `contain` keeps it a layout/paint root. The deck theme.css pins
-   `.fourier-field`'s z-index, so the root class is exactly `fourier-field`. */
+/* `content-visibility` lets the substrate's offscreen park engage; `contain` keeps the
+   host a layout and paint root. */
 .fourier-field {
     position: absolute;
     inset: 0;
     z-index: 0;
-    /* Ambient (recessive background) by default — the field never eats the page's
-       hit-testing. The interactive studio register opts the wrapper into pointer events so
-       the scrub gesture (pointer X → head_t) reaches it. */
+    /* Ambient by default — a decor field never eats the page's hit-testing. */
     pointer-events: none;
     contain: layout style;
     content-visibility: auto;

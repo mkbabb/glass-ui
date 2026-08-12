@@ -1,65 +1,47 @@
 # FourierField
 
-FourierField renders a seeded epicycle chain and luminous reconstruction ribbon.
-Its pure coefficient math is CPU-owned; WebGPU performs the primary compute and
-render work, with a supported WebGL2 implementation through the shared GPU
-substrate.
+The drawing machine. Every frame is the truncated inverse transform of a fixed spectrum,
+`Σ c_k·e^{2πikt}` — the rings are the terms, the chain is the sum, the head is where the
+parameter currently is. Nothing decorative moves, so anything that moves is derivable.
 
 ```vue
-<script setup lang="ts">
-import { FourierField } from "@mkbabb/glass-ui/fourier-field";
-</script>
-
-<template>
-    <FourierField color="var(--primary)" seed="article-42" :freeze="capture" />
-</template>
+<FourierField :config="config" :get-palette="getPalette" />
+<FourierField color="var(--viz-fourier)" seed="hero" :interactive="false" />
 ```
 
-## Component props
+## The four laws
 
-| Prop | Type | Default | Purpose |
-|---|---|---|---|
-| `config` | `FourierFieldConfig` | `DEFAULT_FOURIER_CONFIG` | Complete renderer configuration. |
-| `spectrum` | `readonly BasisComponent[]` | generated | Explicit CPU-minted phasor spectrum. |
-| `getPalette` | `() => OklchStop[]` | — | Live palette provider for studio consumers. |
-| `color` | `string` | — | Literal or CSS token used to derive a warm two-stop palette. |
-| `colorResolver` | `ColorResolver` | — | Resolver used when a consumer supplies tokenized color. |
-| `seed` | `string` | `""` | Identity for the generated spectrum. |
-| `freeze` | `boolean` | `false` | Paint a deterministic static state (the capture lever). |
+1. **Motion is a theorem.** The paint is the transform of a fixed spectrum.
+2. **Touch means TIME.** The pointer scrubs and flicks the clock. The figure never
+   translates, leans, or chases.
+3. **One axis, no ceiling.** `harmonics` truncates a fixed, amplitude-ordered,
+   paint-floored array. `spectrum.length` is the maximum, and it is whatever the mint
+   emitted for that source.
+4. **The ink is the palette's own law.** An opaque mark over an opaque ink one ramp step
+   down, offset along the segment's own tangent. Light-led head, never a white specular.
 
-The `variant`/`clock` props and the retired `intensity` override
-(0-setter dead config, REDUCTION W1) are not part of the public surface. Author visual
-bundles through `FourierFieldConfig`; its `speed`, `harmonics`, `showEpicycles`,
-`intensity`, and related fields own runtime behavior.
+## The mint
 
-## Math surface
+`mintSpectrum` runs once per source or seed: forward DFT → hoist the DC term as the fit
+anchor → sort by amplitude → keep a term only if it moves the curve by at least half a
+device pixel at the reference stage. Amplitude order is what makes the assembly claim
+true — every step of the N axis adds the largest remaining correction. The fit is fixed
+under N, so the figure never rescales while you drag.
 
-The package exports `comp`, `positionsAt`, `partialSumAt`, `dftFromPoints`,
-`makeEllipticSpectrum`, `makeHarmonicFigure`, and the curated
-`FOURIER_FIGURES` catalogue. The same pure functions create the spectrum that
-both engines consume.
+`ringsAt` is the same question asked of the live stage: a ring is drawn only if its own
+diameter reaches the mark's stroke. Below that rung the term is still summed and still
+chained; only the outline elides. That is why the machine reads on a phone and in a cel
+with zero media queries.
 
-`partialSumAt(components, t, maxTerms?)` returns the endpoint of the truncated
-phasor sum. `positionsAt` returns the complete tip-to-tail chain. Neither
-function depends on a renderer or browser context.
+## WebGPU only
 
-## Rendering and lifecycle
+There is one renderer. Where WebGPU is absent the field reports the failure through
+`rendererStatus` and paints nothing — a blank stage you can ask about, never a lookalike
+drawn by a different machine.
 
-WebGPU uploads the phasor table, computes curve samples, and renders the ribbon.
-WebGL2 uses the equivalent scene configuration and CPU-owned spectrum. Both
-compose `createGpuSubstrate`, so resize, DPR, visibility parking, reduced motion,
-pause, disposal, and actual-engine status have one owner.
+## Accessibility
 
-Pointer motion feeds the shared velocity field. `freeze` and reduced motion
-produce a stable frame; they do not replace the renderer with a hidden alternate
-surface. Renderer initialization and setup failures are emitted through the
-component's `rendererStatus` event.
-
-```ts
-import {
-    FourierField,
-    DEFAULT_FOURIER_CONFIG,
-    makeEllipticSpectrum,
-    partialSumAt,
-} from "@mkbabb/glass-ui/fourier-field";
-```
+Interactive, the host is the transport: `role="slider"` over the loop parameter, with
+`aria-valuetext` carrying the same summed term count the frame used. Arrows scrub by 1/64,
+Up/Down by 1/8, Home/End to the ends, Space pauses. A decor mount (`:interactive="false"`)
+has no role, no tab stop and no listeners.

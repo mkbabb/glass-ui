@@ -8,7 +8,7 @@ a synthetic renderer or configuration schema.
 |---|---|---|
 | Aurora | `/aurora` | WebGPU preferred, supported WebGL2 path, explicit CSS-static mode |
 | Blob | `/blob` | WebGPU preferred, supported WebGL2 path |
-| FourierField | `/fourier-field` | WebGPU compute/render, supported WebGL2 path |
+| FourierField | `/fourier-field` | WebGPU compute/render only — ~~supported WebGL2 path~~ [struck 2026-08-10, BK #53] |
 | Constellation | `/constellation` | Canvas2D |
 
 ## Shared ownership
@@ -56,9 +56,12 @@ press surface. One clamped `morphT` value owns its flat-to-dressed surface axis.
 ### FourierField
 
 FourierField owns CPU-minted coefficients and pure Fourier helpers. The live
-renderer is WebGPU compute/render with a supported WebGL2 implementation. The
-retired Canvas2D, `variant`, and injected `clock` descriptions are not part of
-the current API.
+renderer is WebGPU compute/render, and it is the ONLY one: ~~with a supported
+WebGL2 implementation~~ [struck 2026-08-10, BK #53 — the WebGL2 twin was a second
+paint law for a component whose whole claim is that what you see is the
+transform. Where WebGPU is absent the field reports the failure through
+`rendererStatus` and paints nothing]. The retired Canvas2D, `variant`, and
+injected `clock` descriptions are not part of the current API.
 
 ### Constellation
 

@@ -1,185 +1,161 @@
-// FourierField module constants shared by the SFC, composables, and both GPU shaders.
+// The fourier-field register: the author schema plus the constants the paint law is
+// written in. Every number here is used by something that paints; nothing is a ceiling.
 //
-// THE WARM-IDENTITY FENCE (load-bearing). `DEFAULT_FOURIER_CONFIG.palette` is the
-// neutral warm-cream library identity (the `--viz-fourier` warm-amber family, resolved
-// via the ColorResolver). A demo-local Teal, cool preset lives in
-// `demo/stories/substrates/presets.ts`; it never enters a library token.
+// THE FOUR LAWS this module serves:
+//   1. Motion is a theorem   — the paint is the truncated inverse DFT of a fixed spectrum.
+//   2. Touch means TIME      — the pointer scrubs and flicks the one clock, never the space.
+//   3. One axis, no ceiling  — N truncates a paint-floored array; there is no MAX.
+//   4. The ink is the palette's own law — warm paper, opaque mark, light-led pen.
 
 import type { OklchStop } from "../../composables/color";
+import type { FOURIER_FIGURES } from "./math";
 
-/**
- * Curve-sampling resolution for the stable view-fit bbox pass — the renderer samples the
- * epicycle curve this many times once at mount to size it to the canvas with a fixed
- * margin (so the curve never clips and the scale is constant across the run). 720 = one
- * sample per half-degree of the unit period.
- */
-export const FOURIER_FIT_SAMPLES = 720;
-
-/**
- * The phasor-table uniform ceiling — the WGSL `MAX_PHASORS` #define. The configurator's
- * harmonic count maxes here; a >64-term custom trace books a storage-buffer widen (cheap —
- * the flow-field already uses a storage buffer). The curated ℱ/heart/star set + the
- * generated elliptic spectrum all sit under it.
- */
-export const MAX_PHASORS = 64;
-
-/**
- * The comet-curve sample ceiling — the storage-buffer array bound. The compute pass
- * writes the partial-sum curve point at `M` samples back along the period from the head;
- * the render pass reads them as the comet polyline. 384 gives a smooth bold stroke.
- */
-export const MAX_CURVE_SAMPLES = 384;
-
-/** The palette-stop ceiling — the WGSL `MAX_FOURIER_STOPS` #define. */
+/** The palette-stop ceiling — the WGSL `MAX_FOURIER_STOPS` binding size. */
 export const MAX_FOURIER_STOPS = 4;
 
 /**
- * The cursor-velocity → head_t clock-coupling gain. Cursor motion (not absolute X)
- * nudges the loop clock: a flick fast-
- * forwards, a still cursor lets the field drift at its config speed. Velocity-continuous —
- * the head never teleports (an absolute-X `headT = pointerX` scrub reads as "not
- * following" a 2-D cursor).
+ * The CPU-resolved OKLab ramp resolution. The palette is sampled into this many entries
+ * once per palette change and uploaded as a table, so the shader never runs an OKLab
+ * conversion per fragment and the ink, the mark and the head all read ONE ramp.
  */
-export const SCRUB_GAIN = 0.15;
-
-// The centroid does NOT teleport (no lunging its whole centroid two-thirds of the
-// frame toward the cursor). The subtle centroid LEAN + the directional DRAW-BIAS are the shared PURE
-// `fourierLeanMapping` (`composables/motion/pointer/pointerFieldMappings.ts`, FOLLOW_LEAN ≈ 0.15,
-// engagement-scaled): the curve "gracefully draws TOWARD" the cursor WITHOUT translating the
-// figure. The velocity SCRUB (`SCRUB_GAIN`, the WHEN-on-the-curve nudge) is orthogonal + preserved.
-
-// ── Thick luminous ribbon stroke register ─────────────────────
-/**
- * The comet ribbon's TAIL width as a fraction of the head width (the head→tail taper). At the
- * head (age 1) the stroke is the full `trailWidth`; at the tail (age 0) it is `RIBBON_TAIL_FRAC`
- * of it. The taper is `f(age) = RIBBON_TAIL_FRAC + (1 − RIBBON_TAIL_FRAC)·age` (LINEAR, so the
- * age-0.5 MID-BODY is `RIBBON_TAIL_FRAC + (1 − RIBBON_TAIL_FRAC)·0.5` of the head). Declared
- * ONCE here + MIRRORED verbatim as the `RIBBON_TAIL_FRAC` const in BOTH shaders (the GLSL twin
- * cannot import a TS constant); keep the three copies equal so the
- * mid-body floor below can never drift off the taper.
- */
-export const RIBBON_TAIL_FRAC = 0.4;
-/** The mid-body taper fraction (age 0.5) — the width the {@link RIBBON_HEAD_FLOOR_PX} floor targets. */
-export const RIBBON_MID_TAPER_FRAC = RIBBON_TAIL_FRAC + (1 - RIBBON_TAIL_FRAC) * 0.5; // 0.7
-/**
- * The MID-BODY minimum in CSS px (the B1 "≥2.5px CSS mid-body at every DPR, never a 1px
- * hairline polyline" bar). The width is DPR-independent by construction (converted to model
- * via `canvasCssMin` = backing ÷ dpr), so a CSS-px floor holds at every DPR.
- */
-export const RIBBON_MID_FLOOR_PX = 2.5;
-/**
- * The HEAD-width floor in CSS px (the `trailWidth` clamp in `trailWidthToModel`). Sized so the
- * mid-body (head × {@link RIBBON_MID_TAPER_FRAC}) clears {@link RIBBON_MID_FLOOR_PX} — even a
- * consumer setting `trailWidth: 1` gets a ≥2.5px mid-body. A hair over the exact quotient for
- * float safety.
- */
-export const RIBBON_HEAD_FLOOR_PX = RIBBON_MID_FLOOR_PX / RIBBON_MID_TAPER_FRAC + 0.05; // ≈3.62
+export const FOURIER_LUT_SIZE = 16;
 
 /**
- * The degenerate-tangent guard ( §2b). At a cusp the head's instantaneous
- * speed `s = length(head − headBack)` collapses to ~0 and the unit tangent `T = d/s` blows
- * up; below `FOURIER_TANGENT_EPS` the shaders + the GL CPU bead path all fall back to the
- * LAST stable tangent, so `s→0` resolves IDENTICALLY across both engines (the cross-engine
- * cusp-parity fence — one shared constant, no per-engine drift).
+ * The tail chroma floor. A ramp that lets chroma fall to zero paints a grey smear at the
+ * trail's end — the blob disease. Every LUT entry is floored here.
+ */
+export const FOURIER_TAIL_CHROMA_FLOOR = 0.1;
+
+/**
+ * THE INK STEP. The ink is the mark's own ramp head taken one step DOWN in lightness and
+ * then gamut-mapped at fixed L and hue, so it is a real pigment rather than a wash. This
+ * is the module's own ramp step, and it is what solves mark:ink into the [1.5, 3.0]:1
+ * band in BOTH schemes at once.
+ */
+export const FOURIER_INK_DELTA_L = 0.22;
+
+/**
+ * THE HEAD LIFT. The comet head's core is the ramp head lifted by half the ink step, with
+ * chroma preserved. The head is light-led and stays in the palette family — it is never a
+ * white specular, which reads as trite and shiny and belongs to no rung.
+ */
+export const FOURIER_HEAD_DELTA_L = 0.11;
+
+/**
+ * The chain's hue sweep, in radians, ridden symmetrically about the palette hue. Measured
+ * swept range 10.3°–50.5° off a warm anchor, which is why the chain cannot reach
+ * chartreuse by construction rather than by a clamp.
+ */
+export const FOURIER_CHAIN_HUE_SWEEP = 0.35;
+
+/** The scaffold stroke as a fraction of the mark stroke — the chain is a rung below the curve. */
+export const FOURIER_SCAFFOLD_STROKE_FRAC = 0.4;
+
+/** The three mark-stroke rungs in CSS px. Three rungs, three visibly distinct pictures. */
+export const FOURIER_STROKE_RUNGS = [4, 8, 12] as const;
+
+/**
+ * The flick's advance cap in turns. A full flick advances the clock by at most half a
+ * figure (`|∫flick| = v/ω² ≤ FOURIER_FLICK_TURNS`), so the machine stays checkable: the
+ * reader can always see where the head went.
+ */
+export const FOURIER_FLICK_TURNS = 0.5;
+
+/** The cursor-velocity → clock-rate scrub gain (turns per second per unit pointer velocity). */
+export const FOURIER_SCRUB_GAIN = 0.15;
+
+/** Base forward period for one full traversal at 1× speed, in seconds. */
+export const FOURIER_PERIOD_S = 16;
+
+/** The keyboard scrub quanta in turns: fine (←/→) and coarse (↑/↓). */
+export const FOURIER_QUANTUM_FINE = 1 / 64;
+export const FOURIER_QUANTUM_COARSE = 1 / 8;
+
+/**
+ * The device-pixel-ratio cap. Consumed locally: the curve is a thin stroke over mostly
+ * empty stage, so it is worth resolving sharply, and 2× is where the sharpness stops
+ * being visible and starts being fill rate.
+ */
+export const FOURIER_DPR_CAP = 2;
+
+/** The number of curve samples the comet body is built from. */
+export const FOURIER_CURVE_SAMPLES = 384;
+
+/**
+ * The degenerate-tangent guard. At a cusp the head's instantaneous speed collapses and
+ * the unit tangent blows up; below this the shader falls back to the last stable tangent.
  */
 export const FOURIER_TANGENT_EPS = 1e-4;
 
-/**
- * The head squash-and-stretch gain ( §2b). The round head bead becomes a
- * volume-preserving anisotropic ellipse: the tangent extent scales `1 + k·ŝ`, the normal
- * extent `1/(1 + k·ŝ)`, where `ŝ` is the normalized head speed. The library identity carries
- * a SMALL non-zero gain (cartoon-weight at rest — the head is never a dead disc); a consumer
- * vivid preset turns it to 11. `0` = the byte-frozen round disc.
- */
-export const FOURIER_SQUASH_GAIN = 0.55;
-
-/**
- * The cartoon cel-shadow gain ( §3b). Each chain ring/arm/dot + the comet
- * rope paints a second darker copy OFFSET opposite its travel — the 1940s technicolor ink.
- * The library identity carries a SMALL non-zero gain (a quiet weight under the chain); a
- * consumer vivid preset floors it UP. `0` = no cel pass (byte-frozen). The offset rides the
- * head tangent, mirrored on both engines off the SAME `curveSamples` tangent.
- */
-export const FOURIER_CEL_GAIN = 0.35;
+/** The spectrum source: the seeded generator, or a curated closed figure by key. */
+export type FourierSource = "elliptic" | keyof typeof FOURIER_FIGURES;
 
 /**
  * The full author schema — the studio's `useConfiguratorState` model. Every field is a
- * tunable the demo configurator drives; the composable resolves it into the uniform table.
+ * tunable a control drives, and every one of them changes the picture.
  */
 export interface FourierFieldConfig {
-    /** The active phasor spectrum source key — `"elliptic"` (generated) or a curated shape key. */
-    source: string;
-    /** TRUNCATE the partial sum — the harmonic count N (1..min(spectrum.length, MAX_PHASORS)). */
+    /** The spectrum source. An unknown key throws at config time rather than painting a default. */
+    source: FourierSource;
+    /**
+     * The partial-sum term count N. Its live domain is `[1, spectrum.length]`, where the
+     * length is what the mint emitted — there is no constant maximum anywhere.
+     */
     harmonics: number;
-    /** Draw the rotating epicycle chain (orthogonal to N). */
-    showEpicycles: boolean;
-    /** How many chain arms to draw (1..N; ≤ the harmonic count). */
-    epicycleArms: number;
-    /** Paint the chain as a warm-anchored hue sweep vs one analogous hue. */
+    /** Draw the machine: the rings, the arms and the joint dots. */
+    showMachine: boolean;
+    /** Sweep the chain's hue about the palette anchor rather than painting one hue. */
     rainbowChain: boolean;
-    /** Comet-body length as a fraction of the period (0.15..1.0). */
+    /** Comet-body length as a fraction of the period (0.15..1). */
     trailArc: number;
-    /** Comet stroke weight in CSS px (1..6). */
-    trailWidth: number;
-    /** Outer loudness envelope (per-layer alpha multiply, 0..2). */
+    /** The mark stroke in CSS px — one of {@link FOURIER_STROKE_RUNGS}. */
+    markStroke: number;
+    /**
+     * The ink's offset from its mark, in stroke widths, taken along this segment's own
+     * tangent and opposite the travel. Below ½ the ink hides under its mark; above 1 it
+     * detaches and reads as a second line.
+     */
+    inkOffset: number;
+    /** The head's squash-and-stretch gain (0..1). 0 is a dead round disc. */
+    squash: number;
+    /** The head halo's strength (0..0.3). */
+    glow: number;
+    /** Outer loudness envelope (0..2). Above 1 the pack clamps, and the row says so. */
     intensity: number;
-    /** Character of the generated elliptic spectrum (0.05..0.4 — smooth ellipse → crinkled). */
-    harmonicScale: number;
-    /** Clock speed multiplier (0.25/0.5/1/2). */
+    /** Character of the GENERATED spectrum (0..1). Inert for a curated source. */
+    richness: number;
+    /** Clock speed multiplier. */
     speed: number;
-    /** The curve-color ramp (the library viz palette; warm default). Resolved via the ColorResolver. */
+    /** The curve-color ramp. */
     palette: OklchStop[];
-    /** ONE static frame then park under `prefers-reduced-motion: reduce`. */
+    /** One static frame then park under `prefers-reduced-motion: reduce`. */
     respectReducedMotion: boolean;
-    /** Pointer scrubs `head_t` + a flick injects clock momentum (the consume). */
-    interactive: boolean;
-    /**
-     * Head squash-and-stretch gain ( §2b). The head bead stretches along the
-     * curve tangent on straights, squashes across it on corners (volume-preserving). The
-     * library identity carries a small non-zero default (cartoon-weight at rest); a vivid
-     * consumer preset turns it to 11. 0 = the byte-frozen round disc.
-     */
-    squashGain: number;
-    /**
-     * Cartoon cel-shadow gain ( §3b). A second darker copy of the chain + rope,
-     * offset opposite the head travel (the technicolor ink). The library identity carries a
-     * small non-zero default; a vivid consumer preset floors it UP. 0 = no cel pass.
-     */
-    celGain: number;
 }
 
 /**
- * The warm-cream identity palette (the library default — NOT teal). A two-stop warm-amber
- * ramp over the warm-cream foreground family, resolved via the ColorResolver. The chain's
- * rainbow sweep is warm-anchored over THIS base; a consumer (the demo) themes it through a
- * preset, never a token edit.
+ * The warm-cream identity ramp — the pre-mount placeholder only. The shipped default
+ * resolves `--viz-fourier` through the cascade at mount and on every dark flip; this pair
+ * exists so the first frame is not colourless while that resolve is pending.
  */
-export const WARM_IDENTITY_PALETTE: OklchStop[] = [
-    // a warm amber comet core (the --viz-fourier family)
+const PLACEHOLDER_PALETTE: OklchStop[] = [
     { L: 0.62, C: 0.19, h: 34 },
-    // a soft warm cream at the trail tail
     { L: 0.86, C: 0.06, h: 70 },
 ];
 
-/** The shipped warm-identity default config. */
+/** The shipped default config. */
 export const DEFAULT_FOURIER_CONFIG: FourierFieldConfig = {
     source: "elliptic",
     harmonics: 6,
-    showEpicycles: true,
-    epicycleArms: 6,
+    showMachine: true,
     rainbowChain: true,
     trailArc: 0.43,
-    //  B1 — a THICK luminous ribbon head. The head→tail taper
-    // (RIBBON_TAIL_FRAC) + the RIBBON_HEAD_FLOOR_PX floor keep the mid-body ≥2.5px CSS.
-    trailWidth: 5,
+    markStroke: 8,
+    inkOffset: 0.7,
+    squash: 0.55,
+    glow: 0.14,
     intensity: 1,
-    harmonicScale: 0.24,
+    richness: 0.5,
     speed: 1,
-    palette: WARM_IDENTITY_PALETTE,
+    palette: PLACEHOLDER_PALETTE,
     respectReducedMotion: true,
-    interactive: true,
-    // The library identity carries cartoon-weight at rest ( §2b/§3b — a
-    // SMALL non-zero squash + cel; the vivid lift is a consumer preset turning these to 11).
-    squashGain: FOURIER_SQUASH_GAIN,
-    celGain: FOURIER_CEL_GAIN,
 };
