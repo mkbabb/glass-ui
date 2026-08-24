@@ -21,14 +21,26 @@
 //            render → mean ≈ 0 → RED. The per-preset hue/chroma parity is W10/W11;
 //            W00 owns ONLY the non-black floor.
 //   BLOB   — BLOB_CONFIG_DEFAULTS: the LOOSE non-flood COVERAGE band 0.10–0.70, read
-//            DIFFERENTIALLY. The verdict is the fraction of interior pixels where the
+//            DIFFERENTIALLY. The verdict is the fraction of sampled pixels where the
 //            live composite differs from the SAME region captured with the canvas
 //            hidden — i.e. the canvas's OWN contribution, with the story's ground
 //            subtracted rather than guessed at. Measured on this device: 0.166 live,
-//            0.000 with the canvas dropped from the composite. Catches the blank (→0)
-//            at MIN and the flood at MAX. The metric is NOT W08 blob-render.spec.ts's
-//            composite-vs-modal-colour coverage, so no subset relation is claimed
-//            between the two bands — the numbers are not commensurable.
+//            0.000 with the canvas dropped from the composite. The metric is NOT W08
+//            blob-render.spec.ts's composite-vs-modal-colour coverage, so no subset
+//            relation is claimed between the two bands — the numbers are not
+//            commensurable.
+//
+//            THE TWO BOUNDS READ DIFFERENT REGIONS, and that is the point (#50 γ3).
+//            · MIN asks "did the canvas paint ANYTHING", so it reads the WHOLE interior
+//              inset box — the region its measured 0.166 / 0.000 pair was taken on.
+//            · MAX asks "did a transparent MARGIN survive", and a margin that is really
+//              the studio stage card's own `overflow-hidden` clip is not the blob's. The
+//              canvas is 160% of its wrapper and the stage clips it, so part of the
+//              readback box shows the page BEHIND the stage — pixels where the canvas
+//              cannot paint at all, identical in the live and baseline reads by
+//              construction, and therefore pure DILUTION of any coverage fraction. MAX
+//              reads the interior INTERSECTED with the canvas's unclipped rect: the
+//              pixels the canvas is actually allowed to paint into.
 //
 // keyframes I-1/I-2 instrument design: the SCENES + preset keys are re-sourced from
 // the manifest (pi-manifest.ts), and each readback is a NAMED-REGION baseline
@@ -65,6 +77,24 @@ import { PI_TARGETS, sourcePresetKeys } from "./pi-manifest.ts";
 //   canvas contributing no pixels — the blank/dead-context class the coverage
 //   floor's lower bound owns. The shader plant is NOT used here: it was measured
 //   NOT to bite the coverage metric, so the honest bite is the one that does.
+// BLOB CEILING — the SECOND blob plant (#50 γ3), because until it existed the
+//   non-flood ceil had never been SEEN to fail and was therefore theatre by this
+//   file's own standard. The canvas is given an OPAQUE background, so every pixel it
+//   is allowed to paint contributes to the composite and no transparent margin
+//   survives — which is exactly the flood class, expressed at the compositor rather
+//   than in the shader. Two alternatives were considered and rejected:
+//     · a SHADER flood (the black-aurora idiom) would mutate `src/components/blob`'s
+//       WebGL2 arm — a path #50 W1 deletes entire, so the plant would be born with a
+//       death date one wave away;
+//     · driving the studio configurator to a flooding radius would make the plant
+//       depend on the physics admitting a flood at all — and #50 W3's energy ceiling
+//       exists precisely to forbid one, so the plant could stop biting for the RIGHT
+//       reason and read as a hollow gate.
+//   The background plant is honest for what this readback MEASURES: the metric is the
+//   canvas element's own contribution to the composite, and an opaque background is
+//   that contribution at full coverage. `grabBlobBaseline` hides the canvas with
+//   `opacity: 0`, which hides the background with it, so the baseline stays the true
+//   ground and the differential is the flood.
 //
 //   That plant did not bite either while the floor measured the composite against its
 //   own MODAL COLOUR. The canvas box is 160% of the wrapper and composites the whole
@@ -76,9 +106,18 @@ import { PI_TARGETS, sourcePresetKeys } from "./pi-manifest.ts";
 //   canvas hidden, and coverage is measured live-vs-that-baseline. The plant then
 //   pins the live frames ONTO the baseline (its hide outlives the baseline helper's)
 //   and the differential collapses to 0.000 — a real, measured bite.
-type Plant = "black-aurora" | "blob-blank";
+type Plant = "black-aurora" | "blob-blank" | "blob-flood";
 const PI_PLANT = process.env.PI_PLANT ?? "";
-const planted = (kind: Plant): boolean => PI_PLANT === kind || PI_PLANT === "all";
+
+// `all` drives the two ARM-COMPATIBLE plants, one per floor. `blob-flood` is
+// deliberately OUTSIDE it: it and `blob-blank` are mutually exclusive mutations of the
+// SAME element — one hides the canvas, one paints it opaque — and `opacity: 0` wins
+// over a background, so folding the flood into `all` would silently retire the blank
+// bite AND leave the ceiling untested. The flood arm gets its own invocation
+// (`gate:pixel-floor:planted:flood`), and `pi-gate-verify.mjs --plant=` is told which
+// plant ran so it can pin the assertion that had to bite.
+const planted = (kind: Plant): boolean =>
+    PI_PLANT === kind || (PI_PLANT === "all" && kind !== "blob-flood");
 
 /** AURORA: force every fragment shader to opaque black. Must precede `goto`. */
 async function plantBlackAurora(page: Page): Promise<void> {
@@ -113,6 +152,113 @@ async function plantBlankBlob(page: Page): Promise<void> {
         content: "canvas.goo-blob-canvas { opacity: 0 !important; }",
     });
     console.log("PLANT blob-blank: canvas dropped from the composite");
+}
+
+// MAGENTA, not a neutral: the differential threshold is |ΔR|+|ΔG|+|ΔB| > 40, and
+// `#ff00ff` scores ≥ 255 against EVERY grey (510 − g) and against both the light and
+// dark card grounds this story paints on. A plant colour that could coincide with the
+// ground somewhere would under-report its own flood.
+const FLOOD_PLANT_COLOR = "#ff00ff";
+
+/** BLOB CEILING: every paintable pixel of the canvas contributes — the flood class. */
+async function plantFloodBlob(page: Page): Promise<void> {
+    if (!planted("blob-flood")) return;
+    await page.addStyleTag({
+        content: `canvas[data-testid="goo-blob-canvas"] { background: ${FLOOD_PLANT_COLOR} !important; }`,
+    });
+    console.log(
+        `PLANT blob-flood: canvas background forced to ${FLOOD_PLANT_COLOR} — no transparent margin survives`,
+    );
+}
+
+// ── the readback REGION (#50 γ3) ─────────────────────────────────────────────
+//
+// A region is expressed in FRACTIONS of the readback box, never in pixels: the box is
+// a composited element screenshot at the device scale factor, so fractions survive both
+// the DPR and any layout move, and a rect measured in CSS pixels maps onto the decoded
+// PNG without carrying a scale term.
+interface Region {
+    x0: number;
+    y0: number;
+    x1: number;
+    y1: number;
+}
+
+const insetRegion = (inset: number): Region => ({
+    x0: inset,
+    y0: inset,
+    x1: 1 - inset,
+    y1: 1 - inset,
+});
+
+const intersectRegion = (a: Region, b: Region): Region => ({
+    x0: Math.max(a.x0, b.x0),
+    y0: Math.max(a.y0, b.y0),
+    x1: Math.min(a.x1, b.x1),
+    y1: Math.min(a.y1, b.y1),
+});
+
+const regionArea = (r: Region): number =>
+    Math.max(0, r.x1 - r.x0) * Math.max(0, r.y1 - r.y0);
+
+/**
+ * The sub-rect of the canvas's readback box that the canvas is actually ALLOWED to
+ * paint into — its bounding box intersected with every clipping ancestor.
+ *
+ * This is a PAINT fact, read from layout, and it is why the ceiling can bite at all.
+ * The studio stage card is `overflow-hidden` and the canvas is 160% of its wrapper, so
+ * the canvas overflows the card and the compositor discards the overflow. An element
+ * screenshot still captures the whole bounding box, and outside the clip it captures
+ * whatever the PAGE paints there — pixels the canvas cannot touch, identical in the
+ * live and baseline reads, and therefore incapable of ever registering as coverage. A
+ * ceiling measured over them is measuring a margin the stage owns, not one the blob
+ * left.
+ *
+ * The ROOT element is excluded from the walk by design: its overflow propagates to the
+ * viewport (it is a scroll port, not a paint clip) and Playwright captures an element
+ * screenshot beyond the viewport, so folding it in would subtract pixels the readback
+ * really does contain.
+ *
+ * Rect intersection is a rectangular approximation of a possibly ROUNDED clip — the
+ * corner nibble a `rounded-card` takes is a handful of pixels and is not modelled. It
+ * can only make the region slightly OPTIMISTIC, i.e. dilute the ceiling a hair, never
+ * fabricate coverage.
+ *
+ * Read AFTER `scrollIntoViewIfNeeded`, at the same scroll position the screenshot is
+ * taken at, or the intersection describes a different frame than the pixels do.
+ */
+async function unclippedRegion(canvas: Locator): Promise<Region> {
+    return canvas.evaluate((el) => {
+        const box = el.getBoundingClientRect();
+        let left = box.left;
+        let top = box.top;
+        let right = box.right;
+        let bottom = box.bottom;
+        for (
+            let p = el.parentElement;
+            p && p !== document.documentElement;
+            p = p.parentElement
+        ) {
+            const cs = getComputedStyle(p);
+            const clips =
+                cs.overflowX !== "visible" ||
+                cs.overflowY !== "visible" ||
+                cs.clipPath !== "none" ||
+                cs.contain.split(/\s+/).includes("paint");
+            if (!clips) continue;
+            const pr = p.getBoundingClientRect();
+            left = Math.max(left, pr.left);
+            top = Math.max(top, pr.top);
+            right = Math.min(right, pr.right);
+            bottom = Math.min(bottom, pr.bottom);
+        }
+        return {
+            x0: (left - box.left) / box.width,
+            y0: (top - box.top) / box.height,
+            x1: (right - box.left) / box.width,
+            y1: (bottom - box.top) / box.height,
+        };
+    });
 }
 
 /**
@@ -159,12 +305,7 @@ async function grabBlobBaseline(page: Page, canvas: Locator): Promise<PNG> {
     while (Date.now() < deadline) {
         await page.waitForTimeout(300);
         const next = await grab(canvas);
-        motion = interiorCoverageDiff(
-            next,
-            previous,
-            BLOB_INTERIOR_INSET,
-            COLOR_DIFF_THRESHOLD,
-        );
+        motion = coverageDiff(next, previous, BLOB_INTERIOR, COLOR_DIFF_THRESHOLD);
         previous = next;
         if (motion <= BLOB_GROUND_QUIET_EPSILON) {
             quiet = next;
@@ -296,15 +437,23 @@ async function assertLiveWebGLPath(page: Page, canvas: Locator): Promise<void> {
 const AURORA_INTERIOR_INSET = 0.2; // sample the central 60% box (avoid edge fade)
 const AURORA_MEAN_CHANNEL_FLOOR = 8; // interior MEAN max(R,G,B); real ≈237, planted-black ≈0.3
 const BLOB_INTERIOR_INSET = 0.12; // exclude the outer rounded-corner band from coverage
+const BLOB_INTERIOR = insetRegion(BLOB_INTERIOR_INSET);
 // The DIFFERENTIAL band (live composite vs the canvas-hidden baseline). MEASURED on
 // this device, both arms: live 0.166, canvas dropped 0.000 — so 0.1 sits between the
 // two states with the green read 1.66× above it, and the floor is kept where it was
 // rather than widened. (Under the OLD composite-vs-modal-colour measure the same
 // dropped canvas read 0.195 and PASSED this same MIN; the separation is the metric's,
-// not the constant's.) The ceil is unchanged and NOT exercised by the blank plant —
-// the flood class is W08 blob-render.spec.ts's, on its own metric.
-const BLOB_COVERAGE_MIN = 0.1; // W00 LOOSE floor: green 0.166 / blank 0.000
-const BLOB_COVERAGE_MAX = 0.7; // W00 LOOSE ceil (the flood side; W08 narrows to 0.55)
+// not the constant's.)
+const BLOB_COVERAGE_MIN = 0.1; // W00 LOOSE floor: green 0.166 / blank 0.000, WHOLE interior
+// The ceil is NOT retuned by #50 γ3 — 0.7 stands exactly where W00 put it. What γ3
+// gives it is a plant it can be SEEN to fail against (`blob-flood`) and its own
+// PAINTABLE region: the interior intersected with the canvas's unclipped rect, so the
+// ceiling scores a flood at the share of pixels the canvas could actually reach rather
+// than diluting it with the stage card's clip. The two blob bounds therefore read the
+// same frames over different denominators, and both are logged. (W08
+// blob-render.spec.ts narrows the flood side to 0.55 on ITS own metric; still no subset
+// relation is claimed — the numbers remain non-commensurable.)
+const BLOB_COVERAGE_MAX = 0.7; // W00 LOOSE ceil, over the PAINTABLE interior
 const BLOB_FRAMES = 6; // read back N frames; verdict over the peak
 const ANTI_FLAKE_RUNS = 3; // 3-run named-region baseline (median verdict)
 const COLOR_DIFF_THRESHOLD = 40; // |ΔR|+|ΔG|+|ΔB| live-vs-baseline = "the canvas painted here"
@@ -357,7 +506,7 @@ function interiorMeanChannel(png: PNG, inset: number): number {
 }
 
 /**
- * DIFFERENTIAL coverage = fraction of INTERIOR-INSET pixels where the LIVE composite
+ * DIFFERENTIAL coverage = fraction of pixels IN `region` where the LIVE composite
  * differs from the CANVAS-HIDDEN baseline by a perceptual threshold. That difference
  * is, by construction, the canvas's OWN contribution to the composite: everything
  * else in the region is identical between the two reads.
@@ -373,10 +522,10 @@ function interiorMeanChannel(png: PNG, inset: number): number {
  * mismatch means the region moved between reads and the difference is meaningless.
  * That hard-fails rather than resizing — a silent resize would fabricate coverage.
  */
-function interiorCoverageDiff(
+function coverageDiff(
     live: PNG,
     base: PNG,
-    inset: number,
+    region: Region,
     threshold: number,
 ): number {
     if (live.width !== base.width || live.height !== base.height) {
@@ -386,10 +535,10 @@ function interiorCoverageDiff(
     }
     const { width: w, height: h, data: L } = live;
     const B = base.data;
-    const x0 = Math.floor(w * inset);
-    const y0 = Math.floor(h * inset);
-    const x1 = Math.ceil(w * (1 - inset));
-    const y1 = Math.ceil(h * (1 - inset));
+    const x0 = Math.floor(w * region.x0);
+    const y0 = Math.floor(h * region.y0);
+    const x1 = Math.ceil(w * region.x1);
+    const y1 = Math.ceil(h * region.y1);
     let differ = 0;
     let total = 0;
     for (let y = y0; y < y1; y++) {
@@ -402,6 +551,11 @@ function interiorCoverageDiff(
             if (d > threshold) differ++;
             total++;
         }
+    }
+    if (total === 0) {
+        throw new Error(
+            `blob differential readback: the sample region [${region.x0},${region.y0}]-[${region.x1},${region.y1}] is EMPTY over a ${w}×${h} readback — a fraction over zero pixels is not a verdict. RED: never return a coverage nobody measured.`,
+        );
     }
     return differ / total;
 }
@@ -522,6 +676,23 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
         ).toBe("webgl2");
 
         await plantBlankBlob(page);
+        await plantFloodBlob(page);
+
+        // THE CEILING'S OWN REGION (#50 γ3), measured before any readback and at the
+        // scroll position the screenshots are taken at. `scrollIntoViewIfNeeded` is
+        // Playwright's own pre-screenshot act, done here explicitly so the rects and the
+        // pixels describe the same frame.
+        await blobCanvas.scrollIntoViewIfNeeded();
+        const paintable = await unclippedRegion(blobCanvas);
+        const ceilingRegion = intersectRegion(BLOB_INTERIOR, paintable);
+        const paintableShare = regionArea(ceilingRegion) / regionArea(BLOB_INTERIOR);
+        expect(
+            regionArea(ceilingRegion),
+            `the blob canvas has NO unclipped interior: its bounding box intersected with every clipping ancestor leaves [${paintable.x0.toFixed(3)},${paintable.y0.toFixed(3)}]-[${paintable.x1.toFixed(3)},${paintable.y1.toFixed(3)}], which misses the interior inset box entirely. The canvas is then wholly hidden behind the stage clip and NOTHING it paints can be read — RED, never a coverage over zero pixels.`,
+        ).toBeGreaterThan(0);
+        console.log(
+            `PI blob paintable=[${paintable.x0.toFixed(3)},${paintable.y0.toFixed(3)}]-[${paintable.x1.toFixed(3)},${paintable.y1.toFixed(3)}] paintableShareOfInterior=${paintableShare.toFixed(3)}`,
+        );
 
         // The BASELINE, taken ONCE and AFTER the plant: the composite with the canvas
         // hidden. Order is load-bearing — under `PI_PLANT` the plant's own permanent
@@ -530,36 +701,50 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
         // restores the canvas and the differential IS the droplet.
         const baseline = await grabBlobBaseline(page, blobCanvas);
 
-        // Read N frames per run; the verdict is the PEAK coverage (the droplet
+        // Read N frames per run; each verdict is the PEAK coverage (the droplet
         // breathes/orbits, so coverage oscillates — the peak is the most-filled
-        // frame, which must STILL leave a transparent margin).
-        const peaks: number[] = [];
+        // frame, which must STILL leave a transparent margin). ONE screenshot per
+        // frame, scored twice: the floor over the whole interior, the ceiling over the
+        // paintable sub-rect.
+        const floorPeaks: number[] = [];
+        const ceilPeaks: number[] = [];
         for (let run = 0; run < ANTI_FLAKE_RUNS; run++) {
-            let peak = 0;
+            let floorPeak = 0;
+            let ceilPeak = 0;
             for (let f = 0; f < BLOB_FRAMES; f++) {
-                const cov = interiorCoverageDiff(
-                    await grab(blobCanvas),
+                const frame = await grab(blobCanvas);
+                const whole = coverageDiff(
+                    frame,
                     baseline,
-                    BLOB_INTERIOR_INSET,
+                    BLOB_INTERIOR,
                     COLOR_DIFF_THRESHOLD,
                 );
-                if (cov > peak) peak = cov;
+                const painted = coverageDiff(
+                    frame,
+                    baseline,
+                    ceilingRegion,
+                    COLOR_DIFF_THRESHOLD,
+                );
+                if (whole > floorPeak) floorPeak = whole;
+                if (painted > ceilPeak) ceilPeak = painted;
                 await page.waitForTimeout(80);
             }
-            peaks.push(peak);
+            floorPeaks.push(floorPeak);
+            ceilPeaks.push(ceilPeak);
         }
-        const verdict = median(peaks);
+        const coverage = median(floorPeaks);
+        const paintedShare = median(ceilPeaks);
         console.log(
-            `PI blob coverage=${verdict.toFixed(3)} band=[${BLOB_COVERAGE_MIN},${BLOB_COVERAGE_MAX}]`,
+            `PI blob coverage=${coverage.toFixed(3)} floor=${BLOB_COVERAGE_MIN} · paintedShare=${paintedShare.toFixed(3)} ceil=${BLOB_COVERAGE_MAX}`,
         );
 
         expect(
-            verdict,
-            `blob coverage ${verdict.toFixed(3)} is below the non-blank floor ${BLOB_COVERAGE_MIN} — the blob did not paint (blank/black canvas)`,
+            coverage,
+            `blob coverage ${coverage.toFixed(3)} is below the non-blank floor ${BLOB_COVERAGE_MIN} — the blob did not paint (blank/black canvas)`,
         ).toBeGreaterThanOrEqual(BLOB_COVERAGE_MIN);
         expect(
-            verdict,
-            `blob coverage ${verdict.toFixed(3)} exceeds the non-flood ceil ${BLOB_COVERAGE_MAX} — the blob FLOODED the canvas (no transparent margin)`,
+            paintedShare,
+            `blob coverage ${paintedShare.toFixed(3)} of the PAINTABLE interior (${paintableShare.toFixed(3)} of the inset box; the rest is behind the stage card's clip) exceeds the non-flood ceil ${BLOB_COVERAGE_MAX} — the blob FLOODED the canvas (no transparent margin)`,
         ).toBeLessThanOrEqual(BLOB_COVERAGE_MAX);
     });
 });

@@ -16,6 +16,10 @@
 //   --expect=planted-red  the self-test bite: every required floor ran and FAILED.
 //                         A planted defect that does not RED means the floor is
 //                         hollow, so a PASS here is itself the gate failure.
+//   --plant=<kind>        which plant the run drove, so the bite can be pinned to the
+//                         assertion that plant actually mutates (default `all`). A
+//                         blob floor self-tested under `blob-flood` must RED on its
+//                         CEILING, not on the blank floor `all` bites.
 
 import { readFileSync } from "node:fs";
 
@@ -58,6 +62,23 @@ if (mode !== "green" && mode !== "planted-red") {
     process.exit(2);
 }
 
+// WHICH PLANT RAN. `all` is the spec's two arm-compatible plants (one per floor);
+// `blob-flood` is its own invocation because it and `blob-blank` are mutually exclusive
+// mutations of the same canvas (substrate-paints-color.spec.ts `planted()`). The
+// verifier must know: a floor can carry more than one plantable assertion, and crediting
+// the run to the wrong one is the same hollowness this file exists to refuse.
+const ALL_PLANTS = ["black-aurora", "blob-blank"];
+const KNOWN_PLANTS = [...ALL_PLANTS, "blob-flood"];
+const plantArg = (process.argv.find((a) => a.startsWith("--plant=")) ?? "").split("=")[1];
+const plant = plantArg ?? "all";
+if (plant !== "all" && !KNOWN_PLANTS.includes(plant)) {
+    console.error(
+        `pi-gate-verify: unknown plant '${plant}' (have: all, ${KNOWN_PLANTS.join(", ")})`,
+    );
+    process.exit(2);
+}
+const activePlants = plant === "all" ? ALL_PLANTS : [plant];
+
 const fail = (lines) => {
     console.error(`\npixel-floor gate: RED (--expect=${mode})\n`);
     for (const l of lines) console.error(`  · ${l}`);
@@ -90,11 +111,19 @@ function collectSpecs(node, out = []) {
 // the arm/readiness path may never resolve — `assertLiveWebGLPath` then fails, or the
 // run times out, and the verifier prints "the floors bite" having never seen the floor
 // assertion evaluate. Each required floor therefore pins the TEXT of its own failure.
+//
+// PER PLANT, not per floor (#50 γ3). The blob floor carries TWO plantable bounds — the
+// blank floor and the non-flood ceiling — and they fail on different sentences. Keying
+// the expected text by floor alone let a flood run be credited to the blank floor's
+// bite, which is the wrong-assertion class this map already refuses one level up.
 const FLOOR_BITE = {
-    "aurora paints a non-black interior on DEFAULT + every preset at t=1":
-        /painted a BLACK interior/,
-    "blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS":
-        /below the non-blank floor/,
+    "aurora paints a non-black interior on DEFAULT + every preset at t=1": {
+        "black-aurora": /painted a BLACK interior/,
+    },
+    "blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS": {
+        "blob-blank": /below the non-blank floor/,
+        "blob-flood": /exceeds the non-flood ceil/,
+    },
 };
 
 const specs = collectSpecs(report);
@@ -152,13 +181,19 @@ for (const title of REQUIRED) {
     }
     if (mode === "planted-red") {
         const msgs = results.map((r) => r.error?.message ?? "").join("\n");
-        if (!failed) {
+        const arms = FLOOR_BITE[title] ?? {};
+        const expected = activePlants.map((p) => arms[p]).filter(Boolean);
+        if (expected.length === 0) {
+            problems.push(
+                `required floor "${title}" has NO plant under --plant=${plant} — nothing in this run mutates it, so a "planted-red" verdict over it would be credited to a defect it never saw. Name a plant that bites it, or drop it from --floors.`,
+            );
+        } else if (!failed) {
             problems.push(
                 `PLANTED DEFECT DID NOT BITE: "${title}" reported ${statuses.join(", ")} with the defect planted. A floor that cannot be made to fail is theatre — this is the gate's own self-test failing.`,
             );
-        } else if (!FLOOR_BITE[title].test(msgs)) {
+        } else if (!expected.some((re) => re.test(msgs))) {
             problems.push(
-                `PLANTED DEFECT FAILED THE WRONG ASSERTION: "${title}" failed, but not on its floor (${FLOOR_BITE[title]}) — the harness broke, the floor did not bite. First error: ${msgs.split("\n")[0]}`,
+                `PLANTED DEFECT FAILED THE WRONG ASSERTION: "${title}" failed, but not on the bound --plant=${plant} mutates (${expected.join(" | ")}) — the harness broke, the floor did not bite. First error: ${msgs.split("\n")[0]}`,
             );
         }
     }
@@ -169,5 +204,5 @@ if (problems.length > 0) fail(problems);
 console.log(
     mode === "green"
         ? `pixel-floor gate: GREEN — ${REQUIRED.length} floors ran on the live paint path and passed.`
-        : `pixel-floor gate: GREEN (self-test) — ${REQUIRED.length} floors RED-ed on the planted defect; the floors bite.`,
+        : `pixel-floor gate: GREEN (self-test, --plant=${plant}) — ${REQUIRED.length} floors RED-ed on the planted defect, each on its own assertion; the floors bite.`,
 );
