@@ -121,13 +121,25 @@ Technicolor default; warm-cream ships as the named Calm preset (RATIFICATION R-5
 
 | gate | GREEN | RED at HEAD | mutation that bites |
 |---|---|---|---|
-| G-NO-ENGINE-BRANCH arm (b) — W1 | `rg -ci 'webgl2\|\.glsl\|setupGL\|buildMetaballProgram' src/components/blob` → **0** | 72 register hits / 11 files | restore one `.glsl.ts` import |
+| G-NO-ENGINE-BRANCH arm (b) — W1 | `rg -ci 'webgl2\|\.glsl\|setupGL\|buildMetaballProgram' src/components/blob` → **0** | ~~72 register hits / 11 files~~ **53 matching lines / 56 occurrences / 11 files** | restore one `.glsl.ts` import |
 | G-SEPARATION | drive 0.90, 300 s, 8 seeds: every seed ≥1 latched event (gap > 2k₀+r/2 held ≥250 ms), colony mean ≥4/min — field-measured on capture, CC-labelled, canvas-cropped | 0 events any config; max-separation still paints n=1 | drive 0.30 → threshold unmet → 0 events |
 | G-SAT-HAS-SURFACE | every node's effective SDF radius > 0 and every depth-1 node's far edge clears the parent skin by ≥k₀/2 in ≥94% of frames | −0.02375/−0.01250 on disk; `absorbed` zeroes opacity | re-add the ×0.3 inflation, or restore `absorbed` |
 | G-CHAOS | Benettin λ ≥ 0.25/s **every seed, undriven**, 300 s (measured min 0.8639); A/B contracting controls recorded in-run | λ≡0 — no state to diverge | swap the pump for a position tether → twin reaches bit-identity in 6 s (measured trace banked) |
 | G-FISSION-CAUSED+LATCHED | click at J\* raises the 10 s event count ≥2× baseline; no latch without gap > 2k₀+r/2; re-latch requires release below 2k₀ | `fissionAmp` unreachable; the engine has never painted a split | drop the hysteresis → chatter inflates the count, the ≥2× ratio collapses |
 | G-SHADOW-ANALYTIC | analytic per-body cast, O(bodies), zero march loops in WGSL; shadow components = field components ±0 in ≥95% of sampled frames (free beads cast separately) | 24-step `softShadow2D` on disk; clause unevaluable at HEAD (no free beads) — the born-GREEN cure | clamp the cast to the body SDF → free beads lose their shadows |
 | G-SETTLED-ONE-SIGNAL | `settled` is the closed-form predicate + 1 s dwell and nothing else (`rg -c 'phase ==='` → 0); true within 5.2 s of quench on 8/8 seeds, 0 flap; **never true while any gap > 2k₀** | `isQuiescent()` phase test reads quiescent mid-sweep | restore any phase or KE-magnitude test → the never-true-while-separated clause fails |
+
+[2026-08-10 · BK #50 W0, lane γ unit 3 — two corrections to row 1, made in place because the
+excise wave reads this table as its acceptance condition. (i) The **72** was struck: the spec's own
+detector yields **53 matching lines / 56 occurrences / 11 files**, identical at the tree this spec
+was written against (`32999753`) and at HEAD — the file count was always exact, the hit count was
+never 53's value at any tree, so nothing drifted and no figure is frozen downstream; the wired
+executable (`tests/components/custom/blob/gl-excise.test.ts`) reads the tree instead. (ii) The **arm
+letter collides**: G-NO-ENGINE-BRANCH already carries an arm (b) — the engine-class-proxy arm
+discharged at `paper.css:93` (row #22). This row is the blob REGISTER arm; it takes no letter, mints
+no seat, and the receipt stays `seats:60 … violations:0`. Also recorded from the scratch-copy run:
+the W1 delete list takes the register **53 → 41, not → 0** — 8 files of residue, 38 of its 41 lines
+prose, the 3 live-code lines all in `composables/useMetaballRenderer.ts`.]
 
 **Acceptance rows (declared, not seats):** G-BOUNDED max (|p|+r)·POS_SCALE ≤ 0.500 uv at the 10-body depth-2 tree (measured 0.4585) · G-DEPTH-BOUND loud clamp at 2 · G-ONE-FIELD one canvas/context/union · π-MOOD five blind stills + π-INK per roster B.1. PASS4's stamp/ink/mood gates ride their mined waves. All in `tests-visual/` — inert until C-13 wires CI (BLOCKING at close).
 

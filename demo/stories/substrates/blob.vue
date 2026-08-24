@@ -463,7 +463,6 @@ watch(studioPaused, () => {
         heading="Blob"
         label="Blob studio — preset · interaction · mood · seed-palette"
         blurb="The blob showcase on the library's own Configurator chrome (the same studio shell Aurora composes). The preset row drives useConfiguratorState (per-preset clones); the stage paints the live config. Hover to feel the lean — attraction +1 leans IN, -1 SHIES AWAY (the sign is honored); click, tap, or focus the blob and press Enter/Space to fire the same spring impulse; pick a mood (the {valence, arousal} affect model); set a seed + harmony to ramp the OKLCh palette fed LIVE to the hero body. One GL context."
-        height-class="h-[min(70vh,560px)]"
         :presets="presets"
         :active-preset="studio.activePreset.value"
         @select-preset="studio.selectPreset"
