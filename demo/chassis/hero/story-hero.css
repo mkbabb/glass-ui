@@ -131,6 +131,88 @@
     margin-block-end: 0;
 }
 
+/* ── THE PAGE CHROME (BK #73 W-SCROLL-SHRINK) ────────────────────────────────
+   The ordinary story's `<header>` composes the library's `.scroll-chrome` recipe,
+   which owns the whole shrink: `scale()` + a rise on the compositor, a shadow that
+   lifts as content passes under, and a quiet — all of it riding the
+   `--chrome-collapse-t` scalar the `useScrollChrome` machine ramps. Nothing below
+   re-implements any of that. What a page header owes on top of the recipe is
+   exactly three things: a seat to stick to, an origin that suits left-aligned
+   prose rather than a dock, and a plate so the content passing underneath stays
+   legible. */
+.story-page-chrome {
+    /* Without this the header scrolls away and "shrink on scroll" has nothing to
+       happen to. `0` seats it flush with the scrollport's top edge — the route
+       scroller's own block padding is scrolled-through space, not a mask. */
+    position: sticky;
+    inset-block-start: 0;
+    /* THE HOUSE RUNG, not a number. `--z-header` is the scale's own name for this
+       exact thing, and it lands the chrome above `--z-content` (10) — which is where
+       the stories' own `z-10` sticky ornaments sit, and `motion/scroll.vue`'s sticky
+       progress rail is one of them — and below `--z-dock` (40) and every overlay
+       above it. A local `1` put the page's own chrome UNDER a story's decoration. */
+    z-index: var(--z-header);
+
+    /* The recipe's origin is `top center`, which is a dock's seat. A page header
+       is left-aligned prose: scaled about its centre the title DRIFTS inward as it
+       shrinks, and the eye reads the drift rather than the size. Re-pointing the
+       origin is the recipe's own documented consumer knob. (`transform-origin` has
+       no logical form; the demo is LTR.) */
+    transform-origin: top left;
+
+    /* The recipe's quiet floors a collapsed bar at 0.72 opacity. That is right for
+       a dock and wrong here: this chrome carries the page's h1 AND its return leg,
+       so it takes the recipe's documented no-quiet retune. It shrinks; it never
+       dims. */
+    --chrome-fade-depth: 0;
+}
+
+/* THE PLATE — the separation the content scrolls under. Its opacity IS
+   `--chrome-collapse-t`, so at rest it is absent (an uncollapsed page looks
+   byte-identical to the page before this wave) and it arrives with the collapse.
+   OPACITY-ONLY: the gradient rasterises once and then only composites, so no
+   scroll frame repaints it, and the resting `backdrop-filter` is never touched —
+   the recipe's crisp-glass fence. The wash is the chassis's own
+   `--story-paper-wash`, which already carries its dark recalibration. */
+.story-page-chrome::before {
+    content: "";
+    position: absolute;
+    /* Past the header's own box: DOWN, so the wash fades into the content instead
+       of ending on a hard edge, and OUT by one rung so a cel riding the article's
+       inline edge does not surface beside it. */
+    inset-block: 0 calc(var(--sp-4) * -1);
+    inset-inline: calc(var(--sp-4) * -1);
+    z-index: -1;
+    border-end-start-radius: var(--radius-card);
+    border-end-end-radius: var(--radius-card);
+    background-image: linear-gradient(
+        to bottom,
+        var(--story-paper-wash) 0 62%,
+        transparent
+    );
+    opacity: var(--chrome-collapse-t);
+    pointer-events: none;
+}
+
+/* THE WEIGHT (the liquid-weight edict). `--chrome-collapse-t` is a registered
+   `<number>`, so it INTERPOLATES rather than stepping, and a curve put on it is
+   inherited by everything that reads it — scale, rise, shadow and plate settle as
+   one body instead of four.
+   It takes the DOCK row, and it takes it BY NAME: `--spring-dock` with
+   `--spring-dock-duration`, never a duration or a bezier written out here. That is
+   #29's grammar law (a row names the spring row that owns its job and mints no
+   figure), and the row that owns "a chrome rect settling into a new position" is
+   dock. The ramp therefore trails the finger with real inertia and the scroll-stop
+   snap arrives on the dock settle instead of teleporting.
+   PRM-gated: under reduce the machine already snaps the scalar to a discrete 0/1,
+   and a transition here would put the interpolation straight back. */
+@media (prefers-reduced-motion: no-preference) {
+    .story-page-chrome {
+        transition: --chrome-collapse-t var(--spring-dock-duration)
+            var(--spring-dock);
+    }
+}
+
 :root:not(.dark) [data-paper-field] .story-header-cluster {
     --muted-foreground: color-mix(in oklab, var(--neutral-5), var(--foreground) 22%);
 }
