@@ -59,6 +59,12 @@ jobs:
               run: npm -w tests-visual run gate:pixel-floor:ci
             - name: pixel floor self-test (planted defect must be RED)
               run: npm -w tests-visual run gate:pixel-floor:ci:planted
+            # The blob floor carries TWO bounds and `blob-blank` only bites the lower
+            # one, so the non-flood CEILING had never been seen to fail. `blob-flood`
+            # is its own arm because the two plants are mutually exclusive mutations of
+            # the same canvas — folding it into `all` would retire the blank bite.
+            - name: pixel floor self-test (planted FLOOD must RED the ceiling)
+              run: npm -w tests-visual run gate:pixel-floor:planted:flood
             - name: bank the machine reports (the captured DELTA is the PAIR)
               if: always()
               uses: actions/upload-artifact@v4

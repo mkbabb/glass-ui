@@ -44,6 +44,10 @@ npm run verify:package
 echo "== aurora pixel floor (real GPU) =="
 npm -w tests-visual run gate:pixel-floor
 npm -w tests-visual run gate:pixel-floor:planted
+# The blob floor's CEILING arm: `blob-blank` bites only the lower bound, so the
+# non-flood ceil needs its own plant (an opaque canvas — no transparent margin) and its
+# own invocation, the two blob plants being mutually exclusive mutations of one canvas.
+npm -w tests-visual run gate:pixel-floor:planted:flood
 
 if [[ ! -f dist/index.d.ts ]]; then
     echo "ERROR: build did not leave dist/index.d.ts" >&2

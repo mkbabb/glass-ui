@@ -35,7 +35,6 @@ import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
 // chunk resolves is a first-paint regression, not a diet. Its deps
 // (`composables/color`, the type-only `aurora/constants/presets`) are already eager.
 import { auroraFallbackGround } from "@glass/components/aurora/composables/auroraFallbackGround";
-import { shellFieldActive } from "../router";
 // The docks stay EAGER: they are the always-visible nav chrome, and their bytes are
 // small next to the two deferred surfaces below (deferring them trades KB for a
 // flash of missing navigation on the first frame).
@@ -100,6 +99,13 @@ const shortcuts = useRegisteredShortcuts();
 // change is not a page swap and must not re-scroll). Under the bare keyed
 // `<component>` swap there is no <Transition> leave window to race.
 const route = useRoute();
+// The shell field is a projection of the committed route, not parallel state. A
+// chromatic hero or self-staging Dock route owns the one page field and suppresses the
+// shell; ordinary routes retain it. `useRoute()` IS the router's `currentRoute`, which
+// updates only after navigation commits, so a keeps→keeps navigation preserves the
+// mounted shell node. It reads the route it already holds rather than importing the
+// router module back up the tree — the sole consumer computing off the sole source.
+const shellFieldActive = computed(() => !route.meta?.suppressesShellField);
 const mainEl = ref<HTMLElement | null>(null);
 const showRouteFocus = ref(false);
 let pendingRouteInput: "keyboard" | "pointer" | null = null;

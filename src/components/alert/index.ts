@@ -55,8 +55,10 @@ const BASE =
    spends it on ink. It does NOT compose `.feedback-tone`, which is the tinted-PLATE
    recipe; that register keeps its one shipped consumer in Toast, the floating tier where
    a louder semantic belongs. The four `--feedback-tone-rung` re-points leave with it, so
-   the token has zero writers in `src/` and is a fallback, exactly as its declaration now
-   says.
+   the token has ZERO RE-POINTS in `src/` — one declaration, its own `:root` definition in
+   `feedback-tone.css`, and one read, the `var()` fallback slot. It is a fallback, not a
+   seam, exactly as its declaration says; `G-FEEDBACK-TINT-SEAM` arm (b) holds both halves
+   (no foreign writer, and the fallback declared exactly once).
 
    Every utility stays a verbatim source literal inside `TONED` — the v4 scanner reads
    source text, so a shared suffix may be interpolated but a class name may never be

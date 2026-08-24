@@ -182,7 +182,11 @@ const rootRuntimeExports = [
     // export-surface cut's (CWT-3 §2 C-10), and `regen-exports.mjs` still reproduces
     // exportKeys 66/66 EXACT.~~ [2026-08-09 · BK #66 CLOSE · RT-65-C] THE CUT LANDED, whole and once:
     // the four mints + `./sheet` + `./menu` in, `./forms` + `./dropdown-menu` out,
-    // `regen-exports.mjs` reproduces exportKeys 70/70 EXACT.
+    // `regen-exports.mjs` reproduces exportKeys ~~70/70~~ EXACT. [2026-08-10 · BK #21
+    // W-DAG-REDUCE] The batched cut was not the last one: `./canvas` is CUT here and the
+    // reproduction is **69/69 EXACT**. The six names it published all live on the root
+    // barrel below and are unmoved — this list did not change by a byte, which is the
+    // point of citing it: a subpath cut that touches the root surface is a different act.
     "NumberFieldInput",
     "NumberFieldStep",
     "PopoverContent",

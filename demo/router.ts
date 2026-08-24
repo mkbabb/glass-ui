@@ -1,4 +1,3 @@
-import { computed } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import {
@@ -105,16 +104,6 @@ export const router = createRouter({
     // AppShell `route.path` watch that scrolls `mainEl` to the top. The ONE scroll-reset
     // owner is the AppShell watch.
 });
-
-/**
- * The shell field is a projection of the committed route, not parallel state.
- * A chromatic hero or self-staging Dock route owns the one page field and suppresses
- * the shell; ordinary routes retain it. Vue Router updates `currentRoute` only after
- * navigation commits, so a keeps→keeps navigation preserves the mounted shell node.
- */
-export const shellFieldActive = computed(
-    () => !router.currentRoute.value.meta?.suppressesShellField,
-);
 
 // Pre-resolve each lazy route chunk before the View Transition update callback so
 // snapshot capture never includes an unresolved component. Warm chunks resolve

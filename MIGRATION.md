@@ -5,7 +5,30 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
-## 8.1.0 — UNRELEASED (in flight; not on the registry)
+## 9.0.0 — UNRELEASED (in flight; not on the registry)
+
+**Status.** `package.json` declares `8.0.0`. This section exists because a BREAKING row
+landed after the `8.1.0` section below was written, and a removal cannot ride a minor —
+so the next cut is a MAJOR and `8.1.0`'s purely-additive content rides it. That section
+keeps its heading and its text rather than being silently renumbered; the version it
+names is superseded here, not overwritten.
+
+_The `./canvas` subpath is removed_
+
+| removed | migration |
+| --- | --- |
+| `@mkbabb/glass-ui/canvas` | Import the same six names from the package root: `useCanvas2D`, `resolveCanvasColor`, and the types `Canvas2DFrame`, `Canvas2DHandle`, `Canvas2DOptions`, `Canvas2DSuspendReason`. |
+
+The subpath published six names and the root barrel already published all six, so this
+removes a door and no room. `canvas2d` remains the internal substrate it always was; no
+file moved, no symbol was renamed, and nothing was deprecated first — a clean break, per
+this document's own rule. **Zero consumers were found at the cut**: a whole-repo walk over
+the fifteen generated sibling roots returned no importer of the specifier, in code or in
+CSS.
+
+## 8.1.0 — UNRELEASED (in flight; not on the registry) [2026-08-10 · BK #21: superseded
+as a version number by the `9.0.0` section above — the content below stands, the cut it
+lands in is now the major]
 
 **Status, stated so nothing here reads as shipped.** `package.json` declares `8.0.0`
 (detector: `node -p "require('./package.json').version"` → `8.0.0`), and `8.1.0` is the
@@ -928,10 +951,10 @@ subpath)` is the 5.0.0 target".]
 | `Brush` | type | `/handmark` |
 | `BrushName` | type | `/handmark` |
 | `ButtonVariants` | type | removed 7.0.0 — use `ButtonProps` / `ButtonEmphasis` / `ButtonSize` (/button) |
-| `Canvas2DFrame` | type | `/canvas` |
-| `Canvas2DHandle` | type | `/canvas` |
-| `Canvas2DOptions` | type | `/canvas` |
-| `Canvas2DSuspendReason` | type | `/canvas` |
+| `Canvas2DFrame` | type | ~~`/canvas`~~ root barrel [2026-08-10 · BK #21 — `./canvas` cut; the name never moved] |
+| `Canvas2DHandle` | type | ~~`/canvas`~~ root barrel [2026-08-10 · BK #21] |
+| `Canvas2DOptions` | type | ~~`/canvas`~~ root barrel [2026-08-10 · BK #21] |
+| `Canvas2DSuspendReason` | type | ~~`/canvas`~~ root barrel [2026-08-10 · BK #21] |
 | `CardMetal` | type | removed 8.0.0 — the `metal` prop dies; the three `metal-{gold,silver,bronze}-border` utilities survive class-borne and a class name needs no union |
 | `CardSurface` | type | removed 7.0.0 — Card decoration folds onto `CardVariant` (/card) + the `Surface` axis (/axes) |
 | `CardTier` | type | removed 8.0.0 from `/card` — already folded onto the shared `surface` axis at 5.0.0; use `SurfaceProps["tier"]` / `SurfaceTier` (/axes) |

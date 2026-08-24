@@ -179,7 +179,14 @@ export const COMPOSABLE_SUBPATHS = {
     color: "src/composables/color/index.ts",
     dom: "src/composables/dom/index.ts",
     reactive: "src/composables/reactive/index.ts",
-    canvas: "src/composables/glass/canvas2d/index.ts", // name "canvas" ≠ leaf "canvas2d"
+    // [2026-08-10 · BK #21 W-DAG-REDUCE] ~~`canvas: "src/composables/glass/canvas2d/index.ts"`~~
+    // — the `./canvas` subpath is CUT. It is the one candidate on DECK-RELOCATION §4's
+    // list whose "redundant" ground survives disk: `/canvas` published exactly six names
+    // (`useCanvas2D`, `resolveCanvasColor`, `Canvas2DFrame|Handle|Options|SuspendReason`)
+    // and the root barrel re-exports ALL SIX through `./composables/glass`, so the cut
+    // removes zero reachable names. G-RELAY walk at the cut: zero consumers across the
+    // 15 generated roots, zero in-repo readers of the package specifier. `canvas2d` stays
+    // INTERNAL substrate, unmoved — this deletes a door, never a room.
     "fourier-math": "src/components/fourier-field/math.ts", // nested, name ≠ leaf
 };
 
