@@ -21,7 +21,7 @@ describe("GlassDock vertical collapse", () => {
 
     function mountVertical(props: Record<string, unknown> = {}) {
         return mount(GlassDock, {
-            props: { orientation: "vertical", startCollapsed: true, ...props },
+            props: { orientation: "vertical", collapse: "closed", ...props },
             slots: {
                 default: () => [
                     h(DockControl, { "aria-label": "A" }, () => "A"),
@@ -45,7 +45,7 @@ describe("GlassDock vertical collapse", () => {
         expect(root.classes()).toContain("vertical");
         // The force-pin is GONE: a vertical dock is NOT always-expanded by construction.
         expect(root.classes()).not.toContain("always-expanded");
-        // It starts collapsed (startCollapsed default honored on the vertical axis).
+        // It starts collapsed (the `collapse: "closed"` default honored on the vertical axis).
         expect(root.classes()).toContain("collapsed");
         expect(root.classes()).not.toContain("expanded");
         wrapper.unmount();
@@ -54,7 +54,7 @@ describe("GlassDock vertical collapse", () => {
     it.each(["horizontal", "vertical"] as const)(
         "mounts %s collapsed directly in its summary posture",
         (orientation) => {
-            const wrapper = mountVertical({ orientation, startCollapsed: true });
+            const wrapper = mountVertical({ orientation, collapse: "closed" });
             const root = wrapper.get(".glass-dock");
             const full = wrapper.get(".dock-layer--full");
             const summary = wrapper.get(".dock-layer--summary");
@@ -70,7 +70,7 @@ describe("GlassDock vertical collapse", () => {
     it.each(["horizontal", "vertical"] as const)(
         "mounts %s expanded directly in its full posture",
         (orientation) => {
-            const wrapper = mountVertical({ orientation, startCollapsed: false });
+            const wrapper = mountVertical({ orientation, collapse: "open" });
             const root = wrapper.get(".glass-dock");
             const full = wrapper.get(".dock-layer--full");
             const summary = wrapper.get(".dock-layer--summary");
@@ -85,7 +85,7 @@ describe("GlassDock vertical collapse", () => {
     );
 
     it("keeps the initially-expanded posture on the existing click-away path", async () => {
-        const wrapper = mountVertical({ startCollapsed: false });
+        const wrapper = mountVertical({ collapse: "open" });
         const root = wrapper.get(".glass-dock");
 
         expect(root.classes()).toContain("expanded");
@@ -115,7 +115,7 @@ describe("GlassDock vertical collapse", () => {
     });
 
     it("an always-expanded vertical dock opts OUT of collapse (the static nav-column look)", () => {
-        const wrapper = mountVertical({ alwaysExpanded: true });
+        const wrapper = mountVertical({ collapse: false });
         const root = wrapper.get(".glass-dock");
         expect(root.classes()).toContain("vertical");
         expect(root.classes()).toContain("always-expanded");

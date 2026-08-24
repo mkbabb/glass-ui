@@ -52,33 +52,40 @@ import { useDockOverflowFit } from "./composables/useDockOverflowFit";
    as written here, a device for keeping a wrapper transparent. */
 defineOptions({ inheritAttrs: false });
 
-/* The prop contract is ONE shape (DockProps, in
-   useDockShellProps): no `variant` discriminant, "vertical" is `orientation="vertical"`
-   alone, and collapse↔expand applies on BOTH orientations (single opt-out
-   `alwaysExpanded`). Defaults resolve at each read site via `?? default`. */
+/* The prop contract is ONE shape (DockProps, in useDockShellProps): SIX members, no
+   `variant` discriminant, "vertical" is `orientation="vertical"` alone, and
+   collapse↔expand applies on BOTH orientations off the one `collapse` member.
+   Defaults resolve at each read site via `?? default`.
+
+   [2026-08-10 · BK #47 W1 CURE] `collapse` MUST state its default HERE, not only at
+   the `?? "closed"` read site. `DockCollapse` is `false | "closed" | "open"`, so the
+   macro compiles the prop to `type: [Boolean, String]` — and Vue's BOOLEAN CASTING
+   turns an ABSENT prop of a Boolean-including type into `false` (resolvePropValue:
+   `if (isAbsent && !hasDefault) value = false`). `false` is the force-pinned pole, so
+   every dock that omitted `collapse` mounted ALWAYS-EXPANDED and could never collapse
+   — the documented `"closed"` default reached the composable (which sees a plain
+   object and its `?? "closed"` holds, which is why the useDockShellProps unit seat
+   stayed green) but NEVER the rendered component. Declaring the default here is what
+   defeats the cast: `hasDefault` short-circuits the absent-branch, and `"closed"` is
+   neither `""` nor `"collapse"`, so the cast-true branch cannot fire either. */
 const props = withDefaults(defineProps<DockProps>(), {
     backdropMode: "live",
+    collapse: "closed",
 });
 
-/* The resolved shell-prop computeds — shape/orientation/density, the collapse
-   surface (`collapseDelay`/`startCollapsed`/`layoutValue`), the intrinsic
-   scroll-overflow class (`scrollClass` is
-   `dock-scroll-x` on EVERY horizontal dock and `null` on vertical, whose
-   block-axis scroll folds into the unconditional cap-derived shell.css rule; the
-   `overflow="scroll"` opt-in is retired), and `alwaysExpanded`/`fitContent`. */
+/* The resolved shell-prop computeds — shape/orientation, the collapse surface
+   (`alwaysExpanded`/`startCollapsed`, both derived from the one `collapse` member),
+   the intrinsic scroll-overflow class (`scrollClass` is `dock-scroll-x` on EVERY
+   horizontal dock and `null` on vertical, whose block-axis scroll folds into the
+   unconditional cap-derived shell.css rule), and `fitContent`. */
 const {
-    collapseDelay,
     startCollapsed,
-    interaction,
-    layoutValue,
     shape,
     orientation,
-    size,
     scrollClass,
     alwaysExpanded,
     fitContent,
 } = useDockShellProps(props);
-const layout = layoutValue;
 
 const dockEl = useTemplateRef<HTMLElement>("dockEl");
 const layersEl = useTemplateRef<HTMLElement>("layersEl");
@@ -137,23 +144,12 @@ const {
     expand,
     collapse,
 } = useDockState({
-    collapseDelay: collapseDelay.value,
     rootEl: dockEl,
     alwaysExpanded,
-    interaction,
     initialExpanded: !startCollapsed.value,
     isTransitioning,
     dockId,
 });
-
-/* The FSM-quiet signal the environmental writers early-return under — an
-   always-expanded dock OR a manual dock. It gates the touch gate too, so a manual
-   dock's collapsed-pill tap does not expand and its deactivate does not collapse
-   (interaction already resolves to "auto" under alwaysExpanded, so this is just the
-   manual arm layered onto the always-expanded pole). */
-const fsmQuiet = computed(
-    () => alwaysExpanded.value || interaction.value === "manual",
-);
 
 /* Canonical typed-key dock context. The 6 prior
    string-keyed dock provides (`glassDockContext`, `glassDockId`,
@@ -168,7 +164,6 @@ const fsmQuiet = computed(
 provideDockContext({
     id: dockId,
     orientation,
-    layout,
     keepOpen,
     release,
     held: graspHeld,
@@ -201,9 +196,7 @@ const {
     },
 });
 
-const summaryIsDisclosure = computed(
-    () => interaction.value === "auto" && outerCurrentLayer.value === "summary",
-);
+const summaryIsDisclosure = computed(() => outerCurrentLayer.value === "summary");
 async function onSummaryKeydown(event: KeyboardEvent) {
     if (!summaryIsDisclosure.value || !["Enter", " "].includes(event.key)) return;
     event.preventDefault();
@@ -235,7 +228,7 @@ async function onSummaryKeydown(event: KeyboardEvent) {
 // `fullEl`. `closest()` walks the whole ancestor chain, so a dock hosted inside an open
 // Dialog would otherwise match the DIALOG and never Escape-collapse.
 async function onFullKeydown(event: KeyboardEvent) {
-    if (interaction.value !== "auto" || event.key !== "Escape") return;
+    if (event.key !== "Escape") return;
     const layer = (event.target as Element | null)?.closest?.(
         OPEN_DISMISSABLE_LAYER_SELECTOR,
     );
@@ -285,9 +278,7 @@ const {
    `deactivate()` on a collapse flip. */
 const { onTouchStart, onTouchMove, onTouchEnd, deactivate: touchDeactivate } =
     useDockTouchGate({
-        collapseDelay: collapseDelay.value,
         rootEl: dockEl,
-        quiet: fsmQuiet,
         visualExpanded,
         expanded,
         isPinned,
@@ -346,18 +337,11 @@ defineExpose({
         :class="[
             orientation,
             `shape-${shape}`,
-            `layout-${layout}`,
             scrollClass,
-            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-overflow-wrap': overflow === 'wrap' && orientation !== 'vertical' },
-            position === 'fixed' ? 'fixed bottom-(--dock-pos) inset-x-0 mx-auto w-max'
-              : position === 'sticky' ? 'dock-sticky'
-              : 'dock-inline',
+            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded },
         ]"
-        :data-size="size"
         :data-backdrop-mode="props.backdropMode"
-        :data-interaction="interaction === 'manual' ? 'manual' : undefined"
         :data-held="graspHeld || undefined"
-        :data-search="search || undefined"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave($event)"
         @focusin="onFocusIn"
@@ -492,16 +476,19 @@ defineExpose({
 
             <!--
                 The dock-as-native-dynamic-search-bar field region.
-                Rendered ONLY when `search` is set (additive default-false → byte-
-                identical to the plain dock otherwise). It seats INSIDE the `.dock-layers` morph
-                aperture so the pill→field reveal rides the dock's OWN `--dock-morph-t`
-                glide (the box shrink-wraps; no second engine).
-                The consumer composes `useDockSearch` and slots its search field + the
-                fuzzy dropdown here; the `.dock-search-field` surface reads the tint
-                seam (dock/search.css) so the active field reads ≥4.5:1 over the backdrop
-                (the no-pale-fade legibility floor).
+                [2026-08-12 · BK #47 W1 SURFACE] Rendered when the `#search` slot is
+                AUTHORED — the slot IS the opt-in. ~~Rendered ONLY when `search` is
+                set~~: a boolean prop gating a named slot was a second switch for one
+                fact, and no dock could ever set one without the other.
+                It seats INSIDE the `.dock-layers` morph aperture so the pill→field
+                reveal rides the dock's OWN `--dock-morph-t` glide (the box
+                shrink-wraps; no second engine). The consumer composes `useDockSearch`
+                and slots its search field + the fuzzy dropdown here; the
+                `.dock-search-field` surface reads the tint seam (dock/search.css) so
+                the active field reads ≥4.5:1 over the backdrop (the no-pale-fade
+                legibility floor).
             -->
-            <div v-if="search" class="dock-search-field">
+            <div v-if="$slots.search" class="dock-search-field">
                 <slot name="search" />
             </div>
         </div>

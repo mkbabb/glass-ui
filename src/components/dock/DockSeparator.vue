@@ -10,12 +10,11 @@ import { useOptionalDockContext } from "./composables/dockContext";
  * class was axis-blind — a fixed VERTICAL 1px hairline that paints a useless
  * 1px-wide sliver in a column (vertical) dock and a single cell-sliver in a grid
  * dock. This primitive bundles the orientation contract the bare class could not:
- * it reads the dock `orientation`/`layout` via `useOptionalDockContext()` and the
- * dock-root ancestor class (`.glass-dock.vertical`, `.layout-grid`) drives the
+ * it reads the dock `orientation` via `useOptionalDockContext()` and the
+ * dock-root ancestor class (`.glass-dock.vertical`) drives the
  * PERPENDICULAR paint (dock.css) —
  *   - row dock (horizontal, default) → a vertical 1px rule
  *   - column dock (vertical)         → a horizontal 1px rule
- *   - grid dock (`layout="grid"`)    → a full-row section break (grid-column: 1, -1)
  *
  * It is a thin oriented `<div>` (KISS); `data-orientation` is the explicit axis
  * marker (so the perpendicular paint resolves even when used inside a

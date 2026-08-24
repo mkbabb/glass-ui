@@ -1,39 +1,36 @@
 import { mount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { defineComponent, h, nextTick, ref } from "vue";
-import type { Ref } from "vue";
 
 import GlassDock from "@glass/components/dock/GlassDock.vue";
-import DockControl from "@glass/components/dock/DockControl.vue";
 import {
     useDockState,
     type UseDockStateReturn,
 } from "@glass/components/dock/composables/useDockState";
 import { useDockSearch } from "@glass/components/dock/composables/useDockSearch";
-import {
-    useDockShellProps,
-    type DockInteraction,
-} from "@glass/components/dock/composables/useDockShellProps";
+import { useDockShellProps } from "@glass/components/dock/composables/useDockShellProps";
 import { HOVER_INTENT_MS } from "@glass/components/dock/constants";
 
 /**
- * The consumer-owned posture axis (the
- * six-close dock disease). `interaction="manual"` suppresses EVERY internal
- * environmental posture writer (hover / focus / idle timer / outside-click /
- * collapsed-tap) at BOTH poles, leaving only the imperative `expand()` /
- * `collapse()` operative — the consumer owns posture through one reducer.
+ * The dock's POSTURE surface: the one `collapse` member, the FSM it resolves to, and
+ * the a11y disclosure contract on the collapsed face.
+ *
+ * [2026-08-12 · BK #47 W1 SURFACE] This file replaces
+ * `GlassDock.interaction-manual.test.ts`. The `interaction="manual"` pole — which
+ * suppressed every environmental posture writer at both poles — is STRUCK with its
+ * prop, so every manual-only contract (T1–T12, T15a, T16, the H8 manual
+ * keyboard-reachability case, the `data-interaction` observability trio) has no
+ * subject left to assert. What survives is what was never about that pole: the auto
+ * FSM's own floor, the force-pinned pole, the fold that resolves `collapse` into
+ * both, and the collapsed-face disclosure/Escape contracts.
  *
  * Each test asserts a STATE OUTCOME across a simulated gesture (never "the guard
- * returned early"). jsdom + fake timers. The exhaustive DOM hover/focus/touch
- * suppression + the live mid-hover flip ride the visual-sweep native debt
- *; these unit contracts pin the FSM seam.
+ * returned early"). jsdom + fake timers.
  */
 
 // ── useDockState composable harness (the FSM seam under test) ──────────────────
 interface StateHarness {
     handle: UseDockStateReturn;
-    interaction: Ref<DockInteraction>;
-    alwaysExpanded: Ref<boolean>;
     unmount: () => void;
 }
 
@@ -41,13 +38,11 @@ const mounted: Array<{ unmount: () => void }> = [];
 
 function mountState(
     opts: {
-        interaction?: DockInteraction;
         initialExpanded?: boolean;
         alwaysExpanded?: boolean;
         collapseDelay?: number;
     } = {},
 ): StateHarness {
-    const interaction = ref<DockInteraction>(opts.interaction ?? "auto");
     const alwaysExpanded = ref<boolean>(opts.alwaysExpanded ?? false);
     let handle!: UseDockStateReturn;
     const Host = defineComponent({
@@ -55,10 +50,11 @@ function mountState(
             const rootEl = ref<HTMLElement | null>(null);
             handle = useDockState({
                 rootEl,
-                interaction,
                 alwaysExpanded,
                 initialExpanded: opts.initialExpanded ?? false,
-                collapseDelay: opts.collapseDelay ?? 3600,
+                ...(opts.collapseDelay === undefined
+                    ? {}
+                    : { collapseDelay: opts.collapseDelay }),
             });
             return () => h("div", { ref: rootEl, class: "state-root" });
         },
@@ -66,7 +62,7 @@ function mountState(
     const wrapper = mount(Host, { attachTo: document.body });
     const h0 = { unmount: () => wrapper.unmount() };
     mounted.push(h0);
-    return { handle, interaction, alwaysExpanded, unmount: h0.unmount };
+    return { handle, unmount: h0.unmount };
 }
 
 beforeEach(() => vi.useFakeTimers());
@@ -77,202 +73,61 @@ afterEach(() => {
     vi.restoreAllMocks();
 });
 
-describe("useDockState — manual suppresses every environmental writer at both poles", () => {
-    it("T1 · hover: onMouseEnter + dwell flush stays collapsed", () => {
-        const { handle } = mountState({ interaction: "manual" });
-        expect(handle.expanded.value).toBe(false);
-        handle.onMouseEnter();
-        vi.advanceTimersByTime(HOVER_INTENT_MS + 20);
-        expect(handle.state.value).toBe("collapsed");
-    });
-
-    it("T2 · focus: onFocusIn stays collapsed", () => {
-        const { handle } = mountState({ interaction: "manual" });
-        handle.onFocusIn();
-        expect(handle.state.value).toBe("collapsed");
-    });
-
-    it("T3 · idle/leave: onMouseLeave + collapseDelay flush stays expanded", () => {
-        const { handle } = mountState({
-            interaction: "manual",
-            initialExpanded: true,
-        });
-        expect(handle.expanded.value).toBe(true);
-        handle.onMouseLeave();
-        vi.runAllTimers();
-        expect(handle.expanded.value).toBe(true);
-    });
-
-    it("T4 · focusout: onFocusOut to outside + flush stays expanded", () => {
-        const { handle } = mountState({
-            interaction: "manual",
-            initialExpanded: true,
-        });
-        // A focusout whose relatedTarget is a detached (outside) node — in auto this
-        // schedules a collapse; in manual it is suppressed.
-        const outside = document.createElement("button");
-        document.body.appendChild(outside);
-        handle.onFocusOut({
-            currentTarget: document.createElement("div"),
-            relatedTarget: outside,
-        } as unknown as FocusEvent);
-        vi.runAllTimers();
-        expect(handle.expanded.value).toBe(true);
-        outside.remove();
-    });
-
-    it("T5 · outside-click: a document pointerdown outside the root stays expanded", async () => {
-        const { handle } = mountState({
-            interaction: "manual",
-            initialExpanded: true,
-        });
-        // Flush the rAF-deferred click-away install, then fire a real outside pointerdown.
-        vi.runAllTimers();
-        await nextTick();
-        document.body.dispatchEvent(
-            new PointerEvent("pointerdown", { bubbles: true, cancelable: true }),
-        );
-        await nextTick();
-        expect(handle.expanded.value).toBe(true);
-    });
-
-    it("T6 · collapsed-tap: onClickCollapsed stays collapsed (no pin)", () => {
-        const { handle } = mountState({ interaction: "manual" });
-        handle.onClickCollapsed();
-        expect(handle.state.value).toBe("collapsed");
-        expect(handle.isPinned.value).toBe(false);
-    });
-});
-
-describe("useDockState — manual keeps the imperative pair operative (free pole)", () => {
-    it("T7 · expand() then collapse() move both poles", () => {
-        const { handle } = mountState({ interaction: "manual" });
-        handle.expand();
-        expect(handle.expanded.value).toBe(true);
-        // Manual writes the "hover" pole (not "pinned"), so it is a FREE pole.
-        expect(handle.state.value).toBe("hover");
-        expect(handle.isPinned.value).toBe(false);
-        handle.collapse();
-        expect(handle.expanded.value).toBe(false);
-        expect(handle.state.value).toBe("collapsed");
-    });
-});
-
-describe("useDockState — runtime flip & stale-timer freeze", () => {
-    it("T8 · auto idle timer armed, flip→manual before delay, flush → stays expanded", async () => {
-        const { handle, interaction } = mountState({
-            interaction: "auto",
-            initialExpanded: true,
-        });
-        // Arm the direct idle-collapse timer (its setTimeout callback writes
-        // state="collapsed" with NO fire-time re-guard — the load-bearing invariant).
-        handle.onMouseLeave();
-        interaction.value = "manual";
-        await nextTick(); // let the flip watch fire clearTimer()
-        vi.runAllTimers();
-        expect(handle.expanded.value).toBe(true);
-    });
-
-    it("T9 · auto hover-intent dwell pending, flip→manual, flush → stays collapsed", async () => {
-        const { handle, interaction } = mountState({ interaction: "auto" });
-        handle.onMouseEnter(); // dwell timer armed
-        interaction.value = "manual";
-        await nextTick(); // flip watch clears the dwell
-        vi.advanceTimersByTime(HOVER_INTENT_MS + 20);
-        expect(handle.state.value).toBe("collapsed");
-    });
-
-    it("T10 · manual→auto re-arms the FSM; the pole is preserved", async () => {
-        const { handle, interaction } = mountState({ interaction: "manual" });
-        expect(handle.expanded.value).toBe(false); // pole preserved across flips
-        interaction.value = "auto";
-        await nextTick();
+describe("useDockState — the auto FSM floor", () => {
+    it("hover-expand fires after the intent dwell", () => {
+        const { handle } = mountState();
         handle.onMouseEnter();
         vi.advanceTimersByTime(HOVER_INTENT_MS + 20);
         expect(handle.state.value).toBe("hover");
     });
 
-    it("T11 · manual: keepOpen()/release() leave posture unchanged", () => {
-        const { handle } = mountState({
-            interaction: "manual",
-            initialExpanded: true,
-        });
-        handle.keepOpen();
-        handle.release();
-        vi.runAllTimers();
-        expect(handle.expanded.value).toBe(true);
-    });
-
-    it("T16 · auto release-grace armed, flip→manual, flush → stays expanded", async () => {
-        const { handle, interaction } = mountState({
-            interaction: "auto",
-            initialExpanded: true,
-        });
-        handle.keepOpen();
-        handle.release(); // arms the grace timer (shared collapseTimer handle)
-        interaction.value = "manual";
-        await nextTick(); // flip watch clears the shared timer
-        vi.runAllTimers();
-        expect(handle.expanded.value).toBe(true);
-    });
-});
-
-describe("useDockState — auto-mode regression floor (the seam did not move the poles)", () => {
-    it("auto hover-expand still fires (T14 anchor)", () => {
-        const { handle } = mountState({ interaction: "auto" });
-        handle.onMouseEnter();
-        vi.advanceTimersByTime(HOVER_INTENT_MS + 20);
-        expect(handle.state.value).toBe("hover");
-    });
-
-    it("auto idle-collapse still fires (T14 anchor)", () => {
-        const { handle } = mountState({
-            interaction: "auto",
-            initialExpanded: true,
-        });
+    it("idle-collapse fires on the one collapse window", () => {
+        const { handle } = mountState({ initialExpanded: true });
         handle.onMouseLeave();
         vi.runAllTimers();
         expect(handle.expanded.value).toBe(false);
     });
 
-    it("T13 · alwaysExpanded force-pins and suppresses the environmental writers", () => {
+    it("alwaysExpanded force-pins and suppresses every environmental writer", () => {
         const { handle } = mountState({ alwaysExpanded: true });
         expect(handle.state.value).toBe("pinned");
         handle.onMouseLeave();
         handle.onClickCollapsed();
         vi.runAllTimers();
         expect(handle.state.value).toBe("pinned");
-        // The imperative pair is a no-op under the force-pin (unlike manual).
+        // The imperative pair is a no-op under the force-pin.
         handle.collapse();
         expect(handle.state.value).toBe("pinned");
     });
 });
 
-describe("useDockShellProps — the alwaysExpanded+manual dead combination is killed at resolution (T17)", () => {
-    it("resolves interaction to auto on an always-expanded dock", () => {
-        const shell = useDockShellProps({ alwaysExpanded: true, interaction: "manual" });
-        expect(shell.interaction.value).toBe("auto");
+describe("useDockShellProps — `collapse` folds the two retired posture props", () => {
+    it("`false` is the force-pinned pole and never starts collapsed", () => {
+        const shell = useDockShellProps({ collapse: false });
+        expect(shell.alwaysExpanded.value).toBe(true);
+        expect(shell.startCollapsed.value).toBe(false);
     });
 
-    it("resolves an explicit manual on a collapsible dock", () => {
-        expect(useDockShellProps({ interaction: "manual" }).interaction.value).toBe(
-            "manual",
-        );
+    it('`"closed"` is collapsible and mounts collapsed', () => {
+        const shell = useDockShellProps({ collapse: "closed" });
+        expect(shell.alwaysExpanded.value).toBe(false);
+        expect(shell.startCollapsed.value).toBe(true);
     });
 
-    it("defaults to auto", () => {
-        expect(useDockShellProps({}).interaction.value).toBe("auto");
+    it('`"open"` is collapsible and mounts expanded', () => {
+        const shell = useDockShellProps({ collapse: "open" });
+        expect(shell.alwaysExpanded.value).toBe(false);
+        expect(shell.startCollapsed.value).toBe(false);
     });
 
-    it("layout=grid (auto-implied alwaysExpanded) also resolves to auto", () => {
-        expect(
-            useDockShellProps({ layout: "grid", interaction: "manual" }).interaction
-                .value,
-        ).toBe("auto");
+    it('defaults to `"closed"`', () => {
+        const shell = useDockShellProps({});
+        expect(shell.alwaysExpanded.value).toBe(false);
+        expect(shell.startCollapsed.value).toBe(true);
     });
 });
 
-// ── GlassDock integration: observability + the a11y disclosure contract ────────
+// ── GlassDock integration: the emitted surface + the a11y disclosure contract ──
 function mountDock(
     props: Record<string, unknown>,
     slots: Record<string, () => unknown> = {},
@@ -286,67 +141,76 @@ function mountDock(
     return wrapper;
 }
 
-describe("GlassDock — data-interaction observability", () => {
-    it("stamps data-interaction=manual on a manual collapsible dock", () => {
-        const root = mountDock({ interaction: "manual", startCollapsed: true }).get(
-            ".glass-dock",
-        );
-        expect(root.attributes("data-interaction")).toBe("manual");
+describe("GlassDock — the W1 six-prop surface is what the root emits", () => {
+    it("stamps NONE of the seven struck props' hooks", () => {
+        // The falsifier for the cut: restore any struck prop's emission and one of
+        // these flips. `data-size`/`data-interaction`/`data-search` were prop-driven
+        // attributes; `layout-*` and the position registers were prop-driven classes.
+        const root = mountDock({}).get(".glass-dock");
+        expect(root.attributes("data-size")).toBeUndefined();
+        expect(root.attributes("data-interaction")).toBeUndefined();
+        expect(root.attributes("data-search")).toBeUndefined();
+        const classes = root.classes();
+        expect(classes).not.toContain("layout-linear");
+        expect(classes).not.toContain("layout-grid");
+        expect(classes).not.toContain("dock-inline");
+        expect(classes).not.toContain("dock-sticky");
+        expect(classes).not.toContain("dock-overflow-wrap");
     });
 
-    it("omits data-interaction in auto (byte-identical to before)", () => {
-        const root = mountDock({ startCollapsed: true }).get(".glass-dock");
-        expect(root.attributes("data-interaction")).toBeUndefined();
+    it("keeps the six survivors observable on the root", () => {
+        const root = mountDock({
+            collapse: false,
+            shape: "card",
+            orientation: "vertical",
+            fitContent: true,
+            backdropMode: "static",
+        }).get(".glass-dock");
+        expect(root.classes()).toEqual(
+            expect.arrayContaining([
+                "vertical",
+                "shape-card",
+                "fit-content",
+                "always-expanded",
+                "pinned",
+            ]),
+        );
+        expect(root.attributes("data-backdrop-mode")).toBe("static");
+
+        /* [2026-08-10 · BK #47 W1 CURE] …and the SAME root with `collapse` ABSENT is
+           the OTHER pole. This is the falsifier for the boolean-cast trap: because
+           `DockCollapse` admits `false`, the macro compiles `type: [Boolean, String]`
+           and Vue casts an absent value to `false` unless the SFC declares the
+           default — so an unprop'd dock silently mounted force-pinned. The
+           useDockShellProps seat above cannot see it (it is called with a plain
+           object and never goes through prop resolution); only a MOUNTED dock can.
+           Drop `collapse: "closed"` from GlassDock.vue's withDefaults and this flips. */
+        const bare = mountDock({}).get(".glass-dock");
+        expect(bare.classes()).toContain("collapsed");
+        expect(bare.classes()).not.toContain("always-expanded");
+        expect(bare.classes()).not.toContain("pinned");
     });
 
-    it("T17 · always-expanded + manual → no stamp, force-pinned", () => {
-        const root = mountDock({ alwaysExpanded: true, interaction: "manual" }).get(
-            ".glass-dock",
+    it("the `#search` aperture IS the opt-in — authored renders it, absent does not", () => {
+        expect(mountDock({}).find(".dock-search-field").exists()).toBe(false);
+        const withSlot = mountDock(
+            { collapse: false },
+            { search: () => h("input", { "data-testid": "field" }) },
         );
-        expect(root.attributes("data-interaction")).toBeUndefined();
-        expect(root.classes()).toContain("always-expanded");
-        expect(root.classes()).toContain("pinned");
+        expect(withSlot.find(".dock-search-field").exists()).toBe(true);
+        expect(withSlot.find("[data-testid='field']").exists()).toBe(true);
     });
 });
 
-describe("GlassDock — manual + collapsed keyboard-reachability contract (H8)", () => {
-    it("the inert full pane is unreachable; a #persistent disclosure is reachable", () => {
-        const wrapper = mountDock(
-            { interaction: "manual", startCollapsed: true },
-            {
-                persistent: () =>
-                    h(
-                        DockControl,
-                        { "aria-label": "Open", "data-testid": "disclosure" },
-                        () => "▸",
-                    ),
-                default: () =>
-                    h(
-                        DockControl,
-                        { "aria-label": "Home", "data-testid": "in-full" },
-                        () => "H",
-                    ),
-            },
-        );
-        // Collapsed: the full pane (its controls) is :inert → keyboard-unreachable.
-        const full = wrapper.get(".dock-layer--full");
-        expect(full.attributes("inert")).toBe("");
-        const inFull = wrapper.get("[data-testid='in-full']").element;
-        expect(inFull.closest("[inert]")).toBe(full.element);
-
-        // The #persistent disclosure sits in a never-inert slot → reachable in both poles.
-        const disclosure = wrapper.get("[data-testid='disclosure']").element;
-        expect(disclosure.closest("[inert]")).toBeNull();
-    });
-});
-
-describe("GlassDock — auto collapsed-face disclosure contract", () => {
+describe("GlassDock — collapsed-face disclosure contract", () => {
     const reachableFaces = (wrapper: ReturnType<typeof mountDock>) =>
-        wrapper.findAll(".dock-layer").filter((face) => !face.element.hasAttribute("inert"));
+        wrapper
+            .findAll(".dock-layer")
+            .filter((face) => !face.element.hasAttribute("inert"));
 
     it("focuses the summary without expanding and keeps exactly one face reachable", async () => {
         const wrapper = mountDock(
-            { startCollapsed: true },
+            { collapse: "closed" },
             {
                 default: () => h("button", { "data-testid": "full-first" }, "Home"),
                 collapsed: () => h("span", { "data-testid": "summary-content" }, "More"),
@@ -373,11 +237,11 @@ describe("GlassDock — auto collapsed-face disclosure contract", () => {
         expect(reachableFaces(wrapper)[0]!.element).toBe(summary.element);
     });
 
-    it.each(["Enter", " "]) (
+    it.each(["Enter", " "])(
         "%s pins and focuses the first full-face descendant after seating",
         async (key) => {
             const wrapper = mountDock(
-                { startCollapsed: true },
+                { collapse: "closed" },
                 {
                     default: () => h("button", { "data-testid": "full-first" }, "Home"),
                     collapsed: () => h("span", "More"),
@@ -405,9 +269,19 @@ describe("GlassDock — auto collapsed-face disclosure contract", () => {
         },
     );
 
+    /* [2026-08-10 · BK #47 W1 CURE] The four Escape cases state `collapse: "open"`
+       and not `{}`. Escape→collapse needs a dock that is EXPANDED **and**
+       COLLAPSIBLE, and that is exactly one pole of the member: `"closed"` mounts
+       collapsed (nothing to dismiss), `false` is force-pinned (nothing CAN dismiss),
+       and `{}` is whatever the default resolves to — which is not a precondition a
+       test may leave to a default it does not own. Authored as `{}` these read a
+       force-pinned dock (the boolean-cast defect cured in GlassDock.vue this seat),
+       so three RED-ed against a dock that cannot collapse and the fourth — "leaves
+       the dock expanded" — was FALSE-GREEN: a pinned dock trivially stays expanded
+       and proves nothing about the dismissable-layer veto it names. */
     it("Escape collapses the full face and restores focus to the seated summary", async () => {
         const wrapper = mountDock(
-            {},
+            { collapse: "open" },
             {
                 default: () => h("button", { "data-testid": "full-first" }, "Home"),
                 collapsed: () => h("span", "More"),
@@ -438,7 +312,7 @@ describe("GlassDock — auto collapsed-face disclosure contract", () => {
 
     it("Escape inside an OPEN hosted layer leaves the dock expanded — the layer owns the dismiss", async () => {
         const wrapper = mountDock(
-            {},
+            { collapse: "open" },
             {
                 default: () =>
                     // reka's own DismissableLayer marker — the primitive that owns
@@ -470,7 +344,7 @@ describe("GlassDock — auto collapsed-face disclosure contract", () => {
 
     it("an OPEN ACCORDION in the pane does NOT eat Escape — it owns no dismiss, so the dock collapses", async () => {
         const wrapper = mountDock(
-            {},
+            { collapse: "open" },
             {
                 // reka stamps `data-state="open"` on Accordion/Collapsible content too,
                 // but neither handles Escape. Only the DismissableLayer marker earns the
@@ -511,6 +385,7 @@ describe("GlassDock — auto collapsed-face disclosure contract", () => {
         host.setAttribute("data-state", "open");
         document.body.appendChild(host);
         const wrapper = mount(GlassDock, {
+            props: { collapse: "open" },
             slots: {
                 default: () => h("button", { "data-testid": "full-first" }, "Home"),
                 collapsed: () => h("span", "More"),
@@ -545,13 +420,13 @@ describe("GlassDock — auto collapsed-face disclosure contract", () => {
 });
 
 // ── useDockSearch: the armSearch reroute ───────────────────────────────────────
-function mountSearch(interaction: DockInteraction, collapseDelay = 3600) {
+function mountSearch() {
     let dock!: UseDockStateReturn;
     let search!: ReturnType<typeof useDockSearch>;
     const Host = defineComponent({
         setup() {
             const rootEl = ref<HTMLElement | null>(null);
-            dock = useDockState({ rootEl, interaction, collapseDelay });
+            dock = useDockState({ rootEl });
             search = useDockSearch({ dockState: dock, items: () => [] });
             return () => h("div", { ref: rootEl });
         },
@@ -562,16 +437,15 @@ function mountSearch(interaction: DockInteraction, collapseDelay = 3600) {
 }
 
 describe("useDockSearch — armSearch opens via the imperative expand() (H5)", () => {
-    it("T15a · manual: armSearch expands the dock (operative in manual)", () => {
-        const { dock, search } = mountSearch("manual");
+    it("armSearch writes the FREE hover pole, not the pinned collapsed-tap pole", () => {
+        const { dock, search } = mountSearch();
         search.armSearch();
         expect(dock.expanded.value).toBe(true);
-        // expand() writes the FREE "hover" pole — not the pinned collapsed-tap pole.
         expect(dock.state.value).toBe("hover");
     });
 
-    it("T15b · auto: disarmSearch grace-collapses back to the pill (the latent-bug fix)", () => {
-        const { dock, search } = mountSearch("auto");
+    it("disarmSearch grace-collapses back to the pill (the latent-bug fix)", () => {
+        const { dock, search } = mountSearch();
         search.armSearch();
         expect(dock.state.value).toBe("hover");
         search.disarmSearch();

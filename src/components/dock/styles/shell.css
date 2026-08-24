@@ -90,19 +90,23 @@
            structurally (onset 0, scalar-keyed below). */
         --dock-stagger-window-size: 0.4;
         --dock-stagger-step: 0.08;
-        /* Big-dock tokens. `--dock-card-radius` is the finite card-shell
-           radius (default --radius-dock-card = --radius-3xl, density-scaled
-           below); `--dock-tile-min` is the grid tile minimum (auto-fill track
-           floor). Both are density-scaled (compact tighter, spacious looser) — the
-           card radius + tile size ride the density cascade, never magic numbers. */
+        /* The big-dock card-shell radius (default --radius-dock-card =
+           --radius-3xl). ~~`--dock-tile-min` is the grid tile minimum (auto-fill
+           track floor)~~ — [2026-08-12 · BK #47 W1 SURFACE] struck with the `layout`
+           prop that was its only consumer. */
         --dock-card-radius: var(--radius-dock-card);
-        --dock-tile-min: 4.5rem;
         position: relative;
         /* The explicit local stack contains the L0 plate's negative z-index without
            leaving the backdrop plate under an identity transform at rest. Morph and
-           collapsed-hover scales arm only on their state selectors; fixed/sticky dock
-           helpers below raise this same stack onto `--z-dock`. */
+           collapsed-hover scales arm only on their state selectors.
+           [2026-08-12 · BK #47 W1 SURFACE] ~~fixed/sticky dock helpers below raise
+           this same stack onto `--z-dock`~~ — struck with the `position` prop. */
         z-index: 0;
+        /* [2026-08-12 · BK #47 W1 SURFACE] The centring `.dock-inline` register — the
+           default `position` the prop resolved to on every dock that never set it —
+           folds here as the base. A dock is centred in its own flow box, full stop;
+           there is no second positioning register to pick from. */
+        margin: 0 auto;
         /* The dock self-darkens over light backdrops with NO consumer opt-in (a dock
            floats over arbitrary — frequently light — page content), and it does so
            WHERE IT PAINTS: the L0 plate composes `@utility glass-plate` at the element
@@ -481,18 +485,12 @@
        paint has zero consumers. The cross-repo consumer dashboard cockpit
        re-pins in its own migration (recorded in MIGRATION.md). */
 
-    .glass-dock:where(.fixed) {
-        z-index: var(--z-dock);
-    }
-
-    .dock-inline {
-        margin: 0 auto;
-    }
-
-    .dock-sticky {
-        position: sticky;
-        top: 0;
-        z-index: var(--z-dock);
-        margin: 0 auto;
-    }
+    /* ~~`.glass-dock:where(.fixed)` z-index lift · `.dock-inline` centring ·
+       `.dock-sticky` sticky register~~ — [2026-08-12 · BK #47 W1 SURFACE] the three
+       positioning registers are STRUCK with the `position` prop that emitted them
+       (`fixed` also emitted four Tailwind utilities inline). `position` had ZERO call
+       sites in this tree, and `inline` — the default every dock silently took — was
+       only ever `margin: 0 auto`, now folded into the base `.glass-dock` block above.
+       A consumer who needs a pinned dock writes the position on the dock; it is one
+       declaration, and it was never the dock's to own. */
 }

@@ -138,7 +138,7 @@ function togglePlay() {
                         role="toolbar"
                         aria-orientation="horizontal"
                         :aria-label="`${posture.label} workspace dock`"
-                        :start-collapsed="posture.startCollapsed"
+                        :collapse="posture.startCollapsed ? 'closed' : 'open'"
                         :data-testid="`dock-horizontal-${posture.startCollapsed ? 'collapsed' : 'expanded'}-first-paint`"
                     >
                         <!-- Home is a persistent control: it stays visible in both the
@@ -160,7 +160,7 @@ function togglePlay() {
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
                 <GlassDock
-                    always-expanded
+                    :collapse="false"
                 >
                     <DockControl aria-label="Previous"><SkipBack /></DockControl>
                     <DockControl
@@ -193,7 +193,7 @@ function togglePlay() {
             >
                 <GlassDock
                     backdrop-mode="static"
-                    always-expanded
+                    :collapse="false"
                     data-testid="dock-static-backdrop"
                 >
                     <DockControl aria-label="Home"><Home /></DockControl>
@@ -211,7 +211,7 @@ function togglePlay() {
             <div
                 class="dock-stage-tile flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-border/30 p-8"
             >
-                <GlassDock always-expanded fit-content>
+                <GlassDock :collapse="false" fit-content>
                     <Select v-model="dockView">
                         <DockTrigger for="select"
                             aria-label="Dock view"
@@ -317,7 +317,7 @@ function togglePlay() {
             <div
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
-                <GlassDock always-expanded>
+                <GlassDock :collapse="false">
                     <DockControl aria-label="New"><Plus /></DockControl>
 
                     <Popover keep-dock-open>
@@ -442,18 +442,27 @@ function togglePlay() {
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
                 data-testid="dock-slider-hold"
             >
-                <!-- data-testid="dock-capture" is the deterministic  capture
-                     selector — a plain root-forwarded data attr (NOT the GlassDock
-                     `container-name` prop, which co-applies `container-type: inline-size`
-                     and breaks the collapse↔expand morph — the
-                     dock-collapse-vs-container-type interaction). The items-lag harness holds THIS single
-                     collapsible dock: it morphs RELIABLY (collapsed→expanded ~490px on the
-                     --dock-morph-t spring) and its trailing .dock-layer--full child rides
-                     the deliberate per-child reveal stagger, so it is the faithful surface
-                     for measuring the entering-child onset the chronic owes. The short
-                     :collapse-delay="600" keeps the capture's collapse-baseline fast.
+                <!-- data-testid="dock-capture" is the deterministic capture selector —
+                     a plain root-forwarded data attr. ~~NOT the GlassDock
+                     `container-name` prop, which co-applies `container-type:
+                     inline-size` and breaks the collapse↔expand morph~~ —
+                     [2026-08-12 · BK #47 W1] that warning taught a prop that HAS NEVER
+                     EXISTED: `DockProps` never carried a `containerName` member, and the
+                     two `@container dock` consumers it was supposed to feed were struck
+                     at 558c3fa3 as dead-by-construction. The `container-type:
+                     inline-size` hazard it names is real (shell.css:136-147 records it as
+                     the 3.3.0 sliver regression) — it is simply not reachable through any
+                     dock prop. The items-lag harness holds THIS single collapsible dock:
+                     it morphs RELIABLY (collapsed→expanded ~490px on the --dock-morph-t
+                     spring) and its trailing .dock-layer--full child rides the deliberate
+                     per-child reveal stagger, so it is the faithful surface for measuring
+                     the entering-child onset the chronic owes.
+                     ~~The short :collapse-delay="600" keeps the capture's
+                     collapse-baseline fast~~ — [2026-08-12 · BK #47 W1 SURFACE] the
+                     `collapseDelay` prop is struck; every dock now reads the one
+                     DOCK_COLLAPSE_DELAY_MS window.
                      Demo-private test-affordance only; no behavioral change. -->
-                <GlassDock :collapse-delay="600" data-testid="dock-capture">
+                <GlassDock data-testid="dock-capture">
                     <DockControl aria-label="Volume"><Volume2 /></DockControl>
                     <div class="flex w-44 items-center px-2">
                         <Slider
@@ -499,15 +508,19 @@ function togglePlay() {
             >
                 <!-- data-testid="dock-tap-capture" — deterministic tap capture
                      click-integrity capture surface (a demo-private test affordance,
-                     same pattern as dock-capture; a plain root data attr, NOT the
-                     container-name prop). It mirrors the slides deck's nav-pattern: a
+                     same pattern as dock-capture; a plain root data attr).
+                     [2026-08-12 · BK #47 W1] ~~NOT the container-name prop~~ — no such
+                     prop has ever existed; see the dock-capture note above.
+                     It mirrors the slides deck's nav-pattern: a
                      collapsed gear-SUMMARY control whose post-expand coordinate hosts a
                      DIFFERENT activatable control (Skip), so the identity-scoped
                      pass-through is genuinely exercised — a tap/click that races the
                      morph and lands on the swapped-in control by coordinate is the
-                     defect the guard catches. The short :collapse-delay keeps the
-                     collapse baseline fast. No behavioral change. -->
-                <GlassDock :collapse-delay="600" data-testid="dock-tap-capture">
+                     defect the guard catches.
+                     ~~The short :collapse-delay keeps the collapse baseline fast~~ —
+                     [2026-08-12 · BK #47 W1 SURFACE] `collapseDelay` is struck.
+                     No behavioral change. -->
+                <GlassDock data-testid="dock-tap-capture">
                     <DockControl aria-label="Skip back"><SkipBack /></DockControl>
                     <DockControl aria-label="Previous"
                         ><ChevronDown
@@ -558,84 +571,28 @@ function togglePlay() {
             </p>
         </StorySection>
 
-        <StorySection heading="Overflow wrap — content reflows to multiple rows" gap="md">
-            <p class="text-micro text-muted-foreground">
-                <code class="rounded bg-muted px-1">overflow="wrap"</code> reflows the
-                row to multiple rows by INTRINSIC flex-wrap whenever the content's
-                natural width exceeds the dock's inline cap (the dock shrink-wraps to
-                content and
-                <code class="rounded bg-muted px-1"
-                    >max-inline-size: var(--dock-max-inline-size)</code
-                >
-                caps it) — at ANY viewport width, no breakpoint. The wrapped multi-row
-                silhouette lifts onto the card/floating shadow tier and a finite
-                <code class="rounded bg-muted px-1">--dock-card-radius</code> corner as
-                it expands.
-            </p>
-            <!-- Host caps --dock-max-inline-size at 28rem so the 14-control row overflows the cap
-                 and wraps ON-SCREEN at desktop (the consumer-override the cap token exposes). -->
-            <div class="flex justify-center py-6">
-                <GlassDock
-                    overflow="wrap"
-                    always-expanded
-                    style="--dock-max-inline-size: 28rem"
-                >
-                    <DockControl aria-label="Home"><Home /></DockControl>
-                    <DockControl aria-label="Search"><Search /></DockControl>
-                    <DockControl aria-label="Add"><Plus /></DockControl>
-                    <DockControl aria-label="Notifications"><Bell /></DockControl>
-                    <DockControl aria-label="Share"><Share2 /></DockControl>
-                    <DockControl aria-label="Download"><Download /></DockControl>
-                    <DockControl aria-label="Settings"><Settings /></DockControl>
-                    <DockControl aria-label="Previous"><SkipBack /></DockControl>
-                    <DockControl aria-label="Play"><Play /></DockControl>
-                    <DockControl aria-label="Next"><SkipForward /></DockControl>
-                    <DockControl aria-label="Home (2)"><Home /></DockControl>
-                    <DockControl aria-label="Search (2)"><Search /></DockControl>
-                    <DockControl aria-label="Add (2)"><Plus /></DockControl>
-                    <DockControl aria-label="Settings (2)"
-                        ><Settings
-                    /></DockControl>
-                </GlassDock>
-            </div>
-            <p class="text-micro text-muted-foreground">
-                Collapsible wrap dock — hover to expand. Collapsed it is a single-row
-                stadium pill (flat
-                <code class="rounded bg-muted px-1">--shadow-dock</code> glow); expanded
-                it wraps to rows AND morphs corner + elevation onto the card tier in
-                lockstep on the one dock spring (no jump-cut).
-            </p>
-            <div class="flex justify-center py-6">
-                <GlassDock overflow="wrap" style="--dock-max-inline-size: 22rem">
-                    <DockControl aria-label="Home"><Home /></DockControl>
-                    <DockControl aria-label="Search"><Search /></DockControl>
-                    <DockControl aria-label="Add"><Plus /></DockControl>
-                    <DockControl aria-label="Notifications"><Bell /></DockControl>
-                    <DockControl aria-label="Share"><Share2 /></DockControl>
-                    <DockControl aria-label="Download"><Download /></DockControl>
-                    <DockControl aria-label="Settings"><Settings /></DockControl>
-                    <DockControl aria-label="Previous"><SkipBack /></DockControl>
-                    <DockControl aria-label="Play"><Play /></DockControl>
-                    <DockControl aria-label="Next"><SkipForward /></DockControl>
-                    <DockControl aria-label="Home (2)"><Home /></DockControl>
-                    <DockControl aria-label="Search (2)"><Search /></DockControl>
-                </GlassDock>
-            </div>
-        </StorySection>
+        <!-- [2026-08-12 · BK #47 W1 SURFACE] The "Overflow wrap — content reflows to
+             multiple rows" section stood here, two docks deep on `overflow="wrap"`.
+             The `overflow` prop is struck: the over-cap strategy is closed-form
+             arithmetic under the lattice, and a second in-cap layout mode (INTRINSIC
+             flex-reflow to N rows) is not a dock. The `--dock-max-inline-size` cap it
+             demonstrated is a token, still consumer-settable, still exercised by the
+             /dock/overflow story. -->
 
-        <StorySection heading="Big dock — card shell + tile grid" gap="md">
+        <StorySection heading="Big dock — the card shell" gap="md">
             <p class="text-micro text-muted-foreground">
                 <code class="rounded bg-muted px-1">shape="card"</code> gives a finite
-                concentric card radius (not a stadium pill);
-                <code class="rounded bg-muted px-1">layout="grid"</code> lays children
-                out as a self-wrapping 2D tile grid for large multi-row docks (<code
-                    class="rounded bg-muted px-1"
-                    >alwaysExpanded</code
-                >
-                by contract — no width morph).
+                concentric card radius (not a stadium pill) — the big-dock shell, above
+                2xl and below pill. Collapsed it returns to a pill and the swap morphs on
+                the one dock spring.
             </p>
+            <!-- [2026-08-12 · BK #47 W1 SURFACE] ~~`layout="grid"` lays children out as a
+                 self-wrapping 2D tile grid (`alwaysExpanded` by contract)~~ — struck with
+                 its prop: a 2D tile panel that cannot collapse is a different component
+                 wearing the dock's chrome. `shape="card"` keeps the shell it was paired
+                 with. -->
             <div class="flex justify-center py-6">
-                <GlassDock shape="card" layout="grid" class="w-80">
+                <GlassDock shape="card" :collapse="false" class="w-80">
                     <DockControl aria-label="Home"><Home /></DockControl>
                     <DockControl aria-label="Search"><Search /></DockControl>
                     <DockControl aria-label="Add"><Plus /></DockControl>

@@ -17,7 +17,6 @@ import {
     Map as MapIcon,
     ChevronRight,
 } from "@lucide/vue";
-import { Button } from "@glass/components/button";
 import {
     GlassDock,
     DockControl,
@@ -78,14 +77,14 @@ const selection = useSelectionGroup<Filter>({
 // ── The overlay-trigger fold demo ──
 const view = ref<string>("grid");
 
-// ── interaction="manual" — the consumer owns posture ──
+// ── expand() / collapse() — the consumer drives posture ──
 //
-// On a manual dock every internal environmental writer (hover / focus / idle timer /
-// outside-click / collapsed-tap / touch) is suppressed at BOTH poles; only the
-// imperative `expand()`/`collapse()` write. Here a single reducer (`manualExpanded`)
-// owns posture and drives the exposed methods, and a `#persistent` disclosure button
-// (never inert, reachable in both poles) is the a11y-honest expand affordance the
-// manual contract requires.
+// [2026-08-12 · BK #47 W1 SURFACE] ~~`interaction="manual"` suppressed every internal
+// environmental writer at both poles~~ — the prop is struck: a pole that switches the
+// dock's own state machine off is not a knob, it is a second component. What survives
+// is the part that was always the real surface: `expand()` / `collapse()` are exposed,
+// so a consumer drives posture imperatively BESIDE the built-in FSM. The `#persistent`
+// disclosure (never inert, reachable in both poles) is the a11y-honest affordance.
 const manualDock = ref<InstanceType<typeof GlassDock> | null>(null);
 const manualExpanded = ref(false);
 function toggleManual() {
@@ -93,17 +92,13 @@ function toggleManual() {
     if (manualExpanded.value) manualDock.value?.expand();
     else manualDock.value?.collapse();
 }
-
-// The mode flip exercises the axis's flip watch live: a timer armed in auto
-// must never fire a ghost collapse after the flip to manual.
-const dockInteraction = ref<"auto" | "manual">("manual");
 </script>
 
 <template>
     <StoryPage>
         <StorySection heading="DockControl — one control, a shape axis">
             <DockStage>
-                <GlassDock always-expanded aria-label="Dock control shapes">
+                <GlassDock :collapse="false" aria-label="Dock control shapes">
                     <template #persistent>
                         <DockControl aria-label="Home"><Home /></DockControl>
                     </template>
@@ -125,7 +120,7 @@ const dockInteraction = ref<"auto" | "manual">("manual");
 
         <StorySection heading="useSelectionGroup — one engine drives the control run">
             <DockStage>
-                <GlassDock always-expanded aria-label="Media filter">
+                <GlassDock :collapse="false" aria-label="Media filter">
                     <div
                         ref="filterRowRef"
                         :role="selection.groupRole.value === 'radiogroup' ? 'radiogroup' : 'group'"
@@ -156,7 +151,7 @@ const dockInteraction = ref<"auto" | "manual">("manual");
 
         <StorySection heading="DockTrigger — one overlay trigger">
             <DockStage>
-                <GlassDock always-expanded aria-label="View picker">
+                <GlassDock :collapse="false" aria-label="View picker">
                     <Select v-model="view">
                         <DockTrigger for="select" aria-label="View">
                             <SelectValue placeholder="View" />
@@ -171,13 +166,12 @@ const dockInteraction = ref<"auto" | "manual">("manual");
             </DockStage>
         </StorySection>
 
-        <StorySection heading="interaction=&quot;manual&quot; — the consumer owns posture">
+        <StorySection heading="expand() / collapse() — the consumer drives posture">
             <DockStage>
                 <GlassDock
                     ref="manualDock"
-                    :interaction="dockInteraction"
-                    start-collapsed
-                    aria-label="Consumer-owned dock"
+                    :collapse="'closed'"
+                    aria-label="Consumer-driven dock"
                 >
                     <template #persistent>
                         <DockControl
@@ -204,17 +198,11 @@ const dockInteraction = ref<"auto" | "manual">("manual");
             </DockStage>
             <p class="text-small text-muted-foreground mt-3">
                 Posture is: <strong>{{ manualExpanded ? "expanded" : "collapsed" }}</strong>
-                — hover, focus, idle, and outside-click move nothing. Only the
-                <code>#persistent</code> disclosure (never inert, reachable in both poles)
-                drives <code>expand()</code>/<code>collapse()</code>.
+                — driven by the <code>#persistent</code> disclosure (never inert,
+                reachable in both poles) through the exposed
+                <code>expand()</code>/<code>collapse()</code>. The built-in hover / focus
+                / idle machinery stays live beside it.
             </p>
-            <Button
-                emphasis="quiet"
-                class="mt-2"
-                @click="dockInteraction = dockInteraction === 'manual' ? 'auto' : 'manual'"
-            >
-                interaction: {{ dockInteraction }} — flip
-            </Button>
         </StorySection>
     </StoryPage>
 </template>

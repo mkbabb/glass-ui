@@ -10,7 +10,8 @@
 // THE CONSUMING-SEAM DISCIPLINE. The page composes `useDockSearch` (the gesture/shrink/
 // dropdown seam) + the SHIPPED /search `useFuzzySearch` matcher (NO re-fork) + the
 // `useVirtualSectionWindow` results window + the `useScrollTo` ToC subuse — and slots its
-// field + dropdown into `<GlassDock search>`'s `#search` aperture. The morph engine
+// field + dropdown into the dock's `#search` aperture (authoring the slot IS the
+// opt-in — [2026-08-12 · BK #47 W1 SURFACE] ~~`<GlassDock search>`~~). The morph engine
 // (dockMorphContext/DOCK_SPRING) is byte-untouched; the dock-search is a seam BESIDE it.
 import { computed, ref, useTemplateRef } from "vue";
 import { Search } from "@lucide/vue";
@@ -174,11 +175,10 @@ function onKeydown(e: KeyboardEvent) {
 
                 <div class="dock-stage-tile dock-search-demo">
                     <!-- The dock-search bar over the live field. PERSISTENT by default;
-                         `search` opts into the field aperture. -->
+                         AUTHORING the `#search` slot opts into the field aperture. -->
                     <GlassDock
                         ref="dockEl"
-                        search
-                        always-expanded
+                        :collapse="false"
                         :background-canvas="backgroundCanvas"
                         class="dock-search-host"
                     >

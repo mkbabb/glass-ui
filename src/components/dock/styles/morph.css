@@ -75,9 +75,13 @@
        (useElementMorph.ts:229, useLiquidReveal.ts:74, useDockCtaReceive.ts:245
        `blur ?? 4`) is live, invisible to this fence, and owned by the motion rows. */
 
-    /* The padding morph is split out + scoped `:not(.dock-overflow-wrap)` so the
-       wrap variant's own padding rules (territory — `.dock-overflow-wrap` +
-       its `@media` snap-back) are NOT clobbered by this higher-specificity longhand.
+    /* ~~The padding morph is split out + scoped `:not(.dock-overflow-wrap)` so the
+       wrap variant's own padding rules are NOT clobbered by this higher-specificity
+       longhand~~ — [2026-08-12 · BK #47 W1 SURFACE] the wrap variant is struck with
+       the `overflow` prop, so there is nothing to except and the qualifier goes.
+       Specificity falls (0,2,0) → (0,1,0) on the horizontal arm; it beats nothing it
+       did not already beat, because the only rule it ever needed to yield to was the
+       wrap recipe that no longer exists.
 
        The LAYOUT-ISOLATION fix: the collapse↔expand morph is
        an INLINE-WIDTH aperture by contract ("horizontal docks animate width"), so
@@ -94,7 +98,7 @@
        (the `.collapsed .dock-layer--summary` rule below), CENTRED on the dock's
        stable-height plate by the root `align-items:center`, not by the root pad. So
        the morph reflows NOTHING vertically: 0px container-height delta. */
-    .glass-dock:not(.vertical):not(.dock-overflow-wrap) {
+    .glass-dock:not(.vertical) {
         /* The collapsed inline-pad endpoint is the EXPANDED block pad (max'd with the
            consumer `--dock-collapsed-padding` handle) so the height-pinned collapsed
            pill is SYMMETRIC → a clean circle at the `--radius-dock` 9999px. The block
@@ -131,9 +135,11 @@
        consumer `--dock-collapsed-padding` handle) so the height-pinned-cross collapsed
        pill is SYMMETRIC. Specificity 0,2,0 source-order after shell.css's static
        `.glass-dock.vertical` padding so this wins at equal specificity; at the rest
-       endpoints `--dock-expand-t` is the class value so the look is exact. Scoped to
-       the NON-scroll/non-wrap vertical dock. */
-    .glass-dock.vertical:not(.dock-overflow-wrap) {
+       endpoints `--dock-expand-t` is the class value so the look is exact.
+       [2026-08-12 · BK #47 W1 SURFACE] ~~Scoped to the NON-scroll/non-wrap vertical
+       dock~~ — the `:not(.dock-overflow-wrap)` arm is struck with the `overflow`
+       prop; the rule stays (0,2,0), the same tie source order already resolved. */
+    .glass-dock.vertical {
         --dock-pad-collapsed: max(
             var(--dock-padding-inline, 0.5rem),
             var(--dock-collapsed-padding, 0px)

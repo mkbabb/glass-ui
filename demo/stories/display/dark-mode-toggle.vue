@@ -15,7 +15,6 @@ import { GlassDock } from "@glass/components/dock";
 // Standalone rungs only — `dock` is excluded here because it inherits its
 // size from a GlassDock host (demonstrated in its own section below).
 const sizes = ["sm", "md", "lg", "control"] as const;
-const dockSizes = ["sm", "md", "xl"] as const;
 const disableTransitions = ref(false);
 </script>
 
@@ -44,20 +43,20 @@ const disableTransitions = ref(false);
 
         <StorySection
             label="dock rung — sizes to its GlassDock host"
-            blurb='size="dock" reads --dock-control-size from the surrounding GlassDock, so the toggle matches its dock siblings at every density. Shown standalone it would fall through to a bare 40px fallback and teach nothing — here it rides three live docks.'
+            blurb='size="dock" reads --dock-control-size from the surrounding GlassDock, so the toggle matches its dock siblings. Shown standalone it would fall through to a bare 40px fallback and teach nothing — here it rides a live dock.'
         >
+            <!-- [2026-08-12 · BK #47 W1 SURFACE] This section iterated a GlassDock
+                 `size` prop across three density rungs. The prop is struck (one density
+                 is the base; `[data-preset]` is the geometry override), so the three
+                 docks fold to the one that is now the whole axis. -->
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap items-end gap-6">
-                    <div
-                        v-for="d in dockSizes"
-                        :key="d"
-                        class="flex flex-col items-center gap-2"
-                    >
-                        <GlassDock :size="d" always-expanded>
+                    <div class="flex flex-col items-center gap-2">
+                        <GlassDock :collapse="false">
                             <DarkModeToggle size="dock" />
                         </GlassDock>
                         <code class="fira-code text-mono-small text-muted-foreground">
-                            size="{{ d }}"
+                            size="dock"
                         </code>
                     </div>
                 </div>

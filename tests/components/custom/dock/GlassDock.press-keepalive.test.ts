@@ -14,7 +14,7 @@ function mountPressCollapseDock() {
                     GlassDock,
                     {
                         ref: dock,
-                        startCollapsed: false,
+                        collapse: "open",
                     },
                     {
                         default: () => [

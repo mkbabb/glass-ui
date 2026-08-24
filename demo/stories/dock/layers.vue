@@ -81,7 +81,7 @@ function back() {
                 active layer = {{ activeLayer }}
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
-                <GlassDock :background-canvas="backgroundCanvas" always-expanded fit-content>
+                <GlassDock :background-canvas="backgroundCanvas" :collapse="false" fit-content>
                     <DockLayerGroup
                         v-model:active="activeLayer"
                         :show-switcher="false"
@@ -136,7 +136,7 @@ function back() {
                 navigation remain available at every motion setting.
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
-                <GlassDock :background-canvas="backgroundCanvas" always-expanded fit-content>
+                <GlassDock :background-canvas="backgroundCanvas" :collapse="false" fit-content>
                     <DockLayerGroup
                         v-model:active="switcherLayer"
                         motion="full"
@@ -166,7 +166,7 @@ function back() {
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
                 <GlassDock :background-canvas="backgroundCanvas"
                     orientation="vertical"
-                    always-expanded
+                    :collapse="false"
                     shape="rounded"
                     aria-label="Vertical layer dock"
                     data-testid="dock-vertical-layer-host"
@@ -241,7 +241,7 @@ function back() {
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
                 <GlassDock :background-canvas="backgroundCanvas"
                     orientation="vertical"
-                    always-expanded
+                    :collapse="false"
                     shape="rounded"
                     aria-label="Vertical overflow dock"
                     data-testid="dock-vertical-overflow-host"
@@ -299,7 +299,7 @@ function back() {
                 </button>
             </div>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
-                <GlassDock :background-canvas="backgroundCanvas" always-expanded fit-content>
+                <GlassDock :background-canvas="backgroundCanvas" :collapse="false" fit-content>
                     <DockCrossfade :active="controlled" data-testid="dock-crossfade-controlled">
                         <DockLayer
                             v-for="p in controlledPanes"

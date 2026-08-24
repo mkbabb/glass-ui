@@ -162,10 +162,12 @@ describe("the hairline INSIDE the dock is BUILT (E29's actual referent)", () => 
         expect(anchored.classes()).toContain("dock-separator");
     });
 
-    it("6. the hairline spans the CROSS EXTENT of its layout root in all three layouts", () => {
+    it("6. the hairline spans the CROSS EXTENT of its layout root in both layouts", () => {
         // A row dock's hairline is a FULL-HEIGHT vertical rule (the plain separator is a
-        // half-height sliver); a column dock's is a full-WIDTH horizontal rule; the grid
-        // dock's already spanned and keeps doing so.
+        // half-height sliver); a column dock's is a full-WIDTH horizontal rule.
+        // [2026-08-12 · BK #47 W1 SURFACE] ~~and the grid dock's already spanned and
+        // keeps doing so~~ — the `layout` prop went at W1, so there is no `.layout-grid`
+        // root left to span, to exclude from the row arm, or to assert about here.
         //
         // BOTH arms root at `:is(.glass-dock, .dock-layer-group)`: the layer group is a
         // layout root in its own right everywhere else in that partial, and an arm that
@@ -174,7 +176,7 @@ describe("the hairline INSIDE the dock is BUILT (E29's actual referent)", () => 
         // over the `.dock-separator` layout rules they override.
         const ROOT = String.raw`:is\(\.glass-dock, \.dock-layer-group\)`;
         const rowRule = layerGroup.match(
-            new RegExp(`${ROOT}:not\\(\\.vertical\\):not\\(\\.layout-grid\\) \\.dock-hairline\\s*\\{([^}]*)\\}`),
+            new RegExp(`${ROOT}:not\\(\\.vertical\\) \\.dock-hairline\\s*\\{([^}]*)\\}`),
         )?.[1];
         expect(rowRule).toBeDefined();
         expect(rowRule).toMatch(/align-self:\s*stretch/);
@@ -186,10 +188,6 @@ describe("the hairline INSIDE the dock is BUILT (E29's actual referent)", () => 
         expect(colRule).toBeDefined();
         expect(colRule).toMatch(/align-self:\s*stretch/);
         expect(colRule).toMatch(/width:\s*100%/);
-
-        expect(layerGroup).toMatch(
-            /\.glass-dock\.layout-grid \.dock-separator\s*\{[^}]*grid-column:\s*1 \/ -1/,
-        );
     });
 
     it("7. ONE hairline name — `--dock-hairline` declared once, read by both painters", () => {

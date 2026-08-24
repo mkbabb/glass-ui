@@ -24,8 +24,12 @@
     /* The search-field region inside the morph aperture. The consumer slots its
        <SearchBar>/<FuzzySearch> here; this rule owns the legibility seam + the layout
        inside the aperture (a column: the field over its dropdown). It is present ONLY on
-       a `[data-search]` dock (additive — a non-search dock never carries it). */
-    .glass-dock[data-search] .dock-search-field {
+       a dock that AUTHORS the `#search` slot (additive — a non-search dock never
+       renders `.dock-search-field`, so the surface is its own gate).
+       [2026-08-12 · BK #47 W1 SURFACE] ~~`.glass-dock[data-search]`~~ — the
+       `search` prop that stamped the attribute is struck; the slot IS the opt-in, and
+       `.dock-search-field` only exists when it is authored. */
+    .glass-dock .dock-search-field {
         display: flex;
         flex-direction: column;
         inline-size: 100%;
@@ -39,7 +43,7 @@
        `@utility glass-plate` seam the dock's L0 plate does — one recipe, two surfaces,
        never a field-local fork. The field TEXT is `--foreground` (the full warm ink);
        the placeholder/muted caption is `--on-glass-muted` (5.76:1 vs the plate). */
-    .glass-dock[data-search] .dock-search-field .input-bar {
+    .glass-dock .dock-search-field .input-bar {
         --glass-veil-tier: var(--glass-veil-floating);
         @apply glass-plate;
         color: var(--foreground);
@@ -48,9 +52,9 @@
     /* The placeholder + the autocomplete ghost-text + any muted caption inside the field
        read the on-glass muted rung (NOT `--muted-foreground`, which is calibrated against
        the opaque page and collapses on a translucent darkened plate). */
-    .glass-dock[data-search] .dock-search-field .input-bar-field::placeholder,
-    .glass-dock[data-search] .dock-search-field .dock-search-ghost,
-    .glass-dock[data-search] .dock-search-field .dock-search-result-meta {
+    .glass-dock .dock-search-field .input-bar-field::placeholder,
+    .glass-dock .dock-search-field .dock-search-ghost,
+    .glass-dock .dock-search-field .dock-search-result-meta {
         color: var(--on-glass-muted);
     }
 
@@ -59,7 +63,7 @@
        `.glass-menu-row` per row; this rule reaches the selected/highlighted row through
        the SAME register the menu families use (no flat `bg-accent`/`bg-muted` fork). The
        active result reads the data-highlighted state the menu recipe already paints. */
-    .glass-dock[data-search] .dock-search-field .dock-search-result {
+    .glass-dock .dock-search-field .dock-search-result {
         color: var(--foreground);
     }
 }

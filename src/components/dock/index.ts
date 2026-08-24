@@ -1,5 +1,12 @@
 export { default as GlassDock } from "./GlassDock.vue";
-export type { DockBackdropMode, DockInteraction } from "./composables/useDockShellProps";
+/* [2026-08-12 · BK #47 W1 SURFACE] `DockInteraction` is STRUCK with the `interaction`
+   prop (a type-only export — the runtime `/dock` barrel is unmoved). `DockCollapse`
+   takes its place on the surface as the folded collapse member's union. */
+export type {
+    DockBackdropMode,
+    DockCollapse,
+    DockProps,
+} from "./composables/useDockShellProps";
 export { default as DockLayerGroup } from "./DockLayerGroup.vue";
 export { default as DockLayer } from "./DockLayer.vue";
 // Thin controlled face-swap core. The
@@ -24,11 +31,12 @@ export { default as DockTrigger } from "./DockTrigger.vue";
 // WCAG 2.2.2 pause/play toggle for animated backgrounds
 // (Aurora/Blob), bound by the consumer to the renderer's pause()/resume().
 export { default as DockBackgroundToggle } from "./DockBackgroundToggle.vue";
-// Orientation- and layout-aware dock divider primitive
-// (component-over-class: the raw `.dock-separator` was axis-blind). Reads the dock
-// orientation/layout via useOptionalDockContext and paints perpendicular to the
-// layout axis (vertical hairline in a row dock, horizontal rule in a column dock,
-// full-row section break in a grid dock).
+// Orientation-aware dock divider primitive (component-over-class: the raw
+// `.dock-separator` was axis-blind). Reads the dock orientation via
+// useOptionalDockContext and paints perpendicular to the layout axis (vertical
+// hairline in a row dock, horizontal rule in a column dock).
+// [2026-08-12 · BK #47 W1 SURFACE] ~~full-row section break in a grid dock~~ — the
+// `layout="grid"` tile panel is struck with its prop.
 export { default as DockSeparator } from "./DockSeparator.vue";
 // Re-export composable types so consumers can
 // type wrappers around the published surface. `UseDockStateOptions`
@@ -54,7 +62,8 @@ export {
     provideDockContext,
     type DockContext,
     type DockOrientation,
-    type DockLayout,
+    /* ~~`DockLayout`~~ — [2026-08-12 · BK #47 W1 SURFACE] STRUCK with the `layout`
+       prop; the context member it typed had zero readers. */
 } from "./composables/dockContext";
 
 // `useDockOrientationMorph` is definition-absent.
@@ -81,7 +90,8 @@ export {
 // VSCode subsequence scorer — NO re-fork) + the dock's OWN `--dock-morph-t` metaball
 // morph (the byte-untouched `morph-bridge.css` — box-inviolate, no second engine) + the
 // optional `useScrollChrome` shrink + the ToC `ensureTargetWindow`/`scrollTo` subsume.
-// A consuming seam BESIDE the morph engine; `<GlassDock search>` opts into it. `SearchBar`
+// A consuming seam BESIDE the morph engine; a dock opts in by AUTHORING the
+// `#search` slot ([2026-08-12 · BK #47 W1 SURFACE] ~~`<GlassDock search>`~~). `SearchBar`
 // KEEPS (a live standalone surface); the `FuzzySearch.vue` demo component retired onto
 // this register at REDUCTION W3.
 // The network source plugs via `onSearch`.

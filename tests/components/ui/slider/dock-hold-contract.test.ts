@@ -165,7 +165,7 @@ describe("dock context-driven host-native hold contract", () => {
                 // the dock root, which querySelector-on-self would miss).
                 return () =>
                     h("div", { class: "dock-tree-host" }, [
-                        h(GlassDock, { collapseDelay: 600 }, {
+                        h(GlassDock, null, {
                             default: () => [
                                 h(Slider, {
                                     modelValue: v.value,

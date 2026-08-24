@@ -62,7 +62,7 @@ const scrollSel = useSelectionGroup<Item>({
         <StorySection heading="Native scroll track — scroll-into-view on select">
             <DockStage>
                 <GlassDock
-                    always-expanded
+                    :collapse="false"
                     aria-label="Scrollable app strip"
                     :style="{ '--dock-max-inline-size': '22rem' }"
                 >

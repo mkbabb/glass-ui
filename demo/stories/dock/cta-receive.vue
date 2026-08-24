@@ -132,7 +132,7 @@ function revealNow() {
                     <!-- The dock with the target control. -->
                     <GlassDock
                         :background-canvas="backgroundCanvas"
-                        always-expanded
+                        :collapse="false"
                         class="relative z-10"
                     >
                         <DockControl aria-label="Foundations"><Compass /></DockControl>

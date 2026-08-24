@@ -27,7 +27,7 @@ import DockStage from "./_frame/DockStage.vue";
                 <div
                     class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
                 >
-                    <GlassDock :background-canvas="backgroundCanvas" always-expanded class="relative z-10">
+                    <GlassDock :background-canvas="backgroundCanvas" :collapse="false" class="relative z-10">
                         <div class="contents" role="group" aria-label="Home">
                             <DockControl aria-label="Home"><Home /></DockControl>
                         </div>
@@ -68,7 +68,7 @@ import DockStage from "./_frame/DockStage.vue";
                 >
                     <GlassDock
                         :background-canvas="backgroundCanvas"
-                        always-expanded
+                        :collapse="false"
                         class="relative z-10"
                         data-testid="dock-hairline-row"
                     >
@@ -86,7 +86,7 @@ import DockStage from "./_frame/DockStage.vue";
                     <GlassDock
                         :background-canvas="backgroundCanvas"
                         orientation="vertical"
-                        always-expanded
+                        :collapse="false"
                         class="relative z-10"
                         data-testid="dock-hairline-column"
                     >

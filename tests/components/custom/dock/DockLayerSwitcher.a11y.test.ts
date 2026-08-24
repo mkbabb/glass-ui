@@ -30,7 +30,7 @@ async function mountSwitcher(withThirdFace = false) {
     const Host = defineComponent({
         setup() {
             return () =>
-                h(GlassDock, { startCollapsed: false }, () => [
+                h(GlassDock, { collapse: "open" }, () => [
                     h(
                         DockLayerGroup,
                         {

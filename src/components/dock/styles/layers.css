@@ -107,11 +107,12 @@
     }
 
     /* Horizontal dock content grows visibly when the active layer's natural
-       width exceeds the content area (grow-to-fit; consumers needing wrap opt
-       into `overflow="wrap"`). No edge-fade mask — content never clips or scrolls,
-       so a feather has nothing to feather and only bleeds a stray ramp onto
-       the edge controls. */
-    .glass-dock.expanded:not(.dock-overflow-wrap) > .dock-controls > .dock-layers {
+       width exceeds the content area (grow-to-fit). ~~consumers needing wrap opt
+       into `overflow="wrap"`~~ — [2026-08-12 · BK #47 W1 SURFACE] there is no wrap
+       register to except, so the `:not(.dock-overflow-wrap)` qualifier goes with it.
+       No edge-fade mask — content never clips or scrolls, so a feather has nothing to
+       feather and only bleeds a stray ramp onto the edge controls. */
+    .glass-dock.expanded > .dock-controls > .dock-layers {
         overflow-x: visible;
     }
 
@@ -323,51 +324,13 @@
         cursor: default;
     }
 
-    /* ── `layout="grid"` the 2D auto-grid big dock ──────────────
-       The active layer becomes a self-wrapping tile grid (Launchpad / Stage-Manager
-       track symmetry — `auto-fill` columns floored at `--dock-tile-min`, explicit
-       `grid-auto-rows` so the concentric look holds). DISTINCT from
-       `overflow="wrap"`'s content-ordered flex-wrap. A `layout="grid"` dock is
-       `alwaysExpanded` by contract (GlassDock.vue), so there is NO width morph and
-       hence NO per-frame grid-column reflow. `white-space: normal` releases the
-       single-row nowrap so the tiles wrap. */
-    .glass-dock.layout-grid {
-        white-space: normal;
-    }
-
-    .glass-dock.layout-grid .dock-layer--full {
-        display: grid;
-        grid-template-columns: repeat(
-            auto-fill,
-            minmax(var(--dock-tile-min, 4.5rem), 1fr)
-        );
-        grid-auto-rows: var(--dock-tile-min, 4.5rem);
-        gap: var(--dock-layer-gap, 0.375rem);
-        width: 100%;
-        height: auto;
-        white-space: normal;
-        /* Center each fixed-size button in its tile cell on BOTH
-           axes. The grid layer only inherited `align-items: center` (block axis);
-           `justify-items` defaulted to `stretch`, which degenerates to `start` for a
-           fixed-width `inline-flex` button — so every icon hugged the inline-start
-           (left) edge of its tile, ~16px off-center (the "big-dock icons are not
-           aligned" defect). `place-items: center` centers on both axes, MIRRORING the
-           flex-wrap layer's `justify-content: center`. */
-        place-items: center;
-    }
-
-    /* A grid dock fills the inline cap; the active layer is the panel body, not a
-       shrink-to-fit row. The cap is the `--dock-max-inline-size` clamp (KEPT). */
-    .glass-dock.layout-grid .dock-layers {
-        width: 100%;
-    }
-
-    /* CONCENTRIC inner tiles — inner radius = outer card radius − padding (the
-       universal macOS / visionOS / Raycast rule). NEVER nest two pills
-       (stadium-in-stadium); a finite outer + a stepped-down inner. */
-    .glass-dock.layout-grid.shape-card .dock-layer--full > * {
-        border-radius: calc(
-            var(--dock-card-radius) - var(--dock-padding-inline, 0.5rem)
-        );
-    }
+    /* ~~`layout="grid"` — the 2D auto-grid big dock: the `.layout-grid` white-space
+       release, the `auto-fill`/`--dock-tile-min` tile track on `.dock-layer--full`,
+       the full-width `.dock-layers` panel body, and the concentric
+       `.layout-grid.shape-card` inner-radius step~~ —
+       [2026-08-12 · BK #47 W1 SURFACE] STRUCK with the `layout` prop. Every rule here
+       was gated on a class only that prop emitted, and the panel it built was
+       `alwaysExpanded` by contract — a tile grid that cannot collapse is not a dock.
+       `shape="card"` keeps the big-dock shell it was paired with; `--dock-tile-min`
+       and `--dock-tile-pad` die with their one consumer. */
 }

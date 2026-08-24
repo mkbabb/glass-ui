@@ -16,7 +16,8 @@
         /* inline-absorb: the `--dock-tab-h` density-keyed height
            knob (parallel to DockIconButton's --dock-control-size). The
            density rungs that set `--dock-tab-h` per tier live in dock.css
-           (the `.glass-dock[data-size="…"]` blocks), NOT utilities.css, so
+           (the density block on `.glass-dock`; [2026-08-12 · BK #47 W1 SURFACE]
+           ~~the `.glass-dock[data-size="…"]` blocks~~ — one rung now), NOT utilities.css, so
            there is no cascade-order split-brain. When a parent <GlassDock size="…">
            sets `--dock-tab-h`, the tab-button reserves that row even when
            the glyph + padding sum would ride lower. Falls through to

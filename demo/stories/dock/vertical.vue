@@ -74,7 +74,7 @@ const initialPostures = [
                 />
                 <GlassDock
                     orientation="vertical"
-                    always-expanded
+                    :collapse="false"
                     class="relative z-10"
                     aria-label="Example vertical dock"
                 >
@@ -116,7 +116,7 @@ const initialPostures = [
             <div class="flex justify-start">
                 <GlassDock
                     orientation="vertical"
-                    always-expanded
+                    :collapse="false"
                     shape="rounded"
                     aria-label="Rounded vertical dock"
                 >
@@ -157,7 +157,7 @@ const initialPostures = [
                         orientation="vertical"
                         role="toolbar"
                         aria-orientation="vertical"
-                        :start-collapsed="posture.startCollapsed"
+                        :collapse="posture.startCollapsed ? 'closed' : 'open'"
                         :aria-label="`${posture.label} vertical dock`"
                         :data-testid="`dock-vertical-${posture.startCollapsed ? 'collapsed' : 'expanded'}-first-paint`"
                     >

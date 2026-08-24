@@ -1,6 +1,7 @@
 import { watch } from "vue";
 import type { Ref } from "vue";
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
+import { DOCK_COLLAPSE_DELAY_MS } from "../constants";
 
 /**
  * Own collapsed-pill tap/scroll discrimination and collapse-on-deactivate state.
@@ -12,18 +13,20 @@ import { useTouchGate } from "../../../composables/dom/useTouchGate";
  * dispatch is used. The same behavior applies to both orientations.
  */
 export interface UseDockTouchGateOptions {
-    /** The dock's auto-collapse delay (ms) — the gate's deactivation timer. */
-    collapseDelay: number;
+    /** The dock's auto-collapse delay (ms) — the gate's deactivation timer.
+     * Defaults to `DOCK_COLLAPSE_DELAY_MS`, the same window `useDockState` arms. */
+    collapseDelay?: number;
     /** The dock body root — the tap discrimination anchors on it. */
     rootEl: Ref<HTMLElement | null>;
-    /**
-     * True when every environmental writer is suppressed — an always-expanded dock
-     * (force-pinned) OR a manual dock (the consumer owns posture). The gate no-ops:
-     * no tap-to-expand, no collapse-on-deactivate. Without folding `manual` in here
-     * the gate would leak a `collapse()` on deactivate (in manual `isPinned` is
-     * false and `alwaysExpanded` is false, so the collapse guard would fire).
-     */
-    quiet: Readonly<Ref<boolean>>;
+    /* ~~`quiet`: true when every environmental writer is suppressed — an
+       always-expanded dock (force-pinned) OR a manual dock~~ —
+       [2026-08-12 · BK #47 W1 SURFACE] STRUCK. The flag existed for the `manual`
+       pole ALONE, because manual was the one state orthogonal to the two signals
+       the gate already reads. With `interaction` struck, `quiet` collapses to
+       `alwaysExpanded`, and under `alwaysExpanded` the gate is unreachable
+       anyway: `visualExpanded` is true (so the gate never arms) and `isPinned`
+       is true (so the deactivate-collapse never fires). Every guard it bought is
+       bought twice over — it is now a knob with no state it can decide. */
     /** The painted expand state (`alwaysExpanded || expanded`). */
     visualExpanded: Readonly<Ref<boolean>>;
     /** The raw expand ref (the collapse-on-deactivate guard reads it). */
@@ -47,17 +50,20 @@ export interface UseDockTouchGateReturn {
 export function useDockTouchGate(
     options: UseDockTouchGateOptions,
 ): UseDockTouchGateReturn {
-    const { collapseDelay, rootEl, quiet, visualExpanded, expanded, isPinned, expand, collapse } =
-        options;
+    const {
+        collapseDelay = DOCK_COLLAPSE_DELAY_MS,
+        rootEl,
+        visualExpanded,
+        expanded,
+        isPinned,
+        expand,
+        collapse,
+    } = options;
 
     const touchGate = useTouchGate(collapseDelay);
 
-    function shouldGateTouch(): boolean {
-        return !quiet.value;
-    }
-
     function onTouchStart(event: TouchEvent): void {
-        if (!shouldGateTouch() || visualExpanded.value) return;
+        if (visualExpanded.value) return;
         const root = rootEl.value;
         const touch = event.touches[0];
         if (!root || !touch) return;
@@ -66,13 +72,14 @@ export function useDockTouchGate(
         touchGate.handleTouchStart(root, touch.clientY);
     }
 
+    /* The gate is armed ONLY by `onTouchStart`, and `handleScrollCheck`/
+       `handleTouchEnd` are no-ops on an unarmed gate — so the move/end handlers
+       need no posture guard of their own. */
     function onTouchMove(event: TouchEvent): void {
-        if (!shouldGateTouch()) return;
         touchGate.handleScrollCheck(event);
     }
 
     function onTouchEnd(): void {
-        if (!shouldGateTouch()) return;
         const wasActive = touchGate.isActive.value;
         touchGate.handleTouchEnd();
         if (!wasActive && touchGate.isActive.value && !visualExpanded.value) {
@@ -83,7 +90,7 @@ export function useDockTouchGate(
     }
 
     watch(touchGate.isActive, (isActive) => {
-        if (!isActive && expanded.value && !isPinned.value && !quiet.value) {
+        if (!isActive && expanded.value && !isPinned.value) {
             collapse();
         }
     });

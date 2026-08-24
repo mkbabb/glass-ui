@@ -2,23 +2,21 @@ import { computed, ref, watch, onUnmounted } from "vue";
 import type { ComputedRef, Ref } from "vue";
 import { isTeleportedTarget } from "../../_shared/overlay/isTeleportedTarget";
 import type { DockHoldKind } from "./dockContext";
-import type { DockInteraction } from "./useDockShellProps";
-import { HOVER_INTENT_MS } from "../constants";
+import { DOCK_COLLAPSE_DELAY_MS, HOVER_INTENT_MS } from "../constants";
 
 export interface UseDockStateOptions {
-    /** Delay before auto-collapse after mouse leaves (ms) */
+    /** Delay before auto-collapse after mouse leaves (ms). Defaults to
+     * `DOCK_COLLAPSE_DELAY_MS`, the one idle window every GlassDock reads. */
     collapseDelay?: number;
     /** Root element ref — used for contains() checks */
     rootEl: Ref<HTMLElement | null>;
     /** Disable collapse behavior and keep the dock expanded. */
     alwaysExpanded?: Ref<boolean> | boolean;
-    /**
-     * Posture ownership. `"auto"` (default) runs the built-in FSM; `"manual"`
-     * suppresses every environmental writer (hover, focus, idle timer,
-     * outside-click, collapsed-tap) at BOTH poles, leaving only `expand()` /
-     * `collapse()` operative — the consumer owns posture.
-     */
-    interaction?: Ref<DockInteraction> | DockInteraction;
+    /* ~~`interaction`: `"manual"` suppresses every environmental writer at BOTH
+       poles, leaving only `expand()`/`collapse()` — the consumer owns posture~~ —
+       [2026-08-12 · BK #47 W1 SURFACE] STRUCK with the `interaction` dock prop. The
+       pole turned this state machine off wholesale; `expand()`/`collapse()` are
+       exposed regardless, so a consumer that drives posture still drives it. */
     /** Mount-only posture for a collapsible dock. */
     initialExpanded?: boolean;
     /** Ref that suppresses click-away during an active dock animation. */
@@ -102,10 +100,9 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     // enter dwell is kept as a sweep-past guard. The stationary, state-sized hit frame
     // removes the moving-edge recheck because it never sweeps the cursor.
     const {
-        collapseDelay = 3600,
+        collapseDelay = DOCK_COLLAPSE_DELAY_MS,
         rootEl,
         alwaysExpanded = false,
-        interaction = "auto",
         initialExpanded = false,
         isTransitioning,
         dockId,
@@ -114,13 +111,9 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     const getAlwaysExpanded = () =>
         typeof alwaysExpanded === "boolean" ? alwaysExpanded : alwaysExpanded.value;
-    const getInteraction = (): DockInteraction =>
-        typeof interaction === "string" ? interaction : interaction.value;
-    /* The ONE predicate every environmental posture writer early-returns under: an
-       always-expanded dock (force-pinned pole) OR a manual dock (the consumer owns
-       posture). The imperative `expand()`/`collapse()` pair crosses it — in manual
-       they fall through to the real writes so the pole stays free. */
-    const isQuiet = () => getAlwaysExpanded() || getInteraction() === "manual";
+    /* The ONE predicate every environmental posture writer early-returns under: the
+       force-pinned pole. The imperative `expand()`/`collapse()` pair crosses it. */
+    const isQuiet = () => getAlwaysExpanded();
 
     const state = ref<DockState>(
         getAlwaysExpanded() ? "pinned" : initialExpanded ? "hover" : "collapsed",
@@ -433,22 +426,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     } else if (alwaysExpanded) {
         state.value = "pinned";
         syncDerived();
-    }
-
-    /* Flip → manual freezes any in-flight environmental timer. Load-bearing, not
-       hygiene: `scheduleCollapse`'s setTimeout callback writes `state="collapsed"`
-       with NO fire-time re-guard, so a timer armed in `auto` would collapse after
-       the flip; `clearTimer()` is the sole guarantor against a stale idle collapse
-       overriding the new owner (it also cancels the `release()` grace timer — shared
-       `collapseTimer` handle). Leaving manual re-arms nothing: `isQuiet()` guards
-       re-arm themselves and the pole is preserved. */
-    if (typeof interaction !== "string") {
-        watch(interaction, (mode) => {
-            if (mode === "manual") {
-                clearTimer();
-                clearHoverIntent();
-            }
-        });
     }
 
     // Cleanup

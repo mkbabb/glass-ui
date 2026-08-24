@@ -97,7 +97,7 @@ const hasNext = computed(() =>
         <GlassDock
             orientation="horizontal"
             fit-content
-            always-expanded
+            :collapse="false"
             class="demo-bottom-dock__shell"
             data-testid="bottom-dock-collapsible"
         >

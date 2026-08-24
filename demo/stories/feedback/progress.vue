@@ -232,7 +232,7 @@ onUnmounted(stopAnimated);
                     :key="`dock-${value}`"
                     class="relative inline-grid rounded-[var(--radius-dock)]"
                 >
-                    <GlassDock always-expanded backdrop-mode="static">
+                    <GlassDock :collapse="false" backdrop-mode="static">
                         <span class="px-3 font-mono text-micro tabular-nums">
                             {{ value }}%
                         </span>
@@ -244,9 +244,12 @@ onUnmounted(stopAnimated);
                     />
                 </div>
                 <div class="relative inline-grid rounded-[var(--radius-dock)]">
+                    <!-- [2026-08-12 · BK #47 W1 SURFACE] ~~`:collapse-delay="60_000"`~~
+                         — the prop is struck, and it was inert here regardless: a
+                         `pointer-events: none` dock that mounts collapsed never arms an
+                         idle timer to stretch. -->
                     <GlassDock
-                        :start-collapsed="true"
-                        :collapse-delay="60_000"
+                        :collapse="'closed'"
                         backdrop-mode="static"
                         style="pointer-events: none"
                     >

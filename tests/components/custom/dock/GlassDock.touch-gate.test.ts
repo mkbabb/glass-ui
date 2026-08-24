@@ -126,7 +126,7 @@ function mountDockWithCollapsedControl() {
                     // (test-env scoping, not a product change; the happy-dom
                     // `elementsFromPoint` stub precedent).
                     GlassDock,
-                    { startCollapsed: true, backdropMode: "static" },
+                    { collapse: "closed", backdropMode: "static" },
                     {
                         // Expanded layer — full controls.
                         default: () => [
@@ -221,7 +221,7 @@ describe("GlassDock touch-gate behavioural contract", () => {
                 return () =>
                     h(
                         GlassDock,
-                        { startCollapsed: true },
+                        { collapse: "closed" },
                         {
                             default: () => h("div", "full"),
                             // A NON-interactive summary — a plain label, no live control.
@@ -323,52 +323,13 @@ describe("GlassDock touch-gate behavioural contract", () => {
         wrapper.unmount();
     });
 
-    it("T12 (interaction=manual): a tap on a collapsed dock neither expands nor collapses (quiet gate)", async () => {
-        // The touch gate takes the merged `quiet`
-        // (alwaysExpanded || manual). Under manual `quiet` is true, so `shouldGateTouch`
-        // no-ops: the tap does not expand, and the isActive→deactivate watch does not
-        // collapse. Without the merged `quiet` the gate would leak a `collapse()` on
-        // deactivate (in manual `isPinned` and `alwaysExpanded` are both false).
-        const onPlay = vi.fn();
-        const Host = defineComponent({
-            setup() {
-                return () =>
-                    h(
-                        GlassDock,
-                        { startCollapsed: true, backdropMode: "static", interaction: "manual" },
-                        {
-                            default: () => h("div", "full"),
-                            collapsed: () =>
-                                h(
-                                    DockControl,
-                                    {
-                                        "aria-label": "Play",
-                                        "data-testid": "collapsed-play",
-                                        onClick: onPlay,
-                                    },
-                                    () => "▶",
-                                ),
-                        },
-                    );
-            },
-        });
-        const wrapper = mount(Host, { attachTo: document.body });
-        const root = wrapper.get(".glass-dock").element;
-        const play = wrapper.get<HTMLElement>("[data-testid='collapsed-play']").element;
-
-        expect(root.classList.contains("collapsed")).toBe(true);
-
-        vi.advanceTimersByTime(1);
-        dispatchTap(play, 0);
-        vi.runAllTimers();
-        await wrapper.vm.$nextTick();
-
-        // The consumer owns posture: the environmental tap does not move it.
-        expect(root.classList.contains("collapsed")).toBe(true);
-        expect(root.classList.contains("expanded")).toBe(false);
-
-        wrapper.unmount();
-    });
+    /* [2026-08-12 · BK #47 W1 SURFACE] ~~T12 (interaction=manual): a tap on a
+       collapsed dock neither expands nor collapses (quiet gate)~~ — STRUCK: the test
+       has no reachable subject. It asserted the MERGED `quiet` (alwaysExpanded ||
+       manual) on the one state where the two disagree — a COLLAPSED dock whose
+       environmental writers are off. With `interaction` struck that state cannot
+       exist: the only quiet pole left is `collapse: false`, and such a dock is never
+       collapsed. The `quiet` option went with it (useDockTouchGate). */
 
     it("no-regression: an already-expanded dock taps its control with no double-fire", async () => {
         const { wrapper, onPlay } = mountDockWithCollapsedControl();

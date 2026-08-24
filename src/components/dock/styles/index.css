@@ -74,7 +74,8 @@
 @import "./cta-seat.css";
 /* The dock-as-native-dynamic-search-bar field surface (the
    active-field tint legibility seam + the `.glass-menu-row` result rows). A net-new
-   surface on a `[data-search]` dock; the pill→field morph is the dock's OWN `--dock-morph-t`
+   surface on a dock that authors the `#search` slot ([2026-08-12 · BK #47 W1
+   SURFACE] ~~`[data-search]`~~); the pill→field morph is the dock's OWN `--dock-morph-t`
    glide (box-inviolate); CONSUMES the tint seam + the menu-row recipe, re-authors neither. */
 @import "./search.css";
 

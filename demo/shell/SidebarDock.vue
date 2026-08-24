@@ -109,7 +109,7 @@ function openConfigurator(): void {
          Foundations is a normal chip. -->
     <GlassDock
         orientation="vertical"
-        always-expanded
+        :collapse="false"
         class="demo-sidebar-dock min-h-0"
         data-testid="sidebar-dock-collapsible"
     >

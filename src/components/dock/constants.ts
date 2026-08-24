@@ -44,6 +44,16 @@ export const DOCK_LAYER_GROUP_LABEL = "glass-ui:dock-layer-group";
  * this window cancels the expansion. */
 export const HOVER_INTENT_MS = 60;
 
+/**
+ * The ONE idle window before an unheld, unhovered dock auto-collapses.
+ *
+ * [2026-08-12 · BK #47 W1 SURFACE] `collapseDelay` was a per-dock prop; it is struck
+ * and this is its single resolution point. The patient-dwell value (2500 → 3600) is a
+ * forgiving hover/interaction window; `useDockState` and `useDockTouchGate` both
+ * default to it, so the two owners of the same timer cannot drift apart.
+ */
+export const DOCK_COLLAPSE_DELAY_MS = 3600;
+
 /* Morph-settle window for the click-integrity guard
  * (`useDockClickIntegrity`). After the dock flips collapsed→expanded (a tap or a
  * hover-approach click that initiated the expand), the layer swap shifts every

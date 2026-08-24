@@ -3,7 +3,6 @@ import { createStrictContext } from "../../../composables/context";
 import { DOCK_CONTEXT_LABEL } from "../constants";
 
 export type DockOrientation = "horizontal" | "vertical";
-export type DockLayout = "linear" | "grid";
 
 /**
  * What KIND of hold a token is. The two are different facts about the dock and
@@ -25,7 +24,7 @@ export type DockHoldKind = "morph" | "grasp";
  * Dock context surfaces the dock id + orientation + held-state coordination
  * to descendants.
  *
- * One typed key carries id, orientation, layout, and held-state coordination.
+ * One typed key carries id, orientation, and held-state coordination.
  * Paired helpers:
  *  - `useDockContext()` — strict; throws when used outside `<GlassDock>`.
  *  - `useOptionalDockContext()` — befitting silent default for primitives
@@ -37,12 +36,11 @@ export type DockHoldKind = "morph" | "grasp";
 export interface DockContext {
     id: string;
     orientation: ComputedRef<DockOrientation>;
-    /**
-     * In-cap arrangement (`linear` row/column vs `grid` tile panel).
-     * `<DockSeparator>` reads this to paint a full-row section break in a grid dock
-     * (a 1px perpendicular hairline is useless in a 2D tile grid).
-     */
-    layout: ComputedRef<DockLayout>;
+    /* ~~`layout`: in-cap arrangement (`linear` row/column vs `grid` tile panel),
+       read by `<DockSeparator>` for the grid section break~~ —
+       [2026-08-12 · BK #47 W1 SURFACE] STRUCK with the `layout` dock prop. The
+       member was WRITE-ONLY on every tree that shipped (`grep` for a reader:
+       zero), and the grid panel it described is gone. */
     /**
      * Acquire a hold token; suppresses timer-based collapse. `kind` defaults to
      * `"morph"` (posture only). Pass `"grasp"` for a live pointer hold — it takes
