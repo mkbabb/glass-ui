@@ -5404,3 +5404,33 @@ VERIFIER seats died on the spend limit. ~~RESUME IS ONE CALL: Workflow({scriptPa
 9 outbound addenda docs under docs/tranches/BJ/coordination/ + the row RECORD +
 PASTE-BLOCKS + ⊕⁷⁵.~~ Everything before this line is COMMITTED AND PUSHED; 8.0.0 is
 LIVE and needs nothing.
+
+
+⊕⁷⁷-WALL-BANK **SPEND-WALL 2026-08-24 — banked mid-final-wave; resume is three dispatches.**
+The org monthly spend limit fired (plus one transient 529) during the batch's last lane
+units. STATE AT THE WALL, HEAD `407de2d3` (fifteen commits landed+pushed this batch):
+**β lane DONE** (#17 `dc4267fc` · #21 `96f0f257`) · **δ**: #52/#53/#73 landed, δ3/#58
+died SEAT-CLEAN (implement 529'd before any byte — porcelain carries zero δ dirt; fresh
+re-dispatch lawful) · **γ**: #49-W0/#50-W0/flood-ceiling landed, γ4/#51 adjudicated
+**EMPTY-NOT-DEFECTIVE** (implement 529'd null; the quartet's Fable adjudication BANKED in
+`wf_aa4d5bcc-5b9`'s journal with SIX exact orders for the real implement seat: W0
+CONTRACT-LOCK first with G-HM-MARK/G-HM-LAYER as ordinary born-RED vitest arms zero-mint ·
+strokeRibbon-at-W1-before-path-cut-at-W2 per the atlas sequencing law, ACK gates only W2's
+sub-close · the clip-predicate one-liner rides in-fence · g12 CONSUME-or-decline logged at
+W2, silence unlawful · pencil-boil peer retirement + hidden-peer probe receipt at W2 · the
+acting seat authors unit5's records and flips roster `:5329`) · **α**: W1 whole at
+`ac471032`, α6/#47-W2-W9 died mid-implement with LIVE PARTIALS in the tree (the
+overflow→run rewrite: `useDockRun.ts`+`run.css` NEW, `useDockOverflowFit.ts`+
+`useDockTouchGate.ts`+`overflow.css` DELETED, `GlassDock.vue`/`dockMorphMeasure.ts`/
+`useDockShellProps.ts`/`density.css`/`index.css`/`shell.css` modified — resume must
+disclose-and-adopt; three dead-seat probe junk files swept by the driver at this bank).
+RESUME (three calls, in any order, after the owner's reset): (1) γ4 quartet re-dispatch
+with the banked adjudication folded into the unit text; (2) α6 re-dispatch with the
+partial enumeration; (3) δ3 fresh re-dispatch. THEN: α4 #42 → #76-tail → ⊕⁷⁸ → the π
+singleton band (γ3's flood arm landed in ci.yml/release.sh at `96f0f257` — C-13 partially
+cured) → BATCH CLOSE (ONE committed-tree ratchet rebind, last live 2607399 = net −25,954
+SHRINK · `demo:dist:build` · quiesced battery with xf owners 6th=β1 7th=γ2 · the ≤20%
+gate on the cured instrument · the **9.0.0** cut — MIGRATION carries §8.1.0+§9.0.0, and
+β2 moved `release.sh`+`ci.yml`, so the close re-verifies the release path under the
+8.0.0 laws). The lane-unit script's stale 1538|5xf standing-battery line was driver-updated
+at this bank per the γ4 adjudication's order.
