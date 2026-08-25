@@ -557,9 +557,14 @@ describe("Row 8 package falsifiers", () => {
         const lock = JSON.parse(readFileSync("package-lock.json", "utf8"));
         expect(manifest.peerDependencies["@mkbabb/keyframes.js"]).toBe("^6.0.0");
         expect(manifest.peerDependenciesMeta).not.toHaveProperty("@mkbabb/keyframes.js");
-        expect(manifest.peerDependencies["@mkbabb/pencil-boil"]).toBe("^0.11.2");
-        expect(manifest.peerDependenciesMeta["@mkbabb/pencil-boil"]).toEqual({ optional: true });
-        expect(lock.packages[""]["peerDependencies"]["@mkbabb/pencil-boil"]).toBe("^0.11.2");
+        // [2026-08-25] The pencil peer is RETIRED: the hand voice derives its own
+        // geometry from five closed-form laws, so the one subpath that named this peer
+        // no longer has anything to resolve. The assertion inverts — a peer that comes
+        // back is a peer nobody consumes.
+        expect(manifest.peerDependencies).not.toHaveProperty("@mkbabb/pencil-boil");
+        expect(manifest.peerDependenciesMeta).not.toHaveProperty("@mkbabb/pencil-boil");
+        expect(manifest.devDependencies).not.toHaveProperty("@mkbabb/pencil-boil");
+        expect(lock.packages[""]["peerDependencies"]).not.toHaveProperty("@mkbabb/pencil-boil");
         // The exact devDep pin, the registry `resolved` URL, and the sha512
         // integrity are REMEMBERED LITERALS — the very class this row's verifier
         // comment condemns. A routine dev bump or a mirror re-resolve REDs them

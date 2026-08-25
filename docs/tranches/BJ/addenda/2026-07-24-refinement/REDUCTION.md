@@ -85,7 +85,7 @@ The giants, with the verdict each actually earns:
 | fourier-field | 2,885 | 0 | 2 | **EARN OR CUT.** |
 | constellation | 2,442 | 0 | 2 | **EARN OR CUT.** |
 | timeline | 2,254 | 0 | 4 | Owner-marked greenfield. |
-| handmark | 2,231 | 0 | 1 | Owner-marked greenfield. 2,231 LOC for one story. |
+| handmark | 2,231 | 0 | 1 | Owner-marked greenfield. ~~2,231 LOC for one story.~~ **[2026-08-25 · #51 W5 — STRUCK, not footnoted.]** The two columns are honestly labelled (`src` and `demo` are both in-repo by definition), but the verdict prose turned them into "one story" — an inference that silently treats the repo as the world. handmark also served **3 live call sites in atlas** (`AnimatedRule.vue:34`, `charts/glyph/HandMark.vue:26`, `useMarkMorphology.ts:40` type-only), which no column here can show. The reduction still stands on its merits (2,306 → **675 measured**, and the cut shipped — detector verbatim, `wc -l src/components/handmark/{HandMark.vue,stroke.ts,index.ts}` = 375 + 280 + 20 = 675; **435 was the charter *estimate* at `GREENFIELD-TERMINAL:912`, never a reading**, and it is corrected here rather than repeated), but it stood on a ground that was **incomplete rather than wrong**, and the difference showed up as four breaking deltas owed to a consumer this row implied did not exist. A LOC-per-consumer verdict needs a column for consumers it cannot see, or it must not name a count at all. |
 | typewriter | 1,409 | 0 | 1 | **EARN OR CUT.** Never examined by any prior tranche. |
 | easing | 983 | 0 | 1 | **DEMOTE.** |
 

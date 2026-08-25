@@ -240,11 +240,21 @@ async function unclippedRegion(canvas: Locator): Promise<Region> {
             p = p.parentElement
         ) {
             const cs = getComputedStyle(p);
+            // `contain` reports the AUTHORED keywords, so `strict` and `content` never
+            // spell "paint" even though both induce paint containment; and
+            // `content-visibility` other than `visible` induces it with no `contain`
+            // declaration at all. A walk that only looked for the word "paint" scored
+            // those three ancestors as transparent and handed the ceiling a paintable
+            // rect the canvas cannot reach.
+            const contain = cs.contain.split(/\s+/);
             const clips =
                 cs.overflowX !== "visible" ||
                 cs.overflowY !== "visible" ||
                 cs.clipPath !== "none" ||
-                cs.contain.split(/\s+/).includes("paint");
+                contain.includes("paint") ||
+                contain.includes("strict") ||
+                contain.includes("content") ||
+                cs.contentVisibility !== "visible";
             if (!clips) continue;
             const pr = p.getBoundingClientRect();
             left = Math.max(left, pr.left);

@@ -132,10 +132,10 @@ function wipe(tone: EasingStrokeTone | undefined): string | false {
             </template>
 
             <!-- the plotted curves — ghosts first so the subject reads on top.
-                 THE DRAW-ON, and the mechanism it is NOT. `<HandMark>` ships two
-                 draw-on arms and a rule for choosing: `stroke-dashoffset` for clean
-                 ink, a `clip-path` WIPE where the engine will not honour a dash. This
-                 lane is the second case, and it is measured rather than assumed:
+                 THE DRAW-ON, and the mechanism it is NOT. `<HandMark>` draws by
+                 pulling a dash shut inside a MASK over the centreline, where the dash
+                 is never gated by the ink's own paint. This lane cannot use that
+                 mechanism, and the reason is measured rather than assumed:
                  every stroke here carries `vector-effect: non-scaling-stroke` — the
                  law that makes the ink a whole CSS pixel independent of the frame —
                  and under it Chrome does not gate the paint by `stroke-dashoffset` at

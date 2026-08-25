@@ -10,24 +10,19 @@
 // are NOT demo color (they ARE library tokens — D6 fence).
 //
 // The section-ramp stops render as the library's OWN hand voice: each stop is its index
-// PAINTED in its own hue — `<HandMark brush="highlighter" shape="highlight">`, the shipped
+// PAINTED in its own hue — a marker-weight `<HandMark>`, the shipped
 // mark engine REUSED not re-forked (no demo-local blob, no demo-local @keyframes). The
 // mark and the caption FUSE: the numeral IS the label and the hand-painted swipe behind
 // it IS the swatch, so a stop reads as one hand-made object instead of a chip stacked
 // over a mono line.
 //
-// TWO measured knobs, both load-bearing, both found by LOOKING (the first cut shipped
-// neither and painted a thin dirty smear):
-//   • the slot is a `w-24` inline-block. HandMark is a TEXT-mark engine — the band
-//     thickness is `brush.weight` in a viewBox whose HEIGHT is derived from the box
-//     ASPECT, so a bare narrow numeral (29×50, aspect 0.58) computes a hairline. A
-//     96×53.3 box (aspect 1.80, viewBox 0 0 100 55.501) lands the band at 25.49px —
-//     half the box, a real swipe.
-//   • `:overrides="{ opacity: 0.72 }"` over the highlighter's shipped 0.38. The ramp IS
-//     the content (the reference-class one-color-event exemption, the progress phase-bus
-//     precedent), so a stop must carry a legible `--section-color-N`, not a wash. 0.38
-//     multiply is tuned for marking a word on a page, not for BEING the specimen.
-// Measured live at 1280 in both arms: 13 marks, 13 paths, 13 distinct oklch fills.
+// TWO knobs, both load-bearing. The slot is a `w-24` inline-block: HandMark marks
+// TEXT, so a bare narrow numeral gives the swipe nothing to sit on and a 96px slot
+// gives it a word's worth of paper. And `:weight="6"` is six times the ink law, which
+// at this rung paints a ~23px body — a marker swipe rather than a pen line, so the
+// numeral IS the label and the mark behind it IS the swatch. The highlight shape is
+// not the instrument here: its band is one law on two papers and takes a hue, while a
+// ramp stop must carry its OWN token colour.
 //
 // Laid out with the HAND-LAID vertical stagger (a fixed per-stop block-offset — the
 // irregular read the user named, never a flat aligned row) and entering ON SCROLL via
@@ -87,7 +82,7 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
 <template>
     <StoryPage>
         <!-- THE RAINBOW — PROMOTED to the focal moment, leading the pane. Each of the
-             13 stops is its index painted in its own hue (the library's own HandMark
+             13 stops is its index swiped in its own hue (the library's own HandMark
              engine — the hand voice glass-ui actually owns), laid out with a hand-laid
              vertical stagger and popping in on the `.scroll-cascade--columns` register
              (the column-stagger spring-clocked build — the focal pop-entrance, no
@@ -109,11 +104,9 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
                 >
                     <span class="text-display-2 font-display leading-none text-foreground">
                         <HandMark
-                            brush="highlighter"
-                            shape="highlight"
                             :color="`var(--section-color-${i})`"
+                            :weight="6"
                             :seed="i + 1"
-                            :overrides="{ opacity: 0.72 }"
                             ><span class="inline-block w-24 text-center">{{
                                 i
                             }}</span></HandMark

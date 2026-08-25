@@ -593,21 +593,14 @@ function installTarball(tarball, pkg) {
     const consumerRoot = mkdtempSync(join(tmpdir(), "glass-ui-consumer-"));
     try {
         const requiredPeer = "@mkbabb/keyframes.js";
-        const pencilPeer = "@mkbabb/pencil-boil";
         const requiredVersion = pkg.peerDependencies?.[requiredPeer];
         if (!requiredVersion || pkg.peerDependenciesMeta?.[requiredPeer]?.optional) {
             throw new Error("required keyframes peer is not explicit in the package contract");
-        }
-        const pencilRange = pkg.peerDependencies?.[pencilPeer];
-        const pencilVersion = pkg.devDependencies?.[pencilPeer];
-        if (!pencilRange || !pencilVersion) {
-            throw new Error("Pencil peer range and development dependency must both be declared");
         }
         const consumerDependencies = Object.fromEntries(
             Object.entries(pkg.peerDependencies ?? {})
                 .filter(([name]) => name !== "@mkbabb/value.js"),
         );
-        consumerDependencies[pencilPeer] = pencilVersion;
         // [2026-08-09 · BK #66 CURE-66-3] THE SANDBOX INSTALLS THE DECLARED CONTRACT AND
         // NOTHING ELSE. It was briefly given a hand-injected
         // `consumerDependencies["vue-component-type-helpers"] = "*"`, and that injection
@@ -638,24 +631,15 @@ function installTarball(tarball, pkg) {
         if (result.status !== 0) throw new Error(`installed-consumer npm install failed: ${result.stderr || result.stdout}`);
         const installed = resolve(consumerRoot, "node_modules/@mkbabb/glass-ui");
         const keyframes = resolve(consumerRoot, "node_modules/@mkbabb/keyframes.js");
-        const pencil = resolve(consumerRoot, "node_modules/@mkbabb/pencil-boil");
         if (!existsSync(keyframes) || lstatSync(keyframes).isSymbolicLink()) {
             throw new Error("required keyframes peer was not installed as a real consumer dependency");
         }
-        if (!existsSync(pencil) || lstatSync(pencil).isSymbolicLink()) {
-            throw new Error("Pencil was not installed as a real consumer dependency");
-        }
         const consumerRealPath = realpathSync(consumerRoot);
         const keyframesRealPath = realpathSync(keyframes);
-        const pencilRealPath = realpathSync(pencil);
         if (!keyframesRealPath.startsWith(`${consumerRealPath}/`)) {
             throw new Error("required keyframes peer escaped the consumer installation root");
         }
-        if (!pencilRealPath.startsWith(`${consumerRealPath}/`)) {
-            throw new Error("Pencil escaped the consumer installation root");
-        }
         const keyframesPackage = JSON.parse(readFileSync(resolve(keyframes, "package.json"), "utf8"));
-        const pencilPackage = JSON.parse(readFileSync(resolve(pencil, "package.json"), "utf8"));
         const valuePackagePath = [
             resolve(keyframes, "node_modules/@mkbabb/value.js/package.json"),
             resolve(consumerRoot, "node_modules/@mkbabb/value.js/package.json"),
@@ -672,9 +656,6 @@ function installTarball(tarball, pkg) {
         }
         if (!satisfiesPeerRange(valuePackage.version, valueRange)) {
             throw new Error(`installed @mkbabb/value.js ${valuePackage.version} is outside the declared peer range ${valueRange}`);
-        }
-        if (!satisfiesPeerRange(pencilPackage.version, pencilRange)) {
-            throw new Error(`installed Pencil ${pencilPackage.version} is outside the declared peer range ${pencilRange}`);
         }
         return {
             consumerRoot,
@@ -693,14 +674,6 @@ function installTarball(tarball, pkg) {
                     directGlassPeerRequested: Object.hasOwn(consumerDependencies, "@mkbabb/value.js"),
                     installedThrough: requiredPeer,
                 },
-            },
-            pencil: {
-                path: pencil,
-                realPath: pencilRealPath,
-                symlink: false,
-                version: pencilPackage.version,
-                dependency: pencilVersion,
-                peerRange: pencilRange,
             },
             install: { exit: result.status, stdout: result.stdout, stderr: result.stderr },
         };

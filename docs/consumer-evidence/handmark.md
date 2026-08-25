@@ -4,7 +4,11 @@
 
 `src/components/handmark/` (the published subpath `@mkbabb/glass-ui/handmark`).
 `HandMark` is the platform's ONE hand voice — a hand-drawn mark
-(underline · strike · highlight band · circle · box · bracket · arbitrary path) in any
+(~~underline · strike · highlight band · circle · box · bracket · arbitrary path~~
+**[2026-08-25 · #51 W2] underline · strike · circle · highlight** — the four gestures the
+runtime `SHAPES` union now enumerates; `box`, `bracket`, positioned mode and the
+arbitrary-`path` capability retired at the greenfield cut, `path`'s successor being the
+exported `strokeRibbon(points, w)` over any caller-supplied polyline) in any
 medium, deterministic per `seed`, optionally animated; the slotted word stays REAL
 selectable text and the mark is an `aria-hidden` SVG overlay.
 
@@ -16,9 +20,12 @@ retired `GlassUnderline` + the `/underline` subpath onto `<HandMark shape="under
 (a clean break, no alias — the `underline/` dir + `src/subpaths/underline.ts` are GONE,
 `handmark/` + `src/subpaths/handmark.ts` are the live surface). The booked-consumer
 roadmap `underline.md` carried (the slides `SlideIntro`/`SlideCloser` re-point) carries
-over to this doc, re-pointed onto `/handmark` per the fold. The honest component-orphan
+over to this doc, re-pointed onto `/handmark` per the fold. ~~The honest component-orphan
 census (source files only, library publication machinery + demo own-story excluded)
-measures it at exactly **0 non-self consumers** — its only in-repo mount is its OWN
+measures it at exactly **0 non-self consumers**~~ — **[2026-08-25 · #51 W5] the word
+"honest" is withdrawn with the number.** The instrument measures IN-REPO mounts and is
+structurally blind to anything downstream (see the struck census below); the true
+non-self count is **3**, in atlas. Its only in-repo mount is its OWN
 story (the own-story exclusion) — but a load-bearing published primitive with a NAMED,
 non-phantom re-point deliverable. Booked here per the evidence-doc escape.
 
@@ -34,7 +41,35 @@ grep -rln 'components/custom/handmark|@mkbabb/glass-ui/handmark' demo/ src/ \
 #   → demo/stories/motion/handmark.vue   (the package's own story — own-story exclusion)
 ```
 
-**External consumers — 0 at HEAD (the booked slides re-point).** slides today ships its
+~~**External consumers — 0 at HEAD (the booked slides re-point).**~~
+
+> **[2026-08-25 · #51 W5 · THE FALSE CENSUS, STRUCK — not footnoted.]** The heading above
+> was never measured; it was **inferred from an instrument that cannot see an external
+> consumer at all.** The grep it rests on searches `demo/ src/` — two directories *inside
+> this repository* — and then reports its empty result under the word "External". Any
+> consumer outside the repo is outside the search path by construction, so the instrument
+> returns "0 external" on every component it is ever pointed at, including the ones with
+> live downstream call sites. It is a **vacuous** measurement, and vacuity is why it read
+> as reassuring for three tranches.
+>
+> **The true count at the census of record is THREE**, all in `~/Programming/atlas`:
+> `AnimatedRule.vue:34`, `charts/glyph/HandMark.vue:26`, and `useMarkMorphology.ts:40`
+> (type-only), plus two prose citations. Banked twice in-repo and independently: the
+> PASS-4 adjudication (`docs/tranches/BJ/addenda/2026-07-24-refinement/GREENFIELD-TERMINAL.md:715`)
+> and the outbound addendum
+> (`docs/tranches/BJ/coordination/glass-outbound-2026-08-10-atlas-handmark-ack.md`), which
+> carries the four breaking deltas against those exact sites. Not re-walked here: atlas is
+> a foreign tree and this unit writes nothing into it.
+>
+> This correction is **load-bearing, not bookkeeping.** "0 external consumers" is the
+> premise a clean break is licensed by, and #51 took four of them — the `path` member cut,
+> `weight` retyped px → dimensionless, `strikethrough`→`strike`, and the `HandShape` union
+> narrowing. Had the census been believed, those would have shipped as unannounced
+> breakage into a live consumer. The sequencing law that protects atlas —
+> **`strokeRibbon` publishes at W1 BEFORE `path` is cut at W2** — exists precisely because
+> the real count is not zero.
+
+slides today ships its
 OWN LOCAL hand-underline — NOT `@mkbabb/glass-ui/handmark` — in the til-briefing cover +
 bookend (the BINDING 2026-06-15 slides ground-truth, no slides break by construction):
 

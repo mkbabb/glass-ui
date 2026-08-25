@@ -134,7 +134,11 @@ describe("stacked url() filter — the row #7 unit case", () => {
             // proves the filtered element sits under the backdrop element, which is why a
             // RELOCATION of the worm layer inside the same SFC would never have emptied
             // it. Nothing was relocated: the filter is deleted.
-            // SVG `filter="url(#…)"` PRESENTATION ATTRIBUTES (HandMark.vue:299) are not
+            // [2026-08-25] the HandMark citation this note carried is gone with the
+            // family's filter graph — the hand voice now authors zero `url()` filters,
+            // so the exclusion below has no remaining subject in src/. It is kept
+            // because the rule, not the example, is what binds.
+            // SVG `filter="url(#…)"` PRESENTATION ATTRIBUTES are not
             // authored CSS — postcss reads declarations only and never sees them, so the
             // exclusion is structural, not a regex carve. It is NOT an exclusion on
             // compositing grounds: a presentation attribute IS the CSS `filter` property
