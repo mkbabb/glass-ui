@@ -1,5 +1,32 @@
 # BorderProgress
 
+> **[2026-08-25 · BK #76 α5 — CONSUMER-EVIDENCE TRUTH-UP. "BANKED DORMANT" IS NOW
+> "DELETED"; THE DISTINCTION WAS THE WHOLE RULING.]** TR#76's second named row.
+> Measured: `grep -rn "BorderProgress\|border-progress" src demo tests` → **0**,
+> and `src/components/custom/border-progress/` is **ABSENT**.
+>
+> The verdict below is `retire-subpath — banked dormant, demo-only`, and it is
+> emphatic that the retire is **`retire-until-adoption`, NOT a delete** — the
+> subpath goes, the component and its demo **STAY**, precisely so the speedtest
+> re-entry would be *a consume of the existing mechanism, not a re-mint*. **The
+> component did not stay.** The subpath retire executed and then the artefact was
+> deleted, and this page never recorded the second half.
+>
+> The two demo consumers the §"Consumer proof (re-runnable)" block names still
+> exist as **files** — `demo/stories/feedback/progress.vue` and
+> `demo/shell/SidebarDock.vue` are both on disk — but neither renders the ring any
+> more, so the re-runnable grep the block invites a reader to run now returns
+> **nothing**, where the doc prints two hits. A proof that a reader can execute
+> and watch disagree with its own transcript is worse than no proof.
+>
+> **What this costs, stated plainly because it is the point of the row:** the
+> named re-entry TRIGGER below (the speedtest `<BorderProgress>` adopt, AW.W7) is
+> now a trigger on a mechanism that does not exist. If speedtest ever fires it,
+> the answer is not *"import it"* — it is a **re-mint**, which is the exact
+> outcome `retire-until-adoption` was chosen to avoid. **ROUTED, not struck**: the
+> deleting wave owns the disposition, and the trigger's owner deserves to be told
+> the shape of what it would be triggering.
+
 ## Artefact path
 
 `src/components/custom/border-progress/` — the masked-conic BORDER ring (BB.W-BORDER-PROGRESS):

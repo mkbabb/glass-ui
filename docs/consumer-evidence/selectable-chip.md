@@ -1,5 +1,41 @@
 # SelectableChip
 
+> **[2026-08-25 · BK #76 α5 — CONSUMER-EVIDENCE TRUTH-UP. THIS ONE IS A FOLD, NOT
+> A DELETE, AND THE DIFFERENCE MATTERS TO THE CONSUMER.]** TR#76's third named
+> row, and the one that breaks the pattern — the other three name artefacts that
+> are simply gone. **The mechanism here SURVIVES; only its face and its door
+> changed.** Measured this seat:
+>
+> | claim below | on disk at HEAD |
+> |---|---|
+> | `src/components/custom/selectable-chip/` | **ABSENT** |
+> | the published subpath `@mkbabb/glass-ui/selectable-chip` | **ABSENT** from `package.json.exports` |
+> | verdict `keep-current` | superseded — **folded** |
+>
+> **`ToggleChip` + `SelectableChip` FOLDED onto the ONE `<Chip>`** (shape × tone;
+> clean break, no alias) — `tests/public-surface.spec.ts:307-311`, which also
+> records that `<Chip>` ships **subpath-only on `./chip`**, off the value.js-free
+> root barrel. The selectable behaviour is a **discriminated `mode`**, live at
+> `src/components/chip/types.ts:28` (`mode: "selectable"`, with `modelValue?:
+> boolean | null`), sitting beside `mode: "static"` (`:18`) and `mode: "action"`
+> (`:38`). `SelectableChipProps` is **still an exported interface** (`:27`, in the
+> `:61` union) — so the type survives the component.
+>
+> **The migration, since this page is where a consumer would look for it:**
+>
+> ```
+> - import { SelectableChip } from "@mkbabb/glass-ui/selectable-chip";
+> + import { Chip } from "@mkbabb/glass-ui/chip";
+> - <SelectableChip v-model="on" …/>
+> + <Chip mode="selectable" v-model="on" …/>
+> ```
+>
+> **The `.accent-tone` register and the WCAG contrast floor over the tinted plate
+> — the substance the ≥2-bar argument below actually rests on — are unchanged by
+> the fold.** The verdict text stands as the record of *why the primitive earned
+> its keep*; it is only the artefact path, the subpath and the word
+> `keep-current` that this bracket retires.
+
 ## Artefact path
 
 `src/components/custom/selectable-chip/` (the published subpath

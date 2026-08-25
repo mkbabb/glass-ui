@@ -1,5 +1,40 @@
 # SplitChars / useCharStagger
 
+> **[2026-08-25 · BK #76 α5 — CONSUMER-EVIDENCE TRUTH-UP. THE ARTEFACT IS GONE;
+> THIS DOC STILL READS "BUILT".]** TR#76 names `SplitChars` as one of four
+> consumer-evidence rows describing a deleted artefact as published. Measured, not
+> remembered — `grep -rn "SplitChars\|useCharStagger" src demo tests` → **0**.
+> Every path this doc names is absent:
+>
+> | cited path | on disk |
+> |---|---|
+> | `src/components/custom/split-chars/` | **ABSENT** |
+> | `src/composables/motion/useCharStagger.ts` | **ABSENT** |
+> | `demo/stories/motion/split-chars.vue` | **ABSENT** |
+>
+> **And the CSS half went with it**, which is the part a reader would otherwise
+> assume survived: `grep -rn "char-stagger" src/styles/` → **0**. The doc's whole
+> thesis is that the component is *"the JS partner to the shipped `.char-stagger`
+> CSS recipe"* at `src/styles/typography/utilities.css:155-159` — there is no
+> recipe, no partner, and no line 155-159 to point at. The `--char-index` /
+> `--char-total` customs have no producer and no reader.
+>
+> So **"Disposition: BUILT — the ≥2-consumer bar MET by construction" is false in
+> both halves.** The bar was met by an argument (*"every hero word is a
+> consumer"*) rather than by binaries, and the family was later deleted whole; the
+> two together are how a doc ends up asserting a shipped surface that no consumer
+> could import if it tried. A consumer reading this page today would write
+> `import { SplitChars } from "@mkbabb/glass-ui/motion-core"` against nothing.
+>
+> **NOT struck, and deliberately so.** The deleting wave is not named in this
+> tree from where this seat sits, and a disposition belongs to the wave that
+> executed it — inventing one here to tidy the page would mint exactly the
+> unsourced ruling this row exists to stop. The page is marked FALSE and routed
+> whole. **The accessibility claim is the part worth carrying forward if the
+> mechanism is ever rebuilt**: the split is the easy half, and the mandatory
+> full-text label with `aria-hidden` glyph spans is the half every hand-rolled
+> `text.split('')` drops.
+
 ## Artefact path
 
 `src/composables/motion/useCharStagger.ts` (the split composable) +
