@@ -4,7 +4,7 @@
  */
 import { ref, watch, computed, onScopeDispose } from "vue";
 import type { SearchableItem, SearchResult, FuzzySearchState } from "./types";
-import { buildIndex, searchIndex, clearSearchCache } from "./fuzzySearchIndex";
+import { buildIndex, searchIndex, clearSearchCache } from "./match";
 
 export interface UseFuzzySearchOptions<T extends SearchableItem = SearchableItem> {
     /** Reactive or static list of searchable items. */

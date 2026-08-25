@@ -1,9 +1,9 @@
 import { nextTick, ref } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { buildIndex, clearSearchCache, searchIndex } from "@glass/components/search/composables/fuzzySearchIndex";
-import { useFuzzySearch } from "@glass/components/search/composables/useFuzzySearch";
-import type { SearchableItem } from "@glass/components/search/composables/types";
-import { mountComposable } from "../../../utils/mountComposable";
+import { buildIndex, clearSearchCache, searchIndex } from "@glass/composables/search/match";
+import { useFuzzySearch } from "@glass/composables/search/useFuzzySearch";
+import type { SearchableItem } from "@glass/composables/search/types";
+import { mountComposable } from "../../utils/mountComposable";
 
 // The `FuzzySearch.vue` overlay component retired at REDUCTION W3 (A14 — demo-only,
 // zero constellation consumers). Its highlighting/aria coverage retired with it; the

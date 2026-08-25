@@ -4,8 +4,8 @@
 // composes — these units pin it stable.
 import { effectScope, nextTick } from "vue";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { useFuzzySearch } from "@glass/components/search/composables/useFuzzySearch";
-import type { SearchableItem, SearchResult } from "@glass/components/search/composables/types";
+import { useFuzzySearch } from "@glass/composables/search/useFuzzySearch";
+import type { SearchableItem, SearchResult } from "@glass/composables/search/types";
 
 const items: SearchableItem[] = [
     { id: "1", label: "Glass panel", text: "surface tokens", type: "component" },

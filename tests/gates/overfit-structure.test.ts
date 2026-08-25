@@ -366,7 +366,13 @@ describe("gate:G-OVERFIT — NO-SHIM arm (the no-legacy edict, enforced)", () =>
         expect(DENY_LIST_RE.test("const RETIRED_FLOATING_ATTRS = new Set([")).toBe(true);
         expect(DENY_LIST_RE.test("const FLOATING_ATTRS = new Set([")).toBe(false);
         // A published ENTRY is out of scope BY CONSTRUCTION, and only by that.
-        expect(isBarrel(join(SRC, "components", "search", "index.ts"))).toBe(true);
+        // [2026-08-25 · BK #42 W-SEARCH] ~~`components/search/index.ts`~~ — the
+        // exemplar was DELETED with its directory. `isBarrel` is pure path logic, so
+        // the bite would have kept PASSING against a phantom file: a self-test that
+        // proves itself against a path that does not exist is the "unwired gate is
+        // ABSENT, never GREEN" defect wearing a green tick. Re-pointed to a live
+        // PUBLISH barrel.
+        expect(isBarrel(join(SRC, "components", "dock", "index.ts"))).toBe(true);
         // [2026-08-09 · BK #66 CLOSE · RT-65-C(iii)] ~~`src/forms.ts`~~ — the curated
         // `./forms` barrel RETIRED and its file is deleted. The bite keeps its job: it
         // needs a curated top-level entry whose path is NOT an `index.ts`, so that the
@@ -374,7 +380,11 @@ describe("gate:G-OVERFIT — NO-SHIM arm (the no-legacy edict, enforced)", () =>
         // regex above. `src/components/blob/config.ts` is that entry (`./blob-config`),
         // and it is the other exemplar the comment on `isBarrel` already names.
         expect(isBarrel(join(SRC, "components", "blob", "config.ts"))).toBe(true);
-        expect(isBarrel(join(SRC, "components", "search", "searchVariants.ts"))).toBe(false);
+        // [2026-08-25 · BK #42 W-SEARCH] ~~`components/search/searchVariants.ts`~~ —
+        // deleted with the CVA axis it held. Re-pointed to a live non-barrel leaf; the
+        // arm's job is unchanged (a NON-entry file must read false), and `constants.ts`
+        // is a plain module in a PUBLISH directory, which is the harder case.
+        expect(isBarrel(join(SRC, "components", "dock", "constants.ts"))).toBe(false);
     });
 });
 

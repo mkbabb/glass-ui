@@ -109,7 +109,14 @@ export const COMPONENT_CLASS = {
     metric: "PUBLISH",
     "music-staff": "PUBLISH",
     "pager-dots": "PUBLISH",
-    search: "PUBLISH", "scroll-progress-rim": "PUBLISH",
+    // [2026-08-25 · BK #42 W-SEARCH] ~~`search: "PUBLISH"`~~ — the directory is DELETED
+    // and the `./search` key is CUT. `SearchBar` went DELETE-with-relay under Ruling 1
+    // (TERMINAL-ROSTER:437 — existence ⇒ relay, never ⇒ KEEP; the four value.js edges
+    // are named in this unit's relay addendum), and the fuzzy ENGINE it was parked over
+    // moved to `src/composables/search/` classified INTERNAL per TR:192 ⊕⁵ SE-4. Clean
+    // break, no alias: the root barrel never re-exported these symbols, so `./search`
+    // was the only door and the cut is total rather than a narrowing.
+    "scroll-progress-rim": "PUBLISH",
     // BI.W-SPEEDTEST-ONLY-PAIR: scrolling-text RETIRED (speedtest-only; the ask-row offers the mechanism).
     "sortable-list": "PUBLISH",
     "status-dot": "PUBLISH", tabs: "PUBLISH",
@@ -126,8 +133,16 @@ export const COMPOSABLE_CLASS = {
     // CURATED (4) — the vueuse/keyframes-bearing SCC-trap surfaces published via a
     // hand-curated flat barrel at src/<name>.ts, NOT this subtree's index.ts.
     dark: "CURATED", keyboard: "CURATED", motion: "CURATED", sidebar: "CURATED",
-    // INTERNAL (2) — substrate (context DI factory / glass GL substrate).
-    context: "INTERNAL", glass: "INTERNAL",
+    // INTERNAL (3) — substrate (context DI factory / glass GL substrate) + the client
+    // fuzzy ENGINE.
+    // [2026-08-25 · BK #42 W-SEARCH] `search` MINTS as INTERNAL, and it is this map's
+    // fail-closed property that forced the row rather than an author remembering to add
+    // one: the new `src/composables/search/index.ts` puts the dir into
+    // `dirsWithIndex()`, and an unclassified dir is a HARD ERROR at `libraryEntryMap()`
+    // — the build stops instead of silently auto-publishing a `./search` that TR:192
+    // ⊕⁵ SE-4 just ruled INTERNAL. The engine's one consumer is in-tree
+    // (`useDockSearch`), reaching it by relative path; no subpath is owed.
+    context: "INTERNAL", glass: "INTERNAL", search: "INTERNAL",
 };
 
 export const TIERS = [

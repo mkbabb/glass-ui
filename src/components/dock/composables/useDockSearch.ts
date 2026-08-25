@@ -30,7 +30,7 @@
 // optional warm callback before `useScrollTo`. No second of any.
 //
 // THE WORDS SUBSUME (the foreign-tree fence, inv-26). The words app's `SearchBar.vue` +
-// its ~7 search composables RETIRE onto `<GlassDock search>` on the `^4.x` consume —
+// its ~7 search composables RETIRE onto the dock's `#search` slot on the `^4.x` consume —
 // THEIR repo edit. The network orchestration (`useLookupSearch` abort/generation) stays
 // words-LOCAL, plugged via the pluggable async `onSearch(query, signal)` data source:
 // the consumer owns the abort/network race-guard, the dock owns the gesture/shrink/
@@ -46,12 +46,16 @@ import {
 } from "vue";
 import type { UseDockStateReturn } from "./useDockState";
 import { useHoldToken } from "../../_shared/overlay";
+// [2026-08-25 · BK #42 W-SEARCH] ~~`from "../../search/composables"`~~ — the engine
+// left `src/components/search/` for `src/composables/search/` when `SearchBar` was
+// deleted with its relay. This is the SAME edge, one directory over: a sibling
+// component's private subtree became a peer composable, which is what it always was.
 import {
     useFuzzySearch,
     type FuzzySearchState,
     type SearchableItem,
     type SearchResult,
-} from "../../search/composables";
+} from "../../../composables/search";
 import {
     useScrollChrome,
     type UseScrollChromeReturn,

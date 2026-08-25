@@ -21,7 +21,7 @@ import { GlassDock, useDockSearch } from "@glass/components/dock";
 import { useDockState } from "@glass/components/dock/composables/useDockState";
 import { useVirtualSectionWindow, type FlatSection } from "../../composables/virtual";
 import { useScrollTo } from "@glass/composables/sidebar";
-import type { SearchableItem } from "@glass/components/search/composables";
+import type { SearchableItem } from "@glass/composables/search";
 import DockStage from "./_frame/DockStage.vue";
 
 // ── A sizeable searchable item set — section titles + their body text (the fuzzy

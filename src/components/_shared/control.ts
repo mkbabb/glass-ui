@@ -10,14 +10,24 @@
 
 export type ControlSize = "sm" | "md" | "lg";
 
-const controlSizeClasses: Record<ControlSize, string> = {
-    sm: "[--control-pill-h:var(--control-h-sm)] [--control-pill-text:var(--control-text-sm)]",
-    md: "",
-    lg: "[--control-pill-h:var(--control-h-lg)]",
-};
-
-export const controlSizeClass = (size: ControlSize = "md") =>
-    controlSizeClasses[size];
+/* [2026-08-25 · BK #42 W-SEARCH] ~~`controlSizeClasses` + `controlSizeClass(size)`~~ —
+ * DELETED, and the deletion was not this unit's idea: `G-OVERFIT`'s EXPORT-REACH arm
+ * REDded the moment `SearchBar.vue` went, naming the function as "referenced nowhere
+ * outside its own module AND ships on no published subpath". `SearchBar` was its ONLY
+ * call site in the entire tree — measured, not assumed — so it went from one caller to
+ * zero in a single act. CWT-2 §SEARCH had already listed it for deletion ("the
+ * `controlSizeClass` re-export (F11)", the ROUND-1 shim), which is the same finding
+ * reached from the other end.
+ *
+ * NOTHING IS LOST, AND THIS IS THE PART WORTH READING. The function emitted two
+ * arbitrary-property utilities, `[--control-pill-h:…]` and `[--control-pill-text:…]`.
+ * Those CSS SEAMS are untouched and still live: `.input-bar`
+ * (`styles/utilities/components.css:33,60`) and `.control-pill`
+ * (`glass/control-surfaces.css:28,56`) both read them WITH FALLBACKS, so a consumer
+ * that wants a size rung sets the property and gets it. What died is a Tailwind-class
+ * string-builder wrapping a two-line lookup — a `md` rung that emitted the empty
+ * string, which is the tell: a "size axis" whose default value is no bytes at all was
+ * a lookup table pretending to be an API. */
 
 /** The state axis every binary control exposes. */
 export interface ControlProps {

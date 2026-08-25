@@ -235,15 +235,19 @@ describe("3. exact W1 bindings", () => {
         );
     });
 
-    it("Search input-bar → --radius-control, floating retains chrome, only bare is chromeless", () => {
+    // [2026-08-25 · BK #42 W-SEARCH] The variant half is STRUCK WITH ITS SUBJECT —
+    // ~~`searchVariants.ts` `floating` keeps the plate / `bare` is the sole
+    // chromeless~~. `SearchBar` went DELETE-with-relay and the CVA died with it, so
+    // there is no `floating`/`bare` rung left to hold a radius role. The RECIPE half is
+    // KEPT and is not a leftover: `.input-bar` outlives the component that used to be
+    // its main mount (live readers — `demo/stories/dock/dock-search.vue:201`,
+    // `src/components/dock/styles/search.css:46`, plus four value.js selector sites),
+    // so its role radius still needs pinning. Same disposition, and for the same
+    // reason, as the tags-input strike below.
+    it("Search input-bar → --radius-control (the recipe outlives its component)", () => {
         const bar = rule(read("src/styles/utilities/components.css"), "\\.input-bar");
         expect(bar).toContain("border-radius: var(--radius-control)");
         expect(bar).not.toContain("--radius-2xl");
-        const variants = read("src/components/search/searchVariants.ts");
-        expect(variants).toMatch(/floating:\s*""/); // floating keeps the component plate
-        expect(variants).toMatch(/bare:\s*"[^"]*rounded-none/); // bare is the sole chromeless
-        // floating must NOT strip the plate
-        expect(variants).not.toMatch(/floating:\s*"[^"]*rounded-none/);
     });
 
     it("InfiniteScroll Reset → the public Button, not a raw <button>", () => {

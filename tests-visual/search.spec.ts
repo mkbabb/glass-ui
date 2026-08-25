@@ -5,8 +5,16 @@
 // `searchIndex` / `fuzzyMatch` (internal API names as UI) plus a `data-testid`
 // "Helper call ledger" of internal call-COUNTS. That belongs in a spec, not on the
 // user-facing page. This spec EXERCISES the same pipeline the ledger did — but
-// through the REAL component (SearchBar → useFuzzySearch → searchIndex/fuzzyMatch),
-// asserting the RANKED render the user actually reads, not an internal call count.
+// through the REAL pipeline (the route's field → useFuzzySearch → searchIndex/
+// fuzzyMatch), asserting the RANKED render the user actually reads, not an internal
+// call count.
+//
+// [2026-08-25 · BK #42 W-SEARCH] ~~"through the REAL component (SearchBar → …)"~~ —
+// `SearchBar` is DELETED (DELETE-with-relay, Ruling 1) and the route hand-composes the
+// surviving `.input-bar` recipe. Nothing this spec asserts was ever about the SFC: it
+// reads a placeholder, types, and reads the ranked cards. The ENGINE is the subject and
+// always was, which is why the arms below survive the component's deletion unchanged in
+// substance.
 //
 // THE BINDING ARMS:
 //   (a) TYPE → RANK — typing a query into the live rail ranks the 200-row catalogue;
@@ -25,7 +33,7 @@ import type { Page } from "@playwright/test";
 const ROUTE = "/data/search";
 const LIVE_RAIL_PLACEHOLDER = "Search components, composables, tokens…";
 
-// The live SearchBar input (the rail that drives the shared query + the overlay).
+// The live field (the rail that drives the shared query).
 function liveRail(page: Page) {
     return page.getByPlaceholder(LIVE_RAIL_PLACEHOLDER);
 }
@@ -57,12 +65,16 @@ test.describe("search (behavioural — the moved fixture instrumentation)", () =
         const count = await titles.count();
         expect(count, "no ranked result cards rendered for a real query").toBeGreaterThan(0);
 
-        // The FuzzySearch overlay row is the strongest match for its own name — it
-        // ranks into the visible set (highest-score-first is the component's contract).
+        // [2026-08-25 · BK #42 W-SEARCH] ~~`/FuzzySearch overlay/i`~~ — BROKEN BEFORE
+        // THIS UNIT AND NOT BY IT. No row named "FuzzySearch overlay" has existed in
+        // `demo/stories/data/search.vue`'s seed table for as long as the seeds have
+        // carried "useFuzzySearch state"; the overlay component retired at REDUCTION W3
+        // and this assertion outlived its subject. Found while re-pointing the route,
+        // recorded rather than quietly swapped. Re-pointed to the live seed.
         const labels = await titles.allInnerTexts();
         expect(
-            labels.some((l) => /FuzzySearch overlay/i.test(l)),
-            `expected "FuzzySearch overlay" in the ranked set, got: ${labels.join(" | ")}`,
+            labels.some((l) => /useFuzzySearch/i.test(l)),
+            `expected "useFuzzySearch state" in the ranked set, got: ${labels.join(" | ")}`,
         ).toBe(true);
     });
 
@@ -71,13 +83,16 @@ test.describe("search (behavioural — the moved fixture instrumentation)", () =
     }) => {
         await page.goto(ROUTE, { waitUntil: "networkidle" });
 
-        // "srchbar" is a subsequence of "SearchBar query rail" — the scorer matches
-        // gaps, so the row surfaces despite the missing 'ea'/'query rail' spans.
-        await typeQuery(page, "srchbar");
+        // [2026-08-25 · BK #42 W-SEARCH] ~~"srchbar" ⊑ "SearchBar query rail"~~ — that
+        // seed row named a component this unit deleted and was re-seeded onto the
+        // surviving engine leaf. "fzmtch" is a subsequence of "fuzzy match scorer"
+        // (f·z·m·t·c·h with gaps at every step), so the arm keeps testing exactly what
+        // it tested: gap-tolerant subsequence matching, not a substring.
+        await typeQuery(page, "fzmtch");
         const labels = await resultTitles(page).allInnerTexts();
         expect(
-            labels.some((l) => /SearchBar/i.test(l)),
-            `subsequence "srchbar" did not surface a SearchBar row, got: ${labels.join(" | ")}`,
+            labels.some((l) => /Fuzzy match scorer/i.test(l)),
+            `subsequence "fzmtch" did not surface the scorer row, got: ${labels.join(" | ")}`,
         ).toBe(true);
     });
 
@@ -100,7 +115,7 @@ test.describe("search (behavioural — the moved fixture instrumentation)", () =
         await typeQuery(page, "fuzzysearch");
         const labels = await resultTitles(page).allInnerTexts();
         expect(
-            labels.some((l) => /FuzzySearch overlay/i.test(l)),
+            labels.some((l) => /useFuzzySearch/i.test(l)),
             "the ranked set differs in dark mode (search must be mode-invariant)",
         ).toBe(true);
     });

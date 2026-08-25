@@ -34,7 +34,6 @@ import * as Motion from "@glass/composables/motion";
 import * as MotionCore from "@glass/composables/motion/core";
 import * as PopoverSurface from "@glass/components/popover";
 import * as ProgressSurface from "@glass/components/progress";
-import * as Search from "@glass/components/search";
 import * as SelectSurface from "@glass/components/select";
 import * as Sidebar from "@glass/composables/sidebar";
 import * as ScrollProgressRimSurface from "@glass/components/scroll-progress-rim";
@@ -184,9 +183,14 @@ const rootRuntimeExports = [
     // the four mints + `./sheet` + `./menu` in, `./forms` + `./dropdown-menu` out,
     // `regen-exports.mjs` reproduces exportKeys ~~70/70~~ EXACT. [2026-08-10 · BK #21
     // W-DAG-REDUCE] The batched cut was not the last one: `./canvas` is CUT here and the
-    // reproduction is **69/69 EXACT**. The six names it published all live on the root
+    // reproduction is ~~**69/69 EXACT**~~. The six names it published all live on the root
     // barrel below and are unmoved — this list did not change by a byte, which is the
     // point of citing it: a subpath cut that touches the root surface is a different act.
+    // [2026-08-25 · BK #42 W-SEARCH] Nor was THAT the last one: `./search` is CUT and
+    // the reproduction is **68/68 EXACT**. Same shape as `./canvas` and cited for the
+    // same reason — this list is again unchanged by a byte, because the root barrel
+    // never carried `SearchBar` or the fuzzy names in the first place. That is what
+    // made the cut TOTAL rather than a narrowing: `./search` was the only door.
     "NumberFieldInput",
     "NumberFieldStep",
     "PopoverContent",
@@ -264,7 +268,14 @@ const rootRuntimeExports = [
 const subpathRuntimeExports = [
     // `./drawer` RETIRED with its directory (BK #39): the family was a placement plus a
     // scalar, and both are props on `<SheetContent>` now — `detents` and `detent`.
-    { subpath: "search", surface: Search, name: "useFuzzySearch" },
+    // [2026-08-25 · BK #42 W-SEARCH] ~~`{ subpath: "search", surface: Search, name:
+    // "useFuzzySearch" }`~~ — STRUCK WITH ITS SUBPATH. `./search` is CUT: `SearchBar`
+    // went DELETE-with-relay and the fuzzy engine is INTERNAL at
+    // `src/composables/search/` (TR:192 ⊕⁵ SE-4). There is no row to weaken here,
+    // because there is no door left to assert a runtime name behind — the `import * as
+    // Search` binding this row read is struck with it. The cut is proven POSITIVELY
+    // instead, by the export-key census below and by `regen-exports` reproducing
+    // package.json exactly at 68 keys.
     // The `ProgressiveSidebar` SFC is gone; the `./sidebar` subpath now
     // surfaces composables only.
     { subpath: "sidebar", surface: Sidebar, name: "useScrollTracker" },
@@ -515,6 +526,13 @@ describe("public runtime surface", () => {
             "metric-badge",
             "metric-cell",
             "metric-stack",
+            // [2026-08-25 · BK #42 W-SEARCH] `search` — the POSITIVE proof of this
+            // unit's cut, and the only proof left: the `subpathRuntimeExports` row that
+            // used to assert `useFuzzySearch` behind `./search` is struck with the door
+            // it read, so absence is now the whole assertion. Both maps, because a key
+            // surviving in `typesVersions` alone is a type-only ghost door that
+            // resolves at editor time and 404s at runtime.
+            "search",
         ]) {
             expect(manifest.exports).not.toHaveProperty(`./${retired}`);
             expect(manifest.typesVersions["*"]).not.toHaveProperty(retired);

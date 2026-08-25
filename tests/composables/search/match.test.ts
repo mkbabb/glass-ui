@@ -8,8 +8,8 @@ import {
     searchIndex,
     fuzzyMatch,
     clearSearchCache,
-} from "@glass/components/search/composables/fuzzySearchIndex";
-import type { SearchableItem } from "@glass/components/search/composables/types";
+} from "@glass/composables/search/match";
+import type { SearchableItem } from "@glass/composables/search/types";
 
 afterEach(() => clearSearchCache());
 
@@ -160,9 +160,20 @@ describe("searchIndex — the 200-item fuzzy query (the dock-scale π)", () => {
             expect(results[i - 1].score).toBeGreaterThanOrEqual(results[i].score);
         }
         // every returned result is a genuine subsequence match with highlight spans.
+        // [2026-08-25 · BK #42 W-SEARCH · MATCHER REPAIR] ~~`expect(r.score)
+        // .toBeGreaterThan(0)`~~ — STRUCK, because it asserted the defect. It was a
+        // TAUTOLOGY over the old `if (best <= 0) return null` filter: every returned
+        // result had a positive score BY CONSTRUCTION, so the line could never fail and
+        // pinned the exact behaviour §PRESENCE below convicts. Score is a ranking
+        // value and is free to be negative; what a returned row owes is that it is
+        // genuinely present in its own label or body, which is what replaces it.
         for (const r of results) {
             expect(r.matchIndices.length).toBeGreaterThanOrEqual(0);
-            expect(r.score).toBeGreaterThan(0);
+            const hay = `${r.item.label} ${r.item.text} ${r.item.type ?? ""}`;
+            expect(
+                fuzzyMatch("glass", hay.toLowerCase()),
+                `returned a row that is not a subsequence match at all: ${r.item.label}`,
+            ).not.toBeNull();
         }
         // the top match's matchIndices index into its label.
         const top = results[0];
@@ -175,6 +186,74 @@ describe("searchIndex — the 200-item fuzzy query (the dock-scale π)", () => {
     it("respects the maxResults cap", () => {
         const idx = buildIndex(build200());
         expect(searchIndex(idx, "panel", 5).length).toBeLessThanOrEqual(5);
+    });
+});
+
+// [2026-08-25 · BK #42 W-SEARCH · MATCHER REPAIR] PRESENCE ≠ RANK.
+//
+// CWT-2 §SEARCH amends row #42's ground to "the matcher needs REPAIR (it silently
+// nulls present subsequences)". This is the arm that holds the repair down. The
+// mechanism, restated so a reader need not re-derive it: `fuzzyMatch` subtracts
+// `0.1` per EXCESS character, unbounded in the text length, and `scoreEntry` used
+// `best = 0` as both the not-found sentinel and a floor — so a real match went
+// invisible the moment the arithmetic crossed zero.
+//
+// The thresholds are COMPUTED here, never hardcoded, so the arm cannot rot into a
+// pinned constant if the bonus table is ever retuned: for a plain mid-string single
+// character the score is exactly `1 - (tLen - 1) * 0.1`, which reaches 0 at 11.
+describe("scoreEntry — a present subsequence is never silently dropped", () => {
+    /** The shortest text at which a plain q-char match scores <= 0 — derived. */
+    function vanishLength(q: string): number {
+        let n = q.length;
+        while (n < 4096) {
+            const text = `${"x".repeat(n - q.length)}${q}`;
+            const m = fuzzyMatch(q, text)!;
+            if (m.score <= 0) return n;
+            n++;
+        }
+        throw new Error("no vanish length found — the penalty term changed shape");
+    }
+
+    it("the vanishing thresholds are real and are the ones the spec convicted", () => {
+        // CWT-2 §SEARCH: "a present subsequence drops at text length 11/72/133/255
+        // for 1/2/3/5-char queries". Re-derived from the live scorer, not asserted.
+        expect(vanishLength("a")).toBe(11);
+        expect(vanishLength("ab")).toBe(72);
+    });
+
+    it("a long body still surfaces its row (the 1-char case, at the threshold)", () => {
+        // Text long enough that the single matched char scores exactly <= 0.
+        const len = vanishLength("q");
+        const body = `${"x".repeat(len - 1)}q`;
+        expect(fuzzyMatch("q", body)!.score).toBeLessThanOrEqual(0);
+
+        const idx = buildIndex([item("1", "zzzz", body, "zzzz")]);
+        const results = searchIndex(idx, "q");
+        expect(
+            results.map((r) => r.item.id),
+            "a present subsequence was dropped because its RANK was non-positive",
+        ).toEqual(["1"]);
+    });
+
+    it("ranks correctly across the zero line — a tight match still outranks a loose one", () => {
+        const tightBody = "q";
+        const looseBody = `${"x".repeat(400)}q`;
+        const idx = buildIndex([
+            item("tight", "zzzz", tightBody, "zzzz"),
+            item("loose", "zzzz", looseBody, "zzzz"),
+        ]);
+        const results = searchIndex(idx, "q");
+        expect(results.map((r) => r.item.id)).toEqual(["tight", "loose"]);
+        // The repair does not floor anything: the loose row's rank IS negative, and
+        // the descending sort orders it correctly anyway.
+        expect(results[1].score).toBeLessThan(0);
+    });
+
+    it("a genuine non-match is still absent — the repair rescues nothing extra", () => {
+        const idx = buildIndex([item("1", "alpha", "beta gamma", "delta")]);
+        expect(searchIndex(idx, "zzzz")).toEqual([]);
+        // out-of-order is not a subsequence, at any length
+        expect(searchIndex(idx, "ahpla")).toEqual([]);
     });
 });
 

@@ -29,9 +29,9 @@ const EVIDENCE_DIR = fileURLToPath(
     new URL("../docs/tranches/BJ/evidence/W1-RADIUS-REDRESS", import.meta.url),
 );
 const COMPILED_CSS = readFileSync(`${EVIDENCE_DIR}/compiled-demo.css`, "utf8");
-const SEARCH_VARIANTS_SRC = fileURLToPath(
-    new URL("../src/components/search/searchVariants.ts", import.meta.url),
-);
+// [2026-08-25 · BK #42 W-SEARCH] ~~`SEARCH_VARIANTS_SRC`~~ — `searchVariants.ts` is
+// DELETED with `SearchBar` (DELETE-with-relay, Ruling 1). The floating/bare clone half
+// of the search arm is struck below; `readFileSync` stays for `COMPILED_CSS`.
 
 const EPS = 0.6;
 const parsePx = (v: string | null | undefined) =>
@@ -56,7 +56,7 @@ const HARNESS = `
   <div id="av-square" class="avatar" data-shape="square" data-size="md"><div class="avatar__identity"></div></div>
   <div id="av-circle" class="avatar" data-shape="circle" data-size="md"><div class="avatar__identity"></div></div>
 
-  <!-- search: inline → control pill + plate; floating/bare recipes applied from source -->
+  <!-- search: the .input-bar recipe → control pill + plate -->
   <div id="bar-inline" class="input-bar" style="width:280px"><span>inline</span></div>
 
   <!-- tags-input: the F12 field CONTAINER → --radius-field (16px) with a pill chip child -->
@@ -101,16 +101,10 @@ test.describe("W1 radius redress — bundled-WebKit static-cascade discovery (ro
             receivers: {},
         };
 
-        // The bare/floating recipes read from the ACTUAL source VARIANT map so the arm
-        // is mutation-biting (floating is "" = no stripping; bare strips the plate).
-        const src = readFileSync(SEARCH_VARIANTS_SRC, "utf8");
-        const pick = (key: string): string => {
-            const m = src.match(new RegExp(`${key}\\s*:\\s*"([^"]*)"`));
-            expect(m, `VARIANT.${key} not found in searchVariants.ts`).toBeTruthy();
-            return m![1];
-        };
-        const floatingCls = pick("floating");
-        const bareCls = pick("bare");
+        // [2026-08-25 · BK #42 W-SEARCH] ~~the VARIANT-map read + `pick()` +
+        // `floatingCls`/`bareCls`~~ — STRUCK WITH THEIR SOURCE. The arm was
+        // mutation-biting against `searchVariants.ts`; that file no longer exists, and
+        // a `pick()` against a deleted file is not a weaker proof, it is a crash.
 
         await page.setContent(HARNESS, { waitUntil: "load" });
 
@@ -133,7 +127,7 @@ test.describe("W1 radius redress — bundled-WebKit static-cascade discovery (ro
         });
 
         const probe = await page.evaluate(
-            ({ floatingCls, bareCls }) => {
+            () => {
                 const rad = (id: string) => {
                     const el = document.getElementById(id);
                     return el ? getComputedStyle(el).borderRadius : null;
@@ -162,16 +156,10 @@ test.describe("W1 radius redress — bundled-WebKit static-cascade discovery (ro
                     }
                     return { radius: cs.borderRadius, border: cs.borderTopWidth, bgAlpha: alpha };
                 };
-                // Search variant clones from the source recipe (mutation-biting).
+                // [2026-08-25 · BK #42 W-SEARCH] ~~`cloneWith`~~ deleted with the two
+                // variant classes it was built to apply — an unused clone helper is the
+                // shim shape `overfit-structure` exists to catch.
                 const inlineBar = document.getElementById("bar-inline")!;
-                const cloneWith = (classes: string) => {
-                    const clone = inlineBar.cloneNode(true) as HTMLElement;
-                    for (const c of classes.split(/\s+/).filter(Boolean)) clone.classList.add(c);
-                    document.body.appendChild(clone);
-                    const out = plateOf(clone);
-                    clone.remove();
-                    return out;
-                };
                 const root = getComputedStyle(document.documentElement);
                 return {
                     tokens: {
@@ -195,8 +183,6 @@ test.describe("W1 radius redress — bundled-WebKit static-cascade discovery (ro
                     },
                     search: {
                         inline: plateOf(inlineBar),
-                        floating: cloneWith(floatingCls),
-                        bare: cloneWith(bareCls),
                     },
                     tags: { container: rad("tags"), chip: radChild("tags", ".tags-input__chip") },
                     sortable: { dropAbove: radPseudo("sortable", "::before") },
@@ -209,7 +195,6 @@ test.describe("W1 radius redress — bundled-WebKit static-cascade discovery (ro
                     button: rad("btn"),
                 };
             },
-            { floatingCls, bareCls },
         );
 
         record(info, "all", probe, ledger);
@@ -233,14 +218,14 @@ test.describe("W1 radius redress — bundled-WebKit static-cascade discovery (ro
         expect(parsePx(probe.avatar.square), "avatar square → media").toBeCloseTo(10, 0);
         expect(parsePx(probe.avatar.circle), "avatar circle → pill").toBeGreaterThanOrEqual(9999 - EPS);
 
-        // ── search: inline pill + plate; floating retains plate; bare chromeless ─
+        // ── search: the .input-bar RECIPE is a control pill carrying the plate ──
+        // [2026-08-25 · BK #42 W-SEARCH] The three ~~floating/bare~~ assertions are
+        // struck with the CVA. The recipe itself is NOT struck — `.input-bar` outlives
+        // `SearchBar` (dock search.css + the dock-search demo + four value.js selector
+        // sites read it), so its WebKit-resolved role radius still needs holding.
         expect(parsePx(probe.search.inline!.radius), "inline input-bar → control pill").toBeGreaterThanOrEqual(9999 - EPS);
         expect(probe.search.inline!.bgAlpha, "inline plate bg").toBeGreaterThan(0.05);
         expect(parsePx(probe.search.inline!.border), "inline plate border").toBeGreaterThanOrEqual(1 - EPS);
-        expect(parsePx(probe.search.floating!.radius), "floating retains the control pill").toBeGreaterThanOrEqual(9999 - EPS);
-        expect(probe.search.floating!.bgAlpha, "floating retains the plate bg").toBeGreaterThan(0.05);
-        expect(parsePx(probe.search.bare!.radius), "bare radius").toBeLessThanOrEqual(EPS);
-        expect(probe.search.bare!.bgAlpha, "bare transparent").toBeLessThanOrEqual(0.05);
 
         // ── tags-input F12: the CONTAINER resolves --radius-field (16px) on WebKit too
         //    — the cross-engine corroboration of the writer fix (was (EMPTY)/0px). The

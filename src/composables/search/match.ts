@@ -1,7 +1,12 @@
 /**
- * Generic fuzzy search index — builds a flat searchable index from items
- * and scores queries with VSCode-style fuzzy matching.
- * Pure functions, no Vue reactivity.
+ * The engine's matcher — builds a flat searchable index from items and scores queries
+ * with VSCode-style fuzzy matching. Pure functions, no Vue reactivity.
+ *
+ * [2026-08-25 · BK #42 W-SEARCH] Landed here from
+ * `src/components/search/composables/fuzzySearchIndex.ts`. The name lost its
+ * `fuzzySearchIndex` prefix with the directory: under `composables/search/` the words
+ * "search" and "fuzzy" are the path, and a file called `search/fuzzySearchIndex.ts`
+ * says them twice.
  */
 import type { SearchableItem, SearchResult } from "./types";
 
@@ -120,12 +125,32 @@ function multiTokenFuzzy(
 /**
  * Scores one query against one entry. Tries each field with different
  * weights and returns the best composite score.
+ *
+ * PRESENCE AND RANK ARE TWO DIFFERENT QUESTIONS, and this function used to answer
+ * both with one number. `best` was initialised to `0` and served as BOTH the
+ * "nothing matched yet" sentinel and a score floor, so a genuine subsequence whose
+ * score landed at or below zero was reported as ABSENT.
+ *
+ * [2026-08-25 · BK #42 W-SEARCH · MATCHER REPAIR] That is not hypothetical. The
+ * `-0.1`-per-excess-character term at `fuzzyMatch` is unbounded in the text length,
+ * so a single plain mid-string character (`cs = 1`) goes non-positive the moment the
+ * field reaches 11 characters — and a 200-row catalogue's bodies run 60-110. Measured
+ * thresholds, re-derived at this seat: a present match DISAPPEARS at text length
+ * 11 / 72 / 133 / 255 for 1 / 2 / 3 / 5-character queries. CWT-2 §SEARCH makes this the
+ * AMENDED GROUND on which row #42 is a SPLIT rather than a DELETE, so the engine may
+ * not take up its new home still carrying it.
+ *
+ * The repair is the separation, not a clamp: `multiTokenFuzzy` ALREADY returns null
+ * iff a token is not a subsequence, so it is the whole and only presence oracle. `best`
+ * becomes `number | null` — a pure ranking value that is free to be negative, exactly
+ * as the excess penalty intends. No score is floored, nothing is rescued that did not
+ * match, and `searchIndex`'s descending sort orders negatives correctly on its own.
  */
 function scoreEntry<T extends SearchableItem>(
     tokens: string[],
     entry: IndexEntry<T>,
 ): { score: number; matches: number[] } | null {
-    let best = 0;
+    let best: number | null = null;
     let bestMatches: number[] = [];
 
     const fields: [string, number][] = [
@@ -137,13 +162,15 @@ function scoreEntry<T extends SearchableItem>(
     for (const [text, weight] of fields) {
         if (!text) continue;
         const m = multiTokenFuzzy(tokens, text);
-        if (m && m.score * weight > best) {
-            best = m.score * weight;
+        if (!m) continue;
+        const scaled = m.score * weight;
+        if (best === null || scaled > best) {
+            best = scaled;
             bestMatches = text === entry._lc.label ? m.matches : [];
         }
     }
 
-    if (best <= 0) return null;
+    if (best === null) return null;
     return { score: best, matches: bestMatches };
 }
 

@@ -98,7 +98,13 @@ const OWNER_MANIFEST = [
     ["src/components/dock", "#89 — M02 dock edge (sever landed)"],
     ["src/components/menu", "#89 — M02 menu edge (was dropdown-menu)"],
     ["src/components/_shared", "#21 — M02 module SCC"],
-    ["src/components/search", "#21 — M02 module SCC"],
+    // [2026-08-25 · BK #42 W-SEARCH] ~~`["src/components/search", "#21 — M02 module
+    // SCC"]`~~ — the directory is DELETED. Deliberately NOT re-added under
+    // `src/composables/search`: the engine's membership in the M02 knot was the
+    // component's doing (`SearchBar` reached `_shared/class-names`, `_shared/axes` and
+    // `_shared/control`), and the engine it was parked over imports nothing but `vue`
+    // and its own three leaves. The generic `src/composables` row below owns it, which
+    // is the correct and weaker claim.
     ["src/components/select", "#21 — M02 module SCC"],
     ["src/components/tabs", "#21 — M02 module SCC"],
     ["src/components/tooltip", "#21 — M02 module SCC"],

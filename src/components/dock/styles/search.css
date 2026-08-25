@@ -21,8 +21,11 @@
  * byte-untouched `morph-bridge.css` metaball (READ-ONLY — bound, never edited). */
 
 @layer components {
-    /* The search-field region inside the morph aperture. The consumer slots its
-       <SearchBar>/<FuzzySearch> here; this rule owns the legibility seam + the layout
+    /* The search-field region inside the morph aperture. The consumer slots its OWN
+       field here — [2026-08-25 · BK #42 W-SEARCH] ~~`<SearchBar>`/`<FuzzySearch>`~~,
+       both now deleted from the package; what the consumer composes is the `.input-bar`
+       recipe (`styles/utilities/components.css`), which SURVIVES and is what the rules
+       below have always actually selected. This rule owns the legibility seam + the layout
        inside the aperture (a column: the field over its dropdown). It is present ONLY on
        a dock that AUTHORS the `#search` slot (additive — a non-search dock never
        renders `.dock-search-field`, so the surface is its own gate).

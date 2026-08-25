@@ -2,8 +2,17 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { computed, ref } from "vue";
-import { SearchBar, useFuzzySearch } from "@glass/components/search";
-import type { SearchResult, SearchableItem } from "@glass/components/search";
+import { Search as SearchIcon } from "@lucide/vue";
+// [2026-08-25 · BK #42 W-SEARCH] ~~`import { SearchBar, useFuzzySearch } from
+// "@glass/components/search"`~~ — `SearchBar` is DELETED (DELETE-with-relay, Ruling 1)
+// and the engine is INTERNAL at `@glass/composables/search`. This route is the ENGINE's
+// specimen now, which is what it was always actually showing: the rail was never the
+// story, the ranking was. The field below is the `.input-bar` recipe hand-composed —
+// the same shape `demo/stories/dock/dock-search.vue` already uses, and the recipe
+// SURVIVES the cut (it lives in `src/styles/utilities/components.css` and ships on
+// `./styles`, so the four consumer-side selector sites are untouched by the deletion).
+import { useFuzzySearch } from "@glass/composables/search";
+import type { SearchResult, SearchableItem } from "@glass/composables/search";
 import { Badge } from "@glass/components/badge";
 import {
     Card,
@@ -35,13 +44,16 @@ type RowSeed = readonly [
 const TONES = ["0", "2", "3", "4", "5", "7", "8", "11"] as const;
 
 const rowSeeds = [
+    // [2026-08-25 · BK #42 W-SEARCH] ~~"SearchBar query rail"~~ — the catalogue is a
+    // list of things this library actually has, so a row for a deleted component was a
+    // lie the moment the component went. Re-seeded onto the surviving engine leaf.
     [
-        "SearchBar query rail",
-        "component",
-        "Compact input bar with a baked-in icon for filtering catalogue rows.",
-        "proof",
+        "Fuzzy match scorer",
+        "composable",
+        "VSCode-style subsequence scorer with start, separator, camelCase and run bonuses.",
+        "wired",
         "Search",
-        ["SearchBar", "input"],
+        ["fuzzyMatch", "scorer"],
     ],
     [
         "useFuzzySearch state",
@@ -431,7 +443,7 @@ const searchState = useFuzzySearch<SearchableItem>({
     },
 });
 
-// The live SearchBar drives the query. ONE field on this route (BK #19, O-17 D-19):
+// The live field drives the query. ONE field on this route (BK #19, O-17 D-19):
 // the page used to call `searchState.open()` on every keystroke to raise a fuzzy-search
 // OVERLAY that carried its own input — two stacked search fields, one of them a
 // duplicate of the other. The overlay component is gone from the package surface, so
@@ -444,9 +456,11 @@ const query = computed({
     },
 });
 
-// The three size specimens carry their own field state so the size axis reads as a
-// permutation strip (the rungs sit side by side), independent of the live query.
-const sizeSample = ref("");
+// [2026-08-25 · BK #42 W-SEARCH] ~~`const sizeSample = ref("")` + the three size
+// specimens~~ — STRUCK WITH THEIR SUBJECT. The "Sizes" section demonstrated
+// `<SearchBar size>`, a prop on a component that no longer exists; there is no rung to
+// paint. The `--control-h-*` cohort it was really showing is demonstrated by every
+// other control route, so nothing is left uncovered.
 
 const visibleResults = computed<SearchResult<StorySearchItem>[]>(() =>
     searchState.results.value
@@ -459,6 +473,16 @@ const visibleResults = computed<SearchResult<StorySearchItem>[]>(() =>
 
 const resultCount = computed(() => visibleResults.value.length);
 const hasQuery = computed(() => query.value.trim().length > 0);
+
+// ArrowDown/Up/Enter are `useFuzzySearch.onKeydown`'s already — the route only had to
+// bind them, which is the half it never did (CWT-2 §SEARCH D10: "/data/search binds no
+// @keydown — ArrowDown+Enter → nothing", while the dock consumed the same combobox
+// half correctly). The engine owns the index; the route reflects it back as the
+// active-descendant so the keyboard walk is announced rather than merely painted.
+const activeResultId = computed(() => {
+    const active = visibleResults.value[searchState.selectedIndex.value];
+    return active ? `search-result-${active.item.id}` : undefined;
+});
 
 function formatScore(score: number): string {
     return score.toFixed(1);
@@ -480,26 +504,52 @@ function formatScore(score: number): string {
 
         <StorySection
             heading="Live search"
-            blurb="Type to filter the 200-row catalogue. The rail and the overlay stay in sync as you type, and screen readers hear the running result count."
+            blurb="Type to filter the 200-row catalogue, then walk the ranked cards with ArrowUp/ArrowDown and commit with Enter. Screen readers hear the running result count."
         >
             <Surface tier="quiet" surface="veil" class="flex flex-col gap-4 p-5">
-                <SearchBar
-                    v-model="query"
-                    size="lg"
-                    surface="glass"
-                    placeholder="Search components, composables, tokens…"
-                    aria-label="Search the catalogue"
-                />
+                <label class="input-bar" data-surface="glass">
+                    <SearchIcon
+                        class="size-4 shrink-0 text-muted-foreground"
+                        aria-hidden="true"
+                    />
+                    <input
+                        v-model="query"
+                        type="text"
+                        class="input-bar-field"
+                        placeholder="Search components, composables, tokens…"
+                        aria-label="Search the catalogue"
+                        :aria-activedescendant="activeResultId"
+                        @keydown="searchState.onKeydown"
+                    />
+                </label>
+                <!-- The blurb above promises "screen readers hear the running result
+                     count". Before this unit that was FALSE — the route carried no live
+                     region at all and the count lived only in a <Badge>. It is true
+                     here, and it is the same `resultCount` the badge renders, so the
+                     two cannot drift. -->
+                <p class="sr-only" role="status" aria-live="polite">
+                    {{
+                        hasQuery
+                            ? `${resultCount} matches for ${query}`
+                            : "No query entered"
+                    }}
+                </p>
             </Surface>
 
             <div
                 v-if="hasQuery && visibleResults.length > 0"
                 class="grid gap-4 md:grid-cols-2"
+                role="listbox"
+                aria-label="Search results"
             >
                 <Card
-                    v-for="result in visibleResults"
+                    v-for="(result, i) in visibleResults"
+                    :id="`search-result-${result.item.id}`"
                     :key="result.item.id"
                     class="border-l-4"
+                    role="option"
+                    :aria-selected="i === searchState.selectedIndex.value"
+                    :data-active="i === searchState.selectedIndex.value || undefined"
                     :style="{
                         borderLeftColor: `var(--section-color-${result.item.tone})`,
                     }"
@@ -546,35 +596,6 @@ function formatScore(score: number): string {
                         ? "No matches for the current query — try a shorter subsequence."
                         : "Start typing above to rank the catalogue by fuzzy score."
                 }}
-            </div>
-        </StorySection>
-
-        <StorySection
-            heading="Sizes"
-            blurb="One warm-cream glass pill recipe across the golden control-height rungs — sm for a quiet inline filter, md the default, lg the hero field."
-        >
-            <div class="flex flex-col gap-3">
-                <SearchBar
-                    v-model="sizeSample"
-                    size="sm"
-                    surface="glass"
-                    placeholder="size=sm — inline filter"
-                    aria-label="Search bar, small"
-                />
-                <SearchBar
-                    v-model="sizeSample"
-                    size="md"
-                    surface="glass"
-                    placeholder="size=md — the default rail"
-                    aria-label="Search bar, medium"
-                />
-                <SearchBar
-                    v-model="sizeSample"
-                    size="lg"
-                    surface="glass"
-                    placeholder="size=lg — the hero field"
-                    aria-label="Search bar, large"
-                />
             </div>
         </StorySection>
     </StoryPage>

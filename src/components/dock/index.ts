@@ -86,14 +86,18 @@ export {
 } from "../../composables/motion/morph/useDockCtaReceive";
 
 // Dock-as-native-dynamic-search-bar seam. `useDockSearch`
-// composes `useDockState` + the SHIPPED /search fuzzy pipeline (`useFuzzySearch`, the
+// composes `useDockState` + the ~~SHIPPED /search~~ fuzzy pipeline (`useFuzzySearch`, the
 // VSCode subsequence scorer — NO re-fork) + the dock's OWN `--dock-morph-t` metaball
 // morph (the byte-untouched `morph-bridge.css` — box-inviolate, no second engine) + the
 // optional `useScrollChrome` shrink + the ToC `ensureTargetWindow`/`scrollTo` subsume.
 // A consuming seam BESIDE the morph engine; a dock opts in by AUTHORING the
-// `#search` slot ([2026-08-12 · BK #47 W1 SURFACE] ~~`<GlassDock search>`~~). `SearchBar`
-// KEEPS (a live standalone surface); the `FuzzySearch.vue` demo component retired onto
-// this register at REDUCTION W3.
+// `#search` slot ([2026-08-12 · BK #47 W1 SURFACE] ~~`<GlassDock search>`~~).
+// [2026-08-25 · BK #42 W-SEARCH] ~~`SearchBar` KEEPS (a live standalone surface)~~ — it
+// is DELETED with its relay, and the pipeline is no longer SHIPPED: it is INTERNAL at
+// `src/composables/search/` and the `./search` subpath is CUT. Nothing about THIS seam
+// moves — `useDockSearch` is still the exported door, and the dock is now the engine's
+// only public expression, which is what ⊕⁵ SE-4 ruled it should be. The
+// `FuzzySearch.vue` demo component retired onto this register at REDUCTION W3.
 // The network source plugs via `onSearch`.
 export { useDockSearch } from "./composables";
 export type { UseDockSearchOptions, UseDockSearchReturn } from "./composables";

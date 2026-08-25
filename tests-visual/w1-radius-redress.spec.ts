@@ -15,9 +15,10 @@
 //   /navigation/tabs   — SegmentedTabs horizontal pill+underline buttons resolve
 //                        --radius-tab (9999px); vertical resolve --radius-strip (12px);
 //                        the button is co-geometric with its indicator.
-//   /data/search       — inline + (corrected) floating single-line fields compute
-//                        --radius-control (9999px, the true control pill) and carry the
-//                        .input-bar glass plate; bare stays chromeless (0px, no plate).
+//   /data/search       — the live single-line field computes --radius-control (9999px,
+//                        the true control pill) and carries the .input-bar glass plate.
+//                        [2026-08-25 · BK #42] the floating/bare variant clones are
+//                        struck with searchVariants.ts.
 //   /feedback/skeleton — default/text specimen computes --radius-media (10px); the 48px
 //                        avatar specimen computes a CIRCLE (rounded-full wins); the card
 //                        specimen computes --radius-card (16px) — proving the @layer
@@ -46,7 +47,9 @@
 import { test, expect } from "@playwright/test";
 import type { Page, TestInfo } from "@playwright/test";
 import { fileURLToPath } from "node:url";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+// [2026-08-25 · BK #42 W-SEARCH] ~~`readFileSync`~~ dropped from the import: its only
+// call site read `searchVariants.ts` for the variant-clone half, struck above.
+import { mkdirSync, writeFileSync } from "node:fs";
 
 const EVIDENCE_DIR = fileURLToPath(
     new URL(
@@ -54,9 +57,9 @@ const EVIDENCE_DIR = fileURLToPath(
         import.meta.url,
     ),
 );
-const SEARCH_VARIANTS_SRC = fileURLToPath(
-    new URL("../src/components/search/searchVariants.ts", import.meta.url),
-);
+// [2026-08-25 · BK #42 W-SEARCH] ~~`SEARCH_VARIANTS_SRC`~~ — `searchVariants.ts` is
+// DELETED with `SearchBar`, so the mutation-biting read of the VARIANT map has no
+// source and the clone half of the search arm is struck. See the arm itself.
 
 const VIEWPORTS = [
     { name: "desktop", width: 1440, height: 900 },
@@ -217,94 +220,69 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
     });
 
     // ── /data/search ─────────────────────────────────────────────────────────
-    test("search — inline .input-bar (sm/md/lg) computes --radius-control (9999px) + glass plate; floating retains the plate, bare is chromeless", async ({
+    // [2026-08-25 · BK #42 W-SEARCH] THE VARIANT HALF IS STRUCK WITH ITS SUBJECT.
+    // ~~The arm read `searchVariants.ts` off disk and cloned the live `.input-bar` with
+    // the `floating` / `bare` classes to prove F17 (floating RETAINS the plate, bare is
+    // the sole chromeless).~~ `SearchBar` went DELETE-with-relay at #42 and the CVA died
+    // with it: there is no `floating` and no `bare`, so there is nothing left that could
+    // strip a plate and no mutation left to bite. ~~`expect(probe.inline.length)
+    // .toBeGreaterThanOrEqual(3)` + the ≥2 distinct heights~~ go the same way — those
+    // three receivers were the Sizes section's `size=sm|md|lg` specimens, struck with
+    // the prop.
+    //
+    // WHAT SURVIVES IS NOT A REMNANT. `.input-bar` is a RECIPE in
+    // `src/styles/utilities/components.css`, not the component's own CSS, and it still
+    // has live readers after the cut (the dock-search demo hand-rolls it, the dock's
+    // `search.css` styles it, four value.js sites select it). Its radius ROLE is
+    // therefore still a real claim to hold: the route's one live field must compute the
+    // true control pill and carry the plate.
+    test("search — the live .input-bar computes --radius-control (9999px) + the glass plate", async ({
         page,
     }, info) => {
         await page.goto("/data/search", { waitUntil: "networkidle" });
         await waitForReceiver(page, ".input-bar");
 
-        // The corrected floating + bare recipes read from the ACTUAL source VARIANT
-        // map (fs, in Node) so the recipe proof is mutation-biting: restoring
-        // floating → the stripping classes flips its clone RED.
-        const src = readFileSync(SEARCH_VARIANTS_SRC, "utf8");
-        const pick = (key: string): string => {
-            const m = src.match(new RegExp(`${key}\\s*:\\s*"([^"]*)"`));
-            expect(m, `VARIANT.${key} not found in searchVariants.ts`).toBeTruthy();
-            return m![1];
-        };
-        const floatingCls = pick("floating");
-        const bareCls = pick("bare");
-
-        const probe = await page.evaluate(
-            ({ floatingCls, bareCls }) => {
-                const bars = [...document.querySelectorAll(".input-bar")];
-                const readPlate = (el: Element) => {
-                    const cs = getComputedStyle(el);
-                    // alpha from rgba()/rgb()/color(srgb .. / a) — 0 for transparent.
-                    let alpha = 1;
-                    const bg = cs.backgroundColor;
-                    if (bg === "transparent" || bg === "rgba(0, 0, 0, 0)") alpha = 0;
+        const probe = await page.evaluate(() => {
+            const bars = [...document.querySelectorAll(".input-bar")];
+            const readPlate = (el: Element) => {
+                const cs = getComputedStyle(el);
+                // alpha from rgba()/rgb()/color(srgb .. / a) — 0 for transparent.
+                let alpha = 1;
+                const bg = cs.backgroundColor;
+                if (bg === "transparent" || bg === "rgba(0, 0, 0, 0)") alpha = 0;
+                else {
+                    const slash = bg.match(/\/\s*([\d.]+)\s*\)/);
+                    if (slash) alpha = parseFloat(slash[1]);
                     else {
-                        const slash = bg.match(/\/\s*([\d.]+)\s*\)/);
-                        if (slash) alpha = parseFloat(slash[1]);
-                        else {
-                            const nums = bg.match(/[\d.]+/g);
-                            if (nums && nums.length >= 4) alpha = parseFloat(nums[3]);
-                        }
+                        const nums = bg.match(/[\d.]+/g);
+                        if (nums && nums.length >= 4) alpha = parseFloat(nums[3]);
                     }
-                    return {
-                        radius: cs.borderRadius,
-                        borderTopWidth: cs.borderTopWidth,
-                        bgAlpha: alpha,
-                        paddingLeft: cs.paddingLeft,
-                        radiusControl: cs.getPropertyValue("--radius-control").trim(),
-                    };
+                }
+                return {
+                    radius: cs.borderRadius,
+                    borderTopWidth: cs.borderTopWidth,
+                    bgAlpha: alpha,
+                    paddingLeft: cs.paddingLeft,
+                    radiusControl: cs.getPropertyValue("--radius-control").trim(),
                 };
-                const inline = bars.map((b) => ({
+            };
+            return {
+                inline: bars.map((b) => ({
                     h: Math.round(b.getBoundingClientRect().height),
                     ...readPlate(b),
-                }));
-                // Recipe clones (real .input-bar + the source variant classes).
-                const base = bars[0];
-                const measureWith = (classes: string) => {
-                    const clone = base.cloneNode(true) as HTMLElement;
-                    for (const c of classes.split(/\s+/).filter(Boolean)) clone.classList.add(c);
-                    document.body.appendChild(clone);
-                    const out = readPlate(clone);
-                    clone.remove();
-                    return out;
-                };
-                return {
-                    inline,
-                    floating: measureWith(floatingCls),
-                    bare: measureWith(bareCls),
-                };
-            },
-            { floatingCls, bareCls },
-        );
+                })),
+            };
+        });
 
         record(info, "search", probe);
 
-        expect(probe.inline.length, "no inline .input-bar receivers").toBeGreaterThanOrEqual(3);
-        // Every rendered inline field is a true control pill (9999px) carrying the plate.
+        expect(probe.inline.length, "no .input-bar receiver on /data/search").toBeGreaterThanOrEqual(1);
+        // Every rendered field is a true control pill (9999px) carrying the plate.
         for (const bar of probe.inline) {
-            expect(parsePx(bar.radius), `inline bar h=${bar.h} radius`).toBeGreaterThanOrEqual(9999 - EPS);
-            expect(bar.bgAlpha, `inline bar h=${bar.h} plate bg alpha`).toBeGreaterThan(0.05);
-            expect(parsePx(bar.borderTopWidth), `inline bar h=${bar.h} plate border`).toBeGreaterThanOrEqual(1 - EPS);
+            expect(parsePx(bar.radius), `bar h=${bar.h} radius`).toBeGreaterThanOrEqual(9999 - EPS);
+            expect(bar.bgAlpha, `bar h=${bar.h} plate bg alpha`).toBeGreaterThan(0.05);
+            expect(parsePx(bar.borderTopWidth), `bar h=${bar.h} plate border`).toBeGreaterThanOrEqual(1 - EPS);
         }
-        // sm/md/lg heights are represented (the size axis is exercised).
-        const heights = new Set(probe.inline.map((b) => b.h));
-        expect(heights.size, `distinct control heights: ${[...heights].join(",")}`).toBeGreaterThanOrEqual(2);
-
-        // F17: floating RETAINS the component-owned plate + control pill.
-        expect(parsePx(probe.floating.radius), "floating radius").toBeGreaterThanOrEqual(9999 - EPS);
-        expect(probe.floating.bgAlpha, "floating plate bg alpha").toBeGreaterThan(0.05);
-        expect(parsePx(probe.floating.borderTopWidth), "floating plate border").toBeGreaterThanOrEqual(1 - EPS);
-
-        // F17: bare is the sole chromeless variant — no plate, no pill.
-        expect(parsePx(probe.bare.radius), "bare radius").toBeLessThanOrEqual(EPS);
-        expect(probe.bare.bgAlpha, "bare bg alpha (transparent)").toBeLessThanOrEqual(0.05);
-        expect(parsePx(probe.bare.borderTopWidth), "bare border width").toBeLessThanOrEqual(EPS);
 
         for (const vp of VIEWPORTS) {
             await page.setViewportSize({ width: vp.width, height: vp.height });
