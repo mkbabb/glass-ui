@@ -78,9 +78,18 @@
             scale: var(--scale-press-dock);
         }
 
-        &:focus:not(:focus-visible) {
-            box-shadow: none;
-        }
+        /* [2026-08-25 · BK #47 W2-W9 CURE] ~~`&:focus:not(:focus-visible) {
+           box-shadow: none; }`~~ — the THIRD site of the same struck class as the
+           icon-button's and the trigger family's, and the only one where the dead half
+           was the ENTIRE rule, so the rule goes with it rather than being left as an
+           empty block. Post-W8 the ring rides `outline`, so this suppressed nothing;
+           the active rule below paints `background` + `color` only, so it deleted
+           nothing either. Struck for the same reason as the trigger family's: a
+           suppressor with no subject is a trap armed for whoever gives the tab an
+           active elevation next. Recorded here because the adjudicated residue
+           enumerated the two sites that were VISIBLE before the band walk went
+           recursive; this one is the same defect and would have made the strike a
+           subset of its own class. */
 
         /* focus-visible ring + disabled paint hoisted to the shared `:where()`
            group in dock.css. */

@@ -143,8 +143,25 @@
             cursor: default;
         }
 
+        /* [2026-08-25 · BK #47 W2-W9 CURE] THE SUPPRESSOR LOST ITS SUBJECT AND KEPT
+           ITS DAMAGE. ~~`box-shadow: none;`~~ — when the ring lived on `box-shadow`
+           (pre-W8) this line suppressed it on mouse focus. W8 moved the ring to
+           `outline`, and this half was left behind suppressing a property the ring no
+           longer uses, while still being a `box-shadow` declaration at (0,3,0) —
+           heavier than the active-paint rule below at (0,2,0). So on a control that is
+           BOTH active and mouse-focused (i.e. the instant a user clicks the active
+           seat) it deletes `--dock-active-shadow`. The house default token is `none`
+           (`src/styles/tokens/sizing.css:240`), so the default dock shows nothing; the
+           loss lands squarely on the consumer the active cohort is documented FOR —
+           set `--dock-active-shadow` and the elevation vanishes on click, for reasons
+           nothing on the page explains. This is the unit's own §4 "silent double miss"
+           (`g-dock-lattice.test.ts` MATERIAL docblock) — a yield that suppresses
+           nothing while deleting something — cured at `[data-ring-yield]` and the
+           switcher tab at W8, and missed HERE because the band walk was not recursive
+           and never read this file. The `outline: none` half STAYS: it is licensed
+           DISJOINT (`:not(:focus-visible)` cannot intersect the ring's
+           `:focus-visible`) and it is what suppresses the UA ring on mouse focus. */
         &:focus:not(:focus-visible) {
-            box-shadow: none;
             outline: none;
         }
 

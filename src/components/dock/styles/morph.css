@@ -294,12 +294,29 @@
        is, on a collapsed dock. It painted identity at rest under a "surface lift"
        comment. Nothing replaces it: a collapsed-dock hover rung is in no spec, and
        inventing one to make the comment true is how a register acquires a state nobody
-       designed. The collapsed dock's hover read is its `box-shadow` elevation (above)
-       and its scale lift (below). */
-    .glass-dock.collapsed:hover:not([data-morphing]) {
-        scale: var(--dock-collapsed-hover-scale);
-        will-change: transform; /* Promote the armed-at-rest scale lift */
-    }
+       designed. The collapsed dock's hover read is its `box-shadow` elevation (above).
+       ~~and its scale lift (below)~~ — [2026-08-24 · BK #47 W7 MORPH] struck with the
+       rule it pointed at. */
+
+    /* ~~`.glass-dock.collapsed:hover:not([data-morphing]) { scale:
+       var(--dock-collapsed-hover-scale); will-change: transform; }`~~ —
+       [2026-08-24 · BK #47 W7 MORPH] THE HOVER PRE-SCALE, DELETED. It is the one motion
+       in the dock that actively fights the motion it precedes, and the `:not(...)` guard
+       that reads as a safeguard is in fact the mechanism of the defect.
+
+       TRACED: hovering a collapsed dock ran the box 56 → 61.6 on `scale`. Then the
+       approach became an expand, `[data-morphing]` landed on the root, and this rule
+       STOPPED MATCHING — so the 1.10 factor reverted to 1 in a single un-tweened frame,
+       54ms before the aperture morph began. The user sees a grow, a snap back, and then
+       the real grow: three events for one intention, the middle one uncommanded.
+
+       There is no retune of it. A pre-scale on the box the morph is about to re-size is
+       a second owner of one geometry, and the guard exists precisely because the two
+       owners cannot both hold — which is the argument for having one. Hover on a
+       collapsed dock now reads on `box-shadow` elevation alone (above), a channel that
+       does not multiply geometry and therefore survives the handoff into the morph
+       instead of being cancelled by it. `--dock-collapsed-hover-scale` is struck at its
+       declaration (shell.css) with this, its only consumer. */
 
     /* Held-state substrate response.
      *

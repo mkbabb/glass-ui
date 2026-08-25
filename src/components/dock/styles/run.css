@@ -1,0 +1,515 @@
+/* The dock LATTICE — the run, the pitch, and the platform as the detent engine.
+ *
+ * [2026-08-24 · BK #47 W3 LATTICE] This partial REPLACES `overflow.css` (253 lines,
+ * deleted whole) and takes over the dock's over-cap story. The replacement is not a
+ * retune: the two files answer different questions.
+ *
+ *   overflow.css asked "does the row fit?" and ran a JS ResizeObserver
+ *   (`useDockOverflowFit`) to answer it, toggling `[data-dock-overflow]` between a
+ *   FITS branch (`overflow-x: visible`, mask none) and an OVERFLOW branch
+ *   (`overflow-x: auto` + a scroll-driven `<FadingScroll>` edge mask). Three moving
+ *   parts — an observer, an attribute, two CSS branches — to express one fact the
+ *   platform already knows.
+ *
+ *   run.css asks nothing. A capped axis IS a scroll axis: the run is `overflow: auto`
+ *   unconditionally and the engine scrolls it exactly when there is something to
+ *   scroll. What the deleted machinery bought was an edge FADE, and the fade measured
+ *   0/255 over 40px while erasing the active item to visFrac 0.24 — it was not
+ *   carrying the cue it cost. The cue moves to the plate's terminal cap (W5), which is
+ *   silhouette-level, port-width-independent, and free of a second owner.
+ *
+ * THE LATTICE. Every seat occupies an integer number of ONE pitch
+ *
+ *     P = --dock-seat + --dock-run-gap
+ *
+ * so detents, reach anchors and the exchange are modular arithmetic rather than a
+ * measured census. Seat i rests at `(i−1)·P + [openIdx<i]·(m−1)·P` — a multiple of P
+ * in every case, the open seat included, which is what lets the census, the detent
+ * table, the bias filter, the flick projector and the rubber band all go unwritten.
+ *
+ * THE DETENT ENGINE IS THE PLATFORM. `scroll-snap-type: <axis> mandatory` +
+ * `scroll-snap-align: start` + `scroll-padding: P/2` + `touch-action: pan-<axis>` +
+ * `overscroll-behavior: contain`. All five measured supported in Chromium 149 AND real
+ * Safari 26.4. A JS flick projector cannot coexist with them — `touchmove` is
+ * non-cancelable once native scroll begins, so owning the gesture means
+ * `touch-action: none`, which un-scrollers the run and takes reach and
+ * overscroll-behavior with it.
+ *
+ * THE MODULAR CORRECTION (GF-DOCK R-B′) — the clause every prior draft got backwards.
+ * With `scroll-padding: P/2` and `snap-align: start`, an interior seat rests at
+ * `(i−1)·P − P/2`, i.e. **≡ P/2 (mod P)**, NOT ≡ 0. Terminals are 0 and max (flush =
+ * completeness). A gate asserting ≡ 0 REDs the design it protects; the reach anchor
+ * carries the same −P/2 term for the same reason (useDockRun.ts).
+ *
+ * THE RESIDUE CLAUSE (R-B″) — why the peek is honest on one edge and generic on the
+ * other. At an interior rest the LEADING edge shows exactly `P/2 − gap` of the
+ * neighbouring seat: exact, guaranteed, independent of the port width. The TRAILING
+ * edge shows a partial seat only generically — it is cut at `(V − P/2) mod P`, and on
+ * the gap-width residue of port widths (~gap/P of all V) that cut lands inside a gap
+ * and shows nothing despite hidden content. That residue is precisely why the plate's
+ * cut cap (W5) is neither redundant nor decorative: it is the V-INDEPENDENT cue, on
+ * both edges, where the content-level peek is only conditionally available.
+ *
+ * THE BUDGET LAW. The run is the SOLE `flex: 1 1 auto` member of the dock; every other
+ * member is counted (`flex: 0 0 auto`) and at most one leading aperture sits outside
+ * the lattice. The run already WAS the sole flexible member, which is exactly why it
+ * absorbed every chrome overrun down to `clientWidth: 0` on a 377px plate. The law is
+ * the contract that stops chrome recolonising the strip, not a new layout.
+ *
+ * ONE SCROLLER, BOTH AXES. A VERTICAL dock scrolls the SAME element on its block
+ * axis. The pre-lattice vertical dock scrolled the dock ROOT (shell.css), which scrolled
+ * the persistent regions out of reach along with the seats — a trailing utility group
+ * that leaves the viewport is the F27 defect, not the cure for it. Moving the port
+ * onto the run pins the counted chrome and scrolls only the lattice.
+ *
+ * @import-ed by index.css in `overflow.css`'s former slot, in the SAME
+ * `@layer components`, so the cascade position is unchanged. */
+
+@layer components {
+    /* ── THE PITCH TOKENS ────────────────────────────────────────────────────────
+       All series-derived, all `calc()` — never a literal px pitch, which breaks at a
+       non-16px root the moment a consumer sets one.
+
+       `--dock-seat` and `--dock-run-gap` BIND to the density-painted box rather than
+       restating its numbers. This is deliberate and it is the difference between a
+       lattice that is exact and a lattice that merely agrees with today's paint: bind
+       the pitch to the seat and P is correct on EVERY register the density cascade can
+       reach (fine, coarse, `[data-preset="cockpit"]`, a consumer `--dock-mobile-scale`)
+       without a single re-derivation. Restate 44 and 8 as literals and the lattice is
+       right on one register and silently wrong on the other four.
+
+       GF-DOCK's stated literals — seat 44, gap 8→4 ≤768, P 52/48 — are the PROPORTION
+       target, and they are W9's to land under paint acceptance: the fine-pointer
+       control is 2.5rem today, and growing every dock in the library from 40px to 44px
+       is a photometered act, not a token rename. W2 already landed the half of that
+       pair which the lattice cannot do without: post-W2 the COARSE seat computes
+       `max(40px × 1, 44px) = 44px`, exactly `--dock-touch-target`, so P is exact on the
+       one viewport class GF-DOCK measured it false on (46.8 vs 44 under the struck
+       ×1.17). See density.css's coarse register. */
+    .glass-dock {
+        --dock-seat: var(--dock-control-size);
+        /* [2026-08-24 · BK #47 W9 PROPORTION] The RUN's gap takes the proportion target
+           — 0.5rem (8px), from ~~`var(--dock-layer-gap, 0.375rem)`~~ (6px) — and it
+           takes it HERE, on the run's own token, which is the whole reason W3 declared
+           a second name for a number that was identical at the time.
+
+           `--dock-layer-gap` is the DOCK FAMILY's gap: it spaces the persistent
+           regions, the layer group, the switcher, the stack. Retuning it to hit the
+           lattice's proportion would move every one of those to serve a number only the
+           run's pitch cares about. The seam lets the two diverge exactly once, in the
+           one place a divergence is meaningful, and the family keeps its 6px.
+
+           IT MOVES THE PITCH WITH IT, which is the point rather than a side effect:
+           `--dock-run-gap` is P's second term AND the value the run actually paints
+           (`gap:` below), so the painted spacing and the lattice arithmetic cannot come
+           apart. At the coarse seat that W2 fixed at exactly 44px this lands
+           P = 44 + 8 = **52px** — GF-DOCK's stated pitch, now computed rather than
+           asserted.
+
+           THE SEAT'S OWN RUNG (fine-pointer 2.5rem → 44px) IS NOT TAKEN HERE and the
+           refusal is π, not oversight: growing every control in every dock in the
+           library by 4px is a photometered act owing owner-paint acceptance, and this
+           unit captured none. It is enqueued as π-PROPORTION. The lattice does not need
+           it — P is exact at whatever `--dock-control-size` resolves to. */
+        --dock-run-gap: 0.5rem;
+        --dock-pitch: calc(var(--dock-seat) + var(--dock-run-gap));
+        /* The open seat's width in PITCHES — authored, never measured. This integer is
+           the specific mechanism that keeps a seat census from re-entering by the back
+           door: the open seat is `m·P − gap` wide BY DECLARATION, so its extent is
+           known before layout and every downstream seat's offset stays a multiple of P.
+           Per-orientation: 3 inline. A vertical dock takes 2 (below) — at m=3 a block-axis
+           open seat is 148px tall around a 24px glyph and an 11.5px label, which is a
+           proportion violation with no affordance bought. */
+        --dock-open-pitches: 3;
+        --dock-open-seat: calc(
+            var(--dock-open-pitches) * var(--dock-pitch) - var(--dock-run-gap)
+        );
+    }
+
+    .glass-dock.vertical {
+        --dock-open-pitches: 2;
+    }
+
+    /* ── THE BUDGET LAW ──────────────────────────────────────────────────────────
+       The run is the sole flexible member; everything else is counted. `.dock-layers`
+       is the run's flex-level identity (the grid that stacks the full/summary faces),
+       so the `flex: 1 1 auto` lands here and the `min-*: 0` pair releases the flex and
+       grid `min-content` floors that would otherwise stop the port from ever shrinking
+       below its content — the floor that makes an `overflow: auto` box silently refuse
+       to scroll. */
+    .glass-dock > .dock-controls > .dock-layers {
+        flex: 1 1 auto;
+        min-inline-size: 0;
+        min-block-size: 0;
+    }
+
+    /* Counted chrome. The persistent regions are the leading aperture and the trailing
+       utility group: in-flow in both postures, never seats, never flexible. Stating it
+       is what makes the law falsifiable — a second `flex: 1` member REDs G-DOCK-BUDGET. */
+    .glass-dock > .dock-controls > .dock-persistent {
+        flex: 0 0 auto;
+    }
+
+    /* ── THE RUN — the snap scroller ─────────────────────────────────────────────
+       `.dock-run` rides the SAME element as `.dock-layer--full` (GlassDock.vue). Zero
+       new DOM: the full face is already the box whose children are the seats, already
+       the box the pre-lattice port scrolled, and already the common ancestor the W5
+       timeline needs. Interposing a wrapper would make every consumer's seats
+       grandchildren of the flex run for no gain. */
+    .glass-dock .dock-run {
+        /* A capped axis IS a scroll axis. No `[data-dock-overflow]` attribute, no
+           observer, no FITS/OVERFLOW branch: the engine scrolls this box exactly when
+           its content exceeds it and leaves it inert otherwise. */
+        overflow-x: auto;
+        overflow-y: hidden;
+        /* Mandatory, not proximity: the lattice's whole claim is that a rest position
+           is a snap position. `proximity` lets a rest land off-pitch, which voids the
+           peek, the reach anchor and the modular gate in one. */
+        scroll-snap-type: x mandatory;
+        /* THE MODULAR CORRECTION, in one declaration. With `snap-align: start` on the
+           seats, this half-pitch of scroll padding is what puts interior rests at
+           ≡ P/2 (mod P) and guarantees the leading peek of `P/2 − gap` at EVERY interior
+           rest, for every port width a `flex: 1` run can take. The rejected alternative
+           sized the port itself (`V = (k−1)·P + gap + seat/2`) — unbuildable under the
+           budget law directly above, where V is an OUTPUT of layout, not an input. */
+        scroll-padding-inline: calc(var(--dock-pitch) / 2);
+        /* The gesture has ONE owner. `pan-x` hands the inline gesture to the scroller,
+           which is what makes the deleted `useDockTouchGate` a second owner rather than
+           a collaborator, and `contain` keeps a bottomed-out flick from chaining into
+           the page behind the dock. `overscroll-behavior` applies only to scroll
+           containers — which is exactly why the vertical port below must stay one. */
+        touch-action: pan-x;
+        overscroll-behavior: contain;
+        scrollbar-width: none;
+        /* Release the flex/grid `min-content` floor on the port itself; without it the
+           run's own children hold it open and `overflow: auto` never engages. */
+        min-inline-size: 0;
+        /* THE SECOND TERM OF P, declared where the first one is. `.dock-layer`'s base
+           rule sets `gap: var(--dock-layer-gap)`; restating it as `--dock-run-gap` here
+           costs nothing today (the token binds to exactly that) and is what lets W9
+           retune the RUN's gap to the proportion target without dragging every other
+           `.dock-layer` in the dock family along with it. A pitch whose gap term is not
+           the gap the box actually paints is a pitch that is quietly wrong. */
+        gap: var(--dock-run-gap);
+    }
+
+    .glass-dock .dock-run::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
+       a seat that grows is a seat that is no longer an integer number of pitches, and
+       the lattice dies quietly the moment one does. `start` alignment is what the
+       `scroll-padding` above is measured against. */
+    .glass-dock .dock-run > * {
+        scroll-snap-align: start;
+        flex: 0 0 auto;
+    }
+
+    /* ── THE VERTICAL DOCK — the same lattice, rotated ───────────────────────────
+       [2026-08-24 · BK #47 W3 · G-ONE-NAME] The struck noun does not reappear here —
+       not even to be defined. BK #72's canon reserves it for the HAIRLINE that sits
+       INSIDE a dock, never for a vertical dock, so the rotated lattice is named for
+       what it is: a vertical dock, whose block-axis port is the column the seats
+       travel in.
+
+       This is where F27 and F47 actually live: at 1440×420 a vertical dock hid
+       291px of content with 6 of 13 items entirely below the plate and no cue that
+       anything was there. It is a scroll container here — a SNAPPED one — because
+       `overscroll-behavior` has no effect on a non-scroller, and `pan-y` on a
+       non-scroller LICENSES the document pan it was meant to trap. */
+    .glass-dock.vertical .dock-run {
+        overflow-x: hidden;
+        overflow-y: auto;
+        scroll-snap-type: y mandatory;
+        scroll-padding-block: calc(var(--dock-pitch) / 2);
+        touch-action: pan-y;
+        min-block-size: 0;
+    }
+
+    /* ══ W4 · THE OPEN SEAT ══════════════════════════════════════════════════════
+       [2026-08-24 · BK #47 W4 SEAT]
+
+       THE DEFECT THIS CLOSES, stated first because it was live on disk between W3 and
+       here. `useDockRun`'s anchor carries an `openExtra` term — `[openIdx < i]·(m−1)·P`
+       — and W3 authored `--dock-open-seat` with ZERO consumers. Arithmetic for a
+       geometry no rule produced: on any dock whose seats carry `aria-current` (which
+       `RouterLink` sets natively) reach overshot by exactly `(m−1)·P` for every seat
+       after the open one. The term is not wrong; it was early. This is its underneath.
+
+       WHICH CHILD IS THE OPEN SEAT — the SAME predicate `useDockRun.openIndexOf` reads,
+       expressed in the selector language, because two owners of "which seat is open"
+       that can disagree is the class of defect this whole rewrite exists to delete.
+       `aria-current` is the one expression of selection every arm of this tree agrees
+       on (GF-DOCK ratifies it over `role="tab"` for a dock whose seats are routes), and
+       it is read as a NEGATION of the false pole so any truthy token — `page`, `true`,
+       `step` — counts. The `:has()` arm catches the common shape where the seat is a
+       wrapper and `RouterLink` stamps the attribute on the anchor inside it.
+
+       WHY `m·P − gap` AND NOT A MEASURED WIDTH. `--dock-open-pitches` is AUTHORED, so
+       the open seat's extent is known before layout: it is the specific mechanism that
+       keeps a seat census from re-entering by the back door. Every seat then sits at
+       `(i−1)·P + [openIdx<i]·(m−1)·P` — a multiple of P in every case, the open seat
+       included — which is what lets the detent table, the bias filter, the flick
+       projector and the rubber band all stay unwritten. The rejected alternative (the
+       label sizes the seat) measured labels at 36.7–213.6px, i.e. a "fixed" pitch of
+       92.7–213.6px: no lattice, no detents, no closed-form reach.
+
+       THE EXCHANGE IS A VOLUME TRANSFER, and it needs no JavaScript. The departing seat
+       runs `m·P → P` while the arriving one runs `P → m·P` on the SAME clock and the
+       SAME curve, so the two deltas are equal and opposite at every instant and the
+       run's total width is invariant by construction — the seats strictly between the
+       pair translate exactly `(m−1)·P` and nothing else moves. That IS the liquid
+       weight, stated as motion rather than asserted: constant Σwidth carrying one fill
+       rung is constant lit mass. `--spring-dock` / `--spring-dock-duration` are the
+       DOCK spring's own emitted `linear()` and clock (tokens/scheme-spring.css) — the
+       token is read, never a remembered literal, so a re-tune of the preset re-tunes
+       the exchange with it. The "free bulge" is struck: a total width that grows
+       mid-exchange is a lattice that stops being one for the duration of the motion. */
+    .glass-dock .dock-run > [aria-current]:not([aria-current="false"]),
+    .glass-dock .dock-run > :has([aria-current]:not([aria-current="false"])) {
+        inline-size: var(--dock-open-seat);
+        /* The cross axis is untouched: the open seat is WIDER, never taller. */
+        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    /* Every OTHER seat is exactly one pitch minus the gap. Stating it is what makes the
+       transfer complementary — the departing seat has a rule to run BACK to, so the two
+       animations are one exchange rather than one growth and one snap. */
+    .glass-dock .dock-run > :not([aria-current]:not([aria-current="false"])):not(
+            :has([aria-current]:not([aria-current="false"]))
+        ) {
+        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    /* Rotated for a vertical dock: m=2 there, so the open seat is 2·P − gap of BLOCK
+       extent (96px at the default rungs) rather than the 148px a block-axis m=3 would
+       impose around a 24px glyph — a proportion violation with no affordance bought. */
+    .glass-dock.vertical .dock-run > [aria-current]:not([aria-current="false"]),
+    .glass-dock.vertical .dock-run > :has([aria-current]:not([aria-current="false"])) {
+        inline-size: auto;
+        block-size: var(--dock-open-seat);
+        transition: block-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    .glass-dock.vertical
+        .dock-run
+        > :not([aria-current]:not([aria-current="false"])):not(
+            :has([aria-current]:not([aria-current="false"]))
+        ) {
+        transition: block-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    /* THE LABEL BUDGET — and why it is a CLIP, not a token.
+       The open seat is the only labelled one, and its label budget is what the pitch
+       leaves over: `open − 2·pad − glyph − gap` = 148 − 24 − 24 − 8 = 92px, about
+       twelve characters at the label rung. That number is the design's sharpest
+       self-inflicted wound and it is named here rather than hidden — a consumer with
+       long destination names raises `--dock-open-pitches` to 4 and pays one
+       destination of capacity for it.
+
+       The budget is ENFORCED by the seat box itself rather than published as a
+       `--dock-open-label-budget` token with a `.dock-seat-label` consumer, because
+       neither would have a producer: the library authors no label element (the seat's
+       content is the consumer's markup), so both would ship as a rule and a token
+       nobody writes — the dead-by-construction class W1 spent its whole wave striking.
+       The seat is already exactly `m·P − gap`; clipping its own overflow makes the
+       budget bite on whatever the consumer actually put inside it, including a plain
+       text node, with no naming contract to honour. A CLOSED seat inherits the same
+       clip at one pitch, which is what stops a label on a closed seat from voiding the
+       lattice — the unquantised-open-seat defect wearing a different hat.
+
+       AND THE CLIP ITSELF IS REFUSED HERE, with its ground measured rather than
+       asserted. The obvious authoring — `overflow: hidden; text-overflow: ellipsis` on
+       `.dock-run > *` — buys the ellipsis by breaking a contract the seat already
+       carries: `<DockControl>`'s face is a painted plate INSET inside the full hit
+       cell (`--dock-control-safe-inset`), and its own docblock states `overflow:
+       visible` is what keeps that inset paint, its hover lift and its specular gleam
+       unclipped. Clipping every seat to buy an ellipsis for a label the library does
+       not author would trade a real, shipped, photometered surface for a hypothetical
+       one. The seat's WIDTH is the enforcement — it is exactly `m·P − gap` and cannot
+       grow — and the ellipsis is the consumer's, on the consumer's own label element,
+       against the budget stated above. */
+
+    /* ══ W5 · THE CUT CAP ════════════════════════════════════════════════════════
+       [2026-08-24 · BK #47 W5 CUT]
+
+       WHAT IT REPLACES, and why the replacement is not like-for-like. W3 deleted BOTH
+       edge fades — the inline one with `overflow.css` and the block one from
+       `shell.css` — on their measurements: 0/255 over 40px (not received as a cue)
+       while erasing an active item at the edge to visFrac 0.24 (a real legibility
+       cost). Between W3 and here the dock therefore shipped NO truncation cue on
+       either axis, which is exactly the half-state `shell.css`'s own strike forbids.
+       This closes it.
+
+       WHY A CAP AND NOT A BETTER FADE. The leading peek is EXACT at every interior rest
+       — `P/2 − gap` of the neighbouring seat, guaranteed by the `scroll-padding` above
+       for every port width a `flex: 1` run can take. The trailing peek is only GENERIC:
+       it is cut at `(V − P/2) mod P`, and on the gap-width residue of port widths
+       (~gap/P ≈ 15% of all V) that cut lands inside a gap and shows nothing at all
+       despite hidden content. So the content-level peek is available on one edge
+       unconditionally and on the other conditionally — and the cap is the
+       V-INDEPENDENT cue that covers both. It is neither a redundant third channel nor
+       the sole leading cue; it is the silhouette-level half of a two-scale report.
+
+       THE MECHANISM — a NAMED, SCOPED timeline, and the name is load-bearing.
+       `timeline-scope: --dock-run` on `.glass-dock` (already the common ancestor of
+       plate and port — ZERO new DOM), `scroll-timeline: --dock-run` on the port, and
+       `animation-timeline: --dock-run` on the plate. The anonymous form the obvious
+       draft reaches for — `animation-timeline: scroll(self inline)` on the plate —
+       measured 9999px INERT in both engines, because the plate is a
+       `position: absolute` overlay SIBLING of the port and scroll timelines resolve
+       DOWN, never up. `styles/scroll-driven.css` documents that trap already.
+
+       `from` IS 50%, and that specific value is the ruling. `50%` resolves to the
+       stadium's own corner, so the pill's rest keyframe is exact with no plate-height
+       token to couple to; the rejected `from: 9999px` is pinned by the half-box clamp
+       until t=0.9988 (measured: t=0.999 still reads 25.98px), i.e. an animation that
+       does nothing until it snaps. The finite shapes keyframe from their literal rests,
+       where no clamp is in play.
+
+       TWO RUNGS DOWN, ON THE SERIES — never a hand-picked number. The corner series is
+       4 · 10 · 16 · 24 · stadium, and every value below is that series by name:
+       stadium → 16 (`--radius-card`), card 24 → 10 (`--radius-lg`), rounded 16 → 4
+       (`--radius-xs`). Plain `border-radius` only: `corner-shape: squircle` measured
+       FALSE on real Safari 26.4, and this is a contract mark, not an enhancement.
+
+       MAGNITUDE, honestly: ~226.6px² of silhouette per edge (28·56 − 2(16² − π16²/4)
+       against π·28²/2), never the ~700 an earlier draft claimed. */
+    .glass-dock {
+        timeline-scope: --dock-run;
+        /* The rest corner and its two-rung drop, per shape. `50%` is the stadium's
+           resolved corner (see above); the finite shapes name their own rest so the
+           keyframe never has to guess at a box height. */
+        --dock-cap-rest: 50%;
+        --dock-cap-cut: var(--radius-card);
+    }
+
+    .glass-dock.shape-rounded {
+        --dock-cap-rest: var(--radius-card);
+        --dock-cap-cut: var(--radius-xs);
+    }
+
+    .glass-dock.shape-card {
+        --dock-cap-rest: var(--dock-card-radius, var(--radius-dock-card));
+        --dock-cap-cut: var(--radius-lg);
+    }
+
+    .glass-dock .dock-run {
+        scroll-timeline: --dock-run inline;
+    }
+
+    .glass-dock.vertical .dock-run {
+        scroll-timeline: --dock-run block;
+    }
+
+    /* Each edge's whole transition is confined to ONE PITCH of travel via
+       `animation-range`, so the cap reports "there is more that way" at the granularity
+       the lattice moves in, rather than easing across the entire scroll length where it
+       would read as a slow deformation instead of a state.
+
+       The TRAILING arm runs the same keyframes in REVERSE over the last pitch: at
+       `100%` (flush against the end) it holds the `from` rest corner, and anywhere
+       before it holds the cut. That is the whole "flush = completeness" grammar in one
+       declaration pair, and it means one keyframe set serves both edges per axis.
+
+       Outside its range each arm holds its own end value (`fill: both`), which is what
+       makes a deeply-scrolled run keep its leading cut instead of springing back. When
+       there is NOTHING to scroll the timeline is inactive and the plate paints its base
+       corner — no cap on a run that hides nothing, with no attribute asked to say so. */
+    .glass-dock .dock-plate {
+        animation:
+            gl-dock-cap-inline-start linear both,
+            gl-dock-cap-inline-end linear both;
+        animation-timeline: --dock-run, --dock-run;
+        animation-range:
+            0 var(--dock-pitch),
+            calc(100% - var(--dock-pitch)) 100%;
+        animation-direction: normal, reverse;
+    }
+
+    .glass-dock.vertical .dock-plate {
+        animation:
+            gl-dock-cap-block-start linear both,
+            gl-dock-cap-block-end linear both;
+        animation-timeline: --dock-run, --dock-run;
+        animation-range:
+            0 var(--dock-pitch),
+            calc(100% - var(--dock-pitch)) 100%;
+        animation-direction: normal, reverse;
+    }
+
+    /* ── THE LIVE REGION ─────────────────────────────────────────────────────────
+       Reach announces to this node (useDockRun). Visually hidden by the canonical
+       one-pixel clip rather than `display: none` or `visibility: hidden`, both of which
+       remove the node from the accessibility tree and silence exactly the announcement
+       it exists to carry. */
+    .glass-dock .dock-run-status {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+    }
+}
+
+/* ── THE CUT-CAP KEYFRAMES ───────────────────────────────────────────────────────
+   [2026-08-24 · BK #47 W5 CUT] Authored OUTSIDE `@layer components` for the same
+   reason `gl-fade-start-in` is (utilities/base-misc.css): `@keyframes` names live in
+   one global namespace and take no part in the cascade, so putting them in a layer
+   buys nothing and only makes the layer's boundary read as if it governed them.
+
+   One set per AXIS, not per edge: the trailing arm reads the same keyframes with
+   `animation-direction: reverse`, which is what makes "flush = completeness" a single
+   grammar rather than two mirrored authorings that can drift. `from` is the rest
+   corner — `50%` on the stadium, the literal rung on the finite shapes — and `to` is
+   two rungs down the 4·10·16·24·stadium series. Both endpoints arrive through
+   `--dock-cap-rest`/`--dock-cap-cut`, so retargeting a shape is a token line and never
+   a keyframe edit. */
+@keyframes gl-dock-cap-inline-start {
+    from {
+        border-start-start-radius: var(--dock-cap-rest);
+        border-end-start-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-start-start-radius: var(--dock-cap-cut);
+        border-end-start-radius: var(--dock-cap-cut);
+    }
+}
+
+@keyframes gl-dock-cap-inline-end {
+    from {
+        border-start-end-radius: var(--dock-cap-rest);
+        border-end-end-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-start-end-radius: var(--dock-cap-cut);
+        border-end-end-radius: var(--dock-cap-cut);
+    }
+}
+
+@keyframes gl-dock-cap-block-start {
+    from {
+        border-start-start-radius: var(--dock-cap-rest);
+        border-start-end-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-start-start-radius: var(--dock-cap-cut);
+        border-start-end-radius: var(--dock-cap-cut);
+    }
+}
+
+@keyframes gl-dock-cap-block-end {
+    from {
+        border-end-start-radius: var(--dock-cap-rest);
+        border-end-end-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-end-start-radius: var(--dock-cap-cut);
+        border-end-end-radius: var(--dock-cap-cut);
+    }
+}

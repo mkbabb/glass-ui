@@ -8,20 +8,34 @@
  * `--dock-collapsed-px`, BOUNDED by construction off the ONE `--dock-morph-t`
  * scalar; NO per-swap `from/to` ratio, NO per-frame layout-axis lerp), the unified
  * `.is-active` / `.is-leaving` 3-state crossfade + hit-test contract (the
- * a11y-006 anchor), the per-child reveal stagger (the `--dock-stagger-*` ramp),
- * and the `layout="grid"` 2D tile-grid arrangement. The `.dock-layer-group` /
- * switcher / stack live in dock/layer-group.css; the overflow strategies in
- * dock/overflow.css.
+ * a11y-006 anchor), and the per-child reveal stagger (the `--dock-stagger-*` ramp).
+ * The `.dock-layer-group` / switcher / stack live in dock/layer-group.css.
+ *
+ * ~~and the `layout="grid"` 2D tile-grid arrangement~~ — [2026-08-12 · BK #47 W1
+ * SURFACE] the `layout` prop is struck; no `.layout-grid` root can exist, so the
+ * arrangement this line advertised has no way to be selected.
+ *
+ * ~~the overflow strategies in dock/overflow.css~~ — [2026-08-24 · BK #47 W3 LATTICE]
+ * that file is DELETED (253 lines) along with its observer and its two branches. There
+ * are no overflow strategies now, in the plural or the singular: the run is a native
+ * snap scroller (`styles/run.css`) and a capped axis simply IS a scroll axis. A route
+ * to a deleted file is worse than no route — it sends a reader looking for a strategy
+ * whose absence is the design.
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
  * carve is isomorphic (same layer, same source order → ZERO visual delta). */
 
 @layer components {
-    /* When the active layer's natural width exceeds
-       `--dock-max-inline-size`, the dock root clips and the layer
-       scrolls horizontally with a mask-fade. `min-width: 0` lets the
-       grid item shrink under the cap (default min-content is the
-       child's intrinsic width which would prevent the clamp). */
+    /* ~~When the active layer's natural width exceeds `--dock-max-inline-size`, the
+       dock root clips and the layer scrolls horizontally with a mask-fade.~~ —
+       [2026-08-24 · BK #47 W3 LATTICE] every noun in that sentence is now false: the
+       consumer cap is deleted (shell.css), the root does not clip, and no mask-fade
+       exists on either axis. What survives is the `min-*: 0` half, and it survives for
+       a BETTER reason than the cap: releasing the grid/flex `min-content` floor is what
+       lets the run's port shrink below its own content at all. Without it an
+       `overflow: auto` box is held open by its children and silently never scrolls —
+       the floor, not the cap, was always the load-bearing half. It is restated on the
+       run itself in run.css, where the budget law can see it. */
     /* The internal-part rules carry a dock-root ANCESTRY
        anchor at ZERO specificity cost (`:where(.glass-dock, .dock-layer-group)`), so a
        consumer element carrying a coincidental `.dock-layers`/`.dock-layer`-family class

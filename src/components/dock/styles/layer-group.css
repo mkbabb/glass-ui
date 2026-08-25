@@ -299,10 +299,20 @@
     /* The dock control focus-ring contract does not cover
        `.dock-layer-tab` (the switcher tab is not in the `.dock-icon-button` family).
        The roving tabindex means only the active tab is in the tab order; a
-       focus-visible tab paints the shared dock ring. */
+       focus-visible tab paints the shared dock ring.
+
+       [2026-08-24 · BK #47 W8 MATERIAL] Re-pointed onto `outline` with the rest of the
+       ring register. ~~`box-shadow: var(--focus-ring-shadow); outline: none;`~~ — this
+       rule was the SECOND site of the one-property collision, and the worse of the two:
+       the switcher tab carries an active-state background and elevation of its own, so a
+       `box-shadow` ring here was competing with the very paint that says which tab is
+       selected. Reading the same `--dock-ring-*` trio the control families read is also
+       what makes "the shared dock ring" in the sentence above true — it was reaching
+       past the dock's own register to the house token, so a consumer retuning
+       `--dock-ring-color` moved every dock control EXCEPT this one. */
     :where(.glass-dock, .dock-layer-group) .dock-layer-switcher [role="tab"]:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
-        outline: none;
+        outline: var(--dock-ring-width) solid var(--dock-ring-color);
+        outline-offset: var(--dock-ring-offset);
     }
 
     /* The travelling indicator is AXIS-AWARE and driven by the ONE

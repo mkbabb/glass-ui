@@ -28,7 +28,16 @@ export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
     let collapsedPx = 0;
     let disposed = false;
 
-    function capture(): void {
+    /**
+     * `"layout"` — the root has actually laid out in the posture `expanded` names, so
+     * its border box IS that posture's endpoint. Only a ResizeObserver callback and the
+     * initial attach can claim this.
+     *
+     * `"flip"` — the posture ref just changed and NOTHING has re-laid out yet.
+     */
+    type CaptureSource = "layout" | "flip";
+
+    function capture(source: CaptureSource = "layout"): void {
         const root = rootEl.value;
         const content = contentEl.value;
         const full = expandedEl.value;
@@ -46,8 +55,37 @@ export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
         const summarySize = getSize(summary, a);
         if (rootSize <= 0 || fullSize < 0 || summarySize < 0) return;
 
-        if (expanded.value) expandedPx = rootSize;
-        else collapsedPx = rootSize;
+        /* THE PRE-MEASURE GUARD, and the endpoint poisoning it stops.
+           [2026-08-24 · BK #47 W7 MORPH]
+
+           ~~`if (expanded.value) expandedPx = rootSize; else collapsedPx = rootSize;`,
+           run unconditionally including from the `watch(expanded, …)` flip~~ — the flip
+           arm is REFUSED here, and it was the bug.
+
+           On a collapsed→expanded flip the watcher fires in the same tick the ref
+           changes: `expanded.value` is already `true` while the root is still laid out
+           at its COLLAPSED span. The old line read that collapsed number and stored it
+           as `expandedPx` — the EXPANDED endpoint seeded with the collapsed box. The
+           morph then armed against it and ran to the wrong target, held there while the
+           spring settled, and snapped to the real span the moment the ResizeObserver
+           delivered an honest measurement. That is precisely the traced defect: the
+           expand runs to 186 of 311, holds ~350ms past settle, then jumps +125px in a
+           single frame at t≈657 — the largest motion defect in the component.
+
+           A posture flip is therefore not a measurement event; it is the event a
+           measurement must already have PRECEDED. The endpoints move only on `"layout"`
+           captures, whose root size and posture actually agree. The flip arm still runs
+           the rest of this function so a content change between morphs re-publishes the
+           two custom properties — it just no longer invents one of them.
+
+           Nothing is masked by this: the fallback path below (`chrome + fullSize`)
+           reads the FULL PANE'S OWN rendered span, which is real from mount because the
+           inactive pane stays laid out under `visibility`. The old flip write was
+           strictly worse than the fallback it overrode. */
+        if (source === "layout") {
+            if (expanded.value) expandedPx = rootSize;
+            else collapsedPx = rootSize;
+        }
 
         // Everything outside the active pane—persistent controls, gaps and chrome—
         // stays in the composition. Swap only the measured pane span.
@@ -70,7 +108,12 @@ export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
         const root = rootEl.value;
         if (!root) return;
         if (typeof ResizeObserver !== "undefined") {
-            observer = new ResizeObserver(capture);
+            // A ResizeObserver callback is by definition a post-layout event: the box
+            // it reports has already been laid out at the size it reports. That is what
+            // makes it — and only it — entitled to move an endpoint. Passed as a lambda
+            // so the observer's `(entries, observer)` arguments cannot arrive as the
+            // `source` parameter.
+            observer = new ResizeObserver(() => capture("layout"));
             for (const el of [
                 root,
                 contentEl.value,
@@ -86,10 +129,10 @@ export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
     watch([rootEl, contentEl, expandedEl, collapsedEl, axis], attach, {
         immediate: true,
     });
-    watch(expanded, capture);
+    watch(expanded, () => capture("flip"));
 
     const fonts = typeof document !== "undefined" ? document.fonts : undefined;
-    if (fonts) void fonts.ready.then(() => !disposed && capture());
+    if (fonts) void fonts.ready.then(() => !disposed && capture("layout"));
 
     onScopeDispose(() => {
         disposed = true;

@@ -90,10 +90,20 @@
         scale: var(--scale-press-dock);
     }
 
+    /* [2026-08-25 · BK #47 W2-W9 CURE] ~~`box-shadow: none;`~~ — the same struck line
+       as the icon-button's (see that file for the full reasoning), and here it is even
+       emptier: post-W8 the ring rides `outline`, so it suppresses nothing, and the
+       trigger family's active rule below (`:is(.is-active, .active, [aria-expanded],
+       [aria-pressed])`) paints `background` + `color` only — no elevation — so it also
+       DELETES nothing today. It was a reflex copy of the icon-button's line and it
+       survived on that file's coat-tails. Struck rather than kept-as-harmless: a
+       suppressor with no subject is a trap primed for whoever gives this family an
+       active elevation next, and it would fail exactly as the icon-button's did, at
+       (0,3,0) over the active rule's (0,2,0). The `outline: none` half STAYS —
+       licensed DISJOINT, and the thing that actually suppresses the UA ring. */
     .dock-trigger:focus:not(:focus-visible),
     .dock-select-trigger:focus:not(:focus-visible),
     .dock-dropdown-trigger:focus:not(:focus-visible) {
-        box-shadow: none;
         outline: none;
     }
 

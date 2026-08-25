@@ -42,38 +42,45 @@
 :root {
     --dock-content-safe-inset: var(--dock-vertical-extend-length, 2.5rem);
 
-    /* ── The arbitrary-shape morph tokens ─────────────────
-       The dock morph is not locked to circle↔pill: the shape is a SCALAR
-       PARAMETER: a `--dock-shape-from`/`--dock-shape-to` corner-radius pair the chrome
-       radius arm interpolates on `--dock-morph-t`, an OPT-IN `--dock-shape-clip-from`/
-       `--dock-shape-clip-to` clip-path silhouette pair (compositor-only, no layout),
-       and a `--dock-morph-max-stretch` squish cap. The library DEFAULTS preserve the
-       collapsed-perfect-circle ↔ expanded-pill identity (CLAUDE.md `aspect-ratio: 1` +
-       `--radius-dock` 9999px), so the common case needs no consumer override; a consumer
-       sets these to morph to an arbitrary silhouette (a wide bar, a teardrop, a tall
-       column). Clean break (MEMORY: no backwards compat) — the circle/pill endpoints
-       ARE these token DEFAULTS, no `--dock-radius-legacy`. */
+    /* ── The arbitrary-shape morph tokens — STRUCK ───────────────────────────────
+       [2026-08-25 · BK #47 W5 CUT] ~~`--dock-shape-from: var(--radius-dock, 9999px);`
+       `--dock-shape-to: var(--radius-dock, 9999px);` `--dock-shape-clip-from: none;`
+       `--dock-shape-clip-to: none;`~~ — ALL FOUR DELETED, with the register that read
+       them (shape.css, where the full ground is recorded).
 
-    /* The corner profile span — the `from`-radius (the collapsed perfect circle, a
-       9999px pill that rounds the height-pinned square into a circle) ↔ the `to`-radius
-       (the expanded pill, `--radius-dock`). Consumer-targetable: set either to any
-       radius to morph to an arbitrary corner profile. */
-    --dock-shape-from: var(--radius-dock, 9999px);
-    --dock-shape-to: var(--radius-dock, 9999px);
+       These were the definitions AND the only setters. Every one of them assigned
+       precisely the fallback the reading rule already carried, so the pair-driven
+       corner LERP computed `r + (r − r)·t` and the clip LERP resolved `none` at both
+       endpoints — for every consumer, at every scalar value, since the register
+       shipped. Four tokens whose entire reachable range was one value.
 
-    /* The arbitrary-silhouette span — an OPT-IN `clip-path` pair (a compositor property,
-       NO layout). DEFAULT-OFF: `none`/`none` means the rectangle/pill morph (the common
-       case) needs no clip. A consumer opts into a teardrop/blob silhouette by setting the
-       clip-from/to to two `inset()`/`path()`/`shape()` values the morph LERPS between on
-       `--dock-morph-t`. */
-    --dock-shape-clip-from: none;
-    --dock-shape-clip-to: none;
+       The circle↔pill identity they were introduced to preserve is preserved by the
+       thing that was actually producing it all along: `--radius-dock` on the shell plus
+       the collapsed pane's own `aspect-ratio: 1` square floor (morph.css). Nothing in
+       the rendered dock moves.
 
-    /* The squish cap — the LOW volume-preserving `--stretch` ceiling for the shape-morph
-       deformation, mirroring the tab-indicator's iOS-segmented register. 
-       TUNE lifts 1.08 → 1.14 so the box-morph reads as FLOWING MASS (the "MORPH MORE on
-       move" mandate; the dock is the most-visible morph surface) — a fast morph swells
-       the plate then caps, a gooey settle, never a taffy-pull (≤1.2 anti-taffy bar). */
+       Clean break, no alias (MEMORY: no backwards compat). Migration: NONE — a token
+       with zero setters has no consumer to migrate, in this repo or the constellation.
+       An arbitrary silhouette returns as a designed facility with paint behind it, not
+       as a resurrected knob. */
+
+    /* ~~The squish cap — the LOW volume-preserving `--stretch` ceiling for the
+       shape-morph deformation… a fast morph swells the plate then caps, a gooey settle,
+       never a taffy-pull.~~ — [2026-08-25 · BK #47 W5 CUT] TRUTHED, NOT STRUCK, and the
+       distinction is deliberate.
+
+       The prose above described a live deformation channel. There is none: the
+       `--stretch` squish this token capped is DEFINITION-ABSENT (shape.css records its
+       retirement — the dock morph carries ONE deformation-free box scale off
+       `--dock-size-scale`), and this token has ZERO readers in `src/` — measured, the
+       only occurrences in the tree were this declaration and the sentence describing it.
+
+       It is left STANDING because striking it is not this wave's to make. The #47 STRIKE
+       list names the four `--dock-shape-*` vars specifically and does not name this one,
+       and minting an extra deletion because it sits in the same block is how a wave's
+       scope quietly becomes whatever the seat noticed. ROUTED as a measured-dead
+       sibling for the seat that owns it. What is fixed here is only the falsehood: a
+       comment promising a squish register the engine cannot produce. */
     --dock-morph-max-stretch: 1.14;
 
     /* ── The collapse-on-scroll trigger-points ─────────────────
@@ -306,4 +313,86 @@
        :447 and :503 TEACH CONSUMERS a `container-name` prop that does not exist. That
        is a shipped documentation falsehood and it belongs to the marked consumer
        addendum GF-DOCK §9 already routes the demo edits to. */
+
+    /* ── THE COARSE-POINTER REGISTER — rehomed here, and the ×1.17 STRUCK ──────────
+       [2026-08-24 · BK #47 W2 SCALE]
+
+       WHY IT MOVED. This block spent its life in `overflow.css` because that partial
+       once owned "the single coarse-pointer `--dock-scale` multiplier" beside the
+       inline scroll port. Those are two unrelated concerns sharing one file, and W3
+       deletes the port. The scale register belongs in the DENSITY partial — the file
+       whose own docblock says it "owns the density cascade" — so it lands here,
+       AFTER the base `.glass-dock` rungs at equal specificity, which is the same
+       source-order win it had when it @imported after density.css. Byte-for-byte the
+       same cascade position; one fewer partial.
+
+       ~~`--dock-local-scale: var(--dock-mobile-scale, var(--dock-coarse-scale, 0.78))`
+       + the `--dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1))`
+       re-declare~~ — STRUCK. That pair was the ×1.17 INFLATION: the library-wide
+       coarse block lifts `--ui-scale` to 1.5, the dock damped it back with a 0.78
+       dock-local factor, and 1.5 × 0.78 = 1.17 survived into every geometry leg. The
+       arithmetic it broke, in the one register it exists for:
+
+         control = max(2.5rem × --dock-scale, --dock-control-floor)
+                 = max(40px × 1.17, 44px) = max(46.8, 44) = 46.8px
+
+       so the rendered seat was 46.8 against a `--dock-touch-target` of 44 — the dock's
+       seat did not equal its own token, and with it the pitch P = seat + gap was false
+       on the ONE viewport class the lattice has to be exact on. G-DOCK-RUN asserts
+       `seat box === computed --dock-touch-target`; under 1.17 that gate cannot green,
+       which is why GF-DOCK sequences W2 BEFORE W3 rather than tuning it afterwards.
+
+       THE CURE IS NOT A SMALLER DAMPER — it is the dock declining the lift. The dock
+       is a dense chrome strip, not a body control: its touch adequacy is carried by
+       the `max(…, --dock-control-floor)` clamp directly below, NOT by growing. So
+       `--dock-scale` re-declares to the dock-local IDENTITY here, and the floor lift
+       does the whole job:
+
+         control = max(40px × 1, 44px) = 44px === --dock-touch-target   ✓ exact
+
+       The consumer knob survives in full and now means something honest:
+       `--dock-mobile-scale` set on ANY ancestor multiplies the dock's own register
+       (1 = match the library floor, >1 = a deliberately larger touch dock). It is
+       read in the FALLBACK, never a hard pin, so it inherits in with no specificity
+       war — the dead-knob trap a hard `--dock-mobile-scale: 1` here would recreate.
+
+       ORPHANED BY THIS STRIKE, and reported rather than reached for:
+       `--dock-coarse-scale: 0.78` (`src/styles/tokens/sizing.css:153`) loses its only
+       consumer with the line above. It is OUT of Lane α's fence (`src/styles/tokens/`),
+       so it is named here for the tokens seat instead of being deleted across the
+       fence. Its `var(--dock-coarse-scale, 0.78)` reader is gone either way, so the
+       token is inert wherever it stands.
+
+       The derived-token SWEEP below is KEPT and is load-bearing for the opposite
+       reason it used to be. `:root` still resolves `--dock-scale` at the lifted
+       `--ui-scale` (1.5), and custom-property SUBSTITUTION freezes every `:root`
+       token derived from it at that value. Without the sweep the dock's BOX would sit
+       at the identity while its GLYPH, collapsed pad and tab froze at the body's 1.5×
+       — the same substitution-vs-inheritance desync, mirrored. Re-resolving each on
+       THIS element, against the re-declared `--dock-scale`, keeps box and type on one
+       register: the dock reads denser than the body on touch, which is the whole
+       point of a chrome strip. Formulas identical to their `:root` definitions; only
+       the resolution element moves.
+
+       Fine pointer is byte-unchanged — this block does not match there. */
+    @media (pointer: coarse) {
+        .glass-dock {
+            --dock-scale: var(--dock-mobile-scale, 1);
+            --dock-control-floor: var(--dock-touch-target, 2.75rem);
+            --size-icon-btn: var(--dock-touch-target, 2.75rem);
+            --dock-icon-glyph: max(
+                calc(
+                    var(--dock-layer-height, calc(2.5rem * var(--dock-scale))) *
+                        var(--dock-icon-glyph-ratio)
+                ),
+                var(--dock-icon-glyph-floor)
+            );
+            --dock-control-glyph-size: var(--dock-icon-glyph);
+            --dock-collapsed-padding: calc(0.25rem * var(--dock-scale));
+            --dock-layer-tab-size: calc(1.75rem * var(--dock-scale));
+            --dock-collapsed-summary-min-size: calc(
+                var(--dock-layer-height, 2.5rem) * 0.85
+            );
+        }
+    }
 }

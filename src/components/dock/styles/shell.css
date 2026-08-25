@@ -56,14 +56,30 @@
             )
             saturate(1.2);
         --dock-surface-blur: var(--glass-blur-resting);
-        /* Vertical-dock max-block + horizontal max-inline caps
-           live as semantic tokens (defaults in `tokens.css`). When
-           content exceeds the cap, the appropriate axis container
-           scrolls with a mask-fade. Consumers override per-instance by
-           setting `--dock-max-block-size` / `--dock-max-inline-size`
-           on a `.glass-dock` directly. */
+        /* ~~Vertical-dock max-block + horizontal max-inline caps live as semantic
+           tokens… the appropriate axis container scrolls with a mask-fade. Consumers
+           override per-instance by setting `--dock-max-block-size` /
+           `--dock-max-inline-size`.~~ — [2026-08-24 · BK #47 W3 LATTICE] TRUTHED on two
+           counts, both of which this wave made false.
+
+           ONE CAP, NOT A PAIR: `--dock-max-inline-size` is deleted with the strike
+           below; only the BLOCK cap survives, and only on the vertical dock, where it
+           is what hands the run a bounded extent to scroll inside.
+
+           AND NO MASK-FADE ON EITHER AXIS: both edge fades died in this wave on their
+           own measurements — 0/255 over 40px (not received as a cue) while erasing an
+           active edge item to visFrac 0.24 (a real legibility cost). The truncation cue
+           is the plate's terminal cut cap (W5, run.css), which is silhouette-level and
+           independent of the port width. A doc that keeps promising a fade teaches a
+           surface no longer on disk. */
         --dock-separator-height: calc(var(--dock-h, var(--size-icon-btn)) * 0.5);
-        --dock-collapsed-hover-scale: var(--scale-hover-dock);
+        /* ~~`--dock-collapsed-hover-scale: var(--scale-hover-dock);`~~ —
+           [2026-08-24 · BK #47 W7 MORPH] struck with its ONE consumer (morph.css, where
+           the ground is recorded in full): the collapsed hover pre-scale ran the box
+           56 → 61.6 and then snapped back un-tweened 54ms before the expand, because the
+           rule carrying it was guarded `:not([data-morphing])` and stopped matching the
+           instant the morph it preceded began. `--scale-hover-dock` itself is a
+           tokens-file name with other readers and is untouched. */
         /* The spring-keyed child stagger knobs. `--dock-stagger-window-size`
            is the fraction of the morph each child reveals over. Consumers retune the
            cascade feel per instance.
@@ -176,7 +192,35 @@
            to the consumer addendum, out of Lane α's fence). */
         /* The base corner is the shape register's token lerp (dock/shape.css, the single radius authority). */
         white-space: nowrap;
-        max-inline-size: var(--dock-max-inline-size);
+        /* ~~`max-inline-size: var(--dock-max-inline-size);`~~ — THE CONSUMER CAP,
+           [2026-08-24 · BK #47 W3 LATTICE] DELETED, and it is the one deletion in this
+           wave that changes what a dock is allowed to be rather than how it is measured.
+
+           The cap was `overflow.css`'s PRECONDITION, not a layout preference. That file
+           asked "does the row fit?" and needed a box that could be too small for its
+           content in order for the question to have a `false` branch; `min(80vw, 64rem)`
+           manufactured one. Under the lattice the question is never asked — the run is
+           `overflow: auto` unconditionally and the engine scrolls it exactly when there
+           is something to scroll — so the cap's only surviving job was to squeeze.
+
+           And squeeze it did, measurably, on the viewport the budget law was written
+           for: at 393px `80vw` is **314px**, NARROWER than the 377px plate GF-DOCK
+           measured, so the cap was clamping the dock BELOW the width the viewport
+           actually offered while the counted chrome (236–281px of it) and the run
+           competed inside the remainder — which is precisely how the run reached
+           `clientWidth: 0`. A root cap makes chrome and lattice fight over an arbitrary
+           box; the budget law makes the run absorb the REAL leftover. The two cannot
+           both hold, which is why G-DOCK-BUDGET's stated mutation is "restore the
+           consumer cap → RED".
+
+           `--dock-max-block-size` SURVIVES and is not the same thing (see the vertical
+           block below): a column cap hands the run its scrollable block extent, which is
+           the lattice working, where an inline cap took the extent away.
+
+           The token's own declaration (`src/styles/tokens/offsets.css:33,40`) and the
+           one demo site that sets it (`demo/stories/dock/overflow.vue:67`) are OUTSIDE
+           Lane α's fence and are routed to a marked consumer addendum — that story
+           forces its overflow through the cap and owes a real width constraint instead. */
         padding: var(--dock-padding-block, 0.375rem) var(--dock-padding-inline, 0.5rem);
         /* The GLASS SURFACE (background + backdrop-filter + border)
            MOVED off `.glass-dock` onto the L0 `.dock-plate` (dock/dock.css), which owns
@@ -270,55 +314,38 @@
        axis is `overflow-x: visible` — post-SPINE the L0 plate owns the clip, so
        the scroll port's cross axis never clips the control's inset hover plate
        (the `overflow-clip-margin` band-aid retired with the aperture).
-       The geometric inset (the 80%-of-cell plate) is the lozenge guard. The soft
-       edge-fade rides the ONE FadingScroll mask seam (the `--fade-start`/
-       `--fade-end` customs driven off `scroll(self block)` in the `@supports`
-       block below); at rest both are 0px → SHARP. NOT PRM-gated (a legibility
-       cue). */
-    .glass-dock.vertical.always-expanded:not([data-morphing]),
-    .glass-dock.vertical.expanded:not([data-morphing]) {
-        /* The cross-axis `overflow-x: clip` + `overflow-clip-margin`
-           band-aid is GONE (the shell.css:294 aperture the plate retires): the L0 plate
-           owns the clip, so the scroll port's cross axis is `visible`. The block-axis
-           `overflow-y: auto` scroll port stays (a capped vertical column scrolls). */
-        overflow-x: visible;
-        overflow-y: auto;
-        scrollbar-width: none;
-        overscroll-behavior-y: contain;
-    }
+       The geometric inset (the 80%-of-cell plate) is the lozenge guard. */
 
-    .glass-dock.vertical.always-expanded:not([data-morphing])::-webkit-scrollbar,
-    .glass-dock.vertical.expanded:not([data-morphing])::-webkit-scrollbar {
-        display: none;
-    }
+    /* ~~the AT-REST block-axis scroll port on the dock ROOT
+       (`.glass-dock.vertical.{always-,}expanded:not([data-morphing])` — `overflow-y:
+       auto` + `scrollbar-width: none` + `overscroll-behavior-y: contain` + its
+       `::-webkit-scrollbar` hide), and the `<FadingScroll>` soft edge on it (the
+       `mask-image` reading `--fade-start`/`--fade-end` off `scroll(self block)`)~~ —
+       [2026-08-24 · BK #47 W3 LATTICE] BOTH STRUCK. The CONTRACT above survives whole
+       and is strictly better served; what changes is WHICH box scrolls.
 
-    /* The liquid-weight soft edge on the vertical
-       scroll port: the `mask-image` reads the `--fade-start`/`--fade-end` customs
-       the SAME `gl-fade-start-in`/`gl-fade-end-out` keyframes `<FadingScroll>`
-       uses drive off the `scroll(self block)` timeline (reached by name — ZERO
-       new recipe). The `@supports (animation-timeline: scroll())` co-gate was
-       COLLAPSED — scroll-driven animations
-       are Baseline on the target set (the Safari-26 `scroll()` floor RATIFIED by
-       4.7's dual-engine paint PASS, WebKit 26.4 driving the ScrollTimelines
-       live), so this is the un-gated mechanism. NOT PRM-gated (a legibility
-       cue). */
-    .glass-dock.vertical.always-expanded:not([data-morphing]),
-    .glass-dock.vertical.expanded:not([data-morphing]) {
-        mask-image: linear-gradient(
-            to bottom,
-            transparent 0,
-            black var(--fade-start, 0px),
-            black calc(100% - var(--fade-end, 0px)),
-            transparent 100%
-        );
-        animation:
-            gl-fade-start-in linear both,
-            gl-fade-end-out linear both;
-        animation-timeline: scroll(self block), scroll(self block);
-        animation-range:
-            0 var(--fade-scroll-width),
-            calc(100% - var(--fade-scroll-width)) 100%;
-    }
+       THE PORT MOVED, and the move is a defect fix, not a relocation. Scrolling the
+       dock ROOT scrolls everything the root contains — including `.dock-persistent`
+       and `.dock-persistent-end`, the always-present leading aperture and trailing
+       utility group. A column that scrolls its trailing utilities out of the viewport is
+       the F27 complaint (291px hidden at 1440×420, 6 of 13 items entirely below the
+       plate), not the cure for it. Under the lattice the port is the RUN
+       (`.dock-run`, run.css) — `overflow-y: auto` + `scroll-snap-type: y mandatory` +
+       `scroll-padding-block: P/2` + `touch-action: pan-y` + `overscroll-behavior:
+       contain` — so the counted chrome stays pinned and only the seats travel.
+       `--dock-max-block-size` still caps the column here; the run is the sole
+       `flex: 1 1 auto` member under that cap (the budget law), which is what hands it
+       the leftover block extent to scroll. A consumer setting the cap gets the same
+       viewport-anchored scrollable palette, with its utilities still reachable.
+
+       THE FADE DIED ON ITS MEASUREMENTS, not on tidiness. The mask reads 0/255 over
+       40px — it is not visible as a cue — while it erases an ACTIVE item at the edge to
+       visFrac 0.24, which is a legibility COST paid for a cue that is not being
+       received. Its replacement is the plate's terminal cut cap (W5): silhouette-level,
+       port-width-independent, one radius pair instead of two scroll-driven keyframe
+       animations on the frosted box. Both edge fades in the dock (this one and the
+       inline one that died with `overflow.css`) go together — there is no half-state
+       where one axis feathers and the other caps. */
 
     /* The paper-grain `::after` MOVED onto `.dock-plate::after`
        (dock/dock.css): the grain belongs on the glass SURFACE, which is the plate now.

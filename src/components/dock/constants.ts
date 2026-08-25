@@ -49,8 +49,14 @@ export const HOVER_INTENT_MS = 60;
  *
  * [2026-08-12 · BK #47 W1 SURFACE] `collapseDelay` was a per-dock prop; it is struck
  * and this is its single resolution point. The patient-dwell value (2500 → 3600) is a
- * forgiving hover/interaction window; `useDockState` and `useDockTouchGate` both
- * default to it, so the two owners of the same timer cannot drift apart.
+ * forgiving hover/interaction window.
+ *
+ * [2026-08-24 · BK #47 W3 LATTICE] ~~`useDockState` and `useDockTouchGate` both default
+ * to it, so the two owners of the same timer cannot drift apart.~~ — `useDockTouchGate`
+ * is DELETED (a JS touch gate beside a native snap scroller is a second owner of one
+ * gesture; `touch-action: pan-x` + mandatory snap supersede it outright). There is now
+ * exactly ONE consumer, `useDockState`, so the drift this sentence guarded against is
+ * not merely prevented — it has no second party left to occur between.
  */
 export const DOCK_COLLAPSE_DELAY_MS = 3600;
 

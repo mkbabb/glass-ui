@@ -236,6 +236,17 @@ describe("GlassDock touch-gate behavioural contract", () => {
         // The summary layer wraps the slot and carries `@click="onClickCollapsed"`.
         const summary = wrapper.get(".dock-layer--summary").element;
 
+        // [2026-08-24 · BK #47 W3 LATTICE] The one-tick separation this file already
+        // documents at the iOS row is now needed HERE too, and for the same reason
+        // rather than a new one. Pre-strike the expand was driven by
+        // `useDockTouchGate`'s own `touchend` arm; post-strike the load-bearing invoker
+        // is the summary's `@click="onClickCollapsed"` — so this row now walks straight
+        // into the FROZEN-CLOCK INVOKER TRAP the iOS row hits, where a `_vts` stamp
+        // equal to the invoker's attach tick makes Vue skip the handler. Advancing one
+        // tick is the same harness correction, not a weakened assertion: the mutation
+        // that proves the row still bites is deleting `@click="onClickCollapsed"` from
+        // the summary face, which REDs this spec AND the iOS one (measured 2026-08-24).
+        vi.advanceTimersByTime(1);
         const tap = dispatchTap(summary, 0);
         vi.runAllTimers();
         await wrapper.vm.$nextTick();

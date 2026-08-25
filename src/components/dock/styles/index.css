@@ -62,7 +62,13 @@
 /* The face-swap crossfade: one two-child opacity overlap on per-face `--dock-t`,
    a measure-once peak reserve, and the collapse content clip. */
 @import "./crossfade.css";
-@import "./overflow.css";
+/* [2026-08-24 · BK #47 W3 LATTICE] `overflow.css` → `run.css`, in the same slot and
+   the same `@layer`, so the cascade position is byte-unchanged. The partial answered
+   "does the row fit?" with a ResizeObserver, an attribute and two branches; the
+   lattice answers it with the platform. Its ONE unrelated tenant — the coarse-pointer
+   scale register — moved to `density.css`, whose cascade it belongs in, with the ×1.17
+   inflation struck (W2). */
+@import "./run.css";
 /* `morph-bridge.css` (the V↔H goo teardrop), `fission-bridge.css` +
    `fission-island.css` (the 1→N fission goo), and `siri.css` (the Siri island) are
    DEFINITION-ABSENT (decided-terminal, clean break, no alias). The goo `filter:url()`
@@ -132,10 +138,14 @@
    derived axis) so its `calc()` re-resolves per-element when `--dock-local-scale`
    shifts. ADDITIVE ONLY: `initial-value: 1` is the identity, so at the default
    `--dock-local-scale: 1` the resolved `--dock-scale` is unchanged (no
-   rung re-tune); the `@media (pointer: coarse)` re-declare (overflow.css) STAYS the
-   `:root`-equivalent re-resolve, and this registration is the complementary
-   non-`:root`-scope thread. DOCK_SPRING is untouched (this is a token registration,
-   not a clock). */
+   rung re-tune); the `@media (pointer: coarse)` re-declare (~~overflow.css~~ —
+   [2026-08-24 · BK #47 W2 SCALE] `density.css`, and it is no longer the
+   `:root`-EQUIVALENT re-resolve: it now re-declares `--dock-scale` to the dock-local
+   IDENTITY `var(--dock-mobile-scale, 1)`, striking the ×1.17 coarse inflation) STAYS,
+   and this registration is the complementary non-`:root`-scope thread — a consumer
+   `--dock-local-scale` override on a dock scope still re-evaluates the `:root` calc at
+   FINE pointer, which is the case this registration was minted for. DOCK_SPRING is
+   untouched (this is a token registration, not a clock). */
 @property --dock-local-scale {
     syntax: "<number>";
     inherits: true;
@@ -146,6 +156,33 @@
     syntax: "<number>";
     inherits: true;
     initial-value: 1;
+}
+
+/* [2026-08-24 · BK #47 W3 LATTICE] The pitch pair, REGISTERED — and the registration
+   is load-bearing rather than idiomatic. `useDockRun` reads P and m through
+   `getComputedStyle`, and an UNREGISTERED custom property returns its substituted but
+   UNCOMPUTED token stream: `--dock-pitch` would hand back the literal string
+   `"calc(var(--dock-seat) + var(--dock-run-gap))"` with nothing to parse a number out
+   of. Declaring the syntax makes the engine resolve the chain to an absolute length at
+   computed-value time, so the reach anchor arithmetic reads `"48px"` and the modular
+   gate has a real number to be modular about. `<number>` for the pitch COUNT for the
+   same reason.
+
+   Both inherit: the run reads them off the dock root that declares them (run.css), and
+   the vertical dock's `--dock-open-pitches: 2` override must reach its own subtree. The
+   initial values are the safe degenerate case — a zero pitch makes the anchor
+   arithmetic a no-op rather than a NaN, which is the correct behaviour on an engine
+   or a test environment that never painted the dock. */
+@property --dock-pitch {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0px;
+}
+
+@property --dock-open-pitches {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 3;
 }
 
 @layer components {
@@ -167,6 +204,29 @@
            `--duration-normal` onto `--spring-dock-duration`, the row's OWN settle
            — the clock fence. */
         --dock-motion-resize: var(--spring-dock-duration) var(--dock-resize-spring);
+
+        /* [2026-08-24 · BK #47 W8 MATERIAL] THE RING REGISTER, as an outline's three
+           terms. Declared on the same `:where()` group that carries the motion register
+           so a dock control gets its ring wherever it is mounted — inside a
+           `.glass-dock`, or standalone in a `.dock-layer-group` — without either scope
+           having to re-declare it.
+
+           WIDTH AND OFFSET are the house focus geometry, not dock-local numbers: a
+           keyboard user learns one ring across the library, and a dock that ships its
+           own thickness teaches a second. The 2px/2px GF-DOCK names IS
+           `--focus-ring-width`'s value; it is READ here rather than restated, so a
+           retune of the house ring moves the dock with it.
+
+           COLOR at 0.48α against the house 0.30. The ring now sits on `outline`, which
+           paints OUTSIDE the control box over the dock's own frosted plate rather than
+           over the page: the plate is a blurred, saturated, mid-luminance surface, and a
+           30% wash of the accent over it lands well under the contrast a focus indicator
+           owes. 48% is the rung that clears it while staying a ring rather than a fill.
+           The two-stop `--focus-ring-shadow` this replaces spent its second stop on a
+           spread halo the outline gets for free from `outline-offset`. */
+        --dock-ring-width: var(--focus-ring-width);
+        --dock-ring-offset: var(--focus-ring-width);
+        --dock-ring-color: color-mix(in srgb, var(--focus-ring-color) 48%, transparent);
     }
 
     /* Shared four-state contract — the focus-visible ring + disabled paint are
@@ -176,22 +236,54 @@
        zero the class and let a per-control :hover box-shadow override the focus
        ring). Per-control transition extensions (the box-shadow fade on
        focus-visible) stay with their own selectors in dock-controls.css where
-       they differ. */
+       they differ.
+
+       [2026-08-24 · BK #47 W8 MATERIAL] THE RING LEAVES `box-shadow` FOR `outline`, and
+       the reason is a collision rather than a preference.
+
+       ~~`box-shadow: var(--dock-ring); outline: none;`~~ — `box-shadow` is ONE property
+       and the dock was asking it to carry two independent facts: this focus ring, and
+       every control's own hover/press/selected elevation. A single property cannot hold
+       two states, so whichever rule wins the cascade ERASES the other — which is why the
+       comment above has to explain that the group deliberately keeps class specificity
+       "NOT `:where()`, which would … let a per-control :hover box-shadow override the
+       focus ring". That paragraph is the defect describing its own workaround: the
+       specificity ladder exists to stop a hover from deleting a keyboard user's focus
+       ring, and it only holds until the next control ships a more specific hover.
+
+       `outline` is a DIFFERENT property. It composes with any elevation instead of
+       competing with it, it is what forced-colors mode actually honours (a `box-shadow`
+       ring vanishes entirely under a forced-colors palette — a total loss of focus
+       visibility, not a degraded one), and `outline-offset` seats it OUTSIDE the control
+       box so it never overlaps the glyph it surrounds. The old `outline: none` was
+       therefore not a tidy-up beside the shadow: it was the line that removed the only
+       channel a high-contrast user had.
+
+       THE REGISTER SURVIVES, RE-EXPRESSED. `--dock-ring` was a whole `box-shadow` LIST,
+       which is the only shape a shadow ring can take; an outline takes three separate
+       terms, so the one register becomes the `--dock-ring-{width,offset,color}` trio
+       declared above. A consumer still retunes every dock ring from one place and now
+       retunes each term independently instead of re-authoring a two-stop shadow string.
+       `--dock-ring` itself (`src/styles/tokens/sizing.css:255`) is left standing: it is
+       outside Lane α's fence and `dark-mode-toggle.css:31` still reads it as a fallback.
+       Its orphaning-or-retarget rides the marked addendum with the rest of W8's
+       tokens-file half. */
     .dock-icon-button:focus-visible,
     .dock-tab-button:focus-visible,
     .dock-select-trigger:focus-visible,
     .dock-dropdown-trigger:focus-visible {
-        /* (value.js P5) — the ONE ring register. Every dock
-           control reads `--dock-ring` (defaults to `--focus-ring-shadow`, byte-
-           identical), so a consumer retunes every dock ring from one token. */
-        box-shadow: var(--dock-ring);
-        outline: none;
+        outline: var(--dock-ring-width) solid var(--dock-ring-color);
+        outline-offset: var(--dock-ring-offset);
     }
 
     /* The ACTIVE SEAT yields to consumer indicator content — a control hosting the
-       consumer's own indicator suppresses the dock ring so that content reads. */
+       consumer's own indicator suppresses the dock ring so that content reads.
+       [2026-08-24 · BK #47 W8 MATERIAL] Re-pointed with the ring: ~~`box-shadow:
+       none`~~ suppressed a ring that no longer rides `box-shadow`, so it would have
+       yielded nothing while still deleting whatever elevation the control carried. A
+       yield must name the property the ring is actually on. */
     .glass-dock [data-ring-yield]:focus-visible {
-        box-shadow: none;
+        outline: none;
     }
 
     .dock-icon-button:disabled,

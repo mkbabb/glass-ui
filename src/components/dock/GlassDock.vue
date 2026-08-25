@@ -4,8 +4,17 @@
 // ./composables/useDockShellProps; the `isTransitioning` flag resolves from the
 // morph orchestrator's OWN spring settle (`morphing`) —
 // excised the CSS-transition-era wrong-clock settle timer +
-// dead `@transitionend` resolver (useDockMorphWindow). The collapsed-pill touch-gate
-// lives in ./composables/useDockTouchGate. This SFC composes the dual-layer grid, the
+// dead `@transitionend` resolver (useDockMorphWindow).
+//
+// [2026-08-24 · BK #47 W3 LATTICE] ~~The collapsed-pill touch-gate lives in
+// ./composables/useDockTouchGate~~ — DELETED, and with it the four `@touchstart/move/
+// end` bindings and the `deactivate()` call on the collapse flip. A JS touch gate
+// beside a native snap scroller is a SECOND OWNER of one gesture: under
+// `touch-action: pan-x` (run.css) the inline gesture belongs to the scroller, and
+// `touchmove` is non-cancelable once native scroll begins, so the gate could only ever
+// have discriminated tap-from-scroll by guessing at a stream it no longer controls.
+// Tap-to-expand is unaffected — it is the `@click="onClickCollapsed"` on the summary
+// face, which is what actually fired it. This SFC composes the dual-layer grid, the
 // axis-aware expand/collapse transition, and the pointer/focus hold machinery.
 // The fission split facility is DEFINITION-ABSENT (decided-terminal;
 // clean break, no alias — demo-only spectacle + the prime Safari suspect).
@@ -27,13 +36,16 @@ import { useDockMorphOrchestrator } from "./composables/useDockMorph";
 import { useDockExpandedSize } from "./composables/dockMorphMeasure";
 import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
 import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
-import { useDockTouchGate } from "./composables/useDockTouchGate";
-// The fits-vs-scrollable mode signal. An RO measures the active
-// full layer's inline overflow and toggles `[data-dock-overflow]` on the dock root, so
-// overflow.css's native scroll track + FadingScroll mask engage ONLY when the row exceeds
-// the cap (at rest the mask is `none` — T-52 a). ZERO scroll listener (RO + a light
-// MutationObserver only — O5/G9).
-import { useDockOverflowFit } from "./composables/useDockOverflowFit";
+// [2026-08-24 · BK #47 W3 LATTICE + W6] The run: reach on the −P/2 lattice anchor via
+// subtree capture, roving tabindex, and the live-region announcement.
+// ~~useDockOverflowFit — an RO measuring the full layer's inline overflow to toggle
+// `[data-dock-overflow]`, so overflow.css's scroll track + FadingScroll mask engaged
+// only when the row exceeded the cap~~ — DELETED with `overflow.css`. A capped axis IS
+// a scroll axis: the run is `overflow: auto` unconditionally and the engine scrolls it
+// exactly when there is something to scroll, so the observer, the attribute and the
+// two CSS branches were three moving parts expressing one fact the platform already
+// had.
+import { useDockRun } from "./composables/useDockRun";
 
 /* The attrs contract. Fall-through attrs (class, data-testid, aria-*, the container
    styles every gate + consumer targets via `.glass-dock[...]`) belong on the
@@ -75,29 +87,26 @@ const props = withDefaults(defineProps<DockProps>(), {
 
 /* The resolved shell-prop computeds — shape/orientation, the collapse surface
    (`alwaysExpanded`/`startCollapsed`, both derived from the one `collapse` member),
-   the intrinsic scroll-overflow class (`scrollClass` is `dock-scroll-x` on EVERY
-   horizontal dock and `null` on vertical, whose block-axis scroll folds into the
-   unconditional cap-derived shell.css rule), and `fitContent`. */
-const {
-    startCollapsed,
-    shape,
-    orientation,
-    scrollClass,
-    alwaysExpanded,
-    fitContent,
-} = useDockShellProps(props);
+   and `fitContent`.
+
+   [2026-08-24 · BK #47 W3 LATTICE] ~~`scrollClass`~~ is struck with the two-mode port
+   it selected. The class existed to tell `overflow.css` which axis to open a scroll
+   track on; under the lattice BOTH axes open one on the same element (`.dock-run`) and
+   the orientation that picks between them is already on the root. */
+const { startCollapsed, shape, orientation, alwaysExpanded, fitContent } =
+    useDockShellProps(props);
 
 const dockEl = useTemplateRef<HTMLElement>("dockEl");
 const layersEl = useTemplateRef<HTMLElement>("layersEl");
 const fullEl = useTemplateRef<HTMLElement>("fullEl");
 const summaryEl = useTemplateRef<HTMLElement>("summaryEl");
+const statusEl = useTemplateRef<HTMLElement>("statusEl");
 
-// The native-scroll-track mode signal (the universal floor). The RO
-// toggles `[data-dock-overflow]` when the active full layer's over-cap inline content
-// exceeds its clamped port, so the scroll track + FadingScroll edge mask (overflow.css)
-// engage only when scrollable and the mask is honestly `none` at rest (T-52 a). The
-// scrollIntoView recenter CALL lives in useSelectionGroup; this owns the
-useDockOverflowFit(dockEl);
+/* THE RUN. The full face IS the run — the box whose children are the seats, the box
+   the port scrolls, and the common ancestor the cut-cap timeline scopes to. Reach,
+   roving tabindex and the announcement all read the SAME lattice arithmetic, so they
+   live in one composable rather than three that must agree. */
+useDockRun({ runEl: fullEl, statusEl, orientation });
 
 /* Wire the sampled-luminance observer ON for
    the dock by default. It writes `--glass-backdrop-luma` + derives the
@@ -174,12 +183,35 @@ const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 /* The SPINE plate owns clipping. Portaled menu and search surfaces remain outside the
    dock's layout, while `.glass-dock` uses layout containment without paint clipping. */
 
+/* (the width-seizure cure) — measure the two convex-blend endpoints
+   ONCE per content change (`--dock-expanded-px`/`--dock-collapsed-px`); the visible
+   size is a ratio-FREE blend off `--dock-morph-t` (shape.css), so the unbounded
+   per-swap ratio is gone by construction. See dockMorphMeasure for the floors.
+
+   [2026-08-24 · BK #47 W7 MORPH] The endpoint-poisoning cure lives inside
+   `dockMorphMeasure` — a posture flip no longer writes an endpoint from a root that has
+   not laid out in that posture. Nothing is needed HERE: see the composable for why the
+   spec's proposed one-frame hold is the wrong mechanism for the right defect. */
+useDockExpandedSize({
+    rootEl: dockEl,
+    contentEl: layersEl,
+    expandedEl: fullEl,
+    collapsedEl: summaryEl,
+    axis: orientation,
+    expanded: visualExpanded,
+});
+
 /* The dock morph orchestrator owns the built-in collapsed↔expanded pair and writes
    one root scalar. Nested face swaps are independently owned by DockCrossfade. */
 const outerActiveLayer = computed<string>(() =>
     visualExpanded.value ? "full" : "summary",
 );
-const outerLayerAxis = computed<"horizontal" | "vertical">(() => orientation.value);
+/* [2026-08-24 · BK #47 W3 LATTICE] ~~`const outerLayerAxis = computed(() =>
+   orientation.value)`~~ — DELETED. `useDockExpandedSize` above now takes `axis:
+   orientation` directly, and this alias' only remaining reader was a comment. It was
+   never a derivation: an identity `computed` over one ref is a second name for that
+   ref, and a second name is exactly how "which axis does the morph run on" acquires
+   two answers that can drift. The orchestrator reads `orientation`. */
 const {
     outerCurrentLayer,
     outerLeavingLayer,
@@ -239,19 +271,6 @@ async function onFullKeydown(event: KeyboardEvent) {
     if (summary && !summary.hasAttribute("inert")) summary.focus({ preventScroll: true });
 }
 
-/* (the width-seizure cure) — measure the two convex-blend endpoints
-   ONCE per content change (`--dock-expanded-px`/`--dock-collapsed-px`); the visible
-   size is a ratio-FREE blend off `--dock-morph-t` (shape.css), so the unbounded
-   per-swap ratio is gone by construction. See dockMorphMeasure for the floors. */
-useDockExpandedSize({
-    rootEl: dockEl,
-    contentEl: layersEl,
-    expandedEl: fullEl,
-    collapsedEl: summaryEl,
-    axis: outerLayerAxis,
-    expanded: visualExpanded,
-});
-
 /* The CLICK-INTEGRITY guard. Scopes the collapsed-tap / hover-
    approach pass-through to the TAPPED ELEMENT'S IDENTITY (captured at pointerdown)
    so a mid-morph layer swap can never activate a DIFFERENT control under the
@@ -272,30 +291,14 @@ const {
     visualExpanded,
 });
 
-/* The collapsed-pill tap-to-expand touch gate (shape B′). The
-   gate owns its own `useTouchGate` + the tap/scroll discrimination + the
-   collapse-on-deactivate watch; the SFC only binds the handlers + reaches
-   `deactivate()` on a collapse flip. */
-const { onTouchStart, onTouchMove, onTouchEnd, deactivate: touchDeactivate } =
-    useDockTouchGate({
-        rootEl: dockEl,
-        visualExpanded,
-        expanded,
-        isPinned,
-        expand,
-        collapse,
-    });
-
+/* [2026-08-24 · BK #47 W3 LATTICE] The `useDockTouchGate` construction and its
+   `deactivate()` arm on the collapse flip are DELETED (see the header). What remains is
+   the half that was never the gate's: a collapsed→expanded flip marks the
+   click-integrity window, so a click that races the FLIP and lands on a swapped-in
+   control is swallowed by the integrity guard. (`isTransitioning` is owned by the
+   `dockMorphing` spring-settle watch above.) */
 watch(visualExpanded, (isExpanded) => {
-    if (isExpanded) {
-        // A collapsed→expanded flip (tap-to-expand or hover/focus
-        // approach) marks the click-integrity window; a click that races the FLIP and
-        // lands on a swapped-in control is swallowed by the integrity guard.
-        // (`isTransitioning` is owned by the `dockMorphing` spring-settle watch above.)
-        markExpandFlip();
-    } else {
-        touchDeactivate();
-    }
+    if (isExpanded) markExpandFlip();
 });
 
 // ── The GRASP mount (glass/grasp.css) ────────────────────────────────────────────
@@ -337,7 +340,6 @@ defineExpose({
         :class="[
             orientation,
             `shape-${shape}`,
-            scrollClass,
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded },
         ]"
         :data-backdrop-mode="props.backdropMode"
@@ -346,9 +348,6 @@ defineExpose({
         @mouseleave="onMouseLeave($event)"
         @focusin="onFocusIn"
         @focusout="onFocusOut"
-        @touchstart="onTouchStart"
-        @touchmove="onTouchMove"
-        @touchend="onTouchEnd"
         @pointerdown.capture="onPointerDownCapture"
         @pointercancel.capture="onPointerCancelCapture"
         @click.capture="onClickCapture"
@@ -426,7 +425,8 @@ defineExpose({
             the full/summary panes on a 1/1 CSS grid and crossfade with the
             FLIP-driven aperture morph: a horizontal dock morphs `width`, a vertical
             dock morphs `height` (the morph orchestrator keys its axis off the
-            resolved `orientation` via `outerLayerAxis`). The unified structure gives
+            resolved `orientation` directly — [2026-08-24 · BK #47 W3 LATTICE] the
+            ~~`outerLayerAxis`~~ alias it used to route through is deleted). The unified structure gives
             a collapsible vertical dock the same collapse/shrink machinery — the height
             morph the mandate names. An `always-expanded` dock renders the `full` pane
             in-flow and the `summary` pane out-of-flow (no morph fires), so a vertical nav
@@ -440,10 +440,28 @@ defineExpose({
                  (every control non-interactive) while VISIBLE — a painted-but-dead
                  column (glass-dock-codebase.md §2.3). GU-4's sole exception is the
                  witnessed full-pane press retained until its click/cancel. -->
+            <!--
+                THE RUN. `dock-run` rides the SAME element as `dock-layer--full` —
+                [2026-08-24 · BK #47 W3 LATTICE] zero new DOM, deliberately. This box is
+                already the one whose children are the seats, already the one the
+                pre-lattice port scrolled, and already the common ancestor the W5
+                cut-cap timeline scopes to. Interposing a wrapper would make every
+                consumer's seats grandchildren of the flex run and buy nothing.
+
+                `role="toolbar"` + `aria-orientation` are the semantics the seat run
+                always had and never declared (role present on 4/14 docks; the arrow-key
+                contract it promises is `useDockRun`'s roving tabindex). No `aria-label`
+                is minted here: an unlabelled toolbar announces as "toolbar", which is
+                honest, whereas a hardcoded generic name would OVERRIDE whatever the
+                consumer put on the dock root via `$attrs` and read as the library's
+                copy in the user's product.
+            -->
             <div
                 ref="fullEl"
                 :id="`${dockId}-full`"
-                :class="['dock-layer dock-layer--full', {
+                role="toolbar"
+                :aria-orientation="orientation"
+                :class="['dock-layer dock-layer--full dock-run', {
                     'is-active': outerCurrentLayer === 'full',
                     'is-leaving': outerLeavingLayer === 'full' || (pressKeepaliveLayer === 'full' && outerCurrentLayer !== 'full'),
                     'is-press-keepalive': pressKeepaliveLayer === 'full',
@@ -511,6 +529,16 @@ defineExpose({
         </div>
         </div>
         <!-- /L1 .dock-controls -->
+        <!--
+            THE LIVE REGION. Reach announces the seat it glided to
+            ([2026-08-24 · BK #47 W6]). It sits OUTSIDE `.dock-run` on purpose: every
+            direct child of the run is a lattice seat (`scroll-snap-align: start`,
+            `flex: 0 0 auto`, run.css), and a zero-width announcement node inside it
+            would be a snap target the user could scroll to and land on. Visually hidden
+            by the one-pixel clip rather than `display: none`, which would take it out of
+            the accessibility tree and silence the announcement it exists to carry.
+        -->
+        <div ref="statusEl" class="dock-run-status" role="status" aria-live="polite"></div>
         <!-- The fission BRIDGE + `#split` slot are DEFINITION-ABSENT
              (the whole fission facility retired decided-terminal; clean break, no alias). -->
     </div>

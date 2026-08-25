@@ -103,7 +103,6 @@ export interface DockShellProps {
     startCollapsed: ComputedRef<boolean>;
     shape: ComputedRef<"pill" | "rounded" | "card">;
     orientation: ComputedRef<"horizontal" | "vertical">;
-    scrollClass: ComputedRef<string | null>;
     alwaysExpanded: ComputedRef<boolean>;
     fitContent: ComputedRef<boolean>;
 }
@@ -117,17 +116,16 @@ export function useDockShellProps(props: DockProps): DockShellProps {
     const shape = computed(() => props.shape ?? "pill");
     /* The single layout axis. */
     const orientation = computed(() => props.orientation ?? "horizontal");
-    /* A capped axis is ALWAYS a scroll axis (no opt-in). A HORIZONTAL dock's inline
-       axis is content-driven, so it wears the `.dock-scroll-x` port INTRINSICALLY —
-       the CSS `overflow-x: auto` scrolls ONLY when the row exceeds
-       `--dock-max-inline-size`; under the cap the port is inert (nothing scrolls). A
-       VERTICAL dock folds into the unconditional cap-derived rule in shell.css (the
-       `.vertical…:not([data-morphing])` at-rest port), so it wears NO class —
-       returning `null` keeps the `.glass-dock.vertical` scroll story in ONE home
-       (shell.css), never a second `.dock-scroll-y` opt-in. */
-    const scrollClass = computed<string | null>(() =>
-        orientation.value === "vertical" ? null : "dock-scroll-x",
-    );
+    /* ~~`scrollClass` — `dock-scroll-x` on a horizontal dock, `null` on a vertical one
+       (whose block-axis port lived in shell.css)~~ — [2026-08-24 · BK #47 W3 LATTICE]
+       STRUCK. The class was an AXIS SELECTOR for a scroll port that lived in two homes:
+       `overflow.css` opened the inline track under `.dock-scroll-x`, `shell.css` opened
+       the block one on the dock root, and the class told the cascade which. Under the
+       lattice there is ONE port on ONE element (`.dock-run`, run.css) and it opens on
+       both axes from the orientation already on the root — so the class selected
+       between two things that no longer differ. Its whole reach was self-contained
+       (overflow.css, this computed, the GlassDock binding, one test row); nothing
+       outside the dock ever read it. */
     /* `collapse: false` is the ONE force-pinned pole. */
     const alwaysExpanded = computed(() => props.collapse === false);
     /* Mount pole for a collapsible dock — inert on the pinned pole, so the SFC
@@ -141,7 +139,6 @@ export function useDockShellProps(props: DockProps): DockShellProps {
         startCollapsed,
         shape,
         orientation,
-        scrollClass,
         alwaysExpanded,
         fitContent,
     };
