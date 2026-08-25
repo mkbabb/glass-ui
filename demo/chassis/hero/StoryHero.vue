@@ -47,7 +47,11 @@ const showHeroTitle = computed(
 const showCluster = computed(
     () => props.heroTitle && Boolean(heroDisplayTitle.value || props.blurb),
 );
-const heroClass = computed(() => `text-display-${props.heroScale}`);
+// [BK #58 W-STORY-PROPORTION] `heroClass` is STRUCK — it read
+// `text-display-${props.heroScale}` and put a SECOND font-size on the same <h1>
+// the `[data-hero-scale]` fit-cap already sized. The utility never won (unlayered
+// sheet vs `@layer utilities`), so the rung it named was decoration on every page.
+// One attribute now decides the rung and the sheet reads it; see story-hero.css.
 
 const auroraPalette = computed<HeroPaletteKey>(() => {
     const d = descriptor.value;
@@ -152,7 +156,7 @@ function drawFocal(
                 <h1
                     v-if="showHeroTitle"
                     :data-hero-scale="heroScale"
-                    :class="cn('story-hero-title', heroClass)"
+                    class="story-hero-title"
                 >
                     <slot name="title-ornament" />{{ heroDisplayTitle }}
                 </h1>
@@ -176,7 +180,7 @@ function drawFocal(
                     <h1
                         v-if="showHeroTitle"
                         :data-hero-scale="heroScale"
-                        :class="cn('story-hero-title', heroClass)"
+                        class="story-hero-title"
                     >
                         <slot name="title-ornament" />{{ heroDisplayTitle }}
                     </h1>

@@ -78,25 +78,48 @@ useClickDelegate({
 
 <template>
     <StoryPage>
+        <!-- `span="full"`: a two-pane instrument is StorySection's own "stage" case.
+             In the default cel track (21rem = 336px) a `200px` nav left the document
+             ~130px wide — the instrument was unreadable at every width, and the
+             section's own prop says so. -->
         <StorySection
+            span="full"
             heading="ToC tracking — the reconciled family"
             blurb="The active section follows the deepest visible heading, stays in view in the sidebar, and scrolls smoothly to a selected destination while long documents render in measured batches."
         >
-            <div class="grid grid-cols-[200px_1fr] gap-4 h-[480px]">
-                <!-- The ToC sidebar (delegated clicks, damped follow) -->
+            <!-- [BK #58] `h-[480px]` is STRUCK for `story-stage`: layout.css declares
+                 the ONE stage envelope (`--stage-block`, min(62svh, 44rem)) and says in
+                 as many words that every story which used to spell its own `vh`/px
+                 height reads this instead. A second height here is a second answer to a
+                 question the chassis has already answered.
+                 The tracks are a PROPORTION with a cap from the measure series, not a
+                 device literal: the ToC takes at most one cel and never more than 30%
+                 of the instrument, and the document takes the rest. `200px` was neither
+                 — at 390 it was half the screen, at 1440 it was a sliver. -->
+            <div
+                class="story-stage grid gap-(--sp-4) grid-cols-[minmax(0,min(var(--measure-cel),30%))_minmax(0,1fr)]"
+            >
+                <!-- The ToC sidebar (delegated clicks, damped follow).
+                     [BK #58 TOC-MENU-GLASS · clean break] `themed-card` is GONE with no
+                     alias. It was a class name with NO definition anywhere in `src/` or
+                     `demo/` — a whole-repo grep found exactly these two consumers and
+                     zero producers — so both panes of this instrument painted as bare
+                     transparent boxes while reading, in the markup, as if they carried
+                     card material. `glass-resting` is the library's own canonical plate
+                     rung and `rounded-panel` its matching radius role. -->
                 <nav
                     ref="navContainer"
-                    class="themed-card overflow-y-auto scrollbar-thin p-2 rounded-xl space-y-0.5"
+                    class="glass-resting scrollbar-thin space-y-(--sp-1) overflow-y-auto rounded-panel p-(--sp-2)"
                 >
                     <template v-for="root in SECTIONS" :key="root.id">
                         <button
                             :data-toc-id="root.id"
                             :data-scroll-target="root.id"
                             :class="[
-                                'w-full text-left px-3 py-1.5 rounded-md text-small transition-fast',
+                                'w-full rounded-control px-(--sp-3) py-(--sp-2) text-left text-small transition-fast',
                                 activeRootId === root.id || activeId === root.id
                                     ? 'bg-primary/10 text-primary font-medium'
-                                    : 'hover:bg-muted/50 text-muted-foreground',
+                                    : 'text-foreground hover:bg-muted/50',
                             ]"
                         >
                             {{ root.title }}
@@ -107,10 +130,10 @@ useClickDelegate({
                             :data-toc-id="child.id"
                             :data-scroll-target="child.id"
                             :class="[
-                                'w-full text-left pl-6 pr-3 py-1 rounded-md text-micro transition-fast',
+                                'w-full rounded-control py-(--sp-1) pr-(--sp-3) pl-(--sp-5) text-left text-micro transition-fast',
                                 activeId === child.id
                                     ? 'bg-primary/10 text-primary'
-                                    : 'hover:bg-muted/40 text-muted-foreground/80',
+                                    : 'text-muted-foreground hover:bg-muted/40',
                             ]"
                         >
                             {{ child.title }}
@@ -118,17 +141,27 @@ useClickDelegate({
                     </template>
                 </nav>
 
-                <!-- The long scroll document -->
+                <!-- The long scroll document — the second `themed-card` consumer,
+                     struck with the first. -->
                 <div
                     ref="scrollContainer"
-                    class="themed-card overflow-y-auto scrollbar-thin p-4 rounded-xl"
+                    class="glass-resting scrollbar-thin overflow-y-auto rounded-panel p-(--sp-4)"
                 >
                     <template v-for="root in visibleSections" :key="root.id">
-                        <section :id="root.id" class="mb-8">
-                            <h3 class="text-lg font-semibold mb-2">
+                        <section :id="root.id" class="mb-(--sp-6)">
+                            <!-- [BK #58 · BD T49 toc-readability] The document's own
+                                 hierarchy reads off the house type ladder, not the
+                                 Tailwind scale: `text-lg font-semibold` was a size with
+                                 no rung, one step from the `text-small` body, so the
+                                 tracker's target headings barely separated from the
+                                 prose they head. `text-subheading` is the rung. The
+                                 child rows likewise stop being `text-muted-foreground/80`
+                                 — an alpha ON an already-muted colour, faded twice —
+                                 and separate by SIZE and indent instead. -->
+                            <h3 class="text-subheading mb-(--sp-2)">
                                 {{ root.title }}
                             </h3>
-                            <p class="text-small text-muted-foreground mb-4">
+                            <p class="text-small text-muted-foreground mb-(--sp-4)">
                                 A scrollable section body for {{ root.title }}. Scroll
                                 to watch the active ToC item track the deepest visible
                                 node.
@@ -137,9 +170,9 @@ useClickDelegate({
                                 v-for="child in root.children"
                                 :id="child.id"
                                 :key="child.id"
-                                class="mb-4 pl-3 border-l-2 border-border/50"
+                                class="mb-(--sp-4) border-l-2 border-border/50 pl-(--sp-3)"
                             >
-                                <h4 class="text-small font-medium mb-1">
+                                <h4 class="text-small mb-(--sp-1) font-medium">
                                     {{ child.title }}
                                 </h4>
                                 <p class="text-micro text-muted-foreground">

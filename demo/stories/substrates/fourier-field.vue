@@ -338,8 +338,10 @@ const rendererStatus = ref<RendererStatus>(pendingRenderer("webgpu"));
 </script>
 
 <template>
+    <!-- [BK #58 G-ONE-NAME] `heading="Fourier Field"` is STRUCK — the chassis <h1>
+         already names the route; the studio section reprinted it verbatim one line
+         below. The label is the section's real contribution. -->
     <VizStudio
-        heading="Fourier Field"
         label="terms · the machine · the clock"
         blurb="A stack of rotating circles draws a curve. Each circle is one term of the transform; adding the next one adds the biggest correction that is still missing. Drag the term count to watch it assemble, drag across the field to move through the loop."
         :presets="presets"

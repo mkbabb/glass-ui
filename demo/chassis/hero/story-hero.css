@@ -80,12 +80,29 @@
     text-wrap: balance;
 }
 
+/* ONE definition of the hero title's type (BK #58 W-STORY-PROPORTION).
+   This block used to declare `font-size` alone, and `StoryHero.vue` ALSO put the
+   `text-display-<rung>` utility on the same <h1>. Two definitions of one thing:
+   the utility's flat `font-size: var(--type-display-<rung>)` and this fit-capped
+   `min()`. The `min()` always won — `story-hero.css` is imported UNLAYERED
+   (`demo.css:130`) and Tailwind's `@utility` output lands in `@layer utilities`,
+   and unlayered beats layered — so the utility's size arm could never apply on any
+   page, at any rung, while its family/weight/leading/tracking arms silently DID.
+   Half a rule live, half dead, and nothing said which half.
+   The chassis slot is authored once: the full display register lives here, next to
+   the fit-cap that bounds it, exactly as `.story-chrome-title` below already
+   declares its own. `heroClass` is struck from the SFC. */
 .story-hero-title[data-hero-scale] {
+    font-family: var(--font-display);
     font-size: min(
         var(--story-hero-title-rung, var(--type-display-4)),
         calc((100cqi - 2 * var(--story-hero-pad, 2rem)) / var(--story-hero-cpl)),
         calc(0.62 * 100svh / var(--story-hero-est-lines))
     );
+    font-weight: var(--type-weight-display);
+    line-height: var(--type-leading-display);
+    letter-spacing: var(--type-tracking-display);
+    font-optical-sizing: auto;
 }
 
 .story-hero-title[data-hero-scale="4"] {

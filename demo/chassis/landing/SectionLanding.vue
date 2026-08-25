@@ -27,7 +27,7 @@ function tileFor(story: Story) {
             :background="landing.background"
             :title="landing.title"
             :blurb="landing.blurb"
-            hero-scale="4"
+            :hero-scale="landing.heroScale"
             :depth="landing.depth"
         >
             <section

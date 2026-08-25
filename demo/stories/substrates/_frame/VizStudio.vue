@@ -14,7 +14,17 @@ import {
 
 const props = withDefaults(
     defineProps<{
-        /** The studio's in-body StorySection heading. */
+        /**
+         * The studio's in-body StorySection heading — **never the page's own name**
+         * (BK #58 W-STORY-PROPORTION, G-ONE-NAME). `StoryPage` already prints the
+         * story's title as the route's one `<h1>`; a studio section headed with the
+         * same word prints it twice, one line apart, which is the "a page prints its
+         * own name once" defect stated verbatim in the wave. All three studios did
+         * exactly that (`heading="Aurora"` / `"Blob"` / `"Fourier Field"`). A studio's
+         * stage section IS the page's subject, so it wants no second name: the `label`
+         * and `blurb` below carry what is genuinely additional. Pass a heading only
+         * when the section names something the page title does not.
+         */
         heading?: string;
         /** Optional compact StorySection label. */
         label?: string;

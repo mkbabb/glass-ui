@@ -264,9 +264,9 @@ function s(
         component: lazy(cat, id),
         background,
         hero: opts?.hero,
-        // the AUTHORED landing-tile rung: resolved from the
+        // the AUTHORED preview strategy: resolved from the
         // `./*/*.tile.vue` glob (undefined when no co-located tile file exists, so
-        // the tile ladder falls through to the frozen still, body marquee, identity).
+        // the resolution falls through to the frozen still, and then to `none`).
         tile: tileLoader(cat, id),
         // depth + heroScale are finalized by assignDepths() once the category's
         // story order is known (the FIRST story is the D2 main; the rest D3 subs).
@@ -293,22 +293,45 @@ function sectionLanding(cat: Category): SectionLanding {
         bgKind === "aurora" && hero
             ? { kind: "aurora", palette: hero.heroPalette }
             : bgKind;
+    // The section landing IS the D1 tier; the rung follows from that one word.
+    const depth = "D1" as const;
     return {
         title: cat.title,
         blurb: LANDING_BLURBS[cat.id] ?? `The ${cat.title.toLowerCase()} family.`,
         background,
-        heroScale: "hero",
-        depth: "D1",
+        heroScale: heroScaleForDepth(depth),
+        depth,
     };
+}
+
+/**
+ * The depth → hero-rung ladder, stated ONCE (BK #58 W-STORY-PROPORTION).
+ *
+ * A page's title size is a function of its tier and of nothing else: D0 `mega`,
+ * D1 `hero`, D2 `5`, D3 `4`. It is exported because the CATALOG hero is not a
+ * manifest row — `/` declares its depth in the template and used to carry a
+ * hard-coded `hero-scale="4"` beside it, which put the app's home page a full rung
+ * BELOW a D3 sub-page and restated a rule this file owns. A caller that knows its
+ * depth now reads the rung rather than repeating it.
+ */
+export function heroScaleForDepth(depth: StoryDepth): HeroScale {
+    return depth === "D0"
+        ? "mega"
+        : depth === "D1"
+          ? "hero"
+          : depth === "D2"
+            ? "5"
+            : "4";
 }
 
 /**
  * Finalize each story's depth + heroScale from the depth-keyed
  * √φ ladder). The FIRST story in a category is the D2 MAIN (the marquee anchor);
- * every subsequent story is a D3 SUB. The hero rung floors at the depth tier — D0
- * `mega`, D2 `5`, D3 `4` — and an explicit `heroScale` override (a live-GL marquee
+ * every subsequent story is a D3 SUB. The hero rung floors at the depth tier via
+ * `heroScaleForDepth` — and an explicit `heroScale` override (a live-GL marquee
  * keeping `hero`) wins, never resolving below `4` (the user-mandate floor). The
- * front door (`foundations/intro`) is the lone D0 — the storybook root.
+ * front door (`foundations/intro`) is the lone D0 STORY — the storybook root; the
+ * catalog at `/` is the other D0 surface and carries no manifest row.
  */
 function assignDepths(categories: Category[]): void {
     for (const cat of categories) {
@@ -330,7 +353,7 @@ function assignDepths(categories: Category[]): void {
             }
             story.depth = depth;
             if (!story.heroScale) {
-                story.heroScale = depth === "D0" ? "mega" : depth === "D2" ? "5" : "4";
+                story.heroScale = heroScaleForDepth(depth);
             }
         });
         cat.landing = sectionLanding(cat);
@@ -941,7 +964,7 @@ export const CATEGORIES: Category[] = [
                 "motion",
                 "handmark",
                 "Hand Mark",
-                "HandMark — the platform's hand voice: a hand-drawn pen underline, highlighter, pencil, crayon, and marker, plus a circled or boxed value, all over the paper grain.",
+                "HandMark — the platform's hand voice: one pen making four gestures over the paper grain, an underline, a strike, a circled word, and a highlighter band.",
                 {
                     // Per-route exception: the hand-drawn
                     // demo IS a paper-grain register surface (its blurb + its own

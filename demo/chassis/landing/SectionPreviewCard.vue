@@ -34,8 +34,16 @@ const authoredTile = computed(() =>
         "
         :data-span="lead ? 'full' : null"
     >
-        <!-- The thumbnail is paint, never a second interactive subtree. -->
-        <div class="section-preview-card-preview" inert aria-hidden="true">
+        <!-- The thumbnail is paint, never a second interactive subtree.
+             [BK #58] It mounts ONLY for a declared preview. A `none` card has no
+             media region at all — no empty well, and so no place for the title to be
+             printed a second time. -->
+        <div
+            v-if="tile.kind !== 'none'"
+            class="section-preview-card-preview"
+            inert
+            aria-hidden="true"
+        >
             <img
                 v-if="tile.kind === 'still'"
                 class="section-preview-card-tile section-preview-card-viz-still"
@@ -48,12 +56,6 @@ const authoredTile = computed(() =>
                 v-else-if="authoredTile"
                 class="section-preview-card-tile"
             />
-            <div
-                v-else-if="tile.kind === 'identity'"
-                class="section-preview-card-tile section-preview-card-identity"
-            >
-                {{ tile.title }}
-            </div>
         </div>
 
         <span data-route-label class="text-subheading text-foreground">{{ title }}</span>
@@ -69,6 +71,20 @@ const authoredTile = computed(() =>
     transition:
         border-color var(--duration-fast) var(--ease-out),
         background-color var(--duration-fast) var(--ease-out);
+}
+
+/* THE ABOVE-FOLD EXEMPTION (BK #58 W-PREVIEW-CARD; the edit ceded from PERF W3).
+   `content-visibility: auto` above the fold buys nothing and costs twice. The lead
+   card is the first grid item on its landing — it is on screen at first paint by
+   construction, so there is no render work to skip — and it is the ONE card that
+   spans the full row, so `contain-intrinsic-size: auto 19rem` is a placeholder height
+   guessed for a box of a different shape. On the first frame the browser lays the
+   field out against that guess and then corrects it, which is a shift under the
+   reader's eye for a saving that was never available. Keyed on `[data-span]`, which
+   is the same one attribute that makes it the lead — never a second flag to drift. */
+.section-preview-card[data-span="full"] {
+    content-visibility: visible;
+    contain-intrinsic-size: none;
 }
 
 .section-preview-card:hover {
@@ -110,18 +126,10 @@ const authoredTile = computed(() =>
     animation: none !important;
 }
 
-.section-preview-card-identity {
-    display: grid;
-    place-items: end start;
-    padding: clamp(0.75rem, 10cqmin, 1.4rem);
-    color: var(--foreground);
-    font-family: var(--font-display);
-    font-size: clamp(1rem, 13cqmin, 1.6rem);
-    font-weight: var(--type-weight-display);
-    line-height: 1.05;
-    letter-spacing: var(--type-tracking-display);
-    text-wrap: balance;
-}
+/* [struck 2026-08-10, BK #58] `.section-preview-card-identity` is GONE with its rung.
+   It styled the title-slab the `identity` resolution rendered; that resolution no
+   longer exists, so the rule had no producer and could never match. A dead rule left
+   behind reads as a live option to the next author. */
 
 @media (prefers-reduced-transparency: reduce) {
     .section-preview-card-preview {

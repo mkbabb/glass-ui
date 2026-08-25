@@ -459,8 +459,11 @@ watch(studioPaused, () => {
 <template>
     <!-- The shared VizStudio owns the page header, configurator, and rounded clip.
          These slots provide only Blob-specific stage, controls, and presets. -->
+    <!-- [BK #58 G-ONE-NAME] `heading="Blob"` is STRUCK. The chassis prints this
+         story's title as the route's one <h1>; the studio section reprinted it one
+         line below, so the page said "Blob" twice before saying anything. The label
+         and blurb carry what is actually additional. -->
     <VizStudio
-        heading="Blob"
         label="Blob studio — preset · interaction · mood · seed-palette"
         blurb="The blob showcase on the library's own Configurator chrome (the same studio shell Aurora composes). The preset row drives useConfiguratorState (per-preset clones); the stage paints the live config. Hover to feel the lean — attraction +1 leans IN, -1 SHIES AWAY (the sign is honored); click, tap, or focus the blob and press Enter/Space to fire the same spring impulse; pick a mood (the {valence, arousal} affect model); set a seed + harmony to ramp the OKLCh palette fed LIVE to the hero body. One GL context."
         :presets="presets"

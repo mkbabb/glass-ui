@@ -3,7 +3,7 @@ import { computed } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import SectionPreviewCard from "../../chassis/landing/SectionPreviewCard.vue";
 import { CATEGORIES } from "../manifest";
-import { resolveStoryTile } from "../../chassis/landing/storyTile";
+import { resolveCategoryTile } from "../../chassis/landing/storyTile";
 
 // The storybook front-door hero declares a live aurora wash on its manifest row;
 // the page chassis renders it behind a glassy hero card so the title sits glass-
@@ -35,25 +35,22 @@ const SUMMARIES: Record<string, string> = {
 // and an inline non-text preview; the front door is a
 // section-landing peer; the cards link
 // the 11 section LANDINGS, each preview a budget-safe still).
+// [BK #58 W-PREVIEW-CARD] The hand-rolled lead-story walk is STRUCK. This file used
+// to find the category's lead story itself (`story.id !== "intro"` — the front-door
+// rule, hardcoded at a call site, a THIRD statement of a thing `assignDepths` already
+// decides), call `resolveStoryTile` on it, and mint a `{ kind: "identity" }` literal
+// when it found nothing. The chassis owns that resolution now: `resolveCategoryTile`
+// reads the D2 main and returns a declared strategy, `none` included. The front door
+// and the catalog resolve the SAME function, so they cannot disagree about what
+// `/display` previews.
 const categories = computed(() =>
-    CATEGORIES.filter((c) => !c.reference).map((c, idx) => {
-        // the front-door card previews a REAL representative
-        // component from the section (the ss-01 "empty brown tile + lone compass"
-        // cure). Resolve the tile of the category's LEAD story (skipping the D0
-        // front door itself) via the SAME per-story ladder the landings use — a
-        // Button cluster for display, a frozen aurora still for substrates, a mini
-        // GlassDock for dock — never a repeated glyph.
-        const leadStory = c.stories.find((story) => story.id !== "intro");
-        return {
-            slug: c.id,
-            title: c.title,
-            blurb: SUMMARIES[c.id] ?? c.stories[0]?.blurb ?? "",
-            lead: idx === 0,
-            tile: leadStory
-                ? resolveStoryTile(c.id, leadStory)
-                : { kind: "identity" as const, title: c.title },
-        };
-    }),
+    CATEGORIES.filter((c) => !c.reference).map((c, idx) => ({
+        slug: c.id,
+        title: c.title,
+        blurb: SUMMARIES[c.id] ?? c.stories[0]?.blurb ?? "",
+        lead: idx === 0,
+        tile: resolveCategoryTile(c),
+    })),
 );
 </script>
 
@@ -71,11 +68,18 @@ const categories = computed(() =>
              inline non-text preview; no text-only redirect card
              survives on the front door, PC7). The cards ride the resting glass rung so
              the aurora the chassis paints reads THROUGH them. -->
-        <section class="mt-16">
-            <p class="text-small mb-4 text-muted-foreground">Categories</p>
-            <div
-                class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-            >
+        <section class="mt-(--sp-6)">
+            <p class="text-small mb-(--sp-4) text-muted-foreground">Categories</p>
+            <!-- [BK #58] THE CEL FIELD, not a breakpoint ladder. `grid-cols-1
+                 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4` asked the VIEWPORT how
+                 many cards fit in a column the viewport has never measured — the
+                 identical mistake `CatalogLanding` records having already struck, left
+                 standing on the OTHER front door. `.story-field` asks the column
+                 itself, so this index packs 1→2→3→4 across the same widths without
+                 naming a breakpoint, and the two front doors now lay out by one law
+                 instead of two. `gap-4`/`mt-16`/`mb-4` went with it: the demo has one
+                 six-rung ladder and the Tailwind scale is not it. -->
+            <div class="story-field">
                 <SectionPreviewCard
                     v-for="cat in categories"
                     :key="cat.slug"
