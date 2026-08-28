@@ -227,6 +227,17 @@
         --dock-ring-width: var(--focus-ring-width);
         --dock-ring-offset: var(--focus-ring-width);
         --dock-ring-color: color-mix(in srgb, var(--focus-ring-color) 48%, transparent);
+
+        /* [2026-08-28 · BK π-CURE · R2 · owner #47 W8 MATERIAL + W3 LATTICE] THE RING'S
+           OUTER EXTENT, as a length any box that must contain the ring can reserve.
+           `outline-offset` seats the ring OUTSIDE the control box, so the paint reaches
+           offset + width beyond it — 4px at the house geometry. That is a fact about the
+           ring, derived from the two terms directly above rather than restated as a
+           literal, so a retune of either moves the reservation with it. `run.css` is its
+           one consumer today (the scroll port is the box that was cutting the ring off);
+           it lives HERE, with the terms it is computed from, because a reserve that
+           drifts from the ring it reserves for is worse than none. */
+        --dock-ring-reserve: calc(var(--dock-ring-width) + var(--dock-ring-offset));
     }
 
     /* Shared four-state contract — the focus-visible ring + disabled paint are

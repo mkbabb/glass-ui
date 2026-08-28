@@ -59,14 +59,35 @@
        `.dock-layers` full/summary morph pair the horizontal dock uses (a vertical dock
        collapses its block axis too). The base `.dock-layer { display: flex;
        align-items: center }` is row by default; here the full/summary panes flip to a
-       stretched column stack carrying the dock's `--dock-layer-gap` rhythm, so
-       authored item groups + `<DockSeparator>` rules read with the correct vertical
-       cadence. The block-axis morph aperture is owned by `.dock-layers` (layers.css —
-       `.glass-dock.vertical[data-morphing] .dock-layers` morphs `block-size`). */
+       stretched column stack, so authored item groups + `<DockSeparator>` rules read
+       with the correct vertical cadence. The block-axis morph aperture is owned by
+       `.dock-layers` (layers.css — `.glass-dock.vertical[data-morphing] .dock-layers`
+       morphs `block-size`).
+
+       [2026-08-28 · BK π-CURE · R1 · owner #47 W9, x-ref W3] ~~`gap:
+       var(--dock-layer-gap, 0.375rem);`~~ — THE ORIENTATION RULE WAS A SECOND OWNER OF
+       THE RUN'S GAP. `.dock-run` rides the SAME element as `.dock-layer--full`
+       (GlassDock.vue), so this selector (0,3,0) matched the run and out-ranked
+       `.glass-dock .dock-run` (0,2,0): every vertical run painted `--dock-layer-gap`
+       6px while `--dock-pitch` computed on `--dock-run-gap` 8px — 2px short per seat,
+       24px cumulative over a 12-seat column, measured on BOTH library vertical docks
+       (`pi-PROPORTION-lattice-layout-overflow-1440-light.json`: painted step 46 against
+       a declared P of 48; the horizontal lattice exact at 48). W9's 6→8 retune landed in
+       the token and on horizontal runs and never reached vertical ones because THIS
+       rule was in front of it.
+
+       The declaration is STRUCK rather than out-specified. A `.glass-dock.vertical
+       .dock-run` rung would have made three rules own one value; deleting this one
+       leaves exactly two, disjoint by element: the base
+       `:where(.glass-dock, .dock-layer-group) .dock-layer` (0,1,0 — layers.css:206)
+       carries the SAME `--dock-layer-gap` to every non-run layer, byte-identical paint,
+       and `.glass-dock .dock-run` (0,2,0) is then the only gap statement the run
+       matches. The run's own token is the law on the run, which is what
+       `run.css:186-192` already said it had bought — *"A pitch whose gap term is not the
+       gap the box actually paints is a pitch that is quietly wrong."* */
     .glass-dock.vertical .dock-layer {
         flex-direction: column;
         align-items: stretch;
-        gap: var(--dock-layer-gap, 0.375rem);
         min-width: 0;
     }
 }

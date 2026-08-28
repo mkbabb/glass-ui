@@ -1,0 +1,66 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui
+
+ ❯ tests/composables/search/born-red-R4.scratch.test.ts (3 tests | 3 failed) 276ms
+     × gives every result row role=option, a stable id and an aria-selected state 105ms
+     × wires the field as a combobox that controls the listbox 86ms
+     × moves aria-selected with aria-activedescendant on ArrowDown 85ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/composables/search/born-red-R4.scratch.test.ts > /data/search — the listbox is a listbox and its options are options > gives every result row role=option, a stable id and an aria-selected state
+AssertionError: expected 0 to be greater than 0
+ ❯ tests/composables/search/born-red-R4.scratch.test.ts:65:32
+     63|         const options = wrapper.findAll('[role="option"]');
+     64|
+     65|         expect(options.length).toBeGreaterThan(0);
+       |                                ^
+     66|         // The listbox OWNS them — every option is a descendant of the…
+     67|         // is what `aria-activedescendant` resolution requires.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/composables/search/born-red-R4.scratch.test.ts > /data/search — the listbox is a listbox and its options are options > wires the field as a combobox that controls the listbox
+AssertionError: expected undefined to be truthy
+
+- Expected:
+true
+
++ Received:
+undefined
+
+ ❯ tests/composables/search/born-red-R4.scratch.test.ts:87:27
+     85|         const listboxId = wrapper.get('[role="listbox"]').attributes("…
+     86|
+     87|         expect(listboxId).toBeTruthy();
+       |                           ^
+     88|         expect(input.attributes("role")).toBe("combobox");
+     89|         expect(input.attributes("aria-controls")).toBe(listboxId);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/composables/search/born-red-R4.scratch.test.ts > /data/search — the listbox is a listbox and its options are options > moves aria-selected with aria-activedescendant on ArrowDown
+AssertionError: expected null to be 'option' // Object.is equality
+
+- Expected:
+"option"
+
++ Received:
+null
+
+ ❯ tests/composables/search/born-red-R4.scratch.test.ts:107:44
+    105|
+    106|         const first = activeOption();
+    107|         expect(first.getAttribute("role")).toBe("option");
+       |                                            ^
+    108|         expect(first.getAttribute("aria-selected")).toBe("true");
+    109|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed (3)
+   Start at  17:58:01
+   Duration  1.49s (transform 577ms, setup 39ms, import 942ms, tests 276ms, environment 132ms)
+

@@ -1,0 +1,72 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui
+
+ ✓ tests/composables/search/search-contracts.test.ts > fuzzy search index caching > scopes cached queries to the index instance 1ms
+ ✓ tests/composables/search/search-contracts.test.ts > fuzzy search index caching > does not reuse a truncated maxResults cache entry 0ms
+ ✓ tests/composables/search/search-contracts.test.ts > useFuzzySearch debounce cleanup > clears pending debounce timers when the owning scope is disposed 4ms
+ ✓ tests/composables/search/search-contracts.test.ts > useFuzzySearch debounce cleanup > cancels pending debounce work and refreshes against changed sources 1ms
+ × tests/composables/search/search-contracts.test.ts > /data/search — the listbox is a listbox and its options are options > gives every result row role=option, a stable id and an aria-selected state 99ms
+   → expected 0 to be greater than 0
+ × tests/composables/search/search-contracts.test.ts > /data/search — the listbox is a listbox and its options are options > wires the field as a combobox that controls the listbox 87ms
+   → expected undefined to be truthy
+ × tests/composables/search/search-contracts.test.ts > /data/search — the listbox is a listbox and its options are options > moves aria-selected with aria-activedescendant on ArrowDown 86ms
+   → expected null to be 'option' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/composables/search/search-contracts.test.ts > /data/search — the listbox is a listbox and its options are options > gives every result row role=option, a stable id and an aria-selected state
+AssertionError: expected 0 to be greater than 0
+ ❯ tests/composables/search/search-contracts.test.ts:165:32
+    163|         const options = wrapper.findAll('[role="option"]');
+    164|
+    165|         expect(options.length).toBeGreaterThan(0);
+       |                                ^
+    166|         // The listbox OWNS them — every option is a descendant of the…
+    167|         // is what `aria-activedescendant` resolution requires.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/composables/search/search-contracts.test.ts > /data/search — the listbox is a listbox and its options are options > wires the field as a combobox that controls the listbox
+AssertionError: expected undefined to be truthy
+
+- Expected:
+true
+
++ Received:
+undefined
+
+ ❯ tests/composables/search/search-contracts.test.ts:187:27
+    185|         const listboxId = wrapper.get('[role="listbox"]').attributes("…
+    186|
+    187|         expect(listboxId).toBeTruthy();
+       |                           ^
+    188|         expect(input.attributes("role")).toBe("combobox");
+    189|         expect(input.attributes("aria-controls")).toBe(listboxId);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/composables/search/search-contracts.test.ts > /data/search — the listbox is a listbox and its options are options > moves aria-selected with aria-activedescendant on ArrowDown
+AssertionError: expected null to be 'option' // Object.is equality
+
+- Expected:
+"option"
+
++ Received:
+null
+
+ ❯ tests/composables/search/search-contracts.test.ts:207:44
+    205|
+    206|         const first = activeOption();
+    207|         expect(first.getAttribute("role")).toBe("option");
+       |                                            ^
+    208|         expect(first.getAttribute("aria-selected")).toBe("true");
+    209|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 4 passed (7)
+   Start at  13:41:49
+   Duration  1.25s (transform 491ms, setup 37ms, import 724ms, tests 278ms, environment 106ms)
+

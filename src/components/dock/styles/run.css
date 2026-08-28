@@ -184,6 +184,32 @@
         /* Release the flex/grid `min-content` floor on the port itself; without it the
            run's own children hold it open and `overflow: auto` never engages. */
         min-inline-size: 0;
+        /* [2026-08-28 · BK π-CURE · R2] THE CROSS AXIS RESERVES THE FOCUS RING, because
+           a scroll port clips to its PADDING BOX and this one had no padding to clip
+           into. `overflow-y: hidden` is not optional here — CSS coerces a `visible`
+           cross axis to `auto` beside a scrollable one, so the port cannot simply stop
+           clipping — and the run's cross-axis extent equals the seat's exactly, so the
+           whole 4px of `outline-offset + outline-width` fell outside the clip: the ring
+           survived as two disconnected arcs on 63 of 67 controls
+           (`pi-MATERIAL-ringclip-census-overview-1440-{light,dark}.json`; the paired
+           captures show the same seat unclipped in `.dock-persistent`, outside the port).
+           Identical in light and dark because it is geometry, and NOT introduced by W8 —
+           a `box-shadow` ring was clipped by the same port; the move to `outline` simply
+           did not cure it.
+
+           The room is REAL, not masked: `padding-block` grows the padding box the clip
+           reads by exactly the ring's extent, and the equal negative `margin-block` hands
+           the growth straight back to the parent, so the run's OUTER box, the seats' own
+           positions and the whole lattice are byte-unchanged — only the clip rectangle
+           moves. Nothing above clips it back: `.glass-dock` is `overflow: visible`
+           (shell.css) with its aperture deleted, which the census corroborates by finding
+           persistent-region seats unclipped. The 4px lands inside the dock's own
+           `--dock-padding-block` and paints over the dock's frosted plate, which is the
+           surface W8 chose 48% α against in the first place. Cross axis only: block
+           padding on an inline scroller takes no part in inline scrolling, and the
+           vertical rule below swaps the pair onto its own cross axis. */
+        padding-block: var(--dock-ring-reserve);
+        margin-block: calc(-1 * var(--dock-ring-reserve));
         /* THE SECOND TERM OF P, declared where the first one is. `.dock-layer`'s base
            rule sets `gap: var(--dock-layer-gap)`; restating it as `--dock-run-gap` here
            costs nothing today (the token binds to exactly that) and is what lets W9
@@ -225,6 +251,17 @@
         scroll-padding-block: calc(var(--dock-pitch) / 2);
         touch-action: pan-y;
         min-block-size: 0;
+        /* [2026-08-28 · BK π-CURE · R2] The ring reserve ROTATES with the port. Every
+           declaration in this rule is the base rule's twin on the other axis, and the
+           reserve is no exception: here the block axis is the SCROLL axis (block padding
+           would join the scrollable length and shift the snap positions), and the inline
+           axis is the one `overflow-x: hidden` clips. The base pair is zeroed rather than
+           left to cascade — a reserve on the scroll axis is not a smaller mistake than
+           no reserve on the clipped one. */
+        padding-block: 0;
+        margin-block: 0;
+        padding-inline: var(--dock-ring-reserve);
+        margin-inline: calc(-1 * var(--dock-ring-reserve));
     }
 
     /* ══ W4 · THE OPEN SEAT ══════════════════════════════════════════════════════

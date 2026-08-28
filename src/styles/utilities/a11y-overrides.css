@@ -111,9 +111,17 @@ html.no-transition *:not([data-allow-motion])::after {
     .dock-tab-button:focus-visible,
     .dock-select-trigger:focus-visible,
     .dock-dropdown-trigger:focus-visible,
-    /* the library-rendered menu trigger — it carries an INHERENT box-shadow ring
+    /* the library-rendered menu trigger — it carries an ~~INHERENT box-shadow ring
        (glass/overlay-plate.css), not an opted-in utility, so it needs the same
-       Highlight restore or it is the one focusable that vanishes under WHC. */
+       Highlight restore or it is the one focusable that vanishes under WHC~~ —
+       [2026-08-28 · BK π-CURE · R3] INHERENT ring that is now an `outline`
+       (glass/overlay-plate.css:120), re-pointed off `box-shadow` when the π band caught
+       it painting a third ring on dock dropdown triggers. The GROUND changes and the
+       ENTRY stays: an outline survives WHC on its own, so this is no longer a restore —
+       it is the geometry normaliser the rest of the group already is, keeping this
+       trigger's ring identical to the ones beside it rather than at its own 2px/2px.
+       The comment above's own note holds — the entry costs nothing and a user cannot
+       tell which control they tabbed onto. */
     .menu__trigger:focus-visible,
     .dark-mode-toggle-button:focus-visible,
     .field-control:focus-visible,

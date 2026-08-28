@@ -49,7 +49,9 @@
        2px black rule and the double shadow the codex stills measured. Scoped to
        the register on purpose, because the FILE declares both further down and
        neither is a plate boundary: `.menu__trigger:focus-visible`
-       paints the focus ring's `box-shadow`, and #81's `[data-slot=
+       ~~paints the focus ring's `box-shadow`~~ — [2026-08-28 · BK π-CURE · R3] paints
+       the focus ring's `outline`; the shadow form was the third site of the
+       one-property collision and is struck at the rule itself — and #81's `[data-slot=
        "select-content"]` block carries its own `--ink-edge` border plus the
        cartoon under-stamp.
 
@@ -123,13 +125,46 @@
            an ACTIVE suppression of the UA ring with nothing painted in its
            place, on a component that renders a bare `<button>`: 2.4.7 by
            commission, not omission. `:focus-visible`, never `:focus`, so a
-           pointer-opened menu never paints the keyboard ring; `outline: none`
-           survives only paired with the ring that replaces it, exactly as
-           `.focus-ring` pairs them, and `utilities/a11y-overrides.css` restores
-           a real outline for engines that drop box-shadows. */
-        outline: none;
+           pointer-opened menu never paints the keyboard ring.
+
+           [2026-08-28 · BK π-CURE · R3 · owner #47 W8 MATERIAL] ~~`outline: none;
+           box-shadow: var(--focus-ring-shadow);`~~ — THE THIRD SITE OF THE ONE-PROPERTY
+           COLLISION, and the one W8 did not know it had. A `.dock-dropdown-trigger` that
+           is ALSO a `.menu__trigger` (`DockTrigger.vue:46` + `DropdownMenuTrigger.vue:72`
+           on one element) painted THREE concentric rings at a single `:focus-visible`:
+           the dock's `outline` at 2px/2px, plus this shadow's two stops — accent/0.30 at
+           0 0 0 2px and the accent/0.15 8px halo — with a resting `box-shadow` of `none`,
+           so all three were focus paint and none of it was elevation
+           (`pi-MATERIAL-dropdown-doublering-1440-light.json`; the paired captures show it
+           against a plain `.dock-dropdown-trigger`, which is clean). The dock's rule wins
+           the `outline` channel — this file is `@import`-ed before `dock/styles/index.css`
+           and the two selectors are equally specific — so the `outline: none` above
+           suppressed nothing while the shadow doubled the ring beside it.
+
+           CURED THE WAY THE OTHER TWO WERE: the ring moves to `outline`, the property
+           nothing else competes for, and the `outline: none` goes with the shadow it was
+           pairing. On a dock trigger the dock's later rule now takes the one channel and
+           exactly one ring paints; standalone, the family keeps a ring of its own — the
+           house one, which is also the form forced-colors honours, where a `box-shadow`
+           ring vanishes entirely.
+
+           The recipe RESTATES `.focus-ring:focus-visible` (`utilities/base.css:144`, the
+           source of record — the `--ink-perimeter` 0.48 rung BK #80 measured at 3.0:1
+           against the retired shadow's 1.91:1) rather than composing the class, and the
+           reason is the cascade, not preference: `.focus-ring` is authored LATER than
+           `dock/styles/index.css` at equal specificity, so putting the utility on the
+           trigger would take the outline channel away from the DOCK ring on every dock
+           dropdown — trading three rings for one wrong one. `border-radius` STAYS: it is
+           the trigger's own rung, not part of the indicator, and an outline traces the
+           border box without restating its shape. */
+        outline: var(--focus-ring-width) solid
+            color-mix(
+                in oklab,
+                var(--foreground) calc(var(--ink-perimeter) * 100%),
+                transparent
+            );
+        outline-offset: var(--focus-ring-width);
         border-radius: var(--radius-control);
-        box-shadow: var(--focus-ring-shadow);
     }
 
     .menu__item,

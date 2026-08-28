@@ -484,6 +484,16 @@ const activeResultId = computed(() => {
     return active ? `search-result-${active.item.id}` : undefined;
 });
 
+// [2026-08-28 · BK π-CURE · R4] The listbox needs a NAME to be controlled by, not just
+// a role: `aria-controls` on the field has to resolve to this element or the field is a
+// combobox pointing at nothing. One literal, read by both ends.
+const RESULTS_LISTBOX_ID = "search-results-listbox";
+
+// The popup is "expanded" exactly when the result surface is in the DOM — the same
+// predicate the `v-if` below reads, so the announced state cannot drift from the
+// rendered one.
+const resultsOpen = computed(() => hasQuery.value && visibleResults.value.length > 0);
+
 function formatScore(score: number): string {
     return score.toFixed(1);
 }
@@ -512,12 +522,21 @@ function formatScore(score: number): string {
                         class="size-4 shrink-0 text-muted-foreground"
                         aria-hidden="true"
                     />
+                    <!-- [2026-08-28 · BK π-CURE · R4] The four attributes that make a
+                         field with an active descendant an actual combobox. The π band
+                         measured `aria-activedescendant` walking correctly with NONE of
+                         them present — a pointer into a popup the field never declared
+                         it owned, which no AT resolves. -->
                     <input
                         v-model="query"
                         type="text"
                         class="input-bar-field"
+                        role="combobox"
+                        aria-autocomplete="list"
                         placeholder="Search components, composables, tokens…"
                         aria-label="Search the catalogue"
+                        :aria-controls="RESULTS_LISTBOX_ID"
+                        :aria-expanded="resultsOpen"
                         :aria-activedescendant="activeResultId"
                         @keydown="searchState.onKeydown"
                     />
@@ -537,19 +556,30 @@ function formatScore(score: number): string {
             </Surface>
 
             <div
-                v-if="hasQuery && visibleResults.length > 0"
+                v-if="resultsOpen"
+                :id="RESULTS_LISTBOX_ID"
                 class="grid gap-4 md:grid-cols-2"
                 role="listbox"
                 aria-label="Search results"
             >
+                <!-- [2026-08-28 · BK π-CURE · R4] ~~`role="option"` +
+                     `:aria-selected` + `:data-active`~~ — three attributes that
+                     type-checked, read correctly, and rendered NOTHING. `Card` binds
+                     `v-bind="$attrs"` first and then restates `:role` / `:aria-selected`
+                     / `:tabindex` off its OWN `selected` prop, so the later explicit
+                     bindings won and an unset `selected` REMOVED all three. The route
+                     was writing to a channel the component owns; `selected` IS that
+                     channel, and passing it also lights the library's own
+                     `.card[role="option"][data-selected="true"]` paint
+                     (`components/card/styles.css:165`) that was dead here for the same
+                     reason. `data-active` goes with them: nothing styled it, and
+                     `data-selected` is now written by its one owner. -->
                 <Card
                     v-for="(result, i) in visibleResults"
                     :id="`search-result-${result.item.id}`"
                     :key="result.item.id"
                     class="border-l-4"
-                    role="option"
-                    :aria-selected="i === searchState.selectedIndex.value"
-                    :data-active="i === searchState.selectedIndex.value || undefined"
+                    :selected="i === searchState.selectedIndex.value"
                     :style="{
                         borderLeftColor: `var(--section-color-${result.item.tone})`,
                     }"

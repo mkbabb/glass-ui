@@ -303,7 +303,14 @@
 
        [2026-08-24 · BK #47 W8 MATERIAL] Re-pointed onto `outline` with the rest of the
        ring register. ~~`box-shadow: var(--focus-ring-shadow); outline: none;`~~ — this
-       rule was the SECOND site of the one-property collision, and the worse of the two:
+       rule was the SECOND site of the one-property collision, and ~~the worse of the
+       two~~ — [2026-08-28 · BK π-CURE · R3] the worse of the FIRST TWO. The figure is
+       struck because it was a count of the sites W8 FOUND, stated as if it were the
+       count of sites that existed: the π band measured a THIRD on
+       `.dock-dropdown-trigger.menu__trigger`, where `glass/overlay-plate.css:120` paired
+       the same shadow ring with the same `outline: none` and painted three concentric
+       rings at one focus. It is cured there now, in this rule's image. The worse-of-two
+       claim below stands on its own merits and is not re-ranked against the third:
        the switcher tab carries an active-state background and elevation of its own, so a
        `box-shadow` ring here was competing with the very paint that says which tab is
        selected. Reading the same `--dock-ring-*` trio the control families read is also

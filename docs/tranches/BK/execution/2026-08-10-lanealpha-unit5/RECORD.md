@@ -268,7 +268,15 @@ GF-DOCK's 2px/2px, so a house retune moves the dock with it. Colour is the accen
 **48%** against the house 30%, because the ring now paints over the dock's own frosted,
 saturated, mid-luminance plate rather than over the page.
 
-Two consequences followed through rather than left dangling: `[data-ring-yield]` was
+~~Two consequences followed through rather than left dangling~~ — [2026-08-28 · BK
+π-CURE · R3, unit 8] **TWO OF THREE.** The count was the sites this unit FOUND, written
+as if it were the sites that existed. The π band measured a third
+(`pi-MATERIAL-dropdown-doublering-1440-light.json`): `glass/overlay-plate.css:120` paired
+the identical `box-shadow: var(--focus-ring-shadow); outline: none;` on
+`.menu__trigger:focus-visible`, so a `.dock-dropdown-trigger` that is also a
+`.menu__trigger` painted THREE concentric rings at one `:focus-visible`. Cured at that
+rule in unit 8, in this unit's image. The two below are unchanged and were correctly
+done: `[data-ring-yield]` was
 re-pointed to `outline: none` (as written it would have suppressed nothing while still
 deleting the control's elevation), and the switcher tab was moved onto the same trio —
 which also makes *"paints the shared dock ring"* in its own comment true for the first
