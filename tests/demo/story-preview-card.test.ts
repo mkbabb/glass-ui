@@ -9,7 +9,13 @@ import {
     resolveStoryTile,
     type TileResolution,
 } from "../../demo/chassis/landing/storyTile";
-import { VIZ_PREVIEW_STILLS } from "../../demo/chassis/landing/vizPreviewStill";
+import {
+    STILL_ARMS,
+    VIZ_PREVIEW_STILLS,
+    stillColor,
+    vizPreviewStill,
+    type StillTheme,
+} from "../../demo/chassis/landing/vizPreviewStill";
 import { CATEGORIES, heroScaleForDepth } from "../../demo/stories/manifest";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -76,6 +82,10 @@ const heroSrc = code("chassis/hero/StoryHero.vue");
 const heroCss = code("chassis/hero/story-hero.css");
 const vizStudioRaw = readRaw("stories/substrates/_frame/VizStudio.vue");
 const tocSrc = code("stories/navigation/toc-tracking.vue");
+const stillSrc = code("chassis/landing/vizPreviewStill.ts");
+
+/** Both paint arms — every resolver row below is asserted in BOTH, never just one. */
+const ARMS: StillTheme[] = ["light", "dark"];
 
 const ROWS = CATEGORIES.flatMap((category) =>
     category.stories.map((story) => ({ category, story })),
@@ -108,7 +118,9 @@ describe("BK #58 · the four detectors are four instruments, not one number", ()
     it("reads stills from the frozen-still REGISTRY, and every registered route is a real row", () => {
         const registered = Object.keys(VIZ_PREVIEW_STILLS);
         expect(registered.length).toBeGreaterThan(0);
-        const routes = new Set(ROWS.map(({ category, story }) => `/${category.id}/${story.id}`));
+        const routes = new Set(
+            ROWS.map(({ category, story }) => `/${category.id}/${story.id}`),
+        );
         expect(registered.filter((route) => !routes.has(route))).toEqual([]);
     });
 
@@ -129,7 +141,17 @@ describe("G-TILE-COVERAGE (⊕² re-read) — every story resolves a DECLARED st
     const DECLARED = new Set<TileResolution["kind"]>(["authored", "still", "none"]);
 
     // THE RASTER IS NOT CALLABLE HERE, and the reason is worth stating rather than
-    // routing around. `vizPreviewStill` draws into a real `<canvas>`; jsdom hands back
+    // routing around. `vizPreviewStill` draws into a real `<canvas>`; ~~jsdom~~
+    // [2026-08-10 · BK #58, D6: the env is `happy-dom` (`vitest.config.ts:26`), and
+    // its context is thinner than this line claimed — it DOES carry `fillRect` and
+    // `createLinearGradient`, it does NOT carry `beginPath`, and `toDataURL` returns
+    // the constant `data:image/png;base64,AA==` no matter what was painted.
+    // [2026-08-28 · adjudicated CURE 1: that context SHAPE is the REPO'S OWN STUB —
+    // tests/setup.ts:127-141's vi.fn getContext, whose :140 toDataURL is the
+    // constant — not happy-dom's; raw happy-dom getContext returns null. happy-dom
+    // stays as the env; the stub is the detector.] That last
+    // one is why the D6 gate below reads DRAW INPUTS and not painted bytes: a raster
+    // comparison here would report the two arms EQUAL and pass forever] hands back
     // a 2D context OBJECT with no drawing methods on it, so `ctx.beginPath` throws —
     // which is neither the `document`-absent path (`render` guards that and returns
     // null) nor anything a target engine does. Stubbing the context to null to make it
@@ -142,9 +164,14 @@ describe("G-TILE-COVERAGE (⊕² re-read) — every story resolves a DECLARED st
 
     it("resolves every raster-free manifest row inside the closed union", () => {
         expect(rasterFree.length).toBeGreaterThan(0);
-        const stray = rasterFree
-            .map(({ category, story }) => resolveStoryTile(category.id, story).kind)
-            .filter((kind) => !DECLARED.has(kind));
+        const stray = ARMS.flatMap((theme) =>
+            rasterFree
+                .map(
+                    ({ category, story }) =>
+                        resolveStoryTile(category.id, story, theme).kind,
+                )
+                .filter((kind) => !DECLARED.has(kind)),
+        );
         expect(stray).toEqual([]);
     });
 
@@ -155,7 +182,9 @@ describe("G-TILE-COVERAGE (⊕² re-read) — every story resolves a DECLARED st
         expect(claimed.length).toBeGreaterThan(0);
         // Registry membership is the `still` declaration; `authored` outranks it, which
         // is the ladder's own order, so a claimed row is one or the other, never none.
-        expect(storyTileSrc).toMatch(/vizPreviewStill\(`\/\$\{categoryId\}\/\$\{story\.id\}`\)/);
+        expect(storyTileSrc).toMatch(
+            /vizPreviewStill\(`\/\$\{categoryId\}\/\$\{story\.id\}`, theme\)/,
+        );
     });
 
     it("resolves every CATEGORY card through the same ladder", () => {
@@ -166,9 +195,11 @@ describe("G-TILE-COVERAGE (⊕² re-read) — every story resolves a DECLARED st
         // There are categories to assert about — without this the filter+toEqual([])
         // shape below would assert nothing at all and pass forever.
         expect(rasterFreeCategories.length).toBeGreaterThan(0);
-        const stray = rasterFreeCategories
-            .map((c) => resolveCategoryTile(c).kind)
-            .filter((kind) => !DECLARED.has(kind));
+        const stray = ARMS.flatMap((theme) =>
+            rasterFreeCategories
+                .map((c) => resolveCategoryTile(c, theme).kind)
+                .filter((kind) => !DECLARED.has(kind)),
+        );
         expect(stray).toEqual([]);
     });
 
@@ -176,7 +207,11 @@ describe("G-TILE-COVERAGE (⊕² re-read) — every story resolves a DECLARED st
         const authored = ROWS.filter(({ story }) => story.tile);
         expect(authored.length).toBeGreaterThan(0);
         for (const { category, story } of authored) {
-            expect(resolveStoryTile(category.id, story).kind).toBe("authored");
+            for (const theme of ARMS) {
+                expect(resolveStoryTile(category.id, story, theme).kind).toBe(
+                    "authored",
+                );
+            }
         }
     });
 
@@ -213,7 +248,10 @@ describe("G-NO-DUP-TITLE — a card prints its name once, and a `none` card has 
     });
 
     it("mounts the media region for a declared still", () => {
-        const card = mountCard({ kind: "still", src: "data:image/png;base64,iVBORw0KGgo=" });
+        const card = mountCard({
+            kind: "still",
+            src: "data:image/png;base64,iVBORw0KGgo=",
+        });
         expect(card.findAll(".section-preview-card-preview")).toHaveLength(1);
         expect(card.findAll("img.section-preview-card-viz-still")).toHaveLength(1);
         card.unmount();
@@ -229,11 +267,15 @@ describe("G-NO-DUP-TITLE — a card prints its name once, and a `none` card has 
         // pre-cut that row resolves `identity`, which paints the story's name INSIDE
         // the well while the card's own label prints it again directly beneath.
         const row = ROWS.find(
-            ({ category, story }) => !story.tile && !isStillRoute(category.id, story.id),
+            ({ category, story }) =>
+                !story.tile && !isStillRoute(category.id, story.id),
         );
         expect(row, "a tile-free, still-free manifest row exists").toBeDefined();
         const { category, story } = row!;
-        const card = mountCard(resolveStoryTile(category.id, story), story.title);
+        const card = mountCard(
+            resolveStoryTile(category.id, story, "light"),
+            story.title,
+        );
         expect(card.text().split(story.title).length - 1).toBe(1);
         expect(card.findAll("[data-route-label]")).toHaveLength(1);
         expect(card.findAll(".section-preview-card-preview")).toHaveLength(0);
@@ -241,7 +283,10 @@ describe("G-NO-DUP-TITLE — a card prints its name once, and a `none` card has 
     });
 
     it("keeps the media region inert and out of the accessibility tree", () => {
-        const card = mountCard({ kind: "still", src: "data:image/png;base64,iVBORw0KGgo=" });
+        const card = mountCard({
+            kind: "still",
+            src: "data:image/png;base64,iVBORw0KGgo=",
+        });
         const preview = card.get(".section-preview-card-preview");
         expect(preview.attributes("aria-hidden")).toBe("true");
         expect(preview.attributes("inert")).toBeDefined();
@@ -275,8 +320,8 @@ describe("ONE LADDER — both front doors resolve through the same function", ()
         expect(main).toBeDefined();
         expect(first.id).not.toBe(main!.id);
         expect(isStillRoute("foundations", main!.id)).toBe(false);
-        expect(resolveCategoryTile(foundations!)).toEqual(
-            resolveStoryTile("foundations", main!),
+        expect(resolveCategoryTile(foundations!, "light")).toEqual(
+            resolveStoryTile("foundations", main!, "light"),
         );
     });
 
@@ -300,7 +345,9 @@ describe("the above-fold exemption (ceded from PERF W3)", () => {
     });
 
     it("leaves the ordinary card's content-visibility exactly as it was", () => {
-        expect(cardSrc).toMatch(/\.section-preview-card\s*\{[^}]*content-visibility:\s*auto/);
+        expect(cardSrc).toMatch(
+            /\.section-preview-card\s*\{[^}]*content-visibility:\s*auto/,
+        );
     });
 });
 
@@ -373,7 +420,10 @@ describe("G-ONE-NAME (studio arm) — a page prints its own name once", () => {
     });
 
     it("states the law where the next author will read it — on the prop itself", () => {
-        const heading = vizStudioRaw.slice(0, vizStudioRaw.indexOf("heading?: string;"));
+        const heading = vizStudioRaw.slice(
+            0,
+            vizStudioRaw.indexOf("heading?: string;"),
+        );
         expect(heading).toContain("never the page's own name");
         expect(heading).toContain("G-ONE-NAME");
     });
@@ -408,7 +458,9 @@ const globbedStorySfcs = (): { cat: string; id: string; rel: string }[] => {
     return out;
 };
 
-const routedIds = new Set(ROWS.map(({ category, story }) => `${category.id}/${story.id}`));
+const routedIds = new Set(
+    ROWS.map(({ category, story }) => `${category.id}/${story.id}`),
+);
 
 describe("W-STORY-TAXONOMY — zero bespoke pages, and the SFCs that resolve to no type", () => {
     it("gives every manifest row a real SFC on disk", () => {
@@ -472,7 +524,8 @@ const restatesOwnName = (cat: string, id: string, title: string): string[] => {
         const n = (body.match(new RegExp(`${attr}="${esc}"`, "g")) ?? []).length;
         if (n) hits.push(`${attr}="${title}" ×${n}`);
     }
-    const n = (body.match(new RegExp(`<h[1-3][^>]*>\\s*${esc}\\s*<`, "g")) ?? []).length;
+    const n = (body.match(new RegExp(`<h[1-3][^>]*>\\s*${esc}\\s*<`, "g")) ?? [])
+        .length;
     if (n) hits.push(`<hN>${title}</hN> ×${n}`);
     return hits;
 };
@@ -481,13 +534,16 @@ describe("G-ONE-NAME — the corpus arm", () => {
     it("has a corpus to read, and every row's SFC is readable", () => {
         expect(ROWS.length).toBeGreaterThan(0);
         for (const { category, story } of ROWS) {
-            expect(read(`stories/${category.id}/${story.id}.vue`).length).toBeGreaterThan(0);
+            expect(
+                read(`stories/${category.id}/${story.id}.vue`).length,
+            ).toBeGreaterThan(0);
         }
     });
 
     it("no story in this lane's fence restates its own manifest title", () => {
         const offenders = ROWS.filter(
-            ({ category, story }) => !ONE_NAME_FENCED_OUT.has(`${category.id}/${story.id}`),
+            ({ category, story }) =>
+                !ONE_NAME_FENCED_OUT.has(`${category.id}/${story.id}`),
         )
             .map(({ category, story }) => ({
                 route: `${category.id}/${story.id}`,
@@ -511,7 +567,9 @@ describe("G-ONE-NAME — the corpus arm", () => {
             const row = ROWS.find((r) => r.category.id === cat && r.story.id === id);
             expect(row, `${key} is a manifest row`).toBeDefined();
             // An exclusion for a route that already passes is a fence around nothing.
-            expect(restatesOwnName(cat, id, row!.story.title).length).toBeGreaterThan(0);
+            expect(restatesOwnName(cat, id, row!.story.title).length).toBeGreaterThan(
+                0,
+            );
         }
     });
 });
@@ -542,7 +600,9 @@ describe("W-STORY-PROPORTION — the catalog is a D0 surface and says so once", 
             .replace(/\/\*[\s\S]*?\*\//g, "")
             .replace(/(^|[^:])\/\/.*$/gm, "$1");
         expect(manifestSrc).not.toMatch(/depth === "D0" \? "mega"/);
-        expect((manifestSrc.match(/heroScaleForDepth\(/g) ?? []).length).toBeGreaterThan(2);
+        expect(
+            (manifestSrc.match(/heroScaleForDepth\(/g) ?? []).length,
+        ).toBeGreaterThan(2);
     });
 
     it("resolves every landing's rung through the ladder, D1 included", () => {
@@ -608,5 +668,157 @@ describe("TOC-MENU-GLASS (⊕⁴ U-43) + BD T49 — the clean break", () => {
         expect(tocSrc).toContain("text-subheading");
         expect(tocSrc).not.toContain("text-lg font-semibold");
         expect(tocSrc).not.toContain("text-muted-foreground/80");
+    });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// D6 — THE FROZEN STILLS HAVE NO DARK ARM (δ3-π-5, PI-BATTERY §8; owner #58
+// W-PREVIEW-CARD). The gate that would have caught it.
+//
+// SEATS +0, like the rest of this file: these are `it` rows on an existing close
+// battery, not a new `G-` seat. Nothing is minted.
+//
+// WHAT IT READS AND WHY. The defect was that `theme` was not an input to the raster
+// at all, so the only honest unit-level detector is the DRAW INPUTS — the arm table,
+// the paint primitive's output, and the call sites that feed it. Painted bytes are
+// NOT available here (see the note above: `toDataURL` is the REPO'S OWN setup stub
+// — tests/setup.ts:140 — constant by construction,
+// so a raster diff would report the arms identical and go green on the bug). The
+// pixel claim is π's, and it is ENQUEUED as π-RERUN-D6 in this unit's PI-QUEUE.
+//
+// BORN-RED against the uncured bytes in a `git archive` mirror of 87464122, where
+// the module exports no `STILL_ARMS`, no `stillColor` and no `StillTheme`. The RED
+// lines are recorded verbatim in the unit record.
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("D6 · the frozen still carries a dark arm", () => {
+    // Read INSIDE the rows, never destructured at collect time: against the uncured
+    // bytes `STILL_ARMS` does not exist, and a collect-time read would take the whole
+    // suite down as one un-attributed error instead of reporting which laws broke.
+    const arm = (theme: StillTheme) => STILL_ARMS[theme];
+
+    /** Every authored lightness stop, read from the generators that actually ask for it. */
+    const stops = [
+        ...stillSrc.matchAll(/stillColor\(\s*arm,\s*[^,]+,\s*(\d+(?:\.\d+)?)\s*[,)]/g),
+    ].map((m) => Number(m[1]));
+
+    it("declares two arms, and no field of one is the other's", () => {
+        const [light, dark] = [arm("light"), arm("dark")];
+        expect(stops.length).toBeGreaterThan(0);
+        expect(light.sat).not.toBe(dark.sat);
+        expect(light.ground).not.toBe(dark.ground);
+        expect(light.mark).not.toBe(dark.mark);
+        expect(light.specular).not.toBe(dark.specular);
+    });
+
+    it("inverts the ramp's polarity — light grounds ABOVE its marks, dark BELOW", () => {
+        const [light, dark] = [arm("light"), arm("dark")];
+        // The whole cure in one relation: in light the ground is the brightest thing
+        // and the marks are ink on it; in dark the ground is the darkest thing and
+        // the marks LIFT off it. A raster that merely darkened uniformly would keep
+        // `ground > mark` in both arms and fail here.
+        expect(light.ground).toBeGreaterThan(light.mark);
+        expect(dark.ground).toBeLessThan(dark.mark);
+    });
+
+    it("puts the ENTIRE dark arm below the light arm's ground — no cream slab survives", () => {
+        const [light, dark] = [arm("light"), arm("dark")];
+        // The measured defect was an L≈0.93 slab on an L 0.34–0.57 page. Both dark
+        // ends sitting under the light ground is the arm-level statement of that.
+        expect(dark.ground).toBeLessThan(light.mark);
+        expect(dark.mark).toBeLessThan(light.ground);
+    });
+
+    it("holds chroma in the dark band instead of collapsing to charcoal", () => {
+        const [light, dark] = [arm("light"), arm("dark")];
+        // hsl saturation is relative to lightness, so the dark arm must ask for MORE
+        // of it to paint the same ember. This is the discipline aurora-hero names.
+        expect(dark.sat).toBeGreaterThan(light.sat);
+    });
+
+    it("anchors the light arm on the ramp the generators actually author", () => {
+        const light = arm("light");
+        // If a generator ever asks for a stop outside `[mark, ground]`, the arm's
+        // endpoints are a fiction and the dark map extrapolates past its own band.
+        expect(Math.max(...stops)).toBe(light.ground);
+        expect(Math.min(...stops)).toBe(light.mark);
+    });
+
+    it("keeps the LIGHT arm an exact identity — the cure moves no light byte", () => {
+        const light = arm("light");
+        expect(stops.length).toBeGreaterThan(0);
+        for (const l of stops) {
+            expect(stillColor(light, 40, l, 0.5)).toBe(`hsla(40, 48%, ${l}%, 0.5)`);
+        }
+    });
+
+    it("lets NO authored lightness escape theming", () => {
+        const [light, dark] = [arm("light"), arm("dark")];
+        expect(stops.length).toBeGreaterThan(0);
+        // Every stop the generators ask for must paint differently in the two arms.
+        // This tally catches a `stillColor` call whose lightness is NON-LITERAL
+        // (parsed stops < call tally). An ADDED literal colour moves neither side —
+        // that class is the raw-hsla census row below. [2026-08-28 · adjudicated
+        // CURE 2: the prior comment claimed this row caught the smuggled literal.]
+        expect(stops.length).toBe((stillSrc.match(/stillColor\(arm,/g) ?? []).length);
+        for (const l of stops) {
+            expect(stillColor(dark, 40, l, 0.5)).not.toBe(
+                stillColor(light, 40, l, 0.5),
+            );
+        }
+    });
+
+    it("pins the raw hsla() census to the two authored paint sites", () => {
+        // [2026-08-28 · adjudicated CURE 2, the strengthen arm] Exactly TWO raw
+        // `hsla(` sites are authored in the generator — the `stillColor` template
+        // and the white specular. Any smuggled literal colour is a THIRD and REDs
+        // this pin by arithmetic; a replacement literal is caught by the anchors
+        // and stops rows. Closes the added-literal escape the tally row cannot see.
+        expect((stillSrc.match(/hsla\(/g) ?? []).length).toBe(2);
+    });
+
+    it("keeps the specular streak WHITE and moves only its strength", () => {
+        const [light, dark] = [arm("light"), arm("dark")];
+        // The one off-ramp paint: a specular highlight is light-source coloured, so
+        // it does not invert with the ground — it only softens against a dark plate.
+        expect(stillSrc).toContain("hsla(0, 0%, 100%, ${arm.specular})");
+        expect(dark.specular).toBeLessThan(light.specular);
+    });
+
+    it("requires a theme at the boundary — there is no default arm to inherit", () => {
+        // Arity is the detector: a `theme: StillTheme = "light"` default would drop
+        // it to 1 and silently re-introduce D6 at every un-migrated call site.
+        expect(vizPreviewStill.length).toBe(2);
+    });
+
+    it("carries the arm in the MEMO KEY, so a flip cannot be served the wrong raster", () => {
+        // Keying on the route alone is the defect restated: whichever theme asked
+        // first would freeze the answer for both.
+        expect(stillSrc).toContain("const key = `${theme}|${route}`");
+        expect(stillSrc).toContain(
+            "function render(spec: VizStillSpec, theme: StillTheme)",
+        );
+    });
+
+    it("re-resolves on the FLIP at every landing that shows a still, not only on mount", () => {
+        // The reactive read is what makes the second arm reach the page at all. All
+        // three front doors resolve the ladder, so all three must track the theme.
+        for (const src of [landingSrc, catalogSrc, introSrc]) {
+            expect(src).toContain("useGlobalDark");
+            expect(src).toContain("stillTheme");
+        }
+        expect(landingSrc).toContain(
+            'resolveStoryTile(category.value?.id ?? "", story, stillTheme.value)',
+        );
+        expect(catalogSrc).toContain("resolveCategoryTile(category, stillTheme)");
+        expect(introSrc).toContain("resolveCategoryTile(c, stillTheme.value)");
+    });
+
+    it("cures by REPAINTING, never by scrimming a light raster", () => {
+        // A theme-conditional overlay on the still would hide a wrong-theme paint
+        // rather than replace it — the masking-fallback class, refused by house law.
+        expect(cardSrc).not.toMatch(/\.dark[^{]*section-preview-card-viz-still/);
+        expect(cardSrc).not.toMatch(/section-preview-card-viz-still[^}]*\bfilter:/);
+        expect(cardSrc).not.toMatch(/section-preview-card-viz-still::(?:after|before)/);
     });
 });

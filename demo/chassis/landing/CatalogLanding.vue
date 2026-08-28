@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { computed } from "vue";
+import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
 import StoryHero from "../hero/StoryHero.vue";
 import SectionPreviewCard from "./SectionPreviewCard.vue";
 import { CATEGORIES, heroScaleForDepth } from "../../stories/manifest";
 import { resolveCategoryTile } from "./storyTile";
+import type { StillTheme } from "./vizPreviewStill";
 
 // [BK #58 W-PREVIEW-CARD] `identityTile(category)` is STRUCK. It minted a tile
 // resolution HERE, beside the ladder rather than through it, so the front door was
@@ -17,6 +20,11 @@ import { resolveCategoryTile } from "./storyTile";
 // owns (`heroScaleForDepth`) was restated at a call site as a literal. One word
 // decides the tier; the rung is read from it.
 const CATALOG_DEPTH = "D0" as const;
+
+// [BK #58 W-PREVIEW-CARD, D6] The frozen stills' paint arm — read in the template,
+// so the catalog's cards re-resolve onto the other arm when the theme flips.
+const { isDark } = useGlobalDark();
+const stillTheme = computed<StillTheme>(() => (isDark.value ? "dark" : "light"));
 </script>
 
 <template>
@@ -53,7 +61,7 @@ const CATALOG_DEPTH = "D0" as const;
                     :title="category.title"
                     :blurb="category.landing?.blurb"
                     :lead="idx === 0"
-                    :tile="resolveCategoryTile(category)"
+                    :tile="resolveCategoryTile(category, stillTheme)"
                 />
             </section>
         </StoryHero>

@@ -1,0 +1,498 @@
+
+ RUN  v4.1.10 /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/d6-pre
+
+ ❯ tests/demo/story-preview-card.test.ts (67 tests | 11 failed | 55 skipped) 9ms
+     × declares two arms, and no field of one is the other's 3ms
+     × inverts the ramp's polarity — light grounds ABOVE its marks, dark BELOW 0ms
+     × puts the ENTIRE dark arm below the light arm's ground — no cream slab survives 0ms
+     × holds chroma in the dark band instead of collapsing to charcoal 0ms
+     × anchors the light arm on the ramp the generators actually author 0ms
+     × keeps the LIGHT arm an exact identity — the cure moves no light byte 0ms
+     × lets NO authored lightness escape theming 0ms
+     × keeps the specular streak WHITE and moves only its strength 0ms
+     × requires a theme at the boundary — there is no default arm to inherit 1ms
+     × carries the arm in the MEMO KEY, so a flip cannot be served the wrong raster 3ms
+     × re-resolves on the FLIP at every landing that shows a still, not only on mount 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/demo/story-preview-card.test.ts > D6 · the frozen still carries a dark arm > declares two arms, and no field of one is the other's
+TypeError: Cannot read properties of undefined (reading 'light')
+ ❯ arm tests/demo/story-preview-card.test.ts:693:40
+    691|     // bytes `STILL_ARMS` does not exist, and a collect-time read woul…
+    692|     // suite down as one un-attributed error instead of reporting whic…
+    693|     const arm = (theme: StillTheme) => STILL_ARMS[theme];
+       |                                        ^
+    694|
+    695|     /** Every authored lightness stop, read from the generators that a…
+ ❯ tests/demo/story-preview-card.test.ts:701:32
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  tests/demo/story-preview-card.test.ts > D6 · the frozen still carries a dark arm > inverts the ramp's polarity — light grounds ABOVE its marks, dark BELOW
+TypeError: Cannot read properties of undefined (reading 'light')
+ ❯ arm tests/demo/story-preview-card.test.ts:693:40
+    691|     // bytes `STILL_ARMS` does not exist, and a collect-time read woul…
+    692|     // suite down as one un-attributed error instead of reporting whic…
+    693|     const arm = (theme: StillTheme) => STILL_ARMS[theme];
+       |                                        ^
+    694|
+    695|     /** Every authored lightness stop, read from the generators that a…
+ ❯ tests/demo/story-preview-card.test.ts:710:32
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  tests/demo/story-preview-card.test.ts > D6 · the frozen still carries a dark arm > puts the ENTIRE dark arm below the light arm's ground — no cream slab survives
+TypeError: Cannot read properties of undefined (reading 'light')
+ ❯ arm tests/demo/story-preview-card.test.ts:693:40
+    691|     // bytes `STILL_ARMS` does not exist, and a collect-time read woul…
+    692|     // suite down as one un-attributed error instead of reporting whic…
+    693|     const arm = (theme: StillTheme) => STILL_ARMS[theme];
+       |                                        ^
+    694|
+    695|     /** Every authored lightness stop, read from the generators that a…
+ ❯ tests/demo/story-preview-card.test.ts:720:32
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+ FAIL  tests/demo/story-preview-card.test.ts > D6 · the frozen still carries a dark arm > holds chroma in the dark band instead of collapsing to charcoal
+TypeError: Cannot read properties of undefined (reading 'light')
+ ❯ arm tests/demo/story-preview-card.test.ts:693:40
+    691|     // bytes `STILL_ARMS` does not exist, and a collect-time read woul…
+    692|     // suite down as one un-attributed error instead of reporting whic…
+    693|     const arm = (theme: StillTheme) => STILL_ARMS[theme];
+       |                                        ^
+    694|
+    695|     /** Every authored lightness stop, read from the generators that a…
+ ❯ tests/demo/story-preview-card.test.ts:728:32
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+
+ FAIL  tests/demo/story-preview-card.test.ts > D6 · the frozen still carries a dark arm > anchors the light arm on the ramp the generators actually author
+TypeError: Cannot read properties of undefined (reading 'light')
+ ❯ arm tests/demo/story-preview-card.test.ts:693:40
+    691|     // bytes `STILL_ARMS` does not exist, and a collect-time read woul…
+    692|     // suite down as one un-attributed error instead of reporting whic…
+    693|     const arm = (theme: StillTheme) => STILL_ARMS[theme];
+       |                                        ^
+    694|
+    695|     /** Every authored lightness stop, read from the generators that a…
+ ❯ tests/demo/story-preview-card.test.ts:735:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+
+ FAIL  tests/demo/story-preview-card.test.ts > D6 · the frozen still carries a dark arm > keeps the LIGHT arm an exact identity — the cure moves no light byte
+TypeError: Cannot read properties of undefined (reading 'light')
+ ❯ arm tests/demo/story-preview-card.test.ts:693:40
+    691|     // bytes `STILL_ARMS` does not exist, and a collect-time read woul…
+    692|     // suite down as one un-attributed error instead of reporting whic…
+    693|     const arm = (theme: StillTheme) => STILL_ARMS[theme];
+       |                                        ^
+    694|
+    695|     /** Every authored lightness stop, read from the generators that a…
+ ❯ tests/demo/story-preview-card.test.ts:743:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+
+ FAIL  tests/demo/story-preview-card.test.ts > D6 · the frozen still carries a dark arm > lets NO authored lightness escape theming
+TypeError: Cannot read properties of undefined (reading 'light')
+ ❯ arm tests/demo/story-preview-card.test.ts:693:40
+    691|     // bytes `STILL_ARMS` does not exist, and a collect-time read woul…
+    692|     // suite down as one un-attributed error instead of reporting whic…
+    693|     const arm = (theme: StillTheme) => STILL_ARMS[theme];
+       |                                        ^
+    694|
+    695|     /** Every authored lightness stop, read from the generators that a…
+ ❯ tests/demo/story-preview-card.test.ts:751:32
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+
+ FAIL  tests/demo/story-preview-card.test.ts > D6 · the frozen still carries a dark arm > keeps the specular streak WHITE and moves only its strength
+TypeError: Cannot read properties of undefined (reading 'light')
+ ❯ arm tests/demo/story-preview-card.test.ts:693:40
+    691|     // bytes `STILL_ARMS` does not exist, and a collect-time read woul…
+    692|     // suite down as one un-attributed error instead of reporting whic…
+    693|     const arm = (theme: StillTheme) => STILL_ARMS[theme];
+       |                                        ^
+    694|
+    695|     /** Every authored lightness stop, read from the generators that a…
+ ❯ tests/demo/story-preview-card.test.ts:765:32
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯
+
+ FAIL  tests/demo/story-preview-card.test.ts > D6 · the frozen still carries a dark arm > requires a theme at the boundary — there is no default arm to inherit
+AssertionError: expected 1 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ tests/demo/story-preview-card.test.ts:775:40
+    773|         // Arity is the detector: a `theme: StillTheme = "light"` defa…
+    774|         // it to 1 and silently re-introduce D6 at every un-migrated c…
+    775|         expect(vizPreviewStill.length).toBe(2);
+       |                                        ^
+    776|     });
+    777|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/11]⎯
+
+ FAIL  tests/demo/story-preview-card.test.ts > D6 · the frozen still carries a dark arm > carries the arm in the MEMO KEY, so a flip cannot be served the wrong raster
+AssertionError: expected '\n\n\n\n\n\n\n\n\n\n\nimport { makeHa…' to contain 'const key = `${theme}|${route}`'
+
+- Expected
++ Received
+
+- const key = `${theme}|${route}`
++
++
++
++
++
++
++
++
++
++
++
++ import { makeHarmonicFigure, positionsAt } from "@glass/components/fourier-field";
++
++
++ export type VizPattern =
++     | "nuclei"
++     | "metaball"
++     | "graph"
++     | "epicycle"
++     | "glass-plate"
++     | "glass-ladder";
++
++
++ export interface VizStillSpec {
++     
++     pattern: VizPattern;
++     
++     hue: number;
++     
++     seed: number;
++ }
++
++
++ export const VIZ_PREVIEW_STILLS: Readonly<Record<string, VizStillSpec>> = {
++     "/substrates/aurora": { pattern: "nuclei", hue: 58, seed: 101 },
++     "/substrates/blob": { pattern: "metaball", hue: 30, seed: 202 },
++     "/substrates/constellation": { pattern: "graph", hue: 45, seed: 303 },
++     "/substrates/fourier-field": { pattern: "epicycle", hue: 40, seed: 404 },
++     "/substrates/glass-material": { pattern: "glass-plate", hue: 62, seed: 505 },
++     "/substrates/glass-panel": { pattern: "glass-ladder", hue: 68, seed: 606 },
++ };
++
++
++ const W = 132;
++ const H = 82;
++
++
++ const warm = (h: number, l: number, a = 1): string => `hsla(${h}, 48%, ${l}%, ${a})`;
++
++
++ function mulberry32(seed: number): () => number {
++     let a = seed >>> 0;
++     return () => {
++         a |= 0;
++         a = (a + 0x6d2b79f5) | 0;
++         let t = Math.imul(a ^ (a >>> 15), 1 | a);
++         t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
++         return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
++     };
++ }
++
++
++ function warmFloor(ctx: CanvasRenderingContext2D, hue: number): void {
++     const g = ctx.createLinearGradient(0, 0, W, H);
++     g.addColorStop(0, warm(hue + 8, 92));
++     g.addColorStop(1, warm(hue - 6, 86));
++     ctx.fillStyle = g;
++     ctx.fillRect(0, 0, W, H);
++ }
++
++ function roundRect(
++     ctx: CanvasRenderingContext2D,
++     x: number,
++     y: number,
++     w: number,
++     h: number,
++     r: number,
++ ): void {
++     ctx.beginPath();
++     ctx.moveTo(x + r, y);
++     ctx.arcTo(x + w, y, x + w, y + h, r);
++     ctx.arcTo(x + w, y + h, x, y + h, r);
++     ctx.arcTo(x, y + h, x, y, r);
++     ctx.arcTo(x, y, x + w, y, r);
++     ctx.closePath();
++ }
++
++
++
++
++ function drawNuclei(ctx: CanvasRenderingContext2D, hue: number, rng: () => number): void {
++     warmFloor(ctx, hue);
++     for (let i = 0; i < 6; i++) {
++         const x = rng() * W;
++         const y = rng() * H;
++         const r = 18 + rng() * 30;
++         const h = hue - 20 + rng() * 50;
++         const g = ctx.createRadialGradient(x, y, 0, x, y, r);
++         g.addColorStop(0, warm(h, 70, 0.55));
++         g.addColorStop(1, warm(h, 70, 0));
++         ctx.fillStyle = g;
++         ctx.fillRect(0, 0, W, H);
++     }
++ }
++
++
++ function drawMetaball(ctx: CanvasRenderingContext2D, hue: number, _rng: () => number): void {
++     warmFloor(ctx, hue);
++     const cx = W * 0.52;
++     const cy = H * 0.55;
++     const blobs: number[][] = [
++         [cx, cy, 24],
++         [cx + 26, cy - 12, 12],
++         [cx - 22, cy + 12, 11],
++     ];
++     ctx.filter = "blur(3px)";
++     for (const [x, y, r] of blobs) {
++         ctx.beginPath();
++         ctx.arc(x, y, r, 0, Math.PI * 2);
++         ctx.fillStyle = warm(hue, 58, 0.92);
++         ctx.fill();
++     }
++     ctx.filter = "none";
++     ctx.beginPath();
++     ctx.arc(cx - 8, cy - 8, 6, 0, Math.PI * 2);
++     ctx.fillStyle = warm(hue + 12, 82, 0.6);
++     ctx.fill();
++ }
++
++
++ function drawGraph(ctx: CanvasRenderingContext2D, hue: number, rng: () => number): void {
++     warmFloor(ctx, hue);
++     const N = 14;
++     const pts: [number, number][] = [];
++     for (let i = 0; i < N; i++) pts.push([8 + rng() * (W - 16), 8 + rng() * (H - 16)]);
++     ctx.strokeStyle = warm(hue, 55, 0.35);
++     ctx.lineWidth = 0.8;
++     for (let i = 0; i < N; i++) {
++         for (let j = i + 1; j < N; j++) {
++             const dx = pts[i][0] - pts[j][0];
++             const dy = pts[i][1] - pts[j][1];
++             if (dx * dx + dy * dy < 34 * 34) {
++                 ctx.beginPath();
++                 ctx.moveTo(pts[i][0], pts[i][1]);
++                 ctx.lineTo(pts[j][0], pts[j][1]);
++                 ctx.stroke();
++             }
++         }
++     }
++     for (const [x, y] of pts) {
++         ctx.beginPath();
++         ctx.arc(x, y, 2, 0, Math.PI * 2);
++         ctx.fillStyle = warm(hue + 6, 45, 0.9);
++         ctx.fill();
++     }
++ }
++
++
++ function drawEpicycle(ctx: CanvasRenderingContext2D, hue: number, _rng: () => number): void {
++     warmFloor(ctx, hue);
++     const cx = W * 0.5;
++     const cy = H * 0.5;
++     const scale = 20;
++     const spectrum = makeHarmonicFigure([
++         { index: 1, mag: 1, phase: 0 },
++         { index: 3, mag: 0.4, phase: 1.2 / (2 * Math.PI) },
++         { index: 5, mag: 0.2, phase: 2.4 / (2 * Math.PI) },
++     ]);
++     ctx.strokeStyle = warm(hue, 50, 0.85);
++     ctx.lineWidth = 1.4;
++     ctx.beginPath();
++     for (let i = 0; i <= 200; i++) {
++         const chain = positionsAt(spectrum, i / 200);
++         const [x, y] = chain[chain.length - 1];
++         const px = cx + x * scale;
++         const py = cy + y * scale;
++         if (i === 0) ctx.moveTo(px, py);
++         else ctx.lineTo(px, py);
++     }
++     ctx.closePath();
++     ctx.stroke();
++     
++     ctx.strokeStyle = warm(hue, 60, 0.3);
++     ctx.lineWidth = 0.8;
++     ctx.beginPath();
++     ctx.arc(cx, cy, spectrum[0].amplitude * scale, 0, Math.PI * 2);
++     ctx.stroke();
++ }
++
++
++ function drawGlassPlate(ctx: CanvasRenderingContext2D, hue: number, rng: () => number): void {
++     drawNuclei(ctx, hue, rng);
++     const px = W * 0.2;
++     const py = H * 0.24;
++     const pw = W * 0.6;
++     const ph = H * 0.52;
++     roundRect(ctx, px, py, pw, ph, 10);
++     ctx.fillStyle = warm(hue, 88, 0.35);
++     ctx.fill();
++     ctx.strokeStyle = warm(hue + 6, 96, 0.7);
++     ctx.lineWidth = 1;
++     ctx.stroke();
++     ctx.save();
++     roundRect(ctx, px, py, pw, ph, 10);
++     ctx.clip();
++     ctx.strokeStyle = "hsla(0, 0%, 100%, 0.5)";
++     ctx.lineWidth = 6;
++     ctx.beginPath();
++     ctx.moveTo(px - 4, py + ph * 0.7);
++     ctx.lineTo(px + pw * 0.7, py - 4);
++     ctx.stroke();
++     ctx.restore();
++ }
++
++
++ function drawGlassLadder(ctx: CanvasRenderingContext2D, hue: number, rng: () => number): void {
++     drawNuclei(ctx, hue, rng);
++     const n = 5;
++     const rung = (H - 16) / n;
++     for (let i = 0; i < n; i++) {
++         const y = 8 + i * rung;
++         roundRect(ctx, 12, y, W - 24, rung - 3, 4);
++         ctx.fillStyle = warm(hue, 86, 0.16 + i * 0.14);
++         ctx.fill();
++         ctx.strokeStyle = warm(hue + 6, 96, 0.4);
++         ctx.lineWidth = 0.6;
++         ctx.stroke();
++     }
++ }
++
++ const GENERATORS: Record<
++     VizPattern,
++     (ctx: CanvasRenderingContext2D, hue: number, rng: () => number) => void
++ > = {
++     nuclei: drawNuclei,
++     metaball: drawMetaball,
++     graph: drawGraph,
++     epicycle: drawEpicycle,
++     "glass-plate": drawGlassPlate,
++     "glass-ladder": drawGlassLadder,
++ };
++
++
++ const cache = new Map<string, string | null>();
++
++ function render(spec: VizStillSpec): string | null {
++     if (typeof document === "undefined") return null;
++     const canvas = document.createElement("canvas");
++     canvas.width = W;
++     canvas.height = H;
++     const ctx = canvas.getContext("2d");
++     if (!ctx) return null;
++     GENERATORS[spec.pattern](ctx, spec.hue, mulberry32(spec.seed));
++     return canvas.toDataURL("image/png");
++ }
++
++
++ export function vizPreviewStill(route: string): string | null {
++     const spec = VIZ_PREVIEW_STILLS[route];
++     if (!spec) return null;
++     if (cache.has(route)) return cache.get(route) ?? null;
++     const uri = render(spec);
++     cache.set(route, uri);
++     return uri;
++ }
++
+
+ ❯ tests/demo/story-preview-card.test.ts:781:26
+    779|         // Keying on the route alone is the defect restated: whichever…
+    780|         // first would freeze the answer for both.
+    781|         expect(stillSrc).toContain("const key = `${theme}|${route}`");
+       |                          ^
+    782|         expect(stillSrc).toContain(
+    783|             "function render(spec: VizStillSpec, theme: StillTheme)",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/11]⎯
+
+ FAIL  tests/demo/story-preview-card.test.ts > D6 · the frozen still carries a dark arm > re-resolves on the FLIP at every landing that shows a still, not only on mount
+AssertionError: expected '<script setup lang="ts">\nimport { co…' to contain 'useGlobalDark'
+
+- Expected
++ Received
+
+- useGlobalDark
++ <script setup lang="ts">
++ import { computed } from "vue";
++ import { useRoute } from "vue-router";
++ import StoryHero from "../hero/StoryHero.vue";
++ import SectionPreviewCard from "./SectionPreviewCard.vue";
++ import { findCategory, type Story } from "../../stories/manifest";
++ import { resolveStoryTile } from "./storyTile";
++
++ const route = useRoute();
++ const category = computed(() => {
++     const id = route.meta.categoryId as string | undefined;
++     return id ? findCategory(id) : undefined;
++ });
++ const landing = computed(() => category.value?.landing ?? null);
++
++ function tileFor(story: Story) {
++     return resolveStoryTile(category.value?.id ?? "", story);
++ }
++ </script>
++
++ <template>
++     
++     <article :data-route-window="route.path" class="optical-bench w-full">
++         <StoryHero
++             v-if="category && landing"
++             :background="landing.background"
++             :title="landing.title"
++             :blurb="landing.blurb"
++             :hero-scale="landing.heroScale"
++             :depth="landing.depth"
++         >
++             <section
++                 :aria-label="`${category.title} stories`"
++                 class="story-field mt-(--sp-4)"
++             >
++                 <SectionPreviewCard
++                     v-for="(story, idx) in category.stories"
++                     :key="story.id"
++                     :to="`/${category.id}/${story.id}`"
++                     :title="story.title"
++                     :blurb="story.blurb"
++                     :lead="idx === 0"
++                     :tile="tileFor(story)"
++                 />
++             </section>
++         </StoryHero>
++     </article>
++ </template>
++
+
+ ❯ tests/demo/story-preview-card.test.ts:791:25
+    789|         // three front doors resolve the ladder, so all three must tra…
+    790|         for (const src of [landingSrc, catalogSrc, introSrc]) {
+    791|             expect(src).toContain("useGlobalDark");
+       |                         ^
+    792|             expect(src).toContain("stillTheme");
+    793|         }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/11]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  11 failed | 1 passed | 55 skipped (67)
+   Start at  18:18:36
+   Duration  595ms (transform 295ms, setup 33ms, import 373ms, tests 9ms, environment 88ms)
+

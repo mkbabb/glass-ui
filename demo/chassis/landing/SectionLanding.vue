@@ -4,7 +4,9 @@ import { useRoute } from "vue-router";
 import StoryHero from "../hero/StoryHero.vue";
 import SectionPreviewCard from "./SectionPreviewCard.vue";
 import { findCategory, type Story } from "../../stories/manifest";
+import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
 import { resolveStoryTile } from "./storyTile";
+import type { StillTheme } from "./vizPreviewStill";
 
 const route = useRoute();
 const category = computed(() => {
@@ -13,8 +15,16 @@ const category = computed(() => {
 });
 const landing = computed(() => category.value?.landing ?? null);
 
+// [BK #58 W-PREVIEW-CARD, D6] The paint arm the frozen stills raster in. `tileFor`
+// is called from the template, so reading `stillTheme` here puts it in the render
+// effect's dependency set — a dark↔light flip re-runs the resolver and the card
+// swaps to the other arm's cached raster. The still re-paints on the FLIP, not only
+// on mount, which is the half of the cure a theme-paired raster alone would miss.
+const { isDark } = useGlobalDark();
+const stillTheme = computed<StillTheme>(() => (isDark.value ? "dark" : "light"));
+
 function tileFor(story: Story) {
-    return resolveStoryTile(category.value?.id ?? "", story);
+    return resolveStoryTile(category.value?.id ?? "", story, stillTheme.value);
 }
 </script>
 

@@ -3,7 +3,9 @@ import { computed } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import SectionPreviewCard from "../../chassis/landing/SectionPreviewCard.vue";
 import { CATEGORIES } from "../manifest";
+import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
 import { resolveCategoryTile } from "../../chassis/landing/storyTile";
+import type { StillTheme } from "../../chassis/landing/vizPreviewStill";
 
 // The storybook front-door hero declares a live aurora wash on its manifest row;
 // the page chassis renders it behind a glassy hero card so the title sits glass-
@@ -43,13 +45,19 @@ const SUMMARIES: Record<string, string> = {
 // reads the D2 main and returns a declared strategy, `none` included. The front door
 // and the catalog resolve the SAME function, so they cannot disagree about what
 // `/display` previews.
+// [BK #58 W-PREVIEW-CARD, D6] The frozen stills' paint arm. `categories` is a
+// computed, so depending on `stillTheme` is what re-resolves the front door's tiles
+// on a dark↔light flip rather than leaving the mount-time arm frozen in place.
+const { isDark } = useGlobalDark();
+const stillTheme = computed<StillTheme>(() => (isDark.value ? "dark" : "light"));
+
 const categories = computed(() =>
     CATEGORIES.filter((c) => !c.reference).map((c, idx) => ({
         slug: c.id,
         title: c.title,
         blurb: SUMMARIES[c.id] ?? c.stories[0]?.blurb ?? "",
         lead: idx === 0,
-        tile: resolveCategoryTile(c),
+        tile: resolveCategoryTile(c, stillTheme.value),
     })),
 );
 </script>

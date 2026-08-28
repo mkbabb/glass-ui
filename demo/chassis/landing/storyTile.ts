@@ -8,7 +8,10 @@
 //                  GlassDock). Lazy — loaded only when the tile renders (code-split).
 //   2. still     — a GL-viz route (`/substrates/<id>`) resolves a frozen `vizPreviewStill`
 //                  data-URI raster. The one honest 0-GL answer for a live-GL target on a
-//                  multi-tile landing (a single parked paint, NOT a masking fallback).
+//                  multi-tile landing (~~a single parked paint~~ [2026-08-10 · BK #58, D6:
+//                  ONE PARKED PAINT PER THEME — the raster took no theme input, so a dark
+//                  page wore the light arm's cream slab. `theme` is threaded to the rung
+//                  below and the still is memoized per arm], NOT a masking fallback).
 //   3. none      — the story declares NO preview. The card is its title and its lede,
 //                  and it carries no media region at all.
 //
@@ -41,7 +44,7 @@
 // frozen raster; rung 1 is CSS-only DOM). A demo-private helper — NOT a library export.
 import type { Component } from "vue";
 import type { Category, Story } from "../../stories/manifest";
-import { vizPreviewStill } from "./vizPreviewStill";
+import { vizPreviewStill, type StillTheme } from "./vizPreviewStill";
 
 /** The resolved preview strategy for a card — a closed union the card dispatches on. */
 export type TileResolution =
@@ -53,16 +56,28 @@ export type TileResolution =
 const NO_PREVIEW: TileResolution = { kind: "none" };
 
 /**
- * Resolve a story's declared preview strategy. `categoryId` + the story row are the
- * only inputs; the `route` (`/cat/id`) keys the frozen-still registry. Total by
- * construction — every row resolves, and `none` is a declaration rather than a floor.
+ * Resolve a story's declared preview strategy. `categoryId` + the story row +
+ * ~~are the only inputs~~ [2026-08-10 · BK #58 W-PREVIEW-CARD, D6: the paint ARM is
+ * a third input] the `theme` are the inputs; the `route` (`/cat/id`) keys the
+ * frozen-still registry. Total by construction — every row resolves, and `none` is a
+ * declaration rather than a floor.
+ *
+ * `theme` reaches the `still` rung and only that rung: an `authored` tile is a live
+ * component that themes itself through the cascade, and a `none` card has nothing to
+ * paint. It is threaded as an ARGUMENT rather than read off a global inside the
+ * raster, because a hidden reactive read would make the resolver untestable by its
+ * own signature and would hide the very draw input D6 was about.
  */
-export function resolveStoryTile(categoryId: string, story: Story): TileResolution {
+export function resolveStoryTile(
+    categoryId: string,
+    story: Story,
+    theme: StillTheme,
+): TileResolution {
     // 1. authored — the co-located `.tile.vue` live-component vignette wins.
     if (story.tile) return { kind: "authored", loader: story.tile };
 
     // 2. still — a GL-viz route paints its frozen data-URI raster (0-GL).
-    const src = vizPreviewStill(`/${categoryId}/${story.id}`);
+    const src = vizPreviewStill(`/${categoryId}/${story.id}`, theme);
     if (src) return { kind: "still", src };
 
     // 3. none — the story declares no preview, and the card shows none.
@@ -89,8 +104,11 @@ export function resolveStoryTile(categoryId: string, story: Story): TileResoluti
  * `?? stories[0]` tail is the total-function floor for a category whose depths have not
  * been assigned yet, not a second policy.
  */
-export function resolveCategoryTile(category: Category): TileResolution {
+export function resolveCategoryTile(
+    category: Category,
+    theme: StillTheme,
+): TileResolution {
     const headline =
         category.stories.find((story) => story.depth === "D2") ?? category.stories[0];
-    return headline ? resolveStoryTile(category.id, headline) : NO_PREVIEW;
+    return headline ? resolveStoryTile(category.id, headline, theme) : NO_PREVIEW;
 }
