@@ -163,6 +163,25 @@ visible band and the old whole-interior read was **never diluted**.
 **Measured, not argued** (§4.1): the whole-interior ceiling only goes vacuous below a
 visible fraction of **0.6340** — a canvas 1.58× its clip. HEAD is at 0.8013, clear of it.
 
+> **[2026-08-28 · STRIKE — THE DERIVATION ABOVE IS REFUTED ON A DEVICE.]** The π band ran
+> π-CEILING on hardware and all three arms print the same line, verbatim:
+> `PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557`
+> (`2026-08-25-pi-band/gamma-aurora-blob/pi-CEILING-arm{1,2,3}-*-run.log`; adjudicated at
+> `2026-08-25-pi-band/PI-CENSUS.md` §3 row **R12**, and at that battery's §5 / §10 row 4).
+> **0.557, not 1.000.** The paintable rect is not centred on the short axis the way this
+> section assumes — its vertical span runs `0.188 → 0.702`, so the clip reaches ≈ 30% of
+> the box from below and the sampled 0.76 interior is **not** wholly inside the visible
+> band. Every sentence above that concludes *"never diluted"*, and the `0.8013 ⇒ share
+> 1.000` cell in §5's table, are **WRONG and are struck**; the crossing figure 0.6340 was
+> read off synthetic frames and is untouched by this, but it no longer clears HEAD by the
+> margin claimed here. **WHAT SURVIVES:** the instrument. §5's own conditional
+> anticipated this exact outcome — *"the ceiling arm still measures correctly … the
+> instrument does not depend on the derivation being right, only the prose does"* — and
+> the receipt bears it out: the green arm read `coverage 0.156 / paintedShare 0.280` and
+> the flood plant bit the MAX at **0.997** on the same denominator. Nothing is retuned
+> here, and `BLOB_COVERAGE_MAX` is not touched: the defect was prose, and prose is what
+> this bracket corrects.
+
 **So what was actually wrong.** Not the denominator: the *absence of a plant*. The ceil
 had never been exercised by anything, and by this file's own standard — *"a floor that has
 never been SEEN to fail is theatre"* — it was hollow for that reason alone. γ3 delivers the
@@ -274,6 +293,12 @@ the unit-2/3 form. Two rows, one of which is new to this unit.
 below 1.000 the derivation in §3 is wrong and the *ceiling arm still measures correctly* —
 that is the property the paintable denominator buys: the instrument does not depend on the
 derivation being right, only the prose does.
+
+> **[2026-08-28 · DISCHARGED — AND THE CONDITION FIRED.]** π-CEILING drained
+> **CAPTURED-GREEN** at the singleton seat, all three arms, exits `0/0/0`, and returned
+> `paintableShareOfInterior=0.557` — **below 1.000**, so the clause above triggers itself
+> and §3's derivation is struck there. The table's `derived 0.8013 ⇒ share 1.000` cell
+> falls with it. Owner of the refutation: **#50**, per `PI-CENSUS.md` §3 R12.
 
 ---
 

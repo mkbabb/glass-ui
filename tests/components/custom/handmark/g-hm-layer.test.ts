@@ -1,6 +1,8 @@
-// G-HM-LAYER — paint order, extent, and a legible substrate: three duties, three
-// mutations. Isolation fixes PAINT ORDER; geometry fixes EXTENT. They are separate
-// arms because isolation does not clip.
+// G-HM-LAYER — paint order, extent, a legible substrate, and staying with the word:
+// four duties, four mutations. Isolation fixes PAINT ORDER; geometry fixes EXTENT —
+// and extent is the emitted `d` AND the mask window that gates it, because a window
+// with zero area masks perfect geometry away. They are separate arms because
+// isolation does not clip.
 //
 // An ordinary vitest file, not a registered gate seat. Arm 3 is split at the only
 // line a headless reader can honour: the STRUCTURAL half (the two-arm band value
@@ -14,7 +16,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { mount } from "@vue/test-utils";
 import { nextTick } from "vue";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import HandMark from "@glass/components/handmark/HandMark.vue";
 import {
     BAND_HEIGHT,
@@ -22,6 +24,7 @@ import {
     RING_ENVELOPE,
     ringAxes,
 } from "@glass/components/handmark/stroke";
+import { type Line, installMeasure, restoreMeasure } from "./measure-frame";
 
 const REPO_ROOT = process.cwd();
 const SFC = resolve(REPO_ROOT, "src/components/handmark/HandMark.vue");
@@ -48,53 +51,7 @@ function styleBlock(): string {
     return i < 0 ? "" : live(sfc.slice(i));
 }
 
-interface Line {
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-}
-
-function domRect(x: number, y: number, w: number, h: number): DOMRect {
-    return {
-        x,
-        y,
-        width: w,
-        height: h,
-        top: y,
-        left: x,
-        right: x + w,
-        bottom: y + h,
-        toJSON: () => ({}),
-    } as DOMRect;
-}
-
-let restore: Array<() => void> = [];
-
-function installMeasure(lines: Line[]): void {
-    const rects = lines.map((l) => domRect(l.x, l.y, l.w, l.h));
-    const list = Object.assign(rects.slice(), { item: (i: number) => rects[i] ?? null });
-    const patch = <T extends object>(target: T, key: string, value: unknown) => {
-        const prev = Object.getOwnPropertyDescriptor(target, key);
-        Object.defineProperty(target, key, { configurable: true, writable: true, value });
-        restore.push(() => {
-            if (prev) Object.defineProperty(target, key, prev);
-            else Reflect.deleteProperty(target, key);
-        });
-    };
-    patch(Range.prototype, "getClientRects", () => list);
-    patch(Element.prototype, "getBoundingClientRect", () => domRect(0, 0, 900, 400));
-    patch(Element.prototype, "getClientRects", () => list);
-}
-
-beforeEach(() => {
-    restore = [];
-});
-
-afterEach(() => {
-    restore.forEach((fn) => fn());
-    restore = [];
-});
+afterEach(restoreMeasure);
 
 async function renderShape(shape: string, fs: number, lines: Line[]) {
     installMeasure(lines);
@@ -115,8 +72,50 @@ async function renderShape(shape: string, fs: number, lines: Line[]) {
         preserveAspectRatio: s.attributes("preserveAspectRatio"),
         viewBox: s.attributes("viewBox"),
     }));
+    const masks = w.findAll("mask").map((m) => ({
+        units: m.attributes("maskUnits"),
+        x: m.attributes("x"),
+        y: m.attributes("y"),
+        width: m.attributes("width"),
+        height: m.attributes("height"),
+    }));
     w.unmount();
-    return { ink, html, svgAttrs };
+    return { ink, html, svgAttrs, masks };
+}
+
+/**
+ * The RENDERED mask window, as the DOM carries it. Anything outside a mask's region is
+ * masked out, so this rect is the mark's real extent gate — and a PERCENTAGE resolves
+ * against the SVG's own box, which an inline host collapses to `0px` the moment the
+ * slot wraps. Reading the window in user-space units is the whole arm: geometry that
+ * is perfect in closed form paints nothing through a zero-area window.
+ */
+function windowOf(m: {
+    units?: string;
+    x?: string;
+    y?: string;
+    width?: string;
+    height?: string;
+}) {
+    expect(m.units, "the window is only geometry if it is stated in user space").toBe(
+        "userSpaceOnUse",
+    );
+    const num = (v: string | undefined, name: string): number => {
+        expect(v, `the mask declares no ${name}`).toBeTypeOf("string");
+        expect(
+            v,
+            `mask ${name}="${v}" is a PERCENTAGE of the SVG's own box — an inline host resolves that box to 0px on wrap and the window has zero area`,
+        ).not.toMatch(/%/);
+        const n = Number(v);
+        expect(n, `mask ${name}="${v}" is not a user-space length`).not.toBeNaN();
+        return n;
+    };
+    return {
+        x: num(m.x, "x"),
+        y: num(m.y, "y"),
+        w: num(m.width, "width"),
+        h: num(m.height, "height"),
+    };
 }
 
 /**
@@ -147,6 +146,7 @@ function bbox(d: string) {
 }
 
 const RUNGS = [18.608, 30.1, 48.7] as const;
+const SHAPE_MEMBERS = ["underline", "strike", "circle", "highlight"] as const;
 /** lh/fs bands: 1.05 at display, 1.20 mid, 1.50 at body — the tightest is the test. */
 const TIGHTEST_LEADING = 1.05;
 
@@ -206,6 +206,26 @@ describe("G-HM-LAYER 2 · CONTAINMENT, geometric — extent is geometry, never i
         expect(ring.h / fs).toBeLessThanOrEqual(RING_ENVELOPE);
         expect(ring.h).toBeGreaterThan(0);
     });
+
+    it.each(SHAPE_MEMBERS)(
+        "%s: the RENDERED mask window is real units and contains the ink it gates",
+        async (shape) => {
+            // This is the reading the doctrine "extent is fixed by geometry alone"
+            // was missing: on a live surface extent is fixed by the MASK WINDOW, and
+            // a window authored in percentages of a collapsible box is not geometry.
+            const fs = 30.1;
+            const r = await renderShape(shape, fs, [{ x: 40, y: 60, w: 240, h: fs * 1.35 }]);
+            expect(r.masks, `${shape}: one mask per emitted mark`).toHaveLength(r.ink.length);
+            const win = windowOf(r.masks[0]);
+            expect(win.w, `${shape}: a zero-area window masks the ink away entirely`).toBeGreaterThan(0);
+            expect(win.h, `${shape}: a zero-area window masks the ink away entirely`).toBeGreaterThan(0);
+            const b = bbox(r.ink[0] ?? "");
+            expect(win.x, `${shape}: window clips the ink's left edge`).toBeLessThanOrEqual(b.x0);
+            expect(win.y, `${shape}: window clips the ink's top edge`).toBeLessThanOrEqual(b.y0);
+            expect(win.x + win.w, `${shape}: window clips the ink's right edge`).toBeGreaterThanOrEqual(b.x1);
+            expect(win.y + win.h, `${shape}: window clips the ink's bottom edge`).toBeGreaterThanOrEqual(b.y1);
+        },
+    );
 });
 
 describe("G-HM-LAYER 3 · SUBSTRATE — structural half; the painted windows are π-BAND", () => {
@@ -236,5 +256,39 @@ describe("G-HM-LAYER 3 · SUBSTRATE — structural half; the painted windows are
 
     it("this arm never reads a colour through getComputedStyle", () => {
         expect(source(SELF)).not.toMatch(/getComputedStyle\(/);
+    });
+});
+
+describe("G-HM-LAYER 4 · TRACKING — the mark hears the scroller that moves its word", () => {
+    it("an ordinary element's scroll reaches the ink-lag listener and the mark settles", async () => {
+        // Scroll events DO NOT BUBBLE. A listener on `window` therefore hears the
+        // document's own scroller and nothing else, so a mark inside any scrolling
+        // pane — a demo shell, an app frame, a dialog — has an ink-lag mechanism that
+        // is inert rather than absent, and an amplitude arm reads 0.00px and calls it
+        // a pass. The event below is dispatched exactly as an engine dispatches one:
+        // on the scroller, `bubbles: false`.
+        installMeasure([{ x: 40, y: 60, w: 240, h: 40 }]);
+        const scroller = document.createElement("div");
+        document.body.appendChild(scroller);
+        const w = mount(HandMark, {
+            props: { shape: "underline", seed: 5 } as Record<string, unknown>,
+            slots: { default: "Hpqjy" },
+            attachTo: scroller,
+        });
+        await nextTick();
+        expect(w.find(".hm-mark").exists(), "no mark to track").toBe(true);
+        expect(w.find(".hm-mark").classes()).not.toContain("hm-mark--settling");
+
+        scroller.dispatchEvent(new Event("scroll"));
+        await new Promise((resolve) => setTimeout(resolve, 160));
+        await nextTick();
+
+        expect(
+            w.find(".hm-mark").classes(),
+            "the scroller's event never reached the mark: a non-bubbling scroll is heard on the document in the CAPTURE phase, not on window",
+        ).toContain("hm-mark--settling");
+
+        w.unmount();
+        scroller.remove();
     });
 });

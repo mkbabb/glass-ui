@@ -77,13 +77,23 @@ export function markDuration(length: number): number {
     return 140 + 0.55 * length;
 }
 
-/** The minimum-jerk draw profile as a CSS `linear()` easing. */
+/**
+ * The minimum-jerk draw profile as a CSS `linear()` easing.
+ *
+ * Every stop is emitted the same way — the PROFILE'S OWN VALUE at its own input — so
+ * `easing(0) = 0` and `easing(1) = 1` hold by construction: `10t³ − 15t⁴ + 6t⁵` is
+ * exactly 0 and exactly 1 at those ends. There is no endpoint special case, because an
+ * endpoint special case is a second expression for a quantity the loop already has,
+ * and the two can disagree. (They did: the branch it replaces emitted the loop INDEX,
+ * so `easing(1)` was `samples` and a draw animating `stroke-dashoffset` to 0 with
+ * `fill: both` came to rest at −23 dash periods — a mark inside its own gap.)
+ */
 export function minJerk(samples = 24): string {
     const stops: string[] = [];
     for (let i = 0; i <= samples; i++) {
         const t = i / samples;
         const v = t * t * t * (10 + t * (-15 + 6 * t));
-        stops.push(i === 0 || i === samples ? `${i}` : `${round(v)} ${round(t * 100)}%`);
+        stops.push(`${round(v)} ${round(t * 100)}%`);
     }
     return `linear(${stops.join(", ")})`;
 }

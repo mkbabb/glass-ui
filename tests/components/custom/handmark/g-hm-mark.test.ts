@@ -1,5 +1,6 @@
 // G-HM-MARK — one continuous painted stroke, total, calm, in one unit, at the right
-// scale. Seven arms, each with the mutation that bites it.
+// scale, drawn on a profile that ends where it says. Eight arms, each with the
+// mutation that bites it.
 //
 // These are ORDINARY vitest arms, not registered gate seats: the roster stays at
 // seats:60 and neither name appears in it. Every arm reads the mark's EMITTED
@@ -12,9 +13,10 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { mount } from "@vue/test-utils";
 import { nextTick } from "vue";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import HandMark from "@glass/components/handmark/HandMark.vue";
-import { handLine, nib } from "@glass/components/handmark/stroke";
+import { handLine, minJerk, nib } from "@glass/components/handmark/stroke";
+import { type Line, installMeasure, restoreMeasure } from "./measure-frame";
 
 /** The three on-ladder rungs the story paints (the only route the ratio gate can run). */
 const RUNGS = [18.608, 30.1, 48.7] as const;
@@ -25,60 +27,7 @@ const RUNG_MULTIPLES = ["1.618", "2.618"] as const;
 const REPO_ROOT = process.cwd();
 const STORY = resolve(REPO_ROOT, "demo/stories/motion/handmark.vue");
 
-interface Line {
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-}
-
-function domRect(x: number, y: number, w: number, h: number): DOMRect {
-    return {
-        x,
-        y,
-        width: w,
-        height: h,
-        top: y,
-        left: x,
-        right: x + w,
-        bottom: y + h,
-        toJSON: () => ({}),
-    } as DOMRect;
-}
-
-let restore: Array<() => void> = [];
-
-/**
- * The synthetic frame: the mark's own SVG lands at the origin and the slot occupies
- * `lines`, so the emitted geometry is already in frame coordinates and every number
- * in a `d` is directly comparable to the rect that produced it.
- */
-function installMeasure(lines: Line[]): void {
-    const rects = lines.map((l) => domRect(l.x, l.y, l.w, l.h));
-    const list = Object.assign(rects.slice(), { item: (i: number) => rects[i] ?? null });
-
-    const patch = <T extends object>(target: T, key: string, value: unknown) => {
-        const prev = Object.getOwnPropertyDescriptor(target, key);
-        Object.defineProperty(target, key, { configurable: true, writable: true, value });
-        restore.push(() => {
-            if (prev) Object.defineProperty(target, key, prev);
-            else Reflect.deleteProperty(target, key);
-        });
-    };
-
-    patch(Range.prototype, "getClientRects", () => list);
-    patch(Element.prototype, "getBoundingClientRect", () => domRect(0, 0, 900, 400));
-    patch(Element.prototype, "getClientRects", () => list);
-}
-
-beforeEach(() => {
-    restore = [];
-});
-
-afterEach(() => {
-    restore.forEach((fn) => fn());
-    restore = [];
-});
+afterEach(restoreMeasure);
 
 interface Emitted {
     /** every `d` on a painted ink path, in DOM order */
@@ -206,6 +155,21 @@ describe("G-HM-MARK 3 · CONTINUITY — one path per line rect, taper only at th
         for (const d of e.ink) expect(points(d).length).toBeGreaterThan(8);
     });
 
+    it("a WRAPPED slot emits one path per LINE rect, never one per wrapper box", async () => {
+        // `strike` renders `<del>` and `highlight` renders `<mark>`, so a range taken
+        // over the host's child nodes reports the wrapper box on top of the text box
+        // and the component chisels every line twice, chaining the duplicate's delay
+        // behind the original's duration. The frame stub states that shape honestly
+        // (`measure-frame.ts`), so this arm is the wrapper's own reading.
+        const fs = 30.1;
+        const one: Line[] = [{ x: 40, y: 60, w: 240, h: fs * 1.35 }];
+        const two: Line[] = [...one, { x: 0, y: 60 + fs * 1.35, w: 150, h: fs * 1.35 }];
+        const strike = await render("strike", fs, one);
+        expect(strike.ink, `<del> over 1 line rect emitted ${strike.ink.length} marks`).toHaveLength(1);
+        const wrapped = await render("highlight", fs, two);
+        expect(wrapped.ink, `<mark> over 2 line rects emitted ${wrapped.ink.length} marks`).toHaveLength(2);
+    });
+
     it("entry taper ≤5%, exit taper ≤8%, and the body holds ≥85% of the nib between", async () => {
         const fs = 48.7;
         const e = await render("underline", fs, LINE(420, fs));
@@ -281,6 +245,51 @@ describe("G-HM-MARK 6 · RATIO — the exponent's one observable", () => {
     });
 });
 
+/**
+ * The EMITTED `linear()`, read the way a compositor reads it: a table of
+ * (output, input%) stops interpolated between, where a stop with no explicit input
+ * takes 0% first and 100% last. Evaluating the STRING is the only reading that catches
+ * a generator emitting the wrong QUANTITY at an endpoint — every closed-form check of
+ * the profile passes while the emission ships the loop index.
+ */
+function easingStops(css: string): Array<{ v: number; t: number }> {
+    const body = /^linear\((.*)\)$/s.exec(css.trim());
+    if (!body) throw new Error(`not a linear() easing: ${css}`);
+    const raw = body[1]
+        .split(",")
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0);
+    return raw.map((s, i) => {
+        const [value, input] = s.split(/\s+/);
+        const t =
+            input !== undefined
+                ? Number(input.replace("%", "")) / 100
+                : i === 0
+                  ? 0
+                  : i === raw.length - 1
+                    ? 1
+                    : Number.NaN;
+        return { v: Number(value), t };
+    });
+}
+
+function easingAt(css: string, u: number): number {
+    const s = easingStops(css);
+    for (const q of s) {
+        if (!Number.isFinite(q.v) || !Number.isFinite(q.t)) {
+            throw new Error(`unreadable stop (${q.v} @ ${q.t}) in ${css}`);
+        }
+    }
+    if (u <= s[0].t) return s[0].v;
+    for (let i = 1; i < s.length; i++) {
+        if (u <= s[i].t) {
+            const span = s[i].t - s[i - 1].t || 1;
+            return s[i - 1].v + ((u - s[i - 1].t) / span) * (s[i].v - s[i - 1].v);
+        }
+    }
+    return s[s.length - 1].v;
+}
+
 describe("G-HM-MARK 7 · REACH, per-end signed — the release overruns the commit", () => {
     it.each([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])("seed %i reaches correctly", async (seed) => {
         const fs = 30.1;
@@ -296,5 +305,38 @@ describe("G-HM-MARK 7 · REACH, per-end signed — the release overruns the comm
         expect(exit, `seed ${seed} exit ${(exit * 100).toFixed(2)}%`).toBeGreaterThanOrEqual(0.012);
         expect(exit, `seed ${seed} exit ${(exit * 100).toFixed(2)}%`).toBeLessThanOrEqual(0.035);
         expect(exit).toBeGreaterThan(lead);
+    });
+});
+
+describe("G-HM-MARK 8 · DRAW PROFILE — the easing the draw SHIPS, evaluated at its ends", () => {
+    // The mask-dash draw animates `stroke-dashoffset` from `total` to `0` on this
+    // easing with `fill: both`, so `easing(1)` is not a detail of the curve: it is the
+    // RESTING offset, in multiples of the dash period. An easing that terminates at
+    // anything but 1 parks the guide inside the dash gap and the mark's resting state
+    // is an empty mask. The live half — that the resting dashoffset is 0px on a real
+    // engine — is π-RERUN-R5 and is never simulated here.
+    it.each([12, 24, 60])("the linear() emitted from %i samples runs 0 → 1", (samples) => {
+        const css = minJerk(samples);
+        expect(easingAt(css, 0), `easing(0) of ${css}`).toBeCloseTo(0, 9);
+        expect(easingAt(css, 1), `easing(1) of ${css}`).toBeCloseTo(1, 9);
+    });
+
+    it("every emitted stop is an output in [0,1] on a monotone clock", () => {
+        const stops = easingStops(minJerk());
+        expect(stops).toHaveLength(25);
+        let clock = -Infinity;
+        for (const { v, t } of stops) {
+            expect(v, `stop output ${v} is outside [0,1]`).toBeGreaterThanOrEqual(0);
+            expect(v, `stop output ${v} is outside [0,1]`).toBeLessThanOrEqual(1);
+            expect(t, `stop input ${t} runs backwards`).toBeGreaterThanOrEqual(clock);
+            clock = t;
+        }
+    });
+
+    it("the profile is minimum-jerk between its ends, not a straight line", () => {
+        // 10t³ − 15t⁴ + 6t⁵ is exactly ½ at the midpoint and 53/512 at the quarter —
+        // an arm that only read the endpoints would pass on `linear(0, 1)`.
+        expect(easingAt(minJerk(), 0.5)).toBeCloseTo(0.5, 6);
+        expect(easingAt(minJerk(), 0.25)).toBeCloseTo(53 / 512, 2);
     });
 });

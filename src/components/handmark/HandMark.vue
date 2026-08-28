@@ -46,6 +46,8 @@ interface Mark {
     stroke: number;
     delay: number;
     duration: number;
+    /** The mask's own window, in the SAME user units the geometry is emitted in. */
+    window: Frame;
 }
 
 const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
@@ -98,19 +100,72 @@ function place(el: HTMLElement, top: number): { index: number; line: number } {
     return { index: Math.max(0, kin.indexOf(el)), line: rows.size };
 }
 
-function slotRects(el: HTMLElement): DOMRect[] {
-    const content = Array.from(el.childNodes).filter((n) =>
-        n.nodeType === Node.ELEMENT_NODE
-            ? (n as Element).tagName.toLowerCase() !== "svg"
-            : n.nodeType === Node.TEXT_NODE && (n.textContent ?? "").trim().length > 0,
-    );
-    if (content.length === 0) return [];
+/**
+ * The slot's LINE boxes — one rect per line, whatever the markup.
+ *
+ * `Range.getClientRects()` returns the border box of every element fully contained in
+ * the range IN ADDITION to the text rects, so a range taken over the host's child
+ * nodes reports a `<del>` / `<mark>` wrapper twice per line and the component chisels
+ * every line twice. Ranging over TEXT NODES admits no element box at any nesting
+ * depth; the per-line merge then puts back the one thing a single range gave for
+ * free — and does it for nested inline markup, which the single range never handled
+ * either.
+ */
+function slotRects(el: HTMLElement): Frame[] {
+    const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
     const range = document.createRange();
-    range.setStartBefore(content[0]);
-    range.setEndAfter(content[content.length - 1]);
-    const rects = Array.from(range.getClientRects()).filter((r) => r.width > 0 && r.height > 0);
+    const rows: Frame[] = [];
+    for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+        if ((n.textContent ?? "").trim().length === 0) continue;
+        if (n.parentElement?.closest("svg")) continue;
+        range.selectNodeContents(n);
+        for (const r of Array.from(range.getClientRects())) {
+            if (r.width <= 0 || r.height <= 0) continue;
+            // Same line box ⇔ the two rects share more than half a line vertically.
+            const row = rows.find(
+                (q) =>
+                    Math.min(q.y + q.height, r.bottom) - Math.max(q.y, r.top) >
+                    Math.min(q.height, r.height) / 2,
+            );
+            if (!row) {
+                rows.push({ x: r.left, y: r.top, width: r.width, height: r.height });
+                continue;
+            }
+            const right = Math.max(row.x + row.width, r.right);
+            const bottom = Math.max(row.y + row.height, r.bottom);
+            row.x = Math.min(row.x, r.left);
+            row.y = Math.min(row.y, r.top);
+            row.width = right - row.x;
+            row.height = bottom - row.y;
+        }
+    }
     range.detach?.();
-    return rects;
+    return rows.sort((a, b) => a.y - b.y || a.x - b.x);
+}
+
+/**
+ * The mask window that gates the ink, in the geometry's OWN user units.
+ *
+ * A percentage window resolves against the SVG's own box, and this SVG is
+ * `width: 100%` inside a `display: inline` host — a box the engine resolves to `0px`
+ * the moment the slot wraps or sits in a `<del>` / `<mark>`. A zero-area window masks
+ * every pixel away, so perfect geometry paints nothing. Real units resolve against
+ * nothing: the window is the mark's own bounds, opened by the guide's half-stroke
+ * (which is the round cap's reach, and comfortably past the ribbon's half-nib) and one
+ * pixel of antialias.
+ */
+function maskWindow(points: Point[], stroke: number): Frame {
+    const pad = stroke / 2 + 1;
+    // Serialized to the same 3 decimals the geometry is, rounded OUTWARD, so the
+    // window can only ever be wider than the ink it gates, never a hair narrower.
+    const lo = (v: number[]) => Math.floor((Math.min(...v) - pad) * 1000) / 1000;
+    const hi = (v: number[]) => Math.ceil((Math.max(...v) + pad) * 1000) / 1000;
+    const xs = points.map((p) => p.x);
+    const ys = points.map((p) => p.y);
+    const out = (a: number, b: number) => Math.ceil((b - a) * 1000) / 1000;
+    const x = lo(xs);
+    const y = lo(ys);
+    return { x, y, width: out(x, hi(xs)), height: out(y, hi(ys)) };
 }
 
 function geometryFor(rect: Frame, fs: number, seed: number): Omit<Mark, "delay" | "duration"> & {
@@ -123,11 +178,13 @@ function geometryFor(rect: Frame, fs: number, seed: number): Omit<Mark, "delay" 
             { x: band[0].x, y: (band[0].y + band[band.length - 1].y) / 2 },
             { x: band[half - 1].x, y: (band[half - 1].y + band[half].y) / 2 },
         ];
+        const stroke = BAND_HEIGHT * fs * 1.6;
         return {
             ink: fillPolygon(band),
             guide: serialize(guide),
             length: polylineLength(guide),
-            stroke: BAND_HEIGHT * fs * 1.6,
+            stroke,
+            window: maskWindow(band.concat(guide), stroke),
         };
     }
     const w = nib(props.weight * swell.value, fs);
@@ -140,6 +197,7 @@ function geometryFor(rect: Frame, fs: number, seed: number): Omit<Mark, "delay" 
         guide: serialize(line),
         length: polylineLength(line),
         stroke: w * 1.6,
+        window: maskWindow(line, w * 1.6),
     };
 }
 
@@ -150,7 +208,7 @@ function measure(): void {
     if (rects.length === 0) return;
     const fs = parseFloat(getComputedStyle(el).fontSize) || 16;
     const origin = (frames.value[0] ?? el).getBoundingClientRect();
-    const { index, line } = place(el, rects[0].top);
+    const { index, line } = place(el, rects[0].y);
     const seed = props.seed ?? markSeed((el.textContent ?? "").trim(), index);
 
     // THE FRAME-RANK LAW: a line's lead over the one above it is four frames of the
@@ -161,14 +219,21 @@ function measure(): void {
     const next: Mark[] = [];
     for (const r of rects) {
         const frame: Frame = {
-            x: r.left - origin.left,
-            y: r.top - origin.top,
+            x: r.x - origin.left,
+            y: r.y - origin.top,
             width: r.width,
             height: r.height,
         };
         const g = geometryFor(frame, fs, seed + next.length);
         const duration = markDuration(g.length);
-        next.push({ ink: g.ink, guide: g.guide, stroke: g.stroke, delay: clock, duration });
+        next.push({
+            ink: g.ink,
+            guide: g.guide,
+            stroke: g.stroke,
+            window: g.window,
+            delay: clock,
+            duration,
+        });
         clock += duration;
     }
     marks.value = next;
@@ -222,9 +287,19 @@ function reink(): void {
 let quiet: number | null = null;
 let lastY = 0;
 
-/** Ink-lag: the mark trails its word by a fraction of a nib, then dries into place. */
+/**
+ * Ink-lag: the mark trails its word by a fraction of a nib, then dries into place.
+ *
+ * The signal is the WORD'S OWN viewport motion, not any one scroller's offset. A mark
+ * lives wherever it is put — the document, an app shell's pane, a dialog, a nested
+ * pane inside that — and only its own rect knows which of those moved. Reading
+ * `window.scrollY` answers for the document alone, so anywhere else the mark trails by
+ * a measured, meaningless zero.
+ */
 function onScroll(): void {
-    const y = window.scrollY;
+    const el = root.value;
+    if (!el) return;
+    const y = el.getBoundingClientRect().top;
     const delta = y - lastY;
     lastY = y;
     settling.value = false;
@@ -252,14 +327,18 @@ onMounted(() => {
         ro = new ResizeObserver(() => measure());
         ro.observe(root.value);
     }
-    lastY = window.scrollY;
-    window.addEventListener("scroll", onScroll, { passive: true });
+    lastY = root.value?.getBoundingClientRect().top ?? 0;
+    // A scroll event DOES NOT BUBBLE — it is dispatched at the scroller and stops
+    // there — but every scroller in the document lies on the capture path from the
+    // document down. One capture listener therefore hears every pane on the page,
+    // including the document's own, with no ancestor to guess at.
+    document.addEventListener("scroll", onScroll, { capture: true, passive: true });
 });
 
 onBeforeUnmount(() => {
     ro?.disconnect();
     if (quiet !== null) window.clearTimeout(quiet);
-    window.removeEventListener("scroll", onScroll);
+    document.removeEventListener("scroll", onScroll, { capture: true });
 });
 
 watch(() => [props.shape, props.weight, props.seed], () => measure());
@@ -294,10 +373,10 @@ defineExpose({ play });
                 <mask
                     :id="`${uid}-${i}`"
                     maskUnits="userSpaceOnUse"
-                    x="-100%"
-                    y="-100%"
-                    width="300%"
-                    height="300%"
+                    :x="m.window.x"
+                    :y="m.window.y"
+                    :width="m.window.width"
+                    :height="m.window.height"
                 >
                     <path
                         class="hm-guide"
