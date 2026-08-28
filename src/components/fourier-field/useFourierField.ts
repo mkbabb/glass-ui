@@ -154,6 +154,29 @@ export function useFourierField(
 
     let handle: ReturnType<typeof createGpuSubstrate> | null = null;
     const rendererStatus = shallowRef<RendererStatus>(pendingRenderer("webgpu"));
+
+    /**
+     * ONE RENDERER, ONE LABEL.
+     *
+     * The shared substrate requires a `setupGL`, so on a host without WebGPU it arms its
+     * WebGL2 net — and the net's only job here is to discover that this field has no
+     * WebGL renderer to arm (`createFourierUnsupportedSetup` throws the refusal). The
+     * status the substrate then publishes carries the NET's engine, `"webgl2"`, and the
+     * net's adapter string, for a renderer that never stood up: the pill read
+     * `WebGL 2 · [FourierField] WebGPU is required …`, which declares the refusal in the
+     * sentence and contradicts it in the label. A reader infers a WebGL renderer is
+     * running (π band δ, cell δ2-π-8, rider D1d).
+     *
+     * `setupGL` is a DECLARATION, not an arm. This field ships exactly one renderer, so
+     * its status names exactly one engine — a status arriving under any other is
+     * re-pointed at the one that actually failed, and its adapter says the true thing.
+     * The re-point is here, at the field's own seam, and not in the shared substrate,
+     * which is right to report the engine IT armed for every other consumer.
+     */
+    const ownEngine = (status: RendererStatus): RendererStatus =>
+        status.engine === "webgpu"
+            ? status
+            : { ...status, engine: "webgpu", adapter: "WebGPU unavailable" };
     let disposed = false;
     const ensure = (): ReturnType<typeof createGpuSubstrate> | null => {
         if (disposed) return null;
@@ -179,7 +202,7 @@ export function useFourierField(
                 // Declared closed — see `createFourierUnsupportedSetup`. There is one
                 // renderer; where it cannot run, the field says so and paints nothing.
                 setupGL: createFourierUnsupportedSetup(),
-                onStatus: (status) => (rendererStatus.value = status),
+                onStatus: (status) => (rendererStatus.value = ownEngine(status)),
             });
             void handle.armAsync().catch(() => undefined);
         }

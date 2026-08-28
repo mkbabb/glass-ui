@@ -100,6 +100,22 @@ useClickDelegate({
                 class="story-stage grid gap-(--sp-4) grid-cols-[minmax(0,min(var(--measure-cel),30%))_minmax(0,1fr)]"
             >
                 <!-- The ToC sidebar (delegated clicks, damped follow).
+                     [2026-08-28 · π band δ, D3] The UNTRACKED child rows take the
+                     -strong muted rung. `text-muted-foreground` on this plate resolves
+                     through `glass/ladder.css:207` to `--on-glass-muted`, whose light
+                     value `hsl(30 26% 35%)` computes to exactly the ink the capture
+                     measured — rgb(112, 89, 66) — and reads 4.04:1 against the ToC
+                     pane's own ground [226,197,185] at 14px: below the 4.5:1 AA floor
+                     for normal text. The rung is calibrated "5.76:1 vs plate" against a
+                     composited CREAM plate; this pane composites over the aurora, which
+                     is darker, and the calibration does not survive the move.
+                     `text-muted-foreground-strong` re-points to `--on-glass-muted-strong`
+                     on the same rule (`:208`) and reads 5.45:1 — the ladder already had
+                     the rung, so nothing is minted, and the row stays subordinate to the
+                     `text-foreground` parents and the `text-primary` tracked row. Dark
+                     was never the failing arm (9.34:1) and improves anyway: the -strong
+                     dark rung is the brighter one.
+
                      [BK #58 TOC-MENU-GLASS · clean break] `themed-card` is GONE with no
                      alias. It was a class name with NO definition anywhere in `src/` or
                      `demo/` — a whole-repo grep found exactly these two consumers and
@@ -133,7 +149,7 @@ useClickDelegate({
                                 'w-full rounded-control py-(--sp-1) pr-(--sp-3) pl-(--sp-5) text-left text-micro transition-fast',
                                 activeId === child.id
                                     ? 'bg-primary/10 text-primary'
-                                    : 'text-muted-foreground hover:bg-muted/40',
+                                    : 'text-muted-foreground-strong hover:bg-muted/40',
                             ]"
                         >
                             {{ child.title }}

@@ -155,6 +155,31 @@ describe("#73 — the chrome can actually shrink where it is", () => {
         // crisp glass, not a blurry mess.
         expect(plate).not.toContain("backdrop-filter");
     });
+
+    it("the plate's wash is the PLATE's, with a dark arm that occludes", () => {
+        // π band δ, cell δ4-π-3, defect D2. The plate read `--story-paper-wash`, whose
+        // dark arm is `--foreground` at 7% — seven per cent of the INK. A film that
+        // lifts is not a film that covers, so in dark the content passing beneath
+        // stopped reading as a ghost and started cutting through the h1. The paper
+        // field's job is to TINT the page and the plate's is to OCCLUDE; they coincide
+        // in light only because `--card` and the page are the same near-white there.
+        const plate = rule(heroSheet, ".story-page-chrome::before");
+        expect(plate).toContain("var(--story-chrome-plate-wash)");
+        expect(plate, "the plate no longer reads the paper field's wash").not.toContain(
+            "var(--story-paper-wash)",
+        );
+
+        const dark = rule(heroSheet, ".dark");
+        expect(dark, "the chassis declares a dark arm").toBeDefined();
+        // The dark plate is CARD-derived, like the light one — the same semantics at an
+        // alpha of its own — and never the ink film the paper field wears.
+        expect(dark).toMatch(
+            /--story-chrome-plate-wash:\s*color-mix\(in srgb, var\(--card\) \d+%, transparent\)/,
+        );
+        expect(dark).toMatch(
+            /--story-paper-wash:\s*color-mix\(in srgb, var\(--foreground\) \d+%, transparent\)/,
+        );
+    });
 });
 
 describe("#73 — the shrink carries weight, and the weight names a row", () => {

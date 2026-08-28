@@ -87,6 +87,23 @@ describe("fourier-field — ONE LAW: one renderer, no ceiling", () => {
         expect(wgpu).not.toContain("#version 300 es");
     });
 
+    it("publishes ONE engine — a net status never labels a renderer that did not stand up", () => {
+        // π band δ, cell δ2-π-8 rider D1d: under `navigator.gpu === undefined` the shared
+        // substrate arms its WebGL2 net, the net's setup throws this field's refusal, and
+        // the failure it published carried the NET's engine — so the pill read
+        // "WebGL 2 · [FourierField] WebGPU is required …", declaring the refusal and
+        // contradicting it in the same breath. The field has one renderer; every status
+        // it publishes is re-pointed at it.
+        const use = readFileSync(
+            join(SRC, "components/fourier-field/useFourierField.ts"),
+            "utf8",
+        );
+        expect(use).toMatch(
+            /onStatus:\s*\(status\)\s*=>\s*\(rendererStatus\.value\s*=\s*ownEngine\(status\)\)/,
+        );
+        expect(use).toMatch(/engine\s*===\s*"webgpu"[\s\S]{0,200}?engine:\s*"webgpu"/);
+    });
+
     it("keeps the fourier pointer-lean arm deleted — touch means time, not space", () => {
         const mappings = readFileSync(
             join(SRC, "composables/motion/pointer/pointerFieldMappings.ts"),

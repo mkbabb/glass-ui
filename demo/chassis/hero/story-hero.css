@@ -1,5 +1,18 @@
 :root {
     --story-paper-wash: color-mix(in srgb, var(--card) 70%, transparent);
+    /* THE PLATE'S WASH — a SEPARATE name from the paper field's, because they are
+       separate jobs that only LOOK like one job in light.
+       The paper field (`.story-bg-paper`) is a full-viewport ground: it tints the page.
+       The chrome plate (`.story-page-chrome::before`) is an OCCLUDER: it has to put
+       enough of itself between the collapsed header and the content sliding under it
+       that the content reads as a ghost. In light both are `--card` and `--card` is the
+       page's own near-white, so one declaration served both. In dark `--card` is the
+       LIFTED L16 surface and the page is the deepened L4 floor
+       (`tokens/dark-arm.css:52-54, :85-87`) — a wash strong enough to occlude would
+       paint the whole page the card colour and collapse the page/card distinction on
+       every paper-field route. So the plate gets its own name and its own dark arm; in
+       light it stays the paper wash, byte for byte. */
+    --story-chrome-plate-wash: var(--story-paper-wash);
     --story-hero-cpl: 7;
     --story-hero-est-lines: 2;
     /* `--story-page-max-inline` (72rem) and `--story-page-section-gap` are GONE:
@@ -13,6 +26,23 @@
 
 .dark {
     --story-paper-wash: color-mix(in srgb, var(--foreground) 7%, transparent);
+    /* THE DARK ARM, DERIVED — not the light arm's number, the light arm's BEHAVIOUR.
+       The plate inherited the paper wash and therefore inherited its dark recalibration:
+       `--foreground` (the near-white INK) at 7%. Seven per cent of the ink is a film that
+       LIFTS what passes under it instead of covering it, so the collapsed chrome stopped
+       washing and started being cut through — the audacious `Aa` struck the h1, and at
+       390 the `Audacious peaks` heading printed solid over the return leg (π band δ,
+       cell δ4-π-3, defect D2; the light/dark 390 pair is the cleanest evidence).
+
+       The detector is the GHOST-TO-GROUND ratio: the plate composited over the passing
+       ink, against the plate composited over the field behind it. Light, from the banked
+       capture (`pi-d4p3-SCROLL-legibility-1440-light.json`): ink [28,25,23], ground
+       [252,241,230] → the ghost lands [186,179,172] and reads 1.86:1. Dark, against the
+       field back-solved from the banked dark ground [43,34,27]: at 70% the same
+       `--card`-derived wash reads 2.58:1 (too visible), at 85% 1.60:1 (heavier than
+       light), and at 80% it reads 1.877:1 — the light arm's 1.864:1 to within 0.013.
+       80% it is, and the h1 over the plate still measures 11.9:1, far above AA. */
+    --story-chrome-plate-wash: color-mix(in srgb, var(--card) 80%, transparent);
 }
 
 .story-hero {
@@ -190,7 +220,12 @@
    OPACITY-ONLY: the gradient rasterises once and then only composites, so no
    scroll frame repaints it, and the resting `backdrop-filter` is never touched —
    the recipe's crisp-glass fence. The wash is the chassis's own
-   `--story-paper-wash`, which already carries its dark recalibration. */
+   `--story-chrome-plate-wash`. ~~The wash is the chassis's own
+   `--story-paper-wash`, which already carries its dark recalibration.~~
+   [2026-08-28 · π band δ, D2] The paper wash carries a recalibration for the PAPER
+   job — tint the page — and this rule needed the OCCLUDER job. In light the two
+   coincide; in dark they invert, and the plate stopped separating the chrome from
+   the content passing under it. The plate now names its own wash; see `:root`. */
 .story-page-chrome::before {
     content: "";
     position: absolute;
@@ -204,7 +239,7 @@
     border-end-end-radius: var(--radius-card);
     background-image: linear-gradient(
         to bottom,
-        var(--story-paper-wash) 0 62%,
+        var(--story-chrome-plate-wash) 0 62%,
         transparent
     );
     opacity: var(--chrome-collapse-t);
