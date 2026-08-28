@@ -1,0 +1,39 @@
+{
+ "seat": "singleton browser seat, claude-opus-5",
+ "session": "2026-08-28",
+ "band": "gamma-handmark",
+ "route": "http://localhost:5400/motion/handmark",
+ "server": "REUSED (not started by this seat, not killed): localhost:5400, curl 200, <title>glass-ui Feature Demo</title>",
+ "engines": {
+  "chromium": "chrome-devtools MCP daemon driven via the chrome-devtools-mcp:chrome-devtools-cli skill; ONE context",
+  "safari": "REAL Safari 26.4 (WebKit 605.1.15) via safaridriver :4599, session 22D1176A-…, closed + driver killed at band end"
+ },
+ "observation": "screenshot + getComputedStyle ONLY. getContext() was never called on any canvas. All pixel figures are read from captured PNGs in Node (pngjs + scripts/reflect-capture-verify.mjs oklabFromRgb). Screenshots are dpr-scaled; every crop scales the CSS box by the live devicePixelRatio.",
+ "cell": "π-MOBILE",
+ "detector_verbatim": "390×844, the wrap case: one chisel per line rect, no bridging",
+ "environment": "chrome-devtools emulate --viewport '390x844x3,mobile,touch' → dpr 3, (hover:none)=true, (pointer:coarse)=true, maxTouchPoints 1",
+ "one_chisel_per_line_rect": {
+  "verdict": "FAIL — TWO chisels per line rect",
+  "measured_rect_counts": {
+   "pays in (bare slot, 1 line)": 1,
+   "Friday (<del> wrapper, 1 line)": 2,
+   "threefold (bare slot, 1 line)": 1,
+   "Hpqjy really matters (<mark> wrapper, 2 lines)": 4,
+   "rose (<mark>, 1 line)": 2,
+   "violet (<mark>, 1 line)": 2
+  },
+  "mechanism": "slotRects() builds a Range over the slot's child nodes; when the slot is wrapped in <del> (strike) or <mark> (highlight), Range.getClientRects() returns BOTH the wrapper's box and its text box per line, so the component emits two identical overlapping marks per line rect and chains the second's delay behind the first's duration.",
+  "evidence": "guide lengths for the 2-line highlight run 171.583 / 108.632 / 170.281 / 108.817 — line1, line2, line1', line2'"
+ },
+ "no_bridging": {
+  "verdict": "PASS",
+  "evidence": "line-1 ink bbox x ∈ [-3.3, +169.6] and line-2 ink bbox x ∈ [-185.3, -69.9] in the shared SVG frame — disjoint, no rect bridges to another line"
+ },
+ "paint": {
+  "verdict": "nothing paints at 390: all four .hm-mark boxes resolve width 0px, plus every guide sits at -23 × dasharray",
+  "src": "pi-MOBILE-wrap-rest-390x844-light.png"
+ },
+ "detector_blindness": "both handmark gates STUB Range.prototype.getClientRects to a hand-authored list (g-hm-mark.test.ts:69, g-hm-layer.test.ts:85), so the real-DOM duplicate a <del>/<mark> wrapper produces can never be observed by them.",
+ "verdict": "DEFECT-ROUTED",
+ "owner": "roster row #51 GF-HANDMARK — src/components/handmark/HandMark.vue:101-114 (slotRects)"
+}

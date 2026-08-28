@@ -1,0 +1,110 @@
+{
+ "seat": "singleton browser seat, claude-opus-5",
+ "session": "2026-08-28",
+ "band": "gamma-handmark",
+ "route": "http://localhost:5400/motion/handmark",
+ "server": "REUSED (not started by this seat, not killed): localhost:5400, curl 200, <title>glass-ui Feature Demo</title>",
+ "engines": {
+  "chromium": "chrome-devtools MCP daemon driven via the chrome-devtools-mcp:chrome-devtools-cli skill; ONE context",
+  "safari": "REAL Safari 26.4 (WebKit 605.1.15) via safaridriver :4599, session 22D1176A-…, closed + driver killed at band end"
+ },
+ "observation": "screenshot + getComputedStyle ONLY. getContext() was never called on any canvas. All pixel figures are read from captured PNGs in Node (pngjs + scripts/reflect-capture-verify.mjs oklabFromRgb). Screenshots are dpr-scaled; every crop scales the CSS box by the live devicePixelRatio.",
+ "cell": "π-DRAW",
+ "detector_verbatim": "the mask-dash minimum-jerk draw · per-rect clocks · T = 140 + 0.55·L",
+ "arm_T_equals_140_plus_0_55L": {
+  "measured": [
+   {
+    "guide_length": 169.969,
+    "expected_ms": 233.483,
+    "observed_ms": 233.48308786517094
+   },
+   {
+    "guide_length": 105.068,
+    "expected_ms": 197.787,
+    "observed_ms": 197.7871665027224
+   },
+   {
+    "guide_length": 64.9518,
+    "expected_ms": 175.723,
+    "observed_ms": 175.72348835101775
+   },
+   {
+    "guide_length": 373.845,
+    "expected_ms": 345.615,
+    "observed_ms": 345.6149151825557
+   },
+   {
+    "guide_length": 146.568,
+    "expected_ms": 220.612,
+    "observed_ms": 220.61242284494188
+   }
+  ],
+  "verdict": "GREEN — exact on all five measured rects"
+ },
+ "arm_per_rect_clocks": {
+  "strike_Friday": [
+   {
+    "delay": 0,
+    "dur": 190.34623041297226
+   },
+   {
+    "delay": 190.34623041297226,
+    "dur": 190.38429709215558
+   }
+  ],
+  "highlight_Hpqjy": [
+   {
+    "delay": 0,
+    "dur": 234.3709620855832
+   },
+   {
+    "delay": 234.3709620855832,
+    "dur": 199.7473879601871
+   },
+   {
+    "delay": 434.1183500457703,
+    "dur": 233.65463303309923
+   },
+   {
+    "delay": 667.7729830788695,
+    "dur": 199.8494271040989
+   }
+  ],
+  "verdict": "GREEN — each rect's delay is the running sum of its predecessors' durations"
+ },
+ "arm_the_draw_itself": {
+  "verdict": "RED",
+  "easing_emitted_verbatim_chromium": "linear(0 0%, 0.001 4.167%, 0.005 8.333%, 0.016 12.5%, 0.035 16.667%, 0.065 20.833%, 0.104 25%, 0.152 29.167%, 0.21 33.333%, 0.275 37.5%, 0.347 41.667%, 0.422 45.833%, 0.5 50%, 0.578 54.167%, 0.653 58.333%, 0.725 62.5%, 0.79 66.667%, 0.848 70.833%, 0.896 75%, 0.935 79.167%, 0.965 83.333%, 0.984 87.5%, 0.995 91.667%, 0.999 95.833%, 24 100%)",
+  "easing_tail_safari_26_4": "67%, 1.00 95.833%, 24.00 100%)",
+  "source_site": "src/components/handmark/stroke.ts:86 — stops.push(i === 0 || i === samples ? `${i}` : `${round(v)} ${round(t * 100)}%`)",
+  "mechanism": "the terminal control point is the loop INDEX (24), not the normalized output 1. easing(1) = 24, so the animated stroke-dashoffset settles at from + (to - from)*24 = -23 x dasharray. With stroke-dasharray = <total> the pattern period is 2 x total, and -23 x total is congruent to +1 x total: the dash occupies path range [-total, 0] and the GAP occupies [0, total], so the whole guide lies in the gap, the mask renders empty, and the ink paints nothing but the dash's round linecap (radius = stroke-width/2) at each guide end.",
+  "observed_dashoffsets_chromium": {
+   "pays in 48.7px": "-3909.29px / dasharray 169.969px",
+   "pays in 30.1px": "-2416.56px / 105.068px",
+   "pays in 18.6px": "-1493.89px / 64.9518px",
+   "Friday": "-2105.39px, -2106.96px / 91.5386px, 91.6072px",
+   "threefold": "-8598.43px / 373.845px",
+   "Hpqjy": "-3946.41px, -2498.54px, -3916.46px, -2502.79px",
+   "rose": "-1469.03px, -1464.32px",
+   "violet": "-1756.81px, -1744.76px",
+   "drawn": "-3371.06px / 146.568px"
+  },
+  "observed_dashoffsets_safari_26_4": {
+   "pays in 48.7px": "-3909.313232px / 169.970139px",
+   "pays in 30.1px": "-2416.674561px / 105.072807px",
+   "rose": "-1469.05603px, -1464.340942px",
+   "violet": "-1756.924072px, -1744.871948px",
+   "drawn": "-3371.106934px / 146.56987px"
+  },
+  "ratio_check": "every offset / its dasharray = -23.000 in both engines",
+  "all_animations_playState": "finished (fill: both) — this is the RESTING state, not a mid-animation frame"
+ },
+ "paired_delta_capture": {
+  "A": "pi-DRAW-A-revealed-by-hover-1440-light.png (+ crop) — a real hover re-inks 'drawn', dashoffset 0px, the underline is fully painted",
+  "B": "pi-DRAW-B-after-replay-erased-1440-light.png (+ crop) — clicking the story's OWN 'Replay' button (which calls the exposed play()) returns dashoffset to -3371.06px and ERASES the line",
+  "note": "the component's documented affordance ('Replay it whenever you like') destroys the mark"
+ },
+ "detector_blindness": "minJerk is exported from src/components/handmark/index.ts:14 and has ZERO references in tests/ or tests-visual/ — the 47-case handmark battery never asserts the easing string, so the terminal 24 is invisible to every gate on this tree.",
+ "verdict": "DEFECT-ROUTED",
+ "owner": "roster row #51 GF-HANDMARK — src/components/handmark/stroke.ts:86"
+}

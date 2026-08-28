@@ -1,0 +1,16 @@
+{
+ "cell": "delta3-pi-6 (AA arm)",
+ "detector": "AA on the tracked headings",
+ "route": "/navigation/toc-tracking", "viewport": "1440x900", "dpr": 1, "capturedAt": "2026-08-28",
+ "method": "tight Range-box around each label's text node, read in the SAME settled state as the paired screenshot; ink = 2nd-percentile-luminance centroid, ground = modal plate colour. Ink reproduces the computed colour exactly (28,25,23 active / 112,89,66 muted), which is the check that the crop landed on the glyphs.",
+ "light": {
+  "trackedActiveHeading": {"label": "Section 1", "ink": [28,25,23], "ground": [206,179,169], "ratio": 8.87, "AA_4_5": true},
+  "activeSubsection":     {"label": "1.1 Subsection", "ratio": 8.86, "AA_4_5": true},
+  "mutedUntrackedLabels": {"labels": ["1.2 Subsection","1.3 Subsection"], "ink": [112,89,66], "ground": [226,197,185], "ratio": 4.04, "AA_4_5": false}
+ },
+ "dark": {
+  "trackedActiveHeading": {"label": "Section 1", "ratio": 6.29, "AA_4_5": true},
+  "mutedUntrackedLabels": {"ratio": 9.34, "AA_4_5": true}
+ },
+ "verdict": "SPLIT. The detector's own subject — the TRACKED heading — is GREEN in both themes (8.87 light / 6.29 dark). The muted, UNTRACKED sibling labels measure 4.04:1 in LIGHT at ~13px, below the 4.5:1 AA floor for normal text; dark is clear at 9.34:1. Recorded as a finding beside the cell, not folded into its verdict: the disposition (is the untracked rung in AA scope?) belongs to #58's owner, not to this seat."
+}

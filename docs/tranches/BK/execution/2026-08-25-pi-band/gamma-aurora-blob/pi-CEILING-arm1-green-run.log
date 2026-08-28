@@ -1,0 +1,14 @@
+
+> @mkbabb/glass-ui-tests-visual@0.0.0 gate:pixel-floor:ci
+> rm -f .cache/pi-report-green.json; PI_REPORT=.cache/pi-report-green.json playwright test substrate-paints-color.spec.ts --project=chromium-headless-new -g 'blob paints'; node pi-gate-verify.mjs --expect=green --report=./.cache/pi-report-green.json --floors=blob
+
+
+Running 1 test using 1 worker
+
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.156 floor=0.1 · paintedShare=0.280 ceil=0.7
+  ✓  1 [chromium-headless-new] › substrate-paints-color.spec.ts:664:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS (5.7s)
+
+  1 passed (6.8s)
+pixel-floor gate: GREEN — 1 floors ran on the live paint path and passed.

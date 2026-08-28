@@ -1,0 +1,39 @@
+{
+ "_note": "[2026-08-28 seat] SUPERSEDED IN MEANING, kept as evidence. This sampler medians a ring band around all four edges of the seat. It reads cr=1.002 (ring indistinguishable from plate) NOT because the ring lacks contrast but because on this seat the ring is CLIPPED away on the inline axis by the run port (overflow-x:hidden) and the surviving arcs do not intersect the sampled band. The contrast question is UNANSWERABLE at a clipped seat; see pi-MATERIAL-ringclip-*.",
+ "route": "/dock/overview",
+ "viewport": "1440x900 dpr2",
+ "theme": "light",
+ "seatSelector": ".dock-icon-button (first match = sidebar vertical run seat)",
+ "measured": {
+  "ringPx": [
+   228,
+   227,
+   223
+  ],
+  "plateOutsidePx": [
+   229,
+   227,
+   223
+  ],
+  "seatInsidePx": [
+   229,
+   228,
+   224
+  ],
+  "cr_ring_vs_plateOutside": 1.002,
+  "cr_ring_vs_seatInside": 1.009,
+  "wcag_1_4_11_min": 3.0,
+  "geom": {
+   "seat": [
+    20.0,
+    28.0,
+    40.0,
+    40.0
+   ],
+   "dpr": 2.0,
+   "outlineOffset": 2.0,
+   "outlineWidth": 2.0
+  }
+ },
+ "interpretation": "clip precedes contrast; routed with the ringclip finding"
+}

@@ -1,0 +1,30 @@
+{
+ "seat": "singleton browser seat, claude-opus-5",
+ "session": "2026-08-28",
+ "band": "gamma-handmark",
+ "route": "http://localhost:5400/motion/handmark",
+ "server": "REUSED (not started by this seat, not killed): localhost:5400, curl 200, <title>glass-ui Feature Demo</title>",
+ "engines": {
+  "chromium": "chrome-devtools MCP daemon driven via the chrome-devtools-mcp:chrome-devtools-cli skill; ONE context",
+  "safari": "REAL Safari 26.4 (WebKit 605.1.15) via safaridriver :4599, session 22D1176A-…, closed + driver killed at band end"
+ },
+ "observation": "screenshot + getComputedStyle ONLY. getContext() was never called on any canvas. All pixel figures are read from captured PNGs in Node (pngjs + scripts/reflect-capture-verify.mjs oklabFromRgb). Screenshots are dpr-scaled; every crop scales the CSS box by the live devicePixelRatio.",
+ "cell": "π-SCROLL",
+ "detector_verbatim": "ink-lag ≤1.5px. KILL CRITERION: if it reads as a made mark DETACHING from its word, the resolution is DELETION, not tuning.",
+ "method": "41 rAF-cadence samples while main.demo-main-scroller.scrollTop was driven 0 → 163px, plus one 700 ms settle sample after the scroll stopped; transform read from getComputedStyle on .hm-mark",
+ "measured": {
+  "distinct_transforms_over_all_samples": [
+   "matrix(1, 0, 0, 1, 0, 0)"
+  ],
+  "hm_mark_settling_class_ever_applied": false,
+  "window_scrollY_over_all_samples": 0,
+  "settle_sample_after_700ms": "matrix(1, 0, 0, 1, 0, 0)",
+  "ink_lag_amplitude_css_px": 0
+ },
+ "threshold_verdict": "0.00px ≤ 1.5px — satisfied, but ONLY because the mechanism never engages",
+ "mechanism": "HandMark.vue:256 registers the listener on `window`; the demo scrolls `main.demo-main-scroller`. A scroll event on an element does not reach window, so onScroll never runs, `lag` stays 0, and .hm-mark--settling is never applied. The document itself is not scrollable on this route (documentElement.scrollHeight === innerHeight).",
+ "source_reading_not_a_claim": "lag = sign(delta) * min(1.5, |0.06*delta|) — capped at 1.5 by construction, so even if wired the amplitude can never exceed the cell's threshold; a 25px frame delta saturates it.",
+ "kill_criterion": "NOT TRIGGERED — detachment cannot be observed because nothing moves. The disposition of a mechanism that is inert on its own subject surface (delete vs rewire) belongs to the owner, not to this capture seat.",
+ "verdict": "DEFECT-ROUTED (inert on the subject surface)",
+ "owner": "roster row #51 GF-HANDMARK — src/components/handmark/HandMark.vue:256"
+}

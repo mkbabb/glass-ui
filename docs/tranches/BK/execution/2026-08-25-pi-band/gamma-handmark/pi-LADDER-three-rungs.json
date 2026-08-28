@@ -1,0 +1,45 @@
+{
+ "seat": "singleton browser seat, claude-opus-5",
+ "session": "2026-08-28",
+ "band": "gamma-handmark",
+ "route": "http://localhost:5400/motion/handmark",
+ "server": "REUSED (not started by this seat, not killed): localhost:5400, curl 200, <title>glass-ui Feature Demo</title>",
+ "engines": {
+  "chromium": "chrome-devtools MCP daemon driven via the chrome-devtools-mcp:chrome-devtools-cli skill; ONE context",
+  "safari": "REAL Safari 26.4 (WebKit 605.1.15) via safaridriver :4599, session 22D1176A-…, closed + driver killed at band end"
+ },
+ "observation": "screenshot + getComputedStyle ONLY. getContext() was never called on any canvas. All pixel figures are read from captured PNGs in Node (pngjs + scripts/reflect-capture-verify.mjs oklabFromRgb). Screenshots are dpr-scaled; every crop scales the CSS box by the live devicePixelRatio.",
+ "cell": "π-LADDER",
+ "detector_verbatim": "the three rungs",
+ "measured_font_sizes_1440": {
+  "rung1": "48.7157px",
+  "rung2": "30.1077px",
+  "rung3": "18.608px"
+ },
+ "ladder_check": {
+  "--type-body @1440": 18.608,
+  "18.608 × 1.618": 30.108,
+  "18.608 × 2.618": 48.716,
+  "verdict": "the three rungs ARE --type-body × {1, 1.618, 2.618}, exact to the third decimal"
+ },
+ "painted_nib_light": {
+  "48.7157": 4.161,
+  "30.1077": 3.109,
+  "18.608": 2.121
+ },
+ "painted_nib_dark": {
+  "48.7157": 3.662,
+  "30.1077": 2.559,
+  "18.608": 1.663
+ },
+ "closed_form_nib": {
+  "48.7157": 3.6879,
+  "30.1077": 2.5706,
+  "18.608": 1.7919
+ },
+ "crops": [
+  "pi-LADDER-three-rungs-crop-1440-light.png",
+  "pi-LADDER-three-rungs-crop-1440-dark.png"
+ ],
+ "verdict": "CAPTURED-GREEN, with the same rest-state disclosure as π-PEN (the rungs are measured on the re-ink-revealed state)"
+}

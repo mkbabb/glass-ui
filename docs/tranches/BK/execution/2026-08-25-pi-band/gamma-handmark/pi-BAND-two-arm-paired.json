@@ -1,0 +1,458 @@
+{
+ "seat": "singleton browser seat, claude-opus-5",
+ "session": "2026-08-28",
+ "band": "gamma-handmark",
+ "route": "http://localhost:5400/motion/handmark",
+ "server": "REUSED (not started by this seat, not killed): localhost:5400, curl 200, <title>glass-ui Feature Demo</title>",
+ "engines": {
+  "chromium": "chrome-devtools MCP daemon driven via the chrome-devtools-mcp:chrome-devtools-cli skill; ONE context",
+  "safari": "REAL Safari 26.4 (WebKit 605.1.15) via safaridriver :4599, session 22D1176A-…, closed + driver killed at band end"
+ },
+ "observation": "screenshot + getComputedStyle ONLY. getContext() was never called on any canvas. All pixel figures are read from captured PNGs in Node (pngjs + scripts/reflect-capture-verify.mjs oklabFromRgb). Screenshots are dpr-scaled; every crop scales the CSS box by the live devicePixelRatio.",
+ "cell": "π-BAND",
+ "detector_verbatim": "both arms · both themes · ≥3 hues (78/318/270) · specimen carrying cap+ascender+descender · painted L window [0.80,0.87] light / [0.42,0.48] dark · painted C ≥ 0.08 · page fg on band ≥ 4.5:1 · band vs card ≥ 1.30:1 · dark÷light painted area ≥ 0.90. CANVAS READBACK ONLY — getComputedStyle returns the authored oklch() literal verbatim in both engines, which is this assertion's own mutation. THE FIRST LIVE TEST OF THE TWO-ARM MECHANISM.",
+ "mutation_check": {
+  "note": "the cell's own predicted mutation, confirmed in BOTH engines",
+  "computed_hm_band_chromium": "light-dark(oklch(0.86 0.16 318), oklch(0.44 0.16 318))",
+  "computed_hm_band_safari": "light-dark(oklch(0.86 0.16 318), oklch(0.44 0.16 318))",
+  "computed_ink_fill_light_chromium": "oklch(0.86 0.16 318)",
+  "computed_ink_fill_dark_chromium": "oklch(0.44 0.16 318)",
+  "computed_ink_fill_dark_safari": "oklch(0.44 0.16 318)",
+  "verdict": "the two-arm light-dark() SELECTION resolves correctly in Chromium and Safari 26.4; CSS.supports('color','light-dark(red,blue)') = true in Safari"
+ },
+ "painted_predicate": "a pixel is PAINTED when its OKLab chroma ≥ 0.08 (the cell's own floor); this separates band ink from the warm paper grain (C≈0.025) and the page text (C≈0.006)",
+ "rest_state": {
+  "note": "THE CELL'S SUBJECT. viewport 1440x806@dpr2, /motion/handmark, main.demo-main-scroller at bottom",
+  "dark": {
+   "src": "pi-BAND-highlight-section-1440-dark.png",
+   "card_painted_rgb": [
+    73,
+    61,
+    50
+   ],
+   "fg_rgb": [
+    235,
+    231,
+    228
+   ],
+   "hue78_specimen_Hpqjy_really_matters": {
+    "box_css": [
+     125,
+     558,
+     380,
+     95
+    ],
+    "box_px": 144400,
+    "painted_px": 0,
+    "painted_px_at_floor_0_06": 0,
+    "painted_px_at_floor_0_05": 0,
+    "verdict": "ZERO PAINTED PIXELS"
+   },
+   "hue318_rose": {
+    "box_css": [
+     284,
+     650,
+     72,
+     34
+    ],
+    "painted_px": 1236,
+    "painted_frac": 0.1262,
+    "painted_bbox_css": [
+     287,
+     661.5,
+     64,
+     19
+    ],
+    "meanL": 0.4923,
+    "meanChroma": 0.1432,
+    "meanHueDeg": 320,
+    "band_vs_card": 1.57,
+    "fg_on_band": 5.448,
+    "shape": "TWO end chips of ~13-14 CSS px, not a band (per-column profile banked below)"
+   },
+   "hue270_violet": {
+    "box_css": [
+     361,
+     650,
+     88,
+     34
+    ],
+    "painted_px": 705,
+    "painted_frac": 0.0589,
+    "painted_bbox_css": [
+     364,
+     661.5,
+     15,
+     19
+    ],
+    "meanL": 0.491,
+    "meanChroma": 0.1401,
+    "meanHueDeg": 272.5,
+    "band_vs_card": 1.628,
+    "fg_on_band": 5.256,
+    "shape": "ONE 15 CSS px chip"
+   },
+   "per_column_painted_rows_rose_x284_356": [
+    0,
+    0,
+    0,
+    14,
+    19,
+    19,
+    3,
+    3,
+    3,
+    16,
+    16,
+    17,
+    17,
+    16,
+    19,
+    16,
+    7,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    6,
+    10,
+    10,
+    11,
+    10,
+    10,
+    10,
+    10,
+    9,
+    8,
+    8,
+    11,
+    16,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "per_column_painted_rows_violet_x361_449": [
+    0,
+    0,
+    0,
+    19,
+    18,
+    16,
+    13,
+    11,
+    11,
+    11,
+    11,
+    14,
+    14,
+    11,
+    12,
+    9,
+    7,
+    6,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "light": {
+   "src": "pi-BAND-highlight-section-1440-light.png",
+   "card_rgb": [
+    253,
+    245,
+    236
+   ],
+   "fg_rgb": [
+    28,
+    25,
+    23
+   ],
+   "hue78_specimen": {
+    "painted_px": 0,
+    "verdict": "ZERO PAINTED PIXELS"
+   },
+   "hue318_rose": {
+    "painted_px": 1289,
+    "painted_frac": 0.1316,
+    "painted_bbox_css": [
+     287,
+     661.5,
+     64,
+     19
+    ],
+    "meanL": 0.7984,
+    "meanChroma": 0.1232,
+    "band_vs_card": 1.827,
+    "fg_on_band": 8.867
+   },
+   "hue270_violet": {
+    "painted_px_at_floor_0_08": 0,
+    "note": "oklch(0.86 0.16 270) is OUTSIDE sRGB and gamut-maps to painted C ≈ 0.0706-0.0722, BELOW the cell's own 0.08 floor"
+   }
+  }
+ },
+ "reink_revealed_state": {
+  "note": "NOT the cell's subject — the only state in which a band paints at all, reached by a real hover/tap re-ink (see π-HOVER / π-TOUCH). Banked so the colour windows have a live reading at all.",
+  "dark_hue318_modal_interior": {
+   "src": "pi-HOVER-reink-reveals-band-1440-dark.png",
+   "modal_rgb": [
+    [
+     130,
+     61,
+     146
+    ],
+    [
+     131,
+     62,
+     147
+    ],
+    [
+     131,
+     63,
+     147
+    ],
+    [
+     130,
+     60,
+     146
+    ],
+    [
+     129,
+     59,
+     145
+    ],
+    [
+     132,
+     64,
+     148
+    ]
+   ],
+   "L_range": [
+    0.4802,
+    0.4929
+   ],
+   "C_range": [
+    0.146,
+    0.1494
+   ],
+   "band_vs_card_range": [
+    1.486,
+    1.574
+   ],
+   "fg_on_band_range": [
+    5.437,
+    5.756
+   ],
+   "L_window_dark": [
+    0.42,
+    0.48
+   ],
+   "L_verdict": "OUT — the modal cluster sits at 0.480-0.493, above the window's 0.48 ceiling; the card's paper-grain overlay composites the authored 0.44 band UP by ≈ +0.045 L"
+  },
+  "light_hue318_modal_interior": {
+   "src": "pi-BAND-hover-revealed-3hues-1440-light.png",
+   "modal_rgb": [
+    [
+     240,
+     163,
+     234
+    ],
+    [
+     238,
+     162,
+     232
+    ],
+    [
+     237,
+     161,
+     231
+    ],
+    [
+     241,
+     164,
+     235
+    ]
+   ],
+   "L_range": [
+    0.8053,
+    0.8159
+   ],
+   "C_range": [
+    0.1267,
+    0.1282
+   ],
+   "band_vs_card_range": [
+    1.729,
+    1.792
+   ],
+   "fg_on_band_range": [
+    9.038,
+    9.369
+   ],
+   "L_window_light": [
+    0.8,
+    0.87
+   ],
+   "L_verdict": "IN",
+   "C_verdict": "IN",
+   "contrast_verdicts": "IN / IN"
+  },
+  "light_hue270_modal_interior": {
+   "modal_rgb": [
+    [
+     160,
+     189,
+     234
+    ],
+    [
+     158,
+     187,
+     231
+    ],
+    [
+     160,
+     190,
+     235
+    ],
+    [
+     161,
+     191,
+     236
+    ]
+   ],
+   "L_range": [
+    0.786,
+    0.7982
+   ],
+   "C_range": [
+    0.0706,
+    0.0722
+   ],
+   "band_vs_card_range": [
+    1.74,
+    1.815
+   ],
+   "fg_on_band_range": [
+    8.924,
+    9.31
+   ],
+   "L_verdict": "OUT — below the [0.80,0.87] floor by 0.014",
+   "C_verdict": "OUT — 0.071 < 0.08 (sRGB gamut mapping)"
+  },
+  "light_hue78": {
+   "painted_px": 0,
+   "note": "the wrapped 2-line mount never reveals: its four .hm-mark boxes resolve width 0px (Chromium 390 + Safari) or 9.05px (Chromium 1920), which collapses the mask window — see π-RING / DEFECT γ-π-2"
+  },
+  "dark_over_light_painted_area": {
+   "rest_rose": 0.9589,
+   "revealed_rose": 0.9732,
+   "threshold": 0.9,
+   "verdict": "IN — but the rest-state ratio is a ratio of CHIPS, not of bands"
+  }
+ },
+ "verdict": "DEFECT-ROUTED",
+ "owner": "roster row #51 GF-HANDMARK (lane γ unit 5) — src/components/handmark/stroke.ts:86 + src/components/handmark/HandMark.vue:294-301,335-343",
+ "grounds": "the cell forbids waving this through on a foreman capture, and the rest state paints ZERO band pixels for the cell's own cap+ascender+descender specimen in BOTH themes. Two further window failures are recorded on the revealed state: the dark arm paints ABOVE its window (0.485 vs [0.42,0.48]) because the card's paper-grain overlay composites over it, and hue 270 at L 0.86 C 0.16 is outside sRGB and gamut-maps to C≈0.072, below the cell's own 0.08 floor."
+}

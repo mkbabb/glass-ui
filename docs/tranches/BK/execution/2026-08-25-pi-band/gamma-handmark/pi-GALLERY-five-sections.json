@@ -1,0 +1,38 @@
+{
+ "seat": "singleton browser seat, claude-opus-5",
+ "session": "2026-08-28",
+ "band": "gamma-handmark",
+ "route": "http://localhost:5400/motion/handmark",
+ "server": "REUSED (not started by this seat, not killed): localhost:5400, curl 200, <title>glass-ui Feature Demo</title>",
+ "engines": {
+  "chromium": "chrome-devtools MCP daemon driven via the chrome-devtools-mcp:chrome-devtools-cli skill; ONE context",
+  "safari": "REAL Safari 26.4 (WebKit 605.1.15) via safaridriver :4599, session 22D1176A-…, closed + driver killed at band end"
+ },
+ "observation": "screenshot + getComputedStyle ONLY. getContext() was never called on any canvas. All pixel figures are read from captured PNGs in Node (pngjs + scripts/reflect-capture-verify.mjs oklabFromRgb). Screenshots are dpr-scaled; every crop scales the CSS box by the live devicePixelRatio.",
+ "cell": "π-GALLERY",
+ "detector_verbatim": "the five-section story",
+ "sections_present": [
+  "UNDERLINE",
+  "STRIKE",
+  "CIRCLE",
+  "HIGHLIGHT",
+  "THE DRAW"
+ ],
+ "mounts": 9,
+ "rest_state_summary": "at rest, 4 of the 5 sections show NO mark at all in Chromium (underline ×4 absent, strike absent, circle absent, the draw absent); the highlight section shows only end-cap chips on 2 of its 3 hues and nothing on the third. Safari 26.4 is the same story with one difference: the circle's cap residue survives there because its .hm-mark box is not collapsed.",
+ "captures": {
+  "chromium_dark_rest": "pi-GALLERY-story-fullpage-1440-dark.png, pi-GALLERY-rest-top-1440-dark.png",
+  "chromium_light_revealed": "pi-GALLERY-revealed-top-1440-light.png, pi-GALLERY-all-revealed-1920-light.png",
+  "safari_dark_rest": "pi-GALLERY-safari26-rest-1440.png"
+ },
+ "g3": {
+  "trigger_cite": "docs/tranches/BK/ASK.md:22 — 'g3 | aurora DUSK/DAWN | #49 — at π-GALLERY, after the medium-collapse renderer fix | harden-not-delete'",
+  "fired": false,
+  "grounds": "the trigger's own precondition is UNMET on this tree. The g3 π-GALLERY is the AURORA medium gallery (roster row 49), not this band's handmark story. A bounded look at /substrates/aurora at this seat found data-aurora-settled = null (the settle beacon absent) and a canvas whose backing store is 300×150 against an 830×246 CSS box — a DUSK/OPENAI_DAWN confusability comparison taken in that state would be vacuous.",
+  "evidence": "g3-aurora-precondition-unmet-1440-dark.png",
+  "routing": "the aurora observation is ROUTED to roster row 49 / the π-ARCHIVE seat. It is NOT claimed as a γ finding and NOTHING is logged against g3."
+ },
+ "adjacent_observation_routed_not_claimed": "at main.demo-main-scroller scrollTop 257 @1440 the sticky story-header cluster paints its title and blurb OVER the underline card's content (text on text, both themes) — see pi-PEN-LADDER-revealed-1440-light.png. Owner: demo/chassis story header (δ's surface). Out of this band's fence; recorded, not claimed.",
+ "verdict": "DEFECT-ROUTED",
+ "owner": "roster row #51 GF-HANDMARK"
+}

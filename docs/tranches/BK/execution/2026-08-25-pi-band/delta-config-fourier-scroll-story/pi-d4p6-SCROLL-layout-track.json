@@ -1,0 +1,47 @@
+{
+ "cell": "delta4-pi-6",
+ "detector": "the Layout track stays FLAT \u2014 the sticky+scale chrome triggers no reflow per scroll frame (motion-canon P5 / proof:no-layout-animation)",
+ "route": "/foundations/typography",
+ "viewport": [
+  1440,
+  900
+ ],
+ "burst": "600px, rAF-paced, 60 steps",
+ "traceBytes": 28186540,
+ "Layout": {
+  "count": 0,
+  "totalUs": 0,
+  "maxUs": 0
+ },
+ "UpdateLayoutTree": {
+  "count": 23,
+  "totalUs": 5287,
+  "maxUs": 301
+ },
+ "Paint": {
+  "count": 40,
+  "totalUs": 1096,
+  "maxUs": 141
+ },
+ "Commit": {
+  "count": 1777,
+  "totalUs": 26710,
+  "maxUs": 243
+ },
+ "topEventNames": {
+  "RunTask": 32090,
+  "UpdateLayer": 7116,
+  "PipelineReporter": 2376,
+  "BeginImplFrameToSendBeginMainFrame": 2376,
+  "EndActivateToSubmitCompositorFrame": 2368,
+  "SubmitCompositorFrameToPresentationCompositorFrame": 2368,
+  "SubmitToReceiveCompositorFrame": 2368,
+  "ReceiveCompositorFrameToStartDraw": 2368,
+  "StartDrawToSwapStart": 2368,
+  "BufferReadyToLatch": 2368,
+  "LatchToSwapEnd": 2368,
+  "SwapEndToPresentationCompositorFrame": 2368,
+  "AnimationFrame": 2366,
+  "UpdateCounters": 1920
+ }
+}

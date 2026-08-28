@@ -1,0 +1,42 @@
+{
+ "seat": "singleton browser seat, claude-opus-5",
+ "session": "2026-08-28",
+ "band": "gamma-handmark",
+ "route": "http://localhost:5400/motion/handmark",
+ "server": "REUSED (not started by this seat, not killed): localhost:5400, curl 200, <title>glass-ui Feature Demo</title>",
+ "engines": {
+  "chromium": "chrome-devtools MCP daemon driven via the chrome-devtools-mcp:chrome-devtools-cli skill; ONE context",
+  "safari": "REAL Safari 26.4 (WebKit 605.1.15) via safaridriver :4599, session 22D1176A-…, closed + driver killed at band end"
+ },
+ "observation": "screenshot + getComputedStyle ONLY. getContext() was never called on any canvas. All pixel figures are read from captured PNGs in Node (pngjs + scripts/reflect-capture-verify.mjs oklabFromRgb). Screenshots are dpr-scaled; every crop scales the CSS box by the live devicePixelRatio.",
+ "cell": "π-HOVER",
+ "detector_verbatim": "re-ink replay on the press spring",
+ "method": "a REAL pointer hover dispatched by the chrome-devtools daemon (not a synthetic event)",
+ "measured": {
+  "before": {
+   "rose_guides": [
+    "-1469.03px",
+    "-1464.32px"
+   ]
+  },
+  "after": {
+   "rose_guides": [
+    "0px",
+    "0px"
+   ]
+  },
+  "control_same_frame": {
+   "violet_guides_untouched": [
+    "-1756.81px",
+    "-1744.76px"
+   ]
+  },
+  "replay_easing_tail_verbatim": "0.97581 97.959%, 1 100%",
+  "replay_easing_head_verbatim": "linear(0 0%, 0.00284 2.041%, 0.0109 4.08…",
+  "replay_duration_ms": 220,
+  "source": "HandMark.vue:188-189 — the from>0 arm reads --spring-press off the host; that token's linear() terminates at 1, which is why the re-ink is the ONLY state in which a mark paints"
+ },
+ "paired_capture": "pi-HOVER-reink-reveals-band-1440-dark.png — 'rose' carries a full band (painted 3266 px, bbox 67 x 19.5 CSS px), 'violet' in the same frame still shows only its 15 px end chip (705 px)",
+ "verdict": "CAPTURED-GREEN — the re-ink fires and rides the press spring in both themes and at both pointer types",
+ "note": "this cell's green is also the instrument that isolates π-DRAW: the token spring's linear() ends at 1, minJerk()'s ends at 24, and only the minJerk arm erases the mark."
+}

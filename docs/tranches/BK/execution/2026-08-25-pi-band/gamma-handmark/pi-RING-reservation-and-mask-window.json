@@ -1,0 +1,60 @@
+{
+ "seat": "singleton browser seat, claude-opus-5",
+ "session": "2026-08-28",
+ "band": "gamma-handmark",
+ "route": "http://localhost:5400/motion/handmark",
+ "server": "REUSED (not started by this seat, not killed): localhost:5400, curl 200, <title>glass-ui Feature Demo</title>",
+ "engines": {
+  "chromium": "chrome-devtools MCP daemon driven via the chrome-devtools-mcp:chrome-devtools-cli skill; ONE context",
+  "safari": "REAL Safari 26.4 (WebKit 605.1.15) via safaridriver :4599, session 22D1176A-…, closed + driver killed at band end"
+ },
+ "observation": "screenshot + getComputedStyle ONLY. getContext() was never called on any canvas. All pixel figures are read from captured PNGs in Node (pngjs + scripts/reflect-capture-verify.mjs oklabFromRgb). Screenshots are dpr-scaled; every crop scales the CSS box by the live devicePixelRatio.",
+ "cell": "π-RING",
+ "detector_verbatim": "the padding-inline reservation PUSHING a real neighbour (never yet painted)",
+ "reservation_arm": {
+  "verdict": "GREEN — the reservation is live and it pushes",
+  "computed_padding_inline": {
+   "chromium 1440 dark": "18.2611px",
+   "chromium 1920 light": "21.028px",
+   "safari 26.4 1440 dark": "19.66065px",
+   "chromium 390 mobile": "reserve live, host rect 163.7px wide"
+  },
+  "computed_hm_reserve_var": "18.261144068169898px (1440)",
+  "host_rect_growth_1440": "text ≈ 154px → .hm rect 190.44px = text + 2 × 18.2611",
+  "visual": "the gap between 'Up' and 'threefold' is visible in every capture, both engines, both themes"
+ },
+ "ring_paint_arm": {
+  "verdict": "RED — the ring is NEVER PAINTED",
+  "chromium": "the circle mount's .hm-mark computed width = 0px. The mask is maskUnits='userSpaceOnUse' x='-100%' y='-100%' width='300%' height='300%' — percentages of the SVG's OWN box — so a 0px box gives a ZERO-AREA mask window and the ink is fully masked out. Confirmed with stroke-dashoffset forced to 0px by a real hover re-ink: still nothing paints (pi-RING-no-ring-painted-crop-1440-light.png).",
+  "safari_26_4": "the same mount resolves .hm-mark width = 173.078125px, so the mask window is real there — and only the ~2px round-cap residue survives, killed instead by the π-DRAW easing defect (visible as a small hook between 'Up' and 'threefold' in pi-GALLERY-safari26-rest-1440.png).",
+  "measured_svg_widths": {
+   "chromium_1440": {
+    "Friday(strike)": "0px, 0px",
+    "threefold(circle)": "0px",
+    "Hpqjy(2-line highlight)": "0px x4",
+    "rose": "not read at 1440",
+    "pays in": "162.04px"
+   },
+   "chromium_1920": {
+    "Hpqjy": "9.04688px x4",
+    "rose": "68.17px x2"
+   },
+   "chromium_390_mobile": {
+    "Friday": "0px x2",
+    "threefold": "0px",
+    "Hpqjy": "0px x4"
+   },
+   "safari_1440": {
+    "Friday": "87.09375px x2",
+    "threefold": "173.078125px",
+    "Hpqjy": "0px x4",
+    "rose": "63.734375px x2",
+    "pays in": "158.625px"
+   }
+  },
+  "mechanism": ".hm-mark is position:absolute; left:0; top:0; width:100%; height:100% inside .hm, which is display:inline; position:relative. The containing block of an absolutely-positioned child of a MULTI-LINE or padded inline is engine-dependent and resolves to 0-9px; the mask's -100%/300% userSpaceOnUse window collapses with it and clips the ink."
+ },
+ "detector_blindness": "G-HM-LAYER 2 ('CONTAINMENT, geometric — extent is geometry, never isolation', tests/components/custom/handmark/g-hm-layer.test.ts:169) reasons over ringAxes() in pure geometry and never reads the rendered .hm-mark box or the mask's percentage window, so a collapsed mask window is invisible to it.",
+ "verdict": "DEFECT-ROUTED",
+ "owner": "roster row #51 GF-HANDMARK — src/components/handmark/HandMark.vue:294-301 (mask) + :335-343 (.hm-mark sizing)"
+}

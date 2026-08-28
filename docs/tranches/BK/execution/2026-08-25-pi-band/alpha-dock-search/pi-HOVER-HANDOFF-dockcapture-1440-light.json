@@ -1,0 +1,37 @@
+{
+ "_cell": "pi-HOVER-HANDOFF",
+ "_dated": "2026-08-28",
+ "_note": "Extracted from the SAME rAF trace as pi-MORPH (pi-MORPH-trace-dockcapture-1440-light.json). One capture answers both cells; this file is the per-cell paired-pi so the record is discoverable under its own name. Not a second capture.",
+ "route": "/dock/overview",
+ "selector": "[data-testid=dock-capture]",
+ "viewport": "1440x900 dpr2",
+ "theme": "light",
+ "engine": "Chromium (chrome-devtools daemon 1.2.0)",
+ "gesture": "real driver hover onto the collapsed pill, then hover away",
+ "frames_total": 505,
+ "frames_while_collapsed": 73,
+ "DETECTOR_the_collapsed_hover_pre_scale_is_DELETED": {
+  "distinct_widths_while_collapsed": [
+   56
+  ],
+  "frames_in_57_to_70px_window_the_old_61_6_excursion": [],
+  "distinct_scale_while_collapsed": [
+   "none"
+  ],
+  "snap_back_frames": 0
+ },
+ "DETECTOR_box_shadow_elevation_alone_still_reads_as_hover": {
+  "collapsed_rest_boxShadow": "color(srgb 0.11 0.098 0.09 / 0.12) 0px 0",
+  "collapsed_hover_boxShadow": "color(srgb 0.11 0.098 0.09 / 0.14) 0px 0",
+  "hover_onset_t_ms": 545.9,
+  "channel_that_moves": "box-shadow alpha 0.12 -> 0.14; width and scale do not move"
+ },
+ "DETECTOR_hover_to_expand_reads_as_ONE_motion": {
+  "hover_onset_t_ms": 545.9,
+  "class_flip_to_expanded_t_ms": 613.8,
+  "dwell_ms": 67.9,
+  "dwell_is": "HOVER_INTENT_MS sweep-past guard (~60ms), useDockState.ts:143-155",
+  "monotonic_ramp_after_flip": true
+ },
+ "verdict": "CAPTURED-GREEN"
+}

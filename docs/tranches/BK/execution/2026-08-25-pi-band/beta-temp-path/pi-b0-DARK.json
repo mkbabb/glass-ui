@@ -1,0 +1,74 @@
+{
+  "band": "beta-temp-path",
+  "unit": "BK lane beta unit b0 (#59 darkModeSyncScript queryOverride)",
+  "source_of_record": "docs/tranches/BK/execution/2026-08-10-lanebeta-unit1/PI-QUEUE.md",
+  "captured": "2026-08-28",
+  "seat_model": "claude-opus-5",
+  "engine": "Chromium driven by the chrome-devtools-mcp daemon 1.2.0 through the chrome-devtools-mcp:chrome-devtools-cli skill (no hand-rolled browser script)",
+  "specimen": {
+    "path": "/tmp/bk-beta0-firstpaint.html",
+    "bytes": 689,
+    "emitted_script_bytes": 402,
+    "emitted_script_sha256_b64": "T/HYS7zqh/wi4E0o0R4IStRZF6TYhOjMFduJeli2HpI=",
+    "derived_from": "src/composables/dark/darkModeSyncScript.ts, darkModeSyncScript({queryOverride:true}), loaded through jiti — DERIVED at this seat, not transcribed",
+    "byte_match_vs_PI_QUEUE_paste_block": true
+  },
+  "detectors": {
+    "cell": "pi-b0-DARK",
+    "url": "file:///tmp/bk-beta0-firstpaint.html?dark",
+    "viewport": "1024x768",
+    "dpr": 1,
+    "emulated_prefers_color_scheme": "light",
+    "mq_prefers_dark_observed": false,
+    "storage_seed_key": "vueuse-color-scheme",
+    "storage_value_at_read": "light",
+    "DETECTOR_1_classList_contains_dark": true,
+    "DETECTOR_2_style_colorScheme": "dark",
+    "DETECTOR_3_computed_backgroundColor": "rgb(0, 0, 0)",
+    "computed_colorScheme": "dark",
+    "html_class_attribute": "dark"
+  },
+  "painted_pixels": {
+    "file": "pi-b0-DARK-query-beats-storage-and-platform-1024x768.png",
+    "w": 1024,
+    "h": 768,
+    "sha256_head32": "1e271d60d9b02d884985ac47e18b0360",
+    "corner_topleft_rgb": [
+      0,
+      0,
+      0
+    ],
+    "center_rgb": [
+      0,
+      0,
+      0
+    ],
+    "corner_bottomright_rgb": [
+      0,
+      0,
+      0
+    ],
+    "distinct_rgb_over_17px_grid": [
+      "0,0,0"
+    ]
+  },
+  "first_paint_ordering_corroboration": {
+    "arm": "dark",
+    "url": "file:///tmp/bk-beta0-firstpaint-instrumented.html?dark",
+    "storage_at_read": "light",
+    "mq_prefers_dark": false,
+    "stamp_observed_immediately_after_emitted_script": {
+      "t": 28.40000009536743,
+      "cls": "dark",
+      "cs": "dark"
+    },
+    "paint_entries": [
+      {
+        "name": "first-paint",
+        "startTime": 48
+      }
+    ],
+    "instrument": "/tmp/bk-beta0-firstpaint-instrumented.html — the specimen plus ONE appended probe <script>; the emitted script is byte-unchanged in the twin (verified)",
+    "note": "stamp t is performance.now() read in the probe that runs immediately after the emitted IIFE; compare against paint_entries[first-paint].startTime"
+  }
+}

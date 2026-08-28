@@ -1,0 +1,42 @@
+{
+ "seat": "singleton browser seat, claude-opus-5",
+ "session": "2026-08-28",
+ "band": "gamma-handmark",
+ "route": "http://localhost:5400/motion/handmark",
+ "server": "REUSED (not started by this seat, not killed): localhost:5400, curl 200, <title>glass-ui Feature Demo</title>",
+ "engines": {
+  "chromium": "chrome-devtools MCP daemon driven via the chrome-devtools-mcp:chrome-devtools-cli skill; ONE context",
+  "safari": "REAL Safari 26.4 (WebKit 605.1.15) via safaridriver :4599, session 22D1176A-…, closed + driver killed at band end"
+ },
+ "observation": "screenshot + getComputedStyle ONLY. getContext() was never called on any canvas. All pixel figures are read from captured PNGs in Node (pngjs + scripts/reflect-capture-verify.mjs oklabFromRgb). Screenshots are dpr-scaled; every crop scales the CSS box by the live devicePixelRatio.",
+ "cell": "π-TOUCH",
+ "detector_verbatim": "tap re-ink on (hover:none) — the coarse pointer's own answer",
+ "environment": {
+  "viewport": "390x844x3,mobile,touch",
+  "matchMedia('(hover: none)')": true,
+  "matchMedia('(pointer: coarse)')": true,
+  "maxTouchPoints": 1
+ },
+ "measured": {
+  "before": {
+   "rose_guides": [
+    "-1263.14px",
+    "-1259.09px"
+   ]
+  },
+  "after_tap": {
+   "rose_guides": [
+    "0px",
+    "0px"
+   ]
+  },
+  "control_same_frame": {
+   "violet_guides_untapped": [
+    "-1510.71px",
+    "-1500.36px"
+   ]
+  }
+ },
+ "capture": "pi-TOUCH-tap-reink-390x844-light.png — 'rose' a full band after the tap, 'violet' still two end chips",
+ "verdict": "CAPTURED-GREEN"
+}

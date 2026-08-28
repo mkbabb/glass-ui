@@ -1,0 +1,37 @@
+
+> @mkbabb/glass-ui-tests-visual@0.0.0 gate:pixel-floor:planted:flood
+> rm -f .cache/pi-report-flood.json; PI_PLANT=blob-flood PI_REPORT=.cache/pi-report-flood.json playwright test substrate-paints-color.spec.ts --project=chromium-headless-new -g 'blob paints'; node pi-gate-verify.mjs --expect=planted-red --report=./.cache/pi-report-flood.json --floors=blob --plant=blob-flood
+
+
+Running 1 test using 1 worker
+
+PLANT blob-flood: canvas background forced to #ff00ff — no transparent margin survives
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.580 floor=0.1 · paintedShare=0.997 ceil=0.7
+  ✘  1 [chromium-headless-new] › substrate-paints-color.spec.ts:664:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS (5.4s)
+
+
+  1) [chromium-headless-new] › substrate-paints-color.spec.ts:664:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS 
+
+    Error: blob coverage 0.997 of the PAINTABLE interior (0.557 of the inset box; the rest is behind the stage card's clip) exceeds the non-flood ceil 0.7 — the blob FLOODED the canvas (no transparent margin)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.7
+    Received:    0.9974811083123426
+
+      756 |             paintedShare,
+      757 |             `blob coverage ${paintedShare.toFixed(3)} of the PAINTABLE interior (${paintableShare.toFixed(3)} of the inset box; the rest is behind the stage card's clip) exceeds the non-flood ceil ${BLOB_COVERAGE_MAX} — the blob FLOODED the canvas (no transparent margin)`,
+    > 758 |         ).toBeLessThanOrEqual(BLOB_COVERAGE_MAX);
+          |           ^
+      759 |     });
+      760 | });
+      761 |
+        at /Users/mkbabb/Programming/glass-ui/tests-visual/substrate-paints-color.spec.ts:758:11
+
+    Error Context: test-results/substrate-paints-color-sub-d4c83-let-on-BLOB-CONFIG-DEFAULTS-chromium-headless-new/error-context.md
+
+  1 failed
+    [chromium-headless-new] › substrate-paints-color.spec.ts:664:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS 
+pixel-floor gate: GREEN (self-test, --plant=blob-flood) — 1 floors RED-ed on the planted defect, each on its own assertion; the floors bite.
