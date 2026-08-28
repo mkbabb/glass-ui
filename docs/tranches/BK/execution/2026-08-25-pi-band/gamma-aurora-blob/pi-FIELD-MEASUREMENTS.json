@@ -1,0 +1,4927 @@
+{
+  "cell": "π-FIELD",
+  "seat": "singleton π browser seat · claude-opus-5",
+  "verdictPosture": "RECORDED-NOT-DECIDED — this seat ratifies nothing; #49 owns the cut",
+  "capturedAt": "2026-08-28T17:46:40.219Z",
+  "base": "http://localhost:5401",
+  "engineFlags": [
+    "--headless=new",
+    "--use-gl=angle",
+    "--use-angle=metal",
+    "--enable-unsafe-webgpu",
+    "--ignore-gpu-blocklist"
+  ],
+  "configSpaceOfRecord": {
+    "source": "src/components/aurora/constants/presets.ts + demo/chassis/hero/aurora-hero.ts (read on disk this seat)",
+    "AURORA_DRIFT_FLOOR": {
+      "nucleiDrift": 0.0005,
+      "paletteDrift": 0.0004,
+      "breathDepth": 0.0015,
+      "warpDrift": 0.00015,
+      "at": "presets.ts:327-331"
+    },
+    "DEFAULT_AURORA_CONFIG": {
+      "nucleiDrift": 0.015,
+      "paletteDrift": 0.015,
+      "breathDepth": 0.05,
+      "breathPeriod": 40,
+      "warpDrift": 0.008
+    },
+    "shellAuroraConfig": {
+      "nucleiDrift": 0.012,
+      "paletteDrift": 0.012,
+      "breathPeriod": 48,
+      "breathDepth": "0.05 (inherited)",
+      "warpDrift": "0.008 (inherited)",
+      "vividness": 0,
+      "paletteC": [
+        0.055,
+        0.065,
+        0.05,
+        0.04
+      ],
+      "paletteL": [
+        0.94,
+        0.93,
+        0.95,
+        0.96
+      ],
+      "at": "aurora-hero.ts:283-306"
+    },
+    "shellAuroraConfigDark": {
+      "nucleiDrift": 0.012,
+      "paletteDrift": 0.012,
+      "breathPeriod": 48,
+      "vividness": 0,
+      "paletteC": [
+        0.06,
+        0.07,
+        0.05,
+        0.045
+      ],
+      "paletteL": [
+        0.22,
+        0.25,
+        0.19,
+        0.17
+      ],
+      "at": "aurora-hero.ts:322-345"
+    }
+  },
+  "arms": [
+    {
+      "id": "shell-substrates-light",
+      "subject": "shell-substrates",
+      "route": "/substrates",
+      "kind": "shell",
+      "theme": "light",
+      "prm": false,
+      "note": "non-focal landing; shell field at the substrates hue",
+      "beacon": {
+        "settledNodes": 1,
+        "settled": true,
+        "canvases": [
+          {
+            "cls": "aurora-canvas block h-full w-full aurora-canvas--armed",
+            "armed": true,
+            "intrinsic": {
+              "w": 1440,
+              "h": 900
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 900
+            },
+            "opacity": "1"
+          }
+        ],
+        "rendererStatusText": null,
+        "htmlClass": "",
+        "dpr": 1,
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "prm": false
+      },
+      "pointMode": "field-visible grid (elementFromPoint + transparent-ancestor walk), step 12px",
+      "samplePoints": 1016,
+      "frames": [
+        {
+          "name": "pi-FIELD-shell-substrates-light-f0.png",
+          "elapsedMs": 0
+        },
+        {
+          "name": "pi-FIELD-shell-substrates-light-f1.png",
+          "elapsedMs": 2000
+        },
+        {
+          "name": "pi-FIELD-shell-substrates-light-f2.png",
+          "elapsedMs": 5000
+        },
+        {
+          "name": "pi-FIELD-shell-substrates-light-f3.png",
+          "elapsedMs": 10000
+        }
+      ],
+      "staticRange_t0": {
+        "n": 1016,
+        "L": {
+          "mean": 0.87013,
+          "sd": 0.01565,
+          "min": 0.82211,
+          "p01": 0.82305,
+          "p50": 0.87537,
+          "p99": 0.89551,
+          "max": 0.89836,
+          "span": 0.07625,
+          "span98": 0.07246
+        },
+        "C": {
+          "mean": 0.06656,
+          "sd": 0.00989,
+          "min": 0.0519,
+          "p50": 0.07199,
+          "p95": 0.07661,
+          "p99": 0.07692,
+          "max": 0.07744
+        },
+        "hueMeanDeg": 63.17,
+        "uniqueRgb": 201
+      },
+      "drift": [
+        {
+          "vsT0AfterMs": 2000,
+          "n": 1016,
+          "changedPx": 833,
+          "changedFrac": 0.8199,
+          "dL": {
+            "mean": 0.001817,
+            "p50": 0.001787,
+            "p95": 0.005008,
+            "p99": 0.006885,
+            "max": 0.010767
+          },
+          "dC": {
+            "mean": 0.000909,
+            "p50": 0.000603,
+            "p95": 0.003723,
+            "p99": 0.006698,
+            "max": 0.008508
+          },
+          "dE": {
+            "mean": 0.003517,
+            "p50": 0.002554,
+            "p95": 0.014024,
+            "p99": 0.02041,
+            "max": 0.025771
+          },
+          "dRgb8": {
+            "mean": 1.606299,
+            "p50": 1,
+            "p95": 6,
+            "p99": 10,
+            "max": 12
+          }
+        },
+        {
+          "vsT0AfterMs": 5000,
+          "n": 1016,
+          "changedPx": 897,
+          "changedFrac": 0.8829,
+          "dL": {
+            "mean": 0.002206,
+            "p50": 0.001948,
+            "p95": 0.00602,
+            "p99": 0.00921,
+            "max": 0.012111
+          },
+          "dC": {
+            "mean": 0.001001,
+            "p50": 0.000648,
+            "p95": 0.003101,
+            "p99": 0.007523,
+            "max": 0.011725
+          },
+          "dE": {
+            "mean": 0.003871,
+            "p50": 0.002881,
+            "p95": 0.010973,
+            "p99": 0.030984,
+            "max": 0.04287
+          },
+          "dRgb8": {
+            "mean": 1.814961,
+            "p50": 1,
+            "p95": 5,
+            "p99": 15,
+            "max": 20
+          }
+        },
+        {
+          "vsT0AfterMs": 10000,
+          "n": 1016,
+          "changedPx": 942,
+          "changedFrac": 0.9272,
+          "dL": {
+            "mean": 0.00346,
+            "p50": 0.00194,
+            "p95": 0.012892,
+            "p99": 0.018486,
+            "max": 0.022777
+          },
+          "dC": {
+            "mean": 0.001656,
+            "p50": 0.000605,
+            "p95": 0.008824,
+            "p99": 0.016903,
+            "max": 0.021057
+          },
+          "dE": {
+            "mean": 0.006955,
+            "p50": 0.003076,
+            "p95": 0.027764,
+            "p99": 0.052351,
+            "max": 0.066976
+          },
+          "dRgb8": {
+            "mean": 2.918307,
+            "p50": 1,
+            "p95": 11,
+            "p99": 21,
+            "max": 28
+          }
+        }
+      ],
+      "consecutive": [
+        {
+          "fromFrame": 0,
+          "toFrame": 1,
+          "gapMs": 2000,
+          "n": 1016,
+          "changedPx": 833,
+          "changedFrac": 0.8199,
+          "dL": {
+            "mean": 0.001817,
+            "p50": 0.001787,
+            "p95": 0.005008,
+            "p99": 0.006885,
+            "max": 0.010767
+          },
+          "dC": {
+            "mean": 0.000909,
+            "p50": 0.000603,
+            "p95": 0.003723,
+            "p99": 0.006698,
+            "max": 0.008508
+          },
+          "dE": {
+            "mean": 0.003517,
+            "p50": 0.002554,
+            "p95": 0.014024,
+            "p99": 0.02041,
+            "max": 0.025771
+          },
+          "dRgb8": {
+            "mean": 1.606299,
+            "p50": 1,
+            "p95": 6,
+            "p99": 10,
+            "max": 12
+          }
+        },
+        {
+          "fromFrame": 1,
+          "toFrame": 2,
+          "gapMs": 3000,
+          "n": 1016,
+          "changedPx": 798,
+          "changedFrac": 0.7854,
+          "dL": {
+            "mean": 0.001543,
+            "p50": 0.001125,
+            "p95": 0.004709,
+            "p99": 0.007978,
+            "max": 0.011248
+          },
+          "dC": {
+            "mean": 0.000711,
+            "p50": 0.000509,
+            "p95": 0.001784,
+            "p99": 0.004461,
+            "max": 0.008882
+          },
+          "dE": {
+            "mean": 0.002557,
+            "p50": 0.002102,
+            "p95": 0.007439,
+            "p99": 0.013065,
+            "max": 0.026854
+          },
+          "dRgb8": {
+            "mean": 1.200787,
+            "p50": 1,
+            "p95": 3,
+            "p99": 6,
+            "max": 13
+          }
+        },
+        {
+          "fromFrame": 2,
+          "toFrame": 3,
+          "gapMs": 5000,
+          "n": 1016,
+          "changedPx": 905,
+          "changedFrac": 0.8907,
+          "dL": {
+            "mean": 0.002869,
+            "p50": 0.001761,
+            "p95": 0.011044,
+            "p99": 0.014336,
+            "max": 0.017347
+          },
+          "dC": {
+            "mean": 0.001496,
+            "p50": 0.000648,
+            "p95": 0.008004,
+            "p99": 0.01122,
+            "max": 0.013881
+          },
+          "dE": {
+            "mean": 0.006161,
+            "p50": 0.003048,
+            "p95": 0.025796,
+            "p99": 0.033307,
+            "max": 0.039754
+          },
+          "dRgb8": {
+            "mean": 2.780512,
+            "p50": 1,
+            "p95": 12,
+            "p99": 14,
+            "max": 15
+          }
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "id": "shell-display-light",
+      "subject": "shell-display",
+      "route": "/display",
+      "kind": "shell",
+      "theme": "light",
+      "prm": false,
+      "note": "non-focal landing; shell field at the display hue",
+      "beacon": {
+        "settledNodes": 1,
+        "settled": true,
+        "canvases": [
+          {
+            "cls": "aurora-canvas block h-full w-full aurora-canvas--armed",
+            "armed": true,
+            "intrinsic": {
+              "w": 1440,
+              "h": 900
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 900
+            },
+            "opacity": "1"
+          }
+        ],
+        "rendererStatusText": null,
+        "htmlClass": "",
+        "dpr": 1,
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "prm": false
+      },
+      "pointMode": "field-visible grid (elementFromPoint + transparent-ancestor walk), step 12px",
+      "samplePoints": 2516,
+      "frames": [
+        {
+          "name": "pi-FIELD-shell-display-light-f0.png",
+          "elapsedMs": 0
+        },
+        {
+          "name": "pi-FIELD-shell-display-light-f1.png",
+          "elapsedMs": 2000
+        },
+        {
+          "name": "pi-FIELD-shell-display-light-f2.png",
+          "elapsedMs": 5000
+        },
+        {
+          "name": "pi-FIELD-shell-display-light-f3.png",
+          "elapsedMs": 10000
+        }
+      ],
+      "staticRange_t0": {
+        "n": 2516,
+        "L": {
+          "mean": 0.91255,
+          "sd": 0.01356,
+          "min": 0.84683,
+          "p01": 0.86454,
+          "p50": 0.91607,
+          "p99": 0.93343,
+          "max": 0.94224,
+          "span": 0.0954,
+          "span98": 0.0689
+        },
+        "C": {
+          "mean": 0.02282,
+          "sd": 0.00162,
+          "min": 0.01893,
+          "p50": 0.02326,
+          "p95": 0.0251,
+          "p99": 0.02616,
+          "max": 0.02629
+        },
+        "hueMeanDeg": 68.11,
+        "uniqueRgb": 330
+      },
+      "drift": [
+        {
+          "vsT0AfterMs": 2000,
+          "n": 2516,
+          "changedPx": 501,
+          "changedFrac": 0.1991,
+          "dL": {
+            "mean": 0.000203,
+            "p50": 0,
+            "p95": 0.001957,
+            "p99": 0.001965,
+            "max": 0.002217
+          },
+          "dC": {
+            "mean": 0.000175,
+            "p50": 0,
+            "p95": 0.001107,
+            "p99": 0.00145,
+            "max": 0.001913
+          },
+          "dE": {
+            "mean": 0.000402,
+            "p50": 0,
+            "p95": 0.002607,
+            "p99": 0.003322,
+            "max": 0.003354
+          },
+          "dRgb8": {
+            "mean": 0.199523,
+            "p50": 0,
+            "p95": 1,
+            "p99": 1,
+            "max": 2
+          }
+        },
+        {
+          "vsT0AfterMs": 5000,
+          "n": 2516,
+          "changedPx": 669,
+          "changedFrac": 0.2659,
+          "dL": {
+            "mean": 0.000284,
+            "p50": 0,
+            "p95": 0.001958,
+            "p99": 0.001968,
+            "max": 0.002217
+          },
+          "dC": {
+            "mean": 0.000288,
+            "p50": 0,
+            "p95": 0.001449,
+            "p99": 0.002593,
+            "max": 0.002816
+          },
+          "dE": {
+            "mean": 0.000611,
+            "p50": 0,
+            "p95": 0.003319,
+            "p99": 0.004348,
+            "max": 0.004369
+          },
+          "dRgb8": {
+            "mean": 0.300079,
+            "p50": 0,
+            "p95": 1,
+            "p99": 2,
+            "max": 2
+          }
+        },
+        {
+          "vsT0AfterMs": 10000,
+          "n": 2516,
+          "changedPx": 736,
+          "changedFrac": 0.2925,
+          "dL": {
+            "mean": 0.000294,
+            "p50": 0,
+            "p95": 0.001957,
+            "p99": 0.001966,
+            "max": 0.002226
+          },
+          "dC": {
+            "mean": 0.000308,
+            "p50": 0,
+            "p95": 0.001449,
+            "p99": 0.002556,
+            "max": 0.003268
+          },
+          "dE": {
+            "mean": 0.00064,
+            "p50": 0,
+            "p95": 0.003318,
+            "p99": 0.004343,
+            "max": 0.005526
+          },
+          "dRgb8": {
+            "mean": 0.31717,
+            "p50": 0,
+            "p95": 1,
+            "p99": 2,
+            "max": 3
+          }
+        }
+      ],
+      "consecutive": [
+        {
+          "fromFrame": 0,
+          "toFrame": 1,
+          "gapMs": 2000,
+          "n": 2516,
+          "changedPx": 501,
+          "changedFrac": 0.1991,
+          "dL": {
+            "mean": 0.000203,
+            "p50": 0,
+            "p95": 0.001957,
+            "p99": 0.001965,
+            "max": 0.002217
+          },
+          "dC": {
+            "mean": 0.000175,
+            "p50": 0,
+            "p95": 0.001107,
+            "p99": 0.00145,
+            "max": 0.001913
+          },
+          "dE": {
+            "mean": 0.000402,
+            "p50": 0,
+            "p95": 0.002607,
+            "p99": 0.003322,
+            "max": 0.003354
+          },
+          "dRgb8": {
+            "mean": 0.199523,
+            "p50": 0,
+            "p95": 1,
+            "p99": 1,
+            "max": 2
+          }
+        },
+        {
+          "fromFrame": 1,
+          "toFrame": 2,
+          "gapMs": 3000,
+          "n": 2516,
+          "changedPx": 566,
+          "changedFrac": 0.225,
+          "dL": {
+            "mean": 0.000241,
+            "p50": 0,
+            "p95": 0.001958,
+            "p99": 0.001966,
+            "max": 0.002211
+          },
+          "dC": {
+            "mean": 0.000205,
+            "p50": 0,
+            "p95": 0.001121,
+            "p99": 0.001589,
+            "max": 0.002776
+          },
+          "dE": {
+            "mean": 0.000473,
+            "p50": 0,
+            "p95": 0.002609,
+            "p99": 0.003337,
+            "max": 0.004367
+          },
+          "dRgb8": {
+            "mean": 0.233704,
+            "p50": 0,
+            "p95": 1,
+            "p99": 1,
+            "max": 2
+          }
+        },
+        {
+          "fromFrame": 2,
+          "toFrame": 3,
+          "gapMs": 5000,
+          "n": 2516,
+          "changedPx": 808,
+          "changedFrac": 0.3211,
+          "dL": {
+            "mean": 0.000318,
+            "p50": 0,
+            "p95": 0.00196,
+            "p99": 0.001969,
+            "max": 0.002228
+          },
+          "dC": {
+            "mean": 0.00029,
+            "p50": 0,
+            "p95": 0.001128,
+            "p99": 0.001526,
+            "max": 0.002704
+          },
+          "dE": {
+            "mean": 0.000646,
+            "p50": 0,
+            "p95": 0.002616,
+            "p99": 0.003332,
+            "max": 0.004392
+          },
+          "dRgb8": {
+            "mean": 0.326312,
+            "p50": 0,
+            "p95": 1,
+            "p99": 1,
+            "max": 2
+          }
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "id": "studio-aurora-light",
+      "subject": "studio-aurora",
+      "theme": "light",
+      "prm": false,
+      "error": "TimeoutError: page.waitForSelector: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-settled]') to be visible\u001b[22m\n"
+    },
+    {
+      "id": "shell-substrates-dark",
+      "subject": "shell-substrates",
+      "route": "/substrates",
+      "kind": "shell",
+      "theme": "dark",
+      "prm": false,
+      "note": "non-focal landing; shell field at the substrates hue",
+      "beacon": {
+        "settledNodes": 1,
+        "settled": true,
+        "canvases": [
+          {
+            "cls": "aurora-canvas block h-full w-full aurora-canvas--armed",
+            "armed": true,
+            "intrinsic": {
+              "w": 1440,
+              "h": 900
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 900
+            },
+            "opacity": "1"
+          }
+        ],
+        "rendererStatusText": null,
+        "htmlClass": "dark",
+        "dpr": 1,
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "prm": false
+      },
+      "pointMode": "field-visible grid (elementFromPoint + transparent-ancestor walk), step 12px",
+      "samplePoints": 1016,
+      "frames": [
+        {
+          "name": "pi-FIELD-shell-substrates-dark-f0.png",
+          "elapsedMs": 0
+        },
+        {
+          "name": "pi-FIELD-shell-substrates-dark-f1.png",
+          "elapsedMs": 2000
+        },
+        {
+          "name": "pi-FIELD-shell-substrates-dark-f2.png",
+          "elapsedMs": 5000
+        },
+        {
+          "name": "pi-FIELD-shell-substrates-dark-f3.png",
+          "elapsedMs": 10000
+        }
+      ],
+      "staticRange_t0": {
+        "n": 1016,
+        "L": {
+          "mean": 0.56802,
+          "sd": 0.01136,
+          "min": 0.55004,
+          "p01": 0.55004,
+          "p50": 0.5707,
+          "p99": 0.59007,
+          "max": 0.59374,
+          "span": 0.0437,
+          "span98": 0.04003
+        },
+        "C": {
+          "mean": 0.07189,
+          "sd": 0.00846,
+          "min": 0.05761,
+          "p50": 0.07592,
+          "p95": 0.08035,
+          "p99": 0.08074,
+          "max": 0.08104
+        },
+        "hueMeanDeg": 61.3,
+        "uniqueRgb": 184
+      },
+      "drift": [
+        {
+          "vsT0AfterMs": 2000,
+          "n": 1016,
+          "changedPx": 822,
+          "changedFrac": 0.8091,
+          "dL": {
+            "mean": 0.001986,
+            "p50": 0.001938,
+            "p95": 0.005464,
+            "p99": 0.008054,
+            "max": 0.012159
+          },
+          "dC": {
+            "mean": 0.000849,
+            "p50": 0.000689,
+            "p95": 0.003176,
+            "p99": 0.005618,
+            "max": 0.007181
+          },
+          "dE": {
+            "mean": 0.003742,
+            "p50": 0.002733,
+            "p95": 0.014331,
+            "p99": 0.021483,
+            "max": 0.026243
+          },
+          "dRgb8": {
+            "mean": 1.61122,
+            "p50": 1,
+            "p95": 6,
+            "p99": 10,
+            "max": 11
+          }
+        },
+        {
+          "vsT0AfterMs": 5000,
+          "n": 1016,
+          "changedPx": 903,
+          "changedFrac": 0.8888,
+          "dL": {
+            "mean": 0.00233,
+            "p50": 0.001938,
+            "p95": 0.006041,
+            "p99": 0.009693,
+            "max": 0.013396
+          },
+          "dC": {
+            "mean": 0.00092,
+            "p50": 0.000701,
+            "p95": 0.002705,
+            "p99": 0.00659,
+            "max": 0.00964
+          },
+          "dE": {
+            "mean": 0.004042,
+            "p50": 0.002738,
+            "p95": 0.011556,
+            "p99": 0.030181,
+            "max": 0.044086
+          },
+          "dRgb8": {
+            "mean": 1.73622,
+            "p50": 1,
+            "p95": 5,
+            "p99": 14,
+            "max": 20
+          }
+        },
+        {
+          "vsT0AfterMs": 10000,
+          "n": 1016,
+          "changedPx": 930,
+          "changedFrac": 0.9154,
+          "dL": {
+            "mean": 0.003757,
+            "p50": 0.001946,
+            "p95": 0.013901,
+            "p99": 0.019792,
+            "max": 0.024246
+          },
+          "dC": {
+            "mean": 0.001398,
+            "p50": 0.000683,
+            "p95": 0.006862,
+            "p99": 0.013635,
+            "max": 0.016778
+          },
+          "dE": {
+            "mean": 0.007422,
+            "p50": 0.003375,
+            "p95": 0.029667,
+            "p99": 0.056362,
+            "max": 0.068432
+          },
+          "dRgb8": {
+            "mean": 2.886811,
+            "p50": 1,
+            "p95": 11,
+            "p99": 20,
+            "max": 28
+          }
+        }
+      ],
+      "consecutive": [
+        {
+          "fromFrame": 0,
+          "toFrame": 1,
+          "gapMs": 2000,
+          "n": 1016,
+          "changedPx": 822,
+          "changedFrac": 0.8091,
+          "dL": {
+            "mean": 0.001986,
+            "p50": 0.001938,
+            "p95": 0.005464,
+            "p99": 0.008054,
+            "max": 0.012159
+          },
+          "dC": {
+            "mean": 0.000849,
+            "p50": 0.000689,
+            "p95": 0.003176,
+            "p99": 0.005618,
+            "max": 0.007181
+          },
+          "dE": {
+            "mean": 0.003742,
+            "p50": 0.002733,
+            "p95": 0.014331,
+            "p99": 0.021483,
+            "max": 0.026243
+          },
+          "dRgb8": {
+            "mean": 1.61122,
+            "p50": 1,
+            "p95": 6,
+            "p99": 10,
+            "max": 11
+          }
+        },
+        {
+          "fromFrame": 1,
+          "toFrame": 2,
+          "gapMs": 3000,
+          "n": 1016,
+          "changedPx": 755,
+          "changedFrac": 0.7431,
+          "dL": {
+            "mean": 0.001577,
+            "p50": 0.001266,
+            "p95": 0.004468,
+            "p99": 0.008671,
+            "max": 0.012072
+          },
+          "dC": {
+            "mean": 0.000623,
+            "p50": 0.000334,
+            "p95": 0.001738,
+            "p99": 0.003894,
+            "max": 0.00703
+          },
+          "dE": {
+            "mean": 0.00258,
+            "p50": 0.002209,
+            "p95": 0.008039,
+            "p99": 0.014669,
+            "max": 0.030425
+          },
+          "dRgb8": {
+            "mean": 1.08563,
+            "p50": 1,
+            "p95": 3,
+            "p99": 6,
+            "max": 13
+          }
+        },
+        {
+          "fromFrame": 2,
+          "toFrame": 3,
+          "gapMs": 5000,
+          "n": 1016,
+          "changedPx": 883,
+          "changedFrac": 0.8691,
+          "dL": {
+            "mean": 0.0031,
+            "p50": 0.002019,
+            "p95": 0.011241,
+            "p99": 0.015627,
+            "max": 0.018945
+          },
+          "dC": {
+            "mean": 0.001219,
+            "p50": 0.00047,
+            "p95": 0.006431,
+            "p99": 0.008897,
+            "max": 0.010085
+          },
+          "dE": {
+            "mean": 0.006428,
+            "p50": 0.002906,
+            "p95": 0.027327,
+            "p99": 0.035113,
+            "max": 0.037744
+          },
+          "dRgb8": {
+            "mean": 2.642717,
+            "p50": 1,
+            "p95": 12,
+            "p99": 14,
+            "max": 15
+          }
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "id": "shell-display-dark",
+      "subject": "shell-display",
+      "route": "/display",
+      "kind": "shell",
+      "theme": "dark",
+      "prm": false,
+      "note": "non-focal landing; shell field at the display hue",
+      "beacon": {
+        "settledNodes": 1,
+        "settled": true,
+        "canvases": [
+          {
+            "cls": "aurora-canvas block h-full w-full aurora-canvas--armed",
+            "armed": true,
+            "intrinsic": {
+              "w": 1440,
+              "h": 900
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 900
+            },
+            "opacity": "1"
+          }
+        ],
+        "rendererStatusText": null,
+        "htmlClass": "dark",
+        "dpr": 1,
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "prm": false
+      },
+      "pointMode": "field-visible grid (elementFromPoint + transparent-ancestor walk), step 12px",
+      "samplePoints": 2516,
+      "frames": [
+        {
+          "name": "pi-FIELD-shell-display-dark-f0.png",
+          "elapsedMs": 0
+        },
+        {
+          "name": "pi-FIELD-shell-display-dark-f1.png",
+          "elapsedMs": 2000
+        },
+        {
+          "name": "pi-FIELD-shell-display-dark-f2.png",
+          "elapsedMs": 5000
+        },
+        {
+          "name": "pi-FIELD-shell-display-dark-f3.png",
+          "elapsedMs": 10000
+        }
+      ],
+      "staticRange_t0": {
+        "n": 2516,
+        "L": {
+          "mean": 0.33983,
+          "sd": 0.01345,
+          "min": 0.30504,
+          "p01": 0.31171,
+          "p50": 0.33954,
+          "p99": 0.38569,
+          "max": 0.39724,
+          "span": 0.09219,
+          "span98": 0.07398
+        },
+        "C": {
+          "mean": 0.01844,
+          "sd": 0.00267,
+          "min": 0.01185,
+          "p50": 0.01856,
+          "p95": 0.02289,
+          "p99": 0.0242,
+          "max": 0.02462
+        },
+        "hueMeanDeg": 59.44,
+        "uniqueRgb": 412
+      },
+      "drift": [
+        {
+          "vsT0AfterMs": 2000,
+          "n": 2516,
+          "changedPx": 2297,
+          "changedFrac": 0.913,
+          "dL": {
+            "mean": 0.005364,
+            "p50": 0.004222,
+            "p95": 0.012825,
+            "p99": 0.017746,
+            "max": 0.021559
+          },
+          "dC": {
+            "mean": 0.001205,
+            "p50": 0.00113,
+            "p95": 0.00334,
+            "p99": 0.004267,
+            "max": 0.005663
+          },
+          "dE": {
+            "mean": 0.005911,
+            "p50": 0.004632,
+            "p95": 0.013267,
+            "p99": 0.01804,
+            "max": 0.021841
+          },
+          "dRgb8": {
+            "mean": 2.117647,
+            "p50": 2,
+            "p95": 4,
+            "p99": 5,
+            "max": 6
+          }
+        },
+        {
+          "vsT0AfterMs": 5000,
+          "n": 2516,
+          "changedPx": 2338,
+          "changedFrac": 0.9293,
+          "dL": {
+            "mean": 0.005925,
+            "p50": 0.004524,
+            "p95": 0.014634,
+            "p99": 0.018592,
+            "max": 0.029103
+          },
+          "dC": {
+            "mean": 0.001346,
+            "p50": 0.001143,
+            "p95": 0.003491,
+            "p99": 0.006336,
+            "max": 0.00806
+          },
+          "dE": {
+            "mean": 0.006528,
+            "p50": 0.005645,
+            "p95": 0.01509,
+            "p99": 0.019217,
+            "max": 0.029527
+          },
+          "dRgb8": {
+            "mean": 2.269078,
+            "p50": 2,
+            "p95": 5,
+            "p99": 6,
+            "max": 8
+          }
+        },
+        {
+          "vsT0AfterMs": 10000,
+          "n": 2516,
+          "changedPx": 2343,
+          "changedFrac": 0.9312,
+          "dL": {
+            "mean": 0.005969,
+            "p50": 0.005049,
+            "p95": 0.014573,
+            "p99": 0.018739,
+            "max": 0.028719
+          },
+          "dC": {
+            "mean": 0.001327,
+            "p50": 0.001143,
+            "p95": 0.003497,
+            "p99": 0.005253,
+            "max": 0.008087
+          },
+          "dE": {
+            "mean": 0.006585,
+            "p50": 0.005831,
+            "p95": 0.014674,
+            "p99": 0.019082,
+            "max": 0.029459
+          },
+          "dRgb8": {
+            "mean": 2.286566,
+            "p50": 2,
+            "p95": 5,
+            "p99": 6,
+            "max": 8
+          }
+        }
+      ],
+      "consecutive": [
+        {
+          "fromFrame": 0,
+          "toFrame": 1,
+          "gapMs": 2000,
+          "n": 2516,
+          "changedPx": 2297,
+          "changedFrac": 0.913,
+          "dL": {
+            "mean": 0.005364,
+            "p50": 0.004222,
+            "p95": 0.012825,
+            "p99": 0.017746,
+            "max": 0.021559
+          },
+          "dC": {
+            "mean": 0.001205,
+            "p50": 0.00113,
+            "p95": 0.00334,
+            "p99": 0.004267,
+            "max": 0.005663
+          },
+          "dE": {
+            "mean": 0.005911,
+            "p50": 0.004632,
+            "p95": 0.013267,
+            "p99": 0.01804,
+            "max": 0.021841
+          },
+          "dRgb8": {
+            "mean": 2.117647,
+            "p50": 2,
+            "p95": 4,
+            "p99": 5,
+            "max": 6
+          }
+        },
+        {
+          "fromFrame": 1,
+          "toFrame": 2,
+          "gapMs": 3000,
+          "n": 2516,
+          "changedPx": 2284,
+          "changedFrac": 0.9078,
+          "dL": {
+            "mean": 0.005529,
+            "p50": 0.00422,
+            "p95": 0.014539,
+            "p99": 0.018489,
+            "max": 0.0215
+          },
+          "dC": {
+            "mean": 0.001269,
+            "p50": 0.001139,
+            "p95": 0.00342,
+            "p99": 0.004467,
+            "max": 0.008059
+          },
+          "dE": {
+            "mean": 0.006108,
+            "p50": 0.005158,
+            "p95": 0.014664,
+            "p99": 0.018568,
+            "max": 0.021782
+          },
+          "dRgb8": {
+            "mean": 2.185612,
+            "p50": 2,
+            "p95": 5,
+            "p99": 6,
+            "max": 6
+          }
+        },
+        {
+          "fromFrame": 2,
+          "toFrame": 3,
+          "gapMs": 5000,
+          "n": 2516,
+          "changedPx": 2336,
+          "changedFrac": 0.9285,
+          "dL": {
+            "mean": 0.005873,
+            "p50": 0.004832,
+            "p95": 0.014551,
+            "p99": 0.018594,
+            "max": 0.024229
+          },
+          "dC": {
+            "mean": 0.001307,
+            "p50": 0.001146,
+            "p95": 0.003464,
+            "p99": 0.004561,
+            "max": 0.006773
+          },
+          "dE": {
+            "mean": 0.006491,
+            "p50": 0.005835,
+            "p95": 0.014674,
+            "p99": 0.018899,
+            "max": 0.024629
+          },
+          "dRgb8": {
+            "mean": 2.268283,
+            "p50": 2,
+            "p95": 5,
+            "p99": 6,
+            "max": 7
+          }
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "id": "studio-aurora-dark",
+      "subject": "studio-aurora",
+      "theme": "dark",
+      "prm": false,
+      "error": "TimeoutError: page.waitForSelector: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-settled]') to be visible\u001b[22m\n"
+    },
+    {
+      "id": "shell-substrates-light-prm",
+      "subject": "shell-substrates",
+      "route": "/substrates",
+      "kind": "shell",
+      "theme": "light",
+      "prm": true,
+      "note": "non-focal landing; shell field at the substrates hue",
+      "beacon": {
+        "settledNodes": 1,
+        "settled": true,
+        "canvases": [
+          {
+            "cls": "aurora-canvas block h-full w-full aurora-canvas--armed",
+            "armed": true,
+            "intrinsic": {
+              "w": 1440,
+              "h": 900
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 900
+            },
+            "opacity": "1"
+          }
+        ],
+        "rendererStatusText": null,
+        "htmlClass": "",
+        "dpr": 1,
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "prm": true
+      },
+      "pointMode": "field-visible grid (elementFromPoint + transparent-ancestor walk), step 12px",
+      "samplePoints": 1016,
+      "frames": [
+        {
+          "name": "pi-FIELD-shell-substrates-light-prm-f0.png",
+          "elapsedMs": 0
+        },
+        {
+          "name": "pi-FIELD-shell-substrates-light-prm-f1.png",
+          "elapsedMs": 2000
+        },
+        {
+          "name": "pi-FIELD-shell-substrates-light-prm-f2.png",
+          "elapsedMs": 5000
+        },
+        {
+          "name": "pi-FIELD-shell-substrates-light-prm-f3.png",
+          "elapsedMs": 10000
+        }
+      ],
+      "staticRange_t0": {
+        "n": 1016,
+        "L": {
+          "mean": 0.87065,
+          "sd": 0.01548,
+          "min": 0.82211,
+          "p01": 0.82325,
+          "p50": 0.87654,
+          "p99": 0.89623,
+          "max": 0.8984,
+          "span": 0.07629,
+          "span98": 0.07298
+        },
+        "C": {
+          "mean": 0.06661,
+          "sd": 0.00994,
+          "min": 0.05185,
+          "p50": 0.0729,
+          "p95": 0.07661,
+          "p99": 0.0769,
+          "max": 0.07744
+        },
+        "hueMeanDeg": 63.37,
+        "uniqueRgb": 200
+      },
+      "drift": [
+        {
+          "vsT0AfterMs": 2000,
+          "n": 1016,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "vsT0AfterMs": 5000,
+          "n": 1016,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "vsT0AfterMs": 10000,
+          "n": 1016,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        }
+      ],
+      "consecutive": [
+        {
+          "fromFrame": 0,
+          "toFrame": 1,
+          "gapMs": 2000,
+          "n": 1016,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "fromFrame": 1,
+          "toFrame": 2,
+          "gapMs": 3000,
+          "n": 1016,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "fromFrame": 2,
+          "toFrame": 3,
+          "gapMs": 5000,
+          "n": 1016,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "id": "shell-display-light-prm",
+      "subject": "shell-display",
+      "route": "/display",
+      "kind": "shell",
+      "theme": "light",
+      "prm": true,
+      "note": "non-focal landing; shell field at the display hue",
+      "beacon": {
+        "settledNodes": 1,
+        "settled": true,
+        "canvases": [
+          {
+            "cls": "aurora-canvas block h-full w-full aurora-canvas--armed",
+            "armed": true,
+            "intrinsic": {
+              "w": 1440,
+              "h": 900
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 900
+            },
+            "opacity": "1"
+          }
+        ],
+        "rendererStatusText": null,
+        "htmlClass": "",
+        "dpr": 1,
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "prm": true
+      },
+      "pointMode": "field-visible grid (elementFromPoint + transparent-ancestor walk), step 12px",
+      "samplePoints": 2516,
+      "frames": [
+        {
+          "name": "pi-FIELD-shell-display-light-prm-f0.png",
+          "elapsedMs": 0
+        },
+        {
+          "name": "pi-FIELD-shell-display-light-prm-f1.png",
+          "elapsedMs": 2000
+        },
+        {
+          "name": "pi-FIELD-shell-display-light-prm-f2.png",
+          "elapsedMs": 5000
+        },
+        {
+          "name": "pi-FIELD-shell-display-light-prm-f3.png",
+          "elapsedMs": 10000
+        }
+      ],
+      "staticRange_t0": {
+        "n": 2516,
+        "L": {
+          "mean": 0.9126,
+          "sd": 0.01356,
+          "min": 0.84683,
+          "p01": 0.86454,
+          "p50": 0.91607,
+          "p99": 0.93343,
+          "max": 0.94198,
+          "span": 0.09515,
+          "span98": 0.0689
+        },
+        "C": {
+          "mean": 0.02285,
+          "sd": 0.00163,
+          "min": 0.01891,
+          "p50": 0.0233,
+          "p95": 0.0251,
+          "p99": 0.02618,
+          "max": 0.02629
+        },
+        "hueMeanDeg": 68.26,
+        "uniqueRgb": 330
+      },
+      "drift": [
+        {
+          "vsT0AfterMs": 2000,
+          "n": 2516,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "vsT0AfterMs": 5000,
+          "n": 2516,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "vsT0AfterMs": 10000,
+          "n": 2516,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        }
+      ],
+      "consecutive": [
+        {
+          "fromFrame": 0,
+          "toFrame": 1,
+          "gapMs": 2000,
+          "n": 2516,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "fromFrame": 1,
+          "toFrame": 2,
+          "gapMs": 3000,
+          "n": 2516,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "fromFrame": 2,
+          "toFrame": 3,
+          "gapMs": 5000,
+          "n": 2516,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "id": "studio-aurora-light-prm",
+      "subject": "studio-aurora",
+      "theme": "light",
+      "prm": true,
+      "error": "TimeoutError: page.waitForSelector: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-settled]') to be visible\u001b[22m\n"
+    },
+    {
+      "id": "shell-substrates-dark-prm",
+      "subject": "shell-substrates",
+      "route": "/substrates",
+      "kind": "shell",
+      "theme": "dark",
+      "prm": true,
+      "note": "non-focal landing; shell field at the substrates hue",
+      "beacon": {
+        "settledNodes": 1,
+        "settled": true,
+        "canvases": [
+          {
+            "cls": "aurora-canvas block h-full w-full aurora-canvas--armed",
+            "armed": true,
+            "intrinsic": {
+              "w": 1440,
+              "h": 900
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 900
+            },
+            "opacity": "1"
+          }
+        ],
+        "rendererStatusText": null,
+        "htmlClass": "dark",
+        "dpr": 1,
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "prm": true
+      },
+      "pointMode": "field-visible grid (elementFromPoint + transparent-ancestor walk), step 12px",
+      "samplePoints": 1016,
+      "frames": [
+        {
+          "name": "pi-FIELD-shell-substrates-dark-prm-f0.png",
+          "elapsedMs": 0
+        },
+        {
+          "name": "pi-FIELD-shell-substrates-dark-prm-f1.png",
+          "elapsedMs": 2000
+        },
+        {
+          "name": "pi-FIELD-shell-substrates-dark-prm-f2.png",
+          "elapsedMs": 5000
+        },
+        {
+          "name": "pi-FIELD-shell-substrates-dark-prm-f3.png",
+          "elapsedMs": 10000
+        }
+      ],
+      "staticRange_t0": {
+        "n": 1016,
+        "L": {
+          "mean": 0.56859,
+          "sd": 0.01114,
+          "min": 0.55004,
+          "p01": 0.55133,
+          "p50": 0.57089,
+          "p99": 0.59109,
+          "max": 0.59326,
+          "span": 0.04323,
+          "span98": 0.03976
+        },
+        "C": {
+          "mean": 0.07186,
+          "sd": 0.00854,
+          "min": 0.05761,
+          "p50": 0.07611,
+          "p95": 0.08033,
+          "p99": 0.08074,
+          "max": 0.08102
+        },
+        "hueMeanDeg": 61.5,
+        "uniqueRgb": 189
+      },
+      "drift": [
+        {
+          "vsT0AfterMs": 2000,
+          "n": 1016,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "vsT0AfterMs": 5000,
+          "n": 1016,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "vsT0AfterMs": 10000,
+          "n": 1016,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        }
+      ],
+      "consecutive": [
+        {
+          "fromFrame": 0,
+          "toFrame": 1,
+          "gapMs": 2000,
+          "n": 1016,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "fromFrame": 1,
+          "toFrame": 2,
+          "gapMs": 3000,
+          "n": 1016,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "fromFrame": 2,
+          "toFrame": 3,
+          "gapMs": 5000,
+          "n": 1016,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "id": "shell-display-dark-prm",
+      "subject": "shell-display",
+      "route": "/display",
+      "kind": "shell",
+      "theme": "dark",
+      "prm": true,
+      "note": "non-focal landing; shell field at the display hue",
+      "beacon": {
+        "settledNodes": 1,
+        "settled": true,
+        "canvases": [
+          {
+            "cls": "aurora-canvas block h-full w-full aurora-canvas--armed",
+            "armed": true,
+            "intrinsic": {
+              "w": 1440,
+              "h": 900
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 900
+            },
+            "opacity": "1"
+          }
+        ],
+        "rendererStatusText": null,
+        "htmlClass": "dark",
+        "dpr": 1,
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "prm": true
+      },
+      "pointMode": "field-visible grid (elementFromPoint + transparent-ancestor walk), step 12px",
+      "samplePoints": 2516,
+      "frames": [
+        {
+          "name": "pi-FIELD-shell-display-dark-prm-f0.png",
+          "elapsedMs": 0
+        },
+        {
+          "name": "pi-FIELD-shell-display-dark-prm-f1.png",
+          "elapsedMs": 2000
+        },
+        {
+          "name": "pi-FIELD-shell-display-dark-prm-f2.png",
+          "elapsedMs": 5000
+        },
+        {
+          "name": "pi-FIELD-shell-display-dark-prm-f3.png",
+          "elapsedMs": 10000
+        }
+      ],
+      "staticRange_t0": {
+        "n": 2516,
+        "L": {
+          "mean": 0.33977,
+          "sd": 0.01352,
+          "min": 0.30256,
+          "p01": 0.31051,
+          "p50": 0.33954,
+          "p99": 0.38677,
+          "max": 0.39831,
+          "span": 0.09575,
+          "span98": 0.07626
+        },
+        "C": {
+          "mean": 0.01859,
+          "sd": 0.00273,
+          "min": 0.01185,
+          "p50": 0.01872,
+          "p95": 0.02307,
+          "p99": 0.0242,
+          "max": 0.02548
+        },
+        "hueMeanDeg": 59.63,
+        "uniqueRgb": 422
+      },
+      "drift": [
+        {
+          "vsT0AfterMs": 2000,
+          "n": 2516,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "vsT0AfterMs": 5000,
+          "n": 2516,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "vsT0AfterMs": 10000,
+          "n": 2516,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        }
+      ],
+      "consecutive": [
+        {
+          "fromFrame": 0,
+          "toFrame": 1,
+          "gapMs": 2000,
+          "n": 2516,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "fromFrame": 1,
+          "toFrame": 2,
+          "gapMs": 3000,
+          "n": 2516,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        },
+        {
+          "fromFrame": 2,
+          "toFrame": 3,
+          "gapMs": 5000,
+          "n": 2516,
+          "changedPx": 0,
+          "changedFrac": 0,
+          "dL": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dC": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dE": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          },
+          "dRgb8": {
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0
+          }
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "id": "studio-aurora-dark-prm",
+      "subject": "studio-aurora",
+      "theme": "dark",
+      "prm": true,
+      "error": "TimeoutError: page.waitForSelector: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-settled]') to be visible\u001b[22m\n"
+    }
+  ],
+  "partB": {
+    "note": "studio arms + the drift bracket; the part-A studio arms timed out on the below-fold deferred init and are superseded by these",
+    "harnessFact": "at 1440×900 the /substrates/aurora stage is below the fold (aurora-root y≈936); the deferred init does not arm, the canvas stays 300×150, the renderer status parks at 'WebGPU·Acquiring adapter', requestAdapter is never called and data-aurora-settled never stamps until the stage is scrolled into view",
+    "arms": [
+      {
+        "id": "studio-aurora-light",
+        "subject": "studio-aurora",
+        "route": "/substrates/aurora?probe=1",
+        "kind": "studio",
+        "theme": "light",
+        "prm": false,
+        "state": {
+          "settled": true,
+          "substrate": "webgl",
+          "canvasArmed": true,
+          "canvasIntrinsic": {
+            "w": 830,
+            "h": 246
+          },
+          "canvasRect": {
+            "x": 145,
+            "y": 412.33,
+            "w": 830,
+            "h": 245.88
+          },
+          "rendererStatus": null,
+          "liveDriftAxes": {
+            "Nuclei drift": 0.022,
+            "Palette drift": 0.016,
+            "Breath depth": 0.05,
+            "Breath period": 44,
+            "Warp drift": 0.008
+          },
+          "allSliderCount": 79,
+          "prm": false,
+          "htmlClass": "",
+          "dpr": 1,
+          "glFamily": [
+            "webgl2->WebGL2RenderingContext",
+            "webgl2->WebGL2RenderingContext",
+            "requestAdapter->",
+            "webgpu->GPUCanvasContext"
+          ]
+        },
+        "samplePoints": 20944,
+        "pointMode": "stage-canvas rect inset 8px, stride 3px",
+        "frames": [
+          {
+            "name": "pi-FIELD-studio-aurora-light-f0.png",
+            "elapsedMs": 0
+          },
+          {
+            "name": "pi-FIELD-studio-aurora-light-f1.png",
+            "elapsedMs": 2000
+          },
+          {
+            "name": "pi-FIELD-studio-aurora-light-f2.png",
+            "elapsedMs": 5000
+          },
+          {
+            "name": "pi-FIELD-studio-aurora-light-f3.png",
+            "elapsedMs": 10000
+          }
+        ],
+        "staticRange_t0": {
+          "n": 20944,
+          "L": {
+            "mean": 0.80361,
+            "sd": 0.05535,
+            "min": 0.62714,
+            "p01": 0.66251,
+            "p50": 0.83563,
+            "p99": 0.8549,
+            "max": 0.85683,
+            "span": 0.22969,
+            "span98": 0.19239
+          },
+          "C": {
+            "mean": 0.11862,
+            "sd": 0.01448,
+            "min": 0.10162,
+            "p50": 0.11424,
+            "p95": 0.13929,
+            "p99": 0.148,
+            "max": 0.16005
+          },
+          "hueMeanDeg": 67.19,
+          "uniqueRgb": 927
+        },
+        "drift": [
+          {
+            "vsT0AfterMs": 2000,
+            "n": 20944,
+            "changedPx": 18871,
+            "changedFrac": 0.901,
+            "dL": {
+              "mean": 0.005631,
+              "p50": 0.003055,
+              "p95": 0.024217,
+              "p99": 0.039084,
+              "max": 0.064684
+            },
+            "dC": {
+              "mean": 0.001601,
+              "p50": 0.000942,
+              "p95": 0.005751,
+              "p99": 0.009495,
+              "max": 0.01754
+            },
+            "dE": {
+              "mean": 0.007428,
+              "p50": 0.00336,
+              "p95": 0.030963,
+              "p99": 0.056216,
+              "max": 0.092229
+            },
+            "dRgb8": {
+              "mean": 3.336134,
+              "p50": 2,
+              "p95": 12,
+              "p99": 20,
+              "max": 33
+            }
+          },
+          {
+            "vsT0AfterMs": 5000,
+            "n": 20944,
+            "changedPx": 20185,
+            "changedFrac": 0.9638,
+            "dL": {
+              "mean": 0.010329,
+              "p50": 0.005136,
+              "p95": 0.036698,
+              "p99": 0.062342,
+              "max": 0.094441
+            },
+            "dC": {
+              "mean": 0.003051,
+              "p50": 0.00188,
+              "p95": 0.009815,
+              "p99": 0.017151,
+              "max": 0.023549
+            },
+            "dE": {
+              "mean": 0.014575,
+              "p50": 0.007415,
+              "p95": 0.049224,
+              "p99": 0.088744,
+              "max": 0.130784
+            },
+            "dRgb8": {
+              "mean": 6.527072,
+              "p50": 4,
+              "p95": 19,
+              "p99": 32,
+              "max": 48
+            }
+          },
+          {
+            "vsT0AfterMs": 10000,
+            "n": 20944,
+            "changedPx": 20839,
+            "changedFrac": 0.995,
+            "dL": {
+              "mean": 0.018124,
+              "p50": 0.011302,
+              "p95": 0.054845,
+              "p99": 0.075566,
+              "max": 0.09371
+            },
+            "dC": {
+              "mean": 0.005519,
+              "p50": 0.00464,
+              "p95": 0.015423,
+              "p99": 0.021035,
+              "max": 0.024785
+            },
+            "dE": {
+              "mean": 0.024939,
+              "p50": 0.015025,
+              "p95": 0.072679,
+              "p99": 0.098782,
+              "max": 0.131721
+            },
+            "dRgb8": {
+              "mean": 11.379822,
+              "p50": 10,
+              "p95": 29,
+              "p99": 39,
+              "max": 48
+            }
+          }
+        ]
+      },
+      {
+        "id": "studio-aurora-dark",
+        "subject": "studio-aurora",
+        "route": "/substrates/aurora?probe=1",
+        "kind": "studio",
+        "theme": "dark",
+        "prm": false,
+        "state": {
+          "settled": true,
+          "substrate": "webgl",
+          "canvasArmed": true,
+          "canvasIntrinsic": {
+            "w": 830,
+            "h": 246
+          },
+          "canvasRect": {
+            "x": 145,
+            "y": 412.33,
+            "w": 830,
+            "h": 245.88
+          },
+          "rendererStatus": null,
+          "liveDriftAxes": {
+            "Nuclei drift": 0.022,
+            "Palette drift": 0.016,
+            "Breath depth": 0.05,
+            "Breath period": 44,
+            "Warp drift": 0.008
+          },
+          "allSliderCount": 79,
+          "prm": false,
+          "htmlClass": "dark",
+          "dpr": 1,
+          "glFamily": [
+            "webgl2->WebGL2RenderingContext",
+            "webgl2->WebGL2RenderingContext",
+            "requestAdapter->",
+            "webgpu->GPUCanvasContext"
+          ]
+        },
+        "samplePoints": 20944,
+        "pointMode": "stage-canvas rect inset 8px, stride 3px",
+        "frames": [
+          {
+            "name": "pi-FIELD-studio-aurora-dark-f0.png",
+            "elapsedMs": 0
+          },
+          {
+            "name": "pi-FIELD-studio-aurora-dark-f1.png",
+            "elapsedMs": 2000
+          },
+          {
+            "name": "pi-FIELD-studio-aurora-dark-f2.png",
+            "elapsedMs": 5000
+          },
+          {
+            "name": "pi-FIELD-studio-aurora-dark-f3.png",
+            "elapsedMs": 10000
+          }
+        ],
+        "staticRange_t0": {
+          "n": 20944,
+          "L": {
+            "mean": 0.80359,
+            "sd": 0.05537,
+            "min": 0.62561,
+            "p01": 0.66314,
+            "p50": 0.83563,
+            "p99": 0.8549,
+            "max": 0.85683,
+            "span": 0.23122,
+            "span98": 0.19176
+          },
+          "C": {
+            "mean": 0.11863,
+            "sd": 0.01449,
+            "min": 0.10162,
+            "p50": 0.11424,
+            "p95": 0.13934,
+            "p99": 0.148,
+            "max": 0.16019
+          },
+          "hueMeanDeg": 67.2,
+          "uniqueRgb": 933
+        },
+        "drift": [
+          {
+            "vsT0AfterMs": 2000,
+            "n": 20944,
+            "changedPx": 18863,
+            "changedFrac": 0.9006,
+            "dL": {
+              "mean": 0.005638,
+              "p50": 0.003055,
+              "p95": 0.024154,
+              "p99": 0.039192,
+              "max": 0.066617
+            },
+            "dC": {
+              "mean": 0.001615,
+              "p50": 0.000942,
+              "p95": 0.005736,
+              "p99": 0.009614,
+              "max": 0.017527
+            },
+            "dE": {
+              "mean": 0.007444,
+              "p50": 0.00336,
+              "p95": 0.030914,
+              "p99": 0.056682,
+              "max": 0.093802
+            },
+            "dRgb8": {
+              "mean": 3.351079,
+              "p50": 2,
+              "p95": 12,
+              "p99": 20,
+              "max": 34
+            }
+          },
+          {
+            "vsT0AfterMs": 5000,
+            "n": 20944,
+            "changedPx": 20236,
+            "changedFrac": 0.9662,
+            "dL": {
+              "mean": 0.010352,
+              "p50": 0.005134,
+              "p95": 0.036782,
+              "p99": 0.062705,
+              "max": 0.092079
+            },
+            "dC": {
+              "mean": 0.003057,
+              "p50": 0.001881,
+              "p95": 0.009873,
+              "p99": 0.017196,
+              "max": 0.023207
+            },
+            "dE": {
+              "mean": 0.014608,
+              "p50": 0.007441,
+              "p95": 0.049255,
+              "p99": 0.089007,
+              "max": 0.132207
+            },
+            "dRgb8": {
+              "mean": 6.548272,
+              "p50": 5,
+              "p95": 19,
+              "p99": 32,
+              "max": 48
+            }
+          },
+          {
+            "vsT0AfterMs": 10000,
+            "n": 20944,
+            "changedPx": 20847,
+            "changedFrac": 0.9954,
+            "dL": {
+              "mean": 0.01807,
+              "p50": 0.011293,
+              "p95": 0.05486,
+              "p99": 0.075651,
+              "max": 0.090912
+            },
+            "dC": {
+              "mean": 0.005511,
+              "p50": 0.004619,
+              "p95": 0.015436,
+              "p99": 0.021007,
+              "max": 0.025348
+            },
+            "dE": {
+              "mean": 0.02489,
+              "p50": 0.014976,
+              "p95": 0.07239,
+              "p99": 0.098706,
+              "max": 0.12941
+            },
+            "dRgb8": {
+              "mean": 11.365833,
+              "p50": 9,
+              "p95": 29,
+              "p99": 40,
+              "max": 47
+            }
+          }
+        ]
+      },
+      {
+        "id": "studio-aurora-light-prm",
+        "subject": "studio-aurora",
+        "route": "/substrates/aurora?probe=1",
+        "kind": "studio",
+        "theme": "light",
+        "prm": true,
+        "state": {
+          "settled": true,
+          "substrate": "webgl",
+          "canvasArmed": true,
+          "canvasIntrinsic": {
+            "w": 830,
+            "h": 246
+          },
+          "canvasRect": {
+            "x": 145,
+            "y": 412.33,
+            "w": 830,
+            "h": 245.88
+          },
+          "rendererStatus": null,
+          "liveDriftAxes": {
+            "Nuclei drift": 0.022,
+            "Palette drift": 0.016,
+            "Breath depth": 0.05,
+            "Breath period": 44,
+            "Warp drift": 0.008
+          },
+          "allSliderCount": 79,
+          "prm": true,
+          "htmlClass": "",
+          "dpr": 1,
+          "glFamily": [
+            "webgl2->WebGL2RenderingContext",
+            "webgl2->WebGL2RenderingContext",
+            "requestAdapter->",
+            "webgpu->GPUCanvasContext"
+          ]
+        },
+        "samplePoints": 20944,
+        "pointMode": "stage-canvas rect inset 8px, stride 3px",
+        "frames": [
+          {
+            "name": "pi-FIELD-studio-aurora-light-prm-f0.png",
+            "elapsedMs": 0
+          },
+          {
+            "name": "pi-FIELD-studio-aurora-light-prm-f1.png",
+            "elapsedMs": 2000
+          },
+          {
+            "name": "pi-FIELD-studio-aurora-light-prm-f2.png",
+            "elapsedMs": 5000
+          },
+          {
+            "name": "pi-FIELD-studio-aurora-light-prm-f3.png",
+            "elapsedMs": 10000
+          }
+        ],
+        "staticRange_t0": {
+          "n": 20944,
+          "L": {
+            "mean": 0.80548,
+            "sd": 0.05417,
+            "min": 0.6269,
+            "p01": 0.66701,
+            "p50": 0.83576,
+            "p99": 0.8549,
+            "max": 0.85683,
+            "span": 0.22993,
+            "span98": 0.1879
+          },
+          "C": {
+            "mean": 0.11812,
+            "sd": 0.0144,
+            "min": 0.10162,
+            "p50": 0.11381,
+            "p95": 0.13889,
+            "p99": 0.14671,
+            "max": 0.16016
+          },
+          "hueMeanDeg": 67.62,
+          "uniqueRgb": 899
+        },
+        "drift": [
+          {
+            "vsT0AfterMs": 2000,
+            "n": 20944,
+            "changedPx": 0,
+            "changedFrac": 0,
+            "dL": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dC": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dE": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dRgb8": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            }
+          },
+          {
+            "vsT0AfterMs": 5000,
+            "n": 20944,
+            "changedPx": 0,
+            "changedFrac": 0,
+            "dL": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dC": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dE": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dRgb8": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            }
+          },
+          {
+            "vsT0AfterMs": 10000,
+            "n": 20944,
+            "changedPx": 0,
+            "changedFrac": 0,
+            "dL": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dC": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dE": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dRgb8": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "studio-aurora-dark-prm",
+        "subject": "studio-aurora",
+        "route": "/substrates/aurora?probe=1",
+        "kind": "studio",
+        "theme": "dark",
+        "prm": true,
+        "state": {
+          "settled": true,
+          "substrate": "webgl",
+          "canvasArmed": true,
+          "canvasIntrinsic": {
+            "w": 830,
+            "h": 246
+          },
+          "canvasRect": {
+            "x": 145,
+            "y": 412.33,
+            "w": 830,
+            "h": 245.88
+          },
+          "rendererStatus": null,
+          "liveDriftAxes": {
+            "Nuclei drift": 0.022,
+            "Palette drift": 0.016,
+            "Breath depth": 0.05,
+            "Breath period": 44,
+            "Warp drift": 0.008
+          },
+          "allSliderCount": 79,
+          "prm": true,
+          "htmlClass": "dark",
+          "dpr": 1,
+          "glFamily": [
+            "webgl2->WebGL2RenderingContext",
+            "webgl2->WebGL2RenderingContext",
+            "requestAdapter->",
+            "webgpu->GPUCanvasContext"
+          ]
+        },
+        "samplePoints": 20944,
+        "pointMode": "stage-canvas rect inset 8px, stride 3px",
+        "frames": [
+          {
+            "name": "pi-FIELD-studio-aurora-dark-prm-f0.png",
+            "elapsedMs": 0
+          },
+          {
+            "name": "pi-FIELD-studio-aurora-dark-prm-f1.png",
+            "elapsedMs": 2000
+          },
+          {
+            "name": "pi-FIELD-studio-aurora-dark-prm-f2.png",
+            "elapsedMs": 5000
+          },
+          {
+            "name": "pi-FIELD-studio-aurora-dark-prm-f3.png",
+            "elapsedMs": 10000
+          }
+        ],
+        "staticRange_t0": {
+          "n": 20944,
+          "L": {
+            "mean": 0.80548,
+            "sd": 0.05417,
+            "min": 0.6269,
+            "p01": 0.66701,
+            "p50": 0.83576,
+            "p99": 0.8549,
+            "max": 0.85683,
+            "span": 0.22993,
+            "span98": 0.1879
+          },
+          "C": {
+            "mean": 0.11812,
+            "sd": 0.0144,
+            "min": 0.10162,
+            "p50": 0.11381,
+            "p95": 0.13889,
+            "p99": 0.14671,
+            "max": 0.16016
+          },
+          "hueMeanDeg": 67.62,
+          "uniqueRgb": 899
+        },
+        "drift": [
+          {
+            "vsT0AfterMs": 2000,
+            "n": 20944,
+            "changedPx": 0,
+            "changedFrac": 0,
+            "dL": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dC": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dE": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dRgb8": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            }
+          },
+          {
+            "vsT0AfterMs": 5000,
+            "n": 20944,
+            "changedPx": 0,
+            "changedFrac": 0,
+            "dL": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dC": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dE": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dRgb8": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            }
+          },
+          {
+            "vsT0AfterMs": 10000,
+            "n": 20944,
+            "changedPx": 0,
+            "changedFrac": 0,
+            "dL": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dC": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dE": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            },
+            "dRgb8": {
+              "mean": 0,
+              "p50": 0,
+              "p95": 0,
+              "p99": 0,
+              "max": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "bracket-PARKED",
+        "subject": "studio-aurora",
+        "kind": "drift-bracket",
+        "theme": "light",
+        "prm": false,
+        "axesBefore": {
+          "Nuclei drift": 0.022,
+          "Palette drift": 0.016,
+          "Breath depth": 0.05,
+          "Breath period": 44,
+          "Warp drift": 0.008
+        },
+        "sliderWrites": [
+          {
+            "name": "Nuclei drift",
+            "ok": true,
+            "steps": 0,
+            "value": 0
+          },
+          {
+            "name": "Palette drift",
+            "ok": true,
+            "steps": 0,
+            "value": 0
+          },
+          {
+            "name": "Breath depth",
+            "ok": true,
+            "steps": 0,
+            "value": 0
+          },
+          {
+            "name": "Warp drift",
+            "ok": true,
+            "steps": 0,
+            "value": 0.008
+          }
+        ],
+        "axesAfter": {
+          "Nuclei drift": 0,
+          "Palette drift": 0,
+          "Breath depth": 0,
+          "Breath period": 44,
+          "Warp drift": 0.008
+        },
+        "state": {
+          "settled": true,
+          "substrate": "webgl",
+          "canvasArmed": true,
+          "canvasIntrinsic": {
+            "w": 830,
+            "h": 246
+          },
+          "canvasRect": {
+            "x": 145,
+            "y": 412.33,
+            "w": 830,
+            "h": 245.88
+          },
+          "rendererStatus": null,
+          "liveDriftAxes": {
+            "Nuclei drift": 0,
+            "Palette drift": 0,
+            "Breath depth": 0,
+            "Breath period": 44,
+            "Warp drift": 0.008
+          },
+          "allSliderCount": 79,
+          "prm": false,
+          "htmlClass": "",
+          "dpr": 1,
+          "glFamily": [
+            "webgl2->WebGL2RenderingContext",
+            "webgl2->WebGL2RenderingContext",
+            "requestAdapter->",
+            "webgpu->GPUCanvasContext"
+          ]
+        },
+        "samplePoints": 20944,
+        "frames": [
+          {
+            "name": "pi-FIELD-bracket-PARKED-f0.png",
+            "elapsedMs": 0
+          },
+          {
+            "name": "pi-FIELD-bracket-PARKED-f1.png",
+            "elapsedMs": 2000
+          },
+          {
+            "name": "pi-FIELD-bracket-PARKED-f2.png",
+            "elapsedMs": 5000
+          },
+          {
+            "name": "pi-FIELD-bracket-PARKED-f3.png",
+            "elapsedMs": 10000
+          }
+        ],
+        "staticRange_t0": {
+          "n": 20944,
+          "L": {
+            "mean": 0.79075,
+            "sd": 0.06472,
+            "min": 0.59207,
+            "p01": 0.63295,
+            "p50": 0.82953,
+            "p99": 0.85362,
+            "max": 0.85475,
+            "span": 0.26268,
+            "span98": 0.22067
+          },
+          "C": {
+            "mean": 0.12165,
+            "sd": 0.01522,
+            "min": 0.10221,
+            "p50": 0.11515,
+            "p95": 0.14594,
+            "p99": 0.15748,
+            "max": 0.16026
+          },
+          "hueMeanDeg": 63.42,
+          "uniqueRgb": 993
+        },
+        "drift": [
+          {
+            "vsT0AfterMs": 2000,
+            "n": 20944,
+            "changedPx": 18878,
+            "changedFrac": 0.9014,
+            "dL": {
+              "mean": 0.005039,
+              "p50": 0.00306,
+              "p95": 0.019664,
+              "p99": 0.03185,
+              "max": 0.044395
+            },
+            "dC": {
+              "mean": 0.001499,
+              "p50": 0.000936,
+              "p95": 0.005227,
+              "p99": 0.008827,
+              "max": 0.013524
+            },
+            "dE": {
+              "mean": 0.006664,
+              "p50": 0.003386,
+              "p95": 0.025007,
+              "p99": 0.04066,
+              "max": 0.061722
+            },
+            "dRgb8": {
+              "mean": 3.077492,
+              "p50": 2,
+              "p95": 10,
+              "p99": 16,
+              "max": 22
+            }
+          },
+          {
+            "vsT0AfterMs": 5000,
+            "n": 20944,
+            "changedPx": 19285,
+            "changedFrac": 0.9208,
+            "dL": {
+              "mean": 0.006807,
+              "p50": 0.003207,
+              "p95": 0.026798,
+              "p99": 0.040037,
+              "max": 0.062471
+            },
+            "dC": {
+              "mean": 0.00196,
+              "p50": 0.000974,
+              "p95": 0.007578,
+              "p99": 0.010767,
+              "max": 0.016276
+            },
+            "dE": {
+              "mean": 0.008963,
+              "p50": 0.003974,
+              "p95": 0.034578,
+              "p99": 0.051858,
+              "max": 0.085787
+            },
+            "dRgb8": {
+              "mean": 4.079259,
+              "p50": 2,
+              "p95": 14,
+              "p99": 20,
+              "max": 31
+            }
+          },
+          {
+            "vsT0AfterMs": 10000,
+            "n": 20944,
+            "changedPx": 19416,
+            "changedFrac": 0.927,
+            "dL": {
+              "mean": 0.009139,
+              "p50": 0.004296,
+              "p95": 0.03159,
+              "p99": 0.047647,
+              "max": 0.065067
+            },
+            "dC": {
+              "mean": 0.002349,
+              "p50": 0.001316,
+              "p95": 0.008216,
+              "p99": 0.013703,
+              "max": 0.019107
+            },
+            "dE": {
+              "mean": 0.012259,
+              "p50": 0.005493,
+              "p95": 0.042675,
+              "p99": 0.064861,
+              "max": 0.087255
+            },
+            "dRgb8": {
+              "mean": 5.258785,
+              "p50": 3,
+              "p95": 16,
+              "p99": 24,
+              "max": 32
+            }
+          }
+        ]
+      },
+      {
+        "id": "bracket-ONESTEP-nuclei",
+        "subject": "studio-aurora",
+        "kind": "drift-bracket",
+        "theme": "light",
+        "prm": false,
+        "axesBefore": {
+          "Nuclei drift": 0.022,
+          "Palette drift": 0.016,
+          "Breath depth": 0.05,
+          "Breath period": 44,
+          "Warp drift": 0.008
+        },
+        "sliderWrites": [
+          {
+            "name": "Palette drift",
+            "ok": true,
+            "steps": 0,
+            "value": 0
+          },
+          {
+            "name": "Breath depth",
+            "ok": true,
+            "steps": 0,
+            "value": 0
+          },
+          {
+            "name": "Warp drift",
+            "ok": true,
+            "steps": 0,
+            "value": 0.008
+          },
+          {
+            "name": "Nuclei drift",
+            "ok": true,
+            "steps": 1,
+            "value": 0.024
+          }
+        ],
+        "axesAfter": {
+          "Nuclei drift": 0.024,
+          "Palette drift": 0.018,
+          "Breath depth": 0.05,
+          "Breath period": 46,
+          "Warp drift": 0.009
+        },
+        "state": {
+          "settled": true,
+          "substrate": "webgl",
+          "canvasArmed": true,
+          "canvasIntrinsic": {
+            "w": 830,
+            "h": 246
+          },
+          "canvasRect": {
+            "x": 145,
+            "y": 412.33,
+            "w": 830,
+            "h": 245.88
+          },
+          "rendererStatus": null,
+          "liveDriftAxes": {
+            "Nuclei drift": 0.024,
+            "Palette drift": 0.018,
+            "Breath depth": 0.05,
+            "Breath period": 46,
+            "Warp drift": 0.009
+          },
+          "allSliderCount": 79,
+          "prm": false,
+          "htmlClass": "",
+          "dpr": 1,
+          "glFamily": [
+            "webgl2->WebGL2RenderingContext",
+            "webgl2->WebGL2RenderingContext",
+            "requestAdapter->",
+            "webgpu->GPUCanvasContext"
+          ]
+        },
+        "samplePoints": 20944,
+        "frames": [
+          {
+            "name": "pi-FIELD-bracket-ONESTEP-nuclei-f0.png",
+            "elapsedMs": 0
+          },
+          {
+            "name": "pi-FIELD-bracket-ONESTEP-nuclei-f1.png",
+            "elapsedMs": 2000
+          },
+          {
+            "name": "pi-FIELD-bracket-ONESTEP-nuclei-f2.png",
+            "elapsedMs": 5000
+          },
+          {
+            "name": "pi-FIELD-bracket-ONESTEP-nuclei-f3.png",
+            "elapsedMs": 10000
+          }
+        ],
+        "staticRange_t0": {
+          "n": 20944,
+          "L": {
+            "mean": 0.76741,
+            "sd": 0.0674,
+            "min": 0.56989,
+            "p01": 0.5924,
+            "p50": 0.79772,
+            "p99": 0.84601,
+            "max": 0.84944,
+            "span": 0.27955,
+            "span98": 0.25362
+          },
+          "C": {
+            "mean": 0.12523,
+            "sd": 0.02356,
+            "min": 0.09743,
+            "p50": 0.1166,
+            "p95": 0.1634,
+            "p99": 0.18534,
+            "max": 0.18906
+          },
+          "hueMeanDeg": 33.86,
+          "uniqueRgb": 1957
+        },
+        "drift": [
+          {
+            "vsT0AfterMs": 2000,
+            "n": 20944,
+            "changedPx": 20850,
+            "changedFrac": 0.9955,
+            "dL": {
+              "mean": 0.017912,
+              "p50": 0.014443,
+              "p95": 0.045634,
+              "p99": 0.053139,
+              "max": 0.07226
+            },
+            "dC": {
+              "mean": 0.005607,
+              "p50": 0.004178,
+              "p95": 0.015223,
+              "p99": 0.022156,
+              "max": 0.030903
+            },
+            "dE": {
+              "mean": 0.042252,
+              "p50": 0.030251,
+              "p95": 0.120912,
+              "p99": 0.150292,
+              "max": 0.188602
+            },
+            "dRgb8": {
+              "mean": 24.464333,
+              "p50": 13,
+              "p95": 88,
+              "p99": 111,
+              "max": 141
+            }
+          },
+          {
+            "vsT0AfterMs": 5000,
+            "n": 20944,
+            "changedPx": 20922,
+            "changedFrac": 0.9989,
+            "dL": {
+              "mean": 0.028586,
+              "p50": 0.026697,
+              "p95": 0.063025,
+              "p99": 0.081294,
+              "max": 0.101179
+            },
+            "dC": {
+              "mean": 0.009338,
+              "p50": 0.00745,
+              "p95": 0.023933,
+              "p99": 0.031742,
+              "max": 0.035405
+            },
+            "dE": {
+              "mean": 0.070285,
+              "p50": 0.057639,
+              "p95": 0.163756,
+              "p99": 0.176082,
+              "max": 0.190222
+            },
+            "dRgb8": {
+              "mean": 40.943516,
+              "p50": 25,
+              "p95": 122,
+              "p99": 132,
+              "max": 141
+            }
+          },
+          {
+            "vsT0AfterMs": 10000,
+            "n": 20944,
+            "changedPx": 20081,
+            "changedFrac": 0.9588,
+            "dL": {
+              "mean": 0.01405,
+              "p50": 0.009076,
+              "p95": 0.044784,
+              "p99": 0.066445,
+              "max": 0.089501
+            },
+            "dC": {
+              "mean": 0.004195,
+              "p50": 0.002299,
+              "p95": 0.015032,
+              "p99": 0.024854,
+              "max": 0.032466
+            },
+            "dE": {
+              "mean": 0.028202,
+              "p50": 0.017512,
+              "p95": 0.104362,
+              "p99": 0.152497,
+              "max": 0.168228
+            },
+            "dRgb8": {
+              "mean": 15.58389,
+              "p50": 8,
+              "p95": 66,
+              "p99": 114,
+              "max": 128
+            }
+          }
+        ]
+      },
+      {
+        "id": "bracket-SHIPPED",
+        "subject": "studio-aurora",
+        "kind": "drift-bracket",
+        "theme": "light",
+        "prm": false,
+        "axesBefore": {
+          "Nuclei drift": 0.022,
+          "Palette drift": 0.016,
+          "Breath depth": 0.05,
+          "Breath period": 44,
+          "Warp drift": 0.008
+        },
+        "sliderWrites": [],
+        "axesAfter": {
+          "Nuclei drift": 0.022,
+          "Palette drift": 0.016,
+          "Breath depth": 0.05,
+          "Breath period": 44,
+          "Warp drift": 0.008
+        },
+        "state": {
+          "settled": true,
+          "substrate": "webgl",
+          "canvasArmed": true,
+          "canvasIntrinsic": {
+            "w": 830,
+            "h": 246
+          },
+          "canvasRect": {
+            "x": 145,
+            "y": 412.33,
+            "w": 830,
+            "h": 245.88
+          },
+          "rendererStatus": null,
+          "liveDriftAxes": {
+            "Nuclei drift": 0.022,
+            "Palette drift": 0.016,
+            "Breath depth": 0.05,
+            "Breath period": 44,
+            "Warp drift": 0.008
+          },
+          "allSliderCount": 79,
+          "prm": false,
+          "htmlClass": "",
+          "dpr": 1,
+          "glFamily": [
+            "webgl2->WebGL2RenderingContext",
+            "webgl2->WebGL2RenderingContext",
+            "requestAdapter->",
+            "webgpu->GPUCanvasContext"
+          ]
+        },
+        "samplePoints": 20944,
+        "frames": [
+          {
+            "name": "pi-FIELD-bracket-SHIPPED-f0.png",
+            "elapsedMs": 0
+          },
+          {
+            "name": "pi-FIELD-bracket-SHIPPED-f1.png",
+            "elapsedMs": 2000
+          },
+          {
+            "name": "pi-FIELD-bracket-SHIPPED-f2.png",
+            "elapsedMs": 5000
+          },
+          {
+            "name": "pi-FIELD-bracket-SHIPPED-f3.png",
+            "elapsedMs": 10000
+          }
+        ],
+        "staticRange_t0": {
+          "n": 20944,
+          "L": {
+            "mean": 0.80588,
+            "sd": 0.05403,
+            "min": 0.62387,
+            "p01": 0.66437,
+            "p50": 0.83576,
+            "p99": 0.8549,
+            "max": 0.85683,
+            "span": 0.23295,
+            "span98": 0.19054
+          },
+          "C": {
+            "mean": 0.11803,
+            "sd": 0.01439,
+            "min": 0.10162,
+            "p50": 0.11374,
+            "p95": 0.13889,
+            "p99": 0.14779,
+            "max": 0.16005
+          },
+          "hueMeanDeg": 67.69,
+          "uniqueRgb": 897
+        },
+        "drift": [
+          {
+            "vsT0AfterMs": 2000,
+            "n": 20944,
+            "changedPx": 19280,
+            "changedFrac": 0.9206,
+            "dL": {
+              "mean": 0.005364,
+              "p50": 0.003058,
+              "p95": 0.019894,
+              "p99": 0.034655,
+              "max": 0.075604
+            },
+            "dC": {
+              "mean": 0.00166,
+              "p50": 0.000966,
+              "p95": 0.005313,
+              "p99": 0.011042,
+              "max": 0.02066
+            },
+            "dE": {
+              "mean": 0.007395,
+              "p50": 0.003816,
+              "p95": 0.026089,
+              "p99": 0.046694,
+              "max": 0.104265
+            },
+            "dRgb8": {
+              "mean": 3.367743,
+              "p50": 2,
+              "p95": 10,
+              "p99": 18,
+              "max": 38
+            }
+          },
+          {
+            "vsT0AfterMs": 5000,
+            "n": 20944,
+            "changedPx": 20661,
+            "changedFrac": 0.9865,
+            "dL": {
+              "mean": 0.015136,
+              "p50": 0.008984,
+              "p95": 0.049726,
+              "p99": 0.068452,
+              "max": 0.092068
+            },
+            "dC": {
+              "mean": 0.004514,
+              "p50": 0.003615,
+              "p95": 0.013342,
+              "p99": 0.018156,
+              "max": 0.024444
+            },
+            "dE": {
+              "mean": 0.020998,
+              "p50": 0.012077,
+              "p95": 0.067202,
+              "p99": 0.094566,
+              "max": 0.131318
+            },
+            "dRgb8": {
+              "mean": 9.593726,
+              "p50": 8,
+              "p95": 26,
+              "p99": 35,
+              "max": 48
+            }
+          },
+          {
+            "vsT0AfterMs": 10000,
+            "n": 20944,
+            "changedPx": 20807,
+            "changedFrac": 0.9935,
+            "dL": {
+              "mean": 0.01553,
+              "p50": 0.009656,
+              "p95": 0.048451,
+              "p99": 0.069405,
+              "max": 0.084288
+            },
+            "dC": {
+              "mean": 0.004874,
+              "p50": 0.003739,
+              "p95": 0.014185,
+              "p99": 0.019799,
+              "max": 0.024202
+            },
+            "dE": {
+              "mean": 0.021144,
+              "p50": 0.013007,
+              "p95": 0.063752,
+              "p99": 0.087491,
+              "max": 0.111988
+            },
+            "dRgb8": {
+              "mean": 9.795407,
+              "p50": 8,
+              "p95": 25,
+              "p99": 36,
+              "max": 43
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "partC_arrowKeyCollision": {
+    "claim": "ArrowLeft/ArrowRight are registered as the aurora studio's preset-cycle shortcuts (aurora.vue onMounted registerShortcut, allowInInput:false). A [role=slider] is not an input, so an arrow press on a FOCUSED drift slider cycles the whole preset.",
+    "focusedElement": {
+      "role": "slider",
+      "label": null,
+      "tag": "SPAN"
+    },
+    "axesBefore": {
+      "Energy": 0.4857142857142859,
+      "Nuclei drift": 0.022,
+      "Palette drift": 0.016,
+      "Breath depth": 0.05,
+      "Breath period": 44,
+      "Warp amount": 0.5,
+      "Warp drift": 0.008,
+      "Saturation": 1.02
+    },
+    "axesAfter": {
+      "Energy": 0.542857142857143,
+      "Nuclei drift": 0.024,
+      "Palette drift": 0.018,
+      "Breath depth": 0.05,
+      "Breath period": 46,
+      "Warp amount": 0.52,
+      "Warp drift": 0.009,
+      "Saturation": 1.04
+    },
+    "axesChangedByOneArrowPress": [
+      "Energy",
+      "Nuclei drift",
+      "Palette drift",
+      "Breath period",
+      "Warp amount",
+      "Warp drift",
+      "Saturation"
+    ],
+    "verdict": "CONFIRMED — one arrow press moved 7 axes (a preset swap), not one step of one axis"
+  },
+  "partC_axisIsolation": {
+    "note": "each arm drives every drift axis to 0 (Home) except the KEPT one, which stays at the lead preset's shipped value; 3-frame series over the stage canvas; the PRM arms of part B are the 0-motion instrument floor",
+    "arms": [
+      {
+        "id": "axis-ALLZERO",
+        "kept": [],
+        "sectionsOpened": {
+          "found": true,
+          "alreadyVisible": true,
+          "opened": []
+        },
+        "axesBefore": {
+          "Nuclei drift": 0.022,
+          "Palette drift": 0.016,
+          "Breath depth": 0.05,
+          "Warp drift": 0.008
+        },
+        "sliderWrites": [
+          {
+            "axis": "Nuclei drift",
+            "ok": true,
+            "value": 0
+          },
+          {
+            "axis": "Palette drift",
+            "ok": true,
+            "value": 0
+          },
+          {
+            "axis": "Breath depth",
+            "ok": true,
+            "value": 0
+          },
+          {
+            "axis": "Warp drift",
+            "ok": false,
+            "value": 0.008
+          }
+        ],
+        "axesIntended": {
+          "Nuclei drift": 0,
+          "Palette drift": 0,
+          "Breath depth": 0,
+          "Warp drift": 0
+        },
+        "axesActual": {
+          "Nuclei drift": 0,
+          "Palette drift": 0,
+          "Breath depth": 0,
+          "Warp drift": 0.008
+        },
+        "armClean": false,
+        "samplePoints": 20944,
+        "frames": [
+          {
+            "name": "pi-FIELD-axis-ALLZERO-f0.png",
+            "elapsedMs": 0
+          },
+          {
+            "name": "pi-FIELD-axis-ALLZERO-f1.png",
+            "elapsedMs": 3000
+          },
+          {
+            "name": "pi-FIELD-axis-ALLZERO-f2.png",
+            "elapsedMs": 8000
+          }
+        ],
+        "staticRange_t0": {
+          "n": 20944,
+          "L": {
+            "mean": 0.79095,
+            "sd": 0.06469,
+            "min": 0.5998,
+            "p01": 0.63171,
+            "p50": 0.83035,
+            "p99": 0.85362,
+            "max": 0.85475,
+            "span": 0.25495,
+            "span98": 0.22191
+          },
+          "C": {
+            "mean": 0.1216,
+            "sd": 0.01516,
+            "min": 0.10221,
+            "p50": 0.11496,
+            "p95": 0.14565,
+            "p99": 0.15767,
+            "max": 0.16033
+          },
+          "hueMeanDeg": 63.48,
+          "uniqueRgb": 989
+        },
+        "drift": [
+          {
+            "vsT0AfterMs": 3000,
+            "n": 20944,
+            "changedPx": 19056,
+            "changedFrac": 0.9099,
+            "dL": {
+              "mean": 0.005724,
+              "p50": 0.003195,
+              "p95": 0.022837,
+              "p99": 0.036697,
+              "max": 0.053121
+            },
+            "dC": {
+              "mean": 0.001693,
+              "p50": 0.000939,
+              "p95": 0.006383,
+              "p99": 0.009593,
+              "max": 0.01451
+            },
+            "dE": {
+              "mean": 0.007529,
+              "p50": 0.003464,
+              "p95": 0.028795,
+              "p99": 0.047251,
+              "max": 0.072533
+            },
+            "dRgb8": {
+              "mean": 3.464524,
+              "p50": 2,
+              "p95": 12,
+              "p99": 19,
+              "max": 26
+            }
+          },
+          {
+            "vsT0AfterMs": 8000,
+            "n": 20944,
+            "changedPx": 19117,
+            "changedFrac": 0.9128,
+            "dL": {
+              "mean": 0.008187,
+              "p50": 0.003479,
+              "p95": 0.029616,
+              "p99": 0.046575,
+              "max": 0.070371
+            },
+            "dC": {
+              "mean": 0.002071,
+              "p50": 0.000979,
+              "p95": 0.00716,
+              "p99": 0.013252,
+              "max": 0.019307
+            },
+            "dE": {
+              "mean": 0.011015,
+              "p50": 0.004715,
+              "p95": 0.040542,
+              "p99": 0.062831,
+              "max": 0.095896
+            },
+            "dRgb8": {
+              "mean": 4.734148,
+              "p50": 3,
+              "p95": 15,
+              "p99": 24,
+              "max": 35
+            }
+          }
+        ]
+      },
+      {
+        "id": "axis-NUCLEI-only",
+        "kept": [
+          "Nuclei drift"
+        ],
+        "sectionsOpened": {
+          "found": true,
+          "alreadyVisible": true,
+          "opened": []
+        },
+        "axesBefore": {
+          "Nuclei drift": 0.022,
+          "Palette drift": 0.016,
+          "Breath depth": 0.05,
+          "Warp drift": 0.008
+        },
+        "sliderWrites": [
+          {
+            "axis": "Palette drift",
+            "ok": true,
+            "value": 0
+          },
+          {
+            "axis": "Breath depth",
+            "ok": true,
+            "value": 0
+          },
+          {
+            "axis": "Warp drift",
+            "ok": false,
+            "value": 0.008
+          }
+        ],
+        "axesIntended": {
+          "Nuclei drift": 0.022,
+          "Palette drift": 0,
+          "Breath depth": 0,
+          "Warp drift": 0
+        },
+        "axesActual": {
+          "Nuclei drift": 0.022,
+          "Palette drift": 0,
+          "Breath depth": 0,
+          "Warp drift": 0.008
+        },
+        "armClean": false,
+        "samplePoints": 20944,
+        "frames": [
+          {
+            "name": "pi-FIELD-axis-NUCLEI-only-f0.png",
+            "elapsedMs": 0
+          },
+          {
+            "name": "pi-FIELD-axis-NUCLEI-only-f1.png",
+            "elapsedMs": 3000
+          },
+          {
+            "name": "pi-FIELD-axis-NUCLEI-only-f2.png",
+            "elapsedMs": 8000
+          }
+        ],
+        "staticRange_t0": {
+          "n": 20944,
+          "L": {
+            "mean": 0.79159,
+            "sd": 0.06349,
+            "min": 0.57799,
+            "p01": 0.63017,
+            "p50": 0.83035,
+            "p99": 0.85362,
+            "max": 0.85475,
+            "span": 0.27676,
+            "span98": 0.22345
+          },
+          "C": {
+            "mean": 0.12161,
+            "sd": 0.01479,
+            "min": 0.10221,
+            "p50": 0.11515,
+            "p95": 0.14402,
+            "p99": 0.15776,
+            "max": 0.16157
+          },
+          "hueMeanDeg": 64.05,
+          "uniqueRgb": 987
+        },
+        "drift": [
+          {
+            "vsT0AfterMs": 3000,
+            "n": 20944,
+            "changedPx": 19365,
+            "changedFrac": 0.9246,
+            "dL": {
+              "mean": 0.006412,
+              "p50": 0.00333,
+              "p95": 0.024544,
+              "p99": 0.036274,
+              "max": 0.061195
+            },
+            "dC": {
+              "mean": 0.001823,
+              "p50": 0.000989,
+              "p95": 0.006504,
+              "p99": 0.009672,
+              "max": 0.01521
+            },
+            "dE": {
+              "mean": 0.008505,
+              "p50": 0.004012,
+              "p95": 0.031459,
+              "p99": 0.048916,
+              "max": 0.084421
+            },
+            "dRgb8": {
+              "mean": 3.86378,
+              "p50": 2,
+              "p95": 13,
+              "p99": 19,
+              "max": 31
+            }
+          },
+          {
+            "vsT0AfterMs": 8000,
+            "n": 20944,
+            "changedPx": 19576,
+            "changedFrac": 0.9347,
+            "dL": {
+              "mean": 0.009182,
+              "p50": 0.004154,
+              "p95": 0.032735,
+              "p99": 0.054094,
+              "max": 0.082897
+            },
+            "dC": {
+              "mean": 0.002237,
+              "p50": 0.001345,
+              "p95": 0.007972,
+              "p99": 0.013439,
+              "max": 0.020233
+            },
+            "dE": {
+              "mean": 0.012338,
+              "p50": 0.005292,
+              "p95": 0.043428,
+              "p99": 0.075852,
+              "max": 0.115967
+            },
+            "dRgb8": {
+              "mean": 5.239591,
+              "p50": 3,
+              "p95": 17,
+              "p99": 27,
+              "max": 42
+            }
+          }
+        ]
+      },
+      {
+        "id": "axis-PALETTE-only",
+        "kept": [
+          "Palette drift"
+        ],
+        "sectionsOpened": {
+          "found": true,
+          "alreadyVisible": true,
+          "opened": []
+        },
+        "axesBefore": {
+          "Nuclei drift": 0.022,
+          "Palette drift": 0.016,
+          "Breath depth": 0.05,
+          "Warp drift": 0.008
+        },
+        "sliderWrites": [
+          {
+            "axis": "Nuclei drift",
+            "ok": true,
+            "value": 0
+          },
+          {
+            "axis": "Breath depth",
+            "ok": true,
+            "value": 0
+          },
+          {
+            "axis": "Warp drift",
+            "ok": false,
+            "value": 0.008
+          }
+        ],
+        "axesIntended": {
+          "Nuclei drift": 0,
+          "Palette drift": 0.016,
+          "Breath depth": 0,
+          "Warp drift": 0
+        },
+        "axesActual": {
+          "Nuclei drift": 0,
+          "Palette drift": 0.016,
+          "Breath depth": 0,
+          "Warp drift": 0.008
+        },
+        "armClean": false,
+        "samplePoints": 20944,
+        "frames": [
+          {
+            "name": "pi-FIELD-axis-PALETTE-only-f0.png",
+            "elapsedMs": 0
+          },
+          {
+            "name": "pi-FIELD-axis-PALETTE-only-f1.png",
+            "elapsedMs": 3000
+          },
+          {
+            "name": "pi-FIELD-axis-PALETTE-only-f2.png",
+            "elapsedMs": 8000
+          }
+        ],
+        "staticRange_t0": {
+          "n": 20944,
+          "L": {
+            "mean": 0.80162,
+            "sd": 0.05701,
+            "min": 0.62109,
+            "p01": 0.64524,
+            "p50": 0.83549,
+            "p99": 0.85378,
+            "max": 0.85475,
+            "span": 0.23366,
+            "span98": 0.20853
+          },
+          "C": {
+            "mean": 0.11902,
+            "sd": 0.01458,
+            "min": 0.10221,
+            "p50": 0.11425,
+            "p95": 0.13934,
+            "p99": 0.15213,
+            "max": 0.16016
+          },
+          "hueMeanDeg": 66.8,
+          "uniqueRgb": 923
+        },
+        "drift": [
+          {
+            "vsT0AfterMs": 3000,
+            "n": 20944,
+            "changedPx": 20622,
+            "changedFrac": 0.9846,
+            "dL": {
+              "mean": 0.014011,
+              "p50": 0.007853,
+              "p95": 0.044036,
+              "p99": 0.057857,
+              "max": 0.07381
+            },
+            "dC": {
+              "mean": 0.003728,
+              "p50": 0.002763,
+              "p95": 0.01157,
+              "p99": 0.01579,
+              "max": 0.021069
+            },
+            "dE": {
+              "mean": 0.01898,
+              "p50": 0.009823,
+              "p95": 0.059267,
+              "p99": 0.075896,
+              "max": 0.101574
+            },
+            "dRgb8": {
+              "mean": 8.378676,
+              "p50": 6,
+              "p95": 22,
+              "p99": 30,
+              "max": 37
+            }
+          },
+          {
+            "vsT0AfterMs": 8000,
+            "n": 20944,
+            "changedPx": 20716,
+            "changedFrac": 0.9891,
+            "dL": {
+              "mean": 0.014721,
+              "p50": 0.008279,
+              "p95": 0.047032,
+              "p99": 0.059843,
+              "max": 0.073699
+            },
+            "dC": {
+              "mean": 0.004268,
+              "p50": 0.003213,
+              "p95": 0.013235,
+              "p99": 0.017181,
+              "max": 0.021465
+            },
+            "dE": {
+              "mean": 0.019736,
+              "p50": 0.010816,
+              "p95": 0.062348,
+              "p99": 0.077168,
+              "max": 0.092604
+            },
+            "dRgb8": {
+              "mean": 8.94194,
+              "p50": 7,
+              "p95": 24,
+              "p99": 31,
+              "max": 38
+            }
+          }
+        ]
+      },
+      {
+        "id": "axis-BREATH-only",
+        "kept": [
+          "Breath depth"
+        ],
+        "sectionsOpened": {
+          "found": true,
+          "alreadyVisible": true,
+          "opened": []
+        },
+        "axesBefore": {
+          "Nuclei drift": 0.022,
+          "Palette drift": 0.016,
+          "Breath depth": 0.05,
+          "Warp drift": 0.008
+        },
+        "sliderWrites": [
+          {
+            "axis": "Nuclei drift",
+            "ok": true,
+            "value": 0
+          },
+          {
+            "axis": "Palette drift",
+            "ok": true,
+            "value": 0
+          },
+          {
+            "axis": "Warp drift",
+            "ok": false,
+            "value": 0.008
+          }
+        ],
+        "axesIntended": {
+          "Nuclei drift": 0,
+          "Palette drift": 0,
+          "Breath depth": 0.05,
+          "Warp drift": 0
+        },
+        "axesActual": {
+          "Nuclei drift": 0,
+          "Palette drift": 0,
+          "Breath depth": 0.05,
+          "Warp drift": 0.008
+        },
+        "armClean": false,
+        "samplePoints": 20944,
+        "frames": [
+          {
+            "name": "pi-FIELD-axis-BREATH-only-f0.png",
+            "elapsedMs": 0
+          },
+          {
+            "name": "pi-FIELD-axis-BREATH-only-f1.png",
+            "elapsedMs": 3000
+          },
+          {
+            "name": "pi-FIELD-axis-BREATH-only-f2.png",
+            "elapsedMs": 8000
+          }
+        ],
+        "staticRange_t0": {
+          "n": 20944,
+          "L": {
+            "mean": 0.79326,
+            "sd": 0.06414,
+            "min": 0.59519,
+            "p01": 0.63646,
+            "p50": 0.83256,
+            "p99": 0.8557,
+            "max": 0.85698,
+            "span": 0.26179,
+            "span98": 0.21924
+          },
+          "C": {
+            "mean": 0.12116,
+            "sd": 0.01563,
+            "min": 0.10158,
+            "p50": 0.11425,
+            "p95": 0.14668,
+            "p99": 0.15756,
+            "max": 0.16208
+          },
+          "hueMeanDeg": 63.3,
+          "uniqueRgb": 990
+        },
+        "drift": [
+          {
+            "vsT0AfterMs": 3000,
+            "n": 20944,
+            "changedPx": 19213,
+            "changedFrac": 0.9174,
+            "dL": {
+              "mean": 0.005861,
+              "p50": 0.003196,
+              "p95": 0.023652,
+              "p99": 0.03748,
+              "max": 0.049194
+            },
+            "dC": {
+              "mean": 0.001767,
+              "p50": 0.000962,
+              "p95": 0.006578,
+              "p99": 0.010039,
+              "max": 0.014286
+            },
+            "dE": {
+              "mean": 0.007678,
+              "p50": 0.003789,
+              "p95": 0.030211,
+              "p99": 0.047631,
+              "max": 0.066101
+            },
+            "dRgb8": {
+              "mean": 3.538436,
+              "p50": 2,
+              "p95": 12,
+              "p99": 19,
+              "max": 24
+            }
+          },
+          {
+            "vsT0AfterMs": 8000,
+            "n": 20944,
+            "changedPx": 19250,
+            "changedFrac": 0.9191,
+            "dL": {
+              "mean": 0.008277,
+              "p50": 0.003497,
+              "p95": 0.029787,
+              "p99": 0.044854,
+              "max": 0.068593
+            },
+            "dC": {
+              "mean": 0.002151,
+              "p50": 0.001118,
+              "p95": 0.007506,
+              "p99": 0.012962,
+              "max": 0.019178
+            },
+            "dE": {
+              "mean": 0.011011,
+              "p50": 0.004786,
+              "p95": 0.039978,
+              "p99": 0.059931,
+              "max": 0.096538
+            },
+            "dRgb8": {
+              "mean": 4.775449,
+              "p50": 3,
+              "p95": 15,
+              "p99": 23,
+              "max": 35
+            }
+          }
+        ]
+      },
+      {
+        "id": "axis-WARP-only",
+        "kept": [
+          "Warp drift"
+        ],
+        "sectionsOpened": {
+          "found": true,
+          "alreadyVisible": true,
+          "opened": []
+        },
+        "axesBefore": {
+          "Nuclei drift": 0.022,
+          "Palette drift": 0.016,
+          "Breath depth": 0.05,
+          "Warp drift": 0.008
+        },
+        "sliderWrites": [
+          {
+            "axis": "Nuclei drift",
+            "ok": true,
+            "value": 0
+          },
+          {
+            "axis": "Palette drift",
+            "ok": true,
+            "value": 0
+          },
+          {
+            "axis": "Breath depth",
+            "ok": true,
+            "value": 0
+          }
+        ],
+        "axesIntended": {
+          "Nuclei drift": 0,
+          "Palette drift": 0,
+          "Breath depth": 0,
+          "Warp drift": 0.008
+        },
+        "axesActual": {
+          "Nuclei drift": 0,
+          "Palette drift": 0,
+          "Breath depth": 0,
+          "Warp drift": 0.008
+        },
+        "armClean": true,
+        "samplePoints": 20944,
+        "frames": [
+          {
+            "name": "pi-FIELD-axis-WARP-only-f0.png",
+            "elapsedMs": 0
+          },
+          {
+            "name": "pi-FIELD-axis-WARP-only-f1.png",
+            "elapsedMs": 3000
+          },
+          {
+            "name": "pi-FIELD-axis-WARP-only-f2.png",
+            "elapsedMs": 8000
+          }
+        ],
+        "staticRange_t0": {
+          "n": 20944,
+          "L": {
+            "mean": 0.79081,
+            "sd": 0.06471,
+            "min": 0.59655,
+            "p01": 0.63171,
+            "p50": 0.82967,
+            "p99": 0.85362,
+            "max": 0.85475,
+            "span": 0.25819,
+            "span98": 0.22191
+          },
+          "C": {
+            "mean": 0.12164,
+            "sd": 0.0152,
+            "min": 0.10257,
+            "p50": 0.11515,
+            "p95": 0.14579,
+            "p99": 0.1576,
+            "max": 0.16079
+          },
+          "hueMeanDeg": 63.44,
+          "uniqueRgb": 999
+        },
+        "drift": [
+          {
+            "vsT0AfterMs": 3000,
+            "n": 20944,
+            "changedPx": 19109,
+            "changedFrac": 0.9124,
+            "dL": {
+              "mean": 0.005799,
+              "p50": 0.003195,
+              "p95": 0.023804,
+              "p99": 0.036939,
+              "max": 0.049262
+            },
+            "dC": {
+              "mean": 0.00173,
+              "p50": 0.000942,
+              "p95": 0.006536,
+              "p99": 0.009827,
+              "max": 0.015335
+            },
+            "dE": {
+              "mean": 0.007625,
+              "p50": 0.00362,
+              "p95": 0.030252,
+              "p99": 0.0472,
+              "max": 0.066797
+            },
+            "dRgb8": {
+              "mean": 3.523873,
+              "p50": 2,
+              "p95": 12,
+              "p99": 19,
+              "max": 24
+            }
+          },
+          {
+            "vsT0AfterMs": 8000,
+            "n": 20944,
+            "changedPx": 19207,
+            "changedFrac": 0.9171,
+            "dL": {
+              "mean": 0.008144,
+              "p50": 0.003356,
+              "p95": 0.029738,
+              "p99": 0.044739,
+              "max": 0.073806
+            },
+            "dC": {
+              "mean": 0.002092,
+              "p50": 0.00102,
+              "p95": 0.007334,
+              "p99": 0.012922,
+              "max": 0.0192
+            },
+            "dE": {
+              "mean": 0.010909,
+              "p50": 0.004675,
+              "p95": 0.040081,
+              "p99": 0.059677,
+              "max": 0.098979
+            },
+            "dRgb8": {
+              "mean": 4.722737,
+              "p50": 3,
+              "p95": 15,
+              "p99": 23,
+              "max": 37
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "partD_allZeroPark": {
+    "note": "all four drift axes driven to 0 after opening the collapsed ConfiguratorLayer that holds the Warp-drift control; `isAuroraDriftLive` is false at these values, so the demand gate should park the loop and the paint delta should be EXACTLY 0 (the PRM arms are the 0-motion instrument floor)",
+    "axesBefore": {
+      "Nuclei drift": {
+        "v": 0.022,
+        "inert": false
+      },
+      "Palette drift": {
+        "v": 0.016,
+        "inert": false
+      },
+      "Breath depth": {
+        "v": 0.05,
+        "inert": false
+      },
+      "Warp drift": {
+        "v": 0.008,
+        "inert": true
+      }
+    },
+    "layerOpen": {
+      "ok": true,
+      "clicked": "Warp & noiseorganic boundary",
+      "region": "configurator-layer-body-v-35"
+    },
+    "sliderWrites": [
+      {
+        "axis": "Nuclei drift",
+        "ok": true,
+        "value": 0,
+        "focusLanded": true
+      },
+      {
+        "axis": "Palette drift",
+        "ok": true,
+        "value": 0,
+        "focusLanded": true
+      },
+      {
+        "axis": "Breath depth",
+        "ok": true,
+        "value": 0,
+        "focusLanded": true
+      },
+      {
+        "axis": "Warp drift",
+        "ok": true,
+        "value": 0,
+        "focusLanded": true
+      }
+    ],
+    "axesAfter": {
+      "Nuclei drift": {
+        "v": 0,
+        "inert": false
+      },
+      "Palette drift": {
+        "v": 0,
+        "inert": false
+      },
+      "Breath depth": {
+        "v": 0,
+        "inert": false
+      },
+      "Warp drift": {
+        "v": 0,
+        "inert": false
+      }
+    },
+    "allZero": true,
+    "state": {
+      "armed": true,
+      "settled": true,
+      "substrate": "webgl"
+    },
+    "samplePoints": 20944,
+    "frames": [
+      {
+        "name": "pi-FIELD-axis-ALLZERO-TRUE-f0.png",
+        "elapsedMs": 0
+      },
+      {
+        "name": "pi-FIELD-axis-ALLZERO-TRUE-f1.png",
+        "elapsedMs": 3000
+      },
+      {
+        "name": "pi-FIELD-axis-ALLZERO-TRUE-f2.png",
+        "elapsedMs": 8000
+      }
+    ],
+    "staticRange_t0": {
+      "n": 20944,
+      "L": {
+        "mean": 0.78949,
+        "sd": 0.06316,
+        "min": 0.5714,
+        "p01": 0.63147,
+        "p50": 0.82169,
+        "p99": 0.85378,
+        "max": 0.85475,
+        "span": 0.28335,
+        "span98": 0.22231
+      },
+      "C": {
+        "mean": 0.12217,
+        "sd": 0.01519,
+        "min": 0.10221,
+        "p50": 0.11531,
+        "p95": 0.14565,
+        "p99": 0.15767,
+        "max": 0.16192
+      },
+      "hueMeanDeg": 63.43,
+      "uniqueRgb": 1019
+    },
+    "drift": [
+      {
+        "vsT0AfterMs": 3000,
+        "n": 20944,
+        "changedPx": 0,
+        "changedFrac": 0,
+        "dL": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "dC": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "dE": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "dRgb8": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        }
+      },
+      {
+        "vsT0AfterMs": 8000,
+        "n": 20944,
+        "changedPx": 0,
+        "changedFrac": 0,
+        "dL": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "dC": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "dE": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        },
+        "dRgb8": {
+          "mean": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0
+        }
+      }
+    ]
+  }
+}

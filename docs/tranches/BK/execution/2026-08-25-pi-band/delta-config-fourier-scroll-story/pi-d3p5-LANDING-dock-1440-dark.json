@@ -1,0 +1,319 @@
+{
+  "url": "/dock",
+  "title": "glass-ui Feature Demo",
+  "htmlClass": "dark",
+  "colorScheme": "dark",
+  "dpr": 1,
+  "viewport": {
+    "w": 1440,
+    "h": 900
+  },
+  "cards": [
+    {
+      "to": "/dock/overview",
+      "label": "Overview",
+      "span": "full",
+      "cardContentVisibility": "visible",
+      "kind": "authored",
+      "hasPreviewRegion": true,
+      "still": null,
+      "authoredTag": "div.dock-tile-wrap.section-preview-card-tile",
+      "authoredDescendants": 23,
+      "tileCanvases": 0,
+      "rect": {
+        "x": 165,
+        "y": 352.77,
+        "width": 1190,
+        "height": 176
+      },
+      "previewCs": {
+        "opacity": "1",
+        "visibility": "visible",
+        "display": "grid",
+        "background": "color(srgb 0.2074 0.165013 0.1326 / 0.68)",
+        "aspectRatio": "1.618 / 1"
+      }
+    },
+    {
+      "to": "/dock/layers",
+      "label": "Dock Layers",
+      "span": null,
+      "cardContentVisibility": "auto",
+      "kind": "none",
+      "hasPreviewRegion": false,
+      "still": null,
+      "authoredTag": null,
+      "authoredDescendants": null,
+      "tileCanvases": 0,
+      "rect": null,
+      "previewCs": null
+    },
+    {
+      "to": "/dock/vertical",
+      "label": "Vertical Dock",
+      "span": null,
+      "cardContentVisibility": "auto",
+      "kind": "none",
+      "hasPreviewRegion": false,
+      "still": null,
+      "authoredTag": null,
+      "authoredDescendants": null,
+      "tileCanvases": 0,
+      "rect": null,
+      "previewCs": null
+    },
+    {
+      "to": "/dock/sections",
+      "label": "Dock Sections",
+      "span": null,
+      "cardContentVisibility": "auto",
+      "kind": "none",
+      "hasPreviewRegion": false,
+      "still": null,
+      "authoredTag": null,
+      "authoredDescendants": null,
+      "tileCanvases": 0,
+      "rect": null,
+      "previewCs": null
+    },
+    {
+      "to": "/dock/controls",
+      "label": "Dock Controls",
+      "span": null,
+      "cardContentVisibility": "auto",
+      "kind": "none",
+      "hasPreviewRegion": false,
+      "still": null,
+      "authoredTag": null,
+      "authoredDescendants": null,
+      "tileCanvases": 0,
+      "rect": null,
+      "previewCs": null
+    },
+    {
+      "to": "/dock/overflow",
+      "label": "Dock Overflow",
+      "span": null,
+      "cardContentVisibility": "auto",
+      "kind": "none",
+      "hasPreviewRegion": false,
+      "still": null,
+      "authoredTag": null,
+      "authoredDescendants": null,
+      "tileCanvases": 0,
+      "rect": null,
+      "previewCs": null
+    },
+    {
+      "to": "/dock/cta-receive",
+      "label": "CTA → Dock Morph",
+      "span": null,
+      "cardContentVisibility": "auto",
+      "kind": "none",
+      "hasPreviewRegion": false,
+      "still": null,
+      "authoredTag": null,
+      "authoredDescendants": null,
+      "tileCanvases": 0,
+      "rect": null,
+      "previewCs": null
+    },
+    {
+      "to": "/dock/dock-search",
+      "label": "Dock Search",
+      "span": null,
+      "cardContentVisibility": "auto",
+      "kind": "none",
+      "hasPreviewRegion": false,
+      "still": null,
+      "authoredTag": null,
+      "authoredDescendants": null,
+      "tileCanvases": 0,
+      "rect": null,
+      "previewCs": null
+    }
+  ],
+  "canvasCount": 1,
+  "canvases": [
+    {
+      "cls": "aurora-canvas block h-full w-full aurora-canvas--armed",
+      "attrs": "data-v-d7d069a3 aria-hidden=true class=aurora-canvas block h-fu width=1440 height=900 style=opacity: 1;",
+      "intrinsic": {
+        "w": 1440,
+        "h": 900
+      },
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 900
+      },
+      "cs": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "zIndex": "auto",
+        "position": "static"
+      },
+      "ancestry": [
+        "div.aurora-canvas-layer.h-full",
+        "div.aurora-root.block",
+        "div",
+        "body",
+        "html.dark"
+      ],
+      "inLadder": false
+    }
+  ],
+  "glCalls": [
+    {
+      "host": "HTMLCanvasElement",
+      "type": "2d",
+      "path": "/dock",
+      "stack": "at HTMLCanvasElement.value [as getContext] (<anonymous>:11:81) | at rasterizeField (http://localhost:5401/src/components/aurora/composables/auroraFallbackGround.ts:330:21) | at auroraFallbackGround (http://localhost:5401/src/components/aurora/composables/auroraFallbackGround.ts:275:24) | at Proxy.<anonymous> (http://localhost:5401/demo/shell/AppShell.vue?t=1787938933750:47:20) | at renderComponentRoot (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:4762:35) | at ReactiveEffect.componentUpdateFn [as fn] (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:5616:41) | at ReactiveEffect.run (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:435:16)",
+      "w": 8,
+      "h": 8,
+      "el": {
+        "cls": null,
+        "attrs": "width,height"
+      },
+      "returned": "CanvasRenderingContext2D"
+    },
+    {
+      "host": "HTMLCanvasElement",
+      "type": "2d",
+      "path": "/dock",
+      "stack": "at HTMLCanvasElement.value [as getContext] (<anonymous>:11:81) | at getDownContext (http://localhost:5401/src/composables/glass/useGlassBackdropLuminance.ts:79:25) | at sampleNow (http://localhost:5401/src/composables/glass/useGlassBackdropLuminance.ts:162:15) | at watch.immediate (http://localhost:5401/src/composables/glass/useGlassBackdropLuminance.ts:224:3) | at callWithErrorHandling (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:1898:17) | at callWithAsyncErrorHandling (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:1905:15) | at baseWatchOptions.call (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:2399:46)",
+      "w": 32,
+      "h": 32,
+      "el": {
+        "cls": null,
+        "attrs": "width,height"
+      },
+      "returned": "CanvasRenderingContext2D"
+    },
+    {
+      "host": "HTMLCanvasElement",
+      "type": "2d",
+      "path": "/dock",
+      "stack": "at HTMLCanvasElement.value [as getContext] (<anonymous>:11:81) | at getDownContext (http://localhost:5401/src/composables/glass/useGlassBackdropLuminance.ts:79:25) | at sampleNow (http://localhost:5401/src/composables/glass/useGlassBackdropLuminance.ts:162:15) | at watch.immediate (http://localhost:5401/src/composables/glass/useGlassBackdropLuminance.ts:224:3) | at callWithErrorHandling (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:1898:17) | at callWithAsyncErrorHandling (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:1905:15) | at baseWatchOptions.call (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:2399:46)",
+      "w": 32,
+      "h": 32,
+      "el": {
+        "cls": null,
+        "attrs": "width,height"
+      },
+      "returned": "CanvasRenderingContext2D"
+    },
+    {
+      "host": "HTMLCanvasElement",
+      "type": "webgl2",
+      "path": "/dock",
+      "stack": "at HTMLCanvasElement.value [as getContext] (<anonymous>:11:81) | at probeWebGL2Renderer (http://localhost:5401/src/composables/glass/webgl/useWebGLCanvas.ts:52:14) | at isSoftwareWebGLRenderer (http://localhost:5401/src/components/aurora/constants/renderMode.ts:32:7) | at resolveRenderMode (http://localhost:5401/src/components/aurora/constants/renderMode.ts:83:66) | at setup (http://localhost:5401/src/components/aurora/Aurora.vue:81:30) | at callWithErrorHandling (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:1898:17) | at setupStatefulComponent (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:6797:23)",
+      "w": 300,
+      "h": 150,
+      "el": {
+        "cls": null,
+        "attrs": ""
+      },
+      "returned": "WebGL2RenderingContext"
+    },
+    {
+      "host": "HTMLCanvasElement",
+      "type": "2d",
+      "path": "/dock",
+      "stack": "at HTMLCanvasElement.value [as getContext] (<anonymous>:11:81) | at rasterizeField (http://localhost:5401/src/components/aurora/composables/auroraFallbackGround.ts:330:21) | at auroraFallbackGround (http://localhost:5401/src/components/aurora/composables/auroraFallbackGround.ts:275:24) | at ComputedRefImpl.fn (http://localhost:5401/src/components/aurora/Aurora.vue:121:41) | at refreshComputed (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:558:26) | at get value (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:1543:3) | at ComputedRefImpl.fn (http://localhost:5401/src/components/aurora/Aurora.vue:122:68)",
+      "w": 8,
+      "h": 8,
+      "el": {
+        "cls": null,
+        "attrs": "width,height"
+      },
+      "returned": "CanvasRenderingContext2D"
+    },
+    {
+      "host": "HTMLCanvasElement",
+      "type": "webgl2",
+      "path": "/dock",
+      "stack": "at HTMLCanvasElement.value [as getContext] (<anonymous>:11:81) | at probeWebGL2Renderer (http://localhost:5401/src/composables/glass/webgl/useWebGLCanvas.ts:52:14) | at isSoftwareWebGLRenderer (http://localhost:5401/src/components/aurora/constants/renderMode.ts:32:7) | at createAurora (http://localhost:5401/src/components/aurora/composables/runtime.ts:94:65) | at http://localhost:5401/src/components/aurora/composables/useAurora.ts:202:11 | at http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:3836:87 | at callWithErrorHandling (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:1898:17)",
+      "w": 300,
+      "h": 150,
+      "el": {
+        "cls": null,
+        "attrs": ""
+      },
+      "returned": "WebGL2RenderingContext"
+    },
+    {
+      "host": "HTMLCanvasElement",
+      "type": "2d",
+      "path": "/dock",
+      "stack": "at HTMLCanvasElement.value [as getContext] (<anonymous>:11:81) | at getDownContext (http://localhost:5401/src/composables/glass/useGlassBackdropLuminance.ts:79:25) | at sampleNow (http://localhost:5401/src/composables/glass/useGlassBackdropLuminance.ts:162:15) | at watch.immediate (http://localhost:5401/src/composables/glass/useGlassBackdropLuminance.ts:224:3) | at callWithErrorHandling (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:1898:17) | at callWithAsyncErrorHandling (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:1905:15) | at baseWatchOptions.call (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:2399:46)",
+      "w": 32,
+      "h": 32,
+      "el": {
+        "cls": null,
+        "attrs": "width,height"
+      },
+      "returned": "CanvasRenderingContext2D"
+    },
+    {
+      "host": "navigator.gpu",
+      "type": "requestAdapter",
+      "path": "/dock",
+      "stack": "at navigator.gpu.requestAdapter (<anonymous>:31:97) | at http://localhost:5401/src/composables/glass/webgpu/useWebGPUCanvas.ts:81:58 | at acquireSharedDevice (http://localhost:5401/src/composables/glass/webgpu/useWebGPUCanvas.ts:108:4) | at acquireDevice (http://localhost:5401/src/composables/glass/webgpu/useWebGPUCanvas.ts:289:26) | at http://localhost:5401/src/composables/glass/webgpu/useWebGPUCanvas.ts:342:11 | at Object.armAsync (http://localhost:5401/src/composables/glass/webgpu/useWebGPUCanvas.ts:386:5) | at Object.armAsync (http://localhost:5401/src/composables/glass/webgpu/useGpuSubstrate.ts:139:18)"
+    },
+    {
+      "host": "HTMLCanvasElement",
+      "type": "webgpu",
+      "path": "/dock",
+      "stack": "at HTMLCanvasElement.value [as getContext] (<anonymous>:11:81) | at buildContext (http://localhost:5401/src/composables/glass/webgpu/useWebGPUCanvas.ts:151:22) | at build (http://localhost:5401/src/composables/glass/webgl/createCanvasLifecycle.ts:135:11) | at Object.arm (http://localhost:5401/src/composables/glass/webgl/createCanvasLifecycle.ts:206:3) | at http://localhost:5401/src/composables/glass/webgpu/useWebGPUCanvas.ts:344:15 | at async Object.armAsync (http://localhost:5401/src/composables/glass/webgpu/useGpuSubstrate.ts:139:5) | at async armRuntime (http://localhost:5401/src/components/aurora/composables/useAurora.ts:165:4)",
+      "w": 1440,
+      "h": 900,
+      "el": {
+        "cls": "aurora-canvas block h-full w-full",
+        "attrs": "data-v-d7d069a3,aria-hidden,class,width,height,style"
+      },
+      "returned": "GPUCanvasContext"
+    }
+  ],
+  "auroraSettledNodes": 1,
+  "fieldCanvases": 1,
+  "theme": "dark",
+  "consoleErrors": [],
+  "glSummary": {
+    "totalGetContextCalls": 9,
+    "byType": {
+      "2d": 5,
+      "webgl2": 2,
+      "requestAdapter": 1,
+      "webgpu": 1
+    },
+    "glFamilyCalls": 3,
+    "glFamily": [
+      {
+        "type": "webgl2",
+        "returned": "WebGL2RenderingContext",
+        "cls": null,
+        "attrs": "",
+        "stack": "at HTMLCanvasElement.value [as getContext] (<anonymous>:11:81) | at probeWebGL2Renderer (http://localhost:5401/src/composables/glass/webgl/useWebGLCanvas.ts:52:14) | at isSoftwareWebGLRenderer (http://localhost:5401/src/components/aurora/constants/renderMode.ts:32:7) | at resolveRenderMode (http://localhost:5401/src/components/aurora/constants/renderMode.ts:83:66) | at setup (http://localhost:5401/src/components/aurora/Aurora.vue:81:30) | at callWithErrorHandling (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:1898:17) | at setupStatefulComponent (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:6797:23)"
+      },
+      {
+        "type": "webgl2",
+        "returned": "WebGL2RenderingContext",
+        "cls": null,
+        "attrs": "",
+        "stack": "at HTMLCanvasElement.value [as getContext] (<anonymous>:11:81) | at probeWebGL2Renderer (http://localhost:5401/src/composables/glass/webgl/useWebGLCanvas.ts:52:14) | at isSoftwareWebGLRenderer (http://localhost:5401/src/components/aurora/constants/renderMode.ts:32:7) | at createAurora (http://localhost:5401/src/components/aurora/composables/runtime.ts:94:65) | at http://localhost:5401/src/components/aurora/composables/useAurora.ts:202:11 | at http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:3836:87 | at callWithErrorHandling (http://localhost:5401/node_modules/.vite/deps/vue.runtime.esm-bundler-D58j8KZH.js?v=7ff3eb77:1898:17)"
+      },
+      {
+        "type": "webgpu",
+        "returned": "GPUCanvasContext",
+        "cls": "aurora-canvas block h-full w-full",
+        "attrs": "data-v-d7d069a3,aria-hidden,class,width,height,style",
+        "stack": "at HTMLCanvasElement.value [as getContext] (<anonymous>:11:81) | at buildContext (http://localhost:5401/src/composables/glass/webgpu/useWebGPUCanvas.ts:151:22) | at build (http://localhost:5401/src/composables/glass/webgl/createCanvasLifecycle.ts:135:11) | at Object.arm (http://localhost:5401/src/composables/glass/webgl/createCanvasLifecycle.ts:206:3) | at http://localhost:5401/src/composables/glass/webgpu/useWebGPUCanvas.ts:344:15 | at async Object.armAsync (http://localhost:5401/src/composables/glass/webgpu/useGpuSubstrate.ts:139:5) | at async armRuntime (http://localhost:5401/src/components/aurora/composables/useAurora.ts:165:4)"
+      }
+    ],
+    "ladderAttributedGl": 0,
+    "twoDCalls": 5
+  }
+}

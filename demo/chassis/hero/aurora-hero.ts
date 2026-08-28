@@ -269,9 +269,12 @@ export function heroAuroraConfig(palette: HeroPaletteKey): AuroraConfig {
  *   - an EXPLICIT recessive C 0.04–0.07 palette (NOT a hue-rotation of
  *     `DEFAULT_AURORA_CONFIG`, whose C 0.16/0.13/0.095 zones paint C>0.10 at the
  *     worst-cool sand projections). Measured OKLab C max well under the 0.10 ceiling.
- * The drift is the calm hero band (breathPeriod 48, low nuclei/palette drift) so the
- * field reads effectively static (WCAG 2.2.2 by being non-animated — no pause
- * control owed on the shell field; the in-/substrates focal auroras keep theirs).
+ * The drift is the calm hero band (breathPeriod 48, low nuclei/palette drift).
+ * ~~so the field reads effectively static (WCAG 2.2.2 by being non-animated — no
+ * pause control owed on the shell field)~~ [2026-08-28 · π-FIELD F1: REFUTED by
+ * measurement — 91.5–93.1% of pixels move, ΔE p99 0.056; the γ §6.3 "struck or
+ * earned" ruling resolves to STRUCK. Whether a pause control is owed on the shell
+ * field is an OPEN #49 question; the in-/substrates focal auroras keep theirs.]
  */
 export function shellAuroraConfig(hue: number): AuroraConfig {
     const h = clampWarm(hue);
@@ -309,13 +312,18 @@ export function shellAuroraConfig(hue: number): AuroraConfig {
  * dark preview-field discipline applied to the page-wide shell): low lightness
  * (L 0.17–0.25), warm hue, chroma KEPT (C 0.045–0.07) so the field GLOWS
  * amber/terracotta rather than collapsing to a charcoal slab. At the SAME shell
- * opacityCeiling 0.5 it composites to L ≈ 0.12–0.16 over the dark page — a light
+ * opacityCeiling 0.5 it composites to ~~L ≈ 0.12–0.16~~ [2026-08-28 · π-FIELD F2:
+ * MEASURED p50 0.340 / 0.571 over the dark page — the figure REFUTED; the AA
+ * clearance claims on this line were derived from it and are SUSPECT until
+ * re-measured at #49] over the dark page — a light
  * hero h1 clears >10:1, the `--muted-foreground` body clears ≥4.5:1 — while reading
  * as a deep warm-ember atmospheric drift, never a light-tan wash.
  *
  * The TWO recessive legs are preserved (vividness:0 + chroma ≤ 0.10, no conic/brown/
  * speckle); only the L band moves DOWN for the dark composite. It rides the same calm
- * drift (breathPeriod 48, low nuclei/palette drift) so it reads effectively static.
+ * drift (breathPeriod 48, low nuclei/palette drift). ~~so it reads effectively
+ * static~~ [2026-08-28 · π-FIELD F1 applies here too — the same drift measured
+ * 91.5–93.1% pixels moving; the static claim is STRUCK in both theme arms.]
  */
 export function shellAuroraConfigDark(hue: number): AuroraConfig {
     const h = clampWarm(hue);

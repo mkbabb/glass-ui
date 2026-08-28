@@ -419,7 +419,16 @@ card are *paint*; whether the home title reads correctly at `mega` is a MEASUREM
         tree — the 70-identity landing is the before.
 δ3-π-5  /display + /substrates @1440
         the four authored tiles and six stills paint; 0 GL contexts on any landing
-        (the ladder's construction claim, measured not asserted).
+        (the ladder's construction claim, measured not asserted). [2026-08-28 · the browser
+        seat's D4 — "0 GL contexts on any landing" is FALSE AS WRITTEN at HEAD: every
+        landing, both themes, carries webgl2 ×2 (throwaway software-renderer probes —
+        the double-probe is #49's D5, useWebGLCanvas.ts:52 + renderMode.ts:32) +
+        webgpu ×1 (the shell <Aurora> AppShell.vue mounts behind every non-focal
+        route). The LADDER's own claim (storyTile.ts:38-40) measured 0 on all 24
+        route×theme runs — GREEN. The cell is DEFECT-ROUTED on this record's wording,
+        not on the ladder; the four authored tiles resolve as the TREE's four
+        (storyTile.ts:37), settling §3's two-vs-four question — both captures were
+        right, the order's count is the tree's.]
 δ3-π-6  /navigation/toc-tracking @1440 + 390 · light AND dark
         both panes paint real glass (the `themed-card` cure); the ToC track measures
         ≤ min(21rem, 30%); the stage is --stage-block; AA on the tracked headings.

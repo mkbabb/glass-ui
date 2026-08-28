@@ -342,3 +342,36 @@ no browser, no dev server, no `getContext()`. Nothing staged, committed, stashed
 No band directory was modified, no artifact deleted, no battery edited — **the D3–D7 count drifts
 are reported here, not corrected in another seat's record.** Every figure above is either lifted
 verbatim from a battery on disk or measured at this seat with the command shown.
+
+---
+
+## RECONCILIATION — driver, 2026-08-28 (the drops cured)
+
+The 29 DROPPED above are now zero. The post-mortem δ adjudication seat wrote
+`PI-BATTERY-delta-config-fourier-scroll-story.md` from the dead seat's 91 banked
+artifacts (16 CAPTURED-GREEN · 7 DEFECT-ROUTED · 4 INSUFFICIENT-EVIDENCE · 1 owed),
+the singleton browser seat then captured the owed δ3-π-5 (44 artifacts, verdict
+appended as that battery's §8 — DEFECT-ROUTED on the RECORD's wording, the ladder's
+own claim GREEN 0/24) and the dropped π-FIELD (79 artifacts + PI-FIELD-VERDICT.md,
+RECORDED-NOT-DECIDED for #49 — the decisive datum: /display and /substrates run
+byte-identical shell drift and differ 12× in paint motion, so a drift-unit threshold
+cannot transfer between two routes of the same field).
+
+**The reconciled coverage line: 35 CAPTURED-GREEN · 18 DEFECT-ROUTED · 4
+INSUFFICIENT-EVIDENCE · 7 BLOCKED (#50 W2-W6 subject unbuilt) · 1 RECORDED-NOT-DECIDED
+(π-FIELD) · 0 DROPPED = 65.**
+
+New routes from the two recovery seats, dispositioned: **D1** (#53 WGSL const PI —
+cure quartet in flight at this writing) · **D2** (#73/#58 dark wash — same quartet) ·
+**D3** (ToC 4.04:1 — driver-ruled chassis, same quartet) · **D4** (the δ3-π-5 record
+wording — CURED IN PLACE this commit, dated bracket at lanedelta-unit4/RECORD.md) ·
+**D5** (double WebGL probe per landing — #49 intake) · **D6** (frozen stills
+theme-invariant, cream slabs on dark — #58 W-PREVIEW-CARD, δ follow-up unit) ·
+**F1/F2** (aurora-hero.ts WCAG-static + composited-L claims REFUTED — STRUCK in place
+this commit, both theme arms; pause-control question OPEN at #49) · **F3** (preset
+shortcuts hijack focused sliders — #49 intake) · **F4** (studio stage arms only
+in-view — capture precondition, #49) · **F5** (focal field theme-invariant to 5
+decimals — #49 intake).
+
+The cure quartets' π-RERUN cells (R1-R8 · D1-D3) drain at the re-capture seat; those
+verdicts amend the per-band batteries, not this census.
