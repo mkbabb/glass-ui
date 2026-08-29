@@ -155,6 +155,23 @@ percentages of a collapsible box is not geometry.
 window cure makes harmless, not a second defect papered over. π-RERUN-R6 is what
 converts that from an argument into a reading.
 
+> **[2026-08-29 · STRIKE — THE READING CAME BACK AND IT REFUTES THIS PARAGRAPH.]**
+> π-RERUN-R6 ran (`2026-08-25-pi-band/rerun/PI-RERUN-BATTERY.md` §π-RERUN-R6, committed
+> `dfe6971f`) and SPLIT: the window cure is **CURED-GREEN** — all 10 masks carry four
+> finite user-space numbers with area > 0 — but the ring on `threefold` is **still never
+> painted**, and the mounts that fail to paint are *precisely and only* the four whose
+> `.hm-mark` box resolves `width: 0`. **"Harmless" is wrong.** A zero-width SVG viewport
+> renders nothing at all, whatever window it carries: an SVG's own viewport is a clip
+> the ink never reaches, not a coordinate space `overflow: visible` can rescue. Measured
+> at 1440 dark (`rerun/pi-RERUN-R6-RING-reservation-1440-dark-cured.json`) —
+> `pays in` 162.04 ✓ · `rose` 61.48 ✓ · `violet` 73.78 ✓ · `drawn` 139.29 ✓ ·
+> **`Friday` 0 ✗ · `threefold` 0 ✗ · `Hpqjy` 0, 0 ✗** — and identically at 390×844×3, in
+> both themes. STRIKE and CIRCLE are blank at rest on `/motion/handmark`. **WHAT
+> SURVIVES:** the window cure itself and every arm that proved it; the box was a SECOND
+> defect of the same class standing behind the first, and it is cured in **unit 7**
+> (`../2026-08-10-lanegamma-unit7/RECORD.md`), which gives the frame the line rect it was
+> made for.
+
 ### 2.4 · R7 — `HandMark.vue` · the wrapper double-rect
 
 `slotRects()` no longer ranges over the host's child nodes. It walks the slot's **text
@@ -263,6 +280,8 @@ paintedShare 0.280`, flood plant biting the MAX at **0.997** on the same denomin
 · π-SCROLL's kill criterion is NOT disposed of. It is made judgeable and handed on.
 · `.hm-mark`'s 0px inline box is not "fixed" — it is made irrelevant by the window cure,
   and π-RERUN-R6 is what proves that rather than argues it.
+  [2026-08-29 · STRUCK. π-RERUN-R6 proved the opposite: the 0px box is load-bearing and
+   is the whole of the still-RED half. See the §2.3 bracket. Cured in unit 7.]
 · No aurora byte. R9–R11 are the driver's banked rulings, not this unit's cures.
 · dist/ was NOT rebuilt. See §5 — it is 18 days stale and shared with three live lanes;
   rebuilding it would bake four lanes' uncommitted edits into a shared artifact.

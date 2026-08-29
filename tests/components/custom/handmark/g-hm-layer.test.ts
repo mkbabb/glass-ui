@@ -72,6 +72,10 @@ async function renderShape(shape: string, fs: number, lines: Line[]) {
         preserveAspectRatio: s.attributes("preserveAspectRatio"),
         viewBox: s.attributes("viewBox"),
     }));
+    const frames = svgs.map((s) => ({
+        width: s.attributes("width"),
+        height: s.attributes("height"),
+    }));
     const masks = w.findAll("mask").map((m) => ({
         units: m.attributes("maskUnits"),
         x: m.attributes("x"),
@@ -80,7 +84,7 @@ async function renderShape(shape: string, fs: number, lines: Line[]) {
         height: m.attributes("height"),
     }));
     w.unmount();
-    return { ink, html, svgAttrs, masks };
+    return { ink, html, svgAttrs, masks, frames };
 }
 
 /**
@@ -119,6 +123,44 @@ function windowOf(m: {
 }
 
 /**
+ * The RENDERED frame — the SVG's OWN viewport, as the DOM carries it.
+ *
+ * A frame that declares no size takes `width: 100%` of its containing block, and an
+ * absolutely positioned child of an INLINE host does not get the word's box: it gets
+ * the box CSS 2.1 §10.1.4 builds between that inline's first and last fragments.
+ * Chromium resolves THAT to `0` for a `<del>` mount, for a ring-reserved slot and for
+ * both line rects of a wrapped `<mark>` — and an SVG viewport of zero width renders
+ * nothing at all, whatever geometry and whatever mask window it carries. So the frame
+ * has to state its own size, in the same user units the geometry is emitted in.
+ */
+function frameOf(f: { width?: string; height?: string }, line: Line) {
+    const size = (v: string | undefined, name: string, span: number): number => {
+        expect(
+            v,
+            `the frame declares no ${name}: with no viewport of its own it takes 100% of the INLINE containing block, which Chromium resolves to 0 for a wrapped or wrapper-bearing mount`,
+        ).toBeTypeOf("string");
+        expect(
+            v,
+            `frame ${name}="${v}" is a PERCENTAGE of a box the engine is free to collapse`,
+        ).not.toMatch(/%/);
+        const n = Number(v);
+        expect(n, `frame ${name}="${v}" is not a user-space length`).not.toBeNaN();
+        expect(
+            n,
+            `a zero-${name} SVG viewport renders NOTHING — the ink, the guide and the mask window are all moot`,
+        ).toBeGreaterThan(0);
+        // The frame is the LINE RECT the mark was made for — the same measurement the
+        // geometry comes from — rounded outward to the geometry's own 3 decimals. A
+        // constant that merely happens to be non-zero would satisfy the arm above and
+        // is exactly what this pins shut.
+        expect(n, `the frame is narrower than the line it stands for`).toBeGreaterThanOrEqual(span);
+        expect(n, `the frame is not the line rect it was made for`).toBeLessThanOrEqual(span + 0.001);
+        return n;
+    };
+    return { w: size(f.width, "width", line.w), h: size(f.height, "height", line.h) };
+}
+
+/**
  * The emitted bbox. A containment arm scored over ZERO emitted points is a gate over
  * zero pixels, so an absent or degenerate `d` throws rather than passing vacuously.
  */
@@ -147,6 +189,30 @@ function bbox(d: string) {
 
 const RUNGS = [18.608, 30.1, 48.7] as const;
 const SHAPE_MEMBERS = ["underline", "strike", "circle", "highlight"] as const;
+
+/**
+ * The MOUNT CLASSES of the story corpus, in the shapes `/motion/handmark` really
+ * produces them: a bare slot, a `<del>` wrapper, a bare slot carrying the ring's own
+ * inline reservation, a `<mark>` on one line, and the same `<mark>` broken over two —
+ * the second line starting LEFT of the first, which is what the page does and what
+ * collapses an inline containing block. Widths are the measured 1440 dark figures from
+ * `2026-08-25-pi-band/rerun/pi-RERUN-R6-RING-reservation-1440-dark-cured.json`, so the
+ * fixture is the page's own arithmetic rather than a convenient round number.
+ */
+const STORY_MOUNTS: Array<{ mount: string; shape: string; lines: Line[] }> = [
+    { mount: "underline · bare slot", shape: "underline", lines: [{ x: 40, y: 60, w: 162.04, h: 37.5 }] },
+    { mount: "strike · <del> wrapper", shape: "strike", lines: [{ x: 40, y: 60, w: 87.81, h: 37.5 }] },
+    { mount: "circle · bare slot, ring-reserved", shape: "circle", lines: [{ x: 40, y: 60, w: 153.93, h: 37.5 }] },
+    { mount: "highlight · <mark>, one line", shape: "highlight", lines: [{ x: 40, y: 60, w: 61.48, h: 37.5 }] },
+    {
+        mount: "highlight · <mark>, two lines",
+        shape: "highlight",
+        lines: [
+            { x: 188, y: 60, w: 171.58, h: 37.5 },
+            { x: 0, y: 100, w: 108.63, h: 37.5 },
+        ],
+    },
+];
 /** lh/fs bands: 1.05 at display, 1.20 mid, 1.50 at body — the tightest is the test. */
 const TIGHTEST_LEADING = 1.05;
 
@@ -226,6 +292,30 @@ describe("G-HM-LAYER 2 · CONTAINMENT, geometric — extent is geometry, never i
             expect(win.y + win.h, `${shape}: window clips the ink's bottom edge`).toBeGreaterThanOrEqual(b.y1);
         },
     );
+
+    it.each(STORY_MOUNTS)(
+        "$mount: the RENDERED frame declares its own viewport, and it is never zero",
+        async ({ shape, lines }) => {
+            // The window cure fixed the box INSIDE the frame; this is the frame. Both
+            // are the same failure twice — a length authored as a percentage of a box
+            // an inline host is free to collapse — and curing one does not cure the
+            // other: with a perfect window, a frame of zero width still paints nothing.
+            const r = await renderShape(shape, 30.1, lines);
+            expect(r.frames, `${shape}: one frame per line rect`).toHaveLength(lines.length);
+            r.frames.forEach((f, i) => frameOf(f, lines[i]));
+        },
+    );
+
+    it("no rule sizes the frame as a percentage of the inline containing block", () => {
+        const rules = [...styleBlock().matchAll(/([^{}]*\.hm-mark[^{}]*)\{([^}]*)\}/g)];
+        expect(rules.length, "no .hm-mark rule at all").toBeGreaterThan(0);
+        for (const [, selector, body] of rules) {
+            expect(
+                body,
+                `${selector.trim().replace(/\s+/g, " ")} sizes the frame in percentages — an inline containing block is not the word's box, and Chromium resolves it to 0 width for the <del> mount, the ring-reserved slot and both line rects of a wrapped <mark>`,
+            ).not.toMatch(/(?:^|;)\s*(?:width|height|inline-size|block-size)\s*:[^;]*%/);
+        }
+    });
 });
 
 describe("G-HM-LAYER 3 · SUBSTRATE — structural half; the painted windows are π-BAND", () => {

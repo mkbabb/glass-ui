@@ -60,8 +60,17 @@ in place of `-100%/-100%/300%/300%`.
 | rendered `<mask>` attributes, read off the live DOM at every mount | `x="-100%" y="-100%" width="300%" height="300%"` | four finite user-space numbers per mask, area > 0, containing the ink |
 | computed `.hm-mark` width per mount, Chromium 1440 / 1920 / 390 and Safari 26.4 | `pays in` 162.04 / — / 139.32 / 158.63 · `Friday` **0**×2 / — / **0**×2 / 87.09×2 · `threefold` **0** / — / **0** / 173.08 · `Hpqjy really matters` **0**×4 / **9.05**×4 / **0**×4 / **0**×4 · `rose` — / 68.17×2 / 52.87×2 / 63.73×2 | **unchanged and no longer load-bearing** — the reading is banked to prove the window cure does not depend on this box |
 | the ring, with `stroke-dashoffset` FORCED to 0px by a real hover (isolates R6 from R5) | ring **never painted**; Chromium `.hm-mark` width `0px` | the ring paints |
+
 | the wrapped hue-78 band at 1920 | a **21 px orange chip on the "H"** and nothing on its second line | both lines carry a full band |
 | Safari 26.4 divergence | `Friday` / `threefold` resolve real widths where Chromium resolves 0, so only R5 kills them there | both engines now agree, from the same window |
+> **[2026-08-29 · STRIKE on the computed-`.hm-mark`-width row's claim cell (the verbatim quote is the anchor; relocated below the table 2026-08-29 so the GFM table renders whole) — *"unchanged and no longer
+> load-bearing"* is FALSE.]** π-RERUN-R6 came back SPLIT: window CURED, ring/paint
+> STILL-RED. With `stroke-dashoffset` 0 at rest (R5's cure supplying the isolation this
+> row wanted a forced hover for), the ring on `threefold` is still never painted, and
+> the mounts that fail are *precisely and only* the four resolving `.hm-mark` width 0.
+> **The width IS load-bearing** — a zero-width SVG viewport renders nothing whatever
+> window it carries. Routed to and cured in **γ unit 7**; re-capture is **π-RERUN2-R6**
+> in `../2026-08-10-lanegamma-unit7/PI-QUEUE.md`.
 
 **Artifacts:** `pi-RING-reservation-and-mask-window.json` (extend with the rendered window
 per mount) · `pi-RING-no-ring-painted-crop-1440-light.png` (must invert) ·

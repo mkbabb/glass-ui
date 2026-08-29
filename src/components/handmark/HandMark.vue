@@ -48,7 +48,19 @@ interface Mark {
     duration: number;
     /** The mask's own window, in the SAME user units the geometry is emitted in. */
     window: Frame;
+    /**
+     * The frame's own SVG viewport, in those same units: the line rect this mark was
+     * made for. See `.hm-mark` in the style block for why it cannot be a percentage.
+     */
+    box: { width: number; height: number };
 }
+
+/**
+ * The three decimals every emitted length carries, rounded OUTWARD in each direction —
+ * a box may be a hair larger than the thing it stands for, never a hair smaller.
+ */
+const up = (v: number) => Math.ceil(v * 1000) / 1000;
+const down = (v: number) => Math.floor(v * 1000) / 1000;
 
 const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
 const root = ref<HTMLElement | null>(null);
@@ -146,31 +158,31 @@ function slotRects(el: HTMLElement): Frame[] {
 /**
  * The mask window that gates the ink, in the geometry's OWN user units.
  *
- * A percentage window resolves against the SVG's own box, and this SVG is
- * `width: 100%` inside a `display: inline` host — a box the engine resolves to `0px`
- * the moment the slot wraps or sits in a `<del>` / `<mark>`. A zero-area window masks
- * every pixel away, so perfect geometry paints nothing. Real units resolve against
- * nothing: the window is the mark's own bounds, opened by the guide's half-stroke
+ * A percentage window resolves against the SVG's own box — the same box `.hm-mark`
+ * itself must not size in percentages, and for the same reason. A zero-area window
+ * masks every pixel away, so perfect geometry paints nothing. Real units resolve
+ * against nothing: the window is the mark's own bounds, opened by the guide's half-stroke
  * (which is the round cap's reach, and comfortably past the ribbon's half-nib) and one
  * pixel of antialias.
  */
 function maskWindow(points: Point[], stroke: number): Frame {
     const pad = stroke / 2 + 1;
-    // Serialized to the same 3 decimals the geometry is, rounded OUTWARD, so the
-    // window can only ever be wider than the ink it gates, never a hair narrower.
-    const lo = (v: number[]) => Math.floor((Math.min(...v) - pad) * 1000) / 1000;
-    const hi = (v: number[]) => Math.ceil((Math.max(...v) + pad) * 1000) / 1000;
+    const lo = (v: number[]) => down(Math.min(...v) - pad);
+    const hi = (v: number[]) => up(Math.max(...v) + pad);
     const xs = points.map((p) => p.x);
     const ys = points.map((p) => p.y);
-    const out = (a: number, b: number) => Math.ceil((b - a) * 1000) / 1000;
     const x = lo(xs);
     const y = lo(ys);
-    return { x, y, width: out(x, hi(xs)), height: out(y, hi(ys)) };
+    return { x, y, width: up(hi(xs) - x), height: up(hi(ys) - y) };
 }
 
-function geometryFor(rect: Frame, fs: number, seed: number): Omit<Mark, "delay" | "duration"> & {
-    length: number;
-} {
+// The frame's `box` is the RECT, not the geometry — `measure()` owns it, so it is not
+// among the things a shape's closed form can answer for.
+function geometryFor(
+    rect: Frame,
+    fs: number,
+    seed: number,
+): Omit<Mark, "delay" | "duration" | "box"> & { length: number } {
     if (props.shape === "highlight") {
         const band = handBand(rect, { fs, seed });
         const half = band.length / 2;
@@ -231,6 +243,7 @@ function measure(): void {
             guide: g.guide,
             stroke: g.stroke,
             window: g.window,
+            box: { width: up(frame.width), height: up(frame.height) },
             delay: clock,
             duration,
         });
@@ -365,6 +378,8 @@ defineExpose({ play });
             ref="frames"
             class="hm-mark"
             :class="{ 'hm-mark--settling': settling }"
+            :width="m.box.width"
+            :height="m.box.height"
             :style="{ transform: `translateY(${-lag}px)` }"
             aria-hidden="true"
             focusable="false"
@@ -411,12 +426,27 @@ defineExpose({ play });
     background: none;
     color: inherit;
 }
+/*
+   The frame is an ORIGIN, not a layer over the word — the geometry inside it is
+   absolute, in 1:1 CSS px, and `overflow: visible` lets it out. So the frame's size is
+   authored per mark, in those same units, as the LINE RECT the mark was made for.
+
+   It cannot be `100%`. This element is absolutely positioned inside an INLINE host, and
+   a percentage there resolves against the box CSS 2.1 §10.1.4 builds between that
+   inline's first and last fragments — not the word's box. Chromium resolves that box to
+   `width: 0` for the `<del>` mount, for a ring-reserved slot and for BOTH line rects of
+   a wrapped `<mark>`, at 1440 and at 390×844×3, in both themes; the mounts that happen
+   to paint are the single-fragment ones, where it coincides with the word. An SVG
+   viewport of zero width renders nothing at all, so perfect geometry behind a perfect
+   mask window painted nothing on four of the ten story mounts.
+
+   `left`/`top` stay 0: the frame's POSITION is what `measure()` reads its origin from,
+   and a size that cannot move it keeps that reading a fixed point.
+*/
 .hm-mark {
     position: absolute;
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
     overflow: visible;
     pointer-events: none;
 }
