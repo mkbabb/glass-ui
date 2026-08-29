@@ -80,8 +80,14 @@ function bandCss(): Array<{ file: string; css: string }> {
 }
 
 /**
- * Every `outline: none` DECLARATION in the band, each resolved to its full nested
- * selector chain.
+ * Every DECLARATION in the band matching `pred`, each resolved to its full nested
+ * selector chain. `pred` must not carry `/g` — `RegExp.test` is stateful with it.
+ *
+ * [2026-08-29 · BK π-RERUN-R2] Parameterised. The walk was written for `outline: none`
+ * and is now the band's one declaration detector; the ring-reserve arm's size census
+ * needs exactly the same three properties (recursive, brace-aware, `&`-resolving), and a
+ * second copy of it is a second thing to forget to fix. `outlineNoneSites` below is the
+ * original caller, unchanged in what it returns.
  *
  * [2026-08-25 · BK #47 W2-W9 CURE] A BRACE WALK, BECAUSE THE REGEX SAW A SUBSET. The
  * previous detector was `/([^{}]*)\{[^{}]*outline:\s*none[^{}]*\}/` — `[^{}]*` cannot
@@ -99,13 +105,13 @@ function bandCss(): Array<{ file: string; css: string }> {
  * author typed. It runs on `declarations()` output, so struck prose inside `~~…~~` is
  * already gone.
  */
-function outlineNoneSites(): string[] {
-    const sites: string[] = [];
+function bandDeclSites(pred: RegExp): Array<{ file: string; chain: string; decl: string }> {
+    const sites: Array<{ file: string; chain: string; decl: string }> = [];
     for (const { file, css } of bandCss()) {
         const stack: string[] = [];
         let buf = "";
         const flush = (): void => {
-            if (/^\s*outline\s*:\s*none\s*$/.test(buf)) {
+            if (pred.test(buf)) {
                 const chain = stack
                     .filter((frame) => !frame.startsWith("@"))
                     .reduce(
@@ -117,7 +123,7 @@ function outlineNoneSites(): string[] {
                                   : frame,
                         "",
                     );
-                sites.push(`${file}: ${chain}`);
+                sites.push({ file, chain, decl: buf.trim().replace(/\s+/g, " ") });
             }
             buf = "";
         };
@@ -137,6 +143,13 @@ function outlineNoneSites(): string[] {
         }
     }
     return sites;
+}
+
+/** Every `outline: none` declaration in the band, as `file: resolved chain`. */
+function outlineNoneSites(): string[] {
+    return bandDeclSites(/^\s*outline\s*:\s*none\s*$/).map(
+        ({ file, chain }) => `${file}: ${chain}`,
+    );
 }
 
 /** Members of an exported `interface` — one `name:` / `name?:` per line. */
@@ -668,6 +681,74 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
             /* SHADOWED */ `${STYLES}/controls/triggers.css: .dock-trigger, .dock-select-trigger, .dock-dropdown-trigger`,
             /* DISJOINT */ `${STYLES}/controls/triggers.css: .dock-trigger:focus:not(:focus-visible), .dock-select-trigger:focus:not(:focus-visible), .dock-dropdown-trigger:focus:not(:focus-visible)`,
             /* YIELD    */ `${STYLES}/index.css: .glass-dock [data-ring-yield]:focus-visible`,
+        ]);
+    });
+
+    /**
+     * THE RESERVE MUST GROW THE BOX, AND ONLY `content-box` LETS IT.
+     *
+     * [2026-08-29 · BK π-RERUN-R2 · owner #47 W8 + W3] BORN-RED at `dfe6971f`: the
+     * reserve shipped as `padding` + negative `margin` on the cross axis with NO
+     * statement of the box model, and the re-capture measured it going backwards on the
+     * two runs whose cross size is authored elsewhere — the sidebar run's margin box
+     * SHRANK `40 → 32` (`content 32`, `scrollW 48`, `crossOverflow +8`) and the port cut
+     * 4px off the SEAT, and horizontal `i=5` lost 8px of dock height (`56 → 48`). A
+     * padding reserve inside a border box someone else has fixed eats the content box.
+     *
+     * WHAT THIS ARM PROVES AND WHAT IT CANNOT. The COLLISION is static text and is
+     * proven here: which rules author a size on the run element, on which axis, and
+     * whether the reserve states the box model that survives them. The GEOMETRY — that
+     * the padding box actually grows, that `crossOverflow` reads 0, that both arcs of the
+     * ring paint — is layout, which jsdom does not do; it is π's half, enqueued as
+     * π-RERUN2-R2. Neither half is claimed for the other.
+     */
+    it("the ring reserve is stated in the box model that lets it exist", () => {
+        const run = declarations(`${STYLES}/run.css`);
+
+        // 1. THE BOX MODEL RIDES THE SAME SUBJECT AS THE RESERVE. Not `run.css` somewhere
+        //    — the one rule that declares the pair. A `box-sizing` that drifted onto a
+        //    different selector would leave the reserve exactly as defeated as it was.
+        const reserveRules = [...run.matchAll(/\.glass-dock \.dock-run \{([^{}]*)\}/g)]
+            .map((m) => m[1]!)
+            .filter((body) => /padding-block:\s*var\(--dock-ring-reserve\)/.test(body));
+        expect(reserveRules.length).toBe(1);
+        expect(reserveRules[0]).toMatch(/box-sizing:\s*content-box/);
+        expect(reserveRules[0]).toMatch(/margin-block:\s*calc\(-1 \* var\(--dock-ring-reserve\)\)/);
+
+        // 2. ONE OWNER. The vertical rotation swaps the AXIS, not the box model; a
+        //    restatement there is the two-owners defect the R1 cure struck in
+        //    `shell-regions.css`, and a `border-box` restatement anywhere in the band
+        //    silently restores the defect this arm exists for.
+        expect(
+            bandDeclSites(/^\s*box-sizing\s*:/).map(
+                ({ file, chain, decl }) => `${file}: ${chain} { ${decl} }`,
+            ),
+        ).toEqual([`${STYLES}/run.css: .glass-dock .dock-run { box-sizing: content-box }`]);
+
+        // 3. THE CENSUS THE BOX MODEL ANSWERS TO — every size declaration in the band
+        //    whose subject is the run's own element (`dock-layer dock-layer--full
+        //    dock-run`, GlassDock.vue:464). Two are PINS, and both land on a cross axis
+        //    the reserve pads; three are FLOORS at zero, which release rather than fix.
+        //    A sixth row arriving is a new size authority on this element, and whoever
+        //    adds it has to say what it does to the reserve.
+        const sized = bandDeclSites(/^\s*(min-|max-)?(width|height|inline-size|block-size)\s*:/)
+            .filter(({ chain }) =>
+                /\.dock-run(?![-\w])|\.dock-layer--full(?![-\w])|\.dock-layer(?![-\w])/.test(
+                    chain.split(/\s+/).pop() ?? "",
+                ),
+            )
+            .map(({ file, chain, decl }) => `${file}: ${chain} { ${decl} }`);
+        expect(sized).toEqual([
+            /* PIN   · a horizontal run's cross (block) axis */
+            `${STYLES}/layers.css: .glass-dock:not(.vertical) .dock-layer { min-height: var(--dock-layer-height, 2.5rem) }`,
+            /* PIN   · the vertical run's cross (inline) axis */
+            `${STYLES}/layers.css: .glass-dock.expanded:not(.fit-content) .dock-layer--full { width: 100% }`,
+            /* FLOOR · releases the flex/grid min-content floor on the scroll axis */
+            `${STYLES}/run.css: .glass-dock .dock-run { min-inline-size: 0 }`,
+            /* FLOOR · the same release, rotated */
+            `${STYLES}/run.css: .glass-dock.vertical .dock-run { min-block-size: 0 }`,
+            /* FLOOR · vertical layer stack */
+            `${STYLES}/shell-regions.css: .glass-dock.vertical .dock-layer { min-width: 0 }`,
         ]);
     });
 

@@ -1,0 +1,52 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui
+
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts (34 tests | 1 failed | 33 skipped) 4ms
+     × the ring reserve is stated in the box model that lets it exist 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/g-dock-lattice.test.ts > G-DOCK-MATERIAL — the focus ring composes instead of competing > the ring reserve is stated in the box model that lets it exist
+AssertionError: expected '\n        \n        overflow-x: auto;…' to match /box-sizing:\s*content-box/
+
+- Expected:
+/box-sizing:\s*content-box/
+
++ Received:
+"
+        
+        overflow-x: auto;
+        overflow-y: hidden;
+        
+        scroll-snap-type: x mandatory;
+        
+        scroll-padding-inline: calc(var(--dock-pitch) / 2);
+        
+        touch-action: pan-x;
+        overscroll-behavior: contain;
+        scrollbar-width: none;
+        
+        min-inline-size: 0;
+        
+        padding-block: var(--dock-ring-reserve);
+        margin-block: calc(-1 * var(--dock-ring-reserve));
+        
+        gap: var(--dock-run-gap);
+    "
+
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts:715:33
+    713|             .filter((body) => /padding-block:\s*var\(--dock-ring-reser…
+    714|         expect(reserveRules.length).toBe(1);
+    715|         expect(reserveRules[0]).toMatch(/box-sizing:\s*content-box/);
+       |                                 ^
+    716|         expect(reserveRules[0]).toMatch(/margin-block:\s*calc\(-1 \* v…
+    717|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 33 skipped (34)
+   Start at  15:17:07
+   Duration  402ms (transform 177ms, setup 36ms, import 188ms, tests 4ms, environment 88ms)
+

@@ -201,13 +201,53 @@
            reads by exactly the ring's extent, and the equal negative `margin-block` hands
            the growth straight back to the parent, so the run's OUTER box, the seats' own
            positions and the whole lattice are byte-unchanged — only the clip rectangle
-           moves. Nothing above clips it back: `.glass-dock` is `overflow: visible`
+           moves. ~~That paragraph holds on EVERY run.~~ — [2026-08-29 · BK π-RERUN-R2] It
+           holds only on a run whose cross size is AUTO, and the re-capture measured the
+           two that are not (see `box-sizing` directly below): a padding reserve on a
+           border box someone else has already fixed eats the CONTENT box instead of
+           growing the padding box, and the negative margin then only shifts the box. The
+           declaration below is what makes the paragraph true as written.
+           Nothing above clips it back: `.glass-dock` is `overflow: visible`
            (shell.css) with its aperture deleted, which the census corroborates by finding
            persistent-region seats unclipped. The 4px lands inside the dock's own
            `--dock-padding-block` and paints over the dock's frosted plate, which is the
            surface W8 chose 48% α against in the first place. Cross axis only: block
            padding on an inline scroller takes no part in inline scrolling, and the
            vertical rule below swaps the pair onto its own cross axis. */
+        /* [2026-08-29 · BK π-RERUN-R2 · owner #47 W8 MATERIAL + W3 LATTICE] THE RESERVE
+           IS A CONTENT-BOX RESERVE, because the run's cross size is authored SOMEWHERE
+           ELSE and a reserve that lands as padding inside a fixed border box is a reserve
+           that never materialises. Two rules in this band author a non-zero size on the
+           element `.dock-run` rides (`dock-layer dock-layer--full dock-run`, GlassDock.vue),
+           and BOTH land on the axis this reserve pads:
+
+             layers.css — `.glass-dock.expanded:not(.fit-content) .dock-layer--full
+                           { width: 100% }`   → the VERTICAL run's cross (inline) axis
+             layers.css — `.glass-dock:not(.vertical) .dock-layer
+                           { min-height: var(--dock-layer-height, 2.5rem) }`
+                                              → a HORIZONTAL run's cross (block) axis
+
+           Measured at `/dock/overview` 1440, both themes identical (geometry):
+           the sidebar run read `runRect w 40 · clientW 40 · scrollW 48 · content 32 ·
+           crossOverflow +8` — the margin box SHRANK 40→32 and the port cut 4px off the
+           SEAT (`layout 20..60`, paint reaching `20..55.5`), so the ring painted its left
+           arc at cssX 16..17.5 and nothing on the right; and the one horizontal run whose
+           `min-height` binds (i=5) lost 8px of DOCK height, `dockRect h 56→48`.
+
+           `content-box` is the whole cure, at the root, in one declaration: the authored
+           size becomes the size of the box the SEATS get, the reserve adds on top of it,
+           and the negative margin hands that addition back — which is exactly what the
+           paragraph above always claimed. The rejected alternatives, on the bytes:
+           re-authoring the size as `calc(100% + 2 * reserve)` smears ring knowledge into
+           a layer rule that is not about rings and loses the cascade anyway (that rule is
+           (0,4,0); a `.glass-dock.vertical .dock-run` rung is (0,3,0)) and does nothing
+           for the `min-height` arm; `overflow-clip-margin` has no effect on a scroll
+           container, which this box is on its other axis; a wrapper element buys the
+           padding box at the cost of the zero-new-DOM law stated at the head of this rule.
+           It also removes a silent dependency on the HOST: the run was content-box or
+           border-box according to whether the consumer shipped a `*` reset, and this
+           states it. `@layer components` is after `base`, so a preflight reset loses. */
+        box-sizing: content-box;
         padding-block: var(--dock-ring-reserve);
         margin-block: calc(-1 * var(--dock-ring-reserve));
         /* THE SECOND TERM OF P, declared where the first one is. `.dock-layer`'s base
@@ -257,7 +297,14 @@
            would join the scrollable length and shift the snap positions), and the inline
            axis is the one `overflow-x: hidden` clips. The base pair is zeroed rather than
            left to cascade — a reserve on the scroll axis is not a smaller mistake than
-           no reserve on the clipped one. */
+           no reserve on the clipped one.
+
+           [2026-08-29 · BK π-RERUN-R2] The `box-sizing: content-box` this rotation needs
+           is NOT restated here. It is one fact about the run and the base rule declares
+           it for both orientations; a second owner of one value is the defect §2.1 of the
+           unit-8 record struck. This rule is where it BINDS hardest, though — the
+           `width: 100%` that fixed this run's cross axis is what made the reserve read as
+           zero, and the whole 8px overflow the re-capture measured was here. */
         padding-block: 0;
         margin-block: 0;
         padding-inline: var(--dock-ring-reserve);

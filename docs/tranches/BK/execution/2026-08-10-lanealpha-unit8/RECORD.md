@@ -140,6 +140,19 @@ the seat's exactly. `overflow` on the cross axis is not removable — CSS coerce
   rectangle by exactly the ring's extent; the equal negative margin hands the growth back
   to the parent, so the run's **margin box, the seats' positions and the lattice are
   byte-unchanged** — only the clip rectangle moves.
+  **~~True as written.~~ — [2026-08-29 · BK π-RERUN2-R2 · lane α unit 9] TRUE ONLY ON A
+  RUN WHOSE CROSS SIZE IS AUTO, which this bullet did not say and did not check.** The
+  re-capture measured the two runs whose cross size is authored elsewhere going the other
+  way: the sidebar run's margin box SHRANK `40 → 32` with `crossOverflow +8` and the port
+  cut 4px off the SEAT, and horizontal `i=5` lost 8px of DOCK height (`56 → 48`)
+  (`PI-RERUN-BATTERY.md` §π-RERUN-R2, `dfe6971f`). On a border box someone else has
+  already fixed — `.dock-layer--full { width: 100% }` and
+  `.glass-dock:not(.vertical) .dock-layer { min-height: … }`, both in `layers.css` —
+  padding eats the CONTENT box and the negative margin only shifts the box. Unit 9 adds
+  the one declaration that makes this bullet true as it stands (`box-sizing: content-box`
+  on the same rule) and lands the static half as a unit arm; see that unit's RECORD §2.
+  **The §2.2 refusal below is UNCHANGED and is restated there** — the scroll-axis
+  residual is still a scroller property and still not cured.
 * `run.css` vertical (block scroller): the pair ROTATES onto the inline axis, and the base
   pair is **zeroed rather than left to cascade** — block padding there would join the
   scrollable length and shift the snap positions.
