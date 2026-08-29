@@ -39,7 +39,12 @@ The root barrel never carried `SearchBar` or any fuzzy name, so `./search` was t
 door — the cut is TOTAL, not a narrowing. **Four consumer edges existed at the cut**, all
 in value.js's own demo tree (none in anything it ships), and all four carry a marked
 relay addendum in the BK coordination channel rather than a silent break: each is one
-import statement whose component no longer exists. The known `.input-bar` selector sites
+import statement whose component no longer exists. [2026-08-29 · the batch-close
+overfitting audit found the census one edge short: a FIFTH edge lives outside value.js —
+`bbnf-lang/playground/src/components/docs/DocsSidebar.vue:4-5` imports `FuzzySearch` /
+`useFuzzySearch` / `SearchableItem` from `./search` at playground pin `^3.0.0`. The
+four-edge claim was value.js-true and constellation-short; the edge routes to the #76
+band for its own relay addendum.] The known `.input-bar` selector sites
 read the RECIPE, not the component, and are unaffected.
 
 ## 8.1.0 — UNRELEASED (in flight; not on the registry) [2026-08-10 · BK #21: superseded

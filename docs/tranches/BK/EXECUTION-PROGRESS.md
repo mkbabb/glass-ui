@@ -6603,3 +6603,40 @@ gate on the cured instrument · the **9.0.0** cut — MIGRATION carries §8.1.0+
 β2 moved `release.sh`+`ci.yml`, so the close re-verifies the release path under the
 8.0.0 laws). The lane-unit script's stale 1538|5xf standing-battery line was driver-updated
 at this bank per the γ4 adjudication's order.
+
+---
+
+**ACT-4 PUBLISH WALL — npm auth, EXTERNAL [2026-08-29 · driver, at this bank's commit]**
+
+The cut itself is DONE and lawful. Tag `v9.0.0` minted by `scripts/release.sh` off clean
+HEAD `d4f7b24f` — typecheck + build + full battery green in the pre-tag run;
+verify:package terminal CLEAN with the ratchet **equal at 2549378**; the aurora pixel
+floor GREEN on real GPU (18 presets, meanChannel 101.5–235.0 against floor 8); BOTH
+planted arms RED-ed on their own assertions; the blob flood ceiling bit at 0.997 > 0.7.
+HEAD + tag pushed. `release.yml` run 33273556530: **every gate green through `test`**;
+the publish step signed provenance (sigstore logIndex 2643275656; rerun 2643375556) and
+then the registry PUT REDed **E404 twice — deterministic, not transient**. The cause is
+external and named in npm's own log notice: tokens that bypass 2FA are being restricted;
+the `NPM_TOKEN` repo secret and the local `~/.npmrc` token (May 28) BOTH reject
+(`npm whoami` E401). The registry carries no 9.0.0; **the v9.0.0 tag is the pin of
+record until the re-mint** — same tree by the release law.
+
+THE ONE OWNER INPUT — fresh npm auth, any of:
+(a) npmjs.com → granular access token with publish on `@mkbabb` → `gh secret set
+NPM_TOKEN` → re-run the release.yml publish job;
+(b) npmjs.com package settings → **Trusted Publishing** (GitHub Actions publisher:
+`mkbabb/glass-ui` · `release.yml`) — the durable cure; the workflow already carries
+`id-token: write`, and the only edit owed is dropping the dead `NODE_AUTH_TOKEN` env
+pair from the publish step (two lines, on request);
+(c) `npm login` locally, then `npm publish` off the `v9.0.0` tag tree.
+
+Post-publish band state at this bank: O-20 ACK **AUTHORED tag-pinned**
+(`coordination/glass-outbound-2026-08-29-valuejs-o20-ack.md` — A-1 answered on bytes,
+the parse-gate ask ACCEPTED into the O-20 disposition wave, the receive whole) ·
+overfitting audit **BANKED** (`execution/2026-08-29-batch-close/OVERFITTING-AUDIT.md` —
+108 graded, 100 KEEP, 8 CUT-CANDIDATE routed to the disposition wave; BOTH named
+precedents moved: α4 `controlSizeClass` deleted by the batch itself, δ A4
+`colorResolver` fell to zero sites; the seat's atlas-edge claim REFUTED on bytes, its
+bbnf-lang claim CONFIRMED) · MIGRATION §9.0.0 four-edge census **BRACKETED** (the fifth
+`./search` edge: bbnf-lang playground `DocsSidebar.vue:4-5` at pin `^3.0.0`, routed to
+the #76 band) · memory updated. Carried-OPEN register unchanged, in ⊕⁸⁰.
