@@ -392,7 +392,12 @@ The gate reads `comment / non-blank` over **all of `src`**, so no lane can green
 Removing comments shrinks the denominator too, so the budget is not `20% × non-blank`: with
 a band's CODE held fixed, `c / (c + code) ≤ 0.2` gives **`budget = ⌊code / 4⌋`**. With code
 at 52,411 the ceiling permits **13,102** comment lines against **32,764** today — a
-**19,662-line cut, 60.0% of every comment in `src`.**
+**19,662-line cut, 60.0% of every comment in `src`.** [2026-08-29 · batch close
+re-base, per the ⊕⁷⁸ staleness finding: at the close HEAD the census reads comment
+**32,320** / nonBlank **83,684** / share **38.62%** / prose hits **353**, so the same
+arithmetic yields a **19,479-line cut, 60.3% of every comment** — the budget the
+comment-reduction wave inherits. The 558c3fa3-denominator table below stands as the
+derivation of record at its own date.]
 
 **THE LIVE TABLE — `558c3fa3`, cured instrument. This is the row a lane executes:**
 

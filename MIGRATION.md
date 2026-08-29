@@ -26,6 +26,22 @@ this document's own rule. **Zero consumers were found at the cut**: a whole-repo
 the fifteen generated sibling roots returned no importer of the specifier, in code or in
 CSS.
 
+_The `./search` subpath is removed, and this one takes the room with the door_
+[2026-08-29 · BK #42 W-SEARCH, landed `76b594c8`]
+
+| removed | migration |
+| --- | --- |
+| `@mkbabb/glass-ui/search` | The subpath is gone and nothing republishes its names. The fuzzy engine is ENGINE-INTERNAL (`src/composables/search/`, ruled ⊕⁵ SE-4) — it serves the library's own dock search and is not a public surface. |
+| `SearchBar` | DELETED with its `searchVariants` CVA. No replacement component ships: the `.input-bar` recipe (on `./styles`, which SURVIVES untouched) composes with your own input element — that recipe was always the paint; the chrome was 79 lines over it. |
+| `FuzzySearchState` · `SearchableItem` · `SearchIndex` · `SearchResult` · `SearchVariant` · `SearchVariants` · `UseFuzzySearchOptions` and every other `/search` type | Die with the door. Type your own items; the engine's shapes are internal. |
+
+The root barrel never carried `SearchBar` or any fuzzy name, so `./search` was the only
+door — the cut is TOTAL, not a narrowing. **Four consumer edges existed at the cut**, all
+in value.js's own demo tree (none in anything it ships), and all four carry a marked
+relay addendum in the BK coordination channel rather than a silent break: each is one
+import statement whose component no longer exists. The known `.input-bar` selector sites
+read the RECIPE, not the component, and are unaffected.
+
 ## 8.1.0 — UNRELEASED (in flight; not on the registry) [2026-08-10 · BK #21: superseded
 as a version number by the `9.0.0` section above — the content below stands, the cut it
 lands in is now the major]
@@ -997,7 +1013,7 @@ subpath)` is the 5.0.0 target".]
 | `ForcedSectionWindowRange` | type | removed 5.0.0 — /virtual subpath retired; no owning subpath |
 | `FourierFieldConfig` | type | `/fourier-field` |
 | `FourierFieldProps` | type | `/fourier-field` |
-| `FuzzySearchState` | type | `/search` |
+| `FuzzySearchState` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
 | `GlassPanelProps` | type | removed 5.0.0 — /glass-panel retired; compose `Card` / `Surface` / `.glass-resting` |
 | `GlassPanelVariant` | type | removed 5.0.0 — /glass-panel retired; the tier-homonym; use `CardTier` (/card) or `SurfaceTier` (/axes) |
 | `HandAnimation` | type | `/handmark` |
@@ -1043,11 +1059,11 @@ subpath)` is the 5.0.0 target".]
 | `ScrollCardProps` | type | removed 7.0.0 — ScrollCard family retired; compose `Card` within a scroll container |
 | `ScrollToOptions` | type | `/sidebar` |
 | `ScrollTrackerOptions` | type | `/sidebar` |
-| `SearchableItem` | type | `/search` |
-| `SearchIndex` | type | `/search` |
-| `SearchResult` | type | `/search` |
-| `SearchVariant` | type | `/search` |
-| `SearchVariants` | type | `/search` |
+| `SearchableItem` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
+| `SearchIndex` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
+| `SearchResult` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
+| `SearchVariant` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
+| `SearchVariants` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
 | `SectionLayout` | type | removed 5.0.0 — /virtual subpath retired; no owning subpath |
 | `SectionWindowRange` | type | removed 5.0.0 — /virtual subpath retired; no owning subpath |
 | `SegmentedTabOption` | type | `/tabs` |
@@ -1101,7 +1117,7 @@ subpath)` is the 5.0.0 target".]
 | `UseDragMorphReturn` | type | `/motion` |
 | `UseEasingPickerOptions` | type | `/easing` |
 | `UseEasingPickerReturn` | type | `/easing` |
-| `UseFuzzySearchOptions` | type | `/search` |
+| `UseFuzzySearchOptions` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
 | `UseGlobalDarkOptions` | type | `/dark` |
 | `UseGlobalDarkReturn` | type | `/dark` |
 | `UseHapticOptions` | type | removed 5.0.0 — dead-composable sweep; `useHaptic` retired |
