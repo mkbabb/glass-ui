@@ -3,6 +3,28 @@
 Ratified 2026-07-27 (`docs/tranches/BJ/addenda/2026-07-24-refinement/EXEC-STATE.md` §THE RATIFICATION):
 the perfected audit warrants a full execution tranche, cut as ONE clean sweep, closing at 8.0.0. Cut
 2026-07-28 (tri-fold: Fable arm ∥ Opus arm, Fable adjudication — provenance header in `PORT.md`).
+
+**[2026-09-17 · status census]** 8.0.0 shipped 2026-08-09: `release.yml` run `31300577617` green on
+`17a11bc580b99306e0928f8e0be3329d30deb9f1` (= tag `v8.0.0`), registry publish `2026-08-09T07:15:47.203Z`
+(`npm view @mkbabb/glass-ui time --json`) with provenance (`npm view @mkbabb/glass-ui@8.0.0 dist --json` →
+`dist.attestations.provenance.predicateType` = `https://slsa.dev/provenance/v1`). A second cut followed under the same release law — 9.0.0, tag
+`v9.0.0` at `d4f7b24fc260489fbbd99995e78876784a5e79dd`, 2026-08-29 — and its registry publish is
+walled on the account's npm token restriction: `release.yml` run `33273556530` REDed at the registry
+PUT on both of its two run attempts (`gh api .../runs/33273556530 --jq .run_attempt` → `2`, attempt 1
+conclusion `failure`), `npm error code E404` / `npm error 404 Not Found - PUT https://registry.npmjs.org/@mkbabb%2fglass-ui - Not found`
+at `20:35:24Z` and `20:40:55Z`. `npm view @mkbabb/glass-ui version` still reads `8.0.0`; the cause
+is banked at `EXECUTION-PROGRESS.md:6618-6621` — npm's own notice that tokens bypassing 2FA are being
+restricted, the `NPM_TOKEN` secret and the local `~/.npmrc` token both rejecting (`npm whoami` E401).
+The register at HEAD `3a2329c1`, censused 2026-09-17 (the register block `:6401-6530` unchanged since
+the cut — the only diff `d4f7b24f..3a2329c1` in that file is one append at `:6603`), is read at its
+bank and not restated here: the verifier-corrected tally with members enumerated and its denominator
+note (88 execution-live of 90 register rows present; #70 BANKED pre-BK carries no row, #36/#37 retired
+in place) at `docs/tranches/BK/execution/2026-09-17-status-census/CENSUS.md:7-18` — the first pass
+read 38 SEALED, the verifiers corrected 17 to PARTIAL (`:5`); the census wins. `FINAL.md` (§7) is not
+authored — `docs/tranches/BK/` carries none, and no successor band is named in PLAN, ASK or BURNDOWN
+(`CENSUS.md:123`). Driver ruling at this bracket: the remainder's disposition is reserved to the owner,
+and `FINAL.md` waits on it.
+
 **Mode: EXECUTION.** Design, research, and prototyping are tranche-development work and they happened;
 BK builds only fully formed, specified wave specs pursuant to `precepts/` (the Seventh Ecoute). The one
 live fold seam is roster row #90 (the NOVELTIES + DESIGN-NOW banks), carried on the cursor — a fold,
