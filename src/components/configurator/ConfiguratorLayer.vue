@@ -116,7 +116,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
                     // focus-ring under the full four-state contract. The press
                     // springs on the same register every band atom uses.
                     'group flex w-full items-center justify-between gap-2 py-2',
-                    'tap-squish transition-control text-left hover:bg-foreground/5 focus-ring',
+                    'tap-squish transition-control text-left focus-ring',
                 )
             "
             :aria-expanded="open"

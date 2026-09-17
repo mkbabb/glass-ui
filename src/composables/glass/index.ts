@@ -20,6 +20,15 @@ export { vSpecular } from "./vSpecular";
 // name `useCanvas2D`, plus `resolveCanvasColor` (the shared
 // `light-dark()`→`rgb()` Canvas2D resolver).
 // Constellation + FourierField compose it.
+// The GPU substrate's two published-signature types. No runtime rides with them: the
+// webgpu leaves themselves stay internal, and these two names are here because the
+// SHIPPED component signatures spend them — `<FourierField>` emits
+// `rendererStatus: [RendererStatus]`, exposes `Readonly<Ref<RendererStatus>>` and
+// `backend: () => GpuBackend`, and Aurora, Blob and Constellation emit the same status.
+// Four published components named a type no entry carried; one shared door answers all
+// four, which is why this is not repeated onto each component barrel.
+export type { RendererStatus } from "./webgpu/rendererStatus";
+export type { GpuBackend } from "./webgpu/useGpuSubstrate";
 export { useCanvas2D, resolveCanvasColor } from "./canvas2d";
 export type {
     Canvas2DFrame,

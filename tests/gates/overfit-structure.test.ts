@@ -69,10 +69,19 @@
 // because build/regen leaves are real consumers (`regen-spring-tokens.mjs` reads
 // `springSettleDurationSeconds`, and a census that omits them privatises a live symbol).
 // A module that merely RE-EXPORTS a name is not a use site of it, so a barrel cannot
-// rescue a leak. The published set is the transitive export closure of the vite entry
-// map (`libraryEntryMap()` — the same fail-closed leaf `package.json` exports are
-// generated from), never a hand-list. Type-only exports are out of scope entirely: they
-// carry no runtime bytes, which is the whole cost this gate prices.
+// rescue a leak. The published set is the export closure of the vite entry map
+// (`libraryEntryMap()` — the same fail-closed leaf `package.json` exports are generated
+// from), never a hand-list. Type-only exports are out of scope entirely: they carry no
+// runtime bytes, which is the whole cost this gate prices.
+//
+// [2026-09-17 · O-20 GATE] ~~"the TRANSITIVE export closure"~~ — the closure was
+// transitive through NAMED re-exports too, and that was the hole. `export { a } from
+// "./x"` published every `export const` in `x`, so one listed name opened the whole
+// module and the arm read GREEN over two dead fourier constants at the 9.0.0 close. The
+// rule now: a named re-export publishes exactly the names it lists; `export *` still
+// hoovers. Corrected, the arm names 3 leaks tree-wide — the two constants (CUT-1 deletes
+// one, CUT-2's deep-import sites retire the other) and
+// the dock crossfade optional reader in `dockCrossfadeContext.ts`, deleted with them.
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -135,7 +144,8 @@ function braceNames(body: string): string[] {
     return out;
 }
 
-/** The transitive runtime-export closure of the published entry map. */
+/** The runtime-export closure of the published entry map: declarations, the listed names
+ * of named re-exports, and recursion through `export *` only. */
 function publishedSurface(): Set<string> {
     const published = new Set<string>();
     const seen = new Set<string>();
@@ -144,9 +154,10 @@ function publishedSurface(): Set<string> {
         seen.add(file);
         const src = read(file);
         for (const m of src.matchAll(DECL_RE)) published.add(m[1]!);
+        // A NAMED re-export publishes exactly the names it lists — it does NOT open the
+        // module it reads from. `export *` still hoovers, because that is what it means.
         for (const m of src.matchAll(BRACE_RE)) {
             for (const name of braceNames(m[1]!)) published.add(name);
-            if (m[2]) collect(resolveSpec(file, m[2]));
         }
         for (const m of src.matchAll(STAR_RE)) collect(resolveSpec(file, m[1]!));
     };
@@ -259,6 +270,23 @@ describe("gate:G-OVERFIT — EXPORT-REACH arm (the TS twin of orphan-css-partial
             },
         ];
         expect(leaks(synthetic).map((r) => r.name)).toEqual(["__leak__"]);
+    });
+
+    it("self-test bite — a named re-export publishes its listed names and nothing else", () => {
+        // [2026-09-17 · O-20 GATE] The hole this bite locks: `collect()` used to recurse
+        // through a NAMED `export { a } from "./x"` and then add every `export const` in
+        // `x`, so one listed name published the whole module. That is why CUT-1 and CUT-2
+        // (two dead fourier constants) rode the 9.0.0 close green. Anchored on the real
+        // tree, at the barrel that held the hole: `./fourier-field` lists
+        // `DEFAULT_FOURIER_CONFIG` from `./constants`, and nothing else in that file is
+        // published by the listing.
+        const published = publishedSurface();
+        expect(published.has("DEFAULT_FOURIER_CONFIG")).toBe(true);
+        expect(published.has("FOURIER_QUANTUM_FINE")).toBe(false);
+        // `export *` still hoovers — that is what it means. `useLiquidPress` is named
+        // nowhere on the `/motion` barrel; it reaches the surface through that barrel's
+        // `export * from "./spring/useLiquidPress"` alone.
+        expect(published.has("useLiquidPress")).toBe(true);
     });
 
     it("self-test bite — a BARREL re-export does not rescue a leak", () => {

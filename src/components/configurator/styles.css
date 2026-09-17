@@ -171,6 +171,47 @@
 .configurator-layer-body {
     padding-inline: var(--configurator-pad-inline);
 }
+
+/* THE TWO CONTROL HOVERS, authored HERE rather than composed as `hover:bg-foreground/5`.
+ *
+ * Tailwind splits an alpha-modified mix into a pair — the `color-mix` inside
+ * `@supports (color: color-mix(in lab, red, red))` and, outside it, a fallback that
+ * drops the alpha and paints the token at FULL strength. For these two that fallback was
+ * `background-color: var(--foreground)` under ink that also resolves to `--foreground`:
+ * 1.00:1 on any pre-2023 engine, the reset glyph and the whole section label gone. It is
+ * real rather than theoretical because `tokens/light-dark.css` guards its own overrides
+ * behind `@supports (color: light-dark(…))`, so that engine keeps the dark ink.
+ *
+ * A bare mix has no synthesized arm behind it: the engine that cannot parse it DROPS the
+ * declaration and keeps the plate, which is what "no masking fallback" means — a
+ * manufactured legacy paint that is worse than none is the thing the law forbids. It is
+ * the recipe `glass/control-bit.css` and `components/button/styles.css` already ship.
+ *
+ * `--fill-hover` is 0.05, the same scalar the `/5` modifier encoded, so the modern paint
+ * does not move. The `@media (hover: hover)` wrapper is the utility's own — Tailwind
+ * emits the class inside it — and is kept: without it the fill would newly apply on
+ * coarse pointers, where it sticks after a tap.
+ *
+ * This file is unlayered and `styles/components.css` is imported `layer(components)`, so
+ * these rules win the channel by layer, with specificity never entering. */
+@media (hover: hover) {
+    [data-slot="configurator-reset"]:hover {
+        background: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--fill-hover) * 100%),
+            transparent
+        );
+        color: var(--foreground);
+    }
+
+    .configurator-layer-trigger:hover {
+        background: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--fill-hover) * 100%),
+            transparent
+        );
+    }
+}
 .configurator-layer-body[data-dividers] > * + * {
     border-color: var(--configurator-divider);
 }

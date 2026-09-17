@@ -17,8 +17,12 @@ import {
     FOURIER_FIGURE_KEYS,
     DEFAULT_FOURIER_CONFIG,
     type FourierFieldConfig,
+    type FourierSource,
     type MintedSpectrum,
 } from "@glass/components/fourier-field";
+// The rung ladder is module-level, not barrel surface — the one source of the three
+// strokes this control offers.
+import { FOURIER_STROKE_RUNGS } from "@glass/components/fourier-field/constants";
 import { mulberry32, hashString } from "@glass/composables/glass/procedural/prng";
 import { cssToOklch, type OklchStop } from "@glass/composables/color";
 import { useGlobalDark } from "@glass/composables/dark";
@@ -267,7 +271,7 @@ const speed = ref("1×");
 const SPEED_OPTIONS = ["0.25×", "0.5×", "1×", "2×"];
 const speedFactor = computed(() => Number(speed.value.match(/^([\d.]+)/)?.[1] ?? 1));
 
-const STROKE_RUNGS = ["4", "8", "12"];
+const STROKE_RUNGS = FOURIER_STROKE_RUNGS.map(String);
 const strokeRung = computed({
     get: () => String(studio.config.markStroke),
     set: (v: string) => {
@@ -278,7 +282,7 @@ const strokeRung = computed({
 const fieldConfig = reactive<FourierFieldConfig>({
     ...DEFAULT_FOURIER_CONFIG,
     get source() {
-        return studio.config.source as FourierFieldConfig["source"];
+        return studio.config.source as FourierSource;
     },
     get harmonics() {
         return Math.min(studio.config.harmonics, maxHarmonics.value);

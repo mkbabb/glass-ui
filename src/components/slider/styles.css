@@ -33,6 +33,27 @@
     transition: color var(--duration-fast) var(--ease-standard);
 }
 
+/* THE DRAG AFFORDANCE. The scrubber is the library's most-consumed dragging surface and
+   was the only one rendering the default arrow — the whole published sheet carried 47
+   cursor rules and none of them matched a slider selector. The idiom is the house one,
+   taken verbatim from the other two draggables (`sheet/styles.css` :101/:257,
+   `tabs/styles/drag.css` :22/:27) rather than invented here, and it rides the state
+   hooks the component already writes: an open hand at rest, a closed one while held,
+   and the refusal when the control is disabled. `:active` sits beside `[data-held]`
+   because the grasp register is written a frame after the pointer lands. */
+.glass-slider {
+    cursor: grab;
+}
+
+.glass-slider[data-held],
+.glass-slider:active {
+    cursor: grabbing;
+}
+
+.glass-slider[data-disabled] {
+    cursor: not-allowed;
+}
+
 .glass-slider[data-inverted],
 .glass-slider:dir(rtl) {
     --slider-range-origin: right center;

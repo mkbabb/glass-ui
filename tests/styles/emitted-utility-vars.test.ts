@@ -169,4 +169,65 @@ describe.skipIf(!existsSync(COMPONENTS))("emitted component utilities", () => {
         );
         expect(offenders).toEqual([]);
     });
+
+    // A-11d (O-20) — THE SYNTHESIZED LEGACY ARM THAT PAINTS FOREGROUND ON FOREGROUND.
+    //
+    // Tailwind splits an alpha-modified `color-mix` into a PAIR: the mix inside
+    // `@supports (color: color-mix(in lab, red, red))`, and, outside it, a fallback that
+    // simply drops the alpha. For a `/5` fill that fallback is the token at FULL
+    // strength — `background-color: var(--foreground)` — so a pre-2023 engine paints the
+    // plate solid ink. Where the ink on top is also `--foreground`, that is 1.00:1: the
+    // control disappears. `tokens/light-dark.css` guards its own overrides behind
+    // `@supports (color: light-dark(…))`, so the legacy engine really does keep the dark
+    // `--foreground` and the collision really lands.
+    //
+    // No fallback at all is the correct answer and the house law's ("no masking
+    // fallback"): a bare `color-mix` declaration is DROPPED whole by an engine that
+    // cannot parse it, leaving the plate underneath — legible, just unhoveed. So the
+    // library authors these fills in its own component stylesheets, where nothing
+    // synthesizes an arm behind its back, and keeps the scanner-emitted utility off the
+    // class strings.
+    //
+    // The arm forbids the SHAPE, not the one class: any background reading bare
+    // `var(--foreground)` outside a color-mix `@supports` block is the same defect
+    // wherever it is emitted from. RED at HEAD 2984e377 on exactly one rule —
+    // `.hover\:bg-foreground\/5:hover`, emitted for the two configurator controls.
+    it("synthesizes no background fallback that paints bare var(--foreground)", () => {
+        const root = postcss.parse(readFileSync(COMPONENTS, "utf-8"));
+        const backgrounds: string[] = [];
+        const offenders: string[] = [];
+
+        root.walkDecls((declaration) => {
+            if (declaration.prop !== "background" && declaration.prop !== "background-color")
+                return;
+            backgrounds.push(declaration.prop);
+            if (!/^var\(\s*--foreground\s*\)$/.test(declaration.value.trim())) return;
+
+            let node: postcss.AnyNode | undefined = declaration.parent;
+            let guarded = false;
+            while (node) {
+                if (
+                    node.type === "atrule" &&
+                    node.name === "supports" &&
+                    node.params.includes("color-mix") &&
+                    !/\bnot\b/.test(node.params)
+                ) {
+                    guarded = true;
+                    break;
+                }
+                node = node.parent;
+            }
+            if (!guarded) {
+                const rule = declaration.parent;
+                offenders.push(
+                    `${rule && rule.type === "rule" ? rule.selector : "?"} { ${declaration.prop}: ${declaration.value} }`,
+                );
+            }
+        });
+
+        // Non-vacuity: a build that emitted no backgrounds at all would green this for
+        // the wrong reason.
+        expect(backgrounds.length).toBeGreaterThan(0);
+        expect(offenders).toEqual([]);
+    });
 });

@@ -69,6 +69,3 @@ export function provideDockCrossfadeContext(context: DockCrossfadeContext): void
 
 /** Strict — throws when used outside `<DockCrossfade>`. */
 export const useDockCrossfadeContext = ctx.use;
-
-/** Befitting silent default; reserved for future consumers. */
-export const useOptionalDockCrossfadeContext = ctx.useOptional;

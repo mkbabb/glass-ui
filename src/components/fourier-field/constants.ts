@@ -51,7 +51,13 @@ export const FOURIER_CHAIN_HUE_SWEEP = 0.35;
 /** The scaffold stroke as a fraction of the mark stroke — the chain is a rung below the curve. */
 export const FOURIER_SCAFFOLD_STROKE_FRAC = 0.4;
 
-/** The three mark-stroke rungs in CSS px. Three rungs, three visibly distinct pictures. */
+/**
+ * The three mark-stroke rungs in CSS px. Three rungs, three visibly distinct pictures.
+ * Deliberately OFF the `/fourier-field` barrel: nothing clamps `markStroke` to it, and no
+ * consumer reads it. The two in-repo readers (the studio story's segmented control and
+ * the smoke battery) deep-import this module, which is the house idiom for a module-level
+ * constant with in-repo readers and no consumer need.
+ */
 export const FOURIER_STROKE_RUNGS = [4, 8, 12] as const;
 
 /**
@@ -81,12 +87,6 @@ export const FOURIER_DPR_CAP = 2;
 /** The number of curve samples the comet body is built from. */
 export const FOURIER_CURVE_SAMPLES = 384;
 
-/**
- * The degenerate-tangent guard. At a cusp the head's instantaneous speed collapses and
- * the unit tangent blows up; below this the shader falls back to the last stable tangent.
- */
-export const FOURIER_TANGENT_EPS = 1e-4;
-
 /** The spectrum source: the seeded generator, or a curated closed figure by key. */
 export type FourierSource = "elliptic" | keyof typeof FOURIER_FIGURES;
 
@@ -108,7 +108,7 @@ export interface FourierFieldConfig {
     rainbowChain: boolean;
     /** Comet-body length as a fraction of the period (0.15..1). */
     trailArc: number;
-    /** The mark stroke in CSS px — one of {@link FOURIER_STROKE_RUNGS}. */
+    /** The mark stroke in CSS px — one of 4 | 8 | 12. */
     markStroke: number;
     /**
      * The ink's offset from its mark, in stroke widths, taken along this segment's own

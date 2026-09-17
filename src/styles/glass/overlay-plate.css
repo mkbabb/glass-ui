@@ -95,12 +95,29 @@
        them are gone (block = inline per role — the ~20px popover pad and the ~5px
        hint pad they produced were sub-pixel theatre). The corner is
        `--radius-panel`; the `--radius-tooltip → --radius-lg → --radius`
-       0.625rem shadcn chain died with it. */
+       0.625rem shadcn chain died with it.
+
+       THE BLOCK CEILING is the menu arm's, verbatim, and for the same reason: a hint
+       long enough to outgrow the viewport had nothing stopping it, because the base
+       rung's `overflow: hidden` clips rather than scrolls. The channel is
+       `--reka-popper-available-height` — reka sets it on the floating WRAPPER, so one
+       declaration serves every role, where the per-component
+       `--reka-tooltip-content-available-height` alias is minted on the inner node and
+       would need one spelling per role. Two costs, stated rather than hidden: a hint
+       tall enough to hit the cap becomes a focusable scroll container, and the popper
+       measure is PLACEMENT-derived, so a short hint pinned against a viewport edge is
+       clamped too. Capping without the scroller would clip the tail silently, which is
+       the masking fallback house law bars. */
     .glass-overlay-plate[data-reveal="tooltip"] {
         --radius-ctx: var(--radius-panel);
         --radius-inset: var(--overlay-pad-hint);
         padding: var(--overlay-pad-hint);
         font-size: var(--tooltip-text);
+        max-block-size: min(
+            var(--overlay-max-block),
+            var(--reka-popper-available-height, var(--overlay-max-block))
+        );
+        overflow-y: auto;
     }
 
     /* ── The menu family's INTERIOR ─────────────────────────────────────────

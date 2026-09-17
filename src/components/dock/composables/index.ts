@@ -28,7 +28,6 @@ export {
 export {
     provideDockCrossfadeContext,
     useDockCrossfadeContext,
-    useOptionalDockCrossfadeContext,
     DOCK_CROSSFADE_KEY,
     type DockFaceDescriptor,
     type DockFaceRegistration,

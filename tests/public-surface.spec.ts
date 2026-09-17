@@ -42,6 +42,14 @@ import * as StatusDotSurface from "@glass/components/status-dot";
 import * as SurfacePackage from "@glass/components/surface";
 import * as TabsSurface from "@glass/components/tabs";
 import * as TimelineSurface from "@glass/components/timeline";
+// [2026-09-17 · O-20 GAP] The nameability doors, type-only. Each of these three is spent
+// by a signature the package already publishes — `FourierFieldConfig.source`, the
+// `rendererStatus` emit/expose, `backend: () => GpuBackend` — and none of them resolved
+// from any of the 68 entries, so the library's own stories deep-imported them and the
+// demo wrote an indexed-access cast instead of the name. These imports ARE the
+// assertion: they fail to typecheck when a door closes.
+import type { FourierSource } from "@glass/components/fourier-field";
+import type { GpuBackend, RendererStatus } from "@glass/index";
 import * as ChipSurface from "@glass/components/chip";
 import * as TypewriterSurface from "@glass/components/typewriter";
 
@@ -316,6 +324,16 @@ const subpathRuntimeExports = [
     },
     { subpath: "sortable-list", surface: SortableListSurface, name: "SortableList" },
     { subpath: "timeline", surface: TimelineSurface, name: "Timeline" },
+    // [2026-09-17 · O-20 A-8] The hue-wrap law gets a door. `accentFor(i)` and the
+    // `(HUE_OFFSET + HUE_STRIDE·i) % HUE_STOPS` constants it walks were shipped in
+    // `geometry.d.ts` and named on no entry, so a consumer painting a legend beside the
+    // Timeline had to re-derive the wrap — and index-interpolated past stop 13 instead
+    // (the named needs: value.js B-7's L-10 and keyframes.js KF-W7 C-15).
+    // `layout`/`fillFor`/`aggregate` stay internal.
+    { subpath: "timeline", surface: TimelineSurface, name: "accentFor" },
+    { subpath: "timeline", surface: TimelineSurface, name: "HUE_OFFSET" },
+    { subpath: "timeline", surface: TimelineSurface, name: "HUE_STRIDE" },
+    { subpath: "timeline", surface: TimelineSurface, name: "HUE_STOPS" },
     {
         subpath: "expandable-container",
         surface: ExpandableContainerSurface,
@@ -547,6 +565,19 @@ describe("public runtime surface", () => {
         expect(BlobSurface).not.toHaveProperty("useMetaballRenderer");
     });
 
+    it("names every type its published signatures spend", () => {
+        // The runtime half is trivial; the assertion is the annotations, which only
+        // typecheck while the doors are open (`vue-tsc -p tsconfig.test.json`).
+        const source: FourierSource = "elliptic";
+        const status: RendererStatus = {
+            phase: "ready",
+            engine: "webgpu",
+            adapter: "probe",
+        };
+        const backend: GpuBackend = "webgpu";
+        expect([source, status.phase, backend]).toEqual(["elliptic", "ready", "webgpu"]);
+    });
+
     it.each(subpathRuntimeExports)(
         "exports $subpath subpath symbol $name",
         ({ surface, name }) => {
@@ -634,6 +665,60 @@ describe("Row 8 package falsifiers", () => {
             `;
             expect(runVerifierProbe(probe, fixture)).toContain(
                 "package.json/package-lock.json root metadata mismatch: version",
+            );
+        } finally {
+            rmSync(fixture, { recursive: true, force: true });
+        }
+    });
+
+    // A-1 (O-20): the published `./styles` closure must PARSE, not merely resolve.
+    // The walker strips comments with the naive regex `scripts/lib/minify-css.mjs:18`
+    // names as THE bug, then only chases @import/url — so a stylesheet no consumer's
+    // toolchain can read walked through CLEAN. Nine of ten siblings import `./styles`.
+    // The plant is the BadString shape: a newline spliced into the `@source "../*.js"`
+    // string interior. postcss tolerates it, which is why the two dist-CSS postcss arms
+    // (`tests/styles/emitted-utility-vars.test.ts:64`,
+    // `tests/styles/backdrop-prefix-normalization.test.ts:141`) cannot see this class —
+    // and why they stay load-bearing in the other direction: an unclosed trailing
+    // comment throws for postcss and NOT for lightningcss. Neither parser is a superset
+    // of the other; pruning either side reopens a hole.
+    it("rejects published CSS that does not parse", () => {
+        const fixture = mkdtempSync(resolve(tmpdir(), "glass-css-parse-"));
+        try {
+            const verifier = pathToFileURL(resolve("scripts/verify-export-types.mjs")).href;
+            const probe = `
+                import { mkdirSync, writeFileSync } from "node:fs";
+                import { verifyExportTypes } from ${JSON.stringify(verifier)};
+                const root = process.argv[1];
+                mkdirSync(root + "/dist/styles", { recursive: true });
+                writeFileSync(root + "/package.json", JSON.stringify({
+                    name: "fixture",
+                    version: "1.0.0",
+                    exports: { "./styles": "./dist/styles/index.css" },
+                }));
+                writeFileSync(root + "/package-lock.json", JSON.stringify({
+                    packages: { "": { name: "fixture", version: "1.0.0" } },
+                }));
+                writeFileSync(root + "/dist/styles/tokens.css", ":root{--probe:1px}");
+                const clean = '@layer theme,base,components,utilities;@import "./tokens.css";@source "../*.js";';
+                const at = clean.indexOf("/*");
+                const planted = clean.slice(0, at) + "/*\\n  the fold block's own prose\\n" + clean.slice(at);
+                const attempt = (css) => {
+                    writeFileSync(root + "/dist/styles/index.css", css);
+                    try {
+                        const evidence = verifyExportTypes({ repositoryRoot: root, artifactRoot: root + "/dist" });
+                        return { terminal: "CLEAN", css: evidence.css };
+                    } catch (error) {
+                        return { terminal: "FAILED", message: error.message };
+                    }
+                };
+                console.log(JSON.stringify({ clean: attempt(clean), planted: attempt(planted) }));
+            `;
+            const results = JSON.parse(runVerifierProbe(probe, fixture));
+            expect(results.clean).toEqual({ terminal: "CLEAN", css: 2 });
+            expect(results.planted.terminal).toBe("FAILED");
+            expect(results.planted.message).toContain(
+                "styles/index.css: published CSS does not parse",
             );
         } finally {
             rmSync(fixture, { recursive: true, force: true });

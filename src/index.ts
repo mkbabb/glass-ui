@@ -481,6 +481,12 @@ export {
     type Canvas2DHandle,
     type Canvas2DOptions,
     type Canvas2DSuspendReason,
+    // The substrate status pair, type-only (no runtime rides the root barrel with it).
+    // `<FourierField>`, `<Aurora>`, `<Blob>` and `<Constellation>` all emit
+    // `rendererStatus`; only FourierField also exposes `backend: () => GpuBackend`. One
+    // shared door serves all four rather than four copies on four component barrels.
+    type GpuBackend,
+    type RendererStatus,
     type SpecularWriter,
     type UseSpecularTracking,
 } from "./composables/glass";

@@ -153,7 +153,7 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
                 v-if="canReset"
                 type="button"
                 data-slot="configurator-reset"
-                class="tap-squish transition-control focus-ring inline-flex h-6 w-6 items-center justify-center rounded-pill text-muted-foreground/60 hover:bg-foreground/5 hover:text-foreground"
+                class="tap-squish transition-control focus-ring inline-flex h-6 w-6 items-center justify-center rounded-pill text-muted-foreground/60"
                 :aria-label="`Reset ${label}`"
                 @click="emit('reset')"
             >

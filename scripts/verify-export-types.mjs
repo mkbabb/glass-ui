@@ -21,6 +21,7 @@ import { isDeepStrictEqual } from "node:util";
 import { fileURLToPath } from "node:url";
 import { tmpdir } from "node:os";
 import ts from "typescript";
+import { transform as parseCss } from "lightningcss";
 
 const require_ = createRequire(import.meta.url);
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
@@ -291,7 +292,26 @@ function validateCss({ artifactRoot, files, entries, failures, pkg }) {
         const file = pending.pop();
         if (!file || visited.has(file)) continue;
         visited.add(file);
-        const source = readFileSync(resolve(artifactRoot, file), "utf8")
+        // Parse the RAW buffer before anything rewrites it. The strip below is the
+        // naive comment regex `scripts/lib/minify-css.mjs:18` names as THE bug, and the
+        // walk that follows only resolves references — together they walked a
+        // stylesheet no consumer's toolchain could read straight through as CLEAN.
+        // lightningcss is not a superset of postcss: it tolerates an unclosed trailing
+        // comment that postcss rejects, and rejects a BadString that postcss tolerates.
+        // So the two dist-CSS postcss arms — `tests/styles/emitted-utility-vars.test.ts:64`
+        // and `tests/styles/backdrop-prefix-normalization.test.ts:141` — are
+        // load-bearing co-detectors for the unclosed-comment class, not redundant with
+        // this one. A file that does not parse has no trustworthy import stream, so it
+        // is recorded and NOT walked.
+        const raw = readFileSync(resolve(artifactRoot, file));
+        try {
+            parseCss({ filename: file, code: raw });
+        } catch (error) {
+            failures.push(`${file}: published CSS does not parse: ${error.message}`);
+            continue;
+        }
+        const source = raw
+            .toString("utf8")
             .replace(/\/\*[\s\S]*?\*\//g, "")
             .replace(/url\(\s*(["'])data:[\s\S]*?\1\s*\)/g, "");
         const imports = [...source.matchAll(importPattern)].map((match) => match.slice(1).find(Boolean));
