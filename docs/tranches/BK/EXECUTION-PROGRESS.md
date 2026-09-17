@@ -6471,7 +6471,7 @@ the five messages diverged from `git`: `1864a214`'s 457/10, `3a2329c1`'s 447/1, 
 and `e91b7b7e`'s 260/6 all reproduce, and `d4f7b24f`'s −83,975 reproduces as arithmetic
 (2,633,353 − 2,549,378) against a datum that is `49673cb8`'s.
 
-**THE PUBLISH WALL STILL STANDS, NINETEEN DAYS ON, AND IT IS THE SAME ONE INPUT.** Re-measured at
+**THE PUBLISH WALL STILL STANDS, NINETEEN DAYS ON, AND IT IS THE SAME ONE INPUT.** [2026-09-17, later the same day: THE WALL FELL — the owner supplied the input and 9.0.0 published; every figure in this paragraph was true when measured and is left standing as the morning's reading. The publish bank at the file's end carries the sequel.] Re-measured at
 this seat, not carried from the bank: `npm view @mkbabb/glass-ui dist-tags` → **`{ latest: '8.0.0' }`**
 · `gh secret list` → **`NPM_TOKEN  2026-06-03T00:04:40Z`**, the same secret that REDed · `git tag`
 carries **`v8.0.0` and `v9.0.0`**, `v9.0.0` = `d4f7b24f` · `package.json` on disk reads **9.0.0**.
@@ -6496,7 +6496,7 @@ word alone. **(a) ROW #66 `CLOSE + 8.0.0` read `UNSTARTED`** while the close it 
 `a8a6f66b` 2026-08-09 (`feat(release)!: land BK #66 CLOSE — 8.0.0…`), tag `v8.0.0` =
 `17a11bc580b99306e0928f8e0be3329d30deb9f1`, `release.yml` run **31300577617 SUCCESS** on that
 exact `headSha` (`gh run view --json conclusion,headSha`), 8.0.0 on the registry. A **second** cut
-followed at `d4f7b24f`, tagged and unpublished. The state word is struck; the row's gate list —
+followed at `d4f7b24f`, tagged and ~~unpublished~~ [2026-09-17, later the same day: PUBLISHED — run 33273556530 attempt 3, provenance; see the publish bank at the file's end]. The state word is struck; the row's gate list —
 `FINAL.md` among it — is **left standing**, because it is still owed. **(b) ROW #18 `W-DELETE`
 carried its tags-input arm as REFUSED-IN-PART and routed to RT-18A #65**, which was true at the
 #18 cut and false thereafter: the delete **LANDED at #66's close**, measured
@@ -6841,7 +6841,7 @@ the publish step signed provenance (sigstore logIndex 2643275656; rerun 26433755
 then the registry PUT REDed **E404 twice — deterministic, not transient**. The cause is
 external and named in npm's own log notice: tokens that bypass 2FA are being restricted;
 the `NPM_TOKEN` repo secret and the local `~/.npmrc` token (May 28) BOTH reject
-(`npm whoami` E401). The registry carries no 9.0.0; **the v9.0.0 tag is the pin of
+(`npm whoami` E401). ~~The registry carries no 9.0.0~~ [2026-09-17 · FALSE FROM TODAY: 9.0.0 PUBLISHED 2026-09-17 — `release.yml` run 33273556530 attempt 3 SUCCESS on `d4f7b24f` after the owner minted a fresh token and the driver set the `NPM_TOKEN` secret (`gh secret list` → 2026-09-17T20:26:20Z); registry `gitHead` `d4f7b24f`, shasum `a4446ab0…989c`, `unpackedSize` 2549378 (the ratchet datum to the byte), 837 files, SLSA v1 provenance (sigstore logIndex 2880033507), `latest` → 9.0.0 — the publish bank at the file's end]; **the v9.0.0 tag is the pin of
 record until the re-mint** — same tree by the release law.
 
 THE ONE OWNER INPUT — fresh npm auth, any of:
@@ -6867,3 +6867,43 @@ the #76 band) · memory updated. Carried-OPEN register unchanged, in ⊕⁸⁰.
 [2026-09-17 · ⊕⁸¹ carries the sequel — this wall still stands 19 days on (`npm view` latest
 `8.0.0`, `NPM_TOKEN` still dated 2026-06-03, the one owner input unchanged), and the block at
 `:6348` banks it with the census and the records-truth pass.]
+
+---
+
+**ACT-4 PUBLISH LANDED — 9.0.0 IS LIVE [2026-09-17 · driver, at this bank's commit]**
+
+The one owner input arrived and the wall fell on the lawful path. Sequence, each step measured:
+the owner ran `npm login` (scope `@mkbabb`); a local publish off a `git archive v9.0.0` scratch
+tree — verify:package CLEAN there, ratchet **equal at 2549378** — was refused **EOTP** twice (the
+`!` runner is not a TTY, so npm prints the one-shot browser URL and exits) and once **E400** on a
+placeholder code; the owner then minted a fresh access token; the driver verified it
+(`npm whoami` → `mkbabb`), set it as the `NPM_TOKEN` repo secret (`gh secret list` →
+`2026-09-17T20:26:20Z`, superseding the 2026-06-03 secret that REDed) and re-ran the failed job.
+**`release.yml` run 33273556530, attempt 3: SUCCESS on `d4f7b24f`** — every gate green, provenance
+signed (sigstore logIndex **2880033507**), `+ @mkbabb/glass-ui@9.0.0`. npm's own notice —
+"Your package is being processed and may take a few minutes to become available" — held for
+about two minutes: the version endpoint answered 200 after seven 15-second polls, the packument's
+`dist-tags` flipped a step later.
+
+THE REGISTRY, READ DIRECTLY (`curl https://registry.npmjs.org/@mkbabb%2fglass-ui/9.0.0`), not
+through npm's cache: `gitHead` **`d4f7b24fc260489fbbd99995e78876784a5e79dd`** = tag `v9.0.0` ·
+shasum `a4446ab0d0ff20b5049508682ad5e94024f0989c` — the same tarball the two walled attempts built
+on 08-29, the CI build being deterministic on the tag · **`unpackedSize` 2549378 — the ratchet
+datum to the byte, in CI's environment**, the content-bytes law holding across machines a second
+time · `fileCount` 837 · `attestations.provenance.predicateType` `https://slsa.dev/provenance/v1` ·
+68 export keys, **no `./search`, no `./canvas`** · `dist-tags.latest` **9.0.0**.
+
+The provenance precedent of 8.0.0 is KEPT: the local publish that would have shipped without it
+never landed, so no deviation is on the record. The three walled attempts and the EOTP/E400
+refusals cost nothing but time. **Trusted Publishing remains the durable cure** — the new token
+is subject to the same restriction regime that expired the last one; the workflow already carries
+`id-token: write`, and the edit owed is dropping the `NODE_AUTH_TOKEN` env pair once the owner
+configures the publisher on npmjs.com. The token transited this session's transcript; rotating it
+after Trusted Publishing is configured closes that.
+
+WHAT THIS CLOSES AND WHAT IT DOES NOT. Closed: act 4 of the four-act close, whole; BURNDOWN field
+5's second cut; the O-20 ACK's publish-state paragraph (bracketed LIVE at its own venue); PLAN's
+2026-09-17 bracket (its wall sentence struck). NOT closed, unchanged by a publish: `FINAL.md`
+(the driver ruling at PLAN reserves the remainder's disposition to the owner) · the O-20
+disposition wave, not started · ⊕⁸⁰'s CARRIED-OPEN register as ⊕⁸¹ carried it.
+

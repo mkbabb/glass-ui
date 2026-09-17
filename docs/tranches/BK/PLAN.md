@@ -12,7 +12,7 @@ the perfected audit warrants a full execution tranche, cut as ONE clean sweep, c
 walled on the account's npm token restriction: `release.yml` run `33273556530` REDed at the registry
 PUT on both of its two run attempts (`gh api .../runs/33273556530 --jq .run_attempt` → `2`, attempt 1
 conclusion `failure`), `npm error code E404` / `npm error 404 Not Found - PUT https://registry.npmjs.org/@mkbabb%2fglass-ui - Not found`
-at `20:35:24Z` and `20:40:55Z`. `npm view @mkbabb/glass-ui version` still reads `8.0.0`; the cause
+at `20:35:24Z` and `20:40:55Z`. `npm view @mkbabb/glass-ui version` ~~still reads `8.0.0`~~ [later the same day: reads **9.0.0** — the owner minted a fresh token, the driver set the secret, run `33273556530` attempt 3 published with provenance; registry `gitHead` `d4f7b24f`, `unpackedSize` 2549378; the cursor's ACT-4 PUBLISH LANDED bank carries it]; the cause
 is banked at `EXECUTION-PROGRESS.md:6618-6621` — npm's own notice that tokens bypassing 2FA are being
 restricted, the `NPM_TOKEN` secret and the local `~/.npmrc` token both rejecting (`npm whoami` E401).
 The register at HEAD `3a2329c1`, censused 2026-09-17 (the register block `:6401-6530` unchanged since

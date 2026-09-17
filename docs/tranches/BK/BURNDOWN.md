@@ -374,3 +374,17 @@ EXECUTION-PROGRESS · PLAN · PORT + `coordination/` `execution/` `gates/` `reco
 reads the same), and none is authored in this pass. Whether BK closes on this reading or carries a
 remainder band is the owner's scoping call, and the burndown is not the file that makes it. This
 entry records the spread; it does not close the tranche.
+
+## 2026-09-17 · amendment 2 — field 5's second cut published; no other figure moves
+
+Entry 3's field 5 recorded the second cut as tagged and unpublished. Later the same day it
+published: `release.yml` run 33273556530, attempt 3, SUCCESS on `d4f7b24f` — the owner minted a
+fresh token, the driver set the `NPM_TOKEN` secret (`gh secret list` → 2026-09-17T20:26:20Z).
+Read from the registry directly (`curl https://registry.npmjs.org/@mkbabb%2fglass-ui/9.0.0`):
+`gitHead` `d4f7b24fc260489fbbd99995e78876784a5e79dd` · shasum
+`a4446ab0d0ff20b5049508682ad5e94024f0989c` · `unpackedSize` 2549378 · `fileCount` 837 ·
+provenance `https://slsa.dev/provenance/v1` · `dist-tags.latest` 9.0.0. Field 5 stays **1 / 1** —
+the tranche's terminal deliverable was 8.0.0 and the second cut was never a fraction of it; this
+amendment records that the cut entry 3 named is now on the registry. Fields 1–4 and the spread are
+untouched: a publish moves no row.
+

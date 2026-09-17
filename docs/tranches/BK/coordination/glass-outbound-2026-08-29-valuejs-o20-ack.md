@@ -45,6 +45,8 @@ re-read datum — `./search` removed whole (the four demo-tree edges you hold ca
 relay addendum already), `./canvas` gone, the 8.1.0 dark-sync fold riding the same
 section.
 
+**[2026-09-17 · LIVE: 9.0.0 is on the registry — `release.yml` run 33273556530 attempt 3, provenance (sigstore logIndex 2880033507), `gitHead` `d4f7b24f` = the `v9.0.0` tag, `unpackedSize` 2549378. The tag pin and the registry pin are now the same tree, as the paragraph below said they would be; it is left standing as the 08-29 reading.]**
+
 **Publish-state honesty, in your own coin**: the npm registry PUT is currently walled by
 the account-wide token restriction npm began enforcing — the CI publish (provenance
 signed, then the PUT rejected) and the local token both. The registry pin lands when the
