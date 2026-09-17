@@ -5,9 +5,9 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
-## 9.0.0 — UNRELEASED (in flight; not on the registry)
+## 9.0.0 — ~~UNRELEASED (in flight; not on the registry)~~ [2026-09-17 · LIVE: tag `v9.0.0` at `d4f7b24f`, published with provenance by `release.yml` run 33273556530 attempt 3, `latest` on the registry]
 
-**Status.** `package.json` declares `8.0.0`. This section exists because a BREAKING row
+**Status.** ~~`package.json` declares `8.0.0`.~~ [2026-09-17 · declares `9.0.0` since `d4f7b24f`; the cut is on the registry.] This section exists because a BREAKING row
 landed after the `8.1.0` section below was written, and a removal cannot ride a minor —
 so the next cut is a MAJOR and `8.1.0`'s purely-additive content rides it. That section
 keeps its heading and its text rather than being silently renumbered; the version it
@@ -47,13 +47,13 @@ four-edge claim was value.js-true and constellation-short; the edge routes to th
 band for its own relay addendum.] The known `.input-bar` selector sites
 read the RECIPE, not the component, and are unaffected.
 
-## 8.1.0 — UNRELEASED (in flight; not on the registry) [2026-08-10 · BK #21: superseded
+## 8.1.0 — ~~UNRELEASED (in flight; not on the registry)~~ [2026-08-10 · BK #21: superseded
 as a version number by the `9.0.0` section above — the content below stands, the cut it
-lands in is now the major]
+lands in is now the major] [2026-09-17 · that major is on the registry: 9.0.0]
 
-**Status, stated so nothing here reads as shipped.** `package.json` declares `8.0.0`
+**Status, stated so nothing here reads as shipped.** ~~`package.json` declares `8.0.0`
 (detector: `node -p "require('./package.json').version"` → `8.0.0`), and `8.1.0` is the
-next minor this additive change cuts at. Nothing below is breaking; a caller who does
+next minor this additive change cuts at.~~ [2026-09-17 · SHIPPED inside 9.0.0 — the detector prints `9.0.0`; everything below is live on the registry.] Nothing below is breaking; a caller who does
 not opt in has nothing to do.
 
 _`darkModeSyncScript()` gains three options — `defaultDark` · `queryOverride` · `normalize`_
