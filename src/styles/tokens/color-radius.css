@@ -298,19 +298,32 @@
        ═══════════════════════════════════════════════ */
     /* Oklch ramp (perceptually-even L; hue preserved from the
        prior hsl() cadence). Categorical jewel tones — distinct hues, not a
-       monotone scale. Authored as oklch pairs with the .dark mirror. */
-    --section-color-0:  oklch(0.552 0.192 359.8);  /* rose       */
-    --section-color-1:  oklch(0.502 0.165 305.9);  /* purple     */
-    --section-color-2:  oklch(0.484 0.163 265.5);  /* indigo     */
-    --section-color-3:  oklch(0.542 0.089 222.8);  /* teal-cyan  */
-    --section-color-4:  oklch(0.551 0.088 171.1);  /* forest     */
-    --section-color-5:  oklch(0.530 0.124 69.6);   /* amber — #13: the safeAccentColor-derived value (5.11:1 vs the warm-cream card; the dark arm already clears 8.07:1 so it stays). --viz-amber auto-tracks; fourier's :root override deletes on adopt. */
-    --section-color-6:  oklch(0.579 0.201 30.4);   /* tomato-red */
-    --section-color-7:  oklch(0.532 0.180 317.5);  /* violet     */
-    --section-color-8:  oklch(0.520 0.176 8.4);    /* ruby       */
+       monotone scale. Authored as oklch pairs with the .dark mirror.
+
+       THE RAMP IS OFFERED AS TEXT, so every rung owes 4.5:1 on `--card`. Four did not:
+       stops 4 (4.27), 6 (4.39), 10 (4.24) and 11 (3.51) had shipped under the floor
+       since the ladder was authored, and stop 11 — the worst — had never been measured
+       at all. The cure is the one stop 5 already took: drop L, leave hue and chroma
+       alone, so the set stays the same thirteen jewel tones and only their legibility
+       moves. `G-CONTRAST-COMPUTED` §6 holds all thirteen now, and §6c holds this file
+       against `light-dark.css`, which declares the same ramp a second time.
+
+       NO LIVE FIGURES BELOW. §6 is the source of record for what each rung measures;
+       a figure copied here is derived data that rots the moment a value or `--card`
+       moves. The rungs carry hue names, the L deltas the cure applied, and the
+       under-floor figures they were cured FROM — history, not a claim about bytes. */
+    --section-color-0:  oklch(0.552 0.192 359.8);  /* rose */
+    --section-color-1:  oklch(0.502 0.165 305.9);  /* purple */
+    --section-color-2:  oklch(0.484 0.163 265.5);  /* indigo */
+    --section-color-3:  oklch(0.542 0.089 222.8);  /* teal-cyan  — the thinnest rung over the floor; untouched */
+    --section-color-4:  oklch(0.521 0.088 171.1);  /* forest     — L 0.551 → 0.521 (was 4.27). --viz-green tracks it. */
+    --section-color-5:  oklch(0.530 0.124 69.6);   /* amber — #13: the safeAccentColor-derived value (~~5.11:1~~ [2026-09-17 · O-20 B-7: 5.02:1 — the retune landed the value, the figure beside it was never re-derived] vs the warm-cream card; the dark arm already clears 8.07:1 so it stays). --viz-amber auto-tracks; fourier's :root override deletes on adopt. */
+    --section-color-6:  oklch(0.549 0.201 30.4);   /* tomato-red — L 0.579 → 0.549 (was 4.39) */
+    --section-color-7:  oklch(0.532 0.180 317.5);  /* violet     — the tinted eyebrow's default rung */
+    --section-color-8:  oklch(0.520 0.176 8.4);    /* ruby */
     --section-color-9:  oklch(0.492 0.038 239.6);  /* slate-blue */
-    --section-color-10: oklch(0.556 0.103 128.8);  /* olive      */
-    --section-color-11: oklch(0.601 0.092 208.0);  /* ocean      */
+    --section-color-10: oklch(0.526 0.103 128.8);  /* olive      — L 0.556 → 0.526 (was 4.24) */
+    --section-color-11: oklch(0.511 0.092 208.0);  /* ocean      — L 0.601 → 0.511 (was 3.51, the worst rung of the thirteen) */
     --section-color-12: oklch(0.513 0.163 291.9);  /* periwinkle */
 
     /* Accent colors */

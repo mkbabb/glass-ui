@@ -1,5 +1,7 @@
 import { createHash } from "node:crypto";
+import { resolve } from "node:path";
 import { runInNewContext } from "node:vm";
+import { loadConfigFromFile, type Plugin } from "vite";
 import { describe, expect, it } from "vitest";
 import {
     DARK_MODE_STORAGE_KEY,
@@ -17,6 +19,9 @@ interface RunOptions {
     startDark: boolean;
     search?: string;
     options?: DarkModeSyncScriptOptions;
+    // A storage that THROWS on write — quota, privacy mode, a sandboxed origin.
+    // Reads still answer, which is the real shape of every one of those failures.
+    throwOnWrite?: boolean;
 }
 
 function makeHost(opts: RunOptions) {
@@ -38,7 +43,10 @@ function makeHost(opts: RunOptions) {
     const host = {
         localStorage: {
             getItem: () => opts.stored,
-            setItem: (k: string, v: string) => writes.push([k, v]),
+            setItem: (k: string, v: string) => {
+                if (opts.throwOnWrite) throw new Error("QuotaExceededError");
+                writes.push([k, v]);
+            },
         },
         // The script reads `window.matchMedia`, so `window` carries it; the host
         // object stands in for the page's global either way.
@@ -352,4 +360,133 @@ describe("G-NO-FLASH — the parse-time stamp: precedence, determinism, write-ba
 
         expect(run.leaked).toEqual([]);
     });
+
+    it("G-NO-FLASH · a storage that THROWS ON WRITE never costs the stamp — default AND normalize", () => {
+        // The emitted `catch(_){}` swallows, so everything emitted after a throwing
+        // call is skipped. That makes the ORDER of the write-back a first-paint
+        // contract, not a stylistic choice: with the write emitted before the stamp,
+        // `{normalize:true}` paid for a failed write with the whole theme and the page
+        // painted unthemed — a page that asked for MORE determinism getting the flash
+        // the default is immune to. Measured on the emission, both arms.
+        const host = { stored: "auto", prefersDark: true, startDark: false, throwOnWrite: true };
+
+        // The default never reaches `setItem` at all — it is the control, and it is
+        // the behaviour the module's prose has always promised.
+        const plain = runScript(host);
+        expect(plain.classList.has("dark")).toBe(true);
+        expect(plain.style.colorScheme).toBe("dark");
+
+        // The arm that does write: the write is LOST (nothing recorded, the throw was
+        // swallowed) and the stamp survives it.
+        const normalized = runScript({ ...host, options: { normalize: true } });
+        expect(normalized.classList.has("dark")).toBe(true);
+        expect(normalized.style.colorScheme).toBe("dark");
+        expect(normalized.writes).toEqual([]);
+
+        // and with every seam on, so the query arm cannot reintroduce the ordering
+        const all = runScript({
+            ...host,
+            stored: "light",
+            prefersDark: false,
+            search: "?dark",
+            options: { queryOverride: true, normalize: true, defaultDark: false },
+        });
+        expect(all.classList.has("dark")).toBe(true);
+        expect(all.style.colorScheme).toBe("dark");
+    });
+
+    it("G-NO-FLASH · the absent and `auto` arms SPLIT — one object says what no scalar can", () => {
+        // The split policy, stated as the pair it is: a first visit is a deliberate
+        // light document, a reader who chose `auto` gets their platform. Four repos
+        // hand-roll a `<head>` block for want of it (DECK-RELOCATION.md:31).
+        const split: DarkModeSyncScriptOptions = {
+            defaultDark: { absent: false, auto: "os" },
+        };
+        const seen = (options: DarkModeSyncScriptOptions, stored: string | null) =>
+            runScript({ stored, prefersDark: true, startDark: false, options }).classList.has(
+                "dark",
+            );
+
+        expect(seen(split, "auto")).toBe(true); // the reader chose the platform
+        expect(seen(split, null)).toBe(false); // nobody chose — the document decides
+
+        // EXHAUSTIVE on the scalar spellings: none of them reproduces that pair, which
+        // is the whole reason the object form exists rather than a fifth scalar.
+        const scalars: DarkModeSyncScriptOptions[] = [
+            {},
+            { defaultDark: false },
+            { defaultDark: true },
+            { defaultDark: "os" },
+        ];
+        for (const options of scalars) {
+            expect(seen(options, "auto") && !seen(options, null)).toBe(false);
+        }
+
+        // the mirror object, so the split is a real parameter and not one hard-coded pair
+        const mirror: DarkModeSyncScriptOptions = {
+            defaultDark: { absent: "os", auto: false },
+        };
+        expect(seen(mirror, "auto")).toBe(false);
+        expect(seen(mirror, null)).toBe(true);
+
+        // both arms emit a parseable body, and the object form leaks no name either
+        expect(() => new Function(darkModeSyncScript(split))).not.toThrow();
+        expect(
+            runInPageGlobal({
+                stored: "auto",
+                prefersDark: true,
+                startDark: false,
+                options: split,
+            }).leaked,
+        ).toEqual([]);
+
+        // …and the scalar emissions did not move a byte to gain it
+        expect(darkModeSyncScript({ defaultDark: false })).toContain(
+            '((m===null||m==="auto")&&false)',
+        );
+    });
+
+    it(
+        "G-NO-FLASH · glass-ui's OWN demo stamps at parse time — vite.config.ts injects it first in <head>",
+        async () => {
+            // The delivery half. A `<head>` script cannot be imported, so the recipe is
+            // a build-time injection — and until this plugin existed the library's own
+            // shell had no parse-time stamp at all (`index.html` carries no classList,
+            // no color-scheme, no localStorage; `demo/main.ts` resolved the theme after
+            // the module graph loaded). This reads the REAL config file through vite's
+            // own loader, so it measures what `npm run dev` serves.
+            // `process.cwd()` is the vitest root and the house idiom — happy-dom
+            // leaves `import.meta.url` non-file (token-hygiene.test.ts:41).
+            const loaded = await loadConfigFromFile(
+                { command: "serve", mode: "development" },
+                resolve(process.cwd(), "vite.config.ts"),
+            );
+            // Flattened as `unknown[]`: vite's own `PluginOption` is a recursive
+            // array type, and `.flat(Infinity)` over it costs TS2589.
+            const plugins = ((loaded?.config.plugins ?? []) as unknown[]).flat(
+                Infinity,
+            ) as Plugin[];
+            const stamp = plugins.find((p) => p?.name === "glass-ui:dark-mode-stamp");
+            expect(stamp, "vite.config.ts carries the dark-mode stamp plugin").toBeTruthy();
+
+            const hook = stamp?.transformIndexHtml;
+            const handler = (typeof hook === "function" ? hook : hook?.handler) as unknown as (
+                html: string,
+                ctx: unknown,
+            ) => Array<{ tag: string; children?: string; injectTo?: string }>;
+            const tags = await handler("<html><head></head><body></body></html>", {});
+
+            expect(tags).toHaveLength(1);
+            expect(tags[0].tag).toBe("script");
+            // `head-prepend`: before the icon link, before any stylesheet, before the
+            // module — the position is the entire point of a parse-time stamp.
+            expect(tags[0].injectTo).toBe("head-prepend");
+            // the EMITTED bytes, not a transcription of them (sci-report transcribed;
+            // that is the failure this recipe exists to end)
+            expect(tags[0].children).toBe(darkModeSyncScript());
+            expect(tags[0].children).toContain("localStorage.getItem");
+            expect(tags[0].children).toContain('classList.toggle("dark"');
+        },
+        30_000,
+    );
 });

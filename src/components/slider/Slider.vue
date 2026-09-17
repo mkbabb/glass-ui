@@ -57,11 +57,16 @@ const delegatedProps = computed(() => {
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
 /* The host-native drag hold — one owner, one acquire path. `useDockHold` attaches
-   NATIVE `pointerdown`/`touchstart` on the RESOLVED host: reka's `<SliderRoot>` is a
-   forwarding component, so a Vue `@pointerdown` template binding arrives as
-   `$attrs.onPointerdown` and is DROPPED across the Slot/forwardRef boundary. vue-tsc
-   and units both pass on the broken form; only a real drag catches it. `data-held`
-   reflects THIS slider's own hand, never the dock's posture count. */
+   NATIVE `pointerdown`/`touchstart` on the RESOLVED host, and not because a template
+   binding would be lost: reka's `<SliderRoot>` sets `inheritAttrs: false` and then
+   re-merges `$attrs` by hand through `mergeProps` (SliderRoot.js:149), which CHAINS
+   `onX` handlers, so a consumer `@pointerdown` does land. It lands LAST — after reka's
+   own slide start — which is the one real limit: it cannot `preventDefault` ahead of
+   the slide. The native listeners earn their place on three other counts:
+   `pointerdown` AND `touchstart` fold onto ONE acquire, the release is window-scoped
+   and survives reka's `setPointerCapture` retarget, and the acquire is
+   capture-independent instant-on. `data-held` reflects THIS slider's own hand, never
+   the dock's posture count. */
 const sliderRootRef = useTemplateRef<{ $el: HTMLElement } | HTMLElement | null>(
     "sliderRootRef",
 );

@@ -84,7 +84,7 @@ const hasCaption = computed(() => Boolean(props.caption || slots.caption));
     padding-inline: var(--sp-4);
     color: var(--muted-foreground);
     font-family: var(--font-mono);
-    font-size: var(--type-mono-caption);
+    font-size: var(--type-micro);
     line-height: 1.4;
 }
 

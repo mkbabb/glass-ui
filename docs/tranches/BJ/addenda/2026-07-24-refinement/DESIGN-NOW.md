@@ -447,11 +447,30 @@ interface ChipProps {
 }
 ```
 
+[2026-09-17 · BK O-20 cure, lane E2 — the size union gains a rung and now reads `size?: "xs"
+| "sm" | "md" | "lg"`. Ground: O-20 B-1. The consumer's meta pill is 6/2px at a fixed 11px;
+`sm` is 10/4px at 12-16px fluid and `text-caption` carries `font-style: italic`, so no rung
+on this ladder stands in for it. `xs` = `gap-0.5 px-1 py-0.5 text-micro`, with
+`ICON_SIZE.xs = size-6` (`chipVariants` indexes `ICON_SIZE[size]` under `strict`, so the two
+widen together). It lands ahead of this spec — row #43 is OPEN — because it is purely
+additive: nothing removed, nothing renamed, `md` still the bare default, so the union only
+widens. #43's own cut is breaking (`mode` dies, `ChipMode` is removed), and holding a
+three-line additive rung behind a major buys nothing. Every other line of this interface is
+untouched and still owed. One caveat for the consumer: `@media (pointer: coarse)` gives
+every INTERACTIVE chip a 44px min box whatever the rung, so `xs` is the static pill's rung.]
+
 `mode` **dies** — clean break, no alias. `action` → Button (glass pill; ⊕ one demo site + README, zero cross-repo). One root, always: `Toggle` when selectable, `<span role="group">` when not; the remove button always a child; `controlAttrs`/`staticAttrs` both delete. Emits unchanged (`update:modelValue`, `remove`). `./chip` exports `Chip`, `chipVariants`, `ChipVariants`, `ChipProps` — `ChipMode` **removed** (breaking, v8). Consumer relay per the ratified sentence: value.js ×1 + keyframes.js ×2 get marked addenda (`mode="selectable"` → `selectable`); the speedtest/muster `ToggleChip` sites are old-pin records, nothing owed, nothing preserved.
 
 ### 3.6 Type, pads, placement
 
 `text-caption` leaves the chip (C8): sm/md/lg → ladder rungs **−2 (14.63) / −1 / 0**, roman, per the PROPORTION register; `font-style: normal` is the gate; type never rides `--ui-scale`. Pads to the space series: **8 / 12 / 20** inline (was 10/14/20), cell block pad 8. `accent-tone.css` moves UP to `src/styles/glass/accent-tone.css` (DAG-RULINGS:195's own direction ⊕); `glass.css:64` re-points; the three cascade-position comments move or die; README pointer updates. Radius by role (`--radius-pill`/`--radius-card`), #23 owns the tokens.
+
+[2026-09-17 · BK O-20 cure, lane E2 — the pad ladder gains 4: inline pads read **4 / 8 / 12
+/ 20** across xs/sm/md/lg. 4 is series-legal on this spec's own terms — §ADJ names the space
+series 4·8·12·20, and only the chip's admitted subset excluded it. The −2/−1/0 rung ladder is
+unchanged for sm/md/lg; `xs` sits below it on `--type-micro` (fixed 11px), which already
+satisfies this section's `font-style: normal` gate, so the C8 cure arrives early on that one
+rung and is still owed on the other three.]
 
 ## 4 · §STRIKE / §ADD
 
@@ -469,6 +488,14 @@ interface ChipProps {
 | X-G6 | death register: rAF trace scale AND opacity distinct-counts > 1, exit ≤ 0.15s ∧ ≤ 0.7× entry; PRM → opacity-only (G-ENGAGE-RUNG PRM arm; pair deliberately) | no register exists | delete the leave pair or its PRM arm |
 | X-G7 | remove control: ≥ 2 computed channels differ on `:hover`, ≥ 1 on `:active` ∧ fine glyph 16px on 20px plate ∧ coarse hit ≥ 44×44 ∧ AX name from `removeLabel` (G-ENGAGE-RUNG + G-COARSE-TARGET) | Δ NONE / Δ NONE; glyph unsized | delete the hover arm |
 | X-G8 | API: `rg '\bmode[=:]' src/components/chip demo` → 0 ∧ `<Chip selectable removable>` renders ONE root control with a child remove button | `mode` everywhere; composition unrepresentable | reinstate the enum |
+
+[2026-09-17 · BK O-20 cure, lane E2 — X-G4's pad clause admits 4: `pad-inline ∈ {4,8,12,20}`,
+the `xs` rung's cell (O-20 B-1, and 4 is on §ADJ's space series already). The
+`font-style: normal` clause is unchanged and binds every rung including `xs`, which satisfies
+it today — `text-micro` carries no italic. The rung clause still reads "sm on rung −2 ±0.1px";
+`xs` is not on the roman rung ladder and that clause does not bind it. No seat moves: X-G4 is
+a born-RED row against a standing seat, the budget stays 60, and its RED-at-HEAD column
+("italic; 10/14") is still true of sm/md.]
 
 Acceptance rows (retired at close, not seats): `./chip` subpath resolves (GREEN) · disabled parity (GREEN, contract-held) · orphan-css-partial (GREEN ⊕, standing) · consumer addenda filed (value.js/keyframes).
 

@@ -20,18 +20,22 @@ import { useOptionalDockContext } from "./dockContext";
  * STANDALONE control engages on its own drag and a control inside a dock does NOT
  * co-engage off a sibling's hold.
  *
- * Why NATIVE host listeners (not a Vue `@pointerdown` template binding):
- * reka-ui's `<SliderRoot>` is a FORWARDING component — it renders through a
- * `CollectionSlot` + `resolveDynamicComponent` (SliderHorizontal/Vertical) +
- * `forwardRef` chain and binds its OWN cached `onPointerdown`
- * (`SliderRoot.js → SliderImpl.js`, which calls `setPointerCapture`). A consumer
- * `@pointerdown` arrives as `$attrs.onPointerdown` and is DROPPED across that
- * Slot/forwardRef boundary — vue-tsc + units pass, only a real drag catches it
- * (the canonical binding-verification class, `feedback_glass_ui_binding_*`). A
- * native `addEventListener` on the RESOLVED host element is immune: the event
- * always reaches the DOM node the user actually presses. This host-native behavior is
- * preferable to a Reka `dragging`-ref subscription, which Reka does not publicly expose
- * and which would re-introduce the same forwarding fragility).
+ * Why NATIVE host listeners (not a Vue `@pointerdown` template binding) — and NOT
+ * because the binding would be lost. reka-ui's `<SliderRoot>` is a forwarding
+ * component and does set `inheritAttrs: false` (`SliderRoot.js:17`), but it re-merges
+ * `$attrs` by hand on the way out — `mergeProps(_ctx.$attrs, { … onPointerdown })`
+ * (`:149`) — and `mergeProps` CHAINS `onX` handlers rather than overwriting them, so a
+ * consumer `@pointerdown` arrives and runs. Measured at our pin and at the consumer's:
+ * the merged order is reka's slide start, reka's update, then the consumer — LAST,
+ * which is the one real limit (it cannot `preventDefault` ahead of the slide).
+ * `tests/components/ui/slider/attrs-pointerdown-channel.test.ts` holds the arrival as a
+ * standing arm; the order was measured at the seat and is not asserted there.
+ *
+ * The native listeners are taken for three reasons that do hold: `pointerdown` AND
+ * `touchstart` fold onto ONE acquire under one owner; the release is window-scoped and
+ * so survives reka's `setPointerCapture` retarget; and the acquire is
+ * capture-independent, which is what makes it instant-on. A Reka `dragging`-ref
+ * subscription serves none of the three and is not publicly exposed.
  *
  * The hold is INSTANT-ON (Apple "Building Fluid Interfaces", facet 5): the first
  * line `keepOpen()` is capture-independent and synchronous, so the halo +

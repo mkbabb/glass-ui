@@ -18,7 +18,10 @@ independent from geometry:
   removable is static content with one separately named remove button.
 - `shape: pill | cell | icon` — geometry only. It never changes role, focus, state,
   or events.
-- `size: sm | md | lg`, `tone`, and `surface` remain orthogonal visual axes.
+- `size: xs | sm | md | lg`, `tone`, and `surface` remain orthogonal visual axes.
+  `xs` is the static micro-pill rung (4/2px pads, fixed 11px roman type); `md` is the
+  default. On a coarse pointer an INTERACTIVE chip still takes the 44px touch floor
+  whatever its rung, so `xs` is for the static pill.
 
 An unplated glyph is ordinary DOM. Interactive icon-only chips need an accessible
 name on their actual button. Use ToggleGroup or SegmentedTabs when the owner requires

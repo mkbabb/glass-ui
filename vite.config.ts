@@ -1,7 +1,8 @@
 import { resolve } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
+import { darkModeSyncScript } from "./src/composables/dark/darkModeSyncScript";
 import {
     libraryEntries,
     libraryExternal,
@@ -9,6 +10,28 @@ import {
 } from "./vite.library";
 import { publishStyleAssets } from "./vite.style-assets";
 import { glassCssTarget } from "./vite.targets";
+
+/**
+ * The demo's parse-time theme stamp — glass-ui dogfooding its own FOUC primitive.
+ *
+ * `darkModeSyncScript()` returns the `<head>` script STRING; a consumer's job is to
+ * get that string into the HTML before first paint, and the recipe is this plugin,
+ * not a transcription. Injected `head-prepend`, so it is the first thing in `<head>`
+ * and the theme is resolved before any stylesheet or module is fetched.
+ *
+ * Until this existed the demo resolved the theme in `demo/main.ts`, after the whole
+ * module graph had loaded — the library's own shell shipped the flash its published
+ * primitive exists to remove. `demo/main.ts`'s capture boot still forces `?mode=`
+ * over this stamp on purpose: a capture asks for a mode, this answers when nobody has.
+ */
+export function darkModeStamp(): Plugin {
+    return {
+        name: "glass-ui:dark-mode-stamp",
+        transformIndexHtml: () => [
+            { tag: "script", children: darkModeSyncScript(), injectTo: "head-prepend" },
+        ],
+    };
+}
 
 export default defineConfig({
     // BH.B2.0 — the `@glass` source alias (`@glass/*` → `src/*`). Decouples the
@@ -26,6 +49,7 @@ export default defineConfig({
     plugins: [
         tailwindcss(),
         vue(),
+        darkModeStamp(),
         // The ONE publish lifecycle: JS/SFC-CSS/declarations/relays/styles are
         // staged outside `dist/`, verified as a complete tuple, then atomically
         // renamed into place. Declarations come from the repo-native `vue-tsc

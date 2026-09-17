@@ -43,7 +43,7 @@ export interface ResolveTokenColorCache {
  *
  * @param css the color string (a `var(--token)` wrapper or a literal)
  * @param el  the element to resolve the cascade against (the host wrapper)
- * @returns the concrete color string the `ColorResolver` can parse
+ * @returns the concrete color string a `(css) => rgb` resolver can parse
  */
 export function resolveTokenColor(css: string, el: HTMLElement | null): string {
     // A literal color (no `var()`) is already concrete — pass through.

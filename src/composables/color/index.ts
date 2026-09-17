@@ -36,10 +36,14 @@ export interface OklchStop {
 /**
  * A color seam: resolves a CSS color string to a GAMMA-sRGB triple in [0,1].
  * `defaultBlobColorResolver` is the default. A general-purpose injection type for
- * consumers that theme a substrate through an external color pipeline — the
- * `<FourierField>` ambient background takes it as an optional `colorResolver` prop
- * (paired with the `color` token seam). The goo-blob resolves color internally through
- * `cssToOklch → oklchToGammaRgb` without dependency injection.
+ * consumers that theme a substrate through an external color pipeline.
+ *
+ * NO shipped component takes one as a prop. `<FourierField>`'s `colorResolver` was
+ * removed at `4a86570b`; its props are `config` / `spectrum` / `getPalette` / `color` /
+ * `seed` / `freeze` / `interactive`, and `color` (a token or a literal) is the ambient
+ * color seam. The goo-blob resolves color internally through
+ * `cssToOklch → oklchToGammaRgb` without dependency injection. So this type has no
+ * in-library caller; it stays published until the 10.0.0 cut, which is the owner's.
  */
 export type ColorResolver = (css: string) => [number, number, number];
 
@@ -148,8 +152,10 @@ export function oklchStopToHex(s: OklchStop): string {
 
 /**
  * Default `ColorResolver`: `(css) => gamma [r,g,b]` through
- * `cssToOklch → oklchToGammaRgb`. `<FourierField>` can pass it as its
- * `colorResolver`; Blob uses the same body internally without a DI seam.
+ * `cssToOklch → oklchToGammaRgb`. Nothing takes it: the `<FourierField colorResolver>`
+ * prop it was built for was removed at `4a86570b`, and Blob uses the same body
+ * internally without a DI seam. It is a one-line composition of two exports on this
+ * same subpath; it stays published until the 10.0.0 cut, which is the owner's.
  */
 export const defaultBlobColorResolver: ColorResolver = (css) =>
     oklchToGammaRgb(cssToOklch(css));

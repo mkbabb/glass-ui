@@ -5,6 +5,7 @@ const BASE =
 const INTERACTIVE =
     "glass-chip--interactive glass-capsule-hover focus-ring cursor-pointer disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-disabled";
 const SIZE = {
+    xs: "gap-0.5 px-1 py-0.5 text-micro",
     sm: "gap-1 px-2.5 py-1 text-caption",
     md: "gap-1.5 px-3.5 py-1.5 text-small",
     lg: "gap-2 px-5 py-2 text-base",
@@ -14,7 +15,12 @@ const SHAPE = {
     cell: "glass-chip--cell flex-col gap-1.5 px-2 py-2.5 text-micro",
     icon: "glass-chip--icon aspect-square p-0",
 } as const;
-const ICON_SIZE = { sm: "size-8", md: "size-10", lg: "size-12" } as const;
+const ICON_SIZE = {
+    xs: "size-6",
+    sm: "size-8",
+    md: "size-10",
+    lg: "size-12",
+} as const;
 
 export interface ChipVariants {
     interactive?: boolean | null;

@@ -42,8 +42,18 @@ export { default as AlertTitle } from "./AlertTitle.vue";
    so a `v-if`-born surface animates at all, with its own reduced-motion arm), so the
    alert enters on the same grammar as every other mount surface. Rest stays material-only
    — no idle loop, per the ratified idle canon. */
+/* BASE SETS NO GLYPH COLOUR. It used to end `[&>svg]:text-current`, and that one
+   utility was the reason the tone never painted: `joinClassValues` is a bucketed
+   deduper, not twMerge, so a toned arm's `[&>svg]:text-(--tone)` joined it rather than
+   replacing it, and Tailwind emits `.[&>svg]:text-(--tone)>svg` BEFORE
+   `.[&>svg]:text-current>svg` at equal specificity in the same layer — currentcolor
+   won, and every toned Alert painted its glyph in the plate's own ink. The collision
+   was harmless while the tinted wash still carried the tone; removing the wash promoted
+   the dead channel to the only channel. The glyph now inherits on the neutral arm
+   (which is what `currentcolor` already resolved to, so neutral paint is unchanged) and
+   takes `--tone` on the four toned arms, where it is the whole colour event. */
 const BASE =
-    "glass-quiet liquid-enter [--glass-specular-intensity-hover:0] w-full rounded-card px-4 py-3 grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-(--ui-glyph) [&>svg]:translate-y-0.5 [&>svg]:text-current";
+    "glass-quiet liquid-enter [--glass-specular-intensity-hover:0] w-full rounded-card px-4 py-3 grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-(--ui-glyph) [&>svg]:translate-y-0.5";
 
 /* THE TONE ARMS — neutral glass + status ink. The status-tinted PLATE is not built:
    colour arrives as the full-chroma glyph and the tone-keyed ink, over the same neutral

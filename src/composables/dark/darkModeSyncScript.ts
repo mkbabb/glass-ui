@@ -17,8 +17,13 @@
 //   - reads the SAME storage key vueuse's `useDark`/`useColorMode` uses
 //     (`vueuse-color-scheme`; the `useStorage` `string` serializer stores the raw
 //     mode string `"dark"` / `"light"` / `"auto"`, no JSON quoting);
-//   - on `"auto"` / missing / unknown, falls back to `prefers-color-scheme`
-//     (vueuse's `system` resolution for the `auto` mode);
+//   - on `"auto"` / missing, falls back to `prefers-color-scheme` (vueuse's
+//     `system` resolution for the `auto` mode). [2026-09-17 · O-20 CUT-6..8 — the
+//     line read "`auto` / missing / ~~unknown~~" and the third term was never
+//     true: an unrecognised stored value (`"garbage"`, `"system"`, `""`) resolves
+//     LIGHT, measured on the published 9.0.0 emission. Struck, not cured: the
+//     resolution is unchanged by this pass and the ledger's CUT-6..8 cure list
+//     does not carry it.];
 //   - toggles `document.documentElement.classList` with the `"dark"` class
 //     (vueuse `valueDark = "dark"`, selector `html`, attribute `class`);
 //   - sets `document.documentElement.style.colorScheme` (`useGlobalDark.ts`'s
@@ -43,8 +48,20 @@ export interface DarkModeSyncScriptOptions {
      * follows `prefers-color-scheme`, which is right for an app. `false`/`true`
      * resolve DETERMINISTICALLY, which is right for a document that must not flip
      * with the projector's OS theme — a briefing, a print target, a capture.
+     *
+     * The scalar forms answer BOTH cases at once. The object form answers them
+     * SEPARATELY, which is the only way to say "a first visit is a deliberate
+     * light document, but a reader who chose `auto` gets their platform":
+     *
+     * ```ts
+     * darkModeSyncScript({ defaultDark: { absent: false, auto: "os" } });
+     * ```
+     *
+     * No scalar reproduces that pair — `false` makes `auto` mean light and `"os"`
+     * makes a first visit follow the OS — which is why a consumer with the split
+     * policy hand-rolls the whole `<head>` block instead of calling this.
      */
-    defaultDark?: boolean | "os";
+    defaultDark?: boolean | "os" | { absent: boolean | "os"; auto: boolean | "os" };
     /**
      * Honour `?light` / `?dark` in the query string, above storage and above the
      * default. This is the capture-forcing seam: a screenshot pipeline asks for a
@@ -55,6 +72,10 @@ export interface DarkModeSyncScriptOptions {
      * Write the RESOLVED mode back to storage, so an absent or `"auto"` value
      * becomes a concrete `"dark"`/`"light"` at first paint and the runtime
      * composable and the stamp cannot disagree about what `auto` meant.
+     *
+     * The write is emitted AFTER the stamp, so a storage that throws on write
+     * (quota, privacy mode, a sandboxed origin) costs the write-back and nothing
+     * else — the page is already themed when it fails.
      */
     normalize?: boolean;
 }
@@ -73,8 +94,8 @@ export interface DarkModeSyncScriptOptions {
 export function darkModeSyncScript(options: DarkModeSyncScriptOptions = {}): string {
     const key = options.storageKey ?? DARK_MODE_STORAGE_KEY;
     const defaultDark = options.defaultDark ?? "os";
-    // The absent/auto fallback, as one expression the emitted IIFE evaluates. `"os"`
-    // asks the platform; a boolean answers deterministically and asks nothing.
+    // One fallback arm, as the expression the emitted IIFE evaluates. `"os"` asks the
+    // platform; a boolean answers deterministically and asks nothing.
     //
     // NO WRAPPING PARENS on the `"os"` arm, deliberately. It substitutes into an `&&`
     // chain of the same precedence and associativity, so the parens would be inert —
@@ -84,27 +105,48 @@ export function darkModeSyncScript(options: DarkModeSyncScriptOptions = {}): str
     // one place this module exists to keep correct. The default emission is therefore
     // BYTE-IDENTICAL across this addition; only an opt-in arm moves bytes, and a
     // consumer opting in is editing its head script anyway.
-    const fallback =
-        defaultDark === "os"
+    const arm = (value: boolean | "os") =>
+        value === "os"
             ? `window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches`
-            : String(defaultDark);
+            : String(value);
+    // A scalar answers the absent and `"auto"` cases with ONE arm, welded — that is
+    // the pre-widening emission, kept to the byte for the CSP reason above. The object
+    // form emits the two cases as two tests, which is the whole point of it: absent
+    // and `"auto"` are different questions ("no one has chosen" vs "the reader chose
+    // the platform") and a policy may answer them differently.
+    const fallback =
+        typeof defaultDark === "object"
+            ? `(m===null&&${arm(defaultDark.absent)})||(m==="auto"&&${arm(defaultDark.auto)})`
+            : `(m===null||m==="auto")&&${arm(defaultDark)}`;
     // The capture-forcing seam: a query parameter outranks storage entirely.
     const queryArm = options.queryOverride
         ? `var q=new URLSearchParams(location.search);if(q.has("dark")){d=true;}else if(q.has("light")){d=false;}`
         : "";
     // Resolve `auto`/absent into a concrete stored mode so the runtime composable
-    // and this stamp cannot disagree about what `auto` meant.
+    // and this stamp cannot disagree about what `auto` meant. Emitted LAST, after the
+    // stamp: `setItem` is the one call in this body that a real browser throws from
+    // (quota, privacy mode, a sandboxed origin), and the `catch(_){}` below swallows
+    // whatever throws — so anything emitted after the write is skipped when it throws.
+    // With the write ordered first, `{normalize:true}` bought a failed write at the
+    // price of the whole stamp and the page painted unthemed: the exact flash this
+    // module exists to remove, in the arm that asked for MORE determinism.
     const normalizeArm = options.normalize
         ? `localStorage.setItem(${JSON.stringify(key)},d?"dark":"light");`
         : "";
     // The emitted body is an IIFE so it leaks no globals. It mirrors the
     // useGlobalDark runtime contract: storage key → mode string → dark boolean
-    // (auto/null/unknown ↦ prefers-color-scheme), then classList + colorScheme.
+    // (auto/null ↦ the fallback arm), then classList + colorScheme.
     // fail-explicit: befitting — the EMITTED inline `<head>` script's `catch(_){}`
     // must swallow (e.g. localStorage throws in privacy mode) so a storage failure
-    // never breaks first paint; the page degrades to prefers-color-scheme. This is
-    // a runtime-emitted string, not source control flow.
+    // never breaks first paint; ~~the page degrades to prefers-color-scheme~~. This
+    // is a runtime-emitted string, not source control flow. [2026-09-17 · O-20
+    // CUT-6..8 — false: the read is the first statement inside the one try, so a
+    // `getItem`/`localStorage` accessor throw (privacy mode, sandboxed origin) skips
+    // the WHOLE body and the page is unstamped, measured on the published 9.0.0 and
+    // the cured emission (dark=false, colorScheme=""). Only the WRITE side is
+    // fail-open after this pass; an inner try around the read would move the 300 B
+    // default and re-pin its CSP hash, which the ledger forbids. Struck, not cured.]
     return `(function(){try{var m=localStorage.getItem(${JSON.stringify(
         key,
-    )});var d=m==="${DARK_CLASS}"||((m===null||m==="auto")&&${fallback});${queryArm}${normalizeArm}var e=document.documentElement;e.classList.toggle("${DARK_CLASS}",d);e.style.colorScheme=d?"dark":"light";}catch(_){}})();`;
+    )});var d=m==="${DARK_CLASS}"||(${fallback});${queryArm}var e=document.documentElement;e.classList.toggle("${DARK_CLASS}",d);e.style.colorScheme=d?"dark":"light";${normalizeArm}}catch(_){}})();`;
 }

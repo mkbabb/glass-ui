@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import { Alert } from "@glass/components/alert";
+import { Alert, alertVariants } from "@glass/components/alert";
 
 describe("Alert announcement policy", () => {
     it("is silent by default", () => {
@@ -45,4 +45,31 @@ describe("Alert announcement policy", () => {
             id: "build-alert",
         });
     });
+});
+
+/* THE GLYPH CHANNEL. Alert's tone reaches paint in exactly one place — the glyph —
+ * because the recompose that removed the tinted plate left the ink neutral on purpose.
+ * BASE used to end `[&>svg]:text-current` and every toned arm adds
+ * `[&>svg]:text-(--tone)`; `joinClassValues` is a bucketed deduper, not twMerge, so both
+ * survived the join, and Tailwind emits `.[&>svg]:text-(--tone)>svg` BEFORE
+ * `.[&>svg]:text-current>svg` at equal specificity — currentcolor won, and a toned Alert
+ * painted the plate's own ink. The collision was harmless while the wash carried the
+ * tone; removing the wash promoted the dead channel to the only channel.
+ *
+ * The row is on the STRING, not on a mount, because the defect is a class the scanner
+ * reads out of source text: it never depended on rendering, and it survived every
+ * mount-shaped test the component had. */
+describe("Alert tone channel", () => {
+    it("BASE declares no text-current arbitrary variant — nothing overrides the tone glyph", () => {
+        expect(alertVariants()).not.toContain("text-current");
+    });
+
+    it.each(["destructive", "success", "warning", "info"] as const)(
+        "the %s arm ships exactly one glyph colour, and it is the tone",
+        (tone) => {
+            const classes = alertVariants({ tone }).split(/\s+/);
+            const glyphColour = classes.filter((cls) => /^\[&>svg\]:text-/.test(cls));
+            expect(glyphColour).toEqual(["[&>svg]:text-(--tone)"]);
+        },
+    );
 });

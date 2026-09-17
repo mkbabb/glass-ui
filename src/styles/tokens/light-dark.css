@@ -149,19 +149,27 @@
         --accent-color:            light-dark(var(--primary), var(--focus-ring-color));
 
         /* Section palette — jewel tones brightened L for dark (oklch pairs;
-           Hue preserved, L evened) */
+           Hue preserved, L evened).
+
+           ONE RAMP, TWO FILES. The light arm here must equal `color-radius.css`
+           declaration for declaration — this is the arm a @supports-split engine
+           actually paints, so a retune applied there and not here forks the light arm
+           and nothing downstream can see it. The B-7 retune (light stops 4/6/10/11, to
+           clear 4.5:1 as text on `--card`) is carried on both, and
+           `G-CONTRAST-COMPUTED` §6c holds the pair. Dark is byte-untouched by the cure
+           and is not held by §6; the light pair is. */
         --section-color-0:   light-dark(oklch(0.552 0.192 359.8), oklch(0.721 0.145 354.0));
         --section-color-1:   light-dark(oklch(0.502 0.165 305.9), oklch(0.733 0.113 308.2));
         --section-color-2:   light-dark(oklch(0.484 0.163 265.5), oklch(0.718 0.107 268.4));
         --section-color-3:   light-dark(oklch(0.542 0.089 222.8), oklch(0.767 0.091 219.9));
-        --section-color-4:   light-dark(oklch(0.551 0.088 171.1), oklch(0.776 0.105 172.6));
+        --section-color-4:   light-dark(oklch(0.521 0.088 171.1), oklch(0.776 0.105 172.6));
         --section-color-5:   light-dark(oklch(0.530 0.124 69.6),  oklch(0.813 0.109 78.2));
-        --section-color-6:   light-dark(oklch(0.579 0.201 30.4),  oklch(0.693 0.151 28.1));
+        --section-color-6:   light-dark(oklch(0.549 0.201 30.4),  oklch(0.693 0.151 28.1));
         --section-color-7:   light-dark(oklch(0.532 0.180 317.5), oklch(0.739 0.134 318.1));
         --section-color-8:   light-dark(oklch(0.520 0.176 8.4),   oklch(0.709 0.142 2.3));
         --section-color-9:   light-dark(oklch(0.492 0.038 239.6), oklch(0.763 0.032 239.0));
-        --section-color-10:  light-dark(oklch(0.556 0.103 128.8), oklch(0.794 0.116 127.9));
-        --section-color-11:  light-dark(oklch(0.601 0.092 208.0), oklch(0.805 0.095 206.7));
+        --section-color-10:  light-dark(oklch(0.526 0.103 128.8), oklch(0.794 0.116 127.9));
+        --section-color-11:  light-dark(oklch(0.511 0.092 208.0), oklch(0.805 0.095 206.7));
         --section-color-12:  light-dark(oklch(0.513 0.163 291.9), oklch(0.719 0.115 295.6));
 
         --accent-pink:     light-dark(oklch(0.613 0.197 353.8), oklch(0.683 0.131 354.7));

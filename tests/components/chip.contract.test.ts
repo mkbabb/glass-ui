@@ -127,6 +127,22 @@ describe("Chip semantic modes", () => {
         expect(chipVariants({ shape: "icon", size: "sm" })).toContain("size-8");
     });
 
+    // The `xs` rung — the static micro-pill. `sm` is 10/4px at 12-16px fluid and
+    // `text-caption` is italic, so it cannot stand in for a meta pill; `xs` is 4/2px
+    // at a fixed 11px, roman. The icon ladder widens in the same edit because
+    // `chipVariants` indexes `ICON_SIZE[size]` under `strict`. Default stays `md`.
+    it("carries an xs rung on both the pad and the icon ladder", () => {
+        const pill = chipVariants({ size: "xs" });
+
+        expect(pill).toContain("text-micro");
+        expect(pill).toContain("px-1");
+        expect(pill).toContain("py-0.5");
+        expect(pill).not.toContain("text-caption");
+        expect(chipVariants({ shape: "icon", size: "xs" })).toContain("size-6");
+        // The union widened; it did not move. `md` is still the bare default.
+        expect(chipVariants()).toContain("text-small");
+    });
+
     it("merges consumer style with the tone-owned variables", () => {
         const wrapper = mount(Chip, {
             attrs: { style: { "--consumer-seam": "1" } },

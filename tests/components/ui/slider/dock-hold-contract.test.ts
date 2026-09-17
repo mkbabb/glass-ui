@@ -8,14 +8,15 @@
  * is unconditional inside a dock and a no-op outside — there is no consumer prop
  * (`keepDockOpen` was retired; the hold reads `useOptionalDockContext()` directly).
  *
- * The failure mode this guards: `Slider.vue` binds `@pointerdown` on reka's `<SliderRoot>`,
- * a forwarding component whose `$attrs` listeners are DROPPED across the
- * Slot/forwardRef boundary (reka's own cached `onPointerdown` shadows the merged
- * handler through `SliderRoot → SliderHorizontal → SliderImpl`). So a real
- * `pointerdown` on the resolved `[data-slot="slider"]` node never reaches
- * `Slider.vue`'s `onPointerDown`, `keepOpen()` never fires, `data-held` never
- * flips. The fix (`useDockHold`) attaches a NATIVE listener on the resolved host
- * element, which the event always reaches — turning this gate GREEN.
+ * The failure mode this guards is NOT a dropped binding. reka's `<SliderRoot>` sets
+ * `inheritAttrs: false` and then re-merges `$attrs` through `mergeProps`, which chains
+ * `onX` handlers, so a template `@pointerdown` does arrive — measured, and held as a
+ * standing arm by `attrs-pointerdown-channel.test.ts` beside this file. What this gate
+ * guards is the ACQUIRE: the hold must be taken from the slider's REAL host element,
+ * under one owner, for pointer and touch alike, with a window-scoped release. So a drag
+ * that starts on the resolved `[data-slot="slider"]` node must light `data-held` on both
+ * roots, and a release anywhere must end it. `useDockHold` attaches the native listeners
+ * that do that; without them `keepOpen()` never fires and `data-held` never flips.
  *
  * It is browser-FREE: the seam that breaks IS a component-mount fact, so it is
  * gateable in jsdom/happy-dom without a real browser (the π-lane owns the live

@@ -777,6 +777,18 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
                 surface: "var(--card)",
                 arm: "light",
             },
+            // O-20 B-7's own strike. The retune that cured the four under-floor rungs
+            // also struck stop 5's stale `5.11:1` and wrote the true figure into the
+            // dated bracket beside it — a claim about bytes like any other, and the
+            // headnote's rule is that struck claims are enrolled. The ramp's other
+            // rungs state no figure at all now; §6 measures all thirteen directly.
+            {
+                file: LIGHT_TOKENS,
+                claim: "O-20 B-7: 5.02:1",
+                ink: "var(--section-color-5)",
+                surface: "var(--card)",
+                arm: "light",
+            },
         ];
 
         for (const { file, claim, ink, surface, arm } of CLAIMS) {
@@ -806,9 +818,91 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
         }
     });
 
-    // §6 · the engine's own bite. Every table above is only as good as the resolver;
+    // §6 · the SECTION RAMP table. The 13-stop jewel ladder is the one token family a
+    // consumer indexes rather than names — `var(--section-color-${i})`, no fallback,
+    // because the ramp is finite by construction — and it is offered as TEXT: the
+    // library paints its own eyebrow out of it (§6b), and DESIGN.md's section-tone
+    // recipe invites a page to do the same. So every rung owes the text floor on the
+    // surface those labels sit on, `--card`, and each one is measured, not sampled.
+    //
+    // FOUR RUNGS WERE BELOW IT. Stops 4 (4.27), 6 (4.39), 10 (4.24) and 11 (3.51) had
+    // shipped under 4.5 on the warm-cream card since the ramp was authored; only stop 5
+    // was ever retuned (0.623 → 0.530, 4.1.0), which is the precedent this cure follows
+    // — drop L, leave hue and chroma alone, so the ladder stays the same categorical
+    // set of jewel tones and only its legibility moves. Stop 11 was the worst and had
+    // never been measured by anyone: the consumer who filed the ask has eleven chapters
+    // and stopped at stop 10.
+    //
+    // LIGHT ONLY. The dark arm computes 4.76–7.85 across all thirteen and is untouched
+    // by the cure, so the rows that would hold it would be rows about bytes nobody
+    // moved; §6c holds the thing that CAN silently break instead — the two files that
+    // must declare one ramp.
+    describe("§6 the 13-stop section ramp reads as text on the card it lands on", () => {
+        const STOPS = Array.from({ length: 13 }, (_, i) => i);
+
+        for (const stop of STOPS) {
+            it(`--section-color-${stop} clears ${TEXT_FLOOR}:1 on --card [light]`, () => {
+                const measured = ratio(
+                    `var(--section-color-${stop})`,
+                    "var(--card)",
+                    lightScope,
+                );
+                expect(
+                    measured,
+                    `--section-color-${stop} over --card [light] computed ${round(measured)}:1`,
+                ).toBeGreaterThanOrEqual(TEXT_FLOOR);
+            });
+        }
+
+        // §6b · glass-ui is its own consumer here. The tinted eyebrow reads the ramp
+        // through a knob whose DEFAULT is a rung, so the rung is shipped text in our
+        // own sheet — read off the register rather than restated, so the row cannot
+        // drift from what paints.
+        it("the library's own tinted eyebrow reads the ramp, and that default clears the floor", () => {
+            const register = read("src/styles/typography/utilities.css");
+            const declared = register.match(
+                /\.section-label--tinted\s*\{\s*color:\s*(var\([^;]+\));/,
+            );
+            expect(
+                declared,
+                ".section-label--tinted declares a colour off the ramp",
+            ).not.toBeNull();
+            expect(declared![1]).toBe("var(--section-label-accent, var(--section-color-7))");
+            const measured = ratio(declared![1], "var(--card)", lightScope);
+            expect(
+                measured,
+                `the tinted eyebrow's default rung over --card computed ${round(measured)}:1`,
+            ).toBeGreaterThanOrEqual(TEXT_FLOOR);
+        });
+
+        // §6c · ONE ramp, two files. `color-radius.css` is the class-arm base and
+        // `light-dark.css` is the enhancement arm a @supports-split engine actually
+        // paints; a retune applied to one and not the other forks the light arm
+        // silently, and the fork is invisible to every row above (they read the base).
+        it("LOCKSTEP — light-dark()'s light arm declares the SAME 13 values as the base", () => {
+            const base = declarations(read(LIGHT_TOKENS));
+            const enhancement = read(LIGHT_DARK);
+            for (const stop of STOPS) {
+                const paired = enhancement.match(
+                    new RegExp(
+                        `--section-color-${stop}\\s*:\\s*light-dark\\(([^,]+),`,
+                    ),
+                );
+                expect(
+                    paired,
+                    `light-dark.css declares --section-color-${stop}`,
+                ).not.toBeNull();
+                expect(
+                    paired![1].trim(),
+                    `--section-color-${stop} forked between the two light arms`,
+                ).toBe(base[`--section-color-${stop}`]);
+            }
+        });
+    });
+
+    // §7 · the engine's own bite. Every table above is only as good as the resolver;
     // these hold it to values computable by hand or by an independent tool.
-    describe("§6 the engine itself", () => {
+    describe("§7 the engine itself", () => {
         it("computes the two WCAG anchors exactly", () => {
             const white = { rgb: [1, 1, 1], a: 1 } as Colour;
             const black = { rgb: [0, 0, 0], a: 1 } as Colour;
