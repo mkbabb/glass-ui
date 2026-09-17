@@ -6480,9 +6480,9 @@ ACT-4 bank wrote it on 08-29. **The one owner input is unchanged — fresh npm a
 paths (granular token · Trusted Publishing · local `npm login`) unaltered and unattempted.
 **`FINAL.md` IS NOT AUTHORED** — `ls docs/tranches/BK/` carries none — and that is now a **ruling,
 not an omission**: PLAN.md's 2026-09-17 bracket records the driver ruling that **the remainder's
-disposition is reserved to the owner, and `FINAL.md` waits on it**. **NEXT WAVE IN LINE, NOT
-STARTED**: the **O-20 disposition wave** — A-2..A-14 + §B-1..B-7 + §C-1, the **8 CUT-CANDIDATEs**
-and **the permanent `./styles` parse arm**. *Not started* is measured, not assumed: the five
+disposition is reserved to the owner, and `FINAL.md` waits on it**. **NEXT WAVE IN LINE, ~~NOT
+STARTED~~** [2026-09-17 · STARTED and disposed at 2984e377 — see ⊕⁸²]: the **O-20 disposition wave** — A-2..A-14 + §B-1..B-7 + §C-1, the **8 CUT-CANDIDATEs**
+and **the permanent `./styles` parse arm**. ~~*Not started*~~ [2026-09-17 · STARTED and disposed at 2984e377 — see ⊕⁸²] is measured, not assumed: the five
 name-greppable CUT-CANDIDATEs all stand in `src/` at HEAD (`FOURIER_TANGENT_EPS` · `FOURIER_STROKE_RUNGS`
 · `ringsAt` · `ColorResolver` · `defaultBlobColorResolver` — `git grep -lw` 1/1/3/3/1 files; the
 other three are `darkModeSyncScript` options), and the only `lightningcss` arm in the repo is
@@ -6905,5 +6905,163 @@ WHAT THIS CLOSES AND WHAT IT DOES NOT. Closed: act 4 of the four-act close, whol
 5's second cut; the O-20 ACK's publish-state paragraph (bracketed LIVE at its own venue); PLAN's
 2026-09-17 bracket (its wall sentence struck). NOT closed, unchanged by a publish: `FINAL.md`
 (the driver ruling at PLAN reserves the remainder's disposition to the owner) · the O-20
-disposition wave, not started · ⊕⁸⁰'s CARRIED-OPEN register as ⊕⁸¹ carried it.
+disposition wave, ~~not started~~ [2026-09-17 · STARTED and disposed at 2984e377 — see ⊕⁸²] · ⊕⁸⁰'s CARRIED-OPEN register as ⊕⁸¹ carried it.
 
+---
+
+⊕⁸² **THE WAVE ⊕⁸¹ CALLED NOT-STARTED STARTED AND DISPOSED ITSELF THE SAME DAY — TWENTY-EIGHT
+READ-ONLY SEATS RE-READ EVERY INBOUND ITEM AGAINST THE PUBLISHED 9.0.0 BYTES INSTEAD OF AGAINST
+`src/`, AND THE FIRST THING THAT DATUM KILLED WAS EIGHT ITEMS THAT ARE DEAD IN THE LIBRARY AND
+STILL LIVE AT THE FILER'S OWN PIN** (2026-09-17, hours after the publish · `e91b7b7e` →
+`2984e377` · back-annotation seat modelId **`claude-opus-5`**, read from this seat's OWN on-disk
+subagent transcript `…/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/subagents/workflows/
+wf_2bb35ea4-0fb/agent-afa3d64d6dc16524f.jsonl` — located by grepping the workflow tree for a
+phrase unique to this dispatch, `.message.model` = `claude-opus-5` throughout, `CLAUDE_MODEL_ID`
+unset, and **the assertion GATES this chain with `&&`, never a newline**).
+`git show --numstat 2984e377` — **5 files, +1143/−6**: `LEDGER.md` **+805** · the constellation
+relay **+168** · the value.js disposition letter **+94** · the bbnf-lang addendum **+70** ·
+`MIGRATION.md` **+6/−6**. Four of the five files are new and the fifth moves **no net line**.
+**NO `src/`, `tests/` OR `scripts/` PATH IS TOUCHED**: `git diff --stat v9.0.0 2984e377 -- src/`
+is **empty**, so ⊕⁸¹'s *"not one byte of code has moved since the cut"* holds one commit later —
+and it holds **by design**. This pass rules; it does not cure.
+
+---
+
+⊕⁸² **THE PASS** — workflow `wf_7d30a8fd-741`, **28 Opus seats**, **read-only throughout** (one
+verifier wrote a scratch probe outside the repo and disclosed it, `LEDGER.md:1-11`). **14
+clusters**: one investigator each, then **one ASSUME-WRONG verifier per cluster** re-establishing
+every state claim with its own commands; the ledger applies each verifier's corrections over its
+investigator's finding and **says so where the ruling departs from both**. **ALL 28 TRANSCRIPTS
+DECLARE `claude-opus-5`** — re-counted at this seat over the workflow directory's own
+`agent-*.jsonl`, **28/28, zero UNKNOWN**, which is the model-law census ⊕⁸¹ banked at 25-of-28
+finally coming in whole.
+
+**THE DATUM IS THE WHOLE POINT OF THE PASS AND IT IS STATED FIRST.** **Published 9.0.0 bytes
+first** — the `git archive v9.0.0` build; the tag resolves to `d4f7b24f`; `unpackedSize`
+**2549378**, the registry figure to the byte — **`src/` second**. `LEDGER.md` names its HEAD as
+`81f7db0d`; re-measured at this seat against `2984e377`, `git diff --stat v9.0.0 HEAD -- src/` is
+**still empty**, so the ledger's datum survives its own commit. Three facts hold across the whole
+ledger and each dissolves a **class** of claim rather than a row: **(1) NO SIBLING INSTALLS
+9.0.0** — value.js 7.0.0 · keyframes.js 7.0.0 · atlas 6.0.0 · sci-report 6.0.0 · slides 3.13.0 ·
+speedtest 4.0.1 · fourier-analysis 4.0.0 · muster 3.1.0 · words 3.0.0 · bbnf-lang `^3.0.0` — so
+**every "cured for the consumer" line in the ledger is prospective-on-bump** · **(2) `MIGRATION.md`
+AND `DESIGN.md` DO NOT SHIP** (`files: ["dist"]`; dist 2,520,451 B + README + LICENSE +
+`package.json` 28,927 B = **2,549,378**, the registry figure **derived rather than quoted**), so
+every doc cure routed through them lives on GitHub only and README carries the pointer ·
+**(3) DEEP `.d.ts` FILES ARE NOT A PUBLISHED SURFACE** — `dist/components/**` carries **381 `.d.ts`
+and zero `.js`** — which dissolves the "doorless bytes" rider on four separate items and leaves
+the finite invariant standing: it IS a defect when a published signature, emit, expose or JSDoc
+`{@link}` names a symbol the consumer cannot import.
+
+⊕⁸² **THE LEDGER** — `docs/tranches/BK/execution/2026-09-17-o20-disposition/LEDGER.md`, **805
+lines on disk**, banked whole at `2984e377`. **THE TALLY IS AT `:763-773` AND IS THE FIGURE OF
+RECORD; IT IS POINTED AT, NOT RESTATED** — the per-row text belongs to the ledger, and copying it
+here is precisely the duplicated-derived-data trap this file has already paid for once. Its
+**counted** rows: **KILL 8 · ANSWER 5 · CURE-NOW 24 · CURE-NEXT-MAJOR 4**. **DECLINE and ROUTE
+carry NO parenthetical count in the table**, and none is minted here — they list items, and a
+count of a list is a reading, not a figure the ledger published. **THE FOUR CURE-NEXT-MAJOR
+RULINGS ARE HELD FOR THE OWNER AND WERE NOT EXECUTED**: `A-3-CLASS` (`:93`) · `CUT-3` (`:590`) ·
+`CUT-4` + `CUT-5` (`:624`) — the commit's own gloss reads *"A-3 class, `ringsAt`, the two
+`./color` orphans"*. Each moves a published name or a paint contract, which is the ledger's own
+definition of the class, and the ledger closes on it in plain words: **the CURE-NEXT-MAJOR set and
+any new publish are the owner's.**
+
+⊕⁸² **THE THREE OUTBOUND LETTERS, BY PATH, WITH ZERO SIBLING WRITES** — all three under
+`docs/tranches/BK/coordination/`: **`glass-outbound-2026-09-17-valuejs-o20-disposition.md`**
+(**+94** — O-20 whole; the 08-29 ACK answered A-1 and received the rest, this letter disposes the
+rest, citing the ledger rather than restating it) · **`glass-outbound-2026-09-17-bbnf-lang-9.0.0-addendum.md`**
+(**+70** — the #76 band's addendum for the **fifth `./search` edge**; `playground/package.json:13`
+pins `^3.0.0`, which **9.0.0 does not satisfy**, so nothing breaks today and **it fires at
+re-pin**) · **`glass-outbound-2026-09-17-constellation-o20-relay.md`** (**+168** — what the O-20
+re-read found on every *other* sibling's bytes: **facts found on your bytes, not asks**). **THE
+FENCE IS MEASURED, NOT ASSERTED**: `git show --numstat 2984e377` lists five paths and **every one
+is inside this repo**; the ledger states it in its own words — *"No sibling tree was written"* —
+and each letter repeats the consumer-updates ruling that the edit is the consumer's, in the
+consumer's tranche, at its own adopt.
+
+⊕⁸² **`MIGRATION.md` — FOUR STRIKES, ZERO NET LINES** (`git show 2984e377 -- MIGRATION.md`,
+**6/6**). Both section headers read `UNRELEASED (in flight; not on the registry)` and both are
+**struck in place and bracketed LIVE**: §9.0.0 takes *"[2026-09-17 · LIVE: tag `v9.0.0` at
+`d4f7b24f`, published with provenance by `release.yml` run 33273556530 attempt 3, `latest` on the
+registry]"*, and §8.1.0 takes *"[2026-09-17 · that major is on the registry: 9.0.0]"* **beside**
+the 2026-08-10 bracket that already superseded it as a version number. **BOTH "declares `8.0.0`"
+LINES GO WITH THEM** — §9.0.0's *"`package.json` declares `8.0.0`"* → *"[2026-09-17 · declares
+`9.0.0` since `d4f7b24f`; the cut is on the registry.]"*, and §8.1.0's longer *"`package.json`
+declares `8.0.0` (detector: `node -p …` → `8.0.0`), and `8.1.0` is the next minor this additive
+change cuts at."* → *"[2026-09-17 · SHIPPED inside 9.0.0 — the detector prints `9.0.0`; everything
+below is live on the registry.]"*. **Nothing is renumbered and nothing is deleted**; §8.1.0 keeps
+its heading and its text exactly as its own 08-10 bracket ruled it should.
+
+⊕⁸² **THE PRE-COMMIT CHALLENGE, AND IT IS WHY THE FIGURES ABOVE REPRODUCE** — workflow
+`wf_286a9dd4-cf0`, **three lenses** (fidelity · on-disk · house-law — three `agent-*.jsonl`,
+counted at this seat), **27 defects** raised against the drafted ledger and letters **before a
+single byte was committed**. **FOUR OF THE 27 WERE THEMSELVES FALSE, and the commit names them
+rather than quietly dropping them**: **`README:180` is the live `@vueuse/core` row, not embla** ·
+**`vite.library.ts:36`, not `:30`** · **`glass-wash` is a live tier class** · **`4a86570b` is
+first carried by 9.0.0**. The other 23 were **tag-versus-working-tree anchor drift and
+misattributions** — the predictable disease of a pass whose datum is a published tarball while
+the editor sits on HEAD — **and all were cured before the commit**. A challenge that raises 27 and
+is wrong about 4 is a challenge working correctly; the four are on the record so the next reader
+does not re-file them.
+
+---
+
+⊕⁸² **THE CURE WAVE OPENS AT THIS ANNOTATION.** **NINE LANES — P · C1 · C2 · E1 · E2 · D · T1 ·
+T2 · R** — disjoint file fences, a **quartet each** (Opus implement → two ASSUME-WRONG challengers
+→ Fable adjudicator), the fence table at `LEDGER.md` under *"The cure wave—lanes"*. **R RUNS LAST
+AND OWNS `MIGRATION.md` ALONE**, so the manifest reflects what actually landed rather than what
+was planned; `README.md` and `DESIGN.md` are **T1's alone** on the same reasoning. **BATCH 1 IS
+DISPATCHED AT THIS ANNOTATION: P · C1 · E1** — **P** is the A-1 permanent parse arm
+(`scripts/verify-export-types.mjs` `validateCss()`: parse the RAW buffer with
+`lightningcss.transform` **before** the comment-strip, born-RED through the existing
+mkdtemp/`runVerifierProbe` fixture, riding the already-bound RELEASE seat so **the receipt stays
+`seats:60`** and **zero published bytes move**) · **C1** is A-9 + B-6 + A-11d · **E1** is CUT-1 +
+CUT-2 + GAP + GATE + the A-8 hue law. **RECORDS LAND AT
+`docs/tranches/BK/execution/2026-09-17-o20-cure/<lane>/RECORD.md`** — and **that directory is
+ABSENT on disk at the moment of this write** (`ls docs/tranches/BK/execution/` carries only
+`2026-09-17-o20-disposition`), which is stated because the alternative is a path that reads as
+banked and is not. **SEAT LAW FOR EVERY LANE**, restated once because it is the thing that keeps
+failing: model asserted from the seat's **OWN** transcript and **gating the chain with `&&`** ·
+gates **exactly 60**, mint nothing · born-RED proven on bytes · `vue-tsc` **0** · the battery
+figure stated in full with foreign REDs attributed · the receipt line verbatim · dated
+strike-in-place brackets on committed text · **no sibling writes** · **no masking fallbacks**.
+
+⊕⁸² **WHAT STAYS THE OWNER'S, UNCHANGED BY A DISPOSITION PASS.** **`FINAL.md` IS STILL NOT
+AUTHORED** — `ls docs/tranches/BK/` carries none, re-measured at this seat — and PLAN's 2026-09-17
+driver ruling stands untouched: **the remainder's disposition is reserved to the owner and
+`FINAL.md` waits on it**. **THE FOUR CURE-NEXT-MAJOR CUTS ARE RULINGS ON THE RECORD AND NOTHING
+MORE**; no seat in the cure wave may take one, because each moves a published name or a paint
+contract and the next major is the owner's to call. **ANY PUBLISH IS THE OWNER'S** — 9.0.0 is
+`latest` and this wave changes no version. **Trusted Publishing is still owed**, exactly as the
+ACT-4 landed bank left it, and the token that shipped 9.0.0 still wants rotating behind it.
+
+⊕⁸² **WHAT THIS ⊕ PLACED, AND WHAT IT DID NOT TAKE.** This seat's write fence is **THIS FILE
+ALONE**: it ran no `git add`, `git commit`, `git tag`, `git push`, `git stash` or `git checkout`,
+opened no browser, and wrote no byte outside `docs/tranches/BK/EXECUTION-PROGRESS.md`. **PLACED**:
+this block, appended at the file's literal end · **three in-place strikes**, each `grep`-verified
+to exist **exactly once** before its edit — **two in ⊕⁸¹** (the `NEXT WAVE IN LINE, NOT STARTED`
+headline at `:6483-6484`, and the `*Not started*` clause at `:6485` that carried the evidence) and
+**one in the ACT-4 PUBLISH LANDED bank** (`the O-20 disposition wave, not started`, `:6908`) — all
+three bracketed **`[2026-09-17 · STARTED and disposed at 2984e377 — see ⊕⁸²]`**, **the state word
+struck and the measurement beneath it left standing**, per ⊕⁸¹'s own treatment of the wall
+paragraph: those CUT-CANDIDATE greps and the missing-parse-arm finding were **true when measured**
+and are the morning's reading, not errors. **NOT TAKEN**: **no gate was minted** — `seats:60` /
+`rosterSha256:282d05cf` untouched · **no roster cell was moved**, because **no row's state
+changed**: a ruling is not a landing, and the 24 CURE-NOW items land in the lanes, not here ·
+**no figure above was typed from memory**, every one lifted from `git show --numstat`, `git show`,
+`git diff --stat`, `wc -l`, `ls`, `grep`, or a named `file:line` read at this seat.
+
+⊕⁸² **LINE-CITE DRIFT NOTE — THE EASIEST ONE THIS FILE HAS WRITTEN, AND STILL MEASURED RATHER
+THAN ASSUMED.** This block is appended at the **literal end of the file**, below the ACT-4 PUBLISH
+LANDED bank and therefore **below every cite in the file**, so **NOTHING SHIFTS**: everything at
+or above the pre-append final line `:6909` is **unmoved**, the whole ⊕⁷³–⊕⁸¹ run included, and
+**every anchor ⊕⁸¹ published still resolves to its own cell** — re-read on disk AFTER all three
+strikes: **#18 `:6678` · #40 `:6699` · #51 `:6709` · #76 `:6744` · #66 `:6752`**. The three
+strikes are **IN-LINE replacements inside existing lines** — **no newline is inserted by any of
+them**, `wc -l` reading **6,909 before and 6,909 after the strikes** — so they move no line number
+either. **THE TWO OUT-OF-FILE CITES THAT ⊕⁷⁸, ⊕⁷⁹, ⊕⁸⁰ AND ⊕⁸¹ EACH HAD TO RE-POINT ARE CORRECT
+AFTER THIS SEAT'S ACT AND NEED NO RE-POINTING FOR THE FIRST TIME IN FIVE BLOCKS**: γ4's
+`PASTE-BLOCKS` §3 → row 51 is **still `:6709`**, and the row-40 `C20` spelling is **still `:6699`**.
+The file goes **6,909 → 7,067** — **+158**, separator counted in, this paragraph counted into its own figure — all of it below the last cite. ⊕⁸¹'s own anchor list is a
+**dated statement about the tree it was taken in** and is left exactly as written; committed
+records keep their pre-insertion numbers, per ⊕⁷², ⊕⁷³, ⊕⁷⁶, ⊕⁷⁷, ⊕⁷⁹, ⊕⁸⁰, ⊕⁸¹.
