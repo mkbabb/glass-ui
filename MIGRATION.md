@@ -32,7 +32,7 @@ _The `./search` subpath is removed, and this one takes the room with the door_
 | removed | migration |
 | --- | --- |
 | `@mkbabb/glass-ui/search` | The subpath is gone and nothing republishes its names. The fuzzy engine is ENGINE-INTERNAL (`src/composables/search/`, ruled ⊕⁵ SE-4) — it serves the library's own dock search and is not a public surface. |
-| `SearchBar` | DELETED with its `searchVariants` CVA. No replacement component ships: the `.input-bar` recipe (on `./styles`, which SURVIVES untouched) composes with your own input element — that recipe was always the paint; the chrome was 79 lines over it. |
+| `SearchBar` | DELETED with its ~~`searchVariants` CVA~~ [2026-09-17 · O-20 CLOSE-DOCS · the export was `searchFieldVariants` — `searchVariants.ts` was the module and `SearchVariants` its options type; the published 8.0.0 `dist/components/search/index.d.ts` carries no `searchVariants` export] CVA. No replacement component ships: the `.input-bar` recipe (on `./styles`, which SURVIVES untouched) composes with your own input element — that recipe was always the paint; the chrome was 79 lines over it. |
 | `FuzzySearchState` · `SearchableItem` · `SearchIndex` · `SearchResult` · `SearchVariant` · `SearchVariants` · `UseFuzzySearchOptions` and every other `/search` type | Die with the door. Type your own items; the engine's shapes are internal. |
 
 The root barrel never carried `SearchBar` or any fuzzy name, so `./search` was the only
@@ -330,7 +330,7 @@ goes **49 → 47** at this cut (three out, one in) and is unchanged at 9.0.0.]
 
 | removed | what to write instead |
 | --- | --- |
-| `glass-fill` | `glass-plate`, which landed in the very commit that removed this one (`4b1a9733`): `.glass-card` moved from `@apply glass-fill` to `@apply glass-plate` there. It paints `background: var(--glass-veil)`, and you pick the rung by declaring `--glass-veil-tier: var(--glass-veil-quiet)` — or `--glass-veil-wash`, `--glass-veil-resting`, `--glass-veil-floating`, `--glass-veil-overlay` — in the place `--glass-fill-rung` used to go. The old TINT mix has no hand-composed equivalent: `--glass-bg-resting`, `--glass-tint-source` and `--glass-tint-strength` all have 0 declarations at 9.0.0. `--glass-fill-tinted` is **not** the successor — it shipped alongside `glass-fill` at 7.0.0 (`216e1d54`) as a tint OVERLAY whose `@property` initials are `transparent` and `0%`, so reading it as a `background` paints nothing until you set both knobs yourself. |
+| `glass-fill` | `glass-plate`, which landed in the very commit that removed this one (`4b1a9733`): `.glass-card` moved from `@apply glass-fill` to `@apply glass-plate` there. It paints `background: var(--glass-veil)`, and you pick the rung by declaring `--glass-veil-tier: var(--glass-veil-quiet)` — or `--glass-veil-wash`, `--glass-veil-resting`, `--glass-veil-floating`, `--glass-veil-overlay` — in the place `--glass-fill-rung` used to go. The old TINT mix has no hand-composed equivalent: `--glass-bg-resting`, `--glass-tint-source` and `--glass-tint-strength` all have 0 declarations at 9.0.0. `--glass-fill-tinted` is **not** the successor — it has shipped beside `glass-fill` since 5.0.0 (`216e1d54`), and still beside it in the 7.0.0 package, as a tint OVERLAY whose `@property` initials are `transparent` and `0%`, so reading it as a `background` paints nothing until you set both knobs yourself. |
 | `text-admin-label` | `text-mono-micro`, plus `uppercase font-medium` wherever the caps or the 500 weight carried meaning — the successor does not include them. The old recipe was `font-mono` · `--type-admin-label` (10px) · `line-height: 1` · `uppercase` · `tracking-caps` · `font-weight: 500`; the new one is `font-mono` · `--type-micro` (11px) · `line-height: 1.25` · `letter-spacing: 0.025em`. Landed `6b450f22`. |
 | `touch-hit-area` | Removed, no drop-in utility. `--touch-target` (`2.75rem`) still ships and is still what the components read; compose it yourself — a `position: relative` host and, inside `@media (pointer: coarse)`, a centred `::before` with `min-width`/`min-height` of `var(--touch-target, 2.75rem)` and `pointer-events: none`. Landed `bd93c22b`. |
 
@@ -1016,10 +1016,21 @@ pointer, keyboard, disabled, and re-entry lifecycle.
 The 7.0 package line declares `@mkbabb/value.js@^4.0.0` as an OPTIONAL peer — required
 for the `/color` and `/css` consumers, absent otherwise — alongside optional
 `@mkbabb/pencil-boil@^0.9.2`; its Keyframes range is finalized from the immutable
-packed compatibility check. Glass imports only Value's `/color`, `/css`, and
+packed compatibility check. [2026-09-17 · O-20 CLOSE-DOCS · true of the 7.0 package line
+(`git show v7.0.0:package.json` carries `@mkbabb/pencil-boil: ^0.9.2`, optional) and left
+standing as that cut's record — but it is NOT an install instruction at 9.0.0:
+`@mkbabb/pencil-boil` is not a peer of any kind there (retired at BK #51),
+`peerDependencies` declares nine names — `@lucide/vue` · `@mkbabb/keyframes.js` ·
+`@mkbabb/value.js` · `@vueuse/core` · `reka-ui` · `tailwindcss` · `tw-animate-css` ·
+`vue` · `vue-component-type-helpers` — and none of them is it. HandMark needs no
+install.] Glass imports only Value's `/color`, `/css`, and
 `/easing` capabilities; the removed Value root has no compatibility external.
 `perfect-freehand` is no longer a peer because its stroke core is vendored in
-HandMark. The obsolete shadcn generator metadata is removed.
+HandMark. [2026-09-17 · O-20 CLOSE-DOCS · the not-a-peer half still holds; the vendored
+core does not — `src/components/handmark/freehand.ts` was deleted at `5a69ed9f`
+(2026-08-25) and is absent from the 9.0.0 tree. HandMark inks its own ribbon from
+`handmark/stroke.ts`; `src/` and `demo/` import `perfect-freehand` zero times.] The
+obsolete shadcn generator metadata is removed.
 
 `EasingPicker` now uses the canonical CSS jump terms `jump-start`, `jump-end`,
 `jump-none`, and `jump-both`. Replace the former `start`, `end`, `none`, and `both`
@@ -2384,6 +2395,12 @@ is now ONE shape of that ONE hand voice — not a parallel component. Two breaks
    morphology (scale-relative amplitude, irregular seeded periods) is the `boil`
    brush (`<HandMark brush="boil" shape="underline">`). The default `pen` brush is a
    clean wobbled line, `grain:0`, no extra dep.
+   [2026-09-17 · O-20 CLOSE-DOCS · the 4.0.0 record of the brush axis, kept as that —
+   but do not write these attributes at 9.0.0. `<HandMark>` declares five props there
+   (`shape` · `color` · `weight` · `seed` · `draw`, `HandMark.vue:33-41`); `brush`,
+   `animation` and the `BRUSHES` continuum are gone, so `brush="boil"` and
+   `animation="draw-on"` are inert attributes. `draw` is the draw-on switch, and the
+   underline is `<HandMark shape="underline">`.]
 2. **New optional peers (vendored/peer split).** `<HandMark>` adds two OPTIONAL peers:
    `@mkbabb/pencil-boil ^0.4.1` (the L1 wobble geometry — imported only when a wobble
    paints) and `perfect-freehand ^1.2.3` (the variable-width hull body — VENDORED into
@@ -2391,6 +2408,12 @@ is now ONE shape of that ONE hand voice — not a parallel component. Two breaks
    `ribbon:"hull"` highlighter). Both are tree-shaken when unused; a `pen`-only
    consumer pulls neither. The `/handmark` chunk is ≈7.6 KiB-gzip (the `profile:budget`
    rebaseline records it + the engaged pf hull body).
+   [2026-09-17 · O-20 CLOSE-DOCS · true at 4.0.0 (`git show v4.0.0:package.json` carries
+   both, both optional) and false as an install instruction today. `perfect-freehand`
+   stopped being a peer at 7.0.0 and `@mkbabb/pencil-boil` at 9.0.0; neither name is in
+   the nine that 9.0.0 declares. The file this row names is gone too —
+   `src/components/handmark/freehand.ts` was deleted at `5a69ed9f` (2026-08-25), and
+   with it the `ribbon:"hull"` axis. A 9.0.0 HandMark consumer installs nothing.]
 
 **This row is for any FUTURE external `/underline` consumer — NOT slides.** The
 2026-06-15 slides ground-truth (BINDING) confirms slides imports ZERO

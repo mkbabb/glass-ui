@@ -1,5 +1,88 @@
 # Changelog
 
+## 9.0.0 — 2026-08-29
+
+`MIGRATION.md` §9.0.0 is the complete break list.
+
+This entry was written at the O-20 cure wave, 2026-09-17, after the publish: the tag
+`v9.0.0` (`d4f7b24f`) was cut 2026-08-29 and published 2026-09-17 by `release.yml` run
+33273556530 with npm provenance, and the cut shipped with no changelog section at all.
+Every figure below is measured against the published bytes of 8.0.0 and 9.0.0, not
+recalled.
+
+### Removed — `./canvas`, a door with no room behind it
+
+`exports` 70 → 68 keys. Both departures are removals; 9.0.0 adds no subpath and renames
+none. `./canvas` published six names — `useCanvas2D`, `resolveCanvasColor`, and the types
+`Canvas2DFrame`, `Canvas2DHandle`, `Canvas2DOptions`, `Canvas2DSuspendReason` — and the
+root barrel already published all six, so import the same six from `@mkbabb/glass-ui`.
+`canvas2d` remains the internal substrate it always was: no file moved, no symbol was
+renamed, and nothing was deprecated first. A whole-repo walk over the fifteen generated
+sibling roots found no importer of the specifier, in code or in CSS.
+
+### Removed — `./search`, and this one takes the room with the door
+
+`SearchBar` is deleted with its `searchFieldVariants` CVA (the `searchVariants` module;
+`SearchVariants` was its options type), and nothing republishes its names.
+No replacement component ships: the `.input-bar` recipe — on `./styles`, which survives
+untouched — was always the paint, and the chrome was 79 lines over it. The fuzzy engine is
+engine-internal (`src/composables/search/`), serving the library's own dock search.
+`FuzzySearchState`, `SearchableItem`, `SearchIndex`, `SearchResult`, `SearchVariant`,
+`SearchVariants`, `UseFuzzySearchOptions` and every other `/search` type die with the
+door; type your own items. The root barrel never carried `SearchBar` or any fuzzy name,
+so `./search` was the only door and the cut is total, not a narrowing. Landed
+`76b594c8`. Five consumer edges existed at the cut — four in value.js's own demo tree,
+none in anything it ships, and a fifth in `bbnf-lang`'s playground — each one import
+statement whose component no longer exists, and each carries a marked relay addendum
+rather than a silent break.
+
+### Removed — `<FourierField :color-resolver>`
+
+Drop the binding and keep the `color` you already pass; the component resolves that value
+itself. The published `FourierField.vue.d.ts` declares seven props at 9.0.0 — `config`,
+`spectrum`, `getPalette`, `color`, `seed`, `freeze`, `interactive` — where the published
+8.0.0 declared `colorResolver` and no `interactive`. Landed `4a86570b` (2026-08-12), and
+9.0.0 is its first carrier. `ColorResolver` and `defaultBlobColorResolver` are untouched
+and still ship on `./color`; what left is the prop that consumed them. The exposed handle
+moves in the same cut: `renderAt(timeSec)` is gone, `headT` (a readonly ref) and
+`flick(turnsPerSec)` arrive. A consumer still writing `variant="hero"` or
+`variant="final"` on this component is writing an inert attribute and has been since
+4.1.0 (`cb1e09fd`, 2026-06-19) — the prop is absent from the 8.0.0 published types too,
+so that removal is not this cut's.
+
+### Added — `darkModeSyncScript()` gains `defaultDark`, `queryOverride` and `normalize`
+
+9.0.0 is the first release to carry them; the published 8.0.0 `DarkModeSyncScriptOptions`
+declared `storageKey` alone. `defaultDark?: boolean | "os"` (default `"os"`) decides what
+an ABSENT or `"auto"` stored mode resolves to — a boolean resolves deterministically and
+the emitted script then asks the platform nothing, which is what a briefing or a capture
+target wants. `queryOverride?: boolean` honours `?light` / `?dark` above storage and above
+the default. `normalize?: boolean` writes the resolved mode back to storage, so an absent
+or `"auto"` value becomes concrete at first paint. Precedence is query > storage >
+default, in that order and no other. No export name is added or moved, and the default
+emission is **byte-identical** — 300 bytes,
+`sha256-VTba/T+6rX/y5+Gk2oyLaaYBdLf4xSZtXnc7kMYziI8=`, the same string 8.0.0 emitted — so
+a `script-src 'sha256-…'` CSP that pins the default needs nothing. Only an opt-in arm
+moves the emitted bytes.
+
+### Changed — `@mkbabb/pencil-boil` leaves `peerDependencies`
+
+Ten declared peers become nine. The optional `@mkbabb/pencil-boil` peer is gone from the
+manifest entirely, as it is from `src/` and `demo/`; HandMark is self-contained and a
+9.0.0 consumer installs nothing for it. The surviving nine are enumerated in the bracket
+on the 6.0.0 entry below. No other peer name or range moves.
+
+### Changed — nothing left the published CSS, and two earlier majors' silences are closed
+
+9.0.0 removed no `@theme` token and no `@utility` class: the `@theme` name set and the
+`@utility` name set of the published `./styles` closure are identical between 8.0.0 and
+9.0.0 — 242 and 47 on both. Two earlier cuts were less tidy. Thirteen `@theme` tokens and
+three `@utility` classes left the published CSS at 8.0.0, and one class at 7.0.0, none of
+them with a migration row at the time; the rows were written afterwards, at the
+2026-09-17 cure wave, into `MIGRATION.md` §8.0.0 (_Theme tokens removed_ · _Classes and
+utilities removed_) and §7.0.0 (_`.paper-texture` is removed_) — under the major that
+actually shipped without each name, not under this one.
+
 ## 8.0.0 — 2026-08-09
 
 `MIGRATION.md` §8.0.0 is the complete break list.

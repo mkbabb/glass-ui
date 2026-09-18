@@ -458,6 +458,27 @@ no existing seat can carry it without a mint, the datum + manifest land and the 
 recorded ruling. Anchor: MIGRATION's class-break precedent is :141-148 in the working tree
 (the seats measured the published copy, which is five lines shorter).
 
+[2026-09-17 · O-20 CLOSE-DOCS, ratifying the driver's disposition · **the shipped ratchet
+pins `@theme` custom-property names AND `@utility` names, and NOT `@layer components`
+class names.** The class half was REFUSED WITH GROUNDS by Lane R act 9
+(`execution/2026-09-17-o20-cure/R/RECORD.md` §9, "REFUSED WITH GROUNDS — `@layer
+components` class names are OUT of the roster") and the refusal was ruled SOUND by that
+lane's adjudicator seat (`laneR:adjudicate`,
+`wf_a0880ff6-f7d/agent-a69aaf1849b9aab43.jsonl`: "SOUND: `@layer components` class names
+stay OUT of the roster"); `R/RECORD.md` itself records only the cure round that followed
+(`## CURE ROUND 1`, seven cures and no class half). The grounds are measured, not argued:
+scoped to `@layer components`,
+the 7.0.0→9.0.0 interval fires three class removals and two of them are FALSE—
+`.accent-tone` and `.glass-drag-lift` still ship, having moved out of a layer block into
+an unlayered rule, which is precisely the artefact A-3-CLASS counts 351 of and rules
+CURE-NEXT-MAJOR; widened to every hand-authored class in the closure the same interval
+moves 134 names out and 107 in, almost all component-internal BEM leaves
+(`.completion-seal__disc`, `.timeline-popover-body`, `.checkbox__seat`). The datum that
+landed is `.published-roster`, 289 names = 242 `@theme` + 47 `@utility`, riding
+`G-NO-ORPHAN-EXPORT` with no mint. The rest of item (4)—the datum, the manifest
+predicate, the born-RED, the wiring—landed in full; this is a narrowing of scope, not an
+escape hatch.]
+
 ### B-4 · re-scope `--viz-easing` onto the easing seam; `--viz-amber`—DEAD → KILL
 
 `viz-easing` → 0 in the dist and in `src` at every revision (never minted); the seam it would
@@ -787,6 +808,13 @@ adjudicator), records at `execution/2026-09-17-o20-cure/<lane>/RECORD.md`, drive
 by pathspec. MIGRATION.md is Lane R's alone and runs LAST so the manifest reflects what
 landed; README.md and DESIGN.md are Lane T1's alone.
 
+[2026-09-17 · O-20 CLOSE-DOCS · the driver added three lanes beyond the nine below:
+**RESIDUE-5A**, which discharged the re-adjudicators' residues from the T1/T2 close
+(committed `43c72339`), and **CLOSE-DOCS / CLOSE-TESTS**, the two disjoint-fence lanes of
+the close itself—the remaining re-adjudicator residues, this ledger's ratifications, the
+`MIGRATION.md` pencil-boil sweep, and the `CHANGELOG.md` 9.0.0 entry the publish never
+got. Twelve lanes ran; the nine below are the cure proper.]
+
 | lane | items | fence |
 | --- | --- | --- |
 | P | A-1 parse arm | `scripts/verify-export-types.mjs`, `tests/public-surface.spec.ts` (the probe `it()` only) |
@@ -797,7 +825,7 @@ landed; README.md and DESIGN.md are Lane T1's alone.
 | D | CUT-6..8 | `src/composables/dark/darkModeSyncScript.ts`, `tests/composables/dark/darkModeSyncScript.test.ts`, `vite.config.ts`, `index.html` |
 | T1 | A-5 · A-14 · B-2 · B-7 doc · HK-vite (README:182/:186 rows) | `docs/design/{tunable-anim,affordance-map}.md`, `DESIGN.md`, `README.md`, `src/styles/glass/veil.css` (header), `src/styles/theme/bridges.css` (pointer), `tests/design/*` (the two doc tests) |
 | T2 | HK-vite (vite.library.ts + canon docs) · HK-audit · HK-keep-current (clause line) · B-3 (3) | `vite.library.ts`, `docs/canon/{dependencies,deps-currency}.md`, `docs/audits/overfitting-audit.md`, `docs/instructions/README.md`, `docs/archive/README.md`, `src/styles/tokens/scale-paper.css` (comment), `tests/docs/*` (path-existence) |
-| R (last) | A-4-RIDER · B-3 (1,2,4) · C-1 doc · CUT-4/5 rows · CUT-6..8 recipe · HK-vite :864 | `MIGRATION.md`, `src/components/_shared/class-names.ts`, `tests/components/_shared/*`, the roster datum + its gate arm |
+| R (last) | A-4-RIDER · B-3 (1,2,4) · C-1 doc · CUT-4/5 rows · CUT-6..8 recipe · HK-vite :864 | `MIGRATION.md`, `src/components/_shared/class-names.ts`, `tests/components/_shared/*`, the roster datum + its gate arm. [2026-09-17 · O-20 CLOSE-DOCS · R's fence grew: it also carried the **batch-2 residue sweep**—`src/styles/tokens/color-radius.css:320` (the amber comment's dark figure, 8.07:1 → 7.72:1), `tests/styles/contrast-computed.test.ts` (the §6 headnote and the new §6d demo-hero LOCKSTEP arm), `demo/vite.demo-dist.config.ts` + the new root `vite.dark-stamp.ts` (the BUILT demo stamps too), and `demo/chassis/hero/aurora-hero.ts` (four retuned rungs). And "runs LAST" was honoured by LAUNCH ORDER, not by completion: `laneR:implement` launched 19:56 ET against `laneT1:implement` / `laneT2:implement` at 19:49, and the three lanes then **overlapped in time**—R's own step-0 baseline records T1's and T2's files already dirty and never opened. Nothing T1 or T2 produced fed R's inputs.] |
 
 Seat law for every lane: model asserted from the seat's own transcript and gating the
 chain; gates exactly 60, mint nothing; born-RED proven on bytes; `vue-tsc` 0; battery
