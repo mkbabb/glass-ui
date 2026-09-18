@@ -196,4 +196,20 @@ describe("LabeledField contract", () => {
             wrapper.unmount();
         });
     });
+
+    // The uncontrolled switch field. `modelValue` was declared required and bound
+    // unconditionally onto `<Switch>`; with no own `default` key an ABSENT prop casts to
+    // `false`, so `default-value` never seeds. The type moves to the runtime truth in the
+    // same edit — the runtime never enforced required.
+    it("honours default-value on LabeledSwitch when the controlled prop is absent", () => {
+        const wrapper = mount(LabeledSwitch, {
+            props: { defaultValue: true, label: "Switch" },
+        });
+        const control = wrapper.get('[role="switch"]');
+
+        expect(control.attributes("aria-checked")).toBe("true");
+        expect(control.attributes("data-state")).toBe("checked");
+
+        wrapper.unmount();
+    });
 });

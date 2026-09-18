@@ -19,9 +19,14 @@ export interface CollapsibleEmits {
 
 defineOptions({ name: "Collapsible", inheritAttrs: false });
 
+/* `open: undefined` gives the controlled prop its own `default` key, which is what
+ * suppresses Vue's absent-Boolean cast. Without it `open?: boolean` compiles to
+ * `{ type: Boolean }`, an uncontrolled `<Collapsible default-open>` handed
+ * `open: false` to `CollapsibleRoot`, and reka read controlled-and-shut. */
 const props = withDefaults(defineProps<CollapsibleProps>(), {
     defaultOpen: false,
     disabled: false,
+    open: undefined,
 });
 const emit = defineEmits<CollapsibleEmits>();
 defineSlots<{

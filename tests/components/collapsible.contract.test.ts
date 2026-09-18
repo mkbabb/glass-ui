@@ -62,6 +62,34 @@ describe("Collapsible product contract", () => {
         wrapper.unmount();
     });
 
+    // An uncontrolled disclosure. `open?: boolean` with no own `default` key compiles to
+    // `{ type: Boolean }`, and Vue casts an ABSENT Boolean prop to `false`; bound onto
+    // `CollapsibleRoot` that reads controlled-and-shut, so `default-open` never paints.
+    it("honours default-open when the controlled prop is absent", async () => {
+        const wrapper = mount({
+            components: { Collapsible, CollapsibleContent, CollapsibleTrigger },
+            template: `
+        <Collapsible default-open>
+          <CollapsibleTrigger>Details</CollapsibleTrigger>
+          <CollapsibleContent force-mount>Disclosure body</CollapsibleContent>
+        </Collapsible>
+      `,
+        });
+
+        const root = wrapper.get('[data-slot="collapsible"]');
+        const trigger = wrapper.get('[data-slot="collapsible-trigger"]');
+        const content = wrapper.get('[data-slot="collapsible-content"]');
+        await nextTick();
+
+        expect(root.attributes("data-state")).toBe("open");
+        expect(trigger.attributes("aria-expanded")).toBe("true");
+        // reka stamps the region's own `data-state` only while it is CLOSED — an open
+        // force-mounted region carries none, so its ABSENCE is the open assertion here.
+        expect(content.attributes("data-state")).toBeUndefined();
+
+        wrapper.unmount();
+    });
+
     it("uses a native button for Enter and Space activation semantics", () => {
         const wrapper = mountCollapsible();
         const trigger = wrapper.get('[data-slot="collapsible-trigger"]');

@@ -6,7 +6,14 @@ import type { LabeledSwitchProps } from "./types";
 
 defineOptions({ name: "LabeledSwitch" });
 
-const props = defineProps<LabeledSwitchProps>();
+/* `modelValue: undefined` for the same reason as `Chip.vue`'s — the prop is bound
+ * unconditionally onto `<Switch>` below, so the absent-Boolean cast arrived there as an
+ * explicit `false` and pinned an uncontrolled field shut. The type widens to optional in
+ * the same edit: the runtime never enforced required, and `<Switch>` itself publishes
+ * `modelValue?: boolean`. */
+const props = withDefaults(defineProps<LabeledSwitchProps>(), {
+    modelValue: undefined,
+});
 const emit = defineEmits<{ "update:modelValue": [value: boolean] }>();
 
 const controlProps = computed(() => {

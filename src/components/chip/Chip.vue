@@ -14,7 +14,16 @@ import type { ChipMode, ChipProps } from "./types";
 
 defineOptions({ name: "Chip", inheritAttrs: false });
 
-const props: Readonly<ChipProps> = defineProps<ChipProps>();
+/* `modelValue` ONLY, and the omission of `defaultValue` is the load-bearing half.
+ * A bare `modelValue?: boolean | null` compiles to `{ type: [Boolean, null] }` and Vue
+ * casts the absent prop to `false`, so reka's `Toggle` read controlled-off and
+ * `:default-value` never seeded. Giving `defaultValue` the same treatment is a
+ * REGRESSION, not a symmetry: with both undefined, `Toggle` resolves no pressed state
+ * at all and Vue omits the attribute, stripping `aria-pressed` from a plain
+ * `<Chip mode="selectable">`. One key, measured. */
+const props: Readonly<ChipProps> = withDefaults(defineProps<ChipProps>(), {
+    modelValue: undefined,
+});
 
 const emit = defineEmits<{
     "update:modelValue": [value: boolean];

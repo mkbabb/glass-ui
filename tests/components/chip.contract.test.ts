@@ -39,6 +39,37 @@ describe("Chip semantic modes", () => {
         expect(wrapper.emitted("update:modelValue")).toEqual([[true]]);
     });
 
+    // The uncontrolled selectable chip. `modelValue?: boolean | null` with no own `default`
+    // key casts an ABSENT prop to `false`, which reka's `Toggle` reads as controlled-off, so
+    // `default-value` never seeds. The guard below is the other half of the same edit:
+    // `defaultValue: undefined` would strip `aria-pressed` off a bare selectable chip, so
+    // only `modelValue` takes a default.
+    it("honours default-value when the controlled prop is absent", () => {
+        const wrapper = mount(Chip, {
+            props: { defaultValue: true, mode: "selectable" },
+            slots: { default: "Selectable" },
+        });
+        const button = wrapper.get("button");
+
+        expect(button.attributes("aria-pressed")).toBe("true");
+        expect(button.attributes("data-state")).toBe("on");
+
+        wrapper.unmount();
+    });
+
+    it("keeps aria-pressed on a bare selectable chip", () => {
+        const wrapper = mount(Chip, {
+            props: { mode: "selectable" },
+            slots: { default: "Selectable" },
+        });
+        const button = wrapper.get("button");
+
+        expect(button.attributes("aria-pressed")).toBe("false");
+        expect(button.attributes("data-state")).toBe("off");
+
+        wrapper.unmount();
+    });
+
     it("keeps selectable semantics authoritative over caller attributes", () => {
         const wrapper = mount(Chip, {
             attrs: {

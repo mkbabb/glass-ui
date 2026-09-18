@@ -51,7 +51,10 @@ export type LabeledInputProps = Omit<InputProps, "class"> &
 export type LabeledSliderProps = Omit<SliderProps, "class" | "modelValue"> &
     LabeledFieldCommonProps & { modelValue: number };
 
+/* Optional, matching `<Switch>` and matching the runtime: required was never enforced
+ * (the compiled prop carried no `required`, and omission warned zero times), so the
+ * uncontrolled `:default-value` spelling was typed out of existence for no gain. */
 export type LabeledSwitchProps = Omit<SwitchProps, "class" | "modelValue"> &
     LabeledFieldCommonProps & {
-        modelValue: boolean;
+        modelValue?: boolean;
     };
