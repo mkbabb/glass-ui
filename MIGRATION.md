@@ -75,6 +75,32 @@ them in the same edit.
 not an execution — so a consumer may keep importing `defaultBlobColorResolver` for its
 own use; what no longer exists is the prop that consumed it.
 
+_The `<FourierField>` instance API loses `renderAt` and gains `headT` + `flick`_
+[2026-09-18 · O-20 CURSOR — the expose delta had no row; measured off the two published
+`FourierField.vue.d.ts`]
+
+| removed | migration |
+| --- | --- |
+| `fieldRef.value.renderAt(timeSec)` | Nothing replaces it. There is no successor method and no emit: `renderAt` is gone from the component's handle type as well as from its expose, so a template ref has no way to draw one out-of-loop frame at 9.0.0. If you called it to PLACE the figure, call `setHeadT(t)` with `t ∈ [0,1)` instead — it scrubs the clock and wakes the loop. If you called it to hold a still, pass `:freeze="true"`, which holds the clock with the field live. |
+
+Measured on the published type declarations rather than on source. 8.0.0's
+`dist/components/fourier-field/FourierField.vue.d.ts` declares seven exposed members —
+`backend`, `pause`, `resume`, `wake`, `renderAt`, `setHeadT`, `rendererStatus`. 9.0.0's
+declares eight — `backend`, `pause`, `resume`, `wake`, `setHeadT`, `headT`, `flick`,
+`rendererStatus`. One out, two in; the other six are unchanged in name and signature.
+
+At 8.0.0 `renderAt` was documented `Draw one frame out-of-loop (capture, thumbnail)` and
+forwarded straight to the substrate. At 9.0.0 the handle type `FourierFieldHandle` carries
+no `renderAt` member at all, so the removal is from the component's whole API and not only
+from its expose — the substrate below still has the capability, and the component no
+longer surfaces it.
+
+The two additions are the transport seam. `headT` is the live loop parameter, unwrapped on
+the exposed proxy so a transport can bind it as a plain number; `flick(turnsPerSec)`
+injects one impulse into the clock, capped and floored like any other. Neither replaces
+`renderAt`: both move the one clock, which is what 9.0.0's field has instead of a frame
+API.
+
 _Two earlier majors' removals get their rows here_
 [2026-09-17 · O-20 A-4-RIDER + B-3 — the rows were missing entirely; they are written
 under the major that actually shipped without each name, not under this one]
@@ -330,7 +356,7 @@ goes **49 → 47** at this cut (three out, one in) and is unchanged at 9.0.0.]
 
 | removed | what to write instead |
 | --- | --- |
-| `glass-fill` | `glass-plate`, which landed in the very commit that removed this one (`4b1a9733`): `.glass-card` moved from `@apply glass-fill` to `@apply glass-plate` there. It paints `background: var(--glass-veil)`, and you pick the rung by declaring `--glass-veil-tier: var(--glass-veil-quiet)` — or `--glass-veil-wash`, `--glass-veil-resting`, `--glass-veil-floating`, `--glass-veil-overlay` — in the place `--glass-fill-rung` used to go. The old TINT mix has no hand-composed equivalent: `--glass-bg-resting`, `--glass-tint-source` and `--glass-tint-strength` all have 0 declarations at 9.0.0. `--glass-fill-tinted` is **not** the successor — it has shipped beside `glass-fill` since 5.0.0 (`216e1d54`), and still beside it in the 7.0.0 package, as a tint OVERLAY whose `@property` initials are `transparent` and `0%`, so reading it as a `background` paints nothing until you set both knobs yourself. |
+| `glass-fill` | `glass-plate`, which landed in the very commit that removed this one (`4b1a9733`): `.glass-card` moved from `@apply glass-fill` to `@apply glass-plate` there. It paints `background: var(--glass-veil)`, and you pick the rung by declaring `--glass-veil-tier: var(--glass-veil-quiet)` — or `--glass-veil-wash`, `--glass-veil-resting`, `--glass-veil-floating`, `--glass-veil-overlay` — in the place `--glass-fill-rung` used to go. The old TINT mix has no hand-composed equivalent: `--glass-bg-resting`, `--glass-tint-source` and `--glass-tint-strength` all have 0 declarations at 9.0.0. `--glass-fill-tinted` is **not** the successor — it has shipped beside `glass-fill` since 5.0.0 (`216e1d54`), and still beside it in the 7.0.0 package, as a tint OVERLAY. It is itself an ordinary custom property, a `color-mix` that READS the two registered knobs: `@property --glass-fill-tint` (`<color>`, initial `transparent`) and `@property --glass-fill-strength` (`<percentage>`, initial `0%`), both registered at the foot of `styles/tokens/glass.css`. With both at their initials the mix resolves to a fully transparent stop, so reading `--glass-fill-tinted` as a `background` paints nothing until you set both knobs yourself. |
 | `text-admin-label` | `text-mono-micro`, plus `uppercase font-medium` wherever the caps or the 500 weight carried meaning — the successor does not include them. The old recipe was `font-mono` · `--type-admin-label` (10px) · `line-height: 1` · `uppercase` · `tracking-caps` · `font-weight: 500`; the new one is `font-mono` · `--type-micro` (11px) · `line-height: 1.25` · `letter-spacing: 0.025em`. Landed `6b450f22`. |
 | `touch-hit-area` | Removed, no drop-in utility. `--touch-target` (`2.75rem`) still ships and is still what the components read; compose it yourself — a `position: relative` host and, inside `@media (pointer: coarse)`, a centred `::before` with `min-width`/`min-height` of `var(--touch-target, 2.75rem)` and `pointer-events: none`. Landed `bd93c22b`. |
 

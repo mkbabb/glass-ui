@@ -7065,3 +7065,282 @@ AFTER THIS SEAT'S ACT AND NEED NO RE-POINTING FOR THE FIRST TIME IN FIVE BLOCKS*
 The file goes **6,909 → 7,067** — **+158**, separator counted in, this paragraph counted into its own figure — all of it below the last cite. ⊕⁸¹'s own anchor list is a
 **dated statement about the tree it was taken in** and is left exactly as written; committed
 records keep their pre-insertion numbers, per ⊕⁷², ⊕⁷³, ⊕⁷⁶, ⊕⁷⁷, ⊕⁷⁹, ⊕⁸⁰, ⊕⁸¹.
+
+---
+
+⊕⁸³ **THE O-20 CURE WAVE RAN TO CODE-COMPLETE IN TEN COMMITS AND TWELVE LANES, AND EVERY LANE
+TOOK EXACTLY ONE CURE ROUND** (2026-09-18 · `c0d43348` at this seat's baseline, `edccdc44` by its
+close, plus this annotation's own commit · cursor seat modelId **`claude-opus-5`**, read from this seat's
+OWN on-disk subagent transcript `…/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/subagents/workflows/
+wf_2238253a-97c/agent-a8ca432347ecb4718.jsonl` — located by grepping the workflow tree for a
+phrase unique to this dispatch, `.message.model` = `claude-opus-5` at every assistant turn,
+`CLAUDE_MODEL_ID` unset, and **the assertion GATES this chain with `&&`, never a newline**). The
+wave cured; it did not publish and it did not close the tranche. Gate receipt at this seat's
+baseline and unchanged at its close:
+`seats:60 active:46 reserved:5 worstCase:51 remaining:9 external:11 bound:13 armOnly:2 unbound:45 drift:0 rosterSha256:282d05cf violations:0`.
+
+⊕⁸³ **(a) THE COMMIT CHAIN** — `git show --numstat`, each figure read at this seat:
+
+- `2984e377` — the disposition pass. **5 files, +1143/−6**: the LEDGER, the three outbound
+  letters' first two, `MIGRATION.md` at +6/−6. Rules, cures nothing. (⊕⁸²'s subject.)
+- `540aad8b` — **1 file, +162/−4**: ⊕⁸² itself, `EXECUTION-PROGRESS.md` alone, and the batch-1
+  dispatch.
+- `46ab4124` — batch 1, lanes **P · C1 · E1**. **23 files, +1904/−27**: the A-1 permanent parse
+  arm, three CSS cures, the fourier/timeline export truths.
+- `c645c393` — batch 2, lanes **C2 · E2 · D**. **25 files, +2379/−71**: the B-7 ramp retune, the
+  Alert glyph, chip `xs`, the slider docblock truth, the dark-sync hardening.
+- `a314533a` — batch 3, lanes **T1 · T2**. **19 files, +1886/−74**: the README/DESIGN token
+  truths, the plate register, the audit and canon housekeeping.
+- `43c72339` — batch 5a, **RESIDUE-5A**. **6 files, +685/−8**: the T1/T2 close residues.
+- `dd8a5fe5` — batch 4, lane **R**. **14 files, +2154/−40**: the MIGRATION manifest, the
+  published-roster ratchet, the class-names truth, the batch-2 residue sweep.
+- `f999c11c` — batch 5b, **CLOSE-DOCS**. **4 files, +815/−5**: the last MIGRATION brackets, the
+  ledger ratifications, the 9.0.0 CHANGELOG entry.
+- `4501fc77` — batch 5b, **CLOSE-TESTS**. **3 files, +44/−10**: seven explicit `30_000` budgets on
+  the load-flaky subprocess arms, the `drive-tokens` regex escape and its hostile arm.
+- `c0d43348` — the bundle-ratchet rebind. **1 file, +1/−1**, `2549378 → 2554360`.
+- `edccdc44` — landed at 00:33 ET while this seat ran: the value.js O-26 relay receipt, mail
+  delivery, not a producer byte and not this wave's (its message says so).
+- **this annotation** — `EXECUTION-PROGRESS.md` alone, appended at the file's literal end, plus the
+  four fenced files act 1 to act 4 below touch.
+
+**Batch 5a lands BEFORE batch 4 in the log** because R ran long; the numbering is the dispatch
+order, the log is the commit order, and both are stated rather than reconciled.
+
+⊕⁸³ **(b) THE TWELVE LANES, AND THE QUARTET OUTCOME OF EACH.** Nine ledger lanes
+(**P · C1 · E1 · C2 · E2 · D · T1 · T2 · R**) plus **RESIDUE-5A · CLOSE-DOCS · CLOSE-TESTS**.
+Every one ran implement → challenge → Fable adjudication → cure → Fable re-adjudication, and
+**every first adjudication returned `CURE-REQUIRED` and every re-adjudication returned `COMPLETE`,
+with exactly one exception** — read from the journals' own `result` lines
+(`…/subagents/workflows/<wf>/journal.jsonl`):
+
+| lane | workflow | challengers | first verdict → final |
+| --- | --- | --- | --- |
+| P · C1 · E1 | `wf_2bb35ea4-0fb` | two (chA · chB) | CURE-REQUIRED → COMPLETE, each |
+| C2 · E2 · D | `wf_4cc3afc1-169` | two (chA · chB) | CURE-REQUIRED → COMPLETE, each |
+| T1 · T2 | `wf_a3cf7fcb-9c4` | two, chB re-spawned at the wall | CURE-REQUIRED → COMPLETE, each |
+| R | `wf_abf37dd9-d5f` (stopped) + `wf_a0880ff6-f7d` | two (chA · chB) | CURE-REQUIRED → COMPLETE |
+| RESIDUE-5A | `wf_a1ce4977-dcc` | one | CURE-REQUIRED → COMPLETE |
+| CLOSE-DOCS | `wf_b83419d1-a4d` | one | CURE-REQUIRED → COMPLETE |
+| CLOSE-TESTS | `wf_b83419d1-a4d` | one | CURE-REQUIRED → **CURE-REQUIRED** |
+
+**ONE CURE ROUND PER LANE, TWELVE FOR TWELVE** — no lane took a second. **CLOSE-TESTS's final
+`CURE-REQUIRED` is residue-only and names one defect**: its CI census was seventeen runs read as
+the population when the window holds thirty-four. Its own verify set re-ran clean at that seat
+(typecheck 0/0, battery `233 passed · 2220 passed | 10 expected fail`, receipt byte-identical).
+**ACT 1 OF THIS ANNOTATION'S SEAT CLOSES IT**: the census was redone whole here, and the
+re-adjudicator's figures reproduce to the run id — 34 runs, all 34 reaching the `pixel-floor` job,
+**1 GREEN + 27 ceiling-RED + 6 `Page.captureScreenshot` deaths**, 29 of 34 reaching the readback
+on the green leg, the dead-artifact warning 34/34. `CLOSE-TESTS/RECORD.md` is uncommitted, so it
+was rewritten plainly in place with a dated line saying the census was redone at this seat and why.
+
+**SEAT MODELS, COUNTED RATHER THAN ASSERTED.** Across the seven workflow directories,
+**74 seats started · 50 `claude-opus-5` · 24 `claude-fable-5-1` · zero UNKNOWN** — counted at this
+seat by reading `.message.model` out of every `agent-*.jsonl` beside each `journal.jsonl`. The
+split is exactly the model law: **Opus implements, challenges and cures; Fable adjudicates and
+re-adjudicates.** No adjudication seat is Opus and no implement, challenge or cure seat is Fable.
+
+⊕⁸³ **(c) VERIFY AT THE CLOSE** — re-run at this seat on the committed tree, real exit codes:
+
+```
+$ npx vue-tsc --noEmit -p tsconfig.json          TSC_APP_EXIT=0
+$ npx vue-tsc --noEmit -p tsconfig.test.json     TSC_TEST_EXIT=0
+$ npx vitest run tests/docs tests/design tests/components/status-dot.contract.test.ts
+ Test Files  5 passed (5)
+      Tests  21 passed (21)                      VITEST_EXIT=0
+$ node scripts/gate-register.mjs
+seats:60 active:46 reserved:5 worstCase:51 remaining:9 external:11 bound:13 armOnly:2 unbound:45 drift:0 rosterSha256:282d05cf violations:0
+```
+
+`tests/components/status-dot.contract.test.ts:19` is the one test that READS `MIGRATION.md`,
+which is why it runs beside the doc and design suites here.
+
+**THE BATTERY AT THE CLOSE IS `233 files · 2220 passed | 10 expected fail (2230)`, twice**
+(`CLOSE-TESTS/RECORD.md:321,331`, re-run by that lane's Fable re-adjudicator with the same
+figures). Where the tests came from, each leg quoted from the RECORD that measured it:
+
+| leg | live | total | files | source |
+| --- | --- | --- | --- | --- |
+| wave open (P's first full battery) | 2166 | 2176 | — | `P/RECORD.md:212` |
+| batch 1 close (P · C1 · E1) | 2172 | 2182 | — | `P:327 · C1:540 · E1:451` |
+| batch 2 close (C2 · E2 · D) | **2199** | 2209 | 228 | `E2/RECORD.md:425 · D/RECORD.md:618` |
+| batch 3 close (T1 · T2) | 2218 | 2228 | 233 | `T1/RECORD.md:609 · R/RECORD.md:662` |
+| R close | 2219 | 2229 | 233 | `R/RECORD.md:1082` |
+| CLOSE-TESTS close | **2220** | 2230 | 233 | `CLOSE-TESTS/RECORD.md:321,331` |
+
+**2199 → 2220 is +21**: **+19 from batch 3** (T1 and T2 together — they ran concurrently on one
+tree, so the two lanes' share is not separable from the battery totals and is not split here),
+**+1 from R** and **+1 from CLOSE-TESTS** (`drive-tokens`' hostile-name arm, `3 it(` at HEAD
+against `4` in the tree, measured at that lane). Across the whole wave, open to close, **2166 →
+2220 = +54**, and the `10 expected fail` xfail count never moved.
+
+**`verify:package` IS TERMINAL CLEAN AND THE FIGURE IS THE REBIND COMMIT'S OWN**: the roster arm
+passed **289/289 PRESENT** (`R/RECORD.md:1111`) and the only throw was `G-BUNDLE-RATCHET` at
+`2554360 > 2549378`; rebound, the run goes terminal clean with tarball sha256
+**`c87c953b67f20a4107eea32626a189b4625749afd552c7d24344e0184adb6a58`** (900,129 B) — all four
+figures quoted from `c0d43348`'s commit message, which states them as measured under the build
+lock. **The +4,982 B decomposes as README.md +2,250** (the token section rewritten, batch 3) **and
+dist/ +2,732** (the `darkModeSyncScript` object form and its `.d.ts`, the timeline and
+fourier-field doors, the slider cursor and overlay-plate arms, chip `xs`). **`verify:package` was
+NOT re-run at this seat and did not need to be**: this annotation changes no `dist/` byte and no
+published path.
+
+⊕⁸³ **(d) THE WALL, AND THE ONE LESSON WORTH KEEPING.** A session limit struck at **20:26 ET on
+2026-09-17** with three seats mid-flight — **T1:chB, T2:chB and R:implement**. The cap reset at
+**21:30**, and the harness re-spawned all three as FRESH agents at 21:30-21:31;
+`wf_a3cf7fcb-9c4`'s journal carries the duplicate `laneT1:chB` / `laneT2:chB` rows that prove the
+re-spawn. **The R relaunch was stopped and relaunched a second time with a PREDECESSOR
+paragraph**, because the first R seat had run 29 m 55 s by its own transcript (19:56:43 → 20:26:38
+ET, `wf_abf37dd9-d5f/agent-a3c38f904a57abe5d.jsonl`; `R/RECORD.md:55` says ~1 hour) and left its
+edits on disk with NO RECORD. The source is R's own `## Inheritance — two predecessors, one of
+them a no-op` (`R/RECORD.md:53-65`): the second seat started 21:31 and was interrupted 39 s later
+by its transcript (21:31:03 → 21:31:42 ET; the RECORD says 36 s), and its transcript shows five
+tool calls, all read-only, **no repo write** — checked by listing every `tool_use` in that file
+rather than assumed — so the inherited dirt is the FIRST seat's alone. The third seat reverted
+none of it and re-applied none of it blind: every hunk was read with `git diff`, every claim
+re-measured from the bytes, every born-RED re-run. **THE LESSON, STATED ONCE: a seat's RECORD is
+the only thing that survives its session, so a wall that lands before the RECORD is written costs
+the whole seat's provenance.** The repair is what the driver did here — hand the successor an
+explicit PREDECESSOR paragraph and make it re-derive, never re-trust.
+
+⊕⁸³ **(e) RULINGS THE DRIVER TOOK UNDER THE DELEGATED RATIFICATION AUTHORITY**, each with its
+grounds:
+
+1. **The T1/T2/R time overlap — RATIFIED.** The ledger's *"R runs LAST"* was honoured by LAUNCH
+   ORDER, not by completion: `laneR:implement` launched 19:56 ET against `laneT1:implement` and
+   `laneT2:implement` at 19:49, and the three overlapped. **Nothing T1 or T2 produced fed R's
+   inputs** — R's own step-0 baseline records T1's and T2's files already dirty and never opened
+   (`R/RECORD.md:29-42`). Grounds: the constraint's purpose was input ordering, and input ordering
+   held. Banked as a bracket on `LEDGER.md`'s Lane R row.
+2. **The roster scope — RULED SOUND.** The published-roster manifest covers `@theme` and
+   `@utility`; the CLASS half was **REFUSED WITH GROUNDS** by its lane rather than silently
+   dropped. Grounds: a refusal that states its reasoning on the record is a disposition, not a
+   miss. Banked as the `LEDGER.md` B-3 (4) bracket.
+3. **The em-dash convention — MIGRATION.md keeps SPACED, every new file is TIGHT.** Measured, not
+   assumed: `CLOSE-DOCS/RECORD.md:458` reads `MIGRATION.md spaced 627 : tight 64 → spaced
+   (matched)`; recounted at this seat on `git show c645c393:MIGRATION.md` by a plainer rule (every
+   `—` that is not ` — `) it is **572 spaced : 83 tight**. The two rules differ on code-span
+   dashes; **the verdict is the same under both**, and the file keeps its own convention.
+4. **The five-vs-two timeout over-reach — RATIFIED.** Lane R re-timed two subprocess arms and left
+   the rest; CLOSE-TESTS budgeted the class whole, seven arms. Grounds: one flake class, one pass,
+   and a battery that REDs at random on machine load teaches everyone to read past its REDs.
+5. **The bundle-ratchet rebind — TAKEN ON THE COMMITTED TREE, AND IT IS NOT A PUBLISH.** `2549378`
+   is the published 9.0.0 `unpackedSize`; the wave's own content is `2554360`. The datum was
+   rebound deliberately on a build of the committed tree at `4501fc77`, under the build lock, with
+   the decomposition stated in the commit message. No version moved and no tarball went anywhere.
+
+⊕⁸³ **(f) THE STANDING CI RED, MEASURED WHOLE AT THIS SEAT.** `master`'s `ci.yml` **pixel-floor**
+leg has been RED since **2026-08-24**; the last green is `350f7a90` (run `32743826000`). The
+window from that green through `f999c11c` (`35304894096`) holds **34 runs, and all 34 reached the
+`pixel-floor` job** — the `verify` job it needs is `success` in every one. The split:
+
+- **1 GREEN** — `32743826000`, under the OLD `band=[0.1,0.7]` assertion.
+- **27 RED on the ceiling** — `paintedShare` over `ceil=0.7`; **24 of the 27 print
+  `Received: 0.9974811083123426` to the last digit**, the other three being the pre-narrowing rows
+  (0.757 · 0.757 · 0.759).
+- **6 dead at `locator.screenshot: Protocol error (Page.captureScreenshot)`** — five on the green
+  leg (`32747589482` · `32862369277` · `32864785902` · `33217756605` · `35302161628`) and one on
+  the PLANTED leg (`32746095576`, where the verifier said *"the harness broke, the floor did not
+  bite"*).
+- **29 of 34 reach the readback** on the green leg; **the `pixel-floor-pi-reports` artifact is
+  empty in all 34**, the last green included, so any instruction pointing at it is a dead pointer
+  — the three PI lines live in the JOB LOG.
+
+**THE v9.0.0 TAG COMMIT ITSELF IS RED ON `ci.yml`** (`d4f7b24f`, run `33273556556`, ceiling);
+`release.yml` gated the publish and did so on its own legs. **ONE ARM carries all of it**:
+*"blob paints a contained non-flood droplet on `BLOB_CONFIG_DEFAULTS`"*. **The two local cells**
+(`CLOSE-TESTS/RECORD.md`, cells a/a2/b): on **Metal** the arm is **GREEN at `paintedShare = 0.288`
+against `ceil 0.7`**, ground null at `groundMotion = 0.000`, on the same `paintable` rect CI
+measures; on **swiftshader on this box** it never reaches the readback at all, stalling in
+`scrollIntoViewIfNeeded` for 180 s, twice of twice. **THE CLASSIFICATION IS A RENDERER ARTEFACT
+UNDER SwiftShader, NOT A FLOOD** — identical rect, identical null ground, 3.5× the painted area —
+and the history rules out the threshold: whole-interior `coverage` never left **0.577-0.578** in
+any row, the last green included, while the DENOMINATOR moved twice, so **the re-denominated
+ceiling has never once been green on swiftshader**. **THE RECOMMENDATION: a GPU-gated arm in the
+aurora floor's own idiom (`ci.yml:54-57`, which gates the aurora floor for exactly this reason) or
+a backend-aware ceiling. NEVER a loosened 0.7** — 0.7 is green on the GPU with 0.288 to spare, and
+loosening it past 0.997 retires the flood class the `blob-flood` plant exists to prove. **The
+software-GL stall and the intermittent `Page.captureScreenshot` death are a SECOND and a THIRD
+defect**, unowned, neither of them the ceiling.
+
+⊕⁸³ **(g) OWNER RULINGS, HELD OPEN — NONE TAKEN AT THIS SEAT OR IN ANY LANE.**
+
+- **`FINAL.md` is still not authored**, and the question under it is unchanged: is BK closed, and
+  does the remainder ride a band or a successor tranche? Reserved to the owner.
+- **The four CURE-NEXT-MAJOR cuts** stand as rulings and nothing more: **A-3-CLASS** (≥379
+  unlayered rules), **`ringsAt`**, **`ColorResolver`**, **`defaultBlobColorResolver`**. Each moves
+  a published name or a paint contract.
+- **Any publish is the owner's.** A 9.0.x carrying this wave is now `verify:package`-clean with
+  the ratchet rebound, which is a readiness statement and not a decision.
+- **The Alert tone-glyph WCAG 1.4.11 question** — `--success` paints **2.13:1** and `--warning`
+  **1.98:1** on `--card`, both under the 3.0 non-text floor (`C2/RECORD.md:232,333-334,444`).
+  Filed as a residue; the ramp is the owner's call.
+- **`darkModeSyncScript`'s read side is fail-CLOSED** and an inner `try` around a throwing
+  `getItem` would move the 300 B default emission and re-pin its CSP hash (`D/RECORD.md:493-501`).
+  Byte-identity versus a hardened read is the owner's trade.
+- **The prettier config lives outside the repo.** There is no `.prettierrc*`, no
+  `prettier.config.*` and `package.json.prettier === null` in this tree; `~/.prettierrc.json`
+  (66 B, `printWidth 88`) resolves upward and is what `--check` measured in the RECORDs
+  (`T1/RECORD.md:430,547,561` · `RESIDUE-5A/RECORD.md:161`). Re-measured at this seat.
+- **`defaultBlobColorResolver` has no `/color` census row** — the census carries types and consts
+  alphabetically and no lowercase entry anywhere, so adding one would mint a convention
+  (`R/RECORD.md`, residue 2). Flagged, not done.
+- **npm Trusted Publishing is still owed**, and the token that shipped 9.0.0 still wants rotating
+  behind it.
+- **The `docs/precepts` submodule copy of `affordance-map.md:85`** drifted from the text it copied;
+  it is a relay, not an edit — `docs/precepts` was not opened by any lane
+  (`RESIDUE-5A/RECORD.md:337,364,375` · `CLOSE-DOCS/RECORD.md:449`).
+
+⊕⁸³ **(h) THE CARRIED-OPEN REGISTER FROM ⊕⁸⁰/⊕⁸¹, RESTATED BY NAME AND UNCHANGED.** ⊕⁸⁰'s
+register at `:6222-6254` and ⊕⁸¹'s treatment of it at `:6511-6528` both stand; nothing in this
+wave touched any of it, and it is named here so a cured batch cannot bury it. **γ #51's two
+colour-window items** (the ≈0.485 dark band against the `[0.42,0.48]` window; `oklch(0.86 0.16
+270)` gamut-mapping to C 0.07256 under the cell's own 0.08 floor, the second having contaminated
+the chroma instrument). · **π-SCROLL's 0.36px-against-1.5px disposition** — the owner's. · **the
+unlayered-consumer box-sizing exposure**. · **the 12-tab-stop question at Card**. · **the
+α-scoped Safari block** (α's and pre-existing, `/dock/layers` and `/dock/overflow` @430×848 still
+owed). · **π-W1's after-half**, open until #50 W1. · **the seven blob cells**, #50 W2-W6 subject
+unbuilt. · **TWO ITEMS STAY UNVERIFIED AND OWED A SOURCE**: the **run.css 15:29:40 byte-identical
+rewrite smell** and the **α aspect-ratio / flex-basis census widening**, both zero-hit on disk. ·
+**THE ONE ITEM THAT MOVED stays as ⊕⁸¹ left it**: nine of the twelve π findings were cured in
+source inside the eleven-commit batch and came back CURED-GREEN in both re-capture batteries;
+**three remain open** (`CENSUS.md:221`).
+
+⊕⁸³ **(i) OUTBOUND, AND THE FENCE.** Three letters, all under `docs/tranches/BK/coordination/`,
+all landed at `2984e377` and untouched since: **`glass-outbound-2026-09-17-valuejs-o20-disposition.md`**
+· **`glass-outbound-2026-09-17-bbnf-lang-9.0.0-addendum.md`** ·
+**`glass-outbound-2026-09-17-constellation-o20-relay.md`**. **ZERO SIBLING WRITES ACROSS THE WHOLE
+WAVE**, and the reason the letters are letters rather than edits is unchanged: **no sibling
+installs 9.0.0** — value.js 7.0.0 · keyframes.js 7.0.0 · atlas 6.0.0 · sci-report 6.0.0 · slides
+3.13.0 · speedtest 4.0.1 · fourier-analysis 4.0.0 · muster 3.1.0 · words 3.0.0 · bbnf-lang
+`^3.0.0` — so every consumer-facing line in the ledger is prospective-on-bump, and the edit is the
+consumer's, in the consumer's tranche, at its own adopt.
+
+⊕⁸³ **WHAT THIS SEAT PLACED, AND WHAT IT DID NOT TAKE.** **PLACED**, inside a fence of five files:
+this block, appended at the file's literal end · `CLOSE-TESTS/RECORD.md`, uncommitted, its census
+redone whole and every count-bearing figure restated in place with a dated line ·
+`R/RECORD.md`, **three dated brackets** opening at `:678`, `:691` and `:810` on disk, under
+the `:956` mentions that sat at `:676`, `:683` and `:793` at `c0d43348`, written in that file's own
+spaced convention, correcting the `public-surface.spec.ts:956` anchor — at `dd8a5fe5` line 956 is
+`: [name];` inside a helper and not an arm, the untimed probes were `:648`, `:685`, `:738`, `:796`
+and `:978`, and CLOSE-TESTS budgeted the class whole · `MIGRATION.md`, **two measured acts** — a
+new §9.0.0 row for the `<FourierField>` expose delta (`renderAt` OUT, `headT` + `flick` IN,
+measured off both published `FourierField.vue.d.ts`, with no successor method and no emit) and a
+plain rewrite of the glass-fill clause, whose `@property` initials belong to `--glass-fill-tint`
+and `--glass-fill-strength` and not to `--glass-fill-tinted`, which is the `color-mix` that reads
+them · `CURSOR/RECORD.md`, this seat's own record. **NOT TAKEN**: **no gate was minted** —
+`seats:60` / `rosterSha256:282d05cf` / `drift:0` / `violations:0`, read at the baseline and again
+at the close · **no version moved, no publish, no tag, no push** · **no sibling tree was read for
+write or written** · **no git verb** — this seat ran no `add`, `commit`, `stash`, `checkout` or
+`reset`; the driver commits by pathspec · **no figure above was typed from memory**: every one is
+from `gh run list` / `gh run view`, `git show --numstat`, a named `file:line` read here, or a
+journal `result` line quoted with its workflow id.
+
+⊕⁸³ **LINE-CITE NOTE.** This block is appended at the **literal end of the file**, below the ⊕⁸²
+bank and therefore below every cite in it, so **NOTHING SHIFTS** — ⊕⁸²'s own re-read anchors
+(**#18 `:6678` · #40 `:6699` · #51 `:6709` · #76 `:6744` · #66 `:6752`**) are unmoved, and γ4's
+`PASTE-BLOCKS` §3 → row 51 is **still `:6709`** with the row-40 `C20` spelling **still `:6699`**.
+No line above `:7067` is edited by this seat, and all five anchors were re-read on disk AFTER the
+append. The file goes **7,067 → 7,346 — +279**, separator counted in, this paragraph counted into
+its own figure, all of it below the last cite. Committed records keep their pre-insertion numbers,
+per ⊕⁷², ⊕⁷³, ⊕⁷⁶, ⊕⁷⁷, ⊕⁷⁹, ⊕⁸⁰, ⊕⁸¹, ⊕⁸².

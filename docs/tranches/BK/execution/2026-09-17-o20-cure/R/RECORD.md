@@ -675,6 +675,12 @@ hiding, because they are one story:
   `demo/*`, `glass-subtlety`, `comment-ratio`) and two of them pre-existing subprocess
   probes in `public-surface.spec.ts` (`:648`, `:956`). It is machine contention, not a
   defect: vitest's default timeout is 5s and `vitest.config.ts` sets no override.
+  [2026-09-18 · the `:956` anchor is wrong. At this lane's own committed tree `dd8a5fe5`,
+  line 956 is `: [name];` inside a helper, not an arm. The untimed subprocess probes there
+  were `:648`, `:685`, `:738`, `:796` and `:978` — five of them, not two. CLOSE-TESTS
+  measured this and budgeted the class whole in `4501fc77`: seven arms in the file now
+  carry an explicit `30_000`, those five plus this lane's own two, at `:673`, `:731`,
+  `:793`, `:833`, `:920`, `:937` and `:1010`.]
 - One of the thirteen WAS this lane's — the committed-pair roster arm. Both roster arms
   spawn a node subprocess that imports the verifier, which loads `typescript` and
   `lightningcss` before a line of the arm's own work runs. The arm's own cost is 26 ms;
@@ -682,6 +688,9 @@ hiding, because they are one story:
   idiom for exactly this shape (`darkModeSyncScript.test.ts`'s config-loading arms carry
   the same). The pre-existing probes at `:648` and `:956` were NOT touched — they are
   not this fence, and re-timing another lane's arms is not this lane's call.
+  [2026-09-18 · `:956` was not an arm; see the bracket on the Run 1 bullet above. The
+  probes left untouched here were `:648`, `:685`, `:738`, `:796` and `:978`, and
+  CLOSE-TESTS (`4501fc77`) budgeted all five.]
 - Run 2 — `1 failed | 2217 passed | 10 expected fail (2228)`, wall 26s. Both roster arms
   green. The one RED was
   `tests/demo/router-field-ownership.test.ts > keeps one story-owned field across
@@ -798,6 +807,12 @@ outside the repo.
    fence. Worth doing in one pass rather than lane by lane — a battery that REDs at
    random on machine load teaches everyone to read past its REDs, which is how a real
    one gets missed.
+   [2026-09-18 · SIX, not three, and `:956` was not one of them. At `dd8a5fe5` the untimed
+   subprocess probes were `:648`, `:685`, `:738`, `:796` and `:978`, and the DockStage
+   route-navigation arm makes six. CLOSE-TESTS (`4501fc77`) did exactly the one pass this
+   item asks for: seven arms in `public-surface.spec.ts` at an explicit `30_000` —
+   `:673`, `:731`, `:793`, `:833`, `:920`, `:937`, `:1010` — and the router arm with
+   them. Class closed.]
 4. **The repo has no prettier configuration.** Every `--check` in every lane's record is
    measuring against prettier's defaults rather than against the house style, which
    makes it a gate that always fails and therefore says nothing. Either commit a
