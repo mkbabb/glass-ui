@@ -7344,3 +7344,185 @@ No line above `:7067` is edited by this seat, and all five anchors were re-read 
 append. The file goes **7,067 → 7,346 — +279**, separator counted in, this paragraph counted into
 its own figure, all of it below the last cite. Committed records keep their pre-insertion numbers,
 per ⊕⁷², ⊕⁷³, ⊕⁷⁶, ⊕⁷⁷, ⊕⁷⁹, ⊕⁸⁰, ⊕⁸¹, ⊕⁸².
+
+---
+
+⊕⁸⁴ **THE O-26 RELAY WAS ANSWERED ROW BY ROW IN ONE COMMIT, AND NOT ONE CURE WAS TAKEN**
+(2026-09-18 · `a53d67bc`, authored 14:50:28 ET on the datum `2113670c`, tree clean · cursor seat
+modelId **`claude-opus-5`**, read from this seat's OWN on-disk subagent transcript
+`…/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/subagents/agent-a9d6cbf0114292105.jsonl` — located by
+grepping the subagent tree for a phrase unique to this dispatch, `.message.model` =
+`claude-opus-5` at every turn it carries, `CLAUDE_MODEL_ID` unset, and **the assertion GATES this
+chain with `&&`, never a newline**). The pass ruled. It cured nothing, published nothing, moved no
+version and wrote no sibling tree. Gate receipt at this seat, unchanged from ⊕⁸³:
+`seats:60 active:46 reserved:5 worstCase:51 remaining:9 external:11 bound:13 armOnly:2 unbound:45 drift:0 rosterSha256:282d05cf violations:0`.
+
+⊕⁸⁴ **(a) THE COMMIT** — `git show --stat a53d67bc`: **3 files, +1832/−0**, every one of them a
+record:
+
+- **`docs/tranches/BK/execution/2026-09-18-o26-disposition/LEDGER.md`** — **886 lines**, 62,652 B.
+  §0 the two facts (`:29`), §A the rows in letter order (`:53`), §D the cure wave that follows
+  (`:834`), Register (`:851`), Tally (`:861`).
+- **`RULINGS.md` beside it** — **470 lines**, 47,395 B, the Fable adjudication the ledger was
+  written from. Its head bracket (`:3`) states its own provenance: the seat JSONs and the rulings
+  were session scratch, lost at a session restart, **replayed byte-for-byte from the driver
+  transcript (1 Write + 10 Edits, 0 misses)** and amended once — the README anchor *"Token
+  overrides"* struck, there being no such heading.
+- **`docs/tranches/BK/coordination/glass-outbound-2026-09-18-valuejs-o26-reply.md`** —
+  **476 lines**. §0 two things before the rows (`:20`), §1 the rows (`:44`), §2 your negative space
+  (`:438`), §3 your interim table with our column corrected (`:452`), §4 two asks of you (`:469`).
+
+**ONE letter.** The inbound `valuejs-outbound-2026-09-18-kfw6-bh-relay.md` — R-1..R-16, a §2
+negative space, a §3 interim table, §4 asks — gets a single reply at the path of record, and every
+row is answered by id.
+
+⊕⁸⁴ **(b) THE TWO FACTS THE LETTER LEADS WITH**, stated once in §0 and never as a per-row
+accusation:
+
+1. **The consumer's installed "7.0.0" is no published version.** Their `dist/glass-ui.css` is
+   **70,109 B** against the registry 7.0.0's **69,884 B** (sha256 `cb2b5092…`); their scope hash is
+   `data-v-87831917` against the published `data-v-defd849d`; the two hashed chunks they cite
+   (`dropdown-menu-0gkd7rMF.js`, `chip-6ysLmScu.js`) exist in **no version 6.0.0–9.0.0** while every
+   unhashed path they cite does. Two dated witnesses put the tree BEFORE the tag rather than beside
+   it: `DropdownMenu`'s `modal: true` entered at `490cc46e`, an ancestor of v7.0.0, and their bytes
+   have `modal` bare; `header-ribbon.js` carries `inert` at `:74`, compiled from source deleted at
+   `4e8c6387`, also an ancestor. **One command settles it** — `wc -l
+   node_modules/@mkbabb/glass-ui/dist/header-ribbon.js` → **43** on the published 7.0.0. **Nothing
+   is withdrawn on this ground**: every MECHANISM they report was re-measured on registry bytes.
+   What moves is their line cites (**drift 8–19**), two chunk names, and R-11, whose object does not
+   exist at the real 7.0.0.
+2. **HEAD is not 9.0.0.** 9.0.0 = `d4f7b24f`, cut 2026-08-29; the whole O-20 cure wave
+   (`a314533a`..`2113670c`, 2026-09-17) is **post-9.0.0** —
+   `git merge-base --is-ancestor a314533a v9.0.0` → NO. So **every CURE-NOW in the O-20 disposition
+   and every CURE-NOW below is at HEAD and in no tarball**: it reaches this consumer at the cut
+   AFTER 9.0.0, then at their bump. Two already tripped over: the A-14 README correction is at HEAD
+   while the 9.0.0 README still carries the old sentence, and A-9's tooltip ceiling is at HEAD only.
+   The ledger and the reply say **"at HEAD"** for cure-wave work and **"at 9.0.0"** only for what
+   the tarball carries.
+
+⊕⁸⁴ **(c) THE TWENTY-FOUR ROWS, EACH IN ONE LINE** — the state at 9.0.0 and the disposition, read
+off the ledger's own `§A` row headings:
+
+| row | the finding | state → disposition |
+| --- | --- | --- |
+| R-1 | `.glass-label`'s layer membership | PARTIAL → ANSWER |
+| R-2 | `components.css` defeats its own `@theme` radius scale | DEAD → ANSWER |
+| R-3 | the Boolean cast pins a reka controlled prop shut | PARTIAL → CURE-NOW |
+| R-4 | aurora placeholder never hidden on arm | LIVE → CURE-NOW (doc) + ANSWER + DECLINE |
+| R-5 | aurora omitted from both a11y sweeps | LIVE → CURE-NOW |
+| R-6 | `wake()` ungated under PRM; the throwing token bridge | LIVE → CURE-NOW + DECLINE |
+| R-6-LIGHT | `interactivity.light` on a medium with no impasto | LIVE → CURE-NOW (a, b) + CURE-NEXT-MAJOR (c) |
+| R-7 | `@utility touch-hit-area` cannot expand a tap target | DEAD → ANSWER |
+| R-7-RIDER | the docs that still prescribe the convicted halo | LIVE → CURE-NOW (docs) |
+| R-8 | the keyboard registry has no suspend, scope or priority (KSM R-1 + R-8 + R-16 + R-17) | LIVE → CURE-NOW |
+| R-9 | a first-class selectable chip-group | LIVE → ANSWER + DECLINE |
+| R-10 | a consumer-reachable material opt-out | PARTIAL → ANSWER |
+| R-10-RIDER | the BK.W-FROST strike is in no MIGRATION row | LIVE → CURE-NOW (docs) |
+| R-11 | the collapsed-at-rest header ribbon | DEAD → ANSWER |
+| R-11-RIDER | MIGRATION's 8.0.0 deletion count and the retained consumer-evidence page | LIVE → CURE-NOW (docs) |
+| R-12 | `text-caption` is italic while no italic face ships | LIVE → ANSWER (+ doc arm CURE-NOW) |
+| R-13 | the `useTabRovingFocus` export ask, withdrawn | LIVE → ANSWER |
+| R-14 | the BG-6 display-token ask, withdrawn as stale | LIVE → ANSWER |
+| R-15 | the demo mints `--specular`/`--shade` | NOT-APPLICABLE → ANSWER |
+| R-15-RIDER | a registered `@property` name removed with no MIGRATION row | LIVE → CURE-NOW (docs) |
+| R-16 | the bare focus-plate variant and a radius-neutral `.focus-ring` | DEAD → ANSWER |
+| R-16-RIDER | the 8.0.0 focus reshape has no MIGRATION row | LIVE → CURE-NOW (docs) |
+| R-S2 | the §2 negative space | PARTIAL → ANSWER |
+| O-26-INT-1 | the engagement envelope survives a mid-session PRM turn-on | LIVE → CURE-NOW |
+
+**THE TALLY** (`LEDGER.md:861`): **13 CURE-NOW · 13 ANSWER · 5 DECLINE limbs across 4 rows ·
+2 CURE-NEXT-MAJOR · KILL and ROUTE none**; states **15 LIVE · 4 PARTIAL · 4 DEAD ·
+1 NOT-APPLICABLE · MOVED none**. **Nothing in the CURE-NOW set removes or renames a published
+export, class, token or subpath**, and the four cures that change computed paint on purpose each
+say so: R-5 (the aurora a11y arms, biting only where `opacityCeiling < 1`), R-6 and O-26-INT-1
+(what the PRM frame holds), R-3 (an uncontrolled Chip or Collapsible seeded by `:default-*` now
+paints ON), R-6-LIGHT (b) (a pointer path that could not paint stops arming). §2's one correction
+is item 6: **`/timeline` is A-8 alone**, A-9 is TooltipContent's block ceiling and is NOT cured at
+9.0.0 — re-file A-9 under `/timeline` at KF.W7 and the row goes missing.
+
+⊕⁸⁴ **(d) HOW IT WAS MADE — THREE DISPOSITION PASSES, THEN AN AUTHOR QUARTET.** Eight clusters
+(layering-label · boolean-cast · aurora-a11y · touch-target · keyboard-registry ·
+chip-group-material · ribbon-font-focus · disposed-notices), one Opus investigator each, then one
+**ASSUME-WRONG** Opus verifier re-establishing every state claim with its own commands, then the
+driver's rulings over both — **sixteen seat results in all**, read-only throughout, probes written
+outside the repo and disclosed.
+
+| pass | workflow | window (ET) | what it did |
+| --- | --- | --- | --- |
+| 1 | `wf_a3d6f5e8-d29` | 01:24:44 → 03:41:43 | banked seven seats — layering-label, boolean-cast and touch-target investigate+verify, aurora-a11y investigate |
+| 2 | `wf_80c4f4a2-1e9` | from 05:08:20 | the first launch DIED to a load-starved watchdog: **36 spawns, zero results** |
+| 3 | same run id, resumed | 10:58:49 → 12:02:23 | **nine seats in 63 min**, launched once the box was back at load 9 |
+
+The journal carries the arithmetic: **45 `started` rows, 9 `result` rows, 6 `failed` rows** in
+`wf_80c4f4a2-1e9/journal.jsonl` — **45 − 9 = the 36 that produced nothing.**
+
+Then the author quartet, **`wf_82133e05-c31`** (12:17:19 → 14:49:10 ET): one **Opus** author wrote
+the ledger and the letter; **three Opus challengers** ran **fidelity · disk · law-style** and
+returned **45 findings** (F-01..F-06 + N-01..N-08 · D-1..D-11 · LS-01..LS-20, every one of them
+`clean: false`); a **Fable** adjudication ruled **29 ACCEPT · 12 AMEND · 5 REJECT**, verdict
+`CURE-ROUND`; **one Opus cure seat applied all 46 cures, zero deviated, zero impossible** (45 unique
+anchors plus cure #1 as a replace-all at 17 hits), nothing REJECTED applied, 10 letter and 7 LEDGER
+paragraphs re-wrapped with token-for-token identity; and a **fresh Fable re-adjudication returned
+`COMPLETE` with `"regressions": []` and `"residue": []`**. **THE MODEL SPLIT IS THE LAW'S**: Opus
+investigates, verifies, authors, challenges and cures; Fable adjudicates and re-adjudicates.
+
+⊕⁸⁴ **(e) THE LESSONS, ALL FOUR PAID FOR.**
+
+1. **THE WORKFLOW WATCHDOG IS 180 s OF NO PROGRESS, SIX TIMES, THEN `failed`.** A seat that is
+   alive but starved reads exactly like a seat that is hung, and the engine cannot tell them apart.
+   Pass 2 lost 36 spawns to it and banked not one result.
+2. **CHECK `uptime` BEFORE BLAMING THE API.** While the seats were dying, a one-word Opus probe
+   answered in **3 s** — the model was fine and the box was not. Pass 3 launched on the same run id
+   once load was back to 9 and finished nine seats in 63 minutes.
+3. **NEVER SHARE A PATH BETWEEN A LIVE SEAT AND A BANKED FILE.** A re-spawned progressive-JSON seat
+   wrote over an artefact that was already banked; it was recovered from the PREDECESSOR
+   transcript's own `Write` call
+   (`…/scratchpad/o26/author/recovered/RULINGS.recovered.md`, 47,156 B, 14:30).
+4. **SCRATCHPAD CONTENTS DO NOT SURVIVE A SESSION RESTART.** The sixteen seat JSONs went with it,
+   and the rulings had to be replayed from the driver transcript — **which is why `RULINGS.md` is
+   banked beside the ledger in the repo** and why the ledger says each row's figures re-measure from
+   the registry tarballs and HEAD by the commands the row gives.
+
+⊕⁸⁴ **(f) WHAT FOLLOWS — THE O-26 CURE WAVE, FOUR LANES** (`LEDGER.md:834`). Quartet per lane
+(**Opus implement → 2 ASSUME-WRONG challengers → Fable adjudicator**), **≤3 concurrent**, disjoint
+file fences, driver commits by pathspec:
+
+| lane | rows it carries |
+| --- | --- |
+| **K · keyboard** | R-8 — `suspendShortcuts()`, `formatComboLabel()`, the `LabeledShortcut` narrowing, the `defaultPrevented` guard, in-house enrolment of the modal overlays, two docblock contracts, a MIGRATION bracket |
+| **A · aurora** | R-4 · R-5 · R-6 · R-6-LIGHT (a)(b) · O-26-INT-1 — the `AuroraConfig.alpha` JSDoc, the custom-property routing and two media arms, three wake guards, the `seed` and `light` JSDocs, the impasto term, the envelope reset on the PRM transition |
+| **B · boolean cast** | R-3 — `Collapsible.open`, `Chip.modelValue` ONLY, `LabeledSwitch.modelValue` plus `modelValue?: boolean` |
+| **M · manifest + docs** | R-7-RIDER · R-10-RIDER · R-11-RIDER · R-12 doc arm · R-15-RIDER · R-16-RIDER · the A-3-CLASS scope note |
+
+Discipline, every lane: **born-RED witnesses on bytes; gates exactly 60; nothing minted;
+`.published-roster` untouched; `.bundle-ratchet` rebound only if dist bytes move** (A/B/K move dist
+→ one deliberate rebind at the close, on the committed-tree datum); shared-tree discipline, no seat
+commits; no masking fallbacks.
+
+**THE OWNER REGISTER IS UNCHANGED** (`LEDGER.md:851`). **CURE-NEXT-MAJOR, ruled and not executed**:
+R-6-LIGHT (c), the atoms-door union narrowing · **A-3-CLASS**, standing from O-20, where R-1's label
+half lives. **Open design item**: whether `text-caption`'s italic on running prose retires at
+10.0.0 — a typography wave's decision, registered and **promised to nobody**. **Owner-reserved,
+register only**: MIGRATION.md joining `files` (every *"we documented it"* answer being unreachable
+at any consumer's pin by construction) · the A-3-CLASS 10.0.0 cut · the CURE-NEXT-MAJOR rulings ·
+**any publish**. **§4 asks the consumer two things and nothing else**: re-install from the registry
+and re-take every banked byte figure against it, and confirm which CSS entry the demo imports,
+because R-14's two re-points resolve to nothing if it is only the bundle.
+
+⊕⁸⁴ **WHAT THIS SEAT PLACED, AND WHAT IT DID NOT TAKE.** **PLACED**: this block, appended at the
+file's literal end, **and nothing else** — one file touched. **NOT TAKEN**: **no gate was minted**
+— `seats:60` / `rosterSha256:282d05cf` / `drift:0` / `violations:0`, re-read here and identical to
+⊕⁸³'s · **no cure was applied**: the 13 CURE-NOW rows land in lanes K/A/B/M, not in this
+annotation · **no version moved, no publish, no tag, no push** · **no sibling tree was read for
+write or written** — the reply is a letter because no sibling installs 9.0.0 · **no git verb**:
+this seat ran `status`, `log`, `show` and `grep` only · **no figure above was typed from memory** —
+every one is from `git show --stat`, `wc -l`, `ls -la`, a named `file:line` read at this seat, or a
+`journal.jsonl` `result` row quoted with its workflow id.
+
+⊕⁸⁴ **LINE-CITE NOTE.** This block is appended at the **literal end of the file**, below the ⊕⁸³
+bank and therefore below every cite in it, so **NOTHING SHIFTS** — ⊕⁸²'s and ⊕⁸³'s shared anchors
+(**#18 `:6678` · #40 `:6699` · #51 `:6709` · #76 `:6744` · #66 `:6752`**) are unmoved, and γ4's
+`PASTE-BLOCKS` §3 → row 51 is **still `:6709`** with the row-40 `C20` spelling **still `:6699`**.
+No line above `:7346` is edited by this seat. The file goes **7,346 → 7,528 — +182**, separator
+counted in, this paragraph counted into its own figure, all of it below the last cite. Committed
+records keep their pre-insertion numbers, per ⊕⁷², ⊕⁷³, ⊕⁷⁶, ⊕⁷⁷, ⊕⁷⁹, ⊕⁸⁰, ⊕⁸¹, ⊕⁸², ⊕⁸³.
