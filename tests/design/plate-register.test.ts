@@ -23,7 +23,27 @@ const read = (rel: string): string => readFileSync(join(process.cwd(), rel), "ut
 
 const GLASS_DIR = "src/styles/glass";
 
-/** `@utility <name>` declarations (line-initial — a mention inside a comment is prose). */
+/**
+ * `@utility <name>` declarations (line-initial — a mention inside a comment is prose).
+ * The character class is the literal set a utility name may use, `*` deliberately NOT
+ * among them: a functional `@utility foo-* {` would otherwise reach the predicate below
+ * as a quantifier. Captured as `foo-`, such a name fails LOUDLY — no doc names `` `foo-`
+ * `` — rather than silently widening the match. Measured at this seat: zero `*` forms
+ * exist under `src/styles`, so the narrowing drops nothing today.
+ */
+const UTILITY_DECL = /^@utility\s+([A-Za-z0-9_-]+)/;
+
+/** Regex metacharacters escaped, so an interpolated name matches as a literal. */
+const escapeRegExp = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/**
+ * DESIGN.md names the utility as a code span. Boundary-anchored by the backticks, so a
+ * longer token spelling that merely CONTAINS the name (`--glass-plate-floating`) does not
+ * satisfy it; escaped, so no name can reach `RegExp` as syntax.
+ */
+const namedInDesign = (design: string, name: string): boolean =>
+    new RegExp(`\`${escapeRegExp(name)}\``).test(design);
+
 const utilitiesIn = (dir: string): { name: string; where: string }[] =>
     readdirSync(join(process.cwd(), dir), { recursive: true, withFileTypes: true })
         .filter((e) => e.isFile() && e.name.endsWith(".css"))
@@ -32,7 +52,7 @@ const utilitiesIn = (dir: string): { name: string; where: string }[] =>
             return readFileSync(path, "utf8")
                 .split("\n")
                 .flatMap((line, i) => {
-                    const m = line.match(/^@utility\s+([A-Za-z0-9_*-]+)/);
+                    const m = line.match(UTILITY_DECL);
                     return m ? [{ name: m[1], where: `${e.name}:${i + 1}` }] : [];
                 });
         });
@@ -47,11 +67,20 @@ describe("the glass register mirrors into DESIGN.md", () => {
 
     it("names every glass @utility in DESIGN.md", () => {
         const missing = utilities
-            // Boundary-anchored: a longer token spelling that merely CONTAINS the
-            // utility name (`--glass-plate-floating`) must not satisfy the assertion.
-            .filter(({ name }) => !new RegExp(`\`${name}\``).test(design))
+            .filter(({ name }) => !namedInDesign(design, name))
             .map(({ name, where }) => `${name} (${where})`);
         expect(missing, "glass utilities absent from DESIGN.md").toEqual([]);
+    });
+
+    it("cannot be widened by a hostile utility name", () => {
+        const doc = "The plate register names `glass-plate` and nothing else.";
+        // The capture never yields a metacharacter in the first place …
+        expect("@utility glass-plate* {".match(UTILITY_DECL)?.[1]).toBe("glass-plate");
+        // … and were one to reach the predicate it is a literal, not syntax. Unescaped,
+        // `` `glass-plate*` `` reads as "glass-plat" + "e"* and MATCHES the line above,
+        // declaring an undocumented utility documented.
+        expect(namedInDesign(doc, "glass-plate*")).toBe(false);
+        expect(namedInDesign(doc, "glass-plate")).toBe(true);
     });
 
     it("documents what glass-plate does NOT supply — the stacking half B-2 re-derived", () => {

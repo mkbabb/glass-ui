@@ -150,6 +150,13 @@ bottom edge and clipped its cast.
 `@mkbabb/pencil-boil@^0.9.2`); `perfect-freehand` is no longer a peer (vendored into
 HandMark). See `MIGRATION.md` §7.0.0 for the per-prop rows.
 
+[2026-09-17 · O-20 cure, residue lane 5A] True as 7.0.0 history, dead as a description of
+today: the vendored copy left too. `src/components/handmark/freehand.ts`—the
+perfect-freehand geometry core, MIT, vendored behind the HandMark L2 seam—was deleted at
+`5a69ed9f`, and `perfect-freehand` now appears nowhere in `package.json`, `src/` or
+`demo/`. `@mkbabb/pencil-boil` is not a peer at 9.0.0 either; the nine-name peer set is
+listed in the bracket on the 6.0.0 entry below.
+
 **Survivors (do not migrate):** `./labeled-field`, `./command`, and `./expandable-container`
 are NOT removed — all three ship in 7.0.0 (verified present in the branch `exports`).
 Repointing them would break working imports. But key-level survival does not imply
@@ -289,6 +296,12 @@ delta from 5.0.0 is one removal, `./stacked-icons`; no key is added or renamed.
   `0.9.2`. The HandMark geometry and boil imports build and test against that artifact.
   Pencil 0.9.2 itself declares Node 24/npm 11; Glass core remains Node 22 compatible
   when that optional peer is not installed.
+  [2026-09-17 · O-20 cure, residue lane 5A] Not true at 9.0.0: `@mkbabb/pencil-boil` is not
+  a peer and is absent from `package.json` altogether, as it is from `src/` and `demo/`.
+  `peerDependencies` is nine names—`@lucide/vue`, `@mkbabb/keyframes.js`,
+  `@mkbabb/value.js`, `@vueuse/core`, `reka-ui`, `tailwindcss`, `tw-animate-css`, `vue`,
+  `vue-component-type-helpers`—of which `peerDependenciesMeta` marks three optional
+  (`@vueuse/core`, `@mkbabb/value.js`, `tw-animate-css`).
 - Release validation is direct (`typecheck`, build, tests) and tag publication retains
   npm provenance; packaging no longer depends on terminal tranche metadata.
 

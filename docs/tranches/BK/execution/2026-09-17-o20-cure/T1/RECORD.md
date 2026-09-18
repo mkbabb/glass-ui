@@ -577,6 +577,19 @@ tests/design/plate-register.test.ts                            PASS
 docs/tranches/…/T1/RECORD.md                                   FAIL   (pre-existing, 4 hunks)
 ```
 
+[2026-09-17 · O-20 cure, residue lane 5A · the figure and the attribution are both wrong,
+re-measured at this seat] `npx prettier --check` on this RECORD still warns (exit 1), and
+the working-tree-vs-formatted diff carries **8 change regions** at zero context (`diff -U0`:
+35-46, 82, 85-92, 233-236, 238, 243, 334-341, 521-533), which coalesce into **5 hunks** at
+prettier's default three lines of context. Neither count is 4. Nor is every region
+pre-existing: **521-533 is the cure round's own act-ledger table**, the eleven-row table
+written in that round, so §Prettier's sentence above ("all four in this RECORD … off lines
+the lane added … none of them is in the cure round's own prose") is struck with this row.
+What holds is the KIND: six regions are markdown-table realignment and two are `*x*` →
+`_x_` (:82, :243), and the decision not to reformat anything pre-existing stands. Only the
+count and the not-the-cure-round's-own claim fall. Measured at `a314533a` against
+`~/.prettierrc.json` (printWidth 88), before lane 5A wrote a byte of this file.
+
 ### Verify — cure round, real exit codes
 
 ```

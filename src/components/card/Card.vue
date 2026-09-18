@@ -16,8 +16,14 @@ export type CardSize = "sm" | "md";
  * and no capacity. `shadow` is CARD's own — Surface went three-prop and the
  * card is the one component with a real elevation grammar, so it stamps its own
  * `data-shadow` for the edge keying instead of routing the flag through a
- * primitive that no longer reads it. `grain` and `specular` are gone from the
- * whole library. `cartoon` / `grid` / `metal` / `variant` / `dataHue` /
+ * primitive that no longer reads it. `grain` and `specular` are gone as PROPS,
+ * not as capacities: `v-specular` ships with `createSpecularWriter` and
+ * `useSpecularTracking` (`src/index.ts:475-479`) over the
+ * `.glass-specular-track` opt-in (`styles/index.css:205`), and grain lives on
+ * as `--glass-grain-opacity` (`styles/tokens/glass-fx.css:10`) and
+ * `@utility paper-grain-overlay` (`styles/paper.css:125`). A card that wants
+ * either arms it on the element.
+ * `cartoon` / `grid` / `metal` / `variant` / `dataHue` /
  * `dataHueStrength` are struck: three of them wrote a class a consumer can write
  * (`cartoon-surface`, `paper-grid`), and `variant`+`dataHue`+`selected` were one
  * state wearing three props. A per-instance rim hue is `--glass-accent`, written
