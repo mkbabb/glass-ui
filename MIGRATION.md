@@ -357,6 +357,98 @@ this component — `mode`, `anchorLabel`, an `anchor` slot, `hideTimeoutMs` — 
 already removed AT 7.0.0; see `## 7.0.0` below. The published 7.0.0 component is 43 lines,
 persistent-only, and renders expanded from first paint.
 
+_Deleted — `AnimatedDigit`_
+[2026-09-18 · O-26 R-11-RIDER-2 — retired at this cut (`4bf53962`, the Φ5 deletion spine)
+with no entry until now. Measured, not recalled: the `exports` key set goes **74 → 70**
+from 7.0.0 to 8.0.0, and this subpath is one of the eleven that retire.]
+
+`AnimatedDigit` is deleted with the `@mkbabb/glass-ui/animated-digit` subpath and its two
+types, `AnimatedDigitProps` and `AnimatedDigitMode`. There is no successor: nothing in the
+library rolls a digit, and a counter that animates its own glyphs is the caller's, not a
+surface's. Delete the import and the specifier together.
+
+_Deleted — `CompletionSeal`_
+[2026-09-18 · O-26 R-11-RIDER-2 — retired at this cut (`4bf53962`, the Φ5 deletion spine)
+with no entry until now.]
+
+`CompletionSeal` is deleted with the `@mkbabb/glass-ui/completion-seal` subpath, its types
+`CompletionSealProps` and `CompletionSealShape`, and the composable door beside it —
+`useCompletionSeal` with `UseCompletionSeal` and `UseCompletionSealOptions`. There is no
+successor, composable included: the whole seal went at once.
+
+_Deleted — `InstrumentChassis`_
+[2026-09-18 · O-26 R-11-RIDER-2 — retired at this cut (`4bf53962`, the Φ5 deletion spine)
+with no entry until now.]
+
+`InstrumentChassis` is deleted with the `@mkbabb/glass-ui/instrument-chassis` subpath and
+all five of its types: `InstrumentChassisProps`, `InstrumentChassisBoundary`,
+`InstrumentChassisProportion`, `InstrumentChassisReserve` and `InstrumentChassisState`.
+There is no successor component. The proportion and reserve it framed are layout the
+caller now owns outright.
+
+_Deleted — `LiquidGrid`_
+[2026-09-18 · O-26 R-11-RIDER-2 — retired at `bda718ac` ("W3 clean deletes"), inside this
+major, with no entry until now.]
+
+`LiquidGrid` is deleted with the `@mkbabb/glass-ui/liquid-grid` subpath and everything that
+door published: the `useLiquidGrid` composable with `LiquidGridHandle` and
+`UseLiquidGridOptions`; the configuration surface `LiquidGridConfig`,
+`DEFAULT_LIQUID_GRID_CONFIG`, `WARM_IDENTITY_INK`, `FACE_WARM_LO`, `FACE_WARM_MID`,
+`FACE_WARM_HI` and `LIQUID_GRID_MAX_MAJOR_EVERY`; and the sampler set `potentialFBM`,
+`curlFBM`, `gridCoverage`, `sampleLiquidGrid`, `gridScaleFor`, `CURL_EPS` with `Vec2`,
+`LiquidGridSampleParams` and `LiquidGridFace`. The `OklchStop` re-export went with it;
+that type has its own door on `@mkbabb/glass-ui/color`. There is no successor.
+
+_Deleted — `PaperBackdrop`_
+[2026-09-18 · O-26 R-11-RIDER-2 — retired at this cut (`4bf53962`, the Φ5 deletion spine)
+with no entry until now.]
+
+`PaperBackdrop` is deleted with the `@mkbabb/glass-ui/paper-backdrop` subpath and its type
+`PaperBackdropProps`. There is no successor component; a page-level ground is a background
+you own.
+
+_Deleted — `Pulse`_
+[2026-09-18 · O-26 R-11-RIDER-2 — retired at `bda718ac` ("the P-CLOSE-ruled pulse →
+StatusDot merge"), inside this major, with no entry until now. The `StatusDot` prop table
+below retires the `pulse` PROP; that is a different object and never recorded this
+component's own retirement.]
+
+`Pulse` is deleted with the `@mkbabb/glass-ui/pulse` subpath and its exported `PulseState`.
+This one is a merge rather than a drop, so it has a successor: liveness is an axis of
+`StatusDot`, never a second component. `PulseState`'s four members — `active`, `idle`,
+`success`, `warning` — are absorbed whole into `StatusDotState`'s seven, so no call site
+loses a state:
+
+```vue
+<!-- was -->
+<Pulse state="active" label="Live" />
+<!-- now -->
+<StatusDot state="active" motion="full" label="Live" />
+```
+
+`state`, `label` and `class` keep their names and meanings, and `motion="full"` is the
+default — but **the default STATE moves, silently**: `Pulse` defaulted to `active`,
+`StatusDot` defaults to `online`, and the breathing is gated to `active` alone
+(`:data-motion="motion === 'full' && state === 'active'"`). So a bare `<Pulse label="Live"/>`
+ports to a STATIC online mark unless you now pass `state="active"` — no type error catches
+it. Any call site that leant on Pulse's default must name the state. Import from
+`@mkbabb/glass-ui` or `@mkbabb/glass-ui/status-dot`, and read the `StatusDot` prop table
+below for the rest.
+
+_Deleted — `WatercolorDot`_
+[2026-09-18 · O-26 R-11-RIDER-2 — retired at `62305f4a` ("the hero ornament dies, the ramp
+is the library's own hand"), inside this major, with no entry until now.]
+
+`WatercolorDot` is deleted with the `@mkbabb/glass-ui/watercolor-dot` subpath and every
+symbol that door published: `useWatercolorBlob` with `UseWatercolorBlobOptions` and
+`WatercolorBlob`, and the seeded-blob helpers `mulberry32`, `hashString`, `randomRadii` and
+`radiiToCSS`. There is no successor in this library — the ornament itself RELOCATED to
+value.js, and the landing ramp it once served is now `<HandMark brush="highlighter"
+shape="highlight">`. Of the four helpers, `mulberry32` and `hashString` live on inside the
+library (`src/composables/glass/procedural/prng.ts`) behind no published door, and
+`randomRadii`/`radiiToCSS` are gone outright: copy whichever you were calling out of your
+pinned 7.0.0 package and into your own tree.
+
 _Class + attribute namespace — `.dropdown-menu__*` → `.menu__*`_
 
 If you style the menu family from outside, the selectors renamed with the family:

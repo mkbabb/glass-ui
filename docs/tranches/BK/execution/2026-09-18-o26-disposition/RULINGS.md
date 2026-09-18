@@ -161,7 +161,12 @@ for what the tarball carries.
   is immutable; its README says nothing of it). Exposure at their pin is NIL: the name occurs once in the 7.0.0
   package (its own definition); the atoms carry real geometry (`.checkbox__seat` 44×44 child, pointer-events auto,
   inside CheckboxRoot; Switch host `min-inline/block-size: var(--touch-target)`; radio seat; coarse
-  `.tags-input__delete`). The Slider thumb is the DELIBERATE exception (`width:0;opacity:0`; the track is the target,
+  `.tags-input__delete`). [2026-09-18 · re-ruled after lane M: the mechanism is named wrong and is
+  stale by a cut—`.checkbox__seat` is the RETIRED absolutely-positioned span (`Checkbox.vue:28-33`),
+  `.tags-input__delete` has zero occurrences (TagsInput deleted at 8.0.0). What ships is HOST-IS-SEAT:
+  the host wears `.control-bit`, sized to `max(--touch-target, face)` IN FLOW
+  (`styles/glass/control-bit.css:142-155`), paint on the `.control-bit__face` child. Exposure is still
+  NIL—the host IS the ≥44 seat.] The Slider thumb is the DELIBERATE exception (`width:0;opacity:0`; the track is the target,
   TR ⊕⁷ on their own measurement)—say so; never claim "every atom".
 - (c) Button: `data-control-target` UNCONDITIONAL at 8.0.0 (`button-yvGPb0Bx.js` byte-identical 8↔9; `70dc0f06`),
   icon-only at 7.0.0, block axis already floored at 7.0.0 via `--button-size` → `--control-h-*` → `--control-floor`.
@@ -172,7 +177,10 @@ for what the tarball carries.
   no charge.
 - R-7-RIDER (docs, CURE-NOW, mints nothing): (1) the MIGRATION `touch-hit-area` removal-table cell—as written it
   prescribes the convicted halo; rewrite to name the keep-the-paint-small door (a real child seat inside the host, the
-  `.checkbox__seat` form) and the attribute floor; (2) `docs/design/design-idioms.md:91`—the removed utility is
+  `.checkbox__seat` form) and the attribute floor [2026-09-18 · re-ruled after lane M: the door to
+  name is HOST-IS-SEAT—the host wears `.control-bit` and IS the seat
+  (`styles/glass/control-bit.css:142-155`), paint small on `.control-bit__face`; the `.checkbox__seat`
+  child-seat form is retired. Cured on that reading at `7c3d5fa3`]; (2) `docs/design/design-idioms.md:91`—the removed utility is
   still the example content for `a11y-overrides.css`; (3) README "Target size" paragraph (README is the only prose
   that installs) naming `[data-control-target]`, `--control-floor`/`--control-h-*`, `.control-bit`'s unconditional
   seat; (4) DESIGN.md: the same three mechanisms beside the tier table (today `[data-control-target]` has one prose
@@ -354,10 +362,22 @@ for what the tarball carries.
   vanishes on re-install. At the bump: HeaderRibbon is DELETED at 8.0.0 (`4bf53962`, 2026-08-04; component,
   `/header-ribbon` subpath, both types, no successor)—compose `<Surface material="functional" surface="glass"
   specular="subtle">` under their own `role="toolbar"`, which is all the 43-line component was.
+  [2026-09-18 · re-ruled after lane M: the recipe is `<Surface tier="floating" surface="glass">`.
+  `SurfaceProps` at 8.0.0/9.0.0/HEAD is `tier | surface | deep | class`; `material` and `specular`
+  were DELETED at 8.0.0—the major this answer documents—so the string above cannot compile at the cut
+  it prescribes. `functional` was the `floating` tier under a second name in 7.0.0's `MATERIAL_TIERS`
+  bijection; `specular` is gone outright.]
 - R-11-RIDER · CURE-NOW (docs, ours): (1) MIGRATION.md `## 8.0.0` is WRONG—"one component is deleted" names only
   TagsInput; add the `_Deleted — HeaderRibbon_` entry (component + subpath + `HeaderRibbonProps`/
   `HeaderRibbonPlacement`, successor recipe as above) and correct the count sentence, following the file's own
-  dated-bracket convention for a late row; (2) `docs/consumer-evidence/header-ribbon.md` still reads RETAINED—a
+  dated-bracket convention for a late row [2026-09-18 · re-ruled after lane M on two limbs: (a) the
+  successor recipe is `<Surface tier="floating" surface="glass">`, per the bracket above; (b) the count
+  sentence was SCOPED, not corrected—"one component is deleted" is batch arithmetic for the one export
+  re-cut it sits in (`exports` 66 → 70, two keys retire), `./header-ribbon` is not one of the two, and
+  `4bf53962` is outside the batch, so "two" would have been false. The sentence stands and its bracket
+  is now a scope note pointing at the HeaderRibbon entry (`7c3d5fa3`). The wider defect the
+  measurement exposed—seven retired subpaths with no record at all—is the new LEDGER row
+  R-11-RIDER-2]; (2) `docs/consumer-evidence/header-ribbon.md` still reads RETAINED—a
   record, so it takes a dated deletion bracket at its head (deleted at 8.0.0, `4bf53962`; historical), not a delete.
 
 ### R-12 (KF-SCR-2 ≡ KF-EST-2) · state9 LIVE · ANSWER (the font decision, RATIFIED) + doc arm CURE-NOW

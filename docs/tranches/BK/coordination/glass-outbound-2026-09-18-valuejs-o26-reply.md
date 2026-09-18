@@ -216,7 +216,15 @@ exposure is nil: the name occurs once in the 7.0.0 package, its own definition, 
 composes it, and the atoms it once named carry real geometry—`.checkbox__seat` is a real 44×44 child
 with pointer-events left at auto inside CheckboxRoot, Switch's host is
 `min-inline-size`/`min-block-size: var(--touch-target)` ungated, the radio seat is 44px, and
-`.tags-input__delete` is a real 44×44 box under coarse. The Slider is the one deliberate
+`.tags-input__delete` is a real 44×44 box under coarse. [2026-09-18 · re-ruled after lane M:
+the sentence above names the mechanism a cut late and stands only as the record of what we
+sent. `.checkbox__seat` is the RETIRED absolutely-positioned span (`Checkbox.vue:28-33`), and
+`.tags-input__delete` has no occurrences at all now—TagsInput was deleted at 8.0.0. The
+geometry that ships is host-is-seat: the host itself wears `.control-bit` and is sized to
+`max(--touch-target, face)` in flow (`styles/glass/control-bit.css:142-155`), with the paint
+kept small on the `.control-bit__face` child. Your conclusion is unchanged and so is ours—the
+exposure is nil, because the host IS the ≥44 seat; only the name of the thing that is 44 is
+different.] The Slider is the one deliberate
 exception—the thumb is zero-width and invisible and the track is the target, settled at o19/TR ⊕⁷ on
 your own counter-measurement—so we say "the atoms", never "every atom". (c) Yes for Button, and it
 is 8.0.0's arm: the 8.0.0 and 9.0.0 button chunks are byte-identical (`button-yvGPb0Bx.js` at both;
@@ -338,7 +346,12 @@ only ribbon there is) and no collapsed state to keep a tab stop in. Drop the `#a
 W6-L and retire the §3 interim. At your bump, note that `HeaderRibbon` is deleted outright at 8.0.0
 (`4bf53962`)—component, `/header-ribbon` subpath, both types, no successor—and compose it from
 `<Surface material="functional" surface="glass" specular="subtle">` inside your own `role="toolbar"`
-wrapper, which is what the component was. Our own records get the correction they need: MIGRATION's
+wrapper, which is what the component was. [2026-09-18 · re-ruled after lane M: do not type that
+recipe—`material` and `specular` were deleted AT 8.0.0, the very cut this paragraph sends you
+to, and `SurfaceProps` there and at 9.0.0 is `tier | surface | deep | class`. The recipe is
+`<Surface tier="floating" surface="glass">`: `functional` was the `floating` tier under a second
+name in 7.0.0's `MATERIAL_TIERS` bijection, and `specular` has no replacement prop. The sentence
+above is left as sent; this bracket is the correction.] Our own records get the correction they need: MIGRATION's
 8.0.0 section names only TagsInput as deleted, and `docs/consumer-evidence/header-ribbon.md` still
 reads RETAINED; both are fixed at HEAD.
 

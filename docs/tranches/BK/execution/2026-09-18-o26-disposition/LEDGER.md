@@ -345,7 +345,14 @@ and the 44px box was a geometry for a computed-style readback. No 7.x doc republ
 immutable and its README says nothing of it. The atoms it once named carry real geometry:
 `.checkbox__seat` is a real 44×44 child with `pointer-events` left at auto inside CheckboxRoot;
 Switch's host is `min-inline-size`/`min-block-size: var(--touch-target)` ungated; the radio seat
-is 44px; `.tags-input__delete` is a real 44×44 box under coarse. The Slider thumb is the
+is 44px; `.tags-input__delete` is a real 44×44 box under coarse. [2026-09-18 · re-ruled
+after lane M: the named mechanism is stale by a cut—`.checkbox__seat` is the RETIRED
+absolutely-positioned span (`Checkbox.vue:28-33`), and `.tags-input__delete` has zero
+occurrences at HEAD (TagsInput was deleted at 8.0.0). The shipping mechanism is
+HOST-IS-SEAT: the host itself wears `.control-bit`, sized to `max(--touch-target, face)` in
+flow (`styles/glass/control-bit.css:142-155`), with the paint on the `.control-bit__face`
+child. The conclusion is untouched—exposure is still nil, because the host IS the ≥44 seat;
+only the name of the geometry changes.] The Slider thumb is the
 DELIBERATE exception (`width: 0; opacity: 0`; the track is the target, settled at o19/TR ⊕⁷ on
 their own measurement)—said plainly; we never claim "every atom". (c) Button wears
 `data-control-target` UNCONDITIONALLY from 8.0.0, not 9.0.0: the 8.0.0 and 9.0.0 chunks
@@ -372,7 +379,12 @@ by the standing ruling `tests/components/a11y/coarse-target.test.ts`.
 
 **Grounds and cure (at HEAD).** (1) The MIGRATION.md `touch-hit-area` removal-table cell as
 written prescribes the halo they convict; rewrite it to name the keep-the-paint-small door (a
-real child seat inside the host, the `.checkbox__seat` form) and the attribute floor. (2)
+real child seat inside the host, the `.checkbox__seat` form) and the attribute floor.
+[2026-09-18 · re-ruled after lane M: the door to name is HOST-IS-SEAT, not the
+`.checkbox__seat` child-seat form—that span is retired (`Checkbox.vue:28-33`). The host
+wears `.control-bit` and IS the seat, sized to `max(--touch-target, face)` in flow
+(`styles/glass/control-bit.css:142-155`); the paint stays small on `.control-bit__face`.
+Cured on that reading at `7c3d5fa3`.] (2)
 `docs/design/design-idioms.md:91` still uses the removed utility as the example content for
 `a11y-overrides.css`. (3) README's "Target size" paragraph—the README is the only prose that
 installs—names `[data-control-target]`, `--control-floor`/`--control-h-*` and `.control-bit`'s
@@ -584,7 +596,12 @@ is no anchor to omit and no collapsed state to keep a tab stop in.
 **Answer.** At the bump, HeaderRibbon is DELETED at 8.0.0 (`4bf53962`, 2026-08-04): the component,
 the `/header-ribbon` subpath and both types, with no successor. Compose `<Surface
 material="functional" surface="glass" specular="subtle">` under their own `role="toolbar"`
-wrapper, which is all the 43-line component was.
+wrapper, which is all the 43-line component was. [2026-09-18 · re-ruled after lane M: the
+recipe is `<Surface tier="floating" surface="glass">`. `SurfaceProps` at 8.0.0, 9.0.0 and
+HEAD is `tier | surface | deep | class`; `material` and `specular` were DELETED at 8.0.0—the
+very major this answer documents—so the string as written cannot compile at the cut it
+prescribes. `functional` was the `floating` tier under a second name in 7.0.0's
+`MATERIAL_TIERS` bijection, and `specular` is simply gone.]
 
 **Seats.** Investigate: DEAD → ANSWER on the published bytes. Verify: UPHELD. Driver: ANSWER.
 
@@ -600,13 +617,74 @@ still reads RETAINED.
 
 **Cure (at HEAD, docs).** (1) Add the `_Deleted — HeaderRibbon_` entry (component, subpath,
 `HeaderRibbonProps`/`HeaderRibbonPlacement`, the successor recipe above) and correct the count
-sentence, following the file's own dated-bracket convention for a late row. (2)
+sentence, following the file's own dated-bracket convention for a late row. [2026-09-18 ·
+re-ruled after lane M, on two limbs. (a) The successor recipe is `<Surface tier="floating"
+surface="glass">`, for the reason bracketed under R-11. (b) The count sentence was SCOPED, not
+corrected. "One component is deleted" is batch arithmetic inside a paragraph that tallies ONE
+export re-cut (`exports` 66 → 70, two keys retire, six mint); `./header-ribbon` is not one of the
+two counted keys and `4bf53962` is outside the batch, so "two components are deleted" would have
+been false. Lane M left the sentence standing and re-wrote the bracket as a scope note that points
+at the HeaderRibbon entry below it (`7c3d5fa3`). The premise of this row—the count says one and
+HeaderRibbon is unnamed—held; only its verb was wrong. The wider defect the measurement exposed is
+R-11-RIDER-2.] (2)
 `docs/consumer-evidence/header-ribbon.md` is a record, so it takes a dated deletion bracket at its
 head (deleted at 8.0.0, `4bf53962`; historical), not a delete.
 
 **Seats.** Raised by the investigate seat, confirmed by the verifier. Driver: CURE-NOW, Lane M.
 
 **Open items.** None.
+
+### R-11-RIDER-2 · seven retired 8.0.0 subpaths with no MIGRATION record at all—DEAD → CURE-NOW (docs)
+
+[2026-09-18 · re-ruled after lane M: this row did not exist when the disposition closed. Lane M's
+adjudicator found it while measuring R-11-RIDER's count sentence—the defect is the same class,
+wider than the row as ruled—and the driver RATIFIES it here as its own row rather than letting a
+lane mint scope for itself.]
+
+**7.0.0 consequence.** None at their pin; every one of these subpaths RESOLVES at 7.0.0 and the
+consumer letter neither cites nor needs them. This is a record defect on our side: a consumer who
+bumps loses seven published doors and MIGRATION says nothing about any of them.
+
+**Grounds (measured at HEAD, `git show v7.0.0:package.json` vs `git show v8.0.0:package.json`).**
+The `exports` key set goes **74 → 70**: eleven keys retire, seven mint. Only THREE of the eleven
+are recorded—`./dropdown-menu` (the re-point row), `./forms` (the split row), `./header-ribbon`
+(lane M's `_Deleted — HeaderRibbon_` entry at `7c3d5fa3`). Eight are not: the seven below, plus
+`./drawer`, which is noted as this row's open item. The seven this row carries HAD **zero
+occurrences anywhere in MIGRATION.md above `## 7.0.0`** — in either the kebab subpath or the
+component name, measured against the pre-cure tree (`git show HEAD:MIGRATION.md` at `c6251420`);
+each occurs now only in the entry the cure below writes for it:
+
+| subpath | component | deleting commit | successor on disk at HEAD |
+| --- | --- | --- | --- |
+| `./animated-digit` | `AnimatedDigit` | `4bf53962` (2026-08-04, the Φ5 deletion spine) | none |
+| `./completion-seal` | `CompletionSeal` | `4bf53962` | none |
+| `./instrument-chassis` | `InstrumentChassis` | `4bf53962` | none |
+| `./paper-backdrop` | `PaperBackdrop` | `4bf53962` | none |
+| `./liquid-grid` | `LiquidGrid` | `bda718ac` (2026-07-20, W3 clean deletes) | none |
+| `./watercolor-dot` | `WatercolorDot` | `62305f4a` (2026-08-07, BK #55 WATERCOLOR-RELOCATE) | none published (the `mulberry32` PRNG survives at `src/composables/glass/procedural/prng.ts`, behind no door) |
+| `./pulse` | `Pulse` | `bda718ac`, RENAMED not deleted—the P-CLOSE-ruled `pulse` → `StatusDot` merge | `<StatusDot :state motion="full">` on `./status-dot` |
+
+Every one of the three shas is an ancestor of `v8.0.0` and none is an ancestor of `v7.0.0`, so all
+seven retirements belong under `## 8.0.0` and nowhere else. `./pulse` is the one rename in the set;
+the StatusDot prop table already in the 8.0.0 section documents the retired `pulse` PROP, which is
+a different object and is why the component's own retirement reads as recorded when it is not.
+
+**Cure (at HEAD, docs).** One `_Deleted — <Name>_` entry per row above, under `## 8.0.0` beside the
+`_Deleted — HeaderRibbon_` entry and in its exact form: component, subpath, the types the 7.0.0
+`index.ts` exported, the deleting commit, and a successor recipe ONLY where one exists on disk—
+otherwise "no successor" said plainly. Each carries the file's late-row dated bracket. Nothing is
+un-deleted and no door re-opens; the cure is the record that was owed at the cut.
+
+**Seats.** Raised by lane M's adjudicator as residue (`M-A-2`), re-measured by the driver against
+both package manifests, RATIFIED as this row. Driver: CURE-NOW, Lane M2.
+
+**Open items.** `./drawer` — the eleventh retired key, folded WHOLE into `./sheet` at `336dacf9`
+("the detent is a size, the drawer folds in whole"). It is unrecorded in the same way, but it is a
+fold rather than a deletion, and MIGRATION still speaks of `Drawer` as live in two sentences of the
+`## 8.0.0` stage paragraph — cited by phrase rather than line, because any insertion above them
+moves the number: "`stage="immersive"` on `Dialog`/`Drawer` paints one fixed `14px`" and "Only
+`Dialog` and `Drawer` accept". So its cure is a rewrite of the `./sheet` row and those two
+sentences, not a `_Deleted —` entry. Left for the driver, deliberately outside this row's scope.
 
 ### R-12 · `text-caption` is italic while no italic face ships—LIVE → ANSWER (+ doc arm CURE-NOW)
 
@@ -848,6 +926,7 @@ disjoint file fences, driver commits by pathspec.
 | A · aurora | R-4, R-5, R-6, R-6-LIGHT (a)(b), O-26-INT-1 | `AuroraConfig.alpha` JSDoc; the custom-property routing plus the two media arms in `Aurora.vue`'s scoped block (the verifier's measured shape); three wake guards plus the `update()` comment; `AuroraAtomsBase.seed` JSDoc; the `light` JSDoc and the `isAuroraPointerEnabled` impasto term (measure which media carry impasto first); the envelope reset on the PRM transition; witnesses in the existing aurora/a11y/pointer-field tests, the implement seat naming the files |
 | B · boolean cast | R-3 | Collapsible `open: undefined`; Chip `modelValue: undefined` ONLY; LabeledSwitch `modelValue: undefined` plus `modelValue?: boolean`; witnesses including the Chip `aria-pressed` guard and the emitted-chunk assertion |
 | M · manifest + docs | R-7-RIDER, R-10-RIDER, R-11-RIDER, R-12 doc arm, R-15-RIDER, R-16-RIDER, the A-3-CLASS scope note | every MIGRATION addition follows the file's own dated-bracket convention for late rows and sits under the major that shipped it (the lane MEASURES 8.0.0 against 9.0.0 from the dists where the ruling says so); README/DESIGN/design-idioms edits as ruled; the `docs/consumer-evidence/header-ribbon.md` dated deletion bracket; the O-20 LEDGER A-3-CLASS scope note (the SFC half plus the consumer-readable manifest) |
+| M2 · the retired-subpath record | R-11-RIDER-2, plus the three re-rulings lane M's adjudication forced back onto this ledger, RULINGS and the sent letter | seven `_Deleted — <Name>_` entries under `## 8.0.0` in the HeaderRibbon entry's exact form, each with the file's late-row bracket and each re-measured from the two package manifests before it is written; dated `re-ruled after lane M` brackets on the dead `<Surface material=…>` recipe, the `.checkbox__seat` mechanism and the count-sentence verb, wherever this ledger, RULINGS or the letter carries them—the letter's prose is a SENT record, so it takes brackets and no rewrites; the roster arm and the gate receipt re-run [2026-09-18 · re-ruled after lane M: lane added at re-rule time] |
 
 Discipline, every lane: born-RED witnesses on bytes; gates exactly 60; nothing minted;
 `.published-roster` untouched (no `@theme`/`@utility` departs); `.bundle-ratchet` rebound only if
@@ -868,7 +947,7 @@ datum); shared-tree discipline, no seat commits, driver commits by pathspec; no 
 
 | disposition | rows |
 | --- | --- |
-| CURE-NOW | R-3 · R-4 (doc) · R-5 · R-6 · R-6-LIGHT (a, b) · R-7-RIDER · R-8 · R-10-RIDER · R-11-RIDER · R-12 (doc arm) · R-15-RIDER · R-16-RIDER · O-26-INT-1 (13) |
+| CURE-NOW | R-3 · R-4 (doc) · R-5 · R-6 · R-6-LIGHT (a, b) · R-7-RIDER · R-8 · R-10-RIDER · R-11-RIDER · R-11-RIDER-2 · R-12 (doc arm) · R-15-RIDER · R-16-RIDER · O-26-INT-1 (14) |
 | ANSWER | R-1 · R-2 · R-4 (answer half) · R-7 · R-9 · R-10 · R-11 · R-12 · R-13 · R-14 · R-15 · R-16 · R-S2 (13) |
 | DECLINE | R-4 (hide-on-arm) · R-6 (the non-throwing atoms bridge) · R-9 (a `ChipGroup`; the Chip-in-ToggleGroup-context arm) · R-10 (restoring the blanket `--glass-cell-backdrop-filter`) (5 limbs across 4 rows) |
 | CURE-NEXT-MAJOR | R-6-LIGHT (c) · A-3-CLASS (standing, carries R-1's label half) (2) |
@@ -878,11 +957,14 @@ datum); shared-tree discipline, no seat commits, driver commits by pathspec; no 
 | --- | --- |
 | LIVE | R-4 · R-5 · R-6 · R-6-LIGHT · R-7-RIDER · R-8 · R-9 · R-10-RIDER · R-11-RIDER · R-12 · R-13 · R-14 · R-15-RIDER · R-16-RIDER · O-26-INT-1 (15) |
 | PARTIAL | R-1 · R-3 · R-10 · R-S2 (4) |
-| DEAD | R-2 · R-7 · R-11 · R-16 (4) |
+| DEAD | R-2 · R-7 · R-11 · R-11-RIDER-2 · R-16 (5) |
 | NOT-APPLICABLE | R-15 (1) |
 | MOVED | none |
 
-Twenty-four rows, every letter row answered by id, nothing disposed re-opened. Nothing in the
+Twenty-five rows [2026-09-18 · re-ruled after lane M: twenty-four at the close; R-11-RIDER-2 is
+the twenty-fifth, ratified by the driver after lane M's adjudication measured the export delta.
+It is ours, not a letter row—the letter-row count is unchanged], every letter row answered by id,
+nothing disposed re-opened. Nothing in the
 CURE-NOW set removes or renames a published export, class, token or subpath. Four cures change
 computed paint on purpose and each states it: R-5 (the aurora a11y arms, which bite only where
 `opacityCeiling < 1`), R-6 and O-26-INT-1 (what the PRM frame holds), R-3 (an uncontrolled Chip or
