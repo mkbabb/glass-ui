@@ -81,7 +81,7 @@ const RULES: ReadonlyArray<readonly [string, RegExp]> = [
     // Button variant under the previous catch-all `text-color` bucket).
     [
         "font-size",
-        /^text-(micro|small|caption|body|prose|admin-label|heading|subheading|title|display|display-hero|display-mega|display-audacious|display-2|display-3|display-4|display-5|hero|math|math-body|mono-caption|mono-small|mono-prose|mono-micro)$/,
+        /^text-(micro|small|caption|body|prose|heading|subheading|title|display|display-hero|display-mega|display-audacious|display-2|display-3|display-4|display-5|hero|math|math-body|mono-caption|mono-small|mono-prose|mono-micro)$/,
     ],
     [
         "font-weight",

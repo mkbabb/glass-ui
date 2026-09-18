@@ -789,6 +789,17 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
                 surface: "var(--card)",
                 arm: "light",
             },
+            // Stop 5's comment makes a SECOND claim, about the dark arm, and it is the
+            // one figure in this file that stated a floor it had never been held to.
+            // It is a claim about bytes like any other, so it is enrolled like any
+            // other — and it is the only DARK row the ramp carries.
+            {
+                file: LIGHT_TOKENS,
+                claim: "O-20 residue: 7.72:1",
+                ink: "var(--section-color-5)",
+                surface: "var(--card)",
+                arm: "dark",
+            },
         ];
 
         for (const { file, claim, ink, surface, arm } of CLAIMS) {
@@ -833,10 +844,16 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
     // never been measured by anyone: the consumer who filed the ask has eleven chapters
     // and stopped at stop 10.
     //
-    // LIGHT ONLY. The dark arm computes 4.76–7.85 across all thirteen and is untouched
-    // by the cure, so the rows that would hold it would be rows about bytes nobody
-    // moved; §6c holds the thing that CAN silently break instead — the two files that
-    // must declare one ramp.
+    // LIGHT ONLY, with one exception. The dark arm computes 4.76–7.85 across all
+    // thirteen — re-derived on this HEAD through this file's own engine, and the
+    // thirteen figures are banked in `docs/tranches/BK/execution/2026-09-17-o20-cure/
+    // R/RECORD.md` rather than restated here, which is the same rule that took the
+    // per-rung figures out of the token comments. The dark arm is untouched by the
+    // cure, so thirteen rows holding it would be rows about bytes nobody moved. The
+    // exception is stop 5, whose comment CLAIMED a dark figure — that is a claim, and
+    // §5 holds it like every other. §6c holds the thing that CAN silently break
+    // instead — the files that must declare one ramp; §6d extends that to the demo's
+    // literal third copy.
     describe("§6 the 13-stop section ramp reads as text on the card it lands on", () => {
         const STOPS = Array.from({ length: 13 }, (_, i) => i);
 
@@ -897,6 +914,40 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
                     `--section-color-${stop} forked between the two light arms`,
                 ).toBe(base[`--section-color-${stop}`]);
             }
+        });
+
+        // §6d · a THIRD file declares this ramp. `demo/chassis/hero/aurora-hero.ts`
+        // carries the thirteen values as TypeScript literals because the hero needs
+        // them at module time and the demo parses no CSS — its own comment says they
+        // are "the light-mode library token values … read AS DATA". Read as data is
+        // exactly the thing that goes stale silently: the B-7 retune moved four rungs
+        // and this copy kept the old ones. The literal stays (an import of the CSS
+        // would not give the hero a value at module time); what changes is that it is
+        // now HELD, so the next retune REDs here instead of drifting.
+        it("LOCKSTEP — the demo hero's literal ramp declares the SAME 13 values as the base", () => {
+            const base = declarations(read(LIGHT_TOKENS));
+            const hero = read("demo/chassis/hero/aurora-hero.ts");
+            const block = hero.match(
+                /SECTION_COLOR_OKLCH:\s*readonly string\[\]\s*=\s*\[([\s\S]*?)\];/,
+            );
+            expect(block, "aurora-hero.ts declares SECTION_COLOR_OKLCH").not.toBeNull();
+            const literals = [...block![1].matchAll(/"(oklch\([^"]+\))"/g)].map(
+                (m) => m[1],
+            );
+            expect(literals, "the hero copy has thirteen rungs").toHaveLength(13);
+            // Every fork at once, not the first one. A ramp retune moves several rungs
+            // in one edit, and a row-at-a-time assertion reports one of them and hides
+            // the rest — which is how a partial re-copy passes on the second run.
+            const forked = STOPS.filter(
+                (stop) => literals[stop] !== base[`--section-color-${stop}`],
+            ).map(
+                (stop) =>
+                    `--section-color-${stop}: hero ${literals[stop]} vs tokens ${base[`--section-color-${stop}`]}`,
+            );
+            expect(
+                forked,
+                `the demo hero's literal ramp forked from the tokens it says it copies:\n${forked.join("\n")}`,
+            ).toEqual([]);
         });
     });
 

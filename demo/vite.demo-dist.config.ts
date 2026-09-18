@@ -2,6 +2,7 @@ import { resolve } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import { defineConfig, type Plugin } from "vite";
+import { darkModeStamp } from "../vite.dark-stamp";
 import { glassCssTarget } from "../vite.targets";
 import { normalizeBackdropFilterPairs } from "../vite.style-fold";
 
@@ -55,7 +56,11 @@ export default defineConfig({
             "@glass": resolve(repoRoot, "src"),
         },
     },
-    plugins: [tailwindcss(), vue(), normalizeDemoCssAssets()],
+    // `darkModeStamp()` is the SAME plugin the dev server runs (`vite.dark-stamp.ts`,
+    // the one module both configs import). It is listed here because this config
+    // replaces the root one wholesale: without the line, the BUILT demo — the bytes
+    // the paint-judge serves — carries the FOUC the dev server no longer has.
+    plugins: [tailwindcss(), vue(), darkModeStamp(), normalizeDemoCssAssets()],
     build: {
         cssTarget: glassCssTarget,
         // A dedicated output dir — NEVER the library `dist/` (which the

@@ -489,4 +489,42 @@ describe("G-NO-FLASH — the parse-time stamp: precedence, determinism, write-ba
         },
         30_000,
     );
+
+    it(
+        "G-NO-FLASH · the BUILT demo stamps too — demo/vite.demo-dist.config.ts carries it",
+        async () => {
+            // The root `vite.config.ts` is the LIBRARY build (`build.lib`), and in lib
+            // mode vite never reads `index.html` — so no root build emits demo HTML.
+            // The built demo comes from this STANDALONE config, which its own header
+            // says "fully REPLACES the root vite.config.ts": it lists its plugins
+            // itself, so it does not inherit the stamp. Until this arm, the dev server
+            // was stamped and `dist-demo/index.html` — the bytes the paint-judge serves
+            // and the ones a viewer actually loads — was not.
+            const loaded = await loadConfigFromFile(
+                { command: "build", mode: "production" },
+                resolve(process.cwd(), "demo/vite.demo-dist.config.ts"),
+            );
+            const plugins = ((loaded?.config.plugins ?? []) as unknown[]).flat(
+                Infinity,
+            ) as Plugin[];
+            const stamp = plugins.find((p) => p?.name === "glass-ui:dark-mode-stamp");
+            expect(
+                stamp,
+                "demo/vite.demo-dist.config.ts carries the dark-mode stamp plugin",
+            ).toBeTruthy();
+
+            const hook = stamp?.transformIndexHtml;
+            const handler = (typeof hook === "function" ? hook : hook?.handler) as unknown as (
+                html: string,
+                ctx: unknown,
+            ) => Array<{ tag: string; children?: string; injectTo?: string }>;
+            const tags = await handler("<html><head></head><body></body></html>", {});
+
+            expect(tags).toHaveLength(1);
+            expect(tags[0].tag).toBe("script");
+            expect(tags[0].injectTo).toBe("head-prepend");
+            expect(tags[0].children).toBe(darkModeSyncScript());
+        },
+        30_000,
+    );
 });

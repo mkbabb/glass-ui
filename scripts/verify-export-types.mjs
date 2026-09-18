@@ -341,6 +341,187 @@ function validateCss({ artifactRoot, files, entries, failures, pkg }) {
     return { count: visited.size, files: visited };
 }
 
+// ── the published-name roster and its ratchet ─────────────────────────────────────
+//
+// A-4-RIDER and B-3 are the same defect twice: thirteen `@theme` tokens and three
+// `@utility` classes left the published CSS at 8.0.0 and NOTHING noticed, because the
+// only artefact that tracks a published name is prose a human remembers to write. The
+// bundle ratchet pins the package's SIZE; this pins its NAMES. Same idiom, same repo
+// root, same "every movement is a deliberate rebind" law.
+//
+// The roster is what the library DECLARES on the `./styles` surface, read off the same
+// closure `validateCss` already walked: `@theme` custom-property names and `@utility`
+// names. It is NOT the scanner's emission — `components.css`'s `hover:bg-foreground/5`
+// and its kin are Tailwind's output from our source text, not names we publish.
+//
+// CLASS SELECTORS ARE DELIBERATELY OUT, and the grounds are measured, not asserted.
+// The O-20 disposition scoped this ratchet over `@layer components` class names too.
+// Written that way it fired 3 removals from 7.0.0 to HEAD and TWO OF THE THREE WERE
+// FALSE — `.accent-tone` and `.glass-drag-lift` still ship; they had simply moved out
+// of a `@layer components` block into an unlayered rule, which A-3-CLASS counts 351 of.
+// Widened to every class in a hand-authored selector in the closure, the same interval
+// moves 134 names out and 107 in — almost all of them component-internal BEM parts
+// (`.completion-seal__disc`, `.timeline-popover-body`, `.checkbox__seat`). A MIGRATION
+// row per BEM leaf is not a migration guide, and a ratchet nobody can satisfy is a
+// ratchet somebody turns off. The published surface is the COMPONENT, not its parts.
+// A token and a utility are different: a consumer reaches them BY NAME, through
+// `var(--x)` and a class attribute, and those are precisely the two name sets
+// A-4-RIDER (246 → 242) and B-3 (49 → 47) measured. So those two are what this pins.
+// The `.dropdown-menu__*` → `.menu__*` family is the counter-example that proves the
+// line: it IS a published rename, and it has a MIGRATION row precisely because someone
+// judged it consumer-facing. That judgement is not mechanisable from a selector.
+
+// A naive `/\/\*[\s\S]*?\*\//g` strip eats from the `/*` INSIDE `@source "../*.js"` to
+// the next `*/`, swallowing whole declaration blocks — that string-interior `/*` is the
+// one A-1 measured at `styles/index.css`. String-aware, therefore, and not a regex.
+export function stripCssComments(source) {
+    let out = "";
+    let index = 0;
+    while (index < source.length) {
+        const char = source[index];
+        if (char === '"' || char === "'") {
+            out += char;
+            index++;
+            while (index < source.length) {
+                if (source[index] === "\\") {
+                    out += source.slice(index, index + 2);
+                    index += 2;
+                    continue;
+                }
+                out += source[index];
+                const closed = source[index] === char;
+                index++;
+                if (closed) break;
+            }
+            continue;
+        }
+        if (char === "/" && source[index + 1] === "*") {
+            const end = source.indexOf("*/", index + 2);
+            index = end < 0 ? source.length : end + 2;
+            out += " ";
+            continue;
+        }
+        out += char;
+        index++;
+    }
+    return out;
+}
+
+/** The body span of the block whose `{` follows `from`, brace-counted. */
+function blockBody(source, from) {
+    const open = source.indexOf("{", from);
+    if (open < 0) return null;
+    let depth = 0;
+    for (let index = open; index < source.length; index++) {
+        if (source[index] === "{") depth++;
+        else if (source[index] === "}" && --depth === 0) return [open + 1, index];
+    }
+    return null;
+}
+
+/** Custom-property names declared at depth 0 of a block body. */
+function declaredCustomProperties(body) {
+    const names = [];
+    let depth = 0;
+    let statement = "";
+    const take = () => {
+        const match = /^\s*(--[A-Za-z0-9_-]+)\s*:/.exec(statement);
+        if (match && depth === 0) names.push(match[1]);
+    };
+    for (const char of body) {
+        if (char === "{") { depth++; statement = ""; }
+        else if (char === "}") { depth--; statement = ""; }
+        else if (char === ";") { take(); statement = ""; }
+        else statement += char;
+    }
+    take();
+    return names;
+}
+
+export function publishedRoster(artifactRoot, cssFiles) {
+    const theme = new Set();
+    const utility = new Set();
+    for (const file of cssFiles) {
+        const source = stripCssComments(readFileSync(resolve(artifactRoot, file), "utf8"));
+        for (const match of source.matchAll(/@theme\b[^{]*/g)) {
+            const span = blockBody(source, match.index);
+            if (!span) continue;
+            for (const name of declaredCustomProperties(source.slice(span[0], span[1]))) theme.add(name);
+        }
+        for (const match of source.matchAll(/@utility\s+([^\s{]+)/g)) utility.add(match[1]);
+    }
+    return [
+        ...[...theme].map((name) => `theme ${name}`),
+        ...[...utility].map((name) => `utility ${name}`),
+    ].sort();
+}
+
+export function rosterDatumLines(raw) {
+    if (!raw.endsWith("\n")) throw new Error("G-NO-ORPHAN-EXPORT: .published-roster must end in exactly one LF");
+    const lines = raw.slice(0, -1).split("\n");
+    if (lines.some((line) => line !== line.trim() || line === "")) {
+        throw new Error("G-NO-ORPHAN-EXPORT: .published-roster carries a blank or padded line");
+    }
+    const sorted = [...lines].sort();
+    if (!isDeepStrictEqual(lines, sorted)) throw new Error("G-NO-ORPHAN-EXPORT: .published-roster is not sorted");
+    if (new Set(lines).size !== lines.length) throw new Error("G-NO-ORPHAN-EXPORT: .published-roster carries a duplicate");
+    return lines;
+}
+
+/** Both directions fail, and they fail for different reasons.
+ *
+ *  A SHRINK is excused by one thing only: a MIGRATION.md REMOVAL-TABLE ROW whose first
+ *  cell is the backticked bare name — `| `--radius-input` | … |`. A mention is not a
+ *  row. A sentence about the name excuses nothing, and neither does the name turning up
+ *  in some OTHER row's successor cell. That distinction is the whole arm: a whole-file
+ *  substring test calls almost every live name "named" (27 of the 289 committed names
+ *  were pre-excused that way, 11 of them by a successor cell), so it would have gone
+ *  silent on the very removals it exists to catch. The removal is fine; the silence is
+ *  the defect.
+ *
+ *  A GROWTH is never excused here. It is the bundle ratchet's posture: a new published
+ *  name is a deliberate act, so the datum moves deliberately with it.
+ *
+ *  A MISSING datum takes that same posture (`ratchetEvidence`): it throws unless the
+ *  caller says otherwise, because an armless ratchet is indistinguishable from a green
+ *  one at the release path. */
+export function rosterRatchetFailures(repositoryRoot, roster, { allowMissingRatchet = false } = {}) {
+    const datumPath = resolve(repositoryRoot, ".published-roster");
+    if (!existsSync(datumPath)) {
+        if (!allowMissingRatchet) throw new Error("G-NO-ORPHAN-EXPORT: .published-roster is missing; bind the emitted roster deliberately");
+        return { status: "ABSENT", datumPath, failures: [] };
+    }
+    const datum = rosterDatumLines(readFileSync(datumPath, "utf8"));
+    const emitted = new Set(roster);
+    const migrationPath = resolve(repositoryRoot, "MIGRATION.md");
+    const migration = existsSync(migrationPath) ? readFileSync(migrationPath, "utf8") : "";
+    const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const failures = [];
+    const unnamed = [];
+    for (const line of datum) {
+        if (emitted.has(line)) continue;
+        // `theme --radius-input` → `--radius-input`; `utility glass-fill` →
+        // `glass-fill`. The bare name has to OPEN a table row: first cell, backticked,
+        // nothing else in it. Deliberately not a word boundary — a successor cell
+        // (`| `--other` | use `--gone` instead |`) must not excuse a removal.
+        const name = line.slice(line.indexOf(" ") + 1);
+        const removalRow = new RegExp("^\\|\\s*`" + escapeRegExp(name) + "`\\s*\\|", "m");
+        if (!removalRow.test(migration)) unnamed.push(line);
+    }
+    if (unnamed.length) {
+        failures.push(
+            `.published-roster: ${unnamed.length} published name(s) left the emitted roster with no MIGRATION.md row: ${unnamed.join(", ")}`,
+        );
+    }
+    const grown = roster.filter((line) => !datum.includes(line));
+    if (grown.length) {
+        failures.push(
+            `.published-roster: ${grown.length} name(s) in the emitted roster are not in the datum — rebind deliberately: ${grown.join(", ")}`,
+        );
+    }
+    return { status: "PRESENT", datumPath, datum: datum.length, emitted: roster.length, failures };
+}
+
 export function packedCssSetFailures(expectedCss, packedFiles) {
     const actualCss = new Set(
         [...packedFiles]
@@ -828,6 +1009,11 @@ export function verifyExportTypes({
     const { failures, claims, declarationEntries, cssEntries } = packageClaims(pkg, files);
     const declarationCount = validateDeclarations({ artifactRoot, pkg, files, entries: declarationEntries, failures });
     const cssClosure = validateCss({ artifactRoot, files, entries: cssEntries, failures, pkg });
+    // The published-NAME ratchet rides the same closure the CSS walk just produced, so
+    // it costs one pass over files already read and cannot drift from what validateCss
+    // considers published.
+    const roster = rosterRatchetFailures(repositoryRoot, publishedRoster(artifactRoot, cssClosure.files), { allowMissingRatchet });
+    failures.push(...roster.failures);
     if (failures.length) throw new Error(`Invalid package artifact:\n${failures.join("\n")}`);
 
     let packEvidence = null;
@@ -869,6 +1055,7 @@ export function verifyExportTypes({
             claims: claims.size,
             declarations: declarationCount,
             css: cssClosure.count,
+            roster: { status: roster.status, datum: roster.datum ?? null, emitted: roster.emitted ?? null },
             pack: packEvidence,
             install: installEvidence,
             ratchet,

@@ -706,7 +706,10 @@ describe("Row 8 package falsifiers", () => {
                 const attempt = (css) => {
                     writeFileSync(root + "/dist/styles/index.css", css);
                     try {
-                        const evidence = verifyExportTypes({ repositoryRoot: root, artifactRoot: root + "/dist" });
+                        // A synthetic root has no \`.published-roster\` and is not owed
+                        // one — this arm plants a CSS parse defect, not a name removal.
+                        // Same opt-out the byte ratchet takes for the same reason.
+                        const evidence = verifyExportTypes({ repositoryRoot: root, artifactRoot: root + "/dist", allowMissingRatchet: true });
                         return { terminal: "CLEAN", css: evidence.css };
                     } catch (error) {
                         return { terminal: "FAILED", message: error.message };
@@ -825,6 +828,109 @@ describe("Row 8 package falsifiers", () => {
         }
     });
 
+    // The NAME ratchet, hostile the same way. `.bundle-ratchet` pins the package's
+    // size; `.published-roster` pins the names it publishes — the `@theme` tokens and
+    // the `@utility` classes a consumer reaches by name. It exists because thirteen
+    // tokens and three utilities left at 8.0.0 with no MIGRATION row and nothing
+    // noticed for two majors.
+    //
+    // A SHRINK is excused by exactly one thing: a MIGRATION.md removal ROW whose FIRST
+    // cell is the departed name. A sentence about the name is not a row, and neither is
+    // the name cited in another row's successor cell — the first spelling of this arm
+    // tested the whole file for the substring and would have gone silent on most of the
+    // live roster. The removal is fine; the SILENCE is the defect. A GROWTH is excused
+    // by nothing, and an ABSENT datum throws — same posture as the byte ratchet, and
+    // for the same reason.
+    it("G-NO-ORPHAN-EXPORT: the published-roster ratchet bites in both directions, and MIGRATION excuses only a shrink", () => {
+        const fixture = mkdtempSync(resolve(tmpdir(), "glass-roster-hostile-"));
+        try {
+            const verifier = pathToFileURL(resolve("scripts/verify-export-types.mjs")).href;
+            const probe = `
+                import { writeFileSync } from "node:fs";
+                import { rosterRatchetFailures } from ${JSON.stringify(verifier)};
+                const root = process.argv[1];
+                const datum = ["theme --gone", "theme --kept", "utility kept-util"];
+                const write = (name, text) => writeFileSync(root + "/" + name, text);
+                const bind = (lines) => write(".published-roster", lines.join("\\n") + "\\n");
+                const results = [];
+                const attempt = (roster, options) => {
+                    try {
+                        return rosterRatchetFailures(root, roster, options);
+                    } catch (error) {
+                        return error.message;
+                    }
+                };
+                // 0 · no datum at all — a synthetic root is not this repo. An absent
+                //     datum THROWS, the way the byte ratchet's does; the caller has to
+                //     ask for the armless read.
+                results.push(attempt(["theme --kept"]));
+                results.push(attempt(["theme --kept"], { allowMissingRatchet: true }).status);
+                bind(datum);
+                write("MIGRATION.md", "nothing relevant here\\n");
+                // 2 · a name left the roster and MIGRATION is silent
+                results.push(attempt(["theme --kept", "utility kept-util"]).failures);
+                // 3 · the same shrink, now carrying a real removal ROW
+                write("MIGRATION.md", "| \`--gone\` | removed 8.0.0 |\\n");
+                results.push(attempt(["theme --kept", "utility kept-util"]).failures);
+                // 4 · prose that MENTIONS the name — a sentence about it, and another
+                //     row citing it as a successor — is not a row, and excuses nothing
+                write("MIGRATION.md", "The token --gone was removed at 8.0.0.\\n\\n| \`--other\` | use \`--gone\` instead |\\n");
+                results.push(attempt(["theme --kept", "utility kept-util"]).failures);
+                // 5 · a GROWTH, which MIGRATION does not excuse
+                results.push(attempt([...datum, "utility brand-new"]).failures);
+                // 6..8 · byte discipline on the datum itself
+                bind(["theme --b", "theme --a"]);
+                results.push(attempt(["theme --a", "theme --b"]));
+                write(".published-roster", "theme --a\\ntheme --a\\n");
+                results.push(attempt(["theme --a"]));
+                write(".published-roster", "theme --a");
+                results.push(attempt(["theme --a"]));
+                console.log(JSON.stringify(results));
+            `;
+            const results = JSON.parse(runVerifierProbe(probe, fixture));
+            expect(results[0]).toMatch(/\.published-roster is missing/);
+            expect(results[1]).toBe("ABSENT");
+            expect(results[2]).toHaveLength(1);
+            expect(results[2][0]).toMatch(
+                /left the emitted roster with no MIGRATION\.md row: theme --gone/,
+            );
+            expect(results[3]).toEqual([]);
+            expect(results[4]).toHaveLength(1);
+            expect(results[4][0]).toMatch(/no MIGRATION\.md row: theme --gone/);
+            expect(results[5]).toHaveLength(1);
+            expect(results[5][0]).toMatch(
+                /not in the datum — rebind deliberately: utility brand-new/,
+            );
+            expect(results[6]).toMatch(/\.published-roster is not sorted/);
+            expect(results[7]).toMatch(/\.published-roster carries a duplicate/);
+            expect(results[8]).toMatch(/\.published-roster must end in exactly one LF/);
+        } finally {
+            rmSync(fixture, { recursive: true, force: true });
+        }
+        // Both roster arms spawn a node subprocess that imports the verifier, which
+        // pulls in `typescript` and `lightningcss` — seconds of module load before a
+        // line of this file's own work runs. Under the whole battery that overruns
+        // vitest's 5s default, so the budget is stated rather than inherited (the
+        // house idiom: `tests/composables/dark/darkModeSyncScript.test.ts`'s
+        // config-loading arms carry the same explicit 30s).
+    }, 30_000);
+
+    // The datum this repo actually ships is bound to the emitted roster, and the
+    // committed pair agrees — the same equality the byte ratchet asserts, on names.
+    // Driven through the verifier's own staged path (a subprocess, like every probe
+    // here), so what it measures is exactly what `npm run verify:package` measures.
+    it("G-NO-ORPHAN-EXPORT: the committed .published-roster equals the emitted roster", () => {
+        expect(existsSync("dist"), "dist/ is absent — run `npm run build` first").toBe(true);
+        const verifier = pathToFileURL(resolve("scripts/verify-export-types.mjs")).href;
+        const probe = `
+            import { verifyExportTypes } from ${JSON.stringify(verifier)};
+            console.log(JSON.stringify(verifyExportTypes({}).roster));
+        `;
+        const roster = JSON.parse(runVerifierProbe(probe));
+        expect(roster.status).toBe("PRESENT");
+        expect(roster.datum).toBeGreaterThan(200);
+        expect(roster.emitted).toBe(roster.datum);
+    }, 30_000);
 });
 
 // Build ACCEPTANCE: these read `dist/`. The arm is LOAD-BEARING — it is the only

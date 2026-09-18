@@ -47,6 +47,45 @@ four-edge claim was value.js-true and constellation-short; the edge routes to th
 band for its own relay addendum.] The known `.input-bar` selector sites
 read the RECIPE, not the component, and are unaffected.
 
+_The `<FourierField>` `colorResolver` prop is removed_
+[2026-09-17 · O-20 CUT-4/5 — the row was owed at the cut and is written now]
+
+| removed | migration |
+| --- | --- |
+| `<FourierField :color-resolver>` | Drop the binding and keep the `color` you already pass — the component resolves that value itself. Drop the `import { defaultBlobColorResolver } from "@mkbabb/glass-ui/color"` above it too, unless the file uses it for something else. |
+
+Landed at `4a86570b` (BK #53 GF-FOURIER, 2026-08-12), and 9.0.0 is its first carrier:
+`git tag --contains 4a86570b` prints `v9.0.0` and nothing else. The published
+`FourierField.vue.d.ts` at 9.0.0 declares seven props — `config?`, `spectrum?`,
+`getPalette?`, `color?`, `seed?`, `freeze?`, `interactive?` — no
+`colorResolver`, and `colorResolver` survives in the package only as two sentences of
+prose in `dist/composables/color/index.d.ts` that this wave corrects.
+
+**There is a live consumer, and it predates the removal by ten weeks.** slides binds the
+prop in two files — `src/decks/feedback-coder/slides/Slide01.vue:11,35` and
+`Slide05.vue:24,43`, both since `89c5d66` (2026-06-07) — at pin `3.13.0`, where
+`colorResolver: ColorResolver` was **required**, not optional. It relaxed to optional at
+7.0.0 and 8.0.0 and is gone at 9.0.0; the repair is one deleted attribute per site.
+Those same two lines also carry `variant="hero"` / `variant="final"`, which have been
+dead since **4.1.0** (`cb1e09fd`, 2026-06-19) and are inert attributes today — delete
+them in the same edit.
+
+`ColorResolver` and `defaultBlobColorResolver` both still ship on `./color` and are
+**unchanged by this cut**. The O-20 disposition ruled them CURE-NEXT-MAJOR — a ruling,
+not an execution — so a consumer may keep importing `defaultBlobColorResolver` for its
+own use; what no longer exists is the prop that consumed it.
+
+_Two earlier majors' removals get their rows here_
+[2026-09-17 · O-20 A-4-RIDER + B-3 — the rows were missing entirely; they are written
+under the major that actually shipped without each name, not under this one]
+
+Thirteen `@theme` tokens and three `@utility` classes left the published CSS at
+**8.0.0** and one class left at **7.0.0**, none with a MIGRATION row. The rows are now
+in §8.0.0 (_Theme tokens removed_ · _Classes and utilities removed_) and §7.0.0
+(_`.paper-texture` is removed_). **9.0.0 removed no token and no utility**: the
+`@theme` name set and the `@utility` name set of the published `./styles` closure are
+byte-identical between 8.0.0 and 9.0.0 (242 and 47 on both).
+
 ## 8.1.0 — ~~UNRELEASED (in flight; not on the registry)~~ [2026-08-10 · BK #21: superseded
 as a version number by the `9.0.0` section above — the content below stands, the cut it
 lands in is now the major] [2026-09-17 · that major is on the registry: 9.0.0]
@@ -111,6 +150,88 @@ Both are held by named arms under the seated `G-NO-FLASH` gate in
 `tests/composables/dark/darkModeSyncScript.test.ts`, so a silent reorder or a swap to a
 value grammar turns the suite RED rather than surprising a consumer.
 
+_Amended after 9.0.0_
+[2026-09-17 · O-20 cure wave, UNRELEASED on the registry: everything from here to the
+end of this section describes the cured source, not the 9.0.0 bytes. The three rows
+above are a true record of what 9.0.0 shipped and are left standing.]
+
+**`defaultDark` widens to answer the absent case and the `"auto"` case separately.**
+
+| option | default | what it does |
+| --- | --- | --- |
+| `defaultDark?: boolean \| "os" \| { absent: boolean \| "os"; auto: boolean \| "os" }` | `"os"` | What an ABSENT or `"auto"` stored mode resolves to. A scalar answers both cases at once: `"os"` follows `prefers-color-scheme` — right for an app; a boolean resolves deterministically — right for a document that must not flip with the projector's OS theme. Under a boolean the emitted script asks the platform nothing (no `matchMedia` call at all). The OBJECT form answers the two cases SEPARATELY, which is the only way to say "a first visit is a deliberate light document, but a reader who chose `auto` gets their platform" — `{ absent: false, auto: "os" }`. No scalar reproduces that pair. |
+
+Additive: every existing call keeps its bytes and its meaning, and a scalar still emits
+the single welded arm it emitted at 9.0.0.
+
+**`normalize` writes AFTER the stamp.** The write-back is emitted last, after the
+`classList` and `color-scheme` writes, so a storage that throws on write (quota, private
+browsing, a sandboxed origin) costs the write-back and nothing else — the page is
+already themed when it fails. 9.0.0 shipped the other order, in which the throw came
+first and cost the WHOLE stamp: a consumer who set `normalize` and saw an unthemed first
+paint in private browsing now knows what that was.
+
+**One CSP hash moves, and only one.** The four opt-in byte counts are unmoved and three
+of the four hashes are unmoved; `{normalize: true}` reorders its bytes, so its hash
+moves. Every figure below is derived from the function, not typed — recomputed on this
+HEAD with `npx tsx` against `src/composables/dark/darkModeSyncScript.ts`, and the 9.0.0
+column read out of the published `dist/dark.js`:
+
+```
+darkModeSyncScript()                     300 B  sha256-VTba/T+6rX/y5+Gk2oyLaaYBdLf4xSZtXnc7kMYziI8=   unmoved
+{ defaultDark: false }                   229 B  sha256-qhpAfju9UAwqj2RfWpOZO9EulLGgZ5V71iPcTGTY3zw=   unmoved
+{ defaultDark: true }                    228 B  sha256-manehYcswRzcI9LxUb8B/PXRoWvHIJReiR2pNGvOG54=   unmoved
+{ queryOverride: true }                  402 B  sha256-T/HYS7zqh/wi4E0o0R4IStRZF6TYhOjMFduJeli2HpI=   unmoved
+{ normalize: true }                      361 B  sha256-Xtel8uEYWeIEsJMO4TZWEump78fncLVrH4/fe166vIw=   9.0.0
+{ normalize: true }                      361 B  sha256-BxbpMykpiKP/WPfTsYpbpPpSCTecT50SMXFVFNrMGrw=   cured
+{ defaultDark: { absent: false, auto: "os" } }
+                                         309 B  sha256-viDl5kPSBmJC9frsYXBK0PtoTtTWq4SnpZnkpC5cv4k=   new
+```
+
+If you pin the normalize emission under `script-src 'sha256-…'`, re-pin it at the bump
+or first paint is blocked. The DEFAULT emission is byte-identical and needs nothing.
+
+_Wire it with a build plugin; do not transcribe the bytes_
+
+`darkModeSyncScript()` returns a STRING, and a `<head>` script cannot import a module —
+so the delivery step is a build-time injection, not a copy-paste. Four repos hand-rolled
+the whole block for want of this paragraph, one of them a byte-for-byte transcription of
+the emitted default that goes stale the moment the emission changes.
+
+In Vite, that is a ~10-line `transformIndexHtml` plugin:
+
+```ts
+import { darkModeSyncScript } from "@mkbabb/glass-ui/dark";
+import type { Plugin } from "vite";
+
+function darkModeStamp(): Plugin {
+    return {
+        name: "app:dark-mode-stamp",
+        transformIndexHtml: () => [
+            {
+                tag: "script",
+                children: darkModeSyncScript(/* { defaultDark: { absent: false, auto: "os" } } */),
+                injectTo: "head-prepend",
+            },
+        ],
+    };
+}
+```
+
+`head-prepend` is the point: the stamp lands ahead of every stylesheet and every module,
+so the first paint is already correct. The options object is where a policy goes — a
+briefing that must not follow the projector passes `defaultDark: false`; a capture
+pipeline adds `queryOverride: true`.
+
+**Put it in every config that builds an HTML shell, not just the one.** glass-ui is
+wired exactly this way and got this wrong first: the plugin lived inside `vite.config.ts`
+and the standalone config that builds the demo replaces that file wholesale, so the dev
+server was stamped and the BUILT demo — the bytes a viewer actually loads — was not. The
+plugin now lives in its own module (`vite.dark-stamp.ts`) and both configs import it.
+
+Under a `script-src 'sha256-…'` CSP, hash the emitted string once at build time rather
+than pinning a literal you maintain by hand — it is the same string on both sides.
+
 ## 8.0.0
 
 **THE EXPORT SURFACE IS RE-CUT — one batched change, six subpath movements, and the
@@ -146,6 +267,101 @@ If you style the menu family from outside, the selectors renamed with the family
 `data-slot` values renamed the same way (`data-slot="dropdown-menu-content"` →
 `"menu-content"`, and so on for all eleven parts). No behaviour changed; only the
 namespace.
+
+_Theme tokens removed — thirteen `@theme` names_
+[2026-09-17 · O-20 A-4-RIDER — these left the published CSS at this cut and had no row
+until now. Measured, not recalled: the `@theme` custom-property name set of the
+published `./styles` closure goes **246 → 242** from 7.0.0 to 8.0.0 and is unchanged
+from 8.0.0 to 9.0.0, so every one of the thirteen belongs here.]
+
+If you read one of these by name, it resolves to nothing today. Each row names what
+carries the value now, or says there is nothing.
+
+One distinction runs through the table and decides how much any given row costs you.
+Four of the thirteen (`--radius-input`, `--radius-tooltip`, `--corner-k-soft`,
+`--corner-k-sharp`) were plain `@theme` declarations in `theme/radius.css`: they
+emitted a real custom property, so a `var()` read of them worked and now does not.
+The other nine lived in `theme/bridges.css`'s `@theme inline` block — a bridge name
+mints a Tailwind utility spelling and never emits a custom property at all — so for
+those, the UTILITY is what you lose; `var(--name)` resolved to nothing before the
+removal too. `--ease-spring` is the one that sits on both sides; its row says so.
+
+| removed | landed | what carries it now |
+| --- | --- | --- |
+| `--radius-input` | `31c01d2a` (2026-07-22) | `--radius-media`, byte-for-byte the same value (`var(--radius)`). The radius canon re-cut every rung as a ROLE, and an input is media-shaped, not its own role. |
+| `--radius-tooltip` | `bca22bd9` (2026-08-08) | Removed, no successor. It aliased `--radius-lg` → `--radius`, which gave the overlay family THREE corners (menu/panel 16, plate 12, hint 10). A hint is a small plate: its corner is `--radius-panel`, declared once by the overlay register. Its only reader was the `rounded-tooltip` utility on `TooltipContent`, which the register replaced. |
+| `--ease-spring` | `d27ec5dc` (2026-08-05) | Removed — see the note under this table. |
+| `--ease-spring-bouncy` | `d27ec5dc` | Removed — see the note under this table. |
+| `--ease-spring-gentle` | `d27ec5dc` | Removed — see the note under this table. |
+| `--ease-spring-press` | `d27ec5dc` | Removed — see the note under this table. |
+| `--ease-spring-smooth` | `d27ec5dc` | Removed — see the note under this table. |
+| `--ease-spring-snappy` | `d27ec5dc` | Removed — see the note under this table. |
+| `--corner-k-soft` | `31c01d2a` (2026-07-22) | `--corner-k-squircle` (`2`). The soft/sharp rungs (1.7 / 2.4) had zero `var()` readers; the squircle vocabulary is one k. |
+| `--corner-k-sharp` | `31c01d2a` | `--corner-k-squircle`, as above. |
+| `--color-surface-tint-35` | `35a30fbb` (2026-07-22) | Removed, no successor rung. The bridge and the `:root` rung it bridged (`--surface-tint-35`, `color-radius.css` + `dark-arm.css`) went together, and the ladder keeps 4 · 6 · 8 · 10 · 12 · 15 · 18 · 22 · 25 · 40 · 70. The rung's one reader was `.input-pill::placeholder`, repointed to `--muted-foreground` by the a11y placeholder-contrast cure. If you used it as placeholder ink, that is the replacement. |
+| `--text-admin-label` | `6b450f22` (2026-08-04) | `--text-micro`, the bridge over `--type-micro`. The size moves: `--type-admin-label` (`typography/scale.css`, also gone) was `0.625rem` (10px, fixed); `--type-micro` is `0.6875rem` (11px). The utility of the same name went in the same cut — see the next table. |
+| `--z-index-hovercard` | `bca22bd9` (2026-08-08) | `--z-index-popover`. The `:root` rung it bridged, `--z-hovercard` (120, `tokens/scheme-motion.css`), went too; `--z-popover` (130) is the surviving rung. The hover arm of the popover union has always painted `z-popover`, because a hover preview IS a popover here — one sealed component, two reka roots. |
+
+**The `--ease-spring-*` family went whole, and its replacement is the token, not a
+utility.** What the removal costs you depends on which spelling you wrote, and the two
+answers are different. Five of the six — `-bouncy`, `-gentle`, `-press`, `-smooth`,
+`-snappy` — were declared ONLY in `theme/bridges.css`'s `@theme inline` block, and a
+bridge name mints a utility spelling without ever emitting a custom property. So
+`ease-spring-smooth` (the utility) was real and is gone; `var(--ease-spring-smooth)`
+resolved to nothing at 7.0.0 and at every version before it, and still resolves to
+nothing — nothing changed for that reader except that it is now honestly named.
+`--ease-spring` is the exception: it was declared TWICE, once as a bridge and once as
+a plain `:root` custom property in `tokens/scheme-spring.css`, so `var(--ease-spring)`
+DID resolve on the `./styles` surface and now does not. The springs themselves
+are very much alive: the register re-cut onto SIX role rungs — `--spring-dock` ·
+`--spring-present` · `--spring-press` · `--spring-panel` · `--spring-world` ·
+`--spring-bloom`, each with its own `-duration`, `-exit-duration` and `-settle` clock. A
+recipe that wants one by utility name reaches the token directly:
+`ease-(--spring-press)`. A consumer that earns the utilities re-mints them in its own
+tranche. The old spellings map by intent, not by name: `--ease-spring` and
+`--ease-spring-snappy` were `--spring-snappy`, which is now `--spring-present` (or
+`--spring-dock` for dock motion); `--ease-spring-smooth` and `--ease-spring-bouncy` also
+land on `--spring-present`; `--ease-spring-gentle` was `--spring-gentle`, now
+`--spring-world`; `--ease-spring-press` is the one that kept its name, `--spring-press`.
+
+_Classes and utilities removed_
+[2026-09-17 · O-20 B-3 — the `@utility` name set of the published `./styles` closure
+goes **49 → 47** at this cut (three out, one in) and is unchanged at 9.0.0.]
+
+| removed | what to write instead |
+| --- | --- |
+| `glass-fill` | `glass-plate`, which landed in the very commit that removed this one (`4b1a9733`): `.glass-card` moved from `@apply glass-fill` to `@apply glass-plate` there. It paints `background: var(--glass-veil)`, and you pick the rung by declaring `--glass-veil-tier: var(--glass-veil-quiet)` — or `--glass-veil-wash`, `--glass-veil-resting`, `--glass-veil-floating`, `--glass-veil-overlay` — in the place `--glass-fill-rung` used to go. The old TINT mix has no hand-composed equivalent: `--glass-bg-resting`, `--glass-tint-source` and `--glass-tint-strength` all have 0 declarations at 9.0.0. `--glass-fill-tinted` is **not** the successor — it shipped alongside `glass-fill` at 7.0.0 (`216e1d54`) as a tint OVERLAY whose `@property` initials are `transparent` and `0%`, so reading it as a `background` paints nothing until you set both knobs yourself. |
+| `text-admin-label` | `text-mono-micro`, plus `uppercase font-medium` wherever the caps or the 500 weight carried meaning — the successor does not include them. The old recipe was `font-mono` · `--type-admin-label` (10px) · `line-height: 1` · `uppercase` · `tracking-caps` · `font-weight: 500`; the new one is `font-mono` · `--type-micro` (11px) · `line-height: 1.25` · `letter-spacing: 0.025em`. Landed `6b450f22`. |
+| `touch-hit-area` | Removed, no drop-in utility. `--touch-target` (`2.75rem`) still ships and is still what the components read; compose it yourself — a `position: relative` host and, inside `@media (pointer: coarse)`, a centred `::before` with `min-width`/`min-height` of `var(--touch-target, 2.75rem)` and `pointer-events: none`. Landed `bd93c22b`. |
+
+The roster also GAINED one utility at this cut: the `@utility` diff 7.0.0 → 8.0.0 is
+three out, one in, and that gain is the successor named above.
+
+_Alert loses its tone wash_
+[2026-09-17 · O-20 C-1 (the ask is value.js's AF-7) — W-ALERT (#33, `76bfae26`) landed
+at this cut with no MIGRATION paragraph; this is it.]
+
+All five Alert tones now ride ONE `.glass-quiet` rung. There is no per-tone tinted
+plate, and there is no per-tone ink rung (`--success-ink` and its siblings are not
+coming). The ink is `text-card-foreground` = `--foreground` on every arm, which measures
+**16.19:1** light and **11.17:1** dark on `--card` — the whole point of the recompose is
+that a tone can no longer cost legibility.
+
+What to do: adopt the component and delete any local fork. A `class="bg-success/10
+text-success"` wrapper reproduces exactly the thing this cut removed; drop it whole. Set
+`announce` explicitly if you want the live region — it defaults to `off`.
+
+**The toned glyph channel was dead from 8.0.0 through 9.0.0, and paints from the O-20
+cure wave on — that wave is not on the registry yet, so at 9.0.0 the glyph is still
+neutral.** The TONED arms carry `[&>svg]:text-(--tone)`, but BASE ended
+`[&>svg]:text-current`; `cn()` is a bucketed deduper rather than twMerge, so both
+survived the join, and Tailwind emits the `--tone` rule BEFORE the `currentcolor` rule
+at equal specificity — currentcolor won, and a toned Alert was pixel-identical to a
+neutral one. Chrome measured the toned glyph at `rgb(28, 25, 23)`, the plate ink. The
+cure deletes `text-current` from BASE, and the same probe then reads the tone. The
+evidence pair is in `docs/tranches/BK/execution/2026-09-17-o20-cure/C2/RECORD.md`. If
+you relied on the neutral-looking glyph, note that your toned Alerts will now paint
+their tone.
 
 _Peer dependencies — `vue-component-type-helpers` is now declared, and the reason is upstream_
 
@@ -634,6 +850,35 @@ replacements, without aliases or compatibility shims.
 `InstrumentChassis` is now one landmark-neutral physical sleeve on the explicit
 `/instrument-chassis` subpath. It is no longer exported from the root.
 
+_`.paper-texture` is removed_
+[2026-09-17 · O-20 B-3 — back-filled. The class left at `490cc46e`, which this cut
+carries, and 6.0.0 is its last shipping version. It had no row until now.]
+
+There is no successor class: the two surviving `@utility paper-*` recipes are not
+drop-ins (`paper-grain-overlay` and `paper-underpaint` paint relief and tooth on an
+`::after` or a fixed layer with `mix-blend-mode`, where `.paper-texture` painted in the
+element's own box). Compose the four declarations yourself — every token they read still
+ships:
+
+```css
+.paper-texture {
+    background-image: var(--paper-grain-tooth);
+    background-repeat: repeat;
+    background-size: var(--paper-grain-tile);
+    background-blend-mode: multiply;
+}
+:where(.dark) .paper-texture {
+    background-blend-mode: screen;
+}
+```
+
+That is the recipe as it last shipped, at 6.0.0. Through 4.0.0 the same class read
+`var(--paper-clean-texture)` and `var(--paper-texture-size)` instead — the 200px
+neutral glass whisper rather than the warm 140px paper tooth — and **both pairs of
+tokens still ship at 9.0.0**, so either spelling reproduces itself. Pick by which one
+your page actually looked like: the grain pair is the warm paper material, the clean
+pair is the glass whisper.
+
 | 6.x surface | 7.0 migration |
 |---|---|
 | `phase="ping|download|upload|jitter|complete"` | Map product phases locally to `state="ready|active|complete|loading"` and pass the consumer color through `tone`. |
@@ -861,11 +1106,14 @@ and `HandMark` remain public. The package export-map delta is exactly the remova
   subpath. `aria-rowcount` and caller-supplied `aria-rowindex` remain table-only, while
   responsive cards retain generic attributes, mounted-row refs, and the sole tab stop.
   Grid headers use `aria-rowindex="1"`; the empty placeholder is presentational.
-- Install `@mkbabb/pencil-boil@^0.9.2` when using HandMark. Glass development and the
+- ~~Install `@mkbabb/pencil-boil@^0.9.2` when using HandMark. Glass development and the
   release build pin `0.9.2`; `catmullRomToBezier`, `ellipsePoints`, `perturbPoints`,
   `perturbPointsClosed`, `pointsToLinear`, `wobbleLinePoints`, and `useLineBoil` are the
   exercised producer surface. Pencil 0.9.2 declares Node 24/npm 11; the optional peer may
-  be omitted by Glass consumers that do not use HandMark.
+  be omitted by Glass consumers that do not use HandMark.~~ [2026-09-17 · O-20 HK-vite ·
+  `@mkbabb/pencil-boil` is no longer a peer of any kind — it was retired at BK #51 and
+  `peerDependencies` at 9.0.0 declares nine names, none of them it. `src/` and `demo/`
+  import it zero times. **HandMark needs no install**: `/handmark` is self-contained.]
 
 ## 5.0.0
 
@@ -982,6 +1230,8 @@ subpath)` is the 5.0.0 target".]
 | `CardVariant` | type | removed 8.0.0 — the `variant` trio is the one `selected` boolean (presence, not truth) |
 | `CelebrationBurstPreset` | type | removed 5.0.0 — dead-composable sweep; `useCelebrationBurst` retired (0 consumers) |
 | `ClickDelegateOptions` | type | `/sidebar` |
+| `ColorHarmony` | type | `/color` [2026-09-17 · O-20 CUT-4/5 — the census never listed it. It ships on `./color` at 9.0.0 (`deriveHue`'s second argument, and `DeriveBlobPaletteOptions.harmony`) and nothing is ruled against it.] |
+| `ColorResolver` | type | `/color` [2026-09-17 · O-20 CUT-4/5 — the census never listed it. Ships on `./color` at 9.0.0 and is live; the O-20 disposition ruled it and `defaultBlobColorResolver` CURE-NEXT-MAJOR, which is a ruling and not an execution, so nothing has moved yet.] |
 | `CompletionSealProps` | type | `/completion-seal` |
 | `CompletionSealShape` | type | `/completion-seal` |
 | `ConcentricConfig` | type | removed 5.0.0 — /concentric viz DELETED (viz-family prune) |
@@ -1003,6 +1253,7 @@ subpath)` is the 5.0.0 target".]
 | `DeckMoves` | type | `/deck` |
 | `DEFAULT_AURORA_CONFIG` | const | `/aurora` |
 | `DeriveAuroraOptions` | type | `/aurora` |
+| `DeriveBlobPaletteOptions` | type | `/color` [2026-09-17 · O-20 CUT-4/5 — the census never listed it. Ships on `./color` at 9.0.0 and is NOT ruled for removal; it is the options bag of `deriveBlobPalette`, which stays.] |
 | `DeriveEasing` | type | `/aurora` |
 | `DockCtaReceivePreset` | type | `/motion` |
 | `DotFlowFieldHandle` | type | removed 5.0.0 — /dot-flow-field viz DELETED |
@@ -1017,7 +1268,7 @@ subpath)` is the 5.0.0 target".]
 | `FlowPattern` | type | `/aurora` |
 | `ForcedSectionWindowRange` | type | removed 5.0.0 — /virtual subpath retired; no owning subpath |
 | `FourierFieldConfig` | type | `/fourier-field` |
-| `FourierFieldProps` | type | `/fourier-field` |
+| `FourierFieldProps` | type | ~~`/fourier-field`~~ [2026-09-17 · O-20 CUT-4/5 — 0 hits in the 9.0.0 dist; the name was never exported from anywhere. The row was wrong when it was written, not overtaken.] |
 | `FuzzySearchState` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
 | `GlassPanelProps` | type | removed 5.0.0 — /glass-panel retired; compose `Card` / `Surface` / `.glass-resting` |
 | `GlassPanelVariant` | type | removed 5.0.0 — /glass-panel retired; the tier-homonym; use `CardTier` (/card) or `SurfaceTier` (/axes) |
@@ -3497,7 +3748,9 @@ the retired recipe) or accept the calm register — the slides `DeckGate.vue:70`
 
 ### The tone-on-glass recompose (W-FEEDBACK-TONE)
 
-Toast / Notification / Alert tone variants render TINTED-GLASS over the floating rung (ONE
+Toast / Notification / ~~Alert~~ [2026-09-17 · Alert left the tint at 8.0.0 (W-ALERT);
+see §8.0.0. Toast and Notification are not measured by this strike and stand.] tone
+variants render TINTED-GLASS over the floating rung (ONE
 `.feedback-tone` `color-mix` recipe, α < 0.92 both modes), NOT an opaque saturated slab. The
 three independent tone maps collapsed onto the ONE recipe. **Consumer re-pin:** a consumer that
 hardcoded a tone-slab color re-points to the house tone token; the slab look is gone.

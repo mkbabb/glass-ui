@@ -59,19 +59,24 @@ const RAW_BASE_HERO_PALETTES = {
 // pastel-wash band the existing hero stops use, so a category hero reads DISTINCT
 // (substrates=aurora-blue, motion=constellation-violet, forms=grid-teal …) while
 // staying the calm painterly drift a text-dense hero wants.
+//
+// They stay LITERALS — the hero needs a value at module time and the demo parses no
+// CSS — and they are HELD against the tokens by `G-CONTRAST-COMPUTED` §6d, so the
+// next ramp retune REDs here instead of drifting. Four rungs (4, 6, 10, 11) had
+// already drifted when that arm landed.
 export const SECTION_COLOR_OKLCH: readonly string[] = [
     "oklch(0.552 0.192 359.8)", //  0 rose
     "oklch(0.502 0.165 305.9)", //  1 purple
     "oklch(0.484 0.163 265.5)", //  2 indigo
     "oklch(0.542 0.089 222.8)", //  3 teal-cyan
-    "oklch(0.551 0.088 171.1)", //  4 forest
+    "oklch(0.521 0.088 171.1)", //  4 forest
     "oklch(0.530 0.124 69.6)", //   5 amber
-    "oklch(0.579 0.201 30.4)", //   6 tomato-red
+    "oklch(0.549 0.201 30.4)", //   6 tomato-red
     "oklch(0.532 0.180 317.5)", //  7 violet
     "oklch(0.520 0.176 8.4)", //    8 ruby
     "oklch(0.492 0.038 239.6)", //  9 slate-blue
-    "oklch(0.556 0.103 128.8)", // 10 olive
-    "oklch(0.601 0.092 208.0)", // 11 ocean
+    "oklch(0.526 0.103 128.8)", // 10 olive
+    "oklch(0.511 0.092 208.0)", // 11 ocean
     "oklch(0.513 0.163 291.9)", // 12 periwinkle
 ];
 
