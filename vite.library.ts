@@ -21,8 +21,11 @@ export function libraryFileName(_format: string, entryName: string) {
 // strings `lucide-vue-next` (renamed → `@lucide/vue` at v1.0) and `vaul-vue`
 // (abrogated at BB.W-DRAWER-ABROGATE — the house reka substrate owns the snap
 // math now) externalized packages no longer in the graph — removed (no alias).
-// Every runtime peer imported by source is externalized here. `perfect-freehand`
-// is vendored into handmark/freehand.ts, so it is intentionally absent.
+// Every JS runtime peer the source imports is externalized here, and every entry
+// here is a declared peer or a subpath of one (E1/E2, scripts/profile-bundle.mjs).
+// The peer set is larger: `tailwindcss` and `tw-animate-css` are CSS-plane peers,
+// `vue-component-type-helpers` is type-only, and the bare `@mkbabb/value.js` root is
+// neither imported nor externalized — only its /color, /css and /easing subpaths are.
 export const libraryExternal = [
     "vue",
     "reka-ui",
@@ -31,8 +34,5 @@ export const libraryExternal = [
     "@mkbabb/value.js/color",
     "@mkbabb/value.js/css",
     "@mkbabb/value.js/easing",
-    // BA.W-HANDMARK — the hand-mark family's L1 geometry peer (optional). Externalized
-    // so the /handmark chunk imports it rather than bundling the optional peer.
-    "@mkbabb/pencil-boil",
     "@lucide/vue",
 ];

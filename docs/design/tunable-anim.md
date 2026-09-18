@@ -130,21 +130,21 @@ them is kind 1.
 | drive | token | default | range | re-tune |
 |---|---|---|---|---|
 | button press | `--glass-btn-press-t` | 0 | [0,1] | the spring (kind 1) + the surface CSS |
-| card press | `--card-press-t` | 0 | [0,1] | spring + recipe |
+| cartoon cast press | `--cartoon-press-t` | 0 | [0,1] | the consumer's own driver — `useLiquidPress({ pressVar: "--cartoon-press-t" })` |
 | dock morph | `--dock-morph-t` | 0 | [0,1] | `DOCK_SPRING` (`springPreset("dock")`) |
 | dock expand | `--dock-expand-t` | 0 | [0,1] | the dock morph scalar |
-| border-progress | `--border-progress-fill` | 0% | [0%,100%] | the value-axis + `useBorderSpectrum` |
-| progress crescendo | `--progress-crescendo` | 0 | [0,1] | the progress value |
-| phase tint | `--phase-tint-amount` | 0% | [0%,100%] | the instrument-chassis phase |
 | reveal blur | `--glass-reveal-blur` | per-register: overlay 6px / menu 2px / tooltip 0px / transient 8px | [0,8px] | per-instance |
 | cascade rise | `--scroll-cascade-rise` | 1.25rem | per-instance | override |
 | cascade window | `--scroll-cascade-range-end` | 45% | [0%,100%] | override |
-| scroll-pin lift | `--scroll-pin-lift` | 2.5rem | per-instance | override |
-| scroll-pin stage | `--scroll-pin-stage-height` | 320vh | per-instance | override |
 
 `--glass-reveal-blur` has NO single default: `reveal.css` binds it per enter-register from
 `--enter-{overlay,menu,tooltip,transient}-blur` (`motion-registers.css`). The literal `4px`
 in `animations.css` is the `var()` fallback arm, not a default.
+
+`--cartoon-press-t` is the one drive in this table the library reads but never writes.
+`.cartoon-cast` (`glass/glass-atom.css`) consumes it for travel and spread; no component
+emits the cast child, so a consumer authors the child and drives the scalar itself. The
+recipe is in DESIGN.md §"The cast is a MOVING cast, and the consumer drives it".
 
 ## The named-FUTURE axis (recorded, not built — the proportion fence)
 

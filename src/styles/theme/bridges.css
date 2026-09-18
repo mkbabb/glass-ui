@@ -7,7 +7,10 @@
    color token — registration snapshots the value and breaks light-dark().
 
    Cascade: this partial MUST @import AFTER theme/radius.css (it references the
-   radius primitives) and BEFORE theme/literals.css. */
+   radius primitives) and BEFORE theme/literals.css.
+
+   CONSUMER-FACING: README.md §Design Tokens states this for consumers — a bridge
+   name is not an override point, the tokens.css spelling is. Keep the two in step. */
 
 @theme inline {
     /* ═══════════════════════════════════════════════

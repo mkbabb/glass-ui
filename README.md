@@ -78,6 +78,8 @@ consumer-facing migration path in [`MIGRATION.md`](./MIGRATION.md):
 - [`docs/canon/motion-system.md`](./docs/canon/motion-system.md) — the spring/bezier motion canon
 - [`DESIGN.md`](./DESIGN.md) — the storybook category index
 
+None of that ships. `package.json` declares `files: ["dist"]`, so an install carries `dist/`, this README and the licence — nothing else. Read `MIGRATION.md`, `DESIGN.md` and `docs/` on GitHub; this file is the only prose in `node_modules`.
+
 ## Build
 
 ```bash
@@ -131,6 +133,11 @@ import { InstrumentChassis } from "@mkbabb/glass-ui/instrument-chassis";
 import { useSidebarState } from "@mkbabb/glass-ui/sidebar";
 ```
 
+There is no `/clipboard` subpath. `useClipboard` and `writeClipboard` ship on `/dom` and on
+the root barrel; `useClipboard` returns `{ status, copy, invalidate }`, where `status` is a
+`ComputedRef<ClipboardStatus>` — the `copied` boolean was removed at 7.0.0, and the
+equivalent is `status.value === "success"`.
+
 The v0.9.x nested subpaths `@mkbabb/glass-ui/composables/dark` and
 `.../composables/keyboard` were flattened to `/dark` and `/keyboard` at v1.0.
 The demo-only `/pagination` and `/virtual` subpaths are retired. The 5.0.0 export
@@ -153,7 +160,21 @@ Convenience classes bundle a tier with a shape: `.glass-card` (resting + `--radi
 
 ## Design Tokens
 
-`src/styles/tokens/` defines the shared `:root` properties consumed by all style modules and components — duration, easing (`--spring-{smooth,snappy,bouncy,gentle}` + `--spring-<name>-duration` clocks), z-index, radius (primitive + semantic), shadows (composed via `color-mix(in srgb, var(--shadow-color) N%, transparent)`), the 5-tier glass ladder, paper/grain textures, the `--surface-tint-*` family, and the warm-chroma color palette. Consumers override any token locally per project.
+`src/styles/tokens/` defines the shared `:root` properties consumed by all style modules and components — duration, easing (`--spring-{smooth,snappy,bouncy,gentle}` + `--spring-<name>-duration` clocks), z-index, radius (primitive + semantic), shadows (composed via `color-mix(in srgb, var(--shadow-color) N%, transparent)`), the 5-tier glass ladder, paper/grain textures, the `--surface-tint-*` family, and the warm-chroma color palette. These are declared in a plain unlayered `:root`, so re-declaring one in your own CSS overrides it for every reader downstream.
+
+**Bridge names are not tokens, and overriding one does nothing.** `src/styles/theme/bridges.css` is a single `@theme inline` block mapping Tailwind theme keys onto those tokens: `--shadow-glass-*`, `--color-*`, `--text-*`, `--spacing-icon-*`, `--blur-glass-*` and nine more families (`--z-*`, `--font-*`, `--leading-*`, `--tracking-*`, `--transition-*`, `--ease-*` among them). Their job is to generate utilities — `shadow-glass-quiet`, `blur-glass-wash`, `size-icon-md` — with the referenced value substituted in place, and `inline` is what stops them minting a second spelling of the same value. A theme key reaches your built CSS as a custom property only when something in that build reads it with `var()`; nothing in this library's own build reads the shadow, blur or icon bridges, so none of them emits here; the shadow family also measures zero in four independently compiled consumer bundles. `var(--shadow-glass-quiet)` therefore resolves to nothing. Override the `tokens/` spelling instead:
+
+```css
+/* the override point — a plain :root token, always emitted */
+:root {
+    --glass-shadow-quiet: 0 1px 3px rgb(0 0 0 / 0.08);
+    --glass-shadow-resting: 0 4px 12px rgb(0 0 0 / 0.1);
+}
+```
+
+Five of the six shadow rungs are bridged: `--glass-shadow-capsule` has no `--shadow-glass-capsule` and no utility, only the token.
+
+**The easing seam.** `<EasingCurve>` writes `--easing-curve-accent: var(--motion-accent, var(--viz-legendre))` on its own wrapper, so that name is already bound on the curve's subtree and an ancestor's `--easing-curve-accent` never reaches it. The one free arm is `--motion-accent`: set it on or above the curve to re-point the accent.
 
 ## Typography
 
@@ -173,18 +194,17 @@ See [`docs/canon/conventions.md`](./docs/canon/conventions.md) for the full set.
 
 All runtime deps are peer — glass-ui declares them in `peerDependencies` and ships none in its own `dependencies` bundle, so the consumer's single Vue / Tailwind / reka-ui spine is reused rather than re-vendored.
 
-| Package                         | Role                                                              |
-| ------------------------------- | ----------------------------------------------------------------- |
-| `vue` ^3.5                      | Framework                                                         |
-| `reka-ui` ^2.0                  | Headless UI primitives                                            |
-| `@vueuse/core` ^14.0            | useDark, createGlobalState, useEventListener (optional peer)      |
-| `tailwindcss` ^4.0              | Utility CSS                                                       |
-| `embla-carousel-vue` ^8.0       | Carousel substrate (optional peer)                                |
-| `@lucide/vue` ^1.16.0           | Icon set (the renamed v1 package; was `lucide-vue-next` pre-v1.0) |
-| `@mkbabb/keyframes.js` ^6.0.0   | Spring/keyframe runtime (optional peer)                           |
-| `@mkbabb/value.js` ^4.0.0       | Color and easing capabilities (optional peer)                     |
-| `@mkbabb/pencil-boil` ^0.9.2    | Hand-mark freehand core (optional peer)                           |
-| `tw-animate-css` ^1.2.5         | `animate-in`/`animate-out` data-state utilities (optional peer)   |
+| Package                             | Role                                                              |
+| ----------------------------------- | ----------------------------------------------------------------- |
+| `vue` ^3.5                          | Framework                                                         |
+| `reka-ui` ^2.0                      | Headless UI primitives                                            |
+| `tailwindcss` ^4.0                  | Utility CSS                                                       |
+| `@lucide/vue` ^1.16.0               | Icon set (the renamed v1 package; was `lucide-vue-next` pre-v1.0) |
+| `@mkbabb/keyframes.js` ^6.0.0       | Spring/keyframe runtime                                           |
+| `vue-component-type-helpers` ^3.0.3 | Emitted-declaration helper types                                  |
+| `@vueuse/core` ^14.0                | useDark, createGlobalState, useEventListener (optional peer)      |
+| `@mkbabb/value.js` ^4.0.0           | Color and easing capabilities (optional peer)                     |
+| `tw-animate-css` ^1.2.5             | `animate-in`/`animate-out` data-state utilities (optional peer)   |
 
 `tw-animate-css` is required only for the animated overlay surfaces (Dialog / Sheet / Popover / DropdownMenu emit `animate-in`/`animate-out` data-state utilities); a Button-only consumer never needs it. See [`docs/canon/dependencies.md`](./docs/canon/dependencies.md).
 

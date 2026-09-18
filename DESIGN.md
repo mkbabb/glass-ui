@@ -475,7 +475,9 @@ The cartoon shadow is not just an elevation token — it is the **visual half of
 
 > A _warm-tinted_ (technicolor-color) cartoon cast — re-pointing the cartoon family off the neutral `--shadow-color`/`--foreground` toward a warm or chromatic ink — is a deliberate token decision deferred to the `cartoon-shadow` greenfield (`docs/tranches/BD/greenfield/cartoon-shadow/`), not asserted here.
 
-**The cast is a MOVING cast on explicit controls.** Button and Badge punch treatments may drive the inert `.cartoon-cast` child through `--cartoon-press-t`; Card's `cartoon` decoration is deliberately static and adds no interaction engine. The travel stays compositor-only and PRM resolves to a static cast.
+**The cast is a MOVING cast, and the consumer drives it.** No component emits the cast child, so a surface that wants the punch authors it: `<span class="cartoon-cast" aria-hidden="true" />` inside the surface's own box, with `--cartoon-press-t` driven from `useLiquidPress({ pressVar: "--cartoon-press-t" })` on the `./motion` subpath. `.cartoon-cast` (`glass/glass-atom.css`) reads that scalar for `--cast-travel` and `--cast-spread`; it is the only press scalar the cast register knows, and nothing in the library writes it.
+
+The second shipped path takes no scalar at all: `.liquid-enter.is-cel > .cartoon-cast` (`glass/liquid-enter.css`) carries the entry lag on the cel register's own clock, so a cast child inside a `.liquid-enter.is-cel` subtree animates on entry whether or not anything presses it. The travel stays compositor-only and PRM resolves to a static cast. `@utility cartoon-surface` is the plate's decoration — border plus cast, no interaction engine.
 
 ### Card flat-offset shadows
 
@@ -513,6 +515,14 @@ Five tiers compose background opacity, backdrop-blur, border, shadow, grain. Dar
 | Resting  | `.glass-resting`  | 65%           | 72%          | `blur(12px) saturate(1.05)` | 12% foreground | `--glass-shadow-resting`  | Cards and the canonical plate; **`<Surface>` default tier** |
 | Floating | `.glass-floating` | 80%           | 88%          | `blur(16px) saturate(1.4)`  | 15% foreground | `--glass-shadow-floating` | Popovers, tooltips, dropdowns                               |
 | Overlay  | `.glass-overlay`  | 95%           | 96%          | `blur(24px) saturate(1.5)`  | 18% foreground | `--glass-shadow-overlay`  | Dialogs, command palette, modals                            |
+
+### Plate register
+
+`@utility glass-plate` (`src/styles/glass/veil.css`) is the plate paint, composed at the element. It reads `--glass-veil-tier` (unset resolves `resting`), clamps it upward by the measured backdrop luminance into `--glass-veil-rest` → `--glass-veil-rung`, mixes that into `--glass-veil`, and writes exactly one declaration: `background: var(--glass-veil)`. The five tier classes above apply it and add their own blur, border and shadow; `--glass-veil` is published as a nestable value token for a surface composing the plate inside a larger mix.
+
+It deliberately supplies **no position, no z-index, no radius, no size**. A plate is paint, not a box. `.dock-plate` is the worked example: it composes `glass-plate` and declares `position: absolute; inset: 0; z-index: -1` itself, because only the surface knows which box it is lining.
+
+That omission is the stacking contract. A plate sharing a box with an `absolute inset-0` decorative layer — a canvas, an aurora, an atmosphere — takes its own positioning **plus** a `--z-content` rung, or the positioned sibling paints over it: a positioned `z-auto` element paints at CSS 2.1 Appendix E step 8, static in-flow content at step 7. The rungs are `--z-behind` / `--z-background` / `--z-content` in `tokens/scheme-motion.css`; see [Z-Index Stack](#z-index-stack).
 
 ### Tokens per tier
 
@@ -927,7 +937,7 @@ The `md` default matches the baseline of the most common surrounding context (ta
 
 ### Section-tone recipe (table status cells)
 
-Tables and tag-input chips frequently need a per-section tinted chip whose hue tracks `--section-color-N`. The canonical recipe—composed by demo consumers (`stories/data/table.vue`, `stories/data/tags-input.vue`)—is the triplet:
+Tables and tag-input chips frequently need a per-section tinted chip whose hue tracks `--section-color-N`. The ladder is exactly thirteen stops and carries no fallback, so **index with `i mod 13`**: there is no thirteenth stop—`text-section-13` generates no utility (the `--color-section-*` theme keys in `theme/bridges.css` stop at 12), and a hand-written `var(--section-color-13)` invalidates its whole declaration at computed-value time. A consumer walking sections in order wants the same ordinal hue law the Timeline uses—`(2 + 4i) mod 13`, `gcd(4, 13) = 1`, so all thirteen are visited before a repeat (stated at [Timeline Primitive § Paint](#paint), the ordinal hue law). The canonical recipe—composed by demo consumers (`stories/data/table.vue`, `stories/data/tags-input.vue`)—is the triplet:
 
 ```
 bg-section-N/15 text-section-N border-section-N/30

@@ -28,6 +28,10 @@ and the by-name cross-repo ask ledgers
 The 2026-06-03 self-audit fan-out output (`a-ui` · `b-custom` · `c-styles` ·
 `d-demo` · `e-composables` · `f-fourier` + the merged `style-audit.md`). The
 reusable PROMPT that produced it stays live at
-`docs/audits/overfitting-audit.md`; only this one dated RUN is archived. The
-standing `proof:component-orphan` / `proof:consumer-evidence-live` gates are
-the continuous replacement for re-running the sweep by hand.
+`docs/audits/overfitting-audit.md`; only this one dated RUN is archived.
+~~The standing `proof:component-orphan` / `proof:consumer-evidence-live` gates
+are the continuous replacement for re-running the sweep by hand.~~
+[2026-09-17 · O-20 HK-audit — struck: neither gate exists. The `proof:*`
+namespace collapsed at `1c2cda3a` (#65) and `package.json` carries zero
+`proof:*` scripts at v7.0.0, v8.0.0 and v9.0.0. Nothing replaced the hand
+sweep.]

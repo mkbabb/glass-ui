@@ -24,6 +24,16 @@
    `glass-plate`. Unset, the tier resolves `resting` — the consumer plate, the honest
    default for a surface that asked for glass without saying which.
 
+   WHAT IT DOES NOT SUPPLY. One declaration lands: `background: var(--glass-veil)`. No
+   position, no z-index, no radius, no size — a plate is paint, not a box. `.dock-plate`
+   composes this utility and declares `position: absolute; inset: 0; z-index: -1` itself,
+   because only the surface knows which box it is lining. That omission is the whole
+   stacking contract: a plate sharing a box with an `absolute inset-0` decorative layer
+   takes its own positioning PLUS a `--z-content` rung, or the positioned sibling paints
+   over it (positioned z-auto paints at CSS 2.1 Appendix E step 8, static in-flow content
+   at step 7). The rungs are `--z-behind` / `--z-background` / `--z-content`
+   (tokens/scheme-motion.css). Published prose: DESIGN.md §"Plate register".
+
    THE EARNED DARKEN. `--glass-veil-rung` is the tier's own ink, clamped upward by the
    measured backdrop luminance: at or below the knee the clamp resolves EXACTLY the
    rung's own ink (the calm identity — a plate over an unknown backdrop never falsely

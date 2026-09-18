@@ -9,13 +9,11 @@ aliases, bundled duplicates, or hidden fallbacks.
 | `reka-ui` | headless primitives | `^2.0` |
 | `@vueuse/core` | optional dark and event utilities | `^14.0` |
 | `tailwindcss` | utility CSS | `^4.0` |
-| `embla-carousel` | optional carousel engine | `^8.0` |
-| `embla-carousel-vue` | optional carousel substrate | `^8.0` |
 | `@lucide/vue` | icons | `^1.16.0` |
 | `tw-animate-css` | optional overlay animation utilities | `^1.2.5` |
-| `@mkbabb/keyframes.js` | optional motion runtime | `^6.0.0` |
-| `@mkbabb/value.js` | optional color and easing capabilities | `^4.0.0` |
-| `@mkbabb/pencil-boil` | optional hand-mark geometry | `^0.9.2` |
+| `@mkbabb/keyframes.js` | motion runtime | `^6.0.0` |
+| `@mkbabb/value.js` | optional color, CSS and easing capabilities | `^4.0.0` |
+| `vue-component-type-helpers` | type closure for reka-ui's declarations | `^3.0.3` |
 
 The package manifest is the version authority. Review upstream APIs and packed consumer
 behavior before moving a floor. Use SemVer: patch for compatible fixes, minor for

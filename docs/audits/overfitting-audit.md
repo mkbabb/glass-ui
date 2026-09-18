@@ -2,7 +2,7 @@
 
 Reusable canned prompt for auditing one-use components, classes, `@utility` blocks, composables, and type interfaces across glass-ui and its consumers. Substitute `{SCOPE_PATHS}` and `{CONSUMER_PATHS}` per audit; dispatch read-only sub-agent.
 
-This sweep is the read-only DISCOVERY layer behind two standing gates — `proof:component-orphan` (every published custom package + flat subpath + root-barrel composable has ≥2 non-self consumers OR a `docs/consumer-evidence/<x>.md`) and `proof:consumer-evidence-live` (every evidence doc is read by a registered gate or pruned). The gates enforce the ≥2-consumer-or-evidence bar continuously; this prompt is what a human or sub-agent runs to FIND the candidates the gates then lock.
+This sweep is the read-only discovery layer for the ≥2-consumer-or-evidence bar — and it is the ONLY instrument that checks it. Nothing enforces the bar between runs. The `proof:*` namespace, `proof:component-orphan` and `proof:consumer-evidence-live` with it, collapsed at `1c2cda3a` (#65, the gates-abrogation mandate); `package.json` carries zero `proof:*` scripts at v7.0.0, v8.0.0 and v9.0.0, and neither gate name appears anywhere outside `docs/`. So nothing holds a found row between runs: run the prompt, then dispose of every row in the same pass.
 
 ---
 
@@ -33,7 +33,7 @@ Enumerate every component, composable, CSS class, `@utility`, type interface, an
    - **keep** — ≥ 2 distinct usage sites in `{CONSUMER_PATHS}` (demo + library + external consumers all count toward the threshold).
    - **library-orphan** — exported from `src/index.ts` but **0 distinct usage sites anywhere** (not src, not demo, not external consumers). The library ships a primitive nobody — including its own demo — uses. This is the strongest overfitting signal for a public-surface library. Triage: (a) delete it (per "no legacy code"), (b) wire a demo story that exercises it, or (c) document as "shipped for forward compatibility with a named consumer roadmap entry". Default action: triage → either (a) or (b); (c) requires a named justification.
    - **inline-and-remove** — exactly 1 usage site, AND the artefact is NOT exported from `src/index.ts`. Inline at the call site; remove the standalone abstraction. Apt for unnamed helper-shaped classes or single-use private composables that don't earn their abstraction.
-   - **keep-current** — exactly 1 usage site, AND the artefact has semantic value worth preserving (e.g., an `@utility` with a meaningful name like `text-mono-caption`, or a public-surface component with one current consumer that should grow). Current-consumer keeps require a matching `docs/consumer-evidence/<artefact>.md` file and a fresh rerun of that file's cited proof grep.
+   - **keep-current** — exactly 1 usage site, AND the artefact has semantic value worth preserving (e.g., an `@utility` with a meaningful name like `text-mono-caption`, or a public-surface component with one current consumer that should grow). Current-consumer keeps require a matching `docs/consumer-evidence/<artefact>.md` file and a fresh rerun of that file's cited proof grep — or a named gate that asserts against the artefact by name, cited file:line; a gate-anchor constant needs no prose doc.
    - **delete-unused** — 0 usage sites anywhere AND not in `src/index.ts`. Pure dead code; delete.
    - **demo-only-private** — 0 sites in `src/`, only used in `demo/`. Move under `demo/<area>/_internal/` if not already; document as private demo helper. Not a library candidate.
 
@@ -55,7 +55,11 @@ Demands:
 ## Substitutions
 
 - `{SCOPE_PATHS}` — paths to audit (e.g., `src/components/ src/composables/ src/styles/`).
-- `{CONSUMER_PATHS}` — where to count usage (e.g., `src/ demo/ ../muster/src/ ../speedtest/src/ ../slides/src/ ../words/frontend/src/ ../bbnf-lang/playground/src/ ../fourier-analysis/web/src/`).
+- `{CONSUMER_PATHS}` — where to count usage. The canonical roster is `src/ demo/ ../value.js/demo/ ../keyframes.js/demo/ ../atlas/src/ ../sci-report/dashboards/ ../muster/frontend/src/ ../speedtest/src/ ../slides/src/ ../words/frontend/src/ ../bbnf-lang/playground/src/ ../fourier-analysis/web/src/`.
+
+Each root is where that repo's glass-ui edges actually live, which is not always its `src/` — value.js and keyframes.js consume glass-ui from their demo trees, and sci-report's dashboard sources sit directly under `dashboards/`. Pins at the 2026-09-17 census: value.js `^7.0.0` · keyframes.js `7.0.0` · atlas `6.0.0` · sci-report/dashboards `7.0.0` · muster `^3.1.0` · speedtest `^4.0.1` · slides `3.13.0` · words `^3.0.0` · bbnf-lang `^3.0.0` · fourier-analysis `^4.0.0`.
+
+A path that does not resolve greps zero, and zero reads as "no consumers" — the silent false negative. `tests/docs/consumer-paths-exist.test.ts` asserts every stem above resolves on disk; it reads the list from this file, so a repo added here is checked on the next run with no test edit.
 
 ## Forbidden
 
@@ -72,19 +76,20 @@ Single markdown file: short prose preamble (≤ 200 words) explaining scope + me
 
 ## Standard glass-ui invocation
 
-For glass-ui tranches, the canonical fan-out is four parallel sub-agents on disjoint scopes:
+For glass-ui tranches, the canonical fan-out is three parallel sub-agents on disjoint scopes — one per live source tree:
 
 | Agent | `{SCOPE_PATHS}` | `{CONSUMER_PATHS}` |
 |---|---|---|
-| 0a | `src/components/ui/` | `src/ demo/ ../muster/src/ ../speedtest/src/ ../slides/src/ ../words/frontend/src/ ../bbnf-lang/playground/src/ ../fourier-analysis/web/src/` |
-| 0b | `src/components/custom/` | (same) |
-| 0c | `src/composables/` | (same) |
-| 0d | `src/styles/` | (same) |
+| 0a | `src/components/` | the canonical roster above |
+| 0b | `src/composables/` | (same) |
+| 0c | `src/styles/` | (same) |
 
-Each agent's deliverable lands at `docs/tranches/{LETTER}/audit/W0-overfitting-{0a..0d}.md`. The orchestrator merges the four tables into a single `W0-overfitting.md` with a unified verdict distribution at close.
+The `ui/` + `custom/` split this fan-out used to name is gone: `9a8761f0` flattened both into `src/components/`, and neither directory exists at v9.0.0. One agent over 55 component families is the trade — split it further if a scope is too big to grep honestly, and say in the deliverable how it was split.
+
+Each agent's deliverable lands at `docs/tranches/{LETTER}/audit/W0-overfitting-{0a..0c}.md`. The orchestrator merges the tables into a single `W0-overfitting.md` with a unified verdict distribution at close.
 
 ## When to run
 
-- Every tranche close, as part of the closing ceremony (verifies §Invariant 5) — the standing `proof:component-orphan` / `proof:consumer-evidence-live` gates run continuously, so the close sweep is a re-confirm, not the sole check.
+- Every tranche close, as part of the closing ceremony (verifies §Invariant 5). No gate holds the bar between closes, so this sweep is the check rather than a re-confirm of one.
 - Before any major refactor that introduces new abstractions — establishes a baseline.
 - On consumer-build smoke — flags newly-orphaned items against the live constellation.
