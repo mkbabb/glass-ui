@@ -145,10 +145,18 @@ export type WarpMode = "fbm" | "cellular" | "hybrid" | "curl";
  * `swirl` is ON by default — a config opts OUT with `swirl: false`. Every aurora is
  * pointer-shapeable, and a capability parked behind an opt-in flag is a capability the
  * surface does not have. `light` and `scroll` remain explicit opt-ins: `light` is only
- * meaningful over a painterly body (smooth has no impasto to relight), and `scroll`
+ * meaningful where the config carries impasto to relight (see its own note), and `scroll`
  * re-times the shader clock against page position, which no surface should inherit.
  */
 export interface AuroraInteractivity {
+    /**
+     * Cursor-driven impasto relight. Steers `uLightDir`, which only `relightImpasto`
+     * consumes, and every term of that is multiplied by `uImpasto` — so `light` steers
+     * relighting ONLY where `impasto > 0`. The medium name is not the key: `impasto`
+     * defaults to 0 (`DEFAULT_AURORA_CONFIG`) and the atoms door raises it for `oil` and
+     * `vangogh` alone, so `light` over crayon, pastel, watercolor, oil-pastel, kuwahara
+     * or either metal shapes nothing unless the config sets `impasto` itself.
+     */
     light?: boolean;
     scroll?: boolean;
     /**
@@ -281,6 +289,16 @@ export interface AuroraConfig {
     // Output
     saturation: number; // 0.6..1.3
     paperGrain: number; // 0..0.02
+    /**
+     * Pigment alpha of the PAINTED image, 0..1. Live presentation applies it once as the
+     * canvas element's own opacity; capture keeps it in the transparent GPU buffer.
+     *
+     * It composites over the palette-derived GROUND placeholder, which is mounted
+     * unconditionally at full opacity and is alpha-blind — a raster of the same field —
+     * so `alpha` re-weights the ground→field dissolve, not the surface's delivered
+     * presence. The presence envelope is the `opacityCeiling` prop, applied once around
+     * placeholder + canvas together.
+     */
     alpha: number; // 0..1
 
     /**

@@ -279,7 +279,13 @@ export function usePointerVelocityField(
     const stopReducedMotionWatch = watch(
         reduced,
         (next) => {
-            if (next) reset();
+            if (!next) return;
+            reset();
+            // `reset()` HOLDS the envelope (a freeze is not a re-center) and `tick()`
+            // early-returns under PRM before the envelope is advanced, so a mid-session
+            // turn-on with the cursor engaged would freeze it non-zero and leave the
+            // glow on screen. The one static PRM frame is the REST frame.
+            engagement.value = 0;
         },
         { flush: "sync" },
     );

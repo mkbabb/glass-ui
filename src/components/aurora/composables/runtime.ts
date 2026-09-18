@@ -190,21 +190,23 @@ export interface AuroraRuntime extends Omit<AuroraInstance, "pause" | "resume"> 
 }
 
 /**
- * One medium-aware predicate shared by pointer writes and uniform projection.
+ * One impasto-keyed predicate shared by pointer writes and uniform projection.
  *
  * `swirl` is the DEFAULT-ON axis: every aurora shapes under the pointer unless its
  * config says `swirl: false`. Suppression is not this predicate's job — the master
  * tempo scalar zeroes the field tick under reduced motion and under the background
  * pause, so a PRM reader never sees the cursor regardless of what this returns.
  *
- * `light` stays an explicit opt-in AND stays medium-aware: it steers the impasto light
- * direction, and the smooth body has no impasto, so `light` alone over `smooth` shapes
- * nothing and must not arm a pointer path.
+ * `light` stays an explicit opt-in AND is keyed on the impasto AMOUNT, not the medium
+ * name: it steers `uLightDir`, which only `relightImpasto` reads, and every term there is
+ * multiplied by `uImpasto`. `impasto` defaults to 0, so `light` alone paints nothing on
+ * crayon or pastel exactly as it paints nothing on smooth, and must not arm a pointer
+ * path that provably cannot change a pixel.
  */
 export function isAuroraPointerEnabled(config: AuroraConfig): boolean {
     return (
         config.interactivity?.swirl !== false ||
-        (config.medium !== "smooth" && config.interactivity?.light === true)
+        (config.impasto > 0 && config.interactivity?.light === true)
     );
 }
 
@@ -423,20 +425,22 @@ export function createAurora(
         // velocity/accel/attractor advance by tick() in the loop (the ONE smoothing stage).
         pointerField.setActive(true);
         pointerField.setPointer(x, y);
-        // A pointer move re-introduces field easing — re-arm a parked loop.
-        canvasHandle.wake();
+        // A pointer move re-introduces field easing — re-arm a parked loop. Under PRM
+        // shader time is pinned and `setPointer` early-outs, so the redraw would repaint
+        // the frame already on screen (the `setScrollProgress` gate).
+        if (!canvasHandle.reducedMotion) canvasHandle.wake();
     }
     function clearCursor() {
         // Disengage — the engagement envelope decays, the attractor relaxes to rest.
         pointerField.setActive(false);
         // The decay-to-rest still needs frames to animate out — re-arm.
-        canvasHandle.wake();
+        if (!canvasHandle.reducedMotion) canvasHandle.wake();
     }
     function setCursorRadius(r: number) {
         cursorRadius = r;
         // Radius shift is visible iff the cursor is active; wake so the change is
         // drawn (the loop re-parks immediately if the cursor is at rest).
-        canvasHandle.wake();
+        if (!canvasHandle.reducedMotion) canvasHandle.wake();
     }
     function setScrollProgress(progress: number) {
         const next = Math.min(1, Math.max(0, progress));
@@ -495,6 +499,8 @@ export function createAurora(
             // A config change may raise a drift uniform (slider drag) — re-arm a
             // parked loop so the new motion is rendered. wake() re-parks
             // immediately if the new config is still steady-state.
+            // The ONE wake the cursor setters' reduced-motion gate does not share:
+            // a preset swap under PRM still has to repaint the single static frame.
             canvasHandle.wake();
         },
         setCursor,

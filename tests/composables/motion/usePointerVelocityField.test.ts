@@ -25,6 +25,35 @@ function installMatchMedia(reduced: boolean): void {
         }) as unknown as MediaQueryList;
 }
 
+// A matchMedia stub that RETAINS its change listener, so the OS preference can be
+// flipped MID-SESSION — the shared `useReducedMotion` ref is driven by that event, and
+// the stub above (a fresh no-op listener each call) can only seat a preference, never
+// turn one on.
+function installLiveMatchMedia(): (reduced: boolean) => void {
+    const listeners = new Set<(event: MediaQueryListEvent) => void>();
+    const mql = {
+        matches: false,
+        media: "(prefers-reduced-motion: reduce)",
+        addEventListener: (_: string, fn: (event: MediaQueryListEvent) => void) => {
+            listeners.add(fn);
+        },
+        removeEventListener: (_: string, fn: (event: MediaQueryListEvent) => void) => {
+            listeners.delete(fn);
+        },
+        addListener: () => {},
+        removeListener: () => {},
+        dispatchEvent: () => false,
+        onchange: null,
+    } as unknown as MediaQueryList;
+    (window as unknown as { matchMedia: (q: string) => MediaQueryList }).matchMedia =
+        () => mql;
+    return (reduced: boolean) => {
+        (mql as unknown as { matches: boolean }).matches = reduced;
+        for (const fn of listeners)
+            fn({ matches: reduced, currentTarget: mql } as unknown as MediaQueryListEvent);
+    };
+}
+
 describe("usePointerVelocityField", () => {
     afterEach(() => {
         vi.restoreAllMocks();
@@ -157,6 +186,27 @@ describe("usePointerVelocityField", () => {
         const { result, unmount } = mountComposable(() => usePointerVelocityField());
         result.setPointer(1.5, -0.3);
         expect(result.position.value).toEqual({ x: 1, y: 0 });
+        unmount();
+    });
+
+    // O-26-INT-1 — `reset()` HOLDS a raised engagement envelope by design (a freeze is
+    // not a re-center), and `tick()` early-returns under PRM before the envelope is
+    // advanced. So a mid-session PRM turn-on with the cursor engaged froze the envelope
+    // NON-ZERO and the cursor glow stayed on screen instead of decaying to rest. The one
+    // static PRM frame must be the rest frame.
+    it("zeroes the engagement envelope when PRM turns on mid-session", () => {
+        const setReduced = installLiveMatchMedia();
+        const { result, unmount } = mountComposable(() => usePointerVelocityField());
+        result.setActive(true);
+        result.setPointer(0.7, 0.3);
+        for (let i = 0; i < 30; i++) result.tick(16);
+        expect(result.engagement.value).toBeGreaterThan(0.5);
+
+        setReduced(true);
+        expect(result.engagement.value).toBe(0);
+        // And the frozen frame stays at rest — the PRM tick cannot raise it again.
+        result.tick(16);
+        expect(result.engagement.value).toBe(0);
         unmount();
     });
 });

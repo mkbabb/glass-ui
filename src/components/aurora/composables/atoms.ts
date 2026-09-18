@@ -126,7 +126,14 @@ export type AuroraInteractivityAtom =
  */
 interface AuroraAtomsBase {
     // ── COLOR (the user's "color" control element — seed + scheme + energy) ──
-    /** A seed color (CSS string or an OklchStop anchor) → drives the derived palette. */
+    /**
+     * A seed color (CSS string or an OklchStop anchor) → drives the derived palette.
+     *
+     * A string is parsed by `cssToOklch`, which THROWS `GlassColorError` on a contextual
+     * value (`var(--x)`, `currentColor`) or a non-opaque one — it resolves nothing from
+     * the DOM and invents no stock palette. Resolve the token yourself and pass either
+     * the resolved string or the `OklchStop` form.
+     */
     seed?: string | OklchStop;
     /** The hue scheme across the derived ramp. Default `analogous` (when a seed is set). */
     harmony?: AuroraHarmony;

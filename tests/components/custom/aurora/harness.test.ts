@@ -169,17 +169,24 @@ describe("GF-AURORA W0 · aurora interactivity defaults ON, PRM-guarded", () => 
         ).toBe(true);
     });
 
-    it("keeps the explicit opt-out — and keeps `light` medium-aware under it", () => {
-        const optedOut = (medium: AuroraConfig["medium"]): AuroraConfig => ({
+    it("keeps the explicit opt-out — and keeps `light` impasto-keyed under it", () => {
+        const optedOut = (
+            medium: AuroraConfig["medium"],
+            impasto = 0,
+        ): AuroraConfig => ({
             ...DEFAULT_AURORA_CONFIG,
             medium,
+            impasto,
             interactivity: { swirl: false, light: true },
         });
-        // swirl off + smooth: `light` drives the impasto direction, and smooth has no
-        // impasto — nothing to shape, so the pointer stays off.
+        // swirl off + no impasto: `light` drives the impasto relight direction and there
+        // is no height field to catch it — nothing to shape, so the pointer stays off.
+        // O-26 R-6-LIGHT (b): the key is the AMOUNT, so a painterly body at the default
+        // `impasto: 0` reads the same as smooth.
         expect(isAuroraPointerEnabled(optedOut("smooth"))).toBe(false);
-        // swirl off + a painterly body: `light` reaches real paint, so the pointer lives.
-        expect(isAuroraPointerEnabled(optedOut("oil"))).toBe(true);
+        expect(isAuroraPointerEnabled(optedOut("oil"))).toBe(false);
+        // swirl off + real impasto: `light` reaches real paint, so the pointer lives.
+        expect(isAuroraPointerEnabled(optedOut("oil", 0.6))).toBe(true);
         expect(
             isAuroraPointerEnabled({
                 ...DEFAULT_AURORA_CONFIG,

@@ -114,12 +114,15 @@ const resolvedRenderMode = resolveRenderMode(props.renderMode, {
         props.runtimeOptions?.forceWebGLUnderSoftwareRaster ?? false,
 });
 
-// Clamp defensively — out-of-range values would otherwise invert (negative)
-// or over-composite (>1) the shared root. The clamp keeps the contract honest
-// at the boundary.
-const clampedOpacityCeiling = computed(() =>
-    Math.max(0, Math.min(1, props.opacityCeiling)),
-);
+// The ceiling and the ground's two paint values ride CUSTOM PROPERTIES rather than
+// inline `opacity`/`background-*`: an inline paint value outranks an author media arm,
+// so the a11y arms in this file's scoped block could never win against one. The
+// properties land on the same elements and are applied exactly once, so the
+// `opacityCeiling` contract is unchanged — only the paint authority moved. The clamp
+// is defensive: out-of-range values would otherwise invert (negative) or
+// over-composite (>1) the shared root. `String` keeps `setProperty` off numeric
+// coercion.
+const ceilingVar = computed(() => String(Math.max(0, Math.min(1, props.opacityCeiling))));
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 // Top-level `onInitError` prop wins over `runtimeOptions.onInitError` —
@@ -204,7 +207,7 @@ defineExpose({
         class="aurora-root block h-full w-full overflow-hidden"
         :data-aurora-substrate="resolvedRenderMode"
         :data-aurora-settled="api.isSettled.value ? '' : undefined"
-        :style="{ opacity: clampedOpacityCeiling }"
+        :style="{ '--aurora-ceiling': ceilingVar }"
     >
         <!--
           Placeholder GROUND. The palette-derived
@@ -218,8 +221,8 @@ defineExpose({
             class="aurora-placeholder h-full min-h-0 w-full"
             aria-hidden="true"
             :style="{
-                backgroundImage: placeholderBackgroundImage,
-                backgroundColor: placeholderBackgroundColor,
+                '--aurora-ground-image': placeholderBackgroundImage,
+                '--aurora-ground-color': placeholderBackgroundColor,
             }"
         />
         <!--
@@ -245,6 +248,10 @@ defineExpose({
 
 <style scoped>
 .aurora-root {
+    /* The route ceiling, applied ONCE around placeholder + canvas. `--aurora-ceiling`
+       is the template's clamped `opacityCeiling`; `--aurora-ceiling-a11y` is written by
+       the reduced-transparency arm below and by nothing else. */
+    opacity: var(--aurora-ceiling-a11y, var(--aurora-ceiling, 1));
     display: grid;
     /* Paint/layout containment caps the `backdrop-filter`-adjacent paint area and
        isolates the WebGL surface as its own compositing root. `content-visibility`
@@ -289,6 +296,13 @@ defineExpose({
     image-rendering: auto;
 }
 
+/* The ground's two paint values. Deliberately at single-class specificity, matching the
+   forced-colors arm below so that arm can override them. */
+.aurora-placeholder {
+    background-image: var(--aurora-ground-image, none);
+    background-color: var(--aurora-ground-color, transparent);
+}
+
 .aurora-canvas-layer {
     opacity: 0;
     transition: opacity var(--duration-slow) var(--ease-standard);
@@ -309,6 +323,34 @@ defineExpose({
 @media (prefers-reduced-motion: reduce) {
     .aurora-canvas-layer {
         transition-duration: 1ms;
+    }
+}
+
+/* Aurora's two a11y arms. It was in NEITHER library sweep: `a11y-overrides.css` is CSS
+   over CSS plates and `forced-colors` leaves canvas pixels alone, so a forced-colors
+   reader got system-colour text over an unforced full-chroma animation. The arms live
+   here because the paint they override is this component's own. */
+
+/* Reduced transparency: the surface composites at full presence. Writes a property no
+   inline style occupies, so no `!important` is needed. Honest scope: a default aurora
+   already presents opaque, so this bites only where a consumer set `opacityCeiling < 1`. */
+@media (prefers-reduced-transparency: reduce) {
+    .aurora-root {
+        --aurora-ceiling-a11y: 1;
+    }
+}
+
+/* Forced colors: the live field goes, the ground falls back to the system canvas.
+   Chromium forces `background-color` but keeps `background-image`, so the image half is
+   the load-bearing one. */
+@media (forced-colors: active) {
+    .aurora-root > .aurora-canvas-layer {
+        display: none;
+    }
+
+    .aurora-placeholder {
+        background-image: none;
+        background-color: Canvas;
     }
 }
 </style>

@@ -14,6 +14,7 @@
 //   - `auroraCursorMapping` projects engagement→strength (the cursor-local luminance lean that
 //     reads on the smooth medium — the T-38 fix), attractor→cursor position.
 
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { effectScope } from "vue";
 import { usePointerVelocityField } from "@glass/composables/motion/pointer/usePointerVelocityField";
@@ -51,14 +52,32 @@ function flick(field: ReturnType<typeof usePointerVelocityField>): void {
 }
 
 describe("the master tempo scalar (tick(0)) freezes the interactive field under PRM", () => {
-    it("uses one medium-aware predicate for pointer writes and uniforms", () => {
-        // `swirl` is default-ON, so the medium-awareness is read UNDER the opt-out:
-        // with swirl off, `light` alone shapes nothing on smooth (no impasto to
-        // relight) and shapes real paint on a painterly body.
+    it("uses one impasto-keyed predicate for pointer writes and uniforms", () => {
+        // O-26 R-6-LIGHT (b): `swirl` is default-ON, so the `light` term is read UNDER
+        // the opt-out. `light` steers `uLightDir`, consumed only by `relightImpasto`,
+        // every term of which is multiplied by `uImpasto` — so the medium name was the
+        // wrong key. `crayon` is a painterly body that carries NO impasto (the atoms
+        // door raises `impasto` for `oil` and `vangogh` only, `atoms-fields.ts:180-182`,
+        // and `DEFAULT_AURORA_CONFIG.impasto` is 0), and a pointer path that provably
+        // cannot paint must not arm.
         expect(
             isAuroraPointerEnabled({
                 ...DEFAULT_AURORA_CONFIG,
                 medium: "smooth",
+                interactivity: { swirl: false, light: true },
+            }),
+        ).toBe(false);
+        expect(
+            isAuroraPointerEnabled({
+                ...DEFAULT_AURORA_CONFIG,
+                medium: "crayon",
+                interactivity: { swirl: false, light: true },
+            }),
+        ).toBe(false);
+        expect(
+            isAuroraPointerEnabled({
+                ...DEFAULT_AURORA_CONFIG,
+                medium: "oil",
                 interactivity: { swirl: false, light: true },
             }),
         ).toBe(false);
@@ -73,6 +92,7 @@ describe("the master tempo scalar (tick(0)) freezes the interactive field under 
             isAuroraPointerEnabled({
                 ...DEFAULT_AURORA_CONFIG,
                 medium: "oil",
+                impasto: 0.6,
                 interactivity: { swirl: false, light: true },
             }),
         ).toBe(true);
@@ -173,5 +193,41 @@ describe("the master tempo scalar (tick(0)) freezes the interactive field under 
             expect(Math.abs(end.x - 0.9)).toBeLessThan(Math.abs(start.x - 0.9));
             expect(Math.abs(end.y - 0.1)).toBeLessThan(Math.abs(start.y - 0.1));
         });
+    });
+});
+
+// O-26 R-6 — the pointer path woke the parked loop under PRM. Shader time is pinned at
+// `REDUCED_MOTION_TIME` and `setPointer` early-outs, so a cursor wake redraws the frame
+// already on screen: pure waste inside the input task. `setScrollProgress` already
+// carried the gate; the three cursor setters did not. The wake is a call into a live
+// runtime handle, so the contract is read off the bytes (a headless `createAurora` has
+// no GL context to park).
+describe("O-26 R-6 — the cursor setters gate the wake under reduced motion", () => {
+    const RUNTIME = readFileSync(
+        "src/components/aurora/composables/runtime.ts",
+        "utf8",
+    );
+    const body = (name: string): string => {
+        const start = RUNTIME.indexOf(`function ${name}(`);
+        expect(start).toBeGreaterThan(-1);
+        return RUNTIME.slice(start, RUNTIME.indexOf("\n    function ", start + 1));
+    };
+
+    it.each(["setCursor", "clearCursor", "setCursorRadius"])(
+        "%s wakes only when motion is not reduced",
+        (name) => {
+            const src = body(name);
+            expect(src).toContain("canvasHandle.wake()");
+            expect(src).toMatch(
+                /if\s*\(!canvasHandle\.reducedMotion\)\s*canvasHandle\.wake\(\);/,
+            );
+        },
+    );
+
+    it("leaves update() its unconditional wake — a preset swap must repaint the static frame", () => {
+        const src = RUNTIME.slice(RUNTIME.indexOf("update: (cfg) => {"));
+        const upToWake = src.slice(0, src.indexOf("canvasHandle.wake()"));
+        expect(upToWake).not.toContain("!canvasHandle.reducedMotion");
+        expect(upToWake).toContain("under PRM");
     });
 });

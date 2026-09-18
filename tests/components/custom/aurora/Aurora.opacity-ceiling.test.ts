@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { mount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { nextTick, type Ref } from "vue";
@@ -71,7 +72,18 @@ describe("Aurora opacity ceiling", () => {
         const canvasLayer = wrapper.get(".aurora-canvas-layer").element as HTMLElement;
 
         expect(root.dataset.auroraSubstrate).toBe("css");
-        expect(root.style.opacity).toBe("0.55");
+        // The ceiling rides a CUSTOM PROPERTY, not an inline `opacity`: an inline
+        // paint value outranks an author media arm, so the a11y arms below could
+        // never win against one. Same element, same single application.
+        expect(root.style.getPropertyValue("--aurora-ceiling")).toBe("0.55");
+        expect(root.style.opacity).toBe("");
+        // The ground's two paint values move the same way.
+        expect(placeholder.style.getPropertyValue("--aurora-ground-image")).toBe(
+            "linear-gradient(#123, #456)",
+        );
+        expect(placeholder.style.getPropertyValue("--aurora-ground-color")).toBe("#123");
+        expect(placeholder.style.backgroundImage).toBe("");
+        expect(placeholder.style.backgroundColor).toBe("");
         expect(placeholder.style.opacity).toBe("");
         expect(canvasLayer.style.opacity).toBe("");
     });
@@ -95,5 +107,51 @@ describe("Aurora opacity ceiling", () => {
 
         expect(canvasLayer.classes()).toContain("aurora-canvas-layer--armed");
         expect((canvasLayer.element as HTMLElement).style.opacity).toBe("");
+    });
+});
+
+// O-26 R-5 — aurora was in NEITHER a11y sweep: a forced-colors reader got
+// system-colour text over an unforced full-chroma animation, and a
+// reduced-transparency reader got the consumer's `opacityCeiling` unchanged. The arms
+// live in `Aurora.vue`'s OWN scoped block (no new file, no JS media read); happy-dom
+// applies no stylesheet, so the arms are read from the emitted block itself.
+describe("O-26 R-5 — the aurora a11y arms in the scoped block", () => {
+    const SFC = readFileSync("src/components/aurora/Aurora.vue", "utf8");
+    const scoped = SFC.slice(SFC.indexOf("<style scoped>"));
+    // Comments out, whitespace flattened — the arms are read as declarations, not as
+    // the prose that explains them.
+    const squashed = scoped.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/\s+/g, " ");
+
+    it("routes both paint values through custom properties the media arms can reach", () => {
+        expect(squashed).toContain(
+            ".aurora-root { opacity: var(--aurora-ceiling-a11y, var(--aurora-ceiling, 1));",
+        );
+        expect(squashed).toContain(
+            ".aurora-placeholder { background-image: var(--aurora-ground-image, none); background-color: var(--aurora-ground-color, transparent); }",
+        );
+    });
+
+    it("carries the reduced-transparency arm", () => {
+        expect(squashed).toContain(
+            "@media (prefers-reduced-transparency: reduce) { .aurora-root { --aurora-ceiling-a11y: 1; } }",
+        );
+    });
+
+    it("carries the forced-colors arm", () => {
+        // Chromium forced-colors forces `background-color` but keeps
+        // `background-image`, so the image half is the load-bearing one.
+        expect(squashed).toContain(
+            "@media (forced-colors: active) { .aurora-root > .aurora-canvas-layer { display: none; } .aurora-placeholder { background-image: none; background-color: Canvas; } }",
+        );
+    });
+
+    it("leaves the default computed ceiling at opacityCeiling", () => {
+        // `--aurora-ceiling-a11y` is written by the media arm ALONE — nothing sets it
+        // inline or at rest — so the default cascade resolves the root's opacity
+        // through the fallback to `--aurora-ceiling`, i.e. to the prop's clamped value.
+        // Exactly ONE write of the a11y override exists, and the arm test above
+        // pins it inside the reduced-transparency media block.
+        expect(squashed.match(/--aurora-ceiling-a11y\s*:/g)).toHaveLength(1);
+        expect(SFC).toContain("'--aurora-ceiling': ceilingVar");
     });
 });
