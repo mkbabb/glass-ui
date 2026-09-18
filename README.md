@@ -65,6 +65,16 @@ The optional `styles/fonts` entry carries the packaged Plus Jakarta Sans and
 Fira Code faces as self-contained WOFF2 data URLs. Consumers that need raw font
 files can address the same built assets through `@mkbabb/glass-ui/fonts/*`.
 
+Every packaged face is roman: there is no italic `@font-face` and none is
+intended. Four utilities ask for one anyway — `text-caption`, `text-math`,
+`text-math-body` and `fourier-f` — so they are SYNTHESIS-DEPENDENT: the browser
+obliques the roman face for them. The library declares no `font-synthesis`, so
+the UA default (`auto`) applies and they paint. If your app sets
+`font-synthesis: none` at the root, those four lose their slant and
+`text-caption`'s running prose goes upright; reach for `text-mono-caption`, or
+`color: var(--muted-foreground)` on `text-caption`, where the distinction has to
+survive that policy.
+
 ## Documentation
 
 The authoritative canon lives under [`docs/canon/`](./docs/canon/), with the
@@ -179,6 +189,20 @@ Five of the six shadow rungs are bridged: `--glass-shadow-capsule` has no `--sha
 ## Typography
 
 Type scale based on √φ ≈ 1.272 (modulated golden ratio); each step is φ^(n/2) of the base. Semantic classes run `.text-micro` → `.text-body` → `.text-heading` → `.text-title` → the audacious `.text-display-*` ladder. The `@theme` block in `theme.css` maps these to Tailwind's `--font-size-*` tokens, so `text-sm` / `text-lg` adopt the golden-ratio scale.
+
+## Target size
+
+Three mechanisms carry the WCAG-2.5.5 44px floor, and a consumer reaches all
+three. `--control-floor` is the clamp seam in the height cohort: `0px` at
+desktop, lifted to `--touch-target` (`2.75rem`) under `pointer: coarse`, and
+every `--control-h-xs|sm|md|lg` rung is a `max()` against it, so no `--ui-scale`
+below 1 can drop a control under the floor. `[data-control-target]` is the
+attribute opt-in — one shared rule in `styles/utilities/responsive.css` floors
+both axes of any element wearing it under coarse pointer, and you can put it on
+your own interactive faces. `.control-bit` is the binary-control register
+(checkbox · switch · radio): the host itself is the ≥44 seat, in flow, and the
+paint sits on the smaller `.control-bit__face` child — so the rect the pointer
+hits is the rect `getBoundingClientRect` reads, and the paint stays small.
 
 ## Conventions
 

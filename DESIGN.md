@@ -898,6 +898,20 @@ Reka `as` / `asChild` composition without creating another styling authority.
 | `tone` | shared `Tone` (`neutral \| success \| warning \| info \| destructive`) | `neutral` | Command intent, independent of priority |
 | `size` | `xs \| sm \| md \| lg` | `md` | Shared control-height rung |
 
+**The target floor under that rung.** Three mechanisms carry WCAG-2.5.5's 44px,
+and the `size` rung is only the first of them. (1) `--control-floor` is the clamp
+seam inside the height cohort: `0px` at desktop, lifted to `--touch-target`
+(`2.75rem`) under `pointer: coarse`, with every `--control-h-xs|sm|md|lg` written
+as a `max()` against it — so a `--ui-scale` below 1 cannot drop a control under
+the floor, whatever rung it names. (2) `[data-control-target]` is the attribute
+opt-in: one shared rule in `styles/utilities/responsive.css` floors both axes of
+any element wearing it under a coarse pointer, and Button wears it
+unconditionally from 8.0.0. (3) `.control-bit` — the binary-control register
+(checkbox · switch · radio) — makes the host itself the ≥44 seat, in flow, and
+keeps the paint on the smaller `.control-bit__face` child, so the hit box and the
+measured rect are one box and the paint stays small. A halo does not: an inert
+`::before` catches nothing.
+
 `iconOnly` selects square geometry but never supplies an accessible name;
 callers provide `aria-label`. `loading` sets `aria-busy` and suppresses activation.
 The native default `type="button"` prevents accidental form submission; explicit

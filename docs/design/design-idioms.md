@@ -88,7 +88,7 @@ declarations) lives in the file that owns its COHESION DOMAIN. The home map:
 |---|---|---|
 | typography | `src/styles/typography.css` | the golden-ratio type scale, semantic type classes, the engraved/depth text utilities |
 | interactive / button | `src/styles/utilities/btn.css` | `scale-on-hover`, `twin-line-divider`, `transition-control/collapse`, `sheet-animate`, `rainbow-vivid/pastel`, `btn-interactive`, `table-cell/head` |
-| a11y / capability override | `src/styles/utilities/a11y-overrides.css` | `touch-hit-area` + the `@media` overrides |
+| a11y / capability override | `src/styles/utilities/a11y-overrides.css` | the capability `@media` arms — the reduced-motion instant fallback, and the `forced-colors: active` focus sweep over `.focus-ring` / `.field-control` / `.input-pill` and the dock triggers |
 | glass surface | `src/styles/glass/*.css` | `glass-progress-rail` (the deck-position rail @utility); the `[data-surface="glass\|veil\|opaque"]` shared surface-decoration axis + the `.paper-ink-mark` MARK register (`glass/surface-axis.css` — see below); the `--control-surface-{bg,border,blur,bg-hover}` form-family REST tier (`glass/surfaces.css`) |
 | feedback tone | `src/components/_shared/feedback/feedback-tone.css` | `.feedback-tone` + `.feedback-tone-{success,warning,info,destructive}` (the ONE shared tinted-glass tone register; a `_shared/feedback/` cohesion-domain register, `@import`ed at cascade rung 7a after `card/styles.css`) |
 | menu glass | `src/components/_shared/menu/menu.css` | `.glass-menu-row` (the shared interactive menu-row register, a `_shared/menu/` cohesion-domain register) |

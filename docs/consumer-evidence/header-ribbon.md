@@ -1,5 +1,13 @@
 # HeaderRibbon
 
+[2026-09-18 · O-26 R-11-RIDER — HISTORICAL. The component was DELETED at 8.0.0 (`4bf53962`,
+the Φ5 deletion spine): `HeaderRibbon`, the `@mkbabb/glass-ui/header-ribbon` subpath,
+`HeaderRibbonProps` and `HeaderRibbonPlacement`, with no successor. Everything below is the
+evidence that carried the persistent RETAIN at BI.W-P114 and is kept as a record of that
+adjudication, not as a statement about the library today. Where it reads RETAINED, read
+"retained then, deleted at 8.0.0". The successor recipe is in MIGRATION.md under `## 8.0.0`,
+`_Deleted — HeaderRibbon_`.]
+
 ## Artefact path (RETAINED persistent-only — BI.W-P114 re-spec)
 
 `src/components/header-ribbon/` (`HeaderRibbon.vue` + `types.ts` + `index.ts` + `styles.css`) +

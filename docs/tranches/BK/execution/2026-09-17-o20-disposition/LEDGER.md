@@ -116,6 +116,20 @@ both CSS export roots asserting each top-level style rule sits inside an `@layer
 (allowlist: token `:root`, `@utility`/`@theme`/`@property`/`@font-face`, named exceptions)
 —born-RED on the measured set, riding an existing seat. Measure FR-COB-8/12 in that wave. Not executed.
 
+[2026-09-18 · O-26 R-1 — SCOPE NOTE, two riders that attach to the class and not to any one
+instance. (1) The SFC SCOPED-BLOCK HALF IS IN SCOPE, explicitly: a `<style scoped>` block can
+author `@layer components {}` around its own rules, `Skeleton.vue:62` already does it, and the
+cure design must say so rather than treat "component stylesheet" as meaning `.css` files only
+— the precedent is what makes the tree mixed by intent, and it is also the door for every
+SFC-authored rule in the set. (2) The wave PUBLISHES ITS MEASURED UNLAYERED SET AS A
+CONSUMER-READABLE MANIFEST, beside the cascade gate and not inside it: the gate's datum is
+"every unlayered top-level rule" and gates do not travel to consumers, so a consumer who needs
+to know which of their overrides stop working at 10.0.0 gets the list by name. The label half
+of O-26 R-1 (`.glass-label`, unlayered at both cuts, moved identifier) joins this set; no
+piecemeal cure is taken ahead of the wave, because curing one member corrupts the born-RED
+datum. The 351 figure above is SUPERSEDED — the figure that travels is "the set, not a number";
+two in-house seats agree only on the depth-0 354 and disagree on all-depths (471 vs 604).]
+
 ### A-4 · `components.css` re-emits `--radius*` under `layer(components)`—DEAD → KILL
 
 Published `components.css` (24,207 B): `:root` count 0; declarations of

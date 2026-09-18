@@ -112,6 +112,49 @@ in §8.0.0 (_Theme tokens removed_ · _Classes and utilities removed_) and §7.0
 `@theme` name set and the `@utility` name set of the published `./styles` closure are
 byte-identical between 8.0.0 and 9.0.0 (242 and 47 on both).
 
+_Amended after 9.0.0_
+[2026-09-18 · O-26 R-8, UNRELEASED on the registry: everything from here to the end of
+this section describes the cured source, not the 9.0.0 bytes. The keyboard registry has
+had no row since 5.0.0 and both changes are behavioural, not renames.]
+
+**The keyboard registry honours `defaultPrevented`, and modal overlays quiet the app's
+bindings.** Nothing is renamed and nothing is removed. Two behaviours change, and a
+consumer who relied on either one relied on a defect.
+
+**A keydown another layer already consumed no longer reaches a shortcut.** The
+dispatcher returns early on `e.defaultPrevented`, so one press fires at most one handler
+across the whole page. reka's `DismissableLayer` reads the same flag and never sets it,
+but three in-house keydown paths DO set it — dock search (`useFuzzySearch`: the arrows,
+Enter, Escape), tab roving focus (the arrows, Home, End, Enter, Space) and the
+sortable-list keyboard drag — so a registry binding on one of those keys no longer fires
+behind them. What also changes is an app that calls `preventDefault()` in its own
+listener and then saw a registry binding fire anyway. Escape is exempt from the modal
+barrier below but NOT from this guard: an Escape a layer consumed was that layer's
+dismissal, and the registry does not dismiss a second thing on the same press.
+
+**A modal overlay barriers the bindings registered before it opened.** `Dialog`, `Sheet`,
+`CommandDialog` and — only when `modal` is true — `DropdownMenu` and `Popover` raise a
+barrier while reka is enforcing modality, which is the same flag that traps focus and
+makes the page behind inert. App-level accelerators stay registered and stay in
+`useRegisteredShortcuts()`; they simply do not fire while a modal is open. Escape is
+exempt and keeps its reversed LIFO walk, so the top-most overlay is always dismissable,
+and within a layer the forward first-registered-wins order is untouched, so a late
+registrant still cannot shadow a destructive binding. A `modal={false}` overlay leaves
+the page operable and keeps its keyboard with it.
+
+**`@mkbabb/glass-ui/keyboard` gains `suspendShortcuts` · `formatComboLabel` ·
+`LabeledShortcut`.**
+
+| export | what it is |
+| --- | --- |
+| `suspendShortcuts(): () => void` | Raise the barrier above, by hand, for an overlay this library does not own. Call it BEFORE the overlay registers its own bindings — the barrier admits registrations made after it, so an overlay whose content stays mounted across a close registers its bindings on open, not on mount — and call the returned release on close; the release is idempotent and order-free. |
+| `formatComboLabel(raw: string): string` | The spoken form of a combo, for an `aria-label` beside the `<kbd>` glyphs `formatComboParts` produces. `"mod+shift+z"` → "Control Shift Z" (or "Command Shift Z" on a Mac); `"delete"` → "Delete or Backspace", because the matcher's alias table says a `delete` binding also answers to Backspace. |
+| `LabeledShortcut` | The element type of `useRegisteredShortcuts()`, narrowing `options.label` to `string`. Type-only and non-breaking — the runtime has always filtered on that label. |
+
+`useRegisteredShortcuts()` is deliberately NOT barrier-filtered: it is the reference list
+of what the app answers to, not a live capability probe, and a help overlay is itself a
+modal that filtering would hand an empty list.
+
 ## 8.1.0 — ~~UNRELEASED (in flight; not on the registry)~~ [2026-08-10 · BK #21: superseded
 as a version number by the `9.0.0` section above — the content below stands, the cut it
 lands in is now the major] [2026-09-17 · that major is on the registry: 9.0.0]
@@ -264,7 +307,9 @@ than pinning a literal you maintain by hand — it is the same string on both si
 `R-PUBLIC-8-LEDGER` this section is.** `exports` goes **66 → 70 keys** (`jsSubpaths` 64,
 regenerated exactly from `scripts/lib/subpath-policy.mjs`, `EXACT REPRODUCTION: YES`).
 Clean breaks throughout: no aliases, no deprecation window. Two keys retire, six mint,
-one component is deleted.
+one component is deleted [2026-09-18 · O-26 R-11-RIDER — in THIS re-cut. The major's
+deletion roll is wider: `HeaderRibbon` went at `4bf53962`, outside the batch, and its
+`./header-ribbon` key is not one of the two counted here. Its entry is below TagsInput's.].
 
 _Package subpaths_
 
@@ -284,6 +329,33 @@ the component directory, its story and its contract test. It was never published
 subpath, and the consumer walk (19 roots: 15 closed-universe + 3 operational mirrors + 1
 negative control) found **zero specifier edges and zero symbol edges**. There is no
 replacement: compose `<Chip>` inside a `<LabeledField>` if you need the shape.
+
+_Deleted — `HeaderRibbon`_
+[2026-09-18 · O-26 R-11-RIDER — the component went at this cut (`4bf53962`, part of the Φ5
+deletion spine) and had no entry until now, outside the export re-cut the count sentence
+above tallies.]
+
+`HeaderRibbon` is deleted with the `@mkbabb/glass-ui/header-ribbon` subpath and both of its
+types, `HeaderRibbonProps` and `HeaderRibbonPlacement`. Delete the import and the specifier
+together; there is no successor component. What the component was is a `role="toolbar"` band
+on a glass surface, and you compose that yourself under your own wrapper:
+
+```vue
+<div role="toolbar" aria-label="…">
+  <Surface tier="floating" surface="glass">
+    <!-- your items -->
+  </Surface>
+</div>
+```
+
+On 7.0.0 the same plate was `material="functional"`; that prop is deleted at this cut and
+`functional` was the `floating` tier under a second name — see the Surface row below.
+
+The `role` and the label belong to the consumer's wrapper because the landmark is the
+consumer's, not the surface's. If you are on 7.0.0 and reading a collapsible contract into
+this component — `mode`, `anchorLabel`, an `anchor` slot, `hideTimeoutMs` — that contract was
+already removed AT 7.0.0; see `## 7.0.0` below. The published 7.0.0 component is 43 lines,
+persistent-only, and renders expanded from first paint.
 
 _Class + attribute namespace — `.dropdown-menu__*` → `.menu__*`_
 
@@ -358,10 +430,44 @@ goes **49 → 47** at this cut (three out, one in) and is unchanged at 9.0.0.]
 | --- | --- |
 | `glass-fill` | `glass-plate`, which landed in the very commit that removed this one (`4b1a9733`): `.glass-card` moved from `@apply glass-fill` to `@apply glass-plate` there. It paints `background: var(--glass-veil)`, and you pick the rung by declaring `--glass-veil-tier: var(--glass-veil-quiet)` — or `--glass-veil-wash`, `--glass-veil-resting`, `--glass-veil-floating`, `--glass-veil-overlay` — in the place `--glass-fill-rung` used to go. The old TINT mix has no hand-composed equivalent: `--glass-bg-resting`, `--glass-tint-source` and `--glass-tint-strength` all have 0 declarations at 9.0.0. `--glass-fill-tinted` is **not** the successor — it has shipped beside `glass-fill` since 5.0.0 (`216e1d54`), and still beside it in the 7.0.0 package, as a tint OVERLAY. It is itself an ordinary custom property, a `color-mix` that READS the two registered knobs: `@property --glass-fill-tint` (`<color>`, initial `transparent`) and `@property --glass-fill-strength` (`<percentage>`, initial `0%`), both registered at the foot of `styles/tokens/glass.css`. With both at their initials the mix resolves to a fully transparent stop, so reading `--glass-fill-tinted` as a `background` paints nothing until you set both knobs yourself. |
 | `text-admin-label` | `text-mono-micro`, plus `uppercase font-medium` wherever the caps or the 500 weight carried meaning — the successor does not include them. The old recipe was `font-mono` · `--type-admin-label` (10px) · `line-height: 1` · `uppercase` · `tracking-caps` · `font-weight: 500`; the new one is `font-mono` · `--type-micro` (11px) · `line-height: 1.25` · `letter-spacing: 0.025em`. Landed `6b450f22`. |
-| `touch-hit-area` | Removed, no drop-in utility. `--touch-target` (`2.75rem`) still ships and is still what the components read; compose it yourself — a `position: relative` host and, inside `@media (pointer: coarse)`, a centred `::before` with `min-width`/`min-height` of `var(--touch-target, 2.75rem)` and `pointer-events: none`. Landed `bd93c22b`. |
+| `touch-hit-area` | Removed, no drop-in utility. ~~Compose it yourself — a `position: relative` host and, inside `@media (pointer: coarse)`, a centred `::before` with `min-width`/`min-height` of `var(--touch-target, 2.75rem)` and `pointer-events: none`.~~ [2026-09-18 · O-26 R-7-RIDER — that recipe was the utility's own body and it never expanded a tap target: `pointer-events: none` makes the halo inert, so the hit box stays the host's. Written now: the two doors that do work.] `--touch-target` (`2.75rem`) still ships and is still what the components read, and there are two ways to reach it. **The host as the seat, the paint on a child** — the host wears `.control-bit`, which sizes it to `max(var(--touch-target), face)` on both axes, in flow, margin box == border box, while the smaller `.control-bit__face` child carries the paint; checkbox and the radio item ship this way (`styles/glass/control-bit.css`). The absolutely-positioned `.checkbox__seat` span it replaced bled past the box and made the hit rect lie — do not reach for that form. **Or the attribute floor** — `[data-control-target]` on the host, read by the shared rule in `styles/utilities/responsive.css`: `@media (pointer: coarse){[data-control-target]{min-block-size: var(--touch-target, 2.75rem); min-inline-size: var(--touch-target, 2.75rem)}}`. That rule ships from 7.0.0; what changes at THIS cut is that Button wears the attribute unconditionally rather than icon-only (`70dc0f06`). It is a floor, not a halo: it grows the host's own box, and the paint stays small by sitting on a child — the Timeline marks are `<button data-control-target>` whose disc does not inflate. Either door; never the inert `::before`. Landed `bd93c22b`. |
 
 The roster also GAINED one utility at this cut: the `@utility` diff 7.0.0 → 8.0.0 is
 three out, one in, and that gain is the successor named above.
+
+_The blanket blur opt-out is gone — `--glass-cell-backdrop-filter`_
+[2026-09-18 · O-26 R-10-RIDER — the strike landed at BK.W-FROST (`4b1a9733`) with no row
+of any kind. Measured from the published dists: 39 occurrences at 7.0.0, 0 at 8.0.0, 0 at
+9.0.0. No roster impact — it was a plain custom property, never a `@theme` or `@utility`
+name — which is why it is its own block and not a fourteenth row in the table above.]
+
+| removed | what to write instead |
+| --- | --- |
+| `--glass-cell-backdrop-filter` | `surface="opaque"` on the component, or `data-surface="opaque"` on a plain element. The token was the blur channel's blanket override: every glass rung read `backdrop-filter: var(--glass-cell-backdrop-filter, var(--glass-blur-<rung>))`, so declaring it anywhere in the tree replaced the blur of every rung under it. Sixteen read-arms collapsed in the same commit, and the rule that set it went with them — `:where(.glass-wash, .glass-quiet, .glass-resting, .glass-floating, .glass-overlay, .glass-card, .glass-dock) > * { --glass-cell-backdrop-filter: none; }`, the content-tier suppression that kept a glass child from blurring inside a glass parent. Both halves are gone together. Build on the SURFACE axis instead, never on the token: a surface declares what it is, and the blur follows from it. Landed `4b1a9733`. |
+
+_A registered `@property` name is gone — `--specular-angle`_
+[2026-09-18 · O-26 R-15-RIDER — a registered `@property` name is a published name, and
+this one left with no row. The major was MEASURED, not recalled: `grep -c specular-angle`
+on `dist/styles/tokens/property-regs.css` is 1 at 7.0.0 and 0 at 8.0.0 and 9.0.0, and the
+dist-wide file count goes 5 → 0 → 0, so the row belongs at THIS cut. No roster impact: the
+roster pins `@theme` and `@utility` names.]
+
+| removed | what to write instead |
+| --- | --- |
+| `--specular-angle` | Removed, no successor. It was the angular channel of the specular register, `@property`-registered in `styles/tokens/property-regs.css` and read by the conic-gradient leg of the `::before` sweep. The positional family is THREE names from this cut, not four: `--specular-x`, `--specular-y` and `--specular-intensity` all survive and stay registered. A stylesheet that writes the angle declares an unregistered custom property that nothing reads. |
+
+_Focus moves off `box-shadow` and stops restating the shape_
+[2026-09-18 · O-26 R-16-RIDER — both reshapes landed at this cut (`70dc0f06`) and neither
+had a row. Both are visible breaks for a consumer that relied on the pill geometry or read
+`--focus-ring-shadow` as the control's paint.]
+
+| was | now | what to do |
+| --- | --- | --- |
+| `.focus-ring:focus-visible` wrote `--radius-pill` on the host, plus `outline: none` and a `box-shadow` ring | one `outline` and `outline-offset: 2px`, nothing else | Nothing, if you wanted a ring. The `--radius-pill` write was the bug: a focus indicator may not restate the element's shape, and it did — a 6px host went to 9999px on focus and snapped back on blur. The outline tracks the corner instead. If you were LEANING on that shape change, it is gone; declare the radius yourself. |
+| `.field-control:focus-visible` painted `box-shadow: var(--focus-ring-shadow)` with `outline: none` | `outline: var(--focus-ring-width) solid var(--field-control-ink)`, `outline-offset: 2px`, plus a `--control-edge-ring` fill | The `box-shadow` channel on a focused field control is YOURS again — nothing of ours writes it. The ring's hue also moves, from the accent at 30% to neutral `--foreground` at `--ink-perimeter` (`0.48`), which measures 3.0:1 where the retired ring measured 1.91:1. If you need to add to the ring rather than replace it, compose instead of erasing: `.glass-control-edge` in `@layer components` reads `--control-edge-inner` and `--control-edge-ring` as slots, so fill a slot. |
+
+`--focus-ring-shadow` itself SURVIVES — fifteen references in the published package — and
+what changed is that `.field-control` is no longer one of them.
 
 _Alert loses its tone wash_
 [2026-09-17 · O-20 C-1 (the ask is value.js's AF-7) — W-ALERT (#33, `76bfae26`) landed
