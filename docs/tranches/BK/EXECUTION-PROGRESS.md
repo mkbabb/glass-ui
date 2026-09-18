@@ -7526,3 +7526,204 @@ bank and therefore below every cite in it, so **NOTHING SHIFTS** — ⊕⁸²'s 
 No line above `:7346` is edited by this seat. The file goes **7,346 → 7,528 — +182**, separator
 counted in, this paragraph counted into its own figure, all of it below the last cite. Committed
 records keep their pre-insertion numbers, per ⊕⁷², ⊕⁷³, ⊕⁷⁶, ⊕⁷⁷, ⊕⁷⁹, ⊕⁸⁰, ⊕⁸¹, ⊕⁸², ⊕⁸³.
+
+---
+
+⊕⁸⁵ **THE O-26 CURE WAVE LANDED IN SIX COMMITS, AND THREE OF ITS OWN RULINGS WERE OVERTURNED ON
+DISK BY THE LANE THAT CARRIED THEM** (2026-09-18 · `ae17992c`..`6e5a35bc` on the datum
+`df5c6f44`, tree clean at this seat's first byte · cursor seat modelId **`claude-opus-5`**, read
+from this seat's OWN on-disk subagent transcript
+`…/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/subagents/agent-a910a15d4db9b11e5.jsonl`—located by
+grepping the subagent tree for the tarball sha256 unique to this dispatch and disambiguated by its
+own `meta.json` description, `⊕⁸⁵ close cursor entry (Opus)`; `.message.model` = `claude-opus-5`,
+`CLAUDE_MODEL_ID` unset, and **the assertion GATES this chain with `&&`, never a newline**). The
+wave cured, recorded and rebound. It published nothing, moved no version and wrote no sibling tree.
+
+⊕⁸⁵ **(a) THE SIX COMMITS** — `git log --oneline df5c6f44..6e5a35bc`, each stat from
+`git show --stat`:
+
+| commit | lane | files | ± |
+| --- | --- | --- | --- |
+| `ae17992c` | B · boolean cast | 8 | +358/−3 |
+| `c1f266ad` | A · aurora | 10 | +679/−32 |
+| `650297da` | K · keyboard | 13 | +887/−14 |
+| `7c3d5fa3` | M · manifest + docs | 7 | +594/−3 |
+| `c6251420` | the ratchet rebind | 1 | +1/−1 |
+| `6e5a35bc` | M2 · the retired-subpath record | 5 | +508/−12 |
+
+**One workflow carried four of the five lanes**: `wf_99bdc0bb-0c3`, **24 seats, 24 `result` rows,
+0 `failed`**, 14:52:58 → 17:11:40 ET—**2 h 19 m**, six seats per lane
+(`implement · challengeA · challengeB · adjudicate1 · cure1 · adjudicate2`), ≤3 concurrent,
+disjoint file fences, **no seat committed**. Two seats ran outside it: lane K's residue seat
+(`agent-a3cc8e2013e47b387`) and **the M2 pair**—`agent-ae54b500e7dc555d0` (implement) plus
+`agent-a95b583996825d16f` (challenge). Every seat Opus, every adjudicator `claude-fable-5-1`.
+
+⊕⁸⁵ **(b) THE FIVE LANES, ONE LINE EACH, WITH THE QUARTET VERDICT UNDER IT.**
+
+**B · `ae17992c` · R-3, the Boolean cast.** `Collapsible.open`, `Chip.modelValue` and
+`LabeledSwitch.modelValue` default to `undefined` so the uncontrolled seeds reach reka, with
+`modelValue?: boolean` on `LabeledSwitchProps` and Chip's `defaultValue` deliberately left bare;
+three born-RED contract witnesses including the `aria-pressed` guard; `dist/chip.js` emits
+`modelValue: { type: [Boolean, null], default: void 0 }`. **Quartet**: challengers `clean: true`
+on 2 and 4 findings → adjudication-1 `CURE-ROUND`, **6 rulings (4 ACCEPT · 2 AMEND · 0 REJECT)**,
+a 10-item cureList that was **all RECORD prose—no source or test byte moved that round** (item 9
+deviated on one cell: the census table's `| — |` padding is not prose spacing) → re-adjudication
+**`RESIDUE`, `regressions: []`**, four items, **applied by the driver in a round 2** the record
+carries (`:83`→`:84`, two line-end dashes, and the false sentence *"No prose dash was left
+spaced."* replaced by the true one).
+
+**A · `c1f266ad` · R-4, R-5, R-6, R-6-LIGHT (a)(b), O-26-INT-1.** The forced-colors and
+reduced-transparency arms via custom-property routing of the inline paint values, PRM guards on
+the three cursor `wake()` paths (`update()` keeps its wake, by comment), the `alpha`/`seed`/`light`
+JSDoc contracts, `isAuroraPointerEnabled` re-keyed on `config.impasto > 0`, and the engagement
+envelope zeroed on the reduced-motion transition; born-RED **3 files / 11 failed → 27 passed (27)**.
+**Quartet**: challengers `clean: false` on 4 and 4 → adjudication-1 `CURE-ROUND`, **8 rulings
+(4 ACCEPT · 1 AMEND · 3 REJECT)**, five edits, the load-bearing one collapsing
+`clampedOpacityCeiling` into the single `ceilingVar` computed → re-adjudication **`COMPLETE`,
+`regressions: []`, `residue: []`**. Two REJECTs are worth keeping: no `compileStyle` instrument was
+minted (the ledger's own named witness idiom is a `readFileSync` source read), and the PRM latch
+claim died on disk (`useReducedMotion.ts:72` re-seeds on every mount, so the latch self-heals).
+
+**K · `650297da` · R-8, the keyboard registry.** `suspendShortcuts()`—a registration-order
+barrier, Escape keeping its LIFO walk through it and first-registered still winning within a
+layer—plus `formatComboLabel()` reading the alias table, the `LabeledShortcut` narrowing,
+`defaultPrevented` honoured (one press, one handler), and the four modal overlays (Dialog, Sheet,
+modal Menu and Popover) enrolled on open through one shared `useModalShortcutBarrier`; the R-8 (d)
+grounds re-ruled in the LEDGER with a dated bracket after the adjudicator found the *"nothing in
+our tree preventDefaults a keydown"* clause FALSE on four live consumers. **Quartet**: challengers
+`clean: false` on 6 and 5 → adjudication-1 `CURE-ROUND`, **11 rulings (9 ACCEPT · 2 AMEND)**,
+cureList items 1–7 the seat's and item 8 the driver's → re-adjudication **`RESIDUE`,
+`regressions: []`** → **a driver cure round 2**, six edits, five of them recorded at
+`K/RECORD.md:471` (the `released`-flag clause struck, every stale source cite re-pointed and
+re-verified with `sed`/`awk`, the `_Amended after 9.0.0_` marker honoured over a minted heading).
+
+**M · `7c3d5fa3` · the manifest and docs riders, DOCS ONLY.** MIGRATION rows for `touch-hit-area`'s
+replacement (host-is-seat), `--glass-cell-backdrop-filter` and the content-tier rule struck at
+BK.W-FROST, the HeaderRibbon deletion, `--specular-angle`, the 8.0.0 focus reshape, plus lane K's
+keyboard rows under the `_Amended after 9.0.0_` marker; README target-size and the four
+synthesis-dependent italic paragraphs; DESIGN.md's three target-size mechanisms; the design-idioms
+example; the consumer-evidence deletion bracket; the O-20 A-3-CLASS scope note. **Quartet**:
+challengers `clean: false` on 4 and 5 → adjudication-1 `CURE-ROUND`, **9 rulings (2 ACCEPT ·
+5 AMEND · 2 REJECT)**, 7-item cureList → re-adjudication **`COMPLETE`, `regressions: []`,
+`residue: []`**. **This is the lane whose adjudication overturned three rulings and raised the
+row that became M2**, below.
+
+**THE RATCHET REBIND · `c6251420`.** `.bundle-ratchet` **2554360 → 2562566** on the committed
+tree at `7c3d5fa3`, A/B/K having moved dist bytes. The first `verify:package` is RED by design—
+`G-BUNDLE-RATCHET: bundle ratchet increase forbidden: 2562566 > 2554360`—and the rebind is what
+makes the second **CLEAN**: `terminal: CLEAN`, `roster {"status":"PRESENT","datum":289,
+"emitted":289}`, tarball sha256
+`976381567626e3d8575574691b25f623ac1dd37ca7177b23c021b66c7a8907e8`, **902,918 B**, packed outside
+the repository. **One deliberate rebind at the close, on the committed-tree datum**, exactly as
+`LEDGER.md` §D ordered.
+
+**M2 · `6e5a35bc` · the retired-subpath record.** Below.
+
+⊕⁸⁵ **(c) THE THREE RULINGS LANE M OVERTURNED ON DISK, AND THE ROW THE DRIVER RATIFIED FOR IT**
+(`M2/RECORD.md`). Nothing was rewritten: a sent letter and a closed ledger take **dated
+`[2026-09-18 · re-ruled after lane M: …]` brackets**, and the bracket is the whole correction.
+
+1. **The `<Surface material="functional" specular="subtle">` recipe cannot work at the cut it
+   documents.** `SurfaceProps` at 8.0.0, 9.0.0 and HEAD is `tier | surface | deep | class`;
+   `material` and `specular` were deleted **AT 8.0.0**, the very major the R-11 answer sends the
+   consumer to, and the same section's own rows say so. `functional` was `floating` under a second
+   name in 7.0.0's `MATERIAL_TIERS`. **The live recipe is `<Surface tier="floating"
+   surface="glass">`**, bracketed at three sites (LEDGER R-11 Answer, RULINGS R-11, the letter's
+   R-11 paragraph); MIGRATION's fence lane M had already cured.
+2. **`.checkbox__seat` is not the seat.** It is the RETIRED absolutely-positioned span
+   (`Checkbox.vue:28-33`), and `.tags-input__delete` has zero occurrences at HEAD. What ships is
+   **HOST-IS-SEAT**: the host wears `.control-bit`, sized to `max(--touch-target, face)` in flow
+   (`styles/glass/control-bit.css:142-155`), the paint on the `.control-bit__face` child. **The
+   conclusion is untouched**—exposure is still nil, because the host IS the ≥44 seat. Five sites
+   bracketed.
+3. **The 8.0.0 "one component is deleted" sentence is batch-scoped, not wrong.** It tallies ONE
+   export re-cut (`exports` 66 → 70, two keys retire, six mint); `./header-ribbon` is not one of
+   the two counted keys and `4bf53962` is outside the batch, so R-11-RIDER's ruled *"one → two"*
+   **would have been FALSE**. Lane M left the sentence standing and re-wrote its bracket as a scope
+   note pointing at the HeaderRibbon entry. **The premise held; only the verb was wrong.**
+
+**R-11-RIDER-2** (`LEDGER.md:637`, DEAD → CURE-NOW (docs)) is **ratified by the driver as its own
+row rather than letting a lane mint scope for itself**, and re-measured from the two package
+manifests before a word was written: `exports` goes **74 → 70** between v7.0.0 and v8.0.0—
+**eleven keys retire, seven mint**—and only three of the eleven were recorded (`./dropdown-menu`,
+`./forms`, `./header-ribbon`). The **seven with zero occurrences anywhere in MIGRATION above
+`## 7.0.0`** get their `_Deleted —` entries: AnimatedDigit, CompletionSeal, InstrumentChassis and
+PaperBackdrop (`4bf53962`), LiquidGrid and Pulse (`bda718ac`), WatercolorDot (`62305f4a`)—every
+one an ancestor of `v8.0.0` and of no earlier tag. **Two are not plain drops.** `./pulse` is a
+**MERGE**: `PulseState`'s four members were absorbed into `StatusDotState`'s seven **and the
+default moved**—`Pulse` defaulted `state: "active"`, `StatusDot` defaults `"online"` and gates the
+breathing to `active` alone—so a bare `<Pulse label="Live"/>` ports to a **STATIC** mark with no
+type error to catch it. `WatercolorDot` **relocated to value.js**, its ramp now HandMark's, and
+only two of its four helpers survive here. **`./drawer` is the eleventh retired key and the EIGHTH
+unrecorded one**—folded whole into `./sheet` at `336dacf9`, where a `_Deleted —` entry would be
+the wrong shape for a fold—so it is **written up as the row's one open item, cited by quoted
+phrase rather than by line** so the next insertion cannot stale it. M2's challenge seat returned
+**ten findings (3 FIX, 7 NIT)**, the driver **ACCEPTED all ten**, and each was re-verified on disk
+before the edit. The tally is now **25 rows** (the letter-row count unchanged): **14 CURE-NOW ·
+13 ANSWER · 5 DECLINE limbs across 4 rows · 2 CURE-NEXT-MAJOR**, DEAD gaining R-11-RIDER-2 (**5**).
+
+⊕⁸⁵ **(d) THE CLOSE BATTERY, THE TYPECHECK AND THE RECEIPT, MEASURED AT THIS SEAT ON THE COMMITTED
+TREE** (`6e5a35bc`, `git status --short` empty, `.bundle-ratchet` reading `2562566` on disk):
+
+- **Battery** — `npx vitest run`: **`Test Files 1 failed | 232 passed (233)` ·
+  `Tests 1 failed | 2238 passed | 10 expected fail (2249)`**, 12.28 s. The one red is
+  `tests/gates/boot-graph.test.ts`'s **build arm**, *"the dist-demo it measures is NEWER than every
+  source it is built from"*: `dist-demo/index.html` built **20:33:12.809Z** against a newest source
+  of **20:44:03.281Z**—lane K's cure-round bytes landed eleven minutes after the last local demo
+  build. **`dist-demo/` is gitignored** (`.gitignore:65`) and `"test": "vitest run"` does not build
+  it, so this arm is a **local build-freshness clock, not a source regression**: it is the class
+  lane A's adjudicator named as a driver note (**A-CA-4**—it re-reds after ANY later lane's source
+  byte) and lane B banked at its own close. Its cure is `npm run demo:dist:build`, which writes
+  outside this seat's fence, so **the arm is left standing and reported, never masked**.
+  [2026-09-18 · driver, after this seat: `npm run demo:dist:build` run under the build lock (exit 0),
+  then `npx vitest run tests/gates/boot-graph.test.ts` → `Test Files 1 passed (1) · Tests 14 passed
+  (14)`; the close battery therefore reads 233/233 on a fresh demo build, the one red being the
+  freshness clock and nothing else.]
+- **Typecheck** — `npm run typecheck`: **both arms clean**, `vue-tsc --noEmit` then
+  `vue-tsc --noEmit -p tsconfig.test.json`, no diagnostic on either.
+- **Receipt** — `node scripts/gate-register.mjs`:
+  `seats:60 active:46 reserved:5 worstCase:51 remaining:9 external:11 bound:13 armOnly:2 unbound:45 drift:0 rosterSha256:282d05cf violations:0`
+  —**identical to ⊕⁸³, to ⊕⁸⁴, and to every lane's own baseline and close**. No gate minted, no
+  threshold moved, `.published-roster` untouched.
+
+⊕⁸⁵ **(e) THE STANDING REGISTER IS UNCHANGED** (`LEDGER.md:936`). **Owner-reserved, register
+only**: MIGRATION.md joining `files` (every *"we documented it"* answer being unreachable at any
+consumer's pin by construction) · the A-3-CLASS 10.0.0 cut · the CURE-NEXT-MAJOR rulings · **any
+publish**. **CURE-NEXT-MAJOR, ruled and not executed**: R-6-LIGHT (c), the atoms-door union
+narrowing · **A-3-CLASS**, standing from O-20, where R-1's label half lives. **Open design item**:
+whether `text-caption`'s italic on running prose retires at 10.0.0—a typography wave's decision,
+registered and promised to nobody. **The master `pixel-floor` CI red stands exactly as ⊕⁸³
+measured it**: a SwiftShader artefact—identical rect, identical null ground, 3.5× the painted
+area—and **the 0.7 floor is never loosened for it**. **npm Trusted Publishing is still owed**, and
+the token that shipped 9.0.0 still wants rotating. **A 9.0.x or 10.0.0 cut carrying O-20 and O-26
+is `verify:package`-clean on this tree and is the owner's to call**—nothing below waits on it.
+
+⊕⁸⁵ **(f) WHAT IS NEXT: NOTHING IN O-26 REMAINS.** All fourteen CURE-NOW rows landed across the
+five lanes; both re-adjudications that could return `COMPLETE` did, and the two that returned
+`RESIDUE` had it applied by the driver in a round 2 the record carries. **The reply to value.js is
+sent and sits at `docs/tranches/BK/coordination/glass-outbound-2026-09-18-valuejs-o26-reply.md`**
+(**489 lines** after M2's two brackets) **for their sweep**; its §4 asks them two things and
+nothing else—re-install from the registry and re-take every banked byte figure against it, and
+confirm which CSS entry the demo imports, because R-14's two re-points resolve to nothing if it is
+only the bundle.
+
+⊕⁸⁵ **WHAT THIS SEAT PLACED, AND WHAT IT DID NOT TAKE.** **PLACED**: this block, appended at the
+file's literal end, **and nothing else**—one file touched. **NOT TAKEN**: **no gate was minted**—
+`seats:60` / `rosterSha256:282d05cf` / `drift:0` / `violations:0`, re-read here and identical to
+⊕⁸³ and ⊕⁸⁴ · **no cure was applied and no residue swept at this seat**—every cure above was
+landed by its own lane and committed before this seat read a byte of it · **the boot-graph build
+arm was left RED rather than rebuilt**, because the rebuild writes outside the fence · **no
+version moved, no publish, no tag, no push** · **no sibling tree was read for write or written** ·
+**no git verb**: this seat ran `status`, `log`, `show`, `diff` and `grep` only · **no figure above
+was typed from memory**—every one is from `git show --stat`, `git log --oneline`, `wc -l`, a named
+`file:line` read at this seat, a `journal.jsonl` row quoted with its workflow id, or a command
+this seat ran and logged.
+
+⊕⁸⁵ **LINE-CITE NOTE.** This block is appended at the **literal end of the file**, below the ⊕⁸⁴
+bank and therefore below every cite in it, so **NOTHING SHIFTS**—⊕⁸²'s, ⊕⁸³'s and ⊕⁸⁴'s shared
+anchors (**#18 `:6678` · #40 `:6699` · #51 `:6709` · #76 `:6744` · #66 `:6752`**) are unmoved, and
+γ4's `PASTE-BLOCKS` §3 → row 51 is **still `:6709`** with the row-40 `C20` spelling **still
+`:6699`**. No line above `:7528` is edited by this seat. The file goes **7,528 → 7,725—+197**,
+separator counted in, this paragraph counted into its own figure, all of it below the last cite.
+Committed records keep their pre-insertion numbers, per ⊕⁷², ⊕⁷³, ⊕⁷⁶, ⊕⁷⁷, ⊕⁷⁹, ⊕⁸⁰, ⊕⁸¹, ⊕⁸²,
+⊕⁸³, ⊕⁸⁴.
