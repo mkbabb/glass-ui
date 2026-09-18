@@ -21,3 +21,4 @@ export type {
     FloatingPlacementProps,
     FloatingSide,
 } from "./placement";
+export { useModalShortcutBarrier } from "./shortcuts";

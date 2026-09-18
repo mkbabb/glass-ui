@@ -13,6 +13,7 @@ import ModalOverlay from "../dialog/ModalOverlay.vue";
 import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 import { surfaceClass } from "../_shared/surface/resolve";
+import { useModalShortcutBarrier } from "../_shared/overlay";
 import {
     scrimDetentOpacity,
     scrimOpacity,
@@ -106,6 +107,12 @@ const contentClass = computed(() =>
 );
 
 const dialogRoot = injectDialogRootContext();
+
+// A sheet is a dialog by root, so it takes the keyboard on the same terms the plate
+// does: while reka is enforcing modality, the app's accelerators are barriered off
+// and only what this sheet registers after this line answers a keystroke.
+useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
+
 // ONE spring mount PER ARM, and the sheet has exactly one arm at a time. The slide's
 // panel spring is seated only on the SLIDING arm: a detented sheet is driven end to end
 // by its own engine (`detents/use.ts`) — `springStyle`, `held` and `scrimAlpha` all read

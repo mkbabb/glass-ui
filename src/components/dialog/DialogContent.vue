@@ -14,6 +14,7 @@ import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 import { surfaceClass } from "../_shared/surface/resolve";
 import { scrimOpacity } from "../sheet/motion";
+import { useModalShortcutBarrier } from "../_shared/overlay";
 import type { DismissableContentEmits } from "../_shared/interaction";
 
 /**
@@ -68,6 +69,13 @@ const motionAxis = useMotionAxis(() => props.motion);
 const live = computed(() => motionAxis.resolved.value !== "off");
 
 const dialogRoot = injectDialogRootContext();
+
+// The app's accelerators go quiet while a MODAL plate is open — reka's own `modal`
+// flag is the measurement, because that is the flag that traps focus and makes the
+// page behind inert; a `modal={false}` dialog leaves the page operable and its
+// keyboard with it. Raised here, in setup, ahead of anything the slot registers.
+useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
+
 // ONE mount spring, ONE curve. MOTION-CANON gives the MODAL a single row, so the curve
 // is named here once and the consumer chooses nothing — and the knob that used to offer
 // the choice took its bug with it: it was captured non-reactively at setup, so a live

@@ -422,7 +422,13 @@ with a MIGRATION bracket (a behaviour change, not an API break): the gate it was
 `proof:esc-stack`, was deleted at BI.W-P000 (PACKAGE-SCRIPT-ABROGATION.md:113; package.json has
 zero `proof:*`), and the hazard was false—reka's `DismissableLayer.js:77-83` READS
 `defaultPrevented` and never sets it, and nothing in our tree preventDefaults a keydown
-(`ExpandableContainer.vue:201` is a mount-autofocus Event). Tested clean. The surviving scenario
+(`ExpandableContainer.vue:201` is a mount-autofocus Event). [2026-09-18 · re-ruled at lane K:
+that clause was false—useFuzzySearch.ts:104-122 (composed at useDockSearch.ts:181),
+useTabRovingFocus.ts:183-201 and sortable-list/drag.ts:589-617 all preventDefault keydowns. The
+cure (d) stands on the invariant "one press, one handler": a consumed key was already handled by
+the layer that consumed it; Escape is NOT exempt from the guard (a consumed Escape was a
+dismissal) and IS exempt from the barrier. The grounds were wrong, the cure was not.] Tested
+clean. The surviving scenario
 is the nested esc-stack story (`demo/stories/containers/expandable-container.vue:126,134`), which
 the witness exercises. IN-HOUSE ENROLMENT ships with the API (A-7/A-8 govern: an export with 0
 importers is the shape A-7 declined, and what earns a door is a NAMED consumer need): the modal

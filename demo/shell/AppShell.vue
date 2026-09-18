@@ -17,7 +17,7 @@ import {
     DialogTitle,
 } from "@glass/components/dialog";
 import {
-    formatCombo,
+    formatComboLabel,
     formatComboParts,
     registerShortcut,
     useRegisteredShortcuts,
@@ -352,7 +352,13 @@ onMounted(() => {
             </DialogHeader>
             <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-small">
                 <template v-for="shortcut in shortcuts" :key="shortcut.raw">
-                    <dt class="flex gap-1" :aria-label="formatCombo(shortcut.raw)">
+                    <!-- The glyphs are the SIGHTED form; the accessible name is the
+                         spoken one. `⌘⇧Z` read aloud is punctuation, and a `delete`
+                         binding also answers to Backspace, which no glyph says. -->
+                    <dt
+                        class="flex gap-1"
+                        :aria-label="formatComboLabel(shortcut.raw)"
+                    >
                         <kbd
                             v-for="part in formatComboParts(shortcut.raw)"
                             :key="part"

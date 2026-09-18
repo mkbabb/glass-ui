@@ -24,6 +24,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@glass/components/dialog";
+import { registerShortcut } from "@glass/composables/keyboard";
 
 function mountDialog(open: ReturnType<typeof ref<boolean>>) {
     const Host = defineComponent({
@@ -94,5 +95,62 @@ describe("DialogContent — focus-return (W1-C)", () => {
             /* happy-dom teleport-fragment teardown quirk, not a product defect */
         }
         wrapper.unmount = () => {};
+    });
+
+    // The MODAL KEYBOARD BARRIER, witnessed through a real mount (O-26 R-8 (e)).
+    // `useModalShortcutBarrier` is wired in DialogContent's setup; the only way to
+    // see it act is to register an app binding BEFORE the plate opens and watch it
+    // go quiet, come back at the close, and come back again when the plate is torn
+    // down while still open.
+    it("suspends the app's accelerators while the modal plate is open", async () => {
+        const spy = vi.fn();
+        const unregister = registerShortcut("k", spy);
+        const press = () =>
+            window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", cancelable: true }));
+
+        try {
+            const open = ref(true);
+            const wrapper = mountDialog(open);
+            await nextTick();
+            await nextTick();
+
+            // Registered before the barrier: seq <= topBarrier, so it is quiet.
+            press();
+            expect(spy).not.toHaveBeenCalled();
+
+            // Logical close releases the barrier even though the content is still
+            // mounted under the exit spring.
+            open.value = false;
+            await nextTick();
+            await nextTick();
+            press();
+            expect(spy).toHaveBeenCalledTimes(1);
+
+            try {
+                wrapper.unmount();
+            } catch {
+                /* happy-dom teleport-fragment teardown quirk, not a product defect */
+            }
+            wrapper.unmount = () => {};
+
+            // Torn down WHILE OPEN — the scope-dispose arm has to release too, or the
+            // app's keyboard never comes back.
+            const stillOpen = ref(true);
+            const second = mountDialog(stillOpen);
+            await nextTick();
+            await nextTick();
+            try {
+                second.unmount();
+            } catch {
+                /* same teardown quirk */
+            }
+            second.unmount = () => {};
+            await nextTick();
+
+            press();
+            expect(spy).toHaveBeenCalledTimes(2);
+        } finally {
+            unregister();
+        }
     });
 });

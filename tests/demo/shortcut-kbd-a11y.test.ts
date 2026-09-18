@@ -38,7 +38,12 @@ describe("keyboard-shortcut help: combo labelled once, parts unlabelled (W2-C)",
         expect(kbdOpen![0]).not.toMatch(/aria-label/);
     });
 
-    it("labels the combo ONCE on the enclosing <dt>", () => {
-        expect(dtOpen![0]).toMatch(/:aria-label="formatCombo\(shortcut\.raw\)"/);
+    it("labels the combo ONCE on the enclosing <dt>, in the SPOKEN form", () => {
+        // `formatCombo` is the glyph string — punctuation read aloud. The accessible
+        // name takes `formatComboLabel`, which speaks the modifiers and the alias a
+        // glyph cannot show (a `delete` binding also answers to Backspace).
+        expect(dtOpen![0]).toMatch(
+            /:aria-label="formatComboLabel\(shortcut\.raw\)"/,
+        );
     });
 });

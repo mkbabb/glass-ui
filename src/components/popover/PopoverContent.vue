@@ -5,11 +5,13 @@ import {
     HoverCardPortal as RekaHoverCardPortal,
     PopoverContent as RekaPopoverContent,
     PopoverPortal as RekaPopoverPortal,
+    injectPopoverRootContext,
 } from "reka-ui";
 import type { DismissableContentEmits } from "../_shared/interaction";
 import {
     overlayContentAttrs,
     useDockParticipation,
+    useModalShortcutBarrier,
     type FloatingPlacementProps,
 } from "../_shared/overlay";
 import { usePopoverUnion } from "./popoverContext";
@@ -107,6 +109,14 @@ const a11yAttrs = computed(() => ({
     ...(usesHoverRoot.value ? { role: "group" } : {}),
     ...(isModal.value ? { "aria-modal": "true" } : {}),
 }));
+
+/* The keyboard follows the SAME axis, and only it. A non-modal popover leaves the
+   page operable, so the page keeps its accelerators; a modal one has the page inert
+   behind it and the accelerators go with it. The root context is injected with a
+   `null` fallback because the hover arm is under a HoverCardRoot instead — and a
+   hover preview is never modal, so the barrier is dead on that arm by construction. */
+const popoverRoot = injectPopoverRootContext(null);
+useModalShortcutBarrier(() => isModal.value && (popoverRoot?.open.value ?? false));
 
 const dock = useDockParticipation();
 const contentAttrs = computed(() =>

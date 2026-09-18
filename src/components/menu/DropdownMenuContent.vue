@@ -5,8 +5,13 @@ import type {
     PointerDownOutsideEvent,
 } from "../_shared/interaction";
 import {
+    injectContextMenuRootContext,
+    injectDropdownMenuRootContext,
+} from "reka-ui";
+import {
     overlayContentAttrs,
     useDockParticipation,
+    useModalShortcutBarrier,
     type FloatingPlacementProps,
 } from "../_shared/overlay";
 import { useMenuPart, useMenuTrigger } from "./context";
@@ -57,6 +62,21 @@ const placementProps = computed(() =>
               avoidCollisions: true,
           },
 );
+/* Both menu roots publish `open` and `modal`, and which one is overhead depends on
+   the trigger — so both are injected with a `null` fallback and the live one answers.
+   `modal` is the measurement, as everywhere else: a `modal={false}` menu leaves the
+   page operable and keeps its accelerators. */
+const menuRoot = injectDropdownMenuRootContext(null);
+const contextRoot = injectContextMenuRootContext(null);
+const openModalRoot = computed(() =>
+    trigger.value === "context" ? contextRoot : menuRoot,
+);
+useModalShortcutBarrier(
+    () =>
+        (openModalRoot.value?.open.value ?? false) &&
+        (openModalRoot.value?.modal.value ?? false),
+);
+
 const dock = useDockParticipation();
 /* ONE CLASS SPELLING. The root used to carry BOTH `dropdown-menu-content` and
    `menu__content` — two names for one element, feeding two different
