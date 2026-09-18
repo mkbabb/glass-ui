@@ -17,7 +17,10 @@ describe("demo route field ownership", () => {
 
         await router.push("/dock/layers");
         expect(router.currentRoute.value.meta.suppressesShellField).toBe(true);
-    });
+        // Each `push` resolves a lazily-imported route component (`demo/router.ts:21`),
+        // so the arm's cost is module load, not assertion — vitest's 5s default flakes
+        // under the full battery while the arm runs in under a second alone.
+    }, 30_000);
 
     it("lets the Aurora studio exclusively own its route field", async () => {
         const aurora = CATEGORIES.find(({ id }) => id === "substrates")?.stories.find(

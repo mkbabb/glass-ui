@@ -669,7 +669,8 @@ describe("Row 8 package falsifiers", () => {
         } finally {
             rmSync(fixture, { recursive: true, force: true });
         }
-    });
+        // Subprocess probe — verifier module load flakes vitest's 5s default under the full battery.
+    }, 30_000);
 
     // A-1 (O-20): the published `./styles` closure must PARSE, not merely resolve.
     // The walker strips comments with the naive regex `scripts/lib/minify-css.mjs:18`
@@ -726,7 +727,8 @@ describe("Row 8 package falsifiers", () => {
         } finally {
             rmSync(fixture, { recursive: true, force: true });
         }
-    });
+        // Subprocess probe — verifier module load flakes vitest's 5s default under the full battery.
+    }, 30_000);
 
     it("G-BARREL-EXPLICIT: keeps the root barrel explicit", () => {
         const source = readFileSync("src/index.ts", "utf8");
@@ -787,7 +789,8 @@ describe("Row 8 package falsifiers", () => {
         expect(results.packageRootRegularLast).toBe(results.packageRootRegularFirst);
         expect(results.packageRootDirectoryFirst).toEqual(["dist/index.js"]);
         expect(results.packageRootDirectoryLast).toEqual(["dist/index.js"]);
-    });
+        // Subprocess probe — verifier module load flakes vitest's 5s default under the full battery.
+    }, 30_000);
 
     // Both directions are a REBIND. A growth was always loud; a shrink used to pass
     // silently, accumulating headroom until the ceiling meant nothing — so the
@@ -826,7 +829,8 @@ describe("Row 8 package falsifiers", () => {
         } finally {
             rmSync(fixture, { recursive: true, force: true });
         }
-    });
+        // Subprocess probe — verifier module load flakes vitest's 5s default under the full battery.
+    }, 30_000);
 
     // The NAME ratchet, hostile the same way. `.bundle-ratchet` pins the package's
     // size; `.published-roster` pins the names it publishes — the `@theme` tokens and
@@ -1002,7 +1006,8 @@ describe("Row 8 built-artifact acceptance", () => {
         expect(results.exactCss).toEqual([]);
         expect(results.addedCss).toEqual(["packed CSS closure has unreachable member orphan.css"]);
         expect(results.removedCss).toEqual(["packed CSS closure is missing component-styles.css"]);
-    });
+        // Subprocess probe — verifier module load flakes vitest's 5s default under the full battery.
+    }, 30_000);
 
     it("keeps raw code-bearing sources out of the built artifact", () => {
         expect(built, buildHint).toBe(true);

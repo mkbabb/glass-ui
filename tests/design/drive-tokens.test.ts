@@ -52,6 +52,9 @@ const kindFiveRows = (doc: string): { drive: string; token: string }[] => {
     return rows;
 };
 
+/** Regex metacharacters escaped, so an interpolated token matches as a literal. */
+const escapeRegExp = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 const SOURCE_EXT = /\.(css|ts|vue|js)$/;
 
 const sourceText = (root: string): string =>
@@ -65,10 +68,14 @@ describe("tunable-anim.md Kind-5 drive table", () => {
     const src = sourceText("src");
 
     /** Registered, declared, or read — never merely mentioned. */
-    const live = (token: string): boolean =>
-        new RegExp(`@property\\s+${token}(?![\\w-])`).test(src) ||
-        new RegExp(`(?<![\\w-])${token}\\s*:`).test(src) ||
-        new RegExp(`var\\(\\s*${token}(?![\\w-])`).test(src);
+    const live = (token: string, source: string = src): boolean => {
+        const t = escapeRegExp(token);
+        return (
+            new RegExp(`@property\\s+${t}(?![\\w-])`).test(source) ||
+            new RegExp(`(?<![\\w-])${t}\\s*:`).test(source) ||
+            new RegExp(`var\\(\\s*${t}(?![\\w-])`).test(source)
+        );
+    };
 
     it("has a drive row for every scalar the register documents", () => {
         expect(rows.length).toBeGreaterThan(0);
@@ -80,6 +87,25 @@ describe("tunable-anim.md Kind-5 drive table", () => {
             ghosts.map((g) => `${g.drive} → ${g.token}`),
             "Kind-5 rows naming a token with no registration, declaration or read in src/",
         ).toEqual([]);
+    });
+
+    it("cannot be widened by a hostile token name", () => {
+        // The capture never yields a metacharacter in the first place — a row whose
+        // code span carries one matches nothing and is DROPPED, not admitted.
+        const doc = [
+            "## Kind 5",
+            "| press | `--fo*` |",
+            "| press | `--cartoon-press-t` |",
+            "## Next",
+        ].join("\n");
+        expect(kindFiveRows(doc).map((r) => r.token)).toEqual(["--cartoon-press-t"]);
+
+        // … and were one to reach the predicate it is a literal, not syntax. Unescaped,
+        // `--fo*` reads as `--f` + `o`* and MATCHES `var(--f)`, declaring a token that
+        // exists nowhere live.
+        const fixture = "a { color: var(--f); }";
+        expect(live("--f", fixture)).toBe(true);
+        expect(live("--fo*", fixture)).toBe(false);
     });
 
     it("names --cartoon-press-t, the one press scalar the cast register reads", () => {
