@@ -1,5 +1,104 @@
 # Changelog
 
+## 10.0.0 — UNRELEASED
+
+`MIGRATION.md` §10.0.0 is the complete break list, and from this release it ships in
+the package.
+
+Every figure below is measured against the published 9.0.0 bytes (`npm pack
+@mkbabb/glass-ui@9.0.0`) and a fresh build of the tree, not recalled. The entry covers
+everything since 9.0.0: the 2026-09-22 register wave, which makes this a major, and the
+O-20 and O-26 cure waves, which landed on `master` after the 9.0.0 publish.
+
+### Changed — every library style rule sits in `@layer components`
+
+466 top-level rules in 48 files, `.css` files and SFC `<style>` blocks alike, left the
+unlayered cascade — 461 in 47 files into `@layer components`, `paper.css`'s five into
+its two `@utility` definitions — and `./styles.css` now opens with `@layer theme, base,
+components, utilities;`. A consumer rule, unlayered or in `@layer utilities`, now beats
+a library rule at any specificity; a library `!important` now beats a consumer
+`!important` outside a layer ordered before `components` (47 of them moved). Token
+roots, the `@utility`/`@theme`/`@property`/`@font-face`/`@keyframes` at-rules and the
+slider's stylesheet stay outside the layer. Inside the library, the template utilities
+that fought a stylesheet rule once both were layered were removed (on `Aurora`,
+`Configurator`, `ConfiguratorLayer`, `ConfiguratorRow`) and `TableHead`'s alignment
+reads `data-align`; the stylesheet is each declaration's one source, and the demo shows
+no paint delta on those elements.
+
+### Removed — `ColorResolver`, `defaultBlobColorResolver`, `ringsAt`
+
+`./color` goes from 16 published names to 14: `ColorResolver` and
+`defaultBlobColorResolver` are deleted (call `oklchToGammaRgb(cssToOklch(css))`, which
+was the whole body). `ringsAt` leaves the `./fourier-field` barrel and stays internal; it
+had no readers. None of the three was on the root barrel. `exports` stays at 68 keys.
+
+### Changed — `AuroraAtoms` admits `interactivity.light` only on the impasto media
+
+A `light` on any medium other than `oil`/`vangogh` is now a type error (`light?: never`).
+It never painted: the light direction's only reader is multiplied by the impasto amount,
+which only those two media write. `configToAtoms` stops projecting it there.
+
+### Changed — `text-caption` is upright
+
+The utility drops `font-style: italic`; `text-math`, `text-math-body` and `fourier-f`
+keep theirs. `class="text-caption italic"` restores the old paint. `Chip`'s `sm` rung
+reads `text-caption` and paints upright with it.
+
+### Changed — `darkModeSyncScript()` survives an unreadable store, and re-hashes
+
+A throwing `localStorage` accessor or `getItem` now counts as an absent store, so the
+page gets its fallback stamp instead of none. Every emission grows 13 bytes and every CSP
+hash moves: the default goes 300 → 313 bytes,
+`sha256-VTba/T+6rX/y5+Gk2oyLaaYBdLf4xSZtXnc7kMYziI8=` →
+`sha256-MOGEZdbxrYiPCsQApEdoFKYoqnbmCxzBPrGPG/EbfJk=`; the published 9.0.0
+`{ normalize: true }` hash `Xtel8uEY…` becomes `ELJDzNkF…`. All six pairs are in
+`MIGRATION.md`.
+
+### Changed — `--success` and `--warning` darken in light mode
+
+`StatusDot`'s text-free marks carry state by colour alone, so both tokens now clear
+WCAG 1.4.11's 3:1 on `--card`: `--success` L 0.720 → 0.600 (2.13 → 3.30), `--warning`
+L 0.770 → 0.635 (1.98 → 3.27); hue, chroma and the dark arm are unchanged. The ramp's
+light stops 4, 6, 10 and 11 drop L the same way (the O-20 cure), so all thirteen clear
+4.5:1 as text on `--card`; stop 11 had been 3.51.
+
+### Added — carried from the cure waves
+
+- `./keyboard`: `suspendShortcuts()`, `formatComboLabel()`, `LabeledShortcut`. The
+  registry skips a keydown another layer already consumed (`defaultPrevented`), and a
+  modal overlay quiets the app's bindings while it is open; Escape keeps its LIFO walk.
+- `./timeline`: `accentFor`, `HUE_OFFSET`, `HUE_STRIDE`, `HUE_STOPS`, `TimelineSpan` —
+  the hue-wrap law, published.
+- Type doors: `GpuBackend` and `RendererStatus` on the root, `FourierSource` on
+  `./fourier-field`.
+- `Chip` gains an `xs` size.
+- `darkModeSyncScript()`'s `defaultDark` takes `{ absent, auto }` to answer the two
+  cases separately, and `normalize` writes after the stamp, so a storage that throws on
+  write no longer costs the whole stamp.
+
+In all, the published entries carry 1279 names, up from 1271.
+
+### Fixed — carried from the cure waves
+
+- The Alert glyph paints its tone (the base `[&>svg]:text-current` is gone).
+- The tooltip plate gets a block ceiling off `--reka-popper-available-height` and
+  scrolls past it.
+- The Slider speaks the house drag cursors (`grab` / `grabbing` / `not-allowed`).
+- The configurator's hover is a `color-mix` on `--fill-hover` inside
+  `@media (hover: hover)`, not a generated utility whose fallback painted 1.00:1 on
+  older engines.
+- `Collapsible`'s `open`, `Chip`'s `modelValue` and `LabeledSwitch`'s `modelValue`
+  default to `undefined`, so an uncontrolled seed reaches reka instead of a cast `false`.
+- `Aurora` gains forced-colors and reduced-transparency arms, and reduced motion guards
+  its three cursor wake paths.
+
+### Changed — the package
+
+`files` is `["dist", "MIGRATION.md"]`. Peers are unchanged (nine), and so is the
+published CSS name set (242 `@theme` tokens, 47 `@utility` classes). The tarball goes
+from 837 entries to 840 and its unpacked content from 2,549,378 to 2,890,330 bytes;
+`MIGRATION.md` is 327,286 bytes of the 340,952 growth.
+
 ## 9.0.0 — 2026-08-29
 
 `MIGRATION.md` §9.0.0 is the complete break list.
@@ -43,7 +142,8 @@ itself. The published `FourierField.vue.d.ts` declares seven props at 9.0.0 — 
 `spectrum`, `getPalette`, `color`, `seed`, `freeze`, `interactive` — where the published
 8.0.0 declared `colorResolver` and no `interactive`. Landed `4a86570b` (2026-08-12), and
 9.0.0 is its first carrier. `ColorResolver` and `defaultBlobColorResolver` are untouched
-and still ship on `./color`; what left is the prop that consumed them. The exposed handle
+and still ship on `./color`; what left is the prop that consumed them. [2026-09-22 ·
+register wave 10-3] Both leave `./color` at 10.0.0. The exposed handle
 moves in the same cut: `renderAt(timeSec)` is gone, `headT` (a readonly ref) and
 `flick(turnsPerSec)` arrive. A consumer still writing `variant="hero"` or
 `variant="final"` on this component is writing an inert attribute and has been since
@@ -63,7 +163,8 @@ default, in that order and no other. No export name is added or moved, and the d
 emission is **byte-identical** — 300 bytes,
 `sha256-VTba/T+6rX/y5+Gk2oyLaaYBdLf4xSZtXnc7kMYziI8=`, the same string 8.0.0 emitted — so
 a `script-src 'sha256-…'` CSP that pins the default needs nothing. Only an opt-in arm
-moves the emitted bytes.
+moves the emitted bytes. [2026-09-22 · register wave N-3] True of 9.0.0; at 10.0.0 every
+emission moves, the default to 313 bytes.
 
 ### Changed — `@mkbabb/pencil-boil` leaves `peerDependencies`
 

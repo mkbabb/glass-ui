@@ -66,14 +66,12 @@ Fira Code faces as self-contained WOFF2 data URLs. Consumers that need raw font
 files can address the same built assets through `@mkbabb/glass-ui/fonts/*`.
 
 Every packaged face is roman: there is no italic `@font-face` and none is
-intended. Four utilities ask for one anyway — `text-caption`, `text-math`,
-`text-math-body` and `fourier-f` — so they are SYNTHESIS-DEPENDENT: the browser
-obliques the roman face for them. The library declares no `font-synthesis`, so
-the UA default (`auto`) applies and they paint. If your app sets
-`font-synthesis: none` at the root, those four lose their slant and
-`text-caption`'s running prose goes upright; reach for `text-mono-caption`, or
-`color: var(--muted-foreground)` on `text-caption`, where the distinction has to
-survive that policy.
+intended. Three utilities ask for one anyway — `text-math`, `text-math-body` and
+`fourier-f`, because mathematical italic is notation — so they are
+SYNTHESIS-DEPENDENT: the browser obliques the roman face for them. The library
+declares no `font-synthesis`, so the UA default (`auto`) applies and they paint.
+If your app sets `font-synthesis: none` at the root, those three lose their slant.
+`text-caption` is upright; add `italic` beside it if you want the slant back.
 
 ## Documentation
 
@@ -88,7 +86,7 @@ consumer-facing migration path in [`MIGRATION.md`](./MIGRATION.md):
 - [`docs/canon/motion-system.md`](./docs/canon/motion-system.md) — the spring/bezier motion canon
 - [`DESIGN.md`](./DESIGN.md) — the storybook category index
 
-None of that ships. `package.json` declares `files: ["dist"]`, so an install carries `dist/`, this README and the licence — nothing else. Read `MIGRATION.md`, `DESIGN.md` and `docs/` on GitHub; this file is the only prose in `node_modules`.
+Of that, only `MIGRATION.md` ships. `package.json` declares `files: ["dist", "MIGRATION.md"]`, so an install carries `dist/`, `MIGRATION.md`, this README and the licence — nothing else; the migration guide for the version you pinned is at `node_modules/@mkbabb/glass-ui/MIGRATION.md`. Read `DESIGN.md` and `docs/` on GitHub.
 
 ## Build
 
@@ -171,6 +169,8 @@ Convenience classes bundle a tier with a shape: `.glass-card` (resting + `--radi
 ## Design Tokens
 
 `src/styles/tokens/` defines the shared `:root` properties consumed by all style modules and components — duration, easing (`--spring-{smooth,snappy,bouncy,gentle}` + `--spring-<name>-duration` clocks), z-index, radius (primitive + semantic), shadows (composed via `color-mix(in srgb, var(--shadow-color) N%, transparent)`), the 5-tier glass ladder, paper/grain textures, the `--surface-tint-*` family, and the warm-chroma color palette. These are declared in a plain unlayered `:root`, so re-declaring one in your own CSS overrides it for every reader downstream.
+
+**Every other rule the package ships sits in `@layer components`**, and `./styles.css` opens with `@layer theme, base, components, utilities;` (the same order `./styles` declares), so a rule of yours — unlayered, or in `@layer utilities` — beats a library rule at any specificity. What stays outside the layer: the token roots above, the `@utility` / `@theme` / `@property` / `@font-face` / `@keyframes` at-rules, and one named exception, the slider's stylesheet. `!important` runs the other way across layers: a library `!important` beats yours unless yours sits in a layer ordered before `components`.
 
 **Bridge names are not tokens, and overriding one does nothing.** `src/styles/theme/bridges.css` is a single `@theme inline` block mapping Tailwind theme keys onto those tokens: `--shadow-glass-*`, `--color-*`, `--text-*`, `--spacing-icon-*`, `--blur-glass-*` and nine more families (`--z-*`, `--font-*`, `--leading-*`, `--tracking-*`, `--transition-*`, `--ease-*` among them). Their job is to generate utilities — `shadow-glass-quiet`, `blur-glass-wash`, `size-icon-md` — with the referenced value substituted in place, and `inline` is what stops them minting a second spelling of the same value. A theme key reaches your built CSS as a custom property only when something in that build reads it with `var()`; nothing in this library's own build reads the shadow, blur or icon bridges, so none of them emits here; the shadow family also measures zero in four independently compiled consumer bundles. `var(--shadow-glass-quiet)` therefore resolves to nothing. Override the `tokens/` spelling instead:
 

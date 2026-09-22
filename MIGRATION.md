@@ -5,6 +5,202 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
+## 10.0.0 — UNRELEASED
+
+**Status.** `package.json` declares `9.0.0` (detector: `node -p
+"require('./package.json').version"`); the bump to `10.0.0` is the cut's own act, and
+nothing below is on the registry. The breaking changes are the cascade layer, the three
+published names that leave, the `AuroraAtoms` narrowing and `text-caption`'s upright
+paint — so the cut is a major, and the rest rides it. Two blocks written after 9.0.0 are
+also unreleased and ship in this cut: _Amended after 9.0.0_ under §9.0.0 (the keyboard
+registry) and _Amended after 9.0.0_ under §8.1.0 (`darkModeSyncScript`'s `defaultDark`
+object form and write order). They are not repeated here. The non-breaking paint and
+default changes carried from the O-20 and O-26 cure waves are listed under
+`CHANGELOG.md` 10.0.0; the one paint row below is the ruled one.
+
+_This file ships in the package_
+
+`package.json` declares `files: ["dist", "MIGRATION.md"]`, so from 10.0.0 the guide for
+the version you pinned is at `node_modules/@mkbabb/glass-ui/MIGRATION.md`. Additive:
+nothing to do.
+
+_Every library style rule moves into `@layer components`_
+
+Every top-level style rule the package ships, through both CSS entries (`./styles` and
+`./styles.css`), now sits in `@layer components` — `.css` files and SFC `<style>` blocks
+alike. `./styles.css` now opens with `@layer theme, base, components, utilities;`, the
+order `./styles` already declared, so a consumer importing only that entry gets the same
+order.
+
+**What moves for you: your overrides win whatever their specificity.** Any rule of
+yours, unlayered or in `@layer utilities`, now beats a library rule whatever the two
+selectors weigh. A utility class on a library component that used to lose to the
+component's own rule now paints: `class="absolute inset-0"` on `<Constellation>` or
+`<Blob>`, `max-h-80` on `<CommandList>` (384 → 320px), a `gap-*` on content slotted into
+`<Configurator>`'s presets, `rounded-dialog` on `<DialogContent>` (the corner goes 24 →
+16px, because your class now beats `:where([data-slot="dialog-content"])`'s
+`--radius-3xl`), and your own `forced-colors` edges on library surfaces. A disabled
+`SortableList` handle shows `cursor: not-allowed` (was `grab`). If you were relying on
+the library rule to win, remove the class that fights it.
+
+**`!important` runs the other way.** Important declarations rank earlier layers first,
+so a library `!important` now beats a consumer `!important` in `@layer utilities` or in
+unlayered CSS. 47 moved into `components` in six files — `deck/styles/capture.css` 27,
+`accessibility.css` 12, `utilities/a11y-overrides.css` 4, `blob/Blob.vue` 2,
+`handmark/HandMark.vue` 1, `view-transition.css` 1 — and one moved into `utilities` with
+`paper.css`'s fold. To win against one, declare yours `!important` in a layer ordered
+before `components`; a declaration without `!important` never beats an important one, in
+any layer. Under reduced motion, for example, an element of yours carrying `animation:
+none !important` now computes the library's PRM `animation-duration: 0.01ms` instead of
+`0s`; its `animation-name` stays `none`, so nothing animates.
+
+**The library's own paint moves in four places**, measured on the demo under
+`forced-colors` and reduced motion: `.glass-resting.ghost-slot` draws its forced-colors
+edge `dashed` (was `solid`; the colour stays `CanvasText`); `.card.cartoon-surface`
+draws it `2px` (was `1px`); `.glass-reveal` at rest under PRM computes `scale: 1` and
+`translate: 0px -1px` (was `none`; no motion returns); `.glass-menu-row` under PRM gains
+`translate, scale` in `transition-property` (every duration is still zeroed). And the
+coarse-pointer hit expansion in `glass/dissolve.css` is layered now, so a consumer layer
+ordered after `components` can re-order that floor.
+
+**What stays outside the layer.** The token roots — rules whose selector is `:root`
+and/or `.dark` and whose every declaration is a custom property, with `color-scheme` and
+`accent-color` admitted on that pair (the scheme switch has to share the tokens' rank);
+the `@utility`, `@theme`, `@property`, `@font-face` and `@keyframes` at-rules; and one
+named exception, `components/slider/styles.css` (47 rules), unlayered on purpose so the
+slider's sizing and state legs beat the layered groove and fill it composes without an
+`!important` (its own header says so). `paper.css`'s five rules did not move into
+`components`: they folded into the `@utility paper-underpaint` and `@utility
+paper-grain-overlay` definitions they overrode, so they rank in `utilities` beside them.
+
+**The layered set, by file and selector** — 466 rules in 48 files, every one unlayered
+at `695d4925` (the tree this cut layered) and every one layered now. Paths are under
+`src/`; a selector list repeats where a file has several rules for it (a base rule and a
+`@media` arm, say).
+
+| file | rules | top-level selectors, in source order |
+| --- | --- | --- |
+| `components/_shared/disclosure/disclosure.css` | 4 | `.disclosure-content` · `.disclosure-icon` · `.disclosure-item` · `.disclosure-trigger:focus-visible` |
+| `components/_shared/menu/menu.css` | 1 | `.glass-menu-row` |
+| `components/aurora/Aurora.vue` | 10 | `.aurora-root` · `.aurora-root > .aurora-placeholder, .aurora-root > .aurora-canvas-layer` · `.aurora-root > .aurora-placeholder` · `.aurora-placeholder` · `.aurora-canvas-layer` · `.aurora-canvas-layer--armed` · `.aurora-canvas-layer` · `.aurora-root` · `.aurora-root > .aurora-canvas-layer` · `.aurora-placeholder` |
+| `components/avatar/styles.css` | 11 | `.avatar` · `.avatar[data-size="md"]` · `.avatar[data-size="lg"]` · `.avatar__identity, .avatar__image, .avatar__fallback` · `.avatar__identity` · `.avatar__image, .avatar__fallback` · `.avatar__image` · `.avatar__fallback` · `.avatar[data-size="md"] .avatar__fallback` · `.avatar[data-size="lg"] .avatar__fallback` · `.avatar__status` |
+| `components/blob/Blob.vue` | 7 | `.goo-blob-wrapper` · `.goo-blob-wrapper:hover` · `.goo-blob-canvas` · `.goo-blob-hit` · `.goo-blob-hit:focus-visible` · `.goo-blob-hit:disabled` · `.goo-blob-wrapper` |
+| `components/command/styles.css` | 16 | `.command` · `.command-dialog__content` · `.command__input-wrapper` · `.command__input-icon` · `.command-dialog__content .command__input-icon, .command-dialog__content .command__item > svg` · `.command__input` · `.command-dialog__content .command__input` · `.command__input::placeholder` · `.command__input:disabled` · `.command__list` · `.command__group` · `.command__group-label` · `.command__item[data-disabled]` · `.command__empty` · `.command__separator` · `.command__shortcut` |
+| `components/configurator/ConfiguratorLayer.vue` | 2 | `.configurator-layer-region` · `.configurator-layer-region` |
+| `components/configurator/ConfiguratorRow.vue` | 6 | `.configurator-row[data-size="sm"]` · `.configurator-row[data-size="md"]` · `.configurator-row[data-size="lg"]` · `.configurator-row` · `.configurator-row` · `.configurator-row` |
+| `components/configurator/styles.css` | 42 | `.configurator-shell` · `.configurator > .configurator-presets, .configurator > .configurator-aside` · `.configurator-section-label` · `.configurator-presets` · `.configurator-presets .configurator-gallery-track, .configurator-presets [role="group"]` · `.configurator-layer` · `.configurator-layer:has(+ .configurator-layer)` · `.configurator-layer + .configurator-layer` · `.configurator-layer-trigger` · `.configurator-layer-body` · `[data-slot="configurator-reset"]:hover` · `.configurator-layer-trigger:hover` · `.configurator-layer-body[data-dividers] > * + *` · `.configurator-aside, .configurator-presets, .configurator-footer` · `[data-slot="configurator"] > [data-gallery-dock]` · `[data-slot="configurator"] > .configurator-stage` · `[data-slot="configurator"] > .configurator-aside` · `[data-slot="configurator"]` · `[data-slot="configurator"][data-gallery="aside"] > [data-gallery-dock]` · `[data-slot="configurator"][data-gallery="aside"] > .configurator-stage` · `[data-slot="configurator"][data-gallery="aside"] > .configurator-aside` · `[data-slot="configurator"][data-gallery="top"] > [data-gallery-dock]` · `[data-slot="configurator"][data-gallery="top"] > .configurator-stage` · `[data-slot="configurator"][data-gallery="top"] > .configurator-aside` · `[data-slot="configurator"] > .configurator-aside` · `[data-slot="configurator"][data-aside-side="left"] > .configurator-aside` · `[data-slot="configurator"] > [data-gallery-dock]` · `[data-slot="configurator"][data-gallery="aside"] > [data-gallery-dock]` · `[data-slot="configurator"][data-gallery="top"] > [data-gallery-dock]` · `.configurator-preset-tile` · `[data-slot="configurator"][data-gallery="top"] .configurator-preset-tile` · `.configurator-preset-well` · `.configurator-preset-well.is-loading` · `.configurator-preset-well.is-loading` · `.configurator-preset-tile.is-active` · `.configurator-preset-chip` · `.configurator-preset-chip.is-active` · `[data-slot="configurator"][data-aside-side="left"] > .configurator-stage` · `[data-slot="configurator"][data-aside-side="left"] > .configurator-aside` · `[data-slot="configurator"][data-aside-side="left"][data-gallery="aside"] > [data-gallery-dock]` · `.configurator-expand-host[data-state="expanded"] > [data-part="panel"]` · `.configurator-expand-host[data-state="expanded"] .configurator-shell` |
+| `components/constellation/Constellation.vue` | 4 | `.constellation` · `.constellation[role="button"]:focus-visible` · `:where(.constellation)` · `.constellation-canvas` |
+| `components/dark-mode-toggle/dark-mode-toggle.css` | 1 | `.dark-mode-toggle-button, .dark-mode-toggle-button .toggle-sun, .dark-mode-toggle-button .toggle-circle` |
+| `components/data-table/styles.css` | 19 | `.data-table` · `.data-table-cards` · `.data-table-card, .data-table-state` · `.data-table-state` · `.data-table-card-skeleton-title` · `.data-table-cell-skeleton` · `.data-table-action-skeleton` · `.data-table-card-header` · `.data-table-card-title, .data-table-card-value` · `.data-table-card-title` · `.data-table-card-fields` · `.data-table-card-label, .data-table-header-row` · `.data-table-actions, .data-table-actions-cell` · `.data-table-sort` · `.data-table [data-align="center"]` · `.data-table [data-align="right"]` · `.data-table-row-interactive` · `.data-table-row-interactive:hover, .data-table-row-interactive[data-state="selected"]` · `.data-table-card.data-table-row-interactive[data-state="selected"]` |
+| `components/deck/styles/capture.css` | 10 | `@page` · `html, body` · `html, body, #app` · `.deck-stage` · `.deck-strip` · `.deck-ground` · `.deck-slide` · `.deck-slide::before, .deck-slide::after` · `.deck-slide:not(:last-child)` · `.deck-stage .sr-only` |
+| `components/dialog/styles.css` | 15 | `:where([data-slot="dialog-content"])` · `:where([data-slot="dialog-header"])` · `:where([data-slot="dialog-content"]:has([data-slot="dialog-close"])) :where([data-slot="dialog-header"])` · `:where([data-slot="dialog-title"])` · `:where([data-slot="dialog-description"])` · `:where([data-slot="dialog-footer"])` · `:where([data-slot="dialog-close"])` · `:where([data-slot="dialog-close"])::before` · `:where([data-slot="dialog-close"]):hover::before` · `:where([data-slot="dialog-close"]):active::before` · `:where([data-slot="dialog-close"]):focus-visible` · `:where([data-slot="dialog-content"][data-rebuff])` · `:where([data-slot="dialog-content"][data-rebuff="a"])` · `:where([data-slot="dialog-content"][data-rebuff="b"])` · `:where([data-slot="dialog-content"][data-rebuff])` |
+| `components/expandable-container/styles.css` | 14 | `.expandable-container` · `.expandable-container[data-state="expanded"]` · `.expandable-container[data-state="expanded"] > [data-part="panel"]` · `.expandable-container__chrome` · `.expandable-container__chrome[hidden]` · `.expandable-container [data-part="trigger"]` · `.expandable-container [data-part="trigger"][data-position="left"]` · `.expandable-container [data-part="trigger"][data-position="right"]` · `.expandable-container [data-part="trigger"]:hover` · `.expandable-container [data-part="trigger"]:focus-visible` · `.expandable-container[data-state="expanded"] [data-part="panel"]` · `.expandable-container__icon` · `.expandable-container [data-part="trigger"]` · `.expandable-container[data-state="expanded"] > [data-part="panel"]` |
+| `components/fourier-field/FourierField.vue` | 3 | `.fourier-field` · `.fourier-field--interactive` · `.fourier-field-canvas` |
+| `components/handmark/HandMark.vue` | 10 | `.hm` · `.hm del` · `.hm mark` · `.hm-mark` · `.hm[data-shape="highlight"] .hm-mark` · `.hm-mark--settling` · `.hm-ink` · `.hm-mark` · `.hm-mark--settling` · `.hm-ink` |
+| `components/label/Label.vue` | 3 | `.label` · `.label[data-disabled]` · `.label-requirement` |
+| `components/labeled-field/LabeledField.vue` | 8 | `.labeled-field, .labeled-field-copy, .labeled-field-control` · `.labeled-field` · `.labeled-field-copy, .labeled-field-control` · `.labeled-field-description, .labeled-field-error` · `.labeled-field-description` · `.labeled-field-error` · `.labeled-field[data-layout="horizontal"]` · `.labeled-field[data-layout="horizontal"]` |
+| `components/pager-dots/PagerDots.vue` | 20 | `.pager-dots` · `.pager-bed-layer` · `.pager-dots[data-orientation="vertical"] .pager-bed-layer` · `.goo-dot` · `.pager-dots[data-orientation="vertical"] .goo-dot` · `.goo-dot[data-flip]` · `.goo-dot::before` · `.goo-dot[data-edge]::before` · `.pager-worm-layer` · `.goo-body, .goo-neck` · `.pager-dots[data-orientation="vertical"] .goo-body, .pager-dots[data-orientation="vertical"] .goo-neck` · `.goo-body` · `.pager-dots[data-orientation="vertical"] .goo-body` · `.goo-neck` · `.pager-dot` · `.goo-dot[data-hover]::before` · `.goo-dot[data-press]::before` · `.pager-dots` · `.goo-body, .goo-neck` · `.goo-dot` |
+| `components/progress/Progress.vue` | 15 | `.progress-rail` · `.progress-rail[data-size="sm"]` · `.progress-rail[data-size="md"]` · `.progress-rail[data-size="lg"]` · `.progress-rail[data-size="md"]` · `.progress-rail[data-size="lg"]` · `.progress-rail[data-orientation="vertical"]` · `.progress-rail[data-status="error"]` · `.progress-value-fill` · `.progress-rail:dir(rtl) .progress-value-fill` · `.progress-rail[data-orientation="vertical"] .progress-value-fill` · `.progress-liquid-fill` · `.progress-rail[data-state="complete"] .progress-value-fill` · `.progress-value-fill` · `.progress-rail[data-state="complete"] .progress-value-fill` |
+| `components/scroll-progress-rim/styles.css` | 9 | `.scroll-progress-rim` · `.scroll-progress-rim__track` · `.scroll-progress-rim[data-orientation="horizontal"] .scroll-progress-rim__track` · `.scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__track` · `.scroll-progress-rim__fill` · `.scroll-progress-rim[data-orientation="horizontal"] .scroll-progress-rim__fill` · `.scroll-progress-rim[data-orientation="horizontal"]:dir(rtl) .scroll-progress-rim__fill` · `.scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__fill` · `.scroll-progress-rim__fill` |
+| `components/separator/Separator.vue` | 10 | `.separator, .separator-segment` · `.separator[data-orientation="horizontal"]` · `.separator[data-orientation="vertical"]` · `.separator-labelled` · `.separator-labelled[data-orientation="horizontal"]` · `.separator-labelled[data-orientation="vertical"]` · `.separator-segment` · `[data-orientation="horizontal"] > .separator-segment` · `[data-orientation="vertical"] > .separator-segment` · `.separator-label` |
+| `components/sheet/styles.css` | 46 | `:where([data-slot="sheet-content"])` · `:where([data-slot="sheet-content"][data-detents])` · `:where([data-slot="sheet-content"][data-modal="false"])` · `:where( [data-slot="sheet-content"][data-detents] > [data-slot="sheet-detent-handle"], [data-slot="sheet-content"][data-detents] [data-slot="dialog-header"] )` · `:where([data-slot="sheet-content"][data-dragging])` · `:where([data-slot="sheet-content"] > [data-slot="sheet-content-region"])` · `:where([data-slot="sheet-content"][data-scroll] > [data-slot="sheet-content-region"])` · `:where( [data-slot="sheet-content"][data-side="left"]:not([data-detents]) > [data-slot="sheet-content-region"], [data-slot="sheet-content"][data-side="right"]:not([data-detents]) > [data-slot="sheet-content-region"] )` · `:where( [data-slot="sheet-content"][data-side="left"] > [data-slot="sheet-content-region"] > :only-child, [data-slot="sheet-content"][data-side="right"] > [data-slot="sheet-content-region"] > :only-child )` · `:where([data-slot="sheet-content"][data-detents] > [data-slot="sheet-content-region"])` · `:where( [data-slot="sheet-content"][data-detents] > [data-slot="sheet-content-region"] > :not([data-slot="dialog-header"]):not([data-slot="dialog-footer"]) )` · `:where( [data-slot="sheet-content"][data-detents] > [data-slot="sheet-content-region"] > [data-slot="dialog-header"] )` · `:where( [data-slot="sheet-content"][data-detents] > [data-slot="sheet-content-region"] > [data-slot="dialog-footer"] )` · `:where([data-slot="sheet-content"]:not([data-detents]):has([data-slot="dialog-close"])) :where([data-slot="dialog-header"])` · `:where([data-slot="sheet-content"][data-detents] > [data-slot="sheet-detent-handle"])` · `:where([data-slot="sheet-detent-handle"] > [data-slot="sheet-detent-grip"])` · `:where([data-slot="sheet-detent-handle"]:hover > [data-slot="sheet-detent-grip"])` · `:where([data-slot="sheet-detent-handle"]:focus-visible)` · `:where( [data-slot="sheet-detent-handle"]:focus-visible > [data-slot="sheet-detent-grip"], [data-slot="sheet-content"][data-dragging] [data-slot="sheet-detent-grip"] )` · `:where( [data-slot="sheet-detent-handle"]:focus-visible > [data-slot="sheet-detent-grip"] )` · `:where([data-slot="sheet-detent-grip"])` · `:where([data-slot="sheet-content"])` · `:where([data-slot="sheet-content"][data-surface="glass"])` · `:where([data-slot="glass-graded-halo"])` · `:where([data-slot="glass-graded-halo"][data-modal="false"])` · `:where([data-slot="glass-graded-halo"][data-side="top"])` · `:where([data-slot="glass-graded-halo"][data-side="bottom"])` · `:where([data-slot="glass-graded-halo"][data-side="left"])` · `:where([data-slot="glass-graded-halo"][data-side="right"])` · `:where([data-slot="glass-graded-halo"][data-detents][data-side="bottom"])` · `:where([data-slot="glass-graded-halo"][data-detents][data-side="top"])` · `:where([data-slot="glass-graded-halo"][data-detents][data-side="left"])` · `:where([data-slot="glass-graded-halo"][data-detents][data-side="right"])` · `:where([data-slot="glass-graded-halo"])` · `:where([data-slot="sheet-content"][data-side="top"])` · `:where([data-slot="sheet-content"][data-side="bottom"])` · `:where([data-slot="sheet-content"][data-side="left"])` · `:where([data-slot="sheet-content"][data-side="right"])` · `:where([data-slot="sheet-content"][data-side="left"]), :where([data-slot="sheet-content"][data-side="right"])` · `:where( [data-slot="sheet-content"][data-detents][data-side="bottom"], [data-slot="sheet-content"][data-detents][data-side="top"] )` · `:where( [data-slot="sheet-content"][data-detents][data-side="left"], [data-slot="sheet-content"][data-detents][data-side="right"] )` · `:where([data-slot="sheet-content"])` · `:where([data-slot="sheet-content"][data-side="top"])` · `:where([data-slot="sheet-content"][data-side="bottom"])` · `:where([data-slot="sheet-content"][data-side="left"])` · `:where([data-slot="sheet-content"][data-side="right"])` |
+| `components/skeleton/Skeleton.vue` | 3 | `.skeleton` · `.skeleton` · `.skeleton` |
+| `components/status-dot/StatusDot.vue` | 32 | `.status-dot` · `.status-dot[data-size="md"]` · `.status-dot[data-size="lg"]` · `.feedback-mark` · `.feedback-mark::before, .feedback-mark::after` · `.feedback-mark::before` · `.feedback-mark::after` · `.feedback-mark[data-state="unknown"]` · `.feedback-mark[data-state="idle"]` · `.feedback-mark[data-state="idle"]::before` · `.feedback-mark[data-state="idle"]::after` · `.feedback-mark[data-state="success"]` · `.feedback-mark[data-state="success"]::before` · `.feedback-mark[data-state="success"]::after` · `.feedback-mark[data-state="warning"]` · `.feedback-mark[data-state="warning"]::before` · `.feedback-mark[data-state="warning"]::after` · `.feedback-mark[data-state="error"]` · `.feedback-mark[data-state="error"]::before` · `.feedback-mark[data-state="error"]::after` · `.feedback-mark[data-state="online"]` · `.feedback-mark[data-state="online"]::before` · `.feedback-mark[data-state="online"]::after` · `.feedback-mark[data-state="active"]` · `.feedback-mark[data-state="active"]::before` · `.feedback-mark[data-state="active"]::after` · `.feedback-mark[data-state="active"][data-motion]::after` · `.feedback-mark[data-state="active"][data-motion]::after` · `.feedback-mark` · `.feedback-mark::before` · `.feedback-mark[data-state="unknown"]::after` · `.feedback-mark[data-state="active"]::after, .feedback-mark[data-state="online"]::after` |
+| `components/tabs/styles/drag.css` | 4 | `.glass-drag-grabbable` · `.glass-drag-lift` · `.segmented-tabs:has(.segmented-indicator.glass-drag-grabbable) .segmented-tab[data-active]` · `.segmented-indicator.glass-drag-lift` |
+| `components/tabs/styles/segmented.css` | 23 | `.segmented-tabs` · `.segmented-tabs--vertical` · `.segmented-tabs--vertical .segmented-indicator` · `.segmented-tabs` · `.segmented-indicator` · `.segmented-tabs--vertical .segmented-indicator` · `.segmented-tabs--underline .segmented-indicator` · `.segmented-tabs--underline.segmented-tabs--vertical .segmented-indicator` · `.segmented-tabs:not(.segmented-tabs--underline)` · `.segmented-tabs:not(.segmented-tabs--underline) .segmented-indicator` · `.segmented-tabs[data-eyeglass-wake]:not(.segmented-tabs--underline)` · `.segmented-tabs[data-eyeglass-wake]:not(.segmented-tabs--underline) .segmented-indicator` · `.segmented-indicator[data-eyeglass-clamped]` · `.segmented-indicator--js` · `.segmented-tab` · `.segmented-tab` · `.segmented-tab[data-active]` · `.segmented-tab.is-disabled` · `.segmented-tabs--underline` · `.segmented-tabs--underline.segmented-tabs--vertical` · `.segmented-tabs--underline .segmented-tab` · `.segmented-tabs--underline.segmented-tabs--vertical .segmented-tab` · `.segmented-tabs--underline .segmented-tab:hover` |
+| `components/timeline/Timeline.vue` | 28 | `.tl` · `.tl__track, .tl__marks` · `.tl__track` · `.tl__marks` · `.tl__mark-seat` · `.tl__mark-seat > *` · `.tl__span` · `.tl__fill` · `.tl__track[data-advancing] .tl__fill` · `.tl__cap` · `.tl .track-flow` · `.tl__mark` · `.tl__marks` · `.tl__mark` · `.tl__mark:focus-visible` · `.tl__disc` · `.tl__mark[data-crossing] .tl__disc` · `.tl__mark[data-state="active"] .tl__disc` · `.tl__mark[data-state="completed"] .tl__disc` · `.tl__mark[aria-current="step"] .tl__disc` · `.tl__check` · `.tl__check path` · `.tl__mark:hover .tl__disc` · `.tl__mark[data-state="completed"]:hover .tl__disc` · `.tl__detail` · `.tl__check path` · `.tl__detail` · `.tl__mark:hover .tl__disc` |
+| `components/typewriter/TypewriterText.vue` | 7 | `.tw-root` · `.tw-reserve` · `.tw-visual` · `.tw-tail` · `.tw-cursor` · `.tw-cursor--blink` · `.tw-cursor--blink` |
+| `styles/accessibility.css` | 4 | `:is( [aria-current]:not([aria-current="false"]), [aria-selected="true"], [aria-pressed="true"], [aria-checked="true"], [data-state="checked"], [data-state="on"] )` · `:is([aria-invalid="true"], :user-invalid)` · `:is( [aria-current]:not([aria-current="false"]), [aria-selected="true"], [aria-pressed="true"], [aria-checked="true"], [data-state="checked"], [data-state="on"] )` · `:is([aria-invalid="true"], :user-invalid)` |
+| `styles/animations.css` | 5 | `.glass-top-layer[popover], dialog.glass-top-layer` · `.glass-top-layer[popover]:popover-open, dialog.glass-top-layer[open]` · `dialog.glass-top-layer::backdrop` · `dialog.glass-top-layer[open]::backdrop` · `.glass-top-layer[popover], dialog.glass-top-layer` |
+| `styles/glass-specular-track.css` | 2 | `.glass-wash::before, .glass-quiet::before, .glass-resting::before, .glass-floating::before, .glass-overlay::before, .glass-card::before, .dock-icon-button::before, .dock-tab-button::before, .dock-select-trigger::before, .dock-dropdown-trigger::before, .glass-specular-track::before` · `.glass-wash::before, .glass-quiet::before, .glass-resting::before, .glass-floating::before, .glass-overlay::before, .glass-card::before, .dock-icon-button::before, .dock-tab-button::before, .dock-select-trigger::before, .dock-dropdown-trigger::before, .glass-specular-track::before` |
+| `styles/glass/a11y-fallback.css` | 3 | `.glass-wash, .glass-quiet, .glass-resting, .glass-floating, .glass-overlay, .glass-card` · `.glass-floating, .glass-overlay` · `.glass-wash::before, .glass-quiet::before, .glass-resting::before, .glass-floating::before, .glass-overlay::before, .glass-card::before` |
+| `styles/glass/dissolve.css` | 1 | `.glass-corner-affordance::after` |
+| `styles/glass/focus-veil.css` | 1 | `.glass-focus-veil` |
+| `styles/glass/reveal.css` | 2 | `.glass-reveal` · `.glass-reveal[data-state="closed"]` |
+| `styles/paper.css` | 5 | `:where(.dark) .paper-underpaint, .dark .paper-underpaint` · `:where(.dark) .paper-grain-overlay::after, .dark .paper-grain-overlay::after` · `.paper-underpaint, .paper-grain-overlay::after` · `.paper-underpaint` · `.paper-underpaint, .paper-grain-overlay::after` |
+| `styles/scroll-choreography.css` | 5 | `.scroll-cascade > *` · `.scroll-cascade.scroll-cascade--inline > *` · `.scroll-cascade.scroll-cascade--columns > *` · `.scroll-cascade.scroll-cascade--columns > *:nth-child(even)` · `.smooth-scroll` |
+| `styles/scroll-chrome.css` | 3 | `.scroll-chrome` · `.scroll-chrome` · `.scroll-chrome--native` |
+| `styles/scroll-driven.css` | 4 | `.scroll-progress` · `.scroll-progress` · `[data-scroll-reveal] > *` · `[data-scroll-reveal].scroll-reveal--inline > *` |
+| `styles/tokens/dark-arm-glass.css` | 1 | `.dark .glass-deep` |
+| `styles/tokens/scheme-motion.css` | 4 | `.liquid-stage` · `:where([data-reorder], [data-autoplay])` · `:where(.liquid-stage)` · `.motion-calm` |
+| `styles/typography/semantic.css` | 1 | `body` |
+| `styles/utilities/a11y-overrides.css` | 4 | `*, *::before, *::after` · `html.no-transition, html.no-transition *:not([data-allow-motion]), html.no-transition *:not([data-allow-motion])::before, html.no-transition *:not([data-allow-motion])::after` · `.focus-ring:focus-visible, .interactive-item:focus-visible, .dock-icon-button:focus-visible, .dock-tab-button:focus-visible, .dock-select-trigger:focus-visible, .dock-dropdown-trigger:focus-visible, .menu__trigger:focus-visible, .dark-mode-toggle-button:focus-visible, .field-control:focus-visible, .input-pill:focus, .input-pill:focus-visible` · `.hairline-accent, .glass-dock` |
+| `styles/utilities/responsive.css` | 1 | `[data-control-target]` |
+| `styles/view-transition.css` | 36 | `::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*)` · `::view-transition-group(.gl-list-item)` · `::view-transition-old(root), ::view-transition-new(root)` · `html:active-view-transition-type(route, zoom, lateral, collapse)::view-transition-old(root), html:active-view-transition-type(route, zoom, lateral, collapse)::view-transition-new(root)` · `html:active-view-transition-type(route, zoom, lateral, collapse)::view-transition-old(root)` · `html:active-view-transition-type(route, zoom, lateral, collapse)::view-transition-new(root)` · `html:active-view-transition-type(route)::view-transition-old(root), html:active-view-transition-type(route)::view-transition-new(root)` · `html:active-view-transition-type(zoom, lateral)::view-transition-old(root), html:active-view-transition-type(zoom, lateral)::view-transition-new(root)` · `html:active-view-transition-type(collapse)::view-transition-old(root), html:active-view-transition-type(collapse)::view-transition-new(root)` · `html:active-view-transition-type(zoom)::view-transition-old(root)` · `html:active-view-transition-type(collapse)::view-transition-new(root)` · `html:active-view-transition-type(lateral)::view-transition-old(root)` · `html:active-view-transition-type(lateral)::view-transition-new(root)` · `::view-transition-group(gl-route-window)` · `html:active-view-transition-type(zoom)::view-transition-group(gl-route-window)` · `html:active-view-transition-type(lateral)::view-transition-group(gl-route-window)` · `html:active-view-transition-type(collapse)::view-transition-group(gl-route-window)` · `html:active-view-transition-type(zoom, lateral)::view-transition-old(gl-route-window), html:active-view-transition-type(zoom, lateral)::view-transition-new(gl-route-window)` · `html:active-view-transition-type(zoom)::view-transition-old(gl-route-window), html:active-view-transition-type(zoom)::view-transition-new(gl-route-window)` · `html:active-view-transition-type(lateral)::view-transition-old(gl-route-window), html:active-view-transition-type(lateral)::view-transition-new(gl-route-window)` · `html:active-view-transition-type(zoom)::view-transition-new(gl-route-window)` · `html:active-view-transition-type(lateral)::view-transition-new(gl-route-window)` · `html:active-view-transition-type(zoom)::view-transition-old(gl-route-window)` · `html:active-view-transition-type(lateral)::view-transition-old(gl-route-window)` · `html:active-view-transition-type(collapse)::view-transition-old(gl-route-window)` · `html:active-view-transition-type(collapse)::view-transition-new(gl-route-window)` · `html:active-view-transition-type(zoom, lateral)::view-transition-old(gl-route-window):only-child` · `html:active-view-transition-type(zoom, lateral)::view-transition-new(gl-route-window):only-child` · `html:active-view-transition-type(collapse)::view-transition-old(gl-route-window):only-child` · `html:active-view-transition-type(collapse)::view-transition-new(gl-route-window):only-child` · `::view-transition-group(.gl-route-chrome), ::view-transition-old(.gl-route-chrome), ::view-transition-new(.gl-route-chrome)` · `html:active-view-transition-type(zoom, lateral, collapse)::view-transition-old(gl-route-label)` · `html:active-view-transition-type(zoom, lateral, collapse)::view-transition-new(gl-route-label)` · `::view-transition-new(.gl-list-item):only-child` · `::view-transition-old(.gl-list-item):only-child` · `::view-transition` |
+| `styles/viz-reveal.css` | 1 | `canvas[data-substrate-reveal]` |
+
+_Two names leave `./color`_
+
+| removed | migration |
+| --- | --- |
+| `ColorResolver` | Nothing replaces the type. It annotated `defaultBlobColorResolver` and nothing else; no shipped component takes a resolver (the `<FourierField colorResolver>` prop went at 9.0.0 — see _The `<FourierField>` `colorResolver` prop is removed_ under 9.0.0). Write `(css: string) => [number, number, number]` if you still need the shape. |
+| `defaultBlobColorResolver` | Call `oklchToGammaRgb(cssToOklch(css))` — both still on `@mkbabb/glass-ui/color`; that composition was the whole body. If you imported it only to bind `<FourierField :color-resolver>`, delete the import and the binding and keep the `color` you pass. |
+
+Neither name was on the root barrel. `./color` goes from 16 published names to 14.
+
+_`ringsAt` leaves `./fourier-field`_
+
+| removed | migration |
+| --- | --- |
+| `ringsAt` | Nothing replaces it on a public entry. It was a CPU copy of the renderer's ring rule (a ring is drawn iff twice the term's amplitude reaches the mark stroke, both in device px) with no readers anywhere; the function stays internal. If you need the count, compute it from `mintSpectrum(...)` with that same rule. |
+
+_`AuroraAtoms` admits `interactivity.light` only on the impasto media_
+
+| was | now |
+| --- | --- |
+| `AuroraAtoms` with `medium.kind` other than `"oil"`/`"vangogh"` and `interactivity.light` | `light?: never` there (type error). It never painted: `light` steers `uLightDir`, whose only reader multiplies every term by `uImpasto`, and only the oil/vangogh texture amount writes `impasto`. Delete `light`, or switch the medium to `oil`/`vangogh` with an `amount` above 0. `configToAtoms` no longer projects `light` for a non-impasto medium. |
+
+_`text-caption` is upright_
+
+| was | now |
+| --- | --- |
+| `text-caption` — size, leading, weight 400, `font-style: italic` | The same without `font-style`. The slant was a synthesized oblique of a roman face on running prose; the size, leading and weight already read as a caption. Want the old paint? Write `class="text-caption italic"` — `cn()` sorts the two into different buckets, so the pair survives merging. |
+
+`text-math`, `text-math-body` and `fourier-f` keep their italic: mathematical italic is
+notation, and those three stay synthesis-dependent (see the README). In the library,
+`Chip`'s `sm` rung reads `text-caption` and now paints upright.
+
+_`darkModeSyncScript()` hardens its read, and every CSP hash moves_
+
+A `localStorage` accessor or `getItem` that throws (privacy mode, a sandboxed origin) no
+longer leaves `<html>` unstamped: the script treats an unreadable store as ABSENT, so a
+scalar `defaultDark` falls to its one arm (by default, `prefers-color-scheme`) and the
+object form to its `absent` arm. Every emission grows 13 bytes, so every hash moves. The
+old column is the source after the O-20 cure (the table under _Amended after 9.0.0_
+under §8.1.0); the published 9.0.0 `{ normalize: true }` hash,
+`sha256-Xtel8uEYWeIEsJMO4TZWEump78fncLVrH4/fe166vIw=`, moves to the same new value.
+
+```
+darkModeSyncScript()                            300 B  sha256-VTba/T+6rX/y5+Gk2oyLaaYBdLf4xSZtXnc7kMYziI8=  →  313 B  sha256-MOGEZdbxrYiPCsQApEdoFKYoqnbmCxzBPrGPG/EbfJk=
+{ defaultDark: false }                          229 B  sha256-qhpAfju9UAwqj2RfWpOZO9EulLGgZ5V71iPcTGTY3zw=  →  242 B  sha256-+kr3+orhvPzjRqodC05PBmZEjiRUYqTQ3bROP1Ul1lc=
+{ defaultDark: true }                           228 B  sha256-manehYcswRzcI9LxUb8B/PXRoWvHIJReiR2pNGvOG54=  →  241 B  sha256-oSg/cCpR7IiOWBMlFDCxzciD09O78RkZ8+FUJxgabrM=
+{ queryOverride: true }                         402 B  sha256-T/HYS7zqh/wi4E0o0R4IStRZF6TYhOjMFduJeli2HpI=  →  415 B  sha256-mQa+YqSIVa3dLg5wzyMtdTGHV27xgeXomarl+4ud3P8=
+{ normalize: true }                             361 B  sha256-BxbpMykpiKP/WPfTsYpbpPpSCTecT50SMXFVFNrMGrw=  →  374 B  sha256-ELJDzNkFORSX8nVSvmrv/vdF/vXsUNcR28MZd/Fz3cA=
+{ defaultDark: { absent: false, auto: "os" } }  309 B  sha256-viDl5kPSBmJC9frsYXBK0PtoTtTWq4SnpZnkpC5cv4k=  →  322 B  sha256-k6c4jJN+Xl68gT4/Up6BGWBY5CCxk0mpavrCzlEkLxY=
+```
+
+If you pin any form under `script-src 'sha256-…'`, re-pin it at the bump or first paint
+is blocked. Better: hash the emitted string at build time (see _Wire it with a build
+plugin; do not transcribe the bytes_ under §8.1.0).
+
+_`--success` and `--warning` darken in the light arm_
+
+Not breaking; a paint change. `StatusDot`'s text-free marks carry a state by colour
+alone, which makes them a required graphical object under WCAG 1.4.11, and both tokens
+measured under 3:1 on `--card` in light mode. They drop L, hue and chroma kept; the dark
+arm is untouched.
+
+| token (light arm) | was | now | on `--card` |
+| --- | --- | --- | --- |
+| `--success` | `oklch(0.720 0.192 149.5)` | `oklch(0.600 0.192 149.5)` | 2.13 → 3.30 |
+| `--warning` | `oklch(0.770 0.165 70.6)` | `oklch(0.635 0.165 70.6)` | 1.98 → 3.27 |
+
+Everything that reads them goes darker in light mode: `Badge`'s success/warning plates,
+`StatusDot` and its inner marks, the `Toast` and `Alert` tone wash, rim and glyph,
+`Metric`'s up delta, the `.input-pill:user-valid` border, and every
+`text-success`/`text-warning`. As text ink, `--success` is 3.30 on the card, under
+1.4.3's 4.5:1 — keep it off body copy.
+
 ## 9.0.0 — ~~UNRELEASED (in flight; not on the registry)~~ [2026-09-17 · LIVE: tag `v9.0.0` at `d4f7b24f`, published with provenance by `release.yml` run 33273556530 attempt 3, `latest` on the registry]
 
 **Status.** ~~`package.json` declares `8.0.0`.~~ [2026-09-17 · declares `9.0.0` since `d4f7b24f`; the cut is on the registry.] This section exists because a BREAKING row
@@ -52,7 +248,7 @@ _The `<FourierField>` `colorResolver` prop is removed_
 
 | removed | migration |
 | --- | --- |
-| `<FourierField :color-resolver>` | Drop the binding and keep the `color` you already pass — the component resolves that value itself. Drop the `import { defaultBlobColorResolver } from "@mkbabb/glass-ui/color"` above it too, unless the file uses it for something else. |
+| `<FourierField :color-resolver>` | Drop the binding and keep the `color` you already pass — the component resolves that value itself. Drop the `import { defaultBlobColorResolver } from "@mkbabb/glass-ui/color"` above it too, ~~unless the file uses it for something else~~ [2026-09-22 · register wave 10-3 — unconditionally at 10.0.0: the name is deleted from `./color`, so the import has nothing to bind; see _Two names leave `./color`_ under 10.0.0]. |
 
 Landed at `4a86570b` (BK #53 GF-FOURIER, 2026-08-12), and 9.0.0 is its first carrier:
 `git tag --contains 4a86570b` prints `v9.0.0` and nothing else. The published
@@ -74,6 +270,9 @@ them in the same edit.
 **unchanged by this cut**. The O-20 disposition ruled them CURE-NEXT-MAJOR — a ruling,
 not an execution — so a consumer may keep importing `defaultBlobColorResolver` for its
 own use; what no longer exists is the prop that consumed it.
+[2026-09-22 · register wave 10-3 — true of 9.0.0 and no further: both are deleted from
+`./color` at 10.0.0, the next major, so the "keep importing" allowance ends there. See
+_Two names leave `./color`_ under 10.0.0 for the one-line replacement.]
 
 _The `<FourierField>` instance API loses `renderAt` and gains `headT` + `flick`_
 [2026-09-18 · O-20 CURSOR — the expose delta had no row; measured off the two published
@@ -181,6 +380,9 @@ and nothing else from this module).
 Precedence is **query > storage > default**, in that order and no other.
 
 _The default emission is BYTE-IDENTICAL — deliberately, and it nearly was not_
+[2026-09-22 · register wave N-3 — true through 9.0.0. At 10.0.0 every emission moves, the
+default to 313 bytes; see _`darkModeSyncScript()` hardens its read, and every CSP hash
+moves_ under 10.0.0.]
 
 The emitted `<head>` script is exactly what a `script-src 'sha256-…'` CSP pins, and a
 re-hashed default would be **blocked at first paint, silently** — no type error, no
@@ -259,6 +461,8 @@ darkModeSyncScript()                     300 B  sha256-VTba/T+6rX/y5+Gk2oyLaaYBd
 
 If you pin the normalize emission under `script-src 'sha256-…'`, re-pin it at the bump
 or first paint is blocked. The DEFAULT emission is byte-identical and needs nothing.
+[2026-09-22 · register wave N-3 — through this amendment. The 10.0.0 read hardening
+moves the default too, and every form re-pins at that bump.]
 
 _Wire it with a build plugin; do not transcribe the bytes_
 
@@ -317,7 +521,7 @@ _Package subpaths_
 | --- | --- | --- |
 | `@mkbabb/glass-ui/dropdown-menu` | `@mkbabb/glass-ui/menu` | Re-point the specifier. **The fourteen `DropdownMenu*` SFC names are UNCHANGED** — the family's directory and door moved, not its symbols, so a one-line import edit is the whole migration. The old name was wrong in both directions: the same 28 reka imports serve both the click and the context arm, and `./context-menu` was never exported at all. |
 | `@mkbabb/glass-ui/forms` | `@mkbabb/glass-ui/input` · `/textarea` · `/checkbox` · `/radio-group` | Split the import by component. `./forms` was a hand-curated union of four components — a second door onto the same source — and the rule is now stateable: **one subpath per public component, no exceptions in either direction.** |
-| — | `@mkbabb/glass-ui/sheet` | NEW. `SheetContent` and the detent surface were reachable only through the root barrel while the `./sheet` specifier resolved to nothing. If you were importing it, it works now. |
+| ~~—~~ `@mkbabb/glass-ui/drawer` | `@mkbabb/glass-ui/sheet` | ~~NEW. `SheetContent` and the detent surface were reachable only through the root barrel while the `./sheet` specifier resolved to nothing. If you were importing it, it works now.~~ [2026-09-22 · register wave N-6 — the row read as a new door; it is the door `Drawer` folded into. `Drawer` folded WHOLE into `Sheet` at `336dacf9` ("the detent is a size, the drawer folds in whole"), so `./drawer` retired with the fold and this row is its record — a fold, not a deletion.] `<Drawer>` + `<DrawerContent>` → `<Dialog>` + `<SheetContent side="bottom" :detents="[…]">` — a detent is a size, so `left`/`right` ladders are as legal as `bottom`/`top`. `mode="live-behind"` → `<Dialog :modal="false">`. `DrawerHeader` · `DrawerTitle` · `DrawerDescription` · `DrawerFooter` → the `Dialog*` parts on `./dialog`. `direction` (`DrawerDirection`) → `side`; `snapPoints` → `detents`, ascending fractions of the anchored axis (a string snap point converts to its fraction); `activeSnapPoint` → `v-model:detent`. Two defaults flip: `direction` defaulted to `bottom`, `side` defaults to `right`, so write `side="bottom"` for a bottom sheet; the live-behind ladder `[0.12, 0.5, 1]` was implicit, so write `:detents="[0.12, 0.5, 1]"` to keep it. `DrawerStage` has no successor: the stage was deleted at `b155ca4c`, inside this major (see **The immersive stage scrim is a private stage-effect role, reconnected to `--glass-level`** under §8.0.0). |
 | `ControlSize` (from `/forms`) | `@mkbabb/glass-ui/input` | The shared `sm \| md \| lg` union the control register threads as `size?`. Input is the canonical member, so `./input` is its one published door. |
 | `useUserInvalidAria` (from `/forms`) | `@mkbabb/glass-ui` (root) | No move — it was **already** on the root barrel, which is now its only door. |
 
@@ -823,18 +1027,25 @@ consumer that relied on the richer retina overlay wash re-verifies legibility; t
 no token-name change, only the removal of the device-conditional value.
 
 **The immersive stage scrim is a private stage-effect role, reconnected to
-`--glass-level`.** `stage="immersive"` on `Dialog`/`Drawer` paints one fixed `14px`
+`--glass-level`.** `stage="immersive"` ~~on `Dialog`/`Drawer`~~ paints one fixed `14px`
 backdrop sample (the last published value) **multiplied by `--glass-level`**, so it
-flattens in lockstep with every other glass surface: `14px` at level 1, `4.2px` at
-level 0.3 (`prefers-contrast: more`), `0px` at level 0 (`prefers-reduced-transparency`
-/ `forced-colors`). The radius never reads the per-frame `--stage-t`, and it carries no
-saturation term — it is a scene-separation effect, not a glass surface recipe, and not
-the deep endpoint. (Interim development had repointed it onto the `16px` deep radius,
-bypassing the clarity axis; this restores the `14px × level` behavior.)
+flattens in lockstep with every other glass surface: `14px` at level 1, `4.2px` at level
+0.3 (`prefers-contrast: more`), `0px` at level 0 (`prefers-reduced-transparency` /
+`forced-colors`). [2026-09-22 · register wave N-6 — `Drawer` folded WHOLE into `Sheet`
+at `336dacf9` ("the detent is a size"), and the stage itself was deleted at `b155ca4c`
+("the stage deleted"), both inside this major: no component accepts `stage` at 8.0.0, so
+this paragraph and the next record a scrim 8.0.0 does not ship.] The radius never reads
+the per-frame `--stage-t`, and it carries no saturation term — it is a scene-separation
+effect, not a glass surface recipe, and not the deep endpoint. (Interim development had
+repointed it onto the `16px` deep radius, bypassing the clarity axis; this restores the
+`14px × level` behavior.)
 
 **`CommandDialog` is not an immersive receiver.** It forwards `DialogProps`, never
-`DialogContentProps`, so it cannot request the stage. Only `Dialog` and `Drawer` accept
-`stage="immersive"`.
+`DialogContentProps`, so it cannot request the stage. ~~Only `Dialog` and `Drawer`
+accept `stage="immersive"`.~~ [2026-09-22 · register wave N-6 — `Drawer` folded WHOLE
+into `Sheet` at `336dacf9` (see the `./sheet` row under _Package subpaths_ under
+§8.0.0), and neither `Dialog` nor `SheetContent` accepts `stage` at 8.0.0: the stage
+went at `b155ca4c`.]
 
 **Blur ontology, restated.** The glass material is three separate concepts: FIVE calm
 role recipes (`wash`/`quiet`/`resting`/`floating`/`overlay`) across THREE distinct
@@ -1466,7 +1677,7 @@ subpath)` is the 5.0.0 target".]
 | `CelebrationBurstPreset` | type | removed 5.0.0 — dead-composable sweep; `useCelebrationBurst` retired (0 consumers) |
 | `ClickDelegateOptions` | type | `/sidebar` |
 | `ColorHarmony` | type | `/color` [2026-09-17 · O-20 CUT-4/5 — the census never listed it. It ships on `./color` at 9.0.0 (`deriveHue`'s second argument, and `DeriveBlobPaletteOptions.harmony`) and nothing is ruled against it.] |
-| `ColorResolver` | type | `/color` [2026-09-17 · O-20 CUT-4/5 — the census never listed it. Ships on `./color` at 9.0.0 and is live; the O-20 disposition ruled it and `defaultBlobColorResolver` CURE-NEXT-MAJOR, which is a ruling and not an execution, so nothing has moved yet.] |
+| `ColorResolver` | type | `/color` [2026-09-17 · O-20 CUT-4/5 — the census never listed it. Ships on `./color` at 9.0.0 and is live; the O-20 disposition ruled it and `defaultBlobColorResolver` CURE-NEXT-MAJOR, which is a ruling and not an execution, so nothing has moved yet.] [2026-09-22 · register wave 10-3 — it moved: deleted at 10.0.0 with `defaultBlobColorResolver`; see _Two names leave `./color`_ under 10.0.0.] |
 | `CompletionSealProps` | type | `/completion-seal` |
 | `CompletionSealShape` | type | `/completion-seal` |
 | `ConcentricConfig` | type | removed 5.0.0 — /concentric viz DELETED (viz-family prune) |
