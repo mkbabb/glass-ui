@@ -236,6 +236,12 @@ BREAKING cures are lawful there and are marked.
   removes it from the tree with `rm`), the CT2 bracket it just received is moot, RECORD notes the
   retirement with the measured zero-binding census. Gates stay 60 (it was never a seat).
 
+- **Stale-L16 class (at CT2 Challenger A):** every comment/docblock site that still states the struck
+  card figure (L16 / hsl(24 8% 16%) / "lifted L16") is the same defect — CT2's fence widens to the
+  full measured census (the challenger's ten sites, re-measured by the adjudicator with one grep),
+  comments only, dated brackets, including any LOCKSTEP twin. Test rows that assert the figure are
+  fixtures, cured the use-accent-tone way (no retune).
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
