@@ -242,6 +242,21 @@ BREAKING cures are lawful there and are marked.
   comments only, dated brackets, including any LOCKSTEP twin. Test rows that assert the figure are
   fixtures, cured the use-accent-tone way (no retune).
 
+- **CT2 round-2 rulings (at CT2's adjudication):** (a) `src/composables/color/accent-tone-solve.ts:27`
+  `DEFAULT_SURFACE` is seeded from the struck light card — a runtime default, not a comment: CURE in
+  CT2 (fence widens to that constant + its :21 docblock): the default reads the shipped card
+  hsl(30 85% 96%), with a born-RED test row asserting the default equals the token file's `--card`
+  light value (parse it from `color-radius.css`/`light-dark.css`, never a second literal); the
+  CHANGELOG Fixed line is R2's if R2 is still in a cure round, else the driver's at the close.
+  (b) `tests-visual/no-gray.spec.ts:287` failure-message literal "L16" → "L17": one word, CURE in CT2
+  (a string is not exempt from the figure class). (c) The stale `LOCKSTEP <file>:<line>` pointers
+  (`dark-arm.css:32/:51/:60/:82`, `light-dark.css:70/80/92`, `story-hero.css:52-54/:85-87`) are a
+  pointer-rot class: CURE in CT2, comments only — each pointer names its twin by TOKEN NAME
+  (`LOCKSTEP light-dark.css --card`), never a line number; no deferral. (d) The "~5×" relL multiplier
+  is measured 8.2× from the shipped bytes: DESIGN.md's palette block and the LEDGER carry 8× where
+  they quote it (AUTHOR2 bracket pass; R2's cure round if DESIGN.md quotes 5×). (e) `git rm` of the
+  retired spec is the driver's at CT2's commit.
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
