@@ -192,6 +192,12 @@ BREAKING cures are lawful there and are marked.
   re-point is a lawful path correction (the gate's rung derivation follows the L-3 seam; the gate count
   stays 60 and the seat is unchanged).
 
+- **Roster rebind at AC1's implement return (B-3, driver's act):** `.published-roster` rebound in the
+  working tree — `utility cm-serif` out, `theme --font-serif-math` in (289 names, sorted, one LF) — so
+  AC1's challengers can build and run the dist witness; it commits WITH lane AC1's pathspec. The
+  G-NO-ORPHAN-EXPORT "left the roster with no MIGRATION row" arm stays RED for `cm-serif` until R2
+  writes the row — expected, recorded, not a lane defect.
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
