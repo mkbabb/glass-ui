@@ -86,22 +86,26 @@
 
            `--dock-stagger-step` is the per-child onset BEAT: each
            successive control's reveal starts this fraction-of-morph later than the
-           one before it, so the row fills outer→in. ONE token × the child index
-           replaces the hand-typed 0.08/0.16/0.24/0.32/0.4 onset ladder — the onset
-           is `step × (childIndex − 1)`, capped (the cap below). 0.08 = ~5% of the
+           one before it, so the row fills edge-in. ONE token × the child's distance
+           from its nearer edge replaces the hand-typed 0.08/0.16/0.24/0.32/0.4 onset
+           ladder [2026-09-22 · O-32 §4.3 L-23: the onset is `step × min(distance from
+           the nearer edge, 3)`, maximum 0.24, both ends bounded — the
+           `step × (childIndex − 1)` / `step × 5` sentences are struck; the ladder
+           itself lives in layers.css]. 0.08 = ~5% of the
            ~0.32s morph between items — inside Emil Kowalski's 30–60ms stagger band,
            never the >100ms "slideshow" register. The onset rides the NORMALIZED
            morph progress (`--dock-expand-t`), NOT a wall-clock timer, so a fast
            flick and a slow hover-open both choreograph correctly and an interrupted
            morph orphans no timers.
 
-           The window is 0.4. The per-child onset caps
-           at `step × 5 = 0.40` (child 6+), so with the 0.4 window the LAST detail child
-           finishes at `0.40 + 0.4 = 0.80` (the iOS front-loaded register: stagger the
-           EXPANDING detail, never the persistent/summary glyph). A wider 0.55 window
-           would push the last child to `0.40 + 0.55 = 0.95` of the morph — barely
-           visible until 95% through (the "shrunken icon does not appear for a while"
-           tail). The step (0.08, Kowalski's band) is the beat; the window is the tuned
+           The window is 0.4. The per-child onset peaks at
+           `step × 3 = 0.24` (the deep middle), so with the 0.4 window the LAST detail
+           child finishes at `0.24 + 0.4 = 0.64` [2026-09-22 · L-23: was `0.40 + 0.4 =
+           0.80` under the struck index ladder] (the iOS front-loaded register: stagger
+           the EXPANDING detail, never the persistent/summary glyph). A wider 0.55
+           window would push the middle child to `0.24 + 0.55 = 0.79` of the morph —
+           barely visible until four fifths through (the "shrunken icon does not appear
+           for a while" tail). The step (0.08, Kowalski's band) is the beat; the window is the tuned
            span. The summary/persistent glyph is front-loaded
            structurally (onset 0, scalar-keyed below). */
         --dock-stagger-window-size: 0.4;

@@ -29,9 +29,15 @@ export function useInfiniteScroll(options: InfiniteScrollOptions): InfiniteScrol
 
     function setupObserver(el: HTMLElement) {
         teardown();
+        // `rootMargin` grows the root's own box; `scrollMargin` grows every scroll
+        // port between the sentinel and the root, so the threshold prefetches inside
+        // a nested port too. An engine without `scrollMargin` loads when the sentinel
+        // is actually visible there—later, never a drain.
+        const margin = `0px 0px ${threshold}px 0px`;
         observer = new IntersectionObserver(handleIntersect, {
             root: options.scrollContainer?.value ?? null,
-            rootMargin: `0px 0px ${threshold}px 0px`,
+            rootMargin: margin,
+            scrollMargin: margin,
         });
         observer.observe(el);
     }

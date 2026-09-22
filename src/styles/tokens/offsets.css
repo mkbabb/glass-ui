@@ -30,14 +30,11 @@
        than cliffs. Defaults clamp to 80vw / 80vh capped at sensible
        desktop widths; consumers override per-dock by setting either
        token directly on a `.glass-dock` instance. User findings 1 + 5a. */
-    /* `--dock-max-inline-size` is the canonical inline cap EVERY overflow
-       strategy reads: `overflow="scroll"` scrolls past it, and `overflow="wrap"`
-       wraps to N rows on the over-cap crossing (the dock shrink-wraps to content,
-       `max-inline-size` caps that intrinsic width at this token). There is no
-       `--dock-overflow-bp: 640px` viewport-breakpoint token (no magic-640
-       snap-back) — the wrap is content-driven, not viewport-coupled, so
-       there is no breakpoint threshold to name. */
-    --dock-max-inline-size: min(80vw, 64rem);
+    /* [2026-09-22 · O-32 AC-D-1] One cap, not two, and no mask-fade: the inline
+       cap `--dock-max-inline-size` is deleted—its last reader went with the
+       per-instance cap at BK #47 W3 LATTICE (shell.css), and the horizontal run
+       scrolls whenever it overflows. The block cap below is the survivor; it bounds
+       the vertical dock's run. */
     --dock-max-block-size: min(80vh, 48rem);
 
     --max-width-input: 24rem;

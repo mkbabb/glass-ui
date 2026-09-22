@@ -20,10 +20,13 @@ import { GlassDock, DockControl } from "@glass/components/dock";
 import { useSelectionGroup } from "@glass/composables/motion/core";
 import DockStage from "./_frame/DockStage.vue";
 
-// A narrow-capped dock whose control run exceeds the cap → the active full layer becomes
-// the native inline scroll port (overflow-x: auto), the FadingScroll edge mask feathers
-// the clipped edges, and `useSelectionGroup`'s select fires scrollIntoView so a control
-// past the fold recenters itself (with the scroll-padding-inline gutter).
+// ~~A narrow-capped dock whose control run exceeds the cap → … the FadingScroll edge mask
+// feathers the clipped edges~~ — [2026-09-22 · O-32 AC-D-1] the per-instance inline cap
+// (`--dock-max-inline-size`) and the edge mask both died at BK #47 W3 LATTICE. The run
+// outgrows the stage, so the active full layer is the native inline scroll port
+// (overflow-x: auto) with no edge fade—the truncation cue is the plate's terminal cap—and
+// `useSelectionGroup`'s select fires scrollIntoView so a control past the fold recenters
+// itself (with the scroll-padding-inline gutter).
 interface Item {
     value: string;
     label: string;
@@ -64,7 +67,6 @@ const scrollSel = useSelectionGroup<Item>({
                 <GlassDock
                     :collapse="false"
                     aria-label="Scrollable app strip"
-                    :style="{ '--dock-max-inline-size': '22rem' }"
                 >
                     <div
                         ref="scrollRowRef"
@@ -88,10 +90,11 @@ const scrollSel = useSelectionGroup<Item>({
                     </div>
                 </GlassDock>
             </DockStage>
+            <!-- [2026-09-22 · O-32 AC-D-1] ~~The row exceeds the cap … the edges feather (FadingScroll)~~: no cap is set and no edge mask ships (BK #47 W3 LATTICE). -->
             <p class="text-small text-muted-foreground mt-3">
-                Selected: <strong>{{ active }}</strong>. The row exceeds the cap, so the
-                active layer is a native scroll port — the edges feather (FadingScroll),
-                and clicking a control past the fold recenters it into view
+                Selected: <strong>{{ active }}</strong>. The row outgrows the stage, so the
+                active layer is a native scroll port with no edge fade (the truncation cue
+                is the plate's terminal cap), and clicking a control past the fold recenters it into view
                 (scrollIntoView + the scroll-padding-inline gutter). Arrow keys rove;
                 Home/End jump. The cross axis is honestly visible, so a flush item's focus
                 ring renders whole at both edges.

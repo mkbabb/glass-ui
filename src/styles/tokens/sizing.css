@@ -288,6 +288,19 @@
        `--slider-track-height`, so this knob can only RAISE a rung, never shrink one. */
     --slider-touch-target: 1.5rem; /* 24px */
 
+    /* The Slider's size rungs—track (the capsule thickness) and thumb (the spectrum
+       handle, the scrubber's invisible value-follow box) per `data-size`.
+       `slider/styles.css` reads them and takes the thumb as `min(thumb, track)`, so the
+       inscription law (thumb ≤ track) holds whatever a consumer sets. This root is
+       unlayered and beats a layered `:root`: override on an element below it (a
+       wrapper, the slider) in any layer, or in an unlayered `:root`. */
+    --slider-track-height-sm: 0.75rem; /* 12px */
+    --slider-thumb-size-sm: 0.5rem; /* 8px */
+    --slider-track-height-md: 1.25rem; /* 20px */
+    --slider-thumb-size-md: 1rem; /* 16px */
+    --slider-track-height-lg: 1.75rem; /* 28px */
+    --slider-thumb-size-lg: 1.5rem; /* 24px */
+
     /* The Configurator density and hierarchy tokens live in sizing-config.css. */
 }
 

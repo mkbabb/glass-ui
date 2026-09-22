@@ -65,18 +65,22 @@
 
 /* The SIZE axis. `--slider-track-height` is the capsule thickness; `--slider-thumb-size`
    sizes the spectrum's visible handle and the scrubber's invisible value-follow box.
-   thumb ≤ track at every rung — the inscription law. */
+   thumb ≤ track at every rung — the inscription law.
+   [2026-09-22 · O-23 L-3] The rungs read `--slider-track-height-{sm,md,lg}` and
+   `--slider-thumb-size-{sm,md,lg}` from the token :root (`tokens/sizing.css`), so a
+   consumer retunes a rung on a wrapper or on the slider instead of restating this
+   attribute selector; `min()` holds the inscription law by construction. */
 .glass-slider[data-size="sm"] {
-    --slider-track-height: 0.75rem;
-    --slider-thumb-size: 0.5rem;
+    --slider-track-height: var(--slider-track-height-sm);
+    --slider-thumb-size: min(var(--slider-thumb-size-sm), var(--slider-track-height-sm));
 }
 .glass-slider[data-size="md"] {
-    --slider-track-height: 1.25rem;
-    --slider-thumb-size: 1rem;
+    --slider-track-height: var(--slider-track-height-md);
+    --slider-thumb-size: min(var(--slider-thumb-size-md), var(--slider-track-height-md));
 }
 .glass-slider[data-size="lg"] {
-    --slider-track-height: 1.75rem;
-    --slider-thumb-size: 1.5rem;
+    --slider-track-height: var(--slider-track-height-lg);
+    --slider-thumb-size: min(var(--slider-thumb-size-lg), var(--slider-track-height-lg));
 }
 
 /* THE INSCRIPTION (S1). The spectrum recipe is a TALLER capsule, and it says so by

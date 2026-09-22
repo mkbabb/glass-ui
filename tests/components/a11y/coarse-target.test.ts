@@ -43,13 +43,20 @@ const source = readFileSync(SLIDER, "utf8");
 /** Live bytes only — a rule quoted inside a cure note is not a shipped rule. */
 const live = source.replace(/\/\*[\s\S]*?\*\//g, "");
 
-/** The `--slider-track-height` each `[data-size]` rung declares, in px. */
+/** The `--slider-track-height` each `[data-size]` rung declares, in px.
+ *  [2026-09-22 · O-23 L-3] The rungs read `--slider-track-height-{sm,md,lg}` from the
+ *  token :root, so the authored values are read there; the slider rule is held to
+ *  reading its own size's token. */
 function rungHeights(): Record<string, number> {
+    const tokens = readFileSync(SIZING, "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
     const out: Record<string, number> = {};
-    for (const [, size, value] of live.matchAll(
-        /\.glass-slider\[data-size="(\w+)"\]\s*\{[^}]*?--slider-track-height:\s*([\d.]+)rem/g,
+    for (const [, size, value] of tokens.matchAll(
+        /--slider-track-height-(\w+):\s*([\d.]+)rem/g,
     )) {
-        out[size] = Number(value) * 16;
+        const rung = live.match(
+            new RegExp(`\\.glass-slider\\[data-size="${size}"\\]\\s*\\{[^}]*?--slider-track-height:\\s*var\\(--slider-track-height-${size}\\)`),
+        );
+        if (rung) out[size] = Number(value) * 16;
     }
     return out;
 }

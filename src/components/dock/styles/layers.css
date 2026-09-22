@@ -277,39 +277,54 @@
         transform-origin: center;
     }
 
-    /* Per-child onsets off the ONE `--dock-stagger-step` token. Each
-       successive control starts `step` later than the one before it (`onset =
-       step × (childIndex − 1)`), so the row fills outer→in on expand. The
-       hand-typed 0.08/0.16/0.24/0.32/0.4 ladder is RETIRED — the onsets are now
-       derived from the single token, so retuning the cascade beat is a one-token
-       override. The set is capped at the 6th child (`nth-child(n + 6)` holds at
-       `step × 5`) so even a long row finishes within the morph window.
-       (`sibling-index()` would
-       collapse this to a single declaration, but it is not yet Baseline across
-       Safari/Firefox — the token-keyed nth-child set is the cross-engine form, and
-       the magic ladder is gone either way.) */
-    /* The SYMMETRIC center-out stagger. The onset ladders by DISTANCE FROM THE ROW
-       CENTER (center pair = onset 0 via the base rule, then ±1, ±2 …) so the reveal
-       radiates center-out in lockstep with the center-out box morph — NOT a
-       left-to-right index cascade that would desync from the centered grow.
-       `--dock-stagger-step` is the per-ring beat;
-       `nth-child(N of *)` + `nth-last-child(N of *)` reach BOTH ends (the row is short —
-       ≤8 controls is the dock norm), the central rule holds the deep middle. The `of *`
-       syntax is Safari 16.4+/Chrome 111+. */
-    /* ring ±1 — 2nd-from-center each side */
-    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(2 of *),
-    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-last-child(2 of *) {
-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 1);
-    }
-    /* ring ±2 — 3rd-from-center each side */
-    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(3 of *),
-    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-last-child(3 of *) {
-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 2);
-    }
-    /* ring ±3 — the deep-middle 4th/5th-from-edge cap (a long row finishes in-window) */
+    /* Per-child onsets off the ONE `--dock-stagger-step` token. The hand-typed
+       0.08/0.16/0.24/0.32/0.4 ladder is RETIRED — the onsets derive from the single
+       token, so retuning the cascade beat is a one-token override.
+       ~~Each successive control starts `step` later than the one before it (`onset =
+       step × (childIndex − 1)`) … capped at the 6th child (`nth-child(n + 6)` holds
+       at `step × 5`).~~ — [2026-09-22 · O-32 §4.3 L-23] no rule on disk has matched
+       that description; the ladder below is what paints.
+       ~~The SYMMETRIC center-out stagger … center pair = onset 0 via the base rule,
+       then ±1, ±2 … the reveal radiates center-out~~ — [2026-09-22 · O-32 §4.3 L-23]
+       the paint was always edge-in, and edge-in is the intent: the controls reveal
+       OUTER→IN (the edge pair at onset 0, the middle last), as the reveal note above
+       says; collapse rewinds the same ramp, so the middle fades first and the edges last.
+
+       THE LADDER. A control's onset is `step × min(distance from the nearer edge, 3)`,
+       counted over CONTROLS ONLY: `nth-child(… of :not(.dock-separator))`. A
+       DockSeparator is a sibling child of the layer, so counting `of *` gave each
+       hairline a rung and shifted every control past it (O-32 L-23, fourier's
+       CanvasControlsDock). Each rung is bounded from BOTH ends — ±1 is 2nd from one
+       edge and at least 2nd from the other, ±2 likewise at 3rd, the deep middle at
+       least 4th from both — so the rungs are disjoint and the ladder is symmetric at
+       every length (3 controls → 0 1 0, 5 → 0 1 2 1 0, 10 → 0 1 2 3 3 3 3 2 1 0).
+       Separators take no rung: they hold the base onset 0. A long row finishes
+       within the morph window because the deep middle holds at `step × 3`.
+       (`sibling-index()` would collapse this to one declaration, but it is not yet
+       Baseline across Safari/Firefox; `nth-child(… of S)` is Safari 16.4+ /
+       Chrome 111+ / Firefox 113+.) */
+    /* ring ±1 — 2nd control from the nearer edge */
     .glass-dock[data-morphing]
         .dock-layer.is-active
-        > *:nth-child(n + 4):nth-child(-n + 5) {
+        > *:nth-child(2 of :not(.dock-separator)):nth-last-child(n + 2 of :not(.dock-separator)),
+    .glass-dock[data-morphing]
+        .dock-layer.is-active
+        > *:nth-last-child(2 of :not(.dock-separator)):nth-child(n + 2 of :not(.dock-separator)) {
+        --dock-stagger-onset: calc(var(--dock-stagger-step) * 1);
+    }
+    /* ring ±2 — 3rd control from the nearer edge */
+    .glass-dock[data-morphing]
+        .dock-layer.is-active
+        > *:nth-child(3 of :not(.dock-separator)):nth-last-child(n + 3 of :not(.dock-separator)),
+    .glass-dock[data-morphing]
+        .dock-layer.is-active
+        > *:nth-last-child(3 of :not(.dock-separator)):nth-child(n + 3 of :not(.dock-separator)) {
+        --dock-stagger-onset: calc(var(--dock-stagger-step) * 2);
+    }
+    /* ring ±3 — the deep middle, 4th or further from BOTH edges (a long row finishes in-window) */
+    .glass-dock[data-morphing]
+        .dock-layer.is-active
+        > *:nth-child(n + 4 of :not(.dock-separator)):nth-last-child(n + 4 of :not(.dock-separator)) {
         --dock-stagger-onset: calc(var(--dock-stagger-step) * 3);
     }
 

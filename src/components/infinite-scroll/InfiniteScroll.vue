@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, toRef } from "vue";
+import { computed, toRef } from "vue";
 import DotRing from "../_shared/feedback/DotRing.vue";
 import { useInfiniteScroll } from "./composables";
 
@@ -21,10 +21,12 @@ const emit = defineEmits<{
     "load-more": [];
 }>();
 
-const scrollContainer = ref<HTMLElement | null>(null);
-
+// The observer root is the viewport: root null clips the sentinel by every ancestor
+// scroll port, this component's own root included when a consumer makes it the port.
+// This root <div> is never passed as the observer root: under an ancestor port its own
+// box would be the root rectangle, the sentinel would always intersect, and every
+// reconnect would load again.
 const { sentinelRef } = useInfiniteScroll({
-    scrollContainer,
     threshold: props.threshold,
     hasMore: toRef(() => props.hasMore),
     isLoading: toRef(() => props.isLoading),
@@ -47,7 +49,7 @@ const announcement = computed(() =>
 </script>
 
 <template>
-    <div ref="scrollContainer">
+    <div>
         <slot />
 
         <!-- Sentinel observed by IntersectionObserver -->

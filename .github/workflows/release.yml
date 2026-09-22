@@ -38,6 +38,7 @@ jobs:
                   node-version: 24
                   registry-url: "https://registry.npmjs.org"
             - run: npm ci
+            - run: npx playwright install --with-deps chromium
             - name: verify tag matches package version
               run: |
                   TAG="${GITHUB_REF_NAME#v}"

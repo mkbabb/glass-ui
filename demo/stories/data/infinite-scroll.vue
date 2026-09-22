@@ -73,8 +73,10 @@ function reset() {
             <Button size="sm" @click="reset">Reset</Button>
         </div>
 
-        <!-- The component sets the scroll container internally; we give it a
-             fixed max-height so the sentinel actually intersects on scroll. -->
+        <!-- The observer watches the sentinel against the viewport, clipped by every
+             scroll port above it. Here the component itself is the port (a fixed
+             max-height with overflow), and the threshold reaches into it as a scroll
+             margin, so the next page loads 160px before the list's end. -->
         <InfiniteScroll
             :has-more="hasMore"
             :is-loading="isLoading"

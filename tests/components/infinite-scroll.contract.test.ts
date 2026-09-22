@@ -29,4 +29,21 @@ describe("InfiniteScroll", () => {
         reconnected.trigger(sentinel);
         expect(wrapper.emitted("load-more")).toHaveLength(2);
     });
+
+    // O-23 L-1—the observer root is the viewport. The component's own root <div> is a
+    // correct IntersectionObserver root only when a consumer makes it the scroll port;
+    // under an ancestor port its box contains the sentinel and every reconnect loads
+    // again until `hasMore` is false. Root null clips by every ancestor port, and
+    // `scrollMargin` carries the threshold into nested ports.
+    it("observes against the viewport with the threshold carried into nested scroll ports", async () => {
+        const wrapper = mount(InfiniteScroll, {
+            props: { hasMore: true, isLoading: false, threshold: 160 },
+        });
+        await nextTick();
+        const observer = TestIntersectionObserver.instances.at(-1)!;
+
+        expect(observer.options?.root ?? null).toBeNull();
+        expect(observer.options?.rootMargin).toBe("0px 0px 160px 0px");
+        expect(observer.options?.scrollMargin).toBe("0px 0px 160px 0px");
+    });
 });

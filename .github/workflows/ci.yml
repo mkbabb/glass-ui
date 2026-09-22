@@ -18,6 +18,7 @@ jobs:
               with:
                   node-version: 24
             - run: npm ci
+            - run: npx playwright install --with-deps chromium
             - run: npm run typecheck
             # gate:boot-graph's BUILD arm measures the demo's eager import graph off a
             # freshly built dist-demo/ and fails loud on a stale or absent one. The build
