@@ -28,6 +28,10 @@ const reading = computed(() =>
     }),
 );
 
+// The delta's number and sign carry its polarity (C-1: no tone rides the text), so a
+// numeric rise is signed through the family's one seam—"+3", not an unsigned "3"
+// whose only polarity was a green. A string delta is the author's own shape and
+// passes through untouched.
 const deltaReading = computed(() =>
     props.delta == null || props.delta === ""
         ? undefined
@@ -35,6 +39,7 @@ const deltaReading = computed(() =>
               placeholder: props.placeholder,
               compact: props.compact,
               locale: props.locale,
+              signed: true,
           }),
 );
 

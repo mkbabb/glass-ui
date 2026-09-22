@@ -29,9 +29,12 @@ takes precedence, masks the value with a stable ellipsis, and marks the readout
 `12.4K`) through the family's one data-shaping seam, `coalesceMetric`.
 
 A numeric `delta` carries its own polarity — positive is `up`, negative is `down`,
-zero is `flat` — and paints as status **ink** on the neutral material, never as a
-coloured plate. State it yourself with `polarity` for a string delta, or for a
-metric where down is the good direction.
+zero is `flat` — ~~and paints as status **ink** on the neutral material, never as a
+coloured plate~~ [2026-09-22 · O-32 §2.1: its number and sign carry the polarity (a
+rise reads `+3`) and it paints `--foreground`; no status tone rides text. A consumer
+that wants the tone composes a mark beside it, keyed on `data-polarity`]. State it
+yourself with `polarity` for a string delta, or for a metric where down is the good
+direction.
 
 Everything here is noninteractive; at rest it reports its state and runs no idle
 animation. Wrap it in a real named control when the owner needs an action.

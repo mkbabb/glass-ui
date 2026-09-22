@@ -12,12 +12,17 @@ export interface CoalesceMetricOptions {
     /** `12400` → `12.4K`. `Intl.NumberFormat` compact notation, never a hand ladder. */
     compact?: boolean;
     locale?: string;
+    /** A positive number takes a leading `+`—the delta, whose number and sign carry
+        its polarity (O-32 §2.1). A negative already carries its sign; zero takes none. */
+    signed?: boolean;
 }
 
 /**
  * The family's ONE data-shaping seam. Every readout in the family — the atom's
  * value, its unit-bearing reading, its delta — passes through this and nothing
- * else, which is why "what counts as empty" has exactly one answer.
+ * else, which is why "what counts as empty" has exactly one answer. [2026-09-22 ·
+ * O-32 §2.1: the delta's `+` is part of its reading, so `signed` is shaped here on
+ * both the compact and the plain path—never a prefix at the call site.]
  *
  * Finite numbers (including `0` and `-0`) and nonblank strings are readings.
  * Blank strings, non-finite numbers, `null` and `undefined` take the placeholder.
@@ -51,13 +56,17 @@ export function coalesceMetric(
 
     if (empty) return { display: placeholder, empty: true, loading: false };
 
+    const signed = options.signed === true && typeof value === "number" && value > 0;
     const display =
         options.compact && typeof value === "number"
             ? new Intl.NumberFormat(options.locale, {
                   notation: "compact",
                   maximumFractionDigits: 1,
+                  signDisplay: signed ? "exceptZero" : "auto",
               }).format(value)
-            : String(value);
+            : signed
+              ? `+${String(value)}`
+              : String(value);
 
     return { display, empty: false, loading: false };
 }

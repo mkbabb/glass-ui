@@ -133,7 +133,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
                 <span class="configurator-section-label truncate">{{ label }}</span>
                 <span
                     v-if="sub"
-                    class="truncate text-micro font-mono text-muted-foreground/70"
+                    class="truncate text-micro font-mono text-muted-foreground"
                 >
                     {{ sub }}
                 </span>

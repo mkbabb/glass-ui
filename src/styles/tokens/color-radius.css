@@ -64,11 +64,16 @@
        ... for cards, buttons"). Glass is TRANSMISSIVE — over a flat page there
        is nothing behind to modulate, so the plate is its own near-neutral cream.
        --card DECOUPLES from the page to a warm-cream value carrying a real OKLab
-       chroma (hsl 36 48% 97% → OKLab C 0.0062 at warm H 75°, L kept ~98 so the
-       page-card SURFACE read is byte-stable), so the plate reads WARM over ANY
+       chroma (~~hsl 36 48% 97% → OKLab C 0.0062 at warm H 75°, L kept ~98~~
+       [2026-09-22 · O-32 §2.2: the bytes are hsl(30 85% 96%) → OKLab C 0.0148 at
+       warm H 67.7°, L 0.974 held within 0.013 of the page's L 0.987 (C 0.0029) —
+       split by warmth, not lightness; a plate is set off by its edge rung and cast
+       (card/styles.css), not its fill] so the page-card SURFACE read is
+       byte-stable), so the plate reads WARM over ANY
        backdrop — the plate floor (composited C ≥ 0.0035) the gamut
        allows a near-white translucent surface. The DARK --card is the
-       lifted hsl(24 8% 16%) (NOT re-warmed here — the dark register is its work).
+       lifted ~~hsl(24 8% 16%)~~ [2026-09-22 · O-32 §2.2: hsl(26 22% 17%), dark-arm.css]
+       (NOT re-warmed here — the dark register is its work).
        Bounded: the cream family, never a tinted cast (the triumvirate bar). */
     --card: hsl(30 85% 96%);
     --card-foreground: var(--foreground);
@@ -125,9 +130,11 @@
            along a 1288px run.
 
        `--border` RETIRES as a divider ink (it stays a SURFACE token above). Tan at
-       α1.0 computes dip 47.5 / contrast 1.28:1 — it fails 3:1 for a control perimeter
-       and is 1.43× the plate edge for a grouping line. It sits between two rungs and
-       belongs to neither; two inks is a second colour system.
+       α1.0 computes dip 47.5 / ~~contrast 1.28:1~~ [2026-09-22 · O-32 §2.2: that
+       figure reproduces on no token ground; as a token pair `--border`
+       computes 1.87:1 on --card and 1.94:1 on --background] — it fails 3:1 for a
+       control perimeter and is 1.43× the plate edge for a grouping line. It sits
+       between two rungs and belongs to neither; two inks is a second colour system.
 
        DARK ARM OWED, NOT INVENTED. Every α below is a light-arm Chromium dpr1
        measurement (§7b item 5: the census is "a light dpr1 floor"), and §7b item 1

@@ -221,8 +221,12 @@
        content-tier `:where()` ABOVE, not the -strong rung here]), the selected-glass
        capsule CHIPS + overflow PUCKS (`.glass-capsule`
        — selectable/removable chips, idle `text-muted-foreground`
-       ink). These plates composite BRIGHTER than the calm
-       quiet plate (the quiet content plate lands L≈0.28; a tone-tinted / selected chip plate
+       ink). [2026-09-22 · O-32 A-1: the pill `SegmentedTabs` TRACK
+       (`.glass-capsule-track`) joins for its own reason: it IS the quiet plate, over
+       `--card`, and the recipe's 12% capsule warm left its inactive label at 3.48:1
+       there; the -strong rung lifts it to 5.34:1.] The chip and tone plates composite
+       BRIGHTER than the calm quiet plate (the quiet content plate lands L≈0.28; a
+       tone-tinted / selected chip plate
        lands L≈0.30-0.35), so a subordinate light ink loses contrast on them — they need the
        STRONGER on-glass rung (`--on-glass-muted-strong`, one step more present) to clear the
        floor while STAYING subordinate to the L90 --foreground ink. ONE register (no new token,
@@ -231,7 +235,7 @@
        auto-flips per mode (the on-glass tokens carry their own light/dark arms); in light these
        surfaces already read the on-glass register on their light glass, byte-consistent. Machine-
        locked by `proof:glass` dark-legibility DL5. */
-    :where(.feedback-tone, .glass-capsule) {
+    :where(.feedback-tone, .glass-capsule, .glass-capsule-track) {
         --muted-foreground: var(--on-glass-muted-strong);
         --muted-foreground-strong: var(--on-glass-muted-strong);
     }

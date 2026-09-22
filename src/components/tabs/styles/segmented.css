@@ -393,6 +393,17 @@
         text-align: start;
     }
 
+    /* The paper strip has no capsule, so its inactive label does not carry the
+       capsule's warm: the 12% mix above pulls the ink toward the ground (4.36:1 on
+       --background, 4.20:1 on --card, light) and here there is no -strong rung to
+       absorb it. It reads `--muted-foreground` itself (5.22 / 5.02 light, 7.71 / 5.44
+       dark). The `:not([data-active])` guard is load-bearing: an unguarded rule
+       (0-2-0, later) outranks `.segmented-tab[data-active]` and repaints the active
+       label muted. It sits before `:hover` (both 0-3-0) so hover still wins. */
+    .segmented-tabs--underline .segmented-tab:not([data-active]) {
+        color: var(--muted-foreground);
+    }
+
     .segmented-tabs--underline .segmented-tab:hover {
         color: color-mix(in oklab, var(--foreground) 70%, transparent);
     }

@@ -146,7 +146,7 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
                 </span>
                 <span
                     v-if="name"
-                    class="truncate text-micro font-mono text-muted-foreground/70"
+                    class="truncate text-micro font-mono text-muted-foreground"
                 >
                     {{ name }}
                 </span>
@@ -166,7 +166,7 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
         <div class="flex w-full min-w-0 items-center [&>*]:min-w-0 [&>*]:w-full [&>*]:flex-1">
             <slot :labelled-by="labelId" />
         </div>
-        <p v-if="description" class="text-micro leading-snug text-muted-foreground/80">
+        <p v-if="description" class="text-micro leading-snug text-muted-foreground">
             {{ description }}
         </p>
     </div>

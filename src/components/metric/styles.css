@@ -82,26 +82,23 @@
         line-height: 1;
     }
 
-    /* THE DELTA — status INK on neutral material, never a bespoke green/red and
+    /* THE DELTA — ~~status INK on neutral material, never a bespoke green/red and
        never a coloured plate (#33's feedback-tint seam applied at its ink half).
        The house tokens `--success` / `--destructive` are the same two the rest of
        the library already means by up and down; `flat` is muted, because zero
-       change is not an event. */
+       change is not an event.~~ [2026-09-22 · O-32 §2.1 residue, C-1: status text
+       is `--foreground` ink and a tone rides a mark beside it, never the text. The
+       up-delta painted `--success` as text at 3.30:1 on --card. The delta has no
+       glyph or plate to carry a tone, so its number and sign carry the polarity (a
+       rise reads "+3", Metric.vue) and every polarity paints the one ink.
+       `data-polarity` stays on the node for a consumer composing a mark beside it.] */
     .metric__delta {
         flex: none;
-        color: var(--muted-foreground);
+        color: var(--foreground);
         font-family: var(--font-mono);
         font-size: var(--type-caption);
         font-variant-numeric: tabular-nums lining-nums;
         line-height: 1;
-    }
-
-    .metric__delta[data-polarity="up"] {
-        color: var(--success);
-    }
-
-    .metric__delta[data-polarity="down"] {
-        color: var(--destructive);
     }
 
     .metric[data-size="sm"] .metric__value {

@@ -121,6 +121,35 @@ function oklchToRgb(L: number, C: number, hDeg: number): [number, number, number
     ];
 }
 
+/* [2026-09-22 · o23-o32 lane CT] `color-mix(in oklab, …)` interpolates in OKLab, as
+ * the browser does; every other space keeps the gamma-sRGB mix. A mix toward
+ * `transparent` is the same in both (premultiplied, the transparent side carries no
+ * channel), so the one-ink rows are unmoved; a mix of two opaque inks (the segmented
+ * recipe's 12% warm) is not, and was 0.04-0.05 low read in sRGB against the Chromium
+ * probe. */
+function rgbToOklab([r, g, b]: [number, number, number]): [number, number, number] {
+    const [lr, lg, lb] = [r, g, b].map(srgbToLinear);
+    const l = Math.cbrt(0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb);
+    const m = Math.cbrt(0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb);
+    const s = Math.cbrt(0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb);
+    return [
+        0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s,
+        1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s,
+        0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s,
+    ];
+}
+
+function oklabToRgb([L, a, b2]: [number, number, number]): [number, number, number] {
+    const l = (L + 0.3963377774 * a + 0.2158037573 * b2) ** 3;
+    const m = (L - 0.1055613458 * a - 0.0638541728 * b2) ** 3;
+    const s = (L - 0.0894841775 * a - 1.291485548 * b2) ** 3;
+    return [
+        clamp01(linearToSrgb(4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s)),
+        clamp01(linearToSrgb(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s)),
+        clamp01(linearToSrgb(-0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s)),
+    ];
+}
+
 /** Split on top-level commas only — `color-mix()` arguments nest function calls. */
 function splitTopLevel(text: string): string[] {
     const parts: string[] = [];
@@ -207,9 +236,10 @@ export function resolveColour(expression: string, scope: Scope, depth = 0): Colo
 
     if (/^transparent$/i.test(expr)) return { rgb: [0, 0, 0], a: 0 };
 
-    const mix = expr.match(/^color-mix\(\s*in\s+[\w-]+\s*,\s*([\s\S]+)\)$/);
+    const mix = expr.match(/^color-mix\(\s*in\s+([\w-]+)\s*,\s*([\s\S]+)\)$/);
     if (mix) {
-        const [first, second] = splitTopLevel(mix[1]);
+        const oklab = mix[1] === "oklab";
+        const [first, second] = splitTopLevel(mix[2]);
         const firstPct = percentOf(first, scope);
         const secondPct = percentOf(second, scope);
         const a = resolveColour(stripPercent(first), scope, depth + 1);
@@ -224,9 +254,11 @@ export function resolveColour(expression: string, scope: Scope, depth = 0): Colo
         // CSS `color-mix()` interpolates PREMULTIPLIED, which is why a mix toward
         // `transparent` darkens nothing — it only thins.
         const alpha = a.a * wa + b.a * wb;
+        const [ca, cb] = oklab ? [rgbToOklab(a.rgb), rgbToOklab(b.rgb)] : [a.rgb, b.rgb];
         const channel = (i: 0 | 1 | 2): number =>
-            alpha === 0 ? 0 : (a.rgb[i] * a.a * wa + b.rgb[i] * b.a * wb) / alpha;
-        return { rgb: [channel(0), channel(1), channel(2)], a: alpha };
+            alpha === 0 ? 0 : (ca[i] * a.a * wa + cb[i] * b.a * wb) / alpha;
+        const mixed: [number, number, number] = [channel(0), channel(1), channel(2)];
+        return { rgb: oklab ? oklabToRgb(mixed) : mixed, a: alpha };
     }
 
     throw new Error(`unparsed colour: ${expr}`);
@@ -854,6 +886,25 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
                 surface: "var(--card)",
                 arm: "dark",
             },
+            // [2026-09-22 · o23-o32 lane CT, O-32 §2.2] The one-ink register's
+            // `--border` retirement stated "contrast 1.28:1", a figure that reproduces on
+            // no token ground. The bracket beside it states the token pair's real figures,
+            // and they are claims like any other. The struck 1.28 names no literal it
+            // could be held against, so it is struck and not enrolled.
+            {
+                file: LIGHT_TOKENS,
+                claim: "computes 1.87:1 on --card",
+                ink: "var(--border)",
+                surface: "var(--card)",
+                arm: "light",
+            },
+            {
+                file: LIGHT_TOKENS,
+                claim: "and 1.94:1 on --background",
+                ink: "var(--border)",
+                surface: "var(--background)",
+                arm: "light",
+            },
         ];
 
         for (const { file, claim, ink, surface, arm } of CLAIMS) {
@@ -1048,5 +1099,162 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
             expect(() => resolveColour("chartreuse", {})).toThrow(/unparsed colour/);
             expect(() => resolveColour("var(--nope)", {})).toThrow(/unresolved token/);
         });
+    });
+
+    // §8 · the library's OWN text inks on the surfaces it paints them over — the O-32
+    // addendum A-1/A-3 and the O-23 L-4 residue (2026-09-22 o23-o32 disposition, lane
+    // CT). Every recipe is READ OFF the sheet or template that paints it, never restated,
+    // so a row cannot drift from what ships.
+    //
+    // THE QUIET TRACK IS A FILL, NOT A BACKDROP. The pill `SegmentedTabs` root is
+    // `.glass-capsule-track`, whose ground is `--glass-plate-quiet`: the veil ink at the
+    // quiet rung's alpha over `--card`. Its blur samples the page behind, but its paint
+    // is that translucent fill over the card it sits on — the arithmetic the headnote's
+    // LIVE-DEFER register does not need a paint probe for. The consumer's measured
+    // ground (#e9e0d7) is this composite exactly.
+    describe("§8 the library's own text inks read on the grounds they paint over", () => {
+        const GLASS_TOKENS = [
+            "src/styles/tokens/glass.css",
+            "src/styles/tokens/glass-fx.css",
+            "src/styles/tokens/on-glass-fg.css",
+        ];
+        const glassLight: Scope = {
+            ...lightScope,
+            ...Object.assign({}, ...GLASS_TOKENS.map((f) => declarations(read(f)))),
+        };
+        const glassArms: Array<[string, Scope]> = [
+            ["light", glassLight],
+            ["dark", { ...glassLight, ...declarations(read(DARK_TOKENS)) }],
+        ];
+        const stripComments = (css: string): string => css.replace(/\/\*[\s\S]*?\*\//g, "");
+        const SEGMENTED = "src/components/tabs/styles/segmented.css";
+        const LADDER = "src/styles/glass/ladder.css";
+
+        /** The quiet track's ground: `--glass-plate-quiet` at `--glass-level` 1 (the
+         *  registered initial) — the veil ink at `base − step` alpha over `--card`. */
+        const quietTrackOverCard = (scope: Scope): Colour => {
+            const level = Number(
+                read("src/styles/tokens/property-regs.css").match(
+                    /@property --glass-level\s*\{[^}]*initial-value:\s*([\d.]+)/,
+                )![1],
+            );
+            const quiet =
+                Number.parseFloat(scope["--glass-veil-base"]) -
+                Number.parseFloat(scope["--glass-veil-step"]);
+            const ink = resolveColour(scope["--glass-veil-ink"], scope);
+            return composite({ rgb: ink.rgb, a: quiet * level }, resolveColour("var(--card)", scope));
+        };
+
+        /** The base `.segmented-tab` recipe — the inactive label every variant inherits. */
+        const tabRecipe = (): string => {
+            const block = stripComments(read(SEGMENTED)).match(
+                /\n\s*\.segmented-tab\s*\{([^}]*)\}/,
+            );
+            if (!block) throw new Error("segmented.css declares no .segmented-tab block");
+            return block[1].match(/\bcolor:\s*([^;]+);/)![1].trim();
+        };
+
+        /** The `--muted-foreground` a `.glass-capsule-track` binds, read off the ladder's
+         *  -strong `:where()` list: the -strong rung when the track is listed, else the
+         *  page register it inherits. */
+        const trackMuted = (): string => {
+            const lists = [
+                ...stripComments(read(LADDER)).matchAll(
+                    /:where\(([^)]*)\)\s*\{\s*--muted-foreground:\s*var\(--on-glass-muted-strong\)/g,
+                ),
+            ].map((m) => m[1].split(",").map((s) => s.trim()));
+            expect(lists, "ladder.css declares the -strong :where() binding").toHaveLength(1);
+            return lists[0].includes(".glass-capsule-track")
+                ? "var(--on-glass-muted-strong)"
+                : "var(--muted-foreground)";
+        };
+
+        // A-1 · the inactive PILL label over its own quiet track, on --card.
+        for (const [arm, scope] of glassArms) {
+            it(`A-1 · the inactive pill label clears ${TEXT_FLOOR}:1 over the quiet track on --card [${arm}]`, () => {
+                const ink = tabRecipe().replace(/var\(--muted-foreground\)/, trackMuted());
+                const ground = quietTrackOverCard(scope);
+                const measured = contrast(composite(resolveColour(ink, scope), ground), ground);
+                expect(
+                    measured,
+                    `inactive pill ink ${ink} over the quiet track on --card [${arm}] computed ${round(measured)}:1`,
+                ).toBeGreaterThanOrEqual(TEXT_FLOOR);
+            });
+        }
+
+        // A-3 · the inactive UNDERLINE label — the paper strip, no plate. Its ink is the
+        // guarded underline rule when one is declared, else the base recipe it inherits.
+        const underlineInactive = (): string => {
+            const css = stripComments(read(SEGMENTED));
+            const guarded = css.match(
+                /\.segmented-tabs--underline \.segmented-tab:not\(\[data-active\]\)\s*\{\s*color:\s*([^;]+);/,
+            );
+            return guarded ? guarded[1].trim() : tabRecipe();
+        };
+        for (const [arm, scope] of glassArms) {
+            it(`A-3 · the inactive underline label clears ${TEXT_FLOOR}:1 on --background and --card [${arm}]`, () => {
+                for (const surface of ["--background", "--card"]) {
+                    const measured = ratio(underlineInactive(), `var(${surface})`, scope);
+                    expect(
+                        measured,
+                        `inactive underline ink over ${surface} [${arm}] computed ${round(measured)}:1`,
+                    ).toBeGreaterThanOrEqual(TEXT_FLOOR);
+                }
+            });
+        }
+
+        // A-3's guard, held. An unguarded `.segmented-tabs--underline .segmented-tab`
+        // colour (0-2-0, later in the sheet) outranks `.segmented-tab[data-active]`
+        // (0-2-0, earlier) and repaints the ACTIVE label muted — Chromium-probed. The
+        // guarded rule (0-3-0) sits before the underline `:hover` (0-3-0) so hover still
+        // wins.
+        it("A-3 · the underline inactive rule is guarded and precedes the underline :hover", () => {
+            const css = stripComments(read(SEGMENTED));
+            expect(css).not.toMatch(
+                /\.segmented-tabs--underline \.segmented-tab\s*\{[^}]*\bcolor:/,
+            );
+            const guard = css.indexOf(
+                ".segmented-tabs--underline .segmented-tab:not([data-active])",
+            );
+            const hover = css.indexOf(".segmented-tabs--underline .segmented-tab:hover");
+            expect(guard, "the guarded underline rule is declared").toBeGreaterThan(-1);
+            expect(guard).toBeLessThan(hover);
+        });
+
+        // L-4 residue · alpha-muted `--muted-foreground` is not a text ink. Every text
+        // element (`<span>`/`<p>`) in the two Configurator templates that paints the
+        // muted register is measured with the alpha it carries; the /60 reset BUTTON
+        // holds only an aria-hidden icon and is not a text site.
+        const CONFIGURATOR = [
+            "src/components/configurator/ConfiguratorRow.vue",
+            "src/components/configurator/ConfiguratorLayer.vue",
+        ];
+        const mutedTextSites = (): Array<{ file: string; ink: string }> =>
+            CONFIGURATOR.flatMap((file) => {
+                const template = read(file).split("<style")[0];
+                return [...template.matchAll(/<(?:span|p)\b[^>]*?class="([^"]*)"/g)]
+                    .map((m) => m[1].match(/\btext-muted-foreground(?:\/(\d+))?(?=\s|$)/))
+                    .filter((m): m is RegExpMatchArray => m !== null)
+                    .map((m) => ({
+                        file: file.split("/").pop()!,
+                        ink: m[1]
+                            ? `color-mix(in oklab, var(--muted-foreground) ${m[1]}%, transparent)`
+                            : "var(--muted-foreground)",
+                    }));
+            });
+        it("L-4 · the Configurator carries four muted text sites (sub, name, description, layer sub)", () => {
+            expect(mutedTextSites()).toHaveLength(4);
+        });
+        for (const [arm, scope] of ARMS) {
+            it(`L-4 · every Configurator muted text site clears ${TEXT_FLOOR}:1 on --card [${arm}]`, () => {
+                for (const { file, ink } of mutedTextSites()) {
+                    const measured = ratio(ink, "var(--card)", scope);
+                    expect(
+                        measured,
+                        `${file} ${ink} over --card [${arm}] computed ${round(measured)}:1`,
+                    ).toBeGreaterThanOrEqual(TEXT_FLOOR);
+                }
+            });
+        }
     });
 });
