@@ -213,6 +213,13 @@ BREAKING cures are lawful there and are marked.
   arbitrary values (`text-[length:…]`, `shadow-[color:…]`) into a colour catch-all is a regression, not
   a ruled shape: the cure keeps the type hint's family (the adjudicator dictates the exact split).
 
+- **L-23 both-ended bound RATIFIED (at AC2's adjudication):** the ±1/±2 rungs bounded from both ends
+  as well as the deep middle is inside the direction ruling (the ruled-only shape paints `2 1 2` on a
+  three-control row, mutation-proved); the post-R2 bracket pass puts RECORD's short-row sentence in
+  the LEDGER and the letter. The release.yml bundled-Chromium step and the shell.css:87-106 stagger
+  docblock bracket (onset `step × min(distance from the nearer edge, 3)`, maximum 0.24, last child
+  finishes at 0.64 with the 0.4 window) are applied by the driver and commit with lane AC2.
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
