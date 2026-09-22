@@ -71,6 +71,20 @@ BREAKING cures are lawful there and are marked.
   live check: the lane runs one Playwright/Chromium check on the demo dock that a persistent control
   does not slide under a stationary pointer during the hover morph, and records it; Safari not
   required (identity logic, not paint). Lane DA.
+  [2026-09-22 · DA STOP re-ruled → (a) LAND AS IS. DA's Chromium check (DA/RECORD.md, "the persistent
+  arm") measured the precondition false by a bounded amount: `.dock-persistent` drifts 4 px during the
+  morph (the collapsed→expanded pad, 8→12 px) and the control it brings under a pointer resting within
+  4 px of its inline edge then shows its hover lift from t = 164 ms — 136 ms before the earliest press
+  in the measured window. That is not race (b): no layer swaps, the control's identity is constant, and
+  the press lands on a control that is visibly under the pointer with hover feedback. (b) pinning the
+  persistent geometry through the morph is DECLINED — it freezes a liquid morph for a 4 px case against
+  the liquid-weight and breath-of-life edicts; (c) declining the persistent half leaves fourier's
+  reported defect in place. The adjudicator dictates: restore the banked cure and its SFC witness from
+  DA/RECORD.md verbatim (`useDockClickIntegrity.ts` arm + `tests/components/custom/dock/
+  GlassDock.click-integrity.test.ts`), RED→GREEN re-run recorded; the measured geometry stays in
+  RECORD as the known bound ("a press within 4 px of a persistent control's inline edge during the
+  morph activates the control it visibly hovers"); the LEDGER and the reply letter carry that bound in
+  one sentence. The witness's stationary-pointer live check is recorded as measured, not as a pass.]
 - **L-7** ANSWER (verified, amended): token scope follows DOM ancestry; the 8.0.0 counts 44/39/10 and
   the 9.0.0/HEAD counts 40/45/9 both go in the reply; CommandList does not teleport.
 - **L-6** CURE-NOW (verified, amended): `offsets.css:93-96` docblock rewritten and `:63` drops
