@@ -40,7 +40,7 @@ export function useScrollTracker<T extends TreeNode>(
 
     const activeRootId = computed(() => {
         if (!activeId.value) return null;
-        return toValue(index).get(activeId.value)?.parentId ?? null;
+        return toValue(index).get(activeId.value)?.rootId ?? null;
     });
 
     function findDeepestVisible(list: T[]): string | null {

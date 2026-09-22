@@ -4,6 +4,10 @@
  *
  * - Deadzone: no scroll if active item is already visible
  * - Manual override: stops auto-scrolling when user scrolls the sidebar
+ *   [2026-09-22 · O-32 §3.3] A pointerdown inside `[data-toc-id]` or
+ *   `[data-sidebar-follow-exempt]` does not suspend following; mark any other nav
+ *   control that must keep following live (a back-to-top button) with the attribute.
+ *   No class name is matched.
  * - Damped animation: smooth approach via requestAnimationFrame
  */
 import { nextTick, onMounted, onUnmounted, watch } from "vue";
@@ -153,7 +157,7 @@ export function useSidebarFollow(options: SidebarFollowOptions) {
 
     function handleSidebarPointer(event: PointerEvent) {
         const target = event.target as HTMLElement | null;
-        if (target?.closest("[data-toc-id], .sidebar-top-btn")) return;
+        if (target?.closest("[data-toc-id], [data-sidebar-follow-exempt]")) return;
         suspendForManualInteraction();
     }
 

@@ -16,7 +16,11 @@ export interface SectionHierarchy {
     depth: number;
     /** ID of the root-level ancestor (self.id when depth === 0). */
     rootId: string;
-    /** Direct parent ID (self.id for root nodes). */
+    /**
+     * Direct parent ID (null for root nodes). [2026-09-22 · O-32 §3.4: the index used
+     * to write self.id for roots and the root id at every depth; read `rootId` for the
+     * root-level ancestor.]
+     */
     parentId: string | null;
     /** Index within root-level nodes. */
     rootIndex: number;

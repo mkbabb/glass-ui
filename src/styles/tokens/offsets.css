@@ -60,9 +60,11 @@
        magnitude so a bare overlay is pixel-stable; a consumer retunes
        EVERY overlay's min-width / max-block / tooltip type / select chevron from
        ONE `:root` override (the uniformity payoff). These are token-backings of
-       EXISTING raw literals (`min-w-32` / `max-h-[60vh]` / tooltip `text-sm` /
+       EXISTING raw literals (`min-w-32` / `max-h-[60vh]` /
        chevron `opacity-50`) — NOT a new compositing register (the `surface` axis
-       + the φ `--overlay-pad-*` ladder are THREADED, not re-minted). */
+       + the φ `--overlay-pad-*` ladder are THREADED, not re-minted).
+       [2026-09-22 · O-23 L-6: tooltip `text-sm` dropped from the list—TooltipContent has
+       carried none since 7.0.0; `--tooltip-text` names its reader in its own docblock.] */
     /* `min-w-32` = 32 × 0.25rem = 8rem — the dropdown/select/context-menu min-width. */
     --overlay-min-width: 8rem;
     /* ONE BOUND, ONE MEASURE. Every portalled list in the family reads this: the
@@ -90,10 +92,12 @@
        on the same space series as the 12 above; the two are the only two plate
        pads in the family. */
     --overlay-pad-hint: 8px;
-    /* The tooltip type rung — the golden quiet caption register (√φ ladder), the
-       token-backing of the bare `text-sm` on TooltipContent (the overlay share of
-       class 3). Defaults to `--type-caption` so the compact tooltip chip reads the
-       house caption scale; a consumer retunes the tooltip type from `:root`. */
+    /* The tooltip type rung. Read as font-size by the tooltip arm of
+       glass/overlay-plate.css, which pairs it with `--type-leading-caption`; defaults
+       to `--type-caption` so the chip reads the house caption rung; a consumer
+       retunes it from `:root`. [2026-09-22 · O-23 L-6: rewritten—TooltipContent
+       has carried no `text-sm` since 7.0.0, and the caption rung is not on the √φ
+       ladder.] */
     --tooltip-text: var(--type-caption);
     /* The Select trigger chevron opacity — the token-backing of the bare
        `opacity-50` so a consumer retunes the affordance prominence from `:root`. */

@@ -31,6 +31,14 @@
 // morph, or a settled click on a stable control) passes through untouched — the
 // pass-through is scoped to identity, NEVER to post-swap coordinates.
 //
+// THE PERSISTENT ARM [2026-09-22 · O-32 A-2]. The `#persistent` / `#persistent-end`
+// regions (`.dock-persistent`) are root flex siblings of the morph region: never a
+// crossfade pane, never swapped, never inert. A layer swap cannot put a different
+// control under the pointer there, so a press inside one whose click lands on the
+// same control passes even when it began mid-morph. Arriving-layer controls get no
+// such pass: from DOM events alone a press on a control that just arrived looks the
+// same as race (b), so those still defer until settle.
+//
 // This makes the consumer's interim arms (the `@touchend.prevent` +
 // 320ms capture-phase guard keyed off the exposed `expanded` ref) UNNECESSARY: the
 // guard lives inside GlassDock. The exposed `expanded` ref STAYS exposed (a
@@ -225,7 +233,12 @@ export function useDockClickIntegrity(
         // genuine activation even while the expand it triggered is still in flight.
         // The user aimed at a real, stationary control; the morph is the RESULT of
         // their tap, not a race that preceded it. Pass it through.
-        if (!pressedDuringMorphSnapshot && sameControlIdentity(event.target)) {
+        // THE PERSISTENT ARM: a press inside `.dock-persistent` has no layer swap to
+        // defend against, so the mid-morph deferral does not apply to it; identity
+        // still must match.
+        const inPersistent =
+            pressTarget instanceof Element && pressTarget.closest(".dock-persistent") !== null;
+        if ((!pressedDuringMorphSnapshot || inPersistent) && sameControlIdentity(event.target)) {
             pressTarget = null;
             return;
         }

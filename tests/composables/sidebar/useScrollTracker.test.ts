@@ -218,3 +218,47 @@ describe("useScrollTracker (reactive-roots canon)", () => {
         unmount();
     });
 });
+
+// O-32 §3.4—activeRootId reads rootId, not parentId. At a depth-2 active node the
+// root and the direct parent differ, so reading parentId would name the depth-1 parent.
+describe("useScrollTracker — activeRootId names the root at any depth", () => {
+    afterEach(() => {
+        document.body.innerHTML = "";
+    });
+
+    it("resolves the root, not the direct parent, for a depth-2 active node", async () => {
+        const deep: SidebarSection[] = [
+            {
+                id: "root-x",
+                title: "X",
+                children: [
+                    {
+                        id: "child-x1",
+                        title: "X1",
+                        children: [{ id: "grand-x1a", title: "X1a" }],
+                    },
+                ],
+            },
+        ];
+        for (const id of ["root-x", "child-x1", "grand-x1a"]) {
+            const el = document.createElement("div");
+            el.id = id;
+            document.body.appendChild(el);
+        }
+        const { index } = useTreeIndex(deep);
+        const { result, unmount } = mountComposable(() =>
+            useScrollTracker(
+                () => deep,
+                () => index,
+            ),
+        );
+        await nextTick();
+
+        const observer = TestIntersectionObserver.instances.at(-1)!;
+        observer.trigger(document.getElementById("grand-x1a")!, true);
+
+        expect(result.activeId.value).toBe("grand-x1a");
+        expect(result.activeRootId.value).toBe("root-x");
+        unmount();
+    });
+});

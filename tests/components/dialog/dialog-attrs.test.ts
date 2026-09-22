@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { mount } from "@vue/test-utils";
 import { defineComponent, h, nextTick } from "vue";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
     Dialog,
@@ -76,5 +76,46 @@ describe("Dialog root — the origin-rect seam", () => {
         expect(document.querySelector("[origin]")).toBeNull();
         expect(document.body.innerHTML).not.toContain("DOMRect");
         wrapper.unmount();
+    });
+});
+
+// O-32 §3.2—reka ships no aria-modal (0 at 2.9.10 through 2.10.5); the role=dialog
+// node takes it from the dialog root's own `modal` flag, the way PopoverContent derives
+// it from its modal axis. Absent, not "false", for a non-modal dialog.
+describe("DialogContent — aria-modal follows the root's modal flag", () => {
+    async function mountModal(modal: boolean | undefined) {
+        const Host = defineComponent(() => () =>
+            h(Dialog, { open: true, ...(modal === undefined ? {} : { modal }) }, () =>
+                h(DialogContent, { id: "modal-dialog" }, () => [
+                    h(DialogTitle, null, () => "Title"),
+                    h(DialogDescription, null, () => "Description"),
+                ]),
+            ),
+        );
+        const wrapper = mount(Host, {
+            attachTo: document.body,
+            global: { stubs: { teleport: false } },
+        });
+        await nextTick();
+        await nextTick();
+        mounted.push(wrapper);
+    }
+
+    const mounted: { unmount(): void }[] = [];
+    afterEach(() => {
+        for (const wrapper of mounted.splice(0)) wrapper.unmount();
+    });
+
+    it("stamps aria-modal=\"true\" on a modal dialog (the default)", async () => {
+        await mountModal(undefined);
+        const content = document.getElementById("modal-dialog")!;
+        expect(content.getAttribute("role")).toBe("dialog");
+        expect(content.getAttribute("aria-modal")).toBe("true");
+    });
+
+    it("omits aria-modal on :modal=\"false\"", async () => {
+        await mountModal(false);
+        const content = document.getElementById("modal-dialog")!;
+        expect(content.hasAttribute("aria-modal")).toBe(false);
     });
 });

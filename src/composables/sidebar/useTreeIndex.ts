@@ -40,18 +40,12 @@ export function useTreeIndex<T extends TreeNode>(
                 node,
                 depth,
                 rootId: rid,
-                parentId: depth === 0 ? node.id : parentId,
+                parentId,
                 rootIndex: ri,
             });
             const children = getChildren(node);
             if (children) {
-                walk(
-                    children,
-                    depth + 1,
-                    depth === 0 ? node.id : parentId,
-                    rid,
-                    ri,
-                );
+                walk(children, depth + 1, node.id, rid, ri);
             }
         }
     }

@@ -95,7 +95,10 @@
        them are gone (block = inline per role — the ~20px popover pad and the ~5px
        hint pad they produced were sub-pixel theatre). The corner is
        `--radius-panel`; the `--radius-tooltip → --radius-lg → --radius`
-       0.625rem shadcn chain died with it.
+       0.625rem shadcn chain died with it. [2026-09-22 · O-23 L-6: the type is the
+       caption rung, size AND leading—`--tooltip-text` with `--type-leading-caption`,
+       the pairing `@utility text-caption` applies; the size alone let the chip ride
+       body's 1.5.]
 
        THE BLOCK CEILING is the menu arm's, verbatim, and for the same reason: a hint
        long enough to outgrow the viewport had nothing stopping it, because the base
@@ -113,6 +116,7 @@
         --radius-inset: var(--overlay-pad-hint);
         padding: var(--overlay-pad-hint);
         font-size: var(--tooltip-text);
+        line-height: var(--type-leading-caption);
         max-block-size: min(
             var(--overlay-max-block),
             var(--reka-popper-available-height, var(--overlay-max-block))

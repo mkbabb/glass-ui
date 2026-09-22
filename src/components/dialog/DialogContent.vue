@@ -194,6 +194,7 @@ const contentClass = computed(() =>
         <ModalOverlay veil :opacity="scrimAlpha" :force-mount="scrimForceMount" />
         <RekaDialogContent
             v-bind="{ ...forwarded, ...$attrs, inert: closingInert }"
+            :aria-modal="dialogRoot.modal.value ? 'true' : undefined"
             :force-mount="contentForceMount"
             :class="contentClass"
             :style="contentStyle"

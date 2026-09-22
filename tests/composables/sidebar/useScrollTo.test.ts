@@ -29,7 +29,7 @@ function makeIndex(n: number): Map<string, TreeIndexEntry> {
             node: { id },
             depth: 0,
             rootId: id,
-            parentId: id,
+            parentId: null,
             rootIndex: i,
         });
     }

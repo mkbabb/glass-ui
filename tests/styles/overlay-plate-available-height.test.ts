@@ -77,3 +77,14 @@ describe("overlay plate — the hint role's block ceiling", () => {
         expect(menu).toContain("--reka-popper-available-height");
     });
 });
+
+// O-23 L-6—the hint's leading. The arm borrows the caption SIZE (`--tooltip-text`,
+// defaulting to `--type-caption`), so it carries the caption's own leading pairing
+// too, the one `@utility text-caption` applies; without it the chip inherits body's
+// `--type-leading-body` (1.5) from <body>, where the portal lands.
+describe("overlay plate — the hint role's leading", () => {
+    it("pairs the caption size with the caption leading", () => {
+        expect(tooltip).toMatch(/font-size\s*:\s*var\(--tooltip-text\)\s*;/);
+        expect(tooltip).toMatch(/line-height\s*:\s*var\(--type-leading-caption\)\s*;/);
+    });
+});
