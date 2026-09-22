@@ -174,6 +174,14 @@ BREAKING cures are lawful there and are marked.
   stationary-pointer check is recorded as measured, not passed; the CHANGELOG line from DA RECORD's
   FOR THE DRIVER joins §3.2/§3.3/§3.4/L-6 under `## 10.0.0` (R2).
 
+- **AC2 witness engine (ruled at AC2's implement return):** happy-dom drops `@layer` blocks, so the L-23
+  and L-3 witnesses launch a real Chromium from vitest. RULING: they launch the Playwright-BUNDLED
+  chromium (`chromium.launch()` with no `channel`), never the machine's Google Chrome — a preinstalled
+  browser is a runner-image accident, the bundled build is what ci.yml already installs for the pixel
+  floor (`npx playwright install --with-deps chromium`). The verify job gains that same step after
+  `npm ci` (release.yml too, since it runs the tests). AC2's fence widens by exactly that: the two witness files' launch line and the one
+  ci.yml step; the adjudicator dictates it.
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
