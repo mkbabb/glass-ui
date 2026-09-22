@@ -144,7 +144,7 @@ const peaks: { cls: string; label: string; peg: string; word: string }[] = [
                 <div class="flex flex-col gap-3">
                     <p
                         data-testid="proportional-kicker"
-                        class="cm-serif text-proportional-kicker text-muted-foreground"
+                        class="font-serif-math text-proportional-kicker text-muted-foreground"
                     >
                         The measured interval
                     </p>

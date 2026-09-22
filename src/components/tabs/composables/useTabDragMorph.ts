@@ -10,7 +10,7 @@ import {
     writeVelocityWeight,
 } from "../../../composables/motion/core/writeVelocityWeight";
 import { DEFAULT_INDICATOR_MAX_STRETCH } from "../../../composables/motion/morph/useSelectionIndicator";
-import type { SegmentedTabOption } from "../SegmentedTabs.vue";
+import type { SegmentedTabOption } from "../types";
 
 /**
  * Package-private composable for `SegmentedTabs.vue` — the LIQUID

@@ -78,6 +78,10 @@
        control slot — it resolves to the SAME text register (the library carries
        no display-serif voice). A consumer rebrands the whole text register by
        overriding --font-text once.
+       [2026-09-22 · O-32 §4.1: the math serif is a separate consumer-settable
+       register, `--font-serif-math` (→ `font-serif-math`). It is a literal with
+       no tokens.css twin, so it lives in theme/literals.css's plain @theme, not
+       in this inline bridge.]
        ═══════════════════════════════════════════════ */
     --font-text:    var(--font-stack-text);
     --font-display: var(--font-stack-display);

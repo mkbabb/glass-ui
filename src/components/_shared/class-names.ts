@@ -27,7 +27,16 @@ export type ClassValue =
  *
  * Tokens that don't match a known bucket pass through untouched (custom
  * classes, arbitrary-value utilities like `[&::after]:hidden`, anything
- * not in the conflict table).
+ * not in the conflict table), and between two of them the winner is
+ * stylesheet emission order, not argument order.
+ * [2026-09-22 · O-32 §4.2 / O-23 L-2: the families that fall through at
+ * 10.0.0, named so an override can be priced — the theme font registers
+ * `font-text` / `font-display` / `font-serif-math` (the family bucket is
+ * `font-sans|serif|mono` only), `tracking-*`, `leading-*`, and the semantic
+ * `border-*` / `ring-*` colours (`border-border`, `ring-ring`; those buckets
+ * match palette-number names only). Every `text-*` and `shadow-*` name
+ * `.published-roster` carries IS bucketed, by its true property — a unit in
+ * `tests/components/_shared/classNames.test.ts` reads the roster to hold it.]
  */
 export function cn(...inputs: ClassValue[]): string {
     return dedupClasses(joinClassValues(...inputs));
@@ -52,6 +61,44 @@ export function joinClassValues(...inputs: ClassValue[]): string {
     return classes.join(" ");
 }
 
+const SHADOW_SIZES = [
+    "2xs",
+    "xs",
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "2xl",
+    "none",
+    "inner",
+    "cartoon",
+    "cartoon-hover",
+    "elevated",
+    "modal",
+    "soft",
+    "focus-ring",
+    "glass-floating",
+    "glass-overlay",
+    "glass-quiet",
+    "glass-resting",
+    "glass-wash",
+];
+const TEXT_SHADOW_SIZES = ["2xs", "xs", "sm", "md", "lg", "none", "depth", "engraved"];
+
+/**
+ * A shadow SIZE token: a named rung, or an arbitrary value with no colour marker,
+ * each with an optional `/alpha`. The colour marker is a `color:` hint, a `#`
+ * literal or a colour function (`rgb(`, `oklch(`, `color-mix(` …); those bucket as
+ * a COLOUR (`--tw-shadow-color`). A named colour (`shadow-[red]`,
+ * `shadow-[currentColor]`) is a colour in Tailwind but is not recognised here and
+ * buckets as a size.
+ */
+function shadowSize(prefix: string, sizes: readonly string[], bare = false): RegExp {
+    const colourValue = String.raw`(?:color:|#|(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color|color-mix)\()`;
+    const value = String.raw`(?:${sizes.join("|")}|\[(?!${colourValue}).+\]|\((?!${colourValue}).+\))`;
+    return new RegExp(String.raw`^${prefix}(?:-${value})${bare ? "?" : ""}(?:/.+)?$`);
+}
+
 /**
  * Rules: each entry is `[bucket-id, regex]`. The regex is matched
  * against the *unprefixed core* of a token (after stripping variant
@@ -67,6 +114,10 @@ const RULES: ReadonlyArray<readonly [string, RegExp]> = [
     // Font-size — listed BEFORE text-color so `text-small` doesn't get
     // mis-bucketed as a colour.
     ["font-size", /^text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)$/],
+    // A type-hinted arbitrary value keeps its hint's family (Tailwind's own
+    // inference): these four hints write font-size. A `color:` hint, and any
+    // un-hinted `text-[…]` / `text-(--x)`, land in the colour catch-all below.
+    ["font-size", /^text-[[(](?:length|percentage|absolute-size|relative-size):/],
     // Glass-ui typography utilities (`text-micro`, `text-display*`,
     // `text-title`, `text-hero`, `text-body`, `text-caption`,
     // `text-mono-*`, etc. — see `styles/typography.css`). These are
@@ -81,7 +132,7 @@ const RULES: ReadonlyArray<readonly [string, RegExp]> = [
     // Button variant under the previous catch-all `text-color` bucket).
     [
         "font-size",
-        /^text-(micro|small|caption|body|prose|heading|subheading|title|display|display-hero|display-mega|display-audacious|display-2|display-3|display-4|display-5|hero|math|math-body|mono-caption|mono-small|mono-prose|mono-micro)$/,
+        /^text-(micro|small|caption|body|prose|heading|subheading|title|display|display-hero|display-mega|display-audacious|display-1|display-2|display-3|display-4|display-5|dropdown|dropdown-secondary|proportional-headline|proportional-kicker|hero|math|math-body|mono-caption|mono-small|mono-prose|mono-micro)$/,
     ],
     [
         "font-weight",
@@ -92,6 +143,13 @@ const RULES: ReadonlyArray<readonly [string, RegExp]> = [
     ["text-align", /^text-(left|center|right|justify|start|end)$/],
     ["text-transform", /^(uppercase|lowercase|capitalize|normal-case)$/],
     ["text-decoration", /^(underline|overline|line-through|no-underline)$/],
+    // Text-shadow — a SIZE (writes `text-shadow`) and a COLOUR (writes
+    // `--tw-text-shadow-color`) are two properties, so two buckets. Both run
+    // before the colour catch-all, which would otherwise evict a real text
+    // colour. Bare `text-shadow` is the `--color-shadow` TEXT colour and stays
+    // with `text-color` (the `-` is required).
+    ["text-shadow", shadowSize("text-shadow", TEXT_SHADOW_SIZES)],
+    ["text-shadow-color", /^text-shadow-/],
     ["text-color", /^text-/], // catch-all colour bucket; runs AFTER size/align/typography
 
     // ── Spacing — padding ─────────────────────────────────────────
@@ -131,6 +189,11 @@ const RULES: ReadonlyArray<readonly [string, RegExp]> = [
     ["size", /^size-/],
 
     // ── Colour ────────────────────────────────────────────────────
+    // Hinted `bg-*` arbitrary values write three other properties (Tailwind's
+    // inference); a `color:` hint and every un-hinted value stay background-color.
+    ["bg-image", /^bg-[[(](?:image:|url\()/],
+    ["bg-size", /^bg-[[(](?:length|size|bg-size):/],
+    ["bg-position", /^bg-[[(](?:position|percentage):/],
     ["bg-color", /^bg-/],
     ["border-color", /^border-(?:[a-z]+-\d+|black|white|transparent|current|inherit)/],
     ["border-width", /^border(?:-x|-y|-t|-r|-b|-l|-s|-e)?(?:-\d+|-0|)$/],
@@ -202,7 +265,12 @@ const RULES: ReadonlyArray<readonly [string, RegExp]> = [
     ["cursor", /^cursor-/],
     ["pointer-events", /^pointer-events-/],
     ["select", /^select-/],
-    ["shadow", /^shadow(?:-|$)/],
+    // Shadow — SIZE (`--tw-shadow`) and COLOUR (`--tw-shadow-color`) are two
+    // properties: `shadow-lg shadow-primary` is one tinted shadow, so a colour
+    // never evicts a size. The size alternation is Tailwind's ladder plus every
+    // `--shadow-*` key and `@utility shadow-*` the roster publishes.
+    ["shadow", shadowSize("shadow", SHADOW_SIZES, true)],
+    ["shadow-color", /^shadow-/],
 ] as const;
 
 /**
@@ -212,7 +280,16 @@ const RULES: ReadonlyArray<readonly [string, RegExp]> = [
  * base-layer token.
  */
 function splitToken(token: string): { scope: string; core: string } {
-    const lastColon = token.lastIndexOf(":");
+    // The last colon OUTSIDE brackets/parens: `shadow-(color:--x)` and
+    // `bg-[url(a:b)]` carry a colon inside their value, not a variant.
+    let lastColon = -1;
+    let depth = 0;
+    for (let index = 0; index < token.length; index += 1) {
+        const char = token[index];
+        if (char === "[" || char === "(") depth += 1;
+        else if (char === "]" || char === ")") depth -= 1;
+        else if (char === ":" && depth === 0) lastColon = index;
+    }
     const scope = lastColon === -1 ? "" : token.slice(0, lastColon + 1);
     let core = lastColon === -1 ? token : token.slice(lastColon + 1);
     if (core.startsWith("!")) core = core.slice(1);

@@ -2,11 +2,13 @@
  * registers.
  *
  * The math/mono variants, the
- * font-family utilities (.cm-serif/.fira-code), the ornamental .fourier-f, and
+ * font-family utility (.fira-code), the ornamental .fourier-f, and
  * the @layer components AUX section-label/pane-title/kinetic hooks. @import-ed
  * LAST by the typography.css thin root (after the faces+scale and the semantic
  * classes). The carve moves rules in the SAME cascade position →
- * byte-isomorphic dist (the no-god-module import-order gate is the witness). */
+ * byte-isomorphic dist (the no-god-module import-order gate is the witness).
+ * [2026-09-22 · O-32 §4.1: `.cm-serif` left this register; the math serif is
+ * the theme-minted `font-serif-math`.] */
 
 /* ═══════════════════════════════════════════════
    MATH — Plus Jakarta Sans italic
@@ -69,15 +71,10 @@
 /* ═══════════════════════════════════════════════
    FONT FAMILY UTILITIES
    ═══════════════════════════════════════════════ */
-/* .cm-serif — the Computer-Modern math/serif voice. A DISTINCT face from the
-   brand text register: it resolves to the consumer-supplied serif (system
-   serif by default; a math consumer maps Computer Modern / KaTeX over it). It
-   is NOT the Plus Jakarta text register — the one serif survivor of the
-   register reconciliation. */
-@utility cm-serif {
-    font-family: var(--font-serif-math, serif);
-}
-
+/* The math-serif voice is `font-serif-math`, minted by Tailwind from the
+   `--font-serif-math` register in theme/literals.css — not an @utility here.
+   [2026-09-22 · O-32 §4.1: `.cm-serif` read `var(--font-serif-math, serif)`,
+   a name nothing declared; it is deleted at 10.0.0, no alias.] */
 @utility fira-code {
     font-family: var(--font-mono);
     font-feature-settings: "liga", "calt";

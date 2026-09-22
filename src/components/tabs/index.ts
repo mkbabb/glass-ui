@@ -13,4 +13,4 @@ export type {
     SegmentedTabsOrientation,
     SegmentedTabsProps,
     SegmentedTabsResponsive,
-} from "./SegmentedTabs.vue";
+} from "./types";

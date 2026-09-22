@@ -5,6 +5,8 @@
    bridge, so these mint their global variable. The --animate-* composites
    (literal keyframe name + var() timing — no tokens.css twin to double), the
    opacity rungs, and the text-shadow family.
+   [2026-09-22 · O-32 §4.1: and the math-serif font register
+   `--font-serif-math`.]
 
    Cascade: this partial MUST @import AFTER theme/bridges.css and BEFORE
    theme/dark.css. */
@@ -101,4 +103,17 @@
                          6px 6px 10px color-mix(in srgb, var(--shadow-color) 15%, transparent);
     --text-shadow-engraved: 0 1px 0 color-mix(in srgb, var(--background) 30%, transparent),
                             0 -1px 0 var(--surface-tint-8);
+
+    /* ═══════════════════════════════════════════════
+       Math serif → the font-serif-math utility
+
+       The consumer-settable math-serif register. glass-ui ships no serif face,
+       so the library default is the UA `serif`; a math consumer sets Computer
+       Modern / KaTeX by re-declaring `--font-serif-math` in its own `@theme`
+       (the later declaration replaces this value in the one emitted root) or on
+       an element in any layer. Plain, not inline, so the utility reads the
+       variable. Theme scope, never the unlayered token root: an unlayered
+       declaration beats a consumer's `@layer theme` one regardless of order.
+       ═══════════════════════════════════════════════ */
+    --font-serif-math: serif;
 }

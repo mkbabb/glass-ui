@@ -226,7 +226,7 @@ describe("SegmentedTabs semantics=tabs with pill material", () => {
         const tabs = () => wrapper.findAll<HTMLElement>('[role="tab"]');
         const indicatorState = () =>
             (
-                wrapper.findComponent(SegmentedTabs).vm as unknown as {
+                wrapper.findComponent({ name: "SegmentedTabs" }).vm as unknown as {
                     singleSliderStyle: Record<string, string>;
                 }
             ).singleSliderStyle;

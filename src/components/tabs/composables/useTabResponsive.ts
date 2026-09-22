@@ -1,9 +1,6 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import type { ComputedRef, Ref } from "vue";
-import type {
-    SegmentedTabOption,
-    SegmentedTabsResponsive,
-} from "../SegmentedTabs.vue";
+import type { SegmentedTabOption, SegmentedTabsResponsive } from "../types";
 
 /**
  * Package-private composable for `SegmentedTabs.vue` (the
@@ -18,40 +15,40 @@ import type {
  * lifecycle-hook owner), so the SFC never re-declares the `mql` listener. It owns the SSR/desktop-first
  * default, the mobile-only model fall-back, and the accessible name resolution.
  */
-export interface UseTabResponsiveParams {
+export interface UseTabResponsiveParams<V extends string = string> {
     /** The `:responsive` prop — `false` | `true` | a tuning object. */
-    responsive: () => boolean | SegmentedTabsResponsive;
+    responsive: () => boolean | SegmentedTabsResponsive<V>;
     /** The full option list (the mobile `<Select>` keeps ALL options). */
-    options: ComputedRef<SegmentedTabOption[]>;
+    options: ComputedRef<SegmentedTabOption<V>[]>;
     /** The single-select model (the strip value the collapse falls back off). */
-    model: Ref<string | undefined>;
+    model: Ref<V | undefined>;
 }
 
-export interface UseTabResponsiveReturn {
+export interface UseTabResponsiveReturn<V extends string = string> {
     /** The resolved responsive config, or `null` when `:responsive` is off. */
-    responsiveCfg: ComputedRef<SegmentedTabsResponsive | null>;
+    responsiveCfg: ComputedRef<SegmentedTabsResponsive<V> | null>;
     /** The collapse breakpoint CSS length (default `"640px"`). */
     breakpoint: ComputedRef<string>;
     /** The desktop-strip option subset (falls back to the full list). */
-    desktopOptions: ComputedRef<SegmentedTabOption[]>;
+    desktopOptions: ComputedRef<SegmentedTabOption<V>[]>;
     /** `true` at/above the breakpoint (the matchMedia state; SSR-default `true`). */
     isDesktop: Ref<boolean>;
     /** The value the STRIP renders (falls back off a mobile-only model). */
-    stripValue: ComputedRef<string | undefined>;
+    stripValue: ComputedRef<V | undefined>;
     /** The options the STRIP renders (desktop subset when responsive, else full). */
-    stripOptions: ComputedRef<SegmentedTabOption[]>;
+    stripOptions: ComputedRef<SegmentedTabOption<V>[]>;
     /** The accessible name for the mobile `<SelectTrigger>`. */
     mobileAriaLabel: ComputedRef<string>;
     /** `true` when the mobile `<Select>` should render (responsive + below breakpoint). */
     showMobileSelect: ComputedRef<boolean>;
 }
 
-export function useTabResponsive(
-    params: UseTabResponsiveParams,
-): UseTabResponsiveReturn {
+export function useTabResponsive<V extends string = string>(
+    params: UseTabResponsiveParams<V>,
+): UseTabResponsiveReturn<V> {
     const { responsive, options, model } = params;
 
-    const responsiveCfg = computed<SegmentedTabsResponsive | null>(() => {
+    const responsiveCfg = computed<SegmentedTabsResponsive<V> | null>(() => {
         const r = responsive();
         if (r === false) return null;
         if (r === true) return {};
