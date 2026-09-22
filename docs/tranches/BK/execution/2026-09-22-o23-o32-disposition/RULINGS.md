@@ -257,6 +257,16 @@ BREAKING cures are lawful there and are marked.
   they quote it (AUTHOR2 bracket pass; R2's cure round if DESIGN.md quotes 5×). (e) `git rm` of the
   retired spec is the driver's at CT2's commit.
 
+- **R2 widenings (at R2 Challenger B):** (a) DESIGN.md's font-override guidance and README.md:171
+  ("any token re-declaration wins") contradict B-1 — both are R2's (same documents, same contract):
+  rewrite each to the B-1 rule verbatim (unlayered `:root` or an element below `:root` in any layer;
+  font registers via the consumer's `@theme`). (b) The L-5 stranding class extends to removal rows
+  whose named SUCCESSOR is itself gone: R2's census sweep covers successor pointers too — each such
+  row names the successor's own removal heading, measured (`git log -S`), so a reader never lands on
+  a second stranding. (c) The DEFAULT_SURFACE CHANGELOG Fixed line is R2's (it is in a cure round).
+  (d) `InstanceType<typeof X>` on a template ref is application code: the §4.3 row says so and gives
+  the typed alternative. No deferral of any item.
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
