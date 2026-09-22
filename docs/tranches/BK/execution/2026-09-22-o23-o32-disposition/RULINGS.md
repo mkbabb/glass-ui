@@ -182,6 +182,16 @@ BREAKING cures are lawful there and are marked.
   `npm ci` (release.yml too, since it runs the tests). AC2's fence widens by exactly that: the two witness files' launch line and the one
   ci.yml step; the adjudicator dictates it.
 
+- **AC2 `playwright` declaration (ruled at AC2's Challenger A):** the two witnesses import `playwright`
+  while the root package.json declares neither `playwright` nor `@playwright/test`; the import resolves
+  only through the tests-visual workspace hoist — an undeclared dependency, which is a masking shape.
+  RULING: the root `devDependencies` declares `playwright` at the exact version the tests-visual
+  workspace already resolves (one copy in the lockfile, no second browser download), refreshed with
+  `npm install --package-lock-only` (no build, no dist); AC2's fence widens by the `devDependencies`
+  entry and the lockfile lines it produces — never the `version` field. The `coarse-target.test.ts`
+  re-point is a lawful path correction (the gate's rung derivation follows the L-3 seam; the gate count
+  stays 60 and the seat is unchanged).
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
