@@ -204,7 +204,7 @@ defineExpose({
       identical across every medium with no way to tell from the picture.
     -->
     <div
-        class="aurora-root block h-full w-full overflow-hidden"
+        class="aurora-root h-full w-full overflow-hidden"
         :data-aurora-substrate="resolvedRenderMode"
         :data-aurora-settled="api.isSettled.value ? '' : undefined"
         :style="{ '--aurora-ceiling': ceilingVar }"
@@ -247,110 +247,112 @@ defineExpose({
 </template>
 
 <style scoped>
-.aurora-root {
-    /* The route ceiling, applied ONCE around placeholder + canvas. `--aurora-ceiling`
-       is the template's clamped `opacityCeiling`; `--aurora-ceiling-a11y` is written by
-       the reduced-transparency arm below and by nothing else. */
-    opacity: var(--aurora-ceiling-a11y, var(--aurora-ceiling, 1));
-    display: grid;
-    /* Paint/layout containment caps the `backdrop-filter`-adjacent paint area and
-       isolates the WebGL surface as its own compositing root. `content-visibility`
-       lets the browser skip an offscreen surface; the
-       `contentvisibilityautostatechange` listener parks the
-       RAF on `skipped`.
-
-       `contain-intrinsic-size` reserves the box across a skip. The block axis
-       MUST carry a non-zero fallback: with a `none` block fallback a
-       never-yet-rendered aurora collapses to zero height while skipped, the
-       deferred-arm IntersectionObserver then targets a zero-height box, and the
-       arm-time `resize()` measures a zero subtree — sizing the backing buffer to
-       a 1px sliver that stretches as a black band over the rest of the surface.
-       `auto 600px` keeps the remembered rendered size once there is one (the
-       `auto` keyword) and reserves a substrate-scale block height otherwise, so a
-       full-bleed background hero never collapses before it first paints. A
-       percentage is NOT valid here, so the fallback is a concrete length; the
-       exact value is immaterial past first paint since `auto` then wins. */
-    contain: content;
-    content-visibility: auto;
-    contain-intrinsic-size: auto 600px;
-}
-
-/* Both layers share the single grid cell so they stack — no positioning. */
-.aurora-root > .aurora-placeholder,
-.aurora-root > .aurora-canvas-layer {
-    grid-area: 1 / 1;
-}
-
-/* the placeholder is the palette-derived field raster
-   (a low-res 2D-canvas data: URI) on EVERY substrate. `cover` + smooth
-   `image-rendering` upscale it bilinearly to fill the box — the upscale preserves
-   the per-quadrant mean luminance the certify reads, and reads as a smooth
-   nuclei-glow field rather than a hard grid. On the capable path it is the frame-0
-   ground the live canvas cross-fades over; on the `"css"` substrate it is the
-   permanent surface. (The SSR / no-canvas fall degrades to a layered
-   `radial-gradient` stack — the same field samples — which fills natively.) */
-.aurora-root > .aurora-placeholder {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    image-rendering: auto;
-}
-
-/* The ground's two paint values. Deliberately at single-class specificity, matching the
-   forced-colors arm below so that arm can override them. */
-.aurora-placeholder {
-    background-image: var(--aurora-ground-image, none);
-    background-color: var(--aurora-ground-color, transparent);
-}
-
-.aurora-canvas-layer {
-    opacity: 0;
-    transition: opacity var(--duration-slow) var(--ease-standard);
-    /* Experimental, efficacy unverified. Hypothesis: at armed
-       opacity:1 the cross-fade's stacking context dissolves, so the live canvas
-       shares one root backing with the page's backdrop-filter plates, letting a
-       GPU present race their backdrop snapshot to a black sample; `isolate`
-       severs that shared backing. Proof owed on the real in-app Chrome arm (the
-       Playwright arm is clean-negative only). Revert if the slab persists on the
-       real instrument or the plate blur visibly changes. */
-    isolation: isolate;
-}
-
-.aurora-canvas-layer--armed {
-    opacity: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .aurora-canvas-layer {
-        transition-duration: 1ms;
-    }
-}
-
-/* Aurora's two a11y arms. It was in NEITHER library sweep: `a11y-overrides.css` is CSS
-   over CSS plates and `forced-colors` leaves canvas pixels alone, so a forced-colors
-   reader got system-colour text over an unforced full-chroma animation. The arms live
-   here because the paint they override is this component's own. */
-
-/* Reduced transparency: the surface composites at full presence. Writes a property no
-   inline style occupies, so no `!important` is needed. Honest scope: a default aurora
-   already presents opaque, so this bites only where a consumer set `opacityCeiling < 1`. */
-@media (prefers-reduced-transparency: reduce) {
+@layer components {
     .aurora-root {
-        --aurora-ceiling-a11y: 1;
-    }
-}
+        /* The route ceiling, applied ONCE around placeholder + canvas. `--aurora-ceiling`
+           is the template's clamped `opacityCeiling`; `--aurora-ceiling-a11y` is written by
+           the reduced-transparency arm below and by nothing else. */
+        opacity: var(--aurora-ceiling-a11y, var(--aurora-ceiling, 1));
+        display: grid;
+        /* Paint/layout containment caps the `backdrop-filter`-adjacent paint area and
+           isolates the WebGL surface as its own compositing root. `content-visibility`
+           lets the browser skip an offscreen surface; the
+           `contentvisibilityautostatechange` listener parks the
+           RAF on `skipped`.
 
-/* Forced colors: the live field goes, the ground falls back to the system canvas.
-   Chromium forces `background-color` but keeps `background-image`, so the image half is
-   the load-bearing one. */
-@media (forced-colors: active) {
+           `contain-intrinsic-size` reserves the box across a skip. The block axis
+           MUST carry a non-zero fallback: with a `none` block fallback a
+           never-yet-rendered aurora collapses to zero height while skipped, the
+           deferred-arm IntersectionObserver then targets a zero-height box, and the
+           arm-time `resize()` measures a zero subtree — sizing the backing buffer to
+           a 1px sliver that stretches as a black band over the rest of the surface.
+           `auto 600px` keeps the remembered rendered size once there is one (the
+           `auto` keyword) and reserves a substrate-scale block height otherwise, so a
+           full-bleed background hero never collapses before it first paints. A
+           percentage is NOT valid here, so the fallback is a concrete length; the
+           exact value is immaterial past first paint since `auto` then wins. */
+        contain: content;
+        content-visibility: auto;
+        contain-intrinsic-size: auto 600px;
+    }
+
+    /* Both layers share the single grid cell so they stack — no positioning. */
+    .aurora-root > .aurora-placeholder,
     .aurora-root > .aurora-canvas-layer {
-        display: none;
+        grid-area: 1 / 1;
     }
 
+    /* the placeholder is the palette-derived field raster
+       (a low-res 2D-canvas data: URI) on EVERY substrate. `cover` + smooth
+       `image-rendering` upscale it bilinearly to fill the box — the upscale preserves
+       the per-quadrant mean luminance the certify reads, and reads as a smooth
+       nuclei-glow field rather than a hard grid. On the capable path it is the frame-0
+       ground the live canvas cross-fades over; on the `"css"` substrate it is the
+       permanent surface. (The SSR / no-canvas fall degrades to a layered
+       `radial-gradient` stack — the same field samples — which fills natively.) */
+    .aurora-root > .aurora-placeholder {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        image-rendering: auto;
+    }
+
+    /* The ground's two paint values. Deliberately at single-class specificity, matching the
+       forced-colors arm below so that arm can override them. */
     .aurora-placeholder {
-        background-image: none;
-        background-color: Canvas;
+        background-image: var(--aurora-ground-image, none);
+        background-color: var(--aurora-ground-color, transparent);
+    }
+
+    .aurora-canvas-layer {
+        opacity: 0;
+        transition: opacity var(--duration-slow) var(--ease-standard);
+        /* Experimental, efficacy unverified. Hypothesis: at armed
+           opacity:1 the cross-fade's stacking context dissolves, so the live canvas
+           shares one root backing with the page's backdrop-filter plates, letting a
+           GPU present race their backdrop snapshot to a black sample; `isolate`
+           severs that shared backing. Proof owed on the real in-app Chrome arm (the
+           Playwright arm is clean-negative only). Revert if the slab persists on the
+           real instrument or the plate blur visibly changes. */
+        isolation: isolate;
+    }
+
+    .aurora-canvas-layer--armed {
+        opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .aurora-canvas-layer {
+            transition-duration: 1ms;
+        }
+    }
+
+    /* Aurora's two a11y arms. It was in NEITHER library sweep: `a11y-overrides.css` is CSS
+       over CSS plates and `forced-colors` leaves canvas pixels alone, so a forced-colors
+       reader got system-colour text over an unforced full-chroma animation. The arms live
+       here because the paint they override is this component's own. */
+
+    /* Reduced transparency: the surface composites at full presence. Writes a property no
+       inline style occupies, so no `!important` is needed. Honest scope: a default aurora
+       already presents opaque, so this bites only where a consumer set `opacityCeiling < 1`. */
+    @media (prefers-reduced-transparency: reduce) {
+        .aurora-root {
+            --aurora-ceiling-a11y: 1;
+        }
+    }
+
+    /* Forced colors: the live field goes, the ground falls back to the system canvas.
+       Chromium forces `background-color` but keeps `background-image`, so the image half is
+       the load-bearing one. */
+    @media (forced-colors: active) {
+        .aurora-root > .aurora-canvas-layer {
+            display: none;
+        }
+
+        .aurora-placeholder {
+            background-image: none;
+            background-color: Canvas;
+        }
     }
 }
 </style>

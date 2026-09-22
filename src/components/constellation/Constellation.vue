@@ -111,42 +111,44 @@ defineExpose(expose);
    listener fires on this host), `contain` keeps it a layout/paint root.
    The CONTAINMENT axes (contain / content-visibility) stay on the scoped class
    (the component owns them); only the LAYOUT/SIZING axes are surrendered. */
-.constellation {
-    contain: layout style;
-    content-visibility: auto;
-    contain-intrinsic-size: auto none;
-}
+@layer components {
+    .constellation {
+        contain: layout style;
+        content-visibility: auto;
+        contain-intrinsic-size: auto none;
+    }
 
-.constellation[role="button"]:focus-visible {
-    outline: 2px solid var(--focus-ring-color);
-    outline-offset: 2px;
-}
+    .constellation[role="button"]:focus-visible {
+        outline: 2px solid var(--focus-ring-color);
+        outline-offset: 2px;
+    }
 
-/* The root layout is consumer-overridable (the zero-paint
-   fix). A scoped `.constellation[data-v-…]` selector is specificity (0,2,0) — it
-   would BEAT a consumer's single-class placement (e.g. the storybook
-   `.story-hero-bg { position: absolute; inset: 0 }` at (0,1,0)), pinning the host
-   `position: relative; block-size: 100%` in-flow against an auto-height parent →
-   the host collapses to h=0 and the canvas never sizes past its 300×150 default
-   (RA-flow-fields §4 — the DEAD constellation hero). Routing the root sizing
-   through `:where()` (specificity ZERO) lets ANY consumer class win, so a placed
-   parent (`position: absolute; inset: 0`) sizes the component — matching the
-   FourierField sibling contract (its scoped root is `position: absolute; inset: 0`;
-   both substrates now FILL a placed parent rather than dictate their own flow).
-   When the consumer does NOT place it, the `position: relative` fallback keeps the
-   host the canvas's offset parent (the `.constellation-canvas` is `position:
-   absolute; inset: 0`), and the `100%` extents fill a sized parent. */
-:where(.constellation) {
-    position: relative;
-    inline-size: 100%;
-    block-size: 100%;
-}
+    /* The root layout is consumer-overridable (the zero-paint
+       fix). A scoped `.constellation[data-v-…]` selector is specificity (0,2,0) — it
+       would BEAT a consumer's single-class placement (e.g. the storybook
+       `.story-hero-bg { position: absolute; inset: 0 }` at (0,1,0)), pinning the host
+       `position: relative; block-size: 100%` in-flow against an auto-height parent →
+       the host collapses to h=0 and the canvas never sizes past its 300×150 default
+       (RA-flow-fields §4 — the DEAD constellation hero). Routing the root sizing
+       through `:where()` (specificity ZERO) lets ANY consumer class win, so a placed
+       parent (`position: absolute; inset: 0`) sizes the component — matching the
+       FourierField sibling contract (its scoped root is `position: absolute; inset: 0`;
+       both substrates now FILL a placed parent rather than dictate their own flow).
+       When the consumer does NOT place it, the `position: relative` fallback keeps the
+       host the canvas's offset parent (the `.constellation-canvas` is `position:
+       absolute; inset: 0`), and the `100%` extents fill a sized parent. */
+    :where(.constellation) {
+        position: relative;
+        inline-size: 100%;
+        block-size: 100%;
+    }
 
-.constellation-canvas {
-    position: absolute;
-    inset: 0;
-    inline-size: 100%;
-    block-size: 100%;
-    display: block;
+    .constellation-canvas {
+        position: absolute;
+        inset: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        display: block;
+    }
 }
 </style>

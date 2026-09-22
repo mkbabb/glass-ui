@@ -10,11 +10,13 @@
 /* ═══════════════════════════════════════════════
    BODY CASCADE — the brand text register inherits globally
    ═══════════════════════════════════════════════ */
-body {
-    font-family: var(--font-text);
-    color: var(--foreground);
-    font-size: var(--type-body);
-    line-height: var(--type-leading-body);
+@layer components {
+    body {
+        font-family: var(--font-text);
+        color: var(--foreground);
+        font-size: var(--type-body);
+        line-height: var(--type-leading-body);
+    }
 }
 
 /* A family-neutral headline/kicker pair. Consumers choose the font family,
@@ -223,7 +225,6 @@ body {
     font-family: var(--font-text);
     font-size: var(--type-caption);
     line-height: var(--type-leading-caption);
-    font-style: italic;
     font-weight: 400;
 }
 

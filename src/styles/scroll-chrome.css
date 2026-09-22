@@ -60,37 +60,39 @@
    on the reader's tick; on a native-timeline engine the same custom rides
    `animation-timeline: scroll(self)`, the native-ramp path). Inside the PRM no-preference
    gate: under reduce the ramp drops and the chrome reads its discrete snapped endpoint. */
-@media (prefers-reduced-motion: no-preference) {
-    .scroll-chrome {
-        /* SPATIAL leg — scale toward the compact size + a small rise toward the anchor
-           edge. transform-origin at the top (a header anchors its top; a consumer dock
-           re-points the origin to its natural seat). Compositor-only — never height/pad. */
-        transform: scale(calc(1 - var(--chrome-collapse-t) * var(--chrome-shrink-depth)))
-            translateY(calc(var(--chrome-collapse-t) * var(--chrome-rise-px) * -1));
-        transform-origin: top center;
-        /* EFFECTS leg — the quiet, BOUNDED above the never-invisible floor (the bar reads
-           at every fraction; the `* fade-depth` caps the drop, opacity never reaches 0). */
-        opacity: calc(1 - var(--chrome-collapse-t) * var(--chrome-fade-depth));
-        /* will-change the compositor channels (NEVER a layout property). */
-        will-change: transform, opacity;
+@layer components {
+    @media (prefers-reduced-motion: no-preference) {
+        .scroll-chrome {
+            /* SPATIAL leg — scale toward the compact size + a small rise toward the anchor
+               edge. transform-origin at the top (a header anchors its top; a consumer dock
+               re-points the origin to its natural seat). Compositor-only — never height/pad. */
+            transform: scale(calc(1 - var(--chrome-collapse-t) * var(--chrome-shrink-depth)))
+                translateY(calc(var(--chrome-collapse-t) * var(--chrome-rise-px) * -1));
+            transform-origin: top center;
+            /* EFFECTS leg — the quiet, BOUNDED above the never-invisible floor (the bar reads
+               at every fraction; the `* fade-depth` caps the drop, opacity never reaches 0). */
+            opacity: calc(1 - var(--chrome-collapse-t) * var(--chrome-fade-depth));
+            /* will-change the compositor channels (NEVER a layout property). */
+            will-change: transform, opacity;
+        }
     }
-}
 
-/* The shadow LIFT — OUTSIDE the PRM gate (a paint cue, not a vestibular motion): the
-   separation shadow strengthens as content scrolls under the chrome. `box-shadow` is a
-   paint prop (compositor-safe, in the proof:no-layout-animation paint set, NOT the reflow
-   set). The lift composes the house `--shadow-color: var(--foreground)` so it re-tints
-   light↔dark for free; the strength grows from a whisper at rest → `--chrome-shadow-lift`
-   at fully collapsed. */
-.scroll-chrome {
-    box-shadow: 0 calc(2px + var(--chrome-collapse-t) * 6px)
-        calc(8px + var(--chrome-collapse-t) * 12px)
-        color-mix(
-            in srgb,
-            var(--shadow-color)
-                calc(6% + var(--chrome-collapse-t) * var(--chrome-shadow-lift)),
-            transparent
-        );
+    /* The shadow LIFT — OUTSIDE the PRM gate (a paint cue, not a vestibular motion): the
+       separation shadow strengthens as content scrolls under the chrome. `box-shadow` is a
+       paint prop (compositor-safe, in the proof:no-layout-animation paint set, NOT the reflow
+       set). The lift composes the house `--shadow-color: var(--foreground)` so it re-tints
+       light↔dark for free; the strength grows from a whisper at rest → `--chrome-shadow-lift`
+       at fully collapsed. */
+    .scroll-chrome {
+        box-shadow: 0 calc(2px + var(--chrome-collapse-t) * 6px)
+            calc(8px + var(--chrome-collapse-t) * 12px)
+            color-mix(
+                in srgb,
+                var(--shadow-color)
+                    calc(6% + var(--chrome-collapse-t) * var(--chrome-shadow-lift)),
+                transparent
+            );
+    }
 }
 
 /* The native-ramp path — on a `scroll()`-supporting engine the consumer can drive
@@ -114,9 +116,11 @@
         /* OPT-IN: a consumer adds `.scroll-chrome--native` to ride the compositor ramp
            (it must set `animation-range` for its own collapse-px span; the
            `useScrollChrome` machine's JS write is the cross-engine floor + the snap). */
-        .scroll-chrome--native {
-            animation: gl-chrome-collapse auto linear both;
-            animation-timeline: scroll(self block);
+        @layer components {
+            .scroll-chrome--native {
+                animation: gl-chrome-collapse auto linear both;
+                animation-timeline: scroll(self block);
+            }
         }
     }
 }

@@ -107,7 +107,9 @@ export function useStagger(options: UseStaggerOptions): UseStaggerControls {
         }
         // Reduced-motion: short-circuit the cascade so every slot reveals
         // synchronously. The cue is honoured as "instant", matching the
-        // canonical brackets in `transitions.css:144` / `utilities.css:467`.
+        // canonical brackets in `transitions.css:144` / `utilities.css:467`
+        // [2026-09-22 · register-wave L: the transitions.css bracket is at :146 since the
+        // `@layer components` wrap].
         // Reduced motion honors the cue as an immediate reveal.
         if (reducedMotion.value) {
             flushAll();

@@ -11,7 +11,7 @@ const props = defineProps<{
     <th
         :class="
             cn(
-                'table-head text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0',
+                'table-head text-left data-[align=center]:text-center data-[align=right]:text-right align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0',
                 props.class,
             )
         "

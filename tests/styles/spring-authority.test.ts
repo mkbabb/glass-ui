@@ -233,7 +233,8 @@ describe("G-SPRING-ONE-JOB · the clock-fence arm — a spring owns its own cloc
     //   · a SPLIT declaration pair (`transition-duration:` + `transition-timing-
     //     function:`, or the `animation-*` forms) — the fence reads one declaration
     //     at a time, so a curve and a clock in two declarations are never compared.
-    //     Live at `view-transition.css:41-42`, `disclosure.css:95-96`,
+    //     Live at ~~`view-transition.css:41-42`~~ [2026-09-22 · BK register wave
+    //     10-1 — `view-transition.css:42-43` after the layer wrap], `disclosure.css:95-96`,
     //     `dark-mode-toggle.css:76-77`, all correctly paired.
     //   · a FALLBACK clock — `TIMEISH` requires `var(--x)` to close immediately, so
     //     `var(--duration-normal, 0.3s)` matches nothing and the leg drops out of

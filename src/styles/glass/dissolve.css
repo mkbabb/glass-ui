@@ -228,15 +228,19 @@
 
 /* The coarse-pointer hit expansion (G-COARSE-TARGET). A 24px disc is a legible mark and an
    illegal target; the painted geometry is §3's and does not move, so the TARGET grows
-   instead — a transparent child inset NEGATIVELY to `--touch-target` on both axes. Unlayered
+   instead — a transparent child inset NEGATIVELY to `--touch-target` on both axes. ~~Unlayered
    and outside the `@layer components` block for the same reason the reduced-motion carve
    below is: an a11y floor answers to the medium, not to a cascade layer a consumer can
-   re-order. */
-@media (pointer: coarse) {
-    .glass-corner-affordance::after {
-        content: "";
-        position: absolute;
-        inset: calc((var(--corner-affordance-size) - var(--touch-target)) / 2);
+   re-order.~~ [2026-09-22 · BK register wave 10-1 — inside `@layer components` at 10.0.0
+   like the reduced-motion carve below; a consumer layer ordered after `components` can now
+   re-order the floor.] */
+@layer components {
+    @media (pointer: coarse) {
+        .glass-corner-affordance::after {
+            content: "";
+            position: absolute;
+            inset: calc((var(--corner-affordance-size) - var(--touch-target)) / 2);
+        }
     }
 }
 
@@ -257,6 +261,10 @@
  *     0.01ms !important`, and an unlayered `!important` yields only to a LAYERED
  *     `!important` (CSS Cascade L5 reverses layer order for important declarations;
  *     `index.css:1` declares the order).
+ *   [2026-09-22 · BK register wave 10-1 — both rules above sit in `@layer components`
+ *   at 10.0.0. The carve still holds: `!important` beats the reveal carve's normal
+ *   declaration in any layer, and against the universal fallback, now `!important` in
+ *   the same layer, this carve wins by specificity — both rows (0,2,0) over `*`.]
  * Take one half and the surface vanishes on the wrong keyframe or on a 0.01ms one. This
  * is the documented escape (`utilities/a11y-overrides.css:32-39`), and this carve is the
  * enumerated + hashed AUTH-3 row of the §PRM-AUTHORIZED-SET it points at

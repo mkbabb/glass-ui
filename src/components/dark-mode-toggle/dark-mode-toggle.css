@@ -86,10 +86,12 @@
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .dark-mode-toggle-button,
-    .dark-mode-toggle-button .toggle-sun,
-    .dark-mode-toggle-button .toggle-circle {
-        transition: none;
+@layer components {
+    @media (prefers-reduced-motion: reduce) {
+        .dark-mode-toggle-button,
+        .dark-mode-toggle-button .toggle-sun,
+        .dark-mode-toggle-button .toggle-circle {
+            transition: none;
+        }
     }
 }

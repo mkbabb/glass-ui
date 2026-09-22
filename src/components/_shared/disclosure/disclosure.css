@@ -117,24 +117,26 @@
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .disclosure-content {
-        animation-duration: 0.01ms;
+@layer components {
+    @media (prefers-reduced-motion: reduce) {
+        .disclosure-content {
+            animation-duration: 0.01ms;
+        }
+
+        .disclosure-icon {
+            transition-duration: 0.01ms;
+        }
     }
 
-    .disclosure-icon {
-        transition-duration: 0.01ms;
-    }
-}
+    @media (forced-colors: active) {
+        .disclosure-item {
+            border-color: CanvasText;
+        }
 
-@media (forced-colors: active) {
-    .disclosure-item {
-        border-color: CanvasText;
-    }
-
-    .disclosure-trigger:focus-visible {
-        outline: 2px solid Highlight;
-        outline-offset: 2px;
-        box-shadow: none;
+        .disclosure-trigger:focus-visible {
+            outline: 2px solid Highlight;
+            outline-offset: 2px;
+            box-shadow: none;
+        }
     }
 }

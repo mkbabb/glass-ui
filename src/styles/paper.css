@@ -113,13 +113,30 @@
     opacity: var(--paper-grain-opacity, var(--glass-grain-opacity));
     /* LIGHT: ink sinks into the cream → multiply darkens the valleys. */
     mix-blend-mode: multiply;
-}
 
-:where(.dark) .paper-underpaint,
-.dark .paper-underpaint {
-    /* DARK: fiber catches light off the ink → screen lifts (NOT soft-light, which
-       collapses to identity on the near-black pole — the self-cancelling defect). */
-    mix-blend-mode: screen;
+    :where(.dark) & {
+        /* DARK: fiber catches light off the ink → screen lifts (NOT soft-light, which
+           collapses to identity on the near-black pole — the self-cancelling defect). */
+        mix-blend-mode: screen;
+    }
+
+    /* The grain drops to 0-alpha under reduced transparency — it is a
+       transmissive enhancement, NEVER a legibility dependency. */
+    @media (prefers-reduced-transparency: reduce) {
+        opacity: 0;
+    }
+
+    /* Static noise is fine at rest; only kill animated grain shimmer if any.
+       The underpaint is currently a still texture, but guard future motion. */
+    @media (prefers-reduced-motion: reduce) {
+        animation: none !important;
+    }
+
+    /* A physical sheet already supplies the paper stratum. Avoid spending ink on
+       a synthetic tooth while leaving all content and layout untouched. */
+    @media print {
+        display: none;
+    }
 }
 
 @utility paper-grain-overlay {
@@ -143,12 +160,23 @@
            overlay, which is identity on the L≈0.98 cream pole). */
         mix-blend-mode: multiply;
     }
-}
 
-:where(.dark) .paper-grain-overlay::after,
-.dark .paper-grain-overlay::after {
-    /* DARK tooth: screen — fiber catches light off the ink (NOT soft-light). */
-    mix-blend-mode: screen;
+    :where(.dark) &::after {
+        /* DARK tooth: screen — fiber catches light off the ink (NOT soft-light). */
+        mix-blend-mode: screen;
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+        &::after {
+            opacity: 0;
+        }
+    }
+
+    @media print {
+        &::after {
+            display: none;
+        }
+    }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -195,9 +223,11 @@
     }
 
     /* The ruling is a transmissive enhancement — it rides the same PRT arm as
-       the tooth. It lives HERE, in the layer, and not in the unlayered PRT block
+       the tooth. It lives HERE, in the layer, ~~and not in the unlayered PRT block
        below, which exists for the two `@utility` registers (a components-layer
-       rule cannot override a utilities-layer one). */
+       rule cannot override a utilities-layer one)~~ [2026-09-22 · BK register wave
+       10-1 — the two `@utility` registers carry their own PRT, PRM, print and dark
+       arms inside their bodies; there is no unlayered block below]. */
     @media (prefers-reduced-transparency: reduce) {
         .paper-grid {
             background-image: none;
@@ -218,34 +248,3 @@
    @property regs are all DELETED). `proof:no-paper-field` asserts the recipe
    ABSENT and the grain register PRESENT.
    ═══════════════════════════════════════════════════════════════════════ */
-
-/* ═══════════════════════════════════════════════
-   A11y — respect user motion + transparency preferences
-   ═══════════════════════════════════════════════ */
-@media (prefers-reduced-transparency: reduce) {
-    /* The grain drops to 0-alpha under reduced transparency — it is a
-       transmissive enhancement, NEVER a legibility dependency. (The retired
-       `.paper-field` PRT line that shared this block is gone; the grain
-       register is the survivor.) */
-    .paper-underpaint,
-    .paper-grain-overlay::after {
-        opacity: 0;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .paper-underpaint {
-        /* Static noise is fine at rest; only kill animated grain shimmer if any.
-           The underpaint is currently a still texture, but guard future motion. */
-        animation: none !important;
-    }
-}
-
-@media print {
-    /* A physical sheet already supplies the paper stratum. Avoid spending ink on
-       a synthetic tooth while leaving all content and layout untouched. */
-    .paper-underpaint,
-    .paper-grain-overlay::after {
-        display: none;
-    }
-}

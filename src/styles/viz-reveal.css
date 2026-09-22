@@ -55,9 +55,11 @@
     }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    canvas[data-substrate-reveal] {
-        animation: substrate-reveal-bloom var(--substrate-reveal-duration)
-            var(--ease-out);
+@layer components {
+    @media (prefers-reduced-motion: no-preference) {
+        canvas[data-substrate-reveal] {
+            animation: substrate-reveal-bloom var(--substrate-reveal-duration)
+                var(--ease-out);
+        }
     }
 }

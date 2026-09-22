@@ -265,8 +265,16 @@
        It is disjoint from the `data-reveal` register axis above (two attributes, two
        concerns): `data-reveal` picks the enter-register BUNDLE (overlay/menu/tooltip);
        `data-motion` DEGRADES the whole reveal for a motion-sensitive
-       consumer. OS `prefers-reduced-motion` (the @media carve below, unlayered) still
+       consumer. OS `prefers-reduced-motion` (the @media carve below, ~~unlayered~~) still
        WINS where active — PRM ≥ the prop reduction (the useMotionAxis precedence).
+       [2026-09-22 · BK register wave 10-1 — the carve is in this layer at 10.0.0. It
+       still wins over `reduced` (disjoint properties: that arm swaps knobs only); the
+       `off` rows at (0,2,0) now outrank its (0,1,0) `.glass-reveal` row on the
+       transition clock, and under PRM the universal instant fallback zeroes both clocks,
+       so no motion returns. At rest two static rows now outrank the carve's `none`s: the
+       open row's `scale: 1 1` (identity) and a later `components` rule's static
+       `translate` (the `shadow-cartoon-*` stamp lift, 1-2px) — the same paint the surface
+       has without PRM.]
 
        reduced — the JS gesture physics degrade to their CSS floor: a barely-there 0.97
                  bloom, decongest blur OFF (a calm mild reduction; only the register
@@ -305,26 +313,28 @@
  * ZERO transform/blur frames. The OPACITY fade SURVIVES (opacity is not a vestibular
  * trigger; the surface fades, never flies, never disappears). The fade rides the
  * short `--duration-fast` clock (the `.glass-top-layer` PRM precedent). */
-@media (prefers-reduced-motion: reduce) {
-    .glass-reveal {
-        scale: none;
-        translate: none;
-        /* The decongest snaps to clear (`filter: blur(0)`); the resting
-           `glass-floating` backdrop-filter plate blur is UNTOUCHED. */
-        filter: blur(0);
-        transition-property: opacity, display, overlay;
-        transition-duration: var(--duration-fast);
-        transition-timing-function: var(--ease-out);
-    }
-    .glass-reveal[data-state="closed"] {
-        scale: none;
-        translate: none;
-        filter: blur(0);
-        /* The exit fades ONLY (no transform/blur frames — the vestibular floor). Swap the
-           keyframe for the fade-only reduced variant reka can STILL await (a transition-
-           only fade would be torn down the same way, so the surface would just vanish; the
-           fade-only keyframe keeps the fade PAINTING). The duration/timing/fill inherit
-           from the closed rule's `animation` shorthand — only the name swaps. */
-        animation-name: glass-reveal-out-reduced;
+@layer components {
+    @media (prefers-reduced-motion: reduce) {
+        .glass-reveal {
+            scale: none;
+            translate: none;
+            /* The decongest snaps to clear (`filter: blur(0)`); the resting
+               `glass-floating` backdrop-filter plate blur is UNTOUCHED. */
+            filter: blur(0);
+            transition-property: opacity, display, overlay;
+            transition-duration: var(--duration-fast);
+            transition-timing-function: var(--ease-out);
+        }
+        .glass-reveal[data-state="closed"] {
+            scale: none;
+            translate: none;
+            filter: blur(0);
+            /* The exit fades ONLY (no transform/blur frames — the vestibular floor). Swap the
+               keyframe for the fade-only reduced variant reka can STILL await (a transition-
+               only fade would be torn down the same way, so the surface would just vanish; the
+               fade-only keyframe keeps the fade PAINTING). The duration/timing/fill inherit
+               from the closed rule's `animation` shorthand — only the name swaps. */
+            animation-name: glass-reveal-out-reduced;
+        }
     }
 }

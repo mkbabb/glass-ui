@@ -221,8 +221,12 @@ const containerClass = computed(() =>
         // gallery → stage → controls. The explicit named areas + the desktop
         // two-column placement ride the precompiled configurator.css rules
         // (`[data-slot=configurator]` + `[data-gallery=…]`) — never a dead JIT
-        // bracket. The base `grid-cols-1` keeps the mobile single column.
-        "grid grid-cols-1",
+        // bracket. ~~The base `grid-cols-1` keeps the mobile single column.~~
+        // [2026-09-22 · BK register wave 10-1 — the base single column and the
+        // mobile row template ship from the `[data-slot="configurator"]` base rule
+        // in configurator/styles.css; once that sheet is layered a utility here
+        // would beat its `@container` arm.]
+        "grid",
         // the single-column band sets EXPLICIT rows so the
         // stage row is a DEFINITE track (a `--configurator-stage-min` floor),
         // not a content-auto row that collapses to 0 when its child sizes off a
@@ -239,7 +243,8 @@ const containerClass = computed(() =>
         // internally). When no gallery renders the first `auto` row collapses to 0.
         // Past the fork the configurator.css rules reset the template to the
         // two-column geometry (per `data-gallery`).
-        "grid-rows-[auto_minmax(var(--configurator-stage-min,18rem),auto)_minmax(0,1fr)]",
+        // [2026-09-22 · BK register wave 10-1 — these rows ship from the same
+        // sheet base rule, not from a utility here.]
         "min-h-0",
     ),
 );
@@ -307,9 +312,11 @@ const containerStyle = computed(() => {
 
 // The aside's hairline follows the side — but it is no longer a `lg:border-l` /
 // `lg:border-r` pair here, because those are VIEWPORT utilities and the columns they
-// divide are now decided by the studio's own width. The stacked `border-t` stays on
-// the element; the side rule lives in the same `@container` block that places the
-// columns (configurator.css §4), so the seam and the split can never disagree.
+// divide are now decided by the studio's own width. ~~The stacked `border-t` stays on
+// the element;~~ [2026-09-22 · BK register wave 10-1 — the stacked seam's width is
+// the sheet's `.configurator-aside` rule now, not a `border-t` utility;] the side
+// rule lives in the same `@container` block that places the columns
+// (configurator.css §4), so the seam and the split can never disagree.
 
 // The controls column uses <FadingScroll axis="y">. The
 // `never` mode does NOT scroll (the host owns overflow — a popover/sheet host),
@@ -346,7 +353,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
         <div
             v-if="$slots.presets || (presets && presets.length > 0)"
             data-gallery-dock
-            class="configurator-presets shrink-0 px-3 py-2"
+            class="configurator-presets shrink-0 px-3"
         >
             <slot name="presets" :presets="presets" :active-preset="activePreset">
                 <!--
@@ -361,7 +368,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
                 -->
                 <FadingScroll
                     axis="x"
-                    class="configurator-gallery-track flex gap-2 scrollbar-hidden"
+                    class="configurator-gallery-track flex scrollbar-hidden"
                     role="group"
                     aria-label="Presets"
                 >
@@ -408,7 +415,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
              OUT to a section-level child (grid-placed); the aside now holds the
              controls body + the optional footer. -->
         <aside
-            class="configurator-aside flex min-h-0 min-w-0 flex-col border-t"
+            class="configurator-aside flex min-h-0 min-w-0 flex-col"
         >
             <!-- Controls column (layered config body) —
                  the `auto`/`always` scroll modes render the <FadingScroll axis="y">

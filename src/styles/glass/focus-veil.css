@@ -166,8 +166,10 @@
 /* The veil is a translucency affordance and nothing else — under reduced transparency or
    forced colors it carries no information to lose, so it is removed outright rather than
    substituted. */
-@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
-    .glass-focus-veil {
-        display: none;
+@layer components {
+    @media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+        .glass-focus-veil {
+            display: none;
+        }
     }
 }

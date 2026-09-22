@@ -208,13 +208,19 @@ describe("BK #87 · the inert-mark register", () => {
     // last line: EVERY rule, including the type ladder, sat in the low-priority
     // layer, so an unlayered demo rule outranked the md fallback and one page
     // painted two different md type sizes (14.384 ×4 and 20.352 ×1). RED.
-    it("layers the avatar's shape seam only", () => {
+    // [2026-09-22 · BK register wave 10-1 — the later ruling layers every top-level rule
+    // the reach union ships (RULINGS §1 10-1 over this row): the whole sheet sits in
+    // `@layer components` and a page rule that re-sizes the mark wins. The shape seam
+    // stays its own last block, border-radius only. HEAD: rules outside any layer. RED.]
+    it("layers the whole avatar sheet, the shape seam last", () => {
         const css = read(AVATAR_CSS);
         const layers = css.match(/@layer components\s*\{([\s\S]*?)\n\}/g) ?? [];
 
-        expect(layers).toHaveLength(1);
+        const outside = layers.reduce((rest, block) => rest.replace(block, ""), css);
+        expect(outside).not.toMatch(/\{/);
         const properties =
-            layers[0]!.match(/^\s{8}([a-z-]+):/gm)?.map((m) => m.trim().slice(0, -1)) ?? [];
+            layers.at(-1)!.match(/^\s{8}([a-z-]+):/gm)?.map((m) => m.trim().slice(0, -1)) ??
+            [];
         expect([...new Set(properties)]).toEqual(["border-radius"]);
         // The φ ladder: `sm` IS the control rung, `md`/`lg` are φ and φ² of it.
         expect(css).toContain("--avatar-size: var(--control-h-md)");

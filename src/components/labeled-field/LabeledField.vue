@@ -74,61 +74,63 @@ const required = computed(() => props.requirement === "required");
 </template>
 
 <style scoped>
-.labeled-field,
-.labeled-field-copy,
-.labeled-field-control {
-    display: grid;
-    min-inline-size: 0;
-}
+@layer components {
+    .labeled-field,
+    .labeled-field-copy,
+    .labeled-field-control {
+        display: grid;
+        min-inline-size: 0;
+    }
 
-/* The named space rungs, never `calc(var(--spacing) * n)`: the ranks carry the ONE
-   width-conditional step-down (`tokens/sizing.css` §1.1), so the field tightens on a
-   narrow viewport for free instead of re-deciding its own spacing at its own
-   breakpoint. Copy→control is one rung under the field's own gap, which is what
-   makes the label read as attached to its control rather than floating between two —
-   above the 768px floor only; at or below it `--space-residue` and `--space-atom` both
-   land on 4px and the two gaps converge. */
-.labeled-field {
-    gap: var(--space-atom);
-    inline-size: 100%;
-}
-
-.labeled-field-copy,
-.labeled-field-control {
-    gap: var(--space-residue);
-}
-
-.labeled-field-description,
-.labeled-field-error {
-    margin: 0;
-    font-size: var(--type-small);
-    line-height: var(--type-leading-small);
-}
-
-.labeled-field-description {
-    color: var(--muted-foreground);
-}
-
-.labeled-field-error {
-    color: var(--destructive);
-}
-
-/* Side-by-side, the two columns are still ONE object, so they sit on the within-field
-   rung (`--space-body`, the "edge" gap of `tokens/color-radius.css` §1.2) — one rung
-   above the stacked gap because a horizontal seam needs more air than a vertical one,
-   and a rung below `--space-family`, which is what separates sibling FIELDS. */
-.labeled-field[data-layout="horizontal"] {
-    grid-template-columns: minmax(8rem, 0.382fr) minmax(0, 1fr);
-    gap: var(--space-body);
-    align-items: start;
-}
-
-@media (max-width: 36rem) {
-    .labeled-field[data-layout="horizontal"] {
-        grid-template-columns: minmax(0, 1fr);
-        /* Collapsed to the stacked layout, it returns to the stacked rung — the same
-           token the default arm declares, not a second decision about spacing. */
+    /* The named space rungs, never `calc(var(--spacing) * n)`: the ranks carry the ONE
+       width-conditional step-down (`tokens/sizing.css` §1.1), so the field tightens on a
+       narrow viewport for free instead of re-deciding its own spacing at its own
+       breakpoint. Copy→control is one rung under the field's own gap, which is what
+       makes the label read as attached to its control rather than floating between two —
+       above the 768px floor only; at or below it `--space-residue` and `--space-atom` both
+       land on 4px and the two gaps converge. */
+    .labeled-field {
         gap: var(--space-atom);
+        inline-size: 100%;
+    }
+
+    .labeled-field-copy,
+    .labeled-field-control {
+        gap: var(--space-residue);
+    }
+
+    .labeled-field-description,
+    .labeled-field-error {
+        margin: 0;
+        font-size: var(--type-small);
+        line-height: var(--type-leading-small);
+    }
+
+    .labeled-field-description {
+        color: var(--muted-foreground);
+    }
+
+    .labeled-field-error {
+        color: var(--destructive);
+    }
+
+    /* Side-by-side, the two columns are still ONE object, so they sit on the within-field
+       rung (`--space-body`, the "edge" gap of `tokens/color-radius.css` §1.2) — one rung
+       above the stacked gap because a horizontal seam needs more air than a vertical one,
+       and a rung below `--space-family`, which is what separates sibling FIELDS. */
+    .labeled-field[data-layout="horizontal"] {
+        grid-template-columns: minmax(8rem, 0.382fr) minmax(0, 1fr);
+        gap: var(--space-body);
+        align-items: start;
+    }
+
+    @media (max-width: 36rem) {
+        .labeled-field[data-layout="horizontal"] {
+            grid-template-columns: minmax(0, 1fr);
+            /* Collapsed to the stacked layout, it returns to the stacked rung — the same
+               token the default arm declares, not a second decision about spacing. */
+            gap: var(--space-atom);
+        }
     }
 }
 </style>

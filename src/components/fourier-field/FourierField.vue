@@ -246,25 +246,27 @@ defineExpose({
 <style scoped>
 /* `content-visibility` lets the substrate's offscreen park engage; `contain` keeps the
    host a layout and paint root. */
-.fourier-field {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    /* Ambient by default — a decor field never eats the page's hit-testing. */
-    pointer-events: none;
-    contain: layout style;
-    content-visibility: auto;
-    contain-intrinsic-size: auto none;
-}
+@layer components {
+    .fourier-field {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        /* Ambient by default — a decor field never eats the page's hit-testing. */
+        pointer-events: none;
+        contain: layout style;
+        content-visibility: auto;
+        contain-intrinsic-size: auto none;
+    }
 
-.fourier-field--interactive {
-    pointer-events: auto;
-}
+    .fourier-field--interactive {
+        pointer-events: auto;
+    }
 
-.fourier-field-canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
+    .fourier-field-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
 }
 </style>

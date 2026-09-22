@@ -89,28 +89,30 @@ const annotation = computed(() => {
    nothing else — zero glass, no `backdrop-filter`, no plate — and D29's law is that
    a `glass-` prefix promising a material the component does not have is a lie in
    the stylesheet. Clean break; `.glass-avatar` went the same way in the same cut. */
-.label {
-    color: var(--foreground);
-    font-family: var(--font-text);
-    font-size: var(--control-label);
-    font-weight: 500;
-    line-height: var(--type-leading-small);
-}
+@layer components {
+    .label {
+        color: var(--foreground);
+        font-family: var(--font-text);
+        font-size: var(--control-label);
+        font-weight: 500;
+        line-height: var(--type-leading-small);
+    }
 
-/* DISABLED IS AN INK CHANGE, NOT A BLANKET FADE. `opacity` on the host faded the
-   label AND its annotation AND every glyph in it as one layer, so a disabled
-   "optional" sat at α 0.5 × α 0.5 against the plate — the compounding a blanket
-   opacity always causes on nested muted content. Ink at full geometry alpha keeps
-   the annotation's own contrast independent of the host's. */
-.label[data-disabled] {
-    cursor: not-allowed;
-    color: oklch(from var(--foreground) l 0 h / 0.45);
-}
+    /* DISABLED IS AN INK CHANGE, NOT A BLANKET FADE. `opacity` on the host faded the
+       label AND its annotation AND every glyph in it as one layer, so a disabled
+       "optional" sat at α 0.5 × α 0.5 against the plate — the compounding a blanket
+       opacity always causes on nested muted content. Ink at full geometry alpha keeps
+       the annotation's own contrast independent of the host's. */
+    .label[data-disabled] {
+        cursor: not-allowed;
+        color: oklch(from var(--foreground) l 0 h / 0.45);
+    }
 
-.label-requirement {
-    margin-inline-start: 4px;
-    color: var(--muted-foreground);
-    font-size: var(--type-caption);
-    font-weight: 400;
+    .label-requirement {
+        margin-inline-start: 4px;
+        color: var(--muted-foreground);
+        font-size: var(--type-caption);
+        font-weight: 400;
+    }
 }
 </style>

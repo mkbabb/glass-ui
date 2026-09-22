@@ -1,138 +1,143 @@
-.command {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    overflow: hidden;
-    /* The palette is a PLATE, so it takes the plate rung — the same
-       `--radius-card` 16 the Select listbox and the menu family read. It used to
-       take `--radius-panel` 12, which made the one corner a consumer sees at the
-       same time as a dropdown disagree with it by 4px. */
-    border-radius: var(--radius-card);
-    color: var(--popover-foreground);
-}
+@layer components {
+    .command {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        overflow: hidden;
+        /* The palette is a PLATE, so it takes the plate rung — the same
+           `--radius-card` 16 the Select listbox and the menu family read. It used to
+           take `--radius-panel` 12, which made the one corner a consumer sees at the
+           same time as a dropdown disagree with it by 4px. */
+        border-radius: var(--radius-card);
+        color: var(--popover-foreground);
+    }
 
-.command-dialog__content {
-    overflow: hidden;
-    padding: 0;
-}
+    .command-dialog__content {
+        overflow: hidden;
+        padding: 0;
+    }
 
-.command__input-wrapper {
-    display: flex;
-    align-items: center;
-    /* The seam under the search field is the SAME in-content ink as the divider
-       between groups (`--ink-seam` 0.08) — it is the same kind of line. */
-    border-block-end: 1px solid
-        color-mix(in oklab, var(--foreground) calc(var(--ink-seam) * 100%), transparent);
-    padding-inline: 0.75rem;
-}
+    .command__input-wrapper {
+        display: flex;
+        align-items: center;
+        /* The seam under the search field is the SAME in-content ink as the divider
+           between groups (`--ink-seam` 0.08) — it is the same kind of line. */
+        border-block-end: 1px solid
+            color-mix(in oklab, var(--foreground) calc(var(--ink-seam) * 100%), transparent);
+        padding-inline: 0.75rem;
+    }
 
-.command__input-icon {
-    width: 1rem;
-    height: 1rem;
-    flex: none;
-    margin-inline-end: 0.5rem;
-    opacity: 0.5;
-}
+    .command__input-icon {
+        width: 1rem;
+        height: 1rem;
+        flex: none;
+        margin-inline-end: 0.5rem;
+        opacity: 0.5;
+    }
 
-.command-dialog__content .command__input-icon,
-.command-dialog__content .command__item > svg {
-    width: 1.25rem;
-    height: 1.25rem;
-}
+    .command-dialog__content .command__input-icon,
+    .command-dialog__content .command__item > svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
 
-.command__input {
-    /* No border-radius: this is a transparent, borderless RekaComboboxInput with no
-       painted plate or clip of its own. The Command panel owns the outer corner
-       (`--radius-card`) and clips the composition; the wrapper owns the divider. A
-       radius here is paint-dead and only mints latent coupling. If a future change
-       gives this input a painted plate, it must choose an explicit field/control role
-       then — it must not inherit the media-tile rung by accident. */
-    width: 100%;
-    height: var(--dropdown-input-height);
-    border: 0;
-    outline: 0;
-    background: transparent;
-    padding-block: 0.75rem;
-    color: inherit;
-    font: inherit;
-    font-size: var(--dropdown-text);
-}
+    .command__input {
+        /* No border-radius: this is a transparent, borderless RekaComboboxInput with no
+           painted plate or clip of its own. The Command panel owns the outer corner
+           (`--radius-card`) and clips the composition; the wrapper owns the divider. A
+           radius here is paint-dead and only mints latent coupling. If a future change
+           gives this input a painted plate, it must choose an explicit field/control role
+           then — it must not inherit the media-tile rung by accident. */
+        width: 100%;
+        height: var(--dropdown-input-height);
+        border: 0;
+        outline: 0;
+        background: transparent;
+        padding-block: 0.75rem;
+        color: inherit;
+        font: inherit;
+        font-size: var(--dropdown-text);
+    }
 
-.command-dialog__content .command__input {
-    height: 3rem;
-}
+    .command-dialog__content .command__input {
+        height: 3rem;
+    }
 
-.command__input::placeholder {
-    color: var(--muted-foreground);
-}
+    .command__input::placeholder {
+        color: var(--muted-foreground);
+    }
 
-.command__input:disabled {
-    cursor: not-allowed;
-    opacity: var(--opacity-disabled);
-}
+    .command__input:disabled {
+        cursor: not-allowed;
+        opacity: var(--opacity-disabled);
+    }
 
-.command__list {
-    /* The bound is the family's ONE measure (`--overlay-max-block`, offsets.css),
-       which now resolves `min(24rem, 60dvh)` — a comfortable ceiling that a short
-       viewport tightens. It used to be a bare `60vh`, which on mobile measures
-       against the *largest* viewport and so let the list run under the URL bar. */
-    max-height: var(--overlay-max-block);
-    /* The BLOCK axis is `.fading-scroll--y`'s (utilities/base-misc.css) — the list
-       composes it for the edge feather, and that class already declares
-       `overflow-y: auto`. Re-declaring it here was a same-value duplicate: one
-       authority per axis, so only the inline axis this component actually owns is
-       stated. */
-    overflow-x: hidden;
-    scrollbar-gutter: stable;
-    /* The plate pad — one axis, `--overlay-pad` 12, shared with the menu family.
-       `--panel-padding`'s 6 was a fourth number off the space series. */
-    padding: var(--overlay-pad);
-}
+    .command__list {
+        /* The bound is the family's ONE measure (`--overlay-max-block`, offsets.css),
+           which now resolves `min(24rem, 60dvh)` — a comfortable ceiling that a short
+           viewport tightens. It used to be a bare `60vh`, which on mobile measures
+           against the *largest* viewport and so let the list run under the URL bar. */
+        max-height: var(--overlay-max-block);
+        /* The BLOCK axis is `.fading-scroll--y`'s (utilities/base-misc.css) — the list
+           composes it for the edge feather, and that class already declares
+           `overflow-y: auto`. Re-declaring it here was a same-value duplicate: one
+           authority per axis, so only the inline axis this component actually owns is
+           stated. */
+        overflow-x: hidden;
+        scrollbar-gutter: stable;
+        /* The plate pad — one axis, `--overlay-pad` 12, shared with the menu family.
+           `--panel-padding`'s 6 was a fourth number off the space series. */
+        padding: var(--overlay-pad);
+    }
 
-.command__group {
-    overflow: hidden;
-    padding: 0.25rem;
-    color: var(--foreground);
-}
+    .command__group {
+        overflow: hidden;
+        padding: 0.25rem;
+        color: var(--foreground);
+    }
 
-.command__group-label {
-    padding: 0.25rem 0.5rem;
-    color: var(--muted-foreground);
-    font-size: var(--dropdown-text-secondary);
-    font-weight: 500;
-}
+    .command__group-label {
+        padding: 0.25rem 0.5rem;
+        color: var(--muted-foreground);
+        font-size: var(--dropdown-text-secondary);
+        font-weight: 500;
+    }
 
-/* `.command__item` carries NO geometry: the row register is `rowClass()`
-   (_shared/menu/rowClass.ts), the same one SelectItem reads. What survives here is
-   the dialog scale-up hook and the disabled arm's pointer treatment — and even the
-   disabled arm's opacity/cursor come from the row class, so this rule states only
-   what a class list cannot. */
-.command__item[data-disabled] {
-    pointer-events: none;
-}
+    /* `.command__item` carries NO geometry: the row register is `rowClass()`
+       (_shared/menu/rowClass.ts), the same one SelectItem reads. What survives here is
+       the dialog scale-up hook and the disabled arm's pointer treatment — and even the
+       disabled arm's opacity/cursor come from the row class, so this rule states only
+       what a class list cannot. */
+    .command__item[data-disabled] {
+        pointer-events: none;
+    }
 
-.command__empty {
-    /* 20, on the space series. The former 24 was the one number in this file that
-       belonged to no rung. */
-    padding-block: 1.25rem;
-    text-align: center;
-    font-size: var(--dropdown-text);
-}
+    .command__empty {
+        /* 20, on the space series. The former 24 was the one number in this file that
+           belonged to no rung. */
+        padding-block: 1.25rem;
+        text-align: center;
+        font-size: var(--dropdown-text);
+    }
 
-/* The separator's LINE is `.glass-menu-divider`'s (_shared/menu/menu.css) — the
-   family's one divider ink, composed at the element. This rule owns only the
-   bleed, which is geometry this panel's inset decides and the shared class
-   cannot. Re-declaring `background` here would beat the shared class outright:
-   this file ships UNLAYERED via `<style src>`, so anything it states wins over
-   every `@layer components` rule in the sheet regardless of specificity. */
-.command__separator {
-    margin-inline: -0.25rem;
-}
+    /* The separator's LINE is `.glass-menu-divider`'s (_shared/menu/menu.css) — the
+       family's one divider ink, composed at the element. This rule owns only the
+       bleed, which is geometry this panel's inset decides and the shared class
+       cannot. Re-declaring `background` here would beat the shared class outright:
+       ~~this file ships UNLAYERED via `<style src>`, so anything it states wins over
+       every `@layer components` rule in the sheet regardless of specificity~~
+       [2026-09-22 · BK register wave 10-1 — this file is in `@layer components` at
+       10.0.0 and rides the SFC bundle, which folds in after `menu.css`, so at the
+       tied (0,1,0) it would still win, by source order]. */
+    .command__separator {
+        margin-inline: -0.25rem;
+    }
 
-.command__shortcut {
-    margin-inline-start: auto;
-    color: var(--muted-foreground);
-    font-size: var(--dropdown-text-secondary);
-    letter-spacing: var(--type-tracking-caps);
+    .command__shortcut {
+        margin-inline-start: auto;
+        color: var(--muted-foreground);
+        font-size: var(--dropdown-text-secondary);
+        letter-spacing: var(--type-tracking-caps);
+    }
 }

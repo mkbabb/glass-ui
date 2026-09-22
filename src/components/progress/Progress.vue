@@ -123,89 +123,91 @@ const indicatorClass = computed(() => ({
    writers in 7 repos and died at birth, no alias. The knob is READ here (never
    assigned onto `.progress-rail`, which would mask an inherited ancestor
    override); the fallback is the ONE host-relative groove derivation. */
-.progress-rail {
-    display: block;
-    inline-size: 100%;
-    block-size: var(--progress-rung);
-    background: var(--glass-progress-track-background, var(--track-well-recess));
-}
+@layer components {
+    .progress-rail {
+        display: block;
+        inline-size: 100%;
+        block-size: var(--progress-rung);
+        background: var(--glass-progress-track-background, var(--track-well-recess));
+    }
 
-/* The size axis. Three rungs off the shared generator (4·8·12·20·32·52); md is
-   the family's shared 12. The axis was inert for two majors: three undeclared
-   knobs behind literal fallbacks painted 16/16/16 under a `SIZES` heading. */
-.progress-rail[data-size="sm"] {
-    --progress-rung: 0.5rem;
-}
-.progress-rail[data-size="md"] {
-    --progress-rung: 0.75rem;
-}
-.progress-rail[data-size="lg"] {
-    --progress-rung: 1.25rem;
-}
-
-/* Coarse pointers transpose one rung down — a meter is a reporting substrate,
-   not a target, so the small viewport spends its block on content. */
-@media (max-width: 768px) {
-    .progress-rail[data-size="md"] {
+    /* The size axis. Three rungs off the shared generator (4·8·12·20·32·52); md is
+       the family's shared 12. The axis was inert for two majors: three undeclared
+       knobs behind literal fallbacks painted 16/16/16 under a `SIZES` heading. */
+    .progress-rail[data-size="sm"] {
         --progress-rung: 0.5rem;
     }
-    .progress-rail[data-size="lg"] {
+    .progress-rail[data-size="md"] {
         --progress-rung: 0.75rem;
     }
-}
+    .progress-rail[data-size="lg"] {
+        --progress-rung: 1.25rem;
+    }
 
-.progress-rail[data-orientation="vertical"] {
-    inline-size: var(--progress-rung);
-    /* A bare vertical mount with a container-driven length collapses to zero.
-       The default length is stated; a consumer overrides it with a class. */
-    block-size: 12rem;
-}
+    /* Coarse pointers transpose one rung down — a meter is a reporting substrate,
+       not a target, so the small viewport spends its block on content. */
+    @media (max-width: 768px) {
+        .progress-rail[data-size="md"] {
+            --progress-rung: 0.5rem;
+        }
+        .progress-rail[data-size="lg"] {
+            --progress-rung: 0.75rem;
+        }
+    }
 
-.progress-rail[data-status="error"] {
-    --progress-fill: var(--destructive);
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--destructive) 48%, transparent);
-}
+    .progress-rail[data-orientation="vertical"] {
+        inline-size: var(--progress-rung);
+        /* A bare vertical mount with a container-driven length collapses to zero.
+           The default length is stated; a consumer overrides it with a class. */
+        block-size: 12rem;
+    }
 
-/* The value MARKS (`.glass-value-marks`/`.glass-value-mark`) are COMPOSED from the
-   shared value-marks register — the horizontal/vertical/RTL dot geometry lives ONCE
-   there, and so does the family's one `[data-consumed]` swallow law. */
+    .progress-rail[data-status="error"] {
+        --progress-fill: var(--destructive);
+        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--destructive) 48%, transparent);
+    }
 
-.progress-value-fill {
-    position: relative;
-    z-index: 1;
-    display: block;
-    inline-size: 100%;
-    block-size: 100%;
-    border-radius: inherit;
-    background: var(--progress-fill, var(--primary));
-    transform: translateX(calc(-100% + var(--progress-value-percent)));
-    /* TRAVEL rides the dock spring — the coordinated-travel row every indicator
-       in the library shares. `dock` peaks 0.97712 and is MONOTONE: an
-       overshooting fill would paint >100% of an asserted quantity, which is why
-       `snappy` (peak 1.03153) is refused on a meter. A continuously-fed bar
-       therefore trails its announced value by ≤ the 0.22s settle. */
-    transition: transform var(--spring-dock-duration) var(--spring-dock);
-}
+    /* The value MARKS (`.glass-value-marks`/`.glass-value-mark`) are COMPOSED from the
+       shared value-marks register — the horizontal/vertical/RTL dot geometry lives ONCE
+       there, and so does the family's one `[data-consumed]` swallow law. */
 
-.progress-rail:dir(rtl) .progress-value-fill {
-    transform: translateX(calc(100% - var(--progress-value-percent)));
-}
+    .progress-value-fill {
+        position: relative;
+        z-index: 1;
+        display: block;
+        inline-size: 100%;
+        block-size: 100%;
+        border-radius: inherit;
+        background: var(--progress-fill, var(--primary));
+        transform: translateX(calc(-100% + var(--progress-value-percent)));
+        /* TRAVEL rides the dock spring — the coordinated-travel row every indicator
+           in the library shares. `dock` peaks 0.97712 and is MONOTONE: an
+           overshooting fill would paint >100% of an asserted quantity, which is why
+           `snappy` (peak 1.03153) is refused on a meter. A continuously-fed bar
+           therefore trails its announced value by ≤ the 0.22s settle. */
+        transition: transform var(--spring-dock-duration) var(--spring-dock);
+    }
 
-.progress-rail[data-orientation="vertical"] .progress-value-fill {
-    transform: translateY(calc(100% - var(--progress-value-percent)));
-}
+    .progress-rail:dir(rtl) .progress-value-fill {
+        transform: translateX(calc(100% - var(--progress-value-percent)));
+    }
 
-.progress-liquid-fill {
-    --liquid-fill-tint: var(--progress-fill, var(--primary));
-}
+    .progress-rail[data-orientation="vertical"] .progress-value-fill {
+        transform: translateY(calc(100% - var(--progress-value-percent)));
+    }
 
-/* COMPLETION is variant-independent — one discharge glow when the quantity
-   lands, whatever paint the meter wears. It is a light-channel EFFECT, so it
-   rides `--ease-standard` (canon: `--spring-press` on the SPATIAL leg,
-   `--ease-standard` on EFFECTS) and it is capped at the 0.12 specular ceiling;
-   the retired crescendo reached 95-100% white. */
-.progress-rail[data-state="complete"] .progress-value-fill {
-    animation: progress-discharge var(--duration-normal) var(--ease-standard) 1;
+    .progress-liquid-fill {
+        --liquid-fill-tint: var(--progress-fill, var(--primary));
+    }
+
+    /* COMPLETION is variant-independent — one discharge glow when the quantity
+       lands, whatever paint the meter wears. It is a light-channel EFFECT, so it
+       rides `--ease-standard` (canon: `--spring-press` on the SPATIAL leg,
+       `--ease-standard` on EFFECTS) and it is capped at the 0.12 specular ceiling;
+       the retired crescendo reached 95-100% white. */
+    .progress-rail[data-state="complete"] .progress-value-fill {
+        animation: progress-discharge var(--duration-normal) var(--ease-standard) 1;
+    }
 }
 
 @keyframes progress-discharge {
@@ -220,14 +222,16 @@ const indicatorClass = computed(() => ({
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .progress-value-fill {
-        transition: none;
-    }
+@layer components {
+    @media (prefers-reduced-motion: reduce) {
+        .progress-value-fill {
+            transition: none;
+        }
 
-    /* The end state carries the fact; the glow is pure decoration on top of it. */
-    .progress-rail[data-state="complete"] .progress-value-fill {
-        animation: none;
+        /* The end state carries the fact; the glow is pure decoration on top of it. */
+        .progress-rail[data-state="complete"] .progress-value-fill {
+            animation: none;
+        }
     }
 }
 </style>

@@ -168,6 +168,22 @@ describe("W4 typed-seam — the component-only export is completed (§4.1)", () 
         expect(order.at(-1)).toBe("./glass-ui.css");
         expect(order).toHaveLength(4);
     });
+
+    it("the generated manifest declares the layer order `./styles` declares, before any import", () => {
+        const manifest = resolve(ROOT, "dist/component-styles.css");
+        const generator = resolve(ROOT, "scripts/gen-component-styles.mjs");
+        if (!existsSync(manifest) || statSync(manifest).mtimeMs < statSync(generator).mtimeMs) return;
+        /* 10.0.0 (A-3-CLASS): every shipped rule sits in `@layer components`, so the
+           component-only entry has to rank its layers exactly as the full entry does —
+           without the statement, a consumer importing only `./styles.css` gets
+           `components` ordered wherever it first appears. Mirrored from
+           `styles/index.css`, never restated. */
+        const declared = readFileSync(resolve(ROOT, "src/styles/index.css"), "utf8").match(
+            /^@layer [^;{]+;/m,
+        )?.[0];
+        expect(declared).toBeDefined();
+        expect(readFileSync(manifest, "utf8").trimStart().startsWith(declared as string)).toBe(true);
+    });
 });
 
 describe("W4 typed-seam — runtime DOM census (mounted components)", () => {

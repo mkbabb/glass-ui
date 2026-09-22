@@ -203,6 +203,121 @@ export const rescuedReferences = (
             .map(([css]) => css),
     );
 
+/**
+ * The top-level style rules of one stylesheet that sit in NO `@layer` block, by prelude
+ * (A-3-CLASS). A style rule counts at its outermost position — its nested rules ride with it —
+ * and a conditional group (`@media`/`@supports`/`@container`/`@scope`/`@starting-style`) passes
+ * the enclosing layer state through, because a group does not layer what it holds. The
+ * at-rules the ruling allowlists — name-defining rules and Tailwind's own layered directives
+ * (`@utility`, `@theme`, `@property`, `@font-face`, `@keyframes`) — are the allowlist; a
+ * `@variant` block is reported, as is any unknown block at-rule, so a new wrapper cannot hide
+ * a rule.
+ */
+const GROUP_AT_RULE = /^@(?:media|supports|container|scope|starting-style)\b/;
+const ALLOWED_AT_RULE = /^@(?:utility|theme|property|font-face|keyframes)\b/;
+// The token roots: `:root` and its class-driven dark twin `.dark`, which match the SAME element.
+// They stay unlayered as a pair — layer one and an unlayered `:root` beats a layered `.dark`, and
+// a layered `@media` token override loses to the unlayered base it overrides. Token roots are
+// content-defined: the prelude is the pair and every declaration is a custom property.
+// `color-scheme` and `accent-color` ride the `:root`/`.dark` pair as named exceptions — the scheme
+// switch must share the token pair's rank (layering one half inverts it) and its `.dark` half sits
+// inside `tokens/dark-arm.css`'s token block.
+const SCHEME_ROOT = /^(?::root|\.dark)(?:\s*,\s*(?::root|\.dark))*$/;
+const TOKEN_ROOT_DECLARATION = /^(?:--|(?:color-scheme|accent-color)\s*:)/;
+
+/** The declarations of a rule body, split on `;` at paren depth 0, nested blocks stripped. */
+const declarationsOf = (body: string): string[] => {
+    const out: string[] = [];
+    let current = "";
+    let quote = "";
+    let parens = 0;
+    let depth = 0;
+    for (let i = 0; i < body.length; i++) {
+        const ch = body[i];
+        if (quote) {
+            if (depth === 0) current += ch;
+            if (ch === "\\") {
+                if (depth === 0) current += body[i + 1] ?? "";
+                i++;
+            } else if (ch === quote) quote = "";
+            continue;
+        }
+        if (ch === "{") depth++;
+        else if (ch === "}") depth--;
+        else if (depth > 0) {
+            if (ch === '"' || ch === "'") quote = ch;
+        } else if (ch === ";" && parens === 0) {
+            out.push(current);
+            current = "";
+        } else {
+            if (ch === '"' || ch === "'") quote = ch;
+            else if (ch === "(") parens++;
+            else if (ch === ")") parens--;
+            current += ch;
+        }
+    }
+    out.push(current);
+    return out.map((declaration) => declaration.trim()).filter(Boolean);
+};
+
+const isTokenRoot = (head: string, body: string): boolean =>
+    SCHEME_ROOT.test(head) &&
+    declarationsOf(body).every((declaration) => TOKEN_ROOT_DECLARATION.test(declaration));
+
+export const unlayeredRules = (css: string): string[] => {
+    const text = stripComments(css);
+    const found: string[] = [];
+
+    const visit = (start: number, end: number, layered: boolean): void => {
+        let prelude = start;
+        let quote = "";
+        let parens = 0;
+        for (let i = start; i < end; i++) {
+            const ch = text[i];
+            if (quote) {
+                if (ch === "\\") i++;
+                else if (ch === quote) quote = "";
+                continue;
+            }
+            if (ch === '"' || ch === "'") quote = ch;
+            else if (ch === "(") parens++;
+            else if (ch === ")") parens--;
+            else if (ch === ";" && parens === 0) prelude = i + 1;
+            else if (ch === "{" && parens === 0) {
+                let depth = 1;
+                let j = i + 1;
+                for (; j < end && depth > 0; j++) {
+                    const c = text[j];
+                    if (quote) {
+                        if (c === "\\") j++;
+                        else if (c === quote) quote = "";
+                    } else if (c === '"' || c === "'") quote = c;
+                    else if (c === "{") depth++;
+                    else if (c === "}") depth--;
+                }
+                const head = text.slice(prelude, i).trim().replace(/\s+/g, " ");
+                if (head.startsWith("@layer")) visit(i + 1, j - 1, true);
+                else if (GROUP_AT_RULE.test(head)) visit(i + 1, j - 1, layered);
+                else if (
+                    !layered &&
+                    !ALLOWED_AT_RULE.test(head) &&
+                    !isTokenRoot(head, text.slice(i + 1, j - 1))
+                )
+                    found.push(head);
+                i = j - 1;
+                prelude = j;
+            }
+        }
+    };
+
+    visit(0, text.length, false);
+    return found;
+};
+
+/** Every inline `<style>` block of an SFC (a `<style src=` carries no body — its file is walked). */
+export const sfcStyleBlocks = (sfc: string): string[] =>
+    [...sfc.replace(/<!--[\s\S]*?-->/g, "").matchAll(/<style(?![^>]*\ssrc=)[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]);
+
 const pkg = JSON.parse(readFileSync(join(REPO_ROOT, "package.json"), "utf8"));
 const files = walk(SRC);
 const roots = declaredCssRoots(pkg);
@@ -214,6 +329,27 @@ const orphans = files
     .filter((file) => file.endsWith(".css"))
     .filter((file) => !reachable.has(file))
     .map((file) => relative(REPO_ROOT, file));
+
+// NAMED EXCEPTIONS, each with its grounds. The slider lane is unlayered on purpose
+// (`slider/styles.css:6-10`): it composes the `@layer components` groove and fill registers and
+// its sizing and state legs win over them by layer, with no `!important` anywhere (O-20 LEDGER
+// §A-3-CLASS).
+const LAYER_EXCEPTIONS = new Set(["src/components/slider/styles.css"]);
+
+// The A-3-CLASS domain is this gate's own reach union — every partial either channel carries
+// into a published entry, plus the inline `<style>` blocks of the public SFC reach set (they ship
+// in `dist/glass-ui.css`, which both `./styles` and `./styles.css` import).
+const unlayered = [
+    ...[...reachable].filter((file) => file.endsWith(".css")),
+    ...[...reach].filter((file) => file.endsWith(".vue")),
+]
+    .filter((file) => !LAYER_EXCEPTIONS.has(relative(REPO_ROOT, file)))
+    .sort()
+    .flatMap((file) => {
+        const text = readFileSync(file, "utf8");
+        const sheets = file.endsWith(".vue") ? sfcStyleBlocks(text) : [text];
+        return sheets.flatMap(unlayeredRules).map((rule) => `${relative(REPO_ROOT, file)}\t${rule}`);
+    });
 
 describe("gate:orphan-CSS-partial — every src/ partial is reachable from a published entry via the source graph", () => {
     it("the closure is anchored — roots resolve, the walk and the JS reach set are non-trivial", () => {
@@ -334,5 +470,23 @@ describe("gate:orphan-CSS-partial — every src/ partial is reachable from a pub
         expect(reachable.has(exemplar), "channel 2 rescues it").toBe(true);
         const rescued = rescuedReferences(refMap, reach);
         expect(rescued.size, "channel 2 rescues the <style src= corpus").toBeGreaterThan(10);
+    });
+
+    // A-3-CLASS (BK register wave 10-1, 10.0.0) — an ARM of this seat, not a seat: its domain is
+    // the reach union above. An unlayered producer rule outranks every layered consumer rule
+    // whatever the specificity, so each top-level style rule this union ships sits inside an
+    // `@layer`. The datum is the set, printed by file and selector, never a count.
+    it("every top-level style rule the reach union ships sits inside an @layer", () => {
+        expect(unlayered.join("\n")).toBe("");
+    });
+
+    it("self-test bite — a non-token `:root` rule and a block `@variant` each print a row", () => {
+        // Synthetic sheets, not `src/`: the bite drives the walker, it does not write the corpus.
+        expect(unlayeredRules(":root { color: red; }")).toEqual([":root"]);
+        expect(unlayeredRules("@variant dark { .zz { color: red; } }")).toEqual(["@variant dark"]);
+        // The token pair and the two named scheme properties stay admitted.
+        expect(
+            unlayeredRules(":root, .dark { --x: 1; color-scheme: light dark; accent-color: var(--x); }"),
+        ).toEqual([]);
     });
 });

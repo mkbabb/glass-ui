@@ -91,32 +91,34 @@
             }
         }
 
-        .scroll-cascade > * {
-            /* The view()-timeline drives the build off each child's OWN entry into
-               the viewport (the implicit stagger). The progress-bound timeline maps
-               the entrance across the `animation-range` window; the keyframe's
-               coupled transform+opacity build is the orchestrated cascade (vs the
-               bare 6px reveal). `linear` is the right easing for a SCROLL-bound
-               progress map (the spring shaping lives in the section's own settle
-               where the build is mount-driven; a scroll-bound timeline reads
-               1:1 with scroll position — a spring on a scrubbed timeline reads as
-               a scrubbed spring, which is correct here as the linear progress map).
+        @layer components {
+            .scroll-cascade > * {
+                /* The view()-timeline drives the build off each child's OWN entry into
+                   the viewport (the implicit stagger). The progress-bound timeline maps
+                   the entrance across the `animation-range` window; the keyframe's
+                   coupled transform+opacity build is the orchestrated cascade (vs the
+                   bare 6px reveal). `linear` is the right easing for a SCROLL-bound
+                   progress map (the spring shaping lives in the section's own settle
+                   where the build is mount-driven; a scroll-bound timeline reads
+                   1:1 with scroll position — a spring on a scrubbed timeline reads as
+                   a scrubbed spring, which is correct here as the linear progress map).
 
-               The easing is the spring-shaped
-               `--ease-scroll-spring` (a `springLinearStops` `linear()` twin of
-               `--spring-world`) — each card's scroll-scrubbed entrance reads with
-               spring WEIGHT, ZERO JS (the platform carries it on the compositor);
-               the row is critically damped, because a world that overshoots reads
-               as an earthquake. The
-               Safari-degrade-to-cel-slam arm lives in the entrance-reveal scope. */
-            animation: gl-cascade-build auto var(--ease-scroll-spring, linear) both;
-            animation-timeline: view(block);
-            animation-range: entry 0% entry var(--scroll-cascade-range-end, 45%);
-        }
+                   The easing is the spring-shaped
+                   `--ease-scroll-spring` (a `springLinearStops` `linear()` twin of
+                   `--spring-world`) — each card's scroll-scrubbed entrance reads with
+                   spring WEIGHT, ZERO JS (the platform carries it on the compositor);
+                   the row is critically damped, because a world that overshoots reads
+                   as an earthquake. The
+                   Safari-degrade-to-cel-slam arm lives in the entrance-reveal scope. */
+                animation: gl-cascade-build auto var(--ease-scroll-spring, linear) both;
+                animation-timeline: view(block);
+                animation-range: entry 0% entry var(--scroll-cascade-range-end, 45%);
+            }
 
-        /* The horizontal-scroller variant — a `view(inline)` axis. */
-        .scroll-cascade.scroll-cascade--inline > * {
-            animation-timeline: view(inline);
+            /* The horizontal-scroller variant — a `view(inline)` axis. */
+            .scroll-cascade.scroll-cascade--inline > * {
+                animation-timeline: view(inline);
+            }
         }
 
         /* The OPT-IN column-stagger variant (the Codrops nuance — even columns
@@ -143,16 +145,18 @@
            reads the SAME range end, zero stagger). The offset is a `%` scaled by the
            consumer-set `--col` index, so column N ends its build `N × stagger` later —
            the even/odd column cascade the Codrops nuance intends. */
-        .scroll-cascade.scroll-cascade--columns > * {
-            animation-range: entry 0%
-                entry
-                calc(
-                    var(--scroll-cascade-range-end, 45%) +
-                        var(--scroll-cascade-column-stagger, 6%) * var(--col, 0)
-                );
-        }
-        .scroll-cascade.scroll-cascade--columns > *:nth-child(even) {
-            animation-name: gl-cascade-build-col-even;
+        @layer components {
+            .scroll-cascade.scroll-cascade--columns > * {
+                animation-range: entry 0%
+                    entry
+                    calc(
+                        var(--scroll-cascade-range-end, 45%) +
+                            var(--scroll-cascade-column-stagger, 6%) * var(--col, 0)
+                    );
+            }
+            .scroll-cascade.scroll-cascade--columns > *:nth-child(even) {
+                animation-name: gl-cascade-build-col-even;
+            }
         }
     }
 }
@@ -168,8 +172,10 @@
  * concern). A consumer wanting Lenis-grade momentum brings it in THEIR app (the
  * presets-in-consumers discipline); the library ships the native register.
  * ─────────────────────────────────────────────────────────────────────────── */
-@media (prefers-reduced-motion: no-preference) {
-    .smooth-scroll {
-        scroll-behavior: smooth;
+@layer components {
+    @media (prefers-reduced-motion: no-preference) {
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
     }
 }

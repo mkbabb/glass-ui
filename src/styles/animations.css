@@ -216,101 +216,103 @@
  * identity-base transform work and does not mint a stacking context. Every
  * visual axis reads a `--top-layer-*` token from the top-layer token group.
  */
-@supports (overlay: auto) {
-    /* Base (closed / exit) + the transition list. `allow-discrete` MUST come
-     * after the property longhands, never negated. */
-    .glass-top-layer[popover],
-    dialog.glass-top-layer {
-        opacity: 0;
-        scale: var(--top-layer-enter-scale, 0.96);
-        /* Coupled blur-settle decongestion (the iOS
-           "light-bending modulation" arrival). The surface's OWN pixels decongest
-           `filter: blur(--top-layer-enter-blur)` → `blur(0)` AS it blooms (a `filter`
-           radius interp is compositor-safe; it rides the surface's pixels, so it does
-           NOT fight the resting glass-tier `backdrop-filter` plate blur). This is the
-           twin of the `.glass-reveal` recipe's blur leg in glass/reveal.css. */
-        filter: blur(var(--top-layer-enter-blur, 4px));
-        transition-property: opacity, scale, filter, display, overlay;
-        /* The native `.glass-top-layer`
-           @starting-style enter is FOLDED onto the `enter-overlay` register bundle (the
-           SAME register the reka portaled overlays ride via `.glass-reveal` — one enter
-           grammar, no fourth recipe). It gains the register CLOCK (`--enter-overlay-clock`)
-           + spring (`--enter-overlay-spring`) — the fired-deploy row, read by name;
-           the scale/blur re-point to the register via the `--top-layer-enter-*` tokens
-           (scroll-tokens.css). There is no independent celebration clock:
-           the native dialog/popover enter matches the reka Dialog enter. The blur
-           decongest keeps the no-overshoot `--ease-out` (EFFECTS), while scale uses the
-           register spring (SPATIAL). Hover-triggered Popover inherits the folded recipe. */
-        transition-duration: var(--enter-overlay-clock),
-            var(--enter-overlay-clock), var(--enter-overlay-clock),
-            var(--enter-overlay-clock), var(--enter-overlay-clock);
-        transition-timing-function: var(--enter-overlay-spring), var(--enter-overlay-spring),
-            var(--ease-out), linear, linear;
-        transition-behavior: allow-discrete;
-    }
-
-    /* Open state + `@starting-style` entry (starting-style AFTER the open
-     * selector so the entry interpolates from the closed values). */
-    .glass-top-layer[popover]:popover-open,
-    dialog.glass-top-layer[open] {
-        opacity: 1;
-        scale: 1;
-        filter: blur(0);
-        @starting-style {
+@layer components {
+    @supports (overlay: auto) {
+        /* Base (closed / exit) + the transition list. `allow-discrete` MUST come
+         * after the property longhands, never negated. */
+        .glass-top-layer[popover],
+        dialog.glass-top-layer {
             opacity: 0;
             scale: var(--top-layer-enter-scale, 0.96);
+            /* Coupled blur-settle decongestion (the iOS
+               "light-bending modulation" arrival). The surface's OWN pixels decongest
+               `filter: blur(--top-layer-enter-blur)` → `blur(0)` AS it blooms (a `filter`
+               radius interp is compositor-safe; it rides the surface's pixels, so it does
+               NOT fight the resting glass-tier `backdrop-filter` plate blur). This is the
+               twin of the `.glass-reveal` recipe's blur leg in glass/reveal.css. */
             filter: blur(var(--top-layer-enter-blur, 4px));
+            transition-property: opacity, scale, filter, display, overlay;
+            /* The native `.glass-top-layer`
+               @starting-style enter is FOLDED onto the `enter-overlay` register bundle (the
+               SAME register the reka portaled overlays ride via `.glass-reveal` — one enter
+               grammar, no fourth recipe). It gains the register CLOCK (`--enter-overlay-clock`)
+               + spring (`--enter-overlay-spring`) — the fired-deploy row, read by name;
+               the scale/blur re-point to the register via the `--top-layer-enter-*` tokens
+               (scroll-tokens.css). There is no independent celebration clock:
+               the native dialog/popover enter matches the reka Dialog enter. The blur
+               decongest keeps the no-overshoot `--ease-out` (EFFECTS), while scale uses the
+               register spring (SPATIAL). Hover-triggered Popover inherits the folded recipe. */
+            transition-duration: var(--enter-overlay-clock),
+                var(--enter-overlay-clock), var(--enter-overlay-clock),
+                var(--enter-overlay-clock), var(--enter-overlay-clock);
+            transition-timing-function: var(--enter-overlay-spring), var(--enter-overlay-spring),
+                var(--ease-out), linear, linear;
+            transition-behavior: allow-discrete;
         }
-    }
 
-    /* Glass backdrop — blur + dim, animated discretely. `::backdrop` only
-     * exists for `showModal()` dialogs, NOT `[popover]` (popovers are
-     * non-modal — correct, no scrim). */
-    dialog.glass-top-layer::backdrop {
-        /* The modal-scrim dim is the house alpha derivative
-           `color-mix(in srgb, var(--background) Npct, transparent)`, NOT the invalid
-           `hsl(var(--background) / α)` double-wrap (`--background` is a complete
-           `hsl()` color = `hsl(48 12% 98%)`, so `hsl(hsl(…)/α)` evaluates to nothing
-           and the dim silently did not paint). The `in srgb` axis only — the
-           `--surface-tint-*` house family + the `in oklab` glass tint axis are
-           untouched. */
-        background-color: color-mix(in srgb, var(--background) 0%, transparent);
-        backdrop-filter: blur(var(--top-layer-backdrop-blur, 7px));
-        transition: display var(--duration-normal) allow-discrete,
-                    overlay var(--duration-normal) allow-discrete,
-                    background-color var(--duration-normal) var(--ease-standard);
-    }
-    dialog.glass-top-layer[open]::backdrop {
-        background-color: color-mix(
-            in srgb,
-            var(--background) calc(var(--top-layer-backdrop-dim, 0.5) * 100%),
-            transparent
-        );
-        /* The scrim couples to launch: the enter dim
-           rides its OWN launch-coupled clock (`--top-layer-backdrop-in`, a fast
-           no-overshoot `--ease-out`) so the scrim reaches ≥80% of its target dim
-           within ~100ms of launch, coupled to the panel window rather than trailing
-           the panel on the slower `--duration-normal`/`--ease-standard` clock. This
-           enter transition is read from the [open] after-change state;
-           the base `::backdrop` transition stays the EXIT clock — released cleanly
-           WITH the panel, no overshoot past gone. The `@starting-style` from-state
-           makes the dim interpolate from transparent (the discrete allow-discrete
-           display/overlay legs stay). */
-        transition: display var(--top-layer-backdrop-in, 0.15s) allow-discrete,
-                    overlay var(--top-layer-backdrop-in, 0.15s) allow-discrete,
-                    background-color var(--top-layer-backdrop-in, 0.15s) var(--ease-out);
-        @starting-style {
+        /* Open state + `@starting-style` entry (starting-style AFTER the open
+         * selector so the entry interpolates from the closed values). */
+        .glass-top-layer[popover]:popover-open,
+        dialog.glass-top-layer[open] {
+            opacity: 1;
+            scale: 1;
+            filter: blur(0);
+            @starting-style {
+                opacity: 0;
+                scale: var(--top-layer-enter-scale, 0.96);
+                filter: blur(var(--top-layer-enter-blur, 4px));
+            }
+        }
+
+        /* Glass backdrop — blur + dim, animated discretely. `::backdrop` only
+         * exists for `showModal()` dialogs, NOT `[popover]` (popovers are
+         * non-modal — correct, no scrim). */
+        dialog.glass-top-layer::backdrop {
+            /* The modal-scrim dim is the house alpha derivative
+               `color-mix(in srgb, var(--background) Npct, transparent)`, NOT the invalid
+               `hsl(var(--background) / α)` double-wrap (`--background` is a complete
+               `hsl()` color = `hsl(48 12% 98%)`, so `hsl(hsl(…)/α)` evaluates to nothing
+               and the dim silently did not paint). The `in srgb` axis only — the
+               `--surface-tint-*` house family + the `in oklab` glass tint axis are
+               untouched. */
             background-color: color-mix(in srgb, var(--background) 0%, transparent);
+            backdrop-filter: blur(var(--top-layer-backdrop-blur, 7px));
+            transition: display var(--duration-normal) allow-discrete,
+                        overlay var(--duration-normal) allow-discrete,
+                        background-color var(--duration-normal) var(--ease-standard);
+        }
+        dialog.glass-top-layer[open]::backdrop {
+            background-color: color-mix(
+                in srgb,
+                var(--background) calc(var(--top-layer-backdrop-dim, 0.5) * 100%),
+                transparent
+            );
+            /* The scrim couples to launch: the enter dim
+               rides its OWN launch-coupled clock (`--top-layer-backdrop-in`, a fast
+               no-overshoot `--ease-out`) so the scrim reaches ≥80% of its target dim
+               within ~100ms of launch, coupled to the panel window rather than trailing
+               the panel on the slower `--duration-normal`/`--ease-standard` clock. This
+               enter transition is read from the [open] after-change state;
+               the base `::backdrop` transition stays the EXIT clock — released cleanly
+               WITH the panel, no overshoot past gone. The `@starting-style` from-state
+               makes the dim interpolate from transparent (the discrete allow-discrete
+               display/overlay legs stay). */
+            transition: display var(--top-layer-backdrop-in, 0.15s) allow-discrete,
+                        overlay var(--top-layer-backdrop-in, 0.15s) allow-discrete,
+                        background-color var(--top-layer-backdrop-in, 0.15s) var(--ease-out);
+            @starting-style {
+                background-color: color-mix(in srgb, var(--background) 0%, transparent);
+            }
         }
     }
-}
 
-/* Reduced-motion carve — flatten the scale to a fade, shorten the duration. */
-@media (prefers-reduced-motion: reduce) {
-    .glass-top-layer[popover],
-    dialog.glass-top-layer {
-        scale: none;
-        transition-duration: var(--duration-fast);
+    /* Reduced-motion carve — flatten the scale to a fade, shorten the duration. */
+    @media (prefers-reduced-motion: reduce) {
+        .glass-top-layer[popover],
+        dialog.glass-top-layer {
+            scale: none;
+            transition-duration: var(--duration-fast);
+        }
     }
 }
 

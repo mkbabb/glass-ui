@@ -110,63 +110,65 @@
     }
 }
 
-@media print {
-    @page {
-        size: 1280px 720px;
-        margin: 0;
-    }
-    html,
-    body {
-        overflow: visible !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
-    }
-    /* the SPA wrapper's full height spills one blank sheet per document */
-    html,
-    body,
-    #app {
-        block-size: auto !important;
-        min-block-size: 0 !important;
-    }
-    .deck-stage {
-        position: static !important;
-        display: block !important;
-        aspect-ratio: auto !important;
-        inline-size: auto !important;
-        block-size: auto !important;
-        overflow: visible !important;
-    }
-    .deck-strip {
-        display: block !important;
-        overflow: visible !important;
-        perspective: none !important;
-    }
-    .deck-ground {
-        display: none !important;
-    }
-    .deck-slide {
-        position: relative !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: none !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        margin: 0 !important;
-        /* 719 against a 720 page: exactly its own height underruns onto a second sheet */
-        block-size: 719px !important;
-        overflow: hidden !important;
-        background: var(--background) !important;
-    }
-    .deck-slide::before,
-    .deck-slide::after {
-        opacity: 0 !important;
-    }
-    .deck-slide:not(:last-child) {
-        break-after: page;
-    }
-    .deck-stage .sr-only {
-        display: none !important;
+@layer components {
+    @media print {
+        @page {
+            size: 1280px 720px;
+            margin: 0;
+        }
+        html,
+        body {
+            overflow: visible !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
+        }
+        /* the SPA wrapper's full height spills one blank sheet per document */
+        html,
+        body,
+        #app {
+            block-size: auto !important;
+            min-block-size: 0 !important;
+        }
+        .deck-stage {
+            position: static !important;
+            display: block !important;
+            aspect-ratio: auto !important;
+            inline-size: auto !important;
+            block-size: auto !important;
+            overflow: visible !important;
+        }
+        .deck-strip {
+            display: block !important;
+            overflow: visible !important;
+            perspective: none !important;
+        }
+        .deck-ground {
+            display: none !important;
+        }
+        .deck-slide {
+            position: relative !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            margin: 0 !important;
+            /* 719 against a 720 page: exactly its own height underruns onto a second sheet */
+            block-size: 719px !important;
+            overflow: hidden !important;
+            background: var(--background) !important;
+        }
+        .deck-slide::before,
+        .deck-slide::after {
+            opacity: 0 !important;
+        }
+        .deck-slide:not(:last-child) {
+            break-after: page;
+        }
+        .deck-stage .sr-only {
+            display: none !important;
+        }
     }
 }

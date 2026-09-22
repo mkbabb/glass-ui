@@ -30,6 +30,11 @@ consumer updates via a marked addendum in ITS tranche, told by ONE outbound lett
   manifest, which lives INSIDE `MIGRATION.md §10.0.0` (it travels with the package once MIGRATION
   joins `files`, 10-6). FR-COB-8/FR-COB-12 are measured in this lane and recorded. The datum is
   "every unlayered top-level rule", never a number.
+  [2026-09-22 · ADJUDICATOR (L, round 1): 'token :root' is content-defined (every declaration a custom
+  property); `color-scheme` and `accent-color` are admitted on the `:root`/`.dark` pair as named
+  exceptions with grounds — the scheme switch must share the token pair's rank and its `.dark` half
+  sits inside Lane T's token block. `@variant`/`@custom-variant` are NOT on the allowlist (never
+  named; statement form only in src).]
   [2026-09-22 15:50 · DRIVER RULING on Lane L's STOP — the implement seat layered 379 of 466 rules and
   STOPPED 87 rules in seven files (Aurora.vue, configurator styles.css/ConfiguratorRow.vue/
   ConfiguratorLayer.vue, Label.vue, data-table styles.css, paper.css) because, once layered, they lose
@@ -136,6 +141,7 @@ lane so three lanes can run at once), driver commits by pathspec at each lane's 
 | lane | rows | fence (exclusive) |
 | --- | --- | --- |
 | L | 10-1, 10-5 | every `src/**/*.css` EXCEPT the token files (`color-radius.css`, `light-dark.css`, ramp copies — Lane T's); every SFC `<style>` block under `src/`; `src/styles/index.css` + the `./styles.css` entry; the host gate test + its fixtures; `tests/**` witnesses for CSS |
+  [2026-09-22 · ADJUDICATOR (L, round 1): inside a `.vue` the fence admits (a) the per-site template-utility removals the 15:50 ruling dictates (Aurora.vue, Configurator.vue, ConfiguratorLayer.vue, ConfiguratorRow.vue, table/TableHead.vue) and (b) a dated bracket on a comment the wrap falsifies (Timeline.vue:529-530); nothing else.]
 | X | 10-2, 10-3, 10-4 | `src/composables/fourier-field/**`, `src/composables/color/**`, `src/components/aurora/composables/atoms.ts` (+ its type tests), in-house importers of the three names (measured), the outbound letter |
 | C | 10-6, N-1, N-4, N-5 | `.github/workflows/*`, `package.json` (`files` only), `.prettierrc.json`, `tests-visual/**` pixel-floor scripts |
 | T | N-2, N-3 | the token files above + their tests; `src/composables/dark/**` + its tests |

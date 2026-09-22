@@ -208,46 +208,48 @@ defineExpose({
 </script>
 
 <style scoped>
-.tw-root {
-    position: relative;
-    display: inline-grid;
-    max-width: 100%;
-    vertical-align: baseline;
-}
+@layer components {
+    .tw-root {
+        position: relative;
+        display: inline-grid;
+        max-width: 100%;
+        vertical-align: baseline;
+    }
 
-.tw-reserve {
-    grid-area: 1 / 1;
-    min-width: 0;
-    visibility: hidden;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    pointer-events: none;
-}
+    .tw-reserve {
+        grid-area: 1 / 1;
+        min-width: 0;
+        visibility: hidden;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        pointer-events: none;
+    }
 
-.tw-visual {
-    position: absolute;
-    inset: 0;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-}
+    .tw-visual {
+        position: absolute;
+        inset: 0;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
 
-.tw-tail {
-    white-space: nowrap;
-}
+    .tw-tail {
+        white-space: nowrap;
+    }
 
-.tw-cursor {
-    display: inline-block;
-    font-weight: 100;
-}
+    .tw-cursor {
+        display: inline-block;
+        font-weight: 100;
+    }
 
-/* Keyframe typewriter-blink lives in src/styles/animations.css */
-.tw-cursor--blink {
-    animation: typewriter-blink 1.06s step-end infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
+    /* Keyframe typewriter-blink lives in src/styles/animations.css */
     .tw-cursor--blink {
-        animation: none;
+        animation: typewriter-blink 1.06s step-end infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .tw-cursor--blink {
+            animation: none;
+        }
     }
 }
 </style>

@@ -78,37 +78,39 @@
        not a hand-rolled re-list) so a future rung added to the material group
        inherits the WHC edge for free — and any material-group div picks up the
        edge with no per-component arm. */
-    .glass-wash,
-    .glass-quiet,
-    .glass-resting,
-    .glass-floating,
-    .glass-overlay,
-    .glass-card {
-        border: 1px solid CanvasText;
-    }
+    @layer components {
+        .glass-wash,
+        .glass-quiet,
+        .glass-resting,
+        .glass-floating,
+        .glass-overlay,
+        .glass-card {
+            border: 1px solid CanvasText;
+        }
 
-    /* The floating + overlay rungs (Dialog / Sheet / Popover / DropdownMenu /
-       HoverCard compose them) get the canonical `Canvas` fill so the modal reads as a
-       DISTINCT boxed region OVER the page, not a transparent overlap — the hierarchy
-       survives. The `CanvasText` edge above already draws the box; this opaque fill
-       separates the floating layer from the content beneath it. */
-    .glass-floating,
-    .glass-overlay {
-        background: Canvas;
-    }
+        /* The floating + overlay rungs (Dialog / Sheet / Popover / DropdownMenu /
+           HoverCard compose them) get the canonical `Canvas` fill so the modal reads as a
+           DISTINCT boxed region OVER the page, not a transparent overlap — the hierarchy
+           survives. The `CanvasText` edge above already draws the box; this opaque fill
+           separates the floating layer from the content beneath it. */
+        .glass-floating,
+        .glass-overlay {
+            background: Canvas;
+        }
 
-    /* The decorative specular catch-light (`::before`) paints nothing meaningful
-       once chroma collapses — yield it entirely (the same decorative-chrome cede
-       the `--glass-level: 0` opaque escape performs on the body). It is NOT part
-       of the structure the skin restores. (The `::after` arms went with the grain
-       register — K1; there is no rung `::after` left to yield.) */
-    .glass-wash::before,
-    .glass-quiet::before,
-    .glass-resting::before,
-    .glass-floating::before,
-    .glass-overlay::before,
-    .glass-card::before {
-        display: none;
+        /* The decorative specular catch-light (`::before`) paints nothing meaningful
+           once chroma collapses — yield it entirely (the same decorative-chrome cede
+           the `--glass-level: 0` opaque escape performs on the body). It is NOT part
+           of the structure the skin restores. (The `::after` arms went with the grain
+           register — K1; there is no rung `::after` left to yield.) */
+        .glass-wash::before,
+        .glass-quiet::before,
+        .glass-resting::before,
+        .glass-floating::before,
+        .glass-overlay::before,
+        .glass-card::before {
+            display: none;
+        }
     }
 
 }

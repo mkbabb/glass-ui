@@ -10,8 +10,11 @@
    `:38-47` and this sheet violated it. Only the SHAPE seam is layered now, for
    Skeleton's exact reason: a caller's public shape utility (`rounded-full`,
    `rounded-card`) is merged onto this element from the utilities layer and
-   must win. Everything else is unlayered and beats a page rule that is not
-   trying to re-shape the mark.
+   must win. ~~Everything else is unlayered and beats a page rule that is not
+   trying to re-shape the mark.~~ [2026-09-22 · BK register wave 10-1 — the whole
+   sheet is in `@layer components` at 10.0.0: a producer rule that outranks every
+   consumer rule at any specificity is the A-3-CLASS defect, so a page rule that
+   re-sizes the mark now wins.]
 
    THE φ LADDER (§3.2). `sm` IS the control rung — an avatar sits beside a
    control and must agree with it — and `md`/`lg` are φ and φ² of that rung. The
@@ -36,91 +39,95 @@
    `0.875rem` floor dies with it.
    ════════════════════════════════════════════════════════════════════════ */
 
-.avatar {
-    --avatar-size: var(--control-h-md);
-    position: relative;
-    display: inline-grid;
-    inline-size: var(--avatar-size);
-    block-size: var(--avatar-size);
-    vertical-align: middle;
-    isolation: isolate;
+@layer components {
+    .avatar {
+        --avatar-size: var(--control-h-md);
+        position: relative;
+        display: inline-grid;
+        inline-size: var(--avatar-size);
+        block-size: var(--avatar-size);
+        vertical-align: middle;
+        isolation: isolate;
+    }
+
+    .avatar[data-size="md"] {
+        --avatar-size: calc(var(--control-h-md) * 1.618);
+    }
+
+    .avatar[data-size="lg"] {
+        --avatar-size: calc(var(--control-h-md) * 2.618);
+    }
+
+    .avatar__identity,
+    .avatar__image,
+    .avatar__fallback {
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
+    .avatar__identity {
+        display: grid;
+        overflow: hidden;
+        place-items: center;
+        /* C9 — ELEVATION EARNS THE EDGE. An avatar carries `--shadow-sm`, which puts
+           it on the floating side of the one-ink ladder: `--ink-edge` (0.16) is a
+           floating plate's boundary, and that is what a drop shadow declares this to
+           be. `--glass-border-wash` was a fourth spelling of a line the ladder
+           already answers. */
+        border: 1px solid oklch(from var(--foreground) l c h / var(--ink-edge));
+        background: var(--glass-plate-wash);
+        color: var(--foreground);
+        box-shadow: var(--glass-material-rim), var(--shadow-sm);
+    }
+
+    .avatar__image,
+    .avatar__fallback {
+        grid-area: 1 / 1;
+    }
+
+    .avatar__image {
+        object-fit: cover;
+    }
+
+    .avatar__fallback {
+        display: grid;
+        place-items: center;
+        background: color-mix(in srgb, var(--secondary) 82%, transparent);
+        font-size: var(--type-caption);
+        font-weight: var(--font-weight-semibold);
+        letter-spacing: var(--tracking-tight);
+        line-height: 1;
+        user-select: none;
+    }
+
+    .avatar[data-size="md"] .avatar__fallback {
+        font-size: var(--type-subheading);
+    }
+
+    .avatar[data-size="lg"] .avatar__fallback {
+        font-size: var(--type-display-2);
+    }
+
+    .avatar__status {
+        position: absolute;
+        inset-inline-end: -0.125rem;
+        inset-block-end: -0.125rem;
+        z-index: 1;
+        display: grid;
+        /* THE SEAM (S15). Everything the mark measures is now `em` off this one
+           declaration: an `sm` StatusDot renders 0.5em = --avatar-size/4 → 10/16/26
+           across the φ ladder. No `min-*` floor, no padding pad — the mark sizes
+           itself and this box is exactly as big as the mark it holds. */
+        font-size: calc(var(--avatar-size) / 2);
+        place-items: center;
+        background: var(--background);
+        box-shadow: 0 0 0 1px oklch(from var(--foreground) l c h / var(--ink-edge));
+    }
 }
 
-.avatar[data-size="md"] {
-    --avatar-size: calc(var(--control-h-md) * 1.618);
-}
-
-.avatar[data-size="lg"] {
-    --avatar-size: calc(var(--control-h-md) * 2.618);
-}
-
-.avatar__identity,
-.avatar__image,
-.avatar__fallback {
-    inline-size: 100%;
-    block-size: 100%;
-}
-
-.avatar__identity {
-    display: grid;
-    overflow: hidden;
-    place-items: center;
-    /* C9 — ELEVATION EARNS THE EDGE. An avatar carries `--shadow-sm`, which puts
-       it on the floating side of the one-ink ladder: `--ink-edge` (0.16) is a
-       floating plate's boundary, and that is what a drop shadow declares this to
-       be. `--glass-border-wash` was a fourth spelling of a line the ladder
-       already answers. */
-    border: 1px solid oklch(from var(--foreground) l c h / var(--ink-edge));
-    background: var(--glass-plate-wash);
-    color: var(--foreground);
-    box-shadow: var(--glass-material-rim), var(--shadow-sm);
-}
-
-.avatar__image,
-.avatar__fallback {
-    grid-area: 1 / 1;
-}
-
-.avatar__image {
-    object-fit: cover;
-}
-
-.avatar__fallback {
-    display: grid;
-    place-items: center;
-    background: color-mix(in srgb, var(--secondary) 82%, transparent);
-    font-size: var(--type-caption);
-    font-weight: var(--font-weight-semibold);
-    letter-spacing: var(--tracking-tight);
-    line-height: 1;
-    user-select: none;
-}
-
-.avatar[data-size="md"] .avatar__fallback {
-    font-size: var(--type-subheading);
-}
-
-.avatar[data-size="lg"] .avatar__fallback {
-    font-size: var(--type-display-2);
-}
-
-.avatar__status {
-    position: absolute;
-    inset-inline-end: -0.125rem;
-    inset-block-end: -0.125rem;
-    z-index: 1;
-    display: grid;
-    /* THE SEAM (S15). Everything the mark measures is now `em` off this one
-       declaration: an `sm` StatusDot renders 0.5em = --avatar-size/4 → 10/16/26
-       across the φ ladder. No `min-*` floor, no padding pad — the mark sizes
-       itself and this box is exactly as big as the mark it holds. */
-    font-size: calc(var(--avatar-size) / 2);
-    place-items: center;
-    background: var(--background);
-    box-shadow: 0 0 0 1px oklch(from var(--foreground) l c h / var(--ink-edge));
-}
-
-/* ── THE SHAPE SEAM — the ONLY layered rules (Skeleton's model) ─────────────── */
+/* ── THE SHAPE SEAM — the ~~ONLY~~ layered rules (Skeleton's model) ─────────── */
+/* [2026-09-22 · BK register wave 10-1 — no longer the only ones; the seam keeps its own
+   last block, border-radius only.] */
 @layer components {
     .avatar[data-shape="circle"] .avatar__identity {
         border-radius: var(--mark-stadium, var(--radius-pill));

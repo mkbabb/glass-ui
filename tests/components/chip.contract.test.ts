@@ -159,9 +159,11 @@ describe("Chip semantic modes", () => {
     });
 
     // The `xs` rung — the static micro-pill. `sm` is 10/4px at 12-16px fluid and
-    // `text-caption` is italic, so it cannot stand in for a meta pill; `xs` is 4/2px
-    // at a fixed 11px, roman. The icon ladder widens in the same edit because
-    // `chipVariants` indexes `ICON_SIZE[size]` under `strict`. Default stays `md`.
+    // ~~`text-caption` is italic, so it cannot stand in for a meta pill~~ [2026-09-22 ·
+    // BK register wave 10-5 — `text-caption` is upright at 10.0.0; `sm` still cannot
+    // stand in, on its pad and fluid size alone]; `xs` is 4/2px at a fixed 11px, roman.
+    // The icon ladder widens in the same edit because `chipVariants` indexes
+    // `ICON_SIZE[size]` under `strict`. Default stays `md`.
     it("carries an xs rung on both the pad and the icon ladder", () => {
         const pill = chipVariants({ size: "xs" });
 

@@ -43,15 +43,17 @@ const hostAttrs = computed(() =>
    separator paints, which is correct: they are the same kind of quiet mark on
    the same plate. The shimmer/tinted-surface variant stays DECLINED (S2's four
    falsifiers). */
-.skeleton {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-    background: color-mix(
-        in oklab,
-        var(--foreground) calc(var(--ink-seam) * 100%),
-        transparent
-    );
+@layer components {
+    .skeleton {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        background: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--ink-seam) * 100%),
+            transparent
+        );
+    }
 }
 
 /* The DEFAULT tile radius lives on @layer components so a caller's public shape
@@ -91,9 +93,11 @@ const hostAttrs = computed(() =>
    ease reads as weight in both directions, and moving through 100% of its cycle
    instead of 71% dead. Five declarations, zero tokens minted. It pairs with the
    status-dot pulse as the register's two — and only two — rest carriers. */
-@media (prefers-reduced-motion: no-preference) {
-    .skeleton {
-        animation: skeleton-breathe 1.1s var(--ease-standard) infinite alternate;
+@layer components {
+    @media (prefers-reduced-motion: no-preference) {
+        .skeleton {
+            animation: skeleton-breathe 1.1s var(--ease-standard) infinite alternate;
+        }
     }
 }
 
@@ -103,11 +107,13 @@ const hostAttrs = computed(() =>
     }
 }
 
-@media (forced-colors: active) {
-    .skeleton {
-        animation: none;
-        background: CanvasText;
-        opacity: 0.18;
+@layer components {
+    @media (forced-colors: active) {
+        .skeleton {
+            animation: none;
+            background: CanvasText;
+            opacity: 0.18;
+        }
     }
 }
 </style>

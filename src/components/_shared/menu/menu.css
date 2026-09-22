@@ -77,21 +77,21 @@
                 scale var(--spring-press-duration) var(--transition-liquid-spatial);
         }
     }
-}
 
-@media (prefers-reduced-motion: reduce) {
-    .glass-menu-row {
-        /* PRM retires the SPATIAL legs and KEEPS the light. A bare `transition: none`
-           kills both, which erases the state report along with the motion — suppressing
-           motion may not remove the acknowledgement. Same direction `.tap-squish`'s own
-           PRM arm takes: the transform retires, the light answers. The lift is
-           neutralized by its token, so the spatial legs are simply not listed. */
-        --menu-row-lift: 0px;
-        transition:
-            background-color var(--engage-control-engage-release) var(--ease-standard),
-            color var(--engage-control-engage-release) var(--ease-standard),
-            border-color var(--engage-control-engage-release) var(--ease-standard),
-            box-shadow var(--engage-control-engage-release) var(--ease-standard);
+    @media (prefers-reduced-motion: reduce) {
+        .glass-menu-row {
+            /* PRM retires the SPATIAL legs and KEEPS the light. A bare `transition: none`
+               kills both, which erases the state report along with the motion — suppressing
+               motion may not remove the acknowledgement. Same direction `.tap-squish`'s own
+               PRM arm takes: the transform retires, the light answers. The lift is
+               neutralized by its token, so the spatial legs are simply not listed. */
+            --menu-row-lift: 0px;
+            transition:
+                background-color var(--engage-control-engage-release) var(--ease-standard),
+                color var(--engage-control-engage-release) var(--ease-standard),
+                border-color var(--engage-control-engage-release) var(--ease-standard),
+                box-shadow var(--engage-control-engage-release) var(--ease-standard);
+        }
     }
 }
 

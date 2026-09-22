@@ -316,105 +316,107 @@ defineExpose({
 </template>
 
 <style scoped>
-.goo-blob-wrapper {
-    /* Layout footprint = width passed by parent (e.g. w-[7rem]) */
-    aspect-ratio: 1;
-    position: relative;
-    z-index: var(--z-content);
-    overflow: visible;
-    /* the ROOT square is pointer-transparent so it NEVER intercepts a
-       sibling-card click; the SDF-shaped `.goo-blob-hit` child is the only interactive
-       surface (the cursor + the listeners live there). The `:hover` shadow lift still
-       fires: hover propagates to this ancestor when the pointer-events:auto child is
-       the hit target. */
-    pointer-events: none;
-    /* Layout/style containment isolates Blob as a layout root
-       (NO `paint` containment: the 160%-canvas satellites intentionally
-       overflow the wrapper footprint, and paint containment would clip them).
-       `content-visibility:auto` lets the browser skip Blob
-       when it scrolls offscreen — the substrate's `contentvisibilityautostate-
-       change` listener then parks the RAF. content-visibility applies its own
-       paint/layout containment ONLY while skipped (offscreen, invisible), so
-       the on-screen overflow is preserved. `contain-intrinsic-size:auto`
-       remembers the rendered size across a skip so the box does not collapse. */
-    contain: layout style;
-    content-visibility: auto;
-    contain-intrinsic-size: auto none;
-    /*  E2, D4 — the GROUNDED gel-dome shadow, NOT the
-       hard `5px 5px` near-black cartoon offset-stamp. A lit gel dome SITS on its
-       surface: a soft AMBIENT cast (the dome floats a little above) PLUS a tight,
-       low-offset, darker CONTACT band hugging the silhouette base (the gravity cue
-       that grounds the dome + the AO the necking satellites pick up where they merge).
-       Two CHAINED drop-shadow() filters — each follows the irregular metaball
-       silhouette (a box-shadow would stamp a rectangle, missing the necking
-       satellites). The Memphis offset-stamp stays the identity of
-       <Card cartoon> only. Adaptive-by-construction via the token's
-       `--shadow-color`/`--foreground` base (re-resolves under .dark, no hardcoded
-       .dark block here). */
-    filter: drop-shadow(var(--blob-shadow-ambient)) drop-shadow(var(--blob-shadow-contact));
-    transition: filter var(--duration-slow, 0.45s) var(--ease-standard, ease);
-}
-
-.goo-blob-wrapper:hover {
-    filter: drop-shadow(var(--blob-shadow-hover)) drop-shadow(var(--blob-shadow-contact-hover));
-}
-
-/* Canvas is 160% of wrapper — overflows so satellites at wide orbits render
-   beyond the layout footprint. */
-.goo-blob-canvas {
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 160%;
-    height: 160%;
-    transform: translate(-50%, -50%);
-    will-change: transform;
-    pointer-events: none;
-}
-
-/* the SDF-shaped hit surface. The wrapper is
-   pointer-events:none (never blocks the square), so this child is the ONLY interactive
-   surface. `clip-path` shapes BOTH paint (transparent — zero visual delta) AND pointer
-   hit-testing to the body silhouette disc, so a click on the corners / empty margin
-   falls THROUGH to whatever card sits beneath — the root square no longer intercepts a
-   sibling click. The canvas paints unclipped underneath (its 160% satellites overflow
-   this box), so the clip never touches the render. */
-.goo-blob-hit {
-    position: absolute;
-    inset: 0;
-    margin: 0;
-    border: 0;
-    padding: 0;
-    border-radius: 50%;
-    background: transparent;
-    pointer-events: auto;
-    cursor: pointer;
-    clip-path: circle(var(--blob-hit-radius, 50%));
-}
-
-.goo-blob-hit:focus-visible {
-    outline: none;
-    background: radial-gradient(
-        circle,
-        transparent calc(var(--blob-hit-radius) - 3px),
-        var(--focus-ring-color) calc(var(--blob-hit-radius) - 3px),
-        var(--focus-ring-color) var(--blob-hit-radius),
-        transparent var(--blob-hit-radius)
-    );
-}
-
-.goo-blob-hit:disabled {
-    cursor: default;
-}
-
-@media (prefers-reduced-motion: reduce) {
+@layer components {
     .goo-blob-wrapper {
-        /*  E2, D4 — the same grounded gel-dome shadow
-           under PRM (the gel-bead lighting language, never the hard offset-stamp);
-           only the filter TRANSITION is cut. The two-rung grounded composite stays. */
-        filter: drop-shadow(var(--blob-shadow-ambient)) drop-shadow(var(--blob-shadow-contact)) !important;
-        transition: none !important;
+        /* Layout footprint = width passed by parent (e.g. w-[7rem]) */
+        aspect-ratio: 1;
+        position: relative;
+        z-index: var(--z-content);
+        overflow: visible;
+        /* the ROOT square is pointer-transparent so it NEVER intercepts a
+           sibling-card click; the SDF-shaped `.goo-blob-hit` child is the only interactive
+           surface (the cursor + the listeners live there). The `:hover` shadow lift still
+           fires: hover propagates to this ancestor when the pointer-events:auto child is
+           the hit target. */
+        pointer-events: none;
+        /* Layout/style containment isolates Blob as a layout root
+           (NO `paint` containment: the 160%-canvas satellites intentionally
+           overflow the wrapper footprint, and paint containment would clip them).
+           `content-visibility:auto` lets the browser skip Blob
+           when it scrolls offscreen — the substrate's `contentvisibilityautostate-
+           change` listener then parks the RAF. content-visibility applies its own
+           paint/layout containment ONLY while skipped (offscreen, invisible), so
+           the on-screen overflow is preserved. `contain-intrinsic-size:auto`
+           remembers the rendered size across a skip so the box does not collapse. */
+        contain: layout style;
+        content-visibility: auto;
+        contain-intrinsic-size: auto none;
+        /*  E2, D4 — the GROUNDED gel-dome shadow, NOT the
+           hard `5px 5px` near-black cartoon offset-stamp. A lit gel dome SITS on its
+           surface: a soft AMBIENT cast (the dome floats a little above) PLUS a tight,
+           low-offset, darker CONTACT band hugging the silhouette base (the gravity cue
+           that grounds the dome + the AO the necking satellites pick up where they merge).
+           Two CHAINED drop-shadow() filters — each follows the irregular metaball
+           silhouette (a box-shadow would stamp a rectangle, missing the necking
+           satellites). The Memphis offset-stamp stays the identity of
+           <Card cartoon> only. Adaptive-by-construction via the token's
+           `--shadow-color`/`--foreground` base (re-resolves under .dark, no hardcoded
+           .dark block here). */
+        filter: drop-shadow(var(--blob-shadow-ambient)) drop-shadow(var(--blob-shadow-contact));
+        transition: filter var(--duration-slow, 0.45s) var(--ease-standard, ease);
+    }
+
+    .goo-blob-wrapper:hover {
+        filter: drop-shadow(var(--blob-shadow-hover)) drop-shadow(var(--blob-shadow-contact-hover));
+    }
+
+    /* Canvas is 160% of wrapper — overflows so satellites at wide orbits render
+       beyond the layout footprint. */
+    .goo-blob-canvas {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 160%;
+        height: 160%;
+        transform: translate(-50%, -50%);
+        will-change: transform;
+        pointer-events: none;
+    }
+
+    /* the SDF-shaped hit surface. The wrapper is
+       pointer-events:none (never blocks the square), so this child is the ONLY interactive
+       surface. `clip-path` shapes BOTH paint (transparent — zero visual delta) AND pointer
+       hit-testing to the body silhouette disc, so a click on the corners / empty margin
+       falls THROUGH to whatever card sits beneath — the root square no longer intercepts a
+       sibling click. The canvas paints unclipped underneath (its 160% satellites overflow
+       this box), so the clip never touches the render. */
+    .goo-blob-hit {
+        position: absolute;
+        inset: 0;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        border-radius: 50%;
+        background: transparent;
+        pointer-events: auto;
+        cursor: pointer;
+        clip-path: circle(var(--blob-hit-radius, 50%));
+    }
+
+    .goo-blob-hit:focus-visible {
+        outline: none;
+        background: radial-gradient(
+            circle,
+            transparent calc(var(--blob-hit-radius) - 3px),
+            var(--focus-ring-color) calc(var(--blob-hit-radius) - 3px),
+            var(--focus-ring-color) var(--blob-hit-radius),
+            transparent var(--blob-hit-radius)
+        );
+    }
+
+    .goo-blob-hit:disabled {
+        cursor: default;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .goo-blob-wrapper {
+            /*  E2, D4 — the same grounded gel-dome shadow
+               under PRM (the gel-bead lighting language, never the hard offset-stamp);
+               only the filter TRANSITION is cut. The two-rung grounded composite stays. */
+            filter: drop-shadow(var(--blob-shadow-ambient)) drop-shadow(var(--blob-shadow-contact)) !important;
+            transition: none !important;
+        }
     }
 }
 </style>

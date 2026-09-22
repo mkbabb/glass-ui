@@ -58,10 +58,12 @@ vtRoot.walkAtRules("keyframes", (at) => {
     keyframes.set(at.params.trim(), at);
 });
 
-/** Every ordinary rule in the grammar's stylesheet, selector-normalised. */
+/** Every ordinary rule in the grammar's stylesheet, selector-normalised. The sheet sits in
+ *  `@layer components` (10-1), so a rule whose parent is that layer is still top-level. */
 const rules: Rule[] = [];
 vtRoot.walkRules((rule) => {
-    if (rule.parent?.type === "atrule") return;
+    const parent = rule.parent;
+    if (parent?.type === "atrule" && (parent as AtRule).name !== "layer") return;
     rules.push(rule);
 });
 

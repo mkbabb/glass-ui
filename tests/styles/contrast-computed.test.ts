@@ -507,7 +507,8 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
             // simultaneously invisible to AT, because the glyph was `aria-hidden`
             // and Label cannot set `aria-required` on a control it does not own.
             // The annotation is `--muted-foreground` on both arms now.
-            // `LabeledField.vue:113` is the real error-ink consumer and still
+            // `LabeledField.vue:113` [2026-09-22 · register-wave L: :114 after the
+            // `@layer components` wrap; :113 is the selector line] is the real error-ink consumer and still
             // holds this table's floor; it stays.
             for (const file of ["src/components/labeled-field/LabeledField.vue"]) {
                 expect(read(file)).toMatch(/color:\s*var\(--destructive\)/);

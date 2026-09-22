@@ -397,252 +397,257 @@ defineExpose({ value });
    the ONE width-conditional declaration in `tokens/sizing.css`, so the whole
    plate transposes for free — the track 12→8, the mark 20→12, and the clearance
    between them (their half-difference) 4→2. */
-.tl {
-    display: grid;
-    grid-template-columns: 100%;
-    row-gap: var(--space-body);
-    position: relative;
-}
+@layer components {
+    .tl {
+        display: grid;
+        grid-template-columns: 100%;
+        row-gap: var(--space-body);
+        position: relative;
+    }
 
-.tl__track,
-.tl__marks {
-    grid-row: 1;
-    grid-column: 1;
-    align-self: center;
-}
-
-.tl__track {
-    block-size: var(--timeline-track-h);
-    /* THE A10 RECESS. The register carries only a muted fallback; a direct
-       consumer authors its own paint (`track-well.css:21-22`). A bare wash
-       measured 4.58 ΔRGB against the card — an invisible groove whose only
-       boundary would be a hairline. Host − 4% L is the field-recess law, and
-       `oklch(from …)` is the house relative-colour idiom, so the one expression
-       serves both modes off the mode-armed host. */
-    background: oklch(from var(--card) calc(l - 0.04) c h);
-    /* (the top-only inset ink edge PROMOTED to `styles/track-well.css` — the
-       register this track composes. It was the third copy of one law; the
-       spelling that moved up is this one, verbatim.) */
-}
-
-.tl__marks {
-    position: relative;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    pointer-events: none;
-    /* The axis reserves the tallest REAL target, not a decorative floor: WCAG
-       2.5.8's 24px at fine. The 44px coarse reservation is one rule below, in
-       this component's own `(pointer: coarse)` arm — an unconditional 44 would
-       bank 20px of dead vertical on every desktop. */
-    min-block-size: 1.5rem;
-}
-
-.tl__mark-seat {
-    position: absolute;
-    top: 50%;
-    left: calc(var(--tl-at) * 100%);
-    translate: -50% -50%;
-    display: flex;
-    line-height: 0;
-    pointer-events: none;
-}
-
-.tl__mark-seat > * {
-    pointer-events: auto;
-}
-
-/* ── SPANS — the second clip box ───────────────────────────────────────────────
-   `.track-well` clips the TRACK's ends; it cannot clip a span. Without
-   this one declaration the fill translates straight into its neighbours (both
-   engines measured it: 100px into the completed side, 200px from the pending
-   side), and TL-1's whole claim — "the bar reads" — is void. */
-.tl__span {
-    position: absolute;
-    inset-block: 0;
-    left: calc(var(--tl-l) * 100%);
-    width: calc(var(--tl-w) * 100%);
-    overflow: hidden;
-}
-
-/* TRAVEL. The fill is 100% of its span box and rides `translateX` inside the
-   two clip boxes — no `width` animation (off the compositor, and it was the
-   `will-change: width` that never came off), no `scaleX` (which would distort
-   the cap), and no division anywhere (so no `matrix(infinity)`). */
-.tl__fill {
-    position: absolute;
-    inset: 0;
-    background: var(--tl-accent);
-    transform: translateX(calc((var(--tl-f) - 1) * 100%));
-}
-
-.tl__track[data-advancing] .tl__fill {
-    will-change: transform;
-}
-
-/* THE MENISCUS — a track-height pill at the fill front, stretching off the
-   travel spring's own velocity through the shared tanh channel, capped at
-   `--scale-hover` and paired reciprocally so the swell preserves volume. It is
-   never grabbed: a timeline reports. */
-.tl__cap {
-    position: absolute;
-    inset-block: 0;
-    right: 0;
-    inline-size: var(--timeline-track-h);
-    border-radius: var(--radius-pill);
-    background: var(--tl-accent);
-    /* The library's ONE lit leg, not a second white minted beside it. */
-    box-shadow: var(--glass-rim-top);
-    transform: scaleX(var(--stretch, 1)) scaleY(calc(1 / var(--stretch, 1)));
-    pointer-events: none;
-}
-
-/* ── THE ONE IDLE LOOP ─────────────────────────────────────────────────────────
-   The host is the TRACK — a non-interactive reporting substrate
-   (`role="progressbar"`, `aria-hidden` spans, no pointer events) and therefore
-   on the canon's own legal-host list. The marks are interactive members and
-   carry ZERO loops, which is the same clause that kills a current-mark halo.
-
-   The loop is LOAD-BEARING, not decoration: in the indeterminate state it is
-   the SOLE carrier. Kill it and `{ state: "active" }` paints pixel-identical to
-   `pending`. Determinate, it additionally reports liveness across a plateau.
-
-   Honest ledger: exactly ONE live animation while a span is active, ZERO
-   otherwise — and zero is lawful, because the canon's rest is a floor, not a
-   loop.
-
-   THE BAND IS NOT AUTHORED HERE. It is `.track-flow` (styles/glass/track-flow.css),
-   COMPOSED by the template: the indeterminate span takes the class directly, the
-   active span's fill takes it on its own box. The local copy that used to live at
-   this spot — the same envelope, the same `plus-lighter`, the same 45% mask, the
-   same `-50% → 150%` sweep and its own `@keyframes tl-flow` — was a second
-   spelling of the register's law inside the very component the register was
-   promoted OUT of. Both clip boxes qualify as hosts (`.tl__span` is
-   `position: absolute; overflow: hidden`; `.tl__fill` is `position: absolute;
-   inset: 0` inside it), so nothing else is owed. The register's own PRM bracket
-   parks the band mid-sweep at the floor, so this file's PRM arm for it goes too. */
-.tl .track-flow {
-    /* The ONE local override: the Timeline's band peaks at the family's selected-
-       fill rung rather than the register's 0.12 specular ceiling — one rung under
-       the "both" fill (0.05 + 0.12 = 0.17). The amplitude FLOOR is the register's
-       (the canon's ≥0.30-of-peak clamp), so it is not restated. Unlayered scoped
-       CSS, so it wins over `@layer components` without a specificity fight. */
-    --track-flow-peak: var(--fill-selected);
-}
-
-/* ── MARKS ─────────────────────────────────────────────────────────────────────
-   The hit box inflates and the paint never does: the `<button>` carries the
-   target, an inner `<span>` carries the disc. `[data-control-target]` DECLARES
-   the mark a coarse-floor member — it is the census marker every interactive
-   face in the library carries — but it cannot deliver the floor here: the shared
-   rule in `utilities/responsive.css` is a bare attribute selector (0,1,0) and
-   Vue suffixes every scoped selector with `[data-v-*]`, so this rule ships as
-   (0,2,0) and out-specifies it on the very two properties it sets. The floor is
-   therefore re-declared at this component's own specificity, off the SAME
-   `--touch-target` token — see the `(pointer: coarse)` arm below. */
-.tl__mark {
-    display: grid;
-    place-items: center;
-    min-inline-size: 1.5rem;
-    min-block-size: 1.5rem;
-    padding: 0;
-    border: 0;
-    background: none;
-    cursor: pointer;
-}
-
-/* WCAG 2.5.5's 44px, where a finger is the pointer. One value read from one
-   token at two declaration sites — never a second number typed beside it. The
-   row reserves the inflated box too, or a 44px mark overhangs a 24px list by
-   10px on both edges. */
-@media (pointer: coarse) {
+    .tl__track,
     .tl__marks {
-        min-block-size: var(--touch-target);
+        grid-row: 1;
+        grid-column: 1;
+        align-self: center;
     }
 
+    .tl__track {
+        block-size: var(--timeline-track-h);
+        /* THE A10 RECESS. The register carries only a muted fallback; a direct
+           consumer authors its own paint (`track-well.css:21-22`). A bare wash
+           measured 4.58 ΔRGB against the card — an invisible groove whose only
+           boundary would be a hairline. Host − 4% L is the field-recess law, and
+           `oklch(from …)` is the house relative-colour idiom, so the one expression
+           serves both modes off the mode-armed host. */
+        background: oklch(from var(--card) calc(l - 0.04) c h);
+        /* (the top-only inset ink edge PROMOTED to `styles/track-well.css` — the
+           register this track composes. It was the third copy of one law; the
+           spelling that moved up is this one, verbatim.) */
+    }
+
+    .tl__marks {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        pointer-events: none;
+        /* The axis reserves the tallest REAL target, not a decorative floor: WCAG
+           2.5.8's 24px at fine. The 44px coarse reservation is one rule below, in
+           this component's own `(pointer: coarse)` arm — an unconditional 44 would
+           bank 20px of dead vertical on every desktop. */
+        min-block-size: 1.5rem;
+    }
+
+    .tl__mark-seat {
+        position: absolute;
+        top: 50%;
+        left: calc(var(--tl-at) * 100%);
+        translate: -50% -50%;
+        display: flex;
+        line-height: 0;
+        pointer-events: none;
+    }
+
+    .tl__mark-seat > * {
+        pointer-events: auto;
+    }
+
+    /* ── SPANS — the second clip box ───────────────────────────────────────────────
+       `.track-well` clips the TRACK's ends; it cannot clip a span. Without
+       this one declaration the fill translates straight into its neighbours (both
+       engines measured it: 100px into the completed side, 200px from the pending
+       side), and TL-1's whole claim — "the bar reads" — is void. */
+    .tl__span {
+        position: absolute;
+        inset-block: 0;
+        left: calc(var(--tl-l) * 100%);
+        width: calc(var(--tl-w) * 100%);
+        overflow: hidden;
+    }
+
+    /* TRAVEL. The fill is 100% of its span box and rides `translateX` inside the
+       two clip boxes — no `width` animation (off the compositor, and it was the
+       `will-change: width` that never came off), no `scaleX` (which would distort
+       the cap), and no division anywhere (so no `matrix(infinity)`). */
+    .tl__fill {
+        position: absolute;
+        inset: 0;
+        background: var(--tl-accent);
+        transform: translateX(calc((var(--tl-f) - 1) * 100%));
+    }
+
+    .tl__track[data-advancing] .tl__fill {
+        will-change: transform;
+    }
+
+    /* THE MENISCUS — a track-height pill at the fill front, stretching off the
+       travel spring's own velocity through the shared tanh channel, capped at
+       `--scale-hover` and paired reciprocally so the swell preserves volume. It is
+       never grabbed: a timeline reports. */
+    .tl__cap {
+        position: absolute;
+        inset-block: 0;
+        right: 0;
+        inline-size: var(--timeline-track-h);
+        border-radius: var(--radius-pill);
+        background: var(--tl-accent);
+        /* The library's ONE lit leg, not a second white minted beside it. */
+        box-shadow: var(--glass-rim-top);
+        transform: scaleX(var(--stretch, 1)) scaleY(calc(1 / var(--stretch, 1)));
+        pointer-events: none;
+    }
+
+    /* ── THE ONE IDLE LOOP ─────────────────────────────────────────────────────────
+       The host is the TRACK — a non-interactive reporting substrate
+       (`role="progressbar"`, `aria-hidden` spans, no pointer events) and therefore
+       on the canon's own legal-host list. The marks are interactive members and
+       carry ZERO loops, which is the same clause that kills a current-mark halo.
+
+       The loop is LOAD-BEARING, not decoration: in the indeterminate state it is
+       the SOLE carrier. Kill it and `{ state: "active" }` paints pixel-identical to
+       `pending`. Determinate, it additionally reports liveness across a plateau.
+
+       Honest ledger: exactly ONE live animation while a span is active, ZERO
+       otherwise — and zero is lawful, because the canon's rest is a floor, not a
+       loop.
+
+       THE BAND IS NOT AUTHORED HERE. It is `.track-flow` (styles/glass/track-flow.css),
+       COMPOSED by the template: the indeterminate span takes the class directly, the
+       active span's fill takes it on its own box. The local copy that used to live at
+       this spot — the same envelope, the same `plus-lighter`, the same 45% mask, the
+       same `-50% → 150%` sweep and its own `@keyframes tl-flow` — was a second
+       spelling of the register's law inside the very component the register was
+       promoted OUT of. Both clip boxes qualify as hosts (`.tl__span` is
+       `position: absolute; overflow: hidden`; `.tl__fill` is `position: absolute;
+       inset: 0` inside it), so nothing else is owed. The register's own PRM bracket
+       parks the band mid-sweep at the floor, so this file's PRM arm for it goes too. */
+    .tl .track-flow {
+        /* The ONE local override: the Timeline's band peaks at the family's selected-
+           fill rung rather than the register's 0.12 specular ceiling — one rung under
+           the "both" fill (0.05 + 0.12 = 0.17). The amplitude FLOOR is the register's
+           (the canon's ≥0.30-of-peak clamp), so it is not restated. ~~Unlayered scoped
+           CSS, so it wins over `@layer components` without a specificity fight.~~
+           [2026-09-22 · BK register wave 10-1 — this block is in `@layer components`
+           too, so it wins by specificity: `.tl .track-flow` plus the scoped attribute
+           outranks the register's bare `.track-flow`.] */
+        --track-flow-peak: var(--fill-selected);
+    }
+
+    /* ── MARKS ─────────────────────────────────────────────────────────────────────
+       The hit box inflates and the paint never does: the `<button>` carries the
+       target, an inner `<span>` carries the disc. `[data-control-target]` DECLARES
+       the mark a coarse-floor member — it is the census marker every interactive
+       face in the library carries — but it cannot deliver the floor here: the shared
+       rule in `utilities/responsive.css` is a bare attribute selector (0,1,0) and
+       Vue suffixes every scoped selector with `[data-v-*]`, so this rule ships as
+       (0,2,0) and out-specifies it on the very two properties it sets. The floor is
+       therefore re-declared at this component's own specificity, off the SAME
+       `--touch-target` token — see the `(pointer: coarse)` arm below. */
     .tl__mark {
-        min-inline-size: var(--touch-target);
-        min-block-size: var(--touch-target);
+        display: grid;
+        place-items: center;
+        min-inline-size: 1.5rem;
+        min-block-size: 1.5rem;
+        padding: 0;
+        border: 0;
+        background: none;
+        cursor: pointer;
     }
-}
 
-.tl__mark:focus-visible {
-    outline: none;
-    box-shadow: var(--focus-ring-shadow);
-    border-radius: var(--radius-pill);
-}
+    /* WCAG 2.5.5's 44px, where a finger is the pointer. One value read from one
+       token at two declaration sites — never a second number typed beside it. The
+       row reserves the inflated box too, or a 44px mark overhangs a 24px list by
+       10px on both edges. */
+    @media (pointer: coarse) {
+        .tl__marks {
+            min-block-size: var(--touch-target);
+        }
 
-.tl__disc {
-    display: grid;
-    place-items: center;
-    inline-size: var(--space-family);
-    block-size: var(--space-family);
-    border-radius: 50%;
-    background: var(--card);
-    /* The control-perimeter rung — one ink, the α the register names, composed
-       exactly as `color-radius.css` §1.2 writes it. The ink is `--foreground`
-       and NOT `--cartoon-ink`: the cartoon ink is clamped dark in both modes,
-       which is correct under a recess (a groove is shadowed at the top in either
-       mode) and wrong on a mark, where a near-black perimeter on a dark card
-       leaves a pending mark with no boundary at all. */
-    border: 1px solid
-        color-mix(in oklab, var(--foreground) calc(var(--ink-perimeter) * 100%), oklch(0 0 0 / 0));
-    transform: scaleX(var(--stretch, 1)) scaleY(calc(1 / var(--stretch, 1)));
-}
+        .tl__mark {
+            min-inline-size: var(--touch-target);
+            min-block-size: var(--touch-target);
+        }
+    }
 
-/* The crossing window is the disc's ONLY animated window: the swell rides the
-   inline `--stretch` the front hands it, and the compositor hint is gated to
-   exactly that window rather than parked on every mark forever — the same shape
-   as `[data-advancing]` on the fill. This is what `data-crossing` is FOR; the
-   attribute is not a spectator. */
-.tl__mark[data-crossing] .tl__disc {
-    will-change: transform;
-}
+    .tl__mark:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring-shadow);
+        border-radius: var(--radius-pill);
+    }
 
-/* Active — hollow, ringed in its own span hue. */
-.tl__mark[data-state="active"] .tl__disc {
-    border-color: var(--tl-accent);
-    border-width: 2px;
-}
+    .tl__disc {
+        display: grid;
+        place-items: center;
+        inline-size: var(--space-family);
+        block-size: var(--space-family);
+        border-radius: 50%;
+        background: var(--card);
+        /* The control-perimeter rung — one ink, the α the register names, composed
+           exactly as `color-radius.css` §1.2 writes it. The ink is `--foreground`
+           and NOT `--cartoon-ink`: the cartoon ink is clamped dark in both modes,
+           which is correct under a recess (a groove is shadowed at the top in either
+           mode) and wrong on a mark, where a near-black perimeter on a dark card
+           leaves a pending mark with no boundary at all. */
+        border: 1px solid
+            color-mix(in oklab, var(--foreground) calc(var(--ink-perimeter) * 100%), oklch(0 0 0 / 0));
+        transform: scaleX(var(--stretch, 1)) scaleY(calc(1 / var(--stretch, 1)));
+    }
 
-/* Completed — the accent disc, its check drawn in whatever ink reads on it. */
-.tl__mark[data-state="completed"] .tl__disc {
-    background: var(--tl-accent);
-    border-color: var(--tl-accent);
-}
+    /* The crossing window is the disc's ONLY animated window: the swell rides the
+       inline `--stretch` the front hands it, and the compositor hint is gated to
+       exactly that window rather than parked on every mark forever — the same shape
+       as `[data-advancing]` on the fill. This is what `data-crossing` is FOR; the
+       attribute is not a spectator. */
+    .tl__mark[data-crossing] .tl__disc {
+        will-change: transform;
+    }
 
-/* The current mark: 2px at half the perimeter α — the SAME ink mass spread over
-   twice the height, because it must be findable along a long run. Static; the
-   halo loop stays dead. */
-.tl__mark[aria-current="step"] .tl__disc {
-    box-shadow: 0 0 0 2px
-        color-mix(
-            in oklab,
-            var(--foreground) calc(var(--ink-perimeter) / 2 * 100%),
-            oklch(0 0 0 / 0)
-        );
-}
+    /* Active — hollow, ringed in its own span hue. */
+    .tl__mark[data-state="active"] .tl__disc {
+        border-color: var(--tl-accent);
+        border-width: 2px;
+    }
 
-.tl__check {
-    inline-size: 100%;
-    block-size: 100%;
-    overflow: visible;
-}
+    /* Completed — the accent disc, its check drawn in whatever ink reads on it. */
+    .tl__mark[data-state="completed"] .tl__disc {
+        background: var(--tl-accent);
+        border-color: var(--tl-accent);
+    }
 
-.tl__check path {
-    fill: none;
-    /* The pre-modern base first so an engine without `contrast-color()` still
-       draws a legible check; the modern arm then picks the max-contrast ink for
-       whichever ramp stop this span landed on. */
-    stroke: white;
-    stroke: contrast-color(var(--tl-accent));
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    /* ≈28 path units; a 32-unit dash covers it, and the sweep to 0 writes it on. */
-    stroke-dasharray: 32;
-    stroke-dashoffset: 0;
-    animation: tl-check var(--spring-dock-duration) var(--spring-dock) both;
+    /* The current mark: 2px at half the perimeter α — the SAME ink mass spread over
+       twice the height, because it must be findable along a long run. Static; the
+       halo loop stays dead. */
+    .tl__mark[aria-current="step"] .tl__disc {
+        box-shadow: 0 0 0 2px
+            color-mix(
+                in oklab,
+                var(--foreground) calc(var(--ink-perimeter) / 2 * 100%),
+                oklch(0 0 0 / 0)
+            );
+    }
+
+    .tl__check {
+        inline-size: 100%;
+        block-size: 100%;
+        overflow: visible;
+    }
+
+    .tl__check path {
+        fill: none;
+        /* The pre-modern base first so an engine without `contrast-color()` still
+           draws a legible check; the modern arm then picks the max-contrast ink for
+           whichever ramp stop this span landed on. */
+        stroke: white;
+        stroke: contrast-color(var(--tl-accent));
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        /* ≈28 path units; a 32-unit dash covers it, and the sweep to 0 writes it on. */
+        stroke-dasharray: 32;
+        stroke-dashoffset: 0;
+        animation: tl-check var(--spring-dock-duration) var(--spring-dock) both;
+    }
 }
 
 @keyframes tl-check {
@@ -655,29 +660,31 @@ defineExpose({ value });
 }
 
 /* Hover exists only where a pointer does. */
-@media (hover: hover) {
-    .tl__mark:hover .tl__disc {
-        scale: var(--scale-hover);
-        background: color-mix(
-            in oklab,
-            var(--tl-accent) calc(var(--fill-hover) * 100%),
-            var(--card)
-        );
+@layer components {
+    @media (hover: hover) {
+        .tl__mark:hover .tl__disc {
+            scale: var(--scale-hover);
+            background: color-mix(
+                in oklab,
+                var(--tl-accent) calc(var(--fill-hover) * 100%),
+                var(--card)
+            );
+        }
+
+        .tl__mark[data-state="completed"]:hover .tl__disc {
+            background: var(--tl-accent);
+        }
     }
 
-    .tl__mark[data-state="completed"]:hover .tl__disc {
-        background: var(--tl-accent);
+    /* ── #detail ───────────────────────────────────────────────────────────────────
+       Carried ALONG the axis rather than cross-faded — the entry nudge takes the
+       sign of the travel, so the detail arrives from the side the front came from.
+       The nudge is one space rung; the clock is the same spring the axis rides. */
+    .tl__detail {
+        grid-row: 2;
+        grid-column: 1;
+        animation: tl-detail var(--spring-dock-duration) var(--spring-dock) both;
     }
-}
-
-/* ── #detail ───────────────────────────────────────────────────────────────────
-   Carried ALONG the axis rather than cross-faded — the entry nudge takes the
-   sign of the travel, so the detail arrives from the side the front came from.
-   The nudge is one space rung; the clock is the same spring the axis rides. */
-.tl__detail {
-    grid-row: 2;
-    grid-column: 1;
-    animation: tl-detail var(--spring-dock-duration) var(--spring-dock) both;
 }
 
 @keyframes tl-detail {
@@ -698,17 +705,19 @@ defineExpose({ value });
    The flow band's PRM arm is the REGISTER's (`track-flow.css`) — it parks the band
    mid-sweep at the amplitude floor, which is the same behaviour this file used to
    restate. */
-@media (prefers-reduced-motion: reduce) {
-    .tl__check path {
-        animation: none;
-    }
+@layer components {
+    @media (prefers-reduced-motion: reduce) {
+        .tl__check path {
+            animation: none;
+        }
 
-    .tl__detail {
-        animation-duration: 0.01ms;
-    }
+        .tl__detail {
+            animation-duration: 0.01ms;
+        }
 
-    .tl__mark:hover .tl__disc {
-        scale: 1;
+        .tl__mark:hover .tl__disc {
+            scale: 1;
+        }
     }
 }
 </style>

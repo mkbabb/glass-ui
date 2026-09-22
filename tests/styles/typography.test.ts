@@ -101,3 +101,30 @@ describe("alert type ladder — content scale on both steps, one constant ratio"
         expect(alertTitle).not.toMatch(/\bline-clamp-\d/);
     });
 });
+
+/* BK register wave 10-5 (10.0.0) — italic is notation, not decoration. The library ships
+   one upright axis (R-12: `italicAngle 0`), so every `font-style: italic` it authors is a
+   synthesized oblique. `text-caption` reads as a caption by size, leading and weight, and
+   an oblique on running prose is a masking fallback for a face the library does not ship;
+   it goes. `text-math`, `text-math-body` and `fourier-f` keep it: mathematical italic is
+   notation, and they are the declared synthesis-dependent set. */
+const utilityBody = (css: string, name: string): string =>
+    css.match(new RegExp(`@utility ${name}\\s*\\{([^}]*)\\}`))?.[1] ?? "";
+
+describe("italic is notation — the caption is upright, the math keeps its slant", () => {
+    const semantic = readFileSync("src/styles/typography/semantic.css", "utf8");
+    const utilities = readFileSync("src/styles/typography/utilities.css", "utf8");
+
+    it("`text-caption` declares no font-style and keeps its size, leading and weight", () => {
+        const caption = utilityBody(semantic, "text-caption");
+        expect(caption).toMatch(/font-size:\s*var\(--type-caption\)/);
+        expect(caption).toMatch(/line-height:\s*var\(--type-leading-caption\)/);
+        expect(caption).toMatch(/font-weight:\s*400/);
+        expect(caption).not.toMatch(/font-style/);
+    });
+
+    it("`text-math`, `text-math-body` and `fourier-f` stay italic", () => {
+        for (const name of ["text-math", "text-math-body", "fourier-f"])
+            expect(utilityBody(utilities, name), name).toMatch(/font-style:\s*italic/);
+    });
+});

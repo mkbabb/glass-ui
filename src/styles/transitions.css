@@ -5,8 +5,10 @@
  * recipe sheet. Unlayered rules land in the implicit unlayered origin,
  * which outranks every `@layer` block at equal specificity — an
  * asymmetry that let a Vue <Transition> class silently outrank a
- * `@layer components` recipe. `animations.css` stays unlayered (pure
- * `@keyframes`, layer-agnostic by spec). */
+ * `@layer components` recipe. ~~`animations.css` stays unlayered (pure
+ * `@keyframes`, layer-agnostic by spec).~~ [2026-09-22 · BK register wave 10-1 —
+ * `animations.css` carries style rules beside its `@keyframes`; they are in
+ * `@layer components` at 10.0.0 and the keyframes stay top-level.] */
 
 @layer components {
     /* ── Fade (symmetric, fast) ── */

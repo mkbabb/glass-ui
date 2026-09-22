@@ -30,8 +30,11 @@
    minted here).
 
    `@layer components`; the consuming slider/progress/timeline recipes stay
-   UNLAYERED (Vue scoped), so their sizing + state legs win over this base
-   groove at equal specificity.
+   ~~UNLAYERED (Vue scoped), so their sizing + state legs win over this base
+   groove at equal specificity~~ [2026-09-22 · BK register wave 10-1 — only the
+   slider stays unlayered; the progress and timeline blocks sit in `@layer
+   components` at 10.0.0 and still win, by the scoped attribute's specificity and
+   by source order, the SFC bundle folding in after this file].
    ════════════════════════════════════════════════════════════════════════ */
 
 @layer components {

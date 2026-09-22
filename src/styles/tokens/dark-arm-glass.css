@@ -21,8 +21,10 @@
    what dark changes is that saturate holds at the named ceiling
    (`--glass-saturate-deep`) instead of at a point part-way up the light arm's
    lerp. One consumer write to that token still retunes both modes. */
-.dark .glass-deep {
-    --glass-blur-deep:
-        blur(var(--glass-blur-deep-active-radius))
-        saturate(var(--glass-saturate-deep));
+@layer components {
+    .dark .glass-deep {
+        --glass-blur-deep:
+            blur(var(--glass-blur-deep-active-radius))
+            saturate(var(--glass-saturate-deep));
+    }
 }

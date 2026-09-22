@@ -58,9 +58,11 @@
  * A consumer that needs a named cross-element timeline writes the WHOLE value
  * (`--scroll-progress-timeline: --my-timeline` + `timeline-scope` on an ancestor),
  * never a fragment inside `scroll()`. */
-.scroll-progress {
-    transform-origin: 0 50%;
-    transform: scaleX(0);
+@layer components {
+    .scroll-progress {
+        transform-origin: 0 50%;
+        transform: scaleX(0);
+    }
 }
 @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: scroll()) {
@@ -68,9 +70,11 @@
             from { transform: scaleX(0); }
             to   { transform: scaleX(1); }
         }
-        .scroll-progress {
-            animation: gl-scroll-grow auto linear;
-            animation-timeline: var(--scroll-progress-timeline, scroll(nearest block));
+        @layer components {
+            .scroll-progress {
+                animation: gl-scroll-grow auto linear;
+                animation-timeline: var(--scroll-progress-timeline, scroll(nearest block));
+            }
         }
     }
 }
@@ -88,13 +92,15 @@
                 transform: translateY(var(--scroll-reveal-rise, 6px));
             }
         }
-        [data-scroll-reveal] > * {
-            animation: gl-reveal-in auto linear both;
-            animation-timeline: view(block);
-            animation-range: entry 0% entry var(--scroll-reveal-range-end, 60%);
-        }
-        [data-scroll-reveal].scroll-reveal--inline > * {
-            animation-timeline: view(inline);
+        @layer components {
+            [data-scroll-reveal] > * {
+                animation: gl-reveal-in auto linear both;
+                animation-timeline: view(block);
+                animation-range: entry 0% entry var(--scroll-reveal-range-end, 60%);
+            }
+            [data-scroll-reveal].scroll-reveal--inline > * {
+                animation-timeline: view(inline);
+            }
         }
     }
 }

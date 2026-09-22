@@ -87,7 +87,8 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
 <template>
     <!-- The section is a concentric
          CARD, not a flush-square hairline block. The `border` (all-side) width is
-         Tailwind; the concentric `border-radius` (max(floor, ctx − inset)) + the
+         ~~Tailwind~~ [2026-09-22 · BK register wave 10-1 — the sheet's
+         `.configurator-layer` rule's own]; the concentric `border-radius` (max(floor, ctx − inset)) + the
          `overflow: hidden` clip + the section tint + the CARD border-color come from
          the scoped `.configurator-layer` rule in configurator.css, which reads the
          Law-1 relay off the parent ctx (the <Configurator> root site #1 / the gear
@@ -99,7 +100,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
         data-slot="configurator-layer"
         :class="
             cn(
-                'configurator-layer border',
+                'configurator-layer',
                 props.class,
             )
         "
@@ -205,12 +206,14 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
  * chevron rotation is owned by the shared `transition-disclosure` register
  * (`btn.css`); no scoped chevron transition survives here.
  */
-.configurator-layer-region {
-    transition: grid-template-rows var(--spring-dock-duration) var(--spring-dock);
-}
-@media (prefers-reduced-motion: reduce) {
+@layer components {
     .configurator-layer-region {
-        transition: none;
+        transition: grid-template-rows var(--spring-dock-duration) var(--spring-dock);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .configurator-layer-region {
+            transition: none;
+        }
     }
 }
 </style>

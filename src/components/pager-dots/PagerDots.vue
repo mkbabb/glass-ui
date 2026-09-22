@@ -425,180 +425,182 @@ const liveMessage = computed(() => {
    Three layers: a crisp bed, the worm masses, the transparent hit-targets. Every
    paint reads a `--pager-*` token (the consumer retint seam). */
 
-.pager-dots {
-    /* THE ONE RAIL GAP — the bed, the buttons and the ring chassis all read it.
-       A second gap literal cannot exist, so the eight-pixel bed/button drift is
-       structurally unreachable rather than fixed. */
-    --pager-rail-gap: var(--space-residue);
-    /* the hit cell: 24px, WCAG 2.5.8 AA, a NAMED law rather than a series rung.
-       The transparent target IS the cell — a target larger than its cell needed a
-       negative margin to pull it back, and two knobs to tune the pair. Zero knobs
-       beat two. */
-    --pager-hit-cell: 1.5rem;
-    --pager-dot-size: var(--space-body); /* 12px — the worm body's D */
-    --pager-dot-active: var(--foreground);
-    --pager-dot-inactive: color-mix(in srgb, var(--foreground) 52%, transparent);
-    --pager-dot-hover: color-mix(in srgb, var(--foreground) 72%, transparent);
-
-    /* the worm layer's ink, ONCE at the layer. OPAQUE: it is the sole carrier of
-       the active/inactive distinction, and it occludes the bed it sits on. */
-    --pager-worm-layer-opacity: 1;
-    /* the travel-squish scalar (1 at rest), written per frame by the driver. */
-    --stretch: 1;
-    /* the FLIP stagger step, off the motion canon's own stagger rung. */
-    --pager-flip-stagger: calc(var(--motion-stagger-default) * 0.15);
-
-    gap: var(--pager-rail-gap);
-    position: relative;
-}
-
-/* THE BED LAYER — N crisp pips, NEVER filtered. */
-.pager-bed-layer {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--pager-rail-gap);
-    pointer-events: none;
-    color: var(--pager-dot-active);
-}
-.pager-dots[data-orientation="vertical"] .pager-bed-layer {
-    flex-direction: column;
-}
-
-.goo-dot {
-    flex: 0 0 var(--pager-hit-cell);
-    width: var(--pager-hit-cell);
-    height: var(--pager-hit-cell);
-    display: grid;
-    place-items: center;
-    /* the window-slide FLIP: placed back where the eye last saw it, released on
-       the coordinated-travel spring, staggered outward from the active pip. */
-    translate: var(--pip-flip, 0px) 0;
-    transition: translate var(--spring-dock-duration) var(--spring-dock);
-    transition-delay: calc(var(--pip-rank, 0) * var(--pager-flip-stagger));
-}
-.pager-dots[data-orientation="vertical"] .goo-dot {
-    translate: 0 var(--pip-flip, 0px);
-}
-.goo-dot[data-flip] {
-    transition: none;
-}
-.goo-dot::before {
-    content: "";
-    width: var(--pager-dot-size);
-    height: var(--pager-dot-size);
-    border-radius: var(--radius-pill);
-    background: var(--pager-dot-inactive);
-    transition:
-        background-color var(--duration-fast) var(--ease-standard),
-        scale var(--spring-press-duration) var(--spring-press);
-}
-/* a clipped window edge cue — a smaller pip. */
-.goo-dot[data-edge]::before {
-    width: calc(var(--pager-dot-size) * 0.5);
-    height: calc(var(--pager-dot-size) * 0.5);
-    opacity: 0.6;
-}
-
-/* THE WORM LAYER — the three masses and the ink, once. No filter, ever: the
-   {circle, rect, circle} union at full girth IS a stadium. */
-.pager-worm-layer {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: var(--pager-worm-layer-opacity, 1);
-    color: var(--pager-dot-active);
-    contain: layout paint;
-    isolation: isolate;
-}
-
-/* THE WORM MASSES. They reserve their resting footprint ONCE; the travel is all
-   `translate`, the squash is the CSS `scale` reciprocal, the neck's span is
-   `scale`. Never an animated width (motion-canon P5). */
-.goo-body,
-.goo-neck {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: var(--pager-dot-size);
-    height: var(--pager-dot-size);
-    margin-top: calc(var(--pager-dot-size) / -2);
-    margin-left: calc(var(--pager-dot-size) / -2);
-    background: currentColor;
-    transform-origin: center;
-    /* ENGAGE-ONLY: the compositor hint is armed while the worm is in flight and
-       released when it parks — a permanent `will-change` is a permanent layer. */
-    will-change: auto;
-}
-.pager-dots[data-orientation="vertical"] .goo-body,
-.pager-dots[data-orientation="vertical"] .goo-neck {
-    top: 0;
-    left: 50%;
-}
-
-.goo-body {
-    border-radius: var(--radius-pill);
-    scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
-}
-.pager-dots[data-orientation="vertical"] .goo-body {
-    scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
-}
-
-/* THE NECK — the stadium's body. A rect of the bodies' own diameter bridging two
-   circles of that diameter IS a stadium; there is nothing left for a filter to
-   merge, and the driver only spans it. */
-.goo-neck {
-    border-radius: 0;
-    opacity: 0;
-}
-
-/* ── THE INTERACTION LAYER — the hit-targets ─────────────────────────────── */
-.pager-dot {
-    position: relative;
-    z-index: 1;
-    /* target ≡ cell, so the inset is identically zero and does not exist */
-    width: var(--pager-hit-cell);
-    height: var(--pager-hit-cell);
-    padding: 0;
-    border: 0;
-    cursor: pointer;
-    background: transparent;
-}
-
-/* THE RAIL IS ALIVE IN THE HAND. Rest, hover and press computed byte-identical
-   before this: the hover token was declared and README-promised with zero rules
-   to read it, and the press squish scaled a childless transparent box. The pip is
-   what a reader sees, so the pip is what responds — one step brighter and one
-   step larger under the pointer, and it gives under the press. */
-@media (hover: hover) {
-    .goo-dot[data-hover]::before {
-        background: var(--pager-dot-hover);
-        scale: 1.14;
-    }
-}
-.goo-dot[data-press]::before {
-    scale: 0.97;
-}
-
-/* COARSE POINTERS get the 44px floor (A6). The painted pip does not grow — the
-   TARGET does, which is the whole distinction the rung exists to make. */
-@media (pointer: coarse) {
+@layer components {
     .pager-dots {
-        --pager-hit-cell: var(--touch-target);
-    }
-}
+        /* THE ONE RAIL GAP — the bed, the buttons and the ring chassis all read it.
+           A second gap literal cannot exist, so the eight-pixel bed/button drift is
+           structurally unreachable rather than fixed. */
+        --pager-rail-gap: var(--space-residue);
+        /* the hit cell: 24px, WCAG 2.5.8 AA, a NAMED law rather than a series rung.
+           The transparent target IS the cell — a target larger than its cell needed a
+           negative margin to pull it back, and two knobs to tune the pair. Zero knobs
+           beat two. */
+        --pager-hit-cell: 1.5rem;
+        --pager-dot-size: var(--space-body); /* 12px — the worm body's D */
+        --pager-dot-active: var(--foreground);
+        --pager-dot-inactive: color-mix(in srgb, var(--foreground) 52%, transparent);
+        --pager-dot-hover: color-mix(in srgb, var(--foreground) 72%, transparent);
 
-@media (prefers-reduced-motion: reduce) {
-    /* P6 — the worm seats on the target with zero in-between frames, the bed does
-       not FLIP, and only the fade survives. */
+        /* the worm layer's ink, ONCE at the layer. OPAQUE: it is the sole carrier of
+           the active/inactive distinction, and it occludes the bed it sits on. */
+        --pager-worm-layer-opacity: 1;
+        /* the travel-squish scalar (1 at rest), written per frame by the driver. */
+        --stretch: 1;
+        /* the FLIP stagger step, off the motion canon's own stagger rung. */
+        --pager-flip-stagger: calc(var(--motion-stagger-default) * 0.15);
+
+        gap: var(--pager-rail-gap);
+        position: relative;
+    }
+
+    /* THE BED LAYER — N crisp pips, NEVER filtered. */
+    .pager-bed-layer {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--pager-rail-gap);
+        pointer-events: none;
+        color: var(--pager-dot-active);
+    }
+    .pager-dots[data-orientation="vertical"] .pager-bed-layer {
+        flex-direction: column;
+    }
+
+    .goo-dot {
+        flex: 0 0 var(--pager-hit-cell);
+        width: var(--pager-hit-cell);
+        height: var(--pager-hit-cell);
+        display: grid;
+        place-items: center;
+        /* the window-slide FLIP: placed back where the eye last saw it, released on
+           the coordinated-travel spring, staggered outward from the active pip. */
+        translate: var(--pip-flip, 0px) 0;
+        transition: translate var(--spring-dock-duration) var(--spring-dock);
+        transition-delay: calc(var(--pip-rank, 0) * var(--pager-flip-stagger));
+    }
+    .pager-dots[data-orientation="vertical"] .goo-dot {
+        translate: 0 var(--pip-flip, 0px);
+    }
+    .goo-dot[data-flip] {
+        transition: none;
+    }
+    .goo-dot::before {
+        content: "";
+        width: var(--pager-dot-size);
+        height: var(--pager-dot-size);
+        border-radius: var(--radius-pill);
+        background: var(--pager-dot-inactive);
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            scale var(--spring-press-duration) var(--spring-press);
+    }
+    /* a clipped window edge cue — a smaller pip. */
+    .goo-dot[data-edge]::before {
+        width: calc(var(--pager-dot-size) * 0.5);
+        height: calc(var(--pager-dot-size) * 0.5);
+        opacity: 0.6;
+    }
+
+    /* THE WORM LAYER — the three masses and the ink, once. No filter, ever: the
+       {circle, rect, circle} union at full girth IS a stadium. */
+    .pager-worm-layer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: var(--pager-worm-layer-opacity, 1);
+        color: var(--pager-dot-active);
+        contain: layout paint;
+        isolation: isolate;
+    }
+
+    /* THE WORM MASSES. They reserve their resting footprint ONCE; the travel is all
+       `translate`, the squash is the CSS `scale` reciprocal, the neck's span is
+       `scale`. Never an animated width (motion-canon P5). */
     .goo-body,
     .goo-neck {
-        scale: 1 1;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: var(--pager-dot-size);
+        height: var(--pager-dot-size);
+        margin-top: calc(var(--pager-dot-size) / -2);
+        margin-left: calc(var(--pager-dot-size) / -2);
+        background: currentColor;
+        transform-origin: center;
+        /* ENGAGE-ONLY: the compositor hint is armed while the worm is in flight and
+           released when it parks — a permanent `will-change` is a permanent layer. */
+        will-change: auto;
     }
-    .goo-dot {
-        transition: none;
+    .pager-dots[data-orientation="vertical"] .goo-body,
+    .pager-dots[data-orientation="vertical"] .goo-neck {
+        top: 0;
+        left: 50%;
+    }
+
+    .goo-body {
+        border-radius: var(--radius-pill);
+        scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
+    }
+    .pager-dots[data-orientation="vertical"] .goo-body {
+        scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
+    }
+
+    /* THE NECK — the stadium's body. A rect of the bodies' own diameter bridging two
+       circles of that diameter IS a stadium; there is nothing left for a filter to
+       merge, and the driver only spans it. */
+    .goo-neck {
+        border-radius: 0;
+        opacity: 0;
+    }
+
+    /* ── THE INTERACTION LAYER — the hit-targets ─────────────────────────────── */
+    .pager-dot {
+        position: relative;
+        z-index: 1;
+        /* target ≡ cell, so the inset is identically zero and does not exist */
+        width: var(--pager-hit-cell);
+        height: var(--pager-hit-cell);
+        padding: 0;
+        border: 0;
+        cursor: pointer;
+        background: transparent;
+    }
+
+    /* THE RAIL IS ALIVE IN THE HAND. Rest, hover and press computed byte-identical
+       before this: the hover token was declared and README-promised with zero rules
+       to read it, and the press squish scaled a childless transparent box. The pip is
+       what a reader sees, so the pip is what responds — one step brighter and one
+       step larger under the pointer, and it gives under the press. */
+    @media (hover: hover) {
+        .goo-dot[data-hover]::before {
+            background: var(--pager-dot-hover);
+            scale: 1.14;
+        }
+    }
+    .goo-dot[data-press]::before {
+        scale: 0.97;
+    }
+
+    /* COARSE POINTERS get the 44px floor (A6). The painted pip does not grow — the
+       TARGET does, which is the whole distinction the rung exists to make. */
+    @media (pointer: coarse) {
+        .pager-dots {
+            --pager-hit-cell: var(--touch-target);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        /* P6 — the worm seats on the target with zero in-between frames, the bed does
+           not FLIP, and only the fade survives. */
+        .goo-body,
+        .goo-neck {
+            scale: 1 1;
+        }
+        .goo-dot {
+            transition: none;
+        }
     }
 }
 </style>

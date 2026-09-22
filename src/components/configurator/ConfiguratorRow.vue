@@ -122,7 +122,9 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
         <div class="flex items-baseline justify-between gap-3">
             <div class="flex min-w-0 items-baseline gap-2">
                 <!-- Secondary label register: the row label
-                     is the SECONDARY rung — the body size (text-small / 500),
+                     is the SECONDARY rung — ~~the body size (text-small / 500)~~
+                     [2026-09-22 · BK register wave 10-1 — Label's own `.label`
+                     register (`--control-label` / 500 / `--foreground`), its one source],
                      deliberately BELOW the .configurator-section-label section
                      register on the parent <ConfiguratorLayer>. The token-name
                      sub-label below (the mono `name` span) is the tertiary
@@ -130,7 +132,7 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
                      section → row → token. -->
                 <Label
                     :id="labelId"
-                    class="truncate text-small font-medium text-foreground"
+                    class="truncate"
                 >
                     {{ label }}
                 </Label>
@@ -180,65 +182,67 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
  * Block padding follows the same density ladder so the row breathes the
  * same way the gap does. `comfortable` keeps the base `py-2` (0.5rem).
  */
-.configurator-row[data-size="sm"] {
-    gap: var(--configurator-row-gap-compact);
-    padding-block: var(--configurator-row-py-compact);
-}
-
-.configurator-row[data-size="md"] {
-    gap: var(--configurator-row-gap-comfortable);
-    padding-block: var(--configurator-row-py-comfortable);
-}
-
-.configurator-row[data-size="lg"] {
-    gap: var(--configurator-row-gap-spacious);
-    padding-block: var(--configurator-row-py-spacious);
-}
-
-/*
- * Container-style-query companion using `@container style(--density)`.
- * Lets a row react to an ANCESTOR's `--configurator-size` custom property with no
- * `data-size` markup contract — a host that sets `--configurator-size: sm`
- * on any wrapping element retunes every descendant row's gap/padding.
- * In Tailwind v4 every element is a custom-property style-query container
- * by default, so `style(--configurator-size: X)` matches the nearest ancestor that
- * declares `--configurator-size` (no explicit container-name needed).
- *
- * Specificity: the inner `.configurator-row` selector (scoped to
- * `[data-v]`, so 0,2,0) sits just BELOW the `[data-size]` attribute
- * rules above (0,3,0) and just ABOVE the baked-in `gap-1.5`/`py-2` Tailwind
- * utilities (0,1,0) — so the container path overrides the bare recipe, yet
- * a row carrying BOTH the attribute and a `--configurator-size` ancestor lands on the
- * attribute rule (identical token, identical paint). `[data-size]` stays
- * the SOLE fallback (not a dead mirror).
- *
- * No `@supports` wrapper: unlike the sibling scroll-state recipe (which probes
- * `@supports (container-type: scroll-state)` — a probeable container-type
- * VALUE), style queries introduce no new `container-type` value (every element
- * is a style container by default), so there is no clean declaration test for
- * style-query support. Instead this relies on `@container style()`'s own
- * graceful degradation: an engine without style-query support parses the
- * unknown `@container style(--configurator-size: …)` as an invalid at-rule, drops the
- * whole block, and keeps the `[data-size]` attribute base. (The earlier
- * `@supports (container-type: inline-size)` wrapper was wrong — it probed
- * SIZE-query support, a distinct feature with a distinct support timeline.)
- */
-@container style(--configurator-size: sm) {
-    .configurator-row {
+@layer components {
+    .configurator-row[data-size="sm"] {
         gap: var(--configurator-row-gap-compact);
         padding-block: var(--configurator-row-py-compact);
     }
-}
-@container style(--configurator-size: md) {
-    .configurator-row {
+
+    .configurator-row[data-size="md"] {
         gap: var(--configurator-row-gap-comfortable);
         padding-block: var(--configurator-row-py-comfortable);
     }
-}
-@container style(--configurator-size: lg) {
-    .configurator-row {
+
+    .configurator-row[data-size="lg"] {
         gap: var(--configurator-row-gap-spacious);
         padding-block: var(--configurator-row-py-spacious);
+    }
+
+    /*
+     * Container-style-query companion using `@container style(--density)`.
+     * Lets a row react to an ANCESTOR's `--configurator-size` custom property with no
+     * `data-size` markup contract — a host that sets `--configurator-size: sm`
+     * on any wrapping element retunes every descendant row's gap/padding.
+     * In Tailwind v4 every element is a custom-property style-query container
+     * by default, so `style(--configurator-size: X)` matches the nearest ancestor that
+     * declares `--configurator-size` (no explicit container-name needed).
+     *
+     * Specificity: the inner `.configurator-row` selector (scoped to
+     * `[data-v]`, so 0,2,0) sits just BELOW the `[data-size]` attribute
+     * rules above (0,3,0) and just ABOVE the baked-in `gap-1.5`/`py-2` Tailwind
+     * utilities (0,1,0) — so the container path overrides the bare recipe, yet
+     * a row carrying BOTH the attribute and a `--configurator-size` ancestor lands on the
+     * attribute rule (identical token, identical paint). `[data-size]` stays
+     * the SOLE fallback (not a dead mirror).
+     *
+     * No `@supports` wrapper: unlike the sibling scroll-state recipe (which probes
+     * `@supports (container-type: scroll-state)` — a probeable container-type
+     * VALUE), style queries introduce no new `container-type` value (every element
+     * is a style container by default), so there is no clean declaration test for
+     * style-query support. Instead this relies on `@container style()`'s own
+     * graceful degradation: an engine without style-query support parses the
+     * unknown `@container style(--configurator-size: …)` as an invalid at-rule, drops the
+     * whole block, and keeps the `[data-size]` attribute base. (The earlier
+     * `@supports (container-type: inline-size)` wrapper was wrong — it probed
+     * SIZE-query support, a distinct feature with a distinct support timeline.)
+     */
+    @container style(--configurator-size: sm) {
+        .configurator-row {
+            gap: var(--configurator-row-gap-compact);
+            padding-block: var(--configurator-row-py-compact);
+        }
+    }
+    @container style(--configurator-size: md) {
+        .configurator-row {
+            gap: var(--configurator-row-gap-comfortable);
+            padding-block: var(--configurator-row-py-comfortable);
+        }
+    }
+    @container style(--configurator-size: lg) {
+        .configurator-row {
+            gap: var(--configurator-row-gap-spacious);
+            padding-block: var(--configurator-row-py-spacious);
+        }
     }
 }
 </style>

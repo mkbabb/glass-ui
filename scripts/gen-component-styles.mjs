@@ -22,6 +22,18 @@ function hasComponentStyles(path) {
     );
 }
 
+/* The layer order `./styles` declares at `styles/index.css:1`, read rather than restated.
+   Every shipped rule sits in `@layer components` (A-3-CLASS, 10.0.0), so the
+   component-only entry declares the same order before its first import and its layers
+   rank exactly as the full entry's do. */
+function declaredLayerOrder() {
+    const order = readFileSync(resolve(REPO_ROOT, "src/styles/index.css"), "utf8").match(
+        /^@layer [^;{]+;/m,
+    );
+    if (!order) throw new Error("gen-component-styles: styles/index.css declares no @layer order");
+    return order[0];
+}
+
 function outputMember(outputRoot, source) {
     const sourceRoot = resolve(REPO_ROOT, "src");
     if (source.startsWith(`${sourceRoot}/`)) return `./${relative(sourceRoot, source)}`;
@@ -42,7 +54,7 @@ export function generateComponentStyles(outputRoot, orderedSources) {
         throw new Error(`gen-component-styles: closure target(s) absent from output — ${missing.join(", ")}`);
     }
     const output = resolve(outputRoot, "component-styles.css");
-    writeFileSync(output, `${imports}\n`, "utf8");
+    writeFileSync(output, `${declaredLayerOrder()}\n${imports}\n`, "utf8");
     console.log(`gen-component-styles: wrote ${output}`);
     return { output, members: [...new Set([...members, "./glass-ui.css"])] };
 }

@@ -21,83 +21,85 @@
  * page's — and the `.glass-value-marks` register: dot geometry, the
  * `--value-mark-*` vocabulary and the family's one `[data-consumed]` swallow
  * law, none of it re-forked here. */
-.scroll-progress-rim {
-    /* 3px, not 4 (#74 J-9). At 4px the band read as a second chrome edge around
-       the host rather than a report ON it; the fill pill carries the signal and
-       the ground only has to be findable. The dots stay 6px — they are the
-       checkpoint read and they deliberately overhang. */
-    --scroll-progress-rim-width: 3px;
-    --scroll-progress-rim-inset: 2px;
-    --scroll-progress-rim-margin: 8px;
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    isolation: isolate;
-    pointer-events: none;
-}
+@layer components {
+    .scroll-progress-rim {
+        /* 3px, not 4 (#74 J-9). At 4px the band read as a second chrome edge around
+           the host rather than a report ON it; the fill pill carries the signal and
+           the ground only has to be findable. The dots stay 6px — they are the
+           checkpoint read and they deliberately overhang. */
+        --scroll-progress-rim-width: 3px;
+        --scroll-progress-rim-inset: 2px;
+        --scroll-progress-rim-margin: 8px;
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        isolation: isolate;
+        pointer-events: none;
+    }
 
-.scroll-progress-rim__track {
-    position: absolute;
-    border-radius: var(--radius-pill);
-    background: var(--track-well-recess);
-}
+    .scroll-progress-rim__track {
+        position: absolute;
+        border-radius: var(--radius-pill);
+        background: var(--track-well-recess);
+    }
 
-/* horizontal — the pill hugs the block-end edge, inset from the sides so host
- * curvature (a pill dock, a circular host) never clips it */
-.scroll-progress-rim[data-orientation="horizontal"] .scroll-progress-rim__track {
-    inset-inline: var(--scroll-progress-rim-margin);
-    inset-block-end: var(--scroll-progress-rim-inset);
-    block-size: var(--scroll-progress-rim-width);
-}
+    /* horizontal — the pill hugs the block-end edge, inset from the sides so host
+     * curvature (a pill dock, a circular host) never clips it */
+    .scroll-progress-rim[data-orientation="horizontal"] .scroll-progress-rim__track {
+        inset-inline: var(--scroll-progress-rim-margin);
+        inset-block-end: var(--scroll-progress-rim-inset);
+        block-size: var(--scroll-progress-rim-width);
+    }
 
-/* vertical — the pill hugs the inline-end edge */
-.scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__track {
-    inset-block: var(--scroll-progress-rim-margin);
-    inset-inline-end: var(--scroll-progress-rim-inset);
-    inline-size: var(--scroll-progress-rim-width);
-}
+    /* vertical — the pill hugs the inline-end edge */
+    .scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__track {
+        inset-block: var(--scroll-progress-rim-margin);
+        inset-inline-end: var(--scroll-progress-rim-inset);
+        inline-size: var(--scroll-progress-rim-width);
+    }
 
-.scroll-progress-rim__fill {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: var(--scroll-progress-rim-spectrum, var(--rainbow-violet));
-    /* spring the width: the clip reveal is the pill's visible length, animated on
-     * --spring-dock; a growing reveal, never a translated fixed-width thumb */
-    clip-path: inset(0 100% 0 0 round var(--radius-pill));
-    transition: clip-path var(--spring-dock-duration) var(--spring-dock);
-}
-
-.scroll-progress-rim[data-orientation="horizontal"] .scroll-progress-rim__fill {
-    clip-path: inset(
-        0 calc(100% - var(--scroll-progress-rim-fill, 0%)) 0 0 round
-            var(--radius-pill)
-    );
-}
-
-.scroll-progress-rim[data-orientation="horizontal"]:dir(rtl)
     .scroll-progress-rim__fill {
-    clip-path: inset(
-        0 0 0 calc(100% - var(--scroll-progress-rim-fill, 0%)) round
-            var(--radius-pill)
-    );
-}
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: var(--scroll-progress-rim-spectrum, var(--rainbow-violet));
+        /* spring the width: the clip reveal is the pill's visible length, animated on
+         * --spring-dock; a growing reveal, never a translated fixed-width thumb */
+        clip-path: inset(0 100% 0 0 round var(--radius-pill));
+        transition: clip-path var(--spring-dock-duration) var(--spring-dock);
+    }
 
-.scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__fill {
-    clip-path: inset(
-        calc(100% - var(--scroll-progress-rim-fill, 0%)) 0 0 0 round
-            var(--radius-pill)
-    );
-}
+    .scroll-progress-rim[data-orientation="horizontal"] .scroll-progress-rim__fill {
+        clip-path: inset(
+            0 calc(100% - var(--scroll-progress-rim-fill, 0%)) 0 0 round
+                var(--radius-pill)
+        );
+    }
 
-/* The dot recipe is the value-marks register's — the third copy of it in this
-   family is DELETED, not maintained. The register's mechanic (a zero-thickness
-   positioned line whose `::before` centres the disc) is direction-agnostic and
-   measures the vertical axis from the block-end, which is the axis this rim
-   already grows along. */
+    .scroll-progress-rim[data-orientation="horizontal"]:dir(rtl)
+        .scroll-progress-rim__fill {
+        clip-path: inset(
+            0 0 0 calc(100% - var(--scroll-progress-rim-fill, 0%)) round
+                var(--radius-pill)
+        );
+    }
 
-@media (prefers-reduced-motion: reduce) {
-    .scroll-progress-rim__fill {
-        transition: none;
+    .scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__fill {
+        clip-path: inset(
+            calc(100% - var(--scroll-progress-rim-fill, 0%)) 0 0 0 round
+                var(--radius-pill)
+        );
+    }
+
+    /* The dot recipe is the value-marks register's — the third copy of it in this
+       family is DELETED, not maintained. The register's mechanic (a zero-thickness
+       positioned line whose `::before` centres the disc) is direction-agnostic and
+       measures the vertical axis from the block-end, which is the axis this rim
+       already grows along. */
+
+    @media (prefers-reduced-motion: reduce) {
+        .scroll-progress-rim__fill {
+            transition: none;
+        }
     }
 }

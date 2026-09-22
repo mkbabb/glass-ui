@@ -411,56 +411,58 @@ defineExpose({ play });
 </template>
 
 <style scoped>
-.hm {
-    position: relative;
-    display: inline;
-    isolation: isolate;
-    padding-inline: var(--hm-reserve, 0px);
-    --hm-h: 78;
-    --hm-band: light-dark(oklch(0.86 0.16 var(--hm-h)), oklch(0.44 0.16 var(--hm-h)));
-}
-.hm del {
-    text-decoration: none;
-}
-.hm mark {
-    background: none;
-    color: inherit;
-}
-/*
-   The frame is an ORIGIN, not a layer over the word — the geometry inside it is
-   absolute, in 1:1 CSS px, and `overflow: visible` lets it out. So the frame's size is
-   authored per mark, in those same units, as the LINE RECT the mark was made for.
+@layer components {
+    .hm {
+        position: relative;
+        display: inline;
+        isolation: isolate;
+        padding-inline: var(--hm-reserve, 0px);
+        --hm-h: 78;
+        --hm-band: light-dark(oklch(0.86 0.16 var(--hm-h)), oklch(0.44 0.16 var(--hm-h)));
+    }
+    .hm del {
+        text-decoration: none;
+    }
+    .hm mark {
+        background: none;
+        color: inherit;
+    }
+    /*
+       The frame is an ORIGIN, not a layer over the word — the geometry inside it is
+       absolute, in 1:1 CSS px, and `overflow: visible` lets it out. So the frame's size is
+       authored per mark, in those same units, as the LINE RECT the mark was made for.
 
-   It cannot be `100%`. This element is absolutely positioned inside an INLINE host, and
-   a percentage there resolves against the box CSS 2.1 §10.1.4 builds between that
-   inline's first and last fragments — not the word's box. Chromium resolves that box to
-   `width: 0` for the `<del>` mount, for a ring-reserved slot and for BOTH line rects of
-   a wrapped `<mark>`, at 1440 and at 390×844×3, in both themes; the mounts that happen
-   to paint are the single-fragment ones, where it coincides with the word. An SVG
-   viewport of zero width renders nothing at all, so perfect geometry behind a perfect
-   mask window painted nothing on four of the ten story mounts.
+       It cannot be `100%`. This element is absolutely positioned inside an INLINE host, and
+       a percentage there resolves against the box CSS 2.1 §10.1.4 builds between that
+       inline's first and last fragments — not the word's box. Chromium resolves that box to
+       `width: 0` for the `<del>` mount, for a ring-reserved slot and for BOTH line rects of
+       a wrapped `<mark>`, at 1440 and at 390×844×3, in both themes; the mounts that happen
+       to paint are the single-fragment ones, where it coincides with the word. An SVG
+       viewport of zero width renders nothing at all, so perfect geometry behind a perfect
+       mask window painted nothing on four of the ten story mounts.
 
-   `left`/`top` stay 0: the frame's POSITION is what `measure()` reads its origin from,
-   and a size that cannot move it keeps that reading a fixed point.
-*/
-.hm-mark {
-    position: absolute;
-    left: 0;
-    top: 0;
-    overflow: visible;
-    pointer-events: none;
-}
-.hm[data-shape="highlight"] .hm-mark {
-    z-index: -1;
-}
-.hm-mark--settling {
-    transition: transform var(--spring-world-duration) var(--spring-world);
-}
-.hm-ink {
-    /* A spring owns its own clock — the settle rides `--spring-present` and the
-       duration that curve was solved for, never a literal that drifts away from it
-       the first time the preset is retuned. */
-    animation: hm-settle var(--spring-present-duration) var(--spring-present) both;
+       `left`/`top` stay 0: the frame's POSITION is what `measure()` reads its origin from,
+       and a size that cannot move it keeps that reading a fixed point.
+    */
+    .hm-mark {
+        position: absolute;
+        left: 0;
+        top: 0;
+        overflow: visible;
+        pointer-events: none;
+    }
+    .hm[data-shape="highlight"] .hm-mark {
+        z-index: -1;
+    }
+    .hm-mark--settling {
+        transition: transform var(--spring-world-duration) var(--spring-world);
+    }
+    .hm-ink {
+        /* A spring owns its own clock — the settle rides `--spring-present` and the
+           duration that curve was solved for, never a literal that drifts away from it
+           the first time the preset is retuned. */
+        animation: hm-settle var(--spring-present-duration) var(--spring-present) both;
+    }
 }
 @keyframes hm-settle {
     from {
@@ -470,15 +472,17 @@ defineExpose({ play });
         opacity: 1;
     }
 }
-@media (prefers-reduced-motion: reduce) {
-    .hm-mark {
-        transform: none !important;
-    }
-    .hm-mark--settling {
-        transition: none;
-    }
-    .hm-ink {
-        animation: none;
+@layer components {
+    @media (prefers-reduced-motion: reduce) {
+        .hm-mark {
+            transform: none !important;
+        }
+        .hm-mark--settling {
+            transition: none;
+        }
+        .hm-ink {
+            animation: none;
+        }
     }
 }
 </style>

@@ -26,41 +26,43 @@
    covers the unified material selector group AND the `.glass-specular-track`
    alias so EVERY band surface (not just the opt-in class) freezes the position
    while keeping the centred catch-light + the warm-cream tint. */
-@media (prefers-reduced-motion: reduce) {
-    .glass-wash::before,
-    .glass-quiet::before,
-    .glass-resting::before,
-    .glass-floating::before,
-    .glass-overlay::before,
-    .glass-card::before,
-    .dock-icon-button::before,
-    .dock-tab-button::before,
-    .dock-select-trigger::before,
-    .dock-dropdown-trigger::before,
-    .glass-specular-track::before {
-        --specular-x: 50%;
-        --specular-y: 50%;
-        transition: none;
+@layer components {
+    @media (prefers-reduced-motion: reduce) {
+        .glass-wash::before,
+        .glass-quiet::before,
+        .glass-resting::before,
+        .glass-floating::before,
+        .glass-overlay::before,
+        .glass-card::before,
+        .dock-icon-button::before,
+        .dock-tab-button::before,
+        .dock-select-trigger::before,
+        .dock-dropdown-trigger::before,
+        .glass-specular-track::before {
+            --specular-x: 50%;
+            --specular-y: 50%;
+            transition: none;
+        }
     }
-}
 
-/* ── Reduced-transparency: drop the specular ───────────────────────────────
-   When the user requests reduced transparency the surface goes opaque (the
-   glass.css bracket maps the blurs to `none`); a travelling catch-light on a
-   flat opaque surface is decoration without substrate, so it drops too — across
-   the whole material group. */
-@media (prefers-reduced-transparency: reduce) {
-    .glass-wash::before,
-    .glass-quiet::before,
-    .glass-resting::before,
-    .glass-floating::before,
-    .glass-overlay::before,
-    .glass-card::before,
-    .dock-icon-button::before,
-    .dock-tab-button::before,
-    .dock-select-trigger::before,
-    .dock-dropdown-trigger::before,
-    .glass-specular-track::before {
-        display: none;
+    /* ── Reduced-transparency: drop the specular ───────────────────────────────
+       When the user requests reduced transparency the surface goes opaque (the
+       glass.css bracket maps the blurs to `none`); a travelling catch-light on a
+       flat opaque surface is decoration without substrate, so it drops too — across
+       the whole material group. */
+    @media (prefers-reduced-transparency: reduce) {
+        .glass-wash::before,
+        .glass-quiet::before,
+        .glass-resting::before,
+        .glass-floating::before,
+        .glass-overlay::before,
+        .glass-card::before,
+        .dock-icon-button::before,
+        .dock-tab-button::before,
+        .dock-select-trigger::before,
+        .dock-dropdown-trigger::before,
+        .glass-specular-track::before {
+            display: none;
+        }
     }
 }
