@@ -1,14 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import {
-    cssToOklch,
-    defaultBlobColorResolver,
-} from "@glass/composables/color/index";
+import { cssToOklch, oklchToGammaRgb } from "@glass/composables/color/index";
 
 // The goo-blob per-frame `value.js` throw.
 //
-// `defaultBlobColorResolver` resolves its color via `cssToOklch(css)`, which
-// feeds the string straight to value.js's `parseCssColor`. Value reports
+// The blob's resolve is `oklchToGammaRgb(cssToOklch(css))`; `cssToOklch` feeds the
+// string straight to value.js's `parseCssColor`. Value reports
 // parse a CSS custom-property reference (`var(--primary)`) and THROWS — once per
 // frame the renderer drew with a token color (the confirmed live runtime bug).
 //
@@ -22,7 +19,7 @@ describe("goo-blob color resolution — the var() → concrete fix", () => {
         // This is the exact string the demo story passes; pre-fix it reached
         // value.js every frame and threw.
         expect(() => cssToOklch("var(--primary)")).toThrow();
-        expect(() => defaultBlobColorResolver("var(--primary)")).toThrow();
+        expect(() => oklchToGammaRgb(cssToOklch("var(--primary)"))).toThrow();
     });
 
     it("resolves a concrete rgb() color clean (the value GooBlob's computed-style read produces)", () => {
@@ -33,7 +30,7 @@ describe("goo-blob color resolution — the var() → concrete fix", () => {
         expect(stop.L).toBeGreaterThanOrEqual(0);
         expect(stop.L).toBeLessThanOrEqual(1);
 
-        const rgb = defaultBlobColorResolver("rgb(26, 23, 23)");
+        const rgb = oklchToGammaRgb(cssToOklch("rgb(26, 23, 23)"));
         expect(rgb).toHaveLength(3);
         for (const c of rgb) {
             expect(c).toBeGreaterThanOrEqual(0);
@@ -42,8 +39,8 @@ describe("goo-blob color resolution — the var() → concrete fix", () => {
     });
 
     it("passes a hex / oklch literal through value.js without a throw", () => {
-        expect(() => defaultBlobColorResolver("#1a1717")).not.toThrow();
-        expect(() => defaultBlobColorResolver("oklch(0.3 0.02 60)")).not.toThrow();
+        expect(() => oklchToGammaRgb(cssToOklch("#1a1717"))).not.toThrow();
+        expect(() => oklchToGammaRgb(cssToOklch("oklch(0.3 0.02 60)"))).not.toThrow();
     });
 
     it("rejects transparency at the named numeric-renderer boundary", () => {

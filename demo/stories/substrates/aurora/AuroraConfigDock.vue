@@ -132,28 +132,32 @@ function applyAtoms() {
         zones: zonesMoved ? { ...atoms.zones! } : undefined,
         ...(colorSourceMoved ? {} : { seed: undefined, harmony: undefined }),
     };
+    // `light` rides the door only on the impasto media (oil, vangogh); every other
+    // arm takes the field axes alone.
+    const field = interactivity && {
+        scroll: interactivity.scroll,
+        swirl: interactivity.swirl,
+        amplitude: interactivity.amplitude,
+    };
+    const moved = mediumMoved ? atoms.medium : undefined;
     const next: AuroraAtoms =
-        mediumMoved &&
-        atoms.medium?.kind !== undefined &&
-        atoms.medium.kind !== "smooth"
+        moved?.kind === "oil" || moved?.kind === "vangogh"
             ? {
                   ...common,
-                  medium: { ...atoms.medium },
+                  medium: { ...moved },
                   ...(interactivity ? { interactivity: { ...interactivity } } : {}),
               }
-            : {
-                  ...common,
-                  ...(mediumMoved ? { medium: { kind: "smooth" as const } } : {}),
-                  ...(interactivity
-                      ? {
-                            interactivity: {
-                                scroll: interactivity.scroll,
-                                swirl: interactivity.swirl,
-                                amplitude: interactivity.amplitude,
-                            },
-                        }
-                      : {}),
-              };
+            : moved !== undefined && moved.kind !== "smooth"
+              ? {
+                    ...common,
+                    medium: { kind: moved.kind, amount: moved.amount },
+                    ...(field ? { interactivity: field } : {}),
+                }
+              : {
+                    ...common,
+                    ...(mediumMoved ? { medium: { kind: "smooth" as const } } : {}),
+                    ...(field ? { interactivity: field } : {}),
+                };
     const resolved = resolveAtoms(next, presetBaseline);
     if (interactivity && (atoms.medium?.kind ?? presetBaseline.medium) !== "smooth") {
         resolved.interactivity = {

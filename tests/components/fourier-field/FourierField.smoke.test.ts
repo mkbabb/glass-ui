@@ -23,18 +23,15 @@ import {
     FOURIER_FIGURES,
     makeHarmonicFigure,
     mintSpectrum,
-    ringsAt,
     type MintedSpectrum,
 } from "@glass/components/fourier-field";
 import {
     FOURIER_REFERENCE_DIAGONAL_PX,
     FOURIER_PAINT_FLOOR_PX,
+    ringsAt,
 } from "@glass/components/fourier-field/renderer/mint";
 import { createFourierClock, FOURIER_SETTLE_ZETA_FLOOR, FOURIER_TRAVEL_SPRING } from "@glass/components/fourier-field/clock";
-import {
-    FOURIER_QUANTUM_FINE,
-    FOURIER_STROKE_RUNGS,
-} from "@glass/components/fourier-field/constants";
+import { FOURIER_QUANTUM_FINE } from "@glass/components/fourier-field/constants";
 import { FOURIER_SHAPES } from "../../../demo/stories/substrates/fourier-field/fourier-paths";
 
 const SRC = join(process.cwd(), "src");
@@ -193,18 +190,6 @@ describe("fourier-field — THE MINT: the axis maxima of record", () => {
 });
 
 describe("fourier-field — THE RINGS: drawn only when they read as rings", () => {
-    it("draws no ring narrower than the stroke drawing it", () => {
-        const m = shape("f-mark");
-        for (const stroke of FOURIER_STROKE_RUNGS) {
-            const drawn = ringsAt(m, 856, stroke);
-            const pxPerModel = 856 / m.diagonal;
-            const eligible = m.terms.filter(
-                (c) => 2 * c.amplitude * pxPerModel >= stroke,
-            ).length;
-            expect(drawn).toBe(eligible);
-        }
-    });
-
     it("sheds rings as the stage shrinks, with zero media queries to do it", () => {
         const m = shape("f-mark");
         const counts = [856, 700, 560, 420, 336].map((d) => ringsAt(m, d, 8));

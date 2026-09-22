@@ -2,8 +2,8 @@
 //
 // value.js's `parseCssColor` reports `color_context_required` for a `var(--token)` wrapper
 // per frame on a token color. So a token color MUST
-// be un-wrapped to a concrete `rgb(...)` BEFORE the renderer's injected
-// `ColorResolver` (value.js) ever sees it. That un-wrap was bolted on TWICE — once in
+// be un-wrapped to a concrete `rgb(...)` BEFORE the renderer's `(css) => rgb` resolve
+// (value.js) ever sees it. That un-wrap was bolted on TWICE — once in
 // `GooBlob.vue` (`resolveColorString`) and again INSIDE the renderer
 // (`useMetaballRenderer.ts` `resolveRimColor` + its `rimCache`), the second reaching
 // BACK into the canvas element for a `getComputedStyle` and so coupling the pure-fn
@@ -11,7 +11,7 @@
 //
 // This leaf is the SINGLE un-wrap path. The SFC un-wraps EVERY color string (base +
 // rim + every palette stop) through it BEFORE handing concrete strings to the
-// renderer, so the renderer's `ColorResolver` only ever sees concrete `rgb(...)`
+// renderer, so the renderer's `(css) => rgb` resolve only ever sees concrete `rgb(...)`
 // strings and stays DOM-free. `getComputedStyle` appears EXACTLY ONCE in the codebase
 // for this concern (here).
 //

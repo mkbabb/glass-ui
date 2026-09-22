@@ -13,7 +13,7 @@
 //   - useTokenColor    — reactive read of a CSS custom property's resolved value.
 //   - resolveTokenColor — one `var(--token)` → concrete-rgb unwrap leaf:
 //                        the single cached `getComputedStyle` cascade read the blob
-//                        un-wraps colors through BEFORE the renderer's ColorResolver,
+//                        un-wraps colors through BEFORE the renderer's color resolve,
 //                        so the renderer stays DOM-free. Distinct from useTokenColor
 //                        (reads a property BY NAME) — this un-wraps a color STRING.
 //   - useClipboard     — one modern clipboard write path with scope-owned

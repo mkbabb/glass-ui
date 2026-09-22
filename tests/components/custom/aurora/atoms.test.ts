@@ -148,9 +148,11 @@ describe("resolveAtoms total-function fuzz", () => {
         ) => {
             const { medium, ...common } = input;
             const atoms: AuroraAtoms =
-                medium?.kind !== undefined && medium.kind !== "smooth"
+                medium?.kind === "oil" || medium?.kind === "vangogh"
                     ? { ...common, medium }
-                    : { ...common, ...(medium ? { medium } : {}) };
+                    : medium?.kind !== undefined && medium.kind !== "smooth"
+                      ? { ...common, medium: { kind: medium.kind, amount: medium.amount } }
+                      : { ...common, ...(medium ? { medium } : {}) };
             const cfg = resolveAtoms(atoms);
             violations.push(...configViolations(cfg, JSON.stringify(input)));
             count++;
@@ -267,6 +269,17 @@ describe("interactivity is discriminated by medium", () => {
         };
         expect(invalid.medium?.kind).toBe("smooth");
         expect(valid.interactivity?.swirl).toBe(true);
+    });
+
+    it("admits light only on the media whose texture writes impasto (oil, vangogh)", () => {
+        // @ts-expect-error — crayon writes no impasto, so light has nothing to relight.
+        const inert: AuroraAtoms = { medium: { kind: "crayon" }, interactivity: { light: true } };
+        const lit: AuroraAtoms = {
+            medium: { kind: "vangogh", amount: 0.6 },
+            interactivity: { light: true },
+        };
+        expect(inert.medium?.kind).toBe("crayon");
+        expect(lit.interactivity?.light).toBe(true);
     });
 });
 

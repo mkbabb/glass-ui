@@ -105,15 +105,18 @@ export interface AuroraFieldInteractivityAtom {
     amplitude?: number;
 }
 
-/** Smooth fields expose the cursor field but have no directional impasto light. */
+/** No impasto to relight (smooth, and every medium but oil/vangogh): no `light`. */
 export interface AuroraSmoothInteractivityAtom extends AuroraFieldInteractivityAtom {
     light?: never;
 }
 
-/** Textured media may additionally steer their directional light from the cursor. */
+/** The impasto media (oil, vangogh) may also steer their light from the cursor. */
 export interface AuroraPainterlyInteractivityAtom extends AuroraFieldInteractivityAtom {
     light?: boolean;
 }
+
+/** Media whose texture amount writes `impasto` — the only ones `light` relights. */
+type AuroraImpastoMedium = "oil" | "vangogh";
 
 export type AuroraInteractivityAtom =
     | AuroraSmoothInteractivityAtom
@@ -206,8 +209,9 @@ interface AuroraAtomsBase {
 }
 
 /**
- * The medium-discriminated atoms surface. Smooth fields retain swirl/scroll/amplitude but
- * reject the directional `light` axis; textured media expose it explicitly.
+ * The medium-discriminated atoms surface. Every medium retains swirl/scroll/amplitude;
+ * the directional `light` axis is admitted only where the medium writes impasto for it
+ * to relight (oil, vangogh) and is `never` on every other arm.
  */
 export type AuroraAtoms = AuroraAtomsBase &
     (
@@ -217,7 +221,14 @@ export type AuroraAtoms = AuroraAtomsBase &
           }
         | {
               medium: {
-                  kind: Exclude<AuroraMedium, "smooth">;
+                  kind: Exclude<AuroraMedium, "smooth" | AuroraImpastoMedium>;
+                  amount?: number;
+              };
+              interactivity?: AuroraSmoothInteractivityAtom;
+          }
+        | {
+              medium: {
+                  kind: AuroraImpastoMedium;
                   amount?: number;
               };
               interactivity?: AuroraPainterlyInteractivityAtom;
@@ -442,18 +453,28 @@ export function configToAtoms(cfg: AuroraConfig): AuroraAtoms {
         noise: unlerp(cfg.warpAmount, 0.2, 0.6),
         motion: motionFor(cfg),
     };
-    return kind === "smooth"
-        ? { ...base, medium: { kind }, ...(field ? { interactivity: field } : {}) }
-        : {
-              ...base,
-              medium: { kind, amount: textureAmountFor(cfg, kind) },
-              ...(field || it?.light !== undefined
-                  ? {
-                        interactivity: {
-                            ...field,
-                            ...(it?.light !== undefined ? { light: it.light } : {}),
-                        },
-                    }
-                  : {}),
-          };
+    if (kind === "smooth") {
+        return { ...base, medium: { kind }, ...(field ? { interactivity: field } : {}) };
+    }
+    const amount = textureAmountFor(cfg, kind);
+    if (kind !== "oil" && kind !== "vangogh") {
+        // No impasto to relight, so `light` has no arm to project onto.
+        return {
+            ...base,
+            medium: { kind, amount },
+            ...(field ? { interactivity: field } : {}),
+        };
+    }
+    return {
+        ...base,
+        medium: { kind, amount },
+        ...(field || it?.light !== undefined
+            ? {
+                  interactivity: {
+                      ...field,
+                      ...(it?.light !== undefined ? { light: it.light } : {}),
+                  },
+              }
+            : {}),
+    };
 }

@@ -50,6 +50,13 @@ import * as TimelineSurface from "@glass/components/timeline";
 // assertion: they fail to typecheck when a door closes.
 import type { FourierSource } from "@glass/components/fourier-field";
 import type { GpuBackend, RendererStatus } from "@glass/index";
+// [2026-09-22 · register wave 10-3] The mirror door: `ColorResolver` is CUT from
+// `./color` at 10.0.0 with the const it annotated. The directive is the assertion —
+// it goes unused, and fails, if the name comes back.
+// @ts-expect-error — `ColorResolver` is no longer exported from `./color`.
+import type { ColorResolver as _RetiredColorResolver } from "@glass/composables/color";
+import * as ColorSurface from "@glass/composables/color";
+import * as FourierFieldSurface from "@glass/components/fourier-field";
 import * as ChipSurface from "@glass/components/chip";
 import * as TypewriterSurface from "@glass/components/typewriter";
 
@@ -411,6 +418,11 @@ const retiredSubpathRuntimeMembers = [
     { subpath: "handmark", surface: HandMarkSurface, name: "InkMark" },
     { subpath: "select", surface: SelectSurface, name: "SelectScrollUpButton" },
     { subpath: "select", surface: SelectSurface, name: "SelectScrollDownButton" },
+    // [2026-09-22 · register wave 10-2/10-3] Off the barrels at 10.0.0: `ringsAt` stays
+    // exported from `renderer/mint.ts` (its test is the one external site);
+    // `defaultBlobColorResolver` is `oklchToGammaRgb(cssToOklch(css))`, both on `./color`.
+    { subpath: "fourier-field", surface: FourierFieldSurface, name: "ringsAt" },
+    { subpath: "color", surface: ColorSurface, name: "defaultBlobColorResolver" },
 ] as const;
 
 const exactSubpathRuntimeSurfaces = [
