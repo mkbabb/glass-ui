@@ -30,6 +30,21 @@ consumer updates via a marked addendum in ITS tranche, told by ONE outbound lett
   manifest, which lives INSIDE `MIGRATION.md §10.0.0` (it travels with the package once MIGRATION
   joins `files`, 10-6). FR-COB-8/FR-COB-12 are measured in this lane and recorded. The datum is
   "every unlayered top-level rule", never a number.
+  [2026-09-22 15:50 · DRIVER RULING on Lane L's STOP — the implement seat layered 379 of 466 rules and
+  STOPPED 87 rules in seven files (Aurora.vue, configurator styles.css/ConfiguratorRow.vue/
+  ConfiguratorLayer.vue, Label.vue, data-table styles.css, paper.css) because, once layered, they lose
+  to the library's OWN template utilities, which is the lawful cascade (`@layer utilities` after
+  `@layer components`); the gate arm is RED on exactly those 87. RULING: a fight is not grounds for an
+  allowlist entry — the fight IS the defect A-3-CLASS names, seen from inside. Cure per site, one
+  source per declaration: the CURRENT paint is the intended paint (the stylesheet won while
+  unlayered), so the template utility that contradicts the stylesheet is REMOVED from the template
+  (or, where the utility is the intended state/responsive variant, the duplicate stylesheet
+  declaration is deleted instead — the lane says which, per site, with grounds); `paper.css`
+  overriding its own `@utility` folds the override INTO the `@utility` definition (the utility is
+  the consumer-facing source). The lane's paint-diff harness is the witness: zero unintended
+  computed-style delta on the demo routes after the cure, the gate arm GREEN on the whole set, the
+  slider the only named exception. The adjudicator dictates the per-site cure list; a second cure
+  round is authorized if the first leaves any of the 87 unresolved.]
 - **10-2 · `ringsAt`** (O-20 CUT-3). Off the `./fourier-field` barrel; the function stays exported
   from `mint.ts` (the test is its external site); the tautology test struck; the two behavioural
   tests kept; the demo story NOT wired to it.
