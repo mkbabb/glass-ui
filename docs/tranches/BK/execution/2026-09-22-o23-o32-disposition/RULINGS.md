@@ -224,6 +224,18 @@ BREAKING cures are lawful there and are marked.
   SegmentedTabs>` still resolves after the generic (a generic SFC's default export is a function
   type); the §4.3 MIGRATION test-code clause widens only if it errors. No in-repo user.
 
+- **CT2 residue (at CT2's implement return):** `dark-arm.css:84` ("LIFTS L10→L16") is the same stale
+  L16 — CT2's fence widens to that one line (dated bracket, L17). A CHANGELOG line for the demo
+  configurator alpha drop is DECLINED (the demo does not ship in the package; CHANGELOG records the
+  package). The tests-visual `dock-wrap-content-driven.spec.ts` question is ruled separately below.
+
+- **`tests-visual/dock-wrap-content-driven.spec.ts` RETIRED (ruled at CT2):** it asserts
+  `overflow="wrap"` (struck at BK #47 W1) against `--dock-max-inline-size` (deleted at AC-D-1); no
+  package script, gate seat, CI step or roster binds it (measured: zero references outside the file).
+  A spec for a deleted prop is legacy — the file is deleted (`git rm` is the driver's; the lane
+  removes it from the tree with `rm`), the CT2 bracket it just received is moot, RECORD notes the
+  retirement with the measured zero-binding census. Gates stay 60 (it was never a seat).
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
