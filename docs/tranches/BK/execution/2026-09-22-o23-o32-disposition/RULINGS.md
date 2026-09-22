@@ -205,6 +205,14 @@ BREAKING cures are lawful there and are marked.
   G-NO-ORPHAN-EXPORT "left the roster with no MIGRATION row" arm stays RED for `cm-serif` until R2
   writes the row — expected, recorded, not a lane defect.
 
+- **AC1 path corrections RATIFIED (at AC1 Challenger B):** (1) `src/styles/theme/literals.css` is the
+  owner of the plain `@theme` block (bridges.css holds only `@theme inline`), so `--font-serif-math`
+  lands there and bridges.css carries a dated pointer only; (2) `useTabDragMorph.ts:13` import path and
+  (3) `segmented-tabs.test.ts:229` `findComponent({ name })` are forced consequences of the ruled type
+  move and are inside AC1's fence by that reach. The §4.2 depth-0 colon split that sends type-hinted
+  arbitrary values (`text-[length:…]`, `shadow-[color:…]`) into a colour catch-all is a regression, not
+  a ruled shape: the cure keeps the type hint's family (the adjudicator dictates the exact split).
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
