@@ -179,8 +179,15 @@ BREAKING cures are lawful there and are marked.
   chromium (`chromium.launch()` with no `channel`), never the machine's Google Chrome — a preinstalled
   browser is a runner-image accident, the bundled build is what ci.yml already installs for the pixel
   floor (`npx playwright install --with-deps chromium`). The verify job gains that same step after
-  `npm ci` (release.yml too, since it runs the tests). AC2's fence widens by exactly that: the two witness files' launch line and the one
-  ci.yml step; the adjudicator dictates it.
+  `npm ci`, and release.yml gains the identical step after its `npm ci` because it runs the same
+  vitest tree [2026-09-22 · made explicit at AC2 Challenger B F1: BOTH workflows, one step each, no
+  conditional]. AC2's fence widens by exactly that: the two witness files' launch line, the one ci.yml
+  step and the one release.yml step; the adjudicator dictates it.
+- **AC2 out-of-fence residue (ruled at AC2 Challenger B):** `src/components/dock/styles/shell.css`'s
+  stagger docblock still teaches the struck `step × (childIndex − 1)` ladder — AC2's fence widens to
+  that docblock (comment only, dated bracket, the edge-in ladder as painted). DESIGN.md's Slider axes
+  paragraph names the six rung tokens — R2. `demo/stories/dock/overflow.vue`'s stale FadingScroll /
+  narrow-cap prose is inside AC2's fence and is cured there.
 
 - **AC2 `playwright` declaration (ruled at AC2's Challenger A):** the two witnesses import `playwright`
   while the root package.json declares neither `playwright` nor `@playwright/test`; the import resolves
