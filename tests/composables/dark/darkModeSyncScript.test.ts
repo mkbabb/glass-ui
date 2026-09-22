@@ -22,6 +22,9 @@ interface RunOptions {
     // A storage that THROWS on write — quota, privacy mode, a sandboxed origin.
     // Reads still answer, which is the real shape of every one of those failures.
     throwOnWrite?: boolean;
+    // A `localStorage` ACCESSOR that throws — a sandboxed origin, a privacy mode that
+    // raises SecurityError on the property itself. Nothing is read or written.
+    throwOnRead?: boolean;
 }
 
 function makeHost(opts: RunOptions) {
@@ -40,13 +43,17 @@ function makeHost(opts: RunOptions) {
     // Every RECORDED `localStorage.setItem`, so the write-back arm reads a
     // measurement rather than an inspection of the source string.
     const writes: Array<[string, string]> = [];
+    const storage = {
+        getItem: () => opts.stored,
+        setItem: (k: string, v: string) => {
+            if (opts.throwOnWrite) throw new Error("QuotaExceededError");
+            writes.push([k, v]);
+        },
+    };
     const host = {
-        localStorage: {
-            getItem: () => opts.stored,
-            setItem: (k: string, v: string) => {
-                if (opts.throwOnWrite) throw new Error("QuotaExceededError");
-                writes.push([k, v]);
-            },
+        get localStorage() {
+            if (opts.throwOnRead) throw new Error("SecurityError");
+            return storage;
         },
         // The script reads `window.matchMedia`, so `window` carries it; the host
         // object stands in for the page's global either way.
@@ -322,11 +329,13 @@ describe("G-NO-FLASH — the parse-time stamp: precedence, determinism, write-ba
         // first paint — no type error, no runtime error, just the flash this module
         // exists to remove. So the default is pinned to the byte, and both figures
         // below are DERIVED from this function rather than typed: they reproduce the
-        // pre-addition emission exactly.
+        // pre-addition emission exactly. [2026-09-22 · register-wave N-3: moved once, at
+        // the 10.0.0 major, by the read's inner `try` — 300 B `VTba/T+6…` → 313 B
+        // `MOGEZdbx…`. The pin holds the new bytes the same way.]
         const out = darkModeSyncScript();
-        expect(Buffer.byteLength(out)).toBe(300);
+        expect(Buffer.byteLength(out)).toBe(313);
         expect(createHash("sha256").update(out).digest("base64")).toBe(
-            "VTba/T+6rX/y5+Gk2oyLaaYBdLf4xSZtXnc7kMYziI8=",
+            "MOGEZdbxrYiPCsQApEdoFKYoqnbmCxzBPrGPG/EbfJk=",
         );
     });
 
@@ -395,6 +404,37 @@ describe("G-NO-FLASH — the parse-time stamp: precedence, determinism, write-ba
         expect(all.style.colorScheme).toBe("dark");
     });
 
+    it("G-NO-FLASH · a storage that THROWS ON READ still stamps — the default arm paints", () => {
+        // The read is the first storage touch, so before 10.0.0 a throwing accessor
+        // skipped the whole body inside the one `try` and the page painted unstamped
+        // (dark=false, colorScheme=""), measured on 9.0.0. The read now has its own
+        // `try`: an unreadable store is treated as absent, and the fallback decides.
+        const host = { stored: "dark", startDark: false, throwOnRead: true };
+
+        // "os" asks the platform, in both directions — never the stored "dark"
+        for (const prefersDark of [true, false]) {
+            const run = runScript({ ...host, prefersDark });
+            expect(run.classList.has("dark")).toBe(prefersDark);
+            expect(run.style.colorScheme).toBe(prefersDark ? "dark" : "light");
+        }
+
+        // the object form takes its ABSENT arm — dark here — not its `auto` arm (light)
+        // and not the platform (light): nothing could be read, so no one chose
+        const split = runScript({
+            ...host,
+            prefersDark: false,
+            options: { defaultDark: { absent: true, auto: false } },
+        });
+        expect(split.classList.has("dark")).toBe(true);
+        expect(split.style.colorScheme).toBe("dark");
+
+        // normalize: the write-back throws too, after the stamp, and costs only itself
+        const normalized = runScript({ ...host, prefersDark: true, options: { normalize: true } });
+        expect(normalized.classList.has("dark")).toBe(true);
+        expect(normalized.style.colorScheme).toBe("dark");
+        expect(normalized.writes).toEqual([]);
+    });
+
     it("G-NO-FLASH · the absent and `auto` arms SPLIT — one object says what no scalar can", () => {
         // The split policy, stated as the pair it is: a first visit is a deliberate
         // light document, a reader who chose `auto` gets their platform. Four repos
@@ -440,9 +480,11 @@ describe("G-NO-FLASH — the parse-time stamp: precedence, determinism, write-ba
             }).leaked,
         ).toEqual([]);
 
-        // …and the scalar emissions did not move a byte to gain it
+        // …and the scalar emissions did not move a byte to gain it [2026-09-22 ·
+        // register-wave N-3: the 10.0.0 read hardening spells the absent test `m==null`,
+        // so an unreadable store counts as absent; the scalar arm is still one welded test]
         expect(darkModeSyncScript({ defaultDark: false })).toContain(
-            '((m===null||m==="auto")&&false)',
+            '((m==null||m==="auto")&&false)',
         );
     });
 

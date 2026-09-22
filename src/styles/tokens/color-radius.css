@@ -344,8 +344,8 @@
     --tier-featured: oklch(0.841 0.173 84.2);
     --tier-saved:    oklch(0.676 0.176 252.3);
     --like:          oklch(0.633 0.200 24.9);
-    --success:       oklch(0.720 0.192 149.5);
-    --warning:       oklch(0.770 0.165 70.6);
+    --success:       oklch(0.600 0.192 149.5);
+    --warning:       oklch(0.635 0.165 70.6);
     --info:          oklch(0.626 0.186 259.6);
     --delete:        oklch(0.597 0.198 25.5);
 
@@ -358,14 +358,22 @@
        the 4.5 body floor, on solid opaque fills. Measured at the authored values,
        the warm-ink `hsl(24 10% 10%)` (the same literal warning and the dark
        `--primary-foreground` already speak — no new ink minted):
-         success  dark ink 7.60  ·  white ink 2.21
-         warning  dark ink 8.19  ·  white ink 2.05
+         success  dark ink ~~7.60~~  ·  white ink ~~2.21~~
+         warning  dark ink ~~8.19~~  ·  white ink ~~2.05~~
          info     dark ink 4.82  ·  white ink 3.49   ← the tranche's thinnest pair
        So all three take dark ink and NO HUE MOVES: the plates are the library's
-       identity and a contrast defect is not a licence to retune them. Destructive
+       identity ~~and a contrast defect is not a licence to retune them~~. Destructive
        keeps white ink because red is the one dark-ceiling hue here — white ink 4.70
        beats dark ink 3.58 at `hsl(0 72% 50%)`. Every figure re-derivable by
-       `tests/styles/contrast-computed.test.ts`, which reads THESE bytes. */
+       `tests/styles/contrast-computed.test.ts`, which reads THESE bytes.
+       [2026-09-22 · register-wave N-2: the hue still does not move; L does. A labelled
+       StatusDot is painted wholly in its tone, so the tone owes WCAG 1.4.11's 3:1
+       against the card, and the light success and warning plates missed it. Both drop
+       L on the B-7 recipe, hue and chroma kept (success 0.720 → 0.600, warning 0.770 →
+       0.635); the dark arm already clears and does not move. The struck rows, re-derived:
+         success  dark ink 4.91  ·  white ink 3.42  ·  over --card 3.30
+         warning  dark ink 4.96  ·  white ink 3.39  ·  over --card 3.27
+       The dark ink still wins both, so the polarity holds.] */
     --success-foreground: hsl(24 10% 10%);
     --warning-foreground: hsl(24 10% 10%);
     --info-foreground:    hsl(24 10% 10%);

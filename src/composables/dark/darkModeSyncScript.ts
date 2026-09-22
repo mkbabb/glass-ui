@@ -60,6 +60,10 @@ export interface DarkModeSyncScriptOptions {
      * No scalar reproduces that pair — `false` makes `auto` mean light and `"os"`
      * makes a first visit follow the OS — which is why a consumer with the split
      * policy hand-rolls the whole `<head>` block instead of calling this.
+     *
+     * [2026-09-22 · register-wave N-3 — an UNREADABLE store (a throwing
+     * `localStorage` accessor or `getItem`) counts as ABSENT: the scalar forms
+     * fall to their one arm, the object form to `absent`.]
      */
     defaultDark?: boolean | "os" | { absent: boolean | "os"; auto: boolean | "os" };
     /**
@@ -104,7 +108,10 @@ export function darkModeSyncScript(options: DarkModeSyncScriptOptions = {}): str
     // pins, and a re-hashed default would be blocked at first paint, silently, in the
     // one place this module exists to keep correct. The default emission is therefore
     // BYTE-IDENTICAL across this addition; only an opt-in arm moves bytes, and a
-    // consumer opting in is editing its head script anyway.
+    // consumer opting in is editing its head script anyway. [2026-09-22 · register-wave
+    // N-3 — true of that addition, and of the scalar sentence below. The 10.0.0 read
+    // hardening moves every emission once, by ruling: a major is where a pinned hash
+    // lawfully moves, and the old→new pair is in MIGRATION.md §10.0.0.]
     const arm = (value: boolean | "os") =>
         value === "os"
             ? `window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches`
@@ -116,8 +123,8 @@ export function darkModeSyncScript(options: DarkModeSyncScriptOptions = {}): str
     // the platform") and a policy may answer them differently.
     const fallback =
         typeof defaultDark === "object"
-            ? `(m===null&&${arm(defaultDark.absent)})||(m==="auto"&&${arm(defaultDark.auto)})`
-            : `(m===null||m==="auto")&&${arm(defaultDark)}`;
+            ? `(m==null&&${arm(defaultDark.absent)})||(m==="auto"&&${arm(defaultDark.auto)})`
+            : `(m==null||m==="auto")&&${arm(defaultDark)}`;
     // The capture-forcing seam: a query parameter outranks storage entirely.
     const queryArm = options.queryOverride
         ? `var q=new URLSearchParams(location.search);if(q.has("dark")){d=true;}else if(q.has("light")){d=false;}`
@@ -146,7 +153,11 @@ export function darkModeSyncScript(options: DarkModeSyncScriptOptions = {}): str
     // the cured emission (dark=false, colorScheme=""). Only the WRITE side is
     // fail-open after this pass; an inner try around the read would move the 300 B
     // default and re-pin its CSP hash, which the ledger forbids. Struck, not cured.]
-    return `(function(){try{var m=localStorage.getItem(${JSON.stringify(
+    // [2026-09-22 · register-wave N-3 — cured at 10.0.0, where the hash may move. The
+    // read has its own inner `try`: a throwing accessor leaves `m` undefined, `m==null`
+    // takes it as absent, and the fallback arm stamps — so for the default the struck
+    // sentence is true again. The outer `try` stays for the write-back.]
+    return `(function(){try{try{var m=localStorage.getItem(${JSON.stringify(
         key,
-    )});var d=m==="${DARK_CLASS}"||(${fallback});${queryArm}var e=document.documentElement;e.classList.toggle("${DARK_CLASS}",d);e.style.colorScheme=d?"dark":"light";${normalizeArm}}catch(_){}})();`;
+    )})}catch(_){}var d=m==="${DARK_CLASS}"||(${fallback});${queryArm}var e=document.documentElement;e.classList.toggle("${DARK_CLASS}",d);e.style.colorScheme=d?"dark":"light";${normalizeArm}}catch(_){}})();`;
 }

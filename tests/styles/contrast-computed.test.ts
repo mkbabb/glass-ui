@@ -448,6 +448,41 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
         });
     });
 
+    // §3b · the STATUS MARKS. A labelled `StatusDot` is `role="img"` with no text
+    // beside it, and every one of its silhouettes is painted in its tone — so the
+    // tone is the whole object, and 1.4.11's 3.0 floor binds it against the card it
+    // sits on (register-wave N-2, the census in its lane record). `--success` and
+    // `--warning` were 2.13 and 1.98 in the light arm; `--info` and `--destructive`
+    // already cleared, and are held here so the set cannot lose one silently.
+    describe("§3b status marks — a solitary StatusDot's tone is visible at all", () => {
+        const MARK_TONES = ["success", "warning", "info", "destructive"] as const;
+        for (const tone of MARK_TONES) {
+            for (const [arm, scope] of ARMS) {
+                it(`--${tone} clears ${NON_TEXT_FLOOR}:1 on --card [${arm}]`, () => {
+                    const measured = ratio(`var(--${tone})`, "var(--card)", scope);
+                    expect(
+                        measured,
+                        `--${tone} over --card [${arm}] computed ${round(measured)}:1`,
+                    ).toBeGreaterThanOrEqual(NON_TEXT_FLOOR);
+                });
+            }
+        }
+
+        // The two retuned tones are declared in three files: the base, the `.dark`
+        // class arm, and `light-dark()`'s pair. Like §4's red, two paints of one colour
+        // are only held if they are compared.
+        it("LOCKSTEP — light-dark()'s pairs declare the SAME --success/--warning as the two class arms", () => {
+            for (const tone of ["success", "warning"]) {
+                const pair = read(LIGHT_DARK).match(
+                    new RegExp(`--${tone}:\\s*light-dark\\(([^,]+\\)),\\s*([^)]+\\))\\s*\\)`),
+                );
+                expect(pair, `light-dark.css declares --${tone}`).not.toBeNull();
+                expect(pair![1].trim()).toBe(declarations(read(LIGHT_TOKENS))[`--${tone}`]);
+                expect(pair![2].trim()).toBe(declarations(read(DARK_TOKENS))[`--${tone}`]);
+            }
+        });
+    });
+
     // §4 · the DOUBLE-JOB table. `--destructive` is the only token that ships as ink
     // AND as a plate, so it owes BOTH floors — and the arm where those two pull
     // hardest against each other (dark) is the arm that had been failing.
@@ -577,7 +612,7 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
             },
             {
                 file: LIGHT_TOKENS,
-                claim: "success  dark ink 7.60",
+                claim: "success  dark ink 4.91",
                 ink: "var(--success-foreground)",
                 surface: "var(--success)",
                 arm: "light",
@@ -612,7 +647,7 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
             },
             {
                 file: LIGHT_TOKENS,
-                claim: "warning  dark ink 8.19",
+                claim: "warning  dark ink 4.96",
                 ink: "var(--warning-foreground)",
                 surface: "var(--warning)",
                 arm: "light",
@@ -653,14 +688,14 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
             // cream page token — not `hsl(0 0% 100%)`, which computes differently.
             {
                 file: LIGHT_TOKENS,
-                claim: "white ink 2.21",
+                claim: "white ink 3.42",
                 ink: "var(--neutral-0)",
                 surface: "var(--success)",
                 arm: "light",
             },
             {
                 file: LIGHT_TOKENS,
-                claim: "white ink 2.05",
+                claim: "white ink 3.39",
                 ink: "var(--neutral-0)",
                 surface: "var(--warning)",
                 arm: "light",
@@ -670,6 +705,24 @@ describe("G-CONTRAST-COMPUTED — authored token pairs clear their floors, by co
                 claim: "white ink 3.49",
                 ink: "var(--neutral-0)",
                 surface: "var(--info)",
+                arm: "light",
+            },
+            // [2026-09-22 · register-wave N-2] The light success/warning rows above
+            // (dark ink, white ink) moved with the retune they measure — 7.60 · 8.19 ·
+            // 2.21 · 2.05 are struck in the comment, their bytes gone. These two are the
+            // bracket's third column, the figure §3b floors.
+            {
+                file: LIGHT_TOKENS,
+                claim: "over --card 3.30",
+                ink: "var(--success)",
+                surface: "var(--card)",
+                arm: "light",
+            },
+            {
+                file: LIGHT_TOKENS,
+                claim: "over --card 3.27",
+                ink: "var(--warning)",
+                surface: "var(--card)",
                 arm: "light",
             },
             // Destructive is the one tone that KEEPS the pale polarity in the light
