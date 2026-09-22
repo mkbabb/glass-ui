@@ -220,6 +220,10 @@ BREAKING cures are lawful there and are marked.
   docblock bracket (onset `step × min(distance from the nearer edge, 3)`, maximum 0.24, last child
   finishes at 0.64 with the 0.4 window) are applied by the driver and commit with lane AC2.
 
+- **R2 probe (from AC1's adjudication):** one vue-tsc line tells whether `InstanceType<typeof
+  SegmentedTabs>` still resolves after the generic (a generic SFC's default export is a function
+  type); the §4.3 MIGRATION test-code clause widens only if it errors. No in-repo user.
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
