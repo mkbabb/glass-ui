@@ -1,0 +1,461 @@
+{
+ "cluster": "infinite-scroll-strikes",
+ "modelId": "claude-opus-5-5[1m]",
+ "rows": [
+  {
+   "id": "O-23 L-1",
+   "stateHead": "PARTIAL",
+   "consequence8": "At their 8.0.0 pin Leg A (the trigger) is already dead but Leg B (the geometry) is live: InfiniteScroll hands its own non-clipping root <div> to IntersectionObserver as root, so GalleryInfiniteGrid (no bounded port on the component) drains every page on mount with zero scroll.",
+   "consequence9": "9.0.0 ships the byte-identical dist/infinite-scroll.js (sha1 a79d718a\u2026), so the drain is identical at 9.0.0; no published version cures it.",
+   "measurements": [
+    "git diff v8.0.0 HEAD --quiet -- src/components/infinite-scroll -> exit 0 (identical); git diff v9.0.0 HEAD --quiet -- same -> exit 0",
+    "shasum reg/800/package/dist/infinite-scroll.js reg/900/package/dist/infinite-scroll.js -> both a79d718a01f508574e348071a55adb807d807228 (cmp: identical)",
+    "8.0.0 dist/infinite-scroll.js:10 `if (t.isIntersecting && s())` \u2014 the handler consults the record; :24-26 check() = teardown+new observer+observe, no onLoadMore call (Leg A dead since 7.0.0, as they say)",
+    "8.0.0 dist/infinite-scroll.js:16-17 `root: e.scrollContainer?.value ?? null`; :61-62 the component passes `scrollContainer: S`; :70-72 S is `ref_key:\"scrollContainer\"` on its own root div (Leg B live). HEAD src: useInfiniteScroll.ts:33, InfiniteScroll.vue:24,27,50",
+    "Real-engine replica (scratchpad/o2332/isprobe/probe.mjs, node + playwright chromium 149 / webkit 26.5, run twice, fresh page per variant): self-root -> pages=10 of 10 with scrollTop=0 in both nested-port and window layouts; root null -> pages=1 of 10. IO entries under self-root: rootBounds.height 201, 2201, 4201 (= the root's own box + 200px margin), isIntersecting true every reconnect",
+    "Cure probe (isprobe/cure.mjs, both engines, twice): fourier layout (ancestor port, component root unbounded) HEAD mount=10 -> cure (root null + scrollMargin=threshold) mount=1, prefetch at 100px-below-fold=2; demo layout (component root IS the bounded port, demo/stories/data/infinite-scroll.vue:78-86) HEAD mount=1 prefetch=2 -> cure mount=1 prefetch=2 (unchanged); root null WITHOUT scrollMargin loses prefetch in both (prefetch=1)",
+    "scrollMargin support (isprobe/t3.mjs): 'scrollMargin' in IntersectionObserver.prototype true in playwright chromium 149, webkit 26.5, firefox 151; TS 6.0.3 lib.dom.d.ts:1343 `scrollMargin?: string` on IntersectionObserverInit",
+    "Born-RED witness (scratchpad/o2332/isw, vitest via repo node_modules, happy-dom, repo tests/setup.ts TestIntersectionObserver): HEAD -> 1 failed (options.root is the component's own <div>); patched copy -> 1 passed; the two existing files (contract + announce, 4 tests) pass on both",
+    "Consumers (grep -rln InfiniteScroll|useInfiniteScroll, node_modules/dist/.git excluded): fourier-analysis web/src/components/visualization/gallery/GalleryInfiniteGrid.vue:3,32 (no class on the component, pin web/package.json:19 \"^8.0.0\"); in-house only demo/stories/data/infinite-scroll.vue:78; value.js/slides/atlas/sci-report: 0 (the only value.js hits are a glass-ui worktree copy under value.js/.claude/worktrees/glass-ui-pinned)"
+   ],
+   "premiseCheck": "Leg B reproduces exactly in two engines (10/10 pages, zero scroll) and the geometry is byte-identical at 8.0.0, 9.0.0 and HEAD; Leg A as they quote it (dist:20-22 check() firing onLoadMore) is their 4.0.0 install's bytes, dead since 7.0.0 as they themselves measured, so ask (2) is already met. No banked ruling (O-20 LEDGER, O-26 LEDGER, register-wave RULINGS) mentions infinite-scroll or FR-GIG, so no collision.",
+   "disposition": "CURE-NOW",
+   "breaking": false,
+   "grounds": "The component's root is only a correct IO root when a consumer makes that root a bounded scroll port (the demo does, via class fallthrough); any consumer whose scroll port is an ancestor gets a root rectangle equal to the list's own box, so the sentinel always intersects and every isLoading true->false reconnect loads again until hasMore is false. Root null clips the target by every ancestor scroll port (including the component itself when it is the port), so it is correct for both layouts; scrollMargin carries the threshold into nested ports so the demo's prefetch survives. Requiring a bounded port by contract (ask 1b) would break fourier's unbounded mount and every ancestor-port layout, and would still drain an unbounded overflow:auto root (its content box contains the sentinel), so it is the weaker cure. types.ts:4 already documents the composable's default as the window; the component was the only thing overriding it.",
+   "cureShape": "(1) InfiniteScroll.vue: delete `const scrollContainer = ref(...)` (:24), the `scrollContainer,` option (:27) and `ref=\"scrollContainer\"` on the root (:50), drop `ref` from the vue import. (2) useInfiniteScroll.ts setupObserver (:32-35): add `scrollMargin: `0px 0px ${threshold}px 0px`` beside rootMargin; the composable's own `scrollContainer` option stays (a caller that passes a real port keeps it as root). (3) check() needs no change: it only reconnects and handleIntersect (:20-28) already gates on entry.isIntersecting. (4) Rewrite the demo comment at demo/stories/data/infinite-scroll.vue:76-77 ('The component sets the scroll container internally'), which becomes false. Born-RED witness: one `it` added to tests/components/infinite-scroll.contract.test.ts asserting `TestIntersectionObserver.instances.at(-1).options.root ?? null` is null and `.options.scrollMargin === \"0px 0px 200px 0px\"` \u2014 RED at HEAD, GREEN on the patched copy, the 4 existing tests stay GREEN (scratchpad/o2332/isw). Not a gate; gates stay 60. Not breaking: props, emits, expose and the composable signature are unchanged; the one behaviour change is that an unbounded list stops draining, which no consumer depends on (fourier files it as the defect; the demo's paint is unchanged per cure.mjs). CHANGELOG line under 10.0.0 fixes.",
+   "replyLine": "L-1: confirmed and taken as CURE-NOW for 10.0.0. At 8.0.0, 9.0.0 and our HEAD the primitive is byte-identical (dist sha1 a79d718a at both published versions), and your two legs split: Leg A is already dead (the handler gates on entry.isIntersecting and check() only reconnects, since 7.0.0), so ask (2) is met; Leg B is live and we reproduced it in Chromium and WebKit \u2014 with the component's own root as the observer root, a list inside an ancestor scroll port loads 10 of 10 pages with zero scroll. The cure is ask (1) in its first form: the observer root becomes the viewport (the component stops passing its own root) and the threshold moves into scrollMargin, so it still prefetches inside nested scroll ports; measured on a patched copy, your layout goes 10 -> 1 page on mount and 2 after scrolling near the end, and our demo (where the component itself is the bounded port) is unchanged. No prop, emit or type changes, so it is not breaking; we did not take the 'require a scroll port' form, which would break your mount and still drain an unbounded overflow root. The witness is a new case in our infinite-scroll contract test, born RED. G15 stands as you wrote it: no pin you can adopt today (8.0.0 or 9.0.0) carries the cure; it arrives with 10.0.0."
+  },
+  {
+   "id": "O-23 \u00a74.1",
+   "stateHead": "DEAD",
+   "consequence8": "./pagination is absent from the 8.0.0 export map and dist, as they measured; nothing to adopt.",
+   "consequence9": "Absent at 9.0.0 too; nothing changes at that pin.",
+   "measurements": [
+    "for r in v8.0.0 v9.0.0 HEAD: git show $r:package.json | grep -c '\"./pagination\"' -> 0, 0, 0 (and grep -c pagination -> 0, 0, 0)",
+    "grep -c pagination reg/800/package/package.json -> 0; reg/900/package/package.json -> 0; ls reg/{800,900}/package/dist | grep -ci pagination -> 0, 0",
+    "MIGRATION.md heading 'Breaking changes' > '### 3. Composable retirements (substrate-without-consumer binary)' > '#### 3.1\u2014useOffsetPagination\u2014REMOVED': Status REMOVED in v1.0, subpath @mkbabb/glass-ui/pagination retired; CHANGELOG.md '## v1.0.0 \u2014 2026-05-11' carries '@mkbabb/glass-ui/pagination subpath REMOVED'"
+   ],
+   "premiseCheck": "Reproduces: 0 at both their pins and at HEAD. One correction to their banked clause: the subpath is not a carry that 'has not landed in three majors' \u2014 it was deliberately removed at v1.0.0 and there is no plan to restore it.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "The subpath was retired at v1.0.0 with a manifest entry (MIGRATION.md 'Composable retirements' 3.1); L-1's cure is to the infinite-scroll primitive and does not touch or revive it.",
+   "cureShape": "ANSWER: ./pagination does not exist at 8.0.0, 9.0.0 or the 10.0.0 tree and will not return; it was removed at v1.0.0 (MIGRATION.md 'Composable retirements' > 3.1 useOffsetPagination REMOVED). Plan nothing around it; L-1 is cured inside ./infinite-scroll.",
+   "replyLine": "\u00a74.1: confirmed \u2014 ./pagination is absent from the export map at 8.0.0, 9.0.0 and our HEAD (0/0/0), and it is not a pending carry: it was removed at v1.0.0 (MIGRATION.md, 'Composable retirements', 3.1) and is not coming back. We read L-1 the same way you do: a change to ./infinite-scroll only."
+  },
+  {
+   "id": "O-32 \u00a71.1",
+   "stateHead": "LIVE",
+   "consequence8": "Confirmed at 8.0.0: the collapsed summary layer is the disclosure (role=button, tabindex=0, aria-label \"Expand dock\", aria-expanded=false, aria-controls, focusin.stop, onKeydown Enter/Space \u2192 expand \u2192 focus first focusable in the full layer or the full layer itself), gated on interaction === \"auto\" && layer === \"summary\".",
+   "consequence9": "Same disclosure at 9.0.0 with one change: the gate is summary-layer only (the `interaction` prop and DockInteraction type are gone, replaced by `collapse: DockCollapse`), so any collapsed summary is a disclosure.",
+   "measurements": [
+    "reg/800/package/dist/dock.js:841-858 summary div (grep -n 'Expand dock' \u2192 :851 is the aria-label line; role :849, tabindex :850, aria-expanded :852, aria-controls :853, onFocusin :854, onKeydown :855): `role: Y.value ? \"button\"`, `tabindex: Y.value ? 0`, `\"aria-label\": Y.value ? \"Expand dock\"`, `\"aria-expanded\": Y.value ? \"false\"`, `\"aria-controls\": \u2026 `${S}-full``, `onFocusin: r[0] ||= se(() => {}, [\"stop\"])`, `onKeydown: Q` (sed -n around grep -n 'Expand dock' \u2192 line 851)",
+    "reg/800/package/dist/dock.js:722 `Y = A(() => a.value === \"auto\" && q.value === \"summary\")`; :723-724 `async function Q(e){ !Y.value || ![\"Enter\",\" \"].includes(e.key) || (e.preventDefault(), I(), await R(), (v.value?.querySelector(b) ?? v.value)?.focus({ preventScroll: !0 })) }`",
+    "reg/900/package/dist/dock.js:786 `H = k(() => B.value === \"summary\")`; :787-788 the same Enter/Space handler; :890-896 (grep -n 'Expand dock' \u2192 :892) the same role/tabindex/aria-*/onFocusin stop/onKeydown bindings",
+    "HEAD src/components/dock/GlassDock.vue:231 `summaryIsDisclosure = computed(() => outerCurrentLayer.value === \"summary\")`; :232-245 onSummaryKeydown; :483-490 the bindings incl. `@focusin.stop` and `@keydown=\"onSummaryKeydown\"`. v8.0.0:GlassDock.vue:196-198 carried the `interaction.value === \"auto\" &&` arm; git log -S \u2192 ac471032 (BK #47 W1, 2026-08-24; git tag --contains \u2192 v9.0.0) dropped it",
+    "GREEN-BY-TYPO probe: grep -c 'keydown' dock.js (case-sensitive) \u2192 0 at 8.0.0, onKeydown \u2192 5; at 9.0.0 keydown \u2192 2 (both addEventListener/removeEventListener at :696,:704 in the click-integrity path, not the disclosure), onKeydown \u2192 6",
+    "API move: grep -rl DockInteraction reg/800/package/dist \u2192 3 files, reg/900 \u2192 0; DockCollapse 0 \u2192 3; reg/900/\u2026/dock/composables/useDockShellProps.d.ts `export type DockCollapse = false | \"closed\" | \"open\"`; grep -c DockCollapse MIGRATION.md \u2192 0, CHANGELOG.md \u2192 0"
+   ],
+   "premiseCheck": "Reproduces byte for byte at 8.0.0, including the GREEN-BY-TYPO trap: the case-sensitive lowercase grep returns 0 because Vue compiles @keydown to onKeydown. Their note needs one addition for 9.0.0: the lowercase grep stops returning 0 there, but its 2 hits are an unrelated addEventListener pair, so it would read GREEN for the wrong reason \u2014 the probe should match the binding, not the word. No banked-ruling collision.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "The disclosure is producer-owned and shipped at 8.0.0 (dist:722-724, 849-855), unchanged in behaviour at 9.0.0 and HEAD except that the gate lost the interaction arm when `interaction` was replaced by `collapse` in ac471032. Their move of the ECD Save into #persistent is the right consumer consequence: the summary is a role=button host and must not contain interactive content (ARIA: button children are presentational).",
+   "cureShape": "ANSWER: confirmed. At 8.0.0 the collapsed summary is the disclosure when interaction is \"auto\"; at 9.0.0 and 10.0.0 whenever the summary layer is current. Retire M-2/B-2. Keep #collapsed free of interactive content at every pin. For a gate, match the binding (`onKeydown: ` beside `\"Expand dock\"`, or the rendered role/aria-expanded in a mount), not the substring `keydown`: at 8.0.0 the lowercase grep misses the handler (0), and at 9.0.0 it hits an unrelated listener pair (2), so it reads GREEN for the wrong reason at both pins.",
+   "replyLine": "\u00a71.1: confirmed at 8.0.0 \u2014 the collapsed summary is the disclosure (role=button, tabindex 0, aria-label \"Expand dock\", aria-expanded, aria-controls, focusin stopped, Enter/Space expands and moves focus to the first focusable in the full layer or the layer itself), gated on interaction \"auto\" (dist/dock.js:722-724, 849-855). Retire M-2 and B-2. Moving the ECD Save into #persistent was right: a role=button host cannot contain controls. Two notes for when you move past 8.0.0: at 9.0.0 the `interaction` prop is gone (replaced by `collapse`), so every collapsed summary is a disclosure; and your keydown probe flips from a miss to a false hit \u2014 the lowercase grep returns 2 at 9.0.0, both from an unrelated addEventListener pair. Match the onKeydown binding or the rendered role/aria-expanded instead."
+  },
+  {
+   "id": "O-32 \u00a71.2",
+   "stateHead": "NOT-APPLICABLE",
+   "consequence8": "No batch tone exists on Badge at 8.0.0; nothing to adopt or retire.",
+   "consequence9": "None at 9.0.0 either.",
+   "measurements": [
+    "grep -c -i batch reg/800/package/dist/badge.js \u2192 0; reg/900/package/dist/badge.js \u2192 0; src/components/badge/Badge.vue at HEAD \u2192 0",
+    "grep -i -E 'AA-3|batch.*tone|violet' over the O-20 LEDGER, O-26 LEDGER and register-wave RULINGS \u2192 0 hits (never ruled, so the withdrawal collides with nothing)"
+   ],
+   "premiseCheck": "Nothing to reproduce: the ask was never taken up and no batch tone shipped at any pin. No banked ruling names AA-3.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "A withdrawn ask that the producer never acted on; recording it closes AA-3's text as a source for a re-open. Their reasoning (batch is a namespace, not a severity) agrees with how the Badge tones are built: tone carries severity/state, not origin.",
+   "cureShape": "ANSWER: noted. AA-3's violet batch tone is withdrawn and recorded closed on our side; Badge ships no batch tone at 8.0.0, 9.0.0 or 10.0.0, and none is planned.",
+   "replyLine": "\u00a71.2: noted. AA-3's violet batch tone is withdrawn and recorded closed on our side; Badge ships no batch tone at 8.0.0, 9.0.0 or our HEAD, and we agree a namespace should not carry a tone."
+  },
+  {
+   "id": "O-23 \u00a72 S-1",
+   "verdict": "SOUND",
+   "stateHead": "DEAD",
+   "consequence8": "The border channel paints at 8.0.0 (W-BUTTON 70dc0f06 is in v8.0.0), so the awareness note is false at their pin too.",
+   "consequence9": "Same at 9.0.0.",
+   "measurements": [
+    "I-33 glass-outbound-2026-09-17-constellation-o20-relay.md:30-35 carries the quoted 'unconditionally \u2026 declares no border to fight it' text; I-32 :40-41 A-11a KILL / A-11b ANSWER; LEDGER.md:271-293",
+    "HEAD src/components/button/styles.css:53 `border: 1px solid var(--button-edge);`; grep -n -E '^\\s*border' src/styles/glass/glass-capsule.css \u2192 only :70 border-radius",
+    "git tag --contains 70dc0f06 | sort -V | head -1 \u2192 v8.0.0; git merge-base --is-ancestor 70dc0f06 v7.0.0 \u2192 no"
+   ],
+   "premiseCheck": "Quotes match I-33 and I-32 verbatim; no collision.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "A-11a KILL and A-11b ANSWER are the rulings; I-33 \u00a71 retired the note. Nothing moved at HEAD.",
+   "cureShape": "ANSWER: strike sound.",
+   "replyLine": "S-1: sound. The border arm paints at 8.0.0 already (W-BUTTON is in v8.0.0) and nothing moved at our HEAD."
+  },
+  {
+   "id": "O-23 \u00a72 S-2",
+   "verdict": "MOVED-SINCE",
+   "stateHead": "MOVED",
+   "consequence8": "At 8.0.0 the class is live (unlayered producer rules beat layered consumer utilities); their five class-bearing Dialog roots keep the 24px paint at that pin.",
+   "consequence9": "Same at 9.0.0; the ruling was CURE-NEXT-MAJOR, not executed.",
+   "measurements": [
+    "I-32 :31 A-3 (class) CURE-NEXT-MAJOR; LEDGER.md:93-131 (the 351 figure SUPERSEDED by the O-26 R-1 scope note at :118-131: 'the set, not a number')",
+    "HEAD a08143ce = Lane L (A-3-CLASS EXECUTED): git log -1 --format=%s a08143ce \u2192 '466 rules in 48 files at 695d4925 \u2026 now sits in @layer components \u2026 DialogContent rounded-dialog 24\u219216px, the consumer now wins'; docs/tranches/BK/execution/2026-09-22-register-wave/L/RECORD.md",
+    "docs/tranches/BK/execution/2026-09-22-register-wave/L/RECORD.md:127-150 'FR-COB-8 / FR-COB-12\u2014measured at 695d4925': FR-COB-8's utility-corpus mechanism DEAD (components.css imported layer(components), vite.utility-emit.ts:295-300); the a11y resets themselves were unlayered (a11y-overrides.css 4, accessibility.css 4, glass/a11y-fallback.css 3) and rank in components after 10-1; FR-COB-12 instance DEAD (scale-press-btn 0\u00d7 in src and dist)",
+    "MIGRATION.md 10.0.0 section, heading '_Every library style rule moves into `@layer components`_' (cite by heading; Lane R is editing), slider named as the one unlayered exception"
+   ],
+   "premiseCheck": "The strike was sound when written (a held ruling is a disposition). It has moved: A-3-CLASS is executed at HEAD for 10.0.0. Their quoted '351' is superseded on our side (LEDGER O-26 R-1 rider); the travelling datum is the set, published by name in MIGRATION.md.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "Lane L landed the layering at a08143ce: every shipped top-level style rule sits in @layer components, exceptions named (token roots, the at-rules, the slider); the measured Dialog case flips to the consumer's 16px.",
+   "cureShape": "ANSWER: strike stands; the ruling is now executed at HEAD for 10.0.0. Their Dialog roots repaint to their own classes at 10.0.0; the unlayered set is manifested by name in MIGRATION.md (10.0.0 section) for override review. Nothing changes at 8.0.0 or 9.0.0.",
+   "replyLine": "S-2: sound, and moved since you wrote it. A-3-CLASS is now executed on our 10.0.0 tree (a08143ce): every top-level style rule the package ships sits in @layer components, with the slider and the token roots as the named exceptions, and your `<DialogContent class=\"rounded-dialog max-w-sm\">` case now paints 16px. The '351' figure is retired on our side; MIGRATION.md's 10.0.0 section lists the moved rules by name so you can check which of your overrides change (heading 'Every library style rule moves into @layer components'). FR-COB-8 itself was measured in that wave: its utility-corpus leg was already dead (components.css is imported into the components layer), and the a11y resets it named now rank inside the layer. 8.0.0 and 9.0.0 are unchanged."
+  },
+  {
+   "id": "O-23 \u00a72 S-3",
+   "verdict": "SOUND",
+   "stateHead": "NOT-APPLICABLE",
+   "consequence8": "Button has no pressed paint at 8.0.0 (W-BUTTON 70dc0f06 in v8.0.0).",
+   "consequence9": "Same at 9.0.0.",
+   "measurements": [
+    "I-32 :41 A-11b ANSWER 'Intentional, and architecture at 9.0.0'; LEDGER.md:284-293",
+    "git tag --contains 70dc0f06 | sort -V | head -1 \u2192 v8.0.0"
+   ],
+   "premiseCheck": "Quote matches; no collision.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "Answered in terms; unchanged at HEAD.",
+   "cureShape": "ANSWER: strike sound.",
+   "replyLine": "S-3: sound. The answer holds at 8.0.0, 9.0.0 and our HEAD; re-home toggles onto Chip mode=\"selectable\" or ToggleGroupItem."
+  },
+  {
+   "id": "O-23 \u00a72 S-4",
+   "verdict": "SOUND",
+   "stateHead": "DEAD",
+   "consequence8": "Cured AT 8.0.0, not above it: the 8.0.0 dist ships the same ring as 9.0.0, so the 1.94:1 reading does not hold at their pin.",
+   "consequence9": "Same ring at 9.0.0 (3.13 light / 4.21 dark per I-32).",
+   "measurements": [
+    "grep -rhoE '\\.focus-ring:focus-visible *\\{[^}]*\\}' reg/800/package/dist and reg/900/package/dist \u2192 the identical rule `outline: var(--focus-ring-width) solid color-mix(in oklab,var(--foreground) calc(var(--ink-perimeter) * 100%),transparent);outline-offset: 2px`",
+    "grep -rhoE -- '--ink-perimeter:\u2026|--focus-ring-width:\u2026' \u2192 0.48 / 2px in both dists; HEAD src/styles/tokens/color-radius.css:140 0.48, scale-paper.css:59 2px, rule at src/styles/utilities/base.css:144",
+    "git tag --contains 70dc0f06 (W-BUTTON) | sort -V | head -1 \u2192 v8.0.0"
+   ],
+   "premiseCheck": "The strike is sound but its framing is off by one version: they say 'cured above our pin; the 8.0.0 reading is our census fact'. The ring is byte-identical in the 8.0.0 and 9.0.0 dists, so their bump to 8.0.0 carries the cure.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "A-11c KILL stands; the cure shipped in 8.0.0 (W-BUTTON).",
+   "cureShape": "ANSWER: strike sound; correct the pin framing \u2014 the 3.13/4.21 ring ships in 8.0.0.",
+   "replyLine": "S-4: sound, with one correction: the ring is not cured above your pin. The 8.0.0 dist ships the same `.focus-ring:focus-visible` outline as 9.0.0 (2px, color-mix of --foreground at 48%), so your 8.0.0 bump carries the cure and your census should read 3.13 light / 4.21 dark, not 1.94."
+  },
+  {
+   "id": "O-23 \u00a72 S-5",
+   "verdict": "MOVED-SINCE",
+   "stateHead": "DEAD",
+   "consequence8": "Live at 8.0.0: ConfiguratorLayer/ConfiguratorRow compose `hover:bg-foreground/5`, whose synthesized fallback paints 1.00:1 on a pre-2023 engine.",
+   "consequence9": "Live at 9.0.0 too (the same two class strings).",
+   "measurements": [
+    "git grep -n 'hover:bg-foreground/5' v8.0.0 -- src \u2192 2, v9.0.0 \u2192 2 (ConfiguratorLayer.vue:119, ConfiguratorRow.vue:156); HEAD \u2192 1, a comment only (src/components/configurator/styles.css:186)",
+    "git log --oneline -S'THE TWO CONTROL HOVERS' -- src/components/configurator/styles.css \u2192 46ab4124 'feat(o20-cure): batch 1 \u2026'; git merge-base --is-ancestor 46ab4124 v9.0.0 \u2192 not-in-v9"
+   ],
+   "premiseCheck": "Sound; the declared cure has since landed at HEAD (46ab4124, after 9.0.0), so it arrives at 10.0.0.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "A-11d CURE-NOW executed in the o20 cure wave: both hovers authored as bare color-mix at --fill-hover inside @media (hover:hover).",
+   "cureShape": "ANSWER: strike sound; the cure landed at 46ab4124 and ships in 10.0.0; the 8.0.0/9.0.0 bytes keep the 1.00:1 legacy-engine fallback.",
+   "replyLine": "S-5: sound, and the cure has landed since: 46ab4124 moves both configurator hovers to a bare color-mix inside @media (hover: hover), so a legacy engine drops the declaration instead of painting 1.00:1. It ships in 10.0.0; your 8.0.0 pin (and 9.0.0) still carry the old class strings."
+  },
+  {
+   "id": "O-23 \u00a72 S-6",
+   "verdict": "SOUND",
+   "stateHead": "NOT-APPLICABLE",
+   "consequence8": "Producer share is zero at 8.0.0 as at 9.0.0; the rule is fourier's own SFC.",
+   "consequence9": "Same.",
+   "measurements": [
+    "I-32 :45 A-12 ROUTE \u2192 fourier; I-33 :24-29; LEDGER.md:344-354"
+   ],
+   "premiseCheck": "Quote matches I-32 verbatim; no collision.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "Routed and accepted by the consumer; nothing on the producer side.",
+   "cureShape": "ANSWER: strike sound.",
+   "replyLine": "S-6: sound. A-12 is yours; nothing on our side moved."
+  },
+  {
+   "id": "O-23 \u00a72 S-7",
+   "verdict": "SOUND",
+   "stateHead": "DEAD",
+   "consequence8": "No `.btn-glass`/`.glass-btn` class at 8.0.0; the only string is the custom property --glass-btn-press-t.",
+   "consequence9": "Same at 9.0.0.",
+   "measurements": [
+    "grep -rhoE '\\.(btn-glass|glass-btn)\\b' reg/800/package/dist \u2192 0, reg/900 \u2192 0; grep -rhoE -- '[-.a-z]*glass-btn[-a-z]*' \u2192 only '--glass-btn-press-t' in both",
+    "I-32 :44 A-11e; LEDGER.md:334-342"
+   ],
+   "premiseCheck": "Reproduces at both published dists; no collision.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "A-11e KILL.",
+   "cureShape": "ANSWER: strike sound.",
+   "replyLine": "S-7: sound. 0 `.btn-glass`/`.glass-btn` classes in the 8.0.0 and 9.0.0 dists; only the custom property --glass-btn-press-t remains."
+  },
+  {
+   "id": "O-23 \u00a72 S-8",
+   "verdict": "SOUND",
+   "stateHead": "NOT-APPLICABLE",
+   "consequence8": "Not a glass-ui ruling; their carry struck it before the letter.",
+   "consequence9": "Same.",
+   "measurements": [
+    "grep -n 'DOCK-ACTIVE' over I-32, I-33 and the O-20 LEDGER \u2192 no row; the strike rests on their own carry (F-W1-CARRY.md), which we do not hold"
+   ],
+   "premiseCheck": "Nothing of ours to confirm or contradict; the strike cites their carry, not I-32.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "Their own prior strike; recorded as precedent, not as a producer disposition.",
+   "cureShape": "ANSWER: noted; not ours to rule.",
+   "replyLine": "S-8: noted. This one rests on your carry, not on any row of ours, so we have nothing to confirm or correct."
+  },
+  {
+   "id": "O-23 \u00a72 S-9",
+   "verdict": "WRONG",
+   "stateHead": "DEAD",
+   "consequence8": "At 8.0.0 the paper-* utilities do not paint black: the recipe measured on a cream --card box darkens mean RGB 244.7 \u2192 228.3 (min 221), a multiply grain at opacity 0.21.",
+   "consequence9": "The tooth, relief and opacity tokens are unchanged at 9.0.0 (and HEAD), so the same paint.",
+   "measurements": [
+    "O-20 inbound valuejs-outbound-2026-08-28-o20-authoring-block-batch.md:36 filed the clause as '\u2026neither surviving @utility paper-* recipe is a drop-in (they paint uniform opaque black at 4.0.0)'",
+    "I-32 :55 B-3 accepts only 'your clause is TRUE, neither paper-* utility is a drop-in'; LEDGER.md:447-452 describes them as painting 'relief/tooth on a ::after/fixed layer with mix-blend-mode' \u2014 no ruling on black paint anywhere (grep -n -i 'black' over LEDGER, I-32, I-33, O-26 LEDGER \u2192 0)",
+    "Render probe isprobe/paper.mjs (playwright chromium 149 + webkit 26.5, twice): 8.0.0 dist/styles/paper.css tokens + the @utility paper-grain-overlay ::after declarations verbatim on a hsl(30 85% 96%) box \u2192 overlay off meanRGB 244.7, on 228.3 (chromium) / 228.4 (webkit), min 221/220",
+    "sha1 of the --paper-grain-tooth declaration in src/styles/paper.css at v8.0.0, v9.0.0, HEAD \u2192 0bfbb447dd \u00d73; git grep --paper-grain-opacity \u2192 0.21 light / 0.16 dark at all three"
+   ],
+   "premiseCheck": "The strike's ground misreads B-3: we accepted the drop-in clause, not the black-paint claim, which we never measured or ruled. The conclusion (do not re-send) still holds at their pin, on a different ground: at 8.0.0 the utilities paint a light multiply grain, not black.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "B-3 disposed the .paper-texture drop-in question only. The black-paint claim is a 4.0.0 reading we never ruled on; at 8.0.0/9.0.0/HEAD the tooth is a translucent cream gradient at opacity 0.21 and it measures as a light darken.",
+   "cureShape": "ANSWER: correct the strike's ground, keep the strike. Do not re-file M-1: at 8.0.0 neither utility paints black (measured). If fourier wants the 4.0.0 black reading on record, it is a 4.0.0 fact that the bump clears, not a producer row.",
+   "replyLine": "S-9: the strike is right but its ground is wrong. B-3 accepted only that neither paper-* utility is a drop-in for .paper-texture; we never ruled on the 'paints uniform opaque black' reading. Measured at your 8.0.0 pin, it does not reproduce: the paper-grain-overlay recipe over a --card cream box takes mean RGB from 244.7 to 228.3 in Chromium and WebKit, a light multiply grain, and the tokens are unchanged at 9.0.0 and our HEAD. Keep M-1 struck, citing the bump rather than B-3."
+  },
+  {
+   "id": "O-23 \u00a72 S-10",
+   "verdict": "MOVED-SINCE",
+   "stateHead": "DEAD",
+   "consequence8": "The ghost still bites at 8.0.0: the cn regex carries admin-label, so cn('text-caption','text-admin-label') evicts text-caption; moot once the 7 sites retarget to text-mono-micro.",
+   "consequence9": "Same at 9.0.0 (the cure landed after it).",
+   "measurements": [
+    "git grep -n 'admin-label' v8.0.0 -- src/components/_shared/class-names.ts \u2192 :84 in the text-size bucket regex; v9.0.0 \u2192 :84 same; HEAD \u2192 0 hits (class-names.ts:84 now reads micro|small|caption|body|prose|heading|\u2026)",
+    "grep -rl 'prose|admin-label|heading' reg/800/package/dist \u2192 1 file, reg/900 \u2192 1 file",
+    "git log --oneline -S'admin-label|' -- src/components/_shared/class-names.ts \u2192 dd8a5fe5 'feat(o20-cure): batch 4 \u2026'; git merge-base --is-ancestor dd8a5fe5 v9.0.0 \u2192 not in v9"
+   ],
+   "premiseCheck": "Sound, with a version qualifier: 'cured' means at HEAD for 10.0.0 (dd8a5fe5), not in 8.0.0 or 9.0.0. Verdict MOVED-SINCE because the declared cure landed on our tree after the HEAD they read (46ab4124); the strike itself stands.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "B-3 cure (1) landed at dd8a5fe5.",
+   "cureShape": "ANSWER: strike sound; the eviction is cured in 10.0.0 only. At 8.0.0 retarget the 7 sites to text-mono-micro (+ uppercase font-medium) and the ghost cannot bite.",
+   "replyLine": "S-10: sound, with a version note: the cn fix landed after 9.0.0 (dd8a5fe5), so at 8.0.0 cn('text-caption','text-admin-label') still drops text-caption. Retargeting your 7 sites to text-mono-micro, as B-3 says, removes the only way to hit it before 10.0.0."
+  },
+  {
+   "id": "O-23 \u00a72 S-11",
+   "verdict": "MOVED-SINCE",
+   "stateHead": "MOVED",
+   "consequence8": "At 8.0.0 light --success is oklch(0.720 0.192 149.5), 2.13:1 on --card (their 2.175 is within instrument spread); C-1's answer (foreground ink, no --success-ink rung) holds.",
+   "consequence9": "Same token and ratio at 9.0.0.",
+   "measurements": [
+    "8.0.0 and 9.0.0 dists: grep -rhoE -- '--success: *[^;]+;' reg/{800,900}/package/dist/styles \u2192 light oklch(0.720 0.192 149.5), dark oklch(0.805 0.186 151.6) at both",
+    "HEAD src/styles/tokens/color-radius.css:347 `--success: oklch(0.600 0.192 149.5)`; light-dark.css:188 light arm 0.600 (LOCKSTEP); dark-arm.css:175 unchanged; v9.0.0 color-radius.css:334 was 0.720",
+    "python oklch\u2192sRGB\u2192WCAG on --card hsl(30 85% 96%) (v8.0.0 color-radius.css:73, same at HEAD): L 0.720 \u2192 2.131:1, L 0.600 \u2192 3.296:1 (Lane T RECORD T/RECORD.md:83 reads 2.13 \u2192 3.30; --warning 1.98 \u2192 3.27 at :84)",
+    "git log -1 --format=%s 9025efe2 \u2192 'feat(register-wave): lane T \u2014 \u2026 --success and --warning drop L in the light arm \u2026 (2.13\u21923.30, 1.98\u21923.27 on --card; dark arm untouched \u2026)'"
+   ],
+   "premiseCheck": "The strike was sound against C-1 when written, but its ground 'a reason that removes the failure' only covers Alert (no tone wash since 8.0.0); the token's own 2.13:1 on --card was not removed by C-1. It has since moved: Lane T (9025efe2) retuned the light arm to L 0.600 \u2192 3.30:1 on --card for 10.0.0, on StatusDot's REQUIRED graphical-object grounds.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "C-1 stands (no --success-ink rung; Alert ink is --foreground). Separately, the token itself moved at HEAD: 3.30:1 on --card clears SC 1.4.11's 3:1 for non-text marks; it is still under 4.5:1, so --success is not a text ink on --card at any version. O-32 \u00a72.1 re-files the same token fact and is answered in that cluster.",
+   "cureShape": "ANSWER: strike stands; tell them the token moved at HEAD (10.0.0): light --success 0.720 \u2192 0.600, 2.13 \u2192 3.30:1 on --card; still not a 4.5:1 text ink.",
+   "replyLine": "S-11: the strike stands, but the ground you quote covers Alert only (no tone wash, --foreground ink), not the token. The token itself has since moved: on our 10.0.0 tree (9025efe2) light --success drops from L 0.720 to 0.600, so it reads 3.30:1 on --card instead of 2.13 (--warning 1.98 \u2192 3.27); the dark arm is unchanged. That clears 3:1 for graphical marks, not 4.5:1 for text, and no --success-ink rung is coming. 8.0.0 and 9.0.0 keep 2.13."
+  },
+  {
+   "id": "O-23 \u00a72 S-12",
+   "verdict": "WRONG",
+   "stateHead": "DEAD",
+   "consequence8": "Cured at 8.0.0: TooltipContent stamps the dock's portal attributes (useDockParticipation), so a dock-anchored tooltip no longer reads as the pointer leaving the dock.",
+   "consequence9": "Same at 9.0.0.",
+   "measurements": [
+    "git grep -n dock v8.0.0 -- src/components/tooltip \u2192 TooltipContent.vue:43-48 'THE HINT PARTICIPATES IN THE DOCK \u2026 only the stamp' + :61 `dock: dock.portalAttrs.value` (their carry's ':43-48' matches); HEAD TooltipContent.vue:48 unchanged",
+    "reg/800/package/dist/tooltip-DqKMZ4dn.js and reg/900/\u2026/tooltip-BKk2qVDn.js: `dock: b.portalAttrs.value`, importing ./participation-*.js, which emits data-glass-dock-portal / data-glass-dock-owner (v8.0.0 src/components/_shared/overlay/participation.ts:83-84,113)",
+    "git log -S'THE HINT PARTICIPATES IN THE DOCK' \u2192 bca22bd9 (W-OVERLAY); git tag --contains bca22bd9 | sort -V | head -1 \u2192 v8.0.0",
+    "I-32 :38 and LEDGER.md:234-249: A-9 is 'TooltipContent has no block ceiling' (max-block-size from --reka-popper-available-height), a different defect; its cure is at HEAD src/styles/glass/overlay-plate.css:103-118"
+   ],
+   "premiseCheck": "The conclusion reproduces (the stamp ships at 8.0.0), but the second ground is wrong: I-32 A-9 is the tooltip block-height ceiling and says nothing about the dock collapse. The strike rests on the carry's own 8.0.0 reading, which we confirm.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "FR-TT-9 is cured at 8.0.0 by W-OVERLAY bca22bd9 (the tooltip's dock stamp). A-9 is unrelated and should not be cited as confirming it.",
+   "cureShape": "ANSWER: keep the strike; re-cite it to bca22bd9 (v8.0.0) and drop the A-9 co-citation. Do not re-file.",
+   "replyLine": "S-12: keep it struck, but fix the citation. We confirm the cure at 8.0.0: TooltipContent stamps the dock's portal attributes (W-OVERLAY bca22bd9, first tag v8.0.0), and both published tooltip chunks carry it. I-32 A-9 is a different defect (the tooltip's block-height ceiling), so it does not confirm FR-TT-9; cite bca22bd9 instead."
+  },
+  {
+   "id": "O-23 \u00a72 S-13",
+   "verdict": "MOVED-SINCE",
+   "stateHead": "DEAD",
+   "consequence8": "At 8.0.0 the render is right (consumer @pointerdown fires after reka's slideStart/update) and the docblock is still false.",
+   "consequence9": "Same at 9.0.0; the comment cure landed after it.",
+   "measurements": [
+    "git grep -n -i 'is DROPPED' <ref> -- src/components/slider \u2192 v8.0.0 1, v9.0.0 1, HEAD 0",
+    "HEAD tests/components/ui/slider/attrs-pointerdown-channel.test.ts exists (the mount lock); I-32 :39 A-10; I-33 :15-23",
+    "git log -S'is DROPPED' -- src/components/slider \u2192 c645c393 (o20-cure batch 2), after 46ab4124"
+   ],
+   "premiseCheck": "Quote matches; the comment cure has landed at HEAD. Verdict MOVED-SINCE because the declared cure landed on our tree after the HEAD they read (46ab4124); the strike itself stands.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "A-10 CURE-NOW (comments) executed; mount test in place.",
+   "cureShape": "ANSWER: strike sound; the false docblock is gone at HEAD (10.0.0), still present in the 8.0.0/9.0.0 dists \u2014 trust the behaviour, not the comment, at your pin.",
+   "replyLine": "S-13: sound. The behaviour is right at 8.0.0; the false 'DROPPED' docblock is still in the 8.0.0 and 9.0.0 sources and is gone on our 10.0.0 tree, with a mount test locking the order."
+  },
+  {
+   "id": "O-23 \u00a72 S-14",
+   "verdict": "SOUND",
+   "stateHead": "DEAD",
+   "consequence8": "Confirmed by tag: 4442b451 is first contained in v8.0.0 (not in v7.0.0), and the 8.0.0 dist's glass.css imports glass-chip.css, so Chip's styles arrive with the bump.",
+   "consequence9": "Same at 9.0.0.",
+   "measurements": [
+    "git tag --contains 4442b451 | sort -V | head -1 \u2192 v8.0.0; git merge-base --is-ancestor 4442b451 v7.0.0 \u2192 no",
+    "grep -c 'glass-chip.css' reg/800/package/dist/styles/glass.css \u2192 1; reg/900 \u2192 1"
+   ],
+   "premiseCheck": "Reproduces; no collision.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "A-2 KILL at 4442b451, in v8.0.0.",
+   "cureShape": "ANSWER: strike sound; 4442b451 = v8.0.0 confirmed by tag.",
+   "replyLine": "S-14: sound. 4442b451 is first tagged v8.0.0 (it is not in v7.0.0), and the 8.0.0 dist's glass.css imports glass-chip.css, so the Chip block lifts with your bump."
+  },
+  {
+   "id": "O-23 \u00a72 S-15",
+   "verdict": "SOUND",
+   "stateHead": "DEAD",
+   "consequence8": "0 occurrences of --type-mono-caption in the 8.0.0 package.",
+   "consequence9": "0 at 9.0.0.",
+   "measurements": [
+    "grep -rl 'type-mono-caption' reg/800/package \u2192 0 files; reg/900/package \u2192 0",
+    "I-32 :35 A-6"
+   ],
+   "premiseCheck": "Sound; the strike drops A-6's second sentence: your three readers still name the token (fallback-guarded, zero paint delta) \u2014 a consumer tidy, not a producer row.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "A-6 KILL.",
+   "cureShape": "ANSWER: strike sound; the optional consumer tidy from A-6 stays yours.",
+   "replyLine": "S-15: sound. 0 hits in the 8.0.0 and 9.0.0 packages. A-6's other half still stands on your side: your three readers still name the token behind a fallback, an optional tidy."
+  },
+  {
+   "id": "O-23 \u00a72 S-16",
+   "verdict": "MOVED-SINCE",
+   "stateHead": "MOVED",
+   "consequence8": "C-1's answer applies at 8.0.0 (Alert has no tone wash since W-ALERT 76bfae26, first tag v8.0.0); --success is 2.13:1 on --card there.",
+   "consequence9": "Same at 9.0.0.",
+   "measurements": [
+    "8.0.0 and 9.0.0 dists: grep -rhoE -- '--success: *[^;]+;' reg/{800,900}/package/dist/styles \u2192 light oklch(0.720 0.192 149.5), dark oklch(0.805 0.186 151.6) at both",
+    "HEAD src/styles/tokens/color-radius.css:347 `--success: oklch(0.600 0.192 149.5)`; light-dark.css:188 light arm 0.600 (LOCKSTEP); dark-arm.css:175 unchanged; v9.0.0 color-radius.css:334 was 0.720",
+    "python oklch\u2192sRGB\u2192WCAG on --card hsl(30 85% 96%) (v8.0.0 color-radius.css:73, same at HEAD): L 0.720 \u2192 2.131:1, L 0.600 \u2192 3.296:1 (Lane T RECORD T/RECORD.md:83 reads 2.13 \u2192 3.30; --warning 1.98 \u2192 3.27 at :84)",
+    "git log -1 --format=%s 9025efe2 \u2192 'feat(register-wave): lane T \u2014 \u2026 --success and --warning drop L in the light arm \u2026 (2.13\u21923.30, 1.98\u21923.27 on --card; dark arm untouched \u2026)'",
+    "git tag --contains 76bfae26 | sort -V | head -1 \u2192 v8.0.0"
+   ],
+   "premiseCheck": "The question is answered as quoted. The token under it moved at HEAD (Lane T), which changes the ratio a --success mark reads at 10.0.0 but not the answer.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "C-1 stands; --success light arm retuned at HEAD for 10.0.0.",
+   "cureShape": "ANSWER: strike stands; note the --success retune (2.13 \u2192 3.30:1 on --card at 10.0.0) for any ActionFeedback mark that paints the token directly.",
+   "replyLine": "S-16: sound as a question answered: foreground ink stays the contract. Same note as S-11: --success itself moves at 10.0.0 (3.30:1 on --card, up from 2.13), which matters only where ActionFeedback paints the token as a mark, not as text."
+  },
+  {
+   "id": "O-23 \u00a72 S-17",
+   "verdict": "SOUND",
+   "stateHead": "DEAD",
+   "consequence8": "--cartoon-press-t is the only press scalar in the 8.0.0 dist; --card-press-t has 0 hits.",
+   "consequence9": "Same at 9.0.0.",
+   "measurements": [
+    "grep -rl -- '--cartoon-press-t' reg/800/package/dist \u2192 2 files, reg/900 \u2192 2; grep -rl -- '--card-press-t' \u2192 0 / 0",
+    "I-32 :34 A-5"
+   ],
+   "premiseCheck": "Reproduces; no collision.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "A-5.",
+   "cureShape": "ANSWER: strike sound.",
+   "replyLine": "S-17: sound. --cartoon-press-t is in both published dists and --card-press-t is in neither."
+  },
+  {
+   "id": "O-23 \u00a72 S-18",
+   "verdict": "MOVED-SINCE",
+   "stateHead": "PARTIAL",
+   "consequence8": "@utility glass-plate already ships at 8.0.0 (veil.css:47, minted by 4b1a9733, first tag v8.0.0) but its register (what it paints and does not supply) is undocumented at that pin.",
+   "consequence9": "Same at 9.0.0; the docs cure landed after it.",
+   "measurements": [
+    "git grep -n '^@utility glass-plate' v8.0.0 -- src \u2192 src/styles/glass/veil.css:47; v9.0.0 \u2192 :47; git log -S'@utility glass-plate' --diff-filter=A \u2192 4b1a9733; git tag --contains 4b1a9733 | sort -V | head -1 \u2192 v8.0.0",
+    "git grep -n -i -E 'no position|stacking' <ref> -- src/styles/glass/veil.css \u2192 v8.0.0 0, v9.0.0 0, HEAD 2 (veil.css:31 'stacking contract: \u2026'); DESIGN.md glass-plate mentions v8 0 / v9 0 / HEAD 2",
+    "git log -S'stacking contract: a plate' -- src/styles/glass/veil.css \u2192 a314533a (o20-cure batch 3), after 46ab4124"
+   ],
+   "premiseCheck": "Sound as a split disposition, with one correction to our own letter: I-32 B-2 said 9.0.0 minted @utility glass-plate; it shipped in 8.0.0. The register docs land at HEAD. Verdict MOVED-SINCE because the declared cure landed on our tree after the HEAD they read (46ab4124); the strike itself stands.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "B-2 DECLINE (shell) + CURE-NOW (docs) \u2014 the docs half is executed at HEAD.",
+   "cureShape": "ANSWER: strike sound; correction \u2014 glass-plate is available at 8.0.0 already; its register ships in veil.css's header and DESIGN.md at 10.0.0.",
+   "replyLine": "S-18: sound. One correction to our own B-2: @utility glass-plate was minted in 8.0.0, not 9.0.0, so it is already in your pin. The plate register (paints --glass-veil, supplies no position/z/radius/size, the stacking sentence) is written into veil.css's header and DESIGN.md on our 10.0.0 tree; it is not in the 8.0.0 or 9.0.0 bytes."
+  },
+  {
+   "id": "O-23 \u00a72 S-19",
+   "verdict": "SOUND",
+   "stateHead": "DEAD",
+   "consequence8": "Killed in 8.0.0 (bca22bd9 first tag v8.0.0): 0 `dropdown-menu__` in the dist; the bump also re-points ./dropdown-menu \u2192 ./menu.",
+   "consequence9": "Same at 9.0.0.",
+   "measurements": [
+    "grep -rl 'dropdown-menu__' reg/800/package/dist \u2192 0 files; reg/900 \u2192 0",
+    "git tag --contains bca22bd9 | sort -V | head -1 \u2192 v8.0.0",
+    "I-32 :30 A-3 KILL, consumer action 'bump + import re-point'"
+   ],
+   "premiseCheck": "Sound; the strike omits A-3's consumer action (the ./dropdown-menu \u2192 ./menu import re-point at the bump).",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "A-3 KILL.",
+   "cureShape": "ANSWER: strike sound; remember the ./menu re-point at the 8.0.0 adopt.",
+   "replyLine": "S-19: sound. 0 `dropdown-menu__` in the 8.0.0 and 9.0.0 dists (W-OVERLAY bca22bd9 is in v8.0.0). The one action A-3 left you is the import re-point from ./dropdown-menu to ./menu at the bump."
+  },
+  {
+   "id": "O-23 \u00a72 S-20",
+   "verdict": "MOVED-SINCE",
+   "stateHead": "LIVE",
+   "consequence8": "No xs rung at 8.0.0 \u2014 B-1's cure landed after 9.0.0; the static pill has sm as its smallest rung at their pin.",
+   "consequence9": "No xs at 9.0.0 either.",
+   "measurements": [
+    "HEAD src/components/chip/chipVariants.ts:8 `xs: \"gap-0.5 px-1 py-0.5 text-micro\"`; git log -S'xs: \"gap-0.5 px-1 py-0.5 text-micro\"' \u2192 c645c393 (o20-cure batch 2); git grep -n '\\bxs\\b' v9.0.0 -- src/components/chip \u2192 0",
+    "text-caption italic: git grep -A6 '@utility text-caption' v9.0.0 -- src | grep -c italic \u2192 1; HEAD \u2192 0 (Lane L, a08143ce: 'text-caption drops italic (10-5)'); chipVariants.ts:9 sm = text-caption"
+   ],
+   "premiseCheck": "Sound, but two things moved: 'lands' means 10.0.0 (c645c393), not 8.0.0 or 9.0.0; and B-1's side note that sm's text-caption is italic is no longer true at HEAD \u2014 text-caption is upright in 10.0.0, so xs vs sm no longer differ on that axis.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "B-1 CURE-NOW executed at HEAD; text-caption upright at HEAD.",
+   "cureShape": "ANSWER: strike stands; xs ships in 10.0.0 only; the italic axis B-1 warned about is gone at 10.0.0.",
+   "replyLine": "S-20: sound, with two updates. The xs rung ships in 10.0.0 (c645c393), not in 8.0.0 or 9.0.0. And the italic caveat in B-1 no longer applies at 10.0.0: text-caption, which sm uses, is upright there, so xs and sm differ only in size and padding."
+  },
+  {
+   "id": "O-23 \u00a72 S-21",
+   "verdict": "SOUND",
+   "stateHead": "DEAD",
+   "consequence8": "Clobber gone at 8.0.0: dist/styles/components.css has 0 :root and 0 --radius/-lg/-sm declarations.",
+   "consequence9": "Same at 9.0.0.",
+   "measurements": [
+    "grep -o ':root' reg/800/package/dist/styles/components.css | wc -l \u2192 0; grep -oE -- '--radius(-lg|-sm)?:' \u2192 0; reg/900 \u2192 0 / 0",
+    "grep -c -- '--radius-input' MIGRATION.md \u2192 2 (the A-4 rider's token-removal table landed; cite by heading, Lane R is editing)",
+    "I-32 :32-33 A-4 KILL + rider"
+   ],
+   "premiseCheck": "Reproduces at both dists; rider table present in MIGRATION.md.",
+   "disposition": "ANSWER",
+   "breaking": false,
+   "grounds": "A-4 KILL; the rider table is in MIGRATION.md.",
+   "cureShape": "ANSWER: strike sound; the --radius-input \u2192 --radius-media re-point is theirs at the bump.",
+   "replyLine": "S-21: sound. The 8.0.0 and 9.0.0 components.css declare no :root and no --radius*; the 13-token removal table is in MIGRATION.md, and --radius-input \u2192 --radius-media is your re-point at the bump."
+  }
+ ],
+ "openQuestions": [
+  "MIGRATION.md has no entry for GlassDock's `interaction` \u2192 `collapse` replacement at 9.0.0 (DockInteraction exported at 8.0.0, gone at 9.0.0; grep -c DockCollapse MIGRATION.md \u2192 0, CHANGELOG.md \u2192 0; the 8.0.0 section still says 'gains an additive interaction axis'). Lane R is live on MIGRATION.md; the driver should rule whether that row joins Lane R's scope or a follow-up.",
+  "S-9 and S-12 are marked WRONG on their GROUND only (B-3 never ruled the paper-* black paint; A-9 is the tooltip block ceiling, not FR-TT-9); both strikes should stay struck, re-cited (S-9 to the 8.0.0 render measurement, S-12 to bca22bd9). The driver should confirm the reply says 'do not re-file' so fourier's \u00a75.3 rule ('we will re-file it unchanged') does not fire.",
+  "Our own I-32 B-2 misdates @utility glass-plate as minted in 9.0.0; it was added at 4b1a9733, first tag v8.0.0 (veil.css:47 at both tags). The S-18 reply corrects it; the driver may want a dated erratum beside I-32.",
+  "L-1 cure is CURE-NOW non-breaking (root null + scrollMargin = threshold; the component stops passing its own root). Driver to rule whether the composable's `scrollContainer` option stays (kept in the proposed shape: a caller passing a real port still gets it as root) and to place the witness row in tests/components/infinite-scroll.contract.test.ts (a test row, not a gate; gates stay 60). scrollMargin was verified in Playwright's chromium 149 / webkit 26.5 / firefox 151 builds only; Playwright webkit is not shipping Safari (house memory), so a Safari cell is owed if the driver wants one."
+ ]
+}
