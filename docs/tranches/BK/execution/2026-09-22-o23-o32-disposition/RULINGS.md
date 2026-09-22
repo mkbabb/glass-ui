@@ -156,6 +156,24 @@ BREAKING cures are lawful there and are marked.
   rule does not fire. **Erratum on our own I-32 B-2** (`@utility glass-plate` minted 8.0.0 via
   `4b1a9733`, not 9.0.0): a dated bracket in the O-20 LEDGER — R2.
 
+### Driver items raised by the lane adjudicators [2026-09-22]
+- **CT residue (out of CT's fence, ruled to ride 10.0.0 in the second wave, lane CT2):**
+  `tests/composables/color/use-accent-tone.test.ts:45-46` asserts contrast against the struck card
+  values (hsl(36 48% 97%) / hsl(24 8% 16%)) — a false witness; the fixture reads the shipped bytes
+  (hsl(30 85% 96%) / hsl(26 22% 17%)) and the test stays born-RED-then-GREEN on the corrected fixture
+  only if its assertions still hold (if a row flips, record it, do not retune). `src/styles/tokens/
+  dark-arm.css:91-93` stale hsl + "lifted L16 card" → dated comment bracket with the true figures.
+  `demo/shell/configurator/PresetEditor.vue:224` (/80) and `:366` (/70) are the L-4 alpha-muted TEXT
+  defect in the demo shell → drop the alpha. The "1.28:1" history prose in `sortable-list/styles.css:11`
+  and `proportion-register.test.ts:335/:404` STANDS as history. `demo/stories/data/metric.vue:40` and
+  the MIGRATION mentions go to R2 as RECORD lists.
+- **Metric §2.1 is a rendered-text change, not paint-only:** `:delta="3"` renders `+3`, compact
+  `+12.4K`; `coalesceMetric` gains `signed?: boolean`. R2 writes it as a MIGRATION §10.0.0 row and a
+  CHANGELOG line; the letter carries one sentence (fourier's GalleryAdminBanner renders `<Metric>`).
+- **A-2 after the re-ruling:** RECORD/LEDGER/letter carry the 4 px bound sentence; the Chromium
+  stationary-pointer check is recorded as measured, not passed; the CHANGELOG line from DA RECORD's
+  FOR THE DRIVER joins §3.2/§3.3/§3.4/L-6 under `## 10.0.0` (R2).
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
