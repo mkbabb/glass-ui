@@ -70,6 +70,11 @@ consumer updates via a marked addendum in ITS tranche, told by ONE outbound lett
   artefact (`gh run download 35399022659 -n pixel-floor-pi-reports`) before touching anything;
   the 0.7 datum NEVER loosens; the `ci.yml` comment block gains the blob-ceiling sentence in the
   aurora idiom (:54-57). Verified by a green `ci.yml` on the wave's first push.
+  [2026-09-22 · the artefact was empty — upload-artifact@v4 skips the hidden `.cache/`
+  (include-hidden-files defaults false); the lane measured from the run log instead; the upload
+  step gains `include-hidden-files: true` so the first push banks the pair. The ruling's
+  "release.yml `pixel-floor-gpu`" pointer named a job release.yml never carried — the ceiling
+  runs in `scripts/release.sh`; ci.yml's comment now says so.]
 - **N-2 · the Alert tone-glyph and WCAG 1.4.11** (C2/RECORD.md:340-350, two questions). RULING
   (a): the Alert glyph is decorative reinforcement — `alert-title`/`alert-description` carry the
   content in `text-card-foreground` — so 1.4.11 does not bind THROUGH Alert. RULING (b): the

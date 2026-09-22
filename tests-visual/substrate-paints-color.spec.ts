@@ -109,7 +109,8 @@ import { PI_TARGETS, sourcePresetKeys } from "./pi-manifest.ts";
 type Plant = "black-aurora" | "blob-blank" | "blob-flood";
 const PI_PLANT = process.env.PI_PLANT ?? "";
 
-// `all` drives the two ARM-COMPATIBLE plants, one per floor. `blob-flood` is
+// `all` drives the two ARM-COMPATIBLE plants, one per floor. [2026-09-22 · N-1: one
+// per PLANTABLE floor — `blob-ceiling` has no plant under `all`.] `blob-flood` is
 // deliberately OUTSIDE it: it and `blob-blank` are mutually exclusive mutations of the
 // SAME element — one hides the canvas, one paints it opaque — and `opacity: 0` wins
 // over a background, so folding the flood into `all` would silently retire the blank
@@ -661,9 +662,14 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
         ).toEqual([]);
     });
 
-    test("blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS", async ({
-        page,
-    }) => {
+    // [2026-09-22 · BK register wave N-1] ONE READBACK, TWO TESTS. The two blob bounds
+    // were one test, so a gate could take both or neither — and on the CI runner's
+    // SwiftShader the ceiling reads 0.997 (run 35399022659) where Metal reads 0.288: a
+    // renderer artefact, not a flood. The ceiling is GPU-gated exactly as the aurora
+    // floor is, by test selection: CI runs `-g 'blob paints'` (the floor alone),
+    // `scripts/release.sh` runs both on real hardware. Each test takes its own readback;
+    // neither bound moved.
+    async function readBlobBounds(page: Page) {
         // Half the enforced surface must witness its own path too: without the force
         // the blob arms Dawn wherever `navigator.gpu` exists, i.e. WebGPU-on-
         // SwiftShader on the runner — the fragile arm this wave was told NOT to gate
@@ -747,11 +753,21 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
         console.log(
             `PI blob coverage=${coverage.toFixed(3)} floor=${BLOB_COVERAGE_MIN} · paintedShare=${paintedShare.toFixed(3)} ceil=${BLOB_COVERAGE_MAX}`,
         );
+        return { coverage, paintedShare, paintableShare };
+    }
 
+    test("blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS", async ({ page }) => {
+        const { coverage } = await readBlobBounds(page);
         expect(
             coverage,
             `blob coverage ${coverage.toFixed(3)} is below the non-blank floor ${BLOB_COVERAGE_MIN} — the blob did not paint (blank/black canvas)`,
         ).toBeGreaterThanOrEqual(BLOB_COVERAGE_MIN);
+    });
+
+    test("blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS", async ({
+        page,
+    }) => {
+        const { paintedShare, paintableShare } = await readBlobBounds(page);
         expect(
             paintedShare,
             `blob coverage ${paintedShare.toFixed(3)} of the PAINTABLE interior (${paintableShare.toFixed(3)} of the inset box; the rest is behind the stage card's clip) exceeds the non-flood ceil ${BLOB_COVERAGE_MAX} — the blob FLOODED the canvas (no transparent margin)`,

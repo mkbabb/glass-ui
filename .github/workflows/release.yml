@@ -9,6 +9,15 @@ name: release
 # (banked pi-report pair exists AND is content-stamped fresh vs the tagged aurora sources) is
 # routed to the GATES band at P-CLOSE-BATTERY — see
 # docs/tranches/BJ/formation/stability/TERMINAL-ROUTINGS.md §GESTALT-1 INC-2.
+#
+# [2026-09-22 · BK register wave N-5] TRUSTED PUBLISHING. The publish step is ready for npm's
+# OIDC trusted publisher (npm >= 11.5.1; `id-token: write` is already granted). The owner's
+# one web act finishes it: npmjs.com → @mkbabb/glass-ui → Settings → Trusted Publisher →
+# GitHub Actions, with organization or user `mkbabb`, repository `glass-ui`, workflow
+# filename `release.yml`, environment name left blank → Set up connection. npm tries OIDC
+# before the token, so `NODE_AUTH_TOKEN` stays until the first OIDC publish succeeds; then
+# the `NPM_TOKEN` secret is deleted and the `env:` line with it. Removing the token BEFORE
+# the publisher is enabled breaks the next cut.
 on:
     push:
         tags:
@@ -46,6 +55,10 @@ jobs:
               run: npm run demo:dist:build
             - name: test
               run: npm test
+            # Trusted publishing needs npm >= 11.5.1. Node 24 ships 11.19.0 (measured
+            # 2026-09-22); the range states the floor without taking npm 12 at a cut.
+            - name: npm with OIDC trusted publishing
+              run: npm install -g npm@^11.5.1 && npm --version
             - name: publish
               run: npm publish --ignore-scripts --access public --provenance
               env:

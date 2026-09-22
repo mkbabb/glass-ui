@@ -20,6 +20,8 @@
 //                         assertion that plant actually mutates (default `all`). A
 //                         blob floor self-tested under `blob-flood` must RED on its
 //                         CEILING, not on the blank floor `all` bites.
+//                         [2026-09-22 · N-1: the ceiling is its own floor,
+//                         `blob-ceiling` — see FLOORS].
 
 import { readFileSync } from "node:fs";
 
@@ -33,9 +35,11 @@ const REPORT = new URL(REPORT_ARG ?? "./.cache/pi-report.json", import.meta.url)
 
 // The sound floors this gate wires (BAND-GATES W2: the two non-black/coverage
 // floors only — the per-preset hue/chroma parity is Family G's).
+// [2026-09-22 · N-1] Three since the blob ceiling split out as `blob-ceiling`.
 const FLOORS = {
     aurora: "aurora paints a non-black interior on DEFAULT + every preset at t=1",
-    blob: "blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS",
+    blob: "blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS",
+    "blob-ceiling": "blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS",
 };
 
 // --floors=a,b selects a subset. The CI lane runs `--floors=blob`: on the software
@@ -43,6 +47,10 @@ const FLOORS = {
 // 180s timeout vs 22.8s green on Metal), so wiring it there gates on the runner's
 // GPU rather than on our paint. Naming the subset explicitly keeps a dropped floor
 // loud — an unnamed floor missing from the report is still RED below.
+// [2026-09-22 · BK register wave N-1] The blob CEILING is GPU-gated the same way and
+// for the same kind of reason: SwiftShader reads it 0.997 where Metal reads 0.288
+// (run 35399022659), so it is its own floor, `blob-ceiling`, which the CI lane does
+// not name and `scripts/release.sh` runs on real hardware.
 const REQUIRED = ((process.argv.find((a) => a.startsWith("--floors=")) ?? "")
     .split("=")[1] ?? "")
     .split(",")
@@ -116,14 +124,12 @@ function collectSpecs(node, out = []) {
 // blank floor and the non-flood ceiling — and they fail on different sentences. Keying
 // the expected text by floor alone let a flood run be credited to the blank floor's
 // bite, which is the wrong-assertion class this map already refuses one level up.
+// [2026-09-22 · BK register wave N-1] The two bounds are now two tests, one plant each;
+// the map stays keyed per plant.
 const FLOOR_BITE = {
-    "aurora paints a non-black interior on DEFAULT + every preset at t=1": {
-        "black-aurora": /painted a BLACK interior/,
-    },
-    "blob paints a contained non-flood droplet on BLOB_CONFIG_DEFAULTS": {
-        "blob-blank": /below the non-blank floor/,
-        "blob-flood": /exceeds the non-flood ceil/,
-    },
+    [FLOORS.aurora]: { "black-aurora": /painted a BLACK interior/ },
+    [FLOORS.blob]: { "blob-blank": /below the non-blank floor/ },
+    [FLOORS["blob-ceiling"]]: { "blob-flood": /exceeds the non-flood ceil/ },
 };
 
 const specs = collectSpecs(report);

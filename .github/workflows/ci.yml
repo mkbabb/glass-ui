@@ -54,22 +54,23 @@ jobs:
             # BLOB floor only. The aurora floor is GPU-gated, not CI-gated: on the
             # software rasterizer it never arms (180s timeout vs 22.8s green on Metal),
             # so running it here would gate on the runner's GPU instead of our paint.
-            # It runs pre-tag on real hardware — see release.yml `pixel-floor-gpu`.
+            # It runs pre-tag on real hardware — see `scripts/release.sh` [2026-09-22 · was
+            # "release.yml `pixel-floor-gpu`", a job release.yml never carried].
+            # [2026-09-22 · BK register wave N-1] The blob CEILING is GPU-gated too: on
+            # the software rasterizer the droplet reads 0.997 of the paintable interior
+            # (run 35399022659) vs 0.288 on Metal, so running it here would gate on the
+            # runner's rasterizer instead of our paint. Its green arm and its planted
+            # FLOOD arm run pre-tag on real hardware — see `scripts/release.sh`.
             - name: pixel floor (real render must be GREEN)
               run: npm -w tests-visual run gate:pixel-floor:ci
             - name: pixel floor self-test (planted defect must be RED)
               run: npm -w tests-visual run gate:pixel-floor:ci:planted
-            # The blob floor carries TWO bounds and `blob-blank` only bites the lower
-            # one, so the non-flood CEILING had never been seen to fail. `blob-flood`
-            # is its own arm because the two plants are mutually exclusive mutations of
-            # the same canvas — folding it into `all` would retire the blank bite.
-            - name: pixel floor self-test (planted FLOOD must RED the ceiling)
-              run: npm -w tests-visual run gate:pixel-floor:planted:flood
             - name: bank the machine reports (the captured DELTA is the PAIR)
               if: always()
               uses: actions/upload-artifact@v4
               with:
                   name: pixel-floor-pi-reports
+                  include-hidden-files: true
                   path: |
                       tests-visual/.cache/pi-report-*.json
                       tests-visual/.cache/aurora-*.png
