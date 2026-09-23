@@ -7,9 +7,9 @@ rename or import re-point per call site.
 
 ## 10.0.0 — UNRELEASED
 
-**Status.** `package.json` declares `9.0.0` (detector: `node -p
-"require('./package.json').version"`); the bump to `10.0.0` is the cut's own act, and
-nothing below is on the registry. The breaking changes are the cascade layer, the three
+**Status.** `package.json` declares ~~`9.0.0`~~ `10.0.0` [2026-09-22 · at the cut, `58f0d243`]
+(detector: `node -p "require('./package.json').version"`); the bump to `10.0.0` was the cut's
+own act, and nothing below is on the registry. The breaking changes are the cascade layer, the three
 published names that leave, the `AuroraAtoms` narrowing and `text-caption`'s upright
 paint — so the cut is a major, and the rest rides it. Two blocks written after 9.0.0 are
 also unreleased and ship in this cut: _Amended after 9.0.0_ under §9.0.0 (the keyboard
