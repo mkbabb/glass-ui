@@ -277,6 +277,14 @@ BREAKING cures are lawful there and are marked.
   600 not 400) are the palette-block class — R2 brackets each with the measured value from the tree
   (cite the declaring file) and deletes the row for a token declared nowhere.
 
+- **DESIGN.md:846-878 (at R2's adjudication r2):** the "Fraunces axes available" line, the display
+  utilities table's `WONK 1, SOFT 0` and weight columns, `.text-wonk-hover`, and the `.dock-label`
+  pin to `var(--font-display)` are the same stale-values class as :806-825 — R2's (measured: zero
+  Fraunces / font-variation-settings hits in src; the .dock-label pin re-measured before writing);
+  bracket each with the measured value or strike the row whose subject is gone. No deferral. If R2's
+  round-3 adjudication dictates it after the loop closes, the driver runs one standalone cure +
+  re-adjudication pair before R2 commits.
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
