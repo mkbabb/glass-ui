@@ -53,3 +53,4 @@ unaddressed registry row with an owning wave. The tranche prompt corpora live be
 - N-11 (owner, 2026-09-23, relayed in O-61): "the shadows on the left clip and are not displayed properly"; "the timeline is always greyed out"; the theme toggle folded under one account dropdown (OA-33) must be one keyboard-actuatable row.
 - N-12 (owner, 2026-09-23, direct, with a screenshot of the demo SidebarDock painting its plate as a lens): "this is not right with the dock. Inspect". Registered in REGISTRY F-18 with the driver's measurement.
 - N-13 (owner, 2026-09-23, relayed in O-62): "why are our docks grayed out, too"; earlier (fourier OA-43): "why is the controls items, these sidebars and elements, so gray and grayed out?"
+- N-14 (owner, 2026-09-23, relayed in O-63): "buttons in the dock are clipped on hover and select like this".
