@@ -236,7 +236,8 @@ test.describe("no-gray (π — the warm-chroma floor, fail-CLOSED)", () => {
     // 0.975 c h) relative-color derivation) resolve OKLab H in the warm register under .dark —
     // the painted truth a hardcoded-yellow-green re-introduction reds on the COMPILED color
     // (the SOURCE gate can be evaded by a renamed literal; the π reads the rendered hue). The
-    // tint chip composited over the dark L16 card carries the derived warm ink (the chip on
+    // tint chip composited over the dark ~~L16~~ [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%)]
+    // card carries the derived warm ink (the chip on
     // the card warm, NOT the H95° yellow-green BA pasted ×12).
     for (const vp of VIEWPORTS) {
         test(`(e) the dark --foreground + the dark --surface-tint-15 chip read warm @ ${vp.name}`, async ({
@@ -257,7 +258,8 @@ test.describe("no-gray (π — the warm-chroma floor, fail-CLOSED)", () => {
                 fgOk.H,
                 `dark --foreground OKLab H ${fgOk.H.toFixed(1)}° above the warm ceiling ${WARM_HUE_HI}° (a yellow-green cast). resolved "${fgStr}"`,
             ).toBeLessThanOrEqual(WARM_HUE_HI);
-            // the dark --surface-tint-15 chip composited over the dark --card (the L16 plate the
+            // the dark --surface-tint-15 chip composited over the dark --card (the ~~L16~~
+            // [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%)] plate the
             // chip lifts off). The α-mix over transparent preserves the ink hue; compositing it
             // over the warm-dark card keeps the warm hue. The chip background is read off a live
             // element so the relative-color recipe resolves through the real cascade.
@@ -284,7 +286,7 @@ test.describe("no-gray (π — the warm-chroma floor, fail-CLOSED)", () => {
             const chipOk = rgbToOklab(chipComp.r, chipComp.g, chipComp.b);
             expect(
                 chipOk.H,
-                `the dark --surface-tint-15 chip (over the L16 card) composites OKLab H ${chipOk.H.toFixed(1)}° outside the warm register [${WARM_HUE_LO},${WARM_HUE_HI}]° — the hardcoded H95° yellow-green tint ink persists. chip "${chip.chipBg}" over card "${chip.cardBg}"`,
+                `the dark --surface-tint-15 chip (over the L17 card) composites OKLab H ${chipOk.H.toFixed(1)}° outside the warm register [${WARM_HUE_LO},${WARM_HUE_HI}]° — the hardcoded H95° yellow-green tint ink persists. chip "${chip.chipBg}" over card "${chip.cardBg}"`,
             ).toBeGreaterThanOrEqual(WARM_HUE_LO);
             expect(
                 chipOk.H,

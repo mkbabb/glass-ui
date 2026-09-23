@@ -25,11 +25,16 @@
     --fade-scroll-width: 1rem;
     /* Dock content overflow caps. When dock content exceeds
        these dimensions, the inner `.dock-layers` (horizontal) /
-       `.glass-dock.vertical` (column) container scrolls with a
+       `.glass-dock.vertical` (column) container scrolls ~~with a
        `.scroll-fade-{x,y}` mask-fade so the boundary feathers rather
-       than cliffs. Defaults clamp to 80vw / 80vh capped at sensible
-       desktop widths; consumers override per-dock by setting either
-       token directly on a `.glass-dock` instance. User findings 1 + 5a. */
+       than cliffs~~. Defaults clamp to ~~80vw /~~ 80vh capped at ~~sensible
+       desktop widths~~ 48rem; consumers override per-dock by setting ~~either
+       token~~ `--dock-max-block-size` directly on a `.glass-dock` instance.
+       User findings 1 + 5a.
+       [2026-09-22 · O-32 CT2: at HEAD no edge mask ships on either axis—the
+       column's scroll is scrollbar-hidden, not feathered (shell.css)—and the
+       one settable token is `--dock-max-block-size`; `--dock-max-inline-size`
+       is gone (the bracket below).] */
     /* [2026-09-22 · O-32 AC-D-1] One cap, not two, and no mask-fade: the inline
        cap `--dock-max-inline-size` is deleted—its last reader went with the
        per-instance cap at BK #47 W3 LATTICE (shell.css), and the horizontal run

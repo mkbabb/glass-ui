@@ -79,8 +79,10 @@
 @supports (color: light-dark(white, black)) {
     :root {
         /* Neutral ladder — the source the var()-aliases track. scope 1:
-           the dark --neutral-0 page floor DEEPENS L6→L4 (LOCKSTEP dark-arm.css:32) so the
-           lifted L16 --card sits ~5× its relL — a real dark elevation step.
+           the dark --neutral-0 page floor DEEPENS L6→L4 (LOCKSTEP dark-arm.css ~~:32~~
+           --neutral-0 [2026-09-22 · O-32 CT2: twin by token name]) so the
+           lifted ~~L16 --card sits ~5× its relL~~ [2026-09-22 · O-32 CT2: L17 --card,
+           hsl(26 22% 17%), sits ≈8× its relL (measured)] — a real dark elevation step.
            THE WARM-CHROMA FLOOR, BOTH ARMS in lockstep. The LIGHT arm warms
            off the achromatic hsl-48 yellow-green onto the warm identity (hsl 28-40, OKLab
            H 62-85°, C off the gray floor; LOCKSTEP color-radius.css). The DARK arm warms in
@@ -98,20 +100,26 @@
 
         /* Core surfaces + ink. The DARK arg warmed off the H95.1°
            yellow-green hsl(48 10% 90%) onto the no-gray identity hsl(30 14% 90%) (OKLab
-           H75.4°, L held) in LOCKSTEP with the .dark fallback floor (dark-arm.css:60). The
+           H75.4°, L held) in LOCKSTEP with the .dark fallback floor (dark-arm.css ~~:60~~
+           --foreground [2026-09-22 · O-32 CT2: twin by token name]). The
            LIGHT arg hsl(24 10% 10%) is already the warm-amber identity (H56°) — untouched. */
         --foreground:                 light-dark(hsl(24 10% 10%), hsl(30 14% 90%));
-        /* The dark --card plate LIFTS L10→L16 (LOCKSTEP
-           dark-arm.css:51); the public-data panel re-anchors L12→L18 to stay above it.
+        /* The dark --card plate LIFTS L10→~~L16~~
+           [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%)] (LOCKSTEP
+           dark-arm.css ~~:51~~ --card [2026-09-22 · O-32 CT2: twin by token name]); the
+           public-data panel re-anchors L12→L18 to stay above it.
            The LIGHT arm DECOUPLES off the near-achromatic page onto the
-           warm-cream plate hsl(36 48% 97%) (LOCKSTEP color-radius.css --card) so the light
-           glass plate reads warm-not-gray; the dark arm is UNCHANGED. */
+           warm-cream plate ~~hsl(36 48% 97%)~~ [2026-09-22 · O-32 CT2: hsl(30 85% 96%),
+           the light arm of the `--card` declaration below and color-radius.css]
+           (LOCKSTEP color-radius.css --card) so the light glass plate reads
+           warm-not-gray; the dark arm is UNCHANGED. */
         --card:                       light-dark(hsl(30 85% 96%), hsl(26 22% 17%));
         --popover:                    light-dark(hsl(30 85% 96%), hsl(26 22% 17%));
         --surface-public-data-panel:  light-dark(hsl(44 16% 96%), hsl(36 9% 18%));
 
         /* The chromatic dark --primary (legendre-violet house
-           hue, oklab chroma 0.134; decoupled from the achromatic cream). LOCKSTEP dark-arm.css:59. */
+           hue, oklab chroma 0.134; decoupled from the achromatic cream). LOCKSTEP dark-arm.css
+           ~~:59~~ --primary [2026-09-22 · O-32 CT2: twin by token name]. */
         --primary:                 light-dark(hsl(24 10% 10%), oklch(0.739 0.134 318.1));
         --primary-foreground:      light-dark(var(--neutral-0), hsl(24 10% 10%));
         /* Dark-arm lift, SECOND CUT (A11Y W3-A). The stock shadcn dark

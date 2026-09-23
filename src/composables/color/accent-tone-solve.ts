@@ -18,13 +18,15 @@ import type { UseAccentToneOptions } from "./useAccentTone";
 /**
  * The canonical resting surface the accent sits ON when the consumer does not name
  * one — the warm-cream `--card` plate (`tokens/color-radius.css`, light
- * `hsl(36 48% 97%)`). DOM-free + deterministic (SSR-safe): the leaf cannot read the
+ * ~~`hsl(36 48% 97%)`~~ `hsl(30 85% 96%)` [2026-09-22 · O-32 CT2: the shipped light card;
+ * `use-accent-tone.test.ts` binds this literal to the token file's `--card` declaration]).
+ * DOM-free + deterministic (SSR-safe): the leaf cannot read the
  * live `--card` token without a DOM, so the band-lightness solve defaults to this
  * concrete surface; a consumer painting onto a different surface passes
  * `opts.surface`. The CSS recipe's `var(--surface, var(--card))` is the live-cascade
  * twin (it resolves the REAL token at paint); this default is the JS-side seed.
  */
-const DEFAULT_SURFACE = "hsl(36 48% 97%)";
+const DEFAULT_SURFACE = "hsl(30 85% 96%)";
 
 /** AA — the body-text contrast bar the resolved ink clears over the band. */
 const AA_CONTRAST = 4.5;

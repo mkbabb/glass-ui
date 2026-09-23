@@ -42,10 +42,12 @@
        supporting engine `color-scheme: dark` (above) drives the §-1b
        light-dark() arms and these agree. */
     /* The luminous-dark elevation widen. The page floor
-       deepens (L6→L4, +1 warmth-sat) and the --card plate LIFTS (L10→L16, below) so the
-       page↔card gap widens from a 4-L collapse (card/page relL ≈ 2.0×, a 0.003-luma
-       band) to a real iOS/Material dark elevation step (card/page relL ≈ 5×, the five glass
-       rungs composite into a perceptible ladder). LOCKSTEP with light-dark.css:70/80.
+       deepens (L6→L4, +1 warmth-sat) and the --card plate LIFTS (L10→~~L16~~
+       [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%); card/page relL ≈ 8×, measured], below)
+       so the page↔card gap widens from a 4-L collapse (card/page relL ≈ 2.0×, a 0.003-luma
+       band) to a real iOS/Material dark elevation step (card/page relL ≈ ~~5×~~ 8×, the five glass
+       rungs composite into a perceptible ladder). LOCKSTEP light-dark.css ~~:70/80~~
+       --neutral-0 / --card [2026-09-22 · O-32 CT2: twin by token name].
        The WARM-CHROMA FLOOR dark arm, in LOCKSTEP with light-dark.css. The
        dark neutrals warm off the achromatic hsl-24/48 onto the warm identity (hsl 28-36,
        OKLab C off the gray floor on the NEW dark base — chip→border C 0.0138-0.0286, muted-fg
@@ -78,20 +80,28 @@
        stays ≥ the body floor). EVERY dark var(--foreground) consumer (body copy, the lifted
        muted register, --glass-veil-ink, the cartoon shadow, the configurator divider, the
        dock-selected-accent, the --surface-tint-* relative-color recipe below) re-resolves
-       warm in lockstep, zero per-site edit. LOCKSTEP light-dark.css:92 (the §2c discipline —
+       warm in lockstep, zero per-site edit. LOCKSTEP light-dark.css ~~:92~~ --foreground
+       [2026-09-22 · O-32 CT2: twin by token name] (the §2c discipline —
        both mode arms warm together or the FOUC/enhancement split paints two inks). */
     --foreground: hsl(30 14% 90%);
-    /* The --card plate LIFTS L10→L16 (a warm-dark elevated
-       surface, macOS-window territory) so it sits ~5× the deepened L4 page relL — a
-       clearly distinct surface the five glass rungs ladder up from. LOCKSTEP light-dark.css:80. */
+    /* The --card plate LIFTS L10→~~L16~~ (a warm-dark elevated
+       surface, macOS-window territory) so it ~~sits ~5×~~ sits ≈ 8× the deepened L4 page relL — a
+       clearly distinct surface the five glass rungs ladder up from. LOCKSTEP light-dark.css
+       ~~:80~~ --card [2026-09-22 · O-32 CT2: twin by token name].
+       [2026-09-22 · O-32 CT2: L17—the card ships hsl(26 22% 17%); card/page relL ≈ 8×, not
+       ~5× (measured over the L4 page hsl(24 9% 4%)).] */
     --card: hsl(26 22% 17%);
     --popover: hsl(26 22% 17%);
 
     /* Dark mirror of the warm-neutral public-data panel.
-       --card's dark hsl(24 8% 16%) nudged one warmth step toward amber
-       (24→36) + +1 sat + +2 L so the dark dashboard panel lifts off the page.
-       Re-anchored L12→L18 to stay ABOVE the lifted L16 card
-       (LOCKSTEP light-dark.css:82). */
+       --card's dark ~~hsl(24 8% 16%)~~ nudged one warmth step toward amber
+       ~~(24→36) + +1 sat + +2 L~~ so the dark dashboard panel lifts off the page.
+       Re-anchored L12→L18 to stay ABOVE the lifted ~~L16~~ card
+       (LOCKSTEP light-dark.css ~~:82~~ --surface-public-data-panel
+       [2026-09-22 · O-32 CT2: twin by token name]). [2026-09-22 · O-32 CT2: the
+       dark --card ships hsl(26 22% 17%) (the `--card` declaration above)—the L17
+       card; from it the panel hsl(36 9% 18%) is H 26→36, S −13, L +1, one step
+       above.] */
     --surface-public-data-panel: hsl(36 9% 18%);
 
     /* The chromatic dark --primary. An achromatic
@@ -101,7 +111,8 @@
        NOT a borrowed demo preset), oklab chroma 0.134. The dark ink --primary-foreground
        stays hsl(24 10% 10%): 7.15:1 over the violet (clears the 4.5 text + 3.0 graphic
        floors). Critical now the disco/audacious texture retires — the accent's
-       COLOR carries the identity. LOCKSTEP light-dark.css:84. */
+       COLOR carries the identity. LOCKSTEP light-dark.css ~~:84~~ --primary
+       [2026-09-22 · O-32 CT2: twin by token name]. */
     --primary: oklch(0.739 0.134 318.1);
     --primary-foreground: hsl(24 10% 10%);
     /* The `.dark` class fallback floor, in LOCKSTEP with the light-dark()
@@ -161,11 +172,11 @@
        configurator divider register, in LOCKSTEP with the `light-dark()`
        enhancement arm minted in offsets-sizing.css (the dark halves). A
        @supports-split engine (no `light-dark()`) and a class-toggle engine paint
-       the SAME lifted divider: off the L34 `--border` (too close to the L16
-       glass plate) toward the L90 `--foreground` warm-ink so a visible luminance
-       step survives the dark glass-floating surface. The SECTION divider runs
-       heavier than the inter-row hairline; the faint section tonal step is the
-       3% foreground wash. */
+       the SAME lifted divider: off the L34 `--border` (too close to the ~~L16~~
+       [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%)] glass plate) toward the L90
+       `--foreground` warm-ink so a visible luminance step survives the dark
+       glass-floating surface. The SECTION divider runs heavier than the inter-row
+       hairline; the faint section tonal step is the 3% foreground wash. */
     --configurator-divider: color-mix(in srgb, var(--foreground) 22%, transparent);
     --configurator-divider-section: color-mix(in srgb, var(--foreground) 30%, transparent);
     --configurator-section-tint: color-mix(in srgb, var(--foreground) 3%, transparent);
@@ -277,7 +288,8 @@
     /* The surface-aware FOREGROUND register, DARK arm (the N13
        whisper collapse where it bites hardest). The dark page-muted --neutral-5 (L62,
        AA 7.70:1 vs page [2026-08-05: re-derived from ~~7.64~~]) COLLAPSES over the
-       lifted luminous-dark plate (the L16 card
+       lifted luminous-dark plate
+       (the ~~L16~~ [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%)] card
        at the 12% --glass-veil-rung composites the bright backdrop UP — the
        measured 1.15-3.29:1). The on-glass muted rung lifts BRIGHTER (the mirror of the
        light arm's darkening) so it clears AA over the composited dark plate WHILE
@@ -309,7 +321,8 @@
        at the token mint); so each rung is a oklch(from var(--foreground) 0.975
        c h) RELATIVE-COLOR derivation: the recipe extracts the (now-warmed) dark --foreground's
        warm hue + chroma and lifts the lightness to 0.975 (so the chip
-       lift off the L16 card is preserved) — the ink CARRIES the --foreground's warm hue
+       lift off the ~~L16~~ [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%)] card is
+       preserved) — the ink CARRIES the --foreground's warm hue
        (OKLab H75.4°) BY DERIVATION (re-point the dark ink → every rung re-resolves warm; a
        future re-tune reaches all 12 from ONE --foreground edit — the symmetry the light arm
        has had). The OUTER mix STAYS color-mix(in srgb, … N%, transparent) — the

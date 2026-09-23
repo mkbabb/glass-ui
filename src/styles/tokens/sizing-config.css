@@ -61,7 +61,8 @@
     /* 3. The DIVIDER register — dark-adaptive (.1).
        Inline `border-border/40` and
        `border-border/30` Tailwind alphas VANISH over the dark
-       `glass-floating` plate (a luminous transmissive material, --card L16): those
+       `glass-floating` plate (a luminous transmissive material, --card ~~L16~~
+       [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%)]): those
        near-equal-luminance hairlines effectively DISAPPEAR — "the sections run
        together". This ONE token is consumed by every divider rule (the
        <ConfiguratorLayer> section border, the dividers-prop inter-row border,
@@ -70,7 +71,8 @@
 
        The dark-LIFTING arm is the load-bearing half: the divider must read on
        BOTH plates. On LIGHT it is the resting `--border` warm-neutral at the
-       prior ~40% weight; on DARK it LIFTS off `--border` (L34 over the L16 plate
+       prior ~40% weight; on DARK it LIFTS off `--border` (L34 over the ~~L16~~
+       [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%)] plate
        — too close) toward the `--foreground` warm-ink (L90) at a higher α, so a
        visible luminance step survives the dark glass. `light-dark()` carries the
        arm in ONE declaration (the same :root cascade context as the surface-tint

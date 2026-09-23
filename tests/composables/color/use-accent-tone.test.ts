@@ -4,6 +4,7 @@
 // contrast target. This test proves the contrast-safe CONTRACT holds for N synthetic
 // tones in BOTH modes — the load-bearing invariant fourier asked for.
 
+import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import { useAccentTone } from "@glass/composables/color";
 import {
@@ -42,8 +43,16 @@ function wcag(a: AnyColor, b: AnyColor) {
     return (hi + 0.05) / (lo + 0.05);
 }
 
-const LIGHT_CARD = "hsl(36 48% 97%)";
-const DARK_CARD = "hsl(24 8% 16%)";
+// [2026-09-22 · O-32 CT2: the fixture held the struck grounds ~~hsl(36 48% 97%)~~ /
+// ~~hsl(24 8% 16%)~~; it now reads the shipped `--card` bytes out of the token files, so
+// the grounds cannot drift from paint again—hsl(30 85% 96%) light, hsl(26 22% 17%) dark.]
+function shippedCard(path: string): string {
+    const match = /^\s*--card:\s*([^;]+);/m.exec(readFileSync(path, "utf8"));
+    if (!match) throw new Error(`no --card declaration in ${path}`);
+    return match[1].trim();
+}
+const LIGHT_CARD = shippedCard("src/styles/tokens/color-radius.css");
+const DARK_CARD = shippedCard("src/styles/tokens/dark-arm.css");
 
 // carved the ink SOLVE behind a dynamic import (the value.js
 // quarantine — the eager /chip chunk stays value.js-free): `ink` is the synchronous
@@ -220,6 +229,21 @@ describe("useAccentTone — the contrast-safe ink contract", () => {
         const looseRatio = wcag(parse(loose.ink.value), band(LIGHT_CARD, tone));
         const tightRatio = wcag(parse(tight.ink.value), band(LIGHT_CARD, tone));
         expect(tightRatio).toBeGreaterThan(looseRatio);
+    });
+
+    // BORN-RED (O-32 CT2, adjudication round 2). The leaf's JS-side default surface (no
+    // `surface` passed) is a literal by necessity (DOM-free, SSR-safe); this row binds it to
+    // the token file's light `--card` so it cannot drift from paint again.
+    it("the JS-side default surface is the shipped light --card (read from the token file)", async () => {
+        const source = readFileSync("src/composables/color/accent-tone-solve.ts", "utf8");
+        const declared = /^const DEFAULT_SURFACE = "([^"]+)";$/m.exec(source);
+        if (!declared) throw new Error("no DEFAULT_SURFACE declaration in accent-tone-solve.ts");
+        expect(declared[1]).toBe(LIGHT_CARD);
+        const { solveAccentInk: actualSolveAccentInk } = await vi.importActual<
+            typeof import("@glass/composables/color/accent-tone-solve")
+        >("@glass/composables/color/accent-tone-solve");
+        const tone = "oklch(0.532 0.180 317.5)";
+        expect(actualSolveAccentInk(tone)).toBe(actualSolveAccentInk(tone, { surface: LIGHT_CARD }));
     });
 
     it("an unparseable concrete tone fails explicitly", async () => {

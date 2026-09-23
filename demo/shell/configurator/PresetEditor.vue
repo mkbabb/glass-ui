@@ -221,7 +221,7 @@ function effectiveFont(slot: keyof FontSlots): string {
                                 class="w-full"
                                 aria-label="Design preset"
                             />
-                            <p class="text-micro leading-snug text-muted-foreground/80">
+                            <p class="text-micro leading-snug text-muted-foreground">
                                 {{ presetDescription }}
                             </p>
                         </div>
@@ -363,7 +363,7 @@ function effectiveFont(slot: keyof FontSlots): string {
                 <div
                     class="configurator-footer flex items-center justify-between gap-2 px-(--configurator-pad-inline) py-4 border-t"
                 >
-                    <Label class="text-micro font-mono text-muted-foreground/70">
+                    <Label class="text-micro font-mono text-muted-foreground">
                         glass-ui-demo-config
                     </Label>
                     <Button emphasis="quiet" size="sm" @click="cfg.reset">

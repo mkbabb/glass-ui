@@ -576,8 +576,10 @@ function togglePlay() {
              The `overflow` prop is struck: the over-cap strategy is closed-form
              arithmetic under the lattice, and a second in-cap layout mode (INTRINSIC
              flex-reflow to N rows) is not a dock. The `--dock-max-inline-size` cap it
-             demonstrated is a token, still consumer-settable, still exercised by the
-             /dock/overflow story. -->
+             demonstrated ~~is a token, still consumer-settable, still exercised by the
+             /dock/overflow story~~. [2026-09-22 · O-32 CT2: is gone—its last reader
+             went at BK #47 W3 LATTICE and the declaration at 10.0.0 (O-32 AC-D-1);
+             /dock/overflow sets no cap, and an over-long run scrolls natively.] -->
 
         <StorySection heading="Big dock — the card shell" gap="md">
             <p class="text-micro text-muted-foreground">

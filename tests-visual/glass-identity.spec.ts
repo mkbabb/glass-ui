@@ -122,7 +122,8 @@ async function setMode(page: Page, mode: "light" | "dark"): Promise<void> {
 
 // The per-mode identity band is bandForTier(selector, mode). In LIGHT the warm-cream floor
 // reads L ∈ [0.85, 0.99]; in DARK the warm material re-resolves the deep-canvas register (the
-// dark `--card` hsl(24 8% 16%), the luminous-dark lift), so the L window shifts down to
+// dark `--card` ~~hsl(24 8% 16%)~~ [2026-09-22 · O-32 CT2: hsl(26 22% 17%); the [0.1, 0.55]
+// window holds], the luminous-dark lift), so the L window shifts down to
 // [0.1, 0.55] AND the dark arm lifts each rung's alpha ~+0.08 (the read-weight lift over the
 // deeper canvas) — so the dark ceilings sit higher (content < 0.82, overlay < 0.97). chroma
 // must STILL be warm (≥ 0.004, NOT a flat neutral). The warmth + translucency invariants are
