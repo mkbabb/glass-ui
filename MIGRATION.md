@@ -5,11 +5,11 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
-## 10.0.0 — UNRELEASED
+## 10.0.0 — ~~UNRELEASED~~ [2026-09-22 · LIVE: tag `v10.0.0` at `dcb0f711`, published with provenance by `release.yml` run 35804200390 attempt 1, `latest` on the registry, unpacked 2,915,902 B = the ratchet datum]
 
 **Status.** `package.json` declares ~~`9.0.0`~~ `10.0.0` [2026-09-22 · at the cut, `58f0d243`]
 (detector: `node -p "require('./package.json').version"`); the bump to `10.0.0` was the cut's
-own act, and nothing below is on the registry. The breaking changes are the cascade layer, the three
+own act, ~~and nothing below is on the registry~~ [2026-09-22 · LIVE since `v10.0.0`; the cut is on the registry]. The breaking changes are the cascade layer, the three
 published names that leave, the `AuroraAtoms` narrowing and `text-caption`'s upright
 paint — so the cut is a major, and the rest rides it. Two blocks written after 9.0.0 are
 also unreleased and ship in this cut: _Amended after 9.0.0_ under §9.0.0 (the keyboard
