@@ -7727,3 +7727,123 @@ anchors (**#18 `:6678` · #40 `:6699` · #51 `:6709` · #76 `:6744` · #66 `:675
 separator counted in, this paragraph counted into its own figure, all of it below the last cite.
 Committed records keep their pre-insertion numbers, per ⊕⁷², ⊕⁷³, ⊕⁷⁶, ⊕⁷⁷, ⊕⁷⁹, ⊕⁸⁰, ⊕⁸¹, ⊕⁸²,
 ⊕⁸³, ⊕⁸⁴.
+
+---
+
+⊕⁸⁶ **10.0.0 IS LIVE, AND THE O-23/O-32 DISPOSITION IS CLOSED END TO END** (2026-09-22 ET ·
+the publish 2026-09-23 00:56:24Z → 01:01:17Z · `e3587ec8`..`d594aed1`, tree clean at this seat's
+first byte · record seat modelId **`claude-opus-5-5[1m]`**, stated from this seat's own identity—
+no transcript was read, the subagent tree being outside this seat's fence). The register wave
+cured, the O-23/O-32 wave cured, the cut was tagged and CI published it. This seat wrote one block.
+
+⊕⁸⁶ **(a) THE REGISTRY.** `git log --oneline -1 v10.0.0` → **`dcb0f711`** (annotated tag,
+`git cat-file -t` = `tag`; `package.json` there declares `10.0.0`). `gh run view 35804200390`:
+**`release.yml`, `event: push`, `headBranch: v10.0.0`, `headSha: dcb0f711…`, attempt 1,
+`completed` / `success`**. Its publish log: *"Signed provenance statement with source and build
+information from GitHub Actions"* and *"Provenance statement published to transparency log:
+https://search.sigstore.dev/?logIndex=2912967710"* (01:01:12Z). `npm view @mkbabb/glass-ui`:
+**`version = '10.0.0'` · `dist-tags.latest = '10.0.0'` · `dist.unpackedSize = 2915902`**—equal to
+`git show dcb0f711:.bundle-ratchet` = **`2915902`**, the ratchet datum at the tag. The post-LIVE
+rebind is `git show HEAD:.bundle-ratchet` = **`2916163`** (`d594aed1`, the LIVE bracket bytes,
++261 B), on the committed tree, never on the registry figure.
+
+⊕⁸⁶ **(b) THE SEGMENT.** `git log --oneline e3587ec8..HEAD | wc -l` = **42 commits** since ⊕⁸⁵;
+`git log --oneline e5ac97f2^..HEAD | wc -l` = **32** of them from the O-23/O-32 driver rulings on.
+Each stat is `git show --stat <hash> | tail -1`:
+
+| commit | seat | files | ± |
+| --- | --- | --- | --- |
+| `695d4925` | register wave · driver RULINGS | 1 | +135 |
+| `72d8bd96` | lane C · the blob ceiling its own floor | 9 | +382/−22 |
+| `6875b1b3` | lane X · three published names leave (`!`) | 12 | +529/−94 |
+| `9025efe2` | lane T · the 1.4.11 census | 6 | +517/−28 |
+| `a08143ce` | lane L · A-3-CLASS, `@layer components` (`!`) | 65 | +5204/−4016 |
+| `cbc1c979` | lane R · the 10.0.0 records | 4 | +633/−23 |
+| `dce84a28` | the eight O-23/O-32 seat JSONs | 8 | +2055 |
+| `e5ac97f2` | O-23/O-32 driver RULINGS | 1 | +168 |
+| `fafc9737` | wave 1 · lane DA (`!`) | 18 | +1040/−21 |
+| `552b5d01` | wave 1 · lane CT | 12 | +656/−35 |
+| `91c65f89` | wave 1 · AUTHOR, the LEDGER | 2 | +1359 |
+| `9d8cd728` | wave 1 · lane AC2 | 18 | +636/−72 |
+| `e853b327` | wave 1 · lane AC1 (`!`) | 17 | +919/−141 |
+| `71be2c0b` | wave 2 · lane CT2 | 13 | +449/−165 |
+| `7f9e417c` | wave 2 · lane R2 | 7 | +1009/−126 |
+| `dcb0f711` | wave 2 · AUTHOR2, the bracket pass (the tag) | 2 | +113/−76 |
+| `58f0d243` | release · 9.0.0 → 10.0.0, ratchet 2562566 → 2915849 | 5 | +7/−5 |
+| `14570f43` | release · the §10.0.0 Status sentence | 1 | +3/−3 |
+| `d3072ce9` | release · ratchet 2915849 → 2915902 | 1 | +1/−1 |
+| `fbd8625e` | release · the close bank | 3 | +1134 |
+| `d594aed1` | release · the LIVE bracket, ratchet 2915902 → 2916163 | 2 | +3/−3 |
+
+**RULINGS.md took 19 commits** (`git log --oneline e5ac97f2^..HEAD -- …/RULINGS.md | wc -l`),
+`e5ac97f2` through the §B-1 bracket `9c984489`, every later one a dated bracket or a driver ruling
+on a seat's STOP or widening. The three commits the table leaves out are coordination and one
+ruling: `b249b586` (the O-23/O-32 carry, 2 files, +473), `46eec459` (the E-F9b-2 erratum, 1, +16),
+`5bbb2de8` (the ruling on lane L's STOP, 1, +15).
+
+⊕⁸⁶ **(c) THE FOUR BREAKS THE O-23/O-32 WAVE ADDS**, read at `MIGRATION.md:20-23`, R2's bracket
+inside the `## 10.0.0` Status paragraph (`:10-29`; the heading at `:8` now carries the LIVE
+bracket): **`cm-serif` leaves for `font-serif-math`** · **`useSidebarFollow` exempts by
+attribute** · **`parentId` names the direct parent** · **`SegmentedTabs` goes generic**—type-level,
+`InstanceType<typeof SegmentedTabs>` no longer compiles, runtime unchanged. They ride beside the
+register wave's own breaks at `:12-14` (the cascade layer, the three published names, the
+`AuroraAtoms` narrowing, `text-caption`'s upright paint). **The LEDGER** (`…/LEDGER.md`,
+**932 lines**; `91c65f89`'s subject calls it 52 rows) tallies itself at `:908-916`: **CURE-NOW
+21 rows or limbs, three BREAKING bracketed to four** · **ANSWER 13 rows plus the 21 strikes** ·
+**SPLIT 1** (A-2) · **DECLINE 6 limbs, none a whole row** · **KILL · ROUTE · CURE-NEXT-MAJOR
+none**; pre-cure state at `:918-924` reads **LIVE 20 · PARTIAL 6 · MOVED 1 · DEAD 3 ·
+NOT-APPLICABLE 2**. **The one reply letter**,
+`docs/tranches/BK/coordination/glass-outbound-2026-09-22-fourier-o23-o32-reply.md`, is
+**464 lines**, every *"lands at 10.0.0, lane X"* filled with its commit by `dcb0f711`.
+
+⊕⁸⁶ **(d) THE CLOSE BANK, THE CAPTURED DELTA** (`…/2026-09-22-o23-o32-disposition/close/`, three
+files: `pi-report-green.json` 10,663 B · `pi-report-planted.json` 26,813 B · `release-10.0.0.log`
+98,581 B, 435 lines). From the log:
+
+- **Battery** (`:191-192`): `Test Files  239 passed (239)` · `Tests  2313 passed | 10 expected
+  fail (2323)`, after `npm run typecheck && npm run build` (`:4`).
+- **`verify:package`** (`:200`): `"terminal":"CLEAN"`, `"version":"10.0.0"`,
+  `roster {"status":"PRESENT","datum":289,"emitted":289}`.
+- **The green arm** (`:237-238`): `3 passed (34.7s)` · *"pixel-floor gate: GREEN — 3 floors ran
+  on the live paint path and passed."*
+- **The planted black aurora** (`:247`, `:390-394`): `PI aurora DEFAULT meanChannel=3.4 floor=8`,
+  `2 failed` · `1 passed`, *"GREEN (self-test, --plant=all) — 2 floors RED-ed on the planted
+  defect"*.
+- **The planted blob flood** (`:405-406`, `:431`): `paintedShare=0.997 ceil=0.7`, `✘`, *"GREEN
+  (self-test, --plant=blob-flood) — 1 floors RED-ed on the planted defect … the floors bite."*
+- **The tag** (`:432`): `Created annotated tag v10.0.0.`
+
+⊕⁸⁶ **(e) THE RECEIPT, AND THE SEATS.** `node scripts/gate-register.mjs`, re-run at this seat:
+`seats:60 active:46 reserved:5 worstCase:51 remaining:9 external:11 bound:13 armOnly:2 unbound:45 drift:0 rosterSha256:282d05cf violations:0`
+—**byte-identical to ⊕⁸⁵'s receipt**. No
+gate minted, no seat moved. **Seat census (driver's count)**: `wf_4e54ec95-1de` **37 seats**,
+`wf_7db62f01-99c` **23 seats**, and **3 standalone seats**—lane T's `adjudicate2` redeploy, R2's
+cure round 3, R2's adjudication round 4. This seat cannot read the journals and does not confirm
+the figures.
+
+⊕⁸⁶ **(f) WHAT IS NEXT.** **The O-23/O-32 disposition is closed end to end and 10.0.0 is on the
+registry.** The reply letter sits in `docs/tranches/BK/coordination/` for fourier's and value.js's
+sweep. **OWNER-ONLY, and all that is left**: enable the npm Trusted Publisher for
+`@mkbabb/glass-ui` on npmjs.com—`release.yml` already carries the paragraph (`:13-19`: OIDC,
+`id-token: write` granted at `:31`, the Settings → Trusted Publisher path, the token kept until the
+first OIDC publish succeeds) and the step (`:59-62`, `npm install -g npm@^11.5.1`), with
+`NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}` still at `:66`—then delete and rotate `NPM_TOKEN`.
+**`FINAL.md` is the next record, and it is owed.**
+
+⊕⁸⁶ **WHAT THIS SEAT PLACED, AND WHAT IT DID NOT TAKE.** **PLACED**: this block, appended at the
+file's literal end, **and nothing else**—one file touched. **NOT TAKEN**: **no gate was minted**—
+`seats:60` / `rosterSha256:282d05cf` / `drift:0` / `violations:0`, re-read here and identical to
+⊕⁸⁵ · **no cure applied, no bracket written into any other record** · **no build, no version
+moved, no publish, no tag, no push** · **no sibling tree read for write or written** · **no git
+verb** beyond `status`, `log`, `show`, `diff`, `cat-file -t` and `tag -l` · **no figure typed from
+memory or from the dispatch**—each is from `git show --stat`, `git log --oneline`, `wc -l`,
+`ls -la`, `gh run view`, `npm view`, `node scripts/gate-register.mjs` or a named `file:line` read
+here, save the seat census, marked the driver's.
+
+⊕⁸⁶ **LINE-CITE NOTE.** This block is appended at the **literal end of the file**, below ⊕⁸⁵ and
+every cite in it, so **NOTHING SHIFTS**—⊕⁸²'s through ⊕⁸⁵'s shared anchors (**#18 `:6678` ·
+#40 `:6699` · #51 `:6709` · #76 `:6744` · #66 `:6752`**) are unmoved. No line at or above `:7729`
+is edited by this seat. The file goes **7,729 → 7,849—+120**, separator counted in, this paragraph
+counted into its own figure. (⊕⁸⁵'s note reads *"7,528 → 7,725"*; `wc -l` read **7,729** before
+this write—left standing, recorded here.) Committed records keep their pre-insertion numbers, per
+⊕⁷² through ⊕⁸⁵.
