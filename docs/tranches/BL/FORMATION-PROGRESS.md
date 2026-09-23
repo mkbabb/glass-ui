@@ -11,7 +11,7 @@ Concurrency: pools of 5. Reports land under `docs/tranches/BL/` so they survive 
 | audit round 2 (9 directed lenses + registry merge) | `wf_e5a1ce80-a24` | RUNNING | `audit/round-2/R2-*.md`, `audit/REGISTRY.md` |
 | audit rounds 3-4 (2 fresh lenses each; stable when both add no new family) | — | pending | `audit/round-3/`, `audit/round-4/` |
 | inbound sibling asks | — | O-53..O-58, O-60 registered | `audit/INBOUND.md` |
-| design loop D1: structure (colocation edict), ≥3 passes | — | round 0 portfolio starting | `design/structure/` |
+| design loop D1: structure (colocation edict), ≥3 passes | round 0 `wf_94c5606f-690`; pass-1 research A `wf_5dfeff05-16f` | round 0 DONE `9a435606` (families D1-A..F); pass 1 research A (W prior art, X constellation) RUNNING serially; research B (6 family seats) waits for a free pool | `design/structure/PORTFOLIO.md`, `design/structure/pass-1/` |
 | design loop D2: the dock (morph, compact-on-scroll, rim seat; O-55/O-56/O-60) | — | pending | `design/dock/` |
 | design loop: other design-shaped families the audit surfaces | — | pending | `design/<family>/` |
 | formation: PLAN, waves, gates, LEDGER, dispositions | — | pending | `PLAN.md`, `waves/`, `LEDGER.md` |
