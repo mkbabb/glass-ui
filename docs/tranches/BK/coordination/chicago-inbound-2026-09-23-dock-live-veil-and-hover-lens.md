@@ -18,3 +18,15 @@ A horizontal `<GlassDock orientation="horizontal" fit-content :collapse="false">
 
 ## Confirmation (2026-09-23, the reporter's probe on the chicago composition)
 [2026-09-23 · CONFIRMED, the hypothesis above is now measured] Sweeping the pointer across the five controls, 111 animation frames sampled: `.dock-run` overflowed (`scrollWidth > clientWidth`) in 46 of them, by at most 2 px, during the hover `inline-size` transition, and `.dock-plate`'s `border-top-left-radius` flipped between `9999px` and `50%` over the same span. The same happens with `backdrop-mode="static"`; it shows less on the opaque plate, so static mode is not a cure, only a milder witness.
+
+## Third symptom, same cause (2026-09-23, reporter-measured)
+Hovering the dock's icon control shifts every label left. The icon control's hover `scale(1.1)` pokes about 2 px past `.dock-run`; transformed content counts toward scrollable overflow, the run is `overflow-x: auto`, so it becomes a real scroll container and scrolls under trackpad or wheel input, sliding every label, and the same overflow arms the cut cap.
+
+## Consumer overrides now live in chicago (temporary; each is retired when BL's cure lands)
+In `~/Programming/chicago/src/style.css`, verified on the live site (`scrollLeft` stays 0 under a horizontal wheel; the plate radius stays `9999px` through a hover sweep; the plate paints at 0.62 alpha with the live blur intact):
+1. `.glass-dock.shape-pill { --dock-cap-rest: 9999px }`
+2. `.page-dock .dock-run { overflow: visible }` (a fit-content dock never needs to scroll)
+3. a plate veil floor: `--dock-plate-expanded-tier` / `--dock-plate-collapsed-tier: max(<token>, 0.62)`
+
+Suggested cure (reporter): hover scale on seats never creates scrollable overflow in the run (clip transforms out of scroll overflow, or reserve the headroom), and a fit-content dock that does not overflow is not a scroll container at all.
+
