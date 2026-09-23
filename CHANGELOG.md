@@ -1,5 +1,29 @@
 # Changelog
 
+## 10.0.1 — 2026-09-22
+
+A geometry cure, no API change; `MIGRATION.md` is untouched. Reported by the chicago
+consumer against 10.0.0 (record: `docs/tranches/BK/coordination/chicago-inbound-2026-09-22-button-stadium-pad.md`).
+
+- **Button — the stadium pad is derived from the control rung.** `size="xs"`/`"sm"` padded
+  inline with `--space-atom` (8px) and the base with `--space-body` (12px), rank rungs the one
+  width query transposes to 4/8px under 768px, while the corner is half the control rung
+  (14/18/20/22px) and never transposes; at a 420px viewport a `sm` command computed to
+  `padding-inline: 4px` against an 18px radius and the leading glyph sat inside the curve.
+  The pad is now the register's own pairing law (`pad = r − 4`) applied to the stadium — ONE
+  declaration on `.button`, `calc(var(--button-size) / 2 - var(--space-residue))`, the xs/sm
+  overrides deleted. Per rung xs/sm/md/lg: 8/8/12/12 → 10/14/16/18 at desktop (4/4/8/8 → the
+  same 10/14/16/18 under 768px); 18 for every rung under the 44px coarse floor. The text arm
+  keeps `--space-residue`; icon-only keeps `padding: 0`. Nothing minted: the inbound's 0.375
+  coefficient and a leading-glyph optical trim were both refused for the derivation the
+  register already states.
+- **Gate re-ruled.** `tests/components/button/Button.test.ts` — the `padding-inline: calc(`
+  ban admits exactly one spelling, the pairing-law derivation on `.button`; a born-RED
+  four-rung witness (28/36/40/44 → 10/14/16/18, each above the residue floor and the standing
+  desktop pad) fails on the 10.0.0 bytes.
+- `src/styles/tokens/sizing.css` rank-series table: the atom/body "control" cells struck to
+  what still pads with those rungs; the pairing-law paragraph gains the stadium line.
+
 ## 10.0.0 — 2026-09-22
 
 `MIGRATION.md` §10.0.0 is the complete break list, and from this release it ships in

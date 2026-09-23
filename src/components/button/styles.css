@@ -19,10 +19,15 @@
    Tone re-points the three hues in ONE rule; emphasis picks which hue each role
    reads; the cascade does the product, and no selector names two axes.
 
-   NOTHING IS MINTED. Pads and gaps read the §1.1 rank series (`--space-atom` 8 /
-   `--space-body` 12 / `--space-residue` 4), so the mobile transposition — 12→8, 8→4,
-   4→4 — arrives from the ONE width query in `tokens/sizing.css` and this file carries
-   no breakpoint of its own. Fills read `--fill-hover` / `--fill-selected`, the edge
+   NOTHING IS MINTED. Gaps read the §1.1 rank series (`--space-atom` 8 /
+   `--space-residue` 4), so the mobile transposition — 8→4, 4→4 — arrives from the ONE
+   width query in `tokens/sizing.css` and this file carries no breakpoint of its own.
+   The stadium PAD is the register's pairing law, `pad = r − 4`, read off the rung:
+   `(--button-size / 2) − --space-residue` = 10/14/16/18 across xs/sm/md/lg (18 for every
+   rung under the 44px coarse floor). It derives from the corner, so like the corner it
+   does not transpose — a pad that halved under 768px while the stadium held set the
+   label into the curve. The text arm keeps the bare residue; the icon arm keeps no pad.
+   Fills read `--fill-hover` / `--fill-selected`, the edge
    reads `--ink-perimeter`, the press reads `--scale-press-sm`, the tone reads
    `--feedback-tone-strength` — the same knob a destructive ~~Alert~~ Toast reads
    [2026-08-08 · BK #33: Alert stopped composing `.feedback-tone` under R-3 and now
@@ -45,7 +50,7 @@
         align-items: center;
         justify-content: center;
         gap: var(--space-atom);
-        padding-inline: var(--space-body);
+        padding-inline: calc(var(--button-size) / 2 - var(--space-residue));
         /* ONE geometry for every cell. The edge is present and transparent at rest so
            a toned command re-points its COLOUR alone — an edge that exists only on the
            toned arm makes the toned box 2px narrower in its content than the neutral
@@ -221,18 +226,16 @@
         );
     }
 
-    /* ── The box axis — four rungs, two pads, one gap pair, three type faces ── */
+    /* ── The box axis — four rungs, one derived pad, one gap pair, three type faces ── */
     .button[data-size="xs"] {
         --button-size: var(--control-h-xs);
         gap: var(--space-residue);
-        padding-inline: var(--space-atom);
         font-size: var(--control-text-sm);
     }
 
     .button[data-size="sm"] {
         --button-size: var(--control-h-sm);
         gap: var(--space-residue);
-        padding-inline: var(--space-atom);
         font-size: var(--control-text-sm);
     }
 

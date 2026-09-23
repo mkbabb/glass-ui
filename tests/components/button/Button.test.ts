@@ -280,7 +280,7 @@ describe("Button §5 STATE — three states that differ", () => {
     });
 });
 
-describe("Button §5 RUNG — four boxes, two pads, one gap pair, three faces", () => {
+describe("Button §5 RUNG — four boxes, one derived pad, one gap pair, three faces", () => {
     it("`size` is exactly four members and every one is a real rung", () => {
         const sizes = ["xs", "sm", "md", "lg"] as const;
         for (const size of sizes) {
@@ -293,13 +293,70 @@ describe("Button §5 RUNG — four boxes, two pads, one gap pair, three faces", 
         expect(css).not.toMatch(/\[data-size="(xl|icon|default)"\]/);
     });
 
-    it("pads and gaps read the rank series — no local literal, no local breakpoint", () => {
+    // THE PAIRING LAW, stadium arm (chicago inbound 2026-09-22, 10.0.1). The pad is
+    // `r − residue` off the SAME rung the corner reads, so it cannot transpose away
+    // from the corner under 768px. Source-read: happy-dom runs no cascade, so the
+    // four rungs are parsed from the register and the derivation is done here.
+    const STADIUM_PAD = "calc(var(--button-size) / 2 - var(--space-residue))";
+
+    it("the stadium pad is the pairing law — one derivation on `.button`, no size-arm pad, gaps on the rank series", () => {
         const css = live(STYLES);
-        expect(css).not.toMatch(/padding-inline:\s*calc\(/);
+        // The ONE permitted calc: exactly once, on `.button`.
+        expect(css.split(`padding-inline: ${STADIUM_PAD};`).length - 1).toBe(1);
+        const base = css.match(/\.button\s*\{([\s\S]*?)\n    \}/);
+        expect(base![1]).toContain(`padding-inline: ${STADIUM_PAD};`);
+        // (a) no size arm declares a pad of its own.
+        for (const arm of css.match(/\.button\[data-size="[a-z]+"\]\s*\{[^}]*\}/g) ?? []) {
+            expect(arm).not.toMatch(/padding-inline:/);
+        }
+        // (b) every other pad and gap reads the rank series; no other calc, no breakpoint.
         expect(css).not.toMatch(/@media\s*\(max-width/);
-        for (const decl of css.match(/(padding-inline|gap):[^;]*;/g) ?? []) {
+        const others = (css.match(/(padding-inline|gap):[^;]*;/g) ?? []).filter(
+            (decl) => decl !== `padding-inline: ${STADIUM_PAD};`,
+        );
+        expect(others.length).toBeGreaterThan(0);
+        for (const decl of others) {
+            expect(decl).not.toMatch(/calc\(/);
             expect(decl).toMatch(/var\(--space-(residue|atom|body)\)/);
         }
+        // (d) the corner and the pad read the SAME rung token.
+        expect(base![1]).toMatch(/border-radius:\s*calc\(var\(--button-size\)\s*\/\s*2\)/);
+        expect(base![1].match(/padding-inline:\s*([^;]+);/)![1]).toContain("var(--button-size)");
+    });
+
+    it("the stadium pad over the four rungs is 10/14/16/18 — ≥ the residue floor, ≥ the standing desktop pads", () => {
+        // (c) the rungs, read off the register rather than retyped.
+        const sizing = read("src/styles/tokens/sizing.css");
+        const rungs = (["xs", "sm", "md", "lg"] as const).map((size) => {
+            const m = sizing.match(
+                new RegExp(`--control-h-${size}:\\s*max\\(calc\\(([\\d.]+)rem`),
+            );
+            return Number(m![1]) * 16;
+        });
+        expect(rungs).toEqual([28, 36, 40, 44]);
+        const residue = Number(sizing.match(/--space-residue:\s*([\d.]+)rem/)![1]) * 16;
+        expect(residue).toBe(4);
+        // Each rung's EFFECTIVE pad, resolved from the stylesheet: the size arm's own
+        // `padding-inline` if it declares one, else `.button`'s. The derivation is
+        // evaluated; a bare rank token is read off the register.
+        const css = live(STYLES);
+        const padOf = (selector: string): string | undefined =>
+            css
+                .match(new RegExp(`${selector}\\s*\\{([^}]*)\\}`))?.[1]
+                ?.match(/padding-inline:\s*([^;]+);/)?.[1];
+        const basePad = padOf("\\.button");
+        const pads = (["xs", "sm", "md", "lg"] as const).map((size, i) => {
+            const decl = padOf(`\\.button\\[data-size="${size}"\\]`) ?? basePad!;
+            if (decl === STADIUM_PAD) return rungs[i]! / 2 - residue;
+            const token = decl.match(/^var\((--space-[a-z]+)\)$/)![1];
+            return Number(sizing.match(new RegExp(`${token}:\\s*([\\d.]+)rem`))![1]) * 16;
+        });
+        expect(pads).toEqual([10, 14, 16, 18]);
+        const standing = [8, 8, 12, 12]; // atom/atom/body/body at desktop, pre-cure
+        pads.forEach((pad, i) => {
+            expect(pad).toBeGreaterThanOrEqual(residue);
+            expect(pad).toBeGreaterThanOrEqual(standing[i]!);
+        });
     });
 
     it("three distinct font-sizes across the four boxes", () => {

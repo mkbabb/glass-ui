@@ -97,8 +97,8 @@
        | rung    | px | padding role                                    | gap role                                     |
        |---------|----|-------------------------------------------------|----------------------------------------------|
        | residue |  4 | concentric residue · inline-mark block inset    | intra-atom — dot ↔ caption                   |
-       | atom    |  8 | atom ↔ glyph · control `xs` · tooltip plate    | control ↔ glyph · term ↔ value               |
-       | body    | 12 | a control's own interior (`md`) · field inset · | peer ↔ peer, same rank; row ↔ row            |
+       | atom    |  8 | atom ↔ glyph · pager pill · tooltip plate       | control ↔ glyph · term ↔ value               |
+       | body    | 12 | list plate + row · field inset ·                | peer ↔ peer, same rank; row ↔ row            |
        |         |    | THE PRESENTED PLATE — card/popover/menu/toast   |                                              |
        | family  | 20 | THE ROOM PLATE — dialog/sheet/drawer ·          | item ↔ item; THE SEPARATOR CHANNEL           |
        |         |    | showcase frame                                  |                                              |
@@ -106,9 +106,10 @@
        | page    | 52 | page-section break (block axis only)            | page-section                                 |
 
        THE PAIRING LAW: `pad(role) = r(role) − 4`. Room 24−20=4 · card 16−12=4 ·
-       control 10−8=2→floor. Every radius rung paired with the padding rung one below
-       it yields the 4px floor exactly, and it is the pairing law — not the plate
-       labels — that is the arithmetic ground.
+       control 10−8=2→floor · stadium control (h/2)−4 = 10/14/16/18. Every radius
+       rung paired with the padding rung one below it yields the 4px floor exactly,
+       and it is the pairing law — not the plate labels — that is the arithmetic
+       ground.
 
        THE GAP RATIO: section : family : body = 32 : 20 : 12 = 8 : 5 : 3.
 
