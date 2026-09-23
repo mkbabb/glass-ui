@@ -23,7 +23,15 @@ in place) at `docs/tranches/BK/execution/2026-09-17-status-census/CENSUS.md:7-18
 read 38 SEALED, the verifiers corrected 17 to PARTIAL (`:5`); the census wins. `FINAL.md` (§7) is not
 authored — `docs/tranches/BK/` carries none, and no successor band is named in PLAN, ASK or BURNDOWN
 (`CENSUS.md:123`). Driver ruling at this bracket: the remainder's disposition is reserved to the owner,
-and `FINAL.md` waits on it.
+and `FINAL.md` waits on it. [2026-09-22 · RULED under the owner's delegation of the gated and deferred items and the
+"no deferring any item" order: **BK CLOSES at 10.0.0** (three cuts — `v8.0.0` 2026-08-09, `v9.0.0`
+2026-08-29, `v10.0.0` 2026-09-22 at `dcb0f711`, published with provenance by run 35804200390; the
+four CURE-NEXT-MAJOR cuts — A-3-CLASS, `ringsAt`, `ColorResolver`, `defaultBlobColorResolver` — landed
+in 10.0.0; the 1.4.11 tone question resolved by the light-arm retune; the O-20, O-26 and O-23/O-32
+consumer dispositions closed end-to-end). **The remainder rides a SUCCESSOR tranche (BL)**, formed as
+tranche-development from a fresh census of the register at this close — nothing rides a band inside
+BK. `FINAL.md` is authored on this ruling; its §Carry-forward names the rows BL inherits from
+`execution/2026-09-17-status-census/CENSUS.md` as re-measured at HEAD.]
 
 **Mode: EXECUTION.** Design, research, and prototyping are tranche-development work and they happened;
 BK builds only fully formed, specified wave specs pursuant to `precepts/` (the Seventh Ecoute). The one
