@@ -7824,7 +7824,7 @@ the figures.
 ⊕⁸⁶ **(f) WHAT IS NEXT.** **The O-23/O-32 disposition is closed end to end and 10.0.0 is on the
 registry.** The reply letter sits in `docs/tranches/BK/coordination/` for fourier's and value.js's
 sweep. **OWNER-ONLY, and all that is left**: enable the npm Trusted Publisher for
-`@mkbabb/glass-ui` on npmjs.com—`release.yml` already carries the paragraph (`:13-19`: OIDC,
+`@mkbabb/glass-ui` on npmjs.com—`release.yml` already carries the paragraph (`:13-19 [2026-09-22 · ⊕⁸⁶ verifier: the trusted-publisher paragraph runs **`:13-20`**, not `:13-19`—`:20` is its last line, *"the publisher is enabled breaks the next cut."* Every other figure in this block re-measured at `7ee206df` and holds: tag, run, sigstore index, registry, both ratchets, 42/32 over `e3587ec8..d594aed1`, all 24 stats, RULINGS 19, LEDGER 932 + tally `:908-924`, letter 464, close bank 10,663 / 26,813 / 98,581 B, every log and MIGRATION cite, the receipt, `-U0` hunk `@@ -7729,0 +7730,120 @@`, 7,729 → 7,849.]`: OIDC,
 `id-token: write` granted at `:31`, the Settings → Trusted Publisher path, the token kept until the
 first OIDC publish succeeds) and the step (`:59-62`, `npm install -g npm@^11.5.1`), with
 `NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}` still at `:66`—then delete and rotate `NPM_TOKEN`.
