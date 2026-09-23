@@ -267,6 +267,16 @@ BREAKING cures are lawful there and are marked.
   (d) `InstanceType<typeof X>` on a template ref is application code: the §4.3 row says so and gives
   the typed alternative. No deferral of any item.
 
+- **§4.3 SegmentedTabs generic is BREAKING (ruled at R2's adjudication):** `InstanceType<typeof
+  SegmentedTabs>` on an application template ref no longer compiles (R2's probe) — a consumer's
+  type-level code breaks, so the row is the FOURTH 10.0.0 break (type-level, runtime unchanged): the
+  MIGRATION Status bracket, the CHANGELOG BREAKING list and the reply letter say four, and the §4.3
+  row gives the typed alternative (`ComponentExposed`/`ComponentPublicInstance` shape per the probe).
+- **DESIGN.md:806-825 typography value table (at R2's adjudication):** stale VALUES (`--font-serif`
+  bridged to `var(--font-stack-text)`, `--font-brand-sans` declared nowhere, `--font-display-weight`
+  600 not 400) are the palette-block class — R2 brackets each with the measured value from the tree
+  (cite the declaring file) and deletes the row for a token declared nowhere.
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
