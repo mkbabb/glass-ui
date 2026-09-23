@@ -17,6 +17,14 @@ registry) and _Amended after 9.0.0_ under §8.1.0 (`darkModeSyncScript`'s `defau
 object form and write order). They are not repeated here. The non-breaking paint and
 default changes carried from the O-20 and O-26 cure waves are listed under
 `CHANGELOG.md` 10.0.0; the one paint row below is the ruled one.
+[2026-09-22 · O-23/O-32 R2 — the O-23/O-32 cure wave adds four more breaks, each marked
+below: `cm-serif` leaves for `font-serif-math`, `useSidebarFollow` exempts by attribute,
+`parentId` names the direct parent, and `SegmentedTabs` goes generic (type-level:
+`InstanceType<typeof SegmentedTabs>` no longer compiles; runtime unchanged). The wave's
+rows run from _The token-root contract_ to the end of this section, and three of them are
+paint or rendered-text rows (_`Metric`'s delta paints the one ink_, _Paint: three label
+sites clear 4.5:1_, _The tooltip chip pairs its size with the caption leading_) beside the
+one ruled paint row above.]
 
 _This file ships in the package_
 
@@ -197,9 +205,171 @@ arm is untouched.
 
 Everything that reads them goes darker in light mode: `Badge`'s success/warning plates,
 `StatusDot` and its inner marks, the `Toast` and `Alert` tone wash, rim and glyph,
-`Metric`'s up delta, the `.input-pill:user-valid` border, and every
+~~`Metric`'s up delta,~~ the `.input-pill:user-valid` border, and every
 `text-success`/`text-warning`. As text ink, `--success` is 3.30 on the card, under
 1.4.3's 4.5:1 — keep it off body copy.
+[2026-09-22 · O-32 §2.1 — `Metric`'s delta paints `--foreground` from 10.0.0 and reads
+neither token; see _`Metric`'s delta paints the one ink_ below.]
+
+_The token-root contract_
+
+glass-ui's token `:root` is unlayered, and it beats every layered consumer `:root` —
+one inside `@theme`, one inside `@layer glass-overrides`, any layer at all. `:root`
+token overrides must be unlayered, or set on an element below `:root` in any layer.
+
+Font registers are consumer-settable in the theme layer: re-declare `--font-serif-math`
+in your own `@theme`, or set it on an element in any layer (the utility reads the
+variable). `--font-text` / `--font-display` are `@theme inline` bridges (`.font-text`
+compiles to `var(--font-stack-text)` unless your own `@theme` re-declares
+`--font-text`), so rebrand them in your own `@theme`, or set `--font-stack-text` /
+`--font-stack-display` on an unlayered `:root` or on an element. Every other
+consumer-settable seam is a plain token in the unlayered `:root` (the slider rungs below
+are the shape), never a `var()` default that nothing declares.
+
+_`cm-serif` leaves the published CSS; `font-serif-math` replaces it_
+
+Breaking.
+
+| removed | migration |
+| --- | --- |
+| `cm-serif` | Write `font-serif-math`. The old utility read `var(--font-serif-math, serif)`, a name the package never declared, so it painted `serif` unless you declared the name yourself. `--font-serif-math` is now declared in the package's plain `@theme` (`src/styles/theme/literals.css`, default `serif`), and Tailwind mints `font-serif-math` from it, reading `var(--font-serif-math)` with no fallback. No alias: rename the class at each site. |
+
+A consumer that already declares `--font-serif-math` in its own `@theme` keeps winning
+unchanged: a consumer `@theme` re-declaration replaces the package value in the one root
+Tailwind emits (Chromium-probed: `.font-serif-math` computes `"CMX", Georgia, serif`
+under `@theme { --font-serif-math: "CMX", Georgia, serif }`). Do not declare it in an
+unlayered `:root` to rebrand it; declare it in `@theme` or on an element. The published
+CSS name set goes from 242 `@theme` tokens and 47 `@utility` classes to 243 and 46.
+
+_`useSidebarFollow` exempts by attribute, not by class_
+
+Breaking.
+
+| was | now |
+| --- | --- |
+| A pointerdown inside `[data-toc-id]` or `.sidebar-top-btn` left following live | A pointerdown inside `[data-toc-id]` or `[data-sidebar-follow-exempt]` leaves following live; any other pointerdown in the nav suspends it. No class name is matched, so a `.sidebar-top-btn` press now suspends following. Mark a back-to-top or similar nav control `data-sidebar-follow-exempt`. |
+
+_`SectionHierarchy.parentId` is the direct parent_
+
+Breaking.
+
+| was | now |
+| --- | --- |
+| `buildTreeIndex` / `useTreeIndex` entries carried `parentId` = the root's id at every depth, and a root's own id at depth 0 | `parentId` is the direct parent's id, and `null` for root nodes. `rootId` is unchanged. Where you read `parentId` as "the root", read `rootId`. `useScrollTracker`'s `activeRootId` now reads `rootId` itself. |
+
+The type was already `parentId: string | null`, so nothing fails to compile; what moves
+is the value at depth 0 (now `null`) and at depth ≥ 2 (now the direct parent). A fixture
+that authored `parentId: id` for a root authors `null`.
+
+_`SegmentedTabs` is generic over its option values_
+
+Breaking (type-level; runtime unchanged).
+
+`SegmentedTabs` declares `generic="T extends string = string"`, and `T` is inferred from
+`options` and `v-model`. `SegmentedTabOption`, `SegmentedTabsResponsive` and
+`SegmentedTabsProps` take a defaulted `<V extends string = string>`; the names under
+`./tabs` are unchanged. A literal-union model no longer needs `$event as …`, and a
+plain-string callsite types exactly as before.
+
+Two type-level uses move, in tests and in application code, because a generic SFC's
+default export is a function type, not a constructor:
+
+- `wrapper.findComponent(SegmentedTabs)` now types as a DOM wrapper. Use
+  `findComponent({ name: "SegmentedTabs" })` for `.vm`.
+- In application code, a template ref typed `InstanceType<typeof SegmentedTabs>` no
+  longer compiles (`TS2344: … does not satisfy the constraint 'abstract new (...args:
+  any) => any'`, probed with `vue-tsc` against the 10.0.0 source). `SegmentedTabs`
+  exposes nothing, so type a template ref to it as `ComponentPublicInstance` from `vue`.
+
+_`cn()` buckets every published `text-*` and `shadow-*` name by the property it writes_
+
+The font-size names `text-display-1`, `text-dropdown`, `text-dropdown-secondary`,
+`text-proportional-headline` and `text-proportional-kicker` no longer evict a text
+colour; the `text-shadow-*` sizes are their own bucket; a shadow or text-shadow colour
+(`shadow-primary`, `text-shadow-primary`, `shadow-(color:--x)`) no longer evicts a shadow
+size. A type-hinted arbitrary value keeps its hint's family: `text-[length:…]` is a font
+size, `bg-[image:…]` / `bg-[url(…)]` an image, `bg-[length:…]` a size, `bg-[position:…]`
+a position, and a `color:` hint is a colour. Output changes only where a class was
+wrongly dropped, or where two colour-hinted arbitrary values (`text-[color:…]`,
+`shadow-(color:--x)`) were both kept. Families that still fall through to stylesheet
+order: `font-text` / `font-display` / `font-serif-math`, `tracking-*`, `leading-*`, the
+semantic `border-*` / `ring-*` colours.
+
+_The Slider's size rungs read six tokens_
+
+Additive. The rungs read `--slider-track-height-{sm,md,lg}` (0.75 / 1.25 / 1.75rem) and
+`--slider-thumb-size-{sm,md,lg}` (0.5 / 1 / 1.5rem), declared in the token `:root`. Set
+them on a wrapper or on the slider, in any layer; a `:root` override must be unlayered
+(_The token-root contract_ above). The thumb is `min(thumb, track)`, so it never
+exceeds the track. Defaults paint unchanged.
+
+_`<InfiniteScroll>` observes against the viewport_
+
+Not breaking. `<InfiniteScroll>` observes its sentinel against the viewport instead of
+its own root element, with the `threshold` applied as both `rootMargin` and
+`scrollMargin`. A list inside an ancestor scroll port no longer loads every page on
+mount; a list whose own root is the scroll port behaves as before. Engines without
+`IntersectionObserver` `scrollMargin` load when the sentinel becomes visible inside a
+nested port — later, never a drain. `useInfiniteScroll`'s `scrollContainer` option is
+unchanged.
+
+_The dock's reveal stagger counts controls only, from both ends_
+
+Not breaking; a timing change. `DockSeparator` takes no step, and a control's onset is
+`--dock-stagger-step × min(distance from the nearer edge, 3)`, edges first, at every row
+length. Every rung is bounded from both ends, so a row of 2, 3 or 4 controls is edge-in
+as well (9.0.0's 3-control row painted `2 1 2`, the edges two beats late).
+
+_Dialog and Sheet stamp `aria-modal`_
+
+Additive. `DialogContent` and `SheetContent` (and `CommandDialog`, which composes
+`DialogContent`) stamp `aria-modal="true"` on the `role="dialog"` node while the root is
+modal, and omit it for `:modal="false"`. Drop a consumer-passed `aria-modal`.
+
+_`GlassDock` passes a same-control press inside `#persistent` mid-morph_
+
+Not breaking. The click-integrity guard passes a press inside `#persistent` /
+`#persistent-end` that begins mid-morph when press and click land on the same control;
+those regions never swap layers. A press on the arriving layer still defers until the
+morph settles, so the remedy there is unchanged: wait for settle. Known bound: a press
+within 4 px of a persistent control's inline edge during the hover morph activates the
+control it visibly hovers.
+
+_`Metric`'s delta paints the one ink_
+
+Not breaking; rendered text and paint. `<Metric>`'s delta no longer paints its text in a
+status tone. `up` was `--success` (3.30:1 on `--card`, under 1.4.3's 4.5:1), `down` was
+`--destructive`, and `flat` was `--muted-foreground`. Every polarity now paints
+`--foreground`. A numeric rise is signed: `:delta="3"` renders `+3`, compact `+12.4K`.
+A string delta passes through as written; `-3` and `0` are unchanged. Text assertions
+on a rendered `<Metric>` delta may need the `+`.
+
+`data-polarity` stays on `.metric__delta`: to show the tone, compose a mark beside the
+number and key it on `[data-polarity]`. Do not recolour the text. Recipe, in your own
+layer: `.metric__delta[data-polarity="up"]::before { content: ""; … background:
+var(--success) }`. `coalesceMetric` gains `signed?: boolean`, the option `<Metric>` uses
+for its delta: a positive number takes a leading `+` on both the plain and the compact
+path.
+
+_Paint: three label sites clear 4.5:1_
+
+Not breaking; paint only. `SegmentedTabs` pill: the inactive label on the
+`.glass-capsule-track` reads `--on-glass-muted-strong` (`.glass-capsule-track` joins the
+ladder's -strong `:where()`), 3.48 → 5.34:1 light on the quiet track over `--card`.
+`SegmentedTabs variant="underline"`: the inactive label paints plain
+`--muted-foreground` without the capsule's 12% warm, 4.36 / 4.20 → 5.22 / 5.02:1 light on
+`--background` / `--card`; the active and hover inks are unchanged. `ConfiguratorRow`'s
+name and description and `ConfiguratorLayer`'s sub drop their alpha (`/70`, `/80`):
+2.82 / 3.38 → 5.01:1 on `--card`. No token moves: `--card` (`hsl(30 85% 96%)`) and
+`--background` (`--neutral-0`, `hsl(40 30% 98%)`) sit at nearly one lightness on purpose,
+split by warmth; a plate is set off by its edge and cast (DESIGN.md _Default Color
+Palette_).
+
+_The tooltip chip pairs its size with the caption leading_
+
+Paint only. The tooltip chip reads `--tooltip-text` with `--type-leading-caption` (1.3);
+it inherited body's 1.5 before, so a one-line hint is about 2.4 px shorter at the 12 px
+caption floor.
 
 ## 9.0.0 — ~~UNRELEASED (in flight; not on the registry)~~ [2026-09-17 · LIVE: tag `v9.0.0` at `d4f7b24f`, published with provenance by `release.yml` run 33273556530 attempt 3, `latest` on the registry]
 
@@ -310,6 +480,57 @@ in §8.0.0 (_Theme tokens removed_ · _Classes and utilities removed_) and §7.0
 (_`.paper-texture` is removed_). **9.0.0 removed no token and no utility**: the
 `@theme` name set and the `@utility` name set of the published `./styles` closure are
 byte-identical between 8.0.0 and 9.0.0 (242 and 47 on both).
+
+_`GlassDock`'s props fold onto `collapse`_
+[2026-09-22 · O-32 §1.1 — landed at `ac471032` (BK #47 W1, 2026-08-24); `git tag
+--contains ac471032` prints `v9.0.0` first. The cut shipped with no row; it is written
+now, measured off `useDockShellProps.ts` and `dock/index.ts` at `v8.0.0` and `v9.0.0`]
+
+| removed | migration |
+| --- | --- |
+| `startCollapsed` | `collapse="closed"` (the default) mounts collapsed; `collapse="open"` mounts expanded. |
+| `alwaysExpanded` | `:collapse="false"`: the dock never collapses, and every environmental writer (hover, focus, idle timer, outside click, collapsed tap, touch) is quiet. |
+| `interaction` · `DockInteraction` | Drop both. The `manual` pole turned the dock's own state machine off; `expand()` / `collapse()` stay exposed, so a consumer that owns posture still drives it. |
+| `layout` · `DockLayout` | Drop both. The `grid` tile panel was always-expanded by contract; a 2D tile panel is not a dock. |
+| `overflow` | Drop it. A horizontal dock's run scrolls natively when it outgrows its stage; the `wrap` reflow and its `.dock-overflow-wrap` recipe are gone. |
+| `collapseDelay` | Drop it. Every dock idles for one window, 3600 ms. |
+| `search` | Drop it. The `#search` slot is the opt-in; `useDockSearch` stays exported. |
+| `position` | Drop it and position the dock with your own classes; `.dock-inline`'s centring folded onto `.glass-dock`. |
+| `size` | Drop it. One density (the former `md` rung) is the base; `[data-preset]` is the geometry override. |
+
+`DockProps` went from fourteen members to six: `fitContent`, `backdropMode`, `shape`,
+`orientation`, `backgroundCanvas`, `collapse`. `./dock` gains the types `DockCollapse`
+(`false | "closed" | "open"`) and `DockProps`.
+
+_`--dock-max-inline-size` is removed_
+[2026-09-22 · O-32 AC-D-1 — the reader left at 9.0.0 and the declaration at 10.0.0; the
+removal is recorded here, under the cut that stopped reading it. The sentence above counts
+the published `@theme` and `@utility` name sets; this is an unlayered `:root` token, on
+neither, and 9.0.0 still declared it.]
+
+| removed | migration |
+| --- | --- |
+| `--dock-max-inline-size` | Nothing reads it. 9.0.0 deleted its last reader with the per-instance inline cap (`964535cb`, BK #47 W2-W9, the W3 LATTICE, 2026-08-25; `git tag --contains` prints `v9.0.0` first), so setting it did nothing at 9.0.0. The declaration in `tokens/offsets.css` is deleted at 10.0.0 (`9d8cd728`). To bound a dock's inline size, write `max-inline-size` on the dock's class. |
+
+_Eight `./handmark` types leave with the barrel's reshape_
+[2026-09-22 · O-23 L-5 — removed at `5a69ed9f` (BK #51 γ4, GF-HANDMARK, 2026-08-25);
+`git tag --contains` prints `v9.0.0` first. The cut shipped with no row; it is written
+now, measured off `handmark/index.ts` at `v8.0.0` and `v9.0.0`]
+
+| removed | migration |
+| --- | --- |
+| `Brush` · `BrushName` · `BlendMode` · `TaperSpec` · `InkPath` | No successor. The brush continuum is gone: `<HandMark>` inks one pen and takes no `brush` prop. |
+| `HandMarkProps` · `HandAnimation` · `MarkBox` | No successor type. `<HandMark>` declares five props at 9.0.0 (`shape` · `color` · `weight` · `seed` · `draw`); `draw` is the draw-on switch. `HandShape` stays. |
+
+The same commit took 25 more names off the barrel: `BRUSHES`, `resolveBrush`,
+`lerpBrush`, `StampFn`, `shapeGeom`, `ShapeGeom`, `boilLines`, `naturalUnderlinePoints`,
+`VB_W`, `VB_H`, `UNDERLINE_GAP`, `ink`, `SVGFragment`, `grainFilter`, `hasGrain`,
+`getStroke`, `getStrokePoints`, `getSvgPathFromStroke`, `StrokeOptions`, `InputPoint`,
+`useHandMark`, `normalizeProps`, `UseHandMarkInput`, `HandMarkCore`, `BoilClock`. None
+has a successor. It added nine: `SHAPES`, `handBand`, `handLine`, `handRing`,
+`markDuration`, `minJerk`, `strokeRibbon`, `Frame`, `Point` (`strokeRibbon` inks any
+polyline with the component's own pen). `HandMark`, `HandShape` and `serialize` are
+unchanged.
 
 _Amended after 9.0.0_
 [2026-09-18 · O-26 R-8, UNRELEASED on the registry: everything from here to the end of
@@ -653,6 +874,20 @@ library (`src/composables/glass/procedural/prng.ts`) behind no published door, a
 `randomRadii`/`radiiToCSS` are gone outright: copy whichever you were calling out of your
 pinned 7.0.0 package and into your own tree.
 
+_Six composables leave `./motion`, `./motion-core` and the root barrel_
+[2026-09-22 · O-23 L-5 — retired at `bda718ac` ("W3 clean deletes", 2026-07-20; `git tag
+--contains` prints `v8.0.0` first), inside this major, with no entry until now; written
+because the census rows below point at them]
+
+| removed | migration |
+| --- | --- |
+| `useBloomUp` · `BloomUpPreset` · `UseBloomUpOptions` · `UseBloomUpReturn` (`./motion`) | No successor. |
+| `useNumericTransition` · `SpringSnapshot` · `UseNumericTransitionOptions` · `UseNumericTransitionReturn` (`./motion`) | No successor. |
+| `useCountup` · `UseCountupOptions` · `UseCountupReturn` (`./motion`) | The number tween is `useAnimatedNumber` (`./motion`). |
+| `useStaggerReveal` (`./motion-core`) | No successor. |
+| `useTextHighlight` · `HighlightMatcher` · `UseTextHighlightControls` (`./motion-core`) | No successor. |
+| `useSpecularPointer` · `UseSpecularPointerOptions` · `UseSpecularPointer` (the root barrel, via `composables/glass`) | No successor. |
+
 _Class + attribute namespace — `.dropdown-menu__*` → `.menu__*`_
 
 If you style the menu family from outside, the selectors renamed with the family:
@@ -897,6 +1132,9 @@ _Metric — one atom, two composers_
 - **New**: `delta` + `polarity` (status ink on the neutral material, never a coloured
   plate), `compact` (locale-aware compact numbers through `coalesceMetric`), and
   `coalesceMetric` / `metricPolarity` are exported from `./metric`.
+  [2026-09-22 · O-32 §2.1 — the status ink ends at 10.0.0: the delta paints
+  `--foreground` and its number and sign carry the polarity; see _`Metric`'s delta
+  paints the one ink_ under 10.0.0.]
 
 **The dock's "rail" vocabulary is struck; the layer-switcher renames and the
 hairline is built.** `rail` meant a VERTICALLY-ORIENTED DOCK in the dock band's own
@@ -1617,7 +1855,9 @@ subsections below.
 The surface-axis grammar types (`Surface` / `SurfaceTier`) publish via the dedicated `/axes`
 grammar subpath (BH.W-AXIS-GRAMMAR — the honest `/api` successor), and both are still exported
 there on the branch. The `components/_shared` `ControlSize` convenience union re-homes to
-`/forms` and is still exported there. Of the three root-barrel `*Variants` types, only
+`/forms` and is still exported there. [2026-09-22 · O-23 L-5 — `./forms` split at
+`a8a6f66b` (8.0.0); `ControlSize` is exported from `/input`, and the census row says so.]
+Of the three root-barrel `*Variants` types, only
 `AlertVariants` still resolves off the root `@mkbabb/glass-ui` barrel — `AvatarVariants` and
 `ToggleVariants` were removed at 7.0.0 (the census marks each). value.js's consumed specifiers
 ride the per-family subpaths named in the table below, so the compound-import unbuildable class
@@ -1631,12 +1871,25 @@ kind; the last column is the symbol's verified home on the current branch, or it
 version):
 [CORRECTION 2026-07-17: previously labeled "The full 199-symbol map ... `new import (owning
 subpath)` is the 5.0.0 target".]
+[2026-09-22 · O-23 L-5 — "current branch" is the branch at 2026-07-17. A sweep of every
+subpath-homed row against the 8.0.0, 9.0.0 and 10.0.0 export maps, and of each live
+subpath's declared exports, found twenty rows whose name had since left — twelve at
+8.0.0 (`4bf53962` retired four subpaths, `bda718ac` deleted the composables behind these
+rows (see _Six composables leave `./motion`, `./motion-core` and the root barrel_ under
+8.0.0)) and eight at 9.0.0 (`5a69ed9f`, the handmark barrel) — and `ControlSize`, which
+changed door at 8.0.0. Those 21 rows carry their removal version and commit now; the
+root-homed rows were not re-swept. A second sweep of every removal row's named successor
+against the 10.0.0 export map and the `dist/` types found nine rows pointing at a
+successor that has itself left (`CardSurface`, `Countup`, `GlassPanelVariant`,
+`HeaderRibbonPosition`, `InstrumentChassisPhase`, `PagerWindow`, `PaperGridConfig`,
+`PaperGridHandle`, `UsePaperGridOptions`); each now names the successor's own removal,
+measured.]
 
 | symbol | kind | branch home (verified) — or removal version |
 |---|---|---|
 | `AlertVariants` | type | `@mkbabb/glass-ui` (root) |
-| `AnimatedDigitMode` | type | `/animated-digit` |
-| `AnimatedDigitProps` | type | `/animated-digit` |
+| `AnimatedDigitMode` | type | ~~`/animated-digit`~~ removed 8.0.0 — `./animated-digit` retired at `4bf53962`; no successor (see _Deleted — `AnimatedDigit`_ under 8.0.0) [2026-09-22 · O-23 L-5] |
+| `AnimatedDigitProps` | type | ~~`/animated-digit`~~ removed 8.0.0 — `./animated-digit` retired at `4bf53962`; no successor (see _Deleted — `AnimatedDigit`_ under 8.0.0) [2026-09-22 · O-23 L-5] |
 | `AuroraAtoms` | type | `/aurora` |
 | `AuroraConfig` | type | `/aurora` |
 | `AuroraCursorApi` | type | `/aurora` |
@@ -1657,29 +1910,29 @@ subpath)` is the 5.0.0 target".]
 | `AvatarVariants` | type | removed 7.0.0 — use `Avatar` typed `size`/`shape` props + `AvatarSize`/`AvatarShape` (root) |
 | `BadgeVariants` | type | `/badge` |
 | `BezierPoints` | type | `/easing` |
-| `BlendMode` | type | `/handmark` |
-| `BloomUpPreset` | type | `/motion` |
+| `BlendMode` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
+| `BloomUpPreset` | type | ~~`/motion`~~ removed 8.0.0 — `useBloomUp` deleted at `bda718ac`; no successor [2026-09-22 · O-23 L-5] |
 | `BorderProgressCoverage` | type | removed 5.0.0 — /border-progress retired; the masked band is `ScrollProgressRim` (/scroll-progress-rim) |
 | `BorderProgressMilestone` | type | removed 5.0.0 — /border-progress retired; see `ScrollProgressRim` (/scroll-progress-rim) |
 | `BorderProgressMilestoneEvent` | type | removed 5.0.0 — /border-progress retired; see `ScrollProgressRim` (/scroll-progress-rim) |
 | `BorderProgressProps` | type | removed 5.0.0 — /border-progress retired; see `ScrollProgressRim` (/scroll-progress-rim) |
-| `Brush` | type | `/handmark` |
-| `BrushName` | type | `/handmark` |
+| `Brush` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
+| `BrushName` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
 | `ButtonVariants` | type | removed 7.0.0 — use `ButtonProps` / `ButtonEmphasis` / `ButtonSize` (/button) |
 | `Canvas2DFrame` | type | ~~`/canvas`~~ root barrel [2026-08-10 · BK #21 — `./canvas` cut; the name never moved] |
 | `Canvas2DHandle` | type | ~~`/canvas`~~ root barrel [2026-08-10 · BK #21] |
 | `Canvas2DOptions` | type | ~~`/canvas`~~ root barrel [2026-08-10 · BK #21] |
 | `Canvas2DSuspendReason` | type | ~~`/canvas`~~ root barrel [2026-08-10 · BK #21] |
 | `CardMetal` | type | removed 8.0.0 — the `metal` prop dies; the three `metal-{gold,silver,bronze}-border` utilities survive class-borne and a class name needs no union |
-| `CardSurface` | type | removed 7.0.0 — Card decoration folds onto `CardVariant` (/card) + the `Surface` axis (/axes) |
+| `CardSurface` | type | removed 7.0.0 — Card decoration folds onto `CardVariant` (/card) + the `Surface` axis (/axes) [2026-09-22 · O-23 L-5 — `CardVariant` itself left at 8.0.0 (`4a04b43c`; see _Props — `<Card>`_ under 8.0.0); the `Surface` axis (/axes) stands] |
 | `CardTier` | type | removed 8.0.0 from `/card` — already folded onto the shared `surface` axis at 5.0.0; use `SurfaceProps["tier"]` / `SurfaceTier` (/axes) |
 | `CardVariant` | type | removed 8.0.0 — the `variant` trio is the one `selected` boolean (presence, not truth) |
 | `CelebrationBurstPreset` | type | removed 5.0.0 — dead-composable sweep; `useCelebrationBurst` retired (0 consumers) |
 | `ClickDelegateOptions` | type | `/sidebar` |
 | `ColorHarmony` | type | `/color` [2026-09-17 · O-20 CUT-4/5 — the census never listed it. It ships on `./color` at 9.0.0 (`deriveHue`'s second argument, and `DeriveBlobPaletteOptions.harmony`) and nothing is ruled against it.] |
 | `ColorResolver` | type | `/color` [2026-09-17 · O-20 CUT-4/5 — the census never listed it. Ships on `./color` at 9.0.0 and is live; the O-20 disposition ruled it and `defaultBlobColorResolver` CURE-NEXT-MAJOR, which is a ruling and not an execution, so nothing has moved yet.] [2026-09-22 · register wave 10-3 — it moved: deleted at 10.0.0 with `defaultBlobColorResolver`; see _Two names leave `./color`_ under 10.0.0.] |
-| `CompletionSealProps` | type | `/completion-seal` |
-| `CompletionSealShape` | type | `/completion-seal` |
+| `CompletionSealProps` | type | ~~`/completion-seal`~~ removed 8.0.0 — `./completion-seal` retired at `4bf53962`; no successor (see _Deleted — `CompletionSeal`_ under 8.0.0) [2026-09-22 · O-23 L-5] |
+| `CompletionSealShape` | type | ~~`/completion-seal`~~ removed 8.0.0 — `./completion-seal` retired at `4bf53962`; no successor (see _Deleted — `CompletionSeal`_ under 8.0.0) [2026-09-22 · O-23 L-5] |
 | `ConcentricConfig` | type | removed 5.0.0 — /concentric viz DELETED (viz-family prune) |
 | `ConcentricHandle` | type | removed 5.0.0 — /concentric viz DELETED |
 | `ConfiguratorCloneMode` | type | `/configurator` |
@@ -1690,8 +1943,8 @@ subpath)` is the 5.0.0 target".]
 | `ConstellationField` | type | `/constellation` |
 | `ConstellationProps` | type | `/constellation` |
 | `ConstellationWarp` | type | `/constellation` |
-| `ControlSize` | type | `/forms` |
-| `Countup` | type | removed 6.0.0 — the return-type alias dropped; use `UseCountupReturn` (/motion) |
+| `ControlSize` | type | ~~`/forms`~~ `/input` [2026-09-22 · O-23 L-5 — `./forms` split at `a8a6f66b` (8.0.0); see _Package subpaths_ under 8.0.0] |
+| `Countup` | type | removed 6.0.0 — the return-type alias dropped; use `UseCountupReturn` (/motion) [2026-09-22 · O-23 L-5 — `UseCountupReturn` itself left at 8.0.0 (`bda718ac`; see _Six composables leave `./motion`, `./motion-core` and the root barrel_ under 8.0.0); the number tween is `useAnimatedNumber` (/motion)] |
 | `CurveFn` | type | removed 7.0.0 — /motion-curves retired; import easing math from `@mkbabb/value.js/easing` |
 | `DarkFlipSettledCallback` | type | `/dark` |
 | `DarkModeSyncScriptOptions` | type | `/dark` |
@@ -1717,24 +1970,24 @@ subpath)` is the 5.0.0 target".]
 | `FourierFieldProps` | type | ~~`/fourier-field`~~ [2026-09-17 · O-20 CUT-4/5 — 0 hits in the 9.0.0 dist; the name was never exported from anywhere. The row was wrong when it was written, not overtaken.] |
 | `FuzzySearchState` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
 | `GlassPanelProps` | type | removed 5.0.0 — /glass-panel retired; compose `Card` / `Surface` / `.glass-resting` |
-| `GlassPanelVariant` | type | removed 5.0.0 — /glass-panel retired; the tier-homonym; use `CardTier` (/card) or `SurfaceTier` (/axes) |
-| `HandAnimation` | type | `/handmark` |
-| `HandMarkProps` | type | `/handmark` |
+| `GlassPanelVariant` | type | removed 5.0.0 — /glass-panel retired; the tier-homonym; use `CardTier` (/card) or `SurfaceTier` (/axes) [2026-09-22 · O-23 L-5 — `CardTier` itself left at 8.0.0 (`4a04b43c`; see _Props — `<Card>`_ under 8.0.0); `SurfaceTier` (/axes) stands] |
+| `HandAnimation` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
+| `HandMarkProps` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
 | `HandShape` | type | `/handmark` |
 | `HapticPattern` | type | removed 5.0.0 — dead-composable sweep; `useHaptic` retired |
-| `HeaderRibbonPosition` | type | removed 5.0.0 — renamed → `HeaderRibbonPlacement` (/header-ribbon) |
-| `HeaderRibbonProps` | type | `/header-ribbon` |
-| `HighlightMatcher` | type | `/motion-core` |
+| `HeaderRibbonPosition` | type | removed 5.0.0 — renamed → `HeaderRibbonPlacement` (/header-ribbon) [2026-09-22 · O-23 L-5 — `HeaderRibbonPlacement` left with `./header-ribbon` at 8.0.0 (`4bf53962`; see _Deleted — `HeaderRibbon`_ under 8.0.0); no successor] |
+| `HeaderRibbonProps` | type | ~~`/header-ribbon`~~ removed 8.0.0 — `./header-ribbon` retired at `4bf53962`; no successor (see _Deleted — `HeaderRibbon`_ under 8.0.0) [2026-09-22 · O-23 L-5] |
+| `HighlightMatcher` | type | ~~`/motion-core`~~ removed 8.0.0 — `useTextHighlight` deleted at `bda718ac`; no successor [2026-09-22 · O-23 L-5] |
 | `IconChipIcon` | type | removed 7.0.0 — /icon-chip retired; use `<Chip shape="icon">` (/chip) |
 | `IconChipProps` | type | removed 7.0.0 — /icon-chip retired; use `<Chip shape="icon">` (/chip) |
 | `IconChipSection` | type | removed 7.0.0 — /icon-chip retired; use `<Chip shape="icon">` (/chip) |
 | `IconChipTone` | type | removed 7.0.0 — /icon-chip retired; use `<Chip shape="icon">` (/chip) |
-| `InkPath` | type | `/handmark` |
-| `InstrumentChassisPhase` | type | removed 7.0.0 — phase → state; use `InstrumentChassisState` (/instrument-chassis) |
+| `InkPath` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
+| `InstrumentChassisPhase` | type | removed 7.0.0 — phase → state; use `InstrumentChassisState` (/instrument-chassis) [2026-09-22 · O-23 L-5 — `InstrumentChassisState` left with `./instrument-chassis` at 8.0.0 (`4bf53962`; see _Deleted — `InstrumentChassis`_ under 8.0.0); no successor] |
 | `JumpTerm` | type | `/easing` |
 | `LazyLoaderOptions` | type | `/sidebar` |
 | `LiquidRevealPreset` | type | `/motion` |
-| `MarkBox` | type | `/handmark` |
+| `MarkBox` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
 | `MAX_NUCLEI` | const | `/aurora` |
 | `MAX_STOPS` | const | `/aurora` |
 | `MenuItemVariants` | type | removed 7.0.0 — no public replacement; the menu-row treatment is applied internally by the menu components (was /command) |
@@ -1750,12 +2003,12 @@ subpath)` is the 5.0.0 target".]
 | `NavigateOptions` | type | removed 7.0.0 — use `ViewTransitionOptions` (/motion-core) |
 | `OklchStop` | type | `/aurora` |
 | `PagerDotsProps` | type | `/pager-dots` |
-| `PagerWindow` | type | removed 7.0.0 — windowing math internalized; use `PagerDots` / `DeckPager` |
+| `PagerWindow` | type | removed 7.0.0 — windowing math internalized; use `PagerDots` / `DeckPager` [2026-09-22 · O-23 L-5 — `DeckPager` itself left at 8.0.0 (`85c322dd`, BK #40 W-PAGER, no §8.0.0 row); `PagerDots` (/pager-dots) stands] |
 | `PAPER_WASH_GROUND` | const | `/aurora` |
 | `PaperBackdropFrequency` | type | removed 7.0.0 — scope the shared paper variables at the owning route |
-| `PaperBackdropProps` | type | `/paper-backdrop` |
-| `PaperGridConfig` | type | removed 5.0.0 — renamed → `LiquidGridConfig` (/liquid-grid) |
-| `PaperGridHandle` | type | removed 5.0.0 — renamed → `LiquidGridHandle` (/liquid-grid) |
+| `PaperBackdropProps` | type | ~~`/paper-backdrop`~~ removed 8.0.0 — `./paper-backdrop` retired at `4bf53962`; no successor (see _Deleted — `PaperBackdrop`_ under 8.0.0) [2026-09-22 · O-23 L-5] |
+| `PaperGridConfig` | type | removed 5.0.0 — renamed → `LiquidGridConfig` (/liquid-grid) [2026-09-22 · O-23 L-5 — `LiquidGridConfig` left with `./liquid-grid` at 8.0.0 (`bda718ac`; see _Deleted — `LiquidGrid`_ under 8.0.0); no successor] |
+| `PaperGridHandle` | type | removed 5.0.0 — renamed → `LiquidGridHandle` (/liquid-grid) [2026-09-22 · O-23 L-5 — `LiquidGridHandle` left with `./liquid-grid` at 8.0.0 (`bda718ac`; see _Deleted — `LiquidGrid`_ under 8.0.0); no successor] |
 | `PointerVec2` | type | `/motion-core` |
 | `ScrollCardHeaderProps` | type | removed 7.0.0 — ScrollCard family retired; compose `Card` within a scroll container |
 | `ScrollCardProps` | type | removed 7.0.0 — ScrollCard family retired; compose `Card` within a scroll container |
@@ -1785,7 +2038,7 @@ subpath)` is the 5.0.0 target".]
 | `StrokeMode` | type | `/aurora` |
 | `StrokeOrient` | type | `/aurora` |
 | `Surface` | type | `/axes` |
-| `TaperSpec` | type | `/handmark` |
+| `TaperSpec` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
 | `TimelineSegment` | type | `/timeline` |
 | `TimelineSegmentGradient` | type | removed 8.0.0 — the per-segment gradient dialect died with the segmented variant; a span's paint is its `accent` (/timeline) |
 | `TimelineSegmentState` | type | `/timeline` |
@@ -1799,8 +2052,8 @@ subpath)` is the 5.0.0 target".]
 | `TriggerPoint` | type | `/motion-core` |
 | `UseAccentToneOptions` | type | `/color` |
 | `UseAccentToneReturn` | type | `/color` |
-| `UseBloomUpOptions` | type | `/motion` |
-| `UseBloomUpReturn` | type | `/motion` |
+| `UseBloomUpOptions` | type | ~~`/motion`~~ removed 8.0.0 — `useBloomUp` deleted at `bda718ac`; no successor [2026-09-22 · O-23 L-5] |
+| `UseBloomUpReturn` | type | ~~`/motion`~~ removed 8.0.0 — `useBloomUp` deleted at `bda718ac`; no successor [2026-09-22 · O-23 L-5] |
 | `UseCelebrationBurstOptions` | type | removed 5.0.0 — dead-composable sweep; `useCelebrationBurst` retired |
 | `UseCelebrationBurstReturn` | type | removed 5.0.0 — dead-composable sweep; `useCelebrationBurst` retired |
 | `UseCharStaggerOptions` | type | removed 7.0.0 — `useCharStagger` / `SplitChars` retired; render ordinary accessible text |
@@ -1808,7 +2061,7 @@ subpath)` is the 5.0.0 target".]
 | `UseClipboardOptions` | type | `/dom` |
 | `UseClipboardReturn` | type | `/dom` |
 | `UseConcentricOptions` | type | removed 5.0.0 — /concentric viz DELETED |
-| `UseCountupOptions` | type | `/motion` |
+| `UseCountupOptions` | type | ~~`/motion`~~ removed 8.0.0 — `useCountup` deleted at `bda718ac`; the number tween is `useAnimatedNumber` (/motion) [2026-09-22 · O-23 L-5] |
 | `UseDockCtaReceiveOptions` | type | `/motion` |
 | `UseDockCtaReceiveReturn` | type | `/motion` |
 | `UseDockSearchOptions` | type | `/dock` |
@@ -1826,14 +2079,14 @@ subpath)` is the 5.0.0 target".]
 | `UseHapticReturn` | type | removed 5.0.0 — dead-composable sweep; `useHaptic` retired |
 | `UseLiquidRevealOptions` | type | `/motion` |
 | `UseLiquidRevealReturn` | type | `/motion` |
-| `UsePaperGridOptions` | type | removed 5.0.0 — renamed → `UseLiquidGridOptions` (/liquid-grid) |
+| `UsePaperGridOptions` | type | removed 5.0.0 — renamed → `UseLiquidGridOptions` (/liquid-grid) [2026-09-22 · O-23 L-5 — `UseLiquidGridOptions` left with `./liquid-grid` at 8.0.0 (`bda718ac`; see _Deleted — `LiquidGrid`_ under 8.0.0); no successor] |
 | `UsePointerVelocityField` | type | `/motion-core` |
 | `UsePointerVelocityFieldOptions` | type | `/motion-core` |
 | `UseScrollChromeOptions` | type | `/motion-core` |
 | `UseScrollChromeReturn` | type | `/motion-core` |
 | `UseScrollTriggerOptions` | type | `/motion-core` |
 | `UseScrollTriggerReturn` | type | `/motion-core` |
-| `UseTextHighlightControls` | type | `/motion-core` |
+| `UseTextHighlightControls` | type | ~~`/motion-core`~~ removed 8.0.0 — `useTextHighlight` deleted at `bda718ac`; no successor [2026-09-22 · O-23 L-5] |
 | `UseUserInvalidAriaOptions` | type | `/dom` |
 | `UseUserInvalidAriaReturn` | type | `/dom` |
 | `ViewTransitionOptions` | type | `/motion-core` |
@@ -2150,6 +2403,12 @@ un-clip — the prior `overflow-*: visible` pin was a latent no-op that CSS Over
 Machine-locked by `proof:dock-plate-clearance` (W2 re-pointed onto the `clip` +
 `overflow-clip-margin` un-clip + the `.dock-scroll-y`-retired assert + a self-test
 bite).
+[2026-09-22 · O-32 AC-D-1 — true from 5.0.0 through 8.0.0 only. 9.0.0 deleted the inline
+cap's last reader and the edge mask with it (`964535cb`, the W3 LATTICE): a horizontal
+dock's run scrolls natively when it outgrows its stage, with no edge fade, and
+`--dock-max-inline-size` does nothing. 10.0.0 deletes the declaration. See
+_`--dock-max-inline-size` is removed_ under 9.0.0; `--dock-max-block-size` remains the
+vertical cap.]
 
 ### BI.W-DOCK-FOLD — the dock control/trigger fold + the reka `ui/tabs` retire
 

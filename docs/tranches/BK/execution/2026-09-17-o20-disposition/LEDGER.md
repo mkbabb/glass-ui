@@ -425,7 +425,11 @@ DECLINED as filed: the ~1050px clamp, `--pane-max`, `.pane-container`, `.dock-ba
 presets live in consumers); the stacking half is already published (`--z-behind/-background/
 -content` in `tokens/scheme-motion.css` + DESIGN.md:332)—the consumer's canvas simply
 carries no z rung. What IS ours: 9.0.0 minted `@utility glass-plate{… background:
-var(--glass-veil)}` (`glass/veil.css`, reachable via `glass.css`)—the roster diff
+var(--glass-veil)}` (`glass/veil.css`, reachable via `glass.css`) [2026-09-22 · O-23
+erratum—minted at 8.0.0, not 9.0.0: `git log -S '@utility glass-plate'` puts its first
+appearance at `4b1a9733` (BK.W-FROST, 2026-08-04), and `git tag --contains 4b1a9733`
+prints `v8.0.0` first; the roster diff below spans 7.0.0→9.0.0 and cannot tell the two
+cuts apart]—the roster diff
 7.0.0→9.0.0 removed `glass-fill`, `text-admin-label`, `touch-hit-area` and added exactly
 this one—and documented it nowhere (0 hits in DESIGN/MIGRATION/README). **Cure:**
 DESIGN.md gains "### Plate register" beside the tier table (:505-525)—what `glass-plate`

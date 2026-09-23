@@ -695,18 +695,21 @@ The four sans fallbacks (per platform) + the unified mono fallback are listed in
 
 #### Consumer activation
 
-Consumers default to the library's pre-existing `--font-stack-sans` ("Helvetica Neue" → Arial Nova → Arial → system-ui → sans-serif). To engage the bundled Plus Jakarta Sans face, override `--font-brand-sans` at the consumer's `:root`:
+Every register ships Plus Jakarta Sans by default: the unlayered token `:root` declares `--font-stack-text` as `"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif` and aliases `--font-stack-display` and `--font-stack-sans` to it (`src/styles/tokens/scheme-motion.css:48-51`); `--font-display`, `--font-serif`, `--font-sans` and `--font-mono` are `@theme inline` bridges onto those stacks (`src/styles/theme/bridges.css:86-90`). Nothing engages the face. To rebrand a register, re-declare the bridge in your own `@theme`, or set the stack it reads on an unlayered `:root` or on an element below `:root` in any layer; a `:root` inside `@theme` or any `@layer` loses to the package root (`MIGRATION.md`, _The token-root contract_ under 10.0.0):
 
 ```css
+@theme {
+    --font-display: "Brand Display", "Plus Jakarta Sans", system-ui, sans-serif;
+    --font-serif: "Brand Serif", Georgia, serif;
+}
+
+/* or the stack the bridges read, on an unlayered :root */
 :root {
-    --font-brand-sans:
-        "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
-    --font-display: var(--font-brand-sans);
-    --font-serif: var(--font-brand-sans);
+    --font-stack-text: "Brand Sans", "Plus Jakarta Sans", system-ui, sans-serif;
 }
 ```
 
-Combined with `[data-typography-preset="brand-uniform-sans"]` on `<html>` (or the equivalent direct token override at `:root`), the display + serif voices collapse to Plus Jakarta Sans across the consumer's surface.
+[2026-09-22 · O-23/O-32 B-1 — this block said consumers default to a "Helvetica Neue" stack and engage the bundled Plus Jakarta Sans face by setting `--font-brand-sans`, `--font-display` and `--font-serif` at `:root`, with a `[data-typography-preset="brand-uniform-sans"]` root preset: `scheme-motion.css:48-51` ships Plus Jakarta Sans in every register, `--font-brand-sans` is declared nowhere in the package, `data-typography-preset` has no reader (0 hits in `src/` at HEAD), and a `:root` override of an inline bridge does nothing to `.font-display` / `.font-serif` unless your `@theme` re-declares it.]
 
 The canonical mono (`--font-mono` / `--font-stack-mono`) ships with `"Fira Code"` first by default—every glass-ui consumer gets the self-hosted mono without any wiring beyond importing `@mkbabb/glass-ui/styles`.
 
@@ -766,11 +769,19 @@ sizes (at viewport ≥ 1440):
 
 The matching `.text-display-mega`, `.text-display-hero`,
 `.text-display-audacious` utilities mirror the `.text-display-5`
-shape—Fraunces with `WONK=1 / SOFT=0` and `var(--font-display-weight)`
-by default; the `data-typography-preset="brand-uniform-sans"`
-:root override still maps `--font-display` → `var(--font-brand-sans)`
-so consumers in the brand-uniform-sans register get their stack at
-the audacious size without any extra wiring.
+shape: `font-family: var(--font-display)` (Plus Jakarta Sans
+through the `--font-stack-display` bridge), `font-weight:
+var(--type-weight-display)` (`--font-display-weight`, 600),
+`font-optical-sizing: auto`, no `font-variation-settings`
+(`src/styles/typography/semantic.css:37-46`). A consumer that
+rebrands `--font-display` in its `@theme` gets its stack at the
+audacious size with no extra wiring (_Consumer activation_ above).
+[2026-09-22 · O-23/O-32 B-1 — this paragraph named Fraunces with
+`WONK=1 / SOFT=0` and a `data-typography-preset="brand-uniform-sans"`
+`:root` override of `--font-display` onto `--font-brand-sans`: the
+package bundles no Fraunces face, declares no
+`font-variation-settings`, declares no `--font-brand-sans` and reads
+no `data-typography-preset` (0 hits each in `src/` at HEAD).]
 
 Opt-out: consumers that want their own ceiling can ignore the tokens
 entirely (and the existing `display-1..5` rungs remain)—the
@@ -802,85 +813,103 @@ the tokens but want a smaller ceiling can reset them locally:
 
 ### Typography Tokens
 
-| Token                               | Value                                            | Semantic Use                                          |
-| ----------------------------------- | ------------------------------------------------ | ----------------------------------------------------- |
-| `--font-display`                    | Fraunces (variable; `opsz`/`wght`/`SOFT`/`WONK`) | Ornamental display voice; headings with personality   |
-| `--font-serif`                      | Computer Modern Serif → Georgia fallback         | Body, prose, headings, math                           |
-| `--font-brand-sans`                 | Helvetica Neue → Arial → system-ui               | Brand/system sans stack used by presets and overrides |
-| `--font-sans`                       | `var(--font-brand-sans)`                         | System sans fallback (rarely direct)                  |
-| `--font-mono`                       | Fira Code → Fira Mono → monospace                | Code, monospace, admin labels                         |
-| `--font-display-variation-settings` | `"WONK" 1, "SOFT" 0`                             | Display font axis defaults                            |
-| `--font-display-weight`             | 400                                              | Display utility weight default                        |
+[2026-09-22 · O-23/O-32 R2 — this table and the block below printed Fraunces, Computer Modern Serif, a `--font-brand-sans` stack, a `--font-display-variation-settings` axis default and a 400 display weight; none is declared in the package. The values below are read off `src/styles/theme/bridges.css:86-90`, `src/styles/tokens/scheme-motion.css:48-52`, `src/styles/theme/literals.css:118` and `src/styles/typography/scale.css:165`. The `--font-brand-sans` and `--font-display-variation-settings` rows are deleted: neither token is declared anywhere in `src/` at HEAD.]
+
+| Token                   | Value | Semantic Use                                        |
+| ----------------------- | ----- | --------------------------------------------------- |
+| `--font-display`        | ~~Fraunces (variable; `opsz`/`wght`/`SOFT`/`WONK`)~~ `var(--font-stack-display)` → `var(--font-stack-text)`, Plus Jakarta Sans (`theme/bridges.css:87`; `tokens/scheme-motion.css:50`) | Ornamental display voice; ~~headings with personality~~ [2026-09-22 · O-23/O-32 R2 — the display utilities and `.text-hero` read it (`typography/semantic.css:37-141`), as do `fourier-f` and `.text-pane-title` (`typography/utilities.css:87`, `:102`); `.text-title` / `.text-heading` read `--font-text` (`:147`, `:156`).] |
+| `--font-serif`          | ~~Computer Modern Serif → Georgia fallback~~ `var(--font-stack-text)`, Plus Jakarta Sans (`theme/bridges.css:88`); math is `--font-serif-math`, `serif` (`theme/literals.css:118`) | ~~Body, prose, headings, math~~ [2026-09-22 · O-23/O-32 R2 — 0 `var(--font-serif)` readers in `src/` at HEAD; body, prose and headings read `--font-text`, math is the Tailwind-minted `font-serif-math` utility over `--font-serif-math` (`theme/literals.css:118`).] |
+| `--font-sans`           | ~~`var(--font-brand-sans)`~~ `var(--font-stack-sans)` → `var(--font-stack-text)` (`theme/bridges.css:89`; `tokens/scheme-motion.css:51`) | System sans fallback (rarely direct)                |
+| `--font-mono`           | ~~Fira Code → Fira Mono → monospace~~ `"Fira Code", "Fira Code Fallback", "Fira Mono", monospace` (`tokens/scheme-motion.css:52`) | Code, monospace, admin labels                       |
+| `--font-display-weight` | ~~400~~ 600 (`typography/scale.css:165`; `--type-weight-display` reads it at :166) | Display utility weight default                      |
 
 ```css
---font-display: "Fraunces", Georgia, serif; /* display voice */
---font-serif:
-    "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif; /* body serif */
---font-brand-sans:
-    "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif; /* independent brand/system sans */
---font-sans: var(--font-brand-sans); /* system sans */
---font-mono: "Fira Code", "Fira Mono", monospace;
---font-display-variation-settings: "WONK" 1, "SOFT" 0;
---font-display-weight: 400;
+/* theme/bridges.css:86-90 — @theme inline */
+--font-text:    var(--font-stack-text);
+--font-display: var(--font-stack-display);
+--font-serif:   var(--font-stack-text);
+--font-sans:    var(--font-stack-sans);
+--font-mono:    var(--font-stack-mono);
+
+/* tokens/scheme-motion.css:48-52 — the unlayered token :root */
+--font-stack-text: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
+--font-stack-display: var(--font-stack-text);
+--font-stack-sans: var(--font-stack-text);
+--font-stack-mono: "Fira Code", "Fira Code Fallback", "Fira Mono", monospace;
+
+/* theme/literals.css:118 — @theme */
+--font-serif-math: serif;
+
+/* typography/scale.css:165 */
+--font-display-weight: 600;
 ```
 
-Consumers override these tokens at `:root` (not just `@theme` at-rules
-— `@theme` may not propagate into already-emitted `@utility` rules at
-evaluation time, so consumer-side cascade leaks are real). Consumers
-that need a uniform sans voice set `--font-brand-sans` and apply the
-root preset:
-
-```html
-<html data-typography-preset="brand-uniform-sans"></html>
-```
-
-The preset maps `--font-serif` and `--font-display` to
-`--font-brand-sans`, normalizes display font variation settings, and
-sets `--font-display-weight` for a non-Fraunces display stack.
+Override these through the bridges' own seam: re-declare `--font-display` /
+`--font-serif` / `--font-sans` / `--font-mono` in your own `@theme`, or set
+`--font-stack-display` / `--font-stack-text` / `--font-stack-sans` / `--font-stack-mono`
+on an unlayered `:root` or on an element below `:root` in any layer; a `:root` inside
+`@theme` or any `@layer` loses to the package's unlayered token root. `--font-serif-math`
+is a plain `@theme` literal: re-declare it in your `@theme`. [2026-09-22 · O-23/O-32 B-1 —
+the struck prose said the reverse (`:root`, not `@theme`) and named a `--font-brand-sans`
+token and a `data-typography-preset` root preset, neither of which the package declares
+or reads (0 hits in `src/` at HEAD).]
 
 `--font-sans` was previously aliased to `--font-serif`, which collapsed the
 two semantic identities and confused consumers that overrode `--font-serif`
 for branding. It now resolves to its own system stack; consumers override
 per-app for brand sans without touching the serif voice.
 
-`.dock-label` is pinned to `var(--font-display)` so dock typography stays
-consistent regardless of consumer body cascade tweaks.
+~~`.dock-label` is pinned to `var(--font-display)` so dock typography stays
+consistent regardless of consumer body cascade tweaks.~~ `.dock-label` reads
+`var(--font-text)` at weight 400, `--type-leading-body`, `--type-tracking-normal`;
+its size is `--dock-label-size` when set, else `--dock-control-size` (fallback
+`2.5rem`) × `--dock-label-ratio` (`typography/semantic.css:188-197`;
+`tokens/sizing.css:276`). [2026-09-22 · O-23/O-32 R2 — the struck sentence named `--font-display`; the utility reads `--font-text`.]
 
-Fraunces axes available: `wght` (300–700), `opsz`, `WONK` (0–1), `SOFT` (0–100).
+~~Fraunces axes available: `wght` (300–700), `opsz`, `WONK` (0–1), `SOFT` (0–100).~~
+[2026-09-22 · O-23/O-32 R2 — the package bundles no Fraunces face and sets no axes: `grep -rniE 'fraunces|wonk|font-variation-settings' src` → 0 hits at HEAD.]
 
 ### Semantic typography classes
 
-| Class                     | Font    | Size                       | Weight         | Line  | Tracking | Axes                                                |
-| ------------------------- | ------- | -------------------------- | -------------- | ----- | -------- | --------------------------------------------------- |
-| `.text-display-audacious` | display | `--type-display-audacious` | display-weight | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
-| `.text-display-hero`      | display | `--type-display-hero`      | display-weight | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
-| `.text-display-mega`      | display | `--type-display-mega`      | display-weight | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
-| `.text-display-5`         | display | `--type-display-5`         | 300            | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
-| `.text-display-4`         | display | `--type-display-4`         | 350            | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
-| `.text-display-3`         | display | `--type-display-3`         | 350            | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
-| `.text-display-2`         | display | `--type-display-2`         | 350            | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
-| `.text-display`           | display | `--type-display-1`         | 350            | 1.1   | tight    | `WONK` 1, `SOFT` 0                                  |
-| `.text-title`             | display | `--type-title`             | 400            | 1.2   | tight    | —                                                   |
-| `.text-heading`           | display | `--type-heading`           | 500            | 1.2   | normal   | —                                                   |
-| `.text-subheading`        | serif   | `--type-subheading`        | 600            | 1.5   | normal   | —                                                   |
-| `.text-prose`             | serif   | `--type-prose`             | 400            | 1.618 | normal   | —                                                   |
-| `.text-body`              | serif   | `--type-body`              | 400            | 1.5   | normal   | —                                                   |
-| `.text-small`             | serif   | `--type-small`             | 400            | 1.4   | normal   | —                                                   |
-| `.text-caption`           | serif   | `--type-caption`           | 400            | 1.3   | wide     | —                                                   |
-| `.text-micro`             | serif   | `--type-micro`             | 500            | 1.2   | wide     | —                                                   |
-| `.text-mono-caption`      | mono    | `--type-caption`           | —              | 1.3   | wider    | `text-transform: uppercase`                         |
-| `.text-mono-small`        | mono    | `--type-small`             | —              | 1.4   | normal   | —                                                   |
-| `.section-label`          | mono    | `--type-caption`           | —              | —     | caps     | `text-transform: uppercase`, muted-foreground color |
+[2026-09-22 · O-23/O-32 R2 — this table printed Fraunces axes (`WONK` 1, `SOFT` 0) on the display rows, 300/350 display weights, a 1.1 display leading, `.text-title` / `.text-heading` on the display face at 400/500, the text rows on a serif face, a `.text-micro` weight/leading/tracking of 500/1.2/wide and a `.text-mono-caption` leading of 1.3 at wider tracking. The rows below are read off `src/styles/typography/semantic.css` (line cited per row) and `src/styles/typography/utilities.css:44-55,129-132`; token values are `tokens/scheme-motion.css:54-77` and `typography/scale.css:165-168`. `.text-hero` was absent and is added. "—" means the utility sets no such property.]
+
+| Class                     | Font                  | Size                                             | Weight                           | Line                       | Tracking                         | Other                                                    |
+| ------------------------- | --------------------- | ------------------------------------------------ | -------------------------------- | -------------------------- | -------------------------------- | -------------------------------------------------------- |
+| `.text-display-audacious` | display (`:37`)       | `--type-display-audacious`                       | `--type-weight-display` (600)    | `--type-leading-display` (1.05) | `--type-tracking-display` (−0.015em) | `font-optical-sizing: auto`, `text-wrap: balance`        |
+| `.text-hero`              | display (`:55`)       | `--text-hero-size` → `--type-display-audacious` | 300                              | `--text-hero-leading` → 0.84 | `--text-hero-tracking` → −0.03em | `ss01`/`tnum`/`lnum`, tabular lining nums, `inline-block`, `nowrap` |
+| `.text-display-hero`      | display (`:73`)       | `--type-display-hero`                            | `--type-weight-display` (600)    | `--type-leading-display` (1.05) | `--type-tracking-display` (−0.015em) | `font-optical-sizing: auto`, `text-wrap: balance`        |
+| `.text-display-mega`      | display (`:83`)       | `--type-display-mega`                            | `--type-weight-display` (600)    | `--type-leading-display` (1.05) | `--type-tracking-display` (−0.015em) | `font-optical-sizing: auto`, `text-wrap: balance`        |
+| `.text-display-5`         | display (`:93`)       | `--type-display-5`                               | `--type-weight-display` (600)    | `--type-leading-display` (1.05) | `--type-tracking-display` (−0.015em) | `font-optical-sizing: auto`, `text-wrap: balance`        |
+| `.text-display-4`         | display (`:103`)      | `--type-display-4`                               | `--type-weight-display` (600)    | `--type-leading-display` (1.05) | `--type-tracking-display` (−0.015em) | `font-optical-sizing: auto`, `text-wrap: balance`        |
+| `.text-display-3`         | display (`:113`)      | `--type-display-3`                               | `--type-weight-display` (600)    | `--type-leading-display` (1.05) | `--type-tracking-display` (−0.015em) | `font-optical-sizing: auto`, `text-wrap: balance`        |
+| `.text-display-2`         | display (`:123`)      | `--type-display-2`                               | `--type-weight-display` (600)    | `--type-leading-display` (1.05) | `--type-tracking-display` (−0.015em) | `font-optical-sizing: auto`, `text-wrap: balance`        |
+| `.text-display`           | display (`:133`)      | `--type-display-1`                               | `--type-weight-display` (600)    | `--type-leading-display` (1.05) | `--type-tracking-display` (−0.015em) | `font-optical-sizing: auto`, `text-wrap: balance`        |
+| `.text-title`             | text (`:146`)         | `--type-title`                                   | `--type-weight-title` (700)      | `--type-leading-heading` (1.2) | `--type-tracking-tight` (−0.025em) | `text-wrap: balance`                                     |
+| `.text-heading`           | text (`:155`)         | `--type-heading`                                 | `--type-weight-heading` (700)    | `--type-leading-heading` (1.2) | —                                | `text-wrap: balance`                                     |
+| `.text-subheading`        | text (`:163`)         | `--type-subheading`                              | 600                              | `--type-leading-body` (1.5) | —                                | `text-wrap: balance`                                     |
+| `.text-prose`             | text (`:199`)         | `--type-prose`                                   | 400                              | `--type-leading-prose` (1.618) | —                             | `text-wrap: pretty`                                      |
+| `.text-body`              | text (`:209`)         | `--type-body`                                    | 400                              | `--type-leading-body` (1.5) | —                                | `text-wrap: pretty`                                      |
+| `.text-small`             | text (`:217`)         | `--type-small`                                   | 400                              | `--type-leading-small` (1.4) | —                               | —                                                        |
+| `.text-caption`           | text (`:224`)         | `--type-caption`                                 | 400                              | `--type-leading-caption` (1.3) | —                             | —                                                        |
+| `.text-micro`             | — (`:234`)            | `--type-micro`                                   | —                                | 1.25                       | —                                | —                                                        |
+| `.text-mono-caption`      | mono (`utilities.css:44`) | `--type-caption`                             | —                                | —                          | `--type-tracking-caps` (0.1em)   | `text-transform: uppercase`                              |
+| `.text-mono-small`        | mono (`utilities.css:51`) | `--type-small`                               | —                                | `--type-leading-small` (1.4) | —                              | —                                                        |
+| `.section-label`          | mono (`utilities.css:129`) | `--type-caption`                            | —                                | —                          | `--type-tracking-caps` (0.1em)   | `@apply text-mono-caption`, `--muted-foreground` color   |
 
 ### Kinetic typography utilities
 
-- **`.text-breathe`**—`animation: weight-breathe 4s ease-in-out infinite` (wght 300 → 500 → 300)
-- **`.text-wonk-hover`**—rest `font-variation-settings: "WONK" 0, "SOFT" 100`; hover toggles to `"WONK" 1, "SOFT" 0`; transition 450 ms `--spring-smooth`
-- **`.scroll-weight-reveal`**—`animation: weight-reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 30%` (wght 100 → 400 + opacity 0.3 → 1)
-- **`.char-stagger > .char`**—per-char `fade-in` 300 ms `--spring-smooth backwards`; `animation-delay: calc(var(--char-index, 0) * 30ms)`
-- **`.text-glass-legible`**—halo text-shadow `0 0 12px color-mix(in srgb, var(--background) 50%, transparent), 0 0 4px color-mix(in srgb, var(--background) 30%, transparent)`
+- ~~**`.text-breathe`**—`animation: weight-breathe 4s ease-in-out infinite` (wght 300 → 500 → 300)~~
+- ~~**`.text-wonk-hover`**—rest `font-variation-settings: "WONK" 0, "SOFT" 100`; hover toggles to `"WONK" 1, "SOFT" 0`; transition 450 ms `--spring-smooth`~~
 
-All kinetic utilities respect `prefers-reduced-motion`: transforms eliminated, opacity fades preserved at `--duration-instant`.
+[2026-09-22 · O-23/O-32 R2 — `.text-breathe`, `.text-wonk-hover` and the `weight-breathe` keyframe: 0 hits in `src/` at HEAD.]
+
+- ~~**`.scroll-weight-reveal`**—`animation: weight-reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 30%` (wght 100 → 400 + opacity 0.3 → 1)~~
+- ~~**`.char-stagger > .char`**—per-char `fade-in` 300 ms `--spring-smooth backwards`; `animation-delay: calc(var(--char-index, 0) * 30ms)`~~
+- ~~**`.text-glass-legible`**—halo text-shadow `0 0 12px color-mix(in srgb, var(--background) 50%, transparent), 0 0 4px color-mix(in srgb, var(--background) 30%, transparent)`~~
+
+~~All kinetic utilities respect `prefers-reduced-motion`: transforms eliminated, opacity fades preserved at `--duration-instant`.~~
+
+[2026-09-22 · O-23/O-32 R2 — `.scroll-weight-reveal`, `.char-stagger`, `.text-glass-legible` and the `weight-reveal` keyframe: 0 hits in `src/` at HEAD, so the section names no shipped kinetic utility and the reduced-motion sentence has no subject. `fade-in` is declared at `src/styles/animations.css:19`.]
 
 ---
 
@@ -1087,13 +1116,23 @@ Density overrides are named by tier, for example
 
 - `.dock-separator`—1 px vertical divider, 50% dock-h tall, 15% foreground
 - `.dock-spacer`—`flex: 1` for pushing items apart
-- `.dock-label` (typography.css `@utility`—AB.W1.T5)—canonical register
-  for text labels INSIDE `.dock-tab-button` (Start, Next, Submit, Done, New
-  Test, survey labels). `font-family: var(--font-serif)` picks up the
-  consumer's brand-uniform-sans preset; `font-size: var(--dock-label-size,
-var(--type-subheading))` composes the audacious-dock label-size knob
+- `.dock-label` (~~typography.css~~ `typography/semantic.css:188-197`
+  `@utility`—AB.W1.T5)—canonical register for text labels INSIDE
+  `.dock-tab-button` (Start, Next, Submit, Done, New Test, survey labels).
+  ~~`font-family: var(--font-serif)` picks up the consumer's
+  brand-uniform-sans preset; `font-size: var(--dock-label-size,
+  var(--type-subheading))` composes the audacious-dock label-size knob
   (14–15px at narrow viewports, falls back to `--type-subheading` at
-  desktop); `font-weight: 500` (medium rung—present but NOT bold). Use
+  desktop); `font-weight: 500` (medium rung—present but NOT bold).~~
+  `font-family: var(--font-text)`; `font-size: var(--dock-label-size,
+  calc(var(--dock-control-size, 2.5rem) * var(--dock-label-ratio)))`—an
+  explicit `--dock-label-size` wins, else the control size ×
+  `--dock-label-ratio` (0.5088, `tokens/sizing.css:276`); `font-weight:
+  400`; `line-height: var(--type-leading-body)`; `letter-spacing:
+  var(--type-tracking-normal)`. [2026-09-22 · O-23/O-32 R2 — the struck
+  text named `--font-serif`, a `--type-subheading` fallback, weight 500
+  and a brand-uniform-sans preset the package never read (0 hits in
+  `src/` at HEAD).] Use
   this instead of `.text-heading` for dock control labels; `.text-heading`
   is the heading register and reads as literal bold inside a dock pill.
 - `DarkModeToggle size="control"` follows `--control-size` and `--control-icon-padding`.
@@ -1228,6 +1267,15 @@ compose the ONE shared `.glass-track-well` groove register and the ONE shared
 | `sm` | 12 px        | 8 px       | Density-tight UIs |
 | `md` | 20 px        | 16 px      | Default           |
 | `lg` | 28 px        | 24 px      | Hero / featured   |
+
+Each rung reads two tokens from the token `:root`: `--slider-track-height-{sm,md,lg}`
+(0.75 / 1.25 / 1.75rem) and `--slider-thumb-size-{sm,md,lg}` (0.5 / 1 / 1.5rem). The rung
+sets `--slider-track-height` to its track token and `--slider-thumb-size` to
+`min(thumb, track)`, so the thumb never exceeds the track whichever token moves. The
+token `:root` is unlayered and beats every layered consumer `:root`, so override a rung
+token on a wrapper or on the slider in any layer, or on an unlayered `:root`; a `:root`
+override inside `@theme` or `@layer glass-overrides` loses. The table above is the
+default paint.
 
 ### Slider keep-dock-open contract
 
@@ -1464,8 +1512,9 @@ All transitions respect `prefers-reduced-motion`: fades preserved at 150 ms, tra
 
 ### Kinetic typography keyframes
 
-- `weight-breathe`—font-variation-settings wght 300 → 500 → 300 over 4 s (ease-in-out)
-- `weight-reveal`—wght 100 → 400, opacity 0.3 → 1 (scroll-timeline driven)
+- ~~`weight-breathe`—font-variation-settings wght 300 → 500 → 300 over 4 s (ease-in-out)~~
+- ~~`weight-reveal`—wght 100 → 400, opacity 0.3 → 1 (scroll-timeline driven)~~
+- [2026-09-22 · O-23/O-32 R2 — `weight-breathe` and `weight-reveal`: 0 hits in `src/` at HEAD.]
 - `gold-shimmer-slide`—`background-position: 200% → -200%` over 6 s linear
 
 `animations.css` owns shimmer keyframes only. Text shimmer utility
@@ -1720,20 +1769,55 @@ import {
 
 ## Default Color Palette
 
-Consumer-overridable HSL tokens. Light values; dark overrides in `.dark {}`.
+Consumer-overridable tokens, light arm then dark arm. The token files declare both arms
+as `light-dark()` (`tokens/light-dark.css`) with a per-mode `.dark` floor
+(`tokens/color-radius.css`, `tokens/dark-arm.css`). [2026-09-22 · O-32 §2.2 — this block
+printed stock shadcn values that were never the package's (the page and the card both as
+`hsl(0 0% 100%)`, a slate ink, and `--ring`, renamed `--focus-ring-color` at 5.0.0). It
+carries the shipped values now.]
 
 ```
---background:          hsl(0 0% 100%)
---foreground:          hsl(222.2 84% 4.9%)
---card:                hsl(0 0% 100%)
---primary:             hsl(222.2 47.4% 11.2%)
---secondary:           hsl(210 40% 96.1%)
---accent:              hsl(210 40% 96.1%)
---destructive:         hsl(0 84.2% 60.2%)
---muted:               hsl(210 40% 96.1%)
---muted-foreground:    hsl(215.4 16.3% 46.9%)
---ring:                hsl(222.2 84% 4.9%)
+                       light                          dark
+--background:          var(--neutral-0)               (same)
+                       = hsl(40 30% 98%)              = hsl(24 9% 4%)
+--foreground:          hsl(24 10% 10%)                hsl(30 14% 90%)
+--card:                hsl(30 85% 96%)                hsl(26 22% 17%)
+--card-foreground:     var(--foreground)              (same)
+--primary:             hsl(24 10% 10%)                oklch(0.739 0.134 318.1)
+--primary-foreground:  var(--neutral-0)               hsl(24 10% 10%)
+--secondary:           var(--neutral-2)               (same)
+--accent:              var(--neutral-3)               (same)
+--muted:               var(--neutral-1)               (same)
+--muted-foreground:    var(--neutral-5)               (same)
+                       = hsl(30 22% 40%)              = hsl(34 14% 62%)
+--destructive:         hsl(0 72% 50%)                 oklch(0.702 0.184 27.5)
+--border, --input:     var(--neutral-4)               (same)
+--focus-ring-color:    hsl(24 10% 10%)                hsl(48 10% 70%)
 ```
+
+`--card` and `--background` sit at nearly one lightness on purpose: the plate is split
+from the page by warmth, not by lightness, and a plate is set off by its edge rung and
+its cast shadow, never by its fill. Where you paint `--card` as a bare fill, draw the
+boundary yourself, once, the way `Card` does: 1px `oklch(from var(--foreground) l c h /
+var(--ink-seam))` for a flush cell, `--ink-edge` for a raised one or a tight gap.
+
+**One ink.** Every boundary and rule is `--foreground` at one of three alphas
+(`--ink-seam` 0.08, `--ink-edge` 0.16, `--ink-perimeter` 0.48), composed by the reader:
+`color-mix(in oklab, var(--foreground) calc(var(--ink-perimeter) * 100%), transparent)`
+or `oklch(from var(--foreground) l c h / var(--ink-perimeter))`. No second
+colour-valued ink exists, and none is minted. Text paints `--foreground` or
+`--muted-foreground` at full strength; an alpha-muted `--muted-foreground` is not a text
+rung.
+
+**Boundaries on fields and check controls.** `--border` and `--input` are surface tokens
+(1.87:1 on `--card`), decorative only. The fields and check controls, `Input`,
+`Textarea`, `NumberField`, `Checkbox`, `Switch` and `Radio`, paint their boundary in
+`--foreground` at `--ink-perimeter`: 3.1:1 light and 3.8:1 dark on `--card`.
+
+**Tier and status tones are tints, not text inks.** `--tier-featured` / `--tier-saved`
+(the `text-tier-*` / `bg-tier-*` bridges) and the status tones tint marks, fills and
+plates. A tier or a status rides a mark or plate beside a `--foreground` numeral; the
+numeral itself is never painted in the tint.
 
 ### Status
 

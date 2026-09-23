@@ -37,7 +37,7 @@ const loading = ref(true);
 
         <StorySection
             label="delta + compact"
-            blurb="A numeric delta carries its own polarity and paints as status ink on the neutral material — never a coloured plate. `compact` renders a number in its locale's compact form through the family's one data-shaping seam."
+            blurb="A numeric delta carries its own polarity in its number and sign, painted in the one ink — never a tone on the text, never a coloured plate. `compact` renders a number in its locale's compact form through the family's one data-shaping seam."
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap items-end gap-6">

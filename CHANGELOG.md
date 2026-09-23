@@ -9,6 +9,9 @@ Every figure below is measured against the published 9.0.0 bytes (`npm pack
 @mkbabb/glass-ui@9.0.0`) and a fresh build of the tree, not recalled. The entry covers
 everything since 9.0.0: the 2026-09-22 register wave, which makes this a major, and the
 O-20 and O-26 cure waves, which landed on `master` after the 9.0.0 publish.
+[2026-09-22 · O-23/O-32 R2 — and the O-23/O-32 cure wave, which landed after the register
+wave and adds four breaks of its own, the fourth type-level; its entries are the four
+sections before _Changed — the package_.]
 
 ### Changed — every library style rule sits in `@layer components`
 
@@ -92,12 +95,90 @@ In all, the published entries carry 1279 names, up from 1271.
 - `Aurora` gains forced-colors and reduced-transparency arms, and reduced motion guards
   its three cursor wake paths.
 
+### Changed — four breaks from the O-23/O-32 cure wave
+
+- `cm-serif` is removed; write `font-serif-math`. The old utility read a name the
+  package never declared, so it painted `serif` unless a consumer declared
+  `--font-serif-math`. The package now declares `--font-serif-math: serif` in its plain
+  `@theme` and Tailwind mints `font-serif-math` from it; a consumer's own `@theme`
+  re-declaration keeps winning. No alias.
+- `useSidebarFollow` (`./sidebar`) exempts a pointerdown inside `[data-toc-id]` or
+  `[data-sidebar-follow-exempt]` and matches no class: a `.sidebar-top-btn` press now
+  suspends following. Mark the control `data-sidebar-follow-exempt`.
+- `buildTreeIndex` / `useTreeIndex` (`./sidebar`) write `parentId` as the direct parent,
+  `null` at the roots; it was the root's id at every depth. `rootId` is unchanged, and
+  `useScrollTracker`'s `activeRootId` reads it.
+- `SegmentedTabs` is generic (`T extends string = string`), `T` inferred from `options`
+  and `v-model`; its option, responsive and props types take a defaulted
+  `<V extends string = string>`, and a literal-union model needs no `$event as …`.
+  Type-level, runtime unchanged: a generic SFC's default export is a function type, so
+  `InstanceType<typeof SegmentedTabs>` no longer compiles (TS2344) — type a template ref
+  to it as `ComponentPublicInstance` from `vue`; in tests,
+  `findComponent(SegmentedTabs)` becomes `findComponent({ name: "SegmentedTabs" })`.
+
+### Added — the O-23/O-32 cure wave
+
+- Six Slider size tokens in the token `:root`: `--slider-track-height-{sm,md,lg}` and
+  `--slider-thumb-size-{sm,md,lg}`. The rungs read them, with the thumb held at
+  `min(thumb, track)`; defaults paint unchanged.
+- `--font-serif-math` (`@theme`) and the `font-serif-math` utility it mints.
+- `CoalesceMetricOptions.signed?: boolean` on `./metric`: a positive number takes a
+  leading `+` on both the plain and the compact path.
+- `data-sidebar-follow-exempt`, the attribute `useSidebarFollow` reads.
+- `playwright` 1.61.1 is a root devDependency, and CI's `verify` job and `release.yml`
+  each install the bundled Chromium (`npx playwright install --with-deps chromium`)
+  after `npm ci`, because two tests resolve layered CSS in a real engine.
+
+### Removed — recorded late
+
+- `--dock-max-inline-size`: its last reader left at 9.0.0 with the per-instance inline
+  cap, and its declaration leaves `tokens/offsets.css` now. Setting it has done nothing
+  since 9.0.0. `MIGRATION.md` records it under §9.0.0.
+
+### Fixed — the O-23/O-32 cure wave
+
+- `<InfiniteScroll>` observes its sentinel against the viewport, with `threshold` as both
+  `rootMargin` and `scrollMargin`, so a list inside an ancestor scroll port no longer
+  loads every page on mount. An engine without `scrollMargin` loads when the sentinel
+  becomes visible.
+- The dock's reveal stagger counts controls only and is bounded from both ends: onset
+  `--dock-stagger-step × min(distance from the nearer edge, 3)`, edges first, at every row
+  length (a 3-control row painted `2 1 2`).
+- `cn()` buckets every published `text-*` and `shadow-*` name by the property it writes,
+  so a size no longer evicts a colour or the reverse; a type-hinted arbitrary value keeps
+  its hint's family. Output changes only where a class was wrongly dropped.
+- `DialogContent` and `SheetContent` stamp `aria-modal="true"` while the root is modal.
+- GlassDock's click-integrity guard passes a same-control press inside
+  `#persistent`/`#persistent-end` that begins mid-morph; arriving-layer presses still
+  defer until settle. Known bound: a press within 4 px of a persistent control's inline
+  edge during the hover morph activates the control it visibly hovers.
+- `SegmentedTabs` pill: the inactive label on `.glass-capsule-track` reads
+  `--on-glass-muted-strong`, 3.48 → 5.34:1 light on the quiet track over `--card`.
+- `SegmentedTabs variant="underline"`: the inactive label paints plain
+  `--muted-foreground`, 4.36 / 4.20 → 5.22 / 5.02:1 light on `--background` / `--card`;
+  active and hover are unchanged.
+- `<Metric>`'s delta paints `--foreground` at every polarity instead of `--success` /
+  `--destructive` / `--muted-foreground`, and a numeric rise renders signed (`+3`,
+  compact `+12.4K`). Rendered text and paint, not breaking; `data-polarity` stays for a
+  consumer's own mark.
+- `ConfiguratorRow`'s name and description and `ConfiguratorLayer`'s sub drop their
+  alpha: 2.82 / 3.38 → 5.01:1 on `--card`.
+- The tooltip chip pairs `--tooltip-text` with `--type-leading-caption` (1.3) instead of
+  inheriting body's 1.5.
+- `solveAccentInk` / `useAccentTone` with no `surface` seed the band solve from the
+  shipped light `--card`, `hsl(30 85% 96%)`, instead of the retired `hsl(36 48% 97%)`;
+  `use-accent-tone.test.ts` binds the default to the token file (O-32 CT2).
+
 ### Changed — the package
 
 `files` is `["dist", "MIGRATION.md"]`. Peers are unchanged (nine), and so is the
 published CSS name set (242 `@theme` tokens, 47 `@utility` classes). The tarball goes
 from 837 entries to 840 and its unpacked content from 2,549,378 to 2,890,330 bytes;
 `MIGRATION.md` is 327,286 bytes of the 340,952 growth.
+[2026-09-22 · O-23/O-32 R2 — the CSS name set moves after all: `cm-serif` leaves and
+`--font-serif-math` arrives, so 243 `@theme` tokens and 46 `@utility` classes. The
+tarball figures predate the O-23/O-32 wave; the close re-measures them with the bundle
+ratchet.]
 
 ## 9.0.0 — 2026-08-29
 
@@ -183,6 +264,24 @@ them with a migration row at the time; the rows were written afterwards, at the
 2026-09-17 cure wave, into `MIGRATION.md` §8.0.0 (_Theme tokens removed_ · _Classes and
 utilities removed_) and §7.0.0 (_`.paper-texture` is removed_) — under the major that
 actually shipped without each name, not under this one.
+
+### Changed — `GlassDock`'s props fold onto `collapse`, and eight `./handmark` types leave
+[2026-09-22 · O-32 §1.1 + O-23 L-5 — both shipped in 9.0.0 with no entry; written now,
+measured off the source at `v8.0.0` and `v9.0.0`]
+
+`GlassDock` goes from fourteen props to six (`ac471032`, 2026-08-24): `startCollapsed`
+and `alwaysExpanded` fold into `collapse` (`"closed"`, the default, mounts collapsed;
+`"open"` mounts expanded; `false` never collapses), and `interaction`, `layout`,
+`overflow`, `collapseDelay`, `search`, `position` and `size` are removed. `./dock` loses
+the `DockInteraction` and `DockLayout` types and gains `DockCollapse` and `DockProps`.
+The same cut deleted the last reader of `--dock-max-inline-size` (`964535cb`), so the
+token did nothing from 9.0.0; its declaration leaves at 10.0.0.
+
+`./handmark` loses `Brush`, `BrushName`, `BlendMode`, `TaperSpec`, `InkPath`,
+`HandMarkProps`, `HandAnimation` and `MarkBox` (`5a69ed9f`, 2026-08-25), with 25 other
+barrel names, and gains the `stroke` surface (`strokeRibbon`, `handLine`, `handBand`,
+`handRing`, `SHAPES`, `markDuration`, `minJerk`, `Frame`, `Point`). None of the removed
+names has a successor. `MIGRATION.md` §9.0.0 has the tables.
 
 ## 8.0.0 — 2026-08-09
 
