@@ -44,3 +44,8 @@ unaddressed registry row with an owning wave. The tranche prompt corpora live be
 - N-3 Recap ALL prompts hitherto; an unaddressed ask becomes a registry row with an owning wave; silent drops are forbidden.
 - N-4 NPM_TOKEN rotation waived by the owner ("No rotation necessary").
 - N-5 Look over the children: value.js megatranche X, the chicago consumer (chicago.babb.dev, reported via the lot-assay session), and our tranches hitherto.
+- N-6 (owner, 2026-09-23, relayed by value.js in O-56): "all glass-ui changes should be done at the root and communicated with the running and developing glass-ui instance."
+- N-7 (owner, 2026-09-23, relayed in O-55): every dock "like in the words app hereof (floridify), ala ios 27, shrink and morph on scroll to go into a smaller state--and change on and expand on focus and hover. And the progress bar for the page scroll should be integrated into the bottom of the dock, too, and properly clip and account for rounding".
+- N-8 (owner, 2026-09-23, relayed in O-56): the dock transitions "in tools and others is janky, not glass-ui idiomatic and ios27 like--the dock does not smoothly morph like it should"; login and @user pills paint "a strange different color and is squared"; "the blob is awful, not animated, and not glass-ui idiomatic"; "All of the pane/card transitions are janky, double animated, and broken"; the background is black and "the aurora is buggy".
+- Inbound sibling asks O-53..O-56 are registered at `docs/tranches/BL/audit/INBOUND.md`.
+
