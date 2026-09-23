@@ -6,12 +6,12 @@
 **Span**: 2026-07-28 11:08:40 −0400 → 2026-09-22 21:13:05 −0400 (`git log --format=%ad --date=iso 99706211 -1`; `git log -1 --format=%ad --date=iso HEAD`)—56 days 10 h wall clock, 57 calendar days.
 **Open commit**: `99706211`.
 **Close commit**: this commit. The ⊕⁸⁶ record is `7ee206df`; its verifier bracket `d856e136` landed while this file was authored and is the HEAD every figure below was read at.
-**Ruling of record**: `PLAN.md:27-36`, the bracket *"[2026-09-22 · RULED under the owner's delegation … **BK CLOSES at 10.0.0** … **The remainder rides a SUCCESSOR tranche (BL)** …]"*, committed at `99e2f0ad`.
+**Ruling of record**: `PLAN.md:26-34`, the bracket *"[2026-09-22 · RULED under the owner's delegation … **BK CLOSES at 10.0.0** … **The remainder rides a SUCCESSOR tranche (BL)** …]"*, committed at `99e2f0ad`.
 **Author seat**: Opus, model id `claude-opus-5-5[1m]` (stated from this seat's own identity).
 
 ## §1—Source commit ledger (351 commits, segmented)
 
-`git rev-list --count 99706211..HEAD` = **351**; one merge (`git rev-list --merges --count` → 1, `533be01f` 2026-08-01); first-parent 339. The segments partition the window at the ⊕ record commits; counts are `git rev-list --count <from>..<to>` and sum to 351.
+`git rev-list --count 99706211..HEAD` = **351**; one merge (`git rev-list --merges --count` → 1, `533be01f` 2026-08-01); first-parent 340. The segments partition the window at the ⊕ record commits; counts are `git rev-list --count <from>..<to>` and sum to 351.
 
 | # | segment | range | commits | what it carries |
 |---|---|---|---|---|
@@ -136,7 +136,7 @@ The rows sum to the shortstat. `docs/` is 92% of the net; the source tree moved 
 | # | lesson | source |
 |---|---|---|
 | 1 | The records fell 45/23/45 days behind the register (PLAN, ASK, BURNDOWN); a census was needed to see the tranche's shape. First-pass readers over-read SEALED by 17 rows. | ⊕⁸¹ `:6417-6460`; `CENSUS.md:5,123` |
-| 2 | Commit subjects are partial: `849c5547`'s subject sums to 84 of 90; `e91b7b7e`'s body says +227 where `git show --numstat` reads 232. Figures come from `git`, never from messages. | ⊕⁸¹ `:6417-6475` |
+| 2 | Commit subjects are partial: `849c5547`'s subject sums to 84 of 90; `e91b7b7e`'s body says +227 where `git show --numstat e91b7b7e -- docs/tranches/BK/BURNDOWN.md` reads 232 (the commit whole: +260/−6). Figures come from `git`, never from messages. | ⊕⁸¹ `:6417-6475` |
 | 3 | The registry wall (E404 at the PUT, tokens bypassing 2FA restricted) held the 9.0.0 tag unpublished for 19 days on one owner input. Trusted Publishing is the durable cure and is still owed (§7). | `PLAN.md:13-19`; ACT-4 banks |
 | 4 | A seat's RECORD is the only thing that survives its session; a wall before the RECORD costs the seat's provenance. The successor gets a PREDECESSOR paragraph and re-derives. | ⊕⁸³(d) `:7188-7205` |
 | 5 | The workflow watchdog fails a seat after 180 s of no progress, six times; a load-starved seat reads as hung. Pass 2 of O-26 lost 36 spawns to it. Check `uptime` before blaming the API. The driver additionally reports re-spawns under machine load during the 10.0.0 waves; not banked in a BK record at HEAD. | ⊕⁸⁴(e) 1-2 `:7469-7477` |
@@ -160,7 +160,7 @@ Every sibling pinned below 9.0.0 at the O-20 pass (value.js 7.0.0 · keyframes.j
 
 **Outbound letters** (`ls docs/tranches/BK/coordination/`; date = `git log --diff-filter=A`):
 
-| letter | added | addressee (header line 3) |
+| letter | added | addressee (letter header) |
 |---|---|---|
 | `glass-outbound-2026-08-29-valuejs-o20-ack.md` | `3a2329c1` 2026-08-29 | value.js (X formation mail seat) |
 | `glass-outbound-2026-09-17-valuejs-o20-disposition.md` | `2984e377` 2026-09-17 | value.js (X formation mail seat) |
@@ -172,7 +172,7 @@ Every sibling pinned below 9.0.0 at the O-20 pass (value.js 7.0.0 · keyframes.j
 
 ## §7—Carry-forward to BL
 
-Per `PLAN.md:27-36`, the remainder rides BL; nothing rides a band inside BK. **BL's formation is tranche-development from a fresh census of the register at this close, and is not this file's act.** The rows below are named as `CENSUS.md` read them on 2026-09-17; the only re-measurement at HEAD taken here is the Φ-table strike grep (§3).
+Per `PLAN.md:26-34`, the remainder rides BL; nothing rides a band inside BK. **BL's formation is tranche-development from a fresh census of the register at this close, and is not this file's act.** The rows below are named as `CENSUS.md` read them on 2026-09-17; the only re-measurement at HEAD taken here is the Φ-table strike grep (§3).
 
 | class | rows (`CENSUS.md:12-15`) | adjustment since the census |
 |---|---|---|
@@ -231,11 +231,11 @@ Model split per the ⊕ records: Opus implements, challenges, cures; Fable adjud
 - [x] The two owner-only items are open and named (§7): Trusted Publisher on npmjs.com; `NPM_TOKEN` rotation after.
 - [x] Unbanked lessons marked as such (§5 #5, #9) rather than cited to a record that does not carry them.
 - [x] The tag commit's `ci.yml` is green on re-run (run 35804004183 attempt 2, §5 #12); the four post-tag `ci.yml` runs were in progress and are not measured.
-- [x] FINAL.md commits after the tag, not before: `v10.0.0` = `dcb0f711`; this file lands five commits after it.
+- [x] FINAL.md commits after the tag, not before: `v10.0.0` = `dcb0f711`; this file lands as the sixth commit after it (five intervene, `dcb0f711..d856e136`).
 
 ## §11—Final disposition
 
-**BK CLOSED at 10.0.0**, per the ruling at `PLAN.md:27-36` (`99e2f0ad`): three cuts (`v8.0.0` 2026-08-09, `v9.0.0` 2026-08-29 published 2026-09-17, `v10.0.0` 2026-09-22 at `dcb0f711`), the four CURE-NEXT-MAJOR cuts landed in 10.0.0 (A-3-CLASS `a08143ce`; `ringsAt`, `ColorResolver`, `defaultBlobColorResolver` `6875b1b3`), the 1.4.11 tone question resolved by the light-arm retune (lane T `9025efe2`), and the O-20, O-26 and O-23/O-32 dispositions closed end to end.
+**BK CLOSED at 10.0.0**, per the ruling at `PLAN.md:26-34` (`99e2f0ad`): three cuts (`v8.0.0` 2026-08-09, `v9.0.0` 2026-08-29 published 2026-09-17, `v10.0.0` 2026-09-22 at `dcb0f711`), the four CURE-NEXT-MAJOR cuts landed in 10.0.0 (A-3-CLASS `a08143ce`; `ringsAt`, `ColorResolver`, `defaultBlobColorResolver` `6875b1b3`), the 1.4.11 tone question resolved by the light-arm retune (lane T `9025efe2`), and the O-20, O-26 and O-23/O-32 dispositions closed end to end.
 
 The successor is **BL**, formed as tranche-development from a fresh census of the register at this close. Nothing rides a band inside BK. The two owner-only acts in §7 are the only items with no tranche seat.
 
