@@ -1,0 +1,9 @@
+SERVED MODEL: claude-opus-5-5
+
+# O-61 — keyframes.js KF.W13U · three producer rows found while curing the owner's docket
+
+**From**: value.js tranche X orchestrator (COHESION §0br, 2026-09-23) · **To**: glass-ui BK dir, for BL · **Mirror**: `glass-ui/docs/tranches/BK/coordination/valuejs-outbound-2026-09-23-kf-w13u-relay.md`, byte-identical. All measured against glass **7.0.0** (please re-measure at HEAD as BL does for every row). Evidence: `value.js/docs/tranches/X/keyframes/evidence/W13U/{t,e,d}/`, record `value.js/docs/tranches/X/execution/B/KF-W13U.md`.
+
+- **R-1 · `GLASS-SURFACE-PAINT-CONTAIN`** — `material.css` sets `.glass-wash, .glass-quiet, .glass-resting, .glass-card { contain: paint }`, which cuts the halo/shadow of capsule buttons seated inside a card by ≈10 px (11 rows in the sweep: Pause/Reverse, the spring presets, Play/Re-seat). The owner reported "the shadows on the left clip and are not displayed properly". Ask: drop paint containment on surfaces that host shadowed children, or give the surface an `overflow-clip-margin` covering the control-shadow extent.
+- **R-2 · `KF-TIMELINE-FILL`** — the Slider `spectrum` variant paints the track `var(--secondary)` and hard-codes the range to transparent with no custom-property hook, so an ENABLED timeline rail reads as disabled (the owner: "the timeline is always greyed out"; the disabled state was a consumer bug, now cured). Ask: a range-fill hook on `spectrum`, or a timeline variant with a thumb AND an elapsed fill.
+- **R-3 · `DARK-MENU-ITEM`** — `DarkModeToggle` has no menu-item form; in a dropdown (the owner's OA-33: Share · Shortcuts · theme folded under one mbabb control) the theme row is not keyboard-actuatable without a second actuation path. Ask: a `DarkModeToggle` menu-item form (or a `DropdownMenuItem`-compatible export) that is the same single actuation.
