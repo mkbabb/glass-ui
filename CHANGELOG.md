@@ -1,6 +1,6 @@
 # Changelog
 
-## 10.0.0 — UNRELEASED
+## 10.0.0 — 2026-09-22
 
 `MIGRATION.md` §10.0.0 is the complete break list, and from this release it ships in
 the package.

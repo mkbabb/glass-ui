@@ -25,6 +25,8 @@ rows run from _The token-root contract_ to the end of this section, and three of
 paint or rendered-text rows (_`Metric`'s delta paints the one ink_, _Paint: three label
 sites clear 4.5:1_, _The tooltip chip pairs its size with the caption leading_) beside the
 one ruled paint row above.]
+[2026-09-22 · the cut: `package.json` declares `10.0.0` (`npm version 10.0.0`, the release
+commit); the heading's LIVE bracket follows the registry publish, as §9.0.0's did.]
 
 _This file ships in the package_
 
