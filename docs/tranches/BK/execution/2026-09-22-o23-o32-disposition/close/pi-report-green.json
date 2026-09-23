@@ -1,0 +1,315 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/node_modules/.bin/playwright",
+      "test",
+      "substrate-paints-color.spec.ts",
+      "--project=chromium-headless-new"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": ".cache/pi-report-green.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5199",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/",
+      "url": "http://localhost:5199",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "substrate-paints-color.spec.ts",
+      "file": "substrate-paints-color.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "substrate-paints-color (π lane — fail-CLOSED)",
+          "file": "substrate-paints-color.spec.ts",
+          "line": 574,
+          "column": 6,
+          "specs": [
+            {
+              "title": "aurora paints a non-black interior on DEFAULT + every preset at t=1",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22155,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "PI aurora DEFAULT meanChannel=230.7 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora SETTING_SUN meanChannel=231.2 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora DUSK meanChannel=230.1 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora VIVID_SETTING_SUN meanChannel=233.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OPENAI_SKY meanChannel=231.5 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OPENAI_DAWN meanChannel=229.4 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OPENAI_MEADOW meanChannel=205.6 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora DELIBERATIVE meanChannel=235.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora DAY9_YELLOW meanChannel=229.1 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OIL_IMPASTO meanChannel=194.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OIL_GESTURAL meanChannel=217.7 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora VANGOGH meanChannel=101.7 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OILPASTEL_SUNSET meanChannel=200.5 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OILPASTEL_RAINBOW meanChannel=218.4 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora OILPASTEL_OCEAN meanChannel=145.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora CRAYON meanChannel=171.7 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora METAL meanChannel=205.3 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora SPEEDTEST meanChannel=175.0 floor=8\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-23T00:54:27.041Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c5333572f9452f84ffb5-5d0f96967b05e13ad1c2",
+              "file": "substrate-paints-color.spec.ts",
+              "line": 575,
+              "column": 5
+            },
+            {
+              "title": "blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5805,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557\n"
+                        },
+                        {
+                          "text": "PI blob baseline groundMotion=0.000\n"
+                        },
+                        {
+                          "text": "PI blob coverage=0.156 floor=0.1 · paintedShare=0.279 ceil=0.7\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-23T00:54:49.295Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c5333572f9452f84ffb5-762efb721c26cdc7e054",
+              "file": "substrate-paints-color.spec.ts",
+              "line": 759,
+              "column": 5
+            },
+            {
+              "title": "blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5470,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557\n"
+                        },
+                        {
+                          "text": "PI blob baseline groundMotion=0.000\n"
+                        },
+                        {
+                          "text": "PI blob coverage=0.156 floor=0.1 · paintedShare=0.280 ceil=0.7\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-23T00:54:55.106Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c5333572f9452f84ffb5-51e0d8dfb44676be2826",
+              "file": "substrate-paints-color.spec.ts",
+              "line": 767,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-23T00:54:25.976Z",
+    "duration": 34657.671,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
