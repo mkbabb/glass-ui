@@ -2,6 +2,7 @@
 
 Model instruction given with the brief: "Use Opus 5.5 for all tasks." It overrides the brief's own Fable routing:
 every seat in BL formation is Opus 5.5, declared explicitly.
+Reaffirmed the same day: "Use Opus 5.5 for all work hereof, too. Fable is to not be used quite yet." No Fable seat of any kind in BL until the owner lifts it.
 
 ---
 
