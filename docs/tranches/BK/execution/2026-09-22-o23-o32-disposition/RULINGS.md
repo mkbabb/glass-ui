@@ -303,7 +303,7 @@ BREAKING cures are lawful there and are marked.
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
   it: "`:root` token overrides must be unlayered, or set on an element below `:root` in any layer."
-  Consumer-settable FONT registers live in the theme layer (`bridges.css` `@theme`, the §4.1 shape);
+  Consumer-settable FONT registers live in the theme layer (`bridges.css` `@theme`, the §4.1 shape) [2026-09-22 · the plain `@theme` that owns the register is `theme/literals.css`'s — `bridges.css` holds only `@theme inline` and a pointer; §4.1 landed there at `e853b327` (the AC1 path corrections bullet)];
   every other consumer-settable seam is a plain unlayered `:root` token (the L-3 shape). A
   declared-nowhere `var()` default is never the shape.
 - **B-2 · test rows are not gates.** A unit in the `npm test` tree that mints no gate seat is a test
