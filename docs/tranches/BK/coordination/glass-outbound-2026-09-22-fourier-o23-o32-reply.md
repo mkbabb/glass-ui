@@ -37,7 +37,7 @@ before the cut.
 declaration beats every layered one regardless of order—including your `@theme` (which Tailwind
 emits into `@layer theme`) and your `@layer glass-overrides`. So a `:root` token override of ours
 must be unlayered, or set on an element below `:root` in any layer. MIGRATION `## 10.0.0` states
-this as the contract [the sentence's heading to be reconciled at landing]. It is why your L-3 and
+this as the contract, under _The token-root contract_. It is why your L-3 and
 §4.1 cures took the shapes they did.
 
 **Two O-32 rows reach you through latex-paper, not through us.** Your paper tree calls
@@ -148,7 +148,7 @@ longer exist—`CompletionSealProps`, `CompletionSealShape`, `HeaderRibbonProps`
 their live subpath no longer exports: eight handmark types gone at 9.0.0 (`BlendMode`, `Brush`,
 `BrushName`, `HandAnimation`, `HandMarkProps`, `InkPath`, `MarkBox`, `TaperSpec`) and six
 motion/motion-core types gone by 8.0.0 (`BloomUpPreset`, `UseBloomUpOptions`, `UseBloomUpReturn`,
-`UseCountupOptions`, `HighlightMatcher`, `UseTextHighlightControls`). 20 rows are marked removed with the cut and the measured retiring commit [commits to be reconciled at landing], the eight handmark types get a removal entry under `## 9.0.0`, and the 21st, `ControlSize`, re-points to `/input`. The
+`UseCountupOptions`, `HighlightMatcher`, `UseTextHighlightControls`). 20 rows are marked removed with the cut and the measured retiring commit (`4bf53962`, in 8.0.0, for the six subpath rows; `5a69ed9f`, in 9.0.0, for the eight handmark types; `bda718ac`, in 8.0.0, for the six motion/motion-core types), the eight handmark types get a removal entry under `## 9.0.0` (_Eight `./handmark` types leave with the barrel's reshape_), the six motion types a late row under `## 8.0.0` (_Six composables leave `./motion`, `./motion-core` and the root barrel_), and the 21st, `ControlSize`, re-points to `/input`. The
 AnimatedDigit types have no successor; `./motion`'s `useAnimatedNumber` is a separate composable, not
 their home.
 
@@ -191,7 +191,7 @@ ECD Save into `#persistent` was right: a `role="button"` host cannot contain con
 when you move past 8.0.0. At 9.0.0 `interaction` is gone, and with it `startCollapsed` and the
 shell's `alwaysExpanded`, all replaced by `collapse: DockCollapse` (`ac471032`)—so every collapsed
 summary is a disclosure. That reshape shipped in 9.0.0 with no MIGRATION or CHANGELOG row; we are
-adding the row under `## 9.0.0` before 10.0.0 [heading to be reconciled at landing]. And your
+adding the row under `## 9.0.0` before 10.0.0 (_`GlassDock`'s props fold onto `collapse`_). And your
 keydown probe flips from a miss to a false hit: the lowercase grep returns 0 at 8.0.0 and 2 at
 9.0.0, both from an unrelated `addEventListener`/`removeEventListener` pair. Match the `onKeydown`
 binding beside `"Expand dock"`, or the rendered role and `aria-expanded`.
@@ -206,7 +206,7 @@ for 10.0.0: light `--success` moves to `oklch(0.600 0.192 149.5)`, 3.30:1 on `--
 text-bearing half we decline under our C-1 ruling: status text is `--foreground` ink and the tone
 sits beside it. A `--success` dark enough to read 4.5 as text on `--card` (L ≤ 0.519) cannot also
 carry its warm foreground at 4.5 (L ≥ 0.580). Your symbolic-tier row closes with the same bump:
-`--section-color-4` goes 4.27 → 4.85:1 on `--card` (see §2.4). We found our own `Metric` breaking the same rule—its up delta painted text in `--success`. At 10.0.0 every delta polarity paints `--foreground` (down leaves `--destructive`, flat leaves `--muted-foreground`) and a numeric rise is signed (`+3`, compact `+12.4K`); `data-polarity` stays on `.metric__delta` so you can compose a mark beside the number.
+`--section-color-4` goes 4.27 → 4.85:1 on `--card` (see §2.4). We found our own `Metric` breaking the same rule—its up delta painted text in `--success`. At 10.0.0 every delta polarity paints `--foreground` (down leaves `--destructive`, flat leaves `--muted-foreground`) and a numeric rise is signed (`+3`, compact `+12.4K`); `data-polarity` stays on `.metric__delta` so you can compose a mark beside the number. [2026-09-22 · as landed: a rendered-text change as well as paint, not breaking; the sign comes from `coalesceMetric`'s new `signed` option, which `<Metric>` passes for its delta, so re-baseline any text assertion on your `GalleryAdminBanner` `<Metric>`s (MIGRATION `## 10.0.0` › _`Metric`'s delta paints the one ink_).]
 
 **§2.2**—LIVE, ANSWER: the explicit ruling you asked for. Your 1.035:1 reproduces, but the tokens are
 not the same: `--card` is `hsl(30 85% 96%)` and `--background` `hsl(40 30% 98%)` at 8.0.0, 9.0.0 and
@@ -287,7 +287,8 @@ have beaten your `@theme` layer (§0) and repainted every site in the UA serif (
 
 **§4.3**, four limbs:
 
-- **SegmentedTabs `modelValue: string`**—LIVE, CURE-NOW for 10.0.0, not breaking. At 8.0.0, 9.0.0
+- **SegmentedTabs `modelValue: string`**—LIVE, CURE-NOW for 10.0.0, ~~not breaking~~ [2026-09-22 · as landed: breaking at the type level, runtime unchanged: `InstanceType<typeof SegmentedTabs>`
+  no longer compiles; type a template ref to it as `ComponentPublicInstance` from `vue`]. At 8.0.0, 9.0.0
   and our tree the model is typed `string` (d.ts `:88`/`:99`), which is why `EquationView.vue:351`
   needs `$event as 'controls' | 'canvas'`. SegmentedTabs does not wrap reka's `TabsRoot`. It becomes
   `generic="T extends string = string"` and infers `T` from `options` and the model. We ran your
@@ -309,7 +310,8 @@ have beaten your `@theme` layer (§0) and repainted every site in the UA serif (
   Measured in Chromium: a 5-control row reveals `0 1 2 3 3`, and a 10-control row leaves its 6th and
   7th controls at onset 0. For 10.0.0 the ladder counts controls only (`of :not(.dock-separator)`)
   and bounds the middle rung from both ends: 5 controls `0 1 2 1 0`, 10 controls
-  `0 1 2 3 3 3 3 2 1 0`, hairlines skipped. The intended direction is edge-in (the edges first); our
+  `0 1 2 3 3 3 3 2 1 0`, hairlines skipped. [2026-09-22 · as landed: every rung is bounded at both ends, so a row of 2, 3 or 4 controls is edge-in as well;
+  a 3-control row painted `2 1 2` and now paints `0 1 0`.] The intended direction is edge-in (the edges first); our
   docblock that says "center-out" was wrong and is rewritten. The single-wrapper collapse in your
   sibling dock is your markup: one wrapper is one child and gets one beat, so put the controls
   directly in the layer.
@@ -356,8 +358,10 @@ bump.
 
 ## §3 · What changes for you at 10.0.0
 
-Three breaking changes, each with a MIGRATION `## 10.0.0` row; one touches your code (`cm-serif`), two touch our copies of what you consume through latex-paper (§0, §7)
-[row headings to be reconciled at landing]:
+Three breaking changes [2026-09-22 · as landed: four—`SegmentedTabs`' generic breaks at the type level, and touches
+your code only if you type a ref `InstanceType<typeof SegmentedTabs>`], each with a MIGRATION `## 10.0.0` row; one touches your code (`cm-serif`), two touch our copies of what you consume through latex-paper (§0, §7)
+(_`useSidebarFollow` exempts by attribute, not by class_; _`SectionHierarchy.parentId` is the direct parent_;
+_`cm-serif` leaves the published CSS; `font-serif-math` replaces it_; _`SegmentedTabs` is generic over its option values_):
 
 | change | what you do |
 | --- | --- |
@@ -435,15 +439,15 @@ MIGRATION ships in the 10.0.0 tarball; until then it is on GitHub. Headings, not
 
 | your row | MIGRATION heading |
 | --- | --- |
-| S-2, §0's cascade sentence | `## 10.0.0` › `_Every library style rule moves into @layer components_` (the `:root` sentence joins it [to be reconciled at landing]) |
+| S-2, §0's cascade sentence | `## 10.0.0` › `_Every library style rule moves into @layer components_`; the `:root` sentence is `## 10.0.0` › _The token-root contract_ |
 | §2.1, S-11, S-16 | `## 10.0.0` › `_--success and --warning darken in the light arm_` |
-| §2.1 (`Metric`) | a new `## 10.0.0` row for `Metric`'s delta (`--foreground` ink, signed rise) [heading to be reconciled at landing] |
+| §2.1 (`Metric`) | `## 10.0.0` › _`Metric`'s delta paints the one ink_ |
 | S-20 | `## 10.0.0` › `_text-caption is upright_` |
 | L-5 framing | `## 10.0.0` › `_This file ships in the package_` |
-| §3.3, §3.4, §4.1, L-3 | new `## 10.0.0` rows for the sidebar-follow attribute, `parentId`, `cm-serif` → `font-serif-math`, and the six slider tokens [headings to be reconciled at landing] |
-| §4.3 AC-D-1 | a late removal row under `## 9.0.0` for `--dock-max-inline-size` [to be reconciled at landing] |
-| §1.1 | a late row under `## 9.0.0` for GlassDock's `collapse: DockCollapse` reshape [to be reconciled at landing] |
-| L-5 | `## 5.0.0` › `### The /api discovery-subpath fold — the 203-symbol census` (the 21 rows); `## 8.0.0` › `_Deleted — AnimatedDigit_`, `_Deleted — CompletionSeal_`, `_Deleted — HeaderRibbon_`, `_Deleted — PaperBackdrop_`; a `## 9.0.0` removal entry for the eight handmark types [to be reconciled at landing] |
+| §3.3, §3.4, §4.1, L-3 | `## 10.0.0` › _`useSidebarFollow` exempts by attribute, not by class_, _`SectionHierarchy.parentId` is the direct parent_, _`cm-serif` leaves the published CSS; `font-serif-math` replaces it_, _The Slider's size rungs read six tokens_ |
+| §4.3 AC-D-1 | `## 9.0.0` › _`--dock-max-inline-size` is removed_ |
+| §1.1 | `## 9.0.0` › _`GlassDock`'s props fold onto `collapse`_ |
+| L-5 | `## 5.0.0` › `### The /api discovery-subpath fold — the 203-symbol census` (the 21 rows); `## 8.0.0` › `_Deleted — AnimatedDigit_`, `_Deleted — CompletionSeal_`, `_Deleted — HeaderRibbon_`, `_Deleted — PaperBackdrop_`; `## 9.0.0` › _Eight `./handmark` types leave with the barrel's reshape_; `## 8.0.0` › _Six composables leave `./motion`, `./motion-core` and the root barrel_ |
 | §4.1 (O-23) | `### 3. Composable retirements` › `#### 3.1—useOffsetPagination—REMOVED` |
 | S-4 | `## 8.0.0` › `_Focus moves off box-shadow and stops restating the shape_` |
 | S-19 | `## 8.0.0` › `_Class + attribute namespace — .dropdown-menu__* → .menu__*_` |

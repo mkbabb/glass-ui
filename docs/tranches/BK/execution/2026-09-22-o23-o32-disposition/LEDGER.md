@@ -42,7 +42,7 @@ is false for 10.0.0: every stale MIGRATION row becomes published bytes at the cu
 (`verify__api-cascade.json`, L-5).
 
 **3. The token root is unlayered and beats every layered consumer `:root`.** Two cures (O-32
-§4.1, O-23 L-3) turned on it and one candidate cure was overturned by it. It is ruled once as §B-1; R2 states it in MIGRATION `## 10.0.0` [heading to be reconciled at landing].
+§4.1, O-23 L-3) turned on it and one candidate cure was overturned by it. It is ruled once as §B-1; R2 states it in MIGRATION `## 10.0.0` › _The token-root contract_.
 
 **4. Two O-32 rows reach fourier through latex-paper, not through us.** fourier's paper tree
 calls `@mkbabb/latex-paper/vue`'s `useSidebarFollow` and `useTreeIndex` (fourier
@@ -108,13 +108,14 @@ Born-RED `it` in `tests/components/infinite-scroll.contract.test.ts` (observer `
 the composable signature are unchanged. The "require a scroll port" form is not taken—it would
 break fourier's mount and still drain an unbounded `overflow: auto` root. RULING: no Safari cell
 before the cut; an engine without `scrollMargin` loads when the sentinel is visible—degraded,
-never a drain, not a masking fallback. Lands at 10.0.0, lane AC2.
+never a drain, not a masking fallback. Lands at 10.0.0, lane AC2, `9d8cd728`. [2026-09-22 · bracket pass: as landed, engines without `IntersectionObserver` `scrollMargin` load when the sentinel becomes visible inside a nested port—later, never a drain (AC2/RECORD, L-1).]
 
 **Seats.** Investigate: PARTIAL → CURE-NOW, measured on a hand-written replica. Verify:
 UPHELD—re-measured on the published bytes in three engines and in a window layout. Driver:
 CURE-NOW on the investigator's shape, Safari cell ruled out.
 
-**Cites.** CHANGELOG 10.0.0 fixes line [to be reconciled at landing]; G15 stands as they wrote it.
+**Cites.** CHANGELOG `## 10.0.0` › `### Fixed — the O-23/O-32 cure wave`, the `<InfiniteScroll>` line;
+MIGRATION `## 10.0.0` › _`<InfiniteScroll>` observes against the viewport_; G15 stands as they wrote it.
 
 ### O-23 L-2 ≡ O-32 §4.2 · `cn`'s group table misbuckets the producer's own vocabulary—PARTIAL → CURE-NOW
 
@@ -145,12 +146,14 @@ SIZE. (b) for fall-through: the `class-names.ts` docblock names the four familie
 extended to them. Witness: a unit in `tests/components/_shared/classNames.test.ts` that reads
 `.published-roster` and asserts `cn('text-foreground', n)` keeps both for every published `text-*`
 name—RED at HEAD on exactly the 12. A test row, not a gate seat (§B-2). Not breaking: `cn` changes
-only where it dropped a class it should have kept. Lands at 10.0.0, lane AC1.
+only where it dropped a class it should have kept. Lands at 10.0.0, lane AC1, `e853b327`.
 
 **Seats.** Investigate: PARTIAL → CURE-NOW, the 12 and the patch. Verify: AMENDED—the real
 fall-through families and the shadow eviction added. Driver: CURE-NOW, widened to `shadow`.
 
-**Cites.** CHANGELOG 10.0.0 [to be reconciled at landing]. Interim at 8.0.0: keep glass-ui's
+**Cites.** CHANGELOG `## 10.0.0` › `### Fixed — the O-23/O-32 cure wave`, the `cn()` line; MIGRATION
+`## 10.0.0` › _`cn()` buckets every published `text-*` and `shadow-*` name by the property it
+writes_. Interim at 8.0.0: keep glass-ui's
 `text-*` size and `text-shadow-*` utilities out of any `cn()` call that also carries a text colour.
 
 ### O-23 L-3 · m-21: `--slider-track-height` is not consumer-tunable—LIVE → CURE-NOW
@@ -175,13 +178,13 @@ token root beats it (`verify__api-cascade.json`, O-23 L-3).
 unlayered. The letter's declared-nowhere `var(--x, literal)` shape is DECLINED: it reaches a layered
 `:root` in test, but it holds the default in a fallback, the shape §4.1 strikes (§B-1). Born-RED
 computed-style test (the wrapper inside `@layer glass-overrides`; RED at HEAD, 20px). Not
-breaking. Lands at 10.0.0, lane AC2.
+breaking. Lands at 10.0.0, lane AC2, `9d8cd728`.
 
 **Seats.** Investigate: LIVE → CURE-NOW, the six tokens. Verify: AMENDED—the layered `:root` case
 fails; the reply must not say "set it on `:root`". Driver: CURE-NOW on the house shape; §B-1.
 
-**Cites.** MIGRATION `## 10.0.0`, the six tokens as additions with the §B-1 sentence
-[heading to be reconciled at landing].
+**Cites.** MIGRATION `## 10.0.0` › _The Slider's size rungs read six tokens_, pointing at the §B-1
+sentence under _The token-root contract_; CHANGELOG `## 10.0.0` › `### Added — the O-23/O-32 cure wave`.
 
 ### O-23 L-4 · GAB-2(a): the tier-tint home and the 3.26:1 rung—PARTIAL → ANSWER
 
@@ -211,14 +214,15 @@ consumer's.
 **Seats.** Investigate: PARTIAL → ANSWER, one `/80` site called "the last". Verify: AMENDED—three
 alpha-muted text sites, not one; name the option taken. Driver: ANSWER; tier arm stays.
 
-**Cites.** DESIGN.md tier note (R2) [to be reconciled at landing]. Library residue: L-4-RIDER.
+**Cites.** DESIGN.md `## Default Color Palette` › **Tier and status tones are tints, not text inks.**
+Library residue: L-4-RIDER.
 
 ### L-4-RIDER · the library's own alpha-muted text—LIVE → CURE-NOW
 
 Ours, raised by the verifier; the reply names it so "treat it as a defect" is not advice we fail.
 The three TEXT sites (`ConfiguratorRow.vue` `/70` and `/80`, `ConfiguratorLayer.vue` `/70`) drop
 the alpha: 5.01:1 on `--card`. The `/60` icon button and the `aria-hidden` `/60` easing numerals
-stay (not text a reader needs). Paint-only; witness in the contrast tree. Lands at 10.0.0, lane CT.
+stay (not text a reader needs). Paint-only; witness in the contrast tree. Lands at 10.0.0, lane CT, `552b5d01`.
 
 ### O-23 L-5 · B-4's i-4: MIGRATION homes symbols at subpaths that do not exist—LIVE → CURE-NOW (docs)
 
@@ -243,21 +247,26 @@ composable, not the AnimatedDigit types' home (`verify__api-cascade.json`, O-23 
 **Cure.** Six of the 7 subpath-stranded rows marked removed with their cut and a pointer to the `## 8.0.0` `_Deleted — X_` entry; the seventh, `ControlSize`, re-pointed to `/input` (as `## 8.0.0` already records it), its census prose corrected. The 14
 symbol-stranded rows marked removed with MEASURED retiring commits (`git log -S`); the eight
 handmark types get a `## 9.0.0` removal entry. Witness: both sweeps re-run over the built 10.0.0
-dist, 7 → 0 and 14 → 0—a one-off check, not a gate. Lands at 10.0.0, lane R2; it must land
-before the cut because the file ships (§0.2).
+dist, 7 → 0 and 14 → 0—a one-off check, not a gate. Lands at 10.0.0, lane R2,
+`7f9e417c`; it must land before the cut because the file ships (§0.2).
 
 **Seats.** Investigate: LIVE → CURE-NOW, the seven rows. Verify: AMENDED—14 more; the "no published
 bytes" framing overturned for 10.0.0. Driver: CURE-NOW, all 21 to R2.
 
 **Cites.** `## 5.0.0` › the 203-symbol census; `## 8.0.0` › `_Deleted — AnimatedDigit_` /
 `_Deleted — CompletionSeal_` / `_Deleted — HeaderRibbon_` / `_Deleted — PaperBackdrop_`; the new
-`## 9.0.0` handmark removal entry [to be reconciled at landing].
+`## 9.0.0` handmark removal entry, _Eight `./handmark` types leave with the barrel's reshape_
+(the types retired at `5a69ed9f`). Retiring commits as measured (R2/RECORD, "Measured commits"): the six subpath rows
+`4bf53962` (v8.0.0), `ControlSize`'s `./forms` home `a8a6f66b` (v8.0.0), the eight handmark types
+`5a69ed9f` (v9.0.0), the six motion/motion-core types `bda718ac` (v8.0.0), which also gained a late
+`## 8.0.0` row, _Six composables leave `./motion`, `./motion-core` and the root barrel_.
 
 ### O-23 L-6 · FR-TT-6: the tooltip chip's geometry, type rung and comment—PARTIAL → CURE-NOW
 
 **8.0.0 consequence.** The chip pads 8px on every side (`--overlay-pad-hint`, ratio 1.00—neither
 2.00 nor 0.79), sets `font-size: var(--tooltip-text)` = `--type-caption` (12px floor) with no
-`line-height`, so it inherits body's 1.5; `offsets.css:93-96` and `:63` still name a tooltip
+`line-height`, so it inherits body's 1.5; `offsets.css:93-96` and `:63` [2026-09-22 · bracket pass: both rewritten at
+`fafc9737`, now `:97-102` and `:65` at `fea0f3a0`] still name a tooltip
 `text-sm` that TooltipContent dropped at 7.0.0.
 
 **Grounds.** The ratio is stale twice: 2.00 (`px-3`/`py-1.5`) is pre-7.0.0; 0.79 is the 7.0.0 chip
@@ -276,12 +285,13 @@ text-sm`; the tooltip arm in `overlay-plate.css` gains `line-height: var(--type-
 (1.3; the token exists, nothing minted). Witness in
 `tests/styles/overlay-plate-available-height.test.ts` (it already isolates the tooltip rule
 body); RED at HEAD. RULING: the 2.4px block change rides the next live-π band; no separate probe.
-Not breaking. Lands at 10.0.0, lane DA.
+Not breaking. Lands at 10.0.0, lane DA, `fafc9737`.
 
 **Seats.** Investigate: PARTIAL → CURE-NOW. Verify: AMENDED—`:63` added, the √φ falsehood
 grounded, 2.00 dated pre-7.0.0. Driver: CURE-NOW.
 
-**Cites.** CHANGELOG 10.0.0 paint line [to be reconciled at landing].
+**Cites.** CHANGELOG `## 10.0.0` › `### Fixed — the O-23/O-32 cure wave`, the tooltip chip line; MIGRATION
+`## 10.0.0` › _The tooltip chip pairs its size with the caption leading_.
 
 ### O-23 L-7 · C-13: dock token scope on owned portals—LIVE → ANSWER
 
@@ -373,7 +383,8 @@ thirteen @theme names_` (S-21).
 
 I-32 B-2 said 9.0.0 minted `@utility glass-plate`; it was minted at `4b1a9733`, first tag v8.0.0
 (`git grep '@utility glass-plate'`: v7.0.0 0, v8.0.0 `veil.css:47`). A dated bracket in the O-20
-LEDGER's B-2 row, bracket only. Lands at 10.0.0, lane R2. The reply carries the correction.
+LEDGER's B-2 row, bracket only. Lands at 10.0.0, lane R2, `7f9e417c`. The reply carries
+the correction.
 
 ## §A—O-32 rows, in letter order
 
@@ -401,13 +412,15 @@ pair (`:696`/`:704`, the click-integrity path)—so it reads GREEN for the wrong
 **Seats.** Investigate: LIVE → ANSWER. Verify: UPHELD; the unrecorded 9.0.0 reshape widened to
 three props. Driver: ANSWER + the docs residue below.
 
-**Cites.** The `## 9.0.0` late row (§1.1-RIDER) [to be reconciled at landing].
+**Cites.** The `## 9.0.0` late row (§1.1-RIDER), _`GlassDock`'s props fold onto `collapse`_; CHANGELOG
+`## 9.0.0` › `` ### Changed — `GlassDock`'s props fold onto `collapse`, and eight `./handmark` types leave ``.
 
 ### §1.1-RIDER · the 9.0.0 GlassDock reshape has no MIGRATION or CHANGELOG row—LIVE → CURE-NOW (docs)
 
 `startCollapsed` / `interaction` / shell `alwaysExpanded` → `collapse: DockCollapse` (`ac471032`)
 shipped in 9.0.0 with no manifest row; fourier (20+ dock mounts, pinned 8.0.0) meets it at the
-next bump. A `## 9.0.0` late-row entry in the file's dated-bracket form. Lands at 10.0.0, lane R2.
+next bump. A `## 9.0.0` late-row entry in the file's dated-bracket form. Lands at 10.0.0,
+lane R2, `7f9e417c`.
 
 ### O-32 §1.2 · the violet `batch` tone, withdrawn—NOT-APPLICABLE → ANSWER
 
@@ -442,11 +455,11 @@ candidate. Driver: ANSWER + the residue below.
 
 ### §2.1-RIDER · `Metric`'s up delta paints text in `--success`—LIVE → CURE-NOW (rendered text + paint)
 
-The library breaks the C-1 rule the reply cites: `metric/styles.css:99-101`
+The library breaks the C-1 rule the reply cites: `metric/styles.css:99-101` [2026-09-22 · bracket pass: both polarity rules are deleted at `552b5d01`; `.metric__delta` sits at `:95` at `fea0f3a0`]
 `.metric__delta[data-polarity="up"]{color:var(--success)}` → 3.296:1 on `--card` at HEAD (2.13 at
-8.0.0/9.0.0), a 1.4.3 miss (register-wave `T/RECORD.md:120-123`, residue 1). Cure: the ruling's second branch—CT measured the markup (`CT/RECORD.md`, §2.1 residue): the delta is one span with no glyph, sign mark or plate, so the number and its sign carry polarity and no tone rides the text. Every polarity paints `--foreground` (up from `--success` 3.30, down from `--destructive` 4.53, flat from `--muted-foreground`); a numeric rise is signed (`+3`, compact `+12.4K`) through the family's one seam—`coalesceMetric` gains `signed?: boolean` and `Metric.vue` passes `signed: true`; a string delta passes through; `data-polarity` stays on the node for a consumer's mark. Witness: two born-RED `it`s in `tests/components/metric.contract.test.ts`. Lands at 10.0.0, lane CT.
+8.0.0/9.0.0), a 1.4.3 miss (register-wave `T/RECORD.md:120-123`, residue 1). Cure: the ruling's second branch—CT measured the markup (`CT/RECORD.md`, §2.1 residue): the delta is one span with no glyph, sign mark or plate, so the number and its sign carry polarity and no tone rides the text. Every polarity paints `--foreground` (up from `--success` 3.30, down from `--destructive` 4.53, flat from `--muted-foreground`); a numeric rise is signed (`+3`, compact `+12.4K`) through the family's one seam—`coalesceMetric` gains `signed?: boolean` and `Metric.vue` passes `signed: true`; a string delta passes through; `data-polarity` stays on the node for a consumer's mark. Witness: two born-RED `it`s in `tests/components/metric.contract.test.ts`. Lands at 10.0.0, lane CT, `552b5d01`.
 
-**Cites.** MIGRATION `## 10.0.0`, the `Metric` delta row (R2; the driver's item at `f3011618`: a rendered-text change, not paint-only—`:delta="3"` renders `+3`) and the reader-list amendment under `_--success and --warning darken in the light arm_`; CHANGELOG 10.0.0 line naming `signed` [to be reconciled at landing].
+**Cites.** MIGRATION `## 10.0.0`, the `Metric` delta row (R2; the driver's item at `f3011618`: a rendered-text change, not paint-only—`:delta="3"` renders `+3`) and the reader-list amendment under `_--success and --warning darken in the light arm_`; CHANGELOG 10.0.0 line naming `signed`—landed as MIGRATION `## 10.0.0` › _`Metric`'s delta paints the one ink_ (rendered text and paint, not breaking; `coalesceMetric` gains `signed?: boolean`), the struck reader under _`--success` and `--warning` darken in the light arm_, and CHANGELOG `## 10.0.0` › `### Fixed — the O-23/O-32 cure wave` (the `<Metric>` line) with `### Added — the O-23/O-32 cure wave` (`CoalesceMetricOptions.signed`).
 
 ### O-32 §2.2 · `--card` ≡ `--background` in the light arm—LIVE → ANSWER
 
@@ -457,26 +470,28 @@ rgb8 (1.039 unrounded) light, 1.418 dark. Their banked 1.000 is the pre-decouple
 still prints (`hsl(0 0% 100%)` for both).
 
 **Grounds.** The near-identity in L is the design: the plate was split from the page by warmth,
-not lightness (OKLab L within 0.013, separated by chroma and hue; `color-radius.css:60-72`). A
+not lightness (OKLab L within 0.013, separated by chroma and hue; `color-radius.css:60-72`,
+`:60-77` at `fea0f3a0`). A
 Card's separation is its edge rung plus cast (`card/styles.css:48-80`). SC 1.4.11 does not
 require a non-control surface fill to contrast with its page. The `color-radius.css:60-72`
-comment itself carries stale figures (`hsl 36 48% 97%`, dark `hsl(24 8% 16%)` against the bytes
+(`:60-77` at `fea0f3a0`) comment itself carries stale figures (`hsl 36 48% 97%`, dark `hsl(24 8% 16%)` against the bytes
 `hsl(30 85% 96%)` / `hsl(26 22% 17%)`) (`verify__contrast-tokens.json`, O-32 §2.2).
 
 **Answer.** The explicit ruling they asked for: intended; separation is edge and cast. Where
 `--card` is a bare fill, draw the boundary once the way Card does—`1px solid oklch(from
 var(--foreground) l c h / var(--ink-seam))` for a flush cell, `--ink-edge` for a raised cell or a
-gap ≤ 12px (the gap law, `color-radius.css:114-118`). Edge ink over its own plate: seam 1.173,
+gap ≤ 12px (the gap law, `color-radius.css:114-118`, `:119-123` at `fea0f3a0`). Edge ink over its own plate: seam 1.173,
 edge 1.389 light.
 
-**Docs CURE-NOW.** DESIGN.md palette block with real values and the one-ink sentence (lane R2);
+**Docs CURE-NOW.** DESIGN.md palette block with real values and the one-ink sentence (lane R2); [2026-09-22 · lane CT2, `71be2c0b`: the same stale-figure class struck and bracketed at fifteen comment sites (L17, hsl(26 22% 17%)), `DEFAULT_SURFACE` re-seeded from the shipped card with its CHANGELOG Fixed line, the PresetEditor alpha-muted text cured, `dock-wrap-content-driven.spec.ts` retired — RULINGS "Driver items raised by the lane adjudicators" and the CT2 brackets.]
 the stale figures in `color-radius.css:60-72` and `:127-128`, a dated comment bracket (lane CT).
-Lands at 10.0.0.
+Lands at 10.0.0: the comment arm lane CT, `552b5d01` (the brackets at `:67-75` and `:133-135` at `fea0f3a0`); the DESIGN arm lane R2, `7f9e417c`.
 
 **Seats.** Investigate: LIVE → ANSWER. Verify: AMENDED—the 1.000 decoded, the stale comment named,
 the exact Card form and the gap law added. Driver: ANSWER + the two doc arms.
 
-**Cites.** DESIGN.md palette block (R2) [to be reconciled at landing].
+**Cites.** DESIGN.md `## Default Color Palette` (the shipped light/dark values, the warmth sentence,
+**One ink.**).
 
 ### O-32 §2.3 · `--border` cannot be a 1.4.11 control boundary—PARTIAL → CURE-NOW (docs)
 
@@ -487,10 +502,10 @@ ships at their pin—`--foreground` at `--ink-perimeter` 0.48, 3.105 light / 3.7
 
 **Grounds.** Their second option is the design: `--border`/`--input` are surface tokens; the
 control boundary is `color-mix(in oklab, var(--foreground) calc(var(--ink-perimeter) * 100%),
-transparent)`, asserted by the test row `contrast-computed.test.ts` §3 (`:389`). DESIGN.md mentions
+transparent)`, asserted by the test row `contrast-computed.test.ts` §3 (`:389`; `:421` at `fea0f3a0`). DESIGN.md mentions
 `ink-perimeter` 0 times. `--border-strong` collides with the one-ink law
-(`color-radius.css:108-112`). The premise holds for three library controls: `SelectTrigger`,
-`ToggleGroupItem` and the `.input-bar` rest on a 5% edge, 1.103 on `--card` light. The `:127`
+(`color-radius.css:108-112`; `:113-117` at `fea0f3a0`). The premise holds for three library controls: `SelectTrigger`,
+`ToggleGroupItem` and the `.input-bar` rest on a 5% edge, 1.103 on `--card` light. The `:127` (`:132-133` at `fea0f3a0`)
 comment's "1.28:1" reproduces on no token ground (`verify__contrast-tokens.json`, O-32 §2.3).
 
 **Cure.** `--border-strong` DECLINED (one ink). DESIGN.md gets the boundary sentence scoped to
@@ -498,12 +513,12 @@ fields and check controls: Input, Textarea, NumberField, Checkbox, Switch and Ra
 `--foreground` at `--ink-perimeter`, 3.1/3.8 on `--card`. RULING on the side reading:
 SelectTrigger, ToggleGroupItem and `.input-bar` are text-identified controls; 1.4.11 does not
 require a boundary for them; no paint moves; recorded here and not claimed in the doc. No token,
-no gate (§3 already asserts the ratio). Lands at 10.0.0, lane R2.
+no gate (§3 already asserts the ratio). Lands at 10.0.0, lane R2, `7f9e417c`.
 
 **Seats.** Investigate: PARTIAL → CURE-NOW (docs). Verify: UPHELD with amendment—the three 5%-edge
 controls bound what the doc may claim. Driver: CURE-NOW (docs), the side reading ruled.
 
-**Cites.** DESIGN.md boundary sentence (R2) [to be reconciled at landing].
+**Cites.** DESIGN.md `## Default Color Palette` › **Boundaries on fields and check controls.**
 
 ### O-32 §2.4 · the section ramp has zero headroom—MOVED → ANSWER
 
@@ -516,7 +531,7 @@ three token files hash identically).
 0.521, 0.579 → 0.549, 0.556 → 0.526, 0.601 → 0.511), C and H unchanged, dark arm no diff: on
 `--card` 4.272 → 4.846, 4.392 → 4.988, 4.239 → 4.809, 3.506 → 5.064. HEAD minimum on `--card`
 4.520 (stop 3), on `--background` 4.696 (stop 3). Asserted by the test row `contrast-computed.test.ts` §6
-(`:911-925`) and §6c lockstep (`:949-969`). Their 4.454/4.438/4.433 are readings of unit `.e`'s handed-over L values (0.003-0.006 lighter than what they landed), not of any producer stop. Their overrides (L 0.538/0.541/0.540) are lighter than
+(`:911-925`; `:962-976` at `fea0f3a0`) and §6c lockstep (`:949-969`; `:1000-1020` at `fea0f3a0`). Their 4.454/4.438/4.433 are readings of unit `.e`'s handed-over L values (0.003-0.006 lighter than what they landed), not of any producer stop. Their overrides (L 0.538/0.541/0.540) are lighter than
 HEAD's and still clear, so after the bump they are redundant; their `.dark` block restates the
 unchanged dark arm (`verify__contrast-tokens.json`, O-32 §2.4).
 
@@ -527,7 +542,8 @@ clear a floor drops L and keeps C and H, dark arm untouched. Keep the three over
 **Seats.** Investigate: MOVED → ANSWER. Verify: AMENDED—the `--background` minimum is 4.696 not
 4.68; the 4.45s decoded; delete the `.dark` block too. Driver: ANSWER.
 
-**Cites.** CHANGELOG 10.0.0 ramp line [to be reconciled at landing]; O-20 LEDGER B-7.
+**Cites.** CHANGELOG `## 10.0.0` › `` ### Changed — `--success` and `--warning` darken in light mode ``, its
+ramp sentence; O-20 LEDGER B-7.
 
 ### O-32 §3.1 (+ erratum `E-F9b-2`) · `aria-hidden` focusable spans—LIVE → ANSWER
 
@@ -571,12 +587,13 @@ non-modal absent (`verify__dom-a11y.json`, O-32 §3.2).
 
 **Cure.** `DialogContent.vue` + `SheetContent.vue` stamp `:aria-modal="dialogRoot.modal.value ?
 'true' : undefined"` (CommandDialog inherits). Witnesses in `tests/components/dialog/dialog-attrs.test.ts`
-and the Sheet pair; RED at HEAD. Additive. Lands at 10.0.0, lane DA.
+and the Sheet pair; RED at HEAD. Additive. Lands at 10.0.0, lane DA, `fafc9737`.
 
 **Seats.** Investigate: LIVE → CURE-NOW. Verify: UPHELD, tested on a patched dist, the false
 consumer comment added. Driver: CURE-NOW.
 
-**Cites.** CHANGELOG 10.0.0 [to be reconciled at landing].
+**Cites.** CHANGELOG `## 10.0.0` › `### Fixed — the O-23/O-32 cure wave`, the `aria-modal` line; MIGRATION
+`## 10.0.0` › _Dialog and Sheet stamp `aria-modal`_.
 
 ### O-32 §3.3 · `useSidebarFollow` hard-codes a consumer class—LIVE → CURE-NOW **BREAKING**
 
@@ -594,12 +611,12 @@ attribute → suspended (0); patched class → suspended (0), attribute → foll
 match goes, no dual selector; the options docblock names the attribute; born-RED happy-dom unit.
 RULING: the attribute is `data-sidebar-follow-exempt`, and the reply carries it so fourier's
 latex-paper letter can ask for the same name. Breaking by contract (a `.sidebar-top-btn` control
-now suspends following). Lands at 10.0.0, lane DA.
+now suspends following). Lands at 10.0.0, lane DA, `fafc9737`.
 
 **Seats.** Investigate: LIVE → CURE-NOW, breaking. Verify: UPHELD, the witness shape run.
 Driver: CURE-NOW **BREAKING**, the name ruled.
 
-**Cites.** MIGRATION `## 10.0.0`, the sidebar-follow row (R2) [heading to be reconciled at landing].
+**Cites.** MIGRATION `## 10.0.0` › _`useSidebarFollow` exempts by attribute, not by class_.
 
 ### O-32 §3.4 · `parentId` names the root, not the parent—LIVE → CURE-NOW **BREAKING**
 
@@ -618,12 +635,12 @@ the defect's convention (`verify__dom-a11y.json`, O-32 §3.4).
 **Cure.** `parentId` = direct parent, `null` for roots; `rootId` unchanged;
 `useScrollTracker.activeRootId` reads `rootId`; `types.ts` docblock; the `useScrollTo.test.ts:32`
 fixture to `null`; born-RED witnesses in `useTreeIndex.test.ts` and `useScrollTracker.test.ts`.
-No alias field. Lands at 10.0.0, lane DA.
+No alias field. Lands at 10.0.0, lane DA, `fafc9737`.
 
 **Seats.** Investigate: LIVE → CURE-NOW, breaking. Verify: AMENDED—latex-paper is fourier's index;
 the fixture moves with the cure. Driver: CURE-NOW **BREAKING**.
 
-**Cites.** MIGRATION `## 10.0.0`, the `parentId` row (R2) [heading to be reconciled at landing].
+**Cites.** MIGRATION `## 10.0.0` › _`SectionHierarchy.parentId` is the direct parent_.
 
 ### O-32 §4.1 · `cm-serif` reads a variable glass-ui never declares—LIVE → CURE-NOW **BREAKING**
 
@@ -646,14 +663,17 @@ utility would be an alias (`verify__api-cascade.json`, O-32 §4.1).
 `typography.vue:147` → `font-serif-math`; born-RED unit over the built dist. NEVER the unlayered
 token root. Roster delta (−`utility cm-serif`, +`theme --font-serif-math`, + the utility row)
 recorded by the lane, rebound by the driver at the close (§B-3). Their `@theme` declaration keeps
-winning unchanged; an undeclared consumer paints `serif`, as today. Lands at 10.0.0, lane AC1.
+winning unchanged; an undeclared consumer paints `serif`, as today. Lands at 10.0.0, lane AC1,
+`e853b327`. [2026-09-22 · bracket pass: the declaration landed in `theme/literals.css`, which owns the plain
+`@theme` (`bridges.css` holds only `@theme inline` and carries a pointer); RULINGS, "AC1 path
+corrections RATIFIED". The roster rebind rode the same commit.]
 
 **Seats.** Investigate: LIVE → CURE-NOW, non-breaking, unlayered root. Verify: OVERTURNED—the
 repaint measured; theme-scope + retire `cm-serif`. Driver: CURE-NOW **BREAKING** on the
 verifier's shape; §B-1.
 
-**Cites.** MIGRATION `## 10.0.0`, the `cm-serif` → `font-serif-math` row with the §B-1 sentence
-(R2) [heading to be reconciled at landing].
+**Cites.** MIGRATION `## 10.0.0` › _`cm-serif` leaves the published CSS; `font-serif-math` replaces it_,
+with the §B-1 sentence under _The token-root contract_.
 
 ### O-32 §4.2 · `cn` does not know its own aliases—see O-23 L-2
 
@@ -674,12 +694,15 @@ A probe cut to the consumer's callsite (inline options, no `as const`, assertion
 defaulted parameters (a generic script-setup block cannot export them), re-exported from
 `index.ts` under the same names; `defineModel<T>`; `onMobileUpdate` resolves through
 `props.options`; `useTabResponsive` threads the parameter. RULING: `T extends string` (numbers out
-of scope). Born-RED vue-tsc fixture mirroring EquationView. Not breaking. Lands at 10.0.0, lane AC1.
+of scope). Born-RED vue-tsc fixture mirroring EquationView. ~~Not breaking.~~ [2026-09-22 · bracket pass: ruled **BREAKING** at `3e5b95eb`, type-level, runtime unchanged: `InstanceType<typeof SegmentedTabs>`
+no longer compiles (TS2344, R2's `vue-tsc` probe); a template ref types as `ComponentPublicInstance`.]
+Lands at 10.0.0, lane AC1, `e853b327`.
 
 **Seats.** Investigate: LIVE → CURE-NOW. Verify: UPHELD by the consumer-shaped probe. Driver:
 CURE-NOW, the bound ruled.
 
-**Cites.** CHANGELOG 10.0.0 [to be reconciled at landing].
+**Cites.** CHANGELOG `## 10.0.0` › `### Changed — four breaks from the O-23/O-32 cure wave`; MIGRATION
+`## 10.0.0` › _`SegmentedTabs` is generic over its option values_.
 
 ### O-32 §4.3 (b) · does `glass-floating` reach portaled content—NOT-APPLICABLE → ANSWER
 
@@ -713,12 +736,15 @@ and `:292-299` "SYMMETRIC center-out" (`verify__api-cascade.json`, O-32 §4.3 L-
 ladder is the intent; the "center-out" docblock is the error and is rewritten, the stale cap
 sentence struck. Browser witness in the dock suite (RED at HEAD on `0 |1 2 3 3 2 |1 0`). Their
 sibling dock's single-wrapper collapse is their markup: one wrapper is one child and gets one beat.
-Lands at 10.0.0, lane AC2.
+Lands at 10.0.0, lane AC2, `9d8cd728`. [2026-09-22 · bracket pass: the ±1/±2 rungs are bounded from both ends as well
+(ratified at AC2's adjudication), so a row of 2, 3 or 4 controls is edge-in too: HEAD's 3-control row
+painted `2 1 2`, the landed ladder `0 1 0`.]
 
 **Seats.** Investigate: LIVE → CURE-NOW. Verify: UPHELD, the 10-control hole added. Driver:
 CURE-NOW, edge-in ruled.
 
-**Cites.** CHANGELOG 10.0.0 [to be reconciled at landing].
+**Cites.** CHANGELOG `## 10.0.0` › `### Fixed — the O-23/O-32 cure wave`, the dock stagger line;
+MIGRATION `## 10.0.0` › _The dock's reveal stagger counts controls only, from both ends_.
 
 ### O-32 §4.3 (d) · AC-D-1, the dock scoped-block frame break—DEAD → ANSWER
 
@@ -740,13 +766,15 @@ MIGRATION `## 5.0.0` still teaches it (`verify__api-cascade.json`, O-32 §4.3 AC
 **Seats.** Investigate: DEAD → ANSWER, the dead token as an open question. Verify: UPHELD, the
 frame dated to 4.0.0. Driver: ANSWER + the dead token below.
 
-**Cites.** The `## 9.0.0` late removal row (AC-D-1-RIDER) [to be reconciled at landing].
+**Cites.** The `## 9.0.0` late removal row (AC-D-1-RIDER), _`--dock-max-inline-size` is removed_ (last
+reader `964535cb`, declaration `9d8cd728`); CHANGELOG `## 10.0.0` › `### Removed — recorded late`.
 
 ### AC-D-1-RIDER · `--dock-max-inline-size` is declared with no reader—LIVE → CURE-NOW
 
 The no-masking-fallback law: a token taught as canonical with 0 readers is a dead primary. Deleted
 at `offsets.css:40` with its docblock, and at `demo/stories/dock/overflow.vue:67` (lane AC2); a late
-removal entry under `## 9.0.0`—removed at LATTICE, recorded at 10.0.0 (lane R2). Lands at 10.0.0.
+removal entry under `## 9.0.0`—removed at LATTICE, recorded at 10.0.0 (lane R2, `7f9e417c`).
+Lands at 10.0.0, the deletion at `9d8cd728`.
 
 ### O-32 erratum `E-F9b-2` · the component named was wrong—ANSWER
 
@@ -759,7 +787,7 @@ through the dialog (`glass-ui dist/components/metric/` carries no such markup;
 ### O-32 A-1 · capsule-track `--muted-foreground` binding omission—LIVE → CURE-NOW
 
 **8.0.0 consequence.** The `-strong` re-binding is `:where(.feedback-tone, .glass-capsule)` only
-(`ladder.css:234`, already in `@layer components`), so an inactive pill SegmentedTabs label on the
+(`ladder.css:234`, already in `@layer components`; the cured selector sits at `:238` at `fea0f3a0`), so an inactive pill SegmentedTabs label on the
 `.glass-capsule-track` root paints `#8b7257`, 3.48:1 on `#e9e0d7`—which is exactly our quiet track
 plate (veil `oklch(0.28 0.035 70)` at α 0.10) over `--card`. The same at 9.0.0.
 
@@ -772,12 +800,13 @@ source consumer of `.glass-capsule-track` outside glass-ui is fourier's `f45901e
 **Cure.** Their shape: `:where(.feedback-tone, .glass-capsule, .glass-capsule-track)`
 (specificity 0, no token, no gate); born-RED row in `contrast-computed.test.ts` (≥ 4.5 over the
 quiet plate on `--card`, both arms). Paint-only. fourier deletes `f45901e`'s binding after the
-bump. Lands at 10.0.0, lane CT.
+bump. Lands at 10.0.0, lane CT, `552b5d01`.
 
 **Seats.** Investigate: LIVE → CURE-NOW, arithmetic only (patched copy never on disk). Verify:
 UPHELD by the probe; the ground named. Driver: CURE-NOW.
 
-**Cites.** CHANGELOG 10.0.0 [to be reconciled at landing].
+**Cites.** CHANGELOG `## 10.0.0` › `### Fixed — the O-23/O-32 cure wave`, the `SegmentedTabs` pill line;
+MIGRATION `## 10.0.0` › _Paint: three label sites clear 4.5:1_.
 
 ### O-32 A-2 · `E-F10S-b1`, the press guard swallows a stable-target click—LIVE → SPLIT
 
@@ -801,7 +830,7 @@ the persistent-only arm passes the persistent cases and keeps race (b) swallowed
 **Cure (CURE-NOW, not breaking).** A press on a control inside `#persistent`/`#persistent-end`
 passes when press and click land on the same control (a `.dock-persistent` `closest()` arm; no new
 listener, no `markMorphStart`); the docblock names the exemption. Witness: a GlassDock SFC unit—a
-persistent press mid-morph fires, a full-layer press mid-morph is still swallowed. RULING on the live check: DA ran it (Chromium, `/dock/overview`, `DA/RECORD.md` "the persistent arm") and it measured the precondition false by a bounded amount—`.dock-persistent` drifts 4 px during the morph (the collapsed→expanded pad, 8 → 12 px) and a pointer resting within 4 px of its inline edge sees the control's hover lift from t = 164 ms, 136 ms before the earliest measured press. DA STOPPED; the driver re-ruled at `b13a792e`: (a) LAND AS IS—no layer swaps and the control's identity is constant, so it is not race (b); (b) pinning the persistent geometry through the morph DECLINED (liquid-weight); (c) declining the persistent half DECLINED (leaves the defect). The banked arm and its SFC witness restore verbatim with a recorded RED→GREEN. Known bound, carried to the reply in one sentence: a press within 4 px of a persistent control's inline edge during the morph activates the control it visibly hovers. The stationary-pointer check is recorded as measured, not as a pass; Safari not required (identity logic, not paint). Lands at 10.0.0, lane DA.
+persistent press mid-morph fires, a full-layer press mid-morph is still swallowed. RULING on the live check: DA ran it (Chromium, `/dock/overview`, `DA/RECORD.md` "the persistent arm") and it measured the precondition false by a bounded amount—`.dock-persistent` drifts 4 px during the morph (the collapsed→expanded pad, 8 → 12 px) and a pointer resting within 4 px of its inline edge sees the control's hover lift from t = 164 ms, 136 ms before the earliest measured press. DA STOPPED; the driver re-ruled at `b13a792e`: (a) LAND AS IS—no layer swaps and the control's identity is constant, so it is not race (b); (b) pinning the persistent geometry through the morph DECLINED (liquid-weight); (c) declining the persistent half DECLINED (leaves the defect). The banked arm and its SFC witness restore verbatim with a recorded RED→GREEN. Known bound, carried to the reply in one sentence: a press within 4 px of a persistent control's inline edge during the morph activates the control it visibly hovers. The stationary-pointer check is recorded as measured, not as a pass; Safari not required (identity logic, not paint). Lands at 10.0.0, lane DA, `fafc9737`.
 
 **DECLINE.** The arriving-layer (fullscreen) half: the remedy is theirs—await settle
 (`await expect(dock).not.toHaveAttribute("data-morphing")` before the click), which their F-W10S
@@ -811,7 +840,8 @@ reopens race (b).
 **Seats.** Investigate: LIVE → CURE-NOW (pointermove + `markMorphStart` arm). Verify: OVERTURNED
 in part—harness-proven not to cure G-F9-11; amended to the persistent-only arm. Driver: SPLIT on the verifier's amendment; the live check measured (DA), the STOP re-ruled (a) LAND AS IS at `b13a792e` with the 4 px bound.
 
-**Cites.** CHANGELOG 10.0.0 [to be reconciled at landing].
+**Cites.** CHANGELOG `## 10.0.0` › `### Fixed — the O-23/O-32 cure wave`, the click-integrity line;
+MIGRATION `## 10.0.0` › _`GlassDock` passes a same-control press inside `#persistent` mid-morph_.
 
 ### O-32 A-3 · `E-F10S-b2`, underline inactive ink under 4.5—LIVE → CURE-NOW
 
@@ -829,12 +859,13 @@ unchanged. The unguarded variant repaints the ACTIVE tab (probed), so the guard 
 **Cure.** In `segmented.css`, before the underline `:hover` rule:
 `.segmented-tabs--underline .segmented-tab:not([data-active]) { color: var(--muted-foreground); }`;
 born-RED contrast row (≥ 4.5 on `--background` and `--card`, both arms). Paint-only. Their
-`visualization-crud.spec.ts:664` fixme can lift after the bump. Lands at 10.0.0, lane CT.
+`visualization-crud.spec.ts:664` fixme can lift after the bump. Lands at 10.0.0, lane CT, `552b5d01`.
 
 **Seats.** Investigate: LIVE → CURE-NOW, arithmetic only. Verify: UPHELD by the probe, the guard
 proven. Driver: CURE-NOW.
 
-**Cites.** CHANGELOG 10.0.0 [to be reconciled at landing].
+**Cites.** CHANGELOG `## 10.0.0` › `### Fixed — the O-23/O-32 cure wave`, the `SegmentedTabs variant="underline"`
+line; MIGRATION `## 10.0.0` › _Paint: three label sites clear 4.5:1_.
 
 ## §B—class rulings (from `RULINGS.md` §B, the one source)
 
@@ -842,9 +873,11 @@ proven. Driver: CURE-NOW.
   exception) and beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`).
   MIGRATION §10.0.0 states it: "`:root` token overrides must be unlayered, or set on an element
   below `:root` in any layer." Consumer-settable FONT registers live in the theme layer
-  (`bridges.css` `@theme`, the §4.1 shape); every other consumer-settable seam is a plain unlayered
-  `:root` token (the L-3 shape). A declared-nowhere `var()` default is never the shape. Rows that
-  turn on it: O-32 §4.1, O-23 L-3.
+  (`bridges.css` `@theme`, the §4.1 shape) [2026-09-22 · bracket pass: the plain `@theme` that
+  owns the register is `theme/literals.css`'s, where §4.1 landed at `e853b327`; `bridges.css`
+  holds only `@theme inline` and a pointer (RULINGS, "AC1 path corrections RATIFIED")]; every
+  other consumer-settable seam is a plain unlayered `:root` token (the L-3 shape). A
+  declared-nowhere `var()` default is never the shape. Rows that turn on it: O-32 §4.1, O-23 L-3.
 - **B-2 · test rows are not gates.** A unit in the `npm test` tree that mints no gate seat is a
   test row; gates stay exactly 60. Every witness in this ledger is a test row.
 - **B-3 · roster and ratchet are the driver's.** Lanes record deltas; the driver rebinds
@@ -876,7 +909,7 @@ Rider homes (the one mapping §C lacks): L-4-RIDER and §2.1-RIDER → CT; §1.1
 
 | disposition | rows |
 | --- | --- |
-| CURE-NOW | O-23 L-1 · L-2 ≡ O-32 §4.2 · L-3 · L-4-RIDER · L-5 (docs) · L-6 · S-18-RIDER (docs) · O-32 §1.1-RIDER (docs) · §2.1-RIDER · §2.2 (docs arms) · §2.3 (docs) · §3.2 · §3.3 **BREAKING** · §3.4 **BREAKING** · §4.1 **BREAKING** · §4.3 (a) · §4.3 (c) · AC-D-1-RIDER · A-1 · A-2 (persistent limb) · A-3 (21 rows or limbs; three BREAKING) |
+| CURE-NOW | O-23 L-1 · L-2 ≡ O-32 §4.2 · L-3 · L-4-RIDER · L-5 (docs) · L-6 · S-18-RIDER (docs) · O-32 §1.1-RIDER (docs) · §2.1-RIDER · §2.2 (docs arms) · §2.3 (docs) · §3.2 · §3.3 **BREAKING** · §3.4 **BREAKING** · §4.1 **BREAKING** · §4.3 (a) · §4.3 (c) · AC-D-1-RIDER · A-1 · A-2 (persistent limb) · A-3 (21 rows or limbs; three BREAKING [2026-09-22 · bracket pass: four: §4.3 (a) ruled BREAKING, type-level, at `3e5b95eb`]) |
 | ANSWER | O-23 §1 · L-4 · L-7 · O-23 §4.1 · S-1..S-21 (every strike STANDS) · O-32 §1.1 · §1.2 · §2.1 · §2.2 · §2.4 · §3.1 · §4.3 (b) · §4.3 (d) · erratum E-F9b-2 (13 rows plus the 21 strikes) |
 | SPLIT | O-32 A-2 (CURE-NOW persistent limb + DECLINE on three limbs) (1) |
 | DECLINE | the text-bearing 4.5 half of §2.1 (a `--success-ink` rung, under C-1) · `--border-strong` (§2.3) · the declared-nowhere `var()` shape (L-3) · A-2's arriving-layer limb · A-2's guard prop · A-2's geometry pin (re-rule (b), `b13a792e`) (6 limbs, none a whole row) |
@@ -892,7 +925,7 @@ Rider homes (the one mapping §C lacks): L-4-RIDER and §2.1-RIDER → CT; §1.1
 
 The erratum row takes its state from §3.1; the 21 strikes are tallied in §S, not here. Every
 inbound label is answered by name: O-23 §1, L-1..L-7, S-1..S-21, §4; O-32 §1.1, §1.2, §2.1-2.4,
-§3.1-3.4, §4.1-4.3, E-F9b-2, A-1..A-3. O-32 §5 (method note) and §6 (asks) and O-23 §5 (reply path) carry no row; received. Three cures break a published contract at 10.0.0 and each
+§3.1-3.4, §4.1-4.3, E-F9b-2, A-1..A-3. O-32 §5 (method note) and §6 (asks) and O-23 §5 (reply path) carry no row; received. Three cures break a published contract at 10.0.0 [2026-09-22 · bracket pass: four: the `SegmentedTabs` generic, type-level, ruled at `3e5b95eb`, under _`SegmentedTabs` is generic over its option values_] and each
 carries a MIGRATION row: the sidebar-follow attribute, `parentId` as the direct parent, `cm-serif`
 → `font-serif-math`. Paint changes on purpose, each stated in its row: A-1, A-3, §2.1-RIDER (also rendered text: a numeric rise renders `+N`),
 L-4-RIDER, L-6 (block size), L-23 (per-child onsets), L-3 (none at default). Every CURE-NOW lands
