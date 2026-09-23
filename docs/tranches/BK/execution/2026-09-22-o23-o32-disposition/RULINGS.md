@@ -285,6 +285,15 @@ BREAKING cures are lawful there and are marked.
   round-3 adjudication dictates it after the loop closes, the driver runs one standalone cure +
   re-adjudication pair before R2 commits.
 
+- **DESIGN.md stale-class closure (at R2's adjudication r3):** `:895-899` (`.scroll-weight-reveal`,
+  `.char-stagger > .char`, `.text-glass-legible`, the reduced-motion sentence) and `:1490-1492`
+  (`### Kinetic typography keyframes`) describe utilities/keyframes with 0 hits in src — R2 strikes
+  them in the cure-24 shape (dated bracket, measured 0 hits). The Typography Tokens Semantic Use
+  column (`--font-serif` with 0 readers; `--font-display` "headings" where the title/heading
+  utilities read `--font-text`) is bracketed to the measured reader set, and the semantic-classes
+  table gains the `.text-hero` row (`semantic.css:55`). Same class, same lane, no deferral. These
+  ride the standalone cure + re-adjudication pair with cures 21-25 (the d222ade8 clause).
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
