@@ -294,6 +294,11 @@ BREAKING cures are lawful there and are marked.
   table gains the `.text-hero` row (`semantic.css:55`). Same class, same lane, no deferral. These
   ride the standalone cure + re-adjudication pair with cures 21-25 (the d222ade8 clause).
 
+- **DESIGN.md:1119 `.dock-label` bullet (at the standalone cure):** prints `var(--font-serif)`, a
+  `--type-subheading` fallback and weight 500 where the utility reads `--font-text`, the ratio
+  fallback and weight 400 (`semantic.css:188-197`) — same class, R2's; the re-adjudicator dictates
+  the one bracket and the driver applies it before R2 commits.
+
 ## §B · Class rulings
 - **B-1 · the token-root contract.** glass-ui's token `:root` is unlayered (the A-3-CLASS exception) and
   beats every layered consumer `:root` (`@theme`, `@layer glass-overrides`). MIGRATION §10.0.0 states
