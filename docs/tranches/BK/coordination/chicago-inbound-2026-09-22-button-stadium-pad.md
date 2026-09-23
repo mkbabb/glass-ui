@@ -94,3 +94,8 @@ cures applied by the driver, C-1/C-3 spaced-em-dash DISMISSED on in-file consist
 tag `v10.0.1` at `3f9ea884`; `release.yml` run 35810076687 publish: success; `latest` on the registry,
 unpacked 2,916,129 B = the ratchet datum; attestations present. `lot-assay-e0` told at each step:
 in-flight ack, then the version.]
+
+[2026-09-22 · CONSUMER-CONFIRMED: chicago bumped to 10.0.1 and is live at chicago.babb.dev; at the same
+420px viewport the `sm` "Listing" command measures `padding 0 14px`, `height 36px`, `width 87px` (from 67),
+the icon-only toggle 36px square; the bump surfaced nothing else. The loop is closed end to end:
+report → ruling → cure → publish → adopt → measure.]
