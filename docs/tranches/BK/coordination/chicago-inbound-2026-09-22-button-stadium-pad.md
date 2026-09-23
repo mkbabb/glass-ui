@@ -83,3 +83,14 @@ release record; MIGRATION is untouched (no break — a geometry cure with no API
 `I` implement (Opus) → `C` challenge (Opus: bytes + mutation + census) → Fable adjudicates in
 place → cure → release. Seats never `git add`/`commit`; the driver commits by pathspec.
 
+## Landed
+
+[2026-09-22 · LIVE: cure `3f9ea884` (styles + gate + sizing table + CHANGELOG §10.0.1 + version + ratchet
+2916163 → 2916129, the −34 B of the two declarations); the I/C lane `wf_515fb0e4-702` (Opus implement,
+Opus challenger: RED by mutation `[10, 8, 16, 18]` vs `[10, 14, 16, 18]`, STAT-IDENTICAL restore; four
+cures applied by the driver, C-1/C-3 spaced-em-dash DISMISSED on in-file consistency, N-2 rides BL);
+`scripts/release.sh v10.0.1` RELEASE_EXIT 0 (239 test files, three pixel-floor gates GREEN; log + three
+π reports banked at `execution/2026-09-22-o23-o32-disposition/close/*10.0.1*`, `7d436c7f`/`aaed5397`);
+tag `v10.0.1` at `3f9ea884`; `release.yml` run 35810076687 publish: success; `latest` on the registry,
+unpacked 2,916,129 B = the ratchet datum; attestations present. `lot-assay-e0` told at each step:
+in-flight ack, then the version.]
