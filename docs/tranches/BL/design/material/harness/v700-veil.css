@@ -1,0 +1,39 @@
+/* v700-veil.css · the 7.0.0 veil, re-expressed on HEAD's plate seam for the owner-glance pair (glance.mjs).
+   Values from `git show v7.0.0:src/styles/tokens/glass.css` and `…/dark-arm.css`:
+     light α wash .30  quiet .50  resting .65  floating .80  overlay .95  dock .50  dialog .68
+     dark  α wash .38  quiet .58  resting .72  floating .88  overlay .96  dock .50  dialog .76
+     blur radii 1 / 7 / 7 / 11 / 11 px; saturate 1.4 / 1.4 / 1.4 / 1.6 / 1.6; quiet carries brightness(1.02).
+   HEAD paints `oklch(from --glass-veil-ink l c h / rung)` over the backdrop, so pointing the ink at --card and the
+   rungs at 7.0.0's alphas paints 7.0.0's `color-mix(in srgb, --card α, transparent)`. Left out: 7.0.0's oklab tint
+   on the dock and dialog plates (--glass-tint-strength) and its separate sheet/chassis rungs. HEAD's luma clamp
+   adds nothing here (every HEAD dock reads luma 0). A scratch overlay; nothing in src changes. */
+html:root {
+    --glass-veil-ink: var(--card);
+    --glass-veil-wash: 0.30;
+    --glass-veil-quiet: 0.50;
+    --glass-veil-resting: 0.65;
+    --glass-veil-floating: 0.80;
+    --glass-veil-overlay: 0.95;
+    --glass-veil-dock: 0.50;
+    --glass-veil-dialog: 0.68;
+    --glass-blur-wash-radius: 1px;
+    --glass-blur-quiet-radius: 7px;
+    --glass-blur-resting-radius: 7px;
+    --glass-blur-floating-radius: 11px;
+    --glass-blur-overlay-radius: 11px;
+    --glass-blur-wash: blur(calc(1px * var(--glass-level))) saturate(1.4);
+    --glass-blur-quiet: blur(calc(7px * var(--glass-level))) saturate(1.4) brightness(1.02);
+    --glass-blur-resting: blur(calc(7px * var(--glass-level))) saturate(1.4);
+    --glass-blur-floating: blur(calc(11px * var(--glass-level))) saturate(1.6);
+    --glass-blur-overlay: blur(calc(11px * var(--glass-level))) saturate(1.6);
+}
+html.dark:root {
+    --glass-veil-ink: var(--card);
+    --glass-veil-wash: 0.38;
+    --glass-veil-quiet: 0.58;
+    --glass-veil-resting: 0.72;
+    --glass-veil-floating: 0.88;
+    --glass-veil-overlay: 0.96;
+    --glass-veil-dock: 0.50;
+    --glass-veil-dialog: 0.76;
+}
