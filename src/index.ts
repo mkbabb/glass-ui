@@ -402,6 +402,7 @@ export {
     type ConfiguratorAsideSide,
     type ConfiguratorCloneMode,
     type ConfiguratorGalleryPlacement,
+    type ConfiguratorLayout,
     type ConfiguratorPreset,
     type ConfiguratorScrollMode,
     type ConfiguratorSize,
