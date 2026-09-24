@@ -9,8 +9,7 @@ import { openRow } from "./lib.mjs";
 
 const row = openRow("f4-terminal-role");
 row.edit("vite.style-fold.ts", [
-    // requires row f3-entry-record (the record reader is already imported)
-    [`import { recordCssExports, recordEntries } from "./docs/tranches/BL/design/structure/floor/lib/entries.mjs";`, `import { recordCssExports, recordEntries, recordTerminal } from "./docs/tranches/BL/design/structure/floor/lib/entries.mjs";`],
+    // requires row f3-entry-record (its `entryRecord` namespace import carries recordTerminal)
     [" * import (or the trailing `@source` in an older source tree). The SFC bundle", " * import, the entry record's declared `cascade.terminal`. The SFC bundle"],
     [
         /\/\*\*\n \* atSourceIndex — locate the offset[\s\S]*?\nexport function terminalImportIndex\(css: string\): number \{\n    const mode = [^\n]*\n    return mode \? mode\.index : atSourceIndex\(css\);\n\}\n/,
@@ -22,7 +21,7 @@ row.edit("vite.style-fold.ts", [
  * last @import, throws: dist-only imports are never placed by a guess.
  */
 export function terminalImportIndex(css: string, distStyles: string, root: string): number {
-    const terminal = resolve(dirname(distStyles), String(recordTerminal(root)).replace(/^src\\//, ""));
+    const terminal = resolve(dirname(distStyles), String(entryRecord.recordTerminal(root)).replace(/^src\\//, ""));
     const imports = [...css.matchAll(/^[ \\t]*@import\\s+(?:url\\(\\s*)?["']([^"']+)["']/gm)];
     const at = imports.findIndex((m) => resolve(distStyles, m[1]) === terminal);
     if (at === -1) throw new Error(\`style-fold: the declared cascade terminal \${terminal} is not imported by \${distStyles}/index.css\`);

@@ -69,10 +69,11 @@ export function makeEvaluator(ts, sf, fileAbs, rootAbs) {
             let kind = "str";
             let anchor = null;
             let strAnchor = null;
+            let rooted = false;
             for (const [i, span] of n.templateSpans.entries()) {
                 const x = ev(span.expression, depth + 1);
                 if (x.t === "opaque") return { t: "opaque", prefix: val(kind, s), lits: [], anchor: null, template: n };
-                if (i === 0 && s === "" && (x.t === "path" || x.t === "url")) { kind = x.t; anchor = x.v; }
+                if (i === 0 && s === "" && (x.t === "path" || x.t === "url")) { kind = x.t; anchor = x.v; if (x.rooted) rooted = true; }
                 // `${DOCK}/composables/x.ts` with DOCK a const string: the const is the anchor
                 // (its own literal is its own edge) and the tail literal spells the rest
                 if (i === 0 && s === "" && x.t === "str") strAnchor = x.v;
@@ -80,7 +81,7 @@ export function makeEvaluator(ts, sf, fileAbs, rootAbs) {
             }
             const one = n.templateSpans.length === 1 && n.head.text === "";
             const tail = one && (anchor || strAnchor !== null) ? [n.templateSpans[0].literal] : [];
-            return { t: kind, v: s, lits: tail, anchor, strAnchor: kind === "str" && one ? strAnchor : null, template: n };
+            return { t: kind, v: s, lits: tail, anchor, strAnchor: kind === "str" && one ? strAnchor : null, template: n, rooted };
         }
         if (ts.isIdentifier(n)) {
             if (bindings.has(n.text)) return bindings.get(n.text);
@@ -112,7 +113,7 @@ export function makeEvaluator(ts, sf, fileAbs, rootAbs) {
             if (a.t !== "opaque" && b.t === "str") {
                 const t = a.t;
                 const anchorable = (t === "path" || t === "url") && a.lits.length === 0 && isLit(n.right);
-                return { t, v: a.v + b.v, lits: anchorable ? [n.right] : [], anchor: anchorable ? a.v : null };
+                return { t, v: a.v + b.v, lits: anchorable ? [n.right] : [], anchor: anchorable ? a.v : null, rooted: !!a.rooted };
             }
             if (a.t !== "opaque" && b.t === "opaque") return { t: "opaque", prefix: a, lits: [], anchor: null };
             return OPAQUE;
@@ -135,7 +136,8 @@ export function makeEvaluator(ts, sf, fileAbs, rootAbs) {
         if (ts.isCallExpression(n)) {
             const name = calleeName(n.expression);
             const txt = n.expression.getText(sf);
-            if (txt === "process.cwd") return val("path", rootAbs);
+            // `rooted`: the value hangs off the working directory, which no move relocates (P3-F5)
+            if (txt === "process.cwd") return { ...val("path", rootAbs), rooted: true };
             if (name === "String" && n.arguments.length === 1) return ev(n.arguments[0], depth + 1);
             if (name === "toString" && ts.isPropertyAccessExpression(n.expression)) return ev(n.expression.expression, depth + 1);
             if (!name || !PATH_FNS.has(name)) return OPAQUE;
@@ -160,14 +162,22 @@ export function makeEvaluator(ts, sf, fileAbs, rootAbs) {
             const combine = (list) => {
                 let acc = null;
                 for (const a of list) {
-                    if (name === "resolve") acc = acc === null ? { path: true, v: a.t === "path" ? a.v : resolve(rootAbs, a.v) } : { path: true, v: resolve(acc.v, a.v) };
-                    else if (acc === null) acc = { path: a.t === "path", v: a.v };
-                    else acc = { path: acc.path, v: acc.path ? join(acc.v, a.v) : posix.join(acc.v, a.v) };
+                    if (name === "resolve") acc = acc === null ? { path: true, v: a.t === "path" ? a.v : resolve(rootAbs, a.v), rooted: a.t === "path" ? !!a.rooted : !a.v.startsWith("/") } : { ...acc, v: resolve(acc.v, a.v), rooted: a.v.startsWith("/") ? false : acc.rooted };
+                    else if (acc === null) acc = { path: a.t === "path", v: a.v, rooted: !!a.rooted };
+                    else acc = { path: acc.path, v: acc.path ? join(acc.v, a.v) : posix.join(acc.v, a.v), rooted: acc.rooted };
                 }
                 return acc;
             };
-            const acc = combine(staticArgs);
-            if (firstOpaque !== -1) return acc && firstOpaque > 0 ? { t: "opaque", prefix: val(acc.path ? "path" : "str", acc.v), lits: [], anchor: null } : OPAQUE;
+            let acc = combine(staticArgs);
+            if (firstOpaque !== -1) {
+                // P3-F4: an opaque argument with a static string head (`"src/components/" + n`)
+                // extends the prefix by the head's whole segments, so the scan base is the dir it
+                // names and not the join's first argument (`join(process.cwd(), …)` was the root)
+                const o = args[firstOpaque];
+                const h = o.t === "opaque" && o.prefix?.t === "str" ? o.prefix.v.slice(0, o.prefix.v.lastIndexOf("/") + 1) : "";
+                if (acc && h && !h.startsWith("/")) acc = combine([...staticArgs, { t: "str", v: h.replace(/\/$/, "") }]);
+                return acc && firstOpaque > 0 ? { t: "opaque", prefix: val(acc.path ? "path" : "str", acc.v), lits: [], anchor: null } : OPAQUE;
+            }
             if (!acc) return OPAQUE;
             // literal tail: the longest run of literal args ending at the last arg
             let k = n.arguments.length;
@@ -175,7 +185,7 @@ export function makeEvaluator(ts, sf, fileAbs, rootAbs) {
             const head = combine(args.slice(0, k));
             const anchor = k === 0 ? (name === "resolve" ? rootAbs : null) : head?.path ? head.v : null;
             const lits = anchor !== null || k === 0 ? n.arguments.slice(k) : [];
-            return { t: acc.path ? "path" : "str", v: acc.v, lits, anchor, call: n };
+            return { t: acc.path ? "path" : "str", v: acc.v, lits, anchor, call: n, rooted: !!acc.rooted };
         }
         return OPAQUE;
     }

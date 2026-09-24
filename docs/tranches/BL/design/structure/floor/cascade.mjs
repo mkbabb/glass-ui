@@ -9,8 +9,9 @@
 //                                                 identical to the baseline, or exit 1 with
 //                                                 the first divergence and its class
 // Flattening inlines relative @imports depth-first (layer()/supports()/media wrap the
-// inlined sheet), and normalises Vue scope ids and hashed v-bind vars by first appearance,
-// so a pure move reads identical while any reorder or content change reads RED.
+// inlined sheet), and normalises Vue scope ids, hashed v-bind vars and scoped @keyframes
+// suffixes (FD-4) by first appearance, so a pure move reads identical while any reorder
+// or content change reads RED.
 import { createHash } from "node:crypto";
 import { createRequire } from "node:module";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -59,11 +60,30 @@ export function leafSequence(postcss, root) {
     });
     const ids = new Map();
     const vars = new Map();
-    return out.map((line) =>
+    const seq = out.map((line) =>
         line
             .replace(/data-v-([0-9a-f]{8})/g, (_, h) => { if (!ids.has(h)) ids.set(h, ids.size + 1); return `data-v-#${ids.get(h)}`; })
             .replace(/--([0-9a-f]{8})-/g, (_, h) => { if (!vars.has(h)) vars.set(h, vars.size + 1); return `--#${vars.get(h)}-`; }),
     );
+    return scopedKeyframes(seq);
+}
+
+/**
+ * FD-4 · Vue's scoped `@keyframes` suffix. A scoped SFC renames `@keyframes x` to
+ * `x-<8hex>`, the hash derived from the SFC's path and source, so a pure move reads as
+ * changed rules. Every name the sequence declares with `@keyframes` and that carries an
+ * 8-hex suffix is renamed `x-#N` by order of first declaration, and the same map is
+ * applied to every use (`animation`, `animation-name`). Unscoped names are untouched.
+ */
+export function scopedKeyframes(seq) {
+    const names = new Map();
+    for (const line of seq) for (const m of line.matchAll(/@keyframes ([A-Za-z0-9_-]+?)-([0-9a-f]{8})(?![0-9A-Za-z_-])/g)) {
+        const full = `${m[1]}-${m[2]}`;
+        if (!names.has(full)) names.set(full, `${m[1]}-#${names.size + 1}`);
+    }
+    if (!names.size) return seq;
+    const re = new RegExp(`(?<![0-9A-Za-z_-])(${[...names.keys()].join("|")})(?![0-9A-Za-z_-])`, "g");
+    return seq.map((line) => line.replace(re, (x) => names.get(x)));
 }
 
 export function snapshotDist(root, dist) {

@@ -4,14 +4,19 @@
 // violation: the graph fails closed.
 import { createRequire } from "node:module";
 import { posix } from "node:path";
-import { openTree, zoneOf } from "./tree.mjs";
-import { loadRecord, distOf } from "./entries.mjs";
-import { discoverAliases, expandGlob, isGenerated, makeResolver } from "./resolve.mjs";
+import { floorHome, ledgerPath, openTree, zoneOf } from "./tree.mjs";
+import { dirUnits } from "./placement.mjs";
+import { loadRecord, publishedPathOf } from "./entries.mjs";
+import { discoverAliases, expandGlob, globToRegex, isGenerated, makeResolver } from "./resolve.mjs";
 import { makeEvaluator } from "./evaluate.mjs";
-import { scanCss, scanHtml, scanJson, scanScript, scanSh, scanVue } from "./scan.mjs";
+import { scanCss } from "./scan/css.mjs";
+import { scanScript } from "./scan/script.mjs";
+import { scanHtml, scanJson, scanSh, scanYaml } from "./scan/text.mjs";
+import { scanVue } from "./scan/vue.mjs";
 
-export const LEDGER_PATH = "docs/tranches/BL/design/structure/floor/records/opaque-ledger.json";
 const SCRIPT = /\.(ts|tsx|mts|cts|js|mjs|cjs|jsx)$/;
+/** Module edge kinds a `src` file may not spell by the package's own name (P3-F3). */
+const SELF_NAME_BANNED = /^(import|import-type|import-side-effect|import-type-node|reexport|reexport-star|reexport-ns|dynamic|require|vi-mock|(sfc-inline-)?css-(import|reference))$/;
 /** Edge kinds that carry a value dependency (an evaluated module edge). */
 export const VALUE_KINDS = new Set(["import", "import-side-effect", "reexport", "reexport-star", "reexport-ns", "require", "sfc-script-src"]);
 
@@ -28,14 +33,23 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
     const { aliases, conflicts } = discoverAliases(tree, ts, makeEvaluator);
     const R = makeResolver(tree, { aliases, record });
     let ledger = { entries: [] };
-    try { ledger = JSON.parse(tree.read(LEDGER_PATH)); } catch { /* absent ledger = empty */ }
+    try { ledger = JSON.parse(tree.read(ledgerPath(tree.root))); } catch { /* absent ledger = empty */ }
     const ledgerUsed = new Set();
+    const recordsDir = `${floorHome(tree.root)}/records/`;
     const edges = [];
     const violations = [];
     const census = [];
     const exportsOf = new Map();
     const refsOf = new Map();
     const ctx = { root: tree.root, abs: (p) => tree.abs(p) };
+    let negations = [];
+    /** A program pattern (a tsconfig include/exclude/files glob, a vite/vitest include) and a
+     *  negated `@source` are collection patterns, not claims: an empty match is legal. Each
+     *  keeps one edge to its static head dir (which must exist), plus one per matched file
+     *  (FD-7: the first `__tests__/` file then joins a pattern instead of staling a ledger row). */
+    const PROGRAM_CONFIG = /^(tsconfig[^/]*\.json|vite[^/]*\.ts|vitest[^/]*\.ts)$/;
+    const programPattern = (from, ref) => (PROGRAM_CONFIG.test(from) && (ref.kind === "json-glob" || ref.kind === "glob-literal")) || (ref.cssSource && ref.negated);
+    const headDir = (pattern) => { const i = pattern.search(/[*{?]/); const head = i === -1 ? pattern : pattern.slice(0, pattern.lastIndexOf("/", i)); return head.replace(/\/$/, "") || "."; };
     const publishedJs = record.js.map(([name, source]) => ({ dist: name === "index" ? "dist/glass-ui.js" : `dist/${name}.js`, source }));
 
     for (const f of tree.parsed) {
@@ -46,9 +60,10 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
             if (f.endsWith(".vue")) out = scanVue(ts, postcss, sfc, f, code, ctx);
             else if (SCRIPT.test(f)) out = scanScript(ts, f, code, 0, ctx);
             else if (f.endsWith(".css")) out = scanCss(postcss, f, code, 0);
-            else if (f.endsWith(".json")) out = scanJson(f, code);
+            else if (f.endsWith(".json")) out = scanJson(f, code, { records: recordsDir });
             else if (f.endsWith(".sh")) out = scanSh(f, code);
             else if (f.endsWith(".html")) out = scanHtml(f, code);
+            else if (/\.ya?ml$/.test(f)) out = scanYaml(f, code);
         } catch (e) {
             violations.push({ kind: "parse-error", from: f, spec: String(e.message).slice(0, 160) });
             continue;
@@ -56,6 +71,8 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
         if (out.exp) exportsOf.set(f, out.exp);
         const fileEdges = [];
         refsOf.set(f, fileEdges);
+        // P3-R6: a negated `@source not "…"` subtracts its matches from the same sheet's scans
+        negations = out.refs.filter((r) => r.cssSource && r.negated).map((r) => globToRegex(expandRefGlob(f, r).pattern));
         const later = [];
         // text-anchored forms resolve last: they need the set of files this file reads
         const deferred = (r) => r.mode === "embedded" || r.mode === "based" || (r.mode === "path" && r.bareLiteral && !r.claim && !r.zoneRooted && !r.write && r.spec.startsWith("."));
@@ -96,6 +113,7 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
             glob: target.glob ?? null,
             plane: target.plane ?? "source",
             mode: ref.mode,
+            rooted: !!ref.rooted,
             refIndex: ref.index,
         };
         edges.push(e);
@@ -118,7 +136,15 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
             if (r && !r.error) return violate(from, code, ref, "absence-present", { target: r.to });
             return add(from, code, { ...ref, kind: "absence" }, { via: "absence", external: `absent:${ref.mode === "abs" ? tree.rel(ref.abs) : ref.spec}` }, fileEdges);
         }
-        if (ref.mode === "census") return census.push({ from, line: lineOf(code, ref.start), kind: ref.kind, spec: ref.spec });
+        if (ref.mode === "census") return census.push({ from, line: lineOf(code, ref.start), kind: ref.kind, spec: ref.spec, ...(ref.base !== undefined ? { base: ref.base } : {}) });
+        if (ref.mode === "npm-script") {
+            // FD-10: `npm run x` in CI names a package script; a missing one is a violation
+            const pkg = ref.workspace ? `${ref.workspace.replace(/\/$/, "")}/package.json` : "package.json";
+            let scripts = null;
+            try { scripts = JSON.parse(tree.read(pkg)).scripts ?? {}; } catch { /* no such package */ }
+            if (!scripts || !Object.prototype.hasOwnProperty.call(scripts, ref.spec)) return violate(from, code, ref, "unresolved", { target: `${pkg}#scripts.${ref.spec}` });
+            return add(from, code, ref, { via: "npm-script", to: pkg }, fileEdges);
+        }
         if (ref.mode === "opaque") {
             if (ledgered(from, ref)) return add(from, code, ref, { via: "ledger", external: "opaque(ledgered)" }, fileEdges);
             return violate(from, code, ref, "opaque");
@@ -126,6 +152,10 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
         if (ref.mode === "module") {
             const r = R.module(from, ref.spec);
             if (r.error) return violate(from, code, ref, r.error);
+            // P3-F3: library source never imports its own package by name (a second path to a
+            // file it can reach relatively). A shipped sheet's url() of a published asset is
+            // not an import and stays an edge.
+            if (r.via === "self-name" && zoneOf(from) === "src" && SELF_NAME_BANNED.test(ref.kind)) return violate(from, code, ref, "self-name-in-src", { target: r.to ?? r.generated });
             return add(from, code, ref, r, fileEdges);
         }
         if (ref.mode === "url") {
@@ -199,7 +229,18 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
             return violate(from, code, ref, "scan-base-missing", { target: cands.join(" | ") });
         }
         if (ref.mode === "glob") {
-            const { pattern, matches, plane } = expandRefGlob(from, ref);
+            const { pattern, matches: all, plane } = expandRefGlob(from, ref);
+            // a negation that names a dir (`@source not "../src/**/__tests__"`) excludes everything under it
+            const negated = (m) => { for (let d = m; d.includes("/"); d = posix.dirname(d)) if (negations.some((re) => re.test(d))) return true; return false; };
+            const matches = ref.cssSource && !ref.negated && negations.length ? all.filter((m) => !negated(m)) : all;
+            if (programPattern(from, ref)) {
+                const head = headDir(pattern);
+                if (!tree.isDir(head)) return violate(from, code, ref, "scan-base-missing", { target: head, pattern });
+                add(from, code, ref, { via: "program-glob", to: head, dir: true, glob: pattern }, fileEdges);
+                if (ref.negated) return; // an exclusion reads nothing
+                for (const m of matches) add(from, code, ref, { via: "glob", to: m, glob: pattern, plane }, fileEdges);
+                return;
+            }
             if (!matches.length && [pattern, ref.spec.replace(/^\.?\//, "")].some((x) => isGenerated(posix.normalize(x))))
                 return add(from, code, ref, { via: "generated", generated: pattern }, fileEdges);
             if (!matches.length) {
@@ -293,7 +334,7 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
         }
         if (!matches.length && ref.cssSource && from.startsWith("src/")) {
             // a shipped stylesheet's @source reads the PUBLISHED layout: match dist names back to entry sources
-            const distPattern = posix.normalize(posix.join(posix.dirname(distOf(from)), spec));
+            const distPattern = posix.normalize(posix.join(posix.dirname(publishedPathOf(record, from)), spec));
             const re = globToRe(distPattern);
             const hits = publishedJs.filter((p) => re.test(p.dist)).map((p) => p.source);
             if (hits.length) return { pattern: distPattern, matches: hits, plane: "published" };
@@ -344,22 +385,12 @@ export function valueSccs(graph, zone = "src") {
     return out;
 }
 
-/** The first-level module grain (import-dag's `leafModule`, the grain M01-M03 are named at). */
-export function leafModule(path) {
-    const parts = path.split("/");
-    if (parts[0] === "src" && parts[1] === "components") return parts.length > 3 ? `src/components/${parts[2]}` : "src/components/_root";
-    if (parts[0] === "src" && ["composables", "lib"].includes(parts[1])) return parts.length > 3 ? `src/${parts[1]}/${parts[2]}` : `src/${parts[1]}/_root`;
-    if (parts[0] === "src" && parts[1] === "styles") return parts.length > 3 ? `src/styles/${parts[2]}` : "src/styles/_root";
-    if (parts[0] === "demo" && parts.length > 3) return `demo/${parts[1]}/${parts[2]}`;
-    if (parts[0] === "demo" && parts.length > 2) return `demo/${parts[1]}`;
-    return parts.slice(0, -1).join("/") || "_root";
-}
-
-/** The load-order edges import-dag's "value" graph counts: value + dynamic + glob + SFC block src + CSS. */
+/** The load-order edges: value + dynamic + glob + SFC block src + CSS. */
 export const RUNTIME_KINDS = new Set([...VALUE_KINDS, "dynamic", "glob", "sfc-style-src", "sfc-template-src", "css-import", "css-url", "sfc-inline-css-import"]);
 
-/** SCCs at a grain (`moduleOf`) over src + demo. `kinds`: "static" = value edges only, "runtime" = import-dag's set. */
-export function moduleSccs(graph, { moduleOf = leafModule, kinds: which = "static", zones = ["src", "demo"] } = {}) {
+/** SCCs at a grain (`moduleOf`, R-2's dir units by default) over src + demo. `kinds`:
+ *  "static" = value edges only, "runtime" = value + dynamic + glob + SFC block src + CSS. */
+export function moduleSccs(graph, { moduleOf = dirUnits().unitOf, kinds: which = "static", zones = ["src", "demo"] } = {}) {
     const kinds = which === "runtime" ? RUNTIME_KINDS : VALUE_KINDS;
     const adj = new Map();
     for (const e of graph.edges) {

@@ -1,29 +1,23 @@
-// scan.mjs — per-language reference extraction. Every function returns raw references
-// with exact source offsets (whole-file coordinates); graph.mjs resolves them.
+// scan/script.mjs — references in TypeScript and JavaScript (the full AST): module
+// specifiers, path expressions evaluated to repo locations, read helpers, absence guards,
+// writes, and the path strings a file names. Offsets are whole-file coordinates; graph.mjs
+// resolves them.
 //
 // A reference: { kind, mode, spec, start, end, names?, typeOnly?, spans?, abs?, prefix? }
 //   mode "module"  resolve as a module specifier       mode "path"  exact file/dir
 //   mode "abs"     an evaluated absolute path           mode "glob"  a pattern
 //   mode "opaque"  not static: fail closed unless the opaque ledger declares it
 //   mode "scan"    a static directory prefix + an opaque tail (a scanner's base)
-import { dirname, join, posix } from "node:path";
-import { makeEvaluator } from "./evaluate.mjs";
+//   mode "census"  counted, not judged (a computed read, an unresolvable mention)
+import { join, posix } from "node:path";
+import { makeEvaluator } from "../evaluate.mjs";
+import { pathCandidate } from "./text.mjs";
 
 const TS_KIND = (ts, f) =>
     /\.(tsx|jsx)$/.test(f) ? ts.ScriptKind.TSX : /\.(js|mjs|cjs)$/.test(f) ? ts.ScriptKind.JS : ts.ScriptKind.TS;
 
 const FS_READ = new Set(["readFileSync", "readFile", "existsSync", "statSync", "lstatSync", "readdirSync", "readdir", "createReadStream", "access", "accessSync", "stat", "opendirSync", "cpSync", "copyFileSync"]);
 const VI_SPEC = new Set(["mock", "doMock", "unmock", "doUnmock", "importActual", "importMock"]);
-
-/** A string that names (or tries to name) a repo location. */
-export function pathCandidate(v) {
-    if (!v || v.length > 300 || /[\s\n<>|"'`$]/.test(v) || v.includes("://") || v.startsWith("data:")) return null;
-    const bare = v.replace(/[?#].*$/, "");
-    const glob = /[*{]/.test(bare);
-    if (/^\/?(src|demo|tests|tests-visual|scripts|docs)\/./.test(bare) || /^\/?(src|demo|tests|tests-visual|scripts)$/.test(bare)) return { glob, zoneRooted: true };
-    if (/^(\.\.?\/)+./.test(bare)) return { glob, zoneRooted: /^(\.\.?\/)+(src|demo|tests|tests-visual|scripts|docs)(\/|$)/.test(bare), hasExt: /\.[a-z0-9]{1,6}$/i.test(bare) };
-    return null;
-}
 
 /** A bare multi-segment path with an extension (`components/x/y.css`): relative to a dir
  *  the same file walks or names (a scanner's base), resolved in graph.mjs. */
@@ -71,6 +65,20 @@ export function scanScript(ts, file, code, offset, ctx) {
         return false;
     };
     const fnNameOf = (e) => (ts.isIdentifier(e) ? e.text : ts.isPropertyAccessExpression(e) ? e.name.text : null);
+    /** the repo-relative dir a computed read's static head names, or null when it names none */
+    const censusBase = (prefix) => {
+        let head = prefix.v;
+        if (prefix.t === "path" || prefix.t === "url") {
+            // a join/resolve prefix ends on a segment boundary: it is the dir itself
+            const rel = posix.relative(ctx.root, head);
+            if (rel.startsWith("..")) return null;
+            return rel.replace(/\/$/, "") || ".";
+        }
+        if (!pathCandidate(head.slice(0, head.lastIndexOf("/")) || "x")) return null;
+        head = head.replace(/^\.?\//, "");
+        const dir = head.endsWith("/") ? head.slice(0, -1) : posix.dirname(head);
+        return dir === "" ? "." : dir;
+    };
     const at = (node) => (absentAt(node) ? { start: offset + node.getStart(sf), end: offset + node.end, absent: true } : { start: offset + node.getStart(sf), end: offset + node.end });
     const lit = (node) => {
         const span = { start: offset + node.getStart(sf) + 1, end: offset + node.end - 1, value: node.text };
@@ -175,6 +183,12 @@ export function scanScript(ts, file, code, offset, ctx) {
                         if (v.t === "str" && k > 0 && !v.v.startsWith(".") && pathCandidate(v.v.slice(0, v.v.lastIndexOf("/", k)) || "x")?.zoneRooted)
                             v = { ...v, t: "path", v: join(ctx.root, v.v.replace(/^\//, "")) };
                         const k2 = typeof v.v === "string" ? v.v.indexOf(SENTINEL) : -1;
+                        // a parameter that is the BASE of a zone-rooted literal tail
+                        // (`resolve(root, "src/styles/theme.css")`) is the root, not a leaf: the
+                        // tail is a repo path in its own right (a path-literal edge), never a
+                        // helper whose body swallows it
+                        const tail = k2 > 0 ? v.v.slice(k2 + 1).replace(/^\//, "") : "";
+                        if (tail && pathCandidate(tail)?.zoneRooted) { ts.forEachChild(m, probe); return; }
                         if ((v.t === "path" || v.t === "url") && k2 > 0) {
                             const list = helpers.get(name) ?? [];
                             // a clean helper joins the parameter as whole path segments; a partial
@@ -305,6 +319,14 @@ export function scanScript(ts, file, code, offset, ctx) {
                     } else if (i === 0) {
                         const v = ev(a);
                         if (v.t === "opaque" && !v.prefix && !isPathCall(a) && !ts.isNewExpression(a) && FS_READ.has(name)) push({ kind: "fs-read", mode: "census", spec: a.getText(sf), ...at(a) });
+                        // P3-F4: a read whose path has a static head and a run-time tail is a
+                        // computed read (B-crit I32/I32b/I32c): `join(cwd, "src/x/" + n)`,
+                        // `` `src/x/${n}/index.ts` ``, `resolve(import.meta.dirname, "../src/x", n)`,
+                        // in a helper body or not. It is census, with the head's dir as its base.
+                        else if (v.t === "opaque" && v.prefix && FS_READ.has(name) && !isWrite(a, null)) {
+                            const base = censusBase(v.prefix);
+                            if (base !== null) push({ kind: "computed-read", mode: "census", spec: `${base}/<computed>`, ...at(a), base });
+                        }
                     }
                 });
             }
@@ -377,7 +399,7 @@ export function scanScript(ts, file, code, offset, ctx) {
         const write = isWrite(node, v);
         if (v.t === "path" || v.t === "url") {
             markLits(node);
-            push({ kind: write ? "write" : kind, mode: "abs", abs: v.v, anchor: v.anchor, spec: node.getText(sf), ...at(node), spans: v.lits.map(lit), write });
+            push({ kind: write ? "write" : kind, mode: "abs", abs: v.v, anchor: v.anchor, spec: node.getText(sf), ...at(node), spans: v.lits.map(lit), write, rooted: !!v.rooted });
             return;
         }
         if (v.t === "opaque" && (v.prefix?.t === "path" || v.prefix?.t === "url")) {
@@ -429,172 +451,5 @@ export function scanScript(ts, file, code, offset, ctx) {
         }
     }
     leftovers(sf);
-    return { refs, exp };
-}
-
-// ---- CSS --------------------------------------------------------------------
-export function scanCss(postcss, file, code, offset, { inline = false } = {}) {
-    const refs = [];
-    let rootNode;
-    try { rootNode = postcss.parse(code, { from: file }); } catch (e) { return { refs: [{ kind: "css-parse-error", mode: "error", spec: String(e.message).slice(0, 120), start: offset, end: offset }] }; }
-    const quoted = (text, base) => {
-        const out = [];
-        for (const m of text.matchAll(/url\(\s*(["']?)([^"')\s]+)\1\s*\)|(["'])((?:(?!\3).)*)\3/g)) {
-            const value = m[2] ?? m[4];
-            const q = m[1] !== undefined ? m[1] : m[3];
-            const idx = m.index + m[0].indexOf(value, m[2] !== undefined ? 4 : 1);
-            out.push({ value, start: base + idx, end: base + idx + value.length, isUrl: m[2] !== undefined, q });
-        }
-        return out;
-    };
-    const tag = inline ? "sfc-inline-" : "";
-    rootNode.walk((n) => {
-        if (n.type === "atrule") {
-            const start = offset + n.source.start.offset;
-            const raw = code.slice(n.source.start.offset, n.source.end.offset + 1);
-            const pstart = start + raw.indexOf(n.params, n.name.length + 1);
-            const qs = quoted(n.params, pstart);
-            const name = n.name;
-            if (name === "import" && qs[0]) {
-                refs.push({ kind: `${tag}css-import`, mode: "module", spec: qs[0].value, start: qs[0].start, end: qs[0].end, spans: [qs[0]], cssImport: true });
-                // Tailwind's `@import "tailwindcss" source("../demo")` names a scan root
-                const src = /\bsource\(\s*(["'])([^"']+)\1\s*\)/.exec(n.params);
-                const q = src && qs.find((x) => x.value === src[2] && x !== qs[0]);
-                if (q) refs.push({ kind: `${tag}css-source`, mode: "glob", spec: q.value, start: q.start, end: q.end, spans: [q], cssSource: true });
-            }
-            else if (name === "reference" && qs[0]) refs.push({ kind: `${tag}css-reference`, mode: "module", spec: qs[0].value, start: qs[0].start, end: qs[0].end, spans: [qs[0]] });
-            else if ((name === "plugin" || name === "config") && qs[0]) refs.push({ kind: `${tag}css-${name}`, mode: "module", spec: qs[0].value, start: qs[0].start, end: qs[0].end, spans: [qs[0]] });
-            else if (name === "source" && !/^\s*inline\(/.test(n.params.replace(/^not\s+/, "")) && qs[0]) refs.push({ kind: `${tag}css-source`, mode: "glob", spec: qs[0].value, start: qs[0].start, end: qs[0].end, spans: [qs[0]], negated: /^\s*not\b/.test(n.params), cssSource: true });
-            else if (name !== "import") for (const q of qs.filter((x) => x.isUrl)) urlRef(q);
-        } else if (n.type === "decl" && /url\(/.test(n.value)) {
-            const raw = code.slice(n.source.start.offset, n.source.end.offset + 1);
-            const vstart = offset + n.source.start.offset + raw.indexOf(n.value, n.prop.length);
-            for (const q of quoted(n.value, vstart).filter((x) => x.isUrl)) urlRef(q);
-        }
-    });
-    function urlRef(q) {
-        if (/^(data:|https?:|#|\/\/|var\()/.test(q.value) || q.value.startsWith("%23")) return;
-        refs.push({ kind: `${tag}css-url`, mode: "module", spec: q.value, start: q.start, end: q.end, spans: [q] });
-    }
-    return { refs };
-}
-
-// ---- JSON (tsconfig, package.json, floor records) -------------------------------
-export function jsonStrings(code) {
-    const out = [];
-    let i = 0;
-    const stack = [];
-    let expectKey = false;
-    while (i < code.length) {
-        const c = code[i];
-        if (c === "/" && code[i + 1] === "/") { while (i < code.length && code[i] !== "\n") i++; continue; }
-        if (c === "/" && code[i + 1] === "*") { i = code.indexOf("*/", i + 2) + 2; continue; }
-        if (c === "{") { stack.push("o"); expectKey = true; i++; continue; }
-        if (c === "[") { stack.push("a"); expectKey = false; i++; continue; }
-        if (c === "}" || c === "]") { stack.pop(); i++; continue; }
-        if (c === ",") { expectKey = stack.at(-1) === "o"; i++; continue; }
-        if (c === ":") { expectKey = false; i++; continue; }
-        if (c === '"') {
-            let j = i + 1;
-            while (j < code.length && code[j] !== '"') j += code[j] === "\\" ? 2 : 1;
-            const raw = code.slice(i + 1, j);
-            let value;
-            try { value = JSON.parse(`"${raw}"`); } catch { value = raw; }
-            out.push({ value, start: i + 1, end: j, isKey: expectKey, path: [...stack] });
-            i = j + 1;
-            continue;
-        }
-        i++;
-    }
-    return out;
-}
-
-export function scanJson(file, code) {
-    const refs = [];
-    const strings = jsonStrings(code);
-    const isPkg = /(^|\/)package\.json$/.test(file);
-    const isRecord = /(^|\/)floor\/records\//.test(file);
-    const isLedger = /(^|\/)floor\/records\/opaque-ledger\.json$/.test(file);
-    let key = null;
-    for (const s of strings) {
-        if (s.isKey) { key = s.value; continue; }
-        if (isPkg && /\s/.test(s.value)) {
-            for (const tok of commandTokens(s.value, s.start)) refs.push({ kind: "json-command", mode: "path", spec: tok.value, start: tok.start, end: tok.end, spans: [tok], rootFirst: false, claim: true });
-            continue;
-        }
-        const c = pathCandidate(s.value) ?? (/^(\.\/)?(dist|MIGRATION\.md|tests-visual)(\/|$)/.test(s.value) ? { glob: /\*/.test(s.value), zoneRooted: true, hasExt: /\.[a-z]+$/.test(s.value) } : null);
-        if (!c) continue;
-        if (isRecord && !c.zoneRooted) continue; // export keys ("./styles"), not paths
-        if (isLedger && key !== "file") continue; // a ledger names phantoms as data; only `file` is a path
-        refs.push({ kind: c.glob ? "json-glob" : "json-ref", mode: c.glob ? "glob" : "path", spec: s.value, start: s.start, end: s.end, spans: [{ start: s.start, end: s.end, value: s.value }], rootFirst: isRecord || c.zoneRooted, claim: true, hasExt: c.hasExt ?? true });
-    }
-    return { refs };
-}
-
-/** Tokens of a shell command line that name repo files (scripts, configs). */
-export function commandTokens(cmd, base) {
-    const out = [];
-    for (const m of cmd.matchAll(/[^\s"';&|=()]+/g)) {
-        const v = m[0];
-        if (/^(\.\/)?(src|demo|tests|tests-visual|scripts|docs)\/[^\s]*\.[a-z0-9]+$/i.test(v) || /^(\.\/)?[\w.-]+\.(mjs|cjs|mts|ts|js|sh)$/.test(v))
-            out.push({ value: v, start: base + m.index, end: base + m.index + v.length });
-    }
-    return out;
-}
-
-export function scanSh(file, code) {
-    const refs = [];
-    code.split("\n").reduce((off, line) => {
-        if (!/^\s*#/.test(line)) for (const tok of commandTokens(line, off)) refs.push({ kind: "sh-ref", mode: "path", spec: tok.value, start: tok.start, end: tok.end, spans: [tok], rootFirst: true, hasExt: true, claim: true });
-        return off + line.length + 1;
-    }, 0);
-    return { refs };
-}
-
-export function scanHtml(file, code) {
-    const refs = [];
-    for (const m of code.matchAll(/<(?:script|link|img|source)\b[^>]*?\b(?:src|href)\s*=\s*(["'])([^"']+)\1/g)) {
-        const v = m[2];
-        if (/^(https?:|data:|#|\/\/)/.test(v)) continue;
-        const start = m.index + m[0].lastIndexOf(v);
-        refs.push({ kind: "html-ref", mode: v.startsWith("/") ? "module" : "path", spec: v, start, end: start + v.length, spans: [{ start, end: start + v.length, value: v }] });
-    }
-    return { refs };
-}
-
-// ---- Vue SFC ----------------------------------------------------------------
-export function scanVue(ts, postcss, sfc, file, code, ctx) {
-    const refs = [];
-    const exp = { own: new Set(["default"]), local: [], importBindings: new Map() };
-    const { descriptor, errors } = sfc.parse(code, { filename: file, ignoreEmpty: false });
-    if (errors?.length) refs.push({ kind: "sfc-parse-error", mode: "error", spec: String(errors[0].message ?? errors[0]).slice(0, 120), start: 0, end: 0 });
-    for (const m of code.matchAll(/<(style|script|template)\b[^>]*?\bsrc\s*=\s*(["'])([^"']+)\2/g)) {
-        const v = m[3];
-        const start = m.index + m[0].lastIndexOf(v);
-        refs.push({ kind: `sfc-${m[1]}-src`, mode: "module", spec: v, start, end: start + v.length, spans: [{ start, end: start + v.length, value: v }] });
-    }
-    for (const block of [descriptor.script, descriptor.scriptSetup]) {
-        if (!block || block.src) continue;
-        const r = scanScript(ts, `${file}.${block.lang === "ts" ? "ts" : "js"}`, block.content, block.loc.start.offset, { ...ctx, abs: () => ctx.abs(file) });
-        for (const ref of r.refs) refs.push(ref);
-        for (const [k, v] of r.exp.importBindings) exp.importBindings.set(k, { ...v, ref: v.ref + refs.length - r.refs.length });
-        for (const n of r.exp.own) if (block === descriptor.script) exp.own.add(n);
-    }
-    for (const style of descriptor.styles) {
-        if (style.src) continue;
-        for (const ref of scanCss(postcss, file, style.content, style.loc.start.offset, { inline: true }).refs) refs.push(ref);
-    }
-    const tpl = descriptor.template;
-    if (tpl && !tpl.src) {
-        const base = tpl.loc.start.offset;
-        for (const m of tpl.content.matchAll(/\s(?:src|href)\s*=\s*(["'])(\.{1,2}\/[^"']+|\/(?:src|demo)\/[^"']+)\1/g)) {
-            const start = base + m.index + m[0].lastIndexOf(m[2]);
-            refs.push({ kind: "template-asset", mode: "module", spec: m[2], start, end: start + m[2].length, spans: [{ start, end: start + m[2].length, value: m[2] }] });
-        }
-        for (const m of tpl.content.matchAll(/url\(\s*(['"]?)(\.{1,2}\/[^'")\s]+)\1\s*\)/g)) {
-            const start = base + m.index + m[0].indexOf(m[2]);
-            refs.push({ kind: "template-asset", mode: "module", spec: m[2], start, end: start + m[2].length, spans: [{ start, end: start + m[2].length, value: m[2] }] });
-        }
-    }
     return { refs, exp };
 }

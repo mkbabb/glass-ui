@@ -1,0 +1,7 @@
+{
+    "note": "P3-F5 plant (a): the style kernel's glass aggregate becomes its dir's door. B-proto §4 and G hold 2: F-2 refused it (a base-relative path collapsed to one segment F-1 no longer read).",
+    "moves": [{ "from": "src/styles/glass.css", "to": "src/styles/glass/index.css" }],
+    "scanDeltas": [
+        { "scanner": "tests/gates/orphan-css-partial.test.ts", "spec": "resolve(SRC, spec.slice(\"@glass/\".length))", "all": true, "reason": "resolves the @glass specifiers it finds in sources; the engine rewrites every specifier" }
+    ]
+}

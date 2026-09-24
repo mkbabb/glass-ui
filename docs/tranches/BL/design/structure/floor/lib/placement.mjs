@@ -7,12 +7,27 @@
 //
 // The unit set is a parameter. `dirUnits` is R-2's reading: every directory is a unit
 // except the kind slots R-5 names (composables/, __tests__/, styles/), which belong to
-// the unit that holds them.
+// the unit that holds them. `isSlot` is the one slot predicate (FD-3); bounds.mjs uses it.
+//
+// The anchor is a parameter too (FD-1, P3-R1): `publicationAnchor(g)` maps a file an
+// entry door publishes from inside its own directory to that door's unit, and such a
+// file is `anchored`, never moved. The anchoring door is the unit's root door (X-10): a
+// slot barrel anchors nothing, and a container's aggregate door is no unit's door.
 import { posix } from "node:path";
-import { zoneOf } from "./tree.mjs";
+import { ZONES, zoneOf } from "./tree.mjs";
 import { makeOrigins } from "./symbols.mjs";
 
 export const KIND_SLOTS = new Set(["composables", "__tests__", "styles"]);
+/** Dirs that hold modules and are not modules: the zones and the two component/hook containers. */
+export const CONTAINERS = new Set([...ZONES, "src/components", "src/composables"]);
+
+/** FD-3 · a kind slot is a dir named in R-5's set that is neither a zone root nor a direct
+ *  child of a zone or container. `src/styles/` and `src/composables/` are therefore units
+ *  (the global zone's own dirs), and `dock/composables/` is dock's slot. */
+export function isSlot(dir) {
+    if (!KIND_SLOTS.has(posix.basename(dir)) || CONTAINERS.has(dir)) return false;
+    return !CONTAINERS.has(posix.dirname(dir));
+}
 export const ZONE_ROOTS = new Set(["src", "src/components", "src/composables", "src/styles", "demo", "scripts", "tests", "tests-visual"]);
 /** An ancestor at one of these is a zone root: the file is shared across the zone (R-4's global slot). */
 export const GLOBAL_HOMES = new Set(["src", "src/components", "src/composables", "src/styles"]);
@@ -24,10 +39,56 @@ export function dirUnits() {
         name: "dir (R-2: component dir, recursively; kind slots belong to their unit)",
         unitOf(file) {
             let d = posix.dirname(file);
-            while (KIND_SLOTS.has(posix.basename(d))) d = posix.dirname(d);
+            while (isSlot(d)) d = posix.dirname(d);
             return d;
         },
     };
+}
+
+/**
+ * FD-1 · publicationAnchor(graph) → anchor(file) → unit | null (P3-R1: publication anchors).
+ * An anchoring door is an entry source, or a declared door (`record.doors`) an entry
+ * reaches through re-exports, whose dir is neither a container nor a kind slot; and every
+ * CSS entry source under the same rule. It
+ * anchors each file it publishes, by symbol origin through barrels (a CSS entry: its
+ * `@import` closure), that lies inside its own dir. The innermost door wins. The global
+ * zone is not exempt: a hook a kernel entry publishes is anchored in its kernel dir.
+ */
+export function publicationAnchor(graph) {
+    const O = makeOrigins(graph);
+    const anchorsDoor = (door) => { const d = posix.dirname(door); return !CONTAINERS.has(d) && !isSlot(d); };
+    const map = new Map();
+    const claim = (file, dir) => {
+        if (!within(file, dir) || file === dir) return;
+        const prev = map.get(file);
+        if (!prev || dir.length > prev.length) map.set(file, dir);
+    };
+    // a door publishes only when an entry reaches it through re-exports (X-10's root door):
+    // a declared door no entry reaches publishes nothing, so it anchors nothing
+    const reached = new Set(graph.record.js.map(([, s]) => s));
+    const stack0 = [...reached];
+    while (stack0.length) {
+        const f = stack0.pop();
+        for (const e of graph.edges) if (e.from === f && /^reexport/.test(e.kind) && e.to && !reached.has(e.to)) { reached.add(e.to); stack0.push(e.to); }
+    }
+    const js = [...reached].filter((d) => (d === graph.record.js.find(([, s]) => s === d)?.[1] || graph.record.doors.includes(d)) && /\.(ts|mts|js|mjs)$/.test(d) && anchorsDoor(d));
+    for (const door of js) {
+        const dir = posix.dirname(door);
+        for (const os of O.exportsOf(door).values()) for (const f of O.files(os)) if (f !== door) claim(f, dir);
+    }
+    for (const door of graph.record.css.map(([, t]) => t.source).filter((s) => s && anchorsDoor(s))) {
+        const dir = posix.dirname(door);
+        const seen = new Set([door]);
+        const stack = [door];
+        while (stack.length) {
+            const f = stack.pop();
+            for (const e of graph.edges) if (e.from === f && /css-import$/.test(e.kind) && e.to && !seen.has(e.to)) { seen.add(e.to); stack.push(e.to); claim(e.to, dir); }
+        }
+    }
+    const anchor = (file) => map.get(file) ?? null;
+    anchor.size = map.size;
+    anchor.entries = () => [...map];
+    return anchor;
 }
 
 export function nca(dirs) {
@@ -53,8 +114,9 @@ const within = (file, dir) => dir === "." || file === dir || file.startsWith(`${
  *             src/styles): the file is shared across the zone and goes to its global slot
  *   published read by no unit in its zone; an entry publishes it (placement free)
  *   unread    read by nothing and published by nothing (E-7 delete, R-8)
+ *   anchored  would be move or global, but an entry door publishes it from its own dir (FD-1)
  */
-export function placeAll(graph, units = dirUnits(), { zones = ["src"] } = {}) {
+export function placeAll(graph, units = dirUnits(), { zones = ["src"], anchor = null } = {}) {
     const O = makeOrigins(graph);
     const doors = new Set([...graph.record.js.map(([, s]) => s), ...graph.record.css.map(([, t]) => t.source).filter(Boolean), ...graph.record.doors]);
     const readers = new Map();
@@ -95,7 +157,9 @@ export function placeAll(graph, units = dirUnits(), { zones = ["src"] } = {}) {
             cls = (within(here, home) && !inReader) || (rootHome && GLOBAL_ZONES.some((z) => within(here, z))) ? "ok" : rootHome ? "global" : "move";
             if (cls !== "ok") why = inReader ? `lives inside reader ${inReader}` : "lives outside its readers' ancestor";
         }
-        rows.push({ file: f, unit: here, readers: rs.length, readerUnits: us, home, class: cls, why });
+        const a = anchor ? anchor(f) : null;
+        if (a && (cls === "move" || cls === "global")) { why = `${cls} → published by ${a}'s door`; cls = "anchored"; home = a; }
+        rows.push({ file: f, unit: here, readers: rs.length, readerUnits: us, home, class: cls, why, ...(a ? { anchor: a } : {}) });
     }
     return { units: units.name, rows, readers };
 }

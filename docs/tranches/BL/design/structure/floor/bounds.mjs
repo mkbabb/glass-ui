@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // bounds.mjs — R-5's measure: a directory holding more than 12 direct files, or a
 // hand-written source file over 500 lines, is "long-running". Zones: src, demo, scripts,
-// tests, tests-visual. Files inside the kind slots (composables/, __tests__/, styles/) do
-// not count toward their parent's 12; the slot is measured as a directory of its own. A
+// tests, tests-visual. Files inside a kind slot (FD-3's `isSlot`, the one predicate
+// placement uses) do not count toward their parent's 12; the slot is bounded by the same
+// 12 and 500 as any dir (P3-R3, strict: one bound everywhere). A
 // file whose head declares itself generated is listed apart: R-5 exempts it only when a
 // checked generator produces it and a gate verifies it, which this tool does not judge.
 // A measurement, not a gate: HEAD is over both bounds, so it is not wired into `npm test`.
@@ -10,11 +11,11 @@
 import { writeFileSync } from "node:fs";
 import { posix } from "node:path";
 import { DEFAULT_ROOT, ZONES, openTree } from "./lib/tree.mjs";
+import { isSlot } from "./lib/placement.mjs";
 
 const DIRS = 12;
 const LINES = 500;
 const SOURCE = /\.(ts|mts|cts|js|mjs|cjs|vue|css)$/;
-const SLOTS = new Set(["composables", "__tests__", "styles"]);
 
 const args = process.argv.slice(2);
 const opt = (k) => (args.includes(k) ? args[args.indexOf(k) + 1] : null);
@@ -33,7 +34,7 @@ for (const f of tree.files) {
     if (lines <= LINES) continue;
     (/^[^\n]*(@generated|GENERATED|do not edit)/i.test(text.slice(0, 400)) ? generated : long).push({ file: f, lines });
 }
-const overDirs = [...direct].filter(([, n]) => n > DIRS).map(([dir, n]) => ({ dir, files: n, slot: SLOTS.has(posix.basename(dir)) && /^(src|demo)\/./.test(posix.dirname(dir)) })).sort((a, b) => b.files - a.files);
+const overDirs = [...direct].filter(([, n]) => n > DIRS).map(([dir, n]) => ({ dir, files: n, slot: isSlot(dir) })).sort((a, b) => b.files - a.files);
 long.sort((a, b) => b.lines - a.lines);
 const byZone = (list, key) => Object.fromEntries(ZONES.map((z) => [z, list.filter((x) => x[key].split("/")[0] === z).length]));
 const summary = { rule: `dirs > ${DIRS} direct files; hand-written sources > ${LINES} lines`, dirsOver: overDirs.length, dirsOverByZone: byZone(overDirs, "dir"), filesOver: long.length, filesOverByZone: byZone(long, "file"), generatedOver: generated.length };

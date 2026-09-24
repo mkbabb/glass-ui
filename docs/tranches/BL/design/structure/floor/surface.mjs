@@ -9,9 +9,7 @@ import { createRequire } from "node:module";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { DEFAULT_ROOT } from "./lib/tree.mjs";
-
-export const PIN_PATH = "docs/tranches/BL/design/structure/floor/records/surface-pin.json";
+import { DEFAULT_ROOT, pinPath } from "./lib/tree.mjs";
 
 export async function readSurface(root, dist) {
     const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
@@ -74,11 +72,11 @@ if (isMain) {
     const dist = resolve(opt("--dist") ?? join(root, "dist"));
     const now = await readSurface(root, dist);
     if (cmd === "pin") {
-        writeFileSync(join(root, PIN_PATH), `${JSON.stringify({ $schema: "surface-pin/1", ...now }, null, 1)}\n`);
+        writeFileSync(join(root, pinPath(root)), `${JSON.stringify({ $schema: "surface-pin/1", ...now }, null, 1)}\n`);
         console.log(`surface pin written: ${JSON.stringify(now.totals)}`);
         process.exit(0);
     }
-    const pin = JSON.parse(readFileSync(join(root, PIN_PATH), "utf8"));
+    const pin = JSON.parse(readFileSync(join(root, pinPath(root)), "utf8"));
     const diff = diffSurface(pin, now);
     console.log(JSON.stringify({ pinned: pin.totals, now: now.totals, differences: diff.length }));
     for (const x of diff.slice(0, 80)) console.log(`  ${x}`);

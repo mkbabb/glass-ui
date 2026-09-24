@@ -122,27 +122,6 @@
             "reason": "a planted or synthetic path inside a gate self-test (two sites, one spelling)"
         },
         {
-            "file": "tsconfig.build.json",
-            "kind": "json-glob",
-            "spec": "src/**/*.spec.ts",
-            "class": "empty-glob",
-            "reason": "declaration-build exclude for colocated tests; empty until R-3 colocates tests under src/**/__tests__/"
-        },
-        {
-            "file": "tsconfig.build.json",
-            "kind": "json-glob",
-            "spec": "src/**/*.test.ts",
-            "class": "empty-glob",
-            "reason": "declaration-build exclude for colocated tests; empty until R-3 colocates tests under src/**/__tests__/"
-        },
-        {
-            "file": "tsconfig.build.json",
-            "kind": "json-glob",
-            "spec": "src/**/__tests__/**",
-            "class": "empty-glob",
-            "reason": "declaration-build exclude for colocated tests; empty until R-3 colocates tests under src/**/__tests__/"
-        },
-        {
             "file": "vite.style-assets.ts",
             "kind": "require",
             "spec": "`${packageName}/package.json`",
@@ -150,18 +129,11 @@
             "reason": "resolves an installed package bin by name (typescript, vue-tsc); a package lookup, not a repo path"
         },
         {
-            "file": "vitest.config.ts",
-            "kind": "glob-literal",
-            "spec": "scripts/**/*.{test,spec}.{ts,tsx}",
-            "class": "empty-glob",
-            "reason": "vitest include pattern that matches no file at HEAD (dead include)"
-        },
-        {
-            "file": "vitest.config.ts",
-            "kind": "glob-literal",
-            "spec": "tests/**/*.{test,spec}.vue",
-            "class": "empty-glob",
-            "reason": "vitest include pattern that matches no file at HEAD (dead include)"
+            "file": "docs/tranches/BL/design/structure/floor/surface.mjs",
+            "kind": "dynamic",
+            "spec": "pathToFileURL(js).href",
+            "class": "runtime",
+            "reason": "the surface pin imports each built dist entry named by package.json exports; the target is dist, read at run time"
         }
     ]
 }

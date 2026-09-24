@@ -1,0 +1,47 @@
+{
+    "note": "P3-F2 plant: aurora's colour helper moved into the kernel's webgl dir. Every edge resolves and the image holds, but the kernel dir then imports aurora's constants, which reach back through _shared and dock: 16 new co-cyclic module pairs (moduleSccs members 23 \u2192 24 at HEAD). FD-2 must refuse it. (Before arm: the same move, declared against the HEAD floor tree, whose scanners include scripts/import-dag.mjs.)",
+    "moves": [
+        {
+            "from": "src/components/aurora/composables/color.ts",
+            "to": "src/composables/glass/webgl/color.ts"
+        }
+    ],
+    "scanDeltas": [
+        {
+            "scanner": "scripts/import-dag.mjs",
+            "spec": "`src/components/${parts[2]}`",
+            "all": true,
+            "reason": "import-dag's module labels are derived from paths (deleted by row fd11 in the P3 chain)"
+        },
+        {
+            "scanner": "scripts/import-dag.mjs",
+            "spec": "`src/${parts[1]}/${parts[2]}`",
+            "all": true,
+            "reason": "import-dag's module labels are derived from paths (deleted by row fd11 in the P3 chain)"
+        },
+        {
+            "scanner": "scripts/import-dag.mjs",
+            "spec": "`src/${parts[1]}/_root`",
+            "all": true,
+            "reason": "import-dag's module labels are derived from paths (deleted by row fd11 in the P3 chain)"
+        },
+        {
+            "scanner": "tests/gates/orphan-css-partial.test.ts",
+            "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+            "all": true,
+            "reason": "resolves the @glass specifiers it finds in sources; the engine rewrites every specifier"
+        },
+        {
+            "scanner": "tests/styles/engage-ladder.test.ts",
+            "spec": "join(COMPONENTS, entry)",
+            "all": true,
+            "reason": "the rung census reads each component dir's text; color.ts carries no rung token"
+        },
+        {
+            "scanner": "tests/styles/engage-ladder.test.ts",
+            "spec": "join(COMPONENTS, name)",
+            "all": true,
+            "reason": "the same census, its per-dir walk"
+        }
+    ]
+}

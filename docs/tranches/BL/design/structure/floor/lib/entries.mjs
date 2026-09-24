@@ -7,20 +7,28 @@
 // declared path exists and is non-empty, no name repeats, no source serves two names,
 // and the cascade's declared terminal exists. Placement is free: a source may live
 // anywhere; only the record names the door.
-import { readdirSync, readFileSync, statSync } from "node:fs";
-import { join } from "node:path";
-import { DEFAULT_ROOT } from "./tree.mjs";
-
-export const RECORD_PATH = "docs/tranches/BL/design/structure/floor/records/entry-record.json";
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { dirname, join, relative } from "node:path";
+import { DEFAULT_ROOT, recordPath } from "./tree.mjs";
 
 export function loadRecord(tree) {
-    return JSON.parse(tree.read(RECORD_PATH));
+    const path = recordPath(tree.root);
+    let text;
+    try { text = tree.read(path); } catch { throw new Error(`entry-record: ${tree.root} has no ${path} (a landed tree is read by its own floor: node scripts/structure/…)`); }
+    return JSON.parse(text);
 }
 
 /** src/<p> ships at dist/<p>; the styles and fonts copies preserve the relative path. */
 export function distOf(source) {
     if (!source.startsWith("src/")) throw new Error(`entry-record: source outside src/: ${source}`);
     return `dist/${source.slice(4)}`;
+}
+
+/** Where a file ships: a CSS entry source ships at its DECLARED dist name (P3-F5), which a
+ *  move of the source never changes; every other file at its mirror path. */
+export function publishedPathOf(record, source) {
+    const entry = record.css.find(([, t]) => t.source === source);
+    return entry?.[1].dist ? `dist/${entry[1].dist}` : distOf(source);
 }
 
 export function validateRecord(record, tree) {
@@ -35,8 +43,15 @@ export function validateRecord(record, tree) {
         sources.set(source, name);
         if (!nonEmpty(source)) v.push({ kind: "entry-source-missing", name, source });
     }
+    const dists = new Map();
     for (const [key, target] of record.css) {
         if (target.source && !nonEmpty(target.source)) v.push({ kind: "css-source-missing", key, source: target.source });
+        // P3-F5: every CSS source entry declares its dist name; it is never derived from the basename
+        if (target.source && !(typeof target.dist === "string" && /^[\w.-]+(\/[\w.-]+)*\.css$/.test(target.dist))) v.push({ kind: "css-dist-undeclared", key, source: target.source });
+        if (target.dist) {
+            if (dists.has(target.dist)) v.push({ kind: "css-dist-twice", key, other: dists.get(target.dist), dist: target.dist });
+            dists.set(target.dist, key);
+        }
         if (target.assets && !tree.isDir(target.assets.replace(/\/$/, ""))) v.push({ kind: "asset-root-missing", key, root: target.assets });
     }
     const doors = new Set(record.doors);
@@ -68,7 +83,10 @@ export function emitExports(record) {
     const ordered = { ".": exp["."] };
     for (const [k, v] of Object.entries(exp)) if (k !== ".") ordered[k] = v;
     for (const [key, target] of record.css) {
-        if (target.source) ordered[key] = `./${distOf(target.source)}`;
+        if (target.source) {
+            if (!target.dist) throw new Error(`entry-record: css key ${key} declares no dist name`);
+            ordered[key] = `./dist/${target.dist}`;
+        }
         else if (target.generated) ordered[key] = `./dist/${target.generated}`;
         else if (target.assets) ordered[key] = `./${distOf(target.assets)}*`;
         else throw new Error(`entry-record: css key ${key} has no source, generated or assets target`);
@@ -172,10 +190,69 @@ export function recordEntries(root = DEFAULT_ROOT) {
     return Object.fromEntries(diskRecord(root).js);
 }
 
-/** The non-JS export keys and their dist targets, as emitted into package.json. */
-export function recordCssExports(root = DEFAULT_ROOT) {
-    const { exports } = emitExports(diskRecord(root));
-    return Object.fromEntries(Object.entries(exports).filter(([, v]) => typeof v === "string"));
+/** The CSS entries as the build reads them: `{ key, source, dist }` (absolute source,
+ *  dist relative to the output root) and the asset roots `{ key, assets, prefix }`. */
+export function recordCssTargets(root = DEFAULT_ROOT) {
+    const record = diskRecord(root);
+    const sheets = [];
+    const assets = [];
+    for (const [key, t] of record.css) {
+        if (t.source) sheets.push({ key, source: join(root, t.source), dist: t.dist });
+        else if (t.assets) assets.push({ key, assets: join(root, t.assets), prefix: distOf(t.assets).slice(5) });
+    }
+    return { sheets, assets };
+}
+
+/**
+ * The build step for a declared dist name (P3-F5). A CSS entry whose source moved away from
+ * its mirror path (`src/styles/theme.css → src/styles/theme/index.css`) still ships at its
+ * declared name: the mirror copy stays where the other published sheets import it, and the
+ * declared name is a one-line `@import` of it, so the rules exist once in dist and a
+ * consumer that imports both `./styles` and `./styles/theme` loads one file. An entry at
+ * its mirror path is left alone, so a tree with no such move builds byte-identically.
+ */
+export function emitDeclaredCssEntries(root, outputRoot) {
+    const out = [];
+    for (const { source, dist } of recordCssTargets(root).sheets) {
+        const mirror = join(outputRoot, source.slice(join(root, "src").length + 1));
+        const target = join(outputRoot, dist);
+        if (mirror === target) continue;
+        if (!existsSync(mirror)) throw new Error(`entry-record: the mirror copy of ${source} is missing at ${mirror}`);
+        if (existsSync(target)) throw new Error(`entry-record: the declared dist name ${dist} is already taken in ${outputRoot}`);
+        const rel = relative(dirname(target), mirror);
+        writeFileSync(target, `@import "${rel.startsWith(".") ? rel : `./${rel}`}";\n`);
+        out.push({ source, dist });
+    }
+    return out;
+}
+
+/**
+ * FD-7 · the declaration program, rooted at the entries. It names every entry source and
+ * every hand-written ambient `.d.ts` under `src/`, with no include and no exclude, so dist carries
+ * the declarations the entries reach and nothing else: a `__tests__/` file is never
+ * reached, so it never ships, with no exclusion list (R-3, S-13). Written inside the
+ * generation dir (which the build removes on failure) and returned for `vue-tsc -p`.
+ */
+export function declarationProgram(root, outDir) {
+    const record = diskRecord(root);
+    const ambient = [];
+    const walk = (dir) => {
+        for (const d of readdirSync(join(root, dir), { withFileTypes: true })) {
+            const rel = `${dir}/${d.name}`;
+            if (d.isDirectory()) walk(rel);
+            else if (d.name.endsWith(".d.ts")) ambient.push(rel);
+        }
+    };
+    walk("src");
+    const program = {
+        extends: join(root, "tsconfig.json"),
+        compilerOptions: { noEmit: false, declaration: true, emitDeclarationOnly: true, rootDir: join(root, "src"), outDir },
+        files: [...record.js.map(([, s]) => join(root, s)), ...ambient.sort().map((a) => join(root, a))],
+        include: [],
+    };
+    const path = join(outDir, ".declarations.tsconfig.json");
+    writeFileSync(path, `${JSON.stringify(program, null, 1)}\n`);
+    return path;
 }
 
 /** The declared cascade terminal (src path). */

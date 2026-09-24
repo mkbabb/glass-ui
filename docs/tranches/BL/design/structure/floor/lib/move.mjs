@@ -8,7 +8,9 @@
 import { createHash } from "node:crypto";
 import { mkdirSync, readdirSync, rmdirSync, statSync, unlinkSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
-import { buildGraph, loadDeps } from "./graph.mjs";
+import { buildGraph, loadDeps, moduleSccs } from "./graph.mjs";
+import { dirUnits } from "./placement.mjs";
+import { zoneOf } from "./tree.mjs";
 
 const EXT = /\.(d\.ts|ts|tsx|mts|cts|js|mjs|cjs|jsx|vue|css|json)$/;
 
@@ -131,7 +133,9 @@ export function computeEdits(graph, M, deps) {
             const base = e.anchorDir ? M.dir(e.anchorDir) : posix.dirname(M.file(e.anchorFile));
             const rel = posix.relative(base, toNew);
             if (rel.startsWith("..")) { residue.push({ kind: "based-escape", edge: brief(e) }); continue; }
-            replaceOne(rel);
+            // P3-F5: one segment is spelled `./name`, the form F-1 reads as a text-anchored
+            // path (`glass.css → glass/index.css` makes `glass/grasp.css` `./grasp.css`)
+            replaceOne(rel.includes("/") ? rel : `./${rel}`);
             continue;
         }
         if (e.mode === "embedded") {
@@ -173,6 +177,10 @@ export function computeEdits(graph, M, deps) {
             continue;
         }
         if (e.mode === "abs") {
+            // P3-F5: a cwd-rooted path with no literal at this site (`join(process.cwd(), PLATE)`)
+            // is spelled by its consts, whose own literals are edges this run rewrites; the
+            // working directory never moves. The image check judges the result.
+            if (!e.spans?.length && e.rooted) continue;
             if (!e.spans?.length || e.anchor === null) { residue.push({ kind: "unrewritable-path", edge: brief(e) }); continue; }
             const oldSelf = dirname(graph.tree.abs(e.from));
             const selfRel = e.anchor === oldSelf || e.anchor.startsWith(`${oldSelf}/`);
@@ -255,10 +263,16 @@ export function treeDigest(root, files) {
 }
 
 /** Edge signature for the image check: identity of an edge that survives a move. */
+/** Kinds that name one mechanism, a path relative to a file whose text carries it; a
+ *  rewrite may change which of the three spellings F-1 reads (P3-F5). */
+const TEXT_ANCHORED = new Set(["base-relative", "quoted-relative", "embedded-path"]);
+/** an edge's mechanism: its kind, with the three text-anchored spellings as one */
+export const kindClass = (kind) => (TEXT_ANCHORED.has(kind) ? "text-anchored" : kind);
 function sig(e, map) {
     const to = e.to ?? e.output ?? e.generated ?? e.external ?? "";
     const target = map ? (e.dir ? map.dir(to) : map.any(to)) : to;
-    return `${map ? map.file(e.from) : e.from}|${e.kind}|${target}|${e.dir ? "d" : "f"}|${e.plane}`;
+    const kind = kindClass(e.kind);
+    return `${map ? map.file(e.from) : e.from}|${kind}|${target}|${e.dir ? "d" : "f"}|${e.plane}`;
 }
 
 /** Scan deltas: every file whose path relative to a scanner's base dir changes under M —
@@ -282,6 +296,34 @@ export function scanDeltasOf(g0, M) {
 }
 
 /**
+ * FD-2 · the coupling stop. Two modules are co-cyclic when they sit in one SCC of
+ * `moduleSccs` over the unit function. A pass may dissolve coupling, never add it: every
+ * co-cyclic pair after the pass must have been co-cyclic before it, with the old module
+ * names read through the move map. A new cycle, a grown SCC (including a new dir that
+ * joins one, such as a parent↔child nesting cycle) and two SCCs merged all add a pair;
+ * the pass is refused and the tree rolled back. A file that moves into a module already
+ * in an SCC adds no pair.
+ */
+export function sccGrowth(g0, g1, M, { moduleOf = dirUnits().unitOf, zones = ["src", "demo"], kinds = "static" } = {}) {
+    const s0 = moduleSccs(g0, { moduleOf, zones, kinds });
+    const s1 = moduleSccs(g1, { moduleOf, zones, kinds });
+    const rename = (m) => (M?.dir ? M.dir(m) : m);
+    const pairs = (sccs, map = (m) => m) => {
+        const out = new Set();
+        for (const c of sccs) {
+            const ms = [...new Set(c.map(map))].sort();
+            for (let i = 0; i < ms.length; i++) for (let j = i + 1; j < ms.length; j++) out.add(`${ms[i]}\u0000${ms[j]}`);
+        }
+        return out;
+    };
+    const p0 = pairs(s0, rename);
+    const added = [...pairs(s1)].filter((p) => !p0.has(p)).map((p) => p.split("\u0000"));
+    const members = (s) => s.reduce((n, c) => n + c.length, 0);
+    const grown = s1.filter((c) => added.some(([a, b]) => c.includes(a) && c.includes(b))).map((scc) => ({ scc, addedPairs: added.filter(([a, b]) => scc.includes(a) && scc.includes(b)).length }));
+    return { before: { sccs: s0.length, members: members(s0) }, after: { sccs: s1.length, members: members(s1) }, addedPairs: added.length, firstAdded: added.slice(0, 5), grown };
+}
+
+/**
  * runMoves(root, moves, { declaredScanDeltas }) — apply a move list, or refuse.
  *
  * Preflight (nothing written): the tree's graph is clean, the plan is consistent, every
@@ -295,7 +337,7 @@ export function scanDeltasOf(g0, M) {
  * never leaves a half-applied tree that a rerun would then read as "already applied".
  * Idempotent: a move whose source is gone and whose target exists counts as applied.
  */
-export function runMoves(root, moves, { dry = false, deps, declaredScanDeltas = [] } = {}) {
+export function runMoves(root, moves, { dry = false, deps, declaredScanDeltas = [], units = dirUnits() } = {}) {
     deps ??= loadDeps(root);
     const g0 = buildGraph(root, { deps });
     if (g0.violations.length) return { ok: false, phase: "preflight", reason: "the tree's graph is not clean", violations: g0.violations };
@@ -311,8 +353,12 @@ export function runMoves(root, moves, { dry = false, deps, declaredScanDeltas = 
     const stale = declaredScanDeltas.filter((x) => !deltas.some((d) => covers(x, d)));
     const scanDeltas = { total: deltas.length, declared: deltas.length - undeclared.length, undeclared, stale };
     Object.assign(report, { filesEdited: edits.size, rewrites: stats.rewrites, byKind: stats.byKind, byVia: stats.byVia, dirsMoved: M.dirMap.size });
-    const preflight = residue.length === 0 && undeclared.length === 0 && stale.length === 0;
-    if (dry || !preflight) return { ok: false, phase: dry ? "dry" : "preflight", preflight, ...report, residue, scanDeltas, written: false };
+    // FD-2 in preflight: the image check makes the new graph the old one under M, so the
+    // coupling a pass would add is known before anything is written
+    const image0 = { edges: g0.edges.map((e) => ({ ...e, from: M.file(e.from), to: e.to ? (e.dir ? M.dir(e.to) : M.any(e.to)) : e.to })), tree: { files: g0.tree.files.map(M.file) } };
+    const sccPre = sccGrowth(g0, image0, M, { moduleOf: units.unitOf });
+    const preflight = residue.length === 0 && undeclared.length === 0 && stale.length === 0 && sccPre.grown.length === 0;
+    if (dry || !preflight) return { ok: false, phase: dry ? "dry" : "preflight", preflight, ...report, residue, scanDeltas, scc: sccPre, written: false };
     // write edited contents at their new paths, then remove the old files; keep the originals
     const touched = new Set([...edits.keys(), ...plan.pending.map((m) => m.from)]);
     const original = new Map();
@@ -338,29 +384,37 @@ export function runMoves(root, moves, { dry = false, deps, declaredScanDeltas = 
     for (const e of g1.edges) { const k = sig(e, null); got.set(k, (got.get(k) ?? 0) + 1); }
     const lost = [...want].filter(([k, n]) => (got.get(k) ?? 0) < n).map(([k]) => k);
     const gained = [...got].filter(([k, n]) => (want.get(k) ?? 0) < n).map(([k]) => k);
-    const ok = lost.length === 0 && gained.length === 0 && g1.violations.length === 0;
+    const imageOk = lost.length === 0 && gained.length === 0 && g1.violations.length === 0;
     const image = { edgesBefore: g0.edges.length, edgesAfter: g1.edges.length, lost, gained };
+    // FD-2: a pass that grows moduleSccs over the unit function is refused, not logged
+    const scc = imageOk ? sccGrowth(g0, g1, M, { moduleOf: units.unitOf }) : null;
+    const ok = imageOk && scc.grown.length === 0;
     if (!ok) {
         for (const m of plan.pending) { const dest = join(root, m.to); if (existsSync(dest)) unlinkSync(dest); }
         pruneEmpty(root, plan.pending.map((m) => dirname(m.to)));
         for (const [f, bytes] of original) { mkdirSync(dirname(join(root, f)), { recursive: true }); writeFileSync(join(root, f), bytes); }
-        return { ok: false, phase: "image", rolledBack: true, ...report, residue, scanDeltas, image, violations: g1.violations, digest: treeDigest(root, buildGraph(root, { deps }).tree.files) };
+        return { ok: false, phase: imageOk ? "scc" : "image", rolledBack: true, ...report, residue, scanDeltas, image, scc, violations: g1.violations, digest: treeDigest(root, buildGraph(root, { deps }).tree.files) };
     }
-    return { ok, ...report, residue, scanDeltas, pruned, image, violations: g1.violations, digest: treeDigest(root, g1.tree.files) };
+    return { ok, ...report, residue, scanDeltas, pruned, image, scc, violations: g1.violations, digest: treeDigest(root, g1.tree.files) };
 }
 
+/** Remove every dir a move emptied, and each parent it empties in turn (P3-F5). Dirs are
+ *  visited deepest first and a parent is re-checked after its children, so a parent whose
+ *  last entry was an emptied child dir (`aurora/constants/` after `constants/shaders/`) goes too. */
 function pruneEmpty(root, dirs) {
     let n = 0;
-    const seen = new Set();
-    for (let d of dirs) {
-        while (d && d !== "." && !seen.has(d)) {
-            seen.add(d);
-            const abs = join(root, d);
-            if (!existsSync(abs) || !statSync(abs).isDirectory() || readdirSync(abs).length) break;
-            rmdirSync(abs);
-            n++;
-            d = dirname(d);
-        }
+    const queue = [...new Set(dirs)].sort((a, b) => b.split("/").length - a.split("/").length || (a < b ? -1 : 1));
+    const done = new Set();
+    while (queue.length) {
+        const d = queue.shift();
+        if (!d || d === "." || done.has(d)) continue;
+        const abs = join(root, d);
+        if (!existsSync(abs) || !statSync(abs).isDirectory() || readdirSync(abs).length) continue;
+        rmdirSync(abs);
+        done.add(d);
+        n++;
+        const parent = dirname(d);
+        if (parent && parent !== ".") queue.push(parent);
     }
     return n;
 }

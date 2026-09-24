@@ -1,0 +1,17 @@
+{
+    "note": "P3-F5 plant (d): the ./styles/theme entry's source becomes a door dir. B-proto \u00a74: F-2 applied it, then the build and entries check failed because the CSS dist name came from the source basename. The record now declares dist names; this move must leave ./dist/styles/theme.css in place.",
+    "moves": [
+        {
+            "from": "src/styles/theme.css",
+            "to": "src/styles/theme/index.css"
+        }
+    ],
+    "scanDeltas": [
+        {
+            "scanner": "tests/gates/orphan-css-partial.test.ts",
+            "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+            "all": true,
+            "reason": "resolves the @glass specifiers it finds in sources; the engine rewrites every specifier"
+        }
+    ]
+}

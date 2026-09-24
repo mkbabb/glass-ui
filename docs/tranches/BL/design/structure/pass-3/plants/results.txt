@@ -1,0 +1,228 @@
+P3 floor plants — recorded commands and outputs (2026-09-24)
+Base commit for every plant: a54b64d6. Paths shortened: <scratch> = this seat's scratch dir,
+<wt> = the plant's fresh linked worktree, <out> = its arm's output dir,
+<structure> = docs/tranches/BL/design/structure in the checkout.
+  before arm: <wt> = a54b64d6 with its own floor and its own rows (f3, f4, m02, m03, f9)
+  after arm:  <wt> = a54b64d6 + the P3 floor, cut by node <structure>/floor/rows/apply.mjs --root <wt>
+              (f3, f4, m02, m03, f9, fd6, fd7, fd11); the floor then runs from <wt>/scripts/structure
+
+================================================================================================
+1. The graph half — pass-3/plants/p3-graph-plants.mjs (18 in-memory plants)
+================================================================================================
+$ node <structure>/pass-3/plants/p3-graph-plants.mjs --floor <scratch>/wt0/<structure>/floor --root <scratch>/wt0
+baseline: 7171 edges, 0 violations, 453 census
+MISSED  F1-a      P3-F1                  Skeleton stays home under skeleton/index.ts — saw: move → src/components/data-table
+MISSED  F1-b      P3-F1                  useTimer (kernel entry) stays in src/composables — saw: move → src/composables/dom
+MISSED  F1-c      P3-F1                  a slot barrel anchors nothing (X-10) — saw: move → src/components/slider; 0 anchored rows
+MISSED  F1-d      P3-F1                  a door no entry reaches publishes nothing — saw: move → src/components/dock; 0 anchored rows
+MISSED  F3-a      P3-F3                  Chip.vue imports Badge by self-name — saw: edge import/self-name → src/components/badge/index.ts
+MISSED  F3-b      P3-F3                  a self-name CSS @import from a src sheet — saw: no violation
+CAUGHT  F3-legal  P3-F3                  legal: the demo imports a door by self-name — saw: edge → src/components/badge/index.ts
+MISSED  F4-a      P3-F4                  I32 join(process.cwd(), "src/components/" + n) — saw: no census row
+MISSED  F4-b      P3-F4                  I32b `src/components/${n}/index.ts` — saw: no census row
+MISSED  F4-c      P3-F4                  I32c resolve(import.meta.dirname, "../../src/components", n, …) — saw: no census row
+MISSED  F4-d      P3-F4                  resolve(root, "src/styles/theme.css") with root a parameter — saw: no edge (the literal is swallowed)
+MISSED  F7-a      P3-F7 (FD-3)           src/styles is a unit: accent-tone.css moves to src/styles — saw: ok → src
+MISSED  F7-b      P3-F7 (FD-3)           one slot predicate shared by bounds and placement — saw: two predicates
+MISSED  F8-b      P3-F8 (FD-7)           the first colocated test raises no violation — saw: ledger-stale tsconfig.build.json src/**/*.test.ts; ledger-stale tsconfig.build.json src/**/__tests__/**
+MISSED  F8-b2     P3-F8 (FD-7, P3-R6)    @source not keeps a colocated test out of the demo scan — saw: 1 css-source edge(s) to the test; 3 violation(s) (empty-glob ../src/**/__tests__)
+MISSED  F8-c      P3-F8 (FD-10)          a CI step naming a missing script — saw: no violation
+MISSED  F8-c2     P3-F8 (FD-10)          a CI step naming a missing package script — saw: no violation
+MISSED  F8-c3     P3-F8 (FD-10)          a script named only in CI has a reader — saw: no reader
+1/18 caught            (the one catch is the legal probe, which must hold on both floors)
+
+$ node <structure>/pass-3/plants/p3-graph-plants.mjs --floor <scratch>/wt1/<structure>/floor --root <scratch>/wt1
+baseline: 7338 edges, 0 violations, 538 census
+CAUGHT  F1-a      saw: anchored → src/components/skeleton
+CAUGHT  F1-b      saw: anchored → src/composables/reactive
+CAUGHT  F1-c      saw: move → src/components/slider; 37 anchored rows
+CAUGHT  F1-d      saw: move → src/components/dock; 37 anchored rows
+CAUGHT  F3-a      saw: violation self-name-in-src → src/components/badge/index.ts
+CAUGHT  F3-b      saw: violation self-name-in-src
+CAUGHT  F3-legal  saw: edge → src/components/badge/index.ts
+CAUGHT  F4-a      saw: computed-read@src/components
+CAUGHT  F4-b      saw: computed-read@src/components
+CAUGHT  F4-c      saw: computed-read@src/components
+CAUGHT  F4-d      saw: edge path-literal → src/styles/theme.css
+CAUGHT  F7-a      saw: move → src/styles
+CAUGHT  F7-b      saw: isSlot present
+CAUGHT  F8-b      saw: 0 violations
+CAUGHT  F8-b2     saw: 0 css-source edge(s) to the test; 0 violation(s)
+CAUGHT  F8-c      saw: violation unresolved scripts/zz-gone.mjs
+CAUGHT  F8-c2     saw: violation unresolved package.json#scripts.zz-gone
+CAUGHT  F8-c3     saw: edge .github/workflows/ci.yml:79
+18/18 caught
+
+$ node <scratch>/wt1/<structure>/floor/plants/graph-plants.mjs --root <scratch>/wt1
+59/59 plants caught; baseline violations 0          (pass 2's battery, C01 flipped to self-name-in-src)
+
+================================================================================================
+2. The tree half — pass-3/plants/p3-tree-plants.sh <before|after> <scratch>/tp [plant…]
+================================================================================================
+verdicts                        before                                              after
+F2   FD-2 co-cyclic stop        MISSED exit 0, no FD-2 stop                         CAUGHT refused at preflight
+F5a  glass door                 MISSED image check LOST 2 base-relative edges       CAUGHT applied; glass-subtlety 36/36
+F5b  cwd-rooted join            MISSED preflight residue 1                          CAUGHT applied; overlay-plate 4/4
+F5c  prune                      MISSED tests/components/_shared left, empty         CAUGHT pruned
+F5d  theme door                 MISSED vite build "Invalid package artifact";       CAUGHT build 0, entries 0, dist/styles/theme.css,
+                                       entries check exit 1                                cascade GREEN, surface 0 differences
+F6   idempotent chain           MISSED replay throws (f3: 0 matches)                CAUGHT replay no-op, digest 70d37498faaa… both runs
+F7b  FD-4 scoped keyframes      MISSED re-hash RED (want GREEN)                     CAUGHT re-hash GREEN, rename RED (content)
+F7c  FD-5 classifier            MISSED no classifier; graph exit 0                  CAUGHT pure move PASS; smuggled rule → 1 UNCLASSIFIED
+F8a  FD-6 walkers               MISSED EISDIR, 2 failed | 28 passed                 CAUGHT 63/63 with __tests__ in 116 src dirs
+F8b  FD-7 first colocated test  MISSED graph ledger-stale 2; "No test files found"  CAUGHT graph 0, 1/1, not in dist, vue-tsc 0
+F8d  FD-11 landing              MISSED 7 readers name docs/                         CAUGHT 0 readers; floor.test 4/4 from scripts/structure
+F9   F-10 browser seat          MISSED two raw runs overlapped                      CAUGHT B acquired after A finished; both GREEN
+                                (A 1790266806-1790266844, B from 1790266809)        (A done 16:49:26.101Z, B acquired 16:49:26.774Z)
+totals                          0/12                                                12/12
+
+---- before arm (excerpts; each plant's full log is <scratch>/tp/before/<plant>.log) ----
+## F2
+$ node <wt>/<structure>/floor/move.mjs <structure>/pass-3/plants/lists/f2-coupling.before.json --root <wt>
+[exit 0]
+## F5a
+$ node <wt>/<structure>/floor/move.mjs <structure>/pass-3/plants/lists/f5a-glass-door.before.json --root <wt>
+ "phase": "image",
+LOST tests/styles/glass-subtlety.test.ts|base-relative|src/styles/glass/grasp.css|f|source
+LOST tests/styles/glass-subtlety.test.ts|base-relative|src/styles/glass/rim.css|f|source
+[exit 1]
+## F5b
+$ node <wt>/<structure>/floor/move.mjs <structure>/pass-3/plants/lists/f5b-cwd-join.json --root <wt>
+ "phase": "preflight",
+ "residue": 1,
+[exit 1]
+## F5c
+$ node <wt>/<structure>/floor/move.mjs <structure>/pass-3/plants/lists/f5c-prune.json --root <wt>
+[exit 0]                    (tests/components/_shared left behind, empty)
+## F5d
+$ npx vite build                                                    [exit 0]
+$ node <wt>/<structure>/floor/cascade.mjs snapshot --root <wt> --dist <wt>/dist --out <out>/F5d-base --sha a54b64d6   [exit 0]
+$ node <wt>/<structure>/floor/move.mjs <structure>/pass-3/plants/lists/f5d-theme-door.before.json --root <wt>          [exit 0]
+$ npx vite build
+error during build:
+Error: Invalid package artifact:
+[exit 1]
+$ node <wt>/<structure>/floor/entries.mjs check --root <wt>          [exit 1]
+## F6
+digest after chain 1: c8ae5164c74aebe24c2af6ab805f6a356e0451e30f8149ebc0e960d2fac6eef9
+Error: row f3-entry-record: vite.library.ts: expected exactly 1 match, found 0 for import { libraryEntryMap } from "./scripts/lib/subpath-policy.mjs";
+[exit 1]
+## F7b
+$ node <wt>/<structure>/floor/cascade.mjs verify --root <wt> --baseline <out>/F7b-base --dist <out>/F7b-hash    "verdict": "RED", "class": "content"   [exit 1]
+$ node <wt>/<structure>/floor/cascade.mjs verify --root <wt> --baseline <out>/F7b-base --dist <out>/F7b-name    "verdict": "RED", "class": "content"   [exit 1]
+  (F7b-hash: skeleton-breathe-0d5ebb1f → skeleton-breathe-deadbeef everywhere, what a move's re-hash does;
+   F7b-name: → skeleton-inhale-0d5ebb1f, a real change)
+## F7c
+$ node <wt>/<structure>/floor/move.mjs …/f5a-glass-door.before.json --root <wt>     "phase": "image"   [exit 1]
+appended .zz-smuggled to src/styles/glass/index.css
+$ node <wt>/<structure>/floor/graph.mjs --root <wt> --quiet                         [exit 0]
+  (no classify.mjs on this floor)
+## F8a   (probe __tests__/probe.test.ts written into 116 src dirs)
+$ npx vitest run tests/components/easing.contract.test.ts tests/components/sortable-list/battery.test.ts
+Error: EISDIR: illegal operation on a directory, read      (×3)
+ Test Files  2 failed (2)
+      Tests  2 failed | 28 passed (30)
+[exit 1]
+## F8b   (src/components/chip/__tests__/chip.test.ts)
+$ node <wt>/<structure>/floor/graph.mjs --root <wt> --quiet        "ledger-stale": 2   [exit 1]
+$ npx vitest run src/components/chip/__tests__/chip.test.ts        No test files found, exiting with code 1   [exit 1]
+$ npx vite build [exit 0]; find dist -path '*__tests__*' → none [exit 0]; npx vue-tsc --noEmit [exit 0]
+## F8d
+readers of the docs floor outside docs/: 7
+$ npx vitest run tests/gates/floor.test.ts                          Tests 4 passed (4)   [exit 0]
+## F9    (two raw `npx playwright test substrate-paints-color.spec.ts --project=chromium-headless-new`, 3 s apart)
+run A start 1790266806 · run B start 1790266809 · A end 1790266844 exit 0 · B end 1790266845 exit 0
+
+---- after arm (excerpts; <scratch>/tp/after/<plant>.log) ----
+## F2
+$ node <wt>/scripts/structure/move.mjs <structure>/pass-3/plants/lists/f2-coupling.json --root <wt>
+ "phase": "preflight",
+FD-2 CO-CYCLIC (new) src/components/aurora/constants ↔ src/composables/glass/webgl
+[exit 1]
+## F5a
+$ node <wt>/scripts/structure/move.mjs <structure>/pass-3/plants/lists/f5a-glass-door.json --root <wt>   [exit 0]
+$ npx vitest run tests/styles/glass-subtlety.test.ts        Tests 36 passed (36)   [exit 0]
+## F5b
+$ node <wt>/scripts/structure/move.mjs <structure>/pass-3/plants/lists/f5b-cwd-join.json --root <wt>     [exit 0]
+$ npx vitest run overlay-plate-available-height            Tests 4 passed (4)   [exit 0]
+## F5c
+$ node <wt>/scripts/structure/move.mjs <structure>/pass-3/plants/lists/f5c-prune.json --root <wt>        [exit 0]   (tests/components/_shared gone)
+## F5d
+$ npx vite build [exit 0]
+$ node <wt>/scripts/structure/cascade.mjs snapshot --root <wt> --dist <wt>/dist --out <out>/F5d-base --sha a54b64d6   [exit 0]
+$ node <wt>/scripts/structure/move.mjs <structure>/pass-3/plants/lists/f5d-theme-door.json --root <wt>              [exit 0]
+$ npx vite build [exit 0]
+$ node <wt>/scripts/structure/entries.mjs check --root <wt>        [exit 0]
+$ test -f dist/styles/theme.css                                    [exit 0]
+$ node <wt>/scripts/structure/cascade.mjs verify --root <wt> --baseline <out>/F5d-base --dist <wt>/dist   "verdict": "GREEN"   [exit 0]
+$ node <wt>/scripts/structure/surface.mjs check --root <wt>        differences 0   [exit 0]
+  First after-arm run (<scratch>/tp/prev/after-1/F5d.first.log) was RED: cascade ./styles rulesBase 1964,
+  rulesNow 1631, onlyBase 333 (dist/styles/components.css not emitted). Cause: vite.utility-emit.ts:85
+  `resolve(root, "src/styles/theme.css")` sat in a function F-1 read as a path helper, so the literal was
+  swallowed (no edge), the move did not rewrite it, and `if (!existsSync(themePath)) return;` skipped the
+  utility emit. Fixed in lib/scan/script.mjs (plant F4-d); the rerun above is GREEN.
+## F6
+digest after chain 1: 70d37498faaa219ad19207ef1512a538de2945afc3a3fc8b614010b93014c1ef
+$ node <structure>/floor/rows/apply.mjs --root <wt>                [exit 0]   (every row: already applied, nothing written)
+digest after chain 2: 70d37498faaa219ad19207ef1512a538de2945afc3a3fc8b614010b93014c1ef
+## F7b
+$ node <wt>/scripts/structure/cascade.mjs verify … --dist <out>/F7b-hash    "verdict": "GREEN"   [exit 0]
+$ node <wt>/scripts/structure/cascade.mjs verify … --dist <out>/F7b-name    "verdict": "RED", "class": "content"   [exit 1]
+## F7c
+$ node <wt>/scripts/structure/move.mjs …/f5a-glass-door.json --root <wt>   [exit 0]
+$ node <wt>/scripts/structure/classify.mjs --base <wt>-base --root <wt> --moves …/f5a-glass-door.json
+{"counts":{"move-only":8},"stale":0,"failed":0}
+PASS   [exit 0]
+appended .zz-smuggled to src/styles/glass/index.css
+$ node <wt>/scripts/structure/graph.mjs --root <wt> --quiet     [exit 0]
+$ node <wt>/scripts/structure/classify.mjs --base <wt>-base --root <wt> --moves …/f5a-glass-door.json
+{"counts":{"unclassified":1,"move-only":7},"stale":0,"failed":1}
+UNCLASSIFIED src/styles/glass/index.css (from src/styles/glass.css): text differs beyond its references
+FAIL   [exit 1]
+  An earlier run flagged tests/styles/glass-subtlety.test.ts too (its base-relative "glass/rim.css" is
+  rewritten to "./rim.css", which F-1 reads as quoted-relative); the classifier now tokens the three
+  text-anchored kinds as one, via kindClass exported from lib/move.mjs, the image check's own reading.
+## F8a
+$ npx vitest run tests/components/easing.contract.test.ts tests/components/sortable-list/battery.test.ts
+ Test Files  2 passed (2)
+      Tests  63 passed (63)
+## F8b
+$ node <wt>/scripts/structure/graph.mjs --root <wt> --quiet        [exit 0]
+$ npx vitest run src/components/chip/__tests__/chip.test.ts        Tests 1 passed (1)   [exit 0]
+$ npx vite build [exit 0]; find dist -path '*__tests__*' → none [exit 0]; npx vue-tsc --noEmit [exit 0]
+## F8d
+readers of the docs floor outside docs/: 0
+$ npx vitest run tests/gates/floor.test.ts                          Tests 4 passed (4)   [exit 0]
+## F9    (two `node <structure>/floor/browser.mjs --root <wt>`, 3 s apart)
+[browser-seat 2026-09-24T16:48:51.579Z] seat acquired after 0.0s: <wt>
+[browser-seat 2026-09-24T16:49:26.101Z] GREEN: 3/3 passed, 0 failed, 0 skipped in 35s → <out>/F9-a.json
+[browser-seat 2026-09-24T16:49:26.774Z] seat acquired after 32.2s: <wt>
+[browser-seat 2026-09-24T16:50:01.134Z] GREEN: 3/3 passed, 0 failed, 0 skipped in 34s → <out>/F9-b.json
+
+================================================================================================
+3. The baseline — pass-3/tools/baseline.sh <scratch>/base   (HEAD 2b72324a + the P3 floor)
+================================================================================================
+fresh                        exit 0  12s    commit 2b72324a
+graph@docs                   exit 0   2s    7,338 edges, 0 violations, 538 census
+plants-59                    exit 0  85s    59/59
+plants-p3                    exit 0  35s    18/18
+chain                        exit 0  41s    8 rows; tree digest 1a0cc579a274…
+chain-replay                 exit 0  13s    every row already applied; tree digest 1a0cc579a274…
+graph                        exit 0   2s    landed: 7,264 edges, 0 violations
+placement                    exit 0   2s    anchored 36, move 14, global 2; 15 proposed; 1 NEEDS-NAME
+placement-none               exit 0   2s    move 40, global 12; 47 proposed; 5 NEEDS-NAME
+bounds                       exit 0   1s    18 dirs over 12 files (src 9, demo 2, tests 6, tests-visual 1); 56 files over 500 lines
+fixpoint-dry                 exit 1   7s    pass 1: 15 moves; FD-2 stop, 169 added co-cyclic pairs (sccs 4→3, members 14→24)
+scc-per-move                 exit 0   2s    useScrollChrome 70, useRoutePointer 45, useScrollProgress 34,
+                                            isTeleportedTarget 3, createCanvasLifecycle 3, useDockHold 1, useFuzzySearch 1, 8 others 0
+build                        exit 0   9s
+gates                        exit 0   4s    PASS F-1 (7,264 edges), F-3 (68 keys, 62 typesVersions, byte-equal), F-4 contract, F-9 pin (0 differences)
+entries / cascade-contract / cascade-snapshot / cascade-self / surface     exit 0 each
+vitest                       exit 1  38s    3 failed | 2314 passed | 10 expected fail | 1 skipped (2328); 239/240 files.
+                                            The 3 are tests/gates/boot-graph.test.ts "build arm" (no dist-demo yet: the script
+                                            runs vitest before demo-build). After demo:dist:build, boot-graph is 14/14 (run in a
+                                            chained a54b64d6 tree, <scratch>/wt6).
+typecheck                    exit 0  21s    vue-tsc lib program and tsconfig.test.json
+demo-build                   exit 0   3s
+verify-package               exit 1   2s    G-BUNDLE-RATCHET shrink: 2910618 < 2916129 (−5,511 B; owed a ruled rebind, P3-R9)
+browser-seat                 exit 0  46s    GREEN 3/3 (π pixel floor) on its own server

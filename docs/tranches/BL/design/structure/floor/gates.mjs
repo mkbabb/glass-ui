@@ -7,11 +7,11 @@
 //   node gates.mjs [--root R] [--json]
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { DEFAULT_ROOT, openTree } from "./lib/tree.mjs";
+import { DEFAULT_ROOT, openTree, pinPath } from "./lib/tree.mjs";
 import { buildGraph, countBy } from "./lib/graph.mjs";
 import { compareToPackage, loadRecord, validateRecord } from "./lib/entries.mjs";
 import { contract } from "./cascade.mjs";
-import { PIN_PATH, diffSurface, readSurface } from "./surface.mjs";
+import { diffSurface, readSurface } from "./surface.mjs";
 
 const args = process.argv.slice(2);
 const root = resolve(args.includes("--root") ? args[args.indexOf("--root") + 1] : DEFAULT_ROOT);
@@ -32,7 +32,7 @@ checks.push({ id: "F-4 cascade contract", pass: c.pass, detail: c });
 const dist = join(root, "dist");
 if (!existsSync(join(dist, "glass-ui.js"))) checks.push({ id: "F-9 surface pin", pass: false, detail: "no dist/ — run `npm run build` first (CI builds before `npm test`)" });
 else {
-    const pin = JSON.parse(readFileSync(join(root, PIN_PATH), "utf8"));
+    const pin = JSON.parse(readFileSync(join(root, pinPath(root)), "utf8"));
     const now = await readSurface(root, dist);
     const diff = diffSurface(pin, now);
     checks.push({ id: "F-9 surface pin", pass: diff.length === 0, detail: { pinned: pin.totals, now: now.totals, differences: diff.slice(0, 40) } });

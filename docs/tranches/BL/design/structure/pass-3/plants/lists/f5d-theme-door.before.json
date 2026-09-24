@@ -1,0 +1,35 @@
+{
+    "note": "P3-F5 plant (d): the ./styles/theme entry's source becomes a door dir. B-proto \u00a74: F-2 applied it, then the build and entries check failed because the CSS dist name came from the source basename. The record now declares dist names; this move must leave ./dist/styles/theme.css in place. (Before arm: declared against the HEAD floor tree.)",
+    "moves": [
+        {
+            "from": "src/styles/theme.css",
+            "to": "src/styles/theme/index.css"
+        }
+    ],
+    "scanDeltas": [
+        {
+            "scanner": "scripts/import-dag.mjs",
+            "spec": "`src/${parts[1]}/${parts[2]}`",
+            "all": true,
+            "reason": "import-dag's module labels are derived from paths (deleted by row fd11 in the P3 chain)"
+        },
+        {
+            "scanner": "scripts/import-dag.mjs",
+            "spec": "`src/${parts[1]}/_root`",
+            "all": true,
+            "reason": "import-dag's module labels are derived from paths (deleted by row fd11 in the P3 chain)"
+        },
+        {
+            "scanner": "scripts/import-dag.mjs",
+            "spec": "`src/styles/${parts[2]}`",
+            "all": true,
+            "reason": "import-dag's module labels are derived from paths (deleted by row fd11 in the P3 chain)"
+        },
+        {
+            "scanner": "tests/gates/orphan-css-partial.test.ts",
+            "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+            "all": true,
+            "reason": "resolves the @glass specifiers it finds in sources; the engine rewrites every specifier"
+        }
+    ]
+}
