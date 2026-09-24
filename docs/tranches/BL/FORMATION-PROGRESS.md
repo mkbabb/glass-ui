@@ -44,6 +44,7 @@ Carried obligations (promised to a peer or the owner; each closes in the named s
 - Formation: `tests/components/menu/contract.test.ts` "restores focus on execute" waits a fixed 30 ms for focus to return and failed once on the release runner (run 36053041265 attempt 1; green on rerun, 8/8 locally). The wave that owns the menu contract replaces the sleep with a wait on the focus event.
 - Formation: O-76 TOGGLE-PRESSED-TINT arrived after the v10.1.0 tag. It folds with the O-66 grey measure in D3, and its landing version waits on an owner publish decision.
 
+- Owner ruling relayed by value-js-0c (2026-09-24), verbatim: "All should be on 10.1." value.js, keyframes and fourier pin 10.1.0 exact; this supersedes value.js's 7.0.0 hold. Answered: 10.1.0 leaves the veil as in 10.0.1 (src diff is the configurator only). O-62 is unscheduled; it is a D3 witness with a working landing of 11.0.0, and any surface still contrast_unreachable against the 10.1.0 composite comes back as a measured O-62 addendum.
 Outage log:
 
 - 2026-09-23 22:02 to 2026-09-24 00:31: the account usage limit stopped every in-flight seat (D1 pass 2's three prototypes, D2 pass 1's A and B researchers, round 5's registry seat); the runs hung without a failed event. At 00:31 the three runs were stopped, the dead seats' five scratch worktrees removed, and each run resumed from its own run id (`wf_42ea24e0-bc2`, `wf_806a4640-d3a`, `wf_f0e2ae4f-95c`): every finished seat replayed from cache and only the six dead seats re-ran. D3 and D4 pass 1 stay parked for the concurrency ceiling.
