@@ -1,0 +1,381 @@
+diff --git a/DESIGN.md b/DESIGN.md
+index 54399560..e64f247f 100644
+--- a/DESIGN.md
++++ b/DESIGN.md
+@@ -382,8 +382,8 @@ this table must agree). Five classes: **primitive** (the numeric ladder), **sema
+ | Token               | Resolves to        | Pixel | Role                                                        |
+ | ------------------- | ------------------ | ----- | ---------------------------------------------------------- |
+ | `--radius-media`    | var(--radius)      | 10 px | Media tile — Skeleton default, Avatar square. NOT the Input |
+-| `--radius-control`  | var(--radius-pill) | stadium | Control/field/mode/action pill (input-bar, tag delete)   |
+-| `--radius-field`    | var(--radius-2xl)  | 16 px | Multi-line field / stepper / dialog-nested input, TagsInput container |
++| `--radius-control`  | calc(var(--control-rung) / 2) | rung/2 | A control, one line or wrapped: half its own one-line box (`--control-rung`), so a wrapped label keeps one-line curvature. No rung published = the stadium |
++| `--radius-field`    | var(--radius-2xl)  | 16 px | Text-entry field: Textarea, dialog-nested input, TagsInput container |
+ | `--radius-card`     | var(--radius-2xl)  | 16 px | Content card / popover                                     |
+ | `--radius-dialog`   | var(--radius-card) | 16 px | Dialog (matches the card — F48)                            |
+ | `--radius-panel`    | var(--radius-xl)   | 12 px | Panel / configurator / Command panel                      |
+diff --git a/src/components/_shared/disclosure/disclosure.css b/src/components/_shared/disclosure/disclosure.css
+index 754c6ca4..a88d843e 100644
+--- a/src/components/_shared/disclosure/disclosure.css
++++ b/src/components/_shared/disclosure/disclosure.css
+@@ -59,6 +59,7 @@
+         justify-content: space-between;
+         min-block-size: 2.75rem;
+         padding: 1rem 0.25rem;
++        --control-rung: max(2.75rem, calc(1lh + 2rem));
+         border: 0;
+         color: var(--foreground);
+         background: transparent;
+diff --git a/src/components/button/styles.css b/src/components/button/styles.css
+index 222fe736..530ba40a 100644
+--- a/src/components/button/styles.css
++++ b/src/components/button/styles.css
+@@ -56,22 +56,13 @@
+            toned arm makes the toned box 2px narrower in its content than the neutral
+            box beside it, at the same `size`. */
+         border: 1px solid var(--button-edge);
+-        /* The stadium bound, resolved against the CONTROL RUNG rather than the
+-           box. `--radius-pill` (9999px) is clamped by the engine to half the
+-           ACTUAL block-size, so a button whose label wraps to two lines grows a
+-           balloon: the curvature tracks the content instead of the control. The
+-           corner is half the control rung `--button-size` (which the size arms
+-           re-point to `--control-h-xs/sm/lg`), so a single-line button is
+-           byte-identical to the stadium it was, and a wrapped or multi-line button
+-           keeps single-line curvature. A narrower-than-tall box (the icon arm)
+-           still reads a circle: the engine's own radius scaling clamps the corner
+-           to half the short edge, which is the resolved-corner precedent — and it is
+-           the `icon / single tap-target → 50%` row of the radius role spine, so the
+-           icon arm mints no corner of its own.
+-           A bare `min(9999px, …)` is REFUSED: it couples the corner to a second
+-           token to re-derive a clamp the engine already applies (GF-DOCK §STRIKE —
+-           `from: 50%` IS the resolved corner). */
+-        border-radius: calc(var(--button-size) / 2);
++        /* The control role (theme/radius.css): the rung is `--button-size`, which
++           the size arms re-point to `--control-h-xs/sm/lg`, so a one-line button is
++           the stadium and a wrapped one keeps one-line curvature. A narrower-than-tall
++           box (the icon arm) still reads a circle: the engine clamps the corner to
++           half the short edge. */
++        --control-rung: var(--button-size);
++        border-radius: var(--radius-control);
+         color: var(--button-ink);
+         font: inherit;
+         font-size: var(--control-text);
+diff --git a/src/components/chip/chipVariants.ts b/src/components/chip/chipVariants.ts
+index f7ed8b43..70cc336a 100644
+--- a/src/components/chip/chipVariants.ts
++++ b/src/components/chip/chipVariants.ts
+@@ -5,10 +5,10 @@ const BASE =
+ const INTERACTIVE =
+     "glass-chip--interactive glass-capsule-hover focus-ring cursor-pointer disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-disabled";
+ const SIZE = {
+-    xs: "gap-0.5 px-1 py-0.5 text-micro",
+-    sm: "gap-1 px-2.5 py-1 text-caption",
+-    md: "gap-1.5 px-3.5 py-1.5 text-small",
+-    lg: "gap-2 px-5 py-2 text-base",
++    xs: "gap-0.5 px-1 glass-chip--xs text-micro",
++    sm: "gap-1 px-2.5 glass-chip--sm text-caption",
++    md: "gap-1.5 px-3.5 glass-chip--md text-small",
++    lg: "gap-2 px-5 glass-chip--lg text-base",
+ } as const;
+ const SHAPE = {
+     pill: "",
+diff --git a/src/components/toggle-group/styles.css b/src/components/toggle-group/styles.css
+index d6b2b1cf..0ffc95f2 100644
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -47,7 +47,8 @@
+        `.control-surface`'s; the resting rim is `.glass-control-edge`'s; the hover
+        specular + press-snap are `.glass-capsule-hover`'s; the focus ring is
+        `.focus-ring`'s `outline`. This file authors ZERO border values and ZERO
+-       backdrop-filter, by construction — that is what G-TOGGLE-REGISTER asserts. */
++       backdrop-filter, by construction — that is what G-TOGGLE-REGISTER asserts.
++       The on-state recolours the register's border; it does not author one. */
+     .toggle-group__item {
+         --toggle-group-item-size: var(--control-h-md);
+         /* The F-3 reconciliation: `.tap-squish` and `.glass-capsule-hover` both write
+@@ -64,10 +65,10 @@
+         justify-content: center;
+         gap: 0.5rem;
+         padding-inline: 0.75rem;
+-        /* ONE spelling of the stadium. The old `calc(var(--radius-pill) + 0.25rem)`
+-           pair upstairs is what made this component the sole author of the ×32
+-           `10003px` census; the role rung is the whole answer here. */
+-        border-radius: var(--radius-pill);
++        /* The control role (theme/radius.css): the rung is the item size, so a
++           one-line item is the stadium and a tile that wraps keeps one-line curvature. */
++        --control-rung: var(--toggle-group-item-size);
++        border-radius: var(--radius-control);
+         color: var(--muted-foreground);
+         font: inherit;
+         font-size: var(--control-text);
+@@ -90,7 +91,7 @@
+         padding-inline: 1.25rem;
+     }
+
+-    /* THE ON-STATE CARRIES ON INK AND WEIGHT, AND ASSISTS WITH FILL. It used to be a
++    /* THE ON-STATE CARRIES ON ITS EDGE, INK AND WEIGHT, AND ASSISTS WITH FILL. It used to be a
+        four-carrier slab: an opaque `--accent` fill, a 28%-α `--primary` border, a
+        `--shadow-sm`, and the ink. The shadow was the real defect — it tied the focus
+        ring at (0,2,0) against (0,2,0), so which one a focused-and-selected pill
+@@ -114,6 +115,10 @@
+        carrying less than §3.5 assumed. That is #82 W-FIELD's register to answer, not
+        this lane's to patch locally with a literal. */
+     .toggle-group__item[data-state="on"] {
++        /* The selected carrier is the plate's own 1px border at full ink: outline is
++           the focus ring's and box-shadow the rim's, and a fill alone reads 1.00:1
++           under reduced transparency. The 0.12 fill stays as an assist. */
++        border-color: var(--foreground);
+         background-color: color-mix(in oklab, var(--foreground) 12%, transparent);
+         color: var(--foreground);
+         font-weight: 600;
+diff --git a/src/styles/glass/glass-chip.css b/src/styles/glass/glass-chip.css
+index 7cef8b74..836a076e 100644
+--- a/src/styles/glass/glass-chip.css
++++ b/src/styles/glass/glass-chip.css
+@@ -8,6 +8,12 @@
+     .glass-chip {
+         --chip-tint-floor: 12%;
+         --accent-band-strength: max(18%, calc(var(--chip-tint-floor) + 10%));
++        /* The control role (theme/radius.css): the rung is the chip's one-line box,
++           one line plus its block pad, or the touch floor where one applies, stated
++           here beside that pad. The floor is one fact: it sizes the box and the rung. */
++        --control-rung: max(calc(1lh + 2 * var(--chip-pad-block)), var(--chip-floor, 0px));
++        padding-block: var(--chip-pad-block);
++        border-radius: var(--radius-control);
+         position: relative;
+         isolation: isolate;
+         background-image: linear-gradient(
+@@ -20,6 +26,11 @@
+             color var(--duration-fast) var(--ease-standard);
+     }
+
++    .glass-chip--xs { --chip-pad-block: 0.125rem; }
++    .glass-chip--sm { --chip-pad-block: 0.25rem; }
++    .glass-chip--md { --chip-pad-block: 0.375rem; }
++    .glass-chip--lg { --chip-pad-block: 0.5rem; }
++
+     .dark .glass-chip {
+         --chip-tint-floor: 15%;
+     }
+@@ -95,13 +106,14 @@
+     }
+
+     @media (pointer: coarse) {
+-        .glass-chip--interactive {
+-            min-inline-size: var(--touch-target, 2.75rem);
+-            min-block-size: var(--touch-target, 2.75rem);
++        .glass-chip--interactive,
++        .glass-chip[data-mode="removable"] {
++            --chip-floor: var(--touch-target, 2.75rem);
++            min-block-size: var(--chip-floor);
+         }
+
+-        .glass-chip[data-mode="removable"] {
+-            min-block-size: var(--touch-target, 2.75rem);
++        .glass-chip--interactive {
++            min-inline-size: var(--chip-floor);
+         }
+
+         .glass-chip[data-mode="removable"]::after {
+diff --git a/src/styles/theme/radius.css b/src/styles/theme/radius.css
+index 31c5e469..33ac0f3f 100644
+--- a/src/styles/theme/radius.css
++++ b/src/styles/theme/radius.css
+@@ -17,8 +17,9 @@
+
+    Role                            Token             Value    Shape       Grammar
+    ─ icon / single tap-target      50% / --radius-pill  circle   round    single tap-target
+-   ─ control / field / mode / cta  --radius-control  stadium  round       primary action = pill
+-   ─ multi-line field / stepper    --radius-field    16px     soft-rect   a box is not a stadium
++   ─ control / mode / cta          --radius-control  rung/2   round       one line = pill; wrapped
++                                                                          keeps one-line curvature
++   ─ text-entry field              --radius-field    16px     soft-rect   a box is not a stadium
+    ─ content card / popover        --radius-card     16px     squircle@lg content container (R28-40)
+    ─ alert                         --radius-card     16px     round       a presented plate — the
+                                    (rounded-card)                         same rank as the card,
+@@ -154,18 +155,14 @@
+        rounded-rect, never a stadium. The vertical SegmentedTabs track reads it;
+        the shipped concentric track calc re-resolves the corner off it for free. */
+     --radius-strip:   0.75rem;
+-    /* The small-inline-control corner rung is a STADIUM, not a
+-       fixed small px. A fixed `--radius-md` (6px) reads SQUARE on a 16-24px control
+-       (6px on a 16px box = 0.38-of-height — a rounded-rect, not a pill); the iOS-27
+-       small-control silhouette is a near-stadium pill where the radius SCALES with the
+-       control (clamped to half-height by `--radius-pill`'s 9999px geometry, so a 16px
+-       control reads an 8px-radius pill — soft at every size). This retires the raw
+-       `rounded-sm` (4px) on Checkbox + base Tabs AND the small-control square class in
+-       ONE rung. The `card` toggle TILE keeps `--radius-card` (the large glass surface
+-       keeps its 1rem squircle — only the small inline controls re-round). The corner-
+-       SHAPE squircle axis reads at LARGE radius only (ROUND set = card+pill for small),
+-       so the small pills stay ROUND (no regression). */
+-    --radius-control: var(--radius-pill);
++    /* The control role: half the holder's CONTROL RUNG (`--control-rung`, its
++       one-line box), never half its box. On one line that is exactly the stadium; a
++       wrapped or multi-line control keeps its one-line curvature. The value here is
++       the root's; the rule below re-declares it on every element so it resolves
++       against that element's own rung. A reader that publishes no rung gets the
++       root rung (twice the pill) and so keeps the stadium, clamped by the engine to
++       half its height. */
++    --radius-control: calc(var(--control-rung) / 2);
+     --radius-badge:   var(--radius-pill);
+     --radius-dock:    var(--radius-pill);
+     /* The iOS-27 segmented-control stadium register. The pill is a
+@@ -261,3 +258,18 @@
+        fallback. A consumer dials it to round (a circular knob) or to soft. */
+     --corner-shape-thumb:   superellipse(var(--corner-k-squircle));
+ }
++
++/* The control role is a rule, not a value. A custom property resolves its var()
++   where it is declared, so a :root-only `calc(var(--control-rung) / 2)` computes once
++   and every holder would inherit that one value (0px, a square, in both engines). The
++   rule is therefore re-declared on every element, against that element's own rung.
++   A holder publishes `--control-rung` beside the geometry that produces it, and reads
++   `border-radius: var(--radius-control)`. */
++:root {
++    --control-rung: calc(var(--radius-pill) * 2);
++}
++@layer base {
++    :where(*) {
++        --radius-control: calc(var(--control-rung) / 2);
++    }
++}
+diff --git a/tests/components/button/Button.test.ts b/tests/components/button/Button.test.ts
+index cd2e19c7..d6ea7b6d 100644
+--- a/tests/components/button/Button.test.ts
++++ b/tests/components/button/Button.test.ts
+@@ -320,7 +320,8 @@ describe("Button §5 RUNG — four boxes, one derived pad, one gap pair, three f
+             expect(decl).toMatch(/var\(--space-(residue|atom|body)\)/);
+         }
+         // (d) the corner and the pad read the SAME rung token.
+-        expect(base![1]).toMatch(/border-radius:\s*calc\(var\(--button-size\)\s*\/\s*2\)/);
++        expect(base![1]).toContain("--control-rung: var(--button-size)");
++        expect(base![1]).toContain("border-radius: var(--radius-control)");
+         expect(base![1].match(/padding-inline:\s*([^;]+);/)![1]).toContain("var(--button-size)");
+     });
+
+diff --git a/tests/components/chip.contract.test.ts b/tests/components/chip.contract.test.ts
+index 209b7ca3..3769e114 100644
+--- a/tests/components/chip.contract.test.ts
++++ b/tests/components/chip.contract.test.ts
+@@ -169,7 +169,7 @@ describe("Chip semantic modes", () => {
+
+         expect(pill).toContain("text-micro");
+         expect(pill).toContain("px-1");
+-        expect(pill).toContain("py-0.5");
++        expect(pill).toContain("glass-chip--xs");
+         expect(pill).not.toContain("text-caption");
+         expect(chipVariants({ shape: "icon", size: "xs" })).toContain("size-6");
+         // The union widened; it did not move. `md` is still the bare default.
+diff --git a/tests/components/ui/toggle-group/ToggleGroup.test.ts b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+index 9b87f3d5..d6f47bff 100644
+--- a/tests/components/ui/toggle-group/ToggleGroup.test.ts
++++ b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+@@ -311,8 +311,9 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+         expect(css).not.toContain("scroll-padding-inline");
+         expect(css).not.toContain("overscroll-behavior-inline");
+         expect(css).not.toContain("safe center");
+-        // The ONE spelling of the stadium that survives is the item's role rung.
+-        expect(css).toContain("border-radius: var(--radius-pill)");
++        // The item reads the control role against its own rung.
++        expect(css).toContain("--control-rung: var(--toggle-group-item-size)");
++        expect(css).toContain("border-radius: var(--radius-control)");
+         // Rules whose selector ENDS at the group host — a descendant rule
+         // (`.toggle-group[data-size="sm"] .toggle-group__item`) paints the item and
+         // is not the group's silhouette.
+diff --git a/tests/styles/radius-role-canon.test.ts b/tests/styles/radius-role-canon.test.ts
+index 152af273..406c084b 100644
+--- a/tests/styles/radius-role-canon.test.ts
++++ b/tests/styles/radius-role-canon.test.ts
+@@ -349,7 +349,7 @@ const px = (value: string): number => {
+
+ const RADIUS_DECLS = declMap(radius);
+
+-type RadiusRole = "floor" | "tick" | "control" | "card" | "room" | "pill" | "relay";
++type RadiusRole = "floor" | "tick" | "control" | "card" | "room" | "pill" | "relay" | "rung";
+
+ /** §4's role spine, keyed to the names that carry each role ON DISK. `cell` (0)
+  *  has no token by construction — it is the absence of a silhouette. */
+@@ -369,7 +369,7 @@ const ROLE_OF: Readonly<Record<string, RadiusRole>> = Object.freeze({
+     "--radius-3xl": "room",
+     "--radius-dock-card": "room",
+     "--radius-pill": "pill",
+-    "--radius-control": "pill",
++    "--radius-control": "rung",
+     "--radius-badge": "pill",
+     "--radius-dock": "pill",
+     "--radius-tab": "pill",
+@@ -378,7 +378,8 @@ const ROLE_OF: Readonly<Record<string, RadiusRole>> = Object.freeze({
+ });
+
+ /** The role values, verbatim from the settlement's terminal table. */
+-const ROLE_PX: Readonly<Record<Exclude<RadiusRole, "relay">, number>> = Object.freeze({
++/** `rung` has no one value: it is half the holder's own control rung (§7). */
++const ROLE_PX: Readonly<Record<Exclude<RadiusRole, "relay" | "rung">, number>> = Object.freeze({
+     floor: 4,
+     tick: 6,
+     control: 10,
+@@ -526,14 +527,45 @@ describe("7. this wave's role bindings", () => {
+         expect(props).not.toContain("`--radius-xl`");
+     });
+
+-    it("Button resolves its stadium against the control rung, and refuses min()", () => {
+-        const body = rule(read("src/components/button/styles.css"), "\\.button");
+-        expect(body).toBeDefined();
+-        // half the CONTROL rung, not half the box
+-        expect(body).toContain("border-radius: calc(var(--button-size) / 2)");
+-        expect(body).not.toContain("border-radius: var(--radius-pill)");
+-        // --button-size IS the control cohort, so the bound tracks the size arms
+-        expect(body).toContain("--button-size: var(--control-h-md)");
++    it("the control role is half the holder's own rung, re-declared on every element", () => {
++        const sheet = strip(radius);
++        expect(RADIUS_DECLS.get("--radius-control")).toBe("calc(var(--control-rung) / 2)");
++        // the rung-less reader keeps the stadium: the root rung is twice the pill
++        expect(sheet).toMatch(/:root\s*\{\s*--control-rung:\s*calc\(var\(--radius-pill\) \* 2\);/);
++        // a :root-only formula computes once and every holder inherits it (0px);
++        // the rule is re-declared where each element publishes its rung
++        expect(sheet).toMatch(
++            /:where\(\*\)\s*\{\s*--radius-control:\s*calc\(var\(--control-rung\) \/ 2\);/,
++        );
++    });
++
++    it("each control holder publishes its rung and reads the control role", () => {
++        const holders: ReadonlyArray<[string, string, string]> = [
++            ["src/components/button/styles.css", "\\.button", "--control-rung: var(--button-size)"],
++            [
++                "src/components/toggle-group/styles.css",
++                "\\.toggle-group__item",
++                "--control-rung: var(--toggle-group-item-size)",
++            ],
++            [
++                "src/styles/glass/glass-chip.css",
++                "\\.glass-chip",
++                "--control-rung: max(calc(1lh + 2 * var(--chip-pad-block)), var(--chip-floor, 0px))",
++            ],
++        ];
++        for (const [file, selector, rung] of holders) {
++            const body = rule(read(file), selector);
++            expect(body, file).toBeDefined();
++            expect(body, file).toContain(rung);
++            expect(body, file).toContain("border-radius: var(--radius-control)");
++        }
++        expect(read("src/components/_shared/disclosure/disclosure.css")).toContain(
++            "--control-rung: max(2.75rem, calc(1lh + 2rem))",
++        );
++        // --button-size IS the control cohort, so Button's rung tracks the size arms
++        expect(rule(read("src/components/button/styles.css"), "\\.button")).toContain(
++            "--button-size: var(--control-h-md)",
++        );
+         // the refused mechanism, kept refused
+         expect(strip(read("src/components/button/styles.css"))).not.toMatch(
+             /border-radius:\s*min\(/,
+@@ -562,9 +594,9 @@ describe("7. this wave's role bindings", () => {
+         // …and the sentinel-producing calc goes with it, in EITHER spelling: the
+         // literal D-5 recorded and the relay #23 re-expressed it as.
+         expect(strippedSheet).not.toMatch(/var\(--radius-pill\)\s*\+/);
+-        // The segment keeps its own role rung (law B) — one stadium, one spelling.
++        // The segment reads the control role against its own rung.
+         const item = rule(sheet, "\\.toggle-group__item");
+-        expect(item).toContain("border-radius: var(--radius-pill)");
++        expect(item).toContain("border-radius: var(--radius-control)");
+     });
+
+     it("mints no radius token to do any of it", () => {
