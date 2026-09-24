@@ -1,0 +1,56 @@
+{
+ "step": "B-S2 placement pass 2 (frozen, F-9)",
+ "moves": [
+  {
+   "from": "src/components/dock/search/types.ts",
+   "to": "src/components/dock/composables/types.ts"
+  },
+  {
+   "from": "src/composables/glass/backdropLuminanceSample.ts",
+   "to": "src/components/dock/backdropLuminanceSample.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/search/types.ts",
+   "reason": "B-S2 placement: src/components/dock/search/types.ts -> src/components/dock/composables/types.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/glass/backdropLuminanceSample.ts",
+   "reason": "B-S2 placement: src/composables/glass/backdropLuminanceSample.ts -> src/components/dock/backdropLuminanceSample.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/search/types.ts",
+   "reason": "B-S2 placement: src/components/dock/search/types.ts -> src/components/dock/composables/types.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/search/types.ts",
+   "reason": "B-S2 placement: src/components/dock/search/types.ts -> src/components/dock/composables/types.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "reasons": [
+  {
+   "from": "src/components/dock/search/types.ts",
+   "why": "F-7 move: lives inside reader src/components/dock/search",
+   "readers": [
+    "src/components/dock",
+    "src/components/dock/search"
+   ]
+  },
+  {
+   "from": "src/composables/glass/backdropLuminanceSample.ts",
+   "why": "F-7 move: read by one unit, lives outside it",
+   "readers": [
+    "src/components/dock"
+   ]
+  }
+ ]
+}

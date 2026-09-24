@@ -1,0 +1,121 @@
+{
+ "step": "B-S3 module carve (frozen, F-9)",
+ "moves": [
+  {
+   "from": "src/composables/color/value.ts",
+   "to": "src/composables/color/value/value.ts"
+  },
+  {
+   "from": "src/composables/motion/core/motionTempo.ts",
+   "to": "src/composables/motion/core/tempo/motionTempo.ts"
+  },
+  {
+   "from": "src/composables/motion/core/asElement.ts",
+   "to": "src/composables/motion/core/element/asElement.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/color/value.ts",
+   "reason": "B-S3 carve: src/composables/color/value.ts -> src/composables/color/value/value.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/motion/core/asElement.ts",
+   "reason": "B-S3 carve: src/composables/motion/core/asElement.ts -> src/composables/motion/core/element/asElement.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/motion/core/motionTempo.ts",
+   "reason": "B-S3 carve: src/composables/motion/core/motionTempo.ts -> src/composables/motion/core/tempo/motionTempo.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "reasons": [
+  {
+   "from": "src/composables/color/value.ts",
+   "why": "authored: the value.js colour adapter. LAW §5 (door sub-module): read from outside its module, unpublished on the module door, which is a published entry; a sub-module of its own gives it a library-internal door, so the surface does not grow and no reader reaches past a door"
+  },
+  {
+   "from": "src/composables/motion/core/motionTempo.ts",
+   "why": "authored: the --motion-tempo reader. LAW §5 (door sub-module): read from outside its module, unpublished on the module door, which is a published entry; a sub-module of its own gives it a library-internal door, so the surface does not grow and no reader reaches past a door"
+  },
+  {
+   "from": "src/composables/motion/core/asElement.ts",
+   "why": "authored: the element resolver ./motion publishes. LAW §5 (door sub-module): read from outside its module, unpublished on the module door, which is a published entry; a sub-module of its own gives it a library-internal door, so the surface does not grow and no reader reaches past a door"
+  }
+ ],
+ "refused": [
+  {
+   "unit": "src/components/aurora",
+   "moves": 4,
+   "added": 3,
+   "first": [
+    [
+     "src/components/aurora/runtime",
+     "src/components/aurora/runtime/webgl"
+    ],
+    [
+     "src/components/aurora/runtime",
+     "src/components/aurora/runtime/webgpu"
+    ],
+    [
+     "src/components/aurora/runtime/webgl",
+     "src/components/aurora/runtime/webgpu"
+    ]
+   ]
+  },
+  {
+   "unit": "src/components/blob",
+   "moves": 1,
+   "added": 1,
+   "first": [
+    [
+     "src/components/blob/renderer",
+     "src/components/blob/renderer/webgpu"
+    ]
+   ]
+  },
+  {
+   "unit": "src/components/sortable-list",
+   "moves": 1,
+   "added": 1,
+   "first": [
+    [
+     "src/components/sortable-list",
+     "src/components/sortable-list/drag"
+    ]
+   ]
+  }
+ ],
+ "declined": [
+  {
+   "unit": "src/components/dock",
+   "root": "GlassDock.vue",
+   "why": "GlassDock.vue is the dock under its product name; nesting it in dock/glass-dock/ would make a second dock inside the dock, and its closure (morph, run, click integrity, shell props) reads dockContext, which the floor's row m02 pins in dock/composables/ (FD-2 would refuse the nesting cycle)"
+  },
+  {
+   "unit": "src/components/fourier-field",
+   "root": "renderer/wgpu.ts",
+   "why": "renderer/ is the authored name and already holds the WebGPU renderer, its uniforms and both WGSL programs; G's wgpu/ erased it (G-crit F-5)"
+  },
+  {
+   "unit": "src/components/sheet",
+   "root": "SheetContent.vue",
+   "why": "detents/ is the authored concept (G-crit F-5); SheetContent.vue stays the sheet's content root"
+  },
+  {
+   "unit": "src/composables/glass",
+   "root": "webgpu/useGpuSubstrate.ts",
+   "why": "webgpu/ is the authored backend module (5 files); a 3-file level inside it adds a name for nothing"
+  },
+  {
+   "unit": "src/composables/motion",
+   "root": "route/useRouteTransition.ts",
+   "why": "useViewTransition is anchored in motion/core (./motion-core publishes it); route/ stays as authored"
+  }
+ ]
+}

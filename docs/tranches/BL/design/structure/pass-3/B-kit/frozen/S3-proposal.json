@@ -1,0 +1,326 @@
+{
+ "step": "B-S3 dominance proposal (frozen, F-9)",
+ "proposal": [
+  {
+   "unit": "src/components/aurora",
+   "dirs": [
+    {
+     "root": "runtime/runtime.ts",
+     "dir": "runtime",
+     "members": [
+      "runtime/runtime.ts",
+      "runtime/frame/auroraImageSource.ts",
+      "runtime/frame/frameLoop.ts",
+      "runtime/frame/textureUpload.ts",
+      "runtime/frame/uniformBridge.ts",
+      "runtime/webgl/glSetup.ts",
+      "runtime/webgl/aurora-image.frag.ts",
+      "runtime/webgl/aurora.vert.ts",
+      "runtime/webgl/palette/aurora.frag.ts",
+      "runtime/webgl/palette/brush.glsl.ts",
+      "runtime/webgl/palette/composition.glsl.ts",
+      "runtime/webgl/palette/curlNoise.glsl.ts",
+      "runtime/webgl/palette/flow.glsl.ts",
+      "runtime/webgl/palette/mediums.glsl.ts",
+      "runtime/webgl/palette/metal-medium.glsl.ts",
+      "runtime/webgl/palette/oil-modes.glsl.ts",
+      "runtime/webgl/palette/vangogh-medium.glsl.ts",
+      "runtime/webgl/palette/tonemap.glsl.ts",
+      "runtime/webgpu/wgpuSetup.ts",
+      "runtime/webgpu/aurora-image.wgsl.ts",
+      "runtime/webgpu/aurora.wgsl.ts",
+      "runtime/webgpu/aurora-mediums.wgsl.ts",
+      "runtime/webgpu/curlNoise.wgsl.ts",
+      "runtime/webgpu/uniformBridgeWGPU.ts",
+      "runtime/webgpu/uniformBridgeWGPUImage.ts"
+     ]
+    },
+    {
+     "root": "runtime/webgl/glSetup.ts",
+     "dir": "runtime/gl-setup",
+     "members": [
+      "runtime/webgl/glSetup.ts",
+      "runtime/webgl/aurora-image.frag.ts",
+      "runtime/webgl/aurora.vert.ts",
+      "runtime/webgl/palette/aurora.frag.ts",
+      "runtime/webgl/palette/brush.glsl.ts",
+      "runtime/webgl/palette/composition.glsl.ts",
+      "runtime/webgl/palette/curlNoise.glsl.ts",
+      "runtime/webgl/palette/flow.glsl.ts",
+      "runtime/webgl/palette/mediums.glsl.ts",
+      "runtime/webgl/palette/metal-medium.glsl.ts",
+      "runtime/webgl/palette/oil-modes.glsl.ts",
+      "runtime/webgl/palette/vangogh-medium.glsl.ts",
+      "runtime/webgl/palette/tonemap.glsl.ts"
+     ]
+    },
+    {
+     "root": "runtime/webgl/palette/aurora.frag.ts",
+     "dir": "runtime/gl-setup/frag",
+     "members": [
+      "runtime/webgl/palette/aurora.frag.ts",
+      "runtime/webgl/palette/brush.glsl.ts",
+      "runtime/webgl/palette/composition.glsl.ts",
+      "runtime/webgl/palette/curlNoise.glsl.ts",
+      "runtime/webgl/palette/flow.glsl.ts",
+      "runtime/webgl/palette/mediums.glsl.ts",
+      "runtime/webgl/palette/metal-medium.glsl.ts",
+      "runtime/webgl/palette/oil-modes.glsl.ts",
+      "runtime/webgl/palette/vangogh-medium.glsl.ts",
+      "runtime/webgl/palette/tonemap.glsl.ts"
+     ]
+    },
+    {
+     "root": "runtime/webgl/palette/mediums.glsl.ts",
+     "dir": "runtime/gl-setup/frag/mediums-glsl",
+     "members": [
+      "runtime/webgl/palette/mediums.glsl.ts",
+      "runtime/webgl/palette/metal-medium.glsl.ts",
+      "runtime/webgl/palette/oil-modes.glsl.ts",
+      "runtime/webgl/palette/vangogh-medium.glsl.ts"
+     ]
+    },
+    {
+     "root": "runtime/webgpu/wgpuSetup.ts",
+     "dir": "runtime/wgpu-setup",
+     "members": [
+      "runtime/webgpu/wgpuSetup.ts",
+      "runtime/webgpu/aurora-image.wgsl.ts",
+      "runtime/webgpu/aurora.wgsl.ts",
+      "runtime/webgpu/aurora-mediums.wgsl.ts",
+      "runtime/webgpu/curlNoise.wgsl.ts",
+      "runtime/webgpu/uniformBridgeWGPU.ts",
+      "runtime/webgpu/uniformBridgeWGPUImage.ts"
+     ]
+    },
+    {
+     "root": "runtime/webgpu/aurora.wgsl.ts",
+     "dir": "runtime/wgpu-setup/wgsl",
+     "members": [
+      "runtime/webgpu/aurora.wgsl.ts",
+      "runtime/webgpu/aurora-mediums.wgsl.ts",
+      "runtime/webgpu/curlNoise.wgsl.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/blob",
+   "dirs": [
+    {
+     "root": "renderer/useMetaballRenderer.ts",
+     "dir": "metaball-renderer",
+     "members": [
+      "renderer/useMetaballRenderer.ts",
+      "renderer/blobSimulation.ts",
+      "renderer/surface/resolveBlobSurface.ts",
+      "renderer/uploadBlobUniforms.ts",
+      "renderer/webgl/buildMetaballProgram.ts",
+      "renderer/webgl/metaball.frag.ts",
+      "renderer/webgl/metaball-uniforms.glsl.ts",
+      "renderer/webgl/oklch-perturb.glsl.ts",
+      "renderer/webgl/sdf-body.glsl.ts",
+      "renderer/webgl/watercolor-edges.glsl.ts",
+      "renderer/webgl/metaball.vert.ts",
+      "renderer/webgpu/wgpuSetup.ts",
+      "renderer/webgpu/metaball.wgsl.ts",
+      "renderer/webgpu/metaball-noise.wgsl.ts",
+      "renderer/webgpu/metaball-palette.wgsl.ts",
+      "renderer/webgpu/uniformBridgeWGPU.ts"
+     ]
+    },
+    {
+     "root": "renderer/webgl/buildMetaballProgram.ts",
+     "dir": "metaball-renderer/build-metaball-program",
+     "members": [
+      "renderer/webgl/buildMetaballProgram.ts",
+      "renderer/webgl/metaball.frag.ts",
+      "renderer/webgl/metaball-uniforms.glsl.ts",
+      "renderer/webgl/oklch-perturb.glsl.ts",
+      "renderer/webgl/sdf-body.glsl.ts",
+      "renderer/webgl/watercolor-edges.glsl.ts",
+      "renderer/webgl/metaball.vert.ts"
+     ]
+    },
+    {
+     "root": "renderer/webgl/metaball.frag.ts",
+     "dir": "metaball-renderer/build-metaball-program/metaball-frag",
+     "members": [
+      "renderer/webgl/metaball.frag.ts",
+      "renderer/webgl/metaball-uniforms.glsl.ts",
+      "renderer/webgl/oklch-perturb.glsl.ts",
+      "renderer/webgl/sdf-body.glsl.ts",
+      "renderer/webgl/watercolor-edges.glsl.ts"
+     ]
+    },
+    {
+     "root": "renderer/webgpu/wgpuSetup.ts",
+     "dir": "metaball-renderer/wgpu-setup",
+     "members": [
+      "renderer/webgpu/wgpuSetup.ts",
+      "renderer/webgpu/metaball.wgsl.ts",
+      "renderer/webgpu/metaball-noise.wgsl.ts",
+      "renderer/webgpu/metaball-palette.wgsl.ts",
+      "renderer/webgpu/uniformBridgeWGPU.ts"
+     ]
+    },
+    {
+     "root": "renderer/webgpu/metaball.wgsl.ts",
+     "dir": "metaball-renderer/wgpu-setup/metaball-wgsl",
+     "members": [
+      "renderer/webgpu/metaball.wgsl.ts",
+      "renderer/webgpu/metaball-noise.wgsl.ts",
+      "renderer/webgpu/metaball-palette.wgsl.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/dock",
+   "dirs": [
+    {
+     "root": "GlassDock.vue",
+     "dir": "glass-dock",
+     "members": [
+      "GlassDock.vue",
+      "composables/dockMorphMeasure.ts",
+      "composables/useDockClickIntegrity.ts",
+      "composables/useDockMorph.ts",
+      "composables/useDockRun.ts",
+      "composables/useDockShellProps.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/fourier-field",
+   "dirs": [
+    {
+     "root": "renderer/wgpu.ts",
+     "dir": "wgpu",
+     "members": [
+      "renderer/wgpu.ts",
+      "renderer/compute.wgsl.ts",
+      "renderer/render.wgsl.ts",
+      "renderer/uniforms.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/sheet",
+   "dirs": [
+    {
+     "root": "SheetContent.vue",
+     "dir": "content",
+     "members": [
+      "SheetContent.vue",
+      "detents/projection.ts",
+      "detents/useSheetDetents.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/sortable-list",
+   "dirs": [
+    {
+     "root": "useSortable.ts",
+     "dir": "sortable",
+     "members": [
+      "useSortable.ts",
+      "drag/drag.ts",
+      "drag/ghost.ts",
+      "drag/motion.ts",
+      "resolve/resolve.ts"
+     ]
+    },
+    {
+     "root": "drag/drag.ts",
+     "dir": "sortable/drag",
+     "members": [
+      "drag/drag.ts",
+      "drag/ghost.ts",
+      "drag/motion.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/tabs",
+   "dirs": [
+    {
+     "root": "segmented-tabs/SegmentedTabs.vue",
+     "dir": "segmented-tabs",
+     "members": [
+      "segmented-tabs/SegmentedTabs.vue",
+      "segmented-tabs/useTabDragMorph.ts",
+      "segmented-tabs/useTabResponsive.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/toast",
+   "dirs": [
+    {
+     "root": "toaster/Toaster.vue",
+     "dir": "toaster",
+     "members": [
+      "toaster/Toaster.vue",
+      "toaster/Toast.vue",
+      "toaster/ToastClose.vue",
+      "toaster/ToastDescription.vue",
+      "toaster/ToastTitle.vue"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/typewriter",
+   "dirs": [
+    {
+     "root": "text/TypewriterText.vue",
+     "dir": "text",
+     "members": [
+      "text/TypewriterText.vue",
+      "text/graphemes.ts",
+      "text/useTypewriter.ts",
+      "text/keyboard.ts",
+      "text/pausePatterns.ts",
+      "text/timing.ts",
+      "text/typoStateMachine.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/composables/glass",
+   "dirs": [
+    {
+     "root": "webgpu/useGpuSubstrate.ts",
+     "dir": "gpu-substrate",
+     "members": [
+      "webgpu/useGpuSubstrate.ts",
+      "webgpu/useWebGPUCanvas.ts",
+      "webgpu/webgpuDevice.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/composables/motion",
+   "dirs": [
+    {
+     "root": "route/useRouteTransition.ts",
+     "dir": "route-transition",
+     "members": [
+      "route/useRouteTransition.ts",
+      "core/useViewTransition.ts",
+      "route/routeGrammar.ts"
+     ]
+    }
+   ]
+  }
+ ]
+}

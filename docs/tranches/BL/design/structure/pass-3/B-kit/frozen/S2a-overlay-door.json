@@ -1,0 +1,7 @@
+{
+ "step": "B-S2a: the overlay door drops isTeleportedTarget (authored row)",
+ "why": "B11: the overlay door publishes isTeleportedTarget and no file reads it through that door (its one reader, dock/useDockState.ts, imports the file). F-7 places the file in dock (P3-R6); left on the door, the kernel door would re-export a unit file (B8) and the move would add the co-cyclic pair _shared/overlay <-> dock, which FD-2 refuses.",
+ "files": {
+  "src/components/_shared/overlay/index.ts": { "hunks": [["export { isTeleportedTarget } from \"./isTeleportedTarget\";\n", ""]] }
+ }
+}

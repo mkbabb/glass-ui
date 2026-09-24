@@ -1,0 +1,65 @@
+{
+ "note": "B-S2 authored placement inputs (LAW §2-§3). F-7 derives every home; a person writes only the file names F-7 cannot derive (NEEDS-NAME, a row marked global that would land loose in a container) and the co-move groups whose members' final home is the next pass's (FD-2 would refuse the first half alone). Each entry names why.",
+ "targets": {
+  "src/components/dialog/ModalOverlay.vue": {
+   "to": "src/components/_shared/overlay/ModalOverlay.vue",
+   "why": "F-7 global (dialog, sheet); SPECS-v2 §1.4 authored target: the overlay kernel module already owns the modal layer (participation, OverlayHost); cures M03"
+  },
+  "src/components/aurora/constants/budget.ts": {
+   "to": "src/composables/glass/budget.ts",
+   "why": "F-7 global (aurora, blob); proposedPath lands it loose in the src/composables container. Its content is the GPU surface budget; the glass kernel module holds the GPU substrate both readers already read"
+  },
+  "src/composables/glass/webgl/shaders/flow.glsl.ts": {
+   "to": "src/components/aurora/constants/shaders/curlNoise.glsl.ts",
+   "why": "NEEDS-NAME: the target flow.glsl.ts exists (aurora's own). The file is the curl-noise field; B's pass-2 name"
+  },
+  "src/composables/glass/webgl/shaders/flow.wgsl.ts": {
+   "to": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts",
+   "why": "the WGSL twin follows its GLSL sibling's authored name"
+  },
+  "src/composables/glass/webgl/createCanvasLifecycle.ts": {
+   "to": "src/composables/glass/lifecycle/createCanvasLifecycle.ts",
+   "why": "F-7 move to the glass module (readers canvas2d, webgl, webgpu). LAW §2b: the glass door reads canvas2d, so a shared file at the glass root would make the nesting cycle glass <-> glass/canvas2d that FD-2 refuses (measured: 3 pairs); it lands in a sibling module named by its concern, lifecycle/"
+  },
+  "src/composables/search/useFuzzySearch.ts": {
+   "to": "src/components/dock/search/useFuzzySearch.ts",
+   "why": "F-7 move (read only by dock). LAW §3: the kernel module search (useFuzzySearch, match, types; its door reached by no entry) is placed whole into its one reader and keeps its authored name as dock/search/"
+  }
+ },
+ "groups": [
+  {
+   "with": "src/composables/glass/webgl/createCanvasLifecycle.ts",
+   "moves": [
+    {
+     "from": "src/composables/glass/webgl/backingSize.ts",
+     "to": "src/composables/glass/lifecycle/backingSize.ts"
+    },
+    {
+     "from": "src/composables/glass/webgl/visibility.ts",
+     "to": "src/composables/glass/lifecycle/visibility.ts"
+    }
+   ],
+   "why": "the lifecycle reads both, and F-7 moves each to the lifecycle once it moves (their readers become lifecycle, webgl, webgpu). Moved in the same list so no pass holds a half-moved lifecycle"
+  },
+  {
+   "with": "src/composables/search/useFuzzySearch.ts",
+   "moves": [
+    {
+     "from": "src/composables/search/match.ts",
+     "to": "src/components/dock/search/match.ts"
+    },
+    {
+     "from": "src/composables/search/types.ts",
+     "to": "src/components/dock/search/types.ts"
+    }
+   ],
+   "why": "LAW §3: the rest of the search module; F-7 moves each into dock once useFuzzySearch has moved (their readers become dock). The emptied kernel door is dissolved by row S2b"
+  }
+ ],
+ "holds": {
+  "src/components/_shared/overlay/isTeleportedTarget.ts": {
+   "home": "src/components/dock",
+   "why": "FD-8: P3-R6 places it by its readers (dock), but the F-2 image check refuses the move because demo/demo.css:106 @source \"../src/components/_shared/**/*.ts\" loses the file, and the floor engine has no declaration for a css-source membership change (only scan edges take scanDeltas). Widening the glob is refused by demo.css itself (shader template literals under components/). Owed: a floor css-source delta arm; no route-side cure is clean"
+  }
+ }
+}

@@ -1,0 +1,254 @@
+{
+ "note": "B-S3 authored names (LAW §3). The dominance proposer (lib/dominance.mjs) finds each module boundary under a single-owner root; a person names it here. A decision is keyed by unit and the root's path relative to the unit at the time of the proposal. name: the dir's name (default: rootName). collapse: the dir folds into its parent dir. keep: the proposal is declined and every member stays where it lives, with the reason. rootAs: the root file's name inside its dir (a CSS aggregator becomes the dir's index.css door). Files the proposer would pull OUT of an existing authored dir are never moved (authored boundaries are kept); only members entering an accepted dir move. `authored` lists B's own carve where dominance finds no root (peer sets), each with its reason.",
+ "decisions": {
+  "src/components/aurora": {
+   "composables/runtime.ts": {
+    "name": "runtime",
+    "why": "the aurora frame runtime: runtime, frameLoop, uniformBridge, textureUpload, auroraImageSource, and its two backends"
+   },
+   "composables/glSetup.ts": {
+    "name": "webgl",
+    "why": "B's authored backend name (S-19: the same 13 files G found); G's gl-setup is a file-derived name"
+   },
+   "constants/shaders/aurora.frag.ts": {
+    "name": "palette",
+    "why": "B's authored name for the fragment program and its brush, composition, flow, noise and tonemap stages"
+   },
+   "constants/shaders/mediums.glsl.ts": {
+    "collapse": true,
+    "why": "the four medium shaders are palette stages; a 4-file mediums-glsl/ level is a file-derived name (G-crit F-5)"
+   },
+   "composables/wgpuSetup.ts": {
+    "name": "webgpu",
+    "why": "B's authored backend name (S-19: the same 7 files)"
+   },
+   "constants/shaders/aurora.wgsl.ts": {
+    "collapse": true,
+    "why": "a 3-file wgsl/ level inside webgpu/ is a file-derived name"
+   }
+  },
+  "src/components/blob": {
+   "composables/useMetaballRenderer.ts": {
+    "name": "renderer",
+    "why": "the metaball renderer and its two backends; the unit token and hook prefix carry nothing"
+   },
+   "composables/buildMetaballProgram.ts": {
+    "name": "webgl",
+    "why": "the WebGL backend, named as aurora's is"
+   },
+   "shaders/metaball.frag.ts": {
+    "collapse": true,
+    "why": "the fragment stages are the WebGL program's own"
+   },
+   "composables/wgpuSetup.ts": {
+    "name": "webgpu",
+    "why": "the WebGPU backend, named as aurora's is"
+   },
+   "shaders/metaball.wgsl.ts": {
+    "collapse": true,
+    "why": "the WGSL modules are the WebGPU backend's own"
+   }
+  },
+  "src/components/dock": {
+   "GlassDock.vue": {
+    "keep": true,
+    "why": "GlassDock.vue is the dock under its product name; nesting it in dock/glass-dock/ would make a second dock inside the dock, and its closure (morph, run, click integrity, shell props) reads dockContext, which the floor's row m02 pins in dock/composables/ (FD-2 would refuse the nesting cycle)"
+   },
+   "styles/controls.css": {
+    "name": "controls",
+    "rootAs": "index.css",
+    "why": "the controls sheet and its four partials are one CSS module; the aggregator becomes its door (B5: no dir inside a kind slot)"
+   }
+  },
+  "src/components/fourier-field": {
+   "renderer/wgpu.ts": {
+    "keep": true,
+    "why": "renderer/ is the authored name and already holds the WebGPU renderer, its uniforms and both WGSL programs; G's wgpu/ erased it (G-crit F-5)"
+   }
+  },
+  "src/components/sheet": {
+   "SheetContent.vue": {
+    "keep": true,
+    "why": "detents/ is the authored concept (G-crit F-5); SheetContent.vue stays the sheet's content root"
+   }
+  },
+  "src/components/sortable-list": {
+   "useSortable.ts": {
+    "collapse": true,
+    "why": "useSortable is SortableList's own composable; a sortable/ level inside sortable-list/ repeats the unit"
+   },
+   "drag.ts": {
+    "name": "drag",
+    "why": "the drag engine (drag, ghost, motion); S-19: the same 3 files in B and G"
+   }
+  },
+  "src/components/tabs": {
+   "SegmentedTabs.vue": {
+    "name": "segmented-tabs",
+    "why": "the segmented tabs and their two private composables (found by G, not carved by B in pass 2)"
+   }
+  },
+  "src/components/toast": {
+   "Toaster.vue": {
+    "name": "toaster",
+    "why": "the toaster and the four sub-components only it renders"
+   }
+  },
+  "src/components/typewriter": {
+   "TypewriterText.vue": {
+    "name": "text",
+    "why": "TypewriterText and its engine; the placeholder utils/ dissolves into it (B15)"
+   }
+  },
+  "src/composables/glass": {
+   "webgpu/useGpuSubstrate.ts": {
+    "keep": true,
+    "why": "webgpu/ is the authored backend module (5 files); a 3-file level inside it adds a name for nothing"
+   }
+  },
+  "src/composables/motion": {
+   "route/useRouteTransition.ts": {
+    "keep": true,
+    "why": "useViewTransition is anchored in motion/core (./motion-core publishes it); route/ stays as authored"
+   }
+  }
+ },
+ "authored": [
+  {
+   "from": "src/components/aurora/constants/presets.ts",
+   "to": "src/components/aurora/presets.ts",
+   "why": "B pass-2: constants/ dissolves; the presets are the unit's own (dominance owner: the unit root)"
+  },
+  {
+   "from": "src/components/aurora/constants/renderMode.ts",
+   "to": "src/components/aurora/renderMode.ts",
+   "why": "as presets.ts"
+  },
+  {
+   "from": "src/components/dock/composables/useDockSearch.ts",
+   "to": "src/components/dock/search/useDockSearch.ts",
+   "why": "B's dock/search (S-19): the search hook joins the engine it drives"
+  },
+  {
+   "from": "src/components/dock/composables/types.ts",
+   "to": "src/components/dock/search/types.ts",
+   "why": "the search result types; read only by search once useDockSearch joins it"
+  },
+  {
+   "from": "src/components/dock/composables/useGlassBackdropLuminance.ts",
+   "to": "src/components/dock/legibility/useGlassBackdropLuminance.ts",
+   "why": "B's dock/legibility (S-19): the backdrop-luminance sampler and its two helpers"
+  },
+  {
+   "from": "src/components/dock/backdropLuminanceSample.ts",
+   "to": "src/components/dock/legibility/backdropLuminanceSample.ts",
+   "why": "as useGlassBackdropLuminance"
+  },
+  {
+   "from": "src/components/dock/backdropSampleMath.ts",
+   "to": "src/components/dock/legibility/backdropSampleMath.ts",
+   "why": "as useGlassBackdropLuminance"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSub.vue",
+   "to": "src/components/menu/sub/DropdownMenuSub.vue",
+   "why": "B's menu/sub: the submenu and its content and trigger (a peer set dominance cannot split, R-5 menu 16)"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSubContent.vue",
+   "to": "src/components/menu/sub/DropdownMenuSubContent.vue",
+   "why": "as DropdownMenuSub"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSubTrigger.vue",
+   "to": "src/components/menu/sub/DropdownMenuSubTrigger.vue",
+   "why": "as DropdownMenuSub"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuItem.vue",
+   "to": "src/components/menu/items/DropdownMenuItem.vue",
+   "why": "B's menu/items: the item kinds (peer set)"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuCheckboxItem.vue",
+   "to": "src/components/menu/items/DropdownMenuCheckboxItem.vue",
+   "why": "as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuRadioGroup.vue",
+   "to": "src/components/menu/items/DropdownMenuRadioGroup.vue",
+   "why": "as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuRadioItem.vue",
+   "to": "src/components/menu/items/DropdownMenuRadioItem.vue",
+   "why": "as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuLabel.vue",
+   "to": "src/components/menu/items/DropdownMenuLabel.vue",
+   "why": "as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSeparator.vue",
+   "to": "src/components/menu/items/DropdownMenuSeparator.vue",
+   "why": "as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuShortcut.vue",
+   "to": "src/components/menu/items/DropdownMenuShortcut.vue",
+   "why": "as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuGroup.vue",
+   "to": "src/components/menu/items/DropdownMenuGroup.vue",
+   "why": "as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/sheet/detents/use.ts",
+   "to": "src/components/sheet/detents/useSheetDetents.ts",
+   "why": "B15: use.ts names nothing; the file holds useSheetDetents (B-07)"
+  },
+  {
+   "from": "src/composables/motion/core/motionTempo.ts",
+   "to": "src/composables/motion/core/tempo/motionTempo.ts",
+   "why": "the --motion-tempo reader. LAW §5 (door sub-module): read from outside its module, unpublished on the module door, which is a published entry; a sub-module of its own gives it a library-internal door, so the surface does not grow and no reader reaches past a door"
+  },
+  {
+   "from": "src/composables/motion/core/asElement.ts",
+   "to": "src/composables/motion/core/element/asElement.ts",
+   "why": "the element resolver ./motion publishes. LAW §5 (door sub-module): read from outside its module, unpublished on the module door, which is a published entry; a sub-module of its own gives it a library-internal door, so the surface does not grow and no reader reaches past a door"
+  },
+  {
+   "from": "src/composables/color/value.ts",
+   "to": "src/composables/color/value/value.ts",
+   "why": "the value.js colour adapter. LAW §5 (door sub-module): read from outside its module, unpublished on the module door, which is a published entry; a sub-module of its own gives it a library-internal door, so the surface does not grow and no reader reaches past a door"
+  }
+ ],
+ "bases_note": "LAW §4 base modules: for each parent dir whose child modules value-read a parent-level file, the one sibling module those files move to. Keyed by unit, then the parent dir relative to the unit (. = the unit root). The files are computed by derive/carve.mjs; only the name is authored.",
+ "bases": {
+  "src/components/aurora": {
+   ".": "config",
+   "runtime": "frame"
+  },
+  "src/components/blob": {
+   ".": "mood",
+   "renderer": "surface"
+  },
+  "src/components/fourier-field": {
+   ".": "constants"
+  },
+  "src/components/menu": {
+   ".": "context"
+  },
+  "src/components/sortable-list": {
+   ".": "resolve"
+  },
+  "src/components/toast": {
+   ".": "queue"
+  },
+  "src/components/typewriter": {
+   ".": "options"
+  }
+ }
+}

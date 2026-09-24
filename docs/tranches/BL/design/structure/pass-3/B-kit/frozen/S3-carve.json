@@ -1,0 +1,2461 @@
+{
+ "step": "B-S3 module carve (frozen, F-9)",
+ "moves": [
+  {
+   "from": "src/components/aurora/composables/runtime.ts",
+   "to": "src/components/aurora/runtime/runtime.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/auroraImageSource.ts",
+   "to": "src/components/aurora/runtime/frame/auroraImageSource.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/frameLoop.ts",
+   "to": "src/components/aurora/runtime/frame/frameLoop.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/textureUpload.ts",
+   "to": "src/components/aurora/runtime/frame/textureUpload.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/uniformBridge.ts",
+   "to": "src/components/aurora/runtime/frame/uniformBridge.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/glSetup.ts",
+   "to": "src/components/aurora/runtime/webgl/glSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora-image.frag.ts",
+   "to": "src/components/aurora/runtime/webgl/aurora-image.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora.vert.ts",
+   "to": "src/components/aurora/runtime/webgl/aurora.vert.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/wgpuSetup.ts",
+   "to": "src/components/aurora/runtime/webgpu/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/uniformBridgeWGPU.ts",
+   "to": "src/components/aurora/runtime/webgpu/uniformBridgeWGPU.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/uniformBridgeWGPUImage.ts",
+   "to": "src/components/aurora/runtime/webgpu/uniformBridgeWGPUImage.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora-image.wgsl.ts",
+   "to": "src/components/aurora/runtime/webgpu/aurora-image.wgsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora.frag.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/brush.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/brush.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/composition.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/composition.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/curlNoise.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/curlNoise.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/flow.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/flow.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/tonemap.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/tonemap.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora.wgsl.ts",
+   "to": "src/components/aurora/runtime/webgpu/aurora.wgsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts",
+   "to": "src/components/aurora/runtime/webgpu/aurora-mediums.wgsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts",
+   "to": "src/components/aurora/runtime/webgpu/curlNoise.wgsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/mediums.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/mediums.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/metal-medium.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/metal-medium.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/oil-modes.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/oil-modes.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/vangogh-medium.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/vangogh-medium.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/presets.ts",
+   "to": "src/components/aurora/config/presets.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/renderMode.ts",
+   "to": "src/components/aurora/config/renderMode.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/color.ts",
+   "to": "src/components/aurora/config/color.ts"
+  },
+  {
+   "from": "src/components/blob/composables/useMetaballRenderer.ts",
+   "to": "src/components/blob/renderer/useMetaballRenderer.ts"
+  },
+  {
+   "from": "src/components/blob/composables/blobSimulation.ts",
+   "to": "src/components/blob/renderer/blobSimulation.ts"
+  },
+  {
+   "from": "src/components/blob/composables/resolveBlobSurface.ts",
+   "to": "src/components/blob/renderer/surface/resolveBlobSurface.ts"
+  },
+  {
+   "from": "src/components/blob/composables/uploadBlobUniforms.ts",
+   "to": "src/components/blob/renderer/uploadBlobUniforms.ts"
+  },
+  {
+   "from": "src/components/blob/composables/wgpuSetup.ts",
+   "to": "src/components/blob/renderer/webgpu/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/blob/composables/uniformBridgeWGPU.ts",
+   "to": "src/components/blob/renderer/webgpu/uniformBridgeWGPU.ts"
+  },
+  {
+   "from": "src/components/blob/composables/buildMetaballProgram.ts",
+   "to": "src/components/blob/renderer/webgl/buildMetaballProgram.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball.vert.ts",
+   "to": "src/components/blob/renderer/webgl/metaball.vert.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball.wgsl.ts",
+   "to": "src/components/blob/renderer/webgpu/metaball.wgsl.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball-noise.wgsl.ts",
+   "to": "src/components/blob/renderer/webgpu/metaball-noise.wgsl.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball-palette.wgsl.ts",
+   "to": "src/components/blob/renderer/webgpu/metaball-palette.wgsl.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball.frag.ts",
+   "to": "src/components/blob/renderer/webgl/metaball.frag.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball-uniforms.glsl.ts",
+   "to": "src/components/blob/renderer/webgl/metaball-uniforms.glsl.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/oklch-perturb.glsl.ts",
+   "to": "src/components/blob/renderer/webgl/oklch-perturb.glsl.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/sdf-body.glsl.ts",
+   "to": "src/components/blob/renderer/webgl/sdf-body.glsl.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/watercolor-edges.glsl.ts",
+   "to": "src/components/blob/renderer/webgl/watercolor-edges.glsl.ts"
+  },
+  {
+   "from": "src/components/blob/constants.ts",
+   "to": "src/components/blob/mood/constants.ts"
+  },
+  {
+   "from": "src/components/dock/styles/controls.css",
+   "to": "src/components/dock/controls/index.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls/icon-button.css",
+   "to": "src/components/dock/controls/icon-button.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls/tab-button.css",
+   "to": "src/components/dock/controls/tab-button.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls/touch-floor.css",
+   "to": "src/components/dock/controls/touch-floor.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls/triggers.css",
+   "to": "src/components/dock/controls/triggers.css"
+  },
+  {
+   "from": "src/components/dock/composables/useDockSearch.ts",
+   "to": "src/components/dock/search/useDockSearch.ts"
+  },
+  {
+   "from": "src/components/dock/composables/types.ts",
+   "to": "src/components/dock/search/types.ts"
+  },
+  {
+   "from": "src/components/dock/composables/useGlassBackdropLuminance.ts",
+   "to": "src/components/dock/legibility/useGlassBackdropLuminance.ts"
+  },
+  {
+   "from": "src/components/dock/backdropLuminanceSample.ts",
+   "to": "src/components/dock/legibility/backdropLuminanceSample.ts"
+  },
+  {
+   "from": "src/components/dock/backdropSampleMath.ts",
+   "to": "src/components/dock/legibility/backdropSampleMath.ts"
+  },
+  {
+   "from": "src/components/fourier-field/constants.ts",
+   "to": "src/components/fourier-field/constants/constants.ts"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSub.vue",
+   "to": "src/components/menu/sub/DropdownMenuSub.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSubContent.vue",
+   "to": "src/components/menu/sub/DropdownMenuSubContent.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSubTrigger.vue",
+   "to": "src/components/menu/sub/DropdownMenuSubTrigger.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuItem.vue",
+   "to": "src/components/menu/items/DropdownMenuItem.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuCheckboxItem.vue",
+   "to": "src/components/menu/items/DropdownMenuCheckboxItem.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuRadioGroup.vue",
+   "to": "src/components/menu/items/DropdownMenuRadioGroup.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuRadioItem.vue",
+   "to": "src/components/menu/items/DropdownMenuRadioItem.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuLabel.vue",
+   "to": "src/components/menu/items/DropdownMenuLabel.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSeparator.vue",
+   "to": "src/components/menu/items/DropdownMenuSeparator.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuShortcut.vue",
+   "to": "src/components/menu/items/DropdownMenuShortcut.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuGroup.vue",
+   "to": "src/components/menu/items/DropdownMenuGroup.vue"
+  },
+  {
+   "from": "src/components/menu/context.ts",
+   "to": "src/components/menu/context/context.ts"
+  },
+  {
+   "from": "src/components/sheet/detents/use.ts",
+   "to": "src/components/sheet/detents/useSheetDetents.ts"
+  },
+  {
+   "from": "src/components/sortable-list/drag.ts",
+   "to": "src/components/sortable-list/drag/drag.ts"
+  },
+  {
+   "from": "src/components/sortable-list/ghost.ts",
+   "to": "src/components/sortable-list/drag/ghost.ts"
+  },
+  {
+   "from": "src/components/sortable-list/motion.ts",
+   "to": "src/components/sortable-list/drag/motion.ts"
+  },
+  {
+   "from": "src/components/sortable-list/resolve.ts",
+   "to": "src/components/sortable-list/resolve/resolve.ts"
+  },
+  {
+   "from": "src/components/tabs/SegmentedTabs.vue",
+   "to": "src/components/tabs/segmented-tabs/SegmentedTabs.vue"
+  },
+  {
+   "from": "src/components/tabs/composables/useTabDragMorph.ts",
+   "to": "src/components/tabs/segmented-tabs/useTabDragMorph.ts"
+  },
+  {
+   "from": "src/components/tabs/composables/useTabResponsive.ts",
+   "to": "src/components/tabs/segmented-tabs/useTabResponsive.ts"
+  },
+  {
+   "from": "src/components/toast/Toaster.vue",
+   "to": "src/components/toast/toaster/Toaster.vue"
+  },
+  {
+   "from": "src/components/toast/Toast.vue",
+   "to": "src/components/toast/toaster/Toast.vue"
+  },
+  {
+   "from": "src/components/toast/ToastClose.vue",
+   "to": "src/components/toast/toaster/ToastClose.vue"
+  },
+  {
+   "from": "src/components/toast/ToastDescription.vue",
+   "to": "src/components/toast/toaster/ToastDescription.vue"
+  },
+  {
+   "from": "src/components/toast/ToastTitle.vue",
+   "to": "src/components/toast/toaster/ToastTitle.vue"
+  },
+  {
+   "from": "src/components/toast/use-toast.ts",
+   "to": "src/components/toast/queue/use-toast.ts"
+  },
+  {
+   "from": "src/components/typewriter/TypewriterText.vue",
+   "to": "src/components/typewriter/text/TypewriterText.vue"
+  },
+  {
+   "from": "src/components/typewriter/composables/useTypewriter.ts",
+   "to": "src/components/typewriter/text/useTypewriter.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/keyboard.ts",
+   "to": "src/components/typewriter/text/keyboard.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/pausePatterns.ts",
+   "to": "src/components/typewriter/text/pausePatterns.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/timing.ts",
+   "to": "src/components/typewriter/text/timing.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/typoStateMachine.ts",
+   "to": "src/components/typewriter/text/typoStateMachine.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/graphemes.ts",
+   "to": "src/components/typewriter/text/graphemes.ts"
+  },
+  {
+   "from": "src/components/typewriter/types.ts",
+   "to": "src/components/typewriter/options/types.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls.css -> src/components/dock/controls/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/controls/icon-button.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/icon-button.css -> src/components/dock/controls/icon-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/controls/tab-button.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/tab-button.css -> src/components/dock/controls/tab-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/controls/touch-floor.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/touch-floor.css -> src/components/dock/controls/touch-floor.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/controls/triggers.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/triggers.css -> src/components/dock/controls/triggers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/fourier-field/FourierField.smoke.test.ts",
+   "spec": "join(SRC, \"components/fourier-field\", file)",
+   "file": "src/components/fourier-field/constants.ts",
+   "reason": "B-S3 carve: src/components/fourier-field/constants.ts -> src/components/fourier-field/constants/constants.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${liar}`",
+   "file": "src/components/sortable-list/drag.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/drag.ts -> src/components/sortable-list/drag/drag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${liar}`",
+   "file": "src/components/sortable-list/ghost.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/ghost.ts -> src/components/sortable-list/drag/ghost.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${liar}`",
+   "file": "src/components/sortable-list/motion.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/motion.ts -> src/components/sortable-list/drag/motion.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${liar}`",
+   "file": "src/components/sortable-list/resolve.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/resolve.ts -> src/components/sortable-list/resolve/resolve.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${honest}`",
+   "file": "src/components/sortable-list/drag.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/drag.ts -> src/components/sortable-list/drag/drag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${honest}`",
+   "file": "src/components/sortable-list/ghost.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/ghost.ts -> src/components/sortable-list/drag/ghost.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${honest}`",
+   "file": "src/components/sortable-list/motion.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/motion.ts -> src/components/sortable-list/drag/motion.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${honest}`",
+   "file": "src/components/sortable-list/resolve.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/resolve.ts -> src/components/sortable-list/resolve/resolve.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/auroraImageSource.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/auroraImageSource.ts -> src/components/aurora/runtime/frame/auroraImageSource.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/color.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/color.ts -> src/components/aurora/config/color.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/frameLoop.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/frameLoop.ts -> src/components/aurora/runtime/frame/frameLoop.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/glSetup.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/glSetup.ts -> src/components/aurora/runtime/webgl/glSetup.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/runtime.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/runtime.ts -> src/components/aurora/runtime/runtime.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/textureUpload.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/textureUpload.ts -> src/components/aurora/runtime/frame/textureUpload.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/uniformBridge.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/uniformBridge.ts -> src/components/aurora/runtime/frame/uniformBridge.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/uniformBridgeWGPU.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/uniformBridgeWGPU.ts -> src/components/aurora/runtime/webgpu/uniformBridgeWGPU.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/uniformBridgeWGPUImage.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/uniformBridgeWGPUImage.ts -> src/components/aurora/runtime/webgpu/uniformBridgeWGPUImage.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/wgpuSetup.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/wgpuSetup.ts -> src/components/aurora/runtime/webgpu/wgpuSetup.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/presets.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/presets.ts -> src/components/aurora/config/presets.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/renderMode.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/renderMode.ts -> src/components/aurora/config/renderMode.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/aurora-image.frag.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora-image.frag.ts -> src/components/aurora/runtime/webgl/aurora-image.frag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/aurora-image.wgsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora-image.wgsl.ts -> src/components/aurora/runtime/webgpu/aurora-image.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts -> src/components/aurora/runtime/webgpu/aurora-mediums.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/aurora.frag.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora.frag.ts -> src/components/aurora/runtime/webgl/palette/aurora.frag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/aurora.vert.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora.vert.ts -> src/components/aurora/runtime/webgl/aurora.vert.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/aurora.wgsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora.wgsl.ts -> src/components/aurora/runtime/webgpu/aurora.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/brush.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/brush.glsl.ts -> src/components/aurora/runtime/webgl/palette/brush.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/composition.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/composition.glsl.ts -> src/components/aurora/runtime/webgl/palette/composition.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/curlNoise.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/curlNoise.glsl.ts -> src/components/aurora/runtime/webgl/palette/curlNoise.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/curlNoise.wgsl.ts -> src/components/aurora/runtime/webgpu/curlNoise.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/flow.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/flow.glsl.ts -> src/components/aurora/runtime/webgl/palette/flow.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/mediums.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/mediums.glsl.ts -> src/components/aurora/runtime/webgl/palette/mediums.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/metal-medium.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/metal-medium.glsl.ts -> src/components/aurora/runtime/webgl/palette/metal-medium.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/oil-modes.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/oil-modes.glsl.ts -> src/components/aurora/runtime/webgl/palette/oil-modes.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/tonemap.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/tonemap.glsl.ts -> src/components/aurora/runtime/webgl/palette/tonemap.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/vangogh-medium.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/vangogh-medium.glsl.ts -> src/components/aurora/runtime/webgl/palette/vangogh-medium.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/blobSimulation.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/blobSimulation.ts -> src/components/blob/renderer/blobSimulation.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/buildMetaballProgram.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/buildMetaballProgram.ts -> src/components/blob/renderer/webgl/buildMetaballProgram.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/resolveBlobSurface.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/resolveBlobSurface.ts -> src/components/blob/renderer/surface/resolveBlobSurface.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/uniformBridgeWGPU.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/uniformBridgeWGPU.ts -> src/components/blob/renderer/webgpu/uniformBridgeWGPU.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/uploadBlobUniforms.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/uploadBlobUniforms.ts -> src/components/blob/renderer/uploadBlobUniforms.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/useMetaballRenderer.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/useMetaballRenderer.ts -> src/components/blob/renderer/useMetaballRenderer.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/wgpuSetup.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/wgpuSetup.ts -> src/components/blob/renderer/webgpu/wgpuSetup.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/constants.ts",
+   "reason": "B-S3 carve: src/components/blob/constants.ts -> src/components/blob/mood/constants.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/metaball-noise.wgsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball-noise.wgsl.ts -> src/components/blob/renderer/webgpu/metaball-noise.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/metaball-palette.wgsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball-palette.wgsl.ts -> src/components/blob/renderer/webgpu/metaball-palette.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/metaball-uniforms.glsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball-uniforms.glsl.ts -> src/components/blob/renderer/webgl/metaball-uniforms.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/metaball.frag.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball.frag.ts -> src/components/blob/renderer/webgl/metaball.frag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/metaball.vert.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball.vert.ts -> src/components/blob/renderer/webgl/metaball.vert.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/metaball.wgsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball.wgsl.ts -> src/components/blob/renderer/webgpu/metaball.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/oklch-perturb.glsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/oklch-perturb.glsl.ts -> src/components/blob/renderer/webgl/oklch-perturb.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/sdf-body.glsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/sdf-body.glsl.ts -> src/components/blob/renderer/webgl/sdf-body.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/watercolor-edges.glsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/watercolor-edges.glsl.ts -> src/components/blob/renderer/webgl/watercolor-edges.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/backdropLuminanceSample.ts",
+   "reason": "B-S3 carve: src/components/dock/backdropLuminanceSample.ts -> src/components/dock/legibility/backdropLuminanceSample.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/backdropSampleMath.ts",
+   "reason": "B-S3 carve: src/components/dock/backdropSampleMath.ts -> src/components/dock/legibility/backdropSampleMath.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/composables/types.ts",
+   "reason": "B-S3 carve: src/components/dock/composables/types.ts -> src/components/dock/search/types.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/composables/useDockSearch.ts",
+   "reason": "B-S3 carve: src/components/dock/composables/useDockSearch.ts -> src/components/dock/search/useDockSearch.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/composables/useGlassBackdropLuminance.ts",
+   "reason": "B-S3 carve: src/components/dock/composables/useGlassBackdropLuminance.ts -> src/components/dock/legibility/useGlassBackdropLuminance.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls.css -> src/components/dock/controls/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/controls/icon-button.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/icon-button.css -> src/components/dock/controls/icon-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/controls/tab-button.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/tab-button.css -> src/components/dock/controls/tab-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/controls/touch-floor.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/touch-floor.css -> src/components/dock/controls/touch-floor.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/controls/triggers.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/triggers.css -> src/components/dock/controls/triggers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/fourier-field/constants.ts",
+   "reason": "B-S3 carve: src/components/fourier-field/constants.ts -> src/components/fourier-field/constants/constants.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuCheckboxItem.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuCheckboxItem.vue -> src/components/menu/items/DropdownMenuCheckboxItem.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuGroup.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuGroup.vue -> src/components/menu/items/DropdownMenuGroup.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuItem.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuItem.vue -> src/components/menu/items/DropdownMenuItem.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuLabel.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuLabel.vue -> src/components/menu/items/DropdownMenuLabel.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuRadioGroup.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuRadioGroup.vue -> src/components/menu/items/DropdownMenuRadioGroup.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuRadioItem.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuRadioItem.vue -> src/components/menu/items/DropdownMenuRadioItem.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuSeparator.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuSeparator.vue -> src/components/menu/items/DropdownMenuSeparator.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuShortcut.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuShortcut.vue -> src/components/menu/items/DropdownMenuShortcut.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuSub.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuSub.vue -> src/components/menu/sub/DropdownMenuSub.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuSubContent.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuSubContent.vue -> src/components/menu/sub/DropdownMenuSubContent.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuSubTrigger.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuSubTrigger.vue -> src/components/menu/sub/DropdownMenuSubTrigger.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/context.ts",
+   "reason": "B-S3 carve: src/components/menu/context.ts -> src/components/menu/context/context.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/sheet/detents/use.ts",
+   "reason": "B-S3 carve: src/components/sheet/detents/use.ts -> src/components/sheet/detents/useSheetDetents.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/sortable-list/drag.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/drag.ts -> src/components/sortable-list/drag/drag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/sortable-list/ghost.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/ghost.ts -> src/components/sortable-list/drag/ghost.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/sortable-list/motion.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/motion.ts -> src/components/sortable-list/drag/motion.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/sortable-list/resolve.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/resolve.ts -> src/components/sortable-list/resolve/resolve.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/tabs/SegmentedTabs.vue",
+   "reason": "B-S3 carve: src/components/tabs/SegmentedTabs.vue -> src/components/tabs/segmented-tabs/SegmentedTabs.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/tabs/composables/useTabDragMorph.ts",
+   "reason": "B-S3 carve: src/components/tabs/composables/useTabDragMorph.ts -> src/components/tabs/segmented-tabs/useTabDragMorph.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/tabs/composables/useTabResponsive.ts",
+   "reason": "B-S3 carve: src/components/tabs/composables/useTabResponsive.ts -> src/components/tabs/segmented-tabs/useTabResponsive.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/toast/Toast.vue",
+   "reason": "B-S3 carve: src/components/toast/Toast.vue -> src/components/toast/toaster/Toast.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/toast/ToastClose.vue",
+   "reason": "B-S3 carve: src/components/toast/ToastClose.vue -> src/components/toast/toaster/ToastClose.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/toast/ToastDescription.vue",
+   "reason": "B-S3 carve: src/components/toast/ToastDescription.vue -> src/components/toast/toaster/ToastDescription.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/toast/ToastTitle.vue",
+   "reason": "B-S3 carve: src/components/toast/ToastTitle.vue -> src/components/toast/toaster/ToastTitle.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/toast/Toaster.vue",
+   "reason": "B-S3 carve: src/components/toast/Toaster.vue -> src/components/toast/toaster/Toaster.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/toast/use-toast.ts",
+   "reason": "B-S3 carve: src/components/toast/use-toast.ts -> src/components/toast/queue/use-toast.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/TypewriterText.vue",
+   "reason": "B-S3 carve: src/components/typewriter/TypewriterText.vue -> src/components/typewriter/text/TypewriterText.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/composables/useTypewriter.ts",
+   "reason": "B-S3 carve: src/components/typewriter/composables/useTypewriter.ts -> src/components/typewriter/text/useTypewriter.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/types.ts",
+   "reason": "B-S3 carve: src/components/typewriter/types.ts -> src/components/typewriter/options/types.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/utils/graphemes.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/graphemes.ts -> src/components/typewriter/text/graphemes.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/utils/keyboard.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/keyboard.ts -> src/components/typewriter/text/keyboard.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/utils/pausePatterns.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/pausePatterns.ts -> src/components/typewriter/text/pausePatterns.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/utils/timing.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/timing.ts -> src/components/typewriter/text/timing.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/utils/typoStateMachine.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/typoStateMachine.ts -> src/components/typewriter/text/typoStateMachine.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/auroraImageSource.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/auroraImageSource.ts -> src/components/aurora/runtime/frame/auroraImageSource.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/color.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/color.ts -> src/components/aurora/config/color.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/frameLoop.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/frameLoop.ts -> src/components/aurora/runtime/frame/frameLoop.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/glSetup.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/glSetup.ts -> src/components/aurora/runtime/webgl/glSetup.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/runtime.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/runtime.ts -> src/components/aurora/runtime/runtime.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/textureUpload.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/textureUpload.ts -> src/components/aurora/runtime/frame/textureUpload.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/uniformBridge.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/uniformBridge.ts -> src/components/aurora/runtime/frame/uniformBridge.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/uniformBridgeWGPU.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/uniformBridgeWGPU.ts -> src/components/aurora/runtime/webgpu/uniformBridgeWGPU.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/uniformBridgeWGPUImage.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/uniformBridgeWGPUImage.ts -> src/components/aurora/runtime/webgpu/uniformBridgeWGPUImage.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/wgpuSetup.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/wgpuSetup.ts -> src/components/aurora/runtime/webgpu/wgpuSetup.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/presets.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/presets.ts -> src/components/aurora/config/presets.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/renderMode.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/renderMode.ts -> src/components/aurora/config/renderMode.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/aurora-image.frag.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora-image.frag.ts -> src/components/aurora/runtime/webgl/aurora-image.frag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/aurora-image.wgsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora-image.wgsl.ts -> src/components/aurora/runtime/webgpu/aurora-image.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts -> src/components/aurora/runtime/webgpu/aurora-mediums.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/aurora.frag.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora.frag.ts -> src/components/aurora/runtime/webgl/palette/aurora.frag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/aurora.vert.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora.vert.ts -> src/components/aurora/runtime/webgl/aurora.vert.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/aurora.wgsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora.wgsl.ts -> src/components/aurora/runtime/webgpu/aurora.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/brush.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/brush.glsl.ts -> src/components/aurora/runtime/webgl/palette/brush.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/composition.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/composition.glsl.ts -> src/components/aurora/runtime/webgl/palette/composition.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/curlNoise.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/curlNoise.glsl.ts -> src/components/aurora/runtime/webgl/palette/curlNoise.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/curlNoise.wgsl.ts -> src/components/aurora/runtime/webgpu/curlNoise.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/flow.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/flow.glsl.ts -> src/components/aurora/runtime/webgl/palette/flow.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/mediums.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/mediums.glsl.ts -> src/components/aurora/runtime/webgl/palette/mediums.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/metal-medium.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/metal-medium.glsl.ts -> src/components/aurora/runtime/webgl/palette/metal-medium.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/oil-modes.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/oil-modes.glsl.ts -> src/components/aurora/runtime/webgl/palette/oil-modes.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/tonemap.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/tonemap.glsl.ts -> src/components/aurora/runtime/webgl/palette/tonemap.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/vangogh-medium.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/vangogh-medium.glsl.ts -> src/components/aurora/runtime/webgl/palette/vangogh-medium.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/blobSimulation.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/blobSimulation.ts -> src/components/blob/renderer/blobSimulation.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/buildMetaballProgram.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/buildMetaballProgram.ts -> src/components/blob/renderer/webgl/buildMetaballProgram.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/resolveBlobSurface.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/resolveBlobSurface.ts -> src/components/blob/renderer/surface/resolveBlobSurface.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/uniformBridgeWGPU.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/uniformBridgeWGPU.ts -> src/components/blob/renderer/webgpu/uniformBridgeWGPU.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/uploadBlobUniforms.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/uploadBlobUniforms.ts -> src/components/blob/renderer/uploadBlobUniforms.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/useMetaballRenderer.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/useMetaballRenderer.ts -> src/components/blob/renderer/useMetaballRenderer.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/wgpuSetup.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/wgpuSetup.ts -> src/components/blob/renderer/webgpu/wgpuSetup.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/constants.ts",
+   "reason": "B-S3 carve: src/components/blob/constants.ts -> src/components/blob/mood/constants.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/metaball-noise.wgsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball-noise.wgsl.ts -> src/components/blob/renderer/webgpu/metaball-noise.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/metaball-palette.wgsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball-palette.wgsl.ts -> src/components/blob/renderer/webgpu/metaball-palette.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/metaball-uniforms.glsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball-uniforms.glsl.ts -> src/components/blob/renderer/webgl/metaball-uniforms.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/metaball.frag.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball.frag.ts -> src/components/blob/renderer/webgl/metaball.frag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/metaball.vert.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball.vert.ts -> src/components/blob/renderer/webgl/metaball.vert.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/metaball.wgsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball.wgsl.ts -> src/components/blob/renderer/webgpu/metaball.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/oklch-perturb.glsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/oklch-perturb.glsl.ts -> src/components/blob/renderer/webgl/oklch-perturb.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/sdf-body.glsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/sdf-body.glsl.ts -> src/components/blob/renderer/webgl/sdf-body.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/watercolor-edges.glsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/watercolor-edges.glsl.ts -> src/components/blob/renderer/webgl/watercolor-edges.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/backdropLuminanceSample.ts",
+   "reason": "B-S3 carve: src/components/dock/backdropLuminanceSample.ts -> src/components/dock/legibility/backdropLuminanceSample.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/backdropSampleMath.ts",
+   "reason": "B-S3 carve: src/components/dock/backdropSampleMath.ts -> src/components/dock/legibility/backdropSampleMath.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/composables/types.ts",
+   "reason": "B-S3 carve: src/components/dock/composables/types.ts -> src/components/dock/search/types.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/composables/useDockSearch.ts",
+   "reason": "B-S3 carve: src/components/dock/composables/useDockSearch.ts -> src/components/dock/search/useDockSearch.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/composables/useGlassBackdropLuminance.ts",
+   "reason": "B-S3 carve: src/components/dock/composables/useGlassBackdropLuminance.ts -> src/components/dock/legibility/useGlassBackdropLuminance.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls.css -> src/components/dock/controls/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/controls/icon-button.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/icon-button.css -> src/components/dock/controls/icon-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/controls/tab-button.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/tab-button.css -> src/components/dock/controls/tab-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/controls/touch-floor.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/touch-floor.css -> src/components/dock/controls/touch-floor.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/controls/triggers.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/triggers.css -> src/components/dock/controls/triggers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/fourier-field/constants.ts",
+   "reason": "B-S3 carve: src/components/fourier-field/constants.ts -> src/components/fourier-field/constants/constants.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuCheckboxItem.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuCheckboxItem.vue -> src/components/menu/items/DropdownMenuCheckboxItem.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuGroup.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuGroup.vue -> src/components/menu/items/DropdownMenuGroup.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuItem.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuItem.vue -> src/components/menu/items/DropdownMenuItem.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuLabel.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuLabel.vue -> src/components/menu/items/DropdownMenuLabel.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuRadioGroup.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuRadioGroup.vue -> src/components/menu/items/DropdownMenuRadioGroup.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuRadioItem.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuRadioItem.vue -> src/components/menu/items/DropdownMenuRadioItem.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuSeparator.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuSeparator.vue -> src/components/menu/items/DropdownMenuSeparator.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuShortcut.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuShortcut.vue -> src/components/menu/items/DropdownMenuShortcut.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuSub.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuSub.vue -> src/components/menu/sub/DropdownMenuSub.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuSubContent.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuSubContent.vue -> src/components/menu/sub/DropdownMenuSubContent.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuSubTrigger.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuSubTrigger.vue -> src/components/menu/sub/DropdownMenuSubTrigger.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/context.ts",
+   "reason": "B-S3 carve: src/components/menu/context.ts -> src/components/menu/context/context.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/sheet/detents/use.ts",
+   "reason": "B-S3 carve: src/components/sheet/detents/use.ts -> src/components/sheet/detents/useSheetDetents.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/sortable-list/drag.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/drag.ts -> src/components/sortable-list/drag/drag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/sortable-list/ghost.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/ghost.ts -> src/components/sortable-list/drag/ghost.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/sortable-list/motion.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/motion.ts -> src/components/sortable-list/drag/motion.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/sortable-list/resolve.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/resolve.ts -> src/components/sortable-list/resolve/resolve.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/tabs/SegmentedTabs.vue",
+   "reason": "B-S3 carve: src/components/tabs/SegmentedTabs.vue -> src/components/tabs/segmented-tabs/SegmentedTabs.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/tabs/composables/useTabDragMorph.ts",
+   "reason": "B-S3 carve: src/components/tabs/composables/useTabDragMorph.ts -> src/components/tabs/segmented-tabs/useTabDragMorph.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/tabs/composables/useTabResponsive.ts",
+   "reason": "B-S3 carve: src/components/tabs/composables/useTabResponsive.ts -> src/components/tabs/segmented-tabs/useTabResponsive.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/toast/Toast.vue",
+   "reason": "B-S3 carve: src/components/toast/Toast.vue -> src/components/toast/toaster/Toast.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/toast/ToastClose.vue",
+   "reason": "B-S3 carve: src/components/toast/ToastClose.vue -> src/components/toast/toaster/ToastClose.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/toast/ToastDescription.vue",
+   "reason": "B-S3 carve: src/components/toast/ToastDescription.vue -> src/components/toast/toaster/ToastDescription.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/toast/ToastTitle.vue",
+   "reason": "B-S3 carve: src/components/toast/ToastTitle.vue -> src/components/toast/toaster/ToastTitle.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/toast/Toaster.vue",
+   "reason": "B-S3 carve: src/components/toast/Toaster.vue -> src/components/toast/toaster/Toaster.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/toast/use-toast.ts",
+   "reason": "B-S3 carve: src/components/toast/use-toast.ts -> src/components/toast/queue/use-toast.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/TypewriterText.vue",
+   "reason": "B-S3 carve: src/components/typewriter/TypewriterText.vue -> src/components/typewriter/text/TypewriterText.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/composables/useTypewriter.ts",
+   "reason": "B-S3 carve: src/components/typewriter/composables/useTypewriter.ts -> src/components/typewriter/text/useTypewriter.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/types.ts",
+   "reason": "B-S3 carve: src/components/typewriter/types.ts -> src/components/typewriter/options/types.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/utils/graphemes.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/graphemes.ts -> src/components/typewriter/text/graphemes.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/utils/keyboard.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/keyboard.ts -> src/components/typewriter/text/keyboard.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/utils/pausePatterns.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/pausePatterns.ts -> src/components/typewriter/text/pausePatterns.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/utils/timing.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/timing.ts -> src/components/typewriter/text/timing.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/utils/typoStateMachine.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/typoStateMachine.ts -> src/components/typewriter/text/typoStateMachine.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/auroraImageSource.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/auroraImageSource.ts -> src/components/aurora/runtime/frame/auroraImageSource.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/color.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/color.ts -> src/components/aurora/config/color.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/frameLoop.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/frameLoop.ts -> src/components/aurora/runtime/frame/frameLoop.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/glSetup.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/glSetup.ts -> src/components/aurora/runtime/webgl/glSetup.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/runtime.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/runtime.ts -> src/components/aurora/runtime/runtime.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/textureUpload.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/textureUpload.ts -> src/components/aurora/runtime/frame/textureUpload.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/uniformBridge.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/uniformBridge.ts -> src/components/aurora/runtime/frame/uniformBridge.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/uniformBridgeWGPU.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/uniformBridgeWGPU.ts -> src/components/aurora/runtime/webgpu/uniformBridgeWGPU.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/uniformBridgeWGPUImage.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/uniformBridgeWGPUImage.ts -> src/components/aurora/runtime/webgpu/uniformBridgeWGPUImage.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/wgpuSetup.ts",
+   "reason": "B-S3 carve: src/components/aurora/composables/wgpuSetup.ts -> src/components/aurora/runtime/webgpu/wgpuSetup.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/presets.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/presets.ts -> src/components/aurora/config/presets.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/renderMode.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/renderMode.ts -> src/components/aurora/config/renderMode.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/aurora-image.frag.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora-image.frag.ts -> src/components/aurora/runtime/webgl/aurora-image.frag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/aurora-image.wgsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora-image.wgsl.ts -> src/components/aurora/runtime/webgpu/aurora-image.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts -> src/components/aurora/runtime/webgpu/aurora-mediums.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/aurora.frag.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora.frag.ts -> src/components/aurora/runtime/webgl/palette/aurora.frag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/aurora.vert.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora.vert.ts -> src/components/aurora/runtime/webgl/aurora.vert.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/aurora.wgsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/aurora.wgsl.ts -> src/components/aurora/runtime/webgpu/aurora.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/brush.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/brush.glsl.ts -> src/components/aurora/runtime/webgl/palette/brush.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/composition.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/composition.glsl.ts -> src/components/aurora/runtime/webgl/palette/composition.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/curlNoise.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/curlNoise.glsl.ts -> src/components/aurora/runtime/webgl/palette/curlNoise.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/curlNoise.wgsl.ts -> src/components/aurora/runtime/webgpu/curlNoise.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/flow.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/flow.glsl.ts -> src/components/aurora/runtime/webgl/palette/flow.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/mediums.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/mediums.glsl.ts -> src/components/aurora/runtime/webgl/palette/mediums.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/metal-medium.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/metal-medium.glsl.ts -> src/components/aurora/runtime/webgl/palette/metal-medium.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/oil-modes.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/oil-modes.glsl.ts -> src/components/aurora/runtime/webgl/palette/oil-modes.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/tonemap.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/tonemap.glsl.ts -> src/components/aurora/runtime/webgl/palette/tonemap.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/vangogh-medium.glsl.ts",
+   "reason": "B-S3 carve: src/components/aurora/constants/shaders/vangogh-medium.glsl.ts -> src/components/aurora/runtime/webgl/palette/vangogh-medium.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/blobSimulation.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/blobSimulation.ts -> src/components/blob/renderer/blobSimulation.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/buildMetaballProgram.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/buildMetaballProgram.ts -> src/components/blob/renderer/webgl/buildMetaballProgram.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/resolveBlobSurface.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/resolveBlobSurface.ts -> src/components/blob/renderer/surface/resolveBlobSurface.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/uniformBridgeWGPU.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/uniformBridgeWGPU.ts -> src/components/blob/renderer/webgpu/uniformBridgeWGPU.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/uploadBlobUniforms.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/uploadBlobUniforms.ts -> src/components/blob/renderer/uploadBlobUniforms.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/useMetaballRenderer.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/useMetaballRenderer.ts -> src/components/blob/renderer/useMetaballRenderer.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/wgpuSetup.ts",
+   "reason": "B-S3 carve: src/components/blob/composables/wgpuSetup.ts -> src/components/blob/renderer/webgpu/wgpuSetup.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/constants.ts",
+   "reason": "B-S3 carve: src/components/blob/constants.ts -> src/components/blob/mood/constants.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/metaball-noise.wgsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball-noise.wgsl.ts -> src/components/blob/renderer/webgpu/metaball-noise.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/metaball-palette.wgsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball-palette.wgsl.ts -> src/components/blob/renderer/webgpu/metaball-palette.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/metaball-uniforms.glsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball-uniforms.glsl.ts -> src/components/blob/renderer/webgl/metaball-uniforms.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/metaball.frag.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball.frag.ts -> src/components/blob/renderer/webgl/metaball.frag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/metaball.vert.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball.vert.ts -> src/components/blob/renderer/webgl/metaball.vert.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/metaball.wgsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/metaball.wgsl.ts -> src/components/blob/renderer/webgpu/metaball.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/oklch-perturb.glsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/oklch-perturb.glsl.ts -> src/components/blob/renderer/webgl/oklch-perturb.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/sdf-body.glsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/sdf-body.glsl.ts -> src/components/blob/renderer/webgl/sdf-body.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/watercolor-edges.glsl.ts",
+   "reason": "B-S3 carve: src/components/blob/shaders/watercolor-edges.glsl.ts -> src/components/blob/renderer/webgl/watercolor-edges.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/backdropLuminanceSample.ts",
+   "reason": "B-S3 carve: src/components/dock/backdropLuminanceSample.ts -> src/components/dock/legibility/backdropLuminanceSample.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/backdropSampleMath.ts",
+   "reason": "B-S3 carve: src/components/dock/backdropSampleMath.ts -> src/components/dock/legibility/backdropSampleMath.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/composables/types.ts",
+   "reason": "B-S3 carve: src/components/dock/composables/types.ts -> src/components/dock/search/types.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/composables/useDockSearch.ts",
+   "reason": "B-S3 carve: src/components/dock/composables/useDockSearch.ts -> src/components/dock/search/useDockSearch.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/composables/useGlassBackdropLuminance.ts",
+   "reason": "B-S3 carve: src/components/dock/composables/useGlassBackdropLuminance.ts -> src/components/dock/legibility/useGlassBackdropLuminance.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls.css -> src/components/dock/controls/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/controls/icon-button.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/icon-button.css -> src/components/dock/controls/icon-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/controls/tab-button.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/tab-button.css -> src/components/dock/controls/tab-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/controls/touch-floor.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/touch-floor.css -> src/components/dock/controls/touch-floor.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/controls/triggers.css",
+   "reason": "B-S3 carve: src/components/dock/styles/controls/triggers.css -> src/components/dock/controls/triggers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/fourier-field/constants.ts",
+   "reason": "B-S3 carve: src/components/fourier-field/constants.ts -> src/components/fourier-field/constants/constants.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuCheckboxItem.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuCheckboxItem.vue -> src/components/menu/items/DropdownMenuCheckboxItem.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuGroup.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuGroup.vue -> src/components/menu/items/DropdownMenuGroup.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuItem.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuItem.vue -> src/components/menu/items/DropdownMenuItem.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuLabel.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuLabel.vue -> src/components/menu/items/DropdownMenuLabel.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuRadioGroup.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuRadioGroup.vue -> src/components/menu/items/DropdownMenuRadioGroup.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuRadioItem.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuRadioItem.vue -> src/components/menu/items/DropdownMenuRadioItem.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuSeparator.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuSeparator.vue -> src/components/menu/items/DropdownMenuSeparator.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuShortcut.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuShortcut.vue -> src/components/menu/items/DropdownMenuShortcut.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuSub.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuSub.vue -> src/components/menu/sub/DropdownMenuSub.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuSubContent.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuSubContent.vue -> src/components/menu/sub/DropdownMenuSubContent.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuSubTrigger.vue",
+   "reason": "B-S3 carve: src/components/menu/DropdownMenuSubTrigger.vue -> src/components/menu/sub/DropdownMenuSubTrigger.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/context.ts",
+   "reason": "B-S3 carve: src/components/menu/context.ts -> src/components/menu/context/context.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/sheet/detents/use.ts",
+   "reason": "B-S3 carve: src/components/sheet/detents/use.ts -> src/components/sheet/detents/useSheetDetents.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/sortable-list/drag.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/drag.ts -> src/components/sortable-list/drag/drag.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/sortable-list/ghost.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/ghost.ts -> src/components/sortable-list/drag/ghost.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/sortable-list/motion.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/motion.ts -> src/components/sortable-list/drag/motion.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/sortable-list/resolve.ts",
+   "reason": "B-S3 carve: src/components/sortable-list/resolve.ts -> src/components/sortable-list/resolve/resolve.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/tabs/SegmentedTabs.vue",
+   "reason": "B-S3 carve: src/components/tabs/SegmentedTabs.vue -> src/components/tabs/segmented-tabs/SegmentedTabs.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/tabs/composables/useTabDragMorph.ts",
+   "reason": "B-S3 carve: src/components/tabs/composables/useTabDragMorph.ts -> src/components/tabs/segmented-tabs/useTabDragMorph.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/tabs/composables/useTabResponsive.ts",
+   "reason": "B-S3 carve: src/components/tabs/composables/useTabResponsive.ts -> src/components/tabs/segmented-tabs/useTabResponsive.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/toast/Toast.vue",
+   "reason": "B-S3 carve: src/components/toast/Toast.vue -> src/components/toast/toaster/Toast.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/toast/ToastClose.vue",
+   "reason": "B-S3 carve: src/components/toast/ToastClose.vue -> src/components/toast/toaster/ToastClose.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/toast/ToastDescription.vue",
+   "reason": "B-S3 carve: src/components/toast/ToastDescription.vue -> src/components/toast/toaster/ToastDescription.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/toast/ToastTitle.vue",
+   "reason": "B-S3 carve: src/components/toast/ToastTitle.vue -> src/components/toast/toaster/ToastTitle.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/toast/Toaster.vue",
+   "reason": "B-S3 carve: src/components/toast/Toaster.vue -> src/components/toast/toaster/Toaster.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/toast/use-toast.ts",
+   "reason": "B-S3 carve: src/components/toast/use-toast.ts -> src/components/toast/queue/use-toast.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/TypewriterText.vue",
+   "reason": "B-S3 carve: src/components/typewriter/TypewriterText.vue -> src/components/typewriter/text/TypewriterText.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/composables/useTypewriter.ts",
+   "reason": "B-S3 carve: src/components/typewriter/composables/useTypewriter.ts -> src/components/typewriter/text/useTypewriter.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/types.ts",
+   "reason": "B-S3 carve: src/components/typewriter/types.ts -> src/components/typewriter/options/types.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/utils/graphemes.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/graphemes.ts -> src/components/typewriter/text/graphemes.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/utils/keyboard.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/keyboard.ts -> src/components/typewriter/text/keyboard.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/utils/pausePatterns.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/pausePatterns.ts -> src/components/typewriter/text/pausePatterns.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/utils/timing.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/timing.ts -> src/components/typewriter/text/timing.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/utils/typoStateMachine.ts",
+   "reason": "B-S3 carve: src/components/typewriter/utils/typoStateMachine.ts -> src/components/typewriter/text/typoStateMachine.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "reasons": [
+  {
+   "from": "src/components/aurora/composables/runtime.ts",
+   "why": "dominance: composables/runtime.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/auroraImageSource.ts",
+   "why": "LAW §4 base of runtime"
+  },
+  {
+   "from": "src/components/aurora/composables/frameLoop.ts",
+   "why": "LAW §4 base of runtime"
+  },
+  {
+   "from": "src/components/aurora/composables/textureUpload.ts",
+   "why": "LAW §4 base of runtime"
+  },
+  {
+   "from": "src/components/aurora/composables/uniformBridge.ts",
+   "why": "LAW §4 base of runtime"
+  },
+  {
+   "from": "src/components/aurora/composables/glSetup.ts",
+   "why": "dominance: composables/glSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora-image.frag.ts",
+   "why": "dominance: composables/glSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora.vert.ts",
+   "why": "dominance: composables/glSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/wgpuSetup.ts",
+   "why": "dominance: composables/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/uniformBridgeWGPU.ts",
+   "why": "dominance: composables/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/uniformBridgeWGPUImage.ts",
+   "why": "dominance: composables/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora-image.wgsl.ts",
+   "why": "dominance: composables/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora.frag.ts",
+   "why": "dominance: constants/shaders/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/brush.glsl.ts",
+   "why": "dominance: constants/shaders/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/composition.glsl.ts",
+   "why": "dominance: constants/shaders/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/curlNoise.glsl.ts",
+   "why": "dominance: constants/shaders/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/flow.glsl.ts",
+   "why": "dominance: constants/shaders/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/tonemap.glsl.ts",
+   "why": "dominance: constants/shaders/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora.wgsl.ts",
+   "why": "dominance: constants/shaders/aurora.wgsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts",
+   "why": "dominance: constants/shaders/aurora.wgsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts",
+   "why": "dominance: constants/shaders/aurora.wgsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/mediums.glsl.ts",
+   "why": "dominance: constants/shaders/mediums.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/metal-medium.glsl.ts",
+   "why": "dominance: constants/shaders/mediums.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/oil-modes.glsl.ts",
+   "why": "dominance: constants/shaders/mediums.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/vangogh-medium.glsl.ts",
+   "why": "dominance: constants/shaders/mediums.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/presets.ts",
+   "why": "LAW §4 base of src/components/aurora"
+  },
+  {
+   "from": "src/components/aurora/constants/renderMode.ts",
+   "why": "LAW §4 base of src/components/aurora"
+  },
+  {
+   "from": "src/components/aurora/composables/color.ts",
+   "why": "LAW §4 base of src/components/aurora"
+  },
+  {
+   "from": "src/components/blob/composables/useMetaballRenderer.ts",
+   "why": "dominance: composables/useMetaballRenderer.ts"
+  },
+  {
+   "from": "src/components/blob/composables/blobSimulation.ts",
+   "why": "dominance: composables/useMetaballRenderer.ts"
+  },
+  {
+   "from": "src/components/blob/composables/resolveBlobSurface.ts",
+   "why": "LAW §4 base of renderer"
+  },
+  {
+   "from": "src/components/blob/composables/uploadBlobUniforms.ts",
+   "why": "dominance: composables/useMetaballRenderer.ts"
+  },
+  {
+   "from": "src/components/blob/composables/wgpuSetup.ts",
+   "why": "dominance: composables/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/blob/composables/uniformBridgeWGPU.ts",
+   "why": "dominance: composables/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/blob/composables/buildMetaballProgram.ts",
+   "why": "dominance: composables/buildMetaballProgram.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball.vert.ts",
+   "why": "dominance: composables/buildMetaballProgram.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball.wgsl.ts",
+   "why": "dominance: shaders/metaball.wgsl.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball-noise.wgsl.ts",
+   "why": "dominance: shaders/metaball.wgsl.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball-palette.wgsl.ts",
+   "why": "dominance: shaders/metaball.wgsl.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball.frag.ts",
+   "why": "dominance: shaders/metaball.frag.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball-uniforms.glsl.ts",
+   "why": "dominance: shaders/metaball.frag.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/oklch-perturb.glsl.ts",
+   "why": "dominance: shaders/metaball.frag.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/sdf-body.glsl.ts",
+   "why": "dominance: shaders/metaball.frag.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/watercolor-edges.glsl.ts",
+   "why": "dominance: shaders/metaball.frag.ts"
+  },
+  {
+   "from": "src/components/blob/constants.ts",
+   "why": "LAW §4 base of src/components/blob"
+  },
+  {
+   "from": "src/components/dock/styles/controls.css",
+   "why": "dominance: styles/controls.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls/icon-button.css",
+   "why": "dominance: styles/controls.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls/tab-button.css",
+   "why": "dominance: styles/controls.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls/touch-floor.css",
+   "why": "dominance: styles/controls.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls/triggers.css",
+   "why": "dominance: styles/controls.css"
+  },
+  {
+   "from": "src/components/dock/composables/useDockSearch.ts",
+   "why": "authored: B's dock/search (S-19): the search hook joins the engine it drives"
+  },
+  {
+   "from": "src/components/dock/composables/types.ts",
+   "why": "authored: the search result types; read only by search once useDockSearch joins it"
+  },
+  {
+   "from": "src/components/dock/composables/useGlassBackdropLuminance.ts",
+   "why": "authored: B's dock/legibility (S-19): the backdrop-luminance sampler and its two helpers"
+  },
+  {
+   "from": "src/components/dock/backdropLuminanceSample.ts",
+   "why": "authored: as useGlassBackdropLuminance"
+  },
+  {
+   "from": "src/components/dock/backdropSampleMath.ts",
+   "why": "authored: as useGlassBackdropLuminance"
+  },
+  {
+   "from": "src/components/fourier-field/constants.ts",
+   "why": "LAW §4 base of src/components/fourier-field"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSub.vue",
+   "why": "authored: B's menu/sub: the submenu and its content and trigger (a peer set dominance cannot split, R-5 menu 16)"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSubContent.vue",
+   "why": "authored: as DropdownMenuSub"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSubTrigger.vue",
+   "why": "authored: as DropdownMenuSub"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuItem.vue",
+   "why": "authored: B's menu/items: the item kinds (peer set)"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuCheckboxItem.vue",
+   "why": "authored: as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuRadioGroup.vue",
+   "why": "authored: as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuRadioItem.vue",
+   "why": "authored: as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuLabel.vue",
+   "why": "authored: as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSeparator.vue",
+   "why": "authored: as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuShortcut.vue",
+   "why": "authored: as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuGroup.vue",
+   "why": "authored: as DropdownMenuItem"
+  },
+  {
+   "from": "src/components/menu/context.ts",
+   "why": "LAW §4 base of src/components/menu"
+  },
+  {
+   "from": "src/components/sheet/detents/use.ts",
+   "why": "authored: B15: use.ts names nothing; the file holds useSheetDetents (B-07)"
+  },
+  {
+   "from": "src/components/sortable-list/drag.ts",
+   "why": "dominance: drag.ts"
+  },
+  {
+   "from": "src/components/sortable-list/ghost.ts",
+   "why": "dominance: drag.ts"
+  },
+  {
+   "from": "src/components/sortable-list/motion.ts",
+   "why": "dominance: drag.ts"
+  },
+  {
+   "from": "src/components/sortable-list/resolve.ts",
+   "why": "LAW §4 base of src/components/sortable-list"
+  },
+  {
+   "from": "src/components/tabs/SegmentedTabs.vue",
+   "why": "dominance: SegmentedTabs.vue"
+  },
+  {
+   "from": "src/components/tabs/composables/useTabDragMorph.ts",
+   "why": "dominance: SegmentedTabs.vue"
+  },
+  {
+   "from": "src/components/tabs/composables/useTabResponsive.ts",
+   "why": "dominance: SegmentedTabs.vue"
+  },
+  {
+   "from": "src/components/toast/Toaster.vue",
+   "why": "dominance: Toaster.vue"
+  },
+  {
+   "from": "src/components/toast/Toast.vue",
+   "why": "dominance: Toaster.vue"
+  },
+  {
+   "from": "src/components/toast/ToastClose.vue",
+   "why": "dominance: Toaster.vue"
+  },
+  {
+   "from": "src/components/toast/ToastDescription.vue",
+   "why": "dominance: Toaster.vue"
+  },
+  {
+   "from": "src/components/toast/ToastTitle.vue",
+   "why": "dominance: Toaster.vue"
+  },
+  {
+   "from": "src/components/toast/use-toast.ts",
+   "why": "LAW §4 base of src/components/toast"
+  },
+  {
+   "from": "src/components/typewriter/TypewriterText.vue",
+   "why": "dominance: TypewriterText.vue"
+  },
+  {
+   "from": "src/components/typewriter/composables/useTypewriter.ts",
+   "why": "dominance: TypewriterText.vue"
+  },
+  {
+   "from": "src/components/typewriter/utils/keyboard.ts",
+   "why": "dominance: TypewriterText.vue"
+  },
+  {
+   "from": "src/components/typewriter/utils/pausePatterns.ts",
+   "why": "dominance: TypewriterText.vue"
+  },
+  {
+   "from": "src/components/typewriter/utils/timing.ts",
+   "why": "dominance: TypewriterText.vue"
+  },
+  {
+   "from": "src/components/typewriter/utils/typoStateMachine.ts",
+   "why": "dominance: TypewriterText.vue"
+  },
+  {
+   "from": "src/components/typewriter/utils/graphemes.ts",
+   "why": "dominance: TypewriterText.vue"
+  },
+  {
+   "from": "src/components/typewriter/types.ts",
+   "why": "LAW §4 base of src/components/typewriter"
+  }
+ ],
+ "refused": [],
+ "declined": [
+  {
+   "unit": "src/components/dock",
+   "root": "GlassDock.vue",
+   "why": "GlassDock.vue is the dock under its product name; nesting it in dock/glass-dock/ would make a second dock inside the dock, and its closure (morph, run, click integrity, shell props) reads dockContext, which the floor's row m02 pins in dock/composables/ (FD-2 would refuse the nesting cycle)"
+  },
+  {
+   "unit": "src/components/fourier-field",
+   "root": "renderer/wgpu.ts",
+   "why": "renderer/ is the authored name and already holds the WebGPU renderer, its uniforms and both WGSL programs; G's wgpu/ erased it (G-crit F-5)"
+  },
+  {
+   "unit": "src/components/sheet",
+   "root": "SheetContent.vue",
+   "why": "detents/ is the authored concept (G-crit F-5); SheetContent.vue stays the sheet's content root"
+  },
+  {
+   "unit": "src/composables/glass",
+   "root": "webgpu/useGpuSubstrate.ts",
+   "why": "webgpu/ is the authored backend module (5 files); a 3-file level inside it adds a name for nothing"
+  },
+  {
+   "unit": "src/composables/motion",
+   "root": "route/useRouteTransition.ts",
+   "why": "useViewTransition is anchored in motion/core (./motion-core publishes it); route/ stays as authored"
+  }
+ ]
+}

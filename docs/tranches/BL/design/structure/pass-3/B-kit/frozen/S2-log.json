@@ -1,0 +1,159 @@
+{
+ "log": [
+  {
+   "pass": 4,
+   "byClass": {
+    "ok": 318,
+    "published": 180,
+    "anchored": 40,
+    "move": 4,
+    "unread": 2
+   },
+   "proposed": 3,
+   "needsName": [],
+   "held": [
+    "src/components/_shared/overlay/isTeleportedTarget.ts"
+   ],
+   "dry": {
+    "residue": 0,
+    "scanDeltas": 7,
+    "sccAdded": 7
+   },
+   "fd2": [
+    {
+     "from": "src/components/aurora/runtime/frame/textureUpload.ts",
+     "to": "src/components/aurora/runtime/composables/textureUpload.ts",
+     "added": 6,
+     "first": [
+      [
+       "src/components/aurora/runtime",
+       "src/components/aurora/runtime/frame"
+      ],
+      [
+       "src/components/aurora/runtime",
+       "src/components/aurora/runtime/webgl"
+      ],
+      [
+       "src/components/aurora/runtime",
+       "src/components/aurora/runtime/webgpu"
+      ],
+      [
+       "src/components/aurora/runtime/frame",
+       "src/components/aurora/runtime/webgl"
+      ],
+      [
+       "src/components/aurora/runtime/frame",
+       "src/components/aurora/runtime/webgpu"
+      ]
+     ]
+    },
+    {
+     "from": "src/components/aurora/runtime/frame/uniformBridge.ts",
+     "to": "src/components/aurora/runtime/composables/uniformBridge.ts",
+     "added": 3,
+     "first": [
+      [
+       "src/components/aurora/runtime",
+       "src/components/aurora/runtime/webgl"
+      ],
+      [
+       "src/components/aurora/runtime",
+       "src/components/aurora/runtime/webgpu"
+      ],
+      [
+       "src/components/aurora/runtime/webgl",
+       "src/components/aurora/runtime/webgpu"
+      ]
+     ]
+    },
+    {
+     "from": "src/composables/glass/lifecycle/createCanvasLifecycle.ts",
+     "to": "src/composables/glass/composables/createCanvasLifecycle.ts",
+     "added": 1,
+     "first": [
+      [
+       "src/composables/glass",
+       "src/composables/glass/canvas2d"
+      ]
+     ]
+    }
+   ],
+   "result": "FD-2 refused; bound moves named"
+  },
+  {
+   "pass": 4,
+   "byClass": {
+    "ok": 318,
+    "published": 180,
+    "anchored": 40,
+    "move": 4,
+    "unread": 2
+   },
+   "proposed": 0,
+   "needsName": [],
+   "held": [
+    "src/components/_shared/overlay/isTeleportedTarget.ts"
+   ],
+   "result": "fixpoint"
+  }
+ ],
+ "fd2Bound": [
+  {
+   "from": "src/components/aurora/runtime/frame/textureUpload.ts",
+   "to": "src/components/aurora/runtime/composables/textureUpload.ts",
+   "added": 6,
+   "first": [
+    [
+     "src/components/aurora/runtime",
+     "src/components/aurora/runtime/frame"
+    ],
+    [
+     "src/components/aurora/runtime",
+     "src/components/aurora/runtime/webgl"
+    ],
+    [
+     "src/components/aurora/runtime",
+     "src/components/aurora/runtime/webgpu"
+    ],
+    [
+     "src/components/aurora/runtime/frame",
+     "src/components/aurora/runtime/webgl"
+    ],
+    [
+     "src/components/aurora/runtime/frame",
+     "src/components/aurora/runtime/webgpu"
+    ]
+   ]
+  },
+  {
+   "from": "src/components/aurora/runtime/frame/uniformBridge.ts",
+   "to": "src/components/aurora/runtime/composables/uniformBridge.ts",
+   "added": 3,
+   "first": [
+    [
+     "src/components/aurora/runtime",
+     "src/components/aurora/runtime/webgl"
+    ],
+    [
+     "src/components/aurora/runtime",
+     "src/components/aurora/runtime/webgpu"
+    ],
+    [
+     "src/components/aurora/runtime/webgl",
+     "src/components/aurora/runtime/webgpu"
+    ]
+   ]
+  },
+  {
+   "from": "src/composables/glass/lifecycle/createCanvasLifecycle.ts",
+   "to": "src/composables/glass/composables/createCanvasLifecycle.ts",
+   "added": 1,
+   "first": [
+    [
+     "src/composables/glass",
+     "src/composables/glass/canvas2d"
+    ]
+   ]
+  }
+ ]
+}

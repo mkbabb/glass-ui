@@ -1,0 +1,26 @@
+{
+ "step": "B-S2 placement pass 3 (frozen, F-9)",
+ "moves": [
+  {
+   "from": "src/composables/glass/backdropSampleMath.ts",
+   "to": "src/components/dock/backdropSampleMath.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/glass/backdropSampleMath.ts",
+   "reason": "B-S2 placement: src/composables/glass/backdropSampleMath.ts -> src/components/dock/backdropSampleMath.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "reasons": [
+  {
+   "from": "src/composables/glass/backdropSampleMath.ts",
+   "why": "F-7 move: read by one unit, lives outside it",
+   "readers": [
+    "src/components/dock"
+   ]
+  }
+ ]
+}
