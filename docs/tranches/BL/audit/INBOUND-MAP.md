@@ -596,3 +596,45 @@ Sources: O-64 (`BK/coordination/valuejs-outbound-2026-09-23-kf-w13r-dock-morph.m
 - **The credit rows** agree with REGISTRY §6.6 and the O-60 table above: at 10.0.1 KFA-53's blur is gone, the row never wraps, and the corner never goes negative (KFA-111).
 - **The KFA rows value.js took as keyframes-side** (KFA-61, -95, -134, -136, -228) are CONSUMER-SIDE in the O-60 table already.
 - **Owner words OA-41 and OA-48** (N-15) are recap rows, not letter rows. They ride F-16's acceptance.
+
+## Round 6: O-65 to O-68
+
+Seat: REGISTRY, round 6. Model `claude-opus-5-5` (asserted from system identity). Read at `2efb414c`; `git diff --stat v10.0.1..HEAD -- src demo` is empty, so every HEAD status below is the published 10.0.1 bytes. Date 2026-09-24. Statuses are as "How to read" defines them. Placement is against `REGISTRY.md` after round 6 (82 families, F-81 and F-82 included).
+
+Sources: `INBOUND.md`, re-read for rows the map lacks. Five registered rows had no map entry: O-65 (`BK/coordination/valuejs-outbound-2026-09-24-dock-collapsed-form.md`), O-66 (`…-select-grey-dock-motion.md`), O-66a (value-js-d0's follow-up to O-66 §1, recorded in `INBOUND.md` only), O-67 (`…-side-dock-edge.md`) and O-68 (`…-configurator-header-actions.md`, registered at `2efb414c` while this seat ran). Each letter was read in full. The owner frames they cite live in value.js and were not opened; each producer half below is placed from its source at HEAD, and a row whose paint the letter reports but no seat has measured says so.
+
+### Counts
+
+- Rows mapped this round: **17**. O-65 4 (the collapsed form, two primitive asks, the notice) · O-66 5 (the Select grey, the menu row grey, the clipped pane shadow, the dock-motion witness scope, the notice) · O-66a 1 · O-67 5 (the edge, the gutter, the badge seat, the witness family, the notice) · O-68 2 (the header-actions slot, the early-minor offer).
+- Per status: FAMILY 17 · NEW **0**. API asks sit in F-71 as decide rows under E-5, as in round 4; consumer notices sit in F-68 with O-55 R-3's precedent.
+- Spot-verified at HEAD by opening the cited source: **6 of 17** (the rows marked "re-checked"). The clipped pane shadow rests on the containment row's round-2 re-check, the two O-67 edge rows on F-18's registered sources, and the notices, witness-scope asks, P-2, the badge seat and the publish offer name no source.
+- Cumulative: **370** rows. FAMILY 297 · CURED-AT-HEAD 47 · CONSUMER-SIDE 20 · NOT-REPRODUCED 6 · NEW 0.
+- Per family, the round-5 table plus: F-16 20 → 23, F-18 7 → 9, F-21 7 → 8, F-24 19 → 20, F-31 12 → 14, F-68 52 → 56, F-71 35 → 39. Still 41 families with at least one inbound row.
+- Genuinely new families from inbound: **0**. Each row's cause is named by F-16, F-18, F-21, F-24, F-31, F-68 or F-71 as they stand after round 6.
+
+### O-65, O-66, O-66a, O-67, O-68 (17)
+
+| letter row | family | status | note |
+|---|---|---|---|
+| O-65 R-1 DOCK-COLLAPSED-FORM | F-16 | FAMILY | The collapsed plate does not wrap its seats (track and count outside, the dismiss detached), and the letter asks that collapsed and expanded share one morph. Collapsed and expanded are two layers of one dock, and the inactive one is laid `absolute; inset: 0` (`dock/styles/layers.css:233-236`, re-checked), so the plate's extent is one layer's measure; W-DOCK-EXTENT's endpoint rule (measure from the row's intrinsic extent, never from an out-of-flow layer, R2-02-01) is the cure's home, and F-76's shape (a reserved extent that leaves out part of what the surface occupies) names the defect's form. Not measured at HEAD; the consumer's collapsed-face markup is the first probe |
+| O-65 P-1 detached Configurator pane | F-71 | FAMILY | API ask (E-5). The shell is `configurator-shell glass-floating rounded-panel` (`Configurator.vue:199`, re-checked) and carries no inset or detached placement; CURE, ANSWER (the consumer places the floating shell) or DECLINE in W-MAIL-INTAKE, in one Configurator wave with O-68 |
+| O-65 P-2 edge drawer under a content surface | F-71 | FAMILY | API ask (E-5). Sheet is the nearest primitive and slides over, not under, a surface; decide row |
+| O-65 notice | F-68 | FAMILY | consumers keep honest-RED DOCK-COLLAPSED-FORM until the landing repin (W-LANDING, 11.0.0) |
+| O-66 §1 GLASS-SELECT-GREY, the trigger | F-31 | FAMILY | With O-62. The filled trigger and the input share `--control-surface-bg` but reach paint through two composites (O-66a, below); both carry the veil-ink plate (`--glass-plate-quiet`, `tokens/glass.css:166`, re-checked), which is O-62's grey. The owner glance in W-FROST-II rules both together |
+| O-66 §1, the selected or highlighted menu item | F-24 | FAMILY | The row's one cue is `--menu-row-bg: var(--glass-plate-quiet)` (`_shared/menu/menu.css:10`, re-checked), R3-02-02's fill-only row: selection carried by one grey channel. The round-3 wave's ring on `[data-highlighted]` and an accent-ink selected state answer it; the token is F-31's |
+| O-66 §1, the pane's clipped left-edge shadow | F-21 | FAMILY | The containment row (O-61 R-1, R2-06-15): `contain: paint` on the card rungs (`glass/material.css:104-109`) cuts a seated control's halo |
+| O-66 §2 every dock motion, witness scope | F-16 | FAMILY | W-DOCK-EXTENT's frame-strip capture runs in each consumer's dock (value.js, keyframes.js, fourier) over expand and collapse, the content-width morph, the first-expand endpoint, scroll compact (F-17) and seat clipping (F-18 item 6), judged headed on a real GPU |
+| O-66 notice | F-68 | FAMILY | consumers keep GLASS-SELECT-GREY, DOCK-MORPH-ROOT, DOCK-SCROLL-MORPH, DOCK-TRIGGER-CLIP and DOCK-COLLAPSED-FORM RED until the landing repin |
+| O-66a the two composites | F-31 | FAMILY | Confirmed at the bytes: `.control-surface` (`glass/defined.css:42-75`, re-checked) paints `background-color: transparent` under two image layers, the plate `var(--glass-defined-plate, var(--glass-veil))` over `--glass-floor-fill` (card at `--glass-floor-fill-max`), with the `--glass-border-defined` rim; `.field-control` paints one `background-color: var(--control-surface-bg)` (`_shared/field/control.css:103`, re-checked). SelectTrigger takes `control-surface` (`SelectTrigger.vue:52`, re-checked). Measure first, as the letter asks; F-21's round-3 paint-layering clause is the neighbour if the floor, not the token, carries the grey |
+| O-67 R-1 the side dock's edge does not close | F-18 | FAMILY | Attribution open. Two registered causes fit a rim that fades on two sides of a vertical plate: the cut-cap scroll-timeline masks bound to the run (R2-02-06, item 4), and the run's cross-axis clip (item 6, O-63). One probe separates them: hold the vertical run with nothing to scroll; if the edge closes, the cap timeline is the cause |
+| O-67 R-2 no gutter above the plate | F-18 | FAMILY | Attribution open between the dock's edge offset and the consumer's placement; the probe is the plate's inset against its containing panel with the consumer's wrapper removed. If the gap closes only by the consumer's rule, the row moves to CONSUMER-SIDE |
+| O-67 R-3 a reserved badge seat | F-71 | FAMILY | API ask (E-5): the dock has no badge or indicator seat, and the amber dot is the consumer's; decide row |
+| O-67 side, vertical and canvas docks as a witness family | F-16 | FAMILY | W-DOCK-EXTENT's and F-18's captures add the side and canvas docks, vertical and horizontal-inset, in both themes at DPR 1 and 2 |
+| O-67 notice | F-68 | FAMILY | consumers keep SIDE-DOCK-EDGE RED until the landing repin, and cure only a consumer clip in the ancestor chain |
+| O-68 R-1 CONFIGURATOR-HEADER-ACTIONS | F-71 | FAMILY | API ask with a structural cure. `ConfiguratorLayer.vue` renders its header as one `<button>` (`:109`, `aria-expanded` at `:123`) and exposes only the default slot (`:189`) (re-checked), and an actions slot cannot nest inside a button, so the cure makes the header a row with the toggle and the actions as siblings, `aria-expanded` and `aria-controls` kept on the toggle. One Configurator wave with O-65 P-1 |
+| O-68 early 10.x minor | F-68 | FAMILY | an owner publish decision (OW-11) against W-LANDING's 11.0.0; BL is tranche-dev only |
+
+### Corrections
+
+- `INBOUND.md` records O-66a as a follow-up row with no letter file; it is mapped above as its own row, and its source reading is confirmed.
+- No other row of `INBOUND.md` is missing from the map.
