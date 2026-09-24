@@ -22,3 +22,8 @@ Concurrency: pools of 5. Reports land under `docs/tranches/BL/` so they survive 
 
 Resume rule: on restart, read this table; for a RUNNING row, read its journal (`<transcript>/subagents/workflows/<run id>/journal.jsonl`),
 and if the run died, hand-author a continuation that feeds the finished lens results in as literals and re-runs only the missing seats.
+
+Carried obligations (promised to a peer or the owner; each closes in the named step):
+
+- D2 pass 2: a dedicated confirm-or-refute probe for O-64 R-6 (the 6 px ring beside the Scene glyph on keyframes' gh build, attributed to the plate re-sampling). Promised to value-js-30 on 2026-09-23.
+- Formation: the reply letter answering O-53..O-64 and C-2 with each row's disposition and the landing version (working answer 11.0.0), sent to value-js-30 and lot-assay-e0.
