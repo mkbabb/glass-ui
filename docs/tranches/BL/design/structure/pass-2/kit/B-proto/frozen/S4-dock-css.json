@@ -1,0 +1,513 @@
+{
+ "step": "B-S4 dock CSS carve (B §7.1)",
+ "moves": [
+  {
+   "from": "src/components/dock/styles/index.css",
+   "to": "src/components/dock/index.css"
+  },
+  {
+   "from": "src/components/dock/styles/search.css",
+   "to": "src/components/dock/search/search.css"
+  },
+  {
+   "from": "src/components/dock/styles/adaptive-legibility.css",
+   "to": "src/components/dock/legibility/adaptive-legibility.css"
+  },
+  {
+   "from": "src/components/dock/styles/layers.css",
+   "to": "src/components/dock/layers/layers.css"
+  },
+  {
+   "from": "src/components/dock/styles/layer-group.css",
+   "to": "src/components/dock/layers/layer-group.css"
+  },
+  {
+   "from": "src/components/dock/styles/crossfade.css",
+   "to": "src/components/dock/layers/crossfade.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls/icon-button.css",
+   "to": "src/components/dock/controls/icon-button.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls/tab-button.css",
+   "to": "src/components/dock/controls/tab-button.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls/triggers.css",
+   "to": "src/components/dock/controls/triggers.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls/touch-floor.css",
+   "to": "src/components/dock/controls/touch-floor.css"
+  },
+  {
+   "from": "src/components/dock/styles/controls.css",
+   "to": "src/components/dock/controls/controls.css"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dock/styles/adaptive-legibility.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/adaptive-legibility.css -> src/components/dock/legibility/adaptive-legibility.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls.css -> src/components/dock/controls/controls.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dock/styles/controls/icon-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/icon-button.css -> src/components/dock/controls/icon-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dock/styles/controls/tab-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/tab-button.css -> src/components/dock/controls/tab-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dock/styles/controls/touch-floor.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/touch-floor.css -> src/components/dock/controls/touch-floor.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dock/styles/controls/triggers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/triggers.css -> src/components/dock/controls/triggers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dock/styles/crossfade.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/crossfade.css -> src/components/dock/layers/crossfade.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dock/styles/index.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/index.css -> src/components/dock/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dock/styles/layer-group.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layer-group.css -> src/components/dock/layers/layer-group.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dock/styles/layers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layers.css -> src/components/dock/layers/layers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dock/styles/search.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/search.css -> src/components/dock/search/search.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dock/styles/adaptive-legibility.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/adaptive-legibility.css -> src/components/dock/legibility/adaptive-legibility.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls.css -> src/components/dock/controls/controls.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dock/styles/controls/icon-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/icon-button.css -> src/components/dock/controls/icon-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dock/styles/controls/tab-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/tab-button.css -> src/components/dock/controls/tab-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dock/styles/controls/touch-floor.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/touch-floor.css -> src/components/dock/controls/touch-floor.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dock/styles/controls/triggers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/triggers.css -> src/components/dock/controls/triggers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dock/styles/crossfade.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/crossfade.css -> src/components/dock/layers/crossfade.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dock/styles/index.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/index.css -> src/components/dock/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dock/styles/layer-group.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layer-group.css -> src/components/dock/layers/layer-group.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dock/styles/layers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layers.css -> src/components/dock/layers/layers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dock/styles/search.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/search.css -> src/components/dock/search/search.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dock/styles/adaptive-legibility.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/adaptive-legibility.css -> src/components/dock/legibility/adaptive-legibility.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls.css -> src/components/dock/controls/controls.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dock/styles/controls/icon-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/icon-button.css -> src/components/dock/controls/icon-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dock/styles/controls/tab-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/tab-button.css -> src/components/dock/controls/tab-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dock/styles/controls/touch-floor.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/touch-floor.css -> src/components/dock/controls/touch-floor.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dock/styles/controls/triggers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/triggers.css -> src/components/dock/controls/triggers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dock/styles/crossfade.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/crossfade.css -> src/components/dock/layers/crossfade.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dock/styles/index.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/index.css -> src/components/dock/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dock/styles/layer-group.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layer-group.css -> src/components/dock/layers/layer-group.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dock/styles/layers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layers.css -> src/components/dock/layers/layers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dock/styles/search.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/search.css -> src/components/dock/search/search.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/adaptive-legibility.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/adaptive-legibility.css -> src/components/dock/legibility/adaptive-legibility.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls.css -> src/components/dock/controls/controls.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/controls/icon-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/icon-button.css -> src/components/dock/controls/icon-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/controls/tab-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/tab-button.css -> src/components/dock/controls/tab-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/controls/touch-floor.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/touch-floor.css -> src/components/dock/controls/touch-floor.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/controls/triggers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/triggers.css -> src/components/dock/controls/triggers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/crossfade.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/crossfade.css -> src/components/dock/layers/crossfade.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/index.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/index.css -> src/components/dock/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/layer-group.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layer-group.css -> src/components/dock/layers/layer-group.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/layers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layers.css -> src/components/dock/layers/layers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/search.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/search.css -> src/components/dock/search/search.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/adaptive-legibility.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/adaptive-legibility.css -> src/components/dock/legibility/adaptive-legibility.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls.css -> src/components/dock/controls/controls.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/controls/icon-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/icon-button.css -> src/components/dock/controls/icon-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/controls/tab-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/tab-button.css -> src/components/dock/controls/tab-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/controls/touch-floor.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/touch-floor.css -> src/components/dock/controls/touch-floor.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/controls/triggers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/triggers.css -> src/components/dock/controls/triggers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/crossfade.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/crossfade.css -> src/components/dock/layers/crossfade.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/index.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/index.css -> src/components/dock/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/layer-group.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layer-group.css -> src/components/dock/layers/layer-group.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/layers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layers.css -> src/components/dock/layers/layers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/search.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/search.css -> src/components/dock/search/search.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/adaptive-legibility.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/adaptive-legibility.css -> src/components/dock/legibility/adaptive-legibility.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls.css -> src/components/dock/controls/controls.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/controls/icon-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/icon-button.css -> src/components/dock/controls/icon-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/controls/tab-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/tab-button.css -> src/components/dock/controls/tab-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/controls/touch-floor.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/touch-floor.css -> src/components/dock/controls/touch-floor.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/controls/triggers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/triggers.css -> src/components/dock/controls/triggers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/crossfade.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/crossfade.css -> src/components/dock/layers/crossfade.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/index.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/index.css -> src/components/dock/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/layer-group.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layer-group.css -> src/components/dock/layers/layer-group.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/layers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layers.css -> src/components/dock/layers/layers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/search.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/search.css -> src/components/dock/search/search.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/adaptive-legibility.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/adaptive-legibility.css -> src/components/dock/legibility/adaptive-legibility.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls.css -> src/components/dock/controls/controls.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/controls/icon-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/icon-button.css -> src/components/dock/controls/icon-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/controls/tab-button.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/tab-button.css -> src/components/dock/controls/tab-button.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/controls/touch-floor.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/touch-floor.css -> src/components/dock/controls/touch-floor.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/controls/triggers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/controls/triggers.css -> src/components/dock/controls/triggers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/crossfade.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/crossfade.css -> src/components/dock/layers/crossfade.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/index.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/index.css -> src/components/dock/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/layer-group.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layer-group.css -> src/components/dock/layers/layer-group.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/layers.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/layers.css -> src/components/dock/layers/layers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/search.css",
+   "reason": "B-S4 dock CSS carve (B §7.1): src/components/dock/styles/search.css -> src/components/dock/search/search.css; the scanner's sensitivity is judged by the test run"
+  }
+ ]
+}

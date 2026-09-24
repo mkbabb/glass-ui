@@ -1,0 +1,13 @@
+import { readFileSync } from "node:fs"; import { join, resolve } from "node:path"; import { pathToFileURL } from "node:url";
+const root = resolve("."); const F = "docs/tranches/BL/design/structure/floor/lib/";
+const { buildGraph } = await import(pathToFileURL(join(root, F + "graph.mjs")));
+const { placeAll } = await import(pathToFileURL(join(root, F + "placement.mjs")));
+const { units } = await import(pathToFileURL(join(root, "scripts/structure/seal.mjs")));
+const read = (p) => readFileSync(join(root, p), "utf8");
+const txt = read("src/styles/index.css").replace(/(@import[^\n]*\n)/, `$1@import "../components/dock/styles/core.css";\n`);
+const g = buildGraph(root, { overlay: { "src/styles/index.css": txt } });
+console.log(g.edges.filter((e) => e.from === "src/styles/index.css" && String(e.to).includes("dock")).map((e) => `${e.line} ${e.kind} ${e.to}`));
+console.log(txt.split("\n").slice(0, 6).join("\n"));
+const g2 = buildGraph(root, { overlay: { "scripts/lib/plantOnlyOne.mjs": "export const one = 1;\n", "scripts/regen-spring-tokens.mjs": 'import { one } from "./lib/plantOnlyOne.mjs";\n' + read("scripts/regen-spring-tokens.mjs") } });
+const P = placeAll(g2, units, { zones: ["src", "scripts"] });
+console.log("scripts rows:", P.rows.filter((r) => r.file.startsWith("scripts/") && (r.class === "move" || r.class === "global")).map((r) => `${r.file} -> ${r.home} [${r.class}]`));

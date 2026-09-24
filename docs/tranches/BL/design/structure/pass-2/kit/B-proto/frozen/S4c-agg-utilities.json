@@ -1,0 +1,35 @@
+{
+ "step": "B-S4 style-kernel aggregator probe (utilities)",
+ "moves": [
+  {
+   "from": "src/styles/utilities.css",
+   "to": "src/styles/utilities/index.css"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/utilities.css",
+   "reason": "B-S4 style-kernel aggregator probe (utilities): src/styles/utilities.css -> src/styles/utilities/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/utilities.css",
+   "reason": "B-S4 style-kernel aggregator probe (utilities): src/styles/utilities.css -> src/styles/utilities/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/utilities.css",
+   "reason": "B-S4 style-kernel aggregator probe (utilities): src/styles/utilities.css -> src/styles/utilities/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/utilities.css",
+   "reason": "B-S4 style-kernel aggregator probe (utilities): src/styles/utilities.css -> src/styles/utilities/index.css; the scanner's sensitivity is judged by the test run"
+  }
+ ]
+}

@@ -1,0 +1,95 @@
+{
+ "moves": [
+  {
+   "from": "src/composables/glass/backdropLuminanceSample.ts",
+   "to": "src/components/dock/backdropLuminanceSample.ts"
+  },
+  {
+   "from": "src/composables/glass/useRAFLoop.ts",
+   "to": "src/components/dock/composables/useRAFLoop.ts"
+  },
+  {
+   "from": "src/composables/motion/core/useYieldToMain.ts",
+   "to": "src/composables/glass/composables/useYieldToMain.ts"
+  },
+  {
+   "from": "src/composables/search/match.ts",
+   "to": "src/components/dock/match.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/glass/backdropLuminanceSample.ts",
+   "reason": "placement (F-7): src/composables/glass/backdropLuminanceSample.ts -> src/components/dock/backdropLuminanceSample.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/glass/useRAFLoop.ts",
+   "reason": "placement (F-7): src/composables/glass/useRAFLoop.ts -> src/components/dock/composables/useRAFLoop.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/motion/core/useYieldToMain.ts",
+   "reason": "placement (F-7): src/composables/motion/core/useYieldToMain.ts -> src/composables/glass/composables/useYieldToMain.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/search/match.ts",
+   "reason": "placement (F-7): src/composables/search/match.ts -> src/components/dock/match.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/glass/backdropLuminanceSample.ts",
+   "reason": "placement (F-7): src/composables/glass/backdropLuminanceSample.ts -> src/components/dock/backdropLuminanceSample.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/glass/useRAFLoop.ts",
+   "reason": "placement (F-7): src/composables/glass/useRAFLoop.ts -> src/components/dock/composables/useRAFLoop.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/motion/core/useYieldToMain.ts",
+   "reason": "placement (F-7): src/composables/motion/core/useYieldToMain.ts -> src/composables/glass/composables/useYieldToMain.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/search/match.ts",
+   "reason": "placement (F-7): src/composables/search/match.ts -> src/components/dock/match.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/glass/backdropLuminanceSample.ts",
+   "reason": "placement (F-7): src/composables/glass/backdropLuminanceSample.ts -> src/components/dock/backdropLuminanceSample.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/glass/useRAFLoop.ts",
+   "reason": "placement (F-7): src/composables/glass/useRAFLoop.ts -> src/components/dock/composables/useRAFLoop.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/motion/core/useYieldToMain.ts",
+   "reason": "placement (F-7): src/composables/motion/core/useYieldToMain.ts -> src/composables/glass/composables/useYieldToMain.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/search/match.ts",
+   "reason": "placement (F-7): src/composables/search/match.ts -> src/components/dock/match.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "note": "frozen B-S2 placement pass (F-9)"
+}

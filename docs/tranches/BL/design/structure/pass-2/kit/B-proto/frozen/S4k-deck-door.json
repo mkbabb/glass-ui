@@ -1,0 +1,47 @@
+{
+ "step": "B-S4 deck CSS door out of its kind slot (B5)",
+ "moves": [
+  {
+   "from": "src/components/deck/styles/index.css",
+   "to": "src/components/deck/index.css"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/deck/styles/index.css",
+   "reason": "B-S4 deck CSS door out of its kind slot (B5): src/components/deck/styles/index.css -> src/components/deck/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/deck/styles/index.css",
+   "reason": "B-S4 deck CSS door out of its kind slot (B5): src/components/deck/styles/index.css -> src/components/deck/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/deck/styles/index.css",
+   "reason": "B-S4 deck CSS door out of its kind slot (B5): src/components/deck/styles/index.css -> src/components/deck/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/deck/styles/index.css",
+   "reason": "B-S4 deck CSS door out of its kind slot (B5): src/components/deck/styles/index.css -> src/components/deck/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/deck/styles/index.css",
+   "reason": "B-S4 deck CSS door out of its kind slot (B5): src/components/deck/styles/index.css -> src/components/deck/index.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/deck/styles/index.css",
+   "reason": "B-S4 deck CSS door out of its kind slot (B5): src/components/deck/styles/index.css -> src/components/deck/index.css; the scanner's sensitivity is judged by the test run"
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+{
+ "proposed": 23,
+ "needsName": [],
+ "heldBefore": [],
+ "attempts": [
+  {
+   "moves": 23,
+   "ok": false,
+   "phase": "image",
+   "filesEdited": 67,
+   "rewrites": 96,
+   "byKind": {
+    "import": 64,
+    "reexport": 13,
+    "reexport-star": 9,
+    "import-type": 5,
+    "css-import": 1,
+    "vi-mock": 1,
+    "path-literal": 2,
+    "path-helper": 1
+   },
+   "scanDeltas": 92,
+   "lost": [
+    "demo/demo.css|css-source|src/components/dock/isTeleportedTarget.ts|f|source"
+   ],
+   "gained": [],
+   "violations": 0
+  },
+  {
+   "moves": 22,
+   "ok": true,
+   "phase": "write",
+   "filesEdited": 65,
+   "rewrites": 93,
+   "byKind": {
+    "import": 63,
+    "reexport": 11,
+    "reexport-star": 9,
+    "import-type": 5,
+    "css-import": 1,
+    "vi-mock": 1,
+    "path-literal": 2,
+    "path-helper": 1
+   },
+   "scanDeltas": 86,
+   "lost": [],
+   "gained": [],
+   "violations": 0
+  }
+ ],
+ "sccMembers": {
+  "before": 12,
+  "after": 28,
+  "grew": true
+ },
+ "applied": 22,
+ "digest": "f2a1e08ecaa1cdddc02aa4110a712d335568d722adff1eec0aa3dd9b2805ba40",
+ "image": {
+  "before": 7176,
+  "after": 7176
+ }
+}

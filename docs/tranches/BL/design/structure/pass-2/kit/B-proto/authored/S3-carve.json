@@ -1,0 +1,257 @@
+{
+ "step": "B-S3 module carve (B \u00a77.1 authored names)",
+ "moves": [
+  {
+   "from": "src/components/aurora/constants/presets.ts",
+   "to": "src/components/aurora/presets.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/renderMode.ts",
+   "to": "src/components/aurora/renderMode.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/atoms.ts",
+   "to": "src/components/aurora/atoms/atoms.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/atoms-fields.ts",
+   "to": "src/components/aurora/atoms/atoms-fields.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/glSetup.ts",
+   "to": "src/components/aurora/webgl/glSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora.vert.ts",
+   "to": "src/components/aurora/webgl/aurora.vert.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora-image.frag.ts",
+   "to": "src/components/aurora/webgl/aurora-image.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora.frag.ts",
+   "to": "src/components/aurora/webgl/palette/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/brush.glsl.ts",
+   "to": "src/components/aurora/webgl/palette/brush.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/composition.glsl.ts",
+   "to": "src/components/aurora/webgl/palette/composition.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/curlNoise.glsl.ts",
+   "to": "src/components/aurora/webgl/palette/curlNoise.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/flow.glsl.ts",
+   "to": "src/components/aurora/webgl/palette/flow.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/mediums.glsl.ts",
+   "to": "src/components/aurora/webgl/palette/mediums.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/metal-medium.glsl.ts",
+   "to": "src/components/aurora/webgl/palette/metal-medium.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/oil-modes.glsl.ts",
+   "to": "src/components/aurora/webgl/palette/oil-modes.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/tonemap.glsl.ts",
+   "to": "src/components/aurora/webgl/palette/tonemap.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/vangogh-medium.glsl.ts",
+   "to": "src/components/aurora/webgl/palette/vangogh-medium.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/wgpuSetup.ts",
+   "to": "src/components/aurora/webgpu/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/uniformBridgeWGPU.ts",
+   "to": "src/components/aurora/webgpu/uniformBridgeWGPU.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/uniformBridgeWGPUImage.ts",
+   "to": "src/components/aurora/webgpu/uniformBridgeWGPUImage.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora.wgsl.ts",
+   "to": "src/components/aurora/webgpu/aurora.wgsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora-image.wgsl.ts",
+   "to": "src/components/aurora/webgpu/aurora-image.wgsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts",
+   "to": "src/components/aurora/webgpu/aurora-mediums.wgsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts",
+   "to": "src/components/aurora/webgpu/curlNoise.wgsl.ts"
+  },
+  {
+   "from": "src/components/dock/composables/useDockSearch.ts",
+   "to": "src/components/dock/search/useDockSearch.ts"
+  },
+  {
+   "from": "src/components/dock/composables/useFuzzySearch.ts",
+   "to": "src/components/dock/search/useFuzzySearch.ts"
+  },
+  {
+   "from": "src/components/dock/composables/useScrollChrome.ts",
+   "to": "src/components/dock/search/useScrollChrome.ts"
+  },
+  {
+   "from": "src/components/dock/match.ts",
+   "to": "src/components/dock/search/match.ts"
+  },
+  {
+   "from": "src/components/dock/types.ts",
+   "to": "src/components/dock/search/types.ts"
+  },
+  {
+   "from": "src/components/dock/composables/useGlassBackdropLuminance.ts",
+   "to": "src/components/dock/legibility/useGlassBackdropLuminance.ts"
+  },
+  {
+   "from": "src/components/dock/composables/useYieldToMain.ts",
+   "to": "src/components/dock/legibility/useYieldToMain.ts"
+  },
+  {
+   "from": "src/components/dock/composables/useRAFLoop.ts",
+   "to": "src/components/dock/legibility/useRAFLoop.ts"
+  },
+  {
+   "from": "src/components/dock/backdropLuminanceSample.ts",
+   "to": "src/components/dock/legibility/backdropLuminanceSample.ts"
+  },
+  {
+   "from": "src/components/dock/backdropSampleMath.ts",
+   "to": "src/components/dock/legibility/backdropSampleMath.ts"
+  },
+  {
+   "from": "src/components/dock/composables/useDockMorph.ts",
+   "to": "src/components/dock/morph/useDockMorph.ts"
+  },
+  {
+   "from": "src/components/dock/composables/dockMorphMeasure.ts",
+   "to": "src/components/dock/morph/dockMorphMeasure.ts"
+  },
+  {
+   "from": "src/components/dock/DockLayer.vue",
+   "to": "src/components/dock/layers/DockLayer.vue"
+  },
+  {
+   "from": "src/components/dock/DockLayerGroup.vue",
+   "to": "src/components/dock/layers/DockLayerGroup.vue"
+  },
+  {
+   "from": "src/components/dock/DockCrossfade.vue",
+   "to": "src/components/dock/layers/DockCrossfade.vue"
+  },
+  {
+   "from": "src/components/dock/composables/dockCrossfadeContext.ts",
+   "to": "src/components/dock/layers/dockCrossfadeContext.ts"
+  },
+  {
+   "from": "src/components/dock/composables/dockSwitcherContext.ts",
+   "to": "src/components/dock/layers/dockSwitcherContext.ts"
+  },
+  {
+   "from": "src/components/dock/DockControl.vue",
+   "to": "src/components/dock/controls/DockControl.vue"
+  },
+  {
+   "from": "src/components/dock/DockTrigger.vue",
+   "to": "src/components/dock/controls/DockTrigger.vue"
+  },
+  {
+   "from": "src/components/dock/DockBackgroundToggle.vue",
+   "to": "src/components/dock/controls/DockBackgroundToggle.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSub.vue",
+   "to": "src/components/menu/sub/DropdownMenuSub.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSubContent.vue",
+   "to": "src/components/menu/sub/DropdownMenuSubContent.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSubTrigger.vue",
+   "to": "src/components/menu/sub/DropdownMenuSubTrigger.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuItem.vue",
+   "to": "src/components/menu/items/DropdownMenuItem.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuCheckboxItem.vue",
+   "to": "src/components/menu/items/DropdownMenuCheckboxItem.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuRadioGroup.vue",
+   "to": "src/components/menu/items/DropdownMenuRadioGroup.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuRadioItem.vue",
+   "to": "src/components/menu/items/DropdownMenuRadioItem.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuLabel.vue",
+   "to": "src/components/menu/items/DropdownMenuLabel.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSeparator.vue",
+   "to": "src/components/menu/items/DropdownMenuSeparator.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuShortcut.vue",
+   "to": "src/components/menu/items/DropdownMenuShortcut.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuGroup.vue",
+   "to": "src/components/menu/items/DropdownMenuGroup.vue"
+  },
+  {
+   "from": "src/components/sortable-list/drag.ts",
+   "to": "src/components/sortable-list/drag/drag.ts"
+  },
+  {
+   "from": "src/components/sortable-list/ghost.ts",
+   "to": "src/components/sortable-list/drag/ghost.ts"
+  },
+  {
+   "from": "src/components/sortable-list/motion.ts",
+   "to": "src/components/sortable-list/drag/motion.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/graphemes.ts",
+   "to": "src/components/typewriter/graphemes.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/keyboard.ts",
+   "to": "src/components/typewriter/keyboard.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/pausePatterns.ts",
+   "to": "src/components/typewriter/pausePatterns.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/timing.ts",
+   "to": "src/components/typewriter/timing.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/typoStateMachine.ts",
+   "to": "src/components/typewriter/typoStateMachine.ts"
+  }
+ ]
+}

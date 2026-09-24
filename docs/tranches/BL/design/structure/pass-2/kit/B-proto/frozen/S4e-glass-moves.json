@@ -1,0 +1,623 @@
+{
+ "step": "S4e-glass moves",
+ "moves": [
+  {
+   "from": "src/styles/glass/material.css",
+   "to": "src/styles/glass/material/material.css"
+  },
+  {
+   "from": "src/styles/glass/veil.css",
+   "to": "src/styles/glass/material/veil.css"
+  },
+  {
+   "from": "src/styles/glass/ladder.css",
+   "to": "src/styles/glass/material/ladder.css"
+  },
+  {
+   "from": "src/styles/glass/ladder-undershadow.css",
+   "to": "src/styles/glass/material/ladder-undershadow.css"
+  },
+  {
+   "from": "src/styles/glass/surfaces.css",
+   "to": "src/styles/glass/surfaces/surfaces.css"
+  },
+  {
+   "from": "src/styles/glass/surfaces-pager.css",
+   "to": "src/styles/glass/surfaces/surfaces-pager.css"
+  },
+  {
+   "from": "src/styles/glass/control-surfaces.css",
+   "to": "src/styles/glass/surfaces/control-surfaces.css"
+  },
+  {
+   "from": "src/styles/glass/control-bit.css",
+   "to": "src/styles/glass/surfaces/control-bit.css"
+  },
+  {
+   "from": "src/styles/glass/control-edge.css",
+   "to": "src/styles/glass/surfaces/control-edge.css"
+  },
+  {
+   "from": "src/styles/glass/glass-capsule.css",
+   "to": "src/styles/glass/shapes/glass-capsule.css"
+  },
+  {
+   "from": "src/styles/glass/glass-chip.css",
+   "to": "src/styles/glass/shapes/glass-chip.css"
+  },
+  {
+   "from": "src/styles/glass/glass-atom.css",
+   "to": "src/styles/glass/shapes/glass-atom.css"
+  },
+  {
+   "from": "src/styles/glass/mark.css",
+   "to": "src/styles/glass/shapes/mark.css"
+  },
+  {
+   "from": "src/styles/glass/liquid-fill.css",
+   "to": "src/styles/glass/shapes/liquid-fill.css"
+  },
+  {
+   "from": "src/styles/glass/value-marks.css",
+   "to": "src/styles/glass/shapes/value-marks.css"
+  },
+  {
+   "from": "src/styles/glass/track-flow.css",
+   "to": "src/styles/glass/shapes/track-flow.css"
+  },
+  {
+   "from": "src/styles/glass/reveal.css",
+   "to": "src/styles/glass/transitions/reveal.css"
+  },
+  {
+   "from": "src/styles/glass/liquid-enter.css",
+   "to": "src/styles/glass/transitions/liquid-enter.css"
+  },
+  {
+   "from": "src/styles/glass/dissolve.css",
+   "to": "src/styles/glass/transitions/dissolve.css"
+  },
+  {
+   "from": "src/styles/glass/deep.css",
+   "to": "src/styles/glass/decoration/deep.css"
+  },
+  {
+   "from": "src/styles/glass/defined.css",
+   "to": "src/styles/glass/decoration/defined.css"
+  },
+  {
+   "from": "src/styles/glass/squircle.css",
+   "to": "src/styles/glass/decoration/squircle.css"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/control-bit.css",
+   "reason": "S4e-glass: src/styles/glass/control-bit.css -> src/styles/glass/surfaces/control-bit.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/control-edge.css",
+   "reason": "S4e-glass: src/styles/glass/control-edge.css -> src/styles/glass/surfaces/control-edge.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/control-surfaces.css",
+   "reason": "S4e-glass: src/styles/glass/control-surfaces.css -> src/styles/glass/surfaces/control-surfaces.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/deep.css",
+   "reason": "S4e-glass: src/styles/glass/deep.css -> src/styles/glass/decoration/deep.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/defined.css",
+   "reason": "S4e-glass: src/styles/glass/defined.css -> src/styles/glass/decoration/defined.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/dissolve.css",
+   "reason": "S4e-glass: src/styles/glass/dissolve.css -> src/styles/glass/transitions/dissolve.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/glass-atom.css",
+   "reason": "S4e-glass: src/styles/glass/glass-atom.css -> src/styles/glass/shapes/glass-atom.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/glass-capsule.css",
+   "reason": "S4e-glass: src/styles/glass/glass-capsule.css -> src/styles/glass/shapes/glass-capsule.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/glass-chip.css",
+   "reason": "S4e-glass: src/styles/glass/glass-chip.css -> src/styles/glass/shapes/glass-chip.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/ladder-undershadow.css",
+   "reason": "S4e-glass: src/styles/glass/ladder-undershadow.css -> src/styles/glass/material/ladder-undershadow.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/ladder.css",
+   "reason": "S4e-glass: src/styles/glass/ladder.css -> src/styles/glass/material/ladder.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/liquid-enter.css",
+   "reason": "S4e-glass: src/styles/glass/liquid-enter.css -> src/styles/glass/transitions/liquid-enter.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/liquid-fill.css",
+   "reason": "S4e-glass: src/styles/glass/liquid-fill.css -> src/styles/glass/shapes/liquid-fill.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/mark.css",
+   "reason": "S4e-glass: src/styles/glass/mark.css -> src/styles/glass/shapes/mark.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/material.css",
+   "reason": "S4e-glass: src/styles/glass/material.css -> src/styles/glass/material/material.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/reveal.css",
+   "reason": "S4e-glass: src/styles/glass/reveal.css -> src/styles/glass/transitions/reveal.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/squircle.css",
+   "reason": "S4e-glass: src/styles/glass/squircle.css -> src/styles/glass/decoration/squircle.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/surfaces-pager.css",
+   "reason": "S4e-glass: src/styles/glass/surfaces-pager.css -> src/styles/glass/surfaces/surfaces-pager.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/surfaces.css",
+   "reason": "S4e-glass: src/styles/glass/surfaces.css -> src/styles/glass/surfaces/surfaces.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/track-flow.css",
+   "reason": "S4e-glass: src/styles/glass/track-flow.css -> src/styles/glass/shapes/track-flow.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/value-marks.css",
+   "reason": "S4e-glass: src/styles/glass/value-marks.css -> src/styles/glass/shapes/value-marks.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass/veil.css",
+   "reason": "S4e-glass: src/styles/glass/veil.css -> src/styles/glass/material/veil.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/control-bit.css",
+   "reason": "S4e-glass: src/styles/glass/control-bit.css -> src/styles/glass/surfaces/control-bit.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/control-edge.css",
+   "reason": "S4e-glass: src/styles/glass/control-edge.css -> src/styles/glass/surfaces/control-edge.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/control-surfaces.css",
+   "reason": "S4e-glass: src/styles/glass/control-surfaces.css -> src/styles/glass/surfaces/control-surfaces.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/deep.css",
+   "reason": "S4e-glass: src/styles/glass/deep.css -> src/styles/glass/decoration/deep.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/defined.css",
+   "reason": "S4e-glass: src/styles/glass/defined.css -> src/styles/glass/decoration/defined.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/dissolve.css",
+   "reason": "S4e-glass: src/styles/glass/dissolve.css -> src/styles/glass/transitions/dissolve.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/glass-atom.css",
+   "reason": "S4e-glass: src/styles/glass/glass-atom.css -> src/styles/glass/shapes/glass-atom.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/glass-capsule.css",
+   "reason": "S4e-glass: src/styles/glass/glass-capsule.css -> src/styles/glass/shapes/glass-capsule.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/glass-chip.css",
+   "reason": "S4e-glass: src/styles/glass/glass-chip.css -> src/styles/glass/shapes/glass-chip.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/ladder-undershadow.css",
+   "reason": "S4e-glass: src/styles/glass/ladder-undershadow.css -> src/styles/glass/material/ladder-undershadow.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/ladder.css",
+   "reason": "S4e-glass: src/styles/glass/ladder.css -> src/styles/glass/material/ladder.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/liquid-enter.css",
+   "reason": "S4e-glass: src/styles/glass/liquid-enter.css -> src/styles/glass/transitions/liquid-enter.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/liquid-fill.css",
+   "reason": "S4e-glass: src/styles/glass/liquid-fill.css -> src/styles/glass/shapes/liquid-fill.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/mark.css",
+   "reason": "S4e-glass: src/styles/glass/mark.css -> src/styles/glass/shapes/mark.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/material.css",
+   "reason": "S4e-glass: src/styles/glass/material.css -> src/styles/glass/material/material.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/reveal.css",
+   "reason": "S4e-glass: src/styles/glass/reveal.css -> src/styles/glass/transitions/reveal.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/squircle.css",
+   "reason": "S4e-glass: src/styles/glass/squircle.css -> src/styles/glass/decoration/squircle.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/surfaces-pager.css",
+   "reason": "S4e-glass: src/styles/glass/surfaces-pager.css -> src/styles/glass/surfaces/surfaces-pager.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/surfaces.css",
+   "reason": "S4e-glass: src/styles/glass/surfaces.css -> src/styles/glass/surfaces/surfaces.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/track-flow.css",
+   "reason": "S4e-glass: src/styles/glass/track-flow.css -> src/styles/glass/shapes/track-flow.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/value-marks.css",
+   "reason": "S4e-glass: src/styles/glass/value-marks.css -> src/styles/glass/shapes/value-marks.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass/veil.css",
+   "reason": "S4e-glass: src/styles/glass/veil.css -> src/styles/glass/material/veil.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/control-bit.css",
+   "reason": "S4e-glass: src/styles/glass/control-bit.css -> src/styles/glass/surfaces/control-bit.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/control-edge.css",
+   "reason": "S4e-glass: src/styles/glass/control-edge.css -> src/styles/glass/surfaces/control-edge.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/control-surfaces.css",
+   "reason": "S4e-glass: src/styles/glass/control-surfaces.css -> src/styles/glass/surfaces/control-surfaces.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/deep.css",
+   "reason": "S4e-glass: src/styles/glass/deep.css -> src/styles/glass/decoration/deep.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/defined.css",
+   "reason": "S4e-glass: src/styles/glass/defined.css -> src/styles/glass/decoration/defined.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/dissolve.css",
+   "reason": "S4e-glass: src/styles/glass/dissolve.css -> src/styles/glass/transitions/dissolve.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/glass-atom.css",
+   "reason": "S4e-glass: src/styles/glass/glass-atom.css -> src/styles/glass/shapes/glass-atom.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/glass-capsule.css",
+   "reason": "S4e-glass: src/styles/glass/glass-capsule.css -> src/styles/glass/shapes/glass-capsule.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/glass-chip.css",
+   "reason": "S4e-glass: src/styles/glass/glass-chip.css -> src/styles/glass/shapes/glass-chip.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/ladder-undershadow.css",
+   "reason": "S4e-glass: src/styles/glass/ladder-undershadow.css -> src/styles/glass/material/ladder-undershadow.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/ladder.css",
+   "reason": "S4e-glass: src/styles/glass/ladder.css -> src/styles/glass/material/ladder.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/liquid-enter.css",
+   "reason": "S4e-glass: src/styles/glass/liquid-enter.css -> src/styles/glass/transitions/liquid-enter.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/liquid-fill.css",
+   "reason": "S4e-glass: src/styles/glass/liquid-fill.css -> src/styles/glass/shapes/liquid-fill.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/mark.css",
+   "reason": "S4e-glass: src/styles/glass/mark.css -> src/styles/glass/shapes/mark.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/material.css",
+   "reason": "S4e-glass: src/styles/glass/material.css -> src/styles/glass/material/material.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/reveal.css",
+   "reason": "S4e-glass: src/styles/glass/reveal.css -> src/styles/glass/transitions/reveal.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/squircle.css",
+   "reason": "S4e-glass: src/styles/glass/squircle.css -> src/styles/glass/decoration/squircle.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/surfaces-pager.css",
+   "reason": "S4e-glass: src/styles/glass/surfaces-pager.css -> src/styles/glass/surfaces/surfaces-pager.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/surfaces.css",
+   "reason": "S4e-glass: src/styles/glass/surfaces.css -> src/styles/glass/surfaces/surfaces.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/track-flow.css",
+   "reason": "S4e-glass: src/styles/glass/track-flow.css -> src/styles/glass/shapes/track-flow.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/value-marks.css",
+   "reason": "S4e-glass: src/styles/glass/value-marks.css -> src/styles/glass/shapes/value-marks.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass/veil.css",
+   "reason": "S4e-glass: src/styles/glass/veil.css -> src/styles/glass/material/veil.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/control-bit.css",
+   "reason": "S4e-glass: src/styles/glass/control-bit.css -> src/styles/glass/surfaces/control-bit.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/control-edge.css",
+   "reason": "S4e-glass: src/styles/glass/control-edge.css -> src/styles/glass/surfaces/control-edge.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/control-surfaces.css",
+   "reason": "S4e-glass: src/styles/glass/control-surfaces.css -> src/styles/glass/surfaces/control-surfaces.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/deep.css",
+   "reason": "S4e-glass: src/styles/glass/deep.css -> src/styles/glass/decoration/deep.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/defined.css",
+   "reason": "S4e-glass: src/styles/glass/defined.css -> src/styles/glass/decoration/defined.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/dissolve.css",
+   "reason": "S4e-glass: src/styles/glass/dissolve.css -> src/styles/glass/transitions/dissolve.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/glass-atom.css",
+   "reason": "S4e-glass: src/styles/glass/glass-atom.css -> src/styles/glass/shapes/glass-atom.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/glass-capsule.css",
+   "reason": "S4e-glass: src/styles/glass/glass-capsule.css -> src/styles/glass/shapes/glass-capsule.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/glass-chip.css",
+   "reason": "S4e-glass: src/styles/glass/glass-chip.css -> src/styles/glass/shapes/glass-chip.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/ladder-undershadow.css",
+   "reason": "S4e-glass: src/styles/glass/ladder-undershadow.css -> src/styles/glass/material/ladder-undershadow.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/ladder.css",
+   "reason": "S4e-glass: src/styles/glass/ladder.css -> src/styles/glass/material/ladder.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/liquid-enter.css",
+   "reason": "S4e-glass: src/styles/glass/liquid-enter.css -> src/styles/glass/transitions/liquid-enter.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/liquid-fill.css",
+   "reason": "S4e-glass: src/styles/glass/liquid-fill.css -> src/styles/glass/shapes/liquid-fill.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/mark.css",
+   "reason": "S4e-glass: src/styles/glass/mark.css -> src/styles/glass/shapes/mark.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/material.css",
+   "reason": "S4e-glass: src/styles/glass/material.css -> src/styles/glass/material/material.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/reveal.css",
+   "reason": "S4e-glass: src/styles/glass/reveal.css -> src/styles/glass/transitions/reveal.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/squircle.css",
+   "reason": "S4e-glass: src/styles/glass/squircle.css -> src/styles/glass/decoration/squircle.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/surfaces-pager.css",
+   "reason": "S4e-glass: src/styles/glass/surfaces-pager.css -> src/styles/glass/surfaces/surfaces-pager.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/surfaces.css",
+   "reason": "S4e-glass: src/styles/glass/surfaces.css -> src/styles/glass/surfaces/surfaces.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/track-flow.css",
+   "reason": "S4e-glass: src/styles/glass/track-flow.css -> src/styles/glass/shapes/track-flow.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/value-marks.css",
+   "reason": "S4e-glass: src/styles/glass/value-marks.css -> src/styles/glass/shapes/value-marks.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/veil.css",
+   "reason": "S4e-glass: src/styles/glass/veil.css -> src/styles/glass/material/veil.css; the scanner's sensitivity is judged by the test run"
+  }
+ ]
+}

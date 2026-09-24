@@ -1,0 +1,62 @@
+{
+ "step": "B11b door trim",
+ "dropped": {
+  "src/composables/search/index.ts": [
+   "UseFuzzySearchOptions",
+   "SearchIndex"
+  ],
+  "src/composables/context/index.ts": [
+   "StrictContext",
+   "OptionalContext"
+  ],
+  "src/components/dock/morph/index.ts": [
+   "UseDockMorphOrchestratorOptions",
+   "UseDockMorphOrchestratorReturn"
+  ],
+  "src/components/dock/layers/index.ts": [
+   "DOCK_CROSSFADE_KEY",
+   "provideDockCrossfadeContext",
+   "useDockCrossfadeContext"
+  ],
+  "src/components/dock/search/index.ts": [
+   "SearchIndex",
+   "UseFuzzySearchOptions"
+  ],
+  "src/components/_shared/overlay/index.ts": [
+   "OverlayAttrs",
+   "OverlayRole",
+   "DockParticipation",
+   "DockPortalAttrs",
+   "HoldTarget",
+   "HoldToken",
+   "FloatingAlign",
+   "FloatingSide"
+  ]
+ },
+ "files": {
+  "src/composables/search/index.ts": {
+   "before": "// The client fuzzy-search ENGINE — the library's ONE subsequence matcher.\n//\n// [2026-08-25 · BK #42 W-SEARCH] This barrel is INTERNAL, and the classification is\n// mechanical rather than editorial: `COMPOSABLE_CLASS.search = \"INTERNAL\"`\n// (`scripts/lib/subpath-policy.mjs`), so the fail-closed generator emits NO `./search`\n// export key for it. TR:192 ⊕⁵ SE-4 ruled the surface shape ENGINE-INTERNAL — the\n// engine has exactly one caller shape (a component that owns a field and wants ranked\n// rows), the dock is it, and a published matcher with no published chrome to drive it\n// is a door onto a room nobody can enter from outside.\n//\n// It reached here from `src/components/search/composables/` in the same act that\n// DELETED `SearchBar` with its relay: the engine was never the component's, it was\n// parked under it. `fuzzySearchIndex.ts` lands as `match.ts` — the name stripped of the\n// component it no longer belongs to.\nexport { useFuzzySearch } from \"../../components/dock/search/useFuzzySearch\";\nexport type { UseFuzzySearchOptions } from \"../../components/dock/search/useFuzzySearch\";\nexport { buildIndex, searchIndex, fuzzyMatch, clearSearchCache } from \"../../components/dock/search/match\";\nexport type { SearchIndex } from \"../../components/dock/search/match\";\nexport type { SearchableItem, SearchResult, FuzzySearchState } from \"../../components/dock/search/types\";\n",
+   "after": "// The client fuzzy-search ENGINE — the library's ONE subsequence matcher.\n//\n// [2026-08-25 · BK #42 W-SEARCH] This barrel is INTERNAL, and the classification is\n// mechanical rather than editorial: `COMPOSABLE_CLASS.search = \"INTERNAL\"`\n// (`scripts/lib/subpath-policy.mjs`), so the fail-closed generator emits NO `./search`\n// export key for it. TR:192 ⊕⁵ SE-4 ruled the surface shape ENGINE-INTERNAL — the\n// engine has exactly one caller shape (a component that owns a field and wants ranked\n// rows), the dock is it, and a published matcher with no published chrome to drive it\n// is a door onto a room nobody can enter from outside.\n//\n// It reached here from `src/components/search/composables/` in the same act that\n// DELETED `SearchBar` with its relay: the engine was never the component's, it was\n// parked under it. `fuzzySearchIndex.ts` lands as `match.ts` — the name stripped of the\n// component it no longer belongs to.\nexport { useFuzzySearch } from \"../../components/dock/search/useFuzzySearch\";export { buildIndex, searchIndex, fuzzyMatch, clearSearchCache } from \"../../components/dock/search/match\";export type { SearchableItem, SearchResult, FuzzySearchState } from \"../../components/dock/search/types\";\n"
+  },
+  "src/composables/context/index.ts": {
+   "before": "// composables/context — the canonical provide/inject DI factory pair.\nexport {\n    createStrictContext,\n    createOptionalContext,\n    type StrictContext,\n    type OptionalContext,\n} from \"./createContext\";\n",
+   "after": "// composables/context — the canonical provide/inject DI factory pair.\nexport {\n    createStrictContext,\n    createOptionalContext,\n} from \"./createContext\";\n"
+  },
+  "src/components/dock/morph/index.ts": {
+   "before": "// components/dock/morph — module door (B-S5): the names read from outside this module.\nexport { useDockExpandedSize } from \"./dockMorphMeasure\";\nexport type { UseDockMorphOrchestratorOptions, UseDockMorphOrchestratorReturn } from \"./useDockMorph\";\nexport { useDockMorphOrchestrator } from \"./useDockMorph\";\n",
+   "after": "// components/dock/morph — module door (B-S5): the names read from outside this module.\nexport { useDockExpandedSize } from \"./dockMorphMeasure\";export { useDockMorphOrchestrator } from \"./useDockMorph\";\n"
+  },
+  "src/components/dock/layers/index.ts": {
+   "before": "// components/dock/layers — module door (B-S5): the names read from outside this module.\nexport { default as DockCrossfade } from \"./DockCrossfade.vue\";\nexport type { DockCrossfadeContext, DockFaceDescriptor, DockFaceRegistration } from \"./dockCrossfadeContext\";\nexport { DOCK_CROSSFADE_KEY, provideDockCrossfadeContext, useDockCrossfadeContext } from \"./dockCrossfadeContext\";\nexport { default as DockLayer } from \"./DockLayer.vue\";\nexport { default as DockLayerGroup } from \"./DockLayerGroup.vue\";\n",
+   "after": "// components/dock/layers — module door (B-S5): the names read from outside this module.\nexport { default as DockCrossfade } from \"./DockCrossfade.vue\";\nexport type { DockCrossfadeContext, DockFaceDescriptor, DockFaceRegistration } from \"./dockCrossfadeContext\";export { default as DockLayer } from \"./DockLayer.vue\";\nexport { default as DockLayerGroup } from \"./DockLayerGroup.vue\";\n"
+  },
+  "src/components/dock/search/index.ts": {
+   "before": "// components/dock/search — module door (B-S5): the names read from outside this module.\nexport type { SearchIndex } from \"./match\";\nexport { buildIndex } from \"./match\";\nexport type { SearchableItem } from \"./types\";\nexport type { UseDockSearchOptions, UseDockSearchReturn } from \"./useDockSearch\";\nexport { useDockSearch } from \"./useDockSearch\";\nexport type { UseFuzzySearchOptions } from \"./useFuzzySearch\";\nexport { useFuzzySearch } from \"./useFuzzySearch\";\nexport type { UseScrollChromeOptions } from \"./useScrollChrome\";\n",
+   "after": "export { buildIndex } from \"./match\";\nexport type { SearchableItem } from \"./types\";\nexport type { UseDockSearchOptions, UseDockSearchReturn } from \"./useDockSearch\";\nexport { useDockSearch } from \"./useDockSearch\";export { useFuzzySearch } from \"./useFuzzySearch\";\nexport type { UseScrollChromeOptions } from \"./useScrollChrome\";\n"
+  },
+  "src/components/_shared/overlay/index.ts": {
+   "before": "/**\n * `_shared/overlay/` — a RELOCATION, not a growth.\n *\n * The portal contract, the keep-open token and the plate's attribute seam were\n * spread across `dock/composables/`, five component files and a `_shared/`\n * denylist module. Nothing here is new machinery; it is the same three\n * contracts, stated once, beside each other, with their readers.\n */\nexport { overlayContentAttrs, type OverlayAttrs, type OverlayRole } from \"./content\";\nexport { isTeleportedTarget } from \"./isTeleportedTarget\";\nexport {\n    useDockParticipation,\n    useHoldToken,\n    type DockParticipation,\n    type DockPortalAttrs,\n    type HoldTarget,\n    type HoldToken,\n} from \"./participation\";\nexport type {\n    FloatingAlign,\n    FloatingPlacementProps,\n    FloatingSide,\n} from \"./placement\";\nexport { useModalShortcutBarrier } from \"./shortcuts\";\nexport { default as ModalOverlay } from \"./ModalOverlay.vue\";\nexport type { DockHoldKind } from \"./participation\";\nexport { provideOverlayHost } from \"./participation\";\n",
+   "after": "/**\n * `_shared/overlay/` — a RELOCATION, not a growth.\n *\n * The portal contract, the keep-open token and the plate's attribute seam were\n * spread across `dock/composables/`, five component files and a `_shared/`\n * denylist module. Nothing here is new machinery; it is the same three\n * contracts, stated once, beside each other, with their readers.\n */\nexport { overlayContentAttrs } from \"./content\";\nexport { isTeleportedTarget } from \"./isTeleportedTarget\";\nexport {\n    useDockParticipation,\n    useHoldToken,\n} from \"./participation\";\nexport type {\n    FloatingPlacementProps,\n} from \"./placement\";\nexport { useModalShortcutBarrier } from \"./shortcuts\";\nexport { default as ModalOverlay } from \"./ModalOverlay.vue\";\nexport type { DockHoldKind } from \"./participation\";\nexport { provideOverlayHost } from \"./participation\";\n"
+  }
+ }
+}

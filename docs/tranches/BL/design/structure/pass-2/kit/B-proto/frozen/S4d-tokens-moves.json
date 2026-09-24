@@ -1,0 +1,539 @@
+{
+ "step": "S4d-tokens moves",
+ "moves": [
+  {
+   "from": "src/styles/tokens/scheme-motion.css",
+   "to": "src/styles/tokens/motion/scheme-motion.css"
+  },
+  {
+   "from": "src/styles/tokens/scheme-spring.css",
+   "to": "src/styles/tokens/motion/scheme-spring.css"
+  },
+  {
+   "from": "src/styles/tokens/motion-registers.css",
+   "to": "src/styles/tokens/motion/motion-registers.css"
+  },
+  {
+   "from": "src/styles/tokens/color-radius.css",
+   "to": "src/styles/tokens/surface/color-radius.css"
+  },
+  {
+   "from": "src/styles/tokens/shadow.css",
+   "to": "src/styles/tokens/surface/shadow.css"
+  },
+  {
+   "from": "src/styles/tokens/glass.css",
+   "to": "src/styles/tokens/surface/glass.css"
+  },
+  {
+   "from": "src/styles/tokens/glass-fx.css",
+   "to": "src/styles/tokens/surface/glass-fx.css"
+  },
+  {
+   "from": "src/styles/tokens/glass-deep.css",
+   "to": "src/styles/tokens/surface/glass-deep.css"
+  },
+  {
+   "from": "src/styles/tokens/on-glass-fg.css",
+   "to": "src/styles/tokens/surface/on-glass-fg.css"
+  },
+  {
+   "from": "src/styles/tokens/offsets.css",
+   "to": "src/styles/tokens/sizing/offsets.css"
+  },
+  {
+   "from": "src/styles/tokens/sizing.css",
+   "to": "src/styles/tokens/sizing/sizing.css"
+  },
+  {
+   "from": "src/styles/tokens/sizing-config.css",
+   "to": "src/styles/tokens/sizing/sizing-config.css"
+  },
+  {
+   "from": "src/styles/tokens/scale-paper.css",
+   "to": "src/styles/tokens/sizing/scale-paper.css"
+  },
+  {
+   "from": "src/styles/tokens/scroll-tokens.css",
+   "to": "src/styles/tokens/sizing/scroll-tokens.css"
+  },
+  {
+   "from": "src/styles/tokens/light-dark.css",
+   "to": "src/styles/tokens/scheme/light-dark.css"
+  },
+  {
+   "from": "src/styles/tokens/dark-arm.css",
+   "to": "src/styles/tokens/scheme/dark-arm.css"
+  },
+  {
+   "from": "src/styles/tokens/dark-arm-glass.css",
+   "to": "src/styles/tokens/scheme/dark-arm-glass.css"
+  },
+  {
+   "from": "src/styles/tokens/property-regs.css",
+   "to": "src/styles/tokens/properties/property-regs.css"
+  },
+  {
+   "from": "src/styles/tokens/property-regs-specular.css",
+   "to": "src/styles/tokens/properties/property-regs-specular.css"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/color-radius.css",
+   "reason": "S4d-tokens: src/styles/tokens/color-radius.css -> src/styles/tokens/surface/color-radius.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/dark-arm-glass.css",
+   "reason": "S4d-tokens: src/styles/tokens/dark-arm-glass.css -> src/styles/tokens/scheme/dark-arm-glass.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/dark-arm.css",
+   "reason": "S4d-tokens: src/styles/tokens/dark-arm.css -> src/styles/tokens/scheme/dark-arm.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/glass-deep.css",
+   "reason": "S4d-tokens: src/styles/tokens/glass-deep.css -> src/styles/tokens/surface/glass-deep.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/glass-fx.css",
+   "reason": "S4d-tokens: src/styles/tokens/glass-fx.css -> src/styles/tokens/surface/glass-fx.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/glass.css",
+   "reason": "S4d-tokens: src/styles/tokens/glass.css -> src/styles/tokens/surface/glass.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/light-dark.css",
+   "reason": "S4d-tokens: src/styles/tokens/light-dark.css -> src/styles/tokens/scheme/light-dark.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/motion-registers.css",
+   "reason": "S4d-tokens: src/styles/tokens/motion-registers.css -> src/styles/tokens/motion/motion-registers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/offsets.css",
+   "reason": "S4d-tokens: src/styles/tokens/offsets.css -> src/styles/tokens/sizing/offsets.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/on-glass-fg.css",
+   "reason": "S4d-tokens: src/styles/tokens/on-glass-fg.css -> src/styles/tokens/surface/on-glass-fg.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/property-regs-specular.css",
+   "reason": "S4d-tokens: src/styles/tokens/property-regs-specular.css -> src/styles/tokens/properties/property-regs-specular.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/property-regs.css",
+   "reason": "S4d-tokens: src/styles/tokens/property-regs.css -> src/styles/tokens/properties/property-regs.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/scale-paper.css",
+   "reason": "S4d-tokens: src/styles/tokens/scale-paper.css -> src/styles/tokens/sizing/scale-paper.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/scheme-motion.css",
+   "reason": "S4d-tokens: src/styles/tokens/scheme-motion.css -> src/styles/tokens/motion/scheme-motion.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/scheme-spring.css",
+   "reason": "S4d-tokens: src/styles/tokens/scheme-spring.css -> src/styles/tokens/motion/scheme-spring.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/scroll-tokens.css",
+   "reason": "S4d-tokens: src/styles/tokens/scroll-tokens.css -> src/styles/tokens/sizing/scroll-tokens.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/shadow.css",
+   "reason": "S4d-tokens: src/styles/tokens/shadow.css -> src/styles/tokens/surface/shadow.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/sizing-config.css",
+   "reason": "S4d-tokens: src/styles/tokens/sizing-config.css -> src/styles/tokens/sizing/sizing-config.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens/sizing.css",
+   "reason": "S4d-tokens: src/styles/tokens/sizing.css -> src/styles/tokens/sizing/sizing.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/color-radius.css",
+   "reason": "S4d-tokens: src/styles/tokens/color-radius.css -> src/styles/tokens/surface/color-radius.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/dark-arm-glass.css",
+   "reason": "S4d-tokens: src/styles/tokens/dark-arm-glass.css -> src/styles/tokens/scheme/dark-arm-glass.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/dark-arm.css",
+   "reason": "S4d-tokens: src/styles/tokens/dark-arm.css -> src/styles/tokens/scheme/dark-arm.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/glass-deep.css",
+   "reason": "S4d-tokens: src/styles/tokens/glass-deep.css -> src/styles/tokens/surface/glass-deep.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/glass-fx.css",
+   "reason": "S4d-tokens: src/styles/tokens/glass-fx.css -> src/styles/tokens/surface/glass-fx.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/glass.css",
+   "reason": "S4d-tokens: src/styles/tokens/glass.css -> src/styles/tokens/surface/glass.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/light-dark.css",
+   "reason": "S4d-tokens: src/styles/tokens/light-dark.css -> src/styles/tokens/scheme/light-dark.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/motion-registers.css",
+   "reason": "S4d-tokens: src/styles/tokens/motion-registers.css -> src/styles/tokens/motion/motion-registers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/offsets.css",
+   "reason": "S4d-tokens: src/styles/tokens/offsets.css -> src/styles/tokens/sizing/offsets.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/on-glass-fg.css",
+   "reason": "S4d-tokens: src/styles/tokens/on-glass-fg.css -> src/styles/tokens/surface/on-glass-fg.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/property-regs-specular.css",
+   "reason": "S4d-tokens: src/styles/tokens/property-regs-specular.css -> src/styles/tokens/properties/property-regs-specular.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/property-regs.css",
+   "reason": "S4d-tokens: src/styles/tokens/property-regs.css -> src/styles/tokens/properties/property-regs.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/scale-paper.css",
+   "reason": "S4d-tokens: src/styles/tokens/scale-paper.css -> src/styles/tokens/sizing/scale-paper.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/scheme-motion.css",
+   "reason": "S4d-tokens: src/styles/tokens/scheme-motion.css -> src/styles/tokens/motion/scheme-motion.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/scheme-spring.css",
+   "reason": "S4d-tokens: src/styles/tokens/scheme-spring.css -> src/styles/tokens/motion/scheme-spring.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/scroll-tokens.css",
+   "reason": "S4d-tokens: src/styles/tokens/scroll-tokens.css -> src/styles/tokens/sizing/scroll-tokens.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/shadow.css",
+   "reason": "S4d-tokens: src/styles/tokens/shadow.css -> src/styles/tokens/surface/shadow.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/sizing-config.css",
+   "reason": "S4d-tokens: src/styles/tokens/sizing-config.css -> src/styles/tokens/sizing/sizing-config.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens/sizing.css",
+   "reason": "S4d-tokens: src/styles/tokens/sizing.css -> src/styles/tokens/sizing/sizing.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/color-radius.css",
+   "reason": "S4d-tokens: src/styles/tokens/color-radius.css -> src/styles/tokens/surface/color-radius.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/dark-arm-glass.css",
+   "reason": "S4d-tokens: src/styles/tokens/dark-arm-glass.css -> src/styles/tokens/scheme/dark-arm-glass.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/dark-arm.css",
+   "reason": "S4d-tokens: src/styles/tokens/dark-arm.css -> src/styles/tokens/scheme/dark-arm.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/glass-deep.css",
+   "reason": "S4d-tokens: src/styles/tokens/glass-deep.css -> src/styles/tokens/surface/glass-deep.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/glass-fx.css",
+   "reason": "S4d-tokens: src/styles/tokens/glass-fx.css -> src/styles/tokens/surface/glass-fx.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/glass.css",
+   "reason": "S4d-tokens: src/styles/tokens/glass.css -> src/styles/tokens/surface/glass.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/light-dark.css",
+   "reason": "S4d-tokens: src/styles/tokens/light-dark.css -> src/styles/tokens/scheme/light-dark.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/motion-registers.css",
+   "reason": "S4d-tokens: src/styles/tokens/motion-registers.css -> src/styles/tokens/motion/motion-registers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/offsets.css",
+   "reason": "S4d-tokens: src/styles/tokens/offsets.css -> src/styles/tokens/sizing/offsets.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/on-glass-fg.css",
+   "reason": "S4d-tokens: src/styles/tokens/on-glass-fg.css -> src/styles/tokens/surface/on-glass-fg.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/property-regs-specular.css",
+   "reason": "S4d-tokens: src/styles/tokens/property-regs-specular.css -> src/styles/tokens/properties/property-regs-specular.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/property-regs.css",
+   "reason": "S4d-tokens: src/styles/tokens/property-regs.css -> src/styles/tokens/properties/property-regs.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/scale-paper.css",
+   "reason": "S4d-tokens: src/styles/tokens/scale-paper.css -> src/styles/tokens/sizing/scale-paper.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/scheme-motion.css",
+   "reason": "S4d-tokens: src/styles/tokens/scheme-motion.css -> src/styles/tokens/motion/scheme-motion.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/scheme-spring.css",
+   "reason": "S4d-tokens: src/styles/tokens/scheme-spring.css -> src/styles/tokens/motion/scheme-spring.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/scroll-tokens.css",
+   "reason": "S4d-tokens: src/styles/tokens/scroll-tokens.css -> src/styles/tokens/sizing/scroll-tokens.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/shadow.css",
+   "reason": "S4d-tokens: src/styles/tokens/shadow.css -> src/styles/tokens/surface/shadow.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/sizing-config.css",
+   "reason": "S4d-tokens: src/styles/tokens/sizing-config.css -> src/styles/tokens/sizing/sizing-config.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens/sizing.css",
+   "reason": "S4d-tokens: src/styles/tokens/sizing.css -> src/styles/tokens/sizing/sizing.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/color-radius.css",
+   "reason": "S4d-tokens: src/styles/tokens/color-radius.css -> src/styles/tokens/surface/color-radius.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/dark-arm-glass.css",
+   "reason": "S4d-tokens: src/styles/tokens/dark-arm-glass.css -> src/styles/tokens/scheme/dark-arm-glass.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/dark-arm.css",
+   "reason": "S4d-tokens: src/styles/tokens/dark-arm.css -> src/styles/tokens/scheme/dark-arm.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/glass-deep.css",
+   "reason": "S4d-tokens: src/styles/tokens/glass-deep.css -> src/styles/tokens/surface/glass-deep.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/glass-fx.css",
+   "reason": "S4d-tokens: src/styles/tokens/glass-fx.css -> src/styles/tokens/surface/glass-fx.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/glass.css",
+   "reason": "S4d-tokens: src/styles/tokens/glass.css -> src/styles/tokens/surface/glass.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/light-dark.css",
+   "reason": "S4d-tokens: src/styles/tokens/light-dark.css -> src/styles/tokens/scheme/light-dark.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/motion-registers.css",
+   "reason": "S4d-tokens: src/styles/tokens/motion-registers.css -> src/styles/tokens/motion/motion-registers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/offsets.css",
+   "reason": "S4d-tokens: src/styles/tokens/offsets.css -> src/styles/tokens/sizing/offsets.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/on-glass-fg.css",
+   "reason": "S4d-tokens: src/styles/tokens/on-glass-fg.css -> src/styles/tokens/surface/on-glass-fg.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/property-regs-specular.css",
+   "reason": "S4d-tokens: src/styles/tokens/property-regs-specular.css -> src/styles/tokens/properties/property-regs-specular.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/property-regs.css",
+   "reason": "S4d-tokens: src/styles/tokens/property-regs.css -> src/styles/tokens/properties/property-regs.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/scale-paper.css",
+   "reason": "S4d-tokens: src/styles/tokens/scale-paper.css -> src/styles/tokens/sizing/scale-paper.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/scheme-motion.css",
+   "reason": "S4d-tokens: src/styles/tokens/scheme-motion.css -> src/styles/tokens/motion/scheme-motion.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/scheme-spring.css",
+   "reason": "S4d-tokens: src/styles/tokens/scheme-spring.css -> src/styles/tokens/motion/scheme-spring.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/scroll-tokens.css",
+   "reason": "S4d-tokens: src/styles/tokens/scroll-tokens.css -> src/styles/tokens/sizing/scroll-tokens.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/shadow.css",
+   "reason": "S4d-tokens: src/styles/tokens/shadow.css -> src/styles/tokens/surface/shadow.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/sizing-config.css",
+   "reason": "S4d-tokens: src/styles/tokens/sizing-config.css -> src/styles/tokens/sizing/sizing-config.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/sizing.css",
+   "reason": "S4d-tokens: src/styles/tokens/sizing.css -> src/styles/tokens/sizing/sizing.css; the scanner's sensitivity is judged by the test run"
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "step": "B-S4 tokens entry into its module (B §7.1: tokens.ts -> tokens/)",
+ "moves": [
+  {
+   "from": "src/styles/tokens.ts",
+   "to": "src/styles/tokens/tokens.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/tokens.ts",
+   "reason": "B-S4 tokens entry into its module (B §7.1: tokens.ts -> tokens/): src/styles/tokens.ts -> src/styles/tokens/tokens.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/tokens.ts",
+   "reason": "B-S4 tokens entry into its module (B §7.1: tokens.ts -> tokens/): src/styles/tokens.ts -> src/styles/tokens/tokens.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/tokens.ts",
+   "reason": "B-S4 tokens entry into its module (B §7.1: tokens.ts -> tokens/): src/styles/tokens.ts -> src/styles/tokens/tokens.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens.ts",
+   "reason": "B-S4 tokens entry into its module (B §7.1: tokens.ts -> tokens/): src/styles/tokens.ts -> src/styles/tokens/tokens.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ]
+}

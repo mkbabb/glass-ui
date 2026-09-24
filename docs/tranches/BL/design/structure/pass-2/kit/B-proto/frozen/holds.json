@@ -1,0 +1,16 @@
+{
+ "holds": [
+  {
+   "from": "src/components/_shared/overlay/isTeleportedTarget.ts",
+   "to": "src/components/dock/isTeleportedTarget.ts",
+   "readers": [
+    "src/components/dock"
+   ],
+   "refusal": "image check",
+   "edges": [
+    "lost demo/demo.css|css-source|src/components/dock/isTeleportedTarget.ts|f|source"
+   ],
+   "ruling": "FD-8 (a @source glob's match set)"
+  }
+ ]
+}

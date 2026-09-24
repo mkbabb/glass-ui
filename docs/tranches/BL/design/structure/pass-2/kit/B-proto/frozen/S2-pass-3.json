@@ -1,0 +1,73 @@
+{
+ "moves": [
+  {
+   "from": "src/composables/glass/backdropSampleMath.ts",
+   "to": "src/components/dock/backdropSampleMath.ts"
+  },
+  {
+   "from": "src/composables/glass/composables/useYieldToMain.ts",
+   "to": "src/components/dock/composables/useYieldToMain.ts"
+  },
+  {
+   "from": "src/composables/search/types.ts",
+   "to": "src/components/dock/types.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/glass/backdropSampleMath.ts",
+   "reason": "placement (F-7): src/composables/glass/backdropSampleMath.ts -> src/components/dock/backdropSampleMath.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/glass/composables/useYieldToMain.ts",
+   "reason": "placement (F-7): src/composables/glass/composables/useYieldToMain.ts -> src/components/dock/composables/useYieldToMain.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/search/types.ts",
+   "reason": "placement (F-7): src/composables/search/types.ts -> src/components/dock/types.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/glass/backdropSampleMath.ts",
+   "reason": "placement (F-7): src/composables/glass/backdropSampleMath.ts -> src/components/dock/backdropSampleMath.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/glass/composables/useYieldToMain.ts",
+   "reason": "placement (F-7): src/composables/glass/composables/useYieldToMain.ts -> src/components/dock/composables/useYieldToMain.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/search/types.ts",
+   "reason": "placement (F-7): src/composables/search/types.ts -> src/components/dock/types.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/glass/backdropSampleMath.ts",
+   "reason": "placement (F-7): src/composables/glass/backdropSampleMath.ts -> src/components/dock/backdropSampleMath.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/glass/composables/useYieldToMain.ts",
+   "reason": "placement (F-7): src/composables/glass/composables/useYieldToMain.ts -> src/components/dock/composables/useYieldToMain.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/search/types.ts",
+   "reason": "placement (F-7): src/composables/search/types.ts -> src/components/dock/types.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "note": "frozen B-S2 placement pass (F-9)"
+}

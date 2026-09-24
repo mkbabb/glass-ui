@@ -1,0 +1,611 @@
+{
+ "moves": [
+  {
+   "from": "src/components/aurora/constants/budget.ts",
+   "to": "src/composables/budget.ts"
+  },
+  {
+   "from": "src/components/chip/accent-tone.css",
+   "to": "src/styles/accent-tone.css"
+  },
+  {
+   "from": "src/components/dialog/ModalOverlay.vue",
+   "to": "src/components/_shared/overlay/ModalOverlay.vue"
+  },
+  {
+   "from": "src/components/dock/composables/useDockHold.ts",
+   "to": "src/components/slider/useDockHold.ts"
+  },
+  {
+   "from": "src/components/fourier-field/shaders/compute.wgsl.ts",
+   "to": "src/components/fourier-field/renderer/compute.wgsl.ts"
+  },
+  {
+   "from": "src/components/fourier-field/shaders/render.wgsl.ts",
+   "to": "src/components/fourier-field/renderer/render.wgsl.ts"
+  },
+  {
+   "from": "src/composables/dom/useClipboard.ts",
+   "to": "src/components/easing/useClipboard.ts"
+  },
+  {
+   "from": "src/composables/dom/useDocumentVisibility.ts",
+   "to": "src/composables/motion/core/useDocumentVisibility.ts"
+  },
+  {
+   "from": "src/composables/dom/useDragVelocity.ts",
+   "to": "src/components/slider/useDragVelocity.ts"
+  },
+  {
+   "from": "src/composables/glass/canvas2d/useCanvas2D.ts",
+   "to": "src/components/constellation/composables/useCanvas2D.ts"
+  },
+  {
+   "from": "src/composables/glass/useGlassBackdropLuminance.ts",
+   "to": "src/components/dock/composables/useGlassBackdropLuminance.ts"
+  },
+  {
+   "from": "src/composables/glass/webgl/createCanvasLifecycle.ts",
+   "to": "src/composables/glass/composables/createCanvasLifecycle.ts"
+  },
+  {
+   "from": "src/composables/glass/webgl/shaders/flow.glsl.ts",
+   "to": "src/components/aurora/constants/shaders/curlNoise.glsl.ts"
+  },
+  {
+   "from": "src/composables/glass/webgl/shaders/flow.wgsl.ts",
+   "to": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts"
+  },
+  {
+   "from": "src/composables/motion/core/useRAFLoop.ts",
+   "to": "src/composables/glass/useRAFLoop.ts"
+  },
+  {
+   "from": "src/composables/motion/core/useViewTransition.ts",
+   "to": "src/composables/motion/route/useViewTransition.ts"
+  },
+  {
+   "from": "src/composables/motion/morph/useElementMorph.ts",
+   "to": "src/composables/motion/composables/useElementMorph.ts"
+  },
+  {
+   "from": "src/composables/motion/pointer/useRoutePointer.ts",
+   "to": "src/components/constellation/composables/useRoutePointer.ts"
+  },
+  {
+   "from": "src/composables/motion/scroll/useScrollChrome.ts",
+   "to": "src/components/dock/composables/useScrollChrome.ts"
+  },
+  {
+   "from": "src/composables/motion/scroll/useScrollProgress.ts",
+   "to": "src/components/aurora/composables/useScrollProgress.ts"
+  },
+  {
+   "from": "src/composables/reactive/useTimer.ts",
+   "to": "src/composables/dom/useTimer.ts"
+  },
+  {
+   "from": "src/composables/search/useFuzzySearch.ts",
+   "to": "src/components/dock/composables/useFuzzySearch.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/aurora/constants/budget.ts",
+   "reason": "placement (F-7): src/components/aurora/constants/budget.ts -> src/composables/budget.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/chip/accent-tone.css",
+   "reason": "placement (F-7): src/components/chip/accent-tone.css -> src/styles/accent-tone.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dialog/ModalOverlay.vue",
+   "reason": "placement (F-7): src/components/dialog/ModalOverlay.vue -> src/components/_shared/overlay/ModalOverlay.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/dock/composables/useDockHold.ts",
+   "reason": "placement (F-7): src/components/dock/composables/useDockHold.ts -> src/components/slider/useDockHold.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/fourier-field/shaders/compute.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/compute.wgsl.ts -> src/components/fourier-field/renderer/compute.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "file": "src/components/fourier-field/shaders/render.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/render.wgsl.ts -> src/components/fourier-field/renderer/render.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/aurora/constants/budget.ts",
+   "reason": "placement (F-7): src/components/aurora/constants/budget.ts -> src/composables/budget.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/chip/accent-tone.css",
+   "reason": "placement (F-7): src/components/chip/accent-tone.css -> src/styles/accent-tone.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dialog/ModalOverlay.vue",
+   "reason": "placement (F-7): src/components/dialog/ModalOverlay.vue -> src/components/_shared/overlay/ModalOverlay.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/dock/composables/useDockHold.ts",
+   "reason": "placement (F-7): src/components/dock/composables/useDockHold.ts -> src/components/slider/useDockHold.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/fourier-field/shaders/compute.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/compute.wgsl.ts -> src/components/fourier-field/renderer/compute.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/components/fourier-field/shaders/render.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/render.wgsl.ts -> src/components/fourier-field/renderer/render.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/dom/useClipboard.ts",
+   "reason": "placement (F-7): src/composables/dom/useClipboard.ts -> src/components/easing/useClipboard.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/dom/useDocumentVisibility.ts",
+   "reason": "placement (F-7): src/composables/dom/useDocumentVisibility.ts -> src/composables/motion/core/useDocumentVisibility.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/dom/useDragVelocity.ts",
+   "reason": "placement (F-7): src/composables/dom/useDragVelocity.ts -> src/components/slider/useDragVelocity.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/glass/canvas2d/useCanvas2D.ts",
+   "reason": "placement (F-7): src/composables/glass/canvas2d/useCanvas2D.ts -> src/components/constellation/composables/useCanvas2D.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/glass/useGlassBackdropLuminance.ts",
+   "reason": "placement (F-7): src/composables/glass/useGlassBackdropLuminance.ts -> src/components/dock/composables/useGlassBackdropLuminance.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/glass/webgl/createCanvasLifecycle.ts",
+   "reason": "placement (F-7): src/composables/glass/webgl/createCanvasLifecycle.ts -> src/composables/glass/composables/createCanvasLifecycle.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/glass/webgl/shaders/flow.glsl.ts",
+   "reason": "placement (F-7): src/composables/glass/webgl/shaders/flow.glsl.ts -> src/components/aurora/constants/shaders/curlNoise.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/glass/webgl/shaders/flow.wgsl.ts",
+   "reason": "placement (F-7): src/composables/glass/webgl/shaders/flow.wgsl.ts -> src/components/aurora/constants/shaders/curlNoise.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/motion/core/useRAFLoop.ts",
+   "reason": "placement (F-7): src/composables/motion/core/useRAFLoop.ts -> src/composables/glass/useRAFLoop.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/motion/core/useViewTransition.ts",
+   "reason": "placement (F-7): src/composables/motion/core/useViewTransition.ts -> src/composables/motion/route/useViewTransition.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/motion/morph/useElementMorph.ts",
+   "reason": "placement (F-7): src/composables/motion/morph/useElementMorph.ts -> src/composables/motion/composables/useElementMorph.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/motion/pointer/useRoutePointer.ts",
+   "reason": "placement (F-7): src/composables/motion/pointer/useRoutePointer.ts -> src/components/constellation/composables/useRoutePointer.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/motion/scroll/useScrollChrome.ts",
+   "reason": "placement (F-7): src/composables/motion/scroll/useScrollChrome.ts -> src/components/dock/composables/useScrollChrome.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/motion/scroll/useScrollProgress.ts",
+   "reason": "placement (F-7): src/composables/motion/scroll/useScrollProgress.ts -> src/components/aurora/composables/useScrollProgress.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/reactive/useTimer.ts",
+   "reason": "placement (F-7): src/composables/reactive/useTimer.ts -> src/composables/dom/useTimer.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/composables/search/useFuzzySearch.ts",
+   "reason": "placement (F-7): src/composables/search/useFuzzySearch.ts -> src/components/dock/composables/useFuzzySearch.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/aurora/constants/budget.ts",
+   "reason": "placement (F-7): src/components/aurora/constants/budget.ts -> src/composables/budget.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/chip/accent-tone.css",
+   "reason": "placement (F-7): src/components/chip/accent-tone.css -> src/styles/accent-tone.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dialog/ModalOverlay.vue",
+   "reason": "placement (F-7): src/components/dialog/ModalOverlay.vue -> src/components/_shared/overlay/ModalOverlay.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/dock/composables/useDockHold.ts",
+   "reason": "placement (F-7): src/components/dock/composables/useDockHold.ts -> src/components/slider/useDockHold.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/fourier-field/shaders/compute.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/compute.wgsl.ts -> src/components/fourier-field/renderer/compute.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/components/fourier-field/shaders/render.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/render.wgsl.ts -> src/components/fourier-field/renderer/render.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/dom/useClipboard.ts",
+   "reason": "placement (F-7): src/composables/dom/useClipboard.ts -> src/components/easing/useClipboard.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/dom/useDocumentVisibility.ts",
+   "reason": "placement (F-7): src/composables/dom/useDocumentVisibility.ts -> src/composables/motion/core/useDocumentVisibility.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/dom/useDragVelocity.ts",
+   "reason": "placement (F-7): src/composables/dom/useDragVelocity.ts -> src/components/slider/useDragVelocity.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/glass/canvas2d/useCanvas2D.ts",
+   "reason": "placement (F-7): src/composables/glass/canvas2d/useCanvas2D.ts -> src/components/constellation/composables/useCanvas2D.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/glass/useGlassBackdropLuminance.ts",
+   "reason": "placement (F-7): src/composables/glass/useGlassBackdropLuminance.ts -> src/components/dock/composables/useGlassBackdropLuminance.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/glass/webgl/createCanvasLifecycle.ts",
+   "reason": "placement (F-7): src/composables/glass/webgl/createCanvasLifecycle.ts -> src/composables/glass/composables/createCanvasLifecycle.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/glass/webgl/shaders/flow.glsl.ts",
+   "reason": "placement (F-7): src/composables/glass/webgl/shaders/flow.glsl.ts -> src/components/aurora/constants/shaders/curlNoise.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/glass/webgl/shaders/flow.wgsl.ts",
+   "reason": "placement (F-7): src/composables/glass/webgl/shaders/flow.wgsl.ts -> src/components/aurora/constants/shaders/curlNoise.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/motion/core/useRAFLoop.ts",
+   "reason": "placement (F-7): src/composables/motion/core/useRAFLoop.ts -> src/composables/glass/useRAFLoop.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/motion/core/useViewTransition.ts",
+   "reason": "placement (F-7): src/composables/motion/core/useViewTransition.ts -> src/composables/motion/route/useViewTransition.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/motion/morph/useElementMorph.ts",
+   "reason": "placement (F-7): src/composables/motion/morph/useElementMorph.ts -> src/composables/motion/composables/useElementMorph.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/motion/pointer/useRoutePointer.ts",
+   "reason": "placement (F-7): src/composables/motion/pointer/useRoutePointer.ts -> src/components/constellation/composables/useRoutePointer.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/motion/scroll/useScrollChrome.ts",
+   "reason": "placement (F-7): src/composables/motion/scroll/useScrollChrome.ts -> src/components/dock/composables/useScrollChrome.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/motion/scroll/useScrollProgress.ts",
+   "reason": "placement (F-7): src/composables/motion/scroll/useScrollProgress.ts -> src/components/aurora/composables/useScrollProgress.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/reactive/useTimer.ts",
+   "reason": "placement (F-7): src/composables/reactive/useTimer.ts -> src/composables/dom/useTimer.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/composables/search/useFuzzySearch.ts",
+   "reason": "placement (F-7): src/composables/search/useFuzzySearch.ts -> src/components/dock/composables/useFuzzySearch.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/fourier-field/FourierField.smoke.test.ts",
+   "spec": "join(SRC, \"components/fourier-field\", file)",
+   "file": "src/components/fourier-field/shaders/compute.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/compute.wgsl.ts -> src/components/fourier-field/renderer/compute.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/components/fourier-field/FourierField.smoke.test.ts",
+   "spec": "join(SRC, \"components/fourier-field\", file)",
+   "file": "src/components/fourier-field/shaders/render.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/render.wgsl.ts -> src/components/fourier-field/renderer/render.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/budget.ts",
+   "reason": "placement (F-7): src/components/aurora/constants/budget.ts -> src/composables/budget.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/chip/accent-tone.css",
+   "reason": "placement (F-7): src/components/chip/accent-tone.css -> src/styles/accent-tone.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dialog/ModalOverlay.vue",
+   "reason": "placement (F-7): src/components/dialog/ModalOverlay.vue -> src/components/_shared/overlay/ModalOverlay.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/composables/useDockHold.ts",
+   "reason": "placement (F-7): src/components/dock/composables/useDockHold.ts -> src/components/slider/useDockHold.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/fourier-field/shaders/compute.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/compute.wgsl.ts -> src/components/fourier-field/renderer/compute.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/fourier-field/shaders/render.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/render.wgsl.ts -> src/components/fourier-field/renderer/render.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/dom/useClipboard.ts",
+   "reason": "placement (F-7): src/composables/dom/useClipboard.ts -> src/components/easing/useClipboard.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/dom/useDocumentVisibility.ts",
+   "reason": "placement (F-7): src/composables/dom/useDocumentVisibility.ts -> src/composables/motion/core/useDocumentVisibility.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/dom/useDragVelocity.ts",
+   "reason": "placement (F-7): src/composables/dom/useDragVelocity.ts -> src/components/slider/useDragVelocity.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/glass/canvas2d/useCanvas2D.ts",
+   "reason": "placement (F-7): src/composables/glass/canvas2d/useCanvas2D.ts -> src/components/constellation/composables/useCanvas2D.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/glass/useGlassBackdropLuminance.ts",
+   "reason": "placement (F-7): src/composables/glass/useGlassBackdropLuminance.ts -> src/components/dock/composables/useGlassBackdropLuminance.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/glass/webgl/createCanvasLifecycle.ts",
+   "reason": "placement (F-7): src/composables/glass/webgl/createCanvasLifecycle.ts -> src/composables/glass/composables/createCanvasLifecycle.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/glass/webgl/shaders/flow.glsl.ts",
+   "reason": "placement (F-7): src/composables/glass/webgl/shaders/flow.glsl.ts -> src/components/aurora/constants/shaders/curlNoise.glsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/glass/webgl/shaders/flow.wgsl.ts",
+   "reason": "placement (F-7): src/composables/glass/webgl/shaders/flow.wgsl.ts -> src/components/aurora/constants/shaders/curlNoise.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/motion/core/useRAFLoop.ts",
+   "reason": "placement (F-7): src/composables/motion/core/useRAFLoop.ts -> src/composables/glass/useRAFLoop.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/motion/core/useViewTransition.ts",
+   "reason": "placement (F-7): src/composables/motion/core/useViewTransition.ts -> src/composables/motion/route/useViewTransition.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/motion/morph/useElementMorph.ts",
+   "reason": "placement (F-7): src/composables/motion/morph/useElementMorph.ts -> src/composables/motion/composables/useElementMorph.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/motion/pointer/useRoutePointer.ts",
+   "reason": "placement (F-7): src/composables/motion/pointer/useRoutePointer.ts -> src/components/constellation/composables/useRoutePointer.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/motion/scroll/useScrollChrome.ts",
+   "reason": "placement (F-7): src/composables/motion/scroll/useScrollChrome.ts -> src/components/dock/composables/useScrollChrome.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/motion/scroll/useScrollProgress.ts",
+   "reason": "placement (F-7): src/composables/motion/scroll/useScrollProgress.ts -> src/components/aurora/composables/useScrollProgress.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/reactive/useTimer.ts",
+   "reason": "placement (F-7): src/composables/reactive/useTimer.ts -> src/composables/dom/useTimer.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/search/useFuzzySearch.ts",
+   "reason": "placement (F-7): src/composables/search/useFuzzySearch.ts -> src/components/dock/composables/useFuzzySearch.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/budget.ts",
+   "reason": "placement (F-7): src/components/aurora/constants/budget.ts -> src/composables/budget.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/chip/accent-tone.css",
+   "reason": "placement (F-7): src/components/chip/accent-tone.css -> src/styles/accent-tone.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dialog/ModalOverlay.vue",
+   "reason": "placement (F-7): src/components/dialog/ModalOverlay.vue -> src/components/_shared/overlay/ModalOverlay.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/composables/useDockHold.ts",
+   "reason": "placement (F-7): src/components/dock/composables/useDockHold.ts -> src/components/slider/useDockHold.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/fourier-field/shaders/compute.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/compute.wgsl.ts -> src/components/fourier-field/renderer/compute.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/fourier-field/shaders/render.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/render.wgsl.ts -> src/components/fourier-field/renderer/render.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/budget.ts",
+   "reason": "placement (F-7): src/components/aurora/constants/budget.ts -> src/composables/budget.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/chip/accent-tone.css",
+   "reason": "placement (F-7): src/components/chip/accent-tone.css -> src/styles/accent-tone.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dialog/ModalOverlay.vue",
+   "reason": "placement (F-7): src/components/dialog/ModalOverlay.vue -> src/components/_shared/overlay/ModalOverlay.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/composables/useDockHold.ts",
+   "reason": "placement (F-7): src/components/dock/composables/useDockHold.ts -> src/components/slider/useDockHold.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/fourier-field/shaders/compute.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/compute.wgsl.ts -> src/components/fourier-field/renderer/compute.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/fourier-field/shaders/render.wgsl.ts",
+   "reason": "placement (F-7): src/components/fourier-field/shaders/render.wgsl.ts -> src/components/fourier-field/renderer/render.wgsl.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "note": "frozen B-S2 placement pass (F-9)"
+}

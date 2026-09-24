@@ -1,0 +1,231 @@
+{
+ "step": "S4f-styles moves",
+ "moves": [
+  {
+   "from": "src/styles/track-well.css",
+   "to": "src/styles/surface/track-well.css"
+  },
+  {
+   "from": "src/styles/glass-specular-track.css",
+   "to": "src/styles/surface/glass-specular-track.css"
+  },
+  {
+   "from": "src/styles/paper.css",
+   "to": "src/styles/surface/paper.css"
+  },
+  {
+   "from": "src/styles/transitions.css",
+   "to": "src/styles/motion/transitions.css"
+  },
+  {
+   "from": "src/styles/animations.css",
+   "to": "src/styles/motion/animations.css"
+  },
+  {
+   "from": "src/styles/viz-reveal.css",
+   "to": "src/styles/motion/viz-reveal.css"
+  },
+  {
+   "from": "src/styles/scroll-driven.css",
+   "to": "src/styles/scroll/scroll-driven.css"
+  },
+  {
+   "from": "src/styles/scroll-choreography.css",
+   "to": "src/styles/scroll/scroll-choreography.css"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/animations.css",
+   "reason": "S4f-styles: src/styles/animations.css -> src/styles/motion/animations.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/glass-specular-track.css",
+   "reason": "S4f-styles: src/styles/glass-specular-track.css -> src/styles/surface/glass-specular-track.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/paper.css",
+   "reason": "S4f-styles: src/styles/paper.css -> src/styles/surface/paper.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/scroll-choreography.css",
+   "reason": "S4f-styles: src/styles/scroll-choreography.css -> src/styles/scroll/scroll-choreography.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/scroll-driven.css",
+   "reason": "S4f-styles: src/styles/scroll-driven.css -> src/styles/scroll/scroll-driven.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/track-well.css",
+   "reason": "S4f-styles: src/styles/track-well.css -> src/styles/surface/track-well.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/transitions.css",
+   "reason": "S4f-styles: src/styles/transitions.css -> src/styles/motion/transitions.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "file": "src/styles/viz-reveal.css",
+   "reason": "S4f-styles: src/styles/viz-reveal.css -> src/styles/motion/viz-reveal.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/animations.css",
+   "reason": "S4f-styles: src/styles/animations.css -> src/styles/motion/animations.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/glass-specular-track.css",
+   "reason": "S4f-styles: src/styles/glass-specular-track.css -> src/styles/surface/glass-specular-track.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/paper.css",
+   "reason": "S4f-styles: src/styles/paper.css -> src/styles/surface/paper.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/scroll-choreography.css",
+   "reason": "S4f-styles: src/styles/scroll-choreography.css -> src/styles/scroll/scroll-choreography.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/scroll-driven.css",
+   "reason": "S4f-styles: src/styles/scroll-driven.css -> src/styles/scroll/scroll-driven.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/track-well.css",
+   "reason": "S4f-styles: src/styles/track-well.css -> src/styles/surface/track-well.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/transitions.css",
+   "reason": "S4f-styles: src/styles/transitions.css -> src/styles/motion/transitions.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "file": "src/styles/viz-reveal.css",
+   "reason": "S4f-styles: src/styles/viz-reveal.css -> src/styles/motion/viz-reveal.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/animations.css",
+   "reason": "S4f-styles: src/styles/animations.css -> src/styles/motion/animations.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/glass-specular-track.css",
+   "reason": "S4f-styles: src/styles/glass-specular-track.css -> src/styles/surface/glass-specular-track.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/paper.css",
+   "reason": "S4f-styles: src/styles/paper.css -> src/styles/surface/paper.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/scroll-choreography.css",
+   "reason": "S4f-styles: src/styles/scroll-choreography.css -> src/styles/scroll/scroll-choreography.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/scroll-driven.css",
+   "reason": "S4f-styles: src/styles/scroll-driven.css -> src/styles/scroll/scroll-driven.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/track-well.css",
+   "reason": "S4f-styles: src/styles/track-well.css -> src/styles/surface/track-well.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/transitions.css",
+   "reason": "S4f-styles: src/styles/transitions.css -> src/styles/motion/transitions.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "file": "src/styles/viz-reveal.css",
+   "reason": "S4f-styles: src/styles/viz-reveal.css -> src/styles/motion/viz-reveal.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/animations.css",
+   "reason": "S4f-styles: src/styles/animations.css -> src/styles/motion/animations.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass-specular-track.css",
+   "reason": "S4f-styles: src/styles/glass-specular-track.css -> src/styles/surface/glass-specular-track.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/paper.css",
+   "reason": "S4f-styles: src/styles/paper.css -> src/styles/surface/paper.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/scroll-choreography.css",
+   "reason": "S4f-styles: src/styles/scroll-choreography.css -> src/styles/scroll/scroll-choreography.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/scroll-driven.css",
+   "reason": "S4f-styles: src/styles/scroll-driven.css -> src/styles/scroll/scroll-driven.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/track-well.css",
+   "reason": "S4f-styles: src/styles/track-well.css -> src/styles/surface/track-well.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/transitions.css",
+   "reason": "S4f-styles: src/styles/transitions.css -> src/styles/motion/transitions.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/viz-reveal.css",
+   "reason": "S4f-styles: src/styles/viz-reveal.css -> src/styles/motion/viz-reveal.css; the scanner's sensitivity is judged by the test run"
+  }
+ ]
+}
