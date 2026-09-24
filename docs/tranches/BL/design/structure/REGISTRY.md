@@ -626,3 +626,411 @@ src/components/dock/
 - **Anything with A, C, E or F.** They are blocked or banked. Their harvested parts go into the floor, which every route uses equally.
 
 No winner is declared in pass 1.
+
+---
+---
+
+# D1 · pass 2 · REGISTRY: the routes after pass 2
+
+| field | value |
+|---|---|
+| seat | D1 pass-2 agglomeration. Closes pass 2 with each route's status, the facts pass 2 established, the merge and cross-pollination tests, the rulings owed and the pass-3 plan. Picks no winner. Pass 1 above is kept intact |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `9aebb552`. `git diff 7362b3bf HEAD -- . ':!docs'` is 0 lines, so every pass-2 seat measured the code pass 1 measured |
+| inputs, read in full | `pass-2/`: `FLOOR-REPORT.md`, `SPECS-v2.md`, `SPECS-v2-synth-b.md`, `{B,Dp,G}-research.md`, `{B,Dp,G}-proto.md`, `{B,Dp,G}-critique.md`; `floor/FLOOR.md` and the floor tree; `RULINGS.md`; pass 1 of this file |
+| instruments | none re-run. Two read-only checks: `ls` of the pass-2 scratch root (which artifacts survive) and `grep -c anchor floor/lib/placement.mjs` (0). Every other number cites the report that measured it (P-3) |
+| fences | no source edit, no git write; this section is the only write |
+
+Short citations: `B-proto §5.1` is `pass-2/B-proto.md` §5.1; likewise `B-crit`, `Dp-proto`, `Dp-crit`, `G-proto`, `G-crit`, `B-res`, `Dp-res`, `G-res`. `SV2` is `SPECS-v2.md`, `SVb` is `SPECS-v2-synth-b.md`, `FR` is `FLOOR-REPORT.md`.
+
+---
+
+## P2-0 · In brief
+
+| id | route | status | conv. | critic's verdict | independent battery | reason in one line |
+|---|---|---|---:|---|---|---|
+| D1-B | sealed modules, flat | **ADVANCE** | 30% | BLOCK, 30% | 30/34 in the intended clause (88%); legal probes 2/2 clean; 1 false positive (L3, an FD-7 dependency) | the strongest gate measured. The migrated tree grew coupling through kernel shims, and that defect comes from the shared placement stage, not from the seal |
+| D1-D′ | rank table over today's dirs | **BANK** | 7% | BANK, 7% | 12/28 diagnosed correctly by the floor executables (43%); the D′ layer 0/28, because its gate is lost | no naming primitive, so the edict's core is out of reach, and the prototype's evidence cannot be re-derived |
+| D1-G | eponymous closures under the declared layer | **ADVANCE** | 60% | BANK, 60% | 23/29 under the spec's clauses (79%); 26/29 with the prototype's added clauses | dominance finds modules nobody named and matches B's authored carve where both ran. Its derived names erase authored ones, and its gate is lost |
+
+The three percentages are the critics' own and use three different formulas: B-crit averages three ratios, Dp-crit counts invariants met out of 28, and G-crit counts rows met out of 25. They are not comparable. Pass 3 uses one formula (§P2-6.5).
+
+Five findings shape pass 3.
+
+1. **The placement stage is one function in all three routes, and it produced the same defect in all three.** The 7 hooks that kernel entries publish (`useClipboard`, `useDragVelocity`, `useRAFLoop`, `useYieldToMain`, `useScrollChrome`, `useScrollProgress`, `useRoutePointer`) move into their first consumer. The kernel entry then re-exports a component interior, and coupling grows in every route (S-18). The cause is one line of ruling text, so one ruling cures all three (P3-R1).
+2. **B and G drew the same file partitions independently wherever a single-owner root exists** (S-19). Dock search, dock legibility, aurora's WebGL (13 files) and WebGPU (7) backends, and the sortable drag engine match file for file. Only the names differ, plus one extra nesting level in G. Where no root exists (menu, the style kernel, dock layers and controls), only B's authored carve produced modules. The graph finds the boundary; a person has to name it.
+3. **Two of the three prototypes cannot be replayed** (S-20). D′'s and G's gates, laws and frozen lists lived only in `/tmp`. B's survive in scratch, uncommitted. No prototype met SV2 §1.4's freeze rule.
+4. **Every critique hit the same floor holes** (S-22): self-name imports from `src`, the first colocated test tripping F-1, the `glass.css` and `theme.css` refusals, non-re-runnable rows, and 0 π or Playwright executions.
+5. **Why two statuses differ from the critics' verdicts.** This registry's definitions apply: BLOCK means a missing primitive, and BANK means a named re-trigger outside the plan.
+   - B-crit's blocker is the §2.9(a) ruling. It is a ruling, not a primitive, and the same defect appears in G and D′.
+   - G-crit's reasons for BANK are lost artifacts (a process failure), the shared placement defect, unrun steps and unwired clauses E4-E7. None of them refutes G's core, and none is a re-trigger outside pass 3's own work.
+   
+   The critics' measurements stand unchanged. Only the status mapping differs.
+
+---
+
+## P2-1 · Registry
+
+| id | unit set declared by | enforced between units | within a unit | status | conv. | re-trigger / missing primitive / refutation | merged | pass-3 role |
+|---|---|---|---|---|---:|---|---|---|
+| D1-B | every code dir in `src` and `scripts` has a door (B7); no families | privacy: the recursive door (B1); kernel direction (B8, D's rank rule as S7) | a hand-authored carve; the module set pinned (B11) | ADVANCE | 30% | — | takes G's dominance as its carve proposer (§P2-4) | second full pass |
+| D1-D′ | an 11-row `[prefix, stratum, grain]` table | direction: `upward`, per-stratum `cycle` | `below` into existing dirs only; mints no dir | BANK | 7% | re-trigger in §P2-2 | harvest: FD-5, B13/B14, the composition-class fact | none |
+| D1-G | roots: SFCs, entries, declared doors, immediate dominators of 2 or more files | only F-7 (E1); no privacy or direction clause | dominator nesting (E2), eponymy (E3), root-derived names | ADVANCE | 60% | — | takes B's authored names and B1/B8/B12/B14 (§P2-4) | second full pass |
+| D1-A | — | — | — | BLOCK (unchanged) | 35% | a declared module boundary | its law is F-7 | none |
+| D1-C, D1-E, D1-F | — | — | — | BANK (unchanged) | 40/35/30% | triggers checked below | — | none |
+
+**Banked triggers checked.**
+- **C:** no trigger fired. The owner has not asked for C′, and the install is unchanged. B's gate held `styles/tokens` as 5 modules; `procedural` was not carved.
+- **E:** its condition is met in form. G needs an authored name per dir wherever `rootName` erases an authored concept, and B pins its module set. That is a per-dir fact. The carrier already exists as one central record, B11's module-set pin (or SVb's manifest `names` block), so a per-unit manifest adds a second source of record and is not needed. E stays banked. It reopens only if pass 3 needs a per-unit fact the pin cannot hold.
+- **F:** no route landed its source placement, so F is not triggered.
+
+---
+
+## P2-2 · Route entries
+
+### D1-B · Sealed modules, flat: ADVANCE, 30%
+
+**What ran.**
+
+| item | result | source |
+|---|---|---|
+| migration | 157 engine moves in 13 frozen lists, plus 11 frozen rows (328 file edits); no hand moves | B-proto §2 |
+| replay | R4 and R5 give the same code digest `7733d92a…c869` over 1,392 files. R6 applies every step twice with the same digests. The critic rebuilt the tree at `21b3824f` from the surviving frozen lists and got the same code digest | B-proto §0; B-crit §3 |
+| toolchain | build, `vue-tsc` ×2, demo build, `npm pack`, `verify:package` and `entries.mjs check` all exit 0 | B-proto §0 |
+| surface | 0 differences; `public-surface.spec.ts` 96/96 | B-proto §0 |
+| cascade | identical under the FD-4 verifier. The floor verifier reads RED `content` on 18 rules, the scoped-keyframe suffix | B-proto §0 |
+| gate | 1,902 → 1,497 lines. GREEN: B5, B11, B13, B15. RED: 12 of 16 clauses. The critic reads 1,888 at HEAD on identical code; not reconciled | B-proto §5.1; B-crit §3 |
+| vitest | 26 failures: 12 are the gate's own clauses, 14 are FD-6-class layout pins | B-proto §5.3 |
+| bounds | `src` dirs over 12: 9 → 0. Files over 500 lines: 57 → 57, since no split ran | B-proto §5.2 |
+| not run | B-S7 to B-S16; π; Playwright | B-proto §6 |
+
+**Independent battery** (B-crit §4). 30 of 34 were caught in the intended clause.
+- Missed: I6 (a self-name import from `chip/`), I11 and I12 (no R-3 clause), I32 (a computed read that F-1 leaves out of the census).
+- Probes missed: I32b and I32c. I15b `dock/utils/` and I15c `dock/v2/` pass B15.
+- False positive: L3, a correct colocated test, because of FD-7.
+- The legal probes L1 and L2 stay clean.
+- I38 is not judged: B10 runs on `src` only, although SV2 §2.2 says `["src","scripts"]`.
+
+**Strongest counterexample** (B-crit §2, §5). `src/composables/search/index.ts` owns no file. It re-exports `dock/search/{useFuzzySearch,match,types}` so that `./search` keeps its names.
+- Four kernel doors re-publish 12 moved files in all (B8 12).
+- The `@src` SCC grows from 7 to 14 top-level modules, and FD-2's module SCC from 12 to 40 members. The planner logged `grew: true` and did not stop.
+- The prototype reported "no shims: met", because B12 exempts doors.
+
+On coupling, the migrated tree is further from the edict than HEAD. The mechanism is S-18's, which G and D′ share. B's gate is the only one that reported it (B8, B9, B4).
+
+**Why ADVANCE, not BLOCK.** No gap needs a primitive.
+- Gaps 1, 2, 9, 10 and 11 of B-crit §6 wait on rulings (P3-R1, P3-R2, P3-R4, P3-R5, P3-R8) or on floor deltas.
+- Gaps 3, 4, 5, 6, 7, 8 and 16 are additive gate clauses.
+- Gaps 12, 13 and 14 are floor work.
+- The route's artifacts survive, and the critic replayed them.
+
+**Open gaps.** The source of record is B-crit §6 (16 items) plus B-proto §9. They are folded into §P2-7 as B-01 to B-13.
+
+### D1-D′ · Rank table over today's dirs: BANK, 7%
+
+**What ran.** The prototype reports two replays at `5b536c72` with the same digests, gate 331 → 133, a green toolchain, the surface held, the cascade identical, and 46 of 50 author plants caught (Dp-proto §0-§9). Every tool behind those numbers is gone: `dp-law.mjs`, `gate-dp.mjs`, the rank table, the lists and `migrate.sh` (Dp-crit §1). The research seat's tools under `Dp-research/` are gone too. The critic credits none of these claims (Dp-crit §4).
+
+**Independent battery** (Dp-crit §0). The critic ran 28 plants on the floor-rows tree, judged by the executables that still exist:
+- 12 caught with the right diagnosis;
+- 4 caught with a wrong or harmful one: I05 steals card's sheet, and I09 and I29 move the subject to the test;
+- 12 missed.
+
+The D′ layer scores 0 of 28, since it does not exist. The legal probes gave 2 false positives.
+
+**Strongest counterexample** (Dp-crit §0). The law moves 4 files that their own unit's root door publishes: `useClipboard` and `useDragVelocity` from `./dom`, and `useRAFLoop` and `useYieldToMain` from `./motion-core`. It then legalises the result by computing those doors as "aggregators", so `./motion-core` re-exports its RAF loop from inside dock. The cause is FD-1's global-zone exclusion (S-18).
+
+**Why BANK.** Standalone, D′ meets the BLOCK test: it cannot mint a name, so R-5 is 75 → 75 and 7 sub-components in 6 units get no dir. Pass 1 recorded the other outcome in advance (D-crit §6): if D′ cannot answer colocation below the unit, it banks as an enforcement arm. It cannot, so it banks. Its direction rule already lives in B as B8.
+
+**Re-trigger.** Either condition reopens D′:
+- a fresh pass-3 battery finds a component-to-component or CSS rank inversion that B4 and B8 both miss;
+- the owner asks for strata.
+
+Reopening requires the law, gate, rank table and move lists to be rebuilt and committed first.
+
+**Harvest.**
+- The move-only diff classifier → FD-5 (already an SV2 floor delta).
+- `door-impure-css` → B14.
+- `bin` → B13.
+- The composition-class fact: 0 door-level composition cycles across 703 commits (Dp-res §6), which is evidence that B4's sibling-cycle clause suffices.
+- The `upward` rule covers every F-1 edge kind, CSS included. Pass 3 checks that B8 does the same.
+
+### D1-G · Eponymous closures: ADVANCE, 60%
+
+**What ran.**
+
+| item | result | source |
+|---|---|---|
+| migration | 117 engine moves: stage 1 28, root normalisation 4, stage 2 82 + 3 global. Plus 4 relay-cure rows and 1 rebind row | G-proto §4 |
+| replay | digest `1a4155a6…d1a9` in two fresh worktrees; every step applied twice is a no-op | G-proto §5 |
+| toolchain, surface, cascade | all green; both verifiers GREEN on 4 of 4 entries | G-proto §6 |
+| vitest | 5 failures, all FD-6 layout pins | G-proto §6 |
+| gate | E0-E3 at HEAD read 0 / 23 / 74 / 8 and are GREEN on the final tree. E4-E7 read 71 / 40 / 90 / 95 on the final tree, RED and CLI-only | G-proto §7.1 |
+| artifacts | `eponym.mjs`, `g-law.mjs`, `dominance.mjs`, `holds.json`, `SEQUENCE.json` with its 17 steps, and the relay rows are all lost | G-crit §3 |
+| critic rebuild | Appendix A's lists replay exactly: 117 / 473 / 636, residue 0. The critic reconstructed the gate from the spec and disclosed that it tuned 3 readings toward the prototype | G-crit §3.1-3.2 |
+| not run | G-S6 to G-S9; π; Playwright | G-proto §1 |
+
+**Independent battery** (G-crit §4). 23 of 29 were caught under SV2 §4.5's clauses, and 26 of 29 with the prototype's relay and self-name extensions.
+- Missed under every reading: P19 (`dock/utils/utils.ts`, an eponymous placeholder), P20 (an alias on the same door) and P28 (a `scripts/` helper).
+- Against the earlier battery the prototype itself scored 28/36, or 24/36 without the clauses it added after reading that battery (G-proto §7.3).
+
+**The counterexamples, re-measured on the result** (G-proto §9.7).
+- CE1 answered: the backends separate, GL 13 files and WGPU 7.
+- CE2 unanswered: 14 dirs are still over 12.
+- CE3 unanswered for `detents` and `renderer`.
+- CE4 answered by a probe (1 move, not 13); siblings not run.
+- CE5: one edge can re-root 25 files.
+- CE6 conceded.
+
+**Strongest counterexample** (G-crit F-5). `sheet/detents/{use,projection}.ts` becomes `sheet/content/{use,projection}.ts`. The authored name `detents` is lost, and `use.ts` no longer says what it holds. `renderer` becomes `wgpu` the same way, and the aurora dir names `aurora-frag`, `mediums-glsl` and `aurora-wgsl` come from file names rather than concepts. The naming law erases authored concepts in at least 4 places.
+
+The shared capture defect (S-18) also nests deepest in G: `./motion-core` publishes `useRAFLoop` from `components/dock/glass-dock/glass-backdrop-luminance/`, and the unit SCC grows from 7 to 30.
+
+**Why ADVANCE, not BANK.** Nothing measured contradicts the core, as G-crit §2 states. The core is ownership by dominance below a declared layer, and it bit 16 of the critic's plants through E1 and 11 through E2.
+
+Each of the critic's five reasons is either pass-3 work or shared:
+- lost artifacts: S-20, bank first;
+- 4 spec-only steps: pass-3 work;
+- E4-E7 unwired: pass-3 work;
+- the FD-2 breach: shared, S-18;
+- kernel hooks inside components: shared, S-18.
+
+A BANK needs a trigger outside the plan, and none of these is one.
+
+**Open gaps.** The source of record is G-crit §8 (15 items) plus G-proto §10. They are folded into §P2-7 as G-01 to G-12.
+
+---
+
+## P2-3 · Facts pass 2 established
+
+These continue pass 1's S-1 to S-17.
+
+**S-18 · One placement stage, one defect, in every route.** F-7 with the FD-1 anchor, run to a fixpoint, is the same function in B, D′ and G, and it yields the same move list up to 3 differences:
+- `useDockHold`, under the X-10 reading;
+- `accent-tone.css`, where FD-3 applies (P3-R2);
+- D′'s two direction moves.
+
+| route | placement moves | published kernel hooks moved into a component | coupling growth measured |
+|---|---:|---|---|
+| B | 29 in 3 passes | the 7, plus the search trio behind a now-empty kernel door | `@src` SCC 7 → 14 top-level modules; FD-2 12 → 40 members; B8 12 |
+| G | 28 in 3 passes | the same 7 (G-proto §9.5) | unit-grain SCC 7 → 30 |
+| D′ | 30 in 3 passes | the same 7: 4 through their own root door, 3 through `./motion-core` | a new `motion ↔ morph ↔ reveal` dir cycle; `./dom` and `./motion-core` re-export component files |
+
+FD-2's no-growth rule was breached in B and G. Both runs logged it and did not stop.
+
+The cause is in the ruling text. R-2 as amended says "a kernel door anchors nothing", and FD-1 excludes every door under `GLOBAL_ZONES`. The edict says composables that are "truly module-level or global-level" live in `composables/`, and a hook a kernel entry publishes is global by publication. All three critics asked for the same ruling: B-crit gap 2, Dp-crit gaps 2-3 and G-crit gap 8.
+
+**S-19 · Where an owner root exists, independent partitions agree.** B's authored carve (B-proto §8, B-res §7.1) and G's dominance nesting (G-proto §9) were built without reference to each other.
+
+| module | B (authored) | G (dominance) | files |
+|---|---|---|---|
+| dock search | `dock/search/` | `dock/search/` | the same 5: `useDockSearch`, `useFuzzySearch`, `match`, `types`, `useScrollChrome` |
+| dock legibility | `dock/legibility/` | `dock/glass-dock/glass-backdrop-luminance/` | the same 5: the backdrop trio, `useRAFLoop`, `useYieldToMain` |
+| aurora WebGL | `webgl/` + `webgl/palette/` | `runtime/gl-setup/` + `aurora-frag/` + `mediums-glsl/` | the same 13 |
+| aurora WebGPU | `webgpu/` | `runtime/wgpu-setup/` + `aurora-wgsl/` | the same 7 |
+| sortable drag engine | `drag/` | `sortable/drag/` | the same 3 |
+
+Where the two differ:
+- **G found what B did not carve:** `toast/toaster/`, `tabs/segmented-tabs/` and the blob backends.
+- **B partitioned where dominance finds no root:** `menu/{sub,items}`, `dock/{layers,controls}`, `styles/glass` into 7 modules, `styles/tokens` into 5 and `styles/{surface,motion,scroll}`.
+- **G erased authored names that B kept:** `detents`, `renderer`.
+
+Pass 1 (S-7) found that the graph places files and people name them. Pass 2 adds that the graph also finds the boundary wherever a single-owner root exists, and there it agrees with the boundary people drew.
+
+**S-20 · An artifact that lives only in scratch is not evidence.**
+- D′ lost its law (365 lines), gate, rank table and lists. G lost its gate, law, dominance module, holds, 17-step sequence and relay rows. Both went in the `/tmp` wipe (`f538a252`).
+- B's 38 frozen lists and 25 tools survive in scratch at this seat's check, uncommitted.
+- Every number resting on the lost files cannot be re-derived: D′'s 331/133 and 46/50, and G's E-clause readings and 28/36.
+- SV2 §1.4 required computed lists to be "committed as literal JSON before the gate judges". No prototype met it.
+
+**S-21 · The spec must hold the law, not the code.**
+- G-crit read SV2 §4 literally and got E2 23 and E3 4 on the prototype's tree, against the prototype's 0. The 9 law choices in G-proto §8, including STAGES, slot tolerance and the eponymy pin, lived only in the lost code.
+- In B, FD-3 against SV2 §1.4 was settled by default: the rule that moved the file won.
+- D′ and SVb, following X-10, moved `useDockHold` against SV2's text.
+
+**S-22 · The floor holes every critique hit.**
+
+| hole | B | D′ | G |
+|---|---|---|---|
+| a self-name import from `src` resolves as an edge, not a violation | I6 missed | I04 missed | P16 caught only by a regex the prototype added |
+| the first colocated test trips F-1 `ledger-stale` (`tsconfig.build.json`) | L3 false positive | L2 false positive | P14: E0 +2 |
+| computed reads F-1 leaves out of the census: `join(cwd, "src/…" + n)`, template paths, `resolve(import.meta.dirname, …, n)` | I32, I32b, I32c | — | — |
+| `glass.css → glass/index.css` refused (a base-relative single segment) | B-proto §4 | — | G hold 2 |
+| `theme.css → theme/index.css` refused (the CSS dist name comes from the basename) | B-proto §4 | — | — |
+| `isTeleportedTarget.ts` held at `demo.css:106 @source` (FD-8) | held | held, plus 7 test moves refused | held |
+| FD-6 layout-pinning test failures | 14 | 9, plus 1 uncollected suite | 5 |
+| floor rows throw on a second application; a whole-chain replay is not idempotent (per step only) | B-proto §7 | — | G-proto §5 |
+| FD-4 exists only as a private `cascade-fd4.mjs` in each prototype | yes | yes | yes |
+| π and Playwright executions | 0 | 0 | 0 |
+
+In G, the floor rows alone raise the bundle by 111 B, so `verify:package` is RED at the base (G-proto §3).
+
+**S-23 · The cost of a door in every dir is measured, and the alternative is not.**
+- B's tree has 119 modules, 103 doors and 1,303 pinned names, and adds 7,419 B unpacked. Some doors are one line, such as `sheet/index.css`.
+- G's E3 accepts "an eponymous root or an `index.*` door". No seat has measured the two readings on one tree.
+
+---
+
+## P2-4 · Merges and cross-pollination
+
+**Merge tests.**
+
+| pair | shared mechanism | verdict |
+|---|---|---|
+| B and G | placement between units (already one floor function, M-1). Measured S-19: the within-unit partition wherever an owner root exists | **no merge yet.** They still differ on three things: the unit declaration (a door in every dir, or an eponymous root or door), enforcement (privacy or ownership) and the naming source (authored or root-derived). Pass 3 runs a merge test (§P2-6.4) |
+| B and D′ | D's rank rule already lives in B as B8 (pass-1 §6.5) | no merge. What remains of D′ is multi-rank direction, which is banked |
+| D′ and G | the pass-1 candidate: G below D′ | not built. D′ is banked, so it is not pursued |
+| all three | stage 1 | one mechanism already. S-18 is a ruling question, not a merge |
+
+**Cross-pollination.**
+
+Earned: both sides ran a whole-tree prototype and had an independent critique, and a critique names the need.
+- **G → B: dominance proposes B's within-unit carve.** B-S3's carve list was written by hand. G's stage 2 reproduces it where an owner root exists (S-19) and finds modules B did not carve. The proposal is written as literal JSON, a person names each proposed dir, and B11 pins the module set. This removes B's hand-authored partitions without removing its authored names.
+- **B → G: authored names, and B's privacy and direction clauses.**
+  - A dir's name is its root's name or an authored override, pinned the way B11 pins B's module set. This cures G-crit F-5 and gap 9.
+  - G takes B1 (the recursive door), B8 (the kernel reads no unit, type-only included), B12 (relays) and B14 (door purity). G has no privacy or direction clause: SV2 §4.5 says it "does not judge" an import past a door. G-crit P18 catches a deep reach only by re-placing the file, and P20 and P21 pass.
+
+Not earned:
+- anything with D′, whose evidence cannot be re-derived until it is rebuilt;
+- anything with A, C, E or F.
+
+**A new formulation, recorded as a hypothesis and not minted as a family.** Call it H: modules found by dominance, named by a person, sealed by a door.
+- A module boundary is a dominator boundary under a single-owner root where one exists, and an authored boundary where none does (peer sets).
+- Every dir name is the root's name or an authored name, and the module set is pinned.
+- Between units, the door seal applies. Within a unit, ownership by dominance applies.
+
+H is B plus G with the earned transfers. It becomes a route only if pass 3's merge test passes; the pass-3 agglomeration then merges B and G into it. It is new against pass 1: pass 1 held that the graph cannot find module boundaries (S-7, A's block), and pass 2 measured that it can wherever an owner root exists (S-19).
+
+---
+
+## P2-5 · Rulings owed before pass 3
+
+These go to the owner as one list. Where a ruling arrives late, a route measures both arms instead of waiting (pass-1 §3.3).
+
+| id | question | arms | evidence |
+|---|---|---|---|
+| P3-R1 | a file a kernel entry publishes | (a) **publication anchors**: an entry door anchors the files it publishes from inside its own dir, in the global zone too, so the 7 hooks stay in `composables/`; (b) the names change entry as MIGRATION rows (+36/−25, B-res §10.4) | S-18; B-crit gap 2; Dp-crit gaps 2-3; G-crit gap 8 |
+| P3-R2 | CSS placement before the channel collapse | FD-3 places `chip/accent-tone.css` into `src/styles/` (B), or SV2 §1.4 defers every CSS move (G held it) | B-proto §3.2 item 3; B-crit gap 9; G-proto §8 |
+| P3-R3 | R-5's slot arm | strict or exempt (X-1), still owed | SV2 §1.3 |
+| P3-R4 | R-6's count | the ruling says 29; B9, E5 and `dual-door` all read 40. 20 blob/blob-config keys have no owner the law can derive | Dp-proto §6; G-proto §10 |
+| P3-R5 | R-10 | the count (7 ruled, 90 measured) and `./aurora-config` (+1 export key) | SV2 §1.3; B-res §8 |
+| P3-R6 | FD-8 | how an `@source` glob treats a unit's `__tests__/`, and `isTeleportedTarget.ts` | S-22 |
+| P3-R7 | R-8 | `springProjection.ts`, `useScrollScene.ts` (cross-zone readers only) | Dp-proto §3 |
+| P3-R8 | `@source` inside the `./styles` aggregate against CSS door purity | an allowed directive, or a named exemption | B-proto §5.1 (B14 1) |
+| P3-R9 | `.bundle-ratchet` rebind wording | owner-worded, one per route | B-proto §2; Dp-proto §3; G-proto §6 |
+
+---
+
+## P2-6 · Pass-3 plan
+
+### P2-6.1 Routes
+
+| route | status | pass-3 work |
+|---|---|---|
+| D1-B, with G's dominance proposer | ADVANCE | second full pass |
+| D1-G, with B's authored names and B1/B8/B12/B14 | ADVANCE | second full pass |
+| D1-D′ | BANK | none; the trigger is watched |
+| D1-A | BLOCK | none |
+| D1-C, D1-E, D1-F | BANK | none; triggers watched |
+
+### P2-6.2 Order
+
+1. **Bank.** Commit B's surviving frozen lists and tools, and each pass-2 critic's battery and tools, under `docs/tranches/BL/design/structure/pass-2/artifacts/`. This is a driver's commit; this seat has no git write. From here on, every law, gate, move list and row is committed before a critic judges it. A number that rests on an uncommitted file does not count.
+2. **Rulings.** P3-R1 to P3-R9 go to the owner as one list.
+3. **Floor.** P3-F1 to P3-F9 are built once, on one seat, each with a plant.
+4. **Routes.** The B and G prototypes run in parallel on the floor, each with its earned transfers.
+5. **Cross-judging.** Each route's gate is run on the other route's migrated tree (§P2-6.4).
+6. **Critique.** Fresh critics who authored nothing in pass 2 or pass 3 write their battery and hash it before reading the gate.
+7. **Pass-3 agglomeration.**
+
+### P2-6.3 Floor work
+
+| id | build | why |
+|---|---|---|
+| P3-F1 | FD-1 as a parameter of `lib/placement.mjs`, with P3-R1's reading. Today `grep anchor` finds 0 lines, and the anchor lived only in route code that is now lost | S-20; Dp-crit §1 |
+| P3-F2 | FD-2 as a stop: a pass that grows `moduleSccs` is refused, not logged | S-18 |
+| P3-F3 | F-1: a self-name import from `src` is a violation | S-22 |
+| P3-F4 | F-1 census: the three computed-read forms of B-crit I32 | S-22 |
+| P3-F5 | F-2: rewrite a base-relative single segment and a cwd-anchored `join`; prune emptied parent dirs. F-3: a declared dist name per CSS entry | S-22; B-proto §4, §7; Dp-proto gap 9 |
+| P3-F6 | `rows/apply.mjs` idempotent, so a whole-chain replay is a no-op | S-22 |
+| P3-F7 | FD-3 (after P3-R2), FD-4 inside `cascade.mjs`, FD-5 | SV2 §1.2 |
+| P3-F8 | FD-6 harness reader; FD-7 programs, so the first `__tests__/` file does not trip `ledger-stale`; FD-10 YAML tokens; FD-11 landing, so no gate imports the floor from `docs/` | S-22; G-proto gap 12 |
+| P3-F9 | F-10: one browser seat, serialized, running π and Playwright on every band a route moves | S-16, S-22 |
+
+### P2-6.4 What pass 3 must prove
+
+**Shared bar.** Pass-1 §6.4 applies unchanged, plus:
+- a seat that authored none of the artifacts replays the migration from committed artifacts only;
+- FD-2 holds as a stop at every pass;
+- under P3-R1(a), no kernel entry re-exports a file outside the global zone; under (b), every name that changes entry is a ruled MIGRATION row;
+- every gate clause is wired into `npm test` and GREEN, with no CLI-only clause;
+- π and Playwright are executed.
+
+**B must close B-01 to B-13, and G must close G-01 to G-12** (§P2-7).
+
+**The merge test (cross-judging).** Run B's seal on G's migrated tree, and G's E0-E3 with its authored overrides on B's. Every clause that fails on the other route's tree names a real mechanism difference.
+- If both run GREEN, B and G merge into H at the pass-3 agglomeration.
+- If not, the failing clauses say which of the two unit declarations to keep.
+
+**The door-cost question** (S-23). On one tree, measure B7's door in every dir against G's "eponymous root or door": door count, bytes and battery catches.
+
+### P2-6.5 Convergence criterion
+
+- **One formula.** Items closed divided by items in the frozen checklist (§P2-7), the route's own items plus the shared ones, measured by the critic.
+- **A route converges when all three hold:**
+  1. zero items remain open, and each was closed by a committed, replayable measurement;
+  2. a fresh adversarial audit re-opens none. Its seats authored none of the route's artifacts and hashed their battery before reading the gate;
+  3. two consecutive passes come back clean: the pass-N critique and the pass-N+1 critique both re-open nothing.
+- **The checklist is finite and frozen here.** A critic's finding outside it is logged for the next registry. It re-opens convergence only when it maps to a listed item or to an edict clause the list leaves out. In that case the registry adds the item and the two-clean-passes count restarts.
+- **Seats.** Opus, with the model asserted in each seat's header.
+
+---
+
+## P2-7 · Open gaps, enumerated (the pass-3 checklist)
+
+**Shared, every live route.**
+- S-01 · Pass-2 artifacts banked; every pass-3 artifact committed before judgment (S-20).
+- S-02 · P3-R1 ruled, or both arms measured (S-18).
+- S-03 · P3-R2 to P3-R9 ruled, or both arms measured.
+- S-04 · P3-F1: FD-1 on the floor.
+- S-05 · P3-F2: FD-2 as a stop.
+- S-06 · P3-F3: src self-name as an F-1 violation.
+- S-07 · P3-F4: the census covers the computed-read forms.
+- S-08 · P3-F5: the F-2 rewrites and pruning; F-3 CSS dist names; the `glass.css` and `theme.css` moves no longer refused.
+- S-09 · P3-F6: rows and the whole-chain replay idempotent.
+- S-10 · P3-F7: FD-3, FD-4 and FD-5 on the floor.
+- S-11 · P3-F8: FD-6, FD-7, FD-10, FD-11; the FD-6-class failures at 0.
+- S-12 · P3-F9: π and Playwright executed.
+- S-13 · The merge test run and recorded.
+
+**D1-B.**
+- B-01 · All 16 seal clauses GREEN on the migrated tree, including B0 and B2 after FD-6, R-3 and R-10.
+- B-02 · Kernel shims 0: B8 0, and every B9 line is a ruled R-6 row.
+- B-03 · The self-name import (I6) caught.
+- B-04 · An R-3 clause catches a test outside its subject (I11) and a test in the wrong unit (I12).
+- B-05 · B10 judges `["src","scripts"]` (I38).
+- B-06 · B13 reads the FD-10 YAML tokens.
+- B-07 · Names: B15 fails `utils`, `v2` and `misc`, and file names are judged (`slider/useDockHold.ts`, `detents/use.ts`). Otherwise the spec states that names are reviewed through the pin and are not gated.
+- B-08 · Styles colocated: `accent-tone.css` placed per P3-R2.
+- B-09 · The style kernel fully carved, with `glass/` and `theme/` behind doors.
+- B-10 · B-S7 to B-S16 run.
+- B-11 · `npm test` refuses `--no-pin`.
+- B-12 · The door cost measured against the alternative reading (S-23).
+- B-13 · The HEAD count reconciled: 1,902 against 1,888.
+
+**D1-G.**
+- G-01 · Law, gate, lists and rows re-authored and committed. The spec text holds every G-proto §8 choice, so a literal reading of the spec gives the gate's verdict (S-21).
+- G-02 · E4 to E7 wired into `npm test` and GREEN, or ruled.
+- G-03 · Authored concepts kept: `detents`, `renderer` and `aurora/config` by rename or override rows, and the aurora shader dirs named by concept. The module set is pinned.
+- G-04 · Privacy and direction: B1, B8, B12 and B14 taken over. P18 caught as a reach, and P20 and P21 caught.
+- G-05 · A placeholder-name clause in the spec (P19).
+- G-06 · The `scripts/` law of SV2 §4.8 run (P28, B-35, B-38).
+- G-07 · CSS: the aggregator-held sheets placed after the channel collapse (B-10, B-28). A glob out of a door caught (B-14), the `<style src>` carve caught (B-22), and the symbol-grain question answered (B-30).
+- G-08 · The registration-weak rule exercised by a plant (P07a). There are 0 wiring files at HEAD.
+- G-09 · Churn replayed on F-1 with each commit's own entry map and hysteresis. Pass 2 measured 14.5% against A's 9%.
+- G-10 · The peer sets over 12 split under authored names taken from B: `menu` 16, `styles/glass` 28, `styles/tokens` 21, `tests-visual` 177.
+- G-11 · G-S6 to G-S9 run.
+- G-12 · Depth 7 and the parent↔child nesting cycles: either FD-2 counts them, or a ruling says they are intra-unit.
+
+**Held with the bank, not in the checklist.** D′'s gaps are Dp-crit §6 (10 items) and Dp-proto §11 (22). They return with D′'s re-trigger.
+
+No winner is declared in pass 2.
