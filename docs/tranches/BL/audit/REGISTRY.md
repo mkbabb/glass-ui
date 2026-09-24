@@ -1,4 +1,4 @@
-# BL—audit registry, rounds 1 to 6
+# BL—audit registry, rounds 1 to 7
 
 Seat: REGISTRY. Model `claude-opus-5-5` (asserted from system identity). Read at `1c1f1f67`; every commit since `d29be90e` is docs-only, `src` is byte-identical to the published 10.0.1 (`git diff --stat v10.0.1..HEAD -- src` is empty; last `src` commit `3f9ea884`). Date 2026-09-23.
 
@@ -14,19 +14,21 @@ Round 5, the third stability pass, folded at `f57a3c1f`, 2026-09-24 (the seats r
 
 Round 6, the fourth stability pass, folded at `2efb414c`, 2026-09-24 (the seats read at `227f5200` and `f538a252`; every commit since is docs-only). Inputs: the two seat reports under `round-6/` (R6-01, R6-02), each read in full; the ledger census's registry gaps and corrections (`ledger/CENSUS.md` §5 and §8), each tested against every mechanism statement; and `INBOUND.md`, re-read for rows the map lacked (O-65, O-66, O-66a, O-67 and O-68, which landed after round 5), traced row by row in `INBOUND-MAP.md`. `git diff --stat v10.0.1..HEAD -- src demo` is empty, so round 6 also measured the published 10.0.1 bytes. Round 6 is recorded in each family's **Round 6** bullets, in the two new families F-81 and F-82, in §2, in §3 (recomputed) and in §10.
 
+Round 7, the fifth stability pass, folded at `71f2ba45`, 2026-09-24 (the seats read at `844eddc1`; every commit since is docs-only). Inputs: the two seat reports under `round-7/` (R7-01, R7-02), each read in full, and `INBOUND.md`, re-read for rows the map lacks (none: O-68 is its last row, mapped in round 6). `git diff --stat v10.0.1..HEAD -- src demo` is empty, so round 7 also measured the published 10.0.1 bytes. Round 7 is recorded in each family's **Round 7** bullets, in the two new families F-83 and F-84, in §2, in §3 (recomputed) and in §11.
+
 ## Counts
 
-Cumulative, after round 6:
+Cumulative, after round 7:
 
-- Findings: **606** (377 + 121 + 33 + 34 + 21 + 20). Accepted: **602**. Rejected whole: **4** (rounds 2 to 6 rejected none whole; round 2's 14 refuted claims are in §2, and rounds 3 to 6 refuted none). Families: **82** (72 + F-73, F-74, F-75 + F-76, F-77 + F-78, F-79 + F-80 + F-81, F-82).
-- Per severity, all findings: BLOCKER 8 · HIGH 164 · MED 300 · LOW 134. Accepted: BLOCKER 8 · HIGH 164 · MED 298 · LOW 132.
-- Families by max severity: BLOCKER 3 · HIGH 52 · MED 27 · LOW 0 (round 6 raised F-42 from MED to HIGH; F-81 and F-82 enter at HIGH).
-- Convergence: 58 families hit by 3 or more lenses, 19 by 2, 5 by 1 (§3).
-- External witnesses: 370 inbound rows traced at HEAD in `INBOUND-MAP.md`: FAMILY 297 · CURED-AT-HEAD 47 · CONSUMER-SIDE 20 · NOT-REPRODUCED 6 · NEW 0.
+- Findings: **624** (377 + 121 + 33 + 34 + 21 + 20 + 18). Accepted: **620**. Rejected whole: **4** (rounds 2 to 7 rejected none whole; round 2's 14 refuted claims are in §2, and rounds 3 to 7 refuted none). Families: **84** (72 + F-73, F-74, F-75 + F-76, F-77 + F-78, F-79 + F-80 + F-81, F-82 + F-83, F-84).
+- Per severity, all findings: BLOCKER 8 · HIGH 169 · MED 311 · LOW 136. Accepted: BLOCKER 8 · HIGH 169 · MED 309 · LOW 134.
+- Families by max severity: BLOCKER 3 · HIGH 53 · MED 28 · LOW 0 (F-83 enters at HIGH, F-84 at MED; round 7 raised no family).
+- Convergence: 58 families hit by 3 or more lenses, 19 by 2, 7 by 1 (§3).
+- External witnesses: 370 inbound rows traced at HEAD in `INBOUND-MAP.md`: FAMILY 297 · CURED-AT-HEAD 47 · CONSUMER-SIDE 20 · NOT-REPRODUCED 6 · NEW 0 (no row landed after round 6).
 - Ledger members: the census's six registry gaps (`ledger/CENSUS.md` §5) fold into F-13, F-14, F-24, F-31, F-54 and F-65 as ledger members, which are not lens findings and are not counted in `n` (§10.5).
-- Per-round counts and per-seat tables: round 2 §6.2, round 3 §7.2, round 4 §8.2, round 5 §9.2, round 6 §10.2.
+- Per-round counts and per-seat tables: round 2 §6.2, round 3 §7.2, round 4 §8.2, round 5 §9.2, round 6 §10.2, round 7 §11.2.
 
-After round 5 the cumulative figures were 586 findings, 582 accepted, 80 families (BLOCKER 3 · HIGH 49 · MED 28 by maximum), a 58 / 18 / 4 convergence split and 353 inbound rows. After round 4 the cumulative figures were 565 findings, 561 accepted, 79 families (BLOCKER 3 · HIGH 47 · MED 29 by maximum), a 57 / 18 / 4 convergence split and 346 inbound rows. After round 3 they were 531 findings, 527 accepted, 77 families (BLOCKER 3 · HIGH 43 · MED 31 by maximum) and a 55 / 18 / 4 convergence split. After round 2 they were 498 findings, 494 accepted, 75 families (BLOCKER 3 · HIGH 42 · MED 30 by maximum) and a 53 / 19 / 3 convergence split.
+After round 6 the cumulative figures were 606 findings, 602 accepted, 82 families (BLOCKER 3 · HIGH 52 · MED 27 by maximum), a 58 / 19 / 5 convergence split and 370 inbound rows. After round 5 the cumulative figures were 586 findings, 582 accepted, 80 families (BLOCKER 3 · HIGH 49 · MED 28 by maximum), a 58 / 18 / 4 convergence split and 353 inbound rows. After round 4 the cumulative figures were 565 findings, 561 accepted, 79 families (BLOCKER 3 · HIGH 47 · MED 29 by maximum), a 57 / 18 / 4 convergence split and 346 inbound rows. After round 3 they were 531 findings, 527 accepted, 77 families (BLOCKER 3 · HIGH 43 · MED 31 by maximum) and a 55 / 18 / 4 convergence split. After round 2 they were 498 findings, 494 accepted, 75 families (BLOCKER 3 · HIGH 42 · MED 30 by maximum) and a 53 / 19 / 3 convergence split.
 
 ### Round 1
 
@@ -60,13 +62,13 @@ After round 5 the cumulative figures were 586 findings, 582 accepted, 80 familie
 | L15b | chicago + density | 14 | 1 | 3 | 6 | 4 | 0 |
 | **all** | | **377** | **4** | **84** | **188** | **101** | **4** |
 
-How to read: each accepted finding sits in exactly one family. A script checked this: 373 assigned, 0 duplicates, 0 unassigned; round 2's 121 were checked the same way (121 assigned, 0 duplicates, 494 accepted in all), round 3's 33 likewise (33 assigned, 0 duplicates, 527 accepted in all), round 4's 34 likewise (34 assigned, 0 duplicates, 561 accepted in all), round 5's 21 likewise (21 assigned, 0 duplicates, 582 accepted in all), and round 6's 20 likewise (20 assigned, 0 duplicates, 602 accepted in all). Families are grouped by the defect mechanism and ordered by band, not by severity. "Lenses" counts distinct reports. "(re-checked)" marks evidence I re-opened at `1c1f1f67` (round 1), `6433284a` (round 2), `95068476` (round 3), `9b5aa09c` (round 4), `f57a3c1f` (round 5) or `2efb414c` (round 6). A disposition is a draft for the ledger: BUILD (its own wave, or a named wave it shares), FOLD (into the named row or wave), or RETIRE (with the rationale stated). Inbound rows name the INBOUND or recap ids the family answers.
+How to read: each accepted finding sits in exactly one family. A script checked this: 373 assigned, 0 duplicates, 0 unassigned; round 2's 121 were checked the same way (121 assigned, 0 duplicates, 494 accepted in all), round 3's 33 likewise (33 assigned, 0 duplicates, 527 accepted in all), round 4's 34 likewise (34 assigned, 0 duplicates, 561 accepted in all), round 5's 21 likewise (21 assigned, 0 duplicates, 582 accepted in all), round 6's 20 likewise (20 assigned, 0 duplicates, 602 accepted in all), and round 7's 18 likewise (18 assigned, 0 duplicates, 620 accepted in all). Families are grouped by the defect mechanism and ordered by band, not by severity. "Lenses" counts distinct reports. "(re-checked)" marks evidence I re-opened at `1c1f1f67` (round 1), `6433284a` (round 2), `95068476` (round 3), `9b5aa09c` (round 4), `f57a3c1f` (round 5), `2efb414c` (round 6) or `71f2ba45` (round 7). A disposition is a draft for the ledger: BUILD (its own wave, or a named wave it shares), FOLD (into the named row or wave), or RETIRE (with the rationale stated). Inbound rows name the INBOUND or recap ids the family answers.
 
 ## 1. Families
 
 ### Index
 
-`n` and `lenses` are cumulative over rounds 1 to 6. Each family lists its later members in a **Round 2** to **Round 6** bullet and any mechanism or wave change in a **Round 2** to **Round 6 correction** bullet. Rows are ordered by band, so the eight later families sit in their bands (F-77 and F-80 in D, F-75 in E, F-73, F-74, F-76, F-78 and F-79 in F).
+`n` and `lenses` are cumulative over rounds 1 to 7. Each family lists its later members in a **Round 2** to **Round 7** bullet and any mechanism or wave change in a **Round 2** to **Round 7 correction** bullet. Rows are ordered by band, so the twelve later families sit in their bands (F-77 and F-80 in D; F-75 and F-81 to F-84 in E; F-73, F-74, F-76, F-78 and F-79 in F).
 
 | id | band | family | n | lenses | max | disposition |
 |---|---|---|---|---|---|---|
@@ -87,8 +89,8 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 | F-15 | B | Owner asks reinterpreted or in conflict, unreconciled | 5 | 3 | MED | FOLD into the W-DECIDE band as owner-glance rows |
 | F-16 | C | The dock extent morph is discontinuous; fission is split-brain | 13 | 7 | HIGH | BUILD |
 | F-17 | C | Compact-on-scroll dropped; the progress rim is unseated | 2 | 2 | HIGH | BUILD |
-| F-18 | C | Dock plate geometry and state residue | 8 | 7 | HIGH | BUILD |
-| F-19 | C | Dock keyboard and ARIA ownership | 8 | 4 | HIGH | BUILD |
+| F-18 | C | Dock plate geometry and state residue | 9 | 8 | HIGH | BUILD |
+| F-19 | C | Dock keyboard and ARIA ownership | 11 | 6 | HIGH | BUILD |
 | F-20 | C | Demo shell chrome at the phone cell | 5 | 4 | MED | BUILD |
 | F-21 | D | Component declarations lose the cascade to the library's own shared rules | 20 | 13 | BLOCKER | BUILD |
 | F-22 | D | Overlay layering: the content seam carries no z, edge or dismissal contract | 9 | 4 | HIGH | BUILD |
@@ -98,7 +100,7 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 | F-26 | D | A composite custom property resolved at :root | 2 | 2 | HIGH | BUILD |
 | F-27 | D | `cn()` never lets a shorthand subsume its longhands | 2 | 2 | HIGH | BUILD |
 | F-28 | D | The chip defect row never started | 2 | 2 | MED | BUILD |
-| F-29 | D | Density: pads transpose under the width query, corners do not | 16 | 6 | HIGH | BUILD |
+| F-29 | D | Density: pads transpose under the width query, corners do not | 19 | 8 | HIGH | BUILD |
 | F-30 | D | Radius role: the off-role 12 px rung (a); multi-line holders on the stadium (b) | 3 | 3 | MED | BUILD (two rows: F-30a, F-30b) |
 | F-31 | D | Frost and the field well | 3 | 2 | HIGH | BUILD |
 | F-32 | D | Sheet detents: the dock covers the live-behind sheet's action | 3 | 3 | MED | BUILD |
@@ -112,12 +114,14 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 | F-38 | E | Overlay focus keyed to mount and unmount, not to the logical open and close | 6 | 4 | HIGH | BUILD |
 | F-39 | E | Four focus-ring registers; the forced-colors and contrast skin | 10 | 5 | HIGH | BUILD |
 | F-40 | E | One widget, two focus or current-row channels | 4 | 4 | MED | BUILD |
-| F-41 | E | Toast placement and the announce channel | 7 | 7 | MED | BUILD |
-| F-42 | E | Small naming and keyboard seams | 16 | 9 | HIGH | BUILD |
-| F-43 | E | An arrival has no single owner: the router seam, pane swaps and mount entrances | 11 | 8 | HIGH | BUILD |
+| F-41 | E | Toast placement, admission and the announce channel | 8 | 8 | MED | BUILD |
+| F-42 | E | Small naming and keyboard seams | 18 | 11 | HIGH | BUILD |
+| F-43 | E | An arrival has no single owner: the router seam, pane swaps and mount entrances | 12 | 9 | HIGH | BUILD |
 | F-75 | E | The reduced-transparency arm lifts the field it should recede | 2 | 2 | HIGH | BUILD |
 | F-81 | E | The host is read through document-global handles | 4 | 1 | HIGH | BUILD |
 | F-82 | E | The platform's form and editing state is a second copy, synced one way | 5 | 1 | HIGH | BUILD |
+| F-83 | E | Closed and off-screen content is withheld from the platform's reveal machinery | 3 | 1 | HIGH | BUILD |
+| F-84 | E | What text is content is not stated to the user agent | 3 | 1 | MED | BUILD |
 | F-44 | F | Motion time off the one authority: integrators, dt policies, emitted tails, the canvas clock | 8 | 5 | HIGH | BUILD |
 | F-45 | F | Non-composited motion at idle | 4 | 3 | HIGH | BUILD |
 | F-46 | F | Offsets follow the velocity path, not position | 6 | 5 | MED | BUILD |
@@ -130,7 +134,7 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 | F-48 | G | Greenfields stopped at W0 | 6 | 5 | HIGH | BUILD |
 | F-49 | G | Device-loss subscription per instance on the shared device | 4 | 4 | HIGH | BUILD |
 | F-50 | G | Idle loops and the luma sampler's blocking readback | 8 | 5 | HIGH | BUILD |
-| F-51 | G | Synchronous costs on the mount path | 6 | 3 | MED | BUILD |
+| F-51 | G | Synchronous costs on the mount path | 7 | 4 | MED | BUILD |
 | F-52 | G | Payload does not shake | 4 | 3 | MED | BUILD |
 | F-53 | G | Perf and boot chronics never started | 6 | 3 | MED | BUILD (decide rows; the dev leg retires) |
 | F-54 | G | iOS 27 hallmarks unbuilt | 2 | 2 | MED | FOLD into the design loop's dock and motion portfolio |
@@ -379,7 +383,9 @@ How to read: each accepted finding sits in exactly one family. A script checked 
   - R2-03-04 (HIGH, CONFIRMS): the settled Tools dock on the owner's composition paints a 116.5×28 ellipse cap with a cut trailing end.
 - **Round 4 (+1; 1M)**:
   - R4-02-08 (MED, CONFIRMS): root font size and zoom arm the owner's lens. At a 24 px root the demo rail overflows by 27 px in the clean 1440×1100 cell (883 over 856, under a 72 px pitch), which is item 2's short-overflow overlap, with corners `calc(31.25% + 9px) | 50%`. At the 400% reflow cell, the four horizontal story docks on `/dock/overview` that rest as stadiums at 1280, and the shell BottomDock, rest as D shapes. No new mechanism: rem-sized seats in a viewport-bound run arm the cap causes above. W-DOCK-EXTENT's born-REDs add the rail at 1440×1100 with a 24 px root, and a four-seat horizontal dock in a 240 px container. In RTL the caps are logical and correct (R4-02, `run.css:557-600`).
-- **Lenses (7)**: L01b, L03b, L05b, R2-01, R2-02, R2-03, R4-02. **Max severity**: HIGH.
+- **Round 7 (+1; 1H)**:
+  - R7-02-02 (HIGH, CONFIRMS): the count axis arms the cap. A 40-seat horizontal dock rests on a 1232×56 plate with `border-radius: 50% calc(0% + 16px) calc(0% + 16px) 50%`, a 616×28 px leading lens, settled at +3 s and identical in a second pass; the same dock at 8, 20 and 26 seats computes `9999px` (`run.css:468` `--dock-cap-rest: 50%`, re-checked). A long run is this family's first arming route; no new mechanism. W-DOCK-EXTENT's born-REDs add a 40-seat horizontal dock whose rest corner is half its cross size.
+- **Lenses (8)**: L01b, L03b, L05b, R2-01, R2-02, R2-03, R4-02, R7-02. **Max severity**: HIGH.
 - **Evidence**: `src/components/dock/styles/run.css:468` `--dock-cap-rest: 50%` (re-checked).
 - **Inbound**: O-56 G-2 producer half (R2-03-01).
 - **Disposition**: BUILD.
@@ -406,11 +412,16 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 - **Round 3 (+2; 2M)**:
   - R3-02-14 (MED, EXTENDS): every dock toolbar is unnamed: `inheritAttrs: false` plus `$attrs` put the consumer's `aria-label` on the role-less `.glass-dock` root (`GlassDock.vue:65`), while the run carries `role="toolbar"` and mints no name by design (`:448-462`, re-checked); 2 unnamed toolbars on each of the 46 first-half routes, 6 on `/dock/controls`, whose roots carry "Dock control shapes", "Media filter" and "View picker".
   - R3-01-15 (MED, EXTENDS, seat-placed in F-18): the run's snap targets are its direct children (`run.css:270-273` `.dock-run > *`, re-checked), the CSS twin of `seatsOf = run.children`; `/dock/overflow` wraps every seat in one `div role="radiogroup"` (`demo/stories/dock/overflow.vue:69-75`), so the run holds one 524 px snap area over a 316 px port and rests land off-pitch (37, 60 and 120 px). Placed here by mechanism: grouped seats collapse into one, on the story that already holds R2-04-10's 12 radio + `aria-pressed` nodes. Measures BDU R56.
-- **Lenses (4)**: L08, R2-04, R3-01, R3-02. **Max severity**: HIGH.
+- **Round 7 (+3; 2H / 1M)**:
+  - R7-01-07 (HIGH, EXTENDS): a `DockSeparator` and any foreign sibling are seats. `onKeydown` picks the index and calls `preventDefault` (`useDockRun.ts:244-273`), then `moveTo` returns when the seat has no focus target (`:229-233`, re-checked). On `/dock/controls` run 2 (Search, Notifications, separator, Overview, Activity) five ArrowRights stop at Notifications, so Overview and Activity are reachable only by End; a prepended `display:none` span makes Home a no-op and an appended one End (2 of 2 each).
+  - R7-01-08 (MED, EXTENDS): the same mechanism outside the dock. Carousel members are `el.children` (`CarouselContent.vue:39-42`, recounted by a `childList` observer at `:81-85`), and the deck snap engine measures pitch and commits the index from the same children (`deck/composables/useDeckSnap.ts:63-66`) (all re-checked). One zero-size first child makes the painted slide 2 `inert` and `aria-hidden` while off-screen slide 3 is announced as current (2 of 2). The seat's control run re-confirms F-70's R3-01-01 (a parent write of `active` does not scroll); it is not counted as a member.
+  - R7-02-01 (HIGH, EXTENDS): a wrapped row is one seat, and reach and the key map read it too. `/dock/overflow` wraps its seats in one `div role="radiogroup"` (`overflow.vue:67-75`); every `focusin` inside reaches the wrapper, which is always occluded, and `anchorFor` resolves index 0 to scroll 0 (`:132-151`, `:158-167`, re-checked), so the focused control sits wholly outside the port (at 390, "Camera" at x 360-400 against a 52-338 port, `scrollLeft` 0 of 238). End computes `seats.length − 1 = 0`, which is in range, so `moveTo(0)` undoes the inner radiogroup's End and focus lands on "Home" (2 of 2). In a consumer, 40 `DockControl`s in one `div.flex` leave a focused last seat at x 1752-1792 against a 1208 px port. Adds reach and End to R3-01-15's snap-lattice consequence on the same story.
+- **Lenses (6)**: L08, R2-04, R3-01, R3-02, R7-01, R7-02. **Max severity**: HIGH.
 - **Evidence**: `useDockRun.ts:71-75` `seatsOf` = `run.children` vs `demo/shell/SidebarDock.vue:119,161` and `BottomDock.vue:154,222` `div.contents[role=group]` (re-checked); the gate `g-dock-lattice.test.ts:432-444` mounts bare buttons.
 - **Disposition**: BUILD.
 - **Wave shape**: W-DOCK-KEYBOARD: group-aware seat resolution (`[data-dock-seat]`), a gate fixture with groups, a born-RED e2e on the live shell.
 - **Round 3 correction**: the group-aware seat resolution also sets the snap target (`.dock-run > [data-dock-seat]`, or seats inside any group), and the toolbar carries the consumer's name (the run reads `aria-labelledby`, or the root takes the role). Born-RED: 0 unnamed toolbars (HEAD 2 per route); on `/dock/overflow` every rest after a gesture sits on the pitch lattice.
+- **Round 7 correction**: the mechanism widens from the dock run to every member set resolved from a container's element children: the run's `seatsOf`, its CSS snap targets (`.dock-run > *`), the Carousel strip's `members()` and the deck snap engine. Any child the library did not mark (a separator, a consumer wrapper, an extension's node) is a member, and the roving stop, reach, the key map, the snap index and the active state all read it. W-DOCK-KEYBOARD's `[data-dock-seat]` resolution becomes one marker-based member query shared with the carousel and deck (`[data-slot="carousel-item"]` and the deck's member marker), serving the roving stop, reach, the key map and the snap commit alike; separators and unmarked nodes are never members, and the run defers Home and End to an inner composite that handled them (`defaultPrevented`). Born-REDs: ArrowRight ×4 from the first seat on `/dock/controls` run 2 visits all four buttons; Home and End hold with a foreign `<span>` prepended and appended; on `/dock/overflow` at 390 every focused seat lies inside the port and End focuses "Settings"; a Carousel with a foreign first child scrolled to pitch 1 gives `active === 1`. The title stands: the carousel and deck rows ride this wave, whose resolution they share.
 
 #### F-20—Demo shell chrome at the phone cell
 
@@ -569,11 +580,16 @@ How to read: each accepted finding sits in exactly one family. A script checked 
   - R2-08-10 (MED, EXTENDS): L15b's pad/corner table extended to 68 plate signatures on 57 routes: 11 move pads under the width query and never their corners; `.dock-tab-button` is 38 px in every cell (no coarse floor).
 - **Round 4 (+1; 1L)**:
   - R4-02-15 (LOW, EXTENDS): SegmentedTabs labels are `nowrap` with `min-width: auto`, and the strip has no overflow policy, so German or CJK labels pan the phone page by 395-552 px (UIA-F-41's "no overflow mode"). `/data/virtual-section` re-confirms the row budget: 35 px on the fine 390 cell, 115 px under 1.4.12. The row-budget invariant (`<main>` scrollWidth equals clientWidth) adds a localized-label cell.
-- **Lenses (6)**: L03a, L08, L15b, R2-01, R2-08, R4-02. **Max severity**: HIGH.
+- **Round 7 (+3; 2M / 1L)**:
+  - R7-02-04 (MED, EXTENDS): label slots carry no inline overflow policy. `overflow-wrap`, `word-break`, `text-overflow`, `ellipsis` and `truncate` have 0 hits in `select`, `command`, `sortable-list`, `carousel`, `tabs`, `toggle-group` and `toast` (re-checked). A 200-character unbroken label pans the page (SegmentedTabs in a 384 seat: document `scrollWidth` 9,612; ToggleGroup 3,219, its stadium plates stretched to 3,195 px), runs the toast title's ink off its plate and the viewport, and is cut with no ellipsis by SortableList's clip, Command's list edge and the Select trigger's `[&>span]:line-clamp-1` (`SelectTrigger.vue:59`). Accessible names stay whole. This is R4-02-15's "no overflow mode" on every sibling control.
+  - R7-02-05 (MED, EXTENDS): the row budget on the count axis. PagerDots shows every dot unless `windowFit` is passed (`PagerDots.vue:42-46,136-143`) and Carousel inherits it; 20 dots pan a 390 phone page to 588, and 8 SegmentedTabs make a 957 px strip in a 384 seat. End still reaches the last member.
+  - R7-01-11 (LOW, seat NEW, folded): under a user minimum font size of 24 px the chip's × glyph outgrows its fixed `1.25rem` square (`styles/glass/glass-chip.css:73-78`, re-checked) by 14 px, and the xs Button's label its 28 px block by 1 px (not re-derived here); badges, dock labels, the pager and eight other surfaces hold. Folded: a literal control box that rides an axis other than its text's is this family's "literal controls ride other axes" clause, here the user's minimum font size, which clamps `font-size` and not `rem` or `px` boxes (§11.3).
+- **Lenses (8)**: L03a, L08, L15b, R2-01, R2-08, R4-02, R7-01, R7-02. **Max severity**: HIGH.
 - **Evidence**: `tokens/sizing.css:108-112` (the law) vs `:333-342` (six space rungs transposed, no radius); local queries at `control.css:310`, `toggle-group/styles.css:35`, `Progress.vue:149`, `segmented.css:115,308`.
 - **Disposition**: BUILD (decide first).
 - **Wave shape**: W-DENSITY-DECIDE (transpose corners with pads, derive pads from corners, or transpose gaps only), then one sweep; marks and handles leave the spacing register; invariant: no width-query spacing outside `tokens/sizing.css`.
 - **Round 2 correction**: the density ruling gains a row-budget clause for coarse floors (R2-08-08; invariant: `<main>` scrollWidth equals clientWidth at P on every route) and takes R2-08-10's 68-row table; `.dock-tab-button` joins the coarse floor.
+- **Round 7 correction**: the row budget gains a content clause, a count clause and a text-scale clause. One label-slot rule in the control register: `min-inline-size: 0` on the flex item, then `overflow-wrap: anywhere` for multi-line holders or `text-overflow: ellipsis` for one-line seats, by role, with the full accessible name kept. Rails window to their container by default (a container-measured `windowFit`), and tab strips take a scroll or collapse mode. Glyph seats become icons, and seat block sizes become `min-block-size`. Born-REDs: every collection control holding a 200-character label in a 384 px seat keeps `<main>` scrollWidth equal to clientWidth, with no descendant rect outside its plate; a 20-member Carousel and an 8-tab strip in a 384 seat at 390 likewise; under a 24 px minimum font size the chip's remove glyph and the xs Button's label sit inside their boxes.
 
 #### F-30—Radius role: the off-role 12 px rung (a); multi-line holders on the stadium (b)
 
@@ -769,7 +785,7 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 - **Wave shape**: options take their focus model from the listbox context; the pin inverts.
 - **Round 4 correction**: retitled. One widget carries two channels for its current item: tab stops beside `aria-activedescendant` (round 1), and a pointer `:hover` fill beside the highlight (R4-01-14). The `:hover` rung keeps its lift and drops the fill, so the highlight is the only current-row paint. Born-RED: exactly one row is painted after a keyboard move under a resting pointer. The inbound map adds pointer-origin focus painting the keyboard ring (UIA-F-58, UIA-V-221, -472, UIA-KF-112, -253), the same class.
 
-#### F-41—Toast placement and the announce channel
+#### F-41—Toast placement, admission and the announce channel
 
 - **Mechanism**: the toast stack covers the shell dock and each toast is announced twice.
 - **Members (3; 3M)**: L01a-34, L03b-09, L08-11.
@@ -782,12 +798,15 @@ How to read: each accepted finding sits in exactly one family. A script checked 
   - R5-02-10 (MED, EXTENDS): in Chromium's AX tree each toast is announced once, politely, and no toast reaches an assertive channel. reka's `ToastRootImpl` renders a `role="alert"` copy (`ToastRootImpl.js:131-133`) inside `VisuallyHidden feature="fully-hidden"` (`ToastAnnounce.js:29`), which stamps `aria-hidden="true"`, so the only exposed live region is Toaster's `aria-live="polite"` viewport (`Toaster.vue:145-148`) (all re-checked). `ToastOptions` carries no urgency, so an error-tone toast is announced politely too, and a toast item is an unnamed `listitem`.
 - **Round 6 (+1; 1L)**:
   - R6-01-13 (LOW, CONFIRMS): two `createApp` roots, each with a Toaster: one `toast()` from app A shows in 2 viewports with 4 live regions (2 of 2). R4-01-19's module-global store, across apps.
-- **Lenses (7)**: L01a, L03b, L08, R3-02, R4-01, R5-02, R6-01. **Max severity**: MED.
+- **Round 7 (+1; 1M)**:
+  - R7-02-06 (MED, seat NEW, folded): the store evicts live toasts. `ADD_TOAST` is `[action.toast, ...toasts.value].slice(0, TOAST_LIMIT)` with `TOAST_LIMIT = 5` (`toast/use-toast.ts:5,62`, re-checked), a drop-oldest array, not a queue. A sixth toast unmounts the oldest in the same frame while it is `data-state="open"`, `duration: Infinity` included, and skips its exit (Toaster's vaporize and `removeToast` path, `Toaster.vue:48-66`): seven infinite toasts 400 ms apart remove "Toast 1" at +2,075 ms and "Toast 2" at +2,478 ms (3 of 3). A same-tick burst of 50 renders and announces 5. Folded: R4-01-19 placed the module-global store in this family, W-TOAST already owns it, and the 45 lost toasts are 45 lost announcements (§11.3).
+- **Lenses (8)**: L01a, L03b, L08, R3-02, R4-01, R5-02, R6-01, R7-02. **Max severity**: MED.
 - **Evidence**: L08-11: reka per-toast `role=alert` plus the region announcer.
 - **Disposition**: BUILD.
 - **Wave shape**: W-TOAST (the row never started).
 - **Round 5 correction**: retitled from "Toast placement and double announcement". The double announcement holds in the DOM (L08-11, R3-02-17), not in Chromium's AX tree, where the alert copy is `aria-hidden`; VoiceOver is unverified (§9.1). The family is placement plus the announce channel. W-TOAST owns one announce channel, polite by default and assertive for an error tone, and names each item from its title. Born-RED: an error-tone toast exposes one assertive announcement and a named item, and a default toast one polite announcement (HEAD: polite only, `listitem ""`).
 - **Round 6 correction**: W-TOAST's one viewport owner is per page, not per app. Born-RED: two app roots with a Toaster each, one `toast()`, give one viewport and one announcement (HEAD: 2 viewports, 4 live regions).
+- **Round 7 correction**: retitled from "Toast placement and the announce channel"; the family is the toast store's contract, and admission is its third leg. W-TOAST's store holds an unbounded queue and a visible window of `limit`. An arrival past the window waits, or dismisses the oldest through its normal exit, never by splice, and a `duration: Infinity` toast is never pre-empted. Born-REDs: seven infinite toasts leave toasts 1 and 2 open or queued, with 0 DOM removals while `data-state="open"`; a burst of 50 eventually renders or announces all 50 (HEAD: 5).
 
 #### F-42—Small naming and keyboard seams
 
@@ -808,12 +827,16 @@ How to read: each accepted finding sits in exactly one family. A script checked 
   - R5-02-12 (LOW, EXTENDS): a consumer `aria-label` on PopoverContent lands and names nothing. reka's `aria-labelledby` (the trigger) wins the name computation, so AX gives `dialog "Open popover"`.
 - **Round 6 (+1; 1H)**:
   - R6-02-07 (HIGH, EXTENDS): keystrokes owned by an input method are acted on. `useFuzzySearch.onKeydown` switches on `e.key` alone (`search/useFuzzySearch.ts:101-130`, re-checked), exported through `useDockSearch`: mid-composition in ja, zh and ko, Enter selects a result and scrolls the section list, Escape closes the results, ArrowDown moves the highlight and Tab and ArrowRight accept the ghost completion (15 of 15 cells). The registry's `allowInInput` path skips the editable filter and reads nothing else (`useKeyboardShortcuts.ts:326-331`, re-checked), and ExpandableContainer registers its Escape there (`ExpandableContainer.vue:213-217`), so a composition's Escape collapses it; reka's DismissableLayer dismisses a Dialog on the same Escape, and the inline Command closes and wipes its query (6 of 6 overlay cells). `src` and `demo` hold 0 `isComposing` and 0 `keyCode` reads (re-checked). Vue's `v-model`, reka's ComboboxInput and the registry's editable filter do guard, which is why Input, Textarea and the app's `k`, `Escape` and `Enter` stayed clean.
-- **Lenses (9)**: L08, R2-04, R2-08, R3-01, R3-02, R4-01, R4-02, R5-02, R6-02. **Max severity**: HIGH.
+- **Round 7 (+2; 1M / 1L)**:
+  - R7-01-10 (MED, seat NEW, folded): destinations built from buttons. The demo shell's rail and bottom-dock page strip navigate through `pushRoute` (`demo/shell/useShellNavDock.ts:6,77`), and the ToC entries are `<button data-scroll-target>` (`demo/stories/navigation/toc-tracking.vue:131,143`) (re-checked), so no destination carries an `href`: a Meta-click on "Badge" navigates the current tab (pages 1 → 1, 2 of 2), and open-in-new-tab, copy link and the status URL are absent. Folded: L08-19 holds the ToC half ("in-page navigation built from buttons, not links", cure: anchors), confirmed by R2-04-13; this row widens it to the shell's route destinations, which `useDockRun.ts:77-81` already reads through `RouterLink`'s `aria-current` (§11.3).
+  - R7-02-07 (LOW, seat NEW, folded): a zero-member collection computes as one. PagerDots and Carousel at count 0, and at `count` null, undefined or NaN, announce "Slide 1 of 0" (`PagerDots.vue:88-95,326`, re-checked) and paint an 8 px worm fragment; a GlassDock with no seats paints a 24×56 plate around an empty `toolbar`; a Select with 0 items opens a 10 px listbox with no message, where Command (`CommandEmpty`) and DataTable have empty slots; a Carousel `active` of `undefined` stays in the model while slide 1 paints as current. Folded: R4-02-14 is the PagerDots half on the same lines (§11.3).
+- **Lenses (11)**: L08, R2-04, R2-08, R3-01, R3-02, R4-01, R4-02, R5-02, R6-02, R7-01, R7-02. **Max severity**: HIGH.
 - **Evidence**: L08-14: the context-menu story promises Shift+F10 with no macOS opener.
 - **Disposition**: BUILD (small).
 - **Wave shape**: one a11y sweep.
 - **Round 5 correction**: the sweep adds two rows. Slider forwards `id`, or the Label's `aria-labelledby`, to the thumb, and its guard moves to `process.env.NODE_ENV` under F-67's dev-guard row; content parts drop the trigger `aria-labelledby` when the consumer names the content. Born-RED: the Label-for Slider's thumb has a non-empty AX name (HEAD: `slider ""`).
 - **Round 6 correction**: MED → HIGH. The keyboard half of the mechanism states its class: a key handler acts on `e.key` without reading the event's own state, `event.repeat` (R4-01-16) or IME ownership (`e.isComposing || e.keyCode === 229`, R6-02-07). The sweep puts one keystroke predicate at the three dispatch seats: `useFuzzySearch.onKeydown`, the registry's `allowInInput` path, and the overlay dismissal (F-22's seam). The registry's editable test at the same lines reads the composed target (F-81, R6-01-02), so both cures land in one predicate. Born-RED: a keydown with `isComposing` or keyCode 229 changes no state in the dock search, a Dialog, an expanded ExpandableContainer or the inline Command (HEAD: 15 of 15 dock cells act; 6 of 6 overlay cells dismiss).
+- **Round 7 correction**: the sweep adds two rows. Destinations are links: the shell's rail and page-strip seats and the ToC entries are `RouterLink`s or `href` anchors (the dock seat already accepts one), with `pushRoute` hooked on the link's navigate rather than replacing it. Count 0 is a state: the rail and the dock render nothing or a consumer `#empty` slot, the announcer is silent, and Select takes an empty slot as Command has. Born-REDs: a Meta-click on a rail seat opens a second page, and every destination has an `href`; count 0 gives no live-region text and no painted plate or worm; a Select with 0 items shows its empty slot.
 
 #### F-43—An arrival has no single owner: the router seam, pane swaps and mount entrances
 
@@ -831,13 +854,16 @@ How to read: each accepted finding sits in exactly one family. A script checked 
   - R4-02-11 (MED, EXTENDS, seat-placed with R4-01-08): the same trigger set never re-measures after the selected tab's own box changes. The underline runs 249 px short after a runtime German label, and 14-22 px short under 1.4.12 spacing injected after mount.
 - **Round 5 (+1; 1H)**:
   - R5-01-02 (HIGH, EXTENDS): a route push waits on the network inside the frozen view-transition update. `routeTransition`'s update is `await mutate()` (`useRouteTransition.ts:120-142`), and its documented `mutate` is `await router.push(to)` (`:46`, `:94`). The demo router loads the lazy chunk inside that push (`demo/router.ts:111-121`), although its comment says the load runs "before the View Transition update callback" (`:108-110`). The engine draws no frame while `update` is pending: 4,016 ms on slow-3G and then a skipped transition, 1,206-1,216 ms on fast-3G, 141-159 ms on broadband. The substrate hides both outcomes: `vt.ready?.catch(() => {})` swallows the TimeoutError, and `finished` maps a rejection to `undefined` (`useViewTransition.ts:168-173`), so an offline push that fails inside `update` resolves like a completed one (all re-checked).
-- **Lenses (8)**: L01a, L04, L05a, R2-02, R3-01, R4-01, R4-02, R5-01. **Max severity**: HIGH.
+- **Round 7 (+1; 1M)**:
+  - R7-01-09 (MED, EXTENDS): an arrival's scroll position has no owner. The shell resets `<main>` to 0 on every `route.path` change, popstate included (`demo/shell/AppShell.vue:135-144`), and the router has no `scrollBehavior` (`demo/router.ts:100-105`) (both re-checked), so Back from a 700 px scroll lands at 0 and Forward from 250 lands at 0 (2 of 2). Nothing replays `location.hash` after the route content mounts, and the library's sidebar kit (`composables/sidebar/useScrollTo.ts`, `useLazyLoader`) reads and writes no hash, where the deck has `useDeckHashSync`: 12 of 12 fresh fragment loads land at `scrollTop` 0 with no `:target`, `#sec-9-1` never renders past the 24-section lazy window, and a ToC jump leaves `location.hash` empty.
+- **Lenses (9)**: L01a, L04, L05a, R2-02, R3-01, R4-01, R4-02, R5-01, R7-01. **Max severity**: HIGH.
 - **Evidence**: L05a-07: RT-29C "the router seam, unclaimed".
 - **Disposition**: BUILD.
 - **Wave shape**: W-ROUTE-POPSTATE with a frame capture.
 - **Round 3 correction**: the family is the arrival seam, not only the router. An arrival (a route push, popstate, a pane swap, a mount entrance) is animated by no owner (popstate, the FamilyTabs swap) or by more than one (the Alert entrance inside the route view transition; HandMark's draw started by two triggers). W-ROUTE-POPSTATE widens to W-ARRIVAL: one owner per arrival and one entrance per mount; mount entrances under a route change wait for the transition or are suppressed while it runs; the `--i` stagger is written by the consumer or struck from the header; the family panel swaps through the pane register with the member preloaded; HandMark re-measures on `fonts.ready` and replays only if the draw has not started. Probes: 0 `.liquid-enter` frames inside a view-transition frame on a push; 0 frames with panel height 0 on a family swap; one draw per mount under a 450 ms font delay.
 - **Round 4 correction**: an arrival's geometry has one owner too. W-ARRIVAL's indicator row seats the first placement rather than travelling it. It measures in layout space (`offsetLeft`, `offsetTop`, `offsetWidth`, `offsetHeight`, as `dock/composables/dockMorphMeasure.ts:3-6` already does), and it re-measures when the selected button's own box changes (observe the button, not only the strip). R4-02-11 folds here rather than minting: its cause is the same unobserved subject, and HandMark's `fonts.ready` re-measure (R3-01-05) already sits in this wave. Born-REDs: 0 frames after mount with the indicator visible and more than 1 px off the active tab; inside a Popover and a Dialog, the indicator within 0.5 px of the active tab at rest (HEAD: −3.9 and −7.1 px); after a label change on the selected tab, within 0.5 px. Max severity MED → HIGH. The Tooltip's entrance with no owner (R4-01-18) is placed in F-70 by its binding; its consequence lands in this wave's invariant.
 - **Round 5 correction**: the router seam's transition starts before its arrival exists. W-ARRIVAL's router row resolves first, then transitions: `routeTransition` takes an async `prepare` (the router resolve plus the matched lazy components) that runs before `startViewTransition`, with a synchronous commit inside it. The substrate reports a skipped or failed transition to the caller instead of swallowing it, and the demo router's comment is corrected. Born-REDs: an uncached push under slow-3G draws a frame at least every 100 ms while the chunk loads, and its transition runs (HEAD: 4,016 ms with no frame, then skipped); an offline push hands the caller a failure (HEAD: resolves). The failed module staying in the module map until reload is consumer-side (no `vite:preloadError` handler). O-64 R-5 joins this family's inbound rows (INBOUND-MAP, round 5).
+- **Round 7 correction**: an arrival's scroll position has one owner too. W-ARRIVAL's router row restores the owning scroller's per-entry position on popstate and resolves a hash after the route's content commits. The sidebar kit takes the deck's hash seam: read `location.hash` into `ensureTargetLoaded` and `scrollTo`, write it on a ToC jump, and honour the target's `scroll-margin` over the literal `scrollOffset = 16`. `useScrollTo`'s `document.getElementById` is F-81's root-relative read. Born-REDs: Back restores 700 ± 1; a fresh load of `#sec-9-1` sets `:target` to `sec-9-1` inside the scroller's port (HEAD: 0 and none).
 
 #### F-75—The reduced-transparency arm lifts the field it should recede
 
@@ -877,6 +903,32 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 - **Evidence**: `captures/R6-02/` (`reset-{chromium,firefox,webkit-modelset}.json`, `form-{chromium,firefox}.json`, `autofill-proxy-chromium.json`, `numberfield-enter-submit.txt`, `undo-paste-*.json`, `numberfield-undo-repeats.txt`, the paired PNGs), with the consumer harness beside them.
 - **Disposition**: BUILD.
 - **Wave shape**: W-FORM-PARTICIPATION, one participation seam per control: `reset` restores `defaultValue` through the model; validity, disabledness and the form owner are read from the form-associated element into `data-state` and ARIA, and the first invalid control takes focus on its visible, named element; the proxy is written synchronously, or implicit submission waits for it, and a proxy `change` moves the model for every control, as Select's does; the NumberField commit reverts instead of clearing and its formatted write rides the editor (reported upstream to reka, with a wrapper cure until it lands). One fixture: the form battery as a consumer test in two engines, asserting FormData = model = paint after fill, reset, blocked submit, fieldset disable and Enter. Born-REDs: after Reset every control's FormData, model and painted value agree and equal its `defaultValue` (HEAD: `fruit` apple against the trigger's Plum); after a blocked submit each empty required control paints the destructive rim and reads AX `invalid: true` with its own name (HEAD 5 of 7 unpainted); inside `<fieldset disabled>` 0 descendants are focusable; Enter in a NumberField submits the value on screen in both engines; commit `7`, undo, redo reads `7` or empty, never `777`; commit `5`, compose letters, blur keeps 5.
+
+#### F-83—Closed and off-screen content is withheld from the platform's reveal machinery
+
+- **Mechanism**: the library expresses "closed" and "not current" by removing content from the document, by `inert`, or by the last frame of an exit animation, never by the platform's own hidden state, `hidden="until-found"`, which find-in-page and text fragments search and then reveal through `beforematch`. reka's CollapsibleContent already renders `hidden="until-found"`, with a `beforematch` listener that opens the root, when `unmountOnHide` is false (`reka-ui/dist/Collapsible/CollapsibleContent.js:64-69,82`, reka 2.10.1). glass-ui deletes `unmountOnHide` and `unmount-on-hide` from the consumer's attrs at all three roots (`Collapsible.vue:44-45`, `Accordion.vue:46-47`, `AccordionItem.vue:32-33`), so closed content is never in the DOM. Off-snap Carousel members carry `inert` and `aria-hidden` (`CarouselItem.vue:54-55`), and inert subtrees are excluded from find, although the strip is a native scroll-snap container that find would otherwise scroll. With the public `forceMount` prop ("Keep the region mounted while closed", `CollapsibleContent.vue:11-12,45`, `AccordionContent.vue:11-12,45`), Presence stays present, reka sets no `hidden`, and the only closed rule is `animation-name: disclosure-close` (`_shared/disclosure/disclosure.css:111-113`), whose keyframes (`:13-23`) carry no fill mode; when the exit ends, the box returns to its natural size. All re-checked at `71f2ba45`.
+- **Members (3; 2H / 1M)**: R7-01-01, R7-01-02 and R7-01-03 (round 7, seat NEW; §11.3).
+  - R7-01-01 (HIGH): needles in a closed Accordion item and a closed Collapsible are in the DOM 0 times; `window.find` returns false, and a `#:~:text=` load leaves the item closed and the model unchanged. The control in the same page, a consumer panel with `hidden="until-found"` and `@beforematch`, is revealed by the same fragment (model `a` → `b`), so the harness drives the platform's find-and-reveal path.
+  - R7-01-02 (MED): the slide-3 needle is in the DOM, but `window.find` returns false and the text fragment leaves `active` at 0 and `scrollLeft` at 0.
+  - R7-01-03 (HIGH, seat NEW as F-84, folded here): a force-mounted Collapsible at load with the model false is `data-state="closed"`, 21 px tall at opacity 1 under a trigger reading `aria-expanded="false"`; 150 ms into a close it is 2 px at opacity 0.07, and 1.2 s later 21 px at opacity 1 again. The AX tree exposes a `region` holding the closed text, find matches it and select-all copies it. The Accordion shares the rule (source only).
+- **Lenses (1)**: R7-01. **Max severity**: HIGH.
+- **Evidence**: `captures/R7-01/` (`find.json`, `find-tf-*.png`, `inject.json`, `forcemount-closed-after-cycle.png`), each probe beside its output; the HEAD tarball is the 10.0.1 bytes (sha256 `de1bfe9a…8c05`). A typed Ctrl+F was not driven (headless has no find bar and CDP no `Page.searchInPage`); text fragments and `window.find` run the same matcher and fire `beforematch`.
+- **Disposition**: BUILD.
+- **Wave shape**: W-FINDABLE. Closed is a state, not a frame. Closed disclosure content carries `hidden="until-found"` whether mounted or not (`unmountOnHide: false` as the library default, or the consumer's attr forwarded instead of stripped), and `beforematch` opens through the model, so a controlled `v-model` sees it. Off-snap Carousel members drop `inert` and leave the tab order on their focusables (`tabindex="-1"`), so the platform's find scrolls the strip and `scrollsnapchange` commits the index. The disclosure's closed rung is the target that W-INTERRUPT's size re-target (F-78, R4-01-02) lands on, and the two waves rewrite `disclosure.css` together. Born-REDs: a `#:~:text=` load against a closed AccordionItem gives `modelValue === item.value` with the needle inside the viewport (HEAD: not in the DOM); against slide 3 of a Carousel, `active === 2` (HEAD 0); force-mounted and closed after one open-close cycle, a box height of 0 and no AX `region` text, with the text still findable (HEAD: 21 px at opacity 1).
+- **Placement**: weighed for R7-01-03 against F-78, whose statement is the interruption of a transition pair; here nothing interrupts, the rest state itself is missing, and its cure is the closed rung this family defines. Against F-82: `beforematch` writing through the model is a platform write read back, F-82's shape, but F-82's wave is a form participation seam per control and cannot carry a disclosure's closed state. Against F-70: stripping `unmountOnHide` is deliberate code, not an untyped binding. Against F-76: no extent is left out of a motion (§11.3).
+
+#### F-84—What text is content is not stated to the user agent
+
+- **Mechanism**: selection, copy, find and translation read every DOM text node that is not `visibility: hidden`, `display: none` or inert, and `aria-hidden` removes nodes from the AX tree only. The library marks the split between content and presentation in neither direction. Presentation reaches the UA as content: TypewriterText holds three text copies of one phrase, the `sr-only` accessible span (`typewriter/TypewriterText.vue:4`), the `visibility: hidden` reserves (`:8-15`) and the `aria-hidden` visual layer with a literal `|` cursor text node (`:17-40`), and `src` holds 0 `translate="no"`. Content reaches the UA as presentation: `user-select: none` sits on the whole `.sortable-item` (`sortable-list/styles.css:74-75`) while the default `handleSelector` is the grip (`SortableList.vue:22`), and `select-none` sits in the static Chip's base (`chip/chipVariants.ts:4`). All re-checked at `71f2ba45`.
+- **Members (3; 3M)**: R7-01-04 and R7-01-05 (round 7, seat NEW as F-85) and R7-01-06 (round 7, seat NEW as F-86); §11.3.
+  - R7-01-04 (MED): copying the settled typewriter gives `"Typewriter says hello world\nTypewriter says hello world |"` (mid-typing, `"…\nTyp |"`); `window.find("hello world")` first matches the 1 px clipped `sr-only` span, so find highlights an invisible match.
+  - R7-01-05 (MED): after a simulated page translation (every text node wrapped in `<font>`), Vue patches `{{ leadingText }}` by `textContent` and `{{ tailChar }}` on the detached node, so the typewriter reads `"…hello worl«r»«|»"` for over 3 s and never paints the final glyph. The absolute visual layer then wraps over the SortableList below; that spill is F-76's absolute-layer clause, reached through translation, and is cross-cited there rather than counted twice. Everything else survived the translation: the Accordion, Tabs, a keyboard reorder, an insert, and `app.unmount()` with 0 errors.
+  - R7-01-06 (MED): a drag across a SortableList row body selects `""` with 0 reorders, a double-click selects `""`, and select-all copy leaves out every row label, in the consumer and on `/data/sortable-list`, whose own blurb says "the row body stays selectable text" (`demo/stories/data/sortable-list.vue:98`, re-checked). The static Chip's label is unselectable on `/forms/chip`.
+- **Lenses (1)**: R7-01. **Max severity**: MED.
+- **Evidence**: `captures/R7-01/` (`copy.json`, `copy-demo.json`, `typewriter-find.json`, `translate.json`, `translate-after-crop.png`), each probe beside its output.
+- **Disposition**: BUILD.
+- **Wave shape**: W-TEXT-ONCE, one text register. Each phrase has one DOM text copy; presentational layers paint from generated content (`content: attr(…)`) or carry `translate="no"` and `user-select: none`; `user-select: none` sits only on controls and on a lifted drag row (`.sortable-handle`, `[data-sortable-lifted]`, and the Chip's interactive and removable modes). Born-REDs: copying the settled typewriter yields the phrase once with no `|`, and the first find hit's rect is the painted glyphs; after the simulated translation the settled visual text equals the settled source phrase and the layer stays inside `.tw-root`; select-all copy of a handle-mode list holds every row label, and a drag across a row body selects its text with 0 reorders.
+- **Placement**: the seat proposed two families, F-85 (presentational copies) and F-86 (the no-select register on content). One register decides both directions of the content and presentation split, for the same four UA features, and one sweep carries it, so they mint once. Weighed: F-76 holds the typewriter's reserved extent, not its text; F-41's two DOM copies of a toast are the announce channel's, cured in W-TOAST; F-65's twins are authored sources, not runtime text nodes; F-42 names controls for the AX tree, which these rows leave intact; F-83 is hidden state, not the text register (§11.3).
 
 ### Band F—Motion
 
@@ -1070,11 +1122,14 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 - **Round 2 (+2; 2M)**:
   - R2-02-15 (MED, EXTENDS): every overlay open costs a 59-100 ms mount frame (handler, popper layout and glass paint in one frame); the dialog enter also stalls ~200 ms in 2 of 6 opens (KFA-164, partly reproduced).
   - R2-04-06 (MED, CONFIRMS): the four mount-path costs stand (`motionTempo.ts:38`; `auroraFallbackGround.ts:335-360` rasters a PNG on 1 element of `/` and 18 of `/substrates/aurora`; `cn()` unmemoised; 5 synchronous pipeline sites and 0 `*Async`).
-- **Lenses (3)**: L07, R2-02, R2-04. **Max severity**: MED.
+- **Round 7 (+1; 1M)**:
+  - R7-02-03 (MED, EXTENDS): a per-item linear lookup of the item's own place makes mount, unmount and reorder quadratic. Each SortableItem's label is `getItemLabel(id)` = `items.value.find(…)` (`SortableItem.vue:17`, `useSortable.ts:63-66`), read by SortableHandle for its name; each ToggleGroup item's `tabindex` is `ordered.value.indexOf(entry)` over a `compareDocumentPosition` sort recomputed on every `triggerRef`, and unregister is `indexOf` plus `splice` plus `triggerRef` (`ToggleGroup.vue:68-78,125-132`) (all re-checked). Mount time grows ×3.2 then ×4.1 per doubling (SortableList 72/228/934 ms at 1k/2k/4k and 7.5-8.4 s at 10k; ToggleGroup 41/126/520 ms and 6.5-7.5 s), against a DataTable that renders more DOM and stays linear (26/40/70 ms; 186-193 ms at 10k). Growth ratios, two passes.
+- **Lenses (4)**: L07, R2-02, R2-04, R7-02. **Max severity**: MED.
 - **Evidence**: L07-08: forced recalc on every spring construction.
 - **Inbound**: O-60 KFA-164 (partly reproduced). KFA-23 moved to F-50 in round 2.
 - **Disposition**: BUILD.
 - **Wave shape**: one mount-path pass.
+- **Round 7 correction**: the mechanism gains a fifth cost, a per-item scan for the item's own label or position. The mount-path pass adds a membership index: a `Map<id, item>` or `Map<entry, index>` computed once per membership change, never a scan per item. Born-RED: mount time at 4k over mount time at 2k is at most 2.5 for SortableList and ToggleGroup (HEAD ≈ 4.0).
 
 #### F-52—Payload does not shake
 
@@ -1606,9 +1661,43 @@ These probes re-opened the cited lines, or re-ran a grep, at `2efb414c` (`src` a
 | R6-02-06 | MED | reka `shared/useFormControl.js:5-7` | `closest("form")`: CONFIRMED |
 | R6-02-07 | HIGH | `search/useFuzzySearch.ts:101-132`; `ExpandableContainer.vue:205-220`; `grep -rn 'isComposing\|keyCode' src demo` (0) | a `switch (e.key)` with no composition read; the container's Escape on `allowInInput`: CONFIRMED |
 
+### Round 7 refutations and narrowings
+
+Round 7 refuted no seat finding. Neither seat filed a REFUTES row, my re-checks confirmed every defect claim they cover, and the reject table stays at 4. Four relation claims narrow; each defect stands and is placed by mechanism (§11.3):
+
+| # | statement | source | probe | effect |
+|---|---|---|---|---|
+| 1 | "No family owns the degenerate count" | R7-02-07 | F-42's round-4 member R4-02-14: PagerDots at count 0 announces "Slide 1 of 0" (`PagerDots.vue:92-94,326`) | narrowed: the PagerDots half is registered; the dock plate, the Select empty slot and the Carousel `undefined` model are the widening. Folded into F-42 |
+| 2 | "F-20 is phone-cell geometry and F-19 is dock ARIA; neither owns link semantics" | R7-01-10 | L08-19 (`round-1/L08.md:39`): "in-page navigation built from buttons, not links or a tree", cure "anchors (`href`)", in F-42 and confirmed by R2-04-13 | narrowed: F-42 owns the ToC half; the shell's route destinations widen it. Folded into F-42 |
+| 3 | "No family owns the store's admission policy" | R7-02-06 | F-41's round-4 member R4-01-19 placed the module-global store and W-TOAST's one viewport owner per store | narrowed: the store is F-41's; admission is its third leg. Folded into F-41 |
+| 4 | "It may FOLD into R7-02's content-extremes family" | R7-01-11 | R7-02 registered no family; F-29's "literal controls ride other axes" | placed in F-29 |
+
+### Round 7 re-check log
+
+These probes re-opened the cited lines, or re-ran a grep, at `71f2ba45` (`src` and `demo` byte-identical to 10.0.1; reka-ui 2.10.1 in `node_modules`, the version the seats cite). Every probe was read-only; the one repository file written is this one. They cover all 5 round-7 HIGH rows, all 10 seat-NEW rows, and four of the five remaining MED rows (R7-02-05 rests on its source cite and the seat's captures). No paint, timing or AX number was re-measured: each rests on the seats' captures under `captures/R7-01/` and `captures/R7-02/`, with each probe script beside them. The browser MCP servers did not connect for this seat, and the browser seat stays with the capture seats (P-8).
+
+| finding(s) | sev | probe | result |
+|---|---|---|---|
+| R7-01-01 | HIGH (NEW) | `Collapsible.vue:38-50`, `Accordion.vue:40-50`, `AccordionItem.vue:28-36`; reka `CollapsibleContent.js:55-90` | `unmountOnHide` and `unmount-on-hide` destructured out of the forwarded attrs at all three roots; reka renders `hidden: !present ? (unmountOnHide ? "" : "until-found")` and binds `beforematch` to `onOpenToggle`: CONFIRMED |
+| R7-01-02 | MED (NEW) | `CarouselItem.vue:48-58` | `:aria-hidden` and `:inert` on every non-active member: CONFIRMED |
+| R7-01-03 | HIGH (NEW) | `disclosure.css:1-24,95-113`; `CollapsibleContent.vue:11-12,19,45`, `AccordionContent.vue:11-12,19,45`; reka `present: forceMount \|\| open` | the only closed rule is `animation-name: disclosure-close`, no `animation-fill-mode` in the file, no closed `block-size` or `hidden`; with `forceMount` reka's `present` is true, so `hidden` is unset: CONFIRMED (source; the paint rests on the seat's capture) |
+| R7-01-04, -05 | MED (NEW) | `TypewriterText.vue:1-42`; `grep -rn 'translate="no"' src` (0) | the `sr-only` span, the `aria-hidden` reserves, the `aria-hidden` visual layer with `{{ leadingText }}`, `{{ tailChar }}` and a literal `\|` text node: CONFIRMED |
+| R7-01-06 | MED (NEW) | `sortable-list/styles.css:70-76`; `SortableList.vue:18,22`; `demo/stories/data/sortable-list.vue:98`; `chip/chipVariants.ts:3-4` | `user-select: none` on `.sortable-item`, handle default `[data-sortable-handle]`, the blurb's "row body stays selectable text", `select-none` in the Chip BASE: CONFIRMED |
+| R7-01-07 | HIGH | `useDockRun.ts:71-75,228-273` | `seatsOf` is `run.children`; `preventDefault` precedes `moveTo`, which returns on a seat with no focus target: CONFIRMED |
+| R7-01-08 | MED | `CarouselContent.vue:39-42,78-87`; `useDeckSnap.ts:63-66` | `members()` = `el.children` in both, a `childList` observer: CONFIRMED |
+| R7-01-09 | MED | `demo/shell/AppShell.vue:135-144`; `demo/router.ts:100-105` | `mainEl.scrollTo({ top: 0 })` on every `route.path` change; no `scrollBehavior`, by the comment's own design: CONFIRMED |
+| R7-01-10 | MED (NEW) | `demo/shell/useShellNavDock.ts:6,77`; `toc-tracking.vue:131,143`; `useDockRun.ts:77-81` | `pushRoute` from a nav handler; `<button>` ToC entries; the run reads `RouterLink`'s `aria-current`: CONFIRMED |
+| R7-01-11 | LOW (NEW) | `styles/glass/glass-chip.css:73-80` | `.glass-chip__remove` a fixed `1.25rem` square: CONFIRMED; the xs Button's 28 px block was not re-derived |
+| R7-02-01 | HIGH | `useDockRun.ts:125-200,244-279,290-302` | `anchorFor` of index 0 clamps `−pitch/2` to 0; `occluded` compares the seat's whole rect to the port; `onActivate` reaches the containing seat on `focusin`; End's `to = seats.length − 1` passes the range test at length 1: CONFIRMED |
+| R7-02-02 | HIGH | `dock/styles/run.css:466-469` | `--dock-cap-rest: 50%`: CONFIRMED |
+| R7-02-03 | MED | `SortableItem.vue:15-18`; `useSortable.ts:62-67`; `ToggleGroup.vue:66-80,122-134` | a `find` per label, an `indexOf` per tabindex and select over a `compareDocumentPosition` sort, `indexOf` + `splice` + `triggerRef` per unregister: CONFIRMED |
+| R7-02-04 | MED | `grep -rn 'overflow-wrap\|word-break\|text-overflow\|ellipsis\|truncate'` over the seven component directories | 0 hits: CONFIRMED |
+| R7-02-06 | MED (NEW) | `toast/use-toast.ts:1-8,58-66` | `TOAST_LIMIT = 5`; `[action.toast, ...toasts.value].slice(0, TOAST_LIMIT)`: CONFIRMED |
+| R7-02-07 | LOW (NEW) | `PagerDots.vue:86-96,324-328` | a non-finite count is 0, `activeIndex` 0 at count 0, the message `Slide ${activeIndex + 1} of ${count}`: CONFIRMED |
+
 ## 3. Convergence map
 
-Recomputed after round 6 from each family's Lenses line (a script cross-checked every Lenses line, and every family heading, against the Index). A seat from rounds 2 to 6 counts as a lens.
+Recomputed after round 7 from each family's Lenses line (a script cross-checked every Lenses line, and every family heading, against the Index). A seat from rounds 2 to 7 counts as a lens.
 
 ### Saturated: 3 or more lenses (58)
 
@@ -1618,21 +1707,22 @@ Point no new discovery seat at these.
 |---|---|---|---|
 | F-21 | Component declarations lose the cascade to the library's own shared rules | 13: L03b, L04, L06, L15b, R2-01, R2-02, R2-04, R2-06, R2-08, R3-01, R3-02, R4-02, R6-01 | 20 |
 | F-63 | Docs not derived from the source of record | 12: L01a, L01b, L03a, L04, L05b, L06, L09, L11, L13, L15a, R2-06, R3-01 | 22 |
+| F-42 | Small naming and keyboard seams | 11: L08, R2-04, R2-08, R3-01, R3-02, R4-01, R4-02, R5-02, R6-02, R7-01, R7-02 | 18 |
 | F-70 | Stale bindings no-op silently (E-11): untyped fallthrough, unwitnessed emits, erased declarations | 10: L13, L15a, R2-02, R2-03, R2-05, R2-07, R3-01, R4-01, R5-02, R6-02 | 12 |
 | F-12 | Close records say what the tree does not | 9: L01a, L01b, L04, L05a, L05b, L06, L08, L09, R2-06 | 20 |
-| F-42 | Small naming and keyboard seams | 9: L08, R2-04, R2-08, R3-01, R3-02, R4-01, R4-02, R5-02, R6-02 | 16 |
-| F-43 | An arrival has no single owner: the router seam, pane swaps and mount entrances | 8: L01a, L04, L05a, R2-02, R3-01, R4-01, R4-02, R5-01 | 11 |
+| F-43 | An arrival has no single owner: the router seam, pane swaps and mount entrances | 9: L01a, L04, L05a, R2-02, R3-01, R4-01, R4-02, R5-01, R7-01 | 12 |
 | F-47 | The WebGPU primary does less than the fallback arm | 8: L01b, L04, L05a, L05b, L10, R2-06, R2-09, R4-01 | 8 |
 | F-62 | Meta and provenance re-accreted | 8: L01a, L05a, L05b, L06, L09, L10, L14, R2-07 | 11 |
 | F-68 | Consumers pinned majors back; cures cannot land | 8: L01b, L05b, L06, L10, L11, L15a, R2-03, R2-07 | 16 |
-| F-41 | Toast placement and the announce channel | 7: L01a, L03b, L08, R3-02, R4-01, R5-02, R6-01 | 7 |
+| F-41 | Toast placement, admission and the announce channel | 8: L01a, L03b, L08, R3-02, R4-01, R5-02, R6-01, R7-02 | 8 |
+| F-18 | Dock plate geometry and state residue | 8: L01b, L03b, L05b, R2-01, R2-02, R2-03, R4-02, R7-02 | 9 |
+| F-29 | Density: pads transpose under the width query, corners do not | 8: L03a, L08, L15b, R2-01, R2-08, R4-02, R7-01, R7-02 | 19 |
 | F-01 | The gate register counts seat names, not executables that can go red | 7: L01a, L01b, L02, L05a, L09, L13, R2-05 | 16 |
 | F-16 | The dock extent morph is discontinuous; fission is split-brain | 7: L01b, L03b, L04, L05b, R2-02, R2-03, R2-08 | 13 |
-| F-18 | Dock plate geometry and state residue | 7: L01b, L03b, L05b, R2-01, R2-02, R2-03, R4-02 | 8 |
 | F-23 | Ink calibrated to the token ground, not the painted composite | 6: L03a, L03b, L08, R2-01, R2-08, R3-02 | 10 |
-| F-29 | Density: pads transpose under the width query, corners do not | 6: L03a, L08, L15b, R2-01, R2-08, R4-02 | 16 |
 | F-55 | The colocation chronic: settlement decided, never landed | 6: L01b, L04, L05b, L12, L13, L14 | 7 |
 | F-66 | Published surface with no consumer | 6: L05a, L06, L10, L13, R2-01, R2-06 | 9 |
+| F-19 | Dock keyboard and ARIA ownership | 6: L08, R2-04, R3-01, R3-02, R7-01, R7-02 | 11 |
 | F-02 | Detectors narrower than the claim they carry | 5: L02, L05a, L09, R2-05, R2-06 | 12 |
 | F-04 | The visual suite never entered CI, and the discharge was redefined | 5: L01a, L01b, L02, L05b, L14 | 6 |
 | F-07 | Safari cells deferred behind an environment excuse | 5: L01a, L04, L08, L10, R2-01 | 8 |
@@ -1651,7 +1741,6 @@ Point no new discovery seat at these.
 | F-10 | Budget ratchets as literal pins, unwired | 4: L02, L07, L14, R2-07 | 5 |
 | F-11 | Routing-chain drops | 4: L01a, L01b, L04, L05a | 10 |
 | F-14 | Owner asks laundered through governance waves | 4: L05a, L05b, R2-06, R3-01 | 12 |
-| F-19 | Dock keyboard and ARIA ownership | 4: L08, R2-04, R3-01, R3-02 | 8 |
 | F-20 | Demo shell chrome at the phone cell | 4: L03a, L03b, R2-08, R4-02 | 5 |
 | F-24 | State, value and emphasis carried by one channel that dark or a preference arm removes | 4: L03a, L03b, R2-08, R3-02 | 8 |
 | F-33 | Specimens lay out by viewport, not by container | 4: L03a, L03b, R2-08, R4-02 | 9 |
@@ -1660,6 +1749,7 @@ Point no new discovery seat at these.
 | F-49 | Device-loss subscription per instance on the shared device | 4: L07, R2-01, R2-04, R5-01 | 4 |
 | F-22 | Overlay layering: the content seam carries no z, edge or dismissal contract | 4: L11, R2-04, R4-01, R6-01 | 9 |
 | F-65 | Twin sources of record | 4: L10, R2-04, R2-08, R6-01 | 6 |
+| F-51 | Synchronous costs on the mount path | 4: L07, R2-02, R2-04, R7-02 | 7 |
 | F-05 | Visual harness rot | 3: L01b, L09, L14 | 6 |
 | F-15 | Owner asks reinterpreted or in conflict, unreconciled | 3: L05a, L05b, R2-06 | 5 |
 | F-30 | Radius role: the off-role 12 px rung (a); multi-line holders on the stadium (b) | 3: L01a, R2-03, R2-04 | 3 |
@@ -1668,7 +1758,6 @@ Point no new discovery seat at these.
 | F-35 | Brand face delivery | 3: L03a, L07, R5-01 | 3 |
 | F-36 | The pager worm reads a rem as px | 3: L03b, L15b, R2-01 | 3 |
 | F-45 | Non-composited motion at idle | 3: L05a, L07, R2-09 | 4 |
-| F-51 | Synchronous costs on the mount path | 3: L07, R2-02, R2-04 | 6 |
 | F-52 | Payload does not shake | 3: L07, R2-04, R2-07 | 4 |
 | F-53 | Perf and boot chronics never started | 3: L01b, L05b, R2-09 | 6 |
 | F-56 | Component-owned code in global zones | 3: L05a, L12, L13 | 8 |
@@ -1681,11 +1770,11 @@ F-03 (L12+L13), F-06 (L01a+L01b), F-17 (L05b+R2-04), F-25 (L03a+L03b), F-26 (L03
 
 Of these, 8 have had no member since round 1: F-03, F-06, F-25, F-28, F-31, F-57, F-59, F-60. F-35 left this list in round 5 (it is now saturated); F-78 joined it. F-80 joined it in round 6. F-31 took ledger members in round 6 (census GAP-1), not a lens member.
 
-### Single lens (5)
+### Single lens (7)
 
-F-73 (R2-02), F-74 (R2-02), F-79 (R4-02), F-81 (R6-01) and F-82 (R6-02). F-73 and F-74 rest on round 2's motion strips; no later lens re-stripped them (the sheet is off-screen at HEAD, F-21). F-79 rests on R4-02's captures, F-81 on R6-01's and F-82 on R6-02's, each with its source re-checked here (§2). F-78 left this list in round 5 and F-80 in round 6.
+F-73 (R2-02), F-74 (R2-02), F-79 (R4-02), F-81 (R6-01), F-82 (R6-02), F-83 (R7-01) and F-84 (R7-01). F-73 and F-74 rest on round 2's motion strips; no later lens re-stripped them (the sheet is off-screen at HEAD, F-21). F-79 rests on R4-02's captures, F-81 on R6-01's, F-82 on R6-02's, and F-83 and F-84 on R7-01's, each with its source re-checked here (§2). F-78 left this list in round 5 and F-80 in round 6. No round-7 lens added a member to F-73, F-74, F-79, F-81 or F-82 (R7-01-09 cross-cites F-81 for `useScrollTo`'s `document.getElementById`, read in source, not driven).
 
-### Remaining coverage gaps (after round 6)
+### Remaining coverage gaps (after round 7)
 
 - Safari. 0 cells banked in any round (§6.7). Round 5 adds its own owed cells: bfcache and print on WebKit, and SSR hydration in Safari.
 - Real input. Still no touch device, trackpad, fling or pen. R5-01's long session carried no touch, pen or text entry, and R5-02's phone cells were `isMobile` plus `hasTouch`.
@@ -1694,14 +1783,15 @@ F-73 (R2-02), F-74 (R2-02), F-79 (R4-02), F-81 (R6-01) and F-82 (R6-02). F-73 an
 - Page lifecycle, the remainder. New-headless offers no same-document hidden state, and CDP freeze does not freeze a visible page in this build, so hide and freeze ran through bfcache only. Device sleep was not driven, and the Sheet was not driven through any transition (off-screen at HEAD, F-21).
 - Hosts and media, the remainder. R6-01 drove the shadow root, both iframes, fullscreen, the native top layer, strict CSP, Trusted Types, two apps and print with overlays open. Not driven: SSR `style` attributes under `style-src-attr`, Trusted Types in a cross-origin frame, the eight `document.activeElement` reads other than DataTable's, the inline Command's `useHideOthers` inside a shadow root, print in dark with an overlay open, a real fullscreen exit, and touch or pen across a frame edge.
 - Forms and text entry, the remainder. R6-02 drove form participation, CDP IME in ja, zh and ko, undo, redo and paste, and three NumberField locales. Not driven: real browser autofill (no `Autofill.trigger` headless; `src` has 0 `:autofill` rules, so the UA fill over the glass well is unmeasured), a real OS IME (Safari's commit Enter arrives with `isComposing: false`), the `/data/search` route, and VoiceOver.
-- User-agent features acting on the page. No lens has driven what the browser itself does to a mounted library: find-in-page into collapsed or virtualised content, page translation rewriting text nodes, text selection and copy across glass layers, native drag-and-drop, anchor and fragment navigation with scroll restoration, a user minimum font size, or extension-injected DOM (password managers, grammar tools). Round 7: R7-01.
-- Content extremes. No lens has driven the library at content scale or shape: empty, one and thousands of items in Select, Command, DataTable, SortableList, Carousel and the dock; unbroken and very long labels, emoji ZWJ sequences, combining marks and mixed-direction strings in fixed-size seats; images and icons that fail to load. R4-02 swept spacing, zoom and root size, not content. Round 7: R7-02.
+- User-agent features acting on the page, the remainder. R7-01 drove find through text fragments and `window.find`, a simulated translation, selection and copy, CDP-synthesised drops, history and fragment arrivals, a minimum font size and simulated injection, in Chromium only. Not driven: a typed Ctrl+F with the real find bar; WebKit, Firefox and Safari; real extensions and contenteditable overlays (Grammarly-style); a native selection drag; the Accordion's `forceMount` paint (source only); `scroll-margin` under a fixed consumer dock; the Tabs panels, dock layers, Sheet, menus, configurator and deck against find and copy; reader mode and caret browsing. Round 8: R8-01.
+- UA rendering overrides. No lens has driven what the browser or OS paints over the page unasked: Chrome's Auto Dark Mode, `color-scheme` inference, user stylesheets and default font size, OS text scaling, image blocking, `prefers-reduced-data`, `prefers-contrast: less`, the UA's `::selection`, caret and `accent-color` over glass, spatial navigation. Round 8: R8-02.
+- Content extremes, the remainder. R7-02 drove 0 to 10,000 members and content shape in Chromium. Not driven: the toaster and the emoji and bidi cells at phone width; Select End visibility at 10,000 with a settled read; DockControls as direct run children under a long run; WebKit and Safari.
 - Direction and zoom, the remainder. Sheet sides, detents and F-74's anchored edge are unmeasurable until F-21 lands. Localized strings were a post-mount swap, not a first mount. Zoom was emulated as the viewport it produces. The 20 px root was targeted, not swept.
 - The demo in the preference cells. R4-02 swept all 92 routes, but in direction, zoom, spacing and root-size cells. R3-02 swept only the first 46 routes in PRT, PCM and FC, so the second half remains thin there.
 - GPU. No real low-end GPU, and no WebGPU readback on WebKit.
 - Untouched families. 16 have had no lens member since round 1: F-03, F-04, F-05, F-06, F-11, F-13, F-25, F-28, F-31, F-55, F-56, F-57, F-58, F-59, F-60, F-61 (F-35 left the list in round 5). F-31 has taken inbound rows (O-62, UIA-F-122, UIA-F-27, O-66 §1, O-66a) and census ledger members (GAP-1); F-13 a census decide row (GAP-B2b).
-- Registry candidates. None pending: the ledger census's six registry gaps and its §8 corrections are folded in round 6 (§10.5), with no mint.
-- Evidence custody. Round-5 and round-6 captures are git-ignored like rounds 2 to 4, with each seat's probe scripts copied beside them (`captures/R5-0x/probes/`, `captures/R6-01/probes/`, and the consumer sources under each seat's `harness/`). The directory still lives on one disk (P-2).
+- Registry candidates. None pending: the ledger census's six registry gaps and its §8 corrections are folded in round 6 (§10.5), with no mint; round 7's six proposed families are ruled in §11.3.
+- Evidence custody. Round-5 to round-7 captures are git-ignored like rounds 2 to 4, with each seat's probe scripts copied beside them (`captures/R5-0x/probes/`, `captures/R6-01/probes/`, `captures/R7-0x/probes/`, and the consumer sources under each seat's `harness/`). The directory still lives on one disk (P-2).
 
 ## 4. Round-2 proposal (as proposed; §6.1 maps it to the seats that ran)
 
@@ -2245,3 +2335,89 @@ Two fresh, independent lenses, at most 2 seats, each on an axis no lens has driv
 | R7-02 | Content extremes: the F-76, F-29, F-30, F-16, F-51 and F-40 neighbourhoods | Mount each collection control at empty, one, typical and 10,000 items: Select, Command (inline and dialog), DataTable, SortableList, Carousel, PagerDots, Tabs, ToggleGroup, the dock (1 and 40 seats) and Toaster (50 queued). Record the empty state, time to first paint and to interactive, scroll and keyboard reach to the last item, typeahead, and memory after unmount. Then content shape in fixed-size seats: an unbroken 200-character label, emoji ZWJ sequences and combining marks, mixed-direction strings in an LTR and an RTL document, a missing or failing icon or image, and `null`, `undefined` and `NaN` passed to value props. Per cell, record layout overflow (`scrollWidth` against `clientWidth`), truncation and its accessible name, the AX tree, console warnings and errors, and the settled paint, each at least twice |
 
 If round 7 mints none, the registry has its first clean pass, and the set closes on a second clean pass or on an owner ruling. If it mints, the same test repeats with at most 2 seats aimed where it minted.
+
+## 11. Round 7
+
+Folded at `71f2ba45`, 2026-09-24. Both seats read at `844eddc1`, and HEAD moved to `da9cc649` and `71f2ba45` while they ran and while this seat folded; every commit between is docs-only, and `src` and `demo` are byte-identical to the published 10.0.1. Round 7 is the fifth stability pass. The fold is recorded once: in each family's **Round 7** bullets and corrections, in the new families F-83 and F-84, in §2, in §3 (recomputed), and here. No inbound row landed after round 6, so `INBOUND-MAP.md` takes no round-7 section.
+
+### 11.1 Seats as run
+
+§10.9 proposed two seats, and both ran as proposed, in sequence on one browser seat (P-8), each against the HEAD tarball (sha256 `de1bfe9a…8c05`, the registry's 10.0.1 bytes) in a scratch Vite consumer, with the built demo served beside it. Every probe is a Playwright script. Neither seat called `getContext()` on a canvas.
+
+| id | lens | cells |
+|---|---|---|
+| R7-01 | User-agent features acting on a mounted library: find and text fragments into closed disclosures, an off-snap Carousel member, collapsed dock layers and a virtual window; a simulated page translation followed by interaction and unmount; selection and copy across the typewriter, SortableList, the Chip and whole pages; CDP-synthesised text and file drops; Back, Forward and fresh fragment loads; a minimum font size of 20 and 24 px; extension-style injection into an Input, a dock run and a Carousel strip | Chromium headless shell, plus `channel: "chromium"` for the minimum-font cells (the headless shell ignores the preference); every behavioural cell at least twice; load 18-27 |
+| R7-02 | Content extremes: 0, 1, 8 and 10,000 members in Select, Command inline and dialog, DataTable, SortableList, Carousel, PagerDots, SegmentedTabs, ToggleGroup, the dock (1 and 40 seats) and a 50-toast burst; content shape in fixed seats (a 200-character token, ZWJ and combining sequences, bidi in LTR and RTL documents, a failing image, `null`, `undefined` and `NaN`); memory across mount and unmount | Chromium headless shell; two passes per cell (the 60 shape cells differ in 0 measurements); timing findings rest on growth ratios; load 9.9-37.3 |
+
+Seats used: 38 across rounds 1 to 7. The formation cursor records rounds 5 and later as a deliberate overrun for the stability law.
+
+Gaps the seats declared, carried into §3: no WebKit, Firefox or Safari cell; no typed Ctrl+F (text fragments and `window.find` stand in); no real extension or contenteditable overlay; native selection drags did not start headless (drops were CDP-synthesised); the Accordion `forceMount` paint is from source; `scroll-margin` under a fixed consumer dock was not driven; Select's End visibility at 10,000 items was measured 250 ms after the key only; the toaster at phone width and emoji and bidi cells at phone width were not run.
+
+### 11.2 Counts
+
+- Findings: **18**. Per severity: BLOCKER 0 · HIGH 5 · MED 11 · LOW 2.
+- Relation as the seats claimed it: CONFIRMS 1 · EXTENDS 7 · NEW 10 · REFUTES 0.
+- Folded into existing families: **13**: every CONFIRMS and EXTENDS row at the seat's own placement (8), and five seat-NEW rows (R7-01-10, R7-01-11, R7-02-06 and R7-02-07 into registered families; R7-01-03 into the new F-83).
+- Genuinely new families minted: **2** (F-83 with 3 members, F-84 with 3), both from R7-01. The seat proposed six (F-83 to F-88); four fold (§11.3). R7-02 minted **0**, and the inbound map minted **0** (§11.5).
+- Refuted claims: **0**. Rejected whole: 0. Four relation claims narrowed (§2).
+- Families touched: 7 of the 82 (F-18, F-19, F-29, F-41, F-42, F-43, F-51), plus the two new ones. No family changes its maximum severity. F-41 is retitled.
+- Re-checks at `71f2ba45`: all 5 HIGH rows, all 10 seat-NEW rows, and four of the five remaining MED rows (§2).
+
+| seat | findings | BLOCKER | HIGH | MED | LOW | CONFIRMS | EXTENDS | NEW | REFUTES |
+|---|---|---|---|---|---|---|---|---|---|
+| R7-01 | 11 | 0 | 3 | 7 | 1 | 0 | 3 | 8 | 0 |
+| R7-02 | 7 | 0 | 2 | 4 | 1 | 1 | 4 | 2 | 0 |
+| **all** | **18** | **0** | **5** | **11** | **2** | **1** | **7** | **10** | **0** |
+
+Placement: F-18 1 · F-19 3 · F-29 3 · F-41 1 · F-42 2 · F-43 1 · F-51 1 · F-83 3 · F-84 3 (18 assigned, 0 duplicates).
+
+### 11.3 Seat-NEW rows, and the placements weighed
+
+Each seat-NEW row was tested against every registered mechanism statement, the widenings of rounds 2 to 6 included, and against every earlier member where a statement is short. The rule is unchanged: a row folds when a family's mechanism, as stated or as widened, names its cause; it mints when the only matching statement is scoped to another surface whose wave cannot carry the cure.
+
+| row(s) | sev | seat's claim | ruling | home | reason |
+|---|---|---|---|---|---|
+| R7-01-01, -02 | HIGH, MED | NEW (F-83: collapsed or off-screen content withheld from the UA's find machinery) | **minted** | F-83 | no family names the platform's hidden state or its reveal path; the registry held 0 `until-found`, `beforematch` or find-in-page rows outside the round-7 charter. F-82 was weighed first, because `beforematch` is a platform write that must reach the model: F-82's wave is a form participation seam per control and cannot give a disclosure or a Carousel member a closed state the platform can search. F-70 was weighed for the stripped `unmountOnHide`: the strip is deliberate code, not an untyped binding, and the cure is the closed rung, not a type surface. F-21 (containment) and F-76 (extent) own geometry, not what the UA can reach. F-40's two channels are for the current item; F-19's member set is how the index is resolved, not whether the non-current members are reachable |
+| R7-01-03 | HIGH | NEW (F-84: closed state carried only by an exit animation's last frame) | **folded** | F-83 | the seat's own disposition makes it a W-FINDABLE row. The closed disclosure has no rest rule because the library expresses closed by unmounting; with `forceMount` that route is gone and nothing else says closed. The cure is the same closed rung (`hidden="until-found"` whether mounted or not). F-78 was weighed: its statement is the interruption of a transition pair, and this row has no interruption; W-INTERRUPT's disclosure re-target lands on the rung F-83 defines, and the two waves are cross-cited |
+| R7-01-04, -05, -06 | MED, MED, MED | NEW (F-85: presentational text copies; F-86: the no-select register on content) | **minted once** | F-84 | selection, copy, find and translation read the DOM's text, and the library states which text is content in neither direction: presentation is exposed (the typewriter's copies and cursor glyph) and content is withheld (`user-select: none` on the SortableList row and the static Chip). One register and one sweep carry both directions, so the seat's two families are one. F-76 keeps the typewriter's extent and takes R7-01-05's spill as a cross-cite (not a second count); F-41's two DOM toast copies are the announce channel's; F-65's twins are authored sources; F-42 names controls for the AX tree, which these rows leave intact |
+| R7-01-10 | MED | NEW (F-87: destinations without link semantics) | **folded** | F-42 | L08-19, in F-42 since round 1, is the same mechanism on the ToC ("in-page navigation built from buttons, not links or a tree", cure: anchors) and R2-04-13 confirmed it; the shell's route destinations widen it. The seat weighed F-19 and F-20 only |
+| R7-01-11 | LOW | NEW (F-88), may fold into a content family | **folded** | F-29 | R7-02 registered no family. F-29's "literal controls ride other axes" names the cause: a fixed `rem` or `px` seat around text that a user setting scales on its own axis. W-DENSITY-DECIDE's `min-block-size` rule carries the cure |
+| R7-02-06 | MED | NEW (toast store admission; ride W-TOAST beside F-41) | **folded** | F-41 | R4-01-19 already placed the module-global store in F-41, and W-TOAST owns the store; the lost toasts are also lost announcements, which is the announce channel. F-76 owns the stack's insertion geometry and F-78 an interrupted transition, and a splice is neither. F-41 is retitled to name admission |
+| R7-02-07 | LOW | NEW (the degenerate count) | **folded** | F-42 | R4-02-14 is the PagerDots half of the same row on the same lines, filed in F-42 in round 4. The dock plate, the Select empty slot and the Carousel `undefined` model widen it |
+| R7-01-07, R7-01-08, R7-02-01 | HIGH, MED, HIGH | EXTENDS F-19 | kept | F-19 | `seatsOf = run.children` and its CSS twin; R7-01-08 carries the same resolution into the Carousel and the deck snap engine, and the round-7 correction widens the mechanism to member sets resolved from element children, with the wave's one marker-based query serving all three |
+| R7-01-09 | MED | EXTENDS F-43 | kept | F-43 | the arrival owner, for scroll position and the fragment target |
+| R7-02-02 | HIGH | CONFIRMS F-18 | kept | F-18 | the 50% rest cap at the count axis |
+| R7-02-03 | MED | EXTENDS F-51 | kept | F-51 | a per-item scan on the mount path; the family gains it as a fifth cost |
+| R7-02-04, -05 | MED, MED | EXTENDS F-29 | kept | F-29 | R4-02-15's row budget on the content and count axes |
+
+### 11.4 New families
+
+- **F-83** (band E, HIGH). Closed and off-screen content is withheld from the platform's reveal machinery. The disclosures strip reka's `until-found` opt-in, the Carousel makes off-snap members inert, and a force-mounted disclosure has no closed rule, so find and text fragments cannot reach closed content, and force-mounted closed content paints as open. Three members, from R7-01.
+- **F-84** (band E, MED). What text is content is not stated to the user agent. The typewriter hands selection, find and translation three copies of its phrase and a cursor glyph, and `user-select: none` withholds the SortableList row and the static Chip. Three members, from R7-01.
+
+### 11.5 The inbound map
+
+`INBOUND.md` was re-read at `71f2ba45`. Its last row is O-68, mapped in round 6, and its corrections paragraph is unchanged since round 5's mapping of it. No row is missing from `INBOUND-MAP.md`, so the map takes no round-7 section: **0** rows mapped, **0** new families from inbound. The map holds **370** rows: FAMILY 297 · CURED-AT-HEAD 47 · CONSUMER-SIDE 20 · NOT-REPRODUCED 6 · NEW 0.
+
+### 11.6 Examined and not filed
+
+- R7-01, clean: an external text drop onto Input writes the DOM and the model with `input` fired; file drops onto Input, a SortableList row or a grip neither navigate nor change the model. A password-manager-style focusable icon injected beside an Input moves no rect, and the shortcut registry correctly fires on it (it is not editable) and not on typing in the Input. Translation dropped no models and logged no errors through interaction and unmount.
+- R7-01, not filed: the collapsed dock layers are inert crossfade faces at opacity 0, which is chrome, not document content; the demo's virtual section window cannot find an unrendered section, which is demo-owned and inherent to windowing; the `/display/buttons` Delete buttons already spill 15 px at the default size, which is F-33's specimen layout.
+- R7-02, not filed: memory after unmount is flat; the first reading's retention was Playwright's undisposed ElementHandles, shown by a heap retainer path, and six overlay cells re-run with locator waits hold DOM nodes flat across four cycles. Select and Command at 10,000 items are slow upstream (raw reka Select 7.5-8.4 s to first paint against glass-ui's 8.8-9.5 s; Command filtering is reka Combobox), a scale ceiling to document or an ask to reka, not a glass-ui mechanism. Keyboard reach and typeahead are correct at every size (Select End at 10k was read 250 ms after the key only, unverified). ZWJ, combining and bidi strings keep their AX names and log nothing. A failing dock icon keeps its 40×40 seat and its name. `null`, `undefined` and `NaN` on Select, Command, SegmentedTabs and ToggleGroup warn nothing and commit on the first interaction. 0 console warnings or errors in any count, shape or value cell.
+
+### 11.7 Stability
+
+**Not stable.** Round 7, the fifth stability pass, minted **2** genuinely new families, both from R7-01: F-83 (closed and off-screen content withheld from the platform's reveal machinery) and F-84 (the text register not stated to the user agent). The seat proposed six; four fold by mechanism: its F-84 into F-83, its F-86 into its F-85 as one register (numbered F-84 here), its F-87 into F-42 and its F-88 into F-29. R7-02 minted **0**: its content and count extremes landed in F-18, F-19, F-29, F-41, F-42 and F-51, every one a registered mechanism met on a new axis. The inbound map minted **0**. Rounds 3 to 7 each minted, so the two-consecutive-clean count has not started, and round 8 can be, at most, the first clean pass.
+
+The pattern holds for a sixth round, and it narrows. The lens that re-measured known surfaces at a new scale (R7-02) minted nothing, which is the first round-7 evidence that the registered mechanisms cover the library's own geometry, keyboard, store and mount path. The lens on a new actor minted: the user agent reading the DOM for its own features. Both mints share round 6's shape, the platform holding an authority the library does not address: the platform's hidden vocabulary, which the library replaces with unmounting and `inert` (F-83), and the platform's reading of text, which the library never tells what is content (F-84). R7-01's own folds (F-19's foreign sibling, F-43's fragment arrival, F-42's destinations) show the same edge also reaching registered families.
+
+### 11.8 Round 8 proposal
+
+Two seats, aimed where round 7 minted (the user agent acting on library-owned DOM), each on cells no lens has driven. Both hold one browser seat in sequence (P-8), mount the HEAD tarball in a scratch consumer, observe by screenshot, computed style, CDP and the AX tree only, never call `getContext()` on a live canvas, copy their probes beside their captures, and file each defect by mechanism in a registered family (F-83 and F-84 included), or as NEW with its capture on disk and a source cite. Safari stays owner-blocked (§6.7), and VoiceOver stays an owner action (§9.1).
+
+| id | target | charter |
+|---|---|---|
+| R8-01 | The hidden-state and text-register census: the F-83, F-84, F-40, F-41 and F-19 neighbourhoods | Census every way `src` hides, collapses, windows, duplicates or decorates content (unmount, `v-if`/`v-show`, `inert`, `aria-hidden`, `visibility`, opacity 0, `display: none`, `content-visibility`, clip, `sr-only`, generated content, `user-select`), component by component, and drive each against every UA feature that reads the DOM: a headed Ctrl+F with the real find bar, text fragments, select-all copy and paste into a rich editor, page translation, reader mode, caret browsing (F7), and the AX tree. Tabs panels, dock layers, the Sheet, menus, tooltips, the configurator, the deck and the substrates are the surfaces round 7 left undriven. Per cell, the expected reveal, copy or translation against the settled state, twice, in Chromium and Playwright Firefox |
+| R8-02 | UA-level rendering and input overrides: the F-23, F-24, F-29, F-39, F-65 and F-77 neighbourhoods | Drive the overrides a browser or OS applies to a page without the page asking: Chrome's Auto Dark Mode for web contents (forced dark over a light page), `color-scheme` inference, a user stylesheet (font family, line height and word spacing past 1.4.12), a user default font size (not the minimum), OS text scaling and `text-size-adjust`, image blocking, `prefers-reduced-data`, `prefers-contrast: less`, the UA's own `::selection`, caret and `accent-color` over glass, and spatial navigation. Per cell, the glass plates, ink, rings and seat geometry against the expected paint, in both themes, twice |
+
+If round 8 mints none, the registry has its first clean pass, and the set closes on a second clean pass or on an owner ruling. If it mints, the same test repeats with at most 2 seats aimed where it minted.
