@@ -1,0 +1,141 @@
+{
+ "note": "F-2's 20-move sample. 18 are colocations F-7 proposes at HEAD (class `move`, one target, re-derived by `placement.mjs` at HEAD 0a2d8bd8; the R-9 skeleton row left out); 2 are stylesheet moves that exercise the published cascade: the S-2 terminal (`accessibility.css`) and a sheet the ./styles aggregator imports. Every scan delta is declared per scanner with the reason its verdict does not change; the post-move test run checks each reason.",
+ "moves": [
+  {
+   "from": "src/composables/search/useFuzzySearch.ts",
+   "to": "src/components/dock/composables/useFuzzySearch.ts"
+  },
+  {
+   "from": "src/composables/dom/useClipboard.ts",
+   "to": "src/components/easing/useClipboard.ts"
+  },
+  {
+   "from": "src/components/switch/Switch.vue",
+   "to": "src/components/labeled-field/Switch.vue"
+  },
+  {
+   "from": "src/components/table/Table.vue",
+   "to": "src/components/data-table/Table.vue"
+  },
+  {
+   "from": "src/components/table/TableBody.vue",
+   "to": "src/components/data-table/TableBody.vue"
+  },
+  {
+   "from": "src/components/table/TableEmpty.vue",
+   "to": "src/components/data-table/TableEmpty.vue"
+  },
+  {
+   "from": "src/components/table/TableHead.vue",
+   "to": "src/components/data-table/TableHead.vue"
+  },
+  {
+   "from": "src/components/table/TableHeader.vue",
+   "to": "src/components/data-table/TableHeader.vue"
+  },
+  {
+   "from": "src/components/fourier-field/shaders/compute.wgsl.ts",
+   "to": "src/components/fourier-field/renderer/compute.wgsl.ts"
+  },
+  {
+   "from": "src/components/fourier-field/shaders/render.wgsl.ts",
+   "to": "src/components/fourier-field/renderer/render.wgsl.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/keyboard.ts",
+   "to": "src/components/typewriter/composables/keyboard.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/timing.ts",
+   "to": "src/components/typewriter/composables/timing.ts"
+  },
+  {
+   "from": "src/composables/glass/useGlassBackdropLuminance.ts",
+   "to": "src/components/dock/composables/useGlassBackdropLuminance.ts"
+  },
+  {
+   "from": "src/composables/motion/scroll/useScrollChrome.ts",
+   "to": "src/components/dock/composables/useScrollChrome.ts"
+  },
+  {
+   "from": "src/composables/motion/scroll/useScrollProgress.ts",
+   "to": "src/components/aurora/composables/useScrollProgress.ts"
+  },
+  {
+   "from": "src/components/surface/Surface.vue",
+   "to": "src/components/card/Surface.vue"
+  },
+  {
+   "from": "src/composables/dom/useDragVelocity.ts",
+   "to": "src/components/slider/useDragVelocity.ts"
+  },
+  {
+   "from": "src/components/dock/composables/useDockHold.ts",
+   "to": "src/components/slider/useDockHold.ts"
+  },
+  {
+   "from": "src/styles/accessibility.css",
+   "to": "src/styles/modes/accessibility.css"
+  },
+  {
+   "from": "src/components/card/scroll.css",
+   "to": "src/components/card/styles/scroll.css"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/components/${parts[2]}`",
+   "all": true,
+   "reason": "module labels derived from paths, not reads"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/${parts[2]}`",
+   "all": true,
+   "reason": "module labels derived from paths, not reads"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/${parts[1]}/_root`",
+   "all": true,
+   "reason": "module labels derived from paths, not reads"
+  },
+  {
+   "scanner": "scripts/import-dag.mjs",
+   "spec": "`src/styles/${parts[2]}`",
+   "all": true,
+   "reason": "module labels derived from paths, not reads"
+  },
+  {
+   "scanner": "scripts/lib/subpath-policy.mjs",
+   "spec": "`src/components/${d}/index.ts`",
+   "all": true,
+   "reason": "reads only first-level <dir>/index.ts; no index.ts moves (row F-3 deletes this scanner)"
+  },
+  {
+   "scanner": "tests/components/fourier-field/FourierField.smoke.test.ts",
+   "spec": "join(SRC, \"components/fourier-field\", file)",
+   "all": true,
+   "reason": "reads clock.ts and useFourierField.ts only; neither moves"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "all": true,
+   "reason": "resolves the @glass specifiers it finds; the engine rewrites every specifier"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "all": true,
+   "reason": "per-component rung census feeding an it.fails and a >0 discrimination check; no count is frozen"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "all": true,
+   "reason": "the same census's per-dir walk"
+  }
+ ]
+}

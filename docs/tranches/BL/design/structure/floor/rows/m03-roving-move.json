@@ -1,0 +1,47 @@
+{
+    "note": "floor row F-8 (second half): the M03 cure. useTabRovingFocus is read by tabs and by motion/morph's useSelectionGroup; F-7 places a two-unit file whose nearest common ancestor is a zone root in the global zone, and B's inversion names motion/morph. Applied with move.mjs.",
+    "moves": [
+        {
+            "from": "src/components/tabs/composables/useTabRovingFocus.ts",
+            "to": "src/composables/motion/morph/useTabRovingFocus.ts"
+        }
+    ],
+    "scanDeltas": [
+        {
+            "scanner": "tests/styles/engage-ladder.test.ts",
+            "spec": "join(COMPONENTS, entry)",
+            "all": true,
+            "reason": "the census reads each component dir's text; the file carries no rung token (grep 0), so tabs' rung verdict is unchanged"
+        },
+        {
+            "scanner": "tests/styles/engage-ladder.test.ts",
+            "spec": "join(COMPONENTS, name)",
+            "all": true,
+            "reason": "the same census, its per-dir walk"
+        },
+        {
+            "scanner": "scripts/import-dag.mjs",
+            "spec": "`src/components/${parts[2]}`",
+            "all": true,
+            "reason": "module labels derived from paths; the file's label moves from src/components/tabs to src/composables/motion, which is the M03 cut itself"
+        },
+        {
+            "scanner": "scripts/import-dag.mjs",
+            "spec": "`src/${parts[1]}/${parts[2]}`",
+            "all": true,
+            "reason": "module labels, as above"
+        },
+        {
+            "scanner": "scripts/import-dag.mjs",
+            "spec": "`src/${parts[1]}/_root`",
+            "all": true,
+            "reason": "module labels, as above"
+        },
+        {
+            "scanner": "tests/gates/orphan-css-partial.test.ts",
+            "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+            "all": true,
+            "reason": "resolves the @glass specifiers it finds; the engine rewrites every specifier"
+        }
+    ]
+}

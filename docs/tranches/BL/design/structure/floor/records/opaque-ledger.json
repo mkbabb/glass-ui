@@ -1,0 +1,167 @@
+{
+    "$schema": "opaque-ledger/1",
+    "note": "Every reference the graph cannot resolve at HEAD, declared with its reason. Matching is by (file, kind, spec). An entry that matches nothing fails the graph (ledger-stale).",
+    "entries": [
+        {
+            "file": "scripts/import-dag.mjs",
+            "kind": "path-literal",
+            "spec": "src/components/_root",
+            "class": "fixture",
+            "reason": "synthetic `_root` node label of the import-dag report, not a file"
+        },
+        {
+            "file": "scripts/import-dag.mjs",
+            "kind": "path-literal",
+            "spec": "src/styles/_root",
+            "class": "fixture",
+            "reason": "synthetic `_root` node label of the import-dag report, not a file"
+        },
+        {
+            "file": "scripts/lib/canon-doc.mjs",
+            "kind": "path-literal",
+            "spec": "src/components/handmark/README.md",
+            "class": "stale",
+            "reason": "canon-doc.mjs is dead (REGISTRY S-15) and names a README deleted at HEAD; the E-7 delete row clears it"
+        },
+        {
+            "file": "scripts/lib/subpath-policy.mjs",
+            "kind": "path-literal",
+            "spec": "src/this-source-was-deleted.ts",
+            "class": "fixture",
+            "reason": "PHANTOM_SOURCE: the --break-fidelity self-test names a deleted source on purpose"
+        },
+        {
+            "file": "tests-visual/webgpu-everywhere.spec.ts",
+            "kind": "dynamic",
+            "spec": "path",
+            "class": "opaque",
+            "reason": "page.evaluate imports each shader module from a literal map two lines up (both literals are graph edges)"
+        },
+        {
+            "file": "tests/gates/boot-graph.test.ts",
+            "kind": "path-literal",
+            "spec": "demo/shell/Nested.vue",
+            "class": "fixture",
+            "reason": "a planted or synthetic path inside a gate self-test"
+        },
+        {
+            "file": "tests/gates/orphan-css-partial.test.ts",
+            "kind": "path-literal",
+            "spec": "join(REPO_ROOT, \"src/styles/nested-leaf.css\")",
+            "class": "fixture",
+            "reason": "a planted or synthetic path inside a gate self-test"
+        },
+        {
+            "file": "tests/gates/orphan-css-partial.test.ts",
+            "kind": "path-literal",
+            "spec": "join(SRC, \"components\", \"_shared\", \"field\", \"__dead_orphan__.css\")",
+            "class": "fixture",
+            "reason": "a planted or synthetic path inside a gate self-test"
+        },
+        {
+            "file": "tests/gates/orphan-css-partial.test.ts",
+            "kind": "path-literal",
+            "spec": "join(SRC, \"styles\", \"planted-orphan.css\")",
+            "class": "fixture",
+            "reason": "a planted or synthetic path inside a gate self-test"
+        },
+        {
+            "file": "tests/gates/orphan-css-partial.test.ts",
+            "kind": "path-literal",
+            "spec": "src/styles/planted-orphan.css",
+            "class": "fixture",
+            "reason": "a planted or synthetic path inside a gate self-test"
+        },
+        {
+            "file": "tests/gates/overfit-structure.test.ts",
+            "kind": "path-literal",
+            "spec": "src/a.ts",
+            "class": "fixture",
+            "reason": "a planted or synthetic path inside a gate self-test"
+        },
+        {
+            "file": "tests/gates/overfit-structure.test.ts",
+            "kind": "path-literal",
+            "spec": "src/w.ts",
+            "class": "fixture",
+            "reason": "a planted or synthetic path inside a gate self-test"
+        },
+        {
+            "file": "tests/gates/overfit-structure.test.ts",
+            "kind": "path-literal",
+            "spec": "src/x.ts",
+            "class": "fixture",
+            "reason": "a planted or synthetic path inside a gate self-test"
+        },
+        {
+            "file": "tests/gates/overfit-structure.test.ts",
+            "kind": "path-literal",
+            "spec": "src/y.ts",
+            "class": "fixture",
+            "reason": "a planted or synthetic path inside a gate self-test"
+        },
+        {
+            "file": "tests/gates/overfit-structure.test.ts",
+            "kind": "path-literal",
+            "spec": "src/z.ts",
+            "class": "fixture",
+            "reason": "a planted or synthetic path inside a gate self-test"
+        },
+        {
+            "file": "tests/scripts/profile-bundle-value-js.test.ts",
+            "kind": "path-literal",
+            "spec": "src/leaf.ts",
+            "class": "fixture",
+            "reason": "a planted or synthetic path inside a gate self-test"
+        },
+        {
+            "file": "tests/styles/spring-authority.test.ts",
+            "kind": "path-literal",
+            "spec": "join(\"src\", \"planted.ts\")",
+            "class": "fixture",
+            "reason": "a planted or synthetic path inside a gate self-test (two sites, one spelling)"
+        },
+        {
+            "file": "tsconfig.build.json",
+            "kind": "json-glob",
+            "spec": "src/**/*.spec.ts",
+            "class": "empty-glob",
+            "reason": "declaration-build exclude for colocated tests; empty until R-3 colocates tests under src/**/__tests__/"
+        },
+        {
+            "file": "tsconfig.build.json",
+            "kind": "json-glob",
+            "spec": "src/**/*.test.ts",
+            "class": "empty-glob",
+            "reason": "declaration-build exclude for colocated tests; empty until R-3 colocates tests under src/**/__tests__/"
+        },
+        {
+            "file": "tsconfig.build.json",
+            "kind": "json-glob",
+            "spec": "src/**/__tests__/**",
+            "class": "empty-glob",
+            "reason": "declaration-build exclude for colocated tests; empty until R-3 colocates tests under src/**/__tests__/"
+        },
+        {
+            "file": "vite.style-assets.ts",
+            "kind": "require",
+            "spec": "`${packageName}/package.json`",
+            "class": "opaque",
+            "reason": "resolves an installed package bin by name (typescript, vue-tsc); a package lookup, not a repo path"
+        },
+        {
+            "file": "vitest.config.ts",
+            "kind": "glob-literal",
+            "spec": "scripts/**/*.{test,spec}.{ts,tsx}",
+            "class": "empty-glob",
+            "reason": "vitest include pattern that matches no file at HEAD (dead include)"
+        },
+        {
+            "file": "vitest.config.ts",
+            "kind": "glob-literal",
+            "spec": "tests/**/*.{test,spec}.vue",
+            "class": "empty-glob",
+            "reason": "vitest include pattern that matches no file at HEAD (dead include)"
+        }
+    ]
+}
