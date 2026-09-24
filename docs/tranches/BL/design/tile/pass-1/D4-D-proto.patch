@@ -1,0 +1,503 @@
+diff --git a/demo/stories/forms/toggle.vue b/demo/stories/forms/toggle.vue
+index 23f6d7ac..00352add 100644
+--- a/demo/stories/forms/toggle.vue
++++ b/demo/stories/forms/toggle.vue
+@@ -18,6 +18,13 @@ const density = ref<string>("comfortable");
+ const densityOptions = ["Compact", "Comfortable", "Spacious", "Touch", "Presentation"];
+ const region = ref<string>("");
+ const frozen = ref<string>("balanced");
++const preset = ref<string>("gentle");
++const presets = [
++    { name: "gentle", readout: "0.50 s · ζ 1.00" },
++    { name: "snappy", readout: "0.25 s · ζ 0.85" },
++    { name: "bouncy", readout: "0.40 s · ζ 0.55" },
++    { name: "wobbly", readout: "0.60 s · ζ 0.35" },
++];
+ </script>
+ 
+ <template>
+@@ -81,6 +88,19 @@ const frozen = ref<string>("balanced");
+             <p class="text-mono-small text-muted-foreground">density · {{ density }}</p>
+         </StorySection>
+ 
++        <StorySection
++            heading="The tile"
++            blurb="shape=&quot;cell&quot; is declared once, at the group: options that hold more than one line sit on the field rung as an auto-fill grid, the selected one carried by a full-ink edge, and all four arrows walk the grid by geometry."
++        >
++            <ToggleGroup v-model="preset" type="single" shape="cell" aria-label="Spring preset">
++                <ToggleGroupItem v-for="p in presets" :key="p.name" :value="p.name">
++                    <span class="text-small capitalize">{{ p.name }}</span>
++                    <span class="text-mono-small text-muted-foreground">{{ p.readout }}</span>
++                </ToggleGroupItem>
++            </ToggleGroup>
++            <p class="text-mono-small text-muted-foreground">preset · {{ preset }}</p>
++        </StorySection>
++
+         <StorySection
+             heading="Invalid and disabled"
+             blurb="One invalid grammar (data-invalid + aria-invalid on the group) and the disabled axis, at the group and at a single item."
+diff --git a/src/components/tabs/composables/useTabRovingFocus.ts b/src/components/tabs/composables/useTabRovingFocus.ts
+index 3dae4ced..df718331 100644
+--- a/src/components/tabs/composables/useTabRovingFocus.ts
++++ b/src/components/tabs/composables/useTabRovingFocus.ts
+@@ -45,6 +45,13 @@ export interface UseTabRovingFocusParams<V extends SelectionValue = string> {
+     stripValue: ComputedRef<V | undefined>;
+     /** True for the vertical (block-axis) orientation — flips the arrow axis. */
+     isVertical: ComputedRef<boolean>;
++    /**
++     * True when the items can lay out in two dimensions (a wrapping row, a grid).
++     * The cross-axis arrows then walk by geometry: to the nearest enabled item in
++     * the adjacent line, closest in the other coordinate. Absent or false, the cross
++     * axis is inert (the tablist model).
++     */
++    grid?: ComputedRef<boolean>;
+     /** Automatic selection-follows-focus or manual Enter/Space activation. */
+     activation: ComputedRef<TabActivation>;
+     /** Per-option button refs, index-aligned to `stripOptions`. */
+@@ -67,6 +74,7 @@ export function useTabRovingFocus<V extends SelectionValue = string>(
+ ): UseTabRovingFocusReturn {
+     const { stripOptions, stripValue, isVertical, activation, buttonRefs, select } =
+         params;
++    const isGrid = computed(() => params.grid?.value ?? false);
+ 
+     // The selected index in the rendered strip. If selection is absent or disabled,
+     // anchor roving focus on the first enabled item; a fully-disabled strip has no
+@@ -156,6 +164,34 @@ export function useTabRovingFocus<V extends SelectionValue = string>(
+         }
+     }
+ 
++    // The cross-axis walk: the nearest enabled item on the adjacent line in `dir`
++    // (+1 down/right, -1 up/left), closest to the origin's centre on the main axis.
++    // Geometry, not a column count, so it holds under auto-fill and resize.
++    function focusCross(fromIdx: number, dir: 1 | -1) {
++        const origin = buttonRefs.value[fromIdx]?.getBoundingClientRect();
++        if (!origin) return;
++        const block = !isVertical.value;
++        const lead = (r: DOMRect) => (block ? r.top + r.height / 2 : r.left + r.width / 2);
++        const main = (r: DOMRect) => (block ? r.left + r.width / 2 : r.top + r.height / 2);
++        const half = (block ? origin.height : origin.width) / 2;
++        let best = -1;
++        let bestLine = Infinity;
++        let bestMain = Infinity;
++        buttonRefs.value.forEach((el, idx) => {
++            if (idx === fromIdx || stripOptions.value[idx]?.disabled) return;
++            const r = el.getBoundingClientRect();
++            const line = (lead(r) - lead(origin)) * dir;
++            if (line <= half) return;
++            const off = Math.abs(main(r) - main(origin));
++            if (line < bestLine - 0.5 || (Math.abs(line - bestLine) <= 0.5 && off < bestMain)) {
++                best = idx;
++                bestLine = line;
++                bestMain = off;
++            }
++        });
++        if (best >= 0) focusOption(best);
++    }
++
+     function onStripKeydown(e: KeyboardEvent) {
+         const targetIndex = buttonRefs.value.indexOf(e.target as HTMLElement);
+         const from =
+@@ -178,6 +214,13 @@ export function useTabRovingFocus<V extends SelectionValue = string>(
+             !isVertical.value &&
+             (computedDirection === "rtl" || declaredDirection === "rtl");
+         const nextDirection: 1 | -1 = rtl ? -1 : 1;
++        const crossNext = isVertical.value ? "ArrowRight" : "ArrowDown";
++        const crossPrev = isVertical.value ? "ArrowLeft" : "ArrowUp";
++        if (isGrid.value && (e.key === crossNext || e.key === crossPrev)) {
++            e.preventDefault();
++            focusCross(from, e.key === crossNext ? 1 : -1);
++            return;
++        }
+         switch (e.key) {
+             case nextKey:
+                 e.preventDefault();
+diff --git a/src/components/toggle-group/ToggleGroup.vue b/src/components/toggle-group/ToggleGroup.vue
+index 6de7049a..e89168ea 100644
+--- a/src/components/toggle-group/ToggleGroup.vue
++++ b/src/components/toggle-group/ToggleGroup.vue
+@@ -39,11 +39,16 @@ import { provideToggleGroupContext, type ToggleItemEntry } from "./context";
+  * no longer happens), the emit pair (`defineModel` — the SegmentedTabs idiom), and
+  * eight props that had zero non-default callers across six repositories. */
+ 
++/** `pill` — one-line options on the stadium, a wrapping row. `cell` — options that
++ *  hold more than one line, on the field rung, laid out as an auto-fill grid. */
++export type ToggleGroupShape = "pill" | "cell";
++
+ export interface ToggleGroupProps extends ControlProps {
+     /** `single` — a one-of-N chooser. `multiple` — N independent toggles. */
+     type: SelectionMode;
+     orientation?: Orientation;
+     size?: ControlSize;
++    shape?: ToggleGroupShape;
+     class?: HTMLAttributes["class"];
+ }
+ 
+@@ -52,6 +57,7 @@ defineOptions({ name: "ToggleGroup" });
+ const props = withDefaults(defineProps<ToggleGroupProps>(), {
+     orientation: "horizontal",
+     size: "md",
++    shape: "pill",
+ });
+ 
+ /* One scalar model for both cardinalities: `single` holds one value, `multiple` an
+@@ -89,6 +95,9 @@ const selection = useSelectionGroup<{ value: SelectionValue; disabled: boolean }
+     model,
+     mode: computed(() => props.type),
+     vertical: computed(() => props.orientation === "vertical"),
++    /* A wrapping row and a cell grid both lay out in two dimensions, so the cross
++     * arrows always walk by geometry; in a single line they find no neighbour. */
++    grid: computed(() => true),
+     /* MODE-DERIVED, never flat. `automatic` activation fires the engine's `select`
+      * on every arrow move, and `select` in `multiple` mode TOGGLES membership — so a
+      * flat `automatic` would have arrows flip every item they crossed. `single` is
+@@ -132,6 +141,7 @@ provideToggleGroupContext({
+     tabindex: (entry) => selection.rovingTabindex(ordered.value.indexOf(entry)),
+     select: (entry) => selection.select(entry.value, ordered.value.indexOf(entry)),
+     disabled: computed(() => props.disabled ?? false),
++    shape: computed(() => props.shape),
+ });
+ </script>
+ 
+@@ -143,6 +153,7 @@ provideToggleGroupContext({
+         :role="selection.groupRole.value"
+         :data-type="props.type"
+         :data-size="props.size"
++        :data-shape="props.shape"
+         :data-orientation="props.orientation"
+         v-bind="controlStateAttrs(props.invalid)"
+         @keydown="selection.onKeydown"
+diff --git a/src/components/toggle-group/ToggleGroupItem.vue b/src/components/toggle-group/ToggleGroupItem.vue
+index d0de9e6c..c733f781 100644
+--- a/src/components/toggle-group/ToggleGroupItem.vue
++++ b/src/components/toggle-group/ToggleGroupItem.vue
+@@ -64,11 +64,33 @@ const entry: ToggleItemEntry = {
+     el: null,
+ };
+ 
++/* A PILL THAT HOLDS TWO LINES IS DECLARED WRONG, AND SAYS SO. The pill does not
++ * soft-wrap (styles.css), but a hard break or a block child still grows it past its
++ * rung into a balloon. DEV-only and non-fatal, like Button's retired-prop voice. */
++let wrongShape: ResizeObserver | null = null;
+ onMounted(() => {
+     entry.el = el.value;
+     group?.register(entry);
++    if (import.meta.env.DEV && group && el.value && typeof ResizeObserver !== "undefined") {
++        let told = false;
++        wrongShape = new ResizeObserver(() => {
++            const host = el.value;
++            if (told || !host || group.shape.value !== "pill") return;
++            const rung = parseFloat(getComputedStyle(host).minBlockSize);
++            if (host.getBoundingClientRect().height <= rung + 1) return;
++            told = true;
++            console.error(
++                `[glass-ui] <ToggleGroupItem value="${String(props.value)}"> holds more than ` +
++                    `one line in a pill group; declare \`shape="cell"\` on the <ToggleGroup>.`,
++            );
++        });
++        wrongShape.observe(el.value);
++    }
++});
++onBeforeUnmount(() => {
++    wrongShape?.disconnect();
++    group?.unregister(entry);
+ });
+-onBeforeUnmount(() => group?.unregister(entry));
+ 
+ const selected = computed(() => group?.isSelected(props.value) ?? false);
+ const isDisabled = computed(() => entry.disabled());
+diff --git a/src/components/toggle-group/context.ts b/src/components/toggle-group/context.ts
+index 4c7c0845..89f26647 100644
+--- a/src/components/toggle-group/context.ts
++++ b/src/components/toggle-group/context.ts
+@@ -42,6 +42,8 @@ export interface ToggleGroupContext {
+     select: (entry: ToggleItemEntry) => void;
+     /** The group's disabled axis, so an item need not read two sources. */
+     disabled: ComputedRef<boolean>;
++    /** The group's declared shape: `pill` items hold one line, `cell` items more. */
++    shape: ComputedRef<"pill" | "cell">;
+ }
+ 
+ const ctx = createOptionalContext<ToggleGroupContext>("glass-ui:toggle-group");
+diff --git a/src/components/toggle-group/index.ts b/src/components/toggle-group/index.ts
+index e1b7b9d5..88dde64e 100644
+--- a/src/components/toggle-group/index.ts
++++ b/src/components/toggle-group/index.ts
+@@ -1,4 +1,8 @@
+-export { default as ToggleGroup, type ToggleGroupProps } from "./ToggleGroup.vue";
++export {
++    default as ToggleGroup,
++    type ToggleGroupProps,
++    type ToggleGroupShape,
++} from "./ToggleGroup.vue";
+ export {
+     default as ToggleGroupItem,
+     type ToggleGroupItemProps,
+diff --git a/src/components/toggle-group/styles.css b/src/components/toggle-group/styles.css
+index d6b2b1cf..d6a13a29 100644
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -79,6 +79,27 @@
+         user-select: none;
+     }
+ 
++    /* THE PILL IS ONE LINE, BY LAW. A stadium whose label wraps grows a balloon
++       (the corner tracks the content), so the pill does not wrap: it takes at most
++       the row, starts its content when it overflows (`safe`), and ellipsizes each
++       label element. Content that needs a second line declares `shape="cell"`. */
++    .toggle-group[data-shape="pill"] .toggle-group__item {
++        max-inline-size: 100%;
++        justify-content: safe center;
++        white-space: nowrap;
++        /* a bare text label is an anonymous flex item `text-overflow` cannot reach:
++           it is clipped at the plate, never run past it */
++        overflow: clip;
++    }
++
++    .toggle-group[data-shape="pill"] .toggle-group__item > :not(svg) {
++        min-inline-size: 0;
++        overflow: hidden;
++        text-overflow: ellipsis;
++        /* the item's `line-height: 1` would shear descenders at the clip edge */
++        padding-block: 0.15em;
++    }
++
+     .toggle-group[data-size="sm"] .toggle-group__item {
+         --toggle-group-item-size: var(--control-h-sm);
+         padding-inline: 0.5rem;
+@@ -115,14 +136,69 @@
+        this lane's to patch locally with a literal. */
+     .toggle-group__item[data-state="on"] {
+         background-color: color-mix(in oklab, var(--foreground) 12%, transparent);
++        /* THE CARRIER THE CONTENT CANNOT ERASE (PORTFOLIO §2.2). A tile's content
++           brings its own ink and weight, so the edge carries: the item's own border
++           at full ink. Full, not `--ink-perimeter`: 0.48 clears 3:1 against the page
++           but not against the sibling's own resting 14% edge on a quiet plate
++           (measured 0 px² of ≥3:1 edge in light). Not `outline` (the ring's), not
++           `box-shadow` (the rim's). */
++        border-color: var(--foreground);
+         color: var(--foreground);
+         font-weight: 600;
+     }
+ 
++    /* The hover answers on the same channel, one rung down: the edge firms from the
++       resting 14% hairline to `--ink-perimeter` (0.48). One ladder on one property:
++       rest 0.14 → hover 0.48 → selected full ink. Fine pointers only (F-77); it is
++       not motion, so PRM keeps it. The state sits in `:where()` so the rule stays
++       at (0,2,0), under the invalid grammar's (0,3,0): validity never yields its
++       edge to a passing pointer. */
++    @media (hover: hover) {
++        .toggle-group__item:where([data-state="off"]:not(:disabled)):hover {
++            border-color: color-mix(in oklab, var(--foreground) calc(var(--ink-perimeter) * 100%), transparent);
++        }
++    }
++
+     .toggle-group__item[data-state="on"]:hover:not(:disabled) {
+         background-color: color-mix(in oklab, var(--foreground) 16%, transparent);
+     }
+ 
++    /* ── THE CELL SHAPE ─────────────────────────────────────────────────────
++       `shape="cell"`: options that hold more than one line. The group becomes an
++       auto-fill grid; the item a start-aligned column on the card pad pair at body
++       leading. The corner is not here: it is the one cell declaration shared with
++       Chip (styles/glass/cell.css). The grid pads by the ring's reach so a scroll
++       port around the group cannot cut the focus ring (2px outline + 2px offset). */
++    .toggle-group[data-shape="cell"] {
++        --toggle-group-cell-min: 10rem;
++        display: grid;
++        grid-template-columns: repeat(
++            auto-fill,
++            minmax(min(var(--toggle-group-cell-min), 100%), 1fr)
++        );
++        inline-size: auto;
++        align-items: stretch;
++        padding: calc(var(--focus-ring-width) + 2px);
++    }
++
++    .toggle-group[data-shape="cell"] .toggle-group__item {
++        flex-direction: column;
++        align-items: stretch;
++        justify-content: flex-start;
++        gap: var(--space-residue);
++        padding: var(--space-atom) var(--space-body);
++        text-align: start;
++        line-height: var(--type-leading-body);
++    }
++
++    .toggle-group[data-shape="cell"][data-size="sm"] .toggle-group__item {
++        padding: var(--space-atom);
++    }
++
++    .toggle-group[data-shape="cell"][data-size="lg"] .toggle-group__item {
++        padding: var(--space-body) var(--space-family);
++    }
++
+     .toggle-group__item:disabled {
+         opacity: var(--opacity-disabled);
+         cursor: not-allowed;
+diff --git a/src/composables/motion/morph/useSelectionGroup.ts b/src/composables/motion/morph/useSelectionGroup.ts
+index cdf65e66..4e6b88de 100644
+--- a/src/composables/motion/morph/useSelectionGroup.ts
++++ b/src/composables/motion/morph/useSelectionGroup.ts
+@@ -76,6 +76,8 @@ export interface UseSelectionGroupParams<O extends SelectionOption> {
+     role?: ComputedRef<SelectionRole> | SelectionRole;
+     /** True for the vertical (block-axis) orientation. */
+     vertical?: ComputedRef<boolean>;
++    /** True when the items lay out in two dimensions; the cross-axis arrows walk by geometry. */
++    grid?: ComputedRef<boolean>;
+     /** Whether roving focus selects immediately. Defaults to automatic. */
+     activation?: ComputedRef<TabActivation> | TabActivation;
+     /** The container scroller root (observed by the indicator's ResizeObserver). */
+@@ -244,6 +246,7 @@ export function useSelectionGroup<O extends SelectionOption>(
+         stripOptions: options,
+         stripValue: indicatorModel,
+         isVertical,
++        grid: params.grid,
+         activation,
+         buttonRefs,
+         select,
+diff --git a/src/styles/glass.css b/src/styles/glass.css
+index f4af6c1e..f68f1dfa 100644
+--- a/src/styles/glass.css
++++ b/src/styles/glass.css
+@@ -121,6 +121,7 @@
+    KEEP-CENTRAL per COLOCATION CL-3 — glass-atom is a MIXED register (folding strands
+    `.cartoon-cast`). */
+ @import "./glass/glass-chip.css";
++@import "./glass/cell.css";
+ @import "./glass/glass-atom.css";
+ /* The INERT-MARK register (`mark.css`) — the ONE declaration set the six inert
+    marks (badge · separator · label · avatar · skeleton · status-dot) share: the
+diff --git a/src/styles/glass/cell.css b/src/styles/glass/cell.css
+new file mode 100644
+index 00000000..e9eba62e
+--- /dev/null
++++ b/src/styles/glass/cell.css
+@@ -0,0 +1,15 @@
++/* glass/cell.css — the cell shape, one declaration for both selection atoms.
++
++   A selectable option that holds more than one line is a box, not a stadium
++   (radius.css: "a box is not a stadium"), so its corner is the field rung. Chip
++   (`shape="cell"`) and ToggleGroup (`shape="cell"`, declared once at the group)
++   share this one rule; neither sheet restates it. The chip pair doubles the class
++   to outrank `.glass-capsule`'s own corner; the group arm outranks the item's
++   stadium by specificity. */
++@layer components {
++    .glass-chip--cell,
++    .glass-chip--cell.glass-capsule,
++    .toggle-group[data-shape="cell"] .toggle-group__item {
++        border-radius: var(--radius-field);
++    }
++}
+diff --git a/src/styles/glass/glass-chip.css b/src/styles/glass/glass-chip.css
+index 7cef8b74..05f4c49d 100644
+--- a/src/styles/glass/glass-chip.css
++++ b/src/styles/glass/glass-chip.css
+@@ -56,11 +56,6 @@
+         transition: opacity var(--duration-normal) var(--ease-out) 60ms;
+     }
+ 
+-    .glass-chip--cell,
+-    .glass-chip--cell.glass-capsule {
+-        border-radius: var(--radius-card);
+-    }
+-
+     .glass-chip--icon,
+     .glass-chip--icon.glass-capsule {
+         border-radius: var(--radius-pill);
+diff --git a/tests/components/ui/toggle-group/ToggleGroup.test.ts b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+index 9b87f3d5..10555dc1 100644
+--- a/tests/components/ui/toggle-group/ToggleGroup.test.ts
++++ b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+@@ -302,7 +302,6 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+     it("G-TOGGLE-WRAP · the row wraps and the group paints no silhouette", () => {
+         const css = withoutForcedColors(code(LANE_SHEET));
+         expect(css).toContain("flex-wrap: wrap");
+-        expect(css).not.toContain("nowrap");
+         expect(css).not.toContain("inline-flex;\n        inline-size");
+         // No corner, no plate, no scroller — all three died with the track.
+         expect(css).not.toContain("--radius-ctx");
+@@ -310,19 +309,33 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+         expect(css).not.toMatch(/var\(--radius-pill\)\s*\+/);
+         expect(css).not.toContain("scroll-padding-inline");
+         expect(css).not.toContain("overscroll-behavior-inline");
+-        expect(css).not.toContain("safe center");
+         // The ONE spelling of the stadium that survives is the item's role rung.
+         expect(css).toContain("border-radius: var(--radius-pill)");
++        // The ROW wraps; the PILL does not (one line by law). `nowrap` and
++        // `safe center` live on the pill item arm and nowhere else.
++        const rules = css.match(/[^{}]+\{[^}]*\}/g) ?? [];
++        for (const r of rules.filter((r) => /nowrap|safe center/.test(r))) {
++            expect(r.trim(), `only the pill item holds one line: ${r}`).toMatch(
++                /^\.toggle-group\[data-shape="pill"\] \.toggle-group__item\s*\{/,
++            );
++        }
+         // Rules whose selector ENDS at the group host — a descendant rule
+         // (`.toggle-group[data-size="sm"] .toggle-group__item`) paints the item and
+-        // is not the group's silhouette.
++        // is not the group's silhouette. The one padding a group may carry is the
++        // cell grid's ring clearance, which paints nothing.
+         const groupRules =
+             css.match(/\.toggle-group(?:\[[^\]]*\])*\s*\{[^}]*\}/g) ?? [];
+         expect(groupRules.length).toBeGreaterThan(0);
+         for (const rule of groupRules) {
+             expect(rule, `the group may not paint: ${rule}`).not.toMatch(
+-                /background|border-radius|box-shadow|backdrop-filter|padding/,
++                /background|border-radius|box-shadow|backdrop-filter/,
+             );
++            const pad = rule.match(/padding[^:]*:\s*([^;]+);/g) ?? [];
++            for (const p of pad) {
++                expect(p, `the group pads only for the ring: ${rule}`).toBe(
++                    "padding: calc(var(--focus-ring-width) + 2px);",
++                );
++            }
+         }
+     });
+ 
+@@ -338,7 +351,7 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+         ]) {
+             expect(barrel, `${dead} was deleted, not aliased`).not.toContain(dead);
+         }
+-        // Four exports, clean break, no shim. Read off the `export` clauses so the
++        // Five exports, clean break, no shim. Read off the `export` clauses so the
+         // `from "./ToggleGroup.vue"` specifiers are not counted as surface.
+         const exported = new Set(
+             [...barrel.matchAll(/(?:default as|type)\s+(ToggleGroup\w*)/g)].map(
+@@ -350,6 +363,7 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+             "ToggleGroupItem",
+             "ToggleGroupItemProps",
+             "ToggleGroupProps",
++            "ToggleGroupShape",
+         ]);
+     });
+ 
+diff --git a/tests/styles/radius-role-canon.test.ts b/tests/styles/radius-role-canon.test.ts
+index 152af273..496a03c7 100644
+--- a/tests/styles/radius-role-canon.test.ts
++++ b/tests/styles/radius-role-canon.test.ts
+@@ -567,6 +567,26 @@ describe("7. this wave's role bindings", () => {
+         expect(item).toContain("border-radius: var(--radius-pill)");
+     });
+ 
++    it("the cell shape is ONE declaration on the field rung, read by Chip and ToggleGroup", () => {
++        // A selectable option that holds more than one line is a box, not a
++        // stadium: `shape="cell"` on either atom lands on `--radius-field`, stated
++        // once in glass/cell.css and restated by neither component sheet.
++        const cell = read("src/styles/glass/cell.css");
++        const body = rule(
++            cell,
++            '\\.glass-chip--cell,\\s*\\.glass-chip--cell\\.glass-capsule,\\s*\\.toggle-group\\[data-shape="cell"\\] \\.toggle-group__item',
++        );
++        expect(body).toContain("border-radius: var(--radius-field)");
++        expect(strip(read("src/styles/glass/glass-chip.css"))).not.toContain(".glass-chip--cell");
++        const lane = strip(read("src/components/toggle-group/styles.css"));
++        for (const r of lane.match(/[^{}]*data-shape="cell"[^{}]*\{[^}]*\}/g) ?? []) {
++            expect(r, "the lane sheet may not restate the cell corner").not.toContain(
++                "border-radius",
++            );
++        }
++        expect(read("src/styles/glass.css")).toContain('@import "./glass/cell.css";');
++    });
++
+     it("mints no radius token to do any of it", () => {
+         // the inventory is the bijection with radius.css (suite 1); the role spine
+         // adds no name of its own, so these two sets stay identical.
