@@ -1,0 +1,1395 @@
+diff --git a/demo/stories/data/search.vue b/demo/stories/data/search.vue
+index ba4b4de0..10a55d7d 100644
+--- a/demo/stories/data/search.vue
++++ b/demo/stories/data/search.vue
+@@ -562,24 +562,18 @@ function formatScore(score: number): string {
+                 role="listbox"
+                 aria-label="Search results"
+             >
+-                <!-- [2026-08-28 · BK π-CURE · R4] ~~`role="option"` +
+-                     `:aria-selected` + `:data-active`~~ — three attributes that
+-                     type-checked, read correctly, and rendered NOTHING. `Card` binds
+-                     `v-bind="$attrs"` first and then restates `:role` / `:aria-selected`
+-                     / `:tabindex` off its OWN `selected` prop, so the later explicit
+-                     bindings won and an unset `selected` REMOVED all three. The route
+-                     was writing to a channel the component owns; `selected` IS that
+-                     channel, and passing it also lights the library's own
+-                     `.card[role="option"][data-selected="true"]` paint
+-                     (`components/card/styles.css:165`) that was dead here for the same
+-                     reason. `data-active` goes with them: nothing styled it, and
+-                     `data-selected` is now written by its one owner. -->
++                <!-- Each result is a listbox option. Card owns no option contract, so
++                     `role` and `aria-selected` reach the plate through `$attrs`, and the
++                     rows take no tab stop: the field walks them by
++                     `aria-activedescendant`. The active row is carried by its full-ink
++                     edge, not a fill. -->
+                 <Card
+                     v-for="(result, i) in visibleResults"
+                     :id="`search-result-${result.item.id}`"
+                     :key="result.item.id"
+-                    class="border-l-4"
+-                    :selected="i === searchState.selectedIndex.value"
++                    class="search-result border-l-4"
++                    role="option"
++                    :aria-selected="i === searchState.selectedIndex.value"
+                     :style="{
+                         borderLeftColor: `var(--section-color-${result.item.tone})`,
+                     }"
+@@ -630,3 +624,10 @@ function formatScore(score: number): string {
+         </StorySection>
+     </StoryPage>
+ </template>
++
++<style scoped>
++.search-result[aria-selected="true"] {
++    border-block-color: var(--foreground);
++    border-inline-end-color: var(--foreground);
++}
++</style>
+diff --git a/demo/stories/display/card.vue b/demo/stories/display/card.vue
+index 45a78e5c..479fbb99 100644
+--- a/demo/stories/display/card.vue
++++ b/demo/stories/display/card.vue
+@@ -14,12 +14,14 @@ import {
+     CardTitle,
+ } from "@glass/components/card";
+ import { Button } from "@glass/components/button";
++import { ChoiceCard, ChoiceGroup } from "@glass/components/choice";
+ 
+ const rows = Array.from({ length: 8 }, (_, index) => `Timeline entry ${index + 1}`);
+ const chosen = ref("balanced");
+ const plans = [
+-    { id: "balanced", title: "Balanced", blurb: "The fill carries the state." },
+-    { id: "vivid", title: "Vivid", blurb: "The rim is a locator, not the state." },
++    { id: "balanced", title: "Balanced", meta: "4 seats · monthly", blurb: "The everyday plan." },
++    { id: "vivid", title: "Vivid", meta: "12 seats · yearly", blurb: "For a team that ships weekly." },
++    { id: "studio", title: "Studio", meta: "unlimited · yearly", blurb: "Every seat, every surface." },
+ ];
+ </script>
+ 
+@@ -115,25 +117,16 @@ const plans = [
+         </StorySection>
+ 
+         <StorySection
+-            heading="Selectable cards"
+-            blurb="`selected` present makes the card an option: role, tab stop, aria-selected, pointer, and the fill that carries the state. Absent, the card stays inert prose."
++            heading="Choice cards"
++            blurb="A card that is a choice is a ChoiceCard in a ChoiceGroup: a radiogroup with one tab stop, arrows that walk the rows, and a 2 px perimeter in the tone that carries the state."
+         >
+-            <div class="card-board" role="listbox" aria-label="Plan">
+-                <Card
+-                    v-for="plan in plans"
+-                    :key="plan.id"
+-                    :selected="chosen === plan.id"
+-                    @click="chosen = plan.id"
+-                    @keydown.enter.prevent="chosen = plan.id"
+-                    @keydown.space.prevent="chosen = plan.id"
+-                >
+-                    <CardHeader>
+-                        <CardTitle>{{ plan.title }}</CardTitle>
+-                        <CardDescription>{{ plan.blurb }}</CardDescription>
+-                    </CardHeader>
+-                    <CardContent>Hover, tab to it, and press it.</CardContent>
+-                </Card>
+-            </div>
++            <ChoiceGroup v-model="chosen" min-column="15rem" aria-label="Plan">
++                <ChoiceCard v-for="plan in plans" :key="plan.id" :value="plan.id">
++                    <template #title>{{ plan.title }}</template>
++                    <template #meta>{{ plan.meta }}</template>
++                    {{ plan.blurb }}
++                </ChoiceCard>
++            </ChoiceGroup>
+         </StorySection>
+ 
+         <StorySection
+diff --git a/demo/stories/forms/chip.vue b/demo/stories/forms/chip.vue
+index 619aa781..a3231d33 100644
+--- a/demo/stories/forms/chip.vue
++++ b/demo/stories/forms/chip.vue
+@@ -42,15 +42,11 @@ const actions = ref(0);
+ 
+         <StorySection
+             label="geometry"
+-            blurb="Pill, cell, and icon silhouettes retain the same declared semantics."
++            blurb="Pill and icon silhouettes retain the same declared semantics."
+         >
+             <ShowcaseFrame pad="lg">
+                 <div class="flex flex-wrap items-center gap-3">
+                     <Chip shape="pill">Pill</Chip>
+-                    <Chip shape="cell">
+-                        <Circle class="size-5" aria-hidden="true" />
+-                        <span>Cell</span>
+-                    </Chip>
+                     <Chip shape="icon">
+                         <Circle class="size-4" aria-hidden="true" />
+                     </Chip>
+diff --git a/demo/stories/manifest.ts b/demo/stories/manifest.ts
+index bfe61f1a..62fdb459 100644
+--- a/demo/stories/manifest.ts
++++ b/demo/stories/manifest.ts
+@@ -579,7 +579,7 @@ export const CATEGORIES: Category[] = [
+                 "forms",
+                 "chip",
+                 "Chip",
+-                "Explicit static, selectable, action, and removable semantics over pill, cell, and icon geometry.",
++                "Explicit static, selectable, action, and removable semantics over pill and icon geometry.",
+             ),
+             // the LabeledField family (parent SFC + 3 wrappers over Input ·
+             // Slider · Switch — a select is a preset and lives in the demo, BK
+diff --git a/docs/tranches/BL/design/tile/harness/scenes.mjs b/docs/tranches/BL/design/tile/harness/scenes.mjs
+index f4e177db..e158ecce 100644
+--- a/docs/tranches/BL/design/tile/harness/scenes.mjs
++++ b/docs/tranches/BL/design/tile/harness/scenes.mjs
+@@ -34,6 +34,7 @@ export const SCENES = [
+   { id: "card", site: "Card's selectable arm, wired as demo/stories/display/card.vue", gates: ["T-1", "T-3", "T-4", "T-5", "T-6", "W-C"] },
+   { id: "chipcell", site: "selectable Chip shape=cell, two lines", gates: ["T-1", "T-3", "T-5", "T-6"] },
+   { id: "wrap", site: "the control-role holders whose content can wrap: ToggleGroupItem, pill Chip, Button", gates: ["T-1", "W-A"] },
++  { id: "matrix", site: "UIA-KF-047 matrix cell (Input) on ChoiceCard: the refusal probe", gates: [] },
+   { id: "family-d", site: "the preset and specimen tiles as <ToggleGroup shape=\"cell\"> with no item utilities", gates: ["W-D"] },
+ ];
+ 
+@@ -93,6 +94,8 @@ import { Chip } from "@glass/components/chip";
+ import { Button } from "@glass/components/button";
+ import { FadingScroll } from "@glass/components/fading-scroll";
+ import { SegmentedTabs } from "@glass/components/tabs";
++import { ChoiceGroup, ChoiceCard } from "@glass/components/choice";
++import { Input } from "@glass/components/input";
+ 
+ const SCENES = ${JSON.stringify(SCENES)};
+ const PRESETS = ${JSON.stringify(PRESETS)};
+@@ -117,11 +120,14 @@ const values: Record<string, string[]> = {
+   chipcell: ["one", "two", "three", "four"],
+   wrap: ["a", "b"],
+   "family-d": PRESETS.map((p) => p.name),
++  matrix: ["a", "b", "c", "d"],
+ };
+ const vals = values[base] ?? [];
+ const selQ = q.get("sel");
+ const model = ref<string>(selQ === "none" ? NONE : vals[selQ ? Number(selQ) : 1] ?? NONE);
+ const specModel = ref<string>(CURVES[1].name);
++const multiModel = ref<string[]>(["dusk"]);
++(window as any).__multi = multiModel;
+ const tabsOptions = values.tabs.map((v) => ({ label: v, value: v }));
+ 
+ (window as any).__tile = {
+@@ -148,27 +154,18 @@ onMounted(async () => {
+   <main class="tx-page" :data-shape-candidate="shape">
+     <button class="tx-sentinel" data-sentinel="before" type="button">before</button>
+ 
+-    <!-- keyframes.js SpringPhysicsFacet.vue:72-93, hosted as the facet hosts it (Card tier=quiet, CardContent px-4 py-3) -->
++    <!-- D4-B: keyframes.js SpringPhysicsFacet preset tiles composed on ChoiceGroup/ChoiceCard, no item utilities.
++         verbatim = the consumer's current cell paint re-targeted onto the card (what the migration deletes) -->
+     <section v-if="base === 'preset'" :data-scene="scene" class="tx-host">
+       <Card tier="quiet" class="cartoon-surface w-full overflow-visible">
+         <CardContent class="panel-content flex flex-col gap-3 px-4 py-3">
+-          <ToggleGroup
+-            type="single" data-group aria-label="Spring presets"
+-            :class="verbatim
+-              ? 'preset-grid grid w-auto max-w-none grid-cols-2 gap-2 rounded-none bg-transparent p-0 shadow-none backdrop-filter-none'
+-              : 'preset-grid grid w-auto max-w-none grid-cols-2 gap-2'"
+-            v-model="model"
+-          >
+-            <ToggleGroupItem
+-              v-for="p in PRESETS" :key="p.name" :value="p.name" :title="p.blurb" data-item
+-              :class="verbatim
+-                ? 'preset-cell kf-verbatim w-full min-w-0 flex-col items-start gap-0.5 bg-background px-3 py-2 font-medium leading-normal'
+-                : 'preset-cell w-full min-w-0 flex-col items-start gap-0.5 px-3 py-2 font-medium leading-normal'"
+-            >
+-              <span data-ink class="text-small text-foreground capitalize">{{ p.name }}</span>
+-              <span data-ink data-line-slot class="text-mono-caption text-muted-foreground tabular-nums whitespace-nowrap">{{ p.response }} s · ζ {{ p.damping }}</span>
+-            </ToggleGroupItem>
+-          </ToggleGroup>
++          <ChoiceGroup data-group aria-label="Spring presets" min-column="10rem" v-model="model">
++            <ChoiceCard v-for="p in PRESETS" :key="p.name" :value="p.name" :title="p.blurb" data-item
++              :class="verbatim ? 'preset-cell kf-verbatim' : undefined">
++              <template #title><span data-ink>{{ p.name }}</span></template>
++              <template #meta><span data-ink data-line-slot>{{ p.response }} s · ζ {{ p.damping }}</span></template>
++            </ChoiceCard>
++          </ChoiceGroup>
+         </CardContent>
+       </Card>
+     </section>
+@@ -177,20 +174,17 @@ onMounted(async () => {
+     <section v-else-if="base === 'specimen'" :data-scene="scene" class="tx-host easing-target">
+       <Card :shadow="false" class="flex w-full flex-col gap-4 overflow-hidden px-4 py-4">
+         <FadingScroll axis="y" class="specimen-drawer min-h-0 w-full">
+-          <ToggleGroup type="single" size="sm" data-group aria-label="Easing curve specimens"
+-            :class="verbatim ? 'specimen-grid kf-verbatim-grid' : 'specimen-grid'" v-model="model">
+-            <ToggleGroupItem
+-              v-for="c in CURVES" :key="c.name" :value="c.name" :title="c.name" data-item data-surface="opaque"
+-              :class="verbatim ? 'specimen-tile kf-verbatim flex-col gap-1.5 px-2 py-2.5' : 'specimen-tile flex-col gap-1.5 px-2 py-2.5'"
+-            >
++          <ChoiceGroup size="sm" data-group aria-label="Easing curve specimens" min-column="150px" v-model="model">
++            <ChoiceCard v-for="c in CURVES" :key="c.name" :value="c.name" :title="c.name" data-item tone="var(--ball-tone)"
++              :class="verbatim ? 'specimen-tile kf-verbatim' : 'specimen-tile'">
+               <span data-ink class="tile-stage" aria-hidden="true">
+                 <svg class="tile-sparkline" viewBox="0 0 1 1" preserveAspectRatio="none"><path :d="c.path" vector-effect="non-scaling-stroke" /></svg>
+                 <span class="progress-rail tile-rail"></span>
+                 <span class="progress-ball tile-ball"></span>
+               </span>
+-              <span data-ink data-line-slot class="tile-name text-mono-caption" data-register="code">{{ c.name }}</span>
+-            </ToggleGroupItem>
+-          </ToggleGroup>
++              <template #meta><span data-ink data-line-slot>{{ c.name }}</span></template>
++            </ChoiceCard>
++          </ChoiceGroup>
+         </FadingScroll>
+       </Card>
+     </section>
+@@ -198,25 +192,40 @@ onMounted(async () => {
+     <!-- value.js EasingSpecimenStrip.vue:86-122 -->
+     <section v-else-if="base === 'strip'" :data-scene="scene" class="tx-host">
+       <FadingScroll axis="x" class="specimen-strip">
+-        <div class="strip-row" role="group" aria-label="Easing curve specimens" data-group>
++        <ChoiceGroup size="sm" class="strip-row-b" aria-label="Easing curve specimens" data-group v-model="model">
+           <div v-for="fam in STRIP" :key="fam.family" class="strip-family">
+             <span class="family-eyebrow" aria-hidden="true">{{ fam.family }}</span>
+             <div class="family-tiles">
+-              <Chip
+-                v-for="t in fam.tiles" :key="fam.family + t[0]" mode="selectable" shape="icon"
+-                :class="verbatim ? 'vj-tile vj-verbatim' : 'vj-tile'" data-item
+-                :model-value="model === fam.family + '-' + t[0]" :aria-label="fam.family + '-' + t[0]"
+-                @update:model-value="(on: boolean) => { if (on) model = fam.family + '-' + t[0]; }"
+-              >
++              <ChoiceCard v-for="t in fam.tiles" :key="fam.family + t[0]" :value="fam.family + '-' + t[0]"
++                :class="verbatim ? 'vj-tile vj-verbatim' : undefined" data-item :aria-label="fam.family + '-' + t[0]">
+                 <svg data-ink class="tile-glyph" viewBox="0 0 1 1" aria-hidden="true"><path :d="t[1]" vector-effect="non-scaling-stroke" /></svg>
+-                <span data-ink data-line-slot class="tile-label">{{ t[0] }}</span>
+-              </Chip>
++                <template #meta><span data-ink data-line-slot class="tile-label">{{ t[0] }}</span></template>
++              </ChoiceCard>
+             </div>
+           </div>
+-        </div>
++        </ChoiceGroup>
+       </FadingScroll>
+     </section>
+ 
++    <!-- N-of-M (value.js Mix palettes, V2): ChoiceGroup type="multiple" -->
++    <section v-else-if="base === 'multi'" :data-scene="scene" class="tx-host">
++      <ChoiceGroup type="multiple" data-group aria-label="Palettes" min-column="9rem" v-model="multiModel">
++        <ChoiceCard v-for="v in ['dawn','dusk','moss','slate']" :key="v" :value="v" data-item>
++          <template #title><span data-ink>{{ v }}</span></template>
++          <template #meta><span data-ink>5 colours</span></template>
++        </ChoiceCard>
++      </ChoiceGroup>
++    </section>
++
++    <!-- UIA-KF-047: a matrix cell holding an Input, composed on ChoiceCard (the refusal probe) -->
++    <section v-else-if="base === 'matrix'" :data-scene="scene" class="tx-host">
++      <ChoiceGroup data-group aria-label="Matrix" min-column="4rem" v-model="model">
++        <ChoiceCard v-for="v in ['a','b','c','d']" :key="v" :value="v" data-item>
++          <Input :model-value="v" />
++        </ChoiceCard>
++      </ChoiceGroup>
++    </section>
++
+     <!-- keyframes.js EasingTarget.vue:54-68, the family filter -->
+     <section v-else-if="base === 'single'" :data-scene="scene" class="tx-host">
+       <ToggleGroup type="single" size="sm" data-group aria-label="Filter curves by family" v-model="model">
+@@ -234,23 +243,24 @@ onMounted(async () => {
+       <SegmentedTabs data-group v-model="model" :options="tabsOptions" semantics="toggle" aria-label="Family" />
+     </section>
+ 
+-    <!-- demo/stories/display/card.vue:117-137 -->
++    <!-- D4-B migration of demo/stories/display/card.vue:117-137 (Card's arm retired): the plans as ChoiceCards -->
+     <section v-else-if="base === 'card'" :data-scene="scene" class="tx-host">
+-      <div class="tx-card-board" role="listbox" aria-label="Plan" data-group>
+-        <Card v-for="v in values.card" :key="v" size="sm" data-item :selected="model === v"
+-          @click="model = v" @keydown.enter.prevent="model = v" @keydown.space.prevent="model = v">
+-          <CardHeader><CardTitle data-ink>{{ v }}</CardTitle><CardDescription data-ink data-line-slot>For a {{ v }} workload.</CardDescription></CardHeader>
+-        </Card>
+-      </div>
++      <ChoiceGroup data-group aria-label="Plan" min-column="12rem" v-model="model">
++        <ChoiceCard v-for="v in values.card" :key="v" :value="v" data-item>
++          <template #title><span data-ink>{{ v }}</span></template>
++          <template #meta><span data-ink data-line-slot>For a {{ v }} workload.</span></template>
++        </ChoiceCard>
++      </ChoiceGroup>
+     </section>
+ 
++    <!-- D4-B migration of the two-line selectable Chip cell (shape="cell" retired) -->
+     <section v-else-if="base === 'chipcell'" :data-scene="scene" class="tx-host">
+-      <div role="group" aria-label="Cells" class="tx-chiprow" data-group>
+-        <Chip v-for="v in values.chipcell" :key="v" mode="selectable" shape="cell" data-item class="tx-cell"
+-          :model-value="model === v" @update:model-value="(on: boolean) => { if (on) model = v; }">
+-          <span data-ink class="tx-cell-ink"><span>{{ v }}</span><span data-line-slot class="tx-cell-meta">0.{{ v.length }} s</span></span>
+-        </Chip>
+-      </div>
++      <ChoiceGroup size="sm" aria-label="Cells" min-column="5rem" data-group v-model="model">
++        <ChoiceCard v-for="v in values.chipcell" :key="v" :value="v" data-item>
++          <template #title><span data-ink>{{ v }}</span></template>
++          <template #meta><span data-ink data-line-slot>0.{{ v.length }} s</span></template>
++        </ChoiceCard>
++      </ChoiceGroup>
+     </section>
+ 
+     <section v-else-if="base === 'wrap'" :data-scene="scene" class="tx-host tx-wrap">
+@@ -331,6 +341,7 @@ body { background: var(--background); color: var(--foreground); font-family: sys
+ 
+ /* value.js EasingSpecimenStrip.vue:125-227; layout and unconditional content typography in both variants */
+ .strip-row { display: inline-flex; align-items: stretch; gap: 0.875rem; width: max-content; padding: 2px; }
++.strip-row-b { display: inline-flex; align-items: stretch; gap: 0.875rem; width: max-content; }
+ .strip-family { display: flex; flex-direction: column; gap: 0.2rem; }
+ .strip-family + .strip-family { border-left: 1px solid var(--card-edge); padding-left: 0.875rem; }
+ .family-eyebrow { font-family: var(--font-mono); font-size: 0.5625rem; line-height: 1; letter-spacing: 0.08em; color: var(--muted-foreground); opacity: 0.75; }
+diff --git a/package.json b/package.json
+index 494f70bb..77295d5e 100644
+--- a/package.json
++++ b/package.json
+@@ -193,6 +193,9 @@
+             "toast": [
+                 "dist/toast.d.ts"
+             ],
++            "choice": [
++                "dist/choice.d.ts"
++            ],
+             "toggle-group": [
+                 "dist/toggle-group.d.ts"
+             ],
+@@ -449,6 +452,10 @@
+             "types": "./dist/toast.d.ts",
+             "import": "./dist/toast.js"
+         },
++        "./choice": {
++            "types": "./dist/choice.d.ts",
++            "import": "./dist/choice.js"
++        },
+         "./toggle-group": {
+             "types": "./dist/toggle-group.d.ts",
+             "import": "./dist/toggle-group.js"
+diff --git a/scripts/lib/subpath-policy.mjs b/scripts/lib/subpath-policy.mjs
+index c5f3b9fd..2132602d 100644
+--- a/scripts/lib/subpath-policy.mjs
++++ b/scripts/lib/subpath-policy.mjs
+@@ -70,7 +70,7 @@ export const COMPONENT_CLASS = {
+     progress: "PUBLISH", select: "PUBLISH", separator: "PUBLISH",
+     // BI.W-SURFACE-EXTRACT — the extracted bare (tier × decoration) glass plate.
+     surface: "PUBLISH",
+-    slider: "PUBLISH", switch: "PUBLISH", toast: "PUBLISH", "toggle-group": "PUBLISH",
++    slider: "PUBLISH", switch: "PUBLISH", toast: "PUBLISH", "toggle-group": "PUBLISH", choice: "PUBLISH",
+     tooltip: "PUBLISH",
+     // [2026-08-09 · BK #66 CLOSE · RT-65-C(iii)] THE FOUR MINTS + THE `./forms`
+     // RETIREMENT. `input` · `textarea` · `checkbox` · `radio-group` go
+diff --git a/src/components/card/Card.vue b/src/components/card/Card.vue
+index edc7022d..da3fb9b1 100644
+--- a/src/components/card/Card.vue
++++ b/src/components/card/Card.vue
+@@ -1,5 +1,4 @@
+ <script setup lang="ts">
+-import { computed } from "vue";
+ import { cn } from "../_shared/class-names";
+ import Surface, { type SurfaceProps } from "../surface/Surface.vue";
+ 
+@@ -33,23 +32,12 @@ export interface CardProps extends SurfaceProps {
+     size?: CardSize;
+     /** The opt-in elevation. Card owns this axis; Surface no longer has one. */
+     shadow?: boolean;
+-    /** Presence makes the card an option: role, tabindex, aria-selected, states. */
+-    selected?: boolean;
+ }
+ 
+ const props = withDefaults(defineProps<CardProps>(), {
+     size: "md",
+     shadow: true,
+-    /* Declared so Vue's BOOLEAN CASTING does not fire. An absent `Boolean` prop
+-       resolves to `false`, not `undefined` — which would make every card in the
+-       library an option with a tab stop. A declared `undefined` default wins over
+-       the cast, and absence stays absence. */
+-    selected: undefined,
+ });
+-
+-/* PRESENCE, not truth, is the signal: `selected` unset leaves a card inert prose;
+-   `selected="false"` is an unselected OPTION, which owes a role and a tab stop. */
+-const selectable = computed(() => props.selected !== undefined);
+ </script>
+ 
+ <template>
+@@ -62,10 +50,6 @@ const selectable = computed(() => props.selected !== undefined);
+         :as="as"
+         :data-shadow="shadow || undefined"
+         :data-size="size"
+-        :data-selected="selected ? 'true' : undefined"
+-        :role="selectable ? 'option' : undefined"
+-        :tabindex="selectable ? 0 : undefined"
+-        :aria-selected="selectable ? (selected ? 'true' : 'false') : undefined"
+         :class="cn('card', props.class)"
+     >
+         <slot />
+diff --git a/src/components/card/styles.css b/src/components/card/styles.css
+index 77256aff..62da5f74 100644
+--- a/src/components/card/styles.css
++++ b/src/components/card/styles.css
+@@ -1,19 +1,6 @@
+ /* Card owns structure, proportion and — on the selectable arm — its own
+    engagement register. Surface owns every plate material. */
+ 
+-/* The selectable card's state FILL, registered so it interpolates. A bare custom
+-   property in a gradient jumps between endpoints; registered, the fill glides on
+-   the light channel's own envelope. `inherits: false` — a card never pushes its
+-   state onto a nested card. (The `@property --fade-start` in utilities/base.css
+-   is the precedent: a component's typed property rides its own recipe file.)
+-   The VALUES are the register's — `--fill-hover` / `--fill-selected`
+-   (tokens/color-radius.css §1.3); nothing is minted here. */
+-@property --card-fill {
+-    syntax: "<color>";
+-    inherits: false;
+-    initial-value: transparent;
+-}
+-
+ @layer components {
+     /* ── PROPORTION (PROPORTION §1.1) ─────────────────────────────────────────
+        ONE pad, inline == block. `r : pad = 16 : 12` — the pairing law, residue
+@@ -79,9 +66,7 @@
+             var(--glass-material-rim), var(--glass-under-shadow-default),
+             var(--card-cast-rung), var(--shadow-card);
+         /* The lift and the edge are the two channels that move; both are light,
+-           neither is spatial, so both ride the light clock. `.card[role="option"]`
+-           restates the whole coherent list rather than patching a duration —
+-           a shorthand is a shorthand. */
++           neither is spatial, so both ride the light clock. */
+         transition:
+             box-shadow var(--engage-control-engage-release) var(--ease-standard),
+             border-color var(--engage-control-engage-release) var(--ease-standard);
+@@ -118,85 +103,6 @@
+         --glass-border-rung: oklch(from var(--foreground) l c h / var(--ink-edge));
+     }
+ 
+-    /* ── ENGAGEMENT — the register the card advertised and never wore.
+-       `.glass-card` (glass/surfaces.css) owns a focus/hover composition under a
+-       comment asserting that `<Card>` "owns its own hover composition"; `<Card>`
+-       has never emitted that class, and the module carries zero hover and zero
+-       focus rules. The engagement half of `.glass-card` re-homes HERE, keyed on
+-       the card itself (C-4: the class splits by halves and dies; the material
+-       half folds onto `.glass-resting`). No `:where(.glass-card, .card)` widening.
+-
+-       The arm is the SELECTABLE card only. An inert content group is not a
+-       control and gets no pointer answer — which is what "the plate stays
+-       static; the control owns activation" meant all along.
+-
+-       THE FILL CARRIES THE STATE, the accent rim is a locator (atlas's own
+-       contract comment: "the ring, not the slab"). The fill rides a gradient
+-       rather than `background-color` because the plate's colour IS the
+-       `background` the veil recipe writes — a state that clobbers it would erase
+-       the material to paint 5% of ink. */
+-    .card[role="option"] {
+-        cursor: pointer;
+-        scale: 1;
+-        background-image: linear-gradient(var(--card-fill), var(--card-fill));
+-        transition:
+-            --card-fill var(--engage-control-engage-release) var(--ease-standard),
+-            box-shadow var(--engage-control-engage-release) var(--ease-standard),
+-            border-color var(--engage-control-engage-release) var(--ease-standard),
+-            /* the SPATIAL leg rides the press spring, never the light clock */
+-            scale var(--spring-press-duration) var(--transition-liquid-spatial);
+-    }
+-
+-    /* The ring is an `outline`: a `box-shadow` ring loses to
+-       `button/styles.css`'s (0,4,0) rule on any card that contains a button, and
+-       a ring that the thing it rings can delete is not a ring. The glow leg is
+-       legal here because this rule owns the COMPLETE resting list (C-7) — it
+-       appends to `--card-cast` instead of replacing it. */
+-    .card[role="option"]:focus-visible {
+-        outline: 2px solid oklch(from var(--foreground) l c h / var(--ink-perimeter));
+-        outline-offset: 2px;
+-    }
+-
+-    .card.glass-resting[role="option"][data-shadow]:focus-visible {
+-        box-shadow: var(--card-cast), 0 0 8px oklch(from var(--foreground) l c h / 0.15);
+-    }
+-
+-    /* Persistent state. `--fill-selected` (0.12) is a rung hover cannot mint. */
+-    .card[role="option"][data-selected="true"] {
+-        --card-fill: oklch(from var(--foreground) l c h / var(--fill-selected));
+-    }
+-
+-    /* HOVER IS BRACKETED. On a coarse pointer `:hover` latches on tap and stays
+-       latched, painting a card as permanently pointed-at. */
+-    @media (hover: hover) {
+-        /* The ATTACK channel. `transition` is a shorthand, so the whole coherent
+-           list is restated rather than duration-patched — a bare
+-           `transition-duration` here would drag the SPATIAL press leg onto the
+-           light clock, and the two channels are not interchangeable. */
+-        .card[role="option"]:hover {
+-            --card-fill: oklch(from var(--foreground) l c h / var(--fill-hover));
+-            transition:
+-                --card-fill var(--engage-control-engage-attack) var(--ease-standard),
+-                box-shadow var(--engage-control-engage-attack) var(--ease-standard),
+-                border-color var(--engage-control-engage-attack) var(--ease-standard),
+-                scale var(--spring-press-duration) var(--transition-liquid-spatial);
+-        }
+-
+-        /* Both at once is the register's own DERIVATION (§1.3: hover + selected =
+-           0.17), not a third rung and not a minted token. */
+-        .card[role="option"][data-selected="true"]:hover {
+-            --card-fill: oklch(
+-                from var(--foreground) l c h / calc(var(--fill-hover) + var(--fill-selected))
+-            );
+-        }
+-    }
+-
+-    /* Press is the SHIPPED vocabulary — `--scale-press-sm` (0.97) on the spatial
+-       spring leg, the same rung the button and slider recipes consume. No
+-       literal, no composable, no per-atom press token. */
+-    .card[role="option"]:active {
+-        scale: var(--scale-press-sm);
+-    }
+ 
+     /* ── ANATOMY ─────────────────────────────────────────────────────────────── */
+     .card-header {
+diff --git a/src/components/chip/README.md b/src/components/chip/README.md
+index 3d7a1222..0387628b 100644
+--- a/src/components/chip/README.md
++++ b/src/components/chip/README.md
+@@ -16,7 +16,7 @@ independent from geometry:
+ - `mode: static | selectable | action | removable` — `static` is the noninteractive
+   default; selectable uses Toggle and `aria-pressed`; action is a native button;
+   removable is static content with one separately named remove button.
+-- `shape: pill | cell | icon` — geometry only. It never changes role, focus, state,
++- `shape: pill | icon` — geometry only. It never changes role, focus, state,
+   or events.
+ - `size: xs | sm | md | lg`, `tone`, and `surface` remain orthogonal visual axes.
+   `xs` is the static micro-pill rung (4/2px pads, fixed 11px roman type); `md` is the
+diff --git a/src/components/chip/chipVariants.ts b/src/components/chip/chipVariants.ts
+index f7ed8b43..33ae2737 100644
+--- a/src/components/chip/chipVariants.ts
++++ b/src/components/chip/chipVariants.ts
+@@ -12,7 +12,6 @@ const SIZE = {
+ } as const;
+ const SHAPE = {
+     pill: "",
+-    cell: "glass-chip--cell flex-col gap-1.5 px-2 py-2.5 text-micro",
+     icon: "glass-chip--icon aspect-square p-0",
+ } as const;
+ const ICON_SIZE = {
+diff --git a/src/components/tabs/composables/useTabRovingFocus.ts b/src/components/tabs/composables/useTabRovingFocus.ts
+index 3dae4ced..8c01e956 100644
+--- a/src/components/tabs/composables/useTabRovingFocus.ts
++++ b/src/components/tabs/composables/useTabRovingFocus.ts
+@@ -23,6 +23,17 @@ export interface RovingSelectionOption<V extends SelectionValue = string> {
+ 
+ export type TabActivation = "automatic" | "manual";
+ 
++/**
++ * The arrow model. `axis` — the tablist/toolbar model: the orientation's two arrows
++ * move, the cross pair is inert (the dock run and SegmentedTabs). `grid` — the
++ * radio-group model for a set that lays out in rows: Left/Right step through the set
++ * in reading order, Up/Down move to the nearest item in the adjacent row, and where
++ * there is no adjacent row they step like Left/Right (the APG radio group, where
++ * every arrow moves). Rows are read from layout at key time, so any grid, flex wrap
++ * or single row is walked as the eye reads it.
++ */
++export type RovingArrows = "axis" | "grid";
++
+ /**
+  * Package-private composable for `SegmentedTabs.vue` (the
+  * roving-focus/responsive carve). The WAI-ARIA tablist/toolbar
+@@ -51,6 +62,8 @@ export interface UseTabRovingFocusParams<V extends SelectionValue = string> {
+     buttonRefs: Ref<HTMLElement[]>;
+     /** The SFC's selection handler (focus-follows activation → model write + squish). */
+     select: (value: V, idx: number) => void;
++    /** The arrow model; `axis` when omitted. */
++    arrows?: ComputedRef<RovingArrows>;
+ }
+ 
+ export interface UseTabRovingFocusReturn {
+@@ -156,6 +169,32 @@ export function useTabRovingFocus<V extends SelectionValue = string>(
+         }
+     }
+ 
++    // The enabled item in the adjacent visual row nearest `fromIdx`'s inline centre,
++    // or -1 when no row lies that way. Read from layout at key time.
++    function rowNeighbour(fromIdx: number, dir: 1 | -1): number {
++        const els = buttonRefs.value;
++        const at = els[fromIdx]?.getBoundingClientRect();
++        if (!at) return -1;
++        const cx = at.left + at.width / 2;
++        let best = -1;
++        let bestRow = Infinity;
++        let bestDx = Infinity;
++        els.forEach((el, idx) => {
++            if (idx === fromIdx || stripOptions.value[idx]?.disabled) return;
++            const r = el.getBoundingClientRect();
++            // Another row: its top clears this item's centre line in `dir`.
++            const rowGap = dir === 1 ? r.top - (at.top + at.height / 2) : at.top + at.height / 2 - r.bottom;
++            if (rowGap <= 0) return;
++            const dx = Math.abs(r.left + r.width / 2 - cx);
++            if (rowGap < bestRow - 0.5 || (Math.abs(rowGap - bestRow) <= 0.5 && dx < bestDx)) {
++                best = idx;
++                bestRow = rowGap;
++                bestDx = dx;
++            }
++        });
++        return best;
++    }
++
+     function onStripKeydown(e: KeyboardEvent) {
+         const targetIndex = buttonRefs.value.indexOf(e.target as HTMLElement);
+         const from =
+@@ -178,6 +217,23 @@ export function useTabRovingFocus<V extends SelectionValue = string>(
+             !isVertical.value &&
+             (computedDirection === "rtl" || declaredDirection === "rtl");
+         const nextDirection: 1 | -1 = rtl ? -1 : 1;
++        if (params.arrows?.value === "grid") {
++            const step: Record<string, 1 | -1> = {
++                ArrowRight: nextDirection,
++                ArrowLeft: nextDirection === 1 ? -1 : 1,
++                ArrowDown: 1,
++                ArrowUp: -1,
++            };
++            const dir = step[e.key];
++            if (dir !== undefined) {
++                e.preventDefault();
++                const vertical = e.key === "ArrowDown" || e.key === "ArrowUp";
++                const row = vertical ? rowNeighbour(from, dir) : -1;
++                if (row >= 0) focusOption(row);
++                else focusEnabled(from, dir);
++                return;
++            }
++        }
+         switch (e.key) {
+             case nextKey:
+                 e.preventDefault();
+diff --git a/src/composables/motion/morph/useSelectionGroup.ts b/src/composables/motion/morph/useSelectionGroup.ts
+index cdf65e66..c734af4e 100644
+--- a/src/composables/motion/morph/useSelectionGroup.ts
++++ b/src/composables/motion/morph/useSelectionGroup.ts
+@@ -16,6 +16,7 @@ import type { SelectionValue } from "../../../components/_shared/selection";
+ // into the `/motion-core`-eligible engine keeps the keyframes/vueuse fence.
+ import {
+     useTabRovingFocus,
++    type RovingArrows,
+     type TabActivation,
+ } from "../../../components/tabs/composables/useTabRovingFocus";
+ 
+@@ -76,6 +77,8 @@ export interface UseSelectionGroupParams<O extends SelectionOption> {
+     role?: ComputedRef<SelectionRole> | SelectionRole;
+     /** True for the vertical (block-axis) orientation. */
+     vertical?: ComputedRef<boolean>;
++    /** The arrow model (`axis` when omitted; `grid` for a set laid out in rows). */
++    arrows?: ComputedRef<RovingArrows>;
+     /** Whether roving focus selects immediately. Defaults to automatic. */
+     activation?: ComputedRef<TabActivation> | TabActivation;
+     /** The container scroller root (observed by the indicator's ResizeObserver). */
+@@ -247,6 +250,7 @@ export function useSelectionGroup<O extends SelectionOption>(
+         activation,
+         buttonRefs,
+         select,
++        arrows: params.arrows,
+     });
+ 
+     // ── Role-per-mode item attributes (the WAI-ARIA contract) ──
+diff --git a/src/index.ts b/src/index.ts
+index 9129ef98..8d190b64 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -366,6 +366,12 @@ export {
+     type ToastTitleProps,
+     type ToasterPosition,
+ } from "./components/toast";
++export {
++    ChoiceCard,
++    ChoiceGroup,
++    type ChoiceCardProps,
++    type ChoiceGroupProps,
++} from "./components/choice";
+ export {
+     ToggleGroup,
+     ToggleGroupItem,
+diff --git a/src/styles/glass/glass-chip.css b/src/styles/glass/glass-chip.css
+index 7cef8b74..05f4c49d 100644
+--- a/src/styles/glass/glass-chip.css
++++ b/src/styles/glass/glass-chip.css
+@@ -56,11 +56,6 @@
+         transition: opacity var(--duration-normal) var(--ease-out) 60ms;
+     }
+ 
+-    .glass-chip--cell,
+-    .glass-chip--cell.glass-capsule {
+-        border-radius: var(--radius-card);
+-    }
+-
+     .glass-chip--icon,
+     .glass-chip--icon.glass-capsule {
+         border-radius: var(--radius-pill);
+diff --git a/src/styles/paper.css b/src/styles/paper.css
+index d4f443f8..7b38cc1b 100644
+--- a/src/styles/paper.css
++++ b/src/styles/paper.css
+@@ -191,18 +191,9 @@
+ 
+    IN THE LAYER, where it has always lived (`card/styles.css`'s own
+    `@layer components` before the move). A decoration class does NOT escalate out
+-   of the cascade to win a fight: unlayered would put this above every component
+-   register in the library, and the one register it actually collides with is
+-   `<Card>`'s state fill — `.card[role="option"]` (0,2,0) writes the same
+-   `background-image` slot to carry hover/selected. In-layer that collision
+-   resolves by ordinary specificity (the state fill wins on a card that is BOTH
+-   ruled and selectable); unlayered it would resolve by escalation, and the state
+-   — the functional half — would be the one silently erased. No site combines
+-   them today; the seam is latent and routed (#62, beside the `cartoon-surface`
+-   re-home — the plate has exactly one `background-image` slot and both `::before`
+-   and `::after` are already spoken for by glass/material.css and
+-   glass/grain-overlay.css, so a decoration/state slot contract is that owner's
+-   call, not a card-local `:not()`).
++   of the cascade to win a fight: unlayered it would sit above every component
++   register in the library and erase whatever writes the plate's one
++   `background-image` slot on the same element.
+    ═══════════════════════════════════════════════════════════════════════ */
+ @layer components {
+     .paper-grid {
+diff --git a/tests/components/card/Card.test.ts b/tests/components/card/Card.test.ts
+index b1c42aa4..f985a5c8 100644
+--- a/tests/components/card/Card.test.ts
++++ b/tests/components/card/Card.test.ts
+@@ -72,21 +72,11 @@ describe("Card", () => {
+         expect(wrapper.classes()).not.toContain("glass-press");
+     });
+ 
+-    it("is an OPTION exactly when `selected` is present — presence, not truth", () => {
+-        const unselected = mount(Card, { props: { selected: false } });
+-        expect(unselected.attributes("role")).toBe("option");
+-        expect(unselected.attributes("tabindex")).toBe("0");
+-        expect(unselected.attributes("aria-selected")).toBe("false");
+-        expect(unselected.attributes("data-selected")).toBeUndefined();
+-
+-        const selected = mount(Card, { props: { selected: true } });
+-        expect(selected.attributes("role")).toBe("option");
+-        expect(selected.attributes("aria-selected")).toBe("true");
+-        expect(selected.attributes("data-selected")).toBe("true");
+-
+-        const inert = mount(Card);
+-        expect(inert.attributes("role")).toBeUndefined();
+-        expect(inert.attributes("aria-selected")).toBeUndefined();
++    it("passes a consumer's role and state through untouched", () => {
++        const wrapper = mount(Card, { attrs: { role: "option", "aria-selected": "true" } });
++        expect(wrapper.attributes("role")).toBe("option");
++        expect(wrapper.attributes("aria-selected")).toBe("true");
++        expect(wrapper.attributes("tabindex")).toBeUndefined();
+     });
+ });
+ 
+diff --git a/tests/components/primitive-display.public-contracts.test-d.ts b/tests/components/primitive-display.public-contracts.test-d.ts
+index 716b3f15..e3ee1679 100644
+--- a/tests/components/primitive-display.public-contracts.test-d.ts
++++ b/tests/components/primitive-display.public-contracts.test-d.ts
+@@ -41,13 +41,13 @@ type CardContract = [
+     // [2026-08-09 · BK #66 CLOSE · RT-40-D] ~~`material` / `variant`~~ — both GONE. DAG-RULINGS §4.3 deleted
+     // `material` as a re-minted `tier` (it breached the axes.ts membership fence)
+     // and the variant axis went with it. Card inherits `tier`/`surface`/`deep`
+-    // from `SurfaceProps` and owns `size`/`shadow`/`selected`. Asserted whole:
++    // from `SurfaceProps` and owns `size`/`shadow`; a choice is a ChoiceCard. Asserted whole:
+     // what it HAS and what it must never re-mint.
+     Assert<Has<"tier", CardProps>>,
+     Assert<Has<"surface", CardProps>>,
+     Assert<Has<"size", CardProps>>,
+     Assert<Has<"shadow", CardProps>>,
+-    Assert<Has<"selected", CardProps>>,
++    Assert<Lacks<"selected", CardProps>>,
+     Assert<Lacks<"material", CardProps>>,
+     Assert<Lacks<"variant", CardProps>>,
+ ];
+diff --git a/tests/composables/search/search-contracts.test.ts b/tests/composables/search/search-contracts.test.ts
+index 4bdef057..83c94e98 100644
+--- a/tests/composables/search/search-contracts.test.ts
++++ b/tests/composables/search/search-contracts.test.ts
+@@ -172,19 +172,11 @@ describe("/data/search — the listbox is a listbox and its options are options"
+             expect(option.attributes("aria-selected")).toMatch(/^(true|false)$/);
+         }
+ 
+-        // THE RESIDUAL, PINNED RATHER THAN LEFT TO DRIFT. `selected` is Card's OPTION
+-        // contract and that contract includes a tab stop by design — *"`selected="false"`
+-        // is an unselected OPTION, which owes a role and a tab stop"* (`Card.vue:44-46`,
+-        // `:60`). Consuming the channel therefore also makes each of the 12 rows
+-        // focusable, beside a field that walks them with `aria-activedescendant` — two
+-        // focus models on one widget. It is asserted here because it is a MEASURED
+-        // consequence of this cure (12 tabbable rows where there were 0), and because the
+-        // route cannot undo it: `Card` binds `v-bind="$attrs"` FIRST, so a consumer
+-        // `tabindex` loses to the component's own — the same clobber that caused R4.
+-        // The question is Card's option contract, not this route's, and is routed there;
+-        // when it is answered this line is the site that says so.
++        // One focus model: the field walks the rows by `aria-activedescendant`, so no
++        // row is a tab stop. Card carries no option contract of its own, and a row's
++        // `role` and `aria-selected` reach the plate through `$attrs`.
+         for (const option of options) {
+-            expect(option.attributes("tabindex")).toBe("0");
++            expect(option.attributes("tabindex")).toBeUndefined();
+         }
+ 
+         const selected = options.filter(
+diff --git a/tests/public-surface.spec.ts b/tests/public-surface.spec.ts
+index 2662fafc..51fe5537 100644
+--- a/tests/public-surface.spec.ts
++++ b/tests/public-surface.spec.ts
+@@ -240,6 +240,8 @@ const rootRuntimeExports = [
+     "ToastDescription",
+     "ToastTitle",
+     "Toaster",
++    "ChoiceCard",
++    "ChoiceGroup",
+     "ToggleGroupItem",
+     "TooltipContent",
+     "TooltipProvider",
+diff --git a/src/components/choice/ChoiceCard.vue b/src/components/choice/ChoiceCard.vue
+new file mode 100644
+index 00000000..311f30d7
+--- /dev/null
++++ b/src/components/choice/ChoiceCard.vue
+@@ -0,0 +1,82 @@
++<script setup lang="ts">
++import { computed, onBeforeUnmount, onMounted, ref, useSlots, type HTMLAttributes } from "vue";
++import { cn } from "../_shared/class-names";
++import type { SelectionValue } from "../_shared/selection";
++import { useChoiceGroupContext, type ChoiceEntry } from "./context";
++
++/* A card that is a radio (or, in a `multiple` group, a pressed toggle). Anatomy, in
++ * reading order: a title row with a trailing mark, an optional body (live content: a
++ * thumbnail, a stage, a readout, a blurb), and a meta line. The host is the button:
++ * every state paints on it through attributes, so a live slot is never re-rendered to
++ * show a state. Content is phrasing content and presentational (a radio's children
++ * are): no controls. */
++export interface ChoiceCardProps {
++    value: SelectionValue;
++    disabled?: boolean;
++    /** The selection hue: a complete colour. The edge, fill and flood read it. */
++    tone?: string;
++    class?: HTMLAttributes["class"];
++}
++
++defineOptions({ name: "ChoiceCard" });
++const props = defineProps<ChoiceCardProps>();
++defineSlots<{
++    default?: () => unknown;
++    title?: () => unknown;
++    meta?: () => unknown;
++    mark?: (p: { selected: boolean }) => unknown;
++}>();
++const slots = useSlots();
++
++const group = useChoiceGroupContext();
++if (!group) throw new Error("[ChoiceCard] must be a descendant of <ChoiceGroup>.");
++
++const el = ref<HTMLElement | null>(null);
++const entry: ChoiceEntry = {
++    get value() {
++        return props.value;
++    },
++    disabled: () => props.disabled === true || group.disabled.value,
++    el: null,
++};
++onMounted(() => {
++    entry.el = el.value;
++    group.register(entry);
++    if (import.meta.env.DEV && el.value?.querySelector("a[href],button,input,select,textarea,[tabindex]"))
++        console.error("[ChoiceCard] holds an interactive descendant; a radio's content is presentational.", el.value);
++});
++onBeforeUnmount(() => group.unregister(entry));
++
++const selected = computed(() => group.isSelected(props.value));
++const showMark = computed(() => !!slots.mark || group.size.value === "md");
++const hasHead = computed(() => !!slots.title || showMark.value);
++</script>
++
++<template>
++    <button
++        ref="el"
++        type="button"
++        data-slot="choice-card"
++        :class="cn('choice-card focus-ring', props.class)"
++        :data-state="selected ? 'on' : 'off'"
++        :data-size="group.size.value"
++        :disabled="entry.disabled() || undefined"
++        :tabindex="group.tabindex(entry)"
++        :style="props.tone ? { '--choice-tone': props.tone } : undefined"
++        v-bind="group.itemAttrs(props.value)"
++        @click="group.select(entry)"
++    >
++        <span v-if="hasHead" class="choice-card__head">
++            <span class="choice-card__title"><slot name="title" /></span>
++            <span v-if="showMark" class="choice-card__mark" aria-hidden="true">
++                <slot name="mark" :selected="selected">
++                    <svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7" /></svg>
++                </slot>
++            </span>
++        </span>
++        <span v-if="slots.default" class="choice-card__body"><slot /></span>
++        <span v-if="slots.meta" class="choice-card__meta"><slot name="meta" /></span>
++    </button>
++</template>
++
++<style src="./styles.css"></style>
+diff --git a/src/components/choice/ChoiceGroup.vue b/src/components/choice/ChoiceGroup.vue
+new file mode 100644
+index 00000000..398076d8
+--- /dev/null
++++ b/src/components/choice/ChoiceGroup.vue
+@@ -0,0 +1,83 @@
++<script setup lang="ts">
++import { computed, onMounted, ref, shallowRef, triggerRef, type HTMLAttributes } from "vue";
++import { cn } from "../_shared/class-names";
++import type { SelectionMode, SelectionValue } from "../_shared/selection";
++import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
++import { provideChoiceGroupContext, type ChoiceEntry } from "./context";
++
++/* A set of choice cards: one-of-N (`single`, a radiogroup) or N-of-M (`multiple`, a
++ * group of pressed toggles). The group owns the layout (an auto-fill grid of
++ * `minColumn` tracks), the ring clearance, and the keyboard: the one selection
++ * engine with the `grid` arrow model, so every arrow moves in a set laid out in rows. */
++export interface ChoiceGroupProps {
++    type?: SelectionMode;
++    size?: "sm" | "md";
++    /** The narrowest column the auto-fill grid will make. */
++    minColumn?: string;
++    disabled?: boolean;
++    class?: HTMLAttributes["class"];
++}
++
++defineOptions({ name: "ChoiceGroup" });
++const props = withDefaults(defineProps<ChoiceGroupProps>(), { type: "single", size: "md", minColumn: "12rem" });
++const model = defineModel<SelectionValue | SelectionValue[]>();
++
++const containerRef = ref<HTMLElement | null>(null);
++const entries = shallowRef<ChoiceEntry[]>([]);
++const ordered = computed(() =>
++    [...entries.value].sort((a, b) =>
++        !a.el || !b.el ? 0 : a.el.compareDocumentPosition(b.el) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1,
++    ),
++);
++const options = computed(() => ordered.value.map((e) => ({ value: e.value, disabled: e.disabled() })));
++const buttonRefs = computed(() => ordered.value.map((e) => e.el).filter((el): el is HTMLElement => !!el));
++
++const selection = useSelectionGroup<{ value: SelectionValue; disabled: boolean }>({
++    options,
++    model,
++    mode: computed(() => props.type),
++    activation: computed(() => (props.type === "single" ? "automatic" : "manual")),
++    arrows: computed(() => "grid"),
++    containerRef,
++    buttonRefs,
++});
++
++/* The commit pop plays on a committed change, never on the first paint. */
++const live = ref(false);
++onMounted(() => requestAnimationFrame(() => (live.value = true)));
++
++provideChoiceGroupContext({
++    register(entry) {
++        entries.value.push(entry);
++        triggerRef(entries);
++    },
++    unregister(entry) {
++        const at = entries.value.indexOf(entry);
++        if (at >= 0) entries.value.splice(at, 1);
++        triggerRef(entries);
++    },
++    isSelected: (v) => selection.isSelected(v),
++    itemAttrs: (v) => selection.itemAttrs(v),
++    tabindex: (entry) => selection.rovingTabindex(ordered.value.indexOf(entry)),
++    select: (entry) => selection.select(entry.value, ordered.value.indexOf(entry)),
++    disabled: computed(() => props.disabled),
++    size: computed(() => props.size),
++});
++</script>
++
++<template>
++    <div
++        ref="containerRef"
++        data-slot="choice-group"
++        :class="cn('choice-group', props.class)"
++        :role="selection.groupRole.value"
++        :data-size="props.size"
++        :data-live="live || undefined"
++        :style="{ '--choice-column': props.minColumn }"
++        @keydown="selection.onKeydown"
++    >
++        <slot />
++    </div>
++</template>
++
++<style src="./styles.css"></style>
+diff --git a/src/components/choice/context.ts b/src/components/choice/context.ts
+new file mode 100644
+index 00000000..5775e1d7
+--- /dev/null
++++ b/src/components/choice/context.ts
+@@ -0,0 +1,26 @@
++import type { ComputedRef } from "vue";
++import { createOptionalContext } from "../../composables/context";
++import type { SelectionValue } from "../_shared/selection";
++
++/* The item registry: each ChoiceCard publishes itself on mount, the group derives the
++ * engine's index-aligned `options` and `buttonRefs` in DOM order. */
++export interface ChoiceEntry {
++    readonly value: SelectionValue;
++    readonly disabled: () => boolean;
++    el: HTMLElement | null;
++}
++
++export interface ChoiceGroupContext {
++    register: (entry: ChoiceEntry) => void;
++    unregister: (entry: ChoiceEntry) => void;
++    isSelected: (value: SelectionValue) => boolean;
++    itemAttrs: (value: SelectionValue) => Record<string, string>;
++    tabindex: (entry: ChoiceEntry) => number;
++    select: (entry: ChoiceEntry) => void;
++    disabled: ComputedRef<boolean>;
++    size: ComputedRef<"sm" | "md">;
++}
++
++const ctx = createOptionalContext<ChoiceGroupContext>("glass-ui:choice-group");
++export const provideChoiceGroupContext = ctx.provide;
++export const useChoiceGroupContext = ctx.use;
+diff --git a/src/components/choice/index.ts b/src/components/choice/index.ts
+new file mode 100644
+index 00000000..a1b7573e
+--- /dev/null
++++ b/src/components/choice/index.ts
+@@ -0,0 +1,2 @@
++export { default as ChoiceGroup, type ChoiceGroupProps } from "./ChoiceGroup.vue";
++export { default as ChoiceCard, type ChoiceCardProps } from "./ChoiceCard.vue";
+diff --git a/src/components/choice/styles.css b/src/components/choice/styles.css
+new file mode 100644
+index 00000000..4994e43e
+--- /dev/null
++++ b/src/components/choice/styles.css
+@@ -0,0 +1,259 @@
++/* The choice card's state channels, registered so they interpolate on the light clock.
++   The fill does not inherit; the two progress numbers do, because the perimeter, the
++   flood and the mark are the card's own pseudo-elements and descendants. */
++@property --choice-fill {
++    syntax: "<color>";
++    inherits: false;
++    initial-value: transparent;
++}
++@property --choice-edge-t {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 0;
++}
++@property --choice-flood-t {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 0;
++}
++
++@layer components {
++    /* THE GROUP owns the layout and the ring's clearance: the ring reaches 4 px
++       (2 px outline + 2 px offset), so a group inside a scroll port pads 4 px and the
++       port can never cut it. */
++    .choice-group {
++        display: grid;
++        grid-template-columns: repeat(auto-fill, minmax(min(var(--choice-column), 100%), 1fr));
++        gap: var(--space-atom);
++        padding: var(--space-residue);
++    }
++
++    /* THE CARD. The card rung by construction (r : pad = 16 : 12); a box, never a
++       stadium, whatever it holds. */
++    .choice-card {
++        --choice-tone: var(--foreground);
++        /* the selection ink: the tone, solid, with its lightness floored away from
++           the plate so any hue separates from the unselected sibling at >= 3:1
++           (a mid-L violet at L 0.56 measured short of the bar in light). */
++        --choice-edge: oklch(from var(--choice-tone) min(l, 0.42) c h);
++        --choice-cast: var(--glass-shadow-resting);
++        position: relative;
++        isolation: isolate;
++        display: flex;
++        flex-direction: column;
++        align-items: stretch;
++        gap: var(--space-residue);
++        min-inline-size: 0;
++        min-block-size: var(--control-h-md);
++        padding: var(--space-atom) var(--space-body);
++        border: 1px solid oklch(from var(--foreground) l c h / var(--ink-edge));
++        border-radius: var(--radius-card);
++        background-color: var(--control-surface-bg);
++        /* the state fill rides the plate's own image layer, above its colour */
++        background-image: linear-gradient(var(--choice-fill), var(--choice-fill));
++        backdrop-filter: var(--control-surface-blur);
++        box-shadow: var(--glass-rim-top), var(--glass-rim-bottom);
++        color: var(--foreground);
++        font: inherit;
++        font-size: var(--control-text);
++        line-height: var(--type-leading-body);
++        text-align: start;
++        cursor: pointer;
++        appearance: none;
++        touch-action: manipulation;
++        user-select: none;
++        scale: 1;
++        transition:
++            --choice-fill var(--engage-control-engage-release) var(--ease-standard),
++            --choice-edge-t var(--engage-control-engage-release) var(--ease-standard),
++            border-color var(--engage-control-engage-release) var(--ease-standard),
++            box-shadow var(--engage-control-engage-release) var(--ease-standard),
++            scale var(--spring-press-duration) var(--transition-liquid-spatial);
++    }
++
++    .dark .choice-card {
++        --choice-edge: oklch(from var(--choice-tone) max(l, 0.8) c h);
++    }
++
++    .choice-card[data-size="sm"] {
++        min-block-size: var(--control-h-sm);
++        padding: var(--space-residue) var(--space-atom);
++        font-size: var(--control-text-sm);
++    }
++
++    /* THE PERIMETER: its own layer over the border, 2 px of the tone, so the state
++       never spends `outline` (the ring's) or `box-shadow` (the ring's and the rim's)
++       and never shifts layout. */
++    .choice-card::before {
++        content: "";
++        position: absolute;
++        inset: -1px;
++        border: 2px solid var(--choice-edge);
++        border-radius: inherit;
++        opacity: var(--choice-edge-t);
++        pointer-events: none;
++    }
++
++    /* THE FLOOD: a wash of the tone that blooms after the spatial pop and settles
++       under the content. Normal blending in both arms and a low strength, so the
++       content keeps its own ink contrast (a plus-lighter flood lifts a dark plate
++       toward a light label: measured 3.82:1 on the title in dark). */
++    .choice-card::after {
++        content: "";
++        position: absolute;
++        inset: 0;
++        z-index: -1;
++        border-radius: inherit;
++        background: radial-gradient(
++            130% 150% at 50% 0%,
++            color-mix(in oklab, var(--choice-tone) 8%, transparent),
++            color-mix(in oklab, var(--choice-tone) 3%, transparent) 70%
++        );
++        opacity: var(--choice-flood-t);
++        pointer-events: none;
++        transition: opacity var(--duration-normal) var(--ease-out) 60ms;
++    }
++
++    .choice-card[data-state="on"] {
++        --choice-fill: color-mix(in oklab, var(--choice-tone) calc(var(--fill-selected) * 100%), transparent);
++        --choice-edge-t: 1;
++        --choice-flood-t: 1;
++        /* the commit attacks on the fast clock whatever set it (pointer or key);
++           the release back to rest keeps the slow clock of the base rule */
++        transition:
++            --choice-fill var(--engage-control-engage-attack) var(--ease-standard),
++            --choice-edge-t var(--engage-control-engage-attack) var(--ease-standard),
++            border-color var(--engage-control-engage-release) var(--ease-standard),
++            box-shadow var(--engage-control-engage-release) var(--ease-standard),
++            scale var(--spring-press-duration) var(--transition-liquid-spatial);
++    }
++
++    .choice-group[data-live] .choice-card[data-state="on"] {
++        animation: choice-commit var(--spring-press-duration) var(--ease-cartoon-punch);
++    }
++
++    @keyframes choice-commit {
++        0% { scale: 1; }
++        40% { scale: 1.025; }
++        100% { scale: 1; }
++    }
++
++    /* HOVER lifts one elevation rung and answers in light; bracketed so a coarse tap
++       never latches it. */
++    @media (hover: hover) {
++        .choice-card:hover:not(:disabled) {
++            --choice-fill: oklch(from var(--foreground) l c h / var(--fill-hover));
++            border-color: oklch(from var(--foreground) l c h / var(--ink-perimeter));
++            box-shadow: var(--glass-rim-top), var(--glass-rim-bottom), var(--glass-shadow-floating);
++            scale: 1.015;
++            transition:
++                --choice-fill var(--engage-control-engage-attack) var(--ease-standard),
++                --choice-edge-t var(--engage-control-engage-attack) var(--ease-standard),
++                border-color var(--engage-control-engage-attack) var(--ease-standard),
++                box-shadow var(--engage-control-engage-attack) var(--ease-standard),
++                scale var(--spring-press-duration) var(--transition-liquid-spatial);
++        }
++
++        .choice-card[data-state="on"]:hover:not(:disabled) {
++            --choice-fill: color-mix(
++                in oklab,
++                var(--choice-tone) calc((var(--fill-selected) + var(--fill-hover)) * 100%),
++                transparent
++            );
++        }
++    }
++
++    .choice-card:active:not(:disabled) {
++        scale: var(--scale-press-sm);
++    }
++
++    @media (prefers-reduced-motion: reduce) {
++        .choice-card:hover:not(:disabled),
++        .choice-card:active:not(:disabled) {
++            scale: 1;
++        }
++        .choice-group[data-live] .choice-card[data-state="on"] {
++            animation: none;
++        }
++    }
++
++    .choice-card:disabled {
++        opacity: var(--opacity-disabled);
++        cursor: not-allowed;
++    }
++
++    /* ── ANATOMY ── */
++    .choice-card__body {
++        display: block;
++        min-inline-size: 0;
++    }
++
++    .choice-card__head {
++        display: flex;
++        align-items: center;
++        gap: var(--space-atom);
++        min-inline-size: 0;
++    }
++
++    .choice-card__title {
++        flex: 1 1 auto;
++        min-inline-size: 0;
++        font-weight: 500;
++        overflow-wrap: anywhere;
++    }
++
++    .choice-card__meta {
++        min-inline-size: 0;
++        overflow: hidden;
++        color: var(--muted-foreground-strong);
++        font-family: var(--font-mono);
++        font-size: var(--type-caption);
++        font-variant-numeric: tabular-nums;
++        text-overflow: ellipsis;
++        white-space: nowrap;
++    }
++
++    /* the selected plate carries a fill and a flood; the meta line lifts to full ink
++       with it so a caption keeps 4.5:1 on the darker (light) or lighter (dark) plate */
++    .choice-card[data-state="on"] .choice-card__meta {
++        color: var(--foreground);
++    }
++
++    .choice-card__mark {
++        display: inline-grid;
++        flex: none;
++        place-items: center;
++        inline-size: 1rem;
++        block-size: 1rem;
++        border-radius: var(--radius-pill);
++        background: var(--choice-tone);
++        color: var(--background);
++        opacity: var(--choice-edge-t);
++        scale: calc(0.6 + 0.4 * var(--choice-edge-t));
++    }
++
++    .choice-card__mark svg {
++        inline-size: 0.75rem;
++        block-size: 0.75rem;
++        fill: none;
++        stroke: currentColor;
++        stroke-width: 2;
++        stroke-linecap: round;
++        stroke-linejoin: round;
++    }
++
++    @media (forced-colors: active) {
++        .choice-card {
++            border-color: ButtonText;
++            background: Canvas;
++            box-shadow: none;
++        }
++        .choice-card::before {
++            border-color: Highlight;
++        }
++        .choice-card__mark {
++            background: Highlight;
++            color: HighlightText;
++        }
++    }
++}
+diff --git a/tests/components/choice/Choice.test.ts b/tests/components/choice/Choice.test.ts
+new file mode 100644
+index 00000000..2d2540e8
+--- /dev/null
++++ b/tests/components/choice/Choice.test.ts
+@@ -0,0 +1,75 @@
++/* The choice card's node-readable contract: roles per mode, one tab stop, the
++ * commit on click, the refusal outside a group. Geometry, the perimeter's contrast
++ * and the grid walk are browser measurements (the D4 tile battery, W-B and T-3). */
++import { mount } from "@vue/test-utils";
++import { defineComponent, nextTick, ref } from "vue";
++import { describe, expect, it } from "vitest";
++import { ChoiceCard, ChoiceGroup } from "@glass/components/choice";
++
++function mountGroup(type: "single" | "multiple", initial: string | string[]) {
++    return mount(
++        defineComponent({
++            components: { ChoiceGroup, ChoiceCard },
++            setup: () => ({ model: ref(initial), type }),
++            template: `
++                <ChoiceGroup v-model="model" :type="type">
++                    <ChoiceCard value="a"><template #title>A</template><template #meta>one</template></ChoiceCard>
++                    <ChoiceCard value="b"><template #title>B</template></ChoiceCard>
++                    <ChoiceCard value="c" disabled><template #title>C</template></ChoiceCard>
++                </ChoiceGroup>`,
++        }),
++        { attachTo: document.body },
++    );
++}
++
++describe("ChoiceGroup + ChoiceCard", () => {
++    it("single is a radiogroup of radios with one tab stop", async () => {
++        const w = mountGroup("single", "b");
++        await nextTick();
++        const group = w.get('[data-slot="choice-group"]');
++        expect(group.attributes("role")).toBe("radiogroup");
++        const cards = w.findAll('[data-slot="choice-card"]');
++        expect(cards.map((c) => c.attributes("role"))).toEqual(["radio", "radio", "radio"]);
++        expect(cards.map((c) => c.attributes("aria-checked"))).toEqual(["false", "true", "false"]);
++        expect(cards.filter((c) => c.attributes("tabindex") === "0")).toHaveLength(1);
++        expect(cards[1].attributes("tabindex")).toBe("0");
++        expect(cards[1].attributes("data-state")).toBe("on");
++        w.unmount();
++    });
++
++    it("a click commits the value and moves the state", async () => {
++        const w = mountGroup("single", "b");
++        await nextTick();
++        await w.findAll('[data-slot="choice-card"]')[0].trigger("click");
++        const cards = w.findAll('[data-slot="choice-card"]');
++        expect(cards[0].attributes("aria-checked")).toBe("true");
++        expect(cards[0].attributes("data-state")).toBe("on");
++        expect(cards[1].attributes("data-state")).toBe("off");
++        w.unmount();
++    });
++
++    it("multiple is a group of pressed toggles", async () => {
++        const w = mountGroup("multiple", ["a"]);
++        await nextTick();
++        expect(w.get('[data-slot="choice-group"]').attributes("role")).toBe("group");
++        const cards = w.findAll('[data-slot="choice-card"]');
++        expect(cards[0].attributes("aria-pressed")).toBe("true");
++        expect(cards[1].attributes("aria-pressed")).toBe("false");
++        w.unmount();
++    });
++
++    it("renders the anatomy it is given, and the md mark", async () => {
++        const w = mountGroup("single", "a");
++        await nextTick();
++        const first = w.findAll('[data-slot="choice-card"]')[0];
++        expect(first.find(".choice-card__title").text()).toBe("A");
++        expect(first.find(".choice-card__meta").text()).toBe("one");
++        expect(first.find(".choice-card__mark").exists()).toBe(true);
++        expect(first.find(".choice-card__body").exists()).toBe(false);
++        w.unmount();
++    });
++
++    it("refuses to render outside a group", () => {
++        expect(() => mount(ChoiceCard, { props: { value: "x" } })).toThrow(/ChoiceGroup/);
++    });
++});
