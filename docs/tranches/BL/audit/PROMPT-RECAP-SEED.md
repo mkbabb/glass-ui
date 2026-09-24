@@ -54,3 +54,4 @@ unaddressed registry row with an owning wave. The tranche prompt corpora live be
 - N-12 (owner, 2026-09-23, direct, with a screenshot of the demo SidebarDock painting its plate as a lens): "this is not right with the dock. Inspect". Registered in REGISTRY F-18 with the driver's measurement.
 - N-13 (owner, 2026-09-23, relayed in O-62): "why are our docks grayed out, too"; earlier (fourier OA-43): "why is the controls items, these sidebars and elements, so gray and grayed out?"
 - N-14 (owner, 2026-09-23, relayed in O-63): "buttons in the dock are clipped on hover and select like this".
+- N-15 (owner, relayed in O-64 from keyframes.js OA-41 and OA-48): "the dock transitions and animations from small to large are blurry, slow, and jittery--not smooth and ios 27 loke"; "all of the dock transitions still are awful and blurry".
