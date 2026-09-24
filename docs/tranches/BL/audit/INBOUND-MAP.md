@@ -563,3 +563,36 @@ O-64 (`BK/coordination/valuejs-outbound-2026-09-23-kf-w13r-dock-morph.md`, keyfr
 | O-64 R-4 | F-16 | FAMILY | the `data-morphing` window runs 533-553 ms against the 0.21 s dock rung: R2-02-05's settle tail; the clock half is F-44's |
 | O-64 R-5 | F-43 | FAMILY | two running animations own `.dock-select-trigger::before` opacity through the first expand: one arrival with two owners |
 | O-64 R-6 | F-18 | FAMILY | a ring under a still glyph changes over 1 s above a plate that carries the two cut-cap scroll-timeline animations; the letter asks glass to confirm or refute the plate-resample reading |
+
+## Round 5: O-64 and the one unrowed ask
+
+Seat: REGISTRY, round 5. Model `claude-opus-5-5` (asserted from system identity). Read at `f57a3c1f`; `git diff --stat v10.0.1..HEAD -- src demo` is empty, so every HEAD status below is the published 10.0.1 bytes. Date 2026-09-24. Statuses are as "How to read" defines them. This section supersedes the provisional table under "Landed during round 4", which stays as written.
+
+Sources: O-64 (`BK/coordination/valuejs-outbound-2026-09-23-kf-w13r-dock-morph.md`, read in full; registered in `INBOUND.md` at `5804d8cc`), and `INBOUND.md`, re-read for rows the map lacks. Every letter row from O-53 to O-64 and C-2 is now mapped. The one ask with no row sat in `INBOUND.md`'s corrections paragraph (value.js `15409ece`): whether the landing version ships a quiescence seam HeroBlob can adopt. It is mapped below. No letter has landed in `BK/coordination/` since O-64.
+
+### Counts
+
+- Rows mapped this round: **7** (O-64 6, the corrections ask 1). Per status: FAMILY 7 · NEW **0**.
+- Spot-verified at HEAD by opening the cited source: **7 of 7**, with the sources named in each note.
+- Cumulative: **353** rows. FAMILY 280 · CURED-AT-HEAD 47 · CONSUMER-SIDE 20 · NOT-REPRODUCED 6 · NEW 0.
+- Per family, the round-4 table plus: F-16 16 → 20, F-18 6 → 7, F-43 1 → 2, F-50 4 → 5. Still 41 families with at least one inbound row.
+- Genuinely new families from inbound: **0**. Each row's cause is named by F-16, F-18, F-43 or F-50 as they stand after round 5.
+
+### O-64 (6) and the corrections ask (1)
+
+| letter row | family | status | note |
+|---|---|---|---|
+| O-64 R-1 | F-16 | FAMILY | R2-02-01 at 10.0.1 on keyframes: a 398.49 px first expand and a 223 px first collapse, each in one frame, 8 of 8. The source is unchanged. The flip arm writes no endpoint (`dockMorphMeasure.ts:85-88`), so the first morph takes the fallback `chrome + fullSize` (`:94`), and `fullSize` is the inactive full layer's `offsetWidth` (`:54`), which `layers.css:233-236` lays `absolute; inset: 0`: the collapsed span. The docblock's "the inactive pane remains laid out" (`:18-22`, `:81-84`) is the stale premise (re-checked) |
+| O-64 R-2 | F-16 | FAMILY | A third discrete path, beside the first flip and the layer swap. The orchestrator watches only the outer collapsed/expanded face (`useDockMorph.ts:89-101`), and its docblock says controlled face swaps "do not register with, or resize, the dock shell" (`:8-11`). The reserve `inline-size: var(--dock-expanded-px)` holds only under `[data-morphing]` (`layers.css:116-121`), so an expanded dock whose content width changes resizes in one frame (re-checked). The 24th switch's 1.06 px dip is on the same path, on the gh build only |
+| O-64 R-3 | F-16 | FAMILY | Narrowed: the integer endpoint, not spring overshoot. Endpoints are `offsetWidth` and `offsetHeight` (`dockMorphMeasure.ts:3-7`), and the visible scale clamps at 1 (`layers.css:101-105`), so the extent cannot pass the reserved `--dock-expanded-px`. A 278.59 px natural width reserves 279, lands on it and steps back 0.41 px when `data-morphing` clears. The letter's eighth run rested at 276.27 px, which rounds down and lands monotone, as the letter records (re-checked) |
+| O-64 R-4 | F-16 | FAMILY | R2-02-05's tail. Settle fires on keyframes.js's `SpringProgress.settled` (`useDockSpring.ts:108-115`) for the `dock` row (response 0.3, ζ 0.88, `settleBand` 0.02, `springPresets.ts:84-89`). That is a second clock beside the CSS rung `--spring-dock-duration: calc(var(--spring-dock-settle) * var(--motion-tempo))` (`scheme-spring.css:110`) (re-checked). The clock half is F-44's |
+| O-64 R-5 | F-43 | FAMILY | One property with two owners on the first expand. The specular `::before` is glass's (`glass/material.css:135-150`), and its `opacity` reads `var(--specular-intensity)` under a 240 ms transition (`:233`, `:282-289`) (re-checked). The second animation is not identifiable from source; W-ARRIVAL's one-owner invariant bites it, and its capture names it |
+| O-64 R-6 | F-18 | FAMILY | Attribution open, and the letter asks glass to confirm or refute. The plate carries two cut-cap animations on the `--dock-run` scroll timeline (`run.css:504-512`), which is inactive while the run has nothing to scroll (re-checked), so the cap reading needs a run that overflows. Two other readings fit a ring that changes under a still glyph on the gh build only: the live veil's idle re-stamp (C-2 row 1, F-47 and F-50), and the plate re-sampling a moving backdrop, which is the material working as designed. One probe separates the three: hold the run still and set `backdropMode="static"`; if the ring stops, the row moves to F-50. Then freeze the page behind the plate; if it stops, the row is an F-71 ANSWER. Otherwise it stays here (REGISTRY F-18, round-5 note) |
+| O-56 G-3, quiescence ask (corrections, `15409ece`) | F-50 | FAMILY | value.js asks whether the landing version ships a `settled` seam HeroBlob can adopt. The seam exists at HEAD: `Blob.vue:284-288` exposes `settled` and `settledFrame`. It never turns true under a manual non-idle mood pin (`useBlobMood.ts:171-178`), which is HeroBlob's case, R2-03-06 (re-checked). The answer: adopt `settled` at the landing version, where W-BLOB-GREENFIELD's born-RED (a mood pin does not veto settle) lands |
+
+### Corrections and credits
+
+- **The G-2 figure.** `INBOUND.md` records value.js's correction: 13 `variant=` bindings on Button in 7 files, not R2-03-02's 49. A read-only count over value.js's own `.vue` files at `b42bdf46` (`node_modules`, `dist` and a vendored glass-ui worktree excluded) gives 13 bindings in 7 files, all under `demo/palettes/`. F-70's member figure narrows (REGISTRY §2); the mechanism stands.
+- **The credit rows** agree with REGISTRY §6.6 and the O-60 table above: at 10.0.1 KFA-53's blur is gone, the row never wraps, and the corner never goes negative (KFA-111).
+- **The KFA rows value.js took as keyframes-side** (KFA-61, -95, -134, -136, -228) are CONSUMER-SIDE in the O-60 table already.
+- **Owner words OA-41 and OA-48** (N-15) are recap rows, not letter rows. They ride F-16's acceptance.
