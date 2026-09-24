@@ -1,0 +1,1884 @@
+diff --git a/src/components/dock/GlassDock.vue b/src/components/dock/GlassDock.vue
+index a590bec6..4d88ee6a 100644
+--- a/src/components/dock/GlassDock.vue
++++ b/src/components/dock/GlassDock.vue
+@@ -33,7 +33,7 @@ import { OPEN_DISMISSABLE_LAYER_SELECTOR } from "./constants";
+ import { provideDockContext } from "./composables/dockContext";
+ import { useDockState } from "./composables/useDockState";
+ import { useDockMorphOrchestrator } from "./composables/useDockMorph";
+-import { useDockExpandedSize } from "./composables/dockMorphMeasure";
++import { useDockScrollTimeline } from "./composables/useDockScrollTimeline";
+ import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
+ import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
+ // [2026-08-24 · BK #47 W3 LATTICE + W6] The run: reach on the −P/2 lattice anchor via
+@@ -183,22 +183,14 @@ const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
+ /* The SPINE plate owns clipping. Portaled menu and search surfaces remain outside the
+    dock's layout, while `.glass-dock` uses layout containment without paint clipping. */
+ 
+-/* (the width-seizure cure) — measure the two convex-blend endpoints
+-   ONCE per content change (`--dock-expanded-px`/`--dock-collapsed-px`); the visible
+-   size is a ratio-FREE blend off `--dock-morph-t` (shape.css), so the unbounded
+-   per-swap ratio is gone by construction. See dockMorphMeasure for the floors.
+-
+-   [2026-08-24 · BK #47 W7 MORPH] The endpoint-poisoning cure lives inside
+-   `dockMorphMeasure` — a posture flip no longer writes an endpoint from a root that has
+-   not laid out in that posture. Nothing is needed HERE: see the composable for why the
+-   spec's proposed one-frame hold is the wrong mechanism for the right defect. */
+-useDockExpandedSize({
++/* The posture morph measures nothing: the aperture is a closed form of tokens and the
++   CSS-owned `--dock-extent-t` (styles/aperture.css). The binder below gives the
++   compaction ramp and the rim their scroll timeline. */
++const { bound: timelineBound } = useDockScrollTimeline({
+     rootEl: dockEl,
+-    contentEl: layersEl,
+-    expandedEl: fullEl,
+-    collapsedEl: summaryEl,
+-    axis: orientation,
+-    expanded: visualExpanded,
++    source: () => props.scrollSource,
++    wanted: () => !!props.compactOnScroll || !!props.progressRim,
++    id: dockId,
+ });
+ 
+ /* The dock morph orchestrator owns the built-in collapsed↔expanded pair and writes
+@@ -344,6 +336,10 @@ defineExpose({
+         ]"
+         :data-backdrop-mode="props.backdropMode"
+         :data-held="graspHeld || undefined"
++        :data-kept-open="isHeld || undefined"
++        :data-anchor="props.anchor && props.anchor !== 'center' ? props.anchor : undefined"
++        :data-compact-on-scroll="(props.compactOnScroll && timelineBound) || undefined"
++        :data-rim="(props.progressRim && timelineBound) || undefined"
+         @mouseenter="onMouseEnter"
+         @mouseleave="onMouseLeave($event)"
+         @focusin="onFocusIn"
+@@ -384,6 +380,7 @@ defineExpose({
+                     @transitionend="onGraspReleaseEnd"
+                 ></span>
+             </template>
++            <span v-if="props.progressRim && timelineBound" class="dock-rim"></span>
+         </div>
+ 
+         <!--
+diff --git a/src/components/dock/composables/dockMorphMeasure.ts b/src/components/dock/composables/dockMorphMeasure.ts
+deleted file mode 100644
+index cf13cdbd..00000000
+--- a/src/components/dock/composables/dockMorphMeasure.ts
++++ /dev/null
+@@ -1,142 +0,0 @@
+-import { onScopeDispose, watch, type Ref } from "vue";
+-
+-function getSize(el: HTMLElement, axis: "horizontal" | "vertical"): number {
+-    // Endpoints are layout border boxes. `getBoundingClientRect()` includes the dock's
+-    // live scale and can expose one stale transformed frame as the morph flag clears.
+-    return axis === "vertical" ? el.offsetHeight : el.offsetWidth;
+-}
+-
+-export interface UseDockExpandedSizeOptions {
+-    rootEl: Ref<HTMLElement | null>;
+-    contentEl: Ref<HTMLElement | null>;
+-    expandedEl: Ref<HTMLElement | null>;
+-    collapsedEl: Ref<HTMLElement | null>;
+-    axis: Ref<"horizontal" | "vertical">;
+-    expanded: Ref<boolean>;
+-}
+-
+-/**
+- * Measure the dock's two rendered pane compositions. The inactive pane remains
+- * laid out (visibility, never display, hides it), so the first morph can derive
+- * both endpoints from real content—coarse controls bring their own 44px floor;
+- * non-interactive visuals receive no invented one.
+- */
+-export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
+-    const { rootEl, contentEl, expandedEl, collapsedEl, axis, expanded } = options;
+-    let observer: ResizeObserver | null = null;
+-    let expandedPx = 0;
+-    let collapsedPx = 0;
+-    let disposed = false;
+-
+-    /**
+-     * `"layout"` — the root has actually laid out in the posture `expanded` names, so
+-     * its border box IS that posture's endpoint. Only a ResizeObserver callback and the
+-     * initial attach can claim this.
+-     *
+-     * `"flip"` — the posture ref just changed and NOTHING has re-laid out yet.
+-     */
+-    type CaptureSource = "layout" | "flip";
+-
+-    function capture(source: CaptureSource = "layout"): void {
+-        const root = rootEl.value;
+-        const content = contentEl.value;
+-        const full = expandedEl.value;
+-        const summary = collapsedEl.value;
+-        if (!root || !content || !full || !summary) return;
+-
+-        // A transformed, mid-flip root is not an endpoint. Preserve the two settled
+-        // measurements until the spring clears its morph flag; the root observer then
+-        // captures the newly seated posture.
+-        if (root.hasAttribute("data-morphing")) return;
+-
+-        const a = axis.value;
+-        const rootSize = getSize(root, a);
+-        const fullSize = getSize(full, a);
+-        const summarySize = getSize(summary, a);
+-        if (rootSize <= 0 || fullSize < 0 || summarySize < 0) return;
+-
+-        /* THE PRE-MEASURE GUARD, and the endpoint poisoning it stops.
+-           [2026-08-24 · BK #47 W7 MORPH]
+-
+-           ~~`if (expanded.value) expandedPx = rootSize; else collapsedPx = rootSize;`,
+-           run unconditionally including from the `watch(expanded, …)` flip~~ — the flip
+-           arm is REFUSED here, and it was the bug.
+-
+-           On a collapsed→expanded flip the watcher fires in the same tick the ref
+-           changes: `expanded.value` is already `true` while the root is still laid out
+-           at its COLLAPSED span. The old line read that collapsed number and stored it
+-           as `expandedPx` — the EXPANDED endpoint seeded with the collapsed box. The
+-           morph then armed against it and ran to the wrong target, held there while the
+-           spring settled, and snapped to the real span the moment the ResizeObserver
+-           delivered an honest measurement. That is precisely the traced defect: the
+-           expand runs to 186 of 311, holds ~350ms past settle, then jumps +125px in a
+-           single frame at t≈657 — the largest motion defect in the component.
+-
+-           A posture flip is therefore not a measurement event; it is the event a
+-           measurement must already have PRECEDED. The endpoints move only on `"layout"`
+-           captures, whose root size and posture actually agree. The flip arm still runs
+-           the rest of this function so a content change between morphs re-publishes the
+-           two custom properties — it just no longer invents one of them.
+-
+-           Nothing is masked by this: the fallback path below (`chrome + fullSize`)
+-           reads the FULL PANE'S OWN rendered span, which is real from mount because the
+-           inactive pane stays laid out under `visibility`. The old flip write was
+-           strictly worse than the fallback it overrode. */
+-        if (source === "layout") {
+-            if (expanded.value) expandedPx = rootSize;
+-            else collapsedPx = rootSize;
+-        }
+-
+-        // Everything outside the active pane—persistent controls, gaps and chrome—
+-        // stays in the composition. Swap only the measured pane span.
+-        const activeSize = expanded.value ? fullSize : summarySize;
+-        const chrome = Math.max(0, rootSize - activeSize);
+-        const expandedEndpoint = expandedPx || chrome + fullSize;
+-        const collapsedEndpoint = collapsedPx || chrome + summarySize;
+-        if (expandedEndpoint <= 0 || collapsedEndpoint <= 0) return;
+-
+-        root.style.setProperty("--dock-collapsed-px", `${collapsedEndpoint}px`);
+-        root.style.setProperty(
+-            "--dock-expanded-px",
+-            `${Math.max(expandedEndpoint, collapsedEndpoint)}px`,
+-        );
+-    }
+-
+-    function attach(): void {
+-        observer?.disconnect();
+-        observer = null;
+-        const root = rootEl.value;
+-        if (!root) return;
+-        if (typeof ResizeObserver !== "undefined") {
+-            // A ResizeObserver callback is by definition a post-layout event: the box
+-            // it reports has already been laid out at the size it reports. That is what
+-            // makes it — and only it — entitled to move an endpoint. Passed as a lambda
+-            // so the observer's `(entries, observer)` arguments cannot arrive as the
+-            // `source` parameter.
+-            observer = new ResizeObserver(() => capture("layout"));
+-            for (const el of [
+-                root,
+-                contentEl.value,
+-                expandedEl.value,
+-                collapsedEl.value,
+-            ]) {
+-                if (el) observer.observe(el);
+-            }
+-        }
+-        capture();
+-    }
+-
+-    watch([rootEl, contentEl, expandedEl, collapsedEl, axis], attach, {
+-        immediate: true,
+-    });
+-    watch(expanded, () => capture("flip"));
+-
+-    const fonts = typeof document !== "undefined" ? document.fonts : undefined;
+-    if (fonts) void fonts.ready.then(() => !disposed && capture("layout"));
+-
+-    onScopeDispose(() => {
+-        disposed = true;
+-        observer?.disconnect();
+-        observer = null;
+-    });
+-}
+diff --git a/src/components/dock/composables/index.ts b/src/components/dock/composables/index.ts
+index 720f5e98..20f47688 100644
+--- a/src/components/dock/composables/index.ts
++++ b/src/components/dock/composables/index.ts
+@@ -38,6 +38,11 @@ export {
+     type UseDockMorphOrchestratorOptions,
+     type UseDockMorphOrchestratorReturn,
+ } from "./useDockMorph";
++export {
++    useDockScrollTimeline,
++    type DockScrollSource,
++    type UseDockScrollTimelineOptions,
++} from "./useDockScrollTimeline";
+ 
+ // The V↔H orientation morph (`useDockOrientationMorph`), the fission
+ // facility (`useDockFission` + `dockFissionSignatures`), and the Siri island (`useSiriDock`)
+diff --git a/src/components/dock/composables/useDockMorph.ts b/src/components/dock/composables/useDockMorph.ts
+index 2f641ed6..4577c710 100644
+--- a/src/components/dock/composables/useDockMorph.ts
++++ b/src/components/dock/composables/useDockMorph.ts
+@@ -1,20 +1,16 @@
+-import { useMediaQuery } from "@vueuse/core";
+-import { onUnmounted, readonly, ref, watch } from "vue";
++import { onScopeDispose, readonly, ref, watch } from "vue";
+ import type { Ref } from "vue";
+-import { DOCK_SPRING } from "../constants";
+-import { useDockSpring } from "./useDockSpring";
+ 
+-/**
+- * The dock collapse/expand morph has one job: project the current outer face
+- * onto the shared `--dock-morph-t` spring. Controlled face swaps belong to
+- * `DockCrossfade`; they do not register with, or resize, the dock shell.
+- */
++/** The one posture scalar. CSS owns it (aperture.css): registered, transitioned on
++ *  the dock spring's own clock, 1 expanded and 0 collapsed. */
++export const DOCK_EXTENT_PROPERTY = "--dock-extent-t";
++
+ export interface UseDockMorphOrchestratorOptions {
+-    /** The `.glass-dock` root carrying the shared scalar. */
++    /** The `.glass-dock` root the posture class lands on. */
+     rootEl: Ref<HTMLElement | null>;
+     /** The outer collapsed/expanded face id. */
+     outerActiveLayer: Ref<string>;
+-    /** Notifies the shell when the spring arms and settles. */
++    /** Notifies the shell when the morph window opens and closes. */
+     onMorphActiveChange?: (active: boolean) => void;
+ }
+ 
+@@ -25,10 +21,20 @@ export interface UseDockMorphOrchestratorReturn {
+     outerLeavingLayer: Readonly<Ref<string | null>>;
+ }
+ 
++function extentTransitionRunning(el: HTMLElement): boolean {
++    // getAnimations() flushes style, so the transition the class flip starts exists here.
++    return el
++        .getAnimations()
++        .some(
++            (a) =>
++                a instanceof CSSTransition && a.transitionProperty === DOCK_EXTENT_PROPERTY,
++        );
++}
++
+ /**
+- * Drive the outer collapsed/expanded pair from the sole dock spring. Mid-flight
+- * reversals complement both position and velocity so the painted trajectory is
+- * continuous; reduced motion seats the same endpoint immediately.
++ * The script measures nothing and writes no scalar. It names the leaving face and
++ * holds `[data-morphing]` from the posture flip to the scalar's own `transitionend`.
++ * A flip that starts no transition (reduced motion, a zero duration) settles at once.
+  */
+ export function useDockMorphOrchestrator(
+     options: UseDockMorphOrchestratorOptions,
+@@ -36,73 +42,54 @@ export function useDockMorphOrchestrator(
+     const { rootEl, outerActiveLayer } = options;
+     const currentLayer = ref(outerActiveLayer.value);
+     const leavingLayer = ref<string | null>(null);
+-    const dockSpring = useDockSpring({
+-        response: DOCK_SPRING.response,
+-        dampingFraction: DOCK_SPRING.dampingFraction,
+-    });
+-    const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+-
+-    function root(): HTMLElement | null {
+-        return rootEl.value;
+-    }
++    let open = false;
+ 
+     function settle(): void {
++        if (!open) return;
++        open = false;
+         leavingLayer.value = null;
+-        const element = root();
+-        if (element) {
+-            // Clear the morph flag before the registered scalar so the settled
+-            // class endpoint wins in the same style recalculation.
+-            element.removeAttribute("data-morphing");
+-            element.style.removeProperty("--dock-morph-t");
+-        }
++        rootEl.value?.removeAttribute("data-morphing");
+         options.onMorphActiveChange?.(false);
+-        dockSpring.dispose();
+     }
+ 
+-    watch(prefersReducedMotion, (reduced) => {
+-        if (reduced && root()?.hasAttribute("data-morphing")) settle();
+-    });
+-
+-    function play(): void {
+-        const element = root();
+-        if (!element) return;
+-
+-        options.onMorphActiveChange?.(true);
+-        element.setAttribute("data-morphing", "");
+-
+-        const liveScalar = Number.parseFloat(
+-            element.style.getPropertyValue("--dock-morph-t"),
+-        );
+-        const reversing = dockSpring.live && !Number.isNaN(liveScalar);
+-        const from = reversing ? 1 - liveScalar : 0;
+-
+-        element.style.setProperty("--dock-morph-t", `${from}`);
+-        dockSpring.playTo(from, 1, {
+-            inheritVelocityScale: reversing ? -1 : 1,
+-            onFrame: (value) => {
+-                root()?.style.setProperty("--dock-morph-t", `${value}`);
+-            },
+-            onSettle: settle,
+-        });
++    function onTransitionEnd(event: TransitionEvent): void {
++        if (event.target === rootEl.value && event.propertyName === DOCK_EXTENT_PROPERTY) {
++            settle();
++        }
+     }
+ 
+-    const stop = watch(outerActiveLayer, (next, previous) => {
+-        if (next === previous) return;
++    watch(
++        rootEl,
++        (el, previous) => {
++            previous?.removeEventListener("transitionend", onTransitionEnd);
++            el?.addEventListener("transitionend", onTransitionEnd);
++        },
++        { immediate: true },
++    );
+ 
+-        const element = root();
+-        currentLayer.value = next;
+-        if (!element) {
+-            leavingLayer.value = null;
+-            return;
+-        }
+-
+-        leavingLayer.value = previous;
+-        play();
+-    });
++    watch(
++        outerActiveLayer,
++        (next, previous) => {
++            if (next === previous) return;
++            currentLayer.value = next;
++            const el = rootEl.value;
++            if (!el) {
++                leavingLayer.value = null;
++                return;
++            }
++            leavingLayer.value = previous;
++            if (!open) {
++                open = true;
++                el.setAttribute("data-morphing", "");
++                options.onMorphActiveChange?.(true);
++            }
++            if (!extentTransitionRunning(el)) settle();
++        },
++        { flush: "post" },
++    );
+ 
+-    onUnmounted(() => {
+-        stop();
+-        dockSpring.dispose();
++    onScopeDispose(() => {
++        rootEl.value?.removeEventListener("transitionend", onTransitionEnd);
+     });
+ 
+     return {
+diff --git a/src/components/dock/composables/useDockShellProps.ts b/src/components/dock/composables/useDockShellProps.ts
+index d3a83f9a..c698728e 100644
+--- a/src/components/dock/composables/useDockShellProps.ts
++++ b/src/components/dock/composables/useDockShellProps.ts
+@@ -95,6 +95,18 @@ export interface DockProps {
+         | (() => HTMLCanvasElement | null)
+         | string
+         | null;
++    /**
++     * The scroll source the compaction ramp and the rim read: an element, the window,
++     * or a getter resolved after mount. Never a selector. Absent, the document scroll.
++     */
++    scrollSource?: HTMLElement | Window | (() => HTMLElement | Window | null) | null;
++    /** Opt in to compaction: past `--dock-compact-distance` of scroll the aperture
++     *  closes to the collapsed extent; hover, focus and a held popover open it. */
++    compactOnScroll?: boolean;
++    /** The dock's own progress rim, painted inside the plate on the scroll timeline. */
++    progressRim?: boolean;
++    /** Which end the collapsed aperture keeps: `"center"` (default), `"start"`, `"end"`. */
++    anchor?: "start" | "center" | "end";
+     // Splitting and item reordering are consumer composition concerns, not Dock props.
+ }
+ 
+diff --git a/src/components/dock/styles/crossfade.css b/src/components/dock/styles/crossfade.css
+index b34ae96c..146d9ca7 100644
+--- a/src/components/dock/styles/crossfade.css
++++ b/src/components/dock/styles/crossfade.css
+@@ -103,32 +103,8 @@
+         block-size: max-content;
+     }
+ 
+-    /* G12 — the content-wrapper clip. Lands on `.dock-face-content` ONLY (the
+-       non-interactive content wrapper), NEVER on the `.dock-face` interactive run, and
+-       ONLY while a SIMULTANEOUS plate collapse is in flight (`.glass-dock[data-morphing]`
+-       ancestor). So a face's row that spills past the narrowing plate is clipped
+-       mid-collapse WHILE hover plates overflow freely at rest (no `[data-morphing]` → no
+-       clip). The clip rides the inheriting `--dock-morph-t` collapse scalar (DISTINCT
+-       from the per-face `--dock-t` opacity scalar): at `--dock-morph-t: 1` (expanded)
+-       `inset(0)` — no clip; toward `0` (collapsing) the trailing/​bottom remainder is
+-       clipped away as the aperture narrows. Compositor-only (`clip-path`) — the
+-       `proof:no-layout-animation` floor. PRM snaps the collapse, so the clip is a single
+-       frame. This is the COMPOUND the synthetic prototypes never composed: a face-swap
+-       crossfade coexisting with a collapse-morph clip on the same face. */
+-    .glass-dock[data-morphing]
+-        .dock-crossfade
+-        > .dock-face.is-active
+-        > .dock-face-content {
+-        clip-path: inset(0 calc((1 - var(--dock-morph-t)) * 100%) 0 0);
+-        will-change: clip-path;
+-    }
+-
+-    .glass-dock.vertical[data-morphing]
+-        .dock-crossfade
+-        > .dock-face.is-active
+-        > .dock-face-content {
+-        clip-path: inset(0 0 calc((1 - var(--dock-morph-t)) * 100%) 0);
+-    }
++    /* A face that spills past the narrowing aperture mid-collapse is cut by the controls
++       row's own aperture clip (aperture.css); the face carries no clip of its own. */
+ 
+     /* PRM — the opacity crossfade snaps (the spring's `respectReducedMotion` jumps
+        `--dock-t` 0→1 in one frame). The reserved box + the discrete active/leaving
+diff --git a/src/components/dock/styles/dock.css b/src/components/dock/styles/dock.css
+index 2174ac57..a4a24de5 100644
+--- a/src/components/dock/styles/dock.css
++++ b/src/components/dock/styles/dock.css
+@@ -64,10 +64,8 @@
+            the dock, NOT passed through (the reserved-footprint pass-through is the
+            TRANSPARENT MARGIN's job below, never the plate's). */
+         pointer-events: auto;
+-        /* Corner rounding follows the box shape exactly (shell.css shape rules set the
+-           `.glass-dock` border-radius; the plate inherits it) so the plate's bg/border/
+-           backdrop round-clip to the same silhouette on every shape. */
+-        border-radius: inherit;
++        /* The corner and the extent are the aperture's (aperture.css): the plate IS the
++           visible dock, so its border, its elevation and its rim all follow it. */
+         /* The backdrop lens — reads the dock-scoped resolved blur the shell composes
+            (`--dock-surface-blur: var(--glass-blur-resting)`, the 16px calibration-host
+            radius + its saturate companion; the `.dark .glass-dock` glow arm + the
+@@ -75,22 +73,6 @@
+            the inheriting token). ONE backdrop-filter in the dock — the box no longer
+            carries it (no double-blur). */
+         backdrop-filter: var(--dock-surface-blur);
+-        /* THE VISIBLE-EXTENT MORPH — paint-only clip off the ONE plate scalar. Reads
+-           `--dock-t` (S2: the plate is the sole reader). Transitionally the collapse
+-           insets are `0px` (the box-size morph drives the extent, shape.css) so this is a
+-           corner-safe no-op that still tracks the scalar; SPRING-UNIFY sets the collapse
+-           geometry + `round` radius. No `round` here yet: an inset(0) clip on the
+-           border-radius-rounded plate keeps the rounded corners (they sit inside the
+-           bounding box) on EVERY shape, so no fixed-radius over/under-round regression. */
+-        --dock-t: var(--dock-morph-t);
+-        --dock-plate-inset-inline: calc(
+-            (1 - var(--dock-t)) * var(--dock-plate-collapse-inset, 0px)
+-        );
+-        --dock-plate-inset-block: calc(
+-            (1 - var(--dock-t)) * var(--dock-plate-collapse-inset-block, 0px)
+-        );
+-        clip-path: inset(var(--dock-plate-inset-block) var(--dock-plate-inset-inline));
+-
+         /* ── THE ONE-LAYER SURFACE INTERPOLATION, COMPOSED AT THE ELEMENT ──────────
+            The collapsed↔expanded surface is ONE painted layer, and what LERPS on
+            `--dock-expand-t` is the plate's INK — the rung's alpha — not two ready-made
+@@ -135,25 +117,9 @@
+             );
+     }
+ 
+-    /* ── THE GRASP PRECONDITION — the plate stands down its two backdrop roots ──────
+-       The grasp carriers (glass/grasp.css) are `backdrop-filter` boxes INSIDE this
+-       plate, and a `backdrop-filter` samples only as far back as its BACKDROP ROOT.
+-       This plate forms one TWICE over: the extent `clip-path`, and the grain `::after`,
+-       whose `mix-blend-mode` makes its parent an isolated group. Captured on Chrome 148
+-       (stripe field, blur(8px) carrier): with either present the carriers blur NOTHING
+-       — not less, nothing — and with both cleared the blur lands. A register that
+-       silently blurs nothing is the exact dead-mechanism shape this file's own history
+-       is made of, so both stand down for the duration of a hold.
+-
+-       Neither costs anything to give up while held. The clip is `inset(0px 0px)` at
+-       rest (the collapse insets default to `0px`, above) and a HELD dock is held OPEN,
+-       so it clips nothing it would otherwise clip; the grain is a texture at
+-       `--glass-grain-opacity` over a plate the hold has already opened. If a future
+-       collapse geometry makes the clip load-bearing, the plate must move it to an
+-       ancestor rather than re-take it here — the register cannot work under it. */
+-    .dock-plate:has(> .glass-grasp-carrier[data-grasp="grasp"]) {
+-        clip-path: none;
+-    }
++    /* THE GRASP PRECONDITION: the grain's `mix-blend-mode` makes the plate an isolated
++       group, a backdrop root for the grasp carriers inside it, so the grain stands down
++       for the duration of a hold. */
+     .dock-plate:has(> .glass-grasp-carrier[data-grasp="grasp"])::after {
+         display: none;
+     }
+@@ -232,28 +198,3 @@
+         width: max-content;
+     }
+ }
+-
+-/* ── The desktop-PRM SNAP-TO-END-STATE ──────────────────────────────────────────────
+-   Under `prefers-reduced-motion: reduce` the reduced-motion cure is SNAP-TO-END-STATE,
+-   NEVER freeze-at-start (WCAG 2.4.3/2.4.7/1.4.13). The EXPANDED / always-expanded dock
+-   resolves its EXPANDED plate geometry STATICALLY — the plate scalar pins to its END
+-   state so the clip reveals the FULL plate (every control reachable, full-width desktop
+-   viewport), never the collapsed-from sliver the frozen morph clock left (the
+-   `--dock-expand-t = 0` freeze). The plate-scalar pin is the GREENFIELD guarantee: when
+-   re-points the plate clip to be the sole extent driver, this arm
+-   makes the PRM end-state correct BY CONSTRUCTION (independent of the JS morph seat). Not
+-   inside the `@layer components` block (an `@media` at-rule sits at the stylesheet root;
+-   it re-declares the `.dock-plate` scalar with the same class-specificity so it wins over
+-   the transitional `--dock-t: var(--dock-morph-t)` alias under reduce). The oracle is REAL
+-   GPU (2 headless false-reds on this surface distrusted — verified on Chromium+Metal). */
+-@media (prefers-reduced-motion: reduce) {
+-    @layer components {
+-        .glass-dock.expanded .dock-plate,
+-        .glass-dock.always-expanded .dock-plate {
+-            --dock-t: 1;
+-        }
+-        .glass-dock.collapsed .dock-plate {
+-            --dock-t: 0;
+-        }
+-    }
+-}
+diff --git a/src/components/dock/styles/index.css b/src/components/dock/styles/index.css
+index ec9648ec..bfd08b01 100644
+--- a/src/components/dock/styles/index.css
++++ b/src/components/dock/styles/index.css
+@@ -84,38 +84,10 @@
+    SURFACE] ~~`[data-search]`~~); the pill→field morph is the dock's OWN `--dock-morph-t`
+    glide (box-inviolate); CONSUMES the tint seam + the menu-row recipe, re-authors neither. */
+ @import "./search.css";
++/* D2-A: the total lattice, the aperture every moving dock length is a closed form of. */
++@import "./aperture.css";
+ 
+-/* The SINGLE morph scalar. The dock morph orchestrator writes it once per frame
+-   to the `.glass-dock` root; EVERY morph axis (box size, padding, radius, scale,
+-   background/border color, child stagger) is a pure `calc()` read off it — one
+-   driver, one clock, on every engine (the View-Transitions collapse fork is
+-   retired). `@property`-registered `<number>` so it interpolates COMPOSITED, not
+-   discretely (an UNregistered custom property jumps + animates on the main
+-   thread). `initial-value:0` = the collapsed-progress floor.
+-
+-   `inherits:true` (NOT false) — the SOTA inheritance-bomb guard is specifically
+-   "never write the scalar to `:root`" (a whole-document subtree recalc per frame
+-   over 1300+ elements). The scalar is written LOCALLY on the small `.glass-dock`
+-   subtree, and its CONSUMERS are DESCENDANTS (`.dock-layers` sizing, the active
+-   pane's child stagger, and `.dock-face-content` clipping) that read it via inheritance, so it MUST
+-   inherit. Writing one inheriting var over a ~10–20-element dock subtree is the
+-   established local-subtree scalar pattern (a `.dock-layers`-scoped write); the
+-   bomb only fires from a `:root` write, which never happens here. The root-chrome
+-   reads (padding/bg/border) sit on the same element it is written to. */
+-@property --dock-morph-t {
+-    syntax: "<number>";
+-    inherits: true;
+-    initial-value: 0;
+-}
+-
+-/* The plate scalar the `clip-path` visible-extent morph reads. `inherits: false` is
+-   LOAD-BEARING (the opposite of `--dock-morph-t`, which MUST inherit to its descendant
+-   readers): the plate scalar has NO descendant reader, so un-inherited is correct.
+-   `initial-value: 0` = the collapsed-progress floor (the safe resting clip on a
+-   non-supporting engine).
+-
+-   The per-frame writes land on the ROOT `--dock-morph-t`; the plate ALIASES this scalar
+-   to it (`--dock-t: var(--dock-morph-t)`, styles/dock.css). */
++/* The per-face crossfade scalar (DockCrossfade writes it on each face). */
+ @property --dock-t {
+     syntax: "<number>";
+     inherits: false;
+diff --git a/src/components/dock/styles/layers.css b/src/components/dock/styles/layers.css
+index 897b9316..6562c1e9 100644
+--- a/src/components/dock/styles/layers.css
++++ b/src/components/dock/styles/layers.css
+@@ -46,80 +46,6 @@
+         min-width: 0;
+     }
+ 
+-    /* ── The ratio-FREE convex-blend SIZE (the width-seizure cure) ──
+-       THE HAZARD THIS AVOIDS: driving the visible size by an UNBOUNDED
+-       per-swap `from/to` ratio — `--dock-root-scale = max(ratio + (1−ratio)·t, 0.06)`,
+-       a FLOOR with NO CEILING — lets a degenerate `to` (the FLIP measure racing the
+-       content layout) run `ratio = from/max(to,1px)` to ~56 → `scaleX(56)` ≈ 2451px on
+-       collapse, or an inversion at the spring's >1 overshoot peak. `transform-origin:
+-       center` kept the centroid clean (cxRange 0), which is exactly why every prior
+-       judge measuring the centroid PASSED while the WIDTH detonated. The whole
+-       per-swap measure-and-arm pipeline + the `--dock-root-*`/`--dock-morph-ratio/scale`
+-       rules are DELETED (clean break, no legacy).
+-
+-       THE CURE — a convex blend of two POSITIVE measure-ONCE endpoints. The dock
+-       measures its expanded content span + its collapsed box ONCE per content change
+-       (`useDockExpandedSize` writes `--dock-expanded-px`/`--dock-collapsed-px`, NOT a
+-       per-swap rAF race) and the visible size is `--dock-live = collapsed +
+-       (expanded − collapsed)·clamp(0, --dock-morph-t, 1)` → BOUNDED by construction:
+-       a convex blend can NEVER exceed the larger endpoint nor invert below the smaller,
+-       regardless of spring overshoot (the `clamp(0,t,1)` caps the size term). No ratio,
+-       no `from>to` degeneracy, no floor guard (the two endpoints ARE the floors). The box
+-       RESERVES `--dock-expanded-px` (ONE layout solve, CDP-Layout-flat) and the visible
+-       size rides `scale: var(--dock-size-scale)` from `transform-origin: center` —
+-       container-justify-agnostic, center-out by construction (left-anchored / centred /
+-       auto-margin docks ALL grow center-out, no justify detection, no translate). The
+-       endpoints default to a no-op (`expanded == collapsed → scale 1`) so an unmeasured
+-       dock paints neutral. The actual `scale:` property is
+-       composed in shape.css as a PURE size morph off `--dock-size-scale` ALONE (the
+-       `--stretch` squish × `--dock-punch-stretch` cartoon-punch deformation zoo is
+-       DEFINITION-ABSENT — one compositor channel, no reciprocal squish). KEEP
+-       `--dock-morph-t` (the shipped token — NO rename).
+-
+-       The size blend reads the DIRECTIONAL `--dock-expand-t`
+-       (the expanded-ness 0=collapsed/1=expanded `morph.css` derives: expand `t`, collapse
+-       `1−t`), NOT the raw morph PROGRESS `--dock-morph-t` (always 0→1). The raw progress is
+-       direction-AGNOSTIC, so reading it made the convex blend `collapsed + Δ·t` play
+-       collapsed→expanded for BOTH directions — correct on expand, but on COLLAPSE it
+-       ballooned the box UP to the full expanded footprint, held there as the spring settled
+-       at t=1, then SNAPPED to the resting collapsed size when `[data-morphing]` cleared (a
+-       reproducible ~440px width reversal, the live "morph hover flicker"). The chrome
+-       (bg/border/blur — `morph.css`) and the child stagger (`--dock-expand-t` reads below)
+-       were ALREADY on the directional scalar; this aligns the SIZE with them. Expand is
+-       byte-identical (`.expanded[data-morphing]` derives `--dock-expand-t: --dock-morph-t`);
+-       only `.collapsed[data-morphing]` (`1−t`) is corrected, so the box now shrinks
+-       monotonically expanded→collapsed with NO snap. */
+-    .glass-dock[data-morphing] {
+-        --dock-live: calc(
+-            var(--dock-collapsed-px, var(--dock-expanded-px, 0px)) +
+-                (
+-                    var(--dock-expanded-px, 0px) -
+-                        var(--dock-collapsed-px, var(--dock-expanded-px, 0px))
+-                ) *
+-                clamp(0, var(--dock-expand-t), 1)
+-        );
+-        --dock-size-scale: clamp(
+-            0.06,
+-            calc(var(--dock-live) / max(var(--dock-expanded-px, 1px), 1px)),
+-            1
+-        );
+-        transform-origin: center center;
+-        will-change: transform;
+-    }
+-
+-    /* The box RESERVES its expanded footprint (ONE layout solve — the page reflows
+-       ONCE to the final size, CDP-Layout stays FLAT) while the visible size scales
+-       toward it. Horizontal reserves `inline-size`, vertical reserves `block-size`,
+-       matching the morph axis. The `.dock-layers` content lays out at its natural
+-       size behind the clip (shell.css) — that natural span is the `--dock-expanded-px`
+-       the ResizeObserver reads. */
+-    .glass-dock[data-morphing]:not(.vertical) {
+-        inline-size: var(--dock-expanded-px);
+-    }
+-    .glass-dock[data-morphing].vertical {
+-        block-size: var(--dock-expanded-px);
+-    }
+-
+     /* Horizontal dock content grows visibly when the active layer's natural
+        width exceeds the content area (grow-to-fit). ~~consumers needing wrap opt
+        into `overflow="wrap"`~~ — [2026-08-12 · BK #47 W1 SURFACE] there is no wrap
+@@ -170,8 +96,13 @@
+         pointer-events: none;
+     }
+ 
+-    .glass-dock[data-morphing] .dock-layer.is-leaving {
+-        opacity: calc(1 - var(--dock-morph-t));
++    /* The leaving outer face fades on the posture scalar: the full face is leaving on
++       a collapse (t runs 1 → 0), the summary on an expand (t runs 0 → 1). */
++    .glass-dock[data-morphing] > .dock-controls > .dock-layers > .dock-layer--full.is-leaving {
++        opacity: var(--dock-extent-t);
++    }
++    .glass-dock[data-morphing] > .dock-controls > .dock-layers > .dock-layer--summary.is-leaving {
++        opacity: calc(1 - var(--dock-extent-t));
+     }
+ 
+     /* GU-4 — retain only the witnessed press control through a collapse-triggered
+@@ -341,11 +272,8 @@
+        reserved footprint. The gate hands the box to the transform for the morph and
+        back to 100% on settle (the transform/reserve vanish when `[data-morphing]`
+        clears). */
+-    .glass-dock.expanded:not(.fit-content):not([data-morphing]) .dock-layers {
+-        width: 100%;
+-    }
+-
+-    .glass-dock.expanded:not(.fit-content) .dock-layer--full {
++    .glass-dock:not(.fit-content) > .dock-controls > .dock-layers,
++    .glass-dock:not(.fit-content) .dock-layer--full {
+         width: 100%;
+     }
+ 
+diff --git a/src/components/dock/styles/morph.css b/src/components/dock/styles/morph.css
+index df3d2543..5c793ad5 100644
+--- a/src/components/dock/styles/morph.css
++++ b/src/components/dock/styles/morph.css
+@@ -13,56 +13,7 @@
+  * carve is isomorphic (same layer, same source order → ZERO visual delta). */
+ 
+ @layer components {
+-    /* The root chrome morphs off the SINGLE `--dock-morph-t` scalar, NOT a
+-       CSS transition (a `padding/scale/radius` + `background/border-color` transition
+-       list would run TWO curves on TWO durations). `--dock-expand-t` is the directional
+-       expanded-ness (0 = collapsed look, 1 = expanded look) derived from the
+-       per-swap morph scalar + the synchronously-set `.expanded`/`.collapsed` class:
+-       the box width AND the root padding/radius plus flat-layer opacity move on ONE clock. The
+-       per-frame writes drive the registered `<number>` scalar; the `calc()` reads
+-       below interpolate composited. Under PRM the spring's `respectReducedMotion`
+-       settles instantly (the scalar jumps 0→1 in one frame → the chrome snaps). */
+-
+-    /* `--dock-expand-t` — the directional expanded-ness. `--dock-morph-t` is a
+-       REGISTERED `@property` (initial-value 0), so it is NEVER guaranteed-invalid:
+-       `var(--dock-morph-t, 1)` reads 0 at REST (the fallback is DEAD), which would
+-       resolve every expanded dock to expand-t 0 → the collapsed resting look (the
+-       pill-radius + collapsed bg/border/padding regression). So the resting value is
+-       stated STATICALLY per class, and ONLY while a morph is in flight
+-       (`[data-morphing]` armed by the dock morph orchestrator and cleared on settle)
+-       does expand-t track the live spring scalar. The class is ALREADY the END state
+-       during the morph, so the read resolves the correct in-flight blend (collapse
+-       1→0 via `1 - t`; expand 0→1 via `t`); on settle `[data-morphing]` clears and
+-       expand-t snaps to the exact class endpoint. */
+-    /* The `--dock-expand-t` directional derivation is
+-       ORIENTATION-AGNOSTIC. The derivation reads the per-swap morph scalar + the
+-       synchronously-set `.expanded`/`.collapsed` class — there is NO axis in this
+-       blend (a `t`-vs-`1-t` directional read), so the `:not(.vertical)` qualifier is
+-       DROPPED here. A collapsing VERTICAL dock now derives the same in-flight
+-       expand-t (the box-size arm `layers.css` already morphs `block-size` on
+-       `--dock-morph-t`; this gives the chrome the matching directional scalar). The
+-       earlier "a vertical dock is ALWAYS-EXPANDED" assumption is retired since
+-       vertical-collapse shipped — `alwaysExpanded` defaults false (GlassDock.vue),
+-       so a genuinely-collapsing vertical dock gets its chrome on the ONE clock. */
+-    .glass-dock.expanded,
+-    .glass-dock.always-expanded {
+-        --dock-expand-t: 1;
+-    }
+-
+-    .glass-dock.collapsed {
+-        --dock-expand-t: 0;
+-    }
+-
+-    /* Only the outer collapsed/expanded pair arms `[data-morphing]`. Controlled
+-       face changes run inside DockCrossfade and leave the shell endpoint alone. */
+-    .glass-dock.expanded[data-morphing],
+-    .glass-dock.always-expanded[data-morphing] {
+-        --dock-expand-t: var(--dock-morph-t);
+-    }
+-
+-    .glass-dock.collapsed[data-morphing] {
+-        --dock-expand-t: calc(1 - var(--dock-morph-t));
+-    }
++    /* `--dock-expand-t` is the posture scalar itself (aperture.css). */
+ 
+     /* NO FILTER ON AN ANCESTOR OF A LENS — the #47 (GF-DOCK) fence. A `filter` on
+        `.glass-dock` — or on ANY ancestor of a backdrop-filtered box (`.dock-plate`, the
+@@ -75,85 +26,6 @@
+        (useElementMorph.ts:229, useLiquidReveal.ts:74, useDockCtaReceive.ts:245
+        `blur ?? 4`) is live, invisible to this fence, and owned by the motion rows. */
+ 
+-    /* ~~The padding morph is split out + scoped `:not(.dock-overflow-wrap)` so the
+-       wrap variant's own padding rules are NOT clobbered by this higher-specificity
+-       longhand~~ — [2026-08-12 · BK #47 W1 SURFACE] the wrap variant is struck with
+-       the `overflow` prop, so there is nothing to except and the qualifier goes.
+-       Specificity falls (0,2,0) → (0,1,0) on the horizontal arm; it beats nothing it
+-       did not already beat, because the only rule it ever needed to yield to was the
+-       wrap recipe that no longer exists.
+-
+-       The LAYOUT-ISOLATION fix: the collapse↔expand morph is
+-       an INLINE-WIDTH aperture by contract ("horizontal docks animate width"), so
+-       the BLOCK axis MUST be invariant across the morph — otherwise the dock's
+-       outer height shrinks ~4px on collapse (the collapsed-pad 0.25rem vs the
+-       expanded pad-block 0.375rem, ×2) and, because a free-floating / inline dock
+-       sits in normal flow (`display:inline-flex`), that height delta REFLOWS its
+-       siblings — the page content jumped as the dock animated (the user's 13:27
+-       audit item 1). The fix holds `padding-block` PINNED at the expanded value in
+-       BOTH states (no `--dock-expand-t` interpolation on the block axis) so the
+-       outer block-size is constant; ONLY `padding-inline` morphs to tighten the
+-       collapsed pill inline. The collapsed circle is unaffected — its diameter is
+-       owned by the summary pane's own symmetric `block-size` + `aspect-ratio:1`
+-       (the `.collapsed .dock-layer--summary` rule below), CENTRED on the dock's
+-       stable-height plate by the root `align-items:center`, not by the root pad. So
+-       the morph reflows NOTHING vertically: 0px container-height delta. */
+-    .glass-dock:not(.vertical) {
+-        /* The collapsed inline-pad endpoint is the EXPANDED block pad (max'd with the
+-           consumer `--dock-collapsed-padding` handle) so the height-pinned collapsed
+-           pill is SYMMETRIC → a clean circle at the `--radius-dock` 9999px. The block
+-           axis is pinned to the expanded pad (below), so matching the inline collapsed
+-           endpoint to it keeps the box square (the B4 "symmetric collapsed padding
+-           keeps the pill a circle" intent, preserved through the §1 height-pin). The
+-           `max()` lets a consumer set `--dock-collapsed-padding` LARGER for a looser
+-           pill but never SMALLER than the block pad (which would re-introduce the
+-           narrower-than-tall oval the height-pin would otherwise leave). */
+-        --dock-pad-collapsed: max(
+-            var(--dock-padding-block, 0.375rem),
+-            var(--dock-collapsed-padding, 0px)
+-        );
+-        /* block padding is INVARIANT — the expanded value, both states (the
+-           layout-isolation contract above): the inline aperture morphs, the block
+-           axis is pinned so the outer height never changes → 0px container reflow. */
+-        padding-block: var(--dock-padding-block, 0.375rem);
+-        padding-inline: calc(
+-            var(--dock-pad-collapsed) +
+-                (var(--dock-padding-inline, 0.5rem) - var(--dock-pad-collapsed)) *
+-                var(--dock-expand-t)
+-        );
+-    }
+-
+-    /* The VERTICAL padding interp is the AXIS-INVERSE
+-       of the horizontal layout-isolation contract above. The vertical collapse↔
+-       expand is a BLOCK-HEIGHT aperture (the box-size arm morphs `block-size`,
+-       layers.css), so the CROSS (inline) axis MUST be invariant across the morph —
+-       else the dock's outer WIDTH changes on collapse and reflows its horizontal
+-       siblings (the §1 contract, mirrored onto the vertical axis). So `padding-
+-       inline` is PINNED at the expanded inline value in BOTH states, and ONLY
+-       `padding-block` morphs to tighten the collapsed pill on the morph axis. The
+-       collapsed block-pad endpoint is the EXPANDED inline pad (max'd with the
+-       consumer `--dock-collapsed-padding` handle) so the height-pinned-cross collapsed
+-       pill is SYMMETRIC. Specificity 0,2,0 source-order after shell.css's static
+-       `.glass-dock.vertical` padding so this wins at equal specificity; at the rest
+-       endpoints `--dock-expand-t` is the class value so the look is exact.
+-       [2026-08-12 · BK #47 W1 SURFACE] ~~Scoped to the NON-scroll/non-wrap vertical
+-       dock~~ — the `:not(.dock-overflow-wrap)` arm is struck with the `overflow`
+-       prop; the rule stays (0,2,0), the same tie source order already resolved. */
+-    .glass-dock.vertical {
+-        --dock-pad-collapsed: max(
+-            var(--dock-padding-inline, 0.5rem),
+-            var(--dock-collapsed-padding, 0px)
+-        );
+-        /* inline padding is INVARIANT — the cross axis, pinned both states so the
+-           outer inline-size never changes → 0px horizontal sibling reflow. */
+-        padding-inline: var(--dock-padding-inline, 0.5rem);
+-        padding-block: calc(
+-            var(--dock-pad-collapsed) +
+-                (var(--dock-padding-block, 0.375rem) - var(--dock-pad-collapsed)) *
+-                var(--dock-expand-t)
+-        );
+-    }
+-
+     /* The collapsed padding / background / border-color are RETIRED here
+        (the `--dock-expand-t` morph block above is the single authority for those
+        three axes — they interpolate, never snap). `.collapsed` keeps only its
+@@ -163,8 +35,6 @@
+        value). */
+     .glass-dock.collapsed {
+         cursor: pointer;
+-        justify-content: center;
+-        box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
+     }
+ 
+     /* The collapsed summary is a PERFECT CIRCLE. The `.dock-layer`
+@@ -211,7 +81,7 @@
+        between the collapsed↔expanded endpoints); only the summary pane's CONTENT
+        reveal is decoupled onto the incoming scalar. */
+     .glass-dock[data-morphing] .dock-layer--summary {
+-        --dock-expand-t: var(--dock-morph-t);
++        --dock-expand-t: calc(1 - var(--dock-extent-t));
+     }
+ 
+     /* The EMPTY-collapsed-summary trap. A dock with a
+@@ -236,27 +106,6 @@
+         border: 0;
+     }
+ 
+-    /* The persistent control IS the collapsed pill in the empty-summary case — drop
+-       the inter-region gap so the collapsed circle is exactly the persistent box. */
+-    .glass-dock.collapsed:has(.dock-layer--summary:empty)
+-        .dock-persistent
+-        + .dock-layers {
+-        margin-inline-start: 0;
+-    }
+-
+-    /* The collapsed persistent pill centers its single glyph on
+-       BOTH axes (the empty-summary case where the #persistent control IS the collapsed
+-       circle). The `--dock-control-safe-inset` padding (background-clip: content-box) must
+-       not shift the glyph off the pill's geometric center — `place-items: center`
+-       belt-and-braces both axes so the shrunken icon reads dead-center (A5 "icons in the
+-       SHRUNKEN state are NOT ALIGNED"). */
+-    .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent {
+-        display: grid;
+-        place-items: center;
+-    }
+-    .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent > * {
+-        place-self: center;
+-    }
+     /* Floor the collapsed glyph at the 16px-min the switcher glyph
+        carries (never a sliver inside an inline-flex column). */
+     .glass-dock.collapsed .dock-persistent svg,
+@@ -285,9 +134,7 @@
+        `[data-morphing]` precedent above (morph.css:46-53). The surface arms
+        (background/border/shadow) stay on the bare `:hover` (they don't multiply
+        geometry, so a hovered collapse keeps its hover read without the pop). */
+-    .glass-dock.collapsed:hover {
+-        box-shadow: var(--shadow-dock-override, var(--shadow-dock));
+-    }
++
+     /* NO collapsed-hover surface lift. The rule that sat here declared the plate's
+        COLLAPSED endpoints byte-for-byte as `shell.css` already declares them, and its
+        EXPANDED endpoints are unread while `--dock-expand-t` is pinned at 0 — which it
+diff --git a/src/components/dock/styles/run.css b/src/components/dock/styles/run.css
+index 3db670e2..8650bda0 100644
+--- a/src/components/dock/styles/run.css
++++ b/src/components/dock/styles/run.css
+@@ -460,74 +460,49 @@
+ 
+        MAGNITUDE, honestly: ~226.6px² of silhouette per edge (28·56 − 2(16² − π16²/4)
+        against π·28²/2), never the ~700 an earlier draft claimed. */
++    /* D2-A: the cap's rest is the aperture corner (`--dock-corner`, cross/2, aperture.css),
++       and `--dock-cap-rest` is deleted with no alias. The cut rides two registered
++       lengths the plate's per-corner radius reads; the ranges reach both ends of a
++       sub-pitch overflow. The cut itself is an owner ruling (C-5): setting
++       `--dock-cap-cut: var(--dock-corner)` drops it in one line. */
+     .glass-dock {
+         timeline-scope: --dock-run;
+-        /* The rest corner and its two-rung drop, per shape. `50%` is the stadium's
+-           resolved corner (see above); the finite shapes name their own rest so the
+-           keyframe never has to guess at a box height. */
+-        --dock-cap-rest: 50%;
+         --dock-cap-cut: var(--radius-card);
+     }
+ 
+     .glass-dock.shape-rounded {
+-        --dock-cap-rest: var(--radius-card);
+         --dock-cap-cut: var(--radius-xs);
+     }
+ 
+     .glass-dock.shape-card {
+-        --dock-cap-rest: var(--dock-card-radius, var(--radius-dock-card));
+         --dock-cap-cut: var(--radius-lg);
+     }
+ 
+-    .glass-dock .dock-run {
++    /* Only the active run scrolls and names the timeline; an inactive face is a
++       one-owner clip, never a scroll container. */
++    .glass-dock .dock-run.is-active {
+         scroll-timeline: --dock-run inline;
+     }
+ 
+-    .glass-dock.vertical .dock-run {
++    .glass-dock.vertical .dock-run.is-active {
+         scroll-timeline: --dock-run block;
+     }
+ 
+-    /* Each edge's whole transition is confined to ONE PITCH of travel via
+-       `animation-range`, so the cap reports "there is more that way" at the granularity
+-       the lattice moves in, rather than easing across the entire scroll length where it
+-       would read as a slow deformation instead of a state.
+-
+-       The TRAILING arm runs the same keyframes in REVERSE over the last pitch: at
+-       `100%` (flush against the end) it holds the `from` rest corner, and anywhere
+-       before it holds the cut. That is the whole "flush = completeness" grammar in one
+-       declaration pair, and it means one keyframe set serves both edges per axis.
+-
+-       Outside its range each arm holds its own end value (`fill: both`), which is what
+-       makes a deeply-scrolled run keep its leading cut instead of springing back. When
+-       there is NOTHING to scroll the timeline is inactive and the plate paints its base
+-       corner — no cap on a run that hides nothing, with no attribute asked to say so. */
+-    .glass-dock .dock-plate {
+-        animation:
+-            gl-dock-cap-inline-start linear both,
+-            gl-dock-cap-inline-end linear both;
+-        animation-timeline: --dock-run, --dock-run;
+-        animation-range:
+-            0 var(--dock-pitch),
+-            calc(100% - var(--dock-pitch)) 100%;
+-        animation-direction: normal, reverse;
++    .glass-dock .dock-run:not(.is-active) {
++        overflow: clip;
+     }
+ 
+-    .glass-dock.vertical .dock-plate {
++    .glass-dock .dock-plate {
+         animation:
+-            gl-dock-cap-block-start linear both,
+-            gl-dock-cap-block-end linear both;
++            gl-dock-cap-start linear both,
++            gl-dock-cap-end linear both;
+         animation-timeline: --dock-run, --dock-run;
+         animation-range:
+-            0 var(--dock-pitch),
+-            calc(100% - var(--dock-pitch)) 100%;
++            0 min(var(--dock-pitch), 50%),
++            calc(100% - min(var(--dock-pitch), 50%)) 100%;
+         animation-direction: normal, reverse;
+     }
+ 
+-    /* ── THE LIVE REGION ─────────────────────────────────────────────────────────
+-       Reach announces to this node (useDockRun). Visually hidden by the canonical
+-       one-pixel clip rather than `display: none` or `visibility: hidden`, both of which
+-       remove the node from the accessibility tree and silence exactly the announcement
+-       it exists to carry. */
+     .glass-dock .dock-run-status {
+         position: absolute;
+         inline-size: 1px;
+@@ -554,46 +529,20 @@
+    two rungs down the 4·10·16·24·stadium series. Both endpoints arrive through
+    `--dock-cap-rest`/`--dock-cap-cut`, so retargeting a shape is a token line and never
+    a keyframe edit. */
+-@keyframes gl-dock-cap-inline-start {
+-    from {
+-        border-start-start-radius: var(--dock-cap-rest);
+-        border-end-start-radius: var(--dock-cap-rest);
+-    }
+-    to {
+-        border-start-start-radius: var(--dock-cap-cut);
+-        border-end-start-radius: var(--dock-cap-cut);
+-    }
+-}
+-
+-@keyframes gl-dock-cap-inline-end {
+-    from {
+-        border-start-end-radius: var(--dock-cap-rest);
+-        border-end-end-radius: var(--dock-cap-rest);
+-    }
+-    to {
+-        border-start-end-radius: var(--dock-cap-cut);
+-        border-end-end-radius: var(--dock-cap-cut);
+-    }
+-}
+-
+-@keyframes gl-dock-cap-block-start {
++@keyframes gl-dock-cap-start {
+     from {
+-        border-start-start-radius: var(--dock-cap-rest);
+-        border-start-end-radius: var(--dock-cap-rest);
++        --dock-cap-s: var(--dock-corner);
+     }
+     to {
+-        border-start-start-radius: var(--dock-cap-cut);
+-        border-start-end-radius: var(--dock-cap-cut);
++        --dock-cap-s: var(--dock-cap-cut);
+     }
+ }
+ 
+-@keyframes gl-dock-cap-block-end {
++@keyframes gl-dock-cap-end {
+     from {
+-        border-end-start-radius: var(--dock-cap-rest);
+-        border-end-end-radius: var(--dock-cap-rest);
++        --dock-cap-e: var(--dock-corner);
+     }
+     to {
+-        border-end-start-radius: var(--dock-cap-cut);
+-        border-end-end-radius: var(--dock-cap-cut);
++        --dock-cap-e: var(--dock-cap-cut);
+     }
+ }
+diff --git a/src/components/dock/styles/shape.css b/src/components/dock/styles/shape.css
+index 19f52468..caf0bdc5 100644
+--- a/src/components/dock/styles/shape.css
++++ b/src/components/dock/styles/shape.css
+@@ -86,57 +86,6 @@
+        "`.glass-dock` NEVER clips its descendants now"). Striking this register does not
+        remove a clip from the dock; it removes a second, inert claimant to one. */
+ 
+-    /* ── The box-size morph — the deformation-FREE convex-blend scale ─────────────
+-       The visible box size rides ONE factor:
+-       `--dock-size-scale` (layers.css — the ratio-FREE convex blend of the two
+-       measure-ONCE endpoints, BOUNDED [0.06, 1] by construction, grown from
+-       `transform-origin: center`). The scale is a PURE size morph on ONE compositor
+-       channel — NOT a multi-factor product: no `--stretch` squish, no
+-       `--dock-punch-stretch` cartoon-punch, no reciprocal cross-axis deformation, no
+-       `[data-punching]` co-driver (clean break; `--stretch` and the punch channel are
+-       DEFINITION-ABSENT). Scoped to
+-       `[data-morphing]` (a morph-transient); at settle the attr clears → `scale:
+-       none` over the TRUE box. Horizontal scales the inline axis; vertical the block
+-       axis (the cross axis stays 1 — the size morph moves the footprint, it does not
+-       pinch). The liquid weight lives in the DOCK spring's own overshoot tail
+-       (DOCK-LADDER §8), not a second parallel punch clock. */
+-    .glass-dock[data-morphing]:not(.vertical) {
+-        scale: var(--dock-size-scale, 1) 1;
+-    }
+-    .glass-dock[data-morphing].vertical {
+-        scale: 1 var(--dock-size-scale, 1);
+-    }
+-
+-    /* ── RIGID CONTENT over the morphing box ───────────────
+-       The box-scale rule above scales the WHOLE `.glass-dock` subtree — including the
+-       glyphs — by `--dock-size-scale` on the morph axis. The two `.dock-controls`
+-       children (`.dock-persistent` + `.dock-layers`) carry the PER-FRAME INVERSE of
+-       that size factor so the composited glyph reads its intrinsic 1:1 aspect in every
+-       frame while the box scales the footprint. A child multiplies its parent's
+-       `scale`, so `1 / max(--dock-size-scale, 0.06)` on the morph axis exactly cancels
+-       the box's morph-axis scale (→ 1); the cross axis stays 1 (the box no longer
+-       reciprocal-squishes, so the child carries no cross-axis counter — the +48.8%
+-       `(--stretch × --dock-punch-stretch)²` residual the deformation zoo introduced is
+-       structurally gone with it).
+-
+-       The `max(…, 0.06)` guard matches the layers.css `--dock-size-scale` clamp floor
+-       exactly (a math fence, not a masking fallback). The children default
+-       `transform-origin: 50% 50%`, the SAME centre the root scales from, so the inverse
+-       un-does the box's outward scale about the shared centroid. SCOPED to
+-       `[data-morphing]` (the residual transform lives ONLY mid-morph); at settle the
+-       attr clears → both rules drop to `scale: none` over the TRUE box, content
+-       byte-rigid, ZERO compositing cost at rest (`proof:no-layout-animation` holds). */
+-    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-persistent,
+-    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-layers {
+-        scale: calc(1 / max(var(--dock-size-scale, 1), 0.06)) 1;
+-        will-change: transform;
+-    }
+-    .glass-dock[data-morphing].vertical > .dock-controls > .dock-persistent,
+-    .glass-dock[data-morphing].vertical > .dock-controls > .dock-layers {
+-        scale: 1 calc(1 / max(var(--dock-size-scale, 1), 0.06));
+-        will-change: transform;
+-    }
+-
+     /* ── The dock is a LOUD MOTION DRIVER (design §L4) ──────────────────────────
+        The dock pins `--motion-weight: 1` on its own scope so the descendant control
+        motion (the glass-atom / btn cartoon-press punch recipes, which read
+diff --git a/src/components/dock/styles/shell.css b/src/components/dock/styles/shell.css
+index cdf2232d..e8425347 100644
+--- a/src/components/dock/styles/shell.css
++++ b/src/components/dock/styles/shell.css
+@@ -241,9 +241,8 @@
+            `--glass-edge-light` ring that fought the (now ≤4% α) `--glass-border-dock`
+            perimeter; the navigation band reads its rim from the SAME corrected token
+            source as cards/dialogs (no dock-local dark rim re-paste). */
+-        box-shadow:
+-            var(--glass-rim-top), var(--glass-rim-bottom),
+-            var(--shadow-dock-override, var(--shadow-dock));
++        /* The elevation moved to the plate (aperture.css): the box keeps the expanded
++           footprint at every posture, so only the plate knows where the dock is. */
+     }
+ 
+     /* PRESERVE the dark-dock read-weight. The light dock
+@@ -398,16 +397,6 @@
+            `--dock-expand-t` interp is the single authority). KEPT: the DECORATIVE
+            hover-scale + press-squish (the individual `scale`/`transform`) and the
+            box-shadow fade — interaction polish on the vertical dock, NOT the morph chrome. */
+-        transition:
+-            box-shadow var(--dock-motion-standard),
+-            transform var(--dock-motion-resize),
+-            scale var(--dock-motion-resize);
+-    }
+-
+-    /* The morph writes `scale` from the dock spring every frame; do not re-ease that
+-       value through the vertical dock's separate at-rest hover transition. */
+-    .glass-dock.vertical[data-morphing] {
+-        transition-property: box-shadow, transform;
+     }
+ 
+     /* The vertical-dock polish transition is COMPOSITOR-PROMOTED
+diff --git a/tests/components/custom/dock/dockMorphMeasure.test.ts b/tests/components/custom/dock/dockMorphMeasure.test.ts
+deleted file mode 100644
+index bceec445..00000000
+--- a/tests/components/custom/dock/dockMorphMeasure.test.ts
++++ /dev/null
+@@ -1,171 +0,0 @@
+-import { describe, expect, it, vi } from "vitest";
+-import { nextTick, ref } from "vue";
+-import { useDockExpandedSize } from "@glass/components/dock/composables/dockMorphMeasure";
+-import { mountComposable } from "../../../utils/mountComposable";
+-
+-function rect(width: number, height = 48): DOMRect {
+-    return {
+-        x: 0,
+-        y: 0,
+-        top: 0,
+-        left: 0,
+-        right: width,
+-        bottom: height,
+-        width,
+-        height,
+-        toJSON: () => ({}),
+-    } as DOMRect;
+-}
+-
+-function element(
+-    width: number | (() => number),
+-    height: number | (() => number) = 48,
+-): HTMLElement {
+-    const el = document.createElement("div");
+-    const readWidth = () => (typeof width === "function" ? width() : width);
+-    const readHeight = () => (typeof height === "function" ? height() : height);
+-    Object.defineProperties(el, {
+-        offsetWidth: { get: readWidth },
+-        offsetHeight: { get: readHeight },
+-    });
+-    el.getBoundingClientRect = () => rect(readWidth(), readHeight());
+-    return el;
+-}
+-
+-describe("useDockExpandedSize", () => {
+-    it.each([
+-        [true, 240],
+-        [false, 64],
+-    ])("derives both endpoints from rendered panes (expanded=%s)", (isExpanded, rootWidth) => {
+-        const root = element(rootWidth);
+-        const content = element(isExpanded ? 220 : 44);
+-        const full = element(220);
+-        const summary = element(44);
+-        root.append(content);
+-
+-        const { unmount } = mountComposable(() =>
+-            useDockExpandedSize({
+-                rootEl: ref(root),
+-                contentEl: ref(content),
+-                expandedEl: ref(full),
+-                collapsedEl: ref(summary),
+-                axis: ref("horizontal"),
+-                expanded: ref(isExpanded),
+-            }),
+-        );
+-
+-        expect(root.style.getPropertyValue("--dock-collapsed-px")).toBe("64px");
+-        expect(root.style.getPropertyValue("--dock-expanded-px")).toBe("240px");
+-        unmount();
+-    });
+-
+-    it("does not impose the coarse target floor on non-interactive geometry", () => {
+-        const root = element(224);
+-        const content = element(220);
+-        const full = element(220);
+-        const summary = element(28);
+-        root.append(content);
+-
+-        const { unmount } = mountComposable(() =>
+-            useDockExpandedSize({
+-                rootEl: ref(root),
+-                contentEl: ref(content),
+-                expandedEl: ref(full),
+-                collapsedEl: ref(summary),
+-                axis: ref("horizontal"),
+-                expanded: ref(true),
+-            }),
+-        );
+-
+-        expect(root.style.getPropertyValue("--dock-collapsed-px")).toBe("32px");
+-        unmount();
+-    });
+-
+-    it("does not replace settled endpoints with transformed mid-morph geometry", async () => {
+-        let rootWidth = 240;
+-        let fullWidth = 220;
+-        let summaryWidth = 44;
+-        const root = element(() => rootWidth);
+-        const content = element(() => fullWidth);
+-        const full = element(() => fullWidth);
+-        const summary = element(() => summaryWidth);
+-        root.append(content);
+-        const expanded = ref(true);
+-
+-        const { unmount } = mountComposable(() =>
+-            useDockExpandedSize({
+-                rootEl: ref(root),
+-                contentEl: ref(content),
+-                expandedEl: ref(full),
+-                collapsedEl: ref(summary),
+-                axis: ref("horizontal"),
+-                expanded,
+-            }),
+-        );
+-
+-        expect(root.style.getPropertyValue("--dock-expanded-px")).toBe("240px");
+-        expect(root.style.getPropertyValue("--dock-collapsed-px")).toBe("64px");
+-
+-        root.setAttribute("data-morphing", "");
+-        rootWidth = 172;
+-        fullWidth = 172;
+-        summaryWidth = 0;
+-        expanded.value = false;
+-        await nextTick();
+-
+-        expect(root.style.getPropertyValue("--dock-expanded-px")).toBe("240px");
+-        expect(root.style.getPropertyValue("--dock-collapsed-px")).toBe("64px");
+-        unmount();
+-    });
+-
+-    it("recaptures the settled layout box instead of a stale transformed paint rect", async () => {
+-        let resize!: () => void;
+-        class ActiveResizeObserver {
+-            constructor(callback: ResizeObserverCallback) {
+-                resize = () => callback([], this as unknown as ResizeObserver);
+-            }
+-            observe() {}
+-            disconnect() {}
+-        }
+-        vi.stubGlobal("ResizeObserver", ActiveResizeObserver);
+-
+-        let rootHeight = 277;
+-        let fullHeight = 257;
+-        let summaryHeight = 60;
+-        const root = element(48, () => rootHeight);
+-        const content = element(48, () => fullHeight);
+-        const full = element(48, () => fullHeight);
+-        const summary = element(48, () => summaryHeight);
+-        root.append(content);
+-        const expanded = ref(true);
+-
+-        const { unmount } = mountComposable(() =>
+-            useDockExpandedSize({
+-                rootEl: ref(root),
+-                contentEl: ref(content),
+-                expandedEl: ref(full),
+-                collapsedEl: ref(summary),
+-                axis: ref("vertical"),
+-                expanded,
+-            }),
+-        );
+-
+-        expect(root.style.getPropertyValue("--dock-expanded-px")).toBe("277px");
+-        expect(root.style.getPropertyValue("--dock-collapsed-px")).toBe("80px");
+-
+-        root.setAttribute("data-morphing", "");
+-        expanded.value = false;
+-        await nextTick();
+-        root.removeAttribute("data-morphing");
+-        rootHeight = 80;
+-        fullHeight = 80;
+-        summaryHeight = 60;
+-        root.getBoundingClientRect = () => rect(48, 80 * (80 / 277));
+-        resize();
+-
+-        expect(root.getBoundingClientRect().height).toBeCloseTo(23.105, 3);
+-        expect(root.style.getPropertyValue("--dock-collapsed-px")).toBe("80px");
+-        unmount();
+-        vi.unstubAllGlobals();
+-    });
+-});
+diff --git a/tests/components/custom/dock/g-dock-lattice.test.ts b/tests/components/custom/dock/g-dock-lattice.test.ts
+index 474ebc03..57ac2f1a 100644
+--- a/tests/components/custom/dock/g-dock-lattice.test.ts
++++ b/tests/components/custom/dock/g-dock-lattice.test.ts
+@@ -5,7 +5,6 @@ import { describe, expect, it } from "vitest";
+ import { nextTick, ref } from "vue";
+ 
+ import GlassDock from "@glass/components/dock/GlassDock.vue";
+-import { useDockExpandedSize } from "@glass/components/dock/composables/dockMorphMeasure";
+ 
+ import { mountComposable } from "../../../utils/mountComposable";
+ 
+@@ -521,84 +520,11 @@ describe("G-DOCK-REACH — the anchor is closed-form, and its geometry ships wit
+ // G-DOCK-MORPH — including the falsifier the pre-measure guard shipped without
+ // ═════════════════════════════════════════════════════════════════════════════
+ 
+-describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", () => {
+-    function sized(size: () => number): HTMLElement {
+-        const el = document.createElement("div");
+-        Object.defineProperties(el, {
+-            offsetWidth: { get: size },
+-            offsetHeight: { get: () => 48 },
+-        });
+-        el.getBoundingClientRect = () =>
+-            ({ width: size(), height: 48, top: 0, left: 0, right: size(), bottom: 48 }) as DOMRect;
+-        return el;
+-    }
+-
+-    /**
+-     * THE FALSIFIER. GF-DOCK calls the defect this guards "the largest motion defect in
+-     * the component" and it shipped, in the cure's first draft, with no test that could
+-     * tell the cure from the defect: reverting the guard survived 29/29 of the dock's
+-     * existing motion seats. This is the assertion whose absence let that stand.
+-     *
+-     * THE MECHANISM, reproduced exactly. On a collapsed→expanded flip the `watch` fires in
+-     * the same tick the ref changes: `expanded.value` is already `true` while the root is
+-     * still laid out at its COLLAPSED span. An unconditional capture reads that collapsed
+-     * number and stores it as `expandedPx` — the expanded ENDPOINT seeded with the
+-     * collapsed box. The morph then arms against it, runs to the wrong target, holds there
+-     * while the spring settles, and snaps to the real span the moment the ResizeObserver
+-     * delivers an honest measurement: 186 of 311, ~350ms of hold, then +125px in one frame
+-     * at t≈657.
+-     *
+-     * THE BITE. Make `capture()` unconditional again (delete the `if (source === "layout")`
+-     * arm) and the root below publishes `--dock-expanded-px: 64px` — identical to
+-     * `--dock-collapsed-px`, i.e. a dock whose expand travels nowhere and then jumps. With
+-     * the guard, the fallback path reads the FULL PANE'S own rendered span (220 + chrome),
+-     * which is real from mount because the inactive pane stays laid out under
+-     * `visibility`. The guard is not masking a measurement — the flip write was strictly
+-     * worse than the fallback it overrode.
+-     */
+-    it("a posture flip never seeds the expanded endpoint from the collapsed box", async () => {
+-        const COLLAPSED_SPAN = 64;
+-        const expanded = ref(false);
+-        // The root NEVER re-lays out: it stays at its collapsed span for the whole test,
+-        // which is precisely the frame the flip watcher fires in.
+-        const root = sized(() => COLLAPSED_SPAN);
+-        const content = sized(() => 44);
+-        const full = sized(() => 220);
+-        const summary = sized(() => 44);
+-        root.append(content);
+-
+-        const { unmount } = mountComposable(() =>
+-            useDockExpandedSize({
+-                rootEl: ref(root),
+-                contentEl: ref(content),
+-                expandedEl: ref(full),
+-                collapsedEl: ref(summary),
+-                axis: ref("horizontal" as const),
+-                expanded,
+-            }),
+-        );
+-        await nextTick();
+-        expect(root.style.getPropertyValue("--dock-collapsed-px")).toBe(`${COLLAPSED_SPAN}px`);
+-
+-        expanded.value = true;
+-        await nextTick();
+-
+-        const expandedPx = Number.parseFloat(root.style.getPropertyValue("--dock-expanded-px"));
+-        expect(
+-            expandedPx,
+-            "the expanded endpoint was seeded from the collapsed root — the morph will run to the wrong target and then jump",
+-        ).not.toBe(COLLAPSED_SPAN);
+-        // It is the full pane's own span that survives, which is the honest number.
+-        expect(expandedPx).toBeGreaterThanOrEqual(220);
+-        unmount();
+-    });
+-
+-    /** The source half: only a post-layout event may move an endpoint. */
+-    it("only the ResizeObserver and the initial attach claim a layout capture", () => {
+-        const src = read(`${DOCK}/composables/dockMorphMeasure.ts`);
+-        expect(src).toMatch(/new ResizeObserver\(\(\) => capture\("layout"\)\)/);
+-        expect(src).toMatch(/watch\(expanded, \(\) => capture\("flip"\)\)/);
+-        expect(src).toMatch(/if \(source === "layout"\)/);
++describe("G-DOCK-MORPH — the posture morph measures nothing", () => {
++    /** D2-A: the endpoints are a closed form of tokens, so no endpoint can go stale. */
++    it("no dock composable measures a morph endpoint", () => {
++        const src = read(`${DOCK}/composables/useDockMorph.ts`);
++        expect(src).not.toMatch(/ResizeObserver|offsetWidth|getBoundingClientRect/);
+     });
+ 
+     /**
+diff --git a/src/components/dock/composables/useDockScrollTimeline.ts b/src/components/dock/composables/useDockScrollTimeline.ts
+new file mode 100644
+index 00000000..d73674c5
+--- /dev/null
++++ b/src/components/dock/composables/useDockScrollTimeline.ts
+@@ -0,0 +1,89 @@
++import { onScopeDispose, ref, watch } from "vue";
++import type { Ref } from "vue";
++
++/** A scroll source: an element, the window, or a getter resolved after mount. Never a
++ *  selector. */
++export type DockScrollSource =
++    | HTMLElement
++    | Window
++    | (() => HTMLElement | Window | null)
++    | null;
++
++export interface UseDockScrollTimelineOptions {
++    rootEl: Ref<HTMLElement | null>;
++    /** The source prop; `undefined` means the document's own scroll. */
++    source: () => DockScrollSource | undefined;
++    /** Whether anything on the dock reads the timeline (compaction or the rim). */
++    wanted: () => boolean;
++    /** A stable per-dock id for the timeline name. */
++    id: string;
++}
++
++function resolve(source: DockScrollSource | undefined): HTMLElement | Window | null {
++    if (source === undefined) return typeof window === "undefined" ? null : window;
++    return typeof source === "function" ? source() : source;
++}
++
++/** Append `entry` to a comma list held in one inline property, keeping what is there. */
++function appendList(el: HTMLElement, prop: string, entry: string): () => void {
++    const before = el.style.getPropertyValue(prop);
++    const computed = getComputedStyle(el).getPropertyValue(prop).trim();
++    const base = before || (computed && computed !== "none" ? computed : "");
++    el.style.setProperty(prop, base ? `${base}, ${entry}` : entry);
++    return () => {
++        if (before) el.style.setProperty(prop, before);
++        else el.style.removeProperty(prop);
++    };
++}
++
++/**
++ * Bind the dock's `--dock-page` timeline to its scroll source. The window binds the
++ * root timeline. An element gets a named `scroll-timeline`, appended to its own list,
++ * and the name is scoped on `:root`, appended to that list. `bound` turns true only
++ * after the binding lands, so CSS that reads the timeline can be gated on it; an
++ * unresolved source logs an error and leaves the dock full.
++ */
++export function useDockScrollTimeline(options: UseDockScrollTimelineOptions): {
++    bound: Readonly<Ref<boolean>>;
++} {
++    const bound = ref(false);
++    let undo: Array<() => void> = [];
++
++    function unbind(): void {
++        for (const u of undo.reverse()) u();
++        undo = [];
++        options.rootEl.value?.style.removeProperty("--dock-page");
++        bound.value = false;
++    }
++
++    function bind(): void {
++        unbind();
++        const root = options.rootEl.value;
++        if (!root || !options.wanted()) return;
++        const target = resolve(options.source());
++        if (!target) {
++            console.error(
++                "[GlassDock] scrollSource resolved to null: compactOnScroll and progressRim stay unbound",
++            );
++            return;
++        }
++        if (target instanceof Window) {
++            root.style.setProperty("--dock-page", "scroll(root block)");
++        } else {
++            const name = `--dock-page-${options.id.replace(/[^\w-]/g, "")}`;
++            undo.push(appendList(target, "scroll-timeline-name", name));
++            undo.push(appendList(target, "scroll-timeline-axis", "block"));
++            undo.push(appendList(document.documentElement, "timeline-scope", name));
++            root.style.setProperty("--dock-page", name);
++        }
++        bound.value = true;
++    }
++
++    watch([options.rootEl, () => options.source(), () => options.wanted()], bind, {
++        flush: "post",
++        immediate: true,
++    });
++    onScopeDispose(unbind);
++
++    return { bound };
++}
+diff --git a/src/components/dock/styles/aperture.css b/src/components/dock/styles/aperture.css
+new file mode 100644
+index 00000000..a19b6660
+--- /dev/null
++++ b/src/components/dock/styles/aperture.css
+@@ -0,0 +1,341 @@
++/* The dock aperture: the total lattice (D2-A).
++ *
++ * Every moving dock length is a closed form of tokens and one scalar that CSS owns.
++ * The script measures nothing; its only write is the posture class.
++ *
++ *   t      `--dock-extent-t`, registered, 1 expanded / 0 collapsed, transitioned on the
++ *          dock spring's own clock.
++ *   c      the compaction: a scroll-driven ramp times an engagement gate.
++ *   a      clamp(0, min(t, 1 − c), 1), the aperture's openness.
++ *   E_c    the collapsed extent, max(cross, n_c·seat + (n_c − 1)·gap + 2·pad), with n_c
++ *          counted by `:has()` rungs (an ancestor cannot read `sibling-count()`).
++ *   span   (1 − a)·(W − E_c), the length the aperture gives up, split by the anchor s.
++ *
++ * The box keeps the expanded footprint in layout at every posture. The expanded end of
++ * the aperture is the in-flow box itself, so a posture morph needs no seat lattice.
++ * One closed form is stamped on two boxes:
++ *   1. the plate's insets: the plate IS the visible dock, so its border, elevation
++ *      and rim follow it (a clip on the plate would cut the border off the caps);
++ *   2. the controls row: a glide `translate` and a clip in the row's own box.
++ * No wrapper: a clip on an ancestor of the plate is its backdrop root. */
++
++@property --dock-extent-t {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 1;
++}
++
++@property --dock-c-scroll {
++    syntax: "<number>";
++    inherits: false;
++    initial-value: 0;
++}
++
++@property --dock-c-gate {
++    syntax: "<number>";
++    inherits: false;
++    initial-value: 1;
++}
++
++/* The two cap radii the cut animates (run.css). */
++@property --dock-cap-s {
++    syntax: "<length>";
++    inherits: false;
++    initial-value: 0px;
++}
++
++@property --dock-cap-e {
++    syntax: "<length>";
++    inherits: false;
++    initial-value: 0px;
++}
++
++@property --dock-rim-p {
++    syntax: "<number>";
++    inherits: false;
++    initial-value: 0;
++}
++
++@layer components {
++    .glass-dock:is(.horizontal, .vertical) {
++        /* Concentric: one pad on every side, the corner half the cross. */
++        --dock-pad: var(--dock-padding-block, 0.5rem);
++        --dock-cross: calc(var(--dock-seat) + 2 * var(--dock-pad));
++        --dock-corner: calc(var(--dock-cross) / 2);
++
++        --dock-n-ps: 0;
++        --dock-n-sum: 1;
++        --dock-n-pe: 0;
++        --dock-n-c: calc(var(--dock-n-ps) + var(--dock-n-sum) + var(--dock-n-pe));
++        --dock-extent-c: max(
++            var(--dock-cross),
++            calc(
++                var(--dock-n-c) * var(--dock-seat) +
++                    max(0, var(--dock-n-c) - 1) * var(--dock-layer-gap) + 2 *
++                    var(--dock-pad)
++            )
++        );
++
++        --dock-s: 0.5;
++        --dock-c: calc(var(--dock-c-scroll) * var(--dock-c-gate));
++        --dock-a: clamp(0, min(var(--dock-extent-t), 1 - var(--dock-c)), 1);
++        /* `100%` resolves where the token is read: the plate's containing block. */
++        --dock-span: calc((1 - var(--dock-a)) * (100% - var(--dock-extent-c)));
++        --dock-expand-t: var(--dock-extent-t);
++        /* How far a seat paints past its box: the hover scale's growth plus the ring,
++           scaled (6.4px at the base rung). It must stay within the pad. */
++        --dock-paint-reach: calc(
++            (var(--scale-hover-dock) - 1) * var(--dock-seat) / 2 +
++                var(--scale-hover-dock) * var(--dock-ring-reserve)
++        );
++
++        padding: var(--dock-pad);
++        transition:
++            --dock-extent-t var(--spring-dock-duration) var(--spring-dock),
++            --dock-c-gate var(--spring-dock-duration) var(--spring-dock) 150ms;
++    }
++
++    .glass-dock.collapsed {
++        --dock-extent-t: 0;
++    }
++
++    .glass-dock[data-anchor="start"] {
++        --dock-s: 0;
++    }
++
++    .glass-dock[data-anchor="end"] {
++        --dock-s: 1;
++    }
++
++    .glass-dock.shape-rounded {
++        --dock-corner: var(--radius-card);
++    }
++
++    .glass-dock.shape-card {
++        --dock-corner: calc(
++            var(--dock-cross) / 2 +
++                (var(--dock-card-radius) - var(--dock-cross) / 2) * var(--dock-expand-t)
++        );
++    }
++
++    /* n_c, the seats the collapsed aperture shows: the persistent regions and a
++       non-empty summary. The table is bounded at 3 per region. */
++    .glass-dock:has(> .dock-controls > .dock-persistent:not(.dock-persistent-end) > :nth-child(1)) {
++        --dock-n-ps: 1;
++    }
++    .glass-dock:has(> .dock-controls > .dock-persistent:not(.dock-persistent-end) > :nth-child(2)) {
++        --dock-n-ps: 2;
++    }
++    .glass-dock:has(> .dock-controls > .dock-persistent:not(.dock-persistent-end) > :nth-child(3)) {
++        --dock-n-ps: 3;
++    }
++    .glass-dock:has(> .dock-controls > .dock-persistent-end > :nth-child(1)) {
++        --dock-n-pe: 1;
++    }
++    .glass-dock:has(> .dock-controls > .dock-persistent-end > :nth-child(2)) {
++        --dock-n-pe: 2;
++    }
++    .glass-dock:has(> .dock-controls > .dock-persistent-end > :nth-child(3)) {
++        --dock-n-pe: 3;
++    }
++    .glass-dock:has(> .dock-controls > .dock-layers > .dock-layer--summary:empty) {
++        --dock-n-sum: 0;
++    }
++
++    /* ── The plate: the aperture itself ─────────────────────────────────────────── */
++    .glass-dock > .dock-plate {
++        --dock-cap-s: var(--dock-corner);
++        --dock-cap-e: var(--dock-corner);
++        border-radius: var(--dock-cap-s) var(--dock-cap-e) var(--dock-cap-e)
++            var(--dock-cap-s);
++        overflow: clip;
++        box-shadow:
++            var(--glass-rim-top), var(--glass-rim-bottom),
++            var(--shadow-dock-override, var(--shadow-dock));
++    }
++
++    .glass-dock.vertical > .dock-plate {
++        border-radius: var(--dock-cap-s) var(--dock-cap-s) var(--dock-cap-e)
++            var(--dock-cap-e);
++    }
++
++    .glass-dock.collapsed > .dock-plate {
++        box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
++    }
++
++    .glass-dock.collapsed:hover > .dock-plate {
++        box-shadow: var(--shadow-dock-override, var(--shadow-dock));
++    }
++
++    .glass-dock:not(.vertical) > .dock-plate {
++        left: calc(var(--dock-s) * var(--dock-span));
++        right: calc((1 - var(--dock-s)) * var(--dock-span));
++    }
++
++    .glass-dock.vertical > .dock-plate {
++        top: calc(var(--dock-s) * var(--dock-span));
++        bottom: calc((1 - var(--dock-s)) * var(--dock-span));
++    }
++
++    /* ── The controls row: a real box, so it can glide and clip ────────────────── */
++    .glass-dock > .dock-controls {
++        display: flex;
++        align-items: center;
++        flex: 1 1 auto;
++        min-inline-size: 0;
++        min-block-size: 0;
++    }
++
++    .glass-dock.vertical > .dock-controls {
++        flex-direction: column;
++        align-items: stretch;
++        gap: var(--dock-layer-gap, 0.375rem);
++    }
++
++    /* The full face stays in flow at every posture (it is the expanded footprint);
++       the summary sits out of flow at the run's start, where the glide brings it. */
++    .glass-dock > .dock-controls > .dock-layers {
++        position: relative;
++    }
++
++    .glass-dock > .dock-controls > .dock-layers > .dock-layer--full {
++        position: relative;
++        inset: auto;
++    }
++
++    .glass-dock > .dock-controls > .dock-layers > .dock-layer--summary {
++        position: absolute;
++        inset: 0 auto 0 0;
++    }
++
++    .glass-dock.vertical > .dock-controls > .dock-layers > .dock-layer--summary {
++        inset: 0 0 auto 0;
++    }
++
++    /* The glide and the clip exist only while the aperture is narrower than the box.
++       At expanded rest the row is transform-free and unclipped: no containing block
++       for anchored surfaces, no backdrop root over the seats' own lenses. */
++    .glass-dock:is(.collapsed, [data-morphing], [data-compact-on-scroll]) > .dock-controls {
++        --dock-row-span: calc(
++            (1 - var(--dock-a)) * (100% + 2 * var(--dock-pad) - var(--dock-extent-c))
++        );
++        --dock-row-out: calc(-1 * var(--dock-pad));
++        --dock-row-cut: calc(var(--dock-row-span) - var(--dock-pad));
++        translate: calc(var(--dock-s) * var(--dock-row-span)) 0;
++        clip-path: inset(
++            var(--dock-row-out) var(--dock-row-cut) var(--dock-row-out)
++                var(--dock-row-out) round var(--dock-corner)
++        );
++    }
++
++    .glass-dock.vertical:is(.collapsed, [data-morphing], [data-compact-on-scroll])
++        > .dock-controls {
++        translate: 0 calc(var(--dock-s) * var(--dock-row-span));
++        clip-path: inset(
++            var(--dock-row-out) var(--dock-row-out) var(--dock-row-cut)
++                var(--dock-row-out) round var(--dock-corner)
++        );
++    }
++
++    /* The trailing persistent region lands beside the summary when the aperture closes
++       (horizontal; `100%` is the row). */
++    .glass-dock:not(.vertical) > .dock-controls > .dock-persistent-end {
++        position: relative;
++        left: calc(
++            -1 * (1 - var(--dock-a)) *
++                (100% + 2 * var(--dock-pad) - var(--dock-extent-c))
++        );
++    }
++
++    /* ── P2 · the paint gutter: the active run's padding box reaches the seats' paint on
++       both axes (a scroll container clips to its padding box), and an equal negative
++       margin keeps the footprint. Scroll padding keeps the half-pitch snap line. */
++    .glass-dock .dock-run.is-active {
++        padding: var(--dock-paint-reach);
++        margin: calc(-1 * var(--dock-paint-reach));
++        scroll-padding-inline: calc(var(--dock-pitch) / 2 + var(--dock-paint-reach));
++    }
++
++    .glass-dock.vertical .dock-run.is-active {
++        padding: var(--dock-paint-reach);
++        margin: calc(-1 * var(--dock-paint-reach));
++        scroll-padding-inline: 0;
++        scroll-padding-block: calc(var(--dock-pitch) / 2 + var(--dock-paint-reach));
++    }
++
++    /* ── P4 · compaction: a scroll ramp times an engagement gate ──────────────────
++       `data-compact-on-scroll` is set by the binder only after it binds `--dock-page`,
++       so an unbound timeline can never compact the dock. */
++    .glass-dock[data-compact-on-scroll] {
++        animation: gl-dock-compact linear both;
++        animation-timeline: var(--dock-page);
++        animation-range: 0 var(--dock-compact-distance, 200px);
++    }
++
++    .glass-dock:is(:focus-within, [data-held], [data-kept-open]) {
++        --dock-c-gate: 0;
++        transition-delay: 0s;
++    }
++
++    @media (hover: hover) {
++        .glass-dock:hover {
++            --dock-c-gate: 0;
++            transition-delay: 0s;
++        }
++    }
++
++    /* ── P5 · the rim: a child of the plate, clipped by the plate's own radius ──── */
++    .glass-dock > .dock-plate > .dock-rim {
++        position: absolute;
++        inset: 0;
++        pointer-events: none;
++        --dock-rim-fill: linear-gradient(
++            var(--dock-rim-color, var(--rainbow-violet)),
++            var(--dock-rim-color, var(--rainbow-violet))
++        );
++        --dock-rim-track: linear-gradient(
++            color-mix(in srgb, var(--foreground) 14%, transparent),
++            color-mix(in srgb, var(--foreground) 14%, transparent)
++        );
++        /* The fill over its track: the rim is visible at progress 0. */
++        background:
++            var(--dock-rim-fill) no-repeat left bottom / calc(var(--dock-rim-p) * 100%)
++                var(--dock-rim-width, 3px),
++            var(--dock-rim-track) no-repeat left bottom / 100% var(--dock-rim-width, 3px);
++        animation: gl-dock-rim linear both;
++        animation-timeline: var(--dock-page);
++    }
++
++    .glass-dock.vertical > .dock-plate > .dock-rim {
++        background-position: right top, right top;
++        background-size:
++            var(--dock-rim-width, 3px) calc(var(--dock-rim-p) * 100%),
++            var(--dock-rim-width, 3px) 100%;
++    }
++}
++
++@keyframes gl-dock-compact {
++    from {
++        --dock-c-scroll: 0;
++    }
++    to {
++        --dock-c-scroll: 1;
++    }
++}
++
++@keyframes gl-dock-rim {
++    from {
++        --dock-rim-p: 0;
++    }
++    to {
++        --dock-rim-p: 1;
++    }
++}
++
++@media (prefers-reduced-motion: reduce) {
++    @layer components {
++        .glass-dock:is(.horizontal, .vertical) {
++            transition-duration: 0s;
++        }
++    }
++}
