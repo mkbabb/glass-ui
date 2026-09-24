@@ -2,203 +2,218 @@
 
 | field | value |
 |---|---|
-| seat | D2-C adversarial CRITIC, pass 1. I did not author the spec, the research report or the prototype |
+| seat | D2-C adversarial CRITIC, pass 1 (rerun after the session limit). I did not author the spec, the research report or the prototype. This file replaces the pre-limit critique. I read that critique's counterexample list only after my own runs, and every number below comes from a command I ran |
 | model | `claude-opus-5-5`, asserted from own system identity |
-| HEAD | checkout at `af92d594`; `git diff --quiet 857cb97f af92d594 -- src` holds, so `src/` is the prototype's base. `D2-C-proto.patch` is byte-identical to the prototype seat's scratch copy (`cmp`), and `git apply --check` then `git apply` succeed on a fresh HEAD worktree: 20 tracked files, +604 / −1,605, plus the 3 new composables |
-| scratch | `K = …/scratchpad/D2/p1/D2-C-crit`. The worktree `$K/wt` is removed (`git worktree list` shows no D2-C-crit entry). Kept: the build `$K/out/builds/d2c`, 11 plant builds `$K/out/builds/plant-*`, the witness run `$K/out/run-d2c.txt`, plant runs `$K/out/plants/*.txt`, my probes `$K/probes.mjs`, `overlap.mjs`, `gestalt.mjs` and their JSON `$K/out/probes-*.json`, the plant script `$K/plant.mjs`, and shots `$K/shots/` |
-| engines | Headless Chromium and Playwright WebKit from node, with playwright imported by absolute path from the checkout; no browser MCP. **Every WebKit number is Playwright WebKit (+shim). Every real-Safari cell is UNMEASURED (owner's safaridriver checkbox)** |
-| load | load average 44 at the start, 385 during the witness run and 51-170 during the plants (`uptime`). Other sessions were running vitest and builds on the machine |
-| fences | My only write in the checkout is this file. My only git writes were `worktree add` and `worktree remove --force`. Plants were applied with Node string replacement and restored from in-memory backups; after all 11, `git diff --stat` read +604 / −1,605 again. I ran no vitest. The checkout's `node_modules/.vite/vitest/…/results.json` (13:54:30) and `.vite-temp` (13:55:06) changed during my session, but at those times I was running only harness witnesses and read-only probes, and `ps` showed other sessions' vitest processes |
+| HEAD | worktree cut at `99839631`. `git diff --quiet 857cb97f 99839631 -- src` holds, so `src/` is the prototype's base. `git apply --check` then `git apply` of `D2-C-proto.patch` succeed. After every plant, `git apply --check -R` of the patch succeeded, so the patched tree was intact |
+| engines | Headless Chromium 149 and **Playwright WebKit** 26.5 (+shim, `HARNESS.md` §4), from node, with playwright imported by absolute path from the checkout. No browser MCP. **Every real-Safari cell is UNMEASURED (owner's safaridriver checkbox)** |
+| scratch | `K = …/scratchpad/D2/p1/D2-C-crit`. Builds `$K/out/builds/{d2c,head,clock26,p-*}`, witness runs `$K/out/runs/`, full run `$K/d2c-run.txt`, probes and plant scripts `$K/mine/`, captures `$K/shots/`. The pre-limit seat's files moved to `$K/prior/`, untouched |
+| fences | My only write in the checkout is this file. My only git writes were `worktree add` and `worktree remove --force`. I also ran `git apply` and `git apply -R` (working tree only, no index) inside my own worktree, which the task's patch step requires. Plants were perl edits restored from a backup copy. I ran no vitest and no typecheck. The checkout's `node_modules/.vite-temp` (empty) has mtime 15:09:28. None of my builds ran then (their `build.json` stamps are 14:47, 14:54-14:55, 15:01, 15:11, and the plant builds that followed), and other seats were running, so I do not attribute it |
 
 ## 1 · Before reading the family: the failures I expected a dock design to hide
 
-I wrote these from `PORTFOLIO.md` §0-2 and `HARNESS.md` alone, before opening SPECS §D2-C, `D2-C.md` or the prototype.
+Written after reading `PORTFOLIO.md` §0-2 and `HARNESS.md`, before the spec or the prototype:
 
-1. **The seat-level morph.** W3 bounds faces against the *plate*. It never asks whether two seats paint over each other mid-morph, so a plate can grow smoothly while its content collides inside it.
-2. **The layout footprint.** W3 reads the plate's painted rect, not the root's layout box. A design can paint a continuous plate while the box that its siblings see jumps in one frame.
-3. **Scenes a family never enters.** Every cell that drives the dock through a platform API (for example `scrollIntoView` for the rail's scrolled end) is vacuous for a family that disowns that API.
-4. **Bounds that move with the proposal.** When a family's fix is to change a token that a witness reads as its bound, the witness turns green without the dock changing.
-5. **Dual triggers.** A primary trigger plus a backstop can hide a dead primary (E-2).
-6. **Reduced motion as "instant everything".** Canon P6 keeps fades under PRM, while the W4 PRM cell counts only extent frames. A design that seats every lane, fades included, passes.
-7. **Owning a platform behaviour.** A family that replaces the native scroller inherits every behaviour the scroller gave for free: tap-to-stop, AT reach, momentum and `scrollIntoView`. The witnesses test almost none of them.
-8. **Hysteresis bounds that are looser than stated.** An oscillation of fixed amplitude around one threshold proves a band only wider than that amplitude.
-9. **Engagement gates that stick.** "Focus within holds the dock open" behaves differently on engines that focus a clicked button.
-10. **Weight and bounce read off a trace.** "Dead landing" passes W3, and D-1 asks for bounce. Whether any bounce is left is a gestalt question.
+| # | expected hidden failure | found here? |
+|---|---|---|
+| E1 | The witnesses pass on the harness scenes and break on consumer shapes: wrappers, flexible seats, nested scrollers | **yes**: the BottomDock at 430 (§5 CX-8); floor row 1 unbuilt |
+| E2 | The corner is green in the sampled rungs and wrong in an unsampled one (compact, card, a real scrolled end) | partial: `rail·scrolled-end` is vacuous (§3), but the corner holds at the real end. The card rung has no scene |
+| E3 | Plate continuity is green while the contents collide or double-expose, because W3 reads seats against the plate, not against each other | **yes** (§5 CX-4) |
+| E4 | A terminal snap hides under the continuity bound (about 40 px per frame on a 387 px travel) | **yes**: a 2 % seat passes W3 11/14 (§3) |
+| E5 | The window passes by moving the clock rather than the motion | **yes** (§4.2) |
+| E6 | The scroll-source contract is met in type and not in reactivity; hover or focus gates get trapped | **yes**, both (§5 CX-2, CX-3) |
+| E7 | The coarse floor rows are left to "the floor" and stay RED | yes: W4 4 cells RED |
+| E8 | The rim is green because it is clipped, not because it follows the silhouette | partial: it is a 3 px bar along the straight edge, cut by the corners (§4.6) |
+| E9 | A scroller-free design drops platform scroller behaviour silently: `scrollIntoView`, AT reach, tap-to-stop, momentum | **yes** (§5 CX-5, CX-6) |
+| E10 | Per-frame layout or main-thread cost hides behind a compositor claim | partial: about 1 layout per morph frame, which is cheap; a ticking seat costs 2.6× HEAD's layouts (§4.4) |
+| E11 | PRM loses a fade | yes, by code: every lane, the opacity crossfade included, is built `respectReducedMotion: true` (§4.5) |
 
 ## 2 · Reproduction (my own run)
 
-`node harness/run.mjs --build $K/out/builds/d2c --adapter $K/adapter-d2c.mjs` (the prototype seat's adapter, copied; against `adapter-head.mjs` it differs only in `config`, `posture()`, `rim()` and `compact()`), exit 1:
+`node $H/run.mjs --build $K/out/builds/d2c --adapter $K/adapter-d2c.mjs --out $K/out` (the prototype's adapter, unchanged):
 
-| witness | Chromium | Playwright WebKit (+shim) | total | prototype's claim |
-|---|---|---|---|---|
-| W1 | worst 0.137 px | worst ≤ 0.49 px | **32/32** | 32/32 |
-| W2 | 0 scroll-container frames on every route; ring cut 0/0 | same | **10/10** | 10/10 |
-| W3 | first expand passes; the other 6 cells fail on the window alone, 257.3-258.8 ms against allowances of 253.4-253.8 ms | first expand and warm expand fail (264 > 262, 265 > 263 ms); the other 5 pass | **6/14** | 8/14 |
-| W4 | compact 214.13 → 179.88 px, band 161/76, PRM 0 frames; coarse latch and tap-pins FAIL | same | **12/16** | 12/16 |
-| W5 | 0 device px outside in 5 rungs | same | **10/10** | 10/10 |
+| witness | prototype claims | my run, Chromium / Playwright WebKit (+shim) |
+|---|---|---|
+| W1 corner | 32/32 | **32/32**; worst 0.146 / 0.239 px |
+| W2 run | 10/10 | **10/10**; 0 scroll-container frames on every route; ring cut 0/0 |
+| W3 morph | 8/14 | **7/14** (3/7 / 4/7). Every failure is the window, over by 3.3-12.6 ms (Chromium warm-expand 265.1 against 252.5). Continuity ×0.65-0.66, faces ≤ 0.14 px, dead landings, 0 owners in all 14 cells |
+| W4 state | 12/16 | **12/16**; the coarse latch and tap-pins fail in both engines |
+| W5 rim | 10/10 | **10/10**; 0 device px outside in all five rungs |
+| W3 at `--spring-dock-settle: 0.26s` | 14/14 | **14/14**; windows 248-267 ms against allowances of 302.5-318.4 ms |
 
-Every W3 cell's continuity (×0.64-0.66 of the bound), faces (≤ 0.15 px), landing (dead, 0 reversals) and owners (0 frames) pass in both engines. The failure is only the window, and the prototype's 8/14 against my 6/14 is Playwright WebKit frame jitter under a load average of 385. The claim reproduces.
+The prototype's "over by 1-5 ms" understates it: I read up to 12.6 ms over at the shipped clock. The pass/fail split moves between runs, and the margin stays inside frame jitter.
 
 ## 3 · Can the witnesses fail on this family? (planted faults)
 
-Each plant edits the patched source, builds as `plant-<name>`, and runs only its witness in both engines (`$K/plant.mjs`, `$K/out/plants/<name>.txt`).
+Each plant is one edit to the patched source, then a build and the target witness in both engines (`$K/mine/plants.sh`, `plantw1.sh`, `plantmo.sh`; diffs `$K/mine/plant-*.diff`).
 
-| plant | edit | witness | result |
+| plant | witness | result | caught? |
 |---|---|---|---|
-| `w1morph` | `.glass-dock[data-morphing] > .dock-plate { border-radius: 12px !important }` | W1 | **FAIL 20/32**: every morph-frame cell in both engines (5.99 / 6.00 px horizontal, 7.20 / 7.00 px vertical). Rests pass |
-| `w1endlens` | the plate takes `border-radius: 50%` whenever the track's `s > 1` | W1 | **PASS 32/32. The witness cannot see it.** `rail·scrolled-end` reaches the end through `scrollIntoView`, which leaves a transform track at `s = 0`. The prototype's own reach-based read (`D2-C-proto/mine/railend.mjs`, `focus()` on the last seat, `s` → 168.5) reads the plant's corner at **19.845 px** (Chromium) and **19.783 px** (Playwright WebKit), against 0.137 / 0.011 px on the unplanted prototype |
-| `w2auto` | run `overflow-x: auto` | W2 | **FAIL 2/10**: routes 1-4 in both engines, e.g. route 2 at 72/72 scroller frames |
-| `w2trackclip` | `.dock-track { overflow: clip }` (a clip, not a scroller) | W2 | **FAIL 4/10**: 0 scroller frames, but ring cut 4.25 / 4.25 px (long runs) and 4.35 / 4.35 px (hover), both engines. The paint check sees `clip` |
-| `w3bounce` | extent lane ζ 0.6, `rest` seat | W3 | **FAIL 0/14**: undesigned overshoot 16.5-36.7 px, 2 reversals, both engines |
-| `w3nomo` | the MutationObserver callback no longer calls `check()`; ResizeObserver alone | W3 | **Content and swap cells PASS continuity in both engines** (×0.64-0.66). Only windows fail (2/14). See §4.5 |
-| `w3noro` | the ResizeObserver callback is a no-op; MutationObserver alone | W3 | **Content and swap cells PASS continuity in both engines** (×0.65-0.66); 6/14, window only. See §4.5 |
-| `clock26` | `--spring-dock-settle: 0.26s`, nothing else | W3 | **14/14**. Windows 249-266 ms, the same as the 210 ms build (§4.3); allowances 302.5-318.9 ms |
-| `clock26late` | 0.26 s plus `data-morphing` removed 45 ms late | W3 | **FAIL 0/14**: the "closes within 2 frames of landing" check catches it (the window closes 3-6 frames, 47-53 ms, after landing) |
-| `w4band` | `DEFAULT_BAND` 40 → 2 (enter 123, exit 116) | W4 | **`no-threshold-bounce` PASSES in both engines** with a 7 px band: 1 flip in 24 moves. See §4.4 |
-| `w5rimout` | rim `translate: 0 6px`, plate `overflow: visible` | W5 | **FAIL**: 374-2,136 device px outside, 12.75-15.95 px deep, in every Chromium rung |
+| `lens`: `border-radius: 50%` on the plate | W1 | **0/32**; worst 14.08 px on `fit`, 15.33 px mid-collapse | yes |
+| `scaleswell`: the rejected squish, `scale: 1 (1+σ)` on the plate while moving | W1 | **32/32**, worst 0.46 px | **no**: W1's 1 px bound cannot see the "resize, never scale" rule the family rests its corner claim on |
+| `clipboth`: the run `overflow: clip` on both axes | W2 | **6/10**; ring cut 4.25 px (long run) and 4.35 px (hover) in both engines | yes |
+| `band2`: seat the extent at 8 px (the spec's option 2, the terminal snap) | W3 | **11/14**, better than the prototype. Final step 8.97 px after 2.88 px (×3.11, `probes.mjs terminal`). The only failures are 3 Chromium windows closing 4 frames late | **no**: W3's continuity bound (41 px here) cannot see a terminal snap |
+| `noaperture`: no aperture clip on the outer faces | W3 | faces 75.6-171.6 px out, in 10 of 14 cells | yes |
+| `nohyst`: compaction band 0 | W4 | `no-threshold-bounce`: 24 flips in both engines | yes |
+| `nogate`: no engagement gate | W4 | `engagement-expands` fails in both engines | yes |
+| `rimleak`: the plate does not clip its rim | W5 | **0/10**; 244-432 device px outside, 7.4-11.7 px deep | yes |
+| `nomo`: delete the MutationObserver trigger | W3 | continuity ×0.64-0.66 in all 14 cells; only windows fail | the trigger is not load-bearing on these scenes |
+| `noro`: delete the ResizeObserver trigger | W3 | continuity ×0.65-0.66 in all 14 cells; only windows fail | the same |
 
-Each witness can fail on this family. Two cannot fail where they claim to (W1's scrolled-end cell, W4's band bound), and two of the family's own mechanisms are not load-bearing (§4.5).
+- **Rail end.** The harness drives W1's `rail·scrolled-end` cell with `scrollIntoView`, which leaves a transform track at s = 0, so the cell reads the rest geometry. I re-read it through `focus()` on the last seat (`$K/mine/railend.mjs`): s 168.48, the seat fully visible, corner 0.137 px (Chromium) / 0.011 px (Playwright WebKit). So the corner holds, but the cell as written cannot fail on this family.
+- **Triggers.** The prototype's D-4 says an earlier ResizeObserver-only build read Playwright WebKit content-add at ×7.1. My `nomo` build is ResizeObserver-only, and it holds continuity in every cell of both engines. D-4 does not reproduce, and one fact (the natural extent) has two observers (§4.5).
 
 ## 4 · The checklist
 
 ### 4.1 Vacuous convergence
 
-- **W1 `rail·scrolled-end` is vacuous here.** The prototype says so (§2.1, item 6), and `w1endlens` shows the consequence: a lens that appears only at a scrolled end passes 32/32. Before any transform-track family counts W1 as green, the harness needs one of two fixes: an adapter read `toEnd()` that uses the family's own reach, or a non-vacuity guard that fails the cell when the run's offset is still 0. The prototype's re-read by focus (0.137 / 0.011 px) is the real evidence for this cell, and it holds.
-- **W2 is green by construction.** No element is a scroll container, so routes 2-4 cannot arm a range. That is the family's thesis, not vacuity, and `w2trackclip` shows the paint half still bites. W2 does not measure what the family gave up for it (§4.6).
+- W2 on a scroller-free family reduces to "no element has `auto`/`scroll`/`hidden`", which holds by construction. Its paint half is real: `clipboth` fails it at 4.25-4.35 px.
+- W1 `rail·scrolled-end` is vacuous here (§3), and W1 cannot tell a resize from a 4 % scale (`scaleswell` 0.46 px).
+- W5 is not vacuous: `rimleak` fails every cell.
+- So W1, W2 and W5 converge on real properties. The corner-and-rim claims stand. The "resize, not scale" design choice is taste that no witness enforces.
 
 ### 4.2 Spec-cites-itself circularity
 
-- **The clock ask moves the bound, not the dock.** No line in the patched `src/components/dock` reads `--spring-dock-settle`. The body lands on `DOCK_SPRING` (0.30, ζ 0.88) with eps 0.5 px, whatever the token says. `clock26` reads windows of 249-266 ms, the same as the 210 ms build's 248-269 ms. What turns W3 green is the allowance rising from about 253 to about 303-319 ms, because the harness derives `clockMs` from `--spring-dock-duration`.
-  - The derivation is physical rather than arbitrary: 0.26 s is the closed-form 0.5 px horizon for D ≤ 600, which I re-derived from the report's node one-liner.
-  - But "one token for CSS and JS" (`D2-C.md` §4 item 2) is not built. The token and `DOCK_SPRING` are two facts that must agree by hand (P-3).
-- **The token has consumers outside the dock.** `--spring-dock-duration` also times `dock-in` (`transitions.css:88`, `literals.css:24`), the grasp veil (`glass/grasp.css:202,206`), value marks (`value-marks.css:82`) and the tab indicator (`scale-paper.css:55`). All of them stretch by 24 % under the ask, and none was measured.
-- **What still bites at 0.26 s:** `clock26late` fails 0/14, so a late close is still caught by landing proximity. The window-length check itself loosens by about 50 ms: a body landing 50 ms later would pass.
+- **The clock.** R-4 fails at 210 ms, and the remedy is to set the register's clock to 0.26 s: "the 0.5 px horizon for the largest travel", which is this family's own seat rule. The witness then passes because its bound grew from about 253 to about 303-318 ms while the windows stayed at 248-267 (§2). That is redefinition, not cure.
+- **The token's reach.** `--spring-dock-settle` feeds `--spring-dock-duration` and `--spring-dock-exit-duration`. `grep` over the worktree's `src/` finds 39 reads of `var(--spring-dock-duration`, 2 of `-exit-duration` and 2 of `-settle`, spread across 27 files that name `--spring-dock*`: tabs, slider, switch, carousel, sheet, menu, pager dots, progress, timeline, among others. The `linear()` curve would not be regenerated. So the dock's W3 would be paid for by the whole register, unmeasured.
+- **The spec's own tables** cite the research probe for the W3 margin ("1-6 ms over"). The prototype and my run read up to 12.6 ms.
 
 ### 4.3 Gates that cannot fail
 
-| gate | shown | evidence |
-|---|---|---|
-| W1 `rail·scrolled-end` on a transform track | cannot fail | `w1endlens` 32/32 against 19.8 px by reach |
-| W4 `no-threshold-bounce` "band wider than 8 px" (`HARNESS.md` §5) | fails only below about 4 px | `w4band`: 7 px passes, because the 24 moves are ±4 px around *enter*, so they never reach *exit* = enter − 7. Fix: oscillate ±(stated bound / 2 + 1) around the band's midpoint, or assert enter − exit ≥ 8 directly |
-| W4 `prm·posture-morph` | blind to fades | it counts only extent frames; see §4.6 item 3 |
-| W3 faces | blind to seat-on-seat and to layout | see §4.6 items 1-2 |
-| the 9 RED `g-dock-lattice.test.ts` gates | unmeasured by me | I did not re-run vitest because of the fence (the prototype's own breach, its item 9). The prototype's 111/121 stands on its word |
+- **W3 has no terminal-smoothness check.** `band2` lands with an 8.97 px step after 2.88 px and scores 11/14. The crossing seat avoids that snap by choice, and nothing enforces the choice.
+- **W3 has no seat-against-seat check.** Collisions pass (CX-4).
+- **W4 reads only the plate.** Compaction scales the seats by 0.706 while the plate scales by 0.84 (CX-1), and every compact cell stays green.
+- **W4's engagement cells cover hover and focus, not press-then-scroll** (CX-2).
+- **The harness's `"@window"` getter always resolves.** A getter whose element mounts late never binds (CX-3), and W4 and W5 cannot see it.
+- **The unit gates.** The patch reports 9 RED `g-dock-lattice` source-grep gates (the prototype's figure, not re-run here). They assert the struck design, so they cannot judge this one either way.
 
 ### 4.4 The elegant-reduction trap
 
-Items that read as one line in the spec and are the hard part:
+- **"An entering face sits at its target; persistent regions lerp between page positions."** One line, and it is where the hard part hides: a region travelling across a face that is already in place must cross its seats. Measured on the warm expand (`$K/mine/collide.mjs`): Home paints over One, Two and Three for **16 of 109 frames (Chromium) and 9 of 55 (Playwright WebKit), up to 36.5 / 37.2 px**. The leaving collapsed "P" stays painting after the posture flips for 23 / 12 frames at opacity up to 1, and it jumps **8 px** up the cross axis on the first frame. HEAD reads the same class: 16 frames, 39.8 px, 8 px. D2-C inherits the choreography defect and does not cure it. `shots/sheet-d2c.png` and `tail-d2c-webkit.png` show "2 H 3", "H2", "1H" and a raised "P" riding over "Play".
+- **"Nothing the body writes changes layout."** The plate's insets are layout. CDP counts 34 layouts across a 31-frame warm expand (HEAD 66 across 65; 1.76 ms against 4.87 ms), so the claim is false but cheap.
+- **"A ResizeObserver covers content."** The prototype added a MutationObserver on the whole subtree (`childList`, `characterData`, `class` attributes). Every text or class change then forces a layout read in a microtask. A seat whose text ticks every frame (`probes.mjs ticker`, Chromium) costs **618 layouts in 2 s against HEAD's 240**. With proportional digits, `data-morphing` is open on **132 of 243 frames**, and the plate never rests (13 distinct widths).
+- **"Retargets carry velocity."** A 600 ms linear CSS width transition on a seat is chased by the extent lane. The window stays open for 92 frames, and the plate lands 726 ms after the change against HEAD's 583 (`probes.mjs seattransition`). That is C-5 as a measured case: two owners of one geometry, invisible to the owners census.
 
-1. **"The gesture."** The family replaces the platform scroller, and my first probe of a behaviour the scroller gave for free fails.
-   - A flick, then a mouse tap on the moving track 30 ms later, activates a seat: `s6` in Chromium (the track caught at 111.5); `s7` in Playwright WebKit, where `s6` was under the pointer when read and the track kept moving 102.6 → 136.2 (`probes.mjs taptrack`).
-   - UIKit's contract is that a tap on a decelerating scroll view stops it and does not activate.
-   - `onPointerDown` holds the lane but leaves the click to fire.
-2. **"Fling to the nearest rest, keeping the velocity."** `decayRest` only picks the target. The flight itself is the dock spring (response 0.30 s), so every flick lands in about 250 ms whatever its speed, not on UIKit's decay. Whether that reads as momentum on a phone is UNMEASURED (C-3).
-3. **"Reach covers AT."** It covers focus and click only (C-1, C-2). A consumer `scrollIntoView` is a silent no-op, and the prototype had to re-derive W1's scrolled-end cell for exactly this reason.
-4. **"The engagement gate: focus within holds c at 0."** After an ordinary mouse click on a seat, the seat keeps focus in both engines (`activeElement` = `t2`). Scrolling to 900 then leaves the dock uncompacted, 214.13 px with posture `pinned` (Chromium; Playwright WebKit 214.16). Real Safari does not focus a clicked button, so the engines would split there. UNMEASURED.
-5. **"Endpoints: posture watcher plus ResizeObserver."** The prototype says the RO alone left a gap (D-4, ×7.1 in WebKit) and added a MutationObserver. The plants refute the need (§4.5).
+### 4.5 Legacy aliases, shims or dual paths
 
-### 4.5 Legacy aliases, shims and dual paths
-
-- **The two content triggers each pass W3 alone.** In `w3nomo` (RO only) and `w3noro` (MO only), every content and swap cell holds continuity at ×0.64-0.66 in both engines. The ×7.1 / ×5.62 WebKit steps that D-4 attributes to "RO alone" do not reproduce on this source.
-  - A plausible reading, not measured: the earlier failure was the harness's read landing between the DOM mutation and the RO delivery, a read the paint never showed.
-  - Either way this is a dual path the witness cannot tell apart (E-1).
-  - The MO has a cost: `check()` calls `getBoundingClientRect` in the microtask after every `class` mutation anywhere in the dock subtree.
-  - Keep the one with a scene that needs it. The RO covers font swaps and resizes, which the MO cannot see; the MO covers nothing the witnesses show.
-- **An identity alias:** `const outerCurrentLayer = outerActiveLayer;` (`GlassDock.vue:199` in the patched tree). HEAD's own comment at that site, which the patch deleted, ruled that exact form out: "an identity `computed` over one ref is a second name for that ref".
-- **Stale prose:** about 48 comment lines across 16 dock files still describe `--dock-morph-t`, the cut cap, the snap scroller or the deleted composables (my `grep -c`, matching the prototype's "about 50"). In addition, 11 files under `tests/`, `tests-visual/` and `demo/` name the deleted internals and are unaudited.
-- **A lane leak:** `DockCrossfade.vue:115` takes `useDockBody().lane(…)`, and `createDockBody` never removes a lane. Every crossfade mounted inside a dock adds a lane that is stepped and kept until the dock unmounts. The prototype names this risk (item 8); it is a defect by inspection.
+- **Two observers of one fact** (`useDockExtent.ts:369`, `:428`), with neither load-bearing on the witness scenes (§3). This breaks P-3.
+- `const outerCurrentLayer = outerActiveLayer;` (`GlassDock.vue:199`) is an identity alias.
+- **The run keeps two reveal paths.** The body's reach is one. The other is the library's own `useSelectionGroup`, which still calls `scrollIntoView` (`useSelectionGroup.ts:235`), and the demo overflow story names it as its recenter path (`demo/stories/dock/overflow.vue:28`). On a transform track that call is a silent no-op.
+- **`--dock-plate-t`** has a CSS default (`var(--dock-expand-t)`) plus an inline JS write during flips. That is a sanctioned two-writer shape, and it is flagged only because the census cannot see it.
+- **PRM.** Every lane, including the face-crossfade opacity lane (`useDockExtent.ts:86`), is built `respectReducedMotion: true` (`useDockBody.ts:107`), so under reduce the fade seats in one frame. Canon P6 keeps fades under PRM. This is a code read: W4's PRM cells measure extent frames, not opacity.
 
 ### 4.6 Masked fallbacks and unverified gestalt
 
-**Masked fallbacks.** None in the paint path: the plate, the rim clip and the track have one route each, and `w5rimout` and `w1morph` show the primaries fail loud. The only masking pair is the dual trigger in §4.5.
-
-**Gestalt.** I captured the first expand frame by frame (`$K/shots/M-expand.png`, Chromium, 7 frames over 262 ms), the rests and the compact rung. I also viewed the prototype's `cmp-sections-430-light.png` and `cmp-bottomdock-430-dark.png`.
-
-- **What is right.**
-  - The plate is a true stadium in every frame; the HEAD lens and squash are gone.
-  - The extent is continuous with no terminal snap.
-  - The compact rung shrinks about the centre with the labels scaled by k = 0.84, and reads as one object.
-  - The ring on the 14th seat of the long run paints whole.
-- **What is not.**
-  1. **Seats collide mid-morph** (`overlap.mjs`, first expand).
-     - Prototype: 19 frames with two painting seats overlapping by more than 2 px, worst **38.8 px** (Chromium) / 39.2 px (Playwright WebKit).
-     - The pairs are Home×One, Home×Two, Home×Three (the persistent Home slides through the entering face, which already sits at its target) and Play×Play (the held collapsed "P" over the entering "Play" chip).
-     - HEAD reads 19 frames, worst 36.8 px (One×Play). So this is not a regression, but it is not cured.
-     - In the captures, "H" draws over "1", "2" and "3" in turn, and a ghost "P" sits on "Play" until the last frame. W3 cannot see this.
-  2. **The layout footprint jumps.** The root lays out at its target at once (D-1).
-     - With a sibling sharing the row (`margin-inline: 0` on the root), the sibling moves **193.8 px in one frame** on both the collapse and the expand. HEAD reads 194 px.
-     - During the collapse the plate paints outside the root for 24 frames, so it paints over that sibling.
-     - W3 reads the plate, so it cannot see this either.
-  3. **PRM drops the fade.** Every lane, the face crossfade included, is built with `respectReducedMotion: true`.
-     - Under `reducedMotion: "reduce"` the posture flip's face opacities go `0/1 → 1/0` with **0 intermediate frames** in both engines (HEAD is the same).
-     - Canon P6 and floor row 4 keep fades. The spec lists PRM as [probed], and the W4 PRM cell cannot see a fade.
-  4. **No bounce on the primary motion.** The extent seats dead by rule (the crossing seat), and the squish swell peaks at +2.22 px on a 56 px plate. I cannot see it in the captures. D-1's bounce survives only in the track's rubber band. The morph reads as a clean, weighted stretch with a curtain reveal, not as a liquid body.
-  5. **Hard cuts at the port edge.** The overflowing dock at 430 slices its trailing seat with a straight vertical edge inside a round plate. There is no fade and no cue (the prototype's §6). HEAD's cut cap was at least a cue, so this is a regression in engagement (D-2).
-  6. **The BottomDock at 430 is broken.** The tab strip grows to 258 px and pushes prev/next-category off the port. The capture confirms the prototype's §6.
-  7. **The rim** reads as a 3 px dark band under the plate, with the fill clipped by the corner. It is legible, but it is not a rim that lives in the glass.
-- **Verdict on gestalt:** geometrically sound, and not yet "one liquid dock, iOS-27 grade". It stays short of that until seats choreograph with the plate, a bounce is designed rather than seated away, and the run's ends carry a cue.
-
-**The cost of the paint path (P5).** The plate is resized through `inset`, a layout property, and the faces through a main-thread `clip-path` (S-17). Chromium CDP over one warm expand reads 34 layouts and 43 style recalcs, against HEAD's 66 and 69 (layout 1.56 ms vs 3.97 ms, style 40.8 ms vs 87.8 ms in 600 ms). So it is cheaper than HEAD. It is still not compositor-only: a main-thread stall freezes the whole dock, where a transform would keep moving. Not measured here.
+- **Masked: the scroll source.** `useDockScrollSource` watches `[source, compactOnScroll]`, where `source` is `() => props.scrollSource` (`useDockScrollSource.ts:63`). A getter prop is stored, not tracked, so a getter whose element resolves after the dock's setup never binds. There is no compaction, no rim fill and no warning. Measured in happy-dom (`$K/mine/getter.mjs`): an element prop reads `compact true, progress 0.200` after scrolling to 900. The getter `() => ref.value` with a late element reads **`compact false, progress 0.000`**. The same getter with the element ready reads `true`. O-55 asks for exactly the getter form. The primary is dead and nothing fails loud (E-2).
+- **Masked: compaction's paint.** `--dock-k` is unregistered, so it inherits. The rule `scale: var(--dock-k)` (`shape.css:105`) matches `.dock-layers`, `.dock-layer` and `.dock-face`, which nest, so the scale compounds. Measured (`compound.mjs`, both engines): plate ×0.84, **seats ×0.706**, seat height 38 → 26.81 px inside a 47.06 px plate. `shots/compact-cmp.png` shows small type afloat in an oversized pill.
+- **Gestalt, the morph** (my film strips, `shots/sheet-d2c.png`, `tail-d2c-*.png`). The plate is a true stadium in every frame, and it grows as one body, which HEAD's squashed, face-spilling strip (`sheet-head.png`) is not. But:
+  - glyphs collide mid-flight;
+  - the leaving face rides raised over "Play";
+  - the landing is dead: 0 reversals by design, and the final steps are 1.34, 1.31, 0.91, 1.0 px.
+  - The only weight cue is the swell. It is +2.22 px at peak (56 → 58.22), reached in the first frames and decaying through the travel. It is below what reads at a glance, and it puffs the plate rather than stretching it along the motion.
+  - It reads as a clean glide, not an iOS-27 liquid morph with bounce (D-1, D-2). The one designed bounce in the family is the track's overpull.
+- **Gestalt, overflow at 430** (`shots/cmp-430.png`, rows HEAD / D2-C):
+  - The sections dock trades HEAD's lens for a stadium, but the trailing seat is cut flat at the port with no cue that more exist. That is a regression of affordance.
+  - The BottomDock's tab strip grows to fill a max-content track (port 360, track 540). «, » and the layers control are pushed off, and "Vertical" is cut.
+- **Gestalt, the rim.** It is a 3 px bar along the plate's straight bottom edge, clipped at the corners. It reads as a bottom shelf, not a rim.
 
 ### 4.7 Consumer-less substrate
 
-- `DockBody.frames` ("an instrument for the idle budget") has no reader in `src/`.
-- `useDockExtent` returns `extent` "for instruments", and `GlassDock.vue:227` destructures only `leavingLayer`.
-- `scrollSource`, `compactOnScroll` and `rim` have a consumer letter (O-55, value.js), but no consumer mounts them yet. Nine props against the six-prop G-DOCK-BUDGET gate is an owner call (the prototype's §5).
-- The spec's `bodyEpisode()` was not built. DockCrossfade takes a raw lane, which is simpler, and the spec should say so.
+- `rim` and `compactOnScroll` have no consumer yet. O-55 asks for both (value.js), so they are owed, not speculative.
+- The body's `fling` and `hold` serve only the track, and the rim lane serves only the rim. Each has one site, which is acceptable inside one composable.
+- The spec's consumer table lacks rows for:
+  - the nested-scroller seat (BottomDock);
+  - `useSelectionGroup`'s `scrollIntoView`;
+  - a getter whose element mounts late.
 
-## 5 · Counterexamples (concrete)
+## 5 · Counterexamples (concrete, all measured here unless marked)
 
 | # | input | wrong output | engines |
 |---|---|---|---|
-| CX-1 | `long` dock; flick 80 px; tap the track 30 ms later | the tap activates a seat (`s6`; `s7` in WebKit, not the seat read under the pointer) | Chromium, Playwright WebKit |
-| CX-2 | `compact` dock; mouse-click "Lots"; move away; scroll to 900 | stays 214.13 px, posture `pinned`; never compacts until blur | Chromium, Playwright WebKit (focus on click) |
-| CX-3 | `morph` dock, `reducedMotion: reduce`; hover | face crossfade 0 → 1 in one frame; P6 fade lost | both |
-| CX-4 | `morph` first expand | Home paints over One/Two/Three, up to 38.8 px, for 19 frames | both |
-| CX-5 | `morph` with a sibling in the row | sibling jumps 193.8 px in one frame; plate paints over it for 24 frames on collapse | Chromium |
-| CX-6 | plate lens only when `s > 1` (`w1endlens`) | W1 32/32 green; real corner 19.8 px at the reached end | both |
-| CX-7 | compaction band 2 (a 7 px band) | W4 `no-threshold-bounce` green | both |
-| CX-8 | delete either content trigger | W3 unchanged: continuity holds with RO alone or MO alone | both |
-| CX-9 | `--spring-dock-settle: 0.26s` | W3 0/14 → 14/14 with windows unchanged; 5 non-dock consumers retimed, unmeasured | both |
-| CX-10 | demo BottomDock at 430 | tab strip 46 → 258 px; prev/next-category off the port | Chromium (prototype §6, capture viewed) |
+| CX-1 | `compact` scene, scroll to 900 | plate ×0.84 but seats ×0.706; seat 38 → 26.81 px in a 47.06 px plate | Chromium, Playwright WebKit |
+| CX-2 | `compact`: click (or tap) "Lots", move away, scroll to 900 | stays 214.13 px (205.52 at 430 touch), posture `pinned`; focus stays on the seat, so the engagement gate never releases | both (Playwright WebKit focuses on click; real Safari macOS does not, so this is UNMEASURED there) |
+| CX-3 | `scrollSource: () => el.value` with `el` mounted after the dock | never binds: `compact false`, progress 0 at scroll 900; no error | happy-dom |
+| CX-4 | `morph` warm expand | Home over One/Two/Three for 16/109 frames, up to 36.5 px; leaving "P" visible after the flip for 23 frames, jumped 8 px | both |
+| CX-5 | `long`: drag 84 px, release, then click the track 30 ms later | the track stops (s 126.29 / 157.19) **and** V7's click fires | both |
+| CX-6 | `useSelectionGroup` selects a seat past the fold (programmatic) | `scrollIntoView` does nothing on the track; the seat stays hidden | code read (`useSelectionGroup.ts:235`), not run |
+| CX-7 | a seat whose text changes each frame (proportional digits) | `data-morphing` open 132/243 frames, 618 layouts in 2 s (HEAD 240) | Chromium |
+| CX-8 | demo BottomDock at 430 | track 540 in a 360 port; prev/next-category and layers off the port | Chromium |
+| CX-9 | `band2` plant (terminal snap 8.97 px) | W3 11/14, green on continuity | both |
+| CX-10 | `--spring-dock-settle: 0.26s` | W3 7/14 → 14/14 with windows unchanged; the dock register's duration token has 39 readers across 27 files, retimed and unmeasured | both |
 
 ## 6 · Convergence
 
-**54 %.** W1, W2 and W5 are sound, and W3's physics (continuity, faces, landing, owners) is sound. What remains:
+The invariant checklist: 17 rows, the five problems, the floor and the checklist above. Closed rows are marked ✓.
 
-**Open gaps (exact list):**
+| # | row | state |
+|---|---|---|
+| 1 | P1 stadium in every sampled rung and frame (W1, plant-verified) | ✓ |
+| 2 | P2 no scroll container; cross-axis paint whole (W2, plant-verified) | ✓ |
+| 3 | P3 continuity, faces within the plate, dead landing, one owner (W3 physics) | ✓ |
+| 4 | P5 rim inside the silhouette in every rung (W5, plant-verified) | ✓ |
+| 5 | one integrator carries velocity across retargets; the loop parks at rest | ✓ (prototype's reading, not contested) |
+| 6 | P3 window on the shipped clock | open |
+| 7 | P3 content choreography: no seat collisions, no ghost after the flip (CX-4) | open |
+| 8 | P4 compaction paint (CX-1) | open |
+| 9 | P4 gate releases after a press (CX-2) | open |
+| 10 | P4/P5 getter source binds (CX-3) | open |
+| 11 | floor row 3: coarse latch, tap-pins (W4 4 RED) | open |
+| 12 | floor row 1 (`[data-dock-seat]` at depth) and row 4 (PRM keeps fades) | open |
+| 13 | the gesture's platform contract: tap-to-stop (CX-5), AT reach (C-1), iOS momentum (C-3) | open |
+| 14 | an overflow end cue, and the flexible-seat consumer (CX-8) | open |
+| 15 | one source per fact: two content observers, the identity alias, two reveal paths (CX-6) | open |
+| 16 | gestalt D-1: designed bounce and weight on the extent | open |
+| 17 | budget: DockProps 9 against 6, 9 RED lattice gates, about 50 stale comment lines (prototype's figures) | open |
 
-1. W3's window at the shipped 210 ms clock: 6/14 here, 8/14 in the prototype's runs. The 0.26 s ask moves the witness's bound, not the body. It is not bound to `DOCK_SPRING` (P-3), it retimes five non-dock consumers unmeasured, and `linear()` was not regenerated. An owner ruling is owed.
-2. Floor row 3 is unbuilt: W4 coarse latch and tap-pins, 4 cells RED.
-3. Floor row 4 is unbuilt: PRM drops the posture fade (CX-3).
-4. Floor row 1 is unbuilt: `[data-dock-seat]` at any depth; wrappers are still one seat.
-5. Tap-to-stop activates a seat (CX-1).
-6. Focus after a click sticks the engagement gate (CX-2).
-7. The dual content triggers (CX-8): delete one, keep the one a scene needs.
-8. Seat collisions mid-morph (CX-4): persistent regions need a path that does not cross entering seats, or the entering face must travel with the plate.
-9. The layout footprint jumps for in-flow docks (CX-5). The spec's max(from, to) hold was not built, and it would not cure this either.
-10. No end cue on an overflowing run; a regression against HEAD's cap cue.
-11. The BottomDock nested-scroller seat (CX-10), which is absent from the spec's consumer table.
-12. DockProps 9 against the 6 budget (owner); 9 RED lattice gates; 11 test and demo files naming deleted internals; about 48 stale comment lines.
-13. The `outerCurrentLayer` identity alias; the DockCrossfade lane leak.
-14. D-1: no designed bounce on the extent; the swell is imperceptible at +2.2 px.
-15. C-1 AT cursor, C-2 consumer `scrollIntoView`, C-3 iOS momentum, C-5 CSS size transitions, C-6 faces unclipped at rest (M-A), C-8 non-window scrollers: named by the family, still open.
+**Convergence: 29 %** (5 of 17 closed).
+
+**Open gaps (exact):**
+1. W3 window at 210 ms. The 0.26 s ask is circular and register-wide (CX-10). An owner ruling is owed.
+2. Seat collisions and the post-flip ghost (CX-4).
+3. Compounded compaction scale (CX-1).
+4. The press-then-scroll gate trap (CX-2).
+5. The late-getter scroll source (CX-3).
+6. Floor row 3 (coarse latch, tap-pins).
+7. Floor row 1 and floor row 4 (PRM drops the crossfade).
+8. Tap-to-stop activates a seat (CX-5).
+9. AT reach (C-1), iOS momentum parity (C-3), and consumer or library `scrollIntoView` (C-2, CX-6).
+10. No end cue on an overflowing run.
+11. The BottomDock nested-scroller seat (CX-8).
+12. Two content observers, one to delete; the `outerCurrentLayer` alias.
+13. No designed bounce on the extent; the swell is imperceptible.
+14. DockProps 9 against the 6 budget (owner call); 9 lattice gates to rewrite; stale comments.
+15. Harness debts that block trust in any transform-track family:
+    - W1 `rail·scrolled-end` must reach through focus;
+    - W3 needs a terminal-step check and a seat-against-seat check;
+    - W4 must read seat scale and press-then-scroll;
+    - the scenes need a late-getter binding.
 16. Real Safari, iOS Safari, VoiceOver and TalkBack: UNMEASURED (owner's safaridriver checkbox).
-
-**Owed by the harness, not by D2-C** (it blocks trust in any transform-track family):
-- H-1: make W1 `rail·scrolled-end` non-vacuous (CX-6).
-- H-2: make W4's band bound match its stated 8 px (CX-7).
-- H-3: add a seat-on-seat overlap read and a root-footprint continuity read to W3 (CX-4, CX-5).
-- H-4: make the PRM cell read fades (CX-3).
 
 ## 7 · Verdict
 
-**BANK.** The family is sound where it claims soundness: the stadium holds in every frame, no scroll container exists, the rim sits inside the plate, and the one integrator carries velocity across retargets, which S-16 finds no CSS carrier does. Nothing is refuted, so it is not RETIRE. No missing primitive stalls it, so it is not BLOCK.
+**BANK.**
 
-On the witness record it is dominated today. The D2-B critique reproduces D2-B at W3 14/14 at the shipped clock and W4 16/16. D2-C needs a register-wide token change to reach W3 green. It also takes on the platform scroller's whole contract, and fails the first unmeasured piece of it I probed (tap-to-stop).
+- **Sound where it claims soundness.** Four witnesses catch their plants, and they read:
+  - a true stadium in every frame;
+  - no scroll container;
+  - a rim inside the plate;
+  - dead landings with velocity carried across retargets, which S-16 finds no CSS carrier gives.
+- **Not refuted, so not RETIRE.** The center (one integrator, a transform track) stands, and no missing primitive stalls it.
+- **Not BLOCK.** Every open gap above is a buildable change.
+- **Not ADVANCE.**
+  - At the shipped clock it is 7/14 on W3.
+  - It reaches green only by retiming the whole dock register.
+  - It takes on the platform scroller's full contract (tap-to-stop, AT reach, `scrollIntoView`, momentum) and already fails one piece of it (CX-5).
+  - Four defects of its own escape the witnesses: CX-1, CX-2, CX-3, CX-7.
+  - The spec's side-by-side table records D2-B at W3 14/14 and W4 16/16 at the shipped clock. On that record D2-C is dominated.
 
-**Re-trigger:** re-open D2-C if either of these happens:
-- a native-scroller family fails a real-Safari or iOS Safari cell on the run's cross-axis paint or its snap lattice, which a transform track cures by construction;
-- the owner rules the dock register's clock to its 0.5 px horizon (0.26 s) for the register as a whole.
+**Re-trigger.** Re-open D2-C if either happens:
+- a native-scroller family fails a real-Safari or iOS Safari cell on the run's cross-axis paint or its lattice, which a transform track cures by construction;
+- the owner rules the dock register's clock to its 0.5 px horizon for the register as a whole.
 
-On re-entry the family must first close gaps 2-8 and 13. Gap 7 means deleting a trigger, and gap 13 means deleting the alias and the leak.
+On re-entry, gaps 2-5, 7, 8 and 12 close first. Each is a deletion or a small fix:
+- register `--dock-k` non-inheriting, or write it on one box;
+- make the gate ignore pointer-caused focus;
+- read the source through `toValue` inside the watch;
+- suppress the click on a catch;
+- keep one observer;
+- give the face lane a PRM exemption.
