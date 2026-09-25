@@ -1,0 +1,1285 @@
+diff --git a/demo/stories/data/search.vue b/demo/stories/data/search.vue
+index ba4b4de0..3308a855 100644
+--- a/demo/stories/data/search.vue
++++ b/demo/stories/data/search.vue
+@@ -562,24 +562,18 @@ function formatScore(score: number): string {
+                 role="listbox"
+                 aria-label="Search results"
+             >
+-                <!-- [2026-08-28 · BK π-CURE · R4] ~~`role="option"` +
+-                     `:aria-selected` + `:data-active`~~ — three attributes that
+-                     type-checked, read correctly, and rendered NOTHING. `Card` binds
+-                     `v-bind="$attrs"` first and then restates `:role` / `:aria-selected`
+-                     / `:tabindex` off its OWN `selected` prop, so the later explicit
+-                     bindings won and an unset `selected` REMOVED all three. The route
+-                     was writing to a channel the component owns; `selected` IS that
+-                     channel, and passing it also lights the library's own
+-                     `.card[role="option"][data-selected="true"]` paint
+-                     (`components/card/styles.css:165`) that was dead here for the same
+-                     reason. `data-active` goes with them: nothing styled it, and
+-                     `data-selected` is now written by its one owner. -->
++                <!-- A result row is a listbox option the field walks with
++                     `aria-activedescendant`: it takes no tab stop of its own. Card
++                     owns no option channel, so `role` / `aria-selected` land from
++                     here untouched. The active row's edge is full ink on `border`
++                     (the tone keeps the leading edge). -->
+                 <Card
+                     v-for="(result, i) in visibleResults"
+                     :id="`search-result-${result.item.id}`"
+                     :key="result.item.id"
+-                    class="border-l-4"
+-                    :selected="i === searchState.selectedIndex.value"
++                    class="search-result border-l-4"
++                    role="option"
++                    :aria-selected="i === searchState.selectedIndex.value ? 'true' : 'false'"
+                     :style="{
+                         borderLeftColor: `var(--section-color-${result.item.tone})`,
+                     }"
+@@ -630,3 +624,9 @@ function formatScore(score: number): string {
+         </StorySection>
+     </StoryPage>
+ </template>
++
++<style scoped>
++.search-result[aria-selected="true"] {
++    border-color: var(--foreground);
++}
++</style>
+diff --git a/demo/stories/display/card.vue b/demo/stories/display/card.vue
+index 45a78e5c..64deac8d 100644
+--- a/demo/stories/display/card.vue
++++ b/demo/stories/display/card.vue
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { ref } from "vue";
++import { computed, ref } from "vue";
+ import StoryPage from "../../chassis/page/StoryPage.vue";
+ import StorySection from "../../chassis/section/StorySection.vue";
+ import CodeBlock from "../../chassis/code/CodeBlock.vue";
+@@ -14,13 +14,15 @@ import {
+     CardTitle,
+ } from "@glass/components/card";
+ import { Button } from "@glass/components/button";
++import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
+ 
+ const rows = Array.from({ length: 8 }, (_, index) => `Timeline entry ${index + 1}`);
+ const chosen = ref("balanced");
+ const plans = [
+-    { id: "balanced", title: "Balanced", blurb: "The fill carries the state." },
+-    { id: "vivid", title: "Vivid", blurb: "The rim is a locator, not the state." },
++    { id: "balanced", title: "Balanced", blurb: "Even weight across every section." },
++    { id: "vivid", title: "Vivid", blurb: "Stronger accents on the lead section." },
+ ];
++const plan = computed(() => plans.find((p) => p.id === chosen.value) ?? plans[0]);
+ </script>
+ 
+ <template>
+@@ -115,23 +117,20 @@ const plans = [
+         </StorySection>
+ 
+         <StorySection
+-            heading="Selectable cards"
+-            blurb="`selected` present makes the card an option: role, tab stop, aria-selected, pointer, and the fill that carries the state. Absent, the card stays inert prose."
++            heading="Choosing, then reading"
++            blurb="A card is never an option. The choice is one line; the detail is one card for the selection."
+         >
+-            <div class="card-board" role="listbox" aria-label="Plan">
+-                <Card
+-                    v-for="plan in plans"
+-                    :key="plan.id"
+-                    :selected="chosen === plan.id"
+-                    @click="chosen = plan.id"
+-                    @keydown.enter.prevent="chosen = plan.id"
+-                    @keydown.space.prevent="chosen = plan.id"
+-                >
++            <div class="card-choice">
++                <ToggleGroup v-model="chosen" type="single" aria-label="Plan">
++                    <ToggleGroupItem v-for="p in plans" :key="p.id" :value="p.id">
++                        {{ p.title }}
++                    </ToggleGroupItem>
++                </ToggleGroup>
++                <Card>
+                     <CardHeader>
+                         <CardTitle>{{ plan.title }}</CardTitle>
+                         <CardDescription>{{ plan.blurb }}</CardDescription>
+                     </CardHeader>
+-                    <CardContent>Hover, tab to it, and press it.</CardContent>
+                 </Card>
+             </div>
+         </StorySection>
+@@ -171,6 +170,12 @@ const plans = [
+ </template>
+ 
+ <style scoped>
++.card-choice {
++    display: grid;
++    gap: var(--space-body);
++    justify-items: start;
++}
++
+ .card-board {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+diff --git a/demo/stories/navigation/tabs.vue b/demo/stories/navigation/tabs.vue
+index 5d1eb657..33b092d2 100644
+--- a/demo/stories/navigation/tabs.vue
++++ b/demo/stories/navigation/tabs.vue
+@@ -104,7 +104,7 @@ const chapterTabs: SegmentedTabOption[] = [
+     { label: "Appendix", value: "appendix" },
+ ];
+ 
+-// ── Responsive — the strip collapses to a <Select> below the breakpoint ──
++// ── Overflow — a strip whose options do not fit one line collapses to a <Select> ──
+ const respView = ref("overview");
+ const respOptions: SegmentedTabOption[] = [
+     { label: "Overview", value: "overview" },
+@@ -364,11 +364,11 @@ const chapterBody: Record<string, string> = {
+             </div>
+         </StorySection>
+ 
+-        <!-- ════ Responsive collapse ════ -->
++        <!-- ════ Overflow collapse ════ -->
+         <StorySection
+             span="full"
+-            heading="Responsive — collapses to a Select"
+-            blurb="Below the breakpoint the strip becomes a <Select>, both driven by one v-model. Narrow the viewport past 640px to see the swap."
++            heading="Overflow — collapses to a Select"
++            blurb="When the options no longer fit one line, the strip becomes a <Select>, both driven by one v-model. Narrow the viewport until the labels outrun the card to see the swap."
+         >
+             <div class="glass-card max-w-md rounded-[var(--radius-card)] p-5">
+                 <SegmentedTabs
+diff --git a/src/components/card/Card.vue b/src/components/card/Card.vue
+index edc7022d..cefc1dc5 100644
+--- a/src/components/card/Card.vue
++++ b/src/components/card/Card.vue
+@@ -1,5 +1,4 @@
+ <script setup lang="ts">
+-import { computed } from "vue";
+ import { cn } from "../_shared/class-names";
+ import Surface, { type SurfaceProps } from "../surface/Surface.vue";
+ 
+@@ -9,7 +8,10 @@ export type CardSize = "sm" | "md";
+ 
+ /**
+  * A semantic content group. Material concerns are forwarded to Surface; the card
+- * owns proportion, anatomy, and — when `selected` is present — engagement.
++ * owns proportion and anatomy. A card is never an option: a one-of-N choice is one
++ * line (ToggleGroup, SegmentedTabs), and its detail is one card for the selection.
++ * A consumer that needs a card inside a listbox writes `role` / `aria-selected` on
++ * the element; they fall through `$attrs` untouched.
+  *
+  * `material` is SEVERED (DAG, via `_shared/surface`): the card is the elevated
+  * role by construction, which is Surface's own default, so the axis added a knob
+@@ -33,23 +35,12 @@ export interface CardProps extends SurfaceProps {
+     size?: CardSize;
+     /** The opt-in elevation. Card owns this axis; Surface no longer has one. */
+     shadow?: boolean;
+-    /** Presence makes the card an option: role, tabindex, aria-selected, states. */
+-    selected?: boolean;
+ }
+ 
+ const props = withDefaults(defineProps<CardProps>(), {
+     size: "md",
+     shadow: true,
+-    /* Declared so Vue's BOOLEAN CASTING does not fire. An absent `Boolean` prop
+-       resolves to `false`, not `undefined` — which would make every card in the
+-       library an option with a tab stop. A declared `undefined` default wins over
+-       the cast, and absence stays absence. */
+-    selected: undefined,
+ });
+-
+-/* PRESENCE, not truth, is the signal: `selected` unset leaves a card inert prose;
+-   `selected="false"` is an unselected OPTION, which owes a role and a tab stop. */
+-const selectable = computed(() => props.selected !== undefined);
+ </script>
+ 
+ <template>
+@@ -62,10 +53,6 @@ const selectable = computed(() => props.selected !== undefined);
+         :as="as"
+         :data-shadow="shadow || undefined"
+         :data-size="size"
+-        :data-selected="selected ? 'true' : undefined"
+-        :role="selectable ? 'option' : undefined"
+-        :tabindex="selectable ? 0 : undefined"
+-        :aria-selected="selectable ? (selected ? 'true' : 'false') : undefined"
+         :class="cn('card', props.class)"
+     >
+         <slot />
+diff --git a/src/components/card/styles.css b/src/components/card/styles.css
+index 77256aff..c6abaa19 100644
+--- a/src/components/card/styles.css
++++ b/src/components/card/styles.css
+@@ -1,18 +1,5 @@
+-/* Card owns structure, proportion and — on the selectable arm — its own
+-   engagement register. Surface owns every plate material. */
+-
+-/* The selectable card's state FILL, registered so it interpolates. A bare custom
+-   property in a gradient jumps between endpoints; registered, the fill glides on
+-   the light channel's own envelope. `inherits: false` — a card never pushes its
+-   state onto a nested card. (The `@property --fade-start` in utilities/base.css
+-   is the precedent: a component's typed property rides its own recipe file.)
+-   The VALUES are the register's — `--fill-hover` / `--fill-selected`
+-   (tokens/color-radius.css §1.3); nothing is minted here. */
+-@property --card-fill {
+-    syntax: "<color>";
+-    inherits: false;
+-    initial-value: transparent;
+-}
++/* Card owns structure and proportion. Surface owns every plate material. A card is
++   never an option (the D4-E law), so it carries no pointer register. */
+ 
+ @layer components {
+     /* ── PROPORTION (PROPORTION §1.1) ─────────────────────────────────────────
+@@ -79,9 +66,7 @@
+             var(--glass-material-rim), var(--glass-under-shadow-default),
+             var(--card-cast-rung), var(--shadow-card);
+         /* The lift and the edge are the two channels that move; both are light,
+-           neither is spatial, so both ride the light clock. `.card[role="option"]`
+-           restates the whole coherent list rather than patching a duration —
+-           a shorthand is a shorthand. */
++           neither is spatial, so both ride the light clock. */
+         transition:
+             box-shadow var(--engage-control-engage-release) var(--ease-standard),
+             border-color var(--engage-control-engage-release) var(--ease-standard);
+@@ -118,86 +103,6 @@
+         --glass-border-rung: oklch(from var(--foreground) l c h / var(--ink-edge));
+     }
+ 
+-    /* ── ENGAGEMENT — the register the card advertised and never wore.
+-       `.glass-card` (glass/surfaces.css) owns a focus/hover composition under a
+-       comment asserting that `<Card>` "owns its own hover composition"; `<Card>`
+-       has never emitted that class, and the module carries zero hover and zero
+-       focus rules. The engagement half of `.glass-card` re-homes HERE, keyed on
+-       the card itself (C-4: the class splits by halves and dies; the material
+-       half folds onto `.glass-resting`). No `:where(.glass-card, .card)` widening.
+-
+-       The arm is the SELECTABLE card only. An inert content group is not a
+-       control and gets no pointer answer — which is what "the plate stays
+-       static; the control owns activation" meant all along.
+-
+-       THE FILL CARRIES THE STATE, the accent rim is a locator (atlas's own
+-       contract comment: "the ring, not the slab"). The fill rides a gradient
+-       rather than `background-color` because the plate's colour IS the
+-       `background` the veil recipe writes — a state that clobbers it would erase
+-       the material to paint 5% of ink. */
+-    .card[role="option"] {
+-        cursor: pointer;
+-        scale: 1;
+-        background-image: linear-gradient(var(--card-fill), var(--card-fill));
+-        transition:
+-            --card-fill var(--engage-control-engage-release) var(--ease-standard),
+-            box-shadow var(--engage-control-engage-release) var(--ease-standard),
+-            border-color var(--engage-control-engage-release) var(--ease-standard),
+-            /* the SPATIAL leg rides the press spring, never the light clock */
+-            scale var(--spring-press-duration) var(--transition-liquid-spatial);
+-    }
+-
+-    /* The ring is an `outline`: a `box-shadow` ring loses to
+-       `button/styles.css`'s (0,4,0) rule on any card that contains a button, and
+-       a ring that the thing it rings can delete is not a ring. The glow leg is
+-       legal here because this rule owns the COMPLETE resting list (C-7) — it
+-       appends to `--card-cast` instead of replacing it. */
+-    .card[role="option"]:focus-visible {
+-        outline: 2px solid oklch(from var(--foreground) l c h / var(--ink-perimeter));
+-        outline-offset: 2px;
+-    }
+-
+-    .card.glass-resting[role="option"][data-shadow]:focus-visible {
+-        box-shadow: var(--card-cast), 0 0 8px oklch(from var(--foreground) l c h / 0.15);
+-    }
+-
+-    /* Persistent state. `--fill-selected` (0.12) is a rung hover cannot mint. */
+-    .card[role="option"][data-selected="true"] {
+-        --card-fill: oklch(from var(--foreground) l c h / var(--fill-selected));
+-    }
+-
+-    /* HOVER IS BRACKETED. On a coarse pointer `:hover` latches on tap and stays
+-       latched, painting a card as permanently pointed-at. */
+-    @media (hover: hover) {
+-        /* The ATTACK channel. `transition` is a shorthand, so the whole coherent
+-           list is restated rather than duration-patched — a bare
+-           `transition-duration` here would drag the SPATIAL press leg onto the
+-           light clock, and the two channels are not interchangeable. */
+-        .card[role="option"]:hover {
+-            --card-fill: oklch(from var(--foreground) l c h / var(--fill-hover));
+-            transition:
+-                --card-fill var(--engage-control-engage-attack) var(--ease-standard),
+-                box-shadow var(--engage-control-engage-attack) var(--ease-standard),
+-                border-color var(--engage-control-engage-attack) var(--ease-standard),
+-                scale var(--spring-press-duration) var(--transition-liquid-spatial);
+-        }
+-
+-        /* Both at once is the register's own DERIVATION (§1.3: hover + selected =
+-           0.17), not a third rung and not a minted token. */
+-        .card[role="option"][data-selected="true"]:hover {
+-            --card-fill: oklch(
+-                from var(--foreground) l c h / calc(var(--fill-hover) + var(--fill-selected))
+-            );
+-        }
+-    }
+-
+-    /* Press is the SHIPPED vocabulary — `--scale-press-sm` (0.97) on the spatial
+-       spring leg, the same rung the button and slider recipes consume. No
+-       literal, no composable, no per-atom press token. */
+-    .card[role="option"]:active {
+-        scale: var(--scale-press-sm);
+-    }
+-
+     /* ── ANATOMY ─────────────────────────────────────────────────────────────── */
+     .card-header {
+         display: grid;
+diff --git a/src/components/tabs/README.md b/src/components/tabs/README.md
+index e7609743..a3678b6b 100644
+--- a/src/components/tabs/README.md
++++ b/src/components/tabs/README.md
+@@ -24,19 +24,21 @@ ONE component, two materials:
+ - **`underline`** — panel-navigation tabs with an underline indicator: the same
+   measured node, drawn as its edge instead of filled.
+ 
+-`semantics="toggle"` exposes `role="group"` + `aria-pressed` buttons;
++`semantics="radio"` exposes `role="radiogroup"` / `role="radio"` + `aria-checked`;
+ `semantics="tabs"` exposes `role="tablist"` / `role="tab"` + `aria-selected`.
+-When omitted, compatibility defaults preserve the historical pairing: pill is
+-toggle semantics and underline is tab semantics. Material remains independent,
++When omitted, pill is radio semantics and underline is tab semantics. Material remains independent,
+ so `variant="pill" semantics="tabs"` is the glass-pill panel-navigation form.
+ 
+ `activation="automatic"` (default) selects as roving focus moves.
+ `activation="manual"` moves focus independently and selects only on Enter,
+ Space, or click. The active indicator always follows selection, never focus.
+ 
+-`:responsive` (`true` or
+-`{ breakpoint, desktopOptions, ariaLabel, triggerClass }`) collapses the strip to
+-a `<Select>` below the breakpoint.
++An option is one line: a tab's block size is one line box and it never wraps. A
++horizontal strip whose options do not fit one line collapses to a `<Select>` on
++measured overflow (the strip outruns its own box or its host), and expands back
++when the host offers the width again. `:responsive`
++(`{ stripOptions, ariaLabel, triggerClass }`) tunes the collapse; it does not arm
++it.
+ 
+ ### ARIA semantics (load-bearing)
+ 
+@@ -44,11 +46,11 @@ The role is keyed to `semantics`, not the look:
+ 
+ - `tabs` is **panel navigation** — `role="tablist"` / `role="tab"` +
+   `aria-selected`. Exactly one tab active; each reveals a distinct panel.
+-- `toggle` is the **ToggleGroup-shaped surface** — `role="group"` +
+-  `aria-pressed`. No panel swap; the toggles flip state on a shared view.
++- `radio` is the **one-of-N chooser** — `role="radiogroup"` / `role="radio"` +
++  `aria-checked`. No panel swap; the choice sets one value on a shared view.
+ 
+ Reach for `semantics="tabs"` for mutually-exclusive PANEL navigation and
+-`semantics="toggle"` for a single-select control that mutates one surface.
++`semantics="radio"` for a single-select control that mutates one surface.
+ 
+ ---
+ 
+@@ -98,9 +100,9 @@ The feature-dir convention (see `docs/precepts/design-idioms.md` §7):
+ 
+ ```
+ src/components/tabs/
+-├── SegmentedTabs.vue          # the single component shell (variant axis + responsive collapse)
++├── SegmentedTabs.vue          # the single component shell (variant axis + overflow collapse)
+ ├── composables/
+-│   ├── useTabResponsive.ts    # the below-breakpoint collapse-to-<Select> resolver
++│   ├── useTabResponsive.ts    # the measured-overflow collapse-to-<Select>
+ │   ├── useTabRovingFocus.ts   # the WAI-ARIA roving-tabindex keyboard machine
+ │   └── useTabDragMorph.ts     # the pull/drag-to-morph liquid-tab gesture (useDragMorph)
+ ├── styles/
+@@ -140,8 +142,8 @@ it belongs to the surface that wants the organ.
+   `deform`. ~~`useTabIndicator` — the active-indicator position + the
+   volume-preserving squish.~~ [2026-08-08 · BK #32: struck, phantom — see the
+   colocation map.]
+-- `useTabResponsive` — the below-breakpoint collapse to a `<Select>` (the
+-  `:responsive` axis). Do not re-fork the breakpoint/collapse logic in the SFC.
++- `useTabResponsive` — the measured-overflow collapse to a `<Select>` (tuned by
++  `:responsive`). Do not re-fork the collapse logic in the SFC.
+ - `useTabRovingFocus` — the WAI-ARIA tablist/toolbar roving-tabindex machine
+   (exactly one `tabindex="0"`, axis-derived arrows, Home/End, disabled-skip). Do
+   not hand-roll a second keyboard handler.
+diff --git a/src/components/tabs/SegmentedTabs.vue b/src/components/tabs/SegmentedTabs.vue
+index 22ed4069..4b187867 100644
+--- a/src/components/tabs/SegmentedTabs.vue
++++ b/src/components/tabs/SegmentedTabs.vue
+@@ -6,6 +6,7 @@
+ // keep in sync. CSS owns paint; this SFC owns markup and the measured position.
+ import { ref, computed, onBeforeUpdate } from "vue";
+ import { cn } from "../_shared/class-names";
++import { useOneLineOptions } from "../_shared/one-line";
+ import {
+     Select,
+     SelectContent,
+@@ -44,7 +45,6 @@ const props = withDefaults(defineProps<SegmentedTabsProps<T>>(), {
+     variant: "pill",
+     orientation: "horizontal",
+     activation: "automatic",
+-    responsive: false,
+ });
+ 
+ // Resolved `full` motion arms drag enrichment; the other modes keep selection intact.
+@@ -58,6 +58,7 @@ const model = defineModel<T>({ required: true });
+ const containerRef = ref<HTMLElement | null>(null);
+ const indicatorRef = ref<HTMLElement | null>(null);
+ const buttonRefs = ref<HTMLElement[]>([]);
++const collapsedRef = ref<HTMLElement | null>(null);
+ 
+ // ── Computed state ──
+ 
+@@ -90,10 +91,10 @@ function pillHoverClass(option: SegmentedTabOption<T>): string | false {
+ // fills it, the underline draws its edge. Safari-identical by construction, because
+ // there is nothing left for an engine to differ about.
+ 
+-// ── Responsive collapse ────────────────────────────────────────────────
++// ── Overflow collapse ──────────────────────────────────────────────────
+ //
+-// The `<Select>`-below-the-breakpoint fold and its `matchMedia` lifecycle live in
+-// `useTabResponsive`. The SFC binds
++// A strip whose options do not fit one line folds into its `<Select>`; the measured
++// trigger lives in `useTabResponsive`. The SFC binds
+ // `stripValue`/`stripOptions`/`showMobileSelect` + feeds `stripValue`/`stripOptions`
+ // to the indicator + roving-focus concerns below.
+ const { responsiveCfg, stripValue, stripOptions, mobileAriaLabel, showMobileSelect } =
+@@ -101,6 +102,9 @@ const { responsiveCfg, stripValue, stripOptions, mobileAriaLabel, showMobileSele
+         responsive: () => props.responsive,
+         options: computed(() => props.options),
+         model,
++        strip: containerRef,
++        collapsedRoot: collapsedRef,
++        vertical: isVertical,
+     });
+ 
+ // The rendered strip owns one coherent selection projection. When a responsive
+@@ -124,7 +128,8 @@ const stripModel = computed<T | undefined>({
+ const selection = useSelectionGroup<SegmentedTabOption<T>>({
+     options: stripOptions,
+     model: stripModel,
+-    role: computed(() => (isTabsSemantic.value ? "tablist" : "group")),
++    // A one-of-N chooser is a radiogroup (APG): `radio` + `aria-checked`, one tab stop.
++    role: computed(() => (isTabsSemantic.value ? "tablist" : "radiogroup")),
+     vertical: isVertical,
+     activation: computed(() => props.activation),
+     containerRef,
+@@ -152,6 +157,13 @@ onBeforeUpdate(() => {
+ });
+ 
+ 
++// An option is one line (the D4-E law): DEV refusal on every rendered tab.
++useOneLineOptions(
++    "SegmentedTabs",
++    () => buttonRefs.value.filter(Boolean),
++    (el) => el.textContent?.trim() ?? "",
++);
++
+ // ── Liquid tab motion ───────────────────────────────────────────────────
+ //
+ // The drag-morph wiring (the center-anchored snap targets, the `useDragMorph` call,
+@@ -208,9 +220,10 @@ function onMobileUpdate(value: unknown) {
+ </script>
+ 
+ <template>
+-    <!-- Responsive collapse — the mobile Select below the breakpoint. -->
++    <!-- Overflow collapse — the strip's options did not fit one line. -->
+     <div
+         v-if="showMobileSelect"
++        ref="collapsedRef"
+         :class="cn('segmented-tabs__mobile w-fit', props.class)"
+     >
+         <Select :model-value="model" @update:model-value="onMobileUpdate">
+@@ -244,7 +257,7 @@ function onMobileUpdate(value: unknown) {
+     <div
+         v-else
+         ref="containerRef"
+-        :role="isTabsSemantic ? 'tablist' : 'group'"
++        :role="selection.groupRole.value"
+         :aria-label="props.ariaLabel"
+         :aria-orientation="
+             isTabsSemantic ? (isVertical ? 'vertical' : 'horizontal') : undefined
+@@ -303,8 +316,7 @@ function onMobileUpdate(value: unknown) {
+                         if (el) buttonRefs[idx] = el as HTMLElement;
+                     }
+                 "
+-                class="segmented-tab"
+-                :role="isTabsSemantic ? 'tab' : undefined"
++                class="segmented-tab focus-ring"
+                 :tabindex="rovingTabindex(idx)"
+                 v-bind="{
+                     // Presence-gated, in the house form the landed emit sites use
+@@ -312,12 +324,10 @@ function onMobileUpdate(value: unknown) {
+                     // on, the key absent when off. `data-active=&quot;false&quot;` would make
+                     // `[data-active]` match every tab in the strip.
+                     ...(isActive(option.value) ? { 'data-active': '' } : {}),
+-                    ...(isTabsSemantic
+-                        ? {
+-                              'aria-selected': isActive(option.value) ? 'true' : 'false',
+-                              'aria-controls': option.controls || undefined,
+-                          }
+-                        : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }),
++                    ...selection.itemAttrs(option.value),
++                    ...(isTabsSemantic && option.controls
++                        ? { 'aria-controls': option.controls }
++                        : {}),
+                 }"
+                 :disabled="option.disabled"
+                 :class="[option.disabled && 'is-disabled', pillHoverClass(option)]"
+diff --git a/src/components/tabs/composables/useTabResponsive.ts b/src/components/tabs/composables/useTabResponsive.ts
+index ca7ae08a..b3980696 100644
+--- a/src/components/tabs/composables/useTabResponsive.ts
++++ b/src/components/tabs/composables/useTabResponsive.ts
+@@ -1,129 +1,130 @@
+-import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
++import { computed, onBeforeUnmount, ref, watch } from "vue";
+ import type { ComputedRef, Ref } from "vue";
+ import type { SegmentedTabOption, SegmentedTabsResponsive } from "../types";
+ 
+ /**
+- * Package-private composable for `SegmentedTabs.vue` (the
+- * roving-focus/responsive carve). The responsive-collapse concern
+- * (the `<Select>`-below-the-breakpoint fold) lives here, held under
+- * the no-god-module bound — the `useTabIndicator`/`useTabDragMorph` colocation-sibling
+- * pattern. The SFC IMPORTS it and binds `stripValue`/`stripOptions`/`showMobileSelect`
+- * in its template + feeds `stripValue`/`stripOptions` to the indicator/roving concerns.
++ * Package-private composable for `SegmentedTabs.vue`: the collapse of a strip whose
++ * options do not fit ONE LINE into its `<Select>` (the D4-E law: an option is one
++ * line, so a strip that cannot hold its options on one line is not a strip).
+  *
+- * Owns the `matchMedia((min-width: <breakpoint>))` lifecycle END-TO-END (the
+- * `onMounted`/`onBeforeUnmount` wiring lives HERE — a composable is a legitimate
+- * lifecycle-hook owner), so the SFC never re-declares the `mql` listener. It owns the SSR/desktop-first
+- * default, the mobile-only model fall-back, and the accessible name resolution.
++ * THE TRIGGER IS MEASURED OVERFLOW, never a viewport breakpoint a consumer must
++ * remember to opt into: the horizontal strip collapses when its content outruns its
++ * own box (`scrollWidth > clientWidth`) or its box outruns its host's content box.
++ * The width it needed is kept, and the Select expands back into the strip once the
++ * host offers that width again. A ResizeObserver delivers after layout and before
++ * paint, so the overflowing strip is never the painted frame.
+  */
+ export interface UseTabResponsiveParams<V extends string = string> {
+-    /** The `:responsive` prop — `false` | `true` | a tuning object. */
+-    responsive: () => boolean | SegmentedTabsResponsive<V>;
+-    /** The full option list (the mobile `<Select>` keeps ALL options). */
++    /** The `:responsive` tuning (strip subset, trigger name and class). */
++    responsive: () => SegmentedTabsResponsive<V> | undefined;
++    /** The full option list (the collapsed `<Select>` keeps ALL options). */
+     options: ComputedRef<SegmentedTabOption<V>[]>;
+     /** The single-select model (the strip value the collapse falls back off). */
+     model: Ref<V | undefined>;
++    /** The rendered strip (null while collapsed). */
++    strip: Ref<HTMLElement | null>;
++    /** The rendered Select wrapper (null while the strip shows). */
++    collapsedRoot: Ref<HTMLElement | null>;
++    /** Vertical strips stack; they never overflow the inline axis. */
++    vertical: Ref<boolean>;
+ }
+ 
+ export interface UseTabResponsiveReturn<V extends string = string> {
+-    /** The resolved responsive config, or `null` when `:responsive` is off. */
++    /** The resolved tuning, or `null` when `:responsive` is unset. */
+     responsiveCfg: ComputedRef<SegmentedTabsResponsive<V> | null>;
+-    /** The collapse breakpoint CSS length (default `"640px"`). */
+-    breakpoint: ComputedRef<string>;
+-    /** The desktop-strip option subset (falls back to the full list). */
+-    desktopOptions: ComputedRef<SegmentedTabOption<V>[]>;
+-    /** `true` at/above the breakpoint (the matchMedia state; SSR-default `true`). */
+-    isDesktop: Ref<boolean>;
+-    /** The value the STRIP renders (falls back off a mobile-only model). */
++    /** The value the STRIP renders (falls back off a Select-only model). */
+     stripValue: ComputedRef<V | undefined>;
+-    /** The options the STRIP renders (desktop subset when responsive, else full). */
++    /** The options the STRIP renders (the `stripOptions` subset, else all). */
+     stripOptions: ComputedRef<SegmentedTabOption<V>[]>;
+-    /** The accessible name for the mobile `<SelectTrigger>`. */
++    /** The accessible name for the collapsed `<SelectTrigger>`. */
+     mobileAriaLabel: ComputedRef<string>;
+-    /** `true` when the mobile `<Select>` should render (responsive + below breakpoint). */
+-    showMobileSelect: ComputedRef<boolean>;
++    /** `true` when the strip overflowed and the `<Select>` renders instead. */
++    showMobileSelect: Ref<boolean>;
++}
++
++/** The inline content size of `el`'s parent: the room the host offers. */
++function hostRoom(el: HTMLElement): number {
++    const host = el.parentElement;
++    if (!host) return Infinity;
++    const cs = getComputedStyle(host);
++    return host.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+ }
+ 
+ export function useTabResponsive<V extends string = string>(
+     params: UseTabResponsiveParams<V>,
+ ): UseTabResponsiveReturn<V> {
+-    const { responsive, options, model } = params;
++    const { responsive, options, model, strip, collapsedRoot, vertical } = params;
+ 
+-    const responsiveCfg = computed<SegmentedTabsResponsive<V> | null>(() => {
+-        const r = responsive();
+-        if (r === false) return null;
+-        if (r === true) return {};
+-        return r;
+-    });
+-    const breakpoint = computed(() => responsiveCfg.value?.breakpoint ?? "640px");
+-    const desktopOptions = computed(
+-        () => responsiveCfg.value?.desktopOptions ?? options.value,
++    const responsiveCfg = computed<SegmentedTabsResponsive<V> | null>(
++        () => responsive() ?? null,
+     );
++    const subset = computed(() => responsiveCfg.value?.stripOptions ?? options.value);
+ 
+-    // SSR/desktop-first default; the matchMedia listener corrects on mount.
+-    const isDesktop = ref(true);
+-    let mql: MediaQueryList | null = null;
+-    function onMql(e: MediaQueryListEvent | MediaQueryList) {
+-        if ("currentTarget" in e && e.currentTarget && e.currentTarget !== mql) return;
+-        isDesktop.value = e.matches;
+-    }
+-
+-    // The active value the strip renders — when the model points at a mobile-only
+-    // option (absent from `desktopOptions`), fall back to the first enabled desktop
++    // The active value the strip renders — when the model points at a Select-only
++    // option (absent from the strip subset), fall back to the first enabled strip
+     // option. A fully-disabled subset has no fabricated selection.
+     const stripValue = computed(() => {
+-        if (!responsiveCfg.value) return model.value;
+-        const opts = desktopOptions.value;
++        const opts = subset.value;
+         if (opts.some((o) => o.value === model.value)) return model.value;
+         return opts.find((option) => !option.disabled)?.value;
+     });
+-    const stripOptions = computed(() =>
+-        responsiveCfg.value ? desktopOptions.value : options.value,
+-    );
++    const stripOptions = subset;
+     const mobileAriaLabel = computed(
+         () =>
+             responsiveCfg.value?.ariaLabel ??
+             options.value.find((o) => o.value === model.value)?.label ??
+             "Select",
+     );
+-    const showMobileSelect = computed(
+-        () => !!responsiveCfg.value && !isDesktop.value,
+-    );
+ 
+-    let mounted = false;
+-    function bindMediaQuery() {
+-        mql?.removeEventListener("change", onMql);
+-        mql = null;
+-        if (
+-            !mounted ||
+-            !responsiveCfg.value ||
+-            typeof window === "undefined" ||
+-            !window.matchMedia
+-        ) {
+-            isDesktop.value = true;
++    const showMobileSelect = ref(false);
++    let needed = 0;
++    let ro: ResizeObserver | null = null;
++
++    function measure() {
++        if (vertical.value) {
++            showMobileSelect.value = false;
++            return;
++        }
++        const s = strip.value;
++        if (s && !showMobileSelect.value) {
++            const width = Math.max(s.scrollWidth, s.getBoundingClientRect().width);
++            if (s.scrollWidth > s.clientWidth + 1 || width > hostRoom(s) + 1) {
++                needed = width;
++                showMobileSelect.value = true;
++            }
+             return;
+         }
+-        mql = window.matchMedia(`(min-width: ${breakpoint.value})`);
+-        isDesktop.value = mql.matches;
+-        mql.addEventListener("change", onMql);
++        const c = collapsedRoot.value;
++        if (c && showMobileSelect.value && hostRoom(c) >= needed) {
++            showMobileSelect.value = false;
++        }
++    }
++
++    function observe() {
++        ro?.disconnect();
++        if (typeof ResizeObserver === "undefined") return;
++        const el = strip.value ?? collapsedRoot.value;
++        if (!el) return;
++        ro = new ResizeObserver(measure);
++        ro.observe(el);
++        if (el.parentElement) ro.observe(el.parentElement);
+     }
+ 
+-    watch([responsiveCfg, breakpoint], bindMediaQuery);
+-    onMounted(() => {
+-        mounted = true;
+-        bindMediaQuery();
++    // The strip re-measures on every mount of either branch and when the options
++    // change shape (a longer label is a wider strip).
++    watch([strip, collapsedRoot], observe, { flush: "post" });
++    watch([subset, vertical], () => {
++        if (showMobileSelect.value) needed = 0;
++        showMobileSelect.value = false;
+     });
+ 
+     onBeforeUnmount(() => {
+-        mounted = false;
+-        mql?.removeEventListener("change", onMql);
+-        mql = null;
++        ro?.disconnect();
++        ro = null;
+     });
+ 
+     return {
+         responsiveCfg,
+-        breakpoint,
+-        desktopOptions,
+-        isDesktop,
+         stripValue,
+         stripOptions,
+         mobileAriaLabel,
+diff --git a/src/components/tabs/styles/segmented.css b/src/components/tabs/styles/segmented.css
+index a822d874..8ddebb35 100644
+--- a/src/components/tabs/styles/segmented.css
++++ b/src/components/tabs/styles/segmented.css
+@@ -209,6 +209,10 @@
+        That inversion is the most legible thing the organ does, and it is a LIGHT
+        channel, so it rides the envelope clock above rather than the travel spring. */
+     .segmented-tabs:not(.segmented-tabs--underline) .segmented-indicator {
++        /* The selected body's EDGE at full ink (the 0.48 perimeter rung measured 2.17 /
++           2.49 / 1.81 p95 and failed light and PRT); the glass body alone separates 1.44 / 1.09 / 1.05:1. The glide and
++           the squish carry the edge with the body. */
++        border: 1.5px solid var(--foreground);
+         box-shadow:
+             var(--glass-rim-top),
+             var(--glass-rim-bottom),
+@@ -273,6 +277,11 @@
+         font-weight: 500;
+         cursor: pointer;
+         white-space: nowrap;
++        /* AN OPTION IS ONE LINE (D4-E): the content box is exactly one line box, so a
++           tab cannot grow past its one-line rung; a forced second row spills in paint
++           and the DEV guard names it. */
++        box-sizing: content-box;
++        block-size: 1lh;
+         padding: 0.25rem 0.625rem;
+         /* The button silhouette reads the SAME orientation-aware seam the indicator does
+            (`--bouncy-slider-radius`): horizontal → `--radius-tab` (the control stadium),
+@@ -317,6 +326,14 @@
+        The recolour is the cascade's ANNOTATION rank — it follows the body rather than
+        racing it (the delay is 0 where no cascade is declared, i.e. on the paper strip,
+        which has no body to follow). */
++    /* THE HOVER LIGHT CHANNEL (R3-02-12) on the unselected pill tab: a quiet plate
++       of light where the body will land. Fine pointers only (F-77). */
++    @media (hover: hover) {
++        .segmented-tabs:not(.segmented-tabs--underline)
++            .segmented-tab:not([data-active], .is-disabled):hover {
++            background-color: color-mix(in oklab, var(--foreground) 8%, transparent);
++        }
++    }
+     .segmented-tab[data-active] {
+         color: var(--foreground);
+         transition-delay: var(--eyeglass-cascade-annotation, 0s);
+diff --git a/src/components/tabs/types.ts b/src/components/tabs/types.ts
+index fdf3228b..1a7ef053 100644
+--- a/src/components/tabs/types.ts
++++ b/src/components/tabs/types.ts
+@@ -26,9 +26,10 @@ export interface SegmentedTabOption<V extends string = string> {
+ /** The two materials: `pill` is the default glass eyeglass; `underline` is the paper ink hairline. */
+ export type SegmentedTabsVariant = "pill" | "underline";
+ 
+-/** The interaction semantic, independent of material. `toggle` exposes a
+- *  group of pressed buttons; `tabs` exposes a tablist with selected tabs. */
+-export type SegmentedTabsSemantics = "toggle" | "tabs";
++/** The interaction semantic, independent of material. `radio` exposes a one-of-N
++ *  `radiogroup` of `radio`s (`aria-checked`); `tabs` exposes a tablist with selected
++ *  tabs. SegmentedTabs is single-select, so there is no pressed-toggle arm. */
++export type SegmentedTabsSemantics = "radio" | "tabs";
+ 
+ /** Whether focus movement also selects. Manual activation waits for Enter/Space. */
+ export type SegmentedTabsActivation = TabActivation;
+@@ -40,19 +41,13 @@ export type SegmentedTabsOrientation = "horizontal" | "vertical";
+ 
+ export interface SegmentedTabsResponsive<V extends string = string> {
+     /**
+-     * CSS length consumed inside `(min-width: <breakpoint>)`. BELOW it the
+-     * strip collapses to a `<Select>`; at/above it renders the tab strip.
+-     * Defaults to `"640px"` (Tailwind `sm:`).
++     * Optional subset shown in the strip (the collapsed Select keeps the full
++     * option list). Falls back to `options`.
+      */
+-    breakpoint?: string;
+-    /**
+-     * Optional subset shown in the desktop strip (the mobile Select keeps the
+-     * full option list). Falls back to `options`.
+-     */
+-    desktopOptions?: SegmentedTabOption<V>[] | null;
+-    /** Accessible name for the mobile `<SelectTrigger>`. */
++    stripOptions?: SegmentedTabOption<V>[] | null;
++    /** Accessible name for the collapsed `<SelectTrigger>`. */
+     ariaLabel?: string;
+-    /** Class merged onto the mobile `<SelectTrigger>` only. */
++    /** Class merged onto the collapsed `<SelectTrigger>` only. */
+     triggerClass?: HTMLAttributes["class"];
+ }
+ 
+@@ -69,7 +64,7 @@ export interface SegmentedTabsProps<V extends string = string> {
+     variant?: SegmentedTabsVariant;
+     /**
+      * Interaction semantics, independent of `variant`. When omitted, preserves the
+-     * historical mapping: `pill` → `toggle`, `underline` → `tabs`.
++     * mapping: `pill` → `radio`, `underline` → `tabs`.
+      */
+     semantics?: SegmentedTabsSemantics;
+     /** Selection follows focus by default; manual mode activates with Enter/Space. */
+@@ -80,11 +75,11 @@ export interface SegmentedTabsProps<V extends string = string> {
+      */
+     orientation?: SegmentedTabsOrientation;
+     /**
+-     * Responsive collapse — below the breakpoint the strip becomes a `<Select>`.
+-     * `true` uses defaults; an object tunes the breakpoint, desktop subset, and
+-     * accessible name.
++     * Tuning for the overflow collapse. The collapse itself is not opt-in: a
++     * horizontal strip whose options do not fit one line becomes a `<Select>`
++     * (measured overflow, never a viewport breakpoint).
+      */
+-    responsive?: boolean | SegmentedTabsResponsive<V>;
++    responsive?: SegmentedTabsResponsive<V>;
+     /**
+      * Motion weight. `full` (default) lets the pill indicator follow a pointer,
+      * squash with drag velocity, and settle to the nearest tab. Drag supplements the
+diff --git a/src/components/toggle-group/ToggleGroupItem.vue b/src/components/toggle-group/ToggleGroupItem.vue
+index d0de9e6c..83a9008d 100644
+--- a/src/components/toggle-group/ToggleGroupItem.vue
++++ b/src/components/toggle-group/ToggleGroupItem.vue
+@@ -1,6 +1,7 @@
+ <script setup lang="ts">
+ import { computed, onBeforeUnmount, onMounted, ref, type HTMLAttributes } from "vue";
+ import { cn } from "../_shared/class-names";
++import { useOneLineOptions } from "../_shared/one-line";
+ import type { SelectionValue } from "../_shared/selection";
+ import { useOptionalToggleGroupContext, type ToggleItemEntry } from "./context";
+ 
+@@ -70,6 +71,9 @@ onMounted(() => {
+ });
+ onBeforeUnmount(() => group?.unregister(entry));
+ 
++/* An option is one line (the D4-E law). DEV refusal; production strips it. */
++useOneLineOptions("ToggleGroupItem", () => (el.value ? [el.value] : []), () => String(props.value));
++
+ const selected = computed(() => group?.isSelected(props.value) ?? false);
+ const isDisabled = computed(() => entry.disabled());
+ </script>
+diff --git a/src/components/toggle-group/styles.css b/src/components/toggle-group/styles.css
+index d6b2b1cf..03093f7f 100644
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -60,6 +60,12 @@
+         flex: none;
+         min-inline-size: var(--toggle-group-item-size);
+         min-block-size: var(--toggle-group-item-size);
++        /* AN OPTION IS ONE LINE (D4-E). The block size IS the rung, so the stadium is
++           correct by construction: content cannot grow the pill into a lozenge. A
++           second row spills past the plate in paint and the DEV guard names it
++           (`_shared/one-line.ts`); nothing clips it. */
++        block-size: var(--toggle-group-item-size);
++        white-space: nowrap;
+         align-items: center;
+         justify-content: center;
+         gap: 0.5rem;
+@@ -114,11 +120,24 @@
+        carrying less than §3.5 assumed. That is #82 W-FIELD's register to answer, not
+        this lane's to patch locally with a literal. */
+     .toggle-group__item[data-state="on"] {
++        /* THE CARRIER THE CONTENT CANNOT ERASE (PORTFOLIO §2.2): the plate's own
++           edge at full ink, on `border-color`, which neither the
++           ring (`outline`) nor the rim (`box-shadow`) spends. */
++        border-color: var(--foreground);
+         background-color: color-mix(in oklab, var(--foreground) 12%, transparent);
+         color: var(--foreground);
+         font-weight: 600;
+     }
+ 
++    /* THE HOVER LIGHT CHANNEL (R3-02-12): an unselected option answers the pointer
++       in light as well as scale, so PRM (which drops the scale) still answers.
++       Fine pointers only (F-77: a tap never latches it). */
++    @media (hover: hover) {
++        .toggle-group__item[data-state="off"]:hover:not(:disabled) {
++            background-color: color-mix(in oklab, var(--foreground) 8%, transparent);
++        }
++    }
++
+     .toggle-group__item[data-state="on"]:hover:not(:disabled) {
+         background-color: color-mix(in oklab, var(--foreground) 16%, transparent);
+     }
+diff --git a/src/styles/paper.css b/src/styles/paper.css
+index d4f443f8..b1efb515 100644
+--- a/src/styles/paper.css
++++ b/src/styles/paper.css
+@@ -192,17 +192,7 @@
+    IN THE LAYER, where it has always lived (`card/styles.css`'s own
+    `@layer components` before the move). A decoration class does NOT escalate out
+    of the cascade to win a fight: unlayered would put this above every component
+-   register in the library, and the one register it actually collides with is
+-   `<Card>`'s state fill — `.card[role="option"]` (0,2,0) writes the same
+-   `background-image` slot to carry hover/selected. In-layer that collision
+-   resolves by ordinary specificity (the state fill wins on a card that is BOTH
+-   ruled and selectable); unlayered it would resolve by escalation, and the state
+-   — the functional half — would be the one silently erased. No site combines
+-   them today; the seam is latent and routed (#62, beside the `cartoon-surface`
+-   re-home — the plate has exactly one `background-image` slot and both `::before`
+-   and `::after` are already spoken for by glass/material.css and
+-   glass/grain-overlay.css, so a decoration/state slot contract is that owner's
+-   call, not a card-local `:not()`).
++   register in the library.
+    ═══════════════════════════════════════════════════════════════════════ */
+ @layer components {
+     .paper-grid {
+diff --git a/tests/components/card/Card.test.ts b/tests/components/card/Card.test.ts
+index b1c42aa4..adabfbfd 100644
+--- a/tests/components/card/Card.test.ts
++++ b/tests/components/card/Card.test.ts
+@@ -72,21 +72,18 @@ describe("Card", () => {
+         expect(wrapper.classes()).not.toContain("glass-press");
+     });
+ 
+-    it("is an OPTION exactly when `selected` is present — presence, not truth", () => {
+-        const unselected = mount(Card, { props: { selected: false } });
+-        expect(unselected.attributes("role")).toBe("option");
+-        expect(unselected.attributes("tabindex")).toBe("0");
+-        expect(unselected.attributes("aria-selected")).toBe("false");
+-        expect(unselected.attributes("data-selected")).toBeUndefined();
+-
+-        const selected = mount(Card, { props: { selected: true } });
+-        expect(selected.attributes("role")).toBe("option");
+-        expect(selected.attributes("aria-selected")).toBe("true");
+-        expect(selected.attributes("data-selected")).toBe("true");
+-
++    it("is never an option of its own, and a consumer's option attributes land untouched", () => {
+         const inert = mount(Card);
+         expect(inert.attributes("role")).toBeUndefined();
++        expect(inert.attributes("tabindex")).toBeUndefined();
+         expect(inert.attributes("aria-selected")).toBeUndefined();
++
++        const option = mount(Card, {
++            attrs: { role: "option", "aria-selected": "true" },
++        });
++        expect(option.attributes("role")).toBe("option");
++        expect(option.attributes("aria-selected")).toBe("true");
++        expect(option.attributes("tabindex")).toBeUndefined();
+     });
+ });
+ 
+diff --git a/tests/components/custom/tabs/segmented-tabs.test.ts b/tests/components/custom/tabs/segmented-tabs.test.ts
+index 604e94f5..22a7e8fd 100644
+--- a/tests/components/custom/tabs/segmented-tabs.test.ts
++++ b/tests/components/custom/tabs/segmented-tabs.test.ts
+@@ -4,8 +4,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
+ import SegmentedTabs from "@glass/components/tabs/SegmentedTabs.vue";
+ 
+ // The unified SegmentedTabs replaced BouncyToggle/BouncyTabs/UnderlineTabs +
+-// ResponsiveTabs. v-model round-trip across the variant axis (segmented default = group/
+-// aria-pressed; underline = tablist/aria-selected), keyed off the Vue 3.5 defineModel.
++// ResponsiveTabs. v-model round-trip across the variant axis (segmented default =
++// radiogroup + aria-checked; underline = tablist/aria-selected), keyed off the Vue 3.5 defineModel.
+ const OPTIONS = [
+     { label: "One", value: "one" },
+     { label: "Two", value: "two" },
+@@ -87,7 +87,7 @@ describe("SegmentedTabs v-model (segmented default)", () => {
+                 attrs: { dir },
+                 props: { options: OPTIONS, modelValue: "one", orientation },
+             });
+-            const group = wrapper.get<HTMLElement>('[role="group"]');
++            const group = wrapper.get<HTMLElement>('[role="radiogroup"]');
+             const buttons = wrapper.findAll<HTMLElement>(".segmented-tab");
+ 
+             vi.spyOn(group.element, "getBoundingClientRect").mockReturnValue(container);
+@@ -122,21 +122,21 @@ describe("SegmentedTabs v-model (segmented default)", () => {
+         const wrapper = mount(SegmentedTabs, {
+             props: { options: OPTIONS, modelValue: "one" },
+         });
+-        const btns = wrapper.findAll('[role="group"] button');
++        const btns = wrapper.findAll('[role="radiogroup"] button');
+         expect(btns.length).toBe(3);
+         await btns[1]!.trigger("click");
+         expect(wrapper.emitted("update:modelValue")?.at(-1)?.[0]).toBe("two");
+     });
+-    it("reflects an external modelValue write in aria-pressed", async () => {
++    it("reflects an external modelValue write in aria-checked", async () => {
+         const wrapper = mount(SegmentedTabs, {
+             props: { options: OPTIONS, modelValue: "one", ariaLabel: "Priority" },
+         });
+         await wrapper.setProps({ modelValue: "three" });
+-        const group = wrapper.get('[role="group"]');
++        const group = wrapper.get('[role="radiogroup"]');
+         expect(group.attributes("aria-label")).toBe("Priority");
+         expect(group.attributes("aria-orientation")).toBeUndefined();
+         const btns = group.findAll("button");
+-        expect(btns[2]!.attributes("aria-pressed")).toBe("true");
++        expect(btns[2]!.attributes("aria-checked")).toBe("true");
+     });
+ });
+ 
+@@ -361,19 +361,14 @@ describe("SegmentedTabs semantics=tabs with pill material", () => {
+         expect(tabIndexes()).toEqual(["0", "-1"]);
+     });
+ 
+-    it("projects a responsive desktop fallback through ARIA and roving focus", () => {
+-        vi.spyOn(window, "matchMedia").mockReturnValue({
+-            matches: true,
+-            addEventListener: vi.fn(),
+-            removeEventListener: vi.fn(),
+-        } as unknown as MediaQueryList);
++    it("projects a strip-subset fallback through ARIA and roving focus", () => {
+         const wrapper = mount(SegmentedTabs, {
+             props: {
+                 options: OPTIONS,
+                 modelValue: "three",
+                 semantics: "tabs",
+                 responsive: {
+-                    desktopOptions: [{ ...OPTIONS[0]!, disabled: true }, OPTIONS[1]!],
++                    stripOptions: [{ ...OPTIONS[0]!, disabled: true }, OPTIONS[1]!],
+                 },
+             },
+         });
+diff --git a/tests/components/primitive-display.public-contracts.test-d.ts b/tests/components/primitive-display.public-contracts.test-d.ts
+index 716b3f15..a8e9d363 100644
+--- a/tests/components/primitive-display.public-contracts.test-d.ts
++++ b/tests/components/primitive-display.public-contracts.test-d.ts
+@@ -41,13 +41,15 @@ type CardContract = [
+     // [2026-08-09 · BK #66 CLOSE · RT-40-D] ~~`material` / `variant`~~ — both GONE. DAG-RULINGS §4.3 deleted
+     // `material` as a re-minted `tier` (it breached the axes.ts membership fence)
+     // and the variant axis went with it. Card inherits `tier`/`surface`/`deep`
+-    // from `SurfaceProps` and owns `size`/`shadow`/`selected`. Asserted whole:
++    // from `SurfaceProps` and owns `size`/`shadow`. Asserted whole:
+     // what it HAS and what it must never re-mint.
+     Assert<Has<"tier", CardProps>>,
+     Assert<Has<"surface", CardProps>>,
+     Assert<Has<"size", CardProps>>,
+     Assert<Has<"shadow", CardProps>>,
+-    Assert<Has<"selected", CardProps>>,
++    // A card is never an option (D4-E): the `selected` arm is deleted, and a
++    // consumer's `role` / `aria-selected` fall through `$attrs` untouched.
++    Assert<Lacks<"selected", CardProps>>,
+     Assert<Lacks<"material", CardProps>>,
+     Assert<Lacks<"variant", CardProps>>,
+ ];
+diff --git a/tests/components/ui/toggle-group/ToggleGroup.test.ts b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+index 9b87f3d5..c3d33948 100644
+--- a/tests/components/ui/toggle-group/ToggleGroup.test.ts
++++ b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+@@ -296,13 +296,14 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+      * concentric identity discharges: with no track there is no concentric pair, and
+      * no `--radius-concentric` token was ever minted to retire.
+      *
+-     * MUTATION BITES: restore `nowrap` or drop `flex-wrap` → RED · re-add any
++     * MUTATION BITES: put `nowrap` on the group or drop `flex-wrap` → RED · re-add any
+      * `+ 0.25rem` / `+ var(--radius-inset)` corner → RED · give the group back a
+      * `background`/`border-radius` → RED. */
+     it("G-TOGGLE-WRAP · the row wraps and the group paints no silhouette", () => {
+         const css = withoutForcedColors(code(LANE_SHEET));
+         expect(css).toContain("flex-wrap: wrap");
+-        expect(css).not.toContain("nowrap");
++        // The ROW wraps; each ITEM is one line (D4-E), so `nowrap` lives on the item
++        // and never on the group (asserted on the group rules below).
+         expect(css).not.toContain("inline-flex;\n        inline-size");
+         // No corner, no plate, no scroller — all three died with the track.
+         expect(css).not.toContain("--radius-ctx");
+@@ -321,7 +322,7 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+         expect(groupRules.length).toBeGreaterThan(0);
+         for (const rule of groupRules) {
+             expect(rule, `the group may not paint: ${rule}`).not.toMatch(
+-                /background|border-radius|box-shadow|backdrop-filter|padding/,
++                /background|border-radius|box-shadow|backdrop-filter|padding|nowrap/,
+             );
+         }
+     });
+diff --git a/tests/composables/search/search-contracts.test.ts b/tests/composables/search/search-contracts.test.ts
+index 4bdef057..c23d1802 100644
+--- a/tests/composables/search/search-contracts.test.ts
++++ b/tests/composables/search/search-contracts.test.ts
+@@ -172,19 +172,12 @@ describe("/data/search — the listbox is a listbox and its options are options"
+             expect(option.attributes("aria-selected")).toMatch(/^(true|false)$/);
+         }
+ 
+-        // THE RESIDUAL, PINNED RATHER THAN LEFT TO DRIFT. `selected` is Card's OPTION
+-        // contract and that contract includes a tab stop by design — *"`selected="false"`
+-        // is an unselected OPTION, which owes a role and a tab stop"* (`Card.vue:44-46`,
+-        // `:60`). Consuming the channel therefore also makes each of the 12 rows
+-        // focusable, beside a field that walks them with `aria-activedescendant` — two
+-        // focus models on one widget. It is asserted here because it is a MEASURED
+-        // consequence of this cure (12 tabbable rows where there were 0), and because the
+-        // route cannot undo it: `Card` binds `v-bind="$attrs"` FIRST, so a consumer
+-        // `tabindex` loses to the component's own — the same clobber that caused R4.
+-        // The question is Card's option contract, not this route's, and is routed there;
+-        // when it is answered this line is the site that says so.
++        // ONE FOCUS MODEL. The field walks the rows with `aria-activedescendant`, so
++        // no row is a tab stop. Card owns no option channel (D4-E deleted its
++        // `selected` arm), so the route's own `role` / `aria-selected` land and no
++        // component-minted `tabindex` rides along.
+         for (const option of options) {
+-            expect(option.attributes("tabindex")).toBe("0");
++            expect(option.attributes("tabindex")).toBeUndefined();
+         }
+ 
+         const selected = options.filter(
+diff --git a/tests/gates/tabs-seam.test.ts b/tests/gates/tabs-seam.test.ts
+index 3def2940..ac078300 100644
+--- a/tests/gates/tabs-seam.test.ts
++++ b/tests/gates/tabs-seam.test.ts
+@@ -71,9 +71,9 @@ const OPTIONS = [
+ ];
+ 
+ const COMBINATIONS = [
+-    { variant: "pill", semantics: "toggle" },
++    { variant: "pill", semantics: "radio" },
+     { variant: "pill", semantics: "tabs" },
+-    { variant: "underline", semantics: "toggle" },
++    { variant: "underline", semantics: "radio" },
+     { variant: "underline", semantics: "tabs" },
+ ] as const;
+ 
+@@ -100,14 +100,14 @@ describe("gate:G-TABS-SEAM — one selected-state seam, one indicator, one defor
+         );
+ 
+         it("the ARIA attributes are untouched by the seam — both spellings still ship", () => {
+-            const toggle = mount(SegmentedTabs, {
++            const radio = mount(SegmentedTabs, {
+                 props: { options: OPTIONS, modelValue: "two", variant: "pill" },
+             });
+             const tabs = mount(SegmentedTabs, {
+                 props: { options: OPTIONS, modelValue: "two", variant: "underline" },
+             });
+             expect(
+-                toggle.findAll(".segmented-tab").map((t) => t.attributes("aria-pressed")),
++                radio.findAll(".segmented-tab").map((t) => t.attributes("aria-checked")),
+             ).toEqual(["false", "true", "false"]);
+             expect(
+                 tabs.findAll(".segmented-tab").map((t) => t.attributes("aria-selected")),
+@@ -169,13 +169,14 @@ describe("gate:G-TABS-SEAM — one selected-state seam, one indicator, one defor
+             );
+         });
+ 
+-        it("CARVED: the responsive collapse renders zero, because it renders a Select instead", () => {
++        it("CARVED: the overflow collapse renders zero, because it renders a Select instead", () => {
+             const wrapper = mount(SegmentedTabs, {
+-                props: { options: OPTIONS, modelValue: "one", responsive: true },
++                props: { options: OPTIONS, modelValue: "one" },
+             });
+-            // jsdom `matchMedia` reports no match, so the strip branch renders; the
+-            // carve is asserted as a STRUCTURAL fact about the two branches rather
+-            // than by faking a viewport: the mobile branch has no indicator in it.
++            // The DOM here has no layout, so nothing overflows and the strip branch
++            // renders; the carve is asserted as a STRUCTURAL fact about the two
++            // branches rather than by faking a width: the Select branch has no
++            // indicator in it.
+             const source = readFileSync(
+                 join(process.cwd(), "src/components/tabs/SegmentedTabs.vue"),
+                 "utf8",
+@@ -381,6 +382,6 @@ describe("gate:G-TABS-SEAM — one selected-state seam, one indicator, one defor
+         );
+         expect(sfc).not.toContain("TooltipProvider");
+         expect(sfc).not.toMatch(/tooltip\?:/);
+-        expect([...sfc.matchAll(/class="segmented-tab"/g)]).toHaveLength(1);
++        expect([...sfc.matchAll(/class="segmented-tab focus-ring"/g)]).toHaveLength(1);
+     });
+ });
+diff --git a/src/components/_shared/one-line.ts b/src/components/_shared/one-line.ts
+new file mode 100644
+index 00000000..35dc684e
+--- /dev/null
++++ b/src/components/_shared/one-line.ts
+@@ -0,0 +1,96 @@
++import { onBeforeUnmount, onMounted, onUpdated } from "vue";
++
++/* AN OPTION IS ONE LINE. A one-of-N option on the control rung is a stadium, and a
++ * stadium is only correct while the option holds one row: a label, a glyph, or both
++ * side by side. Past the rung the corner tracks the content and the pill becomes a
++ * lozenge. Detail belongs to the selection (one detail row), not to each option.
++ *
++ * DEV only, and loud: `console.error` on the first violation per element, stripped
++ * from the production bundle with the branch (the Button retired-prop idiom). */
++
++/** Rows of content inside `el`: text line boxes and graphics, clustered by overlap. */
++function rows(el: HTMLElement): number {
++    const rects: DOMRect[] = [];
++    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
++    while (walker.nextNode()) {
++        const node = walker.currentNode;
++        if (!node.textContent?.trim()) continue;
++        const range = document.createRange();
++        range.selectNodeContents(node);
++        for (const r of range.getClientRects()) if (r.width > 0.5 && r.height > 0.5) rects.push(r);
++    }
++    for (const g of el.querySelectorAll("svg, img, canvas, video")) {
++        if (g.parentElement?.closest("svg")) continue;
++        const r = g.getBoundingClientRect();
++        if (r.width > 0.5 && r.height > 0.5) rects.push(r);
++    }
++    /* A new row starts past the vertical midpoint of the current one: text rects are
++       the font's content area, taller than a `line-height: 1` line box, so stacked
++       lines overlap and an edge-overlap test would merge them. */
++    rects.sort((a, b) => a.top - b.top);
++    let n = 0;
++    let mid = -Infinity;
++    for (const r of rects) {
++        if (r.top >= mid) {
++            n++;
++            mid = r.top + r.height / 2;
++        }
++    }
++    return n;
++}
++
++/**
++ * Refuse, in DEV, any option element that holds more than one row or grows past its
++ * control rung (`min-block-size`). `nodes` returns the option elements; `name` labels
++ * one for the message.
++ */
++export function useOneLineOptions(
++    host: string,
++    nodes: () => HTMLElement[],
++    name: (el: HTMLElement) => string,
++): void {
++    if (!import.meta.env.DEV || typeof ResizeObserver === "undefined") return;
++    const told = new WeakSet<HTMLElement>();
++    const check = (el: HTMLElement) => {
++        if (told.has(el) || !el.isConnected) return;
++        const cs = getComputedStyle(el);
++        const rung = parseFloat(cs.minBlockSize) || 0;
++        const h = el.offsetHeight;
++        const n = rows(el);
++        if (n <= 1 && !(rung > 0 && h > rung + 0.5)) return;
++        told.add(el);
++        console.error(
++            `[glass-ui] <${host}> option "${name(el)}" holds ${n} rows ` +
++                `(${h.toFixed(1)}px at a ${rung ? rung.toFixed(1) + "px" : "one-line"} rung). ` +
++                `An option is one line: a label, a glyph, or both. Move the detail out ` +
++                `of the option, into one detail row for the selection or a caption ` +
++                `outside the plate.`,
++        );
++    };
++    /* Two triggers: a resize (content grew the box) and a content mutation (the box
++       is locked to its rung, so a second row spills without resizing it). */
++    let ro: ResizeObserver | null = null;
++    let mo: MutationObserver | null = null;
++    const observe = () => {
++        ro?.disconnect();
++        mo?.disconnect();
++        ro = new ResizeObserver((entries) => entries.forEach((e) => check(e.target as HTMLElement)));
++        mo = new MutationObserver((records) => {
++            for (const r of records) {
++                const host = nodes().find((el) => el.contains(r.target));
++                if (host) check(host);
++            }
++        });
++        for (const el of nodes()) {
++            ro.observe(el);
++            mo.observe(el, { childList: true, subtree: true, characterData: true });
++            check(el);
++        }
++    };
++    onMounted(observe);
++    onUpdated(observe);
++    onBeforeUnmount(() => {
++        ro?.disconnect();
++        mo?.disconnect();
++    });
++}
