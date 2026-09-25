@@ -1,0 +1,4661 @@
+{
+ "tree": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3/xj-GonB/wt",
+ "summary": {
+  "plants": 107,
+  "na": 13,
+  "errors": 0,
+  "judged": 94,
+  "illegalJudged": 89,
+  "legalJudged": 5,
+  "caught": {
+   "seal": 84,
+   "sealG": 83,
+   "gate": 78,
+   "gateMerge": 52
+  },
+  "doorBought": [
+   {
+    "id": "B-crit:I5",
+    "seal": {
+     "B1": 1
+    }
+   }
+  ],
+  "eponymyBought": [],
+  "onlyB7orB1": [
+   {
+    "id": "B-crit:I4",
+    "seal": {
+     "B1": 1
+    },
+    "sealG": {
+     "B1": 1
+    }
+   },
+   {
+    "id": "B-crit:I5",
+    "seal": {
+     "B1": 1
+    },
+    "sealG": {}
+   },
+   {
+    "id": "B-crit:I17c",
+    "seal": {
+     "B1": 1
+    },
+    "sealG": {
+     "B1": 1
+    }
+   },
+   {
+    "id": "G-crit:P24",
+    "seal": {
+     "B7": 1
+    },
+    "sealG": {
+     "E3": 1
+    }
+   }
+  ],
+  "falsePositives": {
+   "seal": [
+    "Dp-crit:L3"
+   ],
+   "sealG": [],
+   "gate": []
+  },
+  "ms": 318199
+ },
+ "baseline": {
+  "seal": {
+   "B0": 450,
+   "B1": 0,
+   "B2": 71,
+   "B3": 0,
+   "B4": 0,
+   "B5": 0,
+   "B6": 61,
+   "B7": 0,
+   "B8": 0,
+   "B9": 0,
+   "B10": 0,
+   "B11": 0,
+   "B12": 0,
+   "B13": 0,
+   "B14": 0,
+   "B15": 0,
+   "B16": 0
+  },
+  "sealG": {
+   "B0": 450,
+   "B1": 0,
+   "B2": 71,
+   "B3": 0,
+   "B4": 0,
+   "B5": 0,
+   "B6": 61,
+   "B7": 0,
+   "B8": 0,
+   "B9": 0,
+   "B10": 0,
+   "B11": 0,
+   "B12": 0,
+   "B13": 0,
+   "B14": 0,
+   "B15": 0,
+   "B16": 0,
+   "E3": 0
+  },
+  "gate": {
+   "E0": 0,
+   "E1": 1,
+   "E1K": 0,
+   "E2": 42,
+   "E3": 0,
+   "E3N": 10,
+   "E3P": 0,
+   "E4": 61,
+   "E5": 0,
+   "E6": 22,
+   "E7": 44,
+   "B1": 0,
+   "B8": 0,
+   "B12": 1,
+   "B14": 0,
+   "A1": 0,
+   "S1": 2,
+   "S2": 1
+  }
+ },
+ "rows": [
+  {
+   "id": "B-crit:I1",
+   "clause": "B10",
+   "legal": false,
+   "what": "global composable read by one component",
+   "files": [
+    "src/composables/dom/useSliderThumbGlow.ts",
+    "src/components/slider/plantI1.ts"
+   ],
+   "seal": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/slider/plantI1.ts:1 -> src/composables/dom/useSliderThumbGlow.ts [import] (door src/composables/dom/index.ts)"
+    ],
+    "B10": [
+     "src/composables/dom/useSliderThumbGlow.ts -> src/components/slider [move] readers: src/components/slider"
+    ]
+   },
+   "sealG": {
+    "B10": 1
+   },
+   "sealGLines": {
+    "B10": [
+     "src/composables/dom/useSliderThumbGlow.ts -> src/components/slider [move] readers: src/components/slider"
+    ]
+   },
+   "gate": {
+    "E1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "move src/composables/dom/useSliderThumbGlow.ts → src/components/slider/useSliderThumbGlow.ts (readers src/components/slider)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I2",
+   "clause": "B10",
+   "legal": false,
+   "what": "I1 published through the kernel door",
+   "files": [
+    "src/composables/dom/useSliderThumbGlow.ts",
+    "src/composables/dom/index.ts",
+    "src/components/slider/plantI2.ts"
+   ],
+   "seal": {
+    "B11": 1
+   },
+   "sealLines": {
+    "B11": [
+     "src/composables/dom/index.ts +useSliderThumbGlow (not in the pin)"
+    ]
+   },
+   "sealG": {
+    "B11": 1
+   },
+   "sealGLines": {
+    "B11": [
+     "src/composables/dom/index.ts +useSliderThumbGlow (not in the pin)"
+    ]
+   },
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I3",
+   "clause": "B10",
+   "legal": false,
+   "what": "dock composable read only by slider",
+   "files": [
+    "src/components/dock/composables/useDockGhost.ts",
+    "src/components/slider/plantI3.ts"
+   ],
+   "seal": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/slider/plantI3.ts:1 -> src/components/dock/composables/useDockGhost.ts [import] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/composables/useDockGhost.ts -> src/components/slider [move] readers: src/components/slider"
+    ]
+   },
+   "sealG": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealGLines": {
+    "B1": [
+     "src/components/slider/plantI3.ts:1 -> src/components/dock/composables/useDockGhost.ts [import] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/composables/useDockGhost.ts -> src/components/slider [move] readers: src/components/slider"
+    ]
+   },
+   "gate": {
+    "E1": 1,
+    "B1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "move src/components/dock/composables/useDockGhost.ts → src/components/slider/useDockGhost.ts (readers src/components/slider)"
+    ],
+    "B1": [
+     "src/components/slider/plantI3.ts:1 → src/components/dock/composables/useDockGhost.ts [import] (door src/components/dock/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1,
+    "B1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I4",
+   "clause": "B1",
+   "legal": false,
+   "what": "relative deep import past dock/legibility door",
+   "files": [
+    "src/components/slider/plantI4.ts"
+   ],
+   "seal": {
+    "B1": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/slider/plantI4.ts:1 -> src/components/dock/legibility/useGlassBackdropLuminance.ts [import] (door src/components/dock/index.ts)"
+    ]
+   },
+   "sealG": {
+    "B1": 1
+   },
+   "sealGLines": {
+    "B1": [
+     "src/components/slider/plantI4.ts:1 -> src/components/dock/legibility/useGlassBackdropLuminance.ts [import] (door src/components/dock/index.ts)"
+    ]
+   },
+   "gate": {
+    "E1": 3,
+    "B1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "global src/components/dock/legibility/useGlassBackdropLuminance.ts → src/composables/useGlassBackdropLuminance.ts (readers src/components/dock, src/components/slider)",
+     "move src/components/dock/legibility/backdropLuminanceSample.ts → src/composables/backdropLuminanceSample.ts (readers src/composables)",
+     "move src/components/dock/legibility/backdropSampleMath.ts → src/composables/backdropSampleMath.ts (readers src/composables)"
+    ],
+    "B1": [
+     "src/components/slider/plantI4.ts:1 → src/components/dock/legibility/useGlassBackdropLuminance.ts [import] (door src/components/dock/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 3,
+    "B1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I4b",
+   "clause": "B1",
+   "legal": false,
+   "what": "@/ alias deep import past a door",
+   "files": [
+    "src/components/slider/plantI4b.ts"
+   ],
+   "seal": {
+    "B0": 1
+   },
+   "sealLines": {
+    "B0": [
+     "src/components/slider/plantI4b.ts:1 unknown-bare [import] @/components/dock/legibility/useGlassBackdropLuminance"
+    ]
+   },
+   "sealG": {
+    "B0": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "src/components/slider/plantI4b.ts:1 unknown-bare [import] @/components/dock/legibility/useGlassBackdropLuminance"
+    ]
+   },
+   "gate": {
+    "E0": 1
+   },
+   "gateLines": {
+    "E0": [
+     "src/components/slider/plantI4b.ts:1 unknown-bare [import] @/components/dock/legibility/useGlassBackdropLuminance"
+    ]
+   },
+   "gateMerge": {
+    "E0": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I5",
+   "clause": "B1",
+   "legal": false,
+   "what": "member imports its own door",
+   "files": [
+    "src/components/chip/plantI5.ts"
+   ],
+   "seal": {
+    "B1": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/chip/plantI5.ts:1 -> src/components/chip/index.ts (own door)"
+    ]
+   },
+   "sealG": {},
+   "sealGLines": {},
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": false,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I6",
+   "clause": "B1",
+   "legal": false,
+   "what": "self-name import of the package from src",
+   "files": [
+    "src/components/chip/plantI6.ts"
+   ],
+   "seal": {
+    "B0": 1
+   },
+   "sealLines": {
+    "B0": [
+     "src/components/chip/plantI6.ts:1 self-name-in-src [import] @mkbabb/glass-ui/badge"
+    ]
+   },
+   "sealG": {
+    "B0": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "src/components/chip/plantI6.ts:1 self-name-in-src [import] @mkbabb/glass-ui/badge"
+    ]
+   },
+   "gate": {
+    "E0": 1
+   },
+   "gateLines": {
+    "E0": [
+     "src/components/chip/plantI6.ts:1 self-name-in-src [import] @mkbabb/glass-ui/badge"
+    ]
+   },
+   "gateMerge": {
+    "E0": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I7",
+   "clause": "B3",
+   "legal": false,
+   "what": "style kernel @imports a private dock sheet",
+   "files": [
+    "src/styles/index.css"
+   ],
+   "seal": {},
+   "sealLines": {},
+   "sealG": {},
+   "sealGLines": {},
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": false,
+    "sealG": false,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I7b",
+   "clause": "B3",
+   "legal": false,
+   "what": "a kernel leaf sheet @imports a component's private sheet",
+   "files": [
+    "src/styles/view-transition.css"
+   ],
+   "seal": {
+    "B3": 1,
+    "B8": 1,
+    "B10": 1
+   },
+   "sealLines": {
+    "B3": [
+     "src/styles/view-transition.css:1 -> src/components/slider/styles.css (css door src/components/slider/index.css)"
+    ],
+    "B8": [
+     "src/styles/view-transition.css:1 -> src/components/slider/styles.css [css-import] (kernel reads a unit)"
+    ],
+    "B10": [
+     "src/components/slider/styles.css -> src [global] readers: src/components/slider, src/styles"
+    ]
+   },
+   "sealG": {
+    "B3": 1,
+    "B8": 1,
+    "B10": 1
+   },
+   "sealGLines": {
+    "B3": [
+     "src/styles/view-transition.css:1 -> src/components/slider/styles.css (css door src/components/slider/index.css)"
+    ],
+    "B8": [
+     "src/styles/view-transition.css:1 -> src/components/slider/styles.css [css-import] (kernel reads a unit)"
+    ],
+    "B10": [
+     "src/components/slider/styles.css -> src [global] readers: src/components/slider, src/styles"
+    ]
+   },
+   "gate": {
+    "E1": 1,
+    "B1": 1,
+    "B8": 1
+   },
+   "gateLines": {
+    "E1": [
+     "global src/components/slider/styles.css → src/styles/styles.css (readers src/components/slider, src/styles)"
+    ],
+    "B1": [
+     "src/styles/view-transition.css:1 → src/components/slider/styles.css [css-import] (door src/components/slider/index.ts)"
+    ],
+    "B8": [
+     "src/styles/view-transition.css:1 → src/components/slider/styles.css [css-import] (the kernel reads a unit)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1,
+    "B1": 1,
+    "B8": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I8",
+   "clause": "B6",
+   "legal": false,
+   "what": "13 direct files",
+   "files": [
+    "src/components/chip/plantI8_0.ts",
+    "src/components/chip/plantI8_1.ts",
+    "src/components/chip/plantI8_2.ts",
+    "src/components/chip/plantI8_3.ts",
+    "src/components/chip/plantI8_4.ts",
+    "src/components/chip/plantI8_5.ts",
+    "src/components/chip/plantI8_6.ts",
+    "src/components/chip/plantI8_7.ts"
+   ],
+   "seal": {
+    "B6": 1
+   },
+   "sealLines": {
+    "B6": [
+     "src/components/chip/: 15 direct files > 12"
+    ]
+   },
+   "sealG": {
+    "B6": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "src/components/chip/: 15 direct files > 12"
+    ]
+   },
+   "gate": {
+    "E4": 1
+   },
+   "gateLines": {
+    "E4": [
+     "src/components/chip/ 15 direct files"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I9",
+   "clause": "B6",
+   "legal": false,
+   "what": "file > 500 lines",
+   "files": [
+    "src/components/chip/chipVariants.ts"
+   ],
+   "seal": {
+    "B6": 1
+   },
+   "sealLines": {
+    "B6": [
+     "src/components/chip/chipVariants.ts: 565 lines > 500"
+    ]
+   },
+   "sealG": {
+    "B6": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "src/components/chip/chipVariants.ts: 565 lines > 500"
+    ]
+   },
+   "gate": {
+    "E4": 1
+   },
+   "gateLines": {
+    "E4": [
+     "src/components/chip/chipVariants.ts 565 lines"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I10",
+   "clause": "B6",
+   "legal": false,
+   "what": "script > 500 lines",
+   "files": [
+    "scripts/regen-spring-tokens.mjs"
+   ],
+   "seal": {
+    "B6": 1
+   },
+   "sealLines": {
+    "B6": [
+     "scripts/regen-spring-tokens.mjs: 833 lines > 500"
+    ]
+   },
+   "sealG": {
+    "B6": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "scripts/regen-spring-tokens.mjs: 833 lines > 500"
+    ]
+   },
+   "gate": {
+    "E4": 1
+   },
+   "gateLines": {
+    "E4": [
+     "scripts/regen-spring-tokens.mjs 833 lines"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I11",
+   "clause": "R-3",
+   "legal": false,
+   "what": "test whose one subject is chip, left in tests/",
+   "files": [
+    "tests/unit/plant-chip-only.test.ts"
+   ],
+   "seal": {
+    "B16": 1
+   },
+   "sealLines": {
+    "B16": [
+     "tests/unit/plant-chip-only.test.ts (subject in src/components/chip: belongs in src/components/chip/__tests__/)"
+    ]
+   },
+   "sealG": {
+    "B16": 1
+   },
+   "sealGLines": {
+    "B16": [
+     "tests/unit/plant-chip-only.test.ts (subject in src/components/chip: belongs in src/components/chip/__tests__/)"
+    ]
+   },
+   "gate": {
+    "E7": 1
+   },
+   "gateLines": {
+    "E7": [
+     "tests/unit/plant-chip-only.test.ts → src/components/chip/__tests__/"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I11b",
+   "clause": "B2",
+   "legal": false,
+   "what": "test in tests/ deep-reads chip internals",
+   "files": [
+    "tests/unit/plant-chip-deep.test.ts"
+   ],
+   "seal": {
+    "B2": 1,
+    "B16": 1
+   },
+   "sealLines": {
+    "B2": [
+     "tests/unit/plant-chip-deep.test.ts:1 -> src/components/chip/chipVariants.ts [import]"
+    ],
+    "B16": [
+     "tests/unit/plant-chip-deep.test.ts (subject in src/components/chip: belongs in src/components/chip/__tests__/)"
+    ]
+   },
+   "sealG": {
+    "B2": 1,
+    "B16": 1
+   },
+   "sealGLines": {
+    "B2": [
+     "tests/unit/plant-chip-deep.test.ts:1 -> src/components/chip/chipVariants.ts [import]"
+    ],
+    "B16": [
+     "tests/unit/plant-chip-deep.test.ts (subject in src/components/chip: belongs in src/components/chip/__tests__/)"
+    ]
+   },
+   "gate": {
+    "E7": 1
+   },
+   "gateLines": {
+    "E7": [
+     "tests/unit/plant-chip-deep.test.ts → src/components/chip/__tests__/"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I12",
+   "clause": "R-3",
+   "legal": false,
+   "what": "test colocated in chip whose subject is slider",
+   "files": [
+    "src/components/chip/__tests__/plant-slider-only.test.ts"
+   ],
+   "seal": {
+    "B16": 1
+   },
+   "sealLines": {
+    "B16": [
+     "src/components/chip/__tests__/plant-slider-only.test.ts (colocated in src/components/chip; its subject's home is src/components/slider)"
+    ]
+   },
+   "sealG": {
+    "B16": 1
+   },
+   "sealGLines": {
+    "B16": [
+     "src/components/chip/__tests__/plant-slider-only.test.ts (colocated in src/components/chip; its subject's home is src/components/slider)"
+    ]
+   },
+   "gate": {
+    "E7": 1
+   },
+   "gateLines": {
+    "E7": [
+     "src/components/chip/__tests__/plant-slider-only.test.ts → src/components/slider/__tests__/"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I13",
+   "clause": "B9",
+   "legal": false,
+   "what": "dual door: badge door republishes Chip",
+   "files": [
+    "src/components/badge/index.ts"
+   ],
+   "seal": {
+    "B9": 2,
+    "B11": 1
+   },
+   "sealLines": {
+    "B9": [
+     "src/components/badge/index.ts:4 re-exports src/components/chip/index.ts (outside src/components/badge)",
+     "src/components/chip/Chip.vue#default on ./badge + ./chip"
+    ],
+    "B11": [
+     "src/components/badge/index.ts +Chip (not in the pin)"
+    ]
+   },
+   "sealG": {
+    "B9": 2,
+    "B11": 1
+   },
+   "sealGLines": {
+    "B9": [
+     "src/components/badge/index.ts:4 re-exports src/components/chip/index.ts (outside src/components/badge)",
+     "src/components/chip/Chip.vue#default on ./badge + ./chip"
+    ],
+    "B11": [
+     "src/components/badge/index.ts +Chip (not in the pin)"
+    ]
+   },
+   "gate": {
+    "E5": 1
+   },
+   "gateLines": {
+    "E5": [
+     "src/components/chip/Chip.vue#default on ./badge + ./chip (owner ./chip, L4.7)"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I14",
+   "clause": "B11",
+   "legal": false,
+   "what": "alias name on a door",
+   "files": [
+    "src/components/chip/index.ts"
+   ],
+   "seal": {
+    "B11": 1
+   },
+   "sealLines": {
+    "B11": [
+     "src/components/chip/index.ts +Pill (not in the pin)"
+    ]
+   },
+   "sealG": {
+    "B11": 1
+   },
+   "sealGLines": {
+    "B11": [
+     "src/components/chip/index.ts +Pill (not in the pin)"
+    ]
+   },
+   "gate": {
+    "A1": 1
+   },
+   "gateLines": {
+    "A1": [
+     "src/components/chip/index.ts publishes src/components/chip/Chip.vue#default as Chip, Pill"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I15",
+   "clause": "B15",
+   "legal": false,
+   "what": "part-1 module",
+   "files": [
+    "src/components/dock/part-1/x.ts",
+    "src/components/dock/part-1/index.ts"
+   ],
+   "seal": {
+    "B7": 1,
+    "B11": 3,
+    "B15": 1
+   },
+   "sealLines": {
+    "B7": [
+     "src/components/dock/part-1/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "src/components/dock/part-1/index.ts exports x (no reader outside src/components/dock/part-1)",
+     "module src/components/dock/part-1 (not in the pin)",
+     "src/components/dock/part-1/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/dock/part-1 (placeholder name)"
+    ]
+   },
+   "sealG": {
+    "B11": 3,
+    "B15": 1
+   },
+   "sealGLines": {
+    "B11": [
+     "src/components/dock/part-1/index.ts exports x (no reader outside src/components/dock/part-1)",
+     "module src/components/dock/part-1 (not in the pin)",
+     "src/components/dock/part-1/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/dock/part-1 (placeholder name)"
+    ]
+   },
+   "gate": {
+    "E2": 2,
+    "E3N": 1,
+    "E3P": 1,
+    "B12": 1
+   },
+   "gateLines": {
+    "E2": [
+     "src/components/dock/part-1/x.ts → src/components/dock/x.ts",
+     "NEEDS-NAME src/components/dock/part-1/index.ts → src/components/dock/index.ts"
+    ],
+    "E3N": [
+     "module dock/part-1 is not in the pin"
+    ],
+    "E3P": [
+     "src/components/dock/part-1/ (placeholder name)"
+    ],
+    "B12": [
+     "src/components/dock/part-1/index.ts:1 re-exports src/components/dock/part-1/x.ts (relay)"
+    ]
+   },
+   "gateMerge": {
+    "E2": 2,
+    "E3N": 1,
+    "E3P": 1,
+    "B12": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I15b",
+   "clause": "B15",
+   "legal": false,
+   "what": "placeholder name utils",
+   "files": [
+    "src/components/dock/utils/x.ts",
+    "src/components/dock/utils/index.ts"
+   ],
+   "seal": {
+    "B7": 1,
+    "B11": 3,
+    "B15": 1
+   },
+   "sealLines": {
+    "B7": [
+     "src/components/dock/utils/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "src/components/dock/utils/index.ts exports x (no reader outside src/components/dock/utils)",
+     "module src/components/dock/utils (not in the pin)",
+     "src/components/dock/utils/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/dock/utils (placeholder name)"
+    ]
+   },
+   "sealG": {
+    "B11": 3,
+    "B15": 1
+   },
+   "sealGLines": {
+    "B11": [
+     "src/components/dock/utils/index.ts exports x (no reader outside src/components/dock/utils)",
+     "module src/components/dock/utils (not in the pin)",
+     "src/components/dock/utils/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/dock/utils (placeholder name)"
+    ]
+   },
+   "gate": {
+    "E2": 2,
+    "E3N": 1,
+    "E3P": 1,
+    "B12": 1
+   },
+   "gateLines": {
+    "E2": [
+     "src/components/dock/utils/x.ts → src/components/dock/x.ts",
+     "NEEDS-NAME src/components/dock/utils/index.ts → src/components/dock/index.ts"
+    ],
+    "E3N": [
+     "module dock/utils is not in the pin"
+    ],
+    "E3P": [
+     "src/components/dock/utils/ (placeholder name)"
+    ],
+    "B12": [
+     "src/components/dock/utils/index.ts:1 re-exports src/components/dock/utils/x.ts (relay)"
+    ]
+   },
+   "gateMerge": {
+    "E2": 2,
+    "E3N": 1,
+    "E3P": 1,
+    "B12": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I15c",
+   "clause": "B15",
+   "legal": false,
+   "what": "placeholder name v2",
+   "files": [
+    "src/components/dock/v2/x.ts",
+    "src/components/dock/v2/index.ts"
+   ],
+   "seal": {
+    "B7": 1,
+    "B11": 3,
+    "B15": 1
+   },
+   "sealLines": {
+    "B7": [
+     "src/components/dock/v2/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "src/components/dock/v2/index.ts exports x (no reader outside src/components/dock/v2)",
+     "module src/components/dock/v2 (not in the pin)",
+     "src/components/dock/v2/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/dock/v2 (placeholder name)"
+    ]
+   },
+   "sealG": {
+    "B11": 3,
+    "B15": 1
+   },
+   "sealGLines": {
+    "B11": [
+     "src/components/dock/v2/index.ts exports x (no reader outside src/components/dock/v2)",
+     "module src/components/dock/v2 (not in the pin)",
+     "src/components/dock/v2/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/dock/v2 (placeholder name)"
+    ]
+   },
+   "gate": {
+    "E2": 2,
+    "E3N": 1,
+    "E3P": 1,
+    "B12": 1
+   },
+   "gateLines": {
+    "E2": [
+     "src/components/dock/v2/x.ts → src/components/dock/x.ts",
+     "NEEDS-NAME src/components/dock/v2/index.ts → src/components/dock/index.ts"
+    ],
+    "E3N": [
+     "module dock/v2 is not in the pin"
+    ],
+    "E3P": [
+     "src/components/dock/v2/ (placeholder name)"
+    ],
+    "B12": [
+     "src/components/dock/v2/index.ts:1 re-exports src/components/dock/v2/x.ts (relay)"
+    ]
+   },
+   "gateMerge": {
+    "E2": 2,
+    "E3N": 1,
+    "E3P": 1,
+    "B12": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I16",
+   "clause": "B15",
+   "legal": false,
+   "what": "module repeats parent",
+   "files": [
+    "src/components/menu/menu/x.ts",
+    "src/components/menu/menu/index.ts"
+   ],
+   "seal": {
+    "B7": 1,
+    "B11": 3,
+    "B15": 1
+   },
+   "sealLines": {
+    "B7": [
+     "src/components/menu/menu/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "src/components/menu/menu/index.ts exports x (no reader outside src/components/menu/menu)",
+     "module src/components/menu/menu (not in the pin)",
+     "src/components/menu/menu/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/menu/menu (repeats its parent)"
+    ]
+   },
+   "sealG": {
+    "B11": 3,
+    "B15": 1
+   },
+   "sealGLines": {
+    "B11": [
+     "src/components/menu/menu/index.ts exports x (no reader outside src/components/menu/menu)",
+     "module src/components/menu/menu (not in the pin)",
+     "src/components/menu/menu/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/menu/menu (repeats its parent)"
+    ]
+   },
+   "gate": {
+    "E2": 2,
+    "E3N": 1,
+    "E3P": 1,
+    "B12": 1
+   },
+   "gateLines": {
+    "E2": [
+     "src/components/menu/menu/x.ts → src/components/menu/x.ts",
+     "NEEDS-NAME src/components/menu/menu/index.ts → src/components/menu/index.ts"
+    ],
+    "E3N": [
+     "module menu/menu is not in the pin"
+    ],
+    "E3P": [
+     "src/components/menu/menu/ (repeats its parent)"
+    ],
+    "B12": [
+     "src/components/menu/menu/index.ts:1 re-exports src/components/menu/menu/x.ts (relay)"
+    ]
+   },
+   "gateMerge": {
+    "E2": 2,
+    "E3N": 1,
+    "E3P": 1,
+    "B12": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I17",
+   "clause": "B1",
+   "legal": false,
+   "what": "masked fallback: dynamic-template deep import with catch",
+   "files": [
+    "src/components/slider/plantI17.ts"
+   ],
+   "seal": {
+    "B1": 10,
+    "B10": 3
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/slider/plantI17.ts:1 -> src/components/dock/composables/dockContext.ts [dynamic-template] (door src/components/dock/index.ts)",
+     "src/components/slider/plantI17.ts:1 -> src/components/dock/composables/dockCrossfadeContext.ts [dynamic-template] (door src/components/dock/index.ts)",
+     "src/components/slider/plantI17.ts:1 -> src/components/dock/composables/dockMorphMeasure.ts [dynamic-template] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/composables/dockMorphMeasure.ts -> src/components [global] readers: src/components/dock, src/components/slider",
+     "src/components/dock/composables/dockSwitcherContext.ts -> src/components [global] readers: src/components/dock, src/components/slider",
+     "src/components/dock/composables/useDockSpring.ts -> src/components [global] readers: src/components/dock, src/components/slider"
+    ]
+   },
+   "sealG": {
+    "B1": 10,
+    "B10": 3
+   },
+   "sealGLines": {
+    "B1": [
+     "src/components/slider/plantI17.ts:1 -> src/components/dock/composables/dockContext.ts [dynamic-template] (door src/components/dock/index.ts)",
+     "src/components/slider/plantI17.ts:1 -> src/components/dock/composables/dockCrossfadeContext.ts [dynamic-template] (door src/components/dock/index.ts)",
+     "src/components/slider/plantI17.ts:1 -> src/components/dock/composables/dockMorphMeasure.ts [dynamic-template] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/composables/dockMorphMeasure.ts -> src/components [global] readers: src/components/dock, src/components/slider",
+     "src/components/dock/composables/dockSwitcherContext.ts -> src/components [global] readers: src/components/dock, src/components/slider",
+     "src/components/dock/composables/useDockSpring.ts -> src/components [global] readers: src/components/dock, src/components/slider"
+    ]
+   },
+   "gate": {
+    "E1": 7,
+    "B1": 10
+   },
+   "gateLines": {
+    "E1": [
+     "global src/components/dock/composables/dockMorphMeasure.ts → src/composables/dockMorphMeasure.ts (readers src/components/dock, src/components/slider)",
+     "global src/components/dock/composables/dockSwitcherContext.ts → src/composables/dockSwitcherContext.ts (readers src/components/dock, src/components/slider)",
+     "global src/components/dock/composables/useDockClickIntegrity.ts → src/composables/useDockClickIntegrity.ts (readers src/components/dock, src/components/slider)"
+    ],
+    "B1": [
+     "src/components/slider/plantI17.ts:1 → src/components/dock/composables/dockContext.ts [dynamic-template] (door src/components/dock/index.ts)",
+     "src/components/slider/plantI17.ts:1 → src/components/dock/composables/dockCrossfadeContext.ts [dynamic-template] (door src/components/dock/index.ts)",
+     "src/components/slider/plantI17.ts:1 → src/components/dock/composables/dockMorphMeasure.ts [dynamic-template] (door src/components/dock/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 7,
+    "B1": 10
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I17b",
+   "clause": "B0",
+   "legal": false,
+   "what": "masked fallback: CSS import of a missing sheet",
+   "files": [
+    "src/components/slider/index.css"
+   ],
+   "seal": {
+    "B0": 1
+   },
+   "sealLines": {
+    "B0": [
+     "src/components/slider/index.css:3 unresolved [css-import] ./gone.css"
+    ]
+   },
+   "sealG": {
+    "B0": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "src/components/slider/index.css:3 unresolved [css-import] ./gone.css"
+    ]
+   },
+   "gate": {
+    "E0": 1
+   },
+   "gateLines": {
+    "E0": [
+     "src/components/slider/index.css:3 unresolved [css-import] ./gone.css"
+    ]
+   },
+   "gateMerge": {
+    "E0": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I17c",
+   "clause": "B1",
+   "legal": false,
+   "what": "masked fallback: try deep import, fall back to door",
+   "files": [
+    "src/components/slider/plantI17c.ts"
+   ],
+   "seal": {
+    "B1": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/slider/plantI17c.ts:1 -> src/components/dock/legibility/useGlassBackdropLuminance.ts [dynamic] (door src/components/dock/index.ts)"
+    ]
+   },
+   "sealG": {
+    "B1": 1
+   },
+   "sealGLines": {
+    "B1": [
+     "src/components/slider/plantI17c.ts:1 -> src/components/dock/legibility/useGlassBackdropLuminance.ts [dynamic] (door src/components/dock/index.ts)"
+    ]
+   },
+   "gate": {
+    "E1": 3,
+    "B1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "global src/components/dock/legibility/useGlassBackdropLuminance.ts → src/composables/useGlassBackdropLuminance.ts (readers src/components/dock, src/components/slider)",
+     "move src/components/dock/legibility/backdropLuminanceSample.ts → src/composables/backdropLuminanceSample.ts (readers src/composables)",
+     "move src/components/dock/legibility/backdropSampleMath.ts → src/composables/backdropSampleMath.ts (readers src/composables)"
+    ],
+    "B1": [
+     "src/components/slider/plantI17c.ts:1 → src/components/dock/legibility/useGlassBackdropLuminance.ts [dynamic] (door src/components/dock/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 3,
+    "B1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I18",
+   "clause": "B10",
+   "legal": false,
+   "what": "skeleton in skeleton/ read only by data-table",
+   "files": [
+    "src/components/skeleton/DataTableSkeleton.vue",
+    "src/components/data-table/plantI18.ts"
+   ],
+   "seal": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/data-table/plantI18.ts:1 -> src/components/skeleton/DataTableSkeleton.vue [import] (door src/components/skeleton/index.ts)"
+    ],
+    "B10": [
+     "src/components/skeleton/DataTableSkeleton.vue -> src/components/data-table [move] readers: src/components/data-table"
+    ]
+   },
+   "sealG": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealGLines": {
+    "B1": [
+     "src/components/data-table/plantI18.ts:1 -> src/components/skeleton/DataTableSkeleton.vue [import] (door src/components/skeleton/index.ts)"
+    ],
+    "B10": [
+     "src/components/skeleton/DataTableSkeleton.vue -> src/components/data-table [move] readers: src/components/data-table"
+    ]
+   },
+   "gate": {
+    "E1": 1,
+    "B1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "move src/components/skeleton/DataTableSkeleton.vue → src/components/data-table/DataTableSkeleton.vue (readers src/components/data-table)"
+    ],
+    "B1": [
+     "src/components/data-table/plantI18.ts:1 → src/components/skeleton/DataTableSkeleton.vue [import] (door src/components/skeleton/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1,
+    "B1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I19",
+   "clause": "B10",
+   "legal": false,
+   "what": "skeleton in _shared read only by data-table",
+   "files": [
+    "src/components/_shared/DataTableSkeleton.vue",
+    "src/components/data-table/plantI19.ts"
+   ],
+   "seal": {
+    "B10": 1
+   },
+   "sealLines": {
+    "B10": [
+     "src/components/_shared/DataTableSkeleton.vue -> src/components/data-table [move] readers: src/components/data-table"
+    ]
+   },
+   "sealG": {
+    "B10": 1
+   },
+   "sealGLines": {
+    "B10": [
+     "src/components/_shared/DataTableSkeleton.vue -> src/components/data-table [move] readers: src/components/data-table"
+    ]
+   },
+   "gate": {
+    "E1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "move src/components/_shared/DataTableSkeleton.vue → src/components/data-table/DataTableSkeleton.vue (readers src/components/data-table)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I20",
+   "clause": "B10",
+   "legal": false,
+   "what": "stylesheet in style kernel loaded only by slider",
+   "files": [
+    "src/styles/slider-thumb.css",
+    "src/components/slider/index.css"
+   ],
+   "seal": {
+    "B3": 1,
+    "B10": 1
+   },
+   "sealLines": {
+    "B3": [
+     "src/components/slider/index.css:3 -> src/styles/slider-thumb.css (css door src/styles/index.css)"
+    ],
+    "B10": [
+     "src/styles/slider-thumb.css -> src/components/slider [move] readers: src/components/slider"
+    ]
+   },
+   "sealG": {
+    "B3": 1,
+    "B10": 1
+   },
+   "sealGLines": {
+    "B3": [
+     "src/components/slider/index.css:3 -> src/styles/slider-thumb.css (css door src/styles/index.css)"
+    ],
+    "B10": [
+     "src/styles/slider-thumb.css -> src/components/slider [move] readers: src/components/slider"
+    ]
+   },
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I21",
+   "clause": "B7",
+   "legal": false,
+   "what": "doorless dir deep-imported",
+   "files": [
+    "src/components/dock/ghost/useGhost.ts",
+    "src/components/dock/plantI21.ts"
+   ],
+   "seal": {
+    "B6": 1,
+    "B7": 1
+   },
+   "sealLines": {
+    "B6": [
+     "src/components/dock/: 13 direct files > 12"
+    ],
+    "B7": [
+     "src/components/dock/ghost/ (1 direct files, no door)"
+    ]
+   },
+   "sealG": {
+    "B6": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "src/components/dock/: 13 direct files > 12"
+    ]
+   },
+   "gate": {
+    "E2": 1,
+    "E3N": 1,
+    "E4": 1
+   },
+   "gateLines": {
+    "E2": [
+     "src/components/dock/ghost/useGhost.ts → src/components/dock/composables/useGhost.ts"
+    ],
+    "E3N": [
+     "module dock/ghost is not in the pin"
+    ],
+    "E4": [
+     "src/components/dock/ 13 direct files"
+    ]
+   },
+   "gateMerge": {
+    "E2": 1,
+    "E3N": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I22",
+   "clause": "B8",
+   "legal": false,
+   "what": "kernel type-imports a unit",
+   "files": [
+    "src/composables/dom/useBreakpoint.ts"
+   ],
+   "seal": {
+    "B4": 1,
+    "B8": 1,
+    "B11": 1
+   },
+   "sealLines": {
+    "B4": [
+     "cycle @src [components/dock composables/dom] via src/components/dock/DockCrossfade.vue -> src/composables/dom/index.ts ; src/composables/dom/useBreakpoint.ts -> src/components/dock/index.ts [type]"
+    ],
+    "B8": [
+     "src/composables/dom/useBreakpoint.ts:1 -> src/components/dock/index.ts [type] [import-type] (kernel reads a unit)"
+    ],
+    "B11": [
+     "src/composables/dom/index.ts +PlantDock (not in the pin)"
+    ]
+   },
+   "sealG": {
+    "B4": 1,
+    "B8": 1,
+    "B11": 1
+   },
+   "sealGLines": {
+    "B4": [
+     "cycle @src [components/dock composables/dom] via src/components/dock/DockCrossfade.vue -> src/composables/dom/index.ts ; src/composables/dom/useBreakpoint.ts -> src/components/dock/index.ts [type]"
+    ],
+    "B8": [
+     "src/composables/dom/useBreakpoint.ts:1 -> src/components/dock/index.ts [type] [import-type] (kernel reads a unit)"
+    ],
+    "B11": [
+     "src/composables/dom/index.ts +PlantDock (not in the pin)"
+    ]
+   },
+   "gate": {
+    "B8": 1
+   },
+   "gateLines": {
+    "B8": [
+     "src/composables/dom/useBreakpoint.ts:1 → src/components/dock/index.ts [type] [import-type] (the kernel reads a unit)"
+    ]
+   },
+   "gateMerge": {
+    "B8": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I23",
+   "clause": "B8",
+   "legal": false,
+   "what": "src reads demo",
+   "files": [
+    "src/components/chip/plantI23.ts"
+   ],
+   "seal": {
+    "B8": 1
+   },
+   "sealLines": {
+    "B8": [
+     "src/components/chip/plantI23.ts:1 -> demo/router.ts [import] (the library reads the demo zone)"
+    ]
+   },
+   "sealG": {
+    "B8": 1
+   },
+   "sealGLines": {
+    "B8": [
+     "src/components/chip/plantI23.ts:1 -> demo/router.ts [import] (the library reads the demo zone)"
+    ]
+   },
+   "gate": {
+    "B8": 1
+   },
+   "gateLines": {
+    "B8": [
+     "src/components/chip/plantI23.ts:1 → demo/router.ts (the library reads demo)"
+    ]
+   },
+   "gateMerge": {
+    "B8": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I24",
+   "clause": "B4",
+   "legal": false,
+   "what": "sibling cycle chip <-> badge",
+   "files": [
+    "src/components/chip/plantI24a.ts",
+    "src/components/badge/plantI24b.ts"
+   ],
+   "seal": {
+    "B4": 1
+   },
+   "sealLines": {
+    "B4": [
+     "cycle @src [components/chip components/badge] via src/components/chip/plantI24a.ts -> src/components/badge/index.ts ; src/components/badge/plantI24b.ts -> src/components/chip/index.ts"
+    ]
+   },
+   "sealG": {
+    "B4": 1
+   },
+   "sealGLines": {
+    "B4": [
+     "cycle @src [components/chip components/badge] via src/components/chip/plantI24a.ts -> src/components/badge/index.ts ; src/components/badge/plantI24b.ts -> src/components/chip/index.ts"
+    ]
+   },
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I25",
+   "clause": "B14",
+   "legal": false,
+   "what": "code in a JS door",
+   "files": [
+    "src/components/chip/index.ts"
+   ],
+   "seal": {
+    "B11": 1,
+    "B14": 1
+   },
+   "sealLines": {
+    "B11": [
+     "src/components/chip/index.ts +CHIP_DEFAULT (not in the pin)"
+    ],
+    "B14": [
+     "src/components/chip/index.ts:4 holds 1 statement(s) that are not `export … from`, first FirstStatement"
+    ]
+   },
+   "sealG": {
+    "B11": 1,
+    "B14": 1
+   },
+   "sealGLines": {
+    "B11": [
+     "src/components/chip/index.ts +CHIP_DEFAULT (not in the pin)"
+    ],
+    "B14": [
+     "src/components/chip/index.ts:4 holds 1 statement(s) that are not `export … from`, first FirstStatement"
+    ]
+   },
+   "gate": {
+    "B14": 1
+   },
+   "gateLines": {
+    "B14": [
+     "src/components/chip/index.ts:4 holds 1 statement(s) that are not `export … from`"
+    ]
+   },
+   "gateMerge": {
+    "B14": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I26",
+   "clause": "B14",
+   "legal": false,
+   "what": "rule in a CSS door",
+   "files": [
+    "src/components/dock/index.css"
+   ],
+   "seal": {
+    "B14": 1
+   },
+   "sealLines": {
+    "B14": [
+     "src/components/dock/index.css:4 holds 1 non-door node(s), first rule .x"
+    ]
+   },
+   "sealG": {
+    "B14": 1
+   },
+   "sealGLines": {
+    "B14": [
+     "src/components/dock/index.css:4 holds 1 non-door node(s), first rule .x"
+    ]
+   },
+   "gate": {
+    "B14": 1
+   },
+   "gateLines": {
+    "B14": [
+     "src/components/dock/index.css:4 holds 1 non-import node(s)"
+    ]
+   },
+   "gateMerge": {
+    "B14": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I27",
+   "clause": "B12",
+   "legal": false,
+   "what": "legacy shim relay",
+   "files": [
+    "src/components/dock/constants.legacy.ts",
+    "src/components/dock/plantI27.ts"
+   ],
+   "seal": {
+    "B6": 1,
+    "B12": 1
+   },
+   "sealLines": {
+    "B6": [
+     "src/components/dock/: 14 direct files > 12"
+    ],
+    "B12": [
+     "src/components/dock/constants.legacy.ts:1 re-exports src/components/dock/constants.ts (relay)"
+    ]
+   },
+   "sealG": {
+    "B6": 1,
+    "B12": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "src/components/dock/: 14 direct files > 12"
+    ],
+    "B12": [
+     "src/components/dock/constants.legacy.ts:1 re-exports src/components/dock/constants.ts (relay)"
+    ]
+   },
+   "gate": {
+    "E4": 1,
+    "B12": 1
+   },
+   "gateLines": {
+    "E4": [
+     "src/components/dock/ 14 direct files"
+    ],
+    "B12": [
+     "src/components/dock/constants.legacy.ts:1 re-exports src/components/dock/constants.ts (relay)"
+    ]
+   },
+   "gateMerge": {
+    "B12": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I28",
+   "clause": "B5",
+   "legal": false,
+   "what": "dir inside a kind slot",
+   "files": [
+    "src/components/dock/composables/hold/useHold.ts",
+    "src/components/dock/plantI28.ts"
+   ],
+   "seal": {
+    "B5": 1,
+    "B6": 1
+   },
+   "sealLines": {
+    "B5": [
+     "src/components/dock/composables/hold (dir inside kind slot src/components/dock/composables)"
+    ],
+    "B6": [
+     "src/components/dock/: 13 direct files > 12"
+    ]
+   },
+   "sealG": {
+    "B5": 1,
+    "B6": 1
+   },
+   "sealGLines": {
+    "B5": [
+     "src/components/dock/composables/hold (dir inside kind slot src/components/dock/composables)"
+    ],
+    "B6": [
+     "src/components/dock/: 13 direct files > 12"
+    ]
+   },
+   "gate": {
+    "E2": 1,
+    "E3N": 1,
+    "E4": 1
+   },
+   "gateLines": {
+    "E2": [
+     "src/components/dock/composables/hold/useHold.ts → src/components/dock/composables/useHold.ts"
+    ],
+    "E3N": [
+     "module dock/composables/hold is not in the pin"
+    ],
+    "E4": [
+     "src/components/dock/ 13 direct files"
+    ]
+   },
+   "gateMerge": {
+    "E2": 1,
+    "E3N": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I29",
+   "clause": "B13",
+   "legal": false,
+   "what": "bin imports a bin",
+   "files": [
+    "scripts/profile-bundle.mjs"
+   ],
+   "seal": {
+    "B0": 17,
+    "B6": 1,
+    "B13": 1
+   },
+   "sealLines": {
+    "B0": [
+     "scripts/profile-bundle.mjs:315 walk of src/ [path-literal]",
+     "scripts/profile-bundle.mjs:290 computed-path read indexPath [fs-read]",
+     "scripts/profile-bundle.mjs:294 computed-path read target [fs-read]"
+    ],
+    "B6": [
+     "scripts/profile-bundle.mjs: 939 lines > 500"
+    ],
+    "B13": [
+     "scripts/profile-bundle.mjs:1 imports the bin scripts/verify-export-types.mjs [import-side-effect]"
+    ]
+   },
+   "sealG": {
+    "B0": 17,
+    "B6": 1,
+    "B13": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "scripts/profile-bundle.mjs:315 walk of src/ [path-literal]",
+     "scripts/profile-bundle.mjs:290 computed-path read indexPath [fs-read]",
+     "scripts/profile-bundle.mjs:294 computed-path read target [fs-read]"
+    ],
+    "B6": [
+     "scripts/profile-bundle.mjs: 939 lines > 500"
+    ],
+    "B13": [
+     "scripts/profile-bundle.mjs:1 imports the bin scripts/verify-export-types.mjs [import-side-effect]"
+    ]
+   },
+   "gate": {
+    "E4": 1
+   },
+   "gateLines": {
+    "E4": [
+     "scripts/profile-bundle.mjs 939 lines"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I30",
+   "clause": "B8",
+   "legal": false,
+   "what": "kernel entry re-exports a unit file",
+   "files": [
+    "src/composables/dom/index.ts"
+   ],
+   "seal": {
+    "B1": 1,
+    "B4": 1,
+    "B8": 1,
+    "B9": 1,
+    "B11": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/composables/dom/index.ts:50 -> src/components/slider/useDockHold.ts [reexport] (door src/components/slider/index.ts)"
+    ],
+    "B4": [
+     "cycle @src [components/dock components/slider composables/dom] via src/components/dock/DockCrossfade.vue -> src/composables/dom/index.ts ; src/components/slider/Slider.vue -> src/composables/dom/index.ts ; src/components/slider/useDockHold.ts -> src/components/dock/index.ts"
+    ],
+    "B8": [
+     "src/composables/dom/index.ts:50 -> src/components/slider/useDockHold.ts [reexport] (kernel reads a unit)"
+    ],
+    "B9": [
+     "src/composables/dom/index.ts:50 re-exports src/components/slider/useDockHold.ts (outside src/composables/dom)"
+    ],
+    "B11": [
+     "src/composables/dom/index.ts +useDockHold (not in the pin)"
+    ]
+   },
+   "sealG": {
+    "B1": 1,
+    "B4": 1,
+    "B8": 1,
+    "B9": 1,
+    "B11": 1
+   },
+   "sealGLines": {
+    "B1": [
+     "src/composables/dom/index.ts:50 -> src/components/slider/useDockHold.ts [reexport] (door src/components/slider/index.ts)"
+    ],
+    "B4": [
+     "cycle @src [components/dock components/slider composables/dom] via src/components/dock/DockCrossfade.vue -> src/composables/dom/index.ts ; src/components/slider/Slider.vue -> src/composables/dom/index.ts ; src/components/slider/useDockHold.ts -> src/components/dock/index.ts"
+    ],
+    "B8": [
+     "src/composables/dom/index.ts:50 -> src/components/slider/useDockHold.ts [reexport] (kernel reads a unit)"
+    ],
+    "B9": [
+     "src/composables/dom/index.ts:50 re-exports src/components/slider/useDockHold.ts (outside src/composables/dom)"
+    ],
+    "B11": [
+     "src/composables/dom/index.ts +useDockHold (not in the pin)"
+    ]
+   },
+   "gate": {
+    "E1K": 1,
+    "B1": 1,
+    "B8": 1
+   },
+   "gateLines": {
+    "E1K": [
+     "./dom publishes useDockHold from src/components/slider/useDockHold.ts"
+    ],
+    "B1": [
+     "src/composables/dom/index.ts:50 → src/components/slider/useDockHold.ts [reexport] (door src/components/slider/index.ts)"
+    ],
+    "B8": [
+     "src/composables/dom/index.ts:50 → src/components/slider/useDockHold.ts [reexport] (the kernel reads a unit)"
+    ]
+   },
+   "gateMerge": {
+    "E1K": 1,
+    "B1": 1,
+    "B8": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I31",
+   "clause": "B2",
+   "legal": false,
+   "what": "demo past a door",
+   "files": [
+    "demo/plantI31.ts"
+   ],
+   "seal": {
+    "B2": 1
+   },
+   "sealLines": {
+    "B2": [
+     "demo/plantI31.ts:1 -> src/components/slider/useDockHold.ts [import]"
+    ]
+   },
+   "sealG": {
+    "B2": 1
+   },
+   "sealGLines": {
+    "B2": [
+     "demo/plantI31.ts:1 -> src/components/slider/useDockHold.ts [import]"
+    ]
+   },
+   "gate": {
+    "E6": 1
+   },
+   "gateLines": {
+    "E6": [
+     "demo/plantI31.ts:1 import → src/components/slider/useDockHold.ts"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I32",
+   "clause": "B0",
+   "legal": false,
+   "what": "computed-path read in tests",
+   "files": [
+    "tests/unit/plant-walk2.test.ts"
+   ],
+   "seal": {
+    "B0": 1
+   },
+   "sealLines": {
+    "B0": [
+     "tests/unit/plant-walk2.test.ts:3 computed-path read src/components/<computed> [computed-read]"
+    ]
+   },
+   "sealG": {
+    "B0": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "tests/unit/plant-walk2.test.ts:3 computed-path read src/components/<computed> [computed-read]"
+    ]
+   },
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:I33",
+   "clause": "B7",
+   "legal": false,
+   "what": "undeclared index.ts",
+   "files": [
+    "src/components/chip/extra/x.ts",
+    "src/components/chip/extra/index.ts",
+    "src/components/chip/plantI33.ts"
+   ],
+   "seal": {
+    "B7": 1,
+    "B11": 2
+   },
+   "sealLines": {
+    "B7": [
+     "src/components/chip/extra/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "module src/components/chip/extra (not in the pin)",
+     "src/components/chip/extra/index.ts +x (not in the pin)"
+    ]
+   },
+   "sealG": {
+    "B11": 2
+   },
+   "sealGLines": {
+    "B11": [
+     "module src/components/chip/extra (not in the pin)",
+     "src/components/chip/extra/index.ts +x (not in the pin)"
+    ]
+   },
+   "gate": {
+    "E2": 2,
+    "E3N": 1,
+    "B12": 1
+   },
+   "gateLines": {
+    "E2": [
+     "src/components/chip/extra/x.ts → src/components/chip/x.ts",
+     "NEEDS-NAME src/components/chip/extra/index.ts → src/components/chip/index.ts"
+    ],
+    "E3N": [
+     "module chip/extra is not in the pin"
+    ],
+    "B12": [
+     "src/components/chip/extra/index.ts:1 re-exports src/components/chip/extra/x.ts (relay)"
+    ]
+   },
+   "gateMerge": {
+    "E2": 2,
+    "E3N": 1,
+    "B12": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "B-crit:I34",
+   "clause": "B6",
+   "legal": false,
+   "what": "13 files in a story category",
+   "files": [
+    "demo/stories/data/plantI34_0.ts",
+    "demo/stories/data/plantI34_1.ts",
+    "demo/stories/data/plantI34_2.ts",
+    "demo/stories/data/plantI34_3.ts"
+   ],
+   "seal": {
+    "B6": 1
+   },
+   "sealLines": {
+    "B6": [
+     "demo/stories/data/: 13 direct files > 12"
+    ]
+   },
+   "sealG": {
+    "B6": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "demo/stories/data/: 13 direct files > 12"
+    ]
+   },
+   "gate": {
+    "E4": 1
+   },
+   "gateLines": {
+    "E4": [
+     "demo/stories/data/ 13 direct files"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:L1",
+   "clause": null,
+   "legal": true,
+   "what": "slider reads dock through its door",
+   "files": [
+    "src/components/slider/plantL1.ts"
+   ],
+   "seal": {},
+   "sealLines": {},
+   "sealG": {},
+   "sealGLines": {},
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": false,
+    "sealG": false,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "B-crit:L2",
+   "clause": null,
+   "legal": true,
+   "what": "colocated slider-local composable",
+   "files": [
+    "src/components/slider/useSliderLocal.ts",
+    "src/components/slider/plantL2.ts"
+   ],
+   "seal": {},
+   "sealLines": {},
+   "sealG": {},
+   "sealGLines": {},
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": false,
+    "sealG": false,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "G-crit:P01",
+   "na": "n/a: an engine move plant (the overlay judge moves no file)"
+  },
+  {
+   "id": "G-crit:P02",
+   "na": "n/a: an engine move plant (the overlay judge moves no file)"
+  },
+  {
+   "id": "G-crit:P03",
+   "na": "n/a: an engine move plant (the overlay judge moves no file)"
+  },
+  {
+   "id": "G-crit:P04",
+   "na": "n/a: an engine move plant (the overlay judge moves no file)"
+  },
+  {
+   "id": "G-crit:P05",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/badge/p01.ts",
+    "src/components/badge/p02.ts",
+    "src/components/badge/p03.ts",
+    "src/components/badge/p04.ts",
+    "src/components/badge/p05.ts",
+    "src/components/badge/p06.ts",
+    "src/components/badge/p07.ts",
+    "src/components/badge/p08.ts",
+    "src/components/badge/p09.ts",
+    "src/components/badge/p10.ts",
+    "src/components/badge/p11.ts",
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B6": 1
+   },
+   "sealLines": {
+    "B6": [
+     "src/components/badge/: 14 direct files > 12"
+    ]
+   },
+   "sealG": {
+    "B6": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "src/components/badge/: 14 direct files > 12"
+    ]
+   },
+   "gate": {
+    "E3P": 11,
+    "E4": 1
+   },
+   "gateLines": {
+    "E3P": [
+     "src/components/badge/p01.ts (placeholder file name)",
+     "src/components/badge/p02.ts (placeholder file name)",
+     "src/components/badge/p03.ts (placeholder file name)"
+    ],
+    "E4": [
+     "src/components/badge/ 14 direct files"
+    ]
+   },
+   "gateMerge": {
+    "E3P": 11
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "G-crit:P06",
+   "na": "n/a: an engine move plant (the overlay judge moves no file)"
+  },
+  {
+   "id": "G-crit:P07a",
+   "na": "n/a: src/components/dock/glass-dock/GlassDock.vue is not in this tree"
+  },
+  {
+   "id": "G-crit:P07b",
+   "na": "n/a: src/components/dock/glass-dock/GlassDock.vue is not in this tree"
+  },
+  {
+   "id": "G-crit:P08",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/dock/constants.ts"
+   ],
+   "seal": {
+    "B0": 1
+   },
+   "sealLines": {
+    "B0": [
+     "src/components/dock/constants.ts:1 unresolved [import-side-effect] ./does-not-exist"
+    ]
+   },
+   "sealG": {
+    "B0": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "src/components/dock/constants.ts:1 unresolved [import-side-effect] ./does-not-exist"
+    ]
+   },
+   "gate": {
+    "E0": 1
+   },
+   "gateLines": {
+    "E0": [
+     "src/components/dock/constants.ts:1 unresolved [import-side-effect] ./does-not-exist"
+    ]
+   },
+   "gateMerge": {
+    "E0": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "G-crit:P09",
+   "na": "n/a: an engine move plant (the overlay judge moves no file)"
+  },
+  {
+   "id": "G-crit:P10",
+   "na": "n/a: an engine move plant (the overlay judge moves no file)"
+  },
+  {
+   "id": "G-crit:P11",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "demo/stories/dock/controls.vue"
+   ],
+   "seal": {
+    "B2": 1
+   },
+   "sealLines": {
+    "B2": [
+     "demo/stories/dock/controls.vue:5 -> src/components/dock/composables/useDockSpring.ts [import]"
+    ]
+   },
+   "sealG": {
+    "B2": 1
+   },
+   "sealGLines": {
+    "B2": [
+     "demo/stories/dock/controls.vue:5 -> src/components/dock/composables/useDockSpring.ts [import]"
+    ]
+   },
+   "gate": {
+    "E6": 1
+   },
+   "gateLines": {
+    "E6": [
+     "demo/stories/dock/controls.vue:5 import → src/components/dock/composables/useDockSpring.ts"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "G-crit:P12",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/slider/index.ts"
+   ],
+   "seal": {
+    "B9": 2,
+    "B11": 1,
+    "B16": 1
+   },
+   "sealLines": {
+    "B9": [
+     "src/components/slider/index.ts:3 re-exports src/components/dock/index.ts (outside src/components/slider)",
+     "src/components/dock/GlassDock.vue#default on ./dock + ./slider"
+    ],
+    "B11": [
+     "src/components/slider/index.ts +GlassDock (not in the pin)"
+    ],
+    "B16": [
+     "src/components/slider/__tests__/slider.contract.test.ts (colocated in src/components/slider; its subject's home is the harness (several units))"
+    ]
+   },
+   "sealG": {
+    "B9": 2,
+    "B11": 1,
+    "B16": 1
+   },
+   "sealGLines": {
+    "B9": [
+     "src/components/slider/index.ts:3 re-exports src/components/dock/index.ts (outside src/components/slider)",
+     "src/components/dock/GlassDock.vue#default on ./dock + ./slider"
+    ],
+    "B11": [
+     "src/components/slider/index.ts +GlassDock (not in the pin)"
+    ],
+    "B16": [
+     "src/components/slider/__tests__/slider.contract.test.ts (colocated in src/components/slider; its subject's home is the harness (several units))"
+    ]
+   },
+   "gate": {
+    "E5": 1
+   },
+   "gateLines": {
+    "E5": [
+     "src/components/dock/GlassDock.vue#default on ./dock + ./slider (owner ./dock, L4.7)"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "G-crit:P13",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "tests/components/badge-plant.test.ts"
+   ],
+   "seal": {
+    "B16": 1
+   },
+   "sealLines": {
+    "B16": [
+     "tests/components/badge-plant.test.ts (subject in src/components/badge: belongs in src/components/badge/__tests__/)"
+    ]
+   },
+   "sealG": {
+    "B16": 1
+   },
+   "sealGLines": {
+    "B16": [
+     "tests/components/badge-plant.test.ts (subject in src/components/badge: belongs in src/components/badge/__tests__/)"
+    ]
+   },
+   "gate": {
+    "E7": 1
+   },
+   "gateLines": {
+    "E7": [
+     "tests/components/badge-plant.test.ts → src/components/badge/__tests__/"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "G-crit:P14",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/slider/__tests__/dock-plant.test.ts"
+   ],
+   "seal": {
+    "B16": 1
+   },
+   "sealLines": {
+    "B16": [
+     "src/components/slider/__tests__/dock-plant.test.ts (colocated in src/components/slider; its subject's home is src/components/dock)"
+    ]
+   },
+   "sealG": {
+    "B16": 1
+   },
+   "sealGLines": {
+    "B16": [
+     "src/components/slider/__tests__/dock-plant.test.ts (colocated in src/components/slider; its subject's home is src/components/dock)"
+    ]
+   },
+   "gate": {
+    "E7": 1
+   },
+   "gateLines": {
+    "E7": [
+     "src/components/slider/__tests__/dock-plant.test.ts → src/components/dock/__tests__/"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "G-crit:P15",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/badge/index.ts"
+   ],
+   "seal": {
+    "B6": 1
+   },
+   "sealLines": {
+    "B6": [
+     "src/components/badge/index.ts: 523 lines > 500"
+    ]
+   },
+   "sealG": {
+    "B6": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "src/components/badge/index.ts: 523 lines > 500"
+    ]
+   },
+   "gate": {
+    "E4": 1
+   },
+   "gateLines": {
+    "E4": [
+     "src/components/badge/index.ts 523 lines"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "G-crit:P16",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B0": 1
+   },
+   "sealLines": {
+    "B0": [
+     "src/components/badge/Badge.vue:2 self-name-in-src [import] @mkbabb/glass-ui/button"
+    ]
+   },
+   "sealG": {
+    "B0": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "src/components/badge/Badge.vue:2 self-name-in-src [import] @mkbabb/glass-ui/button"
+    ]
+   },
+   "gate": {
+    "E0": 1
+   },
+   "gateLines": {
+    "E0": [
+     "src/components/badge/Badge.vue:2 self-name-in-src [import] @mkbabb/glass-ui/button"
+    ]
+   },
+   "gateMerge": {
+    "E0": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "G-crit:P17",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "demo/demo.css"
+   ],
+   "seal": {
+    "B2": 1
+   },
+   "sealLines": {
+    "B2": [
+     "demo/demo.css:1 -> src/components/dock/styles/run.css [css-import]"
+    ]
+   },
+   "sealG": {
+    "B2": 1
+   },
+   "sealGLines": {
+    "B2": [
+     "demo/demo.css:1 -> src/components/dock/styles/run.css [css-import]"
+    ]
+   },
+   "gate": {
+    "E6": 1
+   },
+   "gateLines": {
+    "E6": [
+     "demo/demo.css:1 css-import → src/components/dock/styles/run.css"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "G-crit:P18",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/components/dock/composables/useDockSpring.ts [import] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/composables/useDockSpring.ts -> src/components [global] readers: src/components/badge, src/components/dock"
+    ]
+   },
+   "sealG": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealGLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/components/dock/composables/useDockSpring.ts [import] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/composables/useDockSpring.ts -> src/components [global] readers: src/components/badge, src/components/dock"
+    ]
+   },
+   "gate": {
+    "E1": 1,
+    "B1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "global src/components/dock/composables/useDockSpring.ts → src/composables/useDockSpring.ts (readers src/components/badge, src/components/dock)"
+    ],
+    "B1": [
+     "src/components/badge/Badge.vue:2 → src/components/dock/composables/useDockSpring.ts [import] (door src/components/dock/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1,
+    "B1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "G-crit:P19",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/dock/utils/format.ts",
+    "src/components/dock/utils/pad.ts",
+    "src/components/dock/utils/utils.ts",
+    "src/components/dock/DockControl.vue"
+   ],
+   "seal": {
+    "B7": 1,
+    "B15": 2
+   },
+   "sealLines": {
+    "B7": [
+     "src/components/dock/utils/ (3 direct files, no door)"
+    ],
+    "B15": [
+     "src/components/dock/utils (placeholder name)",
+     "src/components/dock/utils/utils.ts (placeholder file name)"
+    ]
+   },
+   "sealG": {
+    "B15": 2
+   },
+   "sealGLines": {
+    "B15": [
+     "src/components/dock/utils (placeholder name)",
+     "src/components/dock/utils/utils.ts (placeholder file name)"
+    ]
+   },
+   "gate": {
+    "E3N": 1,
+    "E3P": 2
+   },
+   "gateLines": {
+    "E3N": [
+     "module dock/utils is not in the pin"
+    ],
+    "E3P": [
+     "src/components/dock/utils/ (placeholder name)",
+     "src/components/dock/utils/utils.ts (placeholder file name)"
+    ]
+   },
+   "gateMerge": {
+    "E3N": 1,
+    "E3P": 2
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "G-crit:P20",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/dock/GlassDockLegacy.ts",
+    "src/components/dock/index.ts"
+   ],
+   "seal": {
+    "B0": 1,
+    "B6": 1,
+    "B11": 1
+   },
+   "sealLines": {
+    "B0": [
+     "src/components/dock/GlassDockLegacy.ts:1 unresolved [reexport] ./glass-dock/GlassDock.vue"
+    ],
+    "B6": [
+     "src/components/dock/: 13 direct files > 12"
+    ],
+    "B11": [
+     "src/components/dock/index.ts +GlassDockLegacy (not in the pin)"
+    ]
+   },
+   "sealG": {
+    "B0": 1,
+    "B6": 1,
+    "B11": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "src/components/dock/GlassDockLegacy.ts:1 unresolved [reexport] ./glass-dock/GlassDock.vue"
+    ],
+    "B6": [
+     "src/components/dock/: 13 direct files > 12"
+    ],
+    "B11": [
+     "src/components/dock/index.ts +GlassDockLegacy (not in the pin)"
+    ]
+   },
+   "gate": {
+    "E0": 1,
+    "E4": 1
+   },
+   "gateLines": {
+    "E0": [
+     "src/components/dock/GlassDockLegacy.ts:1 unresolved [reexport] ./glass-dock/GlassDock.vue"
+    ],
+    "E4": [
+     "src/components/dock/ 13 direct files"
+    ]
+   },
+   "gateMerge": {
+    "E0": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "G-crit:P21",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/dock/DockControl.vue"
+   ],
+   "seal": {
+    "B0": 1
+   },
+   "sealLines": {
+    "B0": [
+     "src/components/dock/DockControl.vue:2 unresolved [dynamic] ./nope-missing"
+    ]
+   },
+   "sealG": {
+    "B0": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "src/components/dock/DockControl.vue:2 unresolved [dynamic] ./nope-missing"
+    ]
+   },
+   "gate": {
+    "E0": 1
+   },
+   "gateLines": {
+    "E0": [
+     "src/components/dock/DockControl.vue:2 unresolved [dynamic] ./nope-missing"
+    ]
+   },
+   "gateMerge": {
+    "E0": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "G-crit:P22",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/skeleton/DataTableSkeleton.vue",
+    "src/components/data-table/DataTable.vue"
+   ],
+   "seal": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/data-table/DataTable.vue:2 -> src/components/skeleton/DataTableSkeleton.vue [import] (door src/components/skeleton/index.ts)"
+    ],
+    "B10": [
+     "src/components/skeleton/DataTableSkeleton.vue -> src/components/data-table [move] readers: src/components/data-table"
+    ]
+   },
+   "sealG": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealGLines": {
+    "B1": [
+     "src/components/data-table/DataTable.vue:2 -> src/components/skeleton/DataTableSkeleton.vue [import] (door src/components/skeleton/index.ts)"
+    ],
+    "B10": [
+     "src/components/skeleton/DataTableSkeleton.vue -> src/components/data-table [move] readers: src/components/data-table"
+    ]
+   },
+   "gate": {
+    "E1": 1,
+    "B1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "move src/components/skeleton/DataTableSkeleton.vue → src/components/data-table/DataTableSkeleton.vue (readers src/components/data-table)"
+    ],
+    "B1": [
+     "src/components/data-table/DataTable.vue:2 → src/components/skeleton/DataTableSkeleton.vue [import] (door src/components/skeleton/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1,
+    "B1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "G-crit:P23",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/dock/composables/useDockPlant1.ts",
+    "src/components/dock/composables/useDockPlant2.ts",
+    "src/components/dock/composables/useDockPlant3.ts",
+    "src/components/dock/composables/useDockPlant4.ts",
+    "src/components/dock/composables/useDockPlant5.ts",
+    "src/components/dock/composables/useDockPlant6.ts",
+    "src/components/dock/composables/useDockPlant7.ts",
+    "src/components/dock/composables/useDockPlant8.ts",
+    "src/components/dock/DockControl.vue"
+   ],
+   "seal": {
+    "B6": 1
+   },
+   "sealLines": {
+    "B6": [
+     "src/components/dock/composables/: 18 direct files > 12"
+    ]
+   },
+   "sealG": {
+    "B6": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "src/components/dock/composables/: 18 direct files > 12"
+    ]
+   },
+   "gate": {
+    "E2": 9,
+    "E4": 1,
+    "E7": 1
+   },
+   "gateLines": {
+    "E2": [
+     "src/components/dock/DockControl.vue → src/components/dock/control/DockControl.vue",
+     "src/components/dock/composables/useDockPlant1.ts → src/components/dock/control/useDockPlant1.ts",
+     "src/components/dock/composables/useDockPlant2.ts → src/components/dock/control/useDockPlant2.ts"
+    ],
+    "E4": [
+     "src/components/dock/composables/ 18 direct files"
+    ],
+    "E7": [
+     "src/components/dock/__tests__/DockControl.a11y.test.ts → src/components/dock/control/__tests__/"
+    ]
+   },
+   "gateMerge": {
+    "E2": 9
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "G-crit:P24",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/badge/badge-label/BadgeLabel.vue",
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B7": 1
+   },
+   "sealLines": {
+    "B7": [
+     "src/components/badge/badge-label/ (1 direct files, no door)"
+    ]
+   },
+   "sealG": {
+    "E3": 1
+   },
+   "sealGLines": {
+    "E3": [
+     "src/components/badge/badge-label/ holds no root named badge-label, no door and is no authored base or carve module"
+    ]
+   },
+   "gate": {
+    "E2": 1,
+    "E3": 1,
+    "E3N": 1
+   },
+   "gateLines": {
+    "E2": [
+     "src/components/badge/badge-label/BadgeLabel.vue → src/components/badge/BadgeLabel.vue"
+    ],
+    "E3": [
+     "src/components/badge/badge-label/ holds no root named badge-label, no door and is no authored base or carve module"
+    ],
+    "E3N": [
+     "module badge/badge-label is not in the pin"
+    ]
+   },
+   "gateMerge": {
+    "E2": 1,
+    "E3": 1,
+    "E3N": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "G-crit:P25",
+   "na": "n/a: reads a dir listing for an engine move"
+  },
+  {
+   "id": "G-crit:P26",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/components/dock/search/match.ts [new-url] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/search/match.ts -> src/components [global] readers: src/components/badge, src/components/dock/search"
+    ]
+   },
+   "sealG": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealGLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/components/dock/search/match.ts [new-url] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/search/match.ts -> src/components [global] readers: src/components/badge, src/components/dock/search"
+    ]
+   },
+   "gate": {
+    "E1": 2,
+    "E2": 4,
+    "B1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "global src/components/dock/search/match.ts → src/composables/match.ts (readers src/components/badge, src/components/dock/search)",
+     "global src/components/dock/search/types.ts → src/composables/types.ts (readers src/components/dock/search, src/composables)"
+    ],
+    "E2": [
+     "src/components/dock/search/match.ts → src/components/dock/match.ts",
+     "src/components/dock/search/types.ts → src/components/dock/types.ts",
+     "src/components/dock/search/useDockSearch.ts → src/components/dock/composables/useDockSearch.ts"
+    ],
+    "B1": [
+     "src/components/badge/Badge.vue:2 → src/components/dock/search/match.ts [new-url] (door src/components/dock/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 2,
+    "E2": 4,
+    "B1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "G-crit:P27",
+   "na": "n/a: an engine move plant (the overlay judge moves no file)"
+  },
+  {
+   "id": "G-crit:P28",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "scripts/foo-helper.mjs",
+    "scripts/profile-bundle.mjs"
+   ],
+   "seal": {
+    "B0": 18,
+    "B6": 1
+   },
+   "sealLines": {
+    "B0": [
+     "scripts/profile-bundle.mjs:316 walk of src/ [path-literal]",
+     "scripts/profile-bundle.mjs:290 computed-path read indexPath [fs-read]",
+     "scripts/profile-bundle.mjs:291 computed-path read indexPath [fs-read]"
+    ],
+    "B6": [
+     "scripts/profile-bundle.mjs: 940 lines > 500"
+    ]
+   },
+   "sealG": {
+    "B0": 18,
+    "B6": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "scripts/profile-bundle.mjs:316 walk of src/ [path-literal]",
+     "scripts/profile-bundle.mjs:290 computed-path read indexPath [fs-read]",
+     "scripts/profile-bundle.mjs:291 computed-path read indexPath [fs-read]"
+    ],
+    "B6": [
+     "scripts/profile-bundle.mjs: 940 lines > 500"
+    ]
+   },
+   "gate": {
+    "E4": 1,
+    "S1": 2
+   },
+   "gateLines": {
+    "E4": [
+     "scripts/profile-bundle.mjs 940 lines"
+    ],
+    "S1": [
+     "scripts/profile-bundle.mjs → scripts/profile-bundle/profile-bundle.mjs (reached only by the bin scripts/profile-bundle.mjs)",
+     "scripts/foo-helper.mjs → scripts/profile-bundle/foo-helper.mjs (reached only by the bin scripts/profile-bundle.mjs)"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "G-crit:P29",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "demo/stories/dock/plant-1.vue",
+    "demo/stories/dock/plant-2.vue",
+    "demo/stories/dock/plant-3.vue",
+    "demo/stories/dock/plant-4.vue"
+   ],
+   "seal": {
+    "B6": 1
+   },
+   "sealLines": {
+    "B6": [
+     "demo/stories/dock/: 13 direct files > 12"
+    ]
+   },
+   "sealG": {
+    "B6": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "demo/stories/dock/: 13 direct files > 12"
+    ]
+   },
+   "gate": {
+    "E4": 1
+   },
+   "gateLines": {
+    "E4": [
+     "demo/stories/dock/ 13 direct files"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "G-crit:P30",
+   "clause": null,
+   "legal": false,
+   "what": "G-crit plant",
+   "files": [
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/components/dock/search/types.ts [type] [import-type] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/search/types.ts -> src/components [global] readers: src/components/badge, src/components/dock/search"
+    ]
+   },
+   "sealG": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealGLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/components/dock/search/types.ts [type] [import-type] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/search/types.ts -> src/components [global] readers: src/components/badge, src/components/dock/search"
+    ]
+   },
+   "gate": {
+    "E1": 1,
+    "E2": 1,
+    "B1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "global src/components/dock/search/types.ts → src/composables/types.ts (readers src/components/badge, src/components/dock/search)"
+    ],
+    "E2": [
+     "src/components/dock/search/types.ts → src/components/dock/types.ts"
+    ],
+    "B1": [
+     "src/components/badge/Badge.vue:2 → src/components/dock/search/types.ts [type] [import-type] (door src/components/dock/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1,
+    "E2": 1,
+    "B1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I01",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/composables/dom/useBadgePulse.ts",
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/composables/dom/useBadgePulse.ts [import] (door src/composables/dom/index.ts)"
+    ],
+    "B10": [
+     "src/composables/dom/useBadgePulse.ts -> src/components/badge [move] readers: src/components/badge"
+    ]
+   },
+   "sealG": {
+    "B10": 1
+   },
+   "sealGLines": {
+    "B10": [
+     "src/composables/dom/useBadgePulse.ts -> src/components/badge [move] readers: src/components/badge"
+    ]
+   },
+   "gate": {
+    "E1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "move src/composables/dom/useBadgePulse.ts → src/components/badge/useBadgePulse.ts (readers src/components/badge)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I02",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/slider/useBadgeTone.ts",
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B1": 1,
+    "B10": 1,
+    "B15": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/components/slider/useBadgeTone.ts [import] (door src/components/slider/index.ts)"
+    ],
+    "B10": [
+     "src/components/slider/useBadgeTone.ts -> src/components/badge [move] readers: src/components/badge"
+    ],
+    "B15": [
+     "src/components/slider/useBadgeTone.ts (named for the unit badge, lives in slider; not in the pin's reviewed names)"
+    ]
+   },
+   "sealG": {
+    "B1": 1,
+    "B10": 1,
+    "B15": 1
+   },
+   "sealGLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/components/slider/useBadgeTone.ts [import] (door src/components/slider/index.ts)"
+    ],
+    "B10": [
+     "src/components/slider/useBadgeTone.ts -> src/components/badge [move] readers: src/components/badge"
+    ],
+    "B15": [
+     "src/components/slider/useBadgeTone.ts (named for the unit badge, lives in slider; not in the pin's reviewed names)"
+    ]
+   },
+   "gate": {
+    "E1": 1,
+    "B1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "move src/components/slider/useBadgeTone.ts → src/components/badge/useBadgeTone.ts (readers src/components/badge)"
+    ],
+    "B1": [
+     "src/components/badge/Badge.vue:2 → src/components/slider/useBadgeTone.ts [import] (door src/components/slider/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1,
+    "B1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I03",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B0": 1
+   },
+   "sealLines": {
+    "B0": [
+     "src/components/badge/Badge.vue:2 unresolved [import] ../dock/composables/useDockHold"
+    ]
+   },
+   "sealG": {
+    "B0": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "src/components/badge/Badge.vue:2 unresolved [import] ../dock/composables/useDockHold"
+    ]
+   },
+   "gate": {
+    "E0": 1
+   },
+   "gateLines": {
+    "E0": [
+     "src/components/badge/Badge.vue:2 unresolved [import] ../dock/composables/useDockHold"
+    ]
+   },
+   "gateMerge": {
+    "E0": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I04",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B0": 1
+   },
+   "sealLines": {
+    "B0": [
+     "src/components/badge/Badge.vue:2 self-name-in-src [import] @mkbabb/glass-ui/button"
+    ]
+   },
+   "sealG": {
+    "B0": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "src/components/badge/Badge.vue:2 self-name-in-src [import] @mkbabb/glass-ui/button"
+    ]
+   },
+   "gate": {
+    "E0": 1
+   },
+   "gateLines": {
+    "E0": [
+     "src/components/badge/Badge.vue:2 self-name-in-src [import] @mkbabb/glass-ui/button"
+    ]
+   },
+   "gateMerge": {
+    "E0": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I05",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/styles.css",
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B3": 1,
+    "B10": 1
+   },
+   "sealLines": {
+    "B3": [
+     "src/components/badge/styles.css:1 -> src/components/card/scroll.css (css door src/components/card/index.css)"
+    ],
+    "B10": [
+     "src/components/card/scroll.css -> src/components [global] readers: src/components/badge, src/components/card"
+    ]
+   },
+   "sealG": {
+    "B3": 1,
+    "B10": 1
+   },
+   "sealGLines": {
+    "B3": [
+     "src/components/badge/styles.css:1 -> src/components/card/scroll.css (css door src/components/card/index.css)"
+    ],
+    "B10": [
+     "src/components/card/scroll.css -> src/components [global] readers: src/components/badge, src/components/card"
+    ]
+   },
+   "gate": {
+    "E1": 1,
+    "B1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "global src/components/card/scroll.css → src/styles/scroll.css (readers src/components/badge, src/components/card)"
+    ],
+    "B1": [
+     "src/components/badge/styles.css:1 → src/components/card/scroll.css [css-import] (door src/components/card/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1,
+    "B1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I06",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/part01.ts",
+    "src/components/badge/part02.ts",
+    "src/components/badge/part03.ts",
+    "src/components/badge/part04.ts",
+    "src/components/badge/part05.ts",
+    "src/components/badge/part06.ts",
+    "src/components/badge/part07.ts",
+    "src/components/badge/part08.ts",
+    "src/components/badge/part09.ts",
+    "src/components/badge/part10.ts",
+    "src/components/badge/part11.ts",
+    "src/components/badge/part12.ts",
+    "src/components/badge/part13.ts",
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B6": 1
+   },
+   "sealLines": {
+    "B6": [
+     "src/components/badge/: 16 direct files > 12"
+    ]
+   },
+   "sealG": {
+    "B6": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "src/components/badge/: 16 direct files > 12"
+    ]
+   },
+   "gate": {
+    "E3P": 13,
+    "E4": 1
+   },
+   "gateLines": {
+    "E3P": [
+     "src/components/badge/part01.ts (placeholder file name)",
+     "src/components/badge/part02.ts (placeholder file name)",
+     "src/components/badge/part03.ts (placeholder file name)"
+    ],
+    "E4": [
+     "src/components/badge/ 16 direct files"
+    ]
+   },
+   "gateMerge": {
+    "E3P": 13
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I07",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/badgeTable.ts",
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B6": 1
+   },
+   "sealLines": {
+    "B6": [
+     "src/components/badge/badgeTable.ts: 510 lines > 500"
+    ]
+   },
+   "sealG": {
+    "B6": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "src/components/badge/badgeTable.ts: 510 lines > 500"
+    ]
+   },
+   "gate": {
+    "E4": 1
+   },
+   "gateLines": {
+    "E4": [
+     "src/components/badge/badgeTable.ts 510 lines"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:I08",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "tests/badge-only.test.ts"
+   ],
+   "seal": {
+    "B16": 1
+   },
+   "sealLines": {
+    "B16": [
+     "tests/badge-only.test.ts (subject in src/components/badge: belongs in src/components/badge/__tests__/)"
+    ]
+   },
+   "sealG": {
+    "B16": 1
+   },
+   "sealGLines": {
+    "B16": [
+     "tests/badge-only.test.ts (subject in src/components/badge: belongs in src/components/badge/__tests__/)"
+    ]
+   },
+   "gate": {
+    "E7": 1
+   },
+   "gateLines": {
+    "E7": [
+     "tests/badge-only.test.ts → src/components/badge/__tests__/"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:I09",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/button/__tests__/badge.test.ts"
+   ],
+   "seal": {
+    "B16": 1
+   },
+   "sealLines": {
+    "B16": [
+     "src/components/button/__tests__/badge.test.ts (colocated in src/components/button; its subject's home is src/components/badge)"
+    ]
+   },
+   "sealG": {
+    "B16": 1
+   },
+   "sealGLines": {
+    "B16": [
+     "src/components/button/__tests__/badge.test.ts (colocated in src/components/button; its subject's home is src/components/badge)"
+    ]
+   },
+   "gate": {
+    "E7": 1
+   },
+   "gateLines": {
+    "E7": [
+     "src/components/button/__tests__/badge.test.ts → src/components/badge/__tests__/"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:I10",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/chip/index.ts"
+   ],
+   "seal": {
+    "B9": 2,
+    "B11": 1
+   },
+   "sealLines": {
+    "B9": [
+     "src/components/chip/index.ts:4 re-exports src/components/badge/index.ts (outside src/components/chip)",
+     "src/components/badge/Badge.vue#default on ./badge + ./chip"
+    ],
+    "B11": [
+     "src/components/chip/index.ts +Badge (not in the pin)"
+    ]
+   },
+   "sealG": {
+    "B9": 2,
+    "B11": 1
+   },
+   "sealGLines": {
+    "B9": [
+     "src/components/chip/index.ts:4 re-exports src/components/badge/index.ts (outside src/components/chip)",
+     "src/components/badge/Badge.vue#default on ./badge + ./chip"
+    ],
+    "B11": [
+     "src/components/chip/index.ts +Badge (not in the pin)"
+    ]
+   },
+   "gate": {
+    "E5": 1
+   },
+   "gateLines": {
+    "E5": [
+     "src/components/badge/Badge.vue#default on ./badge + ./chip (owner ./badge, L4.7)"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:I11",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/helpers/utils.ts",
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B7": 1,
+    "B15": 2
+   },
+   "sealLines": {
+    "B7": [
+     "src/components/badge/helpers/ (1 direct files, no door)"
+    ],
+    "B15": [
+     "src/components/badge/helpers (placeholder name)",
+     "src/components/badge/helpers/utils.ts (placeholder file name)"
+    ]
+   },
+   "sealG": {
+    "B15": 2,
+    "E3": 1
+   },
+   "sealGLines": {
+    "B15": [
+     "src/components/badge/helpers (placeholder name)",
+     "src/components/badge/helpers/utils.ts (placeholder file name)"
+    ],
+    "E3": [
+     "src/components/badge/helpers/ holds no root named helpers, no door and is no authored base or carve module"
+    ]
+   },
+   "gate": {
+    "E2": 1,
+    "E3": 1,
+    "E3N": 1,
+    "E3P": 2
+   },
+   "gateLines": {
+    "E2": [
+     "src/components/badge/helpers/utils.ts → src/components/badge/utils.ts"
+    ],
+    "E3": [
+     "src/components/badge/helpers/ holds no root named helpers, no door and is no authored base or carve module"
+    ],
+    "E3N": [
+     "module badge/helpers is not in the pin"
+    ],
+    "E3P": [
+     "src/components/badge/helpers/ (placeholder name)",
+     "src/components/badge/helpers/utils.ts (placeholder file name)"
+    ]
+   },
+   "gateMerge": {
+    "E2": 1,
+    "E3": 1,
+    "E3N": 1,
+    "E3P": 2
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I12",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B0": 1
+   },
+   "sealLines": {
+    "B0": [
+     "src/components/badge/Badge.vue:3 unresolved [dynamic] ./BadgeFancy.vue"
+    ]
+   },
+   "sealG": {
+    "B0": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "src/components/badge/Badge.vue:3 unresolved [dynamic] ./BadgeFancy.vue"
+    ]
+   },
+   "gate": {
+    "E0": 1
+   },
+   "gateLines": {
+    "E0": [
+     "src/components/badge/Badge.vue:3 unresolved [dynamic] ./BadgeFancy.vue"
+    ]
+   },
+   "gateMerge": {
+    "E0": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I13",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/index.ts"
+   ],
+   "seal": {
+    "B11": 1
+   },
+   "sealLines": {
+    "B11": [
+     "src/components/badge/index.ts +BadgeCompat (not in the pin)"
+    ]
+   },
+   "sealG": {
+    "B11": 1
+   },
+   "sealGLines": {
+    "B11": [
+     "src/components/badge/index.ts +BadgeCompat (not in the pin)"
+    ]
+   },
+   "gate": {
+    "A1": 1
+   },
+   "gateLines": {
+    "A1": [
+     "src/components/badge/index.ts publishes src/components/badge/Badge.vue#default as Badge, BadgeCompat"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:I14",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/skeleton/CardSkeleton.vue",
+    "src/components/card/Card.vue"
+   ],
+   "seal": {
+    "B1": 1,
+    "B10": 1,
+    "B15": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/card/Card.vue:2 -> src/components/skeleton/CardSkeleton.vue [import] (door src/components/skeleton/index.ts)"
+    ],
+    "B10": [
+     "src/components/skeleton/CardSkeleton.vue -> src/components/card [move] readers: src/components/card"
+    ],
+    "B15": [
+     "src/components/skeleton/CardSkeleton.vue (named for the unit card, lives in skeleton; not in the pin's reviewed names)"
+    ]
+   },
+   "sealG": {
+    "B1": 1,
+    "B10": 1,
+    "B15": 1
+   },
+   "sealGLines": {
+    "B1": [
+     "src/components/card/Card.vue:2 -> src/components/skeleton/CardSkeleton.vue [import] (door src/components/skeleton/index.ts)"
+    ],
+    "B10": [
+     "src/components/skeleton/CardSkeleton.vue -> src/components/card [move] readers: src/components/card"
+    ],
+    "B15": [
+     "src/components/skeleton/CardSkeleton.vue (named for the unit card, lives in skeleton; not in the pin's reviewed names)"
+    ]
+   },
+   "gate": {
+    "E1": 1,
+    "B1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "move src/components/skeleton/CardSkeleton.vue → src/components/card/CardSkeleton.vue (readers src/components/card)"
+    ],
+    "B1": [
+     "src/components/card/Card.vue:2 → src/components/skeleton/CardSkeleton.vue [import] (door src/components/skeleton/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1,
+    "B1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I15",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/composables/dom/useBreakpoint.ts"
+   ],
+   "seal": {
+    "B8": 1
+   },
+   "sealLines": {
+    "B8": [
+     "src/composables/dom/useBreakpoint.ts:1 -> src/components/button/index.ts [import] (kernel reads a unit)"
+    ]
+   },
+   "sealG": {
+    "B8": 1
+   },
+   "sealGLines": {
+    "B8": [
+     "src/composables/dom/useBreakpoint.ts:1 -> src/components/button/index.ts [import] (kernel reads a unit)"
+    ]
+   },
+   "gate": {
+    "B8": 1
+   },
+   "gateLines": {
+    "B8": [
+     "src/composables/dom/useBreakpoint.ts:1 → src/components/button/index.ts [import] (the kernel reads a unit)"
+    ]
+   },
+   "gateMerge": {
+    "B8": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I16",
+   "na": "n/a: src/styles/tokens.css is not in this tree"
+  },
+  {
+   "id": "Dp-crit:I17",
+   "na": "n/a: src/styles/glass.css is not in this tree"
+  },
+  {
+   "id": "Dp-crit:I18",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/skeleton/index.ts"
+   ],
+   "seal": {
+    "B11": 2,
+    "B14": 1
+   },
+   "sealLines": {
+    "B11": [
+     "src/components/skeleton/index.ts exports SKELETON_PLANT (no reader outside src/components/skeleton)",
+     "src/components/skeleton/index.ts +SKELETON_PLANT (not in the pin)"
+    ],
+    "B14": [
+     "src/components/skeleton/index.ts:2 holds 1 statement(s) that are not `export … from`, first FirstStatement"
+    ]
+   },
+   "sealG": {
+    "B11": 2,
+    "B14": 1
+   },
+   "sealGLines": {
+    "B11": [
+     "src/components/skeleton/index.ts exports SKELETON_PLANT (no reader outside src/components/skeleton)",
+     "src/components/skeleton/index.ts +SKELETON_PLANT (not in the pin)"
+    ],
+    "B14": [
+     "src/components/skeleton/index.ts:2 holds 1 statement(s) that are not `export … from`, first FirstStatement"
+    ]
+   },
+   "gate": {
+    "B14": 1
+   },
+   "gateLines": {
+    "B14": [
+     "src/components/skeleton/index.ts:2 holds 1 statement(s) that are not `export … from`"
+    ]
+   },
+   "gateMerge": {
+    "B14": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I19",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B4": 1
+   },
+   "sealLines": {
+    "B4": [
+     "cycle @src [index.ts components/badge] via src/index.ts -> src/components/badge/index.ts ; src/components/badge/Badge.vue -> src/index.ts"
+    ]
+   },
+   "sealG": {
+    "B4": 1
+   },
+   "sealGLines": {
+    "B4": [
+     "cycle @src [index.ts components/badge] via src/index.ts -> src/components/badge/index.ts ; src/components/badge/Badge.vue -> src/index.ts"
+    ]
+   },
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:I20",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/composables/dom/cycA.ts",
+    "src/composables/dom/cycB.ts",
+    "src/composables/dom/useBreakpoint.ts"
+   ],
+   "seal": {
+    "B6": 1
+   },
+   "sealLines": {
+    "B6": [
+     "src/composables/dom/: 13 direct files > 12"
+    ]
+   },
+   "sealG": {
+    "B6": 1
+   },
+   "sealGLines": {
+    "B6": [
+     "src/composables/dom/: 13 direct files > 12"
+    ]
+   },
+   "gate": {
+    "E4": 1
+   },
+   "gateLines": {
+    "E4": [
+     "src/composables/dom/ 13 direct files"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:I21",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/orphan.ts"
+   ],
+   "seal": {},
+   "sealLines": {},
+   "sealG": {},
+   "sealGLines": {},
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": false,
+    "sealG": false,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:I22",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "scripts/profile-bundle.mjs"
+   ],
+   "seal": {
+    "B0": 17,
+    "B6": 1
+   },
+   "sealLines": {
+    "B0": [
+     "scripts/profile-bundle.mjs:315 walk of src/ [path-literal]",
+     "scripts/profile-bundle.mjs:290 computed-path read indexPath [fs-read]",
+     "scripts/profile-bundle.mjs:294 computed-path read target [fs-read]"
+    ],
+    "B6": [
+     "scripts/profile-bundle.mjs: 939 lines > 500"
+    ]
+   },
+   "sealG": {
+    "B0": 17,
+    "B6": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "scripts/profile-bundle.mjs:315 walk of src/ [path-literal]",
+     "scripts/profile-bundle.mjs:290 computed-path read indexPath [fs-read]",
+     "scripts/profile-bundle.mjs:294 computed-path read target [fs-read]"
+    ],
+    "B6": [
+     "scripts/profile-bundle.mjs: 939 lines > 500"
+    ]
+   },
+   "gate": {
+    "E4": 1
+   },
+   "gateLines": {
+    "E4": [
+     "scripts/profile-bundle.mjs 939 lines"
+    ]
+   },
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:I23",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "scripts/plant-a.mjs",
+    "scripts/plant-b.mjs",
+    "package.json"
+   ],
+   "seal": {},
+   "sealLines": {},
+   "sealG": {},
+   "sealGLines": {},
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": false,
+    "sealG": false,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:I24",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/misc.ts",
+    "src/components/button/Button.vue"
+   ],
+   "seal": {
+    "B10": 1,
+    "B15": 1
+   },
+   "sealLines": {
+    "B10": [
+     "src/misc.ts -> src/components/button [move] readers: src/components/button"
+    ],
+    "B15": [
+     "src/misc.ts (placeholder file name)"
+    ]
+   },
+   "sealG": {
+    "B10": 1,
+    "B15": 1
+   },
+   "sealGLines": {
+    "B10": [
+     "src/misc.ts -> src/components/button [move] readers: src/components/button"
+    ],
+    "B15": [
+     "src/misc.ts (placeholder file name)"
+    ]
+   },
+   "gate": {
+    "E1": 1,
+    "E3P": 1
+   },
+   "gateLines": {
+    "E1": [
+     "move src/misc.ts → src/components/button/misc.ts (readers src/components/button)"
+    ],
+    "E3P": [
+     "src/misc.ts (placeholder file name)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1,
+    "E3P": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I25",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/card/CardHeaderIcon.vue",
+    "src/components/card/CardHeader.vue"
+   ],
+   "seal": {},
+   "sealLines": {},
+   "sealG": {},
+   "sealGLines": {},
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": false,
+    "sealG": false,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:I26",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/dock/composables/useBadgeX.ts",
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B1": 1,
+    "B10": 1,
+    "B15": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/components/dock/composables/useBadgeX.ts [import] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/composables/useBadgeX.ts -> src/components/badge [move] readers: src/components/badge"
+    ],
+    "B15": [
+     "src/components/dock/composables/useBadgeX.ts (named for the unit badge, lives in dock; not in the pin's reviewed names)"
+    ]
+   },
+   "sealG": {
+    "B1": 1,
+    "B10": 1,
+    "B15": 1
+   },
+   "sealGLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/components/dock/composables/useBadgeX.ts [import] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/composables/useBadgeX.ts -> src/components/badge [move] readers: src/components/badge"
+    ],
+    "B15": [
+     "src/components/dock/composables/useBadgeX.ts (named for the unit badge, lives in dock; not in the pin's reviewed names)"
+    ]
+   },
+   "gate": {
+    "E1": 1,
+    "B1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "move src/components/dock/composables/useBadgeX.ts → src/components/badge/useBadgeX.ts (readers src/components/badge)"
+    ],
+    "B1": [
+     "src/components/badge/Badge.vue:2 → src/components/dock/composables/useBadgeX.ts [import] (door src/components/dock/index.ts)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1,
+    "B1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I27",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "demo/stories/data/search.vue"
+   ],
+   "seal": {
+    "B0": 1,
+    "B2": 2,
+    "B6": 1
+   },
+   "sealLines": {
+    "B0": [
+     "demo/stories/data/search.vue:2 unresolved [import] @glass/components/dock/composables/useDockHold"
+    ],
+    "B2": [
+     "demo/stories/data/search.vue:16 -> src/components/dock/search/useFuzzySearch.ts [import]",
+     "demo/stories/data/search.vue:17 -> src/components/dock/search/types.ts [import-type]"
+    ],
+    "B6": [
+     "demo/stories/data/search.vue: 634 lines > 500"
+    ]
+   },
+   "sealG": {
+    "B0": 1,
+    "B2": 2,
+    "B6": 1
+   },
+   "sealGLines": {
+    "B0": [
+     "demo/stories/data/search.vue:2 unresolved [import] @glass/components/dock/composables/useDockHold"
+    ],
+    "B2": [
+     "demo/stories/data/search.vue:16 -> src/components/dock/search/useFuzzySearch.ts [import]",
+     "demo/stories/data/search.vue:17 -> src/components/dock/search/types.ts [import-type]"
+    ],
+    "B6": [
+     "demo/stories/data/search.vue: 634 lines > 500"
+    ]
+   },
+   "gate": {
+    "E0": 1,
+    "E4": 1,
+    "E6": 2
+   },
+   "gateLines": {
+    "E0": [
+     "demo/stories/data/search.vue:2 unresolved [import] @glass/components/dock/composables/useDockHold"
+    ],
+    "E4": [
+     "demo/stories/data/search.vue 634 lines"
+    ],
+    "E6": [
+     "demo/stories/data/search.vue:16 import → src/components/dock/search/useFuzzySearch.ts",
+     "demo/stories/data/search.vue:17 import-type → src/components/dock/search/types.ts"
+    ]
+   },
+   "gateMerge": {
+    "E0": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I28",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/composables/color/badgeConstants.ts",
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B1": 1,
+    "B10": 1
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/composables/color/badgeConstants.ts [import] (door src/composables/color/index.ts)"
+    ],
+    "B10": [
+     "src/composables/color/badgeConstants.ts -> src/components/badge [move] readers: src/components/badge"
+    ]
+   },
+   "sealG": {
+    "B10": 1
+   },
+   "sealGLines": {
+    "B10": [
+     "src/composables/color/badgeConstants.ts -> src/components/badge [move] readers: src/components/badge"
+    ]
+   },
+   "gate": {
+    "E1": 1
+   },
+   "gateLines": {
+    "E1": [
+     "move src/composables/color/badgeConstants.ts → src/components/badge/badgeConstants.ts (readers src/components/badge)"
+    ]
+   },
+   "gateMerge": {
+    "E1": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:I29",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/tests/badge.test.ts"
+   ],
+   "seal": {},
+   "sealLines": {},
+   "sealG": {},
+   "sealGLines": {},
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": false,
+    "sealG": false,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:I30",
+   "clause": null,
+   "legal": false,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "demo/composables/plantHelper.ts",
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {
+    "B8": 1
+   },
+   "sealLines": {
+    "B8": [
+     "src/components/badge/Badge.vue:2 -> demo/composables/plantHelper.ts [import] (the library reads the demo zone)"
+    ]
+   },
+   "sealG": {
+    "B8": 1
+   },
+   "sealGLines": {
+    "B8": [
+     "src/components/badge/Badge.vue:2 -> demo/composables/plantHelper.ts [import] (the library reads the demo zone)"
+    ]
+   },
+   "gate": {
+    "B8": 1
+   },
+   "gateLines": {
+    "B8": [
+     "src/components/badge/Badge.vue:2 → demo/composables/plantHelper.ts (the library reads demo)"
+    ]
+   },
+   "gateMerge": {
+    "B8": 1
+   },
+   "caught": {
+    "seal": true,
+    "sealG": true,
+    "gate": true,
+    "gateMerge": true
+   }
+  },
+  {
+   "id": "Dp-crit:L1",
+   "clause": null,
+   "legal": true,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/Badge.vue"
+   ],
+   "seal": {},
+   "sealLines": {},
+   "sealG": {},
+   "sealGLines": {},
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": false,
+    "sealG": false,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:L2",
+   "clause": null,
+   "legal": true,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/components/badge/__tests__/Badge.test.ts"
+   ],
+   "seal": {},
+   "sealLines": {},
+   "sealG": {},
+   "sealGLines": {},
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": false,
+    "sealG": false,
+    "gate": false,
+    "gateMerge": false
+   }
+  },
+  {
+   "id": "Dp-crit:L3",
+   "clause": null,
+   "legal": true,
+   "what": "Dp-crit intent plant",
+   "files": [
+    "src/composables/dom/useShared2.ts",
+    "src/components/badge/Badge.vue",
+    "src/components/button/Button.vue"
+   ],
+   "seal": {
+    "B1": 2
+   },
+   "sealLines": {
+    "B1": [
+     "src/components/badge/Badge.vue:2 -> src/composables/dom/useShared2.ts [import] (door src/composables/dom/index.ts)",
+     "src/components/button/Button.vue:2 -> src/composables/dom/useShared2.ts [import] (door src/composables/dom/index.ts)"
+    ]
+   },
+   "sealG": {},
+   "sealGLines": {},
+   "gate": {},
+   "gateLines": {},
+   "gateMerge": {},
+   "caught": {
+    "seal": true,
+    "sealG": false,
+    "gate": false,
+    "gateMerge": false
+   }
+  }
+ ]
+}

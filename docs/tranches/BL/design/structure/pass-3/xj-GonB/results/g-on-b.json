@@ -1,0 +1,134 @@
+{
+ "tree": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3/xj-GonB/wt",
+ "files": 12910,
+ "edges": 7617,
+ "ms": 1729,
+ "rewired": [
+  "eponym.mjs: ../lib/placement.mjs → scripts/structure/lib/placement.mjs",
+  "eponym.mjs: ../lib/tree.mjs → scripts/structure/lib/tree.mjs",
+  "stage1.mjs: ../lib/move.mjs → scripts/structure/lib/move.mjs",
+  "stage1.mjs: ../lib/placement.mjs → scripts/structure/lib/placement.mjs",
+  "stage1.mjs: ../lib/resolve.mjs → scripts/structure/lib/resolve.mjs",
+  "stage2.mjs: ../lib/graph.mjs → scripts/structure/lib/graph/graph.mjs",
+  "stage2.mjs: ../lib/placement.mjs → scripts/structure/lib/placement.mjs",
+  "units.mjs: ../lib/graph.mjs → scripts/structure/lib/graph/graph.mjs",
+  "units.mjs: ../lib/symbols.mjs → scripts/structure/lib/symbols.mjs",
+  "units.mjs: ../lib/placement.mjs → scripts/structure/lib/placement.mjs",
+  "zones.mjs: ../lib/placement.mjs → scripts/structure/lib/placement.mjs",
+  "zones.mjs: ../lib/tree.mjs → scripts/structure/lib/tree.mjs"
+ ],
+ "merge": {
+  "E0": 0,
+  "E1": 1,
+  "E1K": 0,
+  "E2": 42,
+  "E3": 0,
+  "E3N": 10,
+  "E3P": 0,
+  "B1": 0,
+  "B8": 0,
+  "B12": 1,
+  "B14": 0
+ },
+ "mergeTotal": 54,
+ "verdict": "RED (E1, E2, E3N, B12)",
+ "rest": {
+  "E4": 61,
+  "E5": 0,
+  "E6": 22,
+  "E7": 44,
+  "A1": 0,
+  "S1": 2,
+  "S2": 1
+ },
+ "info": {
+  "E1": {
+   "anchored": 47,
+   "fd2Held": [
+    "src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/frame/index.ts; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl/index.ts; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu",
+    "src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame/index.ts; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl/index.ts; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu/index.ts"
+   ],
+   "fd8Held": [
+    "src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts"
+   ]
+  },
+  "E2": {
+   "fd2Flattened": [],
+   "fd8Held": []
+  },
+  "S1": {
+   "bins": 17
+  }
+ },
+ "V": {
+  "E0": [],
+  "E1": [
+   "FD-8 held src/components/_shared/overlay/isTeleportedTarget.ts → src/components/dock/isTeleportedTarget.ts (demo/demo.css @source src/components/_shared/**/*.ts)"
+  ],
+  "E1K": [],
+  "E2": [
+   "src/components/aurora/config/color.ts → src/components/aurora/color.ts",
+   "src/components/aurora/config/presets.ts → src/components/aurora/presets.ts",
+   "src/components/aurora/config/renderMode.ts → src/components/aurora/renderMode.ts",
+   "src/components/aurora/runtime/frame/auroraImageSource.ts → src/components/aurora/runtime/auroraImageSource.ts",
+   "src/components/aurora/runtime/frame/frameLoop.ts → src/components/aurora/runtime/frameLoop.ts",
+   "src/components/aurora/runtime/frame/textureUpload.ts → src/components/aurora/runtime/textureUpload.ts",
+   "src/components/aurora/runtime/frame/uniformBridge.ts → src/components/aurora/runtime/uniformBridge.ts",
+   "src/components/blob/mood/constants.ts → src/components/blob/constants.ts",
+   "src/components/blob/renderer/surface/resolveBlobSurface.ts → src/components/blob/renderer/resolveBlobSurface.ts",
+   "src/components/fourier-field/constants/constants.ts → src/components/fourier-field/constants.ts",
+   "src/components/fourier-field/renderer/mint.ts → src/components/fourier-field/mint.ts",
+   "src/components/menu/context/context.ts → src/components/menu/context.ts",
+   "src/components/sheet/SheetContent.vue → src/components/sheet/detents/SheetContent.vue",
+   "src/components/sortable-list/resolve/resolve.ts → src/components/sortable-list/resolve.ts",
+   "src/components/toast/ToastClose.vue → src/components/toast/toaster/ToastClose.vue",
+   "src/components/toast/ToastDescription.vue → src/components/toast/toaster/ToastDescription.vue",
+   "src/components/toast/ToastTitle.vue → src/components/toast/toaster/ToastTitle.vue",
+   "src/components/toast/Toaster.vue → src/components/toast/toaster/Toaster.vue",
+   "src/components/toast/use-toast.ts → src/components/toast/toaster/use-toast.ts",
+   "NEEDS-NAME src/components/aurora/config/index.ts → src/components/aurora/index.ts",
+   "NEEDS-NAME src/components/aurora/runtime/frame/index.ts → src/components/aurora/index.ts",
+   "NEEDS-NAME src/components/aurora/runtime/index.ts → src/components/aurora/index.ts",
+   "NEEDS-NAME src/components/aurora/runtime/webgl/index.ts → src/components/aurora/index.ts",
+   "NEEDS-NAME src/components/aurora/runtime/webgl/palette/index.ts → src/components/aurora/index.ts",
+   "NEEDS-NAME src/components/aurora/runtime/webgpu/index.ts → src/components/aurora/index.ts",
+   "NEEDS-NAME src/components/blob/mood/index.ts → src/components/blob/index.ts",
+   "NEEDS-NAME src/components/blob/renderer/index.ts → src/components/blob/index.ts",
+   "NEEDS-NAME src/components/blob/renderer/surface/index.ts → src/components/blob/index.ts",
+   "NEEDS-NAME src/components/blob/renderer/webgl/index.ts → src/components/blob/index.ts",
+   "NEEDS-NAME src/components/blob/renderer/webgpu/index.ts → src/components/blob/index.ts",
+   "NEEDS-NAME src/components/dock/legibility/index.ts → src/components/dock/index.ts",
+   "NEEDS-NAME src/components/dock/search/index.ts → src/components/dock/index.ts",
+   "NEEDS-NAME src/components/fourier-field/constants/index.ts → src/components/fourier-field/index.ts",
+   "NEEDS-NAME src/components/fourier-field/renderer/index.ts → src/components/fourier-field/index.ts",
+   "NEEDS-NAME src/components/menu/context/index.ts → src/components/menu/index.ts",
+   "NEEDS-NAME src/components/menu/items/index.ts → src/components/menu/index.ts",
+   "NEEDS-NAME src/components/menu/sub/index.ts → src/components/menu/index.ts",
+   "NEEDS-NAME src/components/sheet/detents/index.ts → src/components/sheet/index.ts",
+   "NEEDS-NAME src/components/sortable-list/drag/index.ts → src/components/sortable-list/index.ts",
+   "NEEDS-NAME src/components/sortable-list/resolve/index.ts → src/components/sortable-list/index.ts",
+   "NEEDS-NAME src/components/tabs/segmented-tabs/index.ts → src/components/tabs/index.ts",
+   "NEEDS-NAME base module src/components/sheet: a base module takes motion.ts"
+  ],
+  "E3": [],
+  "E3N": [
+   "module dock/controls is not in the pin",
+   "module fourier-field/constants is not in the pin",
+   "module menu/context is not in the pin",
+   "module sortable-list/resolve is not in the pin",
+   "pinned module dock/styles/controls is gone",
+   "pinned module fourier-field/register is gone",
+   "pinned module sortable-list/drop is gone",
+   "pinned module toast/toaster is gone",
+   "bases.fourier-field.. = register: src/components/fourier-field/register/ does not exist",
+   "bases.sortable-list.. = drop: src/components/sortable-list/drop/ does not exist"
+  ],
+  "E3P": [],
+  "B1": [],
+  "B8": [],
+  "B12": [
+   "scripts/minify/index.ts:3 re-exports scripts/minify/minify-css.ts (relay)"
+  ],
+  "B14": []
+ }
+}
