@@ -1,0 +1,2913 @@
+diff --git a/demo/chassis/hero/StoryHero.vue b/demo/chassis/hero/StoryHero.vue
+index 8eab1209..6fe3cfec 100644
+--- a/demo/chassis/hero/StoryHero.vue
++++ b/demo/chassis/hero/StoryHero.vue
+@@ -144,7 +144,6 @@ function drawFocal(
+         <div
+             v-if="hasBackdrop"
+             :data-live="liveBackdrop ? 'true' : null"
+-            :style="liveBackdrop ? { '--glass-backdrop': 'light' } : undefined"
+             :class="cn('story-hero-bleed-content', cardClass)"
+         >
+             <StoryHeader
+diff --git a/demo/stories/dock/_frame/DockStage.vue b/demo/stories/dock/_frame/DockStage.vue
+index b42fe1a6..dd1e4990 100644
+--- a/demo/stories/dock/_frame/DockStage.vue
++++ b/demo/stories/dock/_frame/DockStage.vue
+@@ -17,12 +17,8 @@
+ // slot (the `.dock-stage-tile` class) so the dock floats DIRECTLY over the shared
+ // field with no opaque card between. The optional `paused` input parks this same
+ // route field for the pause-toggle specimen; it never mounts a second renderer.
+-import { computed, useTemplateRef, watchEffect } from "vue";
++import { useTemplateRef, watchEffect } from "vue";
+ import { Aurora, type AuroraConfig } from "@glass/components/aurora";
+-import {
+-    useGlassBackdropLuminance,
+-    GLASS_BACKDROP_SHARED_ATTR,
+-} from "@glass/composables/glass/useGlassBackdropLuminance";
+ import { heroAuroraConfig } from "../../../chassis/hero/aurora-hero";
+ 
+ const props = withDefaults(
+@@ -50,48 +46,21 @@ const props = withDefaults(
+     },
+ );
+ 
+-// The shared aurora <canvas>, surfaced through the scoped slot.
+-// SUBSUMED the per-dock binding: the stage now runs the ONE shared observer below and the
+-// staged docks INHERIT `--glass-backdrop-luma` (they stand down their own readback), so a
+-// dock no longer needs the canvas. The scoped `backgroundCanvas` is RETAINED for the
+-// sibling dock stories (layers, sections, cta-receive, dock-search) that still bind
+-// `:background-canvas` — a now-harmless no-op there (those docks stand down under the same
+-// shared marker). <Aurora> exposes its `canvasRef`.
++// The staged docks read the field the aurora PUBLISHES (its WebGPU arm reduces every
++// frame it draws, composables/glass/field); nothing here samples it.
+ const auroraRef = useTemplateRef<{
+     canvasRef: HTMLCanvasElement | null;
+     pause: () => void;
+     resume: () => void;
+ }>("auroraRef");
+-const backgroundCanvas = computed<HTMLCanvasElement | null>(
+-    () => auroraRef.value?.canvasRef ?? null,
+-);
+ watchEffect(() =>
+     props.paused ? auroraRef.value?.pause() : auroraRef.value?.resume(),
+ );
+ 
+-// One shared backdrop-luminance observer serves the route. The luminance signal belongs
+-// to the shared field, not to an individual dock
+-// one: N docks over the SAME aurora read the SAME luma (+ ambient hue). This ONE observer
+-// samples the field (drawImage + getImageData, ≤ 4 Hz, 32×32) at the `.dock-stage` scope
+-// and writes `--glass-backdrop-luma` and `--glass-backdrop` there;
+-// every staged GlassDock INHERITS them via the registered inheriting @property cascade and
+-// STANDS DOWN its own per-dock observer (the `shared: true` observer stamps the
+-// `data-glass-backdrop-shared` marker the docks' `.closest` coverage-check reads). 12
+-// per-dock getImageData readbacks → 1 per route. The stage template ALSO carries the
+-// static marker so the stand-down is race-free from frame 0.
+-const stageEl = useTemplateRef<HTMLElement>("stageEl");
+-useGlassBackdropLuminance(stageEl, {
+-    backgroundCanvas: () => auroraRef.value?.canvasRef ?? null,
+-    shared: true,
+-});
+ </script>
+ 
+ <template>
+-    <div
+-        ref="stageEl"
+-        class="dock-stage"
+-            :[GLASS_BACKDROP_SHARED_ATTR]="''"
+-    >
++    <div class="dock-stage">
+         <!-- The single shared field behind the whole demo column. Its backing store
+              is clamped to the viewport:
+              absolute track spans the full scroll column, but the <Aurora> host inside
+@@ -111,33 +80,19 @@ useGlassBackdropLuminance(stageEl, {
+              content-visibility seam parks the rAF once the field leaves the viewport).
+              aria-hidden — purely decorative staging.
+ 
+-             `preserveDrawingBuffer: true` keeps the sampled field readable. A live
+-             WebGL canvas clears its drawing buffer after the
+-             browser composites, so the dock's `useGlassBackdropLuminance` observer
+-             reads BLACK (luma 0 / hue transparent) off `drawImage(auroraCanvas)` —
+-             a false black sample. Preserving the buffer keeps the last rendered warm
+-             frame readable, so the sampled luma + ambient hue are real (the shared
+-             observer reads this same field). The `data-glass-field-canvas` marker also
+-             lets a non-dock content surface over the stage auto-discover this field
+-             (the SHELL_FIELD_CANVAS_SELECTOR reconcile). The render is UNCHANGED —
+-             preservation only affects readback. -->
++             The field PUBLISHES itself: no readback, so no preserved buffer. -->
+         <div class="dock-stage-field-track" aria-hidden="true">
+             <Aurora
+                 ref="auroraRef"
+                 :config="config"
+                 :opacity-ceiling="opacityCeiling"
+-                :runtime-options="{ preserveDrawingBuffer: true }"
+-                data-glass-field-canvas
+                 class="dock-stage-field"
+                 aria-hidden="true"
+             />
+         </div>
+-        <!-- The dock demos flow over the shared field. The scoped slot surfaces the
+-             shared aurora <canvas> so each staged dock threads it into its luminance
+-             observer (`:background-canvas="backgroundCanvas"`) — closing the observer
+-             loop over the live field. -->
++        <!-- The dock demos flow over the shared field. -->
+         <div class="dock-stage-column">
+-            <slot :background-canvas="backgroundCanvas" />
++            <slot />
+         </div>
+     </div>
+ </template>
+diff --git a/demo/stories/dock/cta-receive.vue b/demo/stories/dock/cta-receive.vue
+index 5f760601..422f66a9 100644
+--- a/demo/stories/dock/cta-receive.vue
++++ b/demo/stories/dock/cta-receive.vue
+@@ -79,7 +79,7 @@ function revealNow() {
+         <!-- the CTA-receive demo sits over the ONE shared offscreen-paused
+              aurora field (DockStage); the dock + the CTA float over the live field so
+              the morph reads as glass-into-glass. NO net-new GL context (one-GL-per-route). -->
+-        <DockStage #default="{ backgroundCanvas }">
++        <DockStage>
+             <StorySection heading="External CTA morphs into the dock" gap="lg">
+                 <p class="text-small text-muted-foreground max-w-prose">
+                     Add to dock flies the external action into its reserved star seat,
+@@ -131,7 +131,6 @@ function revealNow() {
+ 
+                     <!-- The dock with the target control. -->
+                     <GlassDock
+-                        :background-canvas="backgroundCanvas"
+                         :collapse="false"
+                         class="relative z-10"
+                     >
+diff --git a/demo/stories/dock/dock-search.vue b/demo/stories/dock/dock-search.vue
+index bde24a1a..0368f342 100644
+--- a/demo/stories/dock/dock-search.vue
++++ b/demo/stories/dock/dock-search.vue
+@@ -157,7 +157,7 @@ function onKeydown(e: KeyboardEvent) {
+ 
+ <template>
+     <StoryPage>
+-        <DockStage #default="{ backgroundCanvas }">
++        <DockStage>
+             <StorySection heading="The dock IS a search bar" gap="lg">
+                 <p class="text-small text-muted-foreground max-w-prose">
+                     Tap the collapsed dock pill — it MORPHS continuously (not a hard
+@@ -179,7 +179,6 @@ function onKeydown(e: KeyboardEvent) {
+                     <GlassDock
+                         ref="dockEl"
+                         :collapse="false"
+-                        :background-canvas="backgroundCanvas"
+                         class="dock-search-host"
+                     >
+                         <!-- The collapsed pill — a search affordance (tap morphs it into
+diff --git a/demo/stories/dock/layers.vue b/demo/stories/dock/layers.vue
+index 9a2c265e..5b4affcc 100644
+--- a/demo/stories/dock/layers.vue
++++ b/demo/stories/dock/layers.vue
+@@ -72,7 +72,7 @@ function back() {
+              shared, offscreen-paused aurora field (DockStage); the flat bg-card/40
+              panels become transparent `.dock-stage-tile` framed slots so the
+              DockLayerGroup glass floats over the live field. -->
+-        <DockStage #default="{ backgroundCanvas }">
++        <DockStage>
+         <StorySection heading="Drill-in navigation" gap="md">
+             <p class="text-small text-muted-foreground">
+                 Root pane shows three entry points. Clicking one swaps the pane; the dock resizes in place.
+@@ -81,7 +81,7 @@ function back() {
+                 active layer = {{ activeLayer }}
+             </p>
+             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
+-                <GlassDock :background-canvas="backgroundCanvas" :collapse="false" fit-content>
++                <GlassDock :collapse="false" fit-content>
+                     <DockLayerGroup
+                         v-model:active="activeLayer"
+                         :show-switcher="false"
+@@ -136,7 +136,7 @@ function back() {
+                 navigation remain available at every motion setting.
+             </p>
+             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
+-                <GlassDock :background-canvas="backgroundCanvas" :collapse="false" fit-content>
++                <GlassDock :collapse="false" fit-content>
+                     <DockLayerGroup
+                         v-model:active="switcherLayer"
+                         motion="full"
+@@ -164,7 +164,7 @@ function back() {
+                 inherits the dock's vertical orientation without a duplicate prop.
+             </p>
+             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
+-                <GlassDock :background-canvas="backgroundCanvas"
++                <GlassDock
+                     orientation="vertical"
+                     :collapse="false"
+                     shape="rounded"
+@@ -206,7 +206,7 @@ function back() {
+                 channel double-drives the other.
+             </p>
+             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
+-                <GlassDock :background-canvas="backgroundCanvas" fit-content data-testid="dock-nested-collapsible">
++                <GlassDock fit-content data-testid="dock-nested-collapsible">
+                     <DockLayerGroup
+                         v-model:active="nestedLayer"
+                         data-testid="dock-nested-collapsible-group"
+@@ -239,7 +239,7 @@ function back() {
+                 cleanly without fighting <code class="rounded bg-muted px-1">max-height</code>.
+             </p>
+             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
+-                <GlassDock :background-canvas="backgroundCanvas"
++                <GlassDock
+                     orientation="vertical"
+                     :collapse="false"
+                     shape="rounded"
+@@ -299,7 +299,7 @@ function back() {
+                 </button>
+             </div>
+             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
+-                <GlassDock :background-canvas="backgroundCanvas" :collapse="false" fit-content>
++                <GlassDock :collapse="false" fit-content>
+                     <DockCrossfade :active="controlled" data-testid="dock-crossfade-controlled">
+                         <DockLayer
+                             v-for="p in controlledPanes"
+diff --git a/demo/stories/dock/overview.vue b/demo/stories/dock/overview.vue
+index c8db08f0..174e0c1c 100644
+--- a/demo/stories/dock/overview.vue
++++ b/demo/stories/dock/overview.vue
+@@ -110,11 +110,8 @@ function togglePlay() {
+              slot so the dock floats directly over the live field.
+              ONE GL context for the band's decorative staging — the former per-demo
+              fields and the pause-toggle's duplicate renderer fold into the shared field. -->
+-        <!-- the 10 per-dock `:background-canvas` bindings COLLAPSE
+-             onto DockStage's ONE shared per-route backdrop-luminance observer: every staged
+-             dock inherits `--glass-backdrop-luma` / `--glass-backdrop`
+-             from the stage scope (the registered inheriting @property cascade) + stands down
+-             its own getImageData readback (12 → 1). -->
++        <!-- Every staged dock registers with the field bus and reads what the shared
++             aurora publishes: no readback anywhere on the route. -->
+         <DockStage :paused="bgPaused">
+         <StorySection heading="Collapsible (hover to expand)" gap="md">
+             <p class="text-small text-muted-foreground">
+diff --git a/demo/stories/dock/sections.vue b/demo/stories/dock/sections.vue
+index 14f4c8d5..c707d280 100644
+--- a/demo/stories/dock/sections.vue
++++ b/demo/stories/dock/sections.vue
+@@ -18,7 +18,7 @@ import DockStage from "./_frame/DockStage.vue";
+ 
+ <template>
+     <StoryPage>
+-        <DockStage #default="{ backgroundCanvas }">
++        <DockStage>
+             <StorySection heading="Semantic groups and separators" gap="md">
+                 <p class="text-small text-muted-foreground">
+                     Ordinary groups and <code class="rounded bg-muted px-1">DockSeparator</code>
+@@ -27,7 +27,7 @@ import DockStage from "./_frame/DockStage.vue";
+                 <div
+                     class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
+                 >
+-                    <GlassDock :background-canvas="backgroundCanvas" :collapse="false" class="relative z-10">
++                    <GlassDock :collapse="false" class="relative z-10">
+                         <div class="contents" role="group" aria-label="Home">
+                             <DockControl aria-label="Home"><Home /></DockControl>
+                         </div>
+@@ -67,7 +67,6 @@ import DockStage from "./_frame/DockStage.vue";
+                     class="dock-stage-tile flex flex-wrap items-start justify-center gap-8 rounded-[var(--radius-card)] border border-border/30 p-8"
+                 >
+                     <GlassDock
+-                        :background-canvas="backgroundCanvas"
+                         :collapse="false"
+                         class="relative z-10"
+                         data-testid="dock-hairline-row"
+@@ -84,7 +83,6 @@ import DockStage from "./_frame/DockStage.vue";
+                     </GlassDock>
+ 
+                     <GlassDock
+-                        :background-canvas="backgroundCanvas"
+                         orientation="vertical"
+                         :collapse="false"
+                         class="relative z-10"
+diff --git a/demo/stories/substrates/glass-material.vue b/demo/stories/substrates/glass-material.vue
+index 418acd86..3427bbc3 100644
+--- a/demo/stories/substrates/glass-material.vue
++++ b/demo/stories/substrates/glass-material.vue
+@@ -13,26 +13,19 @@
+ // the `color-mix(in oklab, …)` actually bites, the squircle reads on the
+ // dialog/sheet register (cards stay round by policy), and the deliberately-subtle
+ // rim is shown against an on/off contrast device.
+-import { computed, onMounted, onScopeDispose, ref, useTemplateRef } from "vue";
++import { onMounted, onScopeDispose, ref, useTemplateRef } from "vue";
+ import StoryPage from "../../chassis/page/StoryPage.vue";
+ import StorySection from "../../chassis/section/StorySection.vue";
+ import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
+ import {
+     useSpecularTracking,
+     Button,
++    Card,
+     Alert,
+     AlertTitle,
+     AlertDescription,
+ } from "@glass/index";
+-//  Arm 2 — the DEMO exerciser for the sampled-luminance observer
+-// (path B: demo-private — the composable is OFF the public glass barrel, imported
+-// directly here as the content-glass DEMO mount that exercises the live sampling path;
+-// the binary consumer is the dock). It writes `--glass-backdrop-luma` + the bucket on a
+-// glass-card over the page's live Aurora substrate so the dynamic darken TRACKS the
+-// painted backdrop (the iOS-27 register). A demo mount is NOT a binary consumer (the
+-// own-story exclusion: it exercises the composable, it does not by
+-// itself clear the public ≥2-binary bar.
+-import { useGlassBackdropLuminance } from "@glass/composables/glass/useGlassBackdropLuminance";
++import { declareField } from "@glass/composables/glass";
+ import {
+     Info,
+     CircleAlert,
+@@ -81,16 +74,18 @@ const tintSamples = [
+ ] as const;
+ const tint = ref<(typeof tintSamples)[number]>(tintSamples[0]);
+ 
+-// A local Canvas2D field makes the live path deterministic: the card samples exactly
+-// this source, alternating dark and light pixels at a pace the 4 Hz sampler can show.
+-const liveCardEl = useTemplateRef<HTMLElement>("liveCardEl");
++// THE FIELD SIGNAL, declared. A local Canvas2D field alternates a dark and a light
++// ground; `declareField(canvas)` hands the canvas itself to the library, which reduces
++// it on the GPU every frame and publishes its tiles. The Card over it is a registered
++// surface, so it solves its own α: thicker over the light phase, never thinner than its
++// floor, and at the any-input bound wherever nothing publishes (no WebGPU, a tainted
++// source). The readout is the bus's own write on the card, nothing measured here.
+ const liveCanvas = useTemplateRef<HTMLCanvasElement>("liveCanvas");
+-const { sample: backdropSample } = useGlassBackdropLuminance(liveCardEl, {
+-    live: true,
+-    backgroundCanvas: () => liveCanvas.value,
+-});
+-const sampleNow = ref(Date.now());
++const liveCard = useTemplateRef<{ $el: HTMLElement }>("liveCard");
++const fieldState = ref<{ state: string; lo: string; hi: string }>({ state: "pending", lo: "—", hi: "—" });
+ let liveFieldTimer: number | undefined;
++let readout = 0;
++let withdraw: (() => void) | undefined;
+ 
+ onMounted(() => {
+     let light = false;
+@@ -103,19 +98,29 @@ onMounted(() => {
+         context.fillRect(0, 0, canvas.width, canvas.height);
+     };
+     paint();
+-    liveFieldTimer = window.setInterval(() => {
+-        sampleNow.value = Date.now();
+-        paint();
+-    }, 700);
++    liveFieldTimer = window.setInterval(paint, 1400);
++    if (liveCanvas.value)
++        declareField(liveCanvas.value).then(
++            (off) => (withdraw = off),
++            (err: Error) => (fieldState.value = { state: `unpublishable: ${err.message}`, lo: "—", hi: "—" }),
++        );
++    const read = () => {
++        const el = liveCard.value?.$el;
++        if (el && withdraw)
++            fieldState.value = {
++                state: el.dataset.field ?? "unpublished (the bound)",
++                lo: el.style.getPropertyValue("--glass-backdrop-luma-lo") || "—",
++                hi: el.style.getPropertyValue("--glass-backdrop-luma-hi") || "—",
++            };
++        readout = requestAnimationFrame(read);
++    };
++    readout = requestAnimationFrame(read);
+ });
+ 
+ onScopeDispose(() => {
+     if (liveFieldTimer !== undefined) window.clearInterval(liveFieldTimer);
+-});
+-
+-const sampleAge = computed(() => {
+-    const current = backdropSample.value;
+-    return current.state === "pending" ? null : sampleNow.value - current.sampledAt;
++    cancelAnimationFrame(readout);
++    withdraw?.();
+ });
+ 
+ // the THIRD disjoint glass axis: the per-INSTANCE chromatic-rim
+@@ -172,49 +177,29 @@ const ACCENT_STRENGTH = "48%";
+         </StorySection>
+ 
+         <StorySection
+-            label="dynamic backdrop luminance — the iOS-27 sampled observer"
+-            blurb="This card samples its named live canvas on a throttled ≤4 Hz loop. The readout exposes source, state, age, luminance, and target coordinates; a live request with no readable canvas is explicitly unavailable rather than silently using a static/default value."
++            label="the field signal — a declared medium publishes, the card solves"
++            blurb="The canvas is declared with declareField: the library reduces it on the GPU and publishes its tiles. The card over it is a registered surface and solves its own veil against them — thicker over the light phase, never thinner than its floor. Where nothing publishes it holds the any-input bound."
+         >
+             <ShowcaseFrame pad="lg" tier="field">
+                 <div class="flex flex-wrap items-center gap-6">
+-                    <div
+-                        class="relative h-28 w-56 overflow-hidden rounded-card"
+-                    >
++                    <div class="relative grid h-56 w-96 place-items-center overflow-hidden rounded-card">
+                         <canvas
+                             ref="liveCanvas"
+-                            width="224"
+-                            height="112"
++                            width="384"
++                            height="224"
+                             class="pointer-events-none absolute inset-0 h-full w-full"
+                             data-material-live-canvas
+                             aria-hidden="true"
+                         />
+-                        <div
+-                            ref="liveCardEl"
++                        <Card
++                            ref="liveCard"
+                             data-glass-sample="live"
+-                            class="glass-card relative flex size-full flex-col items-center justify-center gap-1 rounded-card px-3 text-center text-small font-medium"
++                            class="relative flex h-28 w-56 flex-col items-center justify-center gap-1 px-3 text-center text-small font-medium"
+                         >
+-                            <span>live canvas sample</span>
+-                            <span class="text-mono-small text-muted-foreground">
+-                                {{ backdropSample.state }} ·
+-                                {{ backdropSample.source }} ·
+-                                {{ sampleAge === null ? "—" : `${sampleAge}ms` }}
+-                            </span>
+-                            <span
+-                                v-if="backdropSample.state === 'sampled'"
+-                                class="text-mono-small text-muted-foreground"
+-                            >
+-                                {{ backdropSample.luma.toFixed(3) }} ·
+-                                {{ Math.round(backdropSample.targetRect.x) }},{{
+-                                    Math.round(backdropSample.targetRect.y)
+-                                }}
+-                            </span>
+-                            <span
+-                                v-else-if="backdropSample.state === 'unavailable'"
+-                                class="text-mono-small text-muted-foreground"
+-                            >
+-                                {{ backdropSample.reason }}
+-                            </span>
+-                        </div>
++                            <span>declared canvas field</span>
++                            <span class="text-mono-small text-muted-foreground">{{ fieldState.state }}</span>
++                            <span class="text-mono-small text-muted-foreground">lo {{ fieldState.lo }} · hi {{ fieldState.hi }}</span>
++                        </Card>
+                     </div>
+                 </div>
+             </ShowcaseFrame>
+diff --git a/docs/consumer-evidence/use-glass-backdrop-luminance.md b/docs/consumer-evidence/use-glass-backdrop-luminance.md
+deleted file mode 100644
+index f5fc0dac..00000000
+--- a/docs/consumer-evidence/use-glass-backdrop-luminance.md
++++ /dev/null
+@@ -1,35 +0,0 @@
+-# useGlassBackdropLuminance
+-
+-## Artefact path
+-
+-`src/composables/glass/useGlassBackdropLuminance.ts` (DEMO-PRIVATE — NOT exported from the `src/composables/glass/index.ts` barrel; reached only by a direct relative import).
+-
+-## Disposition: path B (demo-private + booked trigger)
+-
+-AZ.W-ADAPTIVE-AUTO Completion criterion clause 2 offers two no-overfitting paths for the sampled-luminance observer:
+-
+-- **Path A (public barrel export)** — ships ONLY if ≥ 2 **BINARY** consumers exist, where the dock wire-point is consumer #1 and a SECOND BINARY consumer (another library/internal mount, NOT a demo story) is #2. A demo mount is NOT binary (the `proof:component-orphan` own-story exclusion, W-PRUNE2 E4-3, applies to the sibling `useGlassRenderer` cluster).
+-- **Path B (demo-private, RECOMMENDED at AZ)** — the composable stays OFF the glass barrel, wired ON for the dock internally + exercised by a content-glass DEMO mount, with this evidence doc naming the booked 2nd-binary-consumer trigger.
+-
+-At HEAD the dock is the ONLY binary consumer, so a public barrel seat without a 2nd binary consumer is the substrate-without-consumer trap (L invariant 8). **The chosen path is B.**
+-
+-## Current consumers
+-
+-**Binary consumer #1 (library source)**: `src/components/custom/dock/GlassDock.vue` — wires `useGlassBackdropLuminance(dockEl, …)` ON by DEFAULT (H3 arm a), gated by the `autoLuminance` prop (default `true`). The dock writes `--glass-backdrop-luma` + the `--glass-backdrop: light|dark` bucket on its own root, dynamically tracking the painted backdrop.
+-**Proof**: `rg -n 'useGlassBackdropLuminance' src/components/custom/dock/GlassDock.vue`
+-
+-**Demo exerciser (NOT binary)**: `demo/stories/substrates/glass-material.vue` — mounts a `glass-card[data-glass-sample="live"]` over the page's Aurora substrate and surfaces the reactive `luma`/`bucket` readout. This exercises the LIVE sampling path (the `backgroundCanvas` downsample + the throttled re-sample loop) for visual verification. Per W-PRUNE2 E4-3 the demo mount is NOT a binary consumer — it does not by itself clear the public ≥ 2-binary bar.
+-**Proof**: `rg -n 'useGlassBackdropLuminance' demo/stories/substrates/glass-material.vue`
+-
+-## Booked 2nd-binary-consumer trigger
+-
+-The composable PROMOTES to a public glass-barrel export (path A) the moment a SECOND BINARY consumer materializes. The booked trigger is **either** of:
+-
+-1. **A content-glass library surface adopts the dynamic observer** — e.g. a `<Card>` / `Section` / a sheet/panel that, like the dock, floats over an arbitrary (possibly live/animated) consumer backdrop and needs the sampled darken rather than the static declarative bucket. The first such library mount is binary consumer #2 → barrel-export at that wave.
+-2. **A downstream binary consumer (speedtest / fourier / words) wires it** on a glass surface over its own animated substrate (an aurora/blob/canvas field), recorded here with its source path + proof grep (the same evidence discipline E4-3/E4-9 use).
+-
+-Until then the declarative bucket + the Arm-1 unconditional self-engage are the DEFAULT legibility path on every glass surface (the floor + the override); the sampled observer is the dock-only dynamic REFINEMENT.
+-
+-## Re-audit proof
+-
+-This document satisfies the no-overfitting bar for `useGlassBackdropLuminance` only while the dock wire-point proof grep still finds the binary consumer. If `rg -n 'useGlassBackdropLuminance' src/components/custom/dock/GlassDock.vue` fails, the composable is a library-orphan and must retire (or the wire-point is restored). A barrel export added WITHOUT a recorded 2nd binary consumer here REDs `proof:adaptive-observer`.
+diff --git a/src/components/aurora/composables/wgpuSetup.ts b/src/components/aurora/composables/wgpuSetup.ts
+index 9b0c07e1..9c7ea4c4 100644
+--- a/src/components/aurora/composables/wgpuSetup.ts
++++ b/src/components/aurora/composables/wgpuSetup.ts
+@@ -41,6 +41,7 @@ import {
+ } from "./textureUpload";
+ import { isAuroraDriftLive, type AuroraConfig } from "../constants/presets";
+ import type { UsePointerVelocityField } from "../../../composables/motion/pointer/usePointerVelocityField";
++import { createFrameReducer } from "../../../composables/glass/field/reduceFrame";
+ 
+ export interface AuroraWGPUSetupDeps {
+     canvas: HTMLCanvasElement;
+@@ -187,6 +188,8 @@ export function createAuroraWGPUSetup(
+         });
+ 
+         const scratch = createAuroraWGPUUniformScratch();
++        // D3-B: a live (opaque) aurora reduces every frame it draws and publishes it.
++        const reducer = opaquePresentation ? createFrameReducer(device, canvas) : null;
+ 
+         // upload-only. The LEAF sizer already set the backing
+         // store (round(gBCR × resolveAuroraWashDpr), the call-site dprPolicy); the WGPU
+@@ -218,7 +221,8 @@ export function createAuroraWGPUSetup(
+             );
+             device.queue.writeBuffer(uniformBuffer, 0, scratch.buffer);
+ 
+-            const view = context.getCurrentTexture().createView();
++            const texture = context.getCurrentTexture();
++            const view = texture.createView();
+             const encoder = device.createCommandEncoder({ label: "[Aurora] frame" });
+             const pass = encoder.beginRenderPass({
+                 colorAttachments: [
+@@ -239,7 +243,9 @@ export function createAuroraWGPUSetup(
+             pass.setBindGroup(0, bindGroup);
+             pass.draw(3, 1, 0, 0);
+             pass.end();
++            reducer?.encode(encoder, texture);
+             device.queue.submit([encoder.finish()]);
++            reducer?.after();
+         }
+ 
+         function shouldContinue(): boolean {
+@@ -253,6 +259,7 @@ export function createAuroraWGPUSetup(
+             shouldContinue,
+             resize,
+             teardown: () => {
++                reducer?.destroy();
+                 uniformBuffer.destroy();
+             },
+         };
+diff --git a/src/components/card/Card.vue b/src/components/card/Card.vue
+index edc7022d..5563c8d7 100644
+--- a/src/components/card/Card.vue
++++ b/src/components/card/Card.vue
+@@ -1,5 +1,6 @@
+ <script setup lang="ts">
+-import { computed } from "vue";
++import { computed, useTemplateRef } from "vue";
++import { useFieldSurface } from "../../composables/glass/field/fieldBus";
+ import { cn } from "../_shared/class-names";
+ import Surface, { type SurfaceProps } from "../surface/Surface.vue";
+ 
+@@ -50,10 +51,17 @@ const props = withDefaults(defineProps<CardProps>(), {
+ /* PRESENCE, not truth, is the signal: `selected` unset leaves a card inert prose;
+    `selected="false"` is an unselected OPTION, which owes a role and a tab stop. */
+ const selectable = computed(() => props.selected !== undefined);
++
++/* The field signal: a glass card registers its plate with the field bus, so a published
++   field under it (a library substrate, a declared medium) thins it to what its ink
++   needs. Unpublished, it paints the any-input bound. */
++const surfaceEl = useTemplateRef<{ $el: HTMLElement }>("surfaceEl");
++useFieldSurface(() => ((props.surface ?? "glass") === "glass" ? surfaceEl.value?.$el : null));
+ </script>
+ 
+ <template>
+     <Surface
++        ref="surfaceEl"
+         v-bind="$attrs"
+         data-slot="card"
+         :tier="tier"
+diff --git a/src/components/dialog/DialogContent.vue b/src/components/dialog/DialogContent.vue
+index 6ad05a95..ce80c2aa 100644
+--- a/src/components/dialog/DialogContent.vue
++++ b/src/components/dialog/DialogContent.vue
+@@ -15,6 +15,7 @@ import { useMotionAxis } from "../_shared/useMotionAxis";
+ import { surfaceClass } from "../_shared/surface/resolve";
+ import { scrimOpacity } from "../sheet/motion";
+ import { useModalShortcutBarrier } from "../_shared/overlay";
++import { useFieldSurface } from "../../composables/glass/field/fieldBus";
+ import type { DismissableContentEmits } from "../_shared/interaction";
+ 
+ /**
+@@ -130,6 +131,10 @@ const resolveContentEl = (): HTMLElement | null =>
+     (contentAnchorEl.value?.closest(
+         '[data-slot="dialog-content"]',
+     ) as HTMLElement | null) ?? null;
++/* The field signal: the plate registers with the field bus. While the modal scrim is up
++   the bus's occluder breaker holds it unpublished (the substrate never reduced the scrim),
++   so it paints the any-input bound. */
++useFieldSurface(() => (props.surface === "glass" ? resolveContentEl() : null));
+ watch(
+     () => dialogRoot.open.value,
+     (open) => {
+diff --git a/src/components/dock/GlassDock.vue b/src/components/dock/GlassDock.vue
+index a590bec6..48b0bea3 100644
+--- a/src/components/dock/GlassDock.vue
++++ b/src/components/dock/GlassDock.vue
+@@ -19,16 +19,8 @@
+ // The fission split facility is DEFINITION-ABSENT (decided-terminal;
+ // clean break, no alias — demo-only spectacle + the prime Safari suspect).
+ import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
+-// The sampled-luminance observer is wired ON for every
+-// `backdropMode: "live"` dock (the surface the user reported unreadable over light, and the
+-// one most often over a live/bright backdrop). It REFINES the declarative bucket +
+-// the Arm-1 self-engage (both stay the floor); a dark-substrate consumer opts out via
+-// `--glass-level: 0` on the dock or `backdropMode: "static"`. Imported
+-// directly (NOT via the glass barrel) — the composable is demo-private (path B): the
+-// dock is the binary consumer #1, the public barrel seat awaits a 2nd binary consumer
+-// (docs/consumer-evidence/use-glass-backdrop-luminance.md names the booked trigger).
+ import { FOCUSABLE_SELECTOR } from "../_shared/focus";
+-import { useGlassBackdropLuminance } from "../../composables/glass/useGlassBackdropLuminance";
++import { useFieldSurface } from "../../composables/glass/field/fieldBus";
+ import { OPEN_DISMISSABLE_LAYER_SELECTOR } from "./constants";
+ import { provideDockContext } from "./composables/dockContext";
+ import { useDockState } from "./composables/useDockState";
+@@ -108,32 +100,12 @@ const statusEl = useTemplateRef<HTMLElement>("statusEl");
+    live in one composable rather than three that must agree. */
+ useDockRun({ runEl: fullEl, statusEl, orientation });
+ 
+-/* Wire the sampled-luminance observer ON for
+-   the dock by default. It writes `--glass-backdrop-luma` + derives the
+-   `--glass-backdrop: light|dark` bucket on the dock root, DYNAMICALLY tracking the
+-   painted backdrop (a live aurora bleed) the static bucket is too coarse for. The
+-   Arm-1 self-engage + the declarative bucket stay the FLOOR — this REFINES.
+-   Wired ON for every `backdropMode: "live"` dock; a `"static"` dock uses the
+-   solid plate with no observer. */
+-if (props.backdropMode === "live") {
+-    // Hand the field canvas as a REACTIVE GETTER, not
+-    // a by-value snapshot. `props.backgroundCanvas` is the DockStage aurora canvas,
+-    // which resolves POST-MOUNT (the scoped-slot `canvasRef` is null during this
+-    // setup). Passing the raw value captured null forever → the observer never entered
+-    // the live `sampleAnimated` path → the whole dock band was a DEAD observer (0 of 12
+-    // docks stamped the writer-fired witness). The getter re-resolves each sample, so
+-    // the observer picks up the field the moment it paints + writes real luma/ambient-hue.
+-    useGlassBackdropLuminance(dockEl, {
+-        backgroundCanvas: (): HTMLCanvasElement | null => {
+-            const bc = props.backgroundCanvas;
+-            return typeof bc === "function"
+-                ? bc()
+-                : bc instanceof HTMLCanvasElement
+-                  ? bc
+-                  : null;
+-        },
+-    });
+-}
++/* THE FIELD SIGNAL. A `backdropMode: "live"` dock registers its root with the field
++   bus: where a library substrate (or a declared medium) publishes the field under it, the
++   bus writes the published statistics here and the plate (which takes them by `inherit`,
++   dock.css) solves its own α. Nothing publishes → the any-input bound. A `"static"` dock is
++   the level-0 escape and never registers. No DOM readback runs here. */
++useFieldSurface(() => (props.backdropMode === "live" ? dockEl.value : null));
+ 
+ const isTransitioning = ref(false);
+ const dockId = `glass-dock-${useId()}`;
+diff --git a/src/components/dock/composables/useDockShellProps.ts b/src/components/dock/composables/useDockShellProps.ts
+index d3a83f9a..c26f15f0 100644
+--- a/src/components/dock/composables/useDockShellProps.ts
++++ b/src/components/dock/composables/useDockShellProps.ts
+@@ -84,17 +84,6 @@ export interface DockProps {
+      * Applies on BOTH orientations: a vertical dock morphs its block axis too.
+      */
+     collapse?: DockCollapse;
+-    /**
+-     * The KNOWN background-layer canvas the dock floats over (an aurora/blob
+-     * `<canvas>`) — an element, a getter, or a CSS selector. When present, the
+-     * observer downsamples it under the dock's box after settling (the animated-backdrop
+-     * case); absent, it stack-walks the painted page background (the static case).
+-     */
+-    backgroundCanvas?:
+-        | HTMLCanvasElement
+-        | (() => HTMLCanvasElement | null)
+-        | string
+-        | null;
+     // Splitting and item reordering are consumer composition concerns, not Dock props.
+ }
+ 
+diff --git a/src/components/dock/styles/adaptive-legibility.css b/src/components/dock/styles/adaptive-legibility.css
+index 2335980e..7dff8f94 100644
+--- a/src/components/dock/styles/adaptive-legibility.css
++++ b/src/components/dock/styles/adaptive-legibility.css
+@@ -45,7 +45,7 @@
+            stays here is the FOREGROUND half, which is genuinely dock-local: the control
+            glyph/label ink over an unknown field. */
+         --dock-fg-on-aurora: var(--foreground);
+-        --muted-foreground: var(--foreground);
++        --muted-foreground: var(--on-glass-muted);
+     }
+ 
+     /* NO `@container style(--glass-backdrop: light)` bucket for the dock's own ink. It
+@@ -64,15 +64,6 @@
+        DARK ink. Anchoring on the dark ink instead inverts to white (illegible on the
+        still-light dock plate), so the anchor is the light surface, matching the rung
+        refinement in glass.css. The bucket is the floor; this is the native pick. */
+-    @supports (color: contrast-color(white)) {
+-        /* The SELF-ENGAGED dock refinement (the unconditional self-engage above);
+-           progressive enhancement only — the declarative darken is the AA floor. */
+-        :where(.glass-dock) {
+-            --dock-fg-on-aurora: contrast-color(var(--card));
+-            --muted-foreground: contrast-color(var(--card));
+-        }
+-    }
+-
+     /* The public frozen-backdrop arm. A static dock is the per-instance opaque
+        endpoint of the existing glass material: both flat layers read the same card
+        endpoint, no live luminance signal reaches the plate, and no backdrop-filter
+diff --git a/src/components/dock/styles/dock.css b/src/components/dock/styles/dock.css
+index 2174ac57..a1cf313f 100644
+--- a/src/components/dock/styles/dock.css
++++ b/src/components/dock/styles/dock.css
+@@ -121,6 +121,10 @@
+                         var(--dock-plate-collapsed-tier)
+                 ) * var(--dock-expand-t)
+         );
++        /* D3-B · the field bus writes on the dock ROOT; the plate takes it explicitly
++           (the properties are registered `inherits: false`). */
++        --glass-backdrop-luma-lo: inherit;
++        --glass-backdrop-luma-hi: inherit;
+         @apply glass-plate;
+         /* The grasp register's host inputs (glass/grasp.css): the dock plate is one of
+            the two named consumers, and its 16px resting radius IS the calibration host
+diff --git a/src/components/dock/styles/shell.css b/src/components/dock/styles/shell.css
+index cdf2232d..b50f7cfd 100644
+--- a/src/components/dock/styles/shell.css
++++ b/src/components/dock/styles/shell.css
+@@ -137,7 +137,6 @@
+            nested-glass inside the dock reads the bright bucket via the
+            ancestor-querying `@container` block in glass/ladder.css (CSS style queries
+            never self-match, so this declaration is inert for the dock's OWN plate). */
+-        --glass-backdrop: light;
+         /* The plate's morph endpoints are INK RUNGS, not composed colours: the plate
+            lerps its own veil alpha between them and composes the colour at the element
+            (dock/dock.css), which is what lets the observer's measured luminance reach
+diff --git a/src/components/popover/PopoverContent.vue b/src/components/popover/PopoverContent.vue
+index f9f7abd0..e9824e0d 100644
+--- a/src/components/popover/PopoverContent.vue
++++ b/src/components/popover/PopoverContent.vue
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { computed, useAttrs, type HTMLAttributes } from "vue";
++import { computed, useAttrs, useTemplateRef, type HTMLAttributes } from "vue";
+ import {
+     HoverCardContent as RekaHoverCardContent,
+     HoverCardPortal as RekaHoverCardPortal,
+@@ -15,6 +15,7 @@ import {
+     type FloatingPlacementProps,
+ } from "../_shared/overlay";
+ import { usePopoverUnion } from "./popoverContext";
++import { useFieldSurface } from "../../composables/glass/field/fieldBus";
+ 
+ export interface PopoverContentProps extends FloatingPlacementProps {
+     class?: HTMLAttributes["class"];
+@@ -118,6 +119,11 @@ const a11yAttrs = computed(() => ({
+ const popoverRoot = injectPopoverRootContext(null);
+ useModalShortcutBarrier(() => isModal.value && (popoverRoot?.open.value ?? false));
+ 
++/* The field signal: the panel registers with the field bus through a hidden anchor
++   (the content root is reka's, behind a Presence). */
++const fieldAnchor = useTemplateRef<HTMLElement>("fieldAnchor");
++useFieldSurface(() => fieldAnchor.value?.parentElement);
++
+ const dock = useDockParticipation();
+ const contentAttrs = computed(() =>
+     overlayContentAttrs({
+@@ -146,6 +152,7 @@ const contentAttrs = computed(() =>
+             @open-auto-focus="emit('openAutoFocus', $event)"
+             @close-auto-focus="emit('closeAutoFocus', $event)"
+         >
++            <span ref="fieldAnchor" hidden />
+             <slot />
+         </component>
+     </component>
+diff --git a/src/composables/glass/backdropLuminanceSample.ts b/src/composables/glass/backdropLuminanceSample.ts
+deleted file mode 100644
+index 016522f5..00000000
+--- a/src/composables/glass/backdropLuminanceSample.ts
++++ /dev/null
+@@ -1,279 +0,0 @@
+-// Stateless backdrop sampling and OKLab reduction.
+-//
+-// The observer HOST keeps only the reactive wiring (the useRAFLoop/useIntersectionPause/
+-// useResizeObserver composition, the reusable downsample-canvas lifecycle, and the
+-// `--glass-backdrop-*` writes on the target). The two SAMPLERS
+-// live HERE as pure functions the observer COMPOSES:
+-//   - `sampleStatic`   — the `elementsFromPoint` stack-walk of the painted background
+-//                        LAYER (the static page case), un-wrapping `var(--token)`
+-//                        backgrounds through the resolveTokenColor leaf.
+-//   - `sampleAnimated` — the downsampled `drawImage + getImageData` read of a known
+-//                        background `<canvas>` under the surface's bounding box (the
+-//                        aurora/blob live-field case).
+-// Both reduce their pixels to a WCAG relative luminance. The reusable 2D context is passed
+-// IN by the observer — the leaf owns NO canvas lifecycle, NO closure state, NO rAF, NO
+-// reactivity: a pure sampling family (the single-home of the sampling/OKLab math).
+-
+-import { resolveTokenColor } from "../dom/useResolveTokenColor";
+-import { isCanvas, relLuminance, parseRgb, compositeOver } from "./backdropSampleMath";
+-
+-/** The per-sample result — the luminance, the one signal the cascade reads. */
+-export interface SampleResult {
+-    /** WCAG relative luminance of the sampled backdrop (0..1). */
+-    luma: number;
+-}
+-
+-/**
+- * The KNOWN background-layer source for the ANIMATED case — an HTMLCanvasElement, a
+- * getter, a CSS selector resolved against the document, or null. The observer's
+- * `backgroundCanvas` option is this type.
+- */
+-export type BackgroundCanvasSource =
+-    | HTMLCanvasElement
+-    | (() => HTMLCanvasElement | null)
+-    | string
+-    | null;
+-
+-/** The downsample resolution for the animated-field read (a 32×32 mean). */
+-export const SAMPLE_DOWNSAMPLE = 32;
+-
+-// The animated field-canvas
+-// readback carries REAL painted content only when the source WebGL `<canvas>` actually
+-// rendered a frame AND kept its drawing buffer (`preserveDrawingBuffer`). An
+-// unrendered, composited-and-cleared, software-raster-fallback field reads
+-// fully-transparent (mean alpha ≈ 0); compositing THAT over the underlay yields only
+-// the underlay's own luma — the "witness fires but the
+-// value is a lie" state (the field contributed nothing). Below this mean-alpha floor
+-// the readback is not a
+-// valid sample: `sampleAnimated` returns null and the live caller writes `unavailable`
+-// (see useGlassBackdropLuminance.sampleNow). A null live sample NEVER falls to the
+-// static stack-walk — that coalescing is deliberately forbidden. Fail-loud,
+-// never a masking fake value.
+-export const FIELD_ALPHA_FLOOR = 0.02;
+-
+-/** Library convention marking the single shell
+- *  field canvas (the recessive shell `<Aurora>` the demo chassis mounts behind every
+- *  non-focal route; also the BACKDROP-SAMPLE marker). A glass surface that does
+- *  NOT name an explicit `backgroundCanvas` auto-discovers this canvas so it samples
+- *  the LIVE field rather than a static stack-walk; absent it (a focal route where the
+- *  shell stands down, an SSR scope) the static `elementsFromPoint` path is the floor. */
+-export const SHELL_FIELD_CANVAS_SELECTOR =
+-    "[data-glass-field-canvas] canvas, canvas[data-glass-field-canvas]";
+-
+-/**
+- * Resolve the animated-case source canvas from the observer's `backgroundCanvas`
+- * option (an element, a getter, a selector, or nullish). A nullish source
+- * auto-discovers the shell field canvas — the rewire to the live shell field
+- * (backward-safe: no field canvas → null → the static elementsFromPoint path).
+- */
+-export function resolveSourceCanvas(
+-    src: BackgroundCanvasSource | undefined,
+-): HTMLCanvasElement | null {
+-    if (!src) {
+-        if (typeof document !== "undefined") {
+-            const field = document.querySelector(SHELL_FIELD_CANVAS_SELECTOR);
+-            if (isCanvas(field)) return field;
+-        }
+-        return null;
+-    }
+-    if (isCanvas(src)) return src;
+-    if (typeof src === "function") {
+-        const c = src();
+-        return isCanvas(c) ? c : null;
+-    }
+-    if (typeof src === "string" && typeof document !== "undefined") {
+-        const el = document.querySelector(src);
+-        return isCanvas(el) ? el : null;
+-    }
+-    return null;
+-}
+-
+-/**
+- * Robust CSS-color → sRGB `[r,g,b,a]`. `parseRgb` is the fast path for the legacy
+- * `rgb()/rgba()` serialization; ANY other valid CSS color form — the MODERN
+- * `oklch()`, `color(srgb …)`, `hsl()` tokens the warm-cream demo basis resolves to —
+- * is normalized by painting it onto the 1×1 corner of the reused 2D canvas (passed in)
+- * and reading the composited pixel back (`getImageData` ALWAYS returns integer sRGB
+- * whatever the source space).: without this `sampleStatic`
+- * returned null on a `color(srgb …)`/`oklch(…)` backdrop and wrote NOTHING — the static
+- * floor was a DEAD channel. The static floor is now writer-true over ANY backdrop.
+- */
+-function normalizeToRgb(
+-    css: string,
+-    ctx: CanvasRenderingContext2D | null,
+-): [number, number, number, number] | null {
+-    const fast = parseRgb(css);
+-    if (fast) return fast;
+-    if (!ctx) return null;
+-    try {
+-        ctx.clearRect(0, 0, 1, 1);
+-        ctx.fillStyle = "rgba(0,0,0,0)";
+-        ctx.fillStyle = css; // an unparseable value is a no-op (keeps transparent)
+-        ctx.fillRect(0, 0, 1, 1);
+-        const d = ctx.getImageData(0, 0, 1, 1).data;
+-        return [d[0]!, d[1]!, d[2]!, d[3]! / 255];
+-    } catch {
+-        return null;
+-    }
+-}
+-
+-/**
+- * Sample the ANIMATED backdrop: downsample the resolved source canvas under the
+- * surface's bounding box → mean relative luminance. Returns null if no source, an all-transparent
+- * (unrendered) field, or a tainted canvas — the live caller writes `unavailable` on a
+- * null; it NEVER falls to the static stack-walk (that coalescing is forbidden).
+- *
+- * The field canvas is TRANSLUCENT, so each downsampled pixel is composited over the
+- * REAL opaque page `underlay` (resolved by `resolveUnderlayRgb` from the same stack the
+- * static sampler reads) — the same translucent field over a dark page vs a light page
+- * yields DISTINCT luma. Passing a fixed white underlay collapses that distinction and
+- * is the born-RED this repairs. The underlay feeds the EXISTING luma→tint axis; it is
+- * NOT a second opacity/attenuation axis.
+- */
+-export function sampleAnimated(
+-    el: HTMLElement,
+-    source: HTMLCanvasElement | null,
+-    ctx: CanvasRenderingContext2D | null,
+-    underlay: readonly [number, number, number],
+-): SampleResult | null {
+-    if (!source || source.width === 0 || source.height === 0) return null;
+-    if (!ctx) return null;
+-    const rect = el.getBoundingClientRect();
+-    const srcRect = source.getBoundingClientRect();
+-    if (srcRect.width === 0 || srcRect.height === 0) return null;
+-    // Map the surface's viewport box → the source canvas's backing-store region.
+-    const scaleX = source.width / srcRect.width;
+-    const scaleY = source.height / srcRect.height;
+-    const sx = Math.max(0, (rect.left - srcRect.left) * scaleX);
+-    const sy = Math.max(0, (rect.top - srcRect.top) * scaleY);
+-    const sw = Math.min(source.width - sx, Math.max(1, rect.width * scaleX));
+-    const sh = Math.min(source.height - sy, Math.max(1, rect.height * scaleY));
+-    if (sw <= 0 || sh <= 0) return null;
+-    try {
+-        ctx.clearRect(0, 0, SAMPLE_DOWNSAMPLE, SAMPLE_DOWNSAMPLE);
+-        ctx.drawImage(
+-            source,
+-            sx,
+-            sy,
+-            sw,
+-            sh,
+-            0,
+-            0,
+-            SAMPLE_DOWNSAMPLE,
+-            SAMPLE_DOWNSAMPLE,
+-        );
+-        const data = ctx.getImageData(
+-            0,
+-            0,
+-            SAMPLE_DOWNSAMPLE,
+-            SAMPLE_DOWNSAMPLE,
+-        ).data;
+-        let sum = 0;
+-        let alphaSum = 0;
+-        let n = 0;
+-        for (let i = 0; i < data.length; i += 4) {
+-            // Composite the translucent aurora pixel over the REAL page underlay
+-            // (source-over) — a dark page and a light page under the same field
+-            // resolve to distinct luma; a fixed-white underlay was the born-RED.
+-            const a = data[i + 3]! / 255;
+-            const [r, g, b] = compositeOver(
+-                data[i]!,
+-                data[i + 1]!,
+-                data[i + 2]!,
+-                a,
+-                underlay,
+-            );
+-            sum += relLuminance(r, g, b);
+-            alphaSum += a;
+-            n++;
+-        }
+-        // An all-transparent readback carries no painted field content and is not a
+-        // valid sample. Returning null makes the live caller write `unavailable` (never
+-        // the static stack-walk — forbidden) rather than a degenerate luma ≈ 1.0
+-        // with a transparent hue.
+-        if (n === 0 || alphaSum / n < FIELD_ALPHA_FLOOR) return null;
+-        return { luma: sum / n };
+-    } catch {
+-        // fail-loud: a tainted/cross-origin canvas throws on getImageData; the null
+-        // return SURFACES the miss to the caller, which writes `unavailable` (never the
+-        // static stack-walk — forbidden; never a silent wrong answer).
+-        return null;
+-    }
+-}
+-
+-/**
+- * Resolve the opaque backdrop beneath the surface as concrete sRGB `[r,g,b,a]`:
+- * stack-walk `elementsFromPoint` at the surface centre, take the first element under it
+- * with a resolved opaque-enough background (un-wrapping `var(--token)` through the
+- * resolveTokenColor leaf); nothing opaque under it → the page paints through to the
+- * body/root, so read that. Null only when even the body background is unresolvable.
+- * The reusable 2D context (for the modern-color normalization paint-read) is passed in.
+- *
+- * The SINGLE stack-walk of record — the static sampler reduces it to a luma+hue, the
+- * animated sampler reads it as the compositing underlay (`resolveUnderlayRgb`).
+- */
+-function resolveBackdropRgba(
+-    el: HTMLElement,
+-    ctx: CanvasRenderingContext2D | null,
+-): [number, number, number, number] | null {
+-    const rect = el.getBoundingClientRect();
+-    const cx = rect.left + rect.width / 2;
+-    const cy = rect.top + rect.height / 2;
+-    const stack = document.elementsFromPoint(cx, cy);
+-    // Skip the surface itself + its glass descendants; find the first BACKGROUND layer
+-    // below it with an opaque-enough painted background.
+-    for (const node of stack) {
+-        if (!(node instanceof HTMLElement)) continue;
+-        if (node === el || el.contains(node)) continue;
+-        const bgRaw = getComputedStyle(node).backgroundColor;
+-        const concrete = resolveTokenColor(bgRaw, el);
+-        const rgba = normalizeToRgb(concrete, ctx);
+-        if (!rgba) continue;
+-        if (rgba[3] < 0.5) continue; // a near-transparent layer is not the backdrop
+-        return rgba;
+-    }
+-    // Nothing opaque under it → the page paints through to the body/root; read that.
+-    const bodyBg = resolveTokenColor(
+-        getComputedStyle(document.body).backgroundColor,
+-        el,
+-    );
+-    return normalizeToRgb(bodyBg, ctx);
+-}
+-
+-/** The CSS-initial page canvas is white — when NO opaque page background resolves
+- *  (SSR/no-paint), that white viewport IS the formula-correct underlay. This lives at
+- *  the named resolver, never hardcoded inside the compositing loop. */
+-const CSS_INITIAL_UNDERLAY: readonly [number, number, number] = [255, 255, 255];
+-
+-/**
+- * The REAL opaque page underlay beneath the surface — the color the TRANSLUCENT
+- * animated field composites OVER. Reuses `resolveBackdropRgba` (the same stack the
+- * static sampler reads), dropping alpha to an opaque triple; falls back to the
+- * CSS-initial white viewport when nothing opaque paints under the surface. This is the
+- * luma→tint axis input for `sampleAnimated`, NOT a second opacity/attenuation axis.
+- */
+-export function resolveUnderlayRgb(
+-    el: HTMLElement,
+-    ctx: CanvasRenderingContext2D | null,
+-): [number, number, number] {
+-    const rgba = resolveBackdropRgba(el, ctx);
+-    if (rgba && rgba[3] >= 0.5) return [rgba[0], rgba[1], rgba[2]];
+-    return [...CSS_INITIAL_UNDERLAY];
+-}
+-
+-/**
+- * Sample the STATIC backdrop: reduce the resolved backdrop (`resolveBackdropRgba`) to
+- * relative luminance. The reusable 2D context is passed in.
+- */
+-export function sampleStatic(
+-    el: HTMLElement,
+-    ctx: CanvasRenderingContext2D | null,
+-): SampleResult | null {
+-    const rgba = resolveBackdropRgba(el, ctx);
+-    return rgba ? staticResult(rgba) : null;
+-}
+-
+-/** A single resolved backdrop color → its relative luminance. */
+-function staticResult(rgba: [number, number, number, number]): SampleResult {
+-    return { luma: relLuminance(rgba[0], rgba[1], rgba[2]) };
+-}
+diff --git a/src/composables/glass/backdropSampleMath.ts b/src/composables/glass/backdropSampleMath.ts
+deleted file mode 100644
+index d3e5c410..00000000
+--- a/src/composables/glass/backdropSampleMath.ts
++++ /dev/null
+@@ -1,54 +0,0 @@
+-// backdropSampleMath — the pure sRGB sampling primitives (the no-god-module colocation leaf: position-
+-// preserving, behaviour-identical). The WCAG relative-luminance linearization, the
+-// `rgb()/rgba()` string parse, and the HTMLCanvasElement type-guard are DOM-free
+-// (modulo the `instanceof` global) leaves the observer composes; lifting them keeps
+-// the observer module under the line bound while the math stays single-source.
+-
+-/** sRGB channel [0..255] → linear-light (WCAG 2.1 linearization). */
+-function linearize(c: number): number {
+-    const x = c / 255;
+-    return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
+-}
+-
+-/** WCAG relative luminance of an sRGB triple [0..255]. */
+-export function relLuminance(r: number, g: number, b: number): number {
+-    return 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b);
+-}
+-
+-/**
+- * Composite a straight-alpha sRGB pixel [r,g,b] at coverage `a` (0..1) OVER an
+- * opaque sRGB `underlay` triple → the resolved opaque sRGB [r,g,b] (source-over).
+- * The animated field is a TRANSLUCENT canvas; the perceived backdrop is the field
+- * painted over the REAL opaque page beneath it, so the underlay MUST be the actual
+- * page color — a dark page and a light page under the SAME translucent field yield
+- * DISTINCT composited luma. A hardcoded white underlay collapses that distinction
+- * (the born-RED). This is the luma→tint axis input, NOT a second opacity axis.
+- */
+-export function compositeOver(
+-    r: number,
+-    g: number,
+-    b: number,
+-    a: number,
+-    underlay: readonly [number, number, number],
+-): [number, number, number] {
+-    return [
+-        r * a + underlay[0] * (1 - a),
+-        g * a + underlay[1] * (1 - a),
+-        b * a + underlay[2] * (1 - a),
+-    ];
+-}
+-
+-/** Parse a `rgb()/rgba()` string → [r,g,b,a] (the un-wrapped concrete form). */
+-export function parseRgb(str: string): [number, number, number, number] | null {
+-    const m = str.match(
+-        /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+))?/i,
+-    );
+-    if (!m) return null;
+-    return [Number(m[1]), Number(m[2]), Number(m[3]), m[4] === undefined ? 1 : Number(m[4])];
+-}
+-
+-export function isCanvas(v: unknown): v is HTMLCanvasElement {
+-    return (
+-        typeof HTMLCanvasElement !== "undefined" && v instanceof HTMLCanvasElement
+-    );
+-}
+diff --git a/src/composables/glass/index.ts b/src/composables/glass/index.ts
+index c7395176..76908ae8 100644
+--- a/src/composables/glass/index.ts
++++ b/src/composables/glass/index.ts
+@@ -36,3 +36,8 @@ export type {
+     Canvas2DOptions,
+     Canvas2DSuspendReason,
+ } from "./canvas2d";
++// The field signal: a consumer declares a MEDIUM (an <img>, <video> or <canvas>) whose
++// paint lies under glass; the library reduces it on the GPU and publishes its tiles. A
++// consumer never hands in a number.
++export { declareField } from "./field/fieldBus";
++export type { FieldMedium } from "./field/fieldBus";
+diff --git a/src/composables/glass/useGlassBackdropLuminance.ts b/src/composables/glass/useGlassBackdropLuminance.ts
+deleted file mode 100644
+index a2f68011..00000000
+--- a/src/composables/glass/useGlassBackdropLuminance.ts
++++ /dev/null
+@@ -1,413 +0,0 @@
+-// Sample the painted field beneath glass and adapt its tint for legibility. Static
+-// surfaces use an `elementsFromPoint` stack walk; live surfaces downsample a known
+-// background canvas because browsers do not expose composited backdrop-filter pixels.
+-// The observer writes WCAG luminance and a light/dark bucket.
+-// Live sampling is capped at 4 Hz, pauses offscreen or when hidden, and collapses to
+-// one sample under reduced motion. Static surfaces sample at mount and resize settle.
+-
+-import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
+-import { useRAFLoop, type RAFLoopControls } from "../motion/core/useRAFLoop";
+-import { useReducedMotion } from "../motion/core/useReducedMotion";
+-import { useIntersectionPause } from "../motion/core/useIntersectionPause";
+-import { useResizeObserver } from "../dom/useResizeObserver";
+-// Stateless sampling and OKLab reduction live in the colocated leaf; this module
+-// owns reactive wiring, canvas reuse, and the custom-property writes.
+-import {
+-    sampleStatic,
+-    sampleAnimated,
+-    resolveSourceCanvas,
+-    resolveUnderlayRgb,
+-    SAMPLE_DOWNSAMPLE,
+-    type SampleResult,
+-    type BackgroundCanvasSource,
+-} from "./backdropLuminanceSample";
+-
+-/** The discrete backdrop bucket derived and written by the observer. */
+-export type GlassBackdropBucket = "light" | "dark";
+-
+-export interface UseGlassBackdropLuminanceOptions {
+-    /**
+-     * The KNOWN background-layer source for the ANIMATED case — an HTMLCanvasElement
+-     * (or a getter, a CSS selector resolved against the document). When present, the
+-     * observer downsamples this canvas under the surface's bounding box each settle
+-     * instead of the static `elementsFromPoint` stack-walk. The aurora/blob `<canvas>`
+-     * the surface floats over.
+-     */
+-    backgroundCanvas?: BackgroundCanvasSource;
+-    /**
+-     * Force the LIVE periodic re-sample loop on (mirrors the `data-glass-sample="live"`
+-     * attribute on the target). Default: read from the target's
+-     * `data-glass-sample === "live"` attribute. The static page case samples once on
+-     * mount + resize-settle; the live case re-samples on the throttled loop.
+-     */
+-    live?: boolean;
+-    /**
+-     * The luminance threshold above which the backdrop is `light` (engages the darken).
+-     * Default 0.6 — a near-white page surface (luma ≈ 0.9) is light; a dark substrate
+-     * (luma ≈ 0.1) is dark; a mid aurora bleed crosses here.
+-     */
+-    lightThreshold?: number;
+-    /**
+-     * Minimum milliseconds between samples on the live loop (the ≤ 4 Hz throttle floor).
+-     * Default 250 (4 Hz) and bounded to at least 250ms.
+-     */
+-    minSampleIntervalMs?: number;
+-    /**
+-     * Write the discrete `--glass-backdrop` bucket too (re-engages the @container +
+-     * self-engage machinery). Default true. When false, only the numeric
+-     * `--glass-backdrop-luma` is written (a continuous-strength consumer).
+-     */
+-    writeBucket?: boolean;
+-    /**
+-     * mark this as the SHARED per-ROUTE observer. It stamps
+-     * `GLASS_BACKDROP_SHARED_ATTR` on its target (the route/stage scope) so descendant
+-     * glass surfaces (docks) DETECT the coverage and STAND DOWN — inheriting the route's
+-     * `--glass-backdrop-luma`, `--glass-backdrop` via the cascade
+-     * rather than each mounting its own readback loop (12 per-dock observers over ONE
+-     * aurora → ONE per-route readback). Default false: a per-SURFACE observer, which
+-     * stands down when a shared ancestor covers it and self-samples as the honest floor
+-     * when standalone. N docks over the SAME aurora read ONE per-route signal.
+-     */
+-    shared?: boolean;
+-}
+-
+-export interface UseGlassBackdropLuminanceControls {
+-    /** The last sampled backdrop relative luminance (0..1), or null before the first sample. */
+-    readonly luma: Readonly<Ref<number | null>>;
+-    /** The last derived bucket, or null before the first sample. */
+-    readonly bucket: Readonly<Ref<GlassBackdropBucket | null>>;
+-    /**
+-     * The observer's explicit sample provenance. A live request is never represented
+-     * as a static sample: a missing or unreadable canvas reports `unavailable`.
+-     */
+-    readonly sample: Readonly<Ref<GlassBackdropSample>>;
+-    /** Force one sample now (bypasses the throttle — used on mount + resize-settle). */
+-    sampleNow: () => void;
+-    /** Stop the loop + detach every observer/listener. */
+-    dispose: () => void;
+-}
+-
+-export type GlassBackdropSample =
+-    | {
+-          state: "pending";
+-          mode: "live" | "static";
+-          source: "canvas" | "elements";
+-      }
+-    | {
+-          state: "sampled";
+-          mode: "live" | "static";
+-          source: "canvas" | "elements";
+-          luma: number;
+-          sampledAt: number;
+-          targetRect: GlassBackdropTargetRect;
+-      }
+-    | {
+-          state: "unavailable";
+-          mode: "live" | "static";
+-          source: "canvas" | "elements";
+-          reason: "source-unavailable" | "sample-unavailable";
+-          sampledAt: number;
+-          targetRect: GlassBackdropTargetRect;
+-      };
+-
+-export interface GlassBackdropTargetRect {
+-    x: number;
+-    y: number;
+-    width: number;
+-    height: number;
+-}
+-
+-/**
+- * Shared-coverage marker. A route observer stamps this on its target; descendant
+- * surface observers stand down and inherit its custom properties. A DOM marker is
+- * required because provide/inject does not follow the rendered slot ancestry that
+- * the custom properties use.
+- */
+-export const GLASS_BACKDROP_SHARED_ATTR = "data-glass-backdrop-shared";
+-
+-/**
+- * The sampled-luminance observer. Wire it on a glass surface (the dock root, a
+- * content-glass panel) to write a dynamic backdrop-luminance signal that refines the
+- * declarative bucket. Default on for Dock; a dark-substrate consumer
+- * opts out by setting `--glass-level: 0` on the surface (the declarative floor
+- * stays the guarantee — the observer only refines).
+- *
+- * @param target the glass surface element ref to sample under + write the tokens on
+- * @param options sampling source, throttle, threshold (see the interface)
+- */
+-export function useGlassBackdropLuminance(
+-    target: Ref<HTMLElement | null>,
+-    options: UseGlassBackdropLuminanceOptions = {},
+-): UseGlassBackdropLuminanceControls {
+-    const {
+-        lightThreshold = 0.6,
+-        minSampleIntervalMs = 250,
+-        writeBucket = true,
+-    } = options;
+-    // Bound the sampling cadence to 4 Hz.
+-    const sampleIntervalMs = Math.max(250, minSampleIntervalMs);
+-
+-    // A shared route observer runs one readback. Descendant surface observers inherit
+-    // its values; standalone surface observers sample themselves.
+-    const isShared = options.shared === true;
+-
+-    /**
+-     * Does a SHARED route observer cover this per-surface target? True when an ANCESTOR
+-     * carries `GLASS_BACKDROP_SHARED_ATTR`. `.closest` starts at `el`, but a per-surface
+-     * target never carries the marker itself (only a `shared` observer stamps it), so a
+-     * match is an ancestor's shared scope. A shared observer never stands down (it IS the
+-     * coverage), so it short-circuits false.
+-     */
+-    function coveredByShared(el: HTMLElement): boolean {
+-        if (isShared) return false;
+-        return el.closest(`[${GLASS_BACKDROP_SHARED_ATTR}]`) !== null;
+-    }
+-
+-    const luma = ref<number | null>(null);
+-    const bucket = ref<GlassBackdropBucket | null>(null);
+-    const sample = ref<GlassBackdropSample>({
+-        state: "pending",
+-        mode: options.live === true ? "live" : "static",
+-        source: options.live === true ? "canvas" : "elements",
+-    });
+-
+-    // SSR, no-DOM: a pure no-op handle (the static surfaces never need this; the
+-    // composable is safe to call in a non-browser scope).
+-    if (typeof window === "undefined") {
+-        return {
+-            luma: readonly(luma) as Readonly<Ref<number | null>>,
+-            bucket: readonly(bucket) as Readonly<Ref<GlassBackdropBucket | null>>,
+-            sample: readonly(sample) as Readonly<Ref<GlassBackdropSample>>,
+-            sampleNow: () => {},
+-            dispose: () => {},
+-        };
+-    }
+-
+-    const prefersReduced = useReducedMotion();
+-
+-    // A reusable offscreen downsample canvas for the animated case.
+-    let downCanvas: HTMLCanvasElement | null = null;
+-    let downCtx: CanvasRenderingContext2D | null = null;
+-    function getDownContext(): CanvasRenderingContext2D | null {
+-        if (!downCanvas) {
+-            downCanvas = document.createElement("canvas");
+-            downCanvas.width = SAMPLE_DOWNSAMPLE;
+-            downCanvas.height = SAMPLE_DOWNSAMPLE;
+-        }
+-        if (!downCtx) {
+-            downCtx = downCanvas.getContext("2d", { willReadFrequently: true });
+-        }
+-        return downCtx;
+-    }
+-
+-    /**
+-     * Does the config intend the live loop? The loop must arm before a provided source
+-     * resolves: field canvases commonly mount one beat after their consumer. Each tick
+-     * re-resolves the source, so a live request is either sampled from that canvas or
+-     * reported unavailable; it never becomes a static sample.
+-     */
+-    function wantsLiveLoop(): boolean {
+-        if (options.live !== undefined) return options.live;
+-        if (target.value?.dataset.glassSample === "live") return true;
+-        // A CONFIGURED source — even one that resolves null THIS instant (the field
+-        // canvas not yet mounted) — is live intent. `!= null` admits a getter,         // canvas, selector but not an explicit `backgroundCanvas: null` (no source).
+-        if (options.backgroundCanvas != null) return true;
+-        // No explicit source: a discoverable shell field canvas IS the live signal.
+-        return resolveSourceCanvas(undefined) !== null;
+-    }
+-
+-    function targetRect(el: HTMLElement): GlassBackdropTargetRect {
+-        const rect = el.getBoundingClientRect();
+-        return {
+-            x: rect.x,
+-            y: rect.y,
+-            width: rect.width,
+-            height: rect.height,
+-        };
+-    }
+-
+-    /** Write the derived signal onto the target's inline style. */
+-    function write(
+-        result: SampleResult,
+-        el: HTMLElement,
+-        mode: "live" | "static",
+-        sampledAt: number,
+-    ): void {
+-        const value = result.luma;
+-        luma.value = value;
+-        const next: GlassBackdropBucket = value >= lightThreshold ? "light" : "dark";
+-        bucket.value = next;
+-        sample.value = {
+-            state: "sampled",
+-            mode,
+-            source: mode === "live" ? "canvas" : "elements",
+-            luma: value,
+-            sampledAt,
+-            targetRect: targetRect(el),
+-        };
+-        el.style.setProperty("--glass-backdrop-luma", value.toFixed(3));
+-        // Stamp the first successful write so consumers can distinguish an unsampled
+-        // observer from a genuinely calm backdrop. This never affects layout.
+-        el.setAttribute("data-backdrop-sampled", "");
+-        el.setAttribute("data-backdrop-sample-state", "sampled");
+-        el.setAttribute(
+-            "data-backdrop-sample-source",
+-            mode === "live" ? "canvas" : "elements",
+-        );
+-        el.removeAttribute("data-backdrop-sample-reason");
+-        el.style.setProperty("--glass-backdrop-sampled", "1");
+-        if (writeBucket) {
+-            el.style.setProperty("--glass-backdrop", next);
+-        }
+-    }
+-
+-    function writeUnavailable(
+-        el: HTMLElement,
+-        mode: "live" | "static",
+-        reason: "source-unavailable" | "sample-unavailable",
+-        sampledAt: number,
+-    ): void {
+-        luma.value = null;
+-        bucket.value = null;
+-        sample.value = {
+-            state: "unavailable",
+-            mode,
+-            source: mode === "live" ? "canvas" : "elements",
+-            reason,
+-            sampledAt,
+-            targetRect: targetRect(el),
+-        };
+-        el.style.removeProperty("--glass-backdrop-luma");
+-        el.style.removeProperty("--glass-backdrop-sampled");
+-        if (writeBucket) el.style.removeProperty("--glass-backdrop");
+-        el.removeAttribute("data-backdrop-sampled");
+-        el.setAttribute("data-backdrop-sample-state", "unavailable");
+-        el.setAttribute(
+-            "data-backdrop-sample-source",
+-            mode === "live" ? "canvas" : "elements",
+-        );
+-        el.setAttribute("data-backdrop-sample-reason", reason);
+-    }
+-
+-    let lastSampleAt = 0;
+-
+-    /** One sample now (bypasses the throttle — mount + resize-settle path). */
+-    function sampleNow(): void {
+-        const el = target.value;
+-        if (!el) return;
+-        // STAND DOWN — a shared route observer covers this per-surface target; inherit its
+-        // `--glass-backdrop-*` via the cascade (zero readback — the 12→1 collapse).
+-        if (coveredByShared(el)) return;
+-        // Live intent has one source of truth: an unavailable canvas is surfaced as
+-        // unavailable, never substituted with the static stack-walk/default signal.
+-        const ctx = getDownContext();
+-        const mode = wantsLiveLoop() ? "live" : "static";
+-        const source =
+-            mode === "live" ? resolveSourceCanvas(options.backgroundCanvas) : null;
+-        // The animated field is TRANSLUCENT: composite it over the REAL opaque page
+-        // beneath the surface (the same stack the static sampler reads) so a dark page
+-        // and a light page under the same field resolve to distinct luma.
+-        const result =
+-            mode === "live"
+-                ? sampleAnimated(el, source, ctx, resolveUnderlayRgb(el, ctx))
+-                : sampleStatic(el, ctx);
+-        const sampledAt = Date.now();
+-        if (result) write(result, el, mode, sampledAt);
+-        else
+-            writeUnavailable(
+-                el,
+-                mode,
+-                mode === "live" && !source
+-                    ? "source-unavailable"
+-                    : "sample-unavailable",
+-                sampledAt,
+-            );
+-        lastSampleAt =
+-            typeof performance !== "undefined" ? performance.now() : sampledAt;
+-    }
+-
+-    // ── The rAF loop — THROTTLED to ≤ 4 Hz, only ticks while live + not reduced ──────
+-    const loop: RAFLoopControls = useRAFLoop(
+-        ({ now }) => {
+-            if (prefersReduced.value) return; // PRM → one static sample, then park
+-            if (now - lastSampleAt < sampleIntervalMs) return; // ≤ 4 Hz throttle
+-            sampleNow();
+-        },
+-        { immediate: false, pauseWhenHidden: true, respectReducedMotion: true },
+-    );
+-
+-    // ── IntersectionObserver gate — park the loop while the surface is offscreen ─────
+-    const io = useIntersectionPause(
+-        () => target.value,
+-        {
+-            pause: () => loop.pause(),
+-            resume: () => {
+-                // A covered per-surface observer stays parked (it inherits — never a loop).
+-                const el = target.value;
+-                if (el && coveredByShared(el)) return;
+-                if (wantsLiveLoop() && !prefersReduced.value) loop.resume();
+-            },
+-        },
+-        { rootMargin: "200px" },
+-    );
+-
+-    // ── Resize-settle re-sample (the static page case re-samples on a layout change) ─
+-    const ro = useResizeObserver(target, () => sampleNow());
+-
+-    // ── Arm/disarm the live loop on PRM flips (mirrors the substrate's live monitor) ─
+-    function applyMotionState(): void {
+-        // A covered per-surface observer never runs the loop nor samples (it inherits the
+-        // shared route signal via the cascade — the 12→1 collapse).
+-        const el = target.value;
+-        if (el && coveredByShared(el)) {
+-            loop.stop();
+-            return;
+-        }
+-        if (prefersReduced.value) {
+-            loop.stop();
+-            sampleNow(); // one static frame under reduce (the substrate freezes too)
+-        } else if (wantsLiveLoop()) {
+-            // Each tick re-resolves the requested field canvas as it mounts.
+-            loop.start();
+-        }
+-    }
+-    const stopMotionWatch = watch(prefersReduced, applyMotionState, { flush: "sync" });
+-
+-    // First sample once the target is present; arm the loop for the live case.
+-    const stopTargetWatch = watch(
+-        () => target.value,
+-        (el) => {
+-            if (!el) return;
+-            // The SHARED route observer STAMPS the coverage marker so descendant docks
+-            // detect it + stand down (the demo also carries a static template marker so
+-            // the stamp is race-free from frame 0). A per-surface observer covered by a
+-            // shared ancestor stands down here — it inherits the route luma (no sample,
+-            // no loop); an uncovered surface self-samples (the honest floor).
+-            if (isShared) el.setAttribute(GLASS_BACKDROP_SHARED_ATTR, "");
+-            else if (coveredByShared(el)) return;
+-            sampleNow();
+-            applyMotionState();
+-        },
+-        { immediate: true, flush: "post" },
+-    );
+-
+-    function dispose(): void {
+-        stopTargetWatch();
+-        stopMotionWatch();
+-        loop.dispose();
+-        io.dispose();
+-        ro.stop();
+-        downCanvas = null;
+-        downCtx = null;
+-    }
+-
+-    onScopeDispose(dispose);
+-
+-    return {
+-        luma: readonly(luma) as Readonly<Ref<number | null>>,
+-        bucket: readonly(bucket) as Readonly<Ref<GlassBackdropBucket | null>>,
+-        sample: readonly(sample) as Readonly<Ref<GlassBackdropSample>>,
+-        sampleNow,
+-        dispose,
+-    };
+-}
+diff --git a/src/composables/glass/webgpu/useWebGPUCanvas.ts b/src/composables/glass/webgpu/useWebGPUCanvas.ts
+index 72351db8..918c30a2 100644
+--- a/src/composables/glass/webgpu/useWebGPUCanvas.ts
++++ b/src/composables/glass/webgpu/useWebGPUCanvas.ts
+@@ -225,7 +225,8 @@ export function createWebGPUCanvas(
+         if (!ctx) throw new Error("[useWebGPUCanvas] WebGPU context unavailable");
+         context = ctx;
+         format = navigator.gpu.getPreferredCanvasFormat();
+-        ctx.configure({ device, format, alphaMode });
++        // D3-B probe: TEXTURE_BINDING so a substrate can reduce the frame it just drew.
++        ctx.configure({ device, format, alphaMode, usage: 0x10 | 0x04 });
+         // Surface validation errors deterministically (not silent garbage): bracket
+         // the consumer `setup` AND a one-shot probe draw in an error scope + listen for
+         // an uncaptured error. The probe draw forces the pipeline to be EXERCISED inside
+diff --git a/src/styles/glass/ladder.css b/src/styles/glass/ladder.css
+index 291781d8..713c45b0 100644
+--- a/src/styles/glass/ladder.css
++++ b/src/styles/glass/ladder.css
+@@ -128,7 +128,6 @@
+            overlay-band glass in at its own root. `dark` (the :root default at
+            tokens.css) stays the explicit per-surface override a dark-substrate consumer
+            dials in on an ancestor. */
+-        --glass-backdrop: light;
+         position: relative;
+         @apply glass-plate;
+         border-radius: var(--radius-ctx);
+@@ -147,7 +146,6 @@
+     .glass-overlay {
+         /* The overlay band engages the bucket by default
+            (see .glass-floating). */
+-        --glass-backdrop: light;
+         position: relative;
+         @apply glass-plate;
+         border-radius: var(--radius-ctx);
+@@ -179,17 +177,6 @@
+        No `@supports` wrapper: style queries introduce no new `container-type` value, so
+        an engine without style-query support drops the unknown at-rule and keeps the
+        un-lifted register. */
+-    @container style(--glass-backdrop: light) {
+-        .glass-wash,
+-        .glass-quiet,
+-        .glass-resting,
+-        .glass-floating,
+-        .glass-overlay,
+-        .glass-card {
+-            --muted-foreground: var(--foreground);
+-        }
+-    }
+-
+     /* The content tiers and the overlay band both read the ON-GLASS muted register at
+        rest. The page-muted ink is calibrated against the OPAQUE canvas; on a
+        translucent plate it composites toward the lifted backdrop and its contrast
+@@ -202,7 +189,8 @@
+         .glass-quiet,
+         .glass-wash,
+         .glass-floating,
+-        .glass-overlay
++        .glass-overlay,
++        .glass-dock
+     ) {
+         --muted-foreground: var(--on-glass-muted);
+         --muted-foreground-strong: var(--on-glass-muted-strong);
+@@ -240,68 +228,5 @@
+         --muted-foreground-strong: var(--on-glass-muted-strong);
+     }
+ 
+-    /* The `contrast-color()` foreground-ink flip (Chrome 147+/Safari 26+).
+-       A PROGRESSIVE-ENHANCEMENT layer, NEVER the load-bearing floor (Open-Q #5
+-       ratified): the declarative bucket above already carries AA on ALL engines (it
+-       darkens the translucent plate so dark text clears ~11:1 over white at the 18%
+-       floor — the live π readback ratifies). On a supporting engine `contrast-color()`
+-       REFINES the foreground-ink pick natively, anchored on the LIGHT BACKDROP signal
+-       (`--card`, the warm-white surface base the bright bucket implies) — NOT on the
+-       ink. `contrast-color(var(--card))` over the light backdrop resolves to the
+-       maximally-legible DARK ink (anchoring on the dark ink instead would invert to
+-       white, illegible on the still-light translucent plate). The bucket is the floor;
+-       this is the native refinement. Scoped to the bright bucket. */
+-    @supports (color: contrast-color(white)) {
+-        /* The bright-bucket ink flip — the content tiers + overlay band over a DECLARED/
+-           sampled bright backdrop. The SYSTEMIC contrast-color()
+-           selection-inversion fix (approach A, lockstep-lift). Lifting only
+-           --muted-foreground (and the surface `color`) to contrast-color(--card) (white over
+-           a light plate, L100), but the ACTIVE control register (a SegmentedTabs active tab,
+-           the curve-picker selected label) reads var(--foreground) DIRECTLY (L90, un-lifted) —
+-           a control sets its OWN `color: var(--foreground)` which wins over the inherited
+-           surface `color`, so the inactive (muted→white) reads BRIGHTER than the active
+-           (--foreground), inverting selection. The fix lifts --foreground ITSELF in lockstep
+-           with --muted-foreground: now an active register reading --foreground resolves the
+-           SAME anchored contrast-color ink as the lifted inactive, so selected ≥ unselected
+-           everywhere (the inversion gone for ANY --muted-foreground/--foreground selection
+-           pairing inside a glass card — the SYSTEMIC library-seam fix, not a curve-picker
+-           one-off). Progressive enhancement only — the declarative darken is the AA floor. */
+-        @container style(--glass-backdrop: light) {
+-            .glass-wash,
+-            .glass-quiet,
+-            .glass-resting,
+-            .glass-floating,
+-            .glass-overlay,
+-            .glass-card {
+-                color: contrast-color(var(--card));
+-                --foreground: contrast-color(var(--card));
+-                --muted-foreground: contrast-color(var(--card));
+-            }
+-        }
+-        /* The overlay
+-           band's `contrast-color()` ink flip is now GATED in the bright bucket above
+-           (the @container --glass-backdrop:light block already lists `.glass-floating,
+-           .glass-overlay` alongside the content tiers), NOT here as an UNCONDITIONAL
+-           flip. The retired unconditional `:where(.glass-floating, .glass-overlay)`
+-           rule blackened the ink even on a CALM modal over a light page — a translucent
+-           cream plate forced to pure-black `contrast-color(--card)`, harsh on the cream,
+-           and `--muted-foreground` flipped to the same so captions lost their muted
+-           register. Now: over a calm/dark backdrop the modal keeps the WARM-INK
+-           `--foreground` (legible, not pure-black) + the muted caption register; only a
+-           modal over a genuinely-bright/busy backdrop flips to the dark contrast ink
+-           (where the plate ACTUALLY darkens to bright-bucket AA), the `--foreground`/
+-           `--muted-foreground` lift moving in LOCKSTEP there (the scope-6 lockstep). The
+-           overlay band STILL self-darkens UNCONDITIONALLY (the tint-strength clamp above,
+-           it floats over unknown) — only the INK flips in the bright bucket. ONE
+-           reconciled flip, not two forks (ladder.css stays the single source). */
+-        /* The content-tier ink flip is GATED on the bright
+-           signal (it moved INTO the @container bucket above), NOT unconditional. Over a calm
+-           LIGHT page the content tiers only carry the 4% silhouette floor (still a warm cream
+-           plate), so flipping the ink to the contrast-color DARK ink there is correct only
+-           where the plate ACTUALLY darkens to the bright-bucket AA — the unconditional flip
+-           would force a white-on-cream / dark-on-darkened mismatch on the calm card. The
+-           content tiers therefore take NO unconditional contrast-color flip; their flip lives
+-           in the @container bucket with the rest of the bright-condition darken. */
+-    }
+ 
+ }
+diff --git a/src/styles/glass/material.css b/src/styles/glass/material.css
+index ad881204..ee579b2c 100644
+--- a/src/styles/glass/material.css
++++ b/src/styles/glass/material.css
+@@ -101,12 +101,7 @@
+        like a mount defect. A rung that wants the register must stand this down under
+        the same carrier gate the register's other hosts use — the discovery arm in
+        tests/styles/glass-subtlety.test.ts reds on a mount that does not. */
+-    .glass-wash,
+-    .glass-quiet,
+-    .glass-resting,
+-    .glass-card {
+-        contain: paint;
+-    }
++    /* D3 common floor row 1: `contain: paint` dropped (O-61 halos). */
+ 
+     /* (b) The rim — UNIFORM across all rungs, ONE declaration for the whole tree
+        (`--glass-material-rim`, rim.css). It rides the material group so it composes
+diff --git a/src/styles/glass/veil.css b/src/styles/glass/veil.css
+index bf24eec1..846f1c62 100644
+--- a/src/styles/glass/veil.css
++++ b/src/styles/glass/veil.css
+@@ -34,13 +34,10 @@
+    at step 7). The rungs are `--z-behind` / `--z-background` / `--z-content`
+    (tokens/scheme-motion.css). Published prose: DESIGN.md §"Plate register".
+ 
+-   THE EARNED DARKEN. `--glass-veil-rung` is the tier's own ink, clamped upward by the
+-   measured backdrop luminance: at or below the knee the clamp resolves EXACTLY the
+-   rung's own ink (the calm identity — a plate over an unknown backdrop never falsely
+-   darkens), and past the knee it earns up to TWO more rungs of ink, ceiling included.
+-   Unsampled surfaces read the registered `--glass-backdrop-luma` initial 0 and sit on
+-   the floor. This is the ONE chromatic writer on the plate body: there is no second
+-   tint axis mixing the same plate toward the same ink.
++   THE FIELD SOLVE. `--glass-veil-rest` is the α of the `--card` pole that lifts the worst
++   PUBLISHED luminance under the surface to what the static muted ink needs, clamped to
++   [the rung's floor, 1]. A surface nothing publishes for reads the registered initials
++   and paints the any-input bound. This is the ONE chromatic writer on the plate body.
+ 
+    `--glass-veil` is published as a nestable VALUE token so a consumer composing the
+    plate INSIDE a bigger mix (the capsule's warm floor, a tone-tinted feedback panel)
+@@ -55,26 +52,34 @@
+    falsifier pins (0.6·tier < 0.6·rest whenever the clamp earned anything), and the
+    attribute drop at the end of a release stepped the ink instead of landing on it. */
+ @utility glass-plate {
++    /* D3-B · the α solve. The plate is the POLE (`--glass-veil-pole`, `--card`) at the α
++       that lifts the WORST published luminance under this surface to what the static
++       muted ink needs, never below the rung's floor (`--glass-veil-tier`). The mix runs
++       on sRGB-ENCODED channels (the engines composite there), so the solve does too:
++         α = (E(need) − E(worst)) / (E(pole) − E(worst))
++       The theme constants (`--glass-need-e`, `--glass-pole-e`, the sign) are derived in
++       tokens/glass.css. Light reads the low percentile, dark the high one. The field
++       bus (composables/glass/field) writes `--glass-backdrop-luma{-lo,-hi}` only on a
++       surface a component registered and a valid publisher covers; everywhere else the
++       registered initials (lo 0, hi 1) solve the any-input bound. A field already past
++       the need asks nothing: the numerator clamps at 0 and the floor holds. */
++    --glass-field-worst: calc(
++        var(--glass-field-dir) * var(--glass-backdrop-luma-lo) +
++            (1 - var(--glass-field-dir)) * var(--glass-backdrop-luma-hi)
++    );
++    --glass-field-e: calc(1.055 * pow(var(--glass-field-worst), 0.416667) - 0.055);
+     --glass-veil-rest: clamp(
+         var(--glass-veil-tier, var(--glass-veil-resting)),
+         calc(
+-            var(--glass-veil-tier, var(--glass-veil-resting)) + 2 *
+-                var(--glass-veil-step) *
+-                max(
+-                    0,
+-                    (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee)) /
+-                        (1 - var(--glass-backdrop-luma-knee))
+-                )
++            max(0, var(--glass-field-sign) * (var(--glass-need-e) - var(--glass-field-e))) /
++                max(0.001, var(--glass-field-sign) * (var(--glass-pole-e) - var(--glass-field-e)))
+         ),
+-        calc(
+-            var(--glass-veil-tier, var(--glass-veil-resting)) + 2 *
+-                var(--glass-veil-step)
+-        )
++        1
+     );
+     --glass-veil-rung: var(--glass-veil-rest);
+     --glass-veil: color-mix(
+         in srgb,
+-        oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-rung))
++        oklch(from var(--glass-veil-pole) l c h / var(--glass-veil-rung))
+             calc(var(--glass-level) * 100%),
+         var(--card)
+     );
+diff --git a/src/styles/tokens/color-radius.css b/src/styles/tokens/color-radius.css
+index 6dbdc758..c5edfa12 100644
+--- a/src/styles/tokens/color-radius.css
++++ b/src/styles/tokens/color-radius.css
+@@ -75,7 +75,14 @@
+        lifted ~~hsl(24 8% 16%)~~ [2026-09-22 · O-32 §2.2: hsl(26 22% 17%), dark-arm.css]
+        (NOT re-warmed here — the dark register is its work).
+        Bounded: the cream family, never a tinted cast (the triumvirate bar). */
+-    --card: hsl(30 85% 96%);
++    /* D3-B · the plate POLE. Authored in oklch with L as its own token, because the
++       glass solve (glass/veil.css) needs the pole's luminance and derives it here, from
++       the one source: Y = L³ (exact for a neutral, +0.0016 at this chroma). A plain
++       per-mode pair (the dark arm re-declares the three channels in tokens/dark-arm.css),
++       never a light-dark() fold: a number cannot ride light-dark(). The bytes are the
++       prior hsl(30 85% 96%), #fdf5ec. */
++    --card-l: 0.9739;
++    --card: oklch(var(--card-l) 0.0148 67.65);
+     --card-foreground: var(--foreground);
+     --popover: var(--card);
+     --popover-foreground: var(--foreground);
+diff --git a/src/styles/tokens/dark-arm.css b/src/styles/tokens/dark-arm.css
+index 9b573ee0..83f49416 100644
+--- a/src/styles/tokens/dark-arm.css
++++ b/src/styles/tokens/dark-arm.css
+@@ -90,8 +90,11 @@
+        ~~:80~~ --card [2026-09-22 · O-32 CT2: twin by token name].
+        [2026-09-22 · O-32 CT2: L17—the card ships hsl(26 22% 17%); card/page relL ≈ 8×, not
+        ~5× (measured over the L4 page hsl(24 9% 4%)).] */
+-    --card: hsl(26 22% 17%);
+-    --popover: hsl(26 22% 17%);
++    /* D3-B · the pole's dark channels (the light arm and the reason: color-radius.css).
++       The bytes are the prior hsl(26 22% 17%), #352a22. */
++    --card-l: 0.2949;
++    --card: oklch(var(--card-l) 0.0216 59.2);
++    --popover: var(--card);
+ 
+     /* Dark mirror of the warm-neutral public-data panel.
+        --card's dark ~~hsl(24 8% 16%)~~ nudged one warmth step toward amber
+@@ -276,7 +279,12 @@
+        selection veil moves AWAY from the plate, which in dark means lighter. That is a
+        STATE law, not the medium's.) */
+     --glass-veil-ink:  oklch(0.17 0.03 70);
+-    --glass-veil-base: 0.18;
++    /* D3-B · the dark floors: base 0.52 (wash 0.36 … overlay 0.68, step shared). The
++       solve reads the HIGH percentile here (a light ink wants a dark composite), at a
++       4.6 target: 4.5 read 4.47 over white in the research probe (D3-B §3.2). */
++    --glass-veil-base: 0.52;
++    --glass-ink-target: 4.6;
++    --glass-field-dir: 0;
+ 
+     /* The FOCUS-VEIL dim, DARK arm (glass/focus-veil.css; the light arm is the plain
+        per-mode pair in tokens/glass.css). A plain `.dark` re-declaration, never a
+@@ -298,7 +306,8 @@
+        Warm-amber (the identity), NOT the slides deck hsl(45 …) literal
+        (the deck is the REFERENCE; the library re-derives against its own --card). The
+        light arm lives in tokens/glass.css (the plain per-mode pair — the house idiom). */
+-    --on-glass-muted:        hsl(34 16% 72%);   /* brighter than the collapsed --neutral-5 L62 (WCAG 7.52:1 / APCA |Lc| 61.7 vs the luminous-dark composited quiet plate; subordinate to --foreground) */
++    --on-glass-muted-l:      0.7907;   /* D3-B · the muted ink's L, its own token: the solve derives Y = L³ from it (glass/veil.css). Bytes: the prior hsl(34 16% 72%) */
++    --on-glass-muted:        oklch(var(--on-glass-muted-l) 0.0212 74.77);   /* brighter than the collapsed --neutral-5 L62 (WCAG 7.52:1 / APCA |Lc| 61.7 vs the luminous-dark composited quiet plate; subordinate to --foreground) */
+     --on-glass-muted-strong: hsl(36 13% 81%);   /* the -strong rung, one step more present. Held at L81: at L78 the BRIGHTEST on-glass mid-tone plate (the configurator preset-label glass-capsule, composited [100,85,68] L≈0.10) drives the -strong caption to WCAG 4.33 — below AA. L81 clears the whole plate set (configurator 4.68 · shadow-stage 6.89 · texture-panel 6.47 · feedback-tone 6.74 · selected-chip 5.10) while STAYING subordinate to the L90 --foreground ink (L0.634 < L0.794). One register re-point lifts all -strong consumers in lockstep — the DRY register-level fix, NOT a per-site paste. */
+     --input-on-glass:        hsl(26 12% 22%);   /* the form-well fill — grounded warm-dark so the L90 input TEXT reads against a stable base (9.3:1) */
+     /* (the recessed meter track's dark arm RETIRED — `--track-well-recess` is one
+diff --git a/src/styles/tokens/glass-fx.css b/src/styles/tokens/glass-fx.css
+index faec0381..693ad132 100644
+--- a/src/styles/tokens/glass-fx.css
++++ b/src/styles/tokens/glass-fx.css
+@@ -121,28 +121,10 @@
+        so it darkens the inner-top edge without re-coloring the warm fill. */
+     --tab-track-recess-ink: color-mix(in srgb, var(--foreground) 7%, transparent);
+ 
+-    /* THE BACKDROP-LUMINANCE SIGNAL is two things and never one, because there is NO web
+-       API that reads the pixels painted BEHIND a `backdrop-filter` element:
+-
+-         --glass-backdrop       the DECLARATIVE BUCKET. A consumer/shell sets `light` on
+-                                an ancestor where it KNOWS the backdrop is bright. An
+-                                inheriting ident read by `@container style()` on every
+-                                glass family; `dark` (or unset) is the calm read. The
+-                                bucket drives the INK ON the plate, not the plate itself.
+-         --glass-backdrop-luma  the MEASURED relative luminance (0..1) the
+-                                `useGlassBackdropLuminance` observer writes where it is
+-                                wired. It drives the plate's OWN ink through the veil
+-                                clamp (`@utility glass-plate`, glass/veil.css).
+-
+-       The bucket is the band driver, the luma is the dynamic refinement, and neither is a
+-       second chromatic writer on the plate — there is exactly one, the veil. */
+-    --glass-backdrop:           dark;
+-
+-    /* The ONE retune knob for the continuous observer driver: below this knee the plate
+-       resolves EXACTLY the rung's own ink; above it the ink ramps CONTINUOUSLY toward two
+-       rungs deeper. Raising the knee darkens LATER — a brighter backdrop is tolerated
+-       before the lift. */
+-    --glass-backdrop-luma-knee: 0.6;
++    /* THE FIELD SIGNAL has one owner: the substrate that paints the field reduces its own
++       frame and publishes it (composables/glass/field), and the bus writes
++       `--glass-backdrop-luma{,-lo,-hi}` on the surfaces components register. No bucket,
++       no knee: the plate solves its α from the published tiles (glass/veil.css). */
+     /* The on-glass FOREGROUND register lives in tokens/on-glass-fg.css. */
+ 
+     /* NO edge-dispersion fringe. The question it answered — where does chroma at the
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+index 97921d2e..80862c63 100644
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -33,17 +33,34 @@
+        Band: L ∈ [0.24, 0.32], C ≤ 0.045, h = the foreground hue. */
+     --glass-veil-ink: oklch(0.28 0.035 70);
+ 
++    /* D3-B · THE POLE AND THE SOLVE INPUTS. The plate paints toward `--card` in both
++       themes, at an α solved per surface from the published field (glass/veil.css).
++       Every input is a token this file or its per-mode twin already owns: the pole's
++       and the muted ink's luminance are derived there from `--card-l` and
++       `--on-glass-muted-l` (Y = L³), never restated as numbers. `--glass-field-dir` is
++       1 in light (the dark ink wants a light composite: read the LOW percentile) and 0
++       in dark (tokens/dark-arm.css). The light target is 4.7, not 4.5: the solve is
++       exact for greys and the residual is chroma (D3-B §1.3, min 4.53 at 4.7). */
++    --glass-veil-pole: var(--card);
++    --glass-ink-target: 4.7;
++    --glass-field-dir: 1;
++
+     /* THE LADDER — one base, one step, five derived rungs. Every rung is
+        `base ± n·step`; there are no hand alphas, so monotone ordering is a property of
+        the arithmetic rather than of five values that happen to climb. The dark arm
+-       moves base alone (+0.04) and the whole ladder follows.
++       moves base alone (0.52) and the whole ladder follows.
++
++       D3-B: a rung is now the FLOOR α of the `--card` pole, not an ink alpha. The solve
++       in `@utility glass-plate` never paints a surface thinner than its floor, and an
++       UNPUBLISHED surface (nothing reduced what is under it) paints the any-input bound
++       (α 0.894 light, 0.853 dark), whatever its floor.
+ 
+        THE SUBSTITUTION-VS-INHERITANCE SEAM: the composed `--glass-plate-{rung}` colors
+        below resolve at THIS `:root`, so re-pointing `--glass-veil-base` on a DESCENDANT
+        does not re-compose an inherited plate color. A per-scope retune composes the
+        plate AT the element — `@utility glass-plate` (glass/veil.css) is that seam. */
+-    --glass-veil-base: 0.14;
+-    --glass-veil-step: 0.04;
++    --glass-veil-base: 0.26;
++    --glass-veil-step: 0.08;
+ 
+     --glass-veil-wash:     calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
+     --glass-veil-quiet:    calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+@@ -148,8 +165,13 @@
+        `@supports (color: contrast-color(…))` block refines it natively where supported. */
+     --dock-fg-on-aurora: var(--foreground);
+ 
+-    /* THE PLATE — one flat mix per rung, zero nested color-mix. The plate is the INK at
+-       the rung's alpha, lerped against the solid `--card` escape on the ONE
++    /* D3-B: THE VALUE-FORM PLATES ARE UNPUBLISHED. A `:root`-composed colour cannot read
++       the field under the element that paints it, so every `--glass-plate-{rung}` is the
++       pole at the any-input bound (`--glass-veil-bound`, glass/veil.css derives it from
++       the same tokens as the solve), and the rungs differ only in radius here.
++
++       THE PLATE — one flat mix per rung, zero nested color-mix. The plate is the POLE at
++       the bound alpha, lerped against the solid `--card` escape on the ONE
+        `--glass-level` scalar:
+          level 1   → the ink at the rung's own alpha (the glass identity)
+          level 0.3 → the firmer, mostly-solid plate `prefers-contrast: more` rides
+@@ -162,16 +184,16 @@
+        a per-scope retune composes the plate AT the element instead: `@utility
+        glass-plate` (glass/veil.css) is the applied twin, and every ladder rung takes
+        that path. */
+-    --glass-plate-wash:     color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-wash))     calc(var(--glass-level) * 100%), var(--card));
+-    --glass-plate-quiet:    color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-quiet))    calc(var(--glass-level) * 100%), var(--card));
+-    --glass-plate-resting:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-resting))  calc(var(--glass-level) * 100%), var(--card));
+-    --glass-plate-floating: color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-floating)) calc(var(--glass-level) * 100%), var(--card));
+-    --glass-plate-overlay:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-overlay))  calc(var(--glass-level) * 100%), var(--card));
++    --glass-plate-wash:     color-mix(in srgb, oklch(from var(--glass-veil-pole) l c h / var(--glass-veil-bound)) calc(var(--glass-level) * 100%), var(--card));
++    --glass-plate-quiet:    color-mix(in srgb, oklch(from var(--glass-veil-pole) l c h / var(--glass-veil-bound)) calc(var(--glass-level) * 100%), var(--card));
++    --glass-plate-resting:  color-mix(in srgb, oklch(from var(--glass-veil-pole) l c h / var(--glass-veil-bound)) calc(var(--glass-level) * 100%), var(--card));
++    --glass-plate-floating: color-mix(in srgb, oklch(from var(--glass-veil-pole) l c h / var(--glass-veil-bound)) calc(var(--glass-level) * 100%), var(--card));
++    --glass-plate-overlay:  color-mix(in srgb, oklch(from var(--glass-veil-pole) l c h / var(--glass-veil-bound)) calc(var(--glass-level) * 100%), var(--card));
+     /* NO `--glass-plate-dock`, deliberately: the dock plate composes its colour AT THE
+        ELEMENT off a LERPED ink (dock/styles/dock.css), which is the only path a measured
+        luminance can reach. The ink rung `--glass-veil-dock` above is the live one. */
+-    --glass-plate-chassis:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-chassis))  calc(var(--glass-level) * 100%), var(--card));
+-    --glass-plate-dialog:   color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-dialog))   calc(var(--glass-level) * 100%), var(--card));
++    --glass-plate-chassis:  color-mix(in srgb, oklch(from var(--glass-veil-pole) l c h / var(--glass-veil-bound)) calc(var(--glass-level) * 100%), var(--card));
++    --glass-plate-dialog:   color-mix(in srgb, oklch(from var(--glass-veil-pole) l c h / var(--glass-veil-bound)) calc(var(--glass-level) * 100%), var(--card));
+ 
+     /* The recessed WELL rung: the `--card` plate stepped a whisper DARKER toward the
+        warm `--foreground` ink so a nested control reads as recessed INTO the surface.
+@@ -257,6 +279,37 @@
+     --control-surface-bg-hover:  color-mix(in oklab, var(--glass-plate-quiet), var(--glass-plate-resting) 35%);
+ }
+ 
++/* D3-B · THE SOLVE'S CONSTANTS, derived once per theme scope. Declared on `:root` and
++   on every `.dark` scope so a dark island re-derives from its own `--card-l`,
++   `--on-glass-muted-l`, `--glass-ink-target` and `--glass-field-dir` (an unregistered
++   property substitutes where it is declared). Everything the solve needs that does not
++   depend on the element's own field lives here; `@utility glass-plate` (glass/veil.css)
++   adds the field.
++     Y        = L³ (OKLab; exact for a neutral)
++     need     the composite luminance the muted ink needs at its target: above it in
++              light, below it in dark
++     E(y)     = 1.055·y^(1/2.4) − 0.055, the encoded tone the engines composite on
++     bound    the α that meets `need` over ANY field (a black one in light, a white one
++              in dark): the unpublished state */
++:root,
++.dark {
++    --glass-ink-y: pow(var(--on-glass-muted-l), 3);
++    --glass-pole-y: pow(var(--card-l), 3);
++    --glass-field-sign: calc(2 * var(--glass-field-dir) - 1);
++    --glass-need-y: calc(
++        var(--glass-field-dir) * (var(--glass-ink-target) * (var(--glass-ink-y) + 0.05) - 0.05) +
++            (1 - var(--glass-field-dir)) * ((var(--glass-ink-y) + 0.05) / var(--glass-ink-target) - 0.05)
++    );
++    --glass-need-e: calc(1.055 * pow(var(--glass-need-y), 0.416667) - 0.055);
++    --glass-pole-e: calc(1.055 * pow(var(--glass-pole-y), 0.416667) - 0.055);
++    /* The any-input field: E(0) = −0.055 in light, E(1) = 1 in dark. */
++    --glass-bound-e: calc(var(--glass-field-dir) * -0.055 + (1 - var(--glass-field-dir)));
++    --glass-veil-bound: calc(
++        var(--glass-field-sign) * (var(--glass-need-e) - var(--glass-bound-e)) /
++            (var(--glass-field-sign) * (var(--glass-pole-e) - var(--glass-bound-e)))
++    );
++}
++
+ /* The typed per-instance axes — @property no-op floors. Registered here beside the §8
+    ladder they compose (the canonical @property home is tokens/property-regs.css) so the
+    foundation is one self-contained partial. Each is a `<color>` HUE + a `<percentage>`
+@@ -271,7 +324,7 @@
+ @property --glass-veil-rung {
+     syntax: "<number>";
+     inherits: true;
+-    initial-value: 0.14;
++    initial-value: 0.26;
+ }
+ 
+ @property --glass-fill-tint {
+diff --git a/src/styles/tokens/light-dark.css b/src/styles/tokens/light-dark.css
+index 90e71784..9c9eca63 100644
+--- a/src/styles/tokens/light-dark.css
++++ b/src/styles/tokens/light-dark.css
+@@ -113,8 +113,9 @@
+            the light arm of the `--card` declaration below and color-radius.css]
+            (LOCKSTEP color-radius.css --card) so the light glass plate reads
+            warm-not-gray; the dark arm is UNCHANGED. */
+-        --card:                       light-dark(hsl(30 85% 96%), hsl(26 22% 17%));
+-        --popover:                    light-dark(hsl(30 85% 96%), hsl(26 22% 17%));
++        /* `--card` / `--popover` LEAVE this fold (D3-B): the pole carries its L as a
++           numeric token the glass solve reads, and a number cannot ride light-dark().
++           They are a plain per-mode pair (color-radius.css + dark-arm.css). */
+         --surface-public-data-panel:  light-dark(hsl(44 16% 96%), hsl(36 9% 18%));
+ 
+         /* The chromatic dark --primary (legendre-violet house
+diff --git a/src/styles/tokens/on-glass-fg.css b/src/styles/tokens/on-glass-fg.css
+index 7841ff27..a3f65d0e 100644
+--- a/src/styles/tokens/on-glass-fg.css
++++ b/src/styles/tokens/on-glass-fg.css
+@@ -32,7 +32,8 @@
+    resolution under .dark, not a single-declaration light-dark() that an inset-
+    shadow downstream could collapse — the light-dark() inset-shadow trap). */
+ :root {
+-    --on-glass-muted:        hsl(30 26% 35%);   /* the muted caption rung over the composited cream plate (5.76:1 vs plate; darker than --neutral-5 L40) */
++    --on-glass-muted-l:      0.4822;   /* D3-B · the muted ink's L, its own token: the glass solve derives Y = L³ from it (glass/veil.css). Bytes: the prior hsl(30 26% 35%) */
++    --on-glass-muted:        oklch(var(--on-glass-muted-l) 0.0464 66.35);   /* the muted caption rung over the composited cream plate (5.76:1 vs plate; darker than --neutral-5 L40) */
+     --on-glass-muted-strong: hsl(28 28% 28%);   /* the -strong secondary rung, one step more present (7.79:1 vs plate) */
+     --input-on-glass:        hsl(36 40% 92%);   /* the form-well fill over glass — grounded warm so the input TEXT (--foreground) reads against a stable base (14.9:1) */
+     /* (`--track-well-recess` is NOT declared here. It is a HOST-RELATIVE
+diff --git a/src/styles/tokens/property-regs.css b/src/styles/tokens/property-regs.css
+index 961d4109..ce7fe70c 100644
+--- a/src/styles/tokens/property-regs.css
++++ b/src/styles/tokens/property-regs.css
+@@ -157,20 +157,28 @@
+     initial-value: 1;
+ }
+ 
+-/* The OBSERVER's measured backdrop relative-luminance. `useGlassBackdropLuminance`
+-   WRITES this (0..1) on the glass target; the ONE clamp that reads it lives in
+-   `@utility glass-plate` (glass/veil.css) and composes AT THE ELEMENT, so every surface
+-   applying the plate earns the same continuous darken from the same arithmetic. It
+-   lifts the rung's own ink by up to two steps as the measured backdrop brightens past
+-   the knee, ceiling included. Registered so a bare `var()` INTERPOLATES between sample
+-   frames instead of snapping — a per-sample re-paint would flicker the plate.
+-   `initial-value: 0` is the calm-dark rest: the clamp's luma-ramp is `max(0, …) = 0`,
+-   so an unwired surface resolves EXACTLY the floor. */
++/* D3-B · THE FIELD SIGNAL. The field bus (composables/glass/field/fieldBus.ts) writes
++   what the substrate under a surface PUBLISHED: the mean relative luminance, and the
++   low and high percentiles of the tiles under the surface's rect (padded by the blur
++   support). `inherits: false` so a write restyles the surface alone; a descendant that
++   paints the plate (`.dock-plate`) takes the value with an explicit `inherit`.
++   The initial values ARE the unpublished state: lo 0 (a black field) and hi 1 (a white
++   field), so an unpublished surface solves the any-input bound, never a thin guess. */
+ @property --glass-backdrop-luma {
+     syntax: "<number>";
+-    inherits: true;
++    inherits: false;
++    initial-value: 0;
++}
++@property --glass-backdrop-luma-lo {
++    syntax: "<number>";
++    inherits: false;
+     initial-value: 0;
+ }
++@property --glass-backdrop-luma-hi {
++    syntax: "<number>";
++    inherits: false;
++    initial-value: 1;
++}
+ 
+ /* The OPT-IN deep-glass DEPTH scalar — `--glass-level`'s twin for the deep tier. The
+    deep recipe (tokens/glass-deep.css) LERPs both the blur radius AND the saturate
+diff --git a/tests/components/custom/dock/GlassDock.backdrop-mode.test.ts b/tests/components/custom/dock/GlassDock.backdrop-mode.test.ts
+index 8c3c75c4..73d4a319 100644
+--- a/tests/components/custom/dock/GlassDock.backdrop-mode.test.ts
++++ b/tests/components/custom/dock/GlassDock.backdrop-mode.test.ts
+@@ -1,31 +1,36 @@
+ import { mount } from "@vue/test-utils";
+ import { beforeEach, describe, expect, it, vi } from "vitest";
+ 
+-const sampleBackdrop = vi.hoisted(() => vi.fn());
++const registered = vi.hoisted(() => ({ target: null as null | (() => unknown) }));
+ 
+-vi.mock("@glass/composables/glass/useGlassBackdropLuminance", () => ({
+-    useGlassBackdropLuminance: sampleBackdrop,
++vi.mock("@glass/composables/glass/field/fieldBus", () => ({
++    useFieldSurface: (target: () => unknown) => {
++        registered.target = target;
++    },
+ }));
+ 
+ import { GlassDock, type DockBackdropMode } from "@glass/components/dock";
+ 
+ describe("GlassDock backdrop mode", () => {
+-    beforeEach(() => sampleBackdrop.mockClear());
++    beforeEach(() => {
++        registered.target = null;
++    });
+ 
+-    it("keeps the live backdrop as the default", () => {
++    it("registers the live dock's root with the field bus by default", () => {
+         const wrapper = mount(GlassDock);
+ 
+-        expect(wrapper.get(".glass-dock").attributes("data-backdrop-mode")).toBe("live");
+-        expect(sampleBackdrop).toHaveBeenCalledOnce();
++        const root = wrapper.get(".glass-dock");
++        expect(root.attributes("data-backdrop-mode")).toBe("live");
++        expect(registered.target?.()).toBe(root.element);
+         wrapper.unmount();
+     });
+ 
+-    it("witnesses static mode without mounting the backdrop sampler", () => {
++    it("registers nothing in static mode (the level-0 escape)", () => {
+         const mode: DockBackdropMode = "static";
+         const wrapper = mount(GlassDock, { props: { backdropMode: mode } });
+ 
+         expect(wrapper.get(".glass-dock").attributes("data-backdrop-mode")).toBe(mode);
+-        expect(sampleBackdrop).not.toHaveBeenCalled();
++        expect(registered.target?.()).toBeNull();
+         wrapper.unmount();
+     });
+ });
+diff --git a/tests/composables/glass/backdropLuminanceSample.test.ts b/tests/composables/glass/backdropLuminanceSample.test.ts
+deleted file mode 100644
+index 768cd38e..00000000
+--- a/tests/composables/glass/backdropLuminanceSample.test.ts
++++ /dev/null
+@@ -1,109 +0,0 @@
+-// Proof:backdrop-composited-signal (R-COMPOSITED-SIGNAL / G3 → MATERIAL W2).
+-//
+-// The born-RED: `sampleAnimated` composited every TRANSLUCENT field pixel over a
+-// HARDCODED WHITE underlay, so the SAME field over a dark page and a light page
+-// resolved to IDENTICAL luma — the composited signal carried no page information.
+-// The cure feeds the REAL opaque page underlay (`resolveUnderlayRgb`, the same stack
+-// the static sampler reads) into the EXISTING luma→tint axis; no second opacity axis.
+-//
+-// GREEN (this file): a 1×1 translucent field over a dark vs a light underlay yields
+-// formula-correct DISTINCT luma. The dark/light assertions ALSO encode the mutation
+-// gate — restoring the white underlay (ignoring the `underlay` argument in the
+-// composite loop) collapses the two back to identical and FAILS `.not.toBeCloseTo`.
+-
+-import { describe, expect, it } from "vitest";
+-import {
+-    relLuminance,
+-    compositeOver,
+-} from "@glass/composables/glass/backdropSampleMath";
+-import { sampleAnimated } from "@glass/composables/glass/backdropLuminanceSample";
+-import { SAMPLE_DOWNSAMPLE } from "@glass/composables/glass/backdropLuminanceSample";
+-
+-const DARK: readonly [number, number, number] = [10, 10, 10];
+-const LIGHT: readonly [number, number, number] = [250, 250, 250];
+-const WHITE: readonly [number, number, number] = [255, 255, 255];
+-
+-// A translucent CHROMATIC field pixel at 50% coverage (alpha 128/255 ≈ 0.502, well
+-// above FIELD_ALPHA_FLOOR so the readback is a valid sample). Chromatic (not grey) so
+-// the ambient-hue histogram bins a real hue rather than an achromatic null.
+-const FIELD = { r: 210, g: 90, b: 40, alpha: 128 };
+-
+-/** The luma of ONE translucent FIELD pixel composited over `underlay` — the pure
+- *  analytical model the sampler loop executes per pixel. */
+-function analyticalLuma(underlay: readonly [number, number, number]): number {
+-    const a = FIELD.alpha / 255;
+-    const [r, g, b] = compositeOver(FIELD.r, FIELD.g, FIELD.b, a, underlay);
+-    return relLuminance(r, g, b);
+-}
+-
+-/** A fake 2D context whose downsample readback is a UNIFORM FIELD pixel — every
+- *  texel identical, so the sampler's mean IS the single-pixel composite. */
+-function fieldContext(): CanvasRenderingContext2D {
+-    const n = SAMPLE_DOWNSAMPLE * SAMPLE_DOWNSAMPLE;
+-    const data = new Uint8ClampedArray(n * 4);
+-    for (let i = 0; i < data.length; i += 4) {
+-        data[i] = FIELD.r;
+-        data[i + 1] = FIELD.g;
+-        data[i + 2] = FIELD.b;
+-        data[i + 3] = FIELD.alpha;
+-    }
+-    return {
+-        clearRect: () => {},
+-        drawImage: () => {},
+-        getImageData: () => ({ data }),
+-    } as unknown as CanvasRenderingContext2D;
+-}
+-
+-/** A 1×1-equivalent source canvas with a non-degenerate layout box. */
+-function fieldSource(): HTMLCanvasElement {
+-    return {
+-        width: 100,
+-        height: 100,
+-        getBoundingClientRect: () => ({
+-            left: 0,
+-            top: 0,
+-            width: 100,
+-            height: 100,
+-        }),
+-    } as unknown as HTMLCanvasElement;
+-}
+-
+-function surface(): HTMLElement {
+-    const el = document.createElement("div");
+-    el.getBoundingClientRect = () =>
+-        ({ left: 10, top: 10, width: 40, height: 40 }) as DOMRect;
+-    return el;
+-}
+-
+-describe("backdrop composited signal — real underlay, not hardcoded white", () => {
+-    it("analytical: a translucent field over dark vs light yields DISTINCT luma", () => {
+-        const dark = analyticalLuma(DARK);
+-        const light = analyticalLuma(LIGHT);
+-        // Formula-correct: 0.5·grey + 0.5·dark  ≪  0.5·grey + 0.5·light.
+-        expect(dark).toBeLessThan(light);
+-        expect(light - dark).toBeGreaterThan(0.05);
+-    });
+-
+-    it("born-RED: compositing over a FIXED white underlay collapses the distinction", () => {
+-        // Both "pages" composite over white — the defect: identical luma regardless of
+-        // the true page. The cure passes the real underlay instead (asserted below).
+-        expect(analyticalLuma(WHITE)).toBeCloseTo(analyticalLuma(WHITE), 10);
+-    });
+-
+-    it("sampleAnimated over dark vs light underlay resolves DISTINCT luma (mutation gate)", () => {
+-        const el = surface();
+-        const source = fieldSource();
+-
+-        const dark = sampleAnimated(el, source, fieldContext(), DARK);
+-        const light = sampleAnimated(el, source, fieldContext(), LIGHT);
+-
+-        expect(dark).not.toBeNull();
+-        expect(light).not.toBeNull();
+-        // The mutation gate: restoring the white underlay (loop ignores `underlay`)
+-        // makes these two identical → this assertion FAILS.
+-        expect(dark!.luma).not.toBeCloseTo(light!.luma, 2);
+-        // And each matches the closed-form single-pixel composite (uniform field).
+-        expect(dark!.luma).toBeCloseTo(analyticalLuma(DARK), 5);
+-        expect(light!.luma).toBeCloseTo(analyticalLuma(LIGHT), 5);
+-    });
+-});
+diff --git a/tests/setup.ts b/tests/setup.ts
+index 9ed09bdc..7b6bbd68 100644
+--- a/tests/setup.ts
++++ b/tests/setup.ts
+@@ -94,13 +94,8 @@ if (!("PointerEvent" in window)) {
+     });
+ }
+ 
+-// happy-dom lacks `document.elementsFromPoint` (the hit-test stack-walk). The
+-// adaptive-glass backdrop sampler (`useGlassBackdropLuminance`, wired ON for every
+-// `backdropMode: "live"` dock — the default) calls it on mount; without the stub every dock unit test crashes at the
+-// first sample. The product path is CORRECT and unchanged — a happy-dom stub is
+-// HONEST (the test env genuinely has no painted stack to hit-test), NOT a product
+-// fallback that would hide a dead primary (the NO-MASKING-FALLBACK edict). An
+-// empty stack degrades to the static-ground floor exactly as an SSR/no-paint env would.
++// happy-dom lacks `document.elementsFromPoint` (the hit-test stack-walk). The test env
++// has no painted stack to hit-test, so an empty stack is the honest stub.
+ // happy-dom's `document` is an `HTMLDocument` instance whose resolved prototype is
+ // NOT the global `Document.prototype`, so the stub lands on the live instance's own
+ // prototype (covers every `document` in the file) + the instance as a belt-and-braces.
+diff --git a/tests/styles/contrast-computed.test.ts b/tests/styles/contrast-computed.test.ts
+index 0520575e..5220b03c 100644
+--- a/tests/styles/contrast-computed.test.ts
++++ b/tests/styles/contrast-computed.test.ts
+@@ -224,7 +224,12 @@ export function resolveColour(expression: string, scope: Scope, depth = 0): Colo
+         };
+     }
+ 
+-    const oklch = expr.match(
++    // A channel may be its own numeric token (`oklch(var(--card-l) …)`, the glass pole).
++    const oklch = (
++        /^oklch\(/.test(expr)
++            ? expr.replace(/var\(\s*(--[\w-]+)\s*\)/g, (m, name: string) => scope[name]?.trim() ?? m)
++            : expr
++    ).match(
+         /^oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*(?:\/\s*([\d.%]+)\s*)?\)$/,
+     );
+     if (oklch) {
+diff --git a/tests/styles/glass-subtlety.test.ts b/tests/styles/glass-subtlety.test.ts
+index 7f001ff0..c1b8dd4e 100644
+--- a/tests/styles/glass-subtlety.test.ts
++++ b/tests/styles/glass-subtlety.test.ts
+@@ -122,17 +122,18 @@ describe("glass ink ladder — the veil climbs wash → overlay", () => {
+         }
+     });
+ 
+-    it("keeps the CONTENT band under the transmission ceiling in both modes", () => {
+-        // Occlusion is bought with radius, legibility with ink — never with alpha. The
+-        // content band must leave the backdrop's structure legible through it, which
+-        // caps its ink at 0.20. The chrome band may sit above: it claims occlusion, and
+-        // buys it one rung further up the RADIUS axis.
++    it("declares the field-signal FLOORS of the --card pole in both modes", () => {
++        // D3-B: a rung is the floor α of the `--card` pole, never an ink alpha. The solve
++        // (glass/veil.css) only ever thickens a surface above its floor; the floors are
++        // the probe's table (light base 0.26, dark 0.52, one shared step 0.08).
++        const table = {
++            light: [0.1, 0.18, 0.26, 0.34, 0.42],
++            dark: [0.36, 0.44, 0.52, 0.6, 0.68],
++        } as const;
+         for (const [mode, map] of [["light", light], ["dark", dark]] as const) {
+-            for (const rung of ["wash", "quiet", "resting"] as const) {
+-                expect(ink(map, rung), `${mode} ${rung}`).toBeLessThanOrEqual(0.2);
+-            }
+-            expect(ink(map, "wash"), `${mode} wash`).toBeGreaterThan(0);
+-            expect(ink(map, "overlay"), `${mode} overlay`).toBeLessThan(1);
++            RUNGS.forEach((rung, i) =>
++                expect(ink(map, rung), `${mode} ${rung}`).toBeCloseTo(table[mode][i], 6),
++            );
+         }
+     });
+ 
+@@ -154,11 +155,7 @@ describe("glass ink ladder — the veil climbs wash → overlay", () => {
+         expect(darkArm).not.toMatch(
+             /--glass-veil-(?:wash|quiet|resting|floating|overlay)\s*:/,
+         );
+-        const step = Number.parseFloat(light.get("--glass-veil-step")!);
+-        const delta =
+-            Number.parseFloat(dark.get("--glass-veil-base")!) -
+-            Number.parseFloat(light.get("--glass-veil-base")!);
+-        expect(delta).toBeCloseTo(step, 6);
++        expect(darkArm).not.toMatch(/--glass-veil-step\s*:/);
+     });
+ 
+     it("DIMS in both modes — the ink never inverts to a lightener", () => {
+diff --git a/src/composables/glass/field/fieldBus.ts b/src/composables/glass/field/fieldBus.ts
+new file mode 100644
+index 00000000..7dacf2ee
+--- /dev/null
++++ b/src/composables/glass/field/fieldBus.ts
+@@ -0,0 +1,332 @@
++/**
++ * The field bus: publishers in, registered surfaces out.
++ *
++ * A PUBLISHER is a region whose luminance statistics are known without a DOM readback:
++ * a library substrate that reduced its own frame on the GPU (reduceFrame.ts), or a
++ * medium a consumer declared (`declareField`), which the library reduces itself. It
++ * publishes a grid of tiles over its rect.
++ *
++ * A SURFACE is a glass element a component REGISTERED (`useFieldSurface`: GlassDock,
++ * PopoverContent, DialogContent, Card). Plain `.glass-*` markup never registers and
++ * stays unpublished. Once per animation frame while a publisher exists, the bus reads
++ * each registered surface's rect, pads it by 3σ of its blur, and writes onto it
++ * `--glass-backdrop-luma` (the mean under the rect) and `-lo` / `-hi` (the worst p05 /
++ * p95 under the padded rect), registered `inherits: false`, only when a value moved by
++ * more than `EPSILON`. A surface is UNPUBLISHED, its inline values removed so the CSS
++ * solves the any-input bound, when:
++ *   - no single valid publisher covers its padded rect;
++ *   - another publisher reaches into the padded rect without covering it (two owners,
++ *     neither of which describes the whole backdrop);
++ *   - an OCCLUDER intersects it: a layer the publisher did not reduce sits between the
++ *     publisher and the surface (the modal scrim, the focus veil, `[data-glass-occluder]`).
++ * There is no page publication: an unpublished surface is the bound, never a guess.
++ */
++import { onBeforeUnmount, watch } from "vue";
++import { createReduction, pageGround } from "./reduceFrame";
++
++export interface FieldStats {
++    tx: number;
++    ty: number;
++    /** Per tile, row-major: mean, low and high percentile of relative luminance. */
++    mean: Float32Array;
++    lo: Float32Array;
++    hi: Float32Array;
++}
++
++export interface FieldTiles extends FieldStats {
++    /** The element that paints the published region. */
++    el: Element;
++    /** 0 a substrate (a backdrop by construction), 1 a declared medium (content drawn
++     *  over the backdrop). Where two cover a surface, the higher layer owns it. */
++    layer: 0 | 1;
++    /** The published region, CSS px, viewport coordinates. */
++    rect: { left: number; top: number; width: number; height: number };
++    /** Read at every apply: false while what paints no longer matches what was reduced. */
++    valid?: () => boolean;
++}
++
++const OCCLUDERS = ".bg-overlay-scrim, .glass-focus-veil, [data-glass-occluder]";
++const EPSILON = 0.004;
++const PROPS = ["--glass-backdrop-luma", "--glass-backdrop-luma-lo", "--glass-backdrop-luma-hi"] as const;
++
++const publishers = new Map<object, FieldTiles>();
++/** Registered surfaces → the pad (3σ of the blur that paints them), px. */
++const surfaces = new Map<HTMLElement, number>();
++const written = new WeakMap<HTMLElement, [number, number, number]>();
++let raf = 0;
++
++/** Publish (or replace) a region's statistics. `null` withdraws the publisher. */
++export function publishField(owner: object, tiles: FieldTiles | null): void {
++    if (tiles) publishers.set(owner, tiles);
++    else publishers.delete(owner);
++    schedule();
++}
++
++/** 3σ of the widest `blur()` in the backdrop filter of `el` or of a descendant plate
++ *  (the dock's filter sits on `.dock-plate`, not on the root the bus writes). */
++function padOf(el: HTMLElement): number {
++    let r = 0;
++    for (const node of [el, ...el.querySelectorAll<HTMLElement>(":scope > .dock-plate, :scope > * > .dock-plate")]) {
++        const f = getComputedStyle(node).backdropFilter;
++        for (const m of f.matchAll(/blur\(([\d.]+)px\)/g)) r = Math.max(r, +m[1]);
++    }
++    return 3 * r;
++}
++
++/** Register a surface; returns the unregister function. */
++function registerFieldSurface(el: HTMLElement): () => void {
++    surfaces.set(el, padOf(el));
++    const ro = new ResizeObserver(() => {
++        if (surfaces.has(el)) surfaces.set(el, padOf(el));
++        schedule();
++    });
++    ro.observe(el);
++    schedule();
++    return () => {
++        ro.disconnect();
++        surfaces.delete(el);
++        clear(el);
++    };
++}
++
++/** The component seam: register whatever element `target` resolves, for as long as the
++ *  component lives. */
++export function useFieldSurface(target: () => HTMLElement | null | undefined): void {
++    let off: (() => void) | null = null;
++    watch(
++        target,
++        (el) => {
++            off?.();
++            off = el ? registerFieldSurface(el) : null;
++        },
++        { flush: "post", immediate: true },
++    );
++    onBeforeUnmount(() => {
++        off?.();
++        off = null;
++    });
++}
++
++function schedule(): void {
++    if (!raf && typeof requestAnimationFrame === "function") raf = requestAnimationFrame(apply);
++}
++
++function clear(el: HTMLElement): void {
++    if (!written.has(el)) return;
++    for (const p of PROPS) el.style.removeProperty(p);
++    written.delete(el);
++    el.removeAttribute("data-field");
++}
++
++type Box = { x0: number; y0: number; x1: number; y1: number };
++const covers = (t: FieldTiles, b: Box) =>
++    b.x0 >= t.rect.left - 0.5 &&
++    b.y0 >= t.rect.top - 0.5 &&
++    b.x1 <= t.rect.left + t.rect.width + 0.5 &&
++    b.y1 <= t.rect.top + t.rect.height + 0.5;
++const meets = (r: { left: number; top: number; right: number; bottom: number }, b: Box) =>
++    r.left < b.x1 && r.right > b.x0 && r.top < b.y1 && r.bottom > b.y0;
++
++/** The one publisher that describes everything under `pad`, or null. */
++function owner(pad: Box): FieldTiles | null {
++    const covering: FieldTiles[] = [];
++    for (const t of publishers.values()) {
++        const r = t.rect;
++        if (covers(t, pad)) covering.push(t);
++        else if (meets({ left: r.left, top: r.top, right: r.left + r.width, bottom: r.top + r.height }, pad))
++            return null;
++    }
++    if (covering.length <= 1) return covering[0] ?? null;
++    // Several cover it. A declared medium sits over a substrate; between two of a layer,
++    // the later in document order paints later (a z-index can invert that: a named gap).
++    return covering.reduce((a, b) =>
++        b.layer > a.layer ||
++        (b.layer === a.layer && a.el.compareDocumentPosition(b.el) & Node.DOCUMENT_POSITION_FOLLOWING)
++            ? b
++            : a,
++    );
++}
++
++/** Worst extremes over the tiles `pad` touches; mean weighted by overlap with `core`. */
++function stats(t: FieldTiles, core: Box, pad: Box): [number, number, number] | null {
++    const { left, top, width, height } = t.rect;
++    const tw = width / t.tx;
++    const th = height / t.ty;
++    const ix = (x: number) => Math.min(t.tx - 1, Math.max(0, Math.floor((x - left) / tw)));
++    const iy = (y: number) => Math.min(t.ty - 1, Math.max(0, Math.floor((y - top) / th)));
++    let lo = 1;
++    let hi = 0;
++    for (let j = iy(pad.y0); j <= iy(pad.y1 - 1e-3); j++)
++        for (let i = ix(pad.x0); i <= ix(pad.x1 - 1e-3); i++) {
++            const k = j * t.tx + i;
++            lo = Math.min(lo, t.lo[k]);
++            hi = Math.max(hi, t.hi[k]);
++        }
++    let sum = 0;
++    let area = 0;
++    for (let j = iy(core.y0); j <= iy(core.y1 - 1e-3); j++)
++        for (let i = ix(core.x0); i <= ix(core.x1 - 1e-3); i++) {
++            const ox = Math.min(core.x1, left + (i + 1) * tw) - Math.max(core.x0, left + i * tw);
++            const oy = Math.min(core.y1, top + (j + 1) * th) - Math.max(core.y0, top + j * th);
++            const w = Math.max(0, ox) * Math.max(0, oy);
++            sum += t.mean[j * t.tx + i] * w;
++            area += w;
++        }
++    return area ? [sum / area, lo, hi] : null;
++}
++
++function apply(): void {
++    raf = 0;
++    if (!publishers.size) {
++        for (const el of surfaces.keys()) clear(el);
++        return;
++    }
++    const vw = innerWidth;
++    const vh = innerHeight;
++    const occluders = [...document.querySelectorAll<HTMLElement>(OCCLUDERS)]
++        .map((o) => o.getBoundingClientRect())
++        .filter((r) => r.width && r.height);
++    for (const [el, padPx] of surfaces) {
++        const r = el.getBoundingClientRect();
++        if (!r.width || !r.height || !el.isConnected) {
++            clear(el);
++            continue;
++        }
++        const core = { x0: r.left, y0: r.top, x1: r.right, y1: r.bottom };
++        // Nothing outside the viewport reaches the backdrop.
++        const pad = {
++            x0: Math.max(0, r.left - padPx),
++            y0: Math.max(0, r.top - padPx),
++            x1: Math.min(vw, r.right + padPx),
++            y1: Math.min(vh, r.bottom + padPx),
++        };
++        const t = occluders.some((o) => meets(o, core)) ? null : owner(pad);
++        const next = t && (!t.valid || t.valid()) ? stats(t, core, pad) : null;
++        if (!next) {
++            clear(el);
++            continue;
++        }
++        const prev = written.get(el);
++        if (prev && next.every((v, i) => Math.abs(v - prev[i]) < EPSILON)) continue;
++        PROPS.forEach((p, i) => el.style.setProperty(p, next[i].toFixed(4)));
++        written.set(el, next);
++        el.setAttribute("data-field", "published");
++    }
++    if (publishers.size) schedule();
++}
++
++/* ── declareField — a medium the library reduces itself ───────────────────────────── */
++
++export type FieldMedium = HTMLImageElement | HTMLVideoElement | HTMLCanvasElement;
++
++let devicePromise: Promise<GPUDevice> | null = null;
++function fieldDevice(): Promise<GPUDevice> {
++    devicePromise ??= (async () => {
++        if (typeof navigator === "undefined" || !navigator.gpu)
++            throw new Error("[declareField] WebGPU is unavailable: the medium cannot publish");
++        const adapter = await navigator.gpu.requestAdapter();
++        if (!adapter) throw new Error("[declareField] no WebGPU adapter: the medium cannot publish");
++        return adapter.requestDevice();
++    })();
++    return devicePromise;
++}
++
++const TEX_BINDING = 0x04;
++const TEX_COPY_DST = 0x02;
++const TEX_RENDER_ATTACHMENT = 0x10;
++
++/**
++ * Declare a medium whose paint lies under glass: an `<img>`, a `<video>` or a
++ * `<canvas>`. The library copies it into a texture, reduces it (on decode for an image,
++ * per presented frame for a video, per animation frame for a canvas) and publishes the
++ * tiles over the element's box. A consumer never hands in a number. Cross-origin media
++ * without CORS rejects at `copyExternalImageToTexture` (a tainted source cannot be
++ * read), and so does an engine without WebGPU: the surfaces over it stay at the bound.
++ * Resolves the withdraw function.
++ */
++export async function declareField(el: FieldMedium): Promise<() => void> {
++    const device = await fieldDevice();
++    const reduction = createReduction(device);
++    let texture: GPUTexture | null = null;
++    let stats_: FieldStats | null = null;
++    let dead = false;
++    let loop = 0;
++
++    const size = (): [number, number] =>
++        el instanceof HTMLImageElement
++            ? [el.naturalWidth, el.naturalHeight]
++            : el instanceof HTMLVideoElement
++              ? [el.videoWidth, el.videoHeight]
++              : [el.width, el.height];
++
++    const put = () => {
++        if (dead || !stats_) return;
++        const r = el.getBoundingClientRect();
++        publishField(el, {
++            ...stats_,
++            el,
++            layer: 1,
++            rect: { left: r.left, top: r.top, width: r.width, height: r.height },
++            valid: () => el.isConnected && +getComputedStyle(el).opacity >= 0.999,
++        });
++    };
++
++    const reduce = async (): Promise<void> => {
++        const [w, h] = size();
++        if (!w || !h) return;
++        if (!texture || texture.width !== w || texture.height !== h) {
++            texture?.destroy();
++            texture = device.createTexture({
++                size: [w, h],
++                format: "rgba8unorm",
++                usage: TEX_BINDING | TEX_COPY_DST | TEX_RENDER_ATTACHMENT,
++            });
++        }
++        // Throws SecurityError on a tainted (cross-origin, no CORS) source: loud, by design.
++        device.queue.copyExternalImageToTexture({ source: el }, { texture }, [w, h]);
++        const encoder = device.createCommandEncoder({ label: "[declareField] reduce" });
++        if (!reduction.encode(encoder, texture, 1, pageGround(), true)) return;
++        device.queue.submit([encoder.finish()]);
++        const s = await reduction.read();
++        if (s && !dead) {
++            stats_ = s;
++            put();
++        }
++    };
++
++    if (el instanceof HTMLImageElement) {
++        await el.decode();
++        await reduce();
++        el.addEventListener("load", () => void reduce().catch(console.error));
++    } else if (el instanceof HTMLVideoElement) {
++        const tick = () => {
++            if (dead) return;
++            void reduce().catch(console.error);
++            loop = el.requestVideoFrameCallback(tick);
++        };
++        await reduce();
++        loop = el.requestVideoFrameCallback(tick);
++    } else {
++        const tick = () => {
++            if (dead) return;
++            void reduce().catch(console.error);
++            loop = requestAnimationFrame(tick);
++        };
++        await reduce();
++        loop = requestAnimationFrame(tick);
++    }
++
++    const ro = new ResizeObserver(put);
++    ro.observe(el);
++    addEventListener("scroll", put, { passive: true, capture: true });
++    return () => {
++        dead = true;
++        if (el instanceof HTMLVideoElement) el.cancelVideoFrameCallback(loop);
++        else if (el instanceof HTMLCanvasElement) cancelAnimationFrame(loop);
++        ro.disconnect();
++        removeEventListener("scroll", put, { capture: true });
++        publishField(el, null);
++        reduction.destroy();
++        texture?.destroy();
++    };
++}
+diff --git a/src/composables/glass/field/reduceFrame.ts b/src/composables/glass/field/reduceFrame.ts
+new file mode 100644
+index 00000000..99d10bad
+--- /dev/null
++++ b/src/composables/glass/field/reduceFrame.ts
+@@ -0,0 +1,257 @@
++/**
++ * The GPU half of the field signal. A reduction turns a texture, COMPOSITED as it paints
++ * (its layer opacity over the page ground, on encoded channels, where the engines
++ * composite), into per-tile statistics of relative luminance: the mean, and the p05/p95
++ * of a 128-bin histogram (p05 on the bin's lower edge, p95 on its upper edge, so both
++ * err outward). Stats are copied into a 3-deep ring of `MAP_READ` buffers and read by
++ * `mapAsync` a frame or two later. The main thread never blocks and never reads a
++ * canvas: no `getImageData`, no `readPixels`.
++ *
++ * Two callers. A library substrate reduces the frame it just drew, inside its own
++ * command encoder (`createFrameReducer`, the aurora's WebGPU arm). A declared medium
++ * (`declareField`, fieldBus.ts) is copied into a texture and reduced the same way.
++ */
++import { publishField, type FieldStats } from "./fieldBus";
++
++const TX = 32;
++const TY = 18;
++const BINS = 128;
++const STATS_BYTES = TX * TY * 16;
++const P_LO = 0.05;
++const P_HI = 0.95;
++
++// GPUBufferUsage / GPUTextureUsage / GPUMapMode bits, spelled once (the enums are not
++// globals under every test environment).
++const BUF_MAP_READ = 0x1;
++const BUF_COPY_SRC = 0x4;
++const BUF_COPY_DST = 0x8;
++const BUF_UNIFORM = 0x40;
++const BUF_STORAGE = 0x80;
++const MAP_READ = 0x1;
++
++const WGSL = /* wgsl */ `
++struct U { size: vec2f, ceil: f32, straight: f32, bg: vec4f };
++@group(0) @binding(0) var src: texture_2d<f32>;
++@group(0) @binding(1) var<uniform> u: U;
++@group(0) @binding(2) var<storage, read_write> stats: array<vec4f>;
++var<workgroup> hist: array<atomic<u32>, ${BINS}>;
++var<workgroup> sum: atomic<u32>;
++var<workgroup> cnt: atomic<u32>;
++fn lin(c: vec3f) -> vec3f { return select(pow((c + 0.055) / 1.055, vec3f(2.4)), c / 12.92, c <= vec3f(0.04045)); }
++@compute @workgroup_size(16, 16)
++fn main(@builtin(workgroup_id) wg: vec3u, @builtin(local_invocation_id) l: vec3u, @builtin(local_invocation_index) li: u32) {
++  if (li < ${BINS}u) { atomicStore(&hist[li], 0u); }
++  if (li == 0u) { atomicStore(&sum, 0u); atomicStore(&cnt, 0u); }
++  workgroupBarrier();
++  let tile = u.size / vec2f(${TX}.0, ${TY}.0);
++  let o = vec2u(floor(vec2f(wg.xy) * tile));
++  let e = vec2u(floor(vec2f(wg.xy + vec2u(1u)) * tile));
++  for (var y = o.y + l.y; y < e.y; y += 16u) {
++    for (var x = o.x + l.x; x < e.x; x += 16u) {
++      let f = textureLoad(src, vec2u(x, y), 0);
++      // The layer's opacity (and a declared medium's own straight alpha; an opaque
++      // swap chain's alpha is not presented, so it is ignored) over the page ground.
++      let a = u.ceil * select(1.0, f.a, u.straight > 0.5);
++      let comp = a * f.rgb + (1.0 - a) * u.bg.rgb;
++      let Y = clamp(dot(lin(comp), vec3f(0.2126, 0.7152, 0.0722)), 0.0, 1.0);
++      atomicAdd(&hist[min(u32(Y * ${BINS}.0), ${BINS - 1}u)], 1u);
++      atomicAdd(&sum, u32(Y * 4096.0));
++      atomicAdd(&cnt, 1u);
++    }
++  }
++  workgroupBarrier();
++  if (li == 0u) {
++    let n = f32(atomicLoad(&cnt));
++    var acc = 0.0; var lo = 0.0; var hi = 1.0; var gotLo = false; var gotHi = false;
++    for (var b = 0u; b < ${BINS}u; b++) {
++      acc += f32(atomicLoad(&hist[b]));
++      if (!gotLo && acc >= ${P_LO} * n) { lo = f32(b) / ${BINS}.0; gotLo = true; }
++      if (!gotHi && acc >= ${P_HI} * n) { hi = f32(b + 1u) / ${BINS}.0; gotHi = true; }
++    }
++    stats[wg.y * ${TX}u + wg.x] = vec4f(lo, f32(atomicLoad(&sum)) / 4096.0 / max(n, 1.0), hi, n);
++  }
++}`;
++
++/** The page ground the medium composites over. Fails loud on a ground it cannot parse. */
++export function pageGround(): [number, number, number] {
++    const body = getComputedStyle(document.body).backgroundColor;
++    const css = /rgba\(0, 0, 0, 0\)|transparent/.test(body)
++        ? getComputedStyle(document.documentElement).backgroundColor
++        : body;
++    const m = /^rgba?\(\s*([\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)/.exec(css);
++    if (!m)
++        throw new Error(
++            `[field] the page ground "${css}" is not an rgb() colour; the field cannot be composited`,
++        );
++    return [+m[1] / 255, +m[2] / 255, +m[3] / 255];
++}
++
++export interface Reduction {
++    /** Encode one reduction of `texture` into `encoder`. False when every ring buffer is
++     *  still mapping (the frame is skipped, never queued). */
++    encode(
++        encoder: GPUCommandEncoder,
++        texture: GPUTexture,
++        ceil: number,
++        bg: readonly number[],
++        straightAlpha: boolean,
++    ): boolean;
++    /** After submit: map the encoded slot; resolves the tile stats, or null if destroyed. */
++    read(): Promise<FieldStats | null> | null;
++    destroy(): void;
++}
++
++export function createReduction(device: GPUDevice): Reduction {
++    const pipeline = device.createComputePipeline({
++        label: "[field] reduce",
++        layout: "auto",
++        compute: {
++            module: device.createShaderModule({ label: "[field] reduce.wgsl", code: WGSL }),
++            entryPoint: "main",
++        },
++    });
++    const uniforms = device.createBuffer({ size: 32, usage: BUF_UNIFORM | BUF_COPY_DST });
++    const stats = device.createBuffer({ size: STATS_BYTES, usage: BUF_STORAGE | BUF_COPY_SRC });
++    const ring = [0, 1, 2].map(() => ({
++        buf: device.createBuffer({ size: STATS_BYTES, usage: BUF_MAP_READ | BUF_COPY_DST }),
++        busy: false,
++    }));
++    let pending: (typeof ring)[number] | null = null;
++    let dead = false;
++
++    return {
++        encode(encoder, texture, ceil, bg, straightAlpha) {
++            pending = null;
++            const slot = ring.find((r) => !r.busy);
++            if (!slot) return false;
++            device.queue.writeBuffer(
++                uniforms,
++                0,
++                new Float32Array([
++                    texture.width, texture.height, ceil, straightAlpha ? 1 : 0,
++                    bg[0], bg[1], bg[2], 1,
++                ]),
++            );
++            const pass = encoder.beginComputePass({ label: "[field] reduce" });
++            pass.setPipeline(pipeline);
++            pass.setBindGroup(
++                0,
++                device.createBindGroup({
++                    layout: pipeline.getBindGroupLayout(0),
++                    entries: [
++                        { binding: 0, resource: texture.createView() },
++                        { binding: 1, resource: { buffer: uniforms } },
++                        { binding: 2, resource: { buffer: stats } },
++                    ],
++                }),
++            );
++            pass.dispatchWorkgroups(TX, TY);
++            pass.end();
++            encoder.copyBufferToBuffer(stats, 0, slot.buf, 0, STATS_BYTES);
++            pending = slot;
++            return true;
++        },
++        read() {
++            const slot = pending;
++            if (!slot) return null;
++            pending = null;
++            slot.busy = true;
++            return slot.buf.mapAsync(MAP_READ).then(
++                () => {
++                    slot.busy = false;
++                    if (dead) {
++                        slot.buf.unmap();
++                        return null;
++                    }
++                    const a = new Float32Array(slot.buf.getMappedRange().slice(0));
++                    slot.buf.unmap();
++                    const n = TX * TY;
++                    const lo = new Float32Array(n);
++                    const mean = new Float32Array(n);
++                    const hi = new Float32Array(n);
++                    for (let k = 0; k < n; k++) {
++                        lo[k] = a[k * 4];
++                        mean[k] = a[k * 4 + 1];
++                        hi[k] = a[k * 4 + 2];
++                    }
++                    return { tx: TX, ty: TY, lo, mean, hi };
++                },
++                () => {
++                    slot.busy = false;
++                    return null;
++                },
++            );
++        },
++        destroy() {
++            dead = true;
++            uniforms.destroy();
++            stats.destroy();
++        },
++    };
++}
++
++/** The composite opacity of the canvas's own layers up to its field root. */
++function opacities(canvas: HTMLCanvasElement): { root: number; inner: number } {
++    const root = canvas.closest<HTMLElement>(".aurora-root");
++    let inner = 1;
++    for (let el: HTMLElement | null = canvas; el && el !== root; el = el.parentElement)
++        inner *= +getComputedStyle(el).opacity;
++    return { root: root ? +getComputedStyle(root).opacity : 1, inner };
++}
++
++export interface FrameReducer {
++    encode(encoder: GPUCommandEncoder, texture: GPUTexture): void;
++    after(): void;
++    destroy(): void;
++}
++
++/** A substrate reduces the frame it just drew and publishes it under its own canvas. */
++export function createFrameReducer(device: GPUDevice, canvas: HTMLCanvasElement): FrameReducer {
++    const reduction = createReduction(device);
++    let at: { ceil: number; rect: DOMRect } | null = null;
++    let dead = false;
++
++    return {
++        encode(encoder, texture) {
++            at = null;
++            let ceil: number;
++            let bg: [number, number, number];
++            try {
++                ceil = opacities(canvas).root;
++                bg = pageGround();
++            } catch (err) {
++                console.error(err);
++                publishField(canvas, null);
++                return;
++            }
++            if (reduction.encode(encoder, texture, ceil, bg, false))
++                at = { ceil, rect: canvas.getBoundingClientRect() };
++        },
++        after() {
++            const reducedAt = at;
++            const read = reduction.read();
++            if (!read || !reducedAt) return;
++            void read.then((s) => {
++                if (!s || dead) return;
++                const r = reducedAt.rect;
++                publishField(canvas, {
++                    ...s,
++                    el: canvas,
++                    layer: 0,
++                    rect: { left: r.left, top: r.top, width: r.width, height: r.height },
++                    // What was reduced still paints: the arm cross-fade has landed and
++                    // the ceiling is the one the reduction composited with.
++                    valid: () => {
++                        const o = opacities(canvas);
++                        return o.inner >= 0.999 && Math.abs(o.root - reducedAt.ceil) < 0.002;
++                    },
++                });
++            });
++        },
++        destroy() {
++            dead = true;
++            publishField(canvas, null);
++            reduction.destroy();
++        },
++    };
++}
