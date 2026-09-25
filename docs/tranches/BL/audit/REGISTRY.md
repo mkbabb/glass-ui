@@ -1,4 +1,4 @@
-# BL—audit registry, rounds 1 to 9
+# BL—audit registry, rounds 1 to 10
 
 Seat: REGISTRY. Model `claude-opus-5-5` (asserted from system identity). Read at `1c1f1f67`; every commit since `d29be90e` is docs-only, `src` is byte-identical to the published 10.0.1 (`git diff --stat v10.0.1..HEAD -- src` is empty; last `src` commit `3f9ea884`). Date 2026-09-23.
 
@@ -20,19 +20,21 @@ Round 8, the sixth stability pass, folded at `33aa1681`, 2026-09-24 (R8-01 read 
 
 Round 9, the seventh stability pass, folded at `1f376b8b`, 2026-09-24 (both seats read at `48e8bb79`; every commit since is docs-only). Inputs: the two seat reports under `round-9/` (R9-01, R9-02), each read in full, and `INBOUND.md`, re-read for rows the map lacks (none: O-80 is its last row, mapped in round 8, so `INBOUND-MAP.md` is unchanged). `git diff --stat v10.0.1..HEAD -- src demo` is empty, so round 9 also measured the published 10.0.1 bytes. Round 9 is recorded in each family's **Round 9** bullets, in §2, in §3 (recomputed) and in §13. It mints no family.
 
+Round 10, the eighth stability pass, folded at `1ca0933e`, 2026-09-24 (R10-01 read at `04929544`, R10-02 at `cc8a501c`). Inputs: the two seat reports under `round-10/` (R10-01, R10-02), each read in full, and `INBOUND.md`, re-read for rows the map lacks (none: O-80 is its last row, mapped in round 8, so `INBOUND-MAP.md` is unchanged). `src` is no longer byte-identical to 10.0.1: release/10.1 merged at `4afc7fc9`, and `git diff --stat v10.0.1..HEAD -- src demo` lists six files, all in `configurator/` plus `src/index.ts` and the configurator story (the 10.1.0 `#actions` and `layout="detached"` surfaces). Every Sheet, glass, token, test and script byte the round measured is unchanged since `v10.0.1`. Round 10 is recorded in each family's **Round 10** bullets, in §2, in §3 (recomputed) and in §14. It mints no family.
+
 ## Counts
 
-Cumulative, after round 9:
+Cumulative, after round 10:
 
-- Findings: **659** (377 + 121 + 33 + 34 + 21 + 20 + 18 + 12 + 23). Accepted: **655**. Rejected whole: **4** (rounds 2 to 9 rejected none whole; round 2's 14 refuted claims are in §2, and rounds 3 to 9 refuted none). Families: **85** (72 + F-73, F-74, F-75 + F-76, F-77 + F-78, F-79 + F-80 + F-81, F-82 + F-83, F-84 + F-85; round 9 minted none).
-- Per severity, all findings: BLOCKER 9 · HIGH 179 · MED 328 · LOW 143. Accepted: BLOCKER 9 · HIGH 179 · MED 326 · LOW 141.
-- Families by max severity: BLOCKER 3 · HIGH 55 · MED 27 · LOW 0 (round 8 raised F-65 from MED to HIGH, and F-85 entered at HIGH on its inbound rows; round 9 changes no maximum, and F-85's HIGH now rests on two lens rows).
-- Convergence: 58 families hit by 3 or more lenses, 21 by 2, 6 by 1, and 0 by inbound rows only (F-85 took its first lens, R9-01; §3).
-- External witnesses: 442 inbound rows traced at HEAD in `INBOUND-MAP.md`: FAMILY 360 · CURED-AT-HEAD 52 · CONSUMER-SIDE 21 · NOT-REPRODUCED 6 · NEW 3 (O-74's three safe-area rows, which mint F-85). Round 9 mapped no row (none landed); R9-02 corrected five round-8 statuses and placements in paint, recorded in §13.5 rather than by editing the map's round-8 section.
+- Findings: **678** (377 + 121 + 33 + 34 + 21 + 20 + 18 + 12 + 23 + 19). Accepted: **674**. Rejected whole: **4** (rounds 2 to 10 rejected none whole; round 2's 14 refuted claims are in §2, and rounds 3 to 10 refuted none). Families: **85** (72 + F-73, F-74, F-75 + F-76, F-77 + F-78, F-79 + F-80 + F-81, F-82 + F-83, F-84 + F-85; rounds 9 and 10 minted none).
+- Per severity, all findings: BLOCKER 9 · HIGH 183 · MED 339 · LOW 147. Accepted: BLOCKER 9 · HIGH 183 · MED 337 · LOW 145.
+- Families by max severity: BLOCKER 3 · HIGH 55 · MED 27 · LOW 0 (round 8 raised F-65 from MED to HIGH, and F-85 entered at HIGH on its inbound rows; rounds 9 and 10 change no maximum).
+- Convergence: 67 families hit by 3 or more lenses, 13 by 2, 5 by 1, and 0 by inbound rows only (§3). Round 10 moved nine families from two lenses to three (F-03, F-06, F-25, F-28, F-31, F-57, F-59, F-60, F-78) and F-74 from one to two.
+- External witnesses: 442 inbound rows traced at HEAD in `INBOUND-MAP.md`: FAMILY 360 · CURED-AT-HEAD 52 · CONSUMER-SIDE 21 · NOT-REPRODUCED 6 · NEW 3 (O-74's three safe-area rows, which mint F-85). Rounds 9 and 10 mapped no row (none landed); R9-02 corrected five round-8 statuses and placements in paint, recorded in §13.5 rather than by editing the map's round-8 section.
 - Ledger members: the census's six registry gaps (`ledger/CENSUS.md` §5) fold into F-13, F-14, F-24, F-31, F-54 and F-65 as ledger members, which are not lens findings and are not counted in `n` (§10.5). F-85's three inbound rows are likewise not counted in `n`.
-- Per-round counts and per-seat tables: round 2 §6.2, round 3 §7.2, round 4 §8.2, round 5 §9.2, round 6 §10.2, round 7 §11.2, round 8 §12.2, round 9 §13.2.
+- Per-round counts and per-seat tables: round 2 §6.2, round 3 §7.2, round 4 §8.2, round 5 §9.2, round 6 §10.2, round 7 §11.2, round 8 §12.2, round 9 §13.2, round 10 §14.2.
 
-After round 8 the cumulative figures were 636 findings, 632 accepted, 85 families (BLOCKER 3 · HIGH 55 · MED 27 by maximum), a 58 / 21 / 5 convergence split with 1 family on inbound rows only, and 442 inbound rows. After round 7 the cumulative figures were 624 findings, 620 accepted, 84 families (BLOCKER 3 · HIGH 53 · MED 28 by maximum), a 58 / 19 / 7 convergence split and 370 inbound rows. After round 6 the cumulative figures were 606 findings, 602 accepted, 82 families (BLOCKER 3 · HIGH 52 · MED 27 by maximum), a 58 / 19 / 5 convergence split and 370 inbound rows. After round 5 the cumulative figures were 586 findings, 582 accepted, 80 families (BLOCKER 3 · HIGH 49 · MED 28 by maximum), a 58 / 18 / 4 convergence split and 353 inbound rows. After round 4 the cumulative figures were 565 findings, 561 accepted, 79 families (BLOCKER 3 · HIGH 47 · MED 29 by maximum), a 57 / 18 / 4 convergence split and 346 inbound rows. After round 3 they were 531 findings, 527 accepted, 77 families (BLOCKER 3 · HIGH 43 · MED 31 by maximum) and a 55 / 18 / 4 convergence split. After round 2 they were 498 findings, 494 accepted, 75 families (BLOCKER 3 · HIGH 42 · MED 30 by maximum) and a 53 / 19 / 3 convergence split.
+After round 9 the cumulative figures were 659 findings, 655 accepted, 85 families (BLOCKER 3 · HIGH 55 · MED 27 by maximum), a 58 / 21 / 6 convergence split with 0 families on inbound rows only, and 442 inbound rows. After round 8 the cumulative figures were 636 findings, 632 accepted, 85 families (BLOCKER 3 · HIGH 55 · MED 27 by maximum), a 58 / 21 / 5 convergence split with 1 family on inbound rows only, and 442 inbound rows. After round 7 the cumulative figures were 624 findings, 620 accepted, 84 families (BLOCKER 3 · HIGH 53 · MED 28 by maximum), a 58 / 19 / 7 convergence split and 370 inbound rows. After round 6 the cumulative figures were 606 findings, 602 accepted, 82 families (BLOCKER 3 · HIGH 52 · MED 27 by maximum), a 58 / 19 / 5 convergence split and 370 inbound rows. After round 5 the cumulative figures were 586 findings, 582 accepted, 80 families (BLOCKER 3 · HIGH 49 · MED 28 by maximum), a 58 / 18 / 4 convergence split and 353 inbound rows. After round 4 the cumulative figures were 565 findings, 561 accepted, 79 families (BLOCKER 3 · HIGH 47 · MED 29 by maximum), a 57 / 18 / 4 convergence split and 346 inbound rows. After round 3 they were 531 findings, 527 accepted, 77 families (BLOCKER 3 · HIGH 43 · MED 31 by maximum) and a 55 / 18 / 4 convergence split. After round 2 they were 498 findings, 494 accepted, 75 families (BLOCKER 3 · HIGH 42 · MED 30 by maximum) and a 53 / 19 / 3 convergence split.
 
 ### Round 1
 
@@ -66,22 +68,22 @@ After round 8 the cumulative figures were 636 findings, 632 accepted, 85 familie
 | L15b | chicago + density | 14 | 1 | 3 | 6 | 4 | 0 |
 | **all** | | **377** | **4** | **84** | **188** | **101** | **4** |
 
-How to read: each accepted finding sits in exactly one family. A script checked this: 373 assigned, 0 duplicates, 0 unassigned; round 2's 121 were checked the same way (121 assigned, 0 duplicates, 494 accepted in all), round 3's 33 likewise (33 assigned, 0 duplicates, 527 accepted in all), round 4's 34 likewise (34 assigned, 0 duplicates, 561 accepted in all), round 5's 21 likewise (21 assigned, 0 duplicates, 582 accepted in all), round 6's 20 likewise (20 assigned, 0 duplicates, 602 accepted in all), round 7's 18 likewise (18 assigned, 0 duplicates, 620 accepted in all), round 8's 12 likewise (12 assigned, 0 duplicates, 632 accepted in all), and round 9's 23 likewise (23 assigned, 0 duplicates, 655 accepted in all). Families are grouped by the defect mechanism and ordered by band, not by severity. "Lenses" counts distinct reports. "(re-checked)" marks evidence I re-opened at `1c1f1f67` (round 1), `6433284a` (round 2), `95068476` (round 3), `9b5aa09c` (round 4), `f57a3c1f` (round 5), `2efb414c` (round 6), `71f2ba45` (round 7), `33aa1681` (round 8) or `1f376b8b` (round 9). A disposition is a draft for the ledger: BUILD (its own wave, or a named wave it shares), FOLD (into the named row or wave), or RETIRE (with the rationale stated). Inbound rows name the INBOUND or recap ids the family answers.
+How to read: each accepted finding sits in exactly one family. A script checked this: 373 assigned, 0 duplicates, 0 unassigned; round 2's 121 were checked the same way (121 assigned, 0 duplicates, 494 accepted in all), round 3's 33 likewise (33 assigned, 0 duplicates, 527 accepted in all), round 4's 34 likewise (34 assigned, 0 duplicates, 561 accepted in all), round 5's 21 likewise (21 assigned, 0 duplicates, 582 accepted in all), round 6's 20 likewise (20 assigned, 0 duplicates, 602 accepted in all), round 7's 18 likewise (18 assigned, 0 duplicates, 620 accepted in all), round 8's 12 likewise (12 assigned, 0 duplicates, 632 accepted in all), round 9's 23 likewise (23 assigned, 0 duplicates, 655 accepted in all), and round 10's 19 likewise (19 assigned, 0 duplicates, 674 accepted in all). Families are grouped by the defect mechanism and ordered by band, not by severity. "Lenses" counts distinct reports. "(re-checked)" marks evidence I re-opened at `1c1f1f67` (round 1), `6433284a` (round 2), `95068476` (round 3), `9b5aa09c` (round 4), `f57a3c1f` (round 5), `2efb414c` (round 6), `71f2ba45` (round 7), `33aa1681` (round 8), `1f376b8b` (round 9) or `1ca0933e` (round 10). A disposition is a draft for the ledger: BUILD (its own wave, or a named wave it shares), FOLD (into the named row or wave), or RETIRE (with the rationale stated). Inbound rows name the INBOUND or recap ids the family answers.
 
 ## 1. Families
 
 ### Index
 
-`n` and `lenses` are cumulative over rounds 1 to 9. Each family lists its later members in a **Round 2** to **Round 9** bullet and any mechanism or wave change in a **Round 2** to **Round 9 correction** bullet. Rows are ordered by band, so the thirteen later families sit in their bands (F-77, F-80 and F-85 in D; F-75 and F-81 to F-84 in E; F-73, F-74, F-76, F-78 and F-79 in F).
+`n` and `lenses` are cumulative over rounds 1 to 10. Each family lists its later members in a **Round 2** to **Round 10** bullet and any mechanism or wave change in a **Round 2** to **Round 10 correction** bullet. Rows are ordered by band, so the thirteen later families sit in their bands (F-77, F-80 and F-85 in D; F-75 and F-81 to F-84 in E; F-73, F-74, F-76, F-78 and F-79 in F).
 
 | id | band | family | n | lenses | max | disposition |
 |---|---|---|---|---|---|---|
 | F-01 | A | The gate register counts seat names, not executables that can go red | 16 | 7 | BLOCKER | BUILD |
 | F-02 | A | Detectors narrower than the claim they carry | 12 | 5 | HIGH | FOLD into W-REGISTER-COLLAPSE |
-| F-03 | A | Gate fixtures pinned to a live defect | 2 | 2 | MED | FOLD into W-REGISTER-COLLAPSE |
+| F-03 | A | Gate fixtures pinned to a live defect | 4 | 3 | MED | FOLD into W-REGISTER-COLLAPSE |
 | F-04 | A | The visual suite never entered CI, and the discharge was redefined | 6 | 5 | HIGH | BUILD |
 | F-05 | A | Visual harness rot | 6 | 3 | HIGH | BUILD |
-| F-06 | A | Paint evidence routed to the #10 π sink and never captured | 23 | 2 | HIGH | RETIRE the sink as a routing target |
+| F-06 | A | Paint evidence routed to the #10 π sink and never captured | 24 | 3 | HIGH | RETIRE the sink as a routing target |
 | F-07 | A | Safari cells deferred behind an environment excuse | 8 | 5 | HIGH | BUILD |
 | F-08 | A | The WebGPU primary is never paint-gated | 4 | 4 | HIGH | BUILD |
 | F-09 | A | Latches and disclosures standing in for cures | 7 | 5 | HIGH | RETIRE the latch form |
@@ -100,14 +102,14 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 | F-22 | D | Overlay layering: the content seam carries no z, edge or dismissal contract | 17 | 7 | HIGH | BUILD |
 | F-23 | D | Ink calibrated to the token ground, not the painted composite | 11 | 7 | HIGH | BUILD |
 | F-24 | D | State, value and emphasis carried by one channel that dark or a preference arm removes | 8 | 4 | HIGH | BUILD |
-| F-25 | D | Preview stills feed OKLCH-scale hues to hsl() | 2 | 2 | MED | BUILD |
+| F-25 | D | Preview stills feed OKLCH-scale hues to hsl() | 3 | 3 | MED | BUILD |
 | F-26 | D | A composite custom property resolved at :root | 2 | 2 | HIGH | BUILD |
 | F-27 | D | `cn()` never lets a shorthand subsume its longhands | 2 | 2 | HIGH | BUILD |
-| F-28 | D | The chip defect row never started | 2 | 2 | MED | BUILD |
+| F-28 | D | The chip defect row never started | 3 | 3 | MED | BUILD |
 | F-29 | D | Density: pads transpose under the width query, corners do not | 23 | 9 | HIGH | BUILD |
 | F-30 | D | Radius role: the off-role 12 px rung (a); multi-line holders on the stadium (b) | 3 | 3 | MED | BUILD (two rows: F-30a, F-30b) |
-| F-31 | D | Frost and the field well | 3 | 2 | HIGH | BUILD |
-| F-32 | D | Sheet detents: the dock covers the live-behind sheet's action | 4 | 4 | MED | BUILD |
+| F-31 | D | Frost and the field well | 6 | 3 | HIGH | BUILD |
+| F-32 | D | Sheet detents: the dock covers the live-behind sheet's action | 5 | 5 | MED | BUILD |
 | F-33 | D | Specimens lay out by viewport, not by container | 11 | 5 | HIGH | BUILD |
 | F-34 | D | Demo remainder rows unbuilt | 4 | 3 | MED | BUILD |
 | F-35 | D | Brand face delivery | 3 | 3 | HIGH | BUILD |
@@ -129,11 +131,11 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 | F-84 | E | What text is content is not stated to the user agent | 5 | 2 | MED | BUILD |
 | F-44 | F | Motion time off the one authority: integrators, dt policies, emitted tails, the canvas clock | 8 | 5 | HIGH | BUILD |
 | F-45 | F | Non-composited motion at idle | 4 | 3 | HIGH | BUILD |
-| F-46 | F | Offsets follow the velocity path, not position | 6 | 5 | MED | BUILD |
+| F-46 | F | Offsets follow the velocity path, not position | 7 | 6 | MED | BUILD |
 | F-73 | F | The theme flip is not atomic | 1 | 1 | MED | BUILD (small) |
-| F-74 | F | Spring overshoot detaches an edge-anchored sheet | 1 | 1 | MED | BUILD |
+| F-74 | F | Spring overshoot detaches an edge-anchored sheet | 2 | 2 | MED | BUILD |
 | F-76 | F | The animated or reserved extent leaves out part of what the surface occupies | 4 | 2 | MED | BUILD |
-| F-78 | F | Interruption has no transition of its own | 7 | 2 | HIGH | BUILD |
+| F-78 | F | Interruption has no transition of its own | 9 | 3 | HIGH | BUILD |
 | F-79 | F | Direction and writing mode are not inputs to axis code | 6 | 1 | HIGH | BUILD |
 | F-47 | G | The WebGPU primary does less than the fallback arm | 8 | 8 | HIGH | BUILD |
 | F-48 | G | Greenfields stopped at W0 | 6 | 5 | HIGH | BUILD |
@@ -145,15 +147,15 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 | F-54 | G | iOS 27 hallmarks unbuilt | 2 | 2 | MED | FOLD into the design loop's dock and motion portfolio |
 | F-55 | H | The colocation chronic: settlement decided, never landed | 7 | 6 | HIGH | BUILD |
 | F-56 | H | Component-owned code in global zones | 8 | 3 | HIGH | FOLD into W-COLOCATION |
-| F-57 | H | Nesting by file kind; no placement grammar | 3 | 2 | MED | FOLD into W-COLOCATION |
+| F-57 | H | Nesting by file kind; no placement grammar | 4 | 3 | MED | FOLD into W-COLOCATION |
 | F-58 | H | One symbol, two doors | 7 | 3 | HIGH | FOLD into W-COLOCATION |
-| F-59 | H | Cycles from contracts homed inside one consumer | 3 | 2 | HIGH | FOLD into W-COLOCATION |
-| F-60 | H | Periphery structure | 8 | 2 | MED | BUILD |
+| F-59 | H | Cycles from contracts homed inside one consumer | 4 | 3 | HIGH | FOLD into W-COLOCATION |
+| F-60 | H | Periphery structure | 9 | 3 | MED | BUILD |
 | F-61 | H | Repo weight and evidence hygiene | 4 | 3 | MED | BUILD |
 | F-62 | I | Meta and provenance re-accreted | 11 | 8 | HIGH | BUILD |
 | F-63 | I | Docs not derived from the source of record | 22 | 12 | HIGH | BUILD |
 | F-64 | I | Token hygiene | 12 | 5 | MED | BUILD |
-| F-65 | I | Twin sources of record | 9 | 6 | HIGH | BUILD |
+| F-65 | I | Twin sources of record | 12 | 7 | HIGH | BUILD |
 | F-66 | J | Published surface with no consumer | 9 | 6 | MED | FOLD into the P-6 overfitting audit |
 | F-67 | J | Published claims not asserted on the built artefact | 13 | 5 | HIGH | BUILD |
 | F-68 | J | Consumers pinned majors back; cures cannot land | 16 | 8 | BLOCKER | BUILD |
@@ -196,10 +198,14 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 
 - **Mechanism**: a gate self-test uses a live violation as its fixture, so curing the violation breaks the gate.
 - **Members (2; 1M / 1L)**: L12-12, L13-08.
-- **Lenses (2)**: L12, L13. **Max severity**: MED.
+- **Round 10 (+2; 1M / 1L)**:
+  - R10-02-01 (LOW, EXTENDS): the orphan-CSS gate's channel-2 self-test (`tests/gates/orphan-css-partial.test.ts:462-473`, re-checked) needs `_shared/field/control.css` to stay channel-1-unreachable and more than 10 `<style src>` rescues. That is the dual wiring F-58 (L12-05) rules against, so collapsing to one channel fails the bite with no regression behind it.
+  - R10-02-02 (MED, EXTENDS): `tests/styles/proportion-register.test.ts:173-181` ("invents NO dark-arm α", re-checked) fails on any `--ink-*` or `--fill-*` declaration in `dark-arm.css` (0 at HEAD), which are the bytes that cure L01a-10, F-06's owed dark-α leg.
+- **Lenses (3)**: L12, L13, R10-02. **Max severity**: MED.
 - **Evidence**: L13-08: a fixture needs a demo-only helper to stay in `src/`; L12-12: an E-7 violation doubles as the fixture.
 - **Disposition**: FOLD into W-REGISTER-COLLAPSE.
 - **Wave shape**: synthetic fixtures under `tests/_support/`, so the colocation move lands without a gate edit.
+- **Round 10 correction**: the statement widens from a self-test fixture to any gate arm that asserts a live defect state, as its fixture or as its expectation, so that the cure turns it red. Reason: R10-02-02 has the family's consequence (curing the violation breaks the gate) and its cure (the assertion re-stated on the cured state). F-09 was weighed and fails: a latch passes on any failure, while this is a plain assertion that the cure turns red. The dark-α arm flips, in the commit that lands the capture, to "every dark α cites a captured cell"; the channel-2 bite moves to a synthetic manifest under `tests/_support/`.
 
 #### F-04—The visual suite never entered CI, and the discharge was redefined
 
@@ -223,10 +229,13 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 
 - **Mechanism**: rows sealed on source-read green with their π cells routed to #10, which never enqueued them (P-2).
 - **Members (23; 2H / 6M / 15L)**: L01a-10, L01a-03, L01a-28, L01a-32, L01a-33, L01a-41, L01b-X1, L01b-46, L01b-57, L01b-68, L01b-72, L01b-73, L01b-74, L01b-77, L01b-79, L01b-80, L01b-81, L01b-83, L01b-84, L01b-86, L01b-87, L01b-88, L01b-91.
-- **Lenses (2)**: L01a, L01b. **Max severity**: HIGH.
+- **Round 10 (+1; 1M)**:
+  - R10-02-03 (MED, EXTENDS): the routing survives in the tree after #10 closed PARTIAL (BK `FINAL.md:92`). Five src and test sites still point paint cells at #10 (`tests/styles/layout-canon.test.ts:15-26` and `:150-152`, `tests/styles/proportion-register.test.ts:176`, `tests/components/button/Button.test.ts:10-13`, `src/styles/tokens/color-radius.css:141-142`); `glass/material.css:63` says "the π battery counts filtering ancestors" (re-checked), and no such counter exists; the sortable battery routes G-14 FROST to #22's receiver matrix (SEALED), which names no sortable list.
+- **Lenses (3)**: L01a, L01b, R10-02. **Max severity**: HIGH.
 - **Evidence**: L01b-X1: paint for 16 rows routed to #10 and never enqueued; L01a-10: the sink's own dark-α leg is still owed.
 - **Disposition**: RETIRE the sink as a routing target (a queue nobody drains turns debt into a label); FOLD each owed cell into its subject family's wave.
 - **Wave shape**: none of its own: each BUILD wave ships its paired π and a DELTA artefact on disk (P-2).
+- **Round 10 correction**: retiring the sink strikes its in-tree pointers in the same move, and a comment that names a counter must name one that exists. Invariant: `grep -rE "#10\b.*(owed|OWED|π)|π battery" src tests` returns nothing.
 
 #### F-07—Safari cells deferred behind an environment excuse
 
@@ -557,10 +566,13 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 
 - **Mechanism**: a warm band authored on the OKLCH hue scale is fed to `hsla()`, where 58-95 reads yellow-green.
 - **Members (2; 2M)**: L03a-08, L03b-10.
-- **Lenses (2)**: L03a, L03b. **Max severity**: MED.
+- **Round 10 (+1; 1M)**:
+  - R10-02-04 (MED, EXTENDS): in paint, three of the six stills paint 100 % of their chromatic pixels outside the declared 25-95° band: aurora (58), glass-material (62) and glass-panel (68) land at OKLCH p50 107-120° in both modes. `resolveCategoryTile` puts the aurora still on the catalog front door, `/`, where it measures the same. The only other templated `hsl()` sites (`demo/stories/navigation/carousel.vue`) name their hues on the hsl scale and are not this defect.
+- **Lenses (3)**: L03a, L03b, R10-02. **Max severity**: MED.
 - **Evidence**: `demo/chassis/landing/vizPreviewStill.ts:37,50-55`.
 - **Disposition**: BUILD (small).
 - **Wave shape**: W-STILL-OKLCH: author the stills in OKLCH off the field palette, both modes.
+- **Round 10 correction**: evidence lines drift to `vizPreviewStill.ts:38` (the band), `:48-55` (the registry) and `:132` (the one `hsla()` primitive, re-checked). Born-RED: every still has 0 % of chromatic pixels outside [25°, 95°] OKLCH in both arms (HEAD: 100 % for three).
 
 #### F-26—A composite custom property resolved at :root
 
@@ -572,6 +584,7 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 - **Evidence**: declared only at `tokens/glass.css:203`; `Chip.vue:69-77` sets `--glass-fill-tint` per instance; readers `glass-chip.css:14-15`, `glass-atom.css:82-83` (re-checked).
 - **Disposition**: BUILD.
 - **Wave shape**: in W-CHIP: declare the composite on the reading class.
+- **Round 10 note**: no member. R10-02-06 (placed in F-31 by the round-6 ruling) is this mechanism's second instance: the `--glass-blur-*` rungs are composites that read `--glass-level` and resolve at `:root` (`tokens/glass.css:88-92`), so an element's level never reaches its blur. The statement widens from `--glass-fill-tinted` to every composite that reads a per-instance input, and W-FROST-II takes this family's cure form for the blur rungs.
 
 #### F-27—`cn()` never lets a shorthand subsume its longhands
 
@@ -589,10 +602,13 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 
 - **Mechanism**: the 7.0.0 chip row stayed OPEN for five closes with its spec's kill targets live.
 - **Members (2; 2M)**: L01a-43, L04-F13.
-- **Lenses (2)**: L01a, L04. **Max severity**: MED.
+- **Round 10 (+1; 1M)**:
+  - R10-02-05 (MED, CONFIRMS): on `/forms/chip` in both modes X-G1, X-G2, X-G3, X-G5 and X-G8 are still RED in paint (a `plus-lighter` selected `::after` over an opaque selected fill; a settled scale of 1.07416; `border-top-width: 0px` under `border-color` writes; two fill-tinted gradient declarations; 38 mode sites), and `ChipMode` and `--accent-band` are live.
+- **Lenses (3)**: L01a, L04, R10-02. **Max severity**: MED.
 - **Evidence**: L04-F13: #43 OPEN five closes.
 - **Disposition**: BUILD.
 - **Wave shape**: W-CHIP carries this row with the two families above.
+- **Round 10 correction**: X-G4's italic clause is stale. `text-caption` is no longer italic (`typography/semantic.css:224-229`, re-checked), and every chip computes `font-style: normal`; the clause leaves W-CHIP's born-RED set, and its rung and pad clauses stay.
 
 #### F-29—Density: pads transpose under the width query, corners do not
 
@@ -639,7 +655,11 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 
 - **Mechanism**: `--input-on-glass` is opaque, so the field's backdrop-filter is inert; the transmissive cut and the well law never landed; the blur ladder rose against F48.
 - **Members (3; 1H / 2M)**: L01a-22, L01a-25, L05a-05.
-- **Lenses (2)**: L01a, L05a. **Max severity**: HIGH.
+- **Round 10 (+3; 1H / 2M)**:
+  - R10-02-06 (HIGH, EXTENDS): the opaque-surface escape sets `--glass-level: 0` at the element (`glass/surface-axis.css:82`), where the element-composed veil resolves to 100 % `--card` (`glass/veil.css:75-80`), while `--glass-blur-*` are composed at `:root`, where the level is 1 (`tokens/glass.css:88-92`) (all re-checked). Descendants therefore keep `blur(20px) saturate(1.5)` or `blur(14px)` over an opaque plate: 49 inert lenses on 8 routes in light, and 45 of 45 opaque lenses in dark. Placed here by the round-6 ruling (this family is the single home for a `backdrop-filter` that paints nothing); the cause is F-26's mechanism, cross-cited there.
+  - R10-02-07 (MED, EXTENDS): `.fading-scroll` carries `mask-image` even at rest (`utilities/base-misc.css:48-75`, re-checked), and a mask is a backdrop root: 27 of 27 lenses inside one are inert (Configurator preset tiles and chips, slider fills, carousel cards).
+  - R10-02-08 (MED, CONFIRMS): the nested-lens arm in paint: 56 of 73 translucent and 14 of 14 opaque lenses under a lens ancestor are inert. `tests-visual/nested-backdrop-budget.spec.ts:39` sets `DEPTH_CEILING = 4` and passes a three-deep blur stack, and it runs in no CI job (narrowed in §2).
+- **Lenses (3)**: L01a, L05a, R10-02. **Max severity**: HIGH.
 - **Evidence**: `_shared/field/control.css:73-81` "OPAQUE at HEAD ... the backdrop-filter below is currently inert"; `tokens/glass.css:69-73` 10/14/16/20/22 px vs 1/7/7/11/11 at `99706211` (both re-checked).
 - **Inbound (provisional, round 3)**: O-62 GLASS-VEIL-GREY (owner words N-13): the light-mode veil ink is a dark ink by design (`tokens/glass.css:29-34`, "the plate DARKENS toward it and never lightens toward cream", re-checked), and N-13 asks for a light frost at every level. It joins W-FROST-II's owner glance beside F48's blur ladder; the ink consequence is F-23's (§7.6).
 - **Disposition**: BUILD.
@@ -647,6 +667,7 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 - **Ledger (census §5 GAP-1, `ledger/CENSUS.md:242-245`)**: #7's remainder (the press darken `filter: brightness()` on the dock lens carrier, `dock/styles/controls/icon-button.css:92`, re-checked) and #39's RT-39G (the sheet halo's lens with nothing to sample, observed in paint in BK row 39 and generalised library-wide). Ledger members, not counted in `n`.
 - **Round 6 correction (census GAP-1)**: the mechanism widens from the one opaque well to every inert lens. The blur has nothing to sample when an opaque fill sits under it (`--input-on-glass`) or when a backdrop root stands between the lens and its backdrop: a blend-mode pseudo (the grain `::after`, the `plus-lighter` specular at `glass/material.css:247`), a `filter`, or `contain: paint` (`:104-109`). Reason: the defect and its detector are one, a `backdrop-filter` that paints nothing. `glass/grasp.css:27-40` writes the law for grasp carriers only and leaves ancestor formers to "the ancestor surface's duty" (re-checked). W-FROST-II's frost detector gains a nested-lens arm: a lens mounted inside a `.glass-*` plate has no backdrop-root former between it and what it samples, with mounts discovered as `glass-subtlety.test.ts`'s carrier arm discovers them and its scope widened from host formers to ancestor formers. F-21's containment row cures only the `contain: paint` half, so this family is the single home.
 - **Inbound (round 6)**: O-66 §1 GLASS-SELECT-GREY and its lead O-66a (`INBOUND-MAP.md`, round 6): at rest `SelectTrigger` paints `.control-surface` (`glass/defined.css:42-75`, re-checked) as two image layers, the plate over the `--glass-floor-fill` card floor, while `Input` paints `.field-control` as one `background-color: var(--control-surface-bg)` (`_shared/field/control.css:103`); both carry the veil-ink plate (O-62). The owner glance in W-FROST-II measures the two composites first and rules them together with O-62.
+- **Round 10 correction**: the former list gains `mask-image`, a fifth former, and the cause list gains a level-0 host whose descendants read blur rungs composed at `:root`. W-FROST-II composes the blur rungs at the reading element, as the veil is (F-26's cure form), or stands down `backdrop-filter` under `[data-surface="opaque"]`; the fade becomes a sibling overlay, or FadingScroll hosts only matte content; the depth-4 spec is struck or re-authored as the nested-lens arm at depth 1. Born-REDs: a `.glass-capsule` inside `[data-surface="opaque"]` computes `backdrop-filter: none` or `blur(0px)` (HEAD: `blur(20px) saturate(1.5)`); 0 inert lenses under a FadingScroll on `/motion/springs` (HEAD: 100 %).
 
 #### F-32—Sheet detents: the dock covers the live-behind sheet's action
 
@@ -657,12 +678,15 @@ How to read: each accepted finding sits in exactly one family. A script checked 
   - R2-04-03 (MED, EXTENDS): with F-21 cured by injection, the dock covers the live-behind sheet's action (the sheet sits at `z-dock − 1`, `sheet/styles.css:89-91`, re-checked, and nothing insets its content by the dock's extent); the modal detented sheet's action is 8/9 hit-testable.
 - **Round 9 (+1; 1M)**:
   - R9-02-03 (MED, CONFIRMS): A2-KE-L2-3's dock half. At the full rung the non-modal Sheet (`z-dock − 1`, `sheet/styles.css:89-91`, re-checked) spans [0, vh], and its grip row's centre hits a top dock's plate in 4 of 4 cells; the modal arm sits at `--z-modal` over the dock and is clear.
-- **Lenses (4)**: L01a, R2-01, R2-04, R9-02. **Max severity**: MED.
+- **Round 10 (+1; 1M)**:
+  - R10-01-08 (MED, CONFIRMS): the gesture half of R9-02-03. Under a top dock at `d=1` the non-modal Sheet's grip centre hit-tests to the dock (8 of 8): a touch drag from it moves nothing (4 of 4), and a mouse press dismisses the sheet (4 of 4, F-22's R9-02-04 route). The modal arm drags in 8 of 8.
+- **Lenses (5)**: L01a, R2-01, R2-04, R9-02, R10-01. **Max severity**: MED.
 - **Evidence**: L01a-39: P7 RED at 390×844.
 - **Disposition**: BUILD.
 - **Wave shape**: the sheet half of W-SURFACE-GEOMETRY.
 - **Round 2 correction**: Mechanism, corrected (R2-04-03): the dock covers the live-behind sheet's action; the sheet covers nothing. After W-SURFACE-GEOMETRY: a dock-reach inset on live-behind sheets and rung-relative halo stops; born-RED at 390×844: "Done" is 9/9 hit-testable at Peek, Half and Full.
 - **Round 9 correction**: the dock-reach inset is per edge the dock occupies, the block start as well as the block end. Born-RED: at `d=1` under a top dock the non-modal Sheet's grip is hit-testable (HEAD 0 of 4). A2-KE-L2-3's ladder half (rungs merged under the floor) is F-65's (R9-02-02).
+- **Round 10 correction**: the round-9 born-RED gains "and a drag from the grip moves the sheet" (HEAD: 0 of 4 under touch).
 
 #### F-33—Specimens lay out by viewport, not by container
 
@@ -1043,12 +1067,15 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 - **Round 3 (+2; 2M)**:
   - R3-01-02 (MED, EXTENDS): the carousel member lag holds at rest: `useDeckSnap.ts:103-112` feeds `deck.feed(position, velocity)` on scroll events only and nothing feeds zero at `scrollend` (re-checked), so `--member-lag` keeps its last in-flight value (−0.028 to −0.045) and content sits 12.7-14.5 px off its item after a wheel, in light and dark.
   - R3-01-03 (MED, EXTENDS): the pager worm's trail edge is `x − trailOffset(v, τ, ceil)` (`useLeadTrail.ts:176`), bounded by a ceiling and not by the distance travelled (`:73-76`, re-checked), so it steps 12.8-24.6 px behind the origin at launch. F-36's neck masks it today; with F-36 cured in the page, the trailing body kicks back 11.5 px in one frame.
-- **Lenses (5)**: L03a, L03b, R2-02, R2-06, R3-01. **Max severity**: MED.
+- **Round 10 (+1; 1M)**:
+  - R10-01-04 (MED, EXTENDS): the detent release velocity is sampled on `pointermove` only (`use.ts:197-201`) and read at release with no regard to the sample's age (`:214-219`, re-checked). A still finger sends no move, so a pull held 600 ms at t = 0.769 still flings the sheet to 0.36 (6 of 6 at 844×390; 3 of 4 Chromium at 390×844). R3-01-02's shape, nothing feeds zero at rest, on a release projection.
+- **Lenses (6)**: L03a, L03b, R2-02, R2-06, R3-01, R10-01. **Max severity**: MED.
 - **Evidence**: `useScrollChrome.ts:186-222` (re-checked: the two lenses name the two halves of one mechanism).
 - **Disposition**: BUILD.
 - **Wave shape**: derive `t` from `scrollTop`.
 - **Round 3 correction**: one law, three consumers. Scroll chrome, the carousel member lag and the worm's trail are offsets from velocity alone (`trailOffset`, which `carousel/projection.ts:18` calls "one law, two consumers"), advanced on velocity ticks and never bounded or zeroed by position. The wave derives each from position (the distance to the settling snap; the trail bounded between the origin and the lead and decaying to the lead at rest), or zeroes velocity on `scrollend`. Invariants: 100 ms after `scrollend` every `--member-lag` is 0; once F-36 lands, min(trail edge) ≥ origin on every hop.
 - **Round 4 correction**: no member. The round-3 invariant "min(trail edge) ≥ origin" is direction-blind: in RTL it passes on a broken worm (R4-02-01, F-79). It now reads: the trail lies between the origin and the lead.
+- **Round 10 correction**: the round-3 law widens from offsets to any quantity derived from an event-sampled velocity: it is a short windowed estimate that decays by the age of its last sample and reads 0 at rest. Reason: R3-01-02 and R10-01-04 share the cause (a velocity fed on motion events only and never zeroed when the motion stops); only the consumer differs. Born-RED: after 150 ms without a move, the release resolves to the rung nearest the position (HEAD: 0.769 → 0.36).
 
 #### F-73—The theme flip is not atomic
 
@@ -1064,10 +1091,13 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 
 - **Mechanism**: the sheet slide rides the `panel` spring (`SheetContent.vue:123`) and writes its unclamped position to the `translate` longhand ("`p<0` overshoot IS the liquid settle", `:151-158`), which `motion.ts:17-28` maps to `p * 100%` on the side axis. The sheet sits at `right: 0` or `bottom: 0` with no bleed, so the overshoot opens a strip of scrim at the anchored edge.
 - **Members (1; 1M)**: R2-02-10 (round 2, seat NEW; F-21 and F-32 cover the sheet's rest geometry, not its motion).
-- **Lenses (1)**: R2-02. **Max severity**: MED.
+- **Round 10 (+1; 1M)**:
+  - R10-01-07 (MED, EXTENDS): the plain Sheet opens a gap at the anchored edge on all four sides: 12.3 px at 390×844, and 13.7 px (top, bottom) and 16.2 px (left, right) at 844×390, in Chromium and Playwright Firefox, twice per cell. The detented arm is 0 px on every side, because its size law has no translate. Source unchanged (`SheetContent.vue:151-158`, `motion.ts:17-28`).
+- **Lenses (2)**: R2-02, R10-01. **Max severity**: MED.
 - **Evidence**: with F-21 cured by an injected `position: fixed`, the right sheet exposes a 16.2 px strip (30 of 218 frames over 1 px) and the bottom sheet 18.8 px (31 of 215), in both modes (`captures/R2-02/sheet-overshoot/`). Source re-checked at `6433284a`.
 - **Disposition**: BUILD, after W-SURFACE-GEOMETRY (the sheet is off-screen at HEAD).
 - **Wave shape**: W-SHEET-BLEED: take the overshoot as a stretch from the anchored edge (`transform-origin` at the edge), or give the panel an off-edge bleed of at least the peak overshoot; probe: the anchored-edge gap stays ≤ 1 px through open and close.
+- **Round 10 correction**: the statement names every side: `top: 0` and `left: 0` carry the same `-p · 100%` arms as `right` and `bottom`. W-SHEET-BLEED is scoped to the sliding arm, and its probe (the anchored-edge gap stays ≤ 1 px through open and close) runs on all four sides at both cells.
 
 #### F-76—The animated or reserved extent leaves out part of what the surface occupies
 
@@ -1093,12 +1123,16 @@ How to read: each accepted finding sits in exactly one family. A script checked 
   - R4-01-06 (MED): `release()` arms an 800 ms grace and then `scheduleCollapse()` whenever the hold count reaches 0 in hover posture (`useDockState.ts:342-358`), without re-reading whether the pointer or focus is still inside. Closing a keep-dock-open Popover from its own trigger collapses the dock under the resting pointer at +4.45 s (twice). The Slider's grasp hold (`useDockHold.ts:121-136`) takes the same path.
 - **Round 5 (+1; 1H)**:
   - R5-01-01 (HIGH, EXTENDS): a held drag outlives a page hide. EasingPicker (`EasingPicker.vue:228-245`, bound at `:452-455`), SortableList (`sortable-list/drag.ts:519-521` binds document `pointermove`, `pointerup` and `pointercancel`; `:574-582`) and the tabs drag morph (`useDragMorph.ts:344-364`, beside keyframes.js's `Draggable`) end only on `pointerup` or `pointercancel`. None listens for `lostpointercapture`, window `blur`, `visibilitychange` or `pagehide`, and none reads `buttons` on a move (0 hits in the three files, re-checked). A release that happens while the page is hidden reaches the restored page as `lostpointercapture` followed by moves with `buttons: 0`, so each machine stays held (3 of 3): the curve handle follows the released pointer 72 px right and 36 px down, and the next click writes the curve; the sortable ghost stays glued, and the next click reorders the list; the tab indicator rests 255 px off its tab. `useDockHold` already releases on window `blur` (`useDockHold.ts:126-137`), and reka's Slider ends on `lostpointercapture`.
-- **Lenses (2)**: R4-01, R5-01. **Max severity**: HIGH.
+- **Round 10 (+2; 2H)**:
+  - R10-01-01 (HIGH, EXTENDS): the detent release re-seats the spring from its pre-drag state. The drag writes `t` directly (`sheet/detents/use.ts:206`) after only `spring?.stop()` (`:179`); `settle()` reuses the live spring when the leg is unchanged (`:140-141`), and `SpringProgress`'s `target` setter re-seats from the spring's own `(value, velocity)` and is idempotent on an unchanged target (`keyframes.d.ts:3599-3604`) (all re-checked). A drag-to-dismiss after an open (travel then travel) paints t = 0.973 on the frame after release (a 650.39 px step at 390×844, 175.08 px at 844×390; 16 of 16 Chromium, 4 of 4 Firefox), a return to the same rung snaps 253.2 px in one frame, and a catch mid-settle jumps back to where the spring stood at the catch (8 of 8). Source only: even on a leg change the new spring takes the stopped spring's velocity (`:139`), not the finger's (`:167`). The drag interrupts the spring, and the release restarts the spring from its previous state, which is this family's "restarts from … the previous target".
+  - R10-01-03 (HIGH, EXTENDS): the detent drag ends only on `pointerup` or `pointercancel` (`:190-192`), both bound to the committing release (`:209-226`, dismissal at `:220-223`); nothing listens for `lostpointercapture`, `blur`, `visibilitychange` or `pagehide`, no move reads `buttons`, and `onPointerdown` returns while `pointerId !== null` (`:171`) (re-checked). A `touchCancel` at t = 0.060 closes the sheet (4 of 4), at t = 0.660 it commits to 1; after a bfcache round trip mid-drag the page is still dragging (8 of 8), and under touch three fresh drags move nothing (4 of 4). R4-01-04 and R5-01-01 on a machine the family did not list; the latch that refuses every later drag is "drops the input".
+- **Lenses (3)**: R4-01, R5-01, R10-01. **Max severity**: HIGH.
 - **Evidence**: `captures/R4-01/` (`popover-seq.json`, `menu-seq.json`, `collapsible-reverse.json` and `-r2.json`, `tab-reverse-r1.json` and `-r2.json`, `tabdrag-cancel.json`, `dock-rev.json`, `dock-rev-warm.json`, `hdock-release.json` and `-r2.json`, each timing sequence captured twice at different loads); every member's source re-checked (§2).
 - **Inbound**: UIA-V-395 (a collapse after in-pane interaction). UIA-F-11 and KFA-112 do not reproduce as stated; R4-01-06 is their live sibling (INBOUND-MAP).
 - **Disposition**: BUILD.
 - **Wave shape**: W-INTERRUPT: each surface takes its interrupt from the in-flight value. The reveal register moves enter and exit onto one engine that re-targets: the spring mount kernel the Dialog uses, or a transition in both directions with Presence gated on `transitionend`. The disclosure re-targets its size from the current `block-size`. The indicator deform reads the painted position. `pointercancel` springs back to the gesture's origin and never commits. The dock never gates a click-away whose target is outside the root. `release()` re-reads present state (`:hover`, `:focus-within`) before it schedules a collapse. Born-REDs: across a reversal, the largest per-frame step is at most 2× the median step (HEAD: Popover opacity 0.71, Collapsible 179.6 px); a 0→3→1 retarget paints no wider than a 0→1 hop (HEAD: 172.5 vs 139.6 px); a `touchCancel` mid-drag leaves the model unchanged (HEAD: Grid → Kanban); an outside press at +120 ms of an expand collapses the dock (HEAD: pinned); 7 s after a keep-dock-open Popover closes under a resting pointer, the dock is still expanded (HEAD: collapses at +4.4 s).
 - **Round 5 correction**: an interruption can also arrive through a lifecycle edge that no machine listens to. W-INTERRUPT's `pointercancel` row widens to every end of a held gesture: `pointerup`, `pointercancel`, `lostpointercapture` on the capturing element, window `blur`, `visibilitychange` to hidden, `pagehide`, and a move with `buttons === 0`. Everything except `pointerup` runs the cancel transition (spring back to the origin, never commit), through one shared helper beside `useDockHold`'s release. Born-RED: a bfcache round trip mid-drag, then six moves with no button held and one click elsewhere, leaves the handle, the ghost and the indicator at their origins and the list order unchanged (HEAD: carried, glued and reordered, and 255 px off).
+- **Round 10 correction**: the Sheet's detent engine joins W-INTERRUPT as a consumer of the shared end-of-gesture helper, and a release is itself an interrupt of the spring: every release seats a spring at `(t, release velocity in fraction/s)`, whatever the leg. Born-REDs: across every detent release the largest per-frame plate step is at most 2× the median step of the settle that follows (HEAD: 650.39 against 10.07 px on the portrait dismiss); a `touchCancel` mid-drag leaves the model at the gesture's origin rung (HEAD: 0.36 → closed); after a bfcache round trip mid-drag the next touch drags the sheet (HEAD: 0 px over three drags).
 
 #### F-79—Direction and writing mode are not inputs to axis code
 
@@ -1263,9 +1297,12 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 
 - **Mechanism**: sub-components split by file kind, not by feature; the same role has two to four spellings.
 - **Members (3; 2M / 1L)**: L12-06, L12-08, L13-10.
-- **Lenses (2)**: L12, L13. **Max severity**: MED.
+- **Round 10 (+1; 1L)**:
+  - R10-02-09 (LOW, EXTENDS): L12-08 re-measured with drift: root `use*.ts` in 7 dirs plus `_shared` (was 6), shaders at four depths, context files named four ways. A component stylesheet has three spellings (`styles.css` ×20, a `styles/` dir ×3, `<name>.css` ×3), and the chip's rules sit in a fourth place, `src/styles/glass/glass-chip.css`, which is F-58's channel split seen from placement.
+- **Lenses (3)**: L12, L13, R10-02. **Max severity**: MED.
 - **Evidence**: L12-08.
 - **Disposition**: FOLD into W-COLOCATION.
+- **Round 10 correction**: the grammar gets one stylesheet row.
 
 #### F-58—One symbol, two doors
 
@@ -1279,18 +1316,24 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 
 - **Mechanism**: shared contracts live in one consumer's tree and create back-edges: value SCC M02 and `dialog` <-> `sheet`.
 - **Members (3; 1H / 2M)**: L12-03, L12-09, L01a-21.
-- **Lenses (2)**: L01a, L12. **Max severity**: HIGH.
+- **Round 10 (+1; 1M)**:
+  - R10-02-10 (MED, EXTENDS): the back-edges stand (M02 and M03, the four contract edges). `scripts/import-dag.mjs:469` puts `glob`, `vue-block-src` and `style` in `VALUE_TYPES`, against its own header (`:25`, "type/style/glob edges dropped") (re-checked), so it prints three value SCCs; the third, M01 (15 demo modules), exists only through the lazy `import.meta.glob` in `demo/stories/manifest.ts`. The dock "(sever landed)" label is still printed. The instrument half is F-02's mechanism (R2-06-06: an instrument reports a figure its method does not support), cross-cited; the row stays here because its cure is this family's DAG row.
+- **Lenses (3)**: L01a, L12, R10-02. **Max severity**: HIGH.
 - **Evidence**: back-edges `_shared/overlay/participation.ts:11-14` -> `dock/composables/dockContext`; `DialogContent.vue:16` -> `sheet/motion`.
 - **Disposition**: FOLD into W-COLOCATION.
+- **Round 10 correction**: the value SCC count is 2, not L12-03's 3. The DAG row reads `VALUE_TYPES = {"value"}`, matching the header. Born-RED: value module SCCs 2 at HEAD, 0 after the re-homes.
 
 #### F-60—Periphery structure
 
 - **Mechanism**: the test tree mirrors a dead taxonomy; scripts sprawl; workflows duplicate; root config sprawls; demo colocation gaps; tooling inputs sit in closed record dirs.
 - **Members (8; 8M)**: L14-07, L14-08, L14-10, L14-11, L14-12, L14-13, L13-07, L13-11.
-- **Lenses (2)**: L13, L14. **Max severity**: MED.
+- **Round 10 (+1; 1L)**:
+  - R10-02-11 (LOW, EXTENDS): the periphery confirmed at HEAD: 9 `vite*.ts` (1,330 lines), 4 tsconfigs, `scripts/lib/canon-doc.mjs` and `scripts/safari-probe.mjs` unreferenced, no `tests-visual/_support/`, the ci and release setup duplicated, `@glass` defined 4 times and used 0 times in `src`. `tests/gates/overfit-structure.test.ts:425-429` hard-codes `ENGINE_HOMES` (three paths, re-checked; two are the ends of the `motion → tabs` back-edge), so the F-59 re-home fails the ONE-SELECTION arm with no regression behind it: L13-11's literal-path addressing, in a gate constant. F-03's widened statement also covers it; it stays here because L13-11 names the addressing and W-PERIPHERY carries the cure.
+- **Lenses (3)**: L13, L14, R10-02. **Max severity**: MED.
 - **Evidence**: L14-07: 86 of 256 test files mirror no `src` path.
 - **Disposition**: BUILD.
 - **Wave shape**: W-PERIPHERY, after W-COLOCATION fixes the target shape.
+- **Round 10 correction**: gate constants derive their homes from the barrel or the export graph, never from path literals.
 
 #### F-61—Repo weight and evidence hygiene
 
@@ -1353,7 +1396,11 @@ How to read: each accepted finding sits in exactly one family. A script checked 
   - R8-02-02 (MED, EXTENDS): forced dark is a third authority. Under Chrome's Auto Dark Mode (`Emulation.setAutoDarkModeOverride`) `light-dark()` resolves dark despite the root's inline `color-scheme: light` (`useGlobalDark.ts:171`, re-checked), and the darkening filter then runs over it, so the flipped half is darkened twice: the light-theme Badge paints at 2.42:1 (16.58 without the override), and `/forms/inputs`' Read only field at 1.41 (15.23). A used-dark page is skipped. Placed here: F-65's widened statement (one quantity, two authorities) names the UA filter as a second authority over a colour the page already resolved; F-24 was weighed, but no channel is removed.
 - **Round 9 (+1; 1H)**:
   - R9-02-02 (HIGH, seat NEW, folded; §13.3): the detented Sheet's resting extent has two authorities. The engine offers the ladder as fractions of the viewport and never measures (`sheet/detents/use.ts:9`: no `getBoundingClientRect` on any path; `--detent-t` reads 0.12 and 0.36), while the paint floors each rung at an absolute sum (`sheet/styles.css:530-543`: `block-size: calc(clamp(0, var(--detent-t), 1) * 100dvh)` against a `min-block-size` of pads, two touch targets and one line, re-checked). Where a rung falls under the floor the paint takes the floor, so the model offers stops that do not move the sheet. At 844×390, 0.12 and 0.36 both paint [185.5, 390], 204.5 px (A2-KE-L2-3's ladder half); in portrait 0.12 paints at the 171 px floor, 18 to 22 % of the viewport. The floor is higher in landscape because the width query (`tokens/sizing.css:333-342`, `max-width: 768px`) steps the pads down only on narrow viewports, which is F-29's half.
-- **Lenses (6)**: L10, R2-04, R2-08, R6-01, R8-02, R9-02. **Max severity**: HIGH.
+- **Round 10 (+3; 1H / 1M / 1L)**:
+  - R10-01-02 (HIGH, EXTENDS): R9-02-02's two authorities in motion. The engine drags, flings and animates `t` in viewport fractions (`use.ts:83-87`, `:206`, `:250`), while the paint takes `max(t · 100dvh, floor)` (`sheet/styles.css:530-543`, re-checked), so the finger and both springs run through a band the paint does not show: 157.2 px of finger with 0 px of plate above 0.12 at 844×390 (61.6 px at 390×844), 0 frames of size change across the open and the close at floor-bound rungs (16 of 16), and a fling or the grip's ArrowDown selects a merged stop with no plate movement, since the grip keyboard and the projection address rungs by index (`SheetContent.vue:198-244`). This is the half the round-9 correction left unprobed.
+  - R10-01-05 (MED, EXTENDS): the body drag has two authorities. The engine lets a body press at the leading edge drag the sheet (`use.ts:89-101`, `:177`), and the UA decides the same question from `touch-action`, which is `none` on the grip and the header only (`sheet/styles.css:96-101`, re-checked). Under touch the UA takes the pan and fires `pointercancel` (8 of 8); under the mouse the body drags (8 of 8). The round-9 statement: a choice the engine offers is resolved by another authority.
+  - R10-01-06 (LOW, EXTENDS): the drag span is read once at `pointerdown` from `innerHeight` (`use.ts:183`, `:83-87`, re-checked) and the paint reads live `100dvh`; after a keyboard-sized layout shrink mid-drag the plate moves 0.645 px per finger px (portrait) or 0 px (landscape). The span and the plate are one quantity with two readings of the viewport.
+- **Lenses (7)**: L10, R2-04, R2-08, R6-01, R8-02, R9-02, R10-01. **Max severity**: HIGH.
 - **Evidence**: `tokens/light-dark.css:65-79` calls `dark-arm.css` a lockstep witness checked by `proof:glass` DA1; `package.json` has 0 `proof:*` scripts (re-checked).
 - **Disposition**: BUILD.
 - **Wave shape**: one arm per token type; TS tables generate CSS; one colour-resolution leaf.
@@ -1362,6 +1409,7 @@ How to read: each accepted finding sits in exactly one family. A script checked 
 - **Round 6 correction (census §5 GAP-B2a, `ledger/CENSUS.md:250-253`)**: the mechanism widens from authored tables and colours to any quantity with two sources: randomness is drawn from the seeded PRNG (`composables/glass/procedural/prng.ts`) and from ambient `Math.random`. Reason: one quantity with two authorities is this family's mechanism, and its wave (one source per quantity) carries the cure. Ledger member #64 (TR:214 rules the typewriter's 20 `Math.random` sites onto the PRNG), with the constellation's 2 executable defaults (`constellationField.ts:127`, `useConstellation.ts:113`) and the aurora's 1 (`useCursorInteraction.ts:119`) (re-counted: 20 typewriter lines in 5 files). The wave adds one randomness source: every stochastic default takes the PRNG with a seed.
 - **Round 8 correction**: max severity MED → HIGH. W-DARK-ONE-ARM's scheme has one authority. The root does not advertise `light dark` while class-keyed values exist: either every value rides the inherited arm (so the OS scheme is a complete dark scope), or the root states one scheme until the controller runs. The page also states its stance toward UA forced dark: it serves its own dark arm whole, so the filter skips a used-dark page, or pins `only light` on an explicit light pick. One arm alone does not cure the forced-dark cell, because the Badge's pair is already one arm. Born-REDs: no class, OS dark, the Input's value at least 4.5:1 on its well (HEAD 1.07) and the card description at least 4.5 (HEAD 2.05); under the forced-dark override, Read only on `/forms/inputs` at least 4.5 (HEAD 1.41) and the Badge at least 4.5 (HEAD 2.42).
 - **Round 9 correction**: the one-authority rule covers a model and its paint. A quantity the engine offers as a choice (a detent, a stop) is resolved by the authority that paints it. W-DETENT-FLOOR rides the sheet half of W-SURFACE-GEOMETRY (the Sheet is off-screen at HEAD, F-21): the engine resolves each rung to `max(rung · vh, floor)` and drops rungs that resolve within one grip height of a neighbour, so every offered stop moves the plate, and the floor's pads read the height-aware rung. Born-RED at 844×390 with `[0.12, 0.36, 1]`: adjacent offered stops differ by at least 44 px of plate (HEAD 0 px between 0.12 and 0.36). The drag and fling behaviour between merged stops was not probed (R9-02's gap).
+- **Round 10 correction**: W-DETENT-FLOOR widens from rest to motion. The drag, the fling projection, both springs and the grip's keyboard run in the resolved ladder (floored and deduplicated), so the scalar's zero is the floor-sized plate entering from its edge; the span reads the live viewport that the paint reads; and the body's `touch-action` follows the engine's rule (`none` while the region sits at its leading edge), or the body drag is struck from the engine and its comment. Born-REDs: at 844×390 every frame of a drag from the lowest offered rung toward the next moves the plate edge by at least ½ the finger's step (HEAD: 0 px over 157.2 px), and the open to the lowest offered rung paints at least 6 frames of size change (HEAD: 0); under CDP touch at 390×844 a 150 px pull from the body at scroll 0 moves the plate at least 100 px (HEAD: 0).
 
 ### Band J—Exports, consumers and cross-repo
 
@@ -1848,11 +1896,51 @@ These probes re-opened the cited lines, or re-ran a grep, at `1f376b8b` (`src` a
 | R9-02-16 | MED | `configurator/ConfiguratorLayer.vue:126-138` | two `truncate` spans in one `min-w-0` flex row: CONFIRMED |
 | R9-02-17 | LOW | `sheet/styles.css:170-177,204-214` | header row `minmax(0, auto)`, `overflow: hidden`, the docblock's "The crown yielding is the law": CONFIRMED |
 
+### Round 10 refutations and narrowings
+
+Round 10 refuted no seat finding. Neither seat filed a REFUTES row, my re-checks confirmed every defect claim they cover, and the reject table stays at 4. Seven statements narrow, five of them registry statements the seats measured against; each defect stands:
+
+| # | statement | source | probe | effect |
+|---|---|---|---|---|
+| 1 | W-CHIP's born-RED X-G4: "the sm arm reads an italic caption" | R10-02-05 | `typography/semantic.css:224-229` (no `font-style`); every chip computes `font-style: normal` | the italic clause is stale and leaves the set; the rung and pad clauses stay (F-28, round-10 correction) |
+| 2 | L12-03 and F-59's evidence: "module SCCs … value 3" | R10-02-10 | `scripts/import-dag.mjs:25` against `:469` | the value count is 2 (M02, M03); M01 is a lazy-glob edge the instrument counts against its own header. The back-edges stand |
+| 3 | F-74: the sheet "sits at `right: 0` or `bottom: 0`" | R10-01-07 | four sides, both cells | widened, not narrowed: `top` and `left` carry the same arms. Recorded here because it corrects the statement's scope |
+| 4 | F-25's evidence `vizPreviewStill.ts:37,50-55` | R10-02-04 | `grep -n hsla demo/chassis/landing/vizPreviewStill.ts` | line drift only: `:38`, `:48-55`, `:132` |
+| 5 | R10-02-08 and R10-02-03: `nested-backdrop-budget.spec.ts` "is not referenced in `playwright.config.ts`" and is "unwired" | R10-02 | `tests-visual/playwright.config.ts:48-49` (`testDir: "."`, `testMatch: "*.spec.ts"`); `.github/workflows/ci.yml:66-68` | narrowed: the visual config's glob collects the spec, so a local `playwright test` runs it; what holds is that no CI job runs it (CI runs only `gate:pixel-floor:ci`, F-04's). The defect (a spec that budgets nesting to depth 4) stands |
+| 6 | R10-02-11: `ENGINE_HOMES` names "the two ends" of the back-edge | R10-02-11 | `tests/gates/overfit-structure.test.ts:425-429` | figure only: three paths (`useSelectionIndicator.ts` as well), two of which are the back-edge's ends. The defect stands |
+| 7 | The round-9 preamble's "`src` and `demo` byte-identical to the published 10.0.1" | this seat | `git diff --stat v10.0.1..HEAD -- src demo` | no longer true after `4afc7fc9` (release/10.1): six configurator files changed. R10-02-07's Configurator cells ran on a `dist-demo/` built 2026-09-23, before `9065d924`; at HEAD the controls column is still a `<FadingScroll>` (`Configurator.vue:5,14-17`), so the row stands |
+
+### Round 10 re-check log
+
+These probes re-opened the cited lines, or re-ran a grep, at `1ca0933e`. Every probe was read-only; the one repository file written is this one. Round 10 has four HIGHs and no seat-NEW row; each HIGH was re-opened first, and 11 of the 15 MED and LOW rows were re-opened as well.
+
+| finding(s) | sev | probe | result |
+|---|---|---|---|
+| R10-01-01 | HIGH | `sheet/detents/use.ts:117-145,165-226`; `node_modules/@mkbabb/keyframes.js/dist/keyframes.d.ts:3599-3604` | the drag writes `t.value` after `spring?.stop()`; `settle()` takes `spring && leg === nextLeg ? spring : seatSpring(nextLeg, live, velocity)`, where `velocity` is `spring?.velocity`; the setter re-seats from the spring's own state and is idempotent on an unchanged target: CONFIRMED |
+| R10-01-02 | HIGH | `sheet/styles.css:525-543` | `block-size: calc(clamp(0, var(--detent-t), 1) * 100dvh)` against an absolute `min-block-size` sum; the engine writes `t` only: CONFIRMED |
+| R10-01-03 | HIGH | `sheet/detents/use.ts:171,190-192,209-236` | `pointercancel` bound to `onPointerup`, which projects and may `requestClose()`; no `lostpointercapture`, `blur`, `visibilitychange`, `pagehide` or `buttons`; `onPointerdown` returns while `pointerId !== null`: CONFIRMED |
+| R10-02-06 | HIGH | `glass/surface-axis.css:76-86`; `glass/veil.css:70-82`; `tokens/glass.css:84-92` | `--glass-level: 0` on `[data-surface="opaque"]`; the veil's `color-mix` at `calc(var(--glass-level) * 100%)` composed at the element; the five `--glass-blur-*` recipes read `--glass-level` at `:root`: CONFIRMED |
+| R10-01-04 | MED | `sheet/detents/use.ts:195-219` | `velocity` written in `onPointermove` only, read in `onPointerup` with no age term: CONFIRMED |
+| R10-01-05 | MED | `sheet/styles.css:94-101`; `sheet/detents/use.ts:89-101,177` | `touch-action: none` on the handle and `dialog-header` only; the engine admits a body press at the leading edge: CONFIRMED |
+| R10-01-06 | LOW | `sheet/detents/use.ts:83-87,183` | `dragSpan` reads `innerHeight` once per press: CONFIRMED |
+| R10-01-08 | MED | `sheet/styles.css:90-92` | `[data-modal="false"]` at `calc(var(--z-dock) - 1)`: CONFIRMED |
+| R10-02-01 | LOW | `tests/gates/orphan-css-partial.test.ts:460-473` | the exemplar `_shared/field/control.css` must be channel-1-unreachable, and `rescued.size > 10`: CONFIRMED |
+| R10-02-02 | MED | `tests/styles/proportion-register.test.ts:173-181`; `grep -c -- '--ink-\|--fill-' src/styles/tokens/dark-arm.css` | the arm expects `[]` over `--ink-*`/`--fill-*` in `dark-arm.css`; 0 today: CONFIRMED |
+| R10-02-03 | MED | `glass/material.css:63`; `tests-visual/playwright.config.ts` | "the π battery counts filtering ancestors at runtime"; no such counter: CONFIRMED (the spec's wiring narrowed, above) |
+| R10-02-04 | MED | `demo/chassis/landing/vizPreviewStill.ts:120,132` | the one paint primitive is `hsla(${h}, …)`: CONFIRMED |
+| R10-02-05 | MED | `typography/semantic.css:224-229` | `text-caption` sets no `font-style`: the X-G4 clause refuted as the seat says |
+| R10-02-07 | MED | `utilities/base-misc.css:48-75`; `configurator/Configurator.vue:5,14-17` | `mask-image` on `.fading-scroll` and both axis modifiers, flat at rest; the controls column is a FadingScroll: CONFIRMED |
+| R10-02-08 | MED | `tests-visual/nested-backdrop-budget.spec.ts:39`; `.github/workflows/ci.yml` | `DEPTH_CEILING = 4`; not run in CI: CONFIRMED (narrowed, above) |
+| R10-02-10 | MED | `scripts/import-dag.mjs:25,469` | the header drops glob and style edges; `VALUE_TYPES` holds `glob`, `vue-block-src` and `style`: CONFIRMED |
+| R10-02-11 | LOW | `tests/gates/overfit-structure.test.ts:424-430` | three literal paths: CONFIRMED (figure narrowed, above) |
+
+R10-01-07 (F-74), R10-02-09 (F-57) and the paint figures of every row rest on the seats' captures (`captures/R10-01/res/`, `captures/R10-02/`), not a re-drive.
+
 ## 3. Convergence map
 
-Recomputed after round 9 from each family's Lenses line (a script cross-checked every Lenses line, and every family heading, against the Index). A seat from rounds 2 to 9 counts as a lens; an inbound row does not.
+Recomputed after round 10 from each family's Lenses line (a script cross-checked every Lenses line, and every family heading, against the Index). A seat from rounds 2 to 10 counts as a lens; an inbound row does not.
 
-### Saturated: 3 or more lenses (58)
+### Saturated: 3 or more lenses (67)
 
 Point no new discovery seat at these.
 
@@ -1874,11 +1962,12 @@ Point no new discovery seat at these.
 | F-16 | The dock extent morph is discontinuous; fission is split-brain | 7: L01b, L03b, L04, L05b, R2-02, R2-03, R2-08 | 13 |
 | F-23 | Ink calibrated to the token ground, not the painted composite | 7: L03a, L03b, L08, R2-01, R2-08, R3-02, R8-02 | 11 |
 | F-22 | Overlay layering: the content seam carries no z, edge or dismissal contract | 7: L11, R2-04, R4-01, R6-01, R8-02, R9-01, R9-02 | 17 |
+| F-65 | Twin sources of record | 7: L10, R2-04, R2-08, R6-01, R8-02, R9-02, R10-01 | 12 |
 | F-55 | The colocation chronic: settlement decided, never landed | 6: L01b, L04, L05b, L12, L13, L14 | 7 |
 | F-66 | Published surface with no consumer | 6: L05a, L06, L10, L13, R2-01, R2-06 | 9 |
 | F-19 | Dock keyboard and ARIA ownership | 6: L08, R2-04, R3-01, R3-02, R7-01, R7-02 | 11 |
 | F-71 | Inbound mail never carried or answered | 6: L05a, L11, L15a, R2-03, R2-06, R9-02 | 16 |
-| F-65 | Twin sources of record | 6: L10, R2-04, R2-08, R6-01, R8-02, R9-02 | 9 |
+| F-46 | Offsets follow the velocity path, not position | 6: L03a, L03b, R2-02, R2-06, R3-01, R10-01 | 7 |
 | F-02 | Detectors narrower than the claim they carry | 5: L02, L05a, L09, R2-05, R2-06 | 12 |
 | F-04 | The visual suite never entered CI, and the discharge was redefined | 5: L01a, L01b, L02, L05b, L14 | 6 |
 | F-07 | Safari cells deferred behind an environment excuse | 5: L01a, L04, L08, L10, R2-01 | 8 |
@@ -1887,12 +1976,12 @@ Point no new discovery seat at these.
 | F-37 | Modal primitives mounted inline | 5: L03b, L08, R3-02, R4-01, R5-02 | 7 |
 | F-39 | Four focus-ring registers; the forced-colors and contrast skin | 5: L08, L10, R2-08, R3-02, R5-02 | 10 |
 | F-44 | Motion time off the one authority: integrators, dt policies, emitted tails, the canvas clock | 5: L10, R2-02, R2-04, R3-01, R5-01 | 8 |
-| F-46 | Offsets follow the velocity path, not position | 5: L03a, L03b, R2-02, R2-06, R3-01 | 6 |
 | F-48 | Greenfields stopped at W0 | 5: L01b, L05a, L05b, R2-03, R2-06 | 6 |
 | F-50 | Idle loops and the luma sampler's blocking readback | 5: L07, R2-03, R2-04, R2-09, R5-01 | 8 |
 | F-64 | Token hygiene | 5: L01a, L01b, L05a, L10, R3-02 | 12 |
 | F-67 | Published claims not asserted on the built artefact | 5: L06, L09, R2-07, R2-09, R5-02 | 13 |
 | F-33 | Specimens lay out by viewport, not by container | 5: L03a, L03b, R2-08, R4-02, R9-02 | 11 |
+| F-32 | Sheet detents: the dock covers the live-behind sheet's action | 5: L01a, R2-01, R2-04, R9-02, R10-01 | 5 |
 | F-08 | The WebGPU primary is never paint-gated | 4: L02, L03b, L04, R2-07 | 4 |
 | F-10 | Budget ratchets as literal pins, unwired | 4: L02, L07, L14, R2-07 | 5 |
 | F-11 | Routing-chain drops | 4: L01a, L01b, L04, L05a | 10 |
@@ -1903,7 +1992,6 @@ Point no new discovery seat at these.
 | F-40 | One widget, two focus or current-row channels | 4: L01a, L04, L08, R4-01 | 4 |
 | F-49 | Device-loss subscription per instance on the shared device | 4: L07, R2-01, R2-04, R5-01 | 4 |
 | F-51 | Synchronous costs on the mount path | 4: L07, R2-02, R2-04, R7-02 | 7 |
-| F-32 | Sheet detents: the dock covers the live-behind sheet's action | 4: L01a, R2-01, R2-04, R9-02 | 4 |
 | F-05 | Visual harness rot | 3: L01b, L09, L14 | 6 |
 | F-15 | Owner asks reinterpreted or in conflict, unreconciled | 3: L05a, L05b, R2-06 | 5 |
 | F-30 | Radius role: the off-role 12 px rung (a); multi-line holders on the stadium (b) | 3: L01a, R2-03, R2-04 | 3 |
@@ -1916,26 +2004,35 @@ Point no new discovery seat at these.
 | F-56 | Component-owned code in global zones | 3: L05a, L12, L13 | 8 |
 | F-58 | One symbol, two doors | 3: L10, L12, L13 | 7 |
 | F-61 | Repo weight and evidence hygiene | 3: L01b, L09, L14 | 4 |
+| F-78 | Interruption has no transition of its own | 3: R4-01, R5-01, R10-01 | 9 |
+| F-03 | Gate fixtures pinned to a live defect | 3: L12, L13, R10-02 | 4 |
+| F-06 | Paint evidence routed to the #10 π sink and never captured | 3: L01a, L01b, R10-02 | 24 |
+| F-25 | Preview stills feed OKLCH-scale hues to hsl() | 3: L03a, L03b, R10-02 | 3 |
+| F-28 | The chip defect row never started | 3: L01a, L04, R10-02 | 3 |
+| F-31 | Frost and the field well | 3: L01a, L05a, R10-02 | 6 |
+| F-57 | Nesting by file kind; no placement grammar | 3: L12, L13, R10-02 | 4 |
+| F-59 | Cycles from contracts homed inside one consumer | 3: L01a, L12, R10-02 | 4 |
+| F-60 | Periphery structure | 3: L13, L14, R10-02 | 9 |
 
-### Two lenses (21)
+### Two lenses (13)
 
-F-03 (L12+L13), F-06 (L01a+L01b), F-17 (L05b+R2-04), F-25 (L03a+L03b), F-26 (L03a+R2-04), F-27 (L03a+R2-04), F-28 (L01a+L04), F-31 (L01a+L05a), F-54 (L05b+R2-04), F-57 (L12+L13), F-59 (L01a+L12), F-60 (L13+L14), F-69 (L06+R2-04), F-72 (L15a+R2-04), F-75 (R2-08+R3-02), F-76 (R3-01+R4-02), F-77 (R3-02+R4-01), F-78 (R4-01+R5-01), F-80 (R5-01+R6-01), F-83 (R7-01+R8-01), F-84 (R7-01+R8-01).
+F-17 (L05b+R2-04), F-26 (L03a+R2-04), F-27 (L03a+R2-04), F-54 (L05b+R2-04), F-69 (L06+R2-04), F-72 (L15a+R2-04), F-74 (R2-02+R10-01), F-75 (R2-08+R3-02), F-76 (R3-01+R4-02), F-77 (R3-02+R4-01), F-80 (R5-01+R6-01), F-83 (R7-01+R8-01), F-84 (R7-01+R8-01).
 
-Of these, 8 have had no member since round 1: F-03, F-06, F-25, F-28, F-31, F-57, F-59, F-60. F-35 left this list in round 5 (it is now saturated); F-78 joined it. F-80 joined it in round 6, and F-83 and F-84 in round 8. F-31 took ledger members in round 6 (census GAP-1), not a lens member. Round 9 added no member to any two-lens family.
+Round 10 moved nine families off this list: R10-02 gave each of the eight families untouched since round 1 (F-03, F-06, F-25, F-28, F-31, F-57, F-59, F-60) its third lens, and R10-01 gave F-78 its third. F-74 joined it from the single-lens list (R10-01-07). F-26 took a round-10 note (R10-02-06's cause), not a member. Of the thirteen, F-17, F-27, F-54, F-69 and F-72 have had no member since round 2.
 
-### Single lens (6)
+### Single lens (5)
 
-F-73 (R2-02), F-74 (R2-02), F-79 (R4-02), F-81 (R6-01), F-82 (R6-02) and F-85 (R9-01). F-73 and F-74 rest on round 2's motion strips; no later lens re-stripped them (the sheet is off-screen at HEAD, F-21). F-79 rests on R4-02's captures, F-81 on R6-01's and F-82 on R6-02's, each with its source re-checked (§2). F-83 and F-84 left this list in round 8 (R8-01). No round-8 or round-9 lens added a member to F-73, F-74, F-79, F-81 or F-82. F-85 left the inbound-only list in round 9: R9-01 measured five of its rows in paint, with the inset override, and every other surface in its neighbourhood.
+F-73 (R2-02), F-79 (R4-02), F-81 (R6-01), F-82 (R6-02) and F-85 (R9-01). F-73 rests on round 2's motion strips; R10-01 drove the Sheet's slide and gesture but filed nothing on the theme flip. F-79 rests on R4-02's captures, F-81 on R6-01's and F-82 on R6-02's, each with its source re-checked (§2). F-74 left this list in round 10 (R10-01-07).
 
 ### Inbound only (0)
 
 None. F-85 (O-74: A2-FO-L2-2, A2-VA-L2-12, A2-KE-L2-15) took its first lens in round 9 (R9-01).
 
-### Remaining coverage gaps (after round 9)
+### Remaining coverage gaps (after round 10)
 
 - Safari. 0 cells banked in any round (§6.7). Round 5 adds its own owed cells: bfcache and print on WebKit, and SSR hydration in Safari.
-- Real input. Still no touch device, trackpad, fling or pen. R5-01's long session carried no touch, pen or text entry, and R5-02's phone cells were `isMobile` plus `hasTouch`.
-- Interruption, the remainder. The Sheet's slide reversal and a Sheet drag wait for W-SURFACE-GEOMETRY (the sheet is off-screen at HEAD). A Toast dismissed mid-enter and a Select reversal are attributed to R4-01-01 by source only.
+- Real input. Still no touch device, trackpad or pen. R5-01's long session carried no touch, pen or text entry, and R5-02's phone cells were `isMobile` plus `hasTouch`. R10-01 drove CDP touch, flings and a mouse on the Sheet in Chromium, and a mouse only in Playwright Firefox (no CDP touch; synthetic `PointerEvent`s cannot take capture). The spring not receiving the finger's velocity is source-only (headless frame timing too noisy), and the detented left, right and top Sheets were measured for overshoot only, not dragged.
+- Interruption, the remainder. R10-01 drove the Sheet's drag, reversal mid-slide and mid-settle, `touchCancel` and a bfcache page hide with F-21's position injected. A Toast dismissed mid-enter and a Select reversal are attributed to R4-01-01 by source only.
 - Assistive technology. No screen reader has been driven. VoiceOver is not running on the seat machine, and its AppleScript control is off; turning it on is an owner action and would take over the live session. Every announcement claim rests on Chromium's CDP AX tree, and the forced palettes are Chromium's emulation, not Windows High Contrast on hardware.
 - Page lifecycle, the remainder. New-headless offers no same-document hidden state, and CDP freeze does not freeze a visible page in this build, so hide and freeze ran through bfcache only. Device sleep was not driven, and the Sheet was not driven through any transition (off-screen at HEAD, F-21).
 - Hosts and media, the remainder. R6-01 drove the shadow root, both iframes, fullscreen, the native top layer, strict CSP, Trusted Types, two apps and print with overlays open. Not driven: SSR `style` attributes under `style-src-attr`, Trusted Types in a cross-origin frame, the eight `document.activeElement` reads other than DataTable's, the inline Command's `useHideOthers` inside a shadow root, print in dark with an overlay open, a real fullscreen exit, and touch or pen across a frame edge.
@@ -1948,9 +2045,9 @@ None. F-85 (O-74: A2-FO-L2-2, A2-VA-L2-12, A2-KE-L2-15) took its first lens in r
 - Direction and zoom, the remainder. Sheet sides, detents and F-74's anchored edge are unmeasurable until F-21 lands; R9-01 and R9-02 measured the Sheet only with `position: fixed` injected. Localized strings were a post-mount swap, not a first mount. Zoom was emulated as the viewport it produces. The 20 px root was targeted, not swept.
 - The demo in the preference cells. R4-02 swept all 92 routes, but in direction, zoom, spacing and root-size cells. R3-02 swept only the first 46 routes in PRT, PCM and FC, so the second half remains thin there.
 - GPU. No real low-end GPU, and no WebGPU readback on WebKit.
-- Untouched families. 16 have had no lens member since round 1: F-03, F-04, F-05, F-06, F-11, F-13, F-25, F-28, F-31, F-55, F-56, F-57, F-58, F-59, F-60, F-61 (F-35 left the list in round 5). F-31 has taken inbound rows (O-62, UIA-F-122, UIA-F-27, O-66 §1, O-66a) and census ledger members (GAP-1); F-13 a census decide row (GAP-B2b).
-- Registry candidates. None pending: the ledger census's six registry gaps and its §8 corrections are folded in round 6 (§10.5), with no mint; round 7's six proposed families are ruled in §11.3; round 8's seats proposed none, and the one inbound mint is F-85 (§12.4); round 9's one proposed family (R9-02-02) folds into F-65 (§13.3).
-- Evidence custody. Round-5 to round-7 captures are git-ignored like rounds 2 to 4, with each seat's probe scripts copied beside them (`captures/R5-0x/probes/`, `captures/R6-01/probes/`, `captures/R7-0x/probes/`, and the consumer sources under each seat's `harness/`). The directory still lives on one disk (P-2).
+- Untouched families. 8 have had no lens member since round 1: F-04, F-05, F-11, F-13, F-55, F-56, F-58, F-61 (R10-02 took F-03, F-06, F-25, F-28, F-31, F-57, F-59 and F-60 off the list). F-13 has a census decide row (GAP-B2b). Five two-lens families have had none since round 2 (§3, Two lenses).
+- Registry candidates. None pending: the ledger census's six registry gaps and its §8 corrections are folded in round 6 (§10.5), with no mint; round 7's six proposed families are ruled in §11.3; round 8's seats proposed none, and the one inbound mint is F-85 (§12.4); round 9's one proposed family (R9-02-02) folds into F-65 (§13.3); round 10's seats proposed none, and every row folds (§14.3).
+- Evidence custody. R10-01's probes and frame strips sit under `captures/R10-01/probes/` and `res/`, R10-02's scripts and JSON under `captures/R10-02/`. Round-5 to round-7 captures are git-ignored like rounds 2 to 4, with each seat's probe scripts copied beside them (`captures/R5-0x/probes/`, `captures/R6-01/probes/`, `captures/R7-0x/probes/`, and the consumer sources under each seat's `harness/`). The directory still lives on one disk (P-2).
 
 ## 4. Round-2 proposal (as proposed; §6.1 maps it to the seats that ran)
 
@@ -2783,3 +2880,92 @@ Two seats, aimed at territory no lens has measured, since round 9 minted nothing
 | R10-02 | The eight two-lens families with no member since round 1: F-03, F-06, F-25, F-28, F-31, F-57, F-59, F-60 | Re-measure each family's evidence at HEAD and census what sits beside it: gate fixtures pinned to a live defect (F-03) and paint evidence routed to an uncaptured sink (F-06) across the current test and gate tree; the preview stills' colour functions (F-25); the chip row (F-28); every `backdrop-filter` with nothing to sample, from source and computed style (F-31); the placement grammar (F-57), the import DAG's back-edges (F-59) and the periphery (F-60), from the tree. Paint cells for F-25, F-28 and F-31 run after R10-01 on the one browser seat. Confirm, refute or narrow each statement with a probe |
 
 If round 10 mints none, the registry has its second consecutive clean pass and the family set closes. If it mints, the same test repeats with at most 2 seats aimed where it minted.
+
+## 14. Round 10
+
+Folded at `1ca0933e`, 2026-09-24. R10-01 read at `04929544` and R10-02 at `cc8a501c`; every commit between them and the fold is docs-only except the release/10.1 merge (`4afc7fc9`), which touches the configurator alone (§2, round 10, row 7). Round 10 is the eighth stability pass. The fold is recorded once: in each family's **Round 10** bullets and corrections, in §2, in §3 (recomputed) and here. `INBOUND-MAP.md` is unchanged (§14.5).
+
+### 14.1 Seats as run
+
+§13.8 proposed two seats, and both ran as proposed. R10-01 held the browser seat (P-8); R10-02 ran source-first beside it and took the browser after R10-01 returned. R10-01 drove the 10.0.1 tarball in a scratch Vite consumer, R10-02 the repository's `dist-demo/`. Neither seat called `getContext()` on a canvas. R10-01 injected `[data-slot=sheet-content]{position:fixed}` for every Sheet cell, as R9-02 did.
+
+| id | lens | cells |
+|---|---|---|
+| R10-01 | The Sheet in motion and under a finger (F-74, F-78, F-65's detent half, F-32, F-46) | 390×844 and 844×390; Chromium with CDP touch and a mouse, Playwright Firefox with a mouse; every cell twice; load 10.2-42.3 |
+| R10-02 | The eight two-lens families with no member since round 1 (F-03, F-06, F-25, F-28, F-31, F-57, F-59, F-60) | the tree at `cc8a501c`; Chromium paint cells for F-25, F-28 and F-31 at 1440×900, both modes, twice; the first screen of 92 routes for the lens census; load 9-72 |
+
+Seats used: 44 across rounds 1 to 10.
+
+Gaps the seats declared, carried into §3: no Firefox touch; no Safari cell and no Playwright WebKit cell (R10-01 took none; R10-02's WebKit crashed on 11 of 11 routes, not filed); the page hide through bfcache only; the keyboard shrink emulated by `setViewportSize`; the detented left, right and top Sheets measured for overshoot only; the spring's missing finger velocity source-only; fling borders under load not claimed; R10-02's lens census on the first screen only, with closed overlays not mounted and 234 translucent lenses over a uniform ground not adjudicated; the slider and progress fills' α 1 not traced.
+
+### 14.2 Counts
+
+- Findings: **19**. Per severity: BLOCKER 0 · HIGH 4 · MED 11 · LOW 4.
+- Relation as the seats claimed it: CONFIRMS 3 · EXTENDS 16 · NEW 0 · REFUTES 0.
+- Folded into existing families: **19**.
+- Genuinely new families: **0** from the lenses, **0** from inbound (no inbound row landed).
+- Refuted claims: **0**. Rejected whole: 0. Seven statements narrowed or corrected (§2), five of them registry statements.
+- Families touched: 13 of the 85 (F-03, F-06, F-25, F-28, F-31, F-32, F-46, F-57, F-59, F-60, F-65, F-74, F-78), plus a note without a member on F-26. No family's maximum changes.
+- Re-checks at `1ca0933e`: the four HIGHs first, then 11 of the 15 MED and LOW rows (§2).
+
+| seat | findings | BLOCKER | HIGH | MED | LOW | CONFIRMS | EXTENDS | NEW | REFUTES |
+|---|---|---|---|---|---|---|---|---|---|
+| R10-01 | 8 | 0 | 3 | 4 | 1 | 1 | 7 | 0 | 0 |
+| R10-02 | 11 | 0 | 1 | 7 | 3 | 2 | 9 | 0 | 0 |
+| **all** | **19** | **0** | **4** | **11** | **4** | **3** | **16** | **0** | **0** |
+
+Placement: F-03 2 · F-06 1 · F-25 1 · F-28 1 · F-31 3 · F-32 1 · F-46 1 · F-57 1 · F-59 1 · F-60 1 · F-65 3 · F-74 1 · F-78 2 (19 assigned, 0 duplicates).
+
+The seats' relation column: R10-02-04, -08, -09, -10 and -11 were filed as "CONFIRMS + EXTENDS" in the report and as EXTENDS in the digest, and R10-02-05 as CONFIRMS with a narrowing. The table counts the digest's value.
+
+### 14.3 Placements, and the fold test
+
+No seat filed a NEW row, so no row needed the full statement-by-statement table that §13.3 ran. The test was still run in both directions on every EXTENDS row: does the claimed family's statement, as written or as its corrections widen it, name the row's cause, and does another family name it more exactly? Five rows needed a statement widened to hold, and each widening is stated with its reason in the family's round-10 correction. For those five, and for every row where a second family was a live candidate, the nearest alternatives and why each fails or holds:
+
+| row | sev | placed | alternatives weighed | ruling |
+|---|---|---|---|---|
+| R10-01-01 | HIGH | F-78 | F-65 (the scalar `t` and the spring's internal value as two authorities over one position); F-44 (motion time off the one authority) | F-78 holds as written: the drag interrupts the spring and the release restarts it "from … the previous target", and the family's own cure shape (re-target from the in-flight value, as `useSpringMount` does) is the fix. F-65 describes the state split but its cure (one source per quantity) does not name the release transition; F-44 fails, since no clock or integrator is off its authority |
+| R10-01-03 | HIGH | F-78 | F-22 (the dismissal leg) | F-78's round-5 correction names every lifecycle edge and the cancel that must never commit. F-22 fails: nothing outside the sheet dismisses it; the gesture's own cancel does |
+| R10-01-02 | HIGH | F-65 | F-29 (floors under the width query); F-76 (the animated extent leaves out what the surface occupies) | F-65's round-9 correction states the mechanism (the engine offers stops in fractions, the paint floors them) and names this half as unprobed. F-29 holds only as the reason the floor is higher at 844×390. F-76 fails: the plate and its reserved box agree; the motion runs in a coordinate the paint clamps |
+| R10-01-04 | MED | F-46 (widened) | F-78 ("a hold that ends with the pointer still present"); F-44 (dt policies) | F-46 holds once widened from offsets to any quantity derived from an event-sampled velocity: R3-01-02 already carries the cause, a velocity fed on events only and never zeroed at rest. F-78 fails: the still hold is not an interruption of a transition, and nothing is mapped onto a from-rest pair; the release uses a stale input. F-44 fails: the sample time is read, it is never aged |
+| R10-01-05 | MED | F-65 | F-78 (the cancel's commit); F-77 (modality-blind posture) | F-65's round-9 statement (a choice the engine offers is resolved by another authority) holds: the engine and the UA's `touch-action` both decide whether a body press drags. F-78 keeps the commit that follows (R10-01-03), not the ownership split. F-77 fails: it is a hover-entry mechanism |
+| R10-01-06 | LOW | F-65 | F-85 (device geometry inputs) | F-65 holds: the span and the plate read the viewport twice, once frozen. F-85 fails: no inset is involved |
+| R10-01-07 | MED | F-74 (widened) | F-79 (direction and writing mode not inputs to axis code) | F-74's mechanism (an unclamped `p` mapped to `p · 100%` on a sheet with no bleed) holds on every side; the statement's side list widens. F-79 fails: the four sides are physical props, not logical axes read against direction |
+| R10-01-08 | MED | F-32 | F-22 (dock chrome dismisses the non-modal Sheet) | F-32 holds (the dock covers the grip). The mouse dismissal is F-22's R9-02-04, cited and not counted twice |
+| R10-02-02 | MED | F-03 (widened) | F-09 (latches standing in for cures); F-10 (literal pins) | F-03 holds once widened from a self-test fixture to any gate arm that asserts a live defect state: the consequence (the cure turns the gate red) and the cure (re-state the assertion on the cured state) are the family's. F-09 fails: a latch passes on any failure, and this is a plain assertion. F-10 fails: no budget or ratchet |
+| R10-02-03 | MED | F-06 | F-12 (close records say what the tree does not); F-63 (docs not derived from the source) | F-06 holds: in-tree comments route paint cells to the closed sink or to a counter that does not exist, which is the routing the family retires. F-12 and F-63 hold records and docs, not routing in source |
+| R10-02-06 | HIGH | F-31 | F-26 (a composite custom property resolved at `:root`); F-21 (a shared rule beats a component's declaration) | F-26's mechanism names the cause exactly (the blur rungs read `--glass-level` and resolve at `:root`); F-31's round-6 ruling makes it the single home for a `backdrop-filter` that paints nothing, so the row counts once in F-31 and F-26 takes a widening note. R9-01-04's cause-first precedent was weighed: that precedent had no single-home ruling against it. F-21 fails: no shared rule wins; the element's level never reaches a token resolved above it |
+| R10-02-07 | MED | F-31 (former list widened) | F-45 (non-composited motion at idle) | F-31's round-6 statement names backdrop-root formers; a mask is one more. F-45 fails: the mask costs nothing in motion here; the lens under it is inert |
+| R10-02-08 | MED | F-31 | F-02 (detectors narrower than the claim); F-04 (the visual suite never entered CI) | F-31's nested-lens arm holds the paint; the depth-4 spec is its detector re-authored. F-02 and F-04 hold only the spec's wiring (narrowed in §2) |
+| R10-02-10 | MED | F-59 | F-02 (R2-06-06: an instrument reports a figure its method does not support); F-12 | F-59 holds the back-edges and the DAG row that carries the cure; the instrument half is F-02's mechanism, cross-cited. Both are folds; no statement is missing |
+| R10-02-11 | LOW | F-60 | F-03 (widened: a gate arm asserts a live defect state) | both statements cover it: `ENGINE_HOMES` addresses `src` by literal path (L13-11) and pins the back-edge's current ends. Kept in F-60 because L13-11 names the addressing and W-PERIPHERY carries the cure |
+
+R10-02-01 (F-03), R10-02-04 (F-25), R10-02-05 (F-28), R10-02-09 (F-57) sit in their family's statement as written, with no live second candidate: each re-measures the family's own evidence and adds a site of the same mechanism.
+
+No row was forced. Where a statement widened (F-03, F-46, F-74, F-31's former list, F-26's note), the widening names a cause already carried by one of the family's earlier members, not a new one.
+
+### 14.4 New families
+
+None. The seats proposed none, and every row folds (§14.3). No inbound row landed, so none came from the map.
+
+### 14.5 The inbound map
+
+`INBOUND.md` was re-read at `1ca0933e`. Its last row is still O-80, mapped in round 8, and its corrections paragraph was mapped in round 5, so no row is missing from `INBOUND-MAP.md`, and no round-10 section is appended there. Rows mapped: **0**. Cumulative: **442** rows, unchanged. The 10.1.0 release answers O-68 and O-75 at HEAD (`4afc7fc9`); their round-6 and round-8 map statuses are left as mapped, and the cure is recorded here for the ledger to take.
+
+### 14.6 Examined and not filed
+
+- R10-01, clean: a reversal within one drag follows `t` linearly outside the dead band; a catch mid-settle with no finger travel is continuous (8 of 8); the detented arm has 0 px overshoot on every side; the plain Sheet has no gesture (`@pointerdown` bound only when detented, `SheetContent.vue:311`), and nothing registered claims one.
+- R10-01, not filed: portrait fling landings at the rung borders vary with the last event pair's timing under load; the Firefox landscape catch cells ran off the viewport and are superseded; a background tab does not hide the page in new headless (the instrument limit R5-01 recorded).
+- R10-02, not filed: the carousel's templated `hsl()` sites name their hues on the hsl scale; the 234 translucent lenses over a uniform ground depend on content; Playwright WebKit crashes on every route (an engine build; no Safari cell inferred).
+
+### 14.7 Stability
+
+**Second consecutive clean pass.** Round 10, the eighth stability pass, minted **0** families: **0** from the lenses and **0** from inbound. Its 19 rows are registered mechanisms met under a finger and in the eight families no lens had re-measured since round 1; no seat filed a NEW row, and the strict fold test (§14.3) found none that needed one. Five statements widened to carry their rows, each by a cause an earlier member already carries. Five registry statements narrowed or corrected on measurement.
+
+The mint history by source: round 3, 2 (lens); round 4, 2 (lens); round 5, 1 (lens); round 6, 2 (lens); round 7, 2 (lens); round 8, 1 (inbound), 0 (lens); round 9, 0 and 0; round 10, 0 and 0. The lens mint count has been 0 for three rounds and the combined count for two. By §13.8's rule the family set closes at 85: F-01 to F-85, with no pending candidate.
+
+The closure is of the family set, not of coverage. §3's remaining gaps stand, Safari first (0 cells in any round, owner-blocked, §6.7), and a later row still folds by the same test; a row that fails it reopens the set.
+
+### 14.8 After round 10
+
+No round-11 seat is proposed. The set is closed by its own rule, so a further discovery seat would test coverage, not the family set, and that is the ledger's to schedule against §3's gaps. If the owner or the driver opens another round, the two gaps with the most registered families behind them are Safari (every paint family, owner-blocked) and a real touch device (F-65, F-78, F-46 and F-74 under a finger outside CDP).
