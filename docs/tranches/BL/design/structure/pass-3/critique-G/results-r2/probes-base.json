@@ -1,0 +1,301 @@
+{
+ "tree": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3b/crit-G/wt",
+ "floor": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3b/crit-G/wt/scripts/structure",
+ "scc": {
+  "sccs": 4,
+  "members": 14,
+  "sizes": [
+   7,
+   3,
+   2,
+   2
+  ],
+  "pairs": 26,
+  "nestingPairs": 3
+ },
+ "depth": {
+  "max": 3,
+  "deepest": [
+   "src/components/aurora/constants/shaders",
+   "src/components/dock/styles/controls"
+  ],
+  "atLeast6": 0
+ },
+ "placement": {
+  "hasAnchorParam": true,
+  "byClass": {
+   "ok": 310,
+   "published": 181,
+   "anchored": 36,
+   "move": 14,
+   "global": 2,
+   "unread": 2
+  },
+  "moveOrGlobal": [
+   "src/components/_shared/overlay/isTeleportedTarget.ts → src/components/dock (move)",
+   "src/components/aurora/constants/budget.ts → src/components (global)",
+   "src/components/chip/accent-tone.css → src/styles (move)",
+   "src/components/dialog/ModalOverlay.vue → src/components (global)",
+   "src/components/dock/composables/useDockHold.ts → src/components/slider (move)",
+   "src/components/fourier-field/shaders/compute.wgsl.ts → src/components/fourier-field/renderer (move)",
+   "src/components/fourier-field/shaders/render.wgsl.ts → src/components/fourier-field/renderer (move)",
+   "src/composables/dom/useDocumentVisibility.ts → src/composables/motion/core (move)",
+   "src/composables/glass/useGlassBackdropLuminance.ts → src/components/dock (move)",
+   "src/composables/glass/webgl/createCanvasLifecycle.ts → src/composables/glass (move)",
+   "src/composables/glass/webgl/shaders/flow.glsl.ts → src/components/aurora/constants/shaders (move)",
+   "src/composables/glass/webgl/shaders/flow.wgsl.ts → src/components/aurora/constants/shaders (move)",
+   "src/composables/motion/pointer/useRoutePointer.ts → src/components/constellation (move)",
+   "src/composables/motion/scroll/useScrollChrome.ts → src/components/dock (move)",
+   "src/composables/motion/scroll/useScrollProgress.ts → src/components/aurora (move)",
+   "src/composables/search/useFuzzySearch.ts → src/components/dock (move)"
+  ]
+ },
+ "entries": {
+  "js": 63,
+  "css": 5,
+  "doors": 14,
+  "cssWithoutDist": [],
+  "hasAuroraConfig": false,
+  "dualDoor": 40,
+  "dualDoorFirst": [
+   "src/composables/motion/core/constants.ts#DAMPING on motion,motion-core",
+   "src/composables/motion/core/constants.ts#SNAP_THRESHOLD on motion,motion-core",
+   "src/composables/motion/core/constants.ts#FRAME_MS on motion,motion-core",
+   "src/composables/motion/morph/useDockCtaReceive.ts#DockCtaReceivePreset on motion,dock",
+   "src/composables/motion/morph/useDockCtaReceive.ts#UseDockCtaReceiveOptions on motion,dock",
+   "src/composables/motion/morph/useDockCtaReceive.ts#UseDockCtaReceiveReturn on motion,dock",
+   "src/composables/motion/morph/useDockCtaReceive.ts#useDockCtaReceive on motion,dock",
+   "src/components/_shared/axes.ts#SurfaceTier on axes,surface",
+   "src/components/blob/types.ts#BlobMood on blob-config,blob",
+   "src/components/blob/types.ts#BlobMerge on blob-config,blob"
+  ],
+  "kernelReexportOutside": 0,
+  "kernelReexportOutsideFirst": []
+ },
+ "selfNameInSrc": 0,
+ "kernelReadsUnit": [],
+ "demoPastDoor": [
+  "demo/chassis/code/Code.vue → src/components/_shared/class-names.ts",
+  "demo/chassis/code/CodeBlock.vue → src/components/_shared/class-names.ts",
+  "demo/chassis/code/CodeBlock.vue → src/composables/dom/useClipboard.ts",
+  "demo/chassis/hero/StoryHeader.vue → src/components/_shared/class-names.ts",
+  "demo/chassis/hero/StoryHero.vue → src/components/_shared/class-names.ts",
+  "demo/chassis/hero/StoryHero.vue → src/composables/dom/useTokenColor.ts",
+  "demo/chassis/hero/StoryHero.vue → src/composables/motion/pointer/useRoutePointer.ts",
+  "demo/chassis/hero/aurora-hero.ts → src/components/aurora/constants/presets.ts",
+  "demo/chassis/hero/aurora-hero.ts → src/components/aurora/constants/presets.ts",
+  "demo/chassis/landing/CatalogLanding.vue → src/composables/dark/useGlobalDark.ts",
+  "demo/chassis/landing/SectionLanding.vue → src/composables/dark/useGlobalDark.ts",
+  "demo/chassis/landing/SectionPreviewCard.vue → src/components/_shared/class-names.ts",
+  "demo/chassis/page/StoryPage.vue → src/composables/motion/scroll/useScrollChrome.ts",
+  "demo/chassis/section/StorySection.vue → src/components/_shared/class-names.ts",
+  "demo/chassis/showcase/ShowcaseFrame.vue → src/components/_shared/class-names.ts",
+  "demo/chassis/showcase/TokenLadder.vue → src/components/_shared/class-names.ts",
+  "demo/composables/virtual/useVirtualSectionWindow.ts → src/composables/dom/useResizeObserver.ts",
+  "demo/composables/virtual/virtualSectionLayout.ts → src/composables/sidebar/types.ts",
+  "demo/shell/AppShell.vue → src/composables/dark/useGlobalDark.ts",
+  "demo/shell/AppShell.vue → src/components/aurora/composables/auroraFallbackGround.ts",
+  "demo/shell/AppShell.vue → src/components/aurora/Aurora.vue",
+  "demo/shell/BottomDock.vue → src/components/dialog/Dialog.vue",
+  "demo/shell/BottomDock.vue → src/components/dialog/DialogDescription.vue",
+  "demo/shell/BottomDock.vue → src/components/dialog/DialogHeader.vue",
+  "demo/shell/BottomDock.vue → src/components/dialog/DialogTitle.vue",
+  "demo/shell/BottomDock.vue → src/components/sheet/SheetContent.vue",
+  "demo/shell/SidebarDock.vue → src/components/_shared/class-names.ts",
+  "demo/shell/configurator/PresetEditor.vue → src/components/dialog/Dialog.vue",
+  "demo/shell/configurator/PresetEditor.vue → src/components/dialog/DialogDescription.vue",
+  "demo/shell/configurator/PresetEditor.vue → src/components/dialog/DialogHeader.vue",
+  "demo/shell/configurator/PresetEditor.vue → src/components/dialog/DialogTitle.vue",
+  "demo/shell/configurator/PresetEditor.vue → src/components/sheet/SheetContent.vue",
+  "demo/stories/compositions/auth-shell.vue → src/components/_shared/class-names.ts",
+  "demo/stories/compositions/empty-states.vue → src/components/blob/types.ts",
+  "demo/stories/compositions/empty-states.vue → src/components/_shared/class-names.ts",
+  "demo/stories/compositions/settings.vue → src/components/_shared/class-names.ts",
+  "demo/stories/data/infinite-scroll.vue → src/components/_shared/class-names.ts",
+  "demo/stories/data/table.vue → src/components/_shared/class-names.ts",
+  "demo/stories/data/timeline.vue → src/components/_shared/class-names.ts",
+  "demo/stories/data/virtual-section.vue → src/components/_shared/class-names.ts",
+  "demo/stories/display/badge.vue → src/components/_shared/class-names.ts",
+  "demo/stories/dock/_frame/DockStage.vue → src/composables/glass/useGlassBackdropLuminance.ts",
+  "demo/stories/dock/cta-receive.vue → src/composables/motion/morph/useDockCtaReceive.ts",
+  "demo/stories/dock/dock-search.vue → src/components/dock/composables/useDockState.ts",
+  "demo/stories/dock/layers.vue → src/components/_shared/class-names.ts",
+  "demo/stories/forms/slider.vue → src/components/_shared/class-names.ts",
+  "demo/stories/forms/slider.vue → src/components/aurora/composables/auroraFallbackGround.ts",
+  "demo/stories/foundations/colors.vue → src/components/_shared/class-names.ts",
+  "demo/stories/foundations/intro.vue → src/composables/dark/useGlobalDark.ts",
+  "demo/stories/foundations/motion.vue → src/components/_shared/class-names.ts",
+  "demo/stories/foundations/paper-glass.vue → src/components/_shared/class-names.ts",
+  "demo/stories/foundations/radii.vue → src/components/_shared/class-names.ts",
+  "demo/stories/foundations/shadows.vue → src/components/_shared/class-names.ts",
+  "demo/stories/foundations/typography.vue → src/components/_shared/class-names.ts",
+  "demo/stories/motion/countup.vue → src/composables/motion/number/useAnimatedNumber.ts",
+  "demo/stories/motion/curve-gallery.vue → src/composables/motion/spring/springPresets.ts",
+  "demo/stories/motion/scroll.vue → src/composables/motion/scroll/useScrollScene.ts",
+  "demo/stories/motion/springs.vue → src/composables/motion/spring/springPresets.ts",
+  "demo/stories/motion/springs.vue → src/composables/motion/spring/springProjection.ts",
+  "demo/stories/motion/springs.vue → src/composables/motion/core/motionTempo.ts",
+  "demo/stories/motion/springs.vue → src/composables/dom/useClipboard.ts",
+  "demo/stories/motion/springs.vue → src/components/_shared/class-names.ts",
+  "demo/stories/motion/typewriter.vue → src/components/_shared/class-names.ts",
+  "demo/stories/navigation/tabs.vue → src/components/aurora/composables/auroraFallbackGround.ts",
+  "demo/stories/substrates/_frame/RendererStatus.vue → src/composables/glass/webgpu/rendererStatus.ts",
+  "demo/stories/substrates/_frame/VizStudio.vue → src/components/_shared/class-names.ts",
+  "demo/stories/substrates/aurora/AuroraStage.vue → src/components/aurora/composables/runtime.ts",
+  "demo/stories/substrates/aurora/AuroraStage.vue → src/composables/glass/webgpu/rendererStatus.ts",
+  "demo/stories/substrates/aurora/AuroraStage.vue → src/composables/motion/core/useReducedMotion.ts",
+  "demo/stories/substrates/aurora/PresetPickerRow.vue → src/components/_shared/class-names.ts",
+  "demo/stories/substrates/aurora/config/ColorSwatch.vue → src/components/_shared/class-names.ts",
+  "demo/stories/substrates/blob.vue → src/composables/glass/webgpu/rendererStatus.ts",
+  "demo/stories/substrates/blob.vue → src/components/blob/types.ts",
+  "demo/stories/substrates/blob.vue → src/components/blob/constants.ts",
+  "demo/stories/substrates/constellation.vue → src/composables/dom/useTokenColor.ts",
+  "demo/stories/substrates/constellation.vue → src/composables/glass/webgpu/rendererStatus.ts",
+  "demo/stories/substrates/fourier-field.vue → src/composables/glass/webgpu/rendererStatus.ts",
+  "demo/stories/substrates/fourier-field.vue → src/components/fourier-field/constants.ts",
+  "demo/stories/substrates/fourier-field.vue → src/composables/glass/procedural/prng.ts",
+  "demo/stories/substrates/glass-material.vue → src/composables/glass/useGlassBackdropLuminance.ts"
+ ],
+ "counts": {
+  "kernelReadsUnit": 0,
+  "demoPastDoor": 80,
+  "violations": 0
+ },
+ "names": {
+  "detents": [
+   "src/components/sheet/detents"
+  ],
+  "renderer": [
+   "src/components/fourier-field/renderer"
+  ],
+  "auroraConfig": [
+   "demo/stories/substrates/aurora/config"
+  ],
+  "shaderStemDirs": [],
+  "placeholderDirs": [
+   "docs/tranches/BL/design/structure/pass-3/B-kit/lib",
+   "scripts/structure/lib",
+   "src/components/typewriter/utils",
+   "tests/utils"
+  ],
+  "placeholderFiles": []
+ },
+ "bounds": {
+  "dirsOver": 18,
+  "dirsOverList": [
+   "177 tests-visual",
+   "43 tests/components",
+   "28 src/styles/glass",
+   "28 tests/styles",
+   "20 src/styles/tokens",
+   "19 src/styles",
+   "17 tests/demo",
+   "16 src/components/aurora/composables",
+   "16 src/components/menu",
+   "16 tests/components/custom/dock",
+   "15 src/components/dock/styles",
+   "14 src/components/aurora/constants/shaders",
+   "14 tests/components/custom/aurora",
+   "14 tests/composables",
+   "13 demo/stories/containers",
+   "13 demo/stories/foundations",
+   "13 src/components/dock/composables",
+   "13 src/components/sortable-list"
+  ],
+  "filesOver": 56,
+  "filesOverList": [
+   "1030 tests/public-surface.spec.ts",
+   "1079 scripts/verify-export-types.mjs",
+   "1098 demo/stories/manifest.ts",
+   "1099 tests/styles/glass-subtlety.test.ts",
+   "1260 tests/styles/contrast-computed.test.ts",
+   "504 tests/components/music-staff.geometry.test.ts",
+   "505 tests/components/fourier-field/FourierField.smoke.test.ts",
+   "506 src/components/slider/styles.css",
+   "509 tests/composables/glass/webgpu/useWebGPUCanvas.test.ts",
+   "510 tests-visual/substrate-cohesion.spec.ts",
+   "514 demo/stories/substrates/constellation.vue",
+   "517 src/composables/glass/webgpu/useWebGPUCanvas.ts",
+   "527 src/components/aurora/composables/runtime.ts",
+   "527 src/components/dock/styles/shell.css",
+   "528 src/components/blob/shaders/metaball.wgsl.ts",
+   "530 src/components/blob/shaders/metaball.frag.ts",
+   "531 demo/stories/substrates/fourier-field.vue",
+   "540 tests/composables/glass/webgl/useWebGLCanvas.test.ts",
+   "541 demo/stories/motion/springs.vue",
+   "545 src/components/dock/GlassDock.vue",
+   "545 tests/gates/overfit-structure.test.ts",
+   "547 tests/gates/gate-register.test.ts",
+   "547 tests/styles/route-motion.test.ts",
+   "550 src/components/configurator/styles.css",
+   "551 src/components/aurora/constants/presets.ts",
+   "555 tests-visual/adaptive-glass.spec.ts",
+   "572 tests/composables/dark/darkModeSyncScript.test.ts",
+   "578 src/components/sheet/styles.css",
+   "583 scripts/reflect-capture-verify.mjs",
+   "584 src/index.ts",
+   "586 scripts/lib/paint-arm.mjs",
+   "595 tests-visual/w2-blur-redress.spec.ts",
+   "599 src/components/dock/styles/run.css",
+   "606 src/components/music-staff/staffGeometry.ts",
+   "606 src/components/pager-dots/PagerDots.vue",
+   "626 src/components/easing/EasingPicker.vue",
+   "631 src/components/sortable-list/drag.ts",
+   "632 demo/stories/data/search.vue",
+   "670 tests/styles/radius-role-canon.test.ts",
+   "674 demo/stories/dock/overview.vue"
+  ],
+  "peer": {
+   "menu": 16,
+   "stylesGlass": 28,
+   "stylesTokens": 20,
+   "testsVisual": 177
+  }
+ },
+ "scripts": {
+  "top": 10,
+  "topNonBin": [
+   "scripts/comment-census.mjs",
+   "scripts/flatten-subpath-types.mjs",
+   "scripts/gate-register.mjs",
+   "scripts/gen-component-styles.mjs",
+   "scripts/reflect-capture-verify.mjs",
+   "scripts/regen-spring-tokens.mjs",
+   "scripts/safari-probe.mjs"
+  ],
+  "subdirs": [
+   "lib",
+   "structure"
+  ]
+ },
+ "accentTone": [
+  "src/components/chip/accent-tone.css"
+ ],
+ "accentToneReaders": [
+  "src/styles/glass.css [css-import]"
+ ],
+ "census": {
+  "rows": 3,
+  "kinds": [
+   "computed-read@src/components",
+   "computed-read@src/components",
+   "computed-read@src"
+  ]
+ },
+ "eponymyLiteral": {
+  "dirs": 14,
+  "fail": 10,
+  "failList": [
+   "src/components/_shared/feedback",
+   "src/components/_shared/field",
+   "src/components/_shared/surface",
+   "src/components/aurora/constants",
+   "src/components/aurora/constants/shaders",
+   "src/components/blob/shaders",
+   "src/components/fourier-field/renderer",
+   "src/components/fourier-field/shaders",
+   "src/components/sheet/detents",
+   "src/components/typewriter/utils"
+  ]
+ }
+}

@@ -1,0 +1,428 @@
+{
+  "gate": "node scripts/structure/eponym/eponym.mjs --root . --verbose",
+  "baseExit": 1,
+  "baseLines": 102,
+  "digestBefore": "33a91b37edee29f4c68a2b9fed695588e616249ceee5448eef4354bed4d2c96f",
+  "digestAfter": "33a91b37edee29f4c68a2b9fed695588e616249ceee5448eef4354bed4d2c96f",
+  "results": [
+    {
+      "id": "K-S06",
+      "item": "S-06",
+      "expect": "RED",
+      "what": "self-name import in src (Chip.vue → @mkbabb/glass-ui/badge)",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E0 1",
+        "src/components/chip/Chip.vue:2 self-name-in-src [import-side-effect] @mkbabb/glass-ui/badge",
+        "eponym {\"edges\":7357,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (4 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-S07",
+      "item": "S-07",
+      "expect": "CENSUS",
+      "what": "computed read join(process.cwd(), 'src/components/' + n) in a scripts file",
+      "verdict": "CAUGHT(other)",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL S2 1",
+        "scripts/zz-critg-computed.mjs (no reader of any kind)",
+        "eponym {\"edges\":7360,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":20}}}: FAIL (4 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P18",
+      "item": "G-04",
+      "expect": "RED",
+      "what": "Badge.vue deep relative import of a dock-private composable (useDockSpring)",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E1 2",
+        "global src/components/dock/composables/useDockSpring.ts → src/composables/useDockSpring.ts (readers src/components/badge, src/components/dock)",
+        "FAIL B1 1",
+        "src/components/badge/Badge.vue:2 → src/components/dock/composables/useDockSpring.ts [import] (door src/components/dock/index.ts)",
+        "eponym {\"edges\":7358,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (4 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P20",
+      "item": "G-04",
+      "expect": "RED",
+      "what": "same-door alias GlassDockLegacy.ts published on the dock door",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL B12 1",
+        "src/components/dock/GlassDockLegacy.ts:1 re-exports src/components/dock/GlassDock.vue (relay)",
+        "FAIL A1 1",
+        "src/components/dock/index.ts publishes src/components/dock/GlassDock.vue#default as GlassDock, GlassDockLegacy",
+        "eponym {\"edges\":7359,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (5 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P21",
+      "item": "G-04",
+      "expect": "RED",
+      "what": "masked fallback onto an existing file: import('./<existing>').catch(() => null) in DockControl.vue",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "eponym {\"edges\":7358,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (3 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-B8",
+      "item": "G-04",
+      "expect": "RED",
+      "what": "kernel reads a unit: type-only import of a component file from src/composables",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E0 1",
+        "src/composables/motion/core/useRAFLoop.ts:1 unresolved [import-type] ../../../components/badge/Badge.vue.vue",
+        "eponym {\"edges\":7357,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (4 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-B12",
+      "item": "G-04",
+      "expect": "RED",
+      "what": "a non-door relay file re-exporting a sibling, read by an SFC",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "src/components/dock/GlassDock.vue 547 lines",
+        "FAIL B12 1",
+        "src/components/dock/composables/morphRelay.ts:1 re-exports src/components/dock/composables/useDockMorph.ts (relay)",
+        "eponym {\"edges\":7359,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (4 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-B14",
+      "item": "G-04",
+      "expect": "RED",
+      "what": "door impurity: a value statement inside a JS door (badge index.ts)",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL B14 1",
+        "src/components/badge/index.ts:4 holds 1 statement(s) that are not `export … from`",
+        "eponym {\"edges\":7357,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (4 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P19",
+      "item": "G-05",
+      "expect": "RED",
+      "what": "eponymous placeholder dock/utils/utils.ts over dock/utils/format.ts, read by GlassDock",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E2 3",
+        "src/components/dock/utils/format.ts → src/components/dock/format.ts",
+        "src/components/dock/utils/pad.ts → src/components/dock/pad.ts",
+        "src/components/dock/utils/utils.ts → src/components/dock/utils.ts",
+        "FAIL E3N 1",
+        "module dock/utils is not in the pin",
+        "FAIL E3P 2",
+        "src/components/dock/utils/ (placeholder name)",
+        "src/components/dock/utils/utils.ts (placeholder file name)",
+        "src/components/dock/GlassDock.vue 547 lines",
+        "FAIL B12 2",
+        "src/components/dock/utils/utils.ts:1 re-exports src/components/dock/utils/format.ts (relay)"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P19b",
+      "item": "G-05",
+      "expect": "RED",
+      "what": "placeholder module dir misc/ with an eponymous misc.ts over a helper, read by Chip",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E2 2",
+        "src/components/chip/misc/misc.ts → src/components/chip/misc.ts",
+        "src/components/chip/misc/tone.ts → src/components/chip/tone.ts",
+        "FAIL E3N 1",
+        "module chip/misc is not in the pin",
+        "FAIL E3P 2",
+        "src/components/chip/misc/ (placeholder name)",
+        "src/components/chip/misc/misc.ts (placeholder file name)",
+        "eponym {\"edges\":7359,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (6 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P28",
+      "item": "G-06",
+      "expect": "RED",
+      "what": "scripts/foo-helper.mjs at scripts top level, read by one bin only (profile-bundle)",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "scripts/profile-bundle.mjs 939 lines",
+        "FAIL S1 2",
+        "scripts/profile-bundle.mjs → scripts/profile-bundle/profile-bundle.mjs (reached only by the bin scripts/profile-bundle.mjs)",
+        "scripts/foo-helper.mjs → scripts/profile-bundle/foo-helper.mjs (reached only by the bin scripts/profile-bundle.mjs)",
+        "eponym {\"edges\":7358,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (4 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-B35",
+      "item": "G-06",
+      "expect": "RED",
+      "what": "a bin's private helper placed in another bin's dir",
+      "verdict": "NOT-PLANTED",
+      "exit": null,
+      "baseExit": 1,
+      "fresh": [],
+      "err": "plant target not found: scripts/**/comment-census.mjs"
+    },
+    {
+      "id": "K-B10",
+      "item": "G-07",
+      "expect": "RED",
+      "what": "CSS @import of another unit's private sheet (card styles importing a sheet private to sheet/)",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E1 2",
+        "NEEDS-NAME src/components/sheet/styles.css → src/components/card/styles.css",
+        "FAIL B1 1",
+        "src/components/card/scroll.css:1 → src/components/sheet/styles.css [css-import] (door src/components/sheet/index.ts)",
+        "eponym {\"edges\":7358,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (4 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-B28",
+      "item": "G-07",
+      "expect": "RED",
+      "what": "a component sheet moved to src/styles/ and imported by the styles aggregator",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "eponym {\"edges\":7358,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (3 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-B14g",
+      "item": "G-07",
+      "expect": "RED",
+      "what": "import.meta.glob out of a door (deck/index.ts globbing dock SFCs)",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL B1 8",
+        "src/components/deck/index.ts:88 → src/components/dock/DockBackgroundToggle.vue [glob] (door src/components/dock/index.ts)",
+        "src/components/deck/index.ts:88 → src/components/dock/DockControl.vue [glob] (door src/components/dock/index.ts)",
+        "src/components/deck/index.ts:88 → src/components/dock/DockCrossfade.vue [glob] (door src/components/dock/index.ts)",
+        "src/components/deck/index.ts:88 → src/components/dock/DockLayer.vue [glob] (door src/components/dock/index.ts)",
+        "src/components/deck/index.ts:88 → src/components/dock/DockLayerGroup.vue [glob] (door src/components/dock/index.ts)",
+        "src/components/deck/index.ts:88 → src/components/dock/DockSeparator.vue [glob] (door src/components/dock/index.ts)",
+        "src/components/deck/index.ts:88 → src/components/dock/DockTrigger.vue [glob] (door src/components/dock/index.ts)",
+        "src/components/deck/index.ts:88 → src/components/dock/GlassDock.vue [glob] (door src/components/dock/index.ts)",
+        "FAIL B14 1",
+        "src/components/deck/index.ts:88 holds 1 statement(s) that are not `export … from`",
+        "eponym {\"edges\":7365,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (5 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-B22",
+      "item": "G-07",
+      "expect": "RED",
+      "what": "<style src> carve in an SFC (Badge.vue → ./badge.carve.css)",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "eponym {\"edges\":7358,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (3 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P07a",
+      "item": "G-08",
+      "expect": "GREEN",
+      "what": "registration-weak: dock/registry.ts places 3 dock SFCs in an object literal, read by GlassDock.vue",
+      "verdict": "FALSE-POSITIVE",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "src/components/dock/GlassDock.vue 547 lines",
+        "eponym {\"edges\":7361,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (3 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-E4",
+      "item": "G-02",
+      "expect": "RED",
+      "what": "E4: a dir at 13 direct files (13 peers under badge/)",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E2 14",
+        "src/components/badge/peers/peera.ts → src/components/badge/peera.ts",
+        "src/components/badge/peers/peerb.ts → src/components/badge/peerb.ts",
+        "src/components/badge/peers/peerc.ts → src/components/badge/peerc.ts",
+        "src/components/badge/peers/peerd.ts → src/components/badge/peerd.ts",
+        "src/components/badge/peers/peere.ts → src/components/badge/peere.ts",
+        "src/components/badge/peers/peerf.ts → src/components/badge/peerf.ts",
+        "src/components/badge/peers/peerg.ts → src/components/badge/peerg.ts",
+        "src/components/badge/peers/peerh.ts → src/components/badge/peerh.ts",
+        "src/components/badge/peers/peeri.ts → src/components/badge/peeri.ts",
+        "src/components/badge/peers/peerj.ts → src/components/badge/peerj.ts",
+        "src/components/badge/peers/peerk.ts → src/components/badge/peerk.ts"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-E5",
+      "item": "G-02",
+      "expect": "RED",
+      "what": "E5: one symbol on two doors (the chip door re-publishes Badge)",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E0 1",
+        "src/components/chip/index.ts:4 self-name-in-src [reexport] @mkbabb/glass-ui/badge",
+        "eponym {\"edges\":7357,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (4 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-E5b",
+      "item": "G-02",
+      "expect": "RED",
+      "what": "E5 without the self-name: the chip door relatively re-publishes the badge door's default",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E5 4",
+        "src/components/badge/Badge.vue#default on ./badge + ./chip (owner ./badge, L4.7)",
+        "src/components/badge/badgeVariants.ts#BADGE_AXIS_DEFAULTS on ./badge + ./chip (owner ./badge, L4.7)",
+        "src/components/badge/badgeVariants.ts#badgeVariants on ./badge + ./chip (owner ./badge, L4.7)",
+        "src/components/badge/badgeVariants.ts#BadgeVariants on ./badge + ./chip (owner ./badge, L4.7)",
+        "eponym {\"edges\":7358,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (4 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-E6",
+      "item": "G-02",
+      "expect": "RED",
+      "what": "E6: demo reads past a door (demo App.vue imports a dock composable by path)",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E6 19",
+        "demo/App.vue:2 import → src/components/dock/composables/useDockSpring.ts",
+        "eponym {\"edges\":7358,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (3 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-E7",
+      "item": "G-02",
+      "expect": "RED",
+      "what": "E7: a Badge test homed in chip's __tests__/",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E7 1",
+        "src/components/chip/__tests__/zz-badge.test.ts → src/components/badge/__tests__/",
+        "FAIL B1 1",
+        "src/components/chip/__tests__/zz-badge.test.ts:2 → src/components/badge/Badge.vue [import] (door src/components/badge/index.ts)",
+        "eponym {\"edges\":7360,\"info\":{\"E1\":{\"anchored\":41,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (5 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-G03a",
+      "item": "G-03",
+      "expect": "RED",
+      "what": "authored name lost: the sheet detents dir renamed to its root's name",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E2 3",
+        "src/components/sheet/content/SheetContent.vue → src/components/sheet/detents/SheetContent.vue",
+        "src/components/sheet/content/projection.ts → src/components/sheet/detents/projection.ts",
+        "src/components/sheet/content/useSheetDetents.ts → src/components/sheet/detents/useSheetDetents.ts",
+        "FAIL E3 1",
+        "src/components/sheet/content/ holds no root named content, no door and is no authored base or carve module",
+        "FAIL E3N 2",
+        "module sheet/content is not in the pin",
+        "pinned module sheet/detents is gone",
+        "eponym {\"edges\":7357,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (6 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-G03b",
+      "item": "G-03",
+      "expect": "RED",
+      "what": "unpinned new module: badge/tone/ with an eponymous tone.ts over a helper",
+      "verdict": "CAUGHT",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "FAIL E2 2",
+        "src/components/badge/tone/shade.ts → src/components/badge/shade.ts",
+        "src/components/badge/tone/tone.ts → src/components/badge/tone.ts",
+        "FAIL E3N 1",
+        "module badge/tone is not in the pin",
+        "eponym {\"edges\":7359,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (5 clause(s))"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-L1",
+      "item": "control",
+      "expect": "GREEN",
+      "what": "a legitimate colocated test of Badge in badge/__tests__/",
+      "verdict": "FALSE-POSITIVE",
+      "exit": 1,
+      "baseExit": 1,
+      "fresh": [
+        "eponym {\"edges\":7360,\"info\":{\"E1\":{\"anchored\":40,\"fd2Held\":[\"src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu\",\"src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu\"],\"fd8Held\":[\"src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts\"]},\"E2\":{\"fd2Flattened\":[],\"fd8Held\":[]},\"S1\":{\"bins\":19}}}: FAIL (3 clause(s))"
+      ],
+      "err": null
+    }
+  ]
+}

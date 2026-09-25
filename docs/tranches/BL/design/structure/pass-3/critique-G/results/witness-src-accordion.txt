@@ -1,0 +1,8 @@
+src → src/components/accordion:
+  [src] src/index.ts:92 -[reexport]-> src/components/accordion/index.ts [src/components/accordion]
+src/components/accordion → src:
+  [src/components/accordion] src/components/accordion/Accordion.vue:4 -[import]-> src/components/_shared/class-names.ts [src/components/_shared]
+  [src/components/_shared] src/components/_shared/useMotionAxis.ts:43 -[import]-> src/composables/motion/core/useReducedMotion.ts [src/composables/motion/core]
+  [src/composables/motion/core] src/composables/motion/core/index.ts:60 -[reexport-star]-> src/composables/motion/spring/useLiquidFlex.ts [src/composables/motion/spring]
+  [src/composables/motion/spring] src/composables/motion/spring/__tests__/springs-story.test.ts:5 -[import]-> demo/stories/motion/springs.vue [demo/stories/motion]
+  [demo/stories/motion] demo/stories/motion/springs.vue:29 -[import]-> src/index.ts [src]

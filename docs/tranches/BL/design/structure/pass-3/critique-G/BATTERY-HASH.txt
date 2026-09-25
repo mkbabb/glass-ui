@@ -1,0 +1,13 @@
+be928653fcba3a12770a5d98c849afdd3d88b027a321b717842a051655f35ffa
+# run 2: sha256 of (cd battery/r2 && find . -type f | LC_ALL=C sort | xargs shasum -a 256) | shasum -a 256
+# 0174e68068c5f1e8ff7cf7566412f46f13cf4c98f5915ddbd14925cd915f3b10  ./BATTERY.md
+# 406343d3b9a4f32ff20e2241d4ba5b2889eed8d098ebee0720e4bee111186331  ./plants.mjs
+# 1ec2cf3ca49707c3ef93f6ef192deffb9d6120afdc0e5c6b7ec59c91620da0bd  ./probes.mjs
+# written 2026-09-25T07:18:26Z by critique-G run 2 (claude-opus-5-5), before reading pass-3/G-kit/, pass-3/G-proto.md or pass-3/xj-BonG.md
+#
+# run 1 (the prior, uncommitted critique-G seat; its files are battery/BATTERY.md, battery/plants.mjs, battery/probes.mjs, kept unchanged):
+# 68be47ff701f8b7b3fdcaa6daf8bb7c914c5cb04d2bc517f87d94422d0756e18
+# sha256 of: (cd battery && find . -maxdepth 1 -type f | LC_ALL=C sort | xargs shasum -a 256) | shasum -a 256
+# 81b341211c8cd2beaf847453ded96ee60e70cb96cf290671e7fde4a5f97200d2  ./BATTERY.md
+# 45ceed8d582de91580993fd718852c46f084f14c36da8d596c09e7272c7ccef4  ./plants.mjs
+# 83d9268ed7c0d69ced1f5fe5842ce6ecb23e68b96e0abe08a165d41c9b15d682  ./probes.mjs

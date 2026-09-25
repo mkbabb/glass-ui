@@ -1,0 +1,134 @@
+{
+ "base": {
+  "E0": 0,
+  "E1": 1,
+  "E1K": 0,
+  "E2": 0,
+  "E3": 0,
+  "E3N": 0,
+  "E3P": 0,
+  "E4": 64,
+  "E5": 0,
+  "E6": 18,
+  "E7": 0,
+  "B1": 0,
+  "B8": 0,
+  "B12": 0,
+  "B14": 0,
+  "A1": 0,
+  "S1": 0,
+  "S2": 0
+ },
+ "results": [
+  {
+   "id": "V1-e2-nested-helper",
+   "item": "control E2",
+   "verdict": "CAUGHT",
+   "rose": [
+    "E1 1→2",
+    "E2 0→1"
+   ],
+   "fresh": [
+    "FAIL E1 2",
+    "move src/components/sheet/zzDetentHelper.ts → src/components/sheet/detents/zzDetentHelper.ts (readers src/components/sheet/detents)",
+    "FAIL E2 1",
+    "src/components/sheet/zzDetentHelper.ts → src/components/sheet/detents/zzDetentHelper.ts"
+   ]
+  },
+  {
+   "id": "V2-glob-out",
+   "item": "G-07 (B-14)",
+   "verdict": "CAUGHT",
+   "rose": [
+    "B1 0→8",
+    "B14 0→1"
+   ],
+   "fresh": [
+    "FAIL B1 8",
+    "src/components/deck/index.ts:89 → src/components/dock/DockBackgroundToggle.vue [glob] (door src/components/dock/index.ts)",
+    "src/components/deck/index.ts:89 → src/components/dock/DockControl.vue [glob] (door src/components/dock/index.ts)",
+    "src/components/deck/index.ts:89 → src/components/dock/DockCrossfade.vue [glob] (door src/components/dock/index.ts)",
+    "… 5 more",
+    "FAIL B14 1",
+    "src/components/deck/index.ts:89 holds 1 statement(s) that are not `export … from`"
+   ]
+  },
+  {
+   "id": "V3-source-out",
+   "item": "G-07 (P3-R8)",
+   "verdict": "CAUGHT",
+   "rose": [
+    "B14 0→1"
+   ],
+   "fresh": [
+    "FAIL B14 1",
+    "src/components/badge/index.css:1 holds 1 non-import node(s)"
+   ]
+  },
+  {
+   "id": "V4-scripts-shared-in-module",
+   "item": "G-06 (B-38)",
+   "verdict": "MISSED",
+   "rose": [],
+   "fresh": []
+  },
+  {
+   "id": "V5-rename-detents",
+   "item": "G-03 (pin, rename)",
+   "verdict": "CAUGHT",
+   "rose": [
+    "E2 0→3",
+    "E3 0→1",
+    "E3N 0→2"
+   ],
+   "fresh": [
+    "FAIL E2 3",
+    "src/components/sheet/content/SheetContent.vue → src/components/sheet/detents/SheetContent.vue",
+    "src/components/sheet/content/projection.ts → src/components/sheet/detents/projection.ts",
+    "src/components/sheet/content/useSheetDetents.ts → src/components/sheet/detents/useSheetDetents.ts",
+    "FAIL E3 1",
+    "src/components/sheet/content/ holds no root named content, no door and is no authored base or carve module",
+    "FAIL E3N 2",
+    "module sheet/content is not in the pin"
+   ]
+  },
+  {
+   "id": "V6-skeleton-away",
+   "item": "control E1",
+   "verdict": "CAUGHT",
+   "rose": [
+    "E0 0→1",
+    "E7 0→1",
+    "B1 0→1"
+   ],
+   "fresh": [
+    "FAIL E0 1",
+    "src/components/skeleton/index.ts:1 unresolved [reexport] ./Skeleton.vue",
+    "FAIL E7 1",
+    "src/components/skeleton/__tests__/Skeleton.test.ts (no single subject: belongs in the harness)",
+    "FAIL B1 1",
+    "src/components/skeleton/__tests__/Skeleton.test.ts:12 → src/components/data-table/Skeleton.vue [path-literal] (door src/components/data-table/index.ts)"
+   ]
+  },
+  {
+   "id": "V7-css-global-one",
+   "item": "G-07 (B-28)",
+   "verdict": "CAUGHT",
+   "rose": [
+    "E1 1→2"
+   ],
+   "fresh": [
+    "FAIL E1 2",
+    "move src/styles/zz-badge-only.css → src/components/badge/zz-badge-only.css (readers src/components/badge)"
+   ]
+  },
+  {
+   "id": "V8-b8-test-reads-demo",
+   "item": "G-04 (B8, L4.2)",
+   "verdict": "MISSED",
+   "rose": [],
+   "fresh": []
+  }
+ ],
+ "statusLinesAfter": 677
+}

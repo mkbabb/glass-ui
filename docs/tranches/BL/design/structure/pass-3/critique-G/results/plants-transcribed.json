@@ -1,0 +1,74 @@
+[
+ {
+  "id": "K-B8t",
+  "item": "G-04",
+  "verdict": "CAUGHT",
+  "rose": [
+   "B1 0→1",
+   "B8 0→1"
+  ],
+  "fresh": [
+   "  B1 src/composables/motion/core/useRAFLoop.ts:1 → src/components/badge/Badge.vue [type] [import-type] (door src/components/badge/index.ts)",
+   "  B8 src/composables/motion/core/useRAFLoop.ts:1 → src/components/badge/Badge.vue [type] [import-type] (the kernel reads a unit)"
+  ],
+  "err": null
+ },
+ {
+  "id": "K-E4t",
+  "item": "G-02",
+  "verdict": "CAUGHT",
+  "rose": [
+   "E4 64→65"
+  ],
+  "fresh": [
+   "  E4 src/components/badge/ 16 direct files"
+  ],
+  "err": null
+ },
+ {
+  "id": "K-B35t",
+  "item": "G-06",
+  "verdict": "CAUGHT",
+  "rose": [
+   "S1 0→2"
+  ],
+  "fresh": [
+   "  E4 scripts/profile-bundle.mjs 939 lines",
+   "  S1 scripts/profile-bundle.mjs → scripts/profile-bundle/profile-bundle.mjs (reached only by the bin scripts/profile-bundle.mjs)",
+   "  S1 scripts/structure/zz-profile-private.mjs → scripts/profile-bundle/zz-profile-private.mjs (reached only by the bin scripts/profile-bundle.mjs)"
+  ],
+  "err": null
+ },
+ {
+  "id": "K-B38t",
+  "item": "G-06",
+  "verdict": "MISSED",
+  "rose": [],
+  "fresh": [
+   "  E4 scripts/profile-bundle.mjs 939 lines",
+   "  E4 scripts/verify-export-types.mjs 1080 lines"
+  ],
+  "err": null
+ },
+ {
+  "id": "K-P21b",
+  "item": "G-04",
+  "verdict": "CAUGHT",
+  "rose": [
+   "E2 0→1"
+  ],
+  "fresh": [
+   "  E2 FD-2 nesting cycle: src/components/dock/DockControl.vue would head src/components/dock/control"
+  ],
+  "err": null
+ },
+ {
+  "id": "K-S07g",
+  "item": "S-07",
+  "verdict": "MISSED",
+  "census": [
+   0,
+   0
+  ]
+ }
+]

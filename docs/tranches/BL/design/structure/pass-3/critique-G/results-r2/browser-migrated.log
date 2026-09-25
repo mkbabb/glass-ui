@@ -1,0 +1,37 @@
+[browser-seat 2026-09-25T07:42:15.878Z] seat acquired after 0.0s: /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3b/crit-G/wt
+[browser-seat 2026-09-25T07:42:17.484Z] demo server http://localhost:61069 (pid 54047, cwd /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3b/crit-G/wt); 1 spec(s): substrate-paints-color.spec.ts
+
+Running 3 tests using 1 worker
+
+PI aurora DEFAULT meanChannel=230.7 floor=8
+PI aurora SETTING_SUN meanChannel=231.3 floor=8
+PI aurora DUSK meanChannel=230.2 floor=8
+PI aurora VIVID_SETTING_SUN meanChannel=233.0 floor=8
+PI aurora OPENAI_SKY meanChannel=231.3 floor=8
+PI aurora OPENAI_DAWN meanChannel=229.4 floor=8
+PI aurora OPENAI_MEADOW meanChannel=206.2 floor=8
+PI aurora DELIBERATIVE meanChannel=235.1 floor=8
+PI aurora DAY9_YELLOW meanChannel=229.3 floor=8
+PI aurora OIL_IMPASTO meanChannel=194.0 floor=8
+PI aurora OIL_GESTURAL meanChannel=217.7 floor=8
+PI aurora VANGOGH meanChannel=101.5 floor=8
+PI aurora OILPASTEL_SUNSET meanChannel=199.9 floor=8
+PI aurora OILPASTEL_RAINBOW meanChannel=217.4 floor=8
+PI aurora OILPASTEL_OCEAN meanChannel=147.8 floor=8
+PI aurora CRAYON meanChannel=166.1 floor=8
+PI aurora METAL meanChannel=206.7 floor=8
+PI aurora SPEEDTEST meanChannel=177.4 floor=8
+  ✓  1 [chromium-headless-new] › substrate-paints-color.spec.ts:575:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 (24.8s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.161 floor=0.1 · paintedShare=0.289 ceil=0.7
+  ✓  2 [chromium-headless-new] › substrate-paints-color.spec.ts:759:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS (7.9s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.161 floor=0.1 · paintedShare=0.289 ceil=0.7
+  ✓  3 [chromium-headless-new] › substrate-paints-color.spec.ts:767:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS (7.7s)
+
+  3 passed (41.4s)
+[browser-seat 2026-09-25T07:42:59.712Z] GREEN: 3/3 passed, 0 failed, 0 skipped in 44s → /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3b/crit-G/r2/out/browser-migrated.json
+node scripts/structure/browser.mjs --root $S/wt $MV --out  --wait 3600  33.90s user 11.43s system 103% cpu 43.941 total
+exit 0

@@ -1,0 +1,338 @@
+{
+  "gate": "node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-3/critique-G/tools/gate-counts.mjs",
+  "baseExit": 0,
+  "baseLines": 18,
+  "digestBefore": "33a91b37edee29f4c68a2b9fed695588e616249ceee5448eef4354bed4d2c96f",
+  "digestAfter": "33a91b37edee29f4c68a2b9fed695588e616249ceee5448eef4354bed4d2c96f",
+  "results": [
+    {
+      "id": "K-S06",
+      "item": "S-06",
+      "expect": "RED",
+      "what": "self-name import in src (Chip.vue → @mkbabb/glass-ui/badge)",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E0 1"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-S07",
+      "item": "S-07",
+      "expect": "CENSUS",
+      "what": "computed read join(process.cwd(), 'src/components/' + n) in a scripts file",
+      "verdict": "CAUGHT(other)",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "S2 1"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P18",
+      "item": "G-04",
+      "expect": "RED",
+      "what": "Badge.vue deep relative import of a dock-private composable (useDockSpring)",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E1 2",
+        "B1 1"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P20",
+      "item": "G-04",
+      "expect": "RED",
+      "what": "same-door alias GlassDockLegacy.ts published on the dock door",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "B12 1",
+        "A1 1"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P21",
+      "item": "G-04",
+      "expect": "RED",
+      "what": "masked fallback onto an existing file: import('./<existing>').catch(() => null) in DockControl.vue",
+      "verdict": "MISSED",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [],
+      "err": null
+    },
+    {
+      "id": "K-B8",
+      "item": "G-04",
+      "expect": "RED",
+      "what": "kernel reads a unit: type-only import of a component file from src/composables",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E0 1"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-B12",
+      "item": "G-04",
+      "expect": "RED",
+      "what": "a non-door relay file re-exporting a sibling, read by an SFC",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "B12 1"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-B14",
+      "item": "G-04",
+      "expect": "RED",
+      "what": "door impurity: a value statement inside a JS door (badge index.ts)",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "B14 1"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P19",
+      "item": "G-05",
+      "expect": "RED",
+      "what": "eponymous placeholder dock/utils/utils.ts over dock/utils/format.ts, read by GlassDock",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E2 3",
+        "E3N 1",
+        "E3P 2",
+        "B12 2"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P19b",
+      "item": "G-05",
+      "expect": "RED",
+      "what": "placeholder module dir misc/ with an eponymous misc.ts over a helper, read by Chip",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E2 2",
+        "E3N 1",
+        "E3P 2"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-P28",
+      "item": "G-06",
+      "expect": "RED",
+      "what": "scripts/foo-helper.mjs at scripts top level, read by one bin only (profile-bundle)",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "S1 2"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-B35",
+      "item": "G-06",
+      "expect": "RED",
+      "what": "a bin's private helper placed in another bin's dir",
+      "verdict": "NOT-PLANTED",
+      "exit": null,
+      "baseExit": 0,
+      "fresh": [],
+      "err": "plant target not found: scripts/**/comment-census.mjs"
+    },
+    {
+      "id": "K-B10",
+      "item": "G-07",
+      "expect": "RED",
+      "what": "CSS @import of another unit's private sheet (card styles importing a sheet private to sheet/)",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E1 2",
+        "B1 1"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-B28",
+      "item": "G-07",
+      "expect": "RED",
+      "what": "a component sheet moved to src/styles/ and imported by the styles aggregator",
+      "verdict": "MISSED",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [],
+      "err": null
+    },
+    {
+      "id": "K-B14g",
+      "item": "G-07",
+      "expect": "RED",
+      "what": "import.meta.glob out of a door (deck/index.ts globbing dock SFCs)",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "B1 8",
+        "B14 1"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-B22",
+      "item": "G-07",
+      "expect": "RED",
+      "what": "<style src> carve in an SFC (Badge.vue → ./badge.carve.css)",
+      "verdict": "MISSED",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [],
+      "err": null
+    },
+    {
+      "id": "K-P07a",
+      "item": "G-08",
+      "expect": "GREEN",
+      "what": "registration-weak: dock/registry.ts places 3 dock SFCs in an object literal, read by GlassDock.vue",
+      "verdict": "CLEAN",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [],
+      "err": null
+    },
+    {
+      "id": "K-E4",
+      "item": "G-02",
+      "expect": "RED",
+      "what": "E4: a dir at 13 direct files (13 peers under badge/)",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E2 14",
+        "E3N 1",
+        "E4 65",
+        "B12 13"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-E5",
+      "item": "G-02",
+      "expect": "RED",
+      "what": "E5: one symbol on two doors (the chip door re-publishes Badge)",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E0 1"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-E5b",
+      "item": "G-02",
+      "expect": "RED",
+      "what": "E5 without the self-name: the chip door relatively re-publishes the badge door's default",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E5 4"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-E6",
+      "item": "G-02",
+      "expect": "RED",
+      "what": "E6: demo reads past a door (demo App.vue imports a dock composable by path)",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E6 19"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-E7",
+      "item": "G-02",
+      "expect": "RED",
+      "what": "E7: a Badge test homed in chip's __tests__/",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E7 1",
+        "B1 1"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-G03a",
+      "item": "G-03",
+      "expect": "RED",
+      "what": "authored name lost: the sheet detents dir renamed to its root's name",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E2 3",
+        "E3 1",
+        "E3N 2"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-G03b",
+      "item": "G-03",
+      "expect": "RED",
+      "what": "unpinned new module: badge/tone/ with an eponymous tone.ts over a helper",
+      "verdict": "CAUGHT",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [
+        "E2 2",
+        "E3N 1"
+      ],
+      "err": null
+    },
+    {
+      "id": "K-L1",
+      "item": "control",
+      "expect": "GREEN",
+      "what": "a legitimate colocated test of Badge in badge/__tests__/",
+      "verdict": "CLEAN",
+      "exit": 0,
+      "baseExit": 0,
+      "fresh": [],
+      "err": null
+    }
+  ]
+}

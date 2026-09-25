@@ -1,0 +1,44 @@
+{
+ "base": {
+  "E0": 0,
+  "E1": 1,
+  "E1K": 0,
+  "E2": 0,
+  "E3": 0,
+  "E3N": 0,
+  "E3P": 0,
+  "E4": 64,
+  "E5": 0,
+  "E6": 18,
+  "E7": 0,
+  "B1": 0,
+  "B8": 0,
+  "B12": 0,
+  "B14": 0,
+  "A1": 0,
+  "S1": 0,
+  "S2": 0
+ },
+ "results": [
+  {
+   "id": "V9-nest-cycle-clean",
+   "item": "G-12",
+   "verdict": "CAUGHT",
+   "rose": [
+    "E2 0→2",
+    "E3 0→1",
+    "E3N 0→1"
+   ],
+   "fresh": [
+    "FAIL E2 2",
+    "src/components/badge/badge-dot/BadgeDot.vue → src/components/badge/BadgeDot.vue",
+    "src/components/badge/badge-dot/dotSize.ts → src/components/badge/dotSize.ts",
+    "FAIL E3 1",
+    "src/components/badge/badge-dot/ holds no root named badge-dot, no door and is no authored base or carve module",
+    "FAIL E3N 1",
+    "module badge/badge-dot is not in the pin"
+   ]
+  }
+ ],
+ "statusLinesAfter": 677
+}

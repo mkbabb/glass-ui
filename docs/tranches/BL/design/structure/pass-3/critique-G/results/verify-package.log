@@ -1,0 +1,17 @@
+
+> @mkbabb/glass-ui@10.0.1 verify:package
+> node scripts/verify-export-types.mjs
+
+file:///private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3b/crit-G/wt/scripts/verify-export-types.mjs:958
+    if (!firstAdoption && candidate < datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: ${unpackedBytes} < ${datum}`);
+                                                   ^
+
+Error: G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: 2912236 < 2916129
+    at ratchetEvidence (file:///private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3b/crit-G/wt/scripts/verify-export-types.mjs:958:52)
+    at verifyExportTypes (file:///private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3b/crit-G/wt/scripts/verify-export-types.mjs:1034:23)
+    at file:///private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3b/crit-G/wt/scripts/verify-export-types.mjs:1072:22
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:642:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.0.0

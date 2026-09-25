@@ -1,0 +1,66 @@
+{
+  "S-01": {
+    "pass": true,
+    "ev": "G-kit tracked 100; pass-2/kit tracked 84; xj docs tracked 2/2; untracked under pass-3 0"
+  },
+  "S-02": {
+    "pass": true,
+    "ev": "useClipboard: src/composables/dom/useClipboard.ts; useDragVelocity: src/composables/dom/useDragVelocity.ts; useRAFLoop: src/composables/motion/core/useRAFLoop.ts; useYieldToMain: src/composables/motion/core/useYieldToMain.ts; useScrollChrome: src/composables/motion/scroll/useScrollChrome.ts; useScrollProgress: src/composables/motion/scroll/useScrollProgress.ts; useRoutePointer: src/composables/motion/pointer/useRoutePointer.ts"
+  },
+  "S-03": {
+    "pass": true,
+    "ev": "rulings 8/8; ./aurora-config exported true; accent-tone.css at src/styles/accent-tone.css; .bundle-ratchet ceilings equal to HEAD"
+  },
+  "S-04": {
+    "pass": true,
+    "ev": "anchor occurrences 23; scripts/structure/placement.mjs exit 0; summary:   \"ok\": 407, /   \"anchored\": 37, /   \"move\": 16",
+    "note": "move rows 0, global rows 0 (read from the summary above)"
+  },
+  "S-05": {
+    "pass": false,
+    "ev": "move src/composables/motion/scroll/useScrollChrome.ts -> src/components/dock/useScrollChrome.ts: exit 0; TypeError: moves is not iterable"
+  },
+  "S-11": {
+    "pass": true,
+    "ev": "scripts/structure present true; files outside docs/ naming the docs floor: 0 "
+  },
+  "S-13": {
+    "pass": true,
+    "ev": "xj-BonG 16694 B, verdict-bearing true; xj-GonB 18488 B, verdict-bearing true"
+  },
+  "G-01": {
+    "pass": false,
+    "ev": "kit files 100; clauses named E0,E1,E2,E3,E4,E5,E6,E7; §8 choices without a disposition keyword: sibling-stem rename, eponymy pin, hook-only composables, relay-cure rows, auto-hold"
+  },
+  "G-02": {
+    "pass": true,
+    "ev": "npm test = \"vitest run\"; test-side files naming the G gate: tests/gates/eponym.test.ts,tests/components/easing.contract.test.ts,scripts/structure/eponym/stage2.mjs,scripts/structure/eponym/eponym.mjs",
+    "note": "E4..E7 readings are taken from the gate run in step 3"
+  },
+  "G-03": {
+    "pass": true,
+    "ev": "detents src/components/sheet/detents; renderer src/components/fourier-field/renderer; aurora config src/components/aurora/config; stage-named dirs none; pin files docs/tranches/BL/design/structure/pass-3/G-kit/authored/test-pins.json,docs/tranches/BL/design/structure/pass-3/G-kit/eponym/names.json,docs/tranches/BL/design/structure/pass-3/G-kit/rows/25-test-pins.json,docs/tranches/BL/design/structure/pass-3/G-kit/rows/26-surface-pin.json"
+  },
+  "G-06": {
+    "pass": false,
+    "ev": "scripts/ top-level files 6: flatten-subpath-types.mjs,gen-component-styles.mjs,profile-bundle.mjs,regen-spring-tokens.mjs,release.sh,verify-export-types.mjs; not named by package.json or CI: flatten-subpath-types.mjs,gen-component-styles.mjs,regen-spring-tokens.mjs"
+  },
+  "G-07": {
+    "pass": false,
+    "ev": "kit states the symbol-grain answer: false"
+  },
+  "G-10": {
+    "pass": false,
+    "ev": "non-slot dirs over 12: 6 demo/stories/containers=13 demo/stories/foundations=13 tests/components=13 tests/demo=13 tests/gates=14 tests-visual=176; slots over 12: 2 src/components/dock/__tests__=17 tests/styles=23; src/components/menu: files 5, dirs 3; src/styles/glass: files 6, dirs 6; src/styles/tokens: files 1, dirs 6; tests-visual: files 177, dirs 2"
+  },
+  "G-11": {
+    "pass": false,
+    "ev": "./aurora-config true; files over 500 lines 56 (src/components/aurora/config/presets.ts:552, src/components/aurora/runtime/runtime.ts:525, src/components/blob/renderer/webgl/metaball.frag.ts:531, src/components/blob/renderer/webgpu/metaball.wgsl.ts:529, src/components/configurator/styles.css:551, src/components/dock/GlassDock.vue:546, …); src __tests__ dirs 72",
+    "note": "E5 and E6 readings come from the gate run"
+  },
+  "G-12": {
+    "pass": null,
+    "ev": "max src dir depth 6 (components/aurora/runtime/webgl/palette/__tests__); parent<->child dir cycles 20: src/components/blob <-> src/components/blob/mood; src/components/blob <-> src/components/blob/composables; src/components/blob <-> src/components/blob/renderer; src/components/blob/renderer <-> src/components/blob/renderer/webgl; src/components/blob/renderer <-> src/components/blob/renderer/webgpu; src/components/constellation <-> src/components/constellation/composables; src/components/data-table <-> src/components/data-table/composables; src/components/deck <-> src/components/deck/composables; ruling/kit text on G-12 present true",
+    "note": "PASS needs FD-2 to count these (checked by a plant) or a ruling"
+  }
+}

@@ -1,0 +1,328 @@
+{
+ "tree": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3b/crit-G/wt",
+ "floor": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p3b/crit-G/wt/scripts/structure",
+ "scc": {
+  "sccs": 1,
+  "members": 91,
+  "sizes": [
+   91
+  ],
+  "pairs": 4095,
+  "nestingPairs": 119
+ },
+ "sccVsBase": {
+  "baseMembers": 14,
+  "baseSccs": 4,
+  "members": 91,
+  "sccs": 1,
+  "addedPairs": 4072,
+  "addedNesting": 118,
+  "addedOther": 3954,
+  "firstAddedOther": [
+   [
+    "demo/chassis",
+    "demo/stories"
+   ],
+   [
+    "demo/chassis",
+    "demo/stories/data"
+   ],
+   [
+    "demo/chassis",
+    "demo/stories/motion"
+   ],
+   [
+    "demo/chassis",
+    "demo/stories/substrates/_frame"
+   ],
+   [
+    "demo/chassis",
+    "demo/stories/substrates/aurora"
+   ],
+   [
+    "demo/chassis",
+    "demo/stories/substrates/aurora/config"
+   ],
+   [
+    "demo/chassis",
+    "demo/stories/substrates/aurora/sections"
+   ],
+   [
+    "demo/chassis",
+    "src"
+   ],
+   [
+    "demo/chassis",
+    "src/components/_shared"
+   ],
+   [
+    "demo/chassis",
+    "src/components/_shared/overlay"
+   ],
+   [
+    "demo/chassis",
+    "src/components/accordion"
+   ],
+   [
+    "demo/chassis",
+    "src/components/alert"
+   ]
+  ],
+  "firstAddedNesting": [
+   [
+    "demo/chassis",
+    "demo/chassis/body"
+   ],
+   [
+    "demo/chassis",
+    "demo/chassis/family"
+   ],
+   [
+    "demo/chassis",
+    "demo/chassis/field"
+   ],
+   [
+    "demo/chassis",
+    "demo/chassis/hero"
+   ],
+   [
+    "demo/chassis",
+    "demo/chassis/page"
+   ],
+   [
+    "demo/chassis",
+    "demo/chassis/play"
+   ],
+   [
+    "demo/chassis",
+    "demo/chassis/section"
+   ],
+   [
+    "demo/chassis",
+    "demo/chassis/showcase"
+   ],
+   [
+    "demo/stories",
+    "demo/stories/data"
+   ],
+   [
+    "demo/stories",
+    "demo/stories/motion"
+   ],
+   [
+    "demo/stories",
+    "demo/stories/substrates/_frame"
+   ],
+   [
+    "demo/stories",
+    "demo/stories/substrates/aurora"
+   ]
+  ]
+ },
+ "depth": {
+  "max": 5,
+  "deepest": [
+   "src/components/aurora/runtime/webgl/palette/__tests__"
+  ],
+  "atLeast6": 0
+ },
+ "placement": {
+  "hasAnchorParam": true,
+  "byClass": {
+   "ok": 407,
+   "unread": 142,
+   "published": 87,
+   "anchored": 37,
+   "move": 16
+  },
+  "moveOrGlobal": [
+   "src/components/_shared/overlay/isTeleportedTarget.ts → src/components/dock (move)",
+   "src/components/aurora/runtime/frame/textureUpload.ts → src/components/aurora/runtime (move)",
+   "src/components/aurora/runtime/frame/uniformBridge.ts → src/components/aurora (move)",
+   "src/components/aurora/runtime/webgl/glSetup.ts → src/components/aurora (move)",
+   "src/components/aurora/runtime/webgpu/aurora.wgsl.ts → src/components/aurora (move)",
+   "src/components/aurora/runtime/webgpu/uniformBridgeWGPU.ts → src/components/aurora (move)",
+   "src/components/aurora/runtime/webgpu/uniformBridgeWGPUImage.ts → src/components/aurora (move)",
+   "src/components/blob/renderer/surface/resolveBlobSurface.ts → src/components/blob (move)",
+   "src/components/blob/renderer/uploadBlobUniforms.ts → src/components/blob (move)",
+   "src/components/blob/renderer/webgpu/uniformBridgeWGPU.ts → src/components/blob (move)",
+   "src/composables/glass/lifecycle/createCanvasLifecycle.ts → src/composables/glass (move)",
+   "src/composables/glass/webgpu/useWebGPUCanvas.ts → src/composables/glass (move)",
+   "src/composables/glass/webgpu/webgpuDevice.ts → src/composables/glass (move)",
+   "src/composables/motion/pointer/useRoutePointer.ts → src/components/constellation (move)",
+   "src/composables/motion/route/useRouteTransition.ts → src/composables/motion/core (move)",
+   "src/composables/motion/scroll/useScrollProgress.ts → src/components/aurora (move)"
+  ]
+ },
+ "entries": {
+  "js": 64,
+  "css": 5,
+  "doors": 11,
+  "cssWithoutDist": [],
+  "hasAuroraConfig": true,
+  "dualDoor": 0,
+  "dualDoorFirst": [],
+  "kernelReexportOutside": 0,
+  "kernelReexportOutsideFirst": []
+ },
+ "selfNameInSrc": 0,
+ "kernelReadsUnit": [],
+ "demoPastDoor": [
+  "demo/composables/virtual/virtualSectionLayout.ts → src/composables/sidebar/types.ts",
+  "demo/stories/data/search.vue → src/components/dock/search/useFuzzySearch.ts",
+  "demo/stories/data/search.vue → src/components/dock/search/types.ts",
+  "demo/stories/dock/_frame/DockStage.vue → src/components/dock/legibility/useGlassBackdropLuminance.ts",
+  "demo/stories/dock/dock-search.vue → src/components/dock/composables/useDockState.ts",
+  "demo/stories/dock/dock-search.vue → src/components/dock/search/types.ts",
+  "demo/stories/motion/scroll.vue → src/composables/motion/scroll/useScrollScene.ts",
+  "demo/stories/motion/springs.vue → src/composables/motion/spring/springProjection.ts",
+  "demo/stories/motion/springs.vue → src/composables/motion/core/motionTempo.ts",
+  "demo/stories/substrates/aurora/AuroraStage.vue → src/components/aurora/runtime/runtime.ts",
+  "demo/stories/substrates/aurora/AuroraStage.vue → src/composables/glass/webgpu/rendererStatus.ts",
+  "demo/stories/substrates/blob.vue → src/composables/glass/webgpu/rendererStatus.ts",
+  "demo/stories/substrates/blob.vue → src/components/blob/mood/constants.ts",
+  "demo/stories/substrates/constellation.vue → src/composables/glass/webgpu/rendererStatus.ts",
+  "demo/stories/substrates/fourier-field.vue → src/composables/glass/webgpu/rendererStatus.ts",
+  "demo/stories/substrates/fourier-field.vue → src/components/fourier-field/register/constants.ts",
+  "demo/stories/substrates/fourier-field.vue → src/composables/glass/procedural/prng.ts",
+  "demo/stories/substrates/glass-material.vue → src/components/dock/legibility/useGlassBackdropLuminance.ts"
+ ],
+ "counts": {
+  "kernelReadsUnit": 0,
+  "demoPastDoor": 18,
+  "violations": 0
+ },
+ "names": {
+  "detents": [
+   "src/components/sheet/detents"
+  ],
+  "renderer": [
+   "src/components/blob/renderer",
+   "src/components/fourier-field/renderer"
+  ],
+  "auroraConfig": [
+   "demo/stories/substrates/aurora/config",
+   "src/components/aurora/config"
+  ],
+  "shaderStemDirs": [],
+  "placeholderDirs": [
+   "docs/tranches/BL/design/structure/pass-3/B-kit/lib",
+   "scripts/structure/lib",
+   "tests/utils"
+  ],
+  "placeholderFiles": []
+ },
+ "bounds": {
+  "dirsOver": 8,
+  "dirsOverList": [
+   "177 tests-visual",
+   "23 tests/styles",
+   "17 src/components/dock/__tests__",
+   "14 tests/gates",
+   "13 demo/stories/containers",
+   "13 demo/stories/foundations",
+   "13 tests/components",
+   "13 tests/demo"
+  ],
+  "filesOver": 56,
+  "filesOverList": [
+   "1025 tests/public-surface.spec.ts",
+   "1079 scripts/verify-export-types.mjs",
+   "1098 demo/stories/manifest.ts",
+   "1099 tests/styles/glass-subtlety.test.ts",
+   "1260 tests/styles/contrast-computed.test.ts",
+   "504 src/components/music-staff/__tests__/music-staff.geometry.test.ts",
+   "504 tests/components/fourier-field/FourierField.smoke.test.ts",
+   "506 src/components/slider/styles.css",
+   "509 src/composables/glass/__tests__/useWebGPUCanvas.test.ts",
+   "510 src/composables/glass/webgpu/useWebGPUCanvas.ts",
+   "510 tests-visual/substrate-cohesion.spec.ts",
+   "514 demo/stories/substrates/constellation.vue",
+   "524 src/components/aurora/runtime/runtime.ts",
+   "527 src/components/dock/styles/shell.css",
+   "528 src/components/blob/renderer/webgpu/metaball.wgsl.ts",
+   "530 src/components/blob/renderer/webgl/metaball.frag.ts",
+   "533 demo/stories/substrates/fourier-field.vue",
+   "537 demo/stories/motion/springs.vue",
+   "540 src/composables/glass/__tests__/useWebGLCanvas.test.ts",
+   "543 tests/styles/route-motion.test.ts",
+   "545 src/components/dock/GlassDock.vue",
+   "547 tests/gates/gate-register.test.ts",
+   "548 tests/gates/overfit-structure.test.ts",
+   "550 src/components/configurator/styles.css",
+   "551 src/components/aurora/config/presets.ts",
+   "555 tests-visual/adaptive-glass.spec.ts",
+   "572 src/composables/dark/__tests__/darkModeSyncScript.test.ts",
+   "578 src/components/sheet/styles.css",
+   "580 tests-visual/paint/paint-arm.mjs",
+   "583 tests-visual/paint/reflect-capture-verify.mjs",
+   "584 src/index.ts",
+   "595 tests-visual/w2-blur-redress.spec.ts",
+   "599 src/components/dock/styles/run.css",
+   "606 src/components/music-staff/staffGeometry.ts",
+   "606 src/components/pager-dots/PagerDots.vue",
+   "626 src/components/easing/EasingPicker.vue",
+   "631 src/components/sortable-list/drag/drag.ts",
+   "632 demo/stories/data/search.vue",
+   "670 tests/styles/radius-role-canon.test.ts",
+   "674 demo/stories/dock/overview.vue"
+  ],
+  "peer": {
+   "menu": 5,
+   "stylesGlass": 6,
+   "stylesTokens": 1,
+   "testsVisual": 177
+  }
+ },
+ "scripts": {
+  "top": 6,
+  "topNonBin": [
+   "scripts/flatten-subpath-types.mjs",
+   "scripts/gen-component-styles.mjs",
+   "scripts/regen-spring-tokens.mjs"
+  ],
+  "subdirs": [
+   "lib",
+   "structure"
+  ]
+ },
+ "accentTone": [
+  "src/styles/accent-tone.css"
+ ],
+ "accentToneReaders": [
+  "src/styles/glass.css [css-import]"
+ ],
+ "census": {
+  "rows": 3,
+  "kinds": [
+   "computed-read@src/components",
+   "computed-read@src/components",
+   "computed-read@src"
+  ]
+ },
+ "eponymyLiteral": {
+  "dirs": 29,
+  "fail": 19,
+  "failList": [
+   "src/components/_shared/feedback",
+   "src/components/_shared/field",
+   "src/components/_shared/surface",
+   "src/components/aurora/config",
+   "src/components/aurora/runtime/frame",
+   "src/components/aurora/runtime/webgl",
+   "src/components/aurora/runtime/webgl/palette",
+   "src/components/aurora/runtime/webgpu",
+   "src/components/blob/mood",
+   "src/components/blob/renderer",
+   "src/components/blob/renderer/surface",
+   "src/components/blob/renderer/webgl",
+   "src/components/blob/renderer/webgpu",
+   "src/components/dock/legibility",
+   "src/components/fourier-field/register",
+   "src/components/fourier-field/renderer",
+   "src/components/menu/items",
+   "src/components/menu/sub",
+   "src/components/sortable-list/drop"
+  ]
+ }
+}
