@@ -1,0 +1,955 @@
+{
+ "probe": "D2-G-lens-probe.mjs",
+ "filter": "blur(16px) saturate(1.2)",
+ "footprint": {
+  "x": 60,
+  "y": 122,
+  "w": 480,
+  "h": 56,
+  "r": 28
+ },
+ "dpr": 2,
+ "started": "2026-09-25T21:44:28.357Z",
+ "versions": {
+  "chromium": "149.0.7827.55",
+  "webkit (Playwright WebKit)": "26.5"
+ },
+ "q1": [
+  {
+   "engine": "chromium",
+   "id": "ctl-nofilter",
+   "note": "plate, no backdrop-filter: the unblurred baseline",
+   "expectE": 480,
+   "E": 480,
+   "L": 60,
+   "R": 540,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "ctl-plate",
+   "note": "plate alone, own border-radius, filter: the live lens",
+   "expectE": 480,
+   "E": 480,
+   "L": 60,
+   "R": 540,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 27,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "ctl-ancestor-clippath",
+   "note": "ancestor clip-path inset(0 round 28px) (S-28 reproduction)",
+   "expectE": 480,
+   "E": 480,
+   "L": 60,
+   "R": 540,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "ctl-ancestor-ovh",
+   "note": "ancestor overflow:hidden + radius 28, static",
+   "expectE": 480,
+   "E": 480,
+   "L": 60,
+   "R": 540,
+   "arcErr": 0.77,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 27,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "plant-square",
+   "note": "doors border-radius 0 (a square corner)",
+   "expectE": 200,
+   "E": 200,
+   "L": 200,
+   "R": 400,
+   "arcErr": 19.73,
+   "leak": 533,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "plant-lens",
+   "note": "doors border-radius 50% (per-axis: the HEAD lens class)",
+   "expectE": 200,
+   "E": 200,
+   "L": 200,
+   "R": 400,
+   "arcErr": 90.94,
+   "leak": 0,
+   "hole": 5419.3,
+   "sharp": 210,
+   "bMinusR": -53.8,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "plant-desync",
+   "note": "door R's counter-translation off by 6 px at E = 480 (plate slides out of the window)",
+   "expectE": 480,
+   "E": 474,
+   "L": 66,
+   "R": 540,
+   "arcErr": 6.17,
+   "leak": 121.5,
+   "hole": 0,
+   "sharp": 26,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "rest-E56",
+   "note": "aperture at rest, doors transformed statically",
+   "expectE": 56,
+   "E": 56,
+   "L": 272,
+   "R": 328,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "rest-E200",
+   "note": "aperture at rest, doors transformed statically",
+   "expectE": 200,
+   "E": 200,
+   "L": 200,
+   "R": 400,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "rest-E480",
+   "note": "aperture at rest, doors transformed statically",
+   "expectE": 480,
+   "E": 480,
+   "L": 60,
+   "R": 540,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 27,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "rest-E56-wc",
+   "note": "aperture at rest, doors transformed statically, will-change: transform",
+   "expectE": 56,
+   "E": 56,
+   "L": 272,
+   "R": 328,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "rest-E200-wc",
+   "note": "aperture at rest, doors transformed statically, will-change: transform",
+   "expectE": 200,
+   "E": 200,
+   "L": 200,
+   "R": 400,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "rest-E480-wc",
+   "note": "aperture at rest, doors transformed statically, will-change: transform",
+   "expectE": 480,
+   "E": 480,
+   "L": 60,
+   "R": 540,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 27,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "rest-E300-live-before",
+   "note": "aperture at rest, white/black backdrop",
+   "expectE": 300,
+   "E": 300,
+   "L": 150,
+   "R": 450,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "rest-E300-live-after",
+   "note": "same, backdrop recoloured white/blue",
+   "expectE": 300,
+   "E": 300,
+   "L": 150,
+   "R": 450,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 24,
+   "bMinusR": 43,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "rest-live-delta",
+   "bMinusRDelta": 97,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "paused-f0.25",
+   "note": "WAAPI transforms paused mid-flight",
+   "expectE": 162,
+   "E": 162,
+   "L": 219,
+   "R": 381,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "paused-f0.5",
+   "note": "WAAPI transforms paused mid-flight",
+   "expectE": 268,
+   "E": 268,
+   "L": 166,
+   "R": 434,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "paused-f0.75",
+   "note": "WAAPI transforms paused mid-flight",
+   "expectE": 374,
+   "E": 374,
+   "L": 113,
+   "R": 487,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "running-300",
+   "note": "WAAPI linear 1600 ms, screenshot in flight",
+   "expectE": [
+    133.2,
+    157.7
+   ],
+   "inWindow": true,
+   "E": 149,
+   "L": 225.5,
+   "R": 374.5,
+   "arcErr": 0.5,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    51.42,
+    62.37,
+    90.24
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "running-700",
+   "note": "WAAPI linear 1600 ms, screenshot in flight",
+   "expectE": [
+    243.6,
+    254.6
+   ],
+   "inWindow": true,
+   "E": 248,
+   "L": 176,
+   "R": 424,
+   "arcErr": 0.34,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "running-1100",
+   "note": "WAAPI linear 1600 ms, screenshot in flight",
+   "expectE": [
+    349.5,
+    360.6
+   ],
+   "inWindow": true,
+   "E": 354,
+   "L": 123,
+   "R": 477,
+   "arcErr": 0.35,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "spring-running-before",
+   "note": "dock spring (ζ 0.88, 0.30 s) as linear(), slowed ×4 to 2400 ms, in flight, white/black",
+   "E": 239,
+   "L": 180.5,
+   "R": 419.5,
+   "arcErr": 0.35,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 23,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "spring-running-after",
+   "note": "same run, in flight, backdrop recoloured white/blue",
+   "E": 367,
+   "L": 116.5,
+   "R": 483.5,
+   "arcErr": 0.52,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 24,
+   "bMinusR": 43,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "chromium",
+   "id": "running-live-delta",
+   "bMinusRDelta": 97,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "ctl-nofilter",
+   "note": "plate, no backdrop-filter: the unblurred baseline",
+   "expectE": 480,
+   "E": 480,
+   "L": 60,
+   "R": 540,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "ctl-plate",
+   "note": "plate alone, own border-radius, filter: the live lens",
+   "expectE": 480,
+   "E": 480,
+   "L": 60,
+   "R": 540,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "ctl-ancestor-clippath",
+   "note": "ancestor clip-path inset(0 round 28px) (S-28 reproduction)",
+   "expectE": 480,
+   "E": 480,
+   "L": 60,
+   "R": 540,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "ctl-ancestor-ovh",
+   "note": "ancestor overflow:hidden + radius 28, static",
+   "expectE": 480,
+   "E": 480,
+   "L": 60,
+   "R": 540,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "plant-square",
+   "note": "doors border-radius 0 (a square corner)",
+   "expectE": 200,
+   "E": 200,
+   "L": 200,
+   "R": 400,
+   "arcErr": 19.73,
+   "leak": 533,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "plant-lens",
+   "note": "doors border-radius 50% (per-axis: the HEAD lens class)",
+   "expectE": 200,
+   "E": 200,
+   "L": 200,
+   "R": 400,
+   "arcErr": 90.44,
+   "leak": 0,
+   "hole": 5419,
+   "sharp": 255,
+   "bMinusR": -53.8,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "plant-desync",
+   "note": "door R's counter-translation off by 6 px at E = 480 (plate slides out of the window)",
+   "expectE": 480,
+   "E": 474,
+   "L": 66,
+   "R": 540,
+   "arcErr": 6.18,
+   "leak": 123,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "rest-E56",
+   "note": "aperture at rest, doors transformed statically",
+   "expectE": 56,
+   "E": 56,
+   "L": 272,
+   "R": 328,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "rest-E200",
+   "note": "aperture at rest, doors transformed statically",
+   "expectE": 200,
+   "E": 200,
+   "L": 200,
+   "R": 400,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "rest-E480",
+   "note": "aperture at rest, doors transformed statically",
+   "expectE": 480,
+   "E": 480,
+   "L": 60,
+   "R": 540,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "rest-E56-wc",
+   "note": "aperture at rest, doors transformed statically, will-change: transform",
+   "expectE": 56,
+   "E": 56,
+   "L": 272,
+   "R": 328,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "rest-E200-wc",
+   "note": "aperture at rest, doors transformed statically, will-change: transform",
+   "expectE": 200,
+   "E": 200,
+   "L": 200,
+   "R": 400,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "rest-E480-wc",
+   "note": "aperture at rest, doors transformed statically, will-change: transform",
+   "expectE": 480,
+   "E": 480,
+   "L": 60,
+   "R": 540,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "rest-E300-live-before",
+   "note": "aperture at rest, white/black backdrop",
+   "expectE": 300,
+   "E": 300,
+   "L": 150,
+   "R": 450,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "rest-E300-live-after",
+   "note": "same, backdrop recoloured white/blue",
+   "expectE": 300,
+   "E": 300,
+   "L": 150,
+   "R": 450,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": 41.3,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "rest-live-delta",
+   "bMinusRDelta": 95.3,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "paused-f0.25",
+   "note": "WAAPI transforms paused mid-flight",
+   "expectE": 162,
+   "E": 162,
+   "L": 219,
+   "R": 381,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54.1,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "paused-f0.5",
+   "note": "WAAPI transforms paused mid-flight",
+   "expectE": 268,
+   "E": 268,
+   "L": 166,
+   "R": 434,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54.1,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "paused-f0.75",
+   "note": "WAAPI transforms paused mid-flight",
+   "expectE": 374,
+   "E": 374,
+   "L": 113,
+   "R": 487,
+   "arcErr": 0.3,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54.1,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "running-300",
+   "note": "WAAPI linear 1600 ms, screenshot in flight",
+   "expectE": [
+    141.6,
+    174.2
+   ],
+   "inWindow": true,
+   "E": 150,
+   "L": 225,
+   "R": 375,
+   "arcErr": 0.45,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54.1,
+   "load": [
+    56.43,
+    63.23,
+    90.38
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "running-700",
+   "note": "WAAPI linear 1600 ms, screenshot in flight",
+   "expectE": [
+    246.5,
+    254.5
+   ],
+   "inWindow": true,
+   "E": 248,
+   "L": 176,
+   "R": 424,
+   "arcErr": 0.27,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54.1,
+   "load": [
+    59.36,
+    63.72,
+    90.4
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "running-1100",
+   "note": "WAAPI linear 1600 ms, screenshot in flight",
+   "expectE": [
+    351.5,
+    369.2
+   ],
+   "inWindow": true,
+   "E": 354,
+   "L": 123,
+   "R": 477,
+   "arcErr": 0.41,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54.1,
+   "load": [
+    59.36,
+    63.72,
+    90.4
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "spring-running-before",
+   "note": "dock spring (ζ 0.88, 0.30 s) as linear(), slowed ×4 to 2400 ms, in flight, white/black",
+   "E": 235,
+   "L": 182.5,
+   "R": 417.5,
+   "arcErr": 0.45,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": -54.1,
+   "load": [
+    59.36,
+    63.72,
+    90.4
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "spring-running-after",
+   "note": "same run, in flight, backdrop recoloured white/blue",
+   "E": 346,
+   "L": 127,
+   "R": 473,
+   "arcErr": 0.52,
+   "leak": 0,
+   "hole": 0,
+   "sharp": 191,
+   "bMinusR": 41.3,
+   "load": [
+    59.36,
+    63.72,
+    90.4
+   ]
+  },
+  {
+   "engine": "webkit (Playwright WebKit)",
+   "id": "running-live-delta",
+   "bMinusRDelta": 95.4,
+   "load": [
+    59.36,
+    63.72,
+    90.4
+   ]
+  }
+ ],
+ "q2": [],
+ "finished": "2026-09-25T21:44:38.424Z"
+}
