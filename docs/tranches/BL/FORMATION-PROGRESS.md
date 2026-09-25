@@ -73,3 +73,4 @@ Outage log:
 - 2026-09-25 11:09 — session restart killed all five live seats (D1-P4-floor, D3-D-research, D4-P2-H2, D2-P2-H2, BL-waves-D). Dead seats' scratch worktrees + one preview removed; all five runs resumed from their run ids at 11:10, cached prefixes intact, each re-entering its unfinished seat. Crons stay off.
 
 - 2026-09-25 13:0x — O-83 DOCK-CAP-ELLIPSE landed in INBOUND (source-confirmed, run.css:468 50% per-axis ellipse); joins band 0 (10.2.0) with O-82 at the next formation pass. Owner wants it fixed.
+- 2026-09-25 13:4x — O-77a LAYER-HEADER-NO-ELLIPSIS landed (supersedes O-77 shrink/wrap/hide; ConfiguratorLayer.vue:152,155 truncate confirmed); amends W-0.3 in band 0 at the next formation pass.
