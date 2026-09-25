@@ -74,3 +74,4 @@ Outage log:
 
 - 2026-09-25 13:0x — O-83 DOCK-CAP-ELLIPSE landed in INBOUND (source-confirmed, run.css:468 50% per-axis ellipse); joins band 0 (10.2.0) with O-82 at the next formation pass. Owner wants it fixed.
 - 2026-09-25 13:4x — O-77a LAYER-HEADER-NO-ELLIPSIS landed (supersedes O-77 shrink/wrap/hide; ConfiguratorLayer.vue:152,155 truncate confirmed); amends W-0.3 in band 0 at the next formation pass.
+- 2026-09-25 14:0x — O-84 DOCK-SUMMARY-SQUARE (morph.css:180-198 square lock) + O-84a METRIC-TOKEN-JOIN (metric/styles.css:66 min 3ch) landed, source-confirmed; both fold into D2 with O-65 (the D2 pass-2 agglomerate carries them into pass 3 / the O-65 wave).
