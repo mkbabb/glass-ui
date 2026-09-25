@@ -1,0 +1,135 @@
+{
+ "totals": {
+  "bpin": 1646,
+  "self": 999,
+  "selfNoHolds": 1000,
+  "literal": {
+   "ran": false,
+   "error": "seal: the pin <G>/scripts/structure/records/seal-pin.json is missing; the gate has no off switch"
+  }
+ },
+ "counts": {
+  "B0": 438,
+  "B1": 143,
+  "B2": 138,
+  "B3": 17,
+  "B4": 2,
+  "B5": 3,
+  "B6": 64,
+  "B7": 63,
+  "B8": 12,
+  "B9": 2,
+  "B10": 6,
+  "B11": 48,
+  "B12": 0,
+  "B13": 0,
+  "B14": 1,
+  "B15": 0,
+  "B16": 62
+ },
+ "classes": {
+  "B0": {
+   "meta": {
+    "f1": 0,
+    "walks": 86,
+    "computed": 352
+   },
+   "byZone": {
+    "tests": 346,
+    "scripts": 55,
+    "tests-visual": 27,
+    "src": 9,
+    "demo": 1
+   },
+   "colocatedTests": 8
+  },
+  "B1": {
+   "unit/scripts -> kernel module, past its door": 118,
+   "kernel -> kernel module, past its door": 24,
+   "own door (a module member imports its own door)": 1
+  },
+  "B2": {
+   "byZone": {
+    "tests": 99,
+    "demo": 18,
+    "tests-visual": 18,
+    "scripts": 2,
+    "other": 1
+   },
+   "byKind": {
+    "import": 96,
+    "import-type": 21,
+    "dynamic": 18,
+    "import-type-node": 3
+   }
+  },
+  "B3": {
+   "src/styles/index.css imports a unit sheet past the unit's index.css": 17
+  },
+  "B4": [
+   "cycle @src/components/aurora [runtime/frame/uniformBridge.ts runtime/frame/frameLoop.ts runtime/webgl/glSetup.ts] via sr",
+   "cycle @src/composables/motion [morph/useSelectionGroup.ts morph/useSelectionIndicator.ts scroll/useScrollChrome.ts scrol"
+  ],
+  "B5": [
+   "src/components/deck/styles/index.css (door in a kind slot)",
+   "src/components/dock/styles/controls (dir inside kind slot src/components/dock/styles)",
+   "src/components/dock/styles/index.css (door in a kind slot)"
+  ],
+  "B6": {
+   "dirs": 8,
+   "files": 56,
+   "filesByZone": {
+    "src": 21,
+    "tests": 17,
+    "demo": 8,
+    "tests-visual": 8,
+    "scripts": 2
+   }
+  },
+  "B7": {
+   "nested dir of a component unit with no door (G: eponymous root / base / carve module)": 22,
+   "styles kernel module with no door": 18,
+   "composables kernel module with no door": 13,
+   "_shared kernel module with no door": 5,
+   "scripts dir with no door": 4,
+   "script code behind a CSS-only door": 1
+  },
+  "B8": {
+   "colocated test reads demo": 11,
+   "colocated test reads scripts": 1
+  },
+  "B9": [
+   "src/components/command/index.ts:31 re-exports src/components/_shared/selection.ts (outside src/components/command)",
+   "src/components/input/index.ts:10 re-exports src/components/_shared/control.ts (outside src/components/input)"
+  ],
+  "B10": [
+   "scripts/structure/lib/scan/css.mjs -> scripts/structure/lib [move]",
+   "scripts/structure/lib/scan/script.mjs -> scripts/structure/lib [move]",
+   "scripts/structure/lib/scan/text.mjs -> scripts/structure/lib [move]",
+   "src/components/aurora/runtime/frame/textureUpload.ts -> src/components/aurora/runtime [move]",
+   "src/components/aurora/runtime/frame/uniformBridge.ts -> src/components/aurora/runtime [move]",
+   "src/composables/glass/lifecycle/createCanvasLifecycle.ts -> src/composables/glass [move]"
+  ],
+  "B11self": {
+   "scripts/structure/eponym/index.mjs": 38,
+   "src/components/_shared/overlay/index.ts": 8,
+   "src/composables/context/index.ts": 2
+  },
+  "B11bpin": {
+   "B's pinned door name absent": 457,
+   "door name not in B's pin": 122,
+   "B's pinned module absent": 67,
+   "structural (no outside reader / empty door)": 48,
+   "module not in B's pin": 1
+  },
+  "B14": [
+   "src/styles/index.css:313 holds 1 non-door node(s), first @source \"../*.js\""
+  ],
+  "B16": {
+   "in the harness; B homes it in a module (?)": 26,
+   "colocated in a nested dir; B: home is the enclosing unit/module (the nested dir has no door, so it is no module)": 18,
+   "colocated in a kernel dir; B: several units/container -> harness": 12,
+   "colocated in a component unit; B: several units -> harness": 6
+  }
+ }
+}
