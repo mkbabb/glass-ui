@@ -18,9 +18,17 @@
 //   budget()          the main-axis extent the dock may reach, CSS px
 //   rim()             the dock's own progress-rim elements, or null when the dock has none
 //   compact()         true when the dock has the opt-in compact-on-scroll rung
+//   badge()           the dock's reserved badge seat element (O-67), or null when it has none
 //
 // config.compactProps / config.rimProps are bound onto GlassDock by the compact
-// and rim scenes (string "@window" becomes a getter to window). HEAD has neither.
+// and rim scenes (the string "@source" becomes a getter of the scene's scroll source:
+// the window, an element, or an element that mounts late). HEAD has neither.
+//
+// THE ADAPTER LAW (H-6). An adapter reads DOM and pixels. It never derives a reading
+// from the family's own inputs (a token, a spring value, a custom property), never
+// pre-clips (paintingSeats never intersects seats with extent()), and changes nothing
+// in the page. A route's adapter is diffed against this file and linted by
+// adapter-law.mjs before any run; the critic reviews the diff.
 export const config = { compactProps: null, rimProps: null };
 
 /**
@@ -70,6 +78,7 @@ export const source = `(() => {
     },
     rim: () => null,
     compact: () => false,
+    badge: () => null,
     composedRim: () => document.querySelector("[data-testid=rim]"),
   };
   window.__dockProbe = P;

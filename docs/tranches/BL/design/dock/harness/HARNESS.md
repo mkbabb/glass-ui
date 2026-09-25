@@ -1,292 +1,144 @@
-# D2 · the dock measurement floor
+# D2 · the dock measurement floor (H2)
 
 | field | value |
 |---|---|
-| seat | D2 pass 1, HARNESS. It promotes the round-0 scratch harness (`scratchpad/D2/harness/` and the probes `p1-fit.mjs` … `p11-content.mjs`) into durable prototype tooling: five born-RED witnesses, one per problem of `PORTFOLIO.md` §0 |
+| seat | D2 pass 2, H2. Lands REGISTRY §3.2 rows H-1..H-8 into this directory in place, and folds the pass-2 harness obligations: no vacuous green, O-65 (W6), O-66 §2 (W8), O-67 (W7), the O-64 R-6 probe (`r6-probe.mjs`) |
 | model | `claude-opus-5-5`, asserted from own system identity |
-| HEAD | measured at `5dd68ca9`. The brief named `5804d8cc`; the 3 commits between them touch only `docs/tranches/BL/`, and `src/` is byte-identical to `v10.0.1` (`git diff --quiet v10.0.1 5dd68ca9 -- src`). The checkout moved on to `20911dce` (D1) during the run, with `src/` still unchanged. Clean worktree, `node_modules` symlinked from the checkout. The checkout has no `tests-visual/node_modules`, so there was nothing to link |
-| engines | Chromium 149.0.7827.55 headless; Playwright WebKit 26.5 headless, which is the build Playwright 1.61.1 ships and is not Safari. Real Safari: **UNMEASURED (owner's safaridriver checkbox)**. Node 26.0.0, Vite 8.1.5 |
-| viewport | 1440×900 at DSF 2; coarse cells 430×848 with `isMobile` + `hasTouch`; reduced-motion cells use the context's `reducedMotion: "reduce"` |
-| verdict at HEAD | W1 9/32 cells pass, W2 0/10, W3 0/14, W4 4/16, W5 0/10. Every witness is RED (`run.mjs`, §5) |
-| self-test | 21/21 expectations hold: each witness PASSES on the hand-made fixture and FAILS on each planted violation, in both engines (`selftest.mjs`, §6) |
+| what changed from pass 1 | eight witnesses plus one probe (pass 1 had five); faces, corners and edges read from pixels only; WebKit morph frames from the screencast (PF-1); a pinned dock rung (H-3d); the adapter law as a lint (H-6); a real-Safari target (H-8); an unshimmed WebKit pass beside every shimmed one |
+| the numbers | this file describes the tool. Per-pass readings (self-test per engine, HEAD baseline) live beside the pass that took them: `../pass-2/H2.md` |
 
 ## 0 · What it is
 
-The harness:
-- builds a scene page, plus the real demo, from any worktree;
-- drives both engines headless;
-- reads the dock through one small in-page contract, the adapter;
-- judges five properties.
+The harness builds a scene page and the real demo from any worktree, drives Chromium and Playwright WebKit headless (and real Safari through safaridriver when the owner enables it), reads the dock through one small in-page contract, and judges eight properties.
 
-A witness prints one `PASS`/`FAIL` line per cell with the numbers behind it, then a total line. It writes a JSON record and exits non-zero on FAIL.
+A witness prints one `PASS` / `FAIL` / `UNMEASURED` / `RECORD` line per cell with the numbers behind it and the 1-minute load average, then a total. It writes a JSON record and exits non-zero on any FAIL. UNMEASURED and RECORD cells gate nothing and never count as green.
 
-Each witness has a reference implementation in `fixtures.mjs`. It is plain HTML/CSS/JS that satisfies all five problems and exists only to prove each witness can pass. Planted faults (`?fault=`) prove each witness can fail.
+Each witness has a reference implementation in `fixtures.mjs` (plain HTML/CSS/JS that satisfies every property) and planted faults (`?fault=`). `selftest.mjs` proves every check can pass on the fixture and can fail on its plant, in both engines. A check that cannot fail is not a check (the pass-1 critic found 18 of D2-A's 58 greens vacuous; H2 gives every sub-check a plant).
 
 ## 1 · Run it
 
 ```sh
 H=docs/tranches/BL/design/dock/harness
-OUT=/private/tmp/…/scratchpad/D2/p1/out          # any scratch dir; default $DOCK_HARNESS_OUT or $TMPDIR/dock-harness
+OUT=<scratch>/out                                   # default $DOCK_HARNESS_OUT, else $TMPDIR/dock-harness
 
-git worktree add $WT HEAD && ln -s "$PWD/node_modules" $WT/node_modules
-node $H/build.mjs $WT --out $OUT --label head     # scene page + demo → $OUT/builds/head
-node $H/run.mjs --build $OUT/builds/head --out $OUT            # all five witnesses, both engines
-node $H/w3-morph.mjs --build $OUT/builds/head --engine chromium --out $OUT   # one witness, one engine
-node $H/selftest.mjs --out $OUT                   # fixture PASS + planted-fault FAIL for all five
+git worktree add $WT <rev> && ln -s "$PWD/node_modules" $WT/node_modules
+node $H/build.mjs $WT --out $OUT --label head       # scene page + demo → $OUT/builds/head
+node $H/run.mjs --build $OUT/builds/head --out $OUT --safari
+                                                    # adapter law, then every witness: Chromium + WebKit(+shim),
+                                                    # then WebKit unshimmed; then the Safari target's status
+node $H/w3-morph.mjs --build $OUT/builds/head --engine chromium --out $OUT --cells '^warm'
+                                                    # one witness, one engine, cells by regex
+node $H/selftest.mjs --engine all --out $OUT        # fixture PASS + every plant FAIL, both engines
+node $H/adapter-law.mjs <adapter.mjs> [--diff]      # H-6 lint + diff against adapter-head.mjs
+node $H/safari.mjs                                  # H-8 status: ENABLED, or UNMEASURED (owner's safaridriver checkbox)
+node $H/calibrate.mjs --out $OUT                    # the instrument facts behind the screencast bounds and PF-1
 ```
 
-A family prototype builds from its own worktree the same way. If it moved the dock's DOM, it passes its own adapter with `--adapter <file>` (§3).
+A family prototype builds from its own worktree the same way. If it moved the dock's DOM it passes its own adapter with `--adapter <file>`, which `run.mjs` lints first and the critic reviews as a diff before any run (H-6).
 
-`build.mjs` writes nothing inside the worktree or the checkout. Everything lands under `$OUT/builds/<label>/`: the scene sources, both Vite caches and both outputs. A `find -newer` over the checkout's `node_modules` and the worktree after a build returned nothing.
+`build.mjs` writes nothing inside the worktree or the checkout: scene sources, both Vite caches and both outputs land under `$OUT/builds/<label>/`.
 
-Two details keep it that way:
-- Vite's `bundle` config loader writes a temp file into the nearest `node_modules`, and here that is a symlink into the checkout. Its `runner` loader rejects the demo config's `__dirname` under Node's ESM detection (`ERR_AMBIGUOUS_MODULE_SYNTAX`). So `build.mjs` imports `demo/vite.demo-dist.config.ts` through `vite.runnerImport`, with one pre-transform that turns `__dirname` into a string literal. It then builds with `configFile: false`.
-- A build took 1.2 s for the scene page and 2.6 s for the demo (`build.json`).
+Flags every witness takes: `--build <dir>` or `--fixture <pass|fault>`, `--engine chromium|webkit|safari|all` (comma list), `--out`, `--adapter`, `--cells <regex>` (run only matching blocks), `--no-webkit-shim` (writes to `<run>-unshimmed/`).
+
+**Load.** Timing cells are load-sensitive. Every cell records the 1-minute load average. A timing cell that fails is re-run twice; a failure seen only under load is NOT-REPRODUCED, never a defect. Safari refuses to start above load 8 (`DOCK_SAFARI_MAX_LOAD`) and holds a lock (one automation session).
 
 ## 2 · Files
 
 | file | role |
 |---|---|
-| `build.mjs` | `node build.mjs <worktree>`: builds the scene page (from `<worktree>/src` via `@glass`) and the demo (the worktree's own demo-dist config) into scratch, and writes `build.json` (HEAD, dirty flag, timings) |
-| `scenes.mjs` | The scene page as source strings. Scenes: `fit`, `rail`, `long`, `morph`, `vmorph`, `swap`, `menu`, `compact`, `rim`, `vrim`. Its only coupling to the `src/` layout is the App.vue import block: the dock, popover, select and scroll-progress-rim barrels, and `@glass/composables/motion` for `SPRING_PRESETS` |
-| `adapter-head.mjs` | The probe contract for GlassDock as it stands at HEAD, plus the WebKit crash shim (§4) and the demo route for the SidebarDock (`/dock/overview`) |
-| `lib.mjs` | The floor: CLI, static server, targets, engine launch, in-page helpers (`__hp`), probe paint, PNG decode (`pngjs`), the silhouette read, the per-frame logger, spring math, reporting |
-| `fixtures.mjs` | The hand-made reference dock and its planted faults |
-| `w1-corner.mjs` … `w5-rim.mjs` | The five witnesses |
-| `run.mjs` | All five witnesses on one build, then a table |
-| `selftest.mjs` | Checks the fixture PASS and every planted FAIL |
+| `build.mjs` | builds the scene page (from `<worktree>/src` via `@glass`) and the demo into scratch; writes `build.json` (HEAD, dirty flag, timings) |
+| `scenes.mjs` | the scene page as source strings. Scenes: `fit`, `rail`, `long`, `morph` (`lead`, `anchor=end`, `wide=1`, `shape=card`), `vmorph`, `swap`, `menu`, `compact` (`active`, `source=late\|el`, `twin=1`), `rim`, `vrim` (`source=el`), `cwidth`, `depth`, `nested`, `tick`, `seatgrow`, `hidden`, `form`, `edge` (`kind=top\|side\|canvas`, `clip=1`). Page hooks on `window.__scene` (`setFace`, `setExtra`, `setLead`, `collapse`/`expand`, `show`, `grow`, `startTick`/`stopTick`, `scrollTo`, `dropA`, `consumerBudget`) |
+| `adapter-head.mjs` | the probe contract for GlassDock at HEAD, the WebKit crash shim, the demo route |
+| `adapter-law.mjs` | H-6: rules L-1..L-5 plus a diff against `adapter-head.mjs` |
+| `plants/adapter-preclip.mjs` | a planted adapter that breaks L-1, L-2 and L-3 (never run a witness with it) |
+| `lib.mjs` | the floor: CLI, server, targets, engine launch (Safari via `safari.mjs`), `openScene` (theme asserted after load), in-page helpers (`__hp`), probe paint, PNG decode, silhouette / corner / faces reads, the screencast frame source, the per-frame logger (seats, sharpness, scrollers, owners), the pinned rung and spring math, the morph analysis shared by W3 and W6, reporting |
+| `fixtures.mjs` | the reference dock and every planted fault |
+| `w1-corner.mjs` … `w8-motion.mjs` | the eight witnesses |
+| `r6-probe.mjs` | the O-64 R-6 confirm-or-refute probe |
+| `calibrate.mjs` | re-measures PF-1 (does a screenshot complete a running transition, registered property vs plain `width`) and the screencast's noise on static shapes, which set `BOUND_SCREENCAST_PX`, `CARD_SCREENCAST_PX` and `FACE_DOM_SCREENCAST` |
+| `safari.mjs` | H-8: the safaridriver target and the WebDriver page shim |
+| `run.mjs` | lint, then every witness on one build, shimmed and unshimmed; a table and `run-<build>.json` |
+| `selftest.mjs` | fixture PASS, PASS variants, every planted FAIL, the adapter law both ways, the Safari status |
 
 ## 3 · The probe contract
 
-A witness reads the dock only through `window.__dockProbe`. For a build target the adapter module installs it; a fixture page defines its own.
+A witness reads the dock only through `window.__dockProbe`. For a build the adapter installs it; a fixture page defines its own.
 
 | read | meaning | HEAD adapter |
 |---|---|---|
-| `root()` | the dock root | `[data-testid=dock]`; on the demo, `[data-testid=sidebar-dock-collapsible]` |
+| `root()` | the dock root | `[data-testid=dock]`; demo `[data-testid=sidebar-dock-collapsible]` |
 | `plate()` | the one element that paints the glass plate (the silhouette carrier) | `.glass-dock > .dock-plate` |
 | `axis()` | `"x"` or `"y"` | `.vertical` on the root |
-| `extent()` | the plate's painted rect, after its own `clip-path: inset()`, every ancestor clip and transforms | `__hp.paintedRect(plate)` |
+| `extent()` | the plate's painted rect (own `clip-path: inset()`, ancestor clips, transforms) | `__hp.paintedRect(plate)` |
 | `seats({all})` | seat elements; `all` includes inert faces | `.dock-icon-button, .dock-tab-button, .dock-trigger` |
-| `paintingSeats()` | seats with opacity > 0.05 along the chain, each with its clipped painted rect | from `seats({all:true})` |
+| `paintingSeats()` | seats with opacity > 0.05 along the chain, each with its clipped painted rect | from `seats({all:true})`, never pre-clipped to `extent()` (L-2) |
 | `morphing()` | the morph window is open | `[data-morphing]` |
-| `rung()` | the spring the extent morph rides: `response`, `dampingFraction`, `settleBand`, `clockMs` | `springPreset("dock")` from the scene's `SPRING_PRESETS` (0.30 s, ζ 0.88, band 0.02); `clockMs` resolves `--spring-dock-duration` through a probe element: 210 ms |
+| `rung()` | the spring the extent morph claims | `springPreset("dock")` |
 | `posture()` | `collapsed`, `expanded`, `pinned`, `compact`, … | root classes |
-| `budget()` | the main-axis extent the dock may reach | `min(max-inline-size, parent content box)` |
-| `rim()` | the dock's own progress-rim elements, or `null` | `null`: HEAD has no rim seat |
-| `compact()` | the dock has the opt-in compact-on-scroll rung | `false` |
+| `budget()` | the main-axis extent the dock may reach | `min(max-inline-size, parent content box)`. W2 uses `min(budget(), __scene.consumerBudget)`: the adapter never widens the harness's budget |
+| `rim()` | the dock's own progress-rim elements, or `null` | `null` |
+| `compact()` | the opt-in compact-on-scroll rung exists | `false` |
+| `badge()` | the dock's reserved badge seat, or `null` | `null` |
 
-Two adapter fields bind a family's API onto the scene: `config.compactProps` and `config.rimProps`. The string `"@window"` becomes a getter to `window`, which satisfies O-55's getter-or-element contract. Both are `null` at HEAD.
+`config.compactProps` / `config.rimProps` bind a family's API onto the scene. The token `"@source"` becomes the scene's scroll source (a getter to `window`, or an element with `source=el`), which satisfies O-55's getter-or-element contract.
 
-The pixel reads (W1, W5) are independent of the adapter's geometry:
-- **Probe paint** hides everything but the named element.
-- `plate` mode paints the plate opaque magenta on white and keeps every clip and transform on its chain.
-- `rim` mode paints only the rim, in its own colours. The plate keeps its clips but paints nothing.
-- `seat` mode paints one seat on white.
+**The adapter law (H-6, `adapter-law.mjs`).** An adapter reads DOM and pixels. It never derives a reading from the family's inputs and never pre-clips.
+- L-1 `extent()` and `paintingSeats()` read no custom property.
+- L-2 `paintingSeats()` never refers to `extent()` or `plate()`.
+- L-3 the probe source writes nothing into the page (except the `tokenMs` probe element).
+- L-4 `webkitShim` sets colours only.
+- L-5 the contract is complete (all 13 reads).
 
-W1 cross-checks the adapter's `extent()` against the magenta silhouette at every rest. At HEAD the delta was 0.00-0.49 px.
+The runtime half: W1 `agree` (the silhouette is `extent()`), and W3/W6 faces and wraps from pixels only.
+
+**Pixel reads are independent of the adapter's geometry.** Probe paint (`probeMode`) hides everything but the named element:
+- `plate`: the plate opaque magenta on white, every clip and transform kept.
+- `faces`: the plate magenta, every seat glyph green `#0f0` at its own opacity, clip and transform. Faces are read from pixels (H-3), never from `paintingSeats()`.
+- `rim`: the rim alone, in its own colours.
+- `seat`: one seat.
+- `els`: named elements.
+- `edge`: the plate in its own colours on mid-grey, backdrop-filter off.
+
+**The rung is pinned (H-3d).** Every timing check uses `DOCK_RUNG` from `springPresets.ts` (`{0.30 s, ζ 0.88, band 0.02}`), not the adapter's `rung()`: analytic settle 214.2 ms, v̂max 8.372/s. W3 reports `rung()` against it as its own check (`rung`). A fixture carries its own `FIXTURE_RUNG` (ζ 1.0, settle 278.5 ms).
 
 ## 4 · Engines
 
-**Playwright WebKit crashes on every GlassDock mount at HEAD.** The trigger is any property whose value nests two translucent `color-mix()` arms, for example:
+| engine | frames | label |
+|---|---|---|
+| Chromium headless | screenshots (they show in-flight frames) | `Chromium` |
+| Playwright WebKit headless | **screencast** (`recordVideo`, ffmpeg-decoded, 25 fps, 1 video px = 1 CSS px) for every morph frame read. `page.screenshot()` completes a running registered-property transition (PF-1, re-measured in H2) and cannot sample a morph | `Playwright WebKit`, with `+shim` or `unshimmed` |
+| Safari (safaridriver) | viewport screenshots through WebDriver; no touch, no `reducedMotion`, no DSF, no video. Those cells throw and are recorded as not measured | `Safari`. Until the owner ticks Settings → Developer → "Allow remote automation": **UNMEASURED (owner's safaridriver checkbox)** |
 
-```css
-color: color-mix(in srgb, color-mix(in srgb, #1c1917 8%, transparent) 50%,
-                          color-mix(in srgb, #1c1917 5%, transparent));
-```
+Screencast bounds are fixed from measured fixture and plant reads (pass-2/H2.md §1): W1 corner 2.5 px (fixture ≤ 1.69 in the recorded self-test, static stadium ≤ 1.92, nearest plant ≥ 2.93: a WebKit morph-frame shape error under ~3 px is below this instrument's resolution), card radius spread 2.5 px against the same video's static ends, faces and wraps 2.0 px, faces green dominance ≥ 40/255 (VP8 chroma noise reaches 12-20/255 at glyph edges). Chromium keeps screenshots, because its screencast showed 2.1-2.3 px corner glitches.
 
-It crashes at 0%, 50% and 100% and in `border`, `background-color` and `color`, but not with one opaque arm. The plate border (`dock.css:130-135`) resolves to exactly this once `--dock-expand-t` is set: `--glass-border-dock` / `--glass-border-floating` are `color-mix(in srgb, var(--foreground) 8% | 5%, transparent)`. So `.expanded`, `.collapsed` and `.always-expanded` each crash, and `.pinned` alone does not. The bisection is in scratch at `D2/p1/dbg/`.
+**The WebKit crash shim.** Playwright WebKit crashes on GlassDock's nested translucent `color-mix()` border at HEAD. `adapter-head.mjs webkitShim` pins that colour to one arm (colours only, L-4). `run.mjs` runs every witness again unshimmed, so every WebKit cell has its unshimmed result beside it and the crash is never masked (E-2).
 
-`adapter-head.mjs` carries `webkitShim`, a stylesheet that pins the plate's border colour to one arm. The 1.5 px border width and every geometry and motion input are untouched.
-- Witnesses apply the shim on WebKit only and label those cells `+shim`.
-- `--no-webkit-shim` reproduces the crash: `w5-rim.mjs --engine webkit --no-webkit-shim` exits 1 with `page.goto: Page crashed`.
-- This is harness tooling, not a cure. Whether shipping Safari crashes is **UNMEASURED (owner's safaridriver checkbox)**. The memory record says it renders there.
-
-Every WebKit number below is **Playwright WebKit**. No real-Safari cell was run.
+**Keyboard.** WebKit, like Safari by default, skips buttons on Tab, so W2's WebKit keyboard walk uses Option-Tab (`Alt+Tab`) plus arrows, and names the key in the cell.
 
 ## 5 · The witnesses
 
-Each section gives the property, the method, the bounds with their sources, then the reading at HEAD. Readings are Chromium / Playwright WebKit (`+shim`) from `run.mjs --build head` (JSON in `$OUT/runs/W*-head/`).
+Bounds live as exported constants at the top of each file, where the source of each is commented.
 
-### W1 · the plate corner is a circle of radius = cross/2, at rest and at every sampled morph frame
-
-**Method** (`w1-corner.mjs`, `lib.mjs cornerRead`):
-- The plate is probe-painted magenta and screenshotted.
-- Sub-pixel edges come from the silhouette's middle row and column; r = half the cross-axis extent.
-- Rows sample the steep half of each quarter arc and columns the shallow half, so no sample sits on a tangent.
-- Every sample's radial distance is compared with r from a centre r in from both edges.
-- Morphs are sampled by screenshotting continuously until the plate is still: 8-28 samples per transition.
-
-**Scenes:**
-- the `fit` dock at rest, and parked hovered after a sweep;
-- the demo SidebarDock at 1440×900, and at 1440×600, where its 653 px rail must scroll;
-- the capped vertical `rail` at both scroll ends;
-- `morph` and `vmorph` collapsed and expanded at rest, plus every sampled frame of the first expand, the warm collapse and the warm expand.
-
-**Bound:** at most 1.0 CSS px from the circle.
-- The stadium fixture reads at most 0.107 px (Chromium) and 0.072 px (WebKit).
-- Playwright WebKit's snapping of a plate at a fractional x reads 0.49 px on HEAD's true-stadium rests (`offsetWidth` 401 against a rect of 400.53).
-- The bound is twice the larger, and 4.6× below the smallest real defect at HEAD: 4.62 px.
-
-| cell | worst error (px), Chromium / WebKit | reading |
+| witness | property | checks (each has a plant) |
 |---|---|---|
-| fit · rest | 0.137 / 0.492 | PASS: a stadium |
-| fit · hovered rest | 0.137 / **14.117** | FAIL in WebKit: a lens (mean r 19.2 against 28) |
-| sidebar (demo) · 1440×900 | 0.137 / 0.011 | PASS: the rail fits, 64×653 |
-| sidebar (demo) · 1440×600 | **16.486 / 16.463** | FAIL: the owner's F-18 lens on the real demo, 64×480, mean r 21.7 against 32 |
-| rail · rest, scrolled end | **19.845 / 19.774**, **19.818 / 19.783** | FAIL: the lens (mean r 21.9 against 32) |
-| morph · collapsed rest | **4.624 / 4.643** | FAIL: the `scale` squash on a 102×56 plate |
-| morph · first expand | **4.624 / 4.643** | FAIL; 16 / 24 samples, 1 distinct extent: it holds, then jumps (W3) |
-| morph · expanded rest | 0.137 / 0.492 | PASS |
-| morph · warm collapse, expand | **6.266 / 6.265**, **4.705 / 6.265** | FAIL: the corner squashes through the morph |
-| vmorph · collapsed rest, first expand | **5.923 / 5.936** | FAIL |
-| vmorph · expanded rest | 0.137 / 0.011 | PASS |
-| vmorph · warm collapse, expand | **11.346 / 11.26**, **11.777 / 11.842** | FAIL |
+| **W1** `w1-corner.mjs` | the plate corner is a circle of radius cross/2 at rest and in every morph frame; a card's fitted radius is one value | `corner` ≤ 1.0 px (Playwright WebKit screencast 2.5); `agree` silhouette vs `extent()` ≤ 1 px; `cover` the silhouette contains root and seats; `moves` ≥ 3 distinct extents when travel ≥ 20 px; `card` fitted-r spread; rail end fully inside |
+| **W2** `w2-run.mjs` | no seat state is clipped and every seat is reachable, on every route | named sub-checks: `scroller` (no scroll container or range on a run that fits), `ring` (cut ≤ 0.5 px against the free reach), `paint` (the free ring reaches ≥ 1 px: a ring must exist), `pointer`, `keyboard`, `at` (reach), `plateOut` (route 5), `fits` (route 7), `faces` (routes 5, 7, pixels); routes 1-7 (long run h/v, collapsed layer, routed, hover-scale, consumer width, depth, nested scroller) |
+| **W3** `w3-morph.mjs` | every extent morph is one continuous spring on one clock, faces inside the plate | `continuity`, `landing`, `window` (pinned clock + 2 frames + stall), `trajectory` (≤ 0.04·D + 1 px from the analytic spring), `terminal`, `owners` (one owner per property, K-13 extent-owner rule), `seatStep`/`seatOverlap`, `anchor`, `faces` (pixels), `rung`. Cells: first-expand, warm pair, content ±, lead ±, reversal at 35 %, swaps, anchor-end pair, hidden-shown, viewport-resize, ticking, seat-transition, wide |
+| **W4** `w4-state.mjs` | posture and compact behave: hysteresis, no hover latch on touch, tap pins, menu holds, reduced motion | compact cells (compacts, engagement expands, no threshold bounce, seat scale, non-first current, late getter, shared scroller, press-then-scroll, prm), prm posture morph, coarse no-hover-latch (pseudos and descendants), tap-pins, menu-holds |
+| **W5** `w5-rim.mjs` | the progress rim stays inside the plate and fills with progress | `inside` 0 px outside; `whole` the clip lifted keeps ≥ 20 %; `fill` counts at progress 0, .25, .5, .75, 1: never falls by more than 2 % of the largest, > 0 at .5, rises .5 → 1 |
+| **W6** `w6-collapsed-form.mjs` (O-65) | the collapsed dock is one glass form | `wraps` 0 px of form ink beyond the plate (1 px; screencast 2); `present` (collapsed); `dismissSeat`; `onePlate` exactly one backdrop carrier, `plate()`; `samePlate` element identity (the collapsed plate is marked, never compared by label); expand / collapse through `analyseMorph` |
+| **W7** `w7-edge.mjs` (O-67) | side, vertical and canvas docks share the top dock's edge, radius and composite | `whole` 48 perimeter bins, each ≥ 0.25 × the median, median ≥ 4/255; `same` ×0.67-1.5 of the top dock; `radius`; `gutter` ≥ 8 px from the surface above; `badge` reserved seat, 0 shared px with a glyph. Kinds × light/dark × DPR 1/2/3; canvas-clipped RECORD |
+| **W8** `w8-motion.mjs` (O-66 §2) | every dock motion is sharp and at frame rate | `sharp` 0 frames with a non-identity scale or blur on a painting seat's chain (a seat's own scale is exempt only while it is the engagement carrier: `:hover`/`:active` or its CSS scale/transform transition settling); `pacing` ≤ 1 frame over 40 ms headless; 60 fps UNMEASURED unless `--headed` on a real GPU; consumer rows UNMEASURED |
+| **R6** `r6-probe.mjs` (O-64 R-6) | does the ring beside a still trigger change on a static page? | `ring·static`: 0 ring px change over 11 shots in 1 s. On a build, four RECORD arms: A static, B stripe moving behind, C B with backdrop-filter off, D plate animations cancelled, and a verdict |
 
-### W2 · the run is a scroll container only when its seats exceed the budget; no ring or shadow is clipped in the cross axis
+## 6 · Self-test
 
-**Method** (`w2-run.mjs`):
-- Every frame of each route records every CSS scroll container that is an ancestor of a seat inside the dock, meaning computed `overflow-x` or `-y` of `auto`, `scroll` or `hidden`, and its scroll range.
-- "Exceeds" is read once at rest, transform-free: the union of the seat boxes plus the run's main-axis padding, against `budget()`.
-- **Paint check:** one seat gets keyboard focus (`:focus-visible` verified), stays selected and is hovered, and is probe-painted alone on white. Its paint reach past its box is read on both cross sides. Then every clip on its ancestors inside the dock is lifted (`[data-hp-unclip]`: overflow visible; clip-path, contain and mask none), the seat is re-hovered, and the reach is read again.
+`selftest.mjs` holds the `EXPECT` table: for each witness, each fault, the cell pattern that must fail and the sub-check that must be named in `failed`, in every engine run. Every named sub-check of every witness has at least one plant (W1 `end` ← `endout`, `card` ← `cardspread`; W2 `keyboard` ← `notab`, `at` ← `noname`; W3 `rung` ← `wrongrung`; W4 `compacts` ← `nocompact`, `engagement-expands` ← `noengage`; W6 `present` ← `formgone`, `dismissSeat` ← `dismissspan`, `samePlate` ← `plateswap`, and the rest as before). PASS variants (`W1 csscarrier`: the same property on a different carrier) must pass. H6 (the adapter law, both ways) and H8 (the Safari status) are rows too. Results go to `$OUT/selftest-<engines>.json`, and the per-pass table to `../pass-N/`.
 
-**Routes:**
-1. a long run (seats exceed, so scrolling is allowed; the paint check runs);
-2. the collapsed layer at rest;
-3. routed seats (`aria-current`) hovered and re-selected;
-4. a hover-scale sweep over every seat.
+## 7 · Limits
 
-**Bounds:**
-- On a run that fits: 0 frames with a scroll container, and 0 frames with a range above 0.5 px (the LayoutUnit floor).
-- A cut of at most 0.5 CSS px on each side.
-- Ink threshold 12/255, the same for both shots.
-
-| cell | Chromium | Playwright WebKit (+shim) |
-|---|---|---|
-| route 1 · long run, horizontal (needs 664 px, budget 360) | ring cut **2.5 / 2.5 px** (clipped 1.75, free 4.25) | same |
-| route 1 · long run, vertical (568 against 560) | ring cut **2.5 / 2.5 px** | same |
-| route 2 · collapsed layer (fits: 419.66 against 1440) | **81/81** frames with a scroll container (`.dock-run`, auto/hidden), **81** with range, max **318 px** | 59/59, 59, 318 px |
-| route 3 · `aria-current` (434.88 against 1440) | **266/266** container frames, **0** with range | 199/199, 0 |
-| route 4 · hover scale (376.47 against 1440) | **238/238** container frames, **123** with range (max 2 px); ring cut **1.5 / 1.5 px** (clipped 2.85, free 4.35) | 175/175, 90 (max 2 px); cut 1.5 / 1.5 |
-
-Route 3 arms no range, which matches round 0's refutation. It fails only because the run is statically `overflow-x: auto` (`run.css:163`).
-
-### W3 · the extent morph: continuous, no face outside the plate, lands dead, windowed on its own clock, one owner per property
-
-**Method** (`w3-morph.mjs`):
-- A per-rAF strip records the painted extent, the window, the worst face overhang and the ownership census.
-- The read runs after the frame, in a task posted from rAF, so the values are the painted ones whatever order the page's callbacks ran in. A read that finds the next frame already begun is dropped.
-- The census counts running animations per element·pseudo·property, plus JS inline writes sustained over two or more frames (a MutationObserver).
-
-**Transitions:**
-- the first expand after load;
-- the warm collapse and the warm expand;
-- adding and then removing a label seat on an expanded dock (O-64 R-2);
-- a layer swap in each direction.
-
-**Bounds,** with D = |target − start| and the rung from `rung()`:
-
-| check | bound | source |
-|---|---|---|
-| continuity | every frame's step of the length and of both main-axis edges ≤ 1.5·v̂max·D·dt + 0.5 px | v̂max is the spring's peak normalised velocity, computed from (response, ζ) in `lib.mjs springSpec`: 8.37 /s for the dock preset (0.30 s, ζ 0.88), and 7.70 /s for the fixture's critically damped spring. 1.5 covers frame jitter and a time-normalised curve's 1/x(T); 0.5 px is LayoutUnit rounding. The fixture runs at 0.67 of the bound, i.e. exactly its spring's peak |
-| faces | no painting seat more than 0.5 px beyond the painted extent | W-7 |
-| landing | overshoot ≤ 0.05 px (dead), or a designed bounce: M = exp(−ζπ/√(1−ζ²)) > the settle band **and** the overshoot within max(1 px, 0.5·M·D) of M·D. 0.05-1 px is the sub-pixel ring | LAW 0, `springPresets.ts:13-18`; O-64 R-3 |
-| window | opens for any change ≥ 0.5 px. Lasts ≤ clock + 2·F + the longest frame inside it (one frame from the input to the spring's first frame, one to observe the close, one headless-timer stall; F = max(median dt, 16.7 ms)). Closes between 1 frame before and 2 frames after the extent lands for good | O-64 R-2, R-4; W-8 |
-| owners | 0 frames with two running owners | O-64 R-5 |
-
-| transition | Chromium | Playwright WebKit (+shim) |
-|---|---|---|
-| first expand, D 387.66 | holds, then **one step of 387.66 px at 637 ms** (×9.95 the bound); window **545.6 ms** (allow 265.9, clock 210) | step 387.72 px at 673 ms; window 552 ms |
-| warm collapse | faces **158.23 px** out; window **545.3 ms**; travel 245.3 ms | 158.22 px; 552 ms; 244 ms |
-| warm expand | faces **147.49 px** out; **sub-pixel ring 0.34 px**, 1 reversal; window **545 ms** | 147.44 px; ring 0.28 px; 545 ms |
-| content add, remove | **one step of 179.33 px**, no window | 179.39 px, no window |
-| swap long, short | **one step of 244.98 px**, no window | 245.06 px, no window |
-| owners | 0 frames in every transition | 0 |
-
-A capture of HEAD mid-collapse (Chromium, scratch `D2/p1/dbg/midcollapse.png`) shows the faces painting outside a plate whose corners are squashed. No ancestor clips them: `.glass-dock` computes `contain: layout style` and `overflow: visible`.
-
-| O-64 row | the harness at HEAD |
-|---|---|
-| R-1 first-morph endpoint | reproduced: a hold, then a one-frame jump of 387.66 px |
-| R-2 content-width change | reproduced: 179.33 px in one frame, 0 window frames. The swap is the same class: 244.98 px |
-| R-3 sub-pixel settle ring | reproduced on the warm expand: 0.34 px (Chromium), 0.28 px (WebKit) |
-| R-4 window outlasts its rung | reproduced: 545-552 ms against the 210 ms clock (O-64 read 533-553 ms). The `subpx` fault, a ζ 0.88 spring integrated to rest, gives 536-558 ms and a 0.97 px ring by itself |
-| R-5 two owners of `.dock-select-trigger::before` opacity | **not reproduced** in the `morph` scene. A census over the first expand found one running owner there, a transition, for 40 frames. It stays reporter-measured (keyframes' ChromeDock). The `owners` fault shows the check can fail (36 frames) |
-| R-6 plate resample ring | out of W3's scope; carried to D2 pass 2 by the cursor. The plate runs `gl-dock-cap-inline-start` and `-end` throughout: 310 frames each in the first-expand census, more than any other animation |
-
-### W4 · the state inputs
-
-**Method** (`w4-state.mjs`):
-- The compact rung is exercised when `compact()` is true: scroll to 900; hover, keyboard focus and scroll-to-top; then the threshold is located to 1 px from below and scrolled ±4 px around it 12 times.
-- Reduced motion is read on the posture morph and on compaction.
-- The coarse cells tap a seat of the `fit` dock and the collapsed face of `morph`, and open the `menu` dock's own popover by taps.
-
-**Bounds:**
-- **Compacts:** the compact extent is at least 1 px shorter than rest, and `posture()` reads `compact`.
-- **Engagement:** hover, focus and top each return the extent to within 0.5 px of rest (the reference gate, `useSearchBarScroll.ts:36-97`).
-- **No bounce:** at most 1 posture flip in 24 moves, i.e. a band wider than 8 px (O-55 R-1).
-- **Reduced motion:** 0 intermediate frames (canon P6).
-- **Hover latch:** 1.5 s after a tap, the seat's scale, transform, translate, box-shadow and background equal their untouched values (F-77, floor row 3).
-- **Tap pins:** `pinned` and 0 clicks on any seat (W-11, R4-01-15, floor row 3).
-- **Menu holds:** 5.5 s after opening (HEAD's 3.6 s dwell + 1.9 s), the menu is open and the dock is not collapsed.
-
-| cell | reading, both engines unless split |
-|---|---|
-| compact · compacts, engagement, no bounce, reduced motion | **RED by absence**: GlassDock declares `[fitContent, backdropMode, shape, orientation, collapse, backgroundCanvas]`, and none takes a scroll source |
-| reduced motion · posture morph | PASS: 102 → 489.66 px and back with 0 intermediate frames |
-| coarse · no hover latch | **FAIL**: `(hover: hover)` false, `:hover` true; the seat stays `scale: 1.1` and tinted 1.5 s later |
-| coarse · tap on the collapsed face | **FAIL**: posture `pinned`, but the tapped "Play" seat's click fired (1 click) |
-| coarse · menu holds | PASS: menu open and posture `pinned` after 5.5 s (`keep-dock-open`) |
-
-In both engines the coarse context emulates `(hover: hover)` false and `(pointer: coarse)` true, and `:hover` stays latched after a tap. Only a `(hover: hover)` gate on the paint keeps it off: the fixture's gated rules pass and the `latch` fault fails.
-
-### W5 · the progress rim stays inside the plate's silhouette in every rung and orientation
-
-**Method** (`w5-rim.mjs`):
-- Two probe shots are taken of the same region: the plate silhouette (magenta) and the rim alone.
-- A rim pixel is outside when it carries ink (≥ 26/255) where the plate's coverage is under 0.02, i.e. clear of the anti-aliased edge.
-- Rungs: horizontal and vertical, each expanded and collapsed, plus compact.
-
-**Bound:** 0 outside pixels, and the rim paints something.
-
-| cell | reading |
-|---|---|
-| all five rungs | **RED by absence**: the dock has no rim of its own (`rim()` is `null`) |
-| for the record: the consumer-composed `ScrollProgressRim` overlay (`position: absolute; inset: 0` in `#persistent-end`) | horizontal expanded: 142 / 138 device px outside, 4.3 / 4.24 px deep. Horizontal collapsed: 71 / 71 px. Vertical expanded: 210 / 208 px, 5.83 px deep. Vertical collapsed: 99 / 93 px |
-
-## 6 · Can pass, can fail (`selftest.mjs`, both engines)
-
-| witness | fixture `pass` | planted faults (each exit 1, named check failing in both engines) |
-|---|---|---|
-| W1 | 32/32. Worst 0.107 px (Chromium), 0.072 px (WebKit) | `lens` (plate `border-radius: 50%`): 29.03 / 29.06 px. `squash` (the morph rides `scale`): 6.28 / 6.27 px, collapsed and in frames |
-| W2 | 10/10. Every cut 0/0; 0 scroll-container frames on runs that fit | `scroller` (the run always `overflow-x: auto`, no inline padding): container on routes 2-4, range up to 3 / 5 px, cut 1 / 3.5 px. `ringclip` (long run without a cross gutter): cut 4.55 / 6.55 px |
-| W3 | 14/14. Step ratio at most 0.67; windows 279-298 ms against a 278.5 ms clock (their allowance, clock + 2F + the longest frame, is at least 312 ms); overshoot 0; faces 0; owners 0 | `jump` (the first expand holds then snaps): ×12.3 the bound. `subpx` (ζ 0.88 to rest): ring 0.97 px, windows 536-558 ms. `late` (window +250 ms): 532-553 ms. `owners` (two WAAPI opacity animations): 36 frames. `overhang` (unclipped faces): 316 px. `content` (content change unmorphed): ×14.5, no window |
-| W4 | 16/16. Threshold enter 241, exit 156 (band 85 px), 1 flip | `nohyst`: 24 flips (band 5 px). `latch` (ungated hover): scale 1.1 latched. `menucollapse`: collapsed under the open menu (extent 56 px). `noprm`: 24-37 intermediate frames. `tapthrough`: 1 click |
-| W5 | 10/10. 0 pixels outside | `rimout` (rim over the plate, 8 px inset): 172 / 168 device px outside, 4.61 px deep |
-
-## 7 · Promoted from round 0
-
-| round-0 probe | now |
-|---|---|
-| `p1-fit` (hover sweep, ring clip) | W1 `fit` cells; W2 route 4 and the paint check, now a pixel comparison with and without the clip |
-| `p2-rail` | W1 `rail` cells, plus the demo SidebarDock itself (`sidebar` cells) |
-| `p3-morph` | W3 first expand and warm pair; W1 morph frames |
-| `p4-swap` | W3 swap cells |
-| `p5-misc` (group snap, card lerp, rim) | the rim → W5. The group snap lattice (W-5) is floor row 1, not one of the five problems, so it is not a witness; nor is the card lerp (W-2), since W1 reads pill docks |
-| `p6-supports` | reference only (platform facts, `PORTFOLIO.md` §2.3) |
-| `p7-touch-scroll`, `p8-touch-latch` | W4 coarse cells and the compact rung |
-| `p9-anchor` | reference only (a D2-E mechanism probe) |
-| `p10-route3` | W2 route 3 |
-| `p11-content` | W3 content cells: the same 179.33 px step, reproduced |
-
-The Vite page is now built from any worktree instead of served from `glass-ui/src`. It also adds the `long`, `vmorph`, `menu`, `compact` and `vrim` scenes, a select trigger in `morph` (for O-64 R-5), and a selected seat in `long`.
-
-## 8 · Limits
-
-- **Sampling.**
-  - W1's morph cells are screenshot samples (8-28 per transition), not every frame. W3 reads every frame, but through the adapter.
-  - A family whose silhouette is not the plate element's own box, such as a pseudo-element or a path on another node, changes `plate()`, or extends `probeMode` in `lib.mjs`.
-- **Timing.** Headless rAF intervals are irregular in both engines (frames of 6-9 ms and stalls of 20-38 ms were seen). W3's bounds absorb this through dt-scaled steps, a stall allowance and frame-counted gaps; the fixture passed 14/14 on three consecutive runs. Run the witnesses one at a time (`run.mjs` does), not beside other load.
-- **WebKit.** WebKit cells carry `+shim` (§4). Safari is unmeasured.
-- **Scene choices.**
-  - W4's tap lands on the collapsed face's last seat ("Play"). W-11's reading tapped the persistent Home, whose click also fires at HEAD. Whether a persistent control should act on a collapsed tap is a design question, and this witness does not settle it.
-  - W2's routes use four scenes. A family that changes what a "seat" is must keep `seats()` truthful, because both the budget and the scan read it.
+- W8's 60 fps verdict needs a headed run on a real GPU; headless it is UNMEASURED, and consumer docks (value.js, keyframes, fourier) are not run by this seat.
+- WebKit morph frames are 40 ms apart (25 fps screencast); per-frame timing in WebKit comes from the in-page rAF logger, pixels from the screencast.
+- Safari has no touch, reduced-motion or DSF emulation through WebDriver; those cells stay not measured in Safari even once it is enabled.
+- A family whose silhouette is not the plate element's own box changes `plate()` or extends `probeMode`.
+- Headless rAF is irregular under load (stalls of 20-40 ms at load averages above 10). Run one witness at a time; `run.mjs` does.

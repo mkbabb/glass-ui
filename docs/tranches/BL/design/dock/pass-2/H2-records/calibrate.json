@@ -1,0 +1,143 @@
+{
+ "when": "2026-09-25T14:50:56.849Z",
+ "rows": [
+  {
+   "what": "PF-1",
+   "engine": "Chromium",
+   "mode": "running",
+   "domBefore": [
+    192.52,
+    192.52
+   ],
+   "domAfter": [
+    209.97,
+    209.97
+   ],
+   "shot": {
+    "reg": [
+     200,
+     207
+    ],
+    "plain": [
+     200,
+     207
+    ]
+   },
+   "registeredCompletes": false,
+   "plainCompletes": false,
+   "summary": "running: registered --t: DOM 192.52 → shots 200/207 → DOM 209.97; plain width: DOM 192.52 → shots 200/207 → DOM 209.97 (end = 400; a shot at 400 over a mid-flight DOM is PF-1)",
+   "load": 45.8
+  },
+  {
+   "what": "PF-1",
+   "engine": "Chromium",
+   "mode": "paused",
+   "domBefore": [
+    194.88,
+    194.88
+   ],
+   "domAfter": [
+    197.52,
+    197.52
+   ],
+   "shot": {
+    "reg": [
+     198,
+     198
+    ],
+    "plain": [
+     198,
+     198
+    ]
+   },
+   "registeredCompletes": false,
+   "plainCompletes": false,
+   "summary": "paused: registered --t: DOM 194.88 → shots 198/198 → DOM 197.52; plain width: DOM 194.88 → shots 198/198 → DOM 197.52 (end = 400; a shot at 400 over a mid-flight DOM is PF-1)",
+   "load": 45.8
+  },
+  {
+   "what": "CAST",
+   "engine": "Chromium",
+   "frames": 79,
+   "stadiumMaxErr": 0.39,
+   "cardR": [
+    16.25,
+    16.25
+   ],
+   "cardSpread": 0,
+   "greenDomMax": 21,
+   "movingDistinctWidths": 27,
+   "summary": "79 decoded frames at 25 fps: static r-28 stadium corner ≤ 0.39 px; static r-16 card fitted r 16.25-16.25 (spread 0); green dominance on white ≤ 21/255; a 1 s width transition shows 27 distinct widths",
+   "load": 44.27
+  },
+  {
+   "what": "PF-1",
+   "engine": "Playwright WebKit",
+   "mode": "running",
+   "domBefore": [
+    191.8,
+    191.8
+   ],
+   "domAfter": [
+    400,
+    211.59
+   ],
+   "shot": {
+    "reg": [
+     400,
+     400
+    ],
+    "plain": [
+     196.5,
+     201.5
+    ]
+   },
+   "registeredCompletes": true,
+   "plainCompletes": false,
+   "summary": "running: registered --t: DOM 191.8 → shots 400/400 → DOM 400; plain width: DOM 191.8 → shots 196.5/201.5 → DOM 211.59 (end = 400; a shot at 400 over a mid-flight DOM is PF-1)",
+   "load": 44.57
+  },
+  {
+   "what": "PF-1",
+   "engine": "Playwright WebKit",
+   "mode": "paused",
+   "domBefore": [
+    192.09,
+    192.09
+   ],
+   "domAfter": [
+    400,
+    192.09
+   ],
+   "shot": {
+    "reg": [
+     400,
+     400
+    ],
+    "plain": [
+     192,
+     192
+    ]
+   },
+   "registeredCompletes": true,
+   "plainCompletes": false,
+   "summary": "paused: registered --t: DOM 192.09 → shots 400/400 → DOM 400; plain width: DOM 192.09 → shots 192/192 → DOM 192.09 (end = 400; a shot at 400 over a mid-flight DOM is PF-1)",
+   "load": 44.57
+  },
+  {
+   "what": "CAST",
+   "engine": "Playwright WebKit",
+   "frames": 81,
+   "stadiumMaxErr": 1.92,
+   "cardR": [
+    15.12,
+    20.38
+   ],
+   "cardSpread": 5.26,
+   "greenDomMax": 20,
+   "movingDistinctWidths": 25,
+   "summary": "81 decoded frames at 25 fps: static r-28 stadium corner ≤ 1.92 px; static r-16 card fitted r 15.12-20.38 (spread 5.26); green dominance on white ≤ 20/255; a 1 s width transition shows 25 distinct widths",
+   "load": 50.13
+  }
+ ]
+}

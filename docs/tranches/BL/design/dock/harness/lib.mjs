@@ -1,13 +1,15 @@
-// lib.mjs: the shared measurement floor for the D2 dock witnesses.
+// lib.mjs: the shared measurement floor for the D2 dock witnesses (H2).
 //
 // A witness imports this file and nothing else from the harness except the
 // adapter and fixture modules. Everything here is engine-agnostic: the same code
-// drives headless Chromium and Playwright WebKit (which is not Safari).
+// drives headless Chromium and Playwright WebKit (which is not Safari). The
+// safaridriver target (H-8) lives in safari.mjs and is reached through launch().
 import { createRequire } from "node:module";
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -16,7 +18,7 @@ export const REPO = path.resolve(HERE, "../../../../../..");
 const NODE_MODULES = process.env.DOCK_HARNESS_NODE_MODULES ?? path.join(REPO, "node_modules");
 export const playwright = await import(pathToFileURL(path.join(NODE_MODULES, "playwright/index.mjs")).href);
 const requireNM = createRequire(path.join(NODE_MODULES, "_.cjs"));
-const { PNG } = requireNM("pngjs");
+export const { PNG } = requireNM("pngjs");
 
 // ── CLI ───────────────────────────────────────────────────────────────────────
 export function parseArgs(argv = process.argv.slice(2)) {
@@ -35,12 +37,29 @@ export function parseArgs(argv = process.argv.slice(2)) {
 export function engines(args) {
     return args.engine === "all" ? ["chromium", "webkit"] : String(args.engine).split(",");
 }
-export const ENGINE_LABEL = { chromium: "Chromium", webkit: "Playwright WebKit" };
+export const ENGINE_LABEL = { chromium: "Chromium", webkit: "Playwright WebKit", safari: "Safari (safaridriver)" };
 export function outDir(args, witness) {
     const root = args.out ?? process.env.DOCK_HARNESS_OUT ?? path.join(os.tmpdir(), "dock-harness");
-    const d = path.join(root, "runs", `${witness}-${args.fixture ? "fixture-" + args.fixture : path.basename(args.build ?? "nobuild")}`);
+    const shim = args["no-webkit-shim"] ? "-unshimmed" : "";
+    const d = path.join(root, "runs", `${witness}-${args.fixture ? "fixture-" + args.fixture : path.basename(args.build ?? "nobuild")}${shim}`);
     fs.mkdirSync(d, { recursive: true });
     return d;
+}
+/** The 1-minute load average, recorded beside every timing (the brief's serialization law). */
+export function loadAvg() { return +os.loadavg()[0].toFixed(2); }
+
+// ── the pinned rung (H-3d) ────────────────────────────────────────────────────
+/**
+ * The spring the dock's extent morph rides, pinned here so a family cannot move
+ * the witness's clock by editing its own token or adapter. Source of record:
+ * src/composables/motion/spring/springPresets.ts, the "dock" row (response 0.3,
+ * dampingFraction 0.88, settleBand 0.02). A build's adapter rung() must agree with
+ * it; the fixture declares its own rung (fixtures.mjs FIXTURE_RUNG).
+ */
+export const DOCK_RUNG = { name: "dock", response: 0.3, dampingFraction: 0.88, settleBand: 0.02 };
+export async function pinnedRung(target) {
+    if (target.kind === "fixture") return (await import("./fixtures.mjs")).FIXTURE_RUNG;
+    return DOCK_RUNG;
 }
 
 // ── static serving ────────────────────────────────────────────────────────────
@@ -72,7 +91,6 @@ export function serve(rootOrFn) {
 /**
  * A target resolves a scene name to a URL and knows whether the page carries its
  * own `__dockProbe` (fixtures do) or needs the adapter injected (builds do).
- * Scene names: fit, sidebar, rail, long, morph, vmorph, swap, menu, compact, rim, vrim.
  */
 export async function openTarget(args) {
     if (args.fixture) {
@@ -118,26 +136,33 @@ export async function openTarget(args) {
 
 // ── engines + pages ───────────────────────────────────────────────────────────
 export async function launch(engine) {
+    if (engine === "safari") return (await import("./safari.mjs")).launchSafari();
     const b = await playwright[engine].launch({ headless: true });
     b.__engine = engine;
     return b;
 }
 /** The cell label suffix for an engine on a target ("+shim" when the WebKit crash shim is on). */
 export function engineTag(target, engine) {
-    return engine === "webkit" && target.adapter?.webkitShim && !target.noWebkitShim ? "+shim" : "";
+    if (engine !== "webkit" || !target.adapter?.webkitShim) return "";
+    return target.noWebkitShim ? "-unshimmed" : "+shim";
 }
 /**
  * Open one scene in a fresh context. `ctx` takes Playwright context options
- * (viewport, hasTouch, isMobile, reducedMotion). Returns the page, ready: the
- * dock is mounted and the probe contract is installed.
+ * (viewport, hasTouch, isMobile, reducedMotion, deviceScaleFactor, recordVideo).
+ * Returns the page, ready: the dock is mounted and the probe contract is installed.
  */
-export async function openScene(browser, target, scene, { query = {}, ctx = {}, settle = 900 } = {}) {
-    const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2, ...ctx });
+export async function openScene(browser, target, scene, { query = {}, ctx = {}, settle = 900, theme = null } = {}) {
+    const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2, ...(theme ? { colorScheme: theme } : {}), ...ctx });
     const page = await context.newPage();
+    const opened = Date.now();
     const errors = [];
     page.on("pageerror", (e) => errors.push(String(e).slice(0, 300)));
+    let crashed = null;
+    page.on("crash", () => { crashed = "page crashed"; });
     if (target.adapter?.config) await page.addInitScript(`window.__dockAdapterConfig = ${JSON.stringify(target.adapter.config)};`);
     if (scene === "sidebar" && target.adapter?.sidebarRootSel) await page.addInitScript(`window.__hpRootSel = ${JSON.stringify(target.adapter.sidebarRootSel)};`);
+    // the init script runs before <html> exists: add the class when it appears (asserted after load)
+    if (theme === "dark") await page.addInitScript(`(() => { const f = () => document.documentElement?.classList.add("dark"); if (document.documentElement) f(); else new MutationObserver((_, o) => { if (document.documentElement) { f(); o.disconnect(); } }).observe(document, { childList: true }); })();`);
     await page.addInitScript(HP_SRC);
     if (browser.__engine === "webkit" && target.adapter?.webkitShim && !target.noWebkitShim) {
         await page.addInitScript(`document.addEventListener("readystatechange", () => { if (!document.getElementById("hp-wk-shim")) { const s = document.createElement("style"); s.id = "hp-wk-shim"; s.textContent = ${JSON.stringify(target.adapter.webkitShim)}; (document.head || document.documentElement).appendChild(s); } });`);
@@ -149,7 +174,9 @@ export async function openScene(browser, target, scene, { query = {}, ctx = {}, 
     }
     await page.waitForFunction(() => window.__dockProbe && window.__dockProbe.root(), null, { timeout: 20000 });
     await page.waitForTimeout(settle);
-    return { page, context, errors, close: () => context.close() };
+    if (crashed) throw new Error(crashed);
+    if (theme) { const dark = await page.evaluate(() => document.documentElement.classList.contains("dark")); if (dark !== (theme === "dark")) throw new Error(`theme ${theme} not applied (html.dark ${dark})`); }
+    return { page, context, errors, opened, close: () => context.close() };
 }
 
 // ── in-page helpers (installed before any page script; shared by adapters) ────
@@ -213,6 +240,26 @@ export const HP_SRC = `(() => {
       for (let e = el; e && e !== document.documentElement; e = e.parentElement) { const cs = getComputedStyle(e); if (cs.display === "none") return 0; o *= PX(cs.opacity); }
       return o;
     },
+    /** True when el or an ancestor carries a non-identity scale or a blur filter (O-64 R-4, O-66 §2 "sharp").
+     *  Exempt: the seat's OWN scale while it is the engagement carrier (the seat matches :hover or
+     *  :active, or a CSS transition on scale/transform is settling on it). Engagement is D-2's
+     *  and is judged by W2 and W4; this census judges the dock's motion carriers (plate, run,
+     *  ancestors, a FLIP or squash on the seat). A blur is never exempt. */
+    unsharp(el) {
+      const engaged = el.matches(":hover, :active") || el.getAnimations().some((a) => a.constructor.name === "CSSTransition" && /^(scale|transform)$/.test(a.transitionProperty) && a.playState === "running");
+      for (let e = el; e && e !== document.documentElement; e = e.parentElement) {
+        const cs = getComputedStyle(e);
+        if (e === el && engaged) { if (cs.filter && /blur\\(/.test(cs.filter) && !/blur\\(0(px)?\\)/.test(cs.filter)) return hp.label(e) + " filter " + cs.filter; continue; }
+        if (cs.scale && cs.scale !== "none" && cs.scale.split(" ").some((v) => Math.abs(PX(v) - 1) > 1e-3)) return hp.label(e) + " scale " + cs.scale;
+        if (cs.transform && cs.transform !== "none") {
+          const m = cs.transform.match(/matrix(3d)?\\(([^)]*)\\)/);
+          if (m) { const v = m[2].split(",").map(PX); const a = m[1] ? v[0] : v[0], b = m[1] ? v[1] : v[1], c = m[1] ? v[4] : v[2], d = m[1] ? v[5] : v[3];
+            if (Math.abs(Math.hypot(a, b) - 1) > 1e-3 || Math.abs(Math.hypot(c, d) - 1) > 1e-3) return hp.label(e) + " transform " + cs.transform; }
+        }
+        if (cs.filter && /blur\\(/.test(cs.filter) && !/blur\\(0(px)?\\)/.test(cs.filter)) return hp.label(e) + " filter " + cs.filter;
+      }
+      return "";
+    },
     /** Resolve a time token (a custom property holding a <time>) to ms on el. */
     tokenMs(el, name) {
       const d = document.createElement("div");
@@ -230,35 +277,63 @@ export const HP_SRC = `(() => {
   window.__hp = hp;
 })();`;
 
-// ── probe paint (the silhouette read) ─────────────────────────────────────────
+// ── probe paint (the pixel reads) ─────────────────────────────────────────────
 // mode "plate": only the plate element paints, opaque magenta on white.
 // mode "rim":   only the rim paints (its own colours), the plate keeps its clips but not its paint.
 // mode "seat":  only one seat paints (its own colours) on white.
+// mode "faces": the plate paints magenta; every seat paints its glyph ink green (#0f0) at its own
+//               opacity, clip and transform; everything else paints nothing but keeps its box,
+//               clip, opacity and visibility (H-3: faces are read from pixels, never the adapter).
+// mode "els":   only the elements marked [data-hp-el] paint, in their own colours, on white.
+// mode "edge":  only the plate paints, in its own colours, on a mid-grey page, backdrop-filter off (O-67).
 const PROBE_CSS = `
 html[data-hp], html[data-hp] body { background: #fff !important; background-image: none !important; }
-html[data-hp] body * { visibility: hidden !important; }
-html[data-hp="plate"] [data-hp-plate] { visibility: visible !important; background: #f0f !important; background-image: none !important; border-color: #f0f !important; box-shadow: none !important; outline: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; filter: none !important; opacity: 1 !important; }
+html[data-hp="edge"], html[data-hp="edge"] body { background: #7f7f7f !important; }
+html[data-hp]:where(:not([data-hp="faces"])) body * { visibility: hidden !important; }
+html[data-hp="plate"] [data-hp-plate], html[data-hp="faces"] [data-hp-plate] { visibility: visible !important; background: #f0f !important; background-image: none !important; border-color: #f0f !important; box-shadow: none !important; outline: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; filter: none !important; opacity: 1 !important; }
 html[data-hp] [data-hp-plate]::before, html[data-hp] [data-hp-plate]::after { display: none !important; }
+html[data-hp="edge"] [data-hp-plate] { visibility: visible !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+html[data-hp="edge"] [data-hp-plate]::before, html[data-hp="edge"] [data-hp-plate]::after { display: block !important; }
+html[data-hp="edge"] [data-hp-plate] * { visibility: hidden !important; }
 html[data-hp="rim"] [data-hp-plate] { visibility: visible !important; background: transparent !important; background-image: none !important; border-color: transparent !important; box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 html[data-hp="rim"] [data-hp-plate] > :not([data-hp-rim]):not(:has([data-hp-rim])) { visibility: hidden !important; }
 html[data-hp="rim"] [data-hp-rim], html[data-hp="rim"] [data-hp-rim] * { visibility: visible !important; }
 html[data-hp="seat"] [data-hp-seat], html[data-hp="seat"] [data-hp-seat] * { visibility: visible !important; }
+html[data-hp="els"] [data-hp-el], html[data-hp="els"] [data-hp-el] * { visibility: visible !important; }
+html[data-hp="faces"] body *, html[data-hp="faces"] body *::before, html[data-hp="faces"] body *::after { color: transparent !important; -webkit-text-fill-color: transparent !important; background: transparent !important; border-color: transparent !important; box-shadow: none !important; outline-color: transparent !important; text-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; caret-color: transparent !important; }
+html[data-hp="faces"] body svg * { fill: transparent !important; stroke: transparent !important; }
+html[data-hp="faces"] body img, html[data-hp="faces"] body canvas, html[data-hp="faces"] body video { visibility: hidden !important; }
+html[data-hp="faces"] [data-hp-plate] { background: #f0f !important; }
+html[data-hp="faces"] [data-hp-face], html[data-hp="faces"] [data-hp-face] * { color: #0f0 !important; -webkit-text-fill-color: #0f0 !important; }
+html[data-hp="faces"] [data-hp-face] svg [fill]:not([fill="none"]), html[data-hp="faces"] [data-hp-face] svg:not([fill]) *:not([fill]) { fill: #0f0 !important; }
+html[data-hp="faces"] [data-hp-face] svg [stroke]:not([stroke="none"]) { stroke: #0f0 !important; }
+html[data-hp="faces"] [data-hp-face-bg] { background: #0f0 !important; }
+html[data-hp="faces"] [data-hp-face]::before, html[data-hp="faces"] [data-hp-face]::after, html[data-hp="faces"] [data-hp-face] *::before, html[data-hp="faces"] [data-hp-face] *::after { display: none !important; }
 [data-hp-unclip] { overflow: visible !important; clip-path: none !important; contain: none !important; mask: none !important; -webkit-mask: none !important; }
 `;
-export async function probeMode(page, mode, { rim = "dock" } = {}) {
-    await page.evaluate(({ css, mode, rim }) => {
+export async function probeMode(page, mode, { rim = "dock", els = null, faceSel = null } = {}) {
+    await page.evaluate(({ css, mode, rim, els, faceSel }) => {
         if (!document.getElementById("hp-probe-css")) {
             const s = document.createElement("style"); s.id = "hp-probe-css"; s.textContent = css; document.head.appendChild(s);
         }
         const P = window.__dockProbe;
-        document.querySelectorAll("[data-hp-plate]").forEach((e) => e.removeAttribute("data-hp-plate"));
-        document.querySelectorAll("[data-hp-rim]").forEach((e) => e.removeAttribute("data-hp-rim"));
+        for (const a of ["data-hp-plate", "data-hp-rim", "data-hp-face", "data-hp-face-bg", "data-hp-el"]) document.querySelectorAll(`[${a}]`).forEach((e) => e.removeAttribute(a));
         if (!mode) { document.documentElement.removeAttribute("data-hp"); return; }
         P.plate()?.setAttribute("data-hp-plate", "");
         const rims = rim === "composed" ? [P.composedRim?.()].filter(Boolean) : (P.rim?.() ?? []);
         for (const e of rims) e.setAttribute("data-hp-rim", "");
+        if (mode === "faces") {
+            // a face paints its glyph ink green; a face element that paints a box (a track, a
+            // badge, a capsule) paints that box green too, so a bare box outside the plate counts
+            const faces = faceSel ? faceSel.flatMap((sel) => [...document.querySelectorAll(sel)]) : P.seats({ all: true });
+            for (const e of faces) {
+                e.setAttribute("data-hp-face", "");
+                for (const x of [e, ...e.querySelectorAll("*")]) { const bg = getComputedStyle(x).backgroundColor; const m = bg.match(/rgba?\(([^)]*)\)/); const a = m ? (m[1].split(",")[3] ?? "1") : "0"; if (parseFloat(a) > 0.05 || getComputedStyle(x).backgroundImage !== "none") x.setAttribute("data-hp-face-bg", ""); }
+            }
+        }
+        if (els) for (const sel of els) document.querySelectorAll(sel).forEach((e) => e.setAttribute("data-hp-el", ""));
         document.documentElement.setAttribute("data-hp", mode);
-    }, { css: PROBE_CSS, mode, rim });
+    }, { css: PROBE_CSS, mode, rim, els, faceSel });
 }
 
 /** Screenshot a clip rect (CSS px) and decode it. */
@@ -270,14 +345,27 @@ export async function shoot(page, clip) {
     const png = PNG.sync.read(buf);
     return { w: png.width, h: png.height, data: png.data, clip: c, dsf: png.width / c.width, png: buf };
 }
-/** Coverage of the probe magenta (1 = plate) per device pixel. */
-export function magentaCoverage(img) {
+export function decodePng(buf) { const p = PNG.sync.read(buf); return { w: p.width, h: p.height, data: p.data }; }
+/**
+ * Coverage of the probe magenta (1 = plate) per pixel. `interiorG` is the green level
+ * inside the plate: 0 on a lossless screenshot; a screencast (VP8) lifts it, so the
+ * sampler measures it per frame and passes it in.
+ */
+export function magentaCoverage(img, interiorG = 0) {
     const cov = new Float32Array(img.w * img.h);
     for (let i = 0; i < cov.length; i++) {
         const r = img.data[i * 4], g = img.data[i * 4 + 1], b = img.data[i * 4 + 2];
-        cov[i] = r > 150 && b > 150 ? 1 - g / 255 : 0;
+        cov[i] = r > 150 && b > 150 ? Math.max(0, Math.min(1, (255 - g) / (255 - interiorG))) : 0;
     }
     return cov;
+}
+/** The green level inside a screencast frame's magenta (the median over strongly magenta pixels). */
+export function interiorGreen(img) {
+    const gs = [];
+    for (let i = 0; i < img.w * img.h; i += 3) { const r = img.data[i * 4], g = img.data[i * 4 + 1], b = img.data[i * 4 + 2]; if (r > 180 && b > 180 && g < 140) gs.push(g); }
+    if (gs.length < 20) return 0;
+    gs.sort((a, b) => a - b);
+    return gs[Math.floor(gs.length / 2)];
 }
 /** Deviation from white (0..1) per device pixel. */
 export function inkCoverage(img) {
@@ -291,13 +379,13 @@ export function inkCoverage(img) {
 
 /**
  * The silhouette read. Given a plate coverage map, find the plate's sub-pixel
- * edges from its middle row and column, take r = min(w, h) / 2, and measure every
- * well-conditioned boundary point of the four corners against the circle of
- * radius r centred r in from both edges. Rows sample the steep half of each
- * quarter arc and columns the shallow half, so no sample sits on a tangent.
- * Returns errors in CSS px.
+ * edges from its middle row and column and measure every well-conditioned
+ * boundary point of the four corners against a circle. Rows sample the steep half
+ * of each quarter arc and columns the shallow half, so no sample sits on a tangent.
+ * r defaults to half the cross-axis extent (the stadium law); `fitR: true` fits one
+ * r per corner (the card law: each corner a circle, all four equal). Errors in CSS px.
  */
-export function cornerRead(cov, w, h, dsf, axis = null) {
+export function cornerRead(cov, w, h, dsf, axis = null, { fitR = false } = {}) {
     let top = -1, bottom = -1, left = w, right = -1;
     for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (cov[y * w + x] > 0.5) {
         if (top < 0) top = y; bottom = y; if (x < left) left = x; if (x > right) right = x;
@@ -309,41 +397,104 @@ export function cornerRead(cov, w, h, dsf, axis = null) {
     const L = midX - rowSum(midY, 0, midX), R = midX + rowSum(midY, midX, w);
     const T = midY - colSum(midX, 0, midY), B = midY + colSum(midX, midY, h);
     const W = R - L, H = B - T;
-    // r is half the CROSS-axis extent (the task's definition); with no axis given, the shorter side.
-    const r = (axis === "x" ? H : axis === "y" ? W : Math.min(W, H)) / 2;
-    const band = r / Math.SQRT2;
-    const corners = { tl: [L + r, T + r, -1, -1], tr: [R - r, T + r, 1, -1], bl: [L + r, B - r, -1, 1], br: [R - r, B - r, 1, 1] };
-    const out = {};
-    let worst = 0, worstCorner = "";
-    for (const [name, [cx, cy, sx, sy]] of Object.entries(corners)) {
-        const pts = [];
-        for (let y = 0; y < h; y++) {
-            const yc = y + 0.5, dy = (yc - cy) * sy;
-            if (dy < 0 || dy > band) continue;
-            const xb = sx < 0 ? midX - rowSum(y, 0, midX) : midX + rowSum(y, midX, w);
-            pts.push([xb, yc]);
+    const rCross = (axis === "x" ? H : axis === "y" ? W : Math.min(W, H)) / 2;
+    const cornerPts = (r) => {
+        const band = r / Math.SQRT2;
+        const corners = { tl: [L + r, T + r, -1, -1], tr: [R - r, T + r, 1, -1], bl: [L + r, B - r, -1, 1], br: [R - r, B - r, 1, 1] };
+        const out = {};
+        for (const [name, [cx, cy, sx, sy]] of Object.entries(corners)) {
+            const pts = [];
+            for (let y = 0; y < h; y++) { const yc = y + 0.5, dy = (yc - cy) * sy; if (dy < 0 || dy > band) continue; pts.push([sx < 0 ? midX - rowSum(y, 0, midX) : midX + rowSum(y, midX, w), yc]); }
+            for (let x = 0; x < w; x++) { const xc = x + 0.5, dx = (xc - cx) * sx; if (dx < 0 || dx > band) continue; pts.push([xc, sy < 0 ? midY - colSum(x, 0, midY) : midY + colSum(x, midY, h)]); }
+            out[name] = { pts, cx, cy };
         }
-        for (let x = 0; x < w; x++) {
-            const xc = x + 0.5, dx = (xc - cx) * sx;
-            if (dx < 0 || dx > band) continue;
-            const yb = sy < 0 ? midY - colSum(x, 0, midY) : midY + colSum(x, midY, h);
-            pts.push([xc, yb]);
+        return out;
+    };
+    const measure = (r) => {
+        const cs = cornerPts(r); const out = {}; let worst = 0, worstCorner = "";
+        for (const [name, { pts, cx, cy }] of Object.entries(cs)) {
+            const errs = pts.map(([x, y]) => Math.hypot(x - cx, y - cy) - r);
+            const maxAbs = Math.max(0, ...errs.map(Math.abs));
+            const rMean = pts.length ? pts.reduce((s, [x, y]) => s + Math.hypot(x - cx, y - cy), 0) / pts.length : NaN;
+            out[name] = { n: pts.length, maxErr: +(maxAbs / dsf).toFixed(3), rMean: +(rMean / dsf).toFixed(2) };
+            if (maxAbs > worst) { worst = maxAbs; worstCorner = name; }
         }
-        const errs = pts.map(([x, y]) => Math.hypot(x - cx, y - cy) - r);
-        const maxAbs = Math.max(0, ...errs.map(Math.abs));
-        const rMean = pts.length ? pts.reduce((s, [x, y]) => s + Math.hypot(x - cx, y - cy), 0) / pts.length : NaN;
-        out[name] = { n: pts.length, maxErr: +(maxAbs / dsf).toFixed(3), rMean: +(rMean / dsf).toFixed(2) };
-        if (maxAbs > worst) { worst = maxAbs; worstCorner = name; }
+        return { out, worst, worstCorner };
+    };
+    let r = rCross;
+    if (fitR) {
+        // the r (≤ cross/2) whose circles fit all four corners best: a scan in 0.25 device-px steps
+        let best = null;
+        for (let rr = Math.max(2, 0.1 * rCross); rr <= rCross + 1e-6; rr += 0.25) { const m = measure(rr); if (!best || m.worst < best.worst) best = { ...m, r: rr }; }
+        r = best.r;
     }
-    return { w: +(W / dsf).toFixed(2), h: +(H / dsf).toFixed(2), rExpected: +(r / dsf).toFixed(2), maxErr: +(worst / dsf).toFixed(3), worstCorner, corners: out };
+    const m = measure(r);
+    return { w: +(W / dsf).toFixed(2), h: +(H / dsf).toFixed(2), rExpected: +(r / dsf).toFixed(2), maxErr: +(m.worst / dsf).toFixed(3), worstCorner: m.worstCorner, corners: m.out, bbox: { l: L / dsf, t: T / dsf, r: R / dsf, b: B / dsf } };
 }
 
-// ── the frame logger (W2, W3, W4) ────────────────────────────────────────────
+/**
+ * Faces from pixels (H-3). A "faces" probe shot paints the plate magenta and each
+ * seat's glyph ink green at its own opacity. A pixel carries face ink outside the
+ * plate when green dominates (g − max(r, b) ≥ 12, i.e. ≥ 5 % opacity over white);
+ * over the plate a seat's green mixes with magenta and never dominates. Returns the
+ * plate's bbox (magenta coverage ≥ 0.5) and the farthest face ink outside it, CSS px.
+ */
+export const FACE_DOM = 12;              // screenshot: green dominance ≥ 12/255 ≈ 5 % opacity over white
+export const FACE_DOM_SCREENCAST = 40;   // screencast: VP8 chroma noise near glyph edges reaches 12-20/255 on white
+export function facesRead(img, dsf, interiorG = 0, minDom = FACE_DOM) {
+    const cov = magentaCoverage(img, interiorG);
+    let l = img.w, t = img.h, r = -1, b = -1;
+    for (let y = 0; y < img.h; y++) for (let x = 0; x < img.w; x++) if (cov[y * img.w + x] >= 0.5) { if (x < l) l = x; if (x > r) r = x; if (y < t) t = y; if (y > b) b = y; }
+    if (r < 0) return { empty: true };
+    let out = 0, ink = 0, n = 0;
+    for (let y = 0; y < img.h; y++) for (let x = 0; x < img.w; x++) {
+        const i = (y * img.w + x) * 4; const R = img.data[i], G = img.data[i + 1], B = img.data[i + 2];
+        if (G - Math.max(R, B) < minDom) continue;
+        ink++;
+        const d = Math.max(l - x, x - r, t - y, y - b, 0);
+        if (d > 0) { n++; if (d > out) out = d; }
+    }
+    return { plate: { l: l / dsf, t: t / dsf, r: (r + 1) / dsf, b: (b + 1) / dsf }, faceInk: ink, outsidePx: n, outside: +(out / dsf).toFixed(2) };
+}
+
+// ── the screencast sampler (H-1b) ─────────────────────────────────────────────
+/**
+ * Playwright WebKit's page.screenshot() completes a running registered-property
+ * transition, paused or not, and the DOM then reads the completed value (PF-1,
+ * re-measured in H2.md §1). WebKit morph frames are therefore read from the
+ * context's screencast (recordVideo), decoded by ffmpeg into frames at 25 fps and
+ * one video pixel per CSS pixel. `run(page, mark)` drives the page; mark(name)
+ * stamps a wall-clock offset from the page's creation, which is the video's t=0.
+ * Returns { frames: [{t, img}], marks }. System ffmpeg is required and a missing
+ * binary fails loud.
+ */
+export async function screencast(browser, target, scene, { query = {}, ctx = {}, crop, dir }, run) {
+    fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
+    const vp = ctx.viewport ?? { width: 1440, height: 900 };
+    const s = await openScene(browser, target, scene, { query, ctx: { ...ctx, recordVideo: { dir, size: vp } } });
+    const marks = {};
+    const mark = (name) => { marks[name] = Date.now() - s.opened; };
+    try { await run(s.page, mark, s); } finally { await s.close(); }
+    const video = fs.readdirSync(dir).find((f) => f.endsWith(".webm"));
+    if (!video) throw new Error("screencast: no video was recorded");
+    const c = crop(vp);
+    const cx = Math.max(0, Math.floor(c.x)), cy = Math.max(0, Math.floor(c.y));
+    const cw = Math.min(vp.width - cx, Math.ceil(c.width)), ch = Math.min(vp.height - cy, Math.ceil(c.height));
+    try { execFileSync("ffmpeg", ["-v", "error", "-i", path.join(dir, video), "-vsync", "0", "-vf", `crop=${cw}:${ch}:${cx}:${cy}`, path.join(dir, "f%05d.png")]); }
+    catch (e) { throw new Error("screencast: ffmpeg failed or is missing (" + String(e.message).slice(0, 120) + ")"); }
+    const frames = fs.readdirSync(dir).filter((f) => /^f\d+\.png$/.test(f)).sort().map((f, i) => ({ t: i * 40, file: path.join(dir, f), origin: { x: cx, y: cy } }));
+    return { frames, marks, video: path.join(dir, video) };
+}
+export function readFrame(f) { const img = decodePng(fs.readFileSync(f.file)); return { ...img, dsf: 1, clip: { x: f.origin.x, y: f.origin.y } }; }
+
+// ── the frame logger (W2, W3, W4, W6, motion) ────────────────────────────────
 /**
  * Starts an rAF loop that records, per frame: the rAF timestamp, the current mark,
- * the painted extent, the morph window, the posture, the worst face overhang, the
- * seat scrollers, and the ownership census (running animations per
- * element·pseudo·property plus JS inline writes sustained across frames).
+ * the painted extent, the morph window, the posture, the seat scrollers, the seat
+ * row (H-3b: every declared seat's transform-aware rect, clipped rect and opacity,
+ * read by the harness, not the adapter), the unsharp census (O-66 §2), and the
+ * ownership census (running animations per element·pseudo·property plus JS inline
+ * writes sustained across frames, plus the extent-owner rule of K-13).
  */
 export async function startLog(page, opts = {}) {
     await page.evaluate((opts) => {
@@ -358,6 +509,7 @@ export async function startLog(page, opts = {}) {
             try { const k = a.effect.getKeyframes(); const s = new Set(); for (const f of k) for (const p of Object.keys(f)) if (!["offset", "easing", "composite", "computedOffset"].includes(p)) s.add(kebab(p)); ps = [...s]; } catch { }
             kfCache.set(a, ps); return ps;
         };
+        const SIZE = /^(width|height|inline-size|block-size|min-width|max-width|min-height|max-height|min-inline-size|max-inline-size|flex-basis|flex-grow|grid-template-columns|grid-template-rows|padding-left|padding-right|padding-inline|margin-left|margin-right|margin-inline|letter-spacing|font-size)$/;
         const parseStyle = (txt) => { const m = {}; for (const decl of (txt || "").split(";")) { const i = decl.indexOf(":"); if (i > 0) m[decl.slice(0, i).trim()] = decl.slice(i + 1).trim(); } return m; };
         let writes = new Map();
         const mo = new MutationObserver((ms) => {
@@ -388,22 +540,22 @@ export async function startLog(page, opts = {}) {
         const read = (ts) => {
             const e = P.extent();
             const f = { t: ts, mk: L.mark, e: [e.l, e.t, e.r, e.b].map((v) => +v.toFixed(3)), m: !!P.morphing(), p: P.posture?.() ?? "" };
-            if (opts.faces) {
-                let oh = 0, who = "";
-                for (const s of P.paintingSeats()) {
-                    const q = s.rect; const o = Math.max(e.l - q.l, q.r - e.r, e.t - q.t, q.b - e.b);
-                    if (o > oh) { oh = o; who = hp.label(s.el); }
-                }
-                f.oh = +oh.toFixed(3); if (oh > 0.5) f.ohWho = who;
+            if (opts.seats || opts.sharp) {
+                const ss = P.seats({ all: true });
+                if (opts.seats) f.s = ss.map((el) => { const q = el.getBoundingClientRect(); const c = hp.paintedRect(el); return [idOf(el), +q.left.toFixed(2), +q.top.toFixed(2), +q.right.toFixed(2), +q.bottom.toFixed(2), +c.l.toFixed(2), +c.t.toFixed(2), +c.r.toFixed(2), +c.b.toFixed(2), +hp.visibleOpacity(el).toFixed(3)]; });
+                if (opts.sharp) { let n = 0, who = ""; for (const el of ss) { if (hp.visibleOpacity(el) <= 0.05) continue; const u = hp.unsharp(el); if (u) { n++; who = who || u; } } f.us = n; if (who) f.usWho = who; }
             }
             if (opts.scrollers) f.sc = hp.seatScrollers(root, P.seats({ all: true }));
             if (opts.owners) {
-                const own = new Map();
+                const own = new Map(); let sizeAnim = "";
                 for (const a of document.getAnimations()) {
                     if (a.playState !== "running") continue;
                     const tg = a.effect && a.effect.target; if (!tg || !(root === tg || root.contains(tg))) continue;
                     const kind = a.transitionProperty ? "transition" : a.animationName ? "animation:" + a.animationName : "waapi";
-                    for (const p of propsOf(a)) { const key = idOf(tg) + "|" + (a.effect.pseudoElement || "") + "|" + p; const l = own.get(key) || { who: hp.label(tg) + (a.effect.pseudoElement || "") + " " + p, by: [] }; l.by.push(kind); own.set(key, l); }
+                    for (const p of propsOf(a)) {
+                        const key = idOf(tg) + "|" + (a.effect.pseudoElement || "") + "|" + p; const l = own.get(key) || { who: hp.label(tg) + (a.effect.pseudoElement || "") + " " + p, by: [] }; l.by.push(kind); own.set(key, l);
+                        if (tg !== root && SIZE.test(p) && !sizeAnim) sizeAnim = hp.label(tg) + " " + p + " (" + kind + ")";
+                    }
                 }
                 const nowJs = new Set();
                 for (const [key, who] of writes) { const n = (jsRun.get(key) || 0) + 1; jsRun.set(key, n); nowJs.add(key); if (n >= 2) { const [id, p] = key.split("||"); const k2 = id + "||" + p; const l = own.get(k2) || { who, by: [] }; l.by.push("js"); own.set(k2, l); } }
@@ -411,6 +563,9 @@ export async function startLog(page, opts = {}) {
                 writes = new Map();
                 const dup = [...own.values()].filter((l) => l.by.length >= 2);
                 if (dup.length) f.dup = dup.slice(0, 3).map((l) => l.who + " ← " + l.by.join("+"));
+                // K-13: the dock's main-axis extent has one owner. A size animation inside
+                // the dock that runs while the dock's own morph window is open is a second owner.
+                if (sizeAnim && f.m) f.dup = [...(f.dup ?? []), "extent ← dock morph + " + sizeAnim];
             }
             L.frames.push(f);
         };
@@ -451,6 +606,10 @@ export async function extentNow(page) {
 export async function dockCenter(page) {
     return page.evaluate(() => { const e = window.__dockProbe.extent(); return { x: (e.l + e.r) / 2, y: (e.t + e.b) / 2 }; });
 }
+/** Scroll the scene's scroll source (window, an element, or a late element) to y. */
+export async function scrollSource(page, y) {
+    await page.evaluate((y) => { const s = window.__scene; if (s?.scrollTo) s.scrollTo(y); else window.scrollTo(0, y); }, y);
+}
 
 // ── spring math (the rung's own spec) ─────────────────────────────────────────
 /**
@@ -460,35 +619,269 @@ export async function dockCenter(page) {
  */
 export function springSpec({ response, dampingFraction: z, settleBand = 0.02 }) {
     const w0 = (2 * Math.PI) / response;
-    const x = (t) => {
-        if (z < 1) { const wd = w0 * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w0 * t) * (Math.cos(wd * t) + (z * w0 / wd) * Math.sin(wd * t)); }
-        if (z === 1) return 1 - (1 + w0 * t) * Math.exp(-w0 * t);
-        const s = Math.sqrt(z * z - 1), r1 = -w0 * (z - s), r2 = -w0 * (z + s);
-        return 1 - (r2 * Math.exp(r1 * t) - r1 * Math.exp(r2 * t)) / (r2 - r1);
-    };
-    let vmax = 0, settle = 0, prev = x(0);
+    let vmax = 0, settle = 0, prev = 0;
     const dt = 1e-4;
     for (let t = dt; t < 5; t += dt) {
-        const v = x(t); vmax = Math.max(vmax, (v - prev) / dt); prev = v;
+        const v = 1 + springErr(w0, z, -1, 0, t); vmax = Math.max(vmax, (v - prev) / dt); prev = v;
         if (Math.abs(v - 1) > settleBand) settle = t;
     }
     const M = z < 1 ? Math.exp((-z * Math.PI) / Math.sqrt(1 - z * z)) : 0;
     return { w0, zeta: z, vmaxNorm: vmax, M, settleS: settle, settleBand };
 }
+/** The error e(t) = x(t) − target of a spring released at e0 with velocity v0 (units/s). */
+export function springErr(w0, z, e0, v0, t) {
+    if (t <= 0) return e0;
+    if (z < 1) { const wd = w0 * Math.sqrt(1 - z * z); return Math.exp(-z * w0 * t) * (e0 * Math.cos(wd * t) + ((v0 + z * w0 * e0) / wd) * Math.sin(wd * t)); }
+    if (z === 1) return (e0 + (v0 + w0 * e0) * t) * Math.exp(-w0 * t);
+    const s = Math.sqrt(z * z - 1), r1 = -w0 * (z - s), r2 = -w0 * (z + s);
+    const A = (v0 - r2 * e0) / (r1 - r2); return A * Math.exp(r1 * t) + (e0 - A) * Math.exp(r2 * t);
+}
+/**
+ * H-3c · the trajectory row. Fits the analytic spring released from (x0, v0) toward
+ * `to` to frames [{t (ms), L}], sliding the release time t0 over [tLo, tHi] in
+ * 0.5 ms steps (input-to-first-frame latency is not the carrier's fault), and
+ * returns the smallest worst-frame deviation, in px and as a fraction of |to − x0|
+ * (or of the excursion when a retarget carries velocity).
+ */
+export function trajectoryFit(frames, rung, { x0, v0 = 0, to, tLo, tHi }) {
+    const w0 = (2 * Math.PI) / rung.response, z = rung.dampingFraction;
+    const e0 = x0 - to;
+    let best = { dev: Infinity };
+    for (let t0 = tLo; t0 <= tHi; t0 += 0.5) {
+        let dev = 0, at = 0;
+        for (const f of frames) {
+            const tau = (f.t - t0) / 1000;
+            const model = to + (tau <= 0 ? e0 : springErr(w0, z, e0, v0, tau));
+            const d = Math.abs(f.L - model); if (d > dev) { dev = d; at = f.t; }
+        }
+        if (dev < best.dev) best = { dev, at, t0 };
+    }
+    return best;
+}
+/** Velocity (px/s) of the fitted spring at time t (ms), by central difference. */
+export function springVel(rung, { x0, v0 = 0, to, t0 }, t) {
+    const w0 = (2 * Math.PI) / rung.response, z = rung.dampingFraction, h = 1e-4;
+    const x = (tt) => to + springErr(w0, z, x0 - to, v0, (tt - t0) / 1000);
+    return (x(t + h * 1000) - x(t - h * 1000)) / (2 * h);
+}
+
+// ── the seat row (H-3b) ───────────────────────────────────────────────────────
+export const SEAT_OVERLAP_FRAC = 0.2;
+/**
+ * frames[i].s = [[id, l,t,r,b (transform-aware), cl,ct,cr,cb (clipped), opacity], …].
+ * A seat "paints" when its opacity > 0.05 and its clipped rect is non-empty.
+ *   step     for each seat painting in consecutive frames, the main-axis step of its centre
+ *            ≤ 1.5 · v̂max · D_seat · dt + 0.5 px, D_seat = |its last centre − its first|.
+ *   overlap  0 frames where two painting seats' clipped rects intersect by more than 20 % of
+ *            the narrower seat on both axes (a collision, or a double exposure above 5 %).
+ */
+export function seatRow(frames, axis, spec, scale = 1) {
+    const main = (q) => axis === "y" ? [q[2], q[4]] : [q[1], q[3]];
+    const cmain = (q) => axis === "y" ? [q[6], q[8]] : [q[5], q[7]];
+    const ccross = (q) => axis === "y" ? [q[5], q[7]] : [q[6], q[8]];
+    const paints = (q) => q[9] > 0.05 && q[7] - q[5] > 0.5 && q[8] - q[6] > 0.5;
+    const tracks = new Map();
+    frames.forEach((f, i) => (f.s ?? []).forEach((q) => { if (!tracks.has(q[0])) tracks.set(q[0], []); tracks.get(q[0]).push({ i, t: f.t, c: (main(q)[0] + main(q)[1]) / 2, p: paints(q) }); }));
+    let worst = { ratio: 0 };
+    for (const [id, tr] of tracks) {
+        if (tr.filter((x) => x.p).length < 2) continue;
+        const D = scale * Math.max(...tr.map((x) => Math.abs(x.c - tr[0].c)));   // its whole travel, painting or clipped (scaled up for a reversal)
+        for (let k = 1; k < tr.length; k++) {
+            const a = tr[k - 1], b = tr[k];
+            if (!a.p || !b.p || b.i !== a.i + 1) continue;
+            const dt = b.t - a.t;
+            const bound = 1.5 * spec.vmaxNorm * D * (dt / 1000) + 0.5;
+            const step = Math.abs(b.c - a.c);
+            if (step / bound > worst.ratio) worst = { ratio: +(step / bound).toFixed(2), step: +step.toFixed(2), bound: +bound.toFixed(2), seat: id, atMs: +(b.t - frames[0].t).toFixed(1) };
+        }
+    }
+    let overlapFrames = 0, firstOverlap = null;
+    for (const f of frames) {
+        const ps = (f.s ?? []).filter(paints);
+        let hit = null;
+        for (let a = 0; a < ps.length && !hit; a++) for (let b = a + 1; b < ps.length && !hit; b++) {
+            const [a0, a1] = cmain(ps[a]), [b0, b1] = cmain(ps[b]), [c0, c1] = ccross(ps[a]), [d0, d1] = ccross(ps[b]);
+            const im = Math.min(a1, b1) - Math.max(a0, b0), ic = Math.min(c1, d1) - Math.max(c0, d0);
+            if (im > SEAT_OVERLAP_FRAC * Math.min(a1 - a0, b1 - b0) && ic > SEAT_OVERLAP_FRAC * Math.min(c1 - c0, d1 - d0)) hit = { seats: [ps[a][0], ps[b][0]], mainPx: +im.toFixed(2), opacities: [ps[a][9], ps[b][9]] };
+        }
+        if (hit) { overlapFrames++; if (!firstOverlap) firstOverlap = { ...hit, atMs: +(f.t - frames[0].t).toFixed(1) }; }
+    }
+    return { step: { ok: worst.ratio <= 1, ...worst }, overlap: { ok: overlapFrames === 0, frames: overlapFrames, first: firstOverlap } };
+}
 
 // ── reporting ────────────────────────────────────────────────────────────────
 export function makeReport(witness, target) {
     const cells = [];
-    return {
+    const only = parseArgs().cells ? new RegExp(String(parseArgs().cells)) : null;   // --cells <regex>: run only the blocks that record a matching cell
+    const rep = {
         cells,
-        add(cell) { cells.push(cell); const tag = cell.pass ? "PASS" : "FAIL"; console.log(`${tag}  ${witness}  ${ENGINE_LABEL[cell.engine] ?? cell.engine}  ${cell.cell}  ${cell.summary}`); },
+        add(cell) { cell.load = loadAvg(); cells.push(cell); const tag = cell.record ? "RECORD" : cell.pass ? "PASS" : cell.unmeasured ? "UNMEASURED" : "FAIL"; console.log(`${tag}  ${witness}  ${ENGINE_LABEL[cell.engine] ?? cell.engine}  ${cell.cell}  ${cell.summary}  [load ${cell.load}]`); },
+        /**
+         * Run one scene's block; if it throws (a page crash, a missing hook), every
+         * named cell it did not record FAILS with the error, so an unshimmed WebKit
+         * crash is recorded per cell instead of aborting the witness.
+         */
+        async guard(engine, names, fn) {
+            if (only && !names.some((n) => only.test(n))) return;
+            const before = new Set(cells.map((c) => c.cell));
+            try { await fn(); }
+            catch (e) {
+                const msg = String(e?.message ?? e).split("\n")[0].slice(0, 200);
+                for (const n of names) if (!before.has(n) && !cells.some((c) => c.cell === n && c.engine === engine)) rep.add({ engine, cell: n, pass: false, crashed: true, summary: `not measured: ${msg}` });
+            }
+        },
         finish(dir) {
-            const failed = cells.filter((c) => !c.pass);
-            fs.writeFileSync(path.join(dir, `${witness}.json`), JSON.stringify({ witness, target: target.label, when: new Date().toISOString(), cells }, null, 1));
-            console.log(`${failed.length ? "FAIL" : "PASS"}  ${witness}  ${target.label}  ${cells.length - failed.length}/${cells.length} cells pass  (json: ${path.join(dir, witness + ".json")})`);
+            const failed = cells.filter((c) => !c.pass && !c.unmeasured && !c.record);
+            fs.writeFileSync(path.join(dir, `${witness}.json`), JSON.stringify({ witness, target: target.label, when: new Date().toISOString(), load: loadAvg(), cells }, null, 1));
+            console.log(`${failed.length ? "FAIL" : "PASS"}  ${witness}  ${target.label}  ${cells.filter((c) => c.pass).length}/${cells.length} cells pass${cells.some((c) => c.unmeasured) ? `, ${cells.filter((c) => c.unmeasured).length} UNMEASURED` : ""}  (json: ${path.join(dir, witness + ".json")})`);
             process.exitCode = failed.length ? 1 : 0;
             return failed.length === 0;
         },
     };
+    return rep;
 }
 export const r2 = (v) => (Number.isFinite(v) ? +v.toFixed(2) : v);
+
+// ── the morph analysis (W3, W6): one transition's frame strip against the pinned rung ──
+export const K_JITTER = 1.5;
+export const STEP_SLACK_PX = 0.5;
+export const DEAD_PX = 0.05;
+export const SUBPX_PX = 1.0;
+export const TRAJ_TOL = 0.04;
+/**
+ * frames: [{t, e:[l,t,r,b], m, dup?, s?}] for one transition, the first frame being the
+ * last one before its trigger. rung: the PINNED rung (H-3d); its clock is the analytic
+ * settle time into its band, never a token the family declares.
+ *   continuity  every frame's step of the length and of both main-axis edges ≤ 1.5·v̂max·D·dt + 0.5 px
+ *   landing     overshoot ≤ 0.05 px (dead) or a designed bounce (M > band and o ≈ M·D)
+ *   window      opens for D ≥ 0.5 px; lasts ≤ clock + 2F + the longest frame (from the retarget
+ *               for a reversal); closes between 1 frame before and 2 frames after the landing
+ *   owners      0 frames with two running owners of one element·pseudo·property, or of the extent
+ *   trajectory  (H-3c) the length follows the rung's analytic spring from the observed release
+ *               within TRAJ_TOL·D + 1 px; a reversal re-releases it from the fitted state
+ *   terminal    (H-3c) the last step into the target ≤ 1.5 × the step before it (dt-scaled) + 0.5 px
+ *   seats       (H-3b) the seat row, when the strip carries seats
+ */
+export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = true } = {}) {
+    const spec = springSpec(rung);
+    const clockMs = spec.settleS * 1000;
+    const len = (f) => ax === "y" ? f.e[3] - f.e[1] : f.e[2] - f.e[0];
+    const edges = (f) => ax === "y" ? [f.e[1], f.e[3]] : [f.e[0], f.e[2]];
+    const L = frames.map(len);
+    const start = L[0], tgt = L.at(-1);
+    const Dnet = Math.abs(tgt - start);
+    const D = Math.max(Dnet, ...L.map((v) => Math.abs(v - start)), reversal ? Math.abs(reversal.to1 - start) : 0);
+    const dir = Math.sign(tgt - start) || 1;
+    const dts = frames.slice(1).map((f, i) => f.t - frames[i].t).sort((a, b) => a - b);
+    const F = Math.max(16.7, dts.length ? dts[Math.floor(dts.length / 2)] : 16.7);
+    // continuity
+    let worst = { ratio: 0 };
+    for (let i = 1; i < frames.length; i++) {
+        const dt = frames[i].t - frames[i - 1].t;
+        const bound = K_JITTER * spec.vmaxNorm * D * (dt / 1000) + STEP_SLACK_PX;
+        const steps = [Math.abs(L[i] - L[i - 1]), ...edges(frames[i]).map((v, k) => Math.abs(v - edges(frames[i - 1])[k]))];
+        const step = Math.max(...steps);
+        if (step / bound > worst.ratio) worst = { ratio: step / bound, step, bound, t: frames[i].t - frames[0].t, dt };
+    }
+    // landing
+    const iStart = L.findIndex((v) => Math.abs(v - start) > 0.5);
+    const iR = reversal ? frames.findIndex((f) => f.mk === reversal.mark) : -1;
+    const landFrom = iR > 0 ? iR : Math.max(0, iStart);
+    const dirL = iR > 0 ? (Math.sign(tgt - L[iR]) || 1) : dir;
+    const o = iStart < 0 ? 0 : Math.max(0, ...L.slice(landFrom).map((v) => (v - tgt) * dirL));
+    let rev = 0, lastSign = 0;
+    for (let i = Math.max(1, landFrom); i < L.length; i++) { const d = L[i] - L[i - 1]; if (Math.abs(d) < 0.01) continue; const sg = Math.sign(d); if (lastSign && sg !== lastSign) rev++; lastSign = sg; }
+    const designed = spec.M > spec.settleBand;
+    const Dl = iR > 0 ? Math.abs(tgt - L[iR]) : Dnet;
+    let landing;
+    if (o <= DEAD_PX) landing = { ok: true, why: "dead" };
+    else if (o < SUBPX_PX) landing = { ok: false, why: `sub-pixel ring ${r2(o)} px (O-64 R-3)` };
+    else if (designed && Math.abs(o - spec.M * Dl) <= Math.max(1, 0.5 * spec.M * Dl)) landing = { ok: true, why: `designed bounce ${r2(o)} px ≈ M·D ${r2(spec.M * Dl)}` };
+    else landing = { ok: false, why: `undesigned overshoot ${r2(o)} px (spring M·D = ${r2(spec.M * Dl)} px)` };
+    // window (H-3d: the clock is the pinned rung's)
+    const iLand = (() => { for (let i = L.length - 1; i >= 0; i--) if (Math.abs(L[i] - tgt) > 0.5) return i + 1; return 0; })();
+    const iOpen = frames.findIndex((f) => f.m);
+    const iClose = iOpen < 0 ? -1 : frames.findIndex((f, i) => i > iOpen && !f.m);
+    const t = (i) => i < 0 || i >= frames.length ? null : frames[i].t - frames[0].t;
+    const win = { open: t(iOpen), close: t(iClose), land: t(iLand), motionStart: t(iStart), clockMs: r2(clockMs), frameMs: r2(F) };
+    let windowOk = true, windowWhy = "";
+    if (D >= 0.5 && iOpen < 0) { windowOk = false; windowWhy = "no window opened for the change (O-64 R-2)"; }
+    else if (iOpen >= 0) {
+        const end = iClose < 0 ? frames.length - 1 : iClose;
+        const from = iR > 0 ? Math.max(iOpen, iR) : iOpen;
+        const dur = frames[end].t - frames[from].t;
+        const stall = Math.max(0, ...frames.slice(from + 1, end + 1).map((f, k) => f.t - frames[from + k].t));
+        const allow = clockMs + 2 * F + stall;
+        win.duration = r2(frames[end].t - frames[iOpen].t); win.fromRetargetMs = iR > 0 ? r2(dur) : undefined; win.allowMs = r2(allow);
+        if (iClose < 0) { windowOk = false; windowWhy = "window never closed"; }
+        else if (dur > allow) { windowOk = false; windowWhy = `window ${r2(dur)} ms${iR > 0 ? " after the retarget" : ""} > clock ${r2(clockMs)} + 2×${r2(F)} + stall ${r2(stall)} = ${r2(allow)} ms (O-64 R-4, H-3d)`; }
+        if (windowOk && Dnet >= 0.5 && iClose >= 0) {
+            const gapFrames = iClose - iLand;
+            win.closeMinusLandFrames = gapFrames;
+            if (gapFrames < -1) { windowOk = false; windowWhy = `window closed ${-gapFrames} frames before the extent landed`; }
+            else if (gapFrames > 2) { windowOk = false; windowWhy = `window closed ${gapFrames} frames (${r2(frames[iClose].t - frames[iLand].t)} ms) after the extent landed (W-8)`; }
+        }
+    }
+    // trajectory (H-3c)
+    let traj = { ok: true, why: "no motion" };
+    if (D >= 0.5 && iStart > 0) {
+        const pts = frames.map((f, i) => ({ t: f.t, L: L[i] }));
+        const tLo = frames[iStart - 1].t - F, tHi = frames[iStart].t;
+        if (iR > 0) {
+            const seg1 = pts.slice(iStart - 1, iR);
+            const f1 = trajectoryFit(seg1, rung, { x0: start, to: reversal.to1, tLo, tHi });
+            let best2 = { dev: Infinity };
+            for (let tr = frames[Math.max(0, iR - 2)].t; tr <= frames[iR].t + F; tr += 1) {
+                const w0 = (2 * Math.PI) / rung.response, z = rung.dampingFraction;
+                const xr = reversal.to1 + springErr(w0, z, start - reversal.to1, 0, (tr - f1.t0) / 1000);
+                const vr = springVel(rung, { x0: start, to: reversal.to1, t0: f1.t0 }, tr);
+                const seg2 = pts.filter((p) => p.t >= tr);
+                const f2 = trajectoryFit(seg2, rung, { x0: xr, v0: vr, to: tgt, tLo: tr, tHi: tr });
+                if (f2.dev < best2.dev) best2 = { ...f2, xr, vr };
+            }
+            const D1 = Math.abs(reversal.to1 - start) * Math.min(1, Math.abs(L[iR] - start) / Math.max(1e-6, Math.abs(reversal.to1 - start)));
+            const D2 = Math.max(Math.abs(tgt - best2.xr), ...pts.slice(iR).map((p) => Math.abs(p.L - tgt)));
+            const tol1 = TRAJ_TOL * Math.abs(reversal.to1 - start) + 1, tol2 = TRAJ_TOL * D2 + 1;
+            traj = { ok: f1.dev <= tol1 && best2.dev <= tol2, dev1: r2(f1.dev), tol1: r2(tol1), dev2: r2(best2.dev), tol2: r2(tol2), vAtRetarget: r2(best2.vr / 1000), D1: r2(D1),
+                why: `before the retarget ${r2(f1.dev)} px (tol ${r2(tol1)}); after it, released at ${r2(best2.xr)} px with ${r2(best2.vr / 1000)} px/ms: ${r2(best2.dev)} px (tol ${r2(tol2)})` };
+        } else {
+            const f = trajectoryFit(pts.slice(iStart - 1), rung, { x0: start, to: tgt, tLo, tHi });
+            const tol = TRAJ_TOL * Dnet + 1;
+            traj = { ok: f.dev <= tol, dev: r2(f.dev), tol: r2(tol), frac: r2(f.dev / Math.max(Dnet, 1e-6)), atMs: r2(f.at - frames[0].t), why: `worst ${r2(f.dev)} px (${r2(100 * f.dev / Math.max(Dnet, 1e-6))} % of D) from the rung's analytic spring (tol ${r2(tol)})` };
+        }
+    }
+    // terminal step (H-3c)
+    let terminal = { ok: true, why: "no motion" };
+    if (D >= 0.5 && iStart > 0) {
+        const st = [];
+        for (let i = iStart; i < frames.length; i++) { const s = Math.abs(L[i] - L[i - 1]); if (s > 0.05) st.push({ i, s, dt: frames[i].t - frames[i - 1].t }); }
+        if (st.length < 2) terminal = { ok: false, why: `the motion is ${st.length} step(s): ${r2(st[0]?.s ?? 0)} px` };
+        else { const a = st.at(-2), b = st.at(-1); const bound = 1.5 * a.s * (b.dt / a.dt) + 0.5; terminal = { ok: b.s <= bound, last: r2(b.s), prev: r2(a.s), bound: r2(bound), why: `last step ${r2(b.s)} px after ${r2(a.s)} px (bound ${r2(bound)})` }; }
+    }
+    // owners
+    const dupFrames = frames.filter((f) => f.dup);
+    const owners = { ok: dupFrames.length === 0, frames: dupFrames.length, first: dupFrames[0]?.dup };
+    const out = {
+        D: r2(Dnet), start: r2(start), target: r2(tgt), frames: frames.length, travelMs: win.land != null && win.motionStart != null ? r2(win.land - win.motionStart) : null,
+        continuity: { ok: worst.ratio <= 1, ratio: r2(worst.ratio), step: r2(worst.step), bound: r2(worst.bound), atMs: r2(worst.t), dt: r2(worst.dt) },
+        landing: { ...landing, overshoot: r2(o), reversals: rev }, window: { ok: windowOk, why: windowWhy, ...win }, owners, trajectory: traj, terminal,
+        spec: { vmaxNorm: r2(spec.vmaxNorm), M: +spec.M.toExponential(3), band: spec.settleBand, clockMs: r2(clockMs) },
+    };
+    const exc = Math.max(1e-6, ...L.map((v) => Math.abs(v - start)));
+    if (seats && frames.some((f) => f.s)) out.seats = seatRow(frames, ax, spec, reversal ? Math.max(1, D / exc) : 1);
+    return out;
+}
+export function morphChecks(a) {
+    const c = { continuity: a.continuity.ok, landing: a.landing.ok, window: a.window.ok, owners: a.owners.ok, trajectory: a.trajectory.ok, terminal: a.terminal.ok };
+    if (a.seats) { c.seatStep = a.seats.step.ok; c.seatOverlap = a.seats.overlap.ok; }
+    if (a.faces) c.faces = a.faces.ok;
+    return c;
+}
+export function morphSummary(a) {
+    const s = [`D ${a.D} px (${a.start}→${a.target})`, `step ×${a.continuity.ratio}`, a.landing.why + (a.landing.reversals ? `, ${a.landing.reversals} reversal(s)` : ""),
+        `window ${a.window.duration ?? "none"} ms (allow ${a.window.allowMs ?? "-"}, clock ${a.window.clockMs})${a.window.why ? " — " + a.window.why : ""}`,
+        `trajectory ${a.trajectory.why}`, `terminal ${a.terminal.why}`, `owners ${a.owners.frames}${a.owners.first ? " (" + a.owners.first[0] + ")" : ""}`];
+    if (a.seats) s.push(`seat step ×${a.seats.step.ratio ?? 0}${a.seats.step.step != null ? ` (${a.seats.step.step} px)` : ""}, seat overlap ${a.seats.overlap.frames} frame(s)`);
+    if (a.faces) s.push(`faces ${a.faces.why}`);
+    return s.join("; ");
+}
