@@ -1,0 +1,138 @@
+{
+  "templates": {
+    "{{dir:X}}": "repo-relative dir of the unique file with basename X under src/ (the runner fails if 0 or 2+)",
+    "{{rel:FROM|TO}}": "relative specifier from dirname(FROM) to TO, with a leading ./",
+    "{{firstcss:PREFIX}}": "first sorted non-index .css file under PREFIX",
+    "{{firstindexcss:PREFIX}}": "first sorted index.css under PREFIX that is not in a styles/ slot of a slot"
+  },
+  "plants": [
+    { "id": "P-I6", "items": ["S-06", "B-03"], "intended": ["B0", "B1"], "token": "Chip.vue",
+      "ops": [{ "op": "insertAfterRegex", "path": "{{dir:Chip.vue}}/Chip.vue", "regex": "<script[^>]*setup[^>]*>",
+        "text": "\nimport { Badge as __zzBadge } from \"@mkbabb/glass-ui/badge\";\nvoid __zzBadge;\n" }] },
+
+    { "id": "P-I11", "items": ["B-04"], "intended": ["R3", "B16", "B-R3", "R-3"], "token": "zz-chip-only",
+      "ops": [{ "op": "write", "path": "tests/unit/zz-chip-only.test.ts",
+        "content": "import { describe, it, expect } from \"vitest\";\nimport { Chip } from \"{{rel:tests/unit/zz-chip-only.test.ts|{{dir:Chip.vue}}/index}}\";\ndescribe(\"zz\", () => { it(\"chip\", () => { expect(Chip).toBeTruthy(); }); });\n" }] },
+
+    { "id": "P-I12", "items": ["B-04"], "intended": ["R3", "B16", "B-R3", "R-3"], "token": "zz-slider-only",
+      "ops": [{ "op": "write", "path": "{{dir:Chip.vue}}/__tests__/zz-slider-only.test.ts",
+        "content": "import { describe, it, expect } from \"vitest\";\nimport { Slider } from \"{{rel:{{dir:Chip.vue}}/__tests__/zz-slider-only.test.ts|{{dir:Slider.vue}}/index}}\";\ndescribe(\"zz\", () => { it(\"slider\", () => { expect(Slider).toBeTruthy(); }); });\n" }] },
+
+    { "id": "L3", "items": ["B-04", "S-11"], "legal": true, "token": "zz-chip-legal",
+      "ops": [{ "op": "write", "path": "{{dir:Chip.vue}}/__tests__/zz-chip-legal.test.ts",
+        "content": "import { describe, it, expect } from \"vitest\";\nimport { chipVariants } from \"../chipVariants\";\ndescribe(\"zz\", () => { it(\"variants\", () => { expect(chipVariants).toBeTruthy(); }); });\n" }] },
+
+    { "id": "P-I32", "items": ["S-07"], "intended": ["B0"], "token": "zz-walk-a",
+      "ops": [{ "op": "write", "path": "tests/unit/zz-walk-a.test.ts",
+        "content": "import { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { it, expect } from \"vitest\";\nconst n = \"chip/Chip.vue\";\nit(\"reads\", () => { expect(readFileSync(join(process.cwd(), \"src/components/\" + n), \"utf8\").length).toBeGreaterThan(0); });\n" }] },
+
+    { "id": "P-I32b", "items": ["S-07"], "intended": ["B0"], "token": "zz-walk-b",
+      "ops": [{ "op": "write", "path": "tests/unit/zz-walk-b.test.ts",
+        "content": "import { readFileSync } from \"node:fs\";\nimport { it, expect } from \"vitest\";\nconst n = \"chip\";\nit(\"reads\", () => { expect(readFileSync(`src/components/${n}/index.ts`, \"utf8\").length).toBeGreaterThan(0); });\n" }] },
+
+    { "id": "P-I32c", "items": ["S-07"], "intended": ["B0"], "token": "zz-walk-c",
+      "ops": [{ "op": "write", "path": "tests/unit/zz-walk-c.test.ts",
+        "content": "import { readFileSync } from \"node:fs\";\nimport { resolve } from \"node:path\";\nimport { it, expect } from \"vitest\";\nconst n = \"chip\";\nit(\"reads\", () => { expect(readFileSync(resolve(import.meta.dirname, \"../../src/components\", n, \"index.ts\"), \"utf8\").length).toBeGreaterThan(0); });\n" }] },
+
+    { "id": "P-I38", "items": ["B-05"], "intended": ["B10"], "token": "zz-orphan-helper",
+      "ops": [
+        { "op": "write", "path": "scripts/zz-orphan-helper.mjs", "content": "export function zzHelp() { return 1; }\n" },
+        { "op": "mkdirWrite", "path": "scripts/zzmod/index.mjs", "content": "export { zzUse } from \"./use.mjs\";\n" },
+        { "op": "write", "path": "scripts/zzmod/use.mjs", "content": "import { zzHelp } from \"../zz-orphan-helper.mjs\";\nexport function zzUse() { return zzHelp(); }\n" }
+      ] },
+
+    { "id": "P-B13y", "items": ["B-06"], "intended": ["B13"], "token": "zz-ci-bin",
+      "ops": [
+        { "op": "write", "path": "scripts/zz-ci-bin.mjs", "content": "export const zzBin = 1;\n" },
+        { "op": "write", "path": "scripts/zz-ci-caller.mjs", "content": "import { zzBin } from \"./zz-ci-bin.mjs\";\nconsole.log(zzBin);\n" },
+        { "op": "yamlStep", "path": ".github/workflows/ci.yml", "text": "- run: node scripts/zz-ci-bin.mjs" }
+      ] },
+
+    { "id": "P-B13c", "items": ["B-06"], "control": "P-B13y", "notIn": ["B13"], "token": "zz-ci-bin",
+      "ops": [
+        { "op": "write", "path": "scripts/zz-ci-bin.mjs", "content": "export const zzBin = 1;\n" },
+        { "op": "write", "path": "scripts/zz-ci-caller.mjs", "content": "import { zzBin } from \"./zz-ci-bin.mjs\";\nconsole.log(zzBin);\n" }
+      ] },
+
+    { "id": "P-I15b", "items": ["B-07"], "intended": ["B15"], "token": "utils",
+      "ops": [
+        { "op": "write", "path": "{{dir:GlassDock.vue}}/utils/zzThing.ts", "content": "export const zzThing = 1;\n" },
+        { "op": "write", "path": "{{dir:GlassDock.vue}}/utils/index.ts", "content": "export { zzThing } from \"./zzThing\";\n" }
+      ] },
+    { "id": "P-I15c", "items": ["B-07"], "intended": ["B15"], "token": "v2",
+      "ops": [
+        { "op": "write", "path": "{{dir:GlassDock.vue}}/v2/zzThing.ts", "content": "export const zzThing = 1;\n" },
+        { "op": "write", "path": "{{dir:GlassDock.vue}}/v2/index.ts", "content": "export { zzThing } from \"./zzThing\";\n" }
+      ] },
+    { "id": "P-misc", "items": ["B-07"], "intended": ["B15"], "token": "misc",
+      "ops": [
+        { "op": "write", "path": "{{dir:GlassDock.vue}}/misc/zzThing.ts", "content": "export const zzThing = 1;\n" },
+        { "op": "write", "path": "{{dir:GlassDock.vue}}/misc/index.ts", "content": "export { zzThing } from \"./zzThing\";\n" }
+      ] },
+    { "id": "P-fn1", "items": ["B-07"], "intended": ["B15"], "token": "useDockZz",
+      "ops": [{ "op": "write", "path": "{{dir:Slider.vue}}/useDockZz.ts", "content": "export function useDockZz() { return 1; }\n" }] },
+    { "id": "P-fn2", "items": ["B-07"], "intended": ["B15"], "token": "use.ts",
+      "ops": [{ "op": "write", "path": "{{dir:Chip.vue}}/use.ts", "content": "export function useZz() { return 1; }\n" }] },
+
+    { "id": "P-C6", "items": ["B-01"], "intended": ["B7", "B1"], "token": "zzdoorless",
+      "ops": [
+        { "op": "write", "path": "{{dir:GlassDock.vue}}/zzdoorless/thing.ts", "content": "export const zzDoorless = 1;\n" },
+        { "op": "write", "path": "{{dir:Chip.vue}}/zzReach.ts", "content": "import { zzDoorless } from \"{{rel:{{dir:Chip.vue}}/zzReach.ts|{{dir:GlassDock.vue}}/zzdoorless/thing}}\";\nexport const zzReach = zzDoorless;\n" }
+      ] },
+    { "id": "P-B1", "items": ["B-01"], "intended": ["B1"], "token": "zzDeep",
+      "ops": [{ "op": "write", "path": "{{dir:Chip.vue}}/zzDeep.ts",
+        "content": "import type { SliderProps } from \"{{rel:{{dir:Chip.vue}}/zzDeep.ts|{{dir:Slider.vue}}/types}}\";\nexport type ZzDeep = SliderProps;\n" }] },
+    { "id": "P-B2", "items": ["B-01", "S-03"], "intended": ["B2"], "token": "zz-deep-demo",
+      "ops": [{ "op": "write", "path": "demo/zz-deep-demo.ts",
+        "content": "import { chipVariants } from \"{{rel:demo/zz-deep-demo.ts|{{dir:Chip.vue}}/chipVariants}}\";\nexport const zz = chipVariants;\n" }] },
+    { "id": "P-B3", "items": ["B-01"], "intended": ["B3"], "token": "zz-cross",
+      "ops": [{ "op": "write", "path": "{{dir:Chip.vue}}/zz-cross.css",
+        "content": "@import \"{{rel:{{dir:Chip.vue}}/zz-cross.css|{{firstcss:src/components/dock}}}}\";\n" }] },
+    { "id": "P-B4", "items": ["B-01"], "intended": ["B4"], "token": "zzCyc",
+      "ops": [
+        { "op": "write", "path": "{{dir:Chip.vue}}/zzCycA.ts", "content": "import { b } from \"./zzCycB\";\nexport const a = () => b;\n" },
+        { "op": "write", "path": "{{dir:Chip.vue}}/zzCycB.ts", "content": "import { a } from \"./zzCycA\";\nexport const b = () => a;\n" }
+      ] },
+    { "id": "P-B5", "items": ["B-01"], "intended": ["B5"], "token": "composables",
+      "ops": [
+        { "op": "write", "path": "{{dir:Chip.vue}}/composables/useZzSlot.ts", "content": "export function useZzSlot() { return 1; }\n" },
+        { "op": "write", "path": "{{dir:Chip.vue}}/composables/index.ts", "content": "export { useZzSlot } from \"./useZzSlot\";\n" }
+      ] },
+    { "id": "P-B6", "items": ["B-01"], "intended": ["B6"], "token": "zzLong",
+      "ops": [{ "op": "writeLines", "path": "{{dir:Chip.vue}}/zzLong.ts", "lines": 520, "line": "export const zz{{i}} = {{i}};" }] },
+    { "id": "P-B6s", "items": ["B-01", "S-03"], "intended": ["B6"], "token": "composables",
+      "ops": [{ "op": "writeMany", "dir": "{{dir:Chip.vue}}/composables", "count": 13, "name": "useZz{{i}}.ts", "content": "export function useZz{{i}}() { return {{i}}; }\n" }] },
+    { "id": "P-B9", "items": ["B-01", "B-02"], "intended": ["B9"], "token": "badge",
+      "ops": [{ "op": "append", "path": "{{dir:Chip.vue}}/index.ts",
+        "text": "\nexport { Badge as ZzBadge } from \"{{rel:{{dir:Chip.vue}}/index.ts|{{dir:Badge.vue}}/index}}\";\n" }] },
+    { "id": "P-B8", "items": ["S-02", "B-02"], "intended": ["B8", "B9"], "token": "Chip",
+      "ops": [{ "op": "append", "path": "{{dir:useRAFLoop.ts}}/index.ts",
+        "text": "\nexport { chipVariants as zzChipVariants } from \"{{rel:{{dir:useRAFLoop.ts}}/index.ts|{{dir:Chip.vue}}/chipVariants}}\";\n" }] },
+    { "id": "P-B11", "items": ["B-01"], "intended": ["B11"], "token": "zzExtra",
+      "ops": [
+        { "op": "write", "path": "{{dir:Chip.vue}}/zzExtra.ts", "content": "export const zzExtra = 1;\n" },
+        { "op": "append", "path": "{{dir:Chip.vue}}/index.ts", "text": "\nexport { zzExtra } from \"./zzExtra\";\n" }
+      ] },
+    { "id": "P-B12", "items": ["B-01"], "intended": ["B12"], "token": "zz-relay",
+      "ops": [{ "op": "write", "path": "{{dir:Chip.vue}}/zz-relay.ts", "content": "export { chipVariants } from \"./chipVariants\";\n" }] },
+    { "id": "P-B14", "items": ["B-01"], "intended": ["B14"], "token": "index.css",
+      "ops": [{ "op": "append", "path": "{{firstindexcss:src/components}}", "text": "\n.zz-smuggled { color: red; }\n" }] },
+    { "id": "P-B15", "items": ["B-01"], "intended": ["B15"], "token": "part-1",
+      "ops": [
+        { "op": "write", "path": "{{dir:GlassDock.vue}}/part-1/zzThing.ts", "content": "export const zzThing = 1;\n" },
+        { "op": "write", "path": "{{dir:GlassDock.vue}}/part-1/index.ts", "content": "export { zzThing } from \"./zzThing\";\n" }
+      ] },
+    { "id": "P-VAC10", "items": ["B-01"], "intended": ["B10"], "token": "zzDockOnly",
+      "ops": [
+        { "op": "write", "path": "{{dir:useRAFLoop.ts}}/zzDockOnly.ts", "content": "export function zzDockOnly() { return 1; }\n" },
+        { "op": "write", "path": "{{dir:GlassDock.vue}}/zzUseKernel.ts", "content": "import { zzDockOnly } from \"{{rel:{{dir:GlassDock.vue}}/zzUseKernel.ts|{{dir:useRAFLoop.ts}}/zzDockOnly}}\";\nexport const zzUseKernel = zzDockOnly;\n" }
+      ] },
+    { "id": "P-B0w", "items": ["B-01"], "intended": ["B0"], "token": "zz-walkdir",
+      "ops": [{ "op": "write", "path": "tests/unit/zz-walkdir.test.ts",
+        "content": "import { readdirSync } from \"node:fs\";\nimport { it, expect } from \"vitest\";\nit(\"walks\", () => { expect(readdirSync(\"src/components\").length).toBeGreaterThan(0); });\n" }] }
+  ],
+  "moveProbes": [
+    { "id": "P-FD2", "items": ["S-05"], "expect": "refused",
+      "move": { "from": "{{dir:useScrollChrome.ts}}/useScrollChrome.ts", "to": "{{dir:GlassDock.vue}}/useScrollChrome.ts" } }
+  ]
+}

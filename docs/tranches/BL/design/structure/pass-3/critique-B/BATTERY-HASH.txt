@@ -1,0 +1,24 @@
+critique-B battery, D1 pass 3 · SEAT 2 (fresh critic, claude-opus-5-5), hashed 2026-09-25T07:17:31Z.
+Written before reading pass-3/B-kit/, pass-3/B-proto.md, pass-3/xj-*.md or the seat-1 battery/tools/results.
+battery dir: battery/seat-2/
+method: cd battery/seat-2 && ls | sort | xargs cat | shasum -a 256
+battery sha256 (concatenation of the sorted files): 94863738c63c2f8da3677bb1d7148a3fb815cbf7b3314ebb65bab7539a391b7b
+per file:
+dc6530507f459a7532334baf5de00515d2b4e41bc9395617868127843d355a91  ITEMS.md
+eb5b023e9f21cc08b133e224e6341dda58773492193a6440287745fa426d9fbd  plants.json
+b49426b9790947a2e6aeaef83bb849d212aafbe375afe3c160beb105642511a6  probes.sh
+6adb29d9c7de4b22bb4bfb5c0f385e368e2d4788223afe34d1a9af722b415f5a  run-plants.mjs
+Anything written after this hash (the kit adapter, results) lives under tools/seat-2/ and results/seat-2/ and is
+disclosed in ../critique-B.md; battery/seat-2/ is not edited after this line.
+
+--- seat-1 record, preserved verbatim (an earlier seat stopped by the 23:15 outage; untracked; not read or credited by seat 2) ---
+critique-B battery, D1 pass 3. Hashed before reading pass-3/B-kit/, pass-3/B-proto.md or pass-3/xj-*.md.
+method: cd battery && ls | sort | xargs cat | shasum -a 256
+battery sha256 (concatenation of the sorted files): 275e2ace9b7c0c229176ebf7d3f653e0aed415fcacc2c8990abd1d50c2f39949
+per file:
+a274aea65540e9d562d17a1b0575bc5b400eec47715fbe4d27d8ee3b19ac4ce7  ITEMS.md
+342c372583fa5ab9c1ad277666ba3d957f5304745be8dd3a5ff0086946de3487  plants.mjs
+19f5524047b2fcf071e55f1a3122ea72d58b5c8edd60b3ce208073c29a602a23  probes.mjs
+ed9943fec99dbbd3cd04c2f5b134c9b5aa75e604a536724b184c3a969cc1d402  run-plants.mjs
+Anything written after this hash (the gate adapter, fixes to probe mechanics) lives under ../tools/ and is disclosed
+in critique-B.md; battery/ is not edited after this line.
