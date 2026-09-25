@@ -9,9 +9,11 @@
 // it pins exactly the reviewed state; any later change to a module or a door reds B11.
 // S13 landed the gate at scripts/structure/seal.mjs; S19 moved it into seal/. A re-land (a law
 // amendment, or the pin after later moves) is the same row at the landed paths, with its id.
+// Pass 4: the gate has no --pin option (B-11), so the reviewed half is written to the pin's one
+// path for the measuring run and the prior pin is put back before the row writes.
 //   node derive/land-gate.mjs --root <wt> --id S25 --out frozen/S25-gate.json --why "..."
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, readFileSync, rmSync, unlinkSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, unlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { arg } from "../lib/floor.mjs";
@@ -25,18 +27,20 @@ const SEAL = "scripts/structure/seal/seal.mjs", LAW = "scripts/structure/seal/la
 const PIN = "scripts/structure/records/seal-pin.json", TEST = "tests/gates/seal.test.ts";
 const intended = { [SEAL]: kit("gate/seal.mjs"), [LAW]: kit("lib/law.mjs"), [TEST]: kit("gate/seal.test.ts") };
 
-// compute the pin with the landed gate, then take the two files back out: the row writes them
+// compute the pin with the landed gate, then put every file back: the row writes them. The
+// gate reads its pin from one path (B-11), so the reviewed half is written there for the run.
 const prior = {};
 const tmp = mkdtempSync(join(tmpdir(), "b-land-"));
 try {
-    for (const f of [SEAL, LAW]) { try { prior[f] = readFileSync(join(root, f), "utf8"); } catch { /* first land */ } writeFileSync(join(root, f), intended[f]); }
+    for (const f of [SEAL, LAW, PIN]) { if (existsSync(join(root, f))) prior[f] = readFileSync(join(root, f), "utf8"); }
+    for (const f of [SEAL, LAW]) writeFileSync(join(root, f), intended[f]);
     const review = JSON.parse(kit("authored/seal-review.json"));
-    writeFileSync(join(tmp, "review.json"), JSON.stringify({ modules: [], doors: {}, names: review.names, holds: review.holds }));
-    try { execFileSync("node", [join(root, SEAL), "--root", root, "--pin", join(tmp, "review.json"), "--write-pin", join(tmp, "pin.json")], { stdio: "ignore" }); }
+    writeFileSync(join(root, PIN), JSON.stringify({ modules: [], doors: {}, names: review.names, holds: review.holds }));
+    try { execFileSync("node", [join(root, SEAL), "--root", root, "--write-pin", join(tmp, "pin.json")], { stdio: "ignore" }); }
     catch (e) { if (e.status !== 1) throw e; }
     intended[PIN] = readFileSync(join(tmp, "pin.json"), "utf8");
 } finally {
-    for (const f of [SEAL, LAW]) { if (f in prior) writeFileSync(join(root, f), prior[f]); else try { unlinkSync(join(root, f)); } catch { /* not written */ } }
+    for (const f of [SEAL, LAW, PIN]) { if (f in prior) writeFileSync(join(root, f), prior[f]); else if (existsSync(join(root, f))) unlinkSync(join(root, f)); }
     rmSync(tmp, { recursive: true, force: true });
 }
 const pin = JSON.parse(intended[PIN]);

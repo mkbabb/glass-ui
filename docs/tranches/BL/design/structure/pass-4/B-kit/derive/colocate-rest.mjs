@@ -2,7 +2,7 @@
 // colocate-rest.mjs — DERIVE step S24 (R-3, clause B16; LAW §9 as amended in pass 3's second
 // seat). S15 left 55 tests in tests/ with reasons; this step re-reads each reason against
 // the law and moves every test whose reason no longer holds:
-//   rostered   the register retired (S21, R-1's precondition), so no closed record binds a path
+//   rostered   the register retired (floor row r1, R-1's precondition), so no closed record binds a path
 //   not-test   a `*.test-d.ts` is type-checked by the test program (tsconfig.test.json includes
 //              src/), which reads src/**/__tests__ like tests/; vitest never collected it
 //   helpers    a colocated test may read the test harness (LAW §9, B8's test arm): shared

@@ -1,0 +1,132 @@
+{
+ "step": "gate re-land (pass 4): B-11 one pin path (no --pin); B4 counts same-directory file cycles; B15 in all five zones; B17 no masking fallback; no holds; the pin after S33-S36",
+ "files": {
+  "scripts/structure/seal/seal.mjs": {
+   "hunks": [
+    [
+     "// seal.mjs — the D1-B gate, pass 3 (B-kit/LAW.md §6): sealed modules, one door each, over the\n",
+     "// seal.mjs — the D1-B gate, pass 4 (B-kit/LAW.md): sealed modules, one door each, over the\n"
+    ],
+    [
+     "// No comment opt-out and no off switch: the pin is always read (B-11).\n",
+     "// No comment opt-out and no off switch: the pin is always read, from its one path (B-11).\n"
+    ],
+    [
+     "//                                   [--pin other-pin.json] [--write-pin pin.json]\n",
+     "//                                   [--write-pin pin.json]\n// --write-pin writes the pin the gate measures now (a reviewed diff when it lands); the gate\n// itself reads only records/seal-pin.json.\n"
+    ],
+    [
+     "/** The reviewed pin (B11, B15): modules, door names, reviewed file names. */\n",
+     "/** The reviewed pin (B11, B15): modules, door names, reviewed file names. One path (B-11). */\n"
+    ],
+    [
+     "export const readPin = (root, p = posix.join(root, PIN_PATH)) => {\n",
+     "export const readPin = (root) => {\n    const p = posix.join(root, PIN_PATH);\n"
+    ],
+    [
+     "export function seal(root, { overlay = {}, pin = readPin(root) } = {}) {\n",
+     "export function seal(root, { overlay = {} } = {}) {\n    const pin = readPin(root);\n"
+    ],
+    [
+     "    const CLAUSES = [\"B0\", \"B1\", \"B2\", \"B3\", \"B4\", \"B5\", \"B6\", \"B7\", \"B8\", \"B9\", \"B10\", \"B11\", \"B12\", \"B13\", \"B14\", \"B15\", \"B16\"];\n",
+     "    const CLAUSES = [\"B0\", \"B1\", \"B2\", \"B3\", \"B4\", \"B5\", \"B6\", \"B7\", \"B8\", \"B9\", \"B10\", \"B11\", \"B12\", \"B13\", \"B14\", \"B15\", \"B16\", \"B17\"];\n"
+    ],
+    [
+     "    const b4info = [];\n",
+     "    // LAW §8: every sibling cycle counts, files in one directory included (cB O-1)\n"
+    ],
+    [
+     "    for (const [lvl, adj] of adjBy) for (const c of tarjan(adj)) {\n        if (!c.some((x) => modSet.has(x)) && new Set(c.map(dirOf)).size === 1) { b4info.push(`${lvl}: [${c.join(\" \")}]`); continue; }\n        const S = new Set(c); const why = c.flatMap((a) => [...adj.get(a)].filter(([b]) => S.has(b)).map(([, w]) => w));\n",
+     "    for (const [lvl, adj] of adjBy) for (const c of tarjan(adj)) {\n        const S = new Set(c); const why = c.flatMap((a) => [...adj.get(a)].filter(([b]) => S.has(b)).map(([, w]) => w));\n"
+    ],
+    [
+     "    // ---- B15 names (B-07): dir segments and file stems\n",
+     "    // ---- B15 names (B-07): dir segments and file stems, in all five zones (R-5's zones; the\n    //      module-shape arms judge only the sealed zones, where modules are declared)\n    const anyCode = new Set();\n    for (const f of T.files) if (CODE.test(f) && ZONES5.includes(zoneOf(f))) { let d = dirOf(f); while (d !== \".\" && !anyCode.has(d)) { anyCode.add(d); d = dirOf(d); } }\n"
+    ],
+    [
+     "        if (!SEALED.includes(zoneOf(`${d}/x`)) || CONTAINERS.has(d) || !subtreeHasCode.get(d)) continue;\n",
+     "        if (!anyCode.has(d) || CONTAINERS.has(d) || ZONES5.includes(d)) continue;\n"
+    ],
+    [
+     "        if (seg === parent && !CONTAINERS.has(dirOf(d))) put(\"B15\", `${d} (repeats its parent)`);\n        if (KIND_SLOTS.has(seg) && !isSlot(d) && !CONTAINERS.has(dirOf(d))) put(\"B15\", `${d} (a module named as a kind slot)`);\n",
+     "        if (seg === parent && !CONTAINERS.has(dirOf(d))) put(\"B15\", `${d} (repeats its parent)`);\n        if (!SEALED.includes(zoneOf(`${d}/x`))) continue;\n        if (KIND_SLOTS.has(seg) && !isSlot(d) && !CONTAINERS.has(dirOf(d))) put(\"B15\", `${d} (a module named as a kind slot)`);\n"
+    ],
+    [
+     "        if (!SEALED.includes(zoneOf(f)) || !CODE.test(f) || isTest(f) || DOOR_BASENAMES.includes(posix.basename(f))) continue;\n",
+     "        if (!ZONES5.includes(zoneOf(f)) || !CODE.test(f) || isTest(f) || DOOR_BASENAMES.includes(posix.basename(f))) continue;\n"
+    ],
+    [
+     "\n    const counts = Object.fromEntries(Object.entries(V).map(([k, l]) => [k, l.length]));\n",
+     "\n    // ---- B17 no masking fallback (S-14; the edict: \"no masking fallbacks\"). A primary works or\n    //      fails loud. Two forms, read from the syntax in every zone and the root configs:\n    //      (a) a guard that returns as if a missing file were empty: `if (!existsSync(p)) return`\n    //          with nothing, a nullish or empty literal or a value it was handed (the\n    //          negation alone or in an `||` chain); a returned record naming the absence reports it;\n    //      (b) a swallowed module load: `.catch(h)` on a chain that starts at `import(…)`, or a\n    //          `try` whose block loads a module with `import(…)`, where the handler never throws.\n    //      Only the syntax is read: a load passed through a function value (`c().catch(…)` with\n    //      `c = () => import(…)`) is not seen (LAW §10).\n    const SCRIPT = /\\.(ts|mts|cts|js|mjs|cjs|vue)$/;\n    const isExists = (n) => ts.isCallExpression(n) && ((ts.isIdentifier(n.expression) && n.expression.text === \"existsSync\") || (ts.isPropertyAccessExpression(n.expression) && n.expression.name.text === \"existsSync\"));\n    // the guard's condition: `!existsSync(p)`, or an `||` chain holding one (`!existsSync(a) || !existsSync(b)`)\n    const missingGuard = (x) => { while (ts.isParenthesizedExpression(x)) x = x.expression; if (ts.isPrefixUnaryExpression(x) && x.operator === ts.SyntaxKind.ExclamationToken) return isExists(x.operand); return ts.isBinaryExpression(x) && x.operatorToken.kind === ts.SyntaxKind.BarBarToken && (missingGuard(x.left) || missingGuard(x.right)); };\n    // the guard returns as if the file were empty: nothing, a nullish or empty literal, or a\n    // value it was handed (an accumulator, the input). A record that names the absence reports\n    // it, and `false` is a predicate's answer (`isRealPng`: a missing file is not a PNG).\n    const silentValue = (x) => { if (!x) return true; while (ts.isParenthesizedExpression(x) || ts.isAsExpression(x)) x = x.expression;\n        if (ts.isIdentifier(x) || x.kind === ts.SyntaxKind.NullKeyword) return true;\n        if (ts.isStringLiteral(x) || ts.isNoSubstitutionTemplateLiteral(x)) return x.text === \"\";\n        if (ts.isArrayLiteralExpression(x)) return x.elements.length === 0;\n        if (ts.isObjectLiteralExpression(x)) return x.properties.length === 0;\n        return false; };\n    const onlyReturn = (st) => { const r = ts.isReturnStatement(st) ? st : ts.isBlock(st) && st.statements.length === 1 && ts.isReturnStatement(st.statements[0]) ? st.statements[0] : null; return !!r && silentValue(r.expression); };\n    const isImportCall = (n) => ts.isCallExpression(n) && n.expression.kind === ts.SyntaxKind.ImportKeyword;\n    const has = (n, pred) => { let hit = false; const v = (x) => { if (hit) return; if (pred(x)) hit = true; else ts.forEachChild(x, v); }; v(n); return hit; };\n    const loadChain = (n) => { for (let x = n; x; ) { if (isImportCall(x)) return true; if (ts.isCallExpression(x) || ts.isPropertyAccessExpression(x) || ts.isParenthesizedExpression(x) || ts.isAwaitExpression(x)) x = x.expression; else return false; } return false; };\n    for (const f of T.files) {\n        const z = zoneOf(f);\n        if (!(ZONES5.includes(z) || z === \"root\") || !SCRIPT.test(f) || /\\.d\\.[mc]?ts$/.test(f)) continue;\n        const text = T.read(f);\n        if (text === null || text === undefined) throw new Error(`seal B17: ${f} is unreadable`);\n        const blocks = f.endsWith(\".vue\") ? [...text.matchAll(/<script\\b[^>]*>([\\s\\S]*?)<\\/script>/g)].map((m) => ({ code: m[1], off: text.slice(0, m.index + m[0].indexOf(\">\") + 1).split(\"\\n\").length - 1 })) : [{ code: text, off: 0 }];\n        for (const { code, off } of blocks) {\n            const sf = ts.createSourceFile(f, code, ts.ScriptTarget.Latest, true);\n            const at = (n) => `${f}:${sf.getLineAndCharacterOfPosition(n.getStart(sf)).line + 1 + off}`;\n            const visit = (n) => {\n                if (ts.isIfStatement(n) && missingGuard(n.expression) && onlyReturn(n.thenStatement)) put(\"B17\", `${at(n)} returns when a file is missing (a masking fallback: read it and let the read fail, or throw)`);\n                if (ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression) && n.expression.name.text === \"catch\" && loadChain(n.expression.expression) && !(n.arguments[0] && has(n.arguments[0], ts.isThrowStatement))) put(\"B17\", `${at(n)} swallows a failed module load (.catch without a throw)`);\n                if (ts.isTryStatement(n) && n.catchClause && has(n.tryBlock, isImportCall) && !has(n.catchClause.block, ts.isThrowStatement)) put(\"B17\", `${at(n)} swallows a failed module load (try/catch without a throw)`);\n                ts.forEachChild(n, visit);\n            };\n            visit(sf);\n        }\n    }\n\n    const counts = Object.fromEntries(Object.entries(V).map(([k, l]) => [k, l.length]));\n"
+    ],
+    [
+     "    const meta = { b0, files: T.files.length, edges: g.edges.length, modules: modules.length, required: sealedCodeDirs.length, b10: { anchored, bound: law.bound.map((r) => r.file), held: law.held.map((r) => r.file), counted: V.B10.length }, b4info: b4info.length, multiDoorSymbols: multi.length, pin: { modules: pinNow.modules.length, doors: Object.keys(pinNow.doors).length, names: Object.values(pinNow.doors).reduce((a, b) => a + b.length, 0), reviewed: reviewed.size } };\n",
+     "    const meta = { b0, files: T.files.length, edges: g.edges.length, modules: modules.length, required: sealedCodeDirs.length, b10: { anchored, bound: law.bound.map((r) => r.file), held: law.held.map((r) => r.file), counted: V.B10.length }, multiDoorSymbols: multi.length, pin: { modules: pinNow.modules.length, doors: Object.keys(pinNow.doors).length, names: Object.values(pinNow.doors).reduce((a, b) => a + b.length, 0), reviewed: reviewed.size } };\n"
+    ],
+    [
+     "    const args = process.argv.slice(2);\n    const opt = (k, d = null) => (args.includes(k) ? args[args.indexOf(k) + 1] : d);\n",
+     "    const args = process.argv.slice(2);\n    // B-11: the CLI takes exactly these options; any other (a `--pin`, a `--no-pin`) is refused,\n    // never ignored, so no caller can believe it judged against another pin\n    const FLAGS = new Set([\"--verbose\"]), VALUED = new Set([\"--root\", \"--json\", \"--overlay\", \"--write-pin\"]);\n    for (let i = 0; i < args.length; i++) { if (VALUED.has(args[i])) { i++; continue; } if (!FLAGS.has(args[i])) throw new Error(`seal: unknown option ${args[i]} (the pin has one path, ${PIN_PATH})`); }\n    const opt = (k, d = null) => (args.includes(k) ? args[args.indexOf(k) + 1] : d);\n"
+    ],
+    [
+     "        overlay: opt(\"--overlay\") ? JSON.parse(readFileSync(opt(\"--overlay\"), \"utf8\")) : {},\n        pin: readPin(root, opt(\"--pin\") ?? undefined),\n    });\n",
+     "        overlay: opt(\"--overlay\") ? JSON.parse(readFileSync(opt(\"--overlay\"), \"utf8\")) : {},\n    });\n"
+    ]
+   ]
+  },
+  "scripts/structure/records/seal-pin.json": {
+   "hunks": [
+    [
+     "   \"AuroraAtoms\",\n   \"AuroraConfig\",\n   \"AuroraCursorApi\",\n   \"AuroraFallbackGround\",\n   \"AuroraFallbackGroundOptions\",\n   \"AuroraFieldInteractivityAtom\",\n",
+     "   \"AuroraAtoms\",\n   \"AuroraFieldInteractivityAtom\",\n"
+    ],
+    [
+     "   \"AuroraFieldInteractivityAtom\",\n   \"AuroraFlow\",\n   \"AuroraGroundMetrics\",\n   \"AuroraHarmony\",\n   \"AuroraHuePath\",\n   \"AuroraImageBlur\",\n   \"AuroraImageSource\",\n   \"AuroraInstance\",\n   \"AuroraInteractivity\",\n   \"AuroraInteractivityAtom\",\n",
+     "   \"AuroraFieldInteractivityAtom\",\n   \"AuroraInteractivityAtom\",\n"
+    ],
+    [
+     "   \"AuroraInteractivityAtom\",\n   \"AuroraMedium\",\n   \"AuroraMediumAtom\",\n",
+     "   \"AuroraInteractivityAtom\",\n   \"AuroraMediumAtom\",\n"
+    ],
+    [
+     "   \"AuroraMotionAtom\",\n   \"AuroraNucleus\",\n   \"AuroraPainterlyInteractivityAtom\",\n",
+     "   \"AuroraMotionAtom\",\n   \"AuroraPainterlyInteractivityAtom\",\n"
+    ],
+    [
+     "   \"AuroraPainterlyInteractivityAtom\",\n   \"AuroraRenderMode\",\n   \"AuroraRuntimeMode\",\n",
+     "   \"AuroraPainterlyInteractivityAtom\",\n   \"AuroraRuntimeMode\",\n"
+    ],
+    [
+     "   \"AuroraSmoothInteractivityAtom\",\n   \"AuroraSource\",\n   \"AuroraZoneArrangement\",\n",
+     "   \"AuroraSmoothInteractivityAtom\",\n   \"AuroraZoneArrangement\",\n"
+    ],
+    [
+     "   \"DEFAULT_ATOMS\",\n   \"DEFAULT_AURORA_CONFIG\",\n   \"DEFAULT_VIVIDNESS\",\n   \"DeriveAuroraOptions\",\n   \"DeriveEasing\",\n   \"FlowPattern\",\n   \"IMAGE_BLUR_MAX_DEFAULT\",\n   \"IMAGE_BLUR_MIN_DEFAULT\",\n   \"MAX_NUCLEI\",\n   \"MAX_STOPS\",\n   \"PAPER_WASH_GROUND\",\n   \"ResolveRenderModeOptions\",\n   \"StrokeMode\",\n   \"StrokeOrient\",\n   \"UseAuroraReturn\",\n",
+     "   \"DEFAULT_ATOMS\",\n   \"UseAuroraReturn\",\n"
+    ],
+    [
+     "   \"UseAuroraReturn\",\n   \"VIVID_TARGET\",\n   \"WarpMode\",\n   \"auroraFallbackGround\",\n   \"configToAtoms\",\n",
+     "   \"UseAuroraReturn\",\n   \"configToAtoms\",\n"
+    ],
+    [
+     "   \"createAurora\",\n   \"deriveAurora\",\n   \"flattenPalette\",\n   \"hexToOklchStop\",\n   \"isSoftwareWebGLRenderer\",\n   \"nucleiFieldStatic\",\n   \"nucleiPrior\",\n",
+     "   \"createAurora\",\n   \"nucleiPrior\",\n"
+    ],
+    [
+     "   \"nucleiPrior\",\n   \"paletteToCssGradient\",\n   \"relativeLuminance\",\n   \"resolveAtoms\",\n",
+     "   \"nucleiPrior\",\n   \"resolveAtoms\",\n"
+    ],
+    [
+     "   \"resolveAtoms\",\n   \"resolveRenderMode\",\n   \"sampleAuroraField\",\n   \"useAurora\",\n",
+     "   \"resolveAtoms\",\n   \"useAurora\",\n"
+    ]
+   ]
+  }
+ },
+ "pin": {
+  "modules": 135,
+  "doors": 116,
+  "names": 1251,
+  "reviewed": 2,
+  "holds": 0
+ }
+}

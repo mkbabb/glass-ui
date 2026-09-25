@@ -1,0 +1,525 @@
+== start
+chain started at 0d634325, base 35f7b831fe810aac…
+== S1
+row r1-register-retire: R-1: gate-register and its test retired with the register (W-REGISTER-COLLAPSE's retire) (2 file(s))
+row f3-entry-record: 7 readers on the record; subpath-policy.mjs and regen-exports.mjs deleted (9 file(s))
+row f4-terminal-role: terminalImportIndex resolves the declared terminal by file and throws on a miss; the path regex and @source fallback are gone (2 file(s))
+row m02-overlay-host: participation owns OverlayHost + DockHoldKind; dock provides it; dockContext stays in dock (3 file(s))
+{
+ "ok": true,
+ "moves": 1,
+ "expanded": 1,
+ "pending": 1,
+ "alreadyApplied": 0,
+ "filesEdited": 4,
+ "rewrites": 4,
+ "byKind": {
+  "import-type": 2,
+  "import": 1,
+  "path-literal": 1
+ },
+ "byVia": {
+  "relative": 3,
+  "root-relative": 1
+ },
+ "dirsMoved": 0,
+ "pruned": 0,
+ "digest": "b6b75fd89391f4b19a56342ce2ac11204d0c60c6985ec2e33fd24df46ccae612",
+ "ms": 15094,
+ "scc": {
+  "before": {
+   "sccs": 4,
+   "members": 18
+  },
+  "after": {
+   "sccs": 4,
+   "members": 14
+  },
+  "addedPairs": 0,
+  "refused": false
+ },
+ "residue": 0,
+ "scanDeltas": {
+  "total": 6,
+  "declared": 6,
+  "undeclared": 0,
+  "stale": 0
+ },
+ "globDeltas": {
+  "total": 0,
+  "declared": 0,
+  "undeclared": 0,
+  "stale": 0
+ },
+ "classified": {
+  "counts": {
+   "move-only": 4
+  },
+  "failed": 0
+ },
+ "lost": 0,
+ "gained": 0,
+ "violations": 0
+}
+row f9-wire: tests/gates/floor.test.ts runs the floor gates under npm test (1 file(s))
+row fd6-harness: tests/harness/source.ts reads F-1's file set; easing.contract and the sortable-list battery read through it (3 file(s))
+row fd7-programs: declarations rooted at the entry record; vitest collects __tests__ slots; @source excludes them; tsconfig.build.json deleted (4 file(s))
+row fd11-land: floor runtime (29 files) landed at scripts/structure; 8 readers re-pointed; scripts/import-dag.mjs deleted (67 file(s))
+floor rows applied: r1-register-retire, f3-entry-record, f4-terminal-role, m02-overlay-host, m03-roving-move, f9-wire, fd6-harness, fd7-programs, fd11-land
+tree digest 9b0ff3f20a6c1f77fd6394b098ec5cbd81f27cd2c67bcea3b6b59187586c7d90
+S1 → a974a609c0791460…
+== S1b
+{"relayFiles":["src/components/aurora/composables/color.ts: 2 relay statement(s), 2 name(s)","src/components/constellation/constellationField.ts: 1 relay statement(s), 13 name(s)","src/components/dock/composables/index.ts: 10 relay statement(s), 26 name(s)","src/components/index.ts: 30 relay statement(s), 5 name(s)","src/components/infinite-scroll/composables/index.ts: 2 relay statement(s), 3 name(s)","src/components/sortable-list/useSortable.ts: 1 relay statement(s), 3 name(s)","src/composables/glass/webgl/useWebGLCanvas.ts: 1 relay statement(s), 2 name(s)","src/composables/glass/webgpu/useGpuSubstrate.ts: 2 relay statement(s), 4 name(s)","src/composables/glass/webgpu/useWebGPUCanvas.ts: 2 relay statement(s), 6 name(s)"],"importersRewritten":21,"deleted":["src/components/dock/composables/index.ts","src/components/index.ts","src/components/infinite-scroll/composables/index.ts"],"left":[],"files":28}
+{"step":"B-S1b relays cut (LAW §5, B12)","written":28,"applied":0}
+S1b → 3349d80d38e7a883…
+== S1d
+{"step":"B11/P3-R6: the overlay door drops the isTeleportedTarget re-export no reader uses, so S2 places the file by its one reader (dock) with no FD-2 growth; the two comments naming its place follow it","written":3,"applied":0}
+== S2
+[
+ {
+  "pass": 1,
+  "byClass": {
+   "ok": 318,
+   "published": 181,
+   "anchored": 39,
+   "unread": 22,
+   "move": 21,
+   "global": 2
+  },
+  "proposed": 20,
+  "result": "applied",
+  "bound": [
+   "scripts/structure/lib/classify.mjs (+2)",
+   "scripts/structure/lib/entries.mjs (+2)",
+   "scripts/structure/lib/graph.mjs (+2)",
+   "scripts/structure/lib/move.mjs (+2)",
+   "scripts/structure/lib/placement.mjs (+2)",
+   "scripts/structure/lib/tree.mjs (+2)"
+  ],
+  "held": [],
+  "scc": {
+   "before": {
+    "sccs": 4,
+    "members": 14
+   },
+   "after": {
+    "sccs": 3,
+    "members": 11
+   },
+   "addedPairs": 0,
+   "first": []
+  }
+ },
+ {
+  "pass": 2,
+  "byClass": {
+   "ok": 330,
+   "published": 181,
+   "anchored": 40,
+   "unread": 22,
+   "move": 10
+  },
+  "proposed": 2,
+  "result": "applied",
+  "bound": [
+   "scripts/structure/lib/classify.mjs (+2)",
+   "scripts/structure/lib/entries.mjs (+2)",
+   "scripts/structure/lib/graph.mjs (+2)",
+   "scripts/structure/lib/move.mjs (+2)",
+   "scripts/structure/lib/placement.mjs (+2)",
+   "scripts/structure/lib/tree.mjs (+2)",
+   "src/composables/glass/lifecycle/createCanvasLifecycle.ts (+1)"
+  ],
+  "held": [],
+  "scc": {
+   "before": {
+    "sccs": 3,
+    "members": 11
+   },
+   "after": {
+    "sccs": 3,
+    "members": 11
+   },
+   "addedPairs": 0,
+   "first": []
+  }
+ },
+ {
+  "pass": 3,
+  "byClass": {
+   "ok": 331,
+   "published": 181,
+   "anchored": 40,
+   "unread": 22,
+   "move": 9
+  },
+  "proposed": 1,
+  "result": "applied",
+  "bound": [
+   "scripts/structure/lib/classify.mjs (+2)",
+   "scripts/structure/lib/entries.mjs (+2)",
+   "scripts/structure/lib/graph.mjs (+2)",
+   "scripts/structure/lib/move.mjs (+2)",
+   "scripts/structure/lib/placement.mjs (+2)",
+   "scripts/structure/lib/tree.mjs (+2)",
+   "src/composables/glass/lifecycle/createCanvasLifecycle.ts (+1)"
+  ],
+  "held": [],
+  "scc": {
+   "before": {
+    "sccs": 3,
+    "members": 11
+   },
+   "after": {
+    "sccs": 3,
+    "members": 11
+   },
+   "addedPairs": 0,
+   "first": []
+  }
+ },
+ {
+  "pass": 4,
+  "byClass": {
+   "ok": 332,
+   "published": 181,
+   "anchored": 40,
+   "unread": 22,
+   "move": 8
+  },
+  "proposed": 0,
+  "result": "fixpoint",
+  "bound": [
+   "scripts/structure/lib/classify.mjs (+2)",
+   "scripts/structure/lib/entries.mjs (+2)",
+   "scripts/structure/lib/graph.mjs (+2)",
+   "scripts/structure/lib/move.mjs (+2)",
+   "scripts/structure/lib/placement.mjs (+2)",
+   "scripts/structure/lib/tree.mjs (+2)",
+   "src/composables/glass/lifecycle/createCanvasLifecycle.ts (+1)"
+  ],
+  "held": []
+ }
+]
+== S2b
+{"relayFiles":["src/composables/search/index.ts: 5 relay statement(s), 10 name(s)"],"importersRewritten":4,"deleted":["src/composables/search/index.ts"],"left":[],"files":5}
+{"step":"B-S2b the emptied kernel door composables/search dissolves (LAW §5: a kernel door re-exporting unit files is a shim, B8)","written":5,"applied":0}
+S2b → 7537820c31577d58…
+== S3
+{
+ "accepted": [
+  "src/components/aurora (28)",
+  "src/components/blob (17)",
+  "src/components/dock (10)",
+  "src/components/fourier-field (1)",
+  "src/components/menu (12)",
+  "src/components/sheet (1)",
+  "src/components/sortable-list (4)",
+  "src/components/tabs (3)",
+  "src/components/typewriter (6)",
+  "src/composables/color (1)",
+  "src/composables/motion (2)"
+ ],
+ "refused": [],
+ "declined": [
+  "src/components/dock: GlassDock.vue",
+  "src/components/fourier-field: renderer/wgpu.ts",
+  "src/components/sheet: SheetContent.vue",
+  "src/composables/glass: webgpu/useGpuSubstrate.ts",
+  "src/composables/motion: route/useRouteTransition.ts"
+ ],
+ "moves": 85,
+ "dry": {
+  "residue": 0,
+  "sccAdded": 0,
+  "scanDeltas": 263
+ },
+ "engine": {
+  "ok": true,
+  "filesEdited": 135,
+  "rewrites": 319,
+  "lost": [],
+  "gained": [],
+  "scc": {
+   "before": {
+    "sccs": 3,
+    "members": 11
+   },
+   "after": {
+    "sccs": 3,
+    "members": 11
+   },
+   "addedPairs": 0
+  },
+  "digest": "bb03759eaed03f56a91fc04f11e0645fa77401937d8c88e82e59cd3cda0438ee"
+ }
+}
+== S4a
+{
+ "ok": true,
+ "moves": 64,
+ "filesEdited": 50,
+ "rewrites": 223,
+ "scanDeltas": 77,
+ "globDeltas": {
+  "carried": 0,
+  "undeclared": [],
+  "stale": []
+ },
+ "classified": {
+  "counts": {
+   "move-only": 106
+  },
+  "failed": 0
+ },
+ "lost": [],
+ "gained": [],
+ "violations": [],
+ "scc": {
+  "before": {
+   "sccs": 3,
+   "members": 11
+  },
+  "after": {
+   "sccs": 3,
+   "members": 11
+  },
+  "addedPairs": 0
+ }
+}
+== S4b
+{"step":"B-S4b the one rung move the one-door rule forces (LAW §6)","written":1,"applied":0}
+== S4c
+{"pass":1,"importers":9,"doors":32,"files":41}
+{"step":"B-S4c CSS doors, pass 1 (LAW §6)","written":41,"applied":0}
+{"pass":2,"importers":1,"doors":1,"files":2}
+{"step":"B-S4c CSS doors, pass 2 (LAW §6)","written":2,"applied":0}
+pass 3: fixpoint
+== S5a
+src/components/alert/Alert.vue:4 re-pointed at src/components/alert/alertVariants.ts (member of its own door)
+tests/styles/radius-role-canon.test.ts:466 re-pointed at src/components/alert/alertVariants.ts (text reader)
+tests/styles/typography.test.ts:64 re-pointed at src/components/alert/alertVariants.ts (text reader)
+src/components/alert/index.ts: 6 statement(s) -> src/components/alert/alertVariants.ts; the door re-exports 1 value(s), 1 type(s)
+src/components/badge/Badge.vue:3 re-pointed at src/components/badge/badgeVariants.ts (member of its own door)
+tests/styles/mark-register.test.ts:43 re-pointed at src/components/badge/badgeVariants.ts (text reader)
+src/components/badge/index.ts: 8 statement(s) -> src/components/badge/badgeVariants.ts; the door re-exports 2 value(s), 1 type(s)
+src/composables/color/index.ts: 15 statement(s) -> src/composables/color/color.ts; the door re-exports 8 value(s), 3 type(s)
+{"step":"B-S5a door purity splits (LAW §5, B14)","written":11,"applied":0}
+== S4d
+{
+ "ok": true,
+ "moves": 1,
+ "filesEdited": 12,
+ "rewrites": 32,
+ "scanDeltas": 1,
+ "globDeltas": {
+  "carried": 0,
+  "undeclared": [],
+  "stale": []
+ },
+ "classified": {
+  "counts": {
+   "move-only": 12
+  },
+  "failed": 0
+ },
+ "lost": [],
+ "gained": [],
+ "violations": [],
+ "scc": {
+  "before": {
+   "sccs": 3,
+   "members": 11
+  },
+  "after": {
+   "sccs": 2,
+   "members": 4
+  },
+  "addedPairs": 0
+ }
+}
+== S4f
+{"step":"B-S4f type homes: two aurora sibling type cycles (LAW §8, B4)","written":8,"applied":0}
+== S4e
+{"step":"B-S4e the tokens module door is the ./tokens entry source (LAW §5, B7)","written":2,"applied":0}
+== S5-1
+{"created":44,"doorsGrown":46,"names":415,"rerouted":332,"blocked":0,"filesWritten":200}
+{"step":"B-S5 JS doors pass 1 (LAW §5)","written":200,"applied":0}
+S5-1 → 651a53e2538cf41a…
+== S5-2
+{"created":0,"doorsGrown":0,"names":0,"rerouted":1,"blocked":0,"filesWritten":1}
+{"step":"B-S5 JS doors pass 2 (LAW §5)","written":1,"applied":0}
+S5-2 → e2fa704683e8e71e…
+== S6
+{"step":"B-S6: the layout pins the migration reds, re-read through the resolved graph (R-3), intent kept","written":12,"applied":0}
+== S7
+{"step":"B14 (P3-R8): the dist-only @source leaves the ./styles door; the build writes it into the shipped copy, dist bytes unchanged","written":3,"applied":0}
+== S8
+{"step":"B9 (R-6, P3-R4): one symbol, one door. 40 names leave their second entry; consumers re-pointed; a MIGRATION row per name","written":20,"applied":0}
+== S9
+{"step":"B12: the paint-arm and tokens relays leave; B11: ten internal-door names nothing outside reads leave their doors","written":5,"applied":0}
+== S10
+{
+ "ok": true,
+ "moves": 1,
+ "filesEdited": 2,
+ "rewrites": 2,
+ "scanDeltas": 0,
+ "globDeltas": {
+  "carried": 0,
+  "undeclared": [],
+  "stale": []
+ },
+ "classified": {
+  "counts": {
+   "move-only": 3
+  },
+  "failed": 0
+ },
+ "lost": [],
+ "gained": [],
+ "violations": [],
+ "scc": {
+  "before": {
+   "sccs": 2,
+   "members": 4
+  },
+  "after": {
+   "sccs": 2,
+   "members": 4
+  },
+  "addedPairs": 0
+ }
+}
+== S11
+{"step":"B12: minify-css declares its own types; the .d.mts mirror leaves","written":6,"applied":0}
+== S12
+{"step":"B-S12 surface re-pin: 60 losses, each a MIGRATION row, 0 growth","written":1,"applied":0,"losses":60,"growth":0}
+== S13
+{"step":"the gate lands in the tree: every clause runs under npm test (tests/gates/seal.test.ts), against a pin the gate computed on this tree with the reviewed names and holds","written":4,"applied":0,"pin":{"modules":130,"doors":111,"names":1232,"reviewed":2,"holds":0}}
+== S14
+{"step":"R-3: the library program leaves colocated tests out, the test program takes them in","written":2,"applied":0}
+== S15
+{"moves":84,"stays":42,"slots":50,"over12":[["src/components/dock/__tests__",14]],"scanDeltas":0}
+{"ok":true,"filesEdited":0,"rewrites":0,"violations":[]}
+== S16
+{"step":"R-3: three source walkers skip the __tests__ slot, as the harness does","written":3,"applied":0}
+== S17
+{"step":"B9: the Combobox types move to command and ControlSize to input, the entries that publish them; no door re-exports outside its module","written":21,"applied":0}
+== S18
+{"step":"R-8 / E-7: the dead scripts/lib/canon-doc.mjs is deleted with its opaque-ledger row","written":2,"applied":0}
+== S19
+{
+ "ok": true,
+ "moves": 13,
+ "filesEdited": 23,
+ "rewrites": 35,
+ "scanDeltas": 0,
+ "globDeltas": {
+  "carried": 0,
+  "undeclared": [],
+  "stale": []
+ },
+ "classified": {
+  "counts": {
+   "move-only": 33
+  },
+  "failed": 0
+ },
+ "lost": [],
+ "gained": [],
+ "violations": [],
+ "scc": {
+  "before": {
+   "sccs": 2,
+   "members": 4
+  },
+  "after": {
+   "sccs": 2,
+   "members": 4
+  },
+  "addedPairs": 0
+ }
+}
+== S20
+{"step":"B7/B1 in the scripts zone: a door for every scripts module, every crossing through it; path reads of the floor replaced by door functions","written":31,"applied":0}
+== S22
+{"step":"R-3 / FD-2: eight motion tests read their subject from its own module, not the parent's door, so they can colocate without a unit cycle","written":8,"applied":0}
+== S23
+{"step":"R-3 for the scripts zone: the test program and vitest collect scripts/**/__tests__ as they collect src's","written":2,"applied":0}
+== S24
+{"rows":45,"moves":46,"stays":0,"scanDeltas":0}
+{"ok":true,"filesEdited":15,"rewrites":19,"lost":[],"violations":[]}
+== S25
+{"step":"the law's pass-3 amendments land (LAW §1 scripts TS door, §5 B2 on module references, §9 B8's test arm and B16's kernel-as-dependency homing and slot helpers) with the pin the gate computes after S17-S24 and the resolve.mjs hold","written":2,"applied":0,"pin":{"modules":135,"doors":116,"names":1293,"reviewed":2,"holds":0}}
+== S26
+{"rows":23,"moves":23,"stays":0,"scanDeltas":0}
+{"ok":true,"filesEdited":0,"rewrites":0,"lost":[],"violations":[]}
+== S27
+{"step":"LAW §5 the test seam: a test's text read and its vi.mock target are neither consumption (B2) nor a door crossing (B1); the pin after S26","written":1,"applied":0,"pin":{"modules":135,"doors":116,"names":1293,"reviewed":2,"holds":0}}
+== S28
+{"lines":10,"edits":10,"stops":0}
+{"step":"S28 B1: colocated tests cross other modules through their doors (frozen from the gate's B1 reading, F-9)","written":9,"applied":0}
+== S29
+{"lines":155,"edits":103,"stops":52,"privateNames":74}
+{"step":"S29 R-10: consumer imports through the entry that publishes them (frozen from the gate's B2 reading, F-9)","written":77,"applied":0}
+== S30
+{"step":"the floor runtime's CLIs lose their hashbang (the door loads them into DOM-environment tests, whose web transform refuses it); B11: the minify door keeps only minifyCss","written":13,"applied":0}
+== S31
+{"step":"the gate's file loses its hashbang with the runtime's CLIs (S30); the pin after S29-S30","written":2,"applied":0,"pin":{"modules":135,"doors":116,"names":1292,"reviewed":2,"holds":0}}
+== S32
+{"step":"R-3: two more source walkers skip the __tests__ slot, as the harness does","written":2,"applied":0}
+== S33
+{"step":"B-S10 / P3-R5: the ./aurora-config entry lands (a leaf at the aurora unit root, mirroring ./blob-config); ./aurora drops the config module's names and the first-paint ground (R-6, P3-R4), each a MIGRATION row; every consumer that took one through ./aurora is split onto the new entry","written":30,"applied":0,"splits":26,"files":22}
+== S33b
+entries write — 69 export keys, 63 typesVersions
+{"step":"F-3: package.json follows the entry record (./aurora-config: exports and typesVersions)","written":1,"applied":0}
+entries: 64 js entries → 69 export keys, 63 typesVersions; 53 declared doors
+  exports byte-equal: true; typesVersions byte-equal: true
+PASS
+== S33c
+{"step":"B-S33c surface re-pin: ./aurora-config added with 41 names, each leaving ./aurora (a MIGRATION row per name, P3-R5's added key); nothing else changes","written":1,"applied":0,"moved":41}
+== S34
+{"step":"S-14: no masking fallback. 15 missing-file guards that returned as if the file were empty leave (the read fails loud), and the accent-tone solve leaf's load is no longer swallowed; its test asserts the failure surfaces","written":10,"applied":0}
+== S35
+{"step":"B4 (LAW §8, cB O-1): same-directory file cycles are counted; the three on the tree are cured by moving the declaration or helper to the file that owns its meaning","written":6,"applied":0}
+== S36
+{
+ "ok": true,
+ "moves": 3,
+ "filesEdited": 14,
+ "rewrites": 14,
+ "scanDeltas": 0,
+ "globDeltas": {
+  "carried": 0,
+  "undeclared": [],
+  "stale": []
+ },
+ "classified": {
+  "counts": {
+   "move-only": 17
+  },
+  "failed": 0
+ },
+ "lost": [],
+ "gained": [],
+ "violations": [],
+ "scc": {
+  "before": {
+   "sccs": 2,
+   "members": 4
+  },
+  "after": {
+   "sccs": 2,
+   "members": 4
+  },
+  "addedPairs": 0
+ }
+}
+== S37
+{"step":"gate re-land (pass 4): B-11 one pin path (no --pin); B4 counts same-directory file cycles; B15 in all five zones; B17 no masking fallback; no holds; the pin after S33-S36","written":2,"applied":0,"pin":{"modules":135,"doors":116,"names":1251,"reviewed":2,"holds":0}}
+
+real	13m29.865s
+user	9m32.902s
+sys	1m23.657s
+exit 0

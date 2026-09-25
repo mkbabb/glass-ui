@@ -1,5 +1,5 @@
 {
- "note": "B-S4 CSS stage, authored inputs (LAW \u00a76). moves: the CSS carve through the floor engine (B's pass-2 kernel names; the dock sheets into the modules they style). rows: the two rung moves the one-door rule forces, each with its cascade reason. The CSS door row itself is computed (derive/css-doors.mjs).",
+ "note": "B-S4 CSS stage, authored inputs (LAW §6). moves: the CSS carve through the floor engine (B's pass-2 kernel names; the dock sheets into the modules they style). rows: the one rung move the one-door rule forces (card/scroll.css), with its cascade reason; the accent-tone register moves into the glass module that loads it (B-08). The CSS door row itself is computed (derive/css-doors.mjs).",
  "moves": [
   {
    "from": "src/components/dock/styles/search.css",
@@ -305,6 +305,11 @@
    "from": "src/styles/theme.css",
    "to": "src/styles/theme/index.css",
    "why": "the theme aggregator becomes its module's CSS door (B7, B3); a pure @import list"
+  },
+  {
+   "from": "src/components/chip/accent-tone.css",
+   "to": "src/styles/glass/accent-tone.css",
+   "why": "B-08 (REGISTRY §P3-5, P3-R2): CSS is placed by its load edge. Its one loader is the glass sheet (after ladder-undershadow.css, before rim.css), so it lives in src/styles/glass/ and keeps its HEAD rung; the kernel then reads no unit (B8) with no reorder. Chip reads its classes, not its file"
   },
   {
    "from": "src/styles/glass.css",

@@ -1,0 +1,35 @@
+{
+ "baseline": null,
+ "verdict": "RED",
+ "staleListings": [],
+ "entries": [
+  {
+   "key": "./styles",
+   "identical": false,
+   "class": "reorder",
+   "rulesBase": 1970,
+   "rulesNow": 1970,
+   "onlyBase": 0,
+   "onlyNow": 0,
+   "firstDivergence": 610,
+   "base": "@layer components :: :root {--feedback-tone-strength:18%;--feedback-tone-rung:var(--glass-plate-floating);--feedback-tone-border-strength:40%}",
+   "now": "@layer components :: .card-scroll-host {contain:layout style paint;overflow-y:auto;mask-image:linear-gradient( to bottom,black calc(100% - var(--fade-end)),transparent 100% )}",
+   "verdict": "RED: an unlisted reorder"
+  },
+  {
+   "key": "./styles/fonts",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles/theme",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles.css",
+   "identical": true,
+   "rules": 365
+  }
+ ]
+}

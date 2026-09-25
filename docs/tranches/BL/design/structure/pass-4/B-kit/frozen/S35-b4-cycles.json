@@ -1,0 +1,98 @@
+{
+ "step": "B4 (LAW §8, cB O-1): same-directory file cycles are counted; the three on the tree are cured by moving the declaration or helper to the file that owns its meaning",
+ "files": {
+  "src/composables/glass/lifecycle/createCanvasLifecycle.ts": {
+   "hunks": [
+    [
+     "\n// Offscreen parking combines two independent detectors writing\n// DISTINCT reason keys, so the \"one writer per reason\" invariant is literally true:\n//   - \"off-screen\"    — the substrate's `contentvisibilityautostatechange` path\n//                       (content-visibility:auto, the headline lever).\n//   - \"off-screen-io\" — the consumer's IntersectionObserver `rootMargin` fallback\n//                       (the engine-without-content-visibility path).\n// Both gate the same empty-`Set` `isRunning()` check, so the loop runs only when both\n// agree the surface is visible.\nexport type CanvasSuspendReason =\n    | \"tab-hidden\"\n    | \"off-screen\"\n    | \"off-screen-io\"\n    | \"manual\";\n\n// The backing-store sizer and its `BackingSize`/`DprPolicy` types live in the\n",
+     "\n// The backing-store sizer and its `BackingSize`/`DprPolicy` types live in the\n"
+    ],
+    [
+     "import { createCanvasVisibility } from \"./visibility\";\n",
+     "import { createCanvasVisibility, type CanvasSuspendReason } from \"./visibility\";\n"
+    ]
+   ]
+  },
+  "src/composables/glass/lifecycle/visibility.ts": {
+   "hunks": [
+    [
+     "import type { CanvasSuspendReason } from \"./createCanvasLifecycle\";\n",
+     "// Offscreen parking combines two independent detectors writing\n// DISTINCT reason keys, so the \"one writer per reason\" invariant is literally true:\n//   - \"off-screen\"    — the substrate's `contentvisibilityautostatechange` path\n//                       (content-visibility:auto, the headline lever).\n//   - \"off-screen-io\" — the consumer's IntersectionObserver `rootMargin` fallback\n//                       (the engine-without-content-visibility path).\n// Both gate the same empty-`Set` `isRunning()` check, so the loop runs only when both\n// agree the surface is visible.\nexport type CanvasSuspendReason =\n    | \"tab-hidden\"\n    | \"off-screen\"\n    | \"off-screen-io\"\n    | \"manual\";\n"
+    ]
+   ]
+  },
+  "src/composables/color/useAccentTone.ts": {
+   "hunks": [
+    [
+     "type AccentToneSolveModule = typeof import(\"./accent-tone-solve\");\n",
+     "/** The one export this shell reads from the lazy solve leaf. The leaf implements it\n *  (it reads `UseAccentToneOptions` from here), so the type edge runs one way. */\ninterface AccentToneSolveModule {\n    solveAccentInk(toneCss: string, opts?: UseAccentToneOptions): string;\n}\n"
+    ]
+   ]
+  },
+  "scripts/structure/lib/plan.mjs": {
+   "create": "// plan.mjs — the move plan's vocabulary, read by the engine (move.mjs) and by FD-5's\n// classifier (classify.mjs): a move list expanded to file moves, and an edge's mechanism\n// class. It sits apart from both so neither reads the other for it (B4).\n\n/** A move list with every directory move expanded to its member files. */\nexport function expandMoves(tree, moves) {\n    const out = [];\n    for (const m of moves) {\n        if (m.from.endsWith(\"/\")) {\n            const base = m.from.replace(/\\/$/, \"\");\n            const dest = m.to.replace(/\\/$/, \"\");\n            const members = tree.files.filter((f) => f.startsWith(`${base}/`));\n            if (members.length) for (const f of members) out.push({ from: f, to: `${dest}/${f.slice(base.length + 1)}` });\n            else if (tree.isDir(dest)) out.push({ from: m.from, to: m.to, applied: true, dir: true });\n            else throw new Error(`move: directory ${m.from} is empty and ${m.to} does not exist`);\n        } else out.push({ from: m.from, to: m.to });\n    }\n    return out;\n}\n\n/** Kinds that name one mechanism, a path relative to a file whose text carries it; a\n *  rewrite may change which of the three spellings F-1 reads (P3-F5). */\nconst TEXT_ANCHORED = new Set([\"base-relative\", \"quoted-relative\", \"embedded-path\"]);\n/** an edge's mechanism: its kind, with the three text-anchored spellings as one */\nexport const kindClass = (kind) => (TEXT_ANCHORED.has(kind) ? \"text-anchored\" : kind);\n"
+  },
+  "scripts/structure/lib/move.mjs": {
+   "hunks": [
+    [
+     "import { classifyImage } from \"./classify.mjs\";\n\n",
+     "import { classifyImage } from \"./classify.mjs\";\nimport { expandMoves, kindClass } from \"./plan.mjs\";\n\n"
+    ],
+    [
+     "\nexport function expandMoves(tree, moves) {\n    const out = [];\n    for (const m of moves) {\n        if (m.from.endsWith(\"/\")) {\n            const base = m.from.replace(/\\/$/, \"\");\n            const dest = m.to.replace(/\\/$/, \"\");\n            const members = tree.files.filter((f) => f.startsWith(`${base}/`));\n            if (members.length) for (const f of members) out.push({ from: f, to: `${dest}/${f.slice(base.length + 1)}` });\n            else if (tree.isDir(dest)) out.push({ from: m.from, to: m.to, applied: true, dir: true });\n            else throw new Error(`move: directory ${m.from} is empty and ${m.to} does not exist`);\n        } else out.push({ from: m.from, to: m.to });\n    }\n    return out;\n}\n\nexport function planMoves(tree, moves) {\n",
+     "\nexport function planMoves(tree, moves) {\n"
+    ],
+    [
+     "/** Edge signature for the image check: identity of an edge that survives a move. */\n/** Kinds that name one mechanism, a path relative to a file whose text carries it; a\n *  rewrite may change which of the three spellings F-1 reads (P3-F5). */\nconst TEXT_ANCHORED = new Set([\"base-relative\", \"quoted-relative\", \"embedded-path\"]);\n/** an edge's mechanism: its kind, with the three text-anchored spellings as one */\nexport const kindClass = (kind) => (TEXT_ANCHORED.has(kind) ? \"text-anchored\" : kind);\nfunction sig(e, map) {\n",
+     "/** Edge signature for the image check: identity of an edge that survives a move. */\nfunction sig(e, map) {\n"
+    ]
+   ]
+  },
+  "scripts/structure/lib/classify.mjs": {
+   "hunks": [
+    [
+     "import { expandMoves, kindClass } from \"./move.mjs\";\n",
+     "import { expandMoves, kindClass } from \"./plan.mjs\";\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/composables/glass/lifecycle/createCanvasLifecycle.ts",
+   "why": "the suspend-reason union moves to the observers that write three of its four reasons"
+  },
+  {
+   "file": "src/composables/glass/lifecycle/createCanvasLifecycle.ts",
+   "why": "the scheduler reads the union from the observers' leaf, which it already composes"
+  },
+  {
+   "file": "src/composables/glass/lifecycle/visibility.ts",
+   "why": "the union is declared where its reasons are written"
+  },
+  {
+   "file": "src/composables/color/useAccentTone.ts",
+   "why": "the shell declares the one export it reads from the lazy leaf; the leaf implements it"
+  },
+  {
+   "file": "scripts/structure/lib/plan.mjs",
+   "why": "the move plan's vocabulary, read by the engine and by FD-5"
+  },
+  {
+   "file": "scripts/structure/lib/move.mjs",
+   "why": "the engine reads the plan's vocabulary from its leaf"
+  },
+  {
+   "file": "scripts/structure/lib/move.mjs",
+   "why": "expandMoves moves to lib/plan.mjs"
+  },
+  {
+   "file": "scripts/structure/lib/move.mjs",
+   "why": "kindClass moves to lib/plan.mjs"
+  },
+  {
+   "file": "scripts/structure/lib/classify.mjs",
+   "why": "FD-5 reads the plan's vocabulary from its leaf, not from the engine that calls it"
+  }
+ ]
+}

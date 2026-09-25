@@ -2,7 +2,7 @@
  "step": "B7/B1 in the scripts zone: a door for every scripts module, every crossing through it; path reads of the floor replaced by door functions",
  "files": {
   "scripts/structure/lib/graph/index.mjs": {
-   "create": "// graph/ — F-1: the one graph (graph.mjs), its per-language scanners (script, CSS, text, Vue)\n// and the evaluator that folds path expressions. graph.mjs is the root; nothing outside\n// this module reads the scanners except through it.\nexport { scanCss } from \"./css.mjs\";\nexport { buildGraph, countBy, loadDeps, moduleSccs, valueSccs, VALUE_KINDS } from \"./graph.mjs\";\n"
+   "create": "// graph/ — F-1: the one graph (graph.mjs), its per-language scanners (script, CSS, text,\n// Vue, Playwright) and the evaluator that folds path expressions. graph.mjs is the root; nothing outside\n// this module reads the scanners except through it.\nexport { scanCss } from \"./css.mjs\";\nexport { buildGraph, countBy, loadDeps, moduleSccs, valueSccs, VALUE_KINDS } from \"./graph.mjs\";\n"
   },
   "scripts/structure/lib/move.mjs": {
    "hunks": [
@@ -21,7 +21,7 @@
    ]
   },
   "scripts/structure/lib/index.mjs": {
-   "create": "// lib/ — the floor library: the file set (tree), the graph (F-1), symbol origins, placement\n// (F-7), the move engine (F-2), the step classifier (FD-5), the specifier resolver and the\n// entry record (F-3).\nexport { classifyStep } from \"./classify.mjs\";\nexport {\n    compareToPackage,\n    declarationProgram,\n    diskRecord,\n    emitDeclaredCssEntries,\n    libraryEntryMap,\n    loadRecord,\n    readJson,\n    recordCssTargets,\n    recordEntries,\n    recordInputs,\n    recordTerminal,\n    validateRecord,\n} from \"./entries.mjs\";\nexport { buildGraph, countBy, scanCss, valueSccs, VALUE_KINDS } from \"./graph/index.mjs\";\nexport { runMoves, sccGrowth } from \"./move.mjs\";\nexport { CONTAINERS, dirUnits, isSlot, placeAll, proposedPath, publicationAnchor } from \"./placement.mjs\";\nexport { makeOrigins } from \"./symbols.mjs\";\nexport { DEFAULT_ROOT, openTree, pinPath, recordPath, ZONES } from \"./tree.mjs\";\n"
+   "create": "// lib/ — the floor library: the file set (tree), the graph (F-1), symbol origins, placement\n// (F-7), the move engine (F-2), the step classifier (FD-5), the specifier resolver, the\n// class recipes FD-4 and F-10 read, and the entry record (F-3).\nexport { classifyStep } from \"./classify.mjs\";\nexport {\n    compareToPackage,\n    declarationProgram,\n    diskRecord,\n    emitDeclaredCssEntries,\n    libraryEntryMap,\n    loadRecord,\n    readJson,\n    recordCssTargets,\n    recordEntries,\n    recordInputs,\n    recordTerminal,\n    validateRecord,\n} from \"./entries.mjs\";\nexport { buildGraph, countBy, scanCss, valueSccs, VALUE_KINDS } from \"./graph/index.mjs\";\nexport { runMoves, sccGrowth } from \"./move.mjs\";\nexport { CONTAINERS, dirUnits, isSlot, placeAll, proposedPath, publicationAnchor } from \"./placement.mjs\";\nexport { classesOf, classOwners, classRecipes, coOccurrence, impliedBy } from \"./recipes.mjs\";\nexport { makeOrigins } from \"./symbols.mjs\";\nexport { DEFAULT_ROOT, openTree, pinPath, recordPath, ZONES, zoneOf } from \"./tree.mjs\";\n"
   },
   "scripts/structure/lib/entries.mjs": {
    "hunks": [
@@ -102,12 +102,20 @@
   "scripts/structure/cascade.mjs": {
    "hunks": [
     [
-     "import { DEFAULT_ROOT } from \"./lib/tree.mjs\";\n",
-     "import { DEFAULT_ROOT } from \"./lib/index.mjs\";\n"
+     "import { DEFAULT_ROOT, openTree } from \"./lib/tree.mjs\";\nimport { classRecipes, classOwners, coOccurrence, impliedBy } from \"./lib/recipes.mjs\";\n",
+     "import { classOwners, classRecipes, coOccurrence, DEFAULT_ROOT, impliedBy, openTree } from \"./lib/index.mjs\";\n"
     ],
     [
      "    const { buildGraph } = await import(\"./lib/graph/graph.mjs\");\n",
      "    const { buildGraph } = await import(\"./lib/index.mjs\");\n"
+    ]
+   ]
+  },
+  "scripts/structure/browser.mjs": {
+   "hunks": [
+    [
+     "import { buildGraph } from \"./lib/graph/graph.mjs\";\nimport { zoneOf } from \"./lib/tree.mjs\";\nimport { classOwners, classRecipes, classesOf, impliedBy } from \"./lib/recipes.mjs\";\n",
+     "import { buildGraph, classesOf, classOwners, classRecipes, impliedBy, zoneOf } from \"./lib/index.mjs\";\n"
     ]
    ]
   },
@@ -292,11 +300,11 @@
    "hunks": [
     [
      "// tests/gates/seal.test.ts — the D1-B seal (scripts/structure/seal.mjs; the route's law is\n// scripts/structure/seal-law.mjs). One verdict per clause, B0..B16, over the F-1 graph and the\n",
-     "// tests/gates/seal.test.ts — the D1-B seal (scripts/structure/seal/; the route's law is\n// scripts/structure/seal/law.mjs). One verdict per clause, B0..B16, over the F-1 graph and the\n"
+     "// tests/gates/seal.test.ts — the D1-B seal (scripts/structure/seal/; the route's law is\n// scripts/structure/seal/law.mjs). One verdict per clause, B0..B17, over the F-1 graph and the\n"
     ],
     [
      "// read, and a clause passes only with zero violations. One child process, like the floor\n// gates (tests/gates/floor.test.ts).\nimport { execFileSync } from \"node:child_process\";\nimport { mkdtempSync, readFileSync, rmSync } from \"node:fs\";\nimport { tmpdir } from \"node:os\";\nimport { join, resolve } from \"node:path\";\n",
-     "// read, and a clause passes only with zero violations. The gate is read through the floor\n// runtime's door, like every other reader of scripts/structure.\nimport { resolve } from \"node:path\";\n"
+     "// read, and a clause passes only with zero violations. The gate is read through the floor\n// runtime's door, like every other reader of scripts/structure.\nimport { spawnSync } from \"node:child_process\";\nimport { resolve } from \"node:path\";\n"
     ],
     [
      "import { describe, expect, it } from \"vitest\";\n\n",
@@ -311,8 +319,8 @@
      "\ndescribe(\"seal (route D1-B)\", () => {\n"
     ],
     [
-     "    const verdict = run();\n",
-     "    const verdict: { counts: Record<string, number>; V: Record<string, string[]> } = seal(ROOT);\n"
+     "    const verdict = run();\n    it(\"judges all seventeen clauses\", () => {\n        expect(Object.keys(verdict.counts)).toEqual(Array.from({ length: 17 }, (_, i) => `B${i}`));\n",
+     "    const verdict: { counts: Record<string, number>; V: Record<string, string[]> } = seal(ROOT);\n    it(\"has one pin path: the CLI refuses a --pin\", () => {\n        const run = spawnSync(process.execPath, [resolve(ROOT, \"scripts/structure/seal/seal.mjs\"), \"--root\", ROOT, \"--pin\", \"elsewhere.json\"], { encoding: \"utf8\" });\n        expect(run.status).not.toBe(0);\n        expect(run.stderr).toContain(\"unknown option --pin\");\n    });\n    it(\"judges all eighteen clauses\", () => {\n        expect(Object.keys(verdict.counts)).toEqual(Array.from({ length: 18 }, (_, i) => `B${i}`));\n"
     ]
    ]
   }
@@ -376,6 +384,10 @@
   },
   {
    "file": "scripts/structure/cascade.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/browser.mjs",
    "why": "B1: a floor CLI reads lib through its door"
   },
   {

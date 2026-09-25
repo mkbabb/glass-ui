@@ -1,0 +1,11 @@
+file://<scratch>/wt/scripts/structure/seal/seal.mjs:436
+    for (let i = 0; i < args.length; i++) { if (VALUED.has(args[i])) { i++; continue; } if (!FLAGS.has(args[i])) throw new Error(`seal: unknown option ${args[i]} (the pin has one path, ${PIN_PATH})`); }
+                                                                                                                       ^
+
+Error: seal: unknown option --pin (the pin has one path, scripts/structure/records/seal-pin.json)
+    at file://<scratch>/wt/scripts/structure/seal/seal.mjs:436:120
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:642:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.0.0

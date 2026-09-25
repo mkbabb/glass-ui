@@ -1,0 +1,42 @@
+{
+ "baseline": null,
+ "verdict": "GREEN",
+ "staleListings": [],
+ "entries": [
+  {
+   "key": "./styles",
+   "identical": false,
+   "class": "reorder",
+   "rulesBase": 1970,
+   "rulesNow": 1970,
+   "onlyBase": 0,
+   "onlyNow": 0,
+   "firstDivergence": 610,
+   "base": "@layer components :: :root {--feedback-tone-strength:18%;--feedback-tone-rung:var(--glass-plate-floating);--feedback-tone-border-strength:40%}",
+   "now": "@layer components :: .card-scroll-host {contain:layout style paint;overflow-y:auto;mask-image:linear-gradient( to bottom,black calc(100% - var(--fade-end)),transparent 100% )}",
+   "listed": "S4b (LAW §6, B3): card/scroll.css joins card's own rung, one door per unit; the only reorder the chain makes (B-08's accent-tone sheet keeps its HEAD rung)",
+   "judged": {
+    "moved": 18,
+    "swappedPairs": 1818,
+    "risks": 0,
+    "covered": 0
+   },
+   "verdict": "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes"
+  },
+  {
+   "key": "./styles/fonts",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles/theme",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles.css",
+   "identical": true,
+   "rules": 365
+  }
+ ]
+}

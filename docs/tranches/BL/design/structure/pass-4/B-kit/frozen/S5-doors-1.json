@@ -102,8 +102,8 @@
   "src/components/fourier-field/renderer/index.ts": {
    "create": "// components/fourier-field/renderer — module door: the names read from outside this module.\nexport type { MintedSpectrum } from \"./mint\";\nexport { mintSpectrum } from \"./mint\";\nexport { createFourierUnsupportedSetup, createFourierWGPUSetup } from \"./wgpu\";\n"
   },
-  "src/components/fourier-field/constants/index.ts": {
-   "create": "// components/fourier-field/constants — module door: the names read from outside this module.\nexport type { FourierFieldConfig, FourierSource } from \"./constants\";\nexport { DEFAULT_FOURIER_CONFIG, FOURIER_CHAIN_HUE_SWEEP, FOURIER_CURVE_SAMPLES, FOURIER_DPR_CAP, FOURIER_FLICK_TURNS, FOURIER_HEAD_DELTA_L, FOURIER_INK_DELTA_L, FOURIER_LUT_SIZE, FOURIER_PERIOD_S, FOURIER_QUANTUM_COARSE, FOURIER_QUANTUM_FINE, FOURIER_SCAFFOLD_STROKE_FRAC, FOURIER_SCRUB_GAIN, FOURIER_TAIL_CHROMA_FLOOR, MAX_FOURIER_STOPS } from \"./constants\";\n"
+  "src/components/fourier-field/register/index.ts": {
+   "create": "// components/fourier-field/register — module door: the names read from outside this module.\nexport type { FourierFieldConfig, FourierSource } from \"./constants\";\nexport { DEFAULT_FOURIER_CONFIG, FOURIER_CHAIN_HUE_SWEEP, FOURIER_CURVE_SAMPLES, FOURIER_DPR_CAP, FOURIER_FLICK_TURNS, FOURIER_HEAD_DELTA_L, FOURIER_INK_DELTA_L, FOURIER_LUT_SIZE, FOURIER_PERIOD_S, FOURIER_QUANTUM_COARSE, FOURIER_QUANTUM_FINE, FOURIER_SCAFFOLD_STROKE_FRAC, FOURIER_SCRUB_GAIN, FOURIER_TAIL_CHROMA_FLOOR, MAX_FOURIER_STOPS } from \"./constants\";\n"
   },
   "src/components/_shared/field/index.ts": {
    "create": "// components/_shared/field — module door: the names read from outside this module.\nexport { isAriaInvalid, useFieldControlState } from \"./control\";\nexport { resolveValueFraction, resolveValueMarks } from \"./valueDomain\";\n"
@@ -120,8 +120,8 @@
   "src/components/sheet/detents/index.ts": {
    "create": "// components/sheet/detents — module door: the names read from outside this module.\nexport type { ProjectionRow } from \"./projection\";\nexport { nearestRung, projectRest, resolveRelease, settleHorizon, springOmega, throwDistance } from \"./projection\";\nexport { useSheetDetents } from \"./useSheetDetents\";\n"
   },
-  "src/components/sortable-list/resolve/index.ts": {
-   "create": "// components/sortable-list/resolve — module door: the names read from outside this module.\nexport type { ListRects } from \"./resolve\";\nexport { findForeignTarget, instances, resolveBoundary, snapshotRows } from \"./resolve\";\n"
+  "src/components/sortable-list/drop/index.ts": {
+   "create": "// components/sortable-list/drop — module door: the names read from outside this module.\nexport type { ListRects } from \"./resolve\";\nexport { findForeignTarget, instances, resolveBoundary, snapshotRows } from \"./resolve\";\n"
   },
   "src/components/sortable-list/drag/index.ts": {
    "create": "// components/sortable-list/drag — module door: the names read from outside this module.\nexport { createDragController } from \"./drag\";\n"
@@ -792,8 +792,8 @@
   "src/components/dock/composables/useDockState.ts": {
    "hunks": [
     [
-     "import { isTeleportedTarget } from \"../../_shared/overlay/isTeleportedTarget\";\nimport type { DockHoldKind } from \"../../_shared/overlay/participation\";\n",
-     "import { isTeleportedTarget } from \"../../_shared/overlay\";\nimport type { DockHoldKind } from \"../../_shared/overlay\";\n"
+     "import type { DockHoldKind } from \"../../_shared/overlay/participation\";\n",
+     "import type { DockHoldKind } from \"../../_shared/overlay\";\n"
     ]
    ]
   },
@@ -880,8 +880,8 @@
      "import { mintSpectrum, type MintedSpectrum } from \"./renderer\";\n"
     ],
     [
-     "} from \"./constants/constants\";\n",
-     "} from \"./constants\";\n"
+     "} from \"./register/constants\";\n",
+     "} from \"./register\";\n"
     ],
     [
      "import type { RendererStatus } from \"../../composables/glass/webgpu/rendererStatus\";\n",
@@ -892,8 +892,8 @@
   "src/components/fourier-field/clock.ts": {
    "hunks": [
     [
-     "import { springPreset } from \"../../composables/motion/spring/springPresets\";\nimport { FOURIER_FLICK_TURNS, FOURIER_PERIOD_S, FOURIER_SCRUB_GAIN } from \"./constants/constants\";\n",
-     "import { springPreset } from \"../../composables/motion\";\nimport { FOURIER_FLICK_TURNS, FOURIER_PERIOD_S, FOURIER_SCRUB_GAIN } from \"./constants\";\n"
+     "import { springPreset } from \"../../composables/motion/spring/springPresets\";\nimport { FOURIER_FLICK_TURNS, FOURIER_PERIOD_S, FOURIER_SCRUB_GAIN } from \"./register/constants\";\n",
+     "import { springPreset } from \"../../composables/motion\";\nimport { FOURIER_FLICK_TURNS, FOURIER_PERIOD_S, FOURIER_SCRUB_GAIN } from \"./register\";\n"
     ]
    ]
   },
@@ -904,24 +904,24 @@
      "export { mintSpectrum, type MintedSpectrum } from \"./renderer\";\n"
     ],
     [
-     "} from \"./constants/constants\";\n",
-     "} from \"./constants\";\n"
+     "} from \"./register/constants\";\n",
+     "} from \"./register\";\n"
     ]
    ]
   },
   "src/components/fourier-field/renderer/render.wgsl.ts": {
    "hunks": [
     [
-     "} from \"../../../composables/glass/procedural/color.wgsl\";\nimport { FOURIER_LUT_SIZE } from \"../constants/constants\";\n",
-     "} from \"../../../composables/glass\";\nimport { FOURIER_LUT_SIZE } from \"../constants\";\n"
+     "} from \"../../../composables/glass/procedural/color.wgsl\";\nimport { FOURIER_LUT_SIZE } from \"../register/constants\";\n",
+     "} from \"../../../composables/glass\";\nimport { FOURIER_LUT_SIZE } from \"../register\";\n"
     ]
    ]
   },
   "src/components/fourier-field/renderer/uniforms.ts": {
    "hunks": [
     [
-     "} from \"../constants/constants\";\n",
-     "} from \"../constants\";\n"
+     "} from \"../register/constants\";\n",
+     "} from \"../register\";\n"
     ]
    ]
   },
@@ -932,8 +932,8 @@
      "import type { WebGPUCanvasFrame } from \"../../../composables/glass\";\nimport type { BackingSize } from \"../../../composables/glass\";\nimport type { WebGLCanvasFrame } from \"../../../composables/glass\";\n"
     ],
     [
-     "} from \"../constants/constants\";\n",
-     "} from \"../constants\";\n"
+     "} from \"../register/constants\";\n",
+     "} from \"../register\";\n"
     ]
    ]
   },
@@ -944,8 +944,8 @@
      "import { createGpuSubstrate, type GpuBackend } from \"../../composables/glass\";\nimport { type RendererStatus } from \"../../composables/glass\";\nimport { pendingRenderer } from \"../../composables/glass\";\nimport { usePointerVelocityField } from \"../../composables/motion/motion-core\";\n"
     ],
     [
-     "import { FOURIER_DPR_CAP, type FourierFieldConfig } from \"./constants/constants\";\n",
-     "import { FOURIER_DPR_CAP, type FourierFieldConfig } from \"./constants\";\n"
+     "import { FOURIER_DPR_CAP, type FourierFieldConfig } from \"./register/constants\";\n",
+     "import { FOURIER_DPR_CAP, type FourierFieldConfig } from \"./register\";\n"
     ],
     [
      "import { createFourierWGPUSetup, createFourierUnsupportedSetup } from \"./renderer/wgpu\";\nimport type { MintedSpectrum } from \"./renderer/mint\";\n",
@@ -1284,8 +1284,8 @@
   "src/components/sortable-list/drag/drag.ts": {
    "hunks": [
     [
-     "} from \"../resolve/resolve\";\n",
-     "} from \"../resolve\";\n"
+     "} from \"../drop/resolve\";\n",
+     "} from \"../drop\";\n"
     ]
    ]
   },
@@ -1304,8 +1304,8 @@
   "src/components/sortable-list/useSortable.ts": {
    "hunks": [
     [
-     "import { createDragController } from \"./drag/drag\";\nimport { instances } from \"./resolve/resolve\";\n",
-     "import { createDragController } from \"./drag\";\nimport { instances } from \"./resolve\";\n"
+     "import { createDragController } from \"./drag/drag\";\nimport { instances } from \"./drop/resolve\";\n",
+     "import { createDragController } from \"./drag\";\nimport { instances } from \"./drop\";\n"
     ]
    ]
   },
@@ -1793,11 +1793,11 @@
     ],
     [
      "        \"src/components/avatar/index.ts\",\n        \"src/components/skeleton/index.ts\",\n",
-     "        \"src/components/avatar/index.ts\",\n        \"src/components/blob/mood/index.ts\",\n        \"src/components/blob/renderer/index.ts\",\n        \"src/components/blob/renderer/surface/index.ts\",\n        \"src/components/blob/renderer/webgl/index.ts\",\n        \"src/components/blob/renderer/webgpu/index.ts\",\n        \"src/components/dock/legibility/index.ts\",\n        \"src/components/dock/search/index.ts\",\n        \"src/components/fourier-field/constants/index.ts\",\n        \"src/components/fourier-field/renderer/index.ts\",\n        \"src/components/menu/context/index.ts\",\n        \"src/components/menu/items/index.ts\",\n        \"src/components/menu/sub/index.ts\",\n        \"src/components/sheet/detents/index.ts\",\n        \"src/components/skeleton/index.ts\",\n"
+     "        \"src/components/avatar/index.ts\",\n        \"src/components/blob/mood/index.ts\",\n        \"src/components/blob/renderer/index.ts\",\n        \"src/components/blob/renderer/surface/index.ts\",\n        \"src/components/blob/renderer/webgl/index.ts\",\n        \"src/components/blob/renderer/webgpu/index.ts\",\n        \"src/components/dock/legibility/index.ts\",\n        \"src/components/dock/search/index.ts\",\n        \"src/components/fourier-field/register/index.ts\",\n        \"src/components/fourier-field/renderer/index.ts\",\n        \"src/components/menu/context/index.ts\",\n        \"src/components/menu/items/index.ts\",\n        \"src/components/menu/sub/index.ts\",\n        \"src/components/sheet/detents/index.ts\",\n        \"src/components/skeleton/index.ts\",\n"
     ],
     [
      "        \"src/components/skeleton/index.ts\",\n        \"src/components/table/index.ts\",\n",
-     "        \"src/components/skeleton/index.ts\",\n        \"src/components/sortable-list/drag/index.ts\",\n        \"src/components/sortable-list/resolve/index.ts\",\n        \"src/components/table/index.ts\",\n"
+     "        \"src/components/skeleton/index.ts\",\n        \"src/components/sortable-list/drag/index.ts\",\n        \"src/components/sortable-list/drop/index.ts\",\n        \"src/components/table/index.ts\",\n"
     ],
     [
      "        \"src/components/table/index.ts\",\n        \"src/composables/context/index.ts\",\n",
@@ -1829,14 +1829,14 @@
   "src/components/blob/renderer/webgpu/index.ts",
   "src/components/dock/legibility/index.ts",
   "src/components/dock/search/index.ts",
-  "src/components/fourier-field/constants/index.ts",
+  "src/components/fourier-field/register/index.ts",
   "src/components/fourier-field/renderer/index.ts",
   "src/components/menu/context/index.ts",
   "src/components/menu/items/index.ts",
   "src/components/menu/sub/index.ts",
   "src/components/sheet/detents/index.ts",
   "src/components/sortable-list/drag/index.ts",
-  "src/components/sortable-list/resolve/index.ts",
+  "src/components/sortable-list/drop/index.ts",
   "src/components/tabs/segmented-tabs/index.ts",
   "src/composables/color/value/index.ts",
   "src/composables/glass/lifecycle/index.ts",
@@ -1856,7 +1856,7 @@
   "src/composables/motion/scroll/index.ts",
   "src/composables/motion/spring/index.ts"
  ],
- "rerouted": 333,
+ "rerouted": 332,
  "doorsGrown": 46,
  "names": 415,
  "blocked": []

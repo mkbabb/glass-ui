@@ -21,13 +21,6 @@
    "src/components/blob/composables/easing.ts": "the blob's own quadratic easing curves (PRIVATE to /blob, header D7); 'easing' names the maths, not the easing unit",
    "src/components/slider/useDockHold.ts": "the slider's host-native dock hold: published by no entry and read only by slider, so F-7 places it there (R-2 as clarified by X-10); it is named for what it holds open"
   },
-  "holds": {
-   "src/components/_shared/overlay/isTeleportedTarget.ts": {
-    "why": "FD-8: demo.css reaches it through @source ../src/components/_shared/**/*.ts, and the floor has no css-source declaration arm for demo, so a move would drop the demo's class scan silently"
-   },
-   "scripts/structure/lib/resolve.mjs": {
-    "why": "F-2 defect (floor gap, reported): moving it into lib/graph/ makes computeEdits rewrite the generated root literal \"tests-visual/.cache\" in GENERATED_ROOTS to \"null\" (e.to is null for a generated target) and the image check refuses; its dominance home is lib/graph/, held until the engine keeps generated literals"
-   }
-  }
+  "holds": {}
  }
 }

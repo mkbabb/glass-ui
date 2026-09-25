@@ -246,6 +246,10 @@
    "to": "src/styles/theme/index.css"
   },
   {
+   "from": "src/components/chip/accent-tone.css",
+   "to": "src/styles/glass/accent-tone.css"
+  },
+  {
    "from": "src/styles/glass.css",
    "to": "src/styles/glass/index.css"
   },
@@ -272,6 +276,12 @@
    "spec": "`${STYLES}/${name}`",
    "file": "src/components/dock/styles/search.css",
    "reason": "S4a: src/components/dock/styles/search.css -> src/components/dock/search/search.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/chip/accent-tone.css",
+   "reason": "S4a: src/components/chip/accent-tone.css -> src/styles/glass/accent-tone.css; the scanner's sensitivity is judged by the test run"
   },
   {
    "scanner": "tests/gates/orphan-css-partial.test.ts",
@@ -654,6 +664,12 @@
   {
    "scanner": "tests/styles/engage-ladder.test.ts",
    "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/chip/accent-tone.css",
+   "reason": "S4a: src/components/chip/accent-tone.css -> src/styles/glass/accent-tone.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
    "file": "src/components/deck/styles/index.css",
    "reason": "S4a: src/components/deck/styles/index.css -> src/components/deck/index.css; the scanner's sensitivity is judged by the test run"
   },
@@ -674,6 +690,12 @@
    "spec": "join(COMPONENTS, entry)",
    "file": "src/components/dock/styles/search.css",
    "reason": "S4a: src/components/dock/styles/search.css -> src/components/dock/search/search.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/chip/accent-tone.css",
+   "reason": "S4a: src/components/chip/accent-tone.css -> src/styles/glass/accent-tone.css; the scanner's sensitivity is judged by the test run"
   },
   {
    "scanner": "tests/styles/engage-ladder.test.ts",
@@ -700,6 +722,7 @@
    "reason": "S4a: src/components/dock/styles/search.css -> src/components/dock/search/search.css; the scanner's sensitivity is judged by the test run"
   }
  ],
+ "globDeltas": [],
  "reasons": [
   {
    "from": "src/components/dock/styles/search.css",
@@ -1005,6 +1028,11 @@
    "from": "src/styles/theme.css",
    "to": "src/styles/theme/index.css",
    "why": "the theme aggregator becomes its module's CSS door (B7, B3); a pure @import list"
+  },
+  {
+   "from": "src/components/chip/accent-tone.css",
+   "to": "src/styles/glass/accent-tone.css",
+   "why": "B-08 (REGISTRY §P3-5, P3-R2): CSS is placed by its load edge. Its one loader is the glass sheet (after ladder-undershadow.css, before rim.css), so it lives in src/styles/glass/ and keeps its HEAD rung; the kernel then reads no unit (B8) with no reorder. Chip reads its classes, not its file"
   },
   {
    "from": "src/styles/glass.css",

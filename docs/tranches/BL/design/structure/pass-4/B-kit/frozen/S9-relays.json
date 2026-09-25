@@ -32,12 +32,8 @@
   "src/components/_shared/overlay/index.ts": {
    "hunks": [
     [
-     "export { overlayContentAttrs, type OverlayAttrs, type OverlayRole } from \"./content\";\n",
-     "export { overlayContentAttrs } from \"./content\";\n"
-    ],
-    [
-     "export {\n    useDockParticipation,\n    useHoldToken,\n    type DockParticipation,\n    type DockPortalAttrs,\n    type HoldTarget,\n    type HoldToken,\n} from \"./participation\";\nexport type {\n    FloatingAlign,\n    FloatingPlacementProps,\n    FloatingSide,\n} from \"./placement\";\n",
-     "export { useDockParticipation, useHoldToken } from \"./participation\";\nexport type { FloatingPlacementProps } from \"./placement\";\n"
+     "export { overlayContentAttrs, type OverlayAttrs, type OverlayRole } from \"./content\";\nexport {\n    useDockParticipation,\n    useHoldToken,\n    type DockParticipation,\n    type DockPortalAttrs,\n    type HoldTarget,\n    type HoldToken,\n} from \"./participation\";\nexport type {\n    FloatingAlign,\n    FloatingPlacementProps,\n    FloatingSide,\n} from \"./placement\";\n",
+     "export { overlayContentAttrs } from \"./content\";\nexport { useDockParticipation, useHoldToken } from \"./participation\";\nexport type { FloatingPlacementProps } from \"./placement\";\n"
     ]
    ]
   },

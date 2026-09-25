@@ -1,11 +1,13 @@
-// seal.mjs — the D1-B gate, pass 3 (B-kit/LAW.md §6): sealed modules, one door each, over the
+// seal.mjs — the D1-B gate, pass 4 (B-kit/LAW.md): sealed modules, one door each, over the
 // floor's F-1 graph (one graph, fail-closed), F-7 with B's anchor (LAW §1), FD-3's one slot
 // predicate and symbol origins. Every clause judges the RESOLVED file, never the specifier.
-// No comment opt-out and no off switch: the pin is always read (B-11).
+// No comment opt-out and no off switch: the pin is always read, from its one path (B-11).
 // Lands at scripts/structure/seal/seal.mjs, a module of the floor runtime (FD-11, S19).
 //
 //   node scripts/structure/seal/seal.mjs [--root R] [--verbose] [--json out] [--overlay plants.json]
-//                                   [--pin other-pin.json] [--write-pin pin.json]
+//                                   [--write-pin pin.json]
+// --write-pin writes the pin the gate measures now (a reviewed diff when it lands); the gate
+// itself reads only records/seal-pin.json.
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { posix, resolve } from "node:path";
 import { createRequire } from "node:module";
@@ -40,9 +42,10 @@ export const units = { name: "dir (FD-3 slots)", unitOf(file) { let d = dirOf(fi
 const F = { makeOrigins, CONTAINERS: FLOOR_CONTAINERS, isSlot: floorIsSlot, proposedPath, sccGrowth };
 export { doorModule };
 
-/** The reviewed pin (B11, B15): modules, door names, reviewed file names. */
+/** The reviewed pin (B11, B15): modules, door names, reviewed file names. One path (B-11). */
 export const PIN_PATH = "scripts/structure/records/seal-pin.json";
-export const readPin = (root, p = posix.join(root, PIN_PATH)) => {
+export const readPin = (root) => {
+    const p = posix.join(root, PIN_PATH);
     if (!existsSync(p)) throw new Error(`seal: the pin ${p} is missing; the gate has no off switch`);
     return JSON.parse(readFileSync(p, "utf8"));
 };
@@ -53,7 +56,8 @@ const PLACEHOLDER_FILE = /^(use|utils?|helpers?|misc|common|stuff|tmp|temp|index
 const stemOf = (f) => posix.basename(f).replace(/\.(d\.ts|ts|mts|mjs|js|vue|css)$/, "").replace(/\.(glsl|wgsl|vert|frag)$/, "");
 const headToken = (stem) => { const s = stem.replace(/^use(?=[A-Z])/, ""); const m = /^[A-Z]?[a-z0-9]+/.exec(s); return m ? m[0].toLowerCase() : ""; };
 
-export function seal(root, { overlay = {}, pin = readPin(root) } = {}) {
+export function seal(root, { overlay = {} } = {}) {
+    const pin = readPin(root);
     const g = buildGraph(root, { overlay });
     const T = g.tree;
     const ts = createRequire(`${T.root}/package.json`)("typescript");
@@ -106,7 +110,7 @@ export function seal(root, { overlay = {}, pin = readPin(root) } = {}) {
     const isCss = (e) => CSS_KINDS.has(e.kind) && e.to.endsWith(".css");
 
     const V = {}; const put = (k, s) => V[k].push(s);
-    const CLAUSES = ["B0", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "B13", "B14", "B15", "B16"];
+    const CLAUSES = ["B0", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17"];
     for (const k of CLAUSES) V[k] = [];
     const b0 = { f1: 0, walks: 0, computed: 0 };
 
@@ -173,9 +177,8 @@ export function seal(root, { overlay = {}, pin = readPin(root) } = {}) {
         const sc = (x) => { I.set(x, i); L.set(x, i++); st.push(x); on.add(x); for (const w of adj.get(x).keys()) { if (!I.has(w)) { sc(w); L.set(x, Math.min(L.get(x), L.get(w))); } else if (on.has(w)) L.set(x, Math.min(L.get(x), I.get(w))); }
             if (L.get(x) === I.get(x)) { const c = []; let w; do { w = st.pop(); on.delete(w); c.push(w); } while (w !== x); if (c.length > 1) out.push(c); } };
         for (const x of adj.keys()) if (!I.has(x)) sc(x); return out; };
-    const b4info = [];
+    // LAW §8: every sibling cycle counts, files in one directory included (cB O-1)
     for (const [lvl, adj] of adjBy) for (const c of tarjan(adj)) {
-        if (!c.some((x) => modSet.has(x)) && new Set(c.map(dirOf)).size === 1) { b4info.push(`${lvl}: [${c.join(" ")}]`); continue; }
         const S = new Set(c); const why = c.flatMap((a) => [...adj.get(a)].filter(([b]) => S.has(b)).map(([, w]) => w));
         const typeOnly = c.every((a) => [...adj.get(a).keys()].filter((b) => S.has(b)).every((b) => typeOnlyPair.get(`${a}|${b}`)));
         put("B4", `cycle @${lvl} [${c.map((x) => x.replace(`${lvl}/`, "")).join(" ")}]${typeOnly ? " (type-only)" : ""} via ${why.slice(0, 3).join(" ; ")}`);
@@ -312,18 +315,22 @@ export function seal(root, { overlay = {}, pin = readPin(root) } = {}) {
         }
     }
 
-    // ---- B15 names (B-07): dir segments and file stems
+    // ---- B15 names (B-07): dir segments and file stems, in all five zones (R-5's zones; the
+    //      module-shape arms judge only the sealed zones, where modules are declared)
+    const anyCode = new Set();
+    for (const f of T.files) if (CODE.test(f) && ZONES5.includes(zoneOf(f))) { let d = dirOf(f); while (d !== "." && !anyCode.has(d)) { anyCode.add(d); d = dirOf(d); } }
     const componentUnits = new Set(T.files.filter((f) => /^src\/components\/[^/_][^/]*\//.test(f)).map((f) => f.split("/")[2]));
     const reviewed = new Map(Object.entries(pin.names ?? {}));
     for (const d of allDirs) {
-        if (!SEALED.includes(zoneOf(`${d}/x`)) || CONTAINERS.has(d) || !subtreeHasCode.get(d)) continue;
+        if (!anyCode.has(d) || CONTAINERS.has(d) || ZONES5.includes(d)) continue;
         const seg = posix.basename(d), parent = posix.basename(dirOf(d));
         if (PLACEHOLDER_DIR.test(seg)) put("B15", `${d} (placeholder name)`);
         if (seg === parent && !CONTAINERS.has(dirOf(d))) put("B15", `${d} (repeats its parent)`);
+        if (!SEALED.includes(zoneOf(`${d}/x`))) continue;
         if (KIND_SLOTS.has(seg) && !isSlot(d) && !CONTAINERS.has(dirOf(d))) put("B15", `${d} (a module named as a kind slot)`);
     }
     for (const f of T.files) {
-        if (!SEALED.includes(zoneOf(f)) || !CODE.test(f) || isTest(f) || DOOR_BASENAMES.includes(posix.basename(f))) continue;
+        if (!ZONES5.includes(zoneOf(f)) || !CODE.test(f) || isTest(f) || DOOR_BASENAMES.includes(posix.basename(f))) continue;
         const stem = stemOf(f);
         if (PLACEHOLDER_FILE.test(stem)) { put("B15", `${f} (placeholder file name)`); continue; }
         const m = /^src\/components\/([^/_][^/]*)\//.exec(f);
@@ -369,20 +376,68 @@ export function seal(root, { overlay = {}, pin = readPin(root) } = {}) {
         if (!readers.length || readers.some((r) => dirOf(r) !== slot || !TEST_FILE.test(r))) put("B16", `${h} (a helper in ${slot}/ read by ${readers.filter((r) => dirOf(r) !== slot || !TEST_FILE.test(r)).join(", ") || "nothing"})`);
     }
 
+    // ---- B17 no masking fallback (S-14; the edict: "no masking fallbacks"). A primary works or
+    //      fails loud. Two forms, read from the syntax in every zone and the root configs:
+    //      (a) a guard that returns as if a missing file were empty: `if (!existsSync(p)) return`
+    //          with nothing, a nullish or empty literal or a value it was handed (the
+    //          negation alone or in an `||` chain); a returned record naming the absence reports it;
+    //      (b) a swallowed module load: `.catch(h)` on a chain that starts at `import(…)`, or a
+    //          `try` whose block loads a module with `import(…)`, where the handler never throws.
+    //      Only the syntax is read: a load passed through a function value (`c().catch(…)` with
+    //      `c = () => import(…)`) is not seen (LAW §10).
+    const SCRIPT = /\.(ts|mts|cts|js|mjs|cjs|vue)$/;
+    const isExists = (n) => ts.isCallExpression(n) && ((ts.isIdentifier(n.expression) && n.expression.text === "existsSync") || (ts.isPropertyAccessExpression(n.expression) && n.expression.name.text === "existsSync"));
+    // the guard's condition: `!existsSync(p)`, or an `||` chain holding one (`!existsSync(a) || !existsSync(b)`)
+    const missingGuard = (x) => { while (ts.isParenthesizedExpression(x)) x = x.expression; if (ts.isPrefixUnaryExpression(x) && x.operator === ts.SyntaxKind.ExclamationToken) return isExists(x.operand); return ts.isBinaryExpression(x) && x.operatorToken.kind === ts.SyntaxKind.BarBarToken && (missingGuard(x.left) || missingGuard(x.right)); };
+    // the guard returns as if the file were empty: nothing, a nullish or empty literal, or a
+    // value it was handed (an accumulator, the input). A record that names the absence reports
+    // it, and `false` is a predicate's answer (`isRealPng`: a missing file is not a PNG).
+    const silentValue = (x) => { if (!x) return true; while (ts.isParenthesizedExpression(x) || ts.isAsExpression(x)) x = x.expression;
+        if (ts.isIdentifier(x) || x.kind === ts.SyntaxKind.NullKeyword) return true;
+        if (ts.isStringLiteral(x) || ts.isNoSubstitutionTemplateLiteral(x)) return x.text === "";
+        if (ts.isArrayLiteralExpression(x)) return x.elements.length === 0;
+        if (ts.isObjectLiteralExpression(x)) return x.properties.length === 0;
+        return false; };
+    const onlyReturn = (st) => { const r = ts.isReturnStatement(st) ? st : ts.isBlock(st) && st.statements.length === 1 && ts.isReturnStatement(st.statements[0]) ? st.statements[0] : null; return !!r && silentValue(r.expression); };
+    const isImportCall = (n) => ts.isCallExpression(n) && n.expression.kind === ts.SyntaxKind.ImportKeyword;
+    const has = (n, pred) => { let hit = false; const v = (x) => { if (hit) return; if (pred(x)) hit = true; else ts.forEachChild(x, v); }; v(n); return hit; };
+    const loadChain = (n) => { for (let x = n; x; ) { if (isImportCall(x)) return true; if (ts.isCallExpression(x) || ts.isPropertyAccessExpression(x) || ts.isParenthesizedExpression(x) || ts.isAwaitExpression(x)) x = x.expression; else return false; } return false; };
+    for (const f of T.files) {
+        const z = zoneOf(f);
+        if (!(ZONES5.includes(z) || z === "root") || !SCRIPT.test(f) || /\.d\.[mc]?ts$/.test(f)) continue;
+        const text = T.read(f);
+        if (text === null || text === undefined) throw new Error(`seal B17: ${f} is unreadable`);
+        const blocks = f.endsWith(".vue") ? [...text.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].map((m) => ({ code: m[1], off: text.slice(0, m.index + m[0].indexOf(">") + 1).split("\n").length - 1 })) : [{ code: text, off: 0 }];
+        for (const { code, off } of blocks) {
+            const sf = ts.createSourceFile(f, code, ts.ScriptTarget.Latest, true);
+            const at = (n) => `${f}:${sf.getLineAndCharacterOfPosition(n.getStart(sf)).line + 1 + off}`;
+            const visit = (n) => {
+                if (ts.isIfStatement(n) && missingGuard(n.expression) && onlyReturn(n.thenStatement)) put("B17", `${at(n)} returns when a file is missing (a masking fallback: read it and let the read fail, or throw)`);
+                if (ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression) && n.expression.name.text === "catch" && loadChain(n.expression.expression) && !(n.arguments[0] && has(n.arguments[0], ts.isThrowStatement))) put("B17", `${at(n)} swallows a failed module load (.catch without a throw)`);
+                if (ts.isTryStatement(n) && n.catchClause && has(n.tryBlock, isImportCall) && !has(n.catchClause.block, ts.isThrowStatement)) put("B17", `${at(n)} swallows a failed module load (try/catch without a throw)`);
+                ts.forEachChild(n, visit);
+            };
+            visit(sf);
+        }
+    }
+
     const counts = Object.fromEntries(Object.entries(V).map(([k, l]) => [k, l.length]));
     const total = Object.values(counts).reduce((a, b) => a + b, 0);
-    const meta = { b0, files: T.files.length, edges: g.edges.length, modules: modules.length, required: sealedCodeDirs.length, b10: { anchored, bound: law.bound.map((r) => r.file), held: law.held.map((r) => r.file), counted: V.B10.length }, b4info: b4info.length, multiDoorSymbols: multi.length, pin: { modules: pinNow.modules.length, doors: Object.keys(pinNow.doors).length, names: Object.values(pinNow.doors).reduce((a, b) => a + b.length, 0), reviewed: reviewed.size } };
+    const meta = { b0, files: T.files.length, edges: g.edges.length, modules: modules.length, required: sealedCodeDirs.length, b10: { anchored, bound: law.bound.map((r) => r.file), held: law.held.map((r) => r.file), counted: V.B10.length }, multiDoorSymbols: multi.length, pin: { modules: pinNow.modules.length, doors: Object.keys(pinNow.doors).length, names: Object.values(pinNow.doors).reduce((a, b) => a + b.length, 0), reviewed: reviewed.size } };
     return { total, counts, V, meta, pinNow, clauses: CLAUSES };
 }
 
 const isMain = process.argv[1] && resolve(process.argv[1]) === resolve(import.meta.dirname, "seal.mjs");
 if (isMain) {
     const args = process.argv.slice(2);
+    // B-11: the CLI takes exactly these options; any other (a `--pin`, a `--no-pin`) is refused,
+    // never ignored, so no caller can believe it judged against another pin
+    const FLAGS = new Set(["--verbose"]), VALUED = new Set(["--root", "--json", "--overlay", "--write-pin"]);
+    for (let i = 0; i < args.length; i++) { if (VALUED.has(args[i])) { i++; continue; } if (!FLAGS.has(args[i])) throw new Error(`seal: unknown option ${args[i]} (the pin has one path, ${PIN_PATH})`); }
     const opt = (k, d = null) => (args.includes(k) ? args[args.indexOf(k) + 1] : d);
     const root = resolve(opt("--root", resolve(import.meta.dirname, "../../..")));
     const r = seal(root, {
         overlay: opt("--overlay") ? JSON.parse(readFileSync(opt("--overlay"), "utf8")) : {},
-        pin: readPin(root, opt("--pin") ?? undefined),
     });
     for (const [k, list] of Object.entries(r.V)) {
         console.log(`${list.length ? "FAIL" : "PASS"} ${k} ${list.length}`);

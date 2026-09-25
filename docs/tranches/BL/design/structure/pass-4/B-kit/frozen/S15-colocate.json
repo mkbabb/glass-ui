@@ -14,8 +14,24 @@
    "to": "src/components/dock/__tests__/native-title.test.ts"
   },
   {
+   "from": "tests/components/accordion.contract.test.ts",
+   "to": "src/components/accordion/__tests__/accordion.contract.test.ts"
+  },
+  {
+   "from": "tests/components/card/Card.test.ts",
+   "to": "src/components/card/__tests__/Card.test.ts"
+  },
+  {
    "from": "tests/components/carousel/contract.test.ts",
    "to": "src/components/carousel/__tests__/contract.test.ts"
+  },
+  {
+   "from": "tests/components/checkbox.contract.test.ts",
+   "to": "src/components/checkbox/__tests__/checkbox.contract.test.ts"
+  },
+  {
+   "from": "tests/components/chip.contract.test.ts",
+   "to": "src/components/chip/__tests__/chip.contract.test.ts"
   },
   {
    "from": "tests/components/custom/aurora/Aurora.init-error.test.ts",
@@ -126,6 +142,10 @@
    "to": "src/components/timeline/__tests__/timeline.partition.test.ts"
   },
   {
+   "from": "tests/components/custom/typewriter/TypewriterText.contract.test.ts",
+   "to": "src/components/typewriter/__tests__/TypewriterText.contract.test.ts"
+  },
+  {
    "from": "tests/components/dialog/dialog-attrs.test.ts",
    "to": "src/components/dialog/__tests__/dialog-attrs.test.ts"
   },
@@ -150,6 +170,14 @@
    "to": "src/components/label/__tests__/label.contract.test.ts"
   },
   {
+   "from": "tests/components/labeled-field.contract.test.ts",
+   "to": "src/components/labeled-field/__tests__/labeled-field.contract.test.ts"
+  },
+  {
+   "from": "tests/components/menu/contract.test.ts",
+   "to": "src/components/menu/__tests__/contract.test.ts"
+  },
+  {
    "from": "tests/components/metric.contract.test.ts",
    "to": "src/components/metric/__tests__/metric.contract.test.ts"
   },
@@ -160,6 +188,14 @@
   {
    "from": "tests/components/music-staff.midi.test.ts",
    "to": "src/components/music-staff/__tests__/music-staff.midi.test.ts"
+  },
+  {
+   "from": "tests/components/number-field.contract.test.ts",
+   "to": "src/components/number-field/__tests__/number-field.contract.test.ts"
+  },
+  {
+   "from": "tests/components/pager-dots/contract.test.ts",
+   "to": "src/components/pager-dots/__tests__/contract.test.ts"
   },
   {
    "from": "tests/components/pager-dots/morph.test.ts",
@@ -178,6 +214,14 @@
    "to": "src/components/separator/__tests__/separator.contract.test.ts"
   },
   {
+   "from": "tests/components/slider.contract.test.ts",
+   "to": "src/components/slider/__tests__/slider.contract.test.ts"
+  },
+  {
+   "from": "tests/components/sortable-list.contract.test.ts",
+   "to": "src/components/sortable-list/__tests__/sortable-list.contract.test.ts"
+  },
+  {
    "from": "tests/components/switch.contract.test.ts",
    "to": "src/components/switch/__tests__/switch.contract.test.ts"
   },
@@ -192,6 +236,14 @@
   {
    "from": "tests/components/toast.contract.test.ts",
    "to": "src/components/toast/__tests__/toast.contract.test.ts"
+  },
+  {
+   "from": "tests/components/tooltip.contract.test.ts",
+   "to": "src/components/tooltip/__tests__/tooltip.contract.test.ts"
+  },
+  {
+   "from": "tests/components/typewriter.contract.test.ts",
+   "to": "src/components/typewriter/__tests__/typewriter.contract.test.ts"
   },
   {
    "from": "tests/components/ui/alert/Alert.test.ts",
@@ -294,29 +346,9 @@
    "why": "dirname"
   },
   {
-   "test": "tests/components/accordion.contract.test.ts",
-   "home": "src/components/accordion",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
-  },
-  {
-   "test": "tests/components/card/Card.test.ts",
-   "home": "src/components/card",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
-  },
-  {
-   "test": "tests/components/checkbox.contract.test.ts",
-   "home": "src/components/checkbox",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
-  },
-  {
-   "test": "tests/components/chip.contract.test.ts",
-   "home": "src/components/chip",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
-  },
-  {
    "test": "tests/components/chip.public-contracts.test-d.ts",
    "home": "src/components/chip",
-   "why": "rostered (named by path in a closed record the gate-register seat reads); not-test"
+   "why": "not-test"
   },
   {
    "test": "tests/components/custom/blob/blob-color-equivalence.test.ts",
@@ -344,29 +376,14 @@
    "why": "dirname"
   },
   {
-   "test": "tests/components/custom/typewriter/TypewriterText.contract.test.ts",
-   "home": "src/components/typewriter",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
-  },
-  {
    "test": "tests/components/infinite-scroll.contract.test.ts",
    "home": "src/components/infinite-scroll",
-   "why": "reads outside src (tests/setup.ts); rostered (named by path in a closed record the gate-register seat reads)"
-  },
-  {
-   "test": "tests/components/labeled-field.contract.test.ts",
-   "home": "src/components/labeled-field",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
-  },
-  {
-   "test": "tests/components/menu/contract.test.ts",
-   "home": "src/components/menu",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
+   "why": "reads outside src (tests/setup.ts)"
   },
   {
    "test": "tests/components/menu/public-contracts.test-d.ts",
    "home": "src/components/menu",
-   "why": "rostered (named by path in a closed record the gate-register seat reads); not-test"
+   "why": "not-test"
   },
   {
    "test": "tests/components/music-staff.contract.test.ts",
@@ -379,29 +396,9 @@
    "why": "not-test"
   },
   {
-   "test": "tests/components/number-field.contract.test.ts",
-   "home": "src/components/number-field",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
-  },
-  {
-   "test": "tests/components/pager-dots/contract.test.ts",
-   "home": "src/components/pager-dots",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
-  },
-  {
    "test": "tests/components/sheet/sheet-reach.test.ts",
    "home": "src/components/sheet",
    "why": "reads outside src (.); dirname"
-  },
-  {
-   "test": "tests/components/slider.contract.test.ts",
-   "home": "src/components/slider",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
-  },
-  {
-   "test": "tests/components/sortable-list.contract.test.ts",
-   "home": "src/components/sortable-list",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
   },
   {
    "test": "tests/components/status-dot.contract.test.ts",
@@ -411,17 +408,7 @@
   {
    "test": "tests/components/toast.public-contracts.test-d.ts",
    "home": "src/components/toast",
-   "why": "rostered (named by path in a closed record the gate-register seat reads); not-test"
-  },
-  {
-   "test": "tests/components/tooltip.contract.test.ts",
-   "home": "src/components/tooltip",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
-  },
-  {
-   "test": "tests/components/typewriter.contract.test.ts",
-   "home": "src/components/typewriter",
-   "why": "rostered (named by path in a closed record the gate-register seat reads)"
+   "why": "not-test"
   },
   {
    "test": "tests/components/ui/skeleton/Skeleton.test.ts",

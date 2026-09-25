@@ -10,6 +10,10 @@
    "to": "tests-visual/paint/reflect-capture-verify.mjs"
   },
   {
+   "from": "scripts/safari-probe.mjs",
+   "to": "tests-visual/paint/safari-probe.mjs"
+  },
+  {
    "from": "scripts/lib/minify-css.ts",
    "to": "scripts/minify/minify-css.ts"
   },
@@ -38,6 +42,10 @@
    "to": "scripts/structure/lib/graph/vue.mjs"
   },
   {
+   "from": "scripts/structure/lib/scan/playwright.mjs",
+   "to": "scripts/structure/lib/graph/playwright.mjs"
+  },
+  {
    "from": "scripts/structure/seal.mjs",
    "to": "scripts/structure/seal/seal.mjs"
   },
@@ -47,6 +55,7 @@
   }
  ],
  "scanDeltas": [],
+ "globDeltas": [],
  "reasons": [
   {
    "from": "scripts/lib/paint-arm.mjs",
@@ -57,6 +66,11 @@
    "from": "scripts/lib/reflect-capture-verify.mjs",
    "to": "tests-visual/paint/reflect-capture-verify.mjs",
    "why": "SPECS §1.4: its one loader is paint-arm, which moves to tests-visual/paint/"
+  },
+  {
+   "from": "scripts/safari-probe.mjs",
+   "to": "tests-visual/paint/safari-probe.mjs",
+   "why": "B-S15, R-8 (placed in the module it serves): it censuses the demo's glass paint (backdrop-filter, radius) over Safari WebDriver, the same readback paint-arm makes on Chromium; the paint module left scripts for tests-visual (S-15), so that is the module it serves. It has no importer; it is run by hand, as at HEAD"
   },
   {
    "from": "scripts/lib/minify-css.ts",
@@ -92,6 +106,11 @@
    "from": "scripts/structure/lib/scan/vue.mjs",
    "to": "scripts/structure/lib/graph/vue.mjs",
    "why": "the Vue scanner joins the other three: scan/ held one file of four (FD-11's split half-landed), and its reader is graph.mjs"
+  },
+  {
+   "from": "scripts/structure/lib/scan/playwright.mjs",
+   "to": "scripts/structure/lib/graph/playwright.mjs",
+   "why": "the Playwright scanner (P4-F5) joins the other scanners: graph.mjs is its one reader, and scan/ would otherwise hold it alone"
   },
   {
    "from": "scripts/structure/seal.mjs",

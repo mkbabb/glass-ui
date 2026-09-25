@@ -12,6 +12,11 @@
    "why": "SPECS §1.4: its one loader is paint-arm, which moves to tests-visual/paint/"
   },
   {
+   "from": "scripts/safari-probe.mjs",
+   "to": "tests-visual/paint/safari-probe.mjs",
+   "why": "B-S15, R-8 (placed in the module it serves): it censuses the demo's glass paint (backdrop-filter, radius) over Safari WebDriver, the same readback paint-arm makes on Chromium; the paint module left scripts for tests-visual (S-15), so that is the module it serves. It has no importer; it is run by hand, as at HEAD"
+  },
+  {
    "from": "scripts/lib/minify-css.ts",
    "to": "scripts/minify/minify-css.ts",
    "why": "LAW §1: with the paint helpers gone, scripts/lib holds one concern, CSS minification for the style fold; the module is named for it (`lib` names nothing)"
@@ -45,6 +50,11 @@
    "from": "scripts/structure/lib/scan/vue.mjs",
    "to": "scripts/structure/lib/graph/vue.mjs",
    "why": "the Vue scanner joins the other three: scan/ held one file of four (FD-11's split half-landed), and its reader is graph.mjs"
+  },
+  {
+   "from": "scripts/structure/lib/scan/playwright.mjs",
+   "to": "scripts/structure/lib/graph/playwright.mjs",
+   "why": "the Playwright scanner (P4-F5) joins the other scanners: graph.mjs is its one reader, and scan/ would otherwise hold it alone"
   },
   {
    "from": "scripts/structure/seal.mjs",

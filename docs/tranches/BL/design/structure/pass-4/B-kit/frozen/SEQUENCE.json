@@ -1,322 +1,364 @@
 {
  "note": "route D1-B pass 4 (rebased on HEAD code, glass-ui 10.1.0): the frozen chain, replayed by replay.mjs",
- "baseSha": "19bf6569",
+ "baseSha": "0d634325",
  "base": "35f7b831fe810aac0add8405c7c8dc62126962170fc3abace419c7428fa74f53",
  "steps": [
   {
    "id": "S1",
    "kind": "floor-rows",
    "file": null,
-   "why": "the floor rows f3, f4, m02, m03, f9, fd6, fd7, fd11 (floor/rows/apply.mjs): the one cut every route starts from",
-   "digest": "1ee583b1dec4b2860d46ea7f6bdef71b41f0d9de88c28fbdae03107980654e3f"
-  },
-  {
-   "id": "S1c",
-   "kind": "row",
-   "file": "frozen/S1c-base-surface.json",
-   "why": "the floor base's surface pin follows the 10.1.0 base: ConfiguratorLayout, published by the release (9065d924) on . and ./configurator, is pinned; 0 losses, no route move",
-   "digest": "174770bd222fdbc620b6490540e4e1561b25c39c6530245e8abdda1033c1536b"
+   "why": "the floor rows r1, f3, f4, m02, m03, f9, fd6, fd7, fd11 (floor/rows/apply.mjs, the P4 floor): the one cut every route starts from",
+   "digest": "a974a609c0791460806f0fe9b210e4a681aa3c44f3d1098b16b32fc1dfb8004e"
   },
   {
    "id": "S1b",
    "kind": "row",
    "file": "frozen/S1b-unrelay.json",
    "why": "LAW §5 (B12): only a door re-exports. 9 relay files cut, importers re-pointed at the origin, 3 relay barrels deleted",
-   "digest": "c44251a0206a80560f9b79ee7821c5e900309de69dd4dbe1ea6345d762a05c08"
+   "digest": "3349d80d38e7a883fca93a9dedce49738695090403f7786d3485f13fc550abbb"
+  },
+  {
+   "id": "S1d",
+   "kind": "row",
+   "file": "frozen/S1d-overlay-unrelay.json",
+   "why": "B11/P3-R6: the overlay door drops the isTeleportedTarget re-export no reader uses, so S2 places the file by its one reader (dock) with no FD-2 growth; the two comments naming its place follow it",
+   "digest": "d0e9b17285d50c20faf9707f58b866c4bed8a4d0c51a7f632ac222b78895c57d"
   },
   {
    "id": "S2-1",
    "kind": "moves",
    "file": "frozen/S2-pass-1.json",
-   "why": "B-S2 placement pass 1: 19 move(s) by F-7 with B's anchor (LAW §2-§4)",
-   "digest": "524c206b4c4392ba7028403a77026ccacec5dfd41175194f9aeb0fe224873836"
+   "why": "B-S2 placement pass 1: 20 move(s) by F-7 with B's anchor (LAW §2-§4)",
+   "digest": "17169bff7b8f7d982313a79f011a927eb3784b861ff0dea8c4ede2e450948cca"
   },
   {
    "id": "S2-2",
    "kind": "moves",
    "file": "frozen/S2-pass-2.json",
    "why": "B-S2 placement pass 2: 2 move(s) by F-7 with B's anchor (LAW §2-§4)",
-   "digest": "8dac3c8cc38d9ac8408cf6e81f44908dd7060b533a878f17014059287ae80c2c"
+   "digest": "45fb9f1c548c18e094ae1e7924b949e8bac36e0283900d957f889cda4bc1daaa"
   },
   {
    "id": "S2-3",
    "kind": "moves",
    "file": "frozen/S2-pass-3.json",
    "why": "B-S2 placement pass 3: 1 move(s) by F-7 with B's anchor (LAW §2-§4)",
-   "digest": "848bf8e60484061fa75c822117dd4a98ce668ac1705ca76060bf0574d7a99ee3"
+   "digest": "ae409b97c1e3274364ae82c35409ac5bf3fb1d469a285456ff4e1fba787f6484"
   },
   {
    "id": "S2b",
    "kind": "row",
    "file": "frozen/S2b-search-door.json",
    "why": "the kernel door composables/search, emptied by placement, is dissolved; its 3 importers re-point at the origins in dock (B8, no kernel shim)",
-   "digest": "3f0bf2f086b6bd261bca0845317cfdc59c2f87ce81ca96aa0187fb35d6aadae4"
+   "digest": "7537820c31577d5832ccfa804a03be6844ecd3a36234fa44d57b6e2f5ccdeaeb"
   },
   {
    "id": "S3",
    "kind": "moves",
    "file": "frozen/S3-carve.json",
    "why": "B-S3 module carve: 85 moves; modules proposed by dominance (lib/dominance.mjs) and named in authored/names.json, peer sets carved by name (LAW §3-§4)",
-   "digest": "86022171323ab64d40c654dcc72f59e2f016218450e08f3ec15b225d96d15cc5"
+   "digest": "c6ecce13c45a18e90e21a9e2ae091cd2726c25f41706d7637f44b52d16ab2675"
   },
   {
    "id": "S4a",
    "kind": "moves",
    "file": "frozen/S4a-css-carve.json",
-   "why": "B-S4 CSS stage, authored inputs (LAW §6). moves: the CSS carve through the floor engine (B's pass-2 kernel names; the dock sheets into the modules they style). rows: the two rung moves the one-door rule forces, each with its cascade reason. The CSS door row itself is computed (derive/css-doors.mjs).",
-   "digest": "5a35981c96ba51d0ee720c0dedaa3ff0601b66f12ee7ddb2cb275e98d2cbba11"
+   "why": "B-S4 CSS stage, authored inputs (LAW §6). moves: the CSS carve through the floor engine (B's pass-2 kernel names; the dock sheets into the modules they style). rows: the one rung move the one-door rule forces (card/scroll.css), with its cascade reason; the accent-tone register moves into the glass module that loads it (B-08). The CSS door row itself is computed (derive/css-doors.mjs).",
+   "digest": "ec464570dfab8ea417eafe782601ccd22aac9778ed6e992eb7748601a605864a"
   },
   {
    "id": "S4b",
    "kind": "row",
    "file": "frozen/S4b-rungs.json",
-   "why": "accent-tone joins the cascade in the aggregate after the glass block (B8); card/scroll.css joins card's rung (B3). Both listed reorders, π owed on the chip and card bands",
-   "digest": "2cb44101775b3940b1693c35024bb7e9a55086f5fdc00068cb5a68c775647f56"
+   "why": "card/scroll.css joins card's rung (B3): a listed reorder, judged pair by pair by FD-4 (P4-F7)",
+   "digest": "db399b78df7fe383d4bf4c7432a7107a7a26e19a7e5889f4e1c7dbdacf347b1a"
   },
   {
    "id": "S4c-1",
    "kind": "row",
    "file": "frozen/S4c-css-doors-1.json",
-   "why": "CSS doors pass 1: 33 doors; every CSS crossing re-pointed at the entered module's index.css, runs kept in cascade order (B3, B5)",
-   "digest": "b8e779c5786510e7cda3c1b4eaf21e7e7b44b333e207f28bef8bfac90a68d8e8"
+   "why": "CSS doors pass 1: 32 doors; every CSS crossing re-pointed at the entered module's index.css, runs kept in cascade order (B3, B5)",
+   "digest": "9e441917df869201e79a9d44e5fcd0ca825baf24e8a3d094362a99f941581fdd"
   },
   {
    "id": "S4c-2",
    "kind": "row",
    "file": "frozen/S4c-css-doors-2.json",
    "why": "CSS doors pass 2: 1 doors; every CSS crossing re-pointed at the entered module's index.css, runs kept in cascade order (B3, B5)",
-   "digest": "79d33390ea1be35f3d8e529164351a7cb2b3684aa033f6d72f2fbb2279eb906e"
+   "digest": "4994d21cb98096a8828663f93246f6f1be989c843f8ee049e9b0f3306dc8703a"
   },
   {
    "id": "S5a",
    "kind": "row",
    "file": "frozen/S5a-split-doors.json",
    "why": "B14: the alert, badge and color doors hold code; it moves to its leaf and the door re-exports it",
-   "digest": "c51846efe7831f9d74fcdc663ffd33c2389273f79940d1879d21ca8cd268ed22"
+   "digest": "055168fba50b1ef12426167344d398e765c444096e5bdef43837d97bbc03ee39"
   },
   {
    "id": "S4d",
    "kind": "moves",
    "file": "frozen/S4d-entry-move.json",
    "why": "the ./motion-core entry source leaves motion/core/ for motion/: it re-exports core's files and five sibling modules (reveal, scroll, route, dissolve, spring, pointer), so it is a door of composables/motion, and core gets a module door of its own for its siblings (no core <-> sibling cycle). The export key and typesVersions are keyed by name (dist/motion-core.*), so the surface does not change",
-   "digest": "de26e8be05984c703267a987bca38c893e04531cffbac57f2ff3eff551aed38e"
+   "digest": "329d87757633d0b63af37e0a570a39a137398742f2bc9222f9cf53342be7563c"
   },
   {
    "id": "S4f",
    "kind": "row",
    "file": "frozen/S4f-type-homes.json",
    "why": "B4: the uniform table moves to the bridge that uploads by name (frame), the image input types to the config that names them; the runtime reads both",
-   "digest": "c15a45a925fb8903bd07e9d7cbda7f16dfd22409c7901fc37f5dd98afa29c26b"
+   "digest": "dda611915002bb1f9934a806f6e738facc7c23401b85856d5c8fc47fb01fbd70"
   },
   {
    "id": "S4e",
    "kind": "row",
    "file": "frozen/S4e-tokens-door.json",
    "why": "B7: the tokens module holds script code; its door re-exports tokens.ts and is the ./tokens entry source",
-   "digest": "a7ba5ccc2b016fb8f21fbb3b1d1b8e4b2ca399a9f2ebe5fdbae4e94710587eb8"
+   "digest": "867e4b15bed650d4625a167550603893b6f9120e9e7a0f0fb5e7e89ecf0e782b"
   },
   {
    "id": "S5-1",
    "kind": "row",
    "file": "frozen/S5-doors-1.json",
    "why": "JS doors pass 1: a door for every module a crossing enters (record.doors in the same row); every crossing re-pointed at the outermost entered module's door, or, past a published entry that does not carry the name, at the sub-module's door (B1, B7, LAW §5)",
-   "digest": "bdd1b0d39b2065bef9eef4f4d5523847596190659abf551ba6c3995b79ef0af9"
+   "digest": "651a53e2538cf41a9d8b5f97c4415963ffdcd3037e98a3bfd1ac29132aa94c2e"
   },
   {
    "id": "S5-2",
    "kind": "row",
    "file": "frozen/S5-doors-2.json",
    "why": "JS doors pass 2: a door for every module a crossing enters (record.doors in the same row); every crossing re-pointed at the outermost entered module's door, or, past a published entry that does not carry the name, at the sub-module's door (B1, B7, LAW §5)",
-   "digest": "52479a4e020c1209eb50fad08d5409e96a8ba387c09881035846bd52e1185c74"
+   "digest": "e2fa704683e8e71e572f3d77d067d4ef0954e6d22165480f5757a7d03c4b9c0c"
   },
   {
    "id": "S6",
    "kind": "row",
    "file": "frozen/S6-test-edits.json",
    "why": "B-S6: the layout pins the migration reds, re-read through the resolved graph (R-3), intent kept",
-   "digest": "ad75e52c4f7bc98ee100ed3f1f011643603f553101616a438a552787b6d1871b"
+   "digest": "7671e21085a5c1bb093c43b4765962c5cf851b62b5cc3fa649994acd9d2692f7"
   },
   {
    "id": "S7",
    "kind": "row",
    "file": "frozen/S7-source-directive.json",
    "why": "B14 (P3-R8): the dist-only @source leaves the ./styles door; the build writes it into the shipped copy, dist bytes unchanged",
-   "digest": "ae8813cf083b9c0b0c78e3b2e1f7c75fd3d6a5978e2e030c9f1da2919e25ee2e"
+   "digest": "fecb3702ea99264aabb549d8ceb74679db1a22fabad0efba9ffb888951b35d05"
   },
   {
    "id": "S8",
    "kind": "row",
    "file": "frozen/S8-one-door.json",
    "why": "B9 (R-6, P3-R4): one symbol, one door. 40 names leave their second entry; consumers re-pointed; a MIGRATION row per name",
-   "digest": "7767c7b63802aa6b85b6921e5fc76fd4dd6197cf26203ceaa1317f09beb1d423"
+   "digest": "1b35e93c1d61929bc280839fabf19ed9ec49a30e98801f9050c30a9febb335ec"
   },
   {
    "id": "S9",
    "kind": "row",
    "file": "frozen/S9-relays.json",
    "why": "B12: the paint-arm and tokens relays leave; B11: ten internal-door names nothing outside reads leave their doors",
-   "digest": "01ea926ab2dfa8bc33b631548f634bb8ce492011c27b26cf766a91f1818b37fb"
+   "digest": "6eda6870efa7b1a5ac904abde3aced3b48e076813bcc60b2274684b22f8539e1"
   },
   {
    "id": "S10",
    "kind": "moves",
    "file": "frozen/S10-minify-move.json",
    "why": "B12: minify-css becomes TypeScript so it declares its own types; the .d.mts mirror then leaves (S11)",
-   "digest": "563d8415e3498bdc23b68fb92496f8d418bbdb4c0e22f30e94764ff0efab69c8"
+   "digest": "f7e416d26d794e60ab2035d22b7a8baba1eb444563dc7cc2e4a4703d5d853b4f"
   },
   {
    "id": "S11",
    "kind": "row",
    "file": "frozen/S11-minify-types.json",
    "why": "B12: minify-css declares its own types; the .d.mts mirror leaves",
-   "digest": "a8188ef561b2b50ff730db48d4c43bc3d0d5a9c76738ea8c143e934a3f4dab0c"
+   "digest": "20b6469baa3304b3a01ded3d8e24d41e76e582e1ec4025b694b1c2929aa70f9f"
   },
   {
    "id": "S12",
    "kind": "row",
    "file": "frozen/S12-surface-pin.json",
    "why": "the floor surface pin follows the one-door row: 60 name losses across 6 entries, each named by a MIGRATION row; 0 growth",
-   "digest": "8dfc2fc2a81e64b5d2f2a14deae9bdc418da08629c2ec190342ab3c4d00d5e56"
+   "digest": "20ec4d89704341e93068d72e292c845a460f0c161acbf744faf05d9f286ea410"
   },
   {
    "id": "S13",
    "kind": "row",
    "file": "frozen/S13-gate.json",
    "why": "the gate lands in the tree: every clause runs under npm test (tests/gates/seal.test.ts), against a pin the gate computed on this tree with the reviewed names and holds",
-   "digest": "0c5898556bf848f4460b4d9e4b69d33baefebbd5d22f85fcbd7ca820b80f60e2"
+   "digest": "dae22247143f504642b84353145957c53285e0f5e67a80e0e549316a6cfc7bbe"
   },
   {
    "id": "S14",
    "kind": "row",
    "file": "frozen/S14-test-programs.json",
    "why": "R-3: the library program leaves colocated tests out, the test program takes them in",
-   "digest": "e42631e2d1239ee69db9e5a01921049ae72be81eaea5b69a84b93412a8ab9ee9"
+   "digest": "571aa292854bc0a1a8d29905a96ce38870215414ed21c4a50b7e2d4415151839"
   },
   {
    "id": "S15",
    "kind": "moves",
    "file": "frozen/S15-colocate.json",
-   "why": "R-3 (B16): 71 tests join their subject's module in <home>/__tests__/; 55 stay, each with its reason",
-   "digest": "3c013ee047113925eb0b51a997fadc662f3961de9c712315a466b6d483df2ff1"
+   "why": "R-3 (B16): 84 tests join their subject's module in <home>/__tests__/; 42 stay, each with its reason",
+   "digest": "d93dd4017ca5909179c4fd650d3a5b3f5afc040979eff5cdd9d01d4d6c05dde1"
   },
   {
    "id": "S16",
    "kind": "row",
    "file": "frozen/S16-test-slots.json",
    "why": "R-3: three source walkers skip the __tests__ slot, as the harness does",
-   "digest": "fc1f2beac76824ee6d53c49b107a26ca84f1387249901eb3955851e0510975cf"
+   "digest": "6d88b53d11c8f007e2f0cf3c16a23d1195deda36c7806799ba774fe4a8d3a948"
   },
   {
    "id": "S17",
    "kind": "row",
    "file": "frozen/S17-b9-homes.json",
    "why": "B9: the Combobox types move to command and ControlSize to input, the entries that publish them; no door re-exports outside its module",
-   "digest": "e6fa7d523b1f2798b25e39e4e7f4816bc39fea6491a6df6d5205823ba6f30a0d"
+   "digest": "6db83cc595bd3c90bfb16ac8daa81660f98fca87c6f83dfad4c9c1f9dcf3ec80"
   },
   {
    "id": "S18",
    "kind": "row",
    "file": "frozen/S18-r8-canon-doc.json",
    "why": "R-8 / E-7: the dead scripts/lib/canon-doc.mjs is deleted with its opaque-ledger row",
-   "digest": "0b1888b297960647dc54ced4775954cc4cead95d67d51675368649814743a2b2"
+   "digest": "bb50951c1578b2f993006f184dd2b5dc2fa1483830c06d85f099aef79f01cc2b"
   },
   {
    "id": "S19",
    "kind": "moves",
    "file": "frozen/S19-scripts-moves.json",
    "why": "B-S15 (SPECS §2.8, §1.4; LAW §1, §4, §10): the scripts zone as modules. The two paint helpers only tests-visual reads leave scripts for tests-visual (cross-zone placement, S-15); minify-css becomes its own module; the F-1 graph and the files only it dominates (evaluator and the four scanners; the resolver is held, see authored/seal-review.json) become the floor library's graph module; the gate becomes a module of the floor runtime, so every scripts dir holds 12 files or fewer once its door lands",
-   "digest": "85010493a623820e7cb715a9bf2a6ab08566b4738c0b69b5a5b7a6a6ee68de2e"
+   "digest": "fcee44aad705f61d17adacea7061b42a64ea58417d2dc52a2c59c047bcf54c72"
   },
   {
    "id": "S20",
    "kind": "row",
    "file": "frozen/S20-scripts-doors.json",
    "why": "B7/B1 in the scripts zone: a door for every scripts module, every crossing through it; path reads of the floor replaced by door functions",
-   "digest": "14dd0651d2956b400c046f09f694e0ff243ebe09c21fa0e5111fbb0152b99290"
-  },
-  {
-   "id": "S21",
-   "kind": "row",
-   "file": "frozen/S21-r1-register.json",
-   "why": "R-1 (precondition of the structure migration): gate-register and its test retire with the register; the collapse wave's fresh roster names no path",
-   "digest": "164b46b64b993d048f5c179bdbc004844a9141a04526503efe9d5f6a9faf4a4c"
+   "digest": "c9eb593be3c6a7521fc143f0281f3054c0bd6ab5e65f1ba964776527c068480c"
   },
   {
    "id": "S22",
    "kind": "row",
    "file": "frozen/S22-test-home-imports.json",
    "why": "R-3 / FD-2: eight motion tests read their subject from its own module, not the parent's door, so they can colocate without a unit cycle",
-   "digest": "9687142fbc0749a808ccb2f936cefc6c3016b5a41a72fae0d8d3c9f123c03e9c"
+   "digest": "7e9e515e29802d09d12c32e262c219fc55626e0cc02e3ba7e1dbe4cf0c542c89"
   },
   {
    "id": "S23",
    "kind": "row",
    "file": "frozen/S23-test-programs-scripts.json",
    "why": "R-3 for the scripts zone: the test program and vitest collect scripts/**/__tests__ as they collect src's",
-   "digest": "d3f38d85d7d1f546d7577da96ea83a689ecbc006eb39bfda478ce4ae3522fcb0"
+   "digest": "9a029a6d19b57eced54c85df93054bec38a362a46bb6fd5c0918f90619597668"
   },
   {
    "id": "S24",
    "kind": "moves",
    "file": "frozen/S24-colocate.json",
-   "why": "R-3 (B16): 58 held tests join their subject's module; 0 stay, each with its reason",
-   "digest": "923ed98291974aeb9950f82c3f467b6b78aa05deeca334aa84715c6642f37625"
+   "why": "R-3 (B16): 45 held tests join their subject's module; 0 stay, each with its reason",
+   "digest": "23782b0e3b3dbe0214c51fe77d5222ec237d4e2e23d566d1b35c81fe71668923"
   },
   {
    "id": "S25",
    "kind": "row",
    "file": "frozen/S25-gate.json",
    "why": "the law's pass-3 amendments land (LAW §1 scripts TS door, §5 B2 on module references, §9 B8's test arm and B16's kernel-as-dependency homing and slot helpers) with the pin the gate computes after S17-S24 and the resolve.mjs hold",
-   "digest": "041ff371074a0ca74646a09098c9f4cb2a3874df43b0bfd238a68ed064cc99cf"
+   "digest": "dc6ec0faf8c0336355fac8559889d1f1f4a8d836c420dbc35767b85618f0a230"
   },
   {
    "id": "S26",
    "kind": "moves",
    "file": "frozen/S26-colocate.json",
    "why": "R-3 (B16): 23 held tests join their subject's module; 0 stay, each with its reason",
-   "digest": "72709fd25ef6ea696d8be225ae053497fff241840a2d0ffc8ea0aaca5419cee9"
+   "digest": "a274fce570601a3b69197b441954a7f619727f7f889b53cb64e2b3c20414b0ce"
   },
   {
    "id": "S27",
    "kind": "row",
    "file": "frozen/S27-gate.json",
    "why": "LAW §5 the test seam: a test's text read and its vi.mock target are neither consumption (B2) nor a door crossing (B1); the pin after S26",
-   "digest": "225f62602868178aae9a41086ac8a4b33dccce48ae5d0863b5d346c55600c09d"
+   "digest": "8e99e45e74aef0d7765431c7d118a2caaf4a30cd4efd06150244bcb99dd2cd15"
   },
   {
    "id": "S28",
    "kind": "row",
    "file": "frozen/S28-test-doors.json",
    "why": "B1 (LAW §5): 10 imports of colocated tests re-pointed at the entered module's door",
-   "digest": "8f219474b4471e6ffcc02de295f69e90508fe1bba83200828b117f22253a3c00"
+   "digest": "4576a74e7fe071601baa8b7d3dfbd999d682d4fb21cf2fcd023137d291f94a02"
   },
   {
    "id": "S29",
    "kind": "row",
    "file": "frozen/S29-consumer-entries.json",
    "why": "R-10 (B2): 103 consumer imports re-pointed at their publishing entry; 52 lines read private names (the residue, frozen in the row)",
-   "digest": "c4260ce7fef17143f71a8bebc71f37d9afbe0ddf7f946e103dd05e061bfa0dfb"
+   "digest": "e27d877f388e19a2dfe6a9f9b943f61d0d47a8db786592f84b272d663843ab3d"
   },
   {
    "id": "S30",
    "kind": "row",
    "file": "frozen/S30-door-readers.json",
    "why": "the floor runtime's CLIs lose their hashbang (the door loads them into DOM-environment tests, whose web transform refuses it); B11: the minify door keeps only minifyCss",
-   "digest": "dab2d103943a734723c9691378e4f23a4f7549d8ef1d2258d051d3da0120eb05"
+   "digest": "8d9a4935e5d5b065326c78d3b6906c271f336801c6e5c83563971ba9261ddc03"
   },
   {
    "id": "S31",
    "kind": "row",
    "file": "frozen/S31-gate.json",
    "why": "the gate's file loses its hashbang with the runtime's CLIs (S30); the pin after S29-S30",
-   "digest": "8890b3ef3431a4a03f4229b4318cf27659463f48260ea512c712882677e23cfc"
+   "digest": "b5fa4d55d29f384d6fb5df66a19a3d46ee4c49760f28e9c025e331c3cd7c2952"
   },
   {
    "id": "S32",
    "kind": "row",
    "file": "frozen/S32-test-slots.json",
    "why": "R-3: two more source walkers skip the __tests__ slot, as the harness does",
-   "digest": "472cf49336969d4f72142e1bf9b9aed8f79a9c49800c03ef6d500c81c0fd16b0"
+   "digest": "635623e885d2df7186631e37549fefefc4220169c177ab37dd16259bbd4ede6e"
+  },
+  {
+   "id": "S33",
+   "kind": "row",
+   "file": "frozen/S33-aurora-config.json",
+   "why": "B-S10 / P3-R5: the ./aurora-config entry lands (a leaf at the aurora unit root, mirroring ./blob-config); ./aurora drops the config module's names and the first-paint ground (R-6, P3-R4), each a MIGRATION row; every consumer that took one through ./aurora is split onto the new entry",
+   "digest": "9371906760bf0e9de394b6d2a26bada1505d3b14ebb827a147046f8ab976b2c9"
+  },
+  {
+   "id": "S33b",
+   "kind": "row",
+   "file": "frozen/S33b-entries.json",
+   "why": "F-3: package.json follows the entry record (./aurora-config: exports and typesVersions)",
+   "digest": "d859b7c5c9f9d6811093930b1748bb16f2bd8622f63c02fb5c0a9ae3017f536c"
+  },
+  {
+   "id": "S33c",
+   "kind": "row",
+   "file": "frozen/S33c-surface-pin.json",
+   "why": "B-S33c surface re-pin: ./aurora-config added with 41 names, each leaving ./aurora (a MIGRATION row per name, P3-R5's added key); nothing else changes",
+   "digest": "77cee0ba0d0c951c175af5868022f3169651192de311312c81315b88dcea9894"
+  },
+  {
+   "id": "S34",
+   "kind": "row",
+   "file": "frozen/S34-no-masking.json",
+   "why": "S-14: no masking fallback. 15 missing-file guards that returned as if the file were empty leave (the read fails loud), and the accent-tone solve leaf's load is no longer swallowed; its test asserts the failure surfaces",
+   "digest": "5ef2b3dc88487ec80788de71c16b04d6340167db97e0f20cf3372047da67a15f"
+  },
+  {
+   "id": "S35",
+   "kind": "row",
+   "file": "frozen/S35-b4-cycles.json",
+   "why": "B4 (LAW §8, cB O-1): same-directory file cycles are counted; the three on the tree are cured by moving the declaration or helper to the file that owns its meaning",
+   "digest": "0783b69706431786d25d409292c78ef7edbfea4d32dfd3ee68efd00e80ac2aa7"
+  },
+  {
+   "id": "S36",
+   "kind": "moves",
+   "file": "frozen/S36-names-moves.json",
+   "why": "B-07: B15 judges all five zones; tests/utils dissolves into its helpers' homes",
+   "digest": "ef813e34baf95ce27c3f5dc788a01f04057a49a678a8b3b251ced1817a34414f"
+  },
+  {
+   "id": "S37",
+   "kind": "row",
+   "file": "frozen/S37-gate.json",
+   "why": "gate re-land (pass 4): B-11 one pin path (no --pin); B4 counts same-directory file cycles; B15 in all five zones; B17 no masking fallback; no holds; the pin after S33-S36",
+   "digest": "6618df1f7d2f5a0c657e4b1d14f61203e83e5b8164463abdb479f0432ca8685c"
   }
  ]
 }

@@ -236,13 +236,46 @@
    "renderer": "surface"
   },
   "src/components/fourier-field": {
-   ".": "constants"
+   ".": "register"
   },
   "src/components/menu": {
    ".": "context"
   },
   "src/components/sortable-list": {
-   ".": "resolve"
+   ".": "drop"
+  }
+ },
+ "g_review": {
+  "note": "Pass 4 (B-07, REGISTRY §P3-2.2): G's name deltas reviewed one by one against B's names, each with its decision and reason. A name says what the dir holds, never its kind, and never repeats the file it holds.",
+  "fourier-field .": {
+   "g": "register",
+   "b": "constants",
+   "decision": "take G's",
+   "why": "the file calls itself the fourier-field register (the author schema and the constants the paint law is written in); constants/constants.ts names a kind twice"
+  },
+  "sortable-list .": {
+   "g": "drop",
+   "b": "resolve",
+   "decision": "take G's",
+   "why": "the module is the drop resolution (collision math over the lift-time rect cache); resolve/resolve.ts repeats the file and names a verb every module has"
+  },
+  "toast Toaster.vue": {
+   "g": "toaster",
+   "b": "collapse",
+   "decision": "keep B's",
+   "why": "Toaster dominates every component the toast unit holds, so a toaster/ dir would nest the whole unit one level down beside an empty root"
+  },
+  "sheet SheetContent.vue": {
+   "g": "detents",
+   "b": "keep",
+   "decision": "keep B's",
+   "why": "detents/ is the detent maths and its hook (projection, useSheetDetents); SheetContent.vue is the sheet's content root, which reads detents, not a member of it"
+  },
+  "aurora config.ts": {
+   "g": "src/components/aurora/config.ts (./aurora-config source)",
+   "b": "src/components/aurora/aurora-config.ts",
+   "decision": "B's",
+   "why": "aurora already has a config/ module; config.ts beside config/ names one thing twice. The entry leaf is named for its export key (S33)"
   }
  }
 }

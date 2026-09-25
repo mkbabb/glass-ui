@@ -6,7 +6,6 @@
 //   reads outside src  it reads a file outside src (a tests helper, a fixture, the setup, a
 //             root doc), and a src file that reads another zone breaks B8; the law owes a
 //             clause for test helpers first
-//   rostered  a closed record the gate-register seat reads names it by path
 //   dirname   it computes paths from __dirname, import.meta.url or process.cwd() (B0's class):
 //             the engine cannot rewrite a computed path, so the move would break it silently
 //   not-test  it is not a `*.test.ts` file, and vitest collects only `*.test.ts` from src
@@ -34,15 +33,13 @@ try {
 
 const rows = V.B16.map((s) => { const m = /^(\S+) \(subject in (\S+): belongs in /.exec(s); if (!m) throw new Error(`colocate: unread B16 row ${s}`); return { test: m[1], home: m[2] }; });
 const g = F.buildGraph(root);
-// the closed records scripts/gate-register.mjs reads name tests by path; a move breaks the seat
-const rostered = [...readFileSync(join(root, "scripts/gate-register.mjs"), "utf8").matchAll(/"(docs\/[^"]+\.(?:json|md))"/g)].map((m) => readFileSync(join(root, m[1]), "utf8"));
+// (R-1's register retires in the floor's first row, r1, so no closed record binds a test's path)
 const stays = [];
 const moves = [];
 for (const { test, home } of rows) {
     const why = [];
     const helpers = [...new Set(g.edges.filter((e) => e.from === test && e.to && e.to !== test && !e.to.startsWith("src/") && !e.external).map((e) => e.to))];
     if (helpers.length) why.push(`reads outside src (${helpers.join(", ")})`);
-    if (rostered.some((t) => t.includes(test))) why.push("rostered (named by path in a closed record the gate-register seat reads)");
     if (/__dirname|import\.meta\.url|process\.cwd\(\)/.test(readFileSync(join(root, test), "utf8"))) why.push("dirname");
     if (!/\.test\.ts$/.test(test)) why.push("not-test");
     if (why.length) { stays.push({ test, home, why: why.join("; ") }); continue; }

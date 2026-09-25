@@ -4,7 +4,6 @@
 # of how frozen/SEQUENCE.json was made; the replay (replay.mjs) never runs it.
 #   start    the chain's base: the tree's code digest at its HEAD
 #   S1       the floor rows (floor/rows/apply.mjs), shared by every route
-#   S1c      the floor base's surface pin follows the base (derive/base-repin.mjs; new in pass 4)
 #   computed steps run their derive tool on the tree as it stands (placement, carve, doors,
 #            colocation, consumer entries, the surface pin, the gate's pin)
 #   authored steps run the authored input through derive/edits.mjs or derive/apply-moves.mjs
@@ -21,13 +20,13 @@ rec() { node record-step.mjs --root "$W" --id "$1" --kind "$2" ${3:+--file "$3"}
 E() { node derive/edits.mjs --root "$W" --authored "authored/$2" --id "$1" --out "frozen/$3"; }
 AM() { node derive/apply-moves.mjs --root "$W" --authored "authored/$2" --id "$1" --out "frozen/$3"; }
 RL() { node derive/reland.mjs --root "$W" --id "$1" --out "frozen/$1-gate.json"; }
-ORDER="start S1 S1c S1b S2 S2b S3 S4a S4b S4c S5a S4d S4f S4e S5-1 S5-2 S6 S7 S8 S9 S10 S11 S12 S13 S14 S15 S16 S17 S18 S19 S20 S21 S22 S23 S24 S25 S26 S27 S28 S29 S30 S31 S32"
+ORDER="start S1 S1b S1d S2 S2b S3 S4a S4b S4c S5a S4d S4f S4e S5-1 S5-2 S6 S7 S8 S9 S10 S11 S12 S13 S14 S15 S16 S17 S18 S19 S20 S22 S23 S24 S25 S26 S27 S28 S29 S30 S31 S32 S33 S33b S33c S34 S35 S36 S37"
 step() {
 case "$1" in
  start) node record-step.mjs --root "$W" --start "$(git -C "$W" rev-parse --short=8 HEAD)";;
- S1) node "$K/../../floor/rows/apply.mjs" --root "$W"; rec S1 floor-rows;;
- S1c) (cd "$W" && npx vite build >/dev/null 2>&1); node derive/base-repin.mjs --root "$W" --authored authored/base-surface.json --id S1c --out frozen/S1c-base-surface.json;;
+ S1) node "$K/../../floor/rows/apply.mjs" --root "$W"; node record-step.mjs --root "$W" --id S1 --kind floor-rows --why "the floor rows r1, f3, f4, m02, m03, f9, fd6, fd7, fd11 (floor/rows/apply.mjs, the P4 floor): the one cut every route starts from";;
  S1b) node derive/unrelay.mjs --root "$W" --out frozen/S1b-unrelay.json; rec S1b row frozen/S1b-unrelay.json;;
+ S1d) E S1d overlay-unrelay.mjs S1d-overlay-unrelay.json;;
  S2) node derive/place.mjs --root "$W";;
  S2b) node derive/unrelay.mjs --root "$W" --only src/composables/search/index.ts --step "B-S2b the emptied kernel door composables/search dissolves (LAW §5: a kernel door re-exporting unit files is a shim, B8)" --out frozen/S2b-search-door.json; rec S2b row frozen/S2b-search-door.json;;
  S3) node derive/carve.mjs --root "$W";;
@@ -54,7 +53,6 @@ case "$1" in
  S18) E S18 r8-canon-doc.mjs S18-r8-canon-doc.json;;
  S19) AM S19 scripts-moves.json S19-scripts-moves.json;;
  S20) E S20 scripts-doors.mjs S20-scripts-doors.json;;
- S21) E S21 r1-register.mjs S21-r1-register.json;;
  S22) E S22 test-home-imports.mjs S22-test-home-imports.json;;
  S23) E S23 test-programs-scripts.mjs S23-test-programs-scripts.json;;
  S24|S26) node derive/colocate-rest.mjs --root "$W" --id "$1" --out "frozen/$1-colocate.json";;
@@ -62,6 +60,13 @@ case "$1" in
  S29) node derive/consumer-entries.mjs --root "$W" --id S29 --out frozen/S29-consumer-entries.json --partial;;
  S30) E S30 door-readers.mjs S30-door-readers.json;;
  S32) E S32 test-slots-2.mjs S32-test-slots.json;;
+ S34) E S34 no-masking.mjs S34-no-masking.json;;
+ S35) E S35 b4-cycles.mjs S35-b4-cycles.json;;
+ S36) AM S36 names-moves.json S36-names-moves.json;;
+ S37) node derive/land-gate.mjs --root "$W" --id S37 --out frozen/S37-gate.json --why "gate re-land (pass 4): B-11 one pin path (no --pin); B4 counts same-directory file cycles; B15 in all five zones; B17 no masking fallback; no holds; the pin after S33-S36";;
+ S33) node derive/split-entry.mjs --root "$W" --authored authored/aurora-config.mjs --id S33 --out frozen/S33-aurora-config.json;;
+ S33b) node derive/entries-write.mjs --root "$W" --id S33b --why "F-3: package.json follows the entry record (./aurora-config: exports and typesVersions)" --out frozen/S33b-entries.json;;
+ S33c) (cd "$W" && npx vite build >/dev/null 2>&1); node derive/repin-reviewed.mjs --root "$W" --expect authored/aurora-config.mjs --from aurora --id S33c --out frozen/S33c-surface-pin.json;;
  *) echo "chain.sh: unknown step $1"; exit 2;;
 esac
 }

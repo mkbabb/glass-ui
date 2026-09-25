@@ -24,6 +24,10 @@
   "src/composables/search/useFuzzySearch.ts": {
    "to": "src/components/dock/search/useFuzzySearch.ts",
    "why": "F-7 move (read only by dock). LAW §3: the kernel module search (useFuzzySearch, match, types; its door reached by no entry) is placed whole into its one reader and keeps its authored name as dock/search/"
+  },
+  "src/components/_shared/overlay/isTeleportedTarget.ts": {
+   "to": "src/components/dock/composables/isTeleportedTarget.ts",
+   "why": "P3-R6: placed by its readers. F-7 homes it in dock (its one reader is useDockState.ts, in the composables slot); proposedPath puts it at the dock root, which would hold 13 direct files (R-5); it joins its reader in the slot (10 files)"
   }
  },
  "groups": [
@@ -56,10 +60,13 @@
    "why": "LAW §3: the rest of the search module; F-7 moves each into dock once useFuzzySearch has moved (their readers become dock). The emptied kernel door is dissolved by row S2b"
   }
  ],
- "holds": {
-  "src/components/_shared/overlay/isTeleportedTarget.ts": {
-   "home": "src/components/dock",
-   "why": "FD-8: P3-R6 places it by its readers (dock), but the F-2 image check refuses the move because demo/demo.css:106 @source \"../src/components/_shared/**/*.ts\" loses the file, and the floor engine has no declaration for a css-source membership change (only scan edges take scanDeltas). Widening the glob is refused by demo.css itself (shader template literals under components/). Owed: a floor css-source delta arm; no route-side cure is clean"
+ "holds": {},
+ "globDeltas": [
+  {
+   "scanner": "demo/demo.css",
+   "glob": "../src/components/_shared/**/*.ts",
+   "file": "src/components/_shared/overlay/isTeleportedTarget.ts",
+   "reason": "P3-R6: placed by its readers (dock). The file holds no Tailwind class candidate (a DOM predicate over data-glass-dock-* attributes), so leaving the demo's _shared scan drops no utility; declared under P4-F2's ledger rule"
   }
- }
+ ]
 }

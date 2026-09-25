@@ -1,0 +1,844 @@
+[browser-seat 2026-09-25T21:39:46.403Z] seat acquired after 0.0s: <scratch>/wt
+[browser-seat 2026-09-25T21:39:47.660Z] demo server http://localhost:55277 (pid 41613, cwd <scratch>/wt); 12 spec(s): affordance-map.spec.ts, card-composite.spec.ts, card-padding.spec.ts, css-critical.spec.ts, demo-design.spec.ts, glass-cal.spec.ts, no-shadcn-default.spec.ts, page-chassis.spec.ts, selection-card.spec.ts, storybook-meta.spec.ts, substrate-paints-color.spec.ts, zz-chip-band.spec.ts
+
+Running 71 tests using 1 worker
+
+  -   1 [chromium-headless-new] › affordance-map.spec.ts:89:9 › affordance-map — light › (a) HOVER-LIFT — a live pointer hover drives the mapped scale lift > 1
+  -   2 [chromium-headless-new] › affordance-map.spec.ts:113:9 › affordance-map — light › (b) GLEAM-TRACK — the glass gleam position tracks the pointer off the centred 50% rest
+  -   3 [chromium-headless-new] › affordance-map.spec.ts:139:9 › affordance-map — light › (c) PRESS-SQUISH — a live press drives the scale toward --scale-press + the coupled --glass-btn-press-t
+  -   4 [chromium-headless-new] › affordance-map.spec.ts:89:9 › affordance-map — dark › (a) HOVER-LIFT — a live pointer hover drives the mapped scale lift > 1
+  -   5 [chromium-headless-new] › affordance-map.spec.ts:113:9 › affordance-map — dark › (b) GLEAM-TRACK — the glass gleam position tracks the pointer off the centred 50% rest
+  -   6 [chromium-headless-new] › affordance-map.spec.ts:139:9 › affordance-map — dark › (c) PRESS-SQUISH — a live press drives the scale toward --scale-press + the coupled --glass-btn-press-t
+  -   7 [chromium-headless-new] › affordance-map.spec.ts:178:1 › (d) REKA STALE-BINDING — a live click on a Switch actually FLIPS aria-checked/data-state
+  -   8 [chromium-headless-new] › affordance-map.spec.ts:208:1 › (e) FOCUS-RING — a glass Button is keyboard-reachable + paints a visible focus indicator
+  -   9 [chromium-headless-new] › affordance-map.spec.ts:235:1 › (f) ARIA-PRESERVED — a press-squish does NOT alter the element role
+  -  10 [chromium-headless-new] › affordance-map.spec.ts:258:1 › (g) TOUCH-TARGET — the glass Button hit box clears ≥44×44 on coarse pointer
+  -  11 [chromium-headless-new] › affordance-map.spec.ts:276:1 › PRM — under reduce a press snaps the drive with no transform ramp; focus-ring unaffected
+  ✘  12 [chromium-headless-new] › card-composite.spec.ts:85:5 › (a) scroll-shrink demo produces CLS = 0 across the sweep — light (6.2s)
+  ✘  13 [chromium-headless-new] › card-composite.spec.ts:85:5 › (a) scroll-shrink demo produces CLS = 0 across the sweep — dark (6.2s)
+  ✘  14 [chromium-headless-new] › card-composite.spec.ts:102:1 › (b) the 3 lanes are transform/opacity only — no padding/font-size/grid-track delta (6.2s)
+  ✘  15 [chromium-headless-new] › card-composite.spec.ts:160:1 › (c) the layout-property animation forces more per-frame reflow than the transform rewrite (6.3s)
+  ✘  16 [chromium-headless-new] › card-composite.spec.ts:234:1 › capture the rest/scrolled frame pair (the gestalt is identical) (6.2s)
+  ✘  17 [chromium-headless-new] › card-padding.spec.ts:121:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › card golden padding — light (1.3s)
+  ✘  18 [chromium-headless-new] › card-padding.spec.ts:121:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › card golden padding — dark (1.1s)
+  ✘  19 [chromium-headless-new] › card-padding.spec.ts:191:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › scroll-shrink header sqrt-φ lift — light (1.1s)
+  ✘  20 [chromium-headless-new] › card-padding.spec.ts:191:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › scroll-shrink header sqrt-φ lift — dark (1.2s)
+  ✘  21 [chromium-headless-new] › card-padding.spec.ts:224:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › overlay band sqrt-φ ratio — light (1.0m)
+  ✘  22 [chromium-headless-new] › card-padding.spec.ts:224:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › overlay band sqrt-φ ratio — dark (1.0m)
+  ✓  23 [chromium-headless-new] › card-padding.spec.ts:286:5 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › the golden constants are sqrt-φ + φ (5ms)
+  ✓  24 [chromium-headless-new] › css-critical.spec.ts:154:5 › FOUC-safe: above-the-fold chrome paints identically with/without the deferred tail — light (1.5s)
+  ✓  25 [chromium-headless-new] › css-critical.spec.ts:154:5 › FOUC-safe: above-the-fold chrome paints identically with/without the deferred tail — dark (1.4s)
+  ✓  26 [chromium-headless-new] › demo-design.spec.ts:72:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P1 — the type pane leads with a focal display specimen (>> text-title) [light] (1.3s)
+  ✘  27 [chromium-headless-new] › demo-design.spec.ts:105:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P2 — the rainbow ramp reads as the focal moment (above the core grid) [light] (1.0s)
+  ✓  28 [chromium-headless-new] › demo-design.spec.ts:144:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P3 — the Pops row leads the icons pane as static plates [light] (1.3s)
+  ✘  29 [chromium-headless-new] › demo-design.spec.ts:186:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P4 — the primary-audacious CTA out-presents destructive + glass over field [light] (960ms)
+  ✘  30 [chromium-headless-new] › demo-design.spec.ts:223:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P5 — the notification tones render as translucent .feedback-tone rows [light] (8.8s)
+  ✓  31 [chromium-headless-new] › demo-design.spec.ts:72:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P1 — the type pane leads with a focal display specimen (>> text-title) [dark] (1.4s)
+  ✘  32 [chromium-headless-new] › demo-design.spec.ts:105:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P2 — the rainbow ramp reads as the focal moment (above the core grid) [dark] (1.1s)
+  ✓  33 [chromium-headless-new] › demo-design.spec.ts:144:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P3 — the Pops row leads the icons pane as static plates [dark] (1.4s)
+  ✘  34 [chromium-headless-new] › demo-design.spec.ts:186:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P4 — the primary-audacious CTA out-presents destructive + glass over field [dark] (1.0s)
+  ✘  35 [chromium-headless-new] › demo-design.spec.ts:223:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P5 — the notification tones render as translucent .feedback-tone rows [dark] (8.8s)
+  ✘  36 [chromium-headless-new] › glass-cal.spec.ts:68:5 › BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π) › (a) BLUR — the resolved radii are dialed back + glass still reads as glass (1.1s)
+  ✓  37 [chromium-headless-new] › glass-cal.spec.ts:105:5 › BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π) › (b) DISCO — ZERO btn-audacious elements + ZERO sparkle glyphs at /display/buttons (1.6s)
+  ✓  38 [chromium-headless-new] › glass-cal.spec.ts:132:5 › BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π) › (c) DOCK — the primary tier reads the glass register, not the grain (1.5s)
+  ✓  39 [chromium-headless-new] › glass-cal.spec.ts:159:5 › BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π) › (d) CHIP — an interactive Chip hover lifts on §6, not a flat snap (1.4s)
+  ✘  40 [chromium-headless-new] › no-shadcn-default.spec.ts:119:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons (1.0s)
+  ✓  41 [chromium-headless-new] › no-shadcn-default.spec.ts:135:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: Toggle outline resolves the glass-well material — /forms/toggle (1.1s)
+  ✘  42 [chromium-headless-new] › no-shadcn-default.spec.ts:148:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input (982ms)
+  ✓  43 [chromium-headless-new] › no-shadcn-default.spec.ts:164:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: Switch thumb resolves the warm material (NOT the page-background neutral) — /forms/checks (1.2s)
+  ✘  44 [chromium-headless-new] › no-shadcn-default.spec.ts:119:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons (1.0s)
+  ✓  45 [chromium-headless-new] › no-shadcn-default.spec.ts:135:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: Toggle outline resolves the glass-well material — /forms/toggle (1.1s)
+  ✘  46 [chromium-headless-new] › no-shadcn-default.spec.ts:148:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input (990ms)
+  ✓  47 [chromium-headless-new] › no-shadcn-default.spec.ts:164:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: Switch thumb resolves the warm material (NOT the page-background neutral) — /forms/checks (1.1s)
+  ✘  48 [chromium-headless-new] › page-chassis.spec.ts:66:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-1 — the hero <h1> is a display heading + the .fira-code subpath chip renders (734ms)
+  ✓  49 [chromium-headless-new] › page-chassis.spec.ts:99:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-2 — the hero SHRINKS on scroll (monotone then HOLD), CLS ≈ 0 (21.0s)
+  ✓  50 [chromium-headless-new] › page-chassis.spec.ts:147:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-STICKY — the pinned header PERSISTS past the header height + lifts painted (the G7-STICKY containing-block fix) (17.1s)
+  ✓  51 [chromium-headless-new] › page-chassis.spec.ts:211:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-3 — the depth-keyed title size hierarchy (D1 > D2 > D3) (10.2s)
+  ✓  52 [chromium-headless-new] › page-chassis.spec.ts:238:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-4 — PRM: the hero does NOT shrink under reduced-motion (876ms)
+  ✓  53 [chromium-headless-new] › page-chassis.spec.ts:269:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-5 — exactly ONE chassis glass card per page (17.9s)
+  ✘  54 [chromium-headless-new] › page-chassis.spec.ts:295:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-6 — the section-landing bento + inline preview (no GL budget blown) (1.0s)
+  ✘  55 [chromium-headless-new] › selection-card.spec.ts:151:9 › selection-card (the I5 <Card variant=selection> data-hue rim + earned metal-on-select) › light: three distinct data-hue rims, warm-cream plate untouched, metal-on-select (1.4s)
+  ✘  56 [chromium-headless-new] › selection-card.spec.ts:151:9 › selection-card (the I5 <Card variant=selection> data-hue rim + earned metal-on-select) › dark: three distinct data-hue rims, warm-cream plate untouched, metal-on-select (1.3s)
+  ✘  57 [chromium-headless-new] › selection-card.spec.ts:270:5 › selection-card (the I5 <Card variant=selection> data-hue rim + earned metal-on-select) › PRM-static: the selected metal rim paints static under prefers-reduced-motion (1.2s)
+  ✓  58 [chromium-headless-new] › storybook-meta.spec.ts:82:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M6 — the body/caption copy clears the legible floor [light] (1.4s)
+  ✓  59 [chromium-headless-new] › storybook-meta.spec.ts:117:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M7 — no stray off-palette blue artifact [light] (1.1s)
+  ✘  60 [chromium-headless-new] › storybook-meta.spec.ts:143:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [light] (1.2s)
+  ✘  61 [chromium-headless-new] › storybook-meta.spec.ts:191:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [light] (5.4s)
+  ✘  62 [chromium-headless-new] › storybook-meta.spec.ts:249:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [light] (897ms)
+  ✓  63 [chromium-headless-new] › storybook-meta.spec.ts:82:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M6 — the body/caption copy clears the legible floor [dark] (1.1s)
+  ✓  64 [chromium-headless-new] › storybook-meta.spec.ts:117:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M7 — no stray off-palette blue artifact [dark] (929ms)
+  ✘  65 [chromium-headless-new] › storybook-meta.spec.ts:143:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [dark] (1.4s)
+  ✘  66 [chromium-headless-new] › storybook-meta.spec.ts:191:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [dark] (5.4s)
+  ✘  67 [chromium-headless-new] › storybook-meta.spec.ts:249:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [dark] (1.1s)
+PI aurora DEFAULT meanChannel=230.7 floor=8
+PI aurora SETTING_SUN meanChannel=231.3 floor=8
+PI aurora DUSK meanChannel=230.2 floor=8
+PI aurora VIVID_SETTING_SUN meanChannel=233.0 floor=8
+PI aurora OPENAI_SKY meanChannel=231.2 floor=8
+PI aurora OPENAI_DAWN meanChannel=229.4 floor=8
+PI aurora OPENAI_MEADOW meanChannel=206.6 floor=8
+PI aurora DELIBERATIVE meanChannel=235.2 floor=8
+PI aurora DAY9_YELLOW meanChannel=229.4 floor=8
+PI aurora OIL_IMPASTO meanChannel=194.0 floor=8
+PI aurora OIL_GESTURAL meanChannel=217.7 floor=8
+PI aurora VANGOGH meanChannel=101.4 floor=8
+PI aurora OILPASTEL_SUNSET meanChannel=199.3 floor=8
+PI aurora OILPASTEL_RAINBOW meanChannel=217.3 floor=8
+PI aurora OILPASTEL_OCEAN meanChannel=149.5 floor=8
+PI aurora CRAYON meanChannel=166.0 floor=8
+PI aurora METAL meanChannel=206.4 floor=8
+PI aurora SPEEDTEST meanChannel=177.8 floor=8
+  ✓  68 [chromium-headless-new] › substrate-paints-color.spec.ts:575:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 (25.0s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.160 floor=0.1 · paintedShare=0.287 ceil=0.7
+  ✓  69 [chromium-headless-new] › substrate-paints-color.spec.ts:759:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS (8.3s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.160 floor=0.1 · paintedShare=0.287 ceil=0.7
+  ✓  70 [chromium-headless-new] › substrate-paints-color.spec.ts:767:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS (8.1s)
+--accent-band-strength on .glass-chip.accent-tone: max(18%, calc(12% + 10%))
+  ✓  71 [chromium-headless-new] › zz-chip-band.spec.ts:8:1 › a Chip's --accent-band-strength is glass-chip's floored band, not the register's 18% (447ms)
+
+
+  1) [chromium-headless-new] › card-composite.spec.ts:85:5 › (a) scroll-shrink demo produces CLS = 0 across the sweep — light 
+
+    TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="card-shrink-host"]') to be visible
+
+
+      78 |     await page.goto("/display/card", { waitUntil: "networkidle" });
+      79 |     // the shrink surface must exist (scope item 7 added it if absent at HEAD)
+    > 80 |     await page.waitForSelector('[data-testid="card-shrink-host"]', { timeout: 5000 });
+         |                ^
+      81 | });
+      82 |
+      83 | // ── (a) the shipped rewrite produces CLS = 0 ─────────────────────────────────
+        at <scratch>/wt/tests-visual/card-composite.spec.ts:80:16
+
+    Error Context: test-results/card-composite--a-scroll-s-10588--0-across-the-sweep-—-light-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › card-composite.spec.ts:85:5 › (a) scroll-shrink demo produces CLS = 0 across the sweep — dark 
+
+    TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="card-shrink-host"]') to be visible
+
+
+      78 |     await page.goto("/display/card", { waitUntil: "networkidle" });
+      79 |     // the shrink surface must exist (scope item 7 added it if absent at HEAD)
+    > 80 |     await page.waitForSelector('[data-testid="card-shrink-host"]', { timeout: 5000 });
+         |                ^
+      81 | });
+      82 |
+      83 | // ── (a) the shipped rewrite produces CLS = 0 ─────────────────────────────────
+        at <scratch>/wt/tests-visual/card-composite.spec.ts:80:16
+
+    Error Context: test-results/card-composite--a-scroll-s-a83be-S-0-across-the-sweep-—-dark-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › card-composite.spec.ts:102:1 › (b) the 3 lanes are transform/opacity only — no padding/font-size/grid-track delta 
+
+    TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="card-shrink-host"]') to be visible
+
+
+      78 |     await page.goto("/display/card", { waitUntil: "networkidle" });
+      79 |     // the shrink surface must exist (scope item 7 added it if absent at HEAD)
+    > 80 |     await page.waitForSelector('[data-testid="card-shrink-host"]', { timeout: 5000 });
+         |                ^
+      81 | });
+      82 |
+      83 | // ── (a) the shipped rewrite produces CLS = 0 ─────────────────────────────────
+        at <scratch>/wt/tests-visual/card-composite.spec.ts:80:16
+
+    Error Context: test-results/card-composite--b-the-3-la-6eda1--font-size-grid-track-delta-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › card-composite.spec.ts:160:1 › (c) the layout-property animation forces more per-frame reflow than the transform rewrite 
+
+    TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="card-shrink-host"]') to be visible
+
+
+      78 |     await page.goto("/display/card", { waitUntil: "networkidle" });
+      79 |     // the shrink surface must exist (scope item 7 added it if absent at HEAD)
+    > 80 |     await page.waitForSelector('[data-testid="card-shrink-host"]', { timeout: 5000 });
+         |                ^
+      81 | });
+      82 |
+      83 | // ── (a) the shipped rewrite produces CLS = 0 ─────────────────────────────────
+        at <scratch>/wt/tests-visual/card-composite.spec.ts:80:16
+
+    Error Context: test-results/card-composite--c-the-layo-c4e0b--than-the-transform-rewrite-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › card-composite.spec.ts:234:1 › capture the rest/scrolled frame pair (the gestalt is identical) 
+
+    TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="card-shrink-host"]') to be visible
+
+
+      78 |     await page.goto("/display/card", { waitUntil: "networkidle" });
+      79 |     // the shrink surface must exist (scope item 7 added it if absent at HEAD)
+    > 80 |     await page.waitForSelector('[data-testid="card-shrink-host"]', { timeout: 5000 });
+         |                ^
+      81 | });
+      82 |
+      83 | // ── (a) the shipped rewrite produces CLS = 0 ─────────────────────────────────
+        at <scratch>/wt/tests-visual/card-composite.spec.ts:80:16
+
+    Error Context: test-results/card-composite-capture-the-d56d0-r-the-gestalt-is-identical--chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › card-padding.spec.ts:121:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › card golden padding — light 
+
+    Error: block axis must exceed inline (sqrt-φ lift)
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 12
+    Received:   12
+
+      146 |                 m.paddingTop,
+      147 |                 "block axis must exceed inline (sqrt-φ lift)",
+    > 148 |             ).toBeGreaterThan(m.paddingLeft);
+          |               ^
+      149 |             // the ratio is sqrt-φ ±0.04.
+      150 |             const ratio = m.paddingTop / m.paddingLeft;
+      151 |             expect(
+        at <scratch>/wt/tests-visual/card-padding.spec.ts:148:15
+
+    Error Context: test-results/card-padding-card-padding--422cf-card-golden-padding-—-light-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › card-padding.spec.ts:121:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › card golden padding — dark 
+
+    Error: block axis must exceed inline (sqrt-φ lift)
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 12
+    Received:   12
+
+      146 |                 m.paddingTop,
+      147 |                 "block axis must exceed inline (sqrt-φ lift)",
+    > 148 |             ).toBeGreaterThan(m.paddingLeft);
+          |               ^
+      149 |             // the ratio is sqrt-φ ±0.04.
+      150 |             const ratio = m.paddingTop / m.paddingLeft;
+      151 |             expect(
+        at <scratch>/wt/tests-visual/card-padding.spec.ts:148:15
+
+    Error Context: test-results/card-padding-card-padding--cec6f--card-golden-padding-—-dark-chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › card-padding.spec.ts:191:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › scroll-shrink header sqrt-φ lift — light 
+
+    Error: no scroll-shrink header on the route
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      207 |                 };
+      208 |             });
+    > 209 |             expect(m, "no scroll-shrink header on the route").not.toBeNull();
+          |                                                                   ^
+      210 |             if (!m) return;
+      211 |             // the sqrt-φ top lift (paddingTop > paddingLeft) + zeroed block-end.
+      212 |             expect(m.paddingTop).toBeGreaterThan(m.paddingLeft);
+        at <scratch>/wt/tests-visual/card-padding.spec.ts:209:67
+
+    Error Context: test-results/card-padding-card-padding--882b7--header-sqrt-φ-lift-—-light-chromium-headless-new/error-context.md
+
+  9) [chromium-headless-new] › card-padding.spec.ts:191:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › scroll-shrink header sqrt-φ lift — dark 
+
+    Error: no scroll-shrink header on the route
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      207 |                 };
+      208 |             });
+    > 209 |             expect(m, "no scroll-shrink header on the route").not.toBeNull();
+          |                                                                   ^
+      210 |             if (!m) return;
+      211 |             // the sqrt-φ top lift (paddingTop > paddingLeft) + zeroed block-end.
+      212 |             expect(m.paddingTop).toBeGreaterThan(m.paddingLeft);
+        at <scratch>/wt/tests-visual/card-padding.spec.ts:209:67
+
+    Error Context: test-results/card-padding-card-padding--ff342-k-header-sqrt-φ-lift-—-dark-chromium-headless-new/error-context.md
+
+  10) [chromium-headless-new] › card-padding.spec.ts:224:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › overlay band sqrt-φ ratio — light 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: /open glass dialog/i }).first()
+
+
+      231 |                 .getByRole("button", { name: /open glass dialog/i })
+      232 |                 .first()
+    > 233 |                 .click();
+          |                  ^
+      234 |             await page.waitForTimeout(200);
+      235 |             const dlg = await page.evaluate(() => {
+      236 |                 const el = document.querySelector<HTMLElement>(
+        at <scratch>/wt/tests-visual/card-padding.spec.ts:233:18
+
+    Error Context: test-results/card-padding-card-padding--14bcd-y-band-sqrt-φ-ratio-—-light-chromium-headless-new/error-context.md
+
+  11) [chromium-headless-new] › card-padding.spec.ts:224:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › overlay band sqrt-φ ratio — dark 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: /open glass dialog/i }).first()
+
+
+      231 |                 .getByRole("button", { name: /open glass dialog/i })
+      232 |                 .first()
+    > 233 |                 .click();
+          |                  ^
+      234 |             await page.waitForTimeout(200);
+      235 |             const dlg = await page.evaluate(() => {
+      236 |                 const el = document.querySelector<HTMLElement>(
+        at <scratch>/wt/tests-visual/card-padding.spec.ts:233:18
+
+    Error Context: test-results/card-padding-card-padding--c2002-ay-band-sqrt-φ-ratio-—-dark-chromium-headless-new/error-context.md
+
+  12) [chromium-headless-new] › demo-design.spec.ts:105:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P2 — the rainbow ramp reads as the focal moment (above the core grid) [light] 
+
+    Error: the rainbow + core grid both render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      129 |             });
+      130 |             paired[`p2-${mode}`] = order;
+    > 131 |             expect(order, "the rainbow + core grid both render").not.toBeNull();
+          |                                                                      ^
+      132 |             expect(
+      133 |                 order!.rainbowY,
+      134 |                 `the rainbow ramp (Y=${order!.rainbowY}) must lead above the core grid (Y=${order!.coreY}) — the focal promotion`,
+        at <scratch>/wt/tests-visual/demo-design.spec.ts:131:70
+
+    Error Context: test-results/demo-design-BB-W-DEMO-DESI-8d562--above-the-core-grid-light--chromium-headless-new/error-context.md
+
+    Error Context: test-results/demo-design-BB-W-DEMO-DESI-8d562--above-the-core-grid-light--chromium-headless-new/error-context.md
+
+  13) [chromium-headless-new] › demo-design.spec.ts:186:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P4 — the primary-audacious CTA out-presents destructive + glass over field [light] 
+
+    Error: the CTA + destructive buttons render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      208 |             });
+      209 |             paired[`p4-${mode}`] = cta;
+    > 210 |             expect(cta, "the CTA + destructive buttons render").not.toBeNull();
+          |                                                                     ^
+      211 |             expect(
+      212 |                 cta!.ctaY,
+      213 |                 `the CTA (Y=${cta!.ctaY}) must out-present destructive (Y=${cta!.destructiveY}) — the focal placement above`,
+        at <scratch>/wt/tests-visual/demo-design.spec.ts:210:69
+
+    Error Context: test-results/demo-design-BB-W-DEMO-DESI-4fab9-ive-glass-over-field-light--chromium-headless-new/error-context.md
+
+    Error Context: test-results/demo-design-BB-W-DEMO-DESI-4fab9-ive-glass-over-field-light--chromium-headless-new/error-context.md
+
+  14) [chromium-headless-new] › demo-design.spec.ts:223:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P5 — the notification tones render as translucent .feedback-tone rows [light] 
+
+    Error: a .feedback-tone row renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      237 |             });
+      238 |             paired[`p5-${mode}`] = tone;
+    > 239 |             expect(tone, "a .feedback-tone row renders").not.toBeNull();
+          |                                                              ^
+      240 |             const alpha = parseAlpha(tone!.bg);
+      241 |             expect(alpha, `the tone row background resolves (${tone!.bg})`).not.toBeNull();
+      242 |             // A tinted-glass row is translucent (α < ~0.95) — NOT an opaque solid dot/slab.
+        at <scratch>/wt/tests-visual/demo-design.spec.ts:239:62
+
+    Error Context: test-results/demo-design-BB-W-DEMO-DESI-4c30a-t-feedback-tone-rows-light--chromium-headless-new/error-context.md
+
+    Error Context: test-results/demo-design-BB-W-DEMO-DESI-4c30a-t-feedback-tone-rows-light--chromium-headless-new/error-context.md
+
+  15) [chromium-headless-new] › demo-design.spec.ts:105:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P2 — the rainbow ramp reads as the focal moment (above the core grid) [dark] 
+
+    Error: the rainbow + core grid both render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      129 |             });
+      130 |             paired[`p2-${mode}`] = order;
+    > 131 |             expect(order, "the rainbow + core grid both render").not.toBeNull();
+          |                                                                      ^
+      132 |             expect(
+      133 |                 order!.rainbowY,
+      134 |                 `the rainbow ramp (Y=${order!.rainbowY}) must lead above the core grid (Y=${order!.coreY}) — the focal promotion`,
+        at <scratch>/wt/tests-visual/demo-design.spec.ts:131:70
+
+    Error Context: test-results/demo-design-BB-W-DEMO-DESI-67ee2-t-above-the-core-grid-dark--chromium-headless-new/error-context.md
+
+    Error Context: test-results/demo-design-BB-W-DEMO-DESI-67ee2-t-above-the-core-grid-dark--chromium-headless-new/error-context.md
+
+  16) [chromium-headless-new] › demo-design.spec.ts:186:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P4 — the primary-audacious CTA out-presents destructive + glass over field [dark] 
+
+    Error: the CTA + destructive buttons render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      208 |             });
+      209 |             paired[`p4-${mode}`] = cta;
+    > 210 |             expect(cta, "the CTA + destructive buttons render").not.toBeNull();
+          |                                                                     ^
+      211 |             expect(
+      212 |                 cta!.ctaY,
+      213 |                 `the CTA (Y=${cta!.ctaY}) must out-present destructive (Y=${cta!.destructiveY}) — the focal placement above`,
+        at <scratch>/wt/tests-visual/demo-design.spec.ts:210:69
+
+    Error Context: test-results/demo-design-BB-W-DEMO-DESI-567ce-tive-glass-over-field-dark--chromium-headless-new/error-context.md
+
+    Error Context: test-results/demo-design-BB-W-DEMO-DESI-567ce-tive-glass-over-field-dark--chromium-headless-new/error-context.md
+
+  17) [chromium-headless-new] › demo-design.spec.ts:223:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P5 — the notification tones render as translucent .feedback-tone rows [dark] 
+
+    Error: a .feedback-tone row renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      237 |             });
+      238 |             paired[`p5-${mode}`] = tone;
+    > 239 |             expect(tone, "a .feedback-tone row renders").not.toBeNull();
+          |                                                              ^
+      240 |             const alpha = parseAlpha(tone!.bg);
+      241 |             expect(alpha, `the tone row background resolves (${tone!.bg})`).not.toBeNull();
+      242 |             // A tinted-glass row is translucent (α < ~0.95) — NOT an opaque solid dot/slab.
+        at <scratch>/wt/tests-visual/demo-design.spec.ts:239:62
+
+    Error Context: test-results/demo-design-BB-W-DEMO-DESI-512e3-nt-feedback-tone-rows-dark--chromium-headless-new/error-context.md
+
+    Error Context: test-results/demo-design-BB-W-DEMO-DESI-512e3-nt-feedback-tone-rows-dark--chromium-headless-new/error-context.md
+
+  18) [chromium-headless-new] › glass-cal.spec.ts:68:5 › BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π) › (a) BLUR — the resolved radii are dialed back + glass still reads as glass 
+
+    Error: --glass-blur-wash-radius resolves 10px (expected 1px) in light
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 10
+
+      81 |             for (const [name, expected] of Object.entries(EXPECT_RADII)) {
+      82 |                 const got = pxNumber(radii[name]);
+    > 83 |                 expect(got, `${name} resolves ${radii[name]} (expected ${expected}px) in ${scheme}`).toBe(expected);
+         |                                                                                                      ^
+      84 |             }
+      85 |
+      86 |             // A glass surface still composes a real backdrop-filter blur (the glass
+        at <scratch>/wt/tests-visual/glass-cal.spec.ts:83:102
+
+    Error Context: test-results/glass-cal-BA-W-GLASS-CAL-—-3e0a5--glass-still-reads-as-glass-chromium-headless-new/error-context.md
+
+  19) [chromium-headless-new] › no-shadcn-default.spec.ts:119:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons 
+
+    Error: Button variant="outline" (light): no element matched (the reskinned surface must render on this route)
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      87 |     surf: { bg: string; borderColor: string; boxShadow: string } | null,
+      88 | ): void {
+    > 89 |     expect(surf, `${label}: no element matched (the reskinned surface must render on this route)`).not.toBeNull();
+         |                                                                                                        ^
+      90 |     const s = surf!;
+      91 |     const stats = statsFromResolvedBg(s.bg);
+      92 |     expect(
+        at assertMaterial (<scratch>/wt/tests-visual/no-shadcn-default.spec.ts:89:104)
+        at <scratch>/wt/tests-visual/no-shadcn-default.spec.ts:130:17
+
+    Error Context: test-results/no-shadcn-default-no-shadc-218f9-lass-fill-—-display-buttons-chromium-headless-new/error-context.md
+
+  20) [chromium-headless-new] › no-shadcn-default.spec.ts:148:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input 
+
+    Error: TagsInput item (light): no element matched (the reskinned surface must render on this route)
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      87 |     surf: { bg: string; borderColor: string; boxShadow: string } | null,
+      88 | ): void {
+    > 89 |     expect(surf, `${label}: no element matched (the reskinned surface must render on this route)`).not.toBeNull();
+         |                                                                                                        ^
+      90 |     const s = surf!;
+      91 |     const stats = statsFromResolvedBg(s.bg);
+      92 |     expect(
+        at assertMaterial (<scratch>/wt/tests-visual/no-shadcn-default.spec.ts:89:104)
+        at <scratch>/wt/tests-visual/no-shadcn-default.spec.ts:160:13
+
+    Error Context: test-results/no-shadcn-default-no-shadc-01caf-ring-ring-—-data-tags-input-chromium-headless-new/error-context.md
+
+  21) [chromium-headless-new] › no-shadcn-default.spec.ts:119:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons 
+
+    Error: Button variant="outline" (dark): no element matched (the reskinned surface must render on this route)
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      87 |     surf: { bg: string; borderColor: string; boxShadow: string } | null,
+      88 | ): void {
+    > 89 |     expect(surf, `${label}: no element matched (the reskinned surface must render on this route)`).not.toBeNull();
+         |                                                                                                        ^
+      90 |     const s = surf!;
+      91 |     const stats = statsFromResolvedBg(s.bg);
+      92 |     expect(
+        at assertMaterial (<scratch>/wt/tests-visual/no-shadcn-default.spec.ts:89:104)
+        at <scratch>/wt/tests-visual/no-shadcn-default.spec.ts:130:17
+
+    Error Context: test-results/no-shadcn-default-no-shadc-9ba83-lass-fill-—-display-buttons-chromium-headless-new/error-context.md
+
+  22) [chromium-headless-new] › no-shadcn-default.spec.ts:148:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input 
+
+    Error: TagsInput item (dark): no element matched (the reskinned surface must render on this route)
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      87 |     surf: { bg: string; borderColor: string; boxShadow: string } | null,
+      88 | ): void {
+    > 89 |     expect(surf, `${label}: no element matched (the reskinned surface must render on this route)`).not.toBeNull();
+         |                                                                                                        ^
+      90 |     const s = surf!;
+      91 |     const stats = statsFromResolvedBg(s.bg);
+      92 |     expect(
+        at assertMaterial (<scratch>/wt/tests-visual/no-shadcn-default.spec.ts:89:104)
+        at <scratch>/wt/tests-visual/no-shadcn-default.spec.ts:160:13
+
+    Error Context: test-results/no-shadcn-default-no-shadc-e9bf2-ring-ring-—-data-tags-input-chromium-headless-new/error-context.md
+
+  23) [chromium-headless-new] › page-chassis.spec.ts:66:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-1 — the hero <h1> is a display heading + the .fira-code subpath chip renders 
+
+    Error: /substrates subpath chip matches
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "@mkbabb/glass-ui/aurora"
+    Received: null
+
+      92 |             ).toBeGreaterThanOrEqual(DISPLAY4_FLOOR_PX);
+      93 |             // the fira-code subpath chip matches the manifest cell.
+    > 94 |             expect(readback.chipText, `${route} subpath chip matches`).toBe(subpath);
+         |                                                                        ^
+      95 |         }
+      96 |         paired["PC-1"] = perRoute;
+      97 |     });
+        at <scratch>/wt/tests-visual/page-chassis.spec.ts:94:72
+
+    Error Context: test-results/page-chassis-BC-W-PAGE-CHA-5d1d7-a-code-subpath-chip-renders-chromium-headless-new/error-context.md
+
+    Error Context: test-results/page-chassis-BC-W-PAGE-CHA-5d1d7-a-code-subpath-chip-renders-chromium-headless-new/error-context.md
+
+  24) [chromium-headless-new] › page-chassis.spec.ts:295:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-6 — the section-landing bento + inline preview (no GL budget blown) 
+
+    Error: /substrates every card has a static icon-shaped Chip
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 6
+    Received: 0
+
+      352 |             };
+      353 |             expect(r.cards, `${route} renders bento cards`).toBeGreaterThan(0);
+    > 354 |             expect(r.withIcon, `${route} every card has a static icon-shaped Chip`).toBe(r.cards);
+          |                                                                                     ^
+      355 |             expect(r.withChip, `${route} every card has a subpath chip`).toBe(r.cards);
+      356 |             expect(r.previews, `${route} every card has a preview`).toBe(r.cards);
+      357 |             expect(r.previewInert, `${route} previews pointer-events: none`).toBe(true);
+        at <scratch>/wt/tests-visual/page-chassis.spec.ts:354:85
+
+    Error Context: test-results/page-chassis-BC-W-PAGE-CHA-b6583-preview-no-GL-budget-blown--chromium-headless-new/error-context.md
+
+    Error Context: test-results/page-chassis-BC-W-PAGE-CHA-b6583-preview-no-GL-budget-blown--chromium-headless-new/error-context.md
+
+  25) [chromium-headless-new] › selection-card.spec.ts:151:9 › selection-card (the I5 <Card variant=selection> data-hue rim + earned metal-on-select) › light: three distinct data-hue rims, warm-cream plate untouched, metal-on-select 
+
+    Error: light ruby: the selection-card PLATE "color(srgb 0.20397 0.148263 0.0829736 / 0.14)" is NOT warm-cream translucent — oklabL 0.280 not in [0.85, 0.99]. Selection rides the RIM + glint (the --glass-accent A-2 seam), it must NEVER flood the plate (the rim-not-fill discipline; the BC.W-GLASS-IDENTITY floor is inviolate).
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      170 |                     verdict.pass,
+      171 |                     `${mode} ${r.id}: the selection-card PLATE "${r.backgroundColor}" is NOT warm-cream translucent — ${verdict.reasons.join("; ")}. Selection rides the RIM + glint (the --glass-accent A-2 seam), it must NEVER flood the plate (the rim-not-fill discipline; the BC.W-GLASS-IDENTITY floor is inviolate).`,
+    > 172 |                 ).toBe(true);
+          |                   ^
+      173 |             }
+      174 |
+      175 |             // (2) each card's data hue reaches its RIM (the A-2 `--glass-accent` seam
+        at <scratch>/wt/tests-visual/selection-card.spec.ts:172:19
+
+    Error Context: test-results/selection-card-selection-c-0500b-e-untouched-metal-on-select-chromium-headless-new/error-context.md
+
+  26) [chromium-headless-new] › selection-card.spec.ts:151:9 › selection-card (the I5 <Card variant=selection> data-hue rim + earned metal-on-select) › dark: three distinct data-hue rims, warm-cream plate untouched, metal-on-select 
+
+    Error: the three selection-card rims must read as three DISTINCT hues — got oklab(0.925196 0.00238398 0.00574207 / 0.04) / oklab(0.925196 0.00238398 0.00574207 / 0.04) / oklab(0.925196 0.00238398 0.00574207 / 0.04) (a flooded single accent would collapse them)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 3
+    Received: 1
+
+      226 |                 uniqueRims.size,
+      227 |                 `the three selection-card rims must read as three DISTINCT hues — got ${rimColors.join(" / ")} (a flooded single accent would collapse them)`,
+    > 228 |             ).toBe(3);
+          |               ^
+      229 |
+      230 |             // (3) the SELECTED card resolves the metal border-image (a swept gradient
+      231 |             // present on its border); the unselected siblings carry none. `none` is the
+        at <scratch>/wt/tests-visual/selection-card.spec.ts:228:15
+
+    Error Context: test-results/selection-card-selection-c-26cc2-e-untouched-metal-on-select-chromium-headless-new/error-context.md
+
+  27) [chromium-headless-new] › selection-card.spec.ts:270:5 › selection-card (the I5 <Card variant=selection> data-hue rim + earned metal-on-select) › PRM-static: the selected metal rim paints static under prefers-reduced-motion 
+
+    Error: under prefers-reduced-motion the selected metal rim must STILL paint static (the gradient is the load-bearing visual; only the sweep animation is gated) — got "none"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      278 |             selected.borderImageSource !== "none" && /gradient/i.test(selected.borderImageSource),
+      279 |             `under prefers-reduced-motion the selected metal rim must STILL paint static (the gradient is the load-bearing visual; only the sweep animation is gated) — got "${selected.borderImageSource}"`,
+    > 280 |         ).toBe(true);
+          |           ^
+      281 |     });
+      282 | });
+      283 |
+        at <scratch>/wt/tests-visual/selection-card.spec.ts:280:11
+
+    Error Context: test-results/selection-card-selection-c-688b7-nder-prefers-reduced-motion-chromium-headless-new/error-context.md
+
+  28) [chromium-headless-new] › storybook-meta.spec.ts:143:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [light] 
+
+    Error: the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: {"ok":false,"insetPx":null,"articleBottom":779,"scrollerBottom":932}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      185 |                 clearance.ok,
+      186 |                 `the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: ${JSON.stringify(clearance)}`,
+    > 187 |             ).toBe(true);
+          |               ^
+      188 |         });
+      189 |
+      190 |         // ── M9/π — the dogfood-render sweep (the SHELL composes shipped controls) ─
+        at <scratch>/wt/tests-visual/storybook-meta.spec.ts:187:15
+
+    Error Context: test-results/storybook-meta-BC-W-STORYB-ddbcd-lears-the-fixed-dock-light--chromium-headless-new/error-context.md
+
+    Error Context: test-results/storybook-meta-BC-W-STORYB-ddbcd-lears-the-fixed-dock-light--chromium-headless-new/error-context.md
+
+  29) [chromium-headless-new] › storybook-meta.spec.ts:191:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [light] 
+
+    Error: the SHELL morph toggle is not a composed <Button> (still a raw btn-pill chain): {"morphToggleTag":null,"morphToggleClass":"","morphIsButtonComponent":false,"liquidToggleTag":null,"liquidToggleRole":null,"liquidIsSwitch":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      234 |                 shape.morphIsButtonComponent,
+      235 |                 `the SHELL morph toggle is not a composed <Button> (still a raw btn-pill chain): ${JSON.stringify(shape)}`,
+    > 236 |             ).toBe(true);
+          |               ^
+      237 |             expect(
+      238 |                 shape.liquidIsSwitch,
+      239 |                 `the SHELL liquid-preview toggle is not a composed <Switch> (still a raw <input type=checkbox>): ${JSON.stringify(shape)}`,
+        at <scratch>/wt/tests-visual/storybook-meta.spec.ts:236:15
+
+    Error Context: test-results/storybook-meta-BC-W-STORYB-24c0e-n-Switch-Card-markup-light--chromium-headless-new/error-context.md
+
+    Error Context: test-results/storybook-meta-BC-W-STORYB-24c0e-n-Switch-Card-markup-light--chromium-headless-new/error-context.md
+
+  30) [chromium-headless-new] › storybook-meta.spec.ts:249:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [light] 
+
+    Error: the SectionPreviewCard bento does not resolve its composed primitives: {"present":true,"hasIconPlate":false,"hasSubpathChip":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      277 |                     bento.hasIconPlate && bento.hasSubpathChip,
+      278 |                     `the SectionPreviewCard bento does not resolve its composed primitives: ${JSON.stringify(bento)}`,
+    > 279 |                 ).toBe(true);
+          |                   ^
+      280 |             }
+      281 |         });
+      282 |     }
+        at <scratch>/wt/tests-visual/storybook-meta.spec.ts:279:19
+
+    Error Context: test-results/storybook-meta-BC-W-STORYB-2c312-ip-fira-code-subpath-light--chromium-headless-new/error-context.md
+
+    Error Context: test-results/storybook-meta-BC-W-STORYB-2c312-ip-fira-code-subpath-light--chromium-headless-new/error-context.md
+
+  31) [chromium-headless-new] › storybook-meta.spec.ts:143:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [dark] 
+
+    Error: the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: {"ok":false,"insetPx":null,"articleBottom":779,"scrollerBottom":932}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      185 |                 clearance.ok,
+      186 |                 `the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: ${JSON.stringify(clearance)}`,
+    > 187 |             ).toBe(true);
+          |               ^
+      188 |         });
+      189 |
+      190 |         // ── M9/π — the dogfood-render sweep (the SHELL composes shipped controls) ─
+        at <scratch>/wt/tests-visual/storybook-meta.spec.ts:187:15
+
+    Error Context: test-results/storybook-meta-BC-W-STORYB-bb0ce-clears-the-fixed-dock-dark--chromium-headless-new/error-context.md
+
+    Error Context: test-results/storybook-meta-BC-W-STORYB-bb0ce-clears-the-fixed-dock-dark--chromium-headless-new/error-context.md
+
+  32) [chromium-headless-new] › storybook-meta.spec.ts:191:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [dark] 
+
+    Error: the SHELL morph toggle is not a composed <Button> (still a raw btn-pill chain): {"morphToggleTag":null,"morphToggleClass":"","morphIsButtonComponent":false,"liquidToggleTag":null,"liquidToggleRole":null,"liquidIsSwitch":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      234 |                 shape.morphIsButtonComponent,
+      235 |                 `the SHELL morph toggle is not a composed <Button> (still a raw btn-pill chain): ${JSON.stringify(shape)}`,
+    > 236 |             ).toBe(true);
+          |               ^
+      237 |             expect(
+      238 |                 shape.liquidIsSwitch,
+      239 |                 `the SHELL liquid-preview toggle is not a composed <Switch> (still a raw <input type=checkbox>): ${JSON.stringify(shape)}`,
+        at <scratch>/wt/tests-visual/storybook-meta.spec.ts:236:15
+
+    Error Context: test-results/storybook-meta-BC-W-STORYB-27aa1-on-Switch-Card-markup-dark--chromium-headless-new/error-context.md
+
+    Error Context: test-results/storybook-meta-BC-W-STORYB-27aa1-on-Switch-Card-markup-dark--chromium-headless-new/error-context.md
+
+  33) [chromium-headless-new] › storybook-meta.spec.ts:249:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [dark] 
+
+    Error: the SectionPreviewCard bento does not resolve its composed primitives: {"present":true,"hasIconPlate":false,"hasSubpathChip":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      277 |                     bento.hasIconPlate && bento.hasSubpathChip,
+      278 |                     `the SectionPreviewCard bento does not resolve its composed primitives: ${JSON.stringify(bento)}`,
+    > 279 |                 ).toBe(true);
+          |                   ^
+      280 |             }
+      281 |         });
+      282 |     }
+        at <scratch>/wt/tests-visual/storybook-meta.spec.ts:279:19
+
+    Error Context: test-results/storybook-meta-BC-W-STORYB-3b92b-hip-fira-code-subpath-dark--chromium-headless-new/error-context.md
+
+    Error Context: test-results/storybook-meta-BC-W-STORYB-3b92b-hip-fira-code-subpath-dark--chromium-headless-new/error-context.md
+
+  33 failed
+    [chromium-headless-new] › card-composite.spec.ts:85:5 › (a) scroll-shrink demo produces CLS = 0 across the sweep — light 
+    [chromium-headless-new] › card-composite.spec.ts:85:5 › (a) scroll-shrink demo produces CLS = 0 across the sweep — dark 
+    [chromium-headless-new] › card-composite.spec.ts:102:1 › (b) the 3 lanes are transform/opacity only — no padding/font-size/grid-track delta 
+    [chromium-headless-new] › card-composite.spec.ts:160:1 › (c) the layout-property animation forces more per-frame reflow than the transform rewrite 
+    [chromium-headless-new] › card-composite.spec.ts:234:1 › capture the rest/scrolled frame pair (the gestalt is identical) 
+    [chromium-headless-new] › card-padding.spec.ts:121:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › card golden padding — light 
+    [chromium-headless-new] › card-padding.spec.ts:121:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › card golden padding — dark 
+    [chromium-headless-new] › card-padding.spec.ts:191:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › scroll-shrink header sqrt-φ lift — light 
+    [chromium-headless-new] › card-padding.spec.ts:191:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › scroll-shrink header sqrt-φ lift — dark 
+    [chromium-headless-new] › card-padding.spec.ts:224:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › overlay band sqrt-φ ratio — light 
+    [chromium-headless-new] › card-padding.spec.ts:224:9 › card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED) › overlay band sqrt-φ ratio — dark 
+    [chromium-headless-new] › demo-design.spec.ts:105:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P2 — the rainbow ramp reads as the focal moment (above the core grid) [light] 
+    [chromium-headless-new] › demo-design.spec.ts:186:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P4 — the primary-audacious CTA out-presents destructive + glass over field [light] 
+    [chromium-headless-new] › demo-design.spec.ts:223:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P5 — the notification tones render as translucent .feedback-tone rows [light] 
+    [chromium-headless-new] › demo-design.spec.ts:105:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P2 — the rainbow ramp reads as the focal moment (above the core grid) [dark] 
+    [chromium-headless-new] › demo-design.spec.ts:186:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P4 — the primary-audacious CTA out-presents destructive + glass over field [dark] 
+    [chromium-headless-new] › demo-design.spec.ts:223:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P5 — the notification tones render as translucent .feedback-tone rows [dark] 
+    [chromium-headless-new] › glass-cal.spec.ts:68:5 › BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π) › (a) BLUR — the resolved radii are dialed back + glass still reads as glass 
+    [chromium-headless-new] › no-shadcn-default.spec.ts:119:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons 
+    [chromium-headless-new] › no-shadcn-default.spec.ts:148:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input 
+    [chromium-headless-new] › no-shadcn-default.spec.ts:119:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons 
+    [chromium-headless-new] › no-shadcn-default.spec.ts:148:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input 
+    [chromium-headless-new] › page-chassis.spec.ts:66:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-1 — the hero <h1> is a display heading + the .fira-code subpath chip renders 
+    [chromium-headless-new] › page-chassis.spec.ts:295:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-6 — the section-landing bento + inline preview (no GL budget blown) 
+    [chromium-headless-new] › selection-card.spec.ts:151:9 › selection-card (the I5 <Card variant=selection> data-hue rim + earned metal-on-select) › light: three distinct data-hue rims, warm-cream plate untouched, metal-on-select 
+    [chromium-headless-new] › selection-card.spec.ts:151:9 › selection-card (the I5 <Card variant=selection> data-hue rim + earned metal-on-select) › dark: three distinct data-hue rims, warm-cream plate untouched, metal-on-select 
+    [chromium-headless-new] › selection-card.spec.ts:270:5 › selection-card (the I5 <Card variant=selection> data-hue rim + earned metal-on-select) › PRM-static: the selected metal rim paints static under prefers-reduced-motion 
+    [chromium-headless-new] › storybook-meta.spec.ts:143:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [light] 
+    [chromium-headless-new] › storybook-meta.spec.ts:191:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [light] 
+    [chromium-headless-new] › storybook-meta.spec.ts:249:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [light] 
+    [chromium-headless-new] › storybook-meta.spec.ts:143:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [dark] 
+    [chromium-headless-new] › storybook-meta.spec.ts:191:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [dark] 
+    [chromium-headless-new] › storybook-meta.spec.ts:249:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [dark] 
+  11 skipped
+  27 passed (6.3m)
+[browser-seat 2026-09-25T21:46:04.653Z] RED: 27/60 passed, 33 failed, 11 skipped in 378s → <scratch>/browser-base.json
+[browser-seat 2026-09-25T21:46:04.653Z]   FAILED card-composite.spec.ts :: (a) scroll-shrink demo produces CLS = 0 across the sweep — light
+[browser-seat 2026-09-25T21:46:04.653Z]   FAILED card-composite.spec.ts :: (a) scroll-shrink demo produces CLS = 0 across the sweep — dark
+[browser-seat 2026-09-25T21:46:04.653Z]   FAILED card-composite.spec.ts :: (b) the 3 lanes are transform/opacity only — no padding/font-size/grid-track delta
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED card-composite.spec.ts :: (c) the layout-property animation forces more per-frame reflow than the transform rewrite
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED card-composite.spec.ts :: capture the rest/scrolled frame pair (the gestalt is identical)
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED card-padding.spec.ts :: card golden padding — light
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED card-padding.spec.ts :: card golden padding — dark
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED card-padding.spec.ts :: scroll-shrink header sqrt-φ lift — light
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED card-padding.spec.ts :: scroll-shrink header sqrt-φ lift — dark
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED card-padding.spec.ts :: overlay band sqrt-φ ratio — light
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED card-padding.spec.ts :: overlay band sqrt-φ ratio — dark
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED demo-design.spec.ts :: P2 — the rainbow ramp reads as the focal moment (above the core grid) [light]
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED demo-design.spec.ts :: P4 — the primary-audacious CTA out-presents destructive + glass over field [light]
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED demo-design.spec.ts :: P5 — the notification tones render as translucent .feedback-tone rows [light]
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED demo-design.spec.ts :: P2 — the rainbow ramp reads as the focal moment (above the core grid) [dark]
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED demo-design.spec.ts :: P4 — the primary-audacious CTA out-presents destructive + glass over field [dark]
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED demo-design.spec.ts :: P5 — the notification tones render as translucent .feedback-tone rows [dark]
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED glass-cal.spec.ts :: (a) BLUR — the resolved radii are dialed back + glass still reads as glass
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED no-shadcn-default.spec.ts :: light: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED no-shadcn-default.spec.ts :: light: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED no-shadcn-default.spec.ts :: dark: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED no-shadcn-default.spec.ts :: dark: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED page-chassis.spec.ts :: PC-1 — the hero <h1> is a display heading + the .fira-code subpath chip renders
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED page-chassis.spec.ts :: PC-6 — the section-landing bento + inline preview (no GL budget blown)
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED selection-card.spec.ts :: light: three distinct data-hue rims, warm-cream plate untouched, metal-on-select
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED selection-card.spec.ts :: dark: three distinct data-hue rims, warm-cream plate untouched, metal-on-select
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED selection-card.spec.ts :: PRM-static: the selected metal rim paints static under prefers-reduced-motion
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED storybook-meta.spec.ts :: M5 — the last content element clears the fixed dock [light]
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED storybook-meta.spec.ts :: M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [light]
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED storybook-meta.spec.ts :: M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [light]
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED storybook-meta.spec.ts :: M5 — the last content element clears the fixed dock [dark]
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED storybook-meta.spec.ts :: M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [dark]
+[browser-seat 2026-09-25T21:46:04.654Z]   FAILED storybook-meta.spec.ts :: M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [dark]
+node scripts/structure/browser.mjs --root . --specs $SPECS --out  --wait 3600  209.69s user 92.21s system 79% cpu 6:21.07 total

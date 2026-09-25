@@ -63,12 +63,15 @@ for (let pass = 1; pass <= max; pass++) {
     const dry = F.runMoves(root, list, { dry: true });
     const scanDeltas = (dry.scanDeltas?.undeclared ?? []).map((d) => ({ scanner: d.scanner, spec: d.spec, file: d.file, reason: `B-S2 placement: ${d.file} -> ${d.to}; the scanner's sensitivity is judged by the test run` }));
     if (dry.residue?.length) { stop = "residue"; entry.result = stop; entry.residue = dry.residue.slice(0, 10); break; }
-    const r = F.runMoves(root, list, { declaredScanDeltas: scanDeltas });
-    entry.engine = { ok: r.ok, phase: r.phase, filesEdited: r.filesEdited, rewrites: r.rewrites, lost: r.image?.lost ?? [], gained: r.image?.gained ?? [], scc: r.scc ? { before: r.scc.before, after: r.scc.after, addedPairs: r.scc.addedPairs, first: r.scc.firstAdded } : null };
+    // P4-F2: a css-source glob delta is carried only when authored/targets.json declares it
+    // (with its reason); a declaration for a file this pass does not move is not passed on
+    const globDeltas = (A.globDeltas ?? []).filter((x) => list.some((m) => m.from === x.file));
+    const r = F.runMoves(root, list, { declaredScanDeltas: scanDeltas, declaredGlobDeltas: globDeltas });
+    entry.engine = { ok: r.ok, phase: r.phase, globDeltas: r.globDeltas ? { carried: r.globDeltas.carried.length, undeclared: r.globDeltas.undeclared, stale: r.globDeltas.stale } : null, filesEdited: r.filesEdited, rewrites: r.rewrites, lost: r.image?.lost ?? [], gained: r.image?.gained ?? [], scc: r.scc ? { before: r.scc.before, after: r.scc.after, addedPairs: r.scc.addedPairs, first: r.scc.firstAdded } : null };
     if (!r.ok) { stop = `engine refused at ${r.phase}`; entry.result = stop; break; }
     entry.result = "applied";
     const file = `frozen/${tag}-pass-${pass}.json`;
-    writeFileSync(join(KIT, file), `${JSON.stringify({ step: `B-${tag} placement pass ${pass} (frozen, F-9)`, moves: list, scanDeltas, reasons: moves.map((m) => ({ from: m.from, to: m.to, why: m.why, readers: m.readers })) }, null, 1)}\n`);
+    writeFileSync(join(KIT, file), `${JSON.stringify({ step: `B-${tag} placement pass ${pass} (frozen, F-9)`, moves: list, scanDeltas, globDeltas, reasons: moves.map((m) => ({ from: m.from, to: m.to, why: m.why, readers: m.readers })) }, null, 1)}\n`);
     recordStep(root, { id: `${tag}-${pass}`, kind: "moves", file, why: `B-${tag} placement pass ${pass}: ${list.length} move(s) by F-7 with B's anchor (LAW §2-§4)` });
 }
 writeFileSync(join(KIT, `frozen/${tag}-log.json`), `${JSON.stringify({ log, stop }, null, 1)}\n`);

@@ -1,0 +1,54 @@
+{
+ "b17-silent-return": {
+  "B0": {
+   "before": 444,
+   "after": 445,
+   "new": [
+    "scripts/minify/minify-css.ts:201 computed-path read p [fs-read]"
+   ]
+  },
+  "B17": {
+   "before": 0,
+   "after": 1,
+   "new": [
+    "scripts/minify/minify-css.ts:201 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+   ]
+  }
+ },
+ "b17-swallowed-load": {
+  "B17": {
+   "before": 0,
+   "after": 1,
+   "new": [
+    "src/composables/color/useAccentTone.ts:164 swallows a failed module load (.catch without a throw)"
+   ]
+  }
+ },
+ "b15-placeholder-tests": {
+  "B15": {
+   "before": 0,
+   "after": 1,
+   "new": [
+    "tests/helpers (placeholder name)"
+   ]
+  }
+ },
+ "b15-placeholder-tests-visual": {
+  "B15": {
+   "before": 0,
+   "after": 1,
+   "new": [
+    "tests-visual/utils (placeholder name)"
+   ]
+  }
+ },
+ "b4-same-dir-cycle": {
+  "B4": {
+   "before": 0,
+   "after": 1,
+   "new": [
+    "cycle @src/composables/glass/lifecycle [visibility.ts createCanvasLifecycle.ts] via src/composables/glass/lifecycle/visibility.ts -> src/composables/glass/lifecycle/createCanvasLifecycle.ts ; src/composables/glass/lifecycle/createCanvasLifecycle.ts -> src/composables/glass/lifecycle/visibility.ts"
+   ]
+  }
+ }
+}

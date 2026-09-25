@@ -1,0 +1,518 @@
+{
+ "$schema": "browser-seat/1",
+ "root": "<scratch>/wt",
+ "project": "chromium-headless-new",
+ "plant": null,
+ "specs": [
+  "affordance-map.spec.ts",
+  "card-composite.spec.ts",
+  "card-padding.spec.ts",
+  "css-critical.spec.ts",
+  "demo-design.spec.ts",
+  "glass-cal.spec.ts",
+  "no-shadcn-default.spec.ts",
+  "page-chassis.spec.ts",
+  "selection-card.spec.ts",
+  "storybook-meta.spec.ts",
+  "substrate-paints-color.spec.ts",
+  "zz-chip-band.spec.ts"
+ ],
+ "selection": [
+  {
+   "spec": "affordance-map.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "card-composite.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "card-padding.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "css-critical.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "demo-design.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "glass-cal.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "no-shadcn-default.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "page-chassis.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "selection-card.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "storybook-meta.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "substrate-paints-color.spec.ts",
+   "bands": [],
+   "reasons": [
+    "the π pixel floor (every call)"
+   ]
+  },
+  {
+   "spec": "zz-chip-band.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  }
+ ],
+ "bands": [],
+ "url": "http://localhost:62936",
+ "waitedS": 0.001,
+ "ranS": 467.482,
+ "stats": {
+  "startTime": "2026-09-25T23:23:54.778Z",
+  "duration": 464049.275,
+  "expected": 27,
+  "skipped": 11,
+  "unexpected": 33,
+  "flaky": 0
+ },
+ "tests": 71,
+ "ran": 60,
+ "passed": 27,
+ "failed": 33,
+ "skipped": 11,
+ "verdict": "GREEN",
+ "baseReport": "../browser-base.json",
+ "newFailures": [],
+ "failures": [
+  "card-composite.spec.ts :: (a) scroll-shrink demo produces CLS = 0 across the sweep — light",
+  "card-composite.spec.ts :: (a) scroll-shrink demo produces CLS = 0 across the sweep — dark",
+  "card-composite.spec.ts :: (b) the 3 lanes are transform/opacity only — no padding/font-size/grid-track delta",
+  "card-composite.spec.ts :: (c) the layout-property animation forces more per-frame reflow than the transform rewrite",
+  "card-composite.spec.ts :: capture the rest/scrolled frame pair (the gestalt is identical)",
+  "card-padding.spec.ts :: card golden padding — light",
+  "card-padding.spec.ts :: card golden padding — dark",
+  "card-padding.spec.ts :: scroll-shrink header sqrt-φ lift — light",
+  "card-padding.spec.ts :: scroll-shrink header sqrt-φ lift — dark",
+  "card-padding.spec.ts :: overlay band sqrt-φ ratio — light",
+  "card-padding.spec.ts :: overlay band sqrt-φ ratio — dark",
+  "demo-design.spec.ts :: P2 — the rainbow ramp reads as the focal moment (above the core grid) [light]",
+  "demo-design.spec.ts :: P4 — the primary-audacious CTA out-presents destructive + glass over field [light]",
+  "demo-design.spec.ts :: P5 — the notification tones render as translucent .feedback-tone rows [light]",
+  "demo-design.spec.ts :: P2 — the rainbow ramp reads as the focal moment (above the core grid) [dark]",
+  "demo-design.spec.ts :: P4 — the primary-audacious CTA out-presents destructive + glass over field [dark]",
+  "demo-design.spec.ts :: P5 — the notification tones render as translucent .feedback-tone rows [dark]",
+  "glass-cal.spec.ts :: (a) BLUR — the resolved radii are dialed back + glass still reads as glass",
+  "no-shadcn-default.spec.ts :: light: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons",
+  "no-shadcn-default.spec.ts :: light: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input",
+  "no-shadcn-default.spec.ts :: dark: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons",
+  "no-shadcn-default.spec.ts :: dark: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input",
+  "page-chassis.spec.ts :: PC-1 — the hero <h1> is a display heading + the .fira-code subpath chip renders",
+  "page-chassis.spec.ts :: PC-6 — the section-landing bento + inline preview (no GL budget blown)",
+  "selection-card.spec.ts :: light: three distinct data-hue rims, warm-cream plate untouched, metal-on-select",
+  "selection-card.spec.ts :: dark: three distinct data-hue rims, warm-cream plate untouched, metal-on-select",
+  "selection-card.spec.ts :: PRM-static: the selected metal rim paints static under prefers-reduced-motion",
+  "storybook-meta.spec.ts :: M5 — the last content element clears the fixed dock [light]",
+  "storybook-meta.spec.ts :: M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [light]",
+  "storybook-meta.spec.ts :: M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [light]",
+  "storybook-meta.spec.ts :: M5 — the last content element clears the fixed dock [dark]",
+  "storybook-meta.spec.ts :: M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [dark]",
+  "storybook-meta.spec.ts :: M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [dark]"
+ ],
+ "results": [
+  {
+   "spec": "affordance-map.spec.ts",
+   "title": "(d) REKA STALE-BINDING — a live click on a Switch actually FLIPS aria-checked/data-state",
+   "status": "skipped"
+  },
+  {
+   "spec": "affordance-map.spec.ts",
+   "title": "(e) FOCUS-RING — a glass Button is keyboard-reachable + paints a visible focus indicator",
+   "status": "skipped"
+  },
+  {
+   "spec": "affordance-map.spec.ts",
+   "title": "(f) ARIA-PRESERVED — a press-squish does NOT alter the element role",
+   "status": "skipped"
+  },
+  {
+   "spec": "affordance-map.spec.ts",
+   "title": "(g) TOUCH-TARGET — the glass Button hit box clears ≥44×44 on coarse pointer",
+   "status": "skipped"
+  },
+  {
+   "spec": "affordance-map.spec.ts",
+   "title": "PRM — under reduce a press snaps the drive with no transform ramp; focus-ring unaffected",
+   "status": "skipped"
+  },
+  {
+   "spec": "affordance-map.spec.ts",
+   "title": "(a) HOVER-LIFT — a live pointer hover drives the mapped scale lift > 1",
+   "status": "skipped"
+  },
+  {
+   "spec": "affordance-map.spec.ts",
+   "title": "(b) GLEAM-TRACK — the glass gleam position tracks the pointer off the centred 50% rest",
+   "status": "skipped"
+  },
+  {
+   "spec": "affordance-map.spec.ts",
+   "title": "(c) PRESS-SQUISH — a live press drives the scale toward --scale-press + the coupled --glass-btn-press-t",
+   "status": "skipped"
+  },
+  {
+   "spec": "affordance-map.spec.ts",
+   "title": "(a) HOVER-LIFT — a live pointer hover drives the mapped scale lift > 1",
+   "status": "skipped"
+  },
+  {
+   "spec": "affordance-map.spec.ts",
+   "title": "(b) GLEAM-TRACK — the glass gleam position tracks the pointer off the centred 50% rest",
+   "status": "skipped"
+  },
+  {
+   "spec": "affordance-map.spec.ts",
+   "title": "(c) PRESS-SQUISH — a live press drives the scale toward --scale-press + the coupled --glass-btn-press-t",
+   "status": "skipped"
+  },
+  {
+   "spec": "card-composite.spec.ts",
+   "title": "(a) scroll-shrink demo produces CLS = 0 across the sweep — light",
+   "status": "unexpected"
+  },
+  {
+   "spec": "card-composite.spec.ts",
+   "title": "(a) scroll-shrink demo produces CLS = 0 across the sweep — dark",
+   "status": "unexpected"
+  },
+  {
+   "spec": "card-composite.spec.ts",
+   "title": "(b) the 3 lanes are transform/opacity only — no padding/font-size/grid-track delta",
+   "status": "unexpected"
+  },
+  {
+   "spec": "card-composite.spec.ts",
+   "title": "(c) the layout-property animation forces more per-frame reflow than the transform rewrite",
+   "status": "unexpected"
+  },
+  {
+   "spec": "card-composite.spec.ts",
+   "title": "capture the rest/scrolled frame pair (the gestalt is identical)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "card-padding.spec.ts",
+   "title": "card golden padding — light",
+   "status": "unexpected"
+  },
+  {
+   "spec": "card-padding.spec.ts",
+   "title": "card golden padding — dark",
+   "status": "unexpected"
+  },
+  {
+   "spec": "card-padding.spec.ts",
+   "title": "scroll-shrink header sqrt-φ lift — light",
+   "status": "unexpected"
+  },
+  {
+   "spec": "card-padding.spec.ts",
+   "title": "scroll-shrink header sqrt-φ lift — dark",
+   "status": "unexpected"
+  },
+  {
+   "spec": "card-padding.spec.ts",
+   "title": "overlay band sqrt-φ ratio — light",
+   "status": "unexpected"
+  },
+  {
+   "spec": "card-padding.spec.ts",
+   "title": "overlay band sqrt-φ ratio — dark",
+   "status": "unexpected"
+  },
+  {
+   "spec": "card-padding.spec.ts",
+   "title": "the golden constants are sqrt-φ + φ",
+   "status": "expected"
+  },
+  {
+   "spec": "css-critical.spec.ts",
+   "title": "FOUC-safe: above-the-fold chrome paints identically with/without the deferred tail — light",
+   "status": "expected"
+  },
+  {
+   "spec": "css-critical.spec.ts",
+   "title": "FOUC-safe: above-the-fold chrome paints identically with/without the deferred tail — dark",
+   "status": "expected"
+  },
+  {
+   "spec": "demo-design.spec.ts",
+   "title": "P1 — the type pane leads with a focal display specimen (>> text-title) [light]",
+   "status": "expected"
+  },
+  {
+   "spec": "demo-design.spec.ts",
+   "title": "P2 — the rainbow ramp reads as the focal moment (above the core grid) [light]",
+   "status": "unexpected"
+  },
+  {
+   "spec": "demo-design.spec.ts",
+   "title": "P3 — the Pops row leads the icons pane as static plates [light]",
+   "status": "expected"
+  },
+  {
+   "spec": "demo-design.spec.ts",
+   "title": "P4 — the primary-audacious CTA out-presents destructive + glass over field [light]",
+   "status": "unexpected"
+  },
+  {
+   "spec": "demo-design.spec.ts",
+   "title": "P5 — the notification tones render as translucent .feedback-tone rows [light]",
+   "status": "unexpected"
+  },
+  {
+   "spec": "demo-design.spec.ts",
+   "title": "P1 — the type pane leads with a focal display specimen (>> text-title) [dark]",
+   "status": "expected"
+  },
+  {
+   "spec": "demo-design.spec.ts",
+   "title": "P2 — the rainbow ramp reads as the focal moment (above the core grid) [dark]",
+   "status": "unexpected"
+  },
+  {
+   "spec": "demo-design.spec.ts",
+   "title": "P3 — the Pops row leads the icons pane as static plates [dark]",
+   "status": "expected"
+  },
+  {
+   "spec": "demo-design.spec.ts",
+   "title": "P4 — the primary-audacious CTA out-presents destructive + glass over field [dark]",
+   "status": "unexpected"
+  },
+  {
+   "spec": "demo-design.spec.ts",
+   "title": "P5 — the notification tones render as translucent .feedback-tone rows [dark]",
+   "status": "unexpected"
+  },
+  {
+   "spec": "glass-cal.spec.ts",
+   "title": "(a) BLUR — the resolved radii are dialed back + glass still reads as glass",
+   "status": "unexpected"
+  },
+  {
+   "spec": "glass-cal.spec.ts",
+   "title": "(b) DISCO — ZERO btn-audacious elements + ZERO sparkle glyphs at /display/buttons",
+   "status": "expected"
+  },
+  {
+   "spec": "glass-cal.spec.ts",
+   "title": "(c) DOCK — the primary tier reads the glass register, not the grain",
+   "status": "expected"
+  },
+  {
+   "spec": "glass-cal.spec.ts",
+   "title": "(d) CHIP — an interactive Chip hover lifts on §6, not a flat snap",
+   "status": "expected"
+  },
+  {
+   "spec": "no-shadcn-default.spec.ts",
+   "title": "light: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons",
+   "status": "unexpected"
+  },
+  {
+   "spec": "no-shadcn-default.spec.ts",
+   "title": "light: Toggle outline resolves the glass-well material — /forms/toggle",
+   "status": "expected"
+  },
+  {
+   "spec": "no-shadcn-default.spec.ts",
+   "title": "light: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input",
+   "status": "unexpected"
+  },
+  {
+   "spec": "no-shadcn-default.spec.ts",
+   "title": "light: Switch thumb resolves the warm material (NOT the page-background neutral) — /forms/checks",
+   "status": "expected"
+  },
+  {
+   "spec": "no-shadcn-default.spec.ts",
+   "title": "dark: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons",
+   "status": "unexpected"
+  },
+  {
+   "spec": "no-shadcn-default.spec.ts",
+   "title": "dark: Toggle outline resolves the glass-well material — /forms/toggle",
+   "status": "expected"
+  },
+  {
+   "spec": "no-shadcn-default.spec.ts",
+   "title": "dark: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input",
+   "status": "unexpected"
+  },
+  {
+   "spec": "no-shadcn-default.spec.ts",
+   "title": "dark: Switch thumb resolves the warm material (NOT the page-background neutral) — /forms/checks",
+   "status": "expected"
+  },
+  {
+   "spec": "page-chassis.spec.ts",
+   "title": "PC-1 — the hero <h1> is a display heading + the .fira-code subpath chip renders",
+   "status": "unexpected"
+  },
+  {
+   "spec": "page-chassis.spec.ts",
+   "title": "PC-2 — the hero SHRINKS on scroll (monotone then HOLD), CLS ≈ 0",
+   "status": "expected"
+  },
+  {
+   "spec": "page-chassis.spec.ts",
+   "title": "PC-STICKY — the pinned header PERSISTS past the header height + lifts painted (the G7-STICKY containing-block fix)",
+   "status": "expected"
+  },
+  {
+   "spec": "page-chassis.spec.ts",
+   "title": "PC-3 — the depth-keyed title size hierarchy (D1 > D2 > D3)",
+   "status": "expected"
+  },
+  {
+   "spec": "page-chassis.spec.ts",
+   "title": "PC-4 — PRM: the hero does NOT shrink under reduced-motion",
+   "status": "expected"
+  },
+  {
+   "spec": "page-chassis.spec.ts",
+   "title": "PC-5 — exactly ONE chassis glass card per page",
+   "status": "expected"
+  },
+  {
+   "spec": "page-chassis.spec.ts",
+   "title": "PC-6 — the section-landing bento + inline preview (no GL budget blown)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "selection-card.spec.ts",
+   "title": "light: three distinct data-hue rims, warm-cream plate untouched, metal-on-select",
+   "status": "unexpected"
+  },
+  {
+   "spec": "selection-card.spec.ts",
+   "title": "dark: three distinct data-hue rims, warm-cream plate untouched, metal-on-select",
+   "status": "unexpected"
+  },
+  {
+   "spec": "selection-card.spec.ts",
+   "title": "PRM-static: the selected metal rim paints static under prefers-reduced-motion",
+   "status": "unexpected"
+  },
+  {
+   "spec": "storybook-meta.spec.ts",
+   "title": "M6 — the body/caption copy clears the legible floor [light]",
+   "status": "expected"
+  },
+  {
+   "spec": "storybook-meta.spec.ts",
+   "title": "M7 — no stray off-palette blue artifact [light]",
+   "status": "expected"
+  },
+  {
+   "spec": "storybook-meta.spec.ts",
+   "title": "M5 — the last content element clears the fixed dock [light]",
+   "status": "unexpected"
+  },
+  {
+   "spec": "storybook-meta.spec.ts",
+   "title": "M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [light]",
+   "status": "unexpected"
+  },
+  {
+   "spec": "storybook-meta.spec.ts",
+   "title": "M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [light]",
+   "status": "unexpected"
+  },
+  {
+   "spec": "storybook-meta.spec.ts",
+   "title": "M6 — the body/caption copy clears the legible floor [dark]",
+   "status": "expected"
+  },
+  {
+   "spec": "storybook-meta.spec.ts",
+   "title": "M7 — no stray off-palette blue artifact [dark]",
+   "status": "expected"
+  },
+  {
+   "spec": "storybook-meta.spec.ts",
+   "title": "M5 — the last content element clears the fixed dock [dark]",
+   "status": "unexpected"
+  },
+  {
+   "spec": "storybook-meta.spec.ts",
+   "title": "M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [dark]",
+   "status": "unexpected"
+  },
+  {
+   "spec": "storybook-meta.spec.ts",
+   "title": "M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [dark]",
+   "status": "unexpected"
+  },
+  {
+   "spec": "substrate-paints-color.spec.ts",
+   "title": "aurora paints a non-black interior on DEFAULT + every preset at t=1",
+   "status": "expected"
+  },
+  {
+   "spec": "substrate-paints-color.spec.ts",
+   "title": "blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS",
+   "status": "expected"
+  },
+  {
+   "spec": "substrate-paints-color.spec.ts",
+   "title": "blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS",
+   "status": "expected"
+  },
+  {
+   "spec": "zz-chip-band.spec.ts",
+   "title": "a Chip's --accent-band-strength is glass-chip's floored band, not the register's 18%",
+   "status": "expected"
+  }
+ ]
+}

@@ -36,8 +36,8 @@ export const edits = [
     {
         file: "scripts/structure/lib/graph/index.mjs",
         why: "B7: the graph module's door; the names lib/move, lib/classify and the lib door read",
-        create: `// graph/ — F-1: the one graph (graph.mjs), its per-language scanners (script, CSS, text, Vue)
-// and the evaluator that folds path expressions. graph.mjs is the root; nothing outside
+        create: `// graph/ — F-1: the one graph (graph.mjs), its per-language scanners (script, CSS, text,
+// Vue, Playwright) and the evaluator that folds path expressions. graph.mjs is the root; nothing outside
 // this module reads the scanners except through it.
 export { scanCss } from "./css.mjs";
 export { buildGraph, countBy, loadDeps, moduleSccs, valueSccs, VALUE_KINDS } from "./graph.mjs";
@@ -50,8 +50,8 @@ export { buildGraph, countBy, loadDeps, moduleSccs, valueSccs, VALUE_KINDS } fro
         file: "scripts/structure/lib/index.mjs",
         why: "B7: the floor library's door; the names its CLIs, the gate and the structure door read",
         create: `// lib/ — the floor library: the file set (tree), the graph (F-1), symbol origins, placement
-// (F-7), the move engine (F-2), the step classifier (FD-5), the specifier resolver and the
-// entry record (F-3).
+// (F-7), the move engine (F-2), the step classifier (FD-5), the specifier resolver, the
+// class recipes FD-4 and F-10 read, and the entry record (F-3).
 export { classifyStep } from "./classify.mjs";
 export {
     compareToPackage,
@@ -70,8 +70,9 @@ export {
 export { buildGraph, countBy, scanCss, valueSccs, VALUE_KINDS } from "./graph/index.mjs";
 export { runMoves, sccGrowth } from "./move.mjs";
 export { CONTAINERS, dirUnits, isSlot, placeAll, proposedPath, publicationAnchor } from "./placement.mjs";
+export { classesOf, classOwners, classRecipes, coOccurrence, impliedBy } from "./recipes.mjs";
 export { makeOrigins } from "./symbols.mjs";
-export { DEFAULT_ROOT, openTree, pinPath, recordPath, ZONES } from "./tree.mjs";
+export { DEFAULT_ROOT, openTree, pinPath, recordPath, ZONES, zoneOf } from "./tree.mjs";
 `,
     },
     {
@@ -111,7 +112,11 @@ import { buildGraph, countBy, valueSccs } from "./lib/graph/graph.mjs";`, `impor
 import { buildGraph, countBy } from "./lib/graph/graph.mjs";
 import { dirUnits, placeAll, proposedPath, publicationAnchor } from "./lib/placement.mjs";`, `import { buildGraph, countBy, DEFAULT_ROOT, dirUnits, placeAll, proposedPath, publicationAnchor } from "./lib/index.mjs";`),
     lib("surface.mjs", `import { DEFAULT_ROOT, pinPath } from "./lib/tree.mjs";`, `import { DEFAULT_ROOT, pinPath } from "./lib/index.mjs";`),
-    lib("cascade.mjs", `import { DEFAULT_ROOT } from "./lib/tree.mjs";`, `import { DEFAULT_ROOT } from "./lib/index.mjs";`),
+    lib("cascade.mjs", `import { DEFAULT_ROOT, openTree } from "./lib/tree.mjs";
+import { classRecipes, classOwners, coOccurrence, impliedBy } from "./lib/recipes.mjs";`, `import { classOwners, classRecipes, coOccurrence, DEFAULT_ROOT, impliedBy, openTree } from "./lib/index.mjs";`),
+    lib("browser.mjs", `import { buildGraph } from "./lib/graph/graph.mjs";
+import { zoneOf } from "./lib/tree.mjs";
+import { classOwners, classRecipes, classesOf, impliedBy } from "./lib/recipes.mjs";`, `import { buildGraph, classesOf, classOwners, classRecipes, impliedBy, zoneOf } from "./lib/index.mjs";`),
     lib("cascade.mjs", `    const { buildGraph } = await import("./lib/graph/graph.mjs");`, `    const { buildGraph } = await import("./lib/index.mjs");`),
     // ---- gates: a function behind the door; the CLI prints it
     lib("gates.mjs", `//   node gates.mjs [--root R] [--json]

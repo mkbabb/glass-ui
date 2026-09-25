@@ -17,10 +17,12 @@ const dry = F.runMoves(root, list, { dry: true });
 if (dry.residue?.length) { console.error(JSON.stringify({ residue: dry.residue.slice(0, 10) }, null, 1)); process.exit(1); }
 if (dry.scc?.grown?.length) { console.error(JSON.stringify({ fd2: dry.scc.firstAdded }, null, 1)); process.exit(1); }
 const scanDeltas = (dry.scanDeltas?.undeclared ?? []).map((d) => ({ scanner: d.scanner, spec: d.spec, file: d.file, reason: `${arg(args, "--id")}: ${d.file} -> ${d.to}; the scanner's sensitivity is judged by the test run` }));
-const r = F.runMoves(root, list, { declaredScanDeltas: scanDeltas });
-const out = { ok: r.ok, phase: r.phase, moves: list.length, filesEdited: r.filesEdited, rewrites: r.rewrites, scanDeltas: scanDeltas.length, lost: r.image?.lost?.slice(0, 8), gained: r.image?.gained?.slice(0, 8), violations: r.violations?.slice?.(0, 5), scc: r.scc ? { before: r.scc.before, after: r.scc.after, addedPairs: r.scc.addedPairs } : null };
+// P4-F2: a css-source glob delta is carried only when the authored list declares it, with its reason
+const globDeltas = doc.globDeltas ?? [];
+const r = F.runMoves(root, list, { declaredScanDeltas: scanDeltas, declaredGlobDeltas: globDeltas });
+const out = { ok: r.ok, phase: r.phase, moves: list.length, filesEdited: r.filesEdited, rewrites: r.rewrites, scanDeltas: scanDeltas.length, globDeltas: r.globDeltas ? { carried: r.globDeltas.carried.length, undeclared: r.globDeltas.undeclared, stale: r.globDeltas.stale } : null, classified: r.classified ? { counts: r.classified.counts, failed: r.classified.failed } : null, lost: r.image?.lost?.slice(0, 8), gained: r.image?.gained?.slice(0, 8), violations: r.violations?.slice?.(0, 5), scc: r.scc ? { before: r.scc.before, after: r.scc.after, addedPairs: r.scc.addedPairs } : null };
 console.log(JSON.stringify(out, null, 1));
 if (!r.ok) process.exit(1);
 const file = arg(args, "--out");
-writeFileSync(join(KIT, file), `${JSON.stringify({ step: `B-${arg(args, "--id")} (frozen from ${arg(args, "--authored")}, F-9)`, moves: list, scanDeltas, reasons: doc.moves }, null, 1)}\n`);
+writeFileSync(join(KIT, file), `${JSON.stringify({ step: `B-${arg(args, "--id")} (frozen from ${arg(args, "--authored")}, F-9)`, moves: list, scanDeltas, globDeltas, reasons: doc.moves }, null, 1)}\n`);
 recordStep(root, { id: arg(args, "--id"), kind: "moves", file, why: doc.why ?? doc.note });

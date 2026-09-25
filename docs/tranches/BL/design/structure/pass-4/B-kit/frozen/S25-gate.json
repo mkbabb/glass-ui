@@ -61,19 +61,15 @@
     ],
     [
      "  ],\n  \"src/components/aurora/index.ts\": [\n",
-     "  ],\n  \"scripts/structure/lib/index.mjs\": [\n   \"CONTAINERS\",\n   \"DEFAULT_ROOT\",\n   \"VALUE_KINDS\",\n   \"ZONES\",\n   \"buildGraph\",\n   \"classifyStep\",\n   \"compareToPackage\",\n   \"countBy\",\n   \"declarationProgram\",\n   \"dirUnits\",\n   \"diskRecord\",\n   \"emitDeclaredCssEntries\",\n   \"isSlot\",\n   \"libraryEntryMap\",\n   \"loadRecord\",\n   \"makeOrigins\",\n   \"openTree\",\n   \"pinPath\",\n   \"placeAll\",\n   \"proposedPath\",\n   \"publicationAnchor\",\n   \"readJson\",\n   \"recordCssTargets\",\n   \"recordEntries\",\n   \"recordInputs\",\n   \"recordPath\",\n   \"recordTerminal\",\n   \"runMoves\",\n   \"scanCss\",\n   \"sccGrowth\",\n   \"validateRecord\",\n   \"valueSccs\"\n  ],\n  \"src/components/aurora/index.ts\": [\n"
+     "  ],\n  \"scripts/structure/lib/index.mjs\": [\n   \"CONTAINERS\",\n   \"DEFAULT_ROOT\",\n   \"VALUE_KINDS\",\n   \"ZONES\",\n   \"buildGraph\",\n   \"classOwners\",\n   \"classRecipes\",\n   \"classesOf\",\n   \"classifyStep\",\n   \"coOccurrence\",\n   \"compareToPackage\",\n   \"countBy\",\n   \"declarationProgram\",\n   \"dirUnits\",\n   \"diskRecord\",\n   \"emitDeclaredCssEntries\",\n   \"impliedBy\",\n   \"isSlot\",\n   \"libraryEntryMap\",\n   \"loadRecord\",\n   \"makeOrigins\",\n   \"openTree\",\n   \"pinPath\",\n   \"placeAll\",\n   \"proposedPath\",\n   \"publicationAnchor\",\n   \"readJson\",\n   \"recordCssTargets\",\n   \"recordEntries\",\n   \"recordInputs\",\n   \"recordPath\",\n   \"recordTerminal\",\n   \"runMoves\",\n   \"scanCss\",\n   \"sccGrowth\",\n   \"validateRecord\",\n   \"valueSccs\",\n   \"zoneOf\"\n  ],\n  \"src/components/aurora/index.ts\": [\n"
     ],
     [
      "  ],\n  \"src/components/command/index.ts\": [\n",
      "  ],\n  \"scripts/structure/seal/index.mjs\": [\n   \"seal\"\n  ],\n  \"src/components/command/index.ts\": [\n"
     ],
     [
-     "  ],\n  \"src/components/_shared/menu/index.ts\": [\n",
-     "  ],\n  \"scripts/structure/lib/graph/index.mjs\": [\n   \"VALUE_KINDS\",\n   \"buildGraph\",\n   \"countBy\",\n   \"loadDeps\",\n   \"moduleSccs\",\n   \"scanCss\",\n   \"valueSccs\"\n  ],\n  \"src/components/_shared/menu/index.ts\": [\n"
-    ],
-    [
-     "   \"why\": \"FD-8: demo.css reaches it through @source ../src/components/_shared/**/*.ts, and the floor has no css-source declaration arm for demo, so a move would drop the demo's class scan silently\"\n  }\n",
-     "   \"why\": \"FD-8: demo.css reaches it through @source ../src/components/_shared/**/*.ts, and the floor has no css-source declaration arm for demo, so a move would drop the demo's class scan silently\"\n  },\n  \"scripts/structure/lib/resolve.mjs\": {\n   \"why\": \"F-2 defect (floor gap, reported): moving it into lib/graph/ makes computeEdits rewrite the generated root literal \\\"tests-visual/.cache\\\" in GENERATED_ROOTS to \\\"null\\\" (e.to is null for a generated target) and the image check refuses; its dominance home is lib/graph/, held until the engine keeps generated literals\"\n  }\n"
+     "   \"RadioGroupProps\"\n  ],\n",
+     "   \"RadioGroupProps\"\n  ],\n  \"scripts/structure/lib/graph/index.mjs\": [\n   \"VALUE_KINDS\",\n   \"buildGraph\",\n   \"countBy\",\n   \"loadDeps\",\n   \"moduleSccs\",\n   \"scanCss\",\n   \"valueSccs\"\n  ],\n"
     ]
    ]
   }
@@ -81,8 +77,8 @@
  "pin": {
   "modules": 135,
   "doors": 116,
-  "names": 1288,
+  "names": 1293,
   "reviewed": 2,
-  "holds": 2
+  "holds": 0
  }
 }
