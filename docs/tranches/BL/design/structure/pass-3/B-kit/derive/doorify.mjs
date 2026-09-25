@@ -27,7 +27,7 @@ const root = resolve(opt("--root"));
 const F = await loadFloor(root);
 const { buildGraph, makeOrigins } = F;
 const RECORD_PATH = F.tree.recordPath(root);
-const CONTAINERS = new Set(["src", "src/components", "src/composables", "scripts"]);
+const CONTAINERS = new Set(["src", "src/components", "src/composables", "src/components/_shared", "scripts"]); // LAW §1: _shared is a kernel container
 const isSlot = (d) => d.includes("/") && F.isSlot(d) && !CONTAINERS.has(posix.dirname(d));
 const req = createRequire(join(root, "package.json"));
 const ts = req("typescript");
@@ -164,12 +164,13 @@ function explicitOf(file) {
     explicit.set(file, set);
     return set;
 }
-function spell(e, m) {
+function spell(e, m, file = false) {
     const alias = g.aliases.find((a) => e.spans[0].value === a.key || e.spans[0].value.startsWith(`${a.key}/`));
     if (alias && under(m, alias.target)) return `${alias.key}${m.slice(alias.target.length)}`;
     const rel = posix.relative(dirOf(e.from), m);
     const spelled = rel.startsWith(".") ? rel : `./${rel}`;
     // a sibling file named like the dir wins the dir spelling: name the door explicitly
+    if (file) return spelled;
     return [".ts", ".mts", ".js", ".vue"].some((x) => T.isFile(`${m}${x}`)) ? `${spelled}/index` : spelled;
 }
 for (const e of g.edges) {
@@ -204,7 +205,9 @@ for (const e of g.edges) {
     if (ds.size > 1) { blocked.push(`${at} names reach through ${ds.size} doors (${[...ds].join(", ")}); the statement needs a split`); continue; }
     const theDoor = [...ds][0];
     if (theDoor === e.to) continue;
-    const newSpec = spell(e, dirOf(theDoor));
+    // a door that is an index is spelled by its dir; an entry source that is a named file
+    // (./motion-core's motion/motion-core.ts) is spelled by the file itself
+    const newSpec = theDoor.endsWith("/index.ts") ? spell(e, dirOf(theDoor)) : spell(e, theDoor.replace(/\.(ts|mts)$/, ""), true);
     edit(e.from, e.spans[0].start, e.spans[0].end, newSpec);
     const txt = (n) => n.getText();
     if (ts.isImportDeclaration(node) && node.importClause?.name) {

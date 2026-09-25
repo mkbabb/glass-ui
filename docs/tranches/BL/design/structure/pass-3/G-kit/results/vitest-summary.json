@@ -1,0 +1,69 @@
+{
+ "total": 2345,
+ "passed": 2332,
+ "failed": 12,
+ "skipped": 1,
+ "files": 241,
+ "failures": [
+  {
+   "file": "tests/gates/eponym.test.ts",
+   "test": "D1-G eponym gate E1",
+   "message": "AssertionError: E1: FD-8 held src/components/_shared/overlay/isTeleportedTarget.ts → src/components/dock/isTeleportedTarget.ts (demo/demo.css @source src/components/_shared/**/*.ts): expected [ Array(1) ] to deeply equal []"
+  },
+  {
+   "file": "tests/gates/eponym.test.ts",
+   "test": "D1-G eponym gate E4",
+   "message": "AssertionError: E4: demo/stories/containers/ 13 direct files"
+  },
+  {
+   "file": "tests/gates/eponym.test.ts",
+   "test": "D1-G eponym gate E6",
+   "message": "AssertionError: E6: demo/composables/virtual/virtualSectionLayout.ts:12 import-type → src/composables/sidebar/types.ts"
+  },
+  {
+   "file": "tests/gates/gate-register.test.ts",
+   "test": "the gate register binds (G-GATE-BUDGET) every seat and every rostered row resolves to an executable",
+   "message": "AssertionError: active token.graph.published-names-backed: sourcePath missing — tests/styles/token-graph.test.ts"
+  },
+  {
+   "file": "tests/gates/gate-register.test.ts",
+   "test": "the gate register binds (G-GATE-BUDGET) holds the roster drift set as a pinned record, not an allowlist",
+   "message": "AssertionError: expected [] to deeply equal [ Array(1) ]"
+  },
+  {
+   "file": "tests/gates/gate-register.test.ts",
+   "test": "the gate register binds (G-GATE-BUDGET) BITE — severing a rostered `it(` title REDs as an undeclared drift",
+   "message": "Error: ENOENT: no such file or directory, open 'tests/styles/token-graph.test.ts'"
+  },
+  {
+   "file": "tests/gates/gate-register.test.ts",
+   "test": "the gate register binds (G-GATE-BUDGET) BITE — a rostered title that survives only in a COMMENT does not count as bound",
+   "message": "Error: ENOENT: no such file or directory, open 'tests/styles/token-graph.test.ts'"
+  },
+  {
+   "file": "tests/gates/gate-register.test.ts",
+   "test": "the gate register binds (G-GATE-BUDGET) BITE — an `it.skip(`'d registration is ABSENT, not bound",
+   "message": "Error: ENOENT: no such file or directory, open 'tests/styles/token-graph.test.ts'"
+  },
+  {
+   "file": "tests/gates/gate-register.test.ts",
+   "test": "the gate register binds (G-GATE-BUDGET) BITE — a registration commented out with `// it(` is ABSENT, not bound",
+   "message": "Error: ENOENT: no such file or directory, open 'tests/styles/token-graph.test.ts'"
+  },
+  {
+   "file": "tests/gates/gate-register.test.ts",
+   "test": "the gate register binds (G-GATE-BUDGET) BITE — a `describe.skip(` block leaves every rostered row beneath it ABSENT",
+   "message": "Error: ENOENT: no such file or directory, open 'tests/styles/token-graph.test.ts'"
+  },
+  {
+   "file": "tests/gates/gate-register.test.ts",
+   "test": "the gate register binds (G-GATE-BUDGET) BITE — a live `it.only(` leaves its rostered siblings ABSENT, itself bound",
+   "message": "Error: ENOENT: no such file or directory, open 'tests/styles/token-graph.test.ts'"
+  },
+  {
+   "file": "tests/gates/gate-register.test.ts",
+   "test": "the gate register binds (G-GATE-BUDGET) BITE — dropping `tests/` from tsconfig.test.json REDs all EIGHT folded type rows",
+   "message": "AssertionError: expected [ …(5) ] to have a length of 8 but got 5"
+  }
+ ]
+}

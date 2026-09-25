@@ -15,7 +15,7 @@ const gitDir = execFileSync("git", ["-C", root, "rev-parse", "--git-dir"], { enc
 const common = execFileSync("git", ["-C", root, "rev-parse", "--git-common-dir"], { encoding: "utf8" }).trim();
 if (resolve(root, gitDir) === resolve(root, common)) { console.error("apply-list refuses the main checkout"); process.exit(2); }
 const { runMoves } = await import(`${root}/scripts/structure/lib/move.mjs`);
-const L = await import(`${root}/scripts/structure/eponym/law.mjs`);
+const L = await import(`${root}/scripts/structure/eponym/index.mjs`);
 const doc = JSON.parse(readFileSync(args[0], "utf8"));
 const units = L.gUnits(L.context(root));
 const t0 = Date.now();

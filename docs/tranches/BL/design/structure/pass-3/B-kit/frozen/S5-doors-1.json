@@ -1,25 +1,17 @@
 {
- "step": "B-S5 doors (LAW §5)",
+ "step": "B-S5 JS doors pass 1 (LAW §5)",
  "files": {
   "src/components/_shared/surface/index.ts": {
    "create": "// components/_shared/surface — module door: the names read from outside this module.\nexport { surfaceClass } from \"./resolve\";\n"
-  },
-  "src/components/_shared/index.ts": {
-   "hunks": [
-    [
-     "export type { ControlSize } from \"./control\";\n",
-     "export type { ControlSize } from \"./control\";\nexport type { ClassValue } from \"./class-names\";\nexport { cn, joinClassValues } from \"./class-names\";\nexport type { ControlProps } from \"./control\";\nexport { controlStateAttrs } from \"./control\";\nexport { provideDisclosureIds, useDisclosureIds } from \"./disclosure\";\nexport { DotRing } from \"./feedback\";\nexport { isAriaInvalid, resolveValueFraction, resolveValueMarks, useFieldControlState } from \"./field\";\nexport { FOCUSABLE_SELECTOR } from \"./focus\";\nexport type { DismissableContentEmits, FocusOutsideEvent, PointerDownOutsideEvent } from \"./interaction\";\nexport type { MenuRowIndicator } from \"./menu\";\nexport { rowClass } from \"./menu\";\nexport type { DockHoldKind, FloatingPlacementProps } from \"./overlay\";\nexport { isTeleportedTarget, ModalOverlay, overlayContentAttrs, provideOverlayHost, useDockParticipation, useHoldToken, useModalShortcutBarrier } from \"./overlay\";\nexport type { Direction, FormFieldProps, PrimitiveProps } from \"./primitive\";\nexport { fixedHostAttrs } from \"./primitive\";\nexport type { CheckedState, ComboboxEmptyProps, ComboboxGroupProps, ComboboxInputEmits, ComboboxInputProps, ComboboxItemEmits, ComboboxItemProps, ComboboxListEmits, ComboboxSeparatorProps, ComboboxValue, SelectionMode, SelectionValue } from \"./selection\";\nexport { isSelectionValue } from \"./selection\";\nexport { surfaceClass } from \"./surface\";\nexport { useMotionAxis } from \"./useMotionAxis\";\n"
-    ]
-   ]
   },
   "src/components/_shared/disclosure/index.ts": {
    "create": "// components/_shared/disclosure — module door: the names read from outside this module.\nexport { provideDisclosureIds, useDisclosureIds } from \"./disclosure-context\";\n"
   },
   "src/components/aurora/runtime/index.ts": {
-   "create": "// components/aurora/runtime — module door: the names read from outside this module.\nexport type { ImageInputSource } from \"./frame\";\nexport type { AuroraRuntime, AuroraRuntimeMode, AuroraRuntimeOptions } from \"./runtime\";\nexport { createAurora } from \"./runtime\";\n"
+   "create": "// components/aurora/runtime — module door: the names read from outside this module.\nexport type { AuroraRuntime, AuroraRuntimeMode, AuroraRuntimeOptions } from \"./runtime\";\nexport { createAurora } from \"./runtime\";\n"
   },
   "src/components/aurora/config/index.ts": {
-   "create": "// components/aurora/config — module door: the names read from outside this module.\nexport type { AuroraHarmony, DeriveAuroraOptions, DeriveEasing } from \"./color\";\nexport { deriveAurora, flattenPalette, hexToOklchStop, paletteToCssGradient } from \"./color\";\nexport type { AuroraConfig, AuroraCursorApi, AuroraFlow, AuroraHuePath, AuroraImageBlur, AuroraImageSource, AuroraInstance, AuroraInteractivity, AuroraMedium, AuroraNucleus, AuroraSource, FlowPattern, OklchStop, StrokeMode, StrokeOrient, WarpMode } from \"./presets\";\nexport { DEFAULT_AURORA_CONFIG, DEFAULT_VIVIDNESS, IMAGE_BLUR_MAX_DEFAULT, IMAGE_BLUR_MIN_DEFAULT, isAuroraDriftLive, MAX_NUCLEI, MAX_STOPS, METAL_HEIGHT_SCALE_DEFAULT, METAL_POLISH_DEFAULT, PAPER_WASH_GROUND, VIVID_TARGET } from \"./presets\";\nexport type { AuroraRenderMode, ResolveRenderModeOptions } from \"./renderMode\";\nexport { isSoftwareWebGLRenderer, resolveRenderMode } from \"./renderMode\";\n"
+   "create": "// components/aurora/config — module door: the names read from outside this module.\nexport type { AuroraHarmony, DeriveAuroraOptions, DeriveEasing } from \"./color\";\nexport { deriveAurora, flattenPalette, hexToOklchStop, paletteToCssGradient } from \"./color\";\nexport type { AuroraConfig, AuroraCursorApi, AuroraFlow, AuroraHuePath, AuroraImageBlur, AuroraImageSource, AuroraInstance, AuroraInteractivity, AuroraMedium, AuroraNucleus, AuroraSource, FlowPattern, ImageInputSource, OklchStop, StrokeMode, StrokeOrient, UploadableImageSource, WarpMode } from \"./presets\";\nexport { DEFAULT_AURORA_CONFIG, DEFAULT_VIVIDNESS, IMAGE_BLUR_MAX_DEFAULT, IMAGE_BLUR_MIN_DEFAULT, isAuroraDriftLive, MAX_NUCLEI, MAX_STOPS, METAL_HEIGHT_SCALE_DEFAULT, METAL_POLISH_DEFAULT, PAPER_WASH_GROUND, VIVID_TARGET } from \"./presets\";\nexport type { AuroraRenderMode, ResolveRenderModeOptions } from \"./renderMode\";\nexport { isSoftwareWebGLRenderer, resolveRenderMode } from \"./renderMode\";\n"
   },
   "src/composables/glass/index.ts": {
    "hunks": [
@@ -39,14 +31,14 @@
   "src/composables/color/value/index.ts": {
    "create": "// composables/color/value — module door: the names read from outside this module.\nexport { colorValue, numericChannel, oklchColor, opaqueCssColor } from \"./value\";\n"
   },
-  "src/components/aurora/runtime/frame/index.ts": {
-   "create": "// components/aurora/runtime/frame — module door: the names read from outside this module.\nexport type { AuroraImageCoordinator } from \"./auroraImageSource\";\nexport { armWebGL2ImageTexture, createAuroraImageCoordinator } from \"./auroraImageSource\";\nexport type { AuroraCursorScalars } from \"./frameLoop\";\nexport { auroraFieldLive, createFrameLoop, mapAuroraCursor } from \"./frameLoop\";\nexport type { ImageInputSource, UploadableImageSource } from \"./textureUpload\";\nexport { placeholderImageSource, uploadImageTextureWebGPU } from \"./textureUpload\";\nexport type { AuroraCursorUniforms } from \"./uniformBridge\";\nexport { createUniformBridge, HUE_PATH_ID, MEDIUM_ID, WARP_ID } from \"./uniformBridge\";\n"
-  },
   "src/composables/glass/webgl/index.ts": {
    "create": "// composables/glass/webgl — module door: the names read from outside this module.\nexport { compileShader, linkProgram } from \"./compile\";\nexport type { WebGLCanvasFrame, WebGLCanvasOptions } from \"./useWebGLCanvas\";\nexport { createWebGLCanvas, probeWebGL2Renderer } from \"./useWebGLCanvas\";\n"
   },
+  "src/components/aurora/runtime/frame/index.ts": {
+   "create": "// components/aurora/runtime/frame — module door: the names read from outside this module.\nexport type { AuroraImageCoordinator } from \"./auroraImageSource\";\nexport { armWebGL2ImageTexture, createAuroraImageCoordinator } from \"./auroraImageSource\";\nexport type { AuroraCursorScalars } from \"./frameLoop\";\nexport { auroraFieldLive, createFrameLoop, mapAuroraCursor } from \"./frameLoop\";\nexport { placeholderImageSource, uploadImageTextureWebGPU } from \"./textureUpload\";\nexport type { AuroraCursorUniforms, UniformLocations } from \"./uniformBridge\";\nexport { createUniformBridge, HUE_PATH_ID, MEDIUM_ID, UNIFORM_NAMES, WARP_ID } from \"./uniformBridge\";\n"
+  },
   "src/components/aurora/runtime/webgl/index.ts": {
-   "create": "// components/aurora/runtime/webgl — module door: the names read from outside this module.\nexport type { UniformLocations } from \"./glSetup\";\nexport { createAuroraGLSetup } from \"./glSetup\";\n"
+   "create": "// components/aurora/runtime/webgl — module door: the names read from outside this module.\nexport { createAuroraGLSetup } from \"./glSetup\";\n"
   },
   "src/components/aurora/runtime/webgpu/index.ts": {
    "create": "// components/aurora/runtime/webgpu — module door: the names read from outside this module.\nexport { createAuroraWGPUSetup } from \"./wgpuSetup\";\n"
@@ -88,7 +80,7 @@
    "hunks": [
     [
      "export { useModalShortcutBarrier } from \"./shortcuts\";\n",
-     "export { useModalShortcutBarrier } from \"./shortcuts\";\nexport { isTeleportedTarget } from \"./isTeleportedTarget\";\nexport { default as ModalOverlay } from \"./ModalOverlay.vue\";\nexport type { DockHoldKind } from \"./participation\";\nexport { provideOverlayHost } from \"./participation\";\n"
+     "export { useModalShortcutBarrier } from \"./shortcuts\";\nexport { default as ModalOverlay } from \"./ModalOverlay.vue\";\nexport type { DockHoldKind } from \"./participation\";\nexport { provideOverlayHost } from \"./participation\";\n"
     ]
    ]
   },
@@ -97,6 +89,9 @@
   },
   "src/composables/motion/core/tempo/index.ts": {
    "create": "// composables/motion/core/tempo — module door: the names read from outside this module.\nexport { motionTempo } from \"./motionTempo\";\n"
+  },
+  "src/composables/motion/core/index.ts": {
+   "create": "// composables/motion/core — module door: the names read from outside this module.\nexport { DAMPING, FRAME_MS, SNAP_THRESHOLD } from \"./constants\";\nexport { asElement } from \"./element\";\nexport { motionTempo } from \"./tempo\";\nexport type { IntersectionPauseControls, PausableRuntime, UseIntersectionPauseOptions } from \"./useIntersectionPause\";\nexport { useIntersectionPause } from \"./useIntersectionPause\";\nexport type { RAFLoopCallback, RAFLoopControls, RAFLoopTiming, UseRAFLoopOptions } from \"./useRAFLoop\";\nexport { useRAFLoop } from \"./useRAFLoop\";\nexport { readReducedMotion, useReducedMotion } from \"./useReducedMotion\";\nexport type { ViewTransitionOptions, ViewTransitionResult } from \"./useViewTransition\";\nexport { startViewTransition, supportsViewTransitions } from \"./useViewTransition\";\nexport type { UseYieldToMainReturn } from \"./useYieldToMain\";\nexport { useYieldToMain, yieldToMain } from \"./useYieldToMain\";\nexport { effectiveCap, MOTION_WEIGHT_REST, writeVelocityWeight } from \"./writeVelocityWeight\";\n"
   },
   "src/components/dock/search/index.ts": {
    "create": "// components/dock/search — module door: the names read from outside this module.\nexport type { UseDockSearchOptions, UseDockSearchReturn } from \"./useDockSearch\";\nexport { useDockSearch } from \"./useDockSearch\";\n"
@@ -134,35 +129,14 @@
   "src/components/tabs/segmented-tabs/index.ts": {
    "create": "// components/tabs/segmented-tabs — module door: the names read from outside this module.\nexport { default as SegmentedTabs } from \"./SegmentedTabs.vue\";\n"
   },
-  "src/components/toast/toaster/index.ts": {
-   "create": "// components/toast/toaster — module door: the names read from outside this module.\nexport type { ToastEmits, ToastProps, ToastSwipeEvent } from \"./Toast.vue\";\nexport { default as Toast } from \"./Toast.vue\";\nexport type { ToastCloseProps } from \"./ToastClose.vue\";\nexport { default as ToastClose } from \"./ToastClose.vue\";\nexport type { ToastDescriptionProps } from \"./ToastDescription.vue\";\nexport { default as ToastDescription } from \"./ToastDescription.vue\";\nexport type { ToasterPosition } from \"./Toaster.vue\";\nexport { default as Toaster } from \"./Toaster.vue\";\nexport type { ToastTitleProps } from \"./ToastTitle.vue\";\nexport { default as ToastTitle } from \"./ToastTitle.vue\";\n"
-  },
-  "src/components/toast/queue/index.ts": {
-   "create": "// components/toast/queue — module door: the names read from outside this module.\nexport type { ToastHandle, ToastOptions } from \"./use-toast\";\nexport { removeToast, toast, useToast, useToastQueue } from \"./use-toast\";\n"
-  },
-  "src/components/typewriter/text/index.ts": {
-   "create": "// components/typewriter/text — module door: the names read from outside this module.\nexport type { KeyPosition } from \"./keyboard\";\nexport { calculateKeyDelay, getAdjacentKeys, pickTypoChar, QWERTY_MAP } from \"./keyboard\";\nexport type { PausePatterns } from \"./pausePatterns\";\nexport { getPauseDelay, PAUSE_PATTERNS } from \"./pausePatterns\";\nexport { backspaceDelay, createCancellationToken, pickNgramSize, randomInRange, sleep, stochasticDelay } from \"./timing\";\nexport { default as TypewriterText } from \"./TypewriterText.vue\";\nexport type { TypoConfig } from \"./typoStateMachine\";\nexport { createTypoContext, DEFAULT_TYPO_CONFIG, nextTypoAction } from \"./typoStateMachine\";\nexport { useTypewriter } from \"./useTypewriter\";\n"
-  },
-  "src/components/typewriter/options/index.ts": {
-   "create": "// components/typewriter/options — module door: the names read from outside this module.\nexport type { CancellationToken, KeyPosition, TypewriterOptions, TypewriterWord, TypoAction, TypoContext, TypoState } from \"./types\";\nexport { DEFAULTS } from \"./types\";\n"
-  },
-  "src/composables/motion/reveal/index.ts": {
-   "create": "// composables/motion/reveal — module door: the names read from outside this module.\nexport type { LiquidRevealPreset, UseLiquidRevealOptions, UseLiquidRevealReturn } from \"./useLiquidReveal\";\nexport { useLiquidReveal } from \"./useLiquidReveal\";\nexport type { UseStaggerControls, UseStaggerOptions } from \"./useStagger\";\nexport { useStagger } from \"./useStagger\";\nexport { vReveal } from \"./vReveal\";\n"
-  },
-  "src/composables/motion/route/index.ts": {
-   "create": "// composables/motion/route — module door: the names read from outside this module.\nexport type { RouteNavClass, RouteNavRow } from \"./routeGrammar\";\nexport { foregroundClockToken, foregroundCurveToken, ROUTE_CONSTANTS, ROUTE_GRAMMAR, routeNav, worldClockToken } from \"./routeGrammar\";\nexport type { RouteTransitionOptions } from \"./useRouteTransition\";\nexport { ROUTE_DIRECTION_PROP, ROUTE_LABEL_ATTR, ROUTE_LABEL_NAME, ROUTE_WINDOW_ATTR, ROUTE_WINDOW_NAME, routeTransition } from \"./useRouteTransition\";\n"
-  },
-  "src/composables/motion/dissolve/index.ts": {
-   "create": "// composables/motion/dissolve — module door: the names read from outside this module.\nexport type { DissolveDialect, DissolveDialectRow } from \"./dissolveGrammar\";\nexport { backdropOutlivesPanel, channelFraction, CORNER_AFFORDANCE, cornerAffordanceOffset, DISSOLVE_DIALECTS, dissolveDialect, inkBlurFraction, VAPORIZE_CONSTANTS } from \"./dissolveGrammar\";\n"
-  },
   "src/composables/motion/spring/index.ts": {
    "create": "// composables/motion/spring — module door: the names read from outside this module.\nexport type { SpringPresetName, SpringPresetRow } from \"./springPresets\";\nexport { SPRING_PRESETS, springPreset } from \"./springPresets\";\nexport type { LiquidFlexAxis, UseLiquidFlexParams, UseLiquidFlexReturn } from \"./useLiquidFlex\";\nexport { useLiquidFlex } from \"./useLiquidFlex\";\nexport type { UseLiquidPressOptions, UseLiquidPressReturn } from \"./useLiquidPress\";\nexport { useLiquidPress } from \"./useLiquidPress\";\nexport type { SpringRef, UseSpringOptions } from \"./useSpring\";\nexport { useSpring } from \"./useSpring\";\nexport type { SpringMountRef, SpringPreset, UseSpringMountOptions } from \"./useSpringMount\";\nexport { useSpringMount } from \"./useSpringMount\";\n"
   },
-  "src/composables/motion/pointer/index.ts": {
-   "create": "// composables/motion/pointer — module door: the names read from outside this module.\nexport type { AuroraCursorOptions, AuroraCursorResult, BlobPullOptions, BlobPullResult, ConstellationWellResult, PointerFieldSnapshot } from \"./pointerFieldMappings\";\nexport { AURORA_CURSOR_RADIUS, auroraCursorMapping, BLOB_LEAD_K, BLOB_STRETCH_GAIN, BLOB_STRETCH_MAX, blobPullMapping, constellationWellMapping, snapshotField } from \"./pointerFieldMappings\";\nexport type { PointerVec2, UsePointerVelocityField, UsePointerVelocityFieldOptions } from \"./usePointerVelocityField\";\nexport { usePointerVelocityField } from \"./usePointerVelocityField\";\nexport type { RoutePointerContext, UseRoutePointerOptions } from \"./useRoutePointer\";\nexport { useRoutePointer } from \"./useRoutePointer\";\n"
-  },
   "src/composables/motion/core/element/index.ts": {
    "create": "// composables/motion/core/element — module door: the names read from outside this module.\nexport { asElement } from \"./asElement\";\n"
+  },
+  "src/composables/motion/reveal/index.ts": {
+   "create": "// composables/motion/reveal — module door: the names read from outside this module.\nexport type { LiquidRevealPreset, UseLiquidRevealOptions, UseLiquidRevealReturn } from \"./useLiquidReveal\";\nexport { useLiquidReveal } from \"./useLiquidReveal\";\nexport type { UseStaggerControls, UseStaggerOptions } from \"./useStagger\";\nexport { useStagger } from \"./useStagger\";\nexport { vReveal } from \"./vReveal\";\n"
   },
   "src/composables/motion/number/index.ts": {
    "create": "// composables/motion/number — module door: the names read from outside this module.\nexport type { AnimatedNumberMode, UseAnimatedNumberOptions, UseAnimatedNumberReturn } from \"./useAnimatedNumber\";\nexport { useAnimatedNumber } from \"./useAnimatedNumber\";\nexport type { UseAnimatedNumberMapOptions } from \"./useAnimatedNumberMap\";\nexport { useAnimatedNumberMap } from \"./useAnimatedNumberMap\";\n"
@@ -170,8 +144,14 @@
   "src/composables/motion/engage/index.ts": {
    "create": "// composables/motion/engage — module door: the names read from outside this module.\nexport type { EngageEnvelopeRow, EngageRole } from \"./engageEnvelopes\";\nexport { ACKNOWLEDGE_WINDOW_MS, ENGAGE_ATTACK_CLASS, ENGAGE_ENVELOPES, engageAttackT90Ms, engageEnvelope } from \"./engageEnvelopes\";\nexport type { EngageChannel, EngageRungName, EngageRungRow } from \"./engageLadder\";\nexport { CHANNEL_BUDGET, ENGAGE_LADDER, engageRung, HOVER_GEOMETRY_BUDGET, LADDER_EXIT_LAW, rungsForEnvelope } from \"./engageLadder\";\n"
   },
-  "src/styles/tokens/index.ts": {
-   "create": "// styles/tokens — module door: the names read from outside this module.\nexport type { SemanticToken, TokenDomain } from \"./manifest\";\nexport { semanticTokens, tokenDomains } from \"./manifest\";\n"
+  "src/composables/motion/route/index.ts": {
+   "create": "// composables/motion/route — module door: the names read from outside this module.\nexport type { RouteNavClass, RouteNavRow } from \"./routeGrammar\";\nexport { foregroundClockToken, foregroundCurveToken, ROUTE_CONSTANTS, ROUTE_GRAMMAR, routeNav, worldClockToken } from \"./routeGrammar\";\nexport type { RouteTransitionOptions } from \"./useRouteTransition\";\nexport { ROUTE_DIRECTION_PROP, ROUTE_LABEL_ATTR, ROUTE_LABEL_NAME, ROUTE_WINDOW_ATTR, ROUTE_WINDOW_NAME, routeTransition } from \"./useRouteTransition\";\n"
+  },
+  "src/composables/motion/dissolve/index.ts": {
+   "create": "// composables/motion/dissolve — module door: the names read from outside this module.\nexport type { DissolveDialect, DissolveDialectRow } from \"./dissolveGrammar\";\nexport { backdropOutlivesPanel, channelFraction, CORNER_AFFORDANCE, cornerAffordanceOffset, DISSOLVE_DIALECTS, dissolveDialect, inkBlurFraction, VAPORIZE_CONSTANTS } from \"./dissolveGrammar\";\n"
+  },
+  "src/composables/motion/pointer/index.ts": {
+   "create": "// composables/motion/pointer — module door: the names read from outside this module.\nexport type { AuroraCursorOptions, AuroraCursorResult, BlobPullOptions, BlobPullResult, ConstellationWellResult, PointerFieldSnapshot } from \"./pointerFieldMappings\";\nexport { AURORA_CURSOR_RADIUS, auroraCursorMapping, BLOB_LEAD_K, BLOB_STRETCH_GAIN, BLOB_STRETCH_MAX, blobPullMapping, constellationWellMapping, snapshotField } from \"./pointerFieldMappings\";\nexport type { PointerVec2, UsePointerVelocityField, UsePointerVelocityFieldOptions } from \"./usePointerVelocityField\";\nexport { usePointerVelocityField } from \"./usePointerVelocityField\";\nexport type { RoutePointerContext, UseRoutePointerOptions } from \"./useRoutePointer\";\nexport { useRoutePointer } from \"./useRoutePointer\";\n"
   },
   "src/components/_shared/overlay/content.ts": {
    "hunks": [
@@ -185,71 +165,31 @@
    "hunks": [
     [
      "} from \"../../composables/motion/core/useReducedMotion\";\n",
-     "} from \"../../composables/motion/core/index/index\";\n"
-    ]
-   ]
-  },
-  "src/components/accordion/Accordion.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport type { SelectionMode } from \"../_shared/selection\";\n",
-     "import { cn } from \"../_shared\";\nimport type { SelectionMode } from \"../_shared\";\n"
+     "} from \"../../composables/motion/motion-core\";\n"
     ]
    ]
   },
   "src/components/accordion/AccordionContent.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { useDisclosureIds } from \"../_shared/disclosure/disclosure-context\";\n",
-     "import { cn } from \"../_shared\";\nimport { useDisclosureIds } from \"../_shared\";\n"
+     "import { useDisclosureIds } from \"../_shared/disclosure/disclosure-context\";\n",
+     "import { useDisclosureIds } from \"../_shared/disclosure\";\n"
     ]
    ]
   },
   "src/components/accordion/AccordionItem.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { provideDisclosureIds } from \"../_shared/disclosure/disclosure-context\";\n",
-     "import { cn } from \"../_shared\";\nimport { provideDisclosureIds } from \"../_shared\";\n"
+     "import { provideDisclosureIds } from \"../_shared/disclosure/disclosure-context\";\n",
+     "import { provideDisclosureIds } from \"../_shared/disclosure\";\n"
     ]
    ]
   },
   "src/components/accordion/AccordionTrigger.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { useDisclosureIds } from \"../_shared/disclosure/disclosure-context\";\n",
-     "import { cn } from \"../_shared\";\nimport { useDisclosureIds } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/alert/Alert.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/alert/AlertDescription.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/alert/AlertTitle.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/alert/index.ts": {
-   "hunks": [
-    [
-     "import { joinClassValues, type ClassValue } from \"../_shared/class-names\";\n",
-     "import { joinClassValues, type ClassValue } from \"../_shared\";\n"
+     "import { useDisclosureIds } from \"../_shared/disclosure/disclosure-context\";\n",
+     "import { useDisclosureIds } from \"../_shared/disclosure\";\n"
     ]
    ]
   },
@@ -301,7 +241,7 @@
     ],
     [
      "import { useIntersectionPause } from \"../../../composables/motion/core/useIntersectionPause\";\nimport { useScrollProgress } from \"../../../composables/motion/scroll/useScrollProgress\";\nimport type { AuroraConfig } from \"../config/presets\";\n",
-     "import { useIntersectionPause } from \"../../../composables/motion/core/index/index\";\nimport { useScrollProgress } from \"../../../composables/motion/core/index/index\";\nimport type { AuroraConfig } from \"../config\";\n"
+     "import { useIntersectionPause } from \"../../../composables/motion/motion-core\";\nimport { useScrollProgress } from \"../../../composables/motion/motion-core\";\nimport type { AuroraConfig } from \"../config\";\n"
     ],
     [
      "} from \"../../../composables/glass/webgpu/rendererStatus\";\n",
@@ -322,14 +262,6 @@
     [
      "import { colorValue } from \"../../../composables/color/value/value\";\n",
      "import { colorValue } from \"../../../composables/color/value\";\n"
-    ]
-   ]
-  },
-  "src/components/aurora/config/presets.ts": {
-   "hunks": [
-    [
-     "import type { ImageInputSource } from \"../runtime/frame/textureUpload\";\n",
-     "import type { ImageInputSource } from \"../runtime\";\n"
     ]
    ]
   },
@@ -372,24 +304,28 @@
   "src/components/aurora/runtime/frame/auroraImageSource.ts": {
    "hunks": [
     [
-     "import type { AuroraConfig } from \"../../config/presets\";\n",
-     "import type { AuroraConfig } from \"../../config\";\n"
+     "import type { UploadableImageSource } from \"../../config/presets\";\nimport type { AuroraConfig } from \"../../config/presets\";\n",
+     "import type { UploadableImageSource } from \"../../config\";\nimport type { AuroraConfig } from \"../../config\";\n"
     ]
    ]
   },
   "src/components/aurora/runtime/frame/frameLoop.ts": {
    "hunks": [
     [
-     "import type { UniformLocations } from \"../webgl/glSetup\";\n",
-     "import type { UniformLocations } from \"../webgl\";\n"
-    ],
-    [
      "import { isAuroraDriftLive, type AuroraConfig } from \"../../config/presets\";\nimport type { UsePointerVelocityField } from \"../../../../composables/motion/pointer/usePointerVelocityField\";\n",
-     "import { isAuroraDriftLive, type AuroraConfig } from \"../../config\";\nimport type { UsePointerVelocityField } from \"../../../../composables/motion/core/index/index\";\n"
+     "import { isAuroraDriftLive, type AuroraConfig } from \"../../config\";\nimport type { UsePointerVelocityField } from \"../../../../composables/motion/motion-core\";\n"
     ],
     [
      "} from \"../../../../composables/motion/pointer/pointerFieldMappings\";\n",
-     "} from \"../../../../composables/motion/core/index/index\";\n"
+     "} from \"../../../../composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "src/components/aurora/runtime/frame/textureUpload.ts": {
+   "hunks": [
+    [
+     "import type { ImageInputSource, UploadableImageSource } from \"../../config/presets\";\n",
+     "import type { ImageInputSource, UploadableImageSource } from \"../../config\";\n"
     ]
    ]
   },
@@ -398,10 +334,6 @@
     [
      "import { flattenPalette } from \"../../config/color\";\n",
      "import { flattenPalette } from \"../../config\";\n"
-    ],
-    [
-     "import type { UniformLocations } from \"../webgl/glSetup\";\n",
-     "import type { UniformLocations } from \"../webgl\";\n"
     ],
     [
      "} from \"../../config/presets\";\n",
@@ -413,7 +345,7 @@
    "hunks": [
     [
      "import { resolveAuroraWashDpr } from \"../../../composables/glass/budget\";\nimport { createAuroraImageCoordinator } from \"./frame/auroraImageSource\";\nimport { createGpuSubstrate, type GpuSubstrateHandle } from \"../../../composables/glass/webgpu/useGpuSubstrate\";\nimport { type RendererStatus } from \"../../../composables/glass/webgpu/rendererStatus\";\nimport { rendererFailure } from \"../../../composables/glass/webgpu/rendererStatus\";\nimport { isSoftwareWebGLRenderer } from \"../config/renderMode\";\nimport type { AuroraConfig, AuroraInstance } from \"../config/presets\";\nimport { createAuroraGLSetup } from \"./webgl/glSetup\";\nimport type { AuroraCursorScalars } from \"./frame/frameLoop\";\nimport { createAuroraWGPUSetup } from \"./webgpu/wgpuSetup\";\nimport { usePointerVelocityField } from \"../../../composables/motion/pointer/usePointerVelocityField\";\n",
-     "import { resolveAuroraWashDpr } from \"../../../composables/glass\";\nimport { createAuroraImageCoordinator } from \"./frame\";\nimport { createGpuSubstrate, type GpuSubstrateHandle } from \"../../../composables/glass\";\nimport { type RendererStatus } from \"../../../composables/glass\";\nimport { rendererFailure } from \"../../../composables/glass\";\nimport { isSoftwareWebGLRenderer } from \"../config\";\nimport type { AuroraConfig, AuroraInstance } from \"../config\";\nimport { createAuroraGLSetup } from \"./webgl\";\nimport type { AuroraCursorScalars } from \"./frame\";\nimport { createAuroraWGPUSetup } from \"./webgpu\";\nimport { usePointerVelocityField } from \"../../../composables/motion/core/index/index\";\n"
+     "import { resolveAuroraWashDpr } from \"../../../composables/glass\";\nimport { createAuroraImageCoordinator } from \"./frame\";\nimport { createGpuSubstrate, type GpuSubstrateHandle } from \"../../../composables/glass\";\nimport { type RendererStatus } from \"../../../composables/glass\";\nimport { rendererFailure } from \"../../../composables/glass\";\nimport { isSoftwareWebGLRenderer } from \"../config\";\nimport type { AuroraConfig, AuroraInstance } from \"../config\";\nimport { createAuroraGLSetup } from \"./webgl\";\nimport type { AuroraCursorScalars } from \"./frame\";\nimport { createAuroraWGPUSetup } from \"./webgpu\";\nimport { usePointerVelocityField } from \"../../../composables/motion/motion-core\";\n"
     ]
    ]
   },
@@ -429,7 +361,7 @@
    "hunks": [
     [
      "import { compileShader, linkProgram } from \"../../../../composables/glass/webgl/compile\";\nimport type { WebGLCanvasFrame } from \"../../../../composables/glass/webgpu/useGpuSubstrate\";\nimport type { BackingSize } from \"../../../../composables/glass/lifecycle/createCanvasLifecycle\";\nimport type { UsePointerVelocityField } from \"../../../../composables/motion/pointer/usePointerVelocityField\";\n",
-     "import { compileShader, linkProgram } from \"../../../../composables/glass\";\nimport type { WebGLCanvasFrame } from \"../../../../composables/glass\";\nimport type { BackingSize } from \"../../../../composables/glass\";\nimport type { UsePointerVelocityField } from \"../../../../composables/motion/core/index/index\";\n"
+     "import { compileShader, linkProgram } from \"../../../../composables/glass\";\nimport type { WebGLCanvasFrame } from \"../../../../composables/glass\";\nimport type { BackingSize } from \"../../../../composables/glass\";\nimport type { UsePointerVelocityField } from \"../../../../composables/motion/motion-core\";\n"
     ],
     [
      "import { FRAGMENT_SRC } from \"./palette/aurora.frag\";\n",
@@ -440,8 +372,8 @@
      "import type { AuroraConfig } from \"../../config\";\n"
     ],
     [
-     "} from \"../frame/auroraImageSource\";\nimport { createFrameLoop, type AuroraCursorScalars } from \"../frame/frameLoop\";\nimport { createUniformBridge } from \"../frame/uniformBridge\";\n",
-     "} from \"../frame\";\nimport { createFrameLoop, type AuroraCursorScalars } from \"../frame\";\nimport { createUniformBridge } from \"../frame\";\n"
+     "} from \"../frame/auroraImageSource\";\nimport { createFrameLoop, type AuroraCursorScalars } from \"../frame/frameLoop\";\nimport { createUniformBridge, UNIFORM_NAMES, type UniformLocations } from \"../frame/uniformBridge\";\n",
+     "} from \"../frame\";\nimport { createFrameLoop, type AuroraCursorScalars } from \"../frame\";\nimport { createUniformBridge, UNIFORM_NAMES, type UniformLocations } from \"../frame\";\n"
     ]
    ]
   },
@@ -504,48 +436,8 @@
      "} from \"../frame\";\n"
     ],
     [
-     "} from \"../frame/textureUpload\";\nimport { isAuroraDriftLive, type AuroraConfig } from \"../../config/presets\";\nimport type { UsePointerVelocityField } from \"../../../../composables/motion/pointer/usePointerVelocityField\";\n",
-     "} from \"../frame\";\nimport { isAuroraDriftLive, type AuroraConfig } from \"../../config\";\nimport type { UsePointerVelocityField } from \"../../../../composables/motion/core/index/index\";\n"
-    ]
-   ]
-  },
-  "src/components/avatar/Avatar.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/avatar/AvatarFallback.vue": {
-   "hunks": [
-    [
-     "import { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { fixedHostAttrs } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/avatar/AvatarImage.vue": {
-   "hunks": [
-    [
-     "import { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { fixedHostAttrs } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/badge/Badge.vue": {
-   "hunks": [
-    [
-     "import { cn } from '../_shared/class-names'\n",
-     "import { cn } from '../_shared'\n"
-    ]
-   ]
-  },
-  "src/components/badge/index.ts": {
-   "hunks": [
-    [
-     "import { joinClassValues, type ClassValue } from \"../_shared/class-names\";\n",
-     "import { joinClassValues, type ClassValue } from \"../_shared\";\n"
+     "} from \"../frame/textureUpload\";\nimport type { UploadableImageSource } from \"../../config/presets\";\nimport { isAuroraDriftLive, type AuroraConfig } from \"../../config/presets\";\nimport type { UsePointerVelocityField } from \"../../../../composables/motion/pointer/usePointerVelocityField\";\n",
+     "} from \"../frame\";\nimport type { UploadableImageSource } from \"../../config\";\nimport { isAuroraDriftLive, type AuroraConfig } from \"../../config\";\nimport type { UsePointerVelocityField } from \"../../../../composables/motion/motion-core\";\n"
     ]
    ]
   },
@@ -613,7 +505,7 @@
    "hunks": [
     [
      "import type { BackingSize } from \"../../../composables/glass/lifecycle/createCanvasLifecycle\";\nimport { usePointerVelocityField } from \"../../../composables/motion/pointer/usePointerVelocityField\";\n",
-     "import type { BackingSize } from \"../../../composables/glass\";\nimport { usePointerVelocityField } from \"../../../composables/motion/core/index/index\";\n"
+     "import type { BackingSize } from \"../../../composables/glass\";\nimport { usePointerVelocityField } from \"../../../composables/motion/motion-core\";\n"
     ]
    ]
   },
@@ -692,8 +584,8 @@
   "src/components/button/Button.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport type { PrimitiveProps } from \"../_shared/primitive\";\nimport DotRing from \"../_shared/feedback/DotRing.vue\";\n",
-     "import { cn } from \"../_shared\";\nimport type { PrimitiveProps } from \"../_shared\";\nimport { DotRing } from \"../_shared\";\n"
+     "import DotRing from \"../_shared/feedback/DotRing.vue\";\n",
+     "import { DotRing } from \"../_shared/feedback\";\n"
     ],
     [
      "import { asElement } from \"../../composables/motion/core/element/asElement\";\nimport { useLiquidPress } from \"../../composables/motion/spring/useLiquidPress\";\n",
@@ -704,80 +596,24 @@
   "src/components/card/Card.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport Surface, { type SurfaceProps } from \"../surface/Surface.vue\";\n",
-     "import { cn } from \"../_shared\";\nimport { Surface, type SurfaceProps } from \"../surface\";\n"
-    ]
-   ]
-  },
-  "src/components/card/CardContent.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/card/CardDescription.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/card/CardFooter.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
+     "import Surface, { type SurfaceProps } from \"../surface/Surface.vue\";\n",
+     "import { Surface, type SurfaceProps } from \"../surface\";\n"
     ]
    ]
   },
   "src/components/card/CardHeader.vue": {
    "hunks": [
     [
-     "import { useScrollTrigger } from \"../../composables/motion/scroll/useScrollTrigger\";\nimport { cn } from \"../_shared/class-names\";\n",
-     "import { useScrollTrigger } from \"../../composables/motion/core/index/index\";\nimport { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/card/CardTitle.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/carousel/Carousel.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
+     "import { useScrollTrigger } from \"../../composables/motion/scroll/useScrollTrigger\";\n",
+     "import { useScrollTrigger } from \"../../composables/motion/motion-core\";\n"
     ]
    ]
   },
   "src/components/carousel/CarouselContent.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { useReducedMotion } from \"../../composables/motion/core/useReducedMotion\";\n",
-     "import { cn } from \"../_shared\";\nimport { useReducedMotion } from \"../../composables/motion/core/index/index\";\n"
-    ]
-   ]
-  },
-  "src/components/carousel/CarouselItem.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/carousel/CarouselPager.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
+     "import { useReducedMotion } from \"../../composables/motion/core/useReducedMotion\";\n",
+     "import { useReducedMotion } from \"../../composables/motion/motion-core\";\n"
     ]
    ]
   },
@@ -789,59 +625,35 @@
     ]
    ]
   },
-  "src/components/checkbox/Checkbox.vue": {
-   "hunks": [
-    [
-     "import { type ControlProps, controlStateAttrs } from \"../_shared/control\";\nimport type { FormFieldProps, PrimitiveProps } from \"../_shared/primitive\";\nimport type { CheckedState, SelectionValue } from \"../_shared/selection\";\n",
-     "import { type ControlProps, controlStateAttrs } from \"../_shared\";\nimport type { FormFieldProps, PrimitiveProps } from \"../_shared\";\nimport type { CheckedState, SelectionValue } from \"../_shared\";\n"
-    ]
-   ]
-  },
   "src/components/chip/Chip.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { useAccentTone } from \"../../composables/color/useAccentTone\";\n",
-     "import { cn } from \"../_shared\";\nimport { useAccentTone } from \"../../composables/color\";\n"
-    ]
-   ]
-  },
-  "src/components/chip/chipVariants.ts": {
-   "hunks": [
-    [
-     "import { joinClassValues, type ClassValue } from \"../_shared/class-names\";\n",
-     "import { joinClassValues, type ClassValue } from \"../_shared\";\n"
+     "import { useAccentTone } from \"../../composables/color/useAccentTone\";\n",
+     "import { useAccentTone } from \"../../composables/color\";\n"
     ]
    ]
   },
   "src/components/collapsible/Collapsible.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { provideDisclosureIds } from \"../_shared/disclosure/disclosure-context\";\n",
-     "import { cn } from \"../_shared\";\nimport { provideDisclosureIds } from \"../_shared\";\n"
+     "import { provideDisclosureIds } from \"../_shared/disclosure/disclosure-context\";\n",
+     "import { provideDisclosureIds } from \"../_shared/disclosure\";\n"
     ]
    ]
   },
   "src/components/collapsible/CollapsibleContent.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { useDisclosureIds } from \"../_shared/disclosure/disclosure-context\";\n",
-     "import { cn } from \"../_shared\";\nimport { useDisclosureIds } from \"../_shared\";\n"
+     "import { useDisclosureIds } from \"../_shared/disclosure/disclosure-context\";\n",
+     "import { useDisclosureIds } from \"../_shared/disclosure\";\n"
     ]
    ]
   },
   "src/components/collapsible/CollapsibleTrigger.vue": {
    "hunks": [
     [
-     "import type { PrimitiveProps } from \"../_shared/primitive\";\nimport { cn } from \"../_shared/class-names\";\nimport { useDisclosureIds } from \"../_shared/disclosure/disclosure-context\";\n",
-     "import type { PrimitiveProps } from \"../_shared\";\nimport { cn } from \"../_shared\";\nimport { useDisclosureIds } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/command/Command.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport type { ComboboxValue } from \"../_shared/selection\";\nimport { isSelectionValue } from \"../_shared/selection\";\n",
-     "import { cn } from \"../_shared\";\nimport type { ComboboxValue } from \"../_shared\";\nimport { isSelectionValue } from \"../_shared\";\n"
+     "import { useDisclosureIds } from \"../_shared/disclosure/disclosure-context\";\n",
+     "import { useDisclosureIds } from \"../_shared/disclosure\";\n"
     ]
    ]
   },
@@ -853,115 +665,31 @@
     ]
    ]
   },
-  "src/components/command/CommandEmpty.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\nimport type { ComboboxEmptyProps } from \"../_shared/selection\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\nimport type { ComboboxEmptyProps } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/command/CommandGroup.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\nimport type { ComboboxGroupProps } from \"../_shared/selection\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\nimport type { ComboboxGroupProps } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/command/CommandInput.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\n"
-    ],
-    [
-     "} from \"../_shared/selection\";\n",
-     "} from \"../_shared\";\n"
-    ]
-   ]
-  },
   "src/components/command/CommandItem.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { rowClass } from \"../_shared/menu/rowClass\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport { rowClass } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\n"
-    ],
-    [
-     "} from \"../_shared/selection\";\n",
-     "} from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/command/CommandList.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { useDockParticipation } from \"../_shared/overlay\";\nimport type { ComboboxListEmits } from \"../_shared/selection\";\n",
-     "import { cn } from \"../_shared\";\nimport { useDockParticipation } from \"../_shared\";\nimport type { ComboboxListEmits } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/command/CommandSeparator.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\nimport type { ComboboxSeparatorProps } from \"../_shared/selection\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\nimport type { ComboboxSeparatorProps } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/command/CommandShortcut.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/command/index.ts": {
-   "hunks": [
-    [
-     "} from \"../_shared/selection\";\n",
-     "} from \"../_shared\";\n"
+     "import { rowClass } from \"../_shared/menu/rowClass\";\n",
+     "import { rowClass } from \"../_shared/menu\";\n"
     ]
    ]
   },
   "src/components/command/types.ts": {
    "hunks": [
     [
-     "import type { DialogProps } from \"../dialog/Dialog.vue\";\nimport type { ComboboxValue } from \"../_shared/selection\";\n",
-     "import type { DialogProps } from \"../dialog\";\nimport type { ComboboxValue } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/configurator/Configurator.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/configurator/ConfiguratorLayer.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/configurator/ConfiguratorRow.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
+     "import type { DialogProps } from \"../dialog/Dialog.vue\";\n",
+     "import type { DialogProps } from \"../dialog\";\n"
     ]
    ]
   },
   "src/components/constellation/Constellation.vue": {
    "hunks": [
     [
-     "import { useRoutePointer } from \"../../composables/motion/pointer/useRoutePointer\";\nimport { cn } from \"../_shared/class-names\";\nimport type { RendererStatus } from \"../../composables/glass/webgpu/rendererStatus\";\n",
-     "import { useRoutePointer } from \"../../composables/motion/core/index/index\";\nimport { cn } from \"../_shared\";\nimport type { RendererStatus } from \"../../composables/glass\";\n"
+     "import { useRoutePointer } from \"../../composables/motion/pointer/useRoutePointer\";\n",
+     "import { useRoutePointer } from \"../../composables/motion/motion-core\";\n"
+    ],
+    [
+     "import type { RendererStatus } from \"../../composables/glass/webgpu/rendererStatus\";\n",
+     "import type { RendererStatus } from \"../../composables/glass\";\n"
     ]
    ]
   },
@@ -969,11 +697,11 @@
    "hunks": [
     [
      "import { useCanvas2D } from \"../../../composables/glass/canvas2d\";\nimport { hashString, mulberry32 } from \"../../../composables/glass/procedural/prng\";\nimport { usePointerVelocityField } from \"../../../composables/motion/pointer/usePointerVelocityField\";\nimport { readReducedMotion } from \"../../../composables/motion/core/useReducedMotion\";\n",
-     "import { useCanvas2D } from \"../../../composables/glass\";\nimport { hashString, mulberry32 } from \"../../../composables/glass\";\nimport { usePointerVelocityField } from \"../../../composables/motion/core/index/index\";\nimport { readReducedMotion } from \"../../../composables/motion/core/index/index\";\n"
+     "import { useCanvas2D } from \"../../../composables/glass\";\nimport { hashString, mulberry32 } from \"../../../composables/glass\";\nimport { usePointerVelocityField } from \"../../../composables/motion/motion-core\";\nimport { readReducedMotion } from \"../../../composables/motion/motion-core\";\n"
     ],
     [
      "} from \"../../../composables/motion/pointer/pointerFieldMappings\";\n",
-     "} from \"../../../composables/motion/core/index/index\";\n"
+     "} from \"../../../composables/motion/motion-core\";\n"
     ],
     [
      "} from \"../../../composables/glass/webgpu/rendererStatus\";\n",
@@ -984,85 +712,25 @@
   "src/components/dark-mode-toggle/DarkModeToggle.vue": {
    "hunks": [
     [
-     "import { useLiquidPress } from \"../../composables/motion/spring/useLiquidPress\";\nimport { cn } from \"../_shared/class-names\";\n",
-     "import { useLiquidPress } from \"../../composables/motion\";\nimport { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/data-table/DataTable.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { FOCUSABLE_SELECTOR } from \"../_shared/focus\";\n",
-     "import { cn } from \"../_shared\";\nimport { FOCUSABLE_SELECTOR } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/deck/DeckSlide.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/deck/DeckStage.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
+     "import { useLiquidPress } from \"../../composables/motion/spring/useLiquidPress\";\n",
+     "import { useLiquidPress } from \"../../composables/motion\";\n"
     ]
    ]
   },
   "src/components/dialog/DialogContent.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { useSpringMount } from \"../../composables/motion/spring/useSpringMount\";\nimport ModalOverlay from \"../_shared/overlay/ModalOverlay.vue\";\n",
-     "import { cn } from \"../_shared\";\nimport { useSpringMount } from \"../../composables/motion\";\nimport { ModalOverlay } from \"../_shared\";\n"
+     "import { useSpringMount } from \"../../composables/motion/spring/useSpringMount\";\nimport ModalOverlay from \"../_shared/overlay/ModalOverlay.vue\";\n",
+     "import { useSpringMount } from \"../../composables/motion\";\nimport { ModalOverlay } from \"../_shared/overlay\";\n"
     ],
     [
-     "import { useMotionAxis } from \"../_shared/useMotionAxis\";\nimport { surfaceClass } from \"../_shared/surface/resolve\";\nimport { scrimOpacity } from \"../sheet/motion\";\nimport { useModalShortcutBarrier } from \"../_shared/overlay\";\nimport type { DismissableContentEmits } from \"../_shared/interaction\";\n",
-     "import { useMotionAxis } from \"../_shared\";\nimport { surfaceClass } from \"../_shared\";\nimport { scrimOpacity } from \"../sheet\";\nimport { useModalShortcutBarrier } from \"../_shared\";\nimport type { DismissableContentEmits } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/dialog/DialogDescription.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/dialog/DialogFooter.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/dialog/DialogHeader.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/dialog/DialogTitle.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
+     "import { surfaceClass } from \"../_shared/surface/resolve\";\nimport { scrimOpacity } from \"../sheet/motion\";\n",
+     "import { surfaceClass } from \"../_shared/surface\";\nimport { scrimOpacity } from \"../sheet\";\n"
     ]
    ]
   },
   "src/components/dock/DockControl.vue": {
    "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ],
     [
      "import { useLiquidPress } from \"../../composables/motion/spring/useLiquidPress\";\nimport { springPreset } from \"../../composables/motion/spring/springPresets\";\n",
      "import { useLiquidPress } from \"../../composables/motion\";\nimport { springPreset } from \"../../composables/motion\";\n"
@@ -1080,25 +748,17 @@
   "src/components/dock/DockLayerGroup.vue": {
    "hunks": [
     [
-     "import { useSelectionGroup } from \"../../composables/motion/morph/useSelectionGroup\";\nimport { useHoldToken } from \"../_shared/overlay\";\n",
-     "import { useSelectionGroup } from \"../../composables/motion/core/index/index\";\nimport { useHoldToken } from \"../_shared\";\n"
+     "import { useSelectionGroup } from \"../../composables/motion/morph/useSelectionGroup\";\n",
+     "import { useSelectionGroup } from \"../../composables/motion/motion-core\";\n"
     ],
     [
      "} from \"../../composables/motion/morph/useDragMorph\";\n",
      "} from \"../../composables/motion\";\n"
-    ],
-    [
-     "import { useMotionAxis } from \"../_shared/useMotionAxis\";\n",
-     "import { useMotionAxis } from \"../_shared\";\n"
     ]
    ]
   },
   "src/components/dock/DockTrigger.vue": {
    "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ],
     [
      "import DropdownMenuTrigger from \"../menu/DropdownMenuTrigger.vue\";\n",
      "import { DropdownMenuTrigger } from \"../menu\";\n"
@@ -1108,8 +768,8 @@
   "src/components/dock/GlassDock.vue": {
    "hunks": [
     [
-     "import { FOCUSABLE_SELECTOR } from \"../_shared/focus\";\nimport { useGlassBackdropLuminance } from \"./legibility/useGlassBackdropLuminance\";\n",
-     "import { FOCUSABLE_SELECTOR } from \"../_shared\";\nimport { useGlassBackdropLuminance } from \"./legibility\";\n"
+     "import { useGlassBackdropLuminance } from \"./legibility/useGlassBackdropLuminance\";\n",
+     "import { useGlassBackdropLuminance } from \"./legibility\";\n"
     ]
    ]
   },
@@ -1117,15 +777,7 @@
    "hunks": [
     [
      "import { provideOverlayHost, type DockHoldKind } from \"../../_shared/overlay/participation\";\n",
-     "import { provideOverlayHost, type DockHoldKind } from \"../../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/dock/composables/useDockRun.ts": {
-   "hunks": [
-    [
-     "import { FOCUSABLE_SELECTOR } from \"../../_shared/focus\";\n",
-     "import { FOCUSABLE_SELECTOR } from \"../../_shared\";\n"
+     "import { provideOverlayHost, type DockHoldKind } from \"../../_shared/overlay\";\n"
     ]
    ]
   },
@@ -1133,7 +785,7 @@
    "hunks": [
     [
      "import { motionTempo } from \"../../../composables/motion/core/tempo/motionTempo\";\n",
-     "import { motionTempo } from \"../../../composables/motion/core/tempo\";\n"
+     "import { motionTempo } from \"../../../composables/motion/core\";\n"
     ]
    ]
   },
@@ -1141,7 +793,7 @@
    "hunks": [
     [
      "import { isTeleportedTarget } from \"../../_shared/overlay/isTeleportedTarget\";\nimport type { DockHoldKind } from \"../../_shared/overlay/participation\";\n",
-     "import { isTeleportedTarget } from \"../../_shared\";\nimport type { DockHoldKind } from \"../../_shared\";\n"
+     "import { isTeleportedTarget } from \"../../_shared/overlay\";\nimport type { DockHoldKind } from \"../../_shared/overlay\";\n"
     ]
    ]
   },
@@ -1177,39 +829,23 @@
    "hunks": [
     [
      "import { useRAFLoop, type RAFLoopControls } from \"../../../composables/motion/core/useRAFLoop\";\nimport { useReducedMotion } from \"../../../composables/motion/core/useReducedMotion\";\nimport { useIntersectionPause } from \"../../../composables/motion/core/useIntersectionPause\";\nimport { useResizeObserver } from \"../../../composables/dom/useResizeObserver\";\n",
-     "import { useRAFLoop, type RAFLoopControls } from \"../../../composables/motion/core/index/index\";\nimport { useReducedMotion } from \"../../../composables/motion/core/index/index\";\nimport { useIntersectionPause } from \"../../../composables/motion/core/index/index\";\nimport { useResizeObserver } from \"../../../composables/dom\";\n"
+     "import { useRAFLoop, type RAFLoopControls } from \"../../../composables/motion/motion-core\";\nimport { useReducedMotion } from \"../../../composables/motion/motion-core\";\nimport { useIntersectionPause } from \"../../../composables/motion/motion-core\";\nimport { useResizeObserver } from \"../../../composables/dom\";\n"
     ]
    ]
   },
   "src/components/dock/search/useDockSearch.ts": {
    "hunks": [
     [
-     "import { useHoldToken } from \"../../_shared/overlay\";\n",
-     "import { useHoldToken } from \"../../_shared\";\n"
-    ],
-    [
      "} from \"../../../composables/motion/scroll/useScrollChrome\";\n",
-     "} from \"../../../composables/motion/core/index/index\";\n"
-    ]
-   ]
-  },
-  "src/components/easing/EasingCurve.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
+     "} from \"../../../composables/motion/motion-core\";\n"
     ]
    ]
   },
   "src/components/easing/EasingPicker.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ],
-    [
      "import DotRing from \"../_shared/feedback/DotRing.vue\";\n",
-     "import { DotRing } from \"../_shared\";\n"
+     "import { DotRing } from \"../_shared/feedback\";\n"
     ],
     [
      "import { useClipboard } from \"../../composables/dom/useClipboard\";\n",
@@ -1221,15 +857,7 @@
    "hunks": [
     [
      "import { useReducedMotion } from \"../../composables/motion/core/useReducedMotion\";\n",
-     "import { useReducedMotion } from \"../../composables/motion/core/index/index\";\n"
-    ]
-   ]
-  },
-  "src/components/expandable-container/ExpandableContainer.vue": {
-   "hunks": [
-    [
-     "import { FOCUSABLE_SELECTOR } from \"../_shared/focus\";\n",
-     "import { FOCUSABLE_SELECTOR } from \"../_shared\";\n"
+     "import { useReducedMotion } from \"../../composables/motion/motion-core\";\n"
     ]
    ]
   },
@@ -1313,7 +941,7 @@
    "hunks": [
     [
      "import { createGpuSubstrate, type GpuBackend } from \"../../composables/glass/webgpu/useGpuSubstrate\";\nimport { type RendererStatus } from \"../../composables/glass/webgpu/rendererStatus\";\nimport { pendingRenderer } from \"../../composables/glass/webgpu/rendererStatus\";\nimport { usePointerVelocityField } from \"../../composables/motion/pointer/usePointerVelocityField\";\n",
-     "import { createGpuSubstrate, type GpuBackend } from \"../../composables/glass\";\nimport { type RendererStatus } from \"../../composables/glass\";\nimport { pendingRenderer } from \"../../composables/glass\";\nimport { usePointerVelocityField } from \"../../composables/motion/core/index/index\";\n"
+     "import { createGpuSubstrate, type GpuBackend } from \"../../composables/glass\";\nimport { type RendererStatus } from \"../../composables/glass\";\nimport { pendingRenderer } from \"../../composables/glass\";\nimport { usePointerVelocityField } from \"../../composables/motion/motion-core\";\n"
     ],
     [
      "import { FOURIER_DPR_CAP, type FourierFieldConfig } from \"./constants/constants\";\n",
@@ -1345,47 +973,23 @@
    "hunks": [
     [
      "import DotRing from \"../_shared/feedback/DotRing.vue\";\n",
-     "import { DotRing } from \"../_shared\";\n"
+     "import { DotRing } from \"../_shared/feedback\";\n"
     ]
    ]
   },
   "src/components/input/Input.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { useFieldControlState } from \"../_shared/field/control\";\n",
-     "import { cn } from \"../_shared\";\nimport { useFieldControlState } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/input/index.ts": {
-   "hunks": [
-    [
-     "export type { ControlSize } from \"../_shared/control\";\n",
-     "export type { ControlSize } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/input/types.ts": {
-   "hunks": [
-    [
-     "import type { ControlSize } from \"../_shared/control\";\n",
-     "import type { ControlSize } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/label/Label.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\n"
+     "import { useFieldControlState } from \"../_shared/field/control\";\n",
+     "import { useFieldControlState } from \"../_shared/field\";\n"
     ]
    ]
   },
   "src/components/menu/DropdownMenu.vue": {
    "hunks": [
     [
-     "import type { Direction } from \"../_shared/primitive\";\nimport type { MenuTrigger } from \"./context/context\";\n",
-     "import type { Direction } from \"../_shared\";\nimport type { MenuTrigger } from \"./context\";\n"
+     "import type { MenuTrigger } from \"./context/context\";\n",
+     "import type { MenuTrigger } from \"./context\";\n"
     ],
     [
      "import { provideMenuTrigger } from \"./context/context\";\n",
@@ -1396,20 +1000,16 @@
   "src/components/menu/DropdownMenuContent.vue": {
    "hunks": [
     [
-     "} from \"../_shared/interaction\";\n",
-     "} from \"../_shared\";\n"
-    ],
-    [
-     "} from \"../_shared/overlay\";\nimport { useMenuPart, useMenuTrigger } from \"./context/context\";\n",
-     "} from \"../_shared\";\nimport { useMenuPart, useMenuTrigger } from \"./context\";\n"
+     "import { useMenuPart, useMenuTrigger } from \"./context/context\";\n",
+     "import { useMenuPart, useMenuTrigger } from \"./context\";\n"
     ]
    ]
   },
   "src/components/menu/DropdownMenuTrigger.vue": {
    "hunks": [
     [
-     "import type { PrimitiveProps } from \"../_shared/primitive\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\nimport { cn } from \"../_shared/class-names\";\nimport { useMenuPart, useMenuTrigger } from \"./context/context\";\n",
-     "import type { PrimitiveProps } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\nimport { cn } from \"../_shared\";\nimport { useMenuPart, useMenuTrigger } from \"./context\";\n"
+     "import { useMenuPart, useMenuTrigger } from \"./context/context\";\n",
+     "import { useMenuPart, useMenuTrigger } from \"./context\";\n"
     ]
    ]
   },
@@ -1512,64 +1112,56 @@
   "src/components/menu/items/DropdownMenuCheckboxItem.vue": {
    "hunks": [
     [
-     "import type { CheckedState } from \"../../_shared/selection\";\nimport { cn } from \"../../_shared/class-names\";\nimport { fixedHostAttrs } from \"../../_shared/primitive\";\nimport { useMenuPart } from \"../context/context\";\n",
-     "import type { CheckedState } from \"../../_shared\";\nimport { cn } from \"../../_shared\";\nimport { fixedHostAttrs } from \"../../_shared\";\nimport { useMenuPart } from \"../context\";\n"
+     "import { useMenuPart } from \"../context/context\";\n",
+     "import { useMenuPart } from \"../context\";\n"
     ]
    ]
   },
   "src/components/menu/items/DropdownMenuGroup.vue": {
    "hunks": [
     [
-     "import { cn } from \"../../_shared/class-names\";\nimport { fixedHostAttrs } from \"../../_shared/primitive\";\nimport { useMenuPart } from \"../context/context\";\n",
-     "import { cn } from \"../../_shared\";\nimport { fixedHostAttrs } from \"../../_shared\";\nimport { useMenuPart } from \"../context\";\n"
+     "import { useMenuPart } from \"../context/context\";\n",
+     "import { useMenuPart } from \"../context\";\n"
     ]
    ]
   },
   "src/components/menu/items/DropdownMenuItem.vue": {
    "hunks": [
     [
-     "import { cn } from \"../../_shared/class-names\";\nimport { fixedHostAttrs } from \"../../_shared/primitive\";\nimport { useMenuPart } from \"../context/context\";\n",
-     "import { cn } from \"../../_shared\";\nimport { fixedHostAttrs } from \"../../_shared\";\nimport { useMenuPart } from \"../context\";\n"
+     "import { useMenuPart } from \"../context/context\";\n",
+     "import { useMenuPart } from \"../context\";\n"
     ]
    ]
   },
   "src/components/menu/items/DropdownMenuLabel.vue": {
    "hunks": [
     [
-     "import { cn } from \"../../_shared/class-names\";\nimport { fixedHostAttrs } from \"../../_shared/primitive\";\nimport { useMenuPart } from \"../context/context\";\n",
-     "import { cn } from \"../../_shared\";\nimport { fixedHostAttrs } from \"../../_shared\";\nimport { useMenuPart } from \"../context\";\n"
+     "import { useMenuPart } from \"../context/context\";\n",
+     "import { useMenuPart } from \"../context\";\n"
     ]
    ]
   },
   "src/components/menu/items/DropdownMenuRadioGroup.vue": {
    "hunks": [
     [
-     "import type { SelectionValue } from \"../../_shared/selection\";\nimport { isSelectionValue } from \"../../_shared/selection\";\nimport { cn } from \"../../_shared/class-names\";\nimport { fixedHostAttrs } from \"../../_shared/primitive\";\nimport { useMenuPart } from \"../context/context\";\n",
-     "import type { SelectionValue } from \"../../_shared\";\nimport { isSelectionValue } from \"../../_shared\";\nimport { cn } from \"../../_shared\";\nimport { fixedHostAttrs } from \"../../_shared\";\nimport { useMenuPart } from \"../context\";\n"
+     "import { useMenuPart } from \"../context/context\";\n",
+     "import { useMenuPart } from \"../context\";\n"
     ]
    ]
   },
   "src/components/menu/items/DropdownMenuRadioItem.vue": {
    "hunks": [
     [
-     "import type { SelectionValue } from \"../../_shared/selection\";\nimport { cn } from \"../../_shared/class-names\";\nimport { fixedHostAttrs } from \"../../_shared/primitive\";\nimport { useMenuPart } from \"../context/context\";\n",
-     "import type { SelectionValue } from \"../../_shared\";\nimport { cn } from \"../../_shared\";\nimport { fixedHostAttrs } from \"../../_shared\";\nimport { useMenuPart } from \"../context\";\n"
+     "import { useMenuPart } from \"../context/context\";\n",
+     "import { useMenuPart } from \"../context\";\n"
     ]
    ]
   },
   "src/components/menu/items/DropdownMenuSeparator.vue": {
    "hunks": [
     [
-     "import { cn } from \"../../_shared/class-names\";\nimport { fixedHostAttrs } from \"../../_shared/primitive\";\nimport { useMenuPart } from \"../context/context\";\n",
-     "import { cn } from \"../../_shared\";\nimport { fixedHostAttrs } from \"../../_shared\";\nimport { useMenuPart } from \"../context\";\n"
-    ]
-   ]
-  },
-  "src/components/menu/items/DropdownMenuShortcut.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../../_shared/class-names\";\nimport { fixedHostAttrs } from \"../../_shared/primitive\";\n",
-     "import { cn } from \"../../_shared\";\nimport { fixedHostAttrs } from \"../../_shared\";\n"
+     "import { useMenuPart } from \"../context/context\";\n",
+     "import { useMenuPart } from \"../context\";\n"
     ]
    ]
   },
@@ -1584,80 +1176,32 @@
   "src/components/menu/sub/DropdownMenuSubContent.vue": {
    "hunks": [
     [
-     "import type { DismissableContentEmits } from \"../../_shared/interaction\";\nimport { overlayContentAttrs, useDockParticipation } from \"../../_shared/overlay\";\nimport { useMenuPart } from \"../context/context\";\n",
-     "import type { DismissableContentEmits } from \"../../_shared\";\nimport { overlayContentAttrs, useDockParticipation } from \"../../_shared\";\nimport { useMenuPart } from \"../context\";\n"
+     "import { useMenuPart } from \"../context/context\";\n",
+     "import { useMenuPart } from \"../context\";\n"
     ]
    ]
   },
   "src/components/menu/sub/DropdownMenuSubTrigger.vue": {
    "hunks": [
     [
-     "import { cn } from \"../../_shared/class-names\";\nimport { fixedHostAttrs } from \"../../_shared/primitive\";\nimport { useMenuPart } from \"../context/context\";\n",
-     "import { cn } from \"../../_shared\";\nimport { fixedHostAttrs } from \"../../_shared\";\nimport { useMenuPart } from \"../context\";\n"
-    ]
-   ]
-  },
-  "src/components/metric/Metric.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/metric/MetricRow.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/metric/MetricStack.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
+     "import { useMenuPart } from \"../context/context\";\n",
+     "import { useMenuPart } from \"../context\";\n"
     ]
    ]
   },
   "src/components/number-field/NumberField.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport type { ControlSize } from \"../_shared/control\";\nimport { useFieldControlState } from \"../_shared/field/control\";\nimport type { FormFieldProps, PrimitiveProps } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport type { ControlSize } from \"../_shared\";\nimport { useFieldControlState } from \"../_shared\";\nimport type { FormFieldProps, PrimitiveProps } from \"../_shared\";\n"
+     "import { useFieldControlState } from \"../_shared/field/control\";\n",
+     "import { useFieldControlState } from \"../_shared/field\";\n"
     ]
    ]
   },
   "src/components/number-field/NumberFieldInput.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { isAriaInvalid } from \"../_shared/field/control\";\n",
-     "import { cn } from \"../_shared\";\nimport { isAriaInvalid } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/number-field/NumberFieldStep.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/number-field/context.ts": {
-   "hunks": [
-    [
-     "import type { ControlSize } from \"../_shared/control\";\n",
-     "import type { ControlSize } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/pager-dots/PagerDots.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
+     "import { isAriaInvalid } from \"../_shared/field/control\";\n",
+     "import { isAriaInvalid } from \"../_shared/field\";\n"
     ]
    ]
   },
@@ -1665,35 +1209,7 @@
    "hunks": [
     [
      "} from \"../../composables/motion/morph/useLeadTrail\";\nimport { useLiquidFlex } from \"../../composables/motion/spring/useLiquidFlex\";\nimport { useResizeObserver } from \"../../composables/dom/useResizeObserver\";\n",
-     "} from \"../../composables/motion/morph\";\nimport { useLiquidFlex } from \"../../composables/motion/core/index/index\";\nimport { useResizeObserver } from \"../../composables/dom\";\n"
-    ]
-   ]
-  },
-  "src/components/popover/Popover.vue": {
-   "hunks": [
-    [
-     "import { useDockParticipation } from \"../_shared/overlay\";\n",
-     "import { useDockParticipation } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/popover/PopoverContent.vue": {
-   "hunks": [
-    [
-     "import type { DismissableContentEmits } from \"../_shared/interaction\";\n",
-     "import type { DismissableContentEmits } from \"../_shared\";\n"
-    ],
-    [
-     "} from \"../_shared/overlay\";\n",
-     "} from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/popover/PopoverTrigger.vue": {
-   "hunks": [
-    [
-     "import type { PrimitiveProps } from \"../_shared/primitive\";\n",
-     "import type { PrimitiveProps } from \"../_shared\";\n"
+     "} from \"../../composables/motion/morph\";\nimport { useLiquidFlex } from \"../../composables/motion/motion-core\";\nimport { useResizeObserver } from \"../../composables/dom\";\n"
     ]
    ]
   },
@@ -1701,147 +1217,31 @@
    "hunks": [
     [
      "import { resolveValueFraction, resolveValueMarks } from \"../_shared/field/valueDomain\";\n",
-     "import { resolveValueFraction, resolveValueMarks } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/progress/types.ts": {
-   "hunks": [
-    [
-     "import type { PrimitiveProps } from \"../_shared/primitive\";\n",
-     "import type { PrimitiveProps } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/radio-group/RadioGroup.vue": {
-   "hunks": [
-    [
-     "import type { ControlProps } from \"../_shared/control\";\nimport type { Direction, FormFieldProps, PrimitiveProps } from \"../_shared/primitive\";\nimport type { SelectionValue } from \"../_shared/selection\";\n",
-     "import type { ControlProps } from \"../_shared\";\nimport type { Direction, FormFieldProps, PrimitiveProps } from \"../_shared\";\nimport type { SelectionValue } from \"../_shared\";\n"
-    ],
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { controlStateAttrs } from \"../_shared/control\";\n",
-     "import { cn } from \"../_shared\";\nimport { controlStateAttrs } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/radio-group/RadioGroupItem.vue": {
-   "hunks": [
-    [
-     "import type { PrimitiveProps } from \"../_shared/primitive\";\nimport type { SelectionValue } from \"../_shared/selection\";\n",
-     "import type { PrimitiveProps } from \"../_shared\";\nimport type { SelectionValue } from \"../_shared\";\n"
-    ],
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/select/Select.vue": {
-   "hunks": [
-    [
-     "import type { Direction, FormFieldProps } from \"../_shared/primitive\";\nimport type { SelectionValue } from \"../_shared/selection\";\n",
-     "import type { Direction, FormFieldProps } from \"../_shared\";\nimport type { SelectionValue } from \"../_shared\";\n"
-    ],
-    [
-     "import { isSelectionValue } from \"../_shared/selection\";\n",
-     "import { isSelectionValue } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/select/SelectContent.vue": {
-   "hunks": [
-    [
-     "import type { PointerDownOutsideEvent } from \"../_shared/interaction\";\nimport type { FloatingPlacementProps } from \"../_shared/overlay\";\n",
-     "import type { PointerDownOutsideEvent } from \"../_shared\";\nimport type { FloatingPlacementProps } from \"../_shared\";\n"
-    ],
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { useDockParticipation } from \"../_shared/overlay\";\n",
-     "import { cn } from \"../_shared\";\nimport { useDockParticipation } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/select/SelectGroup.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\n"
+     "import { resolveValueFraction, resolveValueMarks } from \"../_shared/field\";\n"
     ]
    ]
   },
   "src/components/select/SelectItem.vue": {
    "hunks": [
     [
-     "import type { SelectionValue } from \"../_shared/selection\";\n",
-     "import type { SelectionValue } from \"../_shared\";\n"
-    ],
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { rowClass, type MenuRowIndicator } from \"../_shared/menu/rowClass\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport { rowClass, type MenuRowIndicator } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/select/SelectLabel.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/select/SelectScrollButton.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/select/SelectSeparator.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/select/SelectTrigger.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/select/SelectValue.vue": {
-   "hunks": [
-    [
-     "import { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { fixedHostAttrs } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/separator/Separator.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\n"
+     "import { rowClass, type MenuRowIndicator } from \"../_shared/menu/rowClass\";\n",
+     "import { rowClass, type MenuRowIndicator } from \"../_shared/menu\";\n"
     ]
    ]
   },
   "src/components/sheet/SheetContent.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { useSpringMount } from \"../../composables/motion/spring/useSpringMount\";\nimport ModalOverlay from \"../_shared/overlay/ModalOverlay.vue\";\n",
-     "import { cn } from \"../_shared\";\nimport { useSpringMount } from \"../../composables/motion\";\nimport { ModalOverlay } from \"../_shared\";\n"
+     "import { useSpringMount } from \"../../composables/motion/spring/useSpringMount\";\nimport ModalOverlay from \"../_shared/overlay/ModalOverlay.vue\";\n",
+     "import { useSpringMount } from \"../../composables/motion\";\nimport { ModalOverlay } from \"../_shared/overlay\";\n"
     ],
     [
-     "import { useMotionAxis } from \"../_shared/useMotionAxis\";\nimport { surfaceClass } from \"../_shared/surface/resolve\";\nimport { useModalShortcutBarrier } from \"../_shared/overlay\";\n",
-     "import { useMotionAxis } from \"../_shared\";\nimport { surfaceClass } from \"../_shared\";\nimport { useModalShortcutBarrier } from \"../_shared\";\n"
+     "import { surfaceClass } from \"../_shared/surface/resolve\";\n",
+     "import { surfaceClass } from \"../_shared/surface\";\n"
     ],
     [
-     "import { useSheetDetents } from \"./detents/useSheetDetents\";\nimport type { DismissableContentEmits } from \"../_shared/interaction\";\n",
-     "import { useSheetDetents } from \"./detents\";\nimport type { DismissableContentEmits } from \"../_shared\";\n"
+     "import { useSheetDetents } from \"./detents/useSheetDetents\";\n",
+     "import { useSheetDetents } from \"./detents\";\n"
     ]
    ]
   },
@@ -1849,7 +1249,7 @@
    "hunks": [
     [
      "import { motionTempo } from \"../../../composables/motion/core/tempo/motionTempo\";\nimport { springPreset } from \"../../../composables/motion/spring/springPresets\";\n",
-     "import { motionTempo } from \"../../../composables/motion/core/tempo\";\nimport { springPreset } from \"../../../composables/motion\";\n"
+     "import { motionTempo } from \"../../../composables/motion/core\";\nimport { springPreset } from \"../../../composables/motion\";\n"
     ]
    ]
   },
@@ -1861,14 +1261,6 @@
     ]
    ]
   },
-  "src/components/skeleton/Skeleton.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { fixedHostAttrs } from \"../_shared/primitive\";\n",
-     "import { cn } from \"../_shared\";\nimport { fixedHostAttrs } from \"../_shared\";\n"
-    ]
-   ]
-  },
   "src/components/slider/Slider.vue": {
    "hunks": [
     [
@@ -1876,24 +1268,16 @@
      "import { useDragVelocity } from \"../../composables/dom\";\n"
     ],
     [
-     "import { resolveValueMarks } from \"../_shared/field/valueDomain\";\nimport { useMotionAxis } from \"../_shared/useMotionAxis\";\n",
-     "import { resolveValueMarks } from \"../_shared\";\nimport { useMotionAxis } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/slider/types.ts": {
-   "hunks": [
-    [
-     "import type { Direction, FormFieldProps } from \"../_shared/primitive\";\n",
-     "import type { Direction, FormFieldProps } from \"../_shared\";\n"
+     "import { resolveValueMarks } from \"../_shared/field/valueDomain\";\n",
+     "import { resolveValueMarks } from \"../_shared/field\";\n"
     ]
    ]
   },
   "src/components/slider/useDockHold.ts": {
    "hunks": [
     [
-     "import { useHoldToken } from \"../_shared/overlay\";\nimport { useOptionalDockContext } from \"../dock/composables/dockContext\";\n",
-     "import { useHoldToken } from \"../_shared\";\nimport { useOptionalDockContext } from \"../dock\";\n"
+     "import { useOptionalDockContext } from \"../dock/composables/dockContext\";\n",
+     "import { useOptionalDockContext } from \"../dock\";\n"
     ]
    ]
   },
@@ -1909,7 +1293,7 @@
    "hunks": [
     [
      "import { motionTempo } from \"../../../composables/motion/core/tempo/motionTempo\";\n",
-     "import { motionTempo } from \"../../../composables/motion/core/tempo\";\n"
+     "import { motionTempo } from \"../../../composables/motion/core\";\n"
     ],
     [
      "} from \"../../../composables/motion/spring/springPresets\";\n",
@@ -1925,91 +1309,11 @@
     ]
    ]
   },
-  "src/components/status-dot/StatusDot.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
   "src/components/surface/Surface.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport type { PrimitiveProps } from \"../_shared/primitive\";\nimport { surfaceClass } from \"../_shared/surface/resolve\";\n",
-     "import { cn } from \"../_shared\";\nimport type { PrimitiveProps } from \"../_shared\";\nimport { surfaceClass } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/switch/Switch.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../_shared/class-names\";\nimport { type ControlProps, controlStateAttrs } from \"../_shared/control\";\nimport type { FormFieldProps, PrimitiveProps } from \"../_shared/primitive\";\nimport type { SelectionValue } from \"../_shared/selection\";\n",
-     "import { cn } from \"../_shared\";\nimport { type ControlProps, controlStateAttrs } from \"../_shared\";\nimport type { FormFieldProps, PrimitiveProps } from \"../_shared\";\nimport type { SelectionValue } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/table/Table.vue": {
-   "hunks": [
-    [
-     "import { cn } from '../_shared/class-names';\n",
-     "import { cn } from '../_shared';\n"
-    ]
-   ]
-  },
-  "src/components/table/TableBody.vue": {
-   "hunks": [
-    [
-     "import { cn } from '../_shared/class-names';\n",
-     "import { cn } from '../_shared';\n"
-    ]
-   ]
-  },
-  "src/components/table/TableCaption.vue": {
-   "hunks": [
-    [
-     "import { cn } from '../_shared/class-names';\n",
-     "import { cn } from '../_shared';\n"
-    ]
-   ]
-  },
-  "src/components/table/TableCell.vue": {
-   "hunks": [
-    [
-     "import { cn } from '../_shared/class-names';\n",
-     "import { cn } from '../_shared';\n"
-    ]
-   ]
-  },
-  "src/components/table/TableEmpty.vue": {
-   "hunks": [
-    [
-     "import { cn } from '../_shared/class-names';\n",
-     "import { cn } from '../_shared';\n"
-    ]
-   ]
-  },
-  "src/components/table/TableHead.vue": {
-   "hunks": [
-    [
-     "import { cn } from '../_shared/class-names';\n",
-     "import { cn } from '../_shared';\n"
-    ]
-   ]
-  },
-  "src/components/table/TableHeader.vue": {
-   "hunks": [
-    [
-     "import { cn } from '../_shared/class-names';\n",
-     "import { cn } from '../_shared';\n"
-    ]
-   ]
-  },
-  "src/components/table/TableRow.vue": {
-   "hunks": [
-    [
-     "import { cn } from '../_shared/class-names';\n",
-     "import { cn } from '../_shared';\n"
+     "import { surfaceClass } from \"../_shared/surface/resolve\";\n",
+     "import { surfaceClass } from \"../_shared/surface\";\n"
     ]
    ]
   },
@@ -2024,16 +1328,8 @@
   "src/components/tabs/segmented-tabs/SegmentedTabs.vue": {
    "hunks": [
     [
-     "import { cn } from \"../../_shared/class-names\";\n",
-     "import { cn } from \"../../_shared\";\n"
-    ],
-    [
      "import { useSelectionGroup } from \"../../../composables/motion/morph/useSelectionGroup\";\n",
-     "import { useSelectionGroup } from \"../../../composables/motion/core/index/index\";\n"
-    ],
-    [
-     "import { useMotionAxis } from \"../../_shared/useMotionAxis\";\n",
-     "import { useMotionAxis } from \"../../_shared\";\n"
+     "import { useSelectionGroup } from \"../../../composables/motion/motion-core\";\n"
     ]
    ]
   },
@@ -2045,7 +1341,7 @@
     ],
     [
      "} from \"../../../composables/motion/core/writeVelocityWeight\";\nimport { DEFAULT_INDICATOR_MAX_STRETCH } from \"../../../composables/motion/morph/useSelectionIndicator\";\n",
-     "} from \"../../../composables/motion/core/index/index\";\nimport { DEFAULT_INDICATOR_MAX_STRETCH } from \"../../../composables/motion/core/index/index\";\n"
+     "} from \"../../../composables/motion/motion-core\";\nimport { DEFAULT_INDICATOR_MAX_STRETCH } from \"../../../composables/motion/motion-core\";\n"
     ]
    ]
   },
@@ -2060,16 +1356,8 @@
   "src/components/textarea/Textarea.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport { useFieldControlState } from \"../_shared/field/control\";\n",
-     "import { cn } from \"../_shared\";\nimport { useFieldControlState } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/textarea/types.ts": {
-   "hunks": [
-    [
-     "import type { ControlSize } from \"../_shared/control\";\n",
-     "import type { ControlSize } from \"../_shared\";\n"
+     "import { useFieldControlState } from \"../_shared/field/control\";\n",
+     "import { useFieldControlState } from \"../_shared/field\";\n"
     ]
    ]
   },
@@ -2077,175 +1365,31 @@
    "hunks": [
     [
      "import { springPreset } from \"../../composables/motion/spring/springPresets\";\nimport { useLiquidFlex } from \"../../composables/motion/spring/useLiquidFlex\";\nimport { useLiquidPress } from \"../../composables/motion/spring/useLiquidPress\";\nimport { useSpring } from \"../../composables/motion/spring/useSpring\";\n",
-     "import { springPreset } from \"../../composables/motion\";\nimport { useLiquidFlex } from \"../../composables/motion/core/index/index\";\nimport { useLiquidPress } from \"../../composables/motion\";\nimport { useSpring } from \"../../composables/motion\";\n"
+     "import { springPreset } from \"../../composables/motion\";\nimport { useLiquidFlex } from \"../../composables/motion/motion-core\";\nimport { useLiquidPress } from \"../../composables/motion\";\nimport { useSpring } from \"../../composables/motion\";\n"
     ]
    ]
   },
-  "src/components/toast/ToastAction.vue": {
+  "src/components/toast/Toast.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/toast/index.ts": {
-   "hunks": [
-    [
-     "    default as Toast,\n",
-     "    Toast as Toast,\n"
-    ],
-    [
-     "} from \"./toaster/Toast.vue\";\n",
-     "} from \"./toaster\";\n"
-    ],
-    [
-     "export { default as ToastClose, type ToastCloseProps } from \"./toaster/ToastClose.vue\";\n",
-     "export { ToastClose as ToastClose, type ToastCloseProps } from \"./toaster\";\n"
-    ],
-    [
-     "    default as ToastDescription,\n",
-     "    ToastDescription as ToastDescription,\n"
-    ],
-    [
-     "} from \"./toaster/ToastDescription.vue\";\nexport { default as ToastTitle, type ToastTitleProps } from \"./toaster/ToastTitle.vue\";\nexport { default as Toaster } from \"./toaster/Toaster.vue\";\nexport { toast, useToast, type ToastHandle, type ToastOptions } from \"./queue/use-toast\";\nexport type { ToasterPosition } from \"./toaster/Toaster.vue\";\n",
-     "} from \"./toaster\";\nexport { ToastTitle as ToastTitle, type ToastTitleProps } from \"./toaster\";\nexport { Toaster as Toaster } from \"./toaster\";\nexport { toast, useToast, type ToastHandle, type ToastOptions } from \"./queue\";\nexport type { ToasterPosition } from \"./toaster\";\n"
-    ]
-   ]
-  },
-  "src/components/toast/toaster/Toast.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../../_shared/class-names\";\n",
-     "import { cn } from \"../../_shared\";\n"
-    ],
-    [
-     "import { surfaceClass } from \"../../_shared/surface/resolve\";\n",
-     "import { surfaceClass } from \"../../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/toast/toaster/ToastClose.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../../_shared/class-names\";\n",
-     "import { cn } from \"../../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/toast/toaster/ToastDescription.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../../_shared/class-names\";\n",
-     "import { cn } from \"../../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/toast/toaster/ToastTitle.vue": {
-   "hunks": [
-    [
-     "import { cn } from \"../../_shared/class-names\";\n",
-     "import { cn } from \"../../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/toast/toaster/Toaster.vue": {
-   "hunks": [
-    [
-     "import { useToastQueue, removeToast } from \"../queue/use-toast\";\nimport { cn } from \"../../_shared/class-names\";\n",
-     "import { useToastQueue, removeToast } from \"../queue\";\nimport { cn } from \"../../_shared\";\n"
+     "import { surfaceClass } from \"../_shared/surface/resolve\";\n",
+     "import { surfaceClass } from \"../_shared/surface\";\n"
     ]
    ]
   },
   "src/components/toggle-group/ToggleGroup.vue": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\n",
-     "import { cn } from \"../_shared\";\n"
-    ],
-    [
-     "} from \"../_shared/control\";\nimport type { SelectionMode, SelectionValue } from \"../_shared/selection\";\nimport { useSelectionGroup } from \"../../composables/motion/morph/useSelectionGroup\";\n",
-     "} from \"../_shared\";\nimport type { SelectionMode, SelectionValue } from \"../_shared\";\nimport { useSelectionGroup } from \"../../composables/motion/core/index/index\";\n"
+     "import { useSelectionGroup } from \"../../composables/motion/morph/useSelectionGroup\";\n",
+     "import { useSelectionGroup } from \"../../composables/motion/motion-core\";\n"
     ]
    ]
   },
-  "src/components/toggle-group/ToggleGroupItem.vue": {
+  "src/components/typewriter/useTypewriter.ts": {
    "hunks": [
     [
-     "import { cn } from \"../_shared/class-names\";\nimport type { SelectionValue } from \"../_shared/selection\";\n",
-     "import { cn } from \"../_shared\";\nimport type { SelectionValue } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/toggle-group/context.ts": {
-   "hunks": [
-    [
-     "import type { SelectionValue } from \"../_shared/selection\";\n",
-     "import type { SelectionValue } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/tooltip/TooltipContent.vue": {
-   "hunks": [
-    [
-     "} from \"../_shared/overlay\";\n",
-     "} from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/tooltip/TooltipTrigger.vue": {
-   "hunks": [
-    [
-     "import type { PrimitiveProps } from \"../_shared/primitive\";\n",
-     "import type { PrimitiveProps } from \"../_shared\";\n"
-    ]
-   ]
-  },
-  "src/components/typewriter/index.ts": {
-   "hunks": [
-    [
-     "export { default as TypewriterText } from \"./text/TypewriterText.vue\";\nexport { useTypewriter } from \"./text/useTypewriter\";\nexport * from \"./options/types\";\nexport * from \"./text/keyboard\";\nexport * from \"./text/pausePatterns\";\nexport * from \"./text/timing\";\nexport * from \"./text/typoStateMachine\";\n",
-     "export { TypewriterText as TypewriterText } from \"./text\";\nexport { useTypewriter } from \"./text\";\nexport { DEFAULTS } from \"./options\";\nexport type { TypewriterWord, TypoState, TypoContext, TypoAction, CancellationToken, TypewriterOptions, KeyPosition } from \"./options\";\nexport { QWERTY_MAP, calculateKeyDelay, getAdjacentKeys, pickTypoChar } from \"./text\";\nexport { PAUSE_PATTERNS, getPauseDelay } from \"./text\";\nexport type { PausePatterns } from \"./text\";\nexport { createCancellationToken, sleep, stochasticDelay, backspaceDelay, pickNgramSize, randomInRange } from \"./text\";\nexport { DEFAULT_TYPO_CONFIG, createTypoContext, nextTypoAction } from \"./text\";\nexport type { TypoConfig } from \"./text\";\n"
-    ]
-   ]
-  },
-  "src/components/typewriter/options/types.ts": {
-   "hunks": [
-    [
-     "import type { KeyPosition } from \"../text/keyboard\";\n",
-     "import type { KeyPosition } from \"../text\";\n"
-    ]
-   ]
-  },
-  "src/components/typewriter/text/TypewriterText.vue": {
-   "hunks": [
-    [
-     "import type { TypewriterWord } from \"../options/types\";\n",
-     "import type { TypewriterWord } from \"../options\";\n"
-    ]
-   ]
-  },
-  "src/components/typewriter/text/timing.ts": {
-   "hunks": [
-    [
-     "import type { CancellationToken } from \"../options/types\";\n",
-     "import type { CancellationToken } from \"../options\";\n"
-    ]
-   ]
-  },
-  "src/components/typewriter/text/typoStateMachine.ts": {
-   "hunks": [
-    [
-     "import type { TypoContext, TypoAction } from \"../options/types\";\n",
-     "import type { TypoContext, TypoAction } from \"../options\";\n"
-    ]
-   ]
-  },
-  "src/components/typewriter/text/useTypewriter.ts": {
-   "hunks": [
-    [
-     "import { useReducedMotion } from \"../../../composables/motion/core/useReducedMotion\";\nimport type { TypewriterOptions, TypewriterWord, CancellationToken } from \"../options/types\";\nimport { DEFAULTS } from \"../options/types\";\n",
-     "import { useReducedMotion } from \"../../../composables/motion/core/index/index\";\nimport type { TypewriterOptions, TypewriterWord, CancellationToken } from \"../options\";\nimport { DEFAULTS } from \"../options\";\n"
+     "import { useReducedMotion } from \"../../composables/motion/core/useReducedMotion\";\n",
+     "import { useReducedMotion } from \"../../composables/motion/motion-core\";\n"
     ]
    ]
   },
@@ -2257,7 +1401,7 @@
     ]
    ]
   },
-  "src/composables/color/index.ts": {
+  "src/composables/color/color.ts": {
    "hunks": [
     [
      "} from \"./value/value\";\n",
@@ -2285,7 +1429,7 @@
    "hunks": [
     [
      "import { useReducedMotion } from \"../../motion/core/useReducedMotion\";\n",
-     "import { useReducedMotion } from \"../../motion/core/index/index\";\n"
+     "import { useReducedMotion } from \"../../motion/motion-core\";\n"
     ]
    ]
   },
@@ -2293,7 +1437,7 @@
    "hunks": [
     [
      "import { useReducedMotion } from \"../motion/core/useReducedMotion\";\n",
-     "import { useReducedMotion } from \"../motion/core/index/index\";\n"
+     "import { useReducedMotion } from \"../motion/motion-core\";\n"
     ]
    ]
   },
@@ -2329,50 +1473,6 @@
     ]
    ]
   },
-  "src/composables/motion/core/index.ts": {
-   "hunks": [
-    [
-     "export * from \"../reveal/useStagger\";\nexport * from \"../scroll/useScrollProgress\";\n",
-     "export { useStagger } from \"../reveal\";\nexport type { UseStaggerOptions, UseStaggerControls } from \"../reveal\";\nexport { useScrollProgress } from \"../scroll\";\n"
-    ],
-    [
-     "export * from \"../route/routeGrammar\";\nexport * from \"../route/useRouteTransition\";\n",
-     "export { ROUTE_GRAMMAR, ROUTE_CONSTANTS, routeNav, foregroundCurveToken, foregroundClockToken, worldClockToken } from \"../route\";\nexport type { RouteNavClass, RouteNavRow } from \"../route\";\nexport { ROUTE_WINDOW_NAME, ROUTE_LABEL_NAME, ROUTE_WINDOW_ATTR, ROUTE_LABEL_ATTR, ROUTE_DIRECTION_PROP, routeTransition } from \"../route\";\nexport type { RouteTransitionOptions } from \"../route\";\n"
-    ],
-    [
-     "export * from \"../dissolve/dissolveGrammar\";\n",
-     "export { DISSOLVE_DIALECTS, dissolveDialect, VAPORIZE_CONSTANTS, channelFraction, inkBlurFraction, backdropOutlivesPanel, CORNER_AFFORDANCE, cornerAffordanceOffset } from \"../dissolve\";\nexport type { DissolveDialect, DissolveDialectRow } from \"../dissolve\";\n"
-    ],
-    [
-     "export * from \"../reveal/vReveal\";\n",
-     "export { vReveal } from \"../reveal\";\n"
-    ],
-    [
-     "export * from \"../spring/useLiquidFlex\";\n",
-     "export { useLiquidFlex } from \"../spring\";\nexport type { LiquidFlexAxis, UseLiquidFlexParams, UseLiquidFlexReturn } from \"../spring\";\n"
-    ],
-    [
-     "export * from \"../pointer/usePointerVelocityField\";\n",
-     "export { usePointerVelocityField } from \"../pointer\";\nexport type { PointerVec2, UsePointerVelocityFieldOptions, UsePointerVelocityField } from \"../pointer\";\n"
-    ],
-    [
-     "export * from \"../pointer/useRoutePointer\";\nexport * from \"../pointer/pointerFieldMappings\";\n",
-     "export { useRoutePointer } from \"../pointer\";\nexport type { RoutePointerContext, UseRoutePointerOptions } from \"../pointer\";\nexport { BLOB_LEAD_K, BLOB_STRETCH_GAIN, BLOB_STRETCH_MAX, blobPullMapping, AURORA_CURSOR_RADIUS, auroraCursorMapping, constellationWellMapping, snapshotField } from \"../pointer\";\nexport type { PointerFieldSnapshot, BlobPullOptions, BlobPullResult, AuroraCursorOptions, AuroraCursorResult, ConstellationWellResult } from \"../pointer\";\n"
-    ],
-    [
-     "export * from \"../scroll/useScrollTrigger\";\n",
-     "export { useScrollTrigger } from \"../scroll\";\nexport type { TriggerPoint, UseScrollTriggerOptions, UseScrollTriggerReturn } from \"../scroll\";\n"
-    ],
-    [
-     "export * from \"../scroll/useScrollChrome\";\n",
-     "export { useScrollChrome } from \"../scroll\";\nexport type { UseScrollChromeOptions, UseScrollChromeReturn } from \"../scroll\";\n"
-    ],
-    [
-     "export * from \"../morph/useSelectionIndicator\";\nexport * from \"../morph/useSelectionGroup\";\n",
-     "export { DEFAULT_INDICATOR_MAX_STRETCH, INDICATOR_RELEASE_AT_ARRIVAL, useSelectionIndicator } from \"../morph\";\nexport type { SelectionOption, SelectionDeform, UseSelectionIndicatorParams, UseSelectionIndicatorReturn } from \"../morph\";\nexport { useSelectionGroup } from \"../morph\";\nexport type { SelectionMode, SelectionRole, UseSelectionGroupParams, UseSelectionGroupReturn } from \"../morph\";\n"
-    ]
-   ]
-  },
   "src/composables/motion/engage/engageLadder.ts": {
    "hunks": [
     [
@@ -2401,7 +1501,7 @@
     ],
     [
      "export { asElement } from \"./core/element/asElement\";\n",
-     "export { asElement } from \"./core/element\";\n"
+     "export { asElement } from \"./core\";\n"
     ],
     [
      "export * from \"./reveal/useLiquidReveal\";\n",
@@ -2433,7 +1533,7 @@
    "hunks": [
     [
      "import { asElement } from \"../core/element/asElement\";\n",
-     "import { asElement } from \"../core/element\";\n"
+     "import { asElement } from \"../core\";\n"
     ]
    ]
   },
@@ -2453,11 +1553,11 @@
    "hunks": [
     [
      "import { motionTempo } from \"../core/tempo/motionTempo\";\nimport { springPreset, type SpringPresetName } from \"../spring/springPresets\";\n",
-     "import { motionTempo } from \"../core/tempo\";\nimport { springPreset, type SpringPresetName } from \"../spring\";\n"
+     "import { motionTempo } from \"../core\";\nimport { springPreset, type SpringPresetName } from \"../spring\";\n"
     ],
     [
      "import { asElement } from \"../core/element/asElement\";\n",
-     "import { asElement } from \"../core/element\";\n"
+     "import { asElement } from \"../core\";\n"
     ]
    ]
   },
@@ -2469,31 +1569,71 @@
     ]
    ]
   },
-  "src/composables/motion/morph/useSelectionGroup.ts": {
-   "hunks": [
-    [
-     "import type { SelectionValue } from \"../../../components/_shared/selection\";\n",
-     "import type { SelectionValue } from \"../../../components/_shared\";\n"
-    ]
-   ]
-  },
   "src/composables/motion/morph/useSelectionIndicator.ts": {
    "hunks": [
     [
      "import { useLiquidFlex } from \"../spring/useLiquidFlex\";\nimport { effectiveCap, writeVelocityWeight } from \"../core/writeVelocityWeight\";\n",
      "import { useLiquidFlex } from \"../spring\";\nimport { effectiveCap, writeVelocityWeight } from \"../core\";\n"
-    ],
-    [
-     "import type { SelectionValue } from \"../../../components/_shared/selection\";\n",
-     "import type { SelectionValue } from \"../../../components/_shared\";\n"
     ]
    ]
   },
-  "src/composables/motion/morph/useTabRovingFocus.ts": {
+  "src/composables/motion/motion-core.ts": {
    "hunks": [
     [
-     "import type { SelectionValue } from \"../../../components/_shared/selection\";\n",
-     "import type { SelectionValue } from \"../../../components/_shared\";\n"
+     "export * from \"./core/constants\";\n",
+     "export { DAMPING, SNAP_THRESHOLD, FRAME_MS } from \"./core\";\n"
+    ],
+    [
+     "export * from \"./reveal/useStagger\";\nexport * from \"./scroll/useScrollProgress\";\nexport * from \"./core/useRAFLoop\";\nexport * from \"./core/useReducedMotion\";\nexport * from \"./core/useIntersectionPause\"; // exports PausableRuntime too\n",
+     "export { useStagger } from \"./reveal\";\nexport type { UseStaggerOptions, UseStaggerControls } from \"./reveal\";\nexport { useScrollProgress } from \"./scroll\";\nexport { useRAFLoop } from \"./core\";\nexport type { RAFLoopTiming, RAFLoopCallback, UseRAFLoopOptions, RAFLoopControls } from \"./core\";\nexport { readReducedMotion, useReducedMotion } from \"./core\";\nexport { useIntersectionPause } from \"./core\";\nexport type { PausableRuntime, UseIntersectionPauseOptions, IntersectionPauseControls } from \"./core\"; // exports PausableRuntime too\n"
+    ],
+    [
+     "export * from \"./core/useYieldToMain\";\n",
+     "export { yieldToMain, useYieldToMain } from \"./core\";\nexport type { UseYieldToMainReturn } from \"./core\";\n"
+    ],
+    [
+     "export * from \"./core/useViewTransition\";\n",
+     "export { supportsViewTransitions, startViewTransition } from \"./core\";\nexport type { ViewTransitionOptions, ViewTransitionResult } from \"./core\";\n"
+    ],
+    [
+     "export * from \"./route/routeGrammar\";\nexport * from \"./route/useRouteTransition\";\n",
+     "export { ROUTE_GRAMMAR, ROUTE_CONSTANTS, routeNav, foregroundCurveToken, foregroundClockToken, worldClockToken } from \"./route\";\nexport type { RouteNavClass, RouteNavRow } from \"./route\";\nexport { ROUTE_WINDOW_NAME, ROUTE_LABEL_NAME, ROUTE_WINDOW_ATTR, ROUTE_LABEL_ATTR, ROUTE_DIRECTION_PROP, routeTransition } from \"./route\";\nexport type { RouteTransitionOptions } from \"./route\";\n"
+    ],
+    [
+     "export * from \"./dissolve/dissolveGrammar\";\n",
+     "export { DISSOLVE_DIALECTS, dissolveDialect, VAPORIZE_CONSTANTS, channelFraction, inkBlurFraction, backdropOutlivesPanel, CORNER_AFFORDANCE, cornerAffordanceOffset } from \"./dissolve\";\nexport type { DissolveDialect, DissolveDialectRow } from \"./dissolve\";\n"
+    ],
+    [
+     "export * from \"./reveal/vReveal\";\n",
+     "export { vReveal } from \"./reveal\";\n"
+    ],
+    [
+     "export * from \"./spring/useLiquidFlex\";\n",
+     "export { useLiquidFlex } from \"./spring\";\nexport type { LiquidFlexAxis, UseLiquidFlexParams, UseLiquidFlexReturn } from \"./spring\";\n"
+    ],
+    [
+     "export * from \"./pointer/usePointerVelocityField\";\n",
+     "export { usePointerVelocityField } from \"./pointer\";\nexport type { PointerVec2, UsePointerVelocityFieldOptions, UsePointerVelocityField } from \"./pointer\";\n"
+    ],
+    [
+     "export * from \"./pointer/useRoutePointer\";\nexport * from \"./pointer/pointerFieldMappings\";\n",
+     "export { useRoutePointer } from \"./pointer\";\nexport type { RoutePointerContext, UseRoutePointerOptions } from \"./pointer\";\nexport { BLOB_LEAD_K, BLOB_STRETCH_GAIN, BLOB_STRETCH_MAX, blobPullMapping, AURORA_CURSOR_RADIUS, auroraCursorMapping, constellationWellMapping, snapshotField } from \"./pointer\";\nexport type { PointerFieldSnapshot, BlobPullOptions, BlobPullResult, AuroraCursorOptions, AuroraCursorResult, ConstellationWellResult } from \"./pointer\";\n"
+    ],
+    [
+     "export * from \"./scroll/useScrollTrigger\";\n",
+     "export { useScrollTrigger } from \"./scroll\";\nexport type { TriggerPoint, UseScrollTriggerOptions, UseScrollTriggerReturn } from \"./scroll\";\n"
+    ],
+    [
+     "export * from \"./scroll/useScrollChrome\";\n",
+     "export { useScrollChrome } from \"./scroll\";\nexport type { UseScrollChromeOptions, UseScrollChromeReturn } from \"./scroll\";\n"
+    ],
+    [
+     "export * from \"./core/writeVelocityWeight\";\n",
+     "export { MOTION_WEIGHT_REST, writeVelocityWeight, effectiveCap } from \"./core\";\n"
+    ],
+    [
+     "export * from \"./morph/useSelectionIndicator\";\nexport * from \"./morph/useSelectionGroup\";\n",
+     "export { DEFAULT_INDICATOR_MAX_STRETCH, INDICATOR_RELEASE_AT_ARRIVAL, useSelectionIndicator } from \"./morph\";\nexport type { SelectionOption, SelectionDeform, UseSelectionIndicatorParams, UseSelectionIndicatorReturn } from \"./morph\";\nexport { useSelectionGroup } from \"./morph\";\nexport type { SelectionMode, SelectionRole, UseSelectionGroupParams, UseSelectionGroupReturn } from \"./morph\";\n"
     ]
    ]
   },
@@ -2525,7 +1665,7 @@
    "hunks": [
     [
      "import { asElement } from \"../core/element/asElement\";\nimport { useElementMorph, type ElementMorphPreset } from \"../morph/useElementMorph\";\n",
-     "import { asElement } from \"../core/element\";\nimport { useElementMorph, type ElementMorphPreset } from \"../morph\";\n"
+     "import { asElement } from \"../core\";\nimport { useElementMorph, type ElementMorphPreset } from \"../morph\";\n"
     ]
    ]
   },
@@ -2557,7 +1697,7 @@
    "hunks": [
     [
      "import { useReducedMotion } from \"../core/useReducedMotion\";\nimport { asElement } from \"../core/element/asElement\";\n",
-     "import { useReducedMotion } from \"../core\";\nimport { asElement } from \"../core/element\";\n"
+     "import { useReducedMotion } from \"../core\";\nimport { asElement } from \"../core\";\n"
     ]
    ]
   },
@@ -2589,7 +1729,7 @@
    "hunks": [
     [
      "import { motionTempo } from \"../core/tempo/motionTempo\";\n",
-     "import { motionTempo } from \"../core/tempo\";\n"
+     "import { motionTempo } from \"../core\";\n"
     ]
    ]
   },
@@ -2605,15 +1745,15 @@
    "hunks": [
     [
      "} from \"./composables/motion/core/useViewTransition\";\n",
-     "} from \"./composables/motion/core/index/index\";\n"
+     "} from \"./composables/motion/motion-core\";\n"
     ],
     [
      "export { vReveal } from \"./composables/motion/reveal/vReveal\";\n",
-     "export { vReveal } from \"./composables/motion/core/index/index\";\n"
+     "export { vReveal } from \"./composables/motion/motion-core\";\n"
     ],
     [
      "} from \"./composables/motion/spring/useLiquidFlex\";\n",
-     "} from \"./composables/motion/core/index/index\";\n"
+     "} from \"./composables/motion/motion-core\";\n"
     ],
     [
      "} from \"./composables/motion/pointer/usePointerVelocityField\";\n",
@@ -2621,27 +1761,15 @@
     ],
     [
      "} from \"./composables/motion/pointer/useRoutePointer\";\n",
-     "} from \"./composables/motion/core/index/index\";\n"
+     "} from \"./composables/motion/motion-core\";\n"
     ],
     [
      "} from \"./composables/motion/pointer/pointerFieldMappings\";\n",
-     "} from \"./composables/motion/core/index/index\";\n"
-    ],
-    [
-     "export { cn } from \"./components/_shared/class-names\";\n",
-     "export { cn } from \"./components/_shared\";\n"
+     "} from \"./composables/motion/motion-core\";\n"
     ],
     [
      "} from \"./composables/motion/scroll/supportsCssTimeline\";\n",
      "} from \"./composables/motion/scroll\";\n"
-    ]
-   ]
-  },
-  "src/styles/tokens.ts": {
-   "hunks": [
-    [
-     "export * from \"./tokens/manifest\";\n",
-     "export { tokenDomains, semanticTokens } from \"./tokens/index\";\nexport type { TokenDomain, SemanticToken } from \"./tokens/index\";\n"
     ]
    ]
   },
@@ -2673,11 +1801,11 @@
     ],
     [
      "        \"src/components/table/index.ts\",\n        \"src/composables/context/index.ts\",\n",
-     "        \"src/components/table/index.ts\",\n        \"src/components/tabs/segmented-tabs/index.ts\",\n        \"src/components/toast/queue/index.ts\",\n        \"src/components/toast/toaster/index.ts\",\n        \"src/components/typewriter/options/index.ts\",\n        \"src/components/typewriter/text/index.ts\",\n        \"src/composables/color/value/index.ts\",\n        \"src/composables/context/index.ts\",\n"
+     "        \"src/components/table/index.ts\",\n        \"src/components/tabs/segmented-tabs/index.ts\",\n        \"src/composables/color/value/index.ts\",\n        \"src/composables/context/index.ts\",\n"
     ],
     [
      "        \"src/composables/glass/index.ts\"\n",
-     "        \"src/composables/glass/index.ts\",\n        \"src/composables/glass/lifecycle/index.ts\",\n        \"src/composables/glass/procedural/index.ts\",\n        \"src/composables/glass/webgl/index.ts\",\n        \"src/composables/glass/webgpu/index.ts\",\n        \"src/composables/motion/core/element/index.ts\",\n        \"src/composables/motion/core/tempo/index.ts\",\n        \"src/composables/motion/dissolve/index.ts\",\n        \"src/composables/motion/engage/index.ts\",\n        \"src/composables/motion/morph/index.ts\",\n        \"src/composables/motion/number/index.ts\",\n        \"src/composables/motion/pointer/index.ts\",\n        \"src/composables/motion/reveal/index.ts\",\n        \"src/composables/motion/route/index.ts\",\n        \"src/composables/motion/scroll/index.ts\",\n        \"src/composables/motion/spring/index.ts\",\n        \"src/styles/tokens/index.ts\"\n"
+     "        \"src/composables/glass/index.ts\",\n        \"src/composables/glass/lifecycle/index.ts\",\n        \"src/composables/glass/procedural/index.ts\",\n        \"src/composables/glass/webgl/index.ts\",\n        \"src/composables/glass/webgpu/index.ts\",\n        \"src/composables/motion/core/element/index.ts\",\n        \"src/composables/motion/core/index.ts\",\n        \"src/composables/motion/core/tempo/index.ts\",\n        \"src/composables/motion/dissolve/index.ts\",\n        \"src/composables/motion/engage/index.ts\",\n        \"src/composables/motion/morph/index.ts\",\n        \"src/composables/motion/number/index.ts\",\n        \"src/composables/motion/pointer/index.ts\",\n        \"src/composables/motion/reveal/index.ts\",\n        \"src/composables/motion/route/index.ts\",\n        \"src/composables/motion/scroll/index.ts\",\n        \"src/composables/motion/spring/index.ts\"\n"
     ]
    ]
   }
@@ -2710,16 +1838,13 @@
   "src/components/sortable-list/drag/index.ts",
   "src/components/sortable-list/resolve/index.ts",
   "src/components/tabs/segmented-tabs/index.ts",
-  "src/components/toast/queue/index.ts",
-  "src/components/toast/toaster/index.ts",
-  "src/components/typewriter/options/index.ts",
-  "src/components/typewriter/text/index.ts",
   "src/composables/color/value/index.ts",
   "src/composables/glass/lifecycle/index.ts",
   "src/composables/glass/procedural/index.ts",
   "src/composables/glass/webgl/index.ts",
   "src/composables/glass/webgpu/index.ts",
   "src/composables/motion/core/element/index.ts",
+  "src/composables/motion/core/index.ts",
   "src/composables/motion/core/tempo/index.ts",
   "src/composables/motion/dissolve/index.ts",
   "src/composables/motion/engage/index.ts",
@@ -2729,11 +1854,10 @@
   "src/composables/motion/reveal/index.ts",
   "src/composables/motion/route/index.ts",
   "src/composables/motion/scroll/index.ts",
-  "src/composables/motion/spring/index.ts",
-  "src/styles/tokens/index.ts"
+  "src/composables/motion/spring/index.ts"
  ],
- "rerouted": 562,
- "doorsGrown": 51,
- "names": 486,
+ "rerouted": 333,
+ "doorsGrown": 46,
+ "names": 415,
  "blocked": []
 }

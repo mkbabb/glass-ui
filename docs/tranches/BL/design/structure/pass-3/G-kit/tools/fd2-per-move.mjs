@@ -7,7 +7,7 @@ import { resolve } from "node:path";
 const args = process.argv.slice(2);
 const root = resolve(args[args.indexOf("--root") + 1]);
 const { sccGrowth } = await import(`${root}/scripts/structure/lib/move.mjs`);
-const L = await import(`${root}/scripts/structure/eponym/law.mjs`);
+const L = await import(`${root}/scripts/structure/eponym/index.mjs`);
 const ctx = L.context(root);
 const { unitOf } = L.gUnits(ctx);
 const moves = JSON.parse(readFileSync(args[0], "utf8")).moves;

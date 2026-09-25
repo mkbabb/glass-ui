@@ -1,0 +1,16 @@
+{
+    "step": "G R-3 programs (LAW.md L5.4): the app program checks library and demo code; the test program checks every test, the __tests__/ slots included",
+    "why": "FD-7's program split. A colocated test is test code: it reads vitest globals and the .mjs gate shims (tests/shims.d.ts), which the strict app program does not carry. Measured: without the split the app program raises TS7016/TS7006 in src/styles/tokens/__tests__/springTokenMirror.test.ts.",
+    "hunks": [
+        {
+            "file": "tsconfig.json",
+            "find": "    \"include\": [\"src/\", \"demo/\"]\n}",
+            "replace": "    \"include\": [\"src/\", \"demo/\"],\n    // R-3: a unit's __tests__/ slot is test code, checked by the test program (tsconfig.test.json)\n    \"exclude\": [\"src/**/__tests__\"]\n}"
+        },
+        {
+            "file": "tsconfig.test.json",
+            "find": "    \"include\": [\"tests/\", \"src/\", \"tests/shims.d.ts\"]\n}",
+            "replace": "    \"include\": [\"tests/\", \"src/\", \"tests/shims.d.ts\"],\n    // the test program checks every test, the __tests__/ slots included (R-3)\n    \"exclude\": []\n}"
+        }
+    ]
+}

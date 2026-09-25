@@ -1,0 +1,16 @@
+{
+    "step": "G P3-R5 (LAW.md L4.5): the ./aurora-config leaf entry, mirroring ./blob-config",
+    "why": "P3-R5 accepts ./aurora-config as one new export key. The demo's eager shell and hero read the aurora configuration and its first-paint ground; through ./aurora that drags Aurora.vue and both renderers into the boot graph (B-research §8: 685,510 B doors-only against the 503,808 B ceiling). The leaf carries the three names the eager path reads, at the unit root beside the ./aurora door exactly as blob/config.ts sits beside blob/index.ts, so L2.5 keeps it at U (an entry source heads U). R-6 then gives the three names to the lighter door (L4.7), and ./aurora drops them in the one-door row.",
+    "hunks": [
+        {
+            "file": "scripts/structure/records/entry-record.json",
+            "find": "        [\"aurora\",\"src/components/aurora/index.ts\"],\n",
+            "replace": "        [\"aurora\",\"src/components/aurora/index.ts\"],\n        [\"aurora-config\",\"src/components/aurora/config.ts\"],\n"
+        }
+    ],
+    "files": {
+        "src/components/aurora/config.ts": {
+            "create": "// @mkbabb/glass-ui/aurora-config — the aurora configuration leaf (P3-R5).\n//\n// The configuration schema, its default and the first-paint ground, without the\n// renderer. A consumer that paints the eager ground before the component resolves (the\n// demo shell's async boundary does) imports here, and never pulls `Aurora.vue` or either\n// backend onto its first-paint path. `/aurora` publishes the component and its runtime.\n// The `/blob-config` leaf beside `/blob` is the same construction.\nexport type { AuroraConfig } from \"./config/presets\";\nexport { DEFAULT_AURORA_CONFIG } from \"./config/presets\";\nexport { auroraFallbackGround } from \"./composables/auroraFallbackGround\";\n"
+        }
+    }
+}

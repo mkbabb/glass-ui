@@ -1,0 +1,2002 @@
+{
+ "tag": "stage2",
+ "stage": 2,
+ "moves": [
+  {
+   "from": "src/components/aurora/composables/auroraImageSource.ts",
+   "to": "src/components/aurora/runtime/frame/auroraImageSource.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/runtime.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/color.ts",
+   "to": "src/components/aurora/config/color.ts",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/aurora/composables/frameLoop.ts",
+   "to": "src/components/aurora/runtime/frame/frameLoop.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/runtime.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/glSetup.ts",
+   "to": "src/components/aurora/runtime/webgl/glSetup.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/runtime.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/runtime.ts",
+   "to": "src/components/aurora/runtime/runtime.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/Aurora.vue"
+  },
+  {
+   "from": "src/components/aurora/composables/textureUpload.ts",
+   "to": "src/components/aurora/runtime/frame/textureUpload.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/runtime.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/uniformBridge.ts",
+   "to": "src/components/aurora/runtime/frame/uniformBridge.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/runtime.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/uniformBridgeWGPU.ts",
+   "to": "src/components/aurora/runtime/webgpu/uniformBridgeWGPU.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/uniformBridgeWGPUImage.ts",
+   "to": "src/components/aurora/runtime/webgpu/uniformBridgeWGPUImage.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/composables/wgpuSetup.ts",
+   "to": "src/components/aurora/runtime/webgpu/wgpuSetup.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/runtime.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/presets.ts",
+   "to": "src/components/aurora/config/presets.ts",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/aurora/constants/renderMode.ts",
+   "to": "src/components/aurora/config/renderMode.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/Aurora.vue"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora-image.frag.ts",
+   "to": "src/components/aurora/runtime/webgl/aurora-image.frag.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/glSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora-image.wgsl.ts",
+   "to": "src/components/aurora/runtime/webgpu/aurora-image.wgsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts",
+   "to": "src/components/aurora/runtime/webgpu/aurora-mediums.wgsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/constants/shaders/aurora.wgsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora.frag.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/aurora.frag.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/glSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora.vert.ts",
+   "to": "src/components/aurora/runtime/webgl/aurora.vert.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/glSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/aurora.wgsl.ts",
+   "to": "src/components/aurora/runtime/webgpu/aurora.wgsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/composables/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/brush.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/brush.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/constants/shaders/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/composition.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/composition.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/constants/shaders/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/curlNoise.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/curlNoise.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/constants/shaders/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts",
+   "to": "src/components/aurora/runtime/webgpu/curlNoise.wgsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/constants/shaders/aurora.wgsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/flow.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/flow.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/constants/shaders/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/mediums.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/mediums.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/constants/shaders/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/metal-medium.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/metal-medium.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/constants/shaders/mediums.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/oil-modes.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/oil-modes.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/constants/shaders/mediums.glsl.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/tonemap.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/tonemap.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/constants/shaders/aurora.frag.ts"
+  },
+  {
+   "from": "src/components/aurora/constants/shaders/vangogh-medium.glsl.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/vangogh-medium.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/aurora/constants/shaders/mediums.glsl.ts"
+  },
+  {
+   "from": "src/components/blob/composables/blobSimulation.ts",
+   "to": "src/components/blob/renderer/blobSimulation.ts",
+   "why": "stage 2 (L2): owner src/components/blob/composables/useMetaballRenderer.ts"
+  },
+  {
+   "from": "src/components/blob/composables/buildMetaballProgram.ts",
+   "to": "src/components/blob/renderer/webgl/buildMetaballProgram.ts",
+   "why": "stage 2 (L2): owner src/components/blob/composables/useMetaballRenderer.ts"
+  },
+  {
+   "from": "src/components/blob/composables/resolveBlobSurface.ts",
+   "to": "src/components/blob/renderer/surface/resolveBlobSurface.ts",
+   "why": "stage 2 (L2): owner src/components/blob/composables/useMetaballRenderer.ts"
+  },
+  {
+   "from": "src/components/blob/composables/uniformBridgeWGPU.ts",
+   "to": "src/components/blob/renderer/webgpu/uniformBridgeWGPU.ts",
+   "why": "stage 2 (L2): owner src/components/blob/composables/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/blob/composables/uploadBlobUniforms.ts",
+   "to": "src/components/blob/renderer/uploadBlobUniforms.ts",
+   "why": "stage 2 (L2): owner src/components/blob/composables/useMetaballRenderer.ts"
+  },
+  {
+   "from": "src/components/blob/composables/useMetaballRenderer.ts",
+   "to": "src/components/blob/renderer/useMetaballRenderer.ts",
+   "why": "stage 2 (L2): owner src/components/blob/Blob.vue"
+  },
+  {
+   "from": "src/components/blob/composables/wgpuSetup.ts",
+   "to": "src/components/blob/renderer/webgpu/wgpuSetup.ts",
+   "why": "stage 2 (L2): owner src/components/blob/composables/useMetaballRenderer.ts"
+  },
+  {
+   "from": "src/components/blob/constants.ts",
+   "to": "src/components/blob/mood/constants.ts",
+   "why": "stage 2 (L2): owner src/components/blob/Blob.vue"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball-noise.wgsl.ts",
+   "to": "src/components/blob/renderer/webgpu/metaball-noise.wgsl.ts",
+   "why": "stage 2 (L2): owner src/components/blob/shaders/metaball.wgsl.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball-palette.wgsl.ts",
+   "to": "src/components/blob/renderer/webgpu/metaball-palette.wgsl.ts",
+   "why": "stage 2 (L2): owner src/components/blob/shaders/metaball.wgsl.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball-uniforms.glsl.ts",
+   "to": "src/components/blob/renderer/webgl/metaball-uniforms.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/blob/shaders/metaball.frag.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball.frag.ts",
+   "to": "src/components/blob/renderer/webgl/metaball.frag.ts",
+   "why": "stage 2 (L2): owner src/components/blob/composables/buildMetaballProgram.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball.vert.ts",
+   "to": "src/components/blob/renderer/webgl/metaball.vert.ts",
+   "why": "stage 2 (L2): owner src/components/blob/composables/buildMetaballProgram.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/metaball.wgsl.ts",
+   "to": "src/components/blob/renderer/webgpu/metaball.wgsl.ts",
+   "why": "stage 2 (L2): owner src/components/blob/composables/wgpuSetup.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/oklch-perturb.glsl.ts",
+   "to": "src/components/blob/renderer/webgl/oklch-perturb.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/blob/shaders/metaball.frag.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/sdf-body.glsl.ts",
+   "to": "src/components/blob/renderer/webgl/sdf-body.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/blob/shaders/metaball.frag.ts"
+  },
+  {
+   "from": "src/components/blob/shaders/watercolor-edges.glsl.ts",
+   "to": "src/components/blob/renderer/webgl/watercolor-edges.glsl.ts",
+   "why": "stage 2 (L2): owner src/components/blob/shaders/metaball.frag.ts"
+  },
+  {
+   "from": "src/components/dock/backdropLuminanceSample.ts",
+   "to": "src/components/dock/legibility/backdropLuminanceSample.ts",
+   "why": "stage 2 (L2): owner src/components/dock/composables/useGlassBackdropLuminance.ts"
+  },
+  {
+   "from": "src/components/dock/backdropSampleMath.ts",
+   "to": "src/components/dock/legibility/backdropSampleMath.ts",
+   "why": "stage 2 (L2): owner src/components/dock/composables/useGlassBackdropLuminance.ts"
+  },
+  {
+   "from": "src/components/dock/composables/useDockSearch.ts",
+   "to": "src/components/dock/search/useDockSearch.ts",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/dock/composables/useFuzzySearch.ts",
+   "to": "src/components/dock/search/useFuzzySearch.ts",
+   "why": "stage 2 (L2): owner src/components/dock/composables/useDockSearch.ts"
+  },
+  {
+   "from": "src/components/dock/composables/useGlassBackdropLuminance.ts",
+   "to": "src/components/dock/legibility/useGlassBackdropLuminance.ts",
+   "why": "stage 2 (L2): owner src/components/dock/GlassDock.vue"
+  },
+  {
+   "from": "src/components/dock/match.ts",
+   "to": "src/components/dock/search/match.ts",
+   "why": "stage 2 (L2): owner src/components/dock/composables/useDockSearch.ts"
+  },
+  {
+   "from": "src/components/dock/types.ts",
+   "to": "src/components/dock/search/types.ts",
+   "why": "stage 2 (L2): owner src/components/dock/composables/useDockSearch.ts"
+  },
+  {
+   "from": "src/components/fourier-field/constants.ts",
+   "to": "src/components/fourier-field/register/constants.ts",
+   "why": "stage 2 (L2): owner src/components/fourier-field/FourierField.vue"
+  },
+  {
+   "from": "src/components/fourier-field/renderer/mint.ts",
+   "to": "src/components/fourier-field/mint.ts",
+   "why": "stage 2 (L2): owner src/components/fourier-field/FourierField.vue"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuCheckboxItem.vue",
+   "to": "src/components/menu/items/DropdownMenuCheckboxItem.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuGroup.vue",
+   "to": "src/components/menu/items/DropdownMenuGroup.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuItem.vue",
+   "to": "src/components/menu/items/DropdownMenuItem.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuLabel.vue",
+   "to": "src/components/menu/items/DropdownMenuLabel.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuRadioGroup.vue",
+   "to": "src/components/menu/items/DropdownMenuRadioGroup.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuRadioItem.vue",
+   "to": "src/components/menu/items/DropdownMenuRadioItem.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSeparator.vue",
+   "to": "src/components/menu/items/DropdownMenuSeparator.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuShortcut.vue",
+   "to": "src/components/menu/items/DropdownMenuShortcut.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSub.vue",
+   "to": "src/components/menu/sub/DropdownMenuSub.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSubContent.vue",
+   "to": "src/components/menu/sub/DropdownMenuSubContent.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/menu/DropdownMenuSubTrigger.vue",
+   "to": "src/components/menu/sub/DropdownMenuSubTrigger.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/sheet/SheetContent.vue",
+   "to": "src/components/sheet/detents/SheetContent.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/sheet/detents/use.ts",
+   "to": "src/components/sheet/detents/useSheetDetents.ts",
+   "why": "stage 2 (L2): owner src/components/sheet/SheetContent.vue"
+  },
+  {
+   "from": "src/components/sortable-list/drag.ts",
+   "to": "src/components/sortable-list/drag/drag.ts",
+   "why": "stage 2 (L2): owner src/components/sortable-list/useSortable.ts"
+  },
+  {
+   "from": "src/components/sortable-list/ghost.ts",
+   "to": "src/components/sortable-list/drag/ghost.ts",
+   "why": "stage 2 (L2): owner src/components/sortable-list/drag.ts"
+  },
+  {
+   "from": "src/components/sortable-list/motion.ts",
+   "to": "src/components/sortable-list/drag/motion.ts",
+   "why": "stage 2 (L2): owner src/components/sortable-list/drag.ts"
+  },
+  {
+   "from": "src/components/sortable-list/resolve.ts",
+   "to": "src/components/sortable-list/drop/resolve.ts",
+   "why": "stage 2 (L2): owner src/components/sortable-list/useSortable.ts"
+  },
+  {
+   "from": "src/components/tabs/SegmentedTabs.vue",
+   "to": "src/components/tabs/segmented-tabs/SegmentedTabs.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/tabs/composables/useTabDragMorph.ts",
+   "to": "src/components/tabs/segmented-tabs/useTabDragMorph.ts",
+   "why": "stage 2 (L2): owner src/components/tabs/SegmentedTabs.vue"
+  },
+  {
+   "from": "src/components/tabs/composables/useTabResponsive.ts",
+   "to": "src/components/tabs/segmented-tabs/useTabResponsive.ts",
+   "why": "stage 2 (L2): owner src/components/tabs/SegmentedTabs.vue"
+  },
+  {
+   "from": "src/components/toast/ToastClose.vue",
+   "to": "src/components/toast/toaster/ToastClose.vue",
+   "why": "stage 2 (L2): owner src/components/toast/Toaster.vue"
+  },
+  {
+   "from": "src/components/toast/ToastDescription.vue",
+   "to": "src/components/toast/toaster/ToastDescription.vue",
+   "why": "stage 2 (L2): owner src/components/toast/Toaster.vue"
+  },
+  {
+   "from": "src/components/toast/ToastTitle.vue",
+   "to": "src/components/toast/toaster/ToastTitle.vue",
+   "why": "stage 2 (L2): owner src/components/toast/Toaster.vue"
+  },
+  {
+   "from": "src/components/toast/Toaster.vue",
+   "to": "src/components/toast/toaster/Toaster.vue",
+   "why": "stage 2 (L2): owner the unit door"
+  },
+  {
+   "from": "src/components/toast/use-toast.ts",
+   "to": "src/components/toast/toaster/use-toast.ts",
+   "why": "stage 2 (L2): owner src/components/toast/Toaster.vue"
+  },
+  {
+   "from": "src/components/typewriter/utils/graphemes.ts",
+   "to": "src/components/typewriter/graphemes.ts",
+   "why": "stage 2 (L2): owner src/components/typewriter/TypewriterText.vue"
+  },
+  {
+   "from": "src/components/typewriter/utils/keyboard.ts",
+   "to": "src/components/typewriter/keyboard.ts",
+   "why": "stage 2 (L2): owner src/components/typewriter/composables/useTypewriter.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/pausePatterns.ts",
+   "to": "src/components/typewriter/pausePatterns.ts",
+   "why": "stage 2 (L2): owner src/components/typewriter/composables/useTypewriter.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/timing.ts",
+   "to": "src/components/typewriter/timing.ts",
+   "why": "stage 2 (L2): owner src/components/typewriter/composables/useTypewriter.ts"
+  },
+  {
+   "from": "src/components/typewriter/utils/typoStateMachine.ts",
+   "to": "src/components/typewriter/typoStateMachine.ts",
+   "why": "stage 2 (L2): owner src/components/typewriter/composables/useTypewriter.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/components/fourier-field/FourierField.smoke.test.ts",
+   "spec": "join(SRC, \"components/fourier-field\", file)",
+   "file": "src/components/fourier-field/constants.ts",
+   "reason": "G stage 2: the scanner reads src/components/fourier-field/constants.ts at src/components/fourier-field/register/constants.ts"
+  },
+  {
+   "scanner": "tests/components/fourier-field/FourierField.smoke.test.ts",
+   "spec": "join(SRC, \"components/fourier-field\", file)",
+   "file": "src/components/fourier-field/renderer/mint.ts",
+   "reason": "G stage 2: the scanner reads src/components/fourier-field/renderer/mint.ts at src/components/fourier-field/mint.ts"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${liar}`",
+   "file": "src/components/sortable-list/drag.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/drag.ts at src/components/sortable-list/drag/drag.ts"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${liar}`",
+   "file": "src/components/sortable-list/ghost.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/ghost.ts at src/components/sortable-list/drag/ghost.ts"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${liar}`",
+   "file": "src/components/sortable-list/motion.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/motion.ts at src/components/sortable-list/drag/motion.ts"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${liar}`",
+   "file": "src/components/sortable-list/resolve.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/resolve.ts at src/components/sortable-list/drop/resolve.ts"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${honest}`",
+   "file": "src/components/sortable-list/drag.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/drag.ts at src/components/sortable-list/drag/drag.ts"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${honest}`",
+   "file": "src/components/sortable-list/ghost.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/ghost.ts at src/components/sortable-list/drag/ghost.ts"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${honest}`",
+   "file": "src/components/sortable-list/motion.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/motion.ts at src/components/sortable-list/drag/motion.ts"
+  },
+  {
+   "scanner": "tests/components/sortable-list/battery.test.ts",
+   "spec": "`${DIR}/${honest}`",
+   "file": "src/components/sortable-list/resolve.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/resolve.ts at src/components/sortable-list/drop/resolve.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/auroraImageSource.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/auroraImageSource.ts at src/components/aurora/runtime/frame/auroraImageSource.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/color.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/color.ts at src/components/aurora/config/color.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/frameLoop.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/frameLoop.ts at src/components/aurora/runtime/frame/frameLoop.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/glSetup.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/glSetup.ts at src/components/aurora/runtime/webgl/glSetup.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/runtime.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/runtime.ts at src/components/aurora/runtime/runtime.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/textureUpload.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/textureUpload.ts at src/components/aurora/runtime/frame/textureUpload.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/uniformBridge.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/uniformBridge.ts at src/components/aurora/runtime/frame/uniformBridge.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/uniformBridgeWGPU.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/uniformBridgeWGPU.ts at src/components/aurora/runtime/webgpu/uniformBridgeWGPU.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/uniformBridgeWGPUImage.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/uniformBridgeWGPUImage.ts at src/components/aurora/runtime/webgpu/uniformBridgeWGPUImage.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/composables/wgpuSetup.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/wgpuSetup.ts at src/components/aurora/runtime/webgpu/wgpuSetup.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/presets.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/presets.ts at src/components/aurora/config/presets.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/renderMode.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/renderMode.ts at src/components/aurora/config/renderMode.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/aurora-image.frag.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora-image.frag.ts at src/components/aurora/runtime/webgl/aurora-image.frag.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/aurora-image.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora-image.wgsl.ts at src/components/aurora/runtime/webgpu/aurora-image.wgsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts at src/components/aurora/runtime/webgpu/aurora-mediums.wgsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/aurora.frag.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora.frag.ts at src/components/aurora/runtime/webgl/palette/aurora.frag.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/aurora.vert.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora.vert.ts at src/components/aurora/runtime/webgl/aurora.vert.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/aurora.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora.wgsl.ts at src/components/aurora/runtime/webgpu/aurora.wgsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/brush.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/brush.glsl.ts at src/components/aurora/runtime/webgl/palette/brush.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/composition.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/composition.glsl.ts at src/components/aurora/runtime/webgl/palette/composition.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/curlNoise.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/curlNoise.glsl.ts at src/components/aurora/runtime/webgl/palette/curlNoise.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/curlNoise.wgsl.ts at src/components/aurora/runtime/webgpu/curlNoise.wgsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/flow.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/flow.glsl.ts at src/components/aurora/runtime/webgl/palette/flow.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/mediums.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/mediums.glsl.ts at src/components/aurora/runtime/webgl/palette/mediums.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/metal-medium.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/metal-medium.glsl.ts at src/components/aurora/runtime/webgl/palette/metal-medium.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/oil-modes.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/oil-modes.glsl.ts at src/components/aurora/runtime/webgl/palette/oil-modes.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/tonemap.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/tonemap.glsl.ts at src/components/aurora/runtime/webgl/palette/tonemap.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/aurora/constants/shaders/vangogh-medium.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/vangogh-medium.glsl.ts at src/components/aurora/runtime/webgl/palette/vangogh-medium.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/blobSimulation.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/blobSimulation.ts at src/components/blob/renderer/blobSimulation.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/buildMetaballProgram.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/buildMetaballProgram.ts at src/components/blob/renderer/webgl/buildMetaballProgram.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/resolveBlobSurface.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/resolveBlobSurface.ts at src/components/blob/renderer/surface/resolveBlobSurface.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/uniformBridgeWGPU.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/uniformBridgeWGPU.ts at src/components/blob/renderer/webgpu/uniformBridgeWGPU.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/uploadBlobUniforms.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/uploadBlobUniforms.ts at src/components/blob/renderer/uploadBlobUniforms.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/useMetaballRenderer.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/useMetaballRenderer.ts at src/components/blob/renderer/useMetaballRenderer.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/composables/wgpuSetup.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/wgpuSetup.ts at src/components/blob/renderer/webgpu/wgpuSetup.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/constants.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/constants.ts at src/components/blob/mood/constants.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/metaball-noise.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball-noise.wgsl.ts at src/components/blob/renderer/webgpu/metaball-noise.wgsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/metaball-palette.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball-palette.wgsl.ts at src/components/blob/renderer/webgpu/metaball-palette.wgsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/metaball-uniforms.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball-uniforms.glsl.ts at src/components/blob/renderer/webgl/metaball-uniforms.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/metaball.frag.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball.frag.ts at src/components/blob/renderer/webgl/metaball.frag.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/metaball.vert.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball.vert.ts at src/components/blob/renderer/webgl/metaball.vert.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/metaball.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball.wgsl.ts at src/components/blob/renderer/webgpu/metaball.wgsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/oklch-perturb.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/oklch-perturb.glsl.ts at src/components/blob/renderer/webgl/oklch-perturb.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/sdf-body.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/sdf-body.glsl.ts at src/components/blob/renderer/webgl/sdf-body.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/blob/shaders/watercolor-edges.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/watercolor-edges.glsl.ts at src/components/blob/renderer/webgl/watercolor-edges.glsl.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/backdropLuminanceSample.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/backdropLuminanceSample.ts at src/components/dock/legibility/backdropLuminanceSample.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/backdropSampleMath.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/backdropSampleMath.ts at src/components/dock/legibility/backdropSampleMath.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/composables/useDockSearch.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/composables/useDockSearch.ts at src/components/dock/search/useDockSearch.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/composables/useFuzzySearch.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/composables/useFuzzySearch.ts at src/components/dock/search/useFuzzySearch.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/composables/useGlassBackdropLuminance.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/composables/useGlassBackdropLuminance.ts at src/components/dock/legibility/useGlassBackdropLuminance.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/match.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/match.ts at src/components/dock/search/match.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/types.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/types.ts at src/components/dock/search/types.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/fourier-field/constants.ts",
+   "reason": "G stage 2: the scanner reads src/components/fourier-field/constants.ts at src/components/fourier-field/register/constants.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/fourier-field/renderer/mint.ts",
+   "reason": "G stage 2: the scanner reads src/components/fourier-field/renderer/mint.ts at src/components/fourier-field/mint.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuCheckboxItem.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuCheckboxItem.vue at src/components/menu/items/DropdownMenuCheckboxItem.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuGroup.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuGroup.vue at src/components/menu/items/DropdownMenuGroup.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuItem.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuItem.vue at src/components/menu/items/DropdownMenuItem.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuLabel.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuLabel.vue at src/components/menu/items/DropdownMenuLabel.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuRadioGroup.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuRadioGroup.vue at src/components/menu/items/DropdownMenuRadioGroup.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuRadioItem.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuRadioItem.vue at src/components/menu/items/DropdownMenuRadioItem.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuSeparator.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuSeparator.vue at src/components/menu/items/DropdownMenuSeparator.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuShortcut.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuShortcut.vue at src/components/menu/items/DropdownMenuShortcut.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuSub.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuSub.vue at src/components/menu/sub/DropdownMenuSub.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuSubContent.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuSubContent.vue at src/components/menu/sub/DropdownMenuSubContent.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/menu/DropdownMenuSubTrigger.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuSubTrigger.vue at src/components/menu/sub/DropdownMenuSubTrigger.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/sheet/SheetContent.vue",
+   "reason": "G stage 2: the scanner reads src/components/sheet/SheetContent.vue at src/components/sheet/detents/SheetContent.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/sheet/detents/use.ts",
+   "reason": "G stage 2: the scanner reads src/components/sheet/detents/use.ts at src/components/sheet/detents/useSheetDetents.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/sortable-list/drag.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/drag.ts at src/components/sortable-list/drag/drag.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/sortable-list/ghost.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/ghost.ts at src/components/sortable-list/drag/ghost.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/sortable-list/motion.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/motion.ts at src/components/sortable-list/drag/motion.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/sortable-list/resolve.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/resolve.ts at src/components/sortable-list/drop/resolve.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/tabs/SegmentedTabs.vue",
+   "reason": "G stage 2: the scanner reads src/components/tabs/SegmentedTabs.vue at src/components/tabs/segmented-tabs/SegmentedTabs.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/tabs/composables/useTabDragMorph.ts",
+   "reason": "G stage 2: the scanner reads src/components/tabs/composables/useTabDragMorph.ts at src/components/tabs/segmented-tabs/useTabDragMorph.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/tabs/composables/useTabResponsive.ts",
+   "reason": "G stage 2: the scanner reads src/components/tabs/composables/useTabResponsive.ts at src/components/tabs/segmented-tabs/useTabResponsive.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/toast/ToastClose.vue",
+   "reason": "G stage 2: the scanner reads src/components/toast/ToastClose.vue at src/components/toast/toaster/ToastClose.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/toast/ToastDescription.vue",
+   "reason": "G stage 2: the scanner reads src/components/toast/ToastDescription.vue at src/components/toast/toaster/ToastDescription.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/toast/ToastTitle.vue",
+   "reason": "G stage 2: the scanner reads src/components/toast/ToastTitle.vue at src/components/toast/toaster/ToastTitle.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/toast/Toaster.vue",
+   "reason": "G stage 2: the scanner reads src/components/toast/Toaster.vue at src/components/toast/toaster/Toaster.vue"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/toast/use-toast.ts",
+   "reason": "G stage 2: the scanner reads src/components/toast/use-toast.ts at src/components/toast/toaster/use-toast.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/utils/graphemes.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/graphemes.ts at src/components/typewriter/graphemes.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/utils/keyboard.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/keyboard.ts at src/components/typewriter/keyboard.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/utils/pausePatterns.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/pausePatterns.ts at src/components/typewriter/pausePatterns.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/utils/timing.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/timing.ts at src/components/typewriter/timing.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/typewriter/utils/typoStateMachine.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/typoStateMachine.ts at src/components/typewriter/typoStateMachine.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/auroraImageSource.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/auroraImageSource.ts at src/components/aurora/runtime/frame/auroraImageSource.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/color.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/color.ts at src/components/aurora/config/color.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/frameLoop.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/frameLoop.ts at src/components/aurora/runtime/frame/frameLoop.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/glSetup.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/glSetup.ts at src/components/aurora/runtime/webgl/glSetup.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/runtime.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/runtime.ts at src/components/aurora/runtime/runtime.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/textureUpload.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/textureUpload.ts at src/components/aurora/runtime/frame/textureUpload.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/uniformBridge.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/uniformBridge.ts at src/components/aurora/runtime/frame/uniformBridge.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/uniformBridgeWGPU.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/uniformBridgeWGPU.ts at src/components/aurora/runtime/webgpu/uniformBridgeWGPU.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/uniformBridgeWGPUImage.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/uniformBridgeWGPUImage.ts at src/components/aurora/runtime/webgpu/uniformBridgeWGPUImage.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/composables/wgpuSetup.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/wgpuSetup.ts at src/components/aurora/runtime/webgpu/wgpuSetup.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/presets.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/presets.ts at src/components/aurora/config/presets.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/renderMode.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/renderMode.ts at src/components/aurora/config/renderMode.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/aurora-image.frag.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora-image.frag.ts at src/components/aurora/runtime/webgl/aurora-image.frag.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/aurora-image.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora-image.wgsl.ts at src/components/aurora/runtime/webgpu/aurora-image.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts at src/components/aurora/runtime/webgpu/aurora-mediums.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/aurora.frag.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora.frag.ts at src/components/aurora/runtime/webgl/palette/aurora.frag.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/aurora.vert.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora.vert.ts at src/components/aurora/runtime/webgl/aurora.vert.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/aurora.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora.wgsl.ts at src/components/aurora/runtime/webgpu/aurora.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/brush.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/brush.glsl.ts at src/components/aurora/runtime/webgl/palette/brush.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/composition.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/composition.glsl.ts at src/components/aurora/runtime/webgl/palette/composition.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/curlNoise.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/curlNoise.glsl.ts at src/components/aurora/runtime/webgl/palette/curlNoise.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/curlNoise.wgsl.ts at src/components/aurora/runtime/webgpu/curlNoise.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/flow.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/flow.glsl.ts at src/components/aurora/runtime/webgl/palette/flow.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/mediums.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/mediums.glsl.ts at src/components/aurora/runtime/webgl/palette/mediums.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/metal-medium.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/metal-medium.glsl.ts at src/components/aurora/runtime/webgl/palette/metal-medium.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/oil-modes.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/oil-modes.glsl.ts at src/components/aurora/runtime/webgl/palette/oil-modes.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/tonemap.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/tonemap.glsl.ts at src/components/aurora/runtime/webgl/palette/tonemap.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/aurora/constants/shaders/vangogh-medium.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/vangogh-medium.glsl.ts at src/components/aurora/runtime/webgl/palette/vangogh-medium.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/blobSimulation.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/blobSimulation.ts at src/components/blob/renderer/blobSimulation.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/buildMetaballProgram.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/buildMetaballProgram.ts at src/components/blob/renderer/webgl/buildMetaballProgram.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/resolveBlobSurface.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/resolveBlobSurface.ts at src/components/blob/renderer/surface/resolveBlobSurface.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/uniformBridgeWGPU.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/uniformBridgeWGPU.ts at src/components/blob/renderer/webgpu/uniformBridgeWGPU.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/uploadBlobUniforms.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/uploadBlobUniforms.ts at src/components/blob/renderer/uploadBlobUniforms.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/useMetaballRenderer.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/useMetaballRenderer.ts at src/components/blob/renderer/useMetaballRenderer.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/composables/wgpuSetup.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/wgpuSetup.ts at src/components/blob/renderer/webgpu/wgpuSetup.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/constants.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/constants.ts at src/components/blob/mood/constants.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/metaball-noise.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball-noise.wgsl.ts at src/components/blob/renderer/webgpu/metaball-noise.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/metaball-palette.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball-palette.wgsl.ts at src/components/blob/renderer/webgpu/metaball-palette.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/metaball-uniforms.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball-uniforms.glsl.ts at src/components/blob/renderer/webgl/metaball-uniforms.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/metaball.frag.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball.frag.ts at src/components/blob/renderer/webgl/metaball.frag.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/metaball.vert.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball.vert.ts at src/components/blob/renderer/webgl/metaball.vert.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/metaball.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball.wgsl.ts at src/components/blob/renderer/webgpu/metaball.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/oklch-perturb.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/oklch-perturb.glsl.ts at src/components/blob/renderer/webgl/oklch-perturb.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/sdf-body.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/sdf-body.glsl.ts at src/components/blob/renderer/webgl/sdf-body.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/blob/shaders/watercolor-edges.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/watercolor-edges.glsl.ts at src/components/blob/renderer/webgl/watercolor-edges.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/backdropLuminanceSample.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/backdropLuminanceSample.ts at src/components/dock/legibility/backdropLuminanceSample.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/backdropSampleMath.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/backdropSampleMath.ts at src/components/dock/legibility/backdropSampleMath.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/composables/useDockSearch.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/composables/useDockSearch.ts at src/components/dock/search/useDockSearch.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/composables/useFuzzySearch.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/composables/useFuzzySearch.ts at src/components/dock/search/useFuzzySearch.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/composables/useGlassBackdropLuminance.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/composables/useGlassBackdropLuminance.ts at src/components/dock/legibility/useGlassBackdropLuminance.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/match.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/match.ts at src/components/dock/search/match.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/types.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/types.ts at src/components/dock/search/types.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/fourier-field/constants.ts",
+   "reason": "G stage 2: the scanner reads src/components/fourier-field/constants.ts at src/components/fourier-field/register/constants.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/fourier-field/renderer/mint.ts",
+   "reason": "G stage 2: the scanner reads src/components/fourier-field/renderer/mint.ts at src/components/fourier-field/mint.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuCheckboxItem.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuCheckboxItem.vue at src/components/menu/items/DropdownMenuCheckboxItem.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuGroup.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuGroup.vue at src/components/menu/items/DropdownMenuGroup.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuItem.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuItem.vue at src/components/menu/items/DropdownMenuItem.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuLabel.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuLabel.vue at src/components/menu/items/DropdownMenuLabel.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuRadioGroup.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuRadioGroup.vue at src/components/menu/items/DropdownMenuRadioGroup.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuRadioItem.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuRadioItem.vue at src/components/menu/items/DropdownMenuRadioItem.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuSeparator.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuSeparator.vue at src/components/menu/items/DropdownMenuSeparator.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuShortcut.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuShortcut.vue at src/components/menu/items/DropdownMenuShortcut.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuSub.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuSub.vue at src/components/menu/sub/DropdownMenuSub.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuSubContent.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuSubContent.vue at src/components/menu/sub/DropdownMenuSubContent.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/menu/DropdownMenuSubTrigger.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuSubTrigger.vue at src/components/menu/sub/DropdownMenuSubTrigger.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/sheet/SheetContent.vue",
+   "reason": "G stage 2: the scanner reads src/components/sheet/SheetContent.vue at src/components/sheet/detents/SheetContent.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/sheet/detents/use.ts",
+   "reason": "G stage 2: the scanner reads src/components/sheet/detents/use.ts at src/components/sheet/detents/useSheetDetents.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/sortable-list/drag.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/drag.ts at src/components/sortable-list/drag/drag.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/sortable-list/ghost.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/ghost.ts at src/components/sortable-list/drag/ghost.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/sortable-list/motion.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/motion.ts at src/components/sortable-list/drag/motion.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/sortable-list/resolve.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/resolve.ts at src/components/sortable-list/drop/resolve.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/tabs/SegmentedTabs.vue",
+   "reason": "G stage 2: the scanner reads src/components/tabs/SegmentedTabs.vue at src/components/tabs/segmented-tabs/SegmentedTabs.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/tabs/composables/useTabDragMorph.ts",
+   "reason": "G stage 2: the scanner reads src/components/tabs/composables/useTabDragMorph.ts at src/components/tabs/segmented-tabs/useTabDragMorph.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/tabs/composables/useTabResponsive.ts",
+   "reason": "G stage 2: the scanner reads src/components/tabs/composables/useTabResponsive.ts at src/components/tabs/segmented-tabs/useTabResponsive.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/toast/ToastClose.vue",
+   "reason": "G stage 2: the scanner reads src/components/toast/ToastClose.vue at src/components/toast/toaster/ToastClose.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/toast/ToastDescription.vue",
+   "reason": "G stage 2: the scanner reads src/components/toast/ToastDescription.vue at src/components/toast/toaster/ToastDescription.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/toast/ToastTitle.vue",
+   "reason": "G stage 2: the scanner reads src/components/toast/ToastTitle.vue at src/components/toast/toaster/ToastTitle.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/toast/Toaster.vue",
+   "reason": "G stage 2: the scanner reads src/components/toast/Toaster.vue at src/components/toast/toaster/Toaster.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/toast/use-toast.ts",
+   "reason": "G stage 2: the scanner reads src/components/toast/use-toast.ts at src/components/toast/toaster/use-toast.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/utils/graphemes.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/graphemes.ts at src/components/typewriter/graphemes.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/utils/keyboard.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/keyboard.ts at src/components/typewriter/keyboard.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/utils/pausePatterns.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/pausePatterns.ts at src/components/typewriter/pausePatterns.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/utils/timing.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/timing.ts at src/components/typewriter/timing.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/typewriter/utils/typoStateMachine.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/typoStateMachine.ts at src/components/typewriter/typoStateMachine.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/auroraImageSource.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/auroraImageSource.ts at src/components/aurora/runtime/frame/auroraImageSource.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/color.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/color.ts at src/components/aurora/config/color.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/frameLoop.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/frameLoop.ts at src/components/aurora/runtime/frame/frameLoop.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/glSetup.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/glSetup.ts at src/components/aurora/runtime/webgl/glSetup.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/runtime.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/runtime.ts at src/components/aurora/runtime/runtime.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/textureUpload.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/textureUpload.ts at src/components/aurora/runtime/frame/textureUpload.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/uniformBridge.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/uniformBridge.ts at src/components/aurora/runtime/frame/uniformBridge.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/uniformBridgeWGPU.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/uniformBridgeWGPU.ts at src/components/aurora/runtime/webgpu/uniformBridgeWGPU.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/uniformBridgeWGPUImage.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/uniformBridgeWGPUImage.ts at src/components/aurora/runtime/webgpu/uniformBridgeWGPUImage.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/composables/wgpuSetup.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/composables/wgpuSetup.ts at src/components/aurora/runtime/webgpu/wgpuSetup.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/presets.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/presets.ts at src/components/aurora/config/presets.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/renderMode.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/renderMode.ts at src/components/aurora/config/renderMode.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/aurora-image.frag.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora-image.frag.ts at src/components/aurora/runtime/webgl/aurora-image.frag.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/aurora-image.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora-image.wgsl.ts at src/components/aurora/runtime/webgpu/aurora-image.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts at src/components/aurora/runtime/webgpu/aurora-mediums.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/aurora.frag.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora.frag.ts at src/components/aurora/runtime/webgl/palette/aurora.frag.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/aurora.vert.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora.vert.ts at src/components/aurora/runtime/webgl/aurora.vert.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/aurora.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/aurora.wgsl.ts at src/components/aurora/runtime/webgpu/aurora.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/brush.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/brush.glsl.ts at src/components/aurora/runtime/webgl/palette/brush.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/composition.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/composition.glsl.ts at src/components/aurora/runtime/webgl/palette/composition.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/curlNoise.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/curlNoise.glsl.ts at src/components/aurora/runtime/webgl/palette/curlNoise.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/curlNoise.wgsl.ts at src/components/aurora/runtime/webgpu/curlNoise.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/flow.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/flow.glsl.ts at src/components/aurora/runtime/webgl/palette/flow.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/mediums.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/mediums.glsl.ts at src/components/aurora/runtime/webgl/palette/mediums.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/metal-medium.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/metal-medium.glsl.ts at src/components/aurora/runtime/webgl/palette/metal-medium.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/oil-modes.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/oil-modes.glsl.ts at src/components/aurora/runtime/webgl/palette/oil-modes.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/tonemap.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/tonemap.glsl.ts at src/components/aurora/runtime/webgl/palette/tonemap.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/aurora/constants/shaders/vangogh-medium.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/aurora/constants/shaders/vangogh-medium.glsl.ts at src/components/aurora/runtime/webgl/palette/vangogh-medium.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/blobSimulation.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/blobSimulation.ts at src/components/blob/renderer/blobSimulation.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/buildMetaballProgram.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/buildMetaballProgram.ts at src/components/blob/renderer/webgl/buildMetaballProgram.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/resolveBlobSurface.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/resolveBlobSurface.ts at src/components/blob/renderer/surface/resolveBlobSurface.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/uniformBridgeWGPU.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/uniformBridgeWGPU.ts at src/components/blob/renderer/webgpu/uniformBridgeWGPU.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/uploadBlobUniforms.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/uploadBlobUniforms.ts at src/components/blob/renderer/uploadBlobUniforms.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/useMetaballRenderer.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/useMetaballRenderer.ts at src/components/blob/renderer/useMetaballRenderer.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/composables/wgpuSetup.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/composables/wgpuSetup.ts at src/components/blob/renderer/webgpu/wgpuSetup.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/constants.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/constants.ts at src/components/blob/mood/constants.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/metaball-noise.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball-noise.wgsl.ts at src/components/blob/renderer/webgpu/metaball-noise.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/metaball-palette.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball-palette.wgsl.ts at src/components/blob/renderer/webgpu/metaball-palette.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/metaball-uniforms.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball-uniforms.glsl.ts at src/components/blob/renderer/webgl/metaball-uniforms.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/metaball.frag.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball.frag.ts at src/components/blob/renderer/webgl/metaball.frag.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/metaball.vert.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball.vert.ts at src/components/blob/renderer/webgl/metaball.vert.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/metaball.wgsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/metaball.wgsl.ts at src/components/blob/renderer/webgpu/metaball.wgsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/oklch-perturb.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/oklch-perturb.glsl.ts at src/components/blob/renderer/webgl/oklch-perturb.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/sdf-body.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/sdf-body.glsl.ts at src/components/blob/renderer/webgl/sdf-body.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/blob/shaders/watercolor-edges.glsl.ts",
+   "reason": "G stage 2: the scanner reads src/components/blob/shaders/watercolor-edges.glsl.ts at src/components/blob/renderer/webgl/watercolor-edges.glsl.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/backdropLuminanceSample.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/backdropLuminanceSample.ts at src/components/dock/legibility/backdropLuminanceSample.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/backdropSampleMath.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/backdropSampleMath.ts at src/components/dock/legibility/backdropSampleMath.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/composables/useDockSearch.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/composables/useDockSearch.ts at src/components/dock/search/useDockSearch.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/composables/useFuzzySearch.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/composables/useFuzzySearch.ts at src/components/dock/search/useFuzzySearch.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/composables/useGlassBackdropLuminance.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/composables/useGlassBackdropLuminance.ts at src/components/dock/legibility/useGlassBackdropLuminance.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/match.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/match.ts at src/components/dock/search/match.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/types.ts",
+   "reason": "G stage 2: the scanner reads src/components/dock/types.ts at src/components/dock/search/types.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/fourier-field/constants.ts",
+   "reason": "G stage 2: the scanner reads src/components/fourier-field/constants.ts at src/components/fourier-field/register/constants.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/fourier-field/renderer/mint.ts",
+   "reason": "G stage 2: the scanner reads src/components/fourier-field/renderer/mint.ts at src/components/fourier-field/mint.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuCheckboxItem.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuCheckboxItem.vue at src/components/menu/items/DropdownMenuCheckboxItem.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuGroup.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuGroup.vue at src/components/menu/items/DropdownMenuGroup.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuItem.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuItem.vue at src/components/menu/items/DropdownMenuItem.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuLabel.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuLabel.vue at src/components/menu/items/DropdownMenuLabel.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuRadioGroup.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuRadioGroup.vue at src/components/menu/items/DropdownMenuRadioGroup.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuRadioItem.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuRadioItem.vue at src/components/menu/items/DropdownMenuRadioItem.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuSeparator.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuSeparator.vue at src/components/menu/items/DropdownMenuSeparator.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuShortcut.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuShortcut.vue at src/components/menu/items/DropdownMenuShortcut.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuSub.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuSub.vue at src/components/menu/sub/DropdownMenuSub.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuSubContent.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuSubContent.vue at src/components/menu/sub/DropdownMenuSubContent.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/menu/DropdownMenuSubTrigger.vue",
+   "reason": "G stage 2: the scanner reads src/components/menu/DropdownMenuSubTrigger.vue at src/components/menu/sub/DropdownMenuSubTrigger.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/sheet/SheetContent.vue",
+   "reason": "G stage 2: the scanner reads src/components/sheet/SheetContent.vue at src/components/sheet/detents/SheetContent.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/sheet/detents/use.ts",
+   "reason": "G stage 2: the scanner reads src/components/sheet/detents/use.ts at src/components/sheet/detents/useSheetDetents.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/sortable-list/drag.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/drag.ts at src/components/sortable-list/drag/drag.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/sortable-list/ghost.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/ghost.ts at src/components/sortable-list/drag/ghost.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/sortable-list/motion.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/motion.ts at src/components/sortable-list/drag/motion.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/sortable-list/resolve.ts",
+   "reason": "G stage 2: the scanner reads src/components/sortable-list/resolve.ts at src/components/sortable-list/drop/resolve.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/tabs/SegmentedTabs.vue",
+   "reason": "G stage 2: the scanner reads src/components/tabs/SegmentedTabs.vue at src/components/tabs/segmented-tabs/SegmentedTabs.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/tabs/composables/useTabDragMorph.ts",
+   "reason": "G stage 2: the scanner reads src/components/tabs/composables/useTabDragMorph.ts at src/components/tabs/segmented-tabs/useTabDragMorph.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/tabs/composables/useTabResponsive.ts",
+   "reason": "G stage 2: the scanner reads src/components/tabs/composables/useTabResponsive.ts at src/components/tabs/segmented-tabs/useTabResponsive.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/toast/ToastClose.vue",
+   "reason": "G stage 2: the scanner reads src/components/toast/ToastClose.vue at src/components/toast/toaster/ToastClose.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/toast/ToastDescription.vue",
+   "reason": "G stage 2: the scanner reads src/components/toast/ToastDescription.vue at src/components/toast/toaster/ToastDescription.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/toast/ToastTitle.vue",
+   "reason": "G stage 2: the scanner reads src/components/toast/ToastTitle.vue at src/components/toast/toaster/ToastTitle.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/toast/Toaster.vue",
+   "reason": "G stage 2: the scanner reads src/components/toast/Toaster.vue at src/components/toast/toaster/Toaster.vue"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/toast/use-toast.ts",
+   "reason": "G stage 2: the scanner reads src/components/toast/use-toast.ts at src/components/toast/toaster/use-toast.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/utils/graphemes.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/graphemes.ts at src/components/typewriter/graphemes.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/utils/keyboard.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/keyboard.ts at src/components/typewriter/keyboard.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/utils/pausePatterns.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/pausePatterns.ts at src/components/typewriter/pausePatterns.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/utils/timing.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/timing.ts at src/components/typewriter/timing.ts"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/typewriter/utils/typoStateMachine.ts",
+   "reason": "G stage 2: the scanner reads src/components/typewriter/utils/typoStateMachine.ts at src/components/typewriter/typoStateMachine.ts"
+  }
+ ],
+ "needsName": [],
+ "fd2Flattened": []
+}

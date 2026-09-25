@@ -1,38 +1,280 @@
 {
+    "note": "D1-G authored names (LAW.md L3.2, L3.5, L2.8, L1.3, L5.2). Dominance finds a module; a person names it here where the root's own name would erase an authored concept (G-03). Every value is taken from B's pass-3 authored names (pass-3/B-kit/authored/names.json) unless its `why` says otherwise. `names`: unit name -> root file name -> the dir's name, or {collapse} (the root heads no dir). `bases`: unit name -> parent dir relative to the unit -> the base module's name (L2.8). `stage1`: a stage-1 target that lands loose in a container, or would close an FD-2 pair, takes a module dir. `groups`: a stage-1 moved file (key) -> the files of its dir that move with it (L1.3). Paths appear only as keys: F-1 reads every JSON value as a potential path. `rename`: a file's authored name (path or file name -> new file name). `modules`: the pinned module set (E3N). `testNames`: a test's authored name where two tests of one name meet in one slot. `carve` (L7.2): a peer dir over 12 that no dominator child splits -> module name -> the file names it holds, taken from B's pass-3 carve; a carve of a kind slot names modules of the slot's unit.",
     "names": {
         "aurora": {
-            "aurora.frag.ts": "palette",
-            "mediums.glsl.ts": "mediums",
-            "aurora.wgsl.ts": "wgsl",
+            "runtime.ts": "runtime",
             "glSetup.ts": "webgl",
-            "wgpuSetup.ts": "webgpu"
+            "wgpuSetup.ts": "webgpu",
+            "aurora.frag.ts": "palette",
+            "mediums.glsl.ts": {
+                "collapse": true,
+                "why": "B: the four medium shaders are palette stages; a mediums/ level is a file-derived name (G-crit F-5)"
+            },
+            "aurora.wgsl.ts": {
+                "collapse": true,
+                "why": "B: a wgsl/ level inside webgpu/ is a file-derived name"
+            }
         },
-        "sheet": {
-            "SheetContent.vue": "detents"
+        "blob": {
+            "useMetaballRenderer.ts": "renderer",
+            "buildMetaballProgram.ts": "webgl",
+            "wgpuSetup.ts": "webgpu",
+            "metaball.frag.ts": {
+                "collapse": true,
+                "why": "B: the fragment stages are the WebGL program's own"
+            },
+            "metaball.wgsl.ts": {
+                "collapse": true,
+                "why": "B: the WGSL modules are the WebGPU backend's own"
+            }
+        },
+        "dock": {
+            "GlassDock.vue": {
+                "collapse": true,
+                "why": "B keep: GlassDock.vue is the dock under its product name; a glass-dock/ inside dock/ is a second dock inside the dock, and its closure reads dockContext, which row m02 pins in dock/composables/"
+            },
+            "useGlassBackdropLuminance.ts": "legibility"
         },
         "fourier-field": {
             "wgpu.ts": "renderer"
         },
-        "blob": {
-            "metaball.frag.ts": "glsl",
-            "metaball.wgsl.ts": "wgsl",
-            "wgpuSetup.ts": "webgpu",
-            "buildMetaballProgram.ts": "webgl",
-            "useMetaballRenderer.ts": "renderer"
+        "sheet": {
+            "SheetContent.vue": "detents"
         },
-        "dock": {
-            "useGlassBackdropLuminance.ts": "legibility"
+        "sortable-list": {
+            "useSortable.ts": {
+                "collapse": true,
+                "why": "B: useSortable is SortableList's own composable; a sortable/ level inside sortable-list/ repeats the unit"
+            },
+            "drag.ts": "drag"
+        },
+        "tabs": {
+            "SegmentedTabs.vue": "segmented-tabs"
+        },
+        "toast": {
+            "Toaster.vue": "toaster"
+        },
+        "typewriter": {
+            "TypewriterText.vue": "text",
+            "useTypewriter.ts": {
+                "collapse": true,
+                "why": "G: useTypewriter is TypewriterText's one engine; a typewriter/ level inside typewriter/text/ repeats the unit"
+            }
+        }
+    },
+    "bases": {
+        "aurora": {
+            ".": "config",
+            "runtime": "frame"
+        },
+        "blob": {
+            ".": "mood",
+            "renderer": "surface"
+        },
+        "fourier-field": {
+            ".": "register"
+        },
+        "sortable-list": {
+            ".": "drop"
         }
     },
     "stage1": {
-        "ModalOverlay.vue": "overlay"
+        "ModalOverlay.vue": "overlay",
+        "budget.ts": "glass",
+        "createCanvasLifecycle.ts": "lifecycle"
     },
     "rename": {
-        "flow.glsl.ts": "curlNoise.glsl.ts",
-        "flow.wgsl.ts": "curlNoise.wgsl.ts"
+        "src/composables/glass/webgl/shaders/flow.glsl.ts": "curlNoise.glsl.ts",
+        "src/composables/glass/webgl/shaders/flow.wgsl.ts": "curlNoise.wgsl.ts",
+        "src/components/sheet/detents/use.ts": "useSheetDetents.ts"
     },
-    "modules": {},
+    "modules": {
+        "aurora": [
+            "config",
+            "runtime",
+            "runtime/frame",
+            "runtime/webgl",
+            "runtime/webgl/palette",
+            "runtime/webgpu"
+        ],
+        "blob": [
+            "mood",
+            "renderer",
+            "renderer/surface",
+            "renderer/webgl",
+            "renderer/webgpu"
+        ],
+        "dock": [
+            "legibility",
+            "search",
+            "styles/controls"
+        ],
+        "fourier-field": [
+            "register",
+            "renderer"
+        ],
+        "sheet": [
+            "detents"
+        ],
+        "sortable-list": [
+            "drag",
+            "drop"
+        ],
+        "tabs": [
+            "segmented-tabs"
+        ],
+        "toast": [
+            "toaster"
+        ],
+        "menu": [
+            "items",
+            "sub"
+        ]
+    },
     "testNames": {
         "tests/composables/dom/useTokenColor.test.ts": "useTokenColor.resolver.test.ts"
+    },
+    "groups": {
+        "src/composables/glass/webgl/createCanvasLifecycle.ts": {
+            "members": [
+                "backingSize.ts",
+                "visibility.ts"
+            ],
+            "why": "B's group: the lifecycle reads both; they move with it, so the lifecycle reads nothing back in webgl/ (FD-2: lifecycle <-> webgl otherwise). backingSize is global-zone ok wherever it sits in glass/ (F-7), so the move keeps E1"
+        }
+    },
+    "basesWhy": {
+        "aurora .": "B's name (P2-4 earned transfer; G-03 names aurora/config)",
+        "aurora runtime": "B's name: the frame loop, uniform bridge, texture upload and image source both backends read",
+        "blob .": "B's name: the shape budget and the mood targets",
+        "blob renderer": "B's name: the surface resolver both backends read",
+        "fourier-field .": "G: the file calls itself the fourier-field register; B's `constants` would make constants/constants.ts",
+        "sortable-list .": "G: the file is the drop resolution (collision math over the lift-time rect cache); B's `resolve` would make resolve/resolve.ts"
+    },
+    "zones": {
+        "tests-visual": "paint"
+    },
+    "zonesWhy": "L6.0: a cross-zone arrival whose loaders' common dir is the zone root takes an authored module; tests-visual/paint/ holds the paint probe and its colour math (paint-arm, reflect-capture-verify)",
+    "purity": {
+        "src/components/alert/index.ts": "alertVariants.ts",
+        "src/components/badge/index.ts": "badgeVariants.ts",
+        "src/composables/color/index.ts": "oklch.ts",
+        "src/components/dock/styles/controls/index.css": "specular.css"
+    },
+    "purityWhy": "L4.4 (B14): the module a door's non-re-export statements move into, named by what it holds: the alert and badge variant recipes (the demo's @source *Variants.ts glob already scans that name), the colour door's OKLCH conversions; the dock controls door's shared :where() group, which sizes the small-tile specular (specular.css)",
+    "modulesWhy": "E3N: the module set is pinned; a new, lost or renamed module is a reviewed diff (G-03). Reviewed on the migrated tree of this kit's SEQUENCE: every dir below is a dominance module named by L3, an authored name (L3.2) or an authored base (L2.8).",
+    "carve": {
+        "src/components/menu": {
+            "sub": [
+                "DropdownMenuSub.vue",
+                "DropdownMenuSubContent.vue",
+                "DropdownMenuSubTrigger.vue"
+            ],
+            "items": [
+                "DropdownMenuItem.vue",
+                "DropdownMenuCheckboxItem.vue",
+                "DropdownMenuRadioGroup.vue",
+                "DropdownMenuRadioItem.vue",
+                "DropdownMenuLabel.vue",
+                "DropdownMenuSeparator.vue",
+                "DropdownMenuShortcut.vue",
+                "DropdownMenuGroup.vue"
+            ],
+            "why": "B's carve (S3-carve.json): the submenu trio and the item family; 14 SFC peers under the menu root, no dominator child (SPECS-v2 §4.4)"
+        },
+        "src/components/dock/styles": {
+            "search": [
+                "search.css"
+            ],
+            "legibility": [
+                "adaptive-legibility.css"
+            ],
+            "why": "B's CSS carve (S4a-css-carve.json): each sheet joins the dock module it paints (dock/search/, dock/legibility/); dock/styles holds 14"
+        },
+        "src/styles": {
+            "surface": [
+                "track-well.css",
+                "glass-specular-track.css",
+                "paper.css"
+            ],
+            "motion": [
+                "transitions.css",
+                "animations.css",
+                "viz-reveal.css"
+            ],
+            "scroll": [
+                "scroll-driven.css",
+                "scroll-choreography.css",
+                "scroll-chrome.css"
+            ],
+            "why": "B's CSS carve (S4a-css-carve.json): src/styles holds 20 peers under the index.css aggregator"
+        },
+        "src/styles/glass": {
+            "material": [
+                "material.css",
+                "veil.css",
+                "ladder.css",
+                "ladder-undershadow.css"
+            ],
+            "surfaces": [
+                "surfaces.css",
+                "surfaces-pager.css",
+                "control-surfaces.css",
+                "control-bit.css",
+                "control-edge.css"
+            ],
+            "shapes": [
+                "glass-capsule.css",
+                "glass-chip.css",
+                "glass-atom.css",
+                "mark.css",
+                "liquid-fill.css",
+                "value-marks.css",
+                "track-flow.css"
+            ],
+            "transitions": [
+                "reveal.css",
+                "liquid-enter.css",
+                "dissolve.css"
+            ],
+            "decoration": [
+                "deep.css",
+                "defined.css",
+                "squircle.css"
+            ],
+            "why": "B's CSS carve (S4a-css-carve.json): 28 registers under glass.css, all leaves (SPECS-v2 §4.4 CE2)"
+        },
+        "src/styles/tokens": {
+            "motion": [
+                "scheme-motion.css",
+                "scheme-spring.css",
+                "motion-registers.css"
+            ],
+            "surface": [
+                "color-radius.css",
+                "shadow.css",
+                "glass.css",
+                "glass-fx.css",
+                "glass-deep.css",
+                "on-glass-fg.css"
+            ],
+            "sizing": [
+                "offsets.css",
+                "sizing.css",
+                "sizing-config.css",
+                "scale-paper.css",
+                "scroll-tokens.css"
+            ],
+            "scheme": [
+                "light-dark.css",
+                "dark-arm.css",
+                "dark-arm-glass.css"
+            ],
+            "properties": [
+                "property-regs.css",
+                "property-regs-specular.css"
+            ],
+            "why": "B's CSS carve (S4a-css-carve.json): 20 token sheets under tokens.css"
+        }
     }
 }

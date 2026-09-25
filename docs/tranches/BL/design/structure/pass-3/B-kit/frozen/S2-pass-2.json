@@ -39,6 +39,7 @@
  "reasons": [
   {
    "from": "src/components/dock/search/types.ts",
+   "to": "src/components/dock/composables/types.ts",
    "why": "F-7 move: lives inside reader src/components/dock/search",
    "readers": [
     "src/components/dock",
@@ -47,6 +48,7 @@
   },
   {
    "from": "src/composables/glass/backdropLuminanceSample.ts",
+   "to": "src/components/dock/backdropLuminanceSample.ts",
    "why": "F-7 move: read by one unit, lives outside it",
    "readers": [
     "src/components/dock"

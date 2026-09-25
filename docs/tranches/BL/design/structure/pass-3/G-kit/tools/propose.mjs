@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // propose.mjs — generation-time only: compute one G stage's move list on a tree with the
-// landed law (scripts/structure/eponym/law.mjs) and write it as literal JSON, with the
+// landed law (scripts/structure/eponym/index.mjs) and write it as literal JSON, with the
 // scan-delta declarations a dry run of the F-2 engine names (each declared per file, with
 // its reason). The written list is frozen under G-kit/lists/ and the replay applies it; the
 // replay never calls this tool (SPECS-v2 §1.4 freeze rule).
-//   node propose.mjs --root <wt> --stage 1|2|3|4 --out <list.json> [--tag name] [--units a,b] [--raw]
+//   node propose.mjs --root <wt> --stage 1|2|3|4|5|6 --out <list.json> [--tag name] [--units a,b] [--raw]
 // --raw (stage 1): the list before FD-2's holds, which the relay-cut row reads as its departures.
 import { createRequire } from "node:module";
 import { writeFileSync } from "node:fs";
@@ -14,7 +14,7 @@ const args = process.argv.slice(2);
 const opt = (k) => (args.includes(k) ? args[args.indexOf(k) + 1] : null);
 const root = resolve(opt("--root"));
 const stage = opt("--stage");
-const L = await import(`${root}/scripts/structure/eponym/law.mjs`);
+const L = await import(`${root}/scripts/structure/eponym/index.mjs`);
 const { runMoves } = await import(`${root}/scripts/structure/lib/move.mjs`);
 const ts = createRequire(`${root}/package.json`)("typescript");
 const ctx = L.context(root);
@@ -40,6 +40,17 @@ if (stage === "1") {
     const clash = moves.filter((m) => claims.get(m.to) > 1 || ctx.T.isFile(m.to));
     extra = { needsName: clash.map((m) => `${m.from} → ${m.to}`) };
     moves = moves.filter((m) => !clash.includes(m));
+} else if (stage === "5") {
+    // L6.0 · cross-zone placement outside the library
+    moves = L.crossZone(ctx).map((m) => ({ from: m.from, to: m.to, why: `L6.0: every loader sits in ${m.to.split("/")[0]} (${m.readers.join(", ")})` }));
+} else if (stage === "6") {
+    // L7.2 · the authored carve of a global-zone peer dir (component units carve in stage 2)
+    // L7.2 · the carve entries stage 2 does not place: the global zone, and CSS in a unit
+    moves = [];
+    for (const [d, m, b] of L.carveEntries()) {
+        if (L.componentUnitOf(`${d}/x`) && L.CODE.test(b)) continue;
+        if (ctx.T.isFile(`${d}/${b}`)) moves.push({ from: `${d}/${b}`, to: `${m}/${b}`, why: `L7.2: ${d} over 12 splits under B's authored module ${m.split("/").pop()}` });
+    }
 } else if (stage === "3") {
     moves = L.cssDoorMoves(ctx).map((m) => ({ from: m.from, to: m.to, why: "L3.6: the aggregator moves in as its dir's door" }));
 } else {

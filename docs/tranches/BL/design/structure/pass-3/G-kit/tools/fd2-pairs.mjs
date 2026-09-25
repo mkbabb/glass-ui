@@ -12,7 +12,7 @@ const args = process.argv.slice(2);
 const opt = (k) => (args.includes(k) ? args[args.indexOf(k) + 1] : null);
 const root = resolve(opt("--root"));
 const { moduleSccs } = await import(`${root}/scripts/structure/lib/graph.mjs`);
-const L = await import(`${root}/scripts/structure/eponym/law.mjs`);
+const L = await import(`${root}/scripts/structure/eponym/index.mjs`);
 const ctx = L.context(root);
 const sccs = moduleSccs(ctx.g, { moduleOf: L.gUnits(ctx).unitOf });
 const pairs = [];

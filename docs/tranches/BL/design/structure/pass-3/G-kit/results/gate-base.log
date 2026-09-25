@@ -1,0 +1,71 @@
+PASS E0 0
+FAIL E1 17
+   global src/components/aurora/constants/budget.ts → src/composables/glass/budget.ts (readers src/components/aurora, src/components/blob)
+   move src/components/chip/accent-tone.css → src/styles/accent-tone.css (readers src/styles)
+   global src/components/dialog/ModalOverlay.vue → src/components/_shared/overlay/ModalOverlay.vue (readers src/components/dialog, src/components/sheet)
+   … 14 more
+PASS E1K 0
+FAIL E2 78
+   src/components/aurora/composables/auroraImageSource.ts → src/components/aurora/runtime/frame/auroraImageSource.ts
+   src/components/aurora/composables/color.ts → src/components/aurora/config/color.ts
+   src/components/aurora/composables/frameLoop.ts → src/components/aurora/runtime/frame/frameLoop.ts
+   … 75 more
+FAIL E3 7
+   src/components/aurora/constants/ holds no root named constants, no door and is no authored base or carve module
+   src/components/aurora/constants/shaders/ holds no root named shaders, no door and is no authored base or carve module
+   src/components/blob/shaders/ holds no root named shaders, no door and is no authored base or carve module
+   … 4 more
+FAIL E3N 96
+   module aurora/constants is not in the pin
+   module aurora/constants/shaders is not in the pin
+   module blob/shaders is not in the pin
+   … 93 more
+FAIL E3P 1
+   src/components/typewriter/utils/ (placeholder name)
+FAIL E4 74
+   demo/stories/containers/ 13 direct files
+   demo/stories/foundations/ 13 direct files
+   src/components/aurora/composables/ 16 direct files
+   … 71 more
+FAIL E5 40
+   src/composables/motion/core/constants.ts#DAMPING on ./motion + ./motion-core (owner ./motion-core, L4.7)
+   src/composables/motion/core/constants.ts#SNAP_THRESHOLD on ./motion + ./motion-core (owner ./motion-core, L4.7)
+   src/composables/motion/core/constants.ts#FRAME_MS on ./motion + ./motion-core (owner ./motion-core, L4.7)
+   … 37 more
+FAIL E6 90
+   demo/chassis/code/Code.vue:20 import → src/components/_shared/class-names.ts
+   demo/chassis/code/CodeBlock.vue:6 import → src/components/_shared/class-names.ts
+   demo/chassis/code/CodeBlock.vue:10 import → src/composables/dom/useClipboard.ts
+   … 87 more
+FAIL E7 144
+   tests/components/_shared/classNames.test.ts → src/components/_shared/__tests__/
+   tests/components/_shared/menu/rowClass.test.ts → src/components/_shared/menu/__tests__/
+   tests/components/_shared/valueDomain.test.ts → src/components/_shared/field/__tests__/
+   … 141 more
+FAIL B1 10
+   src/components/blob/composables/useMetaballRenderer.ts:8 → src/components/aurora/constants/budget.ts [import] (door src/components/aurora/index.ts)
+   src/components/card/Card.vue:4 → src/components/surface/Surface.vue [import] (door src/components/surface/index.ts)
+   src/components/command/CommandDialog.vue:4 → src/components/dialog/Dialog.vue [import] (door src/components/dialog/index.ts)
+   … 7 more
+FAIL B8 1
+   src/styles/glass.css:68 → src/components/chip/accent-tone.css [css-import] (the kernel reads a unit)
+FAIL B12 24
+   scripts/lib/paint-arm.mjs:28 re-exports scripts/reflect-capture-verify.mjs (relay)
+   scripts/lib/paint-arm.mjs:41 re-exports scripts/reflect-capture-verify.mjs (relay)
+   src/components/aurora/composables/color.ts:25 re-exports src/composables/color/index.ts (relay)
+   … 21 more
+FAIL B14 3
+   src/components/alert/index.ts:1 holds 6 statement(s) that are not `export … from`
+   src/components/badge/index.ts:1 holds 8 statement(s) that are not `export … from`
+   src/composables/color/index.ts:15 holds 15 statement(s) that are not `export … from`
+PASS A1 0
+FAIL S1 6
+   scripts/reflect-capture-verify.mjs → scripts/lib/reflect-capture-verify.mjs (reached only by the bin scripts/lib/paint-arm.mjs)
+   scripts/comment-census.mjs → tests/gates/comment-census.mjs (every loader sits in tests, L6.0)
+   scripts/gate-register.mjs → tests/gates/gate-register.mjs (every loader sits in tests, L6.0)
+   … 3 more
+FAIL S2 3
+   scripts/lib/canon-doc.mjs (no reader of any kind)
+   scripts/lib/minify-css.d.mts (no reader of any kind)
+   scripts/safari-probe.mjs (no reader of any kind)
+eponym {"edges":7351,"info":{"E1":{"anchored":39,"fd2Held":["src/composables/search/match.ts: src/components/dock ↔ src/composables/search; src/components/dock ↔ src/composables/search/index.ts; src/composables/search ↔ src/composables/search/index.ts","src/composables/search/useFuzzySearch.ts: src/components/dock ↔ src/composables/search/index.ts"],"fd8Held":["src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts"]},"E2":{"fd2Flattened":[],"fd8Held":[]},"S1":{"bins":25}}}: FAIL (15 clause(s))

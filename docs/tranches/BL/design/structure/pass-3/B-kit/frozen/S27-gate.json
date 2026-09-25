@@ -1,0 +1,24 @@
+{
+ "step": "LAW §5 the test seam: a test's text read and its vi.mock target are neither consumption (B2) nor a door crossing (B1); the pin after S26",
+ "files": {
+  "scripts/structure/seal/seal.mjs": {
+   "hunks": [
+    [
+     "        // B2 (R-10, LAW §5): a consumer module reference into src targets an entry source. A text\n        // read (READ_KINDS) is not consumption: R-3 keeps the library-wide scans in tests/, B0\n        // keeps their reads visible to the graph and B16 homes a single-subject reader\n        if (zt === \"src\" && zf !== \"src\") { if (!HARNESS.test(e.from) && !PUB.has(e.to) && MODULE_KINDS.has(e.kind)) put(\"B2\", `${e.from}:${e.line} -> ${e.to} [${e.kind}]`); continue; }\n",
+     "        // LAW §5 (the test seam): a test's text read (READ_KINDS) and its vi.mock target are not\n        // consumption. A read is a scan (R-3 keeps the library-wide ones in tests/, B0 keeps them\n        // visible, B16 homes a single-subject reader); a mock names the file its subject loads,\n        // which a door cannot stand in for (mocking the door replaces every name it carries)\n        const seam = isTest(e.from) && (READ_KINDS.has(e.kind) || e.kind === \"vi-mock\");\n        // B2 (R-10, LAW §5): a consumer module reference into src targets an entry source\n        if (zt === \"src\" && zf !== \"src\") { if (!HARNESS.test(e.from) && !PUB.has(e.to) && MODULE_KINDS.has(e.kind) && !seam) put(\"B2\", `${e.from}:${e.line} -> ${e.to} [${e.kind}]`); continue; }\n"
+    ],
+    [
+     "        { const home = /^(.*)\\/__tests__\\//.exec(e.from)?.[1]; if (home && isTest(e.from) && under(e.to, home)) continue; }\n        if (isCss(e)) { if (e.to !== cssDoor(M) && !PUB_CSS.has(e.to)) put(\"B3\", `${e.from}:${e.line} -> ${e.to} (css door ${cssDoor(M)})`); continue; }\n",
+     "        { const home = /^(.*)\\/__tests__\\//.exec(e.from)?.[1]; if (home && isTest(e.from) && under(e.to, home)) continue; }\n        if (seam) continue;\n        if (isCss(e)) { if (e.to !== cssDoor(M) && !PUB_CSS.has(e.to)) put(\"B3\", `${e.from}:${e.line} -> ${e.to} (css door ${cssDoor(M)})`); continue; }\n"
+    ]
+   ]
+  }
+ },
+ "pin": {
+  "modules": 135,
+  "doors": 116,
+  "names": 1287,
+  "reviewed": 2,
+  "holds": 2
+ }
+}

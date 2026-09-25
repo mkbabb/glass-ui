@@ -1,0 +1,27 @@
+{
+ "tag": "cross-zone",
+ "stage": 5,
+ "moves": [
+  {
+   "from": "scripts/comment-census.mjs",
+   "to": "tests/gates/comment-census.mjs",
+   "why": "L6.0: every loader sits in tests (tests/gates/comment-ratio.test.ts)"
+  },
+  {
+   "from": "scripts/gate-register.mjs",
+   "to": "tests/gates/gate-register.mjs",
+   "why": "L6.0: every loader sits in tests (tests/gates/gate-register.test.ts)"
+  },
+  {
+   "from": "scripts/lib/paint-arm.mjs",
+   "to": "tests-visual/paint/paint-arm.mjs",
+   "why": "L6.0: every loader sits in tests-visual (tests-visual/adaptive-glass-live.spec.ts, tests-visual/customizability.spec.ts, tests-visual/dialog-glass.spec.ts, tests-visual/glass-identity.spec.ts, tests-visual/glass-legibility.spec.ts, tests-visual/metal-shimmer.spec.ts, tests-visual/no-shadcn-default.spec.ts, tests-visual/selection-card.spec.ts)"
+  },
+  {
+   "from": "scripts/reflect-capture-verify.mjs",
+   "to": "tests-visual/paint/reflect-capture-verify.mjs",
+   "why": "L6.0: every loader sits in tests-visual (scripts/lib/paint-arm.mjs)"
+  }
+ ],
+ "scanDeltas": []
+}

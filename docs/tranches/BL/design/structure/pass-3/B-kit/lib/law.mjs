@@ -73,18 +73,42 @@ export function bAnchor(F, g, O = F.makeOrigins(g)) {
     return anchor;
 }
 
-/** LAW §4 · F-7 at the depth FD-2 permits. A move F-7 proposes that would add a co-cyclic
- *  module pair (the floor's sccGrowth on the image graph, in memory) is FD-2-bound: the file
- *  stays, provided it already lies inside F-7's home. Returns the rows that are violations. */
-export function placementViolations(F, g, rows) {
-    const out = [], bound = [];
+/** LAW §3 · the target of a placement row: the authored target when the law names one
+ *  (authored/targets.json), else the floor's proposedPath, except that in the scripts zone a
+ *  shared file lands in its home dir itself: R-4's `composables/` slot is the hook slot of
+ *  `src`, and a script is not a hook. */
+export function targetOf(F, tree, r, targets = {}) {
+    if (targets[r.file]?.to) return targets[r.file].to;
+    const p = F.proposedPath(tree, r);
+    if (r.file.startsWith("scripts/") && p.includes("/composables/")) return `${r.home}/${posix.basename(r.file)}`;
+    return p;
+}
+
+/** LAW §4 · F-7 at the depth FD-2 permits. For each move or global row F-7 proposes, the
+ *  image graph with that one file at its proposed path is judged by the floor's sccGrowth over
+ *  the sealed zones (src, scripts) and demo. A move that would add a co-cyclic module pair is
+ *  FD-2-bound: the file stays, provided it already lies inside F-7's home (it sits in a
+ *  sub-module of the dir F-7 names). Every other move or global row is a violation, less the
+ *  holds the law names (`holds`, each with its floor reason). Returns { violations, bound, held }. */
+/** LAW §4 · a test is not a reader. R-3 puts a test with its subject; a colocated test must
+ *  not then pull its subject toward the test's slot, so F-7 reads the graph without tests. */
+export const isTestFile = (f) => /(^|\/)__tests__\//.test(f) || /\.(test|spec|test-d)\.(ts|tsx|mts)$/.test(f) || /\.visual\.ts$/.test(f);
+export const placementGraph = (g) => ({ ...g, tree: { ...g.tree, parsed: g.tree.parsed.filter((f) => !isTestFile(f)) } });
+
+export const FD2_ZONES = ["src", "scripts", "demo"];
+export function placementViolations(F, g, rows, { holds = {}, targets = {}, groups = [] } = {}) {
+    const out = [], bound = [], held = [];
     for (const r of rows) {
         if (r.class !== "move" && r.class !== "global") continue;
-        if (!under(r.file, r.home) || r.class === "global") { out.push(r); continue; }
-        const to = F.proposedPath(g.tree, r);
-        const image = { edges: g.edges.map((e) => ({ ...e, from: e.from === r.file ? to : e.from, to: e.to === r.file ? to : e.to })), tree: { files: g.tree.files.map((f) => (f === r.file ? to : f)) } };
-        const s = F.sccGrowth(g, image, null, {});
-        if (s.grown.length) bound.push({ ...r, to, added: s.addedPairs }); else out.push(r);
+        if (holds[r.file]) { held.push({ ...r, why: holds[r.file].why }); continue; }
+        if (!under(r.file, r.home)) { out.push(r); continue; }
+        const to = targetOf(F, g.tree, r, targets);
+        // the image moves the row's file and, when it leads an authored group, the group with it
+        const map = new Map([[r.file, to], ...groups.filter((x) => x.with === r.file).flatMap((x) => x.moves.map((m) => [m.from, m.to]))]);
+        const at = (f) => map.get(f) ?? f;
+        const image = { edges: g.edges.map((e) => ({ ...e, from: at(e.from), to: e.to && at(e.to) })), tree: { ...g.tree, files: g.tree.files.map(at) } };
+        const s = F.sccGrowth(g, image, null, { zones: FD2_ZONES });
+        if (s.grown.length) bound.push({ ...r, to, added: s.addedPairs, first: s.firstAdded }); else out.push(r);
     }
-    return { violations: out, bound };
+    return { violations: out, bound, held };
 }

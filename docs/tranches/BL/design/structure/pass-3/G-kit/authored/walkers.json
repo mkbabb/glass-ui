@@ -1,0 +1,101 @@
+{
+    "step": "G FD-6 walkers (LAW.md L5.3): a suite that walked a source dir reads the harness file set",
+    "why": "R-3 / L5.3: a suite that scans source reads the harness file set (tests/harness/source.ts files({ under })), never a directory walk: the harness leaves __tests__/ out, so the scan does not meet the tests list 07 colocates, and the scan is an edge F-1 reads, so L5.2 judges the suite by what it reads. Applied before the tests list (07), at the suites HEAD paths. Measured without it, once tests live in src/**/__tests__/: 10 failures (overfit-structure 2, type-hygiene 1, route-motion 1, dialog-dismiss 2, dock-name-canon 2, feedback-tint-seam 1, gl-excise 1). The export-reach census in overfit-structure adds the colocated tests as the consumers they are (without them 19 exports read as unreachable). The rest of each suite is unchanged.",
+    "hunks": [
+        {
+            "file": "tests/gates/overfit-structure.test.ts",
+            "find": "function walk(dir: string, out: string[] = []): string[] {\n    if (!existsSync(dir)) return out;\n    for (const entry of readdirSync(dir)) {\n        const full = join(dir, entry);\n        if (statSync(full).isDirectory()) walk(full, out);\n        else if (CODE_RE.test(entry) && !entry.endsWith(\".d.ts\")) out.push(full);\n    }\n    return out;\n}",
+            "replace": "// FD-6 / R-3: a whole-library scan reads the harness's file set, never a directory walk; a\n// unit's __tests__/ slot is test code, not the source it scans.\nfunction walk(dir: string): string[] {\n    return files({ under: relative(REPO_ROOT, dir) })\n        .filter((f) => CODE_RE.test(f) && !f.endsWith(\".d.ts\"))\n        .map((f) => join(REPO_ROOT, f));\n}"
+        },
+        {
+            "file": "tests/gates/overfit-structure.test.ts",
+            "find": "import { existsSync, readFileSync, readdirSync, statSync } from \"node:fs\";",
+            "replace": "import { existsSync, readFileSync, statSync } from \"node:fs\";"
+        },
+        {
+            "file": "tests/gates/overfit-structure.test.ts",
+            "find": "import { libraryEntryMap } from \"../../scripts/structure/lib/entries.mjs\";",
+            "replace": "import { libraryEntryMap } from \"../../scripts/structure/lib/entries.mjs\";\nimport { files } from \"../harness/source\";"
+        },
+        {
+            "file": "tests/gates/type-hygiene.test.ts",
+            "find": "const walk = (dir: string, test: (path: string) => boolean): string[] =>\n    readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {\n        const path = join(dir, entry.name);\n        if (entry.isDirectory()) return walk(path, test);\n        return test(path) ? [path] : [];\n    });",
+            "replace": "// FD-6 / R-3: a whole-library scan reads the harness's file set, never a directory walk; a\n// unit's __tests__/ slot is test code, not the source it scans.\nconst walk = (dir: string, test: (path: string) => boolean): string[] =>\n    files({ under: relative(REPO_ROOT, dir) })\n        .map((f) => join(REPO_ROOT, f))\n        .filter(test);"
+        },
+        {
+            "file": "tests/gates/type-hygiene.test.ts",
+            "find": "import { readFileSync, readdirSync } from \"node:fs\";",
+            "replace": "import { readFileSync } from \"node:fs\";"
+        },
+        {
+            "file": "tests/gates/type-hygiene.test.ts",
+            "find": "import { VAR_FUNCTION, asciiLowerCase } from \"../utils/cssSyntax\";",
+            "replace": "import { files } from \"../harness/source\";\nimport { VAR_FUNCTION, asciiLowerCase } from \"../utils/cssSyntax\";"
+        },
+        {
+            "file": "tests/styles/route-motion.test.ts",
+            "find": "        const files: string[] = [];\n        const walk = (dir: string): void => {\n            for (const entry of readdirSync(dir)) {\n                const path = join(dir, entry);\n                if (statSync(path).isDirectory()) walk(path);\n                else if (/\\.(ts|css|vue)$/.test(entry)) files.push(path);\n            }\n        };\n        walk(join(REPO_ROOT, \"src\"));",
+            "replace": "        // FD-6 / R-3: the harness's file set, never a directory walk (a __tests__/ slot is not source)\n        const files = sourceFiles({ under: \"src\" })\n            .filter((f) => /\\.(ts|css|vue)$/.test(f))\n            .map((f) => join(REPO_ROOT, f));"
+        },
+        {
+            "file": "tests/styles/route-motion.test.ts",
+            "find": "import { readFileSync, readdirSync, statSync } from \"node:fs\";",
+            "replace": "import { readFileSync } from \"node:fs\";"
+        },
+        {
+            "file": "tests/styles/route-motion.test.ts",
+            "find": "import postcss, { type AtRule, type Rule } from \"postcss\";",
+            "replace": "import postcss, { type AtRule, type Rule } from \"postcss\";\nimport { files as sourceFiles } from \"../harness/source\";"
+        },
+        {
+            "file": "tests/components/dialog/dialog-dismiss.test.ts",
+            "find": "const walk = (dir: string): string[] =>\n    readdirSync(dir).flatMap((entry) => {\n        const full = join(dir, entry);\n        return statSync(full).isDirectory() ? walk(full) : [full];\n    });",
+            "replace": "// FD-6 / R-3: a whole-library scan reads the harness's file set, never a directory walk; a\n// unit's __tests__/ slot is test code, not the source it scans.\nconst walk = (dir: string): string[] => files({ under: dir });"
+        },
+        {
+            "file": "tests/components/dialog/dialog-dismiss.test.ts",
+            "find": "import { readdirSync, readFileSync, statSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";",
+            "replace": "import { readFileSync } from \"node:fs\";\nimport { describe, expect, it } from \"vitest\";\nimport { files } from \"../../harness/source\";"
+        },
+        {
+            "file": "tests/styles/dock-name-canon.test.ts",
+            "find": "function walk(rel: string): string[] {\n    const out: string[] = [];\n    for (const e of readdirSync(join(process.cwd(), rel), { withFileTypes: true })) {\n        const child = `${rel}/${e.name}`;\n        if (e.isDirectory()) out.push(...walk(child));\n        else out.push(child);\n    }\n    return out.sort();\n}",
+            "replace": "// FD-6 / R-3: a whole-library scan reads the harness's file set, never a directory walk; a\n// unit's __tests__/ slot is test code, not the source it scans.\nfunction walk(rel: string): string[] {\n    return files({ under: rel }).sort();\n}"
+        },
+        {
+            "file": "tests/styles/dock-name-canon.test.ts",
+            "find": "import { readFileSync, readdirSync } from \"node:fs\";",
+            "replace": "import { readFileSync } from \"node:fs\";"
+        },
+        {
+            "file": "tests/styles/dock-name-canon.test.ts",
+            "find": "import { describe, expect, it } from \"vitest\";",
+            "replace": "import { describe, expect, it } from \"vitest\";\nimport { files } from \"../harness/source\";"
+        },
+        {
+            "file": "tests/gates/feedback-tint-seam.test.ts",
+            "find": "function walk(dir: string, out: string[] = []): string[] {\n    if (!existsSync(dir)) return out;\n    for (const entry of readdirSync(dir)) {\n        const full = join(dir, entry);\n        if (statSync(full).isDirectory()) walk(full, out);\n        else if (SCAN_EXTS.some((e) => entry.endsWith(e))) out.push(full);\n    }\n    return out;\n}",
+            "replace": "// FD-6 / R-3: a whole-library scan reads the harness's file set, never a directory walk; a\n// unit's __tests__/ slot is test code, not the source it scans.\nfunction walk(dir: string): string[] {\n    return files({ under: relative(process.cwd(), dir) })\n        .filter((f) => SCAN_EXTS.some((e) => f.endsWith(e)))\n        .map((f) => join(process.cwd(), f));\n}"
+        },
+        {
+            "file": "tests/gates/feedback-tint-seam.test.ts",
+            "find": "import { existsSync, readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";",
+            "replace": "import { readFileSync } from \"node:fs\";\nimport { join, relative } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\nimport { files } from \"../harness/source\";"
+        },
+        {
+            "file": "tests/components/custom/blob/gl-excise.test.ts",
+            "find": "function walk(dir: string, out: string[] = []): string[] {\n    for (const entry of readdirSync(dir)) {\n        const abs = join(dir, entry);\n        if (statSync(abs).isDirectory()) walk(abs, out);\n        else out.push(abs);\n    }\n    return out;\n}",
+            "replace": "// FD-6 / R-3: a whole-library scan reads the harness's file set, never a directory walk; a\n// unit's __tests__/ slot is test code, not the source it scans.\nfunction walk(dir: string): string[] {\n    return files({ under: relative(process.cwd(), dir) }).map((f) => join(process.cwd(), f));\n}"
+        },
+        {
+            "file": "tests/components/custom/blob/gl-excise.test.ts",
+            "find": "import { readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";",
+            "replace": "import { readFileSync } from \"node:fs\";\nimport { join, relative } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\nimport { files } from \"../../../harness/source\";"
+        },
+        {
+            "file": "tests/gates/overfit-structure.test.ts",
+            "find": "const censusFiles = [\n    ...srcFiles,\n",
+            "replace": "const censusFiles = [\n    ...srcFiles,\n    // the tests colocated in src/**/__tests__/ (R-3) are consumers of the exports they reach\n    ...files({ under: \"src\", tests: true })\n        .filter((f) => /(^|\\/)__tests__\\//.test(f) && CODE_RE.test(f))\n        .map((f) => join(REPO_ROOT, f)),\n"
+        }
+    ]
+}

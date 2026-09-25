@@ -1,0 +1,315 @@
+{
+ "note": "route D1-B pass 3: the frozen chain, replayed by replay.mjs",
+ "baseSha": "99839631",
+ "base": "5080bcadf20ebee030774131717dd951e7646be6ecd8524dfc6d70a77c9f01a1",
+ "steps": [
+  {
+   "id": "S1",
+   "kind": "floor-rows",
+   "file": null,
+   "why": "the floor rows f3, f4, m02, m03, f9, fd6, fd7, fd11 (floor/rows/apply.mjs): the one cut every route starts from",
+   "digest": "f0019420f925151f5983dd1c43a5bd56dfa367efa19ac79712de5af56e991a8c"
+  },
+  {
+   "id": "S1b",
+   "kind": "row",
+   "file": "frozen/S1b-unrelay.json",
+   "why": "LAW §5 (B12): only a door re-exports. 9 relay files cut, importers re-pointed at the origin, 3 relay barrels deleted",
+   "digest": "83f6251ae7ade7e6659fbb3ce462660ab311b025ebc48711a6ee30cab82c942a"
+  },
+  {
+   "id": "S2-1",
+   "kind": "moves",
+   "file": "frozen/S2-pass-1.json",
+   "why": "B-S2 placement pass 1: 19 move(s) by F-7 with B's anchor (LAW §2-§4)",
+   "digest": "03a54aac33a8085f014db6573b63fa700aba420fb8cd604be5b59909a8dbaa19"
+  },
+  {
+   "id": "S2-2",
+   "kind": "moves",
+   "file": "frozen/S2-pass-2.json",
+   "why": "B-S2 placement pass 2: 2 move(s) by F-7 with B's anchor (LAW §2-§4)",
+   "digest": "69d27ac71a6f89ded1a3d40e304e145c4c47cbaca66e9c3a8524156e31ff4897"
+  },
+  {
+   "id": "S2-3",
+   "kind": "moves",
+   "file": "frozen/S2-pass-3.json",
+   "why": "B-S2 placement pass 3: 1 move(s) by F-7 with B's anchor (LAW §2-§4)",
+   "digest": "184c5a57c6435a07fe2e7afff261a8a1dc0c994591a86708de311e197ea64f00"
+  },
+  {
+   "id": "S2b",
+   "kind": "row",
+   "file": "frozen/S2b-search-door.json",
+   "why": "the kernel door composables/search, emptied by placement, is dissolved; its 3 importers re-point at the origins in dock (B8, no kernel shim)",
+   "digest": "132e7edf4108ac44b347411632dfe256aed2d4ad4ba59f6534c909806a928541"
+  },
+  {
+   "id": "S3",
+   "kind": "moves",
+   "file": "frozen/S3-carve.json",
+   "why": "B-S3 module carve: 85 moves; modules proposed by dominance (lib/dominance.mjs) and named in authored/names.json, peer sets carved by name (LAW §3-§4)",
+   "digest": "892d07aa0f5a026e1f6eecc71a9b19969464c68a675dedc090a1ba5bc834266c"
+  },
+  {
+   "id": "S4a",
+   "kind": "moves",
+   "file": "frozen/S4a-css-carve.json",
+   "why": "B-S4 CSS stage, authored inputs (LAW §6). moves: the CSS carve through the floor engine (B's pass-2 kernel names; the dock sheets into the modules they style). rows: the two rung moves the one-door rule forces, each with its cascade reason. The CSS door row itself is computed (derive/css-doors.mjs).",
+   "digest": "b90b02be1e789882e2d0f9b18a151c398b5c6f8718b9e8791757f264eb9c5230"
+  },
+  {
+   "id": "S4b",
+   "kind": "row",
+   "file": "frozen/S4b-rungs.json",
+   "why": "accent-tone joins the cascade in the aggregate after the glass block (B8); card/scroll.css joins card's rung (B3). Both listed reorders, π owed on the chip and card bands",
+   "digest": "ee76dae73de1750513cf5379c4c7541b9ba49eb9ab7968c706245bb87e89002e"
+  },
+  {
+   "id": "S4c-1",
+   "kind": "row",
+   "file": "frozen/S4c-css-doors-1.json",
+   "why": "CSS doors pass 1: 33 doors; every CSS crossing re-pointed at the entered module's index.css, runs kept in cascade order (B3, B5)",
+   "digest": "45f837f17dde583c8829664ee04af2ae5db754c37f6bdbf621f60fcbab1ecf8d"
+  },
+  {
+   "id": "S4c-2",
+   "kind": "row",
+   "file": "frozen/S4c-css-doors-2.json",
+   "why": "CSS doors pass 2: 1 doors; every CSS crossing re-pointed at the entered module's index.css, runs kept in cascade order (B3, B5)",
+   "digest": "13b06565d382bba4ffa96fb518e45f55acb32efa917ce5152bcc6625d7f846e1"
+  },
+  {
+   "id": "S5a",
+   "kind": "row",
+   "file": "frozen/S5a-split-doors.json",
+   "why": "B14: the alert, badge and color doors hold code; it moves to its leaf and the door re-exports it",
+   "digest": "a385ed6f9a618f82cd0652de3fb2e118d65b0f78a978e335b36c8f837510f936"
+  },
+  {
+   "id": "S4d",
+   "kind": "moves",
+   "file": "frozen/S4d-entry-move.json",
+   "why": "the ./motion-core entry source leaves motion/core/ for motion/: it re-exports core's files and five sibling modules (reveal, scroll, route, dissolve, spring, pointer), so it is a door of composables/motion, and core gets a module door of its own for its siblings (no core <-> sibling cycle). The export key and typesVersions are keyed by name (dist/motion-core.*), so the surface does not change",
+   "digest": "711b1afbceaf2f2bce844b530bb3d3366450d4e35a0a0de193c065686efb97ce"
+  },
+  {
+   "id": "S4f",
+   "kind": "row",
+   "file": "frozen/S4f-type-homes.json",
+   "why": "B4: the uniform table moves to the bridge that uploads by name (frame), the image input types to the config that names them; the runtime reads both",
+   "digest": "3a4486576064cb238c441332668d570e63b0402d7e32416a26ca978b17021809"
+  },
+  {
+   "id": "S4e",
+   "kind": "row",
+   "file": "frozen/S4e-tokens-door.json",
+   "why": "B7: the tokens module holds script code; its door re-exports tokens.ts and is the ./tokens entry source",
+   "digest": "853dc341aa1ec356776e1af1d2e585d5677f97780f62d13c25cbbe92515eb387"
+  },
+  {
+   "id": "S5-1",
+   "kind": "row",
+   "file": "frozen/S5-doors-1.json",
+   "why": "JS doors pass 1: a door for every module a crossing enters (record.doors in the same row); every crossing re-pointed at the outermost entered module's door, or, past a published entry that does not carry the name, at the sub-module's door (B1, B7, LAW §5)",
+   "digest": "30e22bc8e882dd1881c670ac40838025d31caaf7ee34a1e92f492d8992df7fa9"
+  },
+  {
+   "id": "S5-2",
+   "kind": "row",
+   "file": "frozen/S5-doors-2.json",
+   "why": "JS doors pass 2: a door for every module a crossing enters (record.doors in the same row); every crossing re-pointed at the outermost entered module's door, or, past a published entry that does not carry the name, at the sub-module's door (B1, B7, LAW §5)",
+   "digest": "c922ee74a0daf1788716a088fc1b3461581ba11aab66cde712eb6aff9a6d9eff"
+  },
+  {
+   "id": "S6",
+   "kind": "row",
+   "file": "frozen/S6-test-edits.json",
+   "why": "B-S6: the layout pins the migration reds, re-read through the resolved graph (R-3), intent kept",
+   "digest": "110aa79a470b58a103ae297e5773a0cb278a3aae1b5d84bec0b01d7a93cae132"
+  },
+  {
+   "id": "S7",
+   "kind": "row",
+   "file": "frozen/S7-source-directive.json",
+   "why": "B14 (P3-R8): the dist-only @source leaves the ./styles door; the build writes it into the shipped copy, dist bytes unchanged",
+   "digest": "3245796760390f69a5d3722e0fb3230d2705cbfc9e6d1779bfea490068a403a7"
+  },
+  {
+   "id": "S8",
+   "kind": "row",
+   "file": "frozen/S8-one-door.json",
+   "why": "B9 (R-6, P3-R4): one symbol, one door. 40 names leave their second entry; consumers re-pointed; a MIGRATION row per name",
+   "digest": "c21ddf6c0571661ce65ed1ba00f6a5e917a0e51715f410f7dc2e9aeb9eb54751"
+  },
+  {
+   "id": "S9",
+   "kind": "row",
+   "file": "frozen/S9-relays.json",
+   "why": "B12: the paint-arm and tokens relays leave; B11: ten internal-door names nothing outside reads leave their doors",
+   "digest": "3fe58fd663455fb5424425b587eb50a4bc0af1b4e997d2d7468b0850db6211d2"
+  },
+  {
+   "id": "S10",
+   "kind": "moves",
+   "file": "frozen/S10-minify-move.json",
+   "why": "B12: minify-css becomes TypeScript so it declares its own types; the .d.mts mirror then leaves (S11)",
+   "digest": "a97e43db88c80a43fb0df46aa53e2a6a4cb7220de2b0ba4cf1a72b753dfda11c"
+  },
+  {
+   "id": "S11",
+   "kind": "row",
+   "file": "frozen/S11-minify-types.json",
+   "why": "B12: minify-css declares its own types; the .d.mts mirror leaves",
+   "digest": "bb969f9c80a11ef93cfcc5331dafcab586a48343ca3b3b2bc3111b8289e8d79e"
+  },
+  {
+   "id": "S12",
+   "kind": "row",
+   "file": "frozen/S12-surface-pin.json",
+   "why": "the floor surface pin follows the one-door row: 60 name losses across 6 entries, each named by a MIGRATION row; 0 growth",
+   "digest": "2be80506bf27693a2554e8f2d58ba2c0dd07644ae2bdc59506e51fd97051a9c3"
+  },
+  {
+   "id": "S13",
+   "kind": "row",
+   "file": "frozen/S13-gate.json",
+   "why": "the gate lands in the tree: every clause runs under npm test (tests/gates/seal.test.ts), against a pin the gate computed on this tree with the reviewed names and holds",
+   "digest": "101df2f62f73b12cd4341ef243cc4f66b5c3891e47902d32264845d4b61bd097"
+  },
+  {
+   "id": "S14",
+   "kind": "row",
+   "file": "frozen/S14-test-programs.json",
+   "why": "R-3: the library program leaves colocated tests out, the test program takes them in",
+   "digest": "56b96f70e6ce1b6a3051708b4c7a5d07e6b276219aff459cd9fc6d268f8cb4c9"
+  },
+  {
+   "id": "S15",
+   "kind": "moves",
+   "file": "frozen/S15-colocate.json",
+   "why": "R-3 (B16): 71 tests join their subject's module in <home>/__tests__/; 55 stay, each with its reason",
+   "digest": "e6f0d9169e3a1598d10635eeeaaf32e82c24ba5c61f0d0c90934cbab0710f46b"
+  },
+  {
+   "id": "S16",
+   "kind": "row",
+   "file": "frozen/S16-test-slots.json",
+   "why": "R-3: three source walkers skip the __tests__ slot, as the harness does",
+   "digest": "fb6b5e81cf7dd39d72d776ddbf1a97ac5541428ea2948580da2b5c123f3c39a9"
+  },
+  {
+   "id": "S17",
+   "kind": "row",
+   "file": "frozen/S17-b9-homes.json",
+   "why": "B9: the Combobox types move to command and ControlSize to input, the entries that publish them; no door re-exports outside its module",
+   "digest": "1c83d099f432edebbd13cade7132a48b5ddebbdc1ed83bdd11fb8eefb11022d9"
+  },
+  {
+   "id": "S18",
+   "kind": "row",
+   "file": "frozen/S18-r8-canon-doc.json",
+   "why": "R-8 / E-7: the dead scripts/lib/canon-doc.mjs is deleted with its opaque-ledger row",
+   "digest": "4623bb92336addc2ecb06e99073e8b46aea46879d8a21557fb4e45acbb7d9777"
+  },
+  {
+   "id": "S19",
+   "kind": "moves",
+   "file": "frozen/S19-scripts-moves.json",
+   "why": "B-S15 (SPECS §2.8, §1.4; LAW §1, §4, §10): the scripts zone as modules. The two paint helpers only tests-visual reads leave scripts for tests-visual (cross-zone placement, S-15); minify-css becomes its own module; the F-1 graph and the files only it dominates (evaluator and the four scanners; the resolver is held, see authored/seal-review.json) become the floor library's graph module; the gate becomes a module of the floor runtime, so every scripts dir holds 12 files or fewer once its door lands",
+   "digest": "2483e73fc64398196912b56d5c3e967c501ddfa61d6c42f9b9b2e3ee08922b20"
+  },
+  {
+   "id": "S20",
+   "kind": "row",
+   "file": "frozen/S20-scripts-doors.json",
+   "why": "B7/B1 in the scripts zone: a door for every scripts module, every crossing through it; path reads of the floor replaced by door functions",
+   "digest": "981c9f202c017a45b400b400a5e7c23ac70007941ad8943bce6cff42013518c2"
+  },
+  {
+   "id": "S21",
+   "kind": "row",
+   "file": "frozen/S21-r1-register.json",
+   "why": "R-1 (precondition of the structure migration): gate-register and its test retire with the register; the collapse wave's fresh roster names no path",
+   "digest": "b0069dfadd711ebb9c75b42dbaf31c12990aa4dc1636a34bb9761026aad7e42f"
+  },
+  {
+   "id": "S22",
+   "kind": "row",
+   "file": "frozen/S22-test-home-imports.json",
+   "why": "R-3 / FD-2: eight motion tests read their subject from its own module, not the parent's door, so they can colocate without a unit cycle",
+   "digest": "4815538a2e3be493caa7e10b7a75c67636cdd2dc688bd497760816def83c2b22"
+  },
+  {
+   "id": "S23",
+   "kind": "row",
+   "file": "frozen/S23-test-programs-scripts.json",
+   "why": "R-3 for the scripts zone: the test program and vitest collect scripts/**/__tests__ as they collect src's",
+   "digest": "0c4aa92ad8006d92cdf25d65d15818170ef60b3ba1a0f7ef4f0742f4a12a1dee"
+  },
+  {
+   "id": "S24",
+   "kind": "moves",
+   "file": "frozen/S24-colocate.json",
+   "why": "R-3 (B16): 58 held tests join their subject's module; 0 stay, each with its reason",
+   "digest": "0ff82945ec08e13ff6480c71bcd0639820a978a33c5fe8ab6d7ec13b4a8b2f8e"
+  },
+  {
+   "id": "S25",
+   "kind": "row",
+   "file": "frozen/S25-gate.json",
+   "why": "the law's pass-3 amendments land (LAW §1 scripts TS door, §5 B2 on module references, §9 B8's test arm and B16's kernel-as-dependency homing and slot helpers) with the pin the gate computes after S17-S24 and the resolve.mjs hold",
+   "digest": "20dcc43daf2fb35bd8a26dd71755d49049e34269524d35ea8856965156f4335d"
+  },
+  {
+   "id": "S26",
+   "kind": "moves",
+   "file": "frozen/S26-colocate.json",
+   "why": "R-3 (B16): 23 held tests join their subject's module; 0 stay, each with its reason",
+   "digest": "e3ce4d0eb92c81906388dc40071ecb858275431d8343cc30eeb6be89dd6183ab"
+  },
+  {
+   "id": "S27",
+   "kind": "row",
+   "file": "frozen/S27-gate.json",
+   "why": "LAW §5 the test seam: a test's text read and its vi.mock target are neither consumption (B2) nor a door crossing (B1); the pin after S26",
+   "digest": "3c28ea843237f1ecc7c1d6c7ee113d51ad93dd3dbd94b64509a16f8cd2e68650"
+  },
+  {
+   "id": "S28",
+   "kind": "row",
+   "file": "frozen/S28-test-doors.json",
+   "why": "B1 (LAW §5): 10 imports of colocated tests re-pointed at the entered module's door",
+   "digest": "f8783101ee5f0a182abc54469341b907c26aa06757aefcef8e0b8983801481c4"
+  },
+  {
+   "id": "S29",
+   "kind": "row",
+   "file": "frozen/S29-consumer-entries.json",
+   "why": "R-10 (B2): 103 consumer imports re-pointed at their publishing entry; 52 lines read private names (the residue, frozen in the row)",
+   "digest": "0213fbc970ab422b01b830236e5a5262eaaa42af69c3de3dc6143560d06c2d1d"
+  },
+  {
+   "id": "S30",
+   "kind": "row",
+   "file": "frozen/S30-door-readers.json",
+   "why": "the floor runtime's CLIs lose their hashbang (the door loads them into DOM-environment tests, whose web transform refuses it); B11: the minify door keeps only minifyCss",
+   "digest": "d13bc22ace5ed60aeadaa931810fc81991c1fd127b136f3e4813488b87a343af"
+  },
+  {
+   "id": "S31",
+   "kind": "row",
+   "file": "frozen/S31-gate.json",
+   "why": "the gate's file loses its hashbang with the runtime's CLIs (S30); the pin after S29-S30",
+   "digest": "6aa6ede34096f33b2c7039f4956753d7ebcafe6c107646921415c734b68efa66"
+  },
+  {
+   "id": "S32",
+   "kind": "row",
+   "file": "frozen/S32-test-slots.json",
+   "why": "R-3: two more source walkers skip the __tests__ slot, as the harness does",
+   "digest": "62878b7f2591c37e9cd2151faef9b2d4cd9b21475517e6c227fb2f404651e1cc"
+  }
+ ]
+}

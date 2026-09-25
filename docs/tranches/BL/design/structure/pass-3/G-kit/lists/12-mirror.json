@@ -1,0 +1,13 @@
+{
+    "tag": "mirror",
+    "stage": 6,
+    "authored": true,
+    "moves": [
+        {
+            "from": "scripts/lib/minify-css.mjs",
+            "to": "scripts/lib/minify-css.mts",
+            "why": "B12 (LAW.md L4.3): no declaration mirror. minify-css.d.mts restates the module's two signatures; the module carries its own types instead, and the mirror is deleted by rows/11-mirror.json"
+        }
+    ],
+    "scanDeltas": []
+}

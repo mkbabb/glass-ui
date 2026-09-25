@@ -1,0 +1,312 @@
+{
+ "base": {
+  "E0": 0,
+  "E1": 1,
+  "E1K": 0,
+  "E2": 0,
+  "E3": 0,
+  "E3N": 0,
+  "E3P": 0,
+  "E4": 64,
+  "E5": 0,
+  "E6": 18,
+  "E7": 0,
+  "B1": 0,
+  "B8": 0,
+  "B12": 0,
+  "B14": 0,
+  "A1": 0,
+  "S1": 0,
+  "S2": 0
+ },
+ "results": [
+  {
+   "id": "P07a",
+   "what": "a wiring file (L2.4): dock/registry.ts registers three SFCs as object-literal values; GlassDock reads it",
+   "expect": [],
+   "rose": [],
+   "bites": true,
+   "lines": {},
+   "wiring": [
+    "src/components/dock/registry.ts (3 registrations)"
+   ],
+   "registeredOwners": [
+    "DockSeparator.vue owned by ⊤",
+    "DockTrigger.vue owned by ⊤",
+    "DockControl.vue owned by src/components/dock/DockBackgroundToggle.vue"
+   ]
+  },
+  {
+   "id": "P18",
+   "what": "a reach past a unit's door: badge reads dock's private composable (L4.1)",
+   "expect": [
+    "B1"
+   ],
+   "rose": [
+    "E1",
+    "B1"
+   ],
+   "bites": true,
+   "lines": {
+    "E1": [
+     "global src/components/dock/composables/useDockSpring.ts → src/composables/useDockSpring.ts (readers src/components/badge, src/components/dock)"
+    ],
+    "B1": [
+     "src/components/badge/Badge.vue:2 → src/components/dock/composables/useDockSpring.ts [import] (door src/components/dock/index.ts)"
+    ]
+   }
+  },
+  {
+   "id": "P19",
+   "what": "a placeholder dir and file name: dock/utils/utils.ts (E3P)",
+   "expect": [
+    "E3P"
+   ],
+   "rose": [
+    "E3N",
+    "E3P"
+   ],
+   "bites": true,
+   "lines": {
+    "E3N": [
+     "module dock/utils is not in the pin"
+    ],
+    "E3P": [
+     "src/components/dock/utils/ (placeholder name)",
+     "src/components/dock/utils/utils.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "P20",
+   "what": "a relay: dock/GlassDockLegacy.ts re-exports GlassDock and the door publishes it again (L4.3, L4.6)",
+   "expect": [
+    "B12"
+   ],
+   "rose": [
+    "B12",
+    "A1"
+   ],
+   "bites": true,
+   "lines": {
+    "B12": [
+     "src/components/dock/GlassDockLegacy.ts:1 re-exports src/components/dock/GlassDock.vue (relay)"
+    ],
+    "A1": [
+     "src/components/dock/index.ts publishes src/components/dock/GlassDock.vue#default as GlassDock, GlassDockLegacy"
+    ]
+   }
+  },
+  {
+   "id": "P21",
+   "what": "a masking fallback: a dynamic import of a missing module caught to null (E0, fail-closed)",
+   "expect": [
+    "E0"
+   ],
+   "rose": [
+    "E0"
+   ],
+   "bites": true,
+   "lines": {
+    "E0": [
+     "src/components/dock/DockControl.vue:2 unresolved [dynamic] ./nope-missing"
+    ]
+   }
+  },
+  {
+   "id": "P28",
+   "what": "a scripts helper one bin alone loads, loose at the zone root (L6.1)",
+   "expect": [
+    "S1"
+   ],
+   "rose": [
+    "S1"
+   ],
+   "bites": true,
+   "lines": {
+    "S1": [
+     "scripts/profile-bundle.mjs → scripts/profile-bundle/profile-bundle.mjs (reached only by the bin scripts/profile-bundle.mjs)",
+     "scripts/foo-helper.mjs → scripts/profile-bundle/foo-helper.mjs (reached only by the bin scripts/profile-bundle.mjs)"
+    ]
+   }
+  },
+  {
+   "id": "P12",
+   "what": "direction: the kernel reads a component unit (L4.2)",
+   "expect": [
+    "B8"
+   ],
+   "rose": [
+    "B8"
+   ],
+   "bites": true,
+   "lines": {
+    "B8": [
+     "src/composables/dom/plantKernelReach.ts:1 → src/components/dock/index.ts [import] (the kernel reads a unit)"
+    ]
+   }
+  },
+  {
+   "id": "B-14",
+   "what": "a CSS door's @source glob out of its own subtree (L4.4, P3-R8)",
+   "expect": [
+    "B14"
+   ],
+   "rose": [
+    "B14"
+   ],
+   "bites": true,
+   "lines": {
+    "B14": [
+     "src/components/dock/styles/controls/index.css:41 holds 1 non-import node(s)"
+    ]
+   }
+  },
+  {
+   "id": "B-22",
+   "what": "a <style src> carve into another unit's sheet (L4.1 reads sfc-style-src)",
+   "expect": [
+    "B1"
+   ],
+   "rose": [
+    "E1",
+    "B1"
+   ],
+   "bites": true,
+   "lines": {
+    "E1": [
+     "global src/components/dock/styles/run.css → src/styles/run.css (readers src/components/badge, src/components/dock)"
+    ],
+    "B1": [
+     "src/components/badge/Badge.vue:45 → src/components/dock/styles/run.css [sfc-style-src] (door src/components/dock/index.ts)"
+    ]
+   }
+  },
+  {
+   "id": "P15",
+   "what": "a file over the 500-line bound (L7.0)",
+   "expect": [
+    "E4"
+   ],
+   "rose": [
+    "E4"
+   ],
+   "bites": true,
+   "lines": {
+    "E4": [
+     "src/components/badge/badgeVariants.ts 611 lines"
+    ]
+   }
+  },
+  {
+   "id": "P14",
+   "what": "a test in the wrong unit's slot: slider/__tests__ tests only the dock (L5.2)",
+   "expect": [
+    "E7"
+   ],
+   "rose": [
+    "E7"
+   ],
+   "bites": true,
+   "lines": {
+    "E7": [
+     "src/components/slider/__tests__/dock-plant.test.ts → src/components/dock/__tests__/"
+    ]
+   }
+  },
+  {
+   "id": "P-carve",
+   "what": "the menu carve undone: menu/items/DropdownMenuItem.vue back at the menu root, importers re-pointed (L7.2)",
+   "expect": [
+    "E3N",
+    "E2"
+   ],
+   "rose": [
+    "E2",
+    "E3N"
+   ],
+   "bites": true,
+   "lines": {
+    "E2": [
+     "src/components/menu/DropdownMenuItem.vue → src/components/menu/items/DropdownMenuItem.vue"
+    ],
+    "E3N": [
+     "carve src/components/menu/items: DropdownMenuItem.vue is not in its module"
+    ]
+   }
+  },
+  {
+   "id": "P-css-carve",
+   "what": "the style carve undone: glass/transitions/dissolve.css back at styles/glass/, the aggregator re-pointed (L7.2)",
+   "expect": [
+    "E3N"
+   ],
+   "rose": [
+    "E0",
+    "E3N",
+    "E7"
+   ],
+   "bites": true,
+   "lines": {
+    "E0": [
+     "tests/components/toast.queue.test.ts:11 unresolved [path-helper] read(\"src/styles/glass/transitions/dissolve.css\")",
+     "tests/styles/dissolve.test.ts:50 unresolved [path-helper] readStyle(\"glass/transitions/dissolve.css\")"
+    ],
+    "E3N": [
+     "carve src/styles/glass/transitions: dissolve.css is not in its module"
+    ],
+    "E7": [
+     "tests/components/toast.queue.test.ts → src/components/toast/__tests__/"
+    ]
+   }
+  },
+  {
+   "id": "P12-r6",
+   "what": "one symbol on two doors: slider's entry re-exports GlassDock (L4.7, R-6)",
+   "expect": [
+    "E5"
+   ],
+   "rose": [
+    "E5"
+   ],
+   "bites": true,
+   "lines": {
+    "E5": [
+     "src/components/dock/GlassDock.vue#default on ./dock + ./slider (owner ./dock, L4.7)"
+    ]
+   }
+  },
+  {
+   "id": "P11-demo",
+   "what": "a demo story imports a dock composable past the door (L4.5, R-10)",
+   "expect": [
+    "E6"
+   ],
+   "rose": [
+    "E6"
+   ],
+   "bites": true,
+   "lines": {
+    "E6": [
+     "demo/stories/dock/overview.vue:2 import → src/components/dock/composables/useDockSpring.ts"
+    ]
+   }
+  },
+  {
+   "id": "P13",
+   "what": "a single-subject test left in the harness (L5.2)",
+   "expect": [
+    "E7"
+   ],
+   "rose": [
+    "E7"
+   ],
+   "bites": true,
+   "lines": {
+    "E7": [
+     "tests/components/badge-plant.test.ts → src/components/badge/__tests__/"
+    ]
+   }
+  }
+ ]
+}

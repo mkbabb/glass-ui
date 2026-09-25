@@ -1,0 +1,41 @@
+{
+    "step": "G subject paths (LAW.md L3.6, L4.4, L2): tests that read a moved subject by path read it where it lives",
+    "why": "Four suites name a subject file by path, and the migration moved or split it: the badge and alert variant recipes left their doors (B14 rows 06-purity-*), sortable-list's drag engine and drop resolution nested (list 03-stage2), and dock's controls aggregator became controls/index.css (list 04-css-doors), which the lattice arm counts among the partials. Measured: mark-register 1 (and its second read of the same path), radius-role-canon 1, sortable-list battery 2, g-dock-lattice 1 failure. Each hunk re-points the path or excludes the door; no assertion changes.",
+    "hunks": [
+        {
+            "file": "tests/styles/mark-register.test.ts",
+            "find": "const BADGE_INDEX = \"src/components/badge/index.ts\";",
+            "replace": "// the badge variant recipe (B14: the door holds only re-exports; the recipe is its own module)\nconst BADGE_VARIANTS = \"src/components/badge/badgeVariants.ts\";"
+        },
+        {
+            "file": "tests/styles/mark-register.test.ts",
+            "find": "        expect(read(BADGE_INDEX)).not.toContain(\"surface\");",
+            "replace": "        expect(read(BADGE_VARIANTS)).not.toContain(\"surface\");"
+        },
+        {
+            "file": "tests/styles/mark-register.test.ts",
+            "find": "        const badge = read(BADGE_INDEX);",
+            "replace": "        const badge = read(BADGE_VARIANTS);"
+        },
+        {
+            "file": "tests/styles/radius-role-canon.test.ts",
+            "find": "        const alert = read(\"src/components/alert/index.ts\");",
+            "replace": "        const alert = read(\"src/components/alert/alertVariants.ts\"); // B14: the recipe left the door"
+        },
+        {
+            "file": "tests/components/sortable-list/battery.test.ts",
+            "find": "        for (const honest of [\"drag.ts\", \"ghost.ts\", \"resolve.ts\", \"motion.ts\"]) {",
+            "replace": "        // G stage 2: the drag engine is its own module (drag/), the drop resolution its base (drop/)\n        for (const honest of [\"drag/drag.ts\", \"drag/ghost.ts\", \"drop/resolve.ts\", \"drag/motion.ts\"]) {"
+        },
+        {
+            "file": "tests/components/sortable-list/battery.test.ts",
+            "find": "        const js = [\"drag.ts\", \"ghost.ts\", \"motion.ts\", \"resolve.ts\", \"useSortable.ts\"]",
+            "replace": "        const js = [\"drag/drag.ts\", \"drag/ghost.ts\", \"drag/motion.ts\", \"drop/resolve.ts\", \"useSortable.ts\"]"
+        },
+        {
+            "file": "tests/components/custom/dock/g-dock-lattice.test.ts",
+            "find": "        expect(bandCss().filter(({ file }) => file.includes(\"/controls/\")).length).toBe(4);",
+            "replace": "        // (the controls module's door, controls/index.css, is its aggregator, not a partial)\n        expect(bandCss().filter(({ file }) => file.includes(\"/controls/\") && !file.endsWith(\"/controls/index.css\")).length).toBe(4);"
+        }
+    ]
+}

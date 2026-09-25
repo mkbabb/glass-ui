@@ -1,0 +1,42 @@
+{
+ "tag": "tests-carve",
+ "stage": 4,
+ "moves": [
+  {
+   "from": "src/styles/glass/__tests__/material-css-syntax.test.ts",
+   "to": "src/styles/glass/material/__tests__/material-css-syntax.test.ts",
+   "why": "L5: the test's subjects are dominated by src/styles/glass/material"
+  },
+  {
+   "from": "src/styles/tokens/__tests__/feedback-motion-tune.test.ts",
+   "to": "src/styles/tokens/motion/__tests__/feedback-motion-tune.test.ts",
+   "why": "L5: the test's subjects are dominated by src/styles/tokens/motion"
+  },
+  {
+   "from": "src/styles/tokens/__tests__/springTokenMirror.test.ts",
+   "to": "src/styles/tokens/motion/__tests__/springTokenMirror.test.ts",
+   "why": "L5: the test's subjects are dominated by src/styles/tokens/motion"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/__tests__/material-css-syntax.test.ts",
+   "reason": "G stage 4: the scanner reads src/styles/glass/__tests__/material-css-syntax.test.ts at src/styles/glass/material/__tests__/material-css-syntax.test.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/__tests__/feedback-motion-tune.test.ts",
+   "reason": "G stage 4: the scanner reads src/styles/tokens/__tests__/feedback-motion-tune.test.ts at src/styles/tokens/motion/__tests__/feedback-motion-tune.test.ts"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/__tests__/springTokenMirror.test.ts",
+   "reason": "G stage 4: the scanner reads src/styles/tokens/__tests__/springTokenMirror.test.ts at src/styles/tokens/motion/__tests__/springTokenMirror.test.ts"
+  }
+ ],
+ "needsName": []
+}

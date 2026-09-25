@@ -1,0 +1,21 @@
+{
+    "step": "G R-6 prose (LAW.md L4.7): three comments that described a name on two entries now describe it on one",
+    "why": "The one-door row removes the second publication; a comment that still says the name ships twice is false. Each hunk rewrites only the sentence the row made false.",
+    "hunks": [
+        {
+            "file": "src/index.ts",
+            "find": "//      `/constellation`, `AuroraConfig` + `MAX_NUCLEI` on `/aurora`,\n",
+            "replace": "//      `/constellation`, `AuroraConfig` on `/aurora-config`, `MAX_NUCLEI` on `/aurora`,\n"
+        },
+        {
+            "file": "src/composables/motion/index.ts",
+            "find": "// `constants` stays on this public surface too — it is keyframes-free (so it also\n// ships on `/motion-core`), but the bearing leaves read DAMPING/SNAP_THRESHOLD\n// directly from its `core/` owner.\n// Duplicate-exporting a pure-data module from two entries is benign.\n",
+            "replace": "// `constants` (DAMPING, SNAP_THRESHOLD, FRAME_MS) ships on `/motion-core` alone (R-6: one\n// symbol, one entry); the bearing leaves read it from its `core/` owner.\n"
+        },
+        {
+            "file": "src/components/blob/config.ts",
+            "find": "// The `/blob` barrel STILL re-exports every symbol here (the union stays whole); this\n// is the narrower value.js-free door, not a fork.\n",
+            "replace": "// These names ship here alone (R-6, P3-R4: the lighter door owns the configuration);\n// `/blob` publishes the component and its composables.\n"
+        }
+    ]
+}

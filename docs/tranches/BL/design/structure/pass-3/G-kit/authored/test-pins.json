@@ -1,0 +1,66 @@
+{
+    "step": "G test pins (FD-6 class, R-6, R-10): suites that pinned a moved path, a dropped name or the pre-R-10 shell construction read the migrated tree",
+    "why": "Each hunk is the smallest edit that makes a suite state the same invariant over the migrated tree. None weakens a check. (1) proportion-register and typed-track-seam compare literal path strings that F-1 does not read as paths (a report line, a generated manifest's @import list); the L7.2 carve moved those sheets. (2) dissolve finds its AUTH row in a closed BJ record (BAND-FEEDBACK-MOTION.md §PRM-AUTHORIZED-SET), which is never rewritten and spells the sheet by its old path; the row is found by the sheet's own name, which survives any move, and the next lines still check the row's selector and digest. (3) g-dock-lattice counts the controls/ partials of the band; the L4.4 purity row added specular.css, the door's former :where() group, as a fifth. (4) boot-graph's source arm pinned the leaf construction R-10 cures: the async boundary now imports the ./aurora subpath dynamically, and the eager ground reads the ./aurora-config leaf (P3-R5); the byte arm is unchanged and judges the chunk cost. (5) public-surface names the rows R-6 dropped (DAMPING and SNAP_THRESHOLD ship on ./motion-core alone; useDockCtaReceive on ./motion alone).",
+    "hunks": [
+        {
+            "file": "tests/styles/proportion-register.test.ts",
+            "find": "        expect(widthConditional).toEqual([\"src/styles/tokens/sizing.css: @media (max-width: 768px)\"]);",
+            "replace": "        expect(widthConditional).toEqual([\"src/styles/tokens/sizing/sizing.css: @media (max-width: 768px)\"]);"
+        },
+        {
+            "file": "tests/styles/typed-track-seam.test.ts",
+            "find": "        expect(order).toContain(\"./styles/track-well.css\");\n        expect(order).toContain(\"./styles/glass/track-flow.css\");\n        expect(order).toContain(\"./styles/glass/value-marks.css\");",
+            "replace": "        expect(order).toContain(\"./styles/surface/track-well.css\");\n        expect(order).toContain(\"./styles/glass/shapes/track-flow.css\");\n        expect(order).toContain(\"./styles/glass/shapes/value-marks.css\");"
+        },
+        {
+            "file": "tests/styles/dissolve.test.ts",
+            "find": "line.includes(\"glass/transitions/dissolve.css\"),",
+            "replace": "line.includes(\"dissolve.css\"),"
+        },
+        {
+            "file": "tests/components/custom/dock/g-dock-lattice.test.ts",
+            "find": "        // the four `controls/` partials leave the band and this whole arm starts greening\n",
+            "replace": "        // the five `controls/` partials (four control families and the shared specular\n        // group, L4.4) leave the band and this whole arm starts greening\n"
+        },
+        {
+            "file": "tests/components/custom/dock/g-dock-lattice.test.ts",
+            "find": "file.includes(\"/controls/\") && !file.endsWith(\"/controls/index.css\")).length).toBe(4);",
+            "replace": "file.includes(\"/controls/\") && !file.endsWith(\"/controls/index.css\")).length).toBe(5);"
+        },
+        {
+            "file": "tests/gates/boot-graph.test.ts",
+            "find": "        [\"Aurora\", \"@glass/components/aurora/Aurora.vue\"],",
+            "replace": "        // R-10: the async boundary imports the public subpath dynamically\n        [\"Aurora\", \"@glass/components/aurora\"],"
+        },
+        {
+            "file": "tests/gates/boot-graph.test.ts",
+            "find": "            binding.module === \"@glass/components/aurora/composables/auroraFallbackGround\",",
+            "replace": "            binding.module === \"@glass/components/aurora/config\", // the ./aurora-config leaf (P3-R5)"
+        },
+        {
+            "file": "tests/gates/boot-graph.test.ts",
+            "find": "                .replace('import(\"@glass/components/aurora/Aurora.vue\")', 'import(\"./configurator/PresetEditor.vue\")')\n                .replace('import(\"__C19_SWAP__\")', 'import(\"@glass/components/aurora/Aurora.vue\")'),",
+            "replace": "                .replace('import(\"@glass/components/aurora\")', 'import(\"./configurator/PresetEditor.vue\")')\n                .replace('import(\"__C19_SWAP__\")', 'import(\"@glass/components/aurora\")'),"
+        },
+        {
+            "file": "tests/gates/boot-graph.test.ts",
+            "find": "            source.replace(\"@glass/components/aurora/composables/auroraFallbackGround\", \"./wrong-ground\"),",
+            "replace": "            source.replace(\"@glass/components/aurora/config\", \"./wrong-ground\"),"
+        },
+        {
+            "file": "tests/public-surface.spec.ts",
+            "find": "    // `constants` (DAMPING/SNAP_THRESHOLD) is duplicate-exported on both.\n",
+            "replace": "    // `constants` (DAMPING/SNAP_THRESHOLD) ships here alone (R-6: one symbol, one entry).\n"
+        },
+        {
+            "file": "tests/public-surface.spec.ts",
+            "find": "    { subpath: \"motion\", surface: Motion, name: \"DAMPING\" },\n    { subpath: \"motion\", surface: Motion, name: \"SNAP_THRESHOLD\" },\n",
+            "replace": ""
+        },
+        {
+            "file": "tests/public-surface.spec.ts",
+            "find": "            // The external-CTA-morphs-into-dock receive seam\n            // (the /motion export STAYS — a re-export, not a move).\n            \"useDockCtaReceive\",\n",
+            "replace": ""
+        }
+    ]
+}

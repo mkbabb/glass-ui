@@ -1,0 +1,19 @@
+{
+    "step": "G R-8 / E-7 (LAW.md L6.2): the scripts nothing reaches are deleted",
+    "why": "scripts/safari-probe.mjs and scripts/lib/canon-doc.mjs have no reader of any kind (F-1); the opaque ledger's canon-doc row names it as data and says the E-7 delete row clears it, so the row goes with the file (else ledger-stale)",
+    "files": {
+        "scripts/safari-probe.mjs": {
+            "delete": true
+        },
+        "scripts/lib/canon-doc.mjs": {
+            "delete": true
+        }
+    },
+    "hunks": [
+        {
+            "file": "scripts/structure/records/opaque-ledger.json",
+            "find": "        {\n            \"file\": \"scripts/lib/canon-doc.mjs\",\n            \"kind\": \"path-literal\",\n            \"spec\": \"src/components/handmark/README.md\",\n            \"class\": \"stale\",\n            \"reason\": \"canon-doc.mjs is dead (REGISTRY S-15) and names a README deleted at HEAD; the E-7 delete row clears it\"\n        },\n",
+            "replace": ""
+        }
+    ]
+}

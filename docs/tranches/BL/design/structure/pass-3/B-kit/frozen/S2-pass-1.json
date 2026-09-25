@@ -2,12 +2,24 @@
  "step": "B-S2 placement pass 1 (frozen, F-9)",
  "moves": [
   {
-   "from": "src/components/aurora/constants/budget.ts",
-   "to": "src/composables/glass/budget.ts"
+   "from": "scripts/reflect-capture-verify.mjs",
+   "to": "scripts/lib/reflect-capture-verify.mjs"
   },
   {
-   "from": "src/components/chip/accent-tone.css",
-   "to": "src/styles/accent-tone.css"
+   "from": "scripts/structure/lib/scan/css.mjs",
+   "to": "scripts/structure/lib/css.mjs"
+  },
+  {
+   "from": "scripts/structure/lib/scan/script.mjs",
+   "to": "scripts/structure/lib/script.mjs"
+  },
+  {
+   "from": "scripts/structure/lib/scan/text.mjs",
+   "to": "scripts/structure/lib/text.mjs"
+  },
+  {
+   "from": "src/components/aurora/constants/budget.ts",
+   "to": "src/composables/glass/budget.ts"
   },
   {
    "from": "src/components/dialog/ModalOverlay.vue",
@@ -84,12 +96,6 @@
    "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
    "file": "src/components/aurora/constants/budget.ts",
    "reason": "B-S2 placement: src/components/aurora/constants/budget.ts -> src/composables/glass/budget.ts; the scanner's sensitivity is judged by the test run"
-  },
-  {
-   "scanner": "tests/gates/orphan-css-partial.test.ts",
-   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
-   "file": "src/components/chip/accent-tone.css",
-   "reason": "B-S2 placement: src/components/chip/accent-tone.css -> src/styles/accent-tone.css; the scanner's sensitivity is judged by the test run"
   },
   {
    "scanner": "tests/gates/orphan-css-partial.test.ts",
@@ -184,12 +190,6 @@
   {
    "scanner": "tests/styles/engage-ladder.test.ts",
    "spec": "join(COMPONENTS, entry)",
-   "file": "src/components/chip/accent-tone.css",
-   "reason": "B-S2 placement: src/components/chip/accent-tone.css -> src/styles/accent-tone.css; the scanner's sensitivity is judged by the test run"
-  },
-  {
-   "scanner": "tests/styles/engage-ladder.test.ts",
-   "spec": "join(COMPONENTS, entry)",
    "file": "src/components/dialog/ModalOverlay.vue",
    "reason": "B-S2 placement: src/components/dialog/ModalOverlay.vue -> src/components/_shared/overlay/ModalOverlay.vue; the scanner's sensitivity is judged by the test run"
   },
@@ -220,12 +220,6 @@
   {
    "scanner": "tests/styles/engage-ladder.test.ts",
    "spec": "join(COMPONENTS, name)",
-   "file": "src/components/chip/accent-tone.css",
-   "reason": "B-S2 placement: src/components/chip/accent-tone.css -> src/styles/accent-tone.css; the scanner's sensitivity is judged by the test run"
-  },
-  {
-   "scanner": "tests/styles/engage-ladder.test.ts",
-   "spec": "join(COMPONENTS, name)",
    "file": "src/components/dialog/ModalOverlay.vue",
    "reason": "B-S2 placement: src/components/dialog/ModalOverlay.vue -> src/components/_shared/overlay/ModalOverlay.vue; the scanner's sensitivity is judged by the test run"
   },
@@ -250,7 +244,43 @@
  ],
  "reasons": [
   {
+   "from": "scripts/reflect-capture-verify.mjs",
+   "to": "scripts/lib/reflect-capture-verify.mjs",
+   "why": "F-7 move: read by one unit, lives outside it",
+   "readers": [
+    "scripts/lib"
+   ]
+  },
+  {
+   "from": "scripts/structure/lib/scan/css.mjs",
+   "to": "scripts/structure/lib/css.mjs",
+   "why": "F-7 move: lives inside reader scripts/structure/lib/scan",
+   "readers": [
+    "scripts/structure/lib",
+    "scripts/structure/lib/scan"
+   ]
+  },
+  {
+   "from": "scripts/structure/lib/scan/script.mjs",
+   "to": "scripts/structure/lib/script.mjs",
+   "why": "F-7 move: lives inside reader scripts/structure/lib/scan",
+   "readers": [
+    "scripts/structure/lib",
+    "scripts/structure/lib/scan"
+   ]
+  },
+  {
+   "from": "scripts/structure/lib/scan/text.mjs",
+   "to": "scripts/structure/lib/text.mjs",
+   "why": "F-7 move: lives inside reader scripts/structure/lib/scan",
+   "readers": [
+    "scripts/structure/lib",
+    "scripts/structure/lib/scan"
+   ]
+  },
+  {
    "from": "src/components/aurora/constants/budget.ts",
+   "to": "src/composables/glass/budget.ts",
    "why": "F-7 global (aurora, blob); proposedPath lands it loose in the src/composables container. Its content is the GPU surface budget; the glass kernel module holds the GPU substrate both readers already read",
    "readers": [
     "src/components/aurora",
@@ -258,14 +288,8 @@
    ]
   },
   {
-   "from": "src/components/chip/accent-tone.css",
-   "why": "F-7 move: read by one unit, lives outside it",
-   "readers": [
-    "src/styles"
-   ]
-  },
-  {
    "from": "src/components/dialog/ModalOverlay.vue",
+   "to": "src/components/_shared/overlay/ModalOverlay.vue",
    "why": "F-7 global (dialog, sheet); SPECS-v2 §1.4 authored target: the overlay kernel module already owns the modal layer (participation, OverlayHost); cures M03",
    "readers": [
     "src/components/dialog",
@@ -274,6 +298,7 @@
   },
   {
    "from": "src/components/dock/composables/useDockHold.ts",
+   "to": "src/components/slider/useDockHold.ts",
    "why": "F-7 move: read by one unit, lives outside it",
    "readers": [
     "src/components/slider"
@@ -281,6 +306,7 @@
   },
   {
    "from": "src/components/fourier-field/shaders/compute.wgsl.ts",
+   "to": "src/components/fourier-field/renderer/compute.wgsl.ts",
    "why": "F-7 move: read by one unit, lives outside it",
    "readers": [
     "src/components/fourier-field/renderer"
@@ -288,6 +314,7 @@
   },
   {
    "from": "src/components/fourier-field/shaders/render.wgsl.ts",
+   "to": "src/components/fourier-field/renderer/render.wgsl.ts",
    "why": "F-7 move: read by one unit, lives outside it",
    "readers": [
     "src/components/fourier-field/renderer"
@@ -295,6 +322,7 @@
   },
   {
    "from": "src/composables/dom/useDocumentVisibility.ts",
+   "to": "src/composables/motion/core/useDocumentVisibility.ts",
    "why": "F-7 move: read by one unit, lives outside it",
    "readers": [
     "src/composables/motion/core"
@@ -302,6 +330,7 @@
   },
   {
    "from": "src/composables/glass/useGlassBackdropLuminance.ts",
+   "to": "src/components/dock/composables/useGlassBackdropLuminance.ts",
    "why": "F-7 move: read by one unit, lives outside it",
    "readers": [
     "src/components/dock"
@@ -309,6 +338,7 @@
   },
   {
    "from": "src/composables/glass/webgl/createCanvasLifecycle.ts",
+   "to": "src/composables/glass/lifecycle/createCanvasLifecycle.ts",
    "why": "F-7 move to the glass module (readers canvas2d, webgl, webgpu). LAW §2b: the glass door reads canvas2d, so a shared file at the glass root would make the nesting cycle glass <-> glass/canvas2d that FD-2 refuses (measured: 3 pairs); it lands in a sibling module named by its concern, lifecycle/",
    "readers": [
     "src/composables/glass/canvas2d",
@@ -318,16 +348,19 @@
   },
   {
    "from": "src/composables/glass/webgl/backingSize.ts",
+   "to": "src/composables/glass/lifecycle/backingSize.ts",
    "why": "the lifecycle reads both, and F-7 moves each to the lifecycle once it moves (their readers become lifecycle, webgl, webgpu). Moved in the same list so no pass holds a half-moved lifecycle",
    "readers": []
   },
   {
    "from": "src/composables/glass/webgl/visibility.ts",
+   "to": "src/composables/glass/lifecycle/visibility.ts",
    "why": "the lifecycle reads both, and F-7 moves each to the lifecycle once it moves (their readers become lifecycle, webgl, webgpu). Moved in the same list so no pass holds a half-moved lifecycle",
    "readers": []
   },
   {
    "from": "src/composables/glass/webgl/shaders/flow.glsl.ts",
+   "to": "src/components/aurora/constants/shaders/curlNoise.glsl.ts",
    "why": "NEEDS-NAME: the target flow.glsl.ts exists (aurora's own). The file is the curl-noise field; B's pass-2 name",
    "readers": [
     "src/components/aurora/constants/shaders"
@@ -335,6 +368,7 @@
   },
   {
    "from": "src/composables/glass/webgl/shaders/flow.wgsl.ts",
+   "to": "src/components/aurora/constants/shaders/curlNoise.wgsl.ts",
    "why": "the WGSL twin follows its GLSL sibling's authored name",
    "readers": [
     "src/components/aurora/constants/shaders"
@@ -342,6 +376,7 @@
   },
   {
    "from": "src/composables/search/useFuzzySearch.ts",
+   "to": "src/components/dock/search/useFuzzySearch.ts",
    "why": "F-7 move (read only by dock). LAW §3: the kernel module search (useFuzzySearch, match, types; its door reached by no entry) is placed whole into its one reader and keeps its authored name as dock/search/",
    "readers": [
     "src/components/dock"
@@ -349,11 +384,13 @@
   },
   {
    "from": "src/composables/search/match.ts",
+   "to": "src/components/dock/search/match.ts",
    "why": "LAW §3: the rest of the search module; F-7 moves each into dock once useFuzzySearch has moved (their readers become dock). The emptied kernel door is dissolved by row S2b",
    "readers": []
   },
   {
    "from": "src/composables/search/types.ts",
+   "to": "src/components/dock/search/types.ts",
    "why": "LAW §3: the rest of the search module; F-7 moves each into dock once useFuzzySearch has moved (their readers become dock). The emptied kernel door is dissolved by row S2b",
    "readers": []
   }

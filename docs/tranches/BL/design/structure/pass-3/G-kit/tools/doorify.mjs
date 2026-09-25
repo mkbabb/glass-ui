@@ -12,7 +12,7 @@ import { join, posix, resolve } from "node:path";
 const args = process.argv.slice(2);
 const opt = (k) => (args.includes(k) ? args[args.indexOf(k) + 1] : null);
 const root = resolve(opt("--root"));
-const L = await import(join(root, "scripts/structure/eponym/law.mjs"));
+const L = await import(join(root, "scripts/structure/eponym/index.mjs"));
 const req = createRequire(join(root, "package.json"));
 const ts = req("typescript");
 const sfc = req("@vue/compiler-sfc");

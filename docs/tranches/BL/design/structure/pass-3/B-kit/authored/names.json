@@ -56,8 +56,8 @@
    },
    "styles/controls.css": {
     "name": "controls",
-    "rootAs": "index.css",
-    "why": "the controls sheet and its four partials are one CSS module; the aggregator becomes its door (B5: no dir inside a kind slot)"
+    "rootAs": "controls.css",
+    "why": "the controls sheet and its four partials are one CSS module (B5: no dir inside a kind slot); the aggregator keeps its rules as controls/controls.css, and the CSS door step gives the module its index.css"
    }
   },
   "src/components/fourier-field": {
@@ -90,14 +90,14 @@
   },
   "src/components/toast": {
    "Toaster.vue": {
-    "name": "toaster",
-    "why": "the toaster and the four sub-components only it renders"
+    "collapse": true,
+    "why": "Toaster dominates every component the toast unit holds (Toast, ToastClose, ToastDescription, ToastTitle); a toaster/ dir would nest the whole unit one level down and leave its root holding only the door. The unit's root stays at the unit root (G's eponymy pin)"
    }
   },
   "src/components/typewriter": {
    "TypewriterText.vue": {
-    "name": "text",
-    "why": "TypewriterText and its engine; the placeholder utils/ dissolves into it (B15)"
+    "collapse": true,
+    "why": "TypewriterText dominates every code file of the unit but its types; a text/ dir would nest the whole unit one level down. It stays at the unit root, and the placeholder utils/ dissolves into that root (B15)"
    }
   },
   "src/composables/glass": {
@@ -243,12 +243,6 @@
   },
   "src/components/sortable-list": {
    ".": "resolve"
-  },
-  "src/components/toast": {
-   ".": "queue"
-  },
-  "src/components/typewriter": {
-   ".": "options"
   }
  }
 }

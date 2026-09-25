@@ -1,0 +1,713 @@
+{
+ "tag": "tests",
+ "stage": 4,
+ "moves": [
+  {
+   "from": "tests/components/_shared/classNames.test.ts",
+   "to": "src/components/_shared/__tests__/classNames.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/_shared"
+  },
+  {
+   "from": "tests/components/_shared/menu/rowClass.test.ts",
+   "to": "src/components/_shared/menu/__tests__/rowClass.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/_shared/menu"
+  },
+  {
+   "from": "tests/components/_shared/valueDomain.test.ts",
+   "to": "src/components/_shared/field/__tests__/valueDomain.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/_shared/field"
+  },
+  {
+   "from": "tests/components/a11y/key-scope.test.ts",
+   "to": "src/components/sortable-list/__tests__/key-scope.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/sortable-list"
+  },
+  {
+   "from": "tests/components/a11y/native-title.test.ts",
+   "to": "src/components/dock/__tests__/native-title.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/accordion.contract.test.ts",
+   "to": "src/components/accordion/__tests__/accordion.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/accordion"
+  },
+  {
+   "from": "tests/components/card/Card.test.ts",
+   "to": "src/components/card/__tests__/Card.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/card"
+  },
+  {
+   "from": "tests/components/carousel/contract.test.ts",
+   "to": "src/components/carousel/__tests__/contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/carousel"
+  },
+  {
+   "from": "tests/components/checkbox.contract.test.ts",
+   "to": "src/components/checkbox/__tests__/checkbox.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/checkbox"
+  },
+  {
+   "from": "tests/components/chip.contract.test.ts",
+   "to": "src/components/chip/__tests__/chip.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/chip"
+  },
+  {
+   "from": "tests/components/chip.public-contracts.test-d.ts",
+   "to": "src/components/chip/__tests__/chip.public-contracts.test-d.ts",
+   "why": "L5: the test's subjects are dominated by src/components/chip"
+  },
+  {
+   "from": "tests/components/custom/aurora/Aurora.init-error.test.ts",
+   "to": "src/components/aurora/__tests__/Aurora.init-error.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/aurora"
+  },
+  {
+   "from": "tests/components/custom/aurora/Aurora.opacity-ceiling.test.ts",
+   "to": "src/components/aurora/__tests__/Aurora.opacity-ceiling.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/aurora"
+  },
+  {
+   "from": "tests/components/custom/aurora/derive-color.test.ts",
+   "to": "src/components/aurora/config/__tests__/derive-color.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/aurora/config"
+  },
+  {
+   "from": "tests/components/custom/aurora/mediums-extraction.test.ts",
+   "to": "src/components/aurora/runtime/webgl/palette/__tests__/mediums-extraction.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/aurora/runtime/webgl/palette"
+  },
+  {
+   "from": "tests/components/custom/aurora/painterly.test.ts",
+   "to": "src/components/aurora/__tests__/painterly.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/aurora"
+  },
+  {
+   "from": "tests/components/custom/aurora/render-mode.test.ts",
+   "to": "src/components/aurora/config/__tests__/render-mode.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/aurora/config"
+  },
+  {
+   "from": "tests/components/custom/aurora/uniform-packing.test.ts",
+   "to": "src/components/aurora/__tests__/uniform-packing.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/aurora"
+  },
+  {
+   "from": "tests/components/custom/blob/Blob.interaction.test.ts",
+   "to": "src/components/blob/__tests__/Blob.interaction.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/blob"
+  },
+  {
+   "from": "tests/components/custom/blob/blob-color-equivalence.test.ts",
+   "to": "src/composables/color/__tests__/blob-color-equivalence.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/color"
+  },
+  {
+   "from": "tests/components/custom/blob/blob-surface.test.ts",
+   "to": "src/components/blob/__tests__/blob-surface.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/blob"
+  },
+  {
+   "from": "tests/components/custom/blob/resolveColor.test.ts",
+   "to": "src/composables/color/__tests__/resolveColor.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/color"
+  },
+  {
+   "from": "tests/components/custom/configurator/Configurator.material.test.ts",
+   "to": "src/components/configurator/__tests__/Configurator.material.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/configurator"
+  },
+  {
+   "from": "tests/components/custom/configurator/ConfiguratorLayer.model.test.ts",
+   "to": "src/components/configurator/__tests__/ConfiguratorLayer.model.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/configurator"
+  },
+  {
+   "from": "tests/components/custom/dock/DockBackgroundToggle.a11y.test.ts",
+   "to": "src/components/dock/__tests__/DockBackgroundToggle.a11y.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/DockControl.a11y.test.ts",
+   "to": "src/components/dock/__tests__/DockControl.a11y.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/DockLayerSwitcher.a11y.test.ts",
+   "to": "src/components/dock/__tests__/DockLayerSwitcher.a11y.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/GlassDock.backdrop-mode.test.ts",
+   "to": "src/components/dock/__tests__/GlassDock.backdrop-mode.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/GlassDock.click-integrity.test.ts",
+   "to": "src/components/dock/__tests__/GlassDock.click-integrity.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/GlassDock.motion-parity.test.ts",
+   "to": "src/components/dock/__tests__/GlassDock.motion-parity.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/GlassDock.posture.test.ts",
+   "to": "src/components/dock/__tests__/GlassDock.posture.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/GlassDock.press-keepalive.test.ts",
+   "to": "src/components/dock/__tests__/GlassDock.press-keepalive.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/GlassDock.scroll-overflow.test.ts",
+   "to": "src/components/dock/__tests__/GlassDock.scroll-overflow.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/GlassDock.stagger.test.ts",
+   "to": "src/components/dock/__tests__/GlassDock.stagger.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/GlassDock.touch-gate.test.ts",
+   "to": "src/components/dock/__tests__/GlassDock.touch-gate.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/GlassDock.vertical-collapse.test.ts",
+   "to": "src/components/dock/__tests__/GlassDock.vertical-collapse.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/GlassDock.vt-names.test.ts",
+   "to": "src/components/dock/__tests__/GlassDock.vt-names.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/dockCrossfadeContext.readonly.test-d.ts",
+   "to": "src/components/dock/__tests__/dockCrossfadeContext.readonly.test-d.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/dockMorphMeasure.test.ts",
+   "to": "src/components/dock/__tests__/dockMorphMeasure.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/handmark/g-hm-layer.test.ts",
+   "to": "src/components/handmark/__tests__/g-hm-layer.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/handmark"
+  },
+  {
+   "from": "tests/components/custom/handmark/g-hm-mark.test.ts",
+   "to": "src/components/handmark/__tests__/g-hm-mark.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/handmark"
+  },
+  {
+   "from": "tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts",
+   "to": "src/components/scroll-progress-rim/__tests__/ScrollProgressRim.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/scroll-progress-rim"
+  },
+  {
+   "from": "tests/components/custom/tabs/segmented-tabs.test.ts",
+   "to": "src/components/tabs/segmented-tabs/__tests__/segmented-tabs.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/tabs/segmented-tabs"
+  },
+  {
+   "from": "tests/components/custom/timeline/timeline.partition.test.ts",
+   "to": "src/components/timeline/__tests__/timeline.partition.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/timeline"
+  },
+  {
+   "from": "tests/components/custom/typewriter/TypewriterText.contract.test.ts",
+   "to": "src/components/typewriter/__tests__/TypewriterText.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/typewriter"
+  },
+  {
+   "from": "tests/components/dialog/dialog-attrs.test.ts",
+   "to": "src/components/dialog/__tests__/dialog-attrs.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dialog"
+  },
+  {
+   "from": "tests/components/dialog/dialog-close-contrast.test.ts",
+   "to": "src/components/dialog/__tests__/dialog-close-contrast.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dialog"
+  },
+  {
+   "from": "tests/components/dialog/dialog-dismiss.test.ts",
+   "to": "src/components/dialog/__tests__/dialog-dismiss.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dialog"
+  },
+  {
+   "from": "tests/components/expandable-container.contract.test.ts",
+   "to": "src/components/expandable-container/__tests__/expandable-container.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/expandable-container"
+  },
+  {
+   "from": "tests/components/fading-scroll.contract.test.ts",
+   "to": "src/components/fading-scroll/__tests__/fading-scroll.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/fading-scroll"
+  },
+  {
+   "from": "tests/components/infinite-scroll.announce.test.ts",
+   "to": "src/components/infinite-scroll/__tests__/infinite-scroll.announce.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/infinite-scroll"
+  },
+  {
+   "from": "tests/components/infinite-scroll.contract.test.ts",
+   "to": "src/components/infinite-scroll/__tests__/infinite-scroll.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/infinite-scroll"
+  },
+  {
+   "from": "tests/components/input.contract.test.ts",
+   "to": "src/components/input/__tests__/input.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/input"
+  },
+  {
+   "from": "tests/components/label.contract.test.ts",
+   "to": "src/components/label/__tests__/label.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/label"
+  },
+  {
+   "from": "tests/components/labeled-field.contract.test.ts",
+   "to": "src/components/labeled-field/__tests__/labeled-field.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/labeled-field"
+  },
+  {
+   "from": "tests/components/menu/contract.test.ts",
+   "to": "src/components/menu/__tests__/contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/menu"
+  },
+  {
+   "from": "tests/components/menu/public-contracts.test-d.ts",
+   "to": "src/components/menu/__tests__/public-contracts.test-d.ts",
+   "why": "L5: the test's subjects are dominated by src/components/menu"
+  },
+  {
+   "from": "tests/components/metric.contract.test.ts",
+   "to": "src/components/metric/__tests__/metric.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/metric"
+  },
+  {
+   "from": "tests/components/music-staff.contract.test.ts",
+   "to": "src/components/music-staff/__tests__/music-staff.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/music-staff"
+  },
+  {
+   "from": "tests/components/music-staff.geometry.test.ts",
+   "to": "src/components/music-staff/__tests__/music-staff.geometry.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/music-staff"
+  },
+  {
+   "from": "tests/components/music-staff.midi.test.ts",
+   "to": "src/components/music-staff/__tests__/music-staff.midi.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/music-staff"
+  },
+  {
+   "from": "tests/components/music-staff.public-contracts.test-d.ts",
+   "to": "src/components/music-staff/__tests__/music-staff.public-contracts.test-d.ts",
+   "why": "L5: the test's subjects are dominated by src/components/music-staff"
+  },
+  {
+   "from": "tests/components/number-field.contract.test.ts",
+   "to": "src/components/number-field/__tests__/number-field.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/number-field"
+  },
+  {
+   "from": "tests/components/pager-dots/contract.test.ts",
+   "to": "src/components/pager-dots/__tests__/contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/pager-dots"
+  },
+  {
+   "from": "tests/components/pager-dots/morph.test.ts",
+   "to": "src/components/pager-dots/__tests__/morph.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/pager-dots"
+  },
+  {
+   "from": "tests/components/popover.contract.test.ts",
+   "to": "src/components/popover/__tests__/popover.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/popover"
+  },
+  {
+   "from": "tests/components/radio-group.contract.test.ts",
+   "to": "src/components/radio-group/__tests__/radio-group.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/radio-group"
+  },
+  {
+   "from": "tests/components/separator.contract.test.ts",
+   "to": "src/components/separator/__tests__/separator.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/separator"
+  },
+  {
+   "from": "tests/components/sheet/sheet-reach.test.ts",
+   "to": "src/components/sheet/__tests__/sheet-reach.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/sheet"
+  },
+  {
+   "from": "tests/components/slider.contract.test.ts",
+   "to": "src/components/slider/__tests__/slider.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/slider"
+  },
+  {
+   "from": "tests/components/sortable-list.contract.test.ts",
+   "to": "src/components/sortable-list/__tests__/sortable-list.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/sortable-list"
+  },
+  {
+   "from": "tests/components/status-dot.contract.test.ts",
+   "to": "src/components/status-dot/__tests__/status-dot.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/status-dot"
+  },
+  {
+   "from": "tests/components/switch.contract.test.ts",
+   "to": "src/components/switch/__tests__/switch.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/switch"
+  },
+  {
+   "from": "tests/components/table.contract.test.ts",
+   "to": "src/components/table/__tests__/table.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/table"
+  },
+  {
+   "from": "tests/components/textarea.contract.test.ts",
+   "to": "src/components/textarea/__tests__/textarea.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/textarea"
+  },
+  {
+   "from": "tests/components/toast.contract.test.ts",
+   "to": "src/components/toast/__tests__/toast.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/toast"
+  },
+  {
+   "from": "tests/components/toast.public-contracts.test-d.ts",
+   "to": "src/components/toast/__tests__/toast.public-contracts.test-d.ts",
+   "why": "L5: the test's subjects are dominated by src/components/toast"
+  },
+  {
+   "from": "tests/components/tooltip.contract.test.ts",
+   "to": "src/components/tooltip/__tests__/tooltip.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/tooltip"
+  },
+  {
+   "from": "tests/components/typewriter.contract.test.ts",
+   "to": "src/components/typewriter/__tests__/typewriter.contract.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/typewriter"
+  },
+  {
+   "from": "tests/components/ui/_shared/useMotionAxis.test.ts",
+   "to": "src/components/_shared/__tests__/useMotionAxis.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/_shared"
+  },
+  {
+   "from": "tests/components/ui/alert/Alert.test.ts",
+   "to": "src/components/alert/__tests__/Alert.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/alert"
+  },
+  {
+   "from": "tests/components/ui/data-table/DataTable.test.ts",
+   "to": "src/components/data-table/__tests__/DataTable.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/data-table"
+  },
+  {
+   "from": "tests/components/ui/data-table/useDataTableResponsive.test.ts",
+   "to": "src/components/data-table/__tests__/useDataTableResponsive.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/data-table"
+  },
+  {
+   "from": "tests/components/ui/data-table/useDataTableRowIdentity.test.ts",
+   "to": "src/components/data-table/__tests__/useDataTableRowIdentity.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/data-table"
+  },
+  {
+   "from": "tests/components/ui/progress/Progress.test.ts",
+   "to": "src/components/progress/__tests__/Progress.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/progress"
+  },
+  {
+   "from": "tests/components/ui/skeleton/Skeleton.test.ts",
+   "to": "src/components/skeleton/__tests__/Skeleton.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/skeleton"
+  },
+  {
+   "from": "tests/components/ui/slider/Slider.marks.test.ts",
+   "to": "src/components/slider/__tests__/Slider.marks.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/slider"
+  },
+  {
+   "from": "tests/components/ui/toggle-group/ToggleGroup.test.ts",
+   "to": "src/components/toggle-group/__tests__/ToggleGroup.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/toggle-group"
+  },
+  {
+   "from": "tests/composables/dark/darkModeSyncScript.test.ts",
+   "to": "src/composables/dark/__tests__/darkModeSyncScript.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/dark"
+  },
+  {
+   "from": "tests/composables/dom/useClipboard.test.ts",
+   "to": "src/composables/dom/__tests__/useClipboard.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/dom"
+  },
+  {
+   "from": "tests/composables/dom/useTokenColor.test.ts",
+   "to": "src/composables/dom/__tests__/useTokenColor.resolver.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/dom"
+  },
+  {
+   "from": "tests/composables/glass/backdropLuminanceSample.test.ts",
+   "to": "src/components/dock/legibility/__tests__/backdropLuminanceSample.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock/legibility"
+  },
+  {
+   "from": "tests/composables/glass/canvas2d/resolveCanvasColor.test.ts",
+   "to": "src/composables/glass/canvas2d/__tests__/resolveCanvasColor.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/glass/canvas2d"
+  },
+  {
+   "from": "tests/composables/glass/canvas2d/useCanvas2D.test.ts",
+   "to": "src/composables/glass/canvas2d/__tests__/useCanvas2D.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/glass/canvas2d"
+  },
+  {
+   "from": "tests/composables/glass/webgl/useWebGLCanvas.test.ts",
+   "to": "src/composables/glass/__tests__/useWebGLCanvas.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/glass"
+  },
+  {
+   "from": "tests/composables/glass/webgl/visibility.test.ts",
+   "to": "src/composables/glass/lifecycle/__tests__/visibility.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/glass/lifecycle"
+  },
+  {
+   "from": "tests/composables/glass/webgpu/useWebGPUCanvas.test.ts",
+   "to": "src/composables/glass/__tests__/useWebGPUCanvas.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/glass"
+  },
+  {
+   "from": "tests/composables/motion/engageEnvelopes.test.ts",
+   "to": "src/composables/motion/engage/__tests__/engageEnvelopes.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/engage"
+  },
+  {
+   "from": "tests/composables/motion/press.test.ts",
+   "to": "src/composables/motion/__tests__/press.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion"
+  },
+  {
+   "from": "tests/composables/motion/springTokenMirror.test.ts",
+   "to": "src/styles/tokens/__tests__/springTokenMirror.test.ts",
+   "why": "L5: the test's subjects are dominated by src/styles/tokens"
+  },
+  {
+   "from": "tests/composables/motion/useDockCtaReceive.test.ts",
+   "to": "src/composables/motion/__tests__/useDockCtaReceive.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion"
+  },
+  {
+   "from": "tests/composables/motion/useElementMorph.test.ts",
+   "to": "src/composables/motion/morph/__tests__/useElementMorph.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/morph"
+  },
+  {
+   "from": "tests/composables/motion/usePointerVelocityField.test.ts",
+   "to": "src/composables/motion/pointer/__tests__/usePointerVelocityField.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/pointer"
+  },
+  {
+   "from": "tests/composables/motion/useReducedMotion.test.ts",
+   "to": "src/composables/motion/core/__tests__/useReducedMotion.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/core"
+  },
+  {
+   "from": "tests/composables/motion/useScrollChrome.test.ts",
+   "to": "src/composables/motion/scroll/__tests__/useScrollChrome.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/scroll"
+  },
+  {
+   "from": "tests/composables/motion/useScrollTrigger.test.ts",
+   "to": "src/composables/motion/scroll/__tests__/useScrollTrigger.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/scroll"
+  },
+  {
+   "from": "tests/composables/motion/useSelectionIndicator.test.ts",
+   "to": "src/composables/motion/morph/__tests__/useSelectionIndicator.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/morph"
+  },
+  {
+   "from": "tests/composables/motion/useStagger.test.ts",
+   "to": "src/composables/motion/reveal/__tests__/useStagger.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/reveal"
+  },
+  {
+   "from": "tests/composables/search/match.test.ts",
+   "to": "src/components/dock/search/__tests__/match.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock/search"
+  },
+  {
+   "from": "tests/composables/search/search-contracts.test.ts",
+   "to": "src/components/dock/search/__tests__/search-contracts.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock/search"
+  },
+  {
+   "from": "tests/composables/search/useFuzzySearch.test.ts",
+   "to": "src/components/dock/search/__tests__/useFuzzySearch.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock/search"
+  },
+  {
+   "from": "tests/composables/sidebar/useLazyLoader.test.ts",
+   "to": "src/composables/sidebar/__tests__/useLazyLoader.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/sidebar"
+  },
+  {
+   "from": "tests/composables/sidebar/useScrollTo.test.ts",
+   "to": "src/composables/sidebar/__tests__/useScrollTo.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/sidebar"
+  },
+  {
+   "from": "tests/composables/sidebar/useScrollTracker.test.ts",
+   "to": "src/composables/sidebar/__tests__/useScrollTracker.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/sidebar"
+  },
+  {
+   "from": "tests/composables/sidebar/useSidebarFollow.test.ts",
+   "to": "src/composables/sidebar/__tests__/useSidebarFollow.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/sidebar"
+  },
+  {
+   "from": "tests/composables/sidebar/useTreeIndex.test.ts",
+   "to": "src/composables/sidebar/__tests__/useTreeIndex.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/sidebar"
+  },
+  {
+   "from": "tests/composables/useAnimatedNumber.test.ts",
+   "to": "src/composables/motion/__tests__/useAnimatedNumber.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion"
+  },
+  {
+   "from": "tests/composables/useIntersectionPause.test.ts",
+   "to": "src/composables/motion/core/__tests__/useIntersectionPause.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/core"
+  },
+  {
+   "from": "tests/composables/useInterval.test.ts",
+   "to": "src/composables/reactive/__tests__/useInterval.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/reactive"
+  },
+  {
+   "from": "tests/composables/useKeyboardShortcuts.test.ts",
+   "to": "src/composables/keyboard/__tests__/useKeyboardShortcuts.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/keyboard"
+  },
+  {
+   "from": "tests/composables/useRAFLoop.test.ts",
+   "to": "src/composables/motion/core/__tests__/useRAFLoop.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/core"
+  },
+  {
+   "from": "tests/composables/useRouteTransition.test.ts",
+   "to": "src/composables/motion/core/__tests__/useRouteTransition.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/core"
+  },
+  {
+   "from": "tests/composables/useSpring.test.ts",
+   "to": "src/composables/motion/__tests__/useSpring.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion"
+  },
+  {
+   "from": "tests/composables/useSpringMount.test.ts",
+   "to": "src/composables/motion/__tests__/useSpringMount.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion"
+  },
+  {
+   "from": "tests/composables/useTimer.test.ts",
+   "to": "src/composables/reactive/__tests__/useTimer.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/reactive"
+  },
+  {
+   "from": "tests/composables/useTokenColor.test.ts",
+   "to": "src/composables/dom/__tests__/useTokenColor.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/dom"
+  },
+  {
+   "from": "tests/composables/useTouchGate.test.ts",
+   "to": "src/composables/dom/__tests__/useTouchGate.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/dom"
+  },
+  {
+   "from": "tests/composables/useViewTransition.test.ts",
+   "to": "src/composables/motion/core/__tests__/useViewTransition.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/core"
+  },
+  {
+   "from": "tests/composables/useYieldToMain.test.ts",
+   "to": "src/composables/motion/core/__tests__/useYieldToMain.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/core"
+  },
+  {
+   "from": "tests/composables/vReveal.test.ts",
+   "to": "src/composables/motion/reveal/__tests__/vReveal.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/reveal"
+  },
+  {
+   "from": "tests/demo/aurora-stage-affordance.test.ts",
+   "to": "src/components/aurora/__tests__/aurora-stage-affordance.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/aurora"
+  },
+  {
+   "from": "tests/demo/dock-stage-field-layout.test.ts",
+   "to": "src/components/aurora/__tests__/dock-stage-field-layout.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/aurora"
+  },
+  {
+   "from": "tests/demo/feedback-motion-tune.test.ts",
+   "to": "src/styles/tokens/__tests__/feedback-motion-tune.test.ts",
+   "why": "L5: the test's subjects are dominated by src/styles/tokens"
+  },
+  {
+   "from": "tests/demo/springs-story.test.ts",
+   "to": "src/composables/motion/spring/__tests__/springs-story.test.ts",
+   "why": "L5: the test's subjects are dominated by src/composables/motion/spring"
+  },
+  {
+   "from": "tests/design/token-bridges.test.ts",
+   "to": "src/styles/theme/__tests__/token-bridges.test.ts",
+   "why": "L5: the test's subjects are dominated by src/styles/theme"
+  },
+  {
+   "from": "tests/styles/dock-name-canon.test.ts",
+   "to": "src/components/dock/__tests__/dock-name-canon.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/dock"
+  },
+  {
+   "from": "tests/styles/material-css-syntax.test.ts",
+   "to": "src/styles/glass/__tests__/material-css-syntax.test.ts",
+   "why": "L5: the test's subjects are dominated by src/styles/glass"
+  },
+  {
+   "from": "tests/styles/overlay-plate-available-height.test.ts",
+   "to": "src/styles/glass/__tests__/overlay-plate-available-height.test.ts",
+   "why": "L5: the test's subjects are dominated by src/styles/glass"
+  },
+  {
+   "from": "tests/styles/slider-cursor-affordance.test.ts",
+   "to": "src/components/slider/__tests__/slider-cursor-affordance.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/slider"
+  },
+  {
+   "from": "tests/styles/token-graph.test.ts",
+   "to": "src/styles/tokens/__tests__/token-graph.test.ts",
+   "why": "L5: the test's subjects are dominated by src/styles/tokens"
+  },
+  {
+   "from": "tests/utils/cn.test.ts",
+   "to": "src/components/_shared/__tests__/cn.test.ts",
+   "why": "L5: the test's subjects are dominated by src/components/_shared"
+  }
+ ],
+ "scanDeltas": [],
+ "needsName": []
+}

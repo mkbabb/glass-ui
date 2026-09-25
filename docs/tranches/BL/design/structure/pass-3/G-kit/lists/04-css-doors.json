@@ -1,0 +1,37 @@
+{
+ "tag": "css-doors",
+ "stage": 3,
+ "moves": [
+  {
+   "from": "src/components/dock/styles/controls.css",
+   "to": "src/components/dock/styles/controls/index.css",
+   "why": "L3.6: the aggregator moves in as its dir's door"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "G stage 3: the scanner reads src/components/dock/styles/controls.css at src/components/dock/styles/controls/index.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "G stage 3: the scanner reads src/components/dock/styles/controls.css at src/components/dock/styles/controls/index.css"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "G stage 3: the scanner reads src/components/dock/styles/controls.css at src/components/dock/styles/controls/index.css"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/controls.css",
+   "reason": "G stage 3: the scanner reads src/components/dock/styles/controls.css at src/components/dock/styles/controls/index.css"
+  }
+ ]
+}

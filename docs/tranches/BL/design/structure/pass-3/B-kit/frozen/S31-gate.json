@@ -1,0 +1,28 @@
+{
+ "step": "the gate's file loses its hashbang with the runtime's CLIs (S30); the pin after S29-S30",
+ "files": {
+  "scripts/structure/seal/seal.mjs": {
+   "hunks": [
+    [
+     "#!/usr/bin/env node\n// seal.mjs — the D1-B gate, pass 3 (B-kit/LAW.md §6): sealed modules, one door each, over the\n",
+     "// seal.mjs — the D1-B gate, pass 3 (B-kit/LAW.md §6): sealed modules, one door each, over the\n"
+    ]
+   ]
+  },
+  "scripts/structure/records/seal-pin.json": {
+   "hunks": [
+    [
+     "  \"scripts/minify/index.ts\": [\n   \"hasCommentOutsideString\",\n   \"minifyCss\"\n",
+     "  \"scripts/minify/index.ts\": [\n   \"minifyCss\"\n"
+    ]
+   ]
+  }
+ },
+ "pin": {
+  "modules": 135,
+  "doors": 116,
+  "names": 1286,
+  "reviewed": 2,
+  "holds": 2
+ }
+}

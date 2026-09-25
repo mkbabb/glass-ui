@@ -1,0 +1,91 @@
+{
+    "step": "G B12 (LAW.md L4.3): no declaration mirror \u2014 minify-css.mts carries the types its deleted .d.mts declared",
+    "why": "The engine moved minify-css.mjs to .mts (list s6-mirror) and spelled its importers .mts, which the programs refuse without allowImportingTsExtensions; the importers spell the emitted .mjs name, which TS, vite and esbuild map to the .mts source. The annotations are the mirror's two signatures plus the helpers strict mode needs; no statement changes.",
+    "files": {
+        "scripts/lib/minify-css.d.mts": {
+            "delete": true
+        }
+    },
+    "hunks": [
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "const isWhitespace = (code) =>",
+            "replace": "const isWhitespace = (code: number): boolean =>"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "const isHex = (code) =>",
+            "replace": "const isHex = (code: number): boolean =>"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "const isName = (code) =>",
+            "replace": "const isName = (code: number): boolean =>"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "const isNameContinuation = (code) =>",
+            "replace": "const isNameContinuation = (code: number): boolean =>"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "function consumeEscape(css, start) {",
+            "replace": "interface Escape {\n    end: number;\n    point: number;\n    hexDigits: number;\n    terminated: boolean;\n}\n\nfunction consumeEscape(css: string, start: number): Escape {"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "function consumeString(css, start) {",
+            "replace": "function consumeString(css: string, start: number): number {"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "function consumeComment(css, start) {",
+            "replace": "function consumeComment(css: string, start: number): number {"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "function consumeName(css, start) {",
+            "replace": "function consumeName(css: string, start: number): { end: number; decoded: string; unterminatedHex: boolean } {"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "            const point = css.codePointAt(end);",
+            "replace": "            const point = css.codePointAt(end)!; // end < css.length: a code point exists"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "function consumeUrl(css, start) {",
+            "replace": "function consumeUrl(css: string, start: number): number {"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "function scanCss(css) {",
+            "replace": "function scanCss(css: string): { output: string; hasComment: boolean } {"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "    const emit = (token, structural = false) => {",
+            "replace": "    const emit = (token: string, structural = false): void => {"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "export function minifyCss(css) {",
+            "replace": "export function minifyCss(css: string): string {"
+        },
+        {
+            "file": "scripts/lib/minify-css.mts",
+            "find": "export function hasCommentOutsideString(css) {",
+            "replace": "export function hasCommentOutsideString(css: string): boolean {"
+        },
+        {
+            "file": "vite.style-fold.ts",
+            "find": "import { minifyCss } from \"./scripts/lib/minify-css.mts\";",
+            "replace": "import { minifyCss } from \"./scripts/lib/minify-css.mjs\";"
+        },
+        {
+            "file": "tests/styles/minify-css.test.ts",
+            "find": "from \"../../scripts/lib/minify-css.mts\";",
+            "replace": "from \"../../scripts/lib/minify-css.mjs\";"
+        }
+    ]
+}

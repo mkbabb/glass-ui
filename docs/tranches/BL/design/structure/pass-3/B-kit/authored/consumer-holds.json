@@ -1,0 +1,15 @@
+{
+ "note": "AUTHORED input to derive/consumer-entries.mjs: B2 lines whose reroute waits for a named step. Each hold is a file and the src prefix its lines read; the line stays in B2 (the gate still counts it) and the row freezes it in its residue with this reason.",
+ "holds": [
+  {
+   "file": "demo/shell/AppShell.vue",
+   "to": "src/components/aurora/",
+   "why": "P3-R5 / B-S10: the shell's frame-0 ground must stay an eager, barrel-free import (tests/gates/boot-graph.test.ts, source arm); the entry that publishes auroraFallbackGround barrel-free is ./aurora-config, accepted by P3-R5 and not landed in this prototype. Rerouting to ./aurora would pull the runtime barrel into the boot graph"
+  },
+  {
+   "file": "demo/chassis/hero/aurora-hero.ts",
+   "to": "src/components/aurora/",
+   "why": "P3-R5 / B-S10: the hero reads the config defaults off the barrel-free leaf (tests/gates/boot-graph.test.ts, source arm); its entry is ./aurora-config, not landed in this prototype"
+  }
+ ]
+}

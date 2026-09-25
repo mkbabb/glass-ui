@@ -1,0 +1,616 @@
+{
+ "tag": "carve",
+ "stage": 6,
+ "moves": [
+  {
+   "from": "src/components/dock/styles/search.css",
+   "to": "src/components/dock/search/search.css",
+   "why": "L7.2: src/components/dock/styles over 12 splits under B's authored module search"
+  },
+  {
+   "from": "src/components/dock/styles/adaptive-legibility.css",
+   "to": "src/components/dock/legibility/adaptive-legibility.css",
+   "why": "L7.2: src/components/dock/styles over 12 splits under B's authored module legibility"
+  },
+  {
+   "from": "src/styles/track-well.css",
+   "to": "src/styles/surface/track-well.css",
+   "why": "L7.2: src/styles over 12 splits under B's authored module surface"
+  },
+  {
+   "from": "src/styles/glass-specular-track.css",
+   "to": "src/styles/surface/glass-specular-track.css",
+   "why": "L7.2: src/styles over 12 splits under B's authored module surface"
+  },
+  {
+   "from": "src/styles/paper.css",
+   "to": "src/styles/surface/paper.css",
+   "why": "L7.2: src/styles over 12 splits under B's authored module surface"
+  },
+  {
+   "from": "src/styles/transitions.css",
+   "to": "src/styles/motion/transitions.css",
+   "why": "L7.2: src/styles over 12 splits under B's authored module motion"
+  },
+  {
+   "from": "src/styles/animations.css",
+   "to": "src/styles/motion/animations.css",
+   "why": "L7.2: src/styles over 12 splits under B's authored module motion"
+  },
+  {
+   "from": "src/styles/viz-reveal.css",
+   "to": "src/styles/motion/viz-reveal.css",
+   "why": "L7.2: src/styles over 12 splits under B's authored module motion"
+  },
+  {
+   "from": "src/styles/scroll-driven.css",
+   "to": "src/styles/scroll/scroll-driven.css",
+   "why": "L7.2: src/styles over 12 splits under B's authored module scroll"
+  },
+  {
+   "from": "src/styles/scroll-choreography.css",
+   "to": "src/styles/scroll/scroll-choreography.css",
+   "why": "L7.2: src/styles over 12 splits under B's authored module scroll"
+  },
+  {
+   "from": "src/styles/scroll-chrome.css",
+   "to": "src/styles/scroll/scroll-chrome.css",
+   "why": "L7.2: src/styles over 12 splits under B's authored module scroll"
+  },
+  {
+   "from": "src/styles/glass/material.css",
+   "to": "src/styles/glass/material/material.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module material"
+  },
+  {
+   "from": "src/styles/glass/veil.css",
+   "to": "src/styles/glass/material/veil.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module material"
+  },
+  {
+   "from": "src/styles/glass/ladder.css",
+   "to": "src/styles/glass/material/ladder.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module material"
+  },
+  {
+   "from": "src/styles/glass/ladder-undershadow.css",
+   "to": "src/styles/glass/material/ladder-undershadow.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module material"
+  },
+  {
+   "from": "src/styles/glass/surfaces.css",
+   "to": "src/styles/glass/surfaces/surfaces.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module surfaces"
+  },
+  {
+   "from": "src/styles/glass/surfaces-pager.css",
+   "to": "src/styles/glass/surfaces/surfaces-pager.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module surfaces"
+  },
+  {
+   "from": "src/styles/glass/control-surfaces.css",
+   "to": "src/styles/glass/surfaces/control-surfaces.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module surfaces"
+  },
+  {
+   "from": "src/styles/glass/control-bit.css",
+   "to": "src/styles/glass/surfaces/control-bit.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module surfaces"
+  },
+  {
+   "from": "src/styles/glass/control-edge.css",
+   "to": "src/styles/glass/surfaces/control-edge.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module surfaces"
+  },
+  {
+   "from": "src/styles/glass/glass-capsule.css",
+   "to": "src/styles/glass/shapes/glass-capsule.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module shapes"
+  },
+  {
+   "from": "src/styles/glass/glass-chip.css",
+   "to": "src/styles/glass/shapes/glass-chip.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module shapes"
+  },
+  {
+   "from": "src/styles/glass/glass-atom.css",
+   "to": "src/styles/glass/shapes/glass-atom.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module shapes"
+  },
+  {
+   "from": "src/styles/glass/mark.css",
+   "to": "src/styles/glass/shapes/mark.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module shapes"
+  },
+  {
+   "from": "src/styles/glass/liquid-fill.css",
+   "to": "src/styles/glass/shapes/liquid-fill.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module shapes"
+  },
+  {
+   "from": "src/styles/glass/value-marks.css",
+   "to": "src/styles/glass/shapes/value-marks.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module shapes"
+  },
+  {
+   "from": "src/styles/glass/track-flow.css",
+   "to": "src/styles/glass/shapes/track-flow.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module shapes"
+  },
+  {
+   "from": "src/styles/glass/reveal.css",
+   "to": "src/styles/glass/transitions/reveal.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module transitions"
+  },
+  {
+   "from": "src/styles/glass/liquid-enter.css",
+   "to": "src/styles/glass/transitions/liquid-enter.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module transitions"
+  },
+  {
+   "from": "src/styles/glass/dissolve.css",
+   "to": "src/styles/glass/transitions/dissolve.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module transitions"
+  },
+  {
+   "from": "src/styles/glass/deep.css",
+   "to": "src/styles/glass/decoration/deep.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module decoration"
+  },
+  {
+   "from": "src/styles/glass/defined.css",
+   "to": "src/styles/glass/decoration/defined.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module decoration"
+  },
+  {
+   "from": "src/styles/glass/squircle.css",
+   "to": "src/styles/glass/decoration/squircle.css",
+   "why": "L7.2: src/styles/glass over 12 splits under B's authored module decoration"
+  },
+  {
+   "from": "src/styles/tokens/scheme-motion.css",
+   "to": "src/styles/tokens/motion/scheme-motion.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module motion"
+  },
+  {
+   "from": "src/styles/tokens/scheme-spring.css",
+   "to": "src/styles/tokens/motion/scheme-spring.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module motion"
+  },
+  {
+   "from": "src/styles/tokens/motion-registers.css",
+   "to": "src/styles/tokens/motion/motion-registers.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module motion"
+  },
+  {
+   "from": "src/styles/tokens/color-radius.css",
+   "to": "src/styles/tokens/surface/color-radius.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module surface"
+  },
+  {
+   "from": "src/styles/tokens/shadow.css",
+   "to": "src/styles/tokens/surface/shadow.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module surface"
+  },
+  {
+   "from": "src/styles/tokens/glass.css",
+   "to": "src/styles/tokens/surface/glass.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module surface"
+  },
+  {
+   "from": "src/styles/tokens/glass-fx.css",
+   "to": "src/styles/tokens/surface/glass-fx.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module surface"
+  },
+  {
+   "from": "src/styles/tokens/glass-deep.css",
+   "to": "src/styles/tokens/surface/glass-deep.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module surface"
+  },
+  {
+   "from": "src/styles/tokens/on-glass-fg.css",
+   "to": "src/styles/tokens/surface/on-glass-fg.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module surface"
+  },
+  {
+   "from": "src/styles/tokens/offsets.css",
+   "to": "src/styles/tokens/sizing/offsets.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module sizing"
+  },
+  {
+   "from": "src/styles/tokens/sizing.css",
+   "to": "src/styles/tokens/sizing/sizing.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module sizing"
+  },
+  {
+   "from": "src/styles/tokens/sizing-config.css",
+   "to": "src/styles/tokens/sizing/sizing-config.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module sizing"
+  },
+  {
+   "from": "src/styles/tokens/scale-paper.css",
+   "to": "src/styles/tokens/sizing/scale-paper.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module sizing"
+  },
+  {
+   "from": "src/styles/tokens/scroll-tokens.css",
+   "to": "src/styles/tokens/sizing/scroll-tokens.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module sizing"
+  },
+  {
+   "from": "src/styles/tokens/light-dark.css",
+   "to": "src/styles/tokens/scheme/light-dark.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module scheme"
+  },
+  {
+   "from": "src/styles/tokens/dark-arm.css",
+   "to": "src/styles/tokens/scheme/dark-arm.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module scheme"
+  },
+  {
+   "from": "src/styles/tokens/dark-arm-glass.css",
+   "to": "src/styles/tokens/scheme/dark-arm-glass.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module scheme"
+  },
+  {
+   "from": "src/styles/tokens/property-regs.css",
+   "to": "src/styles/tokens/properties/property-regs.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module properties"
+  },
+  {
+   "from": "src/styles/tokens/property-regs-specular.css",
+   "to": "src/styles/tokens/properties/property-regs-specular.css",
+   "why": "L7.2: src/styles/tokens over 12 splits under B's authored module properties"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/adaptive-legibility.css",
+   "reason": "G stage 6: the scanner reads src/components/dock/styles/adaptive-legibility.css at src/components/dock/legibility/adaptive-legibility.css"
+  },
+  {
+   "scanner": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "spec": "`${STYLES}/${name}`",
+   "file": "src/components/dock/styles/search.css",
+   "reason": "G stage 6: the scanner reads src/components/dock/styles/search.css at src/components/dock/search/search.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/adaptive-legibility.css",
+   "reason": "G stage 6: the scanner reads src/components/dock/styles/adaptive-legibility.css at src/components/dock/legibility/adaptive-legibility.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/search.css",
+   "reason": "G stage 6: the scanner reads src/components/dock/styles/search.css at src/components/dock/search/search.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/animations.css",
+   "reason": "G stage 6: the scanner reads src/styles/animations.css at src/styles/motion/animations.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass-specular-track.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass-specular-track.css at src/styles/surface/glass-specular-track.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/control-bit.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/control-bit.css at src/styles/glass/surfaces/control-bit.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/control-edge.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/control-edge.css at src/styles/glass/surfaces/control-edge.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/control-surfaces.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/control-surfaces.css at src/styles/glass/surfaces/control-surfaces.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/deep.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/deep.css at src/styles/glass/decoration/deep.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/defined.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/defined.css at src/styles/glass/decoration/defined.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/dissolve.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/dissolve.css at src/styles/glass/transitions/dissolve.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/glass-atom.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/glass-atom.css at src/styles/glass/shapes/glass-atom.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/glass-capsule.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/glass-capsule.css at src/styles/glass/shapes/glass-capsule.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/glass-chip.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/glass-chip.css at src/styles/glass/shapes/glass-chip.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/ladder-undershadow.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/ladder-undershadow.css at src/styles/glass/material/ladder-undershadow.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/ladder.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/ladder.css at src/styles/glass/material/ladder.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/liquid-enter.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/liquid-enter.css at src/styles/glass/transitions/liquid-enter.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/liquid-fill.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/liquid-fill.css at src/styles/glass/shapes/liquid-fill.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/mark.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/mark.css at src/styles/glass/shapes/mark.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/material.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/material.css at src/styles/glass/material/material.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/reveal.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/reveal.css at src/styles/glass/transitions/reveal.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/squircle.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/squircle.css at src/styles/glass/decoration/squircle.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/surfaces-pager.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/surfaces-pager.css at src/styles/glass/surfaces/surfaces-pager.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/surfaces.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/surfaces.css at src/styles/glass/surfaces/surfaces.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/track-flow.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/track-flow.css at src/styles/glass/shapes/track-flow.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/value-marks.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/value-marks.css at src/styles/glass/shapes/value-marks.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/glass/veil.css",
+   "reason": "G stage 6: the scanner reads src/styles/glass/veil.css at src/styles/glass/material/veil.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/paper.css",
+   "reason": "G stage 6: the scanner reads src/styles/paper.css at src/styles/surface/paper.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/scroll-choreography.css",
+   "reason": "G stage 6: the scanner reads src/styles/scroll-choreography.css at src/styles/scroll/scroll-choreography.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/scroll-chrome.css",
+   "reason": "G stage 6: the scanner reads src/styles/scroll-chrome.css at src/styles/scroll/scroll-chrome.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/scroll-driven.css",
+   "reason": "G stage 6: the scanner reads src/styles/scroll-driven.css at src/styles/scroll/scroll-driven.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/color-radius.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/color-radius.css at src/styles/tokens/surface/color-radius.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/dark-arm-glass.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/dark-arm-glass.css at src/styles/tokens/scheme/dark-arm-glass.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/dark-arm.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/dark-arm.css at src/styles/tokens/scheme/dark-arm.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/glass-deep.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/glass-deep.css at src/styles/tokens/surface/glass-deep.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/glass-fx.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/glass-fx.css at src/styles/tokens/surface/glass-fx.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/glass.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/glass.css at src/styles/tokens/surface/glass.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/light-dark.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/light-dark.css at src/styles/tokens/scheme/light-dark.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/motion-registers.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/motion-registers.css at src/styles/tokens/motion/motion-registers.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/offsets.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/offsets.css at src/styles/tokens/sizing/offsets.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/on-glass-fg.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/on-glass-fg.css at src/styles/tokens/surface/on-glass-fg.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/property-regs-specular.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/property-regs-specular.css at src/styles/tokens/properties/property-regs-specular.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/property-regs.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/property-regs.css at src/styles/tokens/properties/property-regs.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/scale-paper.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/scale-paper.css at src/styles/tokens/sizing/scale-paper.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/scheme-motion.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/scheme-motion.css at src/styles/tokens/motion/scheme-motion.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/scheme-spring.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/scheme-spring.css at src/styles/tokens/motion/scheme-spring.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/scroll-tokens.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/scroll-tokens.css at src/styles/tokens/sizing/scroll-tokens.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/shadow.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/shadow.css at src/styles/tokens/surface/shadow.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/sizing-config.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/sizing-config.css at src/styles/tokens/sizing/sizing-config.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/tokens/sizing.css",
+   "reason": "G stage 6: the scanner reads src/styles/tokens/sizing.css at src/styles/tokens/sizing/sizing.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/track-well.css",
+   "reason": "G stage 6: the scanner reads src/styles/track-well.css at src/styles/surface/track-well.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/transitions.css",
+   "reason": "G stage 6: the scanner reads src/styles/transitions.css at src/styles/motion/transitions.css"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/viz-reveal.css",
+   "reason": "G stage 6: the scanner reads src/styles/viz-reveal.css at src/styles/motion/viz-reveal.css"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/adaptive-legibility.css",
+   "reason": "G stage 6: the scanner reads src/components/dock/styles/adaptive-legibility.css at src/components/dock/legibility/adaptive-legibility.css"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/search.css",
+   "reason": "G stage 6: the scanner reads src/components/dock/styles/search.css at src/components/dock/search/search.css"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/adaptive-legibility.css",
+   "reason": "G stage 6: the scanner reads src/components/dock/styles/adaptive-legibility.css at src/components/dock/legibility/adaptive-legibility.css"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/search.css",
+   "reason": "G stage 6: the scanner reads src/components/dock/styles/search.css at src/components/dock/search/search.css"
+  }
+ ]
+}

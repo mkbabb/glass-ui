@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // eponym.mjs — the D1-G gate (pass 3). Every clause is a rule of ../LAW.md read literally, over
 // the floor's F-1 graph (one graph, fail-closed), F-7 placement with the FD-1 anchor and FD-3's
-// one slot predicate, symbol origins, and law.mjs (the same functions the migration ran, frozen
+// one slot predicate, symbol origins, and the law's modules (index.mjs; the same functions the migration ran, frozen
 // as literal lists before this gate judged the tree). Every clause judges the resolved file.
 // There is no comment opt-out and no path ledger: a hold (FD-2, FD-8) is recomputed, never listed.
 //
@@ -12,10 +12,10 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { posix, resolve } from "node:path";
 import { GLOBAL_ZONES, isSlot, placeAll, dirUnits } from "../lib/placement.mjs";
 import { ZONES, zoneOf } from "../lib/tree.mjs";
-import * as L from "./law.mjs";
+import * as L from "./index.mjs";
 
 const { dirname, basename } = posix;
-export const CLAUSES = ["E0", "E1", "E1K", "E2", "E3", "E3N", "E3P", "E4", "E5", "E6", "E7", "B1", "B8", "B12", "B14", "A1", "S1"];
+export const CLAUSES = ["E0", "E1", "E1K", "E2", "E3", "E3N", "E3P", "E4", "E5", "E6", "E7", "B1", "B8", "B12", "B14", "A1", "S1", "S2"];
 const MODULE_KINDS = new Set(["import", "import-type", "import-type-node", "import-side-effect", "reexport", "reexport-star", "reexport-ns", "dynamic", "dynamic-template", "require", "vi-mock", "sfc-style-src", "sfc-template-src", "sfc-script-src", "css-import", "sfc-inline-css-import", "css-url", "css-reference", "template-asset", "glob", "new-url"]);
 const READ_KINDS = new Set(["path-literal", "path-helper", "ts-reference"]);
 const AGGREGATES = new Set(["src/index.ts", "src/components/index.ts", "src/styles/index.css"]);
@@ -33,7 +33,12 @@ export function judge(root, { overlay = {}, clauses = CLAUSES } = {}) {
     const lineCount = (t) => t.split("\n").length - (t.endsWith("\n") ? 1 : 0);
     const reach = (e) => e.to && !e.dir && (MODULE_KINDS.has(e.kind) || READ_KINDS.has(e.kind));
     const PUB = new Set([...ctx.entrySources, ...ctx.cssEntrySources]);
-    const gDoor = (f) => ctx.entrySources.has(f) || ctx.cssEntrySources.has(f) || (g.record.doors.includes(f) && !isSlot(dirname(f)));
+    // E6 · an entry's `assets` dir publishes every file under it (the `./fonts/*` key)
+    const ASSETS = g.record.css.map(([, t]) => t.assets).filter(Boolean).map((d) => d.replace(/\/$/, ""));
+    const published = (f) => PUB.has(f) || ASSETS.some((d) => f.startsWith(`${d}/`));
+    // a G door: an entry source, a CSS entry source, a declared door outside a kind slot (X-10),
+    // or, in scripts, a module's index.mjs (SPECS-v2 §2.1: script code's door there)
+    const gDoor = (f) => ctx.entrySources.has(f) || ctx.cssEntrySources.has(f) || (g.record.doors.includes(f) && !isSlot(dirname(f))) || (zoneOf(f) === "scripts" && basename(f) === "index.mjs");
 
     // E0 · F-1 violations, fail-closed over every S-4 edge kind (self-name in src included, P3-F3)
     for (const v of g.violations) put("E0", `${v.from}:${v.line ?? ""} ${v.kind} [${v.edgeKind ?? ""}] ${v.spec ?? ""}`);
@@ -42,6 +47,9 @@ export function judge(root, { overlay = {}, clauses = CLAUSES } = {}) {
     const s1 = L.stage1(ctx);
     for (const m of s1.moves) put("E1", `${m.class} ${m.from} → ${m.to} (readers ${m.readers.join(", ")})`);
     for (const m of s1.needsName) put("E1", `NEEDS-NAME ${m.from} → ${m.to}`);
+    // L1.4 · an FD-8 hold is a violation: P3-R6 places the file by its readers, and the floor's
+    // F-2 declares no glob-membership delta to carry the move
+    for (const h of s1.globHeld) put("E1", `FD-8 held ${h.from} → ${h.to} (${h.glob})`);
     info.E1 = { anchored: s1.anchored, fd2Held: s1.held.map((h) => `${h.from}: ${h.pairs.join("; ")}`), fd8Held: s1.globHeld.map((h) => `${h.from}: ${h.glob}`) };
 
     // E1K · P3-R1(a): no kernel entry re-exports a file outside the global zone
@@ -56,6 +64,8 @@ export function judge(root, { overlay = {}, clauses = CLAUSES } = {}) {
         s2 = L.stage2(ctx, { ts });
         for (const m of s2.moves) put("E2", `${m.from} → ${m.to}`);
         for (const m of s2.needsName) put("E2", `NEEDS-NAME ${m.from} → ${m.to}`);
+        for (const b of s2.needsBase) put("E2", `NEEDS-NAME base module ${b}`);
+        for (const h of s2.held) put("E2", `FD-2 nesting cycle: ${h.root} would head ${h.dir}`);
         info.E2 = { fd2Flattened: s2.held.map((h) => `${h.root} (${h.dir})`), fd8Held: s2.globHeld.map((h) => `${h.from}: ${h.glob}`) };
     }
 
@@ -68,7 +78,8 @@ export function judge(root, { overlay = {}, clauses = CLAUSES } = {}) {
         const own = T.files.filter((f) => dirname(f) === d && /\.(ts|mts|vue|css)$/.test(f) && !L.isTest(f));
         const hasDoor = own.some((f) => /^index\.(ts|css)$/.test(basename(f)));
         const root = own.find((f) => L.norm(L.dirNameOf(f, U)) === L.norm(basename(d)));
-        if (!hasDoor && !root) put("E3", `${d}/ holds no root named ${basename(d)} and no door`);
+        const base = L.baseNameOf(U, dirname(d)) === basename(d) || L.carveModules().includes(d);
+        if (!hasDoor && !root && !base) put("E3", `${d}/ holds no root named ${basename(d)}, no door and is no authored base or carve module`);
     }
     // E3N · the module set is pinned (names.json `modules`): every nested dir of a component unit,
     // and no other, is listed; a new, lost or renamed module is a reviewed diff (G-03)
@@ -76,6 +87,13 @@ export function judge(root, { overlay = {}, clauses = CLAUSES } = {}) {
     const present = new Set(compDirs.map((d) => d.slice(L.COMPONENTS.length + 1)));
     for (const d of present) if (!pinned.has(d)) put("E3N", `module ${d} is not in the pin`);
     for (const d of pinned) if (!present.has(d)) put("E3N", `pinned module ${d} is gone`);
+    // an authored name that names nothing is stale (the ledger-stale rule, applied to names.json)
+    const unitDir = (u) => `${L.COMPONENTS}/${u}`;
+    for (const [u, ds] of Object.entries(L.NAMES.names ?? {})) for (const b of Object.keys(ds)) if (!T.files.some((f) => L.within(f, unitDir(u)) && basename(f) === b)) put("E3N", `names.${u}.${b} names no root`);
+    for (const [u, ps] of Object.entries(L.NAMES.bases ?? {})) for (const [P, n] of Object.entries(ps)) { const d = `${unitDir(u)}${P === "." ? "" : `/${P}`}/${n}`; if (!T.isDir(d)) put("E3N", `bases.${u}.${P} = ${n}: ${d}/ does not exist`); }
+    for (const [z, n] of Object.entries(L.NAMES.zones ?? {})) if (!T.isDir(`${z}/${n}`)) put("E3N", `zones.${z} = ${n}: ${z}/${n}/ does not exist`);
+    // L7.2 · the carve is pinned: every file it names sits in its module
+    for (const [, m, b] of L.carveEntries()) if (!T.isFile(`${m}/${b}`)) put("E3N", `carve ${m}: ${b} is not in its module`);
     // E3P · placeholder and provenance names (P19): no dir or file stem in src or scripts named as
     // a placeholder, a number, a wave or pass id, or its parent's name
     for (const d of [...T.dirs].filter((x) => ["src", "scripts"].includes(zoneOf(`${x}/x`)) && x.includes("/"))) {
@@ -105,10 +123,10 @@ export function judge(root, { overlay = {}, clauses = CLAUSES } = {}) {
         if (name === "index") continue;
         for (const [n, os] of O.exportsOf(src)) for (const o of os) { const k = `${o.file}#${o.name === "*" ? n : o.name}`; if (!onEntries.has(k)) onEntries.set(k, new Set()); onEntries.get(k).add(name); }
     }
-    for (const [k, s] of onEntries) if (s.size > 1) put("E5", `${k} on ${[...s].map((x) => `./${x}`).join(" + ")}`);
+    for (const [k, s] of onEntries) if (s.size > 1) put("E5", `${k} on ${[...s].map((x) => `./${x}`).join(" + ")} (owner ./${L.r6Owner(ctx, k.split("#")[0], s)}, L4.7)`);
 
     // E6 · R-10: the demo reaches src only through entry sources (module and read kinds)
-    for (const e of g.edges) if (zoneOf(e.from) === "demo" && reach(e) && zoneOf(e.to) === "src" && !PUB.has(e.to)) put("E6", `${e.from}:${e.line} ${e.kind} → ${e.to}`);
+    for (const e of g.edges) if (zoneOf(e.from) === "demo" && reach(e) && zoneOf(e.to) === "src" && !published(e.to)) put("E6", `${e.from}:${e.line} ${e.kind} → ${e.to}`);
 
     // E7 · R-3: a test whose src imports lie in one component unit lives in the __tests__/ slot of
     // the dir of the root that dominates them; any other test lives in the harness zone (LAW L5)
@@ -149,9 +167,12 @@ export function judge(root, { overlay = {}, clauses = CLAUSES } = {}) {
     }
     for (const f of T.files) { const m = /^(.*)\.d\.(m?ts)$/.exec(f); if (m && ["src", "scripts"].includes(zoneOf(f)) && [".mjs", ".ts", ".js", ".vue"].some((x) => T.isFile(m[1] + x))) put("B12", `${f} (declaration mirror)`); }
 
-    // B14 · door purity: an index.ts G door holds only `export … from`; an index.css door only
-    // @import, bodiless @layer, and @source for its own subtree (P3-R8)
-    for (const d of T.files.filter((f) => /\/index\.(ts|css)$/.test(f) && gDoor(f) && !AGGREGATES.has(f))) {
+    // B14 · door purity: an index.ts G door holds only `export … from`; a CSS door (an index.css
+    // in src whose dir is not a kind slot: X-10, a slot barrel is wiring, the JS door's
+    // reading) only @import, bodiless @layer, and @source for its own subtree (P3-R8). A
+    // published leaf sheet (theme.css) is a source, not a door
+    const cssDoor = (f) => f.startsWith("src/") && f.endsWith("/index.css") && !isSlot(dirname(f));
+    for (const d of T.files.filter((f) => ((/\/index\.ts$/.test(f) && gDoor(f)) || cssDoor(f)) && !AGGREGATES.has(f))) {
         const text = T.read(d) ?? "";
         if (d.endsWith(".css")) {
             let r; try { r = postcss.parse(text); } catch { put("B14", `${d} (unparseable)`); continue; }
@@ -175,7 +196,10 @@ export function judge(root, { overlay = {}, clauses = CLAUSES } = {}) {
     // S1 · scripts (LAW L6): a scripts file that one bin alone reaches lives in that bin's module dir
     const S = L.scriptsLaw(ctx);
     for (const r of S.misplaced) put("S1", `${r.file} → ${r.want} (reached only by the bin ${r.bin})`);
+    for (const m of L.crossZone(ctx)) put("S1", `${m.from} → ${m.to} (every loader sits in ${zoneOf(m.to)}, L6.0)`);
     info.S1 = { bins: S.bins.length };
+    // S2 · R-8 / E-7 (LAW L6.2): a scripts file nothing reaches is deleted
+    for (const f of L.unreadScripts(ctx)) put("S2", `${f} (no reader of any kind)`);
 
     const counts = Object.fromEntries(Object.entries(V).map(([k, l]) => [k, l.length]));
     return { counts, V, info, edges: g.edges.length, files: T.files.length };
@@ -188,6 +212,7 @@ if (isMain) {
     const root = resolve(opt("--root", resolve(import.meta.dirname, "../../..")));
     const clauses = opt("--clauses") ? opt("--clauses").split(",") : CLAUSES;
     const r = judge(root, { overlay: opt("--overlay") ? JSON.parse(readFileSync(opt("--overlay"), "utf8")) : {}, clauses });
+    if (opt("--json") === "-") { process.stdout.write(`${JSON.stringify({ clauses: CLAUSES, counts: r.counts, V: r.V, info: r.info })}\n`); process.exit(0); }
     let fail = 0;
     for (const k of clauses) {
         const list = r.V[k];

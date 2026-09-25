@@ -1,0 +1,28 @@
+PASS E0 0
+FAIL E1 1
+   FD-8 held src/components/_shared/overlay/isTeleportedTarget.ts → src/components/dock/isTeleportedTarget.ts (demo/demo.css @source src/components/_shared/**/*.ts)
+PASS E1K 0
+PASS E2 0
+PASS E3 0
+PASS E3N 0
+PASS E3P 0
+FAIL E4 64
+   demo/stories/containers/ 13 direct files
+   demo/stories/foundations/ 13 direct files
+   src/components/dock/__tests__/ 17 direct files
+   … 61 more
+PASS E5 0
+FAIL E6 18
+   demo/composables/virtual/virtualSectionLayout.ts:12 import-type → src/composables/sidebar/types.ts
+   demo/stories/data/search.vue:14 import → src/components/dock/search/useFuzzySearch.ts
+   demo/stories/data/search.vue:15 import-type → src/components/dock/search/types.ts
+   … 15 more
+PASS E7 0
+PASS B1 0
+PASS B8 0
+PASS B12 0
+PASS B14 0
+PASS A1 0
+PASS S1 0
+PASS S2 0
+eponym {"edges":7357,"info":{"E1":{"anchored":40,"fd2Held":["src/components/aurora/runtime/frame/textureUpload.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/frame; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime/frame ↔ src/components/aurora/runtime/webgpu","src/components/aurora/runtime/frame/uniformBridge.ts: src/components/aurora/runtime ↔ src/components/aurora/runtime/webgl; src/components/aurora/runtime ↔ src/components/aurora/runtime/webgpu; src/components/aurora/runtime/webgl ↔ src/components/aurora/runtime/webgpu"],"fd8Held":["src/components/_shared/overlay/isTeleportedTarget.ts: demo/demo.css @source src/components/_shared/**/*.ts"]},"E2":{"fd2Flattened":[],"fd8Held":[]},"S1":{"bins":19}}}: FAIL (3 clause(s))

@@ -19,6 +19,7 @@ import { fileURLToPath } from "node:url";
 import { loadFloor, arg } from "../lib/floor.mjs";
 import { proposeUnit } from "../lib/dominance.mjs";
 import { bAnchor } from "../lib/law.mjs";
+import { recordStep } from "../lib/sequence.mjs";
 
 const KIT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
@@ -140,6 +141,10 @@ const summary = { accepted: accepted.map((x) => `${x.unit} (${x.moves.length})`)
 if (args.includes("--dry") || dry.scc?.grown?.length || !list.length) { console.log(JSON.stringify({ ...summary, plans: args.includes("--verbose") ? plans : undefined }, null, 1)); process.exit(dry.scc?.grown?.length ? 1 : 0); }
 const r = F.runMoves(root, list, { declaredScanDeltas: scanDeltas });
 summary.engine = { ok: r.ok, phase: r.phase, filesEdited: r.filesEdited, rewrites: r.rewrites, lost: r.image?.lost?.slice(0, 5), gained: r.image?.gained?.slice(0, 5), scc: r.scc ? { before: r.scc.before, after: r.scc.after, addedPairs: r.scc.addedPairs } : null, digest: r.digest };
-if (r.ok) writeFileSync(join(KIT, `frozen/${arg(args, "--name", "S3-carve")}.json`), `${JSON.stringify({ step: "B-S3 module carve (frozen, F-9)", moves: list, scanDeltas, reasons: accepted.flatMap((x) => x.moves.map(({ from, why }) => ({ from, why }))), refused, declined }, null, 1)}\n`);
+if (r.ok) {
+    const name = arg(args, "--name", "S3-carve");
+    writeFileSync(join(KIT, `frozen/${name}.json`), `${JSON.stringify({ step: "B-S3 module carve (frozen, F-9)", moves: list, scanDeltas, reasons: accepted.flatMap((x) => x.moves.map(({ from, to, why }) => ({ from, to, why }))), refused, declined }, null, 1)}\n`);
+    recordStep(root, { id: arg(args, "--id", "S3"), kind: "moves", file: `frozen/${name}.json`, why: `B-S3 module carve: ${list.length} moves; modules proposed by dominance (lib/dominance.mjs) and named in authored/names.json, peer sets carved by name (LAW §3-§4)` });
+}
 console.log(JSON.stringify(summary, null, 1));
 process.exit(r.ok ? 0 : 1);
