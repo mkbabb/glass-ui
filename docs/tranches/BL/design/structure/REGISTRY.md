@@ -1034,3 +1034,368 @@ These go to the owner as one list. Where a ruling arrives late, a route measures
 **Held with the bank, not in the checklist.** D′'s gaps are Dp-crit §6 (10 items) and Dp-proto §11 (22). They return with D′'s re-trigger.
 
 No winner is declared in pass 2.
+
+---
+---
+
+# D1 · pass 3 · REGISTRY: the routes after pass 3
+
+| field | value |
+|---|---|
+| seat | D1 pass-3 agglomeration. Closes pass 3 with each route's status and convergence, the merge test's outcome, the door-cost answer (S-23), the rulings still owed, the floor's open gaps and the pass-4 plan. Passes 1 and 2 above are kept intact |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `9a364e08`. The pass-3 route seats and both critics cut at 10.0.1 code (critics at `b602a59b`). Since then `9065d924` and `d8bda2a9` moved 12 code files (+261/−13, the 10.1.0 configurator work) and rebound `.bundle-ratchet` 2,916,129 → 2,919,057. `git diff b602a59b HEAD -- . ':!docs'` is those 12 files and nothing else |
+| inputs, read in full | `pass-3/`: `FLOOR-P3.md`, `B-proto.md`, `G-proto.md`, `B-kit/LAW.md`, `G-kit/LAW.md`, `xj-BonG.md`, `xj-GonB.md`, `critique-B.md`, `critique-G.md`; this file §P2-5..§P2-7; `RULINGS.md`; `CHARTER.md` (the edict) |
+| instruments | none re-run. Read-only checks: `git log`, `git diff --stat b602a59b HEAD` (the drift above), `critique-B/results/seat-2/RESULTS.md` §R9-R11, and `scripts/verify-export-types.mjs:942-958` (the ratchet's form). Every other number cites the report that measured it |
+| fences | no source edit, no git write; this part is the only write |
+
+Short citations: `B-proto §4` is `pass-3/B-proto.md` §4; likewise `G-proto`, `B-LAW`, `G-LAW`, `xjBG` (`xj-BonG.md`, B's seal on G's tree), `xjGB` (`xj-GonB.md`, G's gate on B's tree), `cB` (`critique-B.md`), `cB-R9` (its `results/seat-2/RESULTS.md` §R9), `cG` (`critique-G.md`), `FP3` (`FLOOR-P3.md`).
+
+---
+
+## P3-0 · In brief
+
+| id | route | status | conv. (critic) | critic's verdict | re-opened by the critic | reason in one line |
+|---|---|---|---:|---|---|---|
+| D1-B | sealed modules, flat | **ADVANCE: the kept declaration** | 20/26 = 76.9% | ADVANCE | 2 (S-12, B-08), plus 1 outside finding on an edict clause (O-2) | exact replay by two non-authors; 14 of 17 clauses GREEN; coupling shrinks; its declaration is the one R-2/X-10 and the edict describe |
+| D1-G | eponymous closures | **BANK** | 11/25 = 44% | ADVANCE | 0 | exact replay; but its FD-2 holds only under a unit function no ruling grants (14 → 91 members under R-2 units), its B8 runs an unstated test exemption, and the merge test refuses its declaration |
+
+Both percentages use §P2-6.5's one formula: closed over the frozen checklist, measured by a fresh critic. They are comparable, unlike pass 2's.
+
+**Not converged.** Neither route meets §P2-6.5 (1): B has 6 open items by its critic and 9 by this registry's reading (§P3-2.1). The two-clean-passes count is at 0 for B, because the pass-3 critique re-opened two items and found one edict clause the checklist leaves out. The earliest convergence is pass 5: a clean pass-4 critique followed by a clean pass-5 critique.
+
+Five findings shape pass 4.
+
+1. **The merge test failed in both directions, and the failing clauses point to one declaration.** G's gate on B's tree reads 54 lines, 35 of which are G's law unable to read a nested door as a module (xjGB §3.2). B's seal on G's tree reads 999 lines over 14 of 17 clauses, most of them G's nested and kernel dirs having no door and so no seal (xjBG §3). B's reading is the one R-2 as amended and X-10 describe: a sub-component's dir is a unit, and a parent reaches it through its root door. So B's declaration is kept and H is not minted (§P3-3).
+2. **The doors cost bytes and buy clauses, not battery catches.** On B's tree, B7's door in every dir costs 77 doors and 46,165 B (33% of door bytes) beyond G's reading. On 89 pass-2 plants it buys one catch, and that catch comes from a different arm (xjGB §4). What the doors carry is the kernel seal, sibling acyclicity at module grain and a single declaration rule, none of which any pass-2 battery planted. Pass 4's battery plants them (§P3-4).
+3. **A unit function is a ruling, not route code** (S-27). G's L0.3 made doors and tests nodes of their own. Under the floor's R-2 unit, which P3-F2 counts, G's tree grows its module SCC from 14 to 91 members (cG §S-05). B's tree shrinks from 23 to 4 under the same unit (cB §2, S-05).
+4. **Rule-count identity is not paint identity** (S-28). B's listed `./styles` reorder kept 1,964 = 1,964 rules and passed the cascade verifier, yet it drops every Chip's `--accent-band-strength` from 22%/25% to 18% (cB-R9). The browser run missed it, because band selection is by file name and none of the five specs that read chip paint was selected.
+5. **The chains no longer reach HEAD** (S-32). Both kits are anchored to 10.0.1 code digests. HEAD carries 10.1.0, so each replay refuses it. Pass 4 re-records on the moved base before anything is judged.
+
+---
+
+## P3-1 · Registry
+
+| id | unit set declared by | enforced between units | within a unit | status | conv. | re-trigger / refutation | pass-4 role |
+|---|---|---|---|---|---:|---|---|
+| D1-B | a module is a code dir in `src` or `scripts` with a door (B7), recursively; containers and kind slots excepted | privacy: the recursive door seal on every module, kernel included (B1); direction (B8); sibling acyclicity, value and type (B4) | modules proposed by G's dominance, named in `authored/names.json`, pinned (B11); the base rule | ADVANCE | 76.9% | — | the one live route; third full pass with G's harvest |
+| D1-G | first-level component units; nested modules by eponymous root, authored base or carve (E3) | B1 only into a component unit; no kernel seal; no sibling-cycle clause | dominance nesting, eponymy, authored overrides | **BANK** | 44% | re-trigger in §P3-2.2 | harvest only (§P3-2.2) |
+| D1-D′ | — | — | — | BANK (unchanged) | 7% | re-trigger unchanged (§P2-2); not fired: no pass-3 battery found a rank inversion B4 and B8 both miss | none |
+| D1-A | — | — | — | BLOCK (unchanged) | 35% | — | none |
+| D1-C, D1-E, D1-F | — | — | — | BANK (unchanged) | 40/35/30% | no trigger fired: no owner ask for C′, no per-unit fact the pin cannot hold (E), no route landed placement outside a chain (F) | none |
+
+---
+
+## P3-2 · Route entries
+
+### P3-2.1 · D1-B · Sealed modules, flat: ADVANCE, 76.9%
+
+**What ran** (B-proto §1-§6, confirmed by cB §1 and xjGB §0).
+
+| item | result |
+|---|---|
+| chain | S1..S32: engine move lists and exact-text rows, no hand edit |
+| replay | `62878b7f…51e1cc` over 1,434 files, `--twice` no-op; reproduced by two non-authors (cB §1 by three arms, xjGB §0) and recomputed by cB from the digest's definition without the kit |
+| toolchain | build, both `vue-tsc`, demo build, entries, surface (0 differences), floor gates: all 0 |
+| gate | 14 of 17 GREEN; RED B0 450, B2 71, B6 61; wired into `npm test` with no off switch |
+| coupling | value SCCs 2/4 → 0/0, module SCC members 23 → 4 (cB §2, S-05) |
+| browser | 65 specs, 324 tests: 134/190/8 on both arms, 0 new failures (B-proto §6) |
+| package | `verify:package` RED, +13,056 B over the floor base (B-proto §8.5) |
+
+**The critic's items** (cB §2): 20 CLOSED, 6 OPEN (S-03, S-10, S-12, B-01, B-08, B-10). Two re-opened against the route's claims (S-12, B-08).
+
+**This registry's reading of the critic's outside findings** (§P2-6.5: a finding re-opens only when it maps to a listed item or to an edict clause the list leaves out):
+
+| finding | maps to | effect |
+|---|---|---|
+| cB O-1: same-dir file cycles go to `meta.b4info`, which B-LAW §8 does not state | B-01 (already open) | none new; the law states the exemption or B4 counts them |
+| cB O-2: `vite.utility-emit.ts:86` returns silently when `theme/index.css` is missing | the edict's "no masking fallbacks", which no item names | **new item S-14**; the two-clean count restarts |
+| cB O-3: FD-5's classifier rejects F-2's own rewrite | S-10 (already open) | none new; a floor defect shared by every route |
+| cB O-4: `seal.mjs --pin <file>` swaps the reviewed pin | B-11, under the edict's "no dual paths" | **B-11 re-opened**: the pin has one path |
+| cB O-5: six timeouts at load 131-156 | no item | logged: a gate verdict is read on a quiet machine |
+| cG outside: `tests/utils` is a placeholder dir outside E3P's scope; B15 judges only the sealed zones | B-07, under the edict's "ALL file directories" | **B-07 re-opened**: names are judged in all five zones |
+| cG G-04: `import(…).catch(() => null)` on a live file passes | S-14 (new) | folded into S-14 |
+
+**Registry's entry line for pass 4:** 27 items (26 + S-14), 18 closed, 9 open (S-03, S-10, S-12, S-14, B-01, B-07, B-08, B-10, B-11), 66.7%. The critic's 76.9% stands as pass 3's measurement; this line is what pass 4 starts from.
+
+**Why ADVANCE.** No open item needs a primitive. B-01, B-10 and S-03 are listed route work; S-10 and part of S-12 are floor work (§P3-6); B-07, B-11 and S-14 are additive clauses; B-08 has one cure (§P3-5, P3-R2).
+
+**The largest open body of work** is R-5 (S-30): 55 files over 500 lines (20 in `src`) and 6 dirs over 12, including `tests-visual` at 177. No route in any pass split a file.
+
+### P3-2.2 · D1-G · Eponymous closures: BANK, 44%
+
+**What ran** (G-proto §0-§5, confirmed by cG §1 and xjBG §1): 28 steps (304 engine moves, 19 rows), replay `b26243ef…eb7c6` over 1,360 files reproduced by two non-authors; toolchain GREEN; cascade identical on all 4 CSS entries; gate 15 of 18 GREEN (RED E1 1, E4 64, E6 18); `./aurora-config` landed (P3-R5); browser 74 specs, 0 new failures, π floor bites under the plant; `verify:package` +1,618 B over the floor base.
+
+**The critic's items** (cG §4): 11 CLOSED, 14 OPEN (S-03, S-05, S-08, S-11, S-12, G-01, G-02, G-04, G-06, G-07, G-09, G-10, G-11, G-12). None re-opened.
+
+**Why BANK, against the critic's ADVANCE.** Pass 2 advanced G on the ground that nothing measured refuted its core. Pass 3 measured three things that do:
+1. **The merge test refuses its declaration** (§P3-3). G's law cannot read a nested door as a module (L2.5 sends every nested door to `U/index.ts`; xjGB §3.2(a), 22 lines), and its base rule cannot see through a door (L2.8; xjGB §3.2(b), 13 lines; cG outside finding 4). Its B1 seals only first-level component units, so 118 unit → kernel crossings past a kernel door are unjudged (xjBG B1). R-2 as amended and X-10 describe units that a parent reaches through a root door, at every depth, so the gap is in G's reading, not in B's tree.
+2. **Its FD-2 stop rests on a unit function no ruling grants.** L0.3 makes doors and tests their own nodes. Under the floor's R-2 unit, the one P3-F2 counts, G's tree grows from 14 to 91 SCC members; with tests alone as nodes, 5 new pairs remain (`menu ↔ menu/items ↔ menu/sub`, `sheet ↔ sheet/detents`, `toast ↔ toast/toaster`), each closed by a root door re-exporting down and a child reading up (cG §S-05, G-12).
+3. **Its code runs a rule its law does not state** (S-21): B8 skips every test file, and a literal reading of L4.2 gives 36 edges from 25 colocated tests into `demo`/`tests` (cG G-01).
+
+Each could be cured inside G, but each cure moves G toward B's declaration (a door per nested unit, the floor's unit, B's stated test arm). That is the merge test's answer, so G banks and its working parts transfer.
+
+**Re-trigger.** Either condition reopens G:
+- the pass-4 critic's battery, which must plant kernel-interior reaches and nested-module reaches (§P3-7.4), shows that B's doors buy no catch that G's E3 and B1 would not also make, **and** the owner rules the door bytes too high in the ratchet row (P4-R3);
+- the owner asks for eponymy as the declaration.
+
+Reopening requires L0.3 replaced by the floor's unit and B8's test exemption either stated or removed, before any gate reading counts.
+
+**Harvest into B** (each is earned: G ran it whole-tree and a critic judged it):
+- L7.1, the dominance split, as B-S11's proposer for dirs over 12 inside a component unit (a person still names each dir).
+- `./aurora-config` (G's `rows/16-aurora-config.json`, `rows/17-entries.json`, the boot-graph re-point): B's open P3-R5 item.
+- The `accent-tone.css` placement G's tree carries (F-7/FD-3 → `src/styles/`, loaded at its HEAD rung, cascade identical): B-08's cure.
+- G's name deltas, reviewed in B's `names.json` with reasons: `register` and `drop` against B's `constants` and `resolve` (G's objection: `constants/constants.ts` and `resolve/resolve.ts` stutter), `toaster`, and `SheetContent.vue` heading `detents`. The `aurora/config.ts` beside `aurora/config/` collision is decided in the same review (B-07).
+- L4.5's owner ranking for rerouted consumer imports, and its dynamic-import construction for R-10's async boundary.
+- `tools/browser-pair.mjs` (pairs a migrated run against several base arms).
+
+**Held with the bank, not in the checklist:** G-01..G-12 as cG §4 left them. G-09 (churn under hysteresis) was never measured in any pass.
+
+---
+
+## P3-3 · The merge test (S-13)
+
+**Run in both directions and recorded** (xjBG, xjGB). Neither tree passes the other's gate, so B and G do not merge into H.
+
+| direction | reading | total | RED |
+|---|---|---:|---|
+| B's seal on G's tree | literal (G has no pin) | the gate throws: no pin, no off switch | — |
+| | B's own pin | 1,646 | 14 of 17 |
+| | the gate's reading of G's tree as the pin | 999 | 14 of 17 (B11 structural arm only) |
+| G's merge set on B's tree | E0, E1, E1K, E2, E3, E3N, E3P + B1, B8, B12, B14 | 54 | E1 1, E2 42, E3N 10, B12 1 |
+
+xjBG found one arithmetic slip in B-proto §4: B's table on G's tree omits B14 1 and sums to 999 where the gate gives 1,000. It changes no verdict.
+
+**Which clauses name a real mechanism difference.**
+
+| difference | clauses | lines | real? | ruling |
+|---|---|---:|---|---|
+| **the unit declaration**: a door in every module dir (B) against an eponymous root or authored module under a first-level unit (G) | B7, B1, B4, B11 on G; E2 (a)+(b) on B | 63 + 143 + 2 + 48; 35 | **yes** | **keep B's.** R-2 makes "a sub-component's dir … a unit inside its parent", and X-10 makes the anchoring door "the index at the unit root that an entry or a parent unit reaches", so a nested unit has a root door. The edict asks that modules be "encapsulated"; G's tree leaves 118 unit → kernel crossings past a kernel door unjudged (xjBG B1) and carries 2 sibling cycles B4 finds (xjBG B4). G's 35 E2 lines on B's tree are G's law unable to read that door, not a defect in B's tree |
+| **the test home** (R-3): B drops the kernel from a unit test's subject and reads a directory read as a walk; G counts the kernel and sends such tests to the harness | B16 62, B8 12 on G; E7 44 on B | | **yes** | **keep B's** (B-LAW §9). It colocates 26 more tests (`tests/components/dialog/*` into `dialog/__tests__/`), which is the edict's direction, and its B8 test arm is stated, where G's is an unstated exemption (cG G-01) |
+| **the scripts door's language** | B12 1 on B | 1 | yes, small | **keep B's**: a scripts module's door is `index.ts` when its code is TypeScript, the edict's "befitting their languages". G renamed the file to `.mts` instead |
+| **scripts across zones** | S1 2, S2 1 on B | 3 | yes, small | S2 (`safari-probe.mjs` has no reader) is **settled by R-8's text**: "Tooling scripts (`safari-probe.mjs`, …) are placed inside the `scripts/` module they serve". G's L6.2 deletion reads against it. B places it in pass 4 (B-10, S15). S1 is B-S15 route work |
+| the consumer scope of R-10: B judges every consumer zone, G the demo | B2 138 on G | | a scope question | owed ruling **P4-R1** |
+| the CSS channel: B built doors and the post-collapse placement, G built neither | B3 17, B5 3, B14 1 on G | | **no**: G's unbuilt work (G-07), not a rule difference | — |
+| the naming source: two authored name sets | E2 (c)+(d) 7, E3N 10 on B | 17 | **no**: a review diff | one reconciled `names.json` (the harvest above) |
+| shared residue | B0, B6/E4, E1 (FD-8 hold on both trees), B2's demo lines vs E6 | | no | floor and route items |
+
+**H is not earned.** Pass 2 defined H as "modules found by dominance, named by a person, sealed by a door", with ownership by dominance and no door inside a unit. B already carries the first two parts (dominance proposes, `names.json` names, B11 pins). The third part, no nested door, is what the merge test refused. H is not minted, and no merge is recorded.
+
+**One measurement caveat.** xjGB's merge set read "E0-E3" as E0, E1, E1K, E2, E3, E3N, E3P plus G's adopted B-clauses. Excluding E3N would drop 10 lines and change no verdict (xjGB §5.2).
+
+---
+
+## P3-4 · The door cost (S-23): answered
+
+Measured on one tree, B's migrated tree, by a seat that authored neither route (xjGB §4).
+
+| reading | doors | bytes | statements | one-statement doors |
+|---|---:|---:|---:|---:|
+| B7: a door in every module dir | 158 | 141,307 | 698 | 43 |
+| G: entries, unit roots, and nested dirs with neither an eponymous root nor an authored module | 81 | 95,142 | 417 | 19 |
+| dropped under G | 77 | 46,165 | 281 | 24 |
+| of which kernel doors | 47 | 35,906 | 200 | 10 |
+| of which nested doors | 25 | 8,062 | 67 | 12 |
+| of which scripts doors | 5 | 2,197 | 14 | 2 |
+
+Battery, 89 plants from the three pass-2 batteries plus 5 legal probes:
+
+| judge | caught | legal probes flagged |
+|---|---:|---:|
+| B's seal | 84 | 1 (Dp-crit L3) |
+| B's seal under G's declaration | 83 | 0 |
+| G's gate, full | 78 | 0 |
+
+The one catch the doors appear to buy (B-crit I5, an own-door import) comes from B1's own-door arm on a unit-root door both readings keep. One other (I21) is incidental. The 25 nested doors buy nothing E3 or another clause does not also catch.
+
+**Reconciliation with B-proto §5.** B-proto counted 157 door files, 99 internal, and "at most 38 (11,028 B)" droppable. xjGB counts 158 and 77. B-proto's upper bound covers nested doors under `rootName` only; xjGB also drops kernel and scripts doors, which G never requires. The two are different class sets, not a conflict. xjGB's is the one-tree measure §P2-6.4 asked for, and cB re-counted 158 files and 141,307 B on the replayed tree.
+
+**The answer.** B7 costs 77 doors and 46,165 B of door source (33%) beyond G's reading, and on the pass-2 batteries it buys no catch through the door rule itself. It costs one flag on a probe the Dp critic wrote as legal. The package cost is not decomposed: B's migration adds 13,056 B to the package where G's adds 1,618 B (B-proto §8.5, G-proto §S-03), and how much of the 11,438 B difference the doors carry is unmeasured.
+
+**The ruling.** The doors stay, under the declaration kept in §P3-3. The case for them is the clauses they make expressible, which no pass-2 battery planted: the kernel seal (118 crossings G's law cannot see), B4's module-grain acyclicity, and one declaration rule at every depth instead of two. Two consequences follow:
+- **Dp-crit L3 is not a false positive under the kept law.** A global composable read deep past `composables/dom/index.ts` crosses a module's door, and B1 judges it.
+- **The case must be measured, not asserted.** The pass-4 critic's battery plants kernel-interior reaches, nested-module reaches and a type-only sibling cycle (§P3-7.4). If they buy nothing, and the ratchet row (P4-R3) shows the doors' package bytes, G's re-trigger fires.
+
+---
+
+## P3-5 · Rulings: P3-R1..P3-R9 as applied, and what is still owed
+
+| id | ruled | applied on B's tree | applied on G's tree | still owed |
+|---|---|---|---|---|
+| P3-R1 | (a) publication anchors | yes: 10 kernel entries, 285 names, 0 outside (cB S-02) | yes: E1K 0 | — closed |
+| P3-R2 | CSS by the same law, after the R-7 collapse | the collapse is built; **the `accent-tone.css` rung changes Chip paint** (cB-R9) | the collapse is not built | the cure for B-08: place the sheet where F-7/FD-3 puts it on the post-collapse channel, `src/styles/`, loaded at its HEAD rung, as G's tree has it. B-LAW §6's authored rung is withdrawn. P3-R2's "both routes must agree" is moot with G banked; the law's answer is the one the placement computes |
+| P3-R3 | slots strict | `dock/__tests__` 16 > 12 | `dock/__tests__` 17 > 12 | route work: home dock's tests in the slots of the dock modules they test. If more than 12 stay at dock's root, R-5 requires the route to report it as a counterexample before formation, and the driver rules |
+| P3-R4 | the law governs; `./blob-config` owns config | yes: 40 MIGRATION rows, 0 multi-door symbols | yes: E5 0 | — closed |
+| P3-R5 | 90 edges cured; `./aurora-config` accepted | **not landed**; 2 demo files held for the boot-graph pin | landed | route work: B takes G's rows (§P3-2.2) |
+| P3-R6 | `@source` excludes `__tests__/`; `isTeleportedTarget.ts` by its readers | glob excluded; file held | glob excluded; file held (E1 1) | **floor**: the css-source glob-delta arm (P4-F2) |
+| P3-R7 | cross-zone readers go global | yes (cB S-03) | yes | — closed |
+| P3-R8 | `@source` in a door, own subtree only | B14 0 | B14 0 | — closed |
+| P3-R9 | the rebind wording | no row | no row | **its premise does not match the instrument** (P4-R3) |
+
+**The bundle-ratchet rows.** `scripts/verify-export-types.mjs:942-958` reads `.bundle-ratchet` as one total, the unpacked content byte count, and fails in both directions: over the datum is "increase forbidden", under it is "shrink — rebind down deliberately". There are no per-entry ceilings, so P3-R9's "leaves every entry's byte ceiling unchanged" describes nothing the instrument holds, and a path remap cannot move the number. What is owed is the datum rows themselves:
+
+| row | delta | measured on | status |
+|---|---:|---|---|
+| floor: FD-7 stops emitting 4 unreachable `.d.ts` (−5,637 B), m02 and m03 add 126 B | −5,511 B | datum 2,916,129 (FP3 gap 1) | owed |
+| route B's migration | +13,056 B over the floor base | the same (B-proto §8.5) | owed, with its bytes broken down by door class |
+| route G's migration | +1,618 B | the same (G-proto §S-03) | banked with G |
+
+The datum moved to 2,919,057 at `d8bda2a9` (10.1.0). Every row is re-measured on the pass-4 base.
+
+**Owed before pass 4** (to the owner as one list; where a ruling arrives late, the route measures both arms):
+
+| id | question | arms | evidence |
+|---|---|---|---|
+| P4-R1 | R-10's scope | (a) as written: the demo is held to doors, and tests are governed by R-3's test seam; (b) every consumer zone is held to entries (B2) | B2 on B's tree: demo 22, tests 32, tests-visual 16, scripts 1 (B-proto §5); on G's: demo 18 = G's E6 (xjBG B2) |
+| P4-R2 | the names consumers read that no entry publishes | publish each on its owning entry (a surface growth with a MIGRATION "added" row and a pin row), or change the consumer | B: 44 lines (B-proto §8.3); G: E6 18 (G-proto §G-02). Carried from pass 2's X-5 |
+| P4-R3 | the ratchet | re-word P3-R9 to the instrument (one total datum, two-sided), and rule each datum row above on the pass-4 base | §P3-5 table; `verify-export-types.mjs:942-958` |
+| P4-R4 | a moved CSS entry's dist name (FP3 gap 9) | (a) the export key targets the real dist path; (b) the build writes a one-line `@import` at the old name (what the floor does now: `dist/styles/theme.css` is `@import "./theme/index.css";`) | arm (b) is a file whose only content forwards to another, which the edict's "no shims" reads against |
+
+**Settled by text, not owed:** `safari-probe.mjs` is kept and placed (R-8's last sentence, §P3-3).
+
+---
+
+## P3-6 · The floor: open gaps
+
+FLOOR-P3's ten gaps, and the floor gaps pass 3's seats found.
+
+| id | gap | source | status | pass-4 disposition |
+|---|---|---|---|---|
+| FP3-1 | the ratchet ruling | FP3 | open | P4-R3 |
+| FP3-2 | FD-2 refuses placement pass 1 (three hook moves, 149 of 169 pairs) | FP3 | **closed by the routes**: B binds 10 files (B10), G holds by L1.6; neither overrides FD-2 | — |
+| FP3-3 | the masking fallback in `vite.utility-emit.ts:85-86` | FP3; cB O-2 | open; the file still returns silently after B's theme move | new item S-14, a route row that throws |
+| FP3-4 | browser band selection by file name | FP3 | open, and it **cost a finding**: B's list missed the five specs that read chip paint (cB-R10) | P4-F4 |
+| FP3-5 | Playwright `testDir` not modelled in F-1 | FP3 | open; it blocks the `tests-visual` carve (177 files) in both routes | P4-F5 |
+| FP3-6 | other source walkers | FP3 | partly: B's S32 converted two more; B0 450 is walks and computed reads left by FD-6's unrun harness conversion | route work, B-S12 (B-01) |
+| FP3-7 | colocated tests import vitest explicitly | FP3 | met on both trees: the test program type-checks 0 | — |
+| FP3-8 | scan-delta declarations differ by arm | FP3 | baseline artefact only | — |
+| FP3-9 | the CSS dist name | FP3 | open | P4-R4 |
+| FP3-10 | the baseline vitest ran before the demo build | FP3 | ordering artefact | the pass-4 baseline builds the demo first |
+| P3-G1 | FD-8: no arm to declare a css-source glob delta, so `isTeleportedTarget.ts` is held on both trees | B-proto §8.6, G-proto §6.1, xjGB §3.1 | open | P4-F2 |
+| P3-G2 | F-2 rewrites the generated root literal `"tests-visual/.cache"` to `"null"` when `resolve.mjs` moves (`e.to` is null for a generated target) | B-proto §8.4 | open | P4-F3 |
+| P3-G3 | FD-5's classifier reads the F-2 engine's own rewrite as `UNCLASSIFIED` (`join("src","styles","tokens.css")` → `join("src/styles/tokens/index.css")`), and no chain ran FD-5 per step | cB S-10, O-3 | open | P4-F6 |
+| P3-G4 | FD-4's cascade verifier accepts a listed reorder by rule count and a selector-token heuristic; 92 swapped pairs share a declared property, and the one that changes paint (`.accent-tone` after `.glass-chip`) scored as no risk because the classes co-occur only through `chipVariants.ts` | cB-R9 | open | P4-F7 |
+| P3-G5 | the browser suite is 58% red at base (B: 190 of 324; G: 213 of 393), so "0 new failures" carries no signal for a band with no base-green spec | B-proto §6, G-proto §5 | open | P4-F4 reports each band's base-green count |
+| P3-G6 | R-1's register retire lives inside B's chain (S21) and outside G's, so G's tree fails 9 `gate-register` tests and B's does not | cG S-11, B-proto S21 | open | P4-F1: W-REGISTER-COLLAPSE's retire lands as a floor precondition, as R-1 orders ("lands BEFORE the structure migration"), and B's S21 leaves the chain |
+| P3-G7 | undoing a row by reversing its hunks is ambiguous when a hunk's text recurs | B-proto §8.9 | info | the replay only applies forward; no tool owed |
+
+---
+
+## P3-7 · Facts pass 3 established
+
+These continue S-1..S-23.
+
+**S-24 · Both chains replay exactly from committed artifacts, by non-authors.** B's `62878b7f…` (1,434 files) was reproduced by cB and xjGB, and G's `b26243ef…` (1,360 files) by cG and xjBG. Each `--twice` is a no-op and each whole-chain rerun writes nothing. S-20's failure is cured.
+
+**S-25 · P3-R1(a) cured S-18.** No kernel entry re-exports a file outside the global zone on either tree, and B's coupling shrinks under the floor's unit (value SCCs 2/4 → 0/0, module SCC members 23 → 4).
+
+**S-26 · The merge test separates the declarations.** Both directions RED (§P3-3). The unit declaration accounts for 35 of G's 54 lines on B's tree and for B7, B1, B4 and B11 on G's.
+
+**S-27 · The unit function belongs to the rulings.** G's route-authored L0.3 read FD-2 as +0 at every step while the floor's R-2 unit reads 14 → 91 members on the same tree. A route may not choose the unit its own stop is counted over.
+
+**S-28 · Rule-count identity is not paint identity.** A listed reorder with 1,964 = 1,964 rules changed Chip's band strength from 22%/25% to 18%. Two rules in one layer at one specificity that declare the same property on co-occurring classes cannot swap without a value change.
+
+**S-29 · The browser baseline is mostly red.** 58% of the selected tests fail at base in headless runs. A 0-new-failure delta is evidence only for bands with base-green specs.
+
+**S-30 · R-5 is the largest unrun work.** After three passes, 55 (B) and 56 (G) files are over 500 lines, and `tests-visual` holds 177 direct files. No route has split a file or carved `tests-visual`.
+
+**S-31 · The ratchet is one two-sided total.** `.bundle-ratchet` holds a single unpacked byte count that fails on growth and on shrink. P3-R9's per-entry wording does not describe it.
+
+**S-32 · HEAD's code moved after the cuts.** 10.1.0 (`9065d924`, `d8bda2a9`) changed 12 code files, including the new `configurator` work, and the ratchet datum. Both chains are anchored to 10.0.1 digests and refuse HEAD.
+
+---
+
+## P3-8 · Pass-4 plan
+
+### P3-8.1 Routes
+
+| route | status | pass-4 work |
+|---|---|---|
+| D1-B, with G's harvest (§P3-2.2) | ADVANCE | third full pass: close the 9 open items (§P3-9) |
+| D1-G | BANK | none; the re-trigger is watched through the pass-4 battery |
+| D1-D′, D1-A, D1-C, D1-E, D1-F | unchanged | none; triggers watched |
+
+One live route is the merge test's result, not a portfolio choice. The charter asks for underexplored formulations when agents converge on one family. The one question still open between declarations, whether the doors earn their bytes, is put to the pass-4 battery (§P3-8.4) rather than to a second route.
+
+### P3-8.2 Order
+
+1. **Rebase.** Re-record B's chain on HEAD's code (10.1.0, datum 2,919,057). The new `configurator` files go through the same law as every other file. Commit the re-recorded kit before any seat judges it.
+2. **Rulings.** P4-R1..P4-R4 to the owner as one list.
+3. **Floor.** P4-F1..P4-F7, built once on one seat, each with a plant that is RED before and GREEN after.
+4. **Route.** B's third pass, on the floor, with the harvest.
+5. **Critique.** A fresh critic who authored nothing in passes 2-4 writes and hashes the battery before reading the kit. The battery carries the plants §P3-8.4 names.
+6. **Pass-4 agglomeration.**
+
+### P3-8.3 Floor work
+
+| id | build | why |
+|---|---|---|
+| P4-F1 | R-1's register retire as a floor precondition row (W-REGISTER-COLLAPSE's first act); B's S21 leaves its chain | P3-G6 |
+| P4-F2 | FD-8: F-2 declares a css-source glob delta, so a move that changes a glob's match set is carried, not held | P3-G1; P3-R6 |
+| P4-F3 | F-2: a generated target (`e.to` null) is never rewritten | P3-G2 |
+| P4-F4 | F-10 selects specs by the graph: every spec that reads a moved file, its classes or its paths; each band reports its base-green count, and a band with none says it has no browser signal | FP3-4, P3-G5, S-28, S-29 |
+| P4-F5 | F-1 reads Playwright's `testDir` | FP3-5 |
+| P4-F6 | FD-5 classifies the engine's own rewrites as re-points; the chain runs FD-5 per step | P3-G3 |
+| P4-F7 | FD-4 refuses a listed reorder that swaps two rules declaring one property, in one layer and specificity, on classes that co-occur in any source class recipe, unless a band spec that reads the property runs | P3-G4, S-28 |
+
+### P3-8.4 What pass 4 must prove
+
+**Shared bar.** §P2-6.4's bar unchanged, plus:
+- the chain replays from committed artifacts on HEAD's code (S-32);
+- FD-2 is counted over the floor's R-2 unit, never a route's (S-27);
+- the cascade is value-identical on every band a reorder touches, and a spec that reads the property ran (S-28);
+- `verify:package` is GREEN against a ruled datum row (P4-R3).
+
+**B closes the 9 open items** of §P3-9.
+
+**The battery must plant** (so that the door ruling is measured, §P3-4):
+- a unit file reaching a kernel module's interior past its door;
+- a sibling module reaching a nested module's interior inside one unit;
+- a type-only cycle between sibling modules;
+- a same-directory file cycle (cB O-1);
+- a silent return on a missing file, and `.catch(() => null)` on a live target (S-14);
+- a placeholder dir outside `src` and `scripts` (B-07);
+- a reorder of two property-sharing rules on co-occurring classes (B-08, P4-F7);
+- a second pin path (B-11).
+
+### P3-8.5 Convergence criterion
+
+§P2-6.5 unchanged. The checklist is §P3-9, frozen here. The two-clean-passes count for B is at 0 and starts with the pass-4 critique. D1-B converges no earlier than the pass-5 agglomeration.
+
+---
+
+## P3-9 · Open gaps, enumerated (the pass-4 checklist)
+
+The pass-3 checklist (§P2-7) carries forward with its text frozen. One item is added under §P2-6.5's rule. G's items are held with the bank.
+
+**Added.**
+- **S-14 · No masking fallback.** The gate catches a silent return on a missing file and a swallowed load of a live target, and `vite.utility-emit.ts:85-86` throws. (Admitted: cB O-2 maps to the edict's "no masking fallbacks", which no item named; cG's live-target plant maps here.)
+
+**Status entering pass 4** (critic's verdict, then this registry's reading where it differs):
+
+| item | pass-3 critic | entering pass 4 | what closes it |
+|---|---|---|---|
+| S-01 | CLOSED | CLOSED | re-met by the rebased kit's commit (step 1) |
+| S-02 | CLOSED | CLOSED | — |
+| S-03 | OPEN | OPEN | P3-R3 slot bound or a reported counterexample; P3-R5 landed; P3-R6 placed after P4-F2; P3-R9 via P4-R3 |
+| S-04..S-09 | CLOSED | CLOSED | — |
+| S-10 | OPEN | OPEN | P4-F6, P4-F7 |
+| S-11 | CLOSED | CLOSED | — (P4-F1 moves the register retire out of the chain) |
+| S-12 | OPEN | OPEN | P4-F4, with the chip-paint specs run |
+| S-13 | CLOSED | CLOSED | — |
+| S-14 | — | OPEN (new) | above |
+| B-01 | OPEN | OPEN | B0 after B-S12; B2 after P4-R1 and P4-R2; B6 after B-S11; B-LAW §8 states or counts same-dir file cycles |
+| B-02..B-06 | CLOSED | CLOSED | — |
+| B-07 | CLOSED | **OPEN (re-opened)** | B15 judges all five zones (`tests/utils`); G's four name deltas and `aurora/config.ts` reviewed |
+| B-08 | OPEN | OPEN | `accent-tone.css` placed per P3-R2 as §P3-5 reads it, cascade value-identical, a chip-paint spec run |
+| B-09 | CLOSED | CLOSED | — |
+| B-10 | OPEN | OPEN | B-S10 (`./aurora-config`), B-S11 (every file over 500 lines split into named modules, or a counterexample per file), B-S12, B-S14, B-S15 (`safari-probe.mjs` placed), B-S16 (after P4-F5) |
+| B-11 | CLOSED | **OPEN (re-opened)** | the seal has one pin path: no `--pin` option |
+| B-12 | CLOSED | CLOSED | answered (§P3-4) |
+| B-13 | CLOSED | CLOSED | — |
+
+**Count entering pass 4:** 27 items, 18 closed, 9 open (S-03, S-10, S-12, S-14, B-01, B-07, B-08, B-10, B-11).
+
+**Held with the bank.** G-01..G-12 as cG §4 left them, and D′'s gaps as §P2-7 left them. They return with their route's re-trigger.
+
+No route converged in pass 3. The kept declaration is B's.
