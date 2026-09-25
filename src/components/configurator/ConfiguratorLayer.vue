@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useId, type HTMLAttributes } from "vue";
+import { computed, useId, useSlots, type HTMLAttributes } from "vue";
 import { ChevronDown } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
 
@@ -47,6 +47,11 @@ const props = withDefaults(
          * flush). Default `false` keeps the body gap-only.
          */
         dividers?: boolean;
+        /**
+         * When the `#actions` header slot shows. `"open"` (default) shows it only
+         * while the layer is expanded; `"always"` keeps it in the collapsed header too.
+         */
+        actionsWhen?: "open" | "always";
         class?: HTMLAttributes["class"];
         /** Body wrapper class override. */
         bodyClass?: HTMLAttributes["class"];
@@ -57,8 +62,11 @@ const props = withDefaults(
         // `defaultOpen` (true) for the uncontrolled case — no `open: undefined`
         // withDefaults override is needed.
         defaultOpen: true,
+        actionsWhen: "open",
     },
 );
+
+const slots = useSlots();
 
 // Vue 3.5 defineModel drives the open state — no manual `open` prop +
 // `update:open` emit + `internalOpen` mirror + external-sync watch. When a parent
@@ -82,6 +90,10 @@ function onToggle(): void {
 }
 
 const stateAttr = computed(() => (open.value ? "open" : "closed"));
+
+const showActions = computed(
+    () => !!slots.actions && (props.actionsWhen === "always" || !!open.value),
+);
 </script>
 
 <template>
@@ -106,6 +118,13 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
         "
         :data-state="stateAttr"
     >
+        <!-- The header row: label | actions | chevron. A button may not contain
+             interactive content, so the actions are the trigger's SIBLING, not its
+             child. The trigger spans the whole row as a subgrid (label in track 1,
+             chevron in track 3) and the actions sit in track 2 above it, so a click
+             on an action never reaches the toggle and the trigger keeps the full
+             hit area. Tab order is toggle → actions. -->
+        <div data-slot="configurator-layer-header" class="configurator-layer-header">
         <button
             type="button"
             data-slot="configurator-layer-trigger"
@@ -116,7 +135,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
                     // transition-control surface cross-fade + the canonical
                     // focus-ring under the full four-state contract. The press
                     // springs on the same register every band atom uses.
-                    'group flex w-full items-center justify-between gap-2 py-2',
+                    'group w-full py-2',
                     'tap-squish transition-control text-left focus-ring',
                 )
             "
@@ -125,7 +144,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
             :data-state="stateAttr"
             @click="onToggle"
         >
-            <div class="flex min-w-0 items-baseline gap-2">
+            <div class="configurator-layer-heading flex min-w-0 items-baseline gap-2">
                 <!-- Section label:
                      section (√φ subheading / 600 via .configurator-section-label),
                      NOT a row — a rung above the body-row label register.
@@ -145,10 +164,18 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
                  (Tailwind's `rotate-180` writes `rotate`, not `transform`, so it would SNAP);
                  the chevron shares the register the Accordion + Select carets use. -->
             <ChevronDown
-                class="h-4 w-4 shrink-0 text-muted-foreground group-data-[state=open]:rotate-180 transition-disclosure"
+                class="configurator-layer-chevron h-4 w-4 shrink-0 text-muted-foreground group-data-[state=open]:rotate-180 transition-disclosure"
                 aria-hidden="true"
             />
         </button>
+        <div
+            v-if="showActions"
+            data-slot="configurator-layer-actions"
+            class="configurator-layer-actions flex items-center gap-1"
+        >
+            <slot name="actions" :open="open" />
+        </div>
+        </div>
         <!--
             CSS-only animated reveal: the outer grid morphs its single row
             from `0fr` to `1fr` with `transition-[grid-template-rows]`; the

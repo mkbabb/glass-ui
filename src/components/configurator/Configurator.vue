@@ -49,6 +49,21 @@ export type ConfiguratorAsideSide = "left" | "right";
 export type ConfiguratorGalleryPlacement = "aside" | "top";
 
 /**
+ * How the studio's regions are surfaced.
+ *
+ * `attached` (default) is one instrument: the shell paints a single glass plate
+ * around the gallery, stage and aside, and the aside is divided from the stage by
+ * a hairline seam.
+ *
+ * `detached` paints NO shell plate, border or cast. The gallery, stage and aside are
+ * each their own glass surface (a floating card with its own border, cast and
+ * `--radius-card` corner), separated by the `--configurator-detached-gap` token, so
+ * the page ground shows between them. The size container, the fork, the scroll
+ * modes, the layers and the aside side are unchanged.
+ */
+export type ConfiguratorLayout = "attached" | "detached";
+
+/**
  * Generic preset descriptor. Consumers pass `T` as the live config shape.
  * The primitive carries no preset semantics beyond `key + label` for
  * the picker row and `config: T` for the active payload — preset
@@ -108,6 +123,12 @@ const props = withDefaults(
          */
         galleryPlacement?: ConfiguratorGalleryPlacement;
         /**
+         * How the regions are surfaced. Default `"attached"` (one shell plate).
+         * `"detached"` drops the shell plate; the gallery, stage and aside become
+         * separate glass cards over a token gap. See {@link ConfiguratorLayout}.
+         */
+        layout?: ConfiguratorLayout;
+        /**
          * Aside width band at `lg`+ width, as a CSS length pair driving
          * `minmax(--configurator-aside-min, --configurator-aside-max)`. The
          * prop sets the two inline custom properties; consumers may instead
@@ -143,6 +164,7 @@ const props = withDefaults(
         size: "md",
         asideSide: "right",
         galleryPlacement: "aside",
+        layout: "attached",
         expandable: false,
         expandLabel: "Expand configurator",
         collapseLabel: "Collapse configurator",
@@ -180,6 +202,16 @@ const emit = defineEmits<{
  * the thing that owns the studio's rect, and `[data-slot="configurator"]` keeps its
  * three region children exactly as before.
  */
+const detached = computed(() => props.layout === "detached");
+
+/* A detached region's own surface: the floating card (its own border, cast and
+   `--radius-card` corner, clipped so the stage's content keeps the corner). */
+const regionSurface = computed(() =>
+    detached.value
+        ? "glass-floating rounded-card border border-border/60 overflow-hidden"
+        : undefined,
+);
+
 const shellClass = computed(() =>
     cn(
         // glass-floating is the canonical "studio panel" tier; honors
@@ -196,7 +228,11 @@ const shellClass = computed(() =>
         // beside the container declaration in configurator.css, which is the same
         // discipline §4 states for the two-column geometry — structural layout ships
         // as precompiled CSS, never as a bracket that can die in a content scan.
-        "configurator-shell glass-floating rounded-panel border border-border/60 overflow-hidden",
+        "configurator-shell",
+        // `detached` paints no shell plate: each region carries its own surface
+        // (`regionSurface` below) and the page ground shows between them.
+        !detached.value &&
+            "glass-floating rounded-panel border border-border/60 overflow-hidden",
         props.class,
     ),
 );
@@ -293,7 +329,8 @@ const resolvedGalleryPlacement = computed<ConfiguratorGalleryPlacement>(() =>
 // stays unset and the cascade/defaults apply.
 const containerStyle = computed(() => {
     const style: Record<string, string> = {
-        "--radius-ctx": "var(--radius-panel)",
+        // Detached, the nearest enclosing surface of a layer is the aside CARD.
+        "--radius-ctx": detached.value ? "var(--radius-card)" : "var(--radius-panel)",
         "--radius-inset": "var(--configurator-pad-inline)",
     };
     if (props.asideWidth != null) {
@@ -336,6 +373,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
     <div :class="shellClass" :style="containerStyle">
     <section
         data-slot="configurator"
+        :data-layout="layout"
         :data-aside-side="asideSide"
         :data-gallery="resolvedGalleryPlacement"
         :class="containerClass"
@@ -353,7 +391,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
         <div
             v-if="$slots.presets || (presets && presets.length > 0)"
             data-gallery-dock
-            class="configurator-presets shrink-0 px-3"
+            :class="cn('configurator-presets shrink-0 px-3', regionSurface)"
         >
             <slot name="presets" :presets="presets" :active-preset="activePreset">
                 <!--
@@ -403,7 +441,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
 
         <!-- ── Stage column (live specimen viewport) ─────────────────── -->
         <div
-            class="configurator-stage relative min-h-0 min-w-0 overflow-hidden"
+            :class="cn('configurator-stage relative min-h-0 min-w-0 overflow-hidden', regionSurface)"
         >
             <slot name="stage" />
         </div>
@@ -415,7 +453,7 @@ const controlsScrolls = computed(() => props.scrollMode !== "never");
              OUT to a section-level child (grid-placed); the aside now holds the
              controls body + the optional footer. -->
         <aside
-            class="configurator-aside flex min-h-0 min-w-0 flex-col"
+            :class="cn('configurator-aside flex min-h-0 min-w-0 flex-col', regionSurface)"
         >
             <!-- Controls column (layered config body) —
                  the `auto`/`always` scroll modes render the <FadingScroll axis="y">

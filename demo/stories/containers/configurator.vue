@@ -23,6 +23,8 @@ import {
     LabeledSwitch,
 } from "@glass/components/labeled-field";
 import LabeledSelect from "../../chassis/field/LabeledSelect.vue";
+import { Button } from "@glass/components/button";
+import { RotateCcw } from "@lucide/vue";
 
 interface Cfg {
     medium: string;
@@ -71,6 +73,10 @@ const cfg = useConfiguratorState<Cfg>({
 });
 
 const mediumOpen = ref(false);
+
+// The layout axis: one shell plate (`attached`) or separate region cards over the
+// page ground (`detached`).
+const detached = ref(false);
 
 // Live specimen geometry — every axis is driven off the config so the stage
 // SHOWS the configurator rather than printing it. Spread fans the three
@@ -175,6 +181,7 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
                     :presets="presets"
                     :active-preset="cfg.activePreset.value"
                     gallery-placement="top"
+                    :layout="detached ? 'detached' : 'attached'"
                     @select-preset="cfg.selectPreset"
                     @reset="cfg.resetCurrent"
                 >
@@ -271,6 +278,17 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
                     </template>
                     <template #controls>
                         <ConfiguratorLayer label="Field" sub="--field-*">
+                            <template #actions>
+                                <Button
+                                    size="sm"
+                                    emphasis="quiet"
+                                    icon-only
+                                    aria-label="Reset to preset"
+                                    @click="cfg.resetCurrent"
+                                >
+                                    <RotateCcw class="size-4" />
+                                </Button>
+                            </template>
                             <LabeledSelect
                                 v-model="cfg.config.medium"
                                 v-model:open="mediumOpen"
@@ -298,6 +316,13 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
                                 v-model="cfg.config.grain"
                                 label="Grain"
                                 description="Layer the paper grain overlay."
+                            />
+                        </ConfiguratorLayer>
+                        <ConfiguratorLayer label="Studio">
+                            <LabeledSwitch
+                                v-model="detached"
+                                label="Detached"
+                                description="Separate cards for stage and controls, over the page ground."
                             />
                         </ConfiguratorLayer>
                     </template>

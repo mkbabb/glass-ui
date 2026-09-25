@@ -4,6 +4,7 @@ export { default as ConfiguratorRow } from "./ConfiguratorRow.vue";
 export type {
     ConfiguratorAsideSide,
     ConfiguratorGalleryPlacement,
+    ConfiguratorLayout,
     ConfiguratorPreset,
     ConfiguratorScrollMode,
 } from "./Configurator.vue";

@@ -1,5 +1,23 @@
 # Changelog
 
+## 10.1.0 — 2026-09-24
+
+Two additive Configurator features, no break; `MIGRATION.md` is untouched. Both were asked for
+by the value.js consumer (records: `docs/tranches/BL/audit/INBOUND.md` O-68, O-75).
+
+- **`<ConfiguratorLayer>` — an `#actions` header slot (O-68).** The header is now a row:
+  label | actions | chevron. A button may not hold interactive content, so the actions sit
+  beside the toggle, not inside it: the toggle spans the whole row as a subgrid and the actions
+  take the middle track above it. A click on an action never toggles the layer, and tab order
+  is toggle, then actions. The slot receives `{ open }`. The new `actionsWhen` prop
+  (`"open"` default, or `"always"`) decides whether the actions show on a collapsed layer.
+- **`<Configurator layout="detached">` (O-75).** The default, `"attached"`, is unchanged: one
+  glass shell holds gallery, stage and controls. `"detached"` drops the shell's plate, border
+  and clip, and gives each region its own `glass-floating` card at `--radius-card`, separated by
+  the new `--configurator-detached-gap` (default `--space-body`). Layers inside the controls
+  card derive their corners from the card. `ConfiguratorLayout` is exported.
+- The configurator story uses both: a reset action on the Field layer and a Detached switch.
+
 ## 10.0.1 — 2026-09-22
 
 A geometry cure, no API change; `MIGRATION.md` is untouched. Reported by the chicago
