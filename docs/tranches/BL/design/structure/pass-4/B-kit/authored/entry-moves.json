@@ -1,0 +1,7 @@
+{
+ "note": "B-S4d authored entry-source move (LAW §1, clause B4). An entry source that aggregates its module's siblings is a door of the parent module, not of the dir it sits in.",
+ "why": "the ./motion-core entry source leaves motion/core/ for motion/: it re-exports core's files and five sibling modules (reveal, scroll, route, dissolve, spring, pointer), so it is a door of composables/motion, and core gets a module door of its own for its siblings (no core <-> sibling cycle). The export key and typesVersions are keyed by name (dist/motion-core.*), so the surface does not change",
+ "moves": [
+  { "from": "src/composables/motion/core/index.ts", "to": "src/composables/motion/motion-core.ts", "why": "LAW §1: an entry that aggregates its module's siblings is a door of the parent module; B4: core <-> sibling cycle" }
+ ]
+}

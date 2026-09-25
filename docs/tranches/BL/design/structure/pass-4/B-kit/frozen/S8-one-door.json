@@ -1,0 +1,295 @@
+{
+ "step": "B9 (R-6, P3-R4): one symbol, one door. 40 names leave their second entry; consumers re-pointed; a MIGRATION row per name",
+ "files": {
+  "src/components/blob/index.ts": {
+   "hunks": [
+    [
+     "export { default as Blob } from \"./Blob.vue\";\nexport type {\n    BlobMood,\n    BlobMerge,\n    BlobQuality,\n    MoodParams,\n    MetaballSource,\n    BlobConfig,\n    BlobGeometry,\n    BlobSatelliteTiming,\n    BlobMembrane,\n    BlobColor,\n    BlobSurface,\n    BlobInteraction,\n    SatellitePhase,\n    SatelliteInternal,\n} from \"./types\";\nexport { BLOB_CONFIG_DEFAULTS, BLOB_CONFIG_KEY } from \"./types\";\n// The calibrated hero preset and derived-palette ink-floor bracket\n// (the value.js-free config leaf that also backs the `/blob/config` subpath).\nexport {\n    BLOB_HERO,\n    LIGHTNESS_FLOOR_BRACKET,\n    LIGHTNESS_FLOOR_DEFAULT,\n    clampLightnessFloor,\n} from \"./presets\";\nexport { useBlobMood, type BlobMoodSystem } from \"./composables/useBlobMood\";\n",
+     "export { default as Blob } from \"./Blob.vue\";\nexport { useBlobMood, type BlobMoodSystem } from \"./composables/useBlobMood\";\n"
+    ]
+   ]
+  },
+  "src/components/blob/config.ts": {
+   "hunks": [
+    [
+     "// The `/blob` barrel STILL re-exports every symbol here (the union stays whole); this\n// is the narrower value.js-free door, not a fork.\n",
+     "// These names ship here alone; `/blob` publishes the component and its composables.\n"
+    ]
+   ]
+  },
+  "src/composables/motion/index.ts": {
+   "hunks": [
+    [
+     "// `constants` stays on this public surface too — it is keyframes-free (so it also\n// ships on `/motion-core`), but the bearing leaves read DAMPING/SNAP_THRESHOLD\n// directly from its `core/` owner.\n// Duplicate-exporting a pure-data module from two entries is benign.\n",
+     "// `constants` (DAMPING, SNAP_THRESHOLD, FRAME_MS) ships on `/motion-core` alone; the\n// bearing leaves read it from its `core/` owner.\n"
+    ],
+    [
+     "// exactly ONE entry.\nexport { DAMPING, SNAP_THRESHOLD, FRAME_MS } from \"./core\";\nexport { useSpring } from \"./spring\";\n",
+     "// exactly ONE entry.\nexport { useSpring } from \"./spring\";\n"
+    ]
+   ]
+  },
+  "src/components/dock/index.ts": {
+   "hunks": [
+    [
+     "// The CTA-receive seat lives beside\n// GlassDock/useDockState/DockControl. `useDockCtaReceive` (the external-CTA-morphs-\n// into-dock seam + the `setPending`/`clearPending` landing seat) is ALSO published on\n// the /dock subpath so a dock consumer imports it from `@mkbabb/glass-ui/dock`. ADDITIVE\n// — the /motion export (the keyframes-bearing motion primitive's home) STAYS; this is a\n// re-export, not a move, so no clean break and no migration row.\nexport {\n    useDockCtaReceive,\n    type UseDockCtaReceiveOptions,\n    type UseDockCtaReceiveReturn,\n    type DockCtaReceivePreset,\n} from \"../../composables/motion\";\n",
+     "// The CTA-receive seam (`useDockCtaReceive`) ships on `/motion`, its home.\n"
+    ]
+   ]
+  },
+  "src/components/surface/index.ts": {
+   "hunks": [
+    [
+     "} from \"./Surface.vue\";\nexport type { SurfaceTier } from \"../_shared/axes\";\n",
+     "} from \"./Surface.vue\";\n"
+    ]
+   ]
+  },
+  "src/components/aurora/index.ts": {
+   "hunks": [
+    [
+     "    type FlowPattern,\n    type OklchStop,\n    type StrokeMode,\n",
+     "    type FlowPattern,\n    type StrokeMode,\n"
+    ],
+    [
+     "} from \"./config\";\n// The shared color primitives ship from their OWN home; the aurora barrel names them\n// here so `/aurora` keeps a complete surface, but no module in between holds a\n// pass-through copy of them (BK #19 W-SHIM-PURGE).\nexport {\n    cssToOklch,\n    oklchStopToHex,\n    oklchToLinear,\n} from \"../../composables/color\";\n// The luminance-faithful headless fallback ground (the\n",
+     "} from \"./config\";\n// The luminance-faithful headless fallback ground (the\n"
+    ]
+   ]
+  },
+  "src/components/fourier-field/index.ts": {
+   "hunks": [
+    [
+     "export { default as FourierField } from \"./FourierField.vue\";\nexport {\n    dftFromPoints,\n    partialSumAt,\n    positionsAt,\n    makeEllipticSpectrum,\n    makeHarmonicFigure,\n    FOURIER_FIGURES,\n    FOURIER_FIGURE_KEYS,\n    type BasisComponent,\n} from \"./math\";\nexport { mintSpectrum, type MintedSpectrum } from \"./renderer\";\n",
+     "export { default as FourierField } from \"./FourierField.vue\";\nexport { mintSpectrum, type MintedSpectrum } from \"./renderer\";\n"
+    ]
+   ]
+  },
+  "src/components/handmark/HandMark.vue": {
+   "hunks": [
+    [
+     "import { FRAME_MS } from \"../../composables/motion\";\n",
+     "import { FRAME_MS } from \"../../composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "demo/chassis/landing/vizPreviewStill.ts": {
+   "hunks": [
+    [
+     "import { makeHarmonicFigure, positionsAt } from \"@glass/components/fourier-field\";\n",
+     "import { makeHarmonicFigure, positionsAt } from \"@glass/components/fourier-field/math\";\n"
+    ]
+   ]
+  },
+  "demo/stories/display/surface.vue": {
+   "hunks": [
+    [
+     "    type SurfaceProps,\n    type SurfaceTier,\n} from \"@glass/components/surface\";\n",
+     "    type SurfaceProps,\n} from \"@glass/components/surface\";\n"
+    ],
+    [
+     "} from \"@glass/components/surface\";\nimport StoryPage from \"../../chassis/page/StoryPage.vue\";\n",
+     "} from \"@glass/components/surface\";\nimport type { SurfaceTier } from \"@glass/components/_shared/axes\";\nimport StoryPage from \"../../chassis/page/StoryPage.vue\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/OklchStopRow.vue": {
+   "hunks": [
+    [
+     "import { hexToOklchStop, oklchStopToHex, type OklchStop } from \"@glass/components/aurora\";\n",
+     "import { hexToOklchStop } from \"@glass/components/aurora\";\nimport { oklchStopToHex, type OklchStop } from \"@glass/composables/color\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/config/usePaletteStops.ts": {
+   "hunks": [
+    [
+     "import type { AuroraConfig, OklchStop } from \"@glass/components/aurora\";\n",
+     "import type { AuroraConfig } from \"@glass/components/aurora\";\nimport type { OklchStop } from \"@glass/composables/color\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/sections/AuroraColorSection.vue": {
+   "hunks": [
+    [
+     "    deriveAurora,\n    oklchStopToHex,\n} from \"@glass/components/aurora\";\n",
+     "    deriveAurora,\n} from \"@glass/components/aurora\";\n"
+    ],
+    [
+     "} from \"@glass/components/aurora\";\nimport OklchStopRow from \"../OklchStopRow.vue\";\n",
+     "} from \"@glass/components/aurora\";\nimport { oklchStopToHex } from \"@glass/composables/color\";\nimport OklchStopRow from \"../OklchStopRow.vue\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/blob.vue": {
+   "hunks": [
+    [
+     "import type { BlobConfig, BlobMood, BlobMerge } from \"@glass/components/blob\";\n",
+     "import type { BlobConfig, BlobMood, BlobMerge } from \"@glass/components/blob/config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/fourier-field.vue": {
+   "hunks": [
+    [
+     "import {\n    FourierField,\n    makeEllipticSpectrum,\n",
+     "import {\n    makeEllipticSpectrum,\n"
+    ],
+    [
+     "    makeHarmonicFigure,\n    mintSpectrum,\n    FOURIER_FIGURES,\n",
+     "    makeHarmonicFigure,\n    FOURIER_FIGURES,\n"
+    ],
+    [
+     "    FOURIER_FIGURE_KEYS,\n    DEFAULT_FOURIER_CONFIG,\n",
+     "    FOURIER_FIGURE_KEYS,\n} from \"@glass/components/fourier-field/math\";\nimport {\n    FourierField,\n    mintSpectrum,\n    DEFAULT_FOURIER_CONFIG,\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/fourier-field/fourier-paths.ts": {
+   "hunks": [
+    [
+     "} from \"@glass/components/fourier-field\";\n",
+     "} from \"@glass/components/fourier-field/math\";\n"
+    ]
+   ]
+  },
+  "tests/components/fourier-field/FourierField.smoke.test.ts": {
+   "hunks": [
+    [
+     "import { dftFromPoints, makeEllipticSpectrum, positionsAt } from \"@mkbabb/glass-ui/fourier-math\";\n",
+     "import {\n    dftFromPoints,\n    FOURIER_FIGURES,\n    makeEllipticSpectrum,\n    makeHarmonicFigure,\n    positionsAt,\n} from \"@mkbabb/glass-ui/fourier-math\";\n"
+    ],
+    [
+     "    FourierField,\n    FOURIER_FIGURES,\n    makeHarmonicFigure,\n    mintSpectrum,\n",
+     "    FourierField,\n    mintSpectrum,\n"
+    ]
+   ]
+  },
+  "tests/composables/useAnimatedNumber.test.ts": {
+   "hunks": [
+    [
+     "import { DAMPING, SNAP_THRESHOLD, useAnimatedNumber } from \"@glass/composables/motion\";\n",
+     "import { useAnimatedNumber } from \"@glass/composables/motion\";\nimport { DAMPING, SNAP_THRESHOLD } from \"@glass/composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "tests/public-surface.spec.ts": {
+   "hunks": [
+    [
+     "    // `constants` (DAMPING/SNAP_THRESHOLD) is duplicate-exported on both.\n",
+     "    // `constants` (DAMPING/SNAP_THRESHOLD/FRAME_MS) ships here alone (R-6).\n"
+    ],
+    [
+     "    { subpath: \"motion-core\", surface: MotionCore, name: \"yieldToMain\" },\n    { subpath: \"motion\", surface: Motion, name: \"DAMPING\" },\n    { subpath: \"motion\", surface: Motion, name: \"SNAP_THRESHOLD\" },\n    { subpath: \"motion-core\", surface: MotionCore, name: \"DAMPING\" },\n",
+     "    { subpath: \"motion-core\", surface: MotionCore, name: \"yieldToMain\" },\n    { subpath: \"motion-core\", surface: MotionCore, name: \"DAMPING\" },\n"
+    ],
+    [
+     "            \"GlassDock\",\n            // The external-CTA-morphs-into-dock receive seam\n            // (the /motion export STAYS — a re-export, not a move).\n            \"useDockCtaReceive\",\n            // The dock-as-native-dynamic-search-bar seam.\n",
+     "            \"GlassDock\",\n            // The dock-as-native-dynamic-search-bar seam.\n"
+    ]
+   ]
+  },
+  "MIGRATION.md": {
+   "hunks": [
+    [
+     "\n## 10.0.0 — ~~UNRELEASED~~ [2026-09-22 · LIVE: tag `v10.0.0` at `dcb0f711`, published with provenance by `release.yml` run 35804200390 attempt 1, `latest` on the registry, unpacked 2,915,902 B = the ratchet datum]\n",
+     "\n## UNRELEASED — the structure cut (BL)\n\n_One symbol, one entry_\n\nA name that two entries published now ships from one. Where one module has two entries,\nthe lighter one keeps the name, so a consumer that wants only the configuration or the\nmaths does not pull the component. Re-point the import; nothing else changes.\n\n| Name | Leaves | Import it from |\n| --- | --- | --- |\n| `BlobMood` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `BlobMerge` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `BlobQuality` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `MoodParams` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `MetaballSource` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `BlobConfig` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `BlobGeometry` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `BlobSatelliteTiming` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `BlobMembrane` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `BlobColor` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `BlobSurface` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `BlobInteraction` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `SatellitePhase` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `SatelliteInternal` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `BLOB_CONFIG_DEFAULTS` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `BLOB_CONFIG_KEY` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `BLOB_HERO` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `LIGHTNESS_FLOOR_BRACKET` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `LIGHTNESS_FLOOR_DEFAULT` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `clampLightnessFloor` | `@mkbabb/glass-ui/blob` | `@mkbabb/glass-ui/blob-config` |\n| `DAMPING` | `@mkbabb/glass-ui/motion` | `@mkbabb/glass-ui/motion-core` |\n| `SNAP_THRESHOLD` | `@mkbabb/glass-ui/motion` | `@mkbabb/glass-ui/motion-core` |\n| `FRAME_MS` | `@mkbabb/glass-ui/motion` | `@mkbabb/glass-ui/motion-core` |\n| `dftFromPoints` | `@mkbabb/glass-ui/fourier-field` | `@mkbabb/glass-ui/fourier-math` |\n| `partialSumAt` | `@mkbabb/glass-ui/fourier-field` | `@mkbabb/glass-ui/fourier-math` |\n| `positionsAt` | `@mkbabb/glass-ui/fourier-field` | `@mkbabb/glass-ui/fourier-math` |\n| `makeEllipticSpectrum` | `@mkbabb/glass-ui/fourier-field` | `@mkbabb/glass-ui/fourier-math` |\n| `makeHarmonicFigure` | `@mkbabb/glass-ui/fourier-field` | `@mkbabb/glass-ui/fourier-math` |\n| `FOURIER_FIGURES` | `@mkbabb/glass-ui/fourier-field` | `@mkbabb/glass-ui/fourier-math` |\n| `FOURIER_FIGURE_KEYS` | `@mkbabb/glass-ui/fourier-field` | `@mkbabb/glass-ui/fourier-math` |\n| `BasisComponent` | `@mkbabb/glass-ui/fourier-field` | `@mkbabb/glass-ui/fourier-math` |\n| `cssToOklch` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/color` |\n| `oklchStopToHex` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/color` |\n| `oklchToLinear` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/color` |\n| `OklchStop` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/color` |\n| `useDockCtaReceive` | `@mkbabb/glass-ui/dock` | `@mkbabb/glass-ui/motion` |\n| `UseDockCtaReceiveOptions` | `@mkbabb/glass-ui/dock` | `@mkbabb/glass-ui/motion` |\n| `UseDockCtaReceiveReturn` | `@mkbabb/glass-ui/dock` | `@mkbabb/glass-ui/motion` |\n| `DockCtaReceivePreset` | `@mkbabb/glass-ui/dock` | `@mkbabb/glass-ui/motion` |\n| `SurfaceTier` | `@mkbabb/glass-ui/surface` | `@mkbabb/glass-ui/axes` |\n\n## 10.0.0 — ~~UNRELEASED~~ [2026-09-22 · LIVE: tag `v10.0.0` at `dcb0f711`, published with provenance by `release.yml` run 35804200390 attempt 1, `latest` on the registry, unpacked 2,915,902 B = the ratchet datum]\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/components/blob/index.ts",
+   "why": "./blob-config owns the configuration names (P3-R4)"
+  },
+  {
+   "file": "src/components/blob/config.ts",
+   "why": "the config door's header named the dual path"
+  },
+  {
+   "file": "src/composables/motion/index.ts",
+   "why": "./motion-core owns the constants"
+  },
+  {
+   "file": "src/components/dock/index.ts",
+   "why": "./motion owns the CTA-receive seam"
+  },
+  {
+   "file": "src/components/surface/index.ts",
+   "why": "./axes owns SurfaceTier"
+  },
+  {
+   "file": "src/components/aurora/index.ts",
+   "why": "./color owns OklchStop"
+  },
+  {
+   "file": "src/components/aurora/index.ts",
+   "why": "./color owns the colour primitives"
+  },
+  {
+   "file": "src/components/fourier-field/index.ts",
+   "why": "./fourier-math owns the maths"
+  },
+  {
+   "file": "src/components/handmark/HandMark.vue",
+   "why": "FRAME_MS from its one entry"
+  },
+  {
+   "file": "demo/chassis/landing/vizPreviewStill.ts",
+   "why": "the maths from ./fourier-math"
+  },
+  {
+   "file": "demo/stories/display/surface.vue",
+   "why": "SurfaceTier from ./axes"
+  },
+  {
+   "file": "demo/stories/substrates/aurora/OklchStopRow.vue",
+   "why": "the colour names from ./color"
+  },
+  {
+   "file": "demo/stories/substrates/aurora/config/usePaletteStops.ts",
+   "why": "OklchStop from ./color"
+  },
+  {
+   "file": "demo/stories/substrates/aurora/sections/AuroraColorSection.vue",
+   "why": "oklchStopToHex from ./color"
+  },
+  {
+   "file": "demo/stories/substrates/blob.vue",
+   "why": "the config types from ./blob-config"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field.vue",
+   "why": "the maths from ./fourier-math"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field/fourier-paths.ts",
+   "why": "the maths from ./fourier-math"
+  },
+  {
+   "file": "tests/components/fourier-field/FourierField.smoke.test.ts",
+   "why": "the maths from ./fourier-math, which the suite already reads"
+  },
+  {
+   "file": "tests/composables/useAnimatedNumber.test.ts",
+   "why": "the constants from ./motion-core"
+  },
+  {
+   "file": "tests/public-surface.spec.ts",
+   "why": "the constants ship on /motion-core alone"
+  },
+  {
+   "file": "tests/public-surface.spec.ts",
+   "why": "/motion no longer publishes the constants"
+  },
+  {
+   "file": "tests/public-surface.spec.ts",
+   "why": "/dock no longer publishes the CTA-receive seam"
+  },
+  {
+   "file": "MIGRATION.md",
+   "why": "E-6: a removal row per name, first cell the name"
+  }
+ ]
+}

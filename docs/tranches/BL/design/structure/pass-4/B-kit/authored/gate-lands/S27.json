@@ -1,0 +1,33 @@
+{
+ "note": "AUTHORED input to derive/reland.mjs for S27: the gate text pass 3 landed at this step (its exact-text ops on the gate files, copied from pass-3/B-kit/frozen/S27-gate.json without the pin) and the reviewed half of the pin as it stood then. The computed half of the pin (modules, doors) is recomputed on the rebased tree.",
+ "why": "LAW §5 the test seam: a test's text read and its vi.mock target are neither consumption (B2) nor a door crossing (B1); the pin after S26",
+ "seal": "scripts/structure/seal/seal.mjs",
+ "files": {
+  "scripts/structure/seal/seal.mjs": {
+   "hunks": [
+    [
+     "        // B2 (R-10, LAW §5): a consumer module reference into src targets an entry source. A text\n        // read (READ_KINDS) is not consumption: R-3 keeps the library-wide scans in tests/, B0\n        // keeps their reads visible to the graph and B16 homes a single-subject reader\n        if (zt === \"src\" && zf !== \"src\") { if (!HARNESS.test(e.from) && !PUB.has(e.to) && MODULE_KINDS.has(e.kind)) put(\"B2\", `${e.from}:${e.line} -> ${e.to} [${e.kind}]`); continue; }\n",
+     "        // LAW §5 (the test seam): a test's text read (READ_KINDS) and its vi.mock target are not\n        // consumption. A read is a scan (R-3 keeps the library-wide ones in tests/, B0 keeps them\n        // visible, B16 homes a single-subject reader); a mock names the file its subject loads,\n        // which a door cannot stand in for (mocking the door replaces every name it carries)\n        const seam = isTest(e.from) && (READ_KINDS.has(e.kind) || e.kind === \"vi-mock\");\n        // B2 (R-10, LAW §5): a consumer module reference into src targets an entry source\n        if (zt === \"src\" && zf !== \"src\") { if (!HARNESS.test(e.from) && !PUB.has(e.to) && MODULE_KINDS.has(e.kind) && !seam) put(\"B2\", `${e.from}:${e.line} -> ${e.to} [${e.kind}]`); continue; }\n"
+    ],
+    [
+     "        { const home = /^(.*)\\/__tests__\\//.exec(e.from)?.[1]; if (home && isTest(e.from) && under(e.to, home)) continue; }\n        if (isCss(e)) { if (e.to !== cssDoor(M) && !PUB_CSS.has(e.to)) put(\"B3\", `${e.from}:${e.line} -> ${e.to} (css door ${cssDoor(M)})`); continue; }\n",
+     "        { const home = /^(.*)\\/__tests__\\//.exec(e.from)?.[1]; if (home && isTest(e.from) && under(e.to, home)) continue; }\n        if (seam) continue;\n        if (isCss(e)) { if (e.to !== cssDoor(M) && !PUB_CSS.has(e.to)) put(\"B3\", `${e.from}:${e.line} -> ${e.to} (css door ${cssDoor(M)})`); continue; }\n"
+    ]
+   ]
+  }
+ },
+ "review": {
+  "names": {
+   "src/components/blob/composables/easing.ts": "the blob's own quadratic easing curves (PRIVATE to /blob, header D7); 'easing' names the maths, not the easing unit",
+   "src/components/slider/useDockHold.ts": "the slider's host-native dock hold: published by no entry and read only by slider, so F-7 places it there (R-2 as clarified by X-10); it is named for what it holds open"
+  },
+  "holds": {
+   "src/components/_shared/overlay/isTeleportedTarget.ts": {
+    "why": "FD-8: demo.css reaches it through @source ../src/components/_shared/**/*.ts, and the floor has no css-source declaration arm for demo, so a move would drop the demo's class scan silently"
+   },
+   "scripts/structure/lib/resolve.mjs": {
+    "why": "F-2 defect (floor gap, reported): moving it into lib/graph/ makes computeEdits rewrite the generated root literal \"tests-visual/.cache\" in GENERATED_ROOTS to \"null\" (e.to is null for a generated target) and the image check refuses; its dominance home is lib/graph/, held until the engine keeps generated literals"
+   }
+  }
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "step": "B-S4b the two rung moves the one-door rule forces (LAW §6)",
+ "files": {
+  "src/styles/glass/index.css": {
+   "hunks": [
+    [
+     "   `--glass-grain-opacity` directly and keep it.) */\n/* The contrast-floored 3-channel tonal-accent register\n   (.accent-tone: one --tone → idle/active/edge/ink). AFTER ladder.css (reads the\n   warm-cream --card surface the ladder mints); the SOLE writer of the --accent-*\n   channels, so the placement is cascade-order-invariant. The register colocates\n   with its sole class-consumer at components/chip/; the @import rung is unchanged. */\n@import \"../../components/chip/accent-tone.css\";\n@import \"./rim.css\";\n",
+     "   `--glass-grain-opacity` directly and keep it.) */\n@import \"./rim.css\";\n"
+    ]
+   ]
+  },
+  "src/styles/index.css": {
+   "hunks": [
+    [
+     "@import \"./glass/index.css\";\n@import \"./surface/track-well.css\";\n",
+     "@import \"./glass/index.css\";\n/* The contrast-floored 3-channel tonal-accent register (.accent-tone: one --tone →\n   idle/active/edge/ink), colocated with its sole class-consumer at components/chip/.\n   It joins the cascade here, at the end of the glass block, because the kernel reads\n   no unit (B8). It is the SOLE writer of the --accent-* channels, read at use-time,\n   so this rung and its old one (after ladder.css) give the same computed values. */\n@import \"../components/chip/accent-tone.css\";\n@import \"./surface/track-well.css\";\n"
+    ],
+    [
+     "@import \"../components/card/styles.css\";\n@import \"../components/_shared/feedback/feedback-tone.css\";\n",
+     "@import \"../components/card/styles.css\";\n/* Component-owned real-box contraction for <CardHeader shrink>, and the scroll\n   owner + edge feather it requires. It joins card's rung (one door per unit, B3); no\n   sheet between here and its old rung (after scroll-choreography) targets its rules. */\n@import \"../components/card/scroll.css\";\n@import \"../components/_shared/feedback/feedback-tone.css\";\n"
+    ],
+    [
+     "@import \"./scroll/scroll-choreography.css\";\n/* Component-owned real-box contraction for <CardHeader shrink>, and the scroll\n   owner + edge feather it requires. */\n@import \"../components/card/scroll.css\";\n@import \"./scroll/scroll-chrome.css\";\n",
+     "@import \"./scroll/scroll-choreography.css\";\n@import \"./scroll/scroll-chrome.css\";\n"
+    ]
+   ]
+  }
+ }
+}

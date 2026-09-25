@@ -1,0 +1,69 @@
+{
+ "note": "AUTHORED input to derive/reland.mjs for S25: the gate text pass 3 landed at this step (its exact-text ops on the gate files, copied from pass-3/B-kit/frozen/S25-gate.json without the pin) and the reviewed half of the pin as it stood then. The computed half of the pin (modules, doors) is recomputed on the rebased tree.",
+ "why": "the law's pass-3 amendments land (LAW §1 scripts TS door, §5 B2 on module references, §9 B8's test arm and B16's kernel-as-dependency homing and slot helpers) with the pin the gate computes after S17-S24 and the resolve.mjs hold",
+ "seal": "scripts/structure/seal/seal.mjs",
+ "files": {
+  "scripts/structure/seal/seal.mjs": {
+   "hunks": [
+    [
+     "// Lands at scripts/structure/seal.mjs beside the floor runtime (FD-11).\n",
+     "// Lands at scripts/structure/seal/seal.mjs, a module of the floor runtime (FD-11, S19).\n"
+    ],
+    [
+     "//   node scripts/structure/seal.mjs [--root R] [--verbose] [--json out] [--overlay plants.json]\n",
+     "//   node scripts/structure/seal/seal.mjs [--root R] [--verbose] [--json out] [--overlay plants.json]\n"
+    ],
+    [
+     "// the route's law, stated once (B-kit/lib/law.mjs, landed beside the gate as seal-law.mjs)\n",
+     "// the route's law, stated once (B-kit/lib/law.mjs, landed beside the gate as law.mjs)\n"
+    ],
+    [
+     "export const zoneOf = (f) => { const t = f.split(\"/\")[0]; return ZONES5.includes(t) ? t : !f.includes(\"/\") ? \"root\" : \"other\"; };\nexport const isTest = (f) => /(^|\\/)__tests__\\//.test(f) || /\\.(test|spec|test-d)\\.(ts|tsx|mts)$/.test(f) || /\\.visual\\.ts$/.test(f);\n",
+     "export const zoneOf = (f) => { const t = f.split(\"/\")[0]; return ZONES5.includes(t) ? t : !f.includes(\"/\") ? \"root\" : \"other\"; };\nconst TEST_FILE = /\\.(test|spec|test-d)\\.(ts|tsx|mts)$/;\nexport const isTest = (f) => /(^|\\/)__tests__\\//.test(f) || /\\.(test|spec|test-d)\\.(ts|tsx|mts)$/.test(f) || /\\.visual\\.ts$/.test(f);\n"
+    ],
+    [
+     "    const jsDoor = (m) => (m.startsWith(\"scripts\") ? `${m}/index.mjs` : `${m}/index.ts`);\n",
+     "    // LAW §1: a src module's JS door is index.ts; a scripts module's is index.mjs, or index.ts\n    // when its own code is TypeScript (\"befitting their languages\")\n    const tsScripts = (m) => { const own = (filesIn.get(m) ?? []).filter((f) => /\\.(ts|mts|mjs|js)$/.test(f) && !isTest(f) && !/\\.d\\.m?ts$/.test(f) && !DOOR_BASENAMES.includes(posix.basename(f))); return own.length > 0 && own.every((f) => /\\.m?ts$/.test(f)); };\n    const jsDoor = (m) => (m.startsWith(\"scripts\") ? `${m}/index.${tsScripts(m) ? \"ts\" : \"mjs\"}` : `${m}/index.ts`);\n"
+    ],
+    [
+     "        if (zf === \"src\" && zt !== \"src\") { put(\"B8\", `${e.from}:${e.line} -> ${e.to} [${e.kind}] (the library reads the ${zt} zone)`); continue; }\n",
+     "        // LAW §9 (B8's test arm): a colocated test is not library code; it may read the test\n        // harness (the tests zone: helpers, setup) and the repo root, never a consumer zone\n        if (zf === \"src\" && zt !== \"src\" && !(isTest(e.from) && (zt === \"tests\" || zt === \"root\"))) { put(\"B8\", `${e.from}:${e.line} -> ${e.to} [${e.kind}] (the library reads the ${zt} zone)`); continue; }\n        if (zf === \"src\" && zt !== \"src\") continue;\n"
+    ],
+    [
+     "        if (zt === \"src\" && zf !== \"src\") { if (!HARNESS.test(e.from) && !PUB.has(e.to)) put(\"B2\", `${e.from}:${e.line} -> ${e.to} [${e.kind}]`); continue; }\n",
+     "        // B2 (R-10, LAW §5): a consumer module reference into src targets an entry source. A text\n        // read (READ_KINDS) is not consumption: R-3 keeps the library-wide scans in tests/, B0\n        // keeps their reads visible to the graph and B16 homes a single-subject reader\n        if (zt === \"src\" && zf !== \"src\") { if (!HARNESS.test(e.from) && !PUB.has(e.to) && MODULE_KINDS.has(e.kind)) put(\"B2\", `${e.from}:${e.line} -> ${e.to} [${e.kind}]`); continue; }\n"
+    ],
+    [
+     "    //      to (by symbol through doors; path reads counted). Home: the deepest module or unit\n    //      holding every subject; none when the subject spans a container, a zone or a dir.\n",
+     "    //      to (by symbol through doors; path reads counted), less the kernel when it reads a\n    //      unit: a unit test uses the kernel as a unit file does, a rank below it (B8), so the\n    //      kernel is its subject only when it reads nothing else. Home: the deepest module or\n    //      unit holding every subject; none when the subject spans a container, a zone or a dir.\n    //      A test is a `*.test.ts`, `*.test-d.ts` or `*.spec.ts`; any other file in a slot is a\n    //      helper, read only by the tests of that slot.\n"
+    ],
+    [
+     "        if (!isTest(t) || !/\\.(ts|tsx|mts)$/.test(t) || /\\.visual\\.ts$/.test(t) || zoneOf(t) === \"tests-visual\" || HARNESS.test(t)) continue;\n",
+     "        if (!TEST_FILE.test(t) || zoneOf(t) === \"tests-visual\" || HARNESS.test(t)) continue;\n"
+    ],
+    [
+     "        const subj = [...reads].filter((f) => SEALED.includes(zoneOf(f)) && !isTest(f) && !under(f, \"scripts/structure\"));\n",
+     "        const sealedReads = [...reads].filter((f) => SEALED.includes(zoneOf(f)) && !isTest(f) && !under(f, \"scripts/structure\"));\n        const above = sealedReads.filter((f) => !KERNEL(f));\n        const subj = above.length ? above : sealedReads;\n"
+    ],
+    [
+     "        else if (slot !== null && home !== slot) put(\"B16\", `${t} (colocated in ${slot}; its subject's home is ${home ?? \"the harness (several units)\"})`);\n    }\n",
+     "        else if (slot !== null && home !== slot) put(\"B16\", `${t} (colocated in ${slot}; its subject's home is ${home ?? \"the harness (several units)\"})`);\n    }\n    for (const h of T.files) {\n        const slot = /^(.*\\/__tests__)\\/[^/]+$/.exec(h)?.[1];\n        if (!slot || TEST_FILE.test(h) || !SEALED.includes(zoneOf(h))) continue;\n        const readers = [...new Set(g.edges.filter((e) => e.to === h && e.from !== h).map((e) => e.from))];\n        if (!readers.length || readers.some((r) => dirOf(r) !== slot || !TEST_FILE.test(r))) put(\"B16\", `${h} (a helper in ${slot}/ read by ${readers.filter((r) => dirOf(r) !== slot || !TEST_FILE.test(r)).join(\", \") || \"nothing\"})`);\n    }\n"
+    ]
+   ]
+  }
+ },
+ "review": {
+  "names": {
+   "src/components/blob/composables/easing.ts": "the blob's own quadratic easing curves (PRIVATE to /blob, header D7); 'easing' names the maths, not the easing unit",
+   "src/components/slider/useDockHold.ts": "the slider's host-native dock hold: published by no entry and read only by slider, so F-7 places it there (R-2 as clarified by X-10); it is named for what it holds open"
+  },
+  "holds": {
+   "src/components/_shared/overlay/isTeleportedTarget.ts": {
+    "why": "FD-8: demo.css reaches it through @source ../src/components/_shared/**/*.ts, and the floor has no css-source declaration arm for demo, so a move would drop the demo's class scan silently"
+   },
+   "scripts/structure/lib/resolve.mjs": {
+    "why": "F-2 defect (floor gap, reported): moving it into lib/graph/ makes computeEdits rewrite the generated root literal \"tests-visual/.cache\" in GENERATED_ROOTS to \"null\" (e.to is null for a generated target) and the image check refuses; its dominance home is lib/graph/, held until the engine keeps generated literals"
+   }
+  }
+ }
+}

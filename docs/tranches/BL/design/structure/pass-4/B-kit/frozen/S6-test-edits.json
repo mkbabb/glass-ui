@@ -1,0 +1,283 @@
+{
+ "step": "B-S6: the layout pins the migration reds, re-read through the resolved graph (R-3), intent kept",
+ "files": {
+  "tests/harness/source.ts": {
+   "hunks": [
+    [
+     "import { resolve } from \"node:path\";\n",
+     "import { posix, resolve } from \"node:path\";\nimport postcss from \"postcss\";\n"
+    ],
+    [
+     "import { buildGraph } from \"../../scripts/structure/lib/graph.mjs\";\n\n",
+     "import { buildGraph } from \"../../scripts/structure/lib/graph.mjs\";\n// @ts-ignore — the floor's CSS scanner is an untyped ESM leaf.\nimport { scanCss } from \"../../scripts/structure/lib/css.mjs\";\n\n"
+    ],
+    [
+     "    return edgeSet.filter((e) => (!from || e.from === from) && (!to || e.to === to) && (!kind || e.kind === kind));\n}\n",
+     "    return edgeSet.filter((e) => (!from || e.from === from) && (!to || e.to === to) && (!kind || e.kind === kind));\n}\n\n/** The sheets under a CSS entry in cascade order: each `@import` read by F-1's CSS scanner,\n *  walked in document order, an imported sheet before its importer's own rules, each sheet\n *  once (the CSS plane alone, so a suite pays no whole-graph build). A pin that says \"the\n *  aggregate carries X\" or \"X is imported after Y\" reads this, never an `@import` line. */\nexport function cssOrder(entry: string): string[] {\n    const out: string[] = [];\n    const seen = new Set<string>();\n    const visit = (file: string): void => {\n        if (seen.has(file)) return;\n        seen.add(file);\n        const { refs } = scanCss(postcss, file, read(file), 0) as { refs: Array<{ kind: string; spec: string }> };\n        for (const r of refs) if (r.kind === \"css-import\" && r.spec.startsWith(\".\")) visit(posix.normalize(posix.join(posix.dirname(file), r.spec)));\n        out.push(file);\n    };\n    visit(entry);\n    return out;\n}\n"
+    ]
+   ]
+  },
+  "tests/styles/dissolve.test.ts": {
+   "hunks": [
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { cssOrder } from \"../harness/source\";\n\n"
+    ],
+    [
+     "const REGISTERS_CSS = readStyle(\"tokens/motion/motion-registers.css\");\nconst GLASS_CSS = readStyle(\"glass/index.css\");\nconst REVEAL_CSS = readStyle(\"glass/transitions/reveal.css\");\n",
+     "const REGISTERS_CSS = readStyle(\"tokens/motion/motion-registers.css\");\nconst REVEAL_CSS = readStyle(\"glass/transitions/reveal.css\");\n"
+    ],
+    [
+     "        const reveal = GLASS_CSS.indexOf('@import \"./transitions/reveal.css\"');\n        const dissolve = GLASS_CSS.indexOf('@import \"./transitions/dissolve.css\"');\n",
+     "        const order = cssOrder(\"src/styles/index.css\");\n        const reveal = order.indexOf(\"src/styles/glass/transitions/reveal.css\");\n        const dissolve = order.indexOf(\"src/styles/glass/transitions/dissolve.css\");\n"
+    ],
+    [
+     "                    /^\\|\\s*AUTH-\\d+\\s*\\|/.test(line) && line.includes(\"glass/transitions/dissolve.css\"),\n",
+     "                    /^\\|\\s*AUTH-\\d+\\s*\\|/.test(line) && line.includes('.glass-vaporize[data-state=\"closed\"]'),\n"
+    ]
+   ]
+  },
+  "tests/styles/mark-register.test.ts": {
+   "hunks": [
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { cssOrder } from \"../harness/source\";\n\n"
+    ],
+    [
+     "        expect(read(GLASS_CSS)).toContain('@import \"./shapes/mark.css\";');\n",
+     "        expect(cssOrder(GLASS_CSS)).toContain(\"src/styles/glass/shapes/mark.css\");\n"
+    ]
+   ]
+  },
+  "tests/components/field/forms-seam.test.ts": {
+   "hunks": [
+    [
+     "import { describe, expect, it } from \"vitest\";\nimport { Input } from \"@glass/components/input\";\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { cssOrder } from \"../../harness/source\";\nimport { Input } from \"@glass/components/input\";\n"
+    ],
+    [
+     "        expect(read(\"src/styles/glass/index.css\")).toContain(\n            '@import \"./surfaces/control-edge.css\";',\n",
+     "        expect(cssOrder(\"src/styles/glass/index.css\")).toContain(\n            \"src/styles/glass/surfaces/control-edge.css\",\n"
+    ]
+   ]
+  },
+  "tests/styles/feedback-motion.test.ts": {
+   "hunks": [
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { cssOrder } from \"../harness/source\";\n\n"
+    ],
+    [
+     "        expect(STYLE_ENTRY).toContain(\n            '@import \"../components/_shared/feedback/dot-ring.css\";',\n",
+     "        expect(cssOrder(\"src/styles/index.css\")).toContain(\n            \"src/components/_shared/feedback/dot-ring.css\",\n"
+    ]
+   ]
+  },
+  "tests/styles/proportion-register.test.ts": {
+   "hunks": [
+    [
+     "        expect(widthConditional).toEqual([\"src/styles/tokens/sizing.css: @media (max-width: 768px)\"]);\n",
+     "        expect(widthConditional).toEqual([\"src/styles/tokens/sizing/sizing.css: @media (max-width: 768px)\"]);\n"
+    ]
+   ]
+  },
+  "tests/styles/typed-track-seam.test.ts": {
+   "hunks": [
+    [
+     "        expect(order).toContain(\"./styles/track-well.css\");\n        expect(order).toContain(\"./styles/glass/track-flow.css\");\n        expect(order).toContain(\"./styles/glass/value-marks.css\");\n",
+     "        expect(order).toContain(\"./styles/surface/track-well.css\");\n        expect(order).toContain(\"./styles/glass/shapes/track-flow.css\");\n        expect(order).toContain(\"./styles/glass/shapes/value-marks.css\");\n"
+    ]
+   ]
+  },
+  "tests/components/custom/blob/gl-excise.test.ts": {
+   "hunks": [
+    [
+     "            \"src/components/blob/renderer/webgl/buildMetaballProgram.ts\", // dies in W1\n            \"src/components/blob/renderer/uploadBlobUniforms.ts\", // dies in W1\n",
+     "            \"src/components/blob/renderer/webgl/buildMetaballProgram.ts\", // dies in W1\n            \"src/components/blob/renderer/webgl/index.ts\", // the arm's door — dies in W1\n            \"src/components/blob/renderer/uploadBlobUniforms.ts\", // dies in W1\n"
+    ]
+   ]
+  },
+  "tests/components/custom/dock/g-dock-lattice.test.ts": {
+   "hunks": [
+    [
+     "import { join, sep } from \"node:path\";\n",
+     "import { join } from \"node:path\";\n"
+    ],
+    [
+     "import { mountComposable } from \"../../../utils/mountComposable\";\n\n",
+     "import { mountComposable } from \"../../../utils/mountComposable\";\nimport { files } from \"../../../harness/source\";\n\n"
+    ],
+    [
+     "    return readdirSync(join(process.cwd(), STYLES), { recursive: true })\n        .map((entry) => String(entry).split(sep).join(\"/\"))\n        .filter((name) => name.endsWith(\".css\"))\n        .sort()\n        .map((name) => ({ file: `${STYLES}/${name}`, css: declarations(`${STYLES}/${name}`) }));\n",
+     "    return files({ under: DOCK, suffix: \".css\" }).map((file) => ({ file, css: declarations(file) }));\n"
+    ],
+    [
+     "        expect(bandCss().filter(({ file }) => file.includes(\"/controls/\")).length).toBe(4);\n",
+     "        expect(bandCss().filter(({ file }) => file.includes(\"/controls/\")).length).toBe(6);\n"
+    ],
+    [
+     "            /* SHADOWED */ `${STYLES}/controls/icon-button.css: .dock-icon-button`,\n            /* DISJOINT */ `${STYLES}/controls/icon-button.css: .dock-icon-button:focus:not(:focus-visible)`,\n            /* SHADOWED */ `${STYLES}/controls/tab-button.css: .dock-tab-button`,\n            /* SHADOWED */ `${STYLES}/controls/triggers.css: .dock-trigger, .dock-select-trigger, .dock-dropdown-trigger`,\n            /* DISJOINT */ `${STYLES}/controls/triggers.css: .dock-trigger:focus:not(:focus-visible), .dock-select-trigger:focus:not(:focus-visible), .dock-dropdown-trigger:focus:not(:focus-visible)`,\n            /* YIELD    */ `${STYLES}/index.css: .glass-dock [data-ring-yield]:focus-visible`,\n",
+     "            /* SHADOWED */ `${DOCK}/controls/icon-button.css: .dock-icon-button`,\n            /* DISJOINT */ `${DOCK}/controls/icon-button.css: .dock-icon-button:focus:not(:focus-visible)`,\n            /* SHADOWED */ `${DOCK}/controls/tab-button.css: .dock-tab-button`,\n            /* SHADOWED */ `${DOCK}/controls/triggers.css: .dock-trigger, .dock-select-trigger, .dock-dropdown-trigger`,\n            /* DISJOINT */ `${DOCK}/controls/triggers.css: .dock-trigger:focus:not(:focus-visible), .dock-select-trigger:focus:not(:focus-visible), .dock-dropdown-trigger:focus:not(:focus-visible)`,\n            /* YIELD    */ `${STYLES}/core.css: .glass-dock [data-ring-yield]:focus-visible`,\n"
+    ]
+   ]
+  },
+  "tests/components/sortable-list/battery.test.ts": {
+   "hunks": [
+    [
+     "const read = (rel: string): string => readFileSync(`${DIR}/${rel}`, \"utf8\");\n",
+     "const locate = (name: string): string[] => files({ under: DIR }).filter((f) => f.endsWith(`/${name}`));\nconst read = (name: string): string => {\n    const hit = locate(name);\n    if (hit.length !== 1) throw new Error(`${name}: ${hit.length} files in ${DIR}`);\n    return readFileSync(hit[0], \"utf8\");\n};\n"
+    ],
+    [
+     "            expect(existsSync(`${DIR}/${liar}`), `${liar} survives`).toBe(false);\n",
+     "            expect(locate(liar), `${liar} survives`).toEqual([]);\n"
+    ],
+    [
+     "            expect(existsSync(`${DIR}/${honest}`), `${honest} missing`).toBe(true);\n",
+     "            expect(locate(honest), `${honest} missing`).toHaveLength(1);\n"
+    ]
+   ]
+  },
+  "tests/public-surface.spec.ts": {
+   "hunks": [
+    [
+     "            \"component-styles.css\",\n        ]);\n",
+     "            \"component-styles.css\",\n            ...(\n                JSON.parse(readFileSync(\"scripts/structure/records/entry-record.json\", \"utf8\")).css as [\n                    string,\n                    { source?: string; dist?: string },\n                ][]\n            )\n                .filter(([, t]) => t.source && t.dist && t.dist !== relative(sourceRoot, resolve(t.source)))\n                .map(([, t]) => t.dist as string),\n        ]);\n"
+    ]
+   ]
+  },
+  "tests/gates/orphan-css-partial.test.ts": {
+   "hunks": [
+    [
+     "const JS_EXTS = [\".ts\", \".tsx\", \".mjs\", \".js\", \".vue\"];\n\n/**\n * The published CSS entry roots, derived from `package.json` `exports`. RECURSIVE over the\n",
+     "const JS_EXTS = [\".ts\", \".tsx\", \".mjs\", \".js\", \".vue\"];\n\n// F-3's entry record: a CSS entry published under a dist name other than its source path\n// (`./styles/theme` ships styles/theme.css from theme/index.css) maps back through it.\nconst RECORD_SOURCE = new Map(\n    (\n        JSON.parse(readFileSync(join(REPO_ROOT, \"scripts/structure/records/entry-record.json\"), \"utf8\")).css as [\n            string,\n            { source?: string; dist?: string },\n        ][]\n    )\n        .filter(([, t]) => t.source && t.dist)\n        .map(([, t]) => [`./dist/${t.dist}`, t.source as string]),\n);\n\n/**\n * The published CSS entry roots, derived from `package.json` `exports`. RECURSIVE over the\n"
+    ],
+    [
+     "                roots.push(join(REPO_ROOT, node.replace(\"./dist/\", \"src/\")));\n",
+     "                roots.push(join(REPO_ROOT, RECORD_SOURCE.get(node) ?? node.replace(\"./dist/\", \"src/\")));\n"
+    ],
+    [
+     "const reachable = new Set([...importClosure(roots), ...rescuedReferences(refMap, reach)]);\n",
+     "const reachable = importClosure([...roots, ...rescuedReferences(refMap, reach)]);\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "tests/harness/source.ts",
+   "why": "R-3: the flattened @import order, so a cascade pin holds whichever door holds a sheet"
+  },
+  {
+   "file": "tests/harness/source.ts",
+   "why": "the CSS plane reader and its parser"
+  },
+  {
+   "file": "tests/harness/source.ts",
+   "why": "F-1's CSS scanner, the same reader the graph uses"
+  },
+  {
+   "file": "tests/styles/dissolve.test.ts",
+   "why": "import the harness order"
+  },
+  {
+   "file": "tests/styles/dissolve.test.ts",
+   "why": "reveal and dissolve now sit behind glass/transitions/index.css; the pin is their order in the shipped cascade"
+  },
+  {
+   "file": "tests/styles/dissolve.test.ts",
+   "why": "GLASS_CSS has no reader left"
+  },
+  {
+   "file": "tests/styles/dissolve.test.ts",
+   "why": "the closed BJ register names the sheet by its old path; the row is found by the selector it authorizes (the next line already pins it), the digest check below still binds it to this carve"
+  },
+  {
+   "file": "tests/styles/mark-register.test.ts",
+   "why": "import the harness order"
+  },
+  {
+   "file": "tests/styles/mark-register.test.ts",
+   "why": "mark.css joins the glass cascade through glass/shapes/index.css"
+  },
+  {
+   "file": "tests/components/field/forms-seam.test.ts",
+   "why": "import the harness order"
+  },
+  {
+   "file": "tests/components/field/forms-seam.test.ts",
+   "why": "control-edge.css joins the glass cascade through glass/surfaces/index.css"
+  },
+  {
+   "file": "tests/styles/feedback-motion.test.ts",
+   "why": "import the harness order"
+  },
+  {
+   "file": "tests/styles/feedback-motion.test.ts",
+   "why": "dot-ring.css joins the shipped stylesheet through the _shared/feedback door"
+  },
+  {
+   "file": "tests/styles/proportion-register.test.ts",
+   "why": "sizing.css is a leaf of the tokens/sizing module"
+  },
+  {
+   "file": "tests/styles/typed-track-seam.test.ts",
+   "why": "the generator emits each register at its dist path: track-well in styles/surface, the glass registers in styles/glass/shapes"
+  },
+  {
+   "file": "tests/components/custom/blob/gl-excise.test.ts",
+   "why": "the webgl arm gained a door (LAW §5); it re-exports the program builder and dies with the arm"
+  },
+  {
+   "file": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "why": "the harness file set replaces the directory walk"
+  },
+  {
+   "file": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "why": "import the harness file set"
+  },
+  {
+   "file": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "why": "the band is every dock sheet: controls/, search/ and legibility/ are modules of the unit now, so a walk of styles/ alone would quantify over a subset, the failure this function was cured of"
+  },
+  {
+   "file": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "why": "controls/ holds its four partials, its root and its door"
+  },
+  {
+   "file": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "why": "the controls module sits at the unit root"
+  },
+  {
+   "file": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "why": "the ring rule's sheet is styles/core.css (the unit door is dock/index.css)"
+  },
+  {
+   "file": "tests/components/sortable-list/battery.test.ts",
+   "why": "drag/ and resolve/ are modules of the unit; a member is found by its file name in the unit, never by a remembered path"
+  },
+  {
+   "file": "tests/components/sortable-list/battery.test.ts",
+   "why": "a liar is gone from the whole unit, not only its root"
+  },
+  {
+   "file": "tests/components/sortable-list/battery.test.ts",
+   "why": "each honest name is exactly one file in the unit"
+  },
+  {
+   "file": "tests/public-surface.spec.ts",
+   "why": "P3-F5: a CSS entry the record declares under a dist name other than its source path (./styles/theme ships styles/theme.css from theme/index.css) is a member the build writes"
+  },
+  {
+   "file": "tests/gates/orphan-css-partial.test.ts",
+   "why": "P3-F5: the record maps a declared dist name to its source; every other dist/styles leaf is the copy of its src twin"
+  },
+  {
+   "file": "tests/gates/orphan-css-partial.test.ts",
+   "why": "a declared dist name resolves through the record; the copy rule covers the rest"
+  },
+  {
+   "file": "tests/gates/orphan-css-partial.test.ts",
+   "why": "a rescued sheet carries its own @imports: a <style src> that names a module's CSS door ships the door's sheets"
+  }
+ ]
+}

@@ -1,0 +1,1935 @@
+{
+ "step": "S29 R-10: consumer imports through the entry that publishes them (frozen from the gate's B2 reading, F-9)",
+ "files": {
+  "demo/chassis/code/Code.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/chassis/code/CodeBlock.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ],
+    [
+     "import { useClipboard } from \"@glass/composables/dom/useClipboard\";\n",
+     "import { useClipboard } from \"@glass/composables/dom\";\n"
+    ]
+   ]
+  },
+  "demo/chassis/hero/StoryHeader.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/chassis/hero/StoryHero.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\nimport { useTokenColor } from \"@glass/composables/dom/useTokenColor\";\nimport { useRoutePointer } from \"@glass/composables/motion/pointer/useRoutePointer\";\n",
+     "import { cn } from \"@glass/index\";\nimport { useTokenColor } from \"@glass/composables/dom\";\nimport { useRoutePointer } from \"@glass/composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "demo/chassis/landing/CatalogLanding.vue": {
+   "hunks": [
+    [
+     "import { useGlobalDark } from \"@glass/composables/dark/useGlobalDark\";\n",
+     "import { useGlobalDark } from \"@glass/composables/dark\";\n"
+    ]
+   ]
+  },
+  "demo/chassis/landing/SectionLanding.vue": {
+   "hunks": [
+    [
+     "import { useGlobalDark } from \"@glass/composables/dark/useGlobalDark\";\n",
+     "import { useGlobalDark } from \"@glass/composables/dark\";\n"
+    ]
+   ]
+  },
+  "demo/chassis/landing/SectionPreviewCard.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/chassis/page/StoryPage.vue": {
+   "hunks": [
+    [
+     "import { useScrollChrome } from \"@glass/composables/motion/scroll/useScrollChrome\";\n",
+     "import { useScrollChrome } from \"@glass/composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "demo/chassis/section/StorySection.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/chassis/showcase/ShowcaseFrame.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/chassis/showcase/TokenLadder.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/composables/virtual/useVirtualSectionWindow.ts": {
+   "hunks": [
+    [
+     "import { useResizeObserver } from \"@glass/composables/dom/useResizeObserver\";\n",
+     "import { useResizeObserver } from \"@glass/composables/dom\";\n"
+    ]
+   ]
+  },
+  "demo/shell/AppShell.vue": {
+   "hunks": [
+    [
+     "import { useGlobalDark } from \"@glass/composables/dark/useGlobalDark\";\n",
+     "import { useGlobalDark } from \"@glass/composables/dark\";\n"
+    ]
+   ]
+  },
+  "demo/shell/BottomDock.vue": {
+   "hunks": [
+    [
+     "import Dialog from \"@glass/components/dialog/Dialog.vue\";\nimport DialogDescription from \"@glass/components/dialog/DialogDescription.vue\";\nimport DialogHeader from \"@glass/components/dialog/DialogHeader.vue\";\nimport DialogTitle from \"@glass/components/dialog/DialogTitle.vue\";\n",
+     "import { Dialog } from \"@glass/components/dialog\";\nimport { DialogDescription } from \"@glass/components/dialog\";\nimport { DialogHeader } from \"@glass/components/dialog\";\nimport { DialogTitle } from \"@glass/components/dialog\";\n"
+    ],
+    [
+     "import SheetContent from \"@glass/components/sheet/SheetContent.vue\";\n",
+     "import { SheetContent } from \"@glass/components/sheet\";\n"
+    ]
+   ]
+  },
+  "demo/shell/SidebarDock.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/shell/configurator/PresetEditor.vue": {
+   "hunks": [
+    [
+     "import Dialog from \"@glass/components/dialog/Dialog.vue\";\nimport DialogDescription from \"@glass/components/dialog/DialogDescription.vue\";\nimport DialogHeader from \"@glass/components/dialog/DialogHeader.vue\";\nimport DialogTitle from \"@glass/components/dialog/DialogTitle.vue\";\nimport SheetContent from \"@glass/components/sheet/SheetContent.vue\";\n",
+     "import { Dialog } from \"@glass/components/dialog\";\nimport { DialogDescription } from \"@glass/components/dialog\";\nimport { DialogHeader } from \"@glass/components/dialog\";\nimport { DialogTitle } from \"@glass/components/dialog\";\nimport { SheetContent } from \"@glass/components/sheet\";\n"
+    ]
+   ]
+  },
+  "demo/stories/compositions/auth-shell.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/compositions/empty-states.vue": {
+   "hunks": [
+    [
+     "import { BLOB_CONFIG_DEFAULTS } from \"@glass/components/blob/types\";\n",
+     "import { BLOB_CONFIG_DEFAULTS } from \"@glass/components/blob/config\";\n"
+    ],
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/compositions/settings.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/containers/accordion.vue": {
+   "hunks": [
+    [
+     "} from \"@glass/components/accordion\";\n",
+     "} from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/containers/hover-card.vue": {
+   "hunks": [
+    [
+     "import { Avatar, AvatarFallback, AvatarImage } from \"@glass/components/avatar\";\n",
+     "import { Avatar, AvatarFallback, AvatarImage } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/data/avatar.vue": {
+   "hunks": [
+    [
+     "import { Avatar, AvatarFallback, AvatarImage } from \"@glass/components/avatar\";\n",
+     "import { Avatar, AvatarFallback, AvatarImage } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/data/infinite-scroll.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/data/table.vue": {
+   "hunks": [
+    [
+     "} from \"@glass/components/table\";\n",
+     "} from \"@glass/index\";\n"
+    ],
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/data/timeline.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/data/virtual-section.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/display/badge.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/dock/cta-receive.vue": {
+   "hunks": [
+    [
+     "import { useDockCtaReceive } from \"@glass/composables/motion/morph/useDockCtaReceive\";\n",
+     "import { useDockCtaReceive } from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "demo/stories/dock/layers.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/feedback/alert.vue": {
+   "hunks": [
+    [
+     "import { Alert, AlertDescription, AlertTitle } from \"@glass/components/alert\";\n",
+     "import { Alert, AlertDescription, AlertTitle } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/feedback/skeleton.vue": {
+   "hunks": [
+    [
+     "import { Skeleton } from \"@glass/components/skeleton\";\n",
+     "import { Skeleton } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/forms/slider.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ],
+    [
+     "import { auroraFallbackGround } from \"@glass/components/aurora/composables/auroraFallbackGround\";\n",
+     "import { auroraFallbackGround } from \"@glass/components/aurora\";\n"
+    ]
+   ]
+  },
+  "demo/stories/foundations/colors.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/foundations/intro.vue": {
+   "hunks": [
+    [
+     "import { useGlobalDark } from \"@glass/composables/dark/useGlobalDark\";\n",
+     "import { useGlobalDark } from \"@glass/composables/dark\";\n"
+    ]
+   ]
+  },
+  "demo/stories/foundations/motion.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/foundations/paper-glass.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/foundations/radii.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/foundations/shadows.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/foundations/typography.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/motion/countup.vue": {
+   "hunks": [
+    [
+     "import { useAnimatedNumber } from \"@glass/composables/motion/number/useAnimatedNumber\";\n",
+     "import { useAnimatedNumber } from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "demo/stories/motion/curve-gallery.vue": {
+   "hunks": [
+    [
+     "} from \"@glass/composables/motion/spring/springPresets\";\n",
+     "} from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "demo/stories/motion/springs.vue": {
+   "hunks": [
+    [
+     "} from \"@glass/composables/motion/spring/springPresets\";\n",
+     "} from \"@glass/composables/motion\";\n"
+    ],
+    [
+     "import { useClipboard } from \"@glass/composables/dom/useClipboard\";\n",
+     "import { useClipboard } from \"@glass/composables/dom\";\n"
+    ],
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/motion/typewriter.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/navigation/tabs.vue": {
+   "hunks": [
+    [
+     "import { auroraFallbackGround } from \"@glass/components/aurora/composables/auroraFallbackGround\";\n",
+     "import { auroraFallbackGround } from \"@glass/components/aurora\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/_frame/RendererStatus.vue": {
+   "hunks": [
+    [
+     "import type { RendererStatus } from \"@glass/composables/glass/webgpu/rendererStatus\";\n",
+     "import type { RendererStatus } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/_frame/VizStudio.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/AuroraStage.vue": {
+   "hunks": [
+    [
+     "import { useReducedMotion } from \"@glass/composables/motion/core/useReducedMotion\";\n",
+     "import { useReducedMotion } from \"@glass/composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/PresetPickerRow.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/config/ColorSwatch.vue": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/blob.vue": {
+   "hunks": [
+    [
+     "import { BLOB_CONFIG_DEFAULTS } from \"@glass/components/blob/types\";\n",
+     "import { BLOB_CONFIG_DEFAULTS } from \"@glass/components/blob/config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/constellation.vue": {
+   "hunks": [
+    [
+     "import { useTokenColor } from \"@glass/composables/dom/useTokenColor\";\n",
+     "import { useTokenColor } from \"@glass/composables/dom\";\n"
+    ]
+   ]
+  },
+  "scripts/regen-spring-tokens.mjs": {
+   "hunks": [
+    [
+     "import { SPRING_PRESETS } from \"../src/composables/motion/spring/springPresets.ts\";\n",
+     "import { SPRING_PRESETS } from \"../src/composables/motion/index.ts\";\n"
+    ]
+   ]
+  },
+  "tests-visual/_aur-vangogh-harness.ts": {
+   "hunks": [
+    [
+     "import { createAurora } from \"../src/components/aurora/runtime/runtime\";\n",
+     "import { createAurora } from \"../src/components/aurora/index\";\n"
+    ],
+    [
+     "import type { AuroraConfig, AuroraMedium } from \"../src/components/aurora/config/presets\";\n",
+     "import type { AuroraConfig, AuroraMedium } from \"../src/components/aurora/index\";\n"
+    ]
+   ]
+  },
+  "tests/components/_shared/classNames.test.ts": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "tests/components/custom/aurora/harness.test.ts": {
+   "hunks": [
+    [
+     "import type { RendererStatus } from \"@glass/composables/glass/webgpu/rendererStatus\";\n",
+     "import type { RendererStatus } from \"@glass/index\";\n"
+    ],
+    [
+     "import { AURORA_SETTLE_MS } from \"@glass/components/aurora/composables/useAurora\";\n",
+     "import { AURORA_SETTLE_MS } from \"@glass/components/aurora\";\n"
+    ]
+   ]
+  },
+  "tests/components/custom/dock/g-dock-lattice.test.ts": {
+   "hunks": [
+    [
+     "import GlassDock from \"@glass/components/dock/GlassDock.vue\";\n",
+     "import { GlassDock } from \"@glass/components/dock\";\n"
+    ]
+   ]
+  },
+  "tests/components/custom/handmark/g-hm-mark.test.ts": {
+   "hunks": [
+    [
+     "import HandMark from \"@glass/components/handmark/HandMark.vue\";\n",
+     "import { HandMark } from \"@glass/components/handmark\";\n"
+    ]
+   ]
+  },
+  "tests/components/custom/menu/DropdownMenuTrigger.action.test.ts": {
+   "hunks": [
+    [
+     "import DropdownMenu from \"@glass/components/menu/DropdownMenu.vue\";\nimport DropdownMenuTrigger from \"@glass/components/menu/DropdownMenuTrigger.vue\";\nimport DockTrigger from \"@glass/components/dock/DockTrigger.vue\";\n",
+     "import { DropdownMenu } from \"@glass/components/menu\";\nimport { DropdownMenuTrigger } from \"@glass/components/menu\";\nimport { DockTrigger } from \"@glass/components/dock\";\n"
+    ]
+   ]
+  },
+  "tests/components/disclosure.public-contracts.test-d.ts": {
+   "hunks": [
+    [
+     "} from \"@glass/components/accordion\";\n",
+     "} from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "tests/components/easing.contract.test.ts": {
+   "hunks": [
+    [
+     "import EasingCurve from \"@glass/components/easing/EasingCurve.vue\";\nimport EasingPicker from \"@glass/components/easing/EasingPicker.vue\";\n",
+     "import { EasingCurve } from \"@glass/components/easing\";\nimport { EasingPicker } from \"@glass/components/easing\";\n"
+    ],
+    [
+     "import type { EasingPickerValue } from \"@glass/components/easing/usePicker\";\n",
+     "import type { EasingPickerValue } from \"@glass/components/easing\";\n"
+    ]
+   ]
+  },
+  "tests/components/primitive-display.public-contracts.test-d.ts": {
+   "hunks": [
+    [
+     "import type { AvatarFallback, AvatarImage } from \"@glass/components/avatar\";\n",
+     "import type { AvatarFallback, AvatarImage } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "tests/components/sheet/sheet-motion.test.ts": {
+   "hunks": [
+    [
+     "import { sheetSlideTransform, scrimOpacity } from \"@glass/components/sheet/motion\";\n",
+     "import { sheetSlideTransform, scrimOpacity } from \"@glass/components/sheet\";\n"
+    ]
+   ]
+  },
+  "tests/components/ui/slider/dock-hold-contract.test.ts": {
+   "hunks": [
+    [
+     "} from \"@glass/components/dock/composables/dockContext\";\n",
+     "} from \"@glass/components/dock\";\n"
+    ]
+   ]
+  },
+  "tests/composables/dark/darkModeSyncScript.test.ts": {
+   "hunks": [
+    [
+     "} from \"@glass/composables/dark/darkModeSyncScript\";\n",
+     "} from \"@glass/composables/dark\";\n"
+    ]
+   ]
+  },
+  "tests/composables/motion/springProjection.test.ts": {
+   "hunks": [
+    [
+     "import { SPRING_PRESETS } from \"@glass/composables/motion/spring/springPresets\";\n",
+     "import { SPRING_PRESETS } from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "tests/demo/springs-story.test.ts": {
+   "hunks": [
+    [
+     "import { springPreset } from \"@glass/composables/motion/spring/springPresets\";\n",
+     "import { springPreset } from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "tests/gates/tabs-seam.test.ts": {
+   "hunks": [
+    [
+     "import SegmentedTabs from \"../../src/components/tabs/segmented-tabs/SegmentedTabs.vue\";\n",
+     "import { SegmentedTabs } from \"../../src/components/tabs/index\";\n"
+    ]
+   ]
+  },
+  "tests/lifecycle-cleanup.spec.ts": {
+   "hunks": [
+    [
+     "import ExpandableContainer from \"@glass/components/expandable-container/ExpandableContainer.vue\";\nimport TypewriterText from \"@glass/components/typewriter/TypewriterText.vue\";\n",
+     "import { ExpandableContainer } from \"@glass/components/expandable-container\";\nimport { TypewriterText } from \"@glass/components/typewriter\";\n"
+    ]
+   ]
+  },
+  "tests/styles/dissolve.test.ts": {
+   "hunks": [
+    [
+     "import { FRAME_MS } from \"../../src/composables/motion/core/constants\";\n",
+     "import { FRAME_MS } from \"../../src/composables/motion/motion-core\";\n"
+    ],
+    [
+     "} from \"../../src/composables/motion/dissolve/dissolveGrammar\";\n",
+     "} from \"../../src/composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "tests/styles/dock-name-canon.test.ts": {
+   "hunks": [
+    [
+     "import DockSeparator from \"@glass/components/dock/DockSeparator.vue\";\n",
+     "import { DockSeparator } from \"@glass/components/dock\";\n"
+    ]
+   ]
+  },
+  "tests/styles/engage-ladder.test.ts": {
+   "hunks": [
+    [
+     "} from \"@glass/composables/motion/engage/engageLadder\";\n",
+     "} from \"@glass/composables/motion\";\n"
+    ],
+    [
+     "} from \"@glass/composables/motion/engage/engageEnvelopes\";\nimport { SPRING_PRESETS } from \"@glass/composables/motion/spring/springPresets\";\n",
+     "} from \"@glass/composables/motion\";\nimport { SPRING_PRESETS } from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "tests/styles/radius-role-canon.test.ts": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "tests/styles/route-motion.test.ts": {
+   "hunks": [
+    [
+     "} from \"../../src/composables/motion/route/routeGrammar\";\n",
+     "} from \"../../src/composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "tests/styles/spring-authority.test.ts": {
+   "hunks": [
+    [
+     "} from \"@glass/composables/motion/spring/springPresets\";\n",
+     "} from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "tests/styles/token-graph.test.ts": {
+   "hunks": [
+    [
+     "import { semanticTokens, tokenDomains } from \"../../src/styles/tokens/manifest\";\n",
+     "import { semanticTokens, tokenDomains } from \"../../src/styles/tokens/index\";\n"
+    ]
+   ]
+  },
+  "tests/utils/cn.test.ts": {
+   "hunks": [
+    [
+     "import { cn } from \"@glass/components/_shared/class-names\";\n",
+     "import { cn } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "vite.dark-stamp.ts": {
+   "hunks": [
+    [
+     "import { darkModeSyncScript } from \"./src/composables/dark/darkModeSyncScript\";\n",
+     "import { darkModeSyncScript } from \"./src/composables/dark/index\";\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "demo/chassis/code/Code.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/chassis/code/CodeBlock.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/chassis/code/CodeBlock.vue",
+   "from": "import { useClipboard } from \"@glass/composables/dom/useClipboard\";",
+   "to": "import { useClipboard } from \"@glass/composables/dom\";",
+   "entry": "src/composables/dom/index.ts",
+   "why": "R-10 (B2): src/composables/dom/useClipboard.ts is published by src/composables/dom/index.ts"
+  },
+  {
+   "file": "demo/chassis/hero/StoryHeader.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/chassis/hero/StoryHero.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/chassis/hero/StoryHero.vue",
+   "from": "import { useTokenColor } from \"@glass/composables/dom/useTokenColor\";",
+   "to": "import { useTokenColor } from \"@glass/composables/dom\";",
+   "entry": "src/composables/dom/index.ts",
+   "why": "R-10 (B2): src/composables/dom/useTokenColor.ts is published by src/composables/dom/index.ts"
+  },
+  {
+   "file": "demo/chassis/hero/StoryHero.vue",
+   "from": "import { useRoutePointer } from \"@glass/composables/motion/pointer/useRoutePointer\";",
+   "to": "import { useRoutePointer } from \"@glass/composables/motion/motion-core\";",
+   "entry": "src/composables/motion/motion-core.ts",
+   "why": "R-10 (B2): src/composables/motion/pointer/useRoutePointer.ts is published by src/composables/motion/motion-core.ts"
+  },
+  {
+   "file": "demo/chassis/landing/CatalogLanding.vue",
+   "from": "import { useGlobalDark } from \"@glass/composables/dark/useGlobalDark\";",
+   "to": "import { useGlobalDark } from \"@glass/composables/dark\";",
+   "entry": "src/composables/dark/index.ts",
+   "why": "R-10 (B2): src/composables/dark/useGlobalDark.ts is published by src/composables/dark/index.ts"
+  },
+  {
+   "file": "demo/chassis/landing/SectionLanding.vue",
+   "from": "import { useGlobalDark } from \"@glass/composables/dark/useGlobalDark\";",
+   "to": "import { useGlobalDark } from \"@glass/composables/dark\";",
+   "entry": "src/composables/dark/index.ts",
+   "why": "R-10 (B2): src/composables/dark/useGlobalDark.ts is published by src/composables/dark/index.ts"
+  },
+  {
+   "file": "demo/chassis/landing/SectionPreviewCard.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/chassis/page/StoryPage.vue",
+   "from": "import { useScrollChrome } from \"@glass/composables/motion/scroll/useScrollChrome\";",
+   "to": "import { useScrollChrome } from \"@glass/composables/motion/motion-core\";",
+   "entry": "src/composables/motion/motion-core.ts",
+   "why": "R-10 (B2): src/composables/motion/scroll/useScrollChrome.ts is published by src/composables/motion/motion-core.ts"
+  },
+  {
+   "file": "demo/chassis/section/StorySection.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/chassis/showcase/ShowcaseFrame.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/chassis/showcase/TokenLadder.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/composables/virtual/useVirtualSectionWindow.ts",
+   "from": "import { useResizeObserver } from \"@glass/composables/dom/useResizeObserver\";",
+   "to": "import { useResizeObserver } from \"@glass/composables/dom\";",
+   "entry": "src/composables/dom/index.ts",
+   "why": "R-10 (B2): src/composables/dom/useResizeObserver.ts is published by src/composables/dom/index.ts"
+  },
+  {
+   "file": "demo/shell/AppShell.vue",
+   "from": "import { useGlobalDark } from \"@glass/composables/dark/useGlobalDark\";",
+   "to": "import { useGlobalDark } from \"@glass/composables/dark\";",
+   "entry": "src/composables/dark/index.ts",
+   "why": "R-10 (B2): src/composables/dark/useGlobalDark.ts is published by src/composables/dark/index.ts"
+  },
+  {
+   "file": "demo/shell/BottomDock.vue",
+   "from": "import Dialog from \"@glass/components/dialog/Dialog.vue\";",
+   "to": "import { Dialog } from \"@glass/components/dialog\";",
+   "entry": "src/components/dialog/index.ts",
+   "why": "R-10 (B2): src/components/dialog/Dialog.vue is published by src/components/dialog/index.ts"
+  },
+  {
+   "file": "demo/shell/BottomDock.vue",
+   "from": "import DialogDescription from \"@glass/components/dialog/DialogDescription.vue\";",
+   "to": "import { DialogDescription } from \"@glass/components/dialog\";",
+   "entry": "src/components/dialog/index.ts",
+   "why": "R-10 (B2): src/components/dialog/DialogDescription.vue is published by src/components/dialog/index.ts"
+  },
+  {
+   "file": "demo/shell/BottomDock.vue",
+   "from": "import DialogHeader from \"@glass/components/dialog/DialogHeader.vue\";",
+   "to": "import { DialogHeader } from \"@glass/components/dialog\";",
+   "entry": "src/components/dialog/index.ts",
+   "why": "R-10 (B2): src/components/dialog/DialogHeader.vue is published by src/components/dialog/index.ts"
+  },
+  {
+   "file": "demo/shell/BottomDock.vue",
+   "from": "import DialogTitle from \"@glass/components/dialog/DialogTitle.vue\";",
+   "to": "import { DialogTitle } from \"@glass/components/dialog\";",
+   "entry": "src/components/dialog/index.ts",
+   "why": "R-10 (B2): src/components/dialog/DialogTitle.vue is published by src/components/dialog/index.ts"
+  },
+  {
+   "file": "demo/shell/BottomDock.vue",
+   "from": "import SheetContent from \"@glass/components/sheet/SheetContent.vue\";",
+   "to": "import { SheetContent } from \"@glass/components/sheet\";",
+   "entry": "src/components/sheet/index.ts",
+   "why": "R-10 (B2): src/components/sheet/SheetContent.vue is published by src/components/sheet/index.ts"
+  },
+  {
+   "file": "demo/shell/SidebarDock.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/shell/configurator/PresetEditor.vue",
+   "from": "import Dialog from \"@glass/components/dialog/Dialog.vue\";",
+   "to": "import { Dialog } from \"@glass/components/dialog\";",
+   "entry": "src/components/dialog/index.ts",
+   "why": "R-10 (B2): src/components/dialog/Dialog.vue is published by src/components/dialog/index.ts"
+  },
+  {
+   "file": "demo/shell/configurator/PresetEditor.vue",
+   "from": "import DialogDescription from \"@glass/components/dialog/DialogDescription.vue\";",
+   "to": "import { DialogDescription } from \"@glass/components/dialog\";",
+   "entry": "src/components/dialog/index.ts",
+   "why": "R-10 (B2): src/components/dialog/DialogDescription.vue is published by src/components/dialog/index.ts"
+  },
+  {
+   "file": "demo/shell/configurator/PresetEditor.vue",
+   "from": "import DialogHeader from \"@glass/components/dialog/DialogHeader.vue\";",
+   "to": "import { DialogHeader } from \"@glass/components/dialog\";",
+   "entry": "src/components/dialog/index.ts",
+   "why": "R-10 (B2): src/components/dialog/DialogHeader.vue is published by src/components/dialog/index.ts"
+  },
+  {
+   "file": "demo/shell/configurator/PresetEditor.vue",
+   "from": "import DialogTitle from \"@glass/components/dialog/DialogTitle.vue\";",
+   "to": "import { DialogTitle } from \"@glass/components/dialog\";",
+   "entry": "src/components/dialog/index.ts",
+   "why": "R-10 (B2): src/components/dialog/DialogTitle.vue is published by src/components/dialog/index.ts"
+  },
+  {
+   "file": "demo/shell/configurator/PresetEditor.vue",
+   "from": "import SheetContent from \"@glass/components/sheet/SheetContent.vue\";",
+   "to": "import { SheetContent } from \"@glass/components/sheet\";",
+   "entry": "src/components/sheet/index.ts",
+   "why": "R-10 (B2): src/components/sheet/SheetContent.vue is published by src/components/sheet/index.ts"
+  },
+  {
+   "file": "demo/stories/compositions/auth-shell.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/compositions/empty-states.vue",
+   "from": "import { BLOB_CONFIG_DEFAULTS } from \"@glass/components/blob/types\";",
+   "to": "import { BLOB_CONFIG_DEFAULTS } from \"@glass/components/blob/config\";",
+   "entry": "src/components/blob/config.ts",
+   "why": "R-10 (B2): src/components/blob/types.ts is published by src/components/blob/config.ts"
+  },
+  {
+   "file": "demo/stories/compositions/empty-states.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/compositions/settings.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/containers/accordion.vue",
+   "from": "import {\n    Accordion,\n    AccordionContent,\n    AccordionItem,\n    AccordionTrigger,\n} from \"@glass/components/accordion\";",
+   "to": "import {\n    Accordion,\n    AccordionContent,\n    AccordionItem,\n    AccordionTrigger,\n} from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/accordion/index.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/containers/hover-card.vue",
+   "from": "import { Avatar, AvatarFallback, AvatarImage } from \"@glass/components/avatar\";",
+   "to": "import { Avatar, AvatarFallback, AvatarImage } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/avatar/index.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/data/avatar.vue",
+   "from": "import { Avatar, AvatarFallback, AvatarImage } from \"@glass/components/avatar\";",
+   "to": "import { Avatar, AvatarFallback, AvatarImage } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/avatar/index.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/data/infinite-scroll.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/data/table.vue",
+   "from": "import {\n    Table,\n    TableBody,\n    TableCaption,\n    TableCell,\n    TableHead,\n    TableHeader,\n    TableRow,\n    TableEmpty,\n} from \"@glass/components/table\";",
+   "to": "import {\n    Table,\n    TableBody,\n    TableCaption,\n    TableCell,\n    TableHead,\n    TableHeader,\n    TableRow,\n    TableEmpty,\n} from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/table/index.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/data/table.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/data/timeline.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/data/virtual-section.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/display/badge.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/dock/cta-receive.vue",
+   "from": "import { useDockCtaReceive } from \"@glass/composables/motion/morph/useDockCtaReceive\";",
+   "to": "import { useDockCtaReceive } from \"@glass/composables/motion\";",
+   "entry": "src/composables/motion/index.ts",
+   "why": "R-10 (B2): src/composables/motion/morph/useDockCtaReceive.ts is published by src/composables/motion/index.ts"
+  },
+  {
+   "file": "demo/stories/dock/layers.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/feedback/alert.vue",
+   "from": "import { Alert, AlertDescription, AlertTitle } from \"@glass/components/alert\";",
+   "to": "import { Alert, AlertDescription, AlertTitle } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/alert/index.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/feedback/skeleton.vue",
+   "from": "import { Skeleton } from \"@glass/components/skeleton\";",
+   "to": "import { Skeleton } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/skeleton/index.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/forms/slider.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/forms/slider.vue",
+   "from": "import { auroraFallbackGround } from \"@glass/components/aurora/composables/auroraFallbackGround\";",
+   "to": "import { auroraFallbackGround } from \"@glass/components/aurora\";",
+   "entry": "src/components/aurora/index.ts",
+   "why": "R-10 (B2): src/components/aurora/composables/auroraFallbackGround.ts is published by src/components/aurora/index.ts"
+  },
+  {
+   "file": "demo/stories/foundations/colors.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/foundations/intro.vue",
+   "from": "import { useGlobalDark } from \"@glass/composables/dark/useGlobalDark\";",
+   "to": "import { useGlobalDark } from \"@glass/composables/dark\";",
+   "entry": "src/composables/dark/index.ts",
+   "why": "R-10 (B2): src/composables/dark/useGlobalDark.ts is published by src/composables/dark/index.ts"
+  },
+  {
+   "file": "demo/stories/foundations/motion.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/foundations/paper-glass.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/foundations/radii.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/foundations/shadows.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/foundations/typography.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/motion/countup.vue",
+   "from": "import { useAnimatedNumber } from \"@glass/composables/motion/number/useAnimatedNumber\";",
+   "to": "import { useAnimatedNumber } from \"@glass/composables/motion\";",
+   "entry": "src/composables/motion/index.ts",
+   "why": "R-10 (B2): src/composables/motion/number/useAnimatedNumber.ts is published by src/composables/motion/index.ts"
+  },
+  {
+   "file": "demo/stories/motion/curve-gallery.vue",
+   "from": "import {\n    SPRING_PRESETS,\n    springPreset,\n    type SpringPresetName,\n} from \"@glass/composables/motion/spring/springPresets\";",
+   "to": "import {\n    SPRING_PRESETS,\n    springPreset,\n    type SpringPresetName,\n} from \"@glass/composables/motion\";",
+   "entry": "src/composables/motion/index.ts",
+   "why": "R-10 (B2): src/composables/motion/spring/springPresets.ts is published by src/composables/motion/index.ts"
+  },
+  {
+   "file": "demo/stories/motion/springs.vue",
+   "from": "import {\n    SPRING_PRESETS,\n    springPreset,\n    type SpringPresetName,\n} from \"@glass/composables/motion/spring/springPresets\";",
+   "to": "import {\n    SPRING_PRESETS,\n    springPreset,\n    type SpringPresetName,\n} from \"@glass/composables/motion\";",
+   "entry": "src/composables/motion/index.ts",
+   "why": "R-10 (B2): src/composables/motion/spring/springPresets.ts is published by src/composables/motion/index.ts"
+  },
+  {
+   "file": "demo/stories/motion/springs.vue",
+   "from": "import { useClipboard } from \"@glass/composables/dom/useClipboard\";",
+   "to": "import { useClipboard } from \"@glass/composables/dom\";",
+   "entry": "src/composables/dom/index.ts",
+   "why": "R-10 (B2): src/composables/dom/useClipboard.ts is published by src/composables/dom/index.ts"
+  },
+  {
+   "file": "demo/stories/motion/springs.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/motion/typewriter.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/navigation/tabs.vue",
+   "from": "import { auroraFallbackGround } from \"@glass/components/aurora/composables/auroraFallbackGround\";",
+   "to": "import { auroraFallbackGround } from \"@glass/components/aurora\";",
+   "entry": "src/components/aurora/index.ts",
+   "why": "R-10 (B2): src/components/aurora/composables/auroraFallbackGround.ts is published by src/components/aurora/index.ts"
+  },
+  {
+   "file": "demo/stories/substrates/_frame/RendererStatus.vue",
+   "from": "import type { RendererStatus } from \"@glass/composables/glass/webgpu/rendererStatus\";",
+   "to": "import type { RendererStatus } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/composables/glass/webgpu/rendererStatus.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/substrates/_frame/VizStudio.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/substrates/aurora/AuroraStage.vue",
+   "from": "import { useReducedMotion } from \"@glass/composables/motion/core/useReducedMotion\";",
+   "to": "import { useReducedMotion } from \"@glass/composables/motion/motion-core\";",
+   "entry": "src/composables/motion/motion-core.ts",
+   "why": "R-10 (B2): src/composables/motion/core/useReducedMotion.ts is published by src/composables/motion/motion-core.ts"
+  },
+  {
+   "file": "demo/stories/substrates/aurora/PresetPickerRow.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/substrates/aurora/config/ColorSwatch.vue",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "demo/stories/substrates/blob.vue",
+   "from": "import { BLOB_CONFIG_DEFAULTS } from \"@glass/components/blob/types\";",
+   "to": "import { BLOB_CONFIG_DEFAULTS } from \"@glass/components/blob/config\";",
+   "entry": "src/components/blob/config.ts",
+   "why": "R-10 (B2): src/components/blob/types.ts is published by src/components/blob/config.ts"
+  },
+  {
+   "file": "demo/stories/substrates/constellation.vue",
+   "from": "import { useTokenColor } from \"@glass/composables/dom/useTokenColor\";",
+   "to": "import { useTokenColor } from \"@glass/composables/dom\";",
+   "entry": "src/composables/dom/index.ts",
+   "why": "R-10 (B2): src/composables/dom/useTokenColor.ts is published by src/composables/dom/index.ts"
+  },
+  {
+   "file": "scripts/regen-spring-tokens.mjs",
+   "from": "import { SPRING_PRESETS } from \"../src/composables/motion/spring/springPresets.ts\";",
+   "to": "import { SPRING_PRESETS } from \"../src/composables/motion/index.ts\";",
+   "entry": "src/composables/motion/index.ts",
+   "why": "R-10 (B2): src/composables/motion/spring/springPresets.ts is published by src/composables/motion/index.ts"
+  },
+  {
+   "file": "tests-visual/_aur-vangogh-harness.ts",
+   "from": "import { createAurora } from \"../src/components/aurora/runtime/runtime\";",
+   "to": "import { createAurora } from \"../src/components/aurora/index\";",
+   "entry": "src/components/aurora/index.ts",
+   "why": "R-10 (B2): src/components/aurora/runtime/runtime.ts is published by src/components/aurora/index.ts"
+  },
+  {
+   "file": "tests-visual/_aur-vangogh-harness.ts",
+   "from": "import type { AuroraConfig, AuroraMedium } from \"../src/components/aurora/config/presets\";",
+   "to": "import type { AuroraConfig, AuroraMedium } from \"../src/components/aurora/index\";",
+   "entry": "src/components/aurora/index.ts",
+   "why": "R-10 (B2): src/components/aurora/config/presets.ts is published by src/components/aurora/index.ts"
+  },
+  {
+   "file": "tests/components/_shared/classNames.test.ts",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "tests/components/custom/aurora/harness.test.ts",
+   "from": "import type { RendererStatus } from \"@glass/composables/glass/webgpu/rendererStatus\";",
+   "to": "import type { RendererStatus } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/composables/glass/webgpu/rendererStatus.ts is published by src/index.ts"
+  },
+  {
+   "file": "tests/components/custom/aurora/harness.test.ts",
+   "from": "import { AURORA_SETTLE_MS } from \"@glass/components/aurora/composables/useAurora\";",
+   "to": "import { AURORA_SETTLE_MS } from \"@glass/components/aurora\";",
+   "entry": "src/components/aurora/index.ts",
+   "why": "R-10 (B2): src/components/aurora/composables/useAurora.ts is published by src/components/aurora/index.ts"
+  },
+  {
+   "file": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "from": "import GlassDock from \"@glass/components/dock/GlassDock.vue\";",
+   "to": "import { GlassDock } from \"@glass/components/dock\";",
+   "entry": "src/components/dock/index.ts",
+   "why": "R-10 (B2): src/components/dock/GlassDock.vue is published by src/components/dock/index.ts"
+  },
+  {
+   "file": "tests/components/custom/handmark/g-hm-mark.test.ts",
+   "from": "import HandMark from \"@glass/components/handmark/HandMark.vue\";",
+   "to": "import { HandMark } from \"@glass/components/handmark\";",
+   "entry": "src/components/handmark/index.ts",
+   "why": "R-10 (B2): src/components/handmark/HandMark.vue is published by src/components/handmark/index.ts"
+  },
+  {
+   "file": "tests/components/custom/menu/DropdownMenuTrigger.action.test.ts",
+   "from": "import DropdownMenu from \"@glass/components/menu/DropdownMenu.vue\";",
+   "to": "import { DropdownMenu } from \"@glass/components/menu\";",
+   "entry": "src/components/menu/index.ts",
+   "why": "R-10 (B2): src/components/menu/DropdownMenu.vue is published by src/components/menu/index.ts"
+  },
+  {
+   "file": "tests/components/custom/menu/DropdownMenuTrigger.action.test.ts",
+   "from": "import DropdownMenuTrigger from \"@glass/components/menu/DropdownMenuTrigger.vue\";",
+   "to": "import { DropdownMenuTrigger } from \"@glass/components/menu\";",
+   "entry": "src/components/menu/index.ts",
+   "why": "R-10 (B2): src/components/menu/DropdownMenuTrigger.vue is published by src/components/menu/index.ts"
+  },
+  {
+   "file": "tests/components/custom/menu/DropdownMenuTrigger.action.test.ts",
+   "from": "import DockTrigger from \"@glass/components/dock/DockTrigger.vue\";",
+   "to": "import { DockTrigger } from \"@glass/components/dock\";",
+   "entry": "src/components/dock/index.ts",
+   "why": "R-10 (B2): src/components/dock/DockTrigger.vue is published by src/components/dock/index.ts"
+  },
+  {
+   "file": "tests/components/disclosure.public-contracts.test-d.ts",
+   "from": "import type {\n    AccordionContentProps,\n    AccordionEmits,\n    AccordionItemProps,\n    AccordionProps,\n    AccordionTriggerProps,\n    AccordionValue,\n} from \"@glass/components/accordion\";",
+   "to": "import type {\n    AccordionContentProps,\n    AccordionEmits,\n    AccordionItemProps,\n    AccordionProps,\n    AccordionTriggerProps,\n    AccordionValue,\n} from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/accordion/index.ts is published by src/index.ts"
+  },
+  {
+   "file": "tests/components/easing.contract.test.ts",
+   "from": "import EasingCurve from \"@glass/components/easing/EasingCurve.vue\";",
+   "to": "import { EasingCurve } from \"@glass/components/easing\";",
+   "entry": "src/components/easing/index.ts",
+   "why": "R-10 (B2): src/components/easing/EasingCurve.vue is published by src/components/easing/index.ts"
+  },
+  {
+   "file": "tests/components/easing.contract.test.ts",
+   "from": "import EasingPicker from \"@glass/components/easing/EasingPicker.vue\";",
+   "to": "import { EasingPicker } from \"@glass/components/easing\";",
+   "entry": "src/components/easing/index.ts",
+   "why": "R-10 (B2): src/components/easing/EasingPicker.vue is published by src/components/easing/index.ts"
+  },
+  {
+   "file": "tests/components/easing.contract.test.ts",
+   "from": "import type { EasingPickerValue } from \"@glass/components/easing/usePicker\";",
+   "to": "import type { EasingPickerValue } from \"@glass/components/easing\";",
+   "entry": "src/components/easing/index.ts",
+   "why": "R-10 (B2): src/components/easing/usePicker.ts is published by src/components/easing/index.ts"
+  },
+  {
+   "file": "tests/components/primitive-display.public-contracts.test-d.ts",
+   "from": "import type { AvatarFallback, AvatarImage } from \"@glass/components/avatar\";",
+   "to": "import type { AvatarFallback, AvatarImage } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/avatar/index.ts is published by src/index.ts"
+  },
+  {
+   "file": "tests/components/sheet/sheet-motion.test.ts",
+   "from": "import { sheetSlideTransform, scrimOpacity } from \"@glass/components/sheet/motion\";",
+   "to": "import { sheetSlideTransform, scrimOpacity } from \"@glass/components/sheet\";",
+   "entry": "src/components/sheet/index.ts",
+   "why": "R-10 (B2): src/components/sheet/motion.ts is published by src/components/sheet/index.ts"
+  },
+  {
+   "file": "tests/components/ui/slider/dock-hold-contract.test.ts",
+   "from": "import {\n    provideDockContext,\n    type DockContext,\n} from \"@glass/components/dock/composables/dockContext\";",
+   "to": "import {\n    provideDockContext,\n    type DockContext,\n} from \"@glass/components/dock\";",
+   "entry": "src/components/dock/index.ts",
+   "why": "R-10 (B2): src/components/dock/composables/dockContext.ts is published by src/components/dock/index.ts"
+  },
+  {
+   "file": "tests/composables/dark/darkModeSyncScript.test.ts",
+   "from": "import {\n    DARK_MODE_STORAGE_KEY,\n    darkModeSyncScript,\n    type DarkModeSyncScriptOptions,\n} from \"@glass/composables/dark/darkModeSyncScript\";",
+   "to": "import {\n    DARK_MODE_STORAGE_KEY,\n    darkModeSyncScript,\n    type DarkModeSyncScriptOptions,\n} from \"@glass/composables/dark\";",
+   "entry": "src/composables/dark/index.ts",
+   "why": "R-10 (B2): src/composables/dark/darkModeSyncScript.ts is published by src/composables/dark/index.ts"
+  },
+  {
+   "file": "tests/composables/motion/springProjection.test.ts",
+   "from": "import { SPRING_PRESETS } from \"@glass/composables/motion/spring/springPresets\";",
+   "to": "import { SPRING_PRESETS } from \"@glass/composables/motion\";",
+   "entry": "src/composables/motion/index.ts",
+   "why": "R-10 (B2): src/composables/motion/spring/springPresets.ts is published by src/composables/motion/index.ts"
+  },
+  {
+   "file": "tests/demo/springs-story.test.ts",
+   "from": "import { springPreset } from \"@glass/composables/motion/spring/springPresets\";",
+   "to": "import { springPreset } from \"@glass/composables/motion\";",
+   "entry": "src/composables/motion/index.ts",
+   "why": "R-10 (B2): src/composables/motion/spring/springPresets.ts is published by src/composables/motion/index.ts"
+  },
+  {
+   "file": "tests/gates/tabs-seam.test.ts",
+   "from": "import SegmentedTabs from \"../../src/components/tabs/segmented-tabs/SegmentedTabs.vue\";",
+   "to": "import { SegmentedTabs } from \"../../src/components/tabs/index\";",
+   "entry": "src/components/tabs/index.ts",
+   "why": "R-10 (B2): src/components/tabs/segmented-tabs/SegmentedTabs.vue is published by src/components/tabs/index.ts"
+  },
+  {
+   "file": "tests/lifecycle-cleanup.spec.ts",
+   "from": "import ExpandableContainer from \"@glass/components/expandable-container/ExpandableContainer.vue\";",
+   "to": "import { ExpandableContainer } from \"@glass/components/expandable-container\";",
+   "entry": "src/components/expandable-container/index.ts",
+   "why": "R-10 (B2): src/components/expandable-container/ExpandableContainer.vue is published by src/components/expandable-container/index.ts"
+  },
+  {
+   "file": "tests/lifecycle-cleanup.spec.ts",
+   "from": "import TypewriterText from \"@glass/components/typewriter/TypewriterText.vue\";",
+   "to": "import { TypewriterText } from \"@glass/components/typewriter\";",
+   "entry": "src/components/typewriter/index.ts",
+   "why": "R-10 (B2): src/components/typewriter/TypewriterText.vue is published by src/components/typewriter/index.ts"
+  },
+  {
+   "file": "tests/styles/dissolve.test.ts",
+   "from": "import { FRAME_MS } from \"../../src/composables/motion/core/constants\";",
+   "to": "import { FRAME_MS } from \"../../src/composables/motion/motion-core\";",
+   "entry": "src/composables/motion/motion-core.ts",
+   "why": "R-10 (B2): src/composables/motion/core/constants.ts is published by src/composables/motion/motion-core.ts"
+  },
+  {
+   "file": "tests/styles/dissolve.test.ts",
+   "from": "import {\n    CORNER_AFFORDANCE,\n    DISSOLVE_DIALECTS,\n    VAPORIZE_CONSTANTS,\n    backdropOutlivesPanel,\n    channelFraction,\n    cornerAffordanceOffset,\n    dissolveDialect,\n    inkBlurFraction,\n} from \"../../src/composables/motion/dissolve/dissolveGrammar\";",
+   "to": "import {\n    CORNER_AFFORDANCE,\n    DISSOLVE_DIALECTS,\n    VAPORIZE_CONSTANTS,\n    backdropOutlivesPanel,\n    channelFraction,\n    cornerAffordanceOffset,\n    dissolveDialect,\n    inkBlurFraction,\n} from \"../../src/composables/motion/motion-core\";",
+   "entry": "src/composables/motion/motion-core.ts",
+   "why": "R-10 (B2): src/composables/motion/dissolve/dissolveGrammar.ts is published by src/composables/motion/motion-core.ts"
+  },
+  {
+   "file": "tests/styles/dock-name-canon.test.ts",
+   "from": "import DockSeparator from \"@glass/components/dock/DockSeparator.vue\";",
+   "to": "import { DockSeparator } from \"@glass/components/dock\";",
+   "entry": "src/components/dock/index.ts",
+   "why": "R-10 (B2): src/components/dock/DockSeparator.vue is published by src/components/dock/index.ts"
+  },
+  {
+   "file": "tests/styles/engage-ladder.test.ts",
+   "from": "import {\n    ENGAGE_LADDER,\n    CHANNEL_BUDGET,\n    HOVER_GEOMETRY_BUDGET,\n    LADDER_EXIT_LAW,\n    engageRung,\n    rungsForEnvelope,\n} from \"@glass/composables/motion/engage/engageLadder\";",
+   "to": "import {\n    ENGAGE_LADDER,\n    CHANNEL_BUDGET,\n    HOVER_GEOMETRY_BUDGET,\n    LADDER_EXIT_LAW,\n    engageRung,\n    rungsForEnvelope,\n} from \"@glass/composables/motion\";",
+   "entry": "src/composables/motion/index.ts",
+   "why": "R-10 (B2): src/composables/motion/engage/engageLadder.ts is published by src/composables/motion/index.ts"
+  },
+  {
+   "file": "tests/styles/engage-ladder.test.ts",
+   "from": "import {\n    ENGAGE_ENVELOPES,\n    ENGAGE_ATTACK_CLASS,\n    ACKNOWLEDGE_WINDOW_MS,\n    engageAttackT90Ms,\n} from \"@glass/composables/motion/engage/engageEnvelopes\";",
+   "to": "import {\n    ENGAGE_ENVELOPES,\n    ENGAGE_ATTACK_CLASS,\n    ACKNOWLEDGE_WINDOW_MS,\n    engageAttackT90Ms,\n} from \"@glass/composables/motion\";",
+   "entry": "src/composables/motion/index.ts",
+   "why": "R-10 (B2): src/composables/motion/engage/engageEnvelopes.ts is published by src/composables/motion/index.ts"
+  },
+  {
+   "file": "tests/styles/engage-ladder.test.ts",
+   "from": "import { SPRING_PRESETS } from \"@glass/composables/motion/spring/springPresets\";",
+   "to": "import { SPRING_PRESETS } from \"@glass/composables/motion\";",
+   "entry": "src/composables/motion/index.ts",
+   "why": "R-10 (B2): src/composables/motion/spring/springPresets.ts is published by src/composables/motion/index.ts"
+  },
+  {
+   "file": "tests/styles/radius-role-canon.test.ts",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "tests/styles/route-motion.test.ts",
+   "from": "import {\n    ROUTE_CONSTANTS,\n    ROUTE_GRAMMAR,\n    foregroundClockToken,\n    foregroundCurveToken,\n    routeNav,\n    worldClockToken,\n    type RouteNavRow,\n} from \"../../src/composables/motion/route/routeGrammar\";",
+   "to": "import {\n    ROUTE_CONSTANTS,\n    ROUTE_GRAMMAR,\n    foregroundClockToken,\n    foregroundCurveToken,\n    routeNav,\n    worldClockToken,\n    type RouteNavRow,\n} from \"../../src/composables/motion/motion-core\";",
+   "entry": "src/composables/motion/motion-core.ts",
+   "why": "R-10 (B2): src/composables/motion/route/routeGrammar.ts is published by src/composables/motion/motion-core.ts"
+  },
+  {
+   "file": "tests/styles/spring-authority.test.ts",
+   "from": "import {\n    SPRING_PRESETS,\n    type SpringPresetName,\n} from \"@glass/composables/motion/spring/springPresets\";",
+   "to": "import {\n    SPRING_PRESETS,\n    type SpringPresetName,\n} from \"@glass/composables/motion\";",
+   "entry": "src/composables/motion/index.ts",
+   "why": "R-10 (B2): src/composables/motion/spring/springPresets.ts is published by src/composables/motion/index.ts"
+  },
+  {
+   "file": "tests/styles/token-graph.test.ts",
+   "from": "import { semanticTokens, tokenDomains } from \"../../src/styles/tokens/manifest\";",
+   "to": "import { semanticTokens, tokenDomains } from \"../../src/styles/tokens/index\";",
+   "entry": "src/styles/tokens/index.ts",
+   "why": "R-10 (B2): src/styles/tokens/manifest.ts is published by src/styles/tokens/index.ts"
+  },
+  {
+   "file": "tests/utils/cn.test.ts",
+   "from": "import { cn } from \"@glass/components/_shared/class-names\";",
+   "to": "import { cn } from \"@glass/index\";",
+   "entry": "src/index.ts",
+   "why": "R-10 (B2): src/components/_shared/class-names.ts is published by src/index.ts"
+  },
+  {
+   "file": "vite.dark-stamp.ts",
+   "from": "import { darkModeSyncScript } from \"./src/composables/dark/darkModeSyncScript\";",
+   "to": "import { darkModeSyncScript } from \"./src/composables/dark/index\";",
+   "entry": "src/composables/dark/index.ts",
+   "why": "R-10 (B2): src/composables/dark/darkModeSyncScript.ts is published by src/composables/dark/index.ts"
+  }
+ ],
+ "residue": [
+  {
+   "from": "demo/chassis/hero/aurora-hero.ts",
+   "line": 18,
+   "to": "src/components/aurora/config/presets.ts",
+   "kind": "import-type",
+   "why": "held: P3-R5 / B-S10: the hero reads the config defaults off the barrel-free leaf (tests/gates/boot-graph.test.ts, source arm); its entry is ./aurora-config, not landed in this prototype"
+  },
+  {
+   "from": "demo/chassis/hero/aurora-hero.ts",
+   "line": 19,
+   "to": "src/components/aurora/config/presets.ts",
+   "kind": "import",
+   "why": "held: P3-R5 / B-S10: the hero reads the config defaults off the barrel-free leaf (tests/gates/boot-graph.test.ts, source arm); its entry is ./aurora-config, not landed in this prototype"
+  },
+  {
+   "from": "demo/composables/virtual/virtualSectionLayout.ts",
+   "line": 12,
+   "to": "src/composables/sidebar/types.ts",
+   "kind": "import-type",
+   "names": [
+    "SectionHierarchy"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/shell/AppShell.vue",
+   "line": 37,
+   "to": "src/components/aurora/composables/auroraFallbackGround.ts",
+   "kind": "import",
+   "why": "held: P3-R5 / B-S10: the shell's frame-0 ground must stay an eager, barrel-free import (tests/gates/boot-graph.test.ts, source arm); the entry that publishes auroraFallbackGround barrel-free is ./aurora-config, accepted by P3-R5 and not landed in this prototype. Rerouting to ./aurora would pull the runtime barrel into the boot graph"
+  },
+  {
+   "from": "demo/stories/data/search.vue",
+   "line": 14,
+   "to": "src/components/dock/search/useFuzzySearch.ts",
+   "kind": "import",
+   "names": [
+    "useFuzzySearch"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/data/search.vue",
+   "line": 15,
+   "to": "src/components/dock/search/types.ts",
+   "kind": "import-type",
+   "names": [
+    "SearchResult",
+    "SearchableItem"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/dock/_frame/DockStage.vue",
+   "line": 25,
+   "to": "src/components/dock/legibility/useGlassBackdropLuminance.ts",
+   "kind": "import",
+   "names": [
+    "useGlassBackdropLuminance",
+    "GLASS_BACKDROP_SHARED_ATTR"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/dock/dock-search.vue",
+   "line": 21,
+   "to": "src/components/dock/composables/useDockState.ts",
+   "kind": "import",
+   "names": [
+    "useDockState"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/dock/dock-search.vue",
+   "line": 24,
+   "to": "src/components/dock/search/types.ts",
+   "kind": "import-type",
+   "names": [
+    "SearchableItem"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/motion/scroll.vue",
+   "line": 23,
+   "to": "src/composables/motion/scroll/useScrollScene.ts",
+   "kind": "import",
+   "names": [
+    "useScrollScene"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/motion/springs.vue",
+   "line": 14,
+   "to": "src/composables/motion/spring/springProjection.ts",
+   "kind": "import",
+   "names": [
+    "springProjection"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/motion/springs.vue",
+   "line": 15,
+   "to": "src/composables/motion/core/tempo/motionTempo.ts",
+   "kind": "import",
+   "names": [
+    "motionTempo"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/substrates/aurora/AuroraStage.vue",
+   "line": 5,
+   "to": "src/components/aurora/runtime/runtime.ts",
+   "kind": "import",
+   "names": [
+    "isAuroraPointerEnabled"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/substrates/aurora/AuroraStage.vue",
+   "line": 11,
+   "to": "src/composables/glass/webgpu/rendererStatus.ts",
+   "kind": "import",
+   "names": [
+    "pendingRenderer"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/substrates/blob.vue",
+   "line": 16,
+   "to": "src/composables/glass/webgpu/rendererStatus.ts",
+   "kind": "import",
+   "names": [
+    "pendingRenderer"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/substrates/blob.vue",
+   "line": 22,
+   "to": "src/components/blob/mood/constants.ts",
+   "kind": "import",
+   "names": [
+    "MAX_SATS"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/substrates/constellation.vue",
+   "line": 15,
+   "to": "src/composables/glass/webgpu/rendererStatus.ts",
+   "kind": "import",
+   "names": [
+    "pendingRenderer"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/substrates/fourier-field.vue",
+   "line": 10,
+   "to": "src/composables/glass/webgpu/rendererStatus.ts",
+   "kind": "import",
+   "names": [
+    "pendingRenderer"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/substrates/fourier-field.vue",
+   "line": 27,
+   "to": "src/components/fourier-field/constants/constants.ts",
+   "kind": "import",
+   "names": [
+    "FOURIER_STROKE_RUNGS"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/substrates/fourier-field.vue",
+   "line": 28,
+   "to": "src/composables/glass/procedural/prng.ts",
+   "kind": "import",
+   "names": [
+    "mulberry32",
+    "hashString"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "demo/stories/substrates/glass-material.vue",
+   "line": 35,
+   "to": "src/components/dock/legibility/useGlassBackdropLuminance.ts",
+   "kind": "import",
+   "names": [
+    "useGlassBackdropLuminance"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "scripts/regen-spring-tokens.mjs",
+   "line": 27,
+   "to": "src/composables/motion/spring/springProjection.ts",
+   "kind": "import",
+   "names": [
+    "springProjection",
+    "springSettleDurationSeconds"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/_shared/public-contracts.test-d.ts",
+   "line": 19,
+   "to": "src/components/_shared/interaction.ts",
+   "kind": "import-type",
+   "names": [
+    "FocusOutsideEvent",
+    "ListboxItemSelectEvent",
+    "PointerDownOutsideEvent"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/_shared/public-contracts.test-d.ts",
+   "line": 24,
+   "to": "src/components/_shared/primitive.ts",
+   "kind": "import-type",
+   "names": [
+    "AsTag",
+    "FormFieldProps",
+    "PrimitiveProps"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/_shared/public-contracts.test-d.ts",
+   "line": 29,
+   "to": "src/components/_shared/selection.ts",
+   "kind": "import-type",
+   "names": [
+    "CheckedState",
+    "SelectionMode",
+    "SelectionValue"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/avatar.contract.test.ts",
+   "line": 5,
+   "to": "src/components/avatar/index.ts",
+   "kind": "import",
+   "names": [
+    "*"
+   ],
+   "why": "a namespace import reads the whole module; no entry is that module"
+  },
+  {
+   "from": "tests/components/avatar.contract.test.ts",
+   "line": 11,
+   "to": "src/components/avatar/index.ts",
+   "kind": "import",
+   "names": [
+    "*"
+   ],
+   "why": "a namespace import reads the whole module; no entry is that module"
+  },
+  {
+   "from": "tests/components/custom/aurora/harness.test.ts",
+   "line": 56,
+   "to": "src/components/aurora/runtime/runtime.ts",
+   "kind": "import-type-node",
+   "names": [
+    "*"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/custom/aurora/harness.test.ts",
+   "line": 98,
+   "to": "src/components/aurora/config/presets.ts",
+   "kind": "import",
+   "names": [
+    "AURORA_DRIFT_FLOOR",
+    "isAuroraDriftLive"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/custom/aurora/harness.test.ts",
+   "line": 99,
+   "to": "src/components/aurora/runtime/runtime.ts",
+   "kind": "import",
+   "names": [
+    "isAuroraPointerEnabled"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "line": 8,
+   "to": "src/components/dock/composables/dockMorphMeasure.ts",
+   "kind": "import",
+   "names": [
+    "useDockExpandedSize"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/custom/handmark/g-hm-mark.test.ts",
+   "line": 18,
+   "to": "src/components/handmark/stroke.ts",
+   "kind": "import",
+   "names": [
+    "nib"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/easing.contract.test.ts",
+   "line": 15,
+   "to": "src/components/easing/constants.ts",
+   "kind": "import",
+   "names": [
+    "COPY_ATTEMPT_TIMEOUT_MS",
+    "FRAME_MAX",
+    "FRAME_MIN",
+    "HANDLE_HIT_RADIUS_PX",
+    "HANDLE_HIT_RADIUS_TOUCH_PX",
+    "STEP_COUNT_MAX",
+    "VIEW_BOX"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/fourier-field/FourierField.smoke.test.ts",
+   "line": 36,
+   "to": "src/components/fourier-field/renderer/mint.ts",
+   "kind": "import",
+   "names": [
+    "FOURIER_REFERENCE_DIAGONAL_PX",
+    "FOURIER_PAINT_FLOOR_PX",
+    "ringsAt"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/fourier-field/FourierField.smoke.test.ts",
+   "line": 37,
+   "to": "src/components/fourier-field/clock.ts",
+   "kind": "import",
+   "names": [
+    "createFourierClock",
+    "FOURIER_SETTLE_ZETA_FLOOR",
+    "FOURIER_TRAVEL_SPRING"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/fourier-field/FourierField.smoke.test.ts",
+   "line": 38,
+   "to": "src/components/fourier-field/constants/constants.ts",
+   "kind": "import",
+   "names": [
+    "FOURIER_QUANTUM_FINE"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/fourier-field/wgsl-splice-contract.test.ts",
+   "line": 45,
+   "to": "src/components/fourier-field/renderer/render.wgsl.ts",
+   "kind": "import",
+   "names": [
+    "FOURIER_FIELD_RENDER_WGSL"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/fourier-field/wgsl-splice-contract.test.ts",
+   "line": 46,
+   "to": "src/components/fourier-field/renderer/compute.wgsl.ts",
+   "kind": "import",
+   "names": [
+    "FOURIER_FIELD_COMPUTE_WGSL"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/fourier-field/wgsl-splice-contract.test.ts",
+   "line": 47,
+   "to": "src/components/aurora/runtime/webgpu/aurora.wgsl.ts",
+   "kind": "import",
+   "names": [
+    "AURORA_WGSL"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/fourier-field/wgsl-splice-contract.test.ts",
+   "line": 48,
+   "to": "src/components/aurora/runtime/webgpu/aurora-image.wgsl.ts",
+   "kind": "import",
+   "names": [
+    "AURORA_IMAGE_WGSL"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/fourier-field/wgsl-splice-contract.test.ts",
+   "line": 49,
+   "to": "src/components/blob/renderer/webgpu/metaball.wgsl.ts",
+   "kind": "import",
+   "names": [
+    "METABALL_WGSL"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/fourier-field/wgsl-splice-contract.test.ts",
+   "line": 55,
+   "to": "src/composables/glass/procedural/color.wgsl.ts",
+   "kind": "import",
+   "names": [
+    "OETF_WGSL",
+    "FBM_ROT_WGSL",
+    "OKLCH_MATRICES_WGSL",
+    "PALETTE_RAMP_WGSL"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/components/sheet/sheet-motion.test.ts",
+   "line": 24,
+   "to": "src/composables/motion/spring/useSpringMount.ts",
+   "kind": "import",
+   "names": [
+    "*"
+   ],
+   "why": "a namespace import reads the whole module; no entry is that module"
+  },
+  {
+   "from": "tests/components/ui/_shared/useMotionAxis.test.ts",
+   "line": 5,
+   "to": "src/components/_shared/useMotionAxis.ts",
+   "kind": "import",
+   "names": [
+    "useMotionAxis"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/composables/color/use-accent-tone.test.ts",
+   "line": 243,
+   "to": "src/composables/color/accent-tone-solve.ts",
+   "kind": "import-type-node",
+   "why": "no static statement for @glass/composables/color/accent-tone-solve"
+  },
+  {
+   "from": "tests/composables/color/use-accent-tone.test.ts",
+   "line": 251,
+   "to": "src/composables/color/accent-tone-solve.ts",
+   "kind": "import-type-node",
+   "why": "no static statement for @glass/composables/color/accent-tone-solve"
+  },
+  {
+   "from": "tests/composables/motion/springProjection.test.ts",
+   "line": 5,
+   "to": "src/composables/motion/spring/springProjection.ts",
+   "kind": "import",
+   "names": [
+    "springProjection"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/composables/search/search-contracts.test.ts",
+   "line": 5,
+   "to": "src/components/dock/search/match.ts",
+   "kind": "import",
+   "names": [
+    "buildIndex",
+    "clearSearchCache",
+    "searchIndex"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/composables/search/search-contracts.test.ts",
+   "line": 6,
+   "to": "src/components/dock/search/useFuzzySearch.ts",
+   "kind": "import",
+   "names": [
+    "useFuzzySearch"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/composables/search/search-contracts.test.ts",
+   "line": 7,
+   "to": "src/components/dock/search/types.ts",
+   "kind": "import-type",
+   "names": [
+    "SearchableItem"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/demo/springs-story.test.ts",
+   "line": 6,
+   "to": "src/composables/motion/spring/springProjection.ts",
+   "kind": "import",
+   "names": [
+    "springProjection"
+   ],
+   "why": "private"
+  },
+  {
+   "from": "tests/gates/tabs-seam.test.ts",
+   "line": 51,
+   "to": "src/composables/motion/morph/eyeglass.ts",
+   "kind": "import",
+   "names": [
+    "EYEGLASS_SPAN_MAX",
+    "EYEGLASS_SWELL_MAX",
+    "EYEGLASS_EDGE_RATIO",
+    "EYEGLASS_ORIGIN_FRACTION",
+    "EYEGLASS_OVERFLOW_LICENSE",
+    "CASCADE_RANKS",
+    "CASCADE_RANK_MS",
+    "cascadeRankMs",
+    "eyeglassSpan",
+    "eyeglassSwell",
+    "eyeglassOriginPercent"
+   ],
+   "why": "private"
+  }
+ ]
+}

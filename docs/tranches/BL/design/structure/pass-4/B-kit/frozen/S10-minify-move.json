@@ -1,0 +1,17 @@
+{
+ "step": "B-S10 (frozen from authored/minify-move.json, F-9)",
+ "moves": [
+  {
+   "from": "scripts/lib/minify-css.mjs",
+   "to": "scripts/lib/minify-css.ts"
+  }
+ ],
+ "scanDeltas": [],
+ "reasons": [
+  {
+   "from": "scripts/lib/minify-css.mjs",
+   "to": "scripts/lib/minify-css.ts",
+   "why": "its one typed reader (vite.style-fold.ts, main program) and its test read it; no node bin runs it, so it can be TypeScript and carry its own types"
+  }
+ ]
+}

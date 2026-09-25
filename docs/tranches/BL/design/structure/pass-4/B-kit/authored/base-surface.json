@@ -1,0 +1,7 @@
+{
+ "note": "AUTHORED input to derive/base-repin.mjs (step S1c, pass 4's rebase). The floor's surface pin was recorded on 10.0.1 code; on the 10.1.0 base, F-9 reads the release's own export as growth before any route move (measured: `surface.mjs check` on HEAD + the floor rows gives 2 differences, both below). Each admitted name is tied to the commit that published it. This row belongs to the floor: when the floor rows re-record their pin on the moved base, S1c leaves the chain.",
+ "why": "the floor base's surface pin follows the 10.1.0 base: ConfiguratorLayout, published by the release (9065d924) on . and ./configurator, is pinned; 0 losses, no route move",
+ "growth": [
+  { "name": "ConfiguratorLayout", "entries": [".", "./configurator"], "commit": "9065d924", "why": "feat(configurator) 10.1.0: `Configurator layout=\"detached\"` (O-75) exports its layout union from src/components/configurator/index.ts, and the root barrel re-exports it (src/index.ts:405)" }
+ ]
+}
