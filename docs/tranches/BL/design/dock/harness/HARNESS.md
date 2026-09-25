@@ -38,6 +38,8 @@ A family prototype builds from its own worktree the same way. If it moved the do
 
 `build.mjs` writes nothing inside the worktree or the checkout: scene sources, both Vite caches and both outputs land under `$OUT/builds/<label>/`.
 
+Theme: `DOCK_HARNESS_THEME=dark` (or `light`) in the environment sets the theme of every scene a witness opens, asserted after load; W7 keeps its own per-cell light/dark matrix. Unset, no scheme is forced (Playwright renders light). Give each theme its own `--out`.
+
 Flags every witness takes: `--build <dir>` or `--fixture <pass|fault>`, `--engine chromium|webkit|safari|all` (comma list), `--out`, `--adapter`, `--cells <regex>` (run only matching blocks), `--no-webkit-shim` (writes to `<run>-unshimmed/`).
 
 **Load.** Timing cells are load-sensitive. Every cell records the 1-minute load average. A timing cell that fails is re-run twice; a failure seen only under load is NOT-REPRODUCED, never a defect. Safari refuses to start above load 8 (`DOCK_SAFARI_MAX_LOAD`) and holds a lock (one automation session).

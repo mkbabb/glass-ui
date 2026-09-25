@@ -84,8 +84,9 @@ if (source === "late") setTimeout(() => { lateOn.value = true; }, 600);
 const srcEl = () => document.querySelector("[data-testid=src]") as HTMLElement | null;
 const srcGetter = () => (source === "window" ? window : srcEl());
 // Adapter-declared props for rungs HEAD has no API for. "@source" resolves to a getter of the
-// scene's scroll source: the window, an element, or an element that mounts late.
-const resolve = (o: Record<string, unknown> | null | undefined) => o ? Object.fromEntries(Object.entries(o).map(([k, v]) => [k, v === "@source" ? srcGetter : v])) : {};
+// scene's scroll source: the window, an element, or an element that mounts late. It resolves at
+// any depth, so a grouped prop (the floor's scroll: { source, compact, rim }) binds too.
+const resolve = (o: Record<string, unknown> | null | undefined): Record<string, unknown> => o ? Object.fromEntries(Object.entries(o).map(([k, v]) => [k, v === "@source" ? srcGetter : v && typeof v === "object" && !Array.isArray(v) ? resolve(v as Record<string, unknown>) : v])) : {};
 const lead = ref(false);
 const wide = q.get("wide") === "1";
 const anchorEnd = q.get("anchor") === "end";

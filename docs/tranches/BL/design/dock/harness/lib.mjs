@@ -151,7 +151,10 @@ export function engineTag(target, engine) {
  * (viewport, hasTouch, isMobile, reducedMotion, deviceScaleFactor, recordVideo).
  * Returns the page, ready: the dock is mounted and the probe contract is installed.
  */
-export async function openScene(browser, target, scene, { query = {}, ctx = {}, settle = 900, theme = null } = {}) {
+// DOCK_HARNESS_THEME=light|dark sets the default theme of every scene a witness opens
+// (a witness that names its own theme per cell, W7, keeps it). Unset: no colour scheme
+// is forced and no class is added, which Playwright renders as light.
+export async function openScene(browser, target, scene, { query = {}, ctx = {}, settle = 900, theme = process.env.DOCK_HARNESS_THEME || null } = {}) {
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2, ...(theme ? { colorScheme: theme } : {}), ...ctx });
     const page = await context.newPage();
     const opened = Date.now();
