@@ -638,3 +638,116 @@ Sources: `INBOUND.md`, re-read for rows the map lacks. Five registered rows had 
 
 - `INBOUND.md` records O-66a as a follow-up row with no letter file; it is mapped above as its own row, and its source reading is confirmed.
 - No other row of `INBOUND.md` is missing from the map.
+
+## Round 8: O-74 to O-80
+
+Seat: REGISTRY, round 8. Model `claude-opus-5-5` (asserted from system identity). Read at `33aa1681`; `git diff --stat v10.0.1..HEAD -- src demo` is empty, so every HEAD status below is the published 10.0.1 bytes (npm carries a 10.1.0 cut from `release/10.1`; master's `src` is not it, and no row below is ruled against it). Date 2026-09-24. Statuses are as "How to read" defines them. Placement is against `REGISTRY.md` after round 8 (85 families, F-85 included).
+
+Sources: `INBOUND.md`, re-read for rows the map lacks. Seven registered letters had no map entry: O-74 (`BK/coordination/valuejs-outbound-2026-09-24-audit-2.md`, 62 glass rows, and its erratum `…-audit-2-erratum.md`), O-75 (`…-configurator-detached.md`), O-76 (`…-toggle-pressed-tint.md`), O-77 (`…-layer-header-label.md`), O-78 (`…-menu-stacking.md`), O-79 (a relayed message with no letter file; `INBOUND.md` holds its text) and O-80 (`…-dock-overflow-layout.md`). Each was read in full. O-74's evidence lives in value.js and was not opened; each producer half below is placed from its source at HEAD. There is no O-69 to O-73 in `INBOUND.md`: O-74 was minted as O-69 and re-rowed for a collision with value.js's own inbox.
+
+### Counts
+
+- Rows mapped this round: **72**. O-74 65: the 62 letter rows, A2-VA-L1-2 split into its condense and veil halves (as O-56 G-3 was split in round 4), E-3's new EasingCurve row and E-4's A2-KE-L2-15. O-75 1 · O-76 1 · O-77 1 · O-78 1 · O-79 2 (the paper line, the variant table) · O-80 1.
+- Erratum rows that change no count: E-1 re-routes A2-VA-L2-6's compact half to A2-KE-L2-6 (noted on both rows); E-2's contradiction among the three §11 type asks is one coarse type model for W-DENSITY-DECIDE (noted on A2-VA-L3-6); E-5's value.js micro-text site joins A2-KE-L2-14; E-6 says value.js's open-at-HEAD statuses are source readings, which is how this map treats them.
+- Per status: FAMILY **63** · CURED-AT-HEAD **5** · CONSUMER-SIDE **1** · NOT-REPRODUCED **0** · NEW **3**.
+- Spot-verified at HEAD by opening the cited source: **41 of 72** (the rows marked "re-checked"), among them every BROKEN row with a glass file, every CURED@HEAD claim, and each of O-75 to O-80.
+- Cumulative: **442** rows. FAMILY 360 · CURED-AT-HEAD 52 · CONSUMER-SIDE 21 · NOT-REPRODUCED 6 · NEW 3.
+- Per family, the round-6 table plus: F-15 +3, F-16 +2, F-18 +2, F-21 +1, F-22 +9, F-29 +11, F-31 +1, F-32 +1, F-33 +1, F-34 +1, F-40 +1, F-42 +1, F-63 +2, F-64 +1, F-68 +5 (CURED-AT-HEAD), F-71 +26, F-85 3 (NEW). 42 families now hold at least one inbound row (F-85 joins).
+- Genuinely new families from inbound: **1**. F-85 (edge-anchored surfaces do not read the viewport's safe-area insets) takes A2-FO-L2-2, A2-VA-L2-12 and A2-KE-L2-15; REGISTRY F-85 records the placement weighed (nearest F-32). Every other row's cause is named by a registered family, and the API asks sit in F-71 as decide rows under E-5.
+
+### Placements worth a second look
+
+- **The three rulings where a standing library rule meets the owner's 2026-09-24 words** go to F-15, not F-71: the destructive confirm (A2-VA-L1-6, A2-FO-L1-9) against the no-`Confirm*` rule at `dialog/DialogContent.vue:21-28` and the named-presets-in-consumers edict, and the slider's deliberate 24 px coarse target (`tokens/sizing.css:290`, re-checked) against the owner's hit floor of at least 44 px (erratum E-2). That is two owner asks in conflict, the cartoon under-stamp's precedent (round 4).
+- **A2-KE-L1-28** (`.ios` is never set) goes to F-64 as a dead selector: `styles/utilities/base-misc.css:32-38` keys the no-zoom rule on a class no `src` file sets (re-checked). Its cure pairs with A2-KE-L2-9 in F-29.
+- **A2-VA-L3-1** (the display-1 rung floors at the heading rung) goes to F-29: `--type-display-1: clamp(1.618rem, …)` shares its floor with `--type-heading: 1.618rem` (`typography/scale.css:120-122`, re-checked), so the width axis moves one rung of a pair and not the other, F-29's statement for pads and corners.
+- **A2-KE-L2-1** (a touch tap on a dock item opens the non-modal Sheet, and its outside-press dismissal closes it 3 ms later) goes to F-22's dismissal leg, beside R6-01-11 and A2-KE-L1-27: which presses count as outside is the layer contract's.
+- **A2-FO-L3-7** (LabeledSwitch horizontal) goes to F-33: the horizontal arm collapses on `@media (max-width: 36rem)` (`labeled-field/LabeledField.vue:127-133`, re-checked), a viewport query on a component that sits in dialogs and asides.
+
+### O-74 (65)
+
+Each note opens with the letter's severity and status, then the placement.
+
+| row | family | status | note |
+|---|---|---|---|
+| A2-KE-L2-2 | F-21 | FAMILY | BROKEN · CITE SHEET-POSITION. `.glass-floating { position: relative }` at (0,1,0) (`styles/glass/material.css:35-47`) beats `:where([data-slot="sheet-content"]) { position: fixed }` (`sheet/styles.css:29-32`) (re-checked): F-21's first clause verbatim |
+| A2-KE-L2-1 | F-22 | FAMILY | BROKEN · NEW. The dismissal leg: a non-modal detented Sheet counts the press that opened it, on the dock's chrome, as outside, because reka defers touch pointer-down-outside to a click that runs after the item's. The leg's "which press is outside" clause takes the tethered chrome |
+| A2-KE-L2-3 | F-32 | FAMILY | HIGH · NEW. The detent ladder at 844×390 is degenerate and the sheet rises under the top dock: the detented Sheet reserves nothing for the dock band at either edge |
+| A2-KE-L2-7 | F-42 | FAMILY | MEDIUM · CITE UIA-KF-005/216, tap-to-step NEW. A handle with no tap opener is UIA-KF-216's row in F-42; the handle under the transport is F-32's (UIA-KF-005) and rides W-SHEET's reserve |
+| A2-VA-L2-6 | F-68 | CURED-AT-HEAD | HIGH · CURED@HEAD, narrowed by erratum E-1. The Select-view and Menu triggers take the coarse `::after` hit-slop at `dock/styles/controls/touch-floor.css:36-46` (re-checked). The Toggle action bar is `<DockControl compact>`, exempt at `:25-28`, and is counted on A2-KE-L2-6; the 32 px scene seats are value.js's own buttons |
+| A2-KE-L2-6 | F-29 | FAMILY | HIGH · NEW. `.dock-icon-button:not(.dock-icon-button--compact)` takes the coarse floor and the slop covers only `.dock-trigger`, `.dock-select-trigger` and `.dock-dropdown-trigger` (`touch-floor.css:25-46`, re-checked), so compact seats hit at 30.8 px. UIA-V-76's missing coarse floor (R2-08-10) on the compact rung |
+| A2-VA-L2-7 | F-18 | FAMILY | LOW · CITE. A layer item clipped past the dock edge while the layer scrolls: the run as scroll port and paint box (item 6), with the cut cap as the cue |
+| A2-FO-L2-2 | F-85 | NEW | HIGH · NEW. Bottom docks and the Configurator stage overlay slot read no `env(safe-area-inset-bottom)`; `src` reads the insets only in `deck/styles/stage.css:33-34`, and the demo shell adds its own (`demo/shell/dock-nav.css:29-34`) (re-checked). Mints F-85 |
+| A2-VA-L2-12 | F-85 | NEW | LOW · NEW, merged with A2-FO-L2-2. The dock inset is not `env()`-aware; value.js's own shell half (`index.html:15`) is the consumer's (re-checked with A2-FO-L2-2) |
+| A2-KE-L2-15 (erratum E-4) | F-85 | NEW | keyframes' docks are glass docks, so its safe-area row joins the dock `env()` ask; the letter's instrument note (Chromium can emulate insets through CDP `Emulation.setSafeAreaInsetsOverride`) is R9-01's instrument (re-checked with A2-FO-L2-2) |
+| A2-KE-L2-16 | F-18 | FAMILY | LOW · NEW. The dock's inline cap is not bounded by the page gutter (8.6 px against 16). O-67 R-2's edge offset; the gutter token itself is A2-FO-L3-6's ruling |
+| A2-KE-L2-8 | F-16 | FAMILY | BROKEN · CITE O-65, UIA-KF-032. The collapsed plate is sized to the summary square while two items are slotted in: O-65 R-1's endpoint rule |
+| A2-FO-L2-13 | F-16 | FAMILY | BROKEN · CITE O-65, UIA-F-6. The collapsed readout spills the summary layer; as A2-KE-L2-8 |
+| A2-FO-L2-15 | F-68 | CURED-AT-HEAD | HIGH · CITE UIA-F-215/F-88. The cut cap is the run's V-independent overflow cue (`dock/styles/run.css:46-51`, re-checked); adopted at repin. Its faults are F-18's |
+| A2-VA-L2-1 | F-22 | FAMILY | BROKEN · NEW (partial UIA-V-32). The `menu` role and the select plate clamp to `--reka-popper-available-height` (`styles/glass/overlay-plate.css:75-81`, `:325-328`), and the `overlay` role that Popover wears has only an inline rule (`:88-90`) (re-checked). The edge leg's block ceiling |
+| A2-FO-L2-12 | F-22 | FAMILY | HIGH · CITE UIA-F-56/219. `collisionPadding` is set only in `select/SelectContent.vue:56` (re-checked); Popover and DropdownMenu keep reka's 0. The edge leg |
+| A2-KE-L2-12 | F-22 | FAMILY | LOW · CITE UIA-KF-056/113. As A2-FO-L2-12 (re-checked with it) |
+| A2-VA-L2-3 | F-22 | FAMILY | MEDIUM · NEW (partial UIA-V-66). `--overlay-max-block: min(24rem, 60dvh)` (`tokens/offsets.css:82`, re-checked) with no scroll cue: the edge leg's ceiling, and the cue rides the same row |
+| A2-KE-L2-17 | F-22 | FAMILY | LOW · NEW, merged with A2-VA-L2-3. The menu clipped by its available-height cap with no cue (re-checked with it) |
+| A2-KE-L1-27 | F-22 | FAMILY | LOW · NEW. Three consumer guards read glass's private `data-slot` to stop a Dialog, Popover or Sheet dismissing on a toast press; `DialogContent.vue` and `PopoverContent.vue` hold no toast rule (re-checked). The dismissal leg: a press inside the library's own toaster layer is not outside |
+| A2-FO-L2-8 | F-22 | FAMILY | BROKEN · NEW. DialogContent caps height only under `scroll` (`dialog/DialogContent.vue:180-187`, `props.scroll ? "max-h-[calc(100dvh-2rem)] overflow-y-auto" : ""`, re-checked). The edge leg's block ceiling on the modal plate |
+| A2-VA-L1-6 | F-15 | FAMILY | MEDIUM · RULING. The destructive confirm: the standing no-`Confirm*` rule (`dialog/DialogContent.vue:21-28`) against the owner's "not duplicating any component … fixed at the glass-ui root". An owner-glance row: keep the rule, ship `useConfirm`, or mint the composite |
+| A2-FO-L1-9 | F-15 | FAMILY | MEDIUM · RULING, merged with A2-VA-L1-6. Six sites across three apps |
+| A2-KE-L3-17 | F-40 | FAMILY | LOW · CITE UIA-KF-253. The ring paints on the Close button at a pointer open: pointer-origin focus painting the keyboard ring, the class F-40's round-4 correction holds |
+| A2-KE-L1-25 | F-71 | FAMILY | MEDIUM · NEW. API ask: `#leading` and `#description` slots on DropdownMenuItem, which renders the default slot only (`menu/DropdownMenuItem.vue:46`, re-checked), and an identity-block recipe |
+| A2-VA-L1-7 | F-71 | FAMILY | MEDIUM · NEW, merged with A2-KE-L1-25. API ask: a dock attribution menu |
+| A2-FO-L1-17 | F-71 | FAMILY | LOW · RULING (candidate). API ask: a presentation-only `DockAccount`/`SlugIdentity`; decide row |
+| A2-KE-L2-13 | F-71 | FAMILY | LOW · CITE O-61 R-3. The DarkModeToggle menu-item form |
+| A2-VA-L1-2 (condense) | F-68 | CURED-AT-HEAD | HIGH · CURED@HEAD. `card/CardHeader.vue:20-51` condenses at `--space-family` and releases at `--space-body` behind `hasRoomToCondense` (re-checked); value.js adopts at repin and deletes `PaneHeader.vue` and `useHeaderCondense.ts` |
+| A2-VA-L1-2 (veil) | F-71 | FAMILY | HIGH · NEW (partial UIA-V-3). API ask: the scroll veil under a condensed header |
+| A2-VA-L3-2 | F-71 | FAMILY | MEDIUM · NEW. API ask: a CardHeader `#actions` seat; the header renders the default slot only (`card/CardHeader.vue:86`, re-checked). The Card twin of O-68 R-1 |
+| A2-FO-L3-8 | F-71 | FAMILY | MEDIUM · CITE O-68, UIA-F-134/238. ConfiguratorLayer's `#actions`, as O-68 R-1; the label's truncation is O-77 (re-checked with O-77) |
+| A2-VA-L3-3 | F-34 | FAMILY | MEDIUM · NEW (partial UIA-V-397/163). ConfiguratorRow stacks label over control at every width; the configurator expression (UIA-V-397's row), with a container-query inline mode as the cure |
+| A2-FO-L3-7 | F-33 | FAMILY | MEDIUM · NEW. `labeled-field[data-layout="horizontal"]` is a `0.382fr / 1fr` form grid and collapses to one column on `@media (max-width: 36rem)` (`labeled-field/LabeledField.vue:121-133`, re-checked): layout by viewport inside a dialog. The settings-row arm is the cure |
+| A2-FO-L3-5 | F-71 | FAMILY | MEDIUM · NEW (rider). The double rim is the consumer's Card; the glass half is a ConfiguratorLayer flush arm and a README line. API ask |
+| A2-FO-L3-6 | F-71 | FAMILY | MEDIUM · RULING. Ship a page-gutter token or not; decide row. A2-KE-L2-16's cap reads it if shipped |
+| A2-KE-L3-1 | F-29 | FAMILY | HIGH · NEW. `.segmented-tab` takes `--type-caption`, stepping to `--type-small` under a width query (`tabs/styles/segmented.css:284`, `:309-313`, re-checked), off `--control-text` and `--ui-scale`: a literal control on another axis. E-2 puts it under the one coarse type model |
+| A2-FO-L2-6 | F-29 | FAMILY | MEDIUM · NEW, merged with A2-KE-L3-1. Only the trigger carries `data-control-target` (`tabs/SegmentedTabs.vue:219`, re-checked); the strip's buttons have no coarse floor |
+| A2-FO-L2-14 | F-29 | FAMILY | MEDIUM · CITE UIA-F-41/215. SegmentedTabs has no overflow mode (R4-02-15's row budget) |
+| A2-FO-L2-7 | F-15 | FAMILY | MEDIUM · RULING. `--slider-touch-target: 1.5rem` is deliberate (WCAG 2.5.8; `tokens/sizing.css:290`, re-checked) against the owner's hit floor of at least 44 px (E-2). An owner-glance row |
+| A2-FO-L1-16 | F-71 | FAMILY | MEDIUM · NEW. API ask: a scrub session on Slider, which emits `update:modelValue` and `valueCommit` only (`slider/Slider.vue:30-33`, re-checked) |
+| A2-KE-L1-9 | F-71 | FAMILY | MEDIUM · CITE UIA-KF-280. Draggable marks or lanes; API ask |
+| A2-FO-L1-15 | F-71 | FAMILY | LOW · CITE BL-FW14H-1/-2, UIA-F-75/116. A value field on LabeledSlider and a thumb-plus-fill variant; API ask |
+| A2-KE-L2-9 | F-29 | FAMILY | MEDIUM · CITE UIA-KF-192 (widened). The field reads `font-size: var(--type-small)` and drops `--ui-scale` by its own docblock (`_shared/field/control.css:110-122`, re-checked): 14 px at the phone cell, L15b-14's iOS zoom |
+| A2-KE-L1-28 | F-64 | FAMILY | LOW · NEW. `.ios input, .ios select, …` (`styles/utilities/base-misc.css:32-38`) and no `src` file sets `.ios` (re-checked): a dead selector. Pairs with A2-KE-L2-9 |
+| A2-VA-L2-9 | F-68 | CURED-AT-HEAD | MEDIUM · CURED@HEAD. `--control-floor: var(--touch-target, 2.75rem)` under the coarse arm (`tokens/light-dark.css:11-20`, re-checked); value.js adopts at repin |
+| A2-KE-L3-4 | F-31 | FAMILY | MEDIUM · CITE O-66. The Input paints `background-color: var(--control-surface-bg)` (`_shared/field/control.css:103`) and SelectTrigger takes `control-surface` (`select/SelectTrigger.vue:52`) (re-checked): O-66a's two composites |
+| A2-FO-L3-1 | F-71 | FAMILY | HIGH · NEW. SelectTrigger's recipe carries `w-full` (`select/SelectTrigger.vue:59`, re-checked); an inline arm is an API ask. The consumer passes a width meanwhile |
+| A2-VA-L3-6 | F-29 | FAMILY | MEDIUM · CITE UIA-V-112. Coarse `--ui-scale` multiplies control text past the headings. With A2-KE-L3-1 and A2-KE-L3-2 it is erratum E-2's contradiction; W-DENSITY-DECIDE rules one coarse type model (heading > control label > readout, hit floor at least 44 px) as one change |
+| A2-KE-L3-2 | F-29 | FAMILY | MEDIUM · NEW (the heading half). Headings and readouts do not ride `--ui-scale`; under E-2's one model |
+| A2-FO-L3-14 | F-29 | FAMILY | LOW · CITE UIA-F-91/131. Button labels out-rank the h1 at 390 (F-29); the dark primary receding toward the card is UIA-F-131's flat ladder in F-24, cross-cited |
+| A2-VA-L3-1 | F-29 | FAMILY | HIGH · NEW (partial UIA-V-632/638/647). `--type-display-1: clamp(1.618rem, …)` floors on `--type-heading: 1.618rem` (`typography/scale.css:120-122`, re-checked) |
+| A2-KE-L2-14 | F-29 | FAMILY | LOW · CITE UIA-KF-147. The 11 px micro rung carries readable text; a coarse floor. E-5 adds value.js's `/extract` and `/atmosphere` sites |
+| A2-FO-L2-18 | F-29 | FAMILY | LOW · NEW, merged with A2-KE-L2-14 |
+| A2-FO-L1-14 | F-71 | FAMILY | MEDIUM · NEW (partial UIA-F-146/219). API ask: a single-component tooltip; `components/tooltip/` ships the decomposed parts only (re-checked) |
+| A2-FO-L1-2 | F-71 | FAMILY | MEDIUM · NEW (partial UIA-F-147). API ask: a `TocTree` over the sidebar composables; `src/components` has no ToC component (re-checked) |
+| A2-FO-L1-18 | F-71 | FAMILY | MEDIUM · NEW. API ask: an estimate-then-teleport arm on `useScrollTo` |
+| A2-FO-L1-4 | F-71 | FAMILY | MEDIUM · RULING. Publish a `./search` subpath or record paper search as consumer-owned; `package.json` exports no `./search` (re-checked). Decide row |
+| A2-KE-L1-8 | F-71 | FAMILY | MEDIUM · CITE UIA-KF-201, UIA-F-139. A Badge soft tone; API ask |
+| A2-FO-L1-27 | F-71 | FAMILY | MEDIUM · CITE UIA-F-145, UIA-V-639. Pagination; no component in `src/components` (re-checked) |
+| A2-FO-L1-28 | F-71 | FAMILY | LOW · CITE UIA-F-71/72. Publish DotRing |
+| A2-KE-L1-29 | F-71 | FAMILY | LOW · NEW (partial UIA-KF-298). A CopyButton over the shipped `useClipboard`; none in `src/components` (re-checked) |
+| A2-KE-L1-26 | F-71 | FAMILY | LOW · NEW. A `followPointer` prop; Aurora exposes the imperative `setCursor` only (`aurora/Aurora.vue:177-182`, re-checked) |
+| A2-KE-L1-22 | — | CONSUMER-SIDE | LOW · HELD. The letter makes no ask until keyframes measures a gap between `.kf-focus-ring` and `.focus-ring`; F-39 is the nearest family if it does |
+| E-3 EasingCurve marker and preset strip | F-71 | FAMILY | erratum E-3 · NEW. API ask: a marker sampled on the stroke's own path, and a preset strip or select over one named-curve catalogue |
+
+### O-75 to O-80 (7)
+
+| letter row | family | status | note |
+|---|---|---|---|
+| O-75 CONFIGURATOR-DETACHED | F-71 | FAMILY | API ask with an owner frame. The shell is one `configurator-shell glass-floating rounded-panel border` plate around `#stage` and the aside (`configurator/Configurator.vue:199`, re-checked), so a detached aside shows the plate in its gutter. O-65 P-1 made concrete; one Configurator wave with O-68 and O-77. The publish timing is an owner decision (OW-11, F-68) |
+| O-76 TOGGLE-PRESSED-TINT | F-71 | FAMILY | API ask: a per-item tint token read by the pressed background, border and ink. The pressed edge is glass-owned, so a consumer class cannot restore it; rides the D3 grey measure with O-66 |
+| O-77 LAYER-HEADER-LABEL | F-71 | FAMILY | The label and the sub-label share one `min-w-0` flex track and both carry `truncate` (`configurator/ConfiguratorLayer.vue:128-137`, re-checked), so the label yields as readily as the sub-label. UIA-F-134's truncation priority, placed in F-71 with O-68 R-1 in round 4; the heading-row rewrite carries both |
+| O-78 MENU-STACKING | F-22 | FAMILY | The z leg. `DropdownMenuContent.vue`, `DropdownMenuSubContent.vue` and `_shared/overlay/content.ts` set no z rung (re-checked: 0 `z-` hits), while Popover, Select and Tooltip each set one; reka's PopperContent copies the content's computed `auto` onto its fixed wrapper, so a menu lands under `--z-dock` (40) and `--z-panel` (45) |
+| O-79 (1) the aged-paper line | F-63 | FAMILY | `MIGRATION.md` has no line for `--paper-aged-texture` and `<PaperBackdrop frequency="aged">`, retired in the 7.0.0 cut (re-checked: 0 hits for `aged`). W-DOC-TRUTH names the successor register (`--paper-grain-tooth`, `--paper-grain-relief`) and the owner's no-successor ruling for the SVG look |
+| O-79 (2) the Button variant table | F-63 | FAMILY | `MIGRATION.md` has no `variant` → `emphasis` + `tone` table (re-checked: 0 hits for `emphasis`), so atlas guessed the mapping; R2-03-02 noted the same gap. W-DOC-TRUTH adds one row per v6 variant, judged in paint |
+| O-80 DOCK-OVERFLOW-LAYOUT | F-68 | CURED-AT-HEAD | `useDockOverflowFit` and `overflow.css` are absent at HEAD (re-checked: 0 files under `dock/composables` match `overflow`), deleted in BK #47 (`964535cb`). Closes on value.js's re-measure at its repin; a residual per-frame cost comes back as a measured addendum |
+
+### Corrections
+
+- `INBOUND.md` records O-74 as minted O-69; the ids O-69 to O-73 do not appear as rows, and none is missing.
+- No other row of `INBOUND.md` is missing from the map.
