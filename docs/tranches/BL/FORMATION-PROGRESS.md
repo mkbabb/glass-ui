@@ -71,3 +71,5 @@ Outage log:
 - 2026-09-25 05:0x-09:42: the WEEKLY usage limit (reported "resets Sep 27 1am") failed every live seat and each run failed through its remaining calls (D1 P4 at rebase, D3 at D/E/F research and synth, D2/D4 P2 at H2, formation at bands B-L, ledger and critic); failed seats cache nothing. Worktrees removed. 09:42: on the owner's "re-deploy all workflows" all five resumed from their run ids and their seats run clean (D1 P4 rebase, D3 D-research, D4 P2 H2, D2 P2 H2, formation band B). The H2 seats' partial harness edits stay uncommitted for them to continue.
 
 - 2026-09-25 11:09 — session restart killed all five live seats (D1-P4-floor, D3-D-research, D4-P2-H2, D2-P2-H2, BL-waves-D). Dead seats' scratch worktrees + one preview removed; all five runs resumed from their run ids at 11:10, cached prefixes intact, each re-entering its unfinished seat. Crons stay off.
+
+- 2026-09-25 13:0x — O-83 DOCK-CAP-ELLIPSE landed in INBOUND (source-confirmed, run.css:468 50% per-axis ellipse); joins band 0 (10.2.0) with O-82 at the next formation pass. Owner wants it fixed.
