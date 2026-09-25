@@ -1,0 +1,17 @@
+{
+ "why": "P4-F5 plant (FP3-5): R-3's form for a one-subject visual spec, moved out of tests-visual/ into its unit's slot as *.visual.ts. Playwright collects tests-visual/**/*.spec.ts (testDir \".\", testMatch \"*.spec.ts\"), so the moved spec silently leaves the program. The pass-3 graph does not read testDir/testMatch and applies the move; the P4 graph carries the program as edges, so the image check refuses it.",
+ "moves": [
+  {
+   "from": "tests-visual/css-critical.spec.ts",
+   "to": "src/components/chip/__tests__/css-critical.visual.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests-visual/pi-runner-manifest.mjs",
+   "spec": "resolve(WORKSPACE, f)",
+   "file": "tests-visual/css-critical.spec.ts",
+   "reason": "the \u03c0 runner manifest walks tests-visual; the spec leaves it (declared so the plant isolates the program edge)"
+  }
+ ]
+}

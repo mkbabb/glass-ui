@@ -13,6 +13,7 @@ import { scanCss } from "./scan/css.mjs";
 import { scanScript } from "./scan/script.mjs";
 import { scanHtml, scanJson, scanSh, scanYaml } from "./scan/text.mjs";
 import { scanVue } from "./scan/vue.mjs";
+import { PLAYWRIGHT_CONFIG, scanPlaywright } from "./scan/playwright.mjs";
 
 const SCRIPT = /\.(ts|tsx|mts|cts|js|mjs|cjs|jsx)$/;
 /** Module edge kinds a `src` file may not spell by the package's own name (P3-F3). */
@@ -48,7 +49,7 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
      *  keeps one edge to its static head dir (which must exist), plus one per matched file
      *  (FD-7: the first `__tests__/` file then joins a pattern instead of staling a ledger row). */
     const PROGRAM_CONFIG = /^(tsconfig[^/]*\.json|vite[^/]*\.ts|vitest[^/]*\.ts)$/;
-    const programPattern = (from, ref) => (PROGRAM_CONFIG.test(from) && (ref.kind === "json-glob" || ref.kind === "glob-literal")) || (ref.cssSource && ref.negated);
+    const programPattern = (from, ref) => (PROGRAM_CONFIG.test(from) && (ref.kind === "json-glob" || ref.kind === "glob-literal")) || (ref.cssSource && ref.negated) || ref.testProgram;
     const headDir = (pattern) => { const i = pattern.search(/[*{?]/); const head = i === -1 ? pattern : pattern.slice(0, pattern.lastIndexOf("/", i)); return head.replace(/\/$/, "") || "."; };
     const publishedJs = record.js.map(([name, source]) => ({ dist: name === "index" ? "dist/glass-ui.js" : `dist/${name}.js`, source }));
 
@@ -58,7 +59,11 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
         let out = { refs: [] };
         try {
             if (f.endsWith(".vue")) out = scanVue(ts, postcss, sfc, f, code, ctx);
-            else if (SCRIPT.test(f)) out = scanScript(ts, f, code, 0, ctx);
+            else if (SCRIPT.test(f)) {
+                out = scanScript(ts, f, code, 0, ctx);
+                // P4-F5: a Playwright config's testDir/testMatch is a program over the specs
+                if (PLAYWRIGHT_CONFIG.test(f)) out.refs.push(...scanPlaywright(ts, f, code).refs);
+            }
             else if (f.endsWith(".css")) out = scanCss(postcss, f, code, 0);
             else if (f.endsWith(".json")) out = scanJson(f, code, { records: recordsDir });
             else if (f.endsWith(".sh")) out = scanSh(f, code);

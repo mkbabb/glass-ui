@@ -18,6 +18,7 @@ const root = rootArg();
 const run = (script, ...extra) => {
     process.stdout.write(execFileSync("node", [script.startsWith("/") ? script : join(HERE, script), ...extra, "--root", root], { encoding: "utf8", maxBuffer: 1 << 26 }));
 };
+run("r1-register-retire.mjs"); // R-1 (P4-F1): the register retires before any structure row or move
 run("f3-entry-record.mjs"); // the one entry record; subpath-policy + regen-exports deleted
 run("f4-terminal-role.mjs"); // the declared cascade terminal; the masked fallback deleted
 run("m02-overlay-host.mjs"); // M02: overlay owns OverlayHost, dock provides it
@@ -27,5 +28,5 @@ run("f9-wire.mjs"); // the floor gates under `npm test`
 run("fd6-harness.mjs"); // FD-6: tests/harness/source.ts; the two slot-breaking walkers read through it
 run("fd7-programs.mjs"); // FD-7: entry-rooted declarations, __tests__ collected, @source excludes them
 run("fd11-land.mjs"); // FD-11: the floor runtime lands at scripts/structure; import-dag.mjs deleted
-console.log("floor rows applied: f3-entry-record, f4-terminal-role, m02-overlay-host, m03-roving-move, f9-wire, fd6-harness, fd7-programs, fd11-land");
+console.log("floor rows applied: r1-register-retire, f3-entry-record, f4-terminal-role, m02-overlay-host, m03-roving-move, f9-wire, fd6-harness, fd7-programs, fd11-land");
 console.log(`tree digest ${treeDigest(root, openTree(root).files)}`);

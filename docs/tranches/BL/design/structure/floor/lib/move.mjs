@@ -11,6 +11,8 @@ import { dirname, join, posix } from "node:path";
 import { buildGraph, loadDeps, moduleSccs } from "./graph.mjs";
 import { dirUnits } from "./placement.mjs";
 import { zoneOf } from "./tree.mjs";
+import { globToRegex } from "./resolve.mjs";
+import { classifyImage } from "./classify.mjs";
 
 const EXT = /\.(d\.ts|ts|tsx|mts|cts|js|mjs|cjs|jsx|vue|css|json)$/;
 
@@ -113,14 +115,18 @@ export function computeEdits(graph, M, deps) {
     const rootAbs = graph.tree.root;
     for (const e of graph.edges) {
         const fromNew = M.file(e.from);
-        const target = e.to ?? e.output ?? null;
-        const toNew = target === null ? null : e.dir ? M.dir(target) : M.any(target);
+        // P4-F3: a generated target (dist, a cache root) is not a tree file and never moves;
+        // only its holder's spelling can follow the holder. An edge with no target at all is
+        // never respelled: it is residue, never the text "null".
+        const target = e.to ?? e.output ?? e.generated ?? null;
+        const toNew = target === null ? null : e.generated && !e.to ? target : e.dir ? M.dir(target) : M.any(target);
         const fromMoved = fromNew !== e.from;
         const toMoved = target !== null && toNew !== target;
         const anchorMoved = (!!e.anchorFile && M.file(e.anchorFile) !== e.anchorFile) || (!!e.anchorDir && M.dir(e.anchorDir) !== e.anchorDir);
         if (!fromMoved && !toMoved && !anchorMoved) continue;
         if (e.via === "package" || e.via === "builtin" || e.via === "url" || e.via === "self-name" || e.via === "ledger" || e.via === "generated" || e.via === "absence") continue;
         if (e.kind === "helper-base") continue; // a base marker: the helper's own literals carry the spelling
+        if (target === null) { if (!e.external) residue.push({ kind: "no-target", edge: brief(e) }); continue; } // an external never moves
         const span = e.spans?.[0];
         const replaceOne = (text) => {
             if (!span) return residue.push({ kind: "no-span", edge: brief(e) });
@@ -296,6 +302,41 @@ export function scanDeltasOf(g0, M) {
 }
 
 /**
+ * FD-8 · css-source glob deltas (P4-F2). A Tailwind `@source` glob is a collection pattern:
+ * a move can take a file out of its match set (`_shared/overlay/isTeleportedTarget.ts`
+ * leaving `@source "../src/components/_shared/**\/*.ts"`) or bring one into it. Such a move
+ * changes what Tailwind scans, which no rewrite can express, so every such delta is named
+ * and must be declared (`globDeltas: [{ scanner, glob, file, reason }]`, `file` the path
+ * before the move); the image check then expects exactly the declared edge lost or gained.
+ * A negated `@source not` of the same sheet subtracts, as in F-1. Only source-plane globs
+ * whose holder stays put: a moved holder's glob is respelled and keeps its match set.
+ */
+export function globDeltasOf(g0, M) {
+    const out = [];
+    const isSource = (e) => /css-source$/.test(e.kind) && e.via === "glob" && e.glob && e.plane === "source";
+    const scanners = new Map(); // `${from}\0${spec}` → { from, spec, re, members }
+    for (const e of g0.edges) {
+        if (!isSource(e) || M.file(e.from) !== e.from) continue;
+        const k = `${e.from}\u0000${e.spec}`;
+        if (!scanners.has(k)) scanners.set(k, { from: e.from, spec: e.spec, re: globToRegex(e.glob), members: new Set() });
+        scanners.get(k).members.add(e.to);
+    }
+    const negations = new Map();
+    for (const e of g0.edges) if (e.via === "program-glob" && /css-source$/.test(e.kind) && e.glob) (negations.get(e.from) ?? negations.set(e.from, []).get(e.from)).push(globToRegex(e.glob));
+    const negated = (from, f) => { const res = negations.get(from) ?? []; for (let d = f; d.includes("/"); d = posix.dirname(d)) if (res.some((re) => re.test(d))) return true; return false; };
+    const matches = (s, f) => s.re.test(f) && !negated(s.from, f);
+    for (const s of scanners.values()) {
+        for (const [from, to] of M.fileMap) {
+            const was = s.members.has(from);
+            const now = matches(s, to);
+            if (was && !now) out.push({ scanner: s.from, glob: s.spec, file: from, to, change: "leaves" });
+            if (!was && now && !s.members.has(to)) out.push({ scanner: s.from, glob: s.spec, file: from, to, change: "enters" });
+        }
+    }
+    return out;
+}
+
+/**
  * FD-2 · the coupling stop. Two modules are co-cyclic when they sit in one SCC of
  * `moduleSccs` over the unit function. A pass may dissolve coupling, never add it: every
  * co-cyclic pair after the pass must have been co-cyclic before it, with the old module
@@ -337,7 +378,7 @@ export function sccGrowth(g0, g1, M, { moduleOf = dirUnits().unitOf, zones = ["s
  * never leaves a half-applied tree that a rerun would then read as "already applied".
  * Idempotent: a move whose source is gone and whose target exists counts as applied.
  */
-export function runMoves(root, moves, { dry = false, deps, declaredScanDeltas = [], units = dirUnits() } = {}) {
+export function runMoves(root, moves, { dry = false, deps, declaredScanDeltas = [], declaredGlobDeltas = [], units = dirUnits() } = {}) {
     deps ??= loadDeps(root);
     const g0 = buildGraph(root, { deps });
     if (g0.violations.length) return { ok: false, phase: "preflight", reason: "the tree's graph is not clean", violations: g0.violations };
@@ -352,13 +393,19 @@ export function runMoves(root, moves, { dry = false, deps, declaredScanDeltas = 
     const undeclared = deltas.filter((d) => !declaredScanDeltas.some((x) => covers(x, d)));
     const stale = declaredScanDeltas.filter((x) => !deltas.some((d) => covers(x, d)));
     const scanDeltas = { total: deltas.length, declared: deltas.length - undeclared.length, undeclared, stale };
+    // P4-F2: css-source glob deltas, declared like scan deltas (the ledger rule both ways)
+    const gd = globDeltasOf(g0, M);
+    const gcovers = (x, d) => x.scanner === d.scanner && x.glob === d.glob && x.file === d.file;
+    const gUndeclared = gd.filter((d) => !declaredGlobDeltas.some((x) => gcovers(x, d)));
+    const gStale = declaredGlobDeltas.filter((x) => !gd.some((d) => gcovers(x, d)));
+    const globDeltas = { total: gd.length, declared: gd.length - gUndeclared.length, undeclared: gUndeclared, stale: gStale, carried: gd.filter((d) => !gUndeclared.includes(d)) };
     Object.assign(report, { filesEdited: edits.size, rewrites: stats.rewrites, byKind: stats.byKind, byVia: stats.byVia, dirsMoved: M.dirMap.size });
     // FD-2 in preflight: the image check makes the new graph the old one under M, so the
     // coupling a pass would add is known before anything is written
     const image0 = { edges: g0.edges.map((e) => ({ ...e, from: M.file(e.from), to: e.to ? (e.dir ? M.dir(e.to) : M.any(e.to)) : e.to })), tree: { files: g0.tree.files.map(M.file) } };
     const sccPre = sccGrowth(g0, image0, M, { moduleOf: units.unitOf });
-    const preflight = residue.length === 0 && undeclared.length === 0 && stale.length === 0 && sccPre.grown.length === 0;
-    if (dry || !preflight) return { ok: false, phase: dry ? "dry" : "preflight", preflight, ...report, residue, scanDeltas, scc: sccPre, written: false };
+    const preflight = residue.length === 0 && undeclared.length === 0 && stale.length === 0 && gUndeclared.length === 0 && gStale.length === 0 && sccPre.grown.length === 0;
+    if (dry || !preflight) return { ok: false, phase: dry ? "dry" : "preflight", preflight, ...report, residue, scanDeltas, globDeltas, scc: sccPre, written: false };
     // write edited contents at their new paths, then remove the old files; keep the originals
     const touched = new Set([...edits.keys(), ...plan.pending.map((m) => m.from)]);
     const original = new Map();
@@ -380,6 +427,15 @@ export function runMoves(root, moves, { dry = false, deps, declaredScanDeltas = 
     const g1 = buildGraph(root, { deps });
     const want = new Map();
     for (const e of g0.edges) { const k = sig(e, M); want.set(k, (want.get(k) ?? 0) + 1); }
+    // a declared glob delta is the one expected change: the leaving edge is not wanted, the
+    // entering edge is (sig: from|kind|target|f|plane, the holder unmoved)
+    for (const d of globDeltas.carried) {
+        const kinds = new Set(g0.edges.filter((e) => e.from === d.scanner && e.spec === d.glob && e.via === "glob").map((e) => kindClass(e.kind)));
+        for (const kind of kinds) {
+            if (d.change === "leaves") { const k = `${d.scanner}|${kind}|${d.to}|f|source`; if (want.get(k) > 0) want.set(k, want.get(k) - 1); }
+            else { const k = `${d.scanner}|${kind}|${d.to}|f|source`; want.set(k, (want.get(k) ?? 0) + 1); }
+        }
+    }
     const got = new Map();
     for (const e of g1.edges) { const k = sig(e, null); got.set(k, (got.get(k) ?? 0) + 1); }
     const lost = [...want].filter(([k, n]) => (got.get(k) ?? 0) < n).map(([k]) => k);
@@ -388,14 +444,17 @@ export function runMoves(root, moves, { dry = false, deps, declaredScanDeltas = 
     const image = { edgesBefore: g0.edges.length, edgesAfter: g1.edges.length, lost, gained };
     // FD-2: a pass that grows moduleSccs over the unit function is refused, not logged
     const scc = imageOk ? sccGrowth(g0, g1, M, { moduleOf: units.unitOf }) : null;
-    const ok = imageOk && scc.grown.length === 0;
+    // FD-5 on every engine step (P4-F6): each file the engine wrote must read move-only
+    // against its original under the move map, or the step is refused and rolled back
+    const classified = imageOk && scc.grown.length === 0 ? classifyImage(g0, g1, M, original, root) : null;
+    const ok = imageOk && scc.grown.length === 0 && classified.failed === 0;
     if (!ok) {
         for (const m of plan.pending) { const dest = join(root, m.to); if (existsSync(dest)) unlinkSync(dest); }
         pruneEmpty(root, plan.pending.map((m) => dirname(m.to)));
         for (const [f, bytes] of original) { mkdirSync(dirname(join(root, f)), { recursive: true }); writeFileSync(join(root, f), bytes); }
-        return { ok: false, phase: imageOk ? "scc" : "image", rolledBack: true, ...report, residue, scanDeltas, image, scc, violations: g1.violations, digest: treeDigest(root, buildGraph(root, { deps }).tree.files) };
+        return { ok: false, phase: !imageOk ? "image" : scc.grown.length ? "scc" : "classify", rolledBack: true, ...report, residue, scanDeltas, globDeltas, image, scc, classified, violations: g1.violations, digest: treeDigest(root, buildGraph(root, { deps }).tree.files) };
     }
-    return { ok, ...report, residue, scanDeltas, pruned, image, scc, violations: g1.violations, digest: treeDigest(root, g1.tree.files) };
+    return { ok, ...report, residue, scanDeltas, globDeltas, pruned, image, scc, classified, violations: g1.violations, digest: treeDigest(root, g1.tree.files) };
 }
 
 /** Remove every dir a move emptied, and each parent it empties in turn (P3-F5). Dirs are

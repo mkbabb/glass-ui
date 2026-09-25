@@ -21,35 +21,78 @@ import { makeOrigins } from "./symbols.mjs";
 
 const MODULE_NAMED = /^(import|import-type|reexport)$/;
 
-function spansOf(graph, file) {
-    const out = [];
-    for (const e of graph.refsOf.get(file) ?? []) for (const s of e.spans ?? []) out.push({ ...s, e });
-    // one token per span; overlapping spans (a composite path over its const) keep the outer
-    out.sort((a, b) => a.start - b.start || b.end - a.end);
+/** Separators between the literal segments of one path expression (`"a", "b"`). */
+const SEPARATOR = /^["'`]?\s*,\s*["'`]?$/;
+
+/**
+ * One token per reference site. An edge whose path is spelled over several literal
+ * segments (`join("src", "styles", "tokens.css")`) is ONE site from its first segment to
+ * its last, when only separators lie between them (P4-F6): the engine respells such a path
+ * as one segment (`join("src/styles/tokens/index.css")`), and both spellings must read as
+ * the same reference. A site several edges share (a glob's one literal, one edge per
+ * match) carries the sorted set of their targets, so match order never reads as a change.
+ */
+function spansOf(graph, file, text) {
+    const sites = new Map(); // "start:end" → { start, end, edges }
+    for (const e of graph.refsOf.get(file) ?? []) {
+        const ss = [...(e.spans ?? [])].sort((a, b) => a.start - b.start);
+        if (!ss.length) continue;
+        const joined = ss.length > 1 && ss.every((x, i) => i === 0 || SEPARATOR.test(text.slice(ss[i - 1].end, x.start)));
+        for (const x of joined ? [{ start: ss[0].start, end: ss.at(-1).end }] : ss) {
+            const k = `${x.start}:${x.end}`;
+            if (!sites.has(k)) sites.set(k, { start: x.start, end: x.end, edges: [] });
+            sites.get(k).edges.push(e);
+        }
+    }
+    // overlapping sites (a composite path over its const) keep the outer
+    const out = [...sites.values()].sort((a, b) => a.start - b.start || b.end - a.end);
     const kept = [];
-    for (const s of out) if (!kept.length || s.start >= kept.at(-1).end) kept.push(s);
+    for (const x of out) if (!kept.length || x.start >= kept.at(-1).end) kept.push(x);
     return kept;
 }
 
-function normalized(graph, O, file, text, { mapPath, mode }) {
+function tokenOf(O, e, { mapPath, mode }) {
+    if (mode !== "move-only" && e.kind === "vi-mock") return "vi-mock";
+    if (mode !== "move-only" && MODULE_NAMED.test(e.kind) && e.to && e.names?.length) {
+        const origins = [];
+        for (const n of e.names) for (const o of O.originOf(e.to, n.imported)) origins.push(`${mapPath(o.file)}#${o.name}`);
+        return `${e.kind}:${[...new Set(origins)].sort().join(",")}`;
+    }
+    const to = e.to ?? e.output ?? e.generated ?? e.external ?? "";
+    return `${kindClass(e.kind)}:${e.dir ? `${mapPath(to)}/` : mapPath(to)}`;
+}
+
+export function normalized(graph, O, file, text, { mapPath, mode }) {
     let out = "";
     let at = 0;
-    for (const s of spansOf(graph, file)) {
-        const e = s.e;
-        let token;
-        if (mode !== "move-only" && e.kind === "vi-mock") token = "⟦vi-mock⟧";
-        else if (mode !== "move-only" && MODULE_NAMED.test(e.kind) && e.to && e.names?.length) {
-            const origins = [];
-            for (const n of e.names) for (const o of O.originOf(e.to, n.imported)) origins.push(`${mapPath(o.file)}#${o.name}`);
-            token = `⟦${e.kind}:${[...new Set(origins)].sort().join(",")}⟧`;
-        } else {
-            const to = e.to ?? e.output ?? e.generated ?? e.external ?? "";
-            token = `⟦${kindClass(e.kind)}:${e.dir ? `${mapPath(to)}/` : mapPath(to)}⟧`;
-        }
-        out += text.slice(at, s.start) + token;
+    for (const s of spansOf(graph, file, text)) {
+        const token = [...new Set(s.edges.map((e) => tokenOf(O, e, { mapPath, mode })))].sort().join("|");
+        out += `${text.slice(at, s.start)}⟦${token}⟧`;
         at = s.end;
     }
     return out + text.slice(at);
+}
+
+/**
+ * FD-5 inside the engine (P4-F6): every file an engine step wrote (moved or edited) must
+ * read move-only against its original under the step's move map. `original` holds the
+ * pre-step bytes of every touched file (old path → Buffer). Returns { rows, counts, failed }.
+ */
+export function classifyImage(g0, g1, M, original, root) {
+    const rows = [];
+    const mapPath = (p) => M.any(p);
+    const ident = (p) => p;
+    for (const [f0, bytes] of original) {
+        const f1 = M.file(f0);
+        const now = readFileSync(join(root, f1));
+        if (bytes.equals(now)) { rows.push({ file: f1, from: f0, class: "move-only", why: "bytes equal" }); continue; }
+        const parsed = g0.tree.parsed.includes(f0) && g1.tree.parsed.includes(f1);
+        const same = parsed && normalized(g0, null, f0, bytes.toString("utf8"), { mapPath, mode: "move-only" }) === normalized(g1, null, f1, now.toString("utf8"), { mapPath: ident, mode: "move-only" });
+        rows.push({ file: f1, ...(f0 !== f1 ? { from: f0 } : {}), class: same ? "move-only" : "unclassified", why: same ? "" : parsed ? "text differs beyond its references" : "unparsed file changed" });
+    }
+    const counts = {};
+    for (const r of rows) counts[r.class] = (counts[r.class] ?? 0) + 1;
+    return { rows, counts, failed: rows.filter((r) => r.class === "unclassified").length };
 }
 
 /**

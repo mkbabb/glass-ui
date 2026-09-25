@@ -1,0 +1,29 @@
+{
+ "why": "P4-F2 plant, undeclared arm: the same move with the scan deltas declared and the glob delta NOT declared; the P4 engine must refuse at preflight, naming the delta, with nothing written.",
+ "moves": [
+  {
+   "from": "src/components/_shared/overlay/isTeleportedTarget.ts",
+   "to": "src/composables/dom/isTeleportedTarget.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/_shared/overlay/isTeleportedTarget.ts",
+   "reason": "the partial census walks src; the file relocates inside it"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/_shared/overlay/isTeleportedTarget.ts",
+   "reason": "the ladder walk over src/components; a .ts leaves it"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/_shared/overlay/isTeleportedTarget.ts",
+   "reason": "the same walk, per dir"
+  }
+ ]
+}

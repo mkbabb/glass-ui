@@ -5,7 +5,7 @@
 // refused before anything is written, and the run stops there, naming the pass.
 //   node fixpoint.mjs --root <linked worktree> [--zone src] [--scan-deltas decl.json]
 //                     [--out dir] [--max 6] [--dry]
-// decl.json: { "scanDeltas": [...] } as move.mjs takes them. Each pass is handed the
+// decl.json: { "scanDeltas": [...], "globDeltas": [...] } as move.mjs takes them. Each pass is handed the
 // declarations that cover one of its deltas; a declaration no pass used is stale and fails
 // the run (the ledger rule, over the whole fixpoint). --dry plans pass 1 and writes nothing.
 // NEEDS-NAME targets are reported and never moved (S-7).
@@ -27,7 +27,9 @@ const max = Number(opt("--max") ?? 6);
 const dry = args.includes("--dry");
 const out = opt("--out") ? resolve(opt("--out")) : null;
 if (out) mkdirSync(out, { recursive: true });
-const declared = opt("--scan-deltas") ? JSON.parse(readFileSync(opt("--scan-deltas"), "utf8")).scanDeltas ?? [] : [];
+const decl = opt("--scan-deltas") ? JSON.parse(readFileSync(opt("--scan-deltas"), "utf8")) : {};
+const declared = decl.scanDeltas ?? [];
+const declaredGlob = decl.globDeltas ?? []; // P4-F2: css-source glob deltas, same ledger rule
 const used = new Set();
 const covers = (x, d) => x.scanner === d.scanner && x.spec === d.spec && (x.all === true || x.file === d.file);
 
@@ -45,21 +47,22 @@ for (let i = 1; i <= max; i++) {
     if (!moves.length) { row.result = "fixpoint"; break; }
     if (out) writeFileSync(join(out, `pass-${i}.json`), `${JSON.stringify({ moves }, null, 1)}\n`);
     // hand this pass the declarations that cover one of its deltas
-    const plan = runMoves(root, moves, { dry: true, declaredScanDeltas: declared });
-    const deltas = [...(plan.scanDeltas?.undeclared ?? [])];
+    const plan = runMoves(root, moves, { dry: true, declaredScanDeltas: declared, declaredGlobDeltas: declaredGlob });
+    const deltas = [...(plan.scanDeltas?.undeclared ?? []), ...(plan.globDeltas?.undeclared ?? [])];
     const mine = declared.filter((x) => (plan.scanDeltas?.stale ?? []).every((s) => s !== x));
-    for (const x of mine) used.add(x);
-    const r = runMoves(root, moves, { dry, declaredScanDeltas: mine });
+    const mineGlob = declaredGlob.filter((x) => (plan.globDeltas?.stale ?? []).every((s) => s !== x));
+    for (const x of [...mine, ...mineGlob]) used.add(x);
+    const r = runMoves(root, moves, { dry, declaredScanDeltas: mine, declaredGlobDeltas: mineGlob });
     row.result = r.ok ? "applied" : r.phase;
     row.scc = r.scc ? { before: r.scc.before, after: r.scc.after, addedPairs: r.scc.addedPairs } : null;
     row.residue = r.residue?.length ?? 0;
     row.undeclared = deltas.length;
     row.rewrites = r.rewrites ?? 0;
     if (r.scc?.grown?.length) { stop = { pass: i, reason: "FD-2: the pass adds co-cyclic module pairs", firstAdded: r.scc.firstAdded }; break; }
-    if (!r.ok) { stop = { pass: i, reason: `refused at ${r.phase}`, residue: r.residue?.slice(0, 5), undeclared: deltas.slice(0, 5).map((d) => `${d.scanner} [${d.spec}] ${d.file}`), lost: r.image?.lost?.slice(0, 5), gained: r.image?.gained?.slice(0, 5) }; break; }
+    if (!r.ok) { stop = { pass: i, reason: `refused at ${r.phase}`, residue: r.residue?.slice(0, 5), undeclared: deltas.slice(0, 5).map((d) => `${d.scanner} [${d.spec ?? d.glob}] ${d.file}`), lost: r.image?.lost?.slice(0, 5), gained: r.image?.gained?.slice(0, 5) }; break; }
     if (dry) break;
 }
-const stale = declared.filter((x) => !used.has(x));
+const stale = [...declared, ...declaredGlob].filter((x) => !used.has(x));
 const doc = { root, zones, dry, passes, stop, staleDeclarations: stale.length };
 if (out) writeFileSync(join(out, "fixpoint.json"), `${JSON.stringify(doc, null, 1)}\n`);
 console.log(JSON.stringify(doc, null, 1));

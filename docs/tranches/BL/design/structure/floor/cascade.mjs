@@ -6,8 +6,12 @@
 //   snapshot --dist D --out DIR [--sha S]        the named baseline: each published CSS
 //                                                 entry flattened to its ordered leaf rules
 //   verify --baseline DIR --dist D               move-only check: every entry's sequence is
-//                                                 identical to the baseline, or exit 1 with
-//                                                 the first divergence and its class
+//          [--reorders listed.json]              identical to the baseline, or exit 1 with
+//          [--browser seat-report.json]…         the first divergence and its class. A
+//                                                 LISTED reorder ({"reorders": [{"entry",
+//                                                 "reason"}]}) is judged pair by pair (P4-F7):
+//                                                 GREEN only when no swapped pair can change
+//                                                 a value, or a band spec that reads it ran
 // Flattening inlines relative @imports depth-first (layer()/supports()/media wrap the
 // inlined sheet), and normalises Vue scope ids, hashed v-bind vars and scoped @keyframes
 // suffixes (FD-4) by first appearance, so a pure move reads identical while any reorder
@@ -17,7 +21,8 @@ import { createRequire } from "node:module";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { DEFAULT_ROOT } from "./lib/tree.mjs";
+import { DEFAULT_ROOT, openTree } from "./lib/tree.mjs";
+import { classRecipes, classOwners, coOccurrence, impliedBy } from "./lib/recipes.mjs";
 
 export function cssEntries(root) {
     const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
@@ -115,6 +120,129 @@ export function compare(base, now) {
     return out;
 }
 
+/** A leaf-rule line (`ctx :: selector {decls}`) read back: its layer path, its complex
+ *  selectors and its declared properties. At-rule lines (`@font-face`, `@property`) carry no
+ *  selector and are not judged. */
+function parseRule(line) {
+    const m = /^(.*?) :: (.*?) \{(.*)\}$/.exec(line);
+    if (!m || m[2].startsWith("@")) return null;
+    const layers = m[1].split(" > ").filter((c) => c.startsWith("@layer")).join(" > ");
+    const props = new Set([...m[3].matchAll(/(?:^|;)([-a-zA-Z0-9_]+):/g)].map((x) => x[1]));
+    return { layers, selectors: splitList(m[2]), props };
+}
+function splitList(sel) {
+    const out = [];
+    let depth = 0, cur = "";
+    for (const ch of sel) {
+        if (ch === "(" || ch === "[") depth++;
+        if (ch === ")" || ch === "]") depth--;
+        if (ch === "," && depth === 0) { out.push(cur.trim()); cur = ""; } else cur += ch;
+    }
+    if (cur.trim()) out.push(cur.trim());
+    return out;
+}
+/** Specificity (a,b,c) of one complex selector; `:where()` counts 0, the other functional
+ *  pseudo-classes count their argument (the most specific branch is not resolved). */
+export function specificity(sel) {
+    const s = sel.replace(/:where\((?:[^()]|\([^()]*\))*\)/g, "").replace(/\[[^\]]*\]/g, " [a] ").replace(/::?-?[a-zA-Z-]+\(/g, (x) => (x.startsWith("::") ? " ::pe ( " : " ( "));
+    const a = (s.match(/#[-_a-zA-Z0-9]+/g) ?? []).length;
+    const b = (s.match(/\.-?[_a-zA-Z][-_a-zA-Z0-9]*/g) ?? []).length + (s.match(/\[a\]/g) ?? []).length + (s.match(/(?<!:):(?!:)[-a-zA-Z]+/g) ?? []).length;
+    const c = (s.replace(/[.#][-_a-zA-Z0-9]+/g, " ").replace(/:+[-a-zA-Z]+/g, " ").match(/(^|[\s>+~(])[a-zA-Z][-a-zA-Z0-9]*/g) ?? []).length + (s.match(/::[-a-zA-Z]+/g) ?? []).length;
+    return `${a},${b},${c}`;
+}
+const classSet = (sel) => new Set([...sel.matchAll(/\.(-?[_a-zA-Z][-_a-zA-Z0-9]*)/g)].map((m) => m[1]));
+
+/**
+ * FD-4 · the listed-reorder judge (P4-F7, S-28). Rule-count identity is not paint identity:
+ * two rules in one layer at one specificity that declare the same property, on classes one
+ * element wears together, cannot swap order without changing the value that wins. For every
+ * pair whose relative order the reorder changed (base order against the longest kept
+ * subsequence), the pair is a RISK when the two share a declared property, sit in one layer
+ * path, and hold complex selectors of equal specificity whose classes co-occur in a source
+ * class recipe (lib/recipes.mjs) or are one class (or, classless, are one selector).
+ */
+export function reorderRisks(a, b, recipes) {
+    const idx = new Map();
+    b.forEach((r, i) => (idx.get(r) ?? idx.set(r, []).get(r)).push(i));
+    const used = new Map();
+    const pos = a.map((r) => { const l = idx.get(r) ?? []; const k = used.get(r) ?? 0; used.set(r, k + 1); return l[k] ?? -1; });
+    const n = pos.length, tails = [], tailIdx = [], prev = new Array(n).fill(-1);
+    for (let i = 0; i < n; i++) {
+        if (pos[i] < 0) continue;
+        let lo = 0, hi = tails.length;
+        while (lo < hi) { const m = (lo + hi) >> 1; if (tails[m] < pos[i]) lo = m + 1; else hi = m; }
+        tails[lo] = pos[i]; tailIdx[lo] = i; prev[i] = lo ? tailIdx[lo - 1] : -1;
+    }
+    const keep = new Set();
+    for (let i = tailIdx[tails.length - 1] ?? -1; i >= 0; i = prev[i]) keep.add(i);
+    const moved = [...Array(n).keys()].filter((i) => !keep.has(i) && pos[i] >= 0);
+    const parsed = a.map(parseRule);
+    const risks = [];
+    let swapped = 0;
+    const seen = new Set();
+    for (const i of moved) {
+        const ri = parsed[i];
+        if (!ri) continue;
+        for (let j = 0; j < n; j++) {
+            if (j === i || pos[j] < 0 || (j < i) === (pos[j] < pos[i])) continue;
+            const pk = i < j ? `${i}:${j}` : `${j}:${i}`;
+            if (seen.has(pk)) continue;
+            seen.add(pk);
+            swapped++;
+            const rj = parsed[j];
+            if (!rj || ri.layers !== rj.layers) continue;
+            const props = [...ri.props].filter((p) => rj.props.has(p));
+            if (!props.length) continue;
+            let hit = null;
+            for (const si of ri.selectors) for (const sj of rj.selectors) {
+                if (hit || specificity(si) !== specificity(sj)) continue;
+                const ci = classSet(si), cj = classSet(sj);
+                const co = ci.size && cj.size ? coOccurrence(ci, cj, recipes) : si === sj ? { shared: si } : null;
+                if (co) hit = { selectors: [si, sj], specificity: specificity(si), classes: [...ci, ...cj], via: co };
+            }
+            if (hit) risks.push({ moved: a[i].slice(0, 200), swappedWith: a[j].slice(0, 200), baseOrder: [i, j], nowOrder: [pos[i], pos[j]], props, layers: ri.layers, ...hit });
+        }
+    }
+    return { rules: n, moved: moved.length, swappedPairs: swapped, risks };
+}
+
+/** A risk is covered when a browser-seat report run WITH a base report shows a spec that
+ *  reads it: the spec's text names one of the shared properties AND a class of either rule
+ *  (or a class whose every wearer wears one), it has a base-green band, it passed, and it
+ *  has no new failure. Naming the class alone is not reading the property: the P4 battery
+ *  measured the accent-tone rung (22%/25% → 18%) pass all 18 base-green tests of the five
+ *  specs that name `.glass-chip`, none of which reads --accent-band-strength. */
+const tokenRe = (names) => new RegExp(`(?<![-\\w])(${names.map((x) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})(?![-\\w])`);
+export function coverRisks(risks, reports, tree, { recipes, owners }) {
+    const text = (spec) => { try { return tree.read(`tests-visual/${spec}`); } catch { return ""; } };
+    for (const r of risks) {
+        const cls = new Set(r.classes);
+        const propRe = tokenRe(r.props);
+        const classRe = tokenRe([...cls, ...impliedBy(cls, recipes, owners)]);
+        r.evidence = [];
+        r.namedOnlyTheClass = [];
+        for (const rep of reports) {
+            if (!rep.baseReport) continue;
+            const bySpec = new Map();
+            for (const t of rep.results ?? []) (bySpec.get(t.spec) ?? bySpec.set(t.spec, []).get(t.spec)).push(t);
+            for (const [spec, ts] of bySpec) {
+                const t = text(spec);
+                const c = classRe.exec(t);
+                if (!c) continue;
+                const p = propRe.exec(t);
+                if (!p) { r.namedOnlyTheClass.push(spec); continue; }
+                const band = (rep.bands ?? []).find((b) => b.specs.includes(spec));
+                const green = ts.filter((x) => x.status === "expected").length;
+                const fresh = (rep.newFailures ?? []).filter((k) => k.startsWith(`${spec} :: `));
+                if (green > 0 && fresh.length === 0 && band?.baseGreen > 0) r.evidence.push({ report: rep.root, spec, reads: `${p[1]} on .${c[1]}`, passed: green, baseGreenInBand: band.baseGreen });
+                else r.refuted = [...(r.refuted ?? []), { spec, reads: `${p[1]} on .${c[1]}`, newFailures: fresh }];
+            }
+        }
+        r.covered = r.evidence.length > 0 && !r.refuted?.length;
+    }
+    return risks;
+}
+
 export async function contract(root, graph = null) {
     const { buildGraph } = await import("./lib/graph.mjs");
     const g = graph ?? buildGraph(root);
@@ -164,8 +292,30 @@ if (isMain) {
         for (const [key, e] of Object.entries(manifest.entries)) base[key] = { ...e, seq: readFileSync(join(baseDir, e.seq), "utf8").replace(/\n$/, "").split("\n") };
         const now = snapshotDist(root, dist);
         const rows = compare(base, now);
-        const ok = rows.every((r) => r.identical);
-        console.log(JSON.stringify({ baseline: manifest.sha, verdict: ok ? "GREEN" : "RED", entries: rows }, null, 1));
+        const listed = opt("--reorders") ? JSON.parse(readFileSync(resolve(opt("--reorders")), "utf8")).reorders ?? [] : [];
+        const reports = args.flatMap((a, i) => (a === "--browser" ? [JSON.parse(readFileSync(resolve(args[i + 1]), "utf8"))] : []));
+        let ctx = null;
+        for (const r of rows) {
+            if (r.identical) continue;
+            const l = listed.find((x) => x.entry === r.key);
+            if (r.class !== "reorder" || !l) { r.verdict = r.class === "reorder" ? "RED: an unlisted reorder" : "RED: content changed"; continue; }
+            if (!ctx) { const tree = openTree(root); const { owners } = classOwners(tree); ctx = { tree, recipes: classRecipes(tree), owners }; }
+            const j = reorderRisks(base[r.key].seq, now[r.key].seq, ctx.recipes);
+            coverRisks(j.risks, reports, ctx.tree, ctx);
+            const open = j.risks.filter((x) => !x.covered);
+            r.listed = l.reason;
+            r.judged = { moved: j.moved, swappedPairs: j.swappedPairs, risks: j.risks.length, covered: j.risks.length - open.length };
+            r.risks = j.risks;
+            r.verdict = open.length ? `RED: ${open.length} swapped pair(s) can change a value and no band spec that reads it ran` : j.risks.length ? "GREEN: listed reorder; every risky pair covered by a band spec that ran" : "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes";
+        }
+        const stale = listed.filter((x) => !rows.some((r) => r.key === x.entry && !r.identical));
+        const ok = rows.every((r) => r.identical || r.verdict?.startsWith("GREEN")) && stale.length === 0;
+        console.log(JSON.stringify({ baseline: manifest.sha, verdict: ok ? "GREEN" : "RED", staleListings: stale, entries: rows.map(({ risks, ...x }) => x) }, null, 1));
+        for (const r of rows) for (const x of r.risks ?? []) {
+            console.log(`${x.covered ? "COVERED" : "RISK"} ${r.key} [${x.props.join(",")}] ${x.selectors.join(" × ")} (${x.specificity}; ${x.via.recipe ? `co-occur in ${x.via.recipe}` : `share ${x.via.shared}`})${x.covered ? ` ← ${x.evidence.map((e) => `${e.spec} reads ${e.reads}`).join("; ")}` : ""}`);
+            for (const f of x.refuted ?? []) console.log(`  REFUTED by ${f.spec} (reads ${f.reads}): ${f.newFailures.length} new failure(s) ${f.newFailures.slice(0, 3).join(" | ")}`);
+            if (!x.covered && x.namedOnlyTheClass?.length) console.log(`  not evidence (name the class, never the property): ${x.namedOnlyTheClass.join(", ")}`);
+        }
         process.exit(ok ? 0 : 1);
     }
     console.error("usage: cascade.mjs contract|snapshot|verify …");

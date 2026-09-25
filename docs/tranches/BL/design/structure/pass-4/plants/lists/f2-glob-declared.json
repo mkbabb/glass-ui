@@ -1,0 +1,37 @@
+{
+ "why": "P4-F2 plant (P3-G1, P3-R6): move isTeleportedTarget.ts out of _shared (a placement move, outside the demo's @source \"../src/components/_shared/**/*.ts\") with its scan deltas and its css-source glob delta declared. Pass 3 has no glob-delta arm: the image check loses the @source edge and rolls back, so both routes held the file.",
+ "moves": [
+  {
+   "from": "src/components/_shared/overlay/isTeleportedTarget.ts",
+   "to": "src/composables/dom/isTeleportedTarget.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/_shared/overlay/isTeleportedTarget.ts",
+   "reason": "the partial census walks src; the file relocates inside it"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/_shared/overlay/isTeleportedTarget.ts",
+   "reason": "the ladder walk over src/components; a .ts leaves it"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/_shared/overlay/isTeleportedTarget.ts",
+   "reason": "the same walk, per dir"
+  }
+ ],
+ "globDeltas": [
+  {
+   "scanner": "demo/demo.css",
+   "glob": "../src/components/_shared/**/*.ts",
+   "file": "src/components/_shared/overlay/isTeleportedTarget.ts",
+   "reason": "P3-R6: the file is placed by its readers; it carries no class Tailwind must scan, so leaving the _shared @source is intended"
+  }
+ ]
+}
