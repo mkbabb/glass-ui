@@ -1,0 +1,86 @@
+PASS  adapter-law  ../pass-2/adapter-G.mjs  L-1..L-5 hold
+--- /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/harness/adapter-head.mjs	2026-09-24 22:02:00
++++ /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/pass-2/adapter-G.mjs	2026-09-26 02:46:09
+@@ -1,5 +1,13 @@
+-// adapter-head.mjs: the probe contract for GlassDock as it stands at HEAD
+-// (5dd68ca9; src/ byte-identical to v10.0.1).
++// adapter-G.mjs: the probe contract for GlassDock at HEAD + floor.patch + D2-G-proto.patch
++// (the sliding aperture). It is adapter-floor.mjs with two changes, both DOM reads:
++//   plate()  the plate now sits inside the aperture's two doors, not as the root's child:
++//            `:scope > .dock-aperture .dock-plate`. extent() is unchanged in form
++//            (__hp.paintedRect folds the doors' `overflow: clip` rects).
++//   edge()   NEW, optional: the edge caps the doors carry (`.dock-cap`). W7's "edge" probe
++//            paint shows only the plate, so without it the arcs of the ring would read as a
++//            cut edge. lib.mjs probeMode marks edge() with data-hp-edge in the edge mode.
++//   rim()    follows the plate (`.dock-plate > .dock-rim`).
++// Diffed against ../harness/adapter-head.mjs (H-6). No webkitShim.
+ //
+ // A family prototype that changes the dock's DOM copies this file, edits the
+ // reads, and passes it to every witness with --adapter <file>. The contract
+@@ -22,28 +30,19 @@
+ //
+ // config.compactProps / config.rimProps are bound onto GlassDock by the compact
+ // and rim scenes (the string "@source" becomes a getter of the scene's scroll source:
+-// the window, an element, or an element that mounts late). HEAD has neither.
++// the window, an element, or an element that mounts late; scenes.mjs resolves it at
++// any depth, so it binds inside the grouped `scroll` prop).
+ //
+ // THE ADAPTER LAW (H-6). An adapter reads DOM and pixels. It never derives a reading
+ // from the family's own inputs (a token, a spring value, a custom property), never
+ // pre-clips (paintingSeats never intersects seats with extent()), and changes nothing
+ // in the page. A route's adapter is diffed against this file and linted by
+ // adapter-law.mjs before any run; the critic reviews the diff.
+-export const config = { compactProps: null, rimProps: null };
++export const config = {
++    compactProps: { scroll: { source: "@source", compact: true, rim: true } },
++    rimProps: { scroll: { source: "@source", rim: true } },
++};
+ 
+-/**
+- * Playwright WebKit 26.5 (the build Playwright 1.61.1 ships, not Safari) kills the
+- * page on any property whose value nests two translucent color-mix() arms, e.g.
+- *   color-mix(in srgb, color-mix(in srgb, #1c1917 8%, transparent) 50%,
+- *                      color-mix(in srgb, #1c1917 5%, transparent))
+- * which is what the plate border (dock.css:130-135) resolves to once
+- * --dock-expand-t is set, so every GlassDock mount crashes there. The shim pins
+- * the border COLOUR to one arm; the 1.5px border width and every geometry and
+- * motion input are untouched. Witnesses apply it on WebKit only, label those
+- * cells "+shim", and --no-webkit-shim shows the crash.
+- */
+-export const webkitShim = ".glass-dock .dock-plate { border-color: var(--dock-plate-expanded-border) !important; }";
+-
+ /** The demo route and root that carry the real SidebarDock (vertical). */
+ export const sidebarRoute = "/dock/overview";
+ export const sidebarRootSel = "[data-testid=sidebar-dock-collapsible]";
+@@ -57,7 +56,7 @@
+   const rootSel = window.__hpRootSel || "[data-testid=dock]";
+   const P = {
+     root: () => document.querySelector(rootSel),
+-    plate: () => P.root()?.querySelector(":scope > .dock-plate") ?? null,
++    plate: () => P.root()?.querySelector(":scope > .dock-aperture .dock-plate") ?? null,
+     axis: () => (P.root().classList.contains("vertical") ? "y" : "x"),
+     extent: () => hp.paintedRect(P.plate()),
+     seats: (o = {}) => [...P.root().querySelectorAll(SEAT)].filter((s) => o.all || !s.closest("[inert]")),
+@@ -68,7 +67,7 @@
+       const p = (window.__scene?.presets ?? []).find((x) => x.name === "dock") ?? null;
+       return p ? { name: "dock", response: p.response, dampingFraction: p.dampingFraction, settleBand: p.settleBand, clockMs: hp.tokenMs(P.root(), "--spring-dock-duration") } : null;
+     },
+-    posture: () => { const c = P.root().classList; return c.contains("pinned") ? "pinned" : c.contains("expanded") ? "expanded" : "collapsed"; },
++    posture: () => { const c = P.root().classList; return c.contains("compact") ? "compact" : c.contains("pinned") ? "pinned" : c.contains("expanded") ? "expanded" : "collapsed"; },
+     budget: () => {
+       const root = P.root(), cs = getComputedStyle(root), par = root.parentElement, pcs = getComputedStyle(par);
+       const x = P.axis() === "x";
+@@ -76,9 +75,10 @@
+       const avail = x ? par.clientWidth - parseFloat(pcs.paddingLeft) - parseFloat(pcs.paddingRight) : par.clientHeight - parseFloat(pcs.paddingTop) - parseFloat(pcs.paddingBottom);
+       return Number.isFinite(cap) ? Math.min(cap, avail) : avail;
+     },
+-    rim: () => null,
+-    compact: () => false,
++    rim: () => { const r = [...P.root().querySelectorAll(":scope > .dock-aperture .dock-plate > .dock-rim")]; return r.length ? r : null; },
++    compact: () => true,
+     badge: () => null,
++    edge: () => [...P.root().querySelectorAll(":scope > .dock-aperture .dock-cap")],
+     composedRim: () => document.querySelector("[data-testid=rim]"),
+   };
+   window.__dockProbe = P;
+
