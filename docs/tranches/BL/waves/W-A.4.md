@@ -7,8 +7,8 @@
 | HEAD | `fabc95e2` in a scratch worktree, `dist-demo/` built there and served by `vite preview` on :5793 for three runs of `substrate-paints-color.spec.ts -g "aurora paints"` (Playwright Chromium headless, `PI_ANGLE` defaulting to `metal` on darwin, `playwright.config.ts:35-39`), the server stopped after each |
 | ships in | 11.0.0 |
 | families | F-08 whole (`audit/REGISTRY.md:254-265`) |
-| depends on | W-A.3 (the wired set, the verdict reader, the release workflow's `visual` job) |
-| dependants | W-G.1 (the one-engine wave deletes the WebGL2 arms the HEAD floors read), W-H.4 (the perf register's count gates run on this leg) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

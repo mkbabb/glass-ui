@@ -7,8 +7,8 @@
 | HEAD | `fabc95e2` in a scratch worktree, `dist/` built there (`vite build`, exit 0, "declaration entries: projected 63 public entries") |
 | ships in | 11.0.0 |
 | families | F-10 whole (`audit/REGISTRY.md:279-288`) |
-| depends on | W-A.2 (the roster holds G-01 and G-05 as `owed` to this wave) |
-| dependants | W-G.7 (the shader-free aurora derive subpath is sized by this gate), W-L.3 (the consumer matrix), W-L.8 (the close reads this gate where BK's close read the ratchet datum) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -73,7 +73,7 @@ None. No published name changes; `package.json` `files` is unchanged, and `profi
 
 ## 8 · Ledger rows
 
-Closes #85's remainder (`census-register-b.md:70`: "The absent public-surface pins are F-10's subpath exactness"). The census row F-10 holds (`CENSUS.md:80`) closes with it.
+Closes #85's remainder (`census-register-b.md:70`: "The absent public-surface pins are F-10's subpath exactness"). The census row F-10 holds (`CENSUS.md:80`) closes with it. CT-7 (CSS partials in `dist` that no published entry reaches) closes on A5-G2: the styles draw is the whole closure, 0 unresolved and no unreached file.
 
 ## Appendix A · the closure reader
 

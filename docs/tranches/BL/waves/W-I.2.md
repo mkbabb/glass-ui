@@ -8,8 +8,8 @@
 | kind | a BUILD wave on the dock W-I.1 lands. Not a loop wave: D2's floor row 1 decides the dock's seat marker (`[data-dock-seat]` at any depth); this wave makes that the one member query of the library and closes the ARIA rows the loop does not own |
 | ships in | 11.0.0 |
 | families | F-19 (whole), `audit/REGISTRY.md:420-444`; ledger RT-31B (BK #31's dock keyboard route, `ledger/census-register-a.md:43`) |
-| depends on | W-I.1 (the dock's seat declaration and the rebuilt run); W-A.3 (the wired visual set that takes the e2e rows) |
-| dependants | W-K.6 (the a11y sweep's naming seams and keystroke predicate read this wave's member query); W-K.9 (the findable carousel and deck members); W-L.2 (the carousel model's inbound half) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | instruments | the band-I paint probe (`W-I.1.md` appendix A), rows `I2/*`, and the demo probe `demo-aria.mjs` (appendix A here), rows `D2/*`. Both land under `scripts/probes/band-I/`; the rows then move into W-A.3's wired e2e set |
 | engines | Chromium 149 headless. Playwright WebKit 26.5 headless: every dock route of the demo crashes at HEAD (`page.goto: Page crashed`, the nested translucent `color-mix()` edge, D2 PF-3); the probe's dock scenes crash likewise. W-I.1 removes the crash (floor row 6), and this wave's WebKit cells are measured on that tree. Real Safari: UNMEASURED (owner's safaridriver checkbox, OW-3) |
 

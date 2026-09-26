@@ -8,8 +8,8 @@
 | ships in | 11.0.0 |
 | families | F-73 (member R2-02-08) |
 | inbound | O-60 KFA-115 (keyframes.js: the theme flip animates chrome) |
-| depends on | W-A.3 (the wired-gate runner) |
-| dependants | none in band F; every π capture that flips the theme reads a settled frame sooner |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

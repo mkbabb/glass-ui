@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree, `dist-demo/` built there (`vite build --config demo/vite.demo-dist.config.ts`, 3 s) |
 | ships in | 11.0.0 |
 | families | F-13, the C-4 split (member L04-F06; `audit/REGISTRY.md:312-320`) |
-| depends on | W-B.1 |
-| dependants | W-G.4 (the rider on #49 leaves its scope) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | ruler | seat. The rider was ported as "RETIRE-OR-CONFIRM, never a cure hunt" (`BK/PORT.md:70`); the evidence rules it |
 
 ## 1 · What it closes
@@ -48,7 +48,8 @@ What is still not exercised: an OS-level or human pointer. That is the re-trigge
 |---|---|---|---|
 | B5-G1 · the e2e exists and passes | `test -f tests-visual/aurora/nucleus-drag.spec.ts && npx playwright test -c tests-visual aurora/nucleus-drag` | exit 0 | **exit 1**: the spec is absent. The defect it guards is not live: 3 of 3 legs match (§2) |
 | B5-G2 · the e2e can fail | apply `nucleus-drag.patch`, rebuild the demo, run B5-G1 | exit 1 | measured with the probe: 3 of 3 legs mismatch under the plant |
-| B5-G3 · the decision is recorded | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows C-4` | exit 0, terminal RETIRE with the re-trigger | **exit 1** (absent) |
+
+C-4's terminal (RETIRE with its re-trigger) is LEDGER:226. B5-G1 and B5-G2 enact it; no gate re-reads the ledger (PLAN §1, decide waves).
 
 B5-G1 is RED only by absence, because the defect is not live; the seat says so with the evidence above. B5-G2 is what shows the gate can fail.
 

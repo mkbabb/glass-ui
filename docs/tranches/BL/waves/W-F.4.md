@@ -7,8 +7,8 @@
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`), scratch worktree, demo built and served on :5961 |
 | ships in | 11.0.0 |
 | families | F-76 (members R3-01-06, R3-01-07, R3-01-08, R4-02-10) |
-| depends on | W-F.2 (the one disclosure engine, always mounted, whose body this wave gives its spacing), W-E.5 (the toast store the stack offsets live in; PLAN §5) |
-| dependants | W-K.7, W-K.9, W-K.10 (PLAN §5) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 The dock instance of this shape (DockCrossfade sizes the box to the entering face and lays the leaving face absolute, R2-03-03) stays in F-16 for W-I.1 (loop D2), as the family statement rules (`REG:1104`); this wave does not touch the dock.
 

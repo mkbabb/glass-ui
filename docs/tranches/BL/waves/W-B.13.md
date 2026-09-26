@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree; `npm view` and `gh secret list` read at seat time |
 | ships in | 11.0.0 (the first OIDC publish is the 10.2.0 or 11.0.0 tag, whichever follows the owner act) |
 | families | F-13, the C-1 and C-3 split (member L04-F17) |
-| depends on | W-B.1, OW-1 (owner) |
-| dependants | W-0.7 or W-L.8 (whichever tag publishes first after OW-1 is the first OIDC publish) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | ruler | the owner for OW-1 and OW-2 (acts on npmjs.com and GitHub); seat for the `release.yml` edit |
 
 ## 1 · What it closes

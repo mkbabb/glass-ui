@@ -7,8 +7,8 @@
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B, scene `s=find`) and the built demo on :6271 |
 | ships in | 11.0.0 |
 | families | F-83 (all members) |
-| depends on | W-F.2 (the disclosure's size re-target lands on this wave's closed rung; the two waves rewrite `disclosure.css` together), W-F.4 (the Collapsible body wrapper's extent), W-I.1 (the dock's switcher faces, which this wave makes findable, are rebuilt there) |
-| dependants | none in the DAG |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -51,11 +51,17 @@ A typed Ctrl+F is not driven (headless has no find bar); text fragments and `win
 
 ## 5 · Acceptance gates
 
-Every row in §2 is a gate; it passes at the inverted reading (model `b` with the needle in view; both found and the layer open; 0 px, no AX text, findable; `active 3`; "Slide 4 of 6"; `Layers` selected).
+Each row is a gate on appendix A's cell of the same id. HEAD readings are §2's.
 
-| id | gate | passes when | HEAD |
-|---|---|---|---|
-| K9-S | `! rg -q '_unmountOnHide' src/components && rg -q 'until-found' src/components` | exit 0 | **exit 1** (3 strip sites, 0 `until-found`) |
+| id | passes when | HEAD |
+|---|---|---|
+| K9-G1 | `#:~:text=quartzite%20borealis` against a closed AccordionItem: the Accordion's model is `b` and the needle's rect is inside the viewport | **FAIL** model `a`, needle not in the DOM, both engines |
+| K9-G2 | `window.find` returns true for a closed Accordion item's text and a closed ConfiguratorLayer's text, and the layer then reads `aria-expanded="true"` | **FAIL** both false, both engines |
+| K9-G3 | a force-mounted Collapsible after one open-close: height 0 px, its text absent from the AX tree, `window.find` true | **FAIL** 22 px (WebKit 21), AX holds the text |
+| K9-G4 | `#:~:text=walrus%20tangerine` against Carousel slide 4: the carousel's active index is 3 | **FAIL** active 0, both engines |
+| K9-G5 | `/motion/deck#:~:text=Digit%20jumps`: the live region reads "Slide 4 of 6" | **FAIL** "Slide 1 of 6: Welcome" (Chromium; Playwright WebKit crashes on the route) |
+| K9-G6 | `/dock/layers#:~:text=z-ordered%20surface%20stack`: the Layers tab is `aria-selected="true"` | **FAIL** Assets stays selected (Chromium; Playwright WebKit crashes) |
+| K9-S (static) | `! rg -q '_unmountOnHide' src/components && rg -q 'until-found' src/components` | **exit 1** (3 strip sites, 0 `until-found`) |
 
 ## 6 · π and DELTA obligations
 

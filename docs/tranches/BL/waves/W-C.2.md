@@ -7,8 +7,8 @@
 | HEAD | `26d193b7` in a scratch worktree, with `dist/` built there (`npm run build`, exit 0). `git diff --stat v10.1.0 HEAD -- src` prints nothing |
 | ships in | 11.0.0 |
 | families | F-62 whole (`audit/REGISTRY.md:1349-1358`) |
-| depends on | W-A.2 (G-45 COMMENT-PROSE is `owed` to this wave with a fence, `waves/W-A.2.md:76,179`; this wave turns it `bound`) |
-| dependants | W-C.3 (rewrites and truth-checks the same docs; it runs on the prose this wave leaves, so it lands after), W-D.1 (moves files; a clean comment corpus moves with them) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

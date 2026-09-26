@@ -7,8 +7,8 @@
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`), scratch worktree, demo built and served on :5961 |
 | ships in | 11.0.0 |
 | families | F-79 (the direction and writing-mode members; `REG` band F) |
-| depends on | W-F.3 (the scroll offsets this wave makes logical are the ones W-F.3 derives from position), W-E.3 (the Sheet surface whose `side` this wave renames; PLAN §5) |
-| dependants | W-K rows that read the pager and the dock under RTL (PLAN §5) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

@@ -7,8 +7,8 @@
 | HEAD | `b37a37c3` (`src`, `demo`, `tests` identical to `f3ad78d0`), scratch worktree, demo built and served on :5987, Chromium on Metal with WebGPU (adapter `apple/metal-3`); probe library in W-G.1 appendix A |
 | ships in | 11.0.0 |
 | families | F-49 whole (`audit/REGISTRY.md:1185-1199`): L07-01, R2-01-06, R2-04-15, R5-01-07; inbound O-54 R-1 (`audit/INBOUND.md:11`, `INBOUND-MAP.md:532`) |
-| depends on | W-A.3 (the wired set the route-cycle spec joins) |
-| dependants | W-B.2's reply letter (O-54's answer rides this wave, `W-B.2.md:131`) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

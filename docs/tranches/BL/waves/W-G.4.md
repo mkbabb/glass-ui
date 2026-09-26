@@ -8,8 +8,8 @@
 | ships in | 11.0.0 |
 | families | F-48, the aurora split (`audit/REGISTRY.md:1171-1183`): L01b-49, R2-06-04 (the VizStudio contract). F-47's medium clause that W-G.1 hands over (§0 there): L05a-01 and L10-02's paint half, C-13a's paint half (R9), C-13b (R10). Inbound: UIA-V-46, UIA-V-154 (`INBOUND-MAP.md:407,411`); O-49 (strip-scale aurora motion) and A2-KE-L1-26 (`followPointer`), both routed here by W-B.2 (`W-B.2.md:89,91`) |
 | a disease row | #49 GF-AURORA rode BJ and BK at W0 (`census-register-a.md:56`); deciding it is this wave (CH:23) |
-| depends on | W-G.1 (one engine, the CSS ground, the published luma), W-B.5 (V-A95 retired, so the rider leaves #49; `W-B.5.md` §3.1) |
-| dependants | W-H.1 (D3 reads the field at ceilings 1 and 0.5), W-B.4's aurora-per-category glance and the DUSK ratification (OW-7) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 0 · The spec of record, and what BL changes in it
 
@@ -63,7 +63,7 @@ Order (GF-AURORA §9): FIELD first, CONFIG, then BODIES, then REGISTER; the stud
 5. **One studio contract for every viz** (R2-06-04). `demo/chassis/viz-studio/VizStudio.vue` wraps each substrate story (aurora, blob, constellation, fourier field): the stage; a Configurator pane (`layout="detached"`, 10.1.0) generated from the viz's config fields, each row with its live range; one shortcut group per viz through `registerShortcut` (preset or seed cycling, pause, reset); the viz's pointer interaction (aurora nucleus drag and `followPointer`, blob touch, constellation click-warp and pinning, fourier-field scrub); and a perf readout (presented frames/s from the lifecycle, the effective DPR, the device limit). The budget every viz meets: one shared device, ≤ 30 presented frames/s at rest (W-G.3), DPR at or under `budget.ts`'s cap, knife ≤ 2.0 ms/frame. BD2 A43 (a draw-your-own fourier path in the library) is RETIRED: the one consumer draws its contours itself (`fourier-analysis/web/src/components/visualization/ContourEditorCanvas.vue`), and the field renders the path it is given. The constellation's click-to-add is RETIRED on the same ground: no consumer asks for it (the slides list, W-B.9 §2, does not).
 6. **O-49: `glass-aurora-drift`.** An `@utility` in the aurora subpath's CSS: an oversized `::before` carrying `--aurora-ground` (the `auroraGround` layers for a palette, W-G.1 §3.5) whose `translate` loops on the short axis only, linear, inside `@media (prefers-reduced-motion: no-preference)`; no colour moves along the long axis, and it is compositor-only (W-F.6's law). A consumer sets `--aurora-ground` from `./aurora-palette` (W-G.7) and adds the class.
 7. **A2-KE-L1-26: `followPointer`.** `Aurora` gains `followPointer?: boolean`: a window-level pointer listener that calls `setCursor` in stage coordinates, stops under reduced motion and while the document is hidden, and clears on `pointerleave` of the window. Probe mode (`?probe=1`) stamps the cursor it last wrote as `data-aurora-cursor` on the root, the witness G4-G10 reads. Two consumer copies collapse into the prop (the ≥ 2 sites rule).
-8. **OW-9's asks.** W-B.14 recommends RETIRE for R36, R39, R40, R41 and A6. If the owner answers BUILD for any of them, this wave carries it with a born-RED e2e (`W-B.14.md` §3.2); the answer is quoted in the ledger row either way.
+8. **OW-9a's asks.** W-B.14 recommends RETIRE for R36, R39, R40, R41 and A6. If the owner answers BUILD for any of them, this wave carries it with a born-RED e2e (`W-B.14.md` §3.2); the answer is quoted in the ledger row either way.
 
 ## 4 · Files it touches
 
@@ -122,7 +122,7 @@ W-G.1, W-B.5. W-G.7 delivers the drift utility's CSS with the aurora subpath; W-
 
 ## 9 · Ledger rows it closes
 
-#49 (BUILD, the disease row decided); C-13a's paint half; C-13b; L01b-49; L05a-01 and L10-02's paint halves; UIA-V-46, UIA-V-154; R2-06-04 with BD2 A3, A38, A41, A42 (BUILD) and A43 (RETIRE); O-49 (BUILD); A2-KE-L1-26 (BUILD); OW-9's aurora items by the owner's answer (W-B.14).
+#53c (FourierField's `live`, `inertReason` and `note` props, routed by the census with #52) is RETIRE DECLINE: the studio contract (cure 5) states each viz's live state in its perf readout, and no sibling imports FourierField (`ledger/census-register-b.md:43`), so a prop surface for it has no reader (E-7). #49 (BUILD, the disease row decided); C-13a's paint half; C-13b; L01b-49; L05a-01 and L10-02's paint halves; UIA-V-46, UIA-V-154; R2-06-04 with BD2 A3, A38, A41, A42 (BUILD) and A43 (RETIRE); O-49 (BUILD); A2-KE-L1-26 (BUILD); OW-9a's aurora items by the owner's answer (W-B.14).
 
 ## 10 · Gestalt passes (P-1)
 

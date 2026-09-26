@@ -7,8 +7,8 @@
 | HEAD | `fabc95e2` in a scratch worktree, with `dist/` and `dist-demo/` built there (`vite build`, 12 s; `vite build --config demo/vite.demo-dist.config.ts`, 3 s). `git diff --stat v10.1.0 HEAD -- src tests tests-visual scripts .github package.json` prints nothing |
 | ships in | 11.0.0 |
 | families | F-01, F-02, F-03, F-06, F-09 (`audit/REGISTRY.md:169-208`, `:228-238`, `:267-277`) |
-| depends on | W-A.1 (the roster's G-43 and the visual entries need the repaired harness) |
-| dependants | W-A.3, W-A.5, W-C.2, W-C.3, W-C.4, W-D.1, W-E.8; every later wave binds its born-RED gates into this roster (PLAN §2, "A before every BUILD wave") |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

@@ -8,8 +8,8 @@
 | kind | LOOP WAVE, owned by design loop D5, which does not exist yet. `ls docs/tranches/BL/design/` lists `dock`, `material`, `structure`, `tile`: D5 has no portfolio and no REGISTRY (PLAN §6, `PLAN.md:336`). The wave lands only from D5's converged specification (§3.1). This spec fixes the scope, the born-RED gates and the inputs D5's round 0 must carry; it designs no rung |
 | ships in | 11.0.0 |
 | families | F-54 (remainder: the engaged rung and hallmark 6; the dock hallmarks 1, 2 and 5 are W-I.1's, `W-I.1.md` §1) |
-| depends on | the D5 gate (§3.1); W-I.1 (the dock's engagement and hallmarks, which the register must compose, not duplicate); W-J.1 (the tile's commit and hover rungs, D4's T-6); W-I.3 (the touch answer is the press rung, `W-I.3.md:61`); W-F.1 (the one spring authority the rungs ride); W-F.6 (compositor-only idle life, the breathing preset's cost bound); W-A.2 (the latch becomes an owed entry, `W-A.2.md:78`) |
-| dependants | W-K.4 (the ring register shares the engaged state's modality split); W-L.6 (the P-6 census reads the register's published surface) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | instruments | `tests/styles/engage-ladder.test.ts` (its census detector, `:108-128`); the band-J probe's `slider.mjs` (appendix A); D4's harness T-6 (`design/tile/harness/t6-engagement.mjs`) as the commit-bar model the register's battery generalizes |
 | engines | Chromium 149 headless and **Playwright WebKit** 26.5 headless. Real Safari: **UNMEASURED (owner's safaridriver checkbox)** |
 | machine | shared; load averages about 40 during the runs (18:35-18:45 local) |
@@ -93,11 +93,9 @@ In the table cells below, `\|` is the Markdown escape for `|`: the command itsel
 | G1 · the census, bound | `npx vitest run tests/styles/engage-ladder.test.ts` with the census as a plain `it` over the declared denominator | passes; `! grep -n 'it\.fails(' tests/styles/engage-ladder.test.ts` exits 0 | **FAIL**: 38 of 55 directories rungless (the plain-`it` copy, §2.2); the shipped file carries the `:134` latch |
 | G2 · one writer | `test $(git grep -l 'data-engaged' -- 'src/**/*.vue' \| wc -l) -le 1` | exit 0, and the one file is the register's owner | **exit 1**: 2 writers |
 | G3 · the slider exemplar (if BUILT) | `node scripts/probes/band-J/slider.mjs <dist> <wt>` | exit 0, 4/4 cells | **exit 1**: 4/4 FAIL at ×1.000; the planted grow reads 4/4 PASS, so the gate can pass. If D5 RETIREs T1 GROW, the probe is deleted with the owner's quote in the #27 row and G3 is recorded "retired", not green |
-| G4 · D5's battery | the loop's battery runner in both engines, both themes | exit 0, every witness, including the T-6 generalization and hallmark 6's witness (if BUILT) | the battery does not exist until D5 opens; its round-0 portfolio records it RED at HEAD, the entry condition of §3.1 item 1 |
-| G5 · the battery can fail | the loop's self-test | every fixture PASS, every plant FAIL, both engines | as G4 |
 | G6 · one clock authority | `npx vitest run tests/styles/engage-ladder.test.ts -t "mirror"` plus W-F.1's spring-authority suite | passes with every new rung reading the envelope tokens | passes at HEAD for the existing tokens (a hold line; its own drift test at `:190-200` shows it can fail) |
 
-G4 and G5 cannot be RED at this seat because their executable is D5's first product. They are entry conditions as much as gates: a D5 round 0 that cannot make its battery RED at HEAD has not opened.
+D5's battery and its self-test are D5's convergence gate (PLAN §4), which is this wave's entry condition, not its gates: they have no executable at HEAD, so they cannot be born RED (fix-2 struck G4 and G5, FA-02). A D5 round 0 that cannot make its battery RED at HEAD has not opened. Opening D5 is a formation act owed before this wave's turn (PLAN §6; LEDGER `PLAN-§6-D5`).
 
 ## 6 · π and DELTA obligations
 
@@ -123,7 +121,7 @@ Before = the probe's `bj-head` build and the census run above; after = the same 
 
 ## 8 · Dependencies and ledger rows
 
-Depends on the D5 gate (and D5's opening), W-I.1, W-J.1, W-I.3, W-F.1, W-F.6 and W-A.2. Closes F-54's remainder; #27 and #77 (their remainders); D-2's enforcement; GAP-2 / GAP-B1; L01a-35; L05a-16; UIA-F-84; W-H.3's S6 breathing preset; W-I.3's touch rows; hallmark 6. The three gestalt passes (P-1) are recorded in the wave record before it closes.
+Its edges are PLAN §5's (the D5 gate and D5's opening among them). Closes F-54's remainder; #27 and #77 (their remainders); D-2's enforcement; GAP-2 / GAP-B1; L01a-35; L05a-16; UIA-F-84; W-H.3's S6 breathing preset; W-I.3's touch rows; hallmark 6. The three gestalt passes (P-1) are recorded in the wave record before it closes.
 
 ## Appendix A · the band-J probe's slider row and the census copy
 

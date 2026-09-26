@@ -7,8 +7,8 @@
 | HEAD | `b37a37c3` (`src`, `demo`, `tests` identical to `f3ad78d0`); scratch worktree built with `npm run build`; the band-G component harness (appendix D) served from that build on :5988; the demo on :5987; Chromium on Metal |
 | ships in | 11.0.0 |
 | families | F-51, synchronous costs on the mount path (`audit/REGISTRY.md:1221-1235`): L07-08, L07-10, L07-11, L07-12, R2-02-15, R2-04-06, R7-02-03. Inbound: O-60 KFA-164 (partly) |
-| depends on | W-G.1 (the WebGL2 compile path and the raster ground are deleted there; the engine's pipelines are the ones this wave makes async) |
-| dependants | W-H.4 (the perf register builds its count gates on this wave's mount path) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 0 · What is already closed elsewhere
 
@@ -25,7 +25,7 @@
 | L07-11, R2-04-06 | `cn()` has no memo; every call re-splits and re-buckets | `src/components/_shared/class-names.ts:299-338` (`bucketFor` runs every regex rule per token; `dedupClasses` builds a `Map` per call) |
 | L07-12 (WebGPU half), R2-04-06 | 5 synchronous pipeline creations, 0 `*Async` | `aurora/composables/wgpuSetup.ts:162,323`, `blob/composables/wgpuSetup.ts:100`, `fourier-field/renderer/wgpu.ts:121,155` |
 | R7-02-03 | a per-item linear scan for the item's own label or index | `SortableItem.vue:17` → `useSortable.ts:63-66` (`items.value.find(…)` per item); `ToggleGroup.vue:68-78` (`ordered` re-sorts by `compareDocumentPosition` on every `triggerRef`), `:125-132` (`indexOf` for `tabindex` and `select`, `indexOf` + `splice` + `triggerRef` on unregister) |
-| R2-02-15, KFA-164 | the overlay open frame | measured below; not reliably reproduced |
+| R2-02-15, KFA-164 | the overlay open frame | RETIRE (NOT-REPRODUCED): one 55 ms frame in 8 opens, 0 in the other 7 (below); re-trigger: 3 or more of 8 cold opens over 50 ms on W-A.4's leg |
 
 ## 2 · The defect at HEAD
 
@@ -48,7 +48,7 @@ The machine ran at load average 48-60 through every reading; the absolute times 
 4. **A membership index.**
    - SortableList: `useSortable` keeps a `Map<SortableId, Item>` computed once per `items` change; `getItemLabel(id)` is a `Map.get`.
    - ToggleGroup: the registry keeps entries in DOM order at insert (one `compareDocumentPosition` walk against neighbours, a binary search on insert) and a `Map<ToggleItemEntry, number>` rebuilt once per membership change; `tabindex` and `select` read the map; unregister deletes from the map and marks the order dirty once, flushed in one `triggerRef` per tick.
-5. **The overlay frame** keeps G6-G4 as a regression gate (§5). Its cause is not measured at this seat (one 55 ms frame in 8 opens), so the wave builds nothing for it; the readings go to W-H.4's register with the count gates.
+5. **The overlay frame** is not reproduced (one 55 ms frame in 8 opens), so the wave builds nothing for it and carries no gate for it: a gate that passes and fails on the same tree by chance is neither born RED nor a hold line (PLAN §1). R2-02-15 and KFA-164 RETIRE as NOT-REPRODUCED with the re-trigger in §1; the frame budget is W-H.4's count gates.
 
 ## 4 · Files it touches
 
@@ -61,7 +61,6 @@ The machine ran at load average 48-60 through every reading; the absolute times 
 | G6-G1 · no per-item scan | appendix A: mount(4k)/mount(2k) ≤ 2.5 for SortableList and for ToggleGroup, best of 2 | both | **FAIL**: 3.70 and 5.28 |
 | G6-G2 · one tempo read | appendix A: mounting 20 Buttons reads `--motion-tempo` ≤ 1 time | ≤ 1 | **FAIL**: 20 |
 | G6-G3 · `cn()` memoised | appendix B: ≤ 5 µs per repeated call | ≤ 5 | **FAIL**: 23.67-111.58 |
-| G6-G4 · the overlay open frame (regression) | appendix C, 5 cold launches: every open's longest animation frame ≤ 50 ms | 20 of 20 | not stably RED: 55 ms on 1 of 8 opens |
 | G6-G5 · no synchronous pipeline | `! git grep -nE '\.create(Render\|Compute)Pipeline\(' -- src` | exit 0 | **exit 1**: 5 lines |
 | G6-G6 · no raster ground (guard on W-G.1) | `! git grep -n '\.toDataURL(' -- src` | exit 0 | **exit 1** (`auroraFallbackGround.ts:360`); closes with W-G.1 G1-G8 |
 | G6-G7 · no per-item label scan | `! git grep -nE 'items\.value\.find\(' -- src/components/sortable-list` and `! git grep -nE 'ordered\.value\.indexOf\(' -- src/components/toggle-group` | both exit 0 | **exit 1** each (`useSortable.ts:64`; `ToggleGroup.vue:132,133`) |
@@ -86,7 +85,7 @@ W-G.1.
 
 ## 9 · Ledger rows it closes
 
-F-51: L07-08, L07-11, L07-12 (WebGPU half), R2-04-06, R7-02-03 (BUILD). L07-10 and L07-12's GLSL half close with W-G.1 and are guarded here. R2-02-15 and KFA-164: MEASURED, not reproduced beyond one 55 ms frame; G6-G4 held as a regression gate and the readings routed to W-H.4.
+F-51: L07-08, L07-11, L07-12 (WebGPU half), R2-04-06, R7-02-03 (BUILD). L07-10 and L07-12's GLSL half close with W-G.1 and are guarded here. R2-02-15 and KFA-164: RETIRE (NOT-REPRODUCED, one 55 ms frame in 8 opens; re-trigger 3 or more of 8 cold opens over 50 ms). G6-G4 is struck (fix-2, FA-02).
 
 ## 10 · Gestalt passes (P-1)
 

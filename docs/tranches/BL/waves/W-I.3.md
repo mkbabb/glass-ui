@@ -8,8 +8,8 @@
 | kind | a BUILD wave. Not a loop wave: the dock's share of the guard is D2's floor row 3 and lands in W-I.1; this wave takes the rest of the library and the invariant |
 | ships in | 11.0.0 |
 | families | F-77 (whole: R3-02-01, R4-01-15), `audit/REGISTRY.md:747-757` |
-| depends on | W-I.1 (the dock's rungs and its posture script, built from D2's floor row 3); W-A.2 (the roster that takes the invariant in place of the G7 row) |
-| dependants | W-J.2 (the engagement register composes the press rung this wave names as the touch answer); W-K.4 (the ring register reads the same modality split) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | instruments | `hover-census.mjs` (appendix A) and the band-I paint probe (`W-I.1.md` appendix A, rows `I3/*`). Both land under `scripts/probes/band-I/` with `npm run probe:band-I`; the census also lands as the vitest invariant `tests/styles/hover-guard.test.ts` |
 | engines | Chromium 149 headless, mobile emulation (`hasTouch`, `isMobile`: `(hover: hover)` false, `(pointer: coarse)` true, read in-page). Playwright WebKit 26.5 headless with `hasTouch` (the same two media reads). Real Safari and iOS Safari: UNMEASURED (owner's safaridriver checkbox, OW-3; WebDriver has no touch, `HARNESS.md` §7) |
 

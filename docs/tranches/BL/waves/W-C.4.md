@@ -7,8 +7,8 @@
 | HEAD | `26d193b7` in a scratch worktree, with `dist/` and `dist-demo/` built there |
 | ships in | 11.0.0 |
 | families | F-64 (`audit/REGISTRY.md:1374-1392`), plus the rows W-B.1 and W-B.12 fold here (the `.input-pill` recipe, `data-reparse-ok`, W-CONTROL-CHASSIS, the GU-1 shadow size ladder, the `--radius` ladder) |
-| depends on | W-A.2 (G-13 LADDER-EMITTED is owed here, `tests/gates/roster.json`; this wave's detector is its test) |
-| dependants | W-C.5 (the 55 light-dark twins the duplicate class finds are that wave's; it runs after this one), W-E.8 (proposed edge, not in PLAN §5: the off-role radius readers are re-pointed against the role tokens this wave leaves), W-L.6 (`.glass-top-layer` and other classes a consumer emits are read in its census) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

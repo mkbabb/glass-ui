@@ -7,8 +7,8 @@
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B) and the built demo on :6271 |
 | ships in | 11.0.0 |
 | families | F-43 (all members) and its inbound rows; #29's RT-29C and #32's capture clause (census) |
-| depends on | W-F.2 (the indicator deform reads the painted position; this wave seats the rest it deforms from), W-F.4 (HandMark's per-fragment frames and the extent the family panel owns) |
-| dependants | none in the DAG |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -22,7 +22,7 @@
 | R3-01-04 | the Alerts' mount entrance plays inside the route view transition | 6 |
 | R4-01-07, R4-01-08, R4-02-11 | the indicator travels its first placement; measures through a live ancestor transform; never re-measures on the selected button's own box | 7 |
 | UIA-V-50 | the segmented indicator lands off its track on entry | 7 |
-| O-64 R-5 | two animations own the dock select trigger's `::before` opacity on the first expand | 8 |
+| O-64 R-5 | two animations own the dock select trigger's `::before` opacity on the first expand: NOT-REPRODUCED headless at `183e021a` (fix-2, 0 running); RETIRE with a re-trigger, and K7-G13 holds the one-owner invariant | 8 |
 | #29 RT-29C (census-register-a.md:41) | the router seam, unclaimed | 1 |
 | #32 captures (census-register-a.md:44) | the indicator captures at rest and moving; `/navigation/tabs` console-clean | §6 |
 | N-8d (census-carries-recap.md:86) | "double animated" entrances and panes | 4, 6 |
@@ -50,7 +50,7 @@ Measured with appendix A (`k7.mjs`, `k7c.mjs`). Chromium: **12 rows, 10 FAIL** (
 | K7-G12 (`k7c.mjs`) `/navigation/tabs` console-clean | PASS, 0 errors and warnings | — |
 | K7-S static (below) | exit 1 | |
 
-**Cured or not reproduced at HEAD.** The Popover cell of R4-01-08 reads −0.34 px (the registry's −3.9 px does not reproduce in the fixture; the Dialog's −7.06 px does). R4-02-11's 1.4.12 leg reads 0 px after the injected spacing; its label-change leg stays in the cure (row 7) and K7-G2 stays as a hold line. #32's console clause passes. **Not measured:** O-64 R-5 was found on keyframes' page, headed on a real GPU, on a collapsing dock; the demo's select-trigger dock (`demo/stories/dock/overview.vue:214`) is `:collapse="false"`, so it has no first expand. K7-G13 (§5) states the gate; the executing seat records its RED on a collapsing dock before cutting (open gap).
+**Cured or not reproduced at HEAD.** The Popover cell of R4-01-08 reads −0.34 px (the registry's −3.9 px does not reproduce in the fixture; the Dialog's −7.06 px does). R4-02-11's 1.4.12 leg reads 0 px after the injected spacing; its label-change leg stays in the cure (row 7) and K7-G2 stays as a hold line. #32's console clause passes. **Not measured:** O-64 R-5 was found on keyframes' page, headed on a real GPU, on a collapsing dock; the demo's select-trigger dock (`demo/stories/dock/overview.vue:214`) is `:collapse="false"`, so it has no first expand. K7-G13 (§5) is the one-owner hold line; fix-2's reading on a collapsing dock (0 running, §3 item 8) closes the gap: the defect does not reproduce headless.
 
 ## 3 · The cure
 
@@ -61,7 +61,7 @@ Measured with appendix A (`k7.mjs`, `k7c.mjs`). Chromium: **12 rows, 10 FAIL** (
 5. **One draw per mount.** HandMark keeps a `played` flag. The first `run(0)` sets it; `fonts.ready` re-measures the path lengths and, when the draw has started, rewrites the dash array at its current progress instead of calling `run(0)`.
 6. **Mount entrances wait for the transition.** `styles/glass/liquid-enter.css` pauses the entrance while a view transition is active (`:root:active-view-transition .liquid-enter { animation-play-state: paused }`), so it plays once, after the transition, in the new page. The `--i` stagger line is struck from the header; the library writes no index.
 7. **The indicator is seated, then travels.** `useSelectionIndicator` measures in layout space (`offsetLeft`, `offsetTop`, `offsetWidth`, `offsetHeight` against the strip, as `dock/composables/dockMorphMeasure.ts:3-6` does), so an ancestor's entrance transform does not enter the reading. The first measure writes position and size with the transition off (`.segmented-indicator--js` is applied from the second frame after the seat), and the ResizeObserver observes the selected button as well as the strip.
-8. **One owner for the trigger's specular opacity.** The dock select trigger's `::before` opacity is the material's transition only (`src/styles/glass/material.css:282-289`); the executing seat identifies the second animation with K7-G13's `getAnimations` list and removes that writer.
+8. **One owner for the trigger's specular opacity.** The dock select trigger's `::before` opacity is the material's transition only (`src/styles/glass/material.css:282-289`). fix-2 built a collapsing `GlassDock` with a `DockTrigger for="select"` (Chromium, `reducedMotion: no-preference`), expanded it (class `collapsed` → `expanded`), and sampled `document.getAnimations()` every frame for 2.5 s: 0 animations ran on the trigger's `::before`, and none on the trigger's subtree; its computed transition is `--specular-x 0.2s, --specular-y 0.2s, opacity 0.3s`. The two-writer case does not reproduce headless. O-64 R-5 is RETIRE (NOT-REPRODUCED) with the re-trigger "a headed real-GPU reproduction on W-A.4's leg"; K7-G13 is the hold line that bites if a second writer appears.
 
 ## 4 · Files it touches
 
@@ -73,7 +73,7 @@ Every FAIL row in §2 is a gate; it passes at the inverted reading (within 0.5 p
 
 | id | gate | passes when | HEAD |
 |---|---|---|---|
-| K7-G13 | on a collapsing GlassDock with a `DockTrigger for="select"`, first expand: `document.getAnimations()` filtered to the trigger's `::before` with `opacity` in its keyframes | exactly 1 running | **UNMEASURED** (no collapsing select dock in the demo or fixture; the executing seat adds one to the fixture and records the RED) |
+| K7-G13 (hold line) | on a collapsing GlassDock with a `DockTrigger for="select"`, first expand: `document.getAnimations()` filtered to the trigger's `::before` with `opacity` in its keyframes, sampled per frame for 2.5 s | at most 1 running in any frame | holds at `183e021a`: 0 (Chromium, fix-2; Playwright WebKit crashes on GlassDock). Bite: plant a keyframe animation on `.dock-trigger::before` animating `opacity` beside the material's transition; the max reads 2 |
 | K7-S | `! rg -q 'ready\?\.catch\(\(\) => \{\}\)' src/composables/motion/core/useViewTransition.ts` | exit 0 | **exit 1** (`:168`) |
 
 ## 6 · π and DELTA obligations
@@ -96,12 +96,12 @@ Every FAIL row in §2 is a gate; it passes at the inverted reading (within 0.5 p
 
 ## 8 · Ledger rows
 
-Closes F-43 (L01a-29, L04-F19, L05a-07, R2-02-13, R3-01-04, R3-01-05, R3-01-09, R4-01-07, R4-01-08, R4-02-11, R5-01-02, R7-01-09), #29 RT-29C, #32's capture clause (captures banked at HEAD; console clause PASS), N-8d, UIA-V-50 and O-64 R-5 (gate K7-G13 owed).
+Closes F-43 (L01a-29, L04-F19, L05a-07, R2-02-13, R3-01-04, R3-01-05, R3-01-09, R4-01-07, R4-01-08, R4-02-11, R5-01-02, R7-01-09), #29 RT-29C, #32's capture clause (captures banked at HEAD; console clause PASS), N-8d, UIA-V-50 and O-64 R-5 (RETIRE, NOT-REPRODUCED; re-trigger a headed real-GPU reproduction; K7-G13 holds). A2-FO-L1-18 (estimate-then-teleport scroll) closes on K7-G7 (a fresh load of `#sec-9-1` lands on its target) with cure 3's one scroll owner.
 
 ## 9 · Gestalt passes (P-1)
 
 - **Tranche fit:** every arrival (push, pop, pane swap, mount) has one owner, which draws frames while the destination loads and reports what happened.
-- **Wave:** §2's FAIL rows, K7-G13 and K7-S green in one run.
+- **Wave:** §2's FAIL rows and K7-S green, and K7-G13 holding, in one run.
 - **Feature:** throttle to slow-3G and push to an uncached route: the page keeps animating until the chunk lands and the transition runs; Back returns to the scrolled position; the indicator is seated on first paint inside a Dialog. One frame strip per arrival.
 
 ## Appendix A · `k7.mjs`, `k7c.mjs` (land as `tests-visual/wired/arrival.spec.ts`)

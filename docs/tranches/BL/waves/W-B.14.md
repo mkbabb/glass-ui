@@ -7,9 +7,9 @@
 | HEAD | `19bf6569` in a scratch worktree |
 | ships in | 11.0.0 |
 | families | F-14, the R2-06-03 split (W-COLOR-SOURCE-DECIDE, `audit/REGISTRY.md:329,340`) |
-| depends on | W-B.1, W-B.3 (the rows are carried in `RECAP.md` first) |
-| dependants | — |
-| ruler | the owner (OW-9: these are owner asks, and a RETIRE quotes the owner); seat recommendation RETIRE |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
+| ruler | the owner (OW-9a: these are owner asks, and a RETIRE quotes the owner); seat recommendation RETIRE |
 
 ## 1 · What it closes
 
@@ -23,22 +23,21 @@ R2-06-03's seven owner asks (`audit/round-2/R2-06.md:52`): BDU R36 the album-art
 ## 3 · The cure
 
 1. **Recommendation: RETIRE the seven.** Ground: E-5 (the library's own tokens evolve in `src/styles/`; a colour source that re-themes a page from content is a consumer composition over `deriveAurora` and the palette tokens, which ship), and E-7 (an artefact with no second site and no reader). BD2 A45 and BDC CP-5 touch the dock's material, which D3 (the live luma, M-5) and D2 converge on: a RETIRE here does not constrain those loops, which build what their gates need.
-2. **The owner is asked once** (OW-9, in the owner docket, one question listing the seven with their BD sources): "None of these has a consumer. Retire them, or name the ones to build?" The answer is quoted verbatim into each ledger row. A BUILD answer names W-G.4 (the aurora greenfield) as the wave for R36, R39-R41 and A6, and W-I.1 for A45 and CP-5, each with a born-RED e2e.
-3. On silence at W-L.8: each row's terminal is "RETIRE recommended, OW-9 not answered", listed in FINAL.md, never re-booked (PLAN §1).
+2. **The owner is asked once** (OW-9a, in the owner docket, one question listing the seven with their BD sources): "None of these has a consumer. Retire them, or name the ones to build?" The answer is quoted verbatim into each ledger row. A BUILD answer names W-G.4 (the aurora greenfield) as the wave for R36, R39-R41 and A6, and W-I.1 for A45 and CP-5, each with a born-RED e2e.
+3. On silence at W-L.8: each row's terminal is "RETIRE recommended, OW-9a not answered", listed in FINAL.md, never re-booked (PLAN §1).
 
 ## 4 · Files it touches
 
-`docs/tranches/BL/LEDGER.md` (seven rows, OW-9); `docs/tranches/BL/ledger/RECAP.md` (their carry rows cite this wave).
+`docs/tranches/BL/LEDGER.md` (seven rows, OW-9a); `docs/tranches/BL/ledger/RECAP.md` (their carry rows cite this wave).
 
 ## 5 · Acceptance gates
 
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
-| B14-G1 · each ask terminal with the owner's word or the docket row | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows BDU-R36,BDU-R39,BDU-R40,BDU-R41,BD2-A6,BD2-A45,BDC-CP-5,OW-9` | exit 0 (a RETIRE with no quote fails unless OW-9 is on the docket) | **exit 1** (absent) |
+| B14-G1 · the owner has ruled the registers | `! grep -qE '^\\| OW-9a \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (OW-9a `pending`; fix-2 split OW-9a per wave, LEDGER §4) |
 | B14-G2 · carried in the recap | `node scripts/tranche/verify-recap.mjs docs/tranches/BL` (the seven ids present, terminal W-B.14) | exit 0 | **exit 1** (absent) |
-| B14-G3 · a RETIRE without a quote is caught | B14-G1 on a ledger copy with OW-9's docket row removed | exit 1 | — |
 
-The seven subjects have no code at HEAD, so no code gate can be RED for a RETIRE; the gates are the record and its checker, and B14-G3 shows the checker refuses a silent retire.
+The seven subjects have no code at HEAD, so no code gate can be RED for a RETIRE. The gate is the owner's ruling (B14-G1, the docket line); an answer of BUILD for any subject carries a born-RED e2e into W-G.4 (`W-G.4.md` §3 item 8).
 
 ## 6 · π and DELTA obligations
 
@@ -50,4 +49,4 @@ None.
 
 ## 8 · Ledger rows
 
-R2-06-03's seven rows; OW-9 (this subset).
+R2-06-03's seven rows; OW-9a (this subset).

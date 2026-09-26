@@ -8,8 +8,8 @@
 | ships in | 11.0.0 |
 | loop | D1 structure (`design/structure/`). This is a LOOP WAVE: it lands the loop's converged kit and adds no design of its own |
 | families | F-55, F-56, F-57, F-58, F-59 whole (`audit/REGISTRY.md:1278-1324`) |
-| depends on | the D1 convergence gate (§0); W-A.2 (roster entry G-42 is `owed` to this wave, `waves/W-A.2.md:176,200`; R-1's register retire lands before the migration, `design/structure/RULINGS.md` R-1); W-C.2 (its detector and MIGRATION-shape gate run over the landed tree); W-C.1 (a still-open loop's tooling lives at `scripts/loops/structure/` until this wave, `waves/W-C.1.md:43`) |
-| dependants | W-D.2 (it applies the landed law to the periphery). Waves that defer a placement to this wave's rule: W-B.2 (O-48 `./avatar`, UIA-F-145), W-B.8 (DotRing's directory), W-B.12 (the wrapper topology, G-42) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 Short cites: `REG:n` is `audit/REGISTRY.md`; `D1:n` is `design/structure/REGISTRY.md`; `RUL` is `design/structure/RULINGS.md`; `LAW §n` is `design/structure/pass-4/B-kit/LAW.md`; `REBASE:n` is `design/structure/pass-4/REBASE.md`; `CUR:n` is `FORMATION-PROGRESS.md`.
 

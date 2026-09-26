@@ -7,8 +7,8 @@
 | HEAD | `26d193b7` in a scratch worktree, with `dist/` built there. `git diff --stat v10.1.0 HEAD -- src` prints nothing |
 | ships in | 11.0.0 |
 | families | F-63 remainder (`audit/REGISTRY.md:1360-1372`). O-79 (1) and (2) are W-0.5's; this wave's invariants then cover those rows |
-| depends on | W-A.2 (the two invariants enter its roster), W-0.5 (its MIGRATION rows), W-B.11 (RETIRE the salvaged canon; the canon is derived here, `waves/W-B.11.md:27`), and W-C.2 (proposed edge, not in PLAN §5: both waves rewrite README, DESIGN, MIGRATION and the canon; this one checks the prose W-C.2 leaves, and arm M reads the table form W-C.2 gives MIGRATION) |
-| dependants | W-I.1 (re-runs the generator for the dock README when the dock API changes), W-E.8 (the radius role table this wave generates is the one its role invariant reads), W-K.1 (a shadow-mount limit, if ruled, is documented under these invariants) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

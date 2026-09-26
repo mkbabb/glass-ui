@@ -7,8 +7,8 @@
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); probes on the packed HEAD build in the band-K consumer fixture (W-K.1 appendix B), reka 2.10.5 and 2.10.1 builds, and Playwright WebKit |
 | ships in | 11.0.0 |
 | families | F-37 (all members) |
-| depends on | W-E.4 (the overlay layer stack: the Dialog's Escape, outside and focus are the stack's) |
-| dependants | W-K.5 (the one current-row channel reads the Command's listbox), W-K.6 (the Command listbox's name) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

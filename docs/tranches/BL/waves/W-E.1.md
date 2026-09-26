@@ -7,8 +7,8 @@
 | HEAD | `4d2e3123` (`src` and `demo` byte-identical to `f3ad78d0` and `8141658d`) in a scratch worktree, `npm run build` and `npm run demo:dist:build` both exit 0; the probe consumer app installs `npm pack` of that worktree (`mkbabb-glass-ui-10.1.0.tgz`) |
 | ships in | 11.0.0 |
 | families | F-85 (the O-74 F-85 rows) |
-| depends on | W-A.3 (the wired set: this wave's probe becomes a wired spec with a `PI_PLANT` twin) |
-| dependants | W-E.3 (the Sheet's dock-reach inset adds to these tokens), W-E.4 (popper edge clearance reads them), W-E.5 (toast placement reads them), W-I.1 (the dock placement reads them; D2 owns the dock) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 This spec also carries the band's probe kit (appendix B). Every band-E wave's appendix probe imports `lib.mjs` and drives the scenes in `P.vue`.
 

@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree |
 | ships in | 11.0.0 |
 | families | F-13, the #46 split (`audit/REGISTRY.md:312-320`) |
-| depends on | W-B.1 |
-| dependants | W-I.1 (D2's checklist gains the anisotropic-extent question) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | ruler | the owner for Σwidth (OW-6), with the seat default below; seat for `useAnisotropicExtent` |
 
 ## 1 · What it closes
@@ -34,7 +34,7 @@
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
 | B10-G1 · the dock loop carries the question | `test "$(grep -c useAnisotropicExtent docs/tranches/BL/design/dock/REGISTRY.md)" -ge 1` | exit 0 | **exit 1**: 0 |
-| B10-G2 · decisions recorded | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows #46a,#46b,OW-6` | exit 0 (OW-6 `pending` passes; `--close` prints it) | **exit 1** (absent) |
+| B10-G2 · the owner has ruled the denominator | `! grep -qE '^\\| OW-6 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER:326, OW-6 `pending`; fix-2) |
 | B10-G3 · the kept denominator stays pinned | `npx vitest run tests/components/custom/timeline/timeline.partition.test.ts` | exit 0 | exit 0 at HEAD: the kept behaviour, not a defect. Its bite (divide by 1) turns it red, as its own comment states (`:66-68`) |
 
 ## 6 · π and DELTA obligations

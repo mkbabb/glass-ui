@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree |
 | ships in | 11.0.0 |
 | families | F-13, the GAP-B2b split (`audit/REGISTRY.md:320`, `ledger/CENSUS.md:254-256`) |
-| depends on | W-B.1; the invariants it relies on are W-A.2's roster entries |
-| dependants | W-C.2 (the DECLARATION column), W-C.4, W-D.1, W-L.6 |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | ruler | seat |
 
 ## 1 · What it closes
@@ -37,9 +37,10 @@
 
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
-| B12-G1 · decision recorded | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows GAP-B2b,#64b` | exit 0 | **exit 1** (absent) |
 | B12-G2 · the three holders exist | `node -e 'const r=require("./tests/gates/roster.json");for (const id of ["G-13","G-42","G-01"]) if(!r.find(e=>e.id===id)) process.exit(1)'` | exit 0 | **exit 1**: `roster.json` absent (W-A.2 creates it) |
 | B12-G3 · the declaration residue (built in W-C.2) | `test "$(git grep -ci shadcn -- src \| awk -F: '{s+=$2} END {print s+0}')" -eq 0` | exit 0 | **exit 1**: 27 |
+
+The IDIOM-CLEARED column's terminal is LEDGER:163 (`#64b`). B12-G2 and B12-G3 enact it.
 
 ## 6 · π and DELTA obligations
 

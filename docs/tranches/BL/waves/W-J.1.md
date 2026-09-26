@@ -8,8 +8,8 @@
 | kind | LOOP WAVE, owned by design loop D4 (`design/tile/`). It lands only from D4's converged specification and never before D4 meets its gate (§3.1). It builds nothing the loop has not converged on |
 | ships in | 11.0.0 |
 | families | F-30b (whole) |
-| depends on | the D4 gate (§3.1); W-E.6 (W-CHIP: the Chip's selected register and the per-instance tint rule the tile shares, `W-E.6.md:11,118`); W-E.8 (the role table the tile's corner reads, and the role invariant this wave extends, `W-E.8.md:11`); W-H.1 (ink on the painted composite, which the selected register and the meta ink read, `W-H.1.md:12`); W-A.3 (the wired visual suite the harness witnesses join); W-C.1 (the loop's tooling moves to `scripts/loops/tile/`, `W-C.1.md:43`) |
-| dependants | W-J.2 (the engagement register composes the tile's commit and hover rungs); W-K.4 (the ring register reads the tile's ring clearance); W-K.5 (options take their focus model from the group); W-L.2 (the E-11 type guards for the retired bindings); W-L.7 (the consumer packets: keyframes.js, fourier-analysis, value.js) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | instruments | the D4 harness `docs/tranches/BL/design/tile/harness/` (`$H`), at HEAD the pass-1 harness (H1); the loop's H2 revision is in progress and uncommitted (`pass-2/H2.md`, `git status` shows 21 modified harness files and 4 untracked), so every HEAD number below is H1's, and the landing gates run H2 as the loop commits it. Two band-J probes (appendix A) read what the harness does not: the two-line ToggleGroupItem's corner (the registry's own born-RED, `audit/REGISTRY.md:652`) and the layout shift of the contrast carrier (PF-3). They land under `scripts/probes/band-J/` with `npm run probe:band-J` |
 | engines | Chromium 149.0.7827.55 headless. **Playwright WebKit** 26.5 headless (labelled so; it is not Safari). Real Safari: **UNMEASURED (owner's safaridriver checkbox)**; the harness's T-8 prints the one Safari cell as unmeasured (§2.2) |
 | machine | shared; load averages 37.71 / 42.91 / 46.42 at 18:36 and 41.68 / 39.97 / 43.63 at 18:41 local, printed beside the runs |
@@ -20,6 +20,7 @@
 |---|---|---|
 | F-30b members | L01a-23's multi-line half; R2-03-09 (O-58/N-9 in paint: `.toggle-group__item { border-radius: var(--radius-pill) }` pins two-line tiles to 9999px); R2-04-04's F-30b row | `audit/REGISTRY.md:640-652` |
 | inbound | O-58 PRESET-TILE-SHAPE (value.js relay for keyframes.js) and the 17 UIA rows the map puts on F-30b: UIA-KF-046, UIA-V-60, UIA-V-92, UIA-V-136, UIA-V-180, UIA-KF-047, UIA-F-85, UIA-F-100, UIA-V-219, UIA-V-332, UIA-V-360, UIA-KF-111, UIA-KF-156, UIA-F-141, UIA-V-510, UIA-V-515, UIA-V-201 | `audit/INBOUND.md:21`; `audit/INBOUND-MAP.md:66,121-139,163,544` |
+| inbound, handed from W-B.2 §3.6 | value.js O-65 (FW14H-OA50: -1 the Button/Badge stadium radius on a wrapped label, -2 a list-row primitive) and value.js O-67 (TILE-PRIMITIVE, beside O-58): the tile this wave lands is the list row, and its corner is T-1's (G1) and the two-row corner (G9). Their terminals are read against the converged Q-1 and Q-10 rulings with the 17 UIA rows (§3.1 obligation 2) |
 | ledger | #84 W-TOGGLE-ROW (its two-line-item half; P4's contrast is F-21's, W-E.2); N-9 (the owner's "too rounded ... should be more card like"); O-58 | `ledger/census-register-b.md:69`; `ledger/census-carries-recap.md:88`; `audit/PROMPT-RECAP-SEED.md:51`; PLAN §7 row J |
 | loop floor | TF-1..TF-8 and floor items 1-5 as D4 settled them at pass 1 (`design/tile/REGISTRY.md:193-243`) | D4 REGISTRY §3 |
 
@@ -186,11 +187,10 @@ In the table cells below, `\|` is the Markdown escape for `|`: the command itsel
 | G12 · no Chip cell (Q-8 (a)) | `! git grep -nE 'cell:\|"cell"' -- src/components/chip` | exit 0 | **exit 1**: `chipVariants.ts:15` |
 | G13 · one ARIA answer (TF-4) | `! git grep -n "'aria-pressed'" -- src/components/tabs/SegmentedTabs.vue` and T-5's `tabs` scene | exit 0; `tabs` PASS | **exit 1**: `:320`; T-5 `tabs` RED |
 | G14 · the role invariant | `npx vitest run tests/styles/radius-role-canon.test.ts` with the new tile, stepper, field and strip rows, each an `it` read from the role table, and G1's paint cells | passes; no role row is `it.fails` | the new rows do not exist; their paint twins G1 and G9 are RED |
-| G15 · the gestalt read | the D4 critic's §7.3 gestalt questions on the §6 captures, recorded in the wave record | each question answered yes by a seat that did not author the route | not measurable at HEAD; SF-13's captures read "too rounded" (N-9) |
 | G16 · the harness can fail | `node $H/selftest.mjs --out $OUT` | every fixture PASS, every plant FAIL, both engines | H2's self-test: every clean fixture passes and every plant fails on its planted cell (`pass-2/H2.md` §0 item 1; T-6's tally still being written by the live seat) |
 | G17 · the bundle datum | `npm run build && node scripts/…ratchet` (W-A.5's payload invariant) | the datum moves by the converged spec's ruled row (§3.1 item 3), stated in the wave record | D′ measured +3,153 B at pass 1 (PF-4); re-measured at landing |
 
-A gate whose HEAD reading is a hold line (G2) or not measurable (G15) is stated so; the others are RED at HEAD in the run cited.
+A gate whose HEAD reading is a hold line (G2) is stated so; the others are RED at HEAD in the run cited. G15 (the D4 critic's gestalt questions on the captures) is struck: it restated D4's §7.5 gestalt read, which is D4's convergence gate and this wave's entry (PLAN §4), and had no HEAD reading (fix-2, FA-02).
 
 ## 6 · π and DELTA obligations
 
@@ -223,7 +223,7 @@ Before = the H1 run of `7f92584c` above (`<out>/runs/head/*.json` and its PNGs) 
 
 ## 8 · Dependencies and ledger rows
 
-Depends on the D4 gate, W-E.6, W-E.8, W-H.1, W-A.3 and W-C.1. Closes F-30b; O-58; the 17 UIA rows per §1; #84's two-line-item half; N-9. The three gestalt passes (tranche fit, wave, feature, P-1) are recorded in the wave record before it closes.
+Edges: PLAN §5. Closes value.js O-65 and O-67 (G1, G9; §1), CUR:49 (the D4 family-B critic split) on the entry gate §3.1, where D4's pass-2 agglomerate rules it (CUR:64); F-30b; O-58; the 17 UIA rows per §1; #84's two-line-item half; N-9. The three gestalt passes (tranche fit, wave, feature, P-1) are recorded in the wave record before it closes.
 
 ## Appendix A · the band-J probe (shared with W-J.2)
 

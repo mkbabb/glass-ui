@@ -7,8 +7,8 @@
 | HEAD | `b3d7fa28` in a scratch worktree. `git diff --stat v10.1.0 HEAD -- src package.json tests scripts .github` prints nothing, so every reading measures the published 10.1.0 bytes. `npm run build` exit 0; `npm run demo:dist:build` exit 0; the built demo served by `vite preview` on :6411 |
 | ships in | 11.0.0 |
 | families | F-69 whole (`audit/REGISTRY.md:1467-1476`): L06-02, R2-04-05 |
-| depends on | W-F.2 (`useGestureEnd`, the one end-of-gesture helper, and the rule that a newer choice re-targets from the in-flight value; `waves/W-F.2.md:11,127`), W-E.7 (the coarse hit area that replaces the fork's tab-height edit, `waves/W-E.7.md:56`) |
-| dependants | W-L.7 (scaena's packet names the vendored 8.0.3 for retirement), W-L.3 (its consumer matrix runs this wave's declaration-floor fixture) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | engines | Chromium (Playwright's bundled build) is the gate engine. Playwright WebKit crashed the page on `/navigation/tabs` at HEAD (`page.goto: Page crashed`, appendix A), so its cells are recorded as a crash, not as a reading. Real-Safari cells are UNMEASURED until W-A.6's step 0 (OW-3) |
 
 ## 1 · What it closes
@@ -74,7 +74,7 @@ One invariant covers all three: after any press, drag, fling or interrupt, once 
 | `tests-visual/tabs-std.spec.ts` (+133), `disclosure-rotate.spec.ts`, the contract tests | harvested | the tabs spec's first-press and interrupt arms fold into G-L4-1's spec; the Collapsible and Input contract arms are covered by HEAD's contract tests or by §3.6's fixture |
 | `.bundle-ratchet`, `package.json` version 8.0.3, the BA/BB PNGs | RETIRED | fork bookkeeping |
 
-Step 0, before scaena prunes anything (L06-02's order): the fork's full diff is written to `<scratch>/BL/evidence/W-L.4/fork-e73ec80c.patch` with its sha256 in the wave record. The fork is a sibling tree: glass reads it and never writes it.
+Step 0, before scaena prunes anything (L06-02's order): the fork's full diff is written to `.cache/evidence/W-L.4/fork-e73ec80c.patch` with its sha256 in the wave record. The fork is a sibling tree: glass reads it and never writes it.
 
 ### 3.6 The declarations close at their stated floors
 
@@ -108,7 +108,7 @@ Each gate's exit code is read on its own.
 | G-L4-3 · one closer | `test "$(grep -c 'params.onSnap(' src/composables/motion/morph/useDragMorph.ts)" = 1 && grep -q 'useGestureEnd' src/composables/motion/morph/useDragMorph.ts` | exit 0 | **exit 1**: `onSnap` has one call site today, inside the frame subscriber, and `useGestureEnd` does not exist (W-F.2 creates it). The count clause holds at HEAD; the helper clause fails |
 | G-L4-4 · the declarations close at the floors | `node tests/_support/declaration-floor/run.mjs`: installs `vue@$(semver.minVersion(peer vue))` and `typescript@$(semver.minVersion(peer typescript))` into the fixture, compiles the root and every subpath's declarations with `types: []`, `skipLibCheck: false`; counts errors in files under `@mkbabb/glass-ui/` | exit 0 with 0 glass-owned errors, and `peerDependencies.typescript` present | **fails**: no `typescript` peer; at vue 3.5.24 (inside `^3.5`) 1 glass-owned error, at TypeScript 5.9.3 8 (§3.6). The same fixture at vue 3.5.25 + TypeScript 6.0.3 reads 0, so it can pass |
 | G-L4-5 · the fork's verify leg | `grep -q "types: \[\]" scripts/verify-export-types.mjs` and `npm run verify:package` exit 0 | both | **exit 1**: `compilerOptionsForMode` sets `lib` and no `types` |
-| G-L4-6 · the fork banked | `shasum -a 256 <scratch>/BL/evidence/W-L.4/fork-e73ec80c.patch` equals the sha256 in the wave record, and the patch's `diff --stat` tail reads `23 files changed, 376 insertions(+), 45 deletions(-)` | both | **fails**: no patch banked |
+| G-L4-6 · the fork banked | `shasum -a 256 .cache/evidence/W-L.4/fork-e73ec80c.patch` equals the sha256 in the wave record, and the patch's `diff --stat` tail reads `23 files changed, 376 insertions(+), 45 deletions(-)` | both | **fails**: no patch banked |
 
 G-L4-1 lands in the wired visual suite (W-A.3) and in W-A.2's roster. Real-Safari: UNMEASURED.
 
@@ -119,7 +119,7 @@ G-L4-1 lands in the wired visual suite (W-A.3) and in W-A.2's roster. Real-Safar
 | `/navigation/tabs`, the first draggable pill strip, press 1 held at 350 ms | light, dark | Chromium; Playwright WebKit (crashed at HEAD, recorded as a crash) | before: `f69-head-chromium-{light,dark}-press1-held.png` (this seat; the wave re-takes them on its base); after: the same frame on the wave's last commit | G-L4-1's JSON beside each PNG (`held`, `after`, `selected`, `seated`) |
 | the same strip after drag, release and a click on tab 1 | light, dark | Chromium | before and after at +1.5 s | the `interrupt` object of G-L4-1 |
 
-Every PNG and JSON goes under `<scratch>/BL/evidence/W-L.4/` (the one scratch root, F-61), with sha256 in the wave record. The DELTA is the pair; a claim without the pair is not a close.
+Every PNG and JSON goes under `.cache/evidence/W-L.4/` (the one scratch root, F-61), with sha256 in the wave record. The DELTA is the pair; a claim without the pair is not a close.
 
 ## 7 · MIGRATION rows (11.0.0)
 

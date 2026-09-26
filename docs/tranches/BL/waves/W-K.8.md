@@ -7,8 +7,8 @@
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B, scene `s=form`), consumer app on reka 2.10.5; the checkout's own `node_modules` holds reka 2.10.1 |
 | ships in | 11.0.0 |
 | families | F-82 (all members) |
-| depends on | W-A.3 (the wired set this wave's form battery joins, in two engines) |
-| dependants | W-L.2 (the type surface and the strictTemplates fixture read the participation props) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -57,11 +57,18 @@ One module, `src/components/_shared/field/participation.ts`, exporting `useFormP
 
 ## 5 · Acceptance gates
 
-Every FAIL cell in §2 is a gate; it passes at the inverted reading (0 disagreements; 3 of 3 invalid with focus on a visible named control; 0 stops, `vol 40`, `disabled` paint; `qty=7` in Firefox; model and face `true`/`checked`; after `5`, model `5`). Hold line: K8-G5 (bite: after the cure, a direct `input.value = formatted` write in the NumberField wrapper, with the commit-then-refocus order, turns it red; the executing seat adds that order to G5 before cutting).
+Each row is a gate on appendix A's cell of the same id. HEAD readings are §2's (Chromium, Playwright WebKit, Playwright Firefox).
 
-| id | gate | passes when | HEAD |
-|---|---|---|---|
-| K8-S | `rg -q '"reset"' src/components/_shared` | exit 0 | **exit 1** (0 reset listeners) |
+| id | passes when | HEAD |
+|---|---|---|
+| K8-G1 | after Reset: 0 disagreements between FormData, the model and the paint, each equal to the control's default (every control in the fixture) | **FAIL** 15 disagreements, all three engines |
+| K8-G2 | a blocked submit: 3 of 3 required controls `aria-invalid="true"`, and focus on a visible control with an accessible name | **FAIL** 0 of 3; focus inside `aria-hidden`, all three engines |
+| K8-G3 | inside `<fieldset disabled>`: 0 Tab stops among its descendants, `vol` stays 40 after ArrowRight, and Input and NumberField read `data-state="disabled"` | **FAIL** all three engines |
+| K8-G4 | Enter in a NumberField holding 7 submits `qty=7` | **FAIL** in Playwright Firefox (`qty=3`); PASS in Chromium and Playwright WebKit |
+| K8-G5, hold line | commit 7, undo, redo: the field never reads `777` | PASS in all three. Bite: a direct `input.value = formatted` write in the wrapper with the commit-then-refocus order; the wave adds that order to the cell |
+| K8-G6 | an autofill-shaped write to the proxy input sets the model `true`, paints the face checked, and FormData `agree=yes` | **FAIL** model false, face unchecked, all three engines |
+| K8-G7 | type `5`, compose `日本`, blur: the model is `5` | **FAIL** Chromium (`""`, model `undefined`); not driven in the other two (no IME driver) |
+| K8-S (static) | `rg -q '"reset"' src/components/_shared` | **exit 1** (0 reset listeners) |
 
 ## 6 · π and DELTA obligations
 

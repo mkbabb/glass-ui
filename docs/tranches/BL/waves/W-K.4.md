@@ -7,8 +7,8 @@
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B); forced colours are Playwright's Chromium emulation (`forcedColors: 'active'`), prefers-contrast is CDP `Emulation.setEmulatedMedia` |
 | ships in | 11.0.0 |
 | families | F-39 (all members), with its inbound rows |
-| depends on | W-H.1 (the ring's ink on painted composites is F-23's: the D and DK cells below need that ink), W-I.1 (the dock's focus trio lives in the converged dock) |
-| dependants | W-L.6 (the unconsumed-surface census reads the deleted tokens) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -27,6 +27,7 @@
 | R5-02-09 (LOW) | the forced-colours invalid boundary fails in the light palette only |
 | #83 W-CONTROL-BIT (BK register, the FC rows) | census-register-b.md:68: disabled paints like enabled under FC; the state edge on the seat |
 | inbound | UIA-V-85, UIA-V-263, UIA-V-512 (a UA ring on the dock landing pad and the DockLayer panel), UIA-KF-146 (the FadingScroll port's UA outline), UIA-V-354 (SegmentedTabs' platform ring), UIA-F-129 (Input ring a detached offset stadium), UIA-KF-241 (the dock ring the loudest mark), UIA-V-613's slider-focus half |
+| value.js O-73 (the dock ring colour seam, routed by W-B.2) | RETIRE CURED at HEAD: `--dock-ring-color` is declared at `dock/styles/index.css:229`, the outline reads it at `:286` and at `layer-group.css:321`, and `glass-chip.css` is imported at `styles/glass.css:123` (fix-2, `183e021a`). Re-trigger: a dock control whose focus outline does not read `--dock-ring-color` |
 
 ## 2 · The defect at HEAD
 
@@ -101,7 +102,7 @@ A 2 px outline at `outline-offset` ≥ 1 px covers more than 2 × the element's 
 
 ## 8 · Ledger rows
 
-Closes F-39 (all ten members and R2-08-13), #83's FC rows, and the inbound rows UIA-V-85, -263, -512, UIA-KF-146, UIA-V-354, UIA-F-129, UIA-KF-241 and UIA-V-613's slider-focus half. A2-KE-L1-22 stays CONSUMER-SIDE as the inbound map holds it (no ask until keyframes measures a gap).
+Closes F-39 (all ten members and R2-08-13), #83's FC rows, and the inbound rows UIA-V-85, -263, -512, UIA-KF-146, UIA-V-354, UIA-F-129, UIA-KF-241 and UIA-V-613's slider-focus half. Records value.js O-73 as RETIRE CURED (§1). A2-KE-L1-22 stays CONSUMER-SIDE as the inbound map holds it (no ask until keyframes measures a gap).
 
 ## 9 · Gestalt passes (P-1)
 

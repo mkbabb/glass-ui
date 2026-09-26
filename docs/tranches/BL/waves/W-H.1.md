@@ -8,8 +8,8 @@
 | kind | LOOP WAVE, owned by design loop D3 (`design/material/`). It lands only from D3's converged specification and never before D3 meets its gate |
 | ships in | 11.0.0 |
 | families | F-23 (whole), F-24 (remainder after W-0.1's menu-row split), F-75 (whole) |
-| depends on | the D3 gate (§3.1); W-0.1 (the light veil at the token, the menu row off the veil-ink plate); W-C.5 (one inherited dark arm, one colour leaf); W-E.2 (the containment cure M-7 reads); W-G.3 (the evented luma, for a D3 route that reads a published field luma) |
-| dependants | W-H.3, W-I.1 (the dock builds on this wave's dock ink), W-J.1, W-K.4 (the ring register reads this wave's ink on composites), W-L.1 (the Slider spectrum fill hook, O-61 R-2's API half) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | instruments | the D3 battery `docs/tranches/BL/design/material/harness/` (`$H` below; W-C.1 moves tooling out of `docs/`, and the path follows it) and the band-H paint probe (appendix A), which lands as `scripts/probes/band-H/` with `npm run probe:band-H` |
 | engines | Chromium 149.0.7827.55 is the gate engine. Playwright WebKit 26.5 rows are recorded and labelled "Playwright WebKit (paint-only: headless paints no `backdrop-filter`, and `GlassDock` crashes it)". Real-Safari cells are UNMEASURED (owner's safaridriver checkbox, OW-3) |
 
@@ -28,7 +28,7 @@
 
 **How the dark members close.** L03a-09 (the veil gone in dark) closes on W-H.2's M-6 row, the separable dark ladder; this wave records it as an F-24 member. L03b-06 (hero fields ignore dark) closes on G1's dark aurora rows for the stage prose and on the demo hero configs taking a dark twin (`demo/chassis/hero/aurora-hero.ts:250,333`, `StoryHero.vue:60`, `DockStage.vue:49`). L03a-14 does not reproduce as a separability defect (§2); its remainder is UIA-KF-240's direction question, closed by D3's ruling and G17.
 
-**Not closed here.** The light veil token and the light menu row are W-0.1's. The veil's frost, the transmissive well, the inert lenses, the dark ladder (M-6) and chrome calm (M-8) are W-H.2's. The ring register's forced-colours arm is W-K.4's (F-39); it reads this wave's ink. The Slider spectrum fill hook as a public API is W-L.1's (F-71); this wave paints the value mark it needs. The #31 items routed to F-23 close in band K (PLAN §7), which measures them on this wave's ink.
+**Not closed here.** The light veil token and the light menu row are W-0.1's. The veil's frost, the transmissive well, the inert lenses, the dark ladder (M-6) and chrome calm (M-8) are W-H.2's. The ring register's forced-colours arm is W-K.4's (F-39); it reads this wave's ink. The Slider spectrum fill hook as a public API is W-L.1's (F-71); this wave paints the value mark it needs. The one #31 item routed to F-23 is #31g (the rendered-contrast invariant), and it closes here on G1 and G2; no #31 item goes to band K.
 
 ## 2 · The defect at HEAD
 
@@ -100,13 +100,20 @@ The route is D3's. The landing rule is fixed here: the converged spec's "wave sp
 | route | the ink this wave lands | the live channel this wave lands |
 |---|---|---|
 | D3-A ground pole | static inks re-derived against the bound; `--ink-perimeter` 0.52 on the chrome composite | the sampler's glass consumer deleted: the clamp at `veil.css:58-72`, the knee, `--glass-backdrop-luma` and its `@property`; `backdropMode` narrows to `"glass" \| "opaque"` |
-| D3-B field signal | static inks | the plate reads W-G.3's published luma through `--field-luma-lo`; `declareField(el)` published |
+| D3-B field signal | static inks | this wave builds the field-luma publisher and the dock's subscription (§3.5); the plate reads it through `--field-luma-lo`; `declareField(el)` published |
 | D3-C cascade ink | every ink rung a relative-colour solve against `--glass-composite` (the exact `srgb-linear` form, S-4) | `--glass-ground` declared per scope; the sampler's glass consumer deleted |
 | D3-D calibrated ladder | the solver's ink outputs in `tokens/glass.solved.css` | as A |
 | D3-E self-grounded ink | the stroke-or-halo ground on every glyph, two-tone indicators, the FC and print arms | as A |
 | D3-F yielding field | static inks against the band | the substrate's well; `backdropMode: "live"` keeps its name with the new meaning |
 
 W-G.3's idle-loop cure stands on every route. A route that deletes the live glass channel (A, C, D, E) deletes W-G.3's glass consumer, not W-G.3's registry (PLAN §5 note).
+
+### 3.5 · The field-luma publisher (D3-B only)
+
+A mechanism a loop is still choosing is built by that loop's wave (PLAN §1). The publisher exists only on D3-B, so it lands here, not in band G; on routes A, C, D, E and F this section is void and its gates are struck with the route's ruling.
+
+1. **Every field publishes its luma.** The lifecycle configures the canvas with `usage: RENDER_ATTACHMENT | TEXTURE_BINDING`. At most every 250 ms after a presented frame, it encodes one compute pass (`webgpu/shaders/luma-grid.wgsl.ts`) that reduces the current texture to a 16×16 grid of (mean OKLab L, mean alpha), copies it to a `MAP_READ` buffer and reads it with `mapAsync`: no main-thread block, no 2D canvas. `webgpu/fieldLuma.ts` holds `Map<canvas, { grid, at }>` with `subscribe(canvas, fn)`, and the canvas carries `data-field-luma` (the grid's alpha-weighted mean L, 3 decimals) for witnesses. The registry is internal.
+2. **The dock subscribes.** In live mode `GlassDock` subscribes to the field under it and every `[data-backdrop-sample-state]` reads `sampled`. W-G.3 leaves live mode reading `unavailable` until this lands (W-G.3 cure 1).
 
 ## 4 · Files it touches
 
@@ -126,7 +133,7 @@ W-G.3's idle-loop cure stands on every route. A route that deletes the live glas
 All gates read painted pixels unless the row says "static" (P-3). Setup, in a scratch worktree carrying the candidate `src`:
 
 ```sh
-export D3_OUT=<scratch>/d3out; H=docs/tranches/BL/design/material/harness
+export D3_OUT=.cache/evidence/W-H.1/d3out; H=docs/tranches/BL/design/material/harness
 node $H/run.mjs <wt> --label h1                         # build, capture, every witness
 node scripts/probes/band-H/build.mjs <wt> h1 && ENGINES=chromium,webkit node scripts/probes/band-H/measure.mjs h1
 ```
@@ -144,12 +151,15 @@ node scripts/probes/band-H/build.mjs <wt> h1 && ENGINES=chromium,webkit node scr
 | G9 · PCM moves ink | rows `H1/PCM-MUTED` | muted ≥ 7:1 (the enhanced-contrast register, WCAG 1.4.6) on wash, resting and overlay, both themes | **FAIL 3 of 6**: light 5.96, 5.70, 5.46 (dark 8.18-8.25 pass) |
 | G10 · PRM hover | rows `H1/PRM-HOVER` | ≥ 5% of the hovered item's pixels move by ΔE_OK ≥ 0.02 under reduced motion | **FAIL 2 of 2**: 0 px |
 | G11 · emphasis | rows `H1/EMPHASIS` | primary vs secondary fill ΔE_OK ≥ 0.05, both themes | **FAIL 1 of 2**: light 0.008 |
-| G12 · the value mark | rows `H1/SLIDER-VALUE` | fill or value mark ≥ 3:1 from the track at rest, default and spectrum, both themes | **FAIL 4 of 4**: 1.38, 1.19, 2.28, 1.36 (the best of fill and mark) |
+| G12 · the value mark | rows `H1/SLIDER-VALUE` | fill or value mark ≥ 3:1 from the track at rest, default and spectrum, both themes | **FAIL 4 of 4**: 1.38, 1.19, 2.28, 1.36 (the best of fill and mark). The Progress cell (W-SLIDER-PROGRESS's other half; fix-2's probe, scene `progress`, value 50, rows `W-H.1/PROGRESS-VALUE`) is a hold line: fill against track 12.40 light, 8.22 dark, Chromium and Playwright WebKit alike; bite, a fill rung that drops below 3:1 |
 | G13 · PRT recedes | rows `H1/PRT-RECEDE` (Chromium; the media feature is CDP-emulated) | page muted ≥ 4.5 under PRT and not below the same text without PRT | **FAIL 2 of 2**: 1.35 (2.66 without), 1.50 (3.75 without) |
 | G14 · dock state | rows `H1/DOCK-STATE` (Chromium; the dock crashes Playwright WebKit) | active vs resting control ≥ 3:1, both themes | **FAIL 2 of 2**: 1.40, 1.01 |
 | G15 · the Close ring is the rung (static) | `! git grep -n 'var(--foreground) 48%' -- src/components/dialog` | exit 0 | **exit 1**: `styles.css:144`, `:243` |
 | G16 · no regression | M-1, M-6, M-7, M-8 at `h1` against W-0.1's landing | every row PASS there is PASS here | hold line; W-H.2 owns their cure |
 | G17 · the dark elevation ladder stays separable | `node scripts/probes/band-H/shadow.mjs h1`, field `adjacentStep` | dark adjacent steps md→2xl ≥ 0.01, and every halo's direction is the one D3's converged spec states (glow or shadow) | hold line: HEAD dark steps 0.021-0.057 (appendix B). Not born RED: the separability defect does not reproduce (§2) |
+| G18 · the HandMark band holds | fix-2's probe, scene `handmark`: the mark's stroke band against its plate, light and dark | ≥ 4.5:1 in both themes and both engines | hold line: 10.86 light, 6.37 dark, Chromium and Playwright WebKit (PNGs `e21c0da9c262…`, `7ddbea0d9e73…`, `23b6a9b44efe…`, `146dfd738dd9…`). Moved here from W-B.6 (B6-G4). Bite: a muted rung that drops the mark below 4.5 |
+| H1-G19 · each field publishes its luma (D3-B) | on `/`, content hidden (`main, header, nav { visibility: hidden }`), the shell field canvas's `data-field-luma` is within 0.03 of the OKLab mean L of a screenshot of the canvas rect, read 1 s apart twice; the same on `/substrates/blob` for the blob canvas | both | **absent** (no `data-field-luma` key on either canvas at HEAD). Moved from W-G.1 (G1-G9) |
+| H1-G20 · the dock samples (D3-B) | every `[data-backdrop-sample-state]` on `/dock/overview` reads `sampled` | all | **0 of 3** (`source-unavailable` ×2, `sample-unavailable` ×1). Moved from W-G.3 (G3-G2) |
 
 **The gates can pass.** `FIXTURE=1 node measure.mjs` plants a stylesheet (a `::selection` pair, a ring on `[data-highlighted]`, a PCM ink rule, a hover fill, a primary fill, a visible thumb, a solid ground under PRT, an accent dock tab; appendix A). It is a gate fixture, not a design. It reads **0 FAIL of 40**, against 32 of 40 at HEAD. The battery's own planted-defect selftest covers G1-G4 and G6 (`$H/selftest.mjs`, 30 of 30 expectations, `HARNESS.md` §4).
 
@@ -169,6 +179,8 @@ Before = the `hH`/`head` builds of `80ebfd72`; after = `h1`. Captures under `.ca
 | page text over a recessed aurora under PRT | light, dark | Chromium | `prt-*-reduce-full.png` vs `prt-*-none-full.png` | G13 |
 | the dock tabs | light, dark | Chromium | `dock-*.png` | G14 |
 | the four hero routes under PRT (`/`, `/substrates/aurora`, the dock stages, `/foundations/motion`) | light, dark | Chromium | demo route captures before/after | owner glance: F-75's round-3 note says these improve under HEAD's lift; the recession must not read as a dead page |
+| the field luma on `/` and `/substrates/blob` (D3-B) | light, dark | Chromium | the canvas rect screenshot beside its `data-field-luma` (π-LUMA, from W-G.1) | H1-G19 |
+| the live dock over the aurora (D3-B) | light, dark | Chromium | `dock-live-*.png` beside the sample-state readout (π-DOCK-LUMA, from W-G.3) | H1-G20 |
 | real Safari | both | — | UNMEASURED (OW-3) | — |
 
 ## 7 · MIGRATION rows (clean break, no alias)
@@ -186,7 +198,7 @@ Consumer overrides retire by an addendum in each consumer's own tranche (E-6), n
 
 ## 8 · Dependencies and ledger rows
 
-Depends on the D3 gate, W-0.1, W-C.5, W-E.2 and W-G.3 (§ header). Closes F-23 (all members above), F-24's remainder, F-75; inbound UIA rows in §1 (each closes on the G row that measures its surface, recorded per row by the LEDGER seat); C-2 row 1 (G4 with G1's dock rows); O-61 R-2's value mark (G12); #10's dark-α items, #80's remainder, #83's perimeter half. Carries into W-K.4 the ring register's FC arm and into W-L.1 the spectrum fill hook API, each already a named row of those waves.
+Edges: PLAN §5. Records #54b (leg (v) of #54, GM-L6: the glass-material sample tile at 1.0× DPR) as RETIRE NOT-REPRODUCED: the sampler maps its rect through the source canvas's backing ratio (`composables/glass/backdropLuminanceSample.ts:145-150`), not a fixed 1.0×, and routes A, C, D and E delete its glass consumer (§3.3); re-trigger, a sample read at 1.0× on a canvas backed above 1.0×. Closes #31g (G1, G2), UIA-F-128 (G8, the Command cursor), W-SLIDER-PROGRESS (G12: the Slider rows are RED, the Progress cell holds), the D3-B publisher rows (H1-G19, H1-G20) and F-23 (all members above), F-24's remainder, F-75; inbound UIA rows in §1 (each closes on the G row that measures its surface, recorded per row by the LEDGER seat); C-2 row 1 (G4 with G1's dock rows); O-61 R-2's value mark (G12); #10's dark-α items, #80's remainder, #83's perimeter half. Carries into W-K.4 the ring register's FC arm and into W-L.1 the spectrum fill hook API, each already a named row of those waves.
 
 ## Appendix A · the band-H paint probe (shared by W-H.1 and W-H.2)
 

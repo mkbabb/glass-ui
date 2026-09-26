@@ -7,8 +7,8 @@
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, library and demo built there; probes drive the band-E fixture app (W-E.1 appendix B) and the built demo |
 | ships in | 11.0.0 |
 | families | F-29 remainder (O-74 erratum E-2, the one coarse type model; O-74's F-29 rows; A2-KE-L2-6; UIA-V-225; G-23 COARSE-TARGET-COMPUTED from the W-A.2 roster; the W-B.4 fold "the slider's 44 px coarse hit area by slop"; the W-B.2 folds UIA-F-147, UIA-V-549 and the 25.9 px label) |
-| depends on | W-0.3 (the label-slot rule's first case, the Configurator layer header), W-A.3 (wired set) |
-| dependants | W-E.9 (the fold reads this wave's label-slot rule and count axis), W-I.1 (D2 reads this coarse model for O-81 (3); PLAN §5) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -73,6 +73,31 @@ Local width queries that key density on the viewport, not the seat: `labeled-fie
 | E7-G7 · G-23 coarse hit | appendix A G7: compact dock seat and slider thumb, 4 of 4 hits at 21 px | 2 of 2 | **0 of 4; 2 of 4** |
 | E7-G8 · fine menu row | appendix A G8 | < 44 px | **44** |
 | E7-G9 · one width query | `test "$(rg -c '@media \(max-width\|@media \(min-width' src/components/labeled-field/LabeledField.vue src/components/progress/Progress.vue src/components/sheet/styles.css src/components/tabs/styles/segmented.css \| awk -F: '{s+=$2} END{print s+0}')" -eq 0` | exit 0 | **exit 1** (the five local queries in §2) |
+| E7-G10 · the DockTrigger rung (UIA-V-236, UIA-V-76's trigger leg) | fix-2's probe scene `dtrig`: DockTrigger height against DockControl height, Chromium (GlassDock crashes Playwright WebKit) | equal within 0.5 px | **FAIL**: 35.3 vs 40 |
+| E7-G11 · the chevron rung (UIA-KF-243) | the same scene: the trigger's chevron box against the control's glyph box | equal | **FAIL**: 12 vs 20 |
+| E7-G12 · the Dialog grid holds its content (UIA-F-107) | scene `e7dialog`: a `nowrap` 70-digit line inside `DialogContent`; its right edge against the content's | overrun ≤ 0 | **FAIL**, both engines: 316.7 at coarse 390, 269.3 at 1440 (grid track `653.656px` in a 350 px content) |
+| E7-G13 · the ✕ on the title line (UIA-F-229) | the same scene: close-button centre y against the title line's centre y | within 1 px | **FAIL**, both engines: 398.7 vs 392 (390), 416.3 vs 412.1 (1440) |
+| E7-G14 · the separator meets the plate (UIA-V-523) | scene `e7menu`: separator ends against the plate's inner edges | gap 0 each side | **FAIL**, both engines, both cells: 8 px each side |
+| E7-G15 · the lg glyph on the label's rung (UIA-F-221) | scene `e7rung`: Button `size=lg` glyph box against its label font size | glyph ≤ 1.25 × label | **FAIL** at coarse 390, both engines: 24 vs 16 (1.5); 1440 passes (16 vs 18.608) |
+| E7-G16 · one sm rung (UIA-F-222) | the same scene: Button `sm` height against NumberField `sm` height | equal | **FAIL** at coarse 390, both engines: 44 vs 54; 1440 passes (36, 36) |
+
+**The mechanism rows.** Every F-29 row the LEDGER marks `[M]` is closed by one gate here or is ruled:
+
+| row | gate or terminal |
+|---|---|
+| UIA-F-91, UIA-V-112, UIA-V-224, UIA-V-253, UIA-V-259, UIA-V-262 (the coarse lift; the voice mix is the consumer's), UIA-V-314, UIA-V-365, UIA-V-389, UIA-V-445, UIA-KF-254, UIA-KF-192 (input ≥ 16) | E7-G5 (the coarse type model: one `--control-text`, no `--ui-scale` on text) |
+| UIA-V-139, UIA-V-299, UIA-V-347, UIA-V-381, UIA-V-306 (the 54-60 px coarse controls and rows) | E7-G16 (one sm rung) with E7-G5: the same `--ui-scale` factor sets their height |
+| UIA-V-44, UIA-V-292, UIA-V-612 | E7-G2 (row budget) |
+| UIA-F-38, UIA-V-511 | E7-G3 (label slots) |
+| UIA-V-76 | E7-G7 (the compact dock seat) and E7-G10 (the trigger) |
+| UIA-F-217, UIA-V-261 | E7-G8 (fine menu row) |
+| UIA-V-548 | E7-G9 for the width-query law; the Dialog header flip itself is RETIRE CURED at HEAD (`dialog/styles.css:36-41` `text-align: start` at every width; `DialogHeader.vue:9-11`) |
+| UIA-V-444, UIA-V-636, UIA-V-328's footer leg | RETIRE CURED at HEAD for the stacking: the footer is a row at every width (`dialog/styles.css:90-95`); their 60 px height is E7-G5's and E7-G16's |
+| UIA-V-236, UIA-KF-243, UIA-F-107, UIA-F-229, UIA-V-523, UIA-F-221, UIA-F-222 | E7-G10 to E7-G16 |
+| UIA-KF-147 | RETIRE NOT-REPRODUCED: the library's shortcut is 18.27 px under a 21 px label at coarse 390 and 14.38 under 16.4 at 1440 (scene `e7menu`, both engines); the 11 px caps are the consumer's own. Re-trigger: a `DropdownMenuShortcut` under 0.8 × its row's label |
+| UIA-KF-304 | RETIRE ANSWERED (consumer-side): the library ships no copyable-literal part; the wrap policy is the consumer's element |
+| UIA-F-41 | W-E.9 (E9-G5, SegmentedTabs overflow) |
+| UIA-F-105, UIA-KF-215 | W-0.8 (the Metric inline policy, G3 and G6) |
 
 Can each fail and pass? Four G1 cells pass at HEAD (the controls). Every other row fails. G9 is static. The `PI_PLANT` bite for G1 is `:root{--space-family:0.75rem}` applied at 1440, which moves a pad that should now be corner-derived only if a plate still reads the gap token.
 
@@ -96,7 +121,7 @@ Can each fail and pass? Four G1 cells pass at HEAD (the controls). Every other r
 
 ## 8 · Ledger rows
 
-Closes O-74 E-2 and O-74's F-29 rows, A2-KE-L2-6, UIA-V-225, UIA-F-147, UIA-V-549, the 25.9 px label, and G-23 (bound). The W-B.4 slider fold closes here.
+Closes O-74 E-2 and O-74's F-29 rows, A2-KE-L2-6, UIA-V-225, UIA-F-147, UIA-V-549, the 25.9 px label, and G-23 (bound). Closes the F-29 mechanism rows on the gates §5's table names, and records UIA-KF-147 (NOT-REPRODUCED), UIA-KF-304 (ANSWERED), UIA-V-548, UIA-V-444 and UIA-V-636 (CURED) as RETIRE. The W-B.4 slider fold closes here.
 
 ## 9 · Gestalt passes (P-1)
 

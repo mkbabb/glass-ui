@@ -8,8 +8,8 @@
 | ships in | 11.0.0 |
 | families | F-48, the blob split (`audit/REGISTRY.md:1171-1183`): L01b-50, L05a-02, L05b-10 (blob half), R2-03-07. F-50, the blob's settle seam (`REGISTRY.md:1206,1212-1213,1219`): R2-03-06 and value.js's quiescence ask. Inbound: O-56 G-3 (the look; `INBOUND-MAP.md:538`), UIA-V-47, UIA-V-164, UIA-V-199, UIA-V-386 (`INBOUND-MAP.md:408,412,415,417`), O-52 (hero-blob display-p3, routed here by `W-B.2.md:91`). Folded here by W-E.10 (`W-E.10.md:78,121`): the seed ceiling pair G-CHROMA and G-MOOD-STILL |
 | a disease row | #50 GF-BLOB rode BJ and BK at W0 ("NOT ONE GLSL BYTE IS DELETED", `census-register-a.md:57`); five owner asks since BC H42 (L05b-10). Deciding it is this wave (CH:23) |
-| depends on | W-G.1 (the WebGL2 arm deleted, GF-BLOB W1; `packBlobUniforms.ts` the only packer; the published luma; the engine's `onInitError`) |
-| dependants | W-G.4's VizStudio wraps the blob story; W-B.2's reply letter (O-56 G-3, O-52, the quiescence answer) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 0 · The spec of record, and what BL changes in it
 

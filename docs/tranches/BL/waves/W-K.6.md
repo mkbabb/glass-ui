@@ -7,8 +7,8 @@
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B) and the built demo on :6271 |
 | ships in | 11.0.0 |
 | families | F-42 (all members) and its inbound rows; #31's RT-31C (routed here by the census) |
-| depends on | W-K.1 (the composed target the predicate reads), W-E.4 (the stack's Escape listener is a predicate seat) |
-| dependants | W-L.1 (API asks that read names), W-L.3 (the Slider's DEV guard moves to `process.env.NODE_ENV` in F-67's row) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -33,9 +33,13 @@
 | RT-31C (#31) | one h1 per route | cured at HEAD (§2) |
 | UIA-KF-073 | shortcut labels show `KeyX` | 4 |
 | UIA-KF-145 | "⌫ or Backspace": the consumer's alias bypasses the formatter | 4 (ANSWER) |
-| UIA-V-220, UIA-V-476 | a clipped Select list with no scroll affordance; the Select opens with the selected row on the scroll-button edge | FOLD → W-E.4 (§3) |
+| UIA-V-220 | a clipped Select list with no scroll affordance | FOLD → W-E.4 (its G7 Select cell: 0 scroll cues, mask `none` at `183e021a`, fix-2) |
+| UIA-V-476 | the Select opens with the selected row on the scroll-button edge | W-E.4's (its §5 table records it RETIRE NOT-REPRODUCED with the reading) |
 | UIA-F-128 | menu rows have no `aria-current` leg | FOLD → W-H.1 (§3) |
 | UIA-KF-216, A2-KE-L2-7 | a sheet grab handle with no tap opener | FOLD → W-E.3 (§3) |
+| W-I.4 S1, handed from W-I.4 §3 | the dock's link verb: `DockControl as-child` around the consumer's router link, no `useDockLink` | 7 (K6-G9's shell arm) |
+| value.js O-71 (4), handed from W-B.2 §3.6 | `DropdownMenuItem` has no link-item idiom, so the dock's GitHub row is an `<a>` nested in a menu row and keyboard select does not follow the link | 7 (K6-G24) |
+| #49e (census a:56) | the shell aurora moves (π-FIELD F1: 91.5-93.1 % of pixels move, `demo/chassis/hero/aurora-hero.ts:278-281`) and the shell has no pause control (WCAG 2.2.2); the substrate stories carry `DockBackgroundToggle` | 14 |
 
 ## 2 · The defect at HEAD
 
@@ -91,7 +95,10 @@ Measured with appendix A (`k6.mjs`, `k6b.mjs`, `k6c.mjs`), Chromium, **26 rows, 
 12. **Both axes.** RadioGroup maps ArrowDown/ArrowRight and ArrowUp/ArrowLeft to next and previous in either orientation.
 13. **Reduced motion.** `useDeckSnap.scrollTo` takes its default behaviour from the motion preference (`resolveMotion`): `instant` under reduce. The scroll-position readout is kept under reduce: it follows the reader's own scroll, which is not motion the page initiates, so `.scroll-progress` is driven in both preferences (decided on merit, R3-01-13). The Progress story's demo loop reads the preference and has a pause control.
 
-**Folds.** UIA-V-220 and UIA-V-476 go to W-E.4: its ceilings row puts every popper list in the one fading scroll port with the available height, which removes SelectScrollButton's edge and the item-aligned initial scroll. UIA-F-128 goes to W-H.1: a menu row's current state is a state paint, which W-H.1 separates from value and emphasis. UIA-KF-216 goes to W-E.3: what a sheet's handle does on tap is a detent transition, which the sheet's detent seam owns; W-E.3 takes the born-RED (a tap on the handle at the lowest rung moves one rung up).
+14. **The shell field pauses.** The demo shell mounts the field's pause seat (`DockBackgroundToggle`, the control the substrate stories already use), named "Pause background motion". Ruled on WCAG 2.2.2: the field moves, starts on its own, runs past 5 s beside content, and is not essential.
+15. **A menu row that navigates is a link.** `DropdownMenuItem as-child` wraps a consumer `<a>` or router link, so the row is the link and Enter follows it; the README shows the form. No link-item component is minted.
+
+**Folds.** UIA-V-220 goes to W-E.4 (UIA-V-476 is W-E.4's, NOT-REPRODUCED): its ceilings row puts every popper list in the one fading scroll port with the available height, which removes SelectScrollButton's edge and the item-aligned initial scroll. UIA-F-128 goes to W-H.1: a menu row's current state is a state paint, which W-H.1 separates from value and emphasis. UIA-KF-216 goes to W-E.3: what a sheet's handle does on tap is a detent transition, which the sheet's detent seam owns; W-E.3 takes the born-RED (a tap on the handle at the lowest rung moves one rung up).
 
 ## 4 · Files it touches
 
@@ -99,11 +106,39 @@ Measured with appendix A (`k6.mjs`, `k6b.mjs`, `k6c.mjs`), Chromium, **26 rows, 
 
 ## 5 · Acceptance gates
 
-Every row in the §2 table is a gate; it passes when its reading inverts (named, 0 hidden, 0 activations, `["X"]`, links present, titles differ, focus moves, menu open, tabs resolve or no tabs, described, 0 duplicates, bar not `scaleX(0)`, 0 empty headers, distinct names, no slider with a button). Hold lines: K6-G6 ExpandableContainer, K6-G7 Dialog, K6-G13 (PASS at HEAD; bites: `registerShortcut("Escape", …, { allowInInput: true })` in ExpandableContainer turns G6-EC red; removing the StoryHero h1 turns G13 red). Static:
+Each row is a gate on appendix A's cell of the same id (`k6.mjs`, `k6b.mjs`, `k6c.mjs`), Chromium and, where the scene mounts, Playwright WebKit. HEAD readings are §2's.
 
-| id | gate | HEAD |
+| id | passes when | HEAD |
 |---|---|---|
-| K6-S | `rg -q 'isComposing' src/composables/keyboard && ! rg -q 'ScrollBehavior = "smooth"' src/components/deck/composables/useDeckSnap.ts` | **exit 1** |
+| K6-G1 | the thumb in `[data-probe=lslider]` (scene `s=names`) has an accessible name equal to its `<Label for>` text | **FAIL** (no name) |
+| K6-G2 | the open listbox's accessible name is "Fruit" | **FAIL** (`listbox:` unnamed) |
+| K6-G3 | the PopoverContent's dialog is named "Share settings" | **FAIL** ("Open popover") |
+| K6-G4 | with `count` 0: 0 live-region text and 0 painted dot nodes | **FAIL** ("Slide 1 of 0", 3 nodes) |
+| K6-G5 | a Select with 0 items renders its `#empty` slot | **FAIL** |
+| K6-G6 (Dialog, Command, body `k`) | a composing Escape leaves the Dialog open, the Command query and `aria-expanded` unchanged; a composing `k` fires 0 app shortcuts | **FAIL** 3 of 3 |
+| K6-G6 (ExpandableContainer), hold line | a composing Escape leaves it expanded | PASS. Bite: `registerShortcut("Escape", …, { allowInInput: true })` in ExpandableContainer |
+| K6-G7 (menu) | a held Enter on the menu trigger yields at most 1 item activation | **FAIL** (7 Chromium, 8 WebKit) |
+| K6-G7 (Dialog), hold line | a held Enter settles the Dialog open | PASS. Bite: remove the `e.repeat` guard |
+| K6-G8 | `formatComboParts('KeyX')` → `["X"]` and `formatComboParts('shift+Digit2')` → `["⇧","2"]` | **FAIL** (`["KeyX"]`, `["⇧","Digit2"]`) |
+| K6-G9 | on `/navigation/toc-tracking`, the 48 ToC entries are `a[href^="#sec-"]` and the shell rail and page-strip seats are `a[href]` (0 destination buttons) | **FAIL** (48 buttons, 0 links; nav 69 buttons) |
+| K6-G10 | with a word selected in the deck, Shift+ArrowRight, Alt+ArrowRight and Meta+Digit2 each leave the slide at 1 and are not `preventDefault`ed | **FAIL** 3 of 3 |
+| K6-G11 | on `/forms/checks` and `/data/table`, `document.title` starts with that route's h1 text | **FAIL** (both "glass-ui Feature Demo") |
+| K6-G12 | ArrowDown on the focused `plan-team` radio moves focus to the next radio in DOM order and checks it | **FAIL** (focus stays on `plan-team`) |
+| K6-G13, hold line | each of the 80 routes has exactly one h1 | PASS. Bite: remove the StoryHero h1 |
+| K6-G14 | Shift+F10 on the focused context trigger opens its menu (`role=menu` visible) | **FAIL** |
+| K6-G15 | on `/navigation/tabs`, every `role=tab` has `aria-controls` resolving to a `role=tabpanel`, or the strip has no `role=tab` | **FAIL** (24 tabs, 0 resolve) |
+| K6-G16 | on `/forms/checks`, the invalid checkbox, radiogroup and switch each have an accessible description | **FAIL** 3 of 3 |
+| K6-G17 | 0 duplicate ids across the 80 routes | **FAIL** (`v-15-control` twice on `/substrates/aurora`) |
+| K6-G18 | under reduce, after scrolling half of `/motion/scroll`, the readout's transform is not `matrix(0, 0, 0, 1, 0, 0)` | **FAIL** |
+| K6-G19 | 0 empty `<th>` on `/data/data-table` | **FAIL** (1) |
+| K6-G20 | the two range thumbs on `/forms/slider` have distinct names | **FAIL** (both "Price range") |
+| K6-G21 | the ConfiguratorLayer region has an accessible name equal to its label | **FAIL** (unnamed) |
+| K6-G22 | no `role=slider` on `/display/surface` contains a button | **FAIL** ("Surface prominence") |
+| K6-G23 · the shell field pauses (static) | `test "$(grep -rl 'DockBackgroundToggle' demo/shell \| wc -l)" -ge 1` | **exit 1** (0 files; the control is in 3 story files only), run by fix-2 |
+| K6-G24 · a menu link row follows its link | in an open DropdownMenu, `<DropdownMenuItem as-child><a href="#k6-link">`: the `role=menuitem` element is the `<a>`, and Enter on it sets `location.hash` to `#k6-link` | **FAIL** both engines (fix-2, `183e021a`): the row is a `DIV role=menuitem` holding 1 nested `<a>` (`as-child` is dropped), and Enter leaves `location.hash` empty |
+| K6-S (static) | `rg -q 'isComposing' src/composables/keyboard && ! rg -q 'ScrollBehavior = "smooth"' src/components/deck/composables/useDeckSnap.ts` | **exit 1** |
+
+K6-G11 and K6-G12 were "titles differ" and "focus moves"; a title that changed to any other constant, or focus that moved to the wrong radio, would have passed them. Each now names the value it must reach.
 
 ## 6 · π and DELTA obligations
 
@@ -259,17 +294,18 @@ if (eng === 'chromium') {
   // G11 · demo: document.title names the route (two routes, two titles)
   await safe('K6-G11 title', async () => {
     const { browser, page } = await open({ eng, url: `${DEMO}/forms/checks`, w: 1440, h: 900, settle: 1200 });
-    const a = await page.title(); await page.goto(`${DEMO}/data/table`, { waitUntil: 'networkidle' }); await sleep(1200); const b = await page.title();
-    row('K6-G11 document.title differs per route', a !== b, { a, b });
+    const h = () => page.evaluate(() => document.querySelector('h1')?.textContent.trim() ?? '');
+    const a = await page.title(), ha = await h(); await page.goto(`${DEMO}/data/table`, { waitUntil: 'networkidle' }); await sleep(1200); const b = await page.title(), hb = await h();
+    row('K6-G11 document.title starts with the route h1', a.startsWith(ha) && b.startsWith(hb) && ha !== '' && hb !== '', { a, b, ha, hb });
     await browser.close();
   });
   // G12 · demo: a horizontal RadioGroup moves on ArrowDown as on ArrowRight
   await safe('K6-G12 radio arrows', async () => {
     const { browser, page } = await open({ eng, url: `${DEMO}/forms/checks`, w: 1440, h: 900, settle: 1200 });
-    const m = await page.evaluate(() => { const g = [...document.querySelectorAll('[role=radiogroup]')].find((x) => x.getAttribute('aria-orientation') === 'horizontal' || getComputedStyle(x).flexDirection === 'row' || x.getAttribute('aria-label') === 'Plan'); const r = g.querySelector('[role=radio][aria-checked=true]') || g.querySelector('[role=radio]'); r.focus(); return { label: g.getAttribute('aria-label'), start: r.id || r.getAttribute('value') }; });
+    const m = await page.evaluate(() => { const g = [...document.querySelectorAll('[role=radiogroup]')].find((x) => x.getAttribute('aria-orientation') === 'horizontal' || getComputedStyle(x).flexDirection === 'row' || x.getAttribute('aria-label') === 'Plan'); const r = g.querySelector('[role=radio][aria-checked=true]') || g.querySelector('[role=radio]'); r.focus(); const all = [...g.querySelectorAll('[role=radio]')]; const nx = all[(all.indexOf(r) + 1) % all.length]; return { label: g.getAttribute('aria-label'), start: r.id || r.getAttribute('value'), next: nx.id || nx.getAttribute('value') }; });
     await page.keyboard.press('ArrowDown'); await sleep(200);
-    const after = await page.evaluate(() => document.activeElement.id || document.activeElement.getAttribute('value'));
-    row('K6-G12 horizontal RadioGroup: ArrowDown moves', after !== m.start, { ...m, after });
+    const after = await page.evaluate(() => ({ id: document.activeElement.id || document.activeElement.getAttribute('value'), checked: document.activeElement.getAttribute('aria-checked') }));
+    row('K6-G12 horizontal RadioGroup: ArrowDown moves to the next radio and checks it', after.id === m.next && after.checked === 'true', { ...m, after });
     await browser.close();
   });
   // G13 · one document heading per route (RT-31C): every demo route has exactly one h1

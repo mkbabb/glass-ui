@@ -7,8 +7,8 @@
 | HEAD | `b3d7fa28` in a scratch worktree; `src` identical to v10.1.0. `dist/` and `dist-demo/` built there. Sibling repos read only (`rg` and file reads; nothing built or run in them) |
 | ships in | 11.0.0 |
 | families | F-66 whole (`audit/REGISTRY.md:1416-1427`): L05a-18, L06-10, L10-06, L10-07, L10-15, L10-21, L13-14, R2-01-12, R2-06-11 |
-| depends on | every wave of bands C to K (PLAN §5): the census measures the surface those waves leave. W-D.1 in particular fixes the doors (one symbol, one door) before this wave counts readers per symbol |
-| dependants | W-L.7 (each removal is a MIGRATION row its packets carry), W-L.8 (the census artefact is the close's P-6 item) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | engines | none for the census; the one demo check (§5 G-L6-5) ran in Chromium |
 
 ## 1 · What it closes
@@ -110,7 +110,7 @@ G-L6-5 is a hold line and is not counted as born RED.
 
 ## 6 · π and DELTA obligations
 
-The wave's visual claims are the WIRE rows: each new or extended story is captured once, light and dark, Chromium, with Playwright WebKit labelled and real Safari UNMEASURED (OW-3), under `<scratch>/BL/evidence/W-L.6/`. The deletions make no visual claim; the one surface that could change paint is `.glass-top-layer`, and it has no mounting site (§2), so there is nothing to pair.
+The wave's visual claims are the WIRE rows: each new or extended story is captured once, light and dark, Chromium, with Playwright WebKit labelled and real Safari UNMEASURED (OW-3), under `.cache/evidence/W-L.6/`. The deletions make no visual claim; the one surface that could change paint is `.glass-top-layer`, and it has no mounting site (§2), so there is nothing to pair.
 
 ## 7 · MIGRATION rows (11.0.0)
 
@@ -127,7 +127,7 @@ W-L.7's closure check (G-L7-3) runs over these rows.
 
 ## 8 · Ledger rows
 
-Closes F-66 (all nine members), E-7 (its spirit, through §3.3), P-6's census half (the artefact W-L.8 cites), L06-11's roster clause, #21's `./blob-config` item (KEEP, the census's "0 consumers" corrected), #41 RT-41A, and #53's and #58's F-66 items (both refuted at HEAD, with the #58 placement routed to W-D.1).
+Closes F-66 (all nine members), E-7 (its spirit, through §3.3), P-6's census half (the artefact W-L.8 cites), L06-11's roster clause, #21's `./blob-config` item (KEEP, the census's "0 consumers" corrected), #41 RT-41A, and #53's and #58's F-66 items (both refuted at HEAD, with the #58 placement routed to W-D.1). VREVEAL-HOOK (the exported `vReveal` directive's `data-reveal` hook, 0 sibling consumers) closes on G-L6-1: the per-symbol census rules it with every published symbol.
 
 ## Appendix A · the census as run here
 

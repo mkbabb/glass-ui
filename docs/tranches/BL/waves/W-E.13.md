@@ -7,8 +7,8 @@
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, library and demo built there; probes drive the built demo and the band-E fixture app (W-E.1 appendix B) |
 | ships in | 11.0.0 |
 | families | F-80 |
-| depends on | W-E.4 (the layer stack names every open overlay, which the print arm hides); W-C.5 (proposed edge, not in PLAN §5: the print arm forces the light scheme through the one root scheme authority W-DARK-ONE-ARM leaves) |
-| dependants | none |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

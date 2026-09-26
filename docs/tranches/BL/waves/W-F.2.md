@@ -7,8 +7,8 @@
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`), scratch worktree; demo built there and served on :5961; R4-01's dock harness (`audit/captures/R4-01/probes/harness/`) copied to scratch with `@glass` pointed at the worktree `src`, served by `vite` on :5962; a static build of the same harness with two added pages (`sheet.html` from R10-01's `P.vue.txt`, `drag.html`, appendix E) served by `vite preview` on :5964; a cross-site page on `127.0.0.1:5963` for the bfcache cells |
 | ships in | 11.0.0 |
 | families | F-78 (members R4-01-01..R4-01-06, R5-01-01, R10-01-01, R10-01-03) |
-| depends on | W-F.1 (every re-seat is a `springStepper` row), W-E.3 (the Sheet's drag controller this wave's helper first serves; PLAN §5) |
-| dependants | W-F.4, W-K.3, W-K.7, W-K.9, W-L.4 (PLAN §5); W-I.1 (D2's loop builds on this helper and keeps the dock rows as its born-REDs, PLAN §3 row W-F.2) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 Machine load at the runs: 54 to 230 (other seats). The gates are sequences of events with a state check at the end, and each was also run as a control that passes at HEAD, so a RED reading is the defect and not the load.
 

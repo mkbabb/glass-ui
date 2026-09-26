@@ -7,8 +7,8 @@
 | HEAD | `b3d7fa28` in a scratch worktree; `src` and `package.json` identical to v10.1.0. `dist/` built there. The lockfile resolves `@mkbabb/value.js` `4.0.0` (`package-lock.json`, `"node_modules/@mkbabb/value.js"`) |
 | ships in | 11.0.0 |
 | families | F-72 whole (`audit/REGISTRY.md:1528-1538`): L15a-F9, R2-04-18. Inbound O-36 |
-| depends on | the value.js 4.1.0 publish, a sibling-owned act (§3.1). No glass wave |
-| dependants | W-L.7 and W-L.8 (the cut waits on this wave, PLAN §5: W-L.7 depends on W-L.5) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | engines | none: Node only. No visual claim |
 
 ## 1 · What it closes
@@ -42,7 +42,7 @@ So the cure is upstream and already written: value.js 4.1.0 returns diagnostics 
 
 ### 3.1 The publish ask
 
-The wave's first act is a letter to value.js (`docs/tranches/BL/coordination/glassui-outbound-<date>-valuejs-4.1.0-publish.md`, through W-B.2's outbox) asking for value.js 4.1.0 on npm, citing its own tag message (X-W11 owns the publication) and appendix C's reading. glass writes nothing into value.js's tree; value.js has a live session and runs its own release.
+The wave's first act is a letter to value.js (`docs/tranches/BL/outbox/glassui-outbound-<date>-valuejs-4.1.0-publish.md`, through W-B.2's outbox) asking for value.js 4.1.0 on npm, citing its own tag message (X-W11 owns the publication) and appendix C's reading. glass writes nothing into value.js's tree; value.js has a live session and runs its own release.
 
 ### 3.2 The glass side
 
@@ -57,7 +57,7 @@ The 11.0.0 cut does not ship with the boundary leaking. W-L.7 depends on this wa
 
 ## 4 · Files it touches
 
-`package.json`, `package-lock.json`; `src/composables/color/index.ts` (the export); `MIGRATION.md`, `CHANGELOG.md`; `README.md` (the peer table). New: `tests/composables/color/boundary.test.ts` (appendix B promoted). The outbound letter under `docs/tranches/BL/coordination/`.
+`package.json`, `package-lock.json`; `src/composables/color/index.ts` (the export); `MIGRATION.md`, `CHANGELOG.md`; `README.md` (the peer table). New: `tests/composables/color/boundary.test.ts` (appendix B promoted). The outbound letter under `docs/tranches/BL/outbox/`.
 
 ## 5 · Acceptance gates
 

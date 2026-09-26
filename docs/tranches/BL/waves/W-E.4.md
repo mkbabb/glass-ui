@@ -7,8 +7,8 @@
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree; probes drive the band-E fixture app (W-E.1 appendix B) on the packed build |
 | ships in | 11.0.0 |
 | families | F-22 remainder (#89 residue; O-74's F-22 rows; G-38 LOCKED-DISMISS from the W-A.2 roster; the W-B.4 fold B4-G4 "an open floating plate computes one cast"; the W-B.2 fold UIA-F-77 Popover content-fit width) |
-| depends on | W-0.4 (the menu's z rung on the content seam: `ROLE_Z`, `data-glass-reveal`), W-E.1 (the safe tokens and the seam's `collisionPadding` field) |
-| dependants | W-E.5 (the toast viewport is a layer in this stack), W-E.13 (print hides every layer this contract names), W-K.2, W-K.3, W-K.5, W-K.6, W-L.1 (PLAN §5) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -25,6 +25,7 @@
 | #89 residue | SelectContent composes its plate by hand instead of the overlay content seam |
 | `--z-fullscreen` | declared (`tokens/scheme-motion.css:213`), bridged (`theme/bridges.css:275`), read by nothing |
 | G-38 | `dismiss="locked"` holds (hold line) |
+| the F-22 mechanism rows | the `[M]` rows the LEDGER places here, each on the gate §5's table names |
 
 ## 2 · The defect at HEAD
 
@@ -78,8 +79,8 @@ The contract lives in one module, `src/components/_shared/overlay/layer.ts`, rea
 | E4-G4 · ExpandableContainer host | appendix A G4 | 3 of 3 hit content | **1 of 3** (Popover `null`, Tooltip `seltrig`) |
 | E4-G5 · Escape scoped | appendix A G5 | Select closed, container expanded | **FAIL** (`ec: false`) |
 | E4-G6 · outside inert | appendix A G6 | `__clicks` 0 | **1** |
-| E4-G7 · ceilings | appendix A G7a, G7b (two cells), G7c | 4 of 4 | **4 of 4 FAIL** (Popover 200..1311; Dialog −127..517 and −217..427; menu 234 of 338, no mask) |
-| E4-G8 · edge clearance | appendix A G8 | 4 of 4 ≥ 8 px from both inline edges | **3 of 4 FAIL** |
+| E4-G7 · ceilings | appendix A G7a, G7b (two cells), G7c, plus fix-2's Select cell (scene `mseltall`: 60 rows, 1280×900) | 5 of 5; the Select shows a scroll cue when clipped | **5 of 5 FAIL** (Popover 200..1311; Dialog −127..517 and −217..427; menu 234 of 338, no mask; the Select clips at 108..492 with 0 scroll cues and `mask: none`, both engines) |
+| E4-G8 · edge clearance | appendix A G8, plus fix-2's Select cell (scene `msel`: a 120 px trigger 8 px from the right edge at 390, two long captions) | 5 of 5 ≥ 8 px from both inline edges | **4 of 5 FAIL** (appendix A 3 of 4; the Select's right edge at 610.9 of 390, both engines) |
 | E4-G9 · one cast | appendix A G9 | ≤ 1 outer cast on Popover, menu, Select | **3 of 3 FAIL** (2, 2, 5) |
 | E4-G10 · tethered chrome | appendix A G10, touch and mouse | Sheet open after the dock tap | **2 of 2 FAIL** |
 | E4-G11 · higher layer live | appendix A G11 | `__clicks` 1, Dialog open | **FAIL** (0, closed) |
@@ -87,8 +88,26 @@ The contract lives in one module, `src/components/_shared/overlay/layer.ts`, rea
 | E4-G13 · G-38 (hold line) | appendix A G13 | Dialog open | PASS at HEAD; bites B12, B13 make it red |
 | E4-G14 · content-fit | the `pop&short=1` cell (see below the appendix): the Popover plate is ≤ its content's `max-content` width + 2 × `--overlay-pad` + 2 px | pass | **336 px** for a 12-character body |
 | E4-G15 · static | `! rg -q 'z-fullscreen\|useModalShortcutBarrier\|registerShortcut\("Escape"' src && ! grep -q 'props.scroll' src/components/dialog/DialogContent.vue` | exit 0 | **exit 1** (`scheme-motion.css:213`, `bridges.css:275`, `shortcuts.ts`, `ExpandableContainer.vue:213`, `DialogContent.vue:183`) |
+| E4-G16 · dock clearance (UIA-F-137, UIA-KF-131, UIA-V-293) | fix-2's probe scene `mdockmenu`: a DropdownMenu opened from a DockControl in a bottom GlassDock at 1440×900, Chromium (GlassDock crashes Playwright WebKit) | menu bottom ≤ dock top − 8 | **FAIL**: menu bottom 776, dock top 772 (overlap 4) |
+| E4-G17 · submenu clears its parent (UIA-V-113) | scene `msub`: an open `DropdownMenuSub` beside its parent | overlap 0 px² | **FAIL**, both engines: 741 px² |
+| E4-G18 · the close seat is on top (UIA-F-44) | scene `mclose`: a Dialog with a transparent `position: absolute` 120×120 child at the block-start inline-end corner; `elementFromPoint` at the ✕ centre | the ✕ | **FAIL**, both engines: hit `cover` |
+| E4-G19 · no off-scale z and no literal offsets (static; UIA-V-676, UIA-F-219) | `! grep -q -- '--z-toggle: 999' src/styles/tokens/scheme-motion.css && ! grep -rqE 'sideOffset: *[0-9]' src/components` | exit 0 | **exit 1**: `scheme-motion.css:215`; `sideOffset` 4, 4, 4, 0, 0 at `TooltipContent.vue:26`, `PopoverContent.vue:39`, `DropdownMenuContent.vue:35`, `DropdownMenuSubContent.vue:20`, `SelectContent.vue:35` |
 
-Can each fail and pass? Every browser row except G4 `sel`, G8 menu-left and G13 fails at HEAD. Those three are the controls that show the gates can pass. G13 is a hold line whose bite is in the roster. G15 is static and fails at HEAD.
+**The mechanism rows.** Each F-22 row the LEDGER marks `[M]`:
+
+| row | gate or terminal |
+|---|---|
+| UIA-F-13, UIA-V-676 | E4-G1 (the tooltip over its host) and E4-G19 (`--z-toggle`) |
+| UIA-KF-015 | E4-G2 |
+| UIA-F-137, UIA-KF-131, UIA-V-293 | E4-G16 |
+| UIA-V-113 | E4-G17, with E4-G8 for its edge half |
+| UIA-F-44 | E4-G18 |
+| UIA-F-219 | E4-G19 |
+| UIA-F-56, UIA-KF-113, UIA-V-287, UIA-V-520, UIA-V-2, UIA-V-208, UIA-V-5 | E4-G8 |
+| UIA-V-32, UIA-V-220 | E4-G7 |
+| UIA-V-476 | RETIRE NOT-REPRODUCED: the open list seats the selected row inside the port (scene `mseltall`, value 45: Chromium 322..366 within 108..492; Playwright WebKit 403..447). Re-trigger: a selected row outside the list's port on open |
+
+Can each fail and pass? Every browser row except G4 `sel`, G8 menu-left and G13 fails at HEAD. Those three are the controls that show the gates can pass. G13 is a hold line whose bite is in the roster. G15 and G19 are static and fail at HEAD; G16 to G18 fail in every engine that mounts them.
 
 ## 6 · π and DELTA obligations
 
@@ -111,7 +130,7 @@ Can each fail and pass? Every browser row except G4 `sel`, G8 menu-left and G13 
 
 ## 8 · Ledger rows
 
-Closes #89's residue and O-74's F-22 rows. Closes B4-G4 (from W-B.4) and UIA-F-77 (from W-B.2). G-38 is bound in the roster with its re-pointed bite.
+Closes #89's residue and O-74's F-22 rows. Closes the F-22 mechanism rows on §5's table (E4-G16 to E4-G19 new, the Select cells in E4-G7 and E4-G8), and records UIA-V-476 as RETIRE NOT-REPRODUCED. Closes B4-G4 (from W-B.4) and UIA-F-77 (from W-B.2). G-38 is bound in the roster with its re-pointed bite.
 
 ## 9 · Gestalt passes (P-1)
 

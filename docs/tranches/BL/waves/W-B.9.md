@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree; sibling trees grepped read-only |
 | ships in | 11.0.0 |
 | families | F-13, the #45 split (`audit/REGISTRY.md:312-320`); R2-06-04's "constellation and fourier decided BUILD or RETIRE in the same row" (F-48, `REGISTRY.md:1177`) |
-| depends on | W-B.1 |
-| dependants | W-G.1 (builds the engine), W-G.4 (the VizStudio contract the constellation joins), W-0.6 (the draw order, already separate) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | ruler | seat, on consumer evidence |
 
 ## 1 · What it closes
@@ -37,9 +37,8 @@
 |---|---|---|---|
 | B9-G1 · off Canvas2D (built in W-G.1) | `test "$(git grep -c useCanvas2D -- 'src/components/constellation/*.ts' 'src/components/constellation/**/*.ts' \| awk -F: '{s+=$2} END {print s+0}')" -eq 0` | exit 0 | **exit 1**: 3 code lines in `useConstellation.ts` |
 | B9-G2 · the two engine primitives (built in W-G.1) | `git grep -qE 'pinned' -- src/components/constellation/types.ts && git grep -qE 'drift' -- src/components/constellation/types.ts` | exit 0 | **exit 1** |
-| B9-G3 · decision and consumers recorded | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows #45,R2-06-04` | exit 0, BUILD → W-G.1, citing atlas and slides | **exit 1** (absent) |
 
-This wave closes on B9-G3; B9-G1 and B9-G2 are born RED here and bound into W-G.1's acceptance.
+B9-G1 and B9-G2 are born RED here and bound into W-G.1's acceptance; they are this wave's enactment. #45a/#45b's terminals are LEDGER:110-111 and R2-06-04's is :459 (PLAN §1, decide waves).
 
 ## 6 · π and DELTA obligations
 

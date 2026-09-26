@@ -7,8 +7,8 @@
 | HEAD | `b37a37c3` (`src`, `package.json`, build config identical to `f3ad78d0`); scratch worktree built with `npm run build`; the band-G harness's one-Button page (W-G.6 appendix D) built against that `dist` |
 | ships in | 11.0.0 |
 | families | F-52, payload does not shake (`audit/REGISTRY.md:1237-1250`): L07-05, L07-06, R2-04-07, R2-07-06. Inbound: O-53 R-1 (value.js X-W6, `BK/coordination/valuejs-outbound-2026-09-23-xw6-aurora-derive-relay.md`; `INBOUND-MAP.md:530`) |
-| depends on | W-G.1 (one engine: the GLSL sources and `resolveRenderMode` are gone, so the derive graph has no second backend to fence off), W-A.5 (the payload invariant this wave's budgets are written into) |
-| dependants | W-B.2 (the reply to O-53); W-E.11 (fonts, which this wave leaves in `./styles/fonts`) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -43,14 +43,14 @@ The one-Button consumer (harness `b` page: `@import "tailwindcss"; @import "tw-a
 
 ## 3 · The cure
 
-1. **`./aurora-palette`**, a new subpath with a shader-free graph: `deriveAurora`, `paletteToCssGradient`, `auroraGround` (W-G.1's CSS ground) and their types (`AuroraPalette`, `DerivedAurora`, the palette-stop types). Its source modules import nothing from `composables/wgpu*`, `shaders/`, the runtime or any `.vue`. `./aurora` re-exports the same bindings from it, so there is one definition. `resolveRenderMode` is not in it: W-G.1 deletes it (the engine is WebGPU or the CSS ground, decided by the adapter, with no tier resolver), and the reply to O-53 says so.
+1. **`./aurora-palette`**, a new subpath with a shader-free graph: `deriveAurora`, `paletteToCssGradient`, `auroraGround` (W-G.1's CSS ground) and their types (`AuroraPalette`, `DerivedAurora`, the palette-stop types). Its source modules import nothing from `composables/wgpu*`, `shaders/`, the runtime or any `.vue`. `./aurora` stops exporting them (`src/components/aurora/index.ts:78,81` lose `deriveAurora` and `paletteToCssGradient`): one door per binding (E-1), so there is one definition and no re-export. `resolveRenderMode` is not in it: W-G.1 deletes it (the engine is WebGPU or the CSS ground, decided by the adapter, with no tier resolver), and the reply to O-53 says so.
 2. **CSS per entry.** The library build emits one stylesheet per JS entry (`dist/<entry>.css`, the entry's SFC styles, its colocated `styles.css`, and its compiled component utilities, in `@layer components` and `@layer utilities`), and the entry's JS imports it (`import "./<entry>.css"`). `package.json` `sideEffects` lists `**/*.css` so bundlers keep those imports. Component utilities are compiled at library build per entry (the `emitComponentUtilities` path, split by entry); the `@source "../*.js"` backstop and its comment are deleted.
 3. **`./styles` is the foundation only**: tokens, theme, typography, glass, base, transitions, utilities, accessibility. It imports no component stylesheet. Fonts stay at `./styles/fonts` for W-E.11.
 4. **One CSS entry.** `./styles.css` and `dist/component-styles.css` are removed; the canon's alternative-entry prose goes with them.
 
 ## 4 · Files it touches
 
-`src/components/aurora/`: a new `palette/index.ts` (or the colocated equivalent under the colocation edict) holding the derive modules' public face; `index.ts` re-exports from it. `package.json` (`exports`: `./aurora-palette` added, `./styles.css` removed; `sideEffects`). The library Vite config and `vite.style-assets.ts` / `vite.style-fold.ts` (per-entry CSS emission and injected import; `component-styles.css` emission removed). `src/styles/index.css` (component imports and `@source` out). Each component's stylesheet that `index.css` imported moves under its entry's import graph (the colocated `styles.css` is imported by the component's `index.ts`). `README.md` and the canon's install section (one `@import "@mkbabb/glass-ui/styles"`). Tests: `tests/build/payload.test.ts` (appendix A's rows as assertions after `npm run build`), and the one-Button fixture moved into `tests-visual/fixtures/` with its budget row in W-A.5's invariant.
+`src/components/aurora/`: a new `palette/index.ts` (or the colocated equivalent under the colocation edict) holding the derive modules' public face; `index.ts` drops `deriveAurora` and `paletteToCssGradient` (`:78,81`) and does not re-export the subpath. `package.json` (`exports`: `./aurora-palette` added, `./styles.css` removed; `sideEffects`). The library Vite config and `vite.style-assets.ts` / `vite.style-fold.ts` (per-entry CSS emission and injected import; `component-styles.css` emission removed). `src/styles/index.css` (component imports and `@source` out). Each component's stylesheet that `index.css` imported moves under its entry's import graph (the colocated `styles.css` is imported by the component's `index.ts`). `README.md` and the canon's install section (one `@import "@mkbabb/glass-ui/styles"`). Tests: `tests/build/payload.test.ts` (appendix A's rows as assertions after `npm run build`), and the one-Button fixture moved into `tests-visual/fixtures/` with its budget row in W-A.5's invariant.
 
 ## 5 · Acceptance gates
 
@@ -61,7 +61,7 @@ All run after `npm run build`; appendix A for G7-G1 to G7-G7, appendix B for G7-
 | G7-G1 · the derive subpath exists | `exports` has `./aurora-palette` | present | **FAIL**: `./aurora` only |
 | G7-G2 · the derive graph is shader-free | the `./aurora-palette` closure has 0 `@fragment`, 0 `@vertex`, 0 `@compute`, 0 `#version 300 es` | all 0 | **FAIL**: no subpath; `./aurora`'s closure carries 2 `@fragment`, 3 `#version 300 es` |
 | G7-G3 · the derive budget | the closure's gzip ≤ 8,192 B (value.js's 12,288 B less the headroom W-A.5 ratchets) | ≤ 8,192 | **FAIL**: 78,420 B through `./aurora` |
-| G7-G4 · one definition | `./aurora-palette`'s and `./aurora`'s `deriveAurora` are the same binding (`import` both in Node, `===`) | true | **FAIL**: no subpath |
+| G7-G4 · one door (static) | `! grep -qwE 'deriveAurora\|paletteToCssGradient' src/components/aurora/index.ts` | exit 0 | **exit 1**: `index.ts:78`, `:81` |
 | G7-G5 · CSS ships with its entry | every JS entry whose source graph has a stylesheet imports a `.css` file; `./button` at least | 63 of 63 applicable | **FAIL**: 0 of 63 |
 | G7-G6 · no scan backstop | `dist/styles/index.css` has no `@source` | 0 | **FAIL**: `@source "../*.js";` |
 | G7-G7 · one CSS entry | `exports` has no `./styles.css` | absent | **FAIL**: `./dist/component-styles.css` |
@@ -80,7 +80,7 @@ G7-G8's bound is set at half of HEAD; the post-landing reading is written into W
 
 | removed or changed | replacement |
 |---|---|
-| `import { deriveAurora, paletteToCssGradient } from "@mkbabb/glass-ui/aurora"` for palette maths | `from "@mkbabb/glass-ui/aurora-palette"` (the `./aurora` import keeps working and carries the renderer) |
+| `import { deriveAurora, paletteToCssGradient } from "@mkbabb/glass-ui/aurora"` for palette maths | `from "@mkbabb/glass-ui/aurora-palette"` (`./aurora` no longer exports them; it carries the renderer only) |
 | `resolveRenderMode` (O-53 asked for it on the derive subpath) | deleted by W-G.1; the engine is WebGPU or the CSS ground |
 | `@import "@mkbabb/glass-ui/styles.css"` | `@import "@mkbabb/glass-ui/styles"` |
 | `./styles` delivers every component's CSS | each component's CSS arrives with its JS import; a consumer that renders a component without importing its entry (not possible through the public API) gets no styles |
@@ -94,7 +94,7 @@ W-G.1, W-A.5.
 
 ## 9 · Ledger rows it closes
 
-F-52: L07-05, L07-06, R2-04-07, R2-07-06 (BUILD). O-53 R-1: BUILT (`./aurora-palette`; `resolveRenderMode` answered as deleted).
+F-52: L07-05, L07-06, R2-04-07, R2-07-06 (BUILD). O-53 R-1: BUILT (`./aurora-palette`; `resolveRenderMode` answered as deleted; a re-export from `./aurora` is DECLINED under E-1, and the reply letter says so).
 
 ## 10 · Gestalt passes (P-1)
 
@@ -142,7 +142,7 @@ FAIL G7-G6 … {"atSource":["@source \"../*.js\";"]}
 FAIL G7-G7 … {"stylesCss":"./dist/component-styles.css"}
 ```
 
-The script's row G7-G4 (no `#version 300 es` under `./aurora`) is the probe's form of W-G.1's G1-G11 and is kept there; this spec's G7-G4 is the one-definition check, added to the script when the wave lands (`import('<dist>/aurora-palette.js')` and `import('<dist>/aurora.js')`, compare `deriveAurora`). The script's G7-G2 grows the `@vertex` and `@compute` counts in the same edit.
+The script's row G7-G4 (no `#version 300 es` under `./aurora`) is the probe's form of W-G.1's G1-G11 and is kept there; this spec's G7-G4 is the static one-door check above, exit 1 at `183e021a` (fix-2).
 
 ## Appendix B · the one-Button consumer
 

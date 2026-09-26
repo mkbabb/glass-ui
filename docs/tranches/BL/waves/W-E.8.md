@@ -7,8 +7,8 @@
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, demo built there |
 | ships in | 11.0.0 |
 | families | F-30a (#23 W-RADIUS-ROLE; the latch W-A.2 retires to this wave: `tests/styles/radius-role-canon.test.ts:458`) |
-| depends on | W-A.2 (the latch retires into a born-RED here; G-RADIUS-ROLE's `binding: none` is bound by this wave's test); W-C.4 (proposed edge, not in PLAN §5, and W-C.4's spec already names it: the 10 px role token `--radius-button` is declared directly there) |
-| dependants | W-J.1 (PLAN §5: the tile's corner reads the role table) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -63,8 +63,9 @@
 | E8-G1 · the role invariant | `npx vitest run tests/styles/radius-role-canon.test.ts` with `:458` as an ordinary `it` | passes | **fails**: `["--radius-xl","--radius-panel","--radius-strip"]` |
 | E8-G2 · no off-role reads | `test "$(rg -c -- '--radius-(xl\|panel\|strip)\b\|rounded-(xl\|panel\|strip)\b' src demo \| awk -F: '{s+=$2} END{print s+0}')" -eq 0` | exit 0 | **exit 1** (53 in 27 files) |
 | E8-G3 · paint census | appendix A G1 over the 80 story routes | 0 selectors paint 12 px | **23 selectors on 14 routes** |
+| E8-G4 · Metric reads the context radius (static; UIA-F-149) | `! grep -qE -- 'var\(--radius-(sm\|card)\)' src/components/metric/styles.css` | exit 0 | **exit 1** (`:123` `--radius-sm`, `:142` `--radius-card`; the cure reads `--radius-ctx`) |
 
-Can each fail and pass? All three fail at HEAD. G1's bite is re-declaring `--radius-strip: 0.75rem`, and G3's is the style tag `.segmented-tab{border-radius:12px}`.
+Can each fail and pass? All four fail at HEAD. UIA-V-194 (nested plates not concentric: 12 px inside a 16 px card) is an E8-G3 cell: the 12 px plates are among its 23 selectors. G1's bite is re-declaring `--radius-strip: 0.75rem`, and G3's is the style tag `.segmented-tab{border-radius:12px}`.
 
 ## 6 · π and DELTA obligations
 
@@ -83,7 +84,7 @@ Can each fail and pass? All three fail at HEAD. G1's bite is re-declaring `--rad
 
 ## 8 · Ledger rows
 
-Closes #23 (F-30a). G-RADIUS-ROLE is bound. UIA-KF-130 and UIA-V-485 are closed: the off-ladder half is cured at HEAD (`row: 10`, the control role) and the concentric half is answered in §3.4.
+Closes #23 (F-30a), UIA-F-149 (E8-G4) and UIA-V-194 (E8-G3). G-RADIUS-ROLE is bound. UIA-KF-130 and UIA-V-485 are closed: the off-ladder half is cured at HEAD (`row: 10`, the control role) and the concentric half is answered in §3.4.
 
 ## 9 · Gestalt passes (P-1)
 

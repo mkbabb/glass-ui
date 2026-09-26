@@ -7,8 +7,8 @@
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B), reka 2.10.5 and 2.10.1 builds, Chromium and Playwright WebKit |
 | ships in | 11.0.0 |
 | families | F-38 (all members) |
-| depends on | W-F.2 (the one end-of-gesture helper the exit hold settles on), W-E.4 (the layer stack this wave gives a focus leg), W-K.1 (the layer's shadow-aware Tab edges) |
-| dependants | W-K.5 (pointer-origin focus rides this wave's focus moves) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

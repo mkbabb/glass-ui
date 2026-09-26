@@ -7,8 +7,8 @@
 | HEAD | `fabc95e2` in a scratch worktree (the task named `f3ad78d0`; every commit between is docs-only). `git diff --stat v10.1.0 HEAD -- src tests tests-visual scripts .github package.json` prints nothing |
 | ships in | 11.0.0 (band A, PLAN §2) |
 | families | F-05 whole (`audit/REGISTRY.md:219-226`) |
-| depends on | W-0.7 (PLAN §5) |
-| dependants | W-A.2, W-A.3, W-A.6, W-B.4, W-C.1 |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -20,6 +20,7 @@
 | L14-06 | helpers and the OKLab matrix are redeclared per file |
 | L09-17 | specs write screenshots into closed tranche record directories |
 | L01b-53 | `viz-fourier-ribbon.spec.ts` asserts the retired two-backend ribbon (`:1-10`) |
+| WEBKIT-ACCORDION-CRASH (handed from W-I.3 §8) | Playwright WebKit crashes when a tap opens an Accordion; a minimal reproduction lands here, born RED, and its cause is cured here |
 
 Not closed here: the wired CI set (W-A.3, F-04), the capture tools' move to `scripts/` (W-A.3), the repo-wide scratch root and the `docs/` tooling invariant (W-C.1, F-61), and the test-tree mirror decision (W-D.2, F-60).
 
@@ -73,6 +74,7 @@ Every command runs from the repo root. "HEAD reading" is what the command gave i
 | A1-G10 · no output into records | `test "$(git grep -nE 'docs/tranches/' -- 'tests-visual/*.ts' 'tests-visual/**/*.ts' \| wc -l)" -eq 0` | exit 0 | **exit 1**: 147 lines in 108 files |
 | A1-G11 · a run leaves `docs/` untouched | after any `npx playwright test <spec>`, `git status --porcelain --ignored -- docs \| wc -l` is 0 | exit 0 | **exit 1**: the A1-G6 run left 2 untracked PNGs under `docs/tranches/BG/audit/visual/` and 4 ignored PNGs under `docs/tranches/BA/audit/` |
 | A1-G12 · the dead ribbon spec is gone | `test ! -e tests-visual/viz-fourier-ribbon.spec.ts` | exit 0 | **exit 1** |
+| A1-G13 · the Accordion opens in WebKit | `tests-visual/accordion-open.webkit.spec.ts` (new): one `Accordion type="single" collapsible` with one item, 390×844 with touch; tap the trigger, then (fresh page) click it; each reads `data-state="open"` within 1.2 s, three runs each, `--project=webkit` | 6 of 6 open | **FAIL 6 of 6** (fix-2's probe, `183e021a`): tap → `Page crashed` 3 of 3; click → `page.click: Timeout 30000ms exceeded` 3 of 3. Chromium on the same page opens 6 of 6. Real Safari UNMEASURED (OW-3) |
 
 A1-G1 and A1-G3 alone could pass with the checks weakened (a tsconfig with `include: []`, specs deleted wholesale). A1-G4, A1-G6 and A1-G7 hold the other side: the audit reads every route-shaped literal, A1-G6 needs the two named specs to run and pass, and A1-G7 needs at least one WebKit spec listed. A1-G1's tsconfig must include `tests-visual/**/*.ts`; the wave record prints `tsc --listFilesOnly -p tests-visual/tsconfig.json | grep -c tests-visual/` and it must equal the tracked `.ts` count under `tests-visual/`.
 
@@ -94,7 +96,7 @@ None. `tests-visual/` is a private workspace (`tests-visual/package.json` `"priv
 
 ## 8 · Ledger rows
 
-Closes F-05's six members (L14-02, L14-03, L14-04, L14-06, L09-17, L01b-53). F-05 holds no census row (`ledger/CENSUS.md:81`, route column empty), so no `#n` row closes here. The census's L14-05 remainder (capture specs, zero-`expect` specs, `coarse-touch` scope) is split: `coarse-touch` scope here (A1-G8), the capture specs in W-A.3.
+Closes F-05's six members (L14-02, L14-03, L14-04, L14-06, L09-17, L01b-53). Closes WEBKIT-ACCORDION-CRASH on A1-G13 (BUILD: the reproduction and its cure). F-05 holds no census row (`ledger/CENSUS.md:81`, route column empty), so no `#n` row closes here. The census's L14-05 remainder (capture specs, zero-`expect` specs, `coarse-touch` scope) is split: `coarse-touch` scope here (A1-G8), the capture specs in W-A.3.
 
 ## Appendix A · the route audit
 

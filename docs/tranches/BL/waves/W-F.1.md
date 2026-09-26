@@ -7,8 +7,8 @@
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`: `git diff --stat f3ad78d0 HEAD -- src demo scripts tests` is empty), scratch worktree, demo built there (`npm run demo:dist:build`) and served by `vite preview` on :5961 |
 | ships in | 11.0.0 |
 | families | F-44 (members L10-01, L10-18, R2-02-09, R2-02-16, R2-04-14, R3-01-10, R3-01-11, R5-01-09) |
-| depends on | W-A.3 (the wired set the paint gate joins) |
-| dependants | W-F.2, W-F.3 (PLAN §5), W-I.1 (the dock loop builds on the one spring authority, PLAN §2) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | roster | binds G-29 SPRING-AUTHORITY (owed to this wave, `W-A.2.md` roster row G-29) |
 
 Machine load at the runs: 54 to 230 (other seats). Every reading below is either load-independent by construction (static, unit, seeked animation) or names its load.

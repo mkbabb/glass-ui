@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree; docs-only since `f3ad78d0` |
 | ships in | 11.0.0 (records and one script) |
 | families | F-14, the carry and D-3 split (`audit/REGISTRY.md:322-340`). The subject decide rows are other waves': R2-06-01 → W-I.4, R2-06-02 → W-H.3, R2-06-03 → W-B.14, R3-01-16 → W-B.15 |
-| depends on | W-B.1 |
-| dependants | W-B.14, W-B.15, W-H.3, W-I.4 (their rows are carried here first); every design loop (its standing-law list cites D-3's text) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -22,6 +22,7 @@
 | R2-06-05 | motion outside the dock: a coverage statement, every measured row already placed; closes on the carry |
 | R2-06-07 | the four cured or retired asks leave the open list with their cites |
 | GAP-C1 (D-3) | "the eight laws" have no text of record |
+| W-H.3's S10 (colourful, audacious pops within proportion; BC O11, BC H8), handed from W-H.3 §3 | a design law, not a register: it is D-3's cartoon-technicolor clause and closes on §3.4's text of record (B3-G4) |
 
 ## 2 · The defect at HEAD
 
@@ -64,6 +65,6 @@ None.
 
 ## 8 · Ledger rows
 
-- N-3 (recap all prompts) closes here; D-3 closes on §3.4 with the owner docket line; GAP-C1 closes.
+- N-3 (recap all prompts) closes here; D-3 closes on §3.4 with the owner docket line; GAP-C1 closes; W-H.3's S10 closes with D-3 (B3-G4).
 - #24 and #71 carry their subject rows (RT-24C/D, RT-71A) to W-H.3 through this file; their terminal is W-H.3's.
 - F-14's members in §1 close; R2-06-01/-02/-03 and R3-01-16 close in W-I.4, W-H.3, W-B.14 and W-B.15.

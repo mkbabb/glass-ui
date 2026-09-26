@@ -7,8 +7,8 @@
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`), scratch worktree, demo built and served on :5961; the Sheet cells run on the harness `sheet.html` (W-F.2 appendix E) on :5964 |
 | ships in | 11.0.0 |
 | families | F-46 (members L03a-10, L03b-08, R2-02-14, R2-06-09, R3-01-02, R3-01-03, R10-01-04) |
-| depends on | W-F.1 (the trail's lead is a `springStepper`), W-E.12 (F-36: the worm reads a measured dot; until it lands the trail defect is masked, R3-01-03) |
-| dependants | W-F.5 (PLAN §5: the direction helper signs the magnitudes this wave bounds) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

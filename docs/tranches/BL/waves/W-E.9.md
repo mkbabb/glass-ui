@@ -6,20 +6,21 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, library and demo built there; probes drive the built demo and the band-E fixture app (W-E.1 appendix B) |
 | ships in | 11.0.0 |
-| families | F-33 (#59 W-LAYOUT; C-13c, R11 and R4-02-07, the configurator envelope; the three `layout-canon` latches W-A.2 retires to this wave: `tests/styles/layout-canon.test.ts:371,390,403`) |
-| depends on | W-A.3 (wired set), W-E.7 (the label-slot rule and the count axis the fold builds on; W-E.7 hands the 8-tab strip reading here) |
-| dependants | W-E.10 (the demo remainder builds on the container-keyed cels) |
+| families | F-33 (#59 W-LAYOUT; the `layout-canon` latches W-A.2 retires to this wave at `tests/styles/layout-canon.test.ts:371,403`). The configurator envelope (C-13c, R11, R4-02-07, the `:390` latch) is W-E.14's |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
 | id | what |
 |---|---|
 | #59 | the demo keys layout on the viewport: 32 story files carry `sm:`/`md:`/`lg:` variants, one `matchMedia` width query survives, one raw `vh` envelope survives |
-| C-13c / R11 | the studio configurator's controls region is starved to 0 px at 390×844 (`/substrates/aurora`) |
-| R4-02-07 | the same envelope collapses at 640×400 and under a 24 px root |
+| C-13c / R11, R4-02-07 | the configurator envelope: W-E.14's, a disease row's own wave (fix-2, FA-21). This wave's cel containers are its base |
 | F-33 nested family | a nested family's body is `display: block` with no gap; two families render a one-tab tablist |
 | F-33 SegmentedTabs | the fold is keyed on a `matchMedia` breakpoint and off by default, so a strip overflows its own container |
 | F-33 LabeledField | the horizontal arm is keyed on the viewport (`@media (max-width: 36rem)`), and its switch does not reach the field's end |
+| A2-FO-L3-7 (F-33 mechanism row) | LabeledSwitch's horizontal arm collapses on `@media (max-width: 36rem)` (`labeled-field/LabeledField.vue:127-133`): E9-G6 and E9-G7 |
+| UIA-F-136 (F-33 mechanism row) | EasingCurve's axis captions are `text-micro` at every specimen size (`easing/EasingCurve.vue:186-187`); they do not follow the specimen's container |
 | R2-08-15 | the compositions settings story: closed by W-E.10's compositions prune, not here |
 
 ## 2 · The defect at HEAD
@@ -45,11 +46,12 @@ Note on `--configurator-size`: the latch comment at `:390` says the container sh
 ## 3 · The cure
 
 1. **Cels are containers.** `StorySection`'s `container: cel / inline-size` is the key for every specimen. The 32 files' `sm:`/`md:`/`lg:` variants become Tailwind container variants on the cel (`@sm:`, `@md:`, `@lg:` against `@container/cel`). A deliberate arity (a two-column specimen) is written as explicit tracks under `@container cel (min-width: …)`, and the wave record lists each re-keyed site.
-2. **The studio envelope** is a size container: `container: studio / size` on the configurator host. The configurator's rows become `auto minmax(0, 1fr) minmax(min(3 * var(--control-h-md), 40cqb), auto)`. The stage yields first; the controls region keeps at least three control rows or 40 % of the envelope, whichever is less, and scrolls inside that port. `--configurator-stage-min` is deleted. `--stage-block` becomes a `min-block-size` for the envelope, not a cap on it. The raw `vh` at the last demo site and the `matchMedia("(max-width: 720px)")` in `demo/stories/containers/configurator.vue` are deleted; that story reads the container.
+2. **The studio envelope** is W-E.14's (C-13c).
 3. **The nested-family seam.** `.story-nested-body` is `display: grid; gap: var(--space-family)`. A family with one member renders its member without a tablist.
 4. **SegmentedTabs folds on its own inline size.** `useTabResponsive` observes the strip's own box (ResizeObserver) and compares its `max-content` inline size with the box. It drops `matchMedia`. The fold is on by default (`responsive: true`). Its collapse mode is the existing Select fold: when the strip does not fit, it renders the Select. The `breakpoint` prop is deleted.
 5. **LabeledField is container-keyed.** `.labeled-field` is `container: field / inline-size`. The horizontal arm's `@media (max-width: 36rem)` becomes `@container field (max-width: 36rem)`. The horizontal grid is `minmax(0, 1fr) auto` with the control `justify-self: end`, so the switch ends at the field's end.
-6. **The latches become born-REDs.** `:371`, `:390` and `:403` become ordinary `it`s, green when this wave lands.
+6. **The latches become born-REDs.** `:371` and `:403` become ordinary `it`s, green when this wave lands. `:390` (the configurator story's `matchMedia`) is W-E.14's.
+7. **Specimen captions follow the specimen.** `EasingCurve`'s root is `container: curve / size`; its axis captions size from the container (`clamp(var(--type-micro) * 0.8, 8cqi, var(--type-small))`), so a thumbnail's caption shrinks with it.
 
 ## 4 · Files it touches
 
@@ -59,15 +61,14 @@ Note on `--configurator-size`: the latch comment at `:390` says the container sh
 
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
-| E9-G1 · the latches | `npx vitest run tests/styles/layout-canon.test.ts` with `:371`, `:390`, `:403` as `it` | 0 failures | **3 failures** (32 files; 1 `matchMedia`; 1 raw `vh`) |
-| E9-G2 · configurator envelope | appendix A G1: 4 cells | 4 of 4 ≥ 44 px | **3 of 4 FAIL** (8, 18, 0; blob 160 passes) |
-| E9-G3 · rem growth | appendix A G2: 640×400 and a 24 px root | ≥ 44 px or a ≥ 44 px port | **0, 0** |
+| E9-G1 · the latches | `npx vitest run tests/styles/layout-canon.test.ts` with `:371` and `:403` as `it` | 0 failures | **2 failures** (32 files; 1 raw `vh`) |
 | E9-G4 · nested families | appendix A G3 | every nested body grid or flex with a gap; no one-tab tablist | **5 of 5 families bad** |
 | E9-G5 · fold | appendix A G4, plus the 8-tab strip in a 384 px seat that W-E.7 hands over (`s=count`, `[data-probe=c-seg]`) | strip ≤ box, both | **352 > 328**; **592 > 384** |
 | E9-G6 · LabeledSwitch | appendix A G5 | switch end within 2 px of the field end | **371 vs 657** |
 | E9-G7 · no viewport keys in the fold | `! grep -q 'matchMedia' src/components/tabs/composables/useTabResponsive.ts && ! grep -q '@media (max-width: 36rem)' src/components/labeled-field/LabeledField.vue` | exit 0 | **exit 1** |
+| E9-G8 · captions follow the specimen (UIA-F-136) | fix-2's probe scene `mease`: the axis caption's computed font size in a 120 px and a 480 px `EasingCurve`, 1440×900 | the 120 px caption is smaller than the 480 px caption | **FAIL**, both engines: 11 = 11 |
 
-Can each fail and pass? Every row fails at HEAD except the `/substrates/blob` cell of G2, the control that shows a controls region can clear 44 px. G1 and G7 are static. The `PI_PLANT` bite for G2 is `[data-slot=configurator]{grid-template-rows:auto 18rem minmax(0,1fr) !important}`.
+Can each fail and pass? Every row fails at HEAD. G1 runs the latches and G7 is static. The envelope's passing control and its `PI_PLANT` bite moved with the envelope to W-E.14.
 
 ## 6 · π and DELTA obligations
 
@@ -82,11 +83,10 @@ Can each fail and pass? Every row fails at HEAD except the `/substrates/blob` ce
 |---|---|---|
 | SegmentedTabs `responsive` default `false`, fold at a viewport `breakpoint` | `responsive` default `true`, fold when the strip does not fit its own box | the `breakpoint` prop is removed; a strip in a narrow card folds to the Select at any viewport width |
 | LabeledField's horizontal arm stacks below a 36 rem viewport | below a 36 rem field | a horizontal field in a wide Dialog on a phone-width viewport stays horizontal if the field is wide enough |
-| `--configurator-stage-min` | removed | the stage yields to the controls region |
 
 ## 8 · Ledger rows
 
-Closes #59 and C-13c (R11), with R4-02-07. The three `layout-canon` latches retire here. R2-08-15 is recorded as closed by W-E.10's compositions prune.
+Closes #59, A2-FO-L3-7 (E9-G6, E9-G7) and UIA-F-136 (E9-G8). The `layout-canon` latches at `:371` and `:403` retire here; C-13c (R11), R4-02-07 and the `:390` latch are W-E.14's. R2-08-15 is recorded as closed by W-E.10's compositions prune.
 
 ## 9 · Gestalt passes (P-1)
 

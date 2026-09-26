@@ -7,8 +7,8 @@
 | HEAD | `fabc95e2` in a scratch worktree, `dist/` and `dist-demo/` built there, the demo served by `vite preview --config demo/vite.demo-dist.config.ts --port 5793` for the probes and stopped after |
 | ships in | 11.0.0 |
 | families | F-04 whole (`audit/REGISTRY.md:210-217`) |
-| depends on | W-A.1 (harness), W-A.2 (the roster names which specs are gates) |
-| dependants | W-A.4; every later wave whose π rows add a wired spec (PLAN §2: "its π captures into W-A.3's wired suite") |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree |
 | ships in | 11.0.0 |
 | families | F-13, the #78 split (OWED-1, OWED-2) |
-| depends on | W-B.1 |
-| dependants | W-C.3 (builds the derivation and its invariants), W-C.1 (retires the tooling left under `docs/`), W-H.1/W-H.2 (the material section is written from D3's converged ladder) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | ruler | seat |
 
 ## 1 · What it closes
@@ -35,11 +35,10 @@
 
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
-| B11-G1 · decision recorded | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows #78,OWED-1,OWED-2` | exit 0, RETIRE with ground, W-C.3 named | **exit 1** (absent) |
 | B11-G2 · no dead token cite in the docs (built in W-C.3) | W-C.3's token-existence invariant over `DESIGN.md`, `docs/canon/*.md`, `README.md`, component READMEs, against the built CSS | 0 unresolved | **105** unresolved in `DESIGN.md` alone by the `src` scan above |
 | B11-G3 · no tooling under `docs/` (built in W-C.1) | `test "$(git ls-files docs \| grep -cE '\.(mjs\|js\|ts\|py)$')" -eq 0` | exit 0 | **exit 1**: 724 tracked script files under `docs/`, `regen-design-canon.mjs` among them |
 
-B11-G2 and B11-G3 are born RED here and bound to W-C.3 and W-C.1; this wave closes on B11-G1.
+B11-G2 and B11-G3 are born RED here and bound to W-C.3 and W-C.1; they are this wave's enactment. #78's terminal (RETIRE, W-C.3 named) is LEDGER:190.
 
 ## 6 · π and DELTA obligations
 

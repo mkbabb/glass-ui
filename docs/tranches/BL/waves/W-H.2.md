@@ -1,4 +1,4 @@
-# W-H.2 · W-FROST-II: the transmissive well, one frost detector, blur composed at the element, the F48 ladder (loop D3) · 11.0.0
+# W-H.2 · W-FROST-II: one frost detector, blur composed at the element, the F48 ladder (loop D3) · 11.0.0
 
 | field | value |
 |---|---|
@@ -8,8 +8,8 @@
 | kind | LOOP WAVE, owned by design loop D3 (`design/material/`). It lands only from D3's converged specification and never before D3 meets its gate |
 | ships in | 11.0.0 |
 | families | F-31 (remainder after W-0.1's veil-token and control-surface split), with its ledger members from census GAP-1 (#7's remainder, #39's RT-39G) |
-| depends on | the D3 gate (W-H.1 §3.1, the same gate); W-0.1 (the light veil at the token); W-C.5 (one inherited dark arm); W-E.2 (the containment cure: `contain: paint` leaves `glass/material.css:104-109`, which M-7 reads) |
-| dependants | W-H.3 (decides the glass registers on this wave's ladder), W-H.4 (the low-power register is built on this wave's rungs) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | instruments | the D3 battery (`$H` = `docs/tranches/BL/design/material/harness/`, moved with W-C.1); the band-H paint probe (W-H.1 appendix A: the `lens` scene and the `H2/*` rows); the route frost detector (appendix A here); both land under `scripts/probes/band-H/` |
 | engines | Chromium 149.0.7827.55 is the gate engine. Playwright WebKit 26.5 paints no `backdrop-filter` headless, so it cannot witness a lens in either direction; its rows are recorded as paint-only. Real-Safari cells are UNMEASURED (OW-3) |
 
@@ -18,14 +18,14 @@
 | id | what | source |
 |---|---|---|
 | L01a-22 | #22 W-FROST sealed on a one-shot π; the transmissive cut never landed; no `FROST-TRANSMISSION` executable | `audit/round-1/L01a.md:46,84` |
-| L01a-25 | #25 W-FIELD-WELL "BLOCKED" on riders that all landed; the well law unbuilt, the field fill opaque | `L01a.md:56,224` |
+| L01a-25 | #25 W-FIELD-WELL: W-H.5's | `L01a.md:56,224` |
 | L05a-05 | F48 "glass blur slightly more subtle" inverted: the radius ladder rose 1/7/7/11/11 → 10/14/16/20/22 px with no owner reconciliation | `audit/round-1/L05a.md:19,212` |
 | R10-02-06 | the opaque escape sets `--glass-level: 0` at the element while the blur rungs compose at `:root`, so descendants keep `blur(20px) saturate(1.5)` over an opaque plate | `REGISTRY.md:659` |
 | R10-02-07 | `.fading-scroll` carries `mask-image` at rest; a mask is a backdrop root, so every lens inside is inert | `REGISTRY.md:660` |
 | R10-02-08 | the nested-lens arm; `tests-visual/nested-backdrop-budget.spec.ts:39` sets `DEPTH_CEILING = 4`, passes a three-deep stack and runs in no CI job | `REGISTRY.md:661` |
 | #7 remainder (GAP-1) | the press darken `filter: brightness()` on the dock lens carrier (`dock/styles/controls/icon-button.css:92`) | `ledger/census-register-a.md:28` |
 | #39 RT-39G (GAP-1) | no child of a `.glass-*` plate can carry a working `backdrop-filter`; the library-wide sweep | `census-register-a.md:48`; `BK/EXECUTION-PROGRESS.md:1473` |
-| #25, #82 G-F2 | the well law; the opaque fill leaves the field's blur inert | `census-register-a.md:37`; `census-register-b.md:67` |
+| #25, #82 G-F2 | the well: W-H.5's, a disease row's own wave (fix-2, FA-21). This wave's detector reads the well cells W-H.5 cures | `census-register-a.md:37`; `census-register-b.md:67` |
 | #33 | π cells 5-7 and G-NO-WHITE-SPECULAR against `--glass-material-rim` (Alert moved into the rule) | `census-register-a.md:45` |
 | #38 RT-38C | the Dialog veil blur reads the 20 px floating radius against MOTION-CANON's 11 px; the dark rim | `census-register-a.md:47` |
 | inbound | UIA-KF-268, UIA-F-122, UIA-V-297, UIA-KF-252, UIA-KF-255 (chrome calm), UIA-V-234, UIA-V-431 (the opaque wells), UIA-F-230 (the loupe veil frosts its host row), UIA-V-198 (the dark card pole over a red ground); N-13's remainder (the dark dock plate within 0.015 of the page) | `INBOUND-MAP.md:215,265,285,299,301,350,358,376,437`; `census-carries-recap.md:96` |
@@ -88,7 +88,7 @@ The entry gate is W-H.1 §3.1's: D3's convergence and its battery on the converg
 
 ### 3.1 · What lands, whatever route converges
 
-1. **The well is a rung of the ladder, transmissive** (D3 common floor row 5, `PORTFOLIO.md:237`). `--input-on-glass` retires with no alias in both arms; the field paints the converged well rung (D3-A names it `--glass-well`, at the chrome α; the other routes name theirs in their API tables). The well law in `_shared/field/control.css:66-103` is rewritten to the converged spec's law; the comment block that calls the fill "OPAQUE at HEAD … a seam" goes.
+1. **The well** is W-H.5's (D3 common floor row 5): `--input-on-glass` retires there.
 2. **Blur rungs compose at the reading element** (F-26's cure form, `REGISTRY.md:506`). The `--glass-blur-*` composites are declared on the reading classes, not `:root`, so an element's own `--glass-level` reaches its radius, and the saturate term scales with the level the same way.
 3. **One rule for library-made backdrop roots.** Under a surface that makes a backdrop root the library itself sets (the opaque escape `[data-surface="opaque"]`, `.fading-scroll`'s mask, any `.glass-*` plate), the blur rung variables resolve `none`. A descendant composes its host's frost and carries no lens of its own. A control that must sample the page mounts as a sibling of the plate, as the sheet's halo sampler already does (RT-39G's law). This is one mechanism, the rung variable, for R10-02-06, R10-02-07, R10-02-08 and RT-39G. FadingScroll keeps its mask: the mask is the correct fade over any ground, and a lens under it cannot see the page in any engine.
 4. **The frost detector is the gate**, in two arms: the structural count over the demo routes (0 dead lenses) and the paint A/B on the probe's stripes. `tests-visual/nested-backdrop-budget.spec.ts` is deleted: its depth ceiling of 4 is a budget for lenses that cannot see the page. `tests/styles/glass-subtlety.test.ts`'s carrier arm widens from host formers to ancestor formers (`REGISTRY.md:660`, round 6 correction), or is replaced by the structural arm; W-A.2's roster records which.
@@ -103,7 +103,6 @@ The veil's pole, α per rung, saturate per rung and the dark arm are D3's. The r
 
 - `src/styles/tokens/on-glass-fg.css:37`, `src/styles/tokens/dark-arm.css:278-279,303` (the well and the dark veil), `src/styles/tokens/glass.css:29-52,69-92,134-174` (the veil recipe, the radius ladder, the rung composites move off `:root`).
 - `src/styles/glass/veil.css`, `src/styles/glass/ladder.css`, `src/styles/glass/surface-axis.css:80-90`, `src/styles/utilities/base-misc.css:44-80` (the FadingScroll rule gains the rung stand-down), `src/styles/glass/glass-capsule.css:57` (the capsule reads the element-composed rung).
-- `src/components/_shared/field/control.css:66-103` (the well law).
 - `src/components/dock/styles/shell.css:57,263` (the dock's private re-compositions read the one saturate the spec names).
 - `tests-visual/nested-backdrop-budget.spec.ts` (deleted), `tests/styles/glass-subtlety.test.ts` (the carrier arm).
 - `scripts/probes/band-H/frost-routes.mjs` and `alert-specular.mjs` (appendices A and B), with `npm run probe:band-H`.
@@ -116,14 +115,12 @@ Setup as W-H.1 §5, plus a demo production build of the candidate: `npx vite bui
 |---|---|---|---|
 | G1 · M-6 | `node $H/m6-separable-ladder.mjs $D3_OUT/caps/h2` | exit 0 | **exit 1**, FAIL 14 of 19 |
 | G2 · M-8 | `node $H/m8-chrome-calm.mjs $D3_OUT/caps/h2` | exit 0 | **exit 1**, FAIL 8 of 8 |
-| G3 · the frost detector, routes | `node scripts/probes/band-H/frost-routes.mjs <dist-demo>` over `/`, `/motion/springs`, `/containers/dialog`, `/forms/inputs`, `/containers/configurator`, `/containers/sheet#Open detented sheet`, `/forms/slider` | 0 dead visible lenses | **41 of 72 dead** (the six measured cells; `/forms/slider` is added by the landed script, which can only add rows) |
-| G4 · the frost detector, paint | band-H probe rows `H2/LENS-INERT`, `H2/WELL-INERT` | no lens is inert on the stripes | **FAIL 6 of 8** (opaque host, fade and well in both themes) |
-| G5 · the well transmits | rows `H2/WELL-TRANSMITS` | transmission ≥ 0.02, both themes | **FAIL 2 of 2**: 0.0000 |
+| G3 · the frost detector, routes | `node scripts/probes/band-H/frost-routes.mjs <dist-demo>` over `/`, `/motion/springs`, `/containers/dialog`, `/forms/inputs`, `/containers/configurator`, `/containers/sheet#Open detented sheet`, `/forms/slider`, `/data/sortable-list` (#41c's 20 px frost) | 0 dead visible lenses | **41 of 72 dead** (the six measured cells; `/forms/slider` and `/data/sortable-list` are added by the landed script, which can only add rows, and are not read here) |
+| G4 · the frost detector, paint | band-H probe rows `H2/LENS-INERT` | no lens is inert on the stripes | **FAIL 4 of 6** (opaque host and fade in both themes: the recorded 6 of 8 less the two `H2/WELL-INERT` rows, which are W-H.5's G2) |
 | G6 · blur at the element | rows `H2/BLUR-AT-ELEMENT` | `--glass-level: 0.5` on a floating plate computes half the floating radius (10 px at today's radius, or half the ruled one) | **FAIL 2 of 2**: 20 px |
 | G7 · the opaque host stands down (computed) | rows `H2/OPAQUE-HOST-LENS(computed)` | `none` or `blur(0px)` | **FAIL 2 of 2**: `blur(20px) saturate(1.5)` |
-| G8 · no `--input-on-glass` (static) | `! git grep -n -- '--input-on-glass' -- src` | exit 0 | **exit 1**: `on-glass-fg.css:37`, `dark-arm.css:303`, `_shared/field/control.css:74,83,242,262,282` |
 | G9 · the depth budget is gone (static) | `test ! -e tests-visual/nested-backdrop-budget.spec.ts` | exit 0 | **exit 1** (194 lines; `DEPTH_CEILING = 4` at `:39`) |
-| G10 · OW-8 ruled | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows OW-8,L05a-05` | exit 0: OW-8 terminal with the owner's quote and the ruled table | **exit 1**: `Cannot find module …/verify-ledger.mjs` (W-B.1 builds it; `LEDGER.md` absent) |
+| G10 · OW-8 ruled | `! grep -qE '^\\| OW-8 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER:328, OW-8 `pending`; fix-2) |
 | G11 · the converged family's witness | as W-H.1 G6, on the rows the split table gives this wave | exit 0 | all six exit 1 |
 | G12 · holds | M-1 and M-7 at `h2` (cured by W-0.1 and W-E.2); `H2/PRESS-FILTER-ON-LENS(hold)`; `alert-specular.mjs` | PASS, 0 elements with both a `filter` and a lens, 0 pure-white rim pixels | hold lines: HEAD M-1 11/11 and M-7 8/8 FAIL (cured upstream); press rows and the Alert rows pass at HEAD (§2) |
 
@@ -138,7 +135,6 @@ Before = the `hH`/`head` builds and the demo build of `80ebfd72`; after = `h2`. 
 | **OW-8, the owner glance**: the ladder (wash … overlay, the dock, the Dialog) at HEAD's radii, 7.0.0's and the converged table | light, dark | Chromium; Playwright WebKit cannot paint the blur | `$H/glance.mjs` extended to three columns over paper, aurora c1, aurora c0.5 and the stripes | M-8 bleed and chroma per column; M-2 muted per column |
 | the dark ladder over the dark page | dark | Chromium, Playwright WebKit labelled | `$H/capture.mjs` ladder cells | G1 rows (HEAD adjacent 0.004-0.006) |
 | chrome over the stripes | light, dark | Chromium | the `stripes` cells | G2 rows (HEAD C 0.0743-0.0912) |
-| the field well over the stripes, black and white | light, dark | Chromium | `lens-*-well-on.png` / `-off.png` (HEAD light on `f13361d25836…`, off `c378bd464c8b…`), and the black/white pair | G4, G5 |
 | a capsule in an opaque host, in a FadingScroll, in a plate | light, dark | Chromium | `lens-*-{opaque,fade,plate}-{on,off}.png` | G4, G7 |
 | `/motion/springs`, `/forms/inputs`, `/containers/configurator` | light, dark | Chromium | route screenshots before and after | G3 per route |
 | real Safari | both | — | UNMEASURED (OW-3). The OW-8 glance names this: the owner sees Chromium's blur only | — |
@@ -147,7 +143,6 @@ Before = the `hH`/`head` builds and the demo build of `80ebfd72`; after = `h2`. 
 
 | removed or changed | successor | wave |
 |---|---|---|
-| `--input-on-glass` (both arms) | the converged well rung (D3-A: `--glass-well`, `--glass-well-toward`). keyframes' `TimelineCaret.vue:106` re-points by addendum (SPECS A.2) | this |
 | `--glass-veil-ink` (and, by route, `--glass-veil-base`, `--glass-veil-step`, `--glass-saturate`) | the route's pole and rung tokens (SPECS A.2-F.2). Owed call sites: `sheet/styles.css:216,226`, `music-staff/styles.css:63`, `tokens/manifest.ts:22` | this |
 | `--glass-blur-*` resolved at `:root` | the same names, resolved at the reading element; a consumer that sets `--glass-level` on an element now scales that element's blur | this |
 | a `backdrop-filter` inside a `.glass-*` plate, a `[data-surface="opaque"]` host or a `.fading-scroll` (it painted nothing) | none; a lens that must see the page mounts as a sibling of the plate | this |
@@ -157,7 +152,7 @@ Consumer overrides retire by an addendum in each consumer's own tranche (E-6), n
 
 ## 8 · Dependencies and ledger rows
 
-Depends on the D3 gate, W-0.1, W-C.5 and W-E.2. Closes F-31's remainder (L01a-22, L01a-25, L05a-05, R10-02-06..08) and its ledger members #7 (a hold: cured in paint at HEAD, §2) and #39's RT-39G; #25; #82's G-F2; #33's specular row (a hold: cured at HEAD) and its π cells 5-7 (G3 over `/feedback/alert` in the landed route set); #38's RT-38C (G10); N-13's remainder (G1's dark dock row); OW-8 (G10); the inbound rows in §1 on G1, G2, G4 and G5.
+Its edges are PLAN §5's. Closes F-31's remainder (L01a-22, L05a-05, R10-02-06..08) and its ledger members #7 (a hold: cured in paint at HEAD, §2) and #39's RT-39G; #33's specular row (a hold: cured at HEAD) and its π cells 5-7 (G3 over `/feedback/alert` in the landed route set); #38's RT-38C (G10); N-13's remainder (G1's dark dock row); OW-8 (G10); the inbound rows in §1 on G1, G2 and G4 (the opaque wells, UIA-V-234 and UIA-V-431, are W-H.5's). #41c closes on G3's `/data/sortable-list` cells.
 
 ## Appendix A · the route frost detector (`frost-routes.mjs`)
 

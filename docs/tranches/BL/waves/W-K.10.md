@@ -7,8 +7,8 @@
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B, scene `s=text`) |
 | ships in | 11.0.0 |
 | families | F-84 (all members) |
-| depends on | W-F.4 (the typewriter reserve that holds the cursor; this wave changes what the reserve and the visual layer hold, so it lands on W-F.4's extent) |
-| dependants | none in the DAG |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -50,11 +50,17 @@ HEAD shots: `cap/head/k10-text-{light,dark}.png` (the fixture's text scene: type
 
 ## 5 · Acceptance gates
 
-Every row in §2 is a gate; it passes at the inverted reading (one copy, no `|`, first hit in `tw-visual`; the phrase after translation; 1 copy and 1 match; 3 labels, a non-empty selection, `row-t1,row-t2,row-t3`; a non-empty double-click selection on both). Hold line added with the cure: the tooltip trigger's AX description is the phrase (the registry re-checked that `aria-describedby` resolves at HEAD; bite: removing the id from the hidden node empties it).
+Each row is a gate on appendix A's cell of the same id. HEAD readings are §2's.
 
-| id | gate | passes when | HEAD |
-|---|---|---|---|
-| K10-S | `! rg -q 'tw-accessible' src/components/typewriter && ! rg -q 'text-muted-foreground select-none' src/components/chip/chipVariants.ts` | exit 0 | **exit 1** (`TypewriterText.vue:4`; `chipVariants.ts:4`) |
+| id | passes when | HEAD |
+|---|---|---|
+| K10-G1 | a select-all copy of the settled typewriter holds "Typewriter says hello world" once and no `\|`; the first `window.find` hit is inside `tw-visual` | **FAIL** 2 copies; first hit in `sr-only tw-accessible`, both engines |
+| K10-G2 | after the simulated translation, the visual text settles to the phrase within 3.5 s | **FAIL** "Typewriter says hello worly  \| ", both engines |
+| K10-G3 | an open tooltip: select-all copy holds "Italic · ⌘I" once and `window.find` matches once | **FAIL** 2 copies, 2 matches, both engines |
+| K10-G4 | a handle-mode SortableList: a copy holds 3 of 3 labels; a drag across a row body yields a non-empty selection and the order stays `row-t1,row-t2,row-t3` | **FAIL** 0 labels, selection `""`, both engines |
+| K10-G5 (Chip, `.interactive-item`) | a double-click on a static Chip label and on an `.interactive-item` title each select non-empty text | **FAIL** `""` on both, both engines |
+| K10-G6, hold line (added with the cure) | the tooltip trigger's AX description equals the phrase | holds at HEAD (`aria-describedby` resolves). Bite: remove the id from the hidden node |
+| K10-S (static) | `! rg -q 'tw-accessible' src/components/typewriter && ! rg -q 'text-muted-foreground select-none' src/components/chip/chipVariants.ts` | **exit 1** (`TypewriterText.vue:4`; `chipVariants.ts:4`) |
 
 ## 6 · π and DELTA obligations
 

@@ -7,8 +7,8 @@
 | HEAD | `b37a37c3` (`src`, `demo`, `tests` identical to `f3ad78d0`), scratch worktree; the demo on :5987 and the band-G component harness (W-G.6 appendix C) on :5988; Chromium on Metal with WebGPU (adapter `apple/metal-3`); probe library in W-G.1 appendix A. Load average 30 to 137 during the runs; the gates are counts |
 | ships in | 11.0.0 |
 | families | F-50 remainder (`audit/REGISTRY.md:1201-1219`): L07-02, L07-13, R2-04-16, R2-09-01, R2-09-02 (the subscriber half), R2-09-03, R2-09-04, R5-01-08. The blob's settle seam (R2-03-06, the quiescence ask) is W-G.5's |
-| depends on | W-G.1 (the substrates publish their field luma; the lifecycle this wave gives a clock lives in `webgpu/`) |
-| dependants | W-H.1 (PLAN §5: a D3 route that reads a published field luma needs this wave; a route that deletes the live channel deletes this wave's consumer, not its idle-loop cure) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -45,21 +45,20 @@ R2-09-01's 324-433 ms cold stall did not reproduce at this seat (0 of 3 cold lau
 
 ## 3 · The cure
 
-1. **The dock subscribes; it does not sample.** `useGlassBackdropLuminance`'s live mode subscribes to W-G.1's field registry (`webgpu/fieldLuma.ts`). The field is found from the registry: the topmost registered field canvas whose rect intersects the target. On each publish (at most 4 Hz, W-G.1 §3.6) the observer takes the grid tiles under its rect, composites their (L, alpha) over the underlay the static path already resolves (through W-C.5's colour leaf), and writes the bucket. The rects are re-read on a `ResizeObserver` callback or a publish, never inside a rAF. There is no `drawImage`, no `getImageData`, no 2D canvas and no `FIELD_ALPHA_FLOOR` (a published grid always has a value).
-2. **No source, no loop.** With no registered field under the target, live mode records `unavailable/source-unavailable` once, at mount and on registry changes, and schedules nothing. `useRAFLoop` leaves the sampler entirely. `GlassDock`'s `backgroundCanvas` prop is deleted: the registry replaces both the explicit canvas and the selector.
+1. **The sampler does not read back.** `useGlassBackdropLuminance`'s live mode drops its canvas readback: no `drawImage`, no `getImageData`, no 2D canvas and no `FIELD_ALPHA_FLOOR`. What the dock's live mode reads instead is D3's route (M-5): under D3-B a published field luma that W-H.1 builds (the registry and the subscription, moved there by fix-2, FA-13); under D3-A the live channel is deleted by W-H.1. This wave does not pre-empt that choice. Until W-H.1 lands, live mode reads `unavailable/source-unavailable`, which is what 2 of the 3 dock samplers on `/dock/overview` already read at HEAD (§2).
+2. **No source, no loop.** Live mode records `unavailable/source-unavailable` once, at mount, and schedules nothing. `useRAFLoop` leaves the sampler entirely. `GlassDock`'s `backgroundCanvas` prop is deleted: with no readback it has no reader, whichever route D3 converges on (D3-B replaces it with the published luma, D3-A deletes the channel).
 3. **One frame clock in the lifecycle.** The GPU canvas lifecycle gains `frameInterval(): number` (milliseconds; 0 means display rate). After presenting a frame it schedules the next one as `setTimeout(frameInterval() - elapsed)` followed by one `requestAnimationFrame`, so every rAF callback presents a frame and none serves as a timer. The aurora returns 1000 / 30 while it only drifts, and 0 while it is steered (a cursor within its `cursorRadius`, a nucleus drag, or a config transition in flight); reduced motion keeps today's one-frame park. The blob and the fourier field keep 0 until their own waves rule otherwise; the constellation takes the aurora's rule.
 4. **The sampler's other readback.** `backdropLuminanceSample.ts:113` (the 1×1 colour resolve) is W-C.5's colour leaf, which lands before this wave; G3-G7 checks the file is canvas-free after both.
 
 ## 4 · Files it touches
 
-`src/composables/glass/{useGlassBackdropLuminance,backdropLuminanceSample}.ts`, `src/composables/glass/webgpu/{createCanvasLifecycle,fieldLuma}.ts`, `src/components/aurora/composables/{frameLoop,useCursorInteraction,runtime}.ts`, `src/components/dock/{GlassDock.vue,composables/useDockShellProps.ts,README.md}`, `demo/stories/dock/*` (the `background-canvas` bindings), `tests/composables/glass/backdropLuminanceSample.test.ts`. New: `tests-visual/wired/luma-evented.spec.ts` (appendix A), `tests-visual/wired/dock-idle-loop.spec.ts` (appendix B, on the harness page).
+`src/composables/glass/{useGlassBackdropLuminance,backdropLuminanceSample}.ts`, `src/composables/glass/webgpu/createCanvasLifecycle.ts`, `src/components/aurora/composables/{frameLoop,useCursorInteraction,runtime}.ts`, `src/components/dock/{GlassDock.vue,composables/useDockShellProps.ts,README.md}`, `demo/stories/dock/*` (the `background-canvas` bindings), `tests/composables/glass/backdropLuminanceSample.test.ts`. New: `tests-visual/wired/luma-evented.spec.ts` (appendix A), `tests-visual/wired/dock-idle-loop.spec.ts` (appendix B, on the harness page).
 
 ## 5 · Acceptance gates
 
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
 | G3-G1 · no readback | appendix A: `/dock/overview`, `getImageData` calls from load through 5 s at rest | 0 | **37** |
-| G3-G2 · the dock reads the field | appendix A: every `[data-backdrop-sample-state]` on `/dock/overview` reads `sampled` | all | **0 of 3** (`source-unavailable` ×2, `sample-unavailable` ×1) |
 | G3-G3 · no loop without a source | appendix B: the harness's default GlassDock with no canvas, rAF callbacks over 5 s | 0 | **600** (120/s) |
 | G3-G4 · every rAF presents a frame | appendix A on `/substrates/aurora` and `/`: rAF/s − GPU submits/s ≤ 5 | both routes | **240 − 0** and **360 − 120** |
 | G3-G5 · the drift clock | appendix A on `/` at rest, and `g3-steer.mjs` (appendix C) with `/substrates/aurora`'s stage scrolled into view at rest: GPU submits/s ≤ 30 per live canvas | ≤ 30 on both | **120** on `/` (1 canvas); **120** on the stage in view |
@@ -67,11 +66,11 @@ R2-09-01's 324-433 ms cold stall did not reproduce at this seat (0 of 3 cold lau
 | G3-G7 · the sampler is canvas-free | `! git grep -nE 'getContext\(\s*"2d"\|getImageData\|drawImage\|useRAFLoop\(' -- src/composables/glass/useGlassBackdropLuminance.ts src/composables/glass/backdropLuminanceSample.ts` | exit 0 | **exit 1**: `useGlassBackdropLuminance.ts:198,330`; `backdropLuminanceSample.ts:113,154,165` |
 | G3-G8 · the prop is gone | `! git grep -n backgroundCanvas -- src` | exit 0 | **exit 1**: `useDockShellProps.ts:93`, `GlassDock.vue:120-133`, the composable |
 
-G3-G1 and G3-G4 together are W-A.2's G-31 QUIESCENT. Planted bites: put the `useRAFLoop` back in the sampler (G3-G3, G3-G4); make `frameInterval()` return 0 at rest (G3-G5); publish the grid with alpha 0 (G3-G2 reads `unavailable`).
+G3-G1 and G3-G4 together are W-A.2's G-31 QUIESCENT. Planted bites: put the `useRAFLoop` back in the sampler (G3-G3, G3-G4); make `frameInterval()` return 0 at rest (G3-G5); and restore the `drawImage` read (G3-G1, G3-G7). G3-G2 (the dock reads `sampled` from a published field) moved to W-H.1 as a D3-B-conditional gate (fix-2, FA-13).
 
 ## 6 · π and DELTA obligations
 
-- **π-DOCK-LUMA.** `/dock/overview`, light and dark, 1440×900: the dock over the aurora before (the dock's material on `unavailable`, the state attributes shown in a capture overlay) and after (`sampled`, with the bucket), plus the same route with the aurora's palette switched to a dark preset, showing the bucket follow. The dock's paint change is D3's to judge (M-5, the live veil); this wave's claim is that the value arrives.
+- **π-DOCK-LUMA** is W-H.1's (D3-B only).
 - **π-CLOCK.** `/` at rest, a 2 s screen recording or 8 screenshots at 250 ms before and after: the drift reads the same at 30 Hz (the field moves a few pixels per second, GF-AURORA §6). The paired reading is appendix A's submits/s. R2-09-04's GPU busy time (300 ms/s at HEAD, from a Chrome GPU trace) is re-read after the wave with the same trace method.
 - Engines: Chromium on Metal, measured. Playwright WebKit: not run at this seat. Real Safari: UNMEASURED (OW-3).
 
@@ -79,23 +78,23 @@ G3-G1 and G3-G4 together are W-A.2's G-31 QUIESCENT. Planted bites: put the `use
 
 | removed or changed | replacement |
 |---|---|
-| `GlassDock` prop `backgroundCanvas` (element, getter or selector) | none; the dock reads the published luma of the glass field under it (Aurora, Blob, FourierField, Constellation register themselves). A consumer's own non-glass canvas under a dock is not read; the dock reads `unavailable/source-unavailable` there |
+| `GlassDock` prop `backgroundCanvas` (element, getter or selector) | none. Under D3-B the dock reads the published luma of the glass field under it (W-H.1); under D3-A the live channel is gone. A consumer's own non-glass canvas under a dock is not read |
 | the live sampler's canvas readback | none; `data-backdrop-sample-source` still reads `canvas` for a field source |
 
 keyframes.js binds `:background-canvas="auroraCanvas"` (`demo/app/dock/ChromeDock.vue:392`); it deletes the binding in its own tranche (the consumer-updates ruling).
 
 ## 8 · Dependencies
 
-W-G.1 (the publish registry and the lifecycle's home), W-C.5 (the colour leaf that replaces the 1×1 readback).
+PLAN §5.
 
 ## 9 · Ledger rows it closes
 
-F-50: L07-02, L07-13, R2-04-16, R2-09-01, R2-09-03, R2-09-04, R5-01-08; R2-09-02's subscriber half; KFA-23 and KFA-74 (one defect; the call removed, the stall not reproduced at this seat); #60's quiescence arm (the idle loops); W-A.2's G-31. KFA-164's second half (the dialog's intermittent `FrameRequestCallback` LoAF in the index chunk, R2-02-15) is attributed to the same `useRAFLoop` chunk as R2-09-01 and is re-measured under G6-G5 after this wave.
+F-50: L07-02, L07-13, R2-04-16, R2-09-01, R2-09-03, R2-09-04, R5-01-08; R2-09-02's subscriber half is W-H.1's (D3-B); KFA-23 and KFA-74 (one defect; the call removed, the stall not reproduced at this seat); #60's quiescence arm (the idle loops); W-A.2's G-31. KFA-164's second half (the dialog's intermittent `FrameRequestCallback` LoAF in the index chunk, R2-02-15) is attributed to the same `useRAFLoop` chunk as R2-09-01 and is re-measured under G6-G5 after this wave.
 
 ## 10 · Gestalt passes (P-1)
 
-- **Tranche fit:** idle pages cost nothing, and the live veil's input (D3's M-5) exists on the shipped engine for the first time.
-- **Wave:** G3-G1 to G3-G8 green in one run.
+- **Tranche fit:** idle pages cost nothing, and the dock's live input is left to D3's M-5 (W-H.1), with no readback in the way.
+- **Wave:** G3-G1 and G3-G3 to G3-G8 green in one run.
 - **Feature:** a consumer page with only a dock idles at 0 rAF/s; the shell aurora drifts at 30 Hz and runs at display rate under the pointer.
 
 ## Appendix A · `g3-luma-clock.mjs`
@@ -132,6 +131,8 @@ R.done();
 ```
 
 HEAD output: `FAIL G3-G1 … {"n":37,"totalMs":40.4,"maxMs":1.5,"rafPerSec":480,"submitsPerSec":120,"getImageDataPerSec":3.8}`; `FAIL G3-G2 … {"states":["unavailable/canvas/source-unavailable","unavailable/canvas/sample-unavailable","unavailable/canvas/source-unavailable"]}`; `FAIL G3-G4 /substrates/aurora … {"rafPerSec":240,"submitsPerSec":0,…}`; `FAIL G3-G4 / … {"rafPerSec":360,"submitsPerSec":120,…}`; `FAIL G3-G5 / … {"submitsPerSec":120,"canvases":1}`. (The run at this seat also evaluated G3-G5 on `/substrates/aurora`, which passes vacuously there because the stage is parked; the gate reads `/` only.)
+
+The script's G3-G2 row is W-H.1's H1-G20 (the dock samples, D3-B only); it stays in this script as the probe that wave runs.
 
 ## Appendix B · `g3-dock-fixture.mjs` (harness page, W-G.6 appendix C)
 

@@ -7,8 +7,8 @@
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, demo built there |
 | ships in | 11.0.0 |
 | families | F-36 (G-33 GOO-MORPH-SIGNATURE from the W-A.2 roster) |
-| depends on | W-A.3 (wired set) |
-| dependants | W-F.3 (PLAN §5: offsets and releases from position read the same measured geometry) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

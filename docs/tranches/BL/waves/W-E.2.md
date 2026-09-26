@@ -6,19 +6,20 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, library and demo built there; probes drive the band-E fixture app (W-E.1 appendix B) on the packed build and the built demo |
 | ships in | 11.0.0 |
-| families | F-21 (G-27 CASCADE-GEOMETRY from the W-A.2 roster; N-11a / O-61 R-1; #84; #86's F-21 item; C-8) |
-| depends on | W-A.3 (wired set), W-C.4 (token hygiene: `.glass-top-layer`'s dead-selector verdict and the masking fallbacks in `material.css` land first) |
-| dependants | W-E.3 (the Sheet's `position: fixed` is its base), W-E.7 (the Dialog's own radius is the corner the pad derives from), W-H.1, W-H.2 (PLAN §5), D3's M-7 halo witness (`design/material/harness/m7-halos-whole.mjs` reads this wave's containment cure), W-I.1 (the three dock-run rows this wave writes gates for, §3.9) |
+| families | F-21 (G-27 CASCADE-GEOMETRY from the W-A.2 roster; N-11a / O-61 R-1; #84; #86's F-21 item). C-8 and the dock-run class are W-I.7's (PLAN §3) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
 | id | what |
 |---|---|
 | G-27 CASCADE-GEOMETRY | a material rung's `position: relative` beats the Sheet's `position: fixed`; the rung's `border-radius` beats the Dialog's own corner |
-| N-11a, O-61 R-1 | shadows on the left clip: `contain: paint` on four content rungs cuts every child halo at the host edge |
+| N-11a, O-61 R-1, O-66 §1 (the pane's clipped left-edge shadow) | shadows on the left clip: `contain: paint` on four content rungs cuts every child halo at the host edge |
+| the F-21 mechanism rows | A2-KE-L2-2 and UIA-V-325 (the Sheet's cascade position and phone geometry) close on E2-G1; KFA-163 (R2-02-11, the Select never slides) on E2-G2 and E2-G12; UIA-KF-222 (closed triggers show up-chevrons inside an open drawer) on E2-G11 |
 | #84 (P4, R3-02-08) | ToggleGroup's on-state fill is a `background-color` painted under the `.control-surface` image layers; in dark and under reduced transparency it does not show |
 | #86, F-21 item | the surface material's layering row |
-| C-8 | the layer contract's one `content-box` (dock `run.css:250`): gate written here, bound to W-I.1 |
+| value.js O-71 (UIA-V-537), handed from W-B.2 §3.6 | (1) `Dialog placement="right"` reads translucent: there is no Dialog `placement` prop at HEAD (`dialog/DialogContent.vue:34-40`); the right drawer is `SheetContent side="right"`, whose geometry is E2-G1's right cells and whose frost is W-H.2's. (2) the centred Dialog's gutter is cured at HEAD (`dialog/styles.css:25`, `inline-size: min(100% - 2 * var(--space-section), 32rem)`), measured by fix-2 at `183e021a` |
 | F-21 members | the Select slide pinned by side utilities; the top-layer open state resting on `scale: 1; filter: blur(0)`; the universal PRM `!important` carve; the coarse floor replacing the sm rung; a SelectTrigger chevron keyed on an ancestor's state; `.disclosure-content` and `.command__group` clips outliving their animation; a Sheet header that yields part of a line; UIA-F-48, UIA-V-388, UIA-F-226 |
 
 ## 2 · The defect at HEAD
@@ -64,7 +65,7 @@ The dock-run instances of the same class:
 6. **The coarse floor is a hit area, not a box.** `utilities/responsive.css:4-8` stops setting `min-block-size`/`min-inline-size` on `[data-control-target]`. Under `(pointer: coarse)` the target gets a centred `::after` hit area of `max(100%, var(--touch-target))` in each axis. The box keeps its rung, so the labeled and icon sm Buttons share one block size. W-E.7 applies the same slop to the slider thumb and compact dock seats (G-23).
 7. **A component keys on its own state.** `SelectTrigger.vue:72` rotates on its own `data-[state=open]`, not `in-data-[state=open]`. The sweep covers every `in-data-[state=open]` in `src` (`rg -n 'in-data-\[state=open\]' src`).
 8. **A yielding header yields a whole line.** The Sheet header's collapse at a low detent steps by whole lines: the header's block size is `round(down, available, var(--sheet-header-line))`, and the title is hidden (`visibility: hidden`) when less than one line fits. The disclosure host drops `inline-size: 100%` (UIA-F-48); SelectTrigger's value clamps with `text-overflow: ellipsis` on the value span it owns, not `[&>span]` (UIA-V-388); the dock shell label wraps at its container (UIA-F-226).
-9. **The dock run is D2's.** R2-02-04, R3-02-09 and C-8 are the same defect class inside `dock/styles/run.css`, which D2's route owns (W-I.1). This wave writes their gates (E2-G14..G16) and binds them to W-I.1 in `roster.json`. W-I.1 lands the cure: the seat's width transition appends to the control's list (`transition: var(--icon-button-transition), inline-size …`); the ring reserve moves out of padding into `outline-offset` so the box is `border-box` like every other box.
+9. **The dock run is D2's.** R2-02-04, R3-02-09 and C-8 are the same defect class inside `dock/styles/run.css`, which D2's route owns. C-8 rode three closes, so it is decided by a wave of its own, W-I.7 (loop D2), which carries the three gates this spec first wrote (E2-G14..G16, now I7-G1..G3) and the cure.
 
 ## 4 · Files it touches
 
@@ -87,11 +88,8 @@ The dock-run instances of the same class:
 | E2-G11 · own state | appendix A G11 and `! rg -q 'in-data-\[state=open\]' src` | chevron `none`; rg exit 0 | **`180deg`**; rg **exit 1** |
 | E2-G12 · Select side utilities gone | `! grep -q 'data-\[side=bottom\]:translate-y-1' src/components/select/SelectContent.vue` | exit 0 | **exit 1** |
 | E2-G13 · no rung position or radius (hold on the pseudo anchor) | `node -e` over `src/styles/glass/{material,ladder}.css`: no `position:` or `border-radius:` inside a rule whose selector list names `.glass-wash`, `.glass-quiet`, `.glass-resting`, `.glass-floating`, `.glass-overlay` or `.glass-card`; and, over every manifest route, every element carrying a rung whose `::before`/`::after` is `position: absolute` computes a non-`static` position | 0 and 0 | **2 rules** (`material.css:39-47`, `ladder.css:132-134`); the anchor half is 0 at HEAD, a hold line with a bite (plant: `.glass-card{position:static !important}`) |
-| E2-G14 · (bound to W-I.1) seat transition | `! grep -nE '^\s*transition: inline-size' src/components/dock/styles/run.css` | exit 0 | **exit 1** (`run.css:357,366`) |
-| E2-G15 · (bound to W-I.1) C-8 | `test "$(rg -c 'box-sizing:\s*content-box' src \| wc -l)" -eq 0` | exit 0 | **exit 1** (`run.css:250`) |
-| E2-G16 · (bound to W-I.1) ring reserve | `! grep -q 'padding-block: var(--dock-ring-reserve)' src/components/dock/styles/run.css` | exit 0 | **exit 1** (`run.css:251`) |
 
-Can each fail and pass? G1-G11 fail at HEAD (20 of 21 rows; G3 light is the passing control). G2's RED is Chromium-only and says so. G13's anchor half is a hold line; its plant makes it red. G14-G16 are red now and turn green only when W-I.1 lands; W-E.2 lands with them `owed` in the roster, not bound.
+Can each fail and pass? G1-G11 fail at HEAD (20 of 21 rows; G3 light is the passing control). G2's RED is Chromium-only and says so. G13's anchor half is a hold line; its plant makes it red. The dock-run gates are W-I.7's (I7-G1..G3).
 
 ## 6 · π and DELTA obligations
 
@@ -113,7 +111,7 @@ Can each fail and pass? G1-G11 fail at HEAD (20 of 21 rows; G3 light is the pass
 
 ## 8 · Ledger rows
 
-Closes #84, #86's F-21 item, N-11a and O-61 R-1, and F-21's members in §1. C-8 is gated here and closes when W-I.1 lands (E2-G15): a PLAN §7 move from band E to band I, named in the return.
+Closes #84, #86's F-21 item, N-11a and O-61 R-1, and F-21's members in §1. C-8 is W-I.7's (PLAN §7 band I). Closes O-66 §1's clipped left-edge shadow (E2-G4) and the F-21 mechanism rows A2-KE-L2-2, UIA-V-325 (E2-G1), KFA-163 (E2-G2, E2-G12) and UIA-KF-222 (E2-G11). value.js O-71's two legs close here: the drawer on E2-G1's right cells (its frost on W-H.2), the gutter as CURED at HEAD. Its other two legs are not this wave's: leg 3 (WatercolorDot) is ANSWERED as value.js's own component (it left glass at BK #55, `src/components/blob/README.md:7`; UIA-V-6 is CONSUMER-SIDE at `INBOUND-MAP.md:145`), and leg 4 (the menu link row) is W-K.6's (K6-G24).
 
 ## 9 · Gestalt passes (P-1)
 

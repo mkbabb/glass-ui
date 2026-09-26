@@ -7,8 +7,8 @@
 | HEAD | `78922b26` in a scratch worktree (docs-only since `f3ad78d0`; `git diff --stat v10.1.0 HEAD -- src package.json tests scripts .github` prints nothing, so every reading measures the published 10.1.0 bytes). `dist/` built there (`npm run build`, exit 0, "projected 63 public entries"). A minimal consumer app (Vite 8 + `@tailwindcss/vite`, `@mkbabb/glass-ui` linked to the worktree's package) served on :6391 for the Chromium probes (appendix B) |
 | ships in | 11.0.0 |
 | families | F-71, the API-ask cures split (`audit/REGISTRY.md:1511-1526`). The intake, the reply letter and every other F-71 row are W-B.2's; the badge seat (O-67 R-3) is W-I.1's |
-| depends on | W-B.2 (rules the rows this wave builds, `waves/W-B.2.md:43-47`), W-E.4 (the overlay layer contract the menu, tooltip and anchor rows sit on), W-K.6 (names: the menu row and the theme row are named through its predicate), W-H.1 (the Slider's visible value mark, which the spectrum fill hook exposes), W-B.4 (`useConfirm` is ruled there, `waves/W-B.4.md:20`), W-B.8 (the exported DotRing the loading seat renders) |
-| dependants | W-L.2 (the strictTemplates fixture types every prop and slot added here), W-L.6 (the P-6 census counts each new symbol; each needs a consumer or a demo reader), W-L.7 (each consumer's packet names the asks it can now adopt) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | engines | Chromium (Playwright's bundled build) is the gate engine for the paint rows. Playwright WebKit rows are labelled so. Real-Safari cells are UNMEASURED until W-A.6's step 0 (OW-3) |
 
 ## 1 · What it closes
@@ -23,7 +23,7 @@ The decision rule is W-B.2's (`waves/W-B.2.md:41-46`): an ask that removes glass
 | A2-VA-L1-2 (veil) | the scroll veil under a condensed header | CURE | 3.3 |
 | O-61 R-2, N-11b, GAP-C2 | the Slider `spectrum` range has no fill hook | CURE (the API half; the value mark is W-H.1's) | 3.4 |
 | O-61 R-3, N-11c, UIA-V-254, A2-KE-L2-13, UIA-F-130, B-5 | the theme toggle as one menu row; a glyph slot; a decorative seat | CURE | 3.5 |
-| #76, UIA-V-34 | the canvas-anchored overlay's virtual anchor | CURE (a declared `reference`) | 3.6 |
+| #76, UIA-V-34 | the canvas-anchored overlay's moving anchor, on W-0.10's declared `reference` (the declaration and O-82 are W-0.10's) | CURE | 3.6 |
 | R9-02-15, A2-FO-L3-1 | SelectTrigger's `w-full` takes a whole toolbar row | CURE (a break) | 3.7 |
 | O-74 §5, A2-FO-L1-17, A2-VA-L1-7 | a presentation-only slug identity / dock attribution menu | DECLINED with a recipe | 3.8 |
 | O-74 §7, A2-FO-L3-6 | a page-gutter token | ANSWERED: the page gutter is `--space-section` | 3.9 |
@@ -84,8 +84,8 @@ The HEAD probes (appendix A for the unit probe, appendix B for the Chromium prob
 | A13 menu row `tone`, `#leading`, `#description`, unchecked indicator seat | **fail**: `{"tone":null,"leading":false,"description":false,"uncheckedSeat":false}` |
 | B1 spectrum range with `--slider-range-bg: rgb(255 0 0)` | **fail**: `rgba(0, 0, 0, 0) \| none` |
 | B2 a 600 px `flex-wrap` toolbar: Button, SelectTrigger, Button | **fail**: 3 rows; the trigger is 600 px wide |
-| B3 PopoverContent with a virtual `reference` at (700, 400) | **passes at HEAD**: content top 414, centre x 705. The attribute falls through to reka's `PopperContent` untyped. The paint half of #76 is met; the defect is the declaration (G-L1-6) |
-| C1 strictTemplates: `<PopoverContent :reference>` and `<TooltipContent :reference>` | **fail**: `TS2353 … 'reference' does not exist` on both (appendix C) |
+| B3 PopoverContent with a virtual `reference` at (700, 400) | **passes at HEAD**: content top 414, centre x 705. The attribute falls through to reka's `PopperContent` untyped. The static paint half of #76 is met; the declaration is W-0.10's (its G1, the probe below) |
+| C1 strictTemplates: `<PopoverContent :reference>` and `<TooltipContent :reference>` | **fail**: `TS2353 … 'reference' does not exist` on both (appendix C). This row is W-0.10's G1, which lands the declaration in 10.2.0 |
 
 ## 3 · The cure
 
@@ -112,9 +112,9 @@ The spectrum range reads `--slider-range-bg` like every other variant, default `
 - `DarkModeToggle` renders `DarkModeGlyph` through a `#glyph` slot (UIA-F-130), default the glyph.
 - `DarkModeMenuItem` (exported from `./dark-mode-toggle`): a `DropdownMenuCheckboxItem` with `aria-checked` bound to `isDark`, the glyph in the row's `#leading` seat (§3.11), the label in the default slot (default "Dark mode"). One actuation (Enter, Space or click) toggles, and the menu stays open so the state change is visible. N-11c's "one keyboard-actuatable row".
 
-### 3.6 The virtual anchor
+### 3.6 The moving anchor
 
-`PopoverContent` and `TooltipContent` declare `reference?: ReferenceElement` (reka's type) and pass it to `PopperContent`. No `PopoverAnchor` part is added: one door for the anchor. O-82 POPOVER-ANCHOR asks for the same prop and is ruled into band 0 (`FORMATION-PROGRESS.md:79`). Whichever wave lands the declared prop first carries G-L1-6; the other records the row closed by it. #76's canvas case (a moving anchor) is G-L1-7.
+W-0.10 declares `reference` on PopoverContent and TooltipContent in 10.2.0 (O-82). This wave builds #76's canvas case on it: a reference that moves re-seats the content through reka's `update` path, with no hand positioning. G-L1-7 is its gate.
 
 ### 3.7 SelectTrigger sizes to its content
 
@@ -190,7 +190,6 @@ Each gate's exit code is read on its own. The unit gates run `npx vitest run tes
 | G-L1-3 · the spectrum fill hook | B1 | the range computes `rgb(255, 0, 0)` | **fail**: `rgba(0, 0, 0, 0)` |
 | G-L1-4 · the theme row | A7, plus: mount `DarkModeMenuItem` in an open menu, press Enter on it; `isDark` flips, `aria-checked` follows, the menu stays open | all | **fail**: A7 (the parts do not exist) |
 | G-L1-5 · the glyph is one drawing | `test "$(grep -rl '<svg' src/components/dark-mode-toggle | wc -l)" = 1` | exit 0: only `DarkModeGlyph.vue` draws | hold line: 1 at HEAD (`DarkModeToggle.vue`); it bites if the menu item re-draws the glyph |
-| G-L1-6 · the anchor is declared | C1 (appendix C) passes `vue-tsc` | exit 0 | **exit 2**: two `TS2353` on `reference` |
 | G-L1-7 · the canvas case | B3 extended: move the virtual anchor to (300, 200) and call the content's `update` path (a `reference` swap); the content re-seats within 40 px of the new point | exit 0 | the static arm passes at HEAD (top 414, cx 705); the move arm is written with the wave |
 | G-L1-8 · SelectTrigger inline | B2 | one toolbar row; trigger width < 600 | **fail**: 3 rows, 600 px |
 | G-L1-9 · Input seats | A3, plus: `type="search"` with a value shows a trailing clear `Button`; clicking it empties the model and focuses the input | both | **fail**: A3 |
@@ -204,13 +203,12 @@ Each gate's exit code is read on its own. The unit gates run `npx vitest run tes
 | G-L1-17 · Tooltip content | A11 | the content text contains "Hint" | **fail** |
 | G-L1-18 · useConfirm | A8, plus W-B.4's born-RED: `confirm()` resolves `true` on the action and `false` on Escape | both | **fail**: A8 |
 | G-L1-19 · the recipes compile | W-C.3's README-example invariant over `collapsible/README.md` (§3.2), `menu/README.md` (§3.8), `slider/README.md` (§3.20) | each example block compiles | **fail**: none of the three blocks exists |
-| G-L1-20 · every ruled row has a terminal | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows O-65,A2-VA-L3-2,O-61,UIA-V-254,A2-KE-L2-13,UIA-F-130,#76,UIA-V-34,R9-02-15,A2-FO-L3-1,A2-FO-L1-17,A2-VA-L1-7,A2-FO-L3-6,A2-FO-L1-4,UIA-F-106,UIA-V-97,UIA-KF-136,A2-KE-L1-25,UIA-F-133,UIA-V-151,UIA-KF-167,UIA-KF-201,UIA-F-139,A2-KE-L1-8,UIA-V-639,A2-FO-L1-27,A2-FO-L3-5,A2-FO-L1-15,A2-FO-L1-14,O-86` | exit 0 | **exit 1**: the checker (W-B.1) is absent |
 
 A2 as first written passed at HEAD vacuously (it asserted "mark present and glyph absent" while the slot was dropped). It was rewritten to require the glyph at rest; the rewritten form fails at HEAD. G-L1-5 and G-L1-7's static arm are hold lines, not counted as born RED.
 
 ## 6 · π and DELTA obligations
 
-Each row's before capture is taken on the wave's base commit, the after on its last commit, with the probe's JSON readout beside each PNG, under `<scratch>/BL/evidence/W-L.1/` (the one scratch root, F-61), sha256 cited in the wave record.
+Each row's before capture is taken on the wave's base commit, the after on its last commit, with the probe's JSON readout beside each PNG, under `.cache/evidence/W-L.1/` (the one scratch root, F-61), sha256 cited in the wave record.
 
 | surface | themes | engines | paired capture | π |
 |---|---|---|---|---|
@@ -264,7 +262,7 @@ A Vite app whose `src/app.css` is the README recipe (`@import "tailwindcss"; @im
 
 Output at HEAD: `{"rest":{…"bgImage":"none","bgColor":"rgba(0, 0, 0, 0)","backdrop":"none"},"scrolled":{…same…},"flush":{"borderTop":"1px",…}}` (exit 1); `{"spectrumRangeBg":"rgba(0, 0, 0, 0) | none","toolbarRows":3,"triggerWidth":600}` (exit 1); `{"virtualAnchor":{"x":705,"bottom":410},"content":{"top":414,"cx":705}}` (exit 0).
 
-## Appendix C · the anchor declaration probe
+## Appendix C · the anchor declaration probe (W-0.10's G1; kept as the record of this seat's reading)
 
 `vue-tsc --noEmit` with `vueCompilerOptions.strictTemplates: true`, `@mkbabb/glass-ui` resolved to the built package, over:
 

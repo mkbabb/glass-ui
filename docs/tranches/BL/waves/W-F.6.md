@@ -7,8 +7,8 @@
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`), scratch worktree, demo built and served on :5961 |
 | ships in | 11.0.0 |
 | families | F-45 (members L07-03, L05a-11, R2-09-07; L07-09 is the dock's, see below) |
-| depends on | W-A.3 (the wired-gate runner the born-RED rows join), W-F.1 (the `--spring-present` token the card title moves to) |
-| dependants | W-K rows that capture music-staff and the tabs (PLAN §5) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 L07-09 (the dock's layout-property transitions) is closed by W-I.1 (loop D2), which rebuilds the dock's motion; this wave does not edit the dock. Layout transitions where the layout itself is the thing that changes (the disclosure's grid rows, the Sheet's detents, the sortable list) are W-F.2's and are not this family's mechanism.
 

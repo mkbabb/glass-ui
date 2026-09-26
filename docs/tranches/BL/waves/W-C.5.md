@@ -7,8 +7,8 @@
 | HEAD | `26d193b7` in a scratch worktree, with `dist/` and `dist-demo/` built there |
 | ships in | 11.0.0 |
 | families | F-65 remainder (`audit/REGISTRY.md:1394-1412`) |
-| depends on | W-C.4 (its duplicate class leaves the 55 light-dark twins to this wave; its sweep tool is reused), W-0.6 (O-81 (5) is that wave's; this one does not touch it) |
-| dependants | W-A.6 (the real-Safari cells of §6 are carried there), W-E.3 (R9-02-02 and R10-01-* stay there), W-K.1 (a shadow-mount consumer limit, if any remains, is documented under W-C.3's invariants) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

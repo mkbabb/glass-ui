@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree (docs-only since `f3ad78d0`); `src` is the published 10.1.0. Sibling trees read only (value.js `docs/tranches/V/coordination/INBOX.md`) |
 | ships in | 11.0.0 (the reply is sent when this wave closes; each row's landing version is in the letter) |
 | families | F-71, the intake and reply split (`audit/REGISTRY.md:1511-1526`). The API-ask cures named in PLAN §3 W-L.1 are W-L.1's; this wave rules every other F-71 row |
-| depends on | W-B.1 (the ledger the rows land in) |
-| dependants | W-L.1 (builds the CUREs ruled here), W-L.7 (the landing packets cite the reply) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -88,7 +88,7 @@
    | A2-KE-L1-29 CopyButton | DECLINE | Button + `useClipboard` + DotRing + the Check glyph; the recipe is EasingPicker's own |
    | A2-KE-L1-26 Aurora `followPointer` | FOLD | W-G.4 (the VizStudio interaction contract) |
    | O-75, O-76, O-77 | CURED at 10.1.0 / W-0.2 / W-0.3 | as INBOUND states |
-6. **The intake rows** (§2's 18 letters, COHESION §4a's 27, the atlas batch's 20, #64's promises, #76, the SCI-BEAD books, chicago N-2). Each is carried, rowed with its `sender-ref`, re-measured at the wave's HEAD and ruled by §3.4. Known routes: O-47 and KFW12-3/-4/-5 → W-L.1 (field seams, one decision per seam); O-48 `./avatar` → W-D.1's door rule; O-49 aurora strip motion → W-G.4; O-51 search cancel glyph → W-L.1 with the Input adornment; O-52 blob display-p3 → W-G.5; O-36 → W-L.5 (F-72); O-28 and O-31 (KF.W7) are first read against BK's O-26 disposition ledger (`BK/execution/2026-09-18-o26-disposition/LEDGER.md:885` names KF.W7), and ANSWERED by that line where it answers them; value.js O-65 (OA-50) and O-67 (TILE) → W-J.1; O-70's UIA-KF-078 re-measured; O-71 → W-E.2 (surface geometry) with W-H.2's frost; O-72 → W-L.2 (the state vocabulary, R4-01-18); O-73 → W-K.4 (one ring register); B-5 → W-L.1 with the DarkModeToggle; chicago N-2 is recovered from run `wf_515fb0e4` at intake or its row reads RETIRE, "content not on record", quoting the letter line. O-82 (POPOVER-ANCHOR) is already rowed; the next plan pass puts it in band 0 (`INBOUND.md:36`).
+6. **The intake rows** (§2's 18 letters, COHESION §4a's 27, the atlas batch's 20, #64's promises, #76, the SCI-BEAD books, chicago N-2). Each is carried, rowed with its `sender-ref`, re-measured at the wave's HEAD and ruled by §3.4. Known routes: O-47 and KFW12-3/-4/-5 → W-L.1 (field seams, one decision per seam); O-48 `./avatar` → W-D.1's door rule; O-49 aurora strip motion → W-G.4; O-51 search cancel glyph → W-L.1 with the Input adornment; O-52 blob display-p3 → W-G.5; O-36 → W-L.5 (F-72); O-28 and O-31 (KF.W7) are first read against BK's O-26 disposition ledger (`BK/execution/2026-09-18-o26-disposition/LEDGER.md:885` names KF.W7), and ANSWERED by that line where it answers them; value.js O-65 (OA-50) and O-67 (TILE) → W-J.1; O-70's UIA-KF-078 re-measured; value.js O-71 → legs 1-2 W-E.2 (the drawer is Sheet side right, E2-G1; the gutter at `dialog/styles.css:25`) with W-H.2's frost, leg 3 (WatercolorDot) ANSWERED as the consumer's, leg 4 → W-K.6; O-72 → W-L.2 (the state vocabulary, R4-01-18); value.js O-73 is RETIRE CURED at HEAD (`--dock-ring-color` at `dock/styles/index.css:229`, the outline at `:286` and `layer-group.css:321`, `glass-chip.css` imported at `styles/glass.css:123`), recorded in W-K.4 §1; B-5 → W-L.1 with the DarkModeToggle; chicago N-2 is recovered from run `wf_515fb0e4` at intake or its row reads RETIRE, "content not on record", quoting the letter line. O-82 (POPOVER-ANCHOR) is W-0.10's (band 0, 10.2.0).
 7. **The CURED@HEAD claims of O-74**, re-measured at `19bf6569` in `src`: A2-VA-L1-2 (condense) holds (`card/CardHeader.vue:20,38,52,67`); A2-VA-L2-9 holds (`tokens/light-dark.css:18-20`, `--control-floor: var(--touch-target, 2.75rem)` under `pointer: coarse`); A2-FO-L2-15 holds as a source statement (`dock/styles/run.css:44-51`) and its paint fault is F-18's (W-I.1), so the reply says CONFIRMED IN PART; A2-VA-L2-6 is withdrawn by the sender's erratum E-1.
 8. **The reply letter.** `docs/tranches/BL/outbox/glass-reply-<date>.md`, one table: every INBOUND row with its `sender-ref`, terminal, wave and landing version (10.2.0 for band 0, 11.0.0 otherwise), and for each ANSWER the measurement. Sent to value-js-30 (for value.js, keyframes.js, fourier-analysis), lot-assay-e0 (chicago) and the atlas session, and relayed live to the running sessions (N-6). The wave records each send.
 9. **MIGRATION**: the 7.0.0 section gains `.btn-interactive` removed, successor Button's press register (§7).
@@ -110,7 +110,8 @@
 | B2-G5 · the notice answered in MIGRATION | `test "$(grep -c btn-interactive MIGRATION.md)" -ge 1` | exit 0 | **exit 1**: 0 |
 | B2-G6 · the join | `node scripts/tranche/verify-inbound.mjs docs/tranches/BL --sender value.js=../value.js/docs/tranches/V/coordination/INBOX.md` | exit 0 | absent; measured by hand: 0 of 46 joined, 18 with no row at all |
 | B2-G7 · the join bites | the same with one planted glass-addressed row appended to a scratch copy of the sender ledger | exit 1, naming the row | absent |
-| B2-G8 · every inbound row terminal | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows $(ids of INBOUND and INBOUND-MAP)` | exit 0 | **exit 1** (W-B.1's checker absent) |
+
+B2-G8 (`verify-ledger --rows` over every inbound id) is struck: the inbound rows' terminals are LEDGER §6.3, §7 and appendix A, and B2-G6's join is the enactment (PLAN §1).
 
 B2-G3 alone could pass by mentioning an id in prose; B2-G6 requires the `sender-ref` column and the join.
 

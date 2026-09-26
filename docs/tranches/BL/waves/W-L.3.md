@@ -7,8 +7,8 @@
 | HEAD | `78922b26` in a scratch worktree; `src` identical to v10.1.0; `dist/` built there (`npm run build`, exit 0). Probes: `@tailwindcss/node` 4.3.3 compiles (appendix A), a dist import-closure walker (appendix B), `vue/server-renderer` under a node-only `vitest` config and hydration under happy-dom (appendix C) |
 | ships in | 11.0.0 |
 | families | F-67 whole (`audit/REGISTRY.md:1428-1448`): L09-03, L06-03, L06-04, L06-05, R2-07-01, R2-07-03, R2-07-04, R2-07-05, R2-07-07, R2-07-12 (the re-scope), R2-09-08, R5-02-02, R5-02-03 |
-| depends on | W-A.5 (the payload gate and the exact surface record this matrix installs against), W-G.7 (the shader-free derive subpath and CSS that ships with its entry, which change what a consumer installs and compiles), W-K.6 (the Slider's nameless-thumb guard moves to this wave's guard form, `waves/W-K.6.md:80`), W-L.2 (its fixture is the matrix's types leg) |
-| dependants | W-L.7 (packets are measured on the tarball this matrix installs), W-L.8 (the close reads the matrix's release run) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | roster | G-02 PACK-INSTALL turns `bound` here (`waves/W-A.2.md:136`) |
 
 ## 1 · What it closes
@@ -23,6 +23,9 @@
 | R5-02-02 | SSR hydration diverges on coarse-pointer and reduced-motion clients (setup-time `matchMedia` reads) |
 | R2-07-04, L09-03 | `verify:package`, the only pack-and-install gate, installs every optional peer, checks CSS by existence, and runs only in `release.yml` |
 | #8 (census) | W-PKG-TRUTH's reseal never ran; G-THEME-BLEED had no executable (`ledger/census-register-a.md:29`) |
+| UIA-F-57 (F-67 mechanism row) | DESIGN names `text-sm` and `text-xs`, which the bridge deletes: closes on G-L3-1 (the consumer's `text-sm` survives) |
+| #26c (RT-26G) | `DESIGN.md:277` tells readers to use Tailwind `ease-spring-*`, a family deleted from `theme/bridges.css` (the note at `:360-361`) |
+| #81d | the utility emitter's string scanner pairs any quote with any other (`vite.utility-emit.ts:105`, `strRe = /["'\`]([^"'\`\n]*?)["'\`]/g`) |
 
 ## 2 · The defect at HEAD
 
@@ -49,7 +52,9 @@ Sources behind the SSR readings: `useGlobalDark.ts:168-174` (an immediate `watch
    - `useGlobalDark` registers the `colorScheme` mirror only on the client (`isClient` from `@vueuse/core`, now a required peer). On the server the singleton computes `isDark` from its seed and writes nothing. `darkModeSyncScript.ts` stays the head script that sets the class before first paint.
    - `Popover` reads `(pointer: coarse)` through `useMediaQuery`, which is `false` on the server and in the first client render, and updates after mount. The hover-root choice follows it, so hydration matches and the coarse client switches roots after mount.
    - `useReducedMotion` seeds `false` at setup and reads the query in `onMounted`; `data-motion` and SegmentedTabs' drag arming follow the ref. This is the `useTabResponsive` pattern.
-6. **The consumer matrix replaces `verify:package`.** `scripts/consumer-matrix.mjs` packs the committed tree once and runs each leg in a scratch consumer outside the repo. The legs:
+6. **DESIGN names what ships.** `DESIGN.md:277` drops the `ease-spring-*` clause; the line names `var(--spring-*)` only.
+7. **The scanner pairs like quotes.** `strRe` becomes a backreference form, `/(["'`])((?:(?!\1)[^\n])*)\1/g`, so a string opened by one quote closes only on the same quote.
+8. **The consumer matrix replaces `verify:package`.** `scripts/consumer-matrix.mjs` packs the committed tree once and runs each leg in a scratch consumer outside the repo. The legs:
 
    | leg | what it installs and runs | fails when |
    |---|---|---|
@@ -81,6 +86,8 @@ Sources behind the SSR readings: `useGlobalDark.ts:168-174` (an immediate `watch
 | G-L3-7 · hydration on coarse and reduce | appendix C `hydrate-client.test.ts` with `PTR=coarse`, and the matrix's ssr leg over the four cells | 0 hydration warnings | **fail**: 3 mismatches on coarse; fine passes with 0 |
 | G-L3-8 · the matrix is the gate | `grep -q "consumer-matrix" .github/workflows/ci.yml && ! grep -q "verify:package" package.json .github/workflows/release.yml` | exit 0 | **exit 1** |
 | G-L3-9 · the library keeps its own rule | `! rg -n --pcre2 '(?<![\w-])text-(sm\|xs)(?![\w-])' src demo --glob '*.vue' --glob '*.ts'` | exit 0 | hold line: 0 matches at HEAD (a plain `\btext-sm\b` matches `--control-text-sm` 17 times, so the lookarounds are required); it bites when the reset goes and a static rung slips back in |
+| G-L3-10 · DESIGN names no deleted utility (static; #26c) | `! grep -q 'ease-spring-' DESIGN.md` | exit 0 | **exit 1** (`DESIGN.md:277`) |
+| G-L3-11 · the scanner pairs like quotes (#81d) | appendix D `strre.mjs`: the emitter's `strRe`, applied to `"px-2 'p-4"`, yields the one string `px-2 'p-4` | exit 0 | **exit 1**: yields `["px-2 "]` (fix-2, `183e021a`) |
 
 ## 6 · π and DELTA obligations
 
@@ -89,7 +96,7 @@ Sources behind the SSR readings: `useGlobalDark.ts:168-174` (an immediate `watch
 | a consumer page with `class="text-sm"` body copy | light | Chromium | before: the paragraph at the inherited size (the utility compiled to nothing); after: 0.875rem | computed `font-size` of the paragraph |
 | the hydrated SSR page on the coarse cell (a hover Popover trigger and a DropdownMenu) | light | Chromium, coarse emulation | before: the menu opens with `menu ""`, the trigger lacks `aria-haspopup`; after: named, attributes present | the matrix's hydration warning count and the resolved `aria-*` census |
 
-Captures under `<scratch>/BL/evidence/W-L.3/`, sha256 in the wave record. Real-Safari cells UNMEASURED until OW-3.
+Captures under `.cache/evidence/W-L.3/`, sha256 in the wave record. Real-Safari cells UNMEASURED until OW-3.
 
 ## 7 · MIGRATION rows (11.0.0)
 
@@ -103,7 +110,7 @@ Captures under `<scratch>/BL/evidence/W-L.3/`, sha256 in the wave record. Real-S
 
 ## 8 · Ledger rows
 
-Closes F-67 (all members), #8 W-PKG-TRUTH's remainder (the theme bleed's executable is G-L3-1; `ledger/census-register-a.md:29`), roster G-02. The README recipe O-57 R-2's answer rests on (`waves/W-B.2.md:131`) is compiled by the css leg.
+Closes F-67 (all members), #8 W-PKG-TRUTH's remainder (the theme bleed's executable is G-L3-1; `ledger/census-register-a.md:29`), roster G-02, UIA-F-57 (G-L3-1), #26c (G-L3-10) and #81d (G-L3-11). The README recipe O-57 R-2's answer rests on (`waves/W-B.2.md:131`) is compiled by the css leg.
 
 ## Appendix A · the CSS probes as run at HEAD
 
@@ -127,3 +134,11 @@ For each JS entry of `package.json` `exports`, follow every `from "…"` and `im
 ## Appendix C · the SSR probes
 
 `vitest.ssr.config.ts`: `environment: "node"`, no setup file, the `@glass` alias. `ssr-render.test.ts` renders `createSSRApp({ render: () => h(DarkModeToggle) })` with `renderToString`. `ssr-hydrate-server.test.ts` renders a fixture (`<Popover trigger="hover">` with a `PopoverTrigger as-child` Button and content) to HTML; `hydrate-client.test.ts` (happy-dom) stubs `matchMedia` from `PTR`, sets the HTML into a host, spies `console.warn`/`console.error`, and mounts `createSSRApp` on it. Readings: `PTR=fine` 0 warnings (pass); `PTR=coarse` 3 `Hydration node mismatch` warnings (fail).
+
+## Appendix D · the quote-pairing probe (fix-2)
+
+```sh
+node -e 'const s=require("fs").readFileSync("vite.utility-emit.ts","utf8");const m=s.match(/const strRe = (\/.*\/g);/);const re=eval(m[1]);const r=[..."\"px-2 '"'"'p-4\"".matchAll(re)].map(x=>x[x.length-1]);console.log(JSON.stringify(r));process.exit(r[0]==="px-2 '"'"'p-4"?0:1)'
+```
+
+At `183e021a`: prints `["px-2 "]`, exit 1. The probe reads each match's last group, so it holds for the cure's backreference form (content in group 2) as for HEAD's (group 1).

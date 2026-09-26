@@ -6,9 +6,9 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree; probes drive the band-E fixture app (W-E.1 appendix B: `pages/e.html` scene `toast`, `pages/f.html` two app roots) and the built demo |
 | ships in | 11.0.0 |
-| families | F-41 (#34 W-TOAST; UIA-F-51, O-59's one BLOCKING row; UIA-F-142) |
-| depends on | W-E.1 (the viewport's inset-aware pad), W-E.4 (the viewport is a layer in the stack: z and host) |
-| dependants | W-F.4 (PLAN §5: the stack's spring offsets live inside this wave's store) |
+| families | F-41 (#34 W-TOAST; UIA-F-51, O-59's one BLOCKING row; UIA-F-142; UIA-KF-221, UIA-F-227; #33b; #31f) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -21,6 +21,10 @@
 | F-41 deck | the deck stage and PagerDots each own a polite region, so one step is announced twice |
 | UIA-F-51 | below `sm`, a `bottom-*` toast renders at the top |
 | UIA-F-142 | stacked toasts touch (gap 0) |
+| UIA-KF-221 | no caller id for replace-in-place, and no tone glyph in the Toaster's item |
+| UIA-F-227 | the close glyph takes the tone (`Toast.vue:138`, `[&_svg]:text-(--tone)` colours every svg, the close included), and the stack order flips at `sm` (`Toaster.vue:83,87,91` `flex-col-reverse` below it, `sm:flex-col` above) |
+| #33b | `ToastTitle.vue:14` sets `text-small font-semibold`: `text-small` declares `font-weight: 400` (`typography/semantic.css:221`) and the second utility overrides it, two weight sources on one element |
+| #31f (RT-31F) | the feedback recipes' own tint and ink decisions: RETIRE CURED at HEAD. Title and description ink on all five tone plates, light and dark, pass 4.5:1 (fix-2's probe, scene `toast`, Chromium: 10 of 10, the lowest a description at 7.66 on the light destructive plate). E5-G15 holds it. Re-trigger: any tone plate under 4.5:1 |
 
 ## 2 · The defect at HEAD
 
@@ -46,6 +50,10 @@ Measured with appendix A (`node e5.mjs`), Chromium, AX reads over CDP `Accessibi
 4. **The deck is stated once.** PagerDots renders its region only when it is outside a deck: it injects the deck context and skips the region inside `DeckStage`, whose paragraph is the deck's one announcer. The `announce` prop stays, for opting out outside a deck.
 5. **Placement at every width.** `VIEWPORT_BASE` drops `top-0`. Each position's anchor fragment (`top-*` or `bottom-*`, and its flex direction) applies at every width, not under `sm:`. `VIEWPORT_PAD` is W-E.1's inset-aware pad.
 6. **A stack gap.** The viewport's flex stack has `gap: var(--space-atom)` (the 8 px gap rung at `tokens/sizing.css:121`, stepped by the width query like every gap, W-E.7); the toast's own margin is removed.
+7. **Replace in place.** `toast({ id })` with an id already on the store replaces that toast's content and restarts its timer, in its place; with a new id it appends.
+8. **The tone glyph.** A non-neutral toast renders its tone's glyph (the feedback register's, shared with Alert) at the item's start; `[&_svg]:text-(--tone)` narrows to that glyph, so the close glyph keeps the item's ink.
+9. **One stack order.** With cure 5 each anchor has one direction at every width: oldest first, newest nearest the anchor edge. `flex-col-reverse` and the `sm:flex-col` override leave `Toaster.vue`.
+10. **One weight source.** `ToastTitle` reads one type role that owns its size and weight; `font-semibold` leaves `ToastTitle.vue:14`.
 
 ## 4 · Files it touches
 
@@ -64,8 +72,14 @@ Measured with appendix A (`node e5.mjs`), Chromium, AX reads over CDP `Accessibi
 | E5-G7 · stack gap | appendix A G7 | ≥ 8 px | **0** |
 | E5-G8 · deck once | appendix A G8 | 1 exposed region | **2** |
 | E5-G9 · no slice | `! grep -q 'slice(0, TOAST_LIMIT)' src/components/toast/use-toast.ts` | exit 0 | **exit 1** (`use-toast.ts:62`) |
+| E5-G10 · one title weight (static, #33b) | `! grep -q 'text-small font-semibold' src/components/toast/ToastTitle.vue` | exit 0 | **exit 1** (`:14`) |
+| E5-G11 · replace in place (UIA-KF-221) | fix-2's probe scene `mtoast`: `toast({ id: 'same', title: 'first' })`, then `toast({ id: 'same', title: 'second' })` | one toast titled "second" | **FAIL**, both engines: 2 toasts, "second" and "first" both rendered |
+| E5-G12 · the tone glyph (UIA-KF-221) | the same scene: a `tone: 'success'` toast's svg count, excluding the close | ≥ 1 | **FAIL**, both engines: 1 svg in the item, the close only |
+| E5-G13 · the close keeps its ink (UIA-F-227, static) | `! grep -qF '[&_svg]:text-(--tone)' src/components/toast/Toast.vue` | exit 0 | **exit 1** (`:138`) |
+| E5-G14 · one stack order (UIA-F-227, static) | `! grep -q 'flex-col-reverse' src/components/toast/Toaster.vue` | exit 0 | **exit 1** (`:83`, `:87`, `:91`) |
+| E5-G15 · tone ink holds (#31f) | fix-2's probe scene `toast`, rows `W-E.5/TOAST-INK`: title and description on each tone plate, light and dark | 10 of 10 ≥ 4.5:1 | hold line: 10 of 10, lowest 7.66. Bite: a tone wash that pushes a description under 4.5 |
 
-Can each fail and pass? All nine browser rows fail at HEAD. The AX row G5 has a passing shape on any page with one named `status` item; its planted twin sets the list back to `aria-live="polite"`, which adds a second region. G9 is static.
+Can each fail and pass? All nine browser rows fail at HEAD. The AX row G5 has a passing shape on any page with one named `status` item; its planted twin sets the list back to `aria-live="polite"`, which adds a second region. G9, G10, G13 and G14 are static and exit 1 at HEAD; G11 and G12 fail in both engines; G15 is a hold line with its bite.
 
 ## 6 · π and DELTA obligations
 
@@ -86,7 +100,7 @@ Can each fail and pass? All nine browser rows fail at HEAD. The AX row G5 has a 
 
 ## 8 · Ledger rows
 
-Closes #34, UIA-F-51 (O-59's BLOCKING row) and UIA-F-142.
+Closes #34, UIA-F-51 (O-59's BLOCKING row), UIA-F-142, UIA-KF-221 (E5-G11, E5-G12), UIA-F-227 (E5-G13, E5-G14) and #33b (E5-G10, BUILD). Records #31f as RETIRE CURED (E5-G15 its hold).
 
 ## 9 · Gestalt passes (P-1)
 

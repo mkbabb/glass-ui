@@ -7,8 +7,8 @@
 | HEAD | `fabc95e2` in a scratch worktree. macOS 26.4.1 (`sw_vers`), Safari 26.4 (`safaridriver --version` → "Included with Safari 26.4 (21624.1.16.11.4)"). No Safari session was attempted at this seat; the operative pref was read with `plutil` |
 | ships in | 11.0.0 |
 | families | F-07 whole (`audit/REGISTRY.md:240-252`) |
-| depends on | W-A.1 (the harness and the manifest resolver the cells use), OW-3 (owner) |
-| dependants | every wave with a Safari cell: until step 0 passes, those cells are recorded UNMEASURED (PLAN §1, "Engines") |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

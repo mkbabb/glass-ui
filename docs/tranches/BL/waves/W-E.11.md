@@ -7,8 +7,8 @@
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, `dist/` and `dist-demo/` built there |
 | ships in | 11.0.0 |
 | families | F-35 |
-| depends on | W-A.3 (wired set) |
-| dependants | none |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

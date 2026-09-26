@@ -8,8 +8,8 @@
 | kind | a disease row decided and built (F-53: W-PERF and W-BOOT-SHELL rode BI, BJ and BK OPEN, `ledger/census-register-b.md:50,58`; `CHARTER.md:23`). Not a loop wave |
 | ships in | 11.0.0 |
 | families | F-53 whole (`audit/REGISTRY.md:1250-1262`); #39's RT-39C (routed to F-53, `census-register-a.md:48`) |
-| depends on | W-H.2 (the low-power register is built on its rung variables, and its stand-downs change the counts the budget records); W-A.4 (the GPU-backed CI leg the count gates run on) |
-| dependants | W-L.8 (the close reads the budget datum) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | ruler | this seat for the low-power decide (R2-09-06 is an audit finding, not an owner ask); OW-9 is not needed |
 | engines | Chromium 149.0.7827.55 headless with WebGPU on Metal (`--enable-unsafe-webgpu --ignore-gpu-blocklist --use-angle=metal`). Real Safari UNMEASURED (OW-3); a Safari count leg needs W-A.6 |
 
@@ -40,13 +40,11 @@ Measured here (appendix A, `perf.mjs`; appendix B, `sheet-passes.mjs`; 1440×900
 | `/foundations/typography` | 3 (2) | 360 | **2.00** |
 | `/containers/sheet`, closed | 13 (lenses counted without pseudo-elements) | 360 | **5.00** |
 | `/containers/sheet`, detented sheet open (RT-39C) | 16 | 360 | **6.00**: the detented sheet adds one pass per frame |
-
 | boot (390×844, 150 ms RTT, 1.6 Mbps down, 4× CPU; production `dist-demo`) | run 0 | run 1 |
 |---|---|---|
 | first-contentful-paint | **6,508 ms** | **6,432 ms** |
 | responseEnd / DOMContentLoaded / load | 202 / 4,690 / 5,046 ms | 198 / 4,667 / 5,016 ms |
 | bytes inside `#app` in the first HTML | **0** | 0 |
-
 | capability arm (`/`) | WebGPU adapter | WebGL context | `.dock-plate` `backdrop-filter` |
 |---|---|---|---|
 | GPU (Metal) | yes | yes | `blur(16px) saturate(1.2)` |
@@ -77,9 +75,8 @@ R2-09-09's unthrottled production FCP (264-692 ms) did not test the premise; und
 | G2 · the budget holds | `npm run perf:count` against `budget.json` | every route at or under its datum | hold line once G1 lands. HEAD's counts (§2) are the ceiling the datum may not exceed: `/` 5.00, `/dock/overview` 1.01, `/foundations/typography` 2.00, sheet closed 5.00, detented 6.00 passes per frame |
 | G3 · the boot shell paints first | `perf.mjs`'s boot row on the landed `dist-demo` (appendix A: 390×844, 150 ms RTT, 1.6 Mbps, 4× CPU) | first-contentful-paint ≤ 1,000 ms on 2 of 2 runs, and the first HTML's `#app` is non-empty | **FAIL**: 6,508 and 6,432 ms; 0 bytes |
 | G4 · the low-power register | `perf.mjs`'s low-power rows | software arm: `<html data-glass-power="low">` and `.dock-plate` computes `backdrop-filter: none`; GPU arm: no attribute and the blur kept | **FAIL**: software arm `blur(16px) saturate(1.2)`, no attribute |
-| G5 · the decisions are terminal | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows L01b-60,L01b-69,L05b-20,R2-09-05,R2-09-06,R2-09-09,#60,#69,RT-39C` | exit 0 | **exit 1**: `Cannot find module …/verify-ledger.mjs` (W-B.1 builds it) |
 
-G2 is not born RED: a budget is a ratchet, and HEAD is its ceiling. The born-RED rows are G1, G3, G4 and G5. G1's plant is its selftest; G3's shell and G4's register each fail on HEAD's tree and pass only when built.
+G2 is not born RED: a budget is a ratchet, and HEAD is its ceiling. The born-RED rows are G1, G3 and G4. G5 (`verify-ledger --rows …`) is struck: the decisions' terminals are the LEDGER's (#60a at :155, #69 at :174), and G1, G3 and G4 enact them (PLAN §1). G1's plant is its selftest; G3's shell and G4's register each fail on HEAD's tree and pass only when built.
 
 ## 6 · π and DELTA obligations
 

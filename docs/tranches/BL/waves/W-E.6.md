@@ -7,8 +7,8 @@
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree; probes drive the band-E fixture app scene `chips` (W-E.1 appendix B) |
 | ships in | 11.0.0 |
 | families | F-26, F-27, F-28 (#43 W-CHIP; the X-gate row at `BJ/addenda/2026-07-24-refinement/DESIGN-NOW.md:483-490`, X-G4 as amended there to admit 4) |
-| depends on | W-A.3 (wired set), W-B.7 (#44 retired: the tags field is not rebuilt, so no chip composition for it is sequenced here) |
-| dependants | W-J.1 (PLAN §5: the selectable multi-line tile reads the chip's selected register) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -111,7 +111,7 @@ No sibling repo imports `./chip` (§2), so none of these rows needs a consumer a
 
 ## 8 · Ledger rows
 
-Closes #43 and F-26, F-27, F-28. X-G7 is recorded as cured at HEAD, with the reading above as its evidence.
+Closes #43 and F-26, F-27, F-28, and UIA-F-140 (the `:root` composite; E6-G1, its 1 of 5 fills). X-G7 is recorded as cured at HEAD, with the reading above as its evidence.
 
 ## 9 · Gestalt passes (P-1)
 

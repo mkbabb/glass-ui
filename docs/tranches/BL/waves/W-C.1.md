@@ -7,8 +7,8 @@
 | HEAD | `26d193b7` in a scratch worktree (the task named `f3ad78d0`; every commit between is under `docs/tranches/BL/`). `git diff --stat v10.1.0 HEAD -- src` prints nothing |
 | ships in | 11.0.0 (band C, PLAN §2) |
 | families | F-61 whole (`audit/REGISTRY.md:1338-1345`) |
-| depends on | W-A.1 (PLAN §5: its step 6 moves `tests-visual/` output to `.cache/visual/`; this wave extends the same root to everything else) |
-| dependants | W-B.11's B11-G3 (bound here), every design-loop wave (its harness moves in §3.4), W-L.8 (the close checks `scripts/loops/` is gone) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 

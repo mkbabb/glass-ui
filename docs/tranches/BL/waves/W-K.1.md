@@ -7,8 +7,8 @@
 | HEAD | `9866d229` (the task named `f3ad78d0`; `git diff --stat f3ad78d0 HEAD -- src demo package.json` is empty, so `src` is the published 10.1.0). Probes ran in the scratch worktree `scratchpad/formation/band-K/wt` against the packed HEAD build (`npm pack` of that tree) installed in a consumer app, and against the built demo |
 | ships in | 11.0.0 |
 | families | F-81 (all four members) |
-| depends on | W-A.3 (PLAN §5: the wired visual suite takes this wave's spec). Added edge: W-C.5 (the one root scheme authority), because a stylesheet adopted only by a shadow root reads the dark arm through the inherited `color-scheme`, which W-C.5 makes the only dark channel |
-| dependants | W-K.6 (the keystroke predicate folds this wave's composed-target read), W-K.3 (the trap edges this wave writes are the layer's) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | harness | appendix B (shared by W-K.1 .. W-K.10): the fixture app, its two builds (reka 2.10.5, what a fresh consumer resolves, and reka 2.10.1, the library's lock), the demo preview, and `lib.mjs` |
 
 ## 1 · What it closes
@@ -170,7 +170,7 @@ export const PORT = process.env.KAPP_PORT || '6272';
 export const APP = `http://localhost:${PORT}/pages/k.html`;
 export const SAPP = `http://localhost:${PORT}/pages/s.html`;
 export const DEMO = 'http://localhost:6271';
-export const CAP = '<scratch>/formation/band-K/cap';
+export const CAP = '.cache/evidence/W-K.1/cap';
 fs.mkdirSync(CAP, { recursive: true });
 export const load = () => os.loadavg().map((x) => x.toFixed(2)).join('/');
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree (the task named `f3ad78d0`; the 13 commits between are docs-only: `git diff --stat f3ad78d0 HEAD -- src tests scripts .github package.json` prints nothing). `src` is the published 10.1.0 |
 | ships in | 11.0.0 (the ledger is a tranche record; the checker ships in `scripts/`, not in the package) |
 | families | F-11 whole (`audit/REGISTRY.md:292-299`) |
-| depends on | — (formation). The formation LEDGER seat writes `LEDGER.md`; this wave is that act plus its checker |
-| dependants | W-B.2 .. W-B.15 (each writes its rows into this ledger); W-L.8 (the close runs the checker with `--close`) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -27,7 +27,7 @@
 
 ## 2 · The defect at HEAD
 
-- **No ledger.** `test -f docs/tranches/BL/LEDGER.md` exits 1. The census (`ledger/CENSUS.md`) holds 135 rows with HEAD words LANDED 14, PARTIAL 60, OPEN 44, BLOCKED 7, OWNER-GATED 4, RETIRED 6 (`CENSUS.md:20-25`). Those are status words, not terminals: 115 of the 135 carry no BUILD, FOLD, RETIRE, ANSWERED or DECLINE. `INBOUND.md:5` promises each inbound row "a terminal disposition in `LEDGER.md` at formation"; the file does not exist.
+- **The ledger exists; its checker does not.** The formation LEDGER seat wrote `docs/tranches/BL/LEDGER.md` (committed at `ae8370e0`; `test -f` exits 0 at `183e021a`, read by fix-2). Before it, the census (`ledger/CENSUS.md`) holds 135 rows with HEAD words LANDED 14, PARTIAL 60, OPEN 44, BLOCKED 7, OWNER-GATED 4, RETIRED 6 (`CENSUS.md:20-25`). Those are status words, not terminals: 115 of the 135 carry no BUILD, FOLD, RETIRE, ANSWERED or DECLINE. `INBOUND.md:5` promises each inbound row "a terminal disposition in `LEDGER.md` at formation"; LEDGER §6-§7 and appendix A now carry them.
 - **Routes to rows that do not exist, in the tree.** `git grep -nE '(fenced on|routed? (to|→)|rides|owed to|OWED|→) *`?(B[A-Z]\.)?W-[A-Z]{2,}' -- src tests scripts` prints 4 lines at HEAD:
   - `tests/components/field/forms-seam.test.ts:83` "KNOWN-RED half, fenced on W-CONTROL-REGISTER (§9 row 1)" (a row that never existed, L01b-82);
   - `tests/components/field/forms-seam.test.ts:91` "fill α fenced on W-FROST" (a BK wave name, closed);
@@ -38,25 +38,25 @@
 
 ## 3 · The cure
 
-1. **`docs/tranches/BL/LEDGER.md`**, one table, one row per carried item:
+1. **`docs/tranches/BL/LEDGER.md`** (written at formation; this wave does not rewrite it), one table, one row per carried item:
 
    `| row | source | HEAD word | terminal | wave | ruler | rationale or owner quote |`
 
    - `row`: the census id (`#n`, `C-n`, `E-n`, `D-n`, `P-n`, `N-n`), the owner item (`OW-n`), the inbound id with its sender reference (W-B.2's `value.js:O-47` form), or an INBOUND-MAP row id (`UIA-*`, `KFA-*`, `A2-*`, `O-nn R-n`).
-   - `terminal` is one of **BUILD**, **FOLD**, **RETIRE**, **ANSWERED**, **DECLINE**, **CURED** (landed at HEAD with the measurement cited). OPEN, PARTIAL, BLOCKED, DEFERRED, OWED and OWNER-GATED are not terminals.
+   - `terminal` is one of the charter's four words (CH:44), whose one statement is LEDGER §0: **BUILD**, **FOLD**, **BANKED** (with a named re-trigger), **RETIRE** (with a rationale that opens with its class where one applies: CURED, ANSWERED, DECLINE or NOT-REPRODUCED). OPEN, PARTIAL, BLOCKED, DEFERRED, OWED, OWNER-GATED and UNPLACED are not terminals.
    - BUILD and FOLD name a wave in `waves/INDEX.md`. RETIRE and DECLINE carry a rationale; the RETIRE of an owner ask carries the owner's words with a date, or the OW row that asks for them.
    - A row whose items span waves is split into item rows (`#51a`, `#51b`), each with one wave. The census's item columns (`CENSUS.md` §2) are the split list.
    - §4 of the file is the **owner docket**: one row per OW item with the question, the seat's default, the owner's verbatim answer and date, or `pending`. W-B.4, W-B.5, W-B.6, W-B.10, W-B.13, W-B.14 and W-B.15 write their owner questions here.
 
 2. **`scripts/tranche/verify-ledger.mjs <tranche-dir> [--rows id,…] [--close]`.** It exits 1 when:
    - an id in the expected set has no row, or has two. The expected set is read, never typed: the first column of `ledger/census-register-a.md`, `census-register-b.md` and `census-carries-recap.md`, the OW items of `CENSUS.md` §4, every row id of `audit/INBOUND-MAP.md`, and every id in `audit/INBOUND.md`;
-   - a terminal is not one of the six words;
+   - a terminal is not one of LEDGER §0's four words, a BANKED row names no re-trigger, or a RETIRE row's class (where given) is not one of the four;
    - a BUILD or FOLD row names a wave with no `waves/<id>.md` and no INDEX row;
    - a RETIRE or DECLINE row has an empty rationale, or an owner-ask row (source class `N-`, `D-`, `OW-`, a BD/BI/BJ/AY recap id, or an inbound owner quote) retires with neither an owner quote nor an owner-docket row;
    - any `W-x.n` id cited in `PLAN.md`, `waves/*.md` or `LEDGER.md` has no INDEX row (the F-11 mechanism, checked over the plan as well as the ledger);
    - with `--close`, any owner-docket row reads `pending`. W-L.8 records a pending row as its wave's terminal state with the owner act named (PLAN §1), and the close run prints each one.
 
-   `--rows` limits the report to named rows; each band-B wave uses it as its own record gate. The script lives in `scripts/` (F-61: no tooling under `docs/`) and is tranche-generic: it reads the census, map and plan paths relative to the tranche dir, so a later tranche reuses it unchanged.
+   `--rows` limits the report to named rows, for a reader's lookup. No wave gates on it: a decide wave's gates are its enactment in the tree, and an owner-ruled row's gate is its docket line (PLAN §1). The script lives in `scripts/` (F-61: no tooling under `docs/`) and is tranche-generic: it reads the census, map and plan paths relative to the tranche dir, so a later tranche reuses it unchanged.
 
 3. **L01b-X2's seven orphan names**, one row each:
 
@@ -98,13 +98,11 @@ Run at `19bf6569` in the scratch worktree; the battery is `scratchpad/formation/
 
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
-| B1-G1 · the ledger exists | `test -f docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** |
 | B1-G2 · every row terminal, every route real | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL` | exit 0 | **exit 1**: `Error: Cannot find module '…/scripts/tranche/verify-ledger.mjs'` |
 | B1-G3 · no in-tree route to a dead row | `! git grep -nE '(fenced on\|routed? (to\|→)\|rides\|owed to\|OWED\|→) *`?(B[A-Z]\.)?W-[A-Z]{2,}' -- src tests scripts` | exit 0 | **exit 1**: 4 lines (§2) |
 | B1-G4 · the checker bites | a copy of `LEDGER.md` with one BUILD row's wave set to `W-Z.9`, then `verify-ledger.mjs` on the copy's dir; again with one terminal set to `OPEN`; again with one census row deleted | exit 1 each, naming the row | the checker is absent |
-| B1-G5 · the orphan names and the BG block are rowed | `verify-ledger.mjs docs/tranches/BL --rows W-CONTROL-REGISTER,W-GLASS-DEDUP,W-CONTROL-CHASSIS,W-BLUR-LADDER,W-SLIDER-PROGRESS,DIRECTORY-SHAPE,CT-7,BG-ONWARD-1..8` | exit 0 | **exit 1** (absent) |
 
-B1-G2 alone could pass on a ledger whose expected set was typed short. The expected set is derived from the census and map files (§3.2), and B1-G4's third plant (a deleted census row) proves the derivation is read.
+B1-G1 (`test -f LEDGER.md`) is struck: it exits 0 at `183e021a` (the ledger was committed at `ae8370e0`). B1-G5 is struck: the orphan names and the BG block are rows at LEDGER:388-406 (§6.1), and B1-G2's run over the whole file reads them. B1-G2 alone could pass on a ledger whose expected set was typed short. The expected set is derived from the census and map files (§3.2), and B1-G4's third plant (a deleted census row) proves the derivation is read.
 
 ## 6 · π and DELTA obligations
 

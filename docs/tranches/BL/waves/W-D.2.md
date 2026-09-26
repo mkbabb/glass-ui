@@ -7,8 +7,8 @@
 | HEAD | `8141658d` (the task named `f3ad78d0`; `git diff --stat f3ad78d0 HEAD -- . ':!docs'` prints nothing). Measured in scratch worktree `wt` at HEAD, in `wt2` (HEAD with route B's committed pass-4 chain replayed, digest `472cf49336969d4f…`, `chain final MATCH`), and in a fixture repository built for the pass case |
 | ships in | 11.0.0 |
 | families | F-60 whole (`audit/REGISTRY.md:1326-1336`); L14-01's execution (its decision is W-D.1's, F-55) |
-| depends on | W-D.1 (the landed seal, floor, entry record and harness are what this wave extends); W-A.3 (`visual.yml`, which this wave points at the one verify build); W-B.13 (the `release.yml` auth edit); W-A.4 (the receipt check in `release.yml`); W-A.1 (`tests-visual/_support/`, the tests-visual half of L14-06) |
-| dependants | W-L.6 (the P-6 census reads the settled periphery), W-L.8 (the close checklist) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 Short cites: `REG:n` is `audit/REGISTRY.md`; `D1:n` is `design/structure/REGISTRY.md`; `RUL` is `design/structure/RULINGS.md`; `LAW §n` is `design/structure/pass-4/B-kit/LAW.md`.
 

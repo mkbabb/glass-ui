@@ -1,16 +1,16 @@
-# W-I.4 · W-DOCK-COMPOSE-DECIDE: the dock composition facilities decided on the converged dock · 11.0.0
+# W-I.4 · W-DOCK-COMPOSE-DECIDE: the dock composition facilities, decided inside D2 (loop D2) · 11.0.0
 
 | field | value |
 |---|---|
 | seat | band-I wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `8536f2cc` in a scratch worktree; `src` is the published 10.1.0 |
-| kind | a DECIDE wave (the charter's form for a disease row: F-14's asks rode BI, BJ and BK without a terminal, `CHARTER.md:23`). Not a loop wave, but it decides against D2's converged dock, so it runs after W-I.1 |
+| kind | a DECIDE wave (the charter's form for a disease row: F-14's asks rode BI, BJ and BK without a terminal, `CHARTER.md:23`) and a loop D2 wave (fix-2, FA-15): the composition subjects are dock design questions, so D2 carries each as a witness row or a RETIRE question (PLAN §4 obligations), and this wave lands D2's rulings on the converged dock. The registry placed W-DOCK-COMPOSE-DECIDE "inside the dock design loop" (`audit/REGISTRY.md:339`) |
 | ships in | 11.0.0 (the BUILD rows land in this wave) |
 | families | F-14, the R2-06-01 split (`audit/REGISTRY.md:326`, `:334`) |
-| depends on | W-I.1 (the converged dock these rows compose or retire against); W-B.1 (the ledger and its checker); W-B.3 (the rows are carried in `ledger/RECAP.md` first); W-B.4 (the owner docket that carries every RETIRE question, OW-9) |
-| dependants | W-K.6 (the link-verb row folds into "destinations are links"); W-L.6 (the P-6 census counts any surface built here); W-L.8 (FINAL lists a terminal whose owner act is missing) |
-| ruler | the owner for every RETIRE of an owner ask (OW-9, `ledger/CENSUS.md:233`); this seat for the FOLD and BUILD rulings, each with its gate |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
+| ruler | the owner for every RETIRE of an owner ask (OW-9d, `ledger/CENSUS.md:233`); this seat for the FOLD and BUILD rulings, each with its gate |
 | instruments | `seq-probe.mjs` (appendix A) over the demo build; it lands under `scripts/probes/band-I/` and its rows join W-A.3's wired set |
 
 ## 1 · What it closes
@@ -31,7 +31,7 @@ R2-06-01's 11 owner rows (`audit/round-2/R2-06.md:28,48`), grouped by subject. H
 
 ## 2 · The defect at HEAD
 
-Eleven owner asks with no terminal disposition since BD. BI's dock-retire JSON disposed eight other dock items, and BK #47's spec omitted these (L05b-06). There is no ledger and no checker at HEAD: `test -f docs/tranches/BL/LEDGER.md` exits 1; `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows BDU-R20` fails with `Cannot find module` (run here; W-B.1 builds both).
+Eleven owner asks with no terminal disposition since BD. BI's dock-retire JSON disposed eight other dock items, and BK #47's spec omitted these (L05b-06). The formation LEDGER carries the subject row (R2-06-01, LEDGER:455) and the owner docket row this wave answers (OW-9d, LEDGER §4); the per-subject rulings are this wave's, inside D2.
 
 The two subjects that exist in code fail in paint on the demo (`seq-probe.mjs`, Chromium, run here on the HEAD demo build):
 
@@ -46,25 +46,25 @@ Playwright WebKit crashes on every dock route at HEAD (W-I.1 §2.2); these rows 
 
 ## 3 · The cure: one terminal per subject
 
-Each subject gets exactly one of BUILD (with a born-RED e2e, built here), FOLD (into a named wave that already owns the mechanism, with that wave's gate) or RETIRE (with rationale; an owner ask's RETIRE carries the owner's quote through W-B.4's docket, OW-9). The seat's rulings:
+Each subject gets exactly one of BUILD (with a born-RED e2e, built here), FOLD (into a named wave that already owns the mechanism, with that wave's gate) or RETIRE (with rationale; an owner ask's RETIRE carries the owner's quote through W-B.4's docket, OW-9d). The seat's rulings:
 
 | subject | ruling | ground | gate |
 |---|---|---|---|
 | S1 · link verb | **FOLD into W-K.6** ("destinations are links"). The verb is `DockControl as-child` around the consumer's router link; no `useDockLink` is minted | one verb exists and is typed; a second (a composable that wraps the first) is a second path to one fact (E-1, P-3). What is missing is the shell using it, which is F-42's row | W-K.6's link row; this wave adds the dock case to it: the shell's destinations render `<a href>` with `aria-current="page"` on the current one and no `aria-pressed` |
-| S2 · dock-as-hub, fullscreen bloom | **FOLD** the hub into the converged dock: `DockLayerGroup` layers are the facility slots and `shape="card"` is the bloom's rung, both riding the one spring (W-I.1 §3.3 row 1). **RETIRE** the fullscreen bloom (OW-9) | the dock has one morph; a bloom from the dock into a page surface is a second carrier across two components with no consumer (E-5, E-7). `ExpandableContainer` owns page-content expansion | the S7 rows (the layer legs ride one extent) and W-I.1's W1 card cells |
-| S3 · three islands | **RETIRE** (OW-9) | no consumer composes three docks; three `GlassDock`s side by side need nothing the library lacks, and W-I.1's refcounted scroll binder already covers docks that share a scroller (A X-1). A library "constellation" component would have one site (E-7) | — |
+| S2 · dock-as-hub, fullscreen bloom | **FOLD** the hub into the converged dock: `DockLayerGroup` layers are the facility slots and `shape="card"` is the bloom's rung, both riding the one spring (W-I.1 §3.3 row 1). **RETIRE** the fullscreen bloom (OW-9d) | the dock has one morph; a bloom from the dock into a page surface is a second carrier across two components with no consumer (E-5, E-7). `ExpandableContainer` owns page-content expansion | the S7 rows (the layer legs ride one extent) and W-I.1's W1 card cells |
+| S3 · three islands | **RETIRE** (OW-9d) | no consumer composes three docks; three `GlassDock`s side by side need nothing the library lacks, and W-I.1's refcounted scroll binder already covers docks that share a scroller (A X-1). A library "constellation" component would have one site (E-7) | — |
 | S4 · stadium pill | **FOLD into W-I.1** (the plate is a stadium at every rest) | the ask is exactly F-18's cure | W-I.1 G1 (W1 22/22, both engines) |
-| S5 · ghost satellite | **RETIRE** the detached satellite (OW-9); the recessed seat register is `[data-tier="secondary"]` | a recessed register exists and ships; a detached second dock is S3's case | — |
-| S6 · goo spacing; small-vs-large flip | **RETIRE** the goo merge (OW-9). **FOLD** the flip into W-I.1 (the collapsed ↔ expanded morph) | a goo merge is a second silhouette engine beside the plate's stadium geometry, the subject BI retired with S9; neither D2 route carries one, and D2-D's drawn silhouette is BANKED on a refuted primitive (`design/dock/REGISTRY.md:135-157`) | W-I.1 G3 (W3 warm pair) |
+| S5 · ghost satellite | **RETIRE** the detached satellite (OW-9d); the recessed seat register is `[data-tier="secondary"]` | a recessed register exists and ships; a detached second dock is S3's case | — |
+| S6 · goo spacing; small-vs-large flip | **RETIRE** the goo merge (OW-9d). **FOLD** the flip into W-I.1 (the collapsed ↔ expanded morph) | a goo merge is a second silhouette engine beside the plate's stadium geometry, the subject BI retired with S9; neither D2 route carries one, and D2-D's drawn silhouette is BANKED on a refuted primitive (`design/dock/REGISTRY.md:135-157`) | W-I.1 G3 (W3 warm pair) |
 | S7 · one organism | **BUILD**, as a sequence e2e over the facilities that exist: nav → subdock → back → minimize → expand → search, each leg one continuous extent. The split leg is **RETIRED** with Q-9 (fission) | every leg but split is a shipped facility; the ask is that they read as one body, which W-I.1's one-spring rule makes true and this e2e holds across the sequence | G3, G4 (born RED: 82.44 px in one frame each way) |
 | S8 · search terminus bloom | **BUILD** on its story: the dock-search story becomes a `collapse="closed"` dock whose summary is the search pill, and arming it blooms the field on the one spring | the mechanism exists (`useDockSearch`); its story never shows it | G5 (born RED: the arm control never paints) |
 | S9 · silhouette engine | **RETIRE**, the BI ruling quoted into the ledger row | retired at BI; D2's routes keep the plate's box geometry; D2-D's `shape()` fill is refuted in Chromium (PF-4) | — |
 
-The owner is asked once, in W-B.4's docket: one question listing S2's fullscreen bloom, S3, S5's satellite, S6's goo merge and S7's split leg, each with its source row, and the answer is quoted verbatim into each ledger row. On owner silence at W-L.8, each such row's terminal is "RETIRE recommended, OW-9 not answered", listed in FINAL.md, never re-booked. If the owner answers BUILD for a row, that row takes a born-RED from W-I.1's harness (a new scene) before its code lands, and this wave builds it.
+The owner is asked once, in W-B.4's docket: one question listing S2's fullscreen bloom, S3, S5's satellite, S6's goo merge and S7's split leg, each with its source row, and the answer is quoted verbatim into each ledger row. On owner silence at W-L.8, each such row's terminal is "RETIRE recommended, OW-9d not answered", listed in FINAL.md, never re-booked. If the owner answers BUILD for a row, that row takes a born-RED from W-I.1's harness (a new scene) before its code lands, and this wave builds it.
 
 ## 4 · Files it touches
 
-- `docs/tranches/BL/LEDGER.md` (one row per subject, OW-9), `docs/tranches/BL/ledger/RECAP.md` (the 11 carry rows cite this wave).
+- `docs/tranches/BL/LEDGER.md` (one row per subject, OW-9d), `docs/tranches/BL/ledger/RECAP.md` (the 11 carry rows cite this wave).
 - BUILD S7: `scripts/probes/band-I/seq-probe.mjs` (appendix A) extended to the full sequence on `/dock/layers` and the shell BottomDock; its rows join W-A.3's wired set.
 - BUILD S8: `demo/stories/dock/dock-search.vue:179-196` (the dock collapses; the pill is its summary). No `src` change unless W-I.1's converged spec leaves the search face outside the one spring, in which case `src/components/dock/composables/useDockSearch.ts` routes the arm through the chart's `send()`.
 - FOLD S1: a row added to W-K.6's gate list (the shell's destinations as links).
@@ -73,14 +73,13 @@ The owner is asked once, in W-B.4's docket: one question listing S2's fullscreen
 
 | id | gate | passes when | HEAD reading (run here) |
 |---|---|---|---|
-| G1 · every subject terminal | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows BDU-R20,BDU-R24,BDU-R26,BDU-R27,BDU-R28,BDU-R29,BDM-B1,BDH-R5.B1,BD2-A44,BD2-A46,BD2-A47,OW-9` | exit 0: each row BUILD with this wave and an e2e, FOLD with a wave that exists in `waves/INDEX.md` and a named gate, or RETIRE with a rationale and the owner's quote or the OW-9 docket row | **exit 1**: `Cannot find module …/scripts/tranche/verify-ledger.mjs` (W-B.1 builds it) |
-| G2 · a silent RETIRE is caught | G1 on a ledger copy with OW-9's docket row removed | exit 1 | — (the checker's own planted bite) |
+| G1 · the owner has ruled the RETIREs | `! grep -qE '^\\| OW-9d \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (OW-9d `pending`; fix-2) |
 | G3 · S7, the subdock legs | `node scripts/probes/band-I/seq-probe.mjs <demo>` rows `S7/SUBDOCK-IN`, `S7/SUBDOCK-OUT` | the largest single-frame step ≤ 25 % of the travel and ≥ 3 distinct extents, both engines | **FAIL 2 of 2** Chromium: 82.44 of 82.44 px in one frame, 2 distinct extents; Playwright WebKit crashes on the route |
 | G4 · S7, the whole sequence | the extended `seq-probe.mjs` sequence row (nav → subdock → back → minimize → expand → search on one dock) | every leg passes G3's bound | **FAIL** at its subdock legs (G3); the other legs are W-I.1 G3's warm pair, RED at HEAD (one step ×8.12 on the first expand, a 541-602 ms window) |
 | G5 · S8, the bloom on its story | row `S8/SEARCH-BLOOM` | the pill paints, the click arms it, and the extent blooms under G3's bound, both engines | **FAIL**: the arm control never paints (click timeout; `visibility: hidden`, inert summary layer) |
 | G6 · the carry | `node scripts/tranche/verify-recap.mjs docs/tranches/BL` (the 11 rows present, terminal W-I.4) | exit 0 | **exit 1**: `Cannot find module` (W-B.3 builds it) |
 
-No RETIRE has a code gate: those subjects have no code at HEAD, so no code gate can be RED for them. G1 and G2 are the gate, and G2 shows the checker refuses a silent retire. G3-G5 can pass: the probe's `CONTROL/CONTINUOUS` row samples a planted 400 ms width transition (100 → 300 px) on the same page with the same sampler and reads PASS at HEAD (largest step 7.87 px of 200, 46 distinct extents, 109 frames, Chromium, run here), while the subdock legs read one 82.44 px step.
+No RETIRE has a code gate: those subjects have no code at HEAD, so no code gate can be RED for them. G1, the owner's docket line, is their gate.
 
 ## 6 · π and DELTA obligations
 
@@ -100,7 +99,7 @@ None. No RETIRE removes a shipped surface (none of the retired facilities has co
 
 ## 8 · Dependencies and ledger rows
 
-Depends on W-I.1, W-B.1, W-B.3 and W-B.4. Closes R2-06-01's 11 rows and OW-9's dock subset. S1's verb is a named row of W-K.6; S2's hub, S4 and S6's flip are W-I.1's gates; nothing is re-booked.
+Its edges are PLAN §5's. Closes R2-06-01's 11 rows and OW-9d, the dock subset of OW-9d. S1's verb is a named row of W-K.6; S2's hub, S4 and S6's flip are W-I.1's gates; nothing is re-booked.
 
 ## Appendix A · `seq-probe.mjs`
 

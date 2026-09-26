@@ -7,8 +7,8 @@
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, demo built there (`npm run demo:dist:build`) |
 | ships in | 11.0.0 |
 | families | F-34 (#18 W-DELETE's compositions prune, #52 W-CONFIG-EXPRESS, #56 W-DEMO-TRUTH, #58 W-PREVIEW-CARD); F-25 (W-STILL-OKLCH); F-20 (the demo shell at the phone cell). Folds: W-B.1 (L05a-03, L01a-18, the compositions prune), W-B.3 (L05b-19, "many more examples"), W-B.4 (R2-06-08: per-page aurora, and the header one √φ rung down). The latches W-A.2 retires here: `tests/demo/story-preview-card.test.ts:487,556` |
-| depends on | W-E.9 (cels are containers; the preview specimens and the configurator envelope build on them) |
-| dependants | none in band E |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -71,6 +71,7 @@ $ rg -c 'function plateField' demo | wc -l
    - MOVE 4: the tier;
    - the gallery split, which deletes `PresetPickerRow.vue`;
    - the `#transport` slot in `Configurator.vue`, with its driving contract `{ paused, headT, setHeadT, flick, speed }`.
+   - the row's inline mode (UIA-V-397, A2-VA-L3-3): `ConfiguratorRow` is `container: row / inline-size` and lays label and readout on one line with the readout in a right-aligned column when the row has the room; it drops the unconditional `flex flex-col` (`ConfiguratorRow.vue:119`).
 
    The rem-floored stage was W-E.9's.
 4. **Demo truth (#56).** ShowcaseFrame's resting tier resolves `surface: "glass"`, not `"opaque"`. `plateField` is deleted from both stories, which render on the library's page substrate instead of a demo-painted field.
@@ -97,8 +98,9 @@ $ rg -c 'function plateField' demo | wc -l
 | E10-G6 · shell strip | appendix A G6 at coarse 390 | 0 bad routes (strip ≥ 88 px, current tab visible) | **80 of 80 bad** |
 | E10-G7 · short viewport | appendix A G7 at 320×256 | ≤ 25 % covered on 3 routes | **2 of 3 FAIL** (0.715, 0.645) |
 | E10-G8 · configurator and prune | `! test -e demo/stories/substrates/aurora/PresetPickerRow.vue && grep -q 'name="transport"' src/components/configurator/Configurator.vue && ! test -d demo/stories/compositions && test "$(rg -c 'function plateField' demo \| wc -l)" -eq 0` | exit 0 | **exit 1** (present; 0 slots; present; 2) |
+| E10-G9 · the row's inline mode (static; UIA-V-397, A2-VA-L3-3) | `! grep -q "configurator-row flex flex-col" src/components/configurator/ConfiguratorRow.vue` | exit 0 | **exit 1** (`:119`) |
 
-Can each fail and pass? Every browser row fails at HEAD except G7's `/forms/buttons` cell, the passing control. The unit rows fail when flipped. G8 is static. The MOVE 1-4 acts have no single born-RED in this table. Their π is the configurator capture in §6, and their checklist is the census line quoted in §1.
+Can each fail and pass? Every browser row fails at HEAD except G7's `/forms/buttons` cell, the passing control. The unit rows fail when flipped. G8 and G9 are static and exit 1. The MOVE 1-4 acts have no single born-RED in this table. Their π is the configurator capture in §6, and their checklist is the census line quoted in §1.
 
 ## 6 · π and DELTA obligations
 
@@ -118,7 +120,7 @@ The demo is not published API. `Configurator`'s `#transport` slot is additive: a
 
 ## 8 · Ledger rows
 
-Closes #18 (the compositions prune), #52, #56 and #58; F-25; F-20. Also closes the W-B.1 folds L05a-03 and L01a-18, the W-B.3 fold L05b-19 and the W-B.4 fold R2-06-08. The two `story-preview-card` latches retire. R2-08-15 closes with the prune. The seed ceiling (G-CHROMA/G-MOOD-STILL) is recorded as folded to W-G.5.
+Closes #18 (the compositions prune), #52, #56 and #58; F-25; F-20. Closes the F-34 mechanism rows UIA-V-397 and A2-VA-L3-3 (E10-G9). Also closes the W-B.1 folds L05a-03 and L01a-18, the W-B.3 fold L05b-19 and the W-B.4 fold R2-06-08. The two `story-preview-card` latches retire. R2-08-15 closes with the prune. The seed ceiling (G-CHROMA/G-MOOD-STILL) is recorded as folded to W-G.5.
 
 ## 9 · Gestalt passes (P-1)
 

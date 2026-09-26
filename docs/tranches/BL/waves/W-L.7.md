@@ -7,8 +7,8 @@
 | HEAD | `b3d7fa28` in a scratch worktree; `src` identical to v10.1.0; `dist/` built and packed there (`npm pack` → `mkbabb-glass-ui-10.1.0.tgz`). Sibling repos read only |
 | ships in | 11.0.0 (the packets are written against the 11.0.0 release commit, before the tag) |
 | families | F-68 remainder (`audit/REGISTRY.md:1450-1465`): the 11.0.0 packets and relay. Members L15a-F4, L15a-F3, L15a-F5, L15a-F10, L15a-F12, L06-01, L06-07, L06-12, L06-13, L01b-76, L05b-13, L10-08, L11-11, R2-03-10, R2-03-11, R2-07-11. The 10.2.0 relay leg is W-0.7's |
-| depends on | W-L.1, W-L.2, W-L.3, W-L.4, W-L.5, W-L.6 (PLAN §5); W-B.2 (the BL outbox the letters go through); W-0.7 (the 10.2.0 letters this wave follows) |
-| dependants | W-L.8 (the cut does not tag until the packets are written) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | engines | none for the packets. Visual claims are the source waves' |
 
 ## 1 · What it closes
@@ -67,7 +67,7 @@ The eight consumers on the 10.1.0 line read zero hard breaks against 10.1.0, as 
 
 **chicago's three overrides** (`chicago/src/style.css`): `:131` `--dock-cap-rest: 9999px`; `:137` `.dock-run { overflow: visible }`; `:140-141` the tier floors `max(var(--glass-veil-dock), 0.62)` and `max(var(--glass-veil-wash), 0.62)`.
 
-**Outbox**: `ls docs/tranches/BL/coordination` → absent. The roster of record omits chicago, scaena and bbnf-buddy (W-L.6 §2).
+**Outbox**: `ls docs/tranches/BL/outbox` → absent. The roster of record omits chicago, scaena and bbnf-buddy (W-L.6 §2).
 
 ## 3 · The cure
 
@@ -85,7 +85,7 @@ The eight consumers on the 10.1.0 line read zero hard breaks against 10.1.0, as 
 
 ### 3.2 The consumers and the relay
 
-Packets go to all 13 roster consumers. The four on older majors (sci-report, muster, words, bbnf-lang) get the same packet; their hard-break section is long and is the whole point. Letters go through W-B.2's outbox as `docs/tranches/BL/coordination/glassui-outbound-<date>-11.0.0-<consumer>.md`. value.js's orchestrator relays for keyframes.js and fourier, as it did for 10.2.0 (W-0.7 §3 step 9), so those three letters are sent to value.js's inbox together. The relay is sent after the tag is live (W-L.8), with the packet contents fixed at the release commit.
+Packets go to all 13 roster consumers. The four on older majors (sci-report, muster, words, bbnf-lang) get the same packet; their hard-break section is long and is the whole point. Letters go through W-B.2's outbox as `docs/tranches/BL/outbox/glassui-outbound-<date>-11.0.0-<consumer>.md`. value.js's orchestrator relays for keyframes.js and fourier, as it did for 10.2.0 (W-0.7 §3 step 9), so those three letters are sent to value.js's inbox together. The relay is sent after the tag is live (W-L.8), with the packet contents fixed at the release commit.
 
 L06-12's orphaned copies are named in the owner's close glance (W-L.8) as a hygiene list with paths. They are sibling or home-directory trees: glass does not delete them, and the owner rules each.
 
@@ -95,17 +95,17 @@ L06-12's orphaned copies are named in the owner's close glance (W-L.8) as a hygi
 
 ## 4 · Files it touches
 
-New: `scripts/audit/landing-packets.mjs`, `scripts/audit/migration-closure.mjs` (appendix B), `tests/gates/migration-closure.test.ts` (runs it); the 13 letters under `docs/tranches/BL/coordination/`. Edited: `MIGRATION.md` (`:2534`, `:2675`, and the `## 11.0.0` table's successor cells); `.github/workflows/ci.yml` (the closure check).
+New: `scripts/audit/landing-packets.mjs`, `scripts/audit/migration-closure.mjs` (appendix B), `tests/gates/migration-closure.test.ts` (runs it); the 13 letters under `docs/tranches/BL/outbox/`. Edited: `MIGRATION.md` (`:2534`, `:2675`, and the `## 11.0.0` table's successor cells); `.github/workflows/ci.yml` (the closure check).
 
 ## 5 · Acceptance gates
 
 | id | gate | passes when | HEAD reading (ran here) |
 |---|---|---|---|
-| G-L7-1 · a packet per consumer | `for c in value.js keyframes.js fourier atlas chicago slides speedtest bbnf-buddy sci-report scaena muster words bbnf-lang; do ls docs/tranches/BL/coordination/*-11.0.0-$c.md >/dev/null 2>&1 \|\| exit 1; done` | exit 0 | **exit 1**: no outbox |
+| G-L7-1 · a packet per consumer | `for c in value.js keyframes.js fourier atlas chicago slides speedtest bbnf-buddy sci-report scaena muster words bbnf-lang; do ls docs/tranches/BL/outbox/*-11.0.0-$c.md >/dev/null 2>&1 \|\| exit 1; done` | exit 0 | **exit 1**: no outbox |
 | G-L7-2 · packets from the graph | `node scripts/audit/landing-packets.mjs --pack <11.0.0 tgz> --check`: re-derives every packet and diffs it against the letter on disk | exit 0, no diff | **fails**: the generator does not exist. Its hard-break half ran here as appendix A and bites (sci-report 2 absent doors, muster 9 and 12 names, words 5 and 8, bbnf-lang 1 and 1) |
 | G-L7-3 · MIGRATION is closed | `node scripts/audit/migration-closure.mjs` | exit 0 | **exit 1**: 2 failures (`:2534`, `:2675`) |
-| G-L7-4 · chicago's interims are named | `f=$(ls docs/tranches/BL/coordination/*-11.0.0-chicago.md) && grep -q -- '--dock-cap-rest' $f && grep -q 'overflow: visible' $f && grep -q '0.62' $f` | exit 0 | **exit 1**: no letter |
-| G-L7-5 · the silent half bites | the generator's silent-binding section, run on a fixture SFC that binds `<Button variant="ghost">` and `<Dock start-collapsed>` against the release pack | both names listed as silent | **fails**: no generator. The fixture pins the section to the names 7.0.0 and 10.0.0 removed |
+| G-L7-4 · chicago's interims are named | `f=$(ls docs/tranches/BL/outbox/*-11.0.0-chicago.md) && grep -q -- '--dock-cap-rest' $f && grep -q 'overflow: visible' $f && grep -q '0.62' $f` | exit 0 | **exit 1**: no letter |
+| G-L7-5 · the silent half bites | the generator's silent-binding section, run on a fixture SFC that binds `<Button variant="ghost">` and `<Dock start-collapsed>` and sets `--skeleton-glass-bg` (UIA-V-456) against the release pack | all three names listed as silent | **fails**: no generator. The fixture pins the section to the names 7.0.0 and 10.0.0 removed |
 | G-L7-6 · no sibling write | `git diff --name-only <W-L.7 base>..<W-L.7 last> \| grep -v '^docs/tranches/BL/\|^scripts/\|^tests/\|^MIGRATION.md\|^\.github/'` | empty | not applicable before the wave; it holds if the wave writes only its own paths |
 
 ## 6 · π and DELTA obligations
@@ -118,7 +118,7 @@ This wave writes no new break. It edits `:2534` and `:2675`, and G-L7-3 holds ev
 
 ## 8 · Ledger rows
 
-Closes F-68's remainder (every member above), census #66's re-pin gate and #76's adopt remainder (`census-register-b.md:56,62`), E-6 and N-6 (the relay half; N-6's intake half is W-B.2's), N-8b's consumer half, L06-06, L06-07, L06-11's census clause, L06-12 (named to the owner), L06-13 (the successor in fourier's packet; speedtest's half already cured on its side), C-2's chicago overrides. Each consumer's repin is recorded as that consumer's act, not as a BL row left open.
+Closes F-68's remainder (every member above), census #66's re-pin gate and #76's adopt remainder (`census-register-b.md:56,62`), E-6 and N-6 (the relay half; N-6's intake half is W-B.2's), N-8b's consumer half, L06-06, L06-07, L06-11's census clause, L06-12 (named to the owner), L06-13 (the successor in fourier's packet; speedtest's half already cured on its side), C-2's chicago overrides. Each consumer's repin is recorded as that consumer's act, not as a BL row left open. The packet-riding rows close on the packets' gates: #18b (RT-18E, atlas and speedtest off the five deleted subpaths), #53e (the fourier adopt), #55b (RT-55A) and #59c (§11 LIB-SEAM) on G-L7-1 and G-L7-2, each named as a line of its consumer's packet; the O-55 R-3, O-65, O-66 and O-67 notices on G-L7-1 (the notice section of each packet) and G-L7-2 (re-derived from the graph).
 
 ## Appendix A · `packet-breaks.mjs` (the hard-break half)
 

@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree |
 | ships in | 11.0.0 |
 | families | F-13, the #28 split (RT-28D, RT-28E); F-71 inbound UIA-F-72 and A2-FO-L1-28 |
-| depends on | W-B.1 |
-| dependants | W-I.1 (DockControl's loading seat, UIA-F-132), W-L.1 (Button's loading mark replaces the leading seat, UIA-F-133) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | ruler | seat, under W-B.2's rule: two consumer rows name it |
 
 ## 1 · What it closes

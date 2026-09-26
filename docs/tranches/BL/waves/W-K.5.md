@@ -6,17 +6,15 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B), reka 2.10.5 and 2.10.1 builds, Chromium and Playwright WebKit |
 | ships in | 11.0.0 |
-| families | F-40 (all members) and its inbound rows |
-| depends on | W-E.4 (the layer seam that returns focus after a pick), W-K.2 (the Command's listbox is one of the widgets this wave governs) |
-| dependants | W-K.4 (the one ring reads this wave's input-modality stamp) |
+| families | F-40 remainder and its inbound rows. The option focus model (C-9, L01a-42, L04-F09, L08-12) is W-K.11's, a disease row's own wave (fix-2, FA-21) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
 | id | what |
 |---|---|
-| L01a-42, L04-F09, L08-12 (MED) | options take tab stops beside an `aria-activedescendant` listbox; a unit test pins the defect |
 | R4-01-14 (MED) | a resting pointer's `:hover` fill and the keyboard highlight light two rows |
-| C-9 (BK FINAL §7 carry) | the 12-tab-stop question at Card (census-carries-recap.md:34) |
 | #81 W-PICKER (the two-lit-rows part) | census-register-b.md:66 |
 | inbound, two lit rows | UIA-V-222, UIA-V-271, UIA-F-126, UIA-KF-247 |
 | inbound, pointer-origin focus paints the keyboard ring | UIA-F-58, UIA-V-221, UIA-KF-112, UIA-V-472, UIA-V-517, UIA-KF-253, A2-KE-L3-17 |
@@ -44,22 +42,20 @@ The menu trigger and the pointer-opened Dialog do not paint the ring at HEAD; UI
 
 ## 3 · The cure
 
-1. **An option's focusability is the listbox's.** Card's option contract (`selected` present) sets `role="option"` and `aria-selected` and no `tabindex`. `$attrs` binds last, so a roving listbox's `tabindex` lands. In an `aria-activedescendant` listbox the options take no tab stop by construction. The pin at `search-contracts.test.ts:186-188` inverts: every option's `tabindex` is absent.
+1. **An option's focusability** is W-K.11's (Card's option contract and the search pin).
 2. **The highlight is the only current-row paint.** The menu row's `:hover` rung (`menu.css:66-76`) keeps its lift (`translate`) and drops `background` and `color`. reka's `[data-highlighted]` already follows the pointer, so a pointer still lights the row it rests on until the keyboard moves the highlight.
 3. **Pointer-origin focus paints no keyboard ring.** One input-modality stamp: a `pointerdown` in the capture phase sets `data-input-modality="pointer"` on the root element, a `keydown` sets `"keyboard"`. The house ring (W-K.4) paints on `:focus-visible` only under `:root:not([data-input-modality="pointer"])`. The stamp lives in `src/composables/dom/modality.ts` beside W-K.1's root module and is installed once by the layer stack. There is no second rule for engines that support `FocusOptions.focusVisible`; the stamp is the one mechanism.
 
 ## 4 · Files it touches
 
-`src/components/card/Card.vue`, `src/components/_shared/menu/menu.css`, `src/composables/dom/modality.ts` (new), `src/components/_shared/overlay/layer.ts` (installs it), `src/styles/utilities/base.css` (the ring selector reads it; W-K.4 then points every register at that ring), `tests/composables/search/search-contracts.test.ts` (the pin inverts). New `tests-visual/wired/current-row.spec.ts` (appendix A).
+`src/components/_shared/menu/menu.css`, `src/composables/dom/modality.ts` (new), `src/components/_shared/overlay/layer.ts` (installs it), `src/styles/utilities/base.css` (the ring selector reads it; W-K.4 then points every register at that ring). New `tests-visual/wired/current-row.spec.ts` (appendix A).
 
 ## 5 · Acceptance gates
 
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
-| K5-G1 | appendix A G1, both engines | 0 of 12 options tabbable; Tab leaves the listbox | **FAIL** 12 of 12 |
 | K5-G2 | appendix A G2, both engines | exactly 1 painted row, the highlighted one | **FAIL** 2 |
 | K5-G3 | appendix A G3, three cells | none of the three is `:focus-visible` after a pointer action | Select **FAIL** (Chromium); menu and Dialog PASS (controls; bite: removing the modality stamp from the ring selector turns the Select cell red after the cure) |
-| K5-S | `! grep -q 'toBe("0")' tests/composables/search/search-contracts.test.ts` | exit 0 | **exit 1** (the pin at `:187`) |
 
 ## 6 · π and DELTA obligations
 
@@ -72,18 +68,17 @@ The menu trigger and the pointer-opened Dialog do not paint the ring at HEAD; UI
 
 | before | after | note |
 |---|---|---|
-| `<Card selected>` adds `tabindex="0"` | no `tabindex`; `$attrs` wins | a consumer that relied on the implicit tab stop in a roving list sets `tabindex` itself |
 | menu row `:hover` paints the row fill | `:hover` lifts only; the highlight paints | |
 | the keyboard ring paints after a pointer pick | it paints only when the last input was a key | |
 
 ## 8 · Ledger rows
 
-Closes F-40 (L01a-42, L04-F09, L08-12, R4-01-14), C-9, #81's two-lit-rows part, and the inbound rows UIA-V-222, -271, UIA-F-126, UIA-KF-247, UIA-F-58, UIA-V-221, UIA-KF-112, UIA-V-472, UIA-V-517, UIA-KF-253 (hold line), A2-KE-L3-17 (hold line).
+Closes F-40's remainder (R4-01-14), #81's two-lit-rows part, and the inbound rows UIA-V-222, -271, UIA-F-126, UIA-KF-247, UIA-F-58, UIA-V-221, UIA-KF-112, UIA-V-472, UIA-V-517, UIA-KF-253 (hold line), A2-KE-L3-17 (hold line).
 
 ## 9 · Gestalt passes (P-1)
 
 - **Tranche fit:** one current item per widget: its focus model is the listbox's, its paint is the highlight, its ring follows the input that moved it.
-- **Wave:** K5-G1..G3 and K5-S green in one run, both engines.
+- **Wave:** K5-G2 and K5-G3 green in one run, both engines.
 - **Feature:** on `/data/search`, type, ArrowDown through results, Tab out in one press; in a menu, rest the pointer and use the keys: one lit row. One frame strip.
 
 ## Appendix A · `k5.mjs` (lands as `tests-visual/wired/current-row.spec.ts`)

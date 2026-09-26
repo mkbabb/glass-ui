@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree |
 | ships in | 11.0.0 |
 | families | F-13, the #44 split (`audit/REGISTRY.md:312-320`) |
-| depends on | W-B.1 |
-| dependants | W-E.6 (W-CHIP no longer sequences a tags field behind it) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | ruler | seat. The row is a tranche-authored successor, not an owner ask (below) |
 
 ## 1 · What it closes
@@ -34,7 +34,8 @@
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
 | B7-G1 · no tags residue in `src` | `test "$(git grep -ciE 'tags-input\|TagsInput' -- src \| awk -F: '{s+=$2} END {print s+0}')" -eq 0` | exit 0 | **exit 1**: 8 |
-| B7-G2 · decision recorded | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows #44` | exit 0, RETIRE with ground and re-trigger | **exit 1** (absent) |
+
+#44's terminal (RETIRE) is LEDGER:109; B7-G1 enacts it.
 
 B7-G1 could pass by deleting comments without the decision; B7-G2 holds the decision.
 

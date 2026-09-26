@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree |
 | ships in | 11.0.0 |
 | families | F-13, the #51 split: C-5, C-6, C-7 (members L04-F07, L04-F23; `audit/REGISTRY.md:312-320`) |
-| depends on | W-B.1 |
-| dependants | W-H.1 (takes the band's contrast into its rendered-contrast invariant) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | ruler | seat for C-5 and C-6; the owner for C-7 (OW-4), with the seat default below |
 
 ## 1 · What it closes
@@ -44,8 +44,9 @@
 |---|---|---|---|
 | B6-G1 · the kept lag is held | `npx vitest run tests/components/custom/handmark/ink-lag.test.ts` | exit 0 | **exit 1**: no such file |
 | B6-G2 · the test bites | apply the cap-3.0 patch, run B6-G1 | exit 1 | absent |
-| B6-G3 · decisions recorded | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows C-5,C-6,C-7,OW-4,#51a,#51b,#51c` | exit 0 (OW-4 `pending` passes; `--close` prints it) | **exit 1** (absent) |
-| B6-G4 · the band enters W-H.1's invariant | `grep -qi handmark docs/tranches/BL/waves/W-H.1.md` | exit 0 | **exit 1**: W-H.1's spec is not yet written |
+| B6-G3 · the owner has ruled π-SCROLL | `! grep -qE '^\\| OW-4 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER:324, OW-4 `pending`; fix-2) |
+
+B6-G4 (`grep -qi handmark W-H.1.md`) is struck: a grep of a plan file is not a gate on the tree. The band's dark window is held in paint by W-H.1 G18 (HandMark `shape="highlight"` ink on band: 10.86 light, 6.37 dark in both engines at `183e021a`). C-5, C-6, C-7 and #51a-c's terminals are LEDGER:227-229 and :128-130.
 
 ## 6 · π and DELTA obligations
 

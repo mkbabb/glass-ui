@@ -7,8 +7,8 @@
 | HEAD | `19bf6569` in a scratch worktree; docs-only since `f3ad78d0` |
 | ships in | 11.0.0 (records; each default is built by its named wave) |
 | families | F-15 whole (`audit/REGISTRY.md:342-352`) |
-| depends on | W-B.1 (the owner docket), W-A.1 (the capture harness and the one scratch root) |
-| dependants | W-I.1 (rim), W-E.4 (overlay cast), W-E.10 (aurora per page, header scale), W-L.1 (`useConfirm`), W-E.7 (coarse hit floor), W-H.1 (slider value mark), W-J.2 (slider engagement) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -46,7 +46,7 @@
 |---|---|---|---|
 | B4-G1 · the glance record exists | `test -f docs/tranches/BL/ledger/GLANCES.md` | exit 0 | **exit 1** |
 | B4-G2 · every glance captured | for each GLANCES row, every cited capture exists and its sha256 matches | exit 0 | absent |
-| B4-G3 · every glance has a verdict line | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows OW-7,L05b-15,UIA-KF-069,R2-06-08,A2-VA-L1-6,A2-FO-L2-7,L05b-21,L05a-16,L05a-21` | exit 0 (a `pending` verdict passes; `--close` at W-L.8 prints it) | **exit 1**: checker absent, no rows |
+| B4-G3 · the owner has ruled the glances | `! grep -qE '^\\| OW-7 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER:327, OW-7 `pending`; run by fix-2 at `183e021a`) |
 | B4-G4 · the overlay stack (handed to W-E.4) | count of comma-separated layers in the computed `box-shadow` of an open `.glass-overlay-plate` on the Chromium engine lane | ≤ 2 (rim + one cast) | at source, 4 layers (`overlay-plate.css:316-318`); the engine reading is taken in the wave |
 
 ## 6 · π and DELTA obligations

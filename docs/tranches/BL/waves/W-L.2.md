@@ -7,8 +7,8 @@
 | HEAD | `78922b26` in a scratch worktree; `src` identical to v10.1.0. `dist/` built there. The consumer fixture (appendix A) type-checks against the built package; the runtime witnesses ran under `vitest` (happy-dom) and one in Chromium (appendix B) |
 | ships in | 11.0.0 |
 | families | F-70 whole (`audit/REGISTRY.md:1478-1509`): L15a-F6, L13-12, R2-02-17, R2-03-02, R2-05-F4, R2-05-F5, R2-07-02, R3-01-01, R4-01-18, R5-02-04, R5-02-05, R6-02-06, R8-02-05. Inbound O-57 R-1; O-56 G-2's consumer half (N-8b); O-72 (W-B.2 §3.6 routes it here) |
-| depends on | W-K.8 (the form participation seam: this wave asserts where `form` and `name` land, W-K.8 builds the proxy), W-L.1 (every prop and slot it adds is typed here), W-I.2 (the carousel deck the inbound model drives, `waves/W-I.2.md:12`) |
-| dependants | W-L.3 (the consumer matrix runs this fixture against the installed tarball), W-L.7 (the packets name each binding this wave turns from silent to rejected) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | roster | G-08 STRICT-CONSUMER and G-39 REKA-EMIT-WITNESS turn `bound` here (`waves/W-A.2.md:142,173`) |
 
 ## 1 · What it closes
@@ -27,6 +27,8 @@
 | R6-02-05 (declaration half) | NumberField declares `update:modelValue: [value: number]` and emits `undefined` on clear |
 | R2-02-17, R8-02-05, L05b-11 | struck dock props (`start-collapsed`, `always-expanded`, …) land on the GlassDock root as attributes; the dock README's own example mounts a collapsed dock |
 | R2-03-02, N-8b (consumer half) | value.js bound Button's removed `variant` |
+| UIA-V-214, UIA-V-165 (F-70 mechanism rows) | the same stale `variant` binding, seen as dead variants: G-L2-1's fixture rejects it |
+| UIA-V-149 (F-70 mechanism row) | EasingPicker's preset reads "Pick a curve" for an interval that is a named preset: `usePicker.ts:242` sets `CUSTOM_PRESET` for any seed with points, without matching the seed against `bezierPresets` |
 
 ## 2 · The defect at HEAD
 
@@ -80,6 +82,8 @@ W5 was first run under happy-dom and passed (one emit each path): the double emi
 11. **NumberField** declares `"update:modelValue": [value: number | undefined]`.
 12. **The consumer fixture.** `tests/consumer/strict/` (a `tsconfig.json` with `strictTemplates`, `checkUnknownProps` and `checkUnknownEvents`, and `.vue` files) type-checks against the built package: legal native attributes and listeners on every native-root component; `@vue-expect-error` lines for a struck prop (Button `variant`), an unknown prop on each component (Chip first), an attribute on a renderless root, a number-only NumberField handler, and the dock README's first example after W-C.3 regenerates it (R8-02-05: a struck `start-collapsed` must fail). `npm run check:consumer` runs it; `ci.yml` runs it after `build`; W-L.3's matrix runs it against the installed tarball.
 
+**The seeded preset (UIA-V-149).** `usePicker` resolves a seed's points against `bezierPresets` and seeds `preset` with the matching name; `CUSTOM_PRESET` only when none matches. `tests/components/easing/usePicker.test.ts` gains the case (a seed equal to `ease-in-out`'s points reads `ease-in-out`).
+
 ## 4 · Files it touches
 
 - New: `tests/consumer/strict/` (tsconfig and fixtures), `scripts/gen-reka-witness.mjs`, `tests/components/_witness/reka-channels.test.ts`, `tests/components/_witness/state-vocabulary.test.ts`, `tests-visual/command-dialog-emits.spec.ts`.
@@ -99,6 +103,7 @@ W5 was first run under happy-dom and passed (one emit each path): the double emi
 | G-L2-8 · one emit per close | W5 in Chromium (`tests-visual/command-dialog-emits.spec.ts`) | each path `["open=false"]` | **fail**: two emits on each of the three paths |
 | G-L2-9 · every forwarded channel witnessed | `node scripts/gen-reka-witness.mjs --check && npx vitest run tests/components/_witness` | exit 0 | **fail**: the generator is absent; R2-05's sweep counts 18 of 37 channels unwitnessed |
 | G-L2-10 · the witness list bites | delete one generated case from `reka-channels.test.ts`, run `gen-reka-witness.mjs --check` | exit 1 naming the channel | absent |
+| G-L2-11 · a preset seed names its preset (static; UIA-V-149) | `! grep -q 'seedPoints ? CUSTOM_PRESET' src/components/easing/usePicker.ts` | exit 0 | **exit 1** (`:242`; fix-2) |
 
 G-L2-1's struck-prop line holds at HEAD, so the fixture's RED comes from its four legal lines and two expect-errors; each of those can pass only when the matching cure lands.
 
@@ -109,7 +114,7 @@ G-L2-1's struck-prop line holds at HEAD, so the fixture's RED comes from its fou
 | the Tooltip entrance: frames 0, 2, 4 and 8 after open | light, dark | Chromium; Playwright WebKit labelled | before: the hint at opacity 1 on frame 0; after: the reveal ramp | opacity per frame from the probe; frame 0 < 0.5 after |
 | the Carousel after a model write (PagerDots dot 3) | light | Chromium; WebKit labelled | before: strip at `scrollLeft` 0; after: the third member centred | `scrollLeft` and the centred member's index |
 
-Captures under `<scratch>/BL/evidence/W-L.2/`, sha256 in the wave record. Real-Safari cells UNMEASURED until OW-3. The type gates make no visual claim.
+Captures under `.cache/evidence/W-L.2/`, sha256 in the wave record. Real-Safari cells UNMEASURED until OW-3. The type gates make no visual claim.
 
 ## 7 · MIGRATION rows (11.0.0)
 
@@ -124,7 +129,7 @@ Captures under `<scratch>/BL/evidence/W-L.2/`, sha256 in the wave record. Real-S
 
 ## 8 · Ledger rows
 
-Closes F-70 (every member in §1), E-11's enforcement (`ledger/CENSUS.md:177`: typecheck of fallthrough and emits; the consumer fixture is the sweep E-11 asks for at each version bump), O-57 R-1, N-8b's consumer half (measured cured at value.js HEAD; the fixture keeps the rejection), O-72. Roster G-08 and G-39 bound.
+Closes F-70 (every member in §1), E-11's enforcement (`ledger/CENSUS.md:177`: typecheck of fallthrough and emits; the consumer fixture is the sweep E-11 asks for at each version bump), O-57 R-1, N-8b's consumer half (measured cured at value.js HEAD; the fixture keeps the rejection), O-72. Roster G-08 and G-39 bound. The F-70 mechanism rows: UIA-V-214 and UIA-V-165 close on G-L2-1, UIA-V-149 on G-L2-11. UIA-F-43 is W-K.11's (K11-G2). UIA-V-456 (a consumer token, `--skeleton-glass-bg`, the library never reads) is W-L.7's silent-binding section (G-L7-5). UIA-F-146 is RETIRE NOT-REPRODUCED: no floating primitive wraps its content in a `<Transition>` (`grep -rl '<Transition' src/components` lists only InfiniteScroll, Button and DotRing; fix-2, `183e021a`); re-trigger, a `<Transition>` over a fragment root in `src/components`.
 
 ## Appendix A · the consumer fixture as run at HEAD
 

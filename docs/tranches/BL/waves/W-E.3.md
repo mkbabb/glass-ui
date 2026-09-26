@@ -7,8 +7,8 @@
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree; probes drive the band-E fixture app (W-E.1 appendix B) on the packed build |
 | ships in | 11.0.0 |
 | families | F-32 (#39 W-DIALOG-DETENT), F-74, F-65 split (W-DETENT-FLOOR: the detent ladder is the one source for the rung quantities; W-C.5 PLAN row names it W-E.3's) |
-| depends on | W-E.1 (the safe tokens the reach adds to), W-E.2 (the Sheet computes `position: fixed`; every reading here injects that cure, `inj=fixed`, so it measures this wave's defects alone), W-C.5 (one source per quantity) |
-| dependants | W-F.2 and W-F.5 (PLAN §5: the end-of-gesture helper and the direction helper take this wave's drag controller as their first reader) |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 
 ## 1 · What it closes
 
@@ -21,6 +21,8 @@
 | F-65 split | the detent floor (`sheet/styles.css:530-543`) is a second authority over rung height next to the ladder; W-DETENT-FLOOR makes the resolved ladder the one source |
 | UIA-F-124 | takeover: a Sheet at its top detent meets the viewport's block-start edge with rounded corners and a gap |
 | the sliding arm | the plain (undetented) Sheet opens and closes with a 12-16 px gap at its anchored edge during the overshoot |
+| UIA-KF-216, A2-KE-L2-7 (handed from W-K.6 §1) | the detent grip has no tap opener: a tap on it leaves the Sheet on its rung |
+| UIA-KF-005, A2-KE-L2-3 (the F-32 mechanism rows) | the transport dock covers the detented Sheet's content at 390, and the ladder at 844×390 is degenerate: E3-G1, E3-G2 and E3-G3 measure them |
 
 ## 2 · The defect at HEAD
 
@@ -46,6 +48,7 @@ Measured with appendix A (`node e3.mjs`), Chromium, every cell with `inj=fixed`:
 5. **The body pulls under touch.** While the Sheet is below its highest resolved rung, the body carries `touch-action: none` and the drag controller owns vertical moves from it. At the highest rung the body carries `touch-action: pan-y`, and the controller takes a downward pull only when the body's `scrollTop` is 0.
 6. **Halo stops are rung-relative.** The fixed `40px` and `120px` stops at `styles.css:362-377` become lengths the ladder publishes per resolved rung, `--sheet-halo-near` and `--sheet-halo-far`, each a fixed fraction of the rung's plate extent (the HEAD stops read at a 390×844 half-height rung give the fractions: 40 / 422 and 120 / 422).
 7. **The plate bleeds from its anchored edge.** The plate extends past its anchored edge by `--sheet-bleed`, the panel spring's peak overshoot in px (computed from the `panel` spring preset, `springPreset("panel")`). The anchored-edge padding adds the same amount, so content does not move. The overshoot then slides bleed into view instead of opening a gap. A detented Sheet at its top rung (UIA-F-124, takeover) reaches the block-start edge less the dock's reach. That edge becomes a second anchored edge, with square corners and the same bleed.
+8. **The grip steps on tap.** A tap (or click) on `[data-slot="sheet-detent-grip"]` moves the Sheet to the next resolved rung up, and from the highest to the lowest; the grip's accessible name states the action.
 
 ## 4 · Files it touches
 
@@ -64,8 +67,9 @@ Measured with appendix A (`node e3.mjs`), Chromium, every cell with `inj=fixed`:
 | E3-G7 · live span | appendix A G7 | ratio 0.95-1.05 | **0.763** |
 | E3-G8 · anchored-edge bleed | appendix A G8: gap from the anchored edge ≤ 1 px on every frame of open and close, 4 sides × 2 cells | 8 of 8 | **8 of 8 FAIL** (12.2-16.2 px) |
 | E3-G9 · one floor authority | `! grep -q 'min-block-size: calc(' src/components/sheet/styles.css` and `! grep -q 'window.innerHeight' src/components/sheet/detents/use.ts` | exit 0 | **exit 1** (`styles.css:531`, `use.ts:85`) |
+| E3-G10 · the grip opens on tap (UIA-KF-216) | fix-2's probe scene `mgrip`: a bottom `SheetContent` with detents `[0.12, 0.36, 1]` at 390×844 with touch; tap the grip's centre, wait 1.2 s | the detent reads 0.36 and the plate grows | **FAIL**, both engines: 0.12 → 0.12, height 171 → 171 |
 
-Can each fail and pass? Nineteen of the 20 browser rows fail at HEAD; G3 at 390×844 is the passing control that shows the gate can pass. G9 is static and fails at HEAD. The `PI_PLANT` bite is `[data-slot=sheet-content]{min-block-size:60dvh !important}`, which reintroduces a floor over the ladder and turns G3-G5 red on a cured tree.
+Can each fail and pass? Nineteen of the 20 browser rows fail at HEAD; G3 at 390×844 is the passing control that shows the gate can pass. G9 is static and fails at HEAD. G10 fails in both engines. The `PI_PLANT` bite is `[data-slot=sheet-content]{min-block-size:60dvh !important}`, which reintroduces a floor over the ladder and turns G3-G5 red on a cured tree.
 
 ## 6 · π and DELTA obligations
 
@@ -84,7 +88,7 @@ Can each fail and pass? Nineteen of the 20 browser rows fail at HEAD; G3 at 390�
 
 ## 8 · Ledger rows
 
-Closes #39 (RT-39F and the fixed halo stops; P7 is F-53's and the Safari pair F-07's, per the census row) and F-74. Closes the W-DETENT-FLOOR split of F-65 and UIA-F-124.
+Closes #39 (RT-39F and the fixed halo stops; P7 is F-53's and the Safari pair F-07's, per the census row) and F-74. Closes the W-DETENT-FLOOR split of F-65 and UIA-F-124. Closes UIA-KF-216 and A2-KE-L2-7 (E3-G10), UIA-KF-005 (E3-G1, E3-G2) and A2-KE-L2-3 (E3-G1 to E3-G3).
 
 ## 9 · Gestalt passes (P-1)
 

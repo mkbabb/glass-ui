@@ -7,9 +7,9 @@
 | HEAD | `8536f2cc` in a scratch worktree (the task named `f3ad78d0`; every commit since is under `docs/`). `git diff --stat v10.1.0 HEAD -- src` prints nothing, so every reading measures the published 10.1.0 bytes, and the dock is the 10.0.1 dock (10.1.0 changed the Configurator only). A second worktree carries HEAD + `design/dock/pass-2/floor.patch` (`git apply --check` clean, 38 files) to say which rows D2's floor already cures |
 | kind | LOOP WAVE, owned by design loop D2 (`design/dock/`). It lands only from D2's converged specification and never before D2 meets its gate (§3.1). It builds nothing the loop has not converged on |
 | ships in | 11.0.0 |
-| families | F-16 (whole), F-17 (whole), F-18 (whole), F-54 (split: the dock hallmarks and #67), F-71 (split: O-67 R-3, the badge seat) |
-| depends on | the D2 gate (§3.1); W-F.1 (the one spring authority), W-F.2 (the end-of-gesture helper and the dock's click-away and `release()` rows), W-F.5 (the direction helper, for the rim's inline origin and the anchor), W-H.1 (the dock's ink and state channel, M-4), W-E.7 (the one coarse-pointer type model that O-81 (3) reads); band 0's dock-surface wave (O-83, O-84, O-84a, formed at the next formation pass, CUR:75-79), whose 10.2.0 cures this wave supersedes or keeps (§3.4) |
-| dependants | W-I.2, W-I.3, W-I.4, W-J.2, W-K.4 (the dock trio of the ring register), W-K.9 (the switcher's tabpanels), W-L.7 (the consumer packets: chicago's three overrides, the three docks' O-66 §2 cells) |
+| families | F-16 (less #48, W-I.5), F-17 (whole), F-18 (whole), F-71 (split: O-67 R-3, the badge seat). The dock hallmarks (#67, #90) are W-I.6's and the run box (C-8) W-I.7's |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | instruments | the D2 harness `docs/tranches/BL/design/dock/harness/` (`$H`; H2: eight witnesses and the R6 probe, self-test 85/85 in both engines, `pass-2/H2.md` §4). W-C.1 moves tooling out of `docs/`, and the path follows it. The band-I probe (appendix A) and `demo-aria.mjs` (`W-I.2.md` appendix A) for the rows the harness does not read. They land under `scripts/probes/band-I/` with `npm run probe:band-I` |
 | engines | Chromium 149 headless (screenshots). **Playwright WebKit** 26.5 headless (screencast frames for morph reads, PF-1); at HEAD every unshimmed WebKit dock page crashes, so HEAD's WebKit numbers are `+shim` (the harness's colour-only aid, L-4) beside a crashed unshimmed column. After this wave every WebKit cell is unshimmed. Real Safari: **UNMEASURED (owner's safaridriver checkbox)** (OW-3; `safari.mjs` reports Safari 26.4's own refusal) |
 
@@ -20,16 +20,19 @@
 | F-16 members | L01b-48, L03b-04, L04-F14, L04-F27, L05b-04, L05b-05; R2-02-01 (the poisoned first endpoint), R2-02-02 (faces not anchored to the plate), R2-02-03 (the collapsed Play never plays), R2-02-05 (the dead tail and the squashed corner), R2-02-07 (the layer swap snaps), R2-03-03 (O-56 G-1, DockCrossfade resizes in one frame), R2-08-13 (hold-then-jump in all nine a11y cells) | `audit/REGISTRY.md:356-375` |
 | F-17 | L05b-03, R2-04-09 (compact-on-scroll dropped; no rim mounted) | `REGISTRY.md:377-387` |
 | F-18 | L03b-03, L01b-47, L05b-18; R2-01-10, R2-02-06, R2-03-01 (O-56 G-2 producer half), R2-03-04, R4-02-08, R7-02-02; the owner witness items 1-6 (the lens, short overflow, scroll-into-view under the tip, the hover-transition arming, the transform-overflow arming, the block-axis clip O-63) | `REGISTRY.md:389-418` |
-| F-54 split | L05b-14, R2-04-17: hallmarks 1 (dock-to-card squish), 2 (magnetic overpull) and 5 (the stagger, PARTIAL at `layers.css:238-257`) on the dock. Hallmark 6 (momentum for all components) and the engaged rung are W-J.2's | `REGISTRY.md:1264-1275`; `round-1/L05b.md:31` |
+| O-85 DOCK-PRIORITY-OVERFLOW | a per-control priority with the lowest-priority controls folding into the dock's own More menu, container-driven (IN:41; ruled to this band with O-65 as a D2 question, CUR:80). D2 rules it against the scrolling run and the cap (§3.1 item 6) | `audit/INBOUND.md:41` |
+| R56 scroll glide in the dock run, handed from W-B.15 | the dock run's scroll is native; D2 rules a glide or keeps native (§3.1 item 7). B15-G1 holds the hand-off (`design/dock/REGISTRY.md` names R56: 0 hits at `183e021a`) | `W-B.15.md` |
+| UIA-KF-052, UIA-F-132 | the DockControl tone seat and loading state (W-B.2 §3.5): D2 checklist items (§3.1 item 8) | LEDGER:577, :592 |
+| W-0.8's cures | the cap rest, the summary floor and the metric token shipped in 10.2.0, kept or superseded here (§3.4) | `W-0.8.md` |
 | F-71 split | O-67 R-3, the reserved badge seat (an API ask decided here as a dock seat) | `audit/INBOUND-MAP.md:631` |
 | inbound, F-16 | O-56 G-1; O-60 KFA-7, -8, -13, -50, -53, -110 (LIVE), -189 (folds into 7 and 13); O-64 R-1..R-4; O-65 R-1 DOCK-COLLAPSED-FORM; O-66 §2 (the witness scope); O-67's witness family; UIA-KF-032, UIA-F-6, UIA-V-67, UIA-V-68, UIA-F-94, UIA-V-235, UIA-V-251, UIA-V-504; A2-KE-L2-8, A2-FO-L2-13 | `INBOUND-MAP.md:147-177,490-518,536,560-563,585-588,619,626,632,683-684` |
 | inbound, F-18 | O-56 G-2 (producer half); O-63; O-64 R-6; O-67 R-1, R-2; C-2 rows 2 and 3; UIA-V-159, UIA-V-399, UIA-V-618; A2-VA-L2-7, A2-KE-L2-16 | `INBOUND-MAP.md:310-322,537,549-552,565,590,629-630,678,682` |
 | inbound, F-17 | O-55 R-1, R-2 (N-7) | `INBOUND-MAP.md:533-534` |
 | O-81 (1)-(3) | DOCK-END-INSET, DOCK-FIRST-EXPAND, DOCK-MOBILE-SCALE-COARSE (D2 pass-3 checklist rows; (3) with F-29) | `audit/INBOUND.md:35` |
-| ledger | #47 GF-DOCK (the state attribute; the latch at `g-dock-lattice.test.ts:925`), #48 W-DOCK-FISSION (Q-9), #67 IOS27-EXEC (the hallmarks, OWED-3), #90 (OW-5, the three R-7 captures); N-7, N-8a, N-8b (producer half), N-12, N-14, N-15; OW-5; OW-7's rim glance (read from D2's capture) | `ledger/census-register-a.md:54-55`, `census-register-b.md:57,75`, `census-carries-recap.md:82-98`, `ledger/CENSUS.md:226-231` |
+| ledger | #47 GF-DOCK (the state attribute; the latch at `g-dock-lattice.test.ts:925`); N-7, N-8a, N-8b (producer half), N-12, N-14, N-15; OW-7's rim glance (read from D2's capture) | `ledger/census-register-a.md:54-55`, `census-register-b.md:57,75`, `census-carries-recap.md:82-98`, `ledger/CENSUS.md:226-231` |
 | carried obligations (CUR) | the O-64 R-6 probe (CUR:32); O-65 as a witness (CUR:33); O-66 §2 scope (CUR:35); O-67 as a witness family (CUR:36); the hardened harness and the unshimmed WebKit result (CUR:38); the rim's owner-record conflict (CUR:43) | `FORMATION-PROGRESS.md:32-43` |
 
-**Not closed here.** The dock's veil (C-2 row 1) is W-H.1's M-5 and W-H.2's; this wave reads the ink W-H.1 lands. F-19's member query, naming and selection semantic are W-I.2's (the floor's seat declaration cures three of its rows here, §2.3). F-77 outside the dock is W-I.3's. The dock composition facilities (R2-06-01) are W-I.4's. O-83 (the cap ellipse) and O-84 / O-84a (the summary square, the metric token) ship in band 0's dock-surface wave in 10.2.0; §3.4 says what this wave does with those cures.
+**Not closed here.** The dock's veil (C-2 row 1) is W-H.1's M-5 and W-H.2's; this wave reads the ink W-H.1 lands. F-19's member query, naming and selection semantic are W-I.2's (the floor's seat declaration cures three of its rows here, §2.3). F-77 outside the dock is W-I.3's. The dock composition facilities (R2-06-01) are W-I.4's. The disease rows D2 decides are each a wave of their own: #48's retired facilities (Q-9) W-I.5; #67's hallmarks, OWED-3 and #90's R-7 captures (OW-5) W-I.6; C-8's run box W-I.7 (fix-2, FA-21). O-83 (the cap ellipse) and O-84 / O-84a (the summary square, the metric token) ship in band 0's dock-surface wave in 10.2.0; §3.4 says what this wave does with those cures.
 
 ## 2 · The defect at HEAD
 
@@ -113,11 +116,14 @@ D2 meets the charter's convergence criterion (`CHARTER.md:82,86`): at least thre
 
 **Obligations from this seat to D2** (the §7.5 checklist is frozen for pass 2, so these enter the pass-3 checklist; the loop adopts them or states a stronger row):
 
-1. **The hallmarks.** One witness each, or a RETIRE with the owner's words: hallmark 1, the plate's cross-axis stretch while the extent moves (PORTFOLIO D2-C problem 1: proportional to |v_e|, on the plate, never the root); hallmark 2, a bounded overpull that returns (C's banked transform track, or the native run's end behaviour under Q-2 (a)); hallmark 5, the stagger. HEAD has a morph-keyed child stagger (`layers.css:238-257`); E and F deleted it with nothing in its place, and no family carried seats with the glass (`design/dock/REGISTRY.md:222-223`, F-8 and F-9), so the winning route either carries a stagger with a witness or the owner retires it.
+1. **The hallmarks** are W-I.6's (one witness each, or a RETIRE with the owner's words); D2 carries them as witnesses for that wave.
 2. **O-84 against Q-10.** Band 0 ships a content-sized collapsed summary in 10.2.0 (O-84: drop `aspect-ratio: 1` and the fixed sizes, keep the min-size floor; ratified under the owner's grant, CUR:79). D2's floor keeps the summary a seat-row square with `aspect-ratio: 1` (`FLOOR.md` row 1, `morph.css:107`) under Q-10 default (a). An 11.0.0 that re-squares the summary reverses a shipped cure; D2 re-rules Q-10 against the 10.2.0 behaviour with the owner before the floor lands, and this wave lands the ruling.
 3. **O-81 (1)-(3)** as checklist rows (INBOUND routes them to pass 3). (1) is W2 route 4 and the end inset; (2) is W3 `first-expand`; (3) is the dock reading W-E.7's coarse-pointer type model instead of its own `(pointer: coarse)` media query.
 4. **C-2 row 2 in Playwright WebKit.** `fit·hovered-rest` is RED in 3 of 4 runs (the hovered plate paints as an ellipse). H2 recorded it intermittent and unattributed. Under the floor the cap is struck, so the reading must go to 0 of N; the loop confirms over three runs.
-5. **OWED-3** re-runs if the converged spec changes the dock rung (Q-4 or Q-5).
+5. **OWED-3** re-runs if the converged spec changes the dock rung (Q-4 or Q-5); W-I.6 holds it.
+6. **O-85, priority folding.** A per-control priority whose lowest controls fold into the dock's own More menu, against the scrolling run and the cut cap (O-83, Q-1). D2 rules BUILD with a witness, or RETIRE with the owner's words (IN:41). `design/dock/REGISTRY.md` has 0 hits for O-85 at `183e021a` (G24).
+7. **R56, scroll glide** (W-B.15's FOLD): D2 rules a glide on the dock run, or keeps it native with the reason recorded.
+8. **The tone and loading seats** (UIA-KF-052, UIA-F-132): a DockControl `tone` for a primary or accent control, and a `loading` state that seats W-B.8's DotRing. D2 rules each; `DockControl.vue` declares neither at `183e021a` (G25).
 
 ### 3.2 · What lands, whatever route converges
 
@@ -148,9 +154,8 @@ Whichever converges, the landing is the converged spec's patch (floor + carrier 
 4. **No scale or blur on a painting seat's chain in motion**, except the seat's own engagement scale.
 5. **The collapsed form is one plate** that wraps face, track and count, a dismiss is a seat inside it, and collapsed and expanded share the one morph (O-65).
 6. **Side, vertical and canvas docks** share the top dock's rim, radius and composite, with a gutter ≥ 8 px from the surface above and a **reserved badge seat** that shares 0 px with a glyph (O-67). The badge seat is a slot on `GlassDock` (`#badge`) placed by the dock, not an overlay the consumer positions (F-71's O-67 R-3, CURED as a dock seat under E-5: the owner's order relayed in O-67 names it, and the amber status dot it must not overlap is a consumer's).
-7. **Q-9's ruling is applied everywhere, records included** (default (a): fission, the V↔H morph and Siri struck from `src` prose and the register row #48 closed RETIRED with the ruling quoted).
-8. **OWED-3.** If the converged rung stays `springPreset("dock")` = {0.30, ζ 0.88} (`springPresets.ts:84-86`, read on disk), OWED-3 closes on BK's derivation (`612717e5`) with `check.mjs` 87/87 re-run at the landing commit. If D2 changes the rung, the four C2 rows are re-derived on the new pair and must read 87/87 before landing.
-9. **OW-5.** The three R-7 captures (Siri waveform, the loupe close-up with the L-3 device cell, the ChatGPT dock motion): with Q-9 (a) the Siri capture has no consumer, and the loupe belongs to no dock facility, so this wave records the recommendation "ruled unneeded" for both and asks the owner once, in W-B.4's docket, whether the ChatGPT dock motion capture is still wanted as a reference for D2's gestalt read. The owner's answer is quoted in the ledger row; on silence at W-L.8 the terminal is "unneeded recommended, OW-5 not answered", never re-booked.
+7. **Q-9's ruling** (fission, the V↔H morph and Siri) is W-I.5's.
+8. **OWED-3** and 9. **OW-5** (the three R-7 captures) are W-I.6's.
 
 ### 3.4 · The F-18 residue and the band-0 cures
 
@@ -177,7 +182,7 @@ These rows are not design questions and are not on D2's checklist; they land in 
 Setup, in a scratch worktree carrying the candidate `src`:
 
 ```sh
-H=docs/tranches/BL/design/dock/harness; OUT=<scratch>/dock-out
+H=docs/tranches/BL/design/dock/harness; OUT=.cache/evidence/W-I.1/dock-out
 node $H/build.mjs <wt> --out $OUT --label i1
 node $H/run.mjs --build $OUT/builds/i1 --out $OUT --adapter <the converged spec's adapter> --safari          # light
 DOCK_HARNESS_THEME=dark node $H/run.mjs --build $OUT/builds/i1 --out $OUT-dark --adapter <…> --safari       # dark
@@ -210,9 +215,8 @@ In the table cells below, `\|` is the Markdown escape for `|`: the command itsel
 | G17 · the dock's hover rungs (static) | `! (node scripts/probes/band-I/hover-census.mjs . --list \| grep -q 'src/components/dock/')` | exit 0 | **exit 1**: 6 rules (`icon-button.css:112`, `tab-button.css:69,144`, `triggers.css:78`, `layer-group.css:275`, `morph.css:288`) |
 | G18 · one pointer model (static, O-81 (3)) | `! git grep -n 'pointer: coarse' -- src/components/dock` | exit 0 | **exit 1**: `touch-floor.css:24`, `density.css:378`, `index.css:141` |
 | G19 · the summary wraps no control (L08-16) | `demo-aria.mjs`, row `D1/SUMMARY-NESTED` | 0, every route mounted, both engines | **FAIL**: 3 (Chromium); WebKit mounted 0 of 8 routes |
-| G20 · retired facilities struck (Q-9 (a)) | `! git grep -niE 'fission\|siri\b' -- src` | exit 0 | **exit 1**: 130 lines |
-| G21 · OWED-3 hold line | `node docs/tranches/IOS27-MICRO/prototypes/spine-conductor/check.mjs` on the landed rung | 87/87 PASS | 87/87 PASS at HEAD (not born RED: discharged at `612717e5`, §2.4) |
-| G22 · the hallmarks | the three witness rows D2 adds (§3.1 item 1), or the owner's RETIRE quoted per hallmark | each row PASS, or RETIRE quoted | not measurable at HEAD: the witnesses do not exist. The static absence is `git grep -niw overpull -- src` → 0 lines; the stagger exists (`layers.css:238-257`) and must not regress without a quoted RETIRE |
+| G24 · O-85 is on D2's checklist | `test "$(grep -c 'O-85' docs/tranches/BL/design/dock/REGISTRY.md)" -ge 1` | exit 0 | **exit 1**: 0 hits (fix-2) |
+| G25 · the loading seat | `grep -qE '^\s+loading\?:' src/components/dock/DockControl.vue`, or D2's RETIRE quoted in LEDGER:592 | exit 0 | **exit 1** (fix-2) |
 | G23 · the harness can fail | `node $H/selftest.mjs --engine all` | SELFTEST PASS (85/85 at H2), every plant FAIL in both engines | 85/85 at `44099fdb` (`pass-2/H2.md` §4). The band-I probe's control rows (`I1` `where: out` PASS, `I1` `where: dock` FAIL) show G14 can pass and fail on one page |
 
 **Real GPU and consumer cells (O-66 §2).** W8's 60 fps verdict and the value.js, keyframes and fourier docks are UNMEASURED headless. The glass demo's cells run headed on a real GPU in W-A.4's GPU leg (`node $H/w8-motion.mjs … --headed`); each consumer's dock is judged in its own repin addendum, named in W-L.7's packets (value.js's tree is read-only to glass seats). Until then those cells are recorded UNMEASURED with the reason, never green.
@@ -255,7 +259,7 @@ Consumer overrides retire by an addendum in each consumer's own tranche (E-6), n
 
 ## 8 · Dependencies and ledger rows
 
-Depends on the D2 gate, W-F.1, W-F.2, W-F.5, W-H.1, W-E.7 and band 0's dock-surface wave. Closes F-16, F-17, F-18, F-54's dock split, F-71's O-67 R-3; the inbound rows in §1 (each on the G row that measures its surface, recorded per row by the LEDGER seat); O-81 (1)-(3); C-2 rows 2 and 3; O-64 R-6 (REFUTED on the static page, the answer carried by W-B.2's reply with the headed gh-build cell UNMEASURED); #47, #48, #67 (OWED-3 closed on G21), #90 (OW-5 per §3.3 item 9); N-7, N-8a, N-8b (producer half), N-12, N-14, N-15; the carried D2 obligations CUR:32-38 and 43. The G14 row closes F-18's round-2 born-RED ("HEAD 17.0 vs 3.6"), re-measured here as a luma-lift ratio.
+Its edges are PLAN §5's. Closes F-16, F-17, F-18, F-71's O-67 R-3; O-85 (per D2's ruling); R56 (with W-B.15); UIA-KF-052 and UIA-F-132 (per D2's ruling); the inbound rows in §1 (each on the G row that measures its surface, recorded per row by the LEDGER seat); O-81 (1)-(3); C-2 rows 2 and 3; O-64 R-6 (REFUTED on the static page, the answer carried by W-B.2's reply with the headed gh-build cell UNMEASURED); #47; N-7, N-8a, N-8b (producer half), N-12, N-14, N-15; the carried D2 obligations CUR:32-38 and 43. The G14 row closes F-18's round-2 born-RED ("HEAD 17.0 vs 3.6"), re-measured here as a luma-lift ratio.
 
 ## Appendix A · the band-I probe (shared by W-I.1, W-I.2, W-I.3)
 

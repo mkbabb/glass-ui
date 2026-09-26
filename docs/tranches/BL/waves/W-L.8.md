@@ -7,8 +7,8 @@
 | HEAD | `b3d7fa28`; `package.json:3` `"version": "10.1.0"`; `npm view @mkbabb/glass-ui version dist.unpackedSize` → `10.1.0`, `2919057`; `cat .bundle-ratchet` → `2919057` |
 | ships in | 11.0.0: this wave is the cut, and BL's close |
 | families | F-12 whole (`audit/REGISTRY.md:301-310`): L04-F01, L04-F05, L04-F16, L04-F22, L04-F24, L04-F25, L04-F26, L01a-07, L01a-11, L01b-49b, L01b-55, L01b-66b, L01b-70, L01b-90, L05a-09, L05b-17, L06-11, L08-26, L09-14, R2-06-13 |
-| depends on | W-L.7 (and through it every wave of bands A-L, PLAN §5); W-B.1 (`verify-ledger.mjs`, `waves/W-B.1.md:51-60`); W-L.6 (the census artefact); W-B.13 (whether the publish runs on OIDC) |
-| dependants | none: BL closes here |
+| depends on | PLAN §5, the one record of edges |
+| dependants | PLAN §5 (its inverse) |
 | owner acts | the in-session confirmation before the tag, quoted verbatim in the wave record; OW-1 (Trusted Publisher) and OW-3 (Safari automation) are recorded at their state on the tag day, never re-booked (PLAN §1) |
 
 ## 1 · What it closes
@@ -39,7 +39,7 @@
 | cites in records | `node tests/_bandL/cite-check.mjs <record> <commit>` (appendix A) | `BK/FINAL.md` at its own HEAD `d856e136`: 8 cites, 0 unresolved (BK's close used full paths; the checker passes a record that is right). `BL/ledger/census-register-b.md` at HEAD: 45 cites, **1 unresolved** (`src/components/equation/ConvergencePlot.vue:136`, a fourier-analysis file cited without its repo). `census-carries-recap.md`: 44, **1 unresolved** (`demo/scenes/amiga/utils.ts:2`, a keyframes.js file, same class). `census-register-a.md`: 47, 0 |
 | the stale L08-26 cite | `grep -n 'DialogContent.vue:404' docs/tranches/BK/execution/2026-08-05-row31-a11y/RECORD.md` | `:36`, written as a bare filename, which appendix A's path rule does not match; the rule in §3.4 makes a bare filename cite a failure |
 
-Three BK close duties are in no census file: #15 (provenance hooks), #70 (archaeology per close) and Q063 (07-27 exemplar recording preservation) (`audit/round-1/L04.md:72-74`, table rows 22-24; `grep -n 'Q063\|#70\b\|#15\b' ledger/*.md` → nothing). `verify-ledger.mjs` reads its expected set from the census files, so it would not see them. §3.3 decides them and the LEDGER seat adds their rows.
+Three BK close duties are in no census file: #15 (provenance hooks), #70 (archaeology per close) and Q063 (07-27 exemplar recording preservation) (`audit/round-1/L04.md:72-74`, table rows 22-24; `grep -n 'Q063\|#70\b\|#15\b' ledger/*.md` → nothing). `verify-ledger.mjs` reads its expected set from the census files, so it would not see them. §3.3 decides them; the formation LEDGER carries their rows at LEDGER:414-416 (§6.2).
 
 ## 3 · The cure: the close checklist, each item a command with an artefact
 
@@ -99,13 +99,12 @@ Each gate's exit code is read on its own.
 | G-L8-4 · the datum is the shipped bytes | `test "$(cat .bundle-ratchet)" = "$(npm view @mkbabb/glass-ui@11.0.0 dist.unpackedSize)"` (or W-A.5's invariant reading, per §3.5 step 4) | exit 0 | **exit 1** (404); 10.1.0 shows it can pass: 2,919,057 both sides |
 | G-L8-5 · the release run | `gh run list --workflow release.yml --json headBranch,conclusion --jq '.[] \| select(.headBranch=="v11.0.0") \| .conclusion'` prints `success` | `success` | **fails**: latest runs are `v10.1.0`, `v10.0.1`, `v10.0.0` |
 | G-L8-6 · the close checklist | `node scripts/tranche/close-check.mjs docs/tranches/BL --tag v11.0.0` | exit 0 | **fails**: the script does not exist; its items fail today (G-L8-7 to G-L8-10) |
-| G-L8-7 · the ledger | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --close` | exit 0 | **fails**: `LEDGER.md` and the checker are absent (`waves/W-B.1.md:102`) |
+| G-L8-7 · the ledger | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --close` | exit 0 | **fails**: the checker is absent (W-B.1 builds it). `LEDGER.md` exists (committed at `ae8370e0`; `test -f` exits 0 at `183e021a`, fix-2) |
 | G-L8-8 · P-6 | W-L.6's census on the release pack, exit 0, sha256 in FINAL.md | both | **exit 1**: 227 names with no reader |
 | G-L8-9 · cites resolve | `node scripts/tranche/cite-check.mjs docs/tranches/BL/FINAL.md v11.0.0`, and over `waves/*.md` | exit 0 | **fails**: FINAL.md absent. The checker bites today on BL's own census at HEAD (2 unqualified sibling cites) and passes BK's FINAL at its HEAD (8/8), so it can do both |
 | G-L8-10 · the hooks path | `d=$(git config --get core.hooksPath); test -z "$d" -o -d "$d"` | exit 0 | **exit 1**: points at the deleted `.githooks` |
-| G-L8-11 · the three duties have rows | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --rows '#15,#70,Q063'` | exit 0, each RETIRE with rationale | **fails**: no ledger; no census row names them |
 | G-L8-12 · the owner's words | the wave record quotes the confirmation with its time, earlier than `git log -1 --format=%cI v11.0.0` | present and earlier | **absent** |
-| G-L8-13 · nothing carries | FINAL.md's carry-forward section has no row whose terminal is not one of BUILD, FOLD, RETIRE, DECLINE, ANSWERED, or an owner act named at its wave | holds | **absent** |
+| G-L8-13 · nothing carries | FINAL.md's carry-forward section has no row whose terminal is not one of LEDGER §0's four (BUILD, FOLD, BANKED with its re-trigger, RETIRE with its class), or an owner act named at its wave | holds | **absent** |
 
 ## 6 · π and DELTA obligations
 
@@ -122,7 +121,7 @@ This wave writes the `## 11.0.0` section heading and its introduction; the rows 
 
 ## 8 · Ledger rows
 
-Closes F-12 (all twenty members), P-4 (the close checklist has an executable), P-6 (its close item, with W-L.6's artefact), L06-11's record half, R2-06-13 (no inherited word, §3.1), census #66's `FINAL.md` gate for BL, and #15, #70 and Q063 (RETIRE, §3.3; the LEDGER seat adds their rows, since no census file holds them). OW-1 and OW-3 are recorded at their tag-day state as the terminals of W-B.13 and W-A.6.
+Closes F-12 (all twenty members), P-4 (the close checklist has an executable), P-6 (its close item, with W-L.6's artefact), L06-11's record half, R2-06-13 (no inherited word, §3.1), census #66's `FINAL.md` gate for BL, and #15, #70 and Q063 (RETIRE, §3.3; their rows are LEDGER:414-416). G-L8-11 is struck: it read the three rows, which exist; G-L8-7's whole-file run covers them. OW-1 and OW-3 are recorded at their tag-day state as the terminals of W-B.13 and W-A.6.
 
 ## Appendix A · `cite-check.mjs` as run here
 
