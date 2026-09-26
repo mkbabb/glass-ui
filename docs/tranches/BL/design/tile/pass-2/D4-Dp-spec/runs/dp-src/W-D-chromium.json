@@ -1,0 +1,81 @@
+{
+ "id": "W-D",
+ "title": "the tile is declared once, at the group, and only where declared (D4-D)",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "dp-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "family-d",
+   "line": "family-d #0 · corner 16px→16.00 (--radius-field 16.00) · column · line-height 22.95 vs body 22.95 · rows 2"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "family-d",
+   "line": "family-d #1 · corner 16px→16.00 (--radius-field 16.00) · column · line-height 22.95 vs body 22.95 · rows 2"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "family-d",
+   "line": "family-d #2 · corner 16px→16.00 (--radius-field 16.00) · column · line-height 22.95 vs body 22.95 · rows 2"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "family-d",
+   "line": "family-d #3 · corner 16px→16.00 (--radius-field 16.00) · column · line-height 22.95 vs body 22.95 · rows 2"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "family-d-undeclared",
+   "line": "family-d-undeclared #0 (undeclared pair) · 195.28×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "family-d-undeclared",
+   "line": "family-d-undeclared #1 (undeclared pair) · 232.92×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "family-d-undeclared",
+   "line": "family-d-undeclared #2 (undeclared pair) · 212.77×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "family-d-undeclared",
+   "line": "family-d-undeclared #3 (undeclared pair) · 216.14×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1"
+  }
+ ],
+ "flavor": "src",
+ "run": {
+  "loadStart": "63.28 / 56.58 / 50.58",
+  "loadEnd": "62.46 / 56.52 / 50.60",
+  "census": {
+   "n": 61,
+   "sample": [
+    "205 bash /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspecto",
+    "218 /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/Playwright.app/Contents/M",
+    "237 bash /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspecto"
+   ],
+   "waitedS": 1.6
+  },
+  "lockWaitS": 0
+ },
+ "pass": true,
+ "tally": "8/8 gating cells pass [library 8/8]",
+ "arms": {
+  "library": {
+   "pass": 8,
+   "of": 8
+  }
+ }
+}

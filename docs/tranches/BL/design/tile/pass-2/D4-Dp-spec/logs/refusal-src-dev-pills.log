@@ -1,0 +1,21 @@
+refusal probe · dp-src-dev (flavor src-dev, dev true) · load 44.25 / 45.79 / 46.81
+engine Chromium 149.0.7827.55
+  chromium single (shape pill) · rung 36.00 · block 36.00 → 36.00 · appended row cut false · REFUSED in paint (held at the rung) · console errors 0 (0 at mount)
+  chromium vertical (shape pill) · rung 40.00 · block 40.00 → 40.00 · appended row cut false · REFUSED in paint (held at the rung) · console errors 0 (0 at mount)
+  chromium pill-icon (shape pill) · rung 40.00 · block 40.00 → 40.00 · appended row cut false · REFUSED in paint (held at the rung) · console errors 0 (0 at mount)
+  chromium pill-badge (shape pill) · rung 40.00 · block 40.00 → 40.00 · appended row cut false · REFUSED in paint (held at the rung) · console errors 0 (0 at mount)
+  chromium c1-migrated (shape pill) · rung 40.00 · block 40.00 → 40.00 · appended row cut false · REFUSED in paint (held at the rung) · console errors 0 (0 at mount)
+  chromium wrap (shape pill) · rung 40.00 · block 40.00 → 40.00 · appended row cut true · REFUSED in paint (held at the rung) · console errors 1 (0 at mount): [ToggleGroupItem] "a" holds more than one row in a pill group (cut at the rung, or grown past it by a consumer size). Declare <ToggleGroup shape="cell">.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.evaluate: TypeError: Cannot read properties of null (reading 'querySelector')
+    at eval (eval at evaluate (:303:30), <anonymous>:2:73)
+    at UtilityScript.evaluate (<anonymous>:305:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+    at /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-2/D4-Dp-spec/probes/refusal.mjs:24:28 {
+  log: []
+}
+
+Node.js v26.0.0

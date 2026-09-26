@@ -1,0 +1,14 @@
+      Tests  1 passed (1)
+--- PLANT
+stdout | tests/styles/tile-corner-canon.test.ts > the tile corner is one declaration, read on the parsed selector > exactly one rule reaches a cell item and not a pill item with a corner, on the field rung
+  "f": "src/components/toggle-group/styles.css",
+  "sel": ".toggle-group[data-shape=\"cell\"] .toggle-group__item",
+  "value": "var(--radius-field)"
+  "f": "PLANT.css",
+  "sel": ".toggle-group:is([data-shape=cell]) .toggle-group__item",
+  "value": "var(--radius-panel)"
+     × exactly one rule reaches a cell item and not a pill item with a corner, on the field rung 493ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/styles/tile-corner-canon.test.ts > the tile corner is one declaration, read on the parsed selector > exactly one rule reaches a cell item and not a pill item with a corner, on the field rung
+AssertionError: expected [ { …(3) }, { f: 'PLANT.css', …(2) } ] to have a length of 1 but got 2
+      Tests  1 failed (1)

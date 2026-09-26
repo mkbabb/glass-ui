@@ -1,0 +1,38 @@
+
+ RUN  v4.1.10 /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-Dp-spec/wt
+
+ ❯ tests/components/ui/toggle-group/ToggleGroup.test.ts (11 tests | 1 failed) 119ms
+     × G-TOGGLE-WRAP · the deleted surface is gone from the public type too 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/ui/toggle-group/ToggleGroup.test.ts > W-TOGGLE-ROW — the selection row > G-TOGGLE-WRAP · the deleted surface is gone from the public type too
+AssertionError: expected [ 'ToggleGroup', …(4) ] to deeply equal [ 'ToggleGroup', …(3) ]
+
+- Expected
++ Received
+
+  [
+    "ToggleGroup",
+    "ToggleGroupItem",
+    "ToggleGroupItemProps",
+    "ToggleGroupProps",
++   "ToggleGroupShape",
+  ]
+
+ ❯ tests/components/ui/toggle-group/ToggleGroup.test.ts:381:38
+    379|             ),
+    380|         );
+    381|         expect([...exported].sort()).toEqual([
+       |                                      ^
+    382|             "ToggleGroup",
+    383|             "ToggleGroupItem",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 76 passed | 1 expected fail (78)
+   Start at  04:16:17
+   Duration  3.87s (transform 2.77s, setup 709ms, import 4.76s, tests 851ms, environment 4.11s)
+

@@ -1,0 +1,232 @@
+diff -ruN a/src/components/toggle-group/ToggleGroup.vue b/src/components/toggle-group/ToggleGroup.vue
+--- a/src/components/toggle-group/ToggleGroup.vue	2026-09-26 04:16:01
++++ b/src/components/toggle-group/ToggleGroup.vue	2026-09-26 05:26:15
+@@ -39,9 +39,14 @@
+  * no longer happens), the emit pair (`defineModel` — the SegmentedTabs idiom), and
+  * eight props that had zero non-default callers across six repositories. */
+ 
++/** `pill` — one-line options on the stadium. `cell` — multi-line tiles on the field rung. */
++export type ToggleGroupShape = "pill" | "cell";
++
+ export interface ToggleGroupProps extends ControlProps {
+     /** `single` — a one-of-N chooser. `multiple` — N independent toggles. */
+     type: SelectionMode;
++    /** The option's shape, declared once for the group. */
++    shape?: ToggleGroupShape;
+     orientation?: Orientation;
+     size?: ControlSize;
+     class?: HTMLAttributes["class"];
+@@ -52,6 +57,7 @@
+ const props = withDefaults(defineProps<ToggleGroupProps>(), {
+     orientation: "horizontal",
+     size: "md",
++    shape: "pill",
+ });
+ 
+ /* One scalar model for both cardinalities: `single` holds one value, `multiple` an
+@@ -156,6 +162,7 @@
+         :role="selection.groupRole.value"
+         :data-type="props.type"
+         :data-size="props.size"
++        :data-shape="props.shape"
+         :data-orientation="props.orientation"
+         v-bind="controlStateAttrs(props.invalid)"
+         @keydown="selection.onKeydown"
+diff -ruN a/src/components/toggle-group/ToggleGroupItem.vue b/src/components/toggle-group/ToggleGroupItem.vue
+--- a/src/components/toggle-group/ToggleGroupItem.vue	2026-09-26 04:15:55
++++ b/src/components/toggle-group/ToggleGroupItem.vue	2026-09-26 05:26:15
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { computed, onBeforeUnmount, onMounted, ref, type HTMLAttributes } from "vue";
++import { computed, onBeforeUnmount, onMounted, ref, watch, type HTMLAttributes } from "vue";
+ import { cn } from "../_shared/class-names";
+ import type { SelectionValue } from "../_shared/selection";
+ import { useOptionalToggleGroupContext, type ToggleItemEntry } from "./context";
+@@ -72,6 +72,57 @@
+ 
+ const selected = computed(() => group?.isSelected(props.value) ?? false);
+ const isDisabled = computed(() => entry.disabled());
++
++/* THE COMMIT, keyed on the MODEL, never on focus: a pointer, a key and a programmatic
++ * write all change the model, and a Tab entry, a mount and a keyed move do not. The
++ * item pops on the weighty punch curve (out, overshoot below rest, settle) on
++ * `transform`, a channel the hover lift and the press squish (`scale`) do not write,
++ * so the two compose rather than race. Amplitude and clock are the item's own tokens;
++ * PRM zeroes the amplitude, and a zero amplitude runs nothing. */
++watch(selected, (on) => {
++    const node = el.value;
++    if (!on || !node) return;
++    const cs = getComputedStyle(node);
++    const pop = Number.parseFloat(cs.getPropertyValue("--selection-pop"));
++    if (!(pop > 0)) return;
++    const clock = cs.getPropertyValue("--selection-pop-duration").trim();
++    node.animate(
++        [
++            { transform: "scale(1)" },
++            { transform: `scale(${1 + pop})`, offset: 0.4 },
++            { transform: "scale(1)" },
++        ],
++        {
++            duration: clock.endsWith("ms") ? Number.parseFloat(clock) : Number.parseFloat(clock) * 1000,
++            easing: cs.getPropertyValue("--ease-cartoon-punch").trim(),
++        },
++    );
++});
++
++/* DEV NAMES WHAT PRODUCTION CUTS: a pill whose content forces a second row is clipped
++ * at its rung in paint (styles.css); in development the item also says why. */
++let rowWatch: ResizeObserver | null = null;
++if (import.meta.env.DEV) {
++    let named = false;
++    onMounted(() => {
++        const node = el.value;
++        if (!node) return;
++        rowWatch = new ResizeObserver(() => {
++            if (named || node.closest("[data-shape]")?.getAttribute("data-shape") === "cell") return;
++            // a second row: the pill grown past its rung by a consumer size, a child whose box runs past the
++            // item's, or a label squeezed by the rung (each label element clips, so its own scroll height says)
++            const box = node.getBoundingClientRect();
++            const rung = Number.parseFloat(getComputedStyle(node).minBlockSize);
++            if (box.height > rung + 0.5 || Array.from(node.children).some((c) => { const r = c.getBoundingClientRect(); return r.height > 0 && (r.bottom > box.bottom + 0.5 || c.scrollHeight > c.clientHeight + 1); })) {
++                named = true;
++                console.error(`[ToggleGroupItem] "${String(props.value)}" holds more than one row in a pill group (cut at the rung, or grown past it by a consumer size). Declare <ToggleGroup shape="cell">.`);
++            }
++        });
++        rowWatch.observe(node);
++        for (const child of Array.from(node.children)) rowWatch.observe(child);
++    });
++    onBeforeUnmount(() => rowWatch?.disconnect());
++}
+ </script>
+ 
+ <template>
+diff -ruN a/src/components/toggle-group/index.ts b/src/components/toggle-group/index.ts
+--- a/src/components/toggle-group/index.ts	2026-09-26 04:15:55
++++ b/src/components/toggle-group/index.ts	2026-09-26 05:26:15
+@@ -1,4 +1,8 @@
+-export { default as ToggleGroup, type ToggleGroupProps } from "./ToggleGroup.vue";
++export {
++    default as ToggleGroup,
++    type ToggleGroupProps,
++    type ToggleGroupShape,
++} from "./ToggleGroup.vue";
+ export {
+     default as ToggleGroupItem,
+     type ToggleGroupItemProps,
+diff -ruN a/src/components/toggle-group/styles.css b/src/components/toggle-group/styles.css
+--- a/src/components/toggle-group/styles.css	2026-09-26 04:16:01
++++ b/src/components/toggle-group/styles.css	2026-09-26 05:26:15
+@@ -1,3 +1,19 @@
++/* THE COMMIT'S TWO INPUTS, registered so the item reads them as a number and a time
++   (an unregistered token computes to its unevaluated text). `--selection-pop` rides
++   `--motion-weight`, so PRM (weight 0) retires the pop in the same assignment that
++   retires every other overshoot. */
++@property --selection-pop {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 0;
++}
++
++@property --selection-pop-duration {
++    syntax: "<time>";
++    inherits: true;
++    initial-value: 0s;
++}
++
+ @layer components {
+     /* THE GROUP PAINTS NOTHING. No background, no backdrop-filter, no rim, no
+        recess, no corner, no padding — both cardinalities, both orientations. What
+@@ -65,6 +81,11 @@
+         flex: none;
+         min-inline-size: var(--toggle-group-item-size);
+         min-block-size: var(--toggle-group-item-size);
++        /* THE PILL HOLDS ONE ROW, structurally: its block is the rung, so a second row
++           a consumer's markup forces (a column utility, a hard break, a nested column)
++           is cut at the plate in paint, in production, rather than ballooning the
++           stadium into a lozenge. The tile rule releases it (Q-5 (b)). */
++        block-size: var(--toggle-group-item-size);
+         align-items: center;
+         justify-content: center;
+         gap: 0.5rem;
+@@ -73,7 +94,13 @@
+            pair upstairs is what made this component the sole author of the ×32
+            `10003px` census; the role rung is the whole answer here. */
+         border-radius: var(--radius-pill);
+-        color: var(--muted-foreground);
++        /* THE SELECTED INK, one token for the label and the media: the item's rest ink,
++           and the selected edge's ink when on (tone-aware, floored). A tile's stage
++           strokes with it and needs no `[data-state="on"]` rule of its own (X-2). */
++        --selection-ink: var(--muted-foreground);
++        color: var(--selection-ink);
++        --selection-pop: calc(0.06 * var(--motion-weight));
++        --selection-pop-duration: var(--spring-panel-duration);
+         font: inherit;
+         font-size: var(--control-text);
+         font-weight: 500;
+@@ -153,6 +180,36 @@
+         padding-inline: 1.25rem;
+     }
+ 
++    /* THE TILE: `<ToggleGroup shape="cell">`. The one declaration of the multi-line
++       corner (the field rung, Q-1 (a)), the column, the pad pair, body leading, and the
++       selected perimeter switched on (a tile's content brings its own ink and weight).
++       It lifts the pill's one-row law. It declares NO group layout: the grid, the
++       column count and the gap are the consumer's (CX-5). */
++    .toggle-group[data-shape="cell"] .toggle-group__item {
++        flex-direction: column;
++        align-items: stretch;
++        justify-content: flex-start;
++        gap: var(--space-residue);
++        padding: var(--space-atom) var(--space-body);
++        text-align: start;
++        line-height: var(--type-leading-body);
++        white-space: normal;
++        overflow: visible;
++        block-size: auto;
++        border-radius: var(--radius-field);
++        --selection-perimeter: 1;
++    }
++
++    .toggle-group[data-shape="cell"][data-size="sm"] .toggle-group__item {
++        padding: var(--space-residue) var(--space-atom);
++    }
++
++    .toggle-group[data-shape="cell"] .toggle-group__item > :not(svg) {
++        overflow: visible;
++        text-overflow: clip;
++        padding-block: 0;
++    }
++
+     /* THE ON-STATE CARRIES ON INK AND WEIGHT, AND ASSISTS WITH FILL. It used to be a
+        four-carrier slab: an opaque `--accent` fill, a 28%-α `--primary` border, a
+        `--shadow-sm`, and the ink. The shadow was the real defect — it tied the focus
+@@ -178,7 +235,7 @@
+        this lane's to patch locally with a literal. */
+     .toggle-group__item[data-state="on"] {
+         background-color: color-mix(in oklab, var(--foreground) 12%, transparent);
+-        color: var(--foreground);
++        --selection-ink: var(--selection-edge);
+         font-weight: 600;
+     }
+ 
+diff -ruN a/src/styles/accessibility.css b/src/styles/accessibility.css
+--- a/src/styles/accessibility.css	2026-09-26 04:15:56
++++ b/src/styles/accessibility.css	2026-09-26 05:26:15
+@@ -15,7 +15,7 @@
+             [aria-checked="true"],
+             [data-state="checked"],
+             [data-state="on"]
+-        ) {
++        ):not(.toggle-group[data-shape="cell"] .toggle-group__item) {
+             border-color: currentColor !important;
+             border-style: solid !important;
+             border-width: 2px !important;
+@@ -36,7 +36,7 @@
+             [aria-checked="true"],
+             [data-state="checked"],
+             [data-state="on"]
+-        ) {
++        ):not(.toggle-group[data-shape="cell"] .toggle-group__item) {
+             border-color: Highlight !important;
+             border-style: solid !important;
+             border-width: 2px !important;

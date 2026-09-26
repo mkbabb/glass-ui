@@ -1,0 +1,96 @@
+{
+ "id": "W-A",
+ "title": "curvature never tracks content (D4-A), fine, coarse, --ui-scale",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "dp-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "wrap",
+   "cell": "fine",
+   "line": "wrap light ToggleGroupItem · 70.05×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×40.00 9999px→20.00 (÷h/2 1.00) · one line at h/2 true, unchanged by lines true (Δ 0.00 px)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "wrap",
+   "cell": "fine",
+   "line": "wrap light Chip pill · 53.91×33.41 9999px→16.70 (÷h/2 1.00) | 110.00×76.22 9999px→38.11 (÷h/2 1.00) | 110.00×119.03 9999px→55.00 (÷h/2 0.92) · one line at h/2 true, unchanged by lines false (Δ 38.30 px)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "wrap",
+   "cell": "fine",
+   "line": "wrap light Button · 98.36×40.00 20px→20.00 (÷h/2 1.00) | 110.00×52.44 20px→20.00 (÷h/2 0.76) | 110.00×86.06 20px→20.00 (÷h/2 0.46) · one line at h/2 true, unchanged by lines true (Δ 0.00 px)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "wrap",
+   "cell": "coarse",
+   "line": "wrap light coarse ToggleGroupItem · 88.88×60.00 9999px→30.00 (÷h/2 1.00) | 110.00×60.00 9999px→30.00 (÷h/2 1.00) | 110.00×60.00 9999px→30.00 (÷h/2 1.00) · one line at h/2 true, unchanged by lines true (Δ 0.00 px)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "wrap",
+   "cell": "coarse",
+   "line": "wrap light coarse Chip pill · 53.91×44.00 9999px→22.00 (÷h/2 1.00) | 110.00×76.22 9999px→38.11 (÷h/2 1.00) | 110.00×119.03 9999px→55.00 (÷h/2 0.92) · one line at h/2 true, unchanged by lines false (Δ 33.00 px)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "wrap",
+   "cell": "coarse",
+   "line": "wrap light coarse Button · 110.00×44.00 30px→22.00 (÷h/2 1.00) | 110.00×102.94 30px→30.00 (÷h/2 0.58) | 110.00×178.64 30px→30.00 (÷h/2 0.34) · one line at h/2 true, unchanged by lines false (Δ 8.00 px)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "wrap",
+   "cell": "ui-scale",
+   "line": "wrap light --ui-scale 1.25 ToggleGroupItem · 79.64×50.00 9999px→25.00 (÷h/2 1.00) | 110.00×50.00 9999px→25.00 (÷h/2 1.00) | 110.00×50.00 9999px→25.00 (÷h/2 1.00) · one line at h/2 true, unchanged by lines true (Δ 0.00 px)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "wrap",
+   "cell": "ui-scale",
+   "line": "wrap light --ui-scale 1.25 Chip pill · 53.91×33.41 9999px→16.70 (÷h/2 1.00) | 110.00×76.22 9999px→38.11 (÷h/2 1.00) | 110.00×119.03 9999px→55.00 (÷h/2 0.92) · one line at h/2 true, unchanged by lines false (Δ 38.30 px)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "wrap",
+   "cell": "ui-scale",
+   "line": "wrap light --ui-scale 1.25 Button · 110.00×50.00 25px→25.00 (÷h/2 1.00) | 110.00×86.13 25px→25.00 (÷h/2 0.58) | 110.00×149.22 25px→25.00 (÷h/2 0.34) · one line at h/2 true, unchanged by lines true (Δ 0.00 px)"
+  }
+ ],
+ "flavor": "src",
+ "run": {
+  "loadStart": "54.21 / 55.03 / 49.16",
+  "loadEnd": "54.40 / 55.03 / 49.23",
+  "census": {
+   "n": 46,
+   "sample": [
+    "19728 /Users/mkbabb/Library/Caches/ms-playwright/chromium-1228/chrome-mac-arm64/Google",
+    "19776 /Users/mkbabb/Library/Caches/ms-playwright/chromium-1228/chrome-mac-arm64/Google",
+    "22766 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un"
+   ],
+   "waitedS": 0.6
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "5/9 gating cells pass [library 5/9]",
+ "arms": {
+  "library": {
+   "pass": 5,
+   "of": 9
+  }
+ }
+}
