@@ -1,0 +1,69 @@
+--- a/src/components/toggle-group/ToggleGroupItem.vue
++++ b/src/components/toggle-group/ToggleGroupItem.vue
+@@ -35,6 +35,10 @@
+  * in: this is a slot, not a travelling mark. */
+ defineSlots<{
+     default?: () => unknown;
++    /** A row above the label (a glyph, a stage). Its presence makes the item a tile. */
++    media?: () => unknown;
++    /** A row below the label (a readout). Its presence makes the item a tile. */
++    meta?: () => unknown;
+     indicator?: (props: { selected: boolean }) => unknown;
+ }>();
+ 
+@@ -92,7 +96,9 @@
+         @click="group?.select(entry)"
+     >
+         <slot name="indicator" :selected="selected" />
++        <span v-if="$slots.media" class="toggle-group__media"><slot name="media" /></span>
+         <slot />
++        <span v-if="$slots.meta" class="toggle-group__meta"><slot name="meta" /></span>
+     </button>
+ </template>
+ 
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -116,6 +116,43 @@
+         padding-block: 0.15em;
+     }
+ 
++    /* D4-F READING 2 (block-test probe): THE ANATOMY DECLARES THE TILE. The item
++       renders `#media` above and `#meta` below its label, each in a marked row; an
++       item that holds either is a cell. The default slot alone, adornments and all,
++       stays the one-line pill above. No prop, no script. */
++    .toggle-group__item:has(> .toggle-group__media, > .toggle-group__meta) {
++        --selection-perimeter: 1;
++        border-radius: var(--radius-field);
++        flex-direction: column;
++        align-items: flex-start;
++        justify-content: flex-start;
++        gap: 0.25rem;
++        white-space: normal;
++        overflow: visible;
++        line-height: var(--type-leading-body);
++        padding-block: 0.625rem;
++
++        & > * {
++            overflow: visible;
++            padding-block: 0;
++        }
++    }
++
++    .toggle-group__media {
++        display: flex;
++    }
++
++    /* the meta row reads muted at rest and lifts to the label's ink when chosen
++       (B's meta ink lift): a tile's selected state reaches its secondary line */
++    .toggle-group__meta {
++        color: var(--muted-foreground);
++        font-weight: 400;
++    }
++
++    .toggle-group__item[data-state="on"] > .toggle-group__meta {
++        color: var(--foreground);
++    }
++
+     /* THE SELECTED PERIMETER: a layer of its own over the border, 2 px of the edge
+        ink. It spends neither `outline` (the ring's) nor `box-shadow` (the ring's and
+        the rim's) nor the item's `border` (the invalid grammar's, a sibling state's and

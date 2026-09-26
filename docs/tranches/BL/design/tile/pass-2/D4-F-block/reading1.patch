@@ -1,0 +1,31 @@
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -116,6 +116,28 @@
+         padding-block: 0.15em;
+     }
+ 
++    /* D4-F READING 1 (block-test probe): THE CONTENT'S STRUCTURE DECLARES THE TILE.
++       An item whose direct children hold two ROWS is a cell; a row is any element
++       child that is not an inline adornment (a bare glyph `svg`/`img`, a library
++       `Badge`, a visually hidden description). One row, with or without adornments,
++       stays the one-line pill above. No prop, no script. */
++    .toggle-group__item:has(> :not(svg, img, .badge-atom, .sr-only) ~ :not(svg, img, .badge-atom, .sr-only)) {
++        --selection-perimeter: 1;
++        border-radius: var(--radius-field);
++        flex-direction: column;
++        align-items: flex-start;
++        justify-content: flex-start;
++        white-space: normal;
++        overflow: visible;
++        line-height: var(--type-leading-body);
++        padding-block: 0.625rem;
++
++        & > * {
++            overflow: visible;
++            padding-block: 0;
++        }
++    }
++
+     /* THE SELECTED PERIMETER: a layer of its own over the border, 2 px of the edge
+        ink. It spends neither `outline` (the ring's) nor `box-shadow` (the ring's and
+        the rim's) nor the item's `border` (the invalid grammar's, a sibling state's and

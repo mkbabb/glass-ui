@@ -1,0 +1,3051 @@
+{
+ "reading": "r1",
+ "build": "r1-src",
+ "meta": {
+  "label": "r1-src",
+  "worktree": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/bt-F/wt",
+  "sha": "d41040e4",
+  "srcDirtyFiles": 17,
+  "flavor": "src",
+  "dev": false,
+  "distBuilt": null,
+  "developmentConditions": null,
+  "route": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-2/D4-F-block/route-r1",
+  "migration": {
+   "label": "D4-F-r1",
+   "sites": [
+    "strip"
+   ]
+  },
+  "familyModules": [],
+  "built": "2026-09-26T06:57:58.161Z",
+  "seconds": 1.2
+ },
+ "selectors": {
+  "W7": ".toggle-group__item:has(> * + *)",
+  "R1": ".toggle-group__item:has(> :not(svg, img, .badge-atom, .sr-only) ~ :not(svg, img, .badge-atom, .sr-only))",
+  "R2": ".toggle-group__item:has(> .toggle-group__media, > .toggle-group__meta)"
+ },
+ "engines": {
+  "chromium": {
+   "version": "Chromium 149.0.7827.55",
+   "loadStart": "30.18 / 40.16 / 39.91",
+   "cases": [
+    {
+     "id": "icon+label",
+     "scene": "pill-icon",
+     "surgery": null,
+     "expected": "pill",
+     "gating": true,
+     "note": "H-10 pill-icon: a bare svg icon beside a label span",
+     "ok": true,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "3/3",
+      "R1": "0/3",
+      "R2": "0/3"
+     },
+     "items": [
+      {
+       "w": 80.14,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.size-4",
+        "span"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 76.59,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.size-4",
+        "span"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 92.27,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.size-4",
+        "span"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "label+Badge",
+     "scene": "pill-badge",
+     "surgery": null,
+     "expected": "pill",
+     "gating": true,
+     "note": "H-10 pill-badge: a label span beside a library Badge",
+     "ok": true,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "3/3",
+      "R1": "0/3",
+      "R2": "0/3"
+     },
+     "items": [
+      {
+       "w": 95.34,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "div.badge-atom.inline-flex"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 90.36,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "div.badge-atom.inline-flex"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 100.8,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "div.badge-atom.inline-flex"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "K1",
+     "scene": "preset",
+     "surgery": null,
+     "expected": "cell",
+     "gating": true,
+     "note": "K1 library arm, unmigrated markup: a name span over a readout span",
+     "ok": true,
+     "got": [
+      "cell"
+     ],
+     "matchTally": {
+      "W7": "4/4",
+      "R1": "4/4",
+      "R2": "0/4"
+     },
+     "items": [
+      {
+       "w": 204,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 204,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 204,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 204,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "K2",
+     "scene": "specimen",
+     "surgery": null,
+     "expected": "cell",
+     "gating": true,
+     "note": "K2 library arm, unmigrated markup: a stage span, a name span, an sr-only description",
+     "ok": true,
+     "got": [
+      "cell"
+     ],
+     "matchTally": {
+      "W7": "8/8",
+      "R1": "8/8",
+      "R2": "0/8"
+     },
+     "items": [
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "V1",
+     "scene": "strip-migrated",
+     "surgery": null,
+     "expected": "cell",
+     "gating": true,
+     "note": "V1 on ToggleGroupItem (route-r1): a bare glyph svg over a label span",
+     "ok": false,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "6/6",
+      "R1": "0/6",
+      "R2": "0/6"
+     },
+     "items": [
+      {
+       "w": 59.08,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.tile-glyph",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 64.63,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.tile-glyph",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 81.23,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.tile-glyph",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 59.08,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.tile-glyph",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 64.63,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.tile-glyph",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 81.23,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.tile-glyph",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "wrap-span",
+     "scene": "single",
+     "surgery": "longSpan",
+     "expected": "pill",
+     "gating": true,
+     "note": "a bare label in a span, 30 characters, the group held to 140 px (TF-7)",
+     "ok": true,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "0/4",
+      "R1": "0/4",
+      "R2": "0/4"
+     },
+     "items": [
+      {
+       "w": 132,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": true,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 58.44,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 49.41,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 60.03,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "wrap-text",
+     "scene": "single",
+     "surgery": "longText",
+     "expected": "pill",
+     "gating": true,
+     "note": "the same label as a bare text node (TF-7, C-3)",
+     "ok": true,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "0/4",
+      "R1": "0/4",
+      "R2": "0/4"
+     },
+     "items": [
+      {
+       "w": 132,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": true,
+       "kids": [],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 58.44,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 49.41,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 60.03,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "label+count",
+     "scene": "pill-badge",
+     "surgery": "count",
+     "expected": "pill",
+     "gating": false,
+     "note": "the Badge swapped for a consumer count span (C1's shape: a label and a count)",
+     "ok": false,
+     "got": [
+      "cell"
+     ],
+     "matchTally": {
+      "W7": "3/3",
+      "R1": "3/3",
+      "R2": "0/3"
+     },
+     "items": [
+      {
+       "w": 64.91,
+       "h": 75.88,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "span.text-muted-foreground.tabular-nums"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 59.59,
+       "h": 75.88,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "span.text-muted-foreground.tabular-nums"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 70.09,
+       "h": 75.88,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "span.text-muted-foreground.tabular-nums"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "glyph span + text",
+     "scene": "pill-icon",
+     "surgery": "glyphSpanText",
+     "expected": "pill",
+     "gating": false,
+     "note": "fourier-analysis BasisSelector.vue:158-162 as shipped: a glyph span and a bare text label",
+     "ok": true,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "0/3",
+      "R1": "0/3",
+      "R2": "0/3"
+     },
+     "items": [
+      {
+       "w": 75.06,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.basis-icon.font-serif-math"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 71.52,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.basis-icon.font-serif-math"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 87.19,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.basis-icon.font-serif-math"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "glyph span + label span",
+     "scene": "pill-icon",
+     "surgery": "glyphSpanSpan",
+     "expected": "pill",
+     "gating": false,
+     "note": "the same with the label in a span, the label element TF-7's ellipsis asks for",
+     "ok": false,
+     "got": [
+      "cell"
+     ],
+     "matchTally": {
+      "W7": "3/3",
+      "R1": "3/3",
+      "R2": "0/3"
+     },
+     "items": [
+      {
+       "w": 56.14,
+       "h": 75.88,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.basis-icon.font-serif-math",
+        "span"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 52.59,
+       "h": 75.88,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.basis-icon.font-serif-math",
+        "span"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 68.27,
+       "h": 75.88,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.basis-icon.font-serif-math",
+        "span"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "label+sr-only",
+     "scene": "pill-badge",
+     "surgery": "srOnly",
+     "expected": "pill",
+     "gating": false,
+     "note": "the Badge swapped for an sr-only span",
+     "ok": true,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "3/3",
+      "R1": "0/3",
+      "R2": "0/3"
+     },
+     "items": [
+      {
+       "w": 64.91,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 59.59,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 70.09,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "V1 glyph in a row",
+     "scene": "strip-migrated",
+     "surgery": "wrapGlyph",
+     "expected": "cell",
+     "gating": false,
+     "note": "V1 with each glyph wrapped in a span: the structural spelling reading 1 would ask of V1",
+     "ok": true,
+     "got": [
+      "cell"
+     ],
+     "matchTally": {
+      "W7": "6/6",
+      "R1": "6/6",
+      "R2": "0/6"
+     },
+     "items": [
+      {
+       "w": 40,
+       "h": 62.8,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-glyph-row",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 40,
+       "h": 62.8,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-glyph-row",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 51.23,
+       "h": 62.8,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-glyph-row",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 40,
+       "h": 62.8,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-glyph-row",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 40,
+       "h": 62.8,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-glyph-row",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 51.23,
+       "h": 62.8,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-glyph-row",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "K1 shipped",
+     "scene": "preset-verbatim",
+     "surgery": null,
+     "expected": "cell",
+     "gating": false,
+     "note": "K1 as shipped (rounded-pill and the consumer's paint)",
+     "ok": true,
+     "got": [
+      "cell"
+     ],
+     "matchTally": {
+      "W7": "4/4",
+      "R1": "4/4",
+      "R2": "0/4"
+     },
+     "items": [
+      {
+       "w": 208,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 208,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 208,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 208,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      }
+     ],
+     "errors": []
+    }
+   ],
+   "flip": {
+    "before": "36.0×36.0 9999px row perim 0",
+    "added": "57.4×70.3 16px column perim 1",
+    "removed": "36.0×36.0 9999px row perim 0"
+   },
+   "loadEnd": "32.59 / 40.18 / 39.92"
+  },
+  "webkit": {
+   "version": "Playwright WebKit 26.5",
+   "loadStart": "32.59 / 40.18 / 39.92",
+   "cases": [
+    {
+     "id": "icon+label",
+     "scene": "pill-icon",
+     "surgery": null,
+     "expected": "pill",
+     "gating": true,
+     "note": "H-10 pill-icon: a bare svg icon beside a label span",
+     "ok": true,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "3/3",
+      "R1": "0/3",
+      "R2": "0/3"
+     },
+     "items": [
+      {
+       "w": 80.16,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.size-4",
+        "span"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 76.59,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.size-4",
+        "span"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 92.28,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.size-4",
+        "span"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "label+Badge",
+     "scene": "pill-badge",
+     "surgery": null,
+     "expected": "pill",
+     "gating": true,
+     "note": "H-10 pill-badge: a label span beside a library Badge",
+     "ok": true,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "3/3",
+      "R1": "0/3",
+      "R2": "0/3"
+     },
+     "items": [
+      {
+       "w": 95.45,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "div.badge-atom.inline-flex"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 90.47,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "div.badge-atom.inline-flex"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 100.91,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "div.badge-atom.inline-flex"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "K1",
+     "scene": "preset",
+     "surgery": null,
+     "expected": "cell",
+     "gating": true,
+     "note": "K1 library arm, unmigrated markup: a name span over a readout span",
+     "ok": true,
+     "got": [
+      "cell"
+     ],
+     "matchTally": {
+      "W7": "4/4",
+      "R1": "4/4",
+      "R2": "0/4"
+     },
+     "items": [
+      {
+       "w": 204,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 204,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 204,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 204,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "K2",
+     "scene": "specimen",
+     "surgery": null,
+     "expected": "cell",
+     "gating": true,
+     "note": "K2 library arm, unmigrated markup: a stage span, a name span, an sr-only description",
+     "ok": true,
+     "got": [
+      "cell"
+     ],
+     "matchTally": {
+      "W7": "8/8",
+      "R1": "8/8",
+      "R2": "0/8"
+     },
+     "items": [
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 100.16,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 126,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 207,
+       "h": 126,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-stage",
+        "span.tile-name.text-mono-caption",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "V1",
+     "scene": "strip-migrated",
+     "surgery": null,
+     "expected": "cell",
+     "gating": true,
+     "note": "V1 on ToggleGroupItem (route-r1): a bare glyph svg over a label span",
+     "ok": false,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "6/6",
+      "R1": "0/6",
+      "R2": "0/6"
+     },
+     "items": [
+      {
+       "w": 59.08,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.tile-glyph",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 64.63,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.tile-glyph",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 81.23,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.tile-glyph",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 59.08,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.tile-glyph",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 64.63,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.tile-glyph",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 81.23,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "svg.tile-glyph",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "wrap-span",
+     "scene": "single",
+     "surgery": "longSpan",
+     "expected": "pill",
+     "gating": true,
+     "note": "a bare label in a span, 30 characters, the group held to 140 px (TF-7)",
+     "ok": true,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "0/4",
+      "R1": "0/4",
+      "R2": "0/4"
+     },
+     "items": [
+      {
+       "w": 132,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": true,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 58.47,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 49.42,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 60.05,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "wrap-text",
+     "scene": "single",
+     "surgery": "longText",
+     "expected": "pill",
+     "gating": true,
+     "note": "the same label as a bare text node (TF-7, C-3)",
+     "ok": true,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "0/4",
+      "R1": "0/4",
+      "R2": "0/4"
+     },
+     "items": [
+      {
+       "w": 132,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": true,
+       "kids": [],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 58.47,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 49.42,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 60.05,
+       "h": 36,
+       "rung": 36,
+       "computed": "9999px",
+       "used": 18,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "label+count",
+     "scene": "pill-badge",
+     "surgery": "count",
+     "expected": "pill",
+     "gating": false,
+     "note": "the Badge swapped for a consumer count span (C1's shape: a label and a count)",
+     "ok": false,
+     "got": [
+      "cell"
+     ],
+     "matchTally": {
+      "W7": "3/3",
+      "R1": "3/3",
+      "R2": "0/3"
+     },
+     "items": [
+      {
+       "w": 64.92,
+       "h": 75.88,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "span.text-muted-foreground.tabular-nums"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 59.61,
+       "h": 75.88,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "span.text-muted-foreground.tabular-nums"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 70.11,
+       "h": 75.88,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "span.text-muted-foreground.tabular-nums"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "glyph span + text",
+     "scene": "pill-icon",
+     "surgery": "glyphSpanText",
+     "expected": "pill",
+     "gating": false,
+     "note": "fourier-analysis BasisSelector.vue:158-162 as shipped: a glyph span and a bare text label",
+     "ok": true,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "0/3",
+      "R1": "0/3",
+      "R2": "0/3"
+     },
+     "items": [
+      {
+       "w": 75.08,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.basis-icon.font-serif-math"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 71.52,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.basis-icon.font-serif-math"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 87.2,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.basis-icon.font-serif-math"
+       ],
+       "m": {
+        "W7": false,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "glyph span + label span",
+     "scene": "pill-icon",
+     "surgery": "glyphSpanSpan",
+     "expected": "pill",
+     "gating": false,
+     "note": "the same with the label in a span, the label element TF-7's ellipsis asks for",
+     "ok": false,
+     "got": [
+      "cell"
+     ],
+     "matchTally": {
+      "W7": "3/3",
+      "R1": "3/3",
+      "R2": "0/3"
+     },
+     "items": [
+      {
+       "w": 56.16,
+       "h": 75.88,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.basis-icon.font-serif-math",
+        "span"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 52.59,
+       "h": 75.88,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.basis-icon.font-serif-math",
+        "span"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 68.28,
+       "h": 75.88,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.basis-icon.font-serif-math",
+        "span"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "label+sr-only",
+     "scene": "pill-badge",
+     "surgery": "srOnly",
+     "expected": "pill",
+     "gating": false,
+     "note": "the Badge swapped for an sr-only span",
+     "ok": true,
+     "got": [
+      "pill"
+     ],
+     "matchTally": {
+      "W7": "3/3",
+      "R1": "0/3",
+      "R2": "0/3"
+     },
+     "items": [
+      {
+       "w": 64.92,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 59.61,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      },
+      {
+       "w": 70.11,
+       "h": 40,
+       "rung": 40,
+       "computed": "9999px",
+       "used": 20,
+       "field": 16,
+       "dir": "row",
+       "ws": "nowrap",
+       "perim": "0",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span",
+        "span.sr-only"
+       ],
+       "m": {
+        "W7": true,
+        "R1": false,
+        "R2": false
+       },
+       "cls": "pill"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "V1 glyph in a row",
+     "scene": "strip-migrated",
+     "surgery": "wrapGlyph",
+     "expected": "cell",
+     "gating": false,
+     "note": "V1 with each glyph wrapped in a span: the structural spelling reading 1 would ask of V1",
+     "ok": true,
+     "got": [
+      "cell"
+     ],
+     "matchTally": {
+      "W7": "6/6",
+      "R1": "6/6",
+      "R2": "0/6"
+     },
+     "items": [
+      {
+       "w": 40,
+       "h": 62.8,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-glyph-row",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 40,
+       "h": 62.8,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-glyph-row",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 51.23,
+       "h": 62.8,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-glyph-row",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 40,
+       "h": 62.8,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-glyph-row",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 40,
+       "h": 62.8,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-glyph-row",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 51.23,
+       "h": 62.8,
+       "rung": 36,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.tile-glyph-row",
+        "span.tile-label"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      }
+     ],
+     "errors": []
+    },
+    {
+     "id": "K1 shipped",
+     "scene": "preset-verbatim",
+     "surgery": null,
+     "expected": "cell",
+     "gating": false,
+     "note": "K1 as shipped (rounded-pill and the consumer's paint)",
+     "ok": true,
+     "got": [
+      "cell"
+     ],
+     "matchTally": {
+      "W7": "4/4",
+      "R1": "4/4",
+      "R2": "0/4"
+     },
+     "items": [
+      {
+       "w": 208,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 208,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 208,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      },
+      {
+       "w": 208,
+       "h": 61.58,
+       "rung": 40,
+       "computed": "16px",
+       "used": 16,
+       "field": 16,
+       "dir": "column",
+       "ws": "normal",
+       "perim": "1",
+       "lines": 1,
+       "clipped": false,
+       "kids": [
+        "span.text-small.text-foreground",
+        "span.text-mono-caption.text-muted-foreground"
+       ],
+       "m": {
+        "W7": true,
+        "R1": true,
+        "R2": false
+       },
+       "cls": "cell"
+      }
+     ],
+     "errors": []
+    }
+   ],
+   "flip": {
+    "before": "36.0×36.0 9999px row perim 0",
+    "added": "57.4×70.3 16px column perim 1",
+    "removed": "36.0×36.0 9999px row perim 0"
+   },
+   "loadEnd": "39.09 / 41.32 / 40.33"
+  }
+ },
+ "pass": 12,
+ "n": 14
+}
