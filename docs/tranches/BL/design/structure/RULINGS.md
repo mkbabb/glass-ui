@@ -34,3 +34,15 @@ The pass-2 registry (`REGISTRY.md` §P2-5) sent nine rulings as one list. The dr
 | P3-R7 | R-8: `springProjection.ts`, `useScrollScene.ts` (cross-zone readers only) | **The global zone.** A file whose readers span zones has no common owner below `src/`, so hooks go to `src/composables/` and non-hook modules go to the global shared slot. | R-8 (placement rule) |
 | P3-R8 | `@source` inside the `./styles` aggregate against CSS door purity | **Allowed, scoped.** `@source` is build metadata, not paint. A door may carry `@source` for its own subtree only; a glob reaching outside the door stays a violation (G-07). | driver |
 | P3-R9 | `.bundle-ratchet` rebind wording | **Driver's wording, one sentence, the same for every route:** "The ratchet binds to the dist entry map, not to `src` paths. A route's rebind is a mechanical path remap that leaves every entry's byte ceiling unchanged, and any ceiling change is its own ruled row." The owner may reword it. | driver |
+
+## Pass-4 rulings P4-R1..P4-R5
+
+Ruled by the driver on 2026-09-26, before pass 5's floor and route seats, from REGISTRY §P4-4. Each follows the registry's recommendation. The owner may override any row.
+
+| id | question | ruling | ground |
+|---|---|---|---|
+| P4-R1 | R-10's scope | **(b) Every consumer zone is held to entries.** One rule at every depth: a file outside a unit reaches it through its door. A test inside `<unit>/__tests__/` is inside its unit and is not a crossing, so R-3's colocation cures most of the test lines. | edict ("encapsulated") + pass-4 measurement (B2: 67 lines, arm (a) 18) |
+| P4-R2 | names consumers read that no entry publishes | **Re-point by default.** Publish a name on its owning entry only when it belongs to a published component's contract, with one MIGRATION "added" row and one pin row each. | driver (a demo reach to a private is a surface gap only when a consumer would need the same name) |
+| P4-R3 | the ratchet | **P3-R9 re-worded:** "The ratchet is one two-sided total. A structure step that moves it lands its own datum row, with its bytes broken down by class, and the datum is rebound once, at the migration's landing commit." The floor row (−5,511 B) is ruled as measured. The route row (+17,264 B) is held until the "other declarations" +12,819 B is explained (P4-G9). | driver + FP4 §4, Bp4 §2 |
+| P4-R4 | a moved CSS entry's dist name | **(a) The export key targets the real dist path.** No forwarding `@import` file. The export key is unchanged; a consumer importing the dist path directly gets a MIGRATION row. | edict (no shims) |
+| P4-R5 | the P3-R3 counterexample, `dock/__tests__` 16 > 12 | **(b) Defer.** B-S11 splits `GlassDock.vue` (545 lines) and its tests follow their new subjects; the slot is then re-measured. If it is still over 12, the route reports it and the driver rules then. | R-5 already requires the split |
