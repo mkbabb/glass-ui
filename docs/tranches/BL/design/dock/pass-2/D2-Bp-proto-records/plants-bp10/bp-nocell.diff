@@ -1,0 +1,12 @@
+diff --git a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final/src/components/dock/composables/useDockScene.ts b/src/components/dock/composables/useDockScene.ts
+index b9484a3c..8470643e 100644
+--- a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final/src/components/dock/composables/useDockScene.ts
++++ b/src/components/dock/composables/useDockScene.ts
+@@ -535,6 +535,7 @@ export function useDockScene(options: UseDockSceneOptions): UseDockSceneReturn {
+                 continue;
+             }
+             m.hold = null;
++            if (m.parent && m.parent.parent) { m.lx.seat(0); m.ly.seat(0); continue; }
+             const pp = parentPainted(m);
+             const ox = target.x - pp.x - m.pos.x;
+             const oy = target.y - pp.y - m.pos.y;

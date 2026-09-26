@@ -1,0 +1,13 @@
+diff --git a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final/src/components/dock/composables/useDockScene.ts b/src/components/dock/composables/useDockScene.ts
+index b9484a3c..07c73d6b 100644
+--- a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final/src/components/dock/composables/useDockScene.ts
++++ b/src/components/dock/composables/useDockScene.ts
+@@ -155,7 +155,7 @@ export function useDockScene(options: UseDockSceneOptions): UseDockSceneReturn {
+     const leavingLayer = ref<Face | null>(null);
+     const morphing = ref(false);
+ 
+-    const spatial = (): DockLane => body.lane({ kind: "spatial", eps: LAND_PX });
++    const spatial = (): DockLane => body.lane({ kind: "spatial", eps: LAND_PX, dampingFraction: 0.6 });
+ 
+     // ── the plate ────────────────────────────────────────────────────────────────
+     const edge = { l: spatial(), t: spatial(), r: spatial(), b: spatial(), radius: spatial() };

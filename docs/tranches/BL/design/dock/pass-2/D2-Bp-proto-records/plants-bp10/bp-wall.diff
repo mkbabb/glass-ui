@@ -1,0 +1,30 @@
+diff --git a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final/src/components/dock/composables/useDockScene.ts b/src/components/dock/composables/useDockScene.ts
+index b9484a3c..9348497e 100644
+--- a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final/src/components/dock/composables/useDockScene.ts
++++ b/src/components/dock/composables/useDockScene.ts
+@@ -508,10 +508,10 @@ export function useDockScene(options: UseDockSceneOptions): UseDockSceneReturn {
+             const nt = firstPlate.t - d.y - L.t;
+             const nr = firstPlate.r - d.x - L.r;
+             const nb = firstPlate.b - d.y - L.b;
+-            edge.l.from(nl, edge.l.velocity, 0);
+-            edge.t.from(nt, edge.t.velocity, 0);
+-            edge.r.from(nr, edge.r.velocity, 0);
+-            edge.b.from(nb, edge.b.velocity, 0);
++            edge.l.from(nl, 0, 0);
++            edge.t.from(nt, 0, 0);
++            edge.r.from(nr, 0, 0);
++            edge.b.from(nb, 0, 0);
+             edge.radius.from(firstRadius - radius, edge.radius.velocity, 0);
+             reach = Math.max(reach, Math.abs(nl), Math.abs(nt), Math.abs(nr), Math.abs(nb), Math.abs(firstRadius - radius));
+         }
+@@ -540,8 +540,8 @@ export function useDockScene(options: UseDockSceneOptions): UseDockSceneReturn {
+             const oy = target.y - pp.y - m.pos.y;
+             // Painted velocity is continuous: the lane takes what its parent does not carry.
+             const pv = m.parent ? velocity(m.parent) : { x: 0, y: 0 };
+-            m.lx.from(ox, was.v.x - pv.x, 0);
+-            m.ly.from(oy, was.v.y - pv.y, 0);
++            m.lx.from(ox, 0, 0);
++            m.ly.from(oy, 0, 0);
+             reach = Math.max(reach, Math.abs(ox), Math.abs(oy));
+         }
+ 

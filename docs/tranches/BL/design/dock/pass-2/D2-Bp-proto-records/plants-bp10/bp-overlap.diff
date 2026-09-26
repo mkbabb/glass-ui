@@ -1,0 +1,15 @@
+diff --git a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final/src/components/dock/composables/useDockScene.ts b/src/components/dock/composables/useDockScene.ts
+index b9484a3c..6a13794c 100644
+--- a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final/src/components/dock/composables/useDockScene.ts
++++ b/src/components/dock/composables/useDockScene.ts
+@@ -318,8 +318,8 @@ export function useDockScene(options: UseDockSceneOptions): UseDockSceneReturn {
+     /** The visibility of a face under the posture crossfade (F-9: split in time). */
+     function faceVisibility(face: Face): number {
+         if (!posture) return 1;
+-        if (face === currentLayer.value) return clamp01((f.value - CROSS_SPLIT) / (1 - CROSS_SPLIT));
+-        if (face === leavingLayer.value) return clamp01(1 - f.value / CROSS_SPLIT);
++        if (face === currentLayer.value) return clamp01(f.value);
++        if (face === leavingLayer.value) return clamp01(1 - f.value);
+         return 0;
+     }
+ 

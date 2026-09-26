@@ -1,0 +1,29 @@
+diff --git a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/useDockBody.keep b/src/components/dock/composables/useDockBody.ts
+index 5b2ec7ce..a9a1b232 100644
+--- a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/useDockBody.keep
++++ b/src/components/dock/composables/useDockBody.ts
+@@ -100,6 +100,7 @@ export function createDockBody(): DockBody {
+         spring: SpringProgress;
+         moving = false;
+         landed = false;
++        span = 0;
+         constructor(readonly o: DockLaneOptions) {
+             this.spring = this.build(0, 0);
+         }
+@@ -120,7 +121,7 @@ export function createDockBody(): DockBody {
+             return this.moving && !this.landed ? this.spring.velocity : 0;
+         }
+         get travelling(): boolean {
+-            return this.moving && !this.landed;
++            return this.moving && !this.landed && Math.abs(this.spring.value - this.spring.target) > Math.max(this.o.eps, 0.02 * this.span);
+         }
+         from(value: number, velocity: number, target: number): void {
+             if (Math.abs(value - target) <= this.o.eps && Math.abs(velocity) < 1e-9) {
+@@ -133,6 +134,7 @@ export function createDockBody(): DockBody {
+             this.spring = this.build(value, velocity);
+             this.spring.target = target;
+             this.landed = false;
++            this.span = Math.abs(value - target);
+             if (this.spring.settled) {
+                 // Reduced motion: a spatial retarget has seated inside SpringProgress.
+                 this.moving = false;

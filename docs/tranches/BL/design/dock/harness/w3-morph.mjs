@@ -93,6 +93,7 @@ function dockBand(e, vp) {
 /** Chromium: screenshot the band continuously from the trigger until the dock rests. Each read
  *  carries the adapter's main length just before its shot, so the verdict knows how many reads
  *  saw the morph in flight (a screenshot at load 27 can outlast a 278 ms spring). */
+const FACES_START_MS = 4000;
 async function facesByShots(page, trigger) {
     await probeMode(page, "faces");
     const e0 = await extentNow(page); const vp = page.viewportSize();
@@ -103,14 +104,17 @@ async function facesByShots(page, trigger) {
     await shot();
     await trigger();
     // stillness counts only once the change has begun (a hover-out delay must not end the loop
-    // before the morph starts), or after 1.5 s with no change at all
+    // before the morph starts), or after FACES_START_MS with no change at all. That is the strip
+    // pass's own start cap (waitChange, 4 s): the dock's hover-out delay is 3.6 s
+    // (DOCK_COLLAPSE_DELAY_MS), and a 1.5 s cutoff left the Chromium warm pair UNMEASURED on
+    // every build (D2-Bp-proto.md §3.3)
     const t0 = Date.now(); let still = 0, last = "", started = false;
-    while (Date.now() - t0 < 3500) {
+    while (Date.now() - t0 < FACES_START_MS + 2500) {
         await shot();
         const e = await extentNow(page); const k = `${e.w.toFixed(1)}x${e.h.toFixed(1)}`; const m = await page.evaluate(() => window.__dockProbe.morphing());
         if (m || Math.abs(e.w - e0.w) > 0.25 || Math.abs(e.h - e0.h) > 0.25) started = true;
         still = k === last && !m ? still + 1 : 0; last = k;
-        if (still >= 3 && (started || Date.now() - t0 > 1500)) break;
+        if (still >= 3 && (started || Date.now() - t0 > FACES_START_MS)) break;
     }
     await probeMode(page, null);
     const L1 = main(await extentNow(page));

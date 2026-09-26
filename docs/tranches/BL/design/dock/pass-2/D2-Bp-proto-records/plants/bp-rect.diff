@@ -1,0 +1,12 @@
+diff --git a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final11-src/components/dock/composables/useDockScene.ts b/src/components/dock/composables/useDockScene.ts
+index b9484a3c..73e54641 100644
+--- a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final11-src/components/dock/composables/useDockScene.ts
++++ b/src/components/dock/composables/useDockScene.ts
+@@ -112,6 +112,7 @@ function cellsOf(el: HTMLElement): HTMLElement[] {
+ 
+ /** Layout position of `el` in `frame`'s padding box: offsets summed up the offsetParent chain. */
+ function posIn(el: HTMLElement, frame: HTMLElement): V | null {
++    if (frame.contains(el) || el === frame) { const a = el.getBoundingClientRect(), b = frame.getBoundingClientRect(); return { x: a.left - b.left - frame.clientLeft, y: a.top - b.top - frame.clientTop }; }
+     let x = 0;
+     let y = 0;
+     let e: Element | null = el;

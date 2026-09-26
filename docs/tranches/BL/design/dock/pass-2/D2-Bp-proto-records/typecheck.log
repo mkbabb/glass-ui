@@ -1,0 +1,11 @@
+ 0:24  up 1 day, 22:27, 2 users, load averages: 23.83 12.12 7.04
+vue-tsc (tsconfig.json) exit 0
+lib build exit 1
+tests/components/fourier-field/FourierField.smoke.test.ts(18,30): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+tests/components/fourier-field/FourierField.smoke.test.ts(19,66): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+vue-tsc -p tsconfig.test.json exit 2
+ 0:24  up 1 day, 22:27, 2 users, load averages: 24.47 12.79 7.36
+ 0:24  up 1 day, 22:27, 2 users, load averages: 21.67 12.74 7.44
+lib build exit 0
+vue-tsc -p tsconfig.test.json exit 0
+ 0:25  up 1 day, 22:27, 2 users, load averages: 20.27 13.02 7.66

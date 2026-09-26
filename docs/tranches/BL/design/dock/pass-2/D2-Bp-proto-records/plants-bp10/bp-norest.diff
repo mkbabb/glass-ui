@@ -1,0 +1,14 @@
+diff --git a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final/src/components/dock/composables/useDockBody.ts b/src/components/dock/composables/useDockBody.ts
+index 095a19a7..c4854c6b 100644
+--- a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final/src/components/dock/composables/useDockBody.ts
++++ b/src/components/dock/composables/useDockBody.ts
+@@ -94,7 +94,8 @@ export function createDockBody(): DockBody {
+         let live = false;
+         for (const lane of lanes) if (lane.step(dt)) live = true;
+         for (const write of writers) write();
+-        if (live) raf = requestAnimationFrame(step);
++        void live;
++        raf = requestAnimationFrame(step);
+     }
+ 
+     class LaneImpl implements DockLane {

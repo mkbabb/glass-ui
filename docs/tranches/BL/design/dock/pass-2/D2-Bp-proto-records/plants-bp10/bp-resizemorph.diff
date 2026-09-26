@@ -1,0 +1,15 @@
+diff --git a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final/src/components/dock/composables/useDockScene.ts b/src/components/dock/composables/useDockScene.ts
+index b9484a3c..a39fc963 100644
+--- a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final/src/components/dock/composables/useDockScene.ts
++++ b/src/components/dock/composables/useDockScene.ts
+@@ -694,9 +694,7 @@ export function useDockScene(options: UseDockSceneOptions): UseDockSceneReturn {
+         }
+     }
+ 
+-    function onViewportResize(): void {
+-        viewportChanged = true;
+-    }
++    function onViewportResize(): void {}
+ 
+     // One owner per animated property (O-64 R-5): a layout-affecting CSS transition or
+     // animation inside the dock would be a second owner of the extent. It is finished

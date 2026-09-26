@@ -1,0 +1,14 @@
+diff --git a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final13-src/components/dock/composables/useDockScene.ts b/src/components/dock/composables/useDockScene.ts
+index b9484a3c..73c52916 100644
+--- a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final13-src/components/dock/composables/useDockScene.ts
++++ b/src/components/dock/composables/useDockScene.ts
+@@ -158,7 +158,8 @@ export function useDockScene(options: UseDockSceneOptions): UseDockSceneReturn {
+     const spatial = (): DockLane => body.lane({ kind: "spatial", eps: LAND_PX });
+ 
+     // ── the plate ────────────────────────────────────────────────────────────────
+-    const edge = { l: spatial(), t: spatial(), r: spatial(), b: spatial(), radius: spatial() };
++    const bounce = (): DockLane => body.lane({ kind: "spatial", eps: LAND_PX, dampingFraction: 0.72 });
++    const edge = { l: bounce(), t: bounce(), r: bounce(), b: bounce(), radius: bounce() };
+     let rest: { w: number; h: number; radius: number; pos: V } | null = null;
+ 
+     // ── the posture fades: `e` is the plate's expanded-ness (veil tier, edge ink); `f` is

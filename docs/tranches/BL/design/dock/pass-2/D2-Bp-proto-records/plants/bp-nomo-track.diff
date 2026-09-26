@@ -1,0 +1,13 @@
+diff --git a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final11-src/components/dock/composables/useDockScene.ts b/src/components/dock/composables/useDockScene.ts
+index b9484a3c..c2e10dfb 100644
+--- a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p2/D2-Bp-proto/final11-src/components/dock/composables/useDockScene.ts
++++ b/src/components/dock/composables/useDockScene.ts
+@@ -734,8 +734,6 @@ export function useDockScene(options: UseDockSceneOptions): UseDockSceneReturn {
+         const r = root.value;
+         if (!r || typeof ResizeObserver === "undefined") return;
+         ro = new ResizeObserver(check);
+-        mo = new MutationObserver(check);
+-        mo.observe(r, { childList: true, characterData: true, subtree: true });
+         track();
+         window.addEventListener("resize", onViewportResize);
+         r.addEventListener("transitionrun", onTransitionRun, { capture: true });

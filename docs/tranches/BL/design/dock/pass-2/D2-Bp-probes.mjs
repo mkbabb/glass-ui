@@ -5,6 +5,8 @@
 //
 //   node D2-Bp-probes.mjs --build <floor build> --adapter adapter-floor.mjs \
 //        --arm cost|block|hit|ro|trun|fluid|scroller|all --engine chromium|webkit|all --out <json>
+//   node D2-Bp-probes.mjs --build <prototype build> --adapter adapter-floor.mjs \
+//        --arm rotate|rotlead|pop|idle|stretch|pblock|pcost|proto --engine chromium|webkit|all --out <json>
 //
 // Arms
 //   cost      per-frame cost of B′'s writes (plate inset + radius, N seat translates, one face
@@ -29,12 +31,36 @@
 //             W3 viewport-resize cell's 6.09 px). §7.3 B′ item 4 (CX-5)
 //   scroller  a translated seat inside a genuine scroller: does the translate change the
 //             scroll range (seat FLIP on an overflowing run)
+//
+// Prototype arms (D2-Bp-proto.md): these run on a B′ prototype build (or a planted variant
+// of it) through the floor adapter, and read the real writer, not an emulation.
+//   rotate    C-6: the first expand's first written plate inset and region translates (the
+//             scene's First − Last) with and without a rotate(12deg) scale(0.85) on the
+//             dock's host. The model is in layout space, so the two must agree. §7.3 B′
+//             item 8; plant `bp-rect`
+//   idle      rAF calls in 2 s at rest before any morph and 2 s after a morph has landed:
+//             the body parks, so the two counts agree. §7.3 B′ item 3; plant `bp-norest`
+//   stretch   P-3's stretched case on the dock: a seat prepended to a run held wider than
+//             its content (a consumer width), so no observed box changes size. The first
+//             seat's per-frame painted step. §7.3 B′ item 5; plant `bp-nomo-track`
+//   rotlead   C-6 where positions enter: the first translate written on the old first seat when
+//             a seat is prepended, with and without the rotated host. Plant `bp-rect`
+//   pop       item 7: per-frame painted opacity of every seat leaving the compact rung; a seat
+//             that goes ≥ 0.95 → ≤ 0.05 in one frame pops. Plant `bp-pop`
+//   pcost     the prototype's real per-frame cost over an expand with N = 0/10/20/40 seats
+//             in the run: rAF interval, and (Chromium) main-thread ms per frame from a trace,
+//             at 1× and 4×. §7.3 B′ item 2
+//   plead     pcost with the trigger a seat prepended to the run: every one of the N cells
+//             translates on its own lane each frame (the BANK re-trigger's case; a posture
+//             expand writes 0 cells). §7.3 B′ item 2
+//   pblock    the prototype's first expand under a 1.2 s main-thread block 60 ms in. §7.3
+//             B′ item 9 (RECORD)
 import fs from "node:fs";
 import path from "node:path";
-import { parseArgs, openTarget, launch, openScene, waitRest, loadAvg, playwright } from "../harness/lib.mjs";
+import { parseArgs, openTarget, launch, openScene, waitRest, loadAvg, playwright, scrollSource } from "../harness/lib.mjs";
 
 const args = parseArgs();
-const arms = (args.arm ?? "all") === "all" ? ["fluid", "hit", "ro", "trun", "scroller", "block", "cost"] : String(args.arm).split(",");
+const arms = (args.arm ?? "all") === "all" ? ["fluid", "hit", "ro", "trun", "scroller", "block", "cost"] : args.arm === "proto" ? ["rotate", "rotlead", "pop", "idle", "stretch", "pblock", "pcost"] : String(args.arm).split(",");
 const engs = (args.engine ?? "all") === "all" ? ["chromium", "webkit"] : String(args.engine).split(",");
 const target = args.build ? await openTarget(args) : null;
 const out = { probe: "D2-Bp-probes", started: new Date().toISOString(), build: target?.label ?? null, cells: [] };
@@ -385,6 +411,223 @@ async function cost(browser, engine, { throttle = 1 } = {}) {
     await s.close();
 }
 
+// ── prototype arms ───────────────────────────────────────────────────────────
+const nextFrames = (page, n = 2) => page.evaluate((n) => new Promise((f) => { let k = 0; const t = () => (++k >= n ? f() : requestAnimationFrame(t)); requestAnimationFrame(t); }), n);
+
+async function rotate(browser, engine) {
+    const res = {};
+    for (const rotated of [false, true]) {
+        const s = await openScene(browser, target, "morph");
+        await s.page.evaluate(() => window.__scene.collapse()); await waitRest(s.page, { quiet: 400 });
+        const r = await s.page.evaluate(async (rotated) => {
+            const P = window.__dockProbe, root = P.root(), plate = P.plate();
+            if (rotated) root.parentElement.style.transform = "rotate(12deg) scale(0.85)";
+            await new Promise((f) => requestAnimationFrame(() => requestAnimationFrame(f)));
+            const insets = [];
+            const regions = [...root.querySelectorAll(":scope > .dock-controls > .dock-persistent, .dock-layers")];
+            const firstTr = new Map();
+            const mo = new MutationObserver(() => {
+                const v = plate.style.inset; if (v && insets.at(-1) !== v) insets.push(v);
+                for (const r of regions) if (!firstTr.has(r) && r.style.translate) firstTr.set(r, r.style.translate);
+            });
+            mo.observe(plate, { attributes: true, attributeFilter: ["style"] });
+            for (const r of regions) mo.observe(r, { attributes: true, attributeFilter: ["style"] });
+            window.__scene.expand();
+            await new Promise((f) => setTimeout(f, 900));
+            mo.disconnect();
+            const px = (v) => v.split(" ").map((x) => +Number.parseFloat(x).toFixed(2));
+            const tr = regions.flatMap((r) => (firstTr.has(r) ? px(firstTr.get(r)) : [0, 0]));
+            return { first: insets[0] ? [...px(insets[0]), ...tr] : null, regionsTranslated: firstTr.size, writes: insets.length, restInset: plate.style.inset || "(cleared)", layoutW: root.offsetWidth };
+        }, rotated);
+        res[rotated ? "rotated" : "plain"] = r;
+        await s.close();
+    }
+    const a = res.plain.first, b = res.rotated.first;
+    const diff = a && b ? Math.max(...a.map((v, i) => Math.abs(v - b[i]))) : null;
+    add({ arm: "rotate", engine: LABEL[engine], ...res, firstInsetMaxDiffPx: diff != null ? +diff.toFixed(2) : null, verdict: diff != null && diff <= 0.5 ? "layout-space (agree)" : "DISAGREE" });
+}
+
+// rotlead: C-6 where the model's positions actually enter. A posture morph never changes a
+// region's place inside the root, so a wrong position reader cancels between First and Last
+// (the rotate arm above cannot fail on it). A seat prepended to the run moves every other
+// seat inside its face: the first translate the scene writes on the old first seat is
+// First − Last in layout px. It must be the same vector with and without an ancestor
+// rotate + scale.
+async function rotlead(browser, engine) {
+    const res = {};
+    for (const rotated of [false, true]) {
+        const s = await openScene(browser, target, "morph");
+        await s.page.evaluate(() => window.__scene.expand()); await waitRest(s.page, { quiet: 500 });
+        res[rotated ? "rotated" : "plain"] = await s.page.evaluate(async (rotated) => {
+            const root = window.__dockProbe.root(), run = root.querySelector(".dock-run");
+            if (rotated) root.parentElement.style.transform = "rotate(12deg) scale(0.85)";
+            await new Promise((f) => requestAnimationFrame(() => requestAnimationFrame(f)));
+            const first = run.querySelector("[data-dock-seat]");
+            const cell = [...run.children].find((c) => c.contains(first)) ?? first;
+            let tr = null;
+            const mo = new MutationObserver(() => { if (tr === null && cell.style.translate) tr = cell.style.translate; });
+            mo.observe(cell, { attributes: true, attributeFilter: ["style"] });
+            const clone = first.cloneNode(true); clone.removeAttribute("data-testid");
+            run.prepend(clone);
+            await new Promise((f) => setTimeout(f, 700));
+            mo.disconnect();
+            return { firstTranslate: tr, restTranslate: cell.style.translate || "(cleared)" };
+        }, rotated);
+        await s.close();
+    }
+    const px = (v) => (v ? v.split(" ").map((x) => Number.parseFloat(x)) : null);
+    const a = px(res.plain.firstTranslate), b = px(res.rotated.firstTranslate);
+    const diff = a && b ? Math.max(...a.map((v, i) => Math.abs(v - (b[i] ?? 0)))) : null;
+    add({ arm: "rotlead", engine: LABEL[engine], ...res, firstTranslateMaxDiffPx: diff != null ? +diff.toFixed(2) : null, verdict: diff == null ? "NO WRITE" : diff <= 0.5 ? "layout-space (agree)" : "DISAGREE" });
+}
+
+// pop: §7.3 B′ item 7, "compaction leaves through the closing aperture or fades on the
+// spring". The H2 cell compact·non-first-current reads the seats that stay; a seat that
+// leaves in one frame is not a step, so it cannot see a pop. This arm logs every
+// top-level run seat's painted opacity (0 when not rendered) per frame across the
+// compaction and counts the seats that go from ≥ 0.95 to ≤ 0.05 in one frame.
+async function pop(browser, engine) {
+    const s = await openScene(browser, target, "compact", { query: { active: "b" } });
+    const has = await s.page.evaluate(() => !!window.__dockProbe.compact?.());
+    if (!has) { add({ arm: "pop", engine: LABEL[engine], verdict: "absent: no compact rung" }); await s.close(); return; }
+    await scrollSource(s.page, 0); await s.page.waitForTimeout(80); await waitRest(s.page, { quiet: 400 });
+    const r = await s.page.evaluate(async () => {
+        const hp = window.__hp, run = window.__dockProbe.root().querySelector(".dock-run");
+        const seats = [...run.querySelectorAll("[data-dock-seat], .dock-separator")].filter((el) => !el.parentElement.closest("[data-dock-seat]"));
+        const op = (el) => (el.getClientRects().length ? hp.visibleOpacity(el) : 0);
+        const log = []; let stop = false;
+        const tick = () => { log.push(seats.map((el) => +op(el).toFixed(3))); if (!stop) requestAnimationFrame(tick); };
+        requestAnimationFrame(tick);
+        await new Promise((f) => setTimeout(f, 60));
+        window.__scene?.scrollTo ? window.__scene.scrollTo(900) : window.scrollTo(0, 900);
+        await new Promise((f) => setTimeout(f, 900)); stop = true;
+        const who = seats.map((el) => el.getAttribute("aria-label") ?? (el.classList.contains("dock-separator") ? "sep" : el.textContent.trim().slice(0, 10)));
+        const rows = seats.map((_, i) => log.map((f) => f[i]));
+        const leaving = rows.map((r, i) => ({ who: who[i], r })).filter((x) => x.r[0] >= 0.95 && x.r.at(-1) <= 0.05);
+        const popped = leaving.filter((x) => x.r.some((v, k) => k > 0 && x.r[k - 1] >= 0.95 && v <= 0.05));
+        const fadeFrames = leaving.map((x) => x.r.filter((v) => v > 0.05 && v < 0.95).length);
+        return { seats: seats.length, leaving: leaving.length, popped: popped.map((x) => x.who), fadeFramesMin: fadeFrames.length ? Math.min(...fadeFrames) : null, fadeFramesMax: fadeFrames.length ? Math.max(...fadeFrames) : null, frames: log.length };
+    });
+    add({ arm: "pop", engine: LABEL[engine], ...r, verdict: r.leaving === 0 ? "NO LEAVING SEAT" : r.popped.length ? "POPS" : "fades" });
+    await s.close();
+}
+
+async function idle(browser, engine) {
+    const s = await openScene(browser, target, "morph");
+    await waitRest(s.page, { quiet: 400 });
+    const count = () => s.page.evaluate(() => new Promise((f) => {
+        const raf = window.requestAnimationFrame; let n = 0;
+        window.requestAnimationFrame = (cb) => { n++; return raf.call(window, cb); };
+        setTimeout(() => { window.requestAnimationFrame = raf; f(n); }, 2000);
+    }));
+    // Two windows before any morph give the page's own rAF noise (other loops on the page).
+    const before = [await count(), await count()];
+    await s.page.evaluate(() => window.__scene.collapse()); await waitRest(s.page, { quiet: 500 });
+    await s.page.evaluate(() => window.__scene.expand()); await waitRest(s.page, { quiet: 500 });
+    const after = await count();
+    const noise = Math.abs(before[1] - before[0]);
+    const extra = after - Math.max(...before);
+    // A body that never parks requests one frame per page frame: ~120 in 2 s headless.
+    add({ arm: "idle", engine: LABEL[engine], rafCallsIn2sBefore: before, rafCallsIn2sAfterMorph: after, noise, extraOverBaseline: extra, verdict: extra <= Math.max(2, 2 * noise) ? "parks" : "RUNS AT REST" });
+    await s.close();
+}
+
+async function stretch(browser, engine) {
+    const s = await openScene(browser, target, "morph");
+    await s.page.evaluate(() => window.__scene.expand()); await waitRest(s.page, { quiet: 500 });
+    const r = await s.page.evaluate(async () => {
+        const P = window.__dockProbe, root = P.root(), run = root.querySelector(".dock-run");
+        root.style.width = `${root.offsetWidth + 160}px`;
+        await new Promise((f) => setTimeout(f, 700));
+        const runW0 = run.getBoundingClientRect().width, rootW0 = root.offsetWidth;
+        const seats = [...run.querySelectorAll("[data-dock-seat]")];
+        const first = seats[0];
+        const x = () => first.getBoundingClientRect().left;
+        const log = []; let stop = false; const tick = () => { log.push(+x().toFixed(2)); if (!stop) requestAnimationFrame(tick); };
+        requestAnimationFrame(tick);
+        await new Promise((f) => setTimeout(f, 100));
+        const n0 = log.length;
+        const clone = first.cloneNode(true); clone.removeAttribute("data-testid");
+        run.prepend(clone);
+        await new Promise((f) => setTimeout(f, 700));
+        stop = true;
+        const tr = log.slice(n0 - 1);
+        let worst = 0; for (let i = 1; i < tr.length; i++) worst = Math.max(worst, Math.abs(tr[i] - tr[i - 1]));
+        const D = Math.abs(tr.at(-1) - tr[0]);
+        const moving = tr.slice(1).filter((v, i) => Math.abs(v - tr[i]) > 0.01).length;
+        return { runW0, rootW0, runW1: run.getBoundingClientRect().width, rootW1: root.offsetWidth, travelPx: +D.toFixed(2), worstStepPx: +worst.toFixed(2), movingFrames: moving };
+    });
+    add({ arm: "stretch", engine: LABEL[engine], ...r, verdict: r.travelPx < 0.5 ? "no travel" : r.worstStepPx >= 0.9 * r.travelPx ? "JUMP (one frame)" : "glides" });
+    await s.close();
+}
+
+async function pblock(browser, engine) {
+    const s = await openScene(browser, target, "morph");
+    await s.page.evaluate(() => window.__scene.collapse()); await waitRest(s.page, { quiet: 500 });
+    const r = await s.page.evaluate(async () => {
+        const P = window.__dockProbe;
+        const log = []; const t0 = performance.now(); let stop = false;
+        const W = () => { const e = P.extent(); return e.r - e.l; };
+        const tick = () => { log.push([+(performance.now() - t0).toFixed(1), +W().toFixed(2)]); if (!stop) requestAnimationFrame(tick); };
+        requestAnimationFrame(tick); window.__scene.expand();
+        setTimeout(() => { const e = performance.now() + 1200; while (performance.now() < e) { /* block */ } }, 60);
+        await new Promise((f) => setTimeout(f, 2400)); stop = true; return log;
+    });
+    let gap = 0, gapAt = 0; for (let i = 1; i < r.length; i++) { const g = r[i][0] - r[i - 1][0]; if (g > gap) { gap = g; gapAt = i; } }
+    const Wend = r.at(-1)[1], Wstart = r[0][1], D = Math.abs(Wend - Wstart);
+    const step = Math.abs(r[gapAt][1] - r[gapAt - 1][1]);
+    const land = r.findIndex((f, i) => i >= gapAt && Math.abs(f[1] - Wend) <= 0.5);
+    add({ arm: "pblock", engine: LABEL[engine], D: +D.toFixed(2), frameGapMs: +gap.toFixed(1), stepAcrossGapPx: +step.toFixed(2), stepAcrossGapFracD: D ? +(step / D).toFixed(3) : null, nextStepPx: r[gapAt + 1] ? +Math.abs(r[gapAt + 1][1] - r[gapAt][1]).toFixed(2) : null, landedAtMs: land >= 0 ? r[land][0] : null, around: r.slice(Math.max(0, gapAt - 3), gapAt + 6) });
+    await s.close();
+}
+
+async function pcost(browser, engine, { throttle = 1, mode = "expand" } = {}) {
+    for (const N of [0, 10, 20, 40]) {
+        const s = await openScene(browser, target, "morph");
+        await s.page.evaluate(() => window.__scene.expand()); await waitRest(s.page, { quiet: 400 });
+        const seatsInRun = await s.page.evaluate((N) => {
+            const run = window.__dockProbe.root().querySelector(".dock-run");
+            const src = [...run.querySelectorAll("[data-dock-seat]")];
+            let k = 0; while (N && run.querySelectorAll("[data-dock-seat]").length < N) { const c = src[k++ % src.length].cloneNode(true); c.removeAttribute("data-testid"); run.appendChild(c); }
+            return run.querySelectorAll("[data-dock-seat]").length;
+        }, N);
+        await waitRest(s.page, { quiet: 400 });
+        if (mode === "expand") { await s.page.evaluate(() => window.__scene.collapse()); await waitRest(s.page, { quiet: 500 }); }
+        let cdp = null;
+        if (engine === "chromium" && throttle > 1) { cdp = await s.context.newCDPSession(s.page); await cdp.send("Emulation.setCPUThrottlingRate", { rate: throttle }); }
+        const traceOn = engine === "chromium";
+        if (traceOn) await browser.startTracing(s.page, { categories: ["devtools.timeline", "disabled-by-default-devtools.timeline"] });
+        const r = await s.page.evaluate(async (mode) => {
+            const root = window.__dockProbe.root();
+            const dts = []; let last = 0; let stop = false; let morphFrames = 0;
+            const tick = (now) => { if (last) dts.push(+(now - last).toFixed(2)); last = now; if (root.hasAttribute("data-morphing")) morphFrames++; if (!stop) requestAnimationFrame(tick); };
+            requestAnimationFrame(tick);
+            if (mode === "expand") window.__scene.expand();
+            else { const run = root.querySelector(".dock-run"); const first = run.querySelector("[data-dock-seat]"); const c = first.cloneNode(true); c.removeAttribute("data-testid"); run.prepend(c); }
+            await new Promise((f) => setTimeout(f, 700)); stop = true;
+            const moved = [...root.querySelectorAll(".dock-run > *")].length;
+            return { dts, morphFrames, cells: moved };
+        }, mode);
+        let trace = null;
+        if (traceOn) {
+            const ev = JSON.parse((await browser.stopTracing()).toString()).traceEvents;
+            const names = {}; for (const e of ev) if (e.ph === "M" && e.name === "thread_name") names[e.pid + ":" + e.tid] = e.args.name;
+            const main = new Set(Object.entries(names).filter(([, n]) => n === "CrRendererMain").map(([k]) => k));
+            const sum = {}; let frames = 0;
+            for (const e of ev) {
+                if (!main.has(e.pid + ":" + e.tid)) continue;
+                if (e.name === "FireAnimationFrame") frames++;
+                if (e.ph === "X" && ["UpdateLayoutTree", "Layout", "PrePaint", "Paint", "Layerize", "Commit", "FireAnimationFrame", "FunctionCall", "RunMicrotasks", "ThreadControllerImpl::RunTask", "RunTask"].includes(e.name)) sum[e.name] = (sum[e.name] || 0) + e.dur / 1000;
+            }
+            trace = { rafFrames: frames, perFrameMs: Object.fromEntries(Object.entries(sum).map(([k, v]) => [k, +(v / Math.max(1, frames)).toFixed(3)])), mainTaskMsPerFrame: +(((sum["ThreadControllerImpl::RunTask"] ?? 0) + (sum["RunTask"] ?? 0)) / Math.max(1, frames)).toFixed(3), mainTaskMsTotal: +((sum["ThreadControllerImpl::RunTask"] ?? 0) + (sum["RunTask"] ?? 0)).toFixed(2) };
+        }
+        if (cdp) await cdp.detach();
+        const q = (arr, p) => { const a = [...arr].sort((x, y) => x - y); return a.length ? +a[Math.min(a.length - 1, Math.floor(p * a.length))].toFixed(2) : null; };
+        add({ arm: "pcost", engine: LABEL[engine], mode, throttle, seats: N, cellsAfter: r.cells, seatsInRun, morphFrames: r.morphFrames, frames: r.dts.length, dtP50: q(r.dts, 0.5), dtP95: q(r.dts, 0.95), dtMax: Math.max(...r.dts), over25ms: r.dts.filter((d) => d > 25).length, trace });
+        await s.close();
+    }
+}
+
 for (const engine of engs) {
     const browser = await launch(engine);
     for (const arm of arms) {
@@ -398,6 +641,14 @@ for (const engine of engs) {
             else if (arm === "rafts") await rafts(browser, engine);
             else if (arm === "resize") await resize(browser, engine);
             else if (arm === "cost") { await cost(browser, engine); if (engine === "chromium") await cost(browser, engine, { throttle: 4 }); }
+            else if (arm === "rotate") await rotate(browser, engine);
+            else if (arm === "rotlead") await rotlead(browser, engine);
+            else if (arm === "pop") await pop(browser, engine);
+            else if (arm === "idle") await idle(browser, engine);
+            else if (arm === "stretch") await stretch(browser, engine);
+            else if (arm === "pblock") await pblock(browser, engine);
+            else if (arm === "pcost") { await pcost(browser, engine); if (engine === "chromium") await pcost(browser, engine, { throttle: 4 }); }
+            else if (arm === "plead") { await pcost(browser, engine, { mode: "lead" }); if (engine === "chromium") await pcost(browser, engine, { throttle: 4, mode: "lead" }); }
         } catch (e) { add({ arm, engine: LABEL[engine], error: String(e).slice(0, 400) }); }
     }
     await browser.close();
