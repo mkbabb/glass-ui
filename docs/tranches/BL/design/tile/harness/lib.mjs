@@ -3,12 +3,14 @@
 // A witness imports this file and measure.mjs. Everything here drives headless
 // Chromium and Playwright WebKit with the same code. Playwright WebKit is the
 // engine build Playwright ships; it is not Safari, and every WebKit number the
-// harness prints is labelled "Playwright WebKit".
+// harness prints is labelled "Playwright WebKit". Real Safari is reached only
+// through safari.mjs (H-11), and only once the owner enables remote automation.
 import { createRequire } from "node:module";
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -26,452 +28,616 @@ const SETTLE_MS = 700;
 export const ENGINE_LABEL = { chromium: "Chromium", webkit: "Playwright WebKit" };
 export const SAFARI_CELL = "real Safari: UNMEASURED (owner's safaridriver checkbox)";
 
+/**
+ * Keyboard focus traversal per engine. Playwright WebKit follows the macOS default: Tab skips buttons and
+ * Option+Tab reaches every focusable element (measured: Tab from a button lands on the next <input>, Alt+Tab on
+ * the next button). Safari users without Full Keyboard Access traverse controls the same way. Every witness
+ * that walks focus uses these keys, and a WebKit cell says so.
+ */
+export const KEYS = {
+  chromium: { tab: "Tab", back: "Shift+Tab", note: "" },
+  webkit: { tab: "Alt+Tab", back: "Alt+Shift+Tab", note: " (Option+Tab: Playwright WebKit's Tab skips buttons)" },
+};
+
+// ── load, other browsers, serialization (H-11) ───────────────────────────────
+/** The 1/5/15-minute load average, printed beside every timing. */
+export function load() { return os.loadavg().map((v) => v.toFixed(2)).join(" / "); }
+/** Headless browser processes on this machine that this process did not start (other seats' harnesses). */
+export function browserCensus() {
+  let out = "";
+  try { out = execFileSync("ps", ["-axo", "pid=,ppid=,command="], { encoding: "utf8", maxBuffer: 32 << 20 }); } catch { return { n: null, sample: [] }; }
+  const mine = new Set([String(process.pid)]);
+  const rows = out.split("\n").map((l) => l.trim().match(/^(\d+)\s+(\d+)\s+(.*)$/)).filter(Boolean);
+  // descendants of this process are ours
+  let grew = true;
+  while (grew) { grew = false; for (const [, pid, ppid] of rows) if (mine.has(ppid) && !mine.has(pid)) { mine.add(pid); grew = true; } }
+  const re = /(chrome-headless-shell|headless_shell|--headless|WebKitWebProcess|MiniBrowser|pw_run\.sh|WebKitNetworkProcess|safaridriver)/;
+  const other = rows.filter(([, pid, , cmd]) => !mine.has(pid) && re.test(cmd) && !/\bps -axo\b/.test(cmd));
+  return { n: other.length, sample: other.slice(0, 3).map(([, pid, , cmd]) => `${pid} ${cmd.slice(0, 80)}`) };
+}
+const LOCK = path.join(os.tmpdir(), "bl-d4-tile-harness.lock");
+const alive = (pid) => { try { process.kill(pid, 0); return true; } catch { return false; } };
+/** One harness process in the browser at a time: an exclusive lock directory, waited on, stale locks broken. */
+export async function acquireLock(label, { maxWaitS = 3600 } = {}) {
+  const t0 = Date.now();
+  for (;;) {
+    try { fs.mkdirSync(LOCK); fs.writeFileSync(path.join(LOCK, "owner"), `${process.pid} ${label}`); break; }
+    catch {
+      let owner = ""; try { owner = fs.readFileSync(path.join(LOCK, "owner"), "utf8"); } catch {}
+      const pid = Number(owner.split(" ")[0]);
+      if (!pid || !alive(pid)) { fs.rmSync(LOCK, { recursive: true, force: true }); continue; }
+      if ((Date.now() - t0) / 1000 > maxWaitS) throw new Error(`browser lock held by ${owner} for ${maxWaitS} s`);
+      await new Promise((r) => setTimeout(r, 2000));
+    }
+  }
+  const release = () => { try { if (fs.readFileSync(path.join(LOCK, "owner"), "utf8").startsWith(String(process.pid))) fs.rmSync(LOCK, { recursive: true, force: true }); } catch {} };
+  process.on("exit", release);
+  return { waitedS: +((Date.now() - t0) / 1000).toFixed(1), release };
+}
+/** Optionally wait until no other seat's headless browser runs (`--wait-quiet <s>`); always report the census. */
+export async function quiet(waitS = 0) {
+  const t0 = Date.now();
+  let c = browserCensus();
+  while (c.n > 0 && (Date.now() - t0) / 1000 < waitS) { await new Promise((r) => setTimeout(r, 5000)); c = browserCensus(); }
+  return { ...c, waitedS: +((Date.now() - t0) / 1000).toFixed(1) };
+}
+
 // ── CLI ───────────────────────────────────────────────────────────────────────
 export function parseArgs(argv = process.argv.slice(2)) {
-    const a = { positional: [] };
-    for (let i = 0; i < argv.length; i++) {
-        const k = argv[i];
-        if (k.startsWith("--")) {
-            const key = k.slice(2);
-            const next = argv[i + 1];
-            if (next === undefined || next.startsWith("--")) a[key] = true;
-            else { a[key] = next; i++; }
-        } else a.positional.push(k);
-    }
-    return a;
+  const a = { positional: [] };
+  for (let i = 0; i < argv.length; i++) {
+    const k = argv[i];
+    if (k.startsWith("--")) {
+      const key = k.slice(2);
+      const next = argv[i + 1];
+      if (next === undefined || next.startsWith("--")) a[key] = true;
+      else { a[key] = next; i++; }
+    } else a.positional.push(k);
+  }
+  return a;
 }
 export function outRoot(args) {
-    return path.resolve(args.out ?? process.env.TILE_HARNESS_OUT ?? path.join(os.tmpdir(), "tile-harness"));
+  return path.resolve(args.out ?? process.env.TILE_HARNESS_OUT ?? path.join(os.tmpdir(), "tile-harness"));
 }
 
 // ── static serving ────────────────────────────────────────────────────────────
 const MIME = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png", ".woff2": "font/woff2", ".woff": "font/woff", ".ttf": "font/ttf" };
 /** Serve a directory, or a function (URL → html string). */
 export function serve(rootOrFn) {
-    const server = http.createServer((req, res) => {
-        const url = new URL(req.url, "http://x");
-        if (typeof rootOrFn === "function") {
-            res.writeHead(200, { "content-type": MIME[".html"], "cache-control": "no-store" });
-            res.end(rootOrFn(url));
-            return;
-        }
-        let p = path.join(rootOrFn, decodeURIComponent(url.pathname));
-        if (!p.startsWith(rootOrFn)) { res.writeHead(403); res.end(); return; }
-        if (!fs.existsSync(p) || fs.statSync(p).isDirectory()) p = path.join(rootOrFn, "index.html");
-        res.writeHead(200, { "content-type": MIME[path.extname(p)] ?? "application/octet-stream", "cache-control": "no-store" });
-        fs.createReadStream(p).pipe(res);
-    });
-    return new Promise((resolve) => server.listen(0, "127.0.0.1", () => {
-        resolve({ url: `http://127.0.0.1:${server.address().port}`, close: () => new Promise((r) => server.close(r)) });
-    }));
+  const server = http.createServer((req, res) => {
+    const url = new URL(req.url, "http://x");
+    if (typeof rootOrFn === "function") {
+      res.writeHead(200, { "content-type": MIME[".html"], "cache-control": "no-store" });
+      res.end(rootOrFn(url));
+      return;
+    }
+    let p = path.join(rootOrFn, decodeURIComponent(url.pathname));
+    if (!p.startsWith(rootOrFn)) { res.writeHead(403); res.end(); return; }
+    if (!fs.existsSync(p) || fs.statSync(p).isDirectory()) p = path.join(rootOrFn, "index.html");
+    res.writeHead(200, { "content-type": MIME[path.extname(p)] ?? "application/octet-stream", "cache-control": "no-store" });
+    fs.createReadStream(p).pipe(res);
+  });
+  return new Promise((resolve) => server.listen(0, "127.0.0.1", () => {
+    resolve({ url: `http://127.0.0.1:${server.address().port}`, close: () => new Promise((r) => server.close(r)) });
+  }));
 }
 
 // ── targets: a build of the scene page, or the hand-made fixture ──────────────
-/** `--build <dir>` (from build.mjs) or `--fixture [--family e] [--fault <name>]`. */
+/**
+ * `--build <dir>` (from build.mjs) or `--fixture [--family e] [--fault <name>] [--flavor dist|dist-dev|src-dev]`.
+ * A target's `flavor` says what the library under test is (H-9): `src` / `src-dev` alias the worktree's src
+ * (production or DEV compile), `dist` / `dist-dev` import the library's built dist as a consumer installs it
+ * (consumer production build or consumer dev build). The fixture emulates a flavour: its DEV-only code runs only
+ * under `src-dev`, as a library build strips `import.meta.env.DEV` branches.
+ */
 export async function openTarget(args) {
-    if (args.fixture) {
-        const { fixturePage } = await import("./fixtures.mjs");
-        const fault = typeof args.fault === "string" ? args.fault : "";
-        const family = typeof args.family === "string" ? args.family : "";
-        const srv = await serve((url) => fixturePage(url.searchParams, fault, family));
-        const label = `fixture${family ? "-" + family : ""}${fault ? "+" + fault : ""}`;
-        return { kind: "fixture", label, fault, url: (q) => `${srv.url}/?${q}`, close: srv.close, meta: { label, dev: true } };
-    }
-    if (!args.build || !fs.existsSync(path.join(args.build, "build.json"))) {
-        throw new Error("pass --build <dir> (the directory build.mjs printed) or --fixture");
-    }
-    const dir = path.resolve(args.build);
-    const meta = JSON.parse(fs.readFileSync(path.join(dir, "build.json"), "utf8"));
-    const srv = await serve(path.join(dir, "dist"));
-    return { kind: "build", label: meta.label, url: (q) => `${srv.url}/index.html?${q}`, close: srv.close, meta };
+  if (args.fixture) {
+    const { fixturePage } = await import("./fixtures.mjs");
+    const fault = typeof args.fault === "string" ? args.fault : "";
+    const family = typeof args.family === "string" ? args.family : "";
+    const flavor = typeof args.flavor === "string" ? args.flavor : "dist";
+    const srv = await serve((url) => fixturePage(url.searchParams, fault, family, flavor));
+    const label = `fixture${family ? "-" + family : ""}${fault ? "+" + fault : ""}${flavor !== "dist" ? "@" + flavor : ""}`;
+    return { kind: "fixture", label, fault, url: (q) => `${srv.url}/?${q}`, close: srv.close, meta: { label, dev: flavor === "src-dev", flavor, migration: "fixture" } };
+  }
+  if (!args.build || !fs.existsSync(path.join(args.build, "build.json"))) {
+    throw new Error("pass --build <dir> (the directory build.mjs printed) or --fixture");
+  }
+  const dir = path.resolve(args.build);
+  const meta = JSON.parse(fs.readFileSync(path.join(dir, "build.json"), "utf8"));
+  const srv = await serve(path.join(dir, "dist"));
+  return { kind: "build", label: meta.label, url: (q) => `${srv.url}/index.html?${q}`, close: srv.close, meta };
 }
+/** A refusal or guard cell gates only against what a consumer installs (H-9): a dist flavour, or the fixture's emulation of one. */
+export const installed = (meta) => meta.flavor === "dist" || meta.flavor === "dist-dev";
 
 // ── engines ───────────────────────────────────────────────────────────────────
 const browsers = {};
+/**
+ * Engine disconnects seen by this process. A browser that died (a renderer crash under load) is relaunched on
+ * the next open instead of leaving a dead handle that fails every later scene; each disconnect is recorded and
+ * printed as a note, so a crash is never silent. A witness that retries a crashed segment says whether the
+ * crash reproduced.
+ */
+export const disconnects = [];
+export const engineClosed = (e) => /has been closed|crashed|disconnected|Target closed/i.test(String(e?.message ?? e));
 export async function browser(engine) {
-    if (!browsers[engine]) {
-        browsers[engine] = engine === "webkit" ? await pw.webkit.launch() : await pw.chromium.launch({ channel: "chromium" });
-    }
-    return browsers[engine];
+  if (browsers[engine] && !browsers[engine].isConnected()) { disconnects.push({ engine, load: load() }); delete browsers[engine]; }
+  if (!browsers[engine]) {
+    browsers[engine] = engine === "webkit" ? await pw.webkit.launch() : await pw.chromium.launch({ channel: "chromium" });
+  }
+  return browsers[engine];
 }
 export async function closeBrowsers() {
-    for (const k of Object.keys(browsers)) { await browsers[k].close().catch(() => {}); delete browsers[k]; }
+  for (const k of Object.keys(browsers)) { await browsers[k].close().catch(() => {}); delete browsers[k]; }
 }
 export async function engineVersion(engine) {
-    return `${ENGINE_LABEL[engine]} ${(await browser(engine)).version()}`;
+  return `${ENGINE_LABEL[engine]} ${(await browser(engine)).version()}`;
 }
 
 /** The forced level-0 path: the one knob the library's PRT bracket sets (a11y-fallback.css). */
 const LEVEL0 = ":root{--glass-level:0 !important;--glass-grain-opacity:0 !important}";
 
 /**
- * Open one scene in one cell. mode: light | dark | prt | forced. flags: prm, coarse; query: extra URL params.
+ * Open one scene in one cell. mode: light | dark | prt | forced. flags: prm, coarse, uiScale (H-1: the comfort
+ * axis set on :root); query: extra URL params.
  * PRT: Chromium emulates `prefers-reduced-transparency` over CDP; Playwright WebKit
  * cannot, so it takes the forced level-0 path and the cell says so.
  */
-export async function openPage(target, engine, scene, { mode = "light", prm = false, coarse = false, query = {} } = {}) {
-    const b = await browser(engine);
-    const opts = {
-        viewport: VIEWPORT, deviceScaleFactor: DSF,
-        colorScheme: mode === "dark" ? "dark" : "light",
-        reducedMotion: prm ? "reduce" : "no-preference",
-        forcedColors: mode === "forced" ? "active" : "none",
-    };
-    if (coarse) { opts.hasTouch = true; if (engine === "chromium") opts.isMobile = true; }
-    const ctx = await b.newContext(opts);
-    const page = await ctx.newPage();
-    const logs = [];
-    page.on("console", (m) => logs.push({ type: m.type(), text: m.text() }));
-    page.on("pageerror", (e) => logs.push({ type: "pageerror", text: String(e) }));
-    let cdp = null;
-    if (engine === "chromium") {
-        cdp = await ctx.newCDPSession(page);
-        if (mode === "prt") {
-            await cdp.send("Emulation.setEmulatedMedia", { features: [
-                { name: "prefers-color-scheme", value: "light" },
-                { name: "prefers-reduced-motion", value: prm ? "reduce" : "no-preference" },
-                { name: "prefers-reduced-transparency", value: "reduce" },
-            ] });
-        }
-    }
-    await page.addInitScript(`(${inPageHelpers.toString()})()`);
-    const q = new URLSearchParams({ scene });
-    if (mode === "dark") q.set("mode", "dark");
-    for (const [k, v] of Object.entries(query)) q.set(k, String(v));
-    await page.goto(target.url(q.toString()), { waitUntil: "load" });
-    await page.waitForFunction(() => window.__tile && window.__tile.ready === true, null, { timeout: 30000 });
-    if (mode === "prt" && engine !== "chromium") await page.addStyleTag({ content: LEVEL0 });
-    await page.evaluate(() => document.fonts.ready.then(() => true));
-    await page.waitForTimeout(SETTLE_MS);
-    const verify = await page.evaluate(() => ({
-        dark: document.documentElement.classList.contains("dark"),
-        prt: matchMedia("(prefers-reduced-transparency: reduce)").matches,
-        forced: matchMedia("(forced-colors: active)").matches,
-        prm: matchMedia("(prefers-reduced-motion: reduce)").matches,
-        hoverNone: matchMedia("(hover: none)").matches,
-        coarse: matchMedia("(pointer: coarse)").matches,
-        dev: !!window.__tile.dev,
-    }));
-    let modeLabel = mode, modeOk = true;
-    if (mode === "dark") modeOk = verify.dark;
+export async function openPage(target, engine, scene, { mode = "light", prm = false, coarse = false, uiScale = null, query = {} } = {}) {
+  const b = await browser(engine);
+  const opts = {
+    viewport: VIEWPORT, deviceScaleFactor: DSF,
+    colorScheme: mode === "dark" ? "dark" : "light",
+    reducedMotion: prm ? "reduce" : "no-preference",
+    forcedColors: mode === "forced" ? "active" : "none",
+  };
+  if (coarse) { opts.hasTouch = true; if (engine === "chromium") opts.isMobile = true; }
+  const ctx = await b.newContext(opts);
+  const page = await ctx.newPage();
+  const logs = [];
+  page.on("console", (m) => logs.push({ type: m.type(), text: m.text() }));
+  page.on("pageerror", (e) => logs.push({ type: "pageerror", text: String(e) }));
+  let cdp = null;
+  if (engine === "chromium") {
+    cdp = await ctx.newCDPSession(page);
     if (mode === "prt") {
-        if (engine === "chromium") modeOk = verify.prt;
-        else modeLabel = "prt (forced level-0 path)";
+      await cdp.send("Emulation.setEmulatedMedia", { features: [
+        { name: "prefers-color-scheme", value: "light" },
+        { name: "prefers-reduced-motion", value: prm ? "reduce" : "no-preference" },
+        { name: "prefers-reduced-transparency", value: "reduce" },
+      ] });
     }
-    if (mode === "forced") modeOk = verify.forced;
-    if (prm && !verify.prm) modeOk = false;
-    if (coarse && !(verify.hoverNone && verify.coarse)) modeOk = false;
-    return { page, ctx, cdp, logs, verify, mode, modeLabel, modeOk, close: () => ctx.close() };
+  }
+  await page.addInitScript(`(${inPageHelpers.toString()})()`);
+  const q = new URLSearchParams({ scene });
+  if (mode === "dark") q.set("mode", "dark");
+  for (const [k, v] of Object.entries(query)) q.set(k, String(v));
+  await page.goto(target.url(q.toString()), { waitUntil: "load" });
+  await page.waitForFunction(() => window.__tile && window.__tile.ready === true, null, { timeout: 30000 });
+  if (mode === "prt" && engine !== "chromium") await page.addStyleTag({ content: LEVEL0 });
+  if (uiScale !== null) await page.addStyleTag({ content: `:root{--ui-scale:${uiScale} !important}` });
+  await page.evaluate(() => document.fonts.ready.then(() => true));
+  await page.waitForTimeout(SETTLE_MS);
+  const verify = await page.evaluate(() => ({
+    dark: document.documentElement.classList.contains("dark"),
+    prt: matchMedia("(prefers-reduced-transparency: reduce)").matches,
+    forced: matchMedia("(forced-colors: active)").matches,
+    prm: matchMedia("(prefers-reduced-motion: reduce)").matches,
+    hoverNone: matchMedia("(hover: none)").matches,
+    coarse: matchMedia("(pointer: coarse)").matches,
+    uiScale: getComputedStyle(document.documentElement).getPropertyValue("--ui-scale").trim(),
+    dev: !!window.__tile.dev,
+  }));
+  let modeLabel = mode, modeOk = true;
+  if (mode === "dark") modeOk = verify.dark;
+  if (mode === "prt") {
+    if (engine === "chromium") modeOk = verify.prt;
+    else modeLabel = "prt (forced level-0 path)";
+  }
+  if (mode === "forced") modeOk = verify.forced;
+  if (prm && !verify.prm) modeOk = false;
+  if (coarse) { modeLabel += " coarse"; if (!(verify.hoverNone && verify.coarse)) modeOk = false; }
+  if (uiScale !== null) { modeLabel += ` --ui-scale ${uiScale}`; if (parseFloat(verify.uiScale) !== uiScale) modeOk = false; }
+  return { page, ctx, cdp, logs, verify, engine, keys: KEYS[engine], mode, modeLabel, modeOk, close: () => ctx.close() };
 }
 
 // ── in-page helpers (window.__th): DOM reads only, no source text ─────────────
 function inPageHelpers() {
-    const px = (s) => { const v = parseFloat(s); return Number.isFinite(v) ? v : 0; };
-    const rad = (v, w, h) => {
-        const [a, b = a] = String(v).trim().split(/\s+/);
-        const f = (t, L) => (t.endsWith("%") ? (parseFloat(t) / 100) * L : px(t));
-        return { x: f(a, w), y: f(b, h) };
-    };
-    const th = {
-        scene: () => document.querySelector("[data-scene]"),
-        group(root = th.scene()) { return (root && root.querySelector("[data-group]")) || root; },
-        items(root = th.scene()) {
-            if (!root) return [];
-            const marked = [...root.querySelectorAll("[data-item]")];
-            if (marked.length) return marked;
-            return [...th.group(root).querySelectorAll('[role="radio"],[role="option"],[role="tab"],[aria-pressed],[aria-checked]')];
-        },
-        on(el) {
-            for (const n of ["aria-checked", "aria-pressed", "aria-selected"]) {
-                const v = el.getAttribute(n);
-                if (v !== null) return v === "true";
-            }
-            const s = el.getAttribute("data-state");
-            return s === "on" || s === "checked" || s === "active";
-        },
-        /** The layout border box (unaffected by scale/transform). */
-        size(el) {
-            const cs = getComputedStyle(el);
-            let w = px(cs.width), h = px(cs.height);
-            if (cs.boxSizing !== "border-box") {
-                w += px(cs.paddingLeft) + px(cs.paddingRight) + px(cs.borderLeftWidth) + px(cs.borderRightWidth);
-                h += px(cs.paddingTop) + px(cs.paddingBottom) + px(cs.borderTopWidth) + px(cs.borderBottomWidth);
-            }
-            return { w, h };
-        },
-        /** The used corner by the CSS Backgrounds 3 §5.5 overlap rule. */
-        corner(el) {
-            const cs = getComputedStyle(el);
-            const { w, h } = th.size(el);
-            const tl = rad(cs.borderTopLeftRadius, w, h), tr = rad(cs.borderTopRightRadius, w, h);
-            const br = rad(cs.borderBottomRightRadius, w, h), bl = rad(cs.borderBottomLeftRadius, w, h);
-            const q = (L, s) => (s > 0 ? L / s : Infinity);
-            const f = Math.min(1, q(w, tl.x + tr.x), q(w, bl.x + br.x), q(h, tl.y + bl.y), q(h, tr.y + br.y));
-            return { w, h, computed: cs.borderTopLeftRadius, rx: tl.x, ry: tl.y, used: tl.x * f, usedY: tl.y * f, clamped: f < 0.9995 };
-        },
-        rect(el) { const r = el.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height }; },
-        tokenNames(prefix = "--radius-") {
-            const names = new Set();
-            const cs = getComputedStyle(document.documentElement);
-            for (let i = 0; i < cs.length; i++) if (cs[i].startsWith(prefix)) names.add(cs[i]);
-            const walk = (rules) => {
-                for (const r of rules) {
-                    if (r.style) for (let i = 0; i < r.style.length; i++) if (r.style[i].startsWith(prefix)) names.add(r.style[i]);
-                    if (r.cssRules) walk(r.cssRules);
-                }
-            };
-            for (const s of document.styleSheets) { try { walk(s.cssRules); } catch { /* cross-origin */ } }
-            return [...names].sort();
-        },
-        /** Resolve a custom property IN the element's context (a probe child reads it). */
-        resolve(el, name, prop = "border-top-left-radius") {
-            const p = document.createElement("span");
-            p.setAttribute("data-th-probe", "");
-            p.style.cssText = `position:absolute;visibility:hidden;pointer-events:none;${prop}:var(${name})`;
-            el.appendChild(p);
-            const v = getComputedStyle(p).getPropertyValue(prop).trim();
-            p.remove();
-            return v;
-        },
-        /** Every named radius role that resolves to a finite px corner in this element's context. */
-        rungs(el) {
-            return th.tokenNames().map((n) => ({ name: n, value: th.resolve(el, n) }))
-                .filter((t) => /^[\d.]+px$/.test(t.value) && px(t.value) > 0 && px(t.value) < 999)
-                .map((t) => ({ name: t.name, px: px(t.value) }));
-        },
-        /** Rows of content: text line boxes, graphics and painted leaves inside [data-ink], clustered by vertical overlap. */
-        rows(el) {
-            const roots = [...el.querySelectorAll("[data-ink]")];
-            const scope = roots.length ? roots : [el];
-            const rects = [];
-            for (const root of scope) {
-                const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-                while (tw.nextNode()) {
-                    const t = tw.currentNode;
-                    if (!t.textContent.trim()) continue;
-                    const r = document.createRange(); r.selectNodeContents(t);
-                    for (const q of r.getClientRects()) if (q.width > 0.5 && q.height > 0.5) rects.push(q);
-                }
-                for (const e of [root, ...root.querySelectorAll("*")]) {
-                    if (e.closest("svg") && e.tagName.toLowerCase() !== "svg") continue;
-                    const cs = getComputedStyle(e);
-                    const graphic = /^(svg|img|canvas|video)$/i.test(e.tagName);
-                    const leafPaint = !e.children.length && (cs.backgroundColor !== "rgba(0, 0, 0, 0)" || cs.backgroundImage !== "none");
-                    if (!graphic && !leafPaint) continue;
-                    const q = e.getBoundingClientRect();
-                    if (q.width > 0.5 && q.height > 0.5) rects.push(q);
-                }
-            }
-            rects.sort((a, b) => a.top - b.top);
-            let rows = 0, bottom = -Infinity;
-            for (const q of rects) {
-                if (q.top >= bottom - 1) { rows++; bottom = q.bottom; } else bottom = Math.max(bottom, q.bottom);
-            }
-            return rows;
-        },
-        /** The item's one-line extent: its [data-ink] content swapped for one short text line, measured, restored. */
-        rung(el) {
-            const tops = [...el.querySelectorAll("[data-ink]")].filter((e) => !e.parentElement.closest("[data-ink]"));
-            if (!tops.length) return th.size(el).h;
-            const marks = tops.map((e) => { const c = document.createComment("th"); e.replaceWith(c); return [c, e]; });
-            const x = document.createElement("span"); x.textContent = "x";
-            marks[0][0].before(x);
-            const h = th.size(el).h;
-            x.remove();
-            marks.forEach(([c, e]) => c.replaceWith(e));
-            return h;
-        },
-        /** Append one more line to the item's [data-line-slot]; removeLines() takes every added line out. */
-        addLine(el) {
-            const slot = el.querySelector("[data-line-slot]") || el;
-            const br = document.createElement("br"); br.setAttribute("data-th-added", "");
-            const s = document.createElement("span"); s.setAttribute("data-th-added", ""); s.textContent = "one more line";
-            slot.append(br, s);
-        },
-        removeLines(el) { el.querySelectorAll("[data-th-added]").forEach((n) => n.remove()); },
-        hideInk(on) {
-            let st = document.getElementById("__th_ink");
-            if (on && !st) {
-                st = document.createElement("style"); st.id = "__th_ink";
-                st.textContent = "[data-ink],[data-ink] *{visibility:hidden !important}";
-                document.head.appendChild(st);
-            }
-            if (!on && st) st.remove();
-        },
-        pin(el, on) {
-            if (on) { el.style.setProperty("scale", "1", "important"); el.style.setProperty("transition", "none", "important"); }
-            else { el.style.removeProperty("scale"); el.style.removeProperty("transition"); }
-        },
-        scale(el) {
-            const cs = getComputedStyle(el);
-            let sx = 1, sy = 1;
-            if (cs.scale && cs.scale !== "none") { const p = cs.scale.split(/\s+/).map(parseFloat); sx = p[0]; sy = p[1] ?? p[0]; }
-            if (cs.transform && cs.transform !== "none") { const m = new DOMMatrixReadOnly(cs.transform); sx *= Math.hypot(m.a, m.b); sy *= Math.hypot(m.c, m.d); }
-            return { sx, sy, scale: cs.scale, transform: cs.transform };
-        },
-        /** Running animations and transitions on the item and its library-owned subtree (consumer [data-ink] content excluded). */
-        anims(el) {
-            return el.getAnimations({ subtree: true }).filter((a) => {
-                const t = a.effect && a.effect.target;
-                return !(t && t.closest && t.closest("[data-ink]"));
-            }).map((a) => ({
-                kind: a.constructor.name,
-                prop: a.transitionProperty ?? a.animationName ?? "",
-                target: (a.effect.target === el ? "item" : (a.effect.target?.tagName?.toLowerCase() ?? "?")) + (a.effect.pseudoElement ?? ""),
-                duration: a.effect.getComputedTiming().duration,
-                state: a.playState,
-            }));
-        },
-        tag() {
-            const its = th.items();
-            its.forEach((e, i) => e.setAttribute("data-th-idx", String(i)));
-            const g = th.group(); if (g) g.setAttribute("data-th-group", "");
-            return its.length;
-        },
-        active() {
-            const a = document.activeElement;
-            if (!a || a === document.body) return "body";
-            const s = a.getAttribute("data-sentinel"); if (s) return s;
-            const it = a.closest("[data-th-idx]");
-            return it ? Number(it.getAttribute("data-th-idx")) : "other";
-        },
-    };
-    window.__th = th;
+  const px = (s) => { const v = parseFloat(s); return Number.isFinite(v) ? v : 0; };
+  const rad = (v, w, h) => {
+    const [a, b = a] = String(v).trim().split(/\s+/);
+    const f = (t, L) => (t.endsWith("%") ? (parseFloat(t) / 100) * L : px(t));
+    return { x: f(a, w), y: f(b, h) };
+  };
+  const th = {
+    scene: () => document.querySelector("[data-scene]"),
+    group(root = th.scene()) { return (root && root.querySelector("[data-group]")) || root; },
+    items(root = th.scene()) {
+      if (!root) return [];
+      const marked = [...root.querySelectorAll("[data-item]")];
+      if (marked.length) return marked;
+      return [...th.group(root).querySelectorAll('[role="radio"],[role="option"],[role="tab"],[aria-pressed],[aria-checked]')];
+    },
+    on(el) {
+      for (const n of ["aria-checked", "aria-pressed", "aria-selected"]) {
+        const v = el.getAttribute(n);
+        if (v !== null) return v === "true";
+      }
+      const s = el.getAttribute("data-state");
+      if (s !== null) return s === "on" || s === "checked" || s === "active";
+      // a hand-rolled site that exposes its selection to nobody (F1): the scene stamps a harness-only hook, so
+      // paint witnesses can find the pair while T-5 still reads the real (absent) state
+      return el.getAttribute("data-th-on") === "true";
+    },
+    /** Resolves after the mutation's frame has painted: the second animation frame (H-1's framed read). */
+    frame: () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r()))),
+    /** The layout border box (unaffected by scale/transform). */
+    size(el) {
+      const cs = getComputedStyle(el);
+      let w = px(cs.width), h = px(cs.height);
+      if (cs.boxSizing !== "border-box") {
+        w += px(cs.paddingLeft) + px(cs.paddingRight) + px(cs.borderLeftWidth) + px(cs.borderRightWidth);
+        h += px(cs.paddingTop) + px(cs.paddingBottom) + px(cs.borderTopWidth) + px(cs.borderBottomWidth);
+      }
+      return { w, h };
+    },
+    /** The used corner by the CSS Backgrounds 3 §5.5 overlap rule. */
+    corner(el) {
+      const cs = getComputedStyle(el);
+      const { w, h } = th.size(el);
+      const tl = rad(cs.borderTopLeftRadius, w, h), tr = rad(cs.borderTopRightRadius, w, h);
+      const br = rad(cs.borderBottomRightRadius, w, h), bl = rad(cs.borderBottomLeftRadius, w, h);
+      const q = (L, s) => (s > 0 ? L / s : Infinity);
+      const f = Math.min(1, q(w, tl.x + tr.x), q(w, bl.x + br.x), q(h, tl.y + bl.y), q(h, tr.y + br.y));
+      return { w, h, computed: cs.borderTopLeftRadius, rx: tl.x, ry: tl.y, used: tl.x * f, usedY: tl.y * f, clamped: f < 0.9995 };
+    },
+    rect(el) { const r = el.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height }; },
+    tokenNames(prefix = "--radius-") {
+      const names = new Set();
+      const cs = getComputedStyle(document.documentElement);
+      for (let i = 0; i < cs.length; i++) if (cs[i].startsWith(prefix)) names.add(cs[i]);
+      const walk = (rules) => {
+        for (const r of rules) {
+          if (r.style) for (let i = 0; i < r.style.length; i++) if (r.style[i].startsWith(prefix)) names.add(r.style[i]);
+          if (r.cssRules) walk(r.cssRules);
+        }
+      };
+      for (const s of document.styleSheets) { try { walk(s.cssRules); } catch { /* cross-origin */ } }
+      return [...names].sort();
+    },
+    /** Resolve a custom property IN the element's context (a probe child reads it). */
+    resolve(el, name, prop = "border-top-left-radius") {
+      const p = document.createElement("span");
+      p.setAttribute("data-th-probe", "");
+      p.style.cssText = `position:absolute;visibility:hidden;pointer-events:none;${prop}:var(${name})`;
+      el.appendChild(p);
+      const v = getComputedStyle(p).getPropertyValue(prop).trim();
+      p.remove();
+      return v;
+    },
+    /**
+     * Every named radius role that resolves to a finite px corner at the DOCUMENT ROOT (H-1). A role is named
+     * where the canon declares it; a role an element re-declares for itself (A1's `:where(*)` restatement) would
+     * name whatever corner that element wears, so it is never read in the item's own context.
+     */
+    rungs() {
+      const root = document.body;
+      return th.tokenNames().map((n) => ({ name: n, value: th.resolve(root, n) }))
+        .filter((t) => /^[\d.]+px$/.test(t.value) && px(t.value) > 0 && px(t.value) < 999)
+        .map((t) => ({ name: t.name, px: px(t.value) }));
+    },
+    /**
+     * Rows of content: text line boxes, graphics and painted leaves inside [data-ink], clustered top-down. A rect
+     * opens a new row when its vertical midpoint lies below the current row's bottom (H-8, the midpoint test): two
+     * stacked lines at `line-height: 1` overlap by their glyph overhang and still read as two rows, while an icon
+     * beside a label, or a badge beside a label, stays one.
+     */
+    rows(el) {
+      const roots = [...el.querySelectorAll("[data-ink]")];
+      const scope = roots.length ? roots : [el];
+      const rects = [];
+      for (const root of scope) {
+        const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        while (tw.nextNode()) {
+          const t = tw.currentNode;
+          if (!t.textContent.trim()) continue;
+          if (t.parentElement && t.parentElement.closest(".sr-only,[hidden]")) continue;
+          const r = document.createRange(); r.selectNodeContents(t);
+          for (const q of r.getClientRects()) if (q.width > 0.5 && q.height > 0.5) rects.push(q);
+        }
+        for (const e of [root, ...root.querySelectorAll("*")]) {
+          if (e.closest("svg") && e.tagName.toLowerCase() !== "svg") continue;
+          const cs = getComputedStyle(e);
+          const graphic = /^(svg|img|canvas|video|input)$/i.test(e.tagName);
+          const leafPaint = !e.children.length && (cs.backgroundColor !== "rgba(0, 0, 0, 0)" || cs.backgroundImage !== "none");
+          if (!graphic && !leafPaint) continue;
+          const q = e.getBoundingClientRect();
+          if (q.width > 0.5 && q.height > 0.5) rects.push(q);
+        }
+      }
+      rects.sort((a, b) => a.top - b.top);
+      let rows = 0, bottom = -Infinity;
+      for (const q of rects) {
+        const mid = (q.top + q.bottom) / 2;
+        if (mid > bottom) { rows++; bottom = q.bottom; } else bottom = Math.max(bottom, q.bottom);
+      }
+      return rows;
+    },
+    /** The item's one-line extent: its [data-ink] content swapped for one short text line, measured, restored. */
+    rung(el) {
+      const tops = [...el.querySelectorAll("[data-ink]")].filter((e) => !e.parentElement.closest("[data-ink]"));
+      if (!tops.length) return th.size(el).h;
+      const marks = tops.map((e) => { const c = document.createComment("th"); e.replaceWith(c); return [c, e]; });
+      const x = document.createElement("span"); x.textContent = "x";
+      marks[0][0].before(x);
+      const h = th.size(el).h;
+      x.remove();
+      marks.forEach(([c, e]) => c.replaceWith(e));
+      return h;
+    },
+    /** Append one more line to the item's [data-line-slot]; removeLines() takes every added line out. */
+    addLine(el) {
+      const slot = el.querySelector("[data-line-slot]") || el;
+      const br = document.createElement("br"); br.setAttribute("data-th-added", "");
+      const s = document.createElement("span"); s.setAttribute("data-th-added", ""); s.textContent = "one more line";
+      slot.append(br, s);
+    },
+    removeLines(el) { el.querySelectorAll("[data-th-added]").forEach((n) => n.remove()); },
+    hideInk(on) {
+      let st = document.getElementById("__th_ink");
+      if (on && !st) {
+        st = document.createElement("style"); st.id = "__th_ink";
+        st.textContent = "[data-ink],[data-ink] *{visibility:hidden !important}";
+        document.head.appendChild(st);
+      }
+      if (!on && st) st.remove();
+    },
+    pin(el, on) {
+      if (on) { el.style.setProperty("scale", "1", "important"); el.style.setProperty("transition", "none", "important"); }
+      else { el.style.removeProperty("scale"); el.style.removeProperty("transition"); }
+    },
+    scale(el) {
+      const cs = getComputedStyle(el);
+      let sx = 1, sy = 1;
+      if (cs.scale && cs.scale !== "none") { const p = cs.scale.split(/\s+/).map(parseFloat); sx = p[0]; sy = p[1] ?? p[0]; }
+      if (cs.transform && cs.transform !== "none") { const m = new DOMMatrixReadOnly(cs.transform); sx *= Math.hypot(m.a, m.b); sy *= Math.hypot(m.c, m.d); }
+      return { sx, sy, scale: cs.scale, transform: cs.transform };
+    },
+    /** Running animations and transitions on the item and its library-owned subtree (consumer [data-ink] content excluded). */
+    anims(el) {
+      return el.getAnimations({ subtree: true }).filter((a) => {
+        const t = a.effect && a.effect.target;
+        return !(t && t.closest && t.closest("[data-ink]"));
+      }).map((a) => ({
+        kind: a.constructor.name,
+        prop: a.transitionProperty ?? a.animationName ?? "",
+        target: (a.effect.target === el ? "item" : (a.effect.target?.tagName?.toLowerCase() ?? "?")) + (a.effect.pseudoElement ?? ""),
+        duration: a.effect.getComputedTiming().duration,
+        state: a.playState,
+      }));
+    },
+    /**
+     * H-4's commit sampler: every animation frame for `ms`, each item's scale and on-state, a paint signature of
+     * the item and its two pseudo-elements (opacity, fills, border, shadow, outline colour), and the rect of a
+     * selection body (`[data-selection-body]` in the group) if the build has one. Results in window.__th_sample.
+     */
+    startSample(ms) {
+      const its = th.items(), g = th.group();
+      const sig = (el) => {
+        const out = [];
+        for (const pe of [null, "::before", "::after"]) { const c = getComputedStyle(el, pe); out.push(c.opacity, c.backgroundColor, c.backgroundImage, c.borderTopColor, c.boxShadow, c.outlineColor); }
+        return out.join("|");
+      };
+      const frames = [], t0 = performance.now();
+      window.__th_sample = { done: false, frames };
+      const tick = () => {
+        const t = performance.now() - t0;
+        const b = g && g.querySelector("[data-selection-body]");
+        frames.push({ t, s: its.map((e) => th.scale(e).sx), on: its.map((e) => th.on(e)), sig: its.map(sig), body: b ? th.rect(b) : null });
+        if (t < ms) requestAnimationFrame(tick); else window.__th_sample.done = true;
+      };
+      requestAnimationFrame(tick);
+    },
+    tag() {
+      const its = th.items();
+      document.querySelectorAll("[data-th-idx]").forEach((e) => e.removeAttribute("data-th-idx"));
+      its.forEach((e, i) => e.setAttribute("data-th-idx", String(i)));
+      const g = th.group(); if (g) g.setAttribute("data-th-group", "");
+      return its.length;
+    },
+    active() {
+      const a = document.activeElement;
+      if (!a || a === document.body) return "body";
+      const s = a.getAttribute("data-sentinel"); if (s) return s;
+      const it = a.closest("[data-th-idx]");
+      if (it && a !== it) return `inside:${it.getAttribute("data-th-idx")}`;
+      return it ? Number(it.getAttribute("data-th-idx")) : `other:${a.tagName.toLowerCase()}${a.className && typeof a.className === "string" ? "." + a.className.split(/\s+/)[0] : ""}`;
+    },
+  };
+  window.__th = th;
 }
+
+/** The in-page helpers as a script, for a driver without init scripts (safari.mjs executes it after load). */
+export const IN_PAGE = `(${inPageHelpers.toString()})()`;
 
 // ── pixels ────────────────────────────────────────────────────────────────────
 export function clipAround(r, pad) {
-    const x = Math.floor(r.x - pad), y = Math.floor(r.y - pad);
-    return { x, y, width: Math.ceil(r.x + r.w + pad) - x, height: Math.ceil(r.y + r.h + pad) - y };
+  const x = Math.floor(r.x - pad), y = Math.floor(r.y - pad);
+  return { x, y, width: Math.ceil(r.x + r.w + pad) - x, height: Math.ceil(r.y + r.h + pad) - y };
 }
 export async function shot(page, clip) {
-    const buf = await page.screenshot({ clip, animations: "disabled", caret: "hide" });
-    const png = PNG.sync.read(buf);
-    return { png, clip, dsf: png.width / clip.width };
+  const buf = await page.screenshot({ clip, animations: "disabled", caret: "hide" });
+  const png = PNG.sync.read(buf);
+  return { png, clip, dsf: png.width / clip.width };
 }
 export const lum = (c) => {
-    const f = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
-    return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+  const f = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+  return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
 };
 export const contrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
 export const hex = (c) => "#" + c.map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");
 export function px(s, i) { const d = s.png.data; return [d[i * 4], d[i * 4 + 1], d[i * 4 + 2]]; }
 /** Mean colour over a CSS-px rect inside the shot. */
 export function meanRect(s, r) {
-    const { png, clip, dsf } = s;
-    const x0 = Math.max(0, Math.round((r.x - clip.x) * dsf)), y0 = Math.max(0, Math.round((r.y - clip.y) * dsf));
-    const x1 = Math.min(png.width, Math.round((r.x + r.w - clip.x) * dsf)), y1 = Math.min(png.height, Math.round((r.y + r.h - clip.y) * dsf));
-    let R = 0, G = 0, B = 0, n = 0;
-    for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const i = (y * png.width + x) * 4; R += png.data[i]; G += png.data[i + 1]; B += png.data[i + 2]; n++; }
-    return n ? [R / n, G / n, B / n] : [0, 0, 0];
+  const { png, clip, dsf } = s;
+  const x0 = Math.max(0, Math.round((r.x - clip.x) * dsf)), y0 = Math.max(0, Math.round((r.y - clip.y) * dsf));
+  const x1 = Math.min(png.width, Math.round((r.x + r.w - clip.x) * dsf)), y1 = Math.min(png.height, Math.round((r.y + r.h - clip.y) * dsf));
+  let R = 0, G = 0, B = 0, n = 0;
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const i = (y * png.width + x) * 4; R += png.data[i]; G += png.data[i + 1]; B += png.data[i + 2]; n++; }
+  return n ? [R / n, G / n, B / n] : [0, 0, 0];
 }
 /**
  * Per-pixel comparison of two shots of the same clip, the R3-02 method:
  * `changed` = largest channel moved by more than 10; `cN` = pixels whose own
  * contrast against the other shot's pixel is at least N:1; `p95` of that contrast.
- * Counts are device pixels.
+ * `c3Edge` counts the ≥ 3:1 pixels inside `edgeBand` device pixels of the clip's border (the perimeter band where
+ * an edge carrier lives), `c3Inner` the rest (a mark, a flood). Counts are device pixels.
  */
-export function compare(a, b, mask = null) {
-    const n = a.png.width * a.png.height;
-    let changed = 0, c3 = 0, c15 = 0, total = 0;
-    const cs = [];
-    for (let i = 0; i < n; i++) {
-        if (mask && !mask(i)) continue;
-        total++;
-        const p = px(a, i), q = px(b, i);
-        if (Math.max(Math.abs(p[0] - q[0]), Math.abs(p[1] - q[1]), Math.abs(p[2] - q[2])) > 10) changed++;
-        const c = contrast(p, q);
-        if (c >= 3) c3++;
-        if (c >= 1.5) c15++;
-        cs.push(c);
+export function compare(a, b, mask = null, edgeBand = 0) {
+  const W = a.png.width, H = a.png.height, n = W * H;
+  let changed = 0, c3 = 0, c15 = 0, total = 0, c3Edge = 0;
+  const cs = [];
+  for (let i = 0; i < n; i++) {
+    if (mask && !mask(i)) continue;
+    total++;
+    const p = px(a, i), q = px(b, i);
+    if (Math.max(Math.abs(p[0] - q[0]), Math.abs(p[1] - q[1]), Math.abs(p[2] - q[2])) > 10) changed++;
+    const c = contrast(p, q);
+    if (c >= 3) {
+      c3++;
+      const x = i % W, y = (i - x) / W;
+      if (edgeBand && (x < edgeBand || y < edgeBand || x >= W - edgeBand || y >= H - edgeBand)) c3Edge++;
     }
-    cs.sort((x, y) => x - y);
-    return { total, changed, c3, c15, p95: cs.length ? cs[Math.floor(cs.length * 0.95)] : 1 };
+    if (c >= 1.5) c15++;
+    cs.push(c);
+  }
+  cs.sort((x, y) => x - y);
+  return { total, changed, c3, c15, c3Edge, c3Inner: c3 - c3Edge, p95: cs.length ? cs[Math.floor(cs.length * 0.95)] : 1 };
 }
 export function savePng(s, file) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, PNG.sync.write(s.png)); }
 
 // ── CDP: accessibility tree and matched styles (Chromium only) ────────────────
 /** backendNodeIds for a selector, through the CDP DOM domain. */
 export async function backendIds(cdp, selector) {
-    const { root } = await cdp.send("DOM.getDocument", { depth: 0 });
-    const { nodeIds } = await cdp.send("DOM.querySelectorAll", { nodeId: root.nodeId, selector });
-    const out = [];
-    for (const nodeId of nodeIds) { const { node } = await cdp.send("DOM.describeNode", { nodeId }); out.push({ nodeId, backendNodeId: node.backendNodeId }); }
-    return out;
+  const { root } = await cdp.send("DOM.getDocument", { depth: 0 });
+  const { nodeIds } = await cdp.send("DOM.querySelectorAll", { nodeId: root.nodeId, selector });
+  const out = [];
+  for (const nodeId of nodeIds) { const { node } = await cdp.send("DOM.describeNode", { nodeId }); out.push({ nodeId, backendNodeId: node.backendNodeId }); }
+  return out;
 }
 /** The AX node for one DOM node: role, name and the state properties. */
 export async function axOf(cdp, backendNodeId) {
-    const { nodes } = await cdp.send("Accessibility.getPartialAXTree", { backendNodeId, fetchRelatives: false });
-    const n = nodes.find((x) => x.backendDOMNodeId === backendNodeId) ?? nodes[0];
-    if (!n) return { role: null };
-    const prop = (k) => n.properties?.find((p) => p.name === k)?.value?.value;
-    return { role: n.role?.value ?? null, name: n.name?.value ?? "", ignored: !!n.ignored, checked: prop("checked"), pressed: prop("pressed"), selected: prop("selected"), focusable: prop("focusable") };
+  const { nodes } = await cdp.send("Accessibility.getPartialAXTree", { backendNodeId, fetchRelatives: false });
+  const n = nodes.find((x) => x.backendDOMNodeId === backendNodeId) ?? nodes[0];
+  if (!n) return { role: null };
+  const prop = (k) => n.properties?.find((p) => p.name === k)?.value?.value;
+  return { role: n.role?.value ?? null, name: n.name?.value ?? "", ignored: !!n.ignored, checked: prop("checked"), pressed: prop("pressed"), selected: prop("selected"), focusable: prop("focusable") };
 }
 
 // ── reporting ─────────────────────────────────────────────────────────────────
-/** A witness result: { id, title, engine, target, cells: [{ gating, pass (true|false|null), line, ... }] }. */
+/**
+ * A witness result: { id, title, engine, target, cells: [{ gating, pass (true|false|null), line, arm?, ... }] }.
+ * Cells carry an `arm` (H-7): `library` (the scene as the library ships, consumer paint stripped), `unmigrated`
+ * (the consumer's HEAD composition, reported) or `migrated` (a route's migration, gating). The verdict gates
+ * the library and migrated arms; the unmigrated arm has its own tally beside it.
+ */
 export function verdict(res) {
-    const gating = res.cells.filter((c) => c.gating);
-    const measured = gating.filter((c) => c.pass !== null);
-    const passed = measured.filter((c) => c.pass).length;
-    res.pass = measured.length > 0 && passed === measured.length;
-    res.tally = `${passed}/${measured.length} gating cells pass` + (gating.length > measured.length ? `, ${gating.length - measured.length} unmeasured` : "");
-    return res;
+  const gating = res.cells.filter((c) => c.gating);
+  const measured = gating.filter((c) => c.pass !== null);
+  const passed = measured.filter((c) => c.pass).length;
+  res.pass = measured.length > 0 && passed === measured.length;
+  res.tally = `${passed}/${measured.length} gating cells pass` + (gating.length > measured.length ? `, ${gating.length - measured.length} unmeasured` : "");
+  const arms = {};
+  for (const c of res.cells) {
+    const a = c.arm ?? "library";
+    if (!c.gating && a !== "unmigrated") continue;
+    if (c.pass === null) continue;
+    arms[a] ??= { pass: 0, of: 0 };
+    arms[a].of++; if (c.pass) arms[a].pass++;
+  }
+  res.arms = arms;
+  const armText = Object.entries(arms).map(([k, v]) => `${k} ${v.pass}/${v.of}`).join(" · ");
+  if (armText) res.tally += ` [${armText}]`;
+  return res;
 }
 export function print(res) {
-    console.log(`${res.id} · ${res.title}`);
-    console.log(`  target ${res.target}${res.dev === false ? " (production build)" : " (DEV build)"} · ${res.engineLabel}`);
-    for (const c of res.cells) {
-        const tag = c.pass === null ? "UNMEASURED" : !c.gating ? (c.pass ? "info-pass" : "info-fail") : c.pass ? "PASS" : "FAIL";
-        console.log(`  ${tag.padEnd(10)} ${c.line}`);
-    }
-    for (const n of res.notes ?? []) console.log(`  note ${n}`);
-    console.log(`${res.id} ${res.pass ? "PASS" : "FAIL"} · ${res.tally}`);
+  console.log(`${res.id} · ${res.title}`);
+  console.log(`  target ${res.target} (flavor ${res.flavor ?? "?"}${res.dev ? ", DEV" : ""}) · ${res.engineLabel}`);
+  if (res.run) console.log(`  load ${res.run.loadStart} at start, ${res.run.loadEnd} at end · other headless browser processes at start: ${res.run.census.n}${res.run.census.waitedS ? ` (waited ${res.run.census.waitedS} s)` : ""} · browser lock waited ${res.run.lockWaitS} s`);
+  for (const c of res.cells) {
+    const tag = c.pass === null ? "UNMEASURED" : !c.gating ? (c.pass ? "info-pass" : "info-fail") : c.pass ? "PASS" : "FAIL";
+    console.log(`  ${tag.padEnd(10)} ${c.arm && c.arm !== "library" ? `[${c.arm}] ` : ""}${c.line}`);
+  }
+  for (const n of res.notes ?? []) console.log(`  note ${n}`);
+  console.log(`${res.id} ${res.pass ? "PASS" : "FAIL"} · ${res.tally}`);
 }
 /** CLI wrapper: run one witness, print, write JSON, exit 0 on PASS and 1 on FAIL (2 on a harness error). */
 export async function cli(id, runFn) {
-    const args = parseArgs();
-    let target;
-    // a hung engine (a pointer move that never returns, a crashed target) fails loud instead of stalling the run
-    const deadline = Number(args.deadline ?? 1200);
-    setTimeout(() => { console.error(`${id} HARNESS ERROR: no verdict within ${deadline} s (an engine hung)`); process.exit(2); }, deadline * 1000).unref();
-    try {
-        target = await openTarget(args);
-        const res = verdict(await runFn(args, target));
-        print(res);
-        const dir = path.join(outRoot(args), "runs", target.label);
-        fs.mkdirSync(dir, { recursive: true });
-        const file = path.join(dir, `${id}${res.engine ? "-" + res.engine : ""}.json`);
-        fs.writeFileSync(file, JSON.stringify(res, null, 1));
-        console.log(`  json ${file}`);
-        await closeBrowsers(); await target.close();
-        process.exit(res.pass ? 0 : 1);
-    } catch (e) {
-        console.error(`${id} HARNESS ERROR ${e.stack ?? e}`);
-        await closeBrowsers(); if (target) await target.close();
-        process.exit(2);
-    }
+  const args = parseArgs();
+  let target;
+  // a hung engine (a pointer move that never returns, a crashed target) fails loud instead of stalling the run
+  const deadline = Number(args.deadline ?? 1800);
+  setTimeout(() => { console.error(`${id} HARNESS ERROR: no verdict within ${deadline} s (an engine hung)`); process.exit(2); }, deadline * 1000).unref();
+  try {
+    const census = await quiet(Number(args["wait-quiet"] ?? 0));
+    const lock = await acquireLock(`${id} ${process.argv.slice(2).join(" ")}`);
+    const loadStart = load();
+    target = await openTarget(args);
+    const res = await runFn(args, target);
+    res.flavor = target.meta.flavor ?? (target.meta.dev ? "src-dev" : "src");
+    res.run = { loadStart, loadEnd: load(), census, lockWaitS: lock.waitedS };
+    for (const d of disconnects) (res.notes ??= []).push(`${ENGINE_LABEL[d.engine]} disconnected (the browser process died) and was relaunched; load ${d.load}`);
+    verdict(res);
+    print(res);
+    const dir = path.join(outRoot(args), "runs", target.label);
+    fs.mkdirSync(dir, { recursive: true });
+    const file = path.join(dir, `${id}${res.engine ? "-" + res.engine : ""}.json`);
+    fs.writeFileSync(file, JSON.stringify(res, null, 1));
+    console.log(`  json ${file}`);
+    await closeBrowsers(); await target.close(); lock.release();
+    process.exit(res.pass ? 0 : 1);
+  } catch (e) {
+    console.error(`${id} HARNESS ERROR ${e.stack ?? e}`);
+    await closeBrowsers(); if (target) await target.close();
+    process.exit(2);
+  }
 }
-/** The scene list the page declares (window.__tile.scenes). */
+/** The scene list the page declares (window.__tile.scenes), with the build's migration label (null at HEAD). */
 export async function sceneList(target, engine = "chromium") {
-    const P = await openPage(target, engine, "__index");
-    const list = await P.page.evaluate(() => window.__tile.scenes);
-    await P.close();
-    return list;
+  const P = await openPage(target, engine, "__index");
+  const { scenes, migration } = await P.page.evaluate(() => ({ scenes: window.__tile.scenes, migration: window.__tile.migration ?? null }));
+  await P.close();
+  scenes.migration = migration;
+  return scenes;
 }
-/** Scenes a witness judges: gates first, then info rows. */
-export function scenesFor(list, id, { info = true } = {}) {
-    const g = list.filter((s) => (s.gates ?? []).includes(id)).map((s) => ({ ...s, gating: true }));
-    const i = info ? list.filter((s) => (s.info ?? []).includes(id)).map((s) => ({ ...s, gating: false })) : [];
-    return [...g, ...i];
+/**
+ * Scenes a witness judges: gates first, then info rows. A consumer site (`arms: true`) also yields its
+ * unmigrated arm (`<id>-verbatim`, reported unless the site lists the witness in `armGates.verbatim`) and, when
+ * the build carries a route migration, its migrated arm (`<id>-migrated`, gating as the library arm does). With no
+ * migration the migrated arm IS the library arm (the null migration) and is not run twice.
+ */
+export function scenesFor(list, id, { info = true, arms = true } = {}) {
+  const out = [];
+  const push = (s, gating) => {
+    out.push({ ...s, gating, arm: "library" });
+    if (!arms || !s.arms) return;
+    out.push({ ...s, id: `${s.id}-verbatim`, base: s.id, gating: (s.armGates?.verbatim ?? []).includes(id), arm: "unmigrated" });
+    if (list.migration) out.push({ ...s, id: `${s.id}-migrated`, base: s.id, gating, arm: "migrated" });
+  };
+  for (const s of list) if ((s.gates ?? []).includes(id)) push(s, true);
+  if (info) for (const s of list) if ((s.info ?? []).includes(id)) push(s, false);
+  return out;
 }
 /** Race a step against a deadline; resolves { ok, value } or { ok: false, error } (a hang or a crashed target). */
 export async function within(ms, fn) {
-    let timer;
-    const t = new Promise((r) => { timer = setTimeout(() => r({ ok: false, error: `no answer within ${ms / 1000} s (hung)` }), ms); });
-    const run = fn().then((value) => ({ ok: true, value }), (e) => ({ ok: false, error: String(e.message ?? e).split("\n")[0] }));
-    const r = await Promise.race([run, t]);
-    clearTimeout(timer);
-    return r;
+  let timer;
+  const t = new Promise((r) => { timer = setTimeout(() => r({ ok: false, error: `no answer within ${ms / 1000} s (hung)` }), ms); });
+  const run = fn().then((value) => ({ ok: true, value }), (e) => ({ ok: false, error: String(e.message ?? e).split("\n")[0] }));
+  const r = await Promise.race([run, t]);
+  clearTimeout(timer);
+  return r;
 }
-export const f2 =(v) => (v === null || v === undefined || Number.isNaN(v) ? "—" : Number(v).toFixed(2));
+export const f2 = (v) => (v === null || v === undefined || Number.isNaN(v) ? "—" : Number(v).toFixed(2));
+/** The engines a generic witness runs in (`--engine chromium|webkit`). */
+export const engineOf = (args) => (args.engine === "webkit" ? "webkit" : "chromium");

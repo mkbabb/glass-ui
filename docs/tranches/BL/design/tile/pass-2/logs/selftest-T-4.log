@@ -1,0 +1,14 @@
+start 2026-09-26 01:03:17 load 17.17 15.82 17.50
+OK     T-4  chromium clean exit 0 · T-4 PASS · 36/36 gating cells pass [library 20/20 · unmigrated 0/24 · migrated 16/16]
+OK     T-4  chromium fault   t4 (the specimen scroll port leaves 2 px of padding against the 4 px ring reach) exit 1 · T-4 FAIL · 28/36 gating cells pass [library 16/20 · unmigrated 0/24 · migrated 12/16]
+         first planted FAIL: FAIL       specimen light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 0.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+OK     T-4  chromium fault   t4-auto (no ring rule: the focused tile paints the UA's outline: auto) exit 1 · T-4 FAIL · 0/36 gating cells pass [library 0/20 · unmigrated 0/24 · migrated 0/16]
+         first planted FAIL: FAIL       preset light sel=none · item 0 (unselected); outline auto 1px offset 0px — the UA's focus outline, not the ring; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on eve
+OK     T-4  webkit   clean exit 0 · T-4 PASS · 36/36 gating cells pass [library 20/20 · unmigrated 0/24 · migrated 16/16]
+OK     T-4  webkit   fault   t4 (the specimen scroll port leaves 2 px of padding against the 4 px ring reach) exit 1 · T-4 FAIL · 28/36 gating cells pass [library 16/20 · unmigrated 0/24 · migrated 12/16]
+         first planted FAIL: FAIL       specimen light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 0.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the
+OK     T-4  webkit   fault   t4-auto (no ring rule: the focused tile paints the UA's outline: auto) exit 1 · T-4 FAIL · 0/36 gating cells pass [library 0/20 · unmigrated 0/24 · migrated 0/16]
+         first planted FAIL: FAIL       preset light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline auto 3px offset 0px — the UA's focus outline, not the ring; painted ring px top 3.00 right 3.00 bottom 3
+selftest: 6 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0
+end 2026-09-26 01:14:15 load 19.68 24.07 20.96

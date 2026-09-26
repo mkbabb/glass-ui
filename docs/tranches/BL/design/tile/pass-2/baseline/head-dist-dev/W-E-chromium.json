@@ -1,0 +1,69 @@
+{
+ "id": "W-E",
+ "title": "every one-of-N option is one line, and what a consumer installs refuses one that is not (D4-E)",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "head-dist-dev",
+ "dev": true,
+ "cells": [
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "line": "preset · 4 items · 4 not one line · e.g. 61.58 px tall at rung 40.00 (1.54 rungs), 2 rows"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "line": "preset refusal (flavor dist-dev) · a line added to item 0 → no refusal (no console error, no throw)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "line": "specimen · 8 items · 8 not one line · e.g. 100.16 px tall at rung 36.00 (2.78 rungs), 2 rows"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "line": "specimen refusal (flavor dist-dev) · a line added to item 0 → no refusal (no console error, no throw)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "line": "strip · 6 items · 6 not one line · e.g. 44.00 px tall at rung 44.00 (1.00 rungs), 2 rows"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "line": "strip refusal (flavor dist-dev) · a line added to item 0 → no refusal (no console error, no throw)"
+  }
+ ],
+ "flavor": "dist-dev",
+ "run": {
+  "loadStart": "150.87 / 177.06 / 128.58",
+  "loadEnd": "144.56 / 175.32 / 128.25",
+  "census": {
+   "n": 31,
+   "sample": [
+    "11392 safaridriver -p 6072",
+    "19728 /Users/mkbabb/Library/Caches/ms-playwright/chromium-1228/chrome-mac-arm64/Google",
+    "19776 /Users/mkbabb/Library/Caches/ms-playwright/chromium-1228/chrome-mac-arm64/Google"
+   ],
+   "waitedS": 0.6
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "0/6 gating cells pass [library 0/6]",
+ "arms": {
+  "library": {
+   "pass": 0,
+   "of": 6
+  }
+ }
+}

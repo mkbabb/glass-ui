@@ -1,0 +1,35 @@
+start T-7 webkit 2026-09-26 01:48:01 load 17.20 18.99 19.67
+T-7 · no consumer paint on the tile (each consumer arm against its stripped twin)
+  target head-src (flavor src) · Playwright WebKit 26.5
+  load 17.20 / 18.99 / 19.67 at start, 18.88 / 20.82 / 20.56 at end · other headless browser processes at start: 19 (waited 0.1 s) · browser lock waited 0 s
+  info-fail  [unmigrated] preset-verbatim · engine failure while reading the four states · no answer within 90 s (hung)
+  UNMEASURED [migrated] preset-migrated · no migration at this build (the null migration is the library arm; a self-paired read is not a measurement)
+  info-fail  [unmigrated] specimen-verbatim · engine failure while reading the four states · no answer within 90 s (hung)
+  UNMEASURED [migrated] specimen-migrated · no migration at this build (the null migration is the library arm; a self-paired read is not a measurement)
+  info-pass  [unmigrated] strip-verbatim vs its stripped twin · rest · no consumer paint
+  info-pass  [unmigrated] strip-verbatim vs its stripped twin · on · no consumer paint
+  info-fail  [unmigrated] strip-verbatim on content ink · rgb(91, 70, 51) 400 / rgb(91, 70, 51) 400 → rgb(91, 70, 51) 400 / rgb(28, 25, 23) 600
+  info-pass  [unmigrated] strip-verbatim vs its stripped twin · focus · no consumer paint
+  info-pass  [unmigrated] strip-verbatim vs its stripped twin · hover · no consumer paint
+  info-fail  [unmigrated] strip-verbatim hover content ink · rgb(91, 70, 51) 400 / rgb(91, 70, 51) 400 → rgb(91, 70, 51) 400 / rgb(28, 25, 23) 400
+  UNMEASURED [migrated] strip-migrated · no migration at this build (the null migration is the library arm; a self-paired read is not a measurement)
+  info-fail  [unmigrated] f1-verbatim vs its stripped twin · rest · background-color: oklab(0.673443 0.021093 0.074662 / 0.244) → rgb(253, 245, 236); border-top-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-right-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-bottom-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-left-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23)
+  info-fail  [unmigrated] f1-verbatim vs its stripped twin · on · background-color: oklab(0.673443 0.021093 0.074662 / 0.244) → rgb(253, 245, 236); box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srg... → color(srgb 0.844149 0.201489 0.216932 / 0.15) 0px 0px 0px...; border-top-color: rgba(0, 0, 0, 0) → oklch(0.58 0.2 25); border-right-color: rgba(0, 0, 0, 0) → oklch(0.58 0.2 25); border-bottom-color: rgba(0, 0, 0, 0) → oklch(0.58 0.2 25); border-left-color: rgba(0, 0, 0, 0) → oklch(0.58 0.2 25)
+  info-fail  [unmigrated] f1-verbatim on content ink · rgb(28, 25, 23) 500 / rgb(91, 70, 51) 500 → rgb(28, 25, 23) 500 / oklch(0.58 0.2 25) 600
+  info-fail  [unmigrated] f1-verbatim vs its stripped twin · focus · background-color: oklab(0.673443 0.021093 0.074662 / 0.244) → rgb(253, 245, 236); border-top-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-right-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-bottom-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-left-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23)
+  info-fail  [unmigrated] f1-verbatim vs its stripped twin · hover · background-color: oklab(0.673443 0.021093 0.074662 / 0.244) → rgb(253, 245, 236); border-top-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-right-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-bottom-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-left-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23)
+  UNMEASURED [migrated] f1-migrated · no migration at this build (the null migration is the library arm; a self-paired read is not a measurement)
+  info-fail  [unmigrated] v2-verbatim vs its stripped twin · rest · border-top-left-radius: 0px → 16px; border-top-right-radius: 0px → 16px; border-bottom-right-radius: 0px → 16px; border-bottom-left-radius: 0px → 16px
+  info-fail  [unmigrated] v2-verbatim vs its stripped twin · on · border-top-left-radius: 0px → 16px; border-top-right-radius: 0px → 16px; border-bottom-right-radius: 0px → 16px; border-bottom-left-radius: 0px → 16px; box-shadow: none → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0p...
+  info-fail  [unmigrated] v2-verbatim vs its stripped twin · focus · border-top-left-radius: 0px → 16px; border-top-right-radius: 0px → 16px; border-bottom-right-radius: 0px → 16px; border-bottom-left-radius: 0px → 16px; outline-style: auto → none; box-shadow: none → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0p...
+  info-fail  [unmigrated] v2-verbatim vs its stripped twin · hover · border-top-left-radius: 0px → 16px; border-top-right-radius: 0px → 16px; border-bottom-right-radius: 0px → 16px; border-bottom-left-radius: 0px → 16px
+  UNMEASURED [migrated] v2-migrated · no migration at this build (the null migration is the library arm; a self-paired read is not a measurement)
+  info-fail  [unmigrated] c1-verbatim vs its stripped twin · rest · border-top-left-radius: 0px → 6px; border-top-right-radius: 0px → 6px; border-bottom-right-radius: 0px → 6px; border-bottom-left-radius: 0px → 6px
+  info-fail  [unmigrated] c1-verbatim vs its stripped twin · on · border-top-left-radius: 0px → 6px; border-top-right-radius: 0px → 6px; border-bottom-right-radius: 0px → 6px; border-bottom-left-radius: 0px → 6px; background-color: rgba(0, 0, 0, 0) → rgb(246, 243, 239)
+  info-fail  [unmigrated] c1-verbatim vs its stripped twin · focus · border-top-left-radius: 0px → 6px; border-top-right-radius: 0px → 6px; border-bottom-right-radius: 0px → 6px; border-bottom-left-radius: 0px → 6px; outline-style: auto → solid; outline-width: 3px → 2px; outline-color: rgb(28, 25, 23) → oklab(0.216115 0.003422 0.005081 / 0.48); outline-offset: 0px → 2px
+  info-fail  [unmigrated] c1-verbatim vs its stripped twin · hover · border-top-left-radius: 0px → 6px; border-top-right-radius: 0px → 6px; border-bottom-right-radius: 0px → 6px; border-bottom-left-radius: 0px → 6px; background-color: rgba(0, 0, 0, 0) → rgb(246, 243, 239)
+  UNMEASURED [migrated] c1-migrated · no migration at this build (the null migration is the library arm; a self-paired read is not a measurement)
+T-7 FAIL · 0/0 gating cells pass, 6 unmeasured [unmigrated 4/21]
+  json /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/h2/r8out/runs/head-src/T-7-webkit.json
+exit 1
+end 2026-09-26 01:52:57 load 18.88 20.82 20.56

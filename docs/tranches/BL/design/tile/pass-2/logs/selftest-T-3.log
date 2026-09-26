@@ -1,0 +1,22 @@
+start 2026-09-26 00:40:33 load 26.91 27.37 21.53
+OK     T-3  chromium clean exit 0 · T-3 PASS · 60/60 gating cells pass [library 39/39 · unmigrated 24/48 · migrated 18/18]
+OK     T-3  chromium fault   t3 (selection is a faint fill only (no perimeter edge): < 3:1 and no second carrier) exit 1 · T-3 FAIL · 0/60 gating cells pass [library 0/39 · unmigrated 0/48 · migrated 0/18]
+         first planted FAIL: FAIL       preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 292.00 px²; fill 1.07:1; p95 1.07; items 1/0 226×66
+OK     T-3  chromium fault   t3-border (the carrier is the tile's own border-color, which the invalid grammar, a sibling state and the consumer's border erase) exit 1 · T-3 FAIL · 51/60 gating cells pass [library 33/39 · unmigrated 2/48 · migrated 18/18]
+         first planted FAIL: FAIL       [unmigrated] preset-verbatim light · carrier ≥3:1 area 278.00 px² (perimeter band 278.00, interior 0.00) vs the bar 292.00 px²; fill 1.19:1; p95 1.19; items 1/0 226×66
+OK     T-3  chromium fault   t3-alpha (the carrier takes the tone as given: a translucent tone paints a translucent edge) exit 1 · T-3 FAIL · 57/60 gating cells pass [library 36/39 · unmigrated 24/48 · migrated 18/18]
+         first planted FAIL: FAIL       preset-tone-translucent light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 292.00 px²; fill 1.19:1; p95 1.91; items 1/0 226×66
+OK     T-3  chromium fault   t3-unres (the carrier falls back to transparent when the tone does not resolve (no signal)) exit 1 · T-3 FAIL · 57/60 gating cells pass [library 36/39 · unmigrated 24/48 · migrated 18/18]
+         first planted FAIL: FAIL       preset-tone-unresolvable light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 292.00 px²; fill 1.19:1; p95 1.19; items 1/0 226×66
+OK     T-3  webkit   clean exit 0 · T-3 PASS · 60/60 gating cells pass [library 39/39 · unmigrated 18/48 · migrated 18/18]
+OK     T-3  webkit   fault   t3 (selection is a faint fill only (no perimeter edge): < 3:1 and no second carrier) exit 1 · T-3 FAIL · 0/60 gating cells pass [library 0/39 · unmigrated 0/48 · migrated 0/18]
+         first planted FAIL: FAIL       preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 292.00 px²; fill 1.07:1; p95 1.07; items 1/0 226×66
+OK     T-3  webkit   fault   t3-border (the carrier is the tile's own border-color, which the invalid grammar, a sibling state and the consumer's border erase) exit 1 · T-3 FAIL · 51/60 gating cells pass [library 33/39 · unmigrated 0/48 · migrated 18/18]
+         first planted FAIL: FAIL       [unmigrated] preset-verbatim light · carrier ≥3:1 area 216.75 px² (perimeter band 216.75, interior 0.00) vs the bar 292.00 px²; fill 1.19:1; p95 1.19; items 1/0 226×66
+OK     T-3  webkit   fault   t3-alpha (the carrier takes the tone as given: a translucent tone paints a translucent edge) exit 1 · T-3 FAIL · 57/60 gating cells pass [library 36/39 · unmigrated 18/48 · migrated 18/18]
+         first planted FAIL: FAIL       preset-tone-translucent light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 292.00 px²; fill 1.19:1; p95 1.91; items 1/0 226×66
+OK     T-3  webkit   fault   t3-unres (the carrier falls back to transparent when the tone does not resolve (no signal)) exit 1 · T-3 FAIL · 57/60 gating cells pass [library 36/39 · unmigrated 18/48 · migrated 18/18]
+         first planted FAIL: FAIL       preset-tone-unresolvable light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 292.00 px²; fill 1.19:1; p95 1.19; items 1/0 226×66
+selftest: 10 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0
+end 2026-09-26 01:03:17 load 17.17 15.82 17.50

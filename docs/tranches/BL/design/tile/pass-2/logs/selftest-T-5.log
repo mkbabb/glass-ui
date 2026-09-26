@@ -1,0 +1,34 @@
+start 2026-09-26 01:14:15 load 19.68 24.07 20.96
+OK     T-5  chromium clean exit 0 · T-5 PASS · 104/104 gating cells pass [library 72/72 · unmigrated 37/37 · migrated 32/32]
+OK     T-5  chromium fault   t5 (ArrowUp and ArrowDown are dead (the tablist model), so grid arrows do not move) exit 1 · T-5 FAIL · 71/104 gating cells pass [library 49/72 · unmigrated 23/37 · migrated 22/32]
+         first planted FAIL: FAIL       preset grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+OK     T-5  chromium fault   t5-cross (no linear step: the cross axis of a one-line row or column is dead) exit 1 · T-5 FAIL · 83/104 gating cells pass [library 57/72 · unmigrated 28/37 · migrated 26/32]
+         first planted FAIL: FAIL       preset keyed reorder · ArrowDown from DOM #3 (no item below: the linear step) · focus 3 → 3 (want 0) · checked true
+OK     T-5  chromium fault   t5-stop (the scroll port is its own tab stop in front of the set) exit 1 · T-5 FAIL · 102/104 gating cells pass [library 71/72 · unmigrated 36/37 · migrated 31/32]
+         first planted FAIL: FAIL       specimen tab stops · 2 stop(s) between the sentinels, 1 of them items [other:div.port → 1]
+OK     T-5  chromium fault   t5-reorder (the roving order is captured at mount and goes stale after a keyed reorder) exit 1 · T-5 FAIL · 103/104 gating cells pass [library 71/72 · unmigrated 37/37 · migrated 32/32]
+         first planted FAIL: FAIL       preset keyed reorder · ArrowDown from DOM #3 (no item below: the linear step) · focus 3 → 2 (want 0) · checked true
+OK     T-5  chromium fault   t5-input (keys typed in an editable descendant move the group's selection) exit 1 · T-5 FAIL · 103/104 gating cells pass [library 71/72 · unmigrated 37/37 · migrated 32/32]
+         first planted FAIL: FAIL       preset-input interactive descendant (flavor dist) · ArrowRight typed in the <input> · focus inside:0 → 1 · selection 1 → 1
+OK     T-5  chromium fault   t5-deselect (a single group whose model matches no value checks the first item (a false choice)) exit 1 · T-5 FAIL · 103/104 gating cells pass [library 71/72 · unmigrated 37/37 · migrated 32/32]
+         first planted FAIL: FAIL       preset no selection (Q-6 a) · checked truefalsefalsefalse · stops [0] (want nothing checked and one stop, the first item)
+OK     T-5  chromium fault   t5-multi (N-of-M: Space on a focused tile does not toggle it) exit 1 · T-5 FAIL · 102/104 gating cells pass [library 71/72 · unmigrated 36/37 · migrated 31/32]
+         first planted FAIL: FAIL       v2 N-of-M Space toggles #0 · false → false → false
+OK     T-5  webkit   clean exit 0 · T-5 PASS · 104/104 gating cells pass [library 72/72 · unmigrated 37/37 · migrated 32/32]
+OK     T-5  webkit   fault   t5 (ArrowUp and ArrowDown are dead (the tablist model), so grid arrows do not move) exit 1 · T-5 FAIL · 71/104 gating cells pass [library 49/72 · unmigrated 23/37 · migrated 22/32]
+         first planted FAIL: FAIL       preset grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+OK     T-5  webkit   fault   t5-cross (no linear step: the cross axis of a one-line row or column is dead) exit 1 · T-5 FAIL · 83/104 gating cells pass [library 57/72 · unmigrated 28/37 · migrated 26/32]
+         first planted FAIL: FAIL       preset keyed reorder · ArrowDown from DOM #3 (no item below: the linear step) · focus 3 → 3 (want 0) · checked true
+OK     T-5  webkit   fault   t5-stop (the scroll port is its own tab stop in front of the set) exit 1 · T-5 FAIL · 102/104 gating cells pass [library 71/72 · unmigrated 36/37 · migrated 31/32]
+         first planted FAIL: FAIL       specimen tab stops · 2 stop(s) between the sentinels, 1 of them items [other:div.port → 1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+OK     T-5  webkit   fault   t5-reorder (the roving order is captured at mount and goes stale after a keyed reorder) exit 1 · T-5 FAIL · 103/104 gating cells pass [library 71/72 · unmigrated 37/37 · migrated 32/32]
+         first planted FAIL: FAIL       preset keyed reorder · ArrowDown from DOM #3 (no item below: the linear step) · focus 3 → 2 (want 0) · checked true
+OK     T-5  webkit   fault   t5-input (keys typed in an editable descendant move the group's selection) exit 1 · T-5 FAIL · 103/104 gating cells pass [library 71/72 · unmigrated 37/37 · migrated 32/32]
+         first planted FAIL: FAIL       preset-input interactive descendant (flavor dist) · ArrowRight typed in the <input> · focus inside:0 → 1 · selection 1 → 1
+OK     T-5  webkit   fault   t5-deselect (a single group whose model matches no value checks the first item (a false choice)) exit 1 · T-5 FAIL · 103/104 gating cells pass [library 71/72 · unmigrated 37/37 · migrated 32/32]
+         first planted FAIL: FAIL       preset no selection (Q-6 a) · checked truefalsefalsefalse · stops [0] (want nothing checked and one stop, the first item)
+OK     T-5  webkit   fault   t5-multi (N-of-M: Space on a focused tile does not toggle it) exit 1 · T-5 FAIL · 102/104 gating cells pass [library 71/72 · unmigrated 36/37 · migrated 31/32]
+         first planted FAIL: FAIL       v2 N-of-M Space toggles #0 · false → false → false
+selftest: 16 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0
+end 2026-09-26 01:37:29 load 19.84 20.76 21.21

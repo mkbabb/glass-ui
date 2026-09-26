@@ -1,0 +1,14 @@
+start 2026-09-26 00:39:46 load 27.54 27.48 21.25
+OK     T-2  chromium clean exit 0 · T-2 PASS · 22/22 gating cells pass [library 22/22]
+OK     T-2  chromium fault   t2 (one-line pills get a 12 px corner instead of h/2) exit 1 · T-2 FAIL · 0/22 gating cells pass [library 0/22]
+         first planted FAIL: FAIL       single #0 48.08×40.00 rung 40.00 12px→12.00 (÷h/2 0.60), 1 row(s)
+OK     T-2  chromium fault   t2-skip (a one-line pill wraps to two lines and leaves its rung) exit 1 · T-2 FAIL · 21/22 gating cells pass [library 21/22]
+         first planted FAIL: FAIL       single #0 52.00×60.00 rung 40.00 9999px→26.00 (÷h/2 0.87), 2 row(s) · left its rung (1.50 rungs)
+OK     T-2  webkit   clean exit 0 · T-2 PASS · 22/22 gating cells pass [library 22/22]
+OK     T-2  webkit   fault   t2 (one-line pills get a 12 px corner instead of h/2) exit 1 · T-2 FAIL · 0/22 gating cells pass [library 0/22]
+         first planted FAIL: FAIL       single #0 48.08×40.00 rung 40.00 12px→12.00 (÷h/2 0.60), 1 row(s)
+OK     T-2  webkit   fault   t2-skip (a one-line pill wraps to two lines and leaves its rung) exit 1 · T-2 FAIL · 21/22 gating cells pass [library 21/22]
+         first planted FAIL: FAIL       single #0 52.00×60.00 rung 40.00 9999px→26.00 (÷h/2 0.87), 2 row(s) · left its rung (1.50 rungs)
+selftest: 6 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0
+end 2026-09-26 00:40:33 load 26.91 27.37 21.53

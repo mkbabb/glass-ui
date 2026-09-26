@@ -1,0 +1,8 @@
+start 2026-09-25 20:40:50 load 35.19 49.46 73.73
+OK     T-6  chromium fault   t6-still (hover keeps its light channel but does not scale, and a press does not squish (the per-frame hover-scale and press reads must fail on smooth frames, not be re-read away)) exit 1 · T-6 FAIL · 56/72 gating cells pass [library 35/45 · unmigrated 32/40 · migrated 21/27]
+         first planted FAIL: FAIL       preset hover scale · 1.00 (none); median frame 7.80 ms, load 36.33 / 48.98 / 73.14
+OK     T-6  webkit   fault   t6-still (hover keeps its light channel but does not scale, and a press does not squish (the per-frame hover-scale and press reads must fail on smooth frames, not be re-read away)) exit 1 · T-6 FAIL · 56/72 gating cells pass [library 35/45 · unmigrated 32/40 · migrated 21/27]
+         first planted FAIL: FAIL       preset hover scale · 1.00 (none); median frame 10.00 ms, load 35.15 / 39.47 / 61.96
+selftest: 2 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0
+end 2026-09-25 20:49:43 load 36.88 39.42 56.51

@@ -1,0 +1,16 @@
+start 2026-09-25 19:31:29 load 67.97 54.74 48.98
+OK     W-A  chromium clean exit 0 · W-A PASS · 9/9 gating cells pass [library 9/9]
+OK     W-A  chromium fault   t1-late (the control corner is stamped 300 ms after the content changes (painted frames show the stadium)) exit 1 · W-A FAIL · 0/9 gating cells pass [library 0/9]
+         first planted FAIL: FAIL       wrap light ToggleGroupItem · 71.73×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×80.00 9999px→40.00 (÷h/2 1.00) | 110.00×120.00 9999px→55.00 (÷h/2 0.92) · one line at h/2 true, unchanged by lines false (Δ 35.00 px)
+OK     W-A  chromium control t1-ro (CONTROL, must PASS: the control corner is stamped by a ResizeObserver before paint; a synchronous read sees the stadium, the framed read the stamp) exit 0 · W-A PASS · 9/9 gating cells pass [library 9/9]
+OK     W-A  chromium fault   wa (the control-role holders keep the stadium, so a wrapped holder balloons) exit 1 · W-A FAIL · 0/9 gating cells pass [library 0/9]
+         first planted FAIL: FAIL       wrap light ToggleGroupItem · 71.73×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×80.00 9999px→40.00 (÷h/2 1.00) | 110.00×120.00 9999px→55.00 (÷h/2 0.92) · one line at h/2 true, unchanged by lines false (Δ 35.00 px)
+OK     W-A  webkit   clean exit 0 · W-A PASS · 9/9 gating cells pass [library 9/9]
+OK     W-A  webkit   fault   t1-late (the control corner is stamped 300 ms after the content changes (painted frames show the stadium)) exit 1 · W-A FAIL · 0/9 gating cells pass [library 0/9]
+         first planted FAIL: FAIL       wrap light ToggleGroupItem · 71.73×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×80.00 9999px→40.00 (÷h/2 1.00) | 110.00×120.00 9999px→55.00 (÷h/2 0.92) · one line at h/2 true, unchanged by lines false (Δ 35.00 px)
+OK     W-A  webkit   control t1-ro (CONTROL, must PASS: the control corner is stamped by a ResizeObserver before paint; a synchronous read sees the stadium, the framed read the stamp) exit 0 · W-A PASS · 9/9 gating cells pass [library 9/9]
+OK     W-A  webkit   fault   wa (the control-role holders keep the stadium, so a wrapped holder balloons) exit 1 · W-A FAIL · 0/9 gating cells pass [library 0/9]
+         first planted FAIL: FAIL       wrap light ToggleGroupItem · 71.73×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×80.00 9999px→40.00 (÷h/2 1.00) | 110.00×120.00 9999px→55.00 (÷h/2 0.92) · one line at h/2 true, unchanged by lines false (Δ 35.00 px)
+selftest: 8 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0
+end 2026-09-25 19:32:37 load 64.24 56.13 49.92

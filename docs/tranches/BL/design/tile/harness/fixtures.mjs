@@ -1,71 +1,129 @@
 // fixtures.mjs · the minimal fixture: one hand-made page (no library, no build) that honours the scene DOM
-// contract (scenes.mjs) and satisfies every witness, plus one planted violation per witness. It proves each
-// witness can PASS and can FAIL; it says nothing about the library.
+// contract (scenes.mjs) and satisfies every witness, plus planted violations. It proves each witness can PASS
+// and can FAIL; it says nothing about the library.
 //
-//   --fixture                   the compliant page (tiles on the field rung, a rung/2 control corner, a
-//                               perimeter edge for selection, a whole ring, grid arrows, a commit motion)
-//   --fixture --family e        options are one line and a guard refuses a second line (W-E's arm; the other
-//                               families need multi-line tiles, so E cannot share the default page)
+//   --fixture                   the compliant page: tiles on the field rung at every rung (fine, coarse, the
+//                               comfort axis), control holders on rung/2, the selected carrier a 2 px perimeter
+//                               layer on ::before (alpha-clamped, lightness-floored, per-item tone) plus a fill, a
+//                               whole library ring, one tab stop, geometric grid arrows with a linear step,
+//                               keys from an editable descendant left alone, a live roving order, a spring pop on
+//                               every commit (pointer, key, programmatic) and none on Tab entry, a structural
+//                               one-line guard, and consumer arms (verbatim paint, a clean migration, twins)
+//   --fixture --family e        options are one line and a guard refuses a second line (W-E's arm)
 //   --fixture --fault <id>      the same page with one planted violation (FAULTS below)
-import { SCENES } from "./scenes.mjs";
+//   --fixture --flavor <f>      the build flavour it emulates (dist by default): its DEV-only code runs only
+//                               under src-dev, as a library build strips import.meta.env.DEV branches (H-9)
+import { SCENES, SITES } from "./scenes.mjs";
 
-/** One planted violation per witness, each the defect class that witness exists to catch. */
+/**
+ * The planted violations. Each names the witnesses it plants against, whether the witness must FAIL (the
+ * default) or must still PASS (a control that proves the check reads the right thing), and for a FAIL the cell
+ * that must be among the failing lines (`cell`, a regex over the printed line).
+ */
 export const FAULTS = {
-  t1: "tiles wear the stadium (border-radius 9999px), so the corner grows with every line",
-  t2: "one-line pills get a 12 px corner instead of h/2",
-  t3: "selection is a faint fill only (no perimeter edge): < 3:1 and no second carrier",
-  t4: "the specimen scroll port leaves 2 px of padding against the 4 px ring reach",
-  t5: "ArrowUp and ArrowDown are dead (the tablist model), so grid arrows do not move",
-  t6: "the commit is a repaint: only scale transitions, colour snaps",
-  t7: "the verbatim scenes carry the consumer's dashed outline on the tile",
-  t8: "a WebKit-only rule turns the tiles back into stadiums (Chromium stays green)",
-  wa: "the control-role holders keep the stadium, so a wrapped holder balloons",
-  wb: "no choice-card slot and no ChoiceGroup/ChoiceCard export",
-  wc: "the card board is a listbox of options, each its own tab stop, with no group stamp",
-  wd: "the declared cell lays out as a row",
-  we: "the one-line guard is absent (with --family e)",
+  t1: { why: "tiles wear the stadium (border-radius 9999px), so the corner grows with every line", witnesses: ["T-1"], cell: /preset/ },
+  "t1-self": { why: "tiles take a role the tile itself declares (rung/2 = 20 px): the per-element role names its own corner", witnesses: ["T-1"], cell: /root --radius-field/ },
+  "t1-coarse": { why: "under a coarse pointer the tiles take rung/2 (30 px): the lozenge the owner rejected", witnesses: ["T-1"], cell: /coarse/ },
+  "t1-scale": { why: "the tile corner rides --ui-scale (16 px × 1.25 = 20 px)", witnesses: ["T-1"], cell: /--ui-scale 1\.25/ },
+  "t1-late": { why: "the control corner is stamped 300 ms after the content changes (painted frames show the stadium)", witnesses: ["T-1", "W-A"], cell: /wrap/ },
+  "t1-ro": { why: "CONTROL, must PASS: the control corner is stamped by a ResizeObserver before paint; a synchronous read sees the stadium, the framed read the stamp", witnesses: ["T-1", "W-A"], expect: "pass" },
+  t2: { why: "one-line pills get a 12 px corner instead of h/2", witnesses: ["T-2"], cell: /single/ },
+  "t2-skip": { why: "a one-line pill wraps to two lines and leaves its rung", witnesses: ["T-2"], cell: /left its rung/ },
+  t3: { why: "selection is a faint fill only (no perimeter edge): < 3:1 and no second carrier", witnesses: ["T-3"], cell: /preset/ },
+  "t3-border": { why: "the carrier is the tile's own border-color, which the invalid grammar, a sibling state and the consumer's border erase", witnesses: ["T-3"], cell: /preset-invalid|preset-sibling|preset-verbatim/ },
+  "t3-alpha": { why: "the carrier takes the tone as given: a translucent tone paints a translucent edge", witnesses: ["T-3"], cell: /preset-tone-translucent/ },
+  "t3-unres": { why: "the carrier falls back to transparent when the tone does not resolve (no signal)", witnesses: ["T-3"], cell: /preset-tone-unresolvable/ },
+  t4: { why: "the specimen scroll port leaves 2 px of padding against the 4 px ring reach", witnesses: ["T-4"], cell: /specimen/ },
+  "t4-auto": { why: "no ring rule: the focused tile paints the UA's outline: auto", witnesses: ["T-4"], cell: /UA's focus outline/ },
+  t5: { why: "ArrowUp and ArrowDown are dead (the tablist model), so grid arrows do not move", witnesses: ["T-5", "W-B"], cell: /ArrowDown|ArrowUp/ },
+  "t5-cross": { why: "no linear step: the cross axis of a one-line row or column is dead", witnesses: ["T-5"], cell: /linear step/ },
+  "t5-stop": { why: "the scroll port is its own tab stop in front of the set", witnesses: ["T-5"], cell: /tab stops/ },
+  "t5-reorder": { why: "the roving order is captured at mount and goes stale after a keyed reorder", witnesses: ["T-5"], cell: /keyed reorder/ },
+  "t5-input": { why: "keys typed in an editable descendant move the group's selection", witnesses: ["T-5"], cell: /interactive descendant/ },
+  "t5-deselect": { why: "a single group whose model matches no value checks the first item (a false choice)", witnesses: ["T-5"], cell: /no selection/ },
+  "t5-multi": { why: "N-of-M: Space on a focused tile does not toggle it", witnesses: ["T-5"], cell: /v2 .*Space/ },
+  "t6-fade": { why: "the commit is a 120 ms linear fade of the selected layer: no pop, no travel", witnesses: ["T-6"], cell: /commit bar/ },
+  "t6-tabpop": { why: "the pop also fires when Tab enters the checked tile", witnesses: ["T-6"], cell: /Tab entry/ },
+  "t6-prog": { why: "the pop fires from pointer and key handlers only: a programmatic model change commits with none", witnesses: ["T-6"], cell: /programmatic/ },
+  "t6-body": { why: "CONTROL, must PASS: no pop; a selection body springs to the committed tile (travel with an overshoot) on every commit, pointer, key and programmatic, and stays put on Tab entry", witnesses: ["T-6"], expect: "pass" },
+  "t6-rest": { why: "CONTROL, must PASS: the selected tile rests scaled (1.05) and its pop overshoots and bounces around that settle; a resting scale is neither a pop on Tab entry nor a pop amplitude", witnesses: ["T-6"], expect: "pass" },
+  "t6-still": { why: "hover keeps its light channel but does not scale, and a press does not squish (the per-frame hover-scale and press reads must fail on smooth frames, not be re-read away)", witnesses: ["T-6"], cell: /hover scale|press ·/ },
+  "t6-glide": { why: "no pop; the selection body glides to the committed tile on a linear path and lands without overshoot (travel with no weight)", witnesses: ["T-6"], cell: /commit bar/ },
+  t7: { why: "the migrated arm keeps the consumer's dashed outline on the tile", witnesses: ["T-7"], cell: /migrated/ },
+  t8: { why: "a WebKit-only rule turns the tiles back into stadiums (Chromium stays green)", witnesses: ["T-8"], cell: /Playwright WebKit T-1/ },
+  wa: { why: "the control-role holders keep the stadium, so a wrapped holder balloons", witnesses: ["W-A"], cell: /wrap/ },
+  wb: { why: "no choice-card slot and no ChoiceGroup/ChoiceCard export", witnesses: ["W-B"], cell: /exports|slots/ },
+  wc: { why: "the card board is a listbox of options, each its own tab stop, with no group stamp", witnesses: ["W-C"], cell: /card/ },
+  "wc-stamp": { why: "the group stamp is present but its values are stale: aria-checked never follows the selection", witnesses: ["W-C"], cell: /stamp/ },
+  wd: { why: "the declared cell lays out as a row", witnesses: ["W-D"], cell: /family-d #/ },
+  wd2: { why: "the declaration is ignored: every item is a cell, the undeclared pair included", witnesses: ["W-D"], cell: /family-d-undeclared/ },
+  we: { why: "the one-line guard is absent", witnesses: ["W-E"], family: "e", cell: /refusal/ },
+  "we-devonly": { why: "the one-line guard is DEV-only, so what a consumer installs refuses nothing", witnesses: ["W-E"], family: "e", cell: /refusal/ },
+  "we-lh1": { why: "an option stacks two lines at line-height 1 inside its rung (the midpoint row test must count 2)", witnesses: ["W-E"], family: "e", cell: /not one line/ },
 };
 
 const PRESETS = [["smooth", "0.5 s · ζ 1"], ["snappy", "0.35 s · ζ 0.78"], ["bouncy", "0.5 s · ζ 0.5"], ["gentle", "0.7 s · ζ 0.95"]];
 const CURVES = ["linear", "ease-in-quad", "ease-out-quad", "ease-in-out-quad", "ease-in-cubic", "ease-out-cubic", "ease-in-back", "ease-out-back"];
 const STRIP = ["quad-in", "quad-out", "quad-in-out", "back-in", "back-out", "back-in-out"];
+const LEVELS = [1, 2, 3, 5, 8, 13];
+const PALETTES = ["Dusk", "Moss", "Tide", "Clay"];
+const STATUSES = [["Any status", ""], ["Messaged", "12"], ["Not messaged", "30"], ["Seen", "7"], ["Not seen", "35"]];
 
-export function fixturePage(params, fault = "", family = "") {
+export function fixturePage(params, fault = "", family = "", flavor = "dist") {
   const scene = params.get("scene") ?? "__index";
-  const base = scene.replace(/-verbatim$/, "");
-  const verbatim = scene.endsWith("-verbatim");
-  const selQ = params.get("sel");
+  const armMatch = scene.match(/-(verbatim|migrated)(-stripped)?$/);
+  const arm = armMatch ? (armMatch[2] ? "stripped" : armMatch[1]) : "library";
+  const site = scene.replace(/-(verbatim|migrated)(-stripped)?$/, "");
+  const base = site.startsWith("preset-") ? "preset" : site === "family-d-undeclared" ? "family-d" : site;
   const oneLine = family === "e";
   const exportsList = fault === "wb" ? ["SelectionGroup", "SelectionItem"] : ["ChoiceGroup", "ChoiceCard", "SelectionGroup", "SelectionItem"];
+  const slot = fault === "wb" ? "" : 'data-slot="choice-card"';
+  const cc = arm === "verbatim" || arm === "migrated" ? " c-cell" : ""; // the consumer's paint class; twins drop it
 
-  const tile = (ink, meta, extra = "") => oneLine
-    ? `<button type="button" class="it" role="radio" data-item ${extra}><span data-ink data-line-slot>${ink}</span></button>`
-    : `<button type="button" class="it tile" role="radio" data-item ${fault === "wb" ? "" : 'data-slot="choice-card"'} ${extra}><span data-ink class="t-name">${ink}</span><span data-ink data-line-slot class="t-meta">${meta}</span></button>`;
-  const pill = (v, extra = "") => `<button type="button" class="it" role="radio" data-item ${extra}><span data-ink data-line-slot>${v}</span></button>`;
-  const group = (label, cls, body) => `<div role="radiogroup" aria-label="${label}" data-group class="${cls}">${body}</div>`;
+  const tile = (name, meta, { extra = "", input = false, sibling = false, cls = "" } = {}) => oneLine
+    ? `<button type="button" class="it${cc}" role="radio" data-item ${extra}>${fault === "we-lh1" && name === "smooth" ? `<span data-ink class="t-lh1">a<br>b</span>` : `<span data-ink data-line-slot>${name}</span>`}</button>`
+    : `<button type="button" class="it tile${cls}${sibling ? " is-bound" : ""}${cc}" role="radio" data-item ${slot} ${extra}><span data-ink class="t-name">${name}</span><span data-ink data-line-slot class="t-meta">${meta}</span>${input ? '<input data-ink data-descendant class="t-input" aria-label="note" value="note">' : ""}</button>`;
+  const pill = (v, extra = "", inner = null) => `<button type="button" class="it" role="radio" data-item ${extra}>${inner ?? `<span data-ink data-line-slot>${v}</span>`}</button>`;
+  const group = (label, cls, body, attrs = "") => `<div role="radiogroup" aria-label="${label}" data-group class="${cls}" ${attrs}>${body}</div>`;
   const spark = `<svg class="spark" viewBox="0 0 1 1" preserveAspectRatio="none"><path d="M0 1 C .4 1 .6 0 1 0"/></svg>`;
+  const staged = (name, meta, stageCls) => oneLine ? tile(name) : `<button type="button" class="it tile${cc}" role="radio" data-item ${slot}><span data-ink class="t-stage ${stageCls}">${spark}</span><span data-ink data-line-slot class="t-meta">${meta}</span></button>`;
+  const presetTiles = (o = {}) => PRESETS.map(([n, m], i) => tile(n, m, { ...o, input: o.input && i === 0 })).join("");
 
   let body;
-  switch (base) {
-    case "preset": body = group("Spring presets", "g-grid2" + (verbatim ? " verbatim" : ""), PRESETS.map(([n, m]) => tile(n, m)).join("")); break;
-    case "specimen": body = `<div class="port">${group("Easing curve specimens", "g-auto" + (verbatim ? " verbatim" : ""),
-      CURVES.map((c) => oneLine ? tile(c) : `<button type="button" class="it tile" role="radio" data-item ${fault === "wb" ? "" : 'data-slot="choice-card"'}><span data-ink class="t-stage">${spark}</span><span data-ink data-line-slot class="t-meta">${c}</span></button>`).join(""))}</div>`; break;
-    case "strip": body = group("Easing curve specimens", "g-row" + (verbatim ? " verbatim" : ""), STRIP.map((s) => oneLine ? tile(s) : `<button type="button" class="it tile" role="radio" data-item ${fault === "wb" ? "" : 'data-slot="choice-card"'}><span data-ink class="t-stage t-glyph">${spark}</span><span data-ink data-line-slot class="t-meta">${s.split("-").slice(1).join("-")}</span></button>`).join("")); break;
-    case "single": body = group("Filter curves by family", "g-row", ["All", "Power", "Back", "Elastic"].map((v) => pill(v)).join("")); break;
+  switch (site) {
+    case "preset": body = group("Spring presets", "g-grid2", presetTiles()); break;
+    case "preset-invalid": body = group("Spring presets", "g-grid2", presetTiles(), 'data-invalid aria-invalid="true"'); break;
+    case "preset-sibling": body = group("Spring presets", "g-grid2", presetTiles({ sibling: true })); break;
+    case "preset-tone-translucent": body = group("Spring presets", "g-grid2", presetTiles(), 'style="--selection-tone: rgb(120 80 200 / 0.35)"'); break;
+    case "preset-tone-unresolvable": body = group("Spring presets", "g-grid2", presetTiles(), 'style="--selection-tone: var(--th-undefined-tone)"'); break;
+    case "preset-contents": body = group("Spring presets", "g-grid2", `<div style="display: contents">${presetTiles()}</div>`); break;
+    case "preset-input": body = group("Spring presets", "g-grid2", presetTiles({ input: true })); break;
+    case "specimen": body = `<div class="port" ${fault === "t5-stop" ? 'tabindex="0"' : ""}>${group("Easing curve specimens", "g-auto", CURVES.map((c) => staged(c, c, "")).join(""))}</div>`; break;
+    case "strip": body = group("Easing curve specimens", "g-row", STRIP.map((s) => staged(s, s.split("-").slice(1).join("-"), "t-glyph")).join("")); break;
+    case "f1": body = `<div class="port-x">${group("Harmonic level", "g-row g-nowrap", LEVELS.map((n) => staged(`n${n}`, `n=${n}`, "t-thumb")).join(""))}</div>`; break;
+    case "v2": body = `<div role="group" aria-label="Palettes" data-group class="g-col-wide">${PALETTES.map((p, i) => `<button type="button" class="it tile${cc}" data-item aria-pressed="${i === 1}"><span data-ink class="t-strip"><i></i><i></i><i></i><i></i></span><span data-ink data-line-slot class="t-meta">${p} · 4</span></button>`).join("")}</div>`; break;
+    case "c1": body = group("Status", "g-col-wide", STATUSES.map(([l, n]) => `<button type="button" class="it row${cc}" role="radio" data-item><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-ink data-line-slot class="t-grow">${l}</span>${n ? `<span data-ink class="t-meta">${n}</span>` : ""}</button>`).join("")); break;
+    case "single": body = group("Filter curves by family", "g-row", ["All", "Power", "Back", "Elastic"].map((v, i) => pill(v, fault === "t2-skip" && i === 0 ? 'style="max-inline-size: 52px; white-space: normal"' : "", fault === "t2-skip" && i === 0 ? `<span data-ink data-line-slot>All power</span>` : null)).join("")); break;
     case "vertical": body = group("Channel", "g-col", ["L", "C", "H", "A"].map((v) => pill(v)).join("")); break;
     case "tabs": body = group("Family", "g-row", ["All", "Power", "Back", "Elastic"].map((v) => pill(v)).join("")); break;
+    case "pill-icon": body = group("View", "g-row", ["Grid", "List", "Board"].map((v) => pill(v, "", `<svg data-ink class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M12 4v16"/></svg><span data-ink data-line-slot>${v}</span>`)).join("")); break;
+    case "pill-badge": body = group("Inbox", "g-row", ["Inbox", "Sent", "Drafts"].map((v) => pill(v, "", `<span data-ink data-line-slot>${v}</span><span data-ink class="badge">${v.length}</span>`)).join("")); break;
     case "card": body = fault === "wc"
       ? `<div role="listbox" aria-label="Plan" data-group class="g-grid2">${["starter", "team", "studio", "scale"].map((v) => `<div class="it tile" role="option" tabindex="0" data-item data-listbox><span data-ink class="t-name">${v}</span><span data-ink data-line-slot class="t-meta">For a ${v} workload.</span></div>`).join("")}</div>`
       : group("Plan", "g-grid2", ["starter", "team", "studio", "scale"].map((v) => `<button type="button" class="it tile" role="radio" data-item data-selection-item><span data-ink class="t-name">${v}</span><span data-ink data-line-slot class="t-meta">For a ${v} workload.</span></button>`).join("")); break;
     case "chipcell": body = group("Cells", "g-row", ["one", "two", "three", "four"].map((v) => tile(v, `0.${v.length} s`)).join("")); break;
     case "wrap": body = group("Wrap", "g-row wrap", ["ToggleGroupItem", "Chip pill", "Button"].map((h, i) => `<button type="button" class="it holder" role="radio" data-item data-holder="${h}"><span data-ink data-line-slot>${["Linear", "Tag", "Continue"][i]}</span></button>`).join("")); break;
     case "family-d": body = group("Spring presets", "g-grid2 cell", PRESETS.map(([n, m]) => `<button type="button" class="it tile" role="radio" data-item><span data-ink class="t-name">${n}</span><span data-ink data-line-slot class="t-meta">${m}</span></button>`).join("")); break;
+    case "family-d-undeclared": body = group("Spring presets", "g-grid2", PRESETS.map(([n, m]) => `<button type="button" class="it${fault === "wd2" ? " tile" : ""}" role="radio" data-item><span data-ink class="t-name">${n}</span><span data-ink data-line-slot class="t-meta">${m}</span></button>`).join("")); break;
     default: body = `<p>${SCENES.map((s) => s.id).join(" · ")}</p>`;
   }
 
+  const late = fault === "t1-late" || fault === "t1-ro";
   const css = `
 :root { color-scheme: light; --bg: #ffffff; --fg: #1c1917; --seam: #d6d3d1; --edge-on: #1c1917; --fill-on: #ecebea; --hover: #f0efee; --ring: #1d4ed8;
-  --control-rung: 40px; --radius-control: calc(var(--control-rung) / 2); --radius-field: 16px; --radius-pill: 9999px; --type-leading-body: 1.5; }
+  --ui-scale: 1; --control-rung: calc(40px * var(--ui-scale)); --radius-control: calc(var(--control-rung) / 2); --radius-field: 16px; --radius-pill: 9999px; --type-leading-body: 1.5;
+  ${fault === "t3-unres" ? "--selection-tone: var(--edge-on);" : ""} }
+@media (pointer: coarse) { :root { --ui-scale: 1.5; } }
 :root.dark { color-scheme: dark; --bg: #141210; --fg: #f5f5f4; --seam: #3a3633; --edge-on: #f5f5f4; --fill-on: #26221f; --hover: #221f1c; --ring: #93c5fd; }
 html, body { margin: 0; } body { background: var(--bg); color: var(--fg); font: 14px/20px system-ui, sans-serif; }
 main { padding: 24px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
@@ -73,92 +131,187 @@ section { width: 460px; }
 .g-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .g-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
 .g-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; }
+.g-nowrap { flex-wrap: nowrap; }
 .g-col { display: flex; flex-direction: column; gap: 8px; width: 64px; }
+.g-col-wide { display: flex; flex-direction: column; gap: 6px; }
 .port { overflow: auto; max-block-size: 260px; padding: ${fault === "t4" ? 2 : 6}px; }
-.it { appearance: none; font: inherit; color: inherit; box-sizing: border-box; min-block-size: var(--control-rung); padding: 8px 14px; margin: 0;
-  border: 2px solid var(--seam); background: var(--bg); border-radius: var(--radius-pill); display: inline-flex; align-items: center; justify-content: center; gap: 2px; line-height: 20px; cursor: pointer;
-  transition: ${fault === "t6" ? "scale 120ms cubic-bezier(.3, 1.4, .5, 1)" : "scale 120ms cubic-bezier(.3, 1.4, .5, 1), background-color 260ms cubic-bezier(.3, 1.3, .5, 1), border-color 260ms ease"}; }
+.port-x { overflow-x: auto; overflow-y: hidden; padding: 6px; }
+.it { position: relative; appearance: none; font: inherit; color: inherit; box-sizing: border-box; min-block-size: var(--control-rung); padding: 8px 14px; margin: 0;
+  border: 2px solid var(--seam); background: var(--bg); border-radius: var(--radius-pill); display: inline-flex; align-items: center; justify-content: center; gap: 4px; line-height: 20px; cursor: pointer;
+  transition: scale 120ms cubic-bezier(.3, 1.4, .5, 1), background-color 260ms cubic-bezier(.3, 1.3, .5, 1), border-color 260ms ease;
+  --tone: var(--selection-tone${fault === "t3-unres" ? "" : ", var(--edge-on)"});
+  --tone-edge: ${fault === "t3-alpha" ? "var(--tone)" : "oklch(from var(--tone) min(l, 0.42) c h / 1)"}; }
+:root.dark .it { --tone-edge: ${fault === "t3-alpha" ? "var(--tone)" : "oklch(from var(--tone) max(l, 0.8) c h / 1)"}; }
 .g-col .it { width: 100%; }
-.it:not(.tile):not(.holder) { white-space: nowrap; }
-${fault === "t2" ? ".it:not(.tile):not(.holder) { border-radius: 12px; }" : ""}
-@media (hover: hover) { .it:hover { scale: 1.015; background: var(--hover); } }
-.it:active { scale: 0.97; }
-.it[aria-checked="true"] { ${fault === "t3" ? "background: #f7f7f6;" : "border-color: var(--edge-on); background: var(--fill-on);"} }
-:root.dark .it[aria-checked="true"] { ${fault === "t3" ? "background: #181614;" : ""} }
-.it:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
-.tile { border-radius: ${fault === "t1" ? "9999px" : "var(--radius-field)"}; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 8px 12px; line-height: calc(var(--type-leading-body) * 1em); text-align: start; }
+.it:not(.tile):not(.holder):not(.row) { white-space: nowrap; }
+${fault === "t2" ? ".it:not(.tile):not(.holder):not(.row) { border-radius: 12px; }" : ""}
+@media (hover: hover) { .it:hover { ${fault === "t6-still" ? "" : "scale: 1.015; "}background: var(--hover); } }
+${fault === "t6-still" ? "" : ".it:active { scale: 0.97; }"}
+.it[aria-checked="true"], .it[aria-pressed="true"] { background: ${fault === "t3" ? "#f7f7f6" : "var(--fill-on)"}; }
+:root.dark .it[aria-checked="true"], :root.dark .it[aria-pressed="true"] { ${fault === "t3" ? "background: #181614;" : ""} }
+/* the selected carrier: a 2 px perimeter layer the content, the tile's own border and consumer paint cannot reach */
+.it::before { content: ""; position: absolute; inset: 0; border: 2px solid ${fault === "t3-unres" ? "var(--tone-edge, transparent)" : "var(--tone-edge)"}; border-radius: inherit; pointer-events: none; opacity: 0;
+  ${fault === "t6-fade" ? "transition: opacity 120ms linear;" : ""} }
+${fault === "t3" || fault === "t3-border" ? "" : '.it[aria-checked="true"]::before, .it[aria-pressed="true"]::before { opacity: 1; }'}
+${fault === "t3-border" ? '.it[aria-checked="true"], .it[aria-pressed="true"] { border-color: var(--edge-on); }' : ""}
+${fault === "t4-auto" ? "" : ".it:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }"}
+.tile { border-radius: ${fault === "t1" ? "9999px" : fault === "t1-self" ? "var(--radius-control)" : fault === "t1-scale" ? "calc(16px * var(--ui-scale))" : "var(--radius-field)"}; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 8px 12px; line-height: calc(var(--type-leading-body) * 1em); text-align: start; }
+${fault === "t1-coarse" ? "@media (pointer: coarse) { .tile { border-radius: calc(var(--control-rung) / 2); } }" : ""}
 .webkit-only .tile { ${fault === "t8" ? "border-radius: 9999px;" : ""} }
 .cell .tile { flex-direction: ${fault === "wd" ? "row" : "column"}; }
-.holder { border-radius: ${fault === "wa" ? "9999px" : "var(--radius-control)"}; max-inline-size: 110px; white-space: normal; }
+.holder { border-radius: ${fault === "wa" || late ? "9999px" : "var(--radius-control)"}; max-inline-size: 110px; white-space: normal; }
+${late ? '.holder[data-extent="block"] { border-radius: var(--radius-control); }' : ""}
+.row { width: 100%; justify-content: flex-start; border-radius: 8px; }
+.row .mark { width: 16px; height: 16px; flex: none; opacity: 0; } .row .mark path { fill: none; stroke: currentColor; stroke-width: 2; }
+.row[aria-checked="true"] .mark { opacity: 1; }
+.t-grow { flex: 1; }
 .g-row .tile { min-inline-size: 64px; }
-.g-row.wrap .it { min-inline-size: 0; }
+.g-row.wrap .it { min-inline-size: var(--control-rung); }
 .t-meta { font-size: 12px; opacity: 0.8; }
 .t-stage { display: block; width: 100%; height: 36px; }
 .t-glyph { width: 28px; height: 22px; }
+.t-thumb { width: 48px; height: 48px; }
+.t-strip { display: flex; width: 100%; height: 24px; } .t-strip i { flex: 1; background: #6d28d9; } .t-strip i:nth-child(2n) { background: #db2777; }
+.t-lh1 { display: block; font-size: 9px; line-height: 1; }
+.t-input { inline-size: 5rem; font: inherit; font-size: 12px; }
+.icon { width: 16px; height: 16px; } .icon path { fill: none; stroke: currentColor; stroke-width: 2; }
+.badge { font-size: 11px; line-height: 16px; padding: 0 6px; border-radius: 8px; background: var(--seam); }
 .spark { width: 100%; height: 100%; overflow: visible; } .spark path { fill: none; stroke: currentColor; stroke-width: 1.25; vector-effect: non-scaling-stroke; }
-.verbatim .it { ${fault === "t7" ? "outline: 1px dashed transparent; outline-offset: -1px;" : ""} }
+/* the invalid grammar and a sibling state: both write the tile's own border (T-3's erasers) */
+[data-invalid] .it { border-color: #db2424; }
+.it.is-bound { border-color: var(--fg); }
+/* consumer arms: the unmigrated composition's paint (its own corner, a transparent border, a dashed outline) */
+[data-arm="verbatim"] .c-cell { border-radius: 12px; outline: 1px dashed transparent; outline-offset: -1px; border-color: transparent; }
+[data-arm="verbatim"] .c-cell[aria-checked="true"] { outline-color: rgb(120 80 200 / 0.65); }
+${fault === "t7" ? '[data-arm="migrated"] .c-cell { outline: 1px dashed transparent; outline-offset: -1px; }' : ""}
+/* the commit: a spring pop on the committed tile (overshoot, bounce, settle) */
+@keyframes pop { 0% { scale: 1; } 45% { scale: 1.035; } 70% { scale: 0.99; } 85% { scale: 1.003; } 100% { scale: 1; } }
+.it.pop { animation: pop 420ms linear; }
+${fault === "t6-rest" ? '.it[aria-checked="true"], .it[aria-pressed="true"] { scale: 1.05; } @keyframes pop-rest { 0% { scale: 1; } 45% { scale: 1.085; } 70% { scale: 1.04; } 85% { scale: 1.053; } 100% { scale: 1.05; } } .it.pop { animation-name: pop-rest; }' : ""}
 .sentinel { font: 12px system-ui; padding: 2px 6px; }
-@media (forced-colors: active) { .it[aria-checked="true"] { border-color: Highlight; } }
+/* the t6-body / t6-glide plants: a selection body, out of flow, under the pointer's reach */
+.has-body { position: relative; }
+.sbody { position: absolute; left: 0; top: 0; box-sizing: border-box; border: 2px solid var(--edge-on); border-radius: var(--radius-field); pointer-events: none; }
+@media (forced-colors: active) { .it[aria-checked="true"]::before, .it[aria-pressed="true"]::before { border-color: Highlight; } }
 `;
 
   const js = `
 const q = new URLSearchParams(location.search);
-const FAULT = ${JSON.stringify(fault)}, ONE_LINE = ${oneLine};
+const FAULT = ${JSON.stringify(fault)}, ONE_LINE = ${oneLine}, FLAVOR = ${JSON.stringify(flavor)}, BASE = ${JSON.stringify(base)}, SITE = ${JSON.stringify(site)};
+const DEV = FLAVOR === "src-dev"; // a library build strips import.meta.env.DEV branches
 if (/AppleWebKit/.test(navigator.userAgent) && !/Chrome|Chromium/.test(navigator.userAgent)) document.documentElement.classList.add("webkit-only");
 const g = document.querySelector("[data-group]");
-const items = g ? [...g.querySelectorAll("[data-item]")] : [];
-const on = (el) => el.getAttribute("aria-checked") === "true" || el.getAttribute("aria-selected") === "true";
-function select(i) {
-  items.forEach((el, k) => {
+const live = () => (g ? [...g.querySelectorAll("[data-item]")] : []);
+const stale = live(); // the t5-reorder plant's snapshot
+const list = () => (FAULT === "t5-reorder" ? stale : live());
+const MULTI = SITE === "v2";
+let ready = false;
+const on = (el) => el.getAttribute("aria-checked") === "true" || el.getAttribute("aria-selected") === "true" || el.getAttribute("aria-pressed") === "true";
+const BODY = (FAULT === "t6-body" || FAULT === "t6-glide") && g && !MULTI ? document.createElement("div") : null;
+if (BODY) { BODY.setAttribute("data-selection-body", ""); BODY.className = "sbody"; g.classList.add("has-body"); g.prepend(BODY); }
+/** Place the body on tile el; with animate, travel there from where it was: a spring with an overshoot (t6-body) or a linear glide (t6-glide). */
+function place(el, animate) {
+  if (!BODY) return;
+  if (!el) { BODY.style.display = "none"; return; }
+  const from = BODY.style.display === "none" ? null : { x: BODY.offsetLeft, y: BODY.offsetTop };
+  Object.assign(BODY.style, { display: "", left: el.offsetLeft + "px", top: el.offsetTop + "px", width: el.offsetWidth + "px", height: el.offsetHeight + "px" });
+  if (!animate || !from) return;
+  const dx = from.x - el.offsetLeft, dy = from.y - el.offsetTop;
+  if (!dx && !dy) return;
+  BODY.animate(FAULT === "t6-glide"
+    ? [{ translate: dx + "px " + dy + "px" }, { translate: "0px 0px" }]
+    : [{ translate: dx + "px " + dy + "px" }, { translate: (-0.08 * dx) + "px " + (-0.08 * dy) + "px", offset: 0.6 }, { translate: (0.02 * dx) + "px " + (0.02 * dy) + "px", offset: 0.82 }, { translate: "0px 0px" }],
+    { duration: FAULT === "t6-glide" ? 240 : 460, easing: FAULT === "t6-glide" ? "linear" : "ease-out" });
+}
+function pop(el) { if (!ready || FAULT === "t6-fade" || BODY) return; el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop"); }
+document.addEventListener("animationend", (e) => e.target.classList && e.target.classList.remove("pop"));
+let current = null; // the model: the element the selection holds (never read back from the stamp)
+function select(i, user = true) {
+  const L = list(), prev = L.findIndex(on);
+  current = i >= 0 ? L[i] : null;
+  L.forEach((el, k) => {
     if (el.hasAttribute("data-listbox")) el.setAttribute("aria-selected", String(k === i));
+    else if (FAULT === "wc-stamp" && SITE === "card") el.setAttribute("aria-checked", "false");
     else el.setAttribute("aria-checked", String(k === i));
   });
   roving();
+  if (i !== prev || !ready) place(i >= 0 ? L[i] : null, ready);
+  if (i >= 0 && i !== prev && (user || FAULT !== "t6-prog")) pop(L[i]);
 }
+function toggle(i) { const el = list()[i]; const v = el.getAttribute("aria-pressed") !== "true"; el.setAttribute("aria-pressed", String(v)); if (v) pop(el); }
 function roving() {
-  if (FAULT === "wc" && ${JSON.stringify(base)} === "card") return; // every option keeps tabindex 0
-  const s = items.findIndex(on);
-  items.forEach((el, k) => { el.tabIndex = (s < 0 ? k === 0 : k === s) ? 0 : -1; });
+  if (MULTI || (FAULT === "wc" && SITE === "card")) return;
+  const L = live(), s = L.findIndex(on);
+  L.forEach((el, k) => { el.tabIndex = (s < 0 ? k === 0 : k === s) ? 0 : -1; });
 }
 function neighbour(i, key) {
-  const n = items.length, r = items.map((e) => e.getBoundingClientRect());
-  if (key === "ArrowRight") return (i + 1) % n;
-  if (key === "ArrowLeft") return (i - 1 + n) % n;
-  if (FAULT === "t5") return -1;
-  const down = key === "ArrowDown";
-  const cx = r[i].x + r[i].width / 2;
-  const col = items.map((_, k) => k).filter((k) => k !== i && Math.abs(r[k].x + r[k].width / 2 - cx) < r[i].width / 2 && (down ? r[k].y > r[i].y : r[k].y < r[i].y));
-  col.sort((a, b) => down ? r[a].y - r[b].y : r[b].y - r[a].y);
-  if (col.length) return col[0];
-  return down ? (i + 1) % n : (i - 1 + n) % n; // a row: the cross arrows step linearly (APG radio group)
+  const L = list(), n = L.length, r = L.map((e) => e.getBoundingClientRect());
+  const horiz = key === "ArrowRight" || key === "ArrowLeft", fwd = key === "ArrowRight" || key === "ArrowDown";
+  const cx = r[i].x + r[i].width / 2, cy = r[i].y + r[i].height / 2;
+  let best = -1, bd = Infinity;
+  L.forEach((_, k) => {
+    if (k === i) return;
+    const x = r[k].x + r[k].width / 2, y = r[k].y + r[k].height / 2;
+    if (horiz) { if (Math.abs(y - cy) >= r[i].height / 2 || (fwd ? x <= cx : x >= cx)) return; const d = Math.abs(x - cx); if (d < bd) { bd = d; best = k; } }
+    else { if (FAULT === "t5" || Math.abs(y - cy) < r[i].height / 2 || (fwd ? y <= cy : y >= cy)) return; const d = Math.abs(y - cy) * 1000 + Math.abs(x - cx); if (d < bd) { bd = d; best = k; } }
+  });
+  if (best >= 0) return best;
+  if ((FAULT === "t5" && !horiz) || FAULT === "t5-cross") return -1;
+  return fwd ? (i + 1) % n : (i - 1 + n) % n; // where no item lies that way: a linear step (Q-4 b)
 }
-items.forEach((el, i) => {
-  el.addEventListener("click", () => { select(i); el.focus(); });
-  el.addEventListener("keydown", (e) => {
+if (g) {
+  g.addEventListener("click", (e) => {
+    const el = e.target.closest("[data-item]");
+    if (!el || e.target.closest("[data-descendant]")) return;
+    const i = list().indexOf(el);
+    if (MULTI) { if (FAULT === "t5-multi" && e.detail === 0) return; toggle(i); return; }
+    select(i); el.focus();
+  });
+  g.addEventListener("keydown", (e) => {
+    const el = e.target.closest("[data-item]");
+    if (!el || MULTI) return;
+    if (e.target !== el && FAULT !== "t5-input") return; // an editable descendant keeps its own keys (Q-5 b)
+    const i = list().indexOf(el);
     if (FAULT === "wc" && el.hasAttribute("data-listbox")) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(i); } return; }
     if (e.key === " " || e.key === "Enter") { e.preventDefault(); select(i); return; }
     if (!/^Arrow/.test(e.key)) return;
     const j = neighbour(i, e.key);
     if (j < 0) return;
-    e.preventDefault(); select(j); items[j].focus();
+    e.preventDefault(); select(j); list()[j].focus();
   });
-});
-const vals = items.length;
-select(q.get("sel") === "none" ? -1 : Math.min(q.get("sel") ? Number(q.get("sel")) : 1, vals - 1));
-if (ONE_LINE && FAULT !== "we") {
-  const ro = new ResizeObserver((es) => { for (const e of es) if (e.borderBoxSize[0].blockSize > 40.5) console.error("[fixture] an option holds more than one line; move the detail out of the option"); });
-  items.forEach((el) => ro.observe(el));
+  g.addEventListener("focusin", (e) => { const el = e.target.closest("[data-item]"); if (FAULT === "t6-tabpop" && el && on(el)) pop(el); });
 }
-window.__tile = { ready: false, dev: true, scenes: ${JSON.stringify(SCENES)}, scene: ${JSON.stringify(scene)}, exports: ${JSON.stringify(exportsList)},
-  async select(i) { select(i === null ? -1 : i); }, selected: () => items.findIndex(on) };
-requestAnimationFrame(() => requestAnimationFrame(() => { window.__tile.ready = true; }));
+const selQ = q.get("sel");
+if (MULTI) roving();
+else select(selQ === "none" ? (FAULT === "t5-deselect" ? 0 : -1) : Math.min(selQ ? Number(selQ) : 1, live().length - 1), false);
+// the one-line guard (W-E): structural in every flavour; the we-devonly plant makes it DEV-only
+const guardOn = ONE_LINE && FAULT !== "we" && (FAULT !== "we-devonly" || DEV);
+if (guardOn) {
+  const ro = new ResizeObserver((es) => { for (const e of es) if (e.borderBoxSize[0].blockSize > 40.5) console.error("[fixture] an option holds more than one line; move the detail out of the option"); });
+  live().forEach((el) => ro.observe(el));
+}
+// the control-corner stamp (the t1-ro / t1-late plants): a ResizeObserver writes data-extent, now or 300 ms later
+if (${JSON.stringify(late)}) {
+  const ro = new ResizeObserver((es) => { for (const e of es) {
+    const el = e.target, rung = parseFloat(getComputedStyle(el).minBlockSize);
+    const v = e.borderBoxSize[0].blockSize > rung + 0.5 ? "block" : "line";
+    if (FAULT === "t1-late") { el.removeAttribute("data-extent"); setTimeout(() => { el.dataset.extent = v; }, 300); } else el.dataset.extent = v;
+  } });
+  document.querySelectorAll(".holder").forEach((el) => ro.observe(el));
+}
+window.__tile = { ready: false, dev: DEV, flavor: FLAVOR, scenes: ${JSON.stringify(SCENES)}, scene: ${JSON.stringify(scene)}, exports: ${JSON.stringify(exportsList)},
+  migration: { label: "fixture", sites: ${JSON.stringify(SITES)} },
+  async select(i) { if (MULTI) { if (i !== null && list()[i].getAttribute("aria-pressed") !== "true") toggle(i); } else select(i === null ? -1 : i, false); },
+  selected: () => (MULTI ? live().filter(on).map((el) => live().indexOf(el)) : current ? live().indexOf(current) : -1),
+  async reorder() { const L = live(); L.reverse().forEach((el) => el.parentElement.appendChild(el)); roving(); } };
+requestAnimationFrame(() => requestAnimationFrame(() => { ready = true; window.__tile.ready = true; }));
 `;
 
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>D4 tile fixture</title>
 <script>if (new URLSearchParams(location.search).get("mode") === "dark") document.documentElement.classList.add("dark");</script>
 <style>${css}</style></head><body><main>
 <button class="sentinel" data-sentinel="before" type="button">before</button>
-<section data-scene="${scene}">${body}</section>
+<section data-scene="${scene}" data-arm="${arm}">${body}</section>
 <button class="sentinel" data-sentinel="after" type="button">after</button>
 </main><script>${js}</script></body></html>`;
 }
