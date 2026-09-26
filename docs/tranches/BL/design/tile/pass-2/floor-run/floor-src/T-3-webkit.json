@@ -1,0 +1,2473 @@
+{
+ "id": "T-3",
+ "title": "the selected state separates ≥ 3:1 on painted pixels (light, dark, PRT), fill reported apart",
+ "engine": "webkit",
+ "engineLabel": "Playwright WebKit 26.5",
+ "target": "floor-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1.2108543735390793,
+    "fillSel": "#c4c2bb",
+    "fillUnsel": "#d7d4cd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1.2171079866763934,
+    "changedPct": 92.54201680672269
+   },
+   "line": "preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.21:1; p95 1.22; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "preset light · fill alone 1.21:1 (#c4c2bb vs #d7d4cd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1.2048151085407184,
+    "fillSel": "#25211c",
+    "fillUnsel": "#120e0a",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1.2404059428563294,
+    "changedPct": 92.54551820728291
+   },
+   "line": "preset dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.20:1; p95 1.24; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "preset dark · fill alone 1.20:1 (#25211c vs #120e0a) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1,
+    "changedPct": 0
+   },
+   "line": "preset prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "preset prt (forced level-0 path) · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70 (sizes differ by 2.0 px; cropped to the smaller)",
+    "fill": 1.5508935249717988,
+    "fillSel": "#b2d3f6",
+    "fillUnsel": "#ffffff",
+    "c3Area": 442.75,
+    "c3Edge": 367,
+    "c3Inner": 75.75,
+    "perimeter": 548,
+    "p95": 1.7276049382918908,
+    "changedPct": 93.40336134453781
+   },
+   "line": "preset forced · carrier ≥3:1 area 442.75 px² (perimeter band 367.00, interior 75.75) vs the bar 274.00 px²; fill 1.55:1; p95 1.73; items 1/0 204×70 (sizes differ by 2.0 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "preset forced · fill alone 1.55:1 (#b2d3f6 vs #ffffff) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "208×70",
+    "fill": 1.1045298494053555,
+    "fillSel": "#f1edf4",
+    "fillUnsel": "#e6e3df",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 556,
+    "p95": 1.1165224380294223,
+    "changedPct": 98.54567307692308
+   },
+   "line": "preset-verbatim light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 278.00 px²; fill 1.10:1; p95 1.12; items 1/0 208×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "preset-verbatim light · fill alone 1.10:1 (#f1edf4 vs #e6e3df) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "208×70",
+    "fill": 1.0672710682584083,
+    "fillSel": "#19151b",
+    "fillUnsel": "#110e0a",
+    "c3Area": 248.75,
+    "c3Edge": 245.25,
+    "c3Inner": 3.5,
+    "perimeter": 556,
+    "p95": 1.0672710682584083,
+    "changedPct": 96.75652472527473
+   },
+   "line": "preset-verbatim dark · carrier ≥3:1 area 248.75 px² (perimeter band 245.25, interior 3.50) vs the bar 278.00 px²; fill 1.07:1; p95 1.07; items 1/0 208×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "preset-verbatim dark · fill alone 1.07:1 (#19151b vs #110e0a) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "208×70",
+    "fill": 1.0710163168028537,
+    "fillSel": "#f1edf4",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 556,
+    "p95": 1.0797095896433337,
+    "changedPct": 98.48214285714286
+   },
+   "line": "preset-verbatim prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 278.00 px²; fill 1.07:1; p95 1.08; items 1/0 208×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "preset-verbatim prt (forced level-0 path) · fill alone 1.07:1 (#f1edf4 vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "208×70 (sizes differ by 2.0 px; cropped to the smaller)",
+    "fill": 1.1085568224360511,
+    "fillSel": "#f1edf4",
+    "fillUnsel": "#fbfaf8",
+    "c3Area": 121.75,
+    "c3Edge": 120.25,
+    "c3Inner": 1.5,
+    "perimeter": 556,
+    "p95": 1.108555822521794,
+    "changedPct": 98.86160714285714
+   },
+   "line": "preset-verbatim forced · carrier ≥3:1 area 121.75 px² (perimeter band 120.25, interior 1.50) vs the bar 278.00 px²; fill 1.11:1; p95 1.11; items 1/0 208×70 (sizes differ by 2.0 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "preset-verbatim forced · fill alone 1.11:1 (#f1edf4 vs #fbfaf8) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "207×102",
+    "fill": 1.202782756866839,
+    "fillSel": "#c0bbb5",
+    "fillUnsel": "#d1cdc6",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 618,
+    "p95": 1.2283818047666788,
+    "changedPct": 89.11504215212655
+   },
+   "line": "specimen light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 309.00 px²; fill 1.20:1; p95 1.23; items 1/0 207×102"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "specimen light · fill alone 1.20:1 (#c0bbb5 vs #d1cdc6) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "207×102",
+    "fill": 1.196429010926633,
+    "fillSel": "#26201c",
+    "fillUnsel": "#130e09",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 618,
+    "p95": 1.2039828233141907,
+    "changedPct": 89.12096239461968
+   },
+   "line": "specimen dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 309.00 px²; fill 1.20:1; p95 1.20; items 1/0 207×102"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "specimen dark · fill alone 1.20:1 (#26201c vs #130e09) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "207×102",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 618,
+    "p95": 1,
+    "changedPct": 0
+   },
+   "line": "specimen prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 309.00 px²; fill 1.00:1; p95 1.00; items 1/0 207×102"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "specimen prt (forced level-0 path) · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "207×104",
+    "fill": 1.550515046542403,
+    "fillSel": "#b2d3f6",
+    "fillUnsel": "#ffffff",
+    "c3Area": 407.5,
+    "c3Edge": 268,
+    "c3Inner": 139.5,
+    "perimeter": 622,
+    "p95": 1.5507922206062992,
+    "changedPct": 89.12346711259755
+   },
+   "line": "specimen forced · carrier ≥3:1 area 407.50 px² (perimeter band 268.00, interior 139.50) vs the bar 311.00 px²; fill 1.55:1; p95 1.55; items 1/0 207×104"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "specimen forced · fill alone 1.55:1 (#b2d3f6 vs #ffffff) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "207×102",
+    "fill": 1.00306587486775,
+    "fillSel": "#d1cec6",
+    "fillUnsel": "#d1cdc6",
+    "c3Area": 789.75,
+    "c3Edge": 765.75,
+    "c3Inner": 24,
+    "perimeter": 618,
+    "p95": 1.0225806665645991,
+    "changedPct": 3.9120962394619685
+   },
+   "line": "specimen-verbatim light · carrier ≥3:1 area 789.75 px² (perimeter band 765.75, interior 24.00) vs the bar 309.00 px²; fill 1.00:1; p95 1.02; items 1/0 207×102"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "specimen-verbatim light · fill alone 1.00:1 (#d1cec6 vs #d1cdc6) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "207×102",
+    "fill": 1,
+    "fillSel": "#130e09",
+    "fillUnsel": "#130e09",
+    "c3Area": 801.5,
+    "c3Edge": 776,
+    "c3Inner": 25.5,
+    "perimeter": 618,
+    "p95": 1,
+    "changedPct": 3.9144643364592215
+   },
+   "line": "specimen-verbatim dark · carrier ≥3:1 area 801.50 px² (perimeter band 776.00, interior 25.50) vs the bar 309.00 px²; fill 1.00:1; p95 1.00; items 1/0 207×102"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "specimen-verbatim dark · fill alone 1.00:1 (#130e09 vs #130e09) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "207×102",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 793.5,
+    "c3Edge": 768,
+    "c3Inner": 25.5,
+    "perimeter": 618,
+    "p95": 1,
+    "changedPct": 3.9239367244482333
+   },
+   "line": "specimen-verbatim prt (forced level-0 path) · carrier ≥3:1 area 793.50 px² (perimeter band 768.00, interior 25.50) vs the bar 309.00 px²; fill 1.00:1; p95 1.00; items 1/0 207×102"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "specimen-verbatim prt (forced level-0 path) · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "207×104",
+    "fill": 1.0797737478845635,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#ffffff",
+    "c3Area": 482,
+    "c3Edge": 473,
+    "c3Inner": 9,
+    "perimeter": 622,
+    "p95": 1.2374518031922757,
+    "changedPct": 98.63665923448532
+   },
+   "line": "specimen-verbatim forced · carrier ≥3:1 area 482.00 px² (perimeter band 473.00, interior 9.00) vs the bar 311.00 px²; fill 1.08:1; p95 1.24; items 1/0 207×104"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "specimen-verbatim forced · fill alone 1.08:1 (#fdf5ec vs #ffffff) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "44×44",
+    "fill": 1.4893759853184456,
+    "fillSel": "#fffefc",
+    "fillUnsel": "#dcd2c3",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 176,
+    "p95": 1.4946840220445057,
+    "changedPct": 78.86105371900827
+   },
+   "line": "strip light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.49:1; p95 1.49; items 1/0 44×44"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "strip light · fill alone 1.49:1 (#fffefc vs #dcd2c3) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "strip",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "44×44",
+    "fill": 3.212198839145702,
+    "fillSel": "#7c5e6e",
+    "fillUnsel": "#1a140b",
+    "c3Area": 847,
+    "c3Edge": 1.25,
+    "c3Inner": 845.75,
+    "perimeter": 176,
+    "p95": 3.534806327689343,
+    "changedPct": 79.57128099173553
+   },
+   "line": "strip dark · carrier ≥3:1 area 847.00 px² (perimeter band 1.25, interior 845.75) vs the bar 88.00 px²; fill 3.21:1; p95 3.53; items 1/0 44×44"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "strip dark · fill alone 3.21:1 (#7c5e6e vs #1a140b) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "44×44",
+    "fill": 1.1275536352607742,
+    "fillSel": "#fffefc",
+    "fillUnsel": "#fdefdd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 176,
+    "p95": 1.1314872777919476,
+    "changedPct": 78.52530991735537
+   },
+   "line": "strip prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.13:1; p95 1.13; items 1/0 44×44"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "strip prt (forced level-0 path) · fill alone 1.13:1 (#fffefc vs #fdefdd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "44×44",
+    "fill": 1.113146727931824,
+    "fillSel": "#fdfdfb",
+    "fillUnsel": "#fdefdd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 176,
+    "p95": 1.7223974097163637,
+    "changedPct": 78.66735537190083
+   },
+   "line": "strip forced · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.11:1; p95 1.72; items 1/0 44×44"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "strip forced · fill alone 1.11:1 (#fdfdfb vs #fdefdd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "44×44",
+    "fill": 1.4893759853184456,
+    "fillSel": "#fffefc",
+    "fillUnsel": "#dcd2c3",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 176,
+    "p95": 1.4946840220445057,
+    "changedPct": 78.86105371900827
+   },
+   "line": "strip-verbatim light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.49:1; p95 1.49; items 1/0 44×44"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "strip-verbatim light · fill alone 1.49:1 (#fffefc vs #dcd2c3) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "44×44",
+    "fill": 3.212198839145702,
+    "fillSel": "#7c5e6e",
+    "fillUnsel": "#1a140b",
+    "c3Area": 847,
+    "c3Edge": 1.25,
+    "c3Inner": 845.75,
+    "perimeter": 176,
+    "p95": 3.534806327689343,
+    "changedPct": 79.57128099173553
+   },
+   "line": "strip-verbatim dark · carrier ≥3:1 area 847.00 px² (perimeter band 1.25, interior 845.75) vs the bar 88.00 px²; fill 3.21:1; p95 3.53; items 1/0 44×44"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "strip-verbatim dark · fill alone 3.21:1 (#7c5e6e vs #1a140b) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "44×44",
+    "fill": 1.1275536352607742,
+    "fillSel": "#fffefc",
+    "fillUnsel": "#fdefdd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 176,
+    "p95": 1.1314872777919476,
+    "changedPct": 78.52530991735537
+   },
+   "line": "strip-verbatim prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.13:1; p95 1.13; items 1/0 44×44"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "strip-verbatim prt (forced level-0 path) · fill alone 1.13:1 (#fffefc vs #fdefdd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "44×44",
+    "fill": 1.113146727931824,
+    "fillSel": "#fdfdfb",
+    "fillUnsel": "#fdefdd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 176,
+    "p95": 1.7223974097163637,
+    "changedPct": 78.66735537190083
+   },
+   "line": "strip-verbatim forced · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.11:1; p95 1.72; items 1/0 44×44"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "strip-verbatim forced · fill alone 1.11:1 (#fdfdfb vs #fdefdd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "82×75",
+    "fill": 1.000164272461043,
+    "fillSel": "#d4caba",
+    "fillUnsel": "#d4caba",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 314,
+    "p95": 1.020677131535931,
+    "changedPct": 0
+   },
+   "line": "f1 light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.00:1; p95 1.02; items 1/0 82×75"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "f1 light · fill alone 1.00:1 (#d4caba vs #d4caba) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "82×75",
+    "fill": 1.0116511535438082,
+    "fillSel": "#1d150c",
+    "fillUnsel": "#1c140b",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 314,
+    "p95": 1.0686615148021719,
+    "changedPct": 1.4552845528455285
+   },
+   "line": "f1 dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.01:1; p95 1.07; items 1/0 82×75"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "f1 dark · fill alone 1.01:1 (#1d150c vs #1c140b) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "82×75",
+    "fill": 1.012501813309666,
+    "fillSel": "#fdf1df",
+    "fillUnsel": "#fdefdd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 314,
+    "p95": 1.0675584735664456,
+    "changedPct": 3.772357723577236
+   },
+   "line": "f1 prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.01:1; p95 1.07; items 1/0 82×75"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "f1 prt (forced level-0 path) · fill alone 1.01:1 (#fdf1df vs #fdefdd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "82×75",
+    "fill": 1.012501813309666,
+    "fillSel": "#fdf1df",
+    "fillUnsel": "#fdefdd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 314,
+    "p95": 1.0675584735664456,
+    "changedPct": 3.772357723577236
+   },
+   "line": "f1 forced · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.01:1; p95 1.07; items 1/0 82×75"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "f1 forced · fill alone 1.01:1 (#fdf1df vs #fdefdd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "83×76",
+    "fill": 1.0108979669621774,
+    "fillSel": "#fdf6ed",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 359.5,
+    "c3Edge": 327.5,
+    "c3Inner": 32,
+    "perimeter": 318,
+    "p95": 3.5535699493736503,
+    "changedPct": 13.8356055802156
+   },
+   "line": "f1-verbatim light · carrier ≥3:1 area 359.50 px² (perimeter band 327.50, interior 32.00) vs the bar 159.00 px²; fill 1.01:1; p95 3.55; items 1/0 83×76"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "f1-verbatim light · fill alone 1.01:1 (#fdf6ed vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "83×76",
+    "fill": 1.016784350091305,
+    "fillSel": "#372b23",
+    "fillUnsel": "#352a22",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 318,
+    "p95": 2.1014549294307794,
+    "changedPct": 13.20149017121116
+   },
+   "line": "f1-verbatim dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 159.00 px²; fill 1.02:1; p95 2.10; items 1/0 83×76"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "f1-verbatim dark · fill alone 1.02:1 (#372b23 vs #352a22) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "83×76",
+    "fill": 1.0107484861493885,
+    "fillSel": "#fdf6ed",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 357.5,
+    "c3Edge": 325.5,
+    "c3Inner": 32,
+    "perimeter": 318,
+    "p95": 3.5535699493736503,
+    "changedPct": 12.947844007609385
+   },
+   "line": "f1-verbatim prt (forced level-0 path) · carrier ≥3:1 area 357.50 px² (perimeter band 325.50, interior 32.00) vs the bar 159.00 px²; fill 1.01:1; p95 3.55; items 1/0 83×76"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "f1-verbatim prt (forced level-0 path) · fill alone 1.01:1 (#fdf6ed vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "83×76",
+    "fill": 1.0107484861493885,
+    "fillSel": "#fdf6ed",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 357.5,
+    "c3Edge": 325.5,
+    "c3Inner": 32,
+    "perimeter": 318,
+    "p95": 3.5535699493736503,
+    "changedPct": 12.947844007609385
+   },
+   "line": "f1-verbatim forced · carrier ≥3:1 area 357.50 px² (perimeter band 325.50, interior 32.00) vs the bar 159.00 px²; fill 1.01:1; p95 3.55; items 1/0 83×76"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "f1-verbatim forced · fill alone 1.01:1 (#fdf6ed vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "v2",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "460×71",
+    "fill": 1,
+    "fillSel": "#fbfaf8",
+    "fillUnsel": "#fbfaf8",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 1062,
+    "p95": 1,
+    "changedPct": 0
+   },
+   "line": "v2 light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "v2 light · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "v2",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "460×71",
+    "fill": 1,
+    "fillSel": "#0b0a09",
+    "fillUnsel": "#0b0a09",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 1062,
+    "p95": 1,
+    "changedPct": 0
+   },
+   "line": "v2 dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "v2 dark · fill alone 1.00:1 (#0b0a09 vs #0b0a09) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "v2",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "460×71",
+    "fill": 1,
+    "fillSel": "#fbfaf8",
+    "fillUnsel": "#fbfaf8",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 1062,
+    "p95": 1,
+    "changedPct": 0
+   },
+   "line": "v2 prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "v2 prt (forced level-0 path) · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "460×71 (sizes differ by 4.0 px; cropped to the smaller)",
+    "fill": 1,
+    "fillSel": "#fbfaf8",
+    "fillUnsel": "#fbfaf8",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 1062,
+    "p95": 1,
+    "changedPct": 3.6558481322718923
+   },
+   "line": "v2 forced · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71 (sizes differ by 4.0 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "v2 forced · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "460×71",
+    "fill": 1,
+    "fillSel": "#fbfaf8",
+    "fillUnsel": "#fbfaf8",
+    "c3Area": 65.5,
+    "c3Edge": 65.5,
+    "c3Inner": 0,
+    "perimeter": 1062,
+    "p95": 1,
+    "changedPct": 0.37660747091243113
+   },
+   "line": "v2-verbatim light · carrier ≥3:1 area 65.50 px² (perimeter band 65.50, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "v2-verbatim light · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "460×71",
+    "fill": 1,
+    "fillSel": "#0b0a09",
+    "fillUnsel": "#0b0a09",
+    "c3Area": 65.5,
+    "c3Edge": 65.5,
+    "c3Inner": 0,
+    "perimeter": 1062,
+    "p95": 1,
+    "changedPct": 0.3735456215554195
+   },
+   "line": "v2-verbatim dark · carrier ≥3:1 area 65.50 px² (perimeter band 65.50, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "v2-verbatim dark · fill alone 1.00:1 (#0b0a09 vs #0b0a09) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2-verbatim",
+   "arm": "unmigrated",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "460×71",
+    "fill": 1,
+    "fillSel": "#fbfaf8",
+    "fillUnsel": "#fbfaf8",
+    "c3Area": 65.5,
+    "c3Edge": 65.5,
+    "c3Inner": 0,
+    "perimeter": 1062,
+    "p95": 1,
+    "changedPct": 0.37660747091243113
+   },
+   "line": "v2-verbatim prt (forced level-0 path) · carrier ≥3:1 area 65.50 px² (perimeter band 65.50, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2-verbatim",
+   "arm": "unmigrated",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "v2-verbatim prt (forced level-0 path) · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "460×71 (sizes differ by 4.0 px; cropped to the smaller)",
+    "fill": 1.0000072658186268,
+    "fillSel": "#fbfaf8",
+    "fillUnsel": "#fbfaf8",
+    "c3Area": 43,
+    "c3Edge": 43,
+    "c3Inner": 0,
+    "perimeter": 1062,
+    "p95": 1,
+    "changedPct": 3.833435394978567
+   },
+   "line": "v2-verbatim forced · carrier ≥3:1 area 43.00 px² (perimeter band 43.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71 (sizes differ by 4.0 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "v2-verbatim forced · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "442×33",
+    "fill": 1,
+    "fillSel": "#dfdcd8",
+    "fillUnsel": "#dfdcd8",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 950,
+    "p95": 1,
+    "changedPct": 0.003427944604415193
+   },
+   "line": "c1 light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 475.00 px²; fill 1.00:1; p95 1.00; items 1/0 442×33"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "c1 light · fill alone 1.00:1 (#dfdcd8 vs #dfdcd8) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "442×33",
+    "fill": 1,
+    "fillSel": "#0d0a07",
+    "fillUnsel": "#0d0a07",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 950,
+    "p95": 1,
+    "changedPct": 0.020567667626491155
+   },
+   "line": "c1 dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 475.00 px²; fill 1.00:1; p95 1.00; items 1/0 442×33"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "c1 dark · fill alone 1.00:1 (#0d0a07 vs #0d0a07) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "442×33",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 950,
+    "p95": 1,
+    "changedPct": 0.003427944604415193
+   },
+   "line": "c1 prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 475.00 px²; fill 1.00:1; p95 1.00; items 1/0 442×33"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "c1 prt (forced level-0 path) · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "442×33 (sizes differ by 4.0 px; cropped to the smaller)",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0.5,
+    "c3Edge": 0.5,
+    "c3Inner": 0,
+    "perimeter": 950,
+    "p95": 1.4362343299567775,
+    "changedPct": 6.903880433292198
+   },
+   "line": "c1 forced · carrier ≥3:1 area 0.50 px² (perimeter band 0.50, interior 0.00) vs the bar 475.00 px²; fill 1.00:1; p95 1.44; items 1/0 442×33 (sizes differ by 4.0 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "c1 forced · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "442×33",
+    "fill": 1.2298589848021197,
+    "fillSel": "#f5f2ee",
+    "fillUnsel": "#dfdcd8",
+    "c3Area": 22.5,
+    "c3Edge": 0,
+    "c3Inner": 22.5,
+    "perimeter": 950,
+    "p95": 1.2354970586647163,
+    "changedPct": 98.32716303304538
+   },
+   "line": "c1-verbatim light · carrier ≥3:1 area 22.50 px² (perimeter band 0.00, interior 22.50) vs the bar 475.00 px²; fill 1.23:1; p95 1.24; items 1/0 442×33"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "c1-verbatim light · fill alone 1.23:1 (#f5f2ee vs #dfdcd8) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "442×33",
+    "fill": 1.1704305277122833,
+    "fillSel": "#1f1c19",
+    "fillUnsel": "#0d0a07",
+    "c3Area": 22.5,
+    "c3Edge": 0,
+    "c3Inner": 22.5,
+    "perimeter": 950,
+    "p95": 1.1643503097182597,
+    "changedPct": 98.33744686685863
+   },
+   "line": "c1-verbatim dark · carrier ≥3:1 area 22.50 px² (perimeter band 0.00, interior 22.50) vs the bar 475.00 px²; fill 1.17:1; p95 1.16; items 1/0 442×33"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "c1-verbatim dark · fill alone 1.17:1 (#1f1c19 vs #0d0a07) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "442×33",
+    "fill": 1.0291108614801543,
+    "fillSel": "#f5f2ee",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 22.5,
+    "c3Edge": 0,
+    "c3Inner": 22.5,
+    "perimeter": 950,
+    "p95": 1.0244146114898094,
+    "changedPct": 0.2331002331002331
+   },
+   "line": "c1-verbatim prt (forced level-0 path) · carrier ≥3:1 area 22.50 px² (perimeter band 0.00, interior 22.50) vs the bar 475.00 px²; fill 1.03:1; p95 1.02; items 1/0 442×33"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "c1-verbatim prt (forced level-0 path) · fill alone 1.03:1 (#f5f2ee vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "442×33 (sizes differ by 4.0 px; cropped to the smaller)",
+    "fill": 1.0291108614801543,
+    "fillSel": "#f5f2ee",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 23,
+    "c3Edge": 0.5,
+    "c3Inner": 22.5,
+    "perimeter": 950,
+    "p95": 1.451733646513808,
+    "changedPct": 7.112985054161525
+   },
+   "line": "c1-verbatim forced · carrier ≥3:1 area 23.00 px² (perimeter band 0.50, interior 22.50) vs the bar 475.00 px²; fill 1.03:1; p95 1.45; items 1/0 442×33 (sizes differ by 4.0 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "c1-verbatim forced · fill alone 1.03:1 (#f5f2ee vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-invalid",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1.20784483321014,
+    "fillSel": "#c5c2bb",
+    "fillUnsel": "#d7d4cd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1.213440753296322,
+    "changedPct": 89.19642857142857
+   },
+   "line": "preset-invalid light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.21:1; p95 1.21; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-invalid",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "preset-invalid light · fill alone 1.21:1 (#c5c2bb vs #d7d4cd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-invalid",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1.21491074287094,
+    "fillSel": "#26231d",
+    "fillUnsel": "#130f0a",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1.2326034680123312,
+    "changedPct": 89.21743697478992
+   },
+   "line": "preset-invalid dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.21:1; p95 1.23; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-invalid",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "preset-invalid dark · fill alone 1.21:1 (#26231d vs #130f0a) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-invalid",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1,
+    "changedPct": 0
+   },
+   "line": "preset-invalid prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-invalid",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "preset-invalid prt (forced level-0 path) · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-invalid",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "202×70 (sizes differ by 2.0 px; cropped to the smaller)",
+    "fill": 1.5508946506166383,
+    "fillSel": "#b2d3f6",
+    "fillUnsel": "#ffffff",
+    "c3Area": 181,
+    "c3Edge": 159.5,
+    "c3Inner": 21.5,
+    "perimeter": 544,
+    "p95": 1.7303672159180126,
+    "changedPct": 93.39108910891089
+   },
+   "line": "preset-invalid forced · carrier ≥3:1 area 181.00 px² (perimeter band 159.50, interior 21.50) vs the bar 272.00 px²; fill 1.55:1; p95 1.73; items 1/0 202×70 (sizes differ by 2.0 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-invalid",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "preset-invalid forced · fill alone 1.55:1 (#b2d3f6 vs #ffffff) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-sibling",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1.2078525567737046,
+    "fillSel": "#c5c2bb",
+    "fillUnsel": "#d7d4cd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1.213440753296322,
+    "changedPct": 89.18242296918767
+   },
+   "line": "preset-sibling light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.21:1; p95 1.21; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-sibling",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "preset-sibling light · fill alone 1.21:1 (#c5c2bb vs #d7d4cd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-sibling",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1.2150275753841424,
+    "fillSel": "#26231d",
+    "fillUnsel": "#130f0a",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1.2326034680123312,
+    "changedPct": 89.21918767507003
+   },
+   "line": "preset-sibling dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.22:1; p95 1.23; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-sibling",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "preset-sibling dark · fill alone 1.22:1 (#26231d vs #130f0a) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-sibling",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1,
+    "changedPct": 0
+   },
+   "line": "preset-sibling prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-sibling",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "preset-sibling prt (forced level-0 path) · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-sibling",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70 (sizes differ by 2.0 px; cropped to the smaller)",
+    "fill": 1.5508935249717988,
+    "fillSel": "#b2d3f6",
+    "fillUnsel": "#ffffff",
+    "c3Area": 465.5,
+    "c3Edge": 382.5,
+    "c3Inner": 83,
+    "perimeter": 548,
+    "p95": 1.801427746397867,
+    "changedPct": 93.46288515406162
+   },
+   "line": "preset-sibling forced · carrier ≥3:1 area 465.50 px² (perimeter band 382.50, interior 83.00) vs the bar 274.00 px²; fill 1.55:1; p95 1.80; items 1/0 204×70 (sizes differ by 2.0 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-sibling",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "preset-sibling forced · fill alone 1.55:1 (#b2d3f6 vs #ffffff) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-tone-translucent",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1.2108543735390793,
+    "fillSel": "#c4c2bb",
+    "fillUnsel": "#d7d4cd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1.2171079866763934,
+    "changedPct": 92.54201680672269
+   },
+   "line": "preset-tone-translucent light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.21:1; p95 1.22; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-tone-translucent",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "preset-tone-translucent light · fill alone 1.21:1 (#c4c2bb vs #d7d4cd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-tone-translucent",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1.2048151085407184,
+    "fillSel": "#25211c",
+    "fillUnsel": "#120e0a",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1.2404059428563294,
+    "changedPct": 92.54551820728291
+   },
+   "line": "preset-tone-translucent dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.20:1; p95 1.24; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-tone-translucent",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "preset-tone-translucent dark · fill alone 1.20:1 (#25211c vs #120e0a) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-tone-translucent",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1,
+    "changedPct": 0
+   },
+   "line": "preset-tone-translucent prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-tone-translucent",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "preset-tone-translucent prt (forced level-0 path) · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-tone-translucent",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70 (sizes differ by 2.0 px; cropped to the smaller)",
+    "fill": 1.5508935249717988,
+    "fillSel": "#b2d3f6",
+    "fillUnsel": "#ffffff",
+    "c3Area": 442.75,
+    "c3Edge": 367,
+    "c3Inner": 75.75,
+    "perimeter": 548,
+    "p95": 1.7276049382918908,
+    "changedPct": 93.40336134453781
+   },
+   "line": "preset-tone-translucent forced · carrier ≥3:1 area 442.75 px² (perimeter band 367.00, interior 75.75) vs the bar 274.00 px²; fill 1.55:1; p95 1.73; items 1/0 204×70 (sizes differ by 2.0 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-tone-translucent",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "preset-tone-translucent forced · fill alone 1.55:1 (#b2d3f6 vs #ffffff) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-tone-unresolvable",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1.2108543735390793,
+    "fillSel": "#c4c2bb",
+    "fillUnsel": "#d7d4cd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1.2171079866763934,
+    "changedPct": 92.54201680672269
+   },
+   "line": "preset-tone-unresolvable light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.21:1; p95 1.22; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-tone-unresolvable",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "preset-tone-unresolvable light · fill alone 1.21:1 (#c4c2bb vs #d7d4cd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-tone-unresolvable",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1.2048151085407184,
+    "fillSel": "#25211c",
+    "fillUnsel": "#120e0a",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1.2404059428563294,
+    "changedPct": 92.54551820728291
+   },
+   "line": "preset-tone-unresolvable dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.20:1; p95 1.24; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-tone-unresolvable",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "preset-tone-unresolvable dark · fill alone 1.20:1 (#25211c vs #120e0a) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-tone-unresolvable",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1,
+    "changedPct": 0
+   },
+   "line": "preset-tone-unresolvable prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-tone-unresolvable",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "preset-tone-unresolvable prt (forced level-0 path) · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-tone-unresolvable",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70 (sizes differ by 2.0 px; cropped to the smaller)",
+    "fill": 1.5508935249717988,
+    "fillSel": "#b2d3f6",
+    "fillUnsel": "#ffffff",
+    "c3Area": 442.75,
+    "c3Edge": 367,
+    "c3Inner": 75.75,
+    "perimeter": 548,
+    "p95": 1.7276049382918908,
+    "changedPct": 93.40336134453781
+   },
+   "line": "preset-tone-unresolvable forced · carrier ≥3:1 area 442.75 px² (perimeter band 367.00, interior 75.75) vs the bar 274.00 px²; fill 1.55:1; p95 1.73; items 1/0 204×70 (sizes differ by 2.0 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-tone-unresolvable",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "preset-tone-unresolvable forced · fill alone 1.55:1 (#b2d3f6 vs #ffffff) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-contents",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1.2108543735390793,
+    "fillSel": "#c4c2bb",
+    "fillUnsel": "#d7d4cd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1.2171079866763934,
+    "changedPct": 92.54201680672269
+   },
+   "line": "preset-contents light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.21:1; p95 1.22; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-contents",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "preset-contents light · fill alone 1.21:1 (#c4c2bb vs #d7d4cd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-contents",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1.2048151085407184,
+    "fillSel": "#25211c",
+    "fillUnsel": "#120e0a",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1.2404059428563294,
+    "changedPct": 92.54551820728291
+   },
+   "line": "preset-contents dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.20:1; p95 1.24; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-contents",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "preset-contents dark · fill alone 1.20:1 (#25211c vs #120e0a) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset-contents",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 548,
+    "p95": 1,
+    "changedPct": 0
+   },
+   "line": "preset-contents prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 274.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×70"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-contents",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "preset-contents prt (forced level-0 path) · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-contents",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×70 (sizes differ by 2.0 px; cropped to the smaller)",
+    "fill": 1.5508935249717988,
+    "fillSel": "#b2d3f6",
+    "fillUnsel": "#ffffff",
+    "c3Area": 442.75,
+    "c3Edge": 367,
+    "c3Inner": 75.75,
+    "perimeter": 548,
+    "p95": 1.7276049382918908,
+    "changedPct": 93.40336134453781
+   },
+   "line": "preset-contents forced · carrier ≥3:1 area 442.75 px² (perimeter band 367.00, interior 75.75) vs the bar 274.00 px²; fill 1.55:1; p95 1.73; items 1/0 204×70 (sizes differ by 2.0 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-contents",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "preset-contents forced · fill alone 1.55:1 (#b2d3f6 vs #ffffff) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "error": "no selected/unselected pair among 4 items (sel -1, unsel -1)"
+   },
+   "line": "card light · no selected/unselected pair among 4 items (sel -1, unsel -1)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "card light · no selected/unselected pair among 4 items (sel -1, unsel -1)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "error": "no selected/unselected pair among 4 items (sel -1, unsel -1)"
+   },
+   "line": "card dark · no selected/unselected pair among 4 items (sel -1, unsel -1)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "card dark · no selected/unselected pair among 4 items (sel -1, unsel -1)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "error": "no selected/unselected pair among 4 items (sel -1, unsel -1)"
+   },
+   "line": "card prt (forced level-0 path) · no selected/unselected pair among 4 items (sel -1, unsel -1)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "card prt (forced level-0 path) · no selected/unselected pair among 4 items (sel -1, unsel -1)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "error": "no selected/unselected pair among 4 items (sel -1, unsel -1)"
+   },
+   "line": "card forced · no selected/unselected pair among 4 items (sel -1, unsel -1)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "card forced · no selected/unselected pair among 4 items (sel -1, unsel -1)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "53×46 (sizes differ by 1.8 px; cropped to the smaller)",
+    "fill": 1.4885455234835778,
+    "fillSel": "#fffffc",
+    "fillUnsel": "#dcd2c3",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 198,
+    "p95": 1.4946840220445057,
+    "changedPct": 84.8031173092699
+   },
+   "line": "chipcell light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 99.00 px²; fill 1.49:1; p95 1.49; items 1/0 53×46 (sizes differ by 1.8 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "chipcell light · fill alone 1.49:1 (#fffffc vs #dcd2c3) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "chipcell",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "53×46 (sizes differ by 1.8 px; cropped to the smaller)",
+    "fill": 3.2010973948961667,
+    "fillSel": "#7c5e6e",
+    "fillUnsel": "#1a140b",
+    "c3Area": 1101.5,
+    "c3Edge": 14.25,
+    "c3Inner": 1087.25,
+    "perimeter": 198,
+    "p95": 3.534806327689343,
+    "changedPct": 84.26989335520919
+   },
+   "line": "chipcell dark · carrier ≥3:1 area 1101.50 px² (perimeter band 14.25, interior 1087.25) vs the bar 99.00 px²; fill 3.20:1; p95 3.53; items 1/0 53×46 (sizes differ by 1.8 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "chipcell",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "chipcell dark · fill alone 3.20:1 (#7c5e6e vs #1a140b) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "53×46 (sizes differ by 1.8 px; cropped to the smaller)",
+    "fill": 1.1263590752379344,
+    "fillSel": "#fffffc",
+    "fillUnsel": "#fdefdd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 198,
+    "p95": 1.1310254333301313,
+    "changedPct": 83.20344544708777
+   },
+   "line": "chipcell prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 99.00 px²; fill 1.13:1; p95 1.13; items 1/0 53×46 (sizes differ by 1.8 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "chipcell prt (forced level-0 path) · fill alone 1.13:1 (#fffffc vs #fdefdd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 3,
+    "size": "55×50 (sizes differ by 1.4 px; cropped to the smaller)",
+    "fill": 1.120792302642775,
+    "fillSel": "#fefefb",
+    "fillUnsel": "#fdefdd",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 210,
+    "p95": 1.7223974097163637,
+    "changedPct": 82.39090909090909
+   },
+   "line": "chipcell forced · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 105.00 px²; fill 1.12:1; p95 1.72; items 1/3 55×50 (sizes differ by 1.4 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "chipcell forced · fill alone 1.12:1 (#fefefb vs #fdefdd) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "single",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 3,
+    "size": "58×36 (sizes differ by 1.6 px; cropped to the smaller)",
+    "fill": 1.2152716371913066,
+    "fillSel": "#d2d0ca",
+    "fillUnsel": "#e7e4e0",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 188,
+    "p95": 1.242721597875331,
+    "changedPct": 88.88888888888889
+   },
+   "line": "single light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 94.00 px²; fill 1.22:1; p95 1.24; items 1/3 58×36 (sizes differ by 1.6 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "single",
+   "arm": "library",
+   "mode": "light",
+   "fillOnly": true,
+   "line": "single light · fill alone 1.22:1 (#d2d0ca vs #e7e4e0) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "single",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 3,
+    "size": "58×36 (sizes differ by 1.6 px; cropped to the smaller)",
+    "fill": 1.1941573878835088,
+    "fillSel": "#24201d",
+    "fillUnsel": "#110e0b",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 188,
+    "p95": 1.2823678331541049,
+    "changedPct": 88.50574712643679
+   },
+   "line": "single dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 94.00 px²; fill 1.19:1; p95 1.28; items 1/3 58×36 (sizes differ by 1.6 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "single",
+   "arm": "library",
+   "mode": "dark",
+   "fillOnly": true,
+   "line": "single dark · fill alone 1.19:1 (#24201d vs #110e0b) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "single",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 3,
+    "size": "58×36 (sizes differ by 1.6 px; cropped to the smaller)",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 188,
+    "p95": 1.0144962642486146,
+    "changedPct": 3.8314176245210727
+   },
+   "line": "single prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 94.00 px²; fill 1.00:1; p95 1.01; items 1/3 58×36 (sizes differ by 1.6 px; cropped to the smaller)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "single",
+   "arm": "library",
+   "mode": "prt",
+   "fillOnly": true,
+   "line": "single prt (forced level-0 path) · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "mode": "forced",
+   "m": {
+    "sel": 1,
+    "unsel": 3,
+    "size": "60×36",
+    "fill": 1.5245240628462073,
+    "fillSel": "#b1d5fb",
+    "fillUnsel": "#ffffff",
+    "c3Area": 133.5,
+    "c3Edge": 118.5,
+    "c3Inner": 15,
+    "perimeter": 192,
+    "p95": 6.183738155028443,
+    "changedPct": 88.47222222222223
+   },
+   "line": "single forced · carrier ≥3:1 area 133.50 px² (perimeter band 118.50, interior 15.00) vs the bar 96.00 px²; fill 1.52:1; p95 6.18; items 1/3 60×36"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "single",
+   "arm": "library",
+   "mode": "forced",
+   "fillOnly": true,
+   "line": "single forced · fill alone 1.52:1 (#b1d5fb vs #ffffff) — decoration, reported apart from the edge"
+  }
+ ],
+ "flavor": "src",
+ "run": {
+  "loadStart": "20.52 / 26.69 / 24.56",
+  "loadEnd": "15.45 / 22.94 / 23.33",
+  "census": {
+   "n": 16,
+   "sample": [
+    "19728 /Users/mkbabb/Library/Caches/ms-playwright/chromium-1228/chrome-mac-arm64/Google",
+    "19776 /Users/mkbabb/Library/Caches/ms-playwright/chromium-1228/chrome-mac-arm64/Google",
+    "43170 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-h"
+   ],
+   "waitedS": 0.2
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "2/42 gating cells pass [library 2/39 · unmigrated 9/48]",
+ "arms": {
+  "library": {
+   "pass": 2,
+   "of": 39
+  },
+  "unmigrated": {
+   "pass": 9,
+   "of": 48
+  }
+ }
+}

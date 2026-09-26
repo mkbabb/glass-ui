@@ -1,0 +1,69 @@
+{
+ "id": "W-E",
+ "title": "every one-of-N option is one line, and what a consumer installs refuses one that is not (D4-E)",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "floor-dist",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "line": "preset · 4 items · 4 not one line · e.g. 70.17 px tall at rung 40.00 (1.75 rungs), 2 rows"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "line": "preset refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "line": "specimen · 8 items · 8 not one line · e.g. 102.17 px tall at rung 36.00 (2.84 rungs), 2 rows"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "line": "specimen refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "line": "strip · 6 items · 6 not one line · e.g. 44.00 px tall at rung 44.00 (1.00 rungs), 2 rows"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "line": "strip refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)"
+  }
+ ],
+ "flavor": "dist",
+ "run": {
+  "loadStart": "33.61 / 22.66 / 20.64",
+  "loadEnd": "32.44 / 22.60 / 20.63",
+  "census": {
+   "n": 13,
+   "sample": [
+    "19728 /Users/mkbabb/Library/Caches/ms-playwright/chromium-1228/chrome-mac-arm64/Google",
+    "19776 /Users/mkbabb/Library/Caches/ms-playwright/chromium-1228/chrome-mac-arm64/Google",
+    "22766 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un"
+   ],
+   "waitedS": 0.2
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "0/6 gating cells pass [library 0/6]",
+ "arms": {
+  "library": {
+   "pass": 0,
+   "of": 6
+  }
+ }
+}
