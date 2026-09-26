@@ -106,7 +106,7 @@ The rest is repository-internal (config paths, workflows, demo, harness).
 
 ## 8 · Dependencies
 
-W-D.1 lands first: it puts the floor, the seal, the entry record and `tests/harness/` in the tree, and this wave extends them. W-A.3 first, so `visual.yml` exists to consume the verify artifact; W-B.13 and W-A.4 first, so the release workflow is edited once more, not three times in parallel. W-A.1 owns `tests-visual/_support/`; this wave's lexer is the one `tests-visual/_support` imports for comment stripping, if it needs one.
+PLAN §5, the one record of edges. This wave extends the floor, the seal, the entry record and `tests/harness/` that D1's wave puts in the tree; `visual.yml` must exist to consume the verify artifact; and the release workflow is edited once more here, after the Trusted Publisher and GPU-leg edits, not in parallel with them. `tests-visual/_support/` is W-A.1's; this wave's lexer is the one `tests-visual/_support` imports for comment stripping, if it needs one.
 
 ## 9 · Ledger rows
 

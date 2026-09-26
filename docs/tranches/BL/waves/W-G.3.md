@@ -4,7 +4,7 @@
 |---|---|
 | seat | band-G wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
-| HEAD | `b37a37c3` (`src`, `demo`, `tests` identical to `f3ad78d0`), scratch worktree; the demo on :5987 and the band-G component harness (W-G.6 appendix C) on :5988; Chromium on Metal with WebGPU (adapter `apple/metal-3`); probe library in W-G.1 appendix A. Load average 30 to 137 during the runs; the gates are counts |
+| HEAD | `b37a37c3` (`src`, `demo`, `tests` identical to `f3ad78d0`), scratch worktree; the demo on :5987 and the band-G component harness (W-G.6 appendix D) on :5988; Chromium on Metal with WebGPU (adapter `apple/metal-3`); probe library in W-G.1 appendix A. Load average 30 to 137 during the runs; the gates are counts |
 | ships in | 11.0.0 |
 | families | F-50 remainder (`audit/REGISTRY.md:1201-1219`): L07-02, L07-13, R2-04-16, R2-09-01, R2-09-02 (the subscriber half), R2-09-03, R2-09-04, R5-01-08. The blob's settle seam (R2-03-06, the quiescence ask) is W-G.5's |
 | depends on | PLAN §5, the one record of edges |
@@ -134,7 +134,7 @@ HEAD output: `FAIL G3-G1 … {"n":37,"totalMs":40.4,"maxMs":1.5,"rafPerSec":480,
 
 The script's G3-G2 row is W-H.1's H1-G20 (the dock samples, D3-B only); it stays in this script as the probe that wave runs.
 
-## Appendix B · `g3-dock-fixture.mjs` (harness page, W-G.6 appendix C)
+## Appendix B · `g3-dock-fixture.mjs` (harness page, W-G.6 appendix D, which W-G.6 lands in `tests-visual/fixtures/`)
 
 ```js
 import { chromium } from '/Users/mkbabb/Programming/glass-ui/node_modules/playwright/index.mjs';

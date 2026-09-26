@@ -78,7 +78,7 @@ G1's control (the slow wheel) and G4's 390×844 cell pass at HEAD, so both measu
 
 ## 8 · Dependencies
 
-PLAN §5, the one record of edges (W-F.2 among them since fix-5: this wave replaces the velocity W-F.2's release seat reads, and its probe imports W-F.2's appendices D and E). Direction (the sign of the bounded offsets, the RTL worm) is W-F.5's.
+PLAN §5, the one record of edges, with the reason for the W-F.2 order in its notes. Direction (the sign of the bounded offsets, the RTL worm) is W-F.5's.
 
 ## 9 · Ledger rows it closes
 

@@ -90,7 +90,7 @@ Consumers: value.js adopts `./aurora-palette` (its X-W6); keyframes.js, slides a
 
 ## 8 · Dependencies
 
-W-G.1, W-A.5.
+PLAN §5, the one record of edges.
 
 ## 9 · Ledger rows it closes
 

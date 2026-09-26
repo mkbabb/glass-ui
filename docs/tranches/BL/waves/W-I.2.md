@@ -116,7 +116,7 @@ Captures under `.cache/evidence/W-I.2/`; the wave record inlines each PNG's path
 
 ## 8 · Dependencies and ledger rows
 
-Depends on W-I.1 and W-A.3. Closes F-19 (L08-05, L08-06, L08-13, L08-17, R2-04-10, R3-01-15, R3-02-14, R7-01-07, R7-01-08, R7-02-01; L08-16 through W-I.1) and RT-31B. The note on the rejected L04-F10 ("an ARIA-role arm for widgets that own arrows but do not `preventDefault`", `REGISTRY.md` §2) is met by §3 item 3: the run defers on `defaultPrevented`, and a widget that owns arrows without `preventDefault` is W-K.6's keystroke predicate.
+Edges: PLAN §5. Closes F-19 (L08-05, L08-06, L08-13, L08-17, R2-04-10, R3-01-15, R3-02-14, R7-01-07, R7-01-08, R7-02-01; L08-16 through W-I.1) and RT-31B. The note on the rejected L04-F10 ("an ARIA-role arm for widgets that own arrows but do not `preventDefault`", `REGISTRY.md` §2) is met by §3 item 3: the run defers on `defaultPrevented`, and a widget that owns arrows without `preventDefault` is W-K.6's keystroke predicate.
 
 ## Appendix A · `demo-aria.mjs`
 

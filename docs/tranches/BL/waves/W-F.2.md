@@ -116,7 +116,7 @@ No alias. A consumer's own `pointercancel` handlers are untouched; only the libr
 
 ## 8 · Dependencies
 
-PLAN §5, the one record of edges (this wave builds on W-F.1's `springStepper` and W-E.3's drag controller; W-F.3 lands after it, fix-5). W-I.1 (loop D2) is downstream: it keeps G6 and G7 as its born-REDs and builds the dock's gestures on `useGestureEnd`; this wave does not pre-empt the loop's plate, run or extent work.
+PLAN §5, the one record of edges, with the reason for the W-F.3 order in its notes (this wave builds on the one `springStepper` and the Sheet's drag controller). W-I.1 (loop D2) is downstream: it keeps G6 and G7 as its born-REDs and builds the dock's gestures on `useGestureEnd`; this wave does not pre-empt the loop's plate, run or extent work.
 
 ## 9 · Ledger rows it closes
 

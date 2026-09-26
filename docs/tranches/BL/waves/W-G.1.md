@@ -126,7 +126,7 @@ A consumer that pinned `renderMode="webgl"` (speedtest `App.vue:53,363-370`) mov
 
 ## 8 · Dependencies
 
-W-A.4, W-B.9, W-C.5. W-G.2 may land before or after; if before, step 1 keeps its one `lost` subscription.
+PLAN §5, the one record of edges. W-G.2 is unordered against this wave there; if it lands first, step 1 keeps its one `lost` subscription.
 
 ## 9 · Ledger rows it closes
 

@@ -82,7 +82,7 @@ These are the registry's invariants (`REG:1111-1112`): a motion's first and last
 
 ## 8 · Dependencies
 
-W-F.2 (the disclosure engine), W-E.5 (the toast store). The dock's crossfade extent is W-I.1's (loop D2); nothing here pre-empts it.
+PLAN §5, the one record of edges (this wave builds on the re-targeting disclosure engine and the toast store). The dock's crossfade extent is W-I.1's (loop D2); nothing here pre-empts it.
 
 ## 9 · Ledger rows it closes
 

@@ -78,7 +78,7 @@ Planted bites for the wired twins: a style tag restoring `animation: music-staff
 
 ## 8 · Dependencies
 
-W-A.3, W-F.1. The dock's transitions (L07-09) are W-I.1's.
+PLAN §5, the one record of edges. The dock's transitions (L07-09) are W-I.1's.
 
 ## 9 · Ledger rows it closes
 

@@ -131,7 +131,7 @@ The rows P4-R2 rules (names a consumer reads that no entry publishes: added on t
 
 ## 8 · Dependencies
 
-The D1 gate (§0), including P4-R1..P4-R4 ruled. W-A.2 first: G-42's roster entry and R-1's register retire (P4-F1 makes it a floor precondition, D1:1333). W-C.2 first: its detector and MIGRATION shape bind the landed text. W-C.1 first, for the loop tooling's home. Waves of bands E-K that land before this wave are moved by its chain, which derives from the graph, so a later tree is re-planned, not hand-merged (PLAN §5 note).
+PLAN §5, the one record of edges, and the D1 gate (§0) with P4-R1..P4-R4 ruled. What the wave needs in the tree when it lands: G-42's roster entry and R-1's register retired (P4-F1 makes that a floor precondition, D1:1333), the demeta detector and MIGRATION shape the landed text binds to, and the loop tooling's home. Waves of bands E-K that land before this wave are moved by its chain, which derives from the graph, so a later tree is re-planned, not hand-merged (PLAN §5 note).
 
 ## 9 · Ledger rows
 

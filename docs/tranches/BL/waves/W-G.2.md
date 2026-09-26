@@ -79,7 +79,7 @@ No export changes.
 
 ## 8 · Dependencies
 
-W-A.3. Independent of W-G.1's order (§4).
+PLAN §5, the one record of edges. Unordered against W-G.1 there (§4 names the paths either way).
 
 ## 9 · Ledger rows it closes
 

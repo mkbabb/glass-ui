@@ -79,7 +79,7 @@ No alias.
 
 ## 8 · Dependencies
 
-W-A.3.
+PLAN §5, the one record of edges.
 
 ## 9 · Ledger rows it closes
 

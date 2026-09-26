@@ -91,7 +91,7 @@ No alias for `left`/`right`.
 
 ## 8 · Dependencies
 
-W-F.3 (position-derived scroll state, read through the logical helper), W-E.3 (the Sheet). The owner glance on the Sheet rename rides the W-B.2 letter.
+PLAN §5, the one record of edges (this wave reads the position-derived scroll state through the logical helper and edits the Sheet). The owner glance on the Sheet rename rides the W-B.2 letter.
 
 ## 9 · Ledger rows it closes
 

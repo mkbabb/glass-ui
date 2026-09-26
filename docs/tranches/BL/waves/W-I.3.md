@@ -98,7 +98,7 @@ None. No public name is removed or renamed. The utilities `hover-lift`, `hover-l
 
 ## 8 · Dependencies and ledger rows
 
-Depends on W-I.1 and W-A.2. Closes F-77 (R3-02-01; R4-01-15 through W-I.1), the G7 detector half, UIA-F-80 (through W-I.1), and UIA-V-229 and UIA-F-220 as NOT REPRODUCED at HEAD with G5 as their hold line (the LEDGER seat records each with this wave's reading).
+Edges: PLAN §5. Closes F-77 (R3-02-01; R4-01-15 through W-I.1), the G7 detector half, UIA-F-80 (through W-I.1), and UIA-V-229 and UIA-F-220 as NOT REPRODUCED at HEAD with G5 as their hold line (the LEDGER seat records each with this wave's reading).
 
 **Recorded, not gated here.** Playwright WebKit crashed (`page.waitForTimeout: Page crashed`) when a tap opened the Accordion on the probe page; the same page mounts and the other controls measure. It is not attributed. It is not a Safari reading, and it is not this wave's mechanism; the LEDGER seat routes it to W-A.1 (the harness) for a minimal reproduction. Until then the Accordion's WebKit cell of G2 is UNMEASURED.
 

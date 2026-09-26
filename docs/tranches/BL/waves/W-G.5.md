@@ -116,7 +116,7 @@ value.js's HeroBlob replaces its wall-clock park (`BLOB_IDLE_MS`, `SLEEPY_POSE_M
 
 ## 8 · Dependencies
 
-W-G.1 (W1 and the packer), W-G.4 (the studio shell the configurator rows live in; they may land in either order, the rows attach when both are in).
+PLAN §5, the one record of edges. W-G.4 (the studio shell the configurator rows live in) is unordered against this wave there; the rows attach when both are in.
 
 ## 9 · Ledger rows it closes
 

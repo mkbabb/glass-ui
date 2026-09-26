@@ -139,7 +139,7 @@ No alias, no deprecated re-export. A consumer passing a removed option under `st
 
 ## 8 · Dependencies
 
-W-A.3 (the wired set G9 joins). No loop wave: F-44 is owned by no design loop. W-B.9 may delete the constellation first; this wave then cures what is left.
+PLAN §5, the one record of edges (G9 joins the wired set). No loop wave: F-44 is owned by no design loop. If the constellation is already off `useCanvas2D` (W-B.9), this wave cures what is left.
 
 ## 9 · Ledger rows it closes
 

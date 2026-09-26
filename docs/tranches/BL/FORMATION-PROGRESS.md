@@ -93,3 +93,4 @@ Outage log:
 - 2026-09-26 04:4x — formation fix 5 banked: FD-01..FD-03 cured in the plan folder, none refuted (G-L1-7 now reads the in-place anchor move). Critic pass 5 launched.
 - 2026-09-26 04:5x — formation critic pass 5 NOT clean: 3 new (FE-01..FE-03; FE-01 extends FD-03's class to pairs FD-03 did not name); all 3 of pass 4 cured. Fix 6 running. Loop cap is pass 7: two consecutive clean is no longer reachable inside the cap unless passes 6 and 7 are both clean.
 - 2026-09-26 05:0x — D2 pass 2: G critique ADVANCE 11/21 (52%); no BLOCK/RETIRE trigger. Route-owned fails include the carrier finish()ing the library's own size transitions (one-frame 94.67/95.91 px step) and the compositor claim not covering a same-task main-thread block. D2 pass-2 agglomerate launched.
+- 2026-09-26 05:1x — formation fix 6 banked: FE-01..FE-03 cured, none refuted (PLAN §5 gains 15 DAG edges swept by class, not by named pair). Critic pass 6 launched.

@@ -120,6 +120,8 @@ Closes #86's F-21 item, N-11a and O-61 R-1, and F-21's members in §1. C-8 is W-
 
 ## Appendix A · `e2.mjs` (lands as `tests-visual/wired/surface-geometry.spec.ts`)
 
+The landed spec omits the block that emits `E2-G3 toggle on≠off` (scene `s=toggle`). That block is W-H.1's H1-G21 and lands with W-H.1, so no RED wired row sits in the suite between the two waves (fix-6). It stays printed here because H1-G21 runs it.
+
 ```js
 // W-E.2 born-RED probe: a shared rule never overrides a component's own declaration; a clip holds only while its purpose does.
 // node e2.mjs [--shots] [--eng webkit]

@@ -52,7 +52,7 @@ The machine ran at load average 48-60 through every reading; the absolute times 
 
 ## 4 · Files it touches
 
-`src/composables/motion/core/motionTempo.ts`; `src/components/_shared/class-names.ts`; `src/components/aurora/composables/wgpuSetup.ts`, `src/components/blob/composables/wgpuSetup.ts`, `src/components/fourier-field/renderer/wgpu.ts`, and any pipeline W-G.1's engine adds (its luma compute pass); `src/components/sortable-list/useSortable.ts`, `SortableItem.vue`; `src/components/toggle-group/ToggleGroup.vue`. Tests: `tests/composables/motion/motionTempo.test.ts` (the cache and its invalidation), `tests/components/shared/class-names.test.ts` (memo returns identical output for the existing fixture set), `tests-visual/wired/mount-path.spec.ts` (appendices A and C against the harness page, which moves into `tests-visual/fixtures/`).
+`src/composables/motion/core/motionTempo.ts`; `src/components/_shared/class-names.ts`; `src/components/aurora/composables/wgpuSetup.ts`, `src/components/blob/composables/wgpuSetup.ts`, `src/components/fourier-field/renderer/wgpu.ts`, and any pipeline W-G.1's engine adds (its luma compute pass); `src/components/sortable-list/useSortable.ts`, `SortableItem.vue`; `src/components/toggle-group/ToggleGroup.vue`. Tests: `tests/composables/motion/motionTempo.test.ts` (the cache and its invalidation), `tests/components/shared/class-names.test.ts` (memo returns identical output for the existing fixture set), `tests-visual/wired/mount-path.spec.ts` (appendices A and C against the harness page, appendix D, which this wave lands in `tests-visual/fixtures/` as the one copy the band's wired specs drive; PLAN §5 notes, fix-6).
 
 ## 5 · Acceptance gates
 
@@ -81,7 +81,7 @@ No API is removed. `cn()`'s output is unchanged for every input.
 
 ## 8 · Dependencies
 
-W-G.1.
+PLAN §5, the one record of edges.
 
 ## 9 · Ledger rows it closes
 

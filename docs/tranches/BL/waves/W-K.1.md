@@ -53,7 +53,7 @@ Measured with appendix A (`node k1.mjs`, both fixture builds and Playwright WebK
 
 ## 4 · Files it touches
 
-`src/composables/dom/root.ts` (new) and `src/composables/dom/index.ts`; `src/composables/keyboard/useKeyboardShortcuts.ts`; the eight files in §2; `src/components/_shared/overlay/layer.ts` (the Tab edge leg); every `src/styles/**` file with a `:root` or `html` token block. New wired spec `tests-visual/wired/root-relative.spec.ts` (appendix A).
+`src/composables/dom/root.ts` (new) and `src/composables/dom/index.ts`; `src/composables/keyboard/useKeyboardShortcuts.ts`; the eight files in §2; `src/components/_shared/overlay/layer.ts` (the Tab edge leg); every `src/styles/**` file with a `:root` or `html` token block. New wired spec `tests-visual/wired/root-relative.spec.ts` (appendix A), and the band's fixture app `tests-visual/fixtures/band-k/` (appendix B's app and `lib.mjs`) that every band-K wired spec drives; W-A.3's `visual.yml` builds it against the packed library. The band-K waves that drive it wait on this wave (PLAN §5 notes, fix-6, FE-01).
 
 ## 5 · Acceptance gates
 

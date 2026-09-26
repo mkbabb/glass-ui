@@ -98,7 +98,7 @@ Captures under `.cache/evidence/W-H.4/`, each with its sha256, command and paire
 
 ## 8 · Dependencies and ledger rows
 
-Depends on W-H.2 and W-A.4. Closes F-53 (L01b-60, L01b-69, L05b-20 by one banked run, R2-09-05, R2-09-06 by BUILD, R2-09-09 by RETIRE), #60's boot-shell arm, #69, #39's RT-39C (G2's detented-sheet row with its datum). #60's quiescence and one-context arms close in W-G.3 and W-G.6, named rows of those waves.
+Edges: PLAN §5. Closes F-53 (L01b-60, L01b-69, L05b-20 by one banked run, R2-09-05, R2-09-06 by BUILD, R2-09-09 by RETIRE), #60's boot-shell arm, #69, #39's RT-39C (G2's detented-sheet row with its datum). #60's quiescence and one-context arms close in W-G.3 and W-G.6, named rows of those waves.
 
 ## Appendix A · `perf.mjs` (scratch, as run)
 
