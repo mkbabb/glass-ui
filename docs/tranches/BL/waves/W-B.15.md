@@ -22,22 +22,22 @@ R3-01-16 measured the only library smoothing loop: `useScrollScene`'s `scrubToDa
 
 ## 2 · The defect at HEAD
 
-- Two owner asks without a terminal; `grep -cE 'R56|R11' docs/tranches/BL/design/dock/REGISTRY.md` → **0**: the loop that owns the dock run has not been given R56.
+- Two owner asks without a terminal. R56's subject, the dock run's scroll, is D2's; W-I.1 carries it (§1 row, §3.1 item 7, G26).
 
 ## 3 · The cure
 
-1. **R56: FOLD into W-I.1.** The rail's continuous-position glide is the dock run's motion, which D2 converges (its run/paint separation and its one clock, which replaces `useDockSpring`'s three instances, `PORTFOLIO.md:634`). This wave appends R56 to D2's next pass checklist as one item with the owner's words; D2 decides the mechanism and W-I.1 builds it with its born-RED.
+1. **R56: FOLD into W-I.1.** The rail's continuous-position glide is the dock run's motion, which D2 converges (its run/paint separation and its one clock, which replaces `useDockSpring`'s three instances, `PORTFOLIO.md:634`). PLAN §4 lists R56 among D2's obligations with the owner's words; D2 decides the mechanism and W-I.1 builds it under G26. This wave writes nothing under `design/`.
 2. **R11: RETIRE a scripted page scroller (recommended; OW-9b).** Ground: native scrolling on the target engines already carries the platform's inertia and overscroll, it runs on the compositor (F-45's compositor-only law), and a script-driven glide on the main scroller breaks find-in-page, keyboard and assistive scrolling and the platform's momentum. What D-1 asks of scroll is met where the library owns the motion: programmatic scrolls ride W-K.7's arrival owner, scroll-linked chrome reads position (W-F.3), and scroll scenes keep `useScrollScene`. The owner docket asks once, with a capture: "Page scrolling stays native (platform inertia). Retire the 'slow glide' ask for the page, or name where it should apply?" Default on silence: RETIRE, recorded as "owner not ruled" at W-L.8.
 
 ## 4 · Files it touches
 
-`docs/tranches/BL/design/dock/REGISTRY.md` (one checklist item); `docs/tranches/BL/LEDGER.md` (R11, R56, OW-9b); `docs/tranches/BL/ledger/RECAP.md`.
+`docs/tranches/BL/LEDGER.md` (R11, R56, OW-9b); `docs/tranches/BL/ledger/RECAP.md`.
 
 ## 5 · Acceptance gates
 
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
-| B15-G1 · the dock loop carries R56 | `test "$(grep -c 'R56' docs/tranches/BL/design/dock/REGISTRY.md)" -ge 1` | exit 0 | **exit 1**: 0 |
+| ~~B15-G1~~ | struck (fix-3, FB-05): it grepped a loop document for a word. R56's gate is its receiver's, W-I.1 G26 | — | — |
 | B15-G2 · the owner has ruled R11 | `! grep -qE '^\\| OW-9b \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (OW-9b `pending`; fix-2) |
 | B15-G3 · the page scroller stays native (a guard on the RETIRE, not a born-RED) | `! git grep -nE "addEventListener\\(['\"](wheel\|touchmove)['\"]" -- src \| grep -v 'passive: true'` | exit 0 | exit 0 at HEAD: the one wheel listener is passive (`composables/sidebar/useSidebarFollow.ts:191`). No defect is live, so this is the RETIRE's regression line; it can fail: appending a non-passive `wheel` listener to any `src` file makes it exit 1. It enters W-A.2's roster with that plant as its bite |
 

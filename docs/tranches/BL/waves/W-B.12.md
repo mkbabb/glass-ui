@@ -31,16 +31,16 @@
 
 ## 4 · Files it touches
 
-`docs/tranches/BL/LEDGER.md` only.
+`docs/tranches/BL/LEDGER.md` only. The RETIRE removes nothing from the tree: the column was never drawn. Its enactment is the ground being true when the ruling lands, which B12-G2 reads; PLAN §5 orders this wave after W-A.2, so the gate is green at this wave's own close, not at a later wave's (fix-3, FB-18).
 
 ## 5 · Acceptance gates
 
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
 | B12-G2 · the three holders exist | `node -e 'const r=require("./tests/gates/roster.json");for (const id of ["G-13","G-42","G-01"]) if(!r.find(e=>e.id===id)) process.exit(1)'` | exit 0 | **exit 1**: `roster.json` absent (W-A.2 creates it) |
-| B12-G3 · the declaration residue (built in W-C.2) | `test "$(git grep -ci shadcn -- src \| awk -F: '{s+=$2} END {print s+0}')" -eq 0` | exit 0 | **exit 1**: 27 |
+| ~~B12-G3~~ | struck (fix-3, FB-18): the DECLARATION column is W-C.2's (§3 item 2), and C2-G7 is the one source of record for the 27 lines; a copy here went green only when W-C.2 landed | — | — |
 
-The IDIOM-CLEARED column's terminal is LEDGER:163 (`#64b`). B12-G2 and B12-G3 enact it.
+The IDIOM-CLEARED column's terminal is LEDGER:163 (`#64b`). B12-G2 reads its ground at this wave's close.
 
 ## 6 · π and DELTA obligations
 

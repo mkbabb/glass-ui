@@ -76,7 +76,7 @@ Can each fail and pass? Nineteen of the 20 browser rows fail at HEAD; G3 at 390�
 - **Surface:** the fixture scene `sheet` with `det=0.12,0.36,1`, `modal=0` and `dock=bottom|top`, at 390×844 and 844×390. Also demo `/containers/sheet` at 390×844.
 - **Themes:** light and dark (G1, G2, G8 in both). The rest are geometric and run light.
 - **Engines:** Chromium measured (CDP touch). `e3.mjs` was not run on Playwright WebKit: the band's WebKit runs crash the page on every fixture scene that mounts GlassDock (W-E.4's G6 and G10), and CDP touch is Chromium-only; the wired spec runs a mouse-only WebKit subset (G3, G4 mouse, G5, G7, G8) and labels it. Real Safari is UNMEASURED (OW-3), and the claim that `visualViewport` resizes live under the iOS URL bar is a real-Safari cell.
-- **Paired capture:** `node e3.mjs --shots` at `<E3-base>` and at the wave: `done-bottomdock-0.36.png` (the action under the dock, then clear) and `grip-topdock-390.png`. A frame strip of G8's open at 390×844 bottom shows the gap, then the bleed. HEAD shots are at `scratchpad/formation/band-E/cap/e3/`.
+- **Paired capture:** `node e3.mjs --shots` at `<E3-base>` and at the wave: `done-bottomdock-0.36.png` (the action under the dock, then clear) and `grip-topdock-390.png`. A frame strip of G8's open at 390×844 bottom shows the gap, then the bleed. The before set is taken at `<E3-base>` with `WAVE=W-E.3`, into `.cache/evidence/W-E.3/e3/`; formation's HEAD shots sat in a session scratchpad and are not evidence.
 
 ## 7 · MIGRATION rows
 

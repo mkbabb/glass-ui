@@ -28,13 +28,12 @@ C-11 (π-W1's after-half, #50 W1) closes here, not in W-G.5 as PLAN §3 lists it
 |---|---|
 | L05a-01, L10-02 | the WebGPU primary paints one Kuwahara body for four ids while the WebGL2 "fallback" carries the stroke cascade (the fallback-richer half; the body split is W-G.4's) |
 | L04-F03, L05b-09, L01b-54, #54 | the WebGPU-only ruling (`BK/PORT.md:115,145`) never executed: `setupGL` required (`useGpuSubstrate.ts:49`), the webgl2 register at 236 lines in 40 files |
-| R2-06-10 | the constellation on `useCanvas2D` (`useConstellation.ts:11,287`) and the aurora raster ground (`auroraFallbackGround.ts:328-366`) |
+| R2-06-10 | the aurora raster ground (`auroraFallbackGround.ts:328-366`); its constellation half (`useCanvas2D`, `useConstellation.ts:11,287`) is W-B.9's (fix-3) |
 | R2-09-02 (publisher half) | moved to W-H.1: whether a field publishes its luma is D3's route choice (D3-B publishes, D3-A deletes the live channel), so the publisher is built only on D3-B's convergence |
 | R4-01-17, UIA-V-55, UIA-V-192, UIA-V-337 | the device is requested without `requiredLimits`; a host past 8192 px flood-fails every frame |
 | #49 D5, #60 one-context | two WebGL2 probe contexts on every aurora mount (`renderMode.ts:118`, `runtime.ts:252`) |
 | C-11 | π-W1, the blob's GL excise and its paired capture |
 | E-2 (engine half), KFA-133 | recognized init failures fall silently to WebGL2 (`useWebGPUCanvas.ts:344`, "falls to the WebGL2 net silently"; the catch at `:461-476`) |
-| W-B.9 (B9-G1, B9-G2) | the constellation on the one engine with `pinned` and `drift` |
 | W-B.1 folds | the Safari WebGPU promote; `webgl/shaders/flow.wgsl.ts`'s GLSL twin |
 | latch `gl-excise.test.ts:112` | retired by W-A.2 into gate G1-G1 (`W-A.2.md:80`) |
 
@@ -70,7 +69,7 @@ In paint (probes in appendices B-D; readings from `cap/g1-*.json` in the band-G 
    - Aurora: delete `glSetup.ts`, the 11 GLSL modules in `constants/shaders/`, the GL half of `textureUpload.ts`, `resolveRenderMode`, `isSoftwareWebGLRenderer`, `ResolveRenderModeOptions`, `forceWebGLUnderSoftwareRaster` and the `?engine=webgl2` pin (`runtime.ts:107,310`, `demo/stories/substrates/aurora.vue:83-88`, `AuroraStage.vue:38`). The `renderMode` prop becomes `"gpu" | "css"`, default `"gpu"`; a software adapter is refused at acquire (step 2), which is where the software-raster guard now lives. The WGSL dispatch is not edited (§0).
    - Blob: GF-BLOB W1 (`DESIGN-NOW.md` §3 W1): delete `shaders/{metaball.frag,metaball.vert,sdf-body.glsl,watercolor-edges.glsl,oklch-perturb.glsl,metaball-uniforms.glsl}.ts`, `composables/{buildMetaballProgram,uploadBlobUniforms}.ts`, the GL branch of `useMetaballRenderer.ts` and `UNIFORM_NAMES`; `uniformBridgeWGPU.ts` becomes `packBlobUniforms.ts`, the only packer. The `uMaxReach` derivation moves verbatim (GF-BLOB ADJ-9: the discard is active).
    - Fourier field: `createFourierUnsupportedSetup` and the `backend` getter (`FourierField.vue:216`, `useFourierField.ts:57,214`) are deleted.
-   - Constellation (W-B.9 BUILD): a WGSL renderer on the shared device. Nodes are instanced SDF discs, edges instanced quads; the field simulation stays on the CPU (`seedField`, `warpStep`, `warpTo`), and W-0.6's draw order holds. `ConstellationField` gains `pinned` per node (excluded from drift and bounce) and a `drift` term distinct from click-warp.
+   - Constellation: moved to WebGPU by W-B.9, its disease row's own wave (fix-3, FB-18), before this wave; it leaves no `useCanvas2D` caller, so step 1 deletes `canvas2d/` whole.
 5. **The ground is CSS.** `auroraFallbackGround` becomes `auroraGround` (the "fallback" name R2-06-10 and BD2 A54 asked retired). It returns the layered `radial-gradient` stack over the field-mean fill it already builds when the raster returns null; `rasterizeField` (`:328-366`) is deleted. It is the frame-0 paint under every aurora, before the first GPU frame and under a failed one.
 6. **The field luma publisher** is W-H.1's, built only if D3 converges on D3-B (fix-2, FA-13). This wave's lifecycle keeps the canvas configuration it needs today.
 7. **The latch's subject.** Gate G1-G1 is the E-2 engine roster entry in `tests/gates/roster.json`; W-A.2 has retired the `it.fails` form into it.
@@ -79,7 +78,7 @@ In paint (probes in appendices B-D; readings from `cap/g1-*.json` in the band-G 
 
 - Deleted: `src/composables/glass/webgl/` (whole), `src/composables/glass/canvas2d/` (whole), `src/components/aurora/composables/glSetup.ts`, `src/components/aurora/constants/shaders/{aurora.frag,aurora.vert,aurora-image.frag,brush.glsl,composition.glsl,flow.glsl,mediums.glsl,metal-medium.glsl,oil-modes.glsl,tonemap.glsl,vangogh-medium.glsl}.ts`, `src/components/aurora/constants/renderMode.ts`, `src/composables/glass/procedural/color.glsl.ts`, `src/components/blob/shaders/{metaball.frag,metaball.vert,sdf-body.glsl,watercolor-edges.glsl,oklch-perturb.glsl,metaball-uniforms.glsl}.ts`, `src/components/blob/composables/{buildMetaballProgram,uploadBlobUniforms}.ts`, `tests/composables/glass/{webgl,canvas2d}/`.
 - Moved into `src/composables/glass/webgpu/`: `createCanvasLifecycle.ts`, `backingSize.ts`, `visibility.ts`, `shaders/flow.wgsl.ts`.
-- Edited: `webgpu/{useWebGPUCanvas,useGpuSubstrate,webgpuDevice,webgpuCanvasTypes,rendererStatus}.ts`; `src/components/aurora/{Aurora.vue,index.ts,README.md,DESIGN.md}`, `composables/{runtime,useAurora,wgpuSetup,textureUpload,auroraImageSource,frameLoop,uniformBridge,auroraFallbackGround→auroraGround}.ts`, `constants/{presets,shaders/aurora.wgsl,shaders/aurora-mediums.wgsl}.ts`; `src/components/blob/{Blob.vue,README.md}`, `composables/{useMetaballRenderer,blobSimulation,wgpuSetup,uniformBridgeWGPU→packBlobUniforms}.ts`, `shaders/metaball.wgsl.ts`; `src/components/fourier-field/{FourierField.vue,useFourierField.ts,renderer/wgpu.ts}`; `src/components/constellation/` (new `renderer/wgpu.ts` + WGSL, `Constellation.vue`, `composables/useConstellation.ts`, `types.ts`, `constellationInteraction.ts`, `README.md`); `src/composables/glass/index.ts`, `src/index.ts`, `src/components/PROCEDURAL-SUITE.md`, `src/composables/motion/pointer/{usePointerVelocityField,pointerFieldMappings}.ts`, `src/composables/glass/procedural/color.wgsl.ts` (its GLSL twin deleted, prose), `demo/stories/substrates/{aurora.vue,aurora/AuroraStage.vue,constellation.vue}`.
+- Edited: `webgpu/{useWebGPUCanvas,useGpuSubstrate,webgpuDevice,webgpuCanvasTypes,rendererStatus}.ts`; `src/components/aurora/{Aurora.vue,index.ts,README.md,DESIGN.md}`, `composables/{runtime,useAurora,wgpuSetup,textureUpload,auroraImageSource,frameLoop,uniformBridge,auroraFallbackGround→auroraGround}.ts`, `constants/{presets,shaders/aurora.wgsl,shaders/aurora-mediums.wgsl}.ts`; `src/components/blob/{Blob.vue,README.md}`, `composables/{useMetaballRenderer,blobSimulation,wgpuSetup,uniformBridgeWGPU→packBlobUniforms}.ts`, `shaders/metaball.wgsl.ts`; `src/components/fourier-field/{FourierField.vue,useFourierField.ts,renderer/wgpu.ts}`; `src/composables/glass/index.ts`, `src/index.ts`, `src/components/PROCEDURAL-SUITE.md`, `src/composables/motion/pointer/{usePointerVelocityField,pointerFieldMappings}.ts`, `src/composables/glass/procedural/color.wgsl.ts` (its GLSL twin deleted, prose), `demo/stories/substrates/{aurora.vue,aurora/AuroraStage.vue}`.
 - New tests: `tests-visual/wired/one-engine.spec.ts` (appendices B-D), `tests/composables/glass/webgpu/backing-limits.test.ts` (the clamp as a unit over a fake `device.limits`).
 - `MIGRATION.md` (§7), `tests/gates/roster.json`.
 
@@ -95,7 +94,7 @@ In paint (probes in appendices B-D; readings from `cap/g1-*.json` in the band-G 
 | G1-G6 · the device takes the adapter's limit | appendix C: device `maxTextureDimension2D` equals the adapter's | equal | **8192 vs 16384**, requested `null` |
 | G1-G7 · an oversize host paints | appendix C: the shell aurora host at 1440×9000 and again at 1440×20000: 0 uncaptured GPU errors over 3 s, `getCurrentTexture()` within the device limit, ≥ 1 % of a 400×300 viewport patch moves in 1.5 s; after a shrink to 900 px, the same | all clauses | **FAIL** at 9000: 50 errors, 0 px moved |
 | G1-G8 · the ground is canvas-free | appendix D: 0 `toDataURL` calls through mount | 0 on `/` and `/substrates/aurora` | **3** and **18** |
-| G1-G10 · the constellation on the engine | W-B.9's B9-G1 (`useCanvas2D` 0 in `src/components/constellation`) and B9-G2 (`pinned` and `drift` in `types.ts`), and appendix B on `/substrates/constellation` requests `webgpu` only | all | **FAIL**: 3 code lines; no `pinned`/`drift`; `2d` ×12 |
+| ~~G1-G10~~ | struck (fix-3, FB-18): the constellation's move is W-B.9's own act and gate (B9-G1, B9-G2), landed before this wave | — | — |
 | G1-G11 · no shader of a second engine ships | after `npm run build`: `! grep -l '#version 300 es' dist/*.js` | exit 0 | **exit 1**: 3 occurrences in `dist/aurora.js`'s closure (W-G.7 appendix A) |
 
 Planted bites (for W-A.2's roster, under `tests/_support/bites/`): re-add one `.glsl.ts` import to `useMetaballRenderer.ts` (G1-G1, G1-G2); drop `requiredLimits` (G1-G6, G1-G7); restore `rasterizeField` (G1-G3, G1-G8); (the luma bite moved to W-H.1 with G1-G9).
@@ -106,7 +105,7 @@ Planted bites (for W-A.2's roster, under `tests/_support/bites/`): re-add one `.
 - **π-GROUND.** `/` and `/substrates/aurora`, light and dark, 1440×900: the frame-0 ground alone (an init script that holds `requestAdapter` pending), before (PNG raster) and after (CSS layers). The per-quadrant mean OKLab L of the pair agrees within 0.01, the certify band the ground already asserts.
 - **π-LIMITS.** The 1440×9000 host, before (frozen field, the error text) and after (a moving field), two screenshots 1.5 s apart each, with appendix C's JSON as the paired reading.
 - **π-NO-GPU.** `navigator.gpu` removed: the aurora route shows the CSS ground and the surfaced error (rendererStatus rendered by the story). Before: the WebGL2 arm painting.
-- **π-CONSTELLATION.** `/substrates/constellation`, light and dark, before (Canvas2D) and after (WebGPU), plus one capture with a `pinned` node held while the field drifts.
+- **π-CONSTELLATION** moved to W-B.9 §6 with the constellation's port.
 - Engines: Chromium on Metal, measured. Playwright WebKit: not run at this seat; each cell is recorded as a reading or a crash. Real Safari: UNMEASURED until W-A.6's step 0 (OW-3). Safari 26 ships WebGPU, so W-B.1's "default-Safari WebGPU promote" is this wave's engine on Safari; its paint cell is W-A.6's.
 - Captures that read a WebGPU canvas are screenshots only; no probe calls `getContext()` on a page canvas (the context-steal trap).
 
@@ -148,7 +147,9 @@ import { chromium, webkit } from '/Users/mkbabb/Programming/glass-ui/node_module
 import os from 'node:os';
 import fs from 'node:fs';
 export const DEMO = process.env.DEMO || 'http://localhost:5987';
-export const CAP = process.env.CAP || new URL('../cap', import.meta.url).pathname;
+const WAVE = process.env.WAVE; // the running wave's id: the one evidence root is .cache/evidence/<wave>/ (PLAN §1)
+if (!/^W-[0-9A-L]\.[0-9]+$/.test(WAVE ?? '')) throw new Error('run as WAVE=<wave id> node <probe>');
+export const CAP = `.cache/evidence/${WAVE}`;
 export const load = () => os.loadavg().map((x) => x.toFixed(2)).join('/');
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 export const GPU_ARGS = ['--use-gl=angle', '--use-angle=metal', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--enable-features=Vulkan'];

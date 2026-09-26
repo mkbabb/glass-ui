@@ -17,7 +17,7 @@
 | #59 | the demo keys layout on the viewport: 32 story files carry `sm:`/`md:`/`lg:` variants, one `matchMedia` width query survives, one raw `vh` envelope survives |
 | C-13c / R11, R4-02-07 | the configurator envelope: W-E.14's, a disease row's own wave (fix-2, FA-21). This wave's cel containers are its base |
 | F-33 nested family | a nested family's body is `display: block` with no gap; two families render a one-tab tablist |
-| F-33 SegmentedTabs | the fold is keyed on a `matchMedia` breakpoint and off by default, so a strip overflows its own container |
+| F-33 SegmentedTabs | the fold is keyed on a `matchMedia` breakpoint and off by default, so a strip overflows its own container. With UIA-F-41 and A2-FO-L2-14 (SegmentedTabs has no overflow mode), handed from W-E.7's mechanism table: E9-G5 |
 | F-33 LabeledField | the horizontal arm is keyed on the viewport (`@media (max-width: 36rem)`), and its switch does not reach the field's end |
 | A2-FO-L3-7 (F-33 mechanism row) | LabeledSwitch's horizontal arm collapses on `@media (max-width: 36rem)` (`labeled-field/LabeledField.vue:127-133`): E9-G6 and E9-G7 |
 | UIA-F-136 (F-33 mechanism row) | EasingCurve's axis captions are `text-micro` at every specimen size (`easing/EasingCurve.vue:186-187`); they do not follow the specimen's container |
@@ -75,7 +75,7 @@ Can each fail and pass? Every row fails at HEAD. G1 runs the latches and G7 is s
 - **Surfaces:** demo `/containers/configurator`, `/substrates/aurora`, `/substrates/blob` at 1440×900, 390×844, 640×400 and a 24 px root; the five nested families; the fixture scenes `fold`, `count` and `lsw`.
 - **Themes:** light and dark for the paired captures.
 - **Engines:** Chromium measured. Playwright WebKit crashes on demo routes at HEAD, recorded as crashes; the wired spec runs the fixture rows (G4, G5) on it. Real Safari is UNMEASURED (OW-3).
-- **Paired capture:** appendix A writes `envelope-*-{1440,390}.png` and `lsw-844.png`. The DELTA pairs them at `<E9-base>` and at the wave: the aurora studio at 390 with no controls, then with a scrolling controls region. The HEAD set is at `scratchpad/formation/band-E/cap/e9/`.
+- **Paired capture:** appendix A writes `envelope-*-{1440,390}.png` and `lsw-844.png`. The DELTA pairs them at `<E9-base>` and at the wave: the aurora studio at 390 with no controls, then with a scrolling controls region. The before set is taken at `<E9-base>` with `WAVE=W-E.9`, into `.cache/evidence/W-E.9/e9/`; formation's HEAD set sat in a session scratchpad and is not evidence.
 
 ## 7 · MIGRATION rows
 

@@ -67,7 +67,7 @@ The fixture and the plant show the row can pass and can fail on the same page in
 - `src/styles/glass/glass-capsule.css:134`, `src/styles/glass/material.css:323`, `src/styles/glass/control-surfaces.css:83`, `src/components/_shared/disclosure/disclosure.css:75`, `src/styles/utilities/components.css:83-93`, `src/styles/utilities/btn.css:24`.
 - `src/components/blob/Blob.vue:359`, `dark-mode-toggle/dark-mode-toggle.css:24`, `data-table/styles.css:108`, `expandable-container/styles.css:85`, `slider/styles.css:170,281`, `tabs/styles/segmented.css:407`, `timeline/Timeline.vue:718`, `toggle-group/styles.css:122`.
 - New `tests/styles/hover-guard.test.ts`; `tests/styles/engage-ladder.test.ts:249-253` (the G7 row deleted) and the `pointerFine` field of `ENGAGE_LADDER` if nothing else reads it.
-- `scripts/probes/band-I/hover-census.mjs` (appendix A) and its npm script.
+- `scripts/probes/band-I/hover-census.mjs` (appendix A) is already in the tree: W-I.1 lands it for its G17 (`W-I.1.md` §4). This wave binds it as `tests/styles/hover-guard.test.ts` over all of `src`.
 - The line numbers move when W-D.1 colocates styles; the census reads the tree, not a path list.
 
 ## 5 · Acceptance gates

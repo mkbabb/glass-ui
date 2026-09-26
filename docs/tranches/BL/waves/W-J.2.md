@@ -10,7 +10,7 @@
 | families | F-54 (remainder: the engaged rung and hallmark 6; the dock hallmarks 1, 2 and 5 are W-I.1's, `W-I.1.md` §1) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
-| instruments | `tests/styles/engage-ladder.test.ts` (its census detector, `:108-128`); the band-J probe's `slider.mjs` (appendix A); D4's harness T-6 (`design/tile/harness/t6-engagement.mjs`) as the commit-bar model the register's battery generalizes |
+| instruments | `tests/styles/engage-ladder.test.ts` (its census detector, `:108-128`); the band-J probe's `slider.mjs` (appendix A); D4's harness T-6 (`scripts/loops/tile/harness/t6-engagement.mjs` after W-C.1; `design/tile/harness/t6-engagement.mjs` at HEAD) as the commit-bar model the register's battery generalizes |
 | engines | Chromium 149 headless and **Playwright WebKit** 26.5 headless. Real Safari: **UNMEASURED (owner's safaridriver checkbox)** |
 | machine | shared; load averages about 40 during the runs (18:35-18:45 local) |
 

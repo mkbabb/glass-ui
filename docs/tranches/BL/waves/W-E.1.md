@@ -87,7 +87,7 @@ Can each fail and pass? G1-G5 fail at HEAD (22 of 24 rows), and the `--plant` ru
 - **Surface:** the band-E fixture app (appendix B), scenes `sheet`, `toast`, `ec`, `pop`, `menu`, at 390×844 and 844×390, with the emulated insets.
 - **Themes:** light and dark (`&theme=dark`). The claim is geometric, so both themes must read the same rows.
 - **Engines:** Chromium measured (CDP insets). Playwright WebKit has no safe-area emulation, so it has no cell for this wave, and that is labelled. Real Safari on an iPhone with a notch is UNMEASURED (OW-3, the owner's safaridriver checkbox): the claim that `env()` resolves on a real device is the owner's cell.
-- **Paired capture:** `node e1.mjs --shots` at `<E1-base>` and at the wave writes `sheet-{P,L}-*.png`, `toast-{P,L}-top-right.png`, `ec-{P,L}.png`, `{pop,menu}-L-rs.png`. The DELTA is each pair side by side with the safe rect outlined, plus the appendix A JSON of both runs. The HEAD set is at `scratchpad/formation/band-E/cap/e1/` (these are the plant-run shots; the wave record re-captures HEAD).
+- **Paired capture:** `node e1.mjs --shots` at `<E1-base>` and at the wave writes `sheet-{P,L}-*.png`, `toast-{P,L}-top-right.png`, `ec-{P,L}.png`, `{pop,menu}-L-rs.png`. The DELTA is each pair side by side with the safe rect outlined, plus the appendix A JSON of both runs. The before set is taken at `<E1-base>` with `WAVE=W-E.1`, into `.cache/evidence/W-E.1/e1/`; formation's HEAD shots sat in a session scratchpad and are not evidence.
 
 ## 7 · MIGRATION rows
 
@@ -200,7 +200,9 @@ import os from 'node:os';
 export const APP = 'http://localhost:5874/pages/e.html';
 export const APP2 = 'http://localhost:5874/pages/f.html';
 export const DEMO = 'http://localhost:5873';
-export const CAP = '<scratchpad>/formation/band-E/cap';
+const WAVE = process.env.WAVE; // the running wave's id: the one evidence root is .cache/evidence/<wave>/ (PLAN §1)
+if (!/^W-[0-9A-L]\.[0-9]+$/.test(WAVE ?? '')) throw new Error('run as WAVE=<wave id> node <probe>');
+export const CAP = `.cache/evidence/${WAVE}`;
 export const load = () => os.loadavg().map((x) => x.toFixed(2)).join('/');
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 export const ENG = { chromium, webkit };

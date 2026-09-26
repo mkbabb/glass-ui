@@ -22,7 +22,7 @@
 | L09-10 | writing style in consumer prose: spaced em dashes, ALL-CAPS emphasis, first-person decree, editorial snark in a public barrel |
 | L05a-22 | three demo comments cite the deleted CLAUDE.md |
 | L14-14 | provenance re-accreted in the periphery; 169 citations of deleted `proof:*` scripts |
-| #64 DECLARATION column | the 27 shadcn provenance lines in `src` (W-B.12's B12-G3, `waves/W-B.12.md:42`) |
+| #64 DECLARATION column | the 27 shadcn provenance lines in `src` (C2-G7; W-B.12's copy struck by fix-3, FB-18) |
 | #55 residue | the `BK #55` tags left in the tree (`census-register-b.md:45`) |
 | #7 (its F-63 cite) | `dock/styles/controls/icon-button.css:89` cites `proof:no-layout-animation`, which has no executable (`census-register-a.md:28`) |
 | `release.yml` header | `release.yml:13` dated bracket; the file's header after W-B.13's edit (`waves/W-B.13.md:35`) |
@@ -65,7 +65,7 @@ Measured in the scratch worktree at `26d193b7` with the E-10 detector of appendi
 | C2-G4 · MIGRATION is a version list | `node <appendix B> MIGRATION.md "$(npm view @mkbabb/glass-ui versions --json \| node -pe 'JSON.parse(require("fs").readFileSync(0)).join(",")')"` (in the suite with the published list as a checked-in fixture refreshed at each cut) | exit 0 | **exit 1**: `33 headings · 26 misses` |
 | C2-G5 · no prose as runtime data | `! grep -rq "DISSOLVE_DIALECTS\|dissolveDialect" src dist` | exit 0 | **exit 1**: `dissolveGrammar.ts:52,97`; `dist/motion-core.js` |
 | C2-G6 · consumer prose style | appendix A's STYLE arm | 0 | **exit 1**: `STYLE 2132 hits in 32 files` (1,520 spaced em dashes, 610 caps-emphasis, 2 first-person) |
-| C2-G7 · the shadcn declaration residue (W-B.12's B12-G3) | `test "$(git grep -ci shadcn -- src \| awk -F: '{s+=$2} END {print s+0}')" -eq 0` | exit 0 | **exit 1**: 27 |
+| C2-G7 · the shadcn declaration residue | `test "$(git grep -ci shadcn -- src \| awk -F: '{s+=$2} END {print s+0}')" -eq 0` | exit 0 | **exit 1**: 27 |
 | C2-G8 · hold line: no byte of paint moves | build at `<C2-base>` and at the wave; `diff <(cd a/dist && find . -name '*.css' -exec shasum {} + \| sort) <(cd b/dist && …)`, and the same over `*.js` excluding the `motion-core` chunk | empty | a hold line, not a born-RED. Its bite: any non-comment edit to a stylesheet (for example `--glass-saturate: 1.5` → `1.51` in `tokens/glass.css:79`) changes a CSS sha |
 
 Can each fail and pass? C2-G1 and C2-G6: appendix A's detector, run on a two-file fixture repo, prints `META 0 … STYLE 0` (exit 0); with one line `// [2026-09-22 · BK #17 W-COMMENT-DIET] ~~old~~` added to its `src/a.ts` and one README line with a spaced em dash, `ALWAYS` and a `docs/tranches/` cite, it prints `META 6 hits in 2 files … STYLE 2 hits` (exit 1), both run here. C2-G4: appendix B on a fixture with `## 2.0.0` and `## 1.0.0` → `0 misses`; with `## 1.5.0 — [2026-01-01 · BK]` added → `1 misses`, run here. C2-G1 alone could pass by deleting comments wholesale; C2-G3 does not stop that, and it need not: a codebase with fewer comments is within the rule, and W-A.2's roster bites still require each gate's explanation to live in its `invariant` field.

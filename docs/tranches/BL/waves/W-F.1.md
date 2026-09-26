@@ -113,7 +113,7 @@ Playwright WebKit: `page.goto: Page crashed` on `/navigation/tabs` (the known cr
 | F1-G5 · chevron and disclosures on one row | appendix A row G5 | the rotation's curve and clock name the same `--spring-*` row; the configurator region reads the disclosure's row | **`--ease-cartoon-punch` on `--spring-present-duration`; `present` vs `dock`** |
 | F1-G6 · L10-18 | appendix A row G6 | one `scheduleIdle`, one scroll-position read | **2 and 2** |
 | F1-G7 · the canvas clock continues | appendix B, `npx vitest run tests/motion/spring-one.test.ts -t F1-G7` | first frame after a 10 s park within 50 ms of the elapsed time at the park | **5.000 s → 1.000 s** |
-| F1-G8 · the attractor is bounded at any dt | appendix B `-t F1-G8`, dt 17/100/250/1000 ms | `|offset after| ≤ 1.05 × |offset before|` on every dt | **17 ms passes; 100 → 1.605, 250 → 12.130, 1000 → 200.076** |
+| F1-G8 · the attractor is bounded at any dt | appendix B `-t F1-G8`, dt 17/100/250/1000 ms | `\|offset after\| ≤ 1.05 × \|offset before\|` on every dt | **17 ms passes; 100 → 1.605, 250 → 12.130, 1000 → 200.076** |
 | F1-G9 · the tail in paint | appendix C, Chromium and Playwright WebKit, light and dark | step 98→100 % ≤ 1.5× step 96→98 % on the tab indicator and the accordion | **6.02 and 8.69 (Chromium); WebKit page crash** |
 
 Can each fail and pass? Every row fails at HEAD. G8's 17 ms case passes at HEAD. G3's bound is met by construction once the stops are divided by `y(T)` (the last segment then continues the previous slope). G9 is deterministic (a paused, seeked animation). The planted bite for G9 (W-A.3 twin): a style tag that sets the tab indicator's timing to the HEAD `--spring-dock` string; it must redden G9 on its ratio.

@@ -103,6 +103,7 @@ Each gate's exit code is read on its own.
 | G-L8-8 · P-6 | W-L.6's census on the release pack, exit 0, sha256 in FINAL.md | both | **exit 1**: 227 names with no reader |
 | G-L8-9 · cites resolve | `node scripts/tranche/cite-check.mjs docs/tranches/BL/FINAL.md v11.0.0`, and over `waves/*.md` | exit 0 | **fails**: FINAL.md absent. The checker bites today on BL's own census at HEAD (2 unqualified sibling cites) and passes BK's FINAL at its HEAD (8/8), so it can do both |
 | G-L8-10 · the hooks path | `d=$(git config --get core.hooksPath); test -z "$d" -o -d "$d"` | exit 0 | **exit 1**: points at the deleted `.githooks` |
+| G-L8-14 · no loop tooling is tracked at the close | `test "$(git ls-files docs/tranches/BL/design scripts/loops \| grep -cE '\.(mjs\|js\|ts\|cjs\|sh\|py)$')" -eq 0` | exit 0 | **exit 1**: 414 at `be1969ea` (fix-3: `design/structure` 329, `design/dock` 33, `design/tile` 29, `design/material` 23; `scripts/loops` absent). W-C.1 moves them to `scripts/loops/`, each loop's last wave deletes its dir; the gate reads both roots, so a move alone does not pass it. Replaces W-C.1's struck C1-G7 |
 | G-L8-12 · the owner's words | the wave record quotes the confirmation with its time, earlier than `git log -1 --format=%cI v11.0.0` | present and earlier | **absent** |
 | G-L8-13 · nothing carries | FINAL.md's carry-forward section has no row whose terminal is not one of LEDGER §0's four (BUILD, FOLD, BANKED with its re-trigger, RETIRE with its class), or an owner act named at its wave | holds | **absent** |
 

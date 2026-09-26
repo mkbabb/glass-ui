@@ -17,7 +17,7 @@
 |---|---|
 | #25 W-FIELD-WELL, L01a-25 | the well law unbuilt; the field fill opaque: decided here, BUILD from D3's converged rung |
 | #82 G-F2 | the opaque fill leaves the field's own blur inert |
-| UIA-V-234, UIA-V-431 | the opaque wells consumers saw (`INBOUND-MAP.md`, W-H.2 §1) |
+| UIA-V-234, UIA-V-431 | the opaque wells consumers saw (`INBOUND-MAP.md:350,358`); this wave is their one owner |
 | #56d | the σ admissibility of welled specimens under the frost detector (LEDGER:148, moved here from W-H.2's mechanism set) |
 
 ## 2 · The defect at HEAD
@@ -67,7 +67,7 @@ Captures under `.cache/evidence/W-H.5/`.
 
 ## 8 · Ledger rows
 
-Closes #25 (BUILD, decided here), L01a-25, #82's G-F2, #56d, UIA-V-234 and UIA-V-431.
+Closes #25 (BUILD, decided here), L01a-25, #82's G-F2 (ledger #82a), #56d, UIA-V-234 and UIA-V-431.
 
 ## 9 · Gestalt passes (P-1)
 

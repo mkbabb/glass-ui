@@ -337,7 +337,9 @@ import { chromium, webkit } from '/Users/mkbabb/Programming/glass-ui/node_module
 import os from 'node:os';
 import fs from 'node:fs';
 export const DEMO = process.env.DEMO || 'http://localhost:5961';
-export const CAP = process.env.CAP || new URL('../cap', import.meta.url).pathname;
+const WAVE = process.env.WAVE; // the running wave's id: the one evidence root is .cache/evidence/<wave>/ (PLAN §1)
+if (!/^W-[0-9A-L]\.[0-9]+$/.test(WAVE ?? '')) throw new Error('run as WAVE=<wave id> node <probe>');
+export const CAP = `.cache/evidence/${WAVE}`;
 export const load = () => os.loadavg().map((x) => x.toFixed(2)).join('/');
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 export const ENG = { chromium, webkit };

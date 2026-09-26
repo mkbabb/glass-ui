@@ -170,7 +170,9 @@ export const PORT = process.env.KAPP_PORT || '6272';
 export const APP = `http://localhost:${PORT}/pages/k.html`;
 export const SAPP = `http://localhost:${PORT}/pages/s.html`;
 export const DEMO = 'http://localhost:6271';
-export const CAP = '.cache/evidence/W-K.1/cap';
+const WAVE = process.env.WAVE; // the running wave's id: the one evidence root is .cache/evidence/<wave>/ (PLAN §1)
+if (!/^W-[0-9A-L]\.[0-9]+$/.test(WAVE ?? '')) throw new Error('run as WAVE=<wave id> node <probe>');
+export const CAP = `.cache/evidence/${WAVE}`;
 fs.mkdirSync(CAP, { recursive: true });
 export const load = () => os.loadavg().map((x) => x.toFixed(2)).join('/');
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

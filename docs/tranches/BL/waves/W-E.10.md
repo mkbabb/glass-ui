@@ -111,7 +111,7 @@ Can each fail and pass? Every browser row fails at HEAD except G7's `/forms/butt
   - a landing at 1440 (cards without previews, then with them);
   - the `/substrates` stills in both arms (yellow-green, then warm);
   - the phone-cell shell on `/forms/chip` at 390 (a 6 px strip, then the current tab shown);
-  - `short-320x256-*` (appendix A writes them; the HEAD set is at `scratchpad/formation/band-E/cap/e10/`);
+  - `short-320x256-*` (appendix A writes them with `WAVE=W-E.10` into `.cache/evidence/W-E.10/e10/`, the before set at `<E10-base>`; formation's HEAD set sat in a session scratchpad and is not evidence);
   - the configurator at 1440 and 390 before and after MOVE 1-4.
 
 ## 7 · MIGRATION rows

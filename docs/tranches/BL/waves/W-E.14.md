@@ -70,7 +70,7 @@ The aurora studio at 390×844 and 640×400, light and dark, Chromium (Playwright
 
 ## 8 · Ledger rows
 
-Closes C-13c (BUILD, decided here), R11, R4-02-07 and the `:390` latch.
+Closes C-13c (BUILD, decided here), R11 (ledger #49c), R4-02-07 and the `:390` latch.
 
 ## 9 · Gestalt passes (P-1)
 

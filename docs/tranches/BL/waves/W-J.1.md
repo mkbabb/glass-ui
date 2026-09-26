@@ -10,7 +10,7 @@
 | families | F-30b (whole) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
-| instruments | the D4 harness `docs/tranches/BL/design/tile/harness/` (`$H`), at HEAD the pass-1 harness (H1); the loop's H2 revision is in progress and uncommitted (`pass-2/H2.md`, `git status` shows 21 modified harness files and 4 untracked), so every HEAD number below is H1's, and the landing gates run H2 as the loop commits it. Two band-J probes (appendix A) read what the harness does not: the two-line ToggleGroupItem's corner (the registry's own born-RED, `audit/REGISTRY.md:652`) and the layout shift of the contrast carrier (PF-3). They land under `scripts/probes/band-J/` with `npm run probe:band-J` |
+| instruments | the D4 harness (`$H` = `scripts/loops/tile/harness/` at landing; W-C.1 §3 step 4 moves it from `docs/tranches/BL/design/tile/harness/`, where the HEAD readings were taken; PLAN §5 orders this wave after W-C.1), at HEAD the pass-1 harness (H1); the loop's H2 revision is in progress and uncommitted (`pass-2/H2.md`, `git status` shows 21 modified harness files and 4 untracked), so every HEAD number below is H1's, and the landing gates run H2 as the loop commits it. Two band-J probes (appendix A) read what the harness does not: the two-line ToggleGroupItem's corner (the registry's own born-RED, `audit/REGISTRY.md:652`) and the layout shift of the contrast carrier (PF-3). They land under `scripts/probes/band-J/` with `npm run probe:band-J` |
 | engines | Chromium 149.0.7827.55 headless. **Playwright WebKit** 26.5 headless (labelled so; it is not Safari). Real Safari: **UNMEASURED (owner's safaridriver checkbox)**; the harness's T-8 prints the one Safari cell as unmeasured (§2.2) |
 | machine | shared; load averages 37.71 / 42.91 / 46.42 at 18:36 and 41.68 / 39.97 / 43.63 at 18:41 local, printed beside the runs |
 
@@ -20,7 +20,7 @@
 |---|---|---|
 | F-30b members | L01a-23's multi-line half; R2-03-09 (O-58/N-9 in paint: `.toggle-group__item { border-radius: var(--radius-pill) }` pins two-line tiles to 9999px); R2-04-04's F-30b row | `audit/REGISTRY.md:640-652` |
 | inbound | O-58 PRESET-TILE-SHAPE (value.js relay for keyframes.js) and the 17 UIA rows the map puts on F-30b: UIA-KF-046, UIA-V-60, UIA-V-92, UIA-V-136, UIA-V-180, UIA-KF-047, UIA-F-85, UIA-F-100, UIA-V-219, UIA-V-332, UIA-V-360, UIA-KF-111, UIA-KF-156, UIA-F-141, UIA-V-510, UIA-V-515, UIA-V-201 | `audit/INBOUND.md:21`; `audit/INBOUND-MAP.md:66,121-139,163,544` |
-| inbound, handed from W-B.2 §3.6 | value.js O-65 (FW14H-OA50: -1 the Button/Badge stadium radius on a wrapped label, -2 a list-row primitive) and value.js O-67 (TILE-PRIMITIVE, beside O-58): the tile this wave lands is the list row, and its corner is T-1's (G1) and the two-row corner (G9). Their terminals are read against the converged Q-1 and Q-10 rulings with the 17 UIA rows (§3.1 obligation 2) |
+| inbound, handed from W-B.2 §3.6 | value.js O-65 (FW14H-OA50: -1 the Button/Badge stadium radius on a wrapped label, -2 a list-row primitive) and value.js O-67 (TILE-PRIMITIVE, beside O-58): the tile this wave lands is the list row, and its corner is T-1's (G1) and the two-row corner (G9). Their terminals are read against the converged Q-1 and Q-10 rulings with the 17 UIA rows (§3.1 obligation 2) | `W-B.2.md` §3.6 |
 | ledger | #84 W-TOGGLE-ROW (its two-line-item half; P4's contrast is F-21's, W-E.2); N-9 (the owner's "too rounded ... should be more card like"); O-58 | `ledger/census-register-b.md:69`; `ledger/census-carries-recap.md:88`; `audit/PROMPT-RECAP-SEED.md:51`; PLAN §7 row J |
 | loop floor | TF-1..TF-8 and floor items 1-5 as D4 settled them at pass 1 (`design/tile/REGISTRY.md:193-243`) | D4 REGISTRY §3 |
 
@@ -161,7 +161,7 @@ keyframes.js drops its two hand-set `--radius-field` overrides and any `rounded-
 Setup, in a scratch worktree carrying the candidate `src`:
 
 ```sh
-H=scripts/loops/tile/harness   # docs/tranches/BL/design/tile/harness until W-C.1 lands
+H=scripts/loops/tile/harness   # W-C.1 lands first (PLAN §5); no second path
 node $H/build.mjs <wt> --label j1 --out $OUT
 node $H/run.mjs --build $OUT/builds/j1 --out $OUT --webkit
 node scripts/probes/band-J/build.mjs <wt> j1 && node scripts/probes/band-J/tile.mjs <dist> <wt>

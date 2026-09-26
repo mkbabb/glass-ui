@@ -40,11 +40,13 @@ Measured here (appendix A, `perf.mjs`; appendix B, `sheet-passes.mjs`; 1440×900
 | `/foundations/typography` | 3 (2) | 360 | **2.00** |
 | `/containers/sheet`, closed | 13 (lenses counted without pseudo-elements) | 360 | **5.00** |
 | `/containers/sheet`, detented sheet open (RT-39C) | 16 | 360 | **6.00**: the detented sheet adds one pass per frame |
+
 | boot (390×844, 150 ms RTT, 1.6 Mbps down, 4× CPU; production `dist-demo`) | run 0 | run 1 |
 |---|---|---|
 | first-contentful-paint | **6,508 ms** | **6,432 ms** |
 | responseEnd / DOMContentLoaded / load | 202 / 4,690 / 5,046 ms | 198 / 4,667 / 5,016 ms |
 | bytes inside `#app` in the first HTML | **0** | 0 |
+
 | capability arm (`/`) | WebGPU adapter | WebGL context | `.dock-plate` `backdrop-filter` |
 |---|---|---|---|
 | GPU (Metal) | yes | yes | `blur(16px) saturate(1.2)` |

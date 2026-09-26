@@ -12,8 +12,8 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-0.4 | 0 | F-22 (split: O-78, O-81 (4)) | menu content on `z-popover`; `data-reveal` namespaced; menu-contract focus wait | — |
 | W-0.5 | 0 | F-63 (split: O-79) | MIGRATION: the 7.0.0 paper line and the Button variant → emphasis + tone table | — |
 | W-0.6 | 0 | F-65 (split: O-81 (5)) | constellation `z` from its own stream; the 3.13.0 draw order pinned | — |
-| W-0.8 | 0 | F-16 (split: O-83, O-84), F-29 (split: O-84a) | the dock surface: cap rest a measured length, the summary floor without the square lock, the metric value content-sized (owner-ratified exception to D2) | — |
-| W-0.9 | 0 | F-71 (split: O-74b) | the card title rung as a named scale token at its current size (name: OW-12) | — |
+| W-0.8 | 0 | F-16 (split: O-83) | the dock cap: the rest a measured length (owner-ratified exception to D2) | — |
+| W-0.9 | 0 | F-71 (split: O-74b) | the card title rung as a named scale token, `--type-card-title`, at its current size | — |
 | W-0.10 | 0 | F-71 (split: O-82) | one declared `reference` on PopoverContent and TooltipContent | — |
 | W-0.7 | 0 | F-68 (split: 10.2.0 relay) | the 10.2.0 cut and the consumer relay | — |
 | W-A.1 | A | F-05 | visual harness repair | — |
@@ -30,7 +30,7 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-B.6 | B | F-13 (split: #51) | decide HandMark's colour windows and π-SCROLL | — |
 | W-B.7 | B | F-13 (split: #44) | decide the tags field | — |
 | W-B.8 | B | F-13 (split: #28) | decide DotRing's export and RT-28D | — |
-| W-B.9 | B | F-13 (split: #45) | decide the constellation | — |
+| W-B.9 | B | F-13 (split: #45) | decide the constellation and move it onto WebGPU (built here) | — |
 | W-B.10 | B | F-13 (split: #46) | decide the Σwidth denominator and `useAnisotropicExtent` | — |
 | W-B.11 | B | F-13 (split: #78) | decide the design-canon re-author | — |
 | W-B.12 | B | F-13 (split: GAP-B2b) | decide the shadcn IDIOM-CLEARED column | — |
@@ -65,7 +65,7 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-F.5 | F | F-79 | W-DIRECTION | — |
 | W-F.6 | F | F-45 | compositor-only idle life | — |
 | W-F.7 | F | F-73 | W-THEME-SWAP | — |
-| W-G.1 | G | F-47 | W-ONE-ENGINE: WGSL cascade, WebGL2 and Canvas2D deleted, device limits, CSS ground, the constellation on WebGPU | — |
+| W-G.1 | G | F-47 | W-ONE-ENGINE: WGSL cascade, WebGL2 and Canvas2D deleted, device limits, CSS ground (the constellation moved by W-B.9) | — |
 | W-G.2 | G | F-49 | one device-loss subscription | — |
 | W-G.3 | G | F-50 (remainder) | W-LUMA-EVENTED and W-AURORA-CLOCK: no readback, no sourceless loop, a 30 Hz clock | — |
 | W-G.4 | G | F-48 (split: aurora) | W-AURORA-GREENFIELD | — |
@@ -77,7 +77,7 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-H.3 | H | F-14 (split: R2-06-02) | W-GLASS-REGISTER-DECIDE on the converged ladder | — |
 | W-H.4 | H | F-53 | W-PERF: count gates, boot shell, the low-power register decide | — |
 | W-H.5 | H | F-31 (split: #25, #82 G-F2) | the transmissive well (a disease row) | D3 |
-| W-I.1 | I | F-16, F-17, F-18, F-71 (split: badge seat) | the dock: plate, run and paint, extent, collapsed form, edges, scroll compact, rim, O-85's fold, W-0.8's cures kept or superseded | D2 |
+| W-I.1 | I | F-16, F-17, F-18, F-71 (split: badge seat), F-29 (split: O-84a) | the dock: plate, run and paint, extent, collapsed form (with O-84), edges, scroll compact, rim, O-85's fold, the metric token (O-84a), W-0.8's cap cure kept or superseded | D2 |
 | W-I.2 | I | F-19 | one marker-based member query; toolbar name | — |
 | W-I.3 | I | F-77 | W-HOVER-GUARD, CSS and script | — |
 | W-I.4 | I | F-14 (split: R2-06-01) | W-DOCK-COMPOSE-DECIDE inside D2 | D2 |

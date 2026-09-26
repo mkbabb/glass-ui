@@ -10,7 +10,7 @@
 | families | F-23 (whole), F-24 (remainder after W-0.1's menu-row split), F-75 (whole) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
-| instruments | the D3 battery `docs/tranches/BL/design/material/harness/` (`$H` below; W-C.1 moves tooling out of `docs/`, and the path follows it) and the band-H paint probe (appendix A), which lands as `scripts/probes/band-H/` with `npm run probe:band-H` |
+| instruments | the D3 battery, `$H` = `scripts/loops/material/harness/` at landing (W-C.1 §3 step 4 moves it from `docs/tranches/BL/design/material/harness/`, where the HEAD readings below were taken; PLAN §5 orders this wave after W-C.1) and the band-H paint probe (appendix A), which lands as `scripts/probes/band-H/` with `npm run probe:band-H` |
 | engines | Chromium 149.0.7827.55 is the gate engine. Playwright WebKit 26.5 rows are recorded and labelled "Playwright WebKit (paint-only: headless paints no `backdrop-filter`, and `GlassDock` crashes it)". Real-Safari cells are UNMEASURED (owner's safaridriver checkbox, OW-3) |
 
 ## 1 · What it closes
@@ -25,6 +25,7 @@
 | inbound, F-24 | UIA-F-78, UIA-F-125, UIA-KF-236, UIA-KF-240, UIA-V-392, UIA-V-613, UIA-F-127, UIA-V-350, UIA-F-131, UIA-V-666, UIA-KF-286, UIA-F-90, UIA-KF-042, UIA-KF-106, UIA-F-135, UIA-V-594, UIA-KF-226, UIA-F-143, UIA-F-144; O-66 §1's menu item in dark and under PRT/PCM (the light row is W-0.1's) | `INBOUND-MAP.md:159-456,624` |
 | C-2 row 1 | the live dock's near-clear veil (/0.14 in dark with text reading through); chicago's `max(<token>, 0.62)` floor is its consumer override | `INBOUND-MAP.md:550`; `ledger/CENSUS.md` |
 | ledger | #10's five dark-α ink and fill measurements (routed to F-23, `ledger/census-register-a.md:30`); #80's remainder (dark primary and secondary render alike, `census-register-b.md:65`); #83's perimeter half (the FC rows are F-39's, W-K.4) | PLAN §7 band H |
+| O-76 rider, from W-0.2 §8 | if W-0.2 did not ride 10.2.0 (D3 unconverged at the cut, or W-0.2 G1 red on W-0.1's plate), W-0.2 lands in 11.0.0 with this wave: its own spec, its gates G1-G3 unchanged, and the pressed register's mix values from the same D3 convergence this wave builds on. The 11.0.0 CHANGELOG then carries W-0.2 §7's line. If W-0.2 rode 10.2.0, this row is recorded "landed in 10.2.0" | `W-0.2.md` §8; CUR:45 |
 
 **How the dark members close.** L03a-09 (the veil gone in dark) closes on W-H.2's M-6 row, the separable dark ladder; this wave records it as an F-24 member. L03b-06 (hero fields ignore dark) closes on G1's dark aurora rows for the stage prose and on the demo hero configs taking a dark twin (`demo/chassis/hero/aurora-hero.ts:250,333`, `StoryHero.vue:60`, `DockStage.vue:49`). L03a-14 does not reproduce as a separability defect (§2); its remainder is UIA-KF-240's direction question, closed by D3's ruling and G17.
 
@@ -133,7 +134,7 @@ A mechanism a loop is still choosing is built by that loop's wave (PLAN §1). Th
 All gates read painted pixels unless the row says "static" (P-3). Setup, in a scratch worktree carrying the candidate `src`:
 
 ```sh
-export D3_OUT=.cache/evidence/W-H.1/d3out; H=docs/tranches/BL/design/material/harness
+export D3_OUT=.cache/evidence/W-H.1/d3out; H=scripts/loops/material/harness
 node $H/run.mjs <wt> --label h1                         # build, capture, every witness
 node scripts/probes/band-H/build.mjs <wt> h1 && ENGINES=chromium,webkit node scripts/probes/band-H/measure.mjs h1
 ```

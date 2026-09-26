@@ -73,7 +73,7 @@ Every FAIL row in §2 is a gate; it passes at the inverted reading (within 0.5 p
 
 | id | gate | passes when | HEAD |
 |---|---|---|---|
-| K7-G13 (hold line) | on a collapsing GlassDock with a `DockTrigger for="select"`, first expand: `document.getAnimations()` filtered to the trigger's `::before` with `opacity` in its keyframes, sampled per frame for 2.5 s | at most 1 running in any frame | holds at `183e021a`: 0 (Chromium, fix-2; Playwright WebKit crashes on GlassDock). Bite: plant a keyframe animation on `.dock-trigger::before` animating `opacity` beside the material's transition; the max reads 2 |
+| K7-G13 (hold line) | on a collapsing GlassDock with a `DockTrigger for="select"`, first expand: `document.getAnimations()` filtered to the trigger's `::before` with `opacity` in its keyframes, sampled per frame for 2.5 s | at most 1 running in any frame (`maxRunning <= 1`; fix-2's probe prints `pass` on `=== 1` at `fix-2.md:557`, and the wave's wired spec takes this row's criterion) | holds at `be1969ea`: 0 running, nothing seen (Chromium, fix-3 re-run of fix-2's probe; Playwright WebKit crashes on GlassDock). The material's own transition is not observed running headless, so the bite plants two owners: `.dock-trigger::before { animation: k7-plant-a 1s linear infinite, k7-plant-b 1.3s linear infinite }` (two `opacity` keyframes) reads `maxRunning 2` → red (fix-3, run). One planted keyframe alone reads 1 and still passes, so it is not the bite |
 | K7-S | `! rg -q 'ready\?\.catch\(\(\) => \{\}\)' src/composables/motion/core/useViewTransition.ts` | exit 0 | **exit 1** (`:168`) |
 
 ## 6 · π and DELTA obligations

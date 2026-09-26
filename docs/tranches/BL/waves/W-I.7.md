@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `183e021a` (fix-2 re-ran the three gates) |
 | ships in | 11.0.0 |
-| loop | D2 dock: `dock/styles/run.css` is D2's route's to own; this wave lands the box fix in the converged run |
+| loop | D2 dock: `dock/styles/run.css` is D2's route's to own. This wave lands after D2's gate and before W-I.1 (PLAN §5, fix-3): the box fix goes on the run as it stands, and W-I.1's converged carrier keeps I7-G1..G3 true on its own rules (§3 item 3) |
 | families | F-21 split: C-8, a disease row (BK FINAL §7 carry, open at two closes, LEDGER:230), with R2-02-04 and R3-02-09, the same defect class in `run.css` |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
@@ -42,7 +42,7 @@ Read at `183e021a`: `run.css:357` and `:366` are `transition: inline-size var(--
 | I7-G1 · seat transition | `! grep -qnE '^\s*transition: inline-size' src/components/dock/styles/run.css` | exit 0 | **exit 1** (`run.css:357,366`) |
 | I7-G2 · C-8 | `test "$(rg -c 'box-sizing:\s*content-box' src \| wc -l)" -eq 0` | exit 0 | **exit 1** (`run.css:250`) |
 | I7-G3 · ring reserve | `! grep -q 'padding-block: var(--dock-ring-reserve)' src/components/dock/styles/run.css` | exit 0 | **exit 1** (`run.css:251`) |
-| I7-G4 · the rings are whole | W-I.1 G7's edge rows (the first and last seats' focus rings, D and DK), both engines | PASS | inside W-I.1 G7's **FAIL** (6/18 Chromium) |
+| I7-G4 · the rings are whole | the D2 harness rows for the first and last seats' focus rings, D and DK (the rows W-I.1 G7 also reads), run by this wave on its own candidate (`$H` = `scripts/loops/dock/harness/`, PLAN §5 orders this wave after W-C.1), both engines | PASS | **FAIL**, inside W-I.1 G7's 6/18 Chromium at HEAD. W-I.1 lands after this wave, so its G7 holds these rows rather than building their cure |
 
 ## 6 · π and DELTA obligations
 

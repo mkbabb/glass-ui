@@ -10,7 +10,7 @@
 | families | F-31 (remainder after W-0.1's veil-token and control-surface split), with its ledger members from census GAP-1 (#7's remainder, #39's RT-39G) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
-| instruments | the D3 battery (`$H` = `docs/tranches/BL/design/material/harness/`, moved with W-C.1); the band-H paint probe (W-H.1 appendix A: the `lens` scene and the `H2/*` rows); the route frost detector (appendix A here); both land under `scripts/probes/band-H/` |
+| instruments | the D3 battery (`$H` = `scripts/loops/material/harness/` at landing; W-C.1 §3 step 4 moves it from `docs/tranches/BL/design/material/harness/`, where the HEAD readings were taken; PLAN §5 orders this wave after W-C.1); the band-H paint probe (W-H.1 appendix A: the `lens` scene and the `H2/*` rows); the route frost detector (appendix A here); both land under `scripts/probes/band-H/` |
 | engines | Chromium 149.0.7827.55 is the gate engine. Playwright WebKit 26.5 paints no `backdrop-filter` headless, so it cannot witness a lens in either direction; its rows are recorded as paint-only. Real-Safari cells are UNMEASURED (OW-3) |
 
 ## 1 · What it closes
@@ -28,7 +28,7 @@
 | #25, #82 G-F2 | the well: W-H.5's, a disease row's own wave (fix-2, FA-21). This wave's detector reads the well cells W-H.5 cures | `census-register-a.md:37`; `census-register-b.md:67` |
 | #33 | π cells 5-7 and G-NO-WHITE-SPECULAR against `--glass-material-rim` (Alert moved into the rule) | `census-register-a.md:45` |
 | #38 RT-38C | the Dialog veil blur reads the 20 px floating radius against MOTION-CANON's 11 px; the dark rim | `census-register-a.md:47` |
-| inbound | UIA-KF-268, UIA-F-122, UIA-V-297, UIA-KF-252, UIA-KF-255 (chrome calm), UIA-V-234, UIA-V-431 (the opaque wells), UIA-F-230 (the loupe veil frosts its host row), UIA-V-198 (the dark card pole over a red ground); N-13's remainder (the dark dock plate within 0.015 of the page) | `INBOUND-MAP.md:215,265,285,299,301,350,358,376,437`; `census-carries-recap.md:96` |
+| inbound | UIA-KF-268, UIA-F-122, UIA-V-297, UIA-KF-252, UIA-KF-255 (chrome calm), UIA-F-230 (the loupe veil frosts its host row), UIA-V-198 (the dark card pole over a red ground); N-13's remainder (the dark dock plate within 0.015 of the page) | `INBOUND-MAP.md:215,265,285,299,301,350,358,376,437`; `census-carries-recap.md:96` |
 | owner | OW-8, the W-FROST-II glance: the light frost at every level with F48's blur ladder, each with a paired π | `ledger/CENSUS.md:232` |
 
 **Closed elsewhere.** O-62, O-66 §1, O-66a, UIA-F-216 and UIA-F-27's plate half close in W-0.1 (the light veil at the token and the one field surface). A2-KE-L3-4 cites O-66a and closes with it. The ink on every plate is W-H.1's. M-7's cure (`contain: paint` removed) is W-E.2's; this wave holds it.

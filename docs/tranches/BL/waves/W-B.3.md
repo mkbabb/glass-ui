@@ -22,7 +22,7 @@
 | R2-06-05 | motion outside the dock: a coverage statement, every measured row already placed; closes on the carry |
 | R2-06-07 | the four cured or retired asks leave the open list with their cites |
 | GAP-C1 (D-3) | "the eight laws" have no text of record |
-| W-H.3's S10 (colourful, audacious pops within proportion; BC O11, BC H8), handed from W-H.3 §3 | a design law, not a register: it is D-3's cartoon-technicolor clause and closes on §3.4's text of record (B3-G4) |
+| W-H.3's S10 (colourful, audacious pops within proportion; BC O11, BC H8), handed from W-H.3 §3 | a design law, not a register: it is D-3's cartoon-technicolor clause and closes on §3.4's text of record (B3-G5) |
 
 ## 2 · The defect at HEAD
 
@@ -36,13 +36,13 @@
 1. **`docs/tranches/BL/ledger/RECAP.md`**: one row per owner ask in every corpus the seed names plus the two L05a-14 adds, `| corpus | row id | owner words (short quote) | HEAD | terminal | BL wave or DECLINE | owner quote for a DECLINE or RETIRE |`. The 89 laundered BI rows (L05b-01's probe list) are re-routed by subject: a governance P-wave is never a terminal for an ask whose subject is a component, a motion or a surface. An ask whose subject is cured cites the file and line (R2-06-07's four).
 2. **`scripts/tranche/verify-recap.mjs <tranche-dir>`**: reads each corpus's row ids from its own table (the id patterns are listed in the script, one per corpus), exits 1 when an id has no RECAP row, when a terminal names a wave missing from `waves/INDEX.md`, or when a DECLINE or RETIRE carries no owner quote and no owner-docket row. It replaces the unbound `G-ROW-HOMED` seat (the register itself goes in W-A.2). Planted bite: delete one BD R row from RECAP.md → exit 1 naming it.
 3. **L05b-19, "many more examples"**: BUILD, folded into W-E.10 (the demo remainder: specimens and a size ladder, 10 of 80 cards at HEAD), rebuilt on the shipped API. The deletion at `98b52613` removed a playground on a retired API; the owner's ask stands.
-4. **D-3's text of record, ruled.** D-3 is answered by `DESIGN.md` "Liquid Glass design language": the seven precepts §L1-§L7 and the one universal law §L4 states ("Liquid Weight is Universal", `DESIGN.md:113`, with the twelve principles as its taxonomy). That is the eight: seven precepts and one law over them. The BD edicts wave encoded them there. The seed's D-3 line and each loop's standing-law list cite `DESIGN.md §L1-§L7` by section. The ruling goes to the owner docket (OW-7's glance list gains one line: "the eight laws are DESIGN.md §L1-§L7 plus Liquid Weight is Universal"), default standing unless the owner names a different eight; a different answer is written into DESIGN.md as its own section in this wave's successor record, and the citations follow it. W-C.3's doc-truth invariants keep DESIGN.md's token cites true (W-B.11).
+4. **D-3's text of record, ruled.** D-3 is answered by `DESIGN.md` "Liquid Glass design language": the seven precepts §L1-§L7 and the one universal law §L4 states ("Liquid Weight is Universal", `DESIGN.md:113`, with the twelve principles as its taxonomy). That is the eight: seven precepts and one law over them. The BD edicts wave encoded them there. The seed's D-3 line cites `DESIGN.md §L1-§L7` by section. The seed is the one source of record for the standing law (the loops' standing-law lists read it, `PROMPT-RECAP-SEED.md` header), so no loop document is edited: a copy of the cite in four `PORTFOLIO.md` files would be derived data a critic could not converge over (P-3). The ruling goes to the owner docket (OW-7's glance list gains one line: "the eight laws are DESIGN.md §L1-§L7 plus Liquid Weight is Universal"), default standing unless the owner names a different eight; a different answer is written into DESIGN.md as its own section in this wave's successor record, and the citations follow it. W-C.3's doc-truth invariants keep DESIGN.md's token cites true (W-B.11).
 5. **The seed gains** the standing asks L05b-16 names, each with its source line: writing style (plain, no editorializing), browser work through the devtools and Playwright MCPs, design through DesignSync under Opus seats while Fable is withheld (`CHARTER.md:3-5`, which answers L05a-21), critics default to "wrong until measured", modern web guidance (E-2's target engines). The charter's Fable routing (`CHARTER.md:40,70,88`) is recorded as superseded by the owner's words at `CHARTER.md:3-5` in one seed line.
 
 ## 4 · Files it touches
 
 - New: `docs/tranches/BL/ledger/RECAP.md`, `scripts/tranche/verify-recap.mjs`.
-- Edited: `docs/tranches/BL/audit/PROMPT-RECAP-SEED.md`, the standing-law lines of `docs/tranches/BL/design/{structure,dock,material,tile}/PORTFOLIO.md` (one citation each; no loop decision is touched), `docs/tranches/BL/LEDGER.md`.
+- Edited: `docs/tranches/BL/audit/PROMPT-RECAP-SEED.md`, `docs/tranches/BL/LEDGER.md`. Nothing under `design/` (the loops own it).
 
 ## 5 · Acceptance gates
 
@@ -51,7 +51,7 @@
 | B3-G1 · the carry exists | `test -f docs/tranches/BL/ledger/RECAP.md` | exit 0 | **exit 1** |
 | B3-G2 · every ask carried | `node scripts/tranche/verify-recap.mjs docs/tranches/BL` | exit 0 | **exit 1**: `Cannot find module …/verify-recap.mjs` |
 | B3-G3 · the detector bites | B3-G2 on a copy with one BD `R` row removed, and on a copy with one DECLINE's quote blanked | exit 1 each | absent |
-| B3-G4 · the loops cite D-3's text | `for d in structure dock material tile; do grep -q 'DESIGN.md §L' docs/tranches/BL/design/$d/PORTFOLIO.md \|\| exit 1; done` | exit 0 | **exit 1**: `no text-of-record cite: structure` |
+| ~~B3-G4~~ | struck (fix-3, FB-05): it grepped four loop documents for a string, passed on any mention, and measured no enactment. The cite's one home is the seed (B3-G5) | — | — |
 | B3-G5 · the seed cites it | `grep -n 'D-3' docs/tranches/BL/audit/PROMPT-RECAP-SEED.md \| grep -q 'DESIGN.md'` | exit 0 | **exit 1** |
 | B3-G6 · the seed carries the standing asks | `test "$(grep -ciE 'writing style\|devtools\|DesignSync\|modern-web' docs/tranches/BL/audit/PROMPT-RECAP-SEED.md)" -ge 4` | exit 0 | **exit 1**: 0 |
 
@@ -65,6 +65,6 @@ None.
 
 ## 8 · Ledger rows
 
-- N-3 (recap all prompts) closes here; D-3 closes on §3.4 with the owner docket line; GAP-C1 closes; W-H.3's S10 closes with D-3 (B3-G4).
+- N-3 (recap all prompts) closes here; D-3 closes on §3.4 with the owner docket line; GAP-C1 closes; W-H.3's S10 closes with D-3 (B3-G5).
 - #24 and #71 carry their subject rows (RT-24C/D, RT-71A) to W-H.3 through this file; their terminal is W-H.3's.
 - F-14's members in §1 close; R2-06-01/-02/-03 and R3-01-16 close in W-I.4, W-H.3, W-B.14 and W-B.15.

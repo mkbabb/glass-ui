@@ -23,6 +23,8 @@
 | UIA-F-147, UIA-V-549, the 25.9 px label | the segmented label on `--type-caption` (12.2 px) beside a 21 px button; the 25.9 px control label is display-1 read at the heading floor |
 | A2-KE-L2-6, G-23 | compact dock seats and the slider thumb have no 44 px coarse hit area |
 | UIA-V-225 | the menu row is floored at 44 px on a fine pointer |
+| A2-KE-L2-14, A2-FO-L2-18, O-74 E-5 | the micro floor: `--type-micro` is a fixed 11 px (`typography/scale.css:86`) on every pointer, and keyframes.js, fourier and value.js set readable text in it (`text-micro`). The ask's cure is a 12 px floor under a coarse pointer (`valuejs-outbound-2026-09-24-audit-2.md:141-142`, erratum E-5) |
+| A2-FO-L2-6 | the SegmentedTabs strip's buttons have no coarse hit area: only the mobile trigger carries `data-control-target` (`tabs/SegmentedTabs.vue:219`) |
 
 ## 2 · The defect at HEAD
 
@@ -53,7 +55,8 @@ Local width queries that key density on the viewport, not the seat: `labeled-fie
    - `--type-display-1`'s floor moves from `1.618rem` to the title rung (`2.058rem`), so display-1 exceeds heading at every width. This also closes the 25.9 px label.
    - SegmentedTabs labels read `--control-text` (UIA-F-147, UIA-V-549).
    - `--ui-scale` keeps its geometry role for control heights. It is out of the type path.
-6. **Coarse hit areas (G-23, A2-KE-L2-6).** W-E.2 §3.6's coarse `::after` hit area of `max(100%, var(--touch-target))` applies to the slider thumb (`--slider-touch-target` is deleted) and to compact dock seats. The `:not(.dock-icon-button--compact)` exclusion at `touch-floor.css:25` goes. The dock seat's box does not change, so D2's run geometry is untouched.
+   - The micro floor: under `(pointer: coarse)` `--type-micro` reads `0.75rem` (12 px), the ask's own cure (A2-KE-L2-14, A2-FO-L2-18, O-74 E-5). On a fine pointer it stays 11 px.
+6. **Coarse hit areas (G-23, A2-KE-L2-6).** W-E.2 §3.6's coarse `::after` hit area of `max(100%, var(--touch-target))` applies to the slider thumb (`--slider-touch-target` is deleted), to compact dock seats, and to the SegmentedTabs strip's buttons (A2-FO-L2-6). The `:not(.dock-icon-button--compact)` exclusion at `touch-floor.css:25` goes. The dock seat's box does not change, so D2's run geometry is untouched.
 7. **The coarse floor is coarse-only (UIA-V-225).** `menu.css:12` becomes `min-block-size: 2rem`. The coarse row gets the hit area from §3.6, not a taller box.
 
 ## 4 · Files it touches
@@ -79,6 +82,8 @@ Local width queries that key density on the viewport, not the seat: `labeled-fie
 | E7-G13 · the ✕ on the title line (UIA-F-229) | the same scene: close-button centre y against the title line's centre y | within 1 px | **FAIL**, both engines: 398.7 vs 392 (390), 416.3 vs 412.1 (1440) |
 | E7-G14 · the separator meets the plate (UIA-V-523) | scene `e7menu`: separator ends against the plate's inner edges | gap 0 each side | **FAIL**, both engines, both cells: 8 px each side |
 | E7-G15 · the lg glyph on the label's rung (UIA-F-221) | scene `e7rung`: Button `size=lg` glyph box against its label font size | glyph ≤ 1.25 × label | **FAIL** at coarse 390, both engines: 24 vs 16 (1.5); 1440 passes (16 vs 18.608) |
+| E7-G17 · the micro floor (A2-KE-L2-14, A2-FO-L2-18, O-74 E-5) | fix-3's probe (`formation-audit/fix-3.md` appendix Q1): computed `font-size` of a `.text-micro` span, coarse 390 (`hasTouch`, `isMobile`) and fine 1440 | ≥ 12 px at coarse 390; 11 px at fine 1440 | **FAIL** at coarse 390, both engines: 11 (fix-3, `be1969ea`). A planted `@media (pointer: coarse) { :root { --type-micro: 0.75rem } }` reads 12, fine 1440 stays 11 |
+| E7-G18 · the strip's coarse hit (A2-FO-L2-6) | the same probe: the second SegmentedTabs strip button, `elementFromPoint` 21 px from its centre on four sides, coarse 390 | 4 of 4 | **FAIL**, both engines: 2 of 4, box 65.5 × 26.3 (fix-3). A planted coarse `::after` of `max(100%, 2.75rem)` on `.segmented-tab` reads 4 of 4 |
 | E7-G16 · one sm rung (UIA-F-222) | the same scene: Button `sm` height against NumberField `sm` height | equal | **FAIL** at coarse 390, both engines: 44 vs 54; 1440 passes (36, 36) |
 
 **The mechanism rows.** Every F-29 row the LEDGER marks `[M]` is closed by one gate here or is ruled:
@@ -94,10 +99,16 @@ Local width queries that key density on the viewport, not the seat: `labeled-fie
 | UIA-V-548 | E7-G9 for the width-query law; the Dialog header flip itself is RETIRE CURED at HEAD (`dialog/styles.css:36-41` `text-align: start` at every width; `DialogHeader.vue:9-11`) |
 | UIA-V-444, UIA-V-636, UIA-V-328's footer leg | RETIRE CURED at HEAD for the stacking: the footer is a row at every width (`dialog/styles.css:90-95`); their 60 px height is E7-G5's and E7-G16's |
 | UIA-V-236, UIA-KF-243, UIA-F-107, UIA-F-229, UIA-V-523, UIA-F-221, UIA-F-222 | E7-G10 to E7-G16 |
-| UIA-KF-147 | RETIRE NOT-REPRODUCED: the library's shortcut is 18.27 px under a 21 px label at coarse 390 and 14.38 under 16.4 at 1440 (scene `e7menu`, both engines); the 11 px caps are the consumer's own. Re-trigger: a `DropdownMenuShortcut` under 0.8 × its row's label |
+| A2-KE-L3-1 (segmented on another type axis) | E7-G6 |
+| A2-KE-L2-9 (the field reads 14 px) | E7-G5 (input ≥ 16) |
+| A2-VA-L3-6, A2-KE-L3-2, A2-FO-L3-14, A2-VA-L3-1 (E-2's one coarse type model: control text past the headings, headings off `--ui-scale`, labels out-ranking the h1, the display-1 floor) | E7-G5 |
+| A2-KE-L2-14, A2-FO-L2-18, O-74 E-5 (the micro floor) | E7-G17 |
+| A2-FO-L2-6 (the strip's coarse hit) | E7-G18 |
+| A2-FO-L2-14 (SegmentedTabs has no overflow mode) | W-E.9, E9-G5, with UIA-F-41 |
+| UIA-KF-147 | RETIRE NOT-REPRODUCED for its shortcut clause (its micro-rung clause is A2-KE-L2-14's, E7-G17): the library's shortcut is 18.27 px under a 21 px label at coarse 390 and 14.38 under 16.4 at 1440 (scene `e7menu`, both engines); the 11 px caps are the consumer's own. Re-trigger: a `DropdownMenuShortcut` under 0.8 × its row's label |
 | UIA-KF-304 | RETIRE ANSWERED (consumer-side): the library ships no copyable-literal part; the wrap policy is the consumer's element |
 | UIA-F-41 | W-E.9 (E9-G5, SegmentedTabs overflow) |
-| UIA-F-105, UIA-KF-215 | W-0.8 (the Metric inline policy, G3 and G6) |
+| UIA-F-105, UIA-KF-215 | W-I.1 (the Metric inline policy with O-84a, G28 and G30) |
 
 Can each fail and pass? Four G1 cells pass at HEAD (the controls). Every other row fails. G9 is static. The `PI_PLANT` bite for G1 is `:root{--space-family:0.75rem}` applied at 1440, which moves a pad that should now be corner-derived only if a plate still reads the gap token.
 

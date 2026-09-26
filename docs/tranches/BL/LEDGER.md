@@ -8,7 +8,7 @@
 | inputs, read in full | `CHARTER.md`; `FORMATION-PROGRESS.md` (the carried obligations, lines 30-49, and the dated rulings, lines 75-80); `PLAN.md`; `waves/INDEX.md`; the "What it closes" and ledger sections of all 90 wave specs, and the cure sections of W-B.1, W-B.2, W-0.3, W-0.4, W-I.1, W-L.1, W-L.8; `ledger/CENSUS.md` and its three seat files; `BK/FINAL.md` §7; `audit/PROMPT-RECAP-SEED.md`; `audit/INBOUND.md`; `audit/INBOUND-MAP.md` (every row table, parsed by script: 442 rows); `audit/REGISTRY.md` (F-11 to F-15, the round-6 gap corrections) |
 | commands run here | `plutil -p ~/Library/WebDriver/com.apple.Safari.plist` → `AllowRemoteAutomation => false`, mtime `Sep 17 18:51:49 2026`; `npm view @mkbabb/value.js version` → `4.0.0`; `test -f docs/tranches/BL/design/material/REGISTRY.md` → absent (D3 has no registry); a parser over `INBOUND-MAP.md` (442 rows, 0 duplicate ids) and a matcher of every row id against the 90 wave specs, with abbreviated lists (`UIA-V-85, -263, -512`) expanded |
 | fences | no source edit, no git write, no build; the one write is this file |
-| amended | formation fix seat 2 (`formation-audit/fix-2.md`): OW-9 split per wave and OW-12 added (§4); every UNPLACED row placed (§8); every `[M]` row names its gate or its RETIRE; §9 recounted |
+| amended | formation fix seat 2 (`formation-audit/fix-2.md`): OW-9 split per wave and OW-12 added (§4); every UNPLACED row placed (§8); every `[M]` row names its gate or its RETIRE; §9 recounted; fix seat 3 (`formation-audit/fix-3.md`): rows re-pointed to the wave that carries them (#49c, #82a, UIA-V-234, UIA-V-431, #46b, #67c, O-84, O-84a, UIA-F-105, UIA-KF-215, #45b, A2-FO-L2-14), the 18 `[G]` rows gated or retired, OW-12 retired, §9 recounted |
 
 Short cites: `a:n`, `b:n`, `c:n` are lines of `ledger/census-register-a.md`, `census-register-b.md`, `census-carries-recap.md`; `CEN:n` is `ledger/CENSUS.md`; `CUR:n` is `FORMATION-PROGRESS.md`; `IN:n` is `audit/INBOUND.md`; `IMAP:n` is `audit/INBOUND-MAP.md`; `FIN:n` is `BK/FINAL.md`; `CH:n` is `CHARTER.md`; `W-x.n §k` is a section of `waves/W-x.n.md`.
 
@@ -108,16 +108,16 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | #43 | a:50 | OPEN | BUILD | W-E.6 | seat | DISEASE, 3 closes, decided in W-E.6 (own: W-CHIP, with F-26 and F-27); W-E.6 §8 |
 | #44 | a:51 | OPEN | RETIRE | W-B.7 | seat | DISEASE, 3 closes, decided in W-B.7 (own): the subject was deleted at `a8a6f66b`, 0 consumers across siblings; W-B.7 removes its tombstones from `src` |
 | #45a | a:52 | OPEN | BUILD | W-B.9 | seat | DISEASE, 3 closes, decided in W-B.9 (own): BUILD on the one engine with two live consumers |
-| #45b | a:52 | OPEN | BUILD | W-G.1 | seat | the constellation off `useCanvas2D` onto the one engine (B9-G1, B9-G2); W-G.1 §9 |
+| #45b | a:52 | OPEN | BUILD | W-B.9 | seat | the constellation off `useCanvas2D` onto the shared WebGPU device, built in the disease row's own wave (B9-G1, B9-G2; fix-3, FB-18) |
 | #46a | a:53 | PARTIAL | BUILD | W-A.6 | seat · OW-3 | the real-Safari and 390×844 coarse cells (W-A.6 §8) |
-| #46b | a:53 | PARTIAL | FOLD | W-B.10 | seat · OW-6 | DISEASE, 3 closes, decided in W-B.10 (own): the Σwidth denominator kept (OW-6 docket), `useAnisotropicExtent` handed to loop D2 |
+| #46b | a:53 | PARTIAL | FOLD | W-B.10 | seat · OW-6 | DISEASE, 3 closes, decided in W-B.10 (own): the Σwidth denominator kept (OW-6 docket, B10-G2), `useAnisotropicExtent` folded into W-I.6 as hallmark 1's candidate mechanism (W-I.6 §1) |
 | #46c | a:53 | PARTIAL | RETIRE | — | seat | "STAYS DIRTY" is false at HEAD (`git status --porcelain src` empty; F-12) |
 | #47a | a:54 | PARTIAL | BUILD | W-I.1 | seat | `data-dock-state`, the `g-dock-lattice.test.ts:925` latch subject, and the ten enqueued π cells in the frame strips; W-I.1 §8 |
 | #47b | a:54 | PARTIAL | BUILD | W-C.4 | seat | the dead `--dock-morph-max-stretch` and the phantom `--dock-vertical-*` reads; W-C.4 §8 |
 | #48 | a:55 | OPEN | BUILD | W-I.5 | seat | DISEASE, 3 closes, decided in W-I.5 (own) by loop D2's Q-9 ruling; I5-G1. The zero-width morph window goes with it |
 | #49a | a:56 | PARTIAL (W0 only) | BUILD | W-G.4 | seat | DISEASE, 3 closes, decided in W-G.4 (own: "the disease row decided", W-G.4 §9); π-FIELD is its capture |
 | #49b | a:56 | PARTIAL | BUILD | W-G.1 | seat | R9's delete half and D5 (the two probe contexts on mount); W-G.1 §9 |
-| #49c | a:56 | PARTIAL | BUILD | W-E.9 | seat | R11, the starved configurator (C-13c); W-E.9 §8 |
+| #49c | a:56 | PARTIAL | BUILD | W-E.14 | seat | R11, the starved configurator (C-13c); W-E.14 §8 (W-E.9 hands it there, `W-E.9.md:18`) |
 | #49d | a:56 | PARTIAL | RETIRE | W-B.5 | seat | V-A95: see C-4 |
 | #49e | a:56 | PARTIAL | BUILD | W-K.6 | seat | F1, the shell aurora's pause (`demo/chassis/hero/aurora-hero.ts:278-281`, WCAG 2.2.2): W-K.6 cure item 14, K6-G23 |
 | #49f | a:56 | PARTIAL | BUILD | W-H.1 | seat | F2, the dark claims: L03b-06, the demo hero configs take a dark twin (`aurora-hero.ts:250,333`); W-H.1 §1 |
@@ -170,7 +170,7 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | #66d | b:56 | PARTIAL | BUILD | W-L.8 | seat | the `FINAL.md` gate for BL; W-L.8 §8 |
 | #67a | b:57 | OPEN | BUILD | W-I.6 | seat | DISEASE, 3 closes, decided in W-I.6 (own, loop D2): hallmarks 1, 2 and 5 (I6-G1, I6-G2) and OWED-3 (I6-G3, a hold) |
 | #67b | b:57 | OPEN | BUILD | W-J.2 | seat | hallmark 6, momentum for all components; W-J.2 §8 |
-| #67c | b:57 | OPEN | FOLD | W-B.10 | seat | W-2, `useAnisotropicExtent`, handed to loop D2 (W-B.10 title) |
+| #67c | b:57 | OPEN | FOLD | W-I.6 | seat | W-2, `useAnisotropicExtent`: hallmark 1's candidate mechanism, from W-B.10; D2 converges the mechanism, I6-G1/I6-G2 measure the squish (W-I.6 §1) |
 | #67d | b:57 | OPEN | FOLD | W-I.6 | seat · OW-5 | the three R-7 captures (W-I.6, I6-G4) |
 | #69 | b:58 | OPEN | BUILD | W-H.4 | seat | DISEASE, 3 closes, decided in W-H.4 (own: count gates, the low-power register decide) |
 | #71a | b:59 | PARTIAL | FOLD | W-H.3 | seat · OW-9c | DISEASE, 3 closes (no owner quote on record), decided in W-H.3 (own DECIDE wave): RT-71A, the dispersion rims |
@@ -193,7 +193,7 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | #81b | b:66 | PARTIAL | BUILD | W-K.5 | seat | two lit rows; W-K.5 §8 |
 | #81c | b:66 | PARTIAL | BUILD | W-H.1 | seat | the fill-only cursor (R3-02-02); W-H.1 §1 |
 | #81d | b:66 | PARTIAL | BUILD | W-L.3 | seat | G-L3-11 (W-L.3 §1) [N] |
-| #82a | b:67 | PARTIAL | BUILD | W-H.2 | seat | G-F2, the opaque fill leaves the field's blur inert; W-H.2 §8 |
+| #82a | b:67 | PARTIAL | BUILD | W-H.5 | seat | G-F2, the opaque fill leaves the field's blur inert; W-H.5 §8 (W-H.2 hands it there, `W-H.2.md:28`) |
 | #82b | b:67 | PARTIAL | BUILD | W-C.4 | seat | G-F1's dead `.input-pill` selectors; W-C.4 §1 |
 | #83a | b:68 | PARTIAL | BUILD | W-K.4 | seat | the forced-colours rows (R3-02-10, R3-02-05); W-K.4 §8 |
 | #83b | b:68 | PARTIAL | BUILD | W-H.1 | seat | the unchecked edge at 2.93:1, the perimeter derivation; W-H.1 §8 |
@@ -332,13 +332,13 @@ W-B.1 §3.1 puts the owner docket in this file. `pending` means no owner word is
 | OW-9d | an owner quote for W-I.4's RETIREs (R2-06-01's subjects) | per subject (W-I.4) | pending | FOLD | W-I.4 |
 | OW-10 | close the registry on the evidence instead of more rounds | — | moot: rounds 9 and 10 minted nothing (CUR:63, CUR:66) | RETIRE | — |
 | OW-11 | an early 10.x minor for O-68 and O-75 | — | "And this should be in 10.0" (relayed by value-js-0c, 2026-09-24, CUR:37); 10.1.0 LIVE at `d8bda2a9` | RETIRE | — |
-| OW-12 | the card title rung's token name (O-74b, IN:40): the ruling names `--type-title`, which is already the φ^(3/2) display rung at `2.058rem` (`typography/scale.css:121`, read by `semantic.css:148`, `bridges.css:37`, `metric/styles.css:110`, `manifest.ts:27`, and by slides, speedtest and keyframes.js); redefining it moves every reader 32.928 → 23.669 px at 1440 in a minor (W-0.9 §2) | (a) a distinct name, `--type-card-title`, at body × 1.272; the display rung keeps `--type-title` | pending | FOLD | W-0.9 |
+| OW-12 | the card title rung's token name (O-74b, IN:40): the ruling names `--type-title`, which is already the φ^(3/2) display rung at `2.058rem` (`typography/scale.css:121`, read by `semantic.css:148`, `bridges.css:37`, `metric/styles.css:110`, `manifest.ts:27`, and by slides, speedtest and keyframes.js); redefining it moves every reader 32.928 → 23.669 px at 1440 in a minor (W-0.9 §2) | retired by fix-3: not an owner question. CUR:80 rules the substance (a named token at the existing size) and names no token; the parenthetical `--type-title` collides with the published display rung, so W-0.9 ships `--type-card-title` (the consumer's own proposal) and nothing is renamed (W-0.9 §1) | not owed | RETIRE | W-0.9 |
 | DOCKET-10.2.0-TAG | the in-session go for the 10.2.0 tag | — | ruling "yes" to the minor (CUR:48, 2026-09-24); the tag go itself pending (CUR:78) | FOLD | W-0.7 |
 | DOCKET-11.0.0-TAG | the in-session go for the 11.0.0 tag | — | pending | FOLD | W-L.8 |
-| DOCKET-Q-10 | D2 re-rules Q-10 (the collapsed summary's square) against 10.2.0's O-84 cure | per W-I.1 §3.1 item 2 | pending | FOLD | W-I.1 |
+| DOCKET-Q-10 | D2 rules Q-10 (the collapsed summary's square) with O-84's ask | per W-I.1 §3.1 item 2 | pending | FOLD | W-I.1 |
 | DOCKET-Q063 | the 07-27 exemplar recording preservation | RETIRE, shown to the owner (W-L.8 §3.3) | pending | RETIRE | W-L.8 |
 
-OW-9 is one row per deciding wave (OW-9a..d), so each wave's docket gate turns green on its own ruling. W-I.4's subset (R2-06-01, OW-9d) and W-H.3's (R2-06-02, OW-9c) retire only with the owner's words; W-B.1's checker enforces that. OW-12's options: (a) the seat default; (b) keep `--type-title` for the card rung and rename the display rung at 11.0.0 with its MIGRATION row (10.2.0 ships (a)'s name until then; a minor does not move `--type-title`'s value).
+OW-9 is one row per deciding wave (OW-9a..d), so each wave's docket gate turns green on its own ruling. W-I.4's subset (R2-06-01, OW-9d) and W-H.3's (R2-06-02, OW-9c) retire only with the owner's words; W-B.1's checker enforces that. OW-12 is retired (fix-3): its option (b) would have renamed a published display rung at 11.0.0 with no owning wave, and band 0 would have waited on an answer scheduled inside its own cut.
 
 ## 5 · Carried obligations (`CUR:30-49`, dated rulings `CUR:75-80`) and formation gaps (PLAN §6)
 
@@ -370,8 +370,8 @@ OW-9 is one row per deciding wave (OW-9a..d), so each wave's docket gate turns g
 | CUR:49 | CUR:49 | open | FOLD | W-J.1 | seat | closes on the entry gate W-J.1 §3.1, where D4's pass-2 agglomerate rules it (CUR:64) [N] |
 | CUR:75 | CUR:75, 78 | ruled | BUILD | W-0.8 | seat | O-83 into band 0 (10.2.0): W-0.8, the dock-surface wave (owner-ratified exception to D2) |
 | CUR:76 | CUR:76, 78 | ruled | BUILD | W-0.3 | seat | O-77a amends W-0.3: wrap, no ellipsis (W-0.3 G1 to G5) |
-| CUR:79 | CUR:79 | ruled | BUILD | W-0.8 | seat | O-84 and O-84a into band 0's dock-surface wave, W-0.8 (G2, G3, G5, G6) |
-| CUR:80a | CUR:80 | ruled | BUILD | W-0.9 | seat · OW-12 | O-74b into band 0 as a named token at body × 1.272; the name `--type-title` collides with the display rung, so the name is OW-12's (W-0.9 §2) |
+| CUR:79 | CUR:79 | ruled | FOLD | W-I.1 | seat | O-84b, value.js's re-ruling of O-84 and O-84a into band 0, is a sibling session's, not the owner's; the owner's ratification (CUR:78) folds both into D2 with O-65, so they are W-I.1's (G27-G30; fix-3, FB-14) |
+| CUR:80a | CUR:80 | ruled | BUILD | W-0.9 | seat | O-74b into band 0 as a named token at body × 1.272, `--type-card-title`; the parenthetical `--type-title` collides with the display rung (W-0.9 §1, §2) |
 | CUR:80b | CUR:80 | ruled | FOLD | W-I.1 | seat | O-85 into the 11.0.0 dock band: D2 rules it (W-I.1 §3.1 item 6, G24) |
 | CUR:80c | CUR:80 | ruled | RETIRE | W-L.1 | seat | O-86: DECLINE with a recipe, the shape ruled against the Slider-marks split (W-L.1 §3.20) |
 | PLAN-§6-D5 | PLAN §6 | open | FOLD | W-J.2 | seat | loop D5 has no portfolio; opening it is a formation act owed before W-J.2 (PLAN §4, §6), since the plan seats are fenced from `design/` |
@@ -470,7 +470,7 @@ INBOUND-MAP maps O-53 to O-80 and C-2 (442 rows, appendix A). The letters and su
 | O-60 | IN:16 | letter | FOLD | W-B.2 | seat | 33 rows, each in appendix A |
 | O-74 | IN:28 | letter | FOLD | W-B.2 | seat | 65 map rows in appendix A; the rulings are CUR:40a-h (§5) |
 | O-74 E-2 | IN:28 | erratum | BUILD | W-E.7 | seat | one coarse-pointer type model (W-E.7 §8) |
-| O-74 E-5 | IN:28 | erratum | BUILD | W-E.7 | seat | value.js's 11 px `text-micro` joins the micro floor (A2-KE-L2-14's row) |
+| O-74 E-5 | IN:28 | erratum | BUILD | W-E.7 | seat | value.js's 11 px `text-micro` joins the micro floor (A2-KE-L2-14's row); E7-G17 |
 | O-74 E-6 | IN:28 | erratum | FOLD | W-B.2 | seat | the sender's open-at-HEAD statuses are source readings on 7.0.0; W-B.2 re-measures (§3.7) |
 | O-81 (1) | IN:35 | confirmed | BUILD | W-I.1 | seat | DOCK-END-INSET, a D2 pass-3 checklist row (W-I.1 §8) |
 | O-81 (2) | IN:35 | confirmed | BUILD | W-I.1 | seat | DOCK-FIRST-EXPAND (W-I.1 §8) |
@@ -479,9 +479,9 @@ INBOUND-MAP maps O-53 to O-80 and C-2 (442 rows, appendix A). The letters and su
 | O-81 (5) | IN:35 | confirmed | BUILD | W-0.6 | seat | SEEDFIELD-DRAW-ORDER: `z` from its own stream; the opt-in to the old order declined as a dual path (W-0.6 §8) |
 | O-82 | IN:36 | confirmed | BUILD | W-0.10 | seat | POPOVER-ANCHOR: one declared `reference` on PopoverContent and TooltipContent, band 0 (W-0.10 G1: `vue-tsc` exit 2 at HEAD) |
 | O-83 | IN:37 | confirmed | BUILD | W-0.8 | seat | DOCK-CAP-ELLIPSE: the cap rests at the plate's half cross (W-0.8 G1, G4) |
-| O-84 | IN:38 | confirmed | BUILD | W-0.8 | seat | DOCK-SUMMARY-SQUARE: the summary drops its forced square, keeps its floor (W-0.8 G2, G5) |
-| O-84a | IN:39 | confirmed | BUILD | W-0.8 | seat | METRIC-TOKEN-JOIN: no `min-inline-size: 3ch`, no `overflow-wrap: anywhere` (W-0.8 G3, G6) |
-| O-74b | IN:40 | confirmed | BUILD | W-0.9 | seat · OW-12 | CARD-TITLE-RUNG: a named token at body × 1.272, its name OW-12's (W-0.9 G1 to G4) |
+| O-84 | IN:38 | confirmed | BUILD | W-I.1 | seat | DOCK-SUMMARY-SQUARE: folded into D2 with O-65 by the owner (CUR:78); D2 rules it with Q-10 (W-I.1 §3.1 item 2, G27, G29) |
+| O-84a | IN:39 | confirmed | BUILD | W-I.1 | seat | METRIC-TOKEN-JOIN, folded into D2 with O-84 (CUR:78): no `min-inline-size: 3ch`, no `overflow-wrap: anywhere` (W-I.1 §3.4 item 5, G28, G30) |
+| O-74b | IN:40 | confirmed | BUILD | W-0.9 | seat | CARD-TITLE-RUNG: `--type-card-title` at body × 1.272 (W-0.9 G1 to G4) |
 | O-85 | IN:41 | confirmed | FOLD | W-I.1 | seat | DOCK-PRIORITY-OVERFLOW: D2 rules BUILD with a witness or RETIRE with the owner's words (W-I.1 §3.1 item 6, G24) |
 | O-86 | IN:42 | confirmed | RETIRE | W-L.1 | seat | DECLINE with a recipe: play/pause + speed + Slider-with-marks composes it (W-L.1 §3.20) |
 | O-77a | IN:43 | confirmed | BUILD | W-0.3 | seat | LAYER-HEADER-NO-ELLIPSIS: W-0.3 rewritten to it (G1 to G5) |
@@ -492,8 +492,8 @@ Formation fix seat 2 (`formation-audit/fix-2.md`) placed all twelve. No row in t
 
 | id | rows | placed |
 |---|---|---|
-| U-1 | O-83, O-84, O-84a (CUR:75, 79) | W-0.8, the band-0 dock-surface wave |
-| U-2 | O-74b (CUR:80) | W-0.9; the token's name is OW-12 (§4) |
+| U-1 | O-83; O-84, O-84a (CUR:75, 78) | O-83 → W-0.8, the band-0 dock-cap wave; O-84 and O-84a → W-I.1 (CUR:78) |
+| U-2 | O-74b (CUR:80) | W-0.9, `--type-card-title` (OW-12 retired, §4) |
 | U-3 | O-77a (CUR:76) | W-0.3, rewritten to it |
 | U-4 | O-85 (CUR:80) | W-I.1 §3.1 item 6, G24 (D2 rules it) |
 | U-5 | O-82's landing | W-0.10 (10.2.0); #76's moving-anchor half stays W-L.1's |
@@ -526,15 +526,15 @@ Counted by a script over this file's row tables (§4 is the docket and is counte
 | §1 register carries (67 census rows, as item rows) | 111 | 33 | 0 | 28 | 172 |
 | §2 BK §7 carries | 11 | 1 | 0 | 8 | 20 |
 | §3 recap rows and charter laws | 43 | 11 | 0 | 10 | 64 |
-| §5 carried obligations and PLAN §6 gaps | 10 | 18 | 0 | 6 | 34 |
+| §5 carried obligations and PLAN §6 gaps | 9 | 19 | 0 | 6 | 34 |
 | §6 rows the specs hand to the ledger | 13 | 30 | 1 | 13 | 57 |
 | §7 inbound outside the map | 13 | 5 | 0 | 1 | 19 |
-| Appendix A, INBOUND-MAP | 294 | 27 | 7 | 114 | 442 |
-| **total** | **495** | **125** | **8** | **180** | **808** |
+| Appendix A, INBOUND-MAP | 293 | 27 | 7 | 115 | 442 |
+| **total** | **493** | **126** | **8** | **181** | **808** |
 
-Recounted by fix-2 after its placements. No row reads UNPLACED. Rows marked DISEASE: 44. Owner docket: 19 lines (OW-9 split into OW-9a..d, OW-12 added), 17 pending an owner word.
+Recounted by fix-2 after its placements; fix-3 moved A2-KE-L1-27 from BUILD to RETIRE (NOT-REPRODUCED) and CUR:79 from BUILD to FOLD (O-84b is not an owner word). No row reads UNPLACED. Rows marked DISEASE: 44. Owner docket: 19 lines (OW-9 split into OW-9a..d; OW-12 added by fix-2 and retired by fix-3). 14 read `pending` at fix-3 (`grep -cE '^\| (OW\|DOCKET)-[^\|]*\|.*\| pending \|' LEDGER.md`).
 
-Appendix A by coverage tag: `[N]` 357, `[R]` 67, `[G]` 18, `[M]` 0. By INBOUND-MAP status: FAMILY 360, CURED-AT-HEAD 52, CONSUMER-SIDE 21, NOT-REPRODUCED 6, NEW 3.
+Appendix A by coverage tag: `[N]` 375, `[R]` 67, `[G]` 0, `[M]` 0 (fix-3 named a gate or a RETIRE for each of the 18 `[G]` rows and retagged it `[N]`). By INBOUND-MAP status: FAMILY 359, CURED-AT-HEAD 52, CONSUMER-SIDE 21, NOT-REPRODUCED 7, NEW 3.
 
 ## Appendix A · INBOUND-MAP rows (442)
 
@@ -731,7 +731,7 @@ One row per map row, in the map's order. The id is the map's first cell, verbati
 | UIA-F-222 | O-59 · IMAP:342 | FAMILY | BUILD | W-E.7 | seat | E7-G16 (W-E.7 §5) [N] |
 | UIA-F-90 | O-59 · IMAP:348 | FAMILY | BUILD | W-H.1 | seat | F-24; the wave names the row [N] |
 | UIA-F-106 | O-59 · IMAP:349 | FAMILY | BUILD | W-L.1 | seat | F-71; the wave names the row [N] |
-| UIA-V-234 | O-59 · IMAP:350 | FAMILY | BUILD | W-H.2 | seat | F-31; the wave names the row [N] |
+| UIA-V-234 | O-59 · IMAP:350 | FAMILY | BUILD | W-H.5 | seat | F-31, the opaque well; W-H.5 §1 and §8 [N] |
 | UIA-V-246 | O-59 · IMAP:351 | CONSUMER-SIDE | RETIRE | W-B.2 | seat | ANSWERED: consumer-side, no producer mechanism (IMAP:351); the reply states it (W-B.2 §3.4, §3.8) [R] |
 | UIA-V-309 | O-59 · IMAP:352 | CURED-AT-HEAD | RETIRE | W-B.2 | seat | CURED at HEAD per IMAP:352; the consumer adopts at its repin (W-L.7 packet); the reply states it (W-B.2 §3.8) [R] |
 | UIA-V-311 | O-59 · IMAP:353 | CURED-AT-HEAD | RETIRE | W-B.2 | seat | CURED at HEAD per IMAP:353; the consumer adopts at its repin (W-L.7 packet); the reply states it (W-B.2 §3.8) [R] |
@@ -739,7 +739,7 @@ One row per map row, in the map's order. The id is the map's first cell, verbati
 | UIA-V-315 | O-59 · IMAP:355 | CURED-AT-HEAD | RETIRE | W-B.2 | seat | CURED at HEAD per IMAP:355; the consumer adopts at its repin (W-L.7 packet); the reply states it (W-B.2 §3.8) [R] |
 | UIA-V-329 | O-59 · IMAP:356 | FAMILY | BUILD | W-H.1 | seat | F-23; the wave names the row [N] |
 | UIA-V-344 | O-59 · IMAP:357 | FAMILY | RETIRE | W-B.2 | seat | DECLINE: one consumer; Surface + `useDropZone` + the house focus ring (W-B.2 §3.5) [N] |
-| UIA-V-431 | O-59 · IMAP:358 | FAMILY | BUILD | W-H.2 | seat | F-31; the wave names the row [N] |
+| UIA-V-431 | O-59 · IMAP:358 | FAMILY | BUILD | W-H.5 | seat | F-31, the opaque well; W-H.5 §1 and §8 [N] |
 | UIA-KF-166 | O-59 · IMAP:359 | CURED-AT-HEAD | RETIRE | W-B.2 | seat | CURED at HEAD per IMAP:359; the consumer adopts at its repin (W-L.7 packet); the reply states it (W-B.2 §3.8) [R] |
 | UIA-F-129 | O-59 · IMAP:360 | FAMILY | BUILD | W-K.4 | seat | F-39; the wave names the row [N] |
 | UIA-V-562 | O-59 · IMAP:361 | CONSUMER-SIDE | RETIRE | W-B.2 | seat | ANSWERED: consumer-side, no producer mechanism (IMAP:361); the reply states it (W-B.2 §3.4, §3.8) [R] |
@@ -791,7 +791,7 @@ One row per map row, in the map's order. The id is the map's first cell, verbati
 | UIA-KF-073 | O-59 · IMAP:432 | FAMILY | BUILD | W-K.6 | seat | F-42; the wave names the row [N] |
 | UIA-F-60 | O-59 · IMAP:433 | FAMILY | RETIRE | W-K.2 | seat | RETIRE the Command popper arm; the Popover composition is the answer (W-K.2 §8) [N] |
 | UIA-F-72 | O-59 · IMAP:434 | FAMILY | BUILD | W-B.8 | seat | F-71; the wave names the row [N] |
-| UIA-F-105 | O-59 · IMAP:435 | FAMILY | BUILD | W-0.8 | seat | the Metric inline policy, G3 and G6 (W-0.8 §1) [N] |
+| UIA-F-105 | O-59 · IMAP:435 | FAMILY | BUILD | W-I.1 | seat | the Metric inline policy with O-84a, G28 and G30 (W-I.1 §1) [N] |
 | UIA-V-194 | O-59 · IMAP:436 | FAMILY | BUILD | W-E.8 | seat | E8-G3's 12 px plates (W-E.8 §8) [N] |
 | UIA-V-198 | O-59 · IMAP:437 | FAMILY | BUILD | W-H.2 | seat | F-31; the wave names the row [N] |
 | UIA-V-200 | O-59 · IMAP:438 | FAMILY | FOLD | W-B.4 | owner docket (OW-7) | F-15; the wave names the row [N] |
@@ -804,7 +804,7 @@ One row per map row, in the map's order. The id is the map's first cell, verbati
 | UIA-KF-147 | O-59 · IMAP:445 | FAMILY | RETIRE | W-E.7 | seat | NOT-REPRODUCED: the library's shortcut is 18.27 px under a 21 px label at coarse 390 and 14.38 under 16.4 at 1440, both engines (fix-2); the 11 px caps are the consumer's. Re-trigger: a DropdownMenuShortcut under 0.8 × its row's label (W-E.7 §5 table) [N] |
 | UIA-KF-170 | O-59 · IMAP:446 | FAMILY | BUILD | W-H.1 | seat | F-23; the wave names the row [N] |
 | UIA-KF-201 | O-59 · IMAP:447 | FAMILY | BUILD | W-L.1 | seat | F-71; the wave names the row [N] |
-| UIA-KF-215 | O-59 · IMAP:448 | FAMILY | BUILD | W-0.8 | seat | the Metric inline policy, G3 and G6 (W-0.8 §1) [N] |
+| UIA-KF-215 | O-59 · IMAP:448 | FAMILY | BUILD | W-I.1 | seat | the Metric inline policy with O-84a, G28 and G30 (W-I.1 §1) [N] |
 | UIA-KF-221 | O-59 · IMAP:449 | FAMILY | BUILD | W-E.5 | seat | E5-G11 and E5-G12 (W-E.5 §1) [N] |
 | UIA-F-130 | O-59 · IMAP:450 | FAMILY | BUILD | W-L.1 | seat | F-71; the wave names the row [N] |
 | UIA-F-134 | O-59 · IMAP:451 | FAMILY | RETIRE | W-B.2 | seat | CURED at 10.1.0: `#actions` shipped (tag `v10.1.0` at `d8bda2a9`) (W-B.2 §3.5) [N] |
@@ -913,7 +913,7 @@ One row per map row, in the map's order. The id is the map's first cell, verbati
 | O-68 R-1 CONFIGURATOR-HEADER-ACTIONS | O-68 · IMAP:634 | FAMILY | RETIRE | W-B.2 | seat | CURED at 10.1.0: `#actions` (tag `v10.1.0` at `d8bda2a9`, release.yml run 36053041265; CUR:37) [N] |
 | O-68 early 10.x minor | O-68 · IMAP:635 | FAMILY | RETIRE | W-B.2 | seat | CURED: the owner ruled the minor (OW-11, "And this should be in 10.0", CUR:37); 10.1.0 LIVE [R] |
 | A2-KE-L2-2 | O-74 · IMAP:672 | FAMILY | BUILD | W-E.2 | seat | the Sheet's cascade geometry, E2-G1 (W-E.2 §1) [N] |
-| A2-KE-L2-1 | O-74 · IMAP:673 | FAMILY | BUILD | W-E.4 | seat | F-22 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
+| A2-KE-L2-1 | O-74 · IMAP:673 | FAMILY | BUILD | W-E.4 | seat | F-22; E4-G10 (W-E.4 §5 mechanism table) [N] |
 | A2-KE-L2-3 | O-74 · IMAP:674 | FAMILY | BUILD | W-E.3 | seat | dock reach and the resolved ladder, E3-G1 to E3-G3 (W-E.3 §1) [N] |
 | A2-KE-L2-7 | O-74 · IMAP:675 | FAMILY | BUILD | W-E.3 | seat | the grip steps on tap, E3-G10 (W-E.3 §3 item 8) [N] |
 | A2-VA-L2-6 | O-74 · IMAP:676 | CURED-AT-HEAD | RETIRE | W-B.2 | seat | withdrawn by the sender's erratum E-1; its compact half is A2-KE-L2-6 (W-E.7) (W-B.2 §3.7) [N] |
@@ -926,13 +926,13 @@ One row per map row, in the map's order. The id is the map's first cell, verbati
 | A2-KE-L2-8 | O-74 · IMAP:683 | FAMILY | BUILD | W-I.1 | seat | F-16; the wave names the row [N] |
 | A2-FO-L2-13 | O-74 · IMAP:684 | FAMILY | BUILD | W-I.1 | seat | F-16; the wave names the row [N] |
 | A2-FO-L2-15 | O-74 · IMAP:685 | CURED-AT-HEAD | RETIRE | W-B.2 | seat | CURED IN PART at HEAD (`run.css:44-51`); its paint fault is F-18's in W-I.1 (W-B.2 §3.7) [N] |
-| A2-VA-L2-1 | O-74 · IMAP:686 | FAMILY | BUILD | W-E.4 | seat | F-22 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-FO-L2-12 | O-74 · IMAP:687 | FAMILY | BUILD | W-E.4 | seat | F-22 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-KE-L2-12 | O-74 · IMAP:688 | FAMILY | BUILD | W-E.4 | seat | F-22 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-VA-L2-3 | O-74 · IMAP:689 | FAMILY | BUILD | W-E.4 | seat | F-22 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-KE-L2-17 | O-74 · IMAP:690 | FAMILY | BUILD | W-E.4 | seat | F-22 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-KE-L1-27 | O-74 · IMAP:691 | FAMILY | BUILD | W-E.4 | seat | F-22 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-FO-L2-8 | O-74 · IMAP:692 | FAMILY | BUILD | W-E.4 | seat | F-22 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
+| A2-VA-L2-1 | O-74 · IMAP:686 | FAMILY | BUILD | W-E.4 | seat | F-22; E4-G7 (W-E.4 §5 mechanism table) [N] |
+| A2-FO-L2-12 | O-74 · IMAP:687 | FAMILY | BUILD | W-E.4 | seat | F-22; E4-G8 (W-E.4 §5 mechanism table) [N] |
+| A2-KE-L2-12 | O-74 · IMAP:688 | FAMILY | BUILD | W-E.4 | seat | F-22; E4-G8 (W-E.4 §5 mechanism table) [N] |
+| A2-VA-L2-3 | O-74 · IMAP:689 | FAMILY | BUILD | W-E.4 | seat | F-22; E4-G7 (scroll cue) (W-E.4 §5 mechanism table) [N] |
+| A2-KE-L2-17 | O-74 · IMAP:690 | FAMILY | BUILD | W-E.4 | seat | F-22; E4-G7 (scroll cue) (W-E.4 §5 mechanism table) [N] |
+| A2-KE-L1-27 | O-74 · IMAP:691 | NOT-REPRODUCED | RETIRE | W-E.4 | seat | NOT-REPRODUCED in the library: 12 of 12 cells (Dialog, Popover, Sheet; mouse and touch; Chromium and Playwright WebKit) keep the overlay open on a toast-action press (fix-3 appendix Q2). Re-trigger: a glass toast press dismissing a glass overlay without consumer code; the consumers' guards retire in their W-L.7 packets [N] |
+| A2-FO-L2-8 | O-74 · IMAP:692 | FAMILY | BUILD | W-E.4 | seat | F-22; E4-G7 and E4-G15 (W-E.4 §5 mechanism table) [N] |
 | A2-VA-L1-6 | O-74 · IMAP:693 | FAMILY | FOLD | W-B.4 | owner docket (OW-7) | ruling row: seat default BUILD `useConfirm()` in W-L.1 (W-B.4 §1, W-L.1 §3.19) [N] |
 | A2-FO-L1-9 | O-74 · IMAP:694 | FAMILY | FOLD | W-B.4 | owner docket (OW-7) | ruling row, merged with A2-VA-L1-6: `useConfirm()` in W-L.1 (W-B.4 §1) [N] |
 | A2-KE-L3-17 | O-74 · IMAP:695 | FAMILY | BUILD | W-K.5 | seat | F-40; the wave names the row [N] |
@@ -948,24 +948,24 @@ One row per map row, in the map's order. The id is the map's first cell, verbati
 | A2-FO-L3-7 | O-74 · IMAP:705 | FAMILY | BUILD | W-E.9 | seat | E9-G6 and E9-G7 (W-E.9 §1) [N] |
 | A2-FO-L3-5 | O-74 · IMAP:706 | FAMILY | BUILD | W-L.1 | seat | F-71; the wave names the row [N] |
 | A2-FO-L3-6 | O-74 · IMAP:707 | FAMILY | RETIRE | W-L.1 | seat | ANSWERED: the page gutter is `--space-section` (W-L.1 §3.9) [N] |
-| A2-KE-L3-1 | O-74 · IMAP:708 | FAMILY | BUILD | W-E.7 | seat | F-29 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-FO-L2-6 | O-74 · IMAP:709 | FAMILY | BUILD | W-E.7 | seat | F-29 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-FO-L2-14 | O-74 · IMAP:710 | FAMILY | BUILD | W-E.7 | seat | F-29 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
+| A2-KE-L3-1 | O-74 · IMAP:708 | FAMILY | BUILD | W-E.7 | seat | F-29; E7-G6 (W-E.7 §5 mechanism table) [N] |
+| A2-FO-L2-6 | O-74 · IMAP:709 | FAMILY | BUILD | W-E.7 | seat | F-29; E7-G18 (W-E.7 §5 mechanism table) [N] |
+| A2-FO-L2-14 | O-74 · IMAP:710 | FAMILY | BUILD | W-E.9 | seat | SegmentedTabs' overflow mode, E9-G5, with UIA-F-41 (W-E.7's mechanism table hands it over) [N] |
 | A2-FO-L2-7 | O-74 · IMAP:711 | FAMILY | FOLD | W-B.4 | owner docket (OW-7) | ruling row: seat default FOLD → W-E.7, 44 px coarse hit area by slop (W-B.4 §1) [N] |
 | A2-FO-L1-16 | O-74 · IMAP:712 | FAMILY | RETIRE | W-B.2 | seat | DECLINE: `update:modelValue` then `valueCommit` bracket a scrub; recipe in the Slider README (W-B.2 §3.5) [N] |
 | A2-KE-L1-9 | O-74 · IMAP:713 | FAMILY | RETIRE | W-B.2 | seat | DECLINE: a keyframe rail is keyframes.js's editor; SortableList + Slider compose it (W-B.2 §3.5) [N] |
 | A2-FO-L1-15 | O-74 · IMAP:714 | FAMILY | BUILD | W-L.1 | seat | F-71; the wave names the row [N] |
-| A2-KE-L2-9 | O-74 · IMAP:715 | FAMILY | BUILD | W-E.7 | seat | F-29 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
+| A2-KE-L2-9 | O-74 · IMAP:715 | FAMILY | BUILD | W-E.7 | seat | F-29; E7-G5 (W-E.7 §5 mechanism table) [N] |
 | A2-KE-L1-28 | O-74 · IMAP:716 | FAMILY | BUILD | W-C.4 | seat | F-64; the wave names the row [N] |
 | A2-VA-L2-9 | O-74 · IMAP:717 | CURED-AT-HEAD | RETIRE | W-B.2 | seat | CURED at HEAD: `tokens/light-dark.css:11-20`; confirmed (W-B.2 §3.7) [N] |
 | A2-KE-L3-4 | O-74 · IMAP:718 | FAMILY | BUILD | W-0.1 | seat | cites O-66a and closes with it (W-H.2 §1 "Closed elsewhere") [N] |
 | A2-FO-L3-1 | O-74 · IMAP:719 | FAMILY | BUILD | W-L.1 | seat | F-71; the wave names the row [N] |
-| A2-VA-L3-6 | O-74 · IMAP:720 | FAMILY | BUILD | W-E.7 | seat | F-29 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-KE-L3-2 | O-74 · IMAP:721 | FAMILY | BUILD | W-E.7 | seat | F-29 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-FO-L3-14 | O-74 · IMAP:722 | FAMILY | BUILD | W-E.7 | seat | F-29 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-VA-L3-1 | O-74 · IMAP:723 | FAMILY | BUILD | W-E.7 | seat | F-29 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-KE-L2-14 | O-74 · IMAP:724 | FAMILY | BUILD | W-E.7 | seat | F-29 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
-| A2-FO-L2-18 | O-74 · IMAP:725 | FAMILY | BUILD | W-E.7 | seat | F-29 mechanism; joins the wave's born-RED set (IMAP:11) [G] |
+| A2-VA-L3-6 | O-74 · IMAP:720 | FAMILY | BUILD | W-E.7 | seat | F-29; E7-G5 (W-E.7 §5 mechanism table) [N] |
+| A2-KE-L3-2 | O-74 · IMAP:721 | FAMILY | BUILD | W-E.7 | seat | F-29; E7-G5 (W-E.7 §5 mechanism table) [N] |
+| A2-FO-L3-14 | O-74 · IMAP:722 | FAMILY | BUILD | W-E.7 | seat | F-29; E7-G5 (W-E.7 §5 mechanism table) [N] |
+| A2-VA-L3-1 | O-74 · IMAP:723 | FAMILY | BUILD | W-E.7 | seat | F-29; E7-G5 (W-E.7 §5 mechanism table) [N] |
+| A2-KE-L2-14 | O-74 · IMAP:724 | FAMILY | BUILD | W-E.7 | seat | F-29; E7-G17 (W-E.7 §5 mechanism table) [N] |
+| A2-FO-L2-18 | O-74 · IMAP:725 | FAMILY | BUILD | W-E.7 | seat | F-29; E7-G17 (W-E.7 §5 mechanism table) [N] |
 | A2-FO-L1-14 | O-74 · IMAP:726 | FAMILY | BUILD | W-L.1 | seat | F-71; the wave names the row [N] |
 | A2-FO-L1-2 | O-74 · IMAP:727 | FAMILY | RETIRE | W-B.2 | seat | DECLINE: one consumer; composes from the `useSidebar*` composables and menu rows (W-B.2 §3.5) [N] |
 | A2-FO-L1-18 | O-74 · IMAP:728 | FAMILY | FOLD | W-K.7 | seat | K7-G7, one scroll owner (W-K.7 §8) [N] |

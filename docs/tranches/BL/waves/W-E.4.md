@@ -105,6 +105,11 @@ The contract lives in one module, `src/components/_shared/overlay/layer.ts`, rea
 | UIA-F-219 | E4-G19 |
 | UIA-F-56, UIA-KF-113, UIA-V-287, UIA-V-520, UIA-V-2, UIA-V-208, UIA-V-5 | E4-G8 |
 | UIA-V-32, UIA-V-220 | E4-G7 |
+| A2-KE-L2-1 (the press that opened a non-modal Sheet counted as outside) | E4-G10 (tethered chrome, touch and mouse) |
+| A2-VA-L2-1, A2-FO-L2-8 (the Popover role and the modal Dialog have no block ceiling) | E4-G7, with E4-G15's `props.scroll` clause for the Dialog |
+| A2-FO-L2-12, A2-KE-L2-12 (`collisionPadding` only on Select) | E4-G8 |
+| A2-VA-L2-3, A2-KE-L2-17 (a clipped overlay shows no scroll cue) | E4-G7's scroll-cue clause |
+| A2-KE-L1-27 (a press on the library's own toast dismisses an open overlay) | RETIRE NOT-REPRODUCED in the library: fix-3's probe (`formation-audit/fix-3.md` appendix Q2, `?k=` `dialog`, `pop`, `sheet`), a toast with a `ToastAction` over an open Dialog, Popover and Dialog-rooted `SheetContent`, mouse and touch, Chromium and Playwright WebKit: 12 of 12 cells the action fires once and the overlay stays open (`be1969ea`). The consumers' private `data-slot` guards retire in their W-L.7 packets. Re-trigger: a press on a glass toast that dismisses a glass overlay, reproduced without consumer code |
 | UIA-V-476 | RETIRE NOT-REPRODUCED: the open list seats the selected row inside the port (scene `mseltall`, value 45: Chromium 322..366 within 108..492; Playwright WebKit 403..447). Re-trigger: a selected row outside the list's port on open |
 
 Can each fail and pass? Every browser row except G4 `sel`, G8 menu-left and G13 fails at HEAD. Those three are the controls that show the gates can pass. G13 is a hold line whose bite is in the roster. G15 and G19 are static and fail at HEAD; G16 to G18 fail in every engine that mounts them.
@@ -114,7 +119,7 @@ Can each fail and pass? Every browser row except G4 `sel`, G8 menu-left and G13 
 - **Surfaces:** the fixture scenes `tip`, `esc`, `native`, `ec`, `inert`, `pop&tall`, `dialog`, `menu&tall`, `sheet&modal=0&dock=top`, `pages/g.html`; demo `/overlays/popover`, `/overlays/menu`, `/forms/select`, `/containers/dialog` at 390×844, 844×390 and 1440×900.
 - **Themes:** light and dark for G1, G7, G8 and G9 (paint and geometry). Dismissal rows are theme-independent and run light.
 - **Engines:** Chromium measured. Playwright WebKit measured, with G6 and G10 crashing its page, recorded as crashes. Real Safari is UNMEASURED (OW-3). The native `showModal` host and `beforetoggle` rows are the cells most likely to differ in real Safari.
-- **Paired capture:** `node e4.mjs --shots` at `<E4-base>` and at the wave: `tip-{pop,dialog}-*.png` (tooltip under, then over its host), `ec-pop-*.png`, `pop-tall-*.png`. Also a demo pair of `/containers/dialog` at 844×390 showing the Dialog cut off and then capped and scrolling. HEAD shots are at `scratchpad/formation/band-E/cap/e4/`.
+- **Paired capture:** `node e4.mjs --shots` at `<E4-base>` and at the wave: `tip-{pop,dialog}-*.png` (tooltip under, then over its host), `ec-pop-*.png`, `pop-tall-*.png`. Also a demo pair of `/containers/dialog` at 844×390 showing the Dialog cut off and then capped and scrolling. The before set is taken at `<E4-base>` with `WAVE=W-E.4`, into `.cache/evidence/W-E.4/e4/`; formation's HEAD shots sat in a session scratchpad and are not evidence.
 
 ## 7 · MIGRATION rows
 

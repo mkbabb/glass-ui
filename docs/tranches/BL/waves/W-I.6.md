@@ -16,7 +16,8 @@
 
 | id | what |
 |---|---|
-| #67a, L05b-14, R2-04-17 | hallmark 1 (dock-to-card squish: the plate's cross-axis stretch while the extent moves, proportional to |v_e|, on the plate, never the root), hallmark 2 (a bounded magnetic overpull that returns) and hallmark 5 (the stagger, PARTIAL at `layers.css:238-257`) on the dock. Hallmark 6 is W-J.2's |
+| #46b, #67c W-2 `useAnisotropicExtent`, from W-B.10 | hallmark 1's candidate mechanism. D2 converges the mechanism; I6-G1/I6-G2's hallmark-1 test measures the stretch in paint, and no symbol of that name is owed (`W-B.10.md` §3 item 2) |
+| #67a, L05b-14, R2-04-17 | hallmark 1 (dock-to-card squish: the plate's cross-axis stretch while the extent moves, proportional to \|v_e\|, on the plate, never the root), hallmark 2 (a bounded magnetic overpull that returns) and hallmark 5 (the stagger, PARTIAL at `layers.css:238-257`) on the dock. Hallmark 6 is W-J.2's |
 | OWED-3 | the dock spring's derivation (`springPreset("dock")` = {0.30, ζ 0.88}, `springPresets.ts:84-86`); discharged at `612717e5`, re-held here on the landed rung |
 | #67d, #90a, OW-5 | the three R-7 captures (the Siri waveform, the loupe close-up with the L-3 device cell, the ChatGPT dock motion) |
 | #90d | device fps and loupe L-3, with #67 |
@@ -24,7 +25,7 @@
 ## 2 · The state at HEAD
 
 - **Hallmarks.** No witness exists: `git grep -qniw overpull -- src tests` exits 1 and `test -f tests-visual/wired/dock-hallmarks.spec.ts` exits 1 (fix-2, `183e021a`). The stagger exists (`layers.css:238-257`); D2's E and F families deleted it with nothing in its place (`design/dock/REGISTRY.md:222-223`, F-8, F-9).
-- **OWED-3.** `node docs/tranches/IOS27-MICRO/prototypes/spine-conductor/check.mjs` → 87/87 PASS (W-I.1 §2.4). Not a defect: a hold line.
+- **OWED-3.** `node docs/tranches/IOS27-MICRO/prototypes/spine-conductor/check.mjs` → 87/87 PASS at HEAD (W-I.1 §2.2). Not a defect: a hold line. W-C.1 moves the check to `scripts/loops/dock/owed-3/`, where I6-G3 runs it.
 - **R-7.** OW-5 reads `pending` (LEDGER:325). With Q-9 (a) the Siri capture has no consumer, and the loupe belongs to no dock facility.
 
 ## 3 · The ruling and the cure
@@ -43,7 +44,7 @@ The converged carrier's hallmark code in `src/components/dock/` (per D2's spec),
 |---|---|---|---|
 | I6-G1 · the hallmark witnesses exist | `test -f tests-visual/wired/dock-hallmarks.spec.ts` | exit 0 (one test per hallmark ruled BUILD) | **exit 1** (fix-2) |
 | I6-G2 · the hallmarks pass | `npx playwright test -c tests-visual wired/dock-hallmarks`, both engines | 0 failed | the spec does not exist (RED by absence with I6-G1) |
-| I6-G3 · OWED-3 (hold line) | `node docs/tranches/IOS27-MICRO/prototypes/spine-conductor/check.mjs` on the landed rung | 87/87 PASS | 87/87 at HEAD. Bite: a rung pair off the derivation (the C2 rows) |
+| I6-G3 · OWED-3 (hold line) | `node scripts/loops/dock/owed-3/check.mjs` on the landed rung (W-C.1 §3 step 4 moves it there from `docs/tranches/IOS27-MICRO/prototypes/spine-conductor/`; this wave lands after W-C.1 through W-I.1, PLAN §5) | 87/87 PASS | 87/87 at HEAD at its `docs/` path (W-I.1 §2.2). Bite: a rung pair off the derivation (the C2 rows) |
 | I6-G4 · OW-5 ruled | `! grep -qE '^\\| OW-5 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER:325, fix-2) |
 
 ## 6 · π and DELTA obligations

@@ -25,20 +25,21 @@
 
 1. **RETIRE OWED-1 and OWED-2.** The salvaged body is not re-authored and the emitter is not shipped. Ground: both encode a schema whose columns have no sources (BK's measurement), and a hand-authored canon of that size is the drift F-63 names.
 2. **The canon is derived.** W-C.3 builds its two invariants (every symbol and subpath a doc names exists; every token a doc names is declared in the built CSS) over README, DESIGN.md, `docs/canon/`, component READMEs and JSDoc, and deletes or rewrites every stale cite. Token tables in DESIGN.md are generated from the token sources (F-65's "TS tables generate CSS") rather than typed. DESIGN.md's material section is rewritten once, from D3's converged ladder, in W-H.1/W-H.2.
-3. The salvage directory is a BJ record and stays; its `.mjs` leaves `docs/` under W-C.1's rule (frozen record scripts retire, with an invariant against new ones).
+3. **The emitter goes in this wave.** The RETIRE's enactment is this wave's own act (PLAN §1; fix-3, FB-18): `git rm` of the salvaged emitter `regen-design-canon.mjs`. The salvaged body (`DESIGN.md` in the same directory) is a BJ record in prose and stays; W-C.1's general sweep later takes every other script under `docs/`.
 
 ## 4 · Files it touches
 
-`docs/tranches/BL/LEDGER.md` (#78, OWED-1, OWED-2). The derivation is W-C.3's; the script's removal W-C.1's.
+`docs/tranches/BJ/audits/2026-07-28-claude-resume/salvage/W-DESIGN-CANON-APOTHEOSIS/regen-design-canon.mjs` (deleted); `docs/tranches/BL/LEDGER.md` (#78, OWED-1, OWED-2). The derivation is W-C.3's.
 
 ## 5 · Acceptance gates
 
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
-| B11-G2 · no dead token cite in the docs (built in W-C.3) | W-C.3's token-existence invariant over `DESIGN.md`, `docs/canon/*.md`, `README.md`, component READMEs, against the built CSS | 0 unresolved | **105** unresolved in `DESIGN.md` alone by the `src` scan above |
-| B11-G3 · no tooling under `docs/` (built in W-C.1) | `test "$(git ls-files docs \| grep -cE '\.(mjs\|js\|ts\|py)$')" -eq 0` | exit 0 | **exit 1**: 724 tracked script files under `docs/`, `regen-design-canon.mjs` among them |
+| B11-G1 · the emitter is retired | `! git ls-files --error-unmatch docs/tranches/BJ/audits/2026-07-28-claude-resume/salvage/W-DESIGN-CANON-APOTHEOSIS/regen-design-canon.mjs` | exit 0 | **exit 1**: tracked (fix-3, `be1969ea`). A path that is not tracked exits 0, so the gate turns green on this wave's `git rm` |
+| ~~B11-G2~~ | struck (fix-3, FB-18): W-C.3's C3-G2 (every named token exists) is the one source of record for the dead-cite invariant; a copy here went green only when W-C.3 landed | — | — |
+| ~~B11-G3~~ | struck (fix-3, FB-18): W-C.1's C1-G1 (no tooling under `docs/`) is the one source of record; a copy here went green only when W-C.1 landed | — | — |
 
-B11-G2 and B11-G3 are born RED here and bound to W-C.3 and W-C.1; they are this wave's enactment. #78's terminal (RETIRE, W-C.3 named) is LEDGER:190.
+B11-G1 is this wave's own enactment of the RETIRE. #78's terminal (RETIRE, W-C.3 named for the derived canon) is LEDGER:190.
 
 ## 6 · π and DELTA obligations
 
