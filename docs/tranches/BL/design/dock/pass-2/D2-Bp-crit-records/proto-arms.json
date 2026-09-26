@@ -1,0 +1,536 @@
+{
+ "probe": "D2-Bp-probes",
+ "started": "2026-09-26T05:44:45.128Z",
+ "build": "crit@4af44b36",
+ "cells": [
+  {
+   "arm": "rotlead",
+   "engine": "Chromium",
+   "plain": {
+    "firstTranslate": "-48px",
+    "restTranslate": "(cleared)"
+   },
+   "rotated": {
+    "firstTranslate": "-48px",
+    "restTranslate": "(cleared)"
+   },
+   "firstTranslateMaxDiffPx": 0,
+   "verdict": "layout-space (agree)",
+   "load": 24.1
+  },
+  {
+   "arm": "pop",
+   "engine": "Chromium",
+   "seats": 3,
+   "leaving": 2,
+   "popped": [],
+   "fadeFramesMin": 2,
+   "fadeFramesMax": 2,
+   "frames": 121,
+   "verdict": "fades",
+   "load": 23.61
+  },
+  {
+   "arm": "idle",
+   "engine": "Chromium",
+   "rafCallsIn2sBefore": [
+    259,
+    260
+   ],
+   "rafCallsIn2sAfterMorph": 263,
+   "noise": 1,
+   "extraOverBaseline": 3,
+   "verdict": "RUNS AT REST",
+   "load": 24.45
+  },
+  {
+   "arm": "stretch",
+   "engine": "Chromium",
+   "runW0": 580,
+   "rootW0": 642,
+   "runW1": 580,
+   "rootW1": 642,
+   "travelPx": 48,
+   "worstStepPx": 5.15,
+   "movingFrames": 31,
+   "verdict": "glides",
+   "load": 24.01
+  },
+  {
+   "arm": "pblock",
+   "engine": "Chromium",
+   "D": 379.64,
+   "frameGapMs": 1204.5,
+   "stepAcrossGapPx": 26.18,
+   "stepAcrossGapFracD": 0.069,
+   "nextStepPx": 18.5,
+   "landedAtMs": 1433.7,
+   "around": [
+    [
+     40.7,
+     173.69
+    ],
+    [
+     48.3,
+     194.45
+    ],
+    [
+     56.5,
+     218.55
+    ],
+    [
+     1261,
+     244.73
+    ],
+    [
+     1262.3,
+     263.23
+    ],
+    [
+     1269.5,
+     352.47
+    ],
+    [
+     1274.2,
+     372.53
+    ],
+    [
+     1282.3,
+     381.88
+    ],
+    [
+     1291.2,
+     396.33
+    ]
+   ],
+   "load": 23.69
+  },
+  {
+   "arm": "pcost",
+   "engine": "Chromium",
+   "mode": "lead",
+   "throttle": 1,
+   "seats": 0,
+   "cellsAfter": 8,
+   "seatsInRun": 6,
+   "morphFrames": 29,
+   "frames": 88,
+   "dtP50": 8,
+   "dtP95": 10.4,
+   "dtMax": 11.6,
+   "over25ms": 0,
+   "trace": {
+    "rafFrames": 211,
+    "perFrameMs": {
+     "RunTask": 0.27,
+     "FunctionCall": 0.054,
+     "UpdateLayoutTree": 0.135,
+     "Layout": 0.007,
+     "FireAnimationFrame": 0.046,
+     "PrePaint": 0.01,
+     "Paint": 0.023,
+     "Layerize": 0.009,
+     "Commit": 0.014
+    },
+    "mainTaskMsPerFrame": 0.27,
+    "mainTaskMsTotal": 57.02
+   },
+   "load": 23.69
+  },
+  {
+   "arm": "pcost",
+   "engine": "Chromium",
+   "mode": "lead",
+   "throttle": 1,
+   "seats": 10,
+   "cellsAfter": 12,
+   "seatsInRun": 10,
+   "morphFrames": 30,
+   "frames": 90,
+   "dtP50": 8,
+   "dtP95": 9.5,
+   "dtMax": 10.6,
+   "over25ms": 0,
+   "trace": {
+    "rafFrames": 214,
+    "perFrameMs": {
+     "RunTask": 0.3,
+     "FunctionCall": 0.058,
+     "UpdateLayoutTree": 0.161,
+     "Layout": 0.007,
+     "FireAnimationFrame": 0.05,
+     "PrePaint": 0.011,
+     "Paint": 0.023,
+     "Layerize": 0.01,
+     "Commit": 0.014
+    },
+    "mainTaskMsPerFrame": 0.3,
+    "mainTaskMsTotal": 64.19
+   },
+   "load": 22.91
+  },
+  {
+   "arm": "pcost",
+   "engine": "Chromium",
+   "mode": "lead",
+   "throttle": 1,
+   "seats": 20,
+   "cellsAfter": 22,
+   "seatsInRun": 20,
+   "morphFrames": 32,
+   "frames": 92,
+   "dtP50": 7.7,
+   "dtP95": 9.3,
+   "dtMax": 13.8,
+   "over25ms": 0,
+   "trace": {
+    "rafFrames": 220,
+    "perFrameMs": {
+     "RunTask": 0.493,
+     "FunctionCall": 0.072,
+     "UpdateLayoutTree": 0.293,
+     "Layout": 0.009,
+     "FireAnimationFrame": 0.059,
+     "PrePaint": 0.018,
+     "Paint": 0.034,
+     "Layerize": 0.016,
+     "Commit": 0.019
+    },
+    "mainTaskMsPerFrame": 0.493,
+    "mainTaskMsTotal": 108.48
+   },
+   "load": 23.16
+  },
+  {
+   "arm": "pcost",
+   "engine": "Chromium",
+   "mode": "lead",
+   "throttle": 1,
+   "seats": 40,
+   "cellsAfter": 42,
+   "seatsInRun": 40,
+   "morphFrames": 32,
+   "frames": 92,
+   "dtP50": 7.8,
+   "dtP95": 9.4,
+   "dtMax": 10.5,
+   "over25ms": 0,
+   "trace": {
+    "rafFrames": 219,
+    "perFrameMs": {
+     "RunTask": 0.505,
+     "FunctionCall": 0.063,
+     "UpdateLayoutTree": 0.342,
+     "Layout": 0.002,
+     "FireAnimationFrame": 0.045,
+     "PrePaint": 0.015,
+     "Paint": 0.013,
+     "Layerize": 0.015,
+     "Commit": 0.019
+    },
+    "mainTaskMsPerFrame": 0.505,
+    "mainTaskMsTotal": 110.61
+   },
+   "load": 23.16
+  },
+  {
+   "arm": "pcost",
+   "engine": "Chromium",
+   "mode": "lead",
+   "throttle": 4,
+   "seats": 0,
+   "cellsAfter": 8,
+   "seatsInRun": 6,
+   "morphFrames": 29,
+   "frames": 88,
+   "dtP50": 7.8,
+   "dtP95": 10,
+   "dtMax": 23.8,
+   "over25ms": 0,
+   "trace": {
+    "rafFrames": 210,
+    "perFrameMs": {
+     "RunTask": 1.044,
+     "FireAnimationFrame": 0.123,
+     "FunctionCall": 0.166,
+     "PrePaint": 0.048,
+     "Layerize": 0.044,
+     "Commit": 0.056,
+     "UpdateLayoutTree": 0.586,
+     "Layout": 0.027,
+     "Paint": 0.103
+    },
+    "mainTaskMsPerFrame": 1.044,
+    "mainTaskMsTotal": 219.3
+   },
+   "load": 24.03
+  },
+  {
+   "arm": "pcost",
+   "engine": "Chromium",
+   "mode": "lead",
+   "throttle": 4,
+   "seats": 10,
+   "cellsAfter": 12,
+   "seatsInRun": 10,
+   "morphFrames": 28,
+   "frames": 87,
+   "dtP50": 7.9,
+   "dtP95": 10,
+   "dtMax": 21.5,
+   "over25ms": 0,
+   "trace": {
+    "rafFrames": 206,
+    "perFrameMs": {
+     "RunTask": 1.03,
+     "FunctionCall": 0.197,
+     "UpdateLayoutTree": 0.612,
+     "Layout": 0.034,
+     "FireAnimationFrame": 0.121,
+     "PrePaint": 0.055,
+     "Paint": 0.069,
+     "Layerize": 0.025,
+     "Commit": 0.046
+    },
+    "mainTaskMsPerFrame": 1.03,
+    "mainTaskMsTotal": 212.08
+   },
+   "load": 24.03
+  },
+  {
+   "arm": "pcost",
+   "engine": "Chromium",
+   "mode": "lead",
+   "throttle": 4,
+   "seats": 20,
+   "cellsAfter": 22,
+   "seatsInRun": 20,
+   "morphFrames": 23,
+   "frames": 82,
+   "dtP50": 7.8,
+   "dtP95": 14.7,
+   "dtMax": 45.1,
+   "over25ms": 1,
+   "trace": {
+    "rafFrames": 191,
+    "perFrameMs": {
+     "RunTask": 1.524,
+     "FunctionCall": 0.298,
+     "UpdateLayoutTree": 0.941,
+     "Layout": 0.031,
+     "FireAnimationFrame": 0.191,
+     "PrePaint": 0.041,
+     "Paint": 0.108,
+     "Layerize": 0.049,
+     "Commit": 0.048
+    },
+    "mainTaskMsPerFrame": 1.524,
+    "mainTaskMsTotal": 291.11
+   },
+   "load": 22.9
+  },
+  {
+   "arm": "pcost",
+   "engine": "Chromium",
+   "mode": "lead",
+   "throttle": 4,
+   "seats": 40,
+   "cellsAfter": 42,
+   "seatsInRun": 40,
+   "morphFrames": 21,
+   "frames": 83,
+   "dtP50": 7.7,
+   "dtP95": 15,
+   "dtMax": 36.3,
+   "over25ms": 1,
+   "trace": {
+    "rafFrames": 190,
+    "perFrameMs": {
+     "RunTask": 1.486,
+     "FunctionCall": 0.224,
+     "UpdateLayoutTree": 0.992,
+     "Layout": 0.009,
+     "FireAnimationFrame": 0.125,
+     "PrePaint": 0.058,
+     "Paint": 0.032,
+     "Layerize": 0.044,
+     "Commit": 0.063
+    },
+    "mainTaskMsPerFrame": 1.486,
+    "mainTaskMsTotal": 282.31
+   },
+   "load": 22.51
+  },
+  {
+   "arm": "rotlead",
+   "engine": "Playwright WebKit",
+   "plain": {
+    "firstTranslate": "-48px",
+    "restTranslate": "(cleared)"
+   },
+   "rotated": {
+    "firstTranslate": "-48px",
+    "restTranslate": "(cleared)"
+   },
+   "firstTranslateMaxDiffPx": 0,
+   "verdict": "layout-space (agree)",
+   "load": 25.35
+  },
+  {
+   "arm": "pop",
+   "engine": "Playwright WebKit",
+   "seats": 3,
+   "leaving": 2,
+   "popped": [],
+   "fadeFramesMin": 1,
+   "fadeFramesMax": 1,
+   "frames": 94,
+   "verdict": "fades",
+   "load": 25.35
+  },
+  {
+   "arm": "idle",
+   "engine": "Playwright WebKit",
+   "rafCallsIn2sBefore": [
+    196,
+    196
+   ],
+   "rafCallsIn2sAfterMorph": 196,
+   "noise": 0,
+   "extraOverBaseline": 0,
+   "verdict": "parks",
+   "load": 23.32
+  },
+  {
+   "arm": "stretch",
+   "engine": "Playwright WebKit",
+   "runW0": 580,
+   "rootW0": 642,
+   "runW1": 580,
+   "rootW1": 642,
+   "travelPx": 48,
+   "worstStepPx": 4.4,
+   "movingFrames": 24,
+   "verdict": "glides",
+   "load": 22.25
+  },
+  {
+   "arm": "pblock",
+   "engine": "Playwright WebKit",
+   "D": 379.72,
+   "frameGapMs": 1203,
+   "stepAcrossGapPx": 31.69,
+   "stepAcrossGapFracD": 0.083,
+   "nextStepPx": 95.28,
+   "landedAtMs": 1448,
+   "around": [
+    [
+     39,
+     148.38
+    ],
+    [
+     48,
+     177.66
+    ],
+    [
+     58,
+     205.86
+    ],
+    [
+     1261,
+     237.55
+    ],
+    [
+     1265,
+     332.83
+    ],
+    [
+     1272,
+     342.55
+    ],
+    [
+     1284,
+     358.5
+    ],
+    [
+     1295,
+     382.86
+    ],
+    [
+     1304,
+     401.94
+    ]
+   ],
+   "load": 22.63
+  },
+  {
+   "arm": "pcost",
+   "engine": "Playwright WebKit",
+   "mode": "lead",
+   "throttle": 1,
+   "seats": 0,
+   "cellsAfter": 8,
+   "seatsInRun": 6,
+   "morphFrames": 23,
+   "frames": 67,
+   "dtP50": 10,
+   "dtP95": 12,
+   "dtMax": 13,
+   "over25ms": 0,
+   "trace": null,
+   "load": 22.63
+  },
+  {
+   "arm": "pcost",
+   "engine": "Playwright WebKit",
+   "mode": "lead",
+   "throttle": 1,
+   "seats": 10,
+   "cellsAfter": 12,
+   "seatsInRun": 10,
+   "morphFrames": 23,
+   "frames": 67,
+   "dtP50": 10,
+   "dtP95": 12,
+   "dtMax": 13,
+   "over25ms": 0,
+   "trace": null,
+   "load": 21.38
+  },
+  {
+   "arm": "pcost",
+   "engine": "Playwright WebKit",
+   "mode": "lead",
+   "throttle": 1,
+   "seats": 20,
+   "cellsAfter": 22,
+   "seatsInRun": 20,
+   "morphFrames": 23,
+   "frames": 67,
+   "dtP50": 10,
+   "dtP95": 12,
+   "dtMax": 13,
+   "over25ms": 0,
+   "trace": null,
+   "load": 21.38
+  },
+  {
+   "arm": "pcost",
+   "engine": "Playwright WebKit",
+   "mode": "lead",
+   "throttle": 1,
+   "seats": 40,
+   "cellsAfter": 42,
+   "seatsInRun": 40,
+   "morphFrames": 23,
+   "frames": 67,
+   "dtP50": 10,
+   "dtP95": 13,
+   "dtMax": 13,
+   "over25ms": 0,
+   "trace": null,
+   "load": 23.03
+  }
+ ],
+ "finished": "2026-09-26T05:46:10.399Z"
+}
