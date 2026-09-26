@@ -46,7 +46,7 @@ With the 12 px dot the token intends, the bound would be 52. The gate uses the m
 
 ## 4 · Files it touches
 
-`src/components/pager-dots/worm.ts`, and each length-reading site the §3.3 sweep finds. New: `tests-visual/wired/pager-worm.spec.ts` (appendix A), bound as G-33 in the roster.
+`src/components/pager-dots/worm.ts`, and each length-reading site the §3.3 sweep finds. New: `tests-visual/wired/pager-worm.spec.ts` (appendix A), bound as G-33 in the roster; it imports the band-E `lib.mjs` W-E.1 lands (PLAN §5 notes).
 
 ## 5 · Acceptance gates
 

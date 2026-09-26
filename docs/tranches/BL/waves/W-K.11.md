@@ -36,7 +36,7 @@
 
 ## 4 · Files it touches
 
-`src/components/card/Card.vue:57-68`, `tests/composables/search/search-contracts.test.ts:186-188`, `tests-visual/wired/current-row.spec.ts` (W-K.5 appendix A's G1 cell, shared), `src/components/card/README.md` (the option contract).
+`src/components/card/Card.vue:57-68`, `tests/composables/search/search-contracts.test.ts:186-188`, new `tests-visual/wired/current-row.spec.ts` with W-K.5 appendix A's G1 cell (this wave is the spec's lander; W-K.5 waits on it and adds its G2 and G3 cells, PLAN §5 notes), `src/components/card/README.md` (the option contract).
 
 ## 5 · Acceptance gates
 

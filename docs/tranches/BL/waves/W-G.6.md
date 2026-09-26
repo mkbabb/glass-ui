@@ -52,7 +52,7 @@ The machine ran at load average 48-60 through every reading; the absolute times 
 
 ## 4 · Files it touches
 
-`src/composables/motion/core/motionTempo.ts`; `src/components/_shared/class-names.ts`; `src/components/aurora/composables/wgpuSetup.ts`, `src/components/blob/composables/wgpuSetup.ts`, `src/components/fourier-field/renderer/wgpu.ts`, and any pipeline W-G.1's engine adds (its luma compute pass); `src/components/sortable-list/useSortable.ts`, `SortableItem.vue`; `src/components/toggle-group/ToggleGroup.vue`. Tests: `tests/composables/motion/motionTempo.test.ts` (the cache and its invalidation), `tests/components/shared/class-names.test.ts` (memo returns identical output for the existing fixture set), `tests-visual/wired/mount-path.spec.ts` (appendices A and C against the harness page, appendix D, which this wave lands in `tests-visual/fixtures/` as the one copy the band's wired specs drive; PLAN §5 notes, fix-6).
+`src/composables/motion/core/motionTempo.ts`; `src/components/_shared/class-names.ts`; `src/components/aurora/composables/wgpuSetup.ts`, `src/components/blob/composables/wgpuSetup.ts`, `src/components/fourier-field/renderer/wgpu.ts`, and any pipeline W-G.1's engine adds (its luma compute pass); `src/components/sortable-list/useSortable.ts`, `SortableItem.vue`; `src/components/toggle-group/ToggleGroup.vue`. Tests: `tests/composables/motion/motionTempo.test.ts` (the cache and its invalidation), `tests/components/shared/class-names.test.ts` (memo returns identical output for the existing fixture set), `tests-visual/wired/mount-path.spec.ts` (appendices A and C against the harness app, appendix D, pages `h` and `b`, which this wave lands in `tests-visual/fixtures/band-g/` as the one copy the band's wired specs drive: W-G.3, W-G.5 and W-G.7 wait on it; PLAN §5 notes).
 
 ## 5 · Acceptance gates
 
@@ -228,4 +228,10 @@ const model = ref(items[0]?.v);
 </template>
 ```
 
-The `b` page (one Button, `@import "tailwindcss"; @import "tw-animate-css"; @import "@mkbabb/glass-ui/styles";` and nothing else) is W-G.7's consumer fixture. W-G.3's dock fixture (`c=dock`) and W-G.5's `c=blob` use the same app.
+The `b` page, W-G.7's one-Button consumer (its G7-G8 reads it):
+
+- `pages/b.html`: `pages/h.html` with the title `band G one Button` and `src="/src/b.js"`.
+- `src/b.css`: `@import "tailwindcss"; @import "tw-animate-css"; @import "@mkbabb/glass-ui/styles";` and nothing else.
+- `src/b.js`: `import "./b.css"; import { createApp, h } from "vue"; import { Button } from "@mkbabb/glass-ui/button"; createApp({ render: () => h(Button, null, () => "One") }).mount("#app");`
+
+W-G.3's dock fixture (`c=dock`) and W-G.5's `c=blob` use the `h` page.

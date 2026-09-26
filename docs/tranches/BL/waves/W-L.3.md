@@ -26,6 +26,7 @@
 | UIA-F-57 (F-67 mechanism row) | DESIGN names `text-sm` and `text-xs`, which the bridge deletes: closes on G-L3-1 (the consumer's `text-sm` survives) |
 | #26c (RT-26G) | `DESIGN.md:277` tells readers to use Tailwind `ease-spring-*`, a family deleted from `theme/bridges.css` (the note at `:360-361`) |
 | #81d | the utility emitter's string scanner pairs any quote with any other (`vite.utility-emit.ts:105`, `strRe = /["'\`]([^"'\`\n]*?)["'\`]/g`) |
+| F-69's declaration leg (hand-off from W-L.4 §3.6) | the fork's declaration check is W-L.4's fixture `tests/_support/declaration-floor/`; the matrix's types leg runs it, which is why this wave lands after W-L.4 (PLAN §5) |
 
 ## 2 · The defect at HEAD
 
@@ -61,7 +62,7 @@ Sources behind the SSR readings: `useGlobalDark.ts:168-174` (an immediate `watch
    | install | `npm install <tgz>` and `pnpm add <tgz>`, required peers at their declared floors (vue 3.5.0, reka-ui 2.0.0, @vueuse/core 14.0.0, tailwindcss 4.0.0, @lucide/vue 1.16.0) and at `latest`, optional peers absent | a peer warning or an install error |
    | closure | appendix B over the installed `dist` | the root reaches an optional peer, or any entry reaches an undeclared package |
    | css | a Vite app compiling the README recipe with `@tailwindcss/vite`; a second app importing `./styles.css` alone | a compile error; `.text-sm` absent from a page that uses it; a README-documented utility absent |
-   | types | W-L.2's `tests/consumer/strict/` against the installed package | any `vue-tsc` error |
+   | types | W-L.2's `tests/consumer/strict/` and W-L.4's `tests/_support/declaration-floor/` against the installed package | any `vue-tsc` error; any glass-owned declaration error at the peer floors |
    | ssr | a Vite SSR server and a Nuxt 4 app, each on a cold process, rendering a page with DarkModeToggle, Popover (`trigger="hover"`), SegmentedTabs and Slider; hydrated in Chromium under {fine, coarse} × {no-preference, reduce} | a non-200 first response; any hydration warning; an `aria-labelledby` or `aria-controls` in the hydrated page that resolves to no element |
    | dev | the Vite app in dev with `<Button variant="outline">`; the same app's production build | the dev console lacks the Button warning; the production bundle contains any guard message |
 
@@ -84,7 +85,7 @@ Sources behind the SSR readings: `useGlobalDark.ts:168-174` (an immediate `watch
 | G-L3-5 · guards leave production | the matrix's dev leg, production arm | 0 guard messages in the consumer's production bundle | not runnable at HEAD (no guard ships, so the arm would pass vacuously); counted only with G-L3-4 green |
 | G-L3-6 · a cold SSR render | appendix C `ssr-render.test.ts` | exit 0 | **fail**: `ReferenceError: document is not defined` (`useGlobalDark.ts:171`) |
 | G-L3-7 · hydration on coarse and reduce | appendix C `hydrate-client.test.ts` with `PTR=coarse`, and the matrix's ssr leg over the four cells | 0 hydration warnings | **fail**: 3 mismatches on coarse; fine passes with 0 |
-| G-L3-8 · the matrix is the gate | `grep -q "consumer-matrix" .github/workflows/ci.yml && ! grep -q "verify:package" package.json .github/workflows/release.yml` | exit 0 | **exit 1** |
+| G-L3-8 · the matrix is the gate | `grep -q "consumer-matrix" .github/workflows/ci.yml && ! grep -q "verify:package" package.json .github/workflows/release.yml && grep -q "declaration-floor" scripts/consumer-matrix.mjs` | exit 0 | **exit 1** (fix-7 re-ran it at `8397fcae` with the third clause: `consumer-matrix` absent from `ci.yml`, `verify:package` at `package.json:492` and `release.yml:52`, no `scripts/consumer-matrix.mjs`) |
 | G-L3-9 · the library keeps its own rule | `! rg -n --pcre2 '(?<![\w-])text-(sm\|xs)(?![\w-])' src demo --glob '*.vue' --glob '*.ts'` | exit 0 | hold line: 0 matches at HEAD (a plain `\btext-sm\b` matches `--control-text-sm` 17 times, so the lookarounds are required); it bites when the reset goes and a static rung slips back in |
 | G-L3-10 · DESIGN names no deleted utility (static; #26c) | `! grep -q 'ease-spring-' DESIGN.md` | exit 0 | **exit 1** (`DESIGN.md:277`) |
 | G-L3-11 · the scanner pairs like quotes (#81d) | appendix D `strre.mjs`: the emitter's `strRe`, applied to `"px-2 'p-4"`, yields the one string `px-2 'p-4` | exit 0 | **exit 1**: yields `["px-2 "]` (fix-2, `183e021a`) |

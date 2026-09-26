@@ -54,7 +54,7 @@
 
 ## 4 · Files it touches
 
-`src/styles/theme/radius.css`, `src/styles/glass/overlay-plate.css`, `src/styles/utilities/base.css`, `src/components/tabs/styles/segmented.css`, `src/components/music-staff/styles.css`, `src/components/configurator/Configurator.vue`, the demo files carrying `rounded-panel`/`rounded-xl` (the 27-file list from the `rg` above), `tests/styles/radius-role-canon.test.ts`. New: `tests-visual/wired/radius-role.spec.ts` (appendix A G1).
+`src/styles/theme/radius.css`, `src/styles/glass/overlay-plate.css`, `src/styles/utilities/base.css`, `src/components/tabs/styles/segmented.css`, `src/components/music-staff/styles.css`, `src/components/configurator/Configurator.vue`, the demo files carrying `rounded-panel`/`rounded-xl` (the 27-file list from the `rg` above), `tests/styles/radius-role-canon.test.ts`. New: `tests-visual/wired/radius-role.spec.ts` (appendix A G1), which imports the band-E `lib.mjs` W-E.1 lands (PLAN §5 notes).
 
 ## 5 · Acceptance gates
 

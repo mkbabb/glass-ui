@@ -38,7 +38,7 @@
 
 ## 4 · Files it touches
 
-`src/styles/tokens/on-glass-fg.css:37`, `src/styles/tokens/dark-arm.css:303`, `src/components/_shared/field/control.css:66-103` (and the `--input-on-glass` reads at `:74,83,242,262,282`), the band-H probe (`scripts/probes/band-H/`, shared with W-H.2).
+`src/styles/tokens/on-glass-fg.css:37`, `src/styles/tokens/dark-arm.css:303`, `src/components/_shared/field/control.css:66-103` (and the `--input-on-glass` reads at `:74,83,242,262,282`), the band-H probe (`scripts/probes/band-H/`, which W-H.1 lands).
 
 ## 5 · Acceptance gates
 

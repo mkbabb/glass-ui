@@ -72,8 +72,8 @@ In order, each step's exit code read from its own run, never through a pipe:
 1. **Entry.** W-L.7 closed, every band's gates green, its π pairs on disk and cited (P-1, P-2).
 2. **Records.** `CHANGELOG.md` `## 11.0.0 — <date>` and `MIGRATION.md` `## 11.0.0`, with no wave ids, tranche ids or dated brackets (E-10), and G-L7-3's closure check green over the new section.
 3. **Version.** `npm version 11.0.0 --no-git-tag-version`, committed as the release commit.
-4. **Datum.** Pack the committed, clean tree; read `unpackedContentBytes` (`scripts/verify-export-types.mjs`); rebind `.bundle-ratchet` in its own commit. A dirty tree never binds the datum. W-A.5 may replace the literal ratchet with its payload invariant; then this step records that invariant's reading instead, and the step says which.
-5. **The release run, not a local subset.** On the release commit: `release.yml`'s steps in order (`npm ci`, `typecheck`, `build`, `verify:package`, `demo:dist:build`, `test`), then `scripts/release.sh v11.0.0`'s real-GPU arms (`gate:pixel-floor`, `:planted`, `:planted:flood`) and W-A.3's wired visual suite and W-A.4's GPU leg. An earlier close that ran a local subset shipped gate drift that only the release set would have caught (`docs/tranches/AX/audit/hardening/CHRONIC-miss-release.md:6-8`, `:192-196`); this step runs the release set.
+4. **Datum.** On the committed, clean release commit, after `npm run build`, run W-A.5's payload invariant (`node scripts/payload.mjs --enforce`, W-A.5 §3 item 3) and record each entry's reading in the wave record. It is the one datum: W-A.5 deletes `.bundle-ratchet` and W-L.3 deletes `scripts/verify-export-types.mjs`, and both land before this wave (PLAN §5). A dirty tree never binds a reading.
+5. **The release run, not a local subset.** On the release commit: `release.yml`'s steps in order as W-A.5 and W-L.3 leave them (`npm ci`, `typecheck`, `build`, `payload.mjs --enforce`, the consumer matrix, `demo:dist:build`, `test`), then `scripts/release.sh v11.0.0`'s real-GPU arms (`gate:pixel-floor`, `:planted`, `:planted:flood`) and W-A.3's wired visual suite and W-A.4's GPU leg. An earlier close that ran a local subset shipped gate drift that only the release set would have caught (`docs/tranches/AX/audit/hardening/CHRONIC-miss-release.md:6-8`, `:192-196`); this step runs the release set.
 6. **The owner's confirmation.** The owner sees the close glance (the band captures W-B.4 rules, the CHANGELOG entry, §3.3's three retirements, W-L.7's orphan list for L06-12, OW-1 and OW-3 at their state) and confirms in-session. The reply is quoted verbatim with its time, before the tag.
 7. **Tag and publish.** `git tag -a v11.0.0` on the release commit, pushed; `release.yml` publishes with provenance. It authenticates with OIDC if W-B.13's Trusted Publisher step is done, otherwise with `NPM_TOKEN`; FINAL.md states which, and OW-1's state is its terminal record.
 8. **The artefact check.** The registry tarball is packed back and read for each band's cure markers, as W-0.7's G5 did for 10.2.0: a marker list is collected from each wave record's "artefact marker" line.
@@ -85,7 +85,7 @@ In order, each step's exit code read from its own run, never through a pipe:
 
 ## 4 · Files it touches
 
-`CHANGELOG.md`, `MIGRATION.md`, `package.json`, `package-lock.json`, `.bundle-ratchet`; new `scripts/tranche/close-check.mjs` and `scripts/tranche/cite-check.mjs` (appendix A promoted); `docs/tranches/BL/FINAL.md`; the close receipt in the evidence path.
+`CHANGELOG.md`, `MIGRATION.md`, `package.json`, `package-lock.json`; new `scripts/tranche/close-check.mjs` and `scripts/tranche/cite-check.mjs` (appendix A promoted); `docs/tranches/BL/FINAL.md`; the close receipt in the evidence path.
 
 ## 5 · Acceptance gates
 
@@ -96,7 +96,7 @@ Each gate's exit code is read on its own.
 | G-L8-1 · version | `test "$(node -p "require('./package.json').version")" = 11.0.0` | exit 0 | **exit 1** (`10.1.0`) |
 | G-L8-2 · records | `grep -q '^## 11.0.0' CHANGELOG.md && grep -q '^## 11.0.0' MIGRATION.md && ! sed -n '/^## 11.0.0/,/^## 10\./p' CHANGELOG.md MIGRATION.md \| grep -qE '\bW-[0-9A-L]\.[0-9]\|\[20[0-9]{2}-[0-9]{2}-[0-9]{2}'` | exit 0 | **exit 1** (no section) |
 | G-L8-3 · published with provenance | `test "$(npm view @mkbabb/glass-ui@11.0.0 dist.attestations.provenance.predicateType)" = https://slsa.dev/provenance/v1` | exit 0 | **exit 1** (`E404`); `@10.1.0` passes the same read |
-| G-L8-4 · the datum is the shipped bytes | `test "$(cat .bundle-ratchet)" = "$(npm view @mkbabb/glass-ui@11.0.0 dist.unpackedSize)"` (or W-A.5's invariant reading, per §3.5 step 4) | exit 0 | **exit 1** (404); 10.1.0 shows it can pass: 2,919,057 both sides |
+| G-L8-4 · the datum is the committed tree's | on the release commit after `npm run build`: `git diff --quiet HEAD && node scripts/payload.mjs --enforce` | exit 0 | **exit 1** (fix-7, `8397fcae`: `Cannot find module …/scripts/payload.mjs`; W-A.5 lands it) |
 | G-L8-5 · the release run | `gh run list --workflow release.yml --json headBranch,conclusion --jq '.[] \| select(.headBranch=="v11.0.0") \| .conclusion'` prints `success` | `success` | **fails**: latest runs are `v10.1.0`, `v10.0.1`, `v10.0.0` |
 | G-L8-6 · the close checklist | `node scripts/tranche/close-check.mjs docs/tranches/BL --tag v11.0.0` | exit 0 | **fails**: the script does not exist; its items fail today (G-L8-7 to G-L8-10) |
 | G-L8-7 · the ledger | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --close` | exit 0 | **fails**: the checker is absent (W-B.1 builds it). `LEDGER.md` exists (committed at `ae8370e0`; `test -f` exits 0 at `183e021a`, fix-2) |

@@ -79,7 +79,7 @@ In paint (probes in appendices B-D; readings from `cap/g1-*.json` in the band-G 
 - Deleted: `src/composables/glass/webgl/` (whole), `src/composables/glass/canvas2d/` (whole), `src/components/aurora/composables/glSetup.ts`, `src/components/aurora/constants/shaders/{aurora.frag,aurora.vert,aurora-image.frag,brush.glsl,composition.glsl,flow.glsl,mediums.glsl,metal-medium.glsl,oil-modes.glsl,tonemap.glsl,vangogh-medium.glsl}.ts`, `src/components/aurora/constants/renderMode.ts`, `src/composables/glass/procedural/color.glsl.ts`, `src/components/blob/shaders/{metaball.frag,metaball.vert,sdf-body.glsl,watercolor-edges.glsl,oklch-perturb.glsl,metaball-uniforms.glsl}.ts`, `src/components/blob/composables/{buildMetaballProgram,uploadBlobUniforms}.ts`, `tests/composables/glass/{webgl,canvas2d}/`.
 - Moved into `src/composables/glass/webgpu/`: `createCanvasLifecycle.ts`, `backingSize.ts`, `visibility.ts`, `shaders/flow.wgsl.ts`.
 - Edited: `webgpu/{useWebGPUCanvas,useGpuSubstrate,webgpuDevice,webgpuCanvasTypes,rendererStatus}.ts`; `src/components/aurora/{Aurora.vue,index.ts,README.md,DESIGN.md}`, `composables/{runtime,useAurora,wgpuSetup,textureUpload,auroraImageSource,frameLoop,uniformBridge,auroraFallbackGround→auroraGround}.ts`, `constants/{presets,shaders/aurora.wgsl,shaders/aurora-mediums.wgsl}.ts`; `src/components/blob/{Blob.vue,README.md}`, `composables/{useMetaballRenderer,blobSimulation,wgpuSetup,uniformBridgeWGPU→packBlobUniforms}.ts`, `shaders/metaball.wgsl.ts`; `src/components/fourier-field/{FourierField.vue,useFourierField.ts,renderer/wgpu.ts}`; `src/composables/glass/index.ts`, `src/index.ts`, `src/components/PROCEDURAL-SUITE.md`, `src/composables/motion/pointer/{usePointerVelocityField,pointerFieldMappings}.ts`, `src/composables/glass/procedural/color.wgsl.ts` (its GLSL twin deleted, prose), `demo/stories/substrates/{aurora.vue,aurora/AuroraStage.vue}`.
-- New tests: `tests-visual/wired/one-engine.spec.ts` (appendices B-D), `tests/composables/glass/webgpu/backing-limits.test.ts` (the clamp as a unit over a fake `device.limits`).
+- Tests: `tests-visual/wired/one-engine.spec.ts` gains appendices B-D's rows (W-B.9 lands the spec with the constellation route row, and the band-G `lib.mjs` it imports; PLAN §5 notes); new `tests/composables/glass/webgpu/backing-limits.test.ts` (the clamp as a unit over a fake `device.limits`).
 - `MIGRATION.md` (§7), `tests/gates/roster.json`.
 
 ## 5 · Acceptance gates
@@ -126,7 +126,7 @@ A consumer that pinned `renderMode="webgl"` (speedtest `App.vue:53,363-370`) mov
 
 ## 8 · Dependencies
 
-PLAN §5, the one record of edges. W-G.2 is unordered against this wave there; if it lands first, step 1 keeps its one `lost` subscription.
+PLAN §5, the one record of edges. W-G.2 lands after this wave and builds its one `lost` subscription on the device record this wave moves.
 
 ## 9 · Ledger rows it closes
 
@@ -138,7 +138,7 @@ PLAN §5, the one record of edges. W-G.2 is unordered against this wave there; i
 - **Wave:** G1-G1 to G1-G11 green in one run on the GPU leg.
 - **Feature:** the aurora, blob and fourier paint on WebGPU on `/`, `/substrates/*` and the 9000 px host (the constellation already does, from W-B.9), with π-W1's pair identical and π-GROUND's pair within band.
 
-## Appendix A · `lib.mjs`, the band-G probe library
+## Appendix A · `lib.mjs`, the band-G probe library (W-B.9 lands it)
 
 ```js
 // Band G probe library: the built demo (dist-demo of the scratch worktree) on :5987, real GPU (Metal + WebGPU).

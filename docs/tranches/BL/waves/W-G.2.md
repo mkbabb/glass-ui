@@ -49,7 +49,7 @@ Probe `g2-loss.mjs` (appendix B), `/substrates/blob`: the page calls `destroy()`
 
 ## 4 · Files it touches
 
-`src/composables/glass/webgpu/{webgpuDevice,useWebGPUCanvas}.ts` (paths after W-G.1; if this wave lands first, `useWebGPUCanvas.ts` holds both). New: `tests-visual/wired/webgpu-route-cycle.spec.ts` (appendix A), `tests-visual/wired/webgpu-device-loss.spec.ts` (appendix B), `tests/composables/glass/webgpu/device-loss.test.ts` (a fake device: 50 canvases arm and dispose, the listener set is empty and `lost` was read once; a resolved loss with 3 live canvases triggers 1 re-acquire and 3 rebuilds).
+`src/composables/glass/webgpu/{webgpuDevice,useWebGPUCanvas}.ts` (the paths W-G.1 leaves; this wave lands after it, PLAN §5). New: `tests-visual/wired/webgpu-route-cycle.spec.ts` (appendix A), `tests-visual/wired/webgpu-device-loss.spec.ts` (appendix B), `tests/composables/glass/webgpu/device-loss.test.ts` (a fake device: 50 canvases arm and dispose, the listener set is empty and `lost` was read once; a resolved loss with 3 live canvases triggers 1 re-acquire and 3 rebuilds).
 
 ## 5 · Acceptance gates
 
@@ -79,7 +79,7 @@ No export changes.
 
 ## 8 · Dependencies
 
-PLAN §5, the one record of edges. Unordered against W-G.1 there (§4 names the paths either way).
+PLAN §5, the one record of edges. Its wired specs import the band-G `lib.mjs`, which W-B.9 lands.
 
 ## 9 · Ledger rows it closes
 

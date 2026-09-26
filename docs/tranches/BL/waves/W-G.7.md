@@ -50,7 +50,7 @@ The one-Button consumer (harness `b` page: `@import "tailwindcss"; @import "tw-a
 
 ## 4 · Files it touches
 
-`src/components/aurora/`: a new `palette/index.ts` (or the colocated equivalent under the colocation edict) holding the derive modules' public face; `index.ts` drops `deriveAurora` and `paletteToCssGradient` (`:78,81`) and does not re-export the subpath. `package.json` (`exports`: `./aurora-palette` added, `./styles.css` removed; `sideEffects`). The library Vite config and `vite.style-assets.ts` / `vite.style-fold.ts` (per-entry CSS emission and injected import; `component-styles.css` emission removed). `src/styles/index.css` (component imports and `@source` out). Each component's stylesheet that `index.css` imported moves under its entry's import graph (the colocated `styles.css` is imported by the component's `index.ts`). `README.md` and the canon's install section (one `@import "@mkbabb/glass-ui/styles"`). Tests: `tests/build/payload.test.ts` (appendix A's rows as assertions after `npm run build`), and the one-Button fixture moved into `tests-visual/fixtures/` with its budget row in W-A.5's invariant.
+`src/components/aurora/`: a new `palette/index.ts` (or the colocated equivalent under the colocation edict) holding the derive modules' public face; `index.ts` drops `deriveAurora` and `paletteToCssGradient` (`:78,81`) and does not re-export the subpath. `package.json` (`exports`: `./aurora-palette` added, `./styles.css` removed; `sideEffects`). The library Vite config and `vite.style-assets.ts` / `vite.style-fold.ts` (per-entry CSS emission and injected import; `component-styles.css` emission removed). `src/styles/index.css` (component imports and `@source` out). Each component's stylesheet that `index.css` imported moves under its entry's import graph (the colocated `styles.css` is imported by the component's `index.ts`). `README.md` and the canon's install section (one `@import "@mkbabb/glass-ui/styles"`). Tests: `tests/build/payload.test.ts` (appendix A's rows as assertions after `npm run build`), and the one-Button budget row in W-A.5's invariant, read from the `b` page W-G.6 lands in `tests-visual/fixtures/band-g/` (PLAN §5 notes).
 
 ## 5 · Acceptance gates
 
@@ -146,7 +146,7 @@ The script's row G7-G4 (no `#version 300 es` under `./aurora`) is the probe's fo
 
 ## Appendix B · the one-Button consumer
 
-The harness `b` page (W-G.6 appendix D): `src/b.css` is `@import "tailwindcss"; @import "tw-animate-css"; @import "@mkbabb/glass-ui/styles";`; `src/b.js` is `import "./b.css"; import { createApp, h } from "vue"; import { Button } from "@mkbabb/glass-ui/button"; createApp({ render: () => h(Button, null, () => "One") }).mount("#app");`. Built with `npx vite build --config vite.config.js` in the harness directory, then:
+The harness `b` page, whose files are W-G.6 appendix D's and which W-G.6 lands. Built with `npx vite build --config vite.config.js` in the harness directory, then:
 
 ```sh
 cd dist/assets; cat b-*.css $(grep -l '' button-*.css 2>/dev/null) > /tmp/b-all.css   # after the wave the Button's own sheet is a separate asset

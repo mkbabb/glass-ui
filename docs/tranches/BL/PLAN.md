@@ -8,7 +8,7 @@
 | inputs, read in full | `CHARTER.md`; `FORMATION-PROGRESS.md`; `audit/REGISTRY.md` (§1 families F-01..F-85 whole; §3 remaining gaps; §6.5-§6.8; §14.7-§14.8); `audit/INBOUND.md`; `audit/INBOUND-MAP.md` (rounds 6 and 8 sections, the O-74 ruling rows); `audit/PROMPT-RECAP-SEED.md`; `ledger/CENSUS.md` and `ledger/census-{register-a,register-b,carries-recap}.md`; `BK/FINAL.md` §7; `design/structure/REGISTRY.md` (P2-0, P2-1, P2-6, P2-7); `design/dock/REGISTRY.md` (§0, §1, §5-§7); `design/tile/REGISTRY.md` (§0, §1, §5, §7); `design/material/PORTFOLIO.md` (§0, §7; D3 has no REGISTRY yet) |
 | commands run here | `npm view @mkbabb/value.js version` → `4.0.0`; `plutil -p ~/Library/WebDriver/com.apple.Safari.plist` → `AllowRemoteAutomation => false`, mtime `Sep 17 18:51:49 2026`; `grep -c emphasis MIGRATION.md` → 0; `grep -c paper-aged MIGRATION.md` → 0; source reads cited inline |
 | fences | no source edit, no git write, no build; the only writes are this file and `waves/INDEX.md` |
-| amended | formation fix seat 2 (`formation-audit/fix-2.md`), against critic pass 1's 21 findings: band 0 gains W-0.8, W-0.9, W-0.10; seven disease rows get waves of their own (W-E.14, W-H.5, W-I.5, W-I.6, W-I.7, W-K.11, and W-I.4 moves into loop D2); §1 gains the evidence-root, decide-wave and gate rules; §5 is the one DAG. 99 waves. Amended again by formation fix seat 3 (`formation-audit/fix-3.md`) against critic pass 2's FB-01..FB-18: W-0.8 is O-83 alone (O-84 and O-84a to W-I.1, CUR:78); OW-12 retired; W-C.1 moves every loop harness and W-H.1/H.2/H.5/I.1/I.7 wait on it; W-B.9 and W-I.7 enact their disease rows themselves. Amended again by formation fix seat 4 (`formation-audit/fix-4.md`) against critic pass 3's FC-01..FC-11: the gate-path rule and base re-run (§1), W-0.2's band-0 terminal as the edge (§5), W-H.5 on D3's FL-11 (§3). Amended again by formation fix seat 5 (`formation-audit/fix-5.md`) against critic pass 4's FD-01..FD-03: G-L1-7 reads the in-place anchor move (W-L.1); state fills leave W-E.2 and W-E.6 for W-H.1 on D3's floor row FL-6 (§3, §4); four within-band edges (§5). Amended again by formation fix seat 6 (`formation-audit/fix-6.md`) against critic pass 5's FE-01..FE-03: the shared-kit edges and two ordered pairs (§5), W-H.1's state-fill captures (W-H.1 §6), and edge lists struck from the specs that restated §5 |
+| amended | formation fix seat 2 (`formation-audit/fix-2.md`), against critic pass 1's 21 findings: band 0 gains W-0.8, W-0.9, W-0.10; seven disease rows get waves of their own (W-E.14, W-H.5, W-I.5, W-I.6, W-I.7, W-K.11, and W-I.4 moves into loop D2); §1 gains the evidence-root, decide-wave and gate rules; §5 is the one DAG. 99 waves. Amended again by formation fix seat 3 (`formation-audit/fix-3.md`) against critic pass 2's FB-01..FB-18: W-0.8 is O-83 alone (O-84 and O-84a to W-I.1, CUR:78); OW-12 retired; W-C.1 moves every loop harness and W-H.1/H.2/H.5/I.1/I.7 wait on it; W-B.9 and W-I.7 enact their disease rows themselves. Amended again by formation fix seat 4 (`formation-audit/fix-4.md`) against critic pass 3's FC-01..FC-11: the gate-path rule and base re-run (§1), W-0.2's band-0 terminal as the edge (§5), W-H.5 on D3's FL-11 (§3). Amended again by formation fix seat 5 (`formation-audit/fix-5.md`) against critic pass 4's FD-01..FD-03: G-L1-7 reads the in-place anchor move (W-L.1); state fills leave W-E.2 and W-E.6 for W-H.1 on D3's floor row FL-6 (§3, §4); four within-band edges (§5). Amended again by formation fix seat 6 (`formation-audit/fix-6.md`) against critic pass 5's FE-01..FE-03: the shared-kit edges and two ordered pairs (§5), W-H.1's state-fill captures (W-H.1 §6), and edge lists struck from the specs that restated §5. Amended again by formation fix seat 7 (`formation-audit/fix-7.md`) against critic pass 6's FF-01..FF-03: one lander per shared kit in bands 0, E, F, G and K with its edges (§5), the W-L.4 → W-L.3 order with the fork's check as the fixture alone, and H1-G23 read across lines |
 
 Short cites: `REG:n` is `audit/REGISTRY.md` line n; `CUR:n` is `FORMATION-PROGRESS.md`; `CEN:n` is `ledger/CENSUS.md`; `CH:n` is `CHARTER.md`; `IN:n` is `audit/INBOUND.md`; `D1:n`, `D2:n`, `D4:n` are the structure, dock and tile `REGISTRY.md`; `D3P:n` is `design/material/PORTFOLIO.md`.
 
@@ -30,7 +30,7 @@ Short cites: `REG:n` is `audit/REGISTRY.md` line n; `CUR:n` is `FORMATION-PROGRE
 - **Decide waves.** The formation LEDGER holds each decided row's terminal. A decide wave's gates are its enactment in the tree: the file, symbol or paint the ruling removes or builds. A row the owner rules adds one docket gate, `! grep -qE '^\| OW-n \|.*\| pending \|' docs/tranches/BL/LEDGER.md`, which is RED while the docket row reads `pending`. No gate re-reads the ledger for a terminal word.
 - **Hand-offs.** When a spec hands an item to another wave, the receiving spec names it in its §1 with the sender. A hand-off the receiver does not carry is a defect of the receiver.
 - **π and DELTA.** Every visual claim ships a captured paint delta: a screenshot plus the paired π reading, before and after, on disk under the one evidence root and cited by the wave record (P-2, F-06). The root is `.cache/evidence/<wave>/` (git-ignored, `.gitignore:29-32`; W-C.1 extends it to every probe). Harness output under `.cache/visual/` (W-A.1 step 6) is cited by path and sha256 from there. Every band probe library (`W-E.1.md`, `W-F.2.md`, `W-G.1.md`, `W-K.1.md` appendices) takes its root from `WAVE=<wave id>` and throws without it; a session scratchpad is never an evidence path.
-- **fix-2's probe.** A spec row that reads "fix-2's probe, scene `x`" names the fixture app printed in full in `formation-audit/fix-2.md` appendix P (`App.vue`, `build.mjs`, `measure.mjs`, `acc.mjs`). The wave that owns the row moves its scene into that wave's wired spec or `scripts/probes/` and runs it there; the reading at `183e021a` is the born-RED or hold figure. "fix-3's probe" is the same, for the fixture apps printed in `formation-audit/fix-3.md` appendix Q (readings at `be1969ea`), "fix-5's probe" for `formation-audit/fix-5.md` appendix R (readings at `c42aee9d`), and "fix-6's probe" for `formation-audit/fix-6.md` appendix S (readings at `958ca517`).
+- **fix-2's probe.** A spec row that reads "fix-2's probe, scene `x`" names the fixture app printed in full in `formation-audit/fix-2.md` appendix P (`App.vue`, `build.mjs`, `measure.mjs`, `acc.mjs`). The wave that owns the row moves its scene into that wave's wired spec or `scripts/probes/` and runs it there; the reading at `183e021a` is the born-RED or hold figure. "fix-3's probe" is the same, for the fixture apps printed in `formation-audit/fix-3.md` appendix Q (readings at `be1969ea`), "fix-5's probe" for `formation-audit/fix-5.md` appendix R (readings at `c42aee9d`), "fix-6's probe" for `formation-audit/fix-6.md` appendix S (readings at `958ca517`), and "fix-7's probe" for `formation-audit/fix-7.md` appendix T (readings at `8397fcae`).
 - **Engines.** Chromium cells are measured. Playwright WebKit cells are labelled Playwright WebKit. Real-Safari cells are UNMEASURED until W-A.6's step 0 passes (the owner's safaridriver checkbox, OW-3; D-4).
 - **Clean breaks.** No alias, shim, dual path or masking fallback (E-1, E-2). A removed or renamed public surface gets a MIGRATION row in the same wave, and a silent binding gets an E-11 guard.
 - **Three gestalt passes.** Each implemented wave records a tranche-fit pass, a wave pass and a feature pass before it closes (P-1).
@@ -267,15 +267,15 @@ This table is the one record of edges. A wave spec cites it and does not restate
 
 | wave | depends on |
 |---|---|
-| W-0.1 | D3 gate |
+| W-0.1 | D3 gate, W-0.3 |
 | W-0.2 | D3 gate, W-0.1 |
 | W-0.3 | — |
-| W-0.4 | — |
+| W-0.4 | W-0.3 |
 | W-0.5 | W-0.1, W-0.2's band-0 terminal (G2, the paint judgement, is re-run on what landed) |
 | W-0.6 | — |
 | W-0.7 | W-0.1, W-0.2's band-0 terminal, W-0.3, W-0.4, W-0.5, W-0.6, W-0.8, W-0.9, W-0.10 |
-| W-0.8 | — |
-| W-0.9 | — |
+| W-0.8 | W-0.3 |
+| W-0.9 | W-0.3 |
 | W-0.10 | — |
 | W-A.1 | W-0.7 |
 | W-A.2 | W-A.1 |
@@ -312,11 +312,11 @@ This table is the one record of edges. A wave spec cites it and does not restate
 | W-E.5 | W-E.1, W-E.4 |
 | W-E.6 | W-A.3, W-B.7, W-E.1 |
 | W-E.7 | W-0.3, W-A.3, W-E.1, W-E.2 |
-| W-E.8 | W-A.2, W-C.4 |
+| W-E.8 | W-A.2, W-C.4, W-E.1 |
 | W-E.9 | W-A.3, W-E.1, W-E.7 |
 | W-E.10 | W-E.9 |
-| W-E.11 | W-A.3 |
-| W-E.12 | W-A.3 |
+| W-E.11 | W-A.3, W-E.1 |
+| W-E.12 | W-A.3, W-E.1 |
 | W-E.13 | W-E.4, W-C.5 |
 | W-E.14 | W-A.3, W-E.9 |
 | W-F.1 | W-A.3 |
@@ -325,14 +325,14 @@ This table is the one record of edges. A wave spec cites it and does not restate
 | W-F.4 | W-F.2, W-E.5 |
 | W-F.5 | W-F.3, W-E.3 |
 | W-F.6 | W-A.3, W-F.1 |
-| W-F.7 | W-A.3 |
+| W-F.7 | W-A.3, W-F.1 |
 | W-G.1 | W-A.4, W-B.9, W-C.5 |
-| W-G.2 | W-A.3 |
+| W-G.2 | W-A.3, W-G.1 |
 | W-G.3 | W-G.1, W-G.6 |
 | W-G.4 | W-G.1, W-B.5, W-G.3, W-G.7 |
 | W-G.5 | W-G.1, W-G.6 |
 | W-G.6 | W-G.1 |
-| W-G.7 | W-G.1, W-A.5 |
+| W-G.7 | W-G.1, W-A.5, W-G.6 |
 | W-H.1 | D3 gate, W-0.1, W-C.1, W-C.5, W-E.2, W-E.6, W-G.3 |
 | W-H.2 | D3 gate, W-0.1, W-C.1, W-C.5, W-E.2, W-H.1 |
 | W-H.3 | W-H.1, W-H.2, W-H.5, W-B.1, W-B.3 |
@@ -360,7 +360,7 @@ This table is the one record of edges. A wave spec cites it and does not restate
 | W-K.11 | W-E.4, W-K.2 |
 | W-L.1 | W-B.2, W-E.4, W-K.6, W-H.1, W-B.4, W-B.8, W-0.10 |
 | W-L.2 | W-K.8, W-L.1, W-I.2 |
-| W-L.3 | W-A.5, W-G.7, W-K.6, W-L.2 |
+| W-L.3 | W-A.5, W-G.7, W-K.6, W-L.2, W-L.4 |
 | W-L.4 | W-F.2, W-E.7 |
 | W-L.5 | — (re-trigger: value.js 4.1.0 or later on npm) |
 | W-L.6 | every wave of bands C to K |
@@ -374,19 +374,23 @@ Notes on edges:
 - W-H.1's edge to W-G.3 is the evented sampler: W-G.3 removes the readback and the idle loop whichever route D3 converges on. If D3 converges on D3-B, W-H.1 builds the field-luma publisher and the dock's subscription on that sampler; if on D3-A, the live channel is deleted and W-G.3's cure stands alone.
 - W-G.4 depends on W-B.5 because V-A95 is a rider on #49; on W-G.3 because the field runs on W-G.3's 30 Hz drift clock and both edit `aurora/composables/{frameLoop,useCursorInteraction,runtime}.ts`, so W-G.4's greenfield lands on W-G.3's cure; on W-G.7 because the drift utility's CSS ships through W-G.7's per-subpath CSS and reads `./aurora-palette` (fix-5, FD-03).
 - W-E.7 depends on W-E.2 because its coarse hit areas are W-E.2 §3.6's `::after` mechanism and its Dialog pad pairs with the 24 px corner W-E.2 restores. W-E.9 and W-E.10 reach W-E.2 through W-E.7 (fix-5, FD-03).
-- W-F.3 depends on W-F.2: W-F.2 seats every detent release as a fresh spring at `(t, v)` and owns the probe libraries W-F.3's appendix A imports (`W-F.2.md` appendices D, E); W-F.3 then replaces the velocity that seat reads with the windowed estimate. One order, one release path (fix-5, FD-03).
+- W-F.3 depends on W-F.2: W-F.2 seats every detent release as a fresh spring at `(t, v)` and lands the Sheet and drag kit W-F.3's appendix A drives (`sheetlib.mjs`, `W-F.2.md` appendix E); W-F.3 then replaces the velocity that seat reads with the windowed estimate. One order, one release path (fix-5, FD-03). The band's `lib.mjs` is W-F.1's (the shared-kit note below).
 - W-H.1 depends on W-E.6 because it builds the chip's selected fill on the chip W-E.6 reshapes (fix-5, FD-02).
 - W-I.1 depends on W-0.8 because it keeps or supersedes W-0.8's 10.2.0 cure (the cap rest) from D2's converged spec.
 - W-L.1 depends on W-0.10 because #76's moving anchor is built on the declared `reference`.
 - W-I.1 depends on W-I.7 because C-8's box is a disease row decided and built by its own wave: W-I.7 lands the box cure on the run first, and W-I.1's G7 then holds the first and last seats' rings on the converged run instead of building C-8's cure itself (fix-3, FB-18).
 - W-H.1, W-H.2, W-H.5, W-I.1 and W-I.7 depend on W-C.1 because their gates run their loop's harness at `scripts/loops/<loop>/`, where W-C.1 moves it (W-C.1 §3 step 4); W-I.4 to W-I.6 and W-J.1 reach W-C.1 through W-I.1 and their own edge. W-0.1 and W-0.2 land before W-C.1 (through W-0.7 → W-A.1 → W-C.1) and read the harness at its `docs/` path. Each wave has one harness path.
-- **A shared kit lands once, and its users wait on it** (fix-6, FE-01). A wave that lands a fixture app, a harness page or a probe directory that other waves' wired specs drive is an edge of each of those waves. The lander is the one wave whose §4 names the kit; no user lands a second copy.
-  - W-E.1 lands the band-E fixture app `tests-visual/fixtures/band-e/` (W-E.1 §4, appendix B). W-E.2, W-E.6, W-E.7 and W-E.9 drive it and depend on W-E.1; W-E.3, W-E.4 and W-E.5 already did, W-E.13 reaches it through W-E.4, and W-E.10 and W-E.14 through W-E.9.
-  - W-G.6 moves the band-G harness page into `tests-visual/fixtures/` (W-G.6 §4, appendix D). W-G.3 lands `dock-idle-loop.spec.ts` on it and W-G.5 adds its `c=blob` scene to it, so both depend on W-G.6. W-G.4 reaches it through W-G.3. W-G.7's one-Button page is its own landing (W-G.7 §4).
+- **A shared kit lands once, and its users wait on it** (fix-6, FE-01; fix-7, FF-01). A wave that lands a fixture app, a harness page, a probe directory, a probe library or a wired spec file that other waves drive or add to is an edge of each of those waves. The lander is the one wave whose §4 lands the kit; a user's §4 names the kit as the lander's and lands no second copy. Where a kit's text is printed in another spec's appendix, the text stays there and the lander is still the one wave named here.
+  - W-0.3 lands the band-0 paint probe `scripts/probes/band-0/` and its npm script (W-0.3 §4; the text is `W-0.1.md` appendix A). W-0.1, W-0.4, W-0.8 and W-0.9 drive it and depend on W-0.3; W-0.2 and W-0.5 reach it through W-0.1. W-0.3 has no dependency, so the kit waits on no loop and band 0's only external edge stays the D3 gate.
+  - W-E.1 lands the band-E fixture app `tests-visual/fixtures/band-e/` with its `lib.mjs` (W-E.1 §4, appendix B). W-E.2, W-E.6, W-E.7, W-E.8, W-E.9, W-E.11 and W-E.12 drive it and depend on W-E.1; W-E.3, W-E.4 and W-E.5 already did, W-E.13 reaches it through W-E.4, and W-E.10 and W-E.14 through W-E.9.
+  - W-F.1 lands the band-F probe library `tests-visual/fixtures/band-f/lib.mjs` (W-F.1 §4; the text is `W-F.2.md` appendix D). W-F.2, W-F.6 and W-F.7 depend on W-F.1; W-F.3, W-F.4 and W-F.5 reach it through W-F.2. W-F.2 lands the Sheet and drag kit beside it (W-F.2 §4, appendix E), which W-F.3 drives.
+  - W-B.9 lands the band-G probe library `tests-visual/fixtures/band-g/lib.mjs` and `tests-visual/wired/one-engine.spec.ts` with its constellation route row (W-B.9 §4; the texts are `W-G.1.md` appendices A and B). W-G.1 depends on W-B.9 and adds its rows to that spec. W-G.2 depends on W-G.1, both for the library and because its cure edits the files W-G.1 moves (one path set, W-G.2 §4); W-G.3 to W-G.7 reach W-B.9 through W-G.1.
+  - W-G.6 lands the band-G harness app, pages `h` and `b`, in `tests-visual/fixtures/band-g/` (W-G.6 §4, appendix D). W-G.3 lands `dock-idle-loop.spec.ts` on it, W-G.5 adds its `c=blob` scene to it and W-G.7's G7-G8 reads its `b` page, so all three depend on W-G.6. W-G.4 reaches it through W-G.3.
   - W-H.1 lands `scripts/probes/band-H/` (W-H.1 §4, appendix A). W-H.2 reads its `H2/*` rows and adds two scripts to it, and W-H.5 reads its `H2/WELL-*` rows, so both depend on W-H.1.
-  - W-K.1 lands the band-K fixture app `tests-visual/fixtures/band-k/` (W-K.1 §4, appendix B). W-K.2, W-K.7, W-K.8, W-K.9 and W-K.10 depend on W-K.1; W-K.3 and W-K.6 already did, and W-K.4, W-K.5 and W-K.11 reach it through W-K.2.
+  - W-K.1 lands the band-K fixture app `tests-visual/fixtures/band-k/` (W-K.1 §4, appendix B). W-K.2, W-K.7, W-K.8, W-K.9 and W-K.10 depend on W-K.1; W-K.3 and W-K.6 already did, and W-K.4, W-K.5 and W-K.11 reach it through W-K.2. W-K.11 lands `tests-visual/wired/current-row.spec.ts` with W-K.5 appendix A's G1 cell (W-K.11 §4); W-K.5 already depends on W-K.11 and adds its G2 and G3 cells.
 - W-E.4 depends on W-E.2 because W-E.4 §3 item 8 rewrites SelectContent's classes on the tree where W-E.2 has removed the side-translate utilities (E2-G12) (fix-6, FE-01).
 - W-K.4 depends on W-K.5 because W-K.5 lands the pointer-origin ring selector (`utilities/base.css`, W-K.5 §4) and W-K.4 points every ring register at it (fix-6, FE-01).
+- W-L.3 depends on W-L.4 because W-L.3's consumer matrix runs W-L.4's declaration-floor fixture (`tests/_support/declaration-floor/`) as its types leg and deletes `scripts/verify-export-types.mjs` and `verify:package`. W-L.4 builds the fork's declaration check as that fixture only and edits neither (fix-7, FF-02).
 
 ## 6 · Formation gaps this plan names
 

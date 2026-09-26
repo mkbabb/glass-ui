@@ -101,11 +101,11 @@ The veil's pole, α per rung, saturate per rung and the dark arm are D3's. The r
 
 ## 4 · Files it touches
 
-- `src/styles/tokens/on-glass-fg.css:37`, `src/styles/tokens/dark-arm.css:278-279,303` (the well and the dark veil), `src/styles/tokens/glass.css:29-52,69-92,134-174` (the veil recipe, the radius ladder, the rung composites move off `:root`).
+- `src/styles/tokens/dark-arm.css:278-279` (the dark veil; the well's lines, `on-glass-fg.css:37` and `dark-arm.css:303`, are W-H.5's), `src/styles/tokens/glass.css:29-52,69-92,134-174` (the veil recipe, the radius ladder, the rung composites move off `:root`).
 - `src/styles/glass/veil.css`, `src/styles/glass/ladder.css`, `src/styles/glass/surface-axis.css:80-90`, `src/styles/utilities/base-misc.css:44-80` (the FadingScroll rule gains the rung stand-down), `src/styles/glass/glass-capsule.css:57` (the capsule reads the element-composed rung).
 - `src/components/dock/styles/shell.css:57,263` (the dock's private re-compositions read the one saturate the spec names).
 - `tests-visual/nested-backdrop-budget.spec.ts` (deleted), `tests/styles/glass-subtlety.test.ts` (the carrier arm).
-- `scripts/probes/band-H/frost-routes.mjs` and `alert-specular.mjs` (appendices A and B), with `npm run probe:band-H`.
+- `scripts/probes/band-H/frost-routes.mjs` and `alert-specular.mjs` (appendices A and B), added to the probe directory and npm script W-H.1 lands.
 
 ## 5 · Acceptance gates
 

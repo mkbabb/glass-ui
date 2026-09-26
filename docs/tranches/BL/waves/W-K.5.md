@@ -48,7 +48,7 @@ The menu trigger and the pointer-opened Dialog do not paint the ring at HEAD; UI
 
 ## 4 · Files it touches
 
-`src/components/_shared/menu/menu.css`, `src/composables/dom/modality.ts` (new), `src/components/_shared/overlay/layer.ts` (installs it), `src/styles/utilities/base.css` (the ring selector reads it; W-K.4 then points every register at that ring). New `tests-visual/wired/current-row.spec.ts` (appendix A).
+`src/components/_shared/menu/menu.css`, `src/composables/dom/modality.ts` (new), `src/components/_shared/overlay/layer.ts` (installs it), `src/styles/utilities/base.css` (the ring selector reads it; W-K.4 then points every register at that ring). `tests-visual/wired/current-row.spec.ts` gains appendix A's G2 and G3 cells; W-K.11 lands the spec with the G1 cell (PLAN §5 notes).
 
 ## 5 · Acceptance gates
 

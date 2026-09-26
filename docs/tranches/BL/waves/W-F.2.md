@@ -73,7 +73,7 @@ Two gate designs were tried and discarded at this seat: "largest per-frame step 
 
 ## 4 · Files it touches
 
-`src/styles/glass/reveal.css`, `src/styles/animations.css`, `src/components/_shared/overlay/content.ts`, the content SFCs of popover, menu (`DropdownMenuContent.vue`, `DropdownMenuSubContent.vue`), select, hover-card, tooltip, toast; `src/components/_shared/disclosure/disclosure.css`, `src/components/accordion/AccordionContent.vue`, `src/components/collapsible/CollapsibleContent.vue`, `src/components/configurator/ConfiguratorLayer.vue`; `src/composables/motion/morph/useSelectionIndicator.ts`; `src/composables/dom/useGestureEnd.ts` (new) and the 19 files of G12; `src/components/dock/composables/{useDockState.ts,useDockHold.ts}`; `src/components/sheet/detents/use.ts`; `src/styles/tokens/scheme-spring.css` (the exit sentence, via the generator's comment table in `scripts/regen-spring-tokens.mjs`). New: `tests-visual/wired/interrupt.spec.ts` (appendices A, B), `tests/gates/gesture-end-seam.test.ts` (appendix C). `MIGRATION.md` (§7).
+`src/styles/glass/reveal.css`, `src/styles/animations.css`, `src/components/_shared/overlay/content.ts`, the content SFCs of popover, menu (`DropdownMenuContent.vue`, `DropdownMenuSubContent.vue`), select, hover-card, tooltip, toast; `src/components/_shared/disclosure/disclosure.css`, `src/components/accordion/AccordionContent.vue`, `src/components/collapsible/CollapsibleContent.vue`, `src/components/configurator/ConfiguratorLayer.vue`; `src/composables/motion/morph/useSelectionIndicator.ts`; `src/composables/dom/useGestureEnd.ts` (new) and the 19 files of G12; `src/components/dock/composables/{useDockState.ts,useDockHold.ts}`; `src/components/sheet/detents/use.ts`; `src/styles/tokens/scheme-spring.css` (the exit sentence, via the generator's comment table in `scripts/regen-spring-tokens.mjs`). New: `tests-visual/wired/interrupt.spec.ts` (appendices A, B), `tests/gates/gesture-end-seam.test.ts` (appendix C), and appendix E's Sheet and drag kit in `tests-visual/fixtures/band-f/` (`sheetlib.mjs` and the `sheet.html` and `drag.html` harness pages), which W-F.3 also drives. The band's `lib.mjs` (appendix D) is W-F.1's landing; this wave imports it. `MIGRATION.md` (§7).
 
 ## 5 · Acceptance gates
 
@@ -329,7 +329,7 @@ off.forEach((p) => console.log('  ' + p)); process.exitCode = helper && off.leng
 
 When W-D.1 (loop D1) moves `src/composables/dom/`, the `HELPER` path follows the converged placement.
 
-## Appendix D · `lib.mjs`, the band-F probe library
+## Appendix D · `lib.mjs`, the band-F probe library (W-F.1 lands it)
 
 ```js
 // Band F probe library: the built demo (dist-demo of the scratch worktree) on :5961.

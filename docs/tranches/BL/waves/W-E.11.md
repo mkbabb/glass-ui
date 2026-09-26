@@ -53,7 +53,7 @@ The build's own header (`vite.style-fold.ts:20-56`) records why base64 was chose
 
 ## 4 · Files it touches
 
-`src/styles/fonts.css`, `src/styles/typography/scale.css`, `src/styles/tokens/scheme-motion.css`, `vite.style-fold.ts`, `demo/index.html`, `README.md`. New: `scripts/fonts/calibrate-fallback.mjs`, `tests-visual/wired/brand-face.spec.ts` (appendix A).
+`src/styles/fonts.css`, `src/styles/typography/scale.css`, `src/styles/tokens/scheme-motion.css`, `vite.style-fold.ts`, `demo/index.html`, `README.md`. New: `scripts/fonts/calibrate-fallback.mjs`, `tests-visual/wired/brand-face.spec.ts` (appendix A), which imports the band-E `lib.mjs` W-E.1 lands (PLAN §5 notes).
 
 ## 5 · Acceptance gates
 
