@@ -118,7 +118,7 @@ Consumers with pinned painterly configs (atlas, keyframes `HeroAurora.vue`) re-c
 
 ## 8 · Dependencies
 
-W-G.1, W-B.5. W-G.7 delivers the drift utility's CSS with the aurora subpath; W-G.3 supplies the clock the field runs on.
+PLAN §5, the one record of edges, with the reasons in its notes (fix-5, FD-03).
 
 ## 9 · Ledger rows it closes
 

@@ -90,3 +90,4 @@ Outage log:
 - 2026-09-26 04:1x — D5 round 0: portfolio banked (PORTFOLIO.md + REGISTRY.md, five families A–E, witnesses E-1..E-8, no winner picked; census 17/55 rung directories, detector wrong in both directions). Battery seat launched.
 - 2026-09-26 04:2x — formation critic pass 4 NOT clean but converging: 3 new findings (FD-01..FD-03), all 11 of pass 3 cured, FA-17 cured at 43093f45. Fix 5 running.
 - 2026-09-26 04:3x — D2 pass 2: G prototype (the sliding aperture) banked. D2-G-proto.patch applies on 04929544+floor; typecheck, builds and 2323 unit tests green; H2 lifts W1 to 20/22 · 17/22 and W3 to 14/19 · 15/19 over floor (Chromium · Playwright WebKit; real Safari UNMEASURED). G critique launched.
+- 2026-09-26 04:4x — formation fix 5 banked: FD-01..FD-03 cured in the plan folder, none refuted (G-L1-7 now reads the in-place anchor move). Critic pass 5 launched.

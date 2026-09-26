@@ -69,7 +69,7 @@ Two gate designs were tried and discarded at this seat: "largest per-frame step 
    `useGestureEnd(target, { pointerId, onCommit, onCancel })` binds, for one held gesture: `pointerup` → `onCommit`; `pointercancel`, `lostpointercapture` on the capturing element, window `blur`, `visibilitychange` to hidden, `pagehide`, and a `pointermove` with `buttons === 0` → `onCancel`. Either end unbinds everything and clears the machine's latch. `onCancel` springs back to the gesture's origin through the machine's own `springStepper` and never commits. The 19 files of G12 consume it; the helper is the only file in `src` that names `pointercancel` or `lostpointercapture`. `useDockHold`'s window-`blur` release (`useDockHold.ts:126-137`) is folded into it.
 5. **The dock's click-away tests the root first.** `onPointerDownOutside` checks `root.contains(target)` and the teleport test first; `isTransitioning` gates only a target inside the root (the case the comment at `useDockState.ts:371-372` describes). An outside press during a morph collapses.
 6. **`release()` re-reads present state.** When the hold count reaches 0 in hover posture, `release()` reads `root.matches(":hover")` and `root.matches(":focus-within")`; if either holds, no collapse is armed, and the next `pointerleave` or `focusout` arms it as usual. The Slider's grasp hold goes through the same `release()`.
-7. **Every detent release seats a fresh spring at `(t, release velocity)`.** `settle()` always calls `spring.reset(t.value, velocity)` before setting the target, whatever the leg; the reuse branch (`use.ts:141`) and the stopped spring's velocity (`:139`) are deleted. The release velocity is the finger's, in fraction/s, as W-F.3 windows it. The drag ends through `useGestureEnd`: `pointercancel` and every lifecycle edge spring back to `startT`'s rung and never dismiss; the `pointerId !== null` latch clears on any end.
+7. **Every detent release seats a fresh spring at `(t, release velocity)`.** `settle()` always calls `spring.reset(t.value, velocity)` before setting the target, whatever the leg; the reuse branch (`use.ts:141`) and the stopped spring's velocity (`:139`) are deleted. The release velocity is the finger's, in fraction/s, read from the detent engine's velocity reader as it stands at this wave's base; W-F.3 lands after this wave (PLAN §5) and replaces that reader with its windowed estimate, so this wave owns the seat and W-F.3 owns the velocity (fix-5, FD-03). The drag ends through `useGestureEnd`: `pointercancel` and every lifecycle edge spring back to `startT`'s rung and never dismiss; the `pointerId !== null` latch clears on any end.
 
 ## 4 · Files it touches
 
@@ -116,7 +116,7 @@ No alias. A consumer's own `pointercancel` handlers are untouched; only the libr
 
 ## 8 · Dependencies
 
-W-F.1 (`springStepper`), W-E.3 (the Sheet's drag controller). W-I.1 (loop D2) is downstream: it keeps G6 and G7 as its born-REDs and builds the dock's gestures on `useGestureEnd`; this wave does not pre-empt the loop's plate, run or extent work.
+PLAN §5, the one record of edges (this wave builds on W-F.1's `springStepper` and W-E.3's drag controller; W-F.3 lands after it, fix-5). W-I.1 (loop D2) is downstream: it keeps G6 and G7 as its born-REDs and builds the dock's gestures on `useGestureEnd`; this wave does not pre-empt the loop's plate, run or extent work.
 
 ## 9 · Ledger rows it closes
 

@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, library and demo built there; probes drive the band-E fixture app (W-E.1 appendix B) on the packed build and the built demo |
 | ships in | 11.0.0 |
-| families | F-21 (G-27 CASCADE-GEOMETRY from the W-A.2 roster; N-11a / O-61 R-1; #84; #86's F-21 item). C-8 and the dock-run class are W-I.7's (PLAN §3) |
+| families | F-21 (G-27 CASCADE-GEOMETRY from the W-A.2 roster; N-11a / O-61 R-1; #86's F-21 item). C-8 and the dock-run class are W-I.7's; #84a, the ToggleGroup state fill, is W-H.1's (PLAN §3; fix-5, FD-02) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
 
@@ -17,7 +17,7 @@
 | G-27 CASCADE-GEOMETRY | a material rung's `position: relative` beats the Sheet's `position: fixed`; the rung's `border-radius` beats the Dialog's own corner |
 | N-11a, O-61 R-1, O-66 §1 (the pane's clipped left-edge shadow) | shadows on the left clip: `contain: paint` on four content rungs cuts every child halo at the host edge |
 | the F-21 mechanism rows | A2-KE-L2-2 and UIA-V-325 (the Sheet's cascade position and phone geometry) close on E2-G1; KFA-163 (R2-02-11, the Select never slides) on E2-G2 and E2-G12; UIA-KF-222 (closed triggers show up-chevrons inside an open drawer) on E2-G11 |
-| #84 (P4, R3-02-08) | ToggleGroup's on-state fill is a `background-color` painted under the `.control-surface` image layers; in dark and under reduced transparency it does not show |
+| ~~#84 (P4, R3-02-08)~~ | moved to W-H.1 (fix-5, FD-02). The state-fill mechanism is D3's floor row FL-6 ("no state fill or dim reads a plate token … read the one-ink fill register", `design/material/REGISTRY.md:318`), and PLAN §1 gives a loop's floor row to that loop's wave. The G3 reading below is W-H.1's H1-G21 HEAD reading |
 | #86, F-21 item | the surface material's layering row |
 | value.js O-71 (UIA-V-537), handed from W-B.2 §3.6 | (1) `Dialog placement="right"` reads translucent: there is no Dialog `placement` prop at HEAD (`dialog/DialogContent.vue:34-40`); the right drawer is `SheetContent side="right"`, whose geometry is E2-G1's right cells and whose frost is W-H.2's. (2) the centred Dialog's gutter is cured at HEAD (`dialog/styles.css:25`, `inline-size: min(100% - 2 * var(--space-section), 32rem)`), measured by fix-2 at `183e021a` |
 | F-21 members | the Select slide pinned by side utilities; the top-layer open state resting on `scale: 1; filter: blur(0)`; the universal PRM `!important` carve; the coarse floor replacing the sm rung; a SelectTrigger chevron keyed on an ancestor's state; `.disclosure-content` and `.command__group` clips outliving their animation; a Sheet header that yields part of a line; UIA-F-48, UIA-V-388, UIA-F-226 |
@@ -30,7 +30,7 @@ Measured with appendix A (`node e2.mjs`), Chromium: **21 rows, 20 FAIL**. Playwr
 |---|---|---|
 | G1 Sheet geometry, 4 cells | `position: relative`; top 992 at 390×844 (bottom 1328.5), top 1109.2 at 1440×900; the anchored-edge corners 24 px, not 0 | `sheet/styles.css:29-32` `:where([data-slot="sheet-content"]){position:fixed}` loses to `glass/material.css:39-47` (`.glass-floating … {position:relative}`) and `glass/ladder.css:132`. The Dialog's `dialog/styles.css:21-22` `:where(...){border-radius:var(--radius-3xl)}` (24 px) loses to `ladder.css:134` `.glass-floating{border-radius:var(--radius-ctx)}`: the Dialog paints 16 px at 390 and 1440 |
 | G2 Select slide | travel 0 px, `translate` pinned at `0px 4px` for 14 frames | `SelectContent.vue:85` `data-[side=*]:translate-*` against the `translate` keyframes in `reveal.css`. Chromium only; Playwright WebKit travels 3.11 |
-| G3 ToggleGroup on vs off | light ΔE 0.056 (PASS); dark ΔE 0.0013; prefers-reduced-transparency ΔE 0 | `toggle-group/styles.css:117,123` write `background-color`, painted under the `.control-surface` `background-image` plate |
+| G3 ToggleGroup on vs off (W-H.1's H1-G21 since fix-5) | light ΔE 0.056 (PASS); dark ΔE 0.0013; prefers-reduced-transparency ΔE 0 | `toggle-group/styles.css:117,123` write `background-color`, painted under the `.control-surface` `background-image` plate |
 | G4 halos (D3 M-7) | a capsule 2 px inside `glass-wash`, `glass-quiet`, `glass-resting`, `glass-card`: shadow reach 2 px on all four against a reference of 16 (WebKit 15) | `contain: paint` at `glass/material.css:104-109` |
 | G5 disclosure at rest | under WCAG 1.4.12 spacing, `scrollWidth` 127 against `clientWidth` 85, `overflow: hidden` | `_shared/disclosure/disclosure.css:90-91` |
 | G6 inline Command | 3 of 3 groups clipped (72/175, 117/290, 106/263 at 390; 74/170, 110/258, 110/258 at 1440); the list does not scroll | `command/styles.css:94-95` `.command__group{overflow:hidden}` on a flex item with no declared minimum |
@@ -60,7 +60,7 @@ The dock-run instances of the same class:
    - `.disclosure-content` rests at `overflow: visible`. The clip moves into the `disclosure-open` and `disclosure-close` keyframes (`disclosure.css:107-112`), which declare `overflow: clip` in every keyframe: a discrete property held for the animation's duration and dropped when it ends, with no attribute or script.
    - `.command__group` loses `overflow: hidden`; the list is the scroll port (`overflow-y: auto`, `min-block-size: 0` on its flex parent). A clipping flex or grid item declares its minimum; the rule is stated in `src/styles/README` next to the layer contract.
 3. **The top layer rests at `scale: none; filter: none`.** The open state at `animations.css:255-266` writes `none` for both. `@starting-style` keeps the entry values. If W-C.4's per-class verdict deletes `.glass-top-layer`, the open-state block goes with it and G7's fixture reads the Dialog instead.
-4. **A state fill writes the plate token.** ToggleGroup's on and hover states set the `.control-surface` plate token (`--control-surface-bg`, the token `glass/control-surfaces.css:45` paints) instead of `background-color`. The same sweep covers every `[data-state=on|checked|active]` rule that writes `background-color` under a `.control-surface` host: the wave lists them from `rg -l 'control-surface' src` crossed with `background-color` under a state selector.
+4. ~~**A state fill writes the plate token.**~~ Struck (fix-5, FD-02). It routed state fills onto `--control-surface-bg`, a plate token, which D3's floor row FL-6 rules out in every route (`design/material/REGISTRY.md:318`). State fills are W-H.1's (§3.2 item 8), built from D3's converged spec on the one-ink fill register. This wave does not touch `toggle-group/styles.css`.
 5. **One PRM table.** The universal `*` carve at `a11y-overrides.css:45-54` is deleted. Under `prefers-reduced-motion: reduce`, `:root` redeclares the motion tokens once, in the motion token file: spatial durations (`--spring-*-duration`, travel and scale transitions) read `0s`; opacity fades read `--duration-fast`. Each component's motion already reads those tokens; one that does not is re-pointed in this wave.
 6. **The coarse floor is a hit area, not a box.** `utilities/responsive.css:4-8` stops setting `min-block-size`/`min-inline-size` on `[data-control-target]`. Under `(pointer: coarse)` the target gets a centred `::after` hit area of `max(100%, var(--touch-target))` in each axis. The box keeps its rung, so the labeled and icon sm Buttons share one block size. W-E.7 applies the same slop to the slider thumb and compact dock seats (G-23).
 7. **A component keys on its own state.** `SelectTrigger.vue:72` rotates on its own `data-[state=open]`, not `in-data-[state=open]`. The sweep covers every `in-data-[state=open]` in `src` (`rg -n 'in-data-\[state=open\]' src`).
@@ -69,7 +69,7 @@ The dock-run instances of the same class:
 
 ## 4 · Files it touches
 
-`src/styles/glass/material.css`, `src/styles/glass/ladder.css`, `src/styles/animations.css`, `src/styles/utilities/a11y-overrides.css`, `src/styles/utilities/responsive.css`, the motion token file under `src/styles/tokens/`, `src/components/toggle-group/styles.css` (and the other state-fill sites §3.4 lists), `src/components/_shared/disclosure/disclosure.css`, `src/components/command/styles.css`, `src/components/select/SelectContent.vue`, `src/components/select/SelectTrigger.vue`, `src/components/sheet/styles.css`, `src/components/dock/styles/shell.css`, the component style files that now declare their own `position` (§3.1), `src/styles/README`. New: `tests-visual/wired/surface-geometry.spec.ts` (appendix A), roster entries for G-27 and E2-G14..G16.
+`src/styles/glass/material.css`, `src/styles/glass/ladder.css`, `src/styles/animations.css`, `src/styles/utilities/a11y-overrides.css`, `src/styles/utilities/responsive.css`, the motion token file under `src/styles/tokens/`, `src/components/_shared/disclosure/disclosure.css`, `src/components/command/styles.css`, `src/components/select/SelectContent.vue`, `src/components/select/SelectTrigger.vue`, `src/components/sheet/styles.css`, `src/components/dock/styles/shell.css`, the component style files that now declare their own `position` (§3.1), `src/styles/README`. New: `tests-visual/wired/surface-geometry.spec.ts` (appendix A), roster entries for G-27 and E2-G14..G16.
 
 ## 5 · Acceptance gates
 
@@ -77,7 +77,7 @@ The dock-run instances of the same class:
 |---|---|---|---|
 | E2-G1 · G-27 cascade geometry | appendix A G1: Sheet `position: fixed`, on screen, anchored corners `0px`, 390×844 and 1440×900, bottom and right | 4 of 4 | **4 of 4 FAIL** (`relative`, top 992 / 1109.2, corners 24) |
 | E2-G2 · Select slide | appendix A G2: content travels ≥ 2 px over the open | travel ≥ 2 | **0** (Chromium); WebKit 3.11 |
-| E2-G3 · state fill paints | appendix A G3: ΔE(on, off) ≥ 0.02 in light, dark, PRT | 3 of 3 | **2 of 3 FAIL** (dark 0.0013, PRT 0) |
+| ~~E2-G3~~ | moved to W-H.1 as H1-G21 with its reading (fix-5, FD-02); appendix A's G3 block is the scene H1-G21 runs | — | — |
 | E2-G4 · halos whole | appendix A G4 (D3 M-7's measure): reach ≥ reference − 2 | 4 of 4 | **4 of 4 FAIL** (2 against 16) |
 | E2-G5 · disclosure at rest | appendix A G5 | `scrollWidth ≤ clientWidth` | **127 > 85** |
 | E2-G6 · inline Command | appendix A G6, 390 and 1440 | 0 groups clipped | **3 of 3 clipped** at both |
@@ -89,14 +89,14 @@ The dock-run instances of the same class:
 | E2-G12 · Select side utilities gone | `! grep -q 'data-\[side=bottom\]:translate-y-1' src/components/select/SelectContent.vue` | exit 0 | **exit 1** |
 | E2-G13 · no rung position or radius (hold on the pseudo anchor) | `node -e` over `src/styles/glass/{material,ladder}.css`: no `position:` or `border-radius:` inside a rule whose selector list names `.glass-wash`, `.glass-quiet`, `.glass-resting`, `.glass-floating`, `.glass-overlay` or `.glass-card`; and, over every manifest route, every element carrying a rung whose `::before`/`::after` is `position: absolute` computes a non-`static` position | 0 and 0 | **2 rules** (`material.css:39-47`, `ladder.css:132-134`); the anchor half is 0 at HEAD, a hold line with a bite (plant: `.glass-card{position:static !important}`) |
 
-Can each fail and pass? G1-G11 fail at HEAD (20 of 21 rows; G3 light is the passing control). G2's RED is Chromium-only and says so. G13's anchor half is a hold line; its plant makes it red. The dock-run gates are W-I.7's (I7-G1..G3).
+Can each fail and pass? G1, G2 and G4-G11 fail at HEAD (18 of 18 rows; G3, struck here, is W-H.1's H1-G21). G2's RED is Chromium-only and says so. G13's anchor half is a hold line; its plant makes it red. The dock-run gates are W-I.7's (I7-G1..G3).
 
 ## 6 · π and DELTA obligations
 
-- **Surfaces:** the band-E fixture scenes `sheet`, `selslide`, `toggle`, `halo`, `disc`, `topdlg`, `toast`, `rung`, `esc&ov=dsel`; demo `/containers/command`, `/forms/toggle`, `/display/surface`, `/containers/dialog`.
-- **Themes:** light and dark for every row. G3 adds prefers-reduced-transparency; G9 adds prefers-reduced-motion.
+- **Surfaces:** the band-E fixture scenes `sheet`, `selslide`, `halo`, `disc`, `topdlg`, `toast`, `rung`, `esc&ov=dsel`; demo `/containers/command`, `/display/surface`, `/containers/dialog`.
+- **Themes:** light and dark for every row. G9 adds prefers-reduced-motion.
 - **Engines:** Chromium measured. Playwright WebKit measured through G5 and labelled as the engine build; the demo-route rows (G6 onward) crash its page at HEAD, recorded as crashes, not findings. Real Safari is UNMEASURED (OW-3).
-- **Paired capture:** `node e2.mjs --shots` at `<E2-base>` and at the wave: `sheet-*-390-bottom.png`, `toggle-*-{light,dark,prt}.png`, `halo-*-on.png`, `sheet-floor-*-390.png`. Also a demo pair of `/containers/dialog` at 390 and 1440 showing the Dialog corner move from 16 to 24 px. The halo pair is also D3's M-7 witness input. The before set is taken at `<E2-base>` with `WAVE=W-E.2`, into `.cache/evidence/W-E.2/e2/`; formation's HEAD shots sat in a session scratchpad and are not evidence.
+- **Paired capture:** `node e2.mjs --shots` at `<E2-base>` and at the wave: `sheet-*-390-bottom.png`, `halo-*-on.png`, `sheet-floor-*-390.png`. Also a demo pair of `/containers/dialog` at 390 and 1440 showing the Dialog corner move from 16 to 24 px. The halo pair is also D3's M-7 witness input. The before set is taken at `<E2-base>` with `WAVE=W-E.2`, into `.cache/evidence/W-E.2/e2/`; formation's HEAD shots sat in a session scratchpad and are not evidence.
 
 ## 7 · MIGRATION rows
 
@@ -104,20 +104,19 @@ Can each fail and pass? G1-G11 fail at HEAD (20 of 21 rows; G3 light is the pass
 |---|---|---|
 | `.glass-wash`/`-quiet`/`-resting`/`-floating`/`-overlay`/`-card` set `position: relative` and (`-floating`) `border-radius` | the rung sets neither | a consumer that puts a rung class on a static element and relies on it for positioning adds `position: relative` itself |
 | `contain: paint` on the four content rungs | removed | children's shadows paint past the host's edge |
-| state fills in `background-color` under `.control-surface` | `--control-surface-bg` on the state selector | a consumer override of the on-state `background-color` no longer shows; set the token |
 | universal PRM `!important` carve | reduced-motion token table | a consumer animation that read no motion token is no longer zeroed by the library; it follows its own `@media (prefers-reduced-motion)` |
 | `[data-control-target]` coarse `min-block-size`/`min-inline-size` | a coarse `::after` hit area | coarse boxes keep their rung size; hit areas stay ≥ 44 px |
 | `in-data-[state=open]` state keys | the component's own `data-[state=open]` | |
 
 ## 8 · Ledger rows
 
-Closes #84, #86's F-21 item, N-11a and O-61 R-1, and F-21's members in §1. C-8 is W-I.7's (PLAN §7 band I). Closes O-66 §1's clipped left-edge shadow (E2-G4) and the F-21 mechanism rows A2-KE-L2-2, UIA-V-325 (E2-G1), KFA-163 (E2-G2, E2-G12) and UIA-KF-222 (E2-G11). value.js O-71's two legs close here: the drawer on E2-G1's right cells (its frost on W-H.2), the gutter as CURED at HEAD. Its other two legs are not this wave's: leg 3 (WatercolorDot) is ANSWERED as value.js's own component (it left glass at BK #55, `src/components/blob/README.md:7`; UIA-V-6 is CONSUMER-SIDE at `INBOUND-MAP.md:145`), and leg 4 (the menu link row) is W-K.6's (K6-G24).
+Closes #86's F-21 item, N-11a and O-61 R-1, and F-21's members in §1. C-8 is W-I.7's (PLAN §7 band I). Closes O-66 §1's clipped left-edge shadow (E2-G4) and the F-21 mechanism rows A2-KE-L2-2, UIA-V-325 (E2-G1), KFA-163 (E2-G2, E2-G12) and UIA-KF-222 (E2-G11). value.js O-71's two legs close here: the drawer on E2-G1's right cells (its frost on W-H.2), the gutter as CURED at HEAD. Its other two legs are not this wave's: leg 3 (WatercolorDot) is ANSWERED as value.js's own component (it left glass at BK #55, `src/components/blob/README.md:7`; UIA-V-6 is CONSUMER-SIDE at `INBOUND-MAP.md:145`), and leg 4 (the menu link row) is W-K.6's (K6-G24).
 
 ## 9 · Gestalt passes (P-1)
 
 - **Tranche fit:** one layer contract. A shared rule declares paint, never geometry; a clip names its purpose. The dock's copy of the class is D2's, with its gates written here.
-- **Wave:** E2-G1..G13 green in one run.
-- **Feature:** the 390×844 capture shows a bottom Sheet flush to the edge with square anchored corners, a Popover's shadow painting past a card's left edge, and a toggle whose on state reads in dark.
+- **Wave:** E2-G1, E2-G2 and E2-G4..G13 green in one run (E2-G3 is W-H.1's).
+- **Feature:** the 390×844 capture shows a bottom Sheet flush to the edge with square anchored corners and a Popover's shadow painting past a card's left edge. The toggle's on state is W-H.1's.
 
 ## Appendix A · `e2.mjs` (lands as `tests-visual/wired/surface-geometry.spec.ts`)
 

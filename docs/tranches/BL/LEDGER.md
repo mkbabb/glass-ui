@@ -105,7 +105,7 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | #41a | a:49 | PARTIAL | BUILD | W-A.6 | seat · OW-3 | π-41 blocks on Safari by its own terms (W-A.6 §8) |
 | #41b | a:49 | PARTIAL | FOLD | W-L.6 | seat | RT-41A: `dropIndex` with no reader; W-L.6 §8 names it |
 | #41c | a:49 | PARTIAL | FOLD | W-H.2 | seat | G3's `/data/sortable-list` cells (W-H.2 §5) [N] |
-| #43 | a:50 | OPEN | BUILD | W-E.6 | seat | DISEASE, 3 closes, decided in W-E.6 (own: W-CHIP, with F-26 and F-27); W-E.6 §8 |
+| #43 | a:50 | OPEN | BUILD | W-E.6 | seat | DISEASE, 3 closes, decided in W-E.6 (own: W-CHIP, with F-26 and F-27); W-E.6 §8. X-G1's selected fill is built by W-H.1 on D3's FL-6 (H1-G22; fix-5 FD-02) |
 | #44 | a:51 | OPEN | RETIRE | W-B.7 | seat | DISEASE, 3 closes, decided in W-B.7 (own): the subject was deleted at `a8a6f66b`, 0 consumers across siblings; W-B.7 removes its tombstones from `src` |
 | #45a | a:52 | OPEN | BUILD | W-B.9 | seat | DISEASE, 3 closes, decided in W-B.9 (own): BUILD on the one engine with two live consumers |
 | #45b | a:52 | OPEN | BUILD | W-B.9 | seat | the constellation off `useCanvas2D` onto the shared WebGPU device, built in the disease row's own wave (B9-G1, B9-G2; fix-3, FB-18); the Canvas2D `drawOverlay` prop retires with a MIGRATION row (B9-G3; fix-4, FC-08) |
@@ -181,7 +181,7 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | #73 | b:60 | PARTIAL | BUILD | W-F.3 | seat | the shrink advances by position; W-F.3 §9 |
 | #74 | b:61 | LANDED | RETIRE | — | seat | CURED: J-9 holds in paint (probe `/feedback/progress`, b:61) |
 | #76a | b:62 | PARTIAL | FOLD | W-L.7 | seat | the adopts; W-L.7 §8 |
-| #76b | b:62 | PARTIAL | BUILD | W-L.1 | seat | the canvas-anchored overlay's moving anchor (G-L1-7, W-L.1 §3.6); its declaration half is W-0.10's (O-82) |
+| #76b | b:62 | PARTIAL | BUILD | W-L.1 | seat | the canvas-anchored overlay's moving anchor: one reference object whose rect moves in place (G-L1-7, born RED at `c42aee9d`, W-L.1 §3.6; fix-5, FD-01); its declaration half is W-0.10's (O-82) |
 | #76c | b:62 | PARTIAL | RETIRE | W-C.3 | seat | the 18 consumer-evidence docs with dead cites: the corpus retires (W-C.3 §8) |
 | #76d | b:62 | PARTIAL | FOLD | W-A.2 | seat | the unplugged forcing gate: a roster entry or recorded not carried |
 | #77a | b:63 | PARTIAL | BUILD | W-J.2 | seat | DISEASE, 3 closes, its remainder routed to no family (GAP-B1), decided in W-J.2 (own; loop D5, §8 U-12): the census arm |
@@ -197,7 +197,7 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | #82b | b:67 | PARTIAL | BUILD | W-C.4 | seat | G-F1's dead `.input-pill` selectors; W-C.4 §1 |
 | #83a | b:68 | PARTIAL | BUILD | W-K.4 | seat | the forced-colours rows (R3-02-10, R3-02-05); W-K.4 §8 |
 | #83b | b:68 | PARTIAL | BUILD | W-H.1 | seat | the unchecked edge at 2.93:1, the perimeter derivation; W-H.1 §8 |
-| #84a | b:69 | PARTIAL | BUILD | W-E.2 | seat | P4's contrast, the paint layering (R3-02-08); W-E.2 §8 |
+| #84a | b:69 | PARTIAL | BUILD | W-H.1 | seat | P4's contrast, the paint layering (R3-02-08): the state fill on D3's FL-6 fill register, H1-G21; W-H.1 §1, §8 (moved from W-E.2, fix-5 FD-02) |
 | #84b | b:69 | PARTIAL | BUILD | W-J.1 | seat | two-line items on the stadium; W-J.1 §8 |
 | #84c | b:69 | PARTIAL | BUILD | W-A.6 | seat · OW-3 | the Safari column (W-A.6 §8) |
 | #85a | b:70 | PARTIAL | BUILD | W-A.5 | seat | the absent public-surface pins; W-A.5 §8 |
@@ -374,7 +374,7 @@ OW-9 is one row per deciding wave (OW-9a..d), so each wave's docket gate turns g
 | CUR:80a | CUR:80 | ruled | BUILD | W-0.9 | seat | O-74b into band 0 as a named token at body × 1.272, `--type-card-title`; the parenthetical `--type-title` collides with the display rung (W-0.9 §1, §2) |
 | CUR:80b | CUR:80 | ruled | FOLD | W-I.1 | seat | O-85 into the 11.0.0 dock band: D2 rules it (W-I.1 §3.1 item 6, G24) |
 | CUR:80c | CUR:80 | ruled | RETIRE | W-L.1 | seat | O-86: DECLINE with a recipe, the shape ruled against the Slider-marks split (W-L.1 §3.20) |
-| PLAN-§6-D5 | PLAN §6 | open | FOLD | W-J.2 | seat | loop D5 has no portfolio; opening it is a formation act owed before W-J.2 (PLAN §4, §6), since the plan seats are fenced from `design/` |
+| PLAN-§6-D5 | PLAN §6 | open | FOLD | W-J.2 | seat | loop D5 opened: round-0 portfolio at `43093f45` (`design/engagement/PORTFOLIO.md`, `REGISTRY.md`); W-J.2 lands on D5's gate (PLAN §4, §6; fix-5) |
 | PLAN-§6-D3 | PLAN:337 | open | FOLD | W-0.1 | seat | D3 has no REGISTRY at `dabfc26f` (measured); W-0.1, W-H.1 and W-H.2 wait on the D3 gate, and 10.2.0 waits on W-0.1 |
 | PLAN-§6-R2-05 | PLAN:338 | open | BUILD | W-A.2 | seat | the R2-05 roster is re-derived (W-A.2 §1) |
 | PLAN-§6-O-65 | PLAN:339 | open | FOLD | W-L.1 | seat | P-1 measured against 10.1.0 before ruling (W-L.1:94) |
@@ -503,7 +503,7 @@ Formation fix seat 2 (`formation-audit/fix-2.md`) placed all twelve. No row in t
 | U-9 | #53c | RETIRE DECLINE in W-G.4 |
 | U-10 | #54b | measured: RETIRE NOT-REPRODUCED in W-H.1 |
 | U-11 | WEBKIT-ACCORDION-CRASH | W-A.1, A1-G13 (born RED: WebKit tap crashes 3 of 3) |
-| U-12 | PLAN-§6-D5 | FOLD W-J.2; opening D5 is a formation act owed (PLAN §4, §6) |
+| U-12 | PLAN-§6-D5 | FOLD W-J.2; D5 opened at `43093f45` (PLAN §4, §6) |
 
 Other findings from placing the rows (not unplaced rows):
 

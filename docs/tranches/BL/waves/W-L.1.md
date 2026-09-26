@@ -85,6 +85,7 @@ The HEAD probes (appendix A for the unit probe, appendix B for the Chromium prob
 | B1 spectrum range with `--slider-range-bg: rgb(255 0 0)` | **fail**: `rgba(0, 0, 0, 0) \| none` |
 | B2 a 600 px `flex-wrap` toolbar: Button, SelectTrigger, Button | **fail**: 3 rows; the trigger is 600 px wide |
 | B3 PopoverContent with a virtual `reference` at (700, 400) | **passes at HEAD**: content top 414, centre x 705. The attribute falls through to reka's `PopperContent` untyped. The static paint half of #76 is met; the declaration is W-0.10's (its G1, the probe below) |
+| B4 the same virtual `reference` object moved in place: its rect goes from (700, 400) to (900, 600) with no swap, scroll or resize, read 600 ms later (fix-5, FD-01; `formation-audit/fix-5.md` appendix R, Chromium, at `c42aee9d`) | **fail**: content top 414, centre x 705, unchanged. A swap to a new object at (300, 200) re-seats (top 214, cx 305), so only the in-place move is the defect: reka's `autoUpdate` runs on scroll, resize and element resize, and a virtual rect moving on a canvas fires none of them |
 | C1 strictTemplates: `<PopoverContent :reference>` and `<TooltipContent :reference>` | **fail**: `TS2353 … 'reference' does not exist` on both (appendix C). This row is W-0.10's G1, which lands the declaration in 10.2.0 |
 
 ## 3 · The cure
@@ -114,7 +115,7 @@ The spectrum range reads `--slider-range-bg` like every other variant, default `
 
 ### 3.6 The moving anchor
 
-W-0.10 declares `reference` on PopoverContent and TooltipContent in 10.2.0 (O-82). This wave builds #76's canvas case on it: a reference that moves re-seats the content through reka's `update` path, with no hand positioning. G-L1-7 is its gate.
+W-0.10 declares `reference` on PopoverContent and TooltipContent in 10.2.0 (O-82). This wave builds #76's canvas case on it: a canvas anchor is one reference object whose rect changes frame to frame, and the content follows it through reka's own update path, with no hand positioning and no reference swap. A swap already re-seats at HEAD (§2 B3, B4), so the swap is not the case. Whatever the wave forwards to reka for this (reka's `PopperContent` runs `autoUpdate` with `animationFrame` under its `updatePositionStrategy: "always"`, `reka-ui/dist/Popper/PopperContent.js:212-214`) is a declared prop, as W-0.10 declared `reference`, never an untyped fallthrough. G-L1-7 is its gate (fix-5, FD-01).
 
 ### 3.7 SelectTrigger sizes to its content
 
@@ -190,7 +191,7 @@ Each gate's exit code is read on its own. The unit gates run `npx vitest run tes
 | G-L1-3 · the spectrum fill hook | B1 | the range computes `rgb(255, 0, 0)` | **fail**: `rgba(0, 0, 0, 0)` |
 | G-L1-4 · the theme row | A7, plus: mount `DarkModeMenuItem` in an open menu, press Enter on it; `isDark` flips, `aria-checked` follows, the menu stays open | all | **fail**: A7 (the parts do not exist) |
 | G-L1-5 · the glyph is one drawing | `test "$(grep -rl '<svg' src/components/dark-mode-toggle \| wc -l)" = 1` | exit 0: only `DarkModeGlyph.vue` draws | hold line: 1 at HEAD (`DarkModeToggle.vue`); it bites if the menu item re-draws the glyph |
-| G-L1-7 · the canvas case | B3 extended: move the virtual anchor to (300, 200) and call the content's `update` path (a `reference` swap); the content re-seats within 40 px of the new point | exit 0 | the static arm passes at HEAD (top 414, cx 705); the move arm is written with the wave |
+| G-L1-7 · the canvas case | B4: `node gate.mjs` (`formation-audit/fix-5.md` appendix R; lands in `tests-visual/wired/` under W-A.3). One virtual `reference` object at (700, 400); its rect moves in place to (900, 600) with no swap, scroll or resize; read 600 ms later | exit 0: content top in [610, 650] and centre x within 40 px of 905 | **exit 1** at `c42aee9d` (fix-5): `moved_in_place` top 414, cx 705. Bite, the other way: the same scene with reka's frame-driven arm planted as an untyped attribute (`update-position-strategy="always"`) exits 0 (top 614, cx 905) |
 | G-L1-8 · SelectTrigger inline | B2 | one toolbar row; trigger width < 600 | **fail**: 3 rows, 600 px |
 | G-L1-9 · Input seats | A3, plus: `type="search"` with a value shows a trailing clear `Button`; clicking it empties the model and focuses the input | both | **fail**: A3 |
 | G-L1-10 · the menu-row grammar | A13 | `{"tone":"destructive","leading":true,"description":true,"uncheckedSeat":true}` | **fail**: all four false or null |
@@ -204,7 +205,7 @@ Each gate's exit code is read on its own. The unit gates run `npx vitest run tes
 | G-L1-18 · useConfirm | A8, plus W-B.4's born-RED: `confirm()` resolves `true` on the action and `false` on Escape | both | **fail**: A8 |
 | G-L1-19 · the recipes compile | W-C.3's README-example invariant over `collapsible/README.md` (§3.2), `menu/README.md` (§3.8), `slider/README.md` (§3.20) | each example block compiles | **fail**: none of the three blocks exists |
 
-A2 as first written passed at HEAD vacuously (it asserted "mark present and glyph absent" while the slot was dropped). It was rewritten to require the glyph at rest; the rewritten form fails at HEAD. G-L1-5 and G-L1-7's static arm are hold lines, not counted as born RED.
+A2 as first written passed at HEAD vacuously (it asserted "mark present and glyph absent" while the slot was dropped). It was rewritten to require the glyph at rest; the rewritten form fails at HEAD. G-L1-5 is a hold line, not counted as born RED. G-L1-7 was first written as a `reference` swap, which re-seats at HEAD; it now reads the in-place move and is born RED (fix-5, FD-01).
 
 ## 6 · π and DELTA obligations
 
@@ -219,6 +220,7 @@ Each row's before capture is taken on the wave's base commit, the after on its l
 | Badge soft × two tones | light, dark | Chromium | fixture `badge` page | G-L1-13's contrast readout |
 | Input with a leading search glyph and the clear seat | light, dark | Chromium; WebKit labelled | fixture `fields` page | G-L1-9 readout |
 | Pagination, EasingCurve marker at three `progress` values, the loading Button with a leading glyph | light | Chromium | fixture pages | G-L1-11, G-L1-12, G-L1-14 readouts |
+| a Popover on one virtual `reference` whose rect moves in place (the canvas case) | light, dark | Chromium; Playwright WebKit labelled | fix-5 appendix R's scene: a frame at rest and a frame 600 ms after the move, at the base and at the wave | G-L1-7 readout (HEAD: top 414, cx 705 after the move) |
 
 Real-Safari cells are UNMEASURED until OW-3.
 

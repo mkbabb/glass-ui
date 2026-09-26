@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree; probes drive the band-E fixture app scene `chips` (W-E.1 appendix B) |
 | ships in | 11.0.0 |
-| families | F-26, F-27, F-28 (#43 W-CHIP; the X-gate row at `BJ/addenda/2026-07-24-refinement/DESIGN-NOW.md:483-490`, X-G4 as amended there to admit 4) |
+| families | F-26, F-27, F-28 less X-G1's fill, which is W-H.1's (fix-5, FD-02) (#43 W-CHIP; the X-gate row at `BJ/addenda/2026-07-24-refinement/DESIGN-NOW.md:483-490`, X-G4 as amended there to admit 4) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
 
@@ -58,7 +58,7 @@ $ node --experimental-strip-types -e 'import("./src/components/_shared/class-nam
 1. **Per-instance composites on the reading class (F-26).** `--glass-fill-tinted` is removed from `:root` and declared on the classes that read it (`.glass-atom[data-surface="glass"]` and `.glass-chip`), where the instance's own `--glass-fill-tint` and `--glass-fill-strength` (written per chip from its `tone`) resolve. The rule goes to `src/styles/README` next to the layer contract: a token whose value reads an input that a component sets per instance (`--glass-fill-tint`, `--glass-fill-strength`, `--tone`, `--accent-*`, `--chip-*`) is declared on the reading class, never at `:root`. The detector reads that rule (§5, E6-G9).
 2. **`cn()` resolves shorthands (F-27).** The conflict table in `_shared/class-names.ts` gains shorthand groups: `p` covers `px py pt pr pb pl ps pe`; `m` likewise; `inset` covers `inset-x inset-y top right bottom left start end`; `gap` covers `gap-x gap-y`; `rounded` covers its corners and sides; `border` (width) covers its sides. A shorthand drops every earlier longhand in its group. A longhand after a shorthand keeps both, in order, as Tailwind emits them. The `*Variants` builders (`chip/chipVariants.ts`, `badge/index.ts`, `alert/index.ts`) are swept for classes that relied on the old keep-both result; each changed output is listed in the wave record.
 3. **One tinted gradient (X-G5).** `glass-chip.css:13-15` is deleted; the chip composes the atom's `[data-surface="glass"]` layer. `@property --chip-flood-t` and its 4 reads are deleted.
-4. **Selected photometry (X-G1).** The selected state writes the plate token from W-E.2 §3.4 with the accent band at its strength, `color-mix(in oklab, var(--accent-band) var(--accent-band-strength), transparent)`. The result has α < 1, sits on the plate, and uses no blend mode. The `::after` flood and `mix-blend-mode: plus-lighter` are deleted. The ink is solved against the composite by the existing `accent-tone-solve.ts`.
+4. **Selected photometry (X-G1): the blend goes.** The `::after` flood and `mix-blend-mode: plus-lighter` are deleted, so the selected chip paints no blend. The selected fill itself (its register, its α < 1, and the ink solved against it) is W-H.1's (§3.2 item 8), built from D3's converged spec on floor row FL-6: a state fill reads the one-ink fill register, never a plate token (`design/material/REGISTRY.md:318`). This wave writes no state-fill mechanism; until W-H.1 lands, the selected chip keeps HEAD's `background-color: var(--accent-band)` (fix-5, FD-02).
 5. **One scale writer (X-G2).** The engage ladder's `scale` is the only writer. The selected state settles at `scale: 1`.
 6. **The edge (X-G3).** `border: 1px solid var(--accent-edge)` at rest (the `border-color` writes now have a width). The selected edge reads `--accent-edge` at its selected strength.
 7. **Pad set and rungs (X-G4).** md pads 12 px and sm pads 8 px. Font sizes sit on the type rungs (`--type-small` and one rung below).
@@ -74,7 +74,7 @@ $ node --experimental-strip-types -e 'import("./src/components/_shared/class-nam
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
 | E6-G1 · F-26 | appendix A G1, light and dark | 5 distinct painted fills | **1 of 5** (both themes, both engines) |
-| E6-G2 · X-G1 | appendix A G2 | no blend mode; selected α < 1 | **`plus-lighter`; opaque** |
+| E6-G2 · X-G1, the blend | appendix A G2 | no blend mode in the selected chip's subtree | **`plus-lighter`** (the α < 1 clause is W-H.1's H1-G22, HEAD opaque; fix-5) |
 | E6-G3 · X-G2 | appendix A G3 | `scale` `none` or `1` | **1.07416** |
 | E6-G4 · X-G3 | appendix A G4 | `1px` | **0px** |
 | E6-G5 · X-G4 | appendix A G5 | pads ⊂ {4, 8, 12, 20}; `font-style: normal` | **14, 10** |
@@ -92,7 +92,7 @@ Can each fail and pass? Every row except G6 fails at HEAD on both engines. G6 is
 - **Surfaces:** the fixture scene `chips`; demo `/forms/chip`.
 - **Themes:** light and dark, every paint row.
 - **Engines:** Chromium and Playwright WebKit both measured, labelled. Real Safari is UNMEASURED (OW-3). DESIGN-NOW's X-G1 carries a WebKit desaturation note on the 0-alpha stop, so the real-Safari cell matters here.
-- **Paired capture:** at `<E6-base>` and at the wave, a 900×400 frame of the `chips` scene in light and dark (five tones painting one fill, then five; the selected chip flooded and scaled, then banded at rest), and a frame strip of the removal (1 frame, then the leave). The DELTA is the pair plus appendix A's JSON.
+- **Paired capture:** at `<E6-base>` and at the wave, a 900×400 frame of the `chips` scene in light and dark (five tones painting one fill, then five; the selected chip flooded and scaled, then unflooded at scale 1), and a frame strip of the removal (1 frame, then the leave). The DELTA is the pair plus appendix A's JSON.
 
 ## 7 · MIGRATION rows
 
@@ -111,13 +111,13 @@ No sibling repo imports `./chip` (§2), so none of these rows needs a consumer a
 
 ## 8 · Ledger rows
 
-Closes #43 and F-26, F-27, F-28, and UIA-F-140 (the `:root` composite; E6-G1, its 1 of 5 fills). X-G7 is recorded as cured at HEAD, with the reading above as its evidence.
+Closes #43 and F-26, F-27, F-28 (less X-G1's fill), and UIA-F-140 (the `:root` composite; E6-G1, its 1 of 5 fills). X-G7 is recorded as cured at HEAD, with the reading above as its evidence. X-G1's fill half (the selected fill on the one-ink register, α < 1) closes on W-H.1's H1-G22 (fix-5, FD-02).
 
 ## 9 · Gestalt passes (P-1)
 
 - **Tranche fit:** the per-instance rule is one rule for every tinted composite (atom, chip, and W-J.1's tile). `cn()` is the one class compositor.
 - **Wave:** E6-G1..G11 green in one run.
-- **Feature:** a row of five toned chips paints five fills. The selected chip is a translucent band with an edge, settled at scale 1. A removed chip leaves in under 0.15 s. Shown in light and dark side by side.
+- **Feature:** a row of five toned chips paints five fills. The selected chip paints no blend flood, carries an edge and settles at scale 1; its translucent fill is W-H.1's. A removed chip leaves in under 0.15 s. Shown in light and dark side by side.
 
 ## Appendix A · `e6.mjs` (lands as `tests-visual/wired/chip.spec.ts`)
 
@@ -137,10 +137,10 @@ for (const theme of ['light', 'dark']) {
   const shot = await page.screenshot();
   const fills = await page.evaluate(async ([b64, rects]) => { const im = new Image(); im.src = 'data:image/png;base64,' + b64; await im.decode(); const c = document.createElement('canvas'); c.width = im.width; c.height = im.height; const x = c.getContext('2d'); x.drawImage(im, 0, 0); return rects.map((r) => [...x.getImageData(Math.round(r.l + 6), Math.round(r.t + r.h / 2) - 1, 1, 1).data.slice(0, 3)].join(',')); }, [shot.toString('base64'), await page.evaluate(() => [...document.querySelectorAll('[data-probe=tchip]')].map((e) => { const r = e.getBoundingClientRect(); return { l: r.left, t: r.top, h: r.height }; }))]);
   row(`E6-G1 F-26 per-instance tint ${theme}`, new Set(fills).size === 5, { distinctPainted: new Set(fills).size, distinctComputedImage: new Set(px).size, fills });
-  // X-G1 · selected photometry: no mix-blend-mode in the chip subtree; the selected background-color has α < 1
+  // X-G1 · the blend: no mix-blend-mode in the chip subtree. The α < 1 clause (`alpha`) is W-H.1's H1-G22 and is only recorded here
   const g1 = await page.evaluate(() => { const e = document.querySelector('[data-probe=selchip]'); const blends = [e, ...e.querySelectorAll('*')].flatMap((n) => [getComputedStyle(n).mixBlendMode, getComputedStyle(n, '::before').mixBlendMode, getComputedStyle(n, '::after').mixBlendMode]).filter((m) => m && m !== 'normal'); return { blends, bg: getComputedStyle(e).backgroundColor, state: e.dataset.state }; });
   const alpha = /\/\s*([\d.]+)\)$/.exec(g1.bg)?.[1];
-  row(`E6-G2 X-G1 selected photometry ${theme}`, g1.blends.length === 0 && alpha != null && +alpha < 1, g1);
+  row(`E6-G2 X-G1 no blend ${theme}`, g1.blends.length === 0, { ...g1, alpha });
   // X-G2 · the settled selected scale is 1
   await sleep(1250);
   const sc = await page.evaluate(() => getComputedStyle(document.querySelector('[data-probe=selchip]')).scale);

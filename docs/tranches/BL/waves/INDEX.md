@@ -45,11 +45,11 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-D.1 | D | F-55, F-56, F-57, F-58, F-59 | W-COLOCATION and the placement seal | D1 |
 | W-D.2 | D | F-60 | W-PERIPHERY | — |
 | W-E.1 | E | F-85 | W-SAFE-EDGE | — |
-| W-E.2 | E | F-21 | W-SURFACE-GEOMETRY and the containment row | — |
+| W-E.2 | E | F-21 | W-SURFACE-GEOMETRY and the containment row (the state fill is W-H.1's) | — |
 | W-E.3 | E | F-32, F-74, F-65 (split: detent floor) | the Sheet: dock-reach inset, resolved detent ladder, anchored-edge bleed | — |
 | W-E.4 | E | F-22 (remainder) | the overlay layer contract: z, edge, dismissal, host, outside, block ceilings | — |
 | W-E.5 | E | F-41 | W-TOAST: store, queue, announce channel, placement | — |
-| W-E.6 | E | F-26, F-27, F-28 | W-CHIP | — |
+| W-E.6 | E | F-26, F-27, F-28 (less X-G1's selected fill) | W-CHIP | — |
 | W-E.7 | E | F-29 (remainder) | W-DENSITY-DECIDE, then the sweep; one coarse type model | — |
 | W-E.8 | E | F-30a | the off-role 12 px rung re-seated; role invariant | — |
 | W-E.9 | E | F-33 | W-CEL-CONTAINER (the configurator envelope is W-E.14's) | — |
@@ -72,7 +72,7 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-G.5 | G | F-48 (split: blob), F-50 (split: blob settle seam) | W-BLOB-GREENFIELD | — |
 | W-G.6 | G | F-51 | the mount-path pass | — |
 | W-G.7 | G | F-52 | the shader-free aurora derive subpath, one door per binding; CSS per subpath | — |
-| W-H.1 | H | F-23, F-24 (remainder), F-75 | W-INK-COMPOSITE: ink on the composite, state separation, PRT recession, the live dock (and D3-B's luma publisher, if D3 converges there) | D3 |
+| W-H.1 | H | F-23, F-24 (remainder), F-75, F-21 (split: #84a), F-28 (split: X-G1's selected fill) | W-INK-COMPOSITE: ink on the composite, state separation, state fills on the fill register (D3 FL-6), PRT recession, the live dock (and D3-B's luma publisher, if D3 converges there) | D3 |
 | W-H.2 | H | F-31 (remainder) | W-FROST-II: the frost detector, blur rungs at the element (the well is W-H.5's) | D3 |
 | W-H.3 | H | F-14 (split: R2-06-02) | W-GLASS-REGISTER-DECIDE on the converged ladder | — |
 | W-H.4 | H | F-53 | W-PERF: count gates, boot shell, the low-power register decide | — |
@@ -85,7 +85,7 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-I.6 | I | F-54 (split: #67, #90) | the dock hallmarks, OWED-3, the R-7 captures (disease rows) | D2 |
 | W-I.7 | I | F-21 (split: C-8) | the dock run's box: border-box, the seat transition, the ring reserve (a disease row) | D2 |
 | W-J.1 | J | F-30b | the selectable multi-line tile | D4 |
-| W-J.2 | J | F-54 (remainder: the engaged rung) | the engagement register, component-wide | D5 (to open) |
+| W-J.2 | J | F-54 (remainder: the engaged rung) | the engagement register, component-wide | D5 |
 | W-K.1 | K | F-81 | W-ROOT-RELATIVE | — |
 | W-K.2 | K | F-37 | W-COMMAND | — |
 | W-K.3 | K | F-38 | W-FOCUS-LIFECYCLE | — |
@@ -106,4 +106,4 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-L.7 | L | F-68 (remainder) | W-LANDING: 11.0.0 packets and relay | — |
 | W-L.8 | L | F-12 | the 11.0.0 cut, the close checklist, FINAL.md | — |
 
-Counts: 99 waves (band 0: 10, A: 6, B: 15, C: 5, D: 2, E: 14, F: 7, G: 7, H: 5, I: 7, J: 2, K: 11, L: 8); 13 loop waves (D1 1, D2 5, D3 5, D4 1, D5 1). Every family F-01..F-85 (F-30 as F-30a and F-30b) is in at least one row; the families in more than one row are the splits PLAN §3 states: F-13, F-14, F-16, F-21, F-22, F-24, F-29, F-31, F-33, F-40, F-48, F-50, F-54, F-63, F-65, F-68, F-71.
+Counts: 99 waves (band 0: 10, A: 6, B: 15, C: 5, D: 2, E: 14, F: 7, G: 7, H: 5, I: 7, J: 2, K: 11, L: 8); 13 loop waves (D1 1, D2 5, D3 5, D4 1, D5 1). Every family F-01..F-85 (F-30 as F-30a and F-30b) is in at least one row; the families in more than one row are the splits PLAN §3 states: F-13, F-14, F-16, F-21, F-22, F-24, F-28, F-29, F-31, F-33, F-40, F-48, F-50, F-54, F-63, F-65, F-68, F-71.
