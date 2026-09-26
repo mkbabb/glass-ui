@@ -1399,3 +1399,252 @@ The pass-3 checklist (§P2-7) carries forward with its text frozen. One item is 
 **Held with the bank.** G-01..G-12 as cG §4 left them, and D′'s gaps as §P2-7 left them. They return with their route's re-trigger.
 
 No route converged in pass 3. The kept declaration is B's.
+
+---
+---
+
+# D1 · pass 4 · REGISTRY: the route after pass 4
+
+| field | value |
+|---|---|
+| seat | D1 pass-4 agglomeration. Closes pass 4 with B's status and convergence, the two-clean-passes count, G's re-trigger, the rulings still owed, the floor's open gaps and the pass-5 plan. Passes 1-3 above are kept intact |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `76f4209a`. `git diff 648e075d HEAD -- . ':!docs'` is empty: the critic judged the committed kit on the code the route ran (base code digest `35f7b831…`, 10.1.0) |
+| inputs, read in full | `pass-4/`: `REBASE.md`, `FLOOR-P4.md`, `B-proto.md`, `critique-B.md`, `critique-B/results/RESULTS.md`; `B-kit/LAW.md` §10-§11; this file §P2-6.5, §P2-7, §P3-0..§P3-9; `RULINGS.md` |
+| instruments | none re-run. Read-only checks: `git log`, the empty code diff above, `B-kit/results/pass4/b6-files.txt`, `B-kit/results/pass4/pack-diff.json` (`byClass`), `wc -l src/components/dock/GlassDock.vue` (545) |
+| fences | no source edit, no git write; this part is the only write |
+
+Short citations: `RB` is `pass-4/REBASE.md`, `FP4` is `pass-4/FLOOR-P4.md`, `Bp4` is `pass-4/B-proto.md`, `cB4` is `pass-4/critique-B.md`, `cB4-R` is `pass-4/critique-B/results/RESULTS.md`.
+
+---
+
+## P4-0 · In brief
+
+| id | route | status | conv. (critic) | critic's verdict | re-opened by the critic | reason in one line |
+|---|---|---|---:|---|---|---|
+| D1-B | sealed modules, flat | **ADVANCE** | 24/27 = 88.9% | ADVANCE | **0** | exact replay by a non-author from committed bytes; 15 of 18 clauses GREEN; the P4 floor closes S-10 and S-12; the door plants are caught only through doors |
+| D1-G | eponymous closures | BANK (unchanged) | 44% (pass 3) | — | — | re-trigger not fired (§P4-3) |
+
+**Not converged, and the count advanced.** B has 3 open items (S-14, B-01, B-10). The pass-4 critique re-opened nothing that entered pass 4 closed, and none of its five outside findings maps to a listed item beyond the already-open S-14 or to an edict clause the list leaves out (§P4-2). By §P2-6.5 (3) this is **the first clean pass: the two-clean-passes count for B is 1.** The earliest convergence is the pass-5 agglomeration: pass 5 closes the three open items and a fresh pass-5 critique re-opens nothing.
+
+Five findings shape pass 5.
+
+1. **A declared limit is not a closure.** B claimed S-14 CLOSED while its own LAW §10 declared the ternary and the loader-bound-to-a-name forms unseen. The critic planted both and found each live on the tree and at HEAD: `scripts/profile-bundle.mjs:292` and `demo/router.ts:117` (cB4 §4). The item reads "the gate catches", so it stays open.
+2. **The doors buy catches G's law cannot make.** Kernel-interior reaches (typed and valued) and type-only sibling cycles at module grain are caught by B1 and B4 and by nothing in G's law, which has no kernel seal and no module-grain cycle clause (§P3-1). G's re-trigger does not fire (§P4-3).
+3. **The doors' package cost is now decomposed and small.** Door declarations +2,175 B and CSS doors +397 B of the route's +17,264 B (Bp4 §2). The largest class is "other declarations" +12,819 B, which nothing yet explains (§P4-6, P4-G9).
+4. **The remaining work is R-5 and the harness, not the law.** B-01 and B-10 are B0 444, B2 67 and B6 62: 56 files over 500 lines, none split; `tests-visual` at 177; the harness walks. No open item needs a primitive, a new clause or a floor build that does not already exist, except S-14's B17 widening.
+5. **The P3-R3 counterexample is premature.** `dock/__tests__` holds 16 because 10 tests take `GlassDock.vue` as subject, and `GlassDock.vue` is itself 545 lines, on B6's list. B-S11 must split it, and its tests follow their subjects. The slot is re-measured after the split (P4-R5).
+
+---
+
+## P4-1 · Registry
+
+| id | unit set declared by | enforced between units | status | conv. | re-trigger / refutation | pass-5 role |
+|---|---|---|---|---:|---|---|
+| D1-B | a module is a code dir in `src` or `scripts` with a door (B7), recursively; containers and kind slots excepted | privacy: the recursive door seal, kernel included (B1); direction (B8); sibling acyclicity, value and type, same-dir files included (B4); no masking fallback (B17) | ADVANCE | 88.9% | — | the one live route; fourth full pass |
+| D1-G | first-level component units; eponymous roots | B1 into component units only | BANK | 44% | not fired (§P4-3) | none |
+| D1-D′ | — | — | BANK (unchanged) | 7% | not fired: no plant found a rank inversion B4 and B8 both miss | none |
+| D1-A | — | — | BLOCK (unchanged) | 35% | — | none |
+| D1-C, D1-E, D1-F | — | — | BANK (unchanged) | 40/35/30% | no trigger fired | none |
+
+---
+
+## P4-2 · D1-B · Sealed modules, flat: ADVANCE, 88.9%
+
+**What ran** (Bp4 §1-§5, confirmed by cB4 §2 and cB4-R §1-§5).
+
+| item | result |
+|---|---|
+| chain | 51 steps: HEAD, the floor rows (S1, `r1` first), 49 B steps. S1c and S21 left the chain for floor row `r1` and the floor's re-recorded surface pin (FP4 §5) |
+| replay | final code digest `6618df1f…8685c` over 1,437 files, `--twice` MATCH, rerun a no-op; reproduced by the critic from committed bytes in a third pristine worktree (668.8 s). The floor-rows-only cut reads `a974a609…`, the chain's S1 digest |
+| toolchain | build, demo build, both `vue-tsc`, entries, surface (69 keys, 0 differences), gates: all 0 |
+| gate | 15 of 18 GREEN; RED B0 444, B2 67, B6 62; B17 new |
+| FD-2 | 10 stop records, every one `addedPairs: 0`; SCCs 4 / 18 members before S2 → 2 / 4 after S36 |
+| FD-5 | inside every engine step: 175 edges `move-only`, 0 failed |
+| cascade | unlisted RED at `./styles` rule 610 (S4b, card/scroll); listed GREEN, 1,818 swapped pairs, 0 risks; the accent-tone divergence of pass 3 is gone. The critic's reorder plant reads RED under the route's own listing |
+| browser | chip band + card band + π floor + the readback plant: base = migrated, 0 new failures; `zz-chip-band` passes on both |
+| package | +17,264 B over the floor base (pass 3: +13,056). Arm (a) RED `2930810 > 2919057`; arm (b) CLEAN |
+| vitest | only the three RED seal clauses fail on a quiet reading; the other reds are 5 s timeouts under load and the fixed-sleep `menu/contract.test.ts` |
+
+**The critic's items** (cB4 §4): 24 CLOSED, 3 OPEN (S-14, B-01, B-10). Of the route's 7 claimed closures, 6 confirmed and S-14 refuted. None re-opened.
+
+**This registry's reading.** It agrees with every verdict. Two need a sentence:
+
+- **S-03 closes on measurement, not on rulings.** Its text is "P3-R2 to P3-R9 ruled, or both arms measured". P3-R9 via P4-R3 has both arms measured (Bp4 §2, cB4-R §3). P3-R3 has a reported counterexample, which R-5 asks for "before formation". The ruling it asks for is owed (P4-R5) and does not re-open the item.
+- **S-14 stays OPEN, and it is not a re-opening.** It entered pass 4 open. The route's claim is not the critic's verdict.
+
+**The critic's outside findings** (cB4 §5), read under §P2-6.5:
+
+| finding | maps to | effect |
+|---|---|---|
+| 1 · B15 misses a dash-less digit suffix (`tests/helpers2`) | B-07, whose text names `utils`, `v2`, `misc`, all caught | none on the count; route polish P4-G10: B15 reads a placeholder stem with any digit suffix |
+| 2 · `listed-reorders.json` lists by entry, not by pair or rung | S-10, closed on its text (FD-4 judges every swapped pair; a risky pair still reds, as the plant shows) | none on the count; floor tightening P5-F3: a listing names the rung it reviewed |
+| 3 · P4-R4 unruled; `dist/styles/theme.css` is a 28 B `@import` | owed ruling P4-R4 | none new |
+| 4 · the kit replays only inside a glass-ui tree (a `git archive` copy refuses) | S-09, met by the worktree recipe | none; the recipe is `pass-4/tools/fresh.sh` |
+| 5 · vitest non-deterministic at load ~60 (5 s timeouts; `menu/contract.test.ts` sleeps 30 ms) | no item; the defect is at HEAD, not in the route | logged P4-G8. A gate verdict is read on a quiet machine, as pass 3's O-5 |
+
+No finding maps to an edict clause the list leaves out: finding 2 over-lists but masks nothing, since FD-4 refuses every pair that can change a value. **No item is added; the checklist stays at 27.**
+
+**Why ADVANCE.** All three open items are listed route work with a stated cure: S-14 is a widening of B17 plus two cures at cause; B-01 and B-10 are R-5 splits, the `tests-visual` carve, the B0 harness conversion and B2 after P4-R1/P4-R2.
+
+---
+
+## P4-3 · G's re-trigger: not fired
+
+§P3-2.2's first condition is a conjunction: the battery shows B's doors buy no catch G's E3 and B1 would not also make, **and** the owner rules the door bytes too high (P4-R3).
+
+**The first arm fails.** The critic's hashed battery (cB4 §3, cB4-R §6):
+
+| plant | caught by | G's law |
+|---|---|---|
+| K-INT, K-INT-T: a unit file reads a kernel interior past its door (value, type) | B1 | no kernel seal (§P3-1), so not caught |
+| T-CYC: type-only cycle chip ↔ badge through doors | B4 | no sibling-cycle clause, so not caught |
+| T-CYC-N: type-only cycle between two nested dock modules | B4 | the same |
+| N-INT: `dock/search` reads `dock/legibility`'s interior | B1 | **unmeasured**: G's E3 may catch it; G's gate was not run on this plant |
+| K-DOOR-L: legal read through the kernel door | clean | — |
+
+Four plants are catches the doors buy by construction of G's law. N-INT does not decide anything, because the conjunction already fails. The nested-door class (24 doors, 7,902 B) is the one class with no catch unique to it, which matches §P3-4. That is a cost note, not a trigger.
+
+**The second arm has nothing to act on.** The doors' package bytes are +2,572 B of +17,264 B (Bp4 §2). No ruling on P4-R3 would single them out.
+
+G stays banked. The second re-trigger (the owner asks for eponymy as the declaration) has not fired.
+
+**Door counts are class-set dependent.** Bp4 §4 counts 156 doors / 70,387 B (entry sources and internal JS/CSS); cB4 §3 counts 157 / 138,667 B in the sealed zones including kernel and aggregators; §P3-4 counted 158 / 141,307 B on pass 3's tree. Only the last two share a class set, and they agree within one door.
+
+---
+
+## P4-4 · Rulings: P4-R1..P4-R5, owed
+
+None of P4-R1..P4-R4 was ruled during pass 4. Both arms were measured where a measurement exists. The driver rules them into `RULINGS.md` before pass 5's route seat starts. Each row carries this registry's recommendation, which the driver may override.
+
+| id | question | arms | evidence | recommendation |
+|---|---|---|---|---|
+| P4-R1 | R-10's scope | (a) the demo is held to doors, tests by R-3; (b) every consumer zone is held to entries | B2: arm (a) 18 (demo, 13 distinct private targets); arm (b) 67 (demo 18, tests 32, tests-visual 16, scripts 1) (Bp4 §3 B-01) | **(b).** One rule at every depth: a file outside a unit reaches it through its door. A test inside `<unit>/__tests__/` is inside its unit and is not a crossing, so R-3's colocation is the cure for most of the 48 test lines, not an exemption. The edict's "encapsulated" reads for (b) |
+| P4-R2 | names consumers read that no entry publishes | publish on the owning entry (MIGRATION "added" + pin row), or re-point the consumer | B2 67 lines by the route; the demo's 13 private targets | **re-point by default; publish a name only when it belongs to a published component's contract**, one MIGRATION "added" row each. A demo reach to a private is a gap in the surface only when a consumer would need the same name |
+| P4-R3 | the ratchet | re-word P3-R9 to the instrument; rule each datum row | floor row −5,511 B (2,913,546 against 2,919,057, FP4 §4); route row +17,264 B (arm (a) RED, arm (b) CLEAN, Bp4 §2) | **re-word P3-R9:** "The ratchet is one two-sided total. A structure step that moves it lands its own datum row, with its bytes broken down by class, and the datum is rebound once, at the migration's landing commit." Rule the floor row as measured. Hold the route row until "other declarations" +12,819 B is explained (P4-G9) |
+| P4-R4 | a moved CSS entry's dist name | (a) the export key targets the real dist path; (b) the build writes a one-line `@import` at the old name (today) | `dist/styles/theme.css` = 28 B `@import "./theme/index.css";` (cB4-R §7) | **(a).** Arm (b) is a file whose only content forwards to another, which the edict's "no shims" reads against. The export key does not change, so a consumer importing by key sees no break; a consumer importing the dist path directly gets a MIGRATION row. The floor builds (a) once ruled (P5-F2) |
+| **P4-R5** (new) | the P3-R3 counterexample: `dock/__tests__` 16 > 12 | (a) rule the counterexample (an exemption, a sub-slot, or merged test files); (b) defer: B-S11 splits `GlassDock.vue` (545 lines, on B6's list) and its tests follow their new subjects, then the slot is re-measured | 10 of the 16 are `GlassDock.*` tests; subject `GlassDock.vue` is over 500 lines (`b6-files.txt`) | **(b).** R-5 already requires the split. A ruling now would exempt a count that the required work changes. If the slot is still over 12 after B-S11, the route reports it again and the driver rules then |
+
+**Settled by text, not owed:** the demo story dirs at 13 (`containers`, `foundations`) are R-5 dirs kept flat by the manifest's `./*/*.vue` glob (Bp4 δ6). That is route work under B-S14: the manifest reads the nested layout, and the dirs split.
+
+---
+
+## P4-5 · The floor: open gaps
+
+FLOOR-P4's own battery went 0/11 → 11/11, and the pass-3 batteries held (59/59, 18/18, 12/12 with F9 re-issued). What remains:
+
+| id | gap | source | pass-5 disposition |
+|---|---|---|---|
+| FP4-1 | the ratchet unruled; floor base −5,511 B | FP4 §6.1 | P4-R3 |
+| FP4-2 | P4-R4 unbuilt; the floor still writes arm (b) | FP4 §6.2 | P5-F2, after P4-R4 |
+| FP4-3 | FD-4's evidence is a property-reading spec; no committed spec reads `--accent-band-strength`, and `zz-chip-band.spec.ts` lives in `pass-4/plants/` | FP4 §6.3 | route: the readback spec lands in chip's unit as `chip/__tests__/*.visual.ts` (R-3), so FD-4 evidence is in the tree |
+| FP4-4 | the co-occurrence index reads string literals only | FP4 §6.4 | declared limit; no build |
+| FP4-5 | pass 3's F9 plant cannot drive the P4 seat from the docs home | FP4 §6.5 | the refusal is correct; no build |
+| P4-G1 | the floor's own `lib/move.mjs` ↔ `lib/classify.mjs` cycle; S35 cures it only in the landed copy | Bp4 §6.3 | **P5-F1**: the floor takes S35's cure (`lib/plan.mjs`) in `floor/`, and S35's floor arm leaves the chain |
+| P4-G2 | the edits engine writes files it does not syntax-check; S34's first derivation cut a function header in `profile-bundle.mjs`, caught only by vitest | Bp4 §6.3 | **P5-F4**: every engine write is parsed (`.mjs`/`.ts` by the TS parser, `.vue` by the SFC compiler) and a parse failure refuses the step |
+| P4-G3 | S20 lands the kit's current `seal.test.ts`, so a later test edit re-derives S20 onward | Bp4 §6.3 | route: accepted cost of one gate text; noted |
+| P4-G4 | listing by entry, not by rung | cB4 §5.2 | **P5-F3**: FD-4's listing names the moved rule set it reviewed; a reorder outside it is unlisted |
+| P4-G5 | any digest of a cut moves with docs | FP4 §4 | the chain pins code digests only; no build |
+
+---
+
+## P4-6 · Open gaps outside the floor
+
+| id | gap | source | pass-5 disposition |
+|---|---|---|---|
+| P4-G6 | 140 of 152 graph-selected specs did not run; 30 bands have no reading spec; 33 of 60 base tests fail | Bp4 §3 S-12, §6.4 | the pass-5 route runs the full graph selection once on the final tree and reports each band's base-green count; a band with none says so |
+| P4-G7 | S-14's two live sites and the unseen forms | cB4 §4 | route work under S-14 (§P4-8.3) |
+| P4-G8 | vitest non-deterministic at load (5 s timeouts; `menu/contract.test.ts` 30 ms sleep) | Bp4 §4, cB4 §5.5 | a HEAD defect outside D1; logged to the tranche cursor. D1 reads gate verdicts on a quiet machine |
+| P4-G9 | "other declarations" +12,819 B (99 added, 93 removed, 54 changed) is unexplained; the route's package row grew +4,208 B since the rebase | `pack-diff.json` `byClass` | the route decomposes it by file before P4-R3's route row is ruled |
+| P4-G10 | B15 misses `helpers2` | cB4 §5.1 | route polish: any digit suffix on a placeholder stem |
+
+---
+
+## P4-7 · Facts pass 4 established
+
+These continue S-1..S-32.
+
+**S-33 · The floor re-records on a moved base.** The surface pin re-recorded on 10.1.0 and the register retire as floor row `r1` took S1c and S21 out of the route's chain (FP4 §5). A floor change moves the chain's S1 digest, and the chain re-derives from it in one command (`derive/chain.sh`).
+
+**S-34 · A spec that names a class is not evidence of a value.** All 18 base-green tests of the five chip-paint specs passed on a rung that changed Chip's band strength; only a computed-style readback of the property refuted it (FP4 §3). FD-4 now counts only a spec that names the property.
+
+**S-35 · A declared limit is not a closure.** B's LAW §10 named two unseen shapes, and both were live on the tree (cB4 §4). An item that reads "the gate catches X" closes when the gate catches X in every shape the tree holds.
+
+**S-36 · The doors' catches are by construction.** Kernel-interior reaches and module-grain type cycles are caught through doors and have no clause in G's law (§P4-3). Their package cost is +2,572 B.
+
+**S-37 · The P3-R3 counterexample follows from an R-5 file.** The 16 tests stay at the dock root because their subject does, and the subject is over 500 lines. Slot bounds are measured after the file bounds they depend on (P4-R5).
+
+---
+
+## P4-8 · Pass-5 plan
+
+### P4-8.1 Routes
+
+| route | status | pass-5 work |
+|---|---|---|
+| D1-B | ADVANCE | fourth full pass: close S-14, B-01, B-10 |
+| D1-G, D1-D′, D1-A, D1-C, D1-E, D1-F | unchanged | none; triggers watched |
+
+### P4-8.2 Order
+
+1. **Rulings.** P4-R1..P4-R5 ruled into `RULINGS.md` as one list, before the floor and route seats. Where a ruling arrives late, the route measures both arms, as in pass 4.
+2. **Floor.** P5-F1..P5-F4 built once on one seat, each with a plant RED before and GREEN after; FLOOR-P5.md; committed before the route re-derives.
+3. **Route.** B re-derives from the P5 floor cut and runs its fourth pass. R-5's splits (56 files) are the bulk: the route may author split rows in parallel seats by zone (src 22, tests 15, demo 8, tests-visual 8, scripts 3), and one seat lands them into the chain. Each seat's model is declared.
+4. **Critique.** A fresh critic who authored nothing in passes 2-5 writes and hashes the battery before reading the kit.
+5. **Pass-5 agglomeration.**
+
+### P4-8.3 Floor and route work
+
+| id | build | closes |
+|---|---|---|
+| P5-F1 | the floor takes the `lib/plan.mjs` cure for its `move.mjs` ↔ `classify.mjs` cycle | P4-G1 |
+| P5-F2 | a moved CSS entry's export key targets its real dist path; no forwarding file (after P4-R4) | FP4-2, FP3-9 |
+| P5-F3 | FD-4's listing names the moved rule set it reviewed | P4-G4 |
+| P5-F4 | every engine write is parsed; a parse failure refuses the step | P4-G2 |
+| route · S-14 | B17 reads the ternary (`existsSync(p) ? read(p) : x`), the positive guard (`if (existsSync(p)) return read(p); return x`), `try { read } catch { return … }`, `.then(ok, h)`, and a loader bound to a name; the two live sites (`scripts/profile-bundle.mjs:292`, `demo/router.ts:117`) are cured at their cause | S-14 |
+| route · B-S11 | every file over 500 lines split into named modules, or one written counterexample per file; `GlassDock.vue` first, then `dock/__tests__` re-measured (P4-R5) | B-10, B-01 (B6) |
+| route · B-S12 | B0's 444 walks and computed reads onto F-1's file set | B-10, B-01 (B0) |
+| route · B-S14 | B2 per P4-R1/P4-R2; the story manifest reads nested dirs and the two story dirs at 13 split | B-10, B-01 (B2, B6) |
+| route · B-S16 | `tests-visual/` carved: the Playwright program edited first (P4-F5), each unit's visual spec into its unit's `__tests__/`, the rest into named modules; `tests/styles` 23 and `tests/demo` 17 split | B-10, B-01 (B6) |
+| route | the chip readback spec lands in the chip unit; the full graph selection runs once on the final tree; "other declarations" decomposed; B15 digit suffix | FP4-3, P4-G6, P4-G9, P4-G10 |
+
+### P4-8.4 What pass 5 must prove
+
+§P3-8.4's bar unchanged, plus:
+- all 18 clauses GREEN on the replayed tree, wired into `npm test` with no off switch;
+- `verify:package` GREEN against a ruled datum row;
+- the full graph-selected browser run on the final tree, with per-band base-green counts and 0 new failures.
+
+**The battery must plant:** every S-14 shape named above, on a literal path and on a parameter path, in each zone; a split file's new module given a placeholder name; a carved visual spec that leaves the Playwright program; a directory over 12 after the splits; a B2 reach re-pointed to a private; a reorder outside the listed rung (P5-F3). It re-runs pass 4's door plants as regressions.
+
+### P4-8.5 Convergence criterion
+
+§P2-6.5 unchanged. The checklist is §P3-9's 27 items, frozen, with the status in §P4-9. **B's two-clean-passes count is 1.** D1-B converges at the pass-5 agglomeration if and only if all 27 items are closed by committed, replayable measurements and the pass-5 critique re-opens nothing. If the pass-5 critique re-opens an item or maps a finding to an edict clause the list leaves out, the count restarts at 0.
+
+---
+
+## P4-9 · Open gaps, enumerated (the pass-5 checklist)
+
+§P3-9's list carries forward with its text frozen. No item is added in pass 4.
+
+| item | pass-4 critic | entering pass 5 | what closes it |
+|---|---|---|---|
+| S-01 | CLOSED | CLOSED | re-met by the pass-5 kit's commit before judgment |
+| S-02 | CLOSED | CLOSED | — |
+| S-03 | CLOSED | CLOSED | — (P4-R3 and P4-R5 owed as rulings, not as items) |
+| S-04..S-09 | CLOSED | CLOSED | — |
+| S-10 | CLOSED | CLOSED | — |
+| S-11 | CLOSED | CLOSED | — |
+| S-12 | CLOSED | CLOSED | — |
+| S-13 | CLOSED | CLOSED | — |
+| **S-14** | OPEN | **OPEN** | §P4-8.3 route · S-14; the critic's X-TERN-LIT and X-FNVAL-D read B17 |
+| **B-01** | OPEN | **OPEN** | B0 0 after B-S12; B2 0 after P4-R1/P4-R2; B6 0 after B-S11, B-S14, B-S16 (or each remaining line a ruled counterexample) |
+| B-02..B-09 | CLOSED | CLOSED | — |
+| **B-10** | OPEN | **OPEN** | B-S11, B-S12, B-S14, B-S16 run (B-S10, B-S15 done) |
+| B-11..B-13 | CLOSED | CLOSED | — |
+
+**Count entering pass 5:** 27 items, 24 closed, 3 open (S-14, B-01, B-10). Two-clean-passes count: 1.
+
+**Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
+
+No route converged in pass 4. The kept declaration is B's, and pass 4's critique is its first clean pass.
