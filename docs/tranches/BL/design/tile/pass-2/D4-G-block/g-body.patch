@@ -1,0 +1,213 @@
+diff --git a/src/components/toggle-group/ToggleGroup.vue b/src/components/toggle-group/ToggleGroup.vue
+index 51a7a124..00db3a54 100644
+--- a/src/components/toggle-group/ToggleGroup.vue
++++ b/src/components/toggle-group/ToggleGroup.vue
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { computed, onUpdated, ref, shallowRef, triggerRef, type HTMLAttributes } from "vue";
++import { computed, onBeforeUnmount, onUpdated, ref, shallowRef, triggerRef, watch, type HTMLAttributes } from "vue";
+ import { cn } from "../_shared/class-names";
+ import type { Orientation } from "../_shared/axes";
+ import {
+@@ -44,6 +44,12 @@ export interface ToggleGroupProps extends ControlProps {
+     type: SelectionMode;
+     orientation?: Orientation;
+     size?: ControlSize;
++    /** D4-G PROTOTYPE. A single group's selected state as its own element, a body
++     * positioned on the selected tile's rect by the engine's one writer. `glide`
++     * travels between tile rects on the spring; `land` lifts off the old tile and
++     * lands on the new one with no path across the gap. Absent: no body; the tile
++     * carries the floor's per-tile register. */
++    travel?: "glide" | "land";
+     class?: HTMLAttributes["class"];
+ }
+ 
+@@ -59,6 +65,12 @@ const props = withDefaults(defineProps<ToggleGroupProps>(), {
+ const model = defineModel<SelectionValue | SelectionValue[]>();
+ 
+ const containerRef = ref<HTMLElement | null>(null);
++/* THE BODY (D4-G). One element per single group, inside the container, so it shares
++ * the container's scroll and layout context and is positioned by the engine's one
++ * rect writer (`singleSliderStyle`) and re-measured by the engine's one
++ * `ResizeObserver`. */
++const bodyRef = ref<HTMLElement | null>(null);
++const hasBody = computed(() => props.type === "single" && props.travel !== undefined);
+ 
+ /* THE REGISTRY. `shallowRef` over a plain array: the entries are identity-stable
+  * objects an item owns, so deep reactivity would track every field of every item to
+@@ -110,6 +122,9 @@ const selection = useSelectionGroup<{ value: SelectionValue; disabled: boolean }
+     activation: computed(() => (props.type === "single" ? "automatic" : "manual")),
+     containerRef,
+     buttonRefs,
++    indicatorRef: bodyRef,
++    /* the body travels whole: a grid has no single travel axis to squish along */
++    deform: computed(() => "none" as const),
+     /* indicatorRef DELIBERATELY OMITTED — see the header. What that omission actually
+      * silences is the travel SQUISH: with no element there is nothing to write
+      * `--stretch` to. ~~It does NOT silence the measure, and saying so would be the
+@@ -130,6 +145,51 @@ const selection = useSelectionGroup<{ value: SelectionValue; disabled: boolean }
+      * only one that never reads the style.] */
+ });
+ 
++/* THE COMMIT ARM. Geometry transitions are armed only for a commit's window, so a
++ * reflow re-measure (resize, font swap, content-visibility) snaps the body onto its
++ * tile instead of gliding after it. `land` adds the lift and the landing pop; the
++ * geometry jump is held for the lift by the stylesheet's transition delay. */
++const bodyTravel = ref(false);
++let travelTimer: ReturnType<typeof setTimeout> | null = null;
++const LIFT_MS = 110;
++const LAND_MS = 520;
++watch(
++    () => (hasBody.value ? model.value : undefined),
++    (to, from) => {
++        if (!hasBody.value || to === from) return;
++        bodyTravel.value = true;
++        if (travelTimer) clearTimeout(travelTimer);
++        travelTimer = setTimeout(() => {
++            bodyTravel.value = false;
++            travelTimer = null;
++        }, 700);
++        const body = bodyRef.value;
++        const wasShown = options.value.some((o) => o.value === from);
++        if (
++            props.travel === "land" &&
++            body &&
++            wasShown &&
++            !matchMedia("(prefers-reduced-motion: reduce)").matches
++        ) {
++            const lift = LIFT_MS / LAND_MS;
++            body.animate(
++                [
++                    { opacity: 1, scale: "1", offset: 0 },
++                    { opacity: 0, scale: "1.05", offset: lift },
++                    { opacity: 0, scale: "0.92", offset: lift + 0.02 },
++                    { opacity: 1, scale: "1.035", offset: lift + 0.36 },
++                    { opacity: 1, scale: "0.992", offset: lift + 0.58 },
++                    { opacity: 1, scale: "1", offset: 1 },
++                ],
++                { duration: LAND_MS, easing: "ease-out" },
++            );
++        }
++    },
++);
++onBeforeUnmount(() => {
++    if (travelTimer) clearTimeout(travelTimer);
++});
++
+ provideToggleGroupContext({
+     register(entry) {
+         entries.value.push(entry);
+@@ -157,9 +217,19 @@ provideToggleGroupContext({
+         :data-type="props.type"
+         :data-size="props.size"
+         :data-orientation="props.orientation"
++        :data-travel="hasBody ? props.travel : undefined"
++        :data-body-travel="bodyTravel ? '' : undefined"
+         v-bind="controlStateAttrs(props.invalid)"
+         @keydown="selection.onKeydown"
+     >
++        <span
++            v-if="hasBody"
++            ref="bodyRef"
++            class="toggle-group__body"
++            data-selection-body
++            aria-hidden="true"
++            :style="selection.singleSliderStyle.value"
++        />
+         <slot />
+     </div>
+ </template>
+diff --git a/src/components/toggle-group/styles.css b/src/components/toggle-group/styles.css
+index bc5a1842..f984cdbd 100644
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -204,6 +204,78 @@
+         pointer-events: none;
+     }
+ 
++
++    /* ── D4-G PROTOTYPE · THE SELECTION IS A BODY ──
++       One element per single group carries the selected register: a raised light
++       fill and the floor's edge ink. It sits under the items in the group's own
++       stacking context, so the items are flush (Q-2 (b): no plate at rest, the seam
++       only) and the body shows through the selected one. The item's own on-state
++       fill and perimeter step aside: the body is the carrier. */
++    .toggle-group[data-travel] {
++        position: relative;
++        isolation: isolate;
++    }
++
++    .toggle-group[data-travel] :where(.toggle-group__item) {
++        z-index: 1;
++        --glass-defined-plate: transparent;
++        --glass-floor-fill: transparent;
++        backdrop-filter: none;
++        --selection-perimeter: 0;
++    }
++
++    /* the selected item's plate is the body: no on-state fill, and no hover plate
++       over it (the hover would veil the body it sits on) */
++    .toggle-group[data-travel] .toggle-group__item[data-state="on"],
++    .toggle-group[data-travel] .toggle-group__item[data-state="on"]:hover:not(:disabled) {
++        background-color: transparent;
++        --glass-defined-plate: transparent;
++    }
++
++    .toggle-group__body {
++        --selection-edge: oklch(from var(--selection-tone, var(--foreground)) min(l, 0.42) c h / 1);
++        position: absolute;
++        z-index: 0;
++        box-sizing: border-box;
++        pointer-events: none;
++        border: 2px solid var(--selection-edge);
++        border-radius: var(--radius-field);
++        background: color-mix(in oklab, var(--card), white 55%);
++        box-shadow:
++            0 1px 2px oklch(0 0 0 / 0.12),
++            0 6px 16px -4px oklch(0 0 0 / 0.18);
++    }
++
++    .dark .toggle-group__body {
++        --selection-edge: oklch(from var(--selection-tone, var(--foreground)) max(l, 0.8) c h / 1);
++        background: color-mix(in oklab, var(--card), var(--foreground) 16%);
++        box-shadow:
++            0 1px 2px oklch(0 0 0 / 0.4),
++            0 6px 18px -4px oklch(0 0 0 / 0.5);
++    }
++
++    /* THE COMMIT WINDOW. Geometry moves on the spring only while a commit is in
++       flight; a reflow re-measure outside it snaps. `glide` rides the overshooting
++       panel spring across the gap; `land` holds the old rect for the lift, then jumps
++       (0 s) and the WAAPI pop in ToggleGroup.vue lands it. */
++    @media (prefers-reduced-motion: no-preference) {
++        .toggle-group[data-travel="glide"][data-body-travel] .toggle-group__body {
++            transition:
++                translate var(--spring-panel-duration) var(--spring-panel),
++                width var(--spring-panel-duration) var(--spring-panel),
++                height var(--spring-panel-duration) var(--spring-panel),
++                opacity var(--duration-fast) ease;
++        }
++
++        .toggle-group[data-travel="land"][data-body-travel] .toggle-group__body {
++            transition:
++                translate 0s linear 110ms,
++                width 0s linear 110ms,
++                height 0s linear 110ms,
++                opacity var(--duration-fast) ease;
++        }
++    }
++
+     @media (forced-colors: active) {
+         .toggle-group__item {
+             border: 1px solid ButtonText;
+@@ -220,5 +292,10 @@
+         .toggle-group__item::before {
+             border-color: Highlight;
+         }
++
++        .toggle-group__body {
++            border-color: Highlight;
++            background: Canvas;
++        }
+     }
+ }
