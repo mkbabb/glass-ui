@@ -1,0 +1,204 @@
+# D5 round 0 · run log (seat: D5 r0 portfolio, claude-opus-5-5), 2026-09-26 03:24-04:00 local
+# worktree: git worktree add --detach <scratch>/D5/r0/portfolio/wt HEAD → 476a0cd6 (docs-only above 70a128b5);
+#   `git diff --stat v10.1.0 HEAD -- src` prints nothing: src is the published 10.1.0 bytes.
+# build: D5_OUT=<scratch>/out node probe/build.mjs <wt> head (Vite, @glass → wt/src).
+# engines: Chromium 149.0.7827.55 and Playwright WebKit 26.5, headless, from glass-ui/node_modules/playwright. Not Safari.
+# Real Safari: UNMEASURED (owner's safaridriver checkbox).
+# Every cell line ends with os.loadavg() 1/5/15 min; other seats ran browsers throughout (load 28.9-48.7).
+# Lines trimmed only by: " · body travel 0.00 px overshoot 0.00 px" removed where no body is read; "N frames, median M ms" → "Nf med Mms".
+# Superseded runs are not reproduced: (a) the first E-5 arm (a mouse press in a touch context; it read hover and focus paint
+#   as press, e.g. accordion 77.18 % pixels moved) and the raw CDP touchStart hold (:active false on all 7 scenes, and the
+#   planted :active rule stayed RED); (b) the first E-2 plant (a CSS `scale` keyframe outranked by the Chip's own rule;
+#   then a WAAPI `scale` pop around 1 against the Chip's 1.068 settle). Both are recorded in PORTFOLIO §1.3.
+
+## census · node probe/census.mjs <wt>
+DIRS 55 · raw detector WITH-RUNG 17 RUNGLESS 38 · decommented WITH-RUNG 15 RUNGLESS 40
+RUNGLESS(raw): accordion alert aurora avatar badge blob chip collapsible command constellation dark-mode-toggle data-table deck expandable-container fading-scroll fourier-field handmark infinite-scroll input label labeled-field metric music-staff number-field popover progress scroll-progress-rim separator sheet skeleton status-dot surface table textarea timeline toast tooltip typewriter
+comment-only rung (raw yes, decommented no): carousel pager-dots
+rungless(raw) with an interactivity signal: accordion avatar blob chip collapsible command constellation dark-mode-toggle data-table deck expandable-container fading-scroll fourier-field handmark input label music-staff number-field popover progress separator sheet surface textarea timeline toast tooltip (27)
+rungless(raw) with NO interactivity signal: alert aurora badge infinite-scroll labeled-field metric scroll-progress-rim skeleton status-dot table typewriter (11)
+rungless(raw) that paint :hover: blob dark-mode-toggle data-table expandable-container sheet timeline toast (7)
+rungless(raw) with a SCRIPT press (useLiquidPress/useSpringPress/data-press-armed) the detector cannot see: dark-mode-toggle timeline
+with-rung(raw) and no interactivity signal: none
+
+## the shipped test · (cd <wt>; npx vitest run tests/styles/engage-ladder.test.ts)
+Test Files  1 passed (1) · Tests  25 passed | 1 expected fail (26)   [load 37.7/39.5/39.6]
+
+## writers · git grep -c 'data-engaged' -- 'src/**/*.vue' | wc -l
+2   (src/components/dialog/ModalOverlay.vue, src/components/slider/Slider.vue)
+
+## hallmark and T1 names · git grep -nE -- '--impulse|useLiquidSpine|--overpull|engage-grow|useEngageModal|data-engage-modal|--scale-engage' -- src | wc -l
+0
+
+## supports · node probe/supports.mjs
+chromium 149.0.7827.55 {"linear() easing":true,":has()":true,"@property (registerProperty)":true,"anchor-name":true,"position-anchor":true,"popover attr":true,"transition-behavior allow-discrete":true,"interpolate-size":true,"animation-timeline scroll()":true,"@starting-style (CSSStartingStyleRule)":true,"WAAPI composite add":true,"if() in a property":true,"sibling-index()":true}
+webkit 26.5 {"linear() easing":true,":has()":true,"@property (registerProperty)":true,"anchor-name":true,"position-anchor":true,"popover attr":true,"transition-behavior allow-discrete":true,"interpolate-size":false,"animation-timeline scroll()":true,"@starting-style (CSSStartingStyleRule)":true,"WAAPI composite add":true,"if() in a property":false,"sibling-index()":true}
+
+## HEAD · Chromium · node probe/battery.mjs <dist> --engines chromium --only E-2,E-3,E-4,E-6
+PASS E-2 chromium switch Tab-entry · scale range 0.000 body moved 0.00 px · load 33.0/43.0/43.7
+FAIL E-2 chromium switch commit·keyboard(Space) · peak 1.000 trough 1.000 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 98f med 8.3ms · load 33.0/43.0/43.7
+FAIL E-2 chromium switch commit·programmatic · peak 1.000 trough 1.000 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 97f med 8.3ms · load 32.7/42.7/43.6
+FAIL E-2 chromium switch commit·pointer · peak 1.000 trough 1.000 settle 1.000 · body travel 19.60 px overshoot 0.00 px · 97f med 8.3ms · load 32.7/42.7/43.6
+PASS E-2 chromium checkbox Tab-entry · scale range 0.000 body moved 0.00 px · load 32.7/42.7/43.6
+FAIL E-2 chromium checkbox commit·keyboard(Space) · peak 1.000 trough 1.000 settle 1.000 · 98f med 8.3ms · load 32.3/42.5/43.5
+FAIL E-2 chromium checkbox commit·programmatic · peak 1.000 trough 1.000 settle 1.000 · 97f med 8.3ms · load 32.3/42.5/43.5
+FAIL E-2 chromium checkbox commit·pointer · peak 1.000 trough 1.000 settle 1.000 · 97f med 8.3ms · load 32.3/42.5/43.5
+PASS E-2 chromium radio Tab-entry · scale range 0.000 body moved 0.00 px · load 32.3/42.5/43.5
+FAIL E-2 chromium radio commit·keyboard(ArrowDown) · peak 1.000 trough 1.000 settle 1.000 · 97f med 8.3ms · load 32.6/42.4/43.5
+FAIL E-2 chromium radio commit·programmatic · peak 1.000 trough 1.000 settle 1.000 · 96f med 8.3ms · load 32.6/42.4/43.5
+FAIL E-2 chromium radio commit·pointer · peak 1.000 trough 1.000 settle 1.000 · 97f med 8.4ms · load 32.6/42.4/43.5
+PASS E-2 chromium tabs Tab-entry · scale range 0.000 body moved 0.00 px · load 32.9/42.3/43.5
+PASS E-2 chromium tabs commit·keyboard(ArrowRight) · peak 1.004 trough 0.974 settle 1.004 · body travel 78.31 px overshoot 1.73 px · 98f med 8.3ms · load 32.9/42.3/43.5
+FAIL E-2 chromium tabs commit·programmatic · peak 1.004 trough 1.004 settle 1.004 · body travel 78.31 px overshoot 0.00 px · 96f med 8.3ms · load 32.9/42.3/43.5
+PASS E-2 chromium tabs commit·pointer · peak 1.004 trough 0.974 settle 1.004 · body travel 78.31 px overshoot 1.76 px · 97f med 8.3ms · load 32.9/42.3/43.5
+PASS E-2 chromium toggle Tab-entry · scale range 0.000 body moved 0.00 px · load 31.5/41.8/43.3
+FAIL E-2 chromium toggle commit·keyboard(ArrowRight) · peak 1.007 trough 1.007 settle 1.007 · 97f med 8.3ms · load 31.5/41.8/43.3
+FAIL E-2 chromium toggle commit·programmatic · peak 1.007 trough 1.007 settle 1.007 · 96f med 8.4ms · load 31.5/41.8/43.3
+FAIL E-2 chromium toggle commit·pointer · peak 1.023 trough 1.023 settle 1.023 · 96f med 8.3ms · load 31.5/41.8/43.3
+PASS E-2 chromium chip Tab-entry · scale range 0.000 body moved 0.00 px · load 34.8/42.3/43.5
+FAIL E-2 chromium chip commit·keyboard(Space) · peak 1.083 trough 1.068 settle 1.068 · 97f med 8.4ms · load 34.8/42.3/43.5
+FAIL E-2 chromium chip commit·programmatic · peak 1.083 trough 1.068 settle 1.068 · 97f med 8.3ms · load 34.8/42.3/43.5
+FAIL E-2 chromium chip commit·pointer · peak 1.018 trough 1.009 settle 1.009 · 97f med 8.3ms · load 36.7/42.6/43.5
+PASS E-2 chromium accordion Tab-entry · scale range 0.000 body moved 0.00 px · load 36.7/42.6/43.5
+FAIL E-2 chromium accordion commit·keyboard(Enter) · peak 1.000 trough 1.000 settle 1.000 · 97f med 8.3ms · load 36.7/42.6/43.5
+FAIL E-2 chromium accordion commit·programmatic · peak 1.000 trough 1.000 settle 1.000 · 97f med 8.4ms · load 36.7/42.6/43.5
+FAIL E-2 chromium accordion commit·pointer · peak 1.000 trough 1.000 settle 1.000 · 96f med 8.3ms · load 38.4/42.9/43.6
+PASS E-2 chromium button Tab-entry · scale range 0.000 body moved 0.00 px · load 38.4/42.9/43.6
+FAIL E-2 chromium button commit·keyboard(Space) · peak 0.997 trough 0.997 settle 0.997 · 97f med 8.4ms · load 38.4/42.9/43.6
+FAIL E-2 chromium button commit·programmatic · peak 0.997 trough 0.997 settle 0.997 · 96f med 8.3ms · load 38.4/42.9/43.6
+FAIL E-2 chromium button commit·pointer · peak 1.012 trough 1.012 settle 1.012 · 97f med 8.3ms · load 38.7/42.8/43.6
+FAIL E-3 chromium light slider grow · rest 360.0 px · pointer-held ×1.000 ([data-engaged] 2) · keyboard-focused ×1.000 · bound ×1.03 sustained · load 38.7/42.8/43.6
+FAIL E-3 chromium dark slider grow · rest 360.0 px · pointer-held ×1.000 ([data-engaged] 2) · keyboard-focused ×1.000 · bound ×1.03 sustained · load 38.0/42.6/43.5
+FAIL E-4 chromium slider fling carries velocity · thumb at release 271.2 px; max travel after release 0.00 px; settle offset 0.00 px (bound ≥ 4 px carried) · load 38.0/42.6/43.5
+FAIL E-6 chromium switch idle rung (breathing), compositor-only · running animations at rest 0 [] · layouts/s 0.0 (bound: ≥1 idle animation AND 0 layouts/s) · load 36.4/42.1/43.4
+
+## HEAD · Playwright WebKit · per scene under `timeout 150` (the first whole run hung at toggle commit·pointer and was killed)
+PASS E-2 webkit switch Tab-entry · scale range 0.000 body moved 0.00 px · load 36.3/40.4/42.4
+FAIL E-2 webkit switch commit·keyboard(Space) · peak 1.000 trough 1.000 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 80f med 10.0ms · load 34.6/40.0/42.3
+FAIL E-2 webkit switch commit·programmatic · peak 1.000 trough 1.000 settle 1.000 · body travel 19.84 px overshoot 0.00 px · 79f med 10.0ms · load 34.6/40.0/42.3
+FAIL E-2 webkit switch commit·pointer · peak 1.000 trough 1.000 settle 1.000 · body travel 19.60 px overshoot 0.00 px · 79f med 10.0ms · load 34.6/40.0/42.3
+PASS E-2 webkit checkbox Tab-entry · scale range 0.000 body moved 0.00 px · load 33.5/39.6/42.2
+FAIL E-2 webkit checkbox commit·keyboard(Space) · peak 1.000 trough 1.000 settle 1.000 · 81f med 10.0ms · load 33.5/39.6/42.2
+FAIL E-2 webkit checkbox commit·programmatic · peak 1.000 trough 1.000 settle 1.000 · 78f med 10.0ms · load 33.5/39.6/42.2
+FAIL E-2 webkit checkbox commit·pointer · peak 1.000 trough 1.000 settle 1.000 · 80f med 10.0ms · load 33.5/39.6/42.2
+PASS E-2 webkit radio Tab-entry · scale range 0.000 body moved 0.00 px · load 32.4/39.3/42.0
+FAIL E-2 webkit radio commit·keyboard(ArrowDown) · peak 1.000 trough 1.000 settle 1.000 · 79f med 10.0ms · load 32.4/39.3/42.0
+FAIL E-2 webkit radio commit·programmatic · peak 1.000 trough 1.000 settle 1.000 · 78f med 10.0ms · load 32.4/39.3/42.0
+FAIL E-2 webkit radio commit·pointer · peak 1.000 trough 1.000 settle 1.000 · 79f med 10.0ms · load 30.7/38.8/41.8
+PASS E-2 webkit tabs Tab-entry · scale range 0.000 body moved 0.00 px · load 30.7/38.8/41.8
+PASS E-2 webkit tabs commit·keyboard(ArrowRight) · peak 1.004 trough 0.976 settle 1.004 · body travel 78.33 px overshoot 1.85 px · 79f med 10.0ms · load 30.7/38.8/41.8
+FAIL E-2 webkit tabs commit·programmatic · peak 1.004 trough 1.004 settle 1.004 · body travel 78.33 px overshoot 0.00 px · 78f med 10.0ms · load 30.7/38.8/41.8
+PASS E-2 webkit tabs commit·pointer · peak 1.004 trough 1.004 settle 1.004 · body travel 78.33 px overshoot 1.65 px · 81f med 10.0ms · load 30.3/38.6/41.7
+PASS E-2 webkit toggle Tab-entry · scale range 0.000 body moved 0.00 px · load 30.3/38.6/41.7
+FAIL E-2 webkit toggle commit·keyboard(ArrowRight) · peak 1.002 trough 1.002 settle 1.002 · 79f med 10.0ms · load 30.2/38.9/41.4
+FAIL E-2 webkit toggle commit·programmatic · peak 1.002 trough 1.002 settle 1.002 · 78f med 10.0ms · load 29.2/38.6/41.2
+FAIL webkit harness · mouse.move: Target page, context or browser has been closed · load 28.9/35.1/39.4      [toggle commit·pointer]
+FAIL E-2 webkit chip commit·keyboard(Space) · peak 1.084 trough 1.068 settle 1.068 · 80f med 10.0ms · load 28.9/35.1/39.4
+FAIL E-2 webkit chip commit·programmatic · peak 1.084 trough 1.068 settle 1.068 · 78f med 10.0ms · load 30.5/35.3/39.5
+FAIL E-2 webkit chip commit·pointer · peak 1.017 trough 1.009 settle 1.009 · 79f med 10.0ms · load 30.5/35.3/39.5
+FAIL E-2 webkit accordion commit·keyboard(Enter) · peak 1.000 trough 1.000 settle 1.000 · 80f med 10.0ms · load 33.7/35.9/39.6
+FAIL E-2 webkit accordion commit·programmatic · peak 1.000 trough 1.000 settle 1.000 · 78f med 10.0ms · load 33.7/35.9/39.6
+FAIL webkit harness · mouse.move: Protocol error (Input.dispatchMouseEvent): Page closed · load 38.6/36.2/39.1      [accordion commit·pointer]
+FAIL webkit harness · mouse.move: Target page, context or browser has been closed · load 39.0/38.1/39.4             [accordion commit·pointer, re-run: reproduced 2/2]
+FAIL E-2 webkit button commit·keyboard(Space) · peak 0.997 trough 0.997 settle 0.997 · 79f med 10.0ms · load 39.9/36.5/39.2
+FAIL E-2 webkit button commit·programmatic · peak 0.997 trough 0.997 settle 0.997 · 79f med 10.0ms · load 39.9/36.5/39.2
+FAIL E-2 webkit button commit·pointer · peak 1.012 trough 1.012 settle 1.012 · 79f med 10.0ms · load 39.9/36.5/39.2
+FAIL E-3 webkit light slider grow · rest 360.0 px · pointer-held ×1.000 ([data-engaged] 2) · keyboard-focused ×1.000 · bound ×1.03 sustained · load 39.0/38.1/39.4
+FAIL E-3 webkit dark slider grow · rest 360.0 px · pointer-held ×1.000 ([data-engaged] 2) · keyboard-focused ×1.000 · bound ×1.03 sustained · load 38.5/38.0/39.4
+FAIL E-4 webkit slider fling carries velocity · thumb at release 271.2 px; max travel after release 0.00 px; settle offset 0.00 px (bound ≥ 4 px carried) · load 38.5/38.0/39.4
+FAIL E-6 webkit switch idle rung (breathing), compositor-only · running animations at rest 0 [] · layouts/s n/a (bound: ≥1 idle animation AND 0 layouts/s) · load 38.1/37.9/39.3
+(the chip, accordion and button Tab-entry lines of the per-scene re-runs were filtered from the capture and are not claimed)
+
+## PLANT · Chromium · E-2 (WAAPI transform pop on commit)
+PASS E-2 chromium switch Tab-entry · scale range 0.000 body moved 0.00 px · load 41.1/39.8/39.7
+PASS E-2 chromium switch commit·keyboard(Space) · peak 1.060 trough 0.986 settle 1.000 · body travel 20.00 px overshoot 0.35 px · 98f med 8.3ms · load 41.1/39.8/39.7
+PASS E-2 chromium switch commit·programmatic · peak 1.059 trough 0.985 settle 1.000 · body travel 20.00 px overshoot 0.35 px · 97f med 8.3ms · load 41.1/39.8/39.7
+PASS E-2 chromium switch commit·pointer · peak 1.060 trough 0.985 settle 1.000 · body travel 19.60 px overshoot 0.35 px · 97f med 8.3ms · load 42.1/40.1/39.8
+PASS E-2 chromium checkbox Tab-entry · scale range 0.000 body moved 0.00 px · load 42.1/40.1/39.8
+PASS E-2 chromium checkbox commit·keyboard(Space) · peak 1.060 trough 0.985 settle 1.000 · 98f med 8.3ms · load 42.1/40.1/39.8
+PASS E-2 chromium checkbox commit·programmatic · peak 1.060 trough 0.985 settle 1.000 · 97f med 8.3ms · load 41.6/40.0/39.8
+PASS E-2 chromium checkbox commit·pointer · peak 1.060 trough 0.985 settle 1.000 · 97f med 8.3ms · load 41.6/40.0/39.8
+PASS E-2 chromium radio Tab-entry · scale range 0.000 body moved 0.00 px · load 41.6/40.0/39.8
+PASS E-2 chromium radio commit·keyboard(ArrowDown) · peak 1.060 trough 0.985 settle 1.000 · 98f med 8.3ms · load 41.6/40.0/39.8
+PASS E-2 chromium radio commit·programmatic · peak 1.060 trough 0.985 settle 1.000 · 97f med 8.3ms · load 42.2/40.1/39.8
+PASS E-2 chromium radio commit·pointer · peak 1.060 trough 0.985 settle 1.000 · 96f med 8.3ms · load 42.2/40.1/39.8
+PASS E-2 chromium tabs Tab-entry · scale range 0.000 body moved 0.00 px · load 42.2/40.1/39.8
+PASS E-2 chromium tabs commit·keyboard(ArrowRight) · peak 1.064 trough 0.989 settle 1.004 · body travel 78.31 px overshoot 1.75 px · 97f med 8.3ms · load 42.2/40.1/39.8
+PASS E-2 chromium tabs commit·programmatic · peak 1.064 trough 0.989 settle 1.004 · body travel 78.31 px overshoot 0.00 px · 97f med 8.3ms · load 41.6/40.1/39.8
+PASS E-2 chromium tabs commit·pointer · peak 1.064 trough 0.990 settle 1.004 · body travel 78.31 px overshoot 1.72 px · 97f med 8.3ms · load 41.6/40.1/39.8
+PASS E-2 chromium toggle Tab-entry · scale range 0.000 body moved 0.00 px · load 41.6/40.1/39.8
+PASS E-2 chromium toggle commit·keyboard(ArrowRight) · peak 1.068 trough 0.993 settle 1.007 · 98f med 8.4ms · load 41.9/40.1/39.8
+PASS E-2 chromium toggle commit·programmatic · peak 1.067 trough 0.992 settle 1.007 · 97f med 8.3ms · load 41.9/40.1/39.8
+PASS E-2 chromium toggle commit·pointer · peak 1.083 trough 1.007 settle 1.023 · 94f med 8.3ms · load 41.9/40.1/39.8
+PASS E-2 chromium chip Tab-entry · scale range 0.000 body moved 0.00 px · load 41.9/40.2/39.8
+PASS E-2 chromium chip commit·keyboard(Space) · peak 1.134 trough 1.052 settle 1.068 · 97f med 8.3ms · load 41.9/40.2/39.8
+PASS E-2 chromium chip commit·programmatic · peak 1.133 trough 1.052 settle 1.068 · 96f med 8.3ms · load 41.9/40.2/39.8
+PASS E-2 chromium chip commit·pointer · peak 1.075 trough 0.995 settle 1.009 · 97f med 8.3ms · load 41.9/40.2/39.8
+PASS E-2 chromium accordion Tab-entry · scale range 0.000 body moved 0.00 px · load 41.8/40.2/39.8
+PASS E-2 chromium accordion commit·keyboard(Enter) · peak 1.189 trough 0.956 settle 1.000 · 97f med 8.3ms · load 41.8/40.2/39.8
+PASS E-2 chromium accordion commit·programmatic · peak 1.191 trough 0.956 settle 1.000 · 96f med 8.3ms · load 41.8/40.2/39.8
+PASS E-2 chromium accordion commit·pointer · peak 1.191 trough 0.956 settle 1.000 · 95f med 8.3ms · load 42.7/40.4/39.9
+PASS E-2 chromium button Tab-entry · scale range 0.000 body moved 0.00 px · load 42.7/40.4/39.9
+PASS E-2 chromium button commit·keyboard(Space) · peak 1.056 trough 0.982 settle 0.997 · 98f med 8.3ms · load 42.7/40.4/39.9
+PASS E-2 chromium button commit·programmatic · peak 1.056 trough 0.982 settle 0.997 · 97f med 8.3ms · load 42.7/40.4/39.9
+PASS E-2 chromium button commit·pointer · peak 1.070 trough 0.996 settle 1.012 · 97f med 8.4ms · load 43.2/40.5/40.0
+VERDICT d5-r0 PLANT: 0 failing cells of 32
+
+## PLANT · Playwright WebKit · E-2 (toggle and accordion excluded: their pointer cells close the page, above)
+PASS E-2 webkit switch Tab-entry · scale range 0.000 body moved 0.00 px · load 43.2/40.5/40.0
+PASS E-2 webkit switch commit·keyboard(Space) · peak 1.059 trough 0.986 settle 1.000 · body travel 20.00 px overshoot 0.25 px · 80f med 10.0ms · load 43.2/40.5/40.0
+PASS E-2 webkit switch commit·programmatic · peak 1.058 trough 0.987 settle 1.000 · body travel 20.00 px overshoot 0.34 px · 79f med 10.0ms · load 43.5/40.6/40.0
+PASS E-2 webkit switch commit·pointer · peak 1.058 trough 0.986 settle 1.000 · body travel 19.60 px overshoot 0.32 px · 79f med 10.0ms · load 43.5/40.6/40.0
+PASS E-2 webkit checkbox Tab-entry · scale range 0.000 body moved 0.00 px · load 41.6/40.3/39.9
+PASS E-2 webkit checkbox commit·keyboard(Space) · peak 1.059 trough 0.985 settle 1.000 · 79f med 10.0ms · load 41.6/40.3/39.9
+PASS E-2 webkit checkbox commit·programmatic · peak 1.060 trough 0.985 settle 1.000 · 78f med 10.0ms · load 41.6/40.3/39.9
+PASS E-2 webkit checkbox commit·pointer · peak 1.060 trough 0.985 settle 1.000 · 79f med 10.0ms · load 41.6/40.3/39.9
+PASS E-2 webkit radio Tab-entry · scale range 0.000 body moved 0.00 px · load 41.1/40.2/39.9
+PASS E-2 webkit radio commit·keyboard(ArrowDown) · peak 1.059 trough 0.986 settle 1.000 · 80f med 10.0ms · load 41.1/40.2/39.9
+PASS E-2 webkit radio commit·programmatic · peak 1.060 trough 0.986 settle 1.000 · 75f med 10.0ms · load 41.1/40.2/39.9
+PASS E-2 webkit radio commit·pointer · peak 1.057 trough 0.986 settle 1.000 · 69f med 11.0ms · load 41.8/40.4/39.9
+PASS E-2 webkit tabs Tab-entry · scale range 0.000 body moved 0.00 px · load 41.8/40.4/39.9
+PASS E-2 webkit tabs commit·keyboard(ArrowRight) · peak 1.062 trough 0.990 settle 1.004 · body travel 78.33 px overshoot 1.75 px · 80f med 10.0ms · load 41.8/40.4/39.9
+PASS E-2 webkit tabs commit·programmatic · peak 1.062 trough 0.990 settle 1.004 · body travel 78.33 px overshoot 0.00 px · 76f med 10.0ms · load 40.5/40.1/39.8
+PASS E-2 webkit tabs commit·pointer · peak 1.063 trough 0.990 settle 1.004 · body travel 78.02 px overshoot 1.60 px · 79f med 10.0ms · load 40.5/40.1/39.8
+PASS E-2 webkit chip Tab-entry · scale range 0.000 body moved 0.00 px · load 40.5/40.1/39.8
+PASS E-2 webkit chip commit·keyboard(Space) · peak 1.132 trough 1.052 settle 1.068 · 72f med 10.0ms · load 38.8/39.8/39.7
+PASS E-2 webkit chip commit·programmatic · peak 1.133 trough 1.053 settle 1.068 · 77f med 10.0ms · load 38.8/39.8/39.7
+PASS E-2 webkit chip commit·pointer · peak 1.069 trough 0.995 settle 1.009 · 80f med 10.0ms · load 38.8/39.8/39.7
+PASS E-2 webkit button Tab-entry · scale range 0.000 body moved 0.00 px · load 39.9/40.0/39.8
+PASS E-2 webkit button commit·keyboard(Space) · peak 1.056 trough 0.983 settle 0.997 · 78f med 10.0ms · load 39.9/40.0/39.8
+PASS E-2 webkit button commit·programmatic · peak 1.055 trough 0.983 settle 0.997 · 78f med 10.0ms · load 39.9/40.0/39.8
+PASS E-2 webkit button commit·pointer · peak 1.069 trough 0.997 settle 1.012 · 75f med 10.0ms · load 41.0/40.2/39.9
+VERDICT d5-r0 PLANT: 0 failing cells of 24
+
+## PLANT · both engines · E-3, E-4, E-6
+PASS E-3 chromium light slider grow · rest 360.0 px · pointer-held ×1.060 ([data-engaged] 2) · keyboard-focused ×1.060 · bound ×1.03 sustained · load 32.0/36.4/38.7
+PASS E-3 chromium dark slider grow · rest 360.0 px · pointer-held ×1.060 ([data-engaged] 2) · keyboard-focused ×1.060 · bound ×1.03 sustained · load 32.9/36.5/38.7
+PASS E-4 chromium slider fling carries velocity · thumb at release 271.2 px; max travel after release 13.89 px; settle offset 10.00 px (bound ≥ 4 px carried) · load 32.9/36.5/38.7
+PASS E-6 chromium switch idle rung (breathing), compositor-only · running animations at rest 1 [CSSAnimation:d5breath] · layouts/s 0.0 (bound: ≥1 idle animation AND 0 layouts/s) · load 34.3/36.7/38.8
+PASS E-3 webkit light slider grow · rest 360.0 px · pointer-held ×1.060 ([data-engaged] 2) · keyboard-focused ×1.060 · bound ×1.03 sustained · load 34.7/36.7/38.8
+PASS E-3 webkit dark slider grow · rest 360.0 px · pointer-held ×1.060 ([data-engaged] 2) · keyboard-focused ×1.060 · bound ×1.03 sustained · load 34.7/36.7/38.8
+PASS E-4 webkit slider fling carries velocity · thumb at release 272.2 px; max travel after release 12.84 px; settle offset 9.00 px (bound ≥ 4 px carried) · load 36.3/37.0/38.9
+PASS E-6 webkit switch idle rung (breathing), compositor-only · running animations at rest 1 [CSSAnimation:d5breath] · layouts/s n/a (bound: ≥1 idle animation AND 0 layouts/s) · load 36.3/37.0/38.9
+
+## E-5 · HEAD · node probe/e5.mjs <dist>   (Chromium only; Playwright WebKit UNMEASURED: no held-touch input)
+FAIL E-5 chromium accordion · (hover:none, pointer:coarse) true · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 38.8/41.2/42.8
+PASS E-5 chromium tabs · (hover:none, pointer:coarse) true · :active true · Δscale -0.030 · touch-changed [] · hover-changed [] · press-only [] · load 40.8/41.5/42.9
+PASS E-5 chromium toggle · (hover:none, pointer:coarse) true · :active true · Δscale -0.030 · touch-changed [background-color, background-image] · hover-changed [background-color, background-image] · press-only [] · load 40.8/41.5/42.9
+PASS E-5 chromium chip · (hover:none, pointer:coarse) true · :active true · Δscale -0.032 · touch-changed [] · hover-changed [] · press-only [] · load 43.0/42.0/43.1
+PASS E-5 chromium button · (hover:none, pointer:coarse) true · :active true · Δscale 0.028 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [] · load 44.1/42.2/43.2
+PASS E-5 chromium switch · (hover:none, pointer:coarse) true · :active true · Δscale -0.040 · touch-changed [] · hover-changed [] · press-only [] · load 44.1/42.2/43.2
+PASS E-5 chromium checkbox · (hover:none, pointer:coarse) true · :active true · Δscale -0.040 · touch-changed [] · hover-changed [] · press-only [] · load 42.2/41.8/43.0
+VERDICT e5 HEAD: 1 failing
+
+## E-5 · PLANT (.disclosure-trigger:active { scale: .96 })
+PASS E-5 chromium accordion · (hover:none, pointer:coarse) true · :active true · Δscale -0.040 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 40.4/41.5/42.9
+VERDICT e5 PLANT: 0 failing   (the other six cells as HEAD)
+
+## E-3 phone arm · node probe/e3m.mjs <dist> [--plant]
+FAIL E-3m chromium light 390×844 coarse · rest 360.0 px · touch-held ×1.000 (:active true, [data-engaged] 2, loupe 120×52 opacity 1) · bound ×1.03 · load 38.1/39.5/39.6
+FAIL E-3m chromium dark 390×844 coarse · rest 360.0 px · touch-held ×1.000 (:active true, [data-engaged] 2, loupe 120×52 opacity 1) · bound ×1.03 · load 38.1/39.5/39.6
+VERDICT e3m HEAD: 2 failing
+PASS E-3m chromium light 390×844 coarse · rest 360.0 px · touch-held ×1.060 (:active true, [data-engaged] 2, loupe 120×52 opacity 1) · bound ×1.03 · load 37.9/39.4/39.6
+PASS E-3m chromium dark 390×844 coarse · rest 360.0 px · touch-held ×1.060 (:active true, [data-engaged] 2, loupe 120×52 opacity 1) · bound ×1.03 · load 37.9/39.4/39.6
+VERDICT e3m PLANT: 0 failing
