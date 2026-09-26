@@ -1,0 +1,17 @@
+critique-B pass 4 · battery hash · seat claude-opus-5-5 · 2026-09-25T23:57:24Z
+Recorded BEFORE reading pass-4/B-kit/ or pass-4/B-proto.md.
+Method: cd pass-4/critique-B/battery && cat $(ls | sort) | shasum -a 256   (files sorted by name, concatenated)
+
+35de480379d38a3adcf83f6c16a13aece625620a00f15e2ff2d7dbba1da59b35  battery (concatenated, sorted)
+
+6cb249546ce478328ccfc52a3c105ae9b3b50dfdd3ccd9f6850bca1f537f690f  ITEMS.md
+7ef69c8a192deba29b33042b62dc894aba721e219e5bb18aad893b6283050db6  plants.mjs
+ffe26e7337a583a2d313148245794acd2ee83546dd2dfad758a5c39a466136a4  probes.mjs
+59e61ff7ccc2ea1edc7c9d027cc40f8c48f0145cbe8364d578309709bebd0f73  reorder.mjs
+d8af78eab660b7b55bf3a1b58f5e8523c5df50e22f70c2c73ccf11d57cc4491f  run-plants.mjs
+4bed6b82a539f57fabfd6e0053d01ebdc66ed5df3baa6102d8f241a52104ea9c  tree-probes.sh
+
+Amendment 1 (after reading the kit, before any verdict): plants.mjs's first run threw at find("Sheet.vue")
+before any plant was judged. The nested-pair candidate list was made optional; no plant's text changed.
+08a0ec976df4c3dc3546531b19725067135ad37b80948477a9243ab65f64a926  battery (concatenated, sorted), amendment 1
+fcdbbc8a4042c09a00bf79638f78e3952af68be229f830ffc9a174c3e431a19a  plants.mjs, amendment 1
