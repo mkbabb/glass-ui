@@ -88,3 +88,4 @@ Outage log:
 - 2026-09-26 03:5x — formation fix 4 banked: FC-01..FC-11 cured in the plan folder, none refuted. FA-17 is held by the D5 round-0 run (wf_4193b8cb-4a4) and cures when that run banks design/engagement/. Critic pass 4 launched.
 - 2026-09-26 04:0x — D4 pass 2: the D4-G block test returned BLOCK. Selection body under content-visibility:auto hangs 25.84 px on reveal in Playwright WebKit (Chromium clean; real Safari UNMEASURED); a direction flip leaves the body 212/215 px off in both engines. 40/44 gating cells. D-prime spec launched.
 - 2026-09-26 04:1x — D5 round 0: portfolio banked (PORTFOLIO.md + REGISTRY.md, five families A–E, witnesses E-1..E-8, no winner picked; census 17/55 rung directories, detector wrong in both directions). Battery seat launched.
+- 2026-09-26 04:2x — formation critic pass 4 NOT clean but converging: 3 new findings (FD-01..FD-03), all 11 of pass 3 cured, FA-17 cured at 43093f45. Fix 5 running.
