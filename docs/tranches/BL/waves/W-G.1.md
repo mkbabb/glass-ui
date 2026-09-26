@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `b37a37c3` (the task named `f3ad78d0`; `git diff --stat f3ad78d0..HEAD -- src demo scripts tests tests-visual package.json` is empty). Scratch worktree; `vite build` and `vite build --config demo/vite.demo-dist.config.ts` exit 0; the demo served by `vite preview` on :5987. Playwright Chromium headless with `--use-angle=metal --enable-unsafe-webgpu --ignore-gpu-blocklist`; adapter `apple/metal-3`. Load average 30 to 137 during the runs (other sessions on the machine); every gate below is a count or a presence test, not a timing |
 | ships in | 11.0.0 |
-| families | F-47 whole (`audit/REGISTRY.md:1154-1169`): L05a-01, L10-02, L04-F03, L05b-09, L01b-54, R2-06-10, R4-01-17. R2-09-02's publisher half is W-H.1's, conditional on D3-B (fix-2, FA-13). Also the engine halves routed here: F-48's C-11 (π-W1, the blob's GL excise), #49's D5 and #60's one-context arm (both F-51 routings, `census-register-a.md:56`, `census-register-b.md:50`), W-B.9's BUILD (the constellation engine and its two primitives), W-B.1's two folds (the Safari WebGPU promote, the `flow.wgsl.ts` curl tail) |
+| families | F-47 whole (`audit/REGISTRY.md:1154-1169`): L05a-01, L10-02, L04-F03, L05b-09, L01b-54, R2-06-10, R4-01-17. R2-09-02's publisher half is W-H.1's, conditional on D3-B (fix-2, FA-13). Also the engine halves routed here: F-48's C-11 (π-W1, the blob's GL excise), #49's D5 and #60's one-context arm (both F-51 routings, `census-register-a.md:56`, `census-register-b.md:50`), W-B.1's two folds (the Safari WebGPU promote, the `flow.wgsl.ts` curl tail). The constellation's port is not this wave's: #45 and R2-06-10's constellation half are W-B.9's (PLAN §3, `LEDGER.md:110-111`; fix-4, FC-11) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
 
@@ -113,7 +113,7 @@ Planted bites (for W-A.2's roster, under `tests/_support/bites/`): re-add one `.
 
 | removed or changed | replacement |
 |---|---|
-| WebGL2 rendering in Aurora, Blob, FourierField, Constellation | none. A host without a usable WebGPU adapter gets the CSS ground (Aurora) or no paint (Blob, FourierField, Constellation), `onInitError` with a typed reason, and `data-engine="css"` |
+| WebGL2 rendering in Aurora, Blob, FourierField | none. A host without a usable WebGPU adapter gets the CSS ground (Aurora) or no paint (Blob, FourierField), `onInitError` with a typed reason, and `data-engine="css"`. The constellation never rendered on WebGL2 (its engine was `useCanvas2D`); its port and rows are W-B.9's |
 | `useCanvas2D`, `Canvas2DFrame`, `Canvas2DHandle`, `Canvas2DOptions`, `Canvas2DSuspendReason` (root export) | none; the library draws nothing on Canvas2D |
 | `GpuBackend` (root type), `FourierField`'s exposed `backend()` | none; the engine is WebGPU |
 | `RendererEngine` `"webgl2" \| "canvas2d"` members | `"webgpu" \| "css"` only |
@@ -121,7 +121,6 @@ Planted bites (for W-A.2's roster, under `tests/_support/bites/`): re-add one `.
 | `resolveRenderMode`, `isSoftwareWebGLRenderer`, `ResolveRenderModeOptions`, `forceWebGLUnderSoftwareRaster` (`./aurora`) | none; pass `renderMode` directly |
 | `auroraFallbackGround`, `AuroraFallbackGround`, `AuroraFallbackGroundOptions` | `auroraGround`, `AuroraGround`, `AuroraGroundOptions`; the result's `backgroundImage` is CSS gradients, never a `data:image/png` |
 | `onInitError` fires only for post-arm failures | it fires for every init failure, with `WebGPUInitError.reason` |
-| `ConstellationField` | gains `pinned` (per node) and `drift` (additive) |
 
 A consumer that pinned `renderMode="webgl"` (speedtest `App.vue:53,363-370`) moves to `"gpu"` in its own tranche (the consumer-updates ruling). Every row goes to the W-B.2 reply letter.
 
@@ -137,7 +136,7 @@ W-A.4, W-B.9, W-C.5. W-G.2 may land before or after; if before, step 1 keeps its
 
 - **Tranche fit:** one engine removes the class F-47 names (a fallback richer than the primary) and makes every later GPU wave (W-G.3 to W-G.7, W-A.4's floors) measure the path that ships.
 - **Wave:** G1-G1 to G1-G11 green in one run on the GPU leg.
-- **Feature:** the aurora, blob, fourier and constellation paint on WebGPU on `/`, `/substrates/*` and the 9000 px host, with π-W1's pair identical and π-GROUND's pair within band.
+- **Feature:** the aurora, blob and fourier paint on WebGPU on `/`, `/substrates/*` and the 9000 px host (the constellation already does, from W-B.9), with π-W1's pair identical and π-GROUND's pair within band.
 
 ## Appendix A · `lib.mjs`, the band-G probe library
 
@@ -192,7 +191,7 @@ for (const route of ['/', '/substrates/aurora', '/substrates/constellation']) {
 R.done();
 ```
 
-Output at HEAD: `FAIL ... / {"tally":{"2d":6,"webgl2":2,"webgpu":1}}`, `FAIL ... /substrates/aurora {"tally":{"webgl2":2,"2d":20}}`, `FAIL ... /substrates/constellation {"tally":{"2d":12,"webgl2":2,"webgpu":1}}`. As a gate, G1-G4 asserts 0 `webgl*` (the sampler's `2d` requests are W-G.3's); G1-G10 asserts `webgpu` only on the constellation route after W-G.3.
+Output at HEAD: `FAIL ... / {"tally":{"2d":6,"webgl2":2,"webgpu":1}}`, `FAIL ... /substrates/aurora {"tally":{"webgl2":2,"2d":20}}`, `FAIL ... /substrates/constellation {"tally":{"2d":12,"webgl2":2,"webgpu":1}}`. As a gate, G1-G4 asserts 0 `webgl*` (the sampler's `2d` requests are W-G.3's); the constellation route's `2d` count is W-B.9's B9-G2 (G1-G10 struck, fix-3).
 
 ## Appendix C · `g1-limits.mjs` (G1-G6, G1-G7)
 

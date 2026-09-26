@@ -108,7 +108,7 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | #43 | a:50 | OPEN | BUILD | W-E.6 | seat | DISEASE, 3 closes, decided in W-E.6 (own: W-CHIP, with F-26 and F-27); W-E.6 §8 |
 | #44 | a:51 | OPEN | RETIRE | W-B.7 | seat | DISEASE, 3 closes, decided in W-B.7 (own): the subject was deleted at `a8a6f66b`, 0 consumers across siblings; W-B.7 removes its tombstones from `src` |
 | #45a | a:52 | OPEN | BUILD | W-B.9 | seat | DISEASE, 3 closes, decided in W-B.9 (own): BUILD on the one engine with two live consumers |
-| #45b | a:52 | OPEN | BUILD | W-B.9 | seat | the constellation off `useCanvas2D` onto the shared WebGPU device, built in the disease row's own wave (B9-G1, B9-G2; fix-3, FB-18) |
+| #45b | a:52 | OPEN | BUILD | W-B.9 | seat | the constellation off `useCanvas2D` onto the shared WebGPU device, built in the disease row's own wave (B9-G1, B9-G2; fix-3, FB-18); the Canvas2D `drawOverlay` prop retires with a MIGRATION row (B9-G3; fix-4, FC-08) |
 | #46a | a:53 | PARTIAL | BUILD | W-A.6 | seat · OW-3 | the real-Safari and 390×844 coarse cells (W-A.6 §8) |
 | #46b | a:53 | PARTIAL | FOLD | W-B.10 | seat · OW-6 | DISEASE, 3 closes, decided in W-B.10 (own): the Σwidth denominator kept (OW-6 docket, B10-G2), `useAnisotropicExtent` folded into W-I.6 as hallmark 1's candidate mechanism (W-I.6 §1) |
 | #46c | a:53 | PARTIAL | RETIRE | — | seat | "STAYS DIRTY" is false at HEAD (`git status --porcelain src` empty; F-12) |
@@ -145,7 +145,7 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | #56a | b:46 | PARTIAL | BUILD | W-E.10 | seat | the opaque-frame sweep (ShowcaseFrame's resting tier) and the DRY fold of `plateField`; W-E.10 §8 |
 | #56b | b:46 | PARTIAL | FOLD | W-G.5 | seat | the seed ceiling (G-CHROMA, G-MOOD-STILL), folded by W-E.10 §8 into W-G.5 §9 |
 | #56c | b:46 | PARTIAL | BUILD | W-D.1 | seat | `deriveBlobPalette`'s placement (P3-R1(a)); W-D.1 §9 |
-| #56d | b:46 | PARTIAL | FOLD | W-H.5 | seat | the welled specimens under the frost detector, H5-G1 and H5-G2 (W-H.5 §1) [N] |
+| #56d | b:46 | PARTIAL | FOLD | W-H.5 | seat | the welled specimens under the frost detector, H5-G1 and H5-G2 (W-H.5 §1; G2 is the no-filter well of D3's FL-11, fix-4) [N] |
 | #57 | b:47 | LANDED | RETIRE | — | seat | CURED: the four owed cells measure as the row's table states (b:47) |
 | #58a | b:48 | PARTIAL | BUILD | W-E.10 | seat | the preview ladder (10 of 80 cards) and the OKLCH stills (F-25); W-E.10 §8 |
 | #58b | b:48 | PARTIAL | BUILD | W-E.10 | seat | the latch subjects `story-preview-card.test.ts:487` (10 unrowed story SFCs) and `:556` (`heading="Aurora"`); the latch form retires in W-A.2 |
@@ -160,7 +160,7 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | #62 | b:52 | OPEN | BUILD | W-D.1 | seat | DISEASE, 3 closes, decided in W-D.1 (own; loop D1, W-D.1 §9) |
 | #63 | b:53 | OPEN | BUILD | W-C.1 | seat | DISEASE, 3 closes, decided in W-C.1 (own). The history rewrite stays declined (BK g8) |
 | #64a | b:54 | OPEN | BUILD | W-C.2 | seat | the DECLARATION column: 27 shadcn provenance lines; W-C.2 §1 |
-| #64b | b:54 | OPEN | RETIRE | W-B.12 | seat | DISEASE, 3 closes, decided in W-B.12 (own): the IDIOM-CLEARED column retires, three roster invariants hold it (GAP-B2b) |
+| #64b | b:54 | OPEN | RETIRE | W-B.12 | seat | DISEASE, 3 closes, decided in W-B.12 (own): the IDIOM-CLEARED column retires, three roster invariants hold it (GAP-B2b), and W-B.12 writes `#64b` into their `law` fields (B12-G2) |
 | #64c | b:54 | OPEN | BUILD | W-C.5 | seat | GAP-B2a: typewriter 20, constellation 2, aurora 1 `Math.random` onto the seeded PRNG; W-C.5 §8 |
 | #64d | b:54 | OPEN | BUILD | W-C.4 | seat | the shadcn-default `--radius` ladder; W-C.4 §1 |
 | #65 | b:55 | PARTIAL | BUILD | W-A.2 | seat | 45 unbound seats behind the literal pins, and the `nameIsLive` hole (F-02); W-A.2 §8 |
@@ -193,7 +193,7 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | #81b | b:66 | PARTIAL | BUILD | W-K.5 | seat | two lit rows; W-K.5 §8 |
 | #81c | b:66 | PARTIAL | BUILD | W-H.1 | seat | the fill-only cursor (R3-02-02); W-H.1 §1 |
 | #81d | b:66 | PARTIAL | BUILD | W-L.3 | seat | G-L3-11 (W-L.3 §1) [N] |
-| #82a | b:67 | PARTIAL | BUILD | W-H.5 | seat | G-F2, the opaque fill leaves the field's blur inert; W-H.5 §8 (W-H.2 hands it there, `W-H.2.md:28`) |
+| #82a | b:67 | PARTIAL | BUILD | W-H.5 | seat | G-F2, the opaque fill leaves the field's blur inert: the inert filter is deleted (D3 FL-11, H5-G2); W-H.5 §8 (W-H.2 hands it there, `W-H.2.md:28`) |
 | #82b | b:67 | PARTIAL | BUILD | W-C.4 | seat | G-F1's dead `.input-pill` selectors; W-C.4 §1 |
 | #83a | b:68 | PARTIAL | BUILD | W-K.4 | seat | the forced-colours rows (R3-02-10, R3-02-05); W-K.4 §8 |
 | #83b | b:68 | PARTIAL | BUILD | W-H.1 | seat | the unchecked edge at 2.93:1, the perimeter derivation; W-H.1 §8 |
@@ -479,7 +479,7 @@ INBOUND-MAP maps O-53 to O-80 and C-2 (442 rows, appendix A). The letters and su
 | O-81 (5) | IN:35 | confirmed | BUILD | W-0.6 | seat | SEEDFIELD-DRAW-ORDER: `z` from its own stream; the opt-in to the old order declined as a dual path (W-0.6 §8) |
 | O-82 | IN:36 | confirmed | BUILD | W-0.10 | seat | POPOVER-ANCHOR: one declared `reference` on PopoverContent and TooltipContent, band 0 (W-0.10 G1: `vue-tsc` exit 2 at HEAD) |
 | O-83 | IN:37 | confirmed | BUILD | W-0.8 | seat | DOCK-CAP-ELLIPSE: the cap rests at the plate's half cross (W-0.8 G1, G4) |
-| O-84 | IN:38 | confirmed | BUILD | W-I.1 | seat | DOCK-SUMMARY-SQUARE: folded into D2 with O-65 by the owner (CUR:78); D2 rules it with Q-10 (W-I.1 §3.1 item 2, G27, G29) |
+| O-84 | IN:38 | confirmed | FOLD | W-I.1 | seat | DOCK-SUMMARY-SQUARE: folded into D2 with O-65 by the owner (CUR:78); D2 rules it with Q-10 (DOCKET-Q-10). Under Q-10 (b) W-I.1 builds it (G27, G29); under Q-10 (a), D2's default, it is DECLINE with D2's words and G27 and G29 are recorded retired with the ruling (W-I.1 §3.1 item 2; fix-4, FC-05) |
 | O-84a | IN:39 | confirmed | BUILD | W-I.1 | seat | METRIC-TOKEN-JOIN, folded into D2 with O-84 (CUR:78): no `min-inline-size: 3ch`, no `overflow-wrap: anywhere` (W-I.1 §3.4 item 5, G28, G30) |
 | O-74b | IN:40 | confirmed | BUILD | W-0.9 | seat | CARD-TITLE-RUNG: `--type-card-title` at body × 1.272 (W-0.9 G1 to G4) |
 | O-85 | IN:41 | confirmed | FOLD | W-I.1 | seat | DOCK-PRIORITY-OVERFLOW: D2 rules BUILD with a witness or RETIRE with the owner's words (W-I.1 §3.1 item 6, G24) |
@@ -528,11 +528,11 @@ Counted by a script over this file's row tables (§4 is the docket and is counte
 | §3 recap rows and charter laws | 43 | 11 | 0 | 10 | 64 |
 | §5 carried obligations and PLAN §6 gaps | 9 | 19 | 0 | 6 | 34 |
 | §6 rows the specs hand to the ledger | 13 | 30 | 1 | 13 | 57 |
-| §7 inbound outside the map | 13 | 5 | 0 | 1 | 19 |
+| §7 inbound outside the map | 12 | 6 | 0 | 1 | 19 |
 | Appendix A, INBOUND-MAP | 293 | 27 | 7 | 115 | 442 |
-| **total** | **493** | **126** | **8** | **181** | **808** |
+| **total** | **492** | **127** | **8** | **181** | **808** |
 
-Recounted by fix-2 after its placements; fix-3 moved A2-KE-L1-27 from BUILD to RETIRE (NOT-REPRODUCED) and CUR:79 from BUILD to FOLD (O-84b is not an owner word). No row reads UNPLACED. Rows marked DISEASE: 44. Owner docket: 19 lines (OW-9 split into OW-9a..d; OW-12 added by fix-2 and retired by fix-3). 14 read `pending` at fix-3 (`grep -cE '^\| (OW\|DOCKET)-[^\|]*\|.*\| pending \|' LEDGER.md`).
+Recounted by fix-2 after its placements; fix-3 moved A2-KE-L1-27 from BUILD to RETIRE (NOT-REPRODUCED) and CUR:79 from BUILD to FOLD (O-84b is not an owner word); fix-4 moved O-84 from BUILD to FOLD (D2 rules Q-10, FC-05). No row reads UNPLACED. Rows marked DISEASE: 44. Owner docket: 19 lines (OW-9 split into OW-9a..d; OW-12 added by fix-2 and retired by fix-3). 14 read `pending` at fix-3 (`grep -cE '^\| (OW\|DOCKET)-[^\|]*\|.*\| pending \|' LEDGER.md`).
 
 Appendix A by coverage tag: `[N]` 375, `[R]` 67, `[G]` 0, `[M]` 0 (fix-3 named a gate or a RETIRE for each of the 18 `[G]` rows and retagged it `[N]`). By INBOUND-MAP status: FAMILY 359, CURED-AT-HEAD 52, CONSUMER-SIDE 21, NOT-REPRODUCED 7, NEW 3.
 

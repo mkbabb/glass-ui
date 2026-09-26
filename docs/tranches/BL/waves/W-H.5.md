@@ -16,7 +16,7 @@
 | id | what |
 |---|---|
 | #25 W-FIELD-WELL, L01a-25 | the well law unbuilt; the field fill opaque: decided here, BUILD from D3's converged rung |
-| #82 G-F2 | the opaque fill leaves the field's own blur inert |
+| #82 G-F2 | the opaque fill leaves the field's own blur inert: cured by deleting that filter, since D3's floor gives the well no `backdrop-filter` of its own (FL-11, `design/material/REGISTRY.md:323`) |
 | UIA-V-234, UIA-V-431 | the opaque wells consumers saw (`INBOUND-MAP.md:350,358`); this wave is their one owner |
 | #56d | the σ admissibility of welled specimens under the frost detector (LEDGER:148, moved here from W-H.2's mechanism set) |
 
@@ -33,7 +33,7 @@
 
 **Ruling (#25): BUILD**, from D3's converged spec.
 
-1. The well is a rung of the ladder, transmissive. `--input-on-glass` retires with no alias in both arms; the field paints the converged well rung (D3-A names it `--glass-well`, at the chrome α; the other routes name theirs in their API tables).
+1. The well is a rung of the ladder, transmissive. `--input-on-glass` retires with no alias in both arms; the field paints the converged well rung (D3-A names it `--glass-well`, at the chrome α; the other routes name theirs in their API tables). The well has no `backdrop-filter` of its own: its backdrop is the rung's paint (D3 floor row FL-11, built by every route). `backdrop-filter: var(--control-surface-blur)` and its transition leg leave `_shared/field/control.css` (`:104`, `:138`).
 2. The well law in `_shared/field/control.css:66-103` is rewritten to the converged spec's law, and the comment block that calls the fill "OPAQUE at HEAD … a seam" goes.
 
 ## 4 · Files it touches
@@ -45,17 +45,17 @@
 | id | gate | passes when | HEAD |
 |---|---|---|---|
 | H5-G1 · the well transmits | rows `H2/WELL-TRANSMITS` | transmission ≥ 0.02, both themes | **FAIL 2 of 2**: 0.0000 |
-| H5-G2 · the well's blur is live | rows `H2/WELL-INERT` | the well's own filter moves the stripes (ΔE > 0), both themes | **FAIL 2 of 2**: 0.0000 |
+| H5-G2 · the well has no filter of its own (static, D3 FL-11) | `! grep -nE 'backdrop-filter' src/components/_shared/field/control.css` | exit 0; the band-H probe's `H2/WELL-INERT` rows then read `missing` (no filtered element in the well) and pass, both themes | **exit 1** (fix-4, `715912fa`): `:76` (the "currently inert" comment), `:104` `backdrop-filter: var(--control-surface-blur);`, `:138` the transition leg. The same file with those lines removed reads exit 0. Rewritten by fix-4 (FC-06): the former G2 ("the well's own filter moves the stripes, ΔE > 0") required the filter FL-11 removes |
 | H5-G3 · no `--input-on-glass` (static) | `! git grep -n -- '--input-on-glass' -- src` | exit 0 | **exit 1**: `on-glass-fg.css:37`, `dark-arm.css:303`, `_shared/field/control.css:74,83,242,262,282` |
 | H5-G4 · the converged witness | the D3 family witness rows the converged split table gives this wave (as W-H.1 G6) | exit 0 | exit 1 (D3's witnesses are RED at HEAD, W-H.1 §2) |
 
-The probe's `FIXTURE=1` plant (an 80 % well fill) reads 0 FAIL on H5-G1 and H5-G2 (W-H.2 §5), so both can pass.
+The probe's `FIXTURE=1` plant (an 80 % well fill) reads 0 FAIL on H5-G1 (W-H.2 §5), so it can pass. H5-G2 can pass on the file with the filter lines removed and fails on HEAD's. If D3's converged spec overturns FL-11, the wave's entry re-writes G2 from that spec (PLAN §1, loop waves); the floor stands at this writing.
 
 ## 6 · π and DELTA obligations
 
 | surface | themes | engines | paired capture | π |
 |---|---|---|---|---|
-| the field well over the stripes, and over black and white | light, dark | Chromium (Playwright WebKit labelled where the scene mounts; real Safari UNMEASURED, OW-3) | `lens-*-well-on.png` / `-off.png` (HEAD light on `f13361d25836…`, off `c378bd464c8b…`, W-H.2 §6), and the black/white pair | H5-G1, H5-G2 |
+| the field well over the stripes, and over black and white | light, dark | Chromium (Playwright WebKit labelled where the scene mounts; real Safari UNMEASURED, OW-3) | `lens-*-well-on.png` / `-off.png` (HEAD light on `f13361d25836…`, off `c378bd464c8b…`, W-H.2 §6), and the black/white pair | H5-G1 (transmission); `H2/WELL-INERT` reading `missing` after |
 
 Captures under `.cache/evidence/W-H.5/`.
 

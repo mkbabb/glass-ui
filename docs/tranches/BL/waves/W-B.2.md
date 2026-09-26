@@ -104,7 +104,7 @@
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
 | B2-G1 · the inbox exists | `test -d docs/tranches/BL/inbox` | exit 0 | **exit 1** |
-| B2-G2 · every row keyed to its sender | `grep -cE '\| *value\.js:O-[0-9]+' docs/tranches/BL/audit/INBOUND.md` ≥ the value.js ledger's glass-addressed row count, checked by B2-G6 | count ≥ 46 | **0** |
+| ~~B2-G2~~ | struck (fix-4, FC-02): a count of `value.js:O-n` sender-refs is derived data of B2-G6's join, which is the one source of record for "every row keyed to its sender". Its rendered form (`'\| *value…'` with the escape removed) begins with an empty alternative, and BSD grep 2.6.0 exits 2 on it (`grep: empty (sub)expression`), so it could never pass | — | — |
 | B2-G3 · L11-01's ten carried | `for id in O-28 O-30 O-31 O-36 O-47 O-48 O-49 O-50 O-51 O-52; do grep -qw -- "$id" docs/tranches/BL/audit/INBOUND.md \|\| exit 1; done` | exit 0 | **exit 1**: `missing O-28` |
 | B2-G4 · the reply exists and covers every row | `ls docs/tranches/BL/outbox/*reply*.md` and every INBOUND id appears in it with a terminal and a version | both | **exit 1**: no match |
 | B2-G5 · the notice answered in MIGRATION | `test "$(grep -c btn-interactive MIGRATION.md)" -ge 1` | exit 0 | **exit 1**: 0 |
@@ -113,7 +113,7 @@
 
 B2-G8 (`verify-ledger --rows` over every inbound id) is struck: the inbound rows' terminals are LEDGER §6.3, §7 and appendix A, and B2-G6's join is the enactment (PLAN §1).
 
-B2-G3 alone could pass by mentioning an id in prose; B2-G6 requires the `sender-ref` column and the join.
+B2-G3 alone could pass by mentioning an id in prose; B2-G6 requires the `sender-ref` column and the join, and is the one gate on sender keys (B2-G2 struck, fix-4).
 
 ## 6 · π and DELTA obligations
 

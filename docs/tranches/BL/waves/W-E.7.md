@@ -114,10 +114,10 @@ Can each fail and pass? Four G1 cells pass at HEAD (the controls). Every other r
 
 ## 6 · π and DELTA obligations
 
-- **Surfaces:** the fixture scenes `dialog`, `sheet`, `pop`, `toast`, `lbl`, `count`, `type`, `dockc`, `slider`, `menu`; all 80 manifest routes at coarse 390 for G2; demo `/containers/dialog`, `/containers/sheet`, `/navigation/tabs`, `/forms/slider` at 390 and 1440.
+- **Surfaces:** the fixture scenes `dialog`, `sheet`, `pop`, `toast`, `lbl`, `count`, `type`, `dockc`, `slider`, `menu`; fix-3's appendix Q1 scene (a `.text-micro` span, and the SegmentedTabs strip), moved into the wired spec with the rest; all 80 manifest routes at coarse 390 for G2; demo `/containers/dialog`, `/containers/sheet`, `/navigation/tabs`, `/forms/slider` at 390 and 1440.
 - **Themes:** light and dark for the paired captures. The rows are geometric and run light.
 - **Engines:** Chromium measured (coarse through `hasTouch`/`isMobile`). The wired spec's Playwright WebKit arm runs G1, G3-G6 and G8 on the fixture app. Its G2 and demo routes crash at HEAD, recorded as crashes. Real Safari is UNMEASURED (OW-3), and the 16 px no-zoom claim is a real-iOS cell.
-- **Paired capture:** at `<E7-base>` and at the wave, the Dialog and Sheet at 390 and 1440 side by side (pad against corner annotated), the `lbl` and `count` scenes at 390, and the `type` scene at coarse 390. The DELTA is each pair plus appendix A's JSON.
+- **Paired capture:** at `<E7-base>` and at the wave, the Dialog and Sheet at 390 and 1440 side by side (pad against corner annotated), the `lbl` and `count` scenes at 390, and the `type` scene at coarse 390. The micro floor (§3 item 5, E7-G17) has its own pair: the Q1 scene's `.text-micro` span at coarse 390 and fine 1440, light and dark, Chromium and Playwright WebKit, before and after, cropped to the span. Its π is E7-G17's computed `font-size` for the same span (11 → 12 at coarse 390; 11 → 11 at fine 1440) and the span's rendered glyph-box height from the capture. The strip's coarse hit area (E7-G18) is an invisible `::after` and changes no paint, so it has no capture. The DELTA is each pair plus appendix A's JSON (fix-4, FC-10).
 
 ## 7 · MIGRATION rows
 

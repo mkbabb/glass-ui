@@ -27,20 +27,21 @@
    - the wrapper topology → F-58, W-D.1, roster G-42 (COLOCATED) with the one-symbol-one-door seal;
    - the public boundary → F-66, W-L.6's P-6 census, roster G-01 (SURFACE-EXACT);
    - `data-slot`: the attribute is the library's styling hook (251 `data-slot` lines in `src` at this seat), not a residue; it stays, and W-L.2's state-vocabulary witness covers attributes the recipes read.
-2. The DECLARATION column (the 27 shadcn provenance lines) is W-C.2's E-10 sweep.
+2. **The ruling is written where the holders enforce it.** The `law` field of roster entries G-13, G-42 and G-01 (W-A.2 §3 item 1's schema: `id`, `name`, `law`, `invariant`, `run`, `bite`, `status`, `owner`) gains `#64b` beside the law it already names, one clause each: G-13 the default visual recipe and the utility vocabulary, G-42 the wrapper topology, G-01 the public boundary. W-A.2's roster names none of them with `#64b`, so this edit is the wave's own act in the tree, and a later change that drops a holder or its clause fails B12-G2. The wave runs `node scripts/bites.mjs` after the edit, as W-A.2 §3 item 2 requires of any wave that edits an entry (fix-4, FC-04).
+3. The DECLARATION column (the 27 shadcn provenance lines) is W-C.2's E-10 sweep.
 
 ## 4 · Files it touches
 
-`docs/tranches/BL/LEDGER.md` only. The RETIRE removes nothing from the tree: the column was never drawn. Its enactment is the ground being true when the ruling lands, which B12-G2 reads; PLAN §5 orders this wave after W-A.2, so the gate is green at this wave's own close, not at a later wave's (fix-3, FB-18).
+`tests/gates/roster.json` (the `law` field of G-13, G-42 and G-01, §3 item 2) and `docs/tranches/BL/LEDGER.md`. The RETIRE removes nothing from the tree, because the column was never drawn. Its enactment is the three holders carrying the ruling. W-A.2 creates the entries and this wave writes `#64b` into them, so B12-G2 is RED at this wave's base and green only by this wave's edit (fix-4, FC-04).
 
 ## 5 · Acceptance gates
 
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
-| B12-G2 · the three holders exist | `node -e 'const r=require("./tests/gates/roster.json");for (const id of ["G-13","G-42","G-01"]) if(!r.find(e=>e.id===id)) process.exit(1)'` | exit 0 | **exit 1**: `roster.json` absent (W-A.2 creates it) |
+| B12-G2 · the three holders carry the ruling | `node -e 'const r=require("./tests/gates/roster.json");for (const id of ["G-13","G-42","G-01"]){const e=r.find(e=>e.id===id);if(!(e&&String(e.law).includes("#64b")))process.exit(1)}'` (no pipe character, so the raw and rendered forms are one command) | exit 0 | **exit 1** at `715912fa`: `roster.json` absent. At this wave's base (W-A.2 landed) it is still exit 1, because no entry's `law` names `#64b`. Fixture (fix-4): the three entries with `#64b` in `law` read 0; with it removed from G-13 alone, 1 |
 | ~~B12-G3~~ | struck (fix-3, FB-18): the DECLARATION column is W-C.2's (§3 item 2), and C2-G7 is the one source of record for the 27 lines; a copy here went green only when W-C.2 landed | — | — |
 
-The IDIOM-CLEARED column's terminal is LEDGER:163 (`#64b`). B12-G2 reads its ground at this wave's close.
+The IDIOM-CLEARED column's terminal is LEDGER:163 (`#64b`). B12-G2 reads the wave's own edit, not W-A.2's.
 
 ## 6 · π and DELTA obligations
 
