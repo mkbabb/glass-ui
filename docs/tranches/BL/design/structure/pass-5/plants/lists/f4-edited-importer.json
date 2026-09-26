@@ -1,0 +1,4 @@
+{
+ "why": "P5-F4 plant (P4-G2): the planted leaf moves one dir down; the engine rewrites the planted importer's specifier and writes the importer, whose body does not parse. The P5 engine parses every file it would write and refuses the step at phase parse, nothing written; the P4 engine writes it.",
+ "moves": [{ "from": "scripts/lib/zz-leaf.mjs", "to": "scripts/lib/zz/zz-leaf.mjs" }]
+}

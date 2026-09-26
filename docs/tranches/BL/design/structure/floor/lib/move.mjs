@@ -13,23 +13,10 @@ import { dirUnits } from "./placement.mjs";
 import { zoneOf } from "./tree.mjs";
 import { globToRegex } from "./resolve.mjs";
 import { classifyImage } from "./classify.mjs";
+import { expandMoves, kindClass } from "./plan.mjs";
+import { unparsed } from "./syntax.mjs";
 
 const EXT = /\.(d\.ts|ts|tsx|mts|cts|js|mjs|cjs|jsx|vue|css|json)$/;
-
-export function expandMoves(tree, moves) {
-    const out = [];
-    for (const m of moves) {
-        if (m.from.endsWith("/")) {
-            const base = m.from.replace(/\/$/, "");
-            const dest = m.to.replace(/\/$/, "");
-            const members = tree.files.filter((f) => f.startsWith(`${base}/`));
-            if (members.length) for (const f of members) out.push({ from: f, to: `${dest}/${f.slice(base.length + 1)}` });
-            else if (tree.isDir(dest)) out.push({ from: m.from, to: m.to, applied: true, dir: true });
-            else throw new Error(`move: directory ${m.from} is empty and ${m.to} does not exist`);
-        } else out.push({ from: m.from, to: m.to });
-    }
-    return out;
-}
 
 export function planMoves(tree, moves) {
     const pending = [];
@@ -269,11 +256,6 @@ export function treeDigest(root, files) {
 }
 
 /** Edge signature for the image check: identity of an edge that survives a move. */
-/** Kinds that name one mechanism, a path relative to a file whose text carries it; a
- *  rewrite may change which of the three spellings F-1 reads (P3-F5). */
-const TEXT_ANCHORED = new Set(["base-relative", "quoted-relative", "embedded-path"]);
-/** an edge's mechanism: its kind, with the three text-anchored spellings as one */
-export const kindClass = (kind) => (TEXT_ANCHORED.has(kind) ? "text-anchored" : kind);
 function sig(e, map) {
     const to = e.to ?? e.output ?? e.generated ?? e.external ?? "";
     const target = map ? (e.dir ? map.dir(to) : map.any(to)) : to;
@@ -373,6 +355,9 @@ export function sccGrowth(g0, g1, M, { moduleOf = dirUnits().unitOf, zones = ["s
  * reason }]`) names one delta exactly or one scanner as a whole; an undeclared delta and a
  * declaration that matches nothing both refuse the run (the ledger rule).
  *
+ * Parse (P5-F4): every file the step would write, moved or edited, parses (lib/syntax.mjs),
+ * or the step is refused before the first write.
+ *
  * Write, then the image check: the new graph must be the old one under the move map, with
  * no violation. A failed image check rolls the tree back byte for byte, so a failed run
  * never leaves a half-applied tree that a rerun would then read as "already applied".
@@ -415,6 +400,10 @@ export function runMoves(root, moves, { dry = false, deps, declaredScanDeltas = 
         original.set(f, bytes);
         contents.set(f, edits.has(f) ? applyEdits(bytes.toString("utf8"), edits.get(f)) : null);
     }
+    // P5-F4: every file this step would write is parsed first; one that does not parse
+    // refuses the step, with nothing written
+    const parse = unparsed(deps, [...touched].map((f) => [M.file(f), contents.get(f) ?? original.get(f)]));
+    if (parse.length) return { ok: false, phase: "parse", preflight, ...report, residue, scanDeltas, globDeltas, scc: sccPre, unparsed: parse, written: false };
     for (const m of plan.pending) {
         const dest = join(root, m.to);
         mkdirSync(dirname(dest), { recursive: true });

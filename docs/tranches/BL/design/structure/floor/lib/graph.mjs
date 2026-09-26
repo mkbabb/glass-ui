@@ -6,7 +6,7 @@ import { createRequire } from "node:module";
 import { posix } from "node:path";
 import { floorHome, ledgerPath, openTree, zoneOf } from "./tree.mjs";
 import { dirUnits } from "./placement.mjs";
-import { loadRecord, publishedPathOf } from "./entries.mjs";
+import { distOf, loadRecord } from "./entries.mjs";
 import { discoverAliases, expandGlob, globToRegex, isGenerated, makeResolver } from "./resolve.mjs";
 import { makeEvaluator } from "./evaluate.mjs";
 import { scanCss } from "./scan/css.mjs";
@@ -339,7 +339,7 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
         }
         if (!matches.length && ref.cssSource && from.startsWith("src/")) {
             // a shipped stylesheet's @source reads the PUBLISHED layout: match dist names back to entry sources
-            const distPattern = posix.normalize(posix.join(posix.dirname(publishedPathOf(record, from)), spec));
+            const distPattern = posix.normalize(posix.join(posix.dirname(distOf(from)), spec));
             const re = globToRe(distPattern);
             const hits = publishedJs.filter((p) => re.test(p.dist)).map((p) => p.source);
             if (hits.length) return { pattern: distPattern, matches: hits, plane: "published" };

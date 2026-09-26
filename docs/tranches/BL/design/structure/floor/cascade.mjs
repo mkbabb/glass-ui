@@ -9,9 +9,13 @@
 //          [--reorders listed.json]              identical to the baseline, or exit 1 with
 //          [--browser seat-report.json]…         the first divergence and its class. A
 //                                                 LISTED reorder ({"reorders": [{"entry",
-//                                                 "reason"}]}) is judged pair by pair (P4-F7):
-//                                                 GREEN only when no swapped pair can change
-//                                                 a value, or a band spec that reads it ran
+//                                                 "moved": [rule…], "reason"}]}) names the
+//                                                 rule set it reviewed (P5-F3): a moved rule
+//                                                 outside it is unlisted, a listed rule that
+//                                                 did not move is stale. It is then judged
+//                                                 pair by pair (P4-F7): GREEN only when no
+//                                                 swapped pair can change a value, or a band
+//                                                 spec that reads it ran
 // Flattening inlines relative @imports depth-first (layer()/supports()/media wrap the
 // inlined sheet), and normalises Vue scope ids, hashed v-bind vars and scoped @keyframes
 // suffixes (FD-4) by first appearance, so a pure move reads identical while any reorder
@@ -203,7 +207,7 @@ export function reorderRisks(a, b, recipes) {
             if (hit) risks.push({ moved: a[i].slice(0, 200), swappedWith: a[j].slice(0, 200), baseOrder: [i, j], nowOrder: [pos[i], pos[j]], props, layers: ri.layers, ...hit });
         }
     }
-    return { rules: n, moved: moved.length, swappedPairs: swapped, risks };
+    return { rules: n, moved: moved.length, movedRules: moved.map((i) => a[i]), swappedPairs: swapped, risks };
 }
 
 /** A risk is covered when a browser-seat report run WITH a base report shows a spec that
@@ -297,10 +301,21 @@ if (isMain) {
         let ctx = null;
         for (const r of rows) {
             if (r.identical) continue;
-            const l = listed.find((x) => x.entry === r.key);
-            if (r.class !== "reorder" || !l) { r.verdict = r.class === "reorder" ? "RED: an unlisted reorder" : "RED: content changed"; continue; }
+            if (r.class !== "reorder") { r.verdict = "RED: content changed"; continue; }
             if (!ctx) { const tree = openTree(root); const { owners } = classOwners(tree); ctx = { tree, recipes: classRecipes(tree), owners }; }
             const j = reorderRisks(base[r.key].seq, now[r.key].seq, ctx.recipes);
+            const l = listed.find((x) => x.entry === r.key);
+            // P5-F3: a listing names the moved rule set it reviewed. Every moved rule must be
+            // in it (else the reorder reaches past the reviewed rung), and every listed rule
+            // must have moved (else the listing is stale). Compared as multisets of leaf rules.
+            const left = new Map();
+            for (const x of l?.moved ?? []) left.set(x, (left.get(x) ?? 0) + 1);
+            r.unlistedRules = [];
+            for (const x of j.movedRules) { if (left.get(x) > 0) left.set(x, left.get(x) - 1); else r.unlistedRules.push(x); }
+            r.staleRules = [...left].flatMap(([x, k]) => Array(k).fill(x));
+            if (!l) { r.verdict = `RED: an unlisted reorder (${j.moved} moved rule(s))`; continue; }
+            if (!Array.isArray(l.moved)) { r.verdict = "RED: the listing names no moved rule set (P5-F3)"; continue; }
+            if (r.unlistedRules.length || r.staleRules.length) { r.verdict = `RED: the reorder is not the listed rung (${r.unlistedRules.length} moved rule(s) unlisted, ${r.staleRules.length} listed rule(s) unmoved)`; continue; }
             coverRisks(j.risks, reports, ctx.tree, ctx);
             const open = j.risks.filter((x) => !x.covered);
             r.listed = l.reason;
@@ -310,7 +325,10 @@ if (isMain) {
         }
         const stale = listed.filter((x) => !rows.some((r) => r.key === x.entry && !r.identical));
         const ok = rows.every((r) => r.identical || r.verdict?.startsWith("GREEN")) && stale.length === 0;
-        console.log(JSON.stringify({ baseline: manifest.sha, verdict: ok ? "GREEN" : "RED", staleListings: stale, entries: rows.map(({ risks, ...x }) => x) }, null, 1));
+        console.log(JSON.stringify({ baseline: manifest.sha, verdict: ok ? "GREEN" : "RED", staleListings: stale, entries: rows.map(({ risks, unlistedRules, staleRules, ...x }) => ({ ...x, ...(unlistedRules ? { unlistedRules: unlistedRules.length, staleRules: staleRules.length } : {}) })) }, null, 1));
+        // the rule lines, as a listing names them: a route copies UNLISTED lines into `moved`
+        for (const r of rows) for (const x of r.unlistedRules ?? []) console.log(`UNLISTED ${r.key} ${JSON.stringify(x)}`);
+        for (const r of rows) for (const x of r.staleRules ?? []) console.log(`STALE-RULE ${r.key} ${JSON.stringify(x)}`);
         for (const r of rows) for (const x of r.risks ?? []) {
             console.log(`${x.covered ? "COVERED" : "RISK"} ${r.key} [${x.props.join(",")}] ${x.selectors.join(" × ")} (${x.specificity}; ${x.via.recipe ? `co-occur in ${x.via.recipe}` : `share ${x.via.shared}`})${x.covered ? ` ← ${x.evidence.map((e) => `${e.spec} reads ${e.reads}`).join("; ")}` : ""}`);
             for (const f of x.refuted ?? []) console.log(`  REFUTED by ${f.spec} (reads ${f.reads}): ${f.newFailures.length} new failure(s) ${f.newFailures.slice(0, 3).join(" | ")}`);

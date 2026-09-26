@@ -6,7 +6,8 @@
 // moves.json: {"moves": [{"from": "src/a.ts", "to": "src/b/a.ts"}, {"from": "dir/", "to": "dir2/"}],
 //              "scanDeltas": [{"scanner": "tests/x.test.ts", "spec": "join(DIR, n)", "file": "src/a.ts", "reason": "…"}],
 //              "globDeltas": [{"scanner": "demo/demo.css", "glob": "../src/components/_shared/**/*.ts", "file": "src/…/x.ts", "reason": "…"}]}
-// Every file the engine writes is classified move-only (FD-5) before the step is kept.
+// Every file the engine would write is parsed first (P5-F4: a parse failure refuses the step,
+// nothing written), and classified move-only (FD-5) before the step is kept.
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -35,6 +36,7 @@ for (const x of scanDeltas?.stale ?? []) console.log("SCAN-DELTA stale declarati
 for (const x of globDeltas?.undeclared ?? []) console.log("GLOB-DELTA undeclared", JSON.stringify(x));
 for (const x of globDeltas?.stale ?? []) console.log("GLOB-DELTA stale declaration", JSON.stringify(x));
 for (const x of globDeltas?.carried ?? []) console.log("GLOB-DELTA carried", JSON.stringify(x));
+for (const x of r.unparsed ?? []) console.log("PARSE refused", JSON.stringify(x));
 for (const x of classified?.rows?.filter((x) => x.class === "unclassified") ?? []) console.log("FD-5 UNCLASSIFIED", JSON.stringify(x));
 for (const x of image?.lost ?? []) console.log("LOST", x);
 for (const x of image?.gained ?? []) console.log("GAINED", x);

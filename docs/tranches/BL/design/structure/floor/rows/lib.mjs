@@ -9,9 +9,14 @@
 // that text, a removal of a file already gone, a drop whose entries are already gone. A
 // row whose every operation is applied writes nothing and says so; a row that is partly
 // applied throws (a half-applied tree is an error, never a state to repair silently).
+//
+// Parsed (P5-F4). Every staged text is parsed (lib/syntax.mjs) before the first write; a
+// text that does not parse throws, and nothing is written.
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
+import { loadDeps } from "../lib/graph.mjs";
+import { unparsed } from "../lib/syntax.mjs";
 
 export function linkedWorktree(root) {
     if (!root) throw new Error("row: --root <linked worktree> is required");
@@ -119,6 +124,9 @@ export function openRow(name) {
                 const done = states.filter((s) => s.state === "applied").map((s) => s.op);
                 throw new Error(`row ${name}: partly applied (${done.length} of ${states.length} operations already in the tree: ${done.slice(0, 3).join("; ")}); refusing to write`);
             }
+            // P5-F4: every staged text parses, or the row throws before its first write
+            const bad = unparsed(loadDeps(root), staged);
+            if (bad.length) throw new Error(`row ${name}: ${bad.length} staged file(s) do not parse; refusing to write: ${bad.map((b) => `${b.file} (${b.error})`).join("; ")}`);
             for (const [file, text] of staged) {
                 const path = join(root, file);
                 if (text === null) unlinkSync(path);

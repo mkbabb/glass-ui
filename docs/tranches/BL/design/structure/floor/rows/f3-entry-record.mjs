@@ -52,18 +52,6 @@ import * as entryRecord from "./${ENTRIES}";`,
 }`,
     ],
     [`    for (const source of Object.values(buildEntrySet(readTree({ repoRoot: root })).entries) as string[]) {`, `    for (const source of Object.values(entryRecord.recordEntries(root)) as string[]) {`],
-    // a CSS entry ships at its declared dist name, wherever its source lives (P3-F5)
-    [
-        `    cpSync(sourceFonts, resolve(outputRoot, "fonts"), {
-        recursive: true,
-        filter: copyFilter(sourceFonts),
-    });`,
-        `    cpSync(sourceFonts, resolve(outputRoot, "fonts"), {
-        recursive: true,
-        filter: copyFilter(sourceFonts),
-    });
-    entryRecord.emitDeclaredCssEntries(root, outputRoot);`,
-    ],
 ]);
 row.edit("scripts/flatten-subpath-types.mjs", [
     [`import { buildEntrySet, readTree } from "./lib/subpath-policy.mjs";`, `import { recordEntries } from "../${ENTRIES}";`],

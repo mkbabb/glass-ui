@@ -7,8 +7,8 @@
 // declared path exists and is non-empty, no name repeats, no source serves two names,
 // and the cascade's declared terminal exists. Placement is free: a source may live
 // anywhere; only the record names the door.
-import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { DEFAULT_ROOT, recordPath } from "./tree.mjs";
 
 export function loadRecord(tree) {
@@ -18,17 +18,11 @@ export function loadRecord(tree) {
     return JSON.parse(text);
 }
 
-/** src/<p> ships at dist/<p>; the styles and fonts copies preserve the relative path. */
+/** src/<p> ships at dist/<p>; the styles and fonts copies preserve the relative path. A CSS
+ *  entry ships at its mirror path too, so its export key targets the real file (P4-R4). */
 export function distOf(source) {
     if (!source.startsWith("src/")) throw new Error(`entry-record: source outside src/: ${source}`);
     return `dist/${source.slice(4)}`;
-}
-
-/** Where a file ships: a CSS entry source ships at its DECLARED dist name (P3-F5), which a
- *  move of the source never changes; every other file at its mirror path. */
-export function publishedPathOf(record, source) {
-    const entry = record.css.find(([, t]) => t.source === source);
-    return entry?.[1].dist ? `dist/${entry[1].dist}` : distOf(source);
 }
 
 export function validateRecord(record, tree) {
@@ -43,14 +37,15 @@ export function validateRecord(record, tree) {
         sources.set(source, name);
         if (!nonEmpty(source)) v.push({ kind: "entry-source-missing", name, source });
     }
-    const dists = new Map();
+    const cssSources = new Map();
     for (const [key, target] of record.css) {
         if (target.source && !nonEmpty(target.source)) v.push({ kind: "css-source-missing", key, source: target.source });
-        // P3-F5: every CSS source entry declares its dist name; it is never derived from the basename
-        if (target.source && !(typeof target.dist === "string" && /^[\w.-]+(\/[\w.-]+)*\.css$/.test(target.dist))) v.push({ kind: "css-dist-undeclared", key, source: target.source });
-        if (target.dist) {
-            if (dists.has(target.dist)) v.push({ kind: "css-dist-twice", key, other: dists.get(target.dist), dist: target.dist });
-            dists.set(target.dist, key);
+        // P4-R4: a CSS entry ships at its source's mirror path; a declared second name would be
+        // a forwarding file, so the record carries none
+        if ("dist" in target) v.push({ kind: "css-dist-declared", key, dist: target.dist });
+        if (target.source) {
+            if (cssSources.has(target.source)) v.push({ kind: "css-source-twice", key, other: cssSources.get(target.source), source: target.source });
+            cssSources.set(target.source, key);
         }
         if (target.assets && !tree.isDir(target.assets.replace(/\/$/, ""))) v.push({ kind: "asset-root-missing", key, root: target.assets });
     }
@@ -83,10 +78,7 @@ export function emitExports(record) {
     const ordered = { ".": exp["."] };
     for (const [k, v] of Object.entries(exp)) if (k !== ".") ordered[k] = v;
     for (const [key, target] of record.css) {
-        if (target.source) {
-            if (!target.dist) throw new Error(`entry-record: css key ${key} declares no dist name`);
-            ordered[key] = `./dist/${target.dist}`;
-        }
+        if (target.source) ordered[key] = `./${distOf(target.source)}`;
         else if (target.generated) ordered[key] = `./dist/${target.generated}`;
         else if (target.assets) ordered[key] = `./${distOf(target.assets)}*`;
         else throw new Error(`entry-record: css key ${key} has no source, generated or assets target`);
@@ -190,40 +182,17 @@ export function recordEntries(root = DEFAULT_ROOT) {
     return Object.fromEntries(diskRecord(root).js);
 }
 
-/** The CSS entries as the build reads them: `{ key, source, dist }` (absolute source,
- *  dist relative to the output root) and the asset roots `{ key, assets, prefix }`. */
+/** The CSS entries as the build reads them: `{ key, source }` (absolute source; it ships at
+ *  its mirror path) and the asset roots `{ key, assets, prefix }`. */
 export function recordCssTargets(root = DEFAULT_ROOT) {
     const record = diskRecord(root);
     const sheets = [];
     const assets = [];
     for (const [key, t] of record.css) {
-        if (t.source) sheets.push({ key, source: join(root, t.source), dist: t.dist });
+        if (t.source) sheets.push({ key, source: join(root, t.source) });
         else if (t.assets) assets.push({ key, assets: join(root, t.assets), prefix: distOf(t.assets).slice(5) });
     }
     return { sheets, assets };
-}
-
-/**
- * The build step for a declared dist name (P3-F5). A CSS entry whose source moved away from
- * its mirror path (`src/styles/theme.css → src/styles/theme/index.css`) still ships at its
- * declared name: the mirror copy stays where the other published sheets import it, and the
- * declared name is a one-line `@import` of it, so the rules exist once in dist and a
- * consumer that imports both `./styles` and `./styles/theme` loads one file. An entry at
- * its mirror path is left alone, so a tree with no such move builds byte-identically.
- */
-export function emitDeclaredCssEntries(root, outputRoot) {
-    const out = [];
-    for (const { source, dist } of recordCssTargets(root).sheets) {
-        const mirror = join(outputRoot, source.slice(join(root, "src").length + 1));
-        const target = join(outputRoot, dist);
-        if (mirror === target) continue;
-        if (!existsSync(mirror)) throw new Error(`entry-record: the mirror copy of ${source} is missing at ${mirror}`);
-        if (existsSync(target)) throw new Error(`entry-record: the declared dist name ${dist} is already taken in ${outputRoot}`);
-        const rel = relative(dirname(target), mirror);
-        writeFileSync(target, `@import "${rel.startsWith(".") ? rel : `./${rel}`}";\n`);
-        out.push({ source, dist });
-    }
-    return out;
 }
 
 /**

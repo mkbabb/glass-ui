@@ -1,0 +1,693 @@
+P5 floor plants — recorded commands and outputs (2026-09-26)
+Seat: FLOOR, D1 pass 5, claude-opus-5-5. Battery: <structure>/pass-5/plants/p5-tree-plants.sh.
+Checkout HEAD 5e278aa7 for every plant but four after-arm cuts (p4 F5, F6; P5 R7, R48), which cut a0fa9d3c:
+a docs-only commit landed mid-run (`git diff --stat 5e278aa7 a0fa9d3c -- . ':!docs'` is empty).
+Paths shortened: <repo> = the checkout, <structure> = docs/tranches/BL/design/structure in it, <scratch> = this
+seat's scratch dir, <wt> = a plant's fresh linked worktree (<scratch>/wt).
+  before arm: <wt> = HEAD with its own (pass-4, committed) floor and rows:
+              sh <structure>/pass-5/plants/p5-tree-plants.sh before <scratch>
+  after arm:  <wt> = HEAD + the P5 floor (the checkout's, rsync'd by pass-4/tools/fresh.sh --floor, which prints
+              "+ P4 floor" as its fixed label), cut by
+              node <structure>/floor/rows/apply.mjs --root <wt>  (r1 first); the floor then runs from <wt>/scripts/structure
+              sh <structure>/pass-5/plants/p5-tree-plants.sh after <scratch> F1 F2 F2d F3 F4r F4m R7 R48
+  regression: sh <structure>/pass-4/plants/p4-tree-plants.sh after <scratch>/p4reg F0 F1 F2 F2u F3 F4 F5 F6
+              (pass 4's battery, after arm = this floor; F7/F47/F48 are re-issued as R7/R48, see FLOOR-P5 §4)
+Filter: this file keeps, from each plant log, every command line ($), its exit ([exit n]) and the lines that carry a
+verdict or a reading (VERDICT, PASS/FAIL, CYCLE, PARSE, UNLISTED, RISK, REFUTED, "ok"/"phase"/"verdict" fields, the
+F2 dist reading). Dropped: the per-row lines of the floor chain (identical in every cut; the chain's digest line is
+kept), vite's chunk tables, Playwright's per-test lines. The full logs are <scratch>/{before,after,p4reg/after}/<plant>.log
+and <scratch>/baseline/baseline.log (bulky outputs, not durable).
+Two readings the filter hid, restored by hand from the logs:
+  - after/F2d: the `entries.mjs check --json` report carries
+      "violations": [ { "kind": "css-dist-declared", "key": "./styles/theme", "dist": "styles/theme.css" } ]
+  - p4reg/after/F1: `vitest run tests/gates` exits 1 on 4 of 77 tests, none the register's: boot-graph.test.ts x3
+    ("dist-demo/index.html is absent") and floor.test.ts "F-9 surface pin" ("no dist/"). The plant cut is not built;
+    the plant counts only gate-register tests (0/0).
+The F1 after-arm VERDICT detail prints `"sccs": 4` from the chain's m03 move report (the script's grep takes the
+first match); the reading is the floor-cycles line above it, `"sccs":0`.
+
+The two rule-set listings were derived once, before the battery, on a dev cut of HEAD + this floor:
+  snapshot; rung a (pass-5/plants/rung.mjs a); vite build; cascade.mjs verify --reorders {entry, reason} (no `moved`)
+  -> RED "the listing names no moved rule set"; 18 UNLISTED lines -> pass-5/plants/listed-rung-a.json (18 rules)
+  + rung c: same listing -> RED "9 moved rule(s) unlisted, 0 listed rule(s) unmoved"; a+c listed in full -> GREEN, risks 0
+  rung b alone (pass-4/plants/rung.mjs b) -> 1 UNLISTED line -> pass-5/plants/listed-rung-b.json;
+  with it: RED "1 swapped pair(s) can change a value", RISK ./styles [--accent-band-strength] .accent-tone × .glass-chip
+Each of these is re-measured by the battery below (F3, R7, R48); the dev cut's numbers are not counted.
+
+================================================================================================
+Verdicts
+================================================================================================
+before (pass-4 floor) — 0/6 CAUGHT
+  MISSED  F1   CYCLE scripts/structure/lib/classify.mjs ↔ scripts/structure/lib/move.mjs;
+  MISSED  F2   ./styles/theme -> ./dist/styles/theme.css; file at the old name: dist/styles/theme.css 28 B: @import "./theme/index.css";; move 0 build 0 gates 0 cascade 0
+  MISSED  F2d  entries check exit 0 with a dist name declared: the record's forwarding name is accepted
+  MISSED  F3   listed rung a exit 0 (want 0); rung a + c exit 0 (want 1), unlisted named 0
+  MISSED  F4r  row exit 0; profile-bundle.mjs changed yes; node --check exit 1
+  MISSED  F4m  move exit 0; importer rewritten; leaf moved: the engine wrote a file that does not parse
+after (P5 floor) — 8/8 CAUGHT (6 P5 plants + R7, R48)
+  CAUGHT  F1   the landed floor's runtime has no file cycle:    "sccs": 4,
+  CAUGHT  F2   theme.css -> theme/index.css: ./styles/theme targets ./dist/styles/theme/index.css (93 B), no file at the old name, 4 gates PASS, cascade identical
+  CAUGHT  F2d  a declared second dist name is a guard violation (css-dist-declared); entries check exit 1
+  CAUGHT  F3   the listed rung a GREEN; rung a + the unreviewed rung c under the same listing RED, 9 moved rule(s) named UNLISTED
+  CAUGHT  F4r  the row is refused before its first write (profile-bundle.mjs unchanged, node --check 0): scripts/profile-bundle.mjs (295:1 Declaration or statement expected.)
+  CAUGHT  F4m  the step is refused at parse, nothing written: PARSE refused {"file":"scripts/zz-importer.mjs","error":"4:12 ':' expected."}
+  CAUGHT  R7   rung a listed by its rule set GREEN; rung b listed by its rule set RED, the pair named on --accent-band-strength
+  CAUGHT  R48  the readback spec refutes the rule-set-listed accent-tone rung
+pass-4 battery on the P5 floor (after arm) — 8/8 CAUGHT
+  CAUGHT  F0   the floor's surface pin follows 10.1.0: all four gates PASS on the cut
+  CAUGHT  F1   the register is retired by the floor cut; the R-3 move of tabs-seam.test.ts applies and no register test reds (0/0)
+  CAUGHT  F2   isTeleportedTarget.ts leaves _shared with its @source glob delta declared: carried, applied, typecheck 0
+  CAUGHT  F2u  the undeclared glob delta is named at preflight; nothing written (8 src/demo changes, the cut's own)
+  CAUGHT  F3   resolve.mjs moves; the generated root literal is kept verbatim; graph 0
+  CAUGHT  F4   5/5 of the chip-paint specs; selected: css-critical.spec.ts,demo-design.spec.ts,glass-cal.spec.ts,page-chassis.spec.ts,storybook-meta.spec.ts,substrate-paints-color.spec.ts
+  CAUGHT  F5   the spec leaving the Playwright program is refused (LOST playwright.config.ts test-program edge), rolled back
+  CAUGHT  F6   the engine's own join respelling classifies (CLI PASS) and the engine step carries its FD-5 verdict
+
+================================================================================================
+Appendix A — plant logs (filtered)
+================================================================================================
+---------------- before / F1
+# F1 · arm before · HEAD 5e278aa7 · 2026-09-26T04:37:45Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt
+fresh <scratch>/wt at 5e278aa7
+[exit 0]
+$ node <scratch>/wt/docs/tranches/BL/design/structure/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest 5b338f9b9df605b575f60fac2a46beb6b0b56ea52cd5cfe79a889e32938d10a9
+[exit 0]
+$ node <structure>/pass-5/plants/floor-cycles.mjs --root <scratch>/wt
+{"floor":"scripts/structure","files":29,"valueEdges":51,"sccs":1}
+CYCLE scripts/structure/lib/classify.mjs ↔ scripts/structure/lib/move.mjs
+[exit 1]
+VERDICT MISSED F1 — CYCLE scripts/structure/lib/classify.mjs ↔ scripts/structure/lib/move.mjs;
+---------------- before / F2
+# F2 · arm before · HEAD 5e278aa7 · 2026-09-26T04:38:27Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt
+fresh <scratch>/wt at 5e278aa7
+[exit 0]
+$ node <scratch>/wt/docs/tranches/BL/design/structure/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest 5b338f9b9df605b575f60fac2a46beb6b0b56ea52cd5cfe79a889e32938d10a9
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs snapshot --root <scratch>/wt --dist <scratch>/wt/dist --out <scratch>/before/F2-base --sha 5e278aa7
+[exit 0]
+$ node <scratch>/wt/scripts/structure/move.mjs <structure>/pass-5/plants/lists/f2-theme-dir.json --root <scratch>/wt
+ "ok": true,
+[exit 0]
+$ node <scratch>/wt/scripts/structure/entries.mjs write --root <scratch>/wt
+entries write — 68 export keys, 62 typesVersions
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/gates.mjs --root <scratch>/wt
+PASS  F-1 graph  {"edges":7436,"violations":0,"byKind":{},"first":[]}
+PASS  F-3 entries  {"exportKeys":68,"typesVersions":62,"exportsByteEqual":true,"typesVersionsByteEqual":true,"guard":[]}
+PASS  F-4 cascade contract  {"terminal":"src/styles/accessibility.css","stylesSource":"src/styles/index.css","imports":36,"last":"src/styles/accessibility.css","importers":["src/styles/index.css"],"findings":[],"pass":true}
+PASS  F-9 surface pin  {"pinned":{"exportKeys":68,"typesVersions":62,"jsEntries":63,"runtimeNames":603,"typeNames":1281},"now":{"exportKeys":68,"typesVersions":62,"jsEntries":63,"runtimeNames":603,"typeNames":1281},"differences":[]}
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs verify --root <scratch>/wt --baseline <scratch>/before/F2-base --dist <scratch>/wt/dist
+ "verdict": "GREEN",
+[exit 0]
+export ./styles/theme -> ./dist/styles/theme.css (28 B); file at the old name: dist/styles/theme.css 28 B: @import "./theme/index.css";; move 0 build 0 gates 0 cascade 0
+VERDICT MISSED F2 — ./styles/theme -> ./dist/styles/theme.css; file at the old name: dist/styles/theme.css 28 B: @import "./theme/index.css";; move 0 build 0 gates 0 cascade 0
+---------------- before / F2d
+# F2d · arm before · HEAD 5e278aa7 · 2026-09-26T04:39:43Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt
+fresh <scratch>/wt at 5e278aa7
+[exit 0]
+$ node <scratch>/wt/docs/tranches/BL/design/structure/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest 5b338f9b9df605b575f60fac2a46beb6b0b56ea52cd5cfe79a889e32938d10a9
+[exit 0]
+$ node -e const fs=require("fs"),p=process.argv[1],r=JSON.parse(fs.readFileSync(p,"utf8"));const t=r.css.find(([k])=>k==="./styles/theme")[1];t.dist="styles/theme.css";fs.writeFileSync(p,JSON.stringify(r,null,4)+"\n");console.log("record: ./styles/theme declares dist",t.dist) <scratch>/wt/scripts/structure/records/entry-record.json
+record: ./styles/theme declares dist styles/theme.css
+[exit 0]
+$ node <scratch>/wt/scripts/structure/entries.mjs check --root <scratch>/wt --json
+[exit 0]
+VERDICT MISSED F2d — entries check exit 0 with a dist name declared: the record's forwarding name is accepted
+---------------- before / F3
+# F3 · arm before · HEAD 5e278aa7 · 2026-09-26T04:40:18Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt
+fresh <scratch>/wt at 5e278aa7
+[exit 0]
+$ node <scratch>/wt/docs/tranches/BL/design/structure/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest 5b338f9b9df605b575f60fac2a46beb6b0b56ea52cd5cfe79a889e32938d10a9
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs snapshot --root <scratch>/wt --dist <scratch>/wt/dist --out <scratch>/before/F3-base --sha 5e278aa7
+[exit 0]
+rung a planted in <scratch>/wt
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs verify --root <scratch>/wt --baseline <scratch>/before/F3-base --dist <scratch>/wt/dist --reorders <structure>/pass-5/plants/listed-rung-a.json
+ "verdict": "GREEN",
+   "judged": {
+   "verdict": "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes"
+[exit 0]
+rung c planted in <scratch>/wt
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs verify --root <scratch>/wt --baseline <scratch>/before/F3-base --dist <scratch>/wt/dist --reorders <structure>/pass-5/plants/listed-rung-a.json
+ "verdict": "GREEN",
+   "judged": {
+   "verdict": "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes"
+[exit 0]
+VERDICT MISSED F3 — listed rung a exit 0 (want 0); rung a + c exit 0 (want 1), unlisted named 0
+---------------- before / F4r
+# F4r · arm before · HEAD 5e278aa7 · 2026-09-26T04:41:30Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt
+fresh <scratch>/wt at 5e278aa7
+[exit 0]
+$ node <scratch>/wt/docs/tranches/BL/design/structure/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest 5b338f9b9df605b575f60fac2a46beb6b0b56ea52cd5cfe79a889e32938d10a9
+[exit 0]
+$ node <structure>/pass-5/plants/f4-plant.mjs row --root <scratch>/wt --rows <scratch>/wt/docs/tranches/BL/design/structure/floor/rows/lib.mjs
+row p5-f4-cut-header: the header of combinedStylesDraw cut (the S34 shape) (1 file(s))
+row result: wrote
+[exit 0]
+$ node --check scripts/profile-bundle.mjs
+[exit 1]
+VERDICT MISSED F4r — row exit 0; profile-bundle.mjs changed yes; node --check exit 1
+---------------- before / F4m
+# F4m · arm before · HEAD 5e278aa7 · 2026-09-26T04:42:00Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt
+fresh <scratch>/wt at 5e278aa7
+[exit 0]
+$ node <scratch>/wt/docs/tranches/BL/design/structure/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest 5b338f9b9df605b575f60fac2a46beb6b0b56ea52cd5cfe79a889e32938d10a9
+[exit 0]
+$ node <structure>/pass-5/plants/f4-plant.mjs seed --root <scratch>/wt
+seeded scripts/lib/zz-leaf.mjs and scripts/zz-importer.mjs
+[exit 0]
+$ node <scratch>/wt/scripts/structure/move.mjs <structure>/pass-5/plants/lists/f4-edited-importer.json --root <scratch>/wt
+ "ok": true,
+[exit 0]
+VERDICT MISSED F4m — move exit 0; importer rewritten; leaf moved: the engine wrote a file that does not parse
+---------------- after / F1
+# F1 · arm after · HEAD 5e278aa7 · 2026-09-26T04:42:57Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt --floor
+fresh <scratch>/wt at 5e278aa7 + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest 2a70ba8d8ee52eac29481f0fb8bfe3bdb4ee8602dea582a9d27a0349a27459e9
+[exit 0]
+$ node <structure>/pass-5/plants/floor-cycles.mjs --root <scratch>/wt
+{"floor":"scripts/structure","files":31,"valueEdges":53,"sccs":0}
+[exit 0]
+VERDICT CAUGHT F1 — the landed floor's runtime has no file cycle:    "sccs": 4,
+---------------- after / F2
+# F2 · arm after · HEAD 5e278aa7 · 2026-09-26T04:43:46Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt --floor
+fresh <scratch>/wt at 5e278aa7 + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest 2a70ba8d8ee52eac29481f0fb8bfe3bdb4ee8602dea582a9d27a0349a27459e9
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs snapshot --root <scratch>/wt --dist <scratch>/wt/dist --out <scratch>/after/F2-base --sha 5e278aa7
+[exit 0]
+$ node <scratch>/wt/scripts/structure/move.mjs <structure>/pass-5/plants/lists/f2-theme-dir.json --root <scratch>/wt
+ "ok": true,
+[exit 0]
+$ node <scratch>/wt/scripts/structure/entries.mjs write --root <scratch>/wt
+entries write — 68 export keys, 62 typesVersions
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/gates.mjs --root <scratch>/wt
+PASS  F-1 graph  {"edges":7436,"violations":0,"byKind":{},"first":[]}
+PASS  F-3 entries  {"exportKeys":68,"typesVersions":62,"exportsByteEqual":true,"typesVersionsByteEqual":true,"guard":[]}
+PASS  F-4 cascade contract  {"terminal":"src/styles/accessibility.css","stylesSource":"src/styles/index.css","imports":36,"last":"src/styles/accessibility.css","importers":["src/styles/index.css"],"findings":[],"pass":true}
+PASS  F-9 surface pin  {"pinned":{"exportKeys":68,"typesVersions":62,"jsEntries":63,"runtimeNames":603,"typeNames":1281},"now":{"exportKeys":68,"typesVersions":62,"jsEntries":63,"runtimeNames":603,"typeNames":1281},"differences":[]}
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs verify --root <scratch>/wt --baseline <scratch>/after/F2-base --dist <scratch>/wt/dist
+ "verdict": "GREEN",
+[exit 0]
+export ./styles/theme -> ./dist/styles/theme/index.css (93 B); file at the old name: none; move 0 build 0 gates 0 cascade 0
+VERDICT CAUGHT F2 — theme.css -> theme/index.css: ./styles/theme targets ./dist/styles/theme/index.css (93 B), no file at the old name, 4 gates PASS, cascade identical
+---------------- after / F2d
+# F2d · arm after · HEAD 5e278aa7 · 2026-09-26T04:44:58Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt --floor
+fresh <scratch>/wt at 5e278aa7 + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest 2a70ba8d8ee52eac29481f0fb8bfe3bdb4ee8602dea582a9d27a0349a27459e9
+[exit 0]
+$ node -e const fs=require("fs"),p=process.argv[1],r=JSON.parse(fs.readFileSync(p,"utf8"));const t=r.css.find(([k])=>k==="./styles/theme")[1];t.dist="styles/theme.css";fs.writeFileSync(p,JSON.stringify(r,null,4)+"\n");console.log("record: ./styles/theme declares dist",t.dist) <scratch>/wt/scripts/structure/records/entry-record.json
+record: ./styles/theme declares dist styles/theme.css
+[exit 0]
+$ node <scratch>/wt/scripts/structure/entries.mjs check --root <scratch>/wt --json
+  "violations": [ { "kind": "css-dist-declared", "key": "./styles/theme", "dist": "styles/theme.css" } ]   (restored, see header)
+[exit 1]
+VERDICT CAUGHT F2d — a declared second dist name is a guard violation (css-dist-declared); entries check exit 1
+---------------- after / F3
+# F3 · arm after · HEAD 5e278aa7 · 2026-09-26T04:45:28Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt --floor
+fresh <scratch>/wt at 5e278aa7 + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest 2a70ba8d8ee52eac29481f0fb8bfe3bdb4ee8602dea582a9d27a0349a27459e9
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs snapshot --root <scratch>/wt --dist <scratch>/wt/dist --out <scratch>/after/F3-base --sha 5e278aa7
+[exit 0]
+rung a planted in <scratch>/wt
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs verify --root <scratch>/wt --baseline <scratch>/after/F3-base --dist <scratch>/wt/dist --reorders <structure>/pass-5/plants/listed-rung-a.json
+ "verdict": "GREEN",
+   "judged": {
+   "verdict": "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes",
+   "unlistedRules": 0,
+   "staleRules": 0
+[exit 0]
+rung c planted in <scratch>/wt
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs verify --root <scratch>/wt --baseline <scratch>/after/F3-base --dist <scratch>/wt/dist --reorders <structure>/pass-5/plants/listed-rung-a.json
+ "verdict": "RED",
+   "verdict": "RED: the reorder is not the listed rung (9 moved rule(s) unlisted, 0 listed rule(s) unmoved)",
+   "unlistedRules": 9,
+   "staleRules": 0
+UNLISTED ./styles "@layer components :: .scroll-progress-rim {--scroll-progress-rim-width:3px;--scroll-progress-rim-inset:2px;--scroll-progress-rim-margin:8px;position:absolute;inset:0;z-index:2;isolation:isolate;pointer-events:none}"
+UNLISTED ./styles "@layer components :: .scroll-progress-rim__track {position:absolute;border-radius:var(--radius-pill);background:var(--track-well-recess)}"
+UNLISTED ./styles "@layer components :: .scroll-progress-rim[data-orientation=\"horizontal\"] .scroll-progress-rim__track {inset-inline:var(--scroll-progress-rim-margin);inset-block-end:var(--scroll-progress-rim-inset);block-size:var(--scroll-progress-rim-width)}"
+UNLISTED ./styles "@layer components :: .scroll-progress-rim[data-orientation=\"vertical\"] .scroll-progress-rim__track {inset-block:var(--scroll-progress-rim-margin);inset-inline-end:var(--scroll-progress-rim-inset);inline-size:var(--scroll-progress-rim-width)}"
+UNLISTED ./styles "@layer components :: .scroll-progress-rim__fill {position:absolute;inset:0;border-radius:inherit;background:var(--scroll-progress-rim-spectrum,var(--rainbow-violet));clip-path:inset(0 100% 0 0 round var(--radius-pill));transition:clip-path var(--spring-dock-duration) var(--spring-dock)}"
+UNLISTED ./styles "@layer components :: .scroll-progress-rim[data-orientation=\"horizontal\"] .scroll-progress-rim__fill {clip-path:inset( 0 calc(100% - var(--scroll-progress-rim-fill,0%)) 0 0 round var(--radius-pill) )}"
+UNLISTED ./styles "@layer components :: .scroll-progress-rim[data-orientation=\"horizontal\"]:dir(rtl) .scroll-progress-rim__fill {clip-path:inset( 0 0 0 calc(100% - var(--scroll-progress-rim-fill,0%)) round var(--radius-pill) )}"
+UNLISTED ./styles "@layer components :: .scroll-progress-rim[data-orientation=\"vertical\"] .scroll-progress-rim__fill {clip-path:inset( calc(100% - var(--scroll-progress-rim-fill,0%)) 0 0 0 round var(--radius-pill) )}"
+UNLISTED ./styles "@layer components > @media (prefers-reduced-motion: reduce) :: .scroll-progress-rim__fill {transition:none}"
+[exit 1]
+VERDICT CAUGHT F3 — the listed rung a GREEN; rung a + the unreviewed rung c under the same listing RED, 9 moved rule(s) named UNLISTED
+---------------- after / F4r
+# F4r · arm after · HEAD 5e278aa7 · 2026-09-26T04:46:18Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt --floor
+fresh <scratch>/wt at 5e278aa7 + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest 2a70ba8d8ee52eac29481f0fb8bfe3bdb4ee8602dea582a9d27a0349a27459e9
+[exit 0]
+$ node <structure>/pass-5/plants/f4-plant.mjs row --root <scratch>/wt --rows <structure>/floor/rows/lib.mjs
+Error: row p5-f4-cut-header: 1 staged file(s) do not parse; refusing to write: scripts/profile-bundle.mjs (295:1 Declaration or statement expected.)
+[exit 1]
+$ node --check scripts/profile-bundle.mjs
+[exit 0]
+VERDICT CAUGHT F4r — the row is refused before its first write (profile-bundle.mjs unchanged, node --check 0): scripts/profile-bundle.mjs (295:1 Declaration or statement expected.)
+---------------- after / F4m
+# F4m · arm after · HEAD 5e278aa7 · 2026-09-26T04:46:45Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt --floor
+fresh <scratch>/wt at 5e278aa7 + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest 2a70ba8d8ee52eac29481f0fb8bfe3bdb4ee8602dea582a9d27a0349a27459e9
+[exit 0]
+$ node <structure>/pass-5/plants/f4-plant.mjs seed --root <scratch>/wt
+seeded scripts/lib/zz-leaf.mjs and scripts/zz-importer.mjs
+[exit 0]
+$ node <scratch>/wt/scripts/structure/move.mjs <structure>/pass-5/plants/lists/f4-edited-importer.json --root <scratch>/wt
+ "ok": false,
+ "phase": "parse",
+PARSE refused {"file":"scripts/zz-importer.mjs","error":"4:12 ':' expected."}
+[exit 1]
+VERDICT CAUGHT F4m — the step is refused at parse, nothing written: PARSE refused {"file":"scripts/zz-importer.mjs","error":"4:12 ':' expected."}
+---------------- after / R7
+# R7 · arm after · HEAD a0fa9d3c · 2026-09-26T04:47:15Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt --floor
+fresh <scratch>/wt at a0fa9d3c + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest a433c015be6ca313dca404d96b0c9efba540ce9b4b7ecd542f27a2279c85b776
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs snapshot --root <scratch>/wt --dist <scratch>/wt/dist --out <scratch>/after/R7-base --sha a0fa9d3c
+[exit 0]
+rung a planted in <scratch>/wt
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs verify --root <scratch>/wt --baseline <scratch>/after/R7-base --dist <scratch>/wt/dist --reorders <structure>/pass-5/plants/listed-rung-a.json
+ "verdict": "GREEN",
+   "judged": {
+   "verdict": "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes",
+   "unlistedRules": 0,
+   "staleRules": 0
+[exit 0]
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt --floor
+fresh <scratch>/wt at a0fa9d3c + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest a433c015be6ca313dca404d96b0c9efba540ce9b4b7ecd542f27a2279c85b776
+[exit 0]
+rung b planted in <scratch>/wt
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs verify --root <scratch>/wt --baseline <scratch>/after/R7-base --dist <scratch>/wt/dist --reorders <structure>/pass-5/plants/listed-rung-b.json
+ "verdict": "RED",
+   "judged": {
+   "verdict": "RED: 1 swapped pair(s) can change a value and no band spec that reads it ran",
+   "unlistedRules": 0,
+   "staleRules": 0
+RISK ./styles [--accent-band-strength] .accent-tone × .glass-chip (0,1,0; co-occur in src/components/chip/chipVariants.ts)
+[exit 1]
+VERDICT CAUGHT R7 — rung a listed by its rule set GREEN; rung b listed by its rule set RED, the pair named on --accent-band-strength
+---------------- after / R48
+# R48 · arm after · HEAD a0fa9d3c · 2026-09-26T04:48:36Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/wt --floor
+fresh <scratch>/wt at a0fa9d3c + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/wt
+ "ok": true,
+tree digest a433c015be6ca313dca404d96b0c9efba540ce9b4b7ecd542f27a2279c85b776
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/cascade.mjs snapshot --root <scratch>/wt --dist <scratch>/wt/dist --out <scratch>/after/R48-base --sha a0fa9d3c
+[exit 0]
+$ node <scratch>/wt/scripts/structure/browser.mjs --root <scratch>/wt --changed src/components/chip/accent-tone.css --specs zz-chip-band.spec.ts --out <scratch>/after/R48-seat-base.json --wait 3600
+[browser-seat 2026-09-26T04:49:08.607Z] demo server http://localhost:61462 (pid 27527, cwd <scratch>/wt); 7 spec(s): css-critical.spec.ts, demo-design.spec.ts, glass-cal.spec.ts, page-chassis.spec.ts, storybook-meta.spec.ts, substrate-paints-color.spec.ts, zz-chip-band.spec.ts [bands chip]
+--accent-band-strength on .glass-chip.accent-tone: max(18%, calc(12% + 10%))
+    Error: the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: {"ok":false,"insetPx":null,"articleBottom":779,"scrollerBottom":932}
+    Error: the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: {"ok":false,"insetPx":null,"articleBottom":779,"scrollerBottom":932}
+[browser-seat 2026-09-26T04:51:46.694Z] RED: 22/37 passed, 15 failed, 0 skipped in 159s → <scratch>/after/R48-seat-base.json
+[browser-seat 2026-09-26T04:51:46.694Z]   band chip: 6 spec(s), base-green —, new failures —
+[exit 1]
+rung b planted in <scratch>/wt
+$ npx vite build
+[exit 0]
+$ node <scratch>/wt/scripts/structure/browser.mjs --root <scratch>/wt --changed src/components/chip/accent-tone.css --specs zz-chip-band.spec.ts --base-report <scratch>/after/R48-seat-base.json --out <scratch>/after/R48-seat.json --wait 3600
+[browser-seat 2026-09-26T04:51:56.948Z] demo server http://localhost:62944 (pid 44835, cwd <scratch>/wt); 7 spec(s): css-critical.spec.ts, demo-design.spec.ts, glass-cal.spec.ts, page-chassis.spec.ts, storybook-meta.spec.ts, substrate-paints-color.spec.ts, zz-chip-band.spec.ts [bands chip]
+--accent-band-strength on .glass-chip.accent-tone: 18%
+    Error: the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: {"ok":false,"insetPx":null,"articleBottom":779,"scrollerBottom":932}
+    Error: the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: {"ok":false,"insetPx":null,"articleBottom":779,"scrollerBottom":932}
+[browser-seat 2026-09-26T04:54:40.945Z] RED: 21/37 passed, 16 failed, 0 skipped in 165s → <scratch>/after/R48-seat.json
+[browser-seat 2026-09-26T04:54:40.945Z]   band chip: 6 spec(s), base-green 19, new failures 1
+[browser-seat 2026-09-26T04:54:40.946Z]   FAILED zz-chip-band.spec.ts :: a Chip's --accent-band-strength is glass-chip's floored band, not the register's 18% (NEW: green at base)
+[exit 1]
+$ node <scratch>/wt/scripts/structure/cascade.mjs verify --root <scratch>/wt --baseline <scratch>/after/R48-base --dist <scratch>/wt/dist --reorders <structure>/pass-5/plants/listed-rung-b.json --browser <scratch>/after/R48-seat.json
+ "verdict": "RED",
+   "judged": {
+   "verdict": "RED: 1 swapped pair(s) can change a value and no band spec that reads it ran",
+   "unlistedRules": 0,
+   "staleRules": 0
+RISK ./styles [--accent-band-strength] .accent-tone × .glass-chip (0,1,0; co-occur in src/components/chip/chipVariants.ts)
+  REFUTED by zz-chip-band.spec.ts (reads --accent-band-strength on .accent-tone): 1 new failure(s) zz-chip-band.spec.ts :: a Chip's --accent-band-strength is glass-chip's floored band, not the register's 18%
+  not evidence (name the class, never the property): css-critical.spec.ts, demo-design.spec.ts, glass-cal.spec.ts, page-chassis.spec.ts, storybook-meta.spec.ts
+[exit 1]
+VERDICT CAUGHT R48 — the readback spec refutes the rule-set-listed accent-tone rung
+---------------- pass-4 battery, after arm (P5 floor) / F0
+# F0 · arm after · HEAD 5e278aa7 · 2026-09-26T04:42:57Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/p4reg/wt --floor
+fresh <scratch>/p4reg/wt at 5e278aa7 + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/p4reg/wt
+ "ok": true,
+tree digest 2a70ba8d8ee52eac29481f0fb8bfe3bdb4ee8602dea582a9d27a0349a27459e9
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <scratch>/p4reg/wt/scripts/structure/gates.mjs --root <scratch>/p4reg/wt
+PASS  F-1 graph  {"edges":7436,"violations":0,"byKind":{},"first":[]}
+PASS  F-3 entries  {"exportKeys":68,"typesVersions":62,"exportsByteEqual":true,"typesVersionsByteEqual":true,"guard":[]}
+PASS  F-4 cascade contract  {"terminal":"src/styles/accessibility.css","stylesSource":"src/styles/index.css","imports":36,"last":"src/styles/accessibility.css","importers":["src/styles/index.css"],"findings":[],"pass":true}
+PASS  F-9 surface pin  {"pinned":{"exportKeys":68,"typesVersions":62,"jsEntries":63,"runtimeNames":603,"typeNames":1281},"now":{"exportKeys":68,"typesVersions":62,"jsEntries":63,"runtimeNames":603,"typeNames":1281},"differences":[]}
+[exit 0]
+VERDICT CAUGHT F0 — the floor's surface pin follows 10.1.0: all four gates PASS on the cut
+---------------- pass-4 battery, after arm (P5 floor) / F1
+# F1 · arm after · HEAD 5e278aa7 · 2026-09-26T04:43:58Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/p4reg/wt --floor
+fresh <scratch>/p4reg/wt at 5e278aa7 + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/p4reg/wt
+ "ok": true,
+tree digest 2a70ba8d8ee52eac29481f0fb8bfe3bdb4ee8602dea582a9d27a0349a27459e9
+[exit 0]
+register after the cut: retired
+$ node <scratch>/p4reg/wt/scripts/structure/move.mjs <structure>/pass-4/plants/lists/f1-register-path.json --root <scratch>/p4reg/wt
+ "ok": true,
+[exit 0]
+$ npx vitest run tests/gates --reporter=json --outputFile=<scratch>/p4reg/after/F1-vitest.json
+[exit 1]   (4 of 77 failed, none the register's: see header)
+VERDICT CAUGHT F1 — the register is retired by the floor cut; the R-3 move of tabs-seam.test.ts applies and no register test reds (0/0)
+---------------- pass-4 battery, after arm (P5 floor) / F2
+# F2 · arm after · HEAD 5e278aa7 · 2026-09-26T04:44:50Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/p4reg/wt --floor
+fresh <scratch>/p4reg/wt at 5e278aa7 + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/p4reg/wt
+ "ok": true,
+tree digest 2a70ba8d8ee52eac29481f0fb8bfe3bdb4ee8602dea582a9d27a0349a27459e9
+[exit 0]
+$ node <scratch>/p4reg/wt/scripts/structure/move.mjs <structure>/pass-4/plants/lists/f2-glob-declared.json --root <scratch>/p4reg/wt
+ "ok": true,
+GLOB-DELTA carried {"scanner":"demo/demo.css","glob":"../src/components/_shared/**/*.ts","file":"src/components/_shared/overlay/isTeleportedTarget.ts","to":"src/composables/dom/isTeleportedTarget.ts","change":"leaves"}
+[exit 0]
+$ npx vue-tsc --noEmit
+[exit 0]
+VERDICT CAUGHT F2 — isTeleportedTarget.ts leaves _shared with its @source glob delta declared: carried, applied, typecheck 0
+---------------- pass-4 battery, after arm (P5 floor) / F2u
+# F2u · arm after · HEAD 5e278aa7 · 2026-09-26T04:45:36Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/p4reg/wt --floor
+fresh <scratch>/p4reg/wt at 5e278aa7 + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/p4reg/wt
+ "ok": true,
+tree digest 2a70ba8d8ee52eac29481f0fb8bfe3bdb4ee8602dea582a9d27a0349a27459e9
+[exit 0]
+$ node <scratch>/p4reg/wt/scripts/structure/move.mjs <structure>/pass-4/plants/lists/f2-glob-undeclared.json --root <scratch>/p4reg/wt
+ "ok": false,
+ "phase": "preflight",
+GLOB-DELTA undeclared {"scanner":"demo/demo.css","glob":"../src/components/_shared/**/*.ts","file":"src/components/_shared/overlay/isTeleportedTarget.ts","to":"src/composables/dom/isTeleportedTarget.ts","change":"leaves"}
+[exit 1]
+VERDICT CAUGHT F2u — the undeclared glob delta is named at preflight; nothing written (8 src/demo changes, the cut's own)
+---------------- pass-4 battery, after arm (P5 floor) / F3
+# F3 · arm after · HEAD 5e278aa7 · 2026-09-26T04:46:05Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/p4reg/wt --floor
+fresh <scratch>/p4reg/wt at 5e278aa7 + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/p4reg/wt
+ "ok": true,
+tree digest 2a70ba8d8ee52eac29481f0fb8bfe3bdb4ee8602dea582a9d27a0349a27459e9
+[exit 0]
+$ node <scratch>/p4reg/wt/scripts/structure/move.mjs <structure>/pass-4/plants/lists/f3-generated-root.json --root <scratch>/p4reg/wt
+ "ok": true,
+[exit 0]
+$ node <scratch>/p4reg/wt/scripts/structure/graph.mjs --root <scratch>/p4reg/wt --quiet
+[exit 0]
+VERDICT CAUGHT F3 — resolve.mjs moves; the generated root literal is kept verbatim; graph 0
+---------------- pass-4 battery, after arm (P5 floor) / F4
+# F4 · arm after · HEAD 5e278aa7 · 2026-09-26T04:46:42Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/p4reg/wt --floor
+fresh <scratch>/p4reg/wt at 5e278aa7 + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/p4reg/wt
+ "ok": true,
+tree digest 2a70ba8d8ee52eac29481f0fb8bfe3bdb4ee8602dea582a9d27a0349a27459e9
+[exit 0]
+$ node <scratch>/p4reg/wt/scripts/structure/browser.mjs --root <scratch>/p4reg/wt --moved <structure>/pass-4/plants/lists/f4-accent-tone.json --select-only --out <scratch>/p4reg/after/F4-seat.json
+[browser-seat 2026-09-26T04:47:08.753Z] band chip: 5 spec(s): css-critical.spec.ts, demo-design.spec.ts, glass-cal.spec.ts, page-chassis.spec.ts, storybook-meta.spec.ts
+[exit 0]
+VERDICT CAUGHT F4 — 5/5 of the chip-paint specs; selected: css-critical.spec.ts,demo-design.spec.ts,glass-cal.spec.ts,page-chassis.spec.ts,storybook-meta.spec.ts,substrate-paints-color.spec.ts
+---------------- pass-4 battery, after arm (P5 floor) / F5
+# F5 · arm after · HEAD a0fa9d3c · 2026-09-26T04:47:11Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/p4reg/wt --floor
+fresh <scratch>/p4reg/wt at a0fa9d3c + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/p4reg/wt
+ "ok": true,
+tree digest a433c015be6ca313dca404d96b0c9efba540ce9b4b7ecd542f27a2279c85b776
+[exit 0]
+$ node <scratch>/p4reg/wt/scripts/structure/move.mjs <structure>/pass-4/plants/lists/f5-spec-leaves-program.json --root <scratch>/p4reg/wt
+ "ok": false,
+ "phase": "image",
+LOST tests-visual/playwright.config.ts|test-program|src/components/chip/__tests__/css-critical.visual.ts|f|source
+[exit 1]
+VERDICT CAUGHT F5 — the spec leaving the Playwright program is refused (LOST playwright.config.ts test-program edge), rolled back
+---------------- pass-4 battery, after arm (P5 floor) / F6
+# F6 · arm after · HEAD a0fa9d3c · 2026-09-26T04:47:53Z
+$ <structure>/pass-4/tools/fresh.sh <scratch>/p4reg/wt --floor
+fresh <scratch>/p4reg/wt at a0fa9d3c + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/p4reg/wt
+ "ok": true,
+tree digest a433c015be6ca313dca404d96b0c9efba540ce9b4b7ecd542f27a2279c85b776
+[exit 0]
+$ <structure>/pass-4/tools/fresh.sh <scratch>/p4reg/wt-base --floor
+fresh <scratch>/p4reg/wt-base at a0fa9d3c + P4 floor
+[exit 0]
+$ node <structure>/floor/rows/apply.mjs --root <scratch>/p4reg/wt-base
+ "ok": true,
+tree digest a433c015be6ca313dca404d96b0c9efba540ce9b4b7ecd542f27a2279c85b776
+[exit 0]
+$ node <scratch>/p4reg/wt/scripts/structure/move.mjs <structure>/pass-4/plants/lists/f6-tokens-door.json --root <scratch>/p4reg/wt
+ "ok": true,
+[exit 0]
+$ node <scratch>/p4reg/wt/scripts/structure/classify.mjs --base <scratch>/p4reg/wt-base --root <scratch>/p4reg/wt --moves <structure>/pass-4/plants/lists/f6-tokens-door.json
+PASS
+[exit 0]
+VERDICT CAUGHT F6 — the engine's own join respelling classifies (CLI PASS) and the engine step carries its FD-5 verdict
+
+================ Appendix B — baseline (sh <structure>/pass-5/tools/baseline.sh <scratch>/baseline), HEAD 5e278aa7 + the P5 floor
+Note: the baseline's cut copied the floor before FLOOR.md's pass-5 edit (a docs-only file), so its chain digest
+65300efe… differs from the plant cuts' 2a70ba8d… on the same commit; code files are the same.
+fresh                        exit 0  21s
+commit 5e278aa7
+graph@docs                   exit 0  4s
+plants-59                    exit 0  95s
+plants-p3                    exit 0  31s
+chain                        exit 0  21s
+chain-replay                 exit 0  15s
+graph                        exit 0  3s
+floor-cycles                 exit 0  2s
+parse-tree                   exit 0  2s
+placement                    exit 0  2s
+placement-none               exit 0  2s
+bounds                       exit 0  1s
+fixpoint-dry                 exit 1  6s
+scc-per-move                 exit 0  2s
+build                        exit 0  9s
+css-dist-names               exit 0  0s
+gates                        exit 0  4s
+entries                      exit 0  0s
+cascade-contract             exit 0  3s
+cascade-snapshot             exit 0  0s
+cascade-self                 exit 0  0s
+surface                      exit 0  1s
+demo-build                   exit 0  3s
+vitest                       exit 0  26s
+typecheck                    exit 0  19s
+verify-package               exit 1  2s
+browser-select               exit 0  2s
+browser-seat                 exit 0  45s
+worktree removed
+
+### chain / chain-replay
+tree digest 65300efed0ce675a6769b710997f2f62783426a57c8cbd2273ecf8c83c1b37d9   (both runs; the replay writes nothing)
+### graph@docs
+$ node docs/tranches/BL/design/structure/floor/graph.mjs --root <scratch>/baseline/wt --quiet
+ "edges": 7527,
+ "violations": 0,
+ "fsReadCensus": 537,
+[exit 0, 4s]
+### graph
+$ node scripts/structure/graph.mjs --root <scratch>/baseline/wt --quiet
+ "edges": 7436,
+ "violations": 0,
+ "fsReadCensus": 518,
+[exit 0, 3s]
+### floor-cycles
+$ node <structure>/pass-5/plants/floor-cycles.mjs --root <scratch>/baseline/wt
+{"floor":"scripts/structure","files":31,"valueEdges":53,"sccs":0}
+[exit 0, 2s]
+### parse-tree
+$ node <structure>/pass-5/tools/parse-tree.mjs --root <scratch>/baseline/wt
+{"floor":"scripts/structure","files":1302,"unparsed":0}
+[exit 0, 2s]
+### placement
+$ node scripts/structure/placement.mjs --root <scratch>/baseline/wt
+  "anchored": 36,
+  "move": 14,
+  "global": 2,
+ "proposedMoves": 15,
+NEEDS-NAME src/composables/glass/webgl/shaders/flow.glsl.ts → src/components/aurora/constants/shaders/flow.glsl.ts (target exists)
+[exit 0, 2s]
+### placement-none
+$ node scripts/structure/placement.mjs --root <scratch>/baseline/wt --anchor none
+  "move": 40,
+  "global": 12,
+ "proposedMoves": 47,
+NEEDS-NAME src/components/deck/types.ts → src/composables/types.ts (4 files claim it)
+NEEDS-NAME src/components/input/types.ts → src/composables/types.ts (4 files claim it)
+NEEDS-NAME src/components/slider/types.ts → src/composables/types.ts (4 files claim it)
+NEEDS-NAME src/components/tabs/types.ts → src/composables/types.ts (4 files claim it)
+NEEDS-NAME src/composables/glass/webgl/shaders/flow.glsl.ts → src/components/aurora/constants/shaders/flow.glsl.ts (target exists)
+[exit 0, 2s]
+### fixpoint-dry
+$ node scripts/structure/fixpoint.mjs --root <scratch>/baseline/wt --dry
+    "anchored": 36,
+    "move": 14,
+    "global": 2,
+     "sccs": 4,
+     "members": 14
+     "sccs": 3,
+     "members": 24
+    "addedPairs": 169
+[exit 1, 6s]
+### css-dist-names
+$ sh -c for k in ./styles ./styles/fonts ./styles/theme; do v=$(node -e "console.log(require(\"./package.json\").exports[process.argv[1]])" "$k"); printf "%s -> %s %s B\n" "$k" "$v" "$(wc -c < "${v#./}" | tr -d " ")"; done
+./styles -> ./dist/styles/index.css 1514 B
+./styles/fonts -> ./dist/styles/fonts.css 132840 B
+./styles/theme -> ./dist/styles/theme.css 117 B
+[exit 0, 0s]
+### gates
+$ node scripts/structure/gates.mjs --root <scratch>/baseline/wt
+PASS  F-1 graph  {"edges":7436,"violations":0,"byKind":{},"first":[]}
+PASS  F-3 entries  {"exportKeys":68,"typesVersions":62,"exportsByteEqual":true,"typesVersionsByteEqual":true,"guard":[]}
+PASS  F-4 cascade contract  {"terminal":"src/styles/accessibility.css","stylesSource":"src/styles/index.css","imports":36,"last":"src/styles/accessibility.css","importers":["src/styles/index.css"],"findings":[],"pass":true}
+PASS  F-9 surface pin  {"pinned":{"exportKeys":68,"typesVersions":62,"jsEntries":63,"runtimeNames":603,"typeNames":1281},"now":{"exportKeys":68,"typesVersions":62,"jsEntries":63,"runtimeNames":603,"typeNames":1281},"differences":[]}
+[exit 0, 4s]
+### entries
+$ node scripts/structure/entries.mjs check --root <scratch>/baseline/wt
+PASS
+[exit 0, 0s]
+### cascade-self
+$ node scripts/structure/cascade.mjs verify --root <scratch>/baseline/wt --baseline <scratch>/baseline/cascade --dist <scratch>/baseline/wt/dist
+ "verdict": "GREEN",
+[exit 0, 0s]
+### surface
+$ node scripts/structure/surface.mjs check --root <scratch>/baseline/wt
+[exit 0, 1s]
+### vitest
+$ npx vitest run
+ Test Files  239 passed (239)
+      Tests  2302 passed | 10 expected fail | 1 skipped (2313)
+[exit 0, 26s]
+### typecheck
+$ npm run typecheck
+[exit 0, 19s]
+### verify-package
+$ npm run verify:package
+    if (!firstAdoption && candidate < datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: ${unpackedBytes} < ${datum}`);
+Error: G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: 2913546 < 2919057
+[exit 1, 2s]
+### browser-select
+$ node scripts/structure/browser.mjs --root <scratch>/baseline/wt --changed src/components/chip/accent-tone.css --select-only --out <scratch>/baseline/browser-select.json
+[browser-seat 2026-09-26T04:42:55.882Z] band chip: 5 spec(s): css-critical.spec.ts, demo-design.spec.ts, glass-cal.spec.ts, page-chassis.spec.ts, storybook-meta.spec.ts
+[exit 0, 2s]
+### browser-seat
+$ node scripts/structure/browser.mjs --root <scratch>/baseline/wt --out <scratch>/baseline/browser-seat.json --wait 3600
+[browser-seat 2026-09-26T04:43:40.073Z] GREEN: 3/3 passed, 0 failed, 0 skipped in 42s → <scratch>/baseline/browser-seat.json
+[exit 0, 45s]
+### plants-59 / plants-p3
+59/59 plants caught; baseline violations 0
+18/18 caught
+### bounds
+ "dirsOver": 18,
+  "src": 9,
+  "demo": 2,
+  "tests": 6,
+  "tests-visual": 1,
+  "scripts": 0
+ "filesOver": 55,
+ "filesOverByZone": {
+  "src": 18,
+  "demo": 8,
+  "tests": 18,
+  "tests-visual": 6,
+  "scripts": 5

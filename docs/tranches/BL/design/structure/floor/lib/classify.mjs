@@ -16,7 +16,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { buildGraph, loadDeps } from "./graph.mjs";
-import { expandMoves, kindClass } from "./move.mjs";
+import { expandMoves, kindClass } from "./plan.mjs";
 import { makeOrigins } from "./symbols.mjs";
 
 const MODULE_NAMED = /^(import|import-type|reexport)$/;

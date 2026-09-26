@@ -1,0 +1,28 @@
+{
+ "reorders": [
+  {
+   "entry": "./styles",
+   "reason": "rung a (card/scroll.css joins card rung after card/styles.css), reviewed and listed by the rule set it moves: the lines are the UNLISTED output of cascade.mjs verify on rung a alone",
+   "moved": [
+    "@layer components :: .card-scroll-host {contain:layout style paint;overflow-y:auto;mask-image:linear-gradient( to bottom,black calc(100% - var(--fade-end)),transparent 100% )}",
+    "@layer components > @supports (animation-timeline: scroll()) :: .card-scroll-host {animation:gl-fade-end-out linear both;animation-timeline:scroll(self block);animation-range:calc(100% - var(--fade-scroll-width)) 100%}",
+    "@layer components :: .card-header--shrink {position:relative;isolation:isolate}",
+    "@layer components :: .card-header--shrink::before {content:\"\";position:absolute;inset:0 0 calc(var(--card-gap) * -1);z-index:-1;border-radius:inherit;background:var(--glass-veil);mask-image:linear-gradient( to bottom,black calc(100% - var(--card-gap)),transparent );opacity:0;pointer-events:none;transition:opacity var(--duration-normal) var(--ease-standard)}",
+    "@layer components :: .card-header--shrink > [data-slot=\"card-title\"] {font-size:calc(var(--type-body) * 2.058);transform-origin:0 50%}",
+    "@layer components :: .card-header--shrink[data-condensed=\"true\"] {padding-block-start:var(--card-gap)}",
+    "@layer components :: .card-header--shrink[data-condensed=\"true\"]::before {opacity:1}",
+    "@layer components :: .card-header--shrink[data-condensed=\"true\"] > [data-slot=\"card-title\"] {font-size:calc(var(--type-body) * 1.618)}",
+    "@layer components > @keyframes card-title-condense :: from {scale:1.272}",
+    "@layer components > @keyframes card-title-condense :: to {scale:1}",
+    "@layer components > @keyframes card-title-release :: from {scale:0.786151}",
+    "@layer components > @keyframes card-title-release :: to {scale:1}",
+    "@layer components :: .card-header--shrink[data-shrink-glide][data-condensed=\"true\"] > [data-slot=\"card-title\"] {animation:card-title-condense var(--duration-normal) var(--ease-standard)}",
+    "@layer components :: .card-header--shrink[data-shrink-glide][data-condensed=\"false\"] > [data-slot=\"card-title\"] {animation:card-title-release var(--duration-normal) var(--ease-standard)}",
+    "@layer components :: .card-header--shrink > [data-slot=\"card-description\"] {transition:opacity var(--duration-normal) var(--ease-standard),visibility var(--duration-normal) var(--ease-standard);transition-behavior:allow-discrete}",
+    "@layer components :: .card-header--shrink[data-condensed=\"true\"] > [data-slot=\"card-description\"] {visibility:hidden;opacity:0}",
+    "@layer components > @media (prefers-reduced-motion: reduce) :: .card-header--shrink::before,.card-header--shrink > [data-slot=\"card-description\"] {transition:none}",
+    "@layer components > @media (prefers-reduced-motion: reduce) :: .card-header--shrink[data-shrink-glide] > [data-slot=\"card-title\"] {animation:none}"
+   ]
+  }
+ ]
+}

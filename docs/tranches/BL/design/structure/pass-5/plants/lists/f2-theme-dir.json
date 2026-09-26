@@ -1,0 +1,12 @@
+{
+ "why": "P5-F2 plant (P4-R4, FP4-2, FP3-9): a CSS entry source moves into its own dir, src/styles/theme.css -> src/styles/theme/index.css (the move route B's pass-4 chain made). Arm (a): the export key ./styles/theme targets the real dist path, dist/styles/theme/index.css, and no file is written at the old name. The pass-4 floor writes arm (b): dist/styles/theme.css as a one-line @import.",
+ "moves": [{ "from": "src/styles/theme.css", "to": "src/styles/theme/index.css" }],
+ "scanDeltas": [
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/styles/theme.css",
+   "reason": "the partial census walks src; the sheet relocates inside it"
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 {
     "$schema": "entry-record/1",
-    "note": "The one entry record (BL D1 floor F-3). js: [name, source] in published order; css: [export key, target]; doors: every index.ts barrel under src/ that is not an entry; cascade.terminal: the stylesheet the published cascade ends on.",
+    "note": "The one entry record (BL D1 floor F-3). js: [name, source] in published order; css: [export key, target], a source target published at its mirror path dist/<path under src> (P4-R4: the export key targets the real dist path, no forwarding file); doors: every index.ts barrel under src/ that is not an entry; cascade.terminal: the stylesheet the published cascade ends on.",
     "js": [
         ["index","src/index.ts"],
         ["tokens","src/styles/tokens.ts"],
@@ -67,9 +67,9 @@
         ["typewriter","src/components/typewriter/index.ts"]
     ],
     "css": [
-        ["./styles",{"source":"src/styles/index.css","dist":"styles/index.css"}],
-        ["./styles/fonts",{"source":"src/styles/fonts.css","dist":"styles/fonts.css"}],
-        ["./styles/theme",{"source":"src/styles/theme.css","dist":"styles/theme.css"}],
+        ["./styles",{"source":"src/styles/index.css"}],
+        ["./styles/fonts",{"source":"src/styles/fonts.css"}],
+        ["./styles/theme",{"source":"src/styles/theme.css"}],
         ["./styles.css",{"generated":"component-styles.css"}],
         ["./fonts/*",{"assets":"src/fonts/"}]
     ],

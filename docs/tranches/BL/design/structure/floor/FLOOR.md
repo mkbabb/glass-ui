@@ -1,6 +1,6 @@
 # D1 floor
 
-The shared floor every D1 route builds on (REGISTRY §3.2). It is design tooling: Node `.mjs` scripts, three records, the tree rows and a plant battery. Until landing it lives here, under `docs/`; row `fd11-land` moves its runtime to `scripts/structure/` (FD-11), and from then on the tree reads its own floor there. The pass-2 report is `../pass-2/FLOOR-REPORT.md`; the pass-3 build (P3-F1..F9, FD-1..FD-11) is `../pass-3/FLOOR-P3.md`; the pass-4 build (P4-F1..F7 and the 10.1.0 surface pin) is `../pass-4/FLOOR-P4.md`.
+The shared floor every D1 route builds on (REGISTRY §3.2). It is design tooling: Node `.mjs` scripts, three records, the tree rows and a plant battery. Until landing it lives here, under `docs/`; row `fd11-land` moves its runtime to `scripts/structure/` (FD-11), and from then on the tree reads its own floor there. The pass-2 report is `../pass-2/FLOOR-REPORT.md`; the pass-3 build (P3-F1..F9, FD-1..FD-11) is `../pass-3/FLOOR-P3.md`; the pass-4 build (P4-F1..F7 and the 10.1.0 surface pin) is `../pass-4/FLOOR-P4.md`; the pass-5 build (P5-F1..F4) is `../pass-5/FLOOR-P5.md`.
 
 A route's worktree starts from the same cut:
 
@@ -31,7 +31,7 @@ node scripts/structure/gates.mjs      # four PASS lines (also under `npm test`, 
 | `gates.mjs` | the four floor gates in one run (F-1, F-3, F-4, surface pin) |
 | `bounds.mjs` | R-5's measure (12 direct files, 500 lines), every dir bounded (P3-R3); a measurement, not a gate |
 | `browser.mjs` | F-10: the one browser seat for π and Playwright; bands selected by the graph, base-green counts |
-| `lib/` | `tree` (file set, zones, the floor's own home), `resolve`, `evaluate` (path expressions), `scan/` (`script`, `css`, `text` for JSON/shell/HTML/YAML, `vue`, `playwright`), `graph`, `entries`, `symbols`, `placement`, `move`, `classify`, `recipes` (class recipes and owners, read by F-10 and FD-4) |
+| `lib/` | `tree` (file set, zones, the floor's own home), `resolve`, `evaluate` (path expressions), `scan/` (`script`, `css`, `text` for JSON/shell/HTML/YAML, `vue`, `playwright`), `graph`, `entries`, `symbols`, `placement`, `plan` (the move plan's vocabulary, `expandMoves` and `kindClass`, read by `move` and `classify`), `move`, `classify`, `syntax` (the parse check every engine write passes), `recipes` (class recipes and owners, read by F-10 and FD-4). The runtime has no file cycle (P5-F1) |
 | `records/entry-record.json` | the one entry record |
 | `records/opaque-ledger.json` | every reference the graph cannot resolve, with its reason |
 | `records/surface-pin.json` | the published surface, recorded on 10.1.0 (the floor base follows HEAD; `ConfiguratorLayout` on `.` and `./configurator` is the one growth, release `9065d924`) |
@@ -85,11 +85,12 @@ Rules the graph applies everywhere: a verdict is on the resolved file, never the
 `node move.mjs <list.json> --root <linked worktree> [--dry] [--out report.json]`
 
 1. **Preflight, nothing written.** The tree's graph is clean; the plan is consistent; every edge into or out of a moved file has a rewrite (residue 0); every scan delta and every css-source glob delta is declared, and no declaration is stale; and the image graph adds no co-cyclic module pair (FD-2, below).
-2. **Write.** Edited contents land at their new paths; emptied dirs are pruned deepest first, and a parent emptied by the pruning is pruned in turn.
-3. **Image check.** The new graph must equal the old one under the move map, edge for edge (a declared glob delta is the one expected change), with no violation, and no co-cyclic pair may have grown.
-4. **FD-5 on the step (P4-F6).** Every file the engine wrote, moved or edited, must classify `move-only` against its original under the move map (`classifyImage`). The report carries `classified`; an `UNCLASSIFIED` file refuses the step.
+2. **Parse, nothing written (P5-F4).** Every file the step would write, moved or edited, is parsed by `lib/syntax.mjs`: scripts by the TypeScript parser, an SFC by `@vue/compiler-sfc` with its script blocks by TypeScript and its plain-CSS style blocks by postcss, a sheet by postcss, JSON by `JSON.parse` (tsconfig and `.jsonc` by TypeScript's reader). A file that does not parse refuses the step at phase `parse`, and the CLI prints `PARSE refused` with the file and the parser's first message.
+3. **Write.** Edited contents land at their new paths; emptied dirs are pruned deepest first, and a parent emptied by the pruning is pruned in turn.
+4. **Image check.** The new graph must equal the old one under the move map, edge for edge (a declared glob delta is the one expected change), with no violation, and no co-cyclic pair may have grown.
+5. **FD-5 on the step (P4-F6).** Every file the engine wrote, moved or edited, must classify `move-only` against its original under the move map (`classifyImage`). The report carries `classified`; an `UNCLASSIFIED` file refuses the step.
 
-A failure in 3 or 4 rolls the tree back byte for byte.
+A failure in 4 or 5 rolls the tree back byte for byte.
 
 Rewrites keep the author's spelling (extension or none, `.js` for `.ts`, dir index, alias, `./`, root-absolute, const anchors, join segments, helper arguments, glob heads, embedded and base-relative paths). A one-segment base-relative rewrite is spelled `./name`. A `process.cwd()`-rooted join is rewritten in place; a cwd-rooted edge with no span to rewrite is judged by the image check. A run whose moves are already applied proposes nothing and reports the same tree digest.
 
@@ -103,9 +104,9 @@ Rewrites keep the author's spelling (extension or none, `.js` for `.ts`, dir ind
 
 `records/entry-record.json` holds `js` (`[name, source]` in published order), `css` (export key → `{ source, dist }` | `generated` | `assets`), `types`, `cascade.terminal` and `doors`. `package.json`'s `exports` and `typesVersions` are emitted from it byte-equal (`entries.mjs check`), and `entries.mjs write` re-pins them.
 
-The guard (`validateRecord`) throws in the build: a duplicate name, one source serving two names, a missing or empty source, a stale door, an undeclared `index.ts` under `src/`, a missing terminal, a CSS source entry with no `dist` (`css-dist-undeclared`) and two keys on one `dist` (`css-dist-twice`).
+The guard (`validateRecord`) throws in the build: a duplicate name, one source serving two names, a missing or empty source, a stale door, an undeclared `index.ts` under `src/`, a missing terminal, a CSS target that declares a `dist` name (`css-dist-declared`) and two CSS keys on one source (`css-source-twice`).
 
-**CSS dist names (P3-F5).** A CSS export's published file is its declared `dist`, not a mirror of its source path. When the two differ (a sheet moved into its unit, `theme.css` → `theme/index.css`), the build writes the declared name as a one-line `@import` of the mirror (`emitDeclaredCssEntries`), so the published key and file survive the move and no rule is duplicated.
+**CSS dist paths (P5-F2, P4-R4 arm (a)).** A CSS entry ships at its source's mirror path, `dist/<path under src/>`, like every other file, and its export key targets that real file: `./styles/theme` → `./dist/styles/theme/index.css` once `theme.css` moves to `theme/index.css`. The build writes no file at an old name, so no published file only forwards to another. The key never changes; the value follows the source, so a move of a CSS entry source is followed by `entries.mjs write` (F-3 is RED until then, naming the drift), and a consumer that imports the dist path directly gets a MIGRATION row.
 
 **The declaration program (FD-7).** `declarationProgram(root, outDir)` writes a throwaway tsconfig that extends `tsconfig.json` with `files` = the entry sources plus the ambient `.d.ts` in `src/`: declarations are emitted for what an entry reaches, and nothing under `__tests__/` enters `dist`. It replaces `tsconfig.build.json`.
 
@@ -114,7 +115,8 @@ The guard (`validateRecord`) throws in the build: a duplicate name, one source s
 - **The role.** The build reads the record's `cascade.terminal`; a terminal that is not imported, or not the last `@import`, stops it.
 - **The source half.** `cascade.mjs contract`: the terminal exists, is the last `@import` of the `./styles` source and has exactly one importer. A floor gate.
 - **The move-only verifier.** `cascade.mjs snapshot --dist D --out DIR --sha S` flattens each published CSS entry into its ordered leaf rules, with Vue scope ids and hashed `v-bind` vars numbered by first appearance, and, since FD-4, scoped `@keyframes` names (`name-<8 hex>`) renamed `name-#N` with every use. `cascade.mjs verify --baseline DIR --dist D` is GREEN only when every sequence is identical, else it names the first divergence (`reorder` or `content`). A move re-hashes a scoped SFC; renaming or changing a keyframe is still `content`.
-- **The listed-reorder judge (P4-F7, S-28).** `verify … --reorders listed.json [--browser seat.json]…`, with `listed.json` = `{ "reorders": [{ "entry": "./styles", "reason": "…" }] }`. An unlisted reorder and any content change stay RED; a listing that matches no reordered entry is stale and RED. A listed reorder is judged pair by pair (`reorderRisks`): the pairs whose relative order changed (base order against the longest kept subsequence) are each a **risk** when the two rules share a declared property, sit in one `@layer` path, and hold complex selectors of equal specificity whose classes co-occur in a source class recipe (`lib/recipes.mjs`) or are one class (classless: one selector). A risk is **covered** only by a browser-seat report run with `--base-report` in which a spec that reads it (its text names one of the shared properties AND a class of either rule, or a class whose every wearer wears one) has a base-green band, passed, and has no new failure; a reading spec with a new failure **refutes** the reorder. A spec that names only the class is not evidence: the P4 battery measured the accent-tone rung (22%/25% → 18%) pass all 18 base-green tests of the five chip-paint specs. GREEN needs every risk covered; each risk prints as `RISK` or `COVERED` with its pair, property and recipe.
+- **The listed-reorder judge (P4-F7, S-28).** `verify … --reorders listed.json [--browser seat.json]…`, with `listed.json` = `{ "reorders": [{ "entry": "./styles", "moved": ["<leaf rule>", …], "reason": "…" }] }`. An unlisted reorder and any content change stay RED; a listing that matches no reordered entry is stale and RED.
+- **The listed rung (P5-F3).** A listing names the moved rule set it reviewed: `moved` holds the leaf rules (the snapshot's `ctx :: selector {decls}` lines) that the reorder moves, read as the rules outside the longest kept subsequence. The set the reorder moves must equal the listed set as a multiset: a moved rule the listing does not name is `UNLISTED` (the reorder reaches past the reviewed rung) and a listed rule that did not move is `STALE-RULE`; either is RED, and a listing with no `moved` is RED. `verify` prints every moved rule of a reordered entry as an `UNLISTED` line, so a route writes its listing from the verifier's own output after it has reviewed the rung. Only a listing that matches is then judged pair by pair (`reorderRisks`): the pairs whose relative order changed (base order against the longest kept subsequence) are each a **risk** when the two rules share a declared property, sit in one `@layer` path, and hold complex selectors of equal specificity whose classes co-occur in a source class recipe (`lib/recipes.mjs`) or are one class (classless: one selector). A risk is **covered** only by a browser-seat report run with `--base-report` in which a spec that reads it (its text names one of the shared properties AND a class of either rule, or a class whose every wearer wears one) has a base-green band, passed, and has no new failure; a reading spec with a new failure **refutes** the reorder. A spec that names only the class is not evidence: the P4 battery measured the accent-tone rung (22%/25% → 18%) pass all 18 base-green tests of the five chip-paint specs. GREEN needs every risk covered; each risk prints as `RISK` or `COVERED` with its pair, property and recipe.
 
 ## F-7 · placement
 
@@ -131,7 +133,7 @@ Classes: `ok`, `anchored`, `move`, `global`, `published`, `unread`. `NEEDS-NAME`
 
 `classify.mjs --base <before> --root <after> [--moves list.json]… [--manifest m.json]`: each changed file is `move-only` (its text equals the base's once every reference span, in both, is replaced by the file it resolves to), `re-point` (the same with named imports replaced by their symbol origins), `vi-mock` (a mock re-aimed at a moved module) or `authored` (named, with a reason, in the manifest). Anything else is `UNCLASSIFIED` and exits 1, as does a manifest row naming an unchanged file. A span's token is its resolved target and its kind class (`kindClass` in `lib/move.mjs`, the image check's reading: `base-relative`, `quoted-relative` and `embedded-path` are one class), so a rewrite that changes which of those spellings F-1 reads is still move-only.
 
-**Reference sites (P4-F6).** A path spelled over several literal segments with only separators between them (`join("src", "styles", "tokens.css")`) is one site from its first segment to its last, so the engine's one-segment respelling (`join("src/styles/tokens/index.css")`) reads move-only. A site several edges share (a glob literal, one edge per match) carries the sorted set of their targets. The same normalizer runs inside the engine on every step (F-2, step 4), so every engine step of a chain is classified; a chain's authored rows are classified with this CLI and a manifest.
+**Reference sites (P4-F6).** A path spelled over several literal segments with only separators between them (`join("src", "styles", "tokens.css")`) is one site from its first segment to its last, so the engine's one-segment respelling (`join("src/styles/tokens/index.css")`) reads move-only. A site several edges share (a glob literal, one edge per match) carries the sorted set of their targets. The same normalizer runs inside the engine on every step (F-2, step 5), so every engine step of a chain is classified; a chain's authored rows are classified with this CLI and a manifest.
 
 ## F-10 · the browser seat
 
@@ -145,12 +147,12 @@ Classes: `ok`, `anchored`, `move`, `global`, `published`, `unread`. `NEEDS-NAME`
 
 ## Tree rows
 
-Each row is an all-or-nothing, idempotent transaction (`rows/lib.mjs`): an op whose result is already in place reports `applied`; a row whose ops are all applied is a no-op; a partly applied row throws. Rows run only in a linked worktree.
+Each row is an all-or-nothing, idempotent transaction (`rows/lib.mjs`): an op whose result is already in place reports `applied`; a row whose ops are all applied is a no-op; a partly applied row throws; a row whose staged text does not parse throws before its first write (P5-F4, `lib/syntax.mjs`). Rows run only in a linked worktree.
 
 | row | change |
 |---|---|
 | `r1-register-retire` | R-1 (P4-F1): `scripts/gate-register.mjs` and `tests/gates/gate-register.test.ts` retire with the register, first, before any structure row or move (W-REGISTER-COLLAPSE's retire; the fresh roster is that wave's). No route chain carries it |
-| `f3-entry-record` | the record is the one entry source; style roots come from the record, not a masked `existsSync`; the declared CSS dist names are emitted (F-3) |
+| `f3-entry-record` | the record is the one entry source; style roots come from the record, not a masked `existsSync` (F-3); CSS entries ship at their mirror paths, so the row writes no dist-name step (P5-F2) |
 | `f4-terminal-role` | the declared terminal replaces the masked anchor fallback (F-4) |
 | `m02-overlay-host` | S-8: `participation.ts` owns `OverlayHost` and `DockHoldKind` and a kernel context key |
 | `m03-roving-move.json` | `useTabRovingFocus.ts` moves to `src/composables/motion/morph/`, by the tree's own move engine |
@@ -161,7 +163,7 @@ Each row is an all-or-nothing, idempotent transaction (`rows/lib.mjs`): an op wh
 
 ## Anti-vacuity
 
-- **The plant batteries.** `plants/graph-plants.mjs` (59: the pass-1 critics' 35 and the floor's 24), `../pass-3/plants/p3-graph-plants.mjs` (18) with `../pass-3/plants/p3-tree-plants.sh` (the tree half), and `../pass-4/plants/p4-tree-plants.sh` (11 tree plants: F0 the 10.1.0 pin, F1..F7 one per item, F2u the undeclared glob delta, F47 the chip band's base-green count and F48 the property readback that refutes the accent-tone rung), each run against the previous floor and this one. The floor's plants are not an independent battery: each route's critic still writes its own.
+- **The plant batteries.** `plants/graph-plants.mjs` (59: the pass-1 critics' 35 and the floor's 24), `../pass-3/plants/p3-graph-plants.mjs` (18) with `../pass-3/plants/p3-tree-plants.sh` (the tree half), and `../pass-4/plants/p4-tree-plants.sh` (11 tree plants: F0 the 10.1.0 pin, F1..F7 one per item, F2u the undeclared glob delta, F47 the chip band's base-green count and F48 the property readback that refutes the accent-tone rung), and `../pass-5/plants/p5-tree-plants.sh` (6 tree plants, one or two per P5 item: F1 the floor's own cycles, F2 the theme move at its real dist path, F2d a declared dist name refused, F3 a reorder outside the listed rung, F4r a row and F4m an engine move that write an unparsable file; plus R7 and R48, pass 4's F7 and F48 re-issued with rule-set listings), each run against the previous floor and this one. The floor's plants are not an independent battery: each route's critic still writes its own.
 - **The surface pin** makes any growth or loss of a door or a name a reviewed diff.
 - **The gates** run under `npm test` through row `f9-wire`.
 
@@ -174,4 +176,7 @@ Each row is an all-or-nothing, idempotent transaction (`rows/lib.mjs`): an op wh
 - F-1 reads a Playwright program from string-literal `testDir` / `testMatch` only; `testIgnore` is not modelled (the tree's only ignore is `node_modules`, which the tree walk skips).
 - A class recipe is a string literal in `src` with two or more class-shaped tokens; a class assembled at run time is not a recipe. F-10's `classes` arm and FD-4's co-occurrence read only these recipes.
 - FD-4's specificity counts a functional pseudo-class's argument as written (`:is()`, `:not()`, `:has()` do not resolve to their most specific branch); `:where()` counts 0.
+- P5-F4 parses scripts, SFCs, CSS and JSON. Markdown, shell, HTML and YAML writes are not parsed. The check is syntax only: a write that parses and does not type-check is the typecheck's to find.
+- A route's own writers (a kit's exact-text edits engine, as B's S34) are outside the floor. They call `lib/syntax.mjs`'s `unparsed` on their staged texts to get the same refusal; the floor's row transaction and move engine already do.
+- P5-F3's moved set is the complement of one longest kept subsequence. When two subsequences are equally long the verifier's choice is deterministic, and a listing is written from the verifier's own `UNLISTED` output, so the two agree.
 - FD-4 accepts a risky listed reorder on the evidence that a spec reading it ran green against a green base. That is the registry's rule (§P3-8.3); it is not a proof of value identity, which only a computed-style readback of the property on a wearer gives.
