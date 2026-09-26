@@ -289,6 +289,8 @@ export const HP_SRC = `(() => {
 //               clip, opacity and visibility (H-3: faces are read from pixels, never the adapter).
 // mode "els":   only the elements marked [data-hp-el] paint, in their own colours, on white.
 // mode "edge":  only the plate paints, in its own colours, on a mid-grey page, backdrop-filter off (O-67).
+//               An adapter whose edge is carried outside the plate (edge caps) names those
+//               elements in the optional edge() read; they paint too, in their own colours.
 const PROBE_CSS = `
 html[data-hp], html[data-hp] body { background: #fff !important; background-image: none !important; }
 html[data-hp="edge"], html[data-hp="edge"] body { background: #7f7f7f !important; }
@@ -298,6 +300,7 @@ html[data-hp] [data-hp-plate]::before, html[data-hp] [data-hp-plate]::after { di
 html[data-hp="edge"] [data-hp-plate] { visibility: visible !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 html[data-hp="edge"] [data-hp-plate]::before, html[data-hp="edge"] [data-hp-plate]::after { display: block !important; }
 html[data-hp="edge"] [data-hp-plate] * { visibility: hidden !important; }
+html[data-hp="edge"] [data-hp-edge] { visibility: visible !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 html[data-hp="rim"] [data-hp-plate] { visibility: visible !important; background: transparent !important; background-image: none !important; border-color: transparent !important; box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 html[data-hp="rim"] [data-hp-plate] > :not([data-hp-rim]):not(:has([data-hp-rim])) { visibility: hidden !important; }
 html[data-hp="rim"] [data-hp-rim], html[data-hp="rim"] [data-hp-rim] * { visibility: visible !important; }
@@ -320,11 +323,12 @@ export async function probeMode(page, mode, { rim = "dock", els = null, faceSel 
             const s = document.createElement("style"); s.id = "hp-probe-css"; s.textContent = css; document.head.appendChild(s);
         }
         const P = window.__dockProbe;
-        for (const a of ["data-hp-plate", "data-hp-rim", "data-hp-face", "data-hp-face-bg", "data-hp-el"]) document.querySelectorAll(`[${a}]`).forEach((e) => e.removeAttribute(a));
+        for (const a of ["data-hp-plate", "data-hp-rim", "data-hp-face", "data-hp-face-bg", "data-hp-el", "data-hp-edge"]) document.querySelectorAll(`[${a}]`).forEach((e) => e.removeAttribute(a));
         if (!mode) { document.documentElement.removeAttribute("data-hp"); return; }
         P.plate()?.setAttribute("data-hp-plate", "");
         const rims = rim === "composed" ? [P.composedRim?.()].filter(Boolean) : (P.rim?.() ?? []);
         for (const e of rims) e.setAttribute("data-hp-rim", "");
+        if (mode === "edge") for (const e of P.edge?.() ?? []) e.setAttribute("data-hp-edge", "");
         if (mode === "faces") {
             // a face paints its glyph ink green; a face element that paints a box (a track, a
             // badge, a capsule) paints that box green too, so a bare box outside the plate counts
