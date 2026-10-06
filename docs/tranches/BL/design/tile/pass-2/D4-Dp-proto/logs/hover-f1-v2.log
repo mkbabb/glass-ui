@@ -1,0 +1,16 @@
+D4-D′ prototype probe (copied from D4-Dp-spec/probes, unchanged in logic) · part hover · dp-src · load 25.97 / 15.07 / 11.34 at start
+engine Chromium 149.0.7827.55
+  FAIL chromium f1-migrated light · selected vs HOVERED unselected ≥3:1 509.00 px² (band 474.00) vs bar 145.00 (3.51×) · hover vs rest 0.55 % moved · items 1/0 · load 27.81 / 15.63 / 11.56
+  PASS chromium f1-migrated dark · selected vs HOVERED unselected ≥3:1 517.00 px² (band 482.00) vs bar 145.00 (3.57×) · hover vs rest 95.99 % moved · items 1/0 · load 27.81 / 15.63 / 11.56
+  FAIL chromium f1-migrated prt · selected vs HOVERED unselected ≥3:1 517.00 px² (band 482.00) vs bar 145.00 (3.57×) · hover vs rest 0.00 % moved · items 1/0 · load 27.91 / 15.85 / 11.66
+  PASS chromium v2-migrated light · selected vs HOVERED unselected ≥3:1 502.25 px² (band 473.75) vs bar 154.00 (3.26×) · hover vs rest 92.25 % moved · items 1/0 · load 27.91 / 15.85 / 11.66
+  PASS chromium v2-migrated dark · selected vs HOVERED unselected ≥3:1 503.00 px² (band 474.50) vs bar 154.00 (3.27×) · hover vs rest 96.47 % moved · items 1/0 · load 27.91 / 15.85 / 11.66
+  FAIL chromium v2-migrated prt · selected vs HOVERED unselected ≥3:1 503.00 px² (band 474.50) vs bar 154.00 (3.27×) · hover vs rest 0.00 % moved · items 1/0 · load 27.03 / 15.87 / 11.69
+engine Playwright WebKit 26.5
+  PASS webkit f1-migrated light · selected vs HOVERED unselected ≥3:1 491.50 px² (band 460.00) vs bar 145.00 (3.39×) · hover vs rest 74.66 % moved · items 1/0 · load 27.03 / 15.87 / 11.69
+  PASS webkit f1-migrated dark · selected vs HOVERED unselected ≥3:1 498.25 px² (band 466.75) vs bar 145.00 (3.44×) · hover vs rest 96.23 % moved · items 1/0 · load 25.11 / 15.66 / 11.64
+  FAIL webkit f1-migrated prt (forced level-0 path) · selected vs HOVERED unselected ≥3:1 499.00 px² (band 467.50) vs bar 145.00 (3.44×) · hover vs rest 0.00 % moved · items 1/0 · load 25.11 / 15.66 / 11.64
+  PASS webkit v2-migrated light · selected vs HOVERED unselected ≥3:1 454.75 px² (band 429.00) vs bar 156.00 (2.92×) · hover vs rest 96.10 % moved · items 1/0 · load 24.86 / 15.76 / 11.70
+  PASS webkit v2-migrated dark · selected vs HOVERED unselected ≥3:1 454.25 px² (band 429.25) vs bar 156.00 (2.91×) · hover vs rest 97.14 % moved · items 1/0 · load 24.86 / 15.76 / 11.70
+  FAIL webkit v2-migrated prt (forced level-0 path) · selected vs HOVERED unselected ≥3:1 454.50 px² (band 428.75) vs bar 156.00 (2.91×) · hover vs rest 0.00 % moved · items 1/0 · load 24.86 / 15.76 / 11.70
+7/12 cells pass · load 24.86 / 15.76 / 11.70 at end

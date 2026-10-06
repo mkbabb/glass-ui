@@ -1,0 +1,33 @@
+== clean · load { 18.46 10.28 8.83 }
+      Tests  45 passed | 1 expected fail (46)
+== plant A: unquoted second tile corner in another sheet · load { 18.66 10.46 8.90 }
+     × the tile corner is one declaration on the field rung; the pill keeps the stadium 44ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected [ { …(2) }, { …(2) } ] to deeply equal [ { …(2) } ]
+- Expected
++ Received
++   {
++     "file": "src/styles/plant-a.css",
++     "value": "var(--radius-panel)",
++   },
+      Tests  1 failed | 44 passed | 1 expected fail (46)
+== plant B: tile corner on the panel rung · load { 18.66 10.46 8.90 }
+     × the tile corner is one declaration on the field rung; the pill keeps the stadium 46ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected [ { …(2) } ] to deeply equal [ { …(2) } ]
+- Expected
++ Received
+-     "value": "var(--radius-field)",
++     "value": "var(--radius-panel)",
+      Tests  1 failed | 44 passed | 1 expected fail (46)
+== plant C: pill corner on the field rung · load { 18.66 10.46 8.90 }
+     × the tile corner is one declaration on the field rung; the pill keeps the stadium 43ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected Set{ 'var(--radius-field)', 'inherit' } to deeply equal Set{ 'var(--radius-pill)', 'inherit' }
+- Expected
++ Received
+-   "var(--radius-pill)",
++   "var(--radius-field)",
+      Tests  1 failed | 44 passed | 1 expected fail (46)
+== clean after restore · load { 18.66 10.46 8.90 }
+      Tests  45 passed | 1 expected fail (46)

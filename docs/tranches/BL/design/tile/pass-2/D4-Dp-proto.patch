@@ -1,0 +1,533 @@
+--- a/MIGRATION.md
++++ b/MIGRATION.md
+@@ -33,6 +33,29 @@
+ answer `<ToggleGroup type="single">` gives. Every arrow moves. The default pairing is
+ unchanged (pill → `radio`, underline → `tabs`). Detector: `rg 'semantics="toggle"'`.
+ 
++One option shape arrives.
++
++_A `ToggleGroup` option that holds more than one row declares `shape="cell"`_
++
++A `ToggleGroup` item is a one-row pill: its block is clamped to the control rung, so a
++second row your markup forces (a column utility, a hard break, a nested column, a
++`height: auto`) is cut at the pill's edge. A set whose options hold more than one row
++declares `<ToggleGroup shape="cell">`: the items take the field corner (16px), a column,
++the pad pair and body leading, and paint the selected perimeter. The group's layout
++(grid, columns, gap) stays yours. Delete the item utilities `cell` supplies
++(`flex-col`, the padding, `leading-*`) and any corner, outline or selected paint. In
++development a pill holding a second row logs `[ToggleGroupItem] "<value>" holds more
++than one row in a pill group`, and a tile with a consumer corner logs `… is a tile with
++a <n>px corner`. Detector: those console errors; `rg 'ToggleGroupItem[^>]*flex-col'`.
++
++_Selected ink is a token_
++
++A `ToggleGroup` item's ink is `--selection-ink`: the muted foreground at rest, and the
++selection edge's ink when selected (it follows `--selection-tone`). Media inside an
++item read it (`stroke: var(--selection-ink)`), so `[data-state="on"] path` and
++`[data-state="on"] .label` rules delete. Detector: `rg 'data-state="on"\]' -g
++'*.{vue,css}'`.
++
+ _Behaviour and paint, nothing to change_
+ 
+ - `<ToggleGroup>` pads its row by `--focus-ring-reach` (the ring's outline plus offset,
+@@ -43,6 +66,14 @@
+   the new order. An arrow typed into an input inside an item stays the input's.
+ - A `ToggleGroup` pill holds one line: it clips at the row and ellipsizes each label
+   element.
++- A `ToggleGroup` item pops when it is selected, by pointer, key or a write to the
++  model (about +3.7% at the default motion weight, on the punch curve and
++  `--spring-panel-duration`); reduced motion runs nothing, and Tab entry never pops. The
++  pop writes `transform` while it runs, so a consumer `transform` on an item is
++  overwritten for that time.
++- A `shape="cell"` item keeps its box under `prefers-contrast: more` and forced colours:
++  the 2px `!important` selected border does not apply to it; its perimeter carries the
++  state (`Highlight` in forced colours).
+ - `--control-surface-bg-hover` is the foreground ink at the rest plate's alpha plus
+   `--fill-hover`, in one flat mix. The `.control-surface` hover (ToggleGroup items, the
+   Select trigger) paints it on the plate's own layer, only on a fine pointer; the
+--- a/src/components/toggle-group/index.ts
++++ b/src/components/toggle-group/index.ts
+@@ -1,5 +1,9 @@
+-export { default as ToggleGroup, type ToggleGroupProps } from "./ToggleGroup.vue";
+ export {
++    default as ToggleGroup,
++    type ToggleGroupProps,
++    type ToggleGroupShape,
++} from "./ToggleGroup.vue";
++export {
+     default as ToggleGroupItem,
+     type ToggleGroupItemProps,
+ } from "./ToggleGroupItem.vue";
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -1,3 +1,19 @@
++/* THE COMMIT'S TWO INPUTS, registered so the item reads a number and a time (an
++   unregistered token computes to its unevaluated text). `--selection-pop` rides
++   `--motion-weight`, so PRM (weight 0) retires the pop in the same assignment that
++   retires every other overshoot. */
++@property --selection-pop {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 0;
++}
++
++@property --selection-pop-duration {
++    syntax: "<time>";
++    inherits: true;
++    initial-value: 0s;
++}
++
+ @layer components {
+     /* THE GROUP PAINTS NOTHING. No background, no backdrop-filter, no rim, no
+        recess, no corner, no padding — both cardinalities, both orientations. What
+@@ -65,6 +81,13 @@
+         flex: none;
+         min-inline-size: var(--toggle-group-item-size);
+         min-block-size: var(--toggle-group-item-size);
++        /* THE PILL HOLDS ONE ROW, structurally (Q-5 (b)): its block is clamped to the
++           rung from both sides, so a second row a consumer forces (a column utility, a
++           hard break, a nested column, a `height: auto`) is cut at the plate in
++           production instead of ballooning the stadium into a lozenge. A clamp, not a
++           `block-size`, because an unlayered consumer size outranks a layered one and
++           a max does not yield to it. The tile rule releases it. */
++        max-block-size: var(--toggle-group-item-size);
+         align-items: center;
+         justify-content: center;
+         gap: 0.5rem;
+@@ -73,7 +96,14 @@
+            pair upstairs is what made this component the sole author of the ×32
+            `10003px` census; the role rung is the whole answer here. */
+         border-radius: var(--radius-pill);
+-        color: var(--muted-foreground);
++        /* THE SELECTED INK, one token for the label and the media: the rest ink, and
++           the selected edge's ink when on (tone-aware, floored). A tile's stage
++           strokes with it and needs no `[data-state="on"]` rule of its own (X-2). */
++        --selection-ink: var(--muted-foreground);
++        color: var(--selection-ink);
++        /* the commit's pop (ToggleGroupItem.vue): amplitude and clock */
++        --selection-pop: calc(0.06 * var(--motion-weight));
++        --selection-pop-duration: var(--spring-panel-duration);
+         font: inherit;
+         font-size: var(--control-text);
+         font-weight: 500;
+@@ -153,6 +183,38 @@
+         padding-inline: 1.25rem;
+     }
+ 
++    /* THE TILE: `<ToggleGroup shape="cell">`. The one declaration of the multi-line
++       corner (the field rung, Q-1 (a)), the column, the pad pair, body leading, and
++       the selected perimeter switched on (a tile's content brings its own ink and
++       weight, which override the pill's carriers). It lifts the pill's one-row law,
++       and `overflow: visible` lets the perimeter's -1 px inset paint all 2 px. It
++       declares NO group layout: the grid, the column count and the gap are the
++       consumer's (CX-5). */
++    .toggle-group[data-shape="cell"] .toggle-group__item {
++        flex-direction: column;
++        align-items: stretch;
++        justify-content: flex-start;
++        gap: var(--space-residue);
++        padding: var(--space-atom) var(--space-body);
++        text-align: start;
++        line-height: var(--type-leading-body);
++        white-space: normal;
++        overflow: visible;
++        max-block-size: none;
++        border-radius: var(--radius-field);
++        --selection-perimeter: 1;
++    }
++
++    .toggle-group[data-shape="cell"][data-size="sm"] .toggle-group__item {
++        padding: var(--space-residue) var(--space-atom);
++    }
++
++    .toggle-group[data-shape="cell"] .toggle-group__item > :not(svg) {
++        overflow: visible;
++        text-overflow: clip;
++        padding-block: 0;
++    }
++
+     /* THE ON-STATE CARRIES ON INK AND WEIGHT, AND ASSISTS WITH FILL. It used to be a
+        four-carrier slab: an opaque `--accent` fill, a 28%-α `--primary` border, a
+        `--shadow-sm`, and the ink. The shadow was the real defect — it tied the focus
+@@ -178,7 +240,7 @@
+        this lane's to patch locally with a literal. */
+     .toggle-group__item[data-state="on"] {
+         background-color: color-mix(in oklab, var(--foreground) 12%, transparent);
+-        color: var(--foreground);
++        --selection-ink: var(--selection-edge);
+         font-weight: 600;
+     }
+ 
+--- a/src/components/toggle-group/ToggleGroup.vue
++++ b/src/components/toggle-group/ToggleGroup.vue
+@@ -39,9 +39,15 @@
+  * no longer happens), the emit pair (`defineModel` — the SegmentedTabs idiom), and
+  * eight props that had zero non-default callers across six repositories. */
+ 
++/** `pill` — one-line options on the stadium. `cell` — options that hold more than one
++ * row (a name and a readout, a stage and a label): tiles on the field rung. */
++export type ToggleGroupShape = "pill" | "cell";
++
+ export interface ToggleGroupProps extends ControlProps {
+     /** `single` — a one-of-N chooser. `multiple` — N independent toggles. */
+     type: SelectionMode;
++    /** The options' shape, declared once for the group. The group's layout stays the consumer's. */
++    shape?: ToggleGroupShape;
+     orientation?: Orientation;
+     size?: ControlSize;
+     class?: HTMLAttributes["class"];
+@@ -52,6 +58,7 @@
+ const props = withDefaults(defineProps<ToggleGroupProps>(), {
+     orientation: "horizontal",
+     size: "md",
++    shape: "pill",
+ });
+ 
+ /* One scalar model for both cardinalities: `single` holds one value, `multiple` an
+@@ -156,6 +163,7 @@
+         :role="selection.groupRole.value"
+         :data-type="props.type"
+         :data-size="props.size"
++        :data-shape="props.shape"
+         :data-orientation="props.orientation"
+         v-bind="controlStateAttrs(props.invalid)"
+         @keydown="selection.onKeydown"
+--- a/src/components/toggle-group/ToggleGroupItem.vue
++++ b/src/components/toggle-group/ToggleGroupItem.vue
+@@ -1,5 +1,12 @@
+ <script setup lang="ts">
+-import { computed, onBeforeUnmount, onMounted, ref, type HTMLAttributes } from "vue";
++import {
++    computed,
++    onBeforeUnmount,
++    onMounted,
++    ref,
++    watch,
++    type HTMLAttributes,
++} from "vue";
+ import { cn } from "../_shared/class-names";
+ import type { SelectionValue } from "../_shared/selection";
+ import { useOptionalToggleGroupContext, type ToggleItemEntry } from "./context";
+@@ -72,6 +79,90 @@
+ 
+ const selected = computed(() => group?.isSelected(props.value) ?? false);
+ const isDisabled = computed(() => entry.disabled());
++
++/* THE COMMIT, keyed on the MODEL, never on focus: a pointer, a key and a programmatic
++ * write all change the model; a Tab entry, a mount and a keyed move do not. The item
++ * pops on the punch curve (out, under, settle) on `transform`, a channel the hover
++ * lift and the press squish (`scale`) never write, so the three compose instead of
++ * racing. Amplitude and clock are the item's tokens (styles.css); PRM zeroes the
++ * amplitude, and a zero amplitude runs nothing. */
++const seconds = (time: string): number =>
++    time.endsWith("ms") ? Number.parseFloat(time) / 1000 : Number.parseFloat(time);
++
++watch(
++    selected,
++    (on) => {
++        const node = el.value;
++        if (!on || !node) return;
++        const style = getComputedStyle(node);
++        const pop = Number.parseFloat(style.getPropertyValue("--selection-pop"));
++        if (!(pop > 0)) return;
++        node.animate(
++            [
++                { transform: "scale(1)" },
++                { transform: `scale(${1 + pop})`, offset: 0.4 },
++                { transform: "scale(1)" },
++            ],
++            {
++                duration:
++                    seconds(style.getPropertyValue("--selection-pop-duration").trim()) *
++                    1000,
++                easing: style.getPropertyValue("--ease-cartoon-punch").trim(),
++            },
++        );
++    },
++    { flush: "post" },
++);
++
++/* DEVELOPMENT NAMES WHAT THE SHAPE RULE DECIDES SILENTLY (Q-5 (b)): production cuts a
++ * pill's second row at its rung and lets a consumer corner win on a tile; here the
++ * item also says so, once. A pill names a second row (a child running past its box,
++ * or a label squeezed by the rung). A tile names a corner that is not the field rung
++ * as the document root resolves it, never as the item resolves it, so a per-item
++ * re-binding cannot name itself. */
++if (import.meta.env.DEV) {
++    let rows: ResizeObserver | null = null;
++    const name = (why: string) =>
++        console.error(`[ToggleGroupItem] "${String(props.value)}" ${why}`);
++    onMounted(() => {
++        const node = el.value;
++        if (!node) return;
++        if (node.closest(".toggle-group")?.getAttribute("data-shape") === "cell") {
++            const probe = document.createElement("div");
++            probe.style.borderTopLeftRadius = "var(--radius-field)";
++            document.body.append(probe);
++            const field = getComputedStyle(probe).borderTopLeftRadius;
++            probe.remove();
++            const corner = getComputedStyle(node).borderTopLeftRadius;
++            if (corner !== field)
++                name(
++                    `is a tile with a ${corner} corner; a tile's corner is the field rung (${field}). Delete the consumer corner.`,
++                );
++            return;
++        }
++        let named = false;
++        rows = new ResizeObserver(() => {
++            if (named) return;
++            const box = node.getBoundingClientRect();
++            const second = Array.from(node.children).some((child) => {
++                const r = child.getBoundingClientRect();
++                return (
++                    r.height > 0 &&
++                    (r.bottom > box.bottom + 0.5 ||
++                        child.scrollHeight > child.clientHeight + 1)
++                );
++            });
++            if (!second) return;
++            named = true;
++            name(
++                `holds more than one row in a pill group, and the pill cuts it at its rung. Declare <ToggleGroup shape="cell">.`,
++            );
++        });
++        rows.observe(node);
++        for (const child of Array.from(node.children)) rows.observe(child);
++    });
++    onBeforeUnmount(() => rows?.disconnect());
++}
+ </script>
+ 
+ <template>
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -371,6 +371,7 @@
+     ToggleGroupItem,
+     type ToggleGroupItemProps,
+     type ToggleGroupProps,
++    type ToggleGroupShape,
+ } from "./components/toggle-group";
+ export {
+     Tooltip,
+--- a/src/styles/accessibility.css
++++ b/src/styles/accessibility.css
+@@ -5,7 +5,9 @@
+ @import "./utilities/a11y-overrides.css";
+ 
+ /* Selection and validation keep a non-hue boundary when contrast is requested.
+-   The system-color arm yields fully to the user's forced palette. */
++   The system-color arm yields fully to the user's forced palette. A ToggleGroup
++   tile is exempt: its selected perimeter is its own layer (`Highlight` in forced
++   colours), and a 2 px border here would move its content. */
+ @layer components {
+     @media (prefers-contrast: more) {
+         :is(
+@@ -15,7 +17,7 @@
+             [aria-checked="true"],
+             [data-state="checked"],
+             [data-state="on"]
+-        ) {
++        ):not(.toggle-group[data-shape="cell"] .toggle-group__item) {
+             border-color: currentColor !important;
+             border-style: solid !important;
+             border-width: 2px !important;
+@@ -36,7 +38,7 @@
+             [aria-checked="true"],
+             [data-state="checked"],
+             [data-state="on"]
+-        ) {
++        ):not(.toggle-group[data-shape="cell"] .toggle-group__item) {
+             border-color: Highlight !important;
+             border-style: solid !important;
+             border-width: 2px !important;
+--- a/tests/components/ui/toggle-group/ToggleGroup.test.ts
++++ b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+@@ -371,7 +371,7 @@
+         ]) {
+             expect(barrel, `${dead} was deleted, not aliased`).not.toContain(dead);
+         }
+-        // Four exports, clean break, no shim. Read off the `export` clauses so the
++        // Five exports, clean break, no shim. Read off the `export` clauses so the
+         // `from "./ToggleGroup.vue"` specifiers are not counted as surface.
+         const exported = new Set(
+             [...barrel.matchAll(/(?:default as|type)\s+(ToggleGroup\w*)/g)].map(
+@@ -383,6 +383,7 @@
+             "ToggleGroupItem",
+             "ToggleGroupItemProps",
+             "ToggleGroupProps",
++            "ToggleGroupShape",
+         ]);
+     });
+ 
+--- a/tests/styles/radius-role-canon.test.ts
++++ b/tests/styles/radius-role-canon.test.ts
+@@ -1,5 +1,6 @@
+ import { readdirSync, readFileSync } from "node:fs";
+ import { join } from "node:path";
++import postcss from "postcss";
+ import { describe, expect, it } from "vitest";
+ import { cn } from "@glass/components/_shared/class-names";
+ 
+@@ -191,7 +192,10 @@
+     });
+ 
+     it("Command input → NO radius (paint-dead, panel owns the corner)", () => {
+-        const body = rule(read("src/components/command/styles.css"), "\\.command__input");
++        const body = rule(
++            read("src/components/command/styles.css"),
++            "\\.command__input",
++        );
+         expect(body).toBeDefined();
+         expect(body).not.toContain("border-radius");
+     });
+@@ -393,7 +397,9 @@
+ /** Every paintable source file under `src/`, repo-relative. A census, not a list —
+  *  a fourth squircle fork added anywhere is found without editing this suite. */
+ const srcFiles = (dir = "src", out: string[] = []): string[] => {
+-    for (const entry of readdirSync(join(process.cwd(), dir), { withFileTypes: true })) {
++    for (const entry of readdirSync(join(process.cwd(), dir), {
++        withFileTypes: true,
++    })) {
+         const rel = `${dir}/${entry.name}`;
+         if (entry.isDirectory()) srcFiles(rel, out);
+         else if (/\.(css|vue|ts)$/.test(entry.name)) out.push(rel);
+@@ -562,11 +568,78 @@
+         // …and the sentinel-producing calc goes with it, in EITHER spelling: the
+         // literal D-5 recorded and the relay #23 re-expressed it as.
+         expect(strippedSheet).not.toMatch(/var\(--radius-pill\)\s*\+/);
+-        // The segment keeps its own role rung (law B) — one stadium, one spelling.
+-        const item = rule(sheet, "\\.toggle-group__item");
+-        expect(item).toContain("border-radius: var(--radius-pill)");
++        // The segment's own rung (law B) is read on the parsed selector below.
+     });
+ 
++    /* D4 · the tile corner is ONE declaration, read on the PARSED selector, never on
++     * text: every corner-declaring rule in every sheet under src/ is matched (happy-dom
++     * `Element.matches`, so any spelling — quoted, unquoted, `:is()`, `:where()`, a
++     * second sheet — counts) against a live item in a `cell` group and the same item
++     * in a `pill` group. Exactly one rule may reach the tile and not the pill, in
++     * toggle-group/styles.css, on the field rung; the pill's own rules there resolve
++     * to the stadium. The painted corner is pinned in both engines by the D4 harness
++     * (T-1, T-2, W-D), not here. */
++    it("the tile corner is one declaration on the field rung; the pill keeps the stadium", () => {
++        const files = (dir: string): string[] =>
++            readdirSync(dir, { withFileTypes: true }).flatMap((d) =>
++                d.isDirectory()
++                    ? files(join(dir, d.name))
++                    : d.name.endsWith(".css")
++                      ? [join(dir, d.name)]
++                      : [],
++            );
++        const mountItem = (shape: "cell" | "pill"): Element => {
++            document.body.innerHTML = `<div class="toggle-group" data-shape="${shape}" data-size="md" data-type="single"><button class="toggle-group__item control-surface glass-control-edge glass-capsule-hover tap-squish focus-ring" data-state="on"></button></div>`;
++            return document.querySelector(".toggle-group__item")!;
++        };
++        // a pseudo-element or a state pseudo-class paints the item in some state: read the host's reach
++        const reaches = (shape: "cell" | "pill", selector: string): boolean => {
++            const host = selector
++                .replace(
++                    /::?(before|after|hover|active|focus-visible|focus)\b(\([^)]*\))?/g,
++                    "",
++                )
++                .trim();
++            const el = mountItem(shape);
++            try {
++                return el.matches(host || "*");
++            } catch {
++                return false;
++            }
++        };
++        const tileOnly: { file: string; value: string }[] = [];
++        const pillHere: string[] = [];
++        for (const file of files(join(process.cwd(), "src"))) {
++            const rel = file.slice(process.cwd().length + 1);
++            postcss
++                .parse(readFileSync(file, "utf8"))
++                .walkDecls(
++                    /^border(-(top|bottom|start|end)-(left|right|start|end))?-radius$/,
++                    (d) => {
++                        if (d.parent?.type !== "rule") return;
++                        for (const selector of (d.parent as postcss.Rule).selectors) {
++                            const onCell = reaches("cell", selector);
++                            const onPill = reaches("pill", selector);
++                            if (onCell && !onPill)
++                                tileOnly.push({ file: rel, value: d.value });
++                            if (
++                                onPill &&
++                                rel === "src/components/toggle-group/styles.css"
++                            )
++                                pillHere.push(d.value);
++                        }
++                    },
++                );
++        }
++        expect(tileOnly).toEqual([
++            {
++                file: "src/components/toggle-group/styles.css",
++                value: "var(--radius-field)",
++            },
++        ]);
++        expect(new Set(pillHere)).toEqual(new Set(["var(--radius-pill)", "inherit"]));
++    });
++
+     it("mints no radius token to do any of it", () => {
+         // the inventory is the bijection with radius.css (suite 1); the role spine
+         // adds no name of its own, so these two sets stay identical.
+@@ -599,7 +672,9 @@
+     it("keeps per-corner longhands DISJOINT from the shorthand", () => {
+         // a side/corner utility writes different longhands — collapsing them into
+         // one bucket would eat the shorthand and square three corners
+-        expect(cn("rounded-card", "rounded-t-none")).toBe("rounded-card rounded-t-none");
++        expect(cn("rounded-card", "rounded-t-none")).toBe(
++            "rounded-card rounded-t-none",
++        );
+         expect(cn("rounded-t-card", "rounded-t-none")).toBe("rounded-t-none");
+         expect(cn("rounded-tl-card", "rounded-t-none")).toBe(
+             "rounded-tl-card rounded-t-none",
+@@ -614,13 +689,17 @@
+         expect(cn("rounded-tooltip", "rounded-t-none")).toBe(
+             "rounded-tooltip rounded-t-none",
+         );
+-        expect(cn("rounded-badge", "rounded-b-none")).toBe("rounded-badge rounded-b-none");
++        expect(cn("rounded-badge", "rounded-b-none")).toBe(
++            "rounded-badge rounded-b-none",
++        );
+         expect(cn("rounded-lg", "rounded-l-none")).toBe("rounded-lg rounded-l-none");
+         expect(cn("rounded-sm", "rounded-s-none")).toBe("rounded-sm rounded-s-none");
+     });
+ 
+     it("scopes by variant prefix like every other bucket", () => {
+-        expect(cn("rounded-card", "md:rounded-pill")).toBe("rounded-card md:rounded-pill");
++        expect(cn("rounded-card", "md:rounded-pill")).toBe(
++            "rounded-card md:rounded-pill",
++        );
+         expect(cn("md:rounded-card", "md:rounded-pill")).toBe("md:rounded-pill");
+     });
+ });
+@@ -639,7 +718,9 @@
+ 
+     it("registers exactly three corner-shape forks across the whole of src", () => {
+         const found = srcFiles().filter((rel) =>
+-            /@supports\s*\(\s*corner-shape:\s*superellipse\(2\)\s*\)/.test(strip(read(rel))),
++            /@supports\s*\(\s*corner-shape:\s*superellipse\(2\)\s*\)/.test(
++                strip(read(rel)),
++            ),
+         );
+         expect(found.sort()).toEqual([...FORKS].sort());
+     });
+@@ -649,9 +730,13 @@
+             const src = strip(read(rel));
+             const gated = supportsRanges(src);
+             // exclude the `@supports (corner-shape: …)` condition text itself
+-            const declarations = [...src.matchAll(/(?<!@supports\s?\()\bcorner-shape\s*:/g)]
++            const declarations = [
++                ...src.matchAll(/(?<!@supports\s?\()\bcorner-shape\s*:/g),
++            ]
+                 .map((m) => m.index!)
+-                .filter((i) => !/@supports\s*\($/.test(src.slice(Math.max(0, i - 12), i)));
++                .filter(
++                    (i) => !/@supports\s*\($/.test(src.slice(Math.max(0, i - 12), i)),
++                );
+             const ungated = declarations.filter(
+                 (i) => !gated.some(([a, b]) => i > a && i < b),
+             );
