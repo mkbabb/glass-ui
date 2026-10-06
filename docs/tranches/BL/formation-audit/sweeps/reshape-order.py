@@ -255,6 +255,10 @@ ADJUDICATED = {
         "W-L.8 step 5 names W-D.2's jobs (fix-8)",
     'W-G.1|createCanvasLifecycle.ts|W-G.3':
         'W-G.3 §4 names the moved path `webgpu/createCanvasLifecycle.ts`, with W-G.1 before it',
+    'W-L.3|scripts/verify-export-types.mjs|W-0.11':
+        "band 0: W-0.11's G5 is W-0.1's G5, read at v10.2.0 by W-0.7 step 1 and not re-run at 11.0.0 (W-L.8 §3.5 step 1; fix-10)",
+    'W-0.8|composables/useDockSpring.ts|W-I.1':
+        "W-I.1 names it in §2 (HEAD readings) and in §3.3, the one description of the carrier W-0.8 lands; W-I.1 §4 states W-0.8 deleted it, and the gate that reads it is W-0.8's G10 (fix-10)",
     'W-L.3|scripts/verify-export-types.mjs|W-0.1':
         "band 0: W-0.n gates are the 10.2.0 cut's, read at v10.2.0 by W-0.7 step 1 and not re-run at 11.0.0 (W-L.8 §3.5 step 1, fix-8)",
     'W-L.3|scripts/verify-export-types.mjs|W-L.8':

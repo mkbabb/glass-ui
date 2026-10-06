@@ -1,0 +1,25 @@
+# inbound-fold.py — class sweep, formation fix seat 10
+
+## before: the plan at HEAD 31f3c5ea (a worktree copy, BL_ROOT), run by fix-10
+OPEN BAND      O-84   INBOUND lands it in band 0 / the 10.x minor; no ledger row for it is at a band-0 wave: W-I.1
+OPEN BAND      O-84a  INBOUND lands it in band 0 / the 10.x minor; no ledger row for it is at a band-0 wave: W-I.1
+OPEN NO-PLAN   O-86   PLAN.md does not name it
+OPEN NO-LEDGER O-87   audit/INBOUND.md has the row; LEDGER.md has none
+OPEN NO-PLAN   O-87   PLAN.md does not name it
+OPEN NO-LEDGER O-88   audit/INBOUND.md has the row; LEDGER.md has none
+OPEN NO-PLAN   O-88   PLAN.md does not name it
+OPEN FOLDED    O-88   folds O-55 into its band-0 unit; O-55's ledger rows are at W-I.1, W-L.7
+OPEN FOLDED    O-88   folds O-65 into its band-0 unit; O-65's ledger rows are at W-I.1, W-L.1, W-L.7
+OPEN FOLDED    O-88   folds O-84 into its band-0 unit; O-84's ledger rows are at W-I.1
+OPEN FOLDED    O-88   folds O-84a into its band-0 unit; O-84a's ledger rows are at W-I.1
+OPEN NO-LEDGER O-89   audit/INBOUND.md has the row; LEDGER.md has none
+OPEN NO-PLAN   O-89   PLAN.md does not name it
+OPEN CARRY     O-87   FORMATION-PROGRESS.md:110 records a carry owed to formation; PLAN.md does not name O-87
+OPEN CARRY     O-88   FORMATION-PROGRESS.md:112 records a carry owed to formation; PLAN.md does not name O-88
+OPEN CARRY     O-89   FORMATION-PROGRESS.md:113 records a carry owed to formation; PLAN.md does not name O-89
+ids 37, open 16, stale 0
+exit=1
+
+## after: the plan as fix-10 leaves it
+ids 37, open 0, stale 0
+exit=0

@@ -14,7 +14,7 @@
 
 | id | the two asks in conflict, or the words and the divergence | seat default (the wave's terminal unless the owner rules otherwise) |
 |---|---|---|
-| L05b-15, N-7, O-55 R-2 | AY B.5 "must NOT be baked into the dock" against N-7 "the progress bar … integrated into the bottom of the dock" | BUILD in W-I.1 as an **opt-in plate seat**: never baked into every dock (AY B.5, which concerned the slides deck bar), present when a consumer asks (N-7, the newer words) |
+| L05b-15, N-7, O-55 R-2 | AY B.5 "must NOT be baked into the dock" against N-7 "the progress bar … integrated into the bottom of the dock" | BUILD in W-0.8 (10.2.0, the O-88 unit) as an **opt-in plate seat**: never baked into every dock (AY B.5, which concerned the slides deck bar), present when a consumer asks (N-7, the newer words) |
 | UIA-KF-069, UIA-F-138, UIA-V-200, -349, -367, -660 | the cartoon register (D-3; `tokens/shadow.css:84-90`, `--shadow-cartoon-lg` three hard offsets) against the consumers' "cluttered" under the owner's own order | KEEP the under-stamp on cards and panes (D-3). The overlay's stack is a defect: `overlay-plate.css:316-318` stacks rim, vivid under-shadow, floating shadow **and** the cartoon under-stamp, which UIA-F-138 reads as a doubled slab. One cast per floating plate: FOLD → W-E.4 |
 | R2-06-08 | "a different custom aurora per page" shipped as one background per category (8 of 11 paper or grid); "header text 2× smaller" never executed (`demo/stories/manifest.ts:317-325`) | BUILD both in W-E.10: per-page aurora presets in the demo (the demo is the library's own consumer, E-5), and the header rung one step down the √φ ladder per the owner's factor |
 | O-74 §4 (A2-VA-L1-6, A2-FO-L1-9) | the no-`Confirm*` rule (`dialog/DialogContent.vue:21-28`) against "not duplicating any component … fixed at the glass-ui root" (six sites in three apps) | BUILD `useConfirm()` in W-L.1: an imperative promise over the existing Dialog at `dismissal="deliberate"` with a `tone="destructive"` action. No `Confirm*` component symbol is minted, so the rule's reason holds and the duplication goes |
@@ -63,4 +63,4 @@ None here; `useConfirm` is additive and its CHANGELOG line is W-L.1's.
 
 - F-15's members and inbound rows (§1) close with their terminals. OW-7 closes on the owner's verdicts or, at W-L.8, on the recorded defaults.
 - O-74 §4 and §9 (the rulings owed, `FORMATION-PROGRESS.md:40`).
-- N-7's conflict half (its build is W-I.1's).
+- N-7's conflict half (its build is W-0.8's).

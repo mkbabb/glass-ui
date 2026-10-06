@@ -1,4 +1,4 @@
-# W-I.1 · W-DOCK-EXTENT: the dock from D2's converged specification (loop D2) · 11.0.0
+# W-I.1 · W-DOCK-EXTENT: the dock's plate, run and state from D2's converged specification, on W-0.8's carrier (loop D2) · 11.0.0
 
 | field | value |
 |---|---|
@@ -7,7 +7,7 @@
 | HEAD | `8536f2cc` in a scratch worktree (the task named `f3ad78d0`; every commit since is under `docs/`). `git diff --stat v10.1.0 HEAD -- src` prints nothing, so every reading measures the published 10.1.0 bytes, and the dock is the 10.0.1 dock (10.1.0 changed the Configurator only). A second worktree carries HEAD + `design/dock/pass-2/floor.patch` (`git apply --check` clean, 38 files) to say which rows D2's floor already cures |
 | kind | LOOP WAVE, owned by design loop D2 (`design/dock/`). It lands only from D2's converged specification and never before D2 meets its gate (§3.1). It builds nothing the loop has not converged on |
 | ships in | 11.0.0 |
-| families | F-16 (less #48, W-I.5, and O-83, W-0.8), F-17 (whole), F-18 (whole), F-71 (split: O-67 R-3, the badge seat), F-29 (split: O-84a METRIC-TOKEN-JOIN with UIA-F-105 and UIA-KF-215, moved from W-0.8 by fix-3). The dock hallmarks (#67, #90) are W-I.6's and the run box (C-8) W-I.7's |
+| families | F-18 (whole), F-16 split (the plate's corner, W1, and O-67's edge witness family, W7), F-71 (split: O-67 R-3, the badge seat). F-16's extent and morph, F-17 and F-29's O-84a split are W-0.8's in 10.2.0 by the owner's O-88 ruling (`audit/INBOUND.md:45`; fix-10): this wave lands the rest of D2's converged spec on that carrier and re-runs W-0.8's harness gates unshimmed. The dock hallmarks (#67, #90) are W-I.6's and the run box (C-8) W-I.7's |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
 | instruments | the D2 harness (`$H` = `scripts/loops/dock/harness/` at landing; W-C.1 §3 step 4 moves it from `docs/tranches/BL/design/dock/harness/`, where the HEAD readings were taken, and PLAN §5 orders this wave after W-C.1; H2: eight witnesses and the R6 probe, self-test 85/85 in both engines, `pass-2/H2.md` §4). The band-I probe (appendix A) and `demo-aria.mjs` (`W-I.2.md` appendix A) for the rows the harness does not read. They land under `scripts/probes/band-I/` with `npm run probe:band-I` |
@@ -15,27 +15,24 @@
 
 ## 1 · What it closes
 
+**The O-88 split (fix-10).** The owner ruled the dock collapse system into 10.2.0 (`audit/INBOUND.md:45`). `W-0.8.md` §3.2 is the one record of which item of D2's converged spec lands in which wave, and `W-0.8.md` §1 lists the rows that close there (F-16's extent and morph rows, F-17, O-84, O-84a). The rows below are what this wave closes.
+
 | id | what | source |
 |---|---|---|
-| F-16 members | L01b-48, L03b-04, L04-F14, L04-F27, L05b-04, L05b-05; R2-02-01 (the poisoned first endpoint), R2-02-02 (faces not anchored to the plate), R2-02-03 (the collapsed Play never plays), R2-02-05 (the dead tail and the squashed corner), R2-02-07 (the layer swap snaps), R2-03-03 (O-56 G-1, DockCrossfade resizes in one frame), R2-08-13 (hold-then-jump in all nine a11y cells) | `audit/REGISTRY.md:356-375` |
-| F-17 | L05b-03, R2-04-09 (compact-on-scroll dropped; no rim mounted) | `REGISTRY.md:377-387` |
 | F-18 | L03b-03, L01b-47, L05b-18; R2-01-10, R2-02-06, R2-03-01 (O-56 G-2 producer half), R2-03-04, R4-02-08, R7-02-02; the owner witness items 1-6 (the lens, short overflow, scroll-into-view under the tip, the hover-transition arming, the transform-overflow arming, the block-axis clip O-63) | `REGISTRY.md:389-418` |
+| F-16 split: O-67's witness family, O-66 §2 | the side, vertical and canvas docks as a witness family (W7), and the witness scope's headed real-GPU cells (W8 headed) | `INBOUND-MAP.md:626,632` |
 | O-85 DOCK-PRIORITY-OVERFLOW | a per-control priority with the lowest-priority controls folding into the dock's own More menu, container-driven (IN:41; ruled to this band with O-65 as a D2 question, CUR:80). D2 rules it against the scrolling run and the cap (§3.1 item 6) | `audit/INBOUND.md:41` |
 | R56 scroll glide in the dock run, handed from W-B.15 | the dock run's scroll is native; D2 rules a glide or keeps native (§3.1 item 7); G26 | `W-B.15.md` |
 | UIA-KF-052, UIA-F-132 | the DockControl tone seat and loading state (W-B.2 §3.5): D2 checklist items (§3.1 item 8) | LEDGER:577, :592 |
 | W-0.8's cure | the cap rest (O-83) shipped in 10.2.0, kept or superseded here (§3.4) | `W-0.8.md` |
-| O-84 DOCK-SUMMARY-SQUARE | `.dock-layer--summary` is locked square (`dock/styles/morph.css:180-198`), so collapsed content wider than the floor overruns the plate. Ask: keep the floor, drop the square lock. The owner's ratification folds it into D2 with O-65, not 10.2.0 (`FORMATION-PROGRESS.md:78`); fix-3 moved it here from W-0.8 (FB-14). D2 rules it with Q-10 (§3.1 item 2); G27, G29 | IN:38 |
-| O-84a METRIC-TOKEN-JOIN, UIA-F-105, UIA-KF-215 | `.metric__value { min-inline-size: 3ch }` (`metric/styles.css:66-67`) detaches a short value from its unit; `overflow-wrap: anywhere` on the label (`:42`) and value (`:68`) breaks numbers mid-word. Folded into D2 with O-84 by the same ratification; moved here from W-0.8 by fix-3. The cure is not a design question: `.metric__value` content-sized, `anywhere` replaced by `break-word` on the label, `tabular-nums lining-nums` kept (§3.4 item 5); G28, G30 | IN:39; `INBOUND-MAP.md:435,448` |
 | F-71 split | O-67 R-3, the reserved badge seat (an API ask decided here as a dock seat) | `audit/INBOUND-MAP.md:631` |
-| inbound, F-16 | O-56 G-1; O-60 KFA-7, -8, -13, -50, -53, -110 (LIVE), -189 (folds into 7 and 13); O-64 R-1..R-4; O-65 R-1 DOCK-COLLAPSED-FORM; O-66 §2 (the witness scope); O-67's witness family; UIA-KF-032, UIA-F-6, UIA-V-67, UIA-V-68, UIA-F-94, UIA-V-235, UIA-V-251, UIA-V-504; A2-KE-L2-8, A2-FO-L2-13 | `INBOUND-MAP.md:147-177,490-518,536,560-563,585-588,619,626,632,683-684` |
 | inbound, F-18 | O-56 G-2 (producer half); O-63; O-64 R-6; O-67 R-1, R-2; C-2 rows 2 and 3; UIA-V-159, UIA-V-399, UIA-V-618; A2-VA-L2-7, A2-KE-L2-16 | `INBOUND-MAP.md:310-322,537,549-552,565,590,629-630,678,682` |
-| inbound, F-17 | O-55 R-1, R-2 (N-7) | `INBOUND-MAP.md:533-534` |
-| O-81 (1)-(3) | DOCK-END-INSET, DOCK-FIRST-EXPAND, DOCK-MOBILE-SCALE-COARSE (D2 pass-3 checklist rows; (3) with F-29) | `audit/INBOUND.md:35` |
-| ledger | #47 GF-DOCK (the state attribute; the latch at `g-dock-lattice.test.ts:925`); N-7, N-8a, N-8b (producer half), N-12, N-14, N-15; OW-7's rim glance (read from D2's capture) | `ledger/census-register-a.md:54-55`, `census-register-b.md:57,75`, `census-carries-recap.md:82-98`, `ledger/CENSUS.md:226-231` |
-| carried obligations (CUR) | the O-64 R-6 probe (CUR:32); O-65 as a witness (CUR:33); O-66 §2 scope (CUR:35); O-67 as a witness family (CUR:36); the hardened harness and the unshimmed WebKit result (CUR:38); the rim's owner-record conflict (CUR:43) | `FORMATION-PROGRESS.md:32-43` |
+| O-81 (1), (3) | DOCK-END-INSET and DOCK-MOBILE-SCALE-COARSE (D2 pass-3 checklist rows; (3) with F-29). O-81 (2) DOCK-FIRST-EXPAND is W-0.8's | `audit/INBOUND.md:35` |
+| ledger | #47 GF-DOCK (the state attribute; the latch at `g-dock-lattice.test.ts:925`); N-8b (producer half), N-12, N-14 (N-7, N-8a and N-15 are W-0.8's; OW-7's rim glance is read from W-0.8's capture) | `ledger/census-register-a.md:54-55`, `census-register-b.md:57,75`, `census-carries-recap.md:82-98`, `ledger/CENSUS.md:226-231` |
+| carried obligations (CUR) | the O-64 R-6 probe (CUR:32); O-66 §2 scope, whose headed GPU cells are read here (CUR:35); O-67 as a witness family (CUR:36); the hardened harness and the unshimmed WebKit result (CUR:38). O-65 as a witness (CUR:33) and the rim's owner-record conflict (CUR:43) are W-0.8's | `FORMATION-PROGRESS.md:32-43` |
 | W-A.2's hand-off | the `g-dock-lattice.test.ts:925` latch's assertion, which W-A.2 moves to `tests/owed/g-dock-lattice.test.ts` with a fence; this wave brings it home (§3 item 1, G13) | W-A.2 §3 item 7 |
 
-**Not closed here.** The dock's veil (C-2 row 1) is W-H.1's M-5 and W-H.2's; this wave reads the ink W-H.1 lands. F-19's member query, naming and selection semantic are W-I.2's (the floor's seat declaration cures three of its rows here, §2.3). F-77 outside the dock is W-I.3's. The dock composition facilities (R2-06-01) are W-I.4's. The disease rows D2 decides are each a wave of their own: #48's retired facilities (Q-9) W-I.5; #67's hallmarks, OWED-3 and #90's R-7 captures (OW-5) W-I.6; C-8's run box W-I.7 (fix-2, FA-21). O-83 (the cap ellipse) ships in band 0's dock-cap wave (W-0.8) in 10.2.0; §3.4 item 4 says what this wave does with it. O-84 and O-84a are this wave's (§1).
+**Not closed here.** Every row `W-0.8.md` §1 closes (the collapse unit, 10.2.0). The dock's veil (C-2 row 1) is W-H.1's M-5 and W-H.2's; this wave reads the ink W-H.1 lands. F-19's member query, naming and selection semantic are W-I.2's (the floor's seat declaration cures three of its rows here, §2.3). F-77 outside the dock is W-I.3's. The dock composition facilities (R2-06-01) are W-I.4's. The disease rows D2 decides are each a wave of their own: #48's retired facilities (Q-9) W-I.5; #67's hallmarks, OWED-3 and #90's R-7 captures (OW-5) W-I.6; C-8's run box W-I.7 (fix-2, FA-21). O-83 (the cap ellipse) ships in W-0.8 in 10.2.0; §3.4 item 4 says what this wave does with it. O-84 and O-84a are W-0.8's too (fix-10).
 
 ## 2 · The defect at HEAD
 
@@ -108,7 +105,9 @@ In the table cells below, `\|` is the Markdown escape for `|`: the command itsel
 
 On HEAD + D2's floor (run here): the cap and timeline lines in the dock fall to one, a comment at `run.css:30` that names the struck mechanism; the state-class lines are 35, the latch sits at `g-dock-lattice.test.ts:854`, and `--dock-control-safe-inset` and `useDockSpring` are unchanged. The floor does not carry the §3.4 residue, and the carrier's deletions are the route's.
 
-### 2.5 · The collapsed summary and the Metric (moved from W-0.8, fix-3)
+### 2.5 · The collapsed summary and the Metric (W-0.8's rows; fix-10)
+
+These readings are W-0.8's born-RED figures (`W-0.8.md` §2, G12 to G15). They stay printed here as the seat took them.
 
 fix-2's probe (`formation-audit/fix-2.md` appendix P), at `183e021a`, reproduced by pass 2 at `6b75e0a7`:
 
@@ -117,7 +116,7 @@ fix-2's probe (`formation-audit/fix-2.md` appendix P), at `183e021a`, reproduced
 
 ## 3 · The cure
 
-D2 owns the design. This wave builds D2's converged specification: the floor every route shares, the carrier the loop converges on, and the F-18 residue the loop's checklist does not hold. It lands nothing D2 has not converged on.
+D2 owns the design. §3.2 and §3.3 are the one description of D2's converged specification: the floor every route shares and the carrier the loop converges on. Two waves land it. W-0.8 lands the collapse unit in 10.2.0 (the rim, the coarse press, the P4 machine, the endpoint model, the carrier and its rows 1 to 5, O-83's length and O-84a); **`W-0.8.md` §3.2 is the one record of the split**. This wave lands every other item at 11.0.0, on the tree W-0.8, W-F.1, W-F.2, W-F.5, W-E.7 and W-H.1 leave, with the F-18 residue the loop's checklist does not hold. It lands nothing D2 has not converged on.
 
 ### 3.1 · The entry gate
 
@@ -126,8 +125,8 @@ D2 meets the charter's convergence criterion (`CHARTER.md:82,86`): at least thre
 **Obligations from this seat to D2** (the §7.5 checklist is frozen for pass 2, so these enter the pass-3 checklist; the loop adopts them or states a stronger row):
 
 1. **The hallmarks** are W-I.6's (one witness each, or a RETIRE with the owner's words); D2 carries them as witnesses for that wave.
-2. **O-84 with Q-10.** O-84 asks for a content-sized collapsed summary (drop `aspect-ratio: 1` and the fixed sizes, keep the min-size floor); the owner folded it into D2 with O-65 (`FORMATION-PROGRESS.md:78`). D2's floor keeps the summary a seat-row square with `aspect-ratio: 1` (`FLOOR.md` row 1, `morph.css:107`) under Q-10 default (a), which leaves O-84's overrun standing. D2 rules Q-10 with O-84's ask and fourier's falsifier (`web/e2e/f-w14v-pd.spec.ts`, green with O-84's rule injected, IN:38) as inputs, and this wave lands the ruling. G27 and G29 are written for Q-10 (b), O-84's ask; under (a) both are recorded "retired with D2's ruling" and O-84 takes D2's words as its DECLINE (LEDGER O-84; fix-4, FC-05). No gate here picks between (a) and (b).
-3. **O-81 (1)-(3)** as checklist rows (INBOUND routes them to pass 3). (1) is W2 route 4 and the end inset; (2) is W3 `first-expand`; (3) is the dock reading W-E.7's coarse-pointer type model instead of its own `(pointer: coarse)` media query.
+2. **O-84 with Q-10** (W-0.8's to land, `W-0.8.md` §3.1; fix-10). O-84 asks for a content-sized collapsed summary (drop `aspect-ratio: 1` and the fixed sizes, keep the min-size floor); the owner folded it into D2 with O-65 (`FORMATION-PROGRESS.md:78`). D2's floor keeps the summary a seat-row square with `aspect-ratio: 1` (`FLOOR.md` row 1, `morph.css:107`) under Q-10 default (a), which leaves O-84's overrun standing. D2 rules Q-10 with O-84's ask and fourier's falsifier (`web/e2e/f-w14v-pd.spec.ts`, green with O-84's rule injected, IN:38) as inputs, and W-0.8 lands the ruling. W-0.8's G12 and G14 are written for Q-10 (b), O-84's ask; under (a) both are recorded "retired with D2's ruling" and O-84 takes D2's words as its DECLINE (LEDGER O-84; fix-4, FC-05). No gate picks between (a) and (b).
+3. **O-81 (1)-(3)** as checklist rows (INBOUND routes them to pass 3). (1) is W2 route 4 and the end inset; (2) is W3 `first-expand`, W-0.8's G5; (3) is the dock reading W-E.7's coarse-pointer type model instead of its own `(pointer: coarse)` media query.
 4. **C-2 row 2 in Playwright WebKit.** `fit·hovered-rest` is RED in 3 of 4 runs (the hovered plate paints as an ellipse). H2 recorded it intermittent and unattributed. Under the floor the cap is struck, so the reading must go to 0 of N; the loop confirms over three runs.
 5. **OWED-3** re-runs if the converged spec changes the dock rung (Q-4 or Q-5); W-I.6 holds it.
 6. **O-85, priority folding.** A per-control priority whose lowest controls fold into the dock's own More menu, against the scrolling run and the cut cap (O-83, Q-1). D2 rules BUILD with a witness, or RETIRE with the owner's words (IN:41). `DockControl.vue` declares no priority at `be1969ea` (G24).
@@ -168,22 +167,21 @@ Whichever converges, the landing is the converged spec's patch (floor + carrier 
 
 ### 3.4 · The F-18 residue and the band-0 cures
 
-These rows are not design questions and are not on D2's checklist; they land in this wave's patch beside the converged spec. None contradicts D2's floor; O-84, which does, is §3.1 item 2's.
+These rows are not design questions and are not on D2's checklist; items 1, 2, 3 and 6 land in this wave's patch beside the converged spec, and items 4 (its 10.2.0 half) and 5 in W-0.8's (`W-0.8.md` §3.2). None contradicts D2's floor; O-84, which does, is §3.1 item 2's.
 
-1. **One state attribute.** The dock root carries `data-dock-state="collapsed|compact|hover|pinned"` from `DOCK_CHART`'s rung, and every state selector in the band reads it; the four state classes go. The `:925` assertion becomes a plain `it` in `g-dock-lattice.test.ts` (born RED on HEAD, green on landing), per its own docblock (`:914-923`). On this wave's base W-A.2 has already moved it to `tests/owed/g-dock-lattice.test.ts` with a fence beside the old site; this wave moves it home and deletes the owed file, its `vitest.config.ts` exclusion and the fence (W-A.2 §3 item 7, the one record of the hand-off; fix-9, FH-01).
+1. **One state attribute.** The dock root carries `data-dock-state="collapsed|compact|hover|pinned"` from `DOCK_CHART`'s rung, and every state selector in the band reads it; the state classes go (HEAD's four, and the `compact` class W-0.8 adds for the 10.x line, `W-0.8.md` §3.2). The `:925` assertion becomes a plain `it` in `g-dock-lattice.test.ts` (born RED on HEAD, green on landing), per its own docblock (`:914-923`). On this wave's base W-A.2 has already moved it to `tests/owed/g-dock-lattice.test.ts` with a fence beside the old site; this wave moves it home and deletes the owed file, its `vitest.config.ts` exclusion and the fence (W-A.2 §3 item 7, the one record of the hand-off; fix-9, FH-01).
 2. **The safe-inset band-aid goes.** `--dock-control-safe-inset` (both density arms) and `.glass-dock :is(.glass-capsule, .glass-capsule-hover) { background-clip: content-box }` are deleted. The dock's own control recipes (`controls/icon-button.css`, `controls/tab-button.css`, `controls/triggers.css`) keep the paint inset they need on their own rules; a foreign capsule in a dock (a glass `Button`, a `Badge`, a `Chip`) paints its whole fill (O-56 G-2, N-8b producer half).
 3. **The dock reads one pointer model.** The dock's `@media (pointer: coarse)` re-declares (`density.css:378`, `controls/touch-floor.css:24`) are replaced by the tokens W-E.7's coarse-pointer type model publishes, so the dock's density and hit slop follow the same model as every other control (O-81 (3); A2-KE-L2-6's compact seats in the coarse hit slop is W-E.7's row).
 4. **Band 0's O-83** (`--dock-cap-rest` a measured length in 10.2.0, W-0.8): the cap it corrects is struck in 11.0.0 under Q-1 (a), so the band-0 length token is deleted with its keyframes, with a MIGRATION row. If the owner rules Q-1 (b) (keep the cap), the band-0 length is the cap's rest and this row changes to "kept".
-5. **O-84a, the metric token** (not a design question): `.metric__value` drops `min-inline-size: 3ch` and `overflow-wrap: anywhere`; `.metric__label` (`:42`) drops `overflow-wrap: anywhere` for `overflow-wrap: break-word`, which breaks only a word longer than its line. `tabular-nums lining-nums` (`:72`, `:100`) stay. O-84 itself lands per D2's Q-10 ruling (§3.1 item 2).
+5. **O-84a, the metric token** (W-0.8 lands it in 10.2.0, `W-0.8.md` §3.4; fix-10): `.metric__value` drops `min-inline-size: 3ch` and `overflow-wrap: anywhere`; `.metric__label` (`:42`) drops `overflow-wrap: anywhere` for `overflow-wrap: break-word`, which breaks only a word longer than its line. `tabular-nums lining-nums` (`:72`, `:100`) stay. O-84 itself lands per D2's Q-10 ruling (§3.1 item 2).
 6. **The prose sweep** (PF-10): every comment that describes `--dock-morph-t`, the aperture as HEAD built it, the cut cap or the retired facilities is rewritten or deleted in each touched file.
 
 ## 4 · Files it touches
 
-- `src/components/dock/` wholly: `GlassDock.vue`, `DockControl.vue`, `DockTrigger.vue`, `DockCrossfade.vue`, `DockLayerGroup.vue`, `constants.ts`, `index.ts`; `composables/{dockMorphMeasure,useDockClickIntegrity,useDockMorph,useDockRun,useDockSearch,useDockShellProps,useDockSpring (deleted),useDockState}.ts` and the new `useDockScrollSource.ts`; `styles/{adaptive-legibility,crossfade,density,dock,index,layer-group,layers,morph,run,shape,shell}.css`, `styles/controls/{icon-button,tab-button,triggers,touch-floor}.css` and the new `styles/scroll-rungs.css` (the floor patch's 38 files, `FLOOR.md` header, plus the route's).
+- `src/components/dock/` wholly: `GlassDock.vue`, `DockControl.vue`, `DockTrigger.vue`, `DockCrossfade.vue`, `DockLayerGroup.vue`, `constants.ts`, `index.ts`; `composables/{dockMorphMeasure,useDockClickIntegrity,useDockMorph,useDockRun,useDockSearch,useDockShellProps,useDockState}.ts` and `useDockScrollSource.ts` (W-0.8 has landed the carrier, deleted `useDockSpring.ts` and added `useDockScrollSource.ts` and `styles/scroll-rungs.css`; this wave edits what it left); `styles/{adaptive-legibility,crossfade,density,dock,index,layer-group,layers,morph,run,shape,shell}.css`, `styles/controls/{icon-button,tab-button,triggers,touch-floor}.css` and `styles/scroll-rungs.css` (the floor patch's 38 files, `FLOOR.md` header, plus the route's, less what W-0.8 landed).
 - `src/styles/glass/glass-capsule.css:122,140-171`, `src/styles/glass/material.css:334`, `src/styles/tokens/glass.css:221-233`, `src/styles/tokens/sizing.css` (struck dock tokens).
-- `tests/components/custom/dock/g-dock-lattice.test.ts` (re-authored; the `:925` assertion home as an `it`), `tests/owed/g-dock-lattice.test.ts` (deleted), `vitest.config.ts` (its exclusion removed), the four new suites.
-- `demo/stories/dock/dock-search.vue` (`:scroll`), the dock stories that used the struck tokens, `demo/shell/SidebarDock.vue`, `BottomDock.vue` (the scroll prop and the rim, if the shell opts in).
-- `src/components/metric/styles.css:42`, `:66-68` and `src/components/metric/README.md` (O-84a, one line).
+- `tests/components/custom/dock/g-dock-lattice.test.ts` (re-authored; the `:925` assertion home as an `it`), `tests/owed/g-dock-lattice.test.ts` (deleted), `vitest.config.ts` (its exclusion removed), W-0.8's four suites kept green.
+- the dock stories that used the struck tokens (the `:scroll` prop on `demo/stories/dock/dock-search.vue` and the demo shell's docks is W-0.8's).
 - `scripts/probes/band-I/` (appendix A) and its npm script, with `hover-census.mjs` (its text is `W-I.3.md` appendix A), which lands here because G17 runs it and W-I.3 depends on this wave (PLAN §5).
 - W-D.1's placement moves these paths if it lands first; D1's ledger re-plans them (PLAN §5 note).
 
@@ -202,18 +200,20 @@ node scripts/probes/band-I/demo-aria.mjs $OUT/builds/i1/demo
 
 The adapter is the converged spec's, linted by `adapter-law.mjs` (L-1..L-5) and reviewed as a diff against `adapter-head.mjs` before the run (H-6). Every harness gate below must pass in both themes, in Chromium and in Playwright WebKit **unshimmed**, with timing cells re-run twice and a failure seen only above load 8 recorded NOT-REPRODUCED (the harness's load law).
 
+**W-0.8's gates, read here unshimmed (fix-10).** W3, W4, W5, W6 and W8 are W-0.8's born-RED gates in Chromium and in Playwright WebKit `+shim` (`W-0.8.md` G5 to G9, 10.2.0). This wave's G3, G4, G5, G6 and G8 read the same witnesses in the unshimmed column only, which reads 0 of N at HEAD and at this wave's base (every page crashes until G9's edge lands). The former G16 (one motion engine) and G27 to G30 (the summary and the metric) are W-0.8's G10 and G12 to G15 and are not gates of this wave.
+
 In the table cells below, `\|` is the Markdown escape for `|`: the command itself uses a bare `|`.
 
 | id | gate | passes when | HEAD reading (run here) |
 |---|---|---|---|
 | G1 · W1 corner | `node $H/w1-corner.mjs --build $OUT/builds/i1 --engine chromium,webkit --no-webkit-shim` | exit 0, 22/22 per engine | **exit 1**: Chromium 6/22, WebKit +shim 5/22, unshimmed 0/22 (crashed) |
 | G2 · W2 run | `node $H/w2-run.mjs …` (same flags) | exit 0, 8/8 per engine | **exit 1**: 2/8, 2/8, 0/8 |
-| G3 · W3 morph | `node $H/w3-morph.mjs …` | exit 0, 19/19 per engine | **exit 1**: 2/19, 1/19, 0/19 |
-| G4 · W4 state | `node $H/w4-state.mjs …` | exit 0, 13/13 per engine | **exit 1**: 2/13, 2/13, 0/8 |
-| G5 · W5 rim | `node $H/w5-rim.mjs …` | exit 0, 6/6 per engine | **exit 1**: 0/6, 0/6, 0/6 |
-| G6 · W6 collapsed form (O-65) | `node $H/w6-collapsed-form.mjs …` | exit 0, 4/4 per engine | **exit 1**: 2/4, 2/4, 0/4 |
+| G3 · W3 morph, unshimmed | `node $H/w3-morph.mjs --build $OUT/builds/i1 --engine webkit --no-webkit-shim` | exit 0, 19/19 in Playwright WebKit unshimmed; the Chromium and `+shim` columns are W-0.8's gates and stay green in `run.mjs`'s full run (G9) | **exit 1**: 0/19 unshimmed, every cell crashed (`8536f2cc`) |
+| G4 · W4 state, unshimmed | `node $H/w4-state.mjs --build $OUT/builds/i1 --engine webkit --no-webkit-shim` | exit 0, 13/13 in Playwright WebKit unshimmed; the Chromium and `+shim` columns are W-0.8's gates and stay green in `run.mjs`'s full run (G9) | **exit 1**: 0/8 (8 crashed; 13 cells once the compact cells exist) unshimmed, every cell crashed (`8536f2cc`) |
+| G5 · W5 rim, unshimmed | `node $H/w5-rim.mjs --build $OUT/builds/i1 --engine webkit --no-webkit-shim` | exit 0, 6/6 in Playwright WebKit unshimmed; the Chromium and `+shim` columns are W-0.8's gates and stay green in `run.mjs`'s full run (G9) | **exit 1**: 0/6 unshimmed, every cell crashed (`8536f2cc`) |
+| G6 · W6 collapsed form (O-65), unshimmed | `node $H/w6-collapsed-form.mjs --build $OUT/builds/i1 --engine webkit --no-webkit-shim` | exit 0, 4/4 in Playwright WebKit unshimmed; the Chromium and `+shim` columns are W-0.8's gates and stay green in `run.mjs`'s full run (G9) | **exit 1**: 0/4 unshimmed, every cell crashed (`8536f2cc`) |
 | G7 · W7 edge, gutter, badge (O-67) | `node $H/w7-edge.mjs …` | exit 0, 18/18 per engine (the canvas-clipped kind stays RECORD, the containment family W-E.2). The first and last seats' ring rows are held here, not built: W-I.7 (C-8, its own wave) lands first and cures them (I7-G4; PLAN §5) | **exit 1**: 6/18, 6/18, 0/20 |
-| G8 · W8 motion (O-66 §2, headless half) | `node $H/w8-motion.mjs …` | exit 0, 6/6 per engine | **exit 1**: 2/6, 1/6, 0/6 |
+| G8 · W8 motion (O-66 §2, headless half), unshimmed | `node $H/w8-motion.mjs --build $OUT/builds/i1 --engine webkit --no-webkit-shim` | exit 0, 6/6 in Playwright WebKit unshimmed; the Chromium and `+shim` columns are W-0.8's gates and stay green in `run.mjs`'s full run (G9) | **exit 1**: 0/6 unshimmed, every cell crashed (`8536f2cc`) |
 | G9 · the crash-free edge | `run.mjs`'s unshimmed column | 0 crashed of 94 cells | **94 of 94 crashed** |
 | G10 · R6 hold line (O-64 R-6) | `node $H/r6-probe.mjs … --no-webkit-shim` | `ring·static` PASS in both engines unshimmed | Chromium PASS, WebKit +shim PASS, **WebKit unshimmed 0/1 (crashed)** |
 | G11 · no cut cap (static) | `! git grep -nE 'dock-cap-(rest\|cut)\|dock-plate-cross-px\|gl-dock-cap-\|scroll-timeline\|animation-timeline' -- src/components/dock` | exit 0 (under Q-1 (a); the `dock-plate-cross-px` arm under any ruling, §7) | **exit 1**: 38 lines in `src/components/dock` (31 cap lines, 7 timeline lines; fix-4 re-ran it with the `dock-plate-cross-px` arm at `715912fa`: 38, the property is W-0.8's and absent at HEAD). A comment that names the struck mechanism also fails it (HEAD + floor: `run.css:30`), which is the prose sweep's row (§3.4 item 6) and E-10's no-tombstone rule |
@@ -221,16 +221,11 @@ In the table cells below, `\|` is the Markdown escape for `|`: the command itsel
 | G13 · the latch is gone and home (static) | `test ! -e tests/owed/g-dock-lattice.test.ts && ! grep -q 'it\.fails(' tests/components/custom/dock/g-dock-lattice.test.ts` | exit 0 | **exit 1** at `96dc425e` (fix-9): the `it.fails` at `:925`. On the wave's base W-A.2's owed file exists, so the first clause holds it RED there; the old form (`! grep it.fails` alone) entered the wave green, since W-A.2 removes every `it.fails` (A2-G7) (fix-9, FH-01) |
 | G14 · a foreign capsule paints whole (O-56 G-2) | `measure.mjs i1 --rows I1`, row `I1/G2-FOREIGN-CAPSULE` `where: dock` | end/mid ratio ≥ 0.6, both engines (the `out` control stays ≥ 0.6) | **FAIL**: 0.00 light, 0.01 dark (Chromium); WebKit crashed at HEAD, 0.00 on the floor |
 | G15 · the band-aid token is gone (static) | `! git grep -n -- '--dock-control-safe-inset' -- src` | exit 0 | **exit 1**: 16 lines |
-| G16 · one motion engine (static) | `! git grep -n 'useDockSpring' -- src` | exit 0 | **exit 1**: 13 lines |
 | G17 · the dock's hover rungs (static) | `out=$(node scripts/probes/band-I/hover-census.mjs . --list 2>&1); printf '%s\n' "$out" \| grep -q '^HOVER-CENSUS rules=' && ! printf '%s\n' "$out" \| grep -q 'src/components/dock/'` (fails closed: no census line, no pass) | exit 0 | **exit 1** (fix-3, `be1969ea`, with W-I.3 appendix A placed at the path; exit 1 also with the script absent; exit 0 once the six dock rules stop being unguarded `:hover`): 6 rules (`icon-button.css:112`, `tab-button.css:69,144`, `triggers.css:78`, `layer-group.css:275`, `morph.css:288`) |
 | G18 · one pointer model (static, O-81 (3)) | `! git grep -n 'pointer: coarse' -- src/components/dock` | exit 0 | **exit 1**: `touch-floor.css:24`, `density.css:378`, `index.css:141` |
 | G19 · the summary wraps no control (L08-16) | `demo-aria.mjs`, row `D1/SUMMARY-NESTED` | 0, every route mounted, both engines | **FAIL**: 3 (Chromium); WebKit mounted 0 of 8 routes |
 | G24 · O-85, the priority seat | `grep -qE '^\s+priority\?:' src/components/dock/DockControl.vue` | exit 0 under D2's BUILD (with D2's fold witness wired beside it); under a RETIRE the row is recorded "retired with D2's ruling" and the owner's words, as I5-G2 | **exit 1** (fix-3, `be1969ea`: `DockControl.vue` declares no `priority`) |
 | G26 · R56, the run glide | D2's run-glide witness row (a fling on an overflowing run, `scrollLeft` per frame against D2's converged curve), both engines | PASS under a glide ruling; under a native ruling the row is recorded "retired with D2's ruling" and its reason | the witness does not exist at HEAD (RED by absence) |
-| G27 · the summary holds its content (O-84, under Q-10 (b)) | fix-2's probe, row `W-0.8/O84-SUMMARY` (moved here) | `overrunPx` ≤ 0.5 when D2 rules Q-10 (b) (the collapsed rung sizes to its face). When D2 rules Q-10 (a) (the collapsed rung is a circle, D2's standing default), the row is recorded "retired with D2's ruling" with D2's words, as G24 | **FAIL**: 28 px, `aspect "1 / 1"` (fix-2; reproduced by pass 3) |
-| G28 · the metric reads as one token (O-84a) | fix-2's probe, rows `W-0.8/O84a-JOIN`, both engines | value-to-unit ink gap within 1 px of the reading gap at 1, 2 and 3 digits | **FAIL 3 of 3** in each engine (30.83, 18.89, 6.95 against 5.45; fix-2, reproduced by pass 2) |
-| G29 · no square lock, floor kept (static, O-84, under Q-10 (b)) | `! sed -n '/\.glass-dock \.dock-layer--summary {/,/}/p' src/components/dock/styles/morph.css \| grep -qE '^\s*(aspect-ratio\|block-size\|height):'`, and as the hold half `sed -n '/\.glass-dock \.dock-layer--summary {/,/}/p' src/components/dock/styles/morph.css \| grep -q 'min-block-size'` | both exit 0 when D2 rules Q-10 (b). Under Q-10 (a) the first half is recorded "retired with D2's ruling" and the floor half stays as the hold line | **exit 1**; the floor half exits 0 (hold line; its bite is deleting the floor) |
-| G30 · the metric is content-sized (static, O-84a) | `! grep -qE 'min-inline-size: *3ch' src/components/metric/styles.css && ! grep -q 'overflow-wrap: anywhere' src/components/metric/styles.css` | exit 0 | **exit 1** (`:67`; `:42`, `:68`) |
 | G25 · the loading seat | `grep -qE '^\s+loading\?:' src/components/dock/DockControl.vue`, or D2's RETIRE quoted in LEDGER:592 | exit 0 | **exit 1** (fix-2) |
 | G23 · the harness can fail | `node $H/selftest.mjs --engine all` | SELFTEST PASS (85/85 at H2), every plant FAIL in both engines | 85/85 at `44099fdb` (`pass-2/H2.md` §4). The band-I probe's control rows (`I1` `where: out` PASS, `I1` `where: dock` FAIL) show G14 can pass and fail on one page |
 
@@ -238,7 +233,7 @@ In the table cells below, `\|` is the Markdown escape for `|`: the command itsel
 
 ## 6 · π and DELTA obligations
 
-Before = the H2 run of `8536f2cc` above (`out/runs/*-head/`, 2,653 PNGs and screencasts, both engines) and the band-I probe's `bi-head` shots; after = the same runs on the candidate, both themes. Captures under `.cache/evidence/W-I.1/`; the wave record inlines each PNG's path, sha256, command and the paired harness row, so a wiped scratch is re-derivable.
+The morph filmstrip, the compact-and-rim strips and the collapsed-form shots are W-0.8's captures in Chromium and Playwright WebKit `+shim` (`W-0.8.md` §6); this wave re-captures them unshimmed and headed on the GPU leg, and the summary and metric captures are W-0.8's alone. Before = the H2 run of `8536f2cc` above (`out/runs/*-head/`, 2,653 PNGs and screencasts, both engines) and the band-I probe's `bi-head` shots; after = the same runs on the candidate, both themes. Captures under `.cache/evidence/W-I.1/`; the wave record inlines each PNG's path, sha256, command and the paired harness row, so a wiped scratch is re-derivable.
 
 | surface | themes | engines | paired capture | π |
 |---|---|---|---|---|
@@ -251,33 +246,29 @@ Before = the H2 run of `8536f2cc` above (`out/runs/*-head/`, 2,653 PNGs and scre
 | the demo shell's SidebarDock and BottomDock at 1440×720 and 390×844 | light, dark | Chromium, Playwright WebKit | route captures | W1 on the demo route; the owner's lens frame (`captures/owner-2026-09-23-dock/`) reproduced before, absent after |
 | the dock motion at 60 fps, headed on a real GPU | light, dark | Chromium with `--use-angle=metal` (W-A.4) | screencast | W8 `sharp` and `pacing` headed |
 | the progress rim for OW-7's glance | light | Chromium | the W5 `h·expanded` strip | owner glance (W-B.4) |
-| the collapsed summary with a track and `1 ×` (O-84), and three Metrics `1 ×`, `12 ×`, `123 ×` (O-84a) | light, dark | Chromium (summary; GlassDock crashes Playwright WebKit), Chromium and Playwright WebKit (metrics) | `summary-chromium.png`, `metric-{engine}.png`, before and after | G27, G28 rows |
 | value.js, keyframes, fourier docks; real Safari | both | — | UNMEASURED (fenced tree; OW-3) | — |
 
 ## 7 · MIGRATION rows (clean break, no alias)
+
+The collapse unit's rows (`useDockSearch`'s scroll options, `scroll` and `scroll.rim`, the summary's `aspect-ratio`, `.metric__value`'s 3ch box, the cap's rest as a length) are `W-0.8.md` §7's, at 10.2.0.
 
 | removed or changed | successor | wave |
 |---|---|---|
 | the cut cap: `--dock-cap-rest`, `--dock-cap-cut`, the `gl-dock-cap-*` keyframes, the `--dock-run` scroll timeline (and band 0's measured-length `--dock-cap-rest`, O-83) | none: the plate is a stadium at every rest (Q-1 (a)); an overflow cue, if ruled, goes on the content | this |
 | `--dock-plate-cross-px`, the measured plate cross size `dockMorphMeasure` publishes from 10.2.0 (W-0.8 §3.1) | `--dock-cross` (`seat + 2·pad`, §3.2 item 1): one published name for the plate's cross size. It is removed whatever Q-1 rules, since its one reader is the cap rest and `--dock-cross` states the same size (fix-4, FC-09) | this |
-| state classes `.expanded`, `.collapsed`, `.pinned`, `.always-expanded` on `.glass-dock` | `[data-dock-state="collapsed" \| "compact" \| "hover" \| "pinned"]`; a consumer selector re-points | this |
+| state classes `.expanded`, `.collapsed`, `.pinned`, `.always-expanded` on `.glass-dock`, and `.compact`, which W-0.8 adds for the 10.x line | `[data-dock-state="collapsed" \| "compact" \| "hover" \| "pinned"]`; a consumer selector re-points | this |
 | `DockState` type values | the four chart rungs | this |
 | `--dock-control-safe-inset` and the dock-scoped `background-clip: content-box` on every capsule | none; a foreign capsule in a dock paints whole | this |
-| `useDockSearch` options `collapseOnScroll`, `scrollContainer`, `chromeRef` and the return `scrollChrome` | `GlassDock`'s `scroll: { source, compact? }` | this |
 | tokens `--dock-vertical-padding`, `--dock-collapsed-padding`, `--dock-collapsed-summary-min-size` (O-84 keeps it as the summary's floor; struck only if D2's Q-10 ruling keeps the floor's seat-row square), `--dock-search-shrink-*`, `--dock-plate-collapsed-border`, `--dock-plate-expanded-border` | `--dock-pad`, `--dock-cross`; the edge inks `--glass-edge-floating`, `--glass-edge-dock` and `--dock-plate-*-edge` | this |
 | `--dock-padding-inline` padding a horizontal dock (a horizontal dock is 8 px narrower at the comfortable density) | one pad on every side, the cross-axis pad | this |
-| a consumer-composed `ScrollProgressRim` overlaid on a dock | `GlassDock`'s `scroll.rim` | this |
 | the dock's own `(pointer: coarse)` density re-declare | W-E.7's coarse-pointer model tokens | this |
-| `GlassDock` props: six | seven: `scroll` added (Q-3 as ruled) | this |
 | `#badge` absent | a reserved badge seat slot | this (additive) |
-| `aspect-ratio: 1` on the collapsed summary | per D2's Q-10 ruling with O-84 (§3.1 item 2) | this |
-| `.metric__value`'s `min-inline-size: 3ch` (O-84a) | none: the value is content-sized; a consumer that relied on the 3ch box sets its own `min-inline-size` | this |
 
 Consumer overrides retire by an addendum in each consumer's own tranche (E-6), named in W-L.7's packets: chicago's `--dock-cap-rest: 9999px`, `.page-dock .dock-run { overflow: visible }` and the 0.62 veil floor (the last is W-H.1's M-5); chicago's `backdrop-mode="static"` workaround (C-2 row 3); keyframes' comments naming `--dock-collapsed-summary-min-size` (`ChromeDock.vue:526`, `TransportDock.vue:50`); the honest-RED DOCK-COLLAPSED-FORM and SIDE-DOCK-EDGE specs each consumer keeps until its repin.
 
 ## 8 · Dependencies and ledger rows
 
-Its edges are PLAN §5's. Closes F-16, F-17, F-18, F-71's O-67 R-3; O-84 (per D2's Q-10 ruling), O-84a, UIA-F-105 and UIA-KF-215 (G27-G30); O-85 (per D2's ruling); R56 (with W-B.15); UIA-KF-052 and UIA-F-132 (per D2's ruling); the inbound rows in §1 (each on the G row that measures its surface, recorded per row by the LEDGER seat); O-81 (1)-(3); C-2 rows 2 and 3; O-64 R-6 (REFUTED on the static page, the answer carried by W-B.2's reply with the headed gh-build cell UNMEASURED); #47; N-7, N-8a, N-8b (producer half), N-12, N-14, N-15; the carried D2 obligations CUR:32-38 and 43. The G14 row closes F-18's round-2 born-RED ("HEAD 17.0 vs 3.6"), re-measured here as a luma-lift ratio.
+Its edges are PLAN §5's. Closes F-18, F-16's corner and edge split and F-71's O-67 R-3 (F-16's extent and morph, F-17, O-84, O-84a, UIA-F-105 and UIA-KF-215 close in W-0.8, `W-0.8.md` §8; fix-10); O-85 (per D2's ruling); R56 (with W-B.15); UIA-KF-052 and UIA-F-132 (per D2's ruling); the inbound rows in §1 that W-0.8 does not close (each on the G row that measures its surface, recorded per row by the LEDGER seat); O-81 (1) and (3); C-2 rows 2 and 3; O-64 R-6 (REFUTED on the static page, the answer carried by W-B.2's reply with the headed gh-build cell UNMEASURED); #47; N-8b (producer half), N-12, N-14; the carried D2 obligations CUR:32, 35, 36 and 38. The G14 row closes F-18's round-2 born-RED ("HEAD 17.0 vs 3.6"), re-measured here as a luma-lift ratio.
 
 ## Appendix A · the band-I probe (shared by W-I.1, W-I.2, W-I.3)
 

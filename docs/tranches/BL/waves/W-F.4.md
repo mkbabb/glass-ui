@@ -10,7 +10,7 @@
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
 
-The dock instance of this shape (DockCrossfade sizes the box to the entering face and lays the leaving face absolute, R2-03-03) stays in F-16 for W-I.1 (loop D2), as the family statement rules (`REG:1104`); this wave does not touch the dock.
+The dock instance of this shape (DockCrossfade sizes the box to the entering face and lays the leaving face absolute, R2-03-03) stays in F-16 for W-0.8 (loop D2, the collapse unit in 10.2.0; W-I.1 re-reads it at 11.0.0), as the family statement rules (`REG:1104`); this wave does not touch the dock.
 
 ## 1 · What it closes
 

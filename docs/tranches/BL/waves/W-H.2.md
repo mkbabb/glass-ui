@@ -20,6 +20,7 @@
 | L01a-22 | #22 W-FROST sealed on a one-shot π; the transmissive cut never landed; no `FROST-TRANSMISSION` executable | `audit/round-1/L01a.md:46,84` |
 | L01a-25 | #25 W-FIELD-WELL: W-H.5's | `L01a.md:56,224` |
 | L05a-05 | F48 "glass blur slightly more subtle" inverted: the radius ladder rose 1/7/7/11/11 → 10/14/16/20/22 px with no owner reconciliation | `audit/round-1/L05a.md:19,212` |
+| O-87 FLAT-LIGHTING, the material part (handed from W-0.11) | the owner's ruling "ios27 everywhere, but a bit flatter, more refined, deft, and slightly less blur" is a governing constraint on D3's converged ladder, lighting and dark ladder, with frames per pass. W-0.11 lowers the five radii and refines the shadow tokens in 10.2.0; this wave's F48 ladder lands on those values, and any part of D3's O-87 answer that removes a name (a specular or gleam token, an opt-in effect prop) lands here or in W-H.1 with its MIGRATION row | `audit/INBOUND.md:44`; `W-0.11.md` §3.2 |
 | R10-02-06 | the opaque escape sets `--glass-level: 0` at the element while the blur rungs compose at `:root`, so descendants keep `blur(20px) saturate(1.5)` over an opaque plate | `REGISTRY.md:659` |
 | R10-02-07 | `.fading-scroll` carries `mask-image` at rest; a mask is a backdrop root, so every lens inside is inert | `REGISTRY.md:660` |
 | R10-02-08 | the nested-lens arm; `tests-visual/nested-backdrop-budget.spec.ts:39` sets `DEPTH_CEILING = 4`, passes a three-deep stack and runs in no CI job | `REGISTRY.md:661` |

@@ -18,8 +18,8 @@
 | id | what | source |
 |---|---|---|
 | R3-02-01 | 26 of the 42 `:hover` rules in `src` sit outside `@media (hover: hover)`, 22 of them paint-bearing at `95068476`; the G7 test reads the ENGAGE_LADDER table, never a selector | `audit/REGISTRY.md:749-750`, `:754` |
-| R4-01-15 | the dock's posture handlers are modality-blind (a tap enters hover through `mouseenter` and `focusin`) | `REGISTRY.md:752-753`. **Closed by W-I.1** (D2 floor row 3, harness W4 `coarse·tap-pins`, `coarse·no-hover-latch`); this wave holds those cells as hold lines |
-| UIA-F-80 | a coarse expand tap misroutes to the persistent control | `audit/INBOUND-MAP.md:160`; closed with R4-01-15 in W-I.1 |
+| R4-01-15 | the dock's posture handlers are modality-blind (a tap enters hover through `mouseenter` and `focusin`) | `REGISTRY.md:752-753`. **Closed by W-0.8** in 10.2.0 (the script half of D2 floor row 3, harness W4 `coarse·tap-pins`, `coarse·no-hover-latch`; `W-0.8.md` §3.2, fix-10), with the unshimmed Playwright WebKit column W-I.1's; this wave holds those cells as hold lines |
+| UIA-F-80 | a coarse expand tap misroutes to the persistent control | `audit/INBOUND-MAP.md:160`; closed with R4-01-15 in W-0.8 |
 | UIA-V-229 | hover cards open after a click, through the focus a press leaves | `INBOUND-MAP.md:260`. NOT REPRODUCED at HEAD on the library's only hover-opened surface, Tooltip (§2); a hold line here |
 | UIA-F-220 | a tooltip opens on touch | `INBOUND-MAP.md:272`. NOT REPRODUCED at HEAD (§2); a hold line here. Its two-at-once half is W-E.4's provider leg |
 | G7 detector half | `tests/styles/engage-ladder.test.ts:249-253` asserts a table row, not a selector (F-02's class) | replaced by the invariant G1 |
@@ -60,7 +60,7 @@ The fixture and the plant show the row can pass and can fail on the same page in
 2. **A rung shared with a press state is split.** `glass-capsule.css:134` pairs `:hover` with `:not([data-press-armed]):active`; the press half stays outside the guard, the hover half moves in. D2's floor patch guards `glass-capsule.css:122` and `material.css:334` but leaves `:134` and `material.css:323` unguarded: on HEAD + `design/dock/pass-2/floor.patch` the census reads `unguarded-paint=17`, 0 of them under `src/components/dock/`, and these two among the 17 (run here). They are this wave's.
 3. **The touch answer is the press rung, never a hover rung.** A control that needs feedback on touch composes the press register (`.tap-squish` or the component's own `:active` rung), as the G7 docblock prescribes (`base.css:220-226`). This wave adds no new touch styling; a control that loses its only feedback on touch is recorded for W-J.2's engagement register, which owns every rung beyond hover.
 4. **The invariant replaces the G7 row.** `tests/styles/hover-guard.test.ts` runs the census over `src` (every `.css` file and every `<style>` block, parsed with postcss, native nesting resolved) and asserts 0 unguarded paint-bearing `:hover` rules. The G7 table assertion at `engage-ladder.test.ts:249-253` is deleted with its `pointerFine` column, and W-A.2's roster swaps the row.
-5. **The script half.** On the dock it is W-I.1's (floor row 3: a touch or pen press on a folded dock pins it and swallows its click; a pointer's focus is not engagement). Outside the dock no surface enters a hover-only state from focus today (§2); the invariant for any future surface is the hold line G5.
+5. **The script half.** On the dock it is W-0.8's (`W-0.8.md` §3.2; floor row 3: a touch or pen press on a folded dock pins it and swallows its click; a pointer's focus is not engagement). Outside the dock no surface enters a hover-only state from focus today (§2); the invariant for any future surface is the hold line G5.
 
 ## 4 · Files it touches
 
@@ -80,7 +80,7 @@ The fixture and the plant show the row can pass and can fail on the same page in
 | G3 · the probe can pass and fail | rows `I3/COARSE-LATCH` `h-fx-guarded` and `h-fx-unguarded` in the same run | guarded PASS, unguarded FAIL | guarded **0 px**, unguarded **4,642 / 4,636 px**, both engines |
 | G4 · the G7 table row is gone (static) | `! git grep -n 'G7 HOVER GUARD' -- tests/styles/engage-ladder.test.ts` | exit 0 | **exit 1**: `engage-ladder.test.ts:249` |
 | G5 · hold line: no hover-only surface opens from a press | rows `I3/TOOLTIP-TAP` and `tt-fine.mjs` | tooltip count 0 after a tap (coarse) and after a click then leave (fine) | PASS at HEAD in both engines (§2). Not born RED: UIA-V-229 and UIA-F-220 do not reproduce |
-| G6 · hold line: the dock's cells | harness W4 `coarse·no-hover-latch`, `coarse·tap-pins` (`design/dock/harness/w4-state.mjs`) | PASS in both engines | RED at HEAD, cured by W-I.1 (§1); this wave keeps them green |
+| G6 · hold line: the dock's cells | harness W4 `coarse·no-hover-latch`, `coarse·tap-pins` (`design/dock/harness/w4-state.mjs`) | PASS in both engines | RED at HEAD, cured by W-0.8 (§1); this wave keeps them green |
 
 ## 6 · π and DELTA obligations
 
@@ -98,7 +98,7 @@ None. No public name is removed or renamed. The utilities `hover-lift`, `hover-l
 
 ## 8 · Dependencies and ledger rows
 
-Edges: PLAN §5. Closes F-77 (R3-02-01; R4-01-15 through W-I.1), the G7 detector half, UIA-F-80 (through W-I.1), and UIA-V-229 and UIA-F-220 as NOT REPRODUCED at HEAD with G5 as their hold line (the LEDGER seat records each with this wave's reading).
+Edges: PLAN §5. Closes F-77 (R3-02-01; R4-01-15 through W-0.8), the G7 detector half, UIA-F-80 (through W-0.8), and UIA-V-229 and UIA-F-220 as NOT REPRODUCED at HEAD with G5 as their hold line (the LEDGER seat records each with this wave's reading).
 
 **Recorded, not gated here.** Playwright WebKit crashed (`page.waitForTimeout: Page crashed`) when a tap opened the Accordion on the probe page; the same page mounts and the other controls measure. It is not attributed. It is not a Safari reading, and it is not this wave's mechanism; the LEDGER seat routes it to W-A.1 (the harness) for a minimal reproduction. Until then the Accordion's WebKit cell of G2 is UNMEASURED.
 

@@ -14,7 +14,7 @@
 
 | id | what |
 |---|---|
-| L05a-*, L05b-* token rows, L14-* | literal fallbacks on declared tokens (E-2's fallback half: a fallback that paints when the token is missing hides a dead token) |
+| #20 (L01a-20), L05a-*, L05b-* token rows, L14-* | literal fallbacks on declared tokens (E-2's fallback half: a fallback that paints when the token is missing hides a dead token) |
 | R3-02-16 | the demo reads `--ring` and `--surface-tint-*`, which nothing declares |
 | L15a token rows, A2-KE-L1-28 | dead tokens and dead selectors (`.ios` among them) left from retired features |
 | UIA-F-218 | `.popover-content`: a class the canon documents and no component emits |

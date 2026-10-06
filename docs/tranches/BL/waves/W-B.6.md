@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree |
 | ships in | 11.0.0 |
-| families | F-13, the #51 split: C-5, C-6, C-7 (members L04-F07, L04-F23; `audit/REGISTRY.md:312-320`) |
+| families | F-13, the #51 split: C-5, C-6, C-7 (members L01b-51, L04-F07, L04-F23; `audit/REGISTRY.md:312-320`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
 | ruler | seat for C-5 and C-6; the owner for C-7 (OW-4), with the seat default below |

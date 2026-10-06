@@ -60,32 +60,34 @@
 
 3. **L01b-X2's seven orphan names**, one row each:
 
-   | name | what it held | terminal |
+   | name | what it held | ledger row (the terminal is LEDGER §6.1's) |
    |---|---|---|
-   | W-CONTROL-REGISTER | G-F1 clause 1, the dead `.input-pill` selectors (22 lines, 0 producers) | FOLD → W-C.4 |
-   | W-GLASS-DEDUP | the Surface/Card axis as one plate (`subpath-policy.mjs:104`) | CURED at HEAD: `glass-panel` retired, one plate; the provenance comment is W-C.2's |
-   | W-CONTROL-CHASSIS | a third control-size mechanism, `controlSizeClass` with `--control-pill-h`, whose sole reader is `.input-bar` (`BJ/addenda/2026-07-24-refinement/COMPONENT-WAVES-TERMINAL-3.md:624`); at HEAD `--control-pill-h` 5 lines, `controlSizeClass` 6, `input-bar` 15 in `src` | FOLD → W-C.4 (a duplicate size authority is token hygiene; W-E.7's density ruling reads the one that survives) |
-   | W-BLUR-LADDER | the blur ladder and its killed `2dppx` writer (`light-dark.css:26`) | FOLD → W-H.2 (the F48 blur ladder, OW-8) |
-   | W-SLIDER-PROGRESS | `Progress.vue:138`, routed from #46 | FOLD → W-H.1 (the value mark in both slider variants and the progress fill) |
-   | DIRECTORY-SHAPE | the directory shape | FOLD → W-D.1 (loop D1) |
-   | CT-7 | `copyStyleAssets` emitting CSS partials into `dist` that no published CSS entry reaches (`COMPONENT-WAVES-TERMINAL-2.md:1107`, `-3.md:627`: the `tags-input/styles.css` orphan, since deleted, and the `_shared/field` orphans) | FOLD → W-A.5 (surface exactness over every subpath; the CSS-reach entry G-12 is W-A.2's) |
+   | W-CONTROL-REGISTER | G-F1 clause 1, the dead `.input-pill` selectors (22 lines, 0 producers) | `W-CONTROL-REGISTER` |
+   | W-GLASS-DEDUP | the Surface/Card axis as one plate (`subpath-policy.mjs:104`) | `W-GLASS-DEDUP` |
+   | W-CONTROL-CHASSIS | a third control-size mechanism, `controlSizeClass` with `--control-pill-h`, whose sole reader is `.input-bar` (`BJ/addenda/2026-07-24-refinement/COMPONENT-WAVES-TERMINAL-3.md:624`); at HEAD `--control-pill-h` 5 lines, `controlSizeClass` 6, `input-bar` 15 in `src` | `W-CONTROL-CHASSIS` |
+   | W-BLUR-LADDER | the blur ladder and its killed `2dppx` writer (`light-dark.css:26`) | `W-BLUR-LADDER` |
+   | W-SLIDER-PROGRESS | `Progress.vue:138`, routed from #46 | `W-SLIDER-PROGRESS` |
+   | DIRECTORY-SHAPE | the directory shape | `DIRECTORY-SHAPE` |
+   | CT-7 | `copyStyleAssets` emitting CSS partials into `dist` that no published CSS entry reaches (`COMPONENT-WAVES-TERMINAL-2.md:1107`, `-3.md:627`: the `tags-input/styles.css` orphan, since deleted, and the `_shared/field` orphans) | `CT-7` |
 
 4. **The in-tree routes.** The four lines of §2 are rewritten: `forms-seam.test.ts:83` and `:91` state the rule the test holds and drop the fence (the dead selectors are W-C.4's G-13; the fill α is W-H.2's), `battery.test.ts:7` and `radius-dialog-bind.test.ts:16` drop the route. An owed item is a roster `owed` entry (W-A.2 §3.7) or a ledger row, never a comment.
 
 5. **BG's onward block** (`BG/FINAL.md:331-348`), the eight items the reconcilers skipped (L04-F21):
 
-   | item | terminal | ground |
+   | item | ledger row (the terminal is LEDGER §6.1's) | ground |
    |---|---|---|
-   | the default-Safari WebGPU promote | FOLD → W-G.1 | one engine, WebGPU; Safari 26 ships WebGPU, its cell is W-A.6's |
-   | the in-shader squircle corner | RETIRE | the corner is the surface's CSS radius (F-21, W-E.2); no consumer or owner line names a shader corner |
-   | the `flow.wgsl.ts` curl tail | FOLD → W-G.1 | `src/composables/glass/webgl/shaders/flow.wgsl.ts` has a GLSL twin `flow.glsl.ts`; the port-then-delete order is W-G.1's |
-   | the iOS-27 gyroscope specular feed | RETIRE, re-trigger: a consumer ask | iOS Safari gates `deviceorientation` behind `DeviceOrientationEvent.requestPermission()` inside a user gesture, which a library cannot own; 0 `deviceorientation` sites in `src` |
-   | the deckle torn-paper param | RETIRE | BG fenced it itself (skeuomorphic restraint); no consumer names it |
-   | anisotropic crayon grain | RETIRE | the paper register is `--paper-grain-tooth` with `--paper-grain-relief` (O-79); no consumer names a second grain |
-   | the raster paper fallback | RETIRE | a fallback engaged "only if the lit tooth diverges" is a masking fallback (E-2) |
-   | the GU-1 holdout tier (`--shadow-sm…2xl` paper family, SortableList drag-lift) | FOLD → W-C.4 | a shadcn-default ladder beside the house shadows is F-64's legacy-ladder class, as the `--radius` ladder is |
+   | the default-Safari WebGPU promote | `BG-ONWARD-1` | one engine, WebGPU; Safari 26 ships WebGPU, its cell is W-A.6's |
+   | the in-shader squircle corner | `BG-ONWARD-2` | the corner is the surface's CSS radius (F-21, W-E.2); no consumer or owner line names a shader corner |
+   | the `flow.wgsl.ts` curl tail | `BG-ONWARD-3` | `src/composables/glass/webgl/shaders/flow.wgsl.ts` has a GLSL twin `flow.glsl.ts`; the port-then-delete order is W-G.1's |
+   | the iOS-27 gyroscope specular feed | `BG-ONWARD-4` | iOS Safari gates `deviceorientation` behind `DeviceOrientationEvent.requestPermission()` inside a user gesture, which a library cannot own; 0 `deviceorientation` sites in `src` |
+   | the deckle torn-paper param | `BG-ONWARD-5` | BG fenced it itself (skeuomorphic restraint); no consumer names it |
+   | anisotropic crayon grain | `BG-ONWARD-6` | the paper register is `--paper-grain-tooth` with `--paper-grain-relief` (O-79); no consumer names a second grain |
+   | the raster paper fallback | `BG-ONWARD-7` | a fallback engaged "only if the lit tooth diverges" is a masking fallback (E-2) |
+   | the GU-1 holdout tier (`--shadow-sm…2xl` paper family, SortableList drag-lift) | `BG-ONWARD-8` | a shadcn-default ladder beside the house shadows is F-64's legacy-ladder class, as the `--radius` ladder is |
 
-   BG's other onward items resolved elsewhere (LENS-SAFARI → BI P132; metallic aurora retired at BI `PLAN.md:127`; perfect-freehand declined; the goo-blob rename shipped at 5.0.0), per L04-F21; each gets a CURED or RETIRE row citing that line.
+   BG's other onward items resolved elsewhere (LENS-SAFARI → BI P132; metallic aurora retired at BI `PLAN.md:127`; perfect-freehand declined; the goo-blob rename shipped at 5.0.0), per L04-F21; they are `BG-ONWARD-9` to `BG-ONWARD-12`.
+
+   LEDGER §6.1 is the one record of each row's terminal and wave; the two tables above say what each item is and why, and state no terminal (fix-10, FI-04).
 
 ## 4 · Files it touches
 

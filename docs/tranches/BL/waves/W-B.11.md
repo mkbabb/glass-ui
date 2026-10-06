@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree |
 | ships in | 11.0.0 |
-| families | F-13, the #78 split (OWED-1, OWED-2) |
+| families | F-13, the #78 split (OWED-1, OWED-2; member L01b-78) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
 | ruler | seat |

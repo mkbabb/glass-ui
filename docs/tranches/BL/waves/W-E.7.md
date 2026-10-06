@@ -108,7 +108,7 @@ Local width queries that key density on the viewport, not the seat: `labeled-fie
 | UIA-KF-147 | RETIRE NOT-REPRODUCED for its shortcut clause (its micro-rung clause is A2-KE-L2-14's, E7-G17): the library's shortcut is 18.27 px under a 21 px label at coarse 390 and 14.38 under 16.4 at 1440 (scene `e7menu`, both engines); the 11 px caps are the consumer's own. Re-trigger: a `DropdownMenuShortcut` under 0.8 × its row's label |
 | UIA-KF-304 | RETIRE ANSWERED (consumer-side): the library ships no copyable-literal part; the wrap policy is the consumer's element |
 | UIA-F-41 | W-E.9 (E9-G5, SegmentedTabs overflow) |
-| UIA-F-105, UIA-KF-215 | W-I.1 (the Metric inline policy with O-84a, G28 and G30) |
+| UIA-F-105, UIA-KF-215 | W-0.8 (the Metric inline policy with O-84a, its G13 and G15, in 10.2.0) |
 
 Can each fail and pass? Four G1 cells pass at HEAD (the controls). Every other row fails. G9 is static. The `PI_PLANT` bite for G1 is `:root{--space-family:0.75rem}` applied at 1440, which moves a pad that should now be corner-derived only if a plate still reads the gap token.
 

@@ -2,11 +2,13 @@
 
 Used by the class sweeps in this folder. Reads only docs/tranches/BL/{PLAN.md,waves/*.md}.
 """
+import os
 import re
 from functools import lru_cache
 from pathlib import Path
 
-BL = Path(__file__).resolve().parents[2]
+# BL_ROOT points a sweep at another copy of the plan folder (a `git archive` of an earlier commit) for its before run.
+BL = Path(os.environ["BL_ROOT"]).resolve() if os.environ.get("BL_ROOT") else Path(__file__).resolve().parents[2]
 WAVES = BL / "waves"
 WID = re.compile(r"W-[0-9A-L]\.\d+")
 

@@ -1,0 +1,11 @@
+# release-gates.py — class sweep, formation fix seat 10
+
+## before: the plan at HEAD 31f3c5ea (a worktree copy, BL_ROOT), run by fix-10
+OPEN INBOUND    audit/INBOUND.md:45 rules 10.2.0 gated on D2; PLAN §5 puts a D2 gate on no band-0 wave
+OPEN INBOUND    FORMATION-PROGRESS.md:112 rules 10.2.0 gated on D2; PLAN §5 puts a D2 gate on no band-0 wave
+waves 99, band-0 loop gates {D3}, open 2
+exit=1
+
+## after: the plan as fix-10 leaves it
+waves 101, band-0 loop gates {D2, D3}, open 0
+exit=0

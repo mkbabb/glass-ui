@@ -42,7 +42,7 @@ The decision rule is W-B.2's (`waves/W-B.2.md:41-46`): an ask that removes glass
 | O-74 §4, A2-VA-L1-6, A2-FO-L1-9 | `useConfirm` (ruled BUILD in W-B.4) | CURE | 3.19 |
 | O-86 | a transport on Timeline | DECLINED with a recipe | 3.20 |
 
-O-86 TIMELINE-TRANSPORT (INBOUND O-86; CUR:80, "shape ruled in its wave against the Slider-marks split") had no owning wave; this wave owns it (§3.20).
+O-86 TIMELINE-TRANSPORT (INBOUND O-86; CUR:80, "shape ruled in its wave against the Slider-marks split") had no owning wave; this wave owns it (§3.20). The same answer closes #37 (L01a-37): BK retired W-SLIDER-TRANSPORT unbuilt at 8.0.0 and booked its gap "owner-revivable in a later tranche" (`BK/EXECUTION-PROGRESS.md:6696`). The ask came back as O-86 and is ruled here, so the booking is struck: the Slider owns no transport, the composition is §3.20's recipe (G-L1-19), and `Slider.vue:54`'s `thumbAlignment: "contain"` is its containment law, not a gap (LEDGER #37, RETIRE; fix-10).
 
 ## 2 · The defect at HEAD
 

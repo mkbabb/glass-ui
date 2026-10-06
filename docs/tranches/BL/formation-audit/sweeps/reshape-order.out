@@ -332,3 +332,10 @@ exit=0
 
 ## after, SWEEP_RAW=1
 rows 81, open 81, stale 0
+
+# ===== fix-10 (after the O-87/O-88/O-89 fold and W-H.6; 101 specs)
+read AFTER  DELETE   W-0.8 -> composables/useDockSpring.ts :: W-I.1  [W-I.1 names it in §2 (HEAD readings) and in §3.3, the one description of the carrier W-0.8 lands; W-I.1 §4 states W-0.8 deleted it, and the gate that reads it is W-0.8's G10 (fix-10)]
+read BEFORE DELETE   W-L.3 -> scripts/verify-export-types.mjs :: W-0.11  [band 0: W-0.11's G5 is W-0.1's G5, read at v10.2.0 by W-0.7 step 1 and not re-run at 11.0.0 (W-L.8 §3.5 step 1; fix-10)]
+rows 83, open 0, stale 0
+exit=0
+(rows naming W-0.8, W-0.11 or W-H.6 shown; the full table is the script's output)

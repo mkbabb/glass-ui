@@ -8,13 +8,14 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 |---|---|---|---|---|
 | W-0.1 | 0 | F-31 (split), F-24 (split) | O-62 light veil recut at the token; O-66 §1/O-66a Select and Input on one field surface; menu selected row off the veil-ink plate | D3 |
 | W-0.2 | 0 | F-71 (split: O-76) | per-item `--toggle-tint` for the pressed ToggleGroup item, mix values from D3 | D3 |
-| W-0.3 | 0 | F-29 (split: O-77 as amended by O-77a) | ConfiguratorLayer header: no ellipsis on either line; inline when it fits, stacked when not | — |
+| W-0.3 | 0 | F-29 (split: O-77 as amended by O-77a; O-89) | ConfiguratorLayer header: no ellipsis on either line; inline when it fits, stacked when not. The easing readout literal and the row's token name wrap (O-89) | — |
 | W-0.4 | 0 | F-22 (split: O-78, O-81 (4)) | menu content on `z-popover`; `data-reveal` namespaced; menu-contract focus wait | — |
 | W-0.5 | 0 | F-63 (split: O-79) | MIGRATION: the 7.0.0 paper line and the Button variant → emphasis + tone table | — |
 | W-0.6 | 0 | F-65 (split: O-81 (5)) | constellation `z` from its own stream; the 3.13.0 draw order pinned | — |
-| W-0.8 | 0 | F-16 (split: O-83) | the dock cap: the rest a measured length (owner-ratified exception to D2) | — |
+| W-0.8 | 0 | F-16 (the extent and morph, with O-83 and O-88), F-17, F-29 (split: O-84a) | the dock collapse unit from D2's converged spec: collapsed form, one continuous morph, every facility, scroll compact, rim, the cap's rest a length, the metric token, the demo witness suite | D2 |
 | W-0.9 | 0 | F-71 (split: O-74b) | the card title rung as a named scale token, `--type-card-title`, at its current size | — |
 | W-0.10 | 0 | F-71 (split: O-82) | one declared `reference` on PopoverContent and TooltipContent | — |
+| W-0.11 | 0 | F-31 (split: O-87 lighting tokens) | O-87's token-level refinement: lower blur radii, one-layer modal shadow, no dock glow; values from D3 | D3 |
 | W-0.7 | 0 | F-68 (split: 10.2.0 relay) | the 10.2.0 cut and the consumer relay | — |
 | W-A.1 | A | F-05 | visual harness repair | — |
 | W-A.2 | A | F-01, F-02, F-03, F-06, F-09 | W-REGISTER-COLLAPSE: 40-60 invariants, bites on shipped detectors, #10 sink struck, latches retired | — |
@@ -77,7 +78,8 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-H.3 | H | F-14 (split: R2-06-02) | W-GLASS-REGISTER-DECIDE on the converged ladder | — |
 | W-H.4 | H | F-53 | W-PERF: count gates, boot shell, the low-power register decide | — |
 | W-H.5 | H | F-31 (split: #25, #82 G-F2) | the transmissive well (a disease row) | D3 |
-| W-I.1 | I | F-16, F-17, F-18, F-71 (split: badge seat), F-29 (split: O-84a) | the dock: plate, run and paint, extent, collapsed form (with O-84), edges, scroll compact, rim, O-85's fold, the metric token (O-84a), W-0.8's cap cure kept or superseded | D2 |
+| W-H.6 | H | F-13 (split: L06-08, T-45) | the backdrop's edge sample, decided BUILD and built (a disease row) | D3 |
+| W-I.1 | I | F-16 (split: corner, edge witness), F-18, F-71 (split: badge seat) | the rest of the dock on W-0.8's carrier: plate and cut cap, run and paint, edges, the state attribute, the crash-free edge, O-85's fold, W-0.8's cap length kept or struck | D2 |
 | W-I.2 | I | F-19 | one marker-based member query; toolbar name | — |
 | W-I.3 | I | F-77 | W-HOVER-GUARD, CSS and script | — |
 | W-I.4 | I | F-14 (split: R2-06-01) | W-DOCK-COMPOSE-DECIDE inside D2 | D2 |
@@ -106,4 +108,4 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-L.7 | L | F-68 (remainder) | W-LANDING: 11.0.0 packets and relay | — |
 | W-L.8 | L | F-12 | the 11.0.0 cut, the close checklist, FINAL.md | — |
 
-Counts: 99 waves (band 0: 10, A: 6, B: 15, C: 5, D: 2, E: 14, F: 7, G: 7, H: 5, I: 7, J: 2, K: 11, L: 8); 13 loop waves (D1 1, D2 5, D3 5, D4 1, D5 1). Every family F-01..F-85 (F-30 as F-30a and F-30b) is in at least one row; the families in more than one row are the splits PLAN §3 states: F-13, F-14, F-16, F-21, F-22, F-24, F-28, F-29, F-31, F-33, F-40, F-48, F-50, F-54, F-63, F-65, F-68, F-71.
+Counts: 101 waves (band 0: 11, A: 6, B: 15, C: 5, D: 2, E: 14, F: 7, G: 7, H: 6, I: 7, J: 2, K: 11, L: 8); 16 loop waves (D1 1, D2 6, D3 7, D4 1, D5 1). Every family F-01..F-85 (F-30 as F-30a and F-30b) is in at least one row; the families in more than one row are the splits PLAN §3 states: F-13, F-14, F-16, F-21, F-22, F-24, F-28, F-29, F-31, F-33, F-40, F-48, F-50, F-54, F-63, F-65, F-68, F-71.
