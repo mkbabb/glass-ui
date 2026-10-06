@@ -113,6 +113,41 @@ for (const engine of engines) {
     console.log(`  ${file.split("/").pop()} · item 0 ${box.w.toFixed(2)}×${box.h.toFixed(2)} corner ${box.corner} · focused item checked ${box.focusedOn} · load ${load()}`);
     await P.close();
   }
+  if (part === "f1hover") for (const scene of ["f1-migrated", "preset-migrated"]) {
+    // R-5's cause: does the hovered F1 tile match :hover, and does its plate layer change?
+    const P = await openPage(target, engine, scene, { mode: "light" });
+    const pick = await P.page.evaluate(() => { const its = window.__th.items(); const u = its.findIndex((e) => !window.__th.on(e)); const r = its[u].getBoundingClientRect(); return { u, x: r.x + r.width / 2, y: r.y + r.height / 2 }; });
+    const read = () => P.page.evaluate((u) => { const el = window.__th.items()[u]; const cs = getComputedStyle(el); const top = document.elementFromPoint(el.getBoundingClientRect().x + 6, el.getBoundingClientRect().y + 6); return { hover: el.matches(":hover"), bg: cs.backgroundColor, img: cs.backgroundImage.slice(0, 220), plate: cs.getPropertyValue("--glass-defined-plate").trim().slice(0, 120), top: top === el ? "item" : `${top?.tagName}.${top?.className?.baseVal ?? top?.className}` }; }, pick.u);
+    await P.page.mouse.move(2, 2); await P.page.waitForTimeout(300);
+    const a = await read();
+    await P.page.mouse.move(pick.x, pick.y); await P.page.waitForTimeout(700);
+    const b = await read();
+    console.log(`  INFO ${engine} ${scene} item ${pick.u} · rest: hover ${a.hover}, bg ${a.bg}, image ${a.img} · hovered: hover ${b.hover}, bg ${b.bg}, image ${b.img} · image changed ${a.img !== b.img} · corner hit-test ${b.top} · load ${load()}`);
+    await P.close();
+  }
+  if (part === "tworow") for (const scene of ["family-d-undeclared", "single", "vertical", "pill-badge"]) {
+    // §7.3 item 9 / M-3 "the pill holds one row, structurally": a second row that FITS inside the rung (two lines
+    // at the pill's line-height 1) — is it cut, and does DEV name it? Appended as refusal.mjs and W-E append it.
+    const P = await openPage(target, engine, scene, { mode: "light" });
+    await P.page.waitForTimeout(400);
+    const r = await P.page.evaluate(async () => {
+      const it = document.querySelector("[data-item]"); const slot = it.querySelector("[data-line-slot]") ?? it;
+      const rung = parseFloat(getComputedStyle(it).minBlockSize);
+      const extra = document.createElement("div"); extra.textContent = "one more line"; slot.append(extra);
+      await new Promise((res) => setTimeout(res, 700));
+      const ir = it.getBoundingClientRect(), er = extra.getBoundingClientRect();
+      const hit = document.elementFromPoint(Math.min(er.x + 8, ir.right - 4), er.y + er.height / 2);
+      const range = document.createRange(); range.selectNodeContents(slot);
+      const tops = [...new Set([...range.getClientRects()].filter((q) => q.width > 1 && q.height > 1).map((q) => Math.round(q.top)))];
+      return { rung, h: ir.height, extraTop: er.top - ir.top, extraBottom: er.bottom - ir.top, inside: er.top >= ir.top - 0.5 && er.bottom <= ir.bottom + 0.5, hitInside: !!hit && it.contains(hit), textRows: tops.length, corner: getComputedStyle(it).borderTopLeftRadius, clip: { x: ir.x - 4, y: ir.y - 4, width: ir.width + 8, height: ir.height + 8 } };
+    });
+    const errs = errors(P).filter((t) => t.includes("[ToggleGroupItem]"));
+    if (args.dir) await P.page.screenshot({ path: `${String(args.dir)}/tworow-${scene}-${engine}.png`, clip: r.clip });
+    const refused = !r.inside; const named = errs.length > 0;
+    const ok = refused && (target.meta.dev ? named : true); n++; if (ok) pass++;
+    console.log(`  ${ok ? "PASS" : "FAIL"} ${engine} ${scene} · rung ${r.rung.toFixed(2)} · item block ${r.h.toFixed(2)} · the appended row sits at ${r.extraTop.toFixed(2)}–${r.extraBottom.toFixed(2)} px of the item (${r.inside ? "INSIDE the plate: painted, not cut" : "past the plate: cut"}; hit-test inside ${r.hitInside}; text rows in the label ${r.textRows}) · corner ${r.corner} · [ToggleGroupItem] errors ${errs.length} · load ${load()}`);
+    await P.close();
+  }
   if (part === "clip") for (const scene of ["preset-migrated", "specimen-migrated"]) for (const mode of ["light", "dark"]) {
     const P = await openPage(target, engine, scene, { mode });
     const r = await P.page.evaluate(async () => {
@@ -129,5 +164,5 @@ for (const engine of engines) {
     await P.close();
   }
 }
-if (["tone", "desc", "x3", "x6"].includes(part)) console.log(`${pass}/${n} cells pass · load ${load()} at end`);
+if (["tone", "desc", "x3", "x6", "tworow"].includes(part)) console.log(`${pass}/${n} cells pass · load ${load()} at end`);
 await closeBrowsers(); await target.close(); lock.release(); process.exit(0);

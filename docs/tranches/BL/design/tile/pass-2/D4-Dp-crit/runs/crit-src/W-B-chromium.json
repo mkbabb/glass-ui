@@ -1,0 +1,334 @@
+{
+ "id": "W-B",
+ "title": "every multi-line one-of-N site composes the choice card (D4-B)",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "crit-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": false,
+   "line": "exports · RED by absence: no ChoiceGroup/ChoiceCard in the bundle (exports seen: [none])"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "line": "preset · 4 multi-line items · slots [toggle-group-item] · roles [radio] (CDP AX tree) · used corner 20.00 · tab stops 1"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset arrows grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset arrows grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset arrows grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset arrows grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset arrows grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset arrows grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "line": "specimen · 8 multi-line items · slots [toggle-group-item] · roles [radio] (CDP AX tree) · used corner 18.00 · tab stops 2"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "specimen arrows grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "specimen arrows grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "specimen arrows grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "specimen arrows grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "specimen arrows grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "specimen arrows grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "line": "strip · 6 multi-line items · slots [] · roles [button] (CDP AX tree) · used corner 22.00 · tab stops 7"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "strip arrows row ArrowRight from #0 · focus 0 → 0 · moved false · checked true"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "strip arrows row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "strip arrows row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "strip arrows row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×40",
+    "fill": 1.1994586321929182,
+    "fillSel": "#b8b4ac",
+    "fillUnsel": "#c9c5bb",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 488,
+    "p95": 1.2004787838364892,
+    "changedPct": 95.66176470588235
+   },
+   "line": "contract T-3 preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.20:1; p95 1.20; items 1/0 204×40"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×40",
+    "fill": 1.2269718135426726,
+    "fillSel": "#27231c",
+    "fillUnsel": "#140e08",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 488,
+    "p95": 1.2783320140717653,
+    "changedPct": 95.75367647058823
+   },
+   "line": "contract T-3 preset dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.23:1; p95 1.28; items 1/0 204×40"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "204×40",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 488,
+    "p95": 1,
+    "changedPct": 0
+   },
+   "line": "contract T-3 preset prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "207×36",
+    "fill": 1.1882460668999577,
+    "fillSel": "#c1bcb5",
+    "fillUnsel": "#d0cdc5",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 486,
+    "p95": 1.1893143594396913,
+    "changedPct": 96.17552334943639
+   },
+   "line": "contract T-3 specimen light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.19:1; p95 1.19; items 1/0 207×36"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "207×36",
+    "fill": 1.2157446751676222,
+    "fillSel": "#27221c",
+    "fillUnsel": "#140e09",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 486,
+    "p95": 1.2905694348265513,
+    "changedPct": 96.17552334943639
+   },
+   "line": "contract T-3 specimen dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.22:1; p95 1.29; items 1/0 207×36"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "207×36",
+    "fill": 1,
+    "fillSel": "#fdf5ec",
+    "fillUnsel": "#fdf5ec",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 486,
+    "p95": 1,
+    "changedPct": 0
+   },
+   "line": "contract T-3 specimen prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.00:1; p95 1.00; items 1/0 207×36"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "mode": "light",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "44×44",
+    "fill": 1.4896678282808884,
+    "fillSel": "#fefefc",
+    "fillUnsel": "#dbd1c2",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 176,
+    "p95": 1.4967817400284293,
+    "changedPct": 79.22262396694215
+   },
+   "line": "contract T-3 strip light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.49:1; p95 1.50; items 1/0 44×44"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "strip",
+   "arm": "library",
+   "mode": "dark",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "44×44",
+    "fill": 3.21465113511177,
+    "fillSel": "#7d5f6e",
+    "fillUnsel": "#1b150c",
+    "c3Area": 849.5,
+    "c3Edge": 0,
+    "c3Inner": 849.5,
+    "perimeter": 176,
+    "p95": 3.540597144468911,
+    "changedPct": 79.80371900826447
+   },
+   "line": "contract T-3 strip dark · carrier ≥3:1 area 849.50 px² (perimeter band 0.00, interior 849.50) vs the bar 88.00 px²; fill 3.21:1; p95 3.54; items 1/0 44×44"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "mode": "prt",
+   "m": {
+    "sel": 1,
+    "unsel": 0,
+    "size": "44×44",
+    "fill": 1.1279847160928202,
+    "fillSel": "#fefefc",
+    "fillUnsel": "#fceedc",
+    "c3Area": 0,
+    "c3Edge": 0,
+    "c3Inner": 0,
+    "perimeter": 176,
+    "p95": 1.131952020896041,
+    "changedPct": 79.11931818181819
+   },
+   "line": "contract T-3 strip prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.13:1; p95 1.13; items 1/0 44×44"
+  }
+ ],
+ "flavor": "src",
+ "run": {
+  "loadStart": "36.99 / 45.93 / 37.44",
+  "loadEnd": "33.26 / 44.29 / 37.09",
+  "census": {
+   "n": 26,
+   "sample": [
+    "1176 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "17788 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-tri",
+    "17790 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-tri"
+   ],
+   "waitedS": 0.4
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "9/25 gating cells pass [library 9/25]",
+ "arms": {
+  "library": {
+   "pass": 9,
+   "of": 25
+  }
+ }
+}

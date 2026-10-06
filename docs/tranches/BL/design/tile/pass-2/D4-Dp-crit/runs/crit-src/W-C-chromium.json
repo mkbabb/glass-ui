@@ -1,0 +1,86 @@
+{
+ "id": "W-C",
+ "title": "selection is a behaviour, not a component (D4-C)",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "crit-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": false,
+   "line": "exports · RED by absence: no SelectionGroup/SelectionItem in the bundle (exports seen: [none])"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "line": "card · group listbox · items generic (CDP AX tree) · tab stops 0"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "line": "card stamp values at rest (role/aria-checked/tabindex, * = group-stamped; selected #-1) · null/null/null null/null/null null/null/null null/null/null"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowRight from #0 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowLeft from #1 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowDown from #0 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowUp from #2 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "card grid edge ArrowDown from #2 (no item that way; reported) · focus body → body · moved false · checked false (the click did not focus; focus placed by script)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "card grid edge ArrowUp from #0 (no item that way; reported) · focus body → body · moved false · checked false (the click did not focus; focus placed by script)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "line": "card stamp values after the arrow commits (selected #-1) · null/null/null null/null/null null/null/null null/null/null"
+  }
+ ],
+ "flavor": "src",
+ "run": {
+  "loadStart": "46.23 / 46.23 / 38.03",
+  "loadEnd": "58.49 / 48.87 / 39.06",
+  "census": {
+   "n": 22,
+   "sample": [
+    "1176 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "34483 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-tri",
+    "34536 /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.fram"
+   ],
+   "waitedS": 0.6
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "0/8 gating cells pass [library 0/8]",
+ "arms": {
+  "library": {
+   "pass": 0,
+   "of": 8
+  }
+ }
+}
