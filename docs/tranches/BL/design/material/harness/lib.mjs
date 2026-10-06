@@ -24,6 +24,27 @@ export const OUT = process.env.D3_OUT || path.join(os.tmpdir(), "d3-material-har
 
 export const GROUNDS = ["paper", "aurora", "aurora50", "black", "white", "checker", "stripes"];
 export const FIELD_GROUNDS = ["aurora", "aurora50"];
+// Grounds captured only by the scenes that need them (W-G): UIA-V-198's saturated red.
+export const EXTRA_GROUNDS = ["red"];
+// The H2 scenes and the grounds each is captured on (run.mjs and the witnesses share this one table).
+//   ladder  every GROUNDS entry and red (W-G)   dialog  every GROUNDS entry (the M battery)          halo  paper          empty  the field grounds (W-F)
+//   held     H-5: a held dock (a real press-and-hold), two held rungs (the consumer grasp contract) and a collapsed dock
+//   hostile  H-10: an opaque band interposed between the field and the dock and first plate row; a teleported Popover
+//            over a declared region
+//   state    H-6 (M-9): the painted state fills (active, hover, checked, selected) and an engaged focus veil
+//   isolated H-15 (W-G): the content rungs and a dock inside an isolated group (isolation: isolate)
+export const SCENE_GROUNDS = {
+  ladder: [...GROUNDS, "red"], dialog: GROUNDS, halo: ["paper"], empty: FIELD_GROUNDS,
+  held: ["black", "white", "aurora"], hostile: FIELD_GROUNDS, state: ["paper", "aurora"], isolated: ["aurora", "red"],
+};
+export const SCENES = Object.keys(SCENE_GROUNDS);
+// The H-4 contract: the floor patch (FL-5) exposes each band's computed bound as a number on every plate.
+export const BOUND_PROP = "--glass-bound";
+// The H-15 contract: a plate that knows its pole went flat carries this attribute (on itself or an ancestor).
+export const FLAT_ATTR = "data-glass-flat";
+// H-14: D2's WebKit crash shim (docs/tranches/BL/design/dock/harness/adapter-head.mjs:45, D2 SPECS S-2): it pins the
+// plate border's nested translucent color-mix() to one arm, colours only. Every WebKit dock row is labelled "+shim".
+export const WEBKIT_SHIM = ".glass-dock .dock-plate { border-color: var(--dock-plate-expanded-border) !important; }";
 export const THEMES = ["light", "dark"];
 export const ENGINES = ["chromium", "webkit"];
 export const CHROMIUM_ARGS = ["--enable-unsafe-webgpu", "--ignore-gpu-blocklist", "--use-angle=metal"];
@@ -33,17 +54,21 @@ export const CONTENT = ["wash", "quiet", "resting", "card"];
 export const CHROME = ["floating", "overlay", "dialog-rung", "dialog", "popover", "dock"];
 export const LABEL = {
   chromium: "Chromium",
-  webkit: "Playwright WebKit (paint-only: headless paints no backdrop-filter)",
+  webkit: "Playwright WebKit (paint-only: headless paints no backdrop-filter; dock rows +shim)",
   safari: "real Safari: UNMEASURED (owner's safaridriver checkbox)",
   nodock: "UNMEASURED in Playwright WebKit (any page that mounts GlassDock crashes it)",
+  shim: "+shim (D2's WebKit crash shim: the dock plate border pinned to one arm, colours only)",
 };
 
 // ── CLI ────────────────────────────────────────────────────────────────────────────────────────────────
 export function cli(options = {}) {
   const { values, positionals } = parseArgs({ allowPositionals: true, strict: false, options: {
-    gate: { type: "string" }, verbose: { type: "boolean" }, ...options } });
+    gate: { type: "string" }, verbose: { type: "boolean" }, cells: { type: "string" }, ...options } });
   return { ...values, _: positionals };
 }
+// --cells <regex>: restrict every witness to the cells whose "engine theme ground scene" matches (the self-test's
+// planted captures hold only the cells their plant touches; a full run never passes it).
+export const CELLS = (() => { const i = process.argv.indexOf("--cells"); return i > 0 && process.argv[i + 1] ? new RegExp(process.argv[i + 1]) : null; })();
 export const list = (s, dflt) => (s ? String(s).split(",").map((x) => x.trim()).filter(Boolean) : dflt);
 
 // ── colour ─────────────────────────────────────────────────────────────────────────────────────────────
@@ -66,6 +91,18 @@ export const f = (v, n = 2) => (v == null || Number.isNaN(v) ? "—" : Number(v)
 export const pct = (arr, p) => { if (!arr.length) return null; const a = Float64Array.from(arr).sort(); return a[Math.min(a.length - 1, Math.max(0, Math.floor(p * (a.length - 1))))]; };
 export const mean3 = (px) => { const s = [0, 0, 0]; for (const p of px) { s[0] += p[0]; s[1] += p[1]; s[2] += p[2]; } return s.map((v) => v / Math.max(1, px.length)); };
 const median = (a) => pct(a, 0.5);
+// OKLCh → linear sRGB, and the largest in-gamut OKLCh chroma at a given L and hue (W-G).
+export function oklchLin(L, C, hdeg) {
+  const a = C * Math.cos((hdeg * Math.PI) / 180), b = C * Math.sin((hdeg * Math.PI) / 180);
+  const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3, m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3, s = (L - 0.0894841775 * a - 1.291485548 * b) ** 3;
+  return [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s];
+}
+export function gamutMaxC(L, hdeg) {
+  let lo = 0, hi = 0.5;
+  for (let i = 0; i < 30; i++) { const mid = (lo + hi) / 2; (oklchLin(L, mid, hdeg).every((v) => v >= -1e-6 && v <= 1 + 1e-6) ? (lo = mid) : (hi = mid)); }
+  return lo;
+}
+export const hueDiff = (h1, h2) => { const d = Math.abs(h1 - h2) % 360; return d > 180 ? 360 - d : d; };
 
 // ── captures ───────────────────────────────────────────────────────────────────────────────────────────
 const _png = new Map();
@@ -108,29 +145,40 @@ export const bare = (cap, cell) => mean3(region(cap.img(cell, "raw"), cell.bare)
 // capture (fill transparent, any stroke or halo kept). Contrast is read per ring pixel (Chebyshev radius R
 // around the glyph, c < 0.25) and reported as p05.
 export function glyphRing(cap, cell, ink, R = 1) {
-  const full = cap.img(cell, "full"), noink = cap.img(cell, "noink"), A = cap.img(cell, "maskA"), B = cap.img(cell, "maskB");
-  const [x0, y0, w, h] = ink.box.map(Math.round);
+  const cv = glyphCoverage(cap.img(cell, "maskA"), cap.img(cell, "maskB"), ink.box, R);
+  return ringRead(cv, cap.img(cell, "full"), cap.img(cell, "noink"), R);
+}
+// Glyph coverage over an ink box grown by R, from the two mask captures (geometry only: independent of ink and ground).
+export function glyphCoverage(A, B, box, R) {
+  const [x0, y0, w, h] = box.map(Math.round);
   const W = w + 2 * R, H = h + 2 * R, ox = x0 - R, oy = y0 - R;
   const cov = new Float32Array(W * H);
   let cmax = 0;
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
     const X = ox + x, Yy = oy + y;
-    if (X < 0 || Yy < 0 || X >= full.width || Yy >= full.height) continue;
-    const i = (full.width * Yy + X) * 4;
+    if (X < 0 || Yy < 0 || X >= A.width || Yy >= A.height) continue;
+    const i = (A.width * Yy + X) * 4;
     const c = (-(A.data[i] - B.data[i]) + (A.data[i + 1] - B.data[i + 1]) - (A.data[i + 2] - B.data[i + 2])) / 765;
     cov[y * W + x] = c; if (c > cmax) cmax = c;
   }
+  return { ox, oy, W, H, cov, cmax };
+}
+// The ring read: ink = median of the glyph cores in `full`; ring = pixels within Chebyshev R of the glyph whose
+// coverage is under `ringMax`, read in `ground` (the noink capture; or, frame-locked, the same frame with
+// ringMax 0.02 so no antialiased ink fringe enters the ring).
+export function ringRead({ ox, oy, W, H, cov, cmax }, full, ground, R, ringMax = 0.25) {
   if (cmax < 0.2) return { p05: null, med: null, n: 0, glyph: 0, rgb: null, note: "no glyph painted" };
   const core = [], ring = []; let glyph = 0;
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
     const c = cov[y * W + x];
     if (c >= 0.25) { glyph++; if (c >= 0.9 * cmax) core.push(at(full, ox + x, oy + y)); continue; }
+    if (c > ringMax) continue;
     let near = false;
     for (let dy = -R; dy <= R && !near; dy++) for (let dx = -R; dx <= R; dx++) {
       const X = x + dx, Yy = y + dy;
       if (X >= 0 && Yy >= 0 && X < W && Yy < H && cov[Yy * W + X] >= 0.25) { near = true; break; }
     }
-    if (near) ring.push(at(noink, ox + x, oy + y));
+    if (near) ring.push(at(ground, ox + x, oy + y));
   }
   const inkPx = [0, 1, 2].map((k) => median(core.map((p) => p[k])));
   const vals = ring.map((g) => cr(inkPx, g));
@@ -179,6 +227,8 @@ export function serve(dir) {
       let p = path.join(dir, decodeURIComponent(u.pathname));
       if (!p.startsWith(dir)) { res.writeHead(403); return res.end(); }
       if (fs.existsSync(p) && fs.statSync(p).isDirectory()) p = path.join(p, "index.html");
+      // SPA fallback (the demo dist, H-13): an extension-less path that is not a file serves index.html.
+      if (!fs.existsSync(p) && !path.extname(p) && fs.existsSync(path.join(dir, "index.html"))) p = path.join(dir, "index.html");
       if (!fs.existsSync(p)) { res.writeHead(404); return res.end("not found"); }
       res.writeHead(200, { "content-type": MIME[path.extname(p)] || "application/octet-stream", "cache-control": "no-store" });
       fs.createReadStream(p).pipe(res);
@@ -196,7 +246,7 @@ export function report(cap, { id, title, lines, gateFails, gateRows, infoFails =
   const pass = gateRows > 0 && gateFails === 0;
   const head = `${id} · ${title}`;
   console.log(head);
-  console.log(`capture ${cap.capdir} · target ${cap.meta?.target || "?"} · worktree ${cap.meta?.worktree || "—"} @ ${cap.meta?.sha || "—"} · gate ${gate.join("+")}`);
+  console.log(`capture ${cap.capdir} · target ${cap.meta?.target || "?"} · worktree ${cap.meta?.worktree || "—"} @ ${cap.meta?.sha || "—"} · gate ${gate.join("+")}${CELLS ? ` · cells restricted to /${CELLS.source}/` : ""}`);
   for (const l of lines) console.log("  " + l);
   for (const l of extra) console.log(l);
   if (infoRows) console.log(`${LABEL.webkit}: ${infoFails ? `FAIL on ${infoFails} of ${infoRows} rows` : `PASS on ${infoRows} rows`} [informational]`);
@@ -208,7 +258,7 @@ export function report(cap, { id, title, lines, gateFails, gateRows, infoFails =
   process.exitCode = pass ? 0 : 1;
   return pass;
 }
-export const tag = (c) => `${c.engine === "webkit" ? "webkit" : "chromium"} ${c.theme} ${c.ground}${c.scene !== "ladder" ? " " + c.scene : ""}${c.variant && c.variant !== "base" ? " [" + c.variant + "]" : ""}`;
+export const tag = (c) => `${c.engine === "webkit" ? "webkit" + (c.shim ? "+shim" : "") : "chromium"} ${c.theme} ${c.ground}${c.scene !== "ladder" ? " " + c.scene : ""}${c.variant && c.variant !== "base" ? " [" + c.variant + "]" : ""}`;
 
 // ── the consumer retune (W-C) ──────────────────────────────────────────────────────────────────────────
 // A consumer preset that re-points only the ground tokens, as E-5 allows: a cool paper and card per theme.

@@ -1,5 +1,5 @@
 // fixtures.mjs: the hand-made minimal dock every witness must PASS on, and the
-// planted violations each witness must FAIL on (H2).
+// planted violations each witness must FAIL on (H2, revised by H3: pass-3/H3.md).
 //
 // Plain HTML/CSS/JS with no glass-ui code. It is not a design proposal; it exists
 // to prove each check CAN pass. What it does, so each witness has something honest
@@ -19,6 +19,24 @@
 //   · a collapsed form (face, track, count, dismiss) wrapped by the one plate (O-65);
 //   · side, canvas and top docks sharing one edge, with a dock-owned gutter and a
 //     reserved badge corner (O-67).
+// H3 additions:
+//   · the integrator's clock is stall-safe: a frame gap over STALL_MS advances it by one
+//     nominal frame (1000/60 ms), so a main-thread block resumes the motion instead of leaping (H3-4);
+//   · a swap is a per-seat wipe on its own episode: a leaving seat whose place lies inside the
+//     new extent is clipped from its start edge over the whole episode, an entering seat is
+//     revealed from its start edge and never over a leaving seat's visible part; a leaving seat
+//     outside the new extent is left to the closing plate (H3-1, H3-3);
+//   · a removed seat leaves in place, clipped from its end edge on the same spring its
+//     followers FLIP on, then is removed (H3-3);
+//   · the size hand-off is scoped: a seat's own size transition is finished only when the running
+//     size transitions change the run's main extent (never for the open-seat exchange), and an
+//     infinite size animation is followed at the extent, with no window and no FLIP (H3-2);
+//   · the morph scene's icon seats carry the open-seat exchange (aria-current: 44 → 92 px on the
+//     fixture's own spring, as a linear() easing) (H3-2);
+//   · morph &neighbour=1: a left-aligned in-flow row with a neighbour box (H3-7);
+//     __scene.stretch(px) holds the run px wider than its content (H3-6);
+//   · edge scene PASS variant `splitcaps`: the plate paints its straights, two cap elements
+//     outside the plate paint the arcs, and edge() names them (H3-9).
 //
 // ?scene=  fit | rail | long | morph | vmorph | swap | menu | compact | rim | vrim | cwidth |
 //          depth | nested | tick | seatgrow | hidden | form | edge
@@ -35,8 +53,11 @@ export const FAULTS = {
     W7: ["edgecut", "sideedge", "gutterless", "badgeover", "lens"],
     W8: ["squash", "jank"],
     R6: ["backdropmotion"],
+    // H3 (pass-3/H3.md): W3 blankswap, pop, slipfade, latsnap, infhold, infthrow, nostretch, nbjump,
+    // bandclose, resizenorest; W1 cardlerp; W7 nocaps; ST leap; FM deadhooks
+    H3: ["blankswap", "pop", "slipfade", "latsnap", "infhold", "infthrow", "nostretch", "nbjump", "bandclose", "resizenorest", "cardlerp", "nocaps", "leap", "deadhooks"],
     // variants that must PASS (they change the carrier, not the property)
-    PASS: ["csscarrier"],
+    PASS: ["csscarrier", "splitcaps"],
 };
 
 export function fixturePage(q) {
@@ -59,6 +80,9 @@ html.dark body { background: linear-gradient(180deg, #1c1917, #0c0a09); }
 .host.v { left: 16px; top: 0; bottom: 0; align-items: center; }
 .host.v.top { top: 16px; bottom: auto; align-items: flex-start; }
 .host.hidden { display: none; }
+.host.h.nb { left: 40px; right: 0; justify-content: flex-start; align-items: center; gap: 12px; }
+.nbox { flex: 0 0 auto; width: 80px; height: 40px; border-radius: 8px; background: #3a53e6; }
+.cap { position: absolute; pointer-events: none; box-shadow: inset 0 0 0 1px var(--edge); }
 .dock { position: relative; }
 .ap { position: relative; }
 .h .ap { height: var(--cross); overflow-x: clip; overflow-y: visible; }
@@ -132,6 +156,11 @@ const W0 = 2 * Math.PI / RESP;
 const err = (e0, v0, t) => { if (t <= 0) return e0; if (ZETA < 1) { const wd = W0 * Math.sqrt(1 - ZETA * ZETA); return Math.exp(-ZETA * W0 * t) * (e0 * Math.cos(wd * t) + ((v0 + ZETA * W0 * e0) / wd) * Math.sin(wd * t)); } return (e0 + (v0 + W0 * e0) * t) * Math.exp(-W0 * t); };
 let CLOCK = 0; for (let t = 0; t < 3; t += 1e-4) if (Math.abs(err(1, 0, t)) > BAND) CLOCK = t;   // seconds
 const SLOW = fault === "slowclock" ? 1.2 / CLOCK : 1;   // slowclock: the carrier runs 1.2 s whatever its rung says
+// H3-4 · the stall-safe clock: episodes run on vnow(); a frame gap over STALL_MS advances it by one
+// frame, so a main-thread block resumes the motion instead of leaping. leap: the plain wall clock.
+const STALL_MS = 100;
+let lag = 0, lastTick = null;
+const vnow = () => performance.now() - lag;
 const bez = (t) => { let lo = 0, hi = 1; for (let i = 0; i < 30; i++) { const m = (lo + hi) / 2; const bx = 3 * (1 - m) * (1 - m) * m * 0.42 + 3 * (1 - m) * m * m * 0.58 + m * m * m; if (bx < t) lo = m; else hi = m; } const m = (lo + hi) / 2; return 3 * (1 - m) * m * m + m * m * m; };
 /** One episode of the one integrator: released at (x0, v0) toward "to" at t0 (ms). */
 function episode(x0, v0, to, t0) {
@@ -227,8 +256,9 @@ if (scene === "edge") {
 } else if (scene === "morph" || scene === "vmorph" || scene === "menu" || scene === "rim" || scene === "vrim") {
   collapsible = scene === "morph" || scene === "vmorph" || scene === "menu" || Q.get("collapse") === "closed";
   const wide = Q.get("wide") === "1";
-  run.append(wide ? seat("Now playing", { tab: true, id: "home" }) : seat("H", { aria: "Home", id: "home" }), seat("1", { aria: "One", id: "f1" }), seat("2", { aria: "Two" }));
-  if (scene === "morph") run.append(seat("3", { aria: "Three" }), sep(), seat("Play", { tab: true, id: "play" }), seat("Settings", { tab: true }));
+  const ic = scene === "morph" ? "ic" : "";
+  run.append(wide ? seat("Now playing", { tab: true, id: "home" }) : seat("H", { aria: "Home", id: "home" }), seat("1", { aria: "One", id: "f1", cls: ic }), seat("2", { aria: "Two", cls: ic }));
+  if (scene === "morph") run.append(seat("3", { aria: "Three", cls: ic }), sep(), seat("Play", { tab: true, id: "play" }), seat("Settings", { tab: true }));
   if (scene === "vmorph") run.append(seat("3", { aria: "Three" }), seat("4", { aria: "Four" }));
   if (scene === "menu") run.append(seat("More", { tab: true, id: "menu" }));
   if (scene === "rim" || scene === "vrim") (fault === "rimout" ? ap : plate).append(rim);
@@ -243,6 +273,21 @@ if (scene === "edge") {
 }
 if (scene !== "edge" || kind === "side") document.body.append(host);
 host.append(dock);
+if (scene === "morph" && Q.get("neighbour") === "1") { host.classList.add("nb"); const nb = document.createElement("div"); nb.className = "nbox"; nb.dataset.testid = "neighbour"; host.append(nb); }
+// H3-9 · split caps: the plate paints its straights, two caps outside it paint the arcs
+let caps = [];
+if (scene === "edge" && (fault === "splitcaps" || fault === "nocaps")) {
+  const line = "linear-gradient(var(--edge), var(--edge))";
+  plate.style.boxShadow = "0 6px 24px rgba(0,0,0,.14)";
+  plate.style.background = V
+    ? line + " 0 50% / 1px calc(100% - 2 * var(--r)) no-repeat, " + line + " 100% 50% / 1px calc(100% - 2 * var(--r)) no-repeat, var(--veil)"
+    : line + " 50% 0 / calc(100% - 2 * var(--r)) 1px no-repeat, " + line + " 50% 100% / calc(100% - 2 * var(--r)) 1px no-repeat, var(--veil)";
+  const a = document.createElement("div"), b = document.createElement("div"); a.className = b.className = "cap";
+  const side = "calc(var(--r) + 1px)";
+  if (V) { Object.assign(a.style, { left: 0, right: 0, top: 0, height: side, borderRadius: "var(--r) var(--r) 0 0", clipPath: "inset(0 0 1px 0)" }); Object.assign(b.style, { left: 0, right: 0, bottom: 0, height: side, borderRadius: "0 0 var(--r) var(--r)", clipPath: "inset(1px 0 0 0)" }); }
+  else { Object.assign(a.style, { top: 0, bottom: 0, left: 0, width: side, borderRadius: "var(--r) 0 0 var(--r)", clipPath: "inset(0 1px 0 0)" }); Object.assign(b.style, { top: 0, bottom: 0, right: 0, width: side, borderRadius: "0 var(--r) var(--r) 0", clipPath: "inset(0 0 0 1px)" }); }
+  plate.after(a, b); caps = [a, b];
+}
 if (fault === "rimshift") rim.style.translate = V ? "12px 0" : "0 12px";
 if (fault === "backdropmotion") { const st = document.createElement("div"); st.className = "stripe"; document.body.insertBefore(st, host); }
 if (fault === "dot") { plate.style.inset = "auto"; plate.style.width = "2px"; plate.style.height = "2px"; }
@@ -275,6 +320,7 @@ const target = () => (posture === "collapsed" || posture === "compact") ? (colla
 let cur = null, ext = null, firstExpandDone = false, liveExtent = null;
 const set = (e) => {
   cur = e;
+  if (fault === "cardlerp" && dock.classList.contains("card") && typeof natural2 === "function") { const lo = crossOf(), hi = Math.min(natural2(), budget); const u = hi - lo > 1 ? Math.max(0, Math.min(1, (e - lo) / (hi - lo))) : 1; plate.style.borderRadius = (20 - 4 * u).toFixed(3) + "px"; }   // cardlerp: the card corner lerps 20 → 16 px with the extent (Q-12's open question)
   if (fault === "squash") { const full = Math.min(natural(), budget); ap.style[V ? "height" : "width"] = full + "px"; ap.style.scale = V ? "1 " + (e / full) : (e / full) + " 1"; ap.style.transformOrigin = "0 0"; }
   else ap.style[V ? "height" : "width"] = e + "px";
 };
@@ -294,9 +340,51 @@ const useCss = fault === "cssbend" || fault === "csscarrier";
 const FX_EASE = "linear(" + Array.from({ length: 41 }, (_, i) => (1 + err(-1, 0, CLOCK * i / 40) - err(-1, 0, CLOCK) * i / 40).toFixed(4)).join(", ") + ")";
 const FX_RUN = "--fx-t " + (CLOCK * 1000).toFixed(0) + "ms " + FX_EASE, FX_RESET = "--fx-t 0ms " + FX_EASE;
 if (useCss) { ap.style.transition = FX_RUN; if (fault === "cssbend") plate.style.borderRadius = "calc(var(--r) - 32px * var(--fx-t) * (1 - var(--fx-t)))"; }
+// H3-3 · leaving seats (removal): in place, clipped from the end edge on the spring, then removed
+const leavers = new Map();   // seat → { ep, w, slip }
+function leaveSeat(s) {
+  if (fault === "pop") { s.remove(); return; }
+  const x = lay(s), cx = V ? s.offsetLeft : s.offsetTop, W = s.offsetWidth, Hh = s.offsetHeight;
+  Object.assign(s.style, { boxSizing: "border-box", position: "absolute", left: (V ? cx : x) + "px", top: (V ? x : cx) + "px", width: W + "px", height: Hh + "px" });
+  leavers.set(s, { ep: episode(0, 0, 1, vnow()), w: V ? Hh : W, slip: 0 });
+}
+// H3-1/H3-3 · the swap: a per-seat wipe on its own episode (header)
+let swapState = null;
+const wiping = new Set();
+function clipMain(s, fromStart, px) { const v = Math.max(0, px).toFixed(2) + "px"; s.style.clipPath = V ? (fromStart ? "inset(" + v + " 0 0 0)" : "inset(0 0 " + v + " 0)") : (fromStart ? "inset(0 0 0 " + v + ")" : "inset(0 " + v + " 0 0)"); }
+function swapTick(vt) {
+  const st = swapState; const p = Math.max(0, Math.min(1, st.ep.pos(vt - st.ep.t0)));
+  const vis = [];
+  for (const g of st.old) { if (!g.wipe) continue; clipMain(g.s, true, p * g.w); if ((1 - p) * g.w > 0.5) vis.push([g.x + p * g.w, g.x + g.w]); }
+  for (const e of st.enter) {
+    const xe = lay(e), we = lenOf(e);
+    let right = fault === "blankswap" && p < 1 ? xe : xe + p * we;   // blankswap: the entering face stays hidden until the episode ends
+    for (const [a, b] of vis) { if (a <= xe && b > xe) right = xe; else if (a > xe && a < right) right = a; }
+    clipMain(e, false, we - (right - xe));
+  }
+  if (vt - st.ep.t0 >= st.ep.T) {
+    st.from.hidden = true;
+    for (const g of st.old) for (const k of ["boxSizing", "position", "left", "top", "width", "height", "clipPath"]) g.s.style[k] = "";
+    for (const e of st.enter) e.style.clipPath = "";
+    wiping.clear(); swapState = null; snapshot();
+    return false;
+  }
+  return true;
+}
 function tick(now) {
   raf = 0;
+  if (lastTick != null && fault !== "leap") { const gap = now - lastTick; if (gap > STALL_MS) lag += gap - 1000 / 60; }
+  lastTick = now;
+  const rnow = now; now = now - lag;   // episodes run on the stall-safe clock (vnow)
+  void rnow;
   let moving = false, fading = false;
+  for (const [s, L] of leavers) {
+    if (fault === "slipfade") { L.slip++; if (L.slip <= 2) { s.style.opacity = L.slip === 1 ? "0.97" : "0.94"; moving = true; continue; } s.remove(); leavers.delete(s); continue; }   // slipfade: 1 → 0.97 → 0.94 → gone (B′ V-3's path)
+    const tau = now - L.ep.t0; const p = Math.max(0, Math.min(1, L.ep.pos(tau)));
+    clipMain(s, false, p * L.w);
+    if (tau >= L.ep.T) { s.remove(); leavers.delete(s); } else moving = true;
+  }
+  if (swapState && swapTick(now)) moving = true;
   if (ext) {
     const tau = now - ext.t0;
     if (fault === "subpx") { const v = ext.to + err(ext.x0 - ext.to, 0, tau / 1000); const done = tau > 450 && Math.abs(v - ext.to) < 0.01; set(done ? ext.to : v); if (done) ext = null; else moving = true; }
@@ -319,13 +407,16 @@ function tick(now) {
   }
   if (fault === "cardspread" && dock.classList.contains("card")) plate.style.borderRadius = moving ? "26px" : "";   // cardspread: the card radius swells mid-morph
   if (fading && !moving) { dock.removeAttribute("data-morphing"); raf = requestAnimationFrame(tick); return; }   // the window is the spatial morph's; a fade is not
-  if (moving) { dock.setAttribute("data-morphing", ""); raf = requestAnimationFrame(tick); }
+  const inBand = fault === "bandclose" && ext && Math.abs(cur - ext.to) <= BAND * Math.abs(ext.to - ext.x0);   // bandclose: the flag closes at the 2 % band (Q-4 (a))
+  if (moving) { if (inBand) dock.removeAttribute("data-morphing"); else dock.setAttribute("data-morphing", ""); raf = requestAnimationFrame(tick); }
   else if (fault === "late") setTimeout(() => { if (!raf) dock.removeAttribute("data-morphing"); }, 250);
   else dock.removeAttribute("data-morphing");
+  if (!raf) lastTick = null;
 }
-const kick = () => { dock.setAttribute("data-morphing", ""); if (!raf) raf = requestAnimationFrame(tick); };
+const kick = () => { dock.setAttribute("data-morphing", ""); if (!raf) { lastTick = performance.now(); raf = requestAnimationFrame(tick); } };
 function morph(to) {
-  const now = performance.now();
+  const now = vnow();
+  if (fault === "nbjump" && Q.get("neighbour") === "1") dock.style[V ? "height" : "width"] = to + "px";   // nbjump: the dock's layout box takes the target at once
   if (cur == null) { set(to); return; }
   if (Math.abs(to - cur) < 0.01 && !ext) return;
   if (PRM.matches && fault !== "noprm") { ext = null; set(to); dock.removeAttribute("data-morphing"); return; }
@@ -347,13 +438,13 @@ function morph(to) {
 }
 /** Content changed (a seat added, removed, resized or reordered): FLIP every seat on one episode. */
 function contentChanged(skipFlip = false) {
-  const now = performance.now();
+  const now = vnow();
   const next = new Map(rendered().map((s) => [s, lay(s)]));
   if (!skipFlip && fault !== "seatjump" && fault !== "content" && !PRM.matches) {
     for (const [s, x] of next) {
       if (lastLayout.has(s) && Math.abs(lastLayout.get(s) - x) < 0.25) continue;   // its layout did not move: a running flip already carries it (a second trigger must not restart it)
       if (lastLayout.has(s)) { const painted = lastLayout.get(s) + trOf(s, now); const d = painted - x; if (Math.abs(d) > 0.25) { const f = episode(d, tvOf(s, now), 0, now); flips.set(s, f); s.style.translate = V ? "0 " + d + "px" : d + "px 0"; } }
-      else if (lastLayout.size) { incoming.set(s, { t0: now, clearAt: null }); s.style.opacity = "0"; }
+      else if (lastLayout.size && !wiping.has(s)) { incoming.set(s, { t0: now, clearAt: null }); s.style.opacity = "0"; }
     }
   }
   lastLayout = next;
@@ -380,9 +471,27 @@ if (fault === "formout") ap.style.overflow = "visible";
 if (ap.dataset.wideout !== undefined) ap.style.overflow = "visible";
 let settled = lenOf(run) > 0;
 /** A content change the page made itself: FLIP in the same task, before any frame can paint it (the RO below is the backstop for changes the fixture did not make). */
+// H3-2 · a size that keeps changing is followed at the extent: no window, no FLIP. Two cases: an
+// infinite animation inside the run, and a seat's own size transition the scoped hand-off let run (the
+// open-seat exchange: its layout moves continuously on its own, so a FLIP would fight it).
+// infhold: an infinite one is morphed every change instead (the window is held open); infthrow: the
+// carrier calls finish() on it (an InvalidStateError on an infinite effect)
+const inRun = (a) => a.effect?.target && run.contains(a.effect.target) && a.playState === "running";
+const infinite = () => document.getAnimations().filter((a) => inRun(a) && !a.transitionProperty && a.effect.getTiming().iterations === Infinity);
+function follow() {
+  const inf = infinite();
+  if (inf.length && fault === "infthrow") inf.forEach((a) => a.finish());
+  const sizing = document.getAnimations().some((a) => inRun(a) && a.transitionProperty && SIZE_RE.test(a.transitionProperty));
+  const useInf = inf.length > 0 && fault !== "infhold" && fault !== "infthrow";
+  if (!sizing && !useInf) return false;
+  if (useInf) ext = null;
+  if (!ext && Math.abs(target2() - cur) > 0.01) set(target2());
+  snapshot(); return true;
+}
 function changed() {
   if (!settled) return;
   if (posture === "collapsed" || posture === "compact") { contentChanged(); return; }
+  if (follow()) return;
   const t = target2();
   contentChanged();
   if (Math.abs(t - cur) > 0.25) { if (fault === "content") { ext = null; set(t); } else morph(t); }
@@ -390,14 +499,34 @@ function changed() {
 new ResizeObserver(() => {
   if (!settled) { if (lenOf(run) === 0) return; fitRun(); if (fault === "hiddengrow") { cur = 0; morph(target2()); } else set(target2()); snapshot(); settled = true; return; }
   if (posture === "collapsed" || posture === "compact") { contentChanged(); return; }
+  if (follow()) return;
   const t = target2();
   contentChanged();
   if (Math.abs(t - cur) > 0.25) { if (fault === "content") { ext = null; set(t); } else morph(t); }
 }).observe(run);
-addEventListener("resize", () => { if (fault === "resizemorph") { cur = 0; morph(target2()); } });
+addEventListener("resize", () => {
+  if (fault === "resizemorph") { cur = 0; morph(target2()); }
+  if (fault === "resizenorest") { let k = 0; const j = () => { ap.style[V ? "height" : "width"] = (cur + (k++ % 2 ? 0.3 : -0.3)) + "px"; requestAnimationFrame(j); }; requestAnimationFrame(j); }   // resizenorest: never comes to rest (and never opens a window)
+});
 
-// ── the seat-size owner (K-13): the dock owns seat geometry; a consumer size transition inside it is finished at once ──
-if (fault !== "twoowners") dock.addEventListener("transitionrun", (e) => { if (!/^(width|inline-size|height|block-size|min-width|max-width|flex-basis|grid-template-columns)$/.test(e.propertyName) || !e.target.closest(".seat")) return; for (const a of e.target.getAnimations()) if (a.transitionProperty === e.propertyName) a.finish(); });
+// ── the seat-size owner (K-13), scoped (H3-2): the dock owns the extent; a seat's own size transition is
+// finished only when the running size transitions change the run's main extent, never for an exchange
+// that holds it (the open-seat exchange). latsnap: every seat size transition is finished (B′ CX-2) ──
+const SIZE_RE = /^(width|inline-size|height|block-size|min-width|max-width|flex-basis|grid-template-columns)$/;
+const MAIN_RE = V ? /^(height|block-size|min-height|max-height|flex-basis)$/ : /^(width|inline-size|min-width|max-width|flex-basis)$/;
+const camel = (p) => p.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+if (fault !== "twoowners") dock.addEventListener("transitionrun", (e) => {
+  if (!SIZE_RE.test(e.propertyName) || !e.target.closest(".seat")) return;
+  const runs = document.getAnimations().filter((a) => a.transitionProperty && SIZE_RE.test(a.transitionProperty) && a.effect?.target && run.contains(a.effect.target) && a.playState !== "finished");
+  if (fault === "latsnap") { runs.forEach((a) => a.finish()); return; }
+  let delta = 0;
+  for (const a of runs) { if (!MAIN_RE.test(a.transitionProperty)) continue; const k = a.effect.getKeyframes(), key = camel(a.transitionProperty); delta += parseFloat(k.at(-1)[key]) - parseFloat(k[0][key]); }
+  if (Math.abs(delta) > 0.5) runs.forEach((a) => a.finish());
+});
+// a size transition the hand-off let run moved its seats continuously itself: the settled layout is the rest
+for (const ev of ["transitionend", "transitioncancel"]) dock.addEventListener(ev, (e) => { if (SIZE_RE.test(e.propertyName) && e.target.closest(".seat")) snapshot(); });
+// the open-seat exchange on the morph scene's icon seats, on the fixture's own spring
+if (scene === "morph") { const st = document.createElement("style"); st.textContent = ".run > .seat.ic { width: 44px; transition: scale .18s ease-out, box-shadow .18s ease-out, width " + (CLOCK * 1000).toFixed(0) + "ms " + FX_EASE + "; } .run > .seat.ic[aria-current] { width: 92px; }"; document.head.append(st); }
 
 // ── posture: typed by modality ──
 function go(p) { if (p === posture) return; posture = p; if (fault === "plateswap" && p === "expanded") { const np = document.createElement("div"); np.className = plate.className; np.style.cssText = plate.style.cssText; plate.replaceWith(np); plate = np; } inertFaces(); morph(target2()); }   // plateswap: the expanded rung paints a different plate element
@@ -458,9 +587,22 @@ const hp = window.__hp;
 window.__scene = {
   name: scene, presets: [],
   consumerBudget: scene === "cwidth" ? 240 : scene === "nested" ? 360 : undefined,
-  setFace: (f) => { const F = window.__faces; if (!F) return; F.short.hidden = f !== "short"; F.long.hidden = f !== "long"; changed(); },
-  setExtra: (v) => { const x = run.querySelector('[data-testid="extra"]'); if (v && !x) run.append(seat(V ? "5" : "Brushes and layers", { tab: !V, aria: V ? "Five" : undefined, id: "extra" })); else if (!v && x) x.remove(); changed(); },
-  setLead: (v) => { const x = run.querySelector('[data-testid="lead"]'); const f1 = run.querySelector('[data-testid="f1"]'); if (v && !x) run.insertBefore(seat(V ? "0" : "Lead", { tab: !V, aria: V ? "Zero" : undefined, id: "lead" }), f1); else if (!v && x) x.remove(); changed(); },
+  setFace: (f) => {
+    const F = window.__faces; if (!F) return;
+    const from = F.short.hidden ? F.long : F.short, to = F[f]; if (from === to) return;
+    const old = [...from.querySelectorAll(".seat")].map((s) => ({ s, x: lay(s), w: lenOf(s), cx: V ? s.offsetLeft : s.offsetTop, W: s.offsetWidth, H: s.offsetHeight }));
+    for (const g of old) Object.assign(g.s.style, { boxSizing: "border-box", position: "absolute", left: (V ? g.cx : g.x) + "px", top: (V ? g.x : g.cx) + "px", width: g.W + "px", height: g.H + "px" });
+    to.hidden = false;
+    const newLen = lenOf(run);
+    const enter = [...to.querySelectorAll(".seat")];
+    enter.forEach((s) => wiping.add(s));
+    swapState = { ep: episode(0, 0, 1, vnow()), from, enter, old: old.map((g) => ({ ...g, wipe: g.x + g.w / 2 < newLen })) };
+    swapTick(vnow());
+    changed(); kick();
+  },
+  setExtra: (v) => { const x = run.querySelector('[data-testid="extra"]'); if (v && !x) run.append(seat(V ? "5" : "Brushes and layers", { tab: !V, aria: V ? "Five" : undefined, id: "extra" })); else if (!v && x) leaveSeat(x); changed(); if (!v) kick(); },
+  setLead: (v) => { const x = run.querySelector('[data-testid="lead"]'); const f1 = run.querySelector('[data-testid="f1"]'); if (v && !x) run.insertBefore(seat(V ? "0" : "Lead", { tab: !V, aria: V ? "Zero" : undefined, id: "lead" }), f1); else if (!v && x) leaveSeat(x); if (fault !== "nostretch") changed(); if (!v) kick(); },   // nostretch: the carrier learns of an insertion only from a ResizeObserver on the run
+  stretch: (px) => { run.style[V ? "height" : "width"] = (lenOf(run) + px) + "px"; },
   collapse: () => { pinned = false; go("collapsed"); },
   expand: () => go("expanded"),
   show: () => host.classList.remove("hidden"),
@@ -473,6 +615,7 @@ window.__scene = {
   dropA: () => { if (twinFn) { const s = srcGetter(); binder.release(s, twinFn); twinEl.remove(); twinFn = null; } },
   jank: fault === "jank",
 };
+if (fault === "deadhooks") for (const k of ["expand", "collapse", "setFace", "setExtra", "setLead"]) window.__scene[k] = () => {};   // deadhooks: the scene hooks do nothing (the film tool's plant)
 if (fault === "jank") { let n = 0; const j = () => { if (dock.hasAttribute("data-morphing") && ++n % 4 === 0) { const t = performance.now(); while (performance.now() - t < 45) {} } requestAnimationFrame(j); }; requestAnimationFrame(j); }
 const extentRect = () => { const r = plate.getBoundingClientRect(); return { l: r.left, t: r.top, r: r.right, b: r.bottom }; };
 window.__dockProbe = {
@@ -494,6 +637,7 @@ window.__dockProbe = {
   rim: () => rim.isConnected ? [rim] : null,
   compact: () => scene === "compact",
   badge: () => badge,
+  ...(fault === "splitcaps" ? { edge: () => caps } : fault === "nocaps" ? { edge: () => [] } : {}),   // nocaps: the caps paint, edge() does not name them
 };
 })();
 </script></body></html>`;

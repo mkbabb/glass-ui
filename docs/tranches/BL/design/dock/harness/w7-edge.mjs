@@ -10,7 +10,11 @@
 //   whole    the plate painted in its own colours on a mid-grey page (probe "edge", backdrop
 //            off): along the silhouette's inward normal (0-3 CSS px from the boundary pixel) the edge ink against the
 //            plate's interior colour, binned into 48 bins around the perimeter; every bin's median
-//            ≥ 0.25 × the median over bins, and that median ≥ 4/255 (an edge exists)
+//            ≥ 0.25 × the median over bins AND ≥ BIN_FLOOR (H3-9: an absolute floor per bin, so a
+//            missing arc cannot pass under a dark DPR-2 median at the witness's own floor), and that
+//            median ≥ 4/255 (an edge exists). An adapter's optional edge() elements (edge caps
+//            outside the plate) paint in the probe; the fixture's `splitcaps` is the PASS half and
+//            `nocaps` (caps painted, edge() empty) the FAIL half
 //   same     side and canvas: the edge's median within [0.67, 1.5] × the top dock's in the same
 //            theme and DPR (one rim for the family)
 //   radius   the W1 stadium read (≤ 1 px from cross/2)
@@ -25,6 +29,9 @@ import fs from "node:fs";
 import { parseArgs, engines, openTarget, launch, openScene, makeReport, outDir, engineTag, probeMode, shoot, magentaCoverage, inkCoverage, cornerRead, extentNow, waitRest, r2 } from "./lib.mjs";
 
 export const WHOLE_RATIO = 0.25, EDGE_FLOOR = 4 / 255, SAME = [0.67, 1.5], GUTTER_PX = 8;
+/** H3-9 · every bin's own floor. Set from the self-test reads (pass-3/H3.md §2 H3-9): the fixture and
+ *  its splitcaps variant against the nocaps plant, dark theme, DPR 2, both engines. */
+export const BIN_FLOOR = 2 / 255;
 const args = parseArgs();
 const target = await openTarget(args);
 const out = outDir(args, "W7");
@@ -103,8 +110,8 @@ for (const engine of engines(args)) {
                 if (r.empty) { rep.add({ engine, cell: name + tag, pass: false, summary: "no plate painted" }); await s.close(); return; }
                 fs.writeFileSync(`${out}/${engine}-${name}.png`, r.png);
                 if (kind === "top") topMedian[`${theme}${dpr}`] = r.median;
-                const checks = { whole: r.median >= EDGE_FLOOR && r.min >= WHOLE_RATIO * r.median, radius: r.corner.maxErr <= 1.0 };
-                const notes = [`edge median ${r2(r.median * 255)}/255, weakest bin ${r2(r.min * 255)}/255 at ${r.weakestDeg}° (bound ≥ ${WHOLE_RATIO} × median, median ≥ 4/255) over ${r.bins} bins`, `corner ${r.corner.maxErr} px (bound 1)`];
+                const checks = { whole: r.median >= EDGE_FLOOR && r.min >= Math.max(WHOLE_RATIO * r.median, BIN_FLOOR), radius: r.corner.maxErr <= 1.0 };
+                const notes = [`edge median ${r2(r.median * 255)}/255, weakest bin ${r2(r.min * 255)}/255 at ${r.weakestDeg}° (bound ≥ max(${WHOLE_RATIO} × median, ${r2(BIN_FLOOR * 255)}/255), median ≥ 4/255) over ${r.bins} bins`, `corner ${r.corner.maxErr} px (bound 1)`];
                 let badge = null, gutter = null;
                 if (kind !== "top") {
                     if (topMedian[`${theme}${dpr}`] == null) { // top cell skipped by --cells: read the reference on its own

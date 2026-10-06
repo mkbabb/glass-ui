@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // build.mjs · bundle the specimen app against a worktree's `src` into the scratch root.
-//   node build.mjs <worktree> [--label head]   →   $D3_OUT/builds/<label>/dist (+ build.json)
+//   node build.mjs <worktree> [--label head] [--demo]   →   $D3_OUT/builds/<label>/dist (+ build.json)
+//   --demo also builds the worktree's demo (demo/vite.demo-dist.config.ts) into $D3_OUT/builds/<label>/demo, for the
+//   glass-material story half of the owner-glance pair (H-13); its vite cache lives under the build root too.
 // The worktree needs its own node_modules (symlink the checkout's). Nothing is written into the worktree:
 // the app sources, the vite cache and the output all live under $D3_OUT/builds/<label>/.
 import fs from "node:fs";
@@ -40,9 +42,20 @@ export async function buildSpecimens(worktree, label) {
   return { dist, meta };
 }
 
+export async function buildDemo(worktree, label) {
+  const wt = path.resolve(worktree), root = path.join(OUT, "builds", label), outDir = path.join(root, "demo");
+  const { build } = await import(path.join(CHECKOUT, "node_modules/vite/dist/node/index.js"));
+  const t0 = Date.now();
+  await build({ configFile: path.join(wt, "demo/vite.demo-dist.config.ts"), mode: "production", logLevel: "warn", cacheDir: path.join(root, ".vite-demo"),
+    build: { outDir, emptyOutDir: true, reportCompressedSize: false, chunkSizeWarningLimit: 1e9 } });
+  fs.writeFileSync(path.join(outDir, "build.json"), JSON.stringify({ label, worktree: wt, demo: true, seconds: +((Date.now() - t0) / 1000).toFixed(1) }, null, 1));
+  return outDir;
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const a = cli({ label: { type: "string" } });
+  const a = cli({ label: { type: "string" }, demo: { type: "boolean" } });
   if (!a._[0]) { console.error("usage: node build.mjs <worktree> [--label head]"); process.exit(2); }
   const { dist, meta } = await buildSpecimens(a._[0], a.label || "head");
   console.log(`built ${meta.label} from ${meta.worktree} @ ${meta.sha} (src dirty files: ${meta.srcDirtyFiles}) in ${meta.seconds}s → ${dist}`);
+  if (a.demo) console.log(`built the demo → ${await buildDemo(a._[0], a.label || "head")}`);
 }

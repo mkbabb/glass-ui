@@ -1,4 +1,5 @@
-// lib.mjs: the shared measurement floor for the D2 dock witnesses (H2).
+// lib.mjs: the shared measurement floor for the D2 dock witnesses (H2, revised by H3:
+// pass-3/H3.md rows H3-1, H3-3, H3-7, H3-11).
 //
 // A witness imports this file and nothing else from the harness except the
 // adapter and fixture modules. Everything here is engine-agnostic: the same code
@@ -547,11 +548,43 @@ export async function startLog(page, opts = {}) {
         const read = (ts) => {
             const e = P.extent();
             const f = { t: ts, mk: L.mark, e: [e.l, e.t, e.r, e.b].map((v) => +v.toFixed(3)), m: !!P.morphing(), p: P.posture?.() ?? "" };
-            if (opts.seats || opts.sharp) {
+            if (opts.seats || opts.sharp || opts.ink) {
                 const ss = P.seats({ all: true });
                 if (opts.seats) f.s = ss.map((el) => { const q = el.getBoundingClientRect(); const c = hp.paintedRect(el); return [idOf(el), +q.left.toFixed(2), +q.top.toFixed(2), +q.right.toFixed(2), +q.bottom.toFixed(2), +c.l.toFixed(2), +c.t.toFixed(2), +c.r.toFixed(2), +c.b.toFixed(2), +hp.visibleOpacity(el).toFixed(3)]; });
                 if (opts.sharp) { let n = 0, who = ""; for (const el of ss) { if (hp.visibleOpacity(el) <= 0.05) continue; const u = hp.unsharp(el); if (u) { n++; who = who || u; } } f.us = n; if (who) f.usWho = who; }
+                // H3-3 · ink leaves the adapter does not call seats (a carrier's clones, a face drawn
+                // elsewhere): every element under the root that paints a glyph (a direct text node or an
+                // <svg>) and lies inside no declared seat. [cl, ct, cr, cb (clipped), opacity, bbox area].
+                // "Whoever paints it": a leaving seat's place is read from these as well as from the seat.
+                if (opts.ink) {
+                    const seatSet = new Set(ss);
+                    const inSeat = (el) => { for (let x = el; x && x !== root; x = x.parentElement) if (seatSet.has(x)) return true; return false; };
+                    const ks = [];
+                    for (const el of root.querySelectorAll("*")) {
+                        const tag = el.tagName.toLowerCase();
+                        if (el instanceof SVGElement && tag !== "svg") continue;
+                        if (tag !== "svg" && ![...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) continue;
+                        if (inSeat(el)) continue;
+                        const o = hp.visibleOpacity(el); if (o <= 0.05) continue;
+                        const q = el.getBoundingClientRect(); if (q.width * q.height < 1) continue;
+                        const c = hp.paintedRect(el);
+                        ks.push([+c.l.toFixed(2), +c.t.toFixed(2), +c.r.toFixed(2), +c.b.toFixed(2), +o.toFixed(3), +(q.width * q.height).toFixed(2)]);
+                    }
+                    f.k = ks;
+                }
             }
+            // H3-2 · the main-axis length of named seats' cells (the largest ancestor that holds
+            // exactly that one seat, inside the root): the seat's own width, whoever carries it
+            if (opts.cellsOf) {
+                const all = P.seats({ all: true }); const ax = P.axis();
+                f.cw = opts.cellsOf.map((sel) => {
+                    const el = root.querySelector(sel); if (!el) return null;
+                    let c = el; while (c.parentElement && c.parentElement !== root && all.filter((x) => c.parentElement.contains(x)).length === 1) c = c.parentElement;
+                    const q = c.getBoundingClientRect(); return +(ax === "y" ? q.height : q.width).toFixed(3);
+                });
+            }
+            // H3-7 · an in-flow neighbour beside the dock ([data-testid=neighbour]): its rect per frame
+            if (opts.neighbour) { const nb = document.querySelector("[data-testid=neighbour]"); if (nb) { const q = nb.getBoundingClientRect(); f.nb = [+q.left.toFixed(3), +q.top.toFixed(3), +q.right.toFixed(3), +q.bottom.toFixed(3)]; } }
             if (opts.scrollers) f.sc = hp.seatScrollers(root, P.seats({ all: true }));
             if (opts.owners) {
                 const own = new Map(); let sizeAnim = "";
@@ -716,13 +749,98 @@ export function seatRow(frames, axis, spec, scale = 1) {
     return { step: { ok: worst.ratio <= 1, ...worst }, overlap: { ok: overlapFrames === 0, frames: overlapFrames, first: firstOverlap } };
 }
 
+// ── H3-1 · the paint floor ────────────────────────────────────────────────────
+const area4 = (l, t, r, b) => Math.max(0, r - l) * Math.max(0, b - t);
+const isect4 = (a, b) => [Math.max(a[0], b[0]), Math.max(a[1], b[1]), Math.min(a[2], b[2]), Math.min(a[3], b[3])];
+/**
+ * A moving frame (the plate's main length or either main edge moves > 0.25 px) is BLANK when no
+ * seat of the entering face paints (opacity > 0.05, clipped rect ≥ 0.5 px on both axes) with at
+ * least 1 × 1 px of its clipped rect inside the plate. The entering face is the set of seats that
+ * paint inside the plate on the strip's last frame. A run of more than BLANK_RUN_MAX blank frames
+ * fails: H2 counted an invisible face as neither overhanging nor overlapping (B′ V-2, 26 blank
+ * frames on a swap passed three W3 checks), so `faces`, `seatStep` and `seatOverlap` now stand on
+ * this floor. A strip whose plate moves and whose last frame paints no seat fails too.
+ */
+export const BLANK_RUN_MAX = 1;
+export function blankRow(frames, ax) {
+    const paints = (q) => q[9] > 0.05 && q[7] - q[5] > 0.5 && q[8] - q[6] > 0.5;
+    const inPlate = (q, e) => { const c = isect4([q[5], q[6], q[7], q[8]], e); return c[2] - c[0] >= 1 && c[3] - c[1] >= 1; };
+    const last = frames.at(-1);
+    const entering = new Set((last.s ?? []).filter((q) => paints(q) && inPlate(q, last.e)).map((q) => q[0]));
+    const len = (f) => ax === "y" ? f.e[3] - f.e[1] : f.e[2] - f.e[0];
+    const edges = (f) => ax === "y" ? [f.e[1], f.e[3]] : [f.e[0], f.e[2]];
+    let moving = 0, blank = 0, run = 0, longest = 0, at = null;
+    for (let i = 1; i < frames.length; i++) {
+        const f = frames[i], g = frames[i - 1];
+        const mv = Math.abs(len(f) - len(g)) > 0.25 || edges(f).some((v, k) => Math.abs(v - edges(g)[k]) > 0.25);
+        if (!mv) { run = 0; continue; }
+        moving++;
+        const vis = (f.s ?? []).some((q) => entering.has(q[0]) && paints(q) && inPlate(q, f.e));
+        if (vis) { run = 0; continue; }
+        blank++; run++;
+        if (run > longest) { longest = run; at = +(f.t - frames[0].t).toFixed(1); }
+    }
+    const ok = entering.size ? longest <= BLANK_RUN_MAX : moving === 0;
+    return { ok, entering: entering.size, movingFrames: moving, blankFrames: blank, longestRun: longest, atMs: at, why: entering.size ? `${blank} blank of ${moving} moving frame(s), longest run ${longest} (bound ${BLANK_RUN_MAX})` : "no seat paints inside the plate at the end" };
+}
+
+// ── H3-3 · leaving seats, a gap-free rule ─────────────────────────────────────
+export const LEAVE_HI = 0.9, LEAVE_LO = 0.1, LEAVE_FRAC = 0.25, LEAVE_MIN_FRAMES = 3, LEAVE_TRACK_TOL = 0.1;
+/**
+ * A seat LEAVES when its visible ink is ≥ LEAVE_HI on the strip's first frame (the rest before the
+ * trigger) and ≤ LEAVE_LO on its last. Its ink per frame, "whoever paints it":
+ *   own    opacity × (its clipped rect ∩ the plate) / its transform-aware box
+ *   place  the largest, over the non-seat ink leaves (frames[i].k: a carrier's clones), of
+ *          opacity × (leaf ∩ the seat's painted place at rest ∩ the plate) / the leaf's box
+ *   ink    max(own, place)
+ * It passes when EITHER
+ *   (a) it travels with the glass: in every frame its ink ≥ its coverage − LEAVE_TRACK_TOL, where
+ *       coverage = (its box ∩ the plate) / its box (its last known box once it is gone): the
+ *       closing edge takes it, nothing takes it ahead of the edge; OR
+ *   (b) it fades on the plate's time: from the last frame with ink ≥ LEAVE_HI to the first with
+ *       ink ≤ LEAVE_LO spans ≥ LEAVE_MIN_FRAMES frames and ≥ LEAVE_FRAC × the plate morph's own
+ *       length (motion start to landing; the pinned clock when the plate does not move).
+ * No threshold gap: 0.968 → 0.937 → 0 is one frame from 0.937 to 0 (B′ V-3), and a clone that
+ * fades while its original vanishes reads as the fade it paints (G's inverse `popdetail`).
+ */
+export function leavingRow(frames, lengthMs) {
+    const maps = frames.map((f) => new Map((f.s ?? []).map((q) => [q[0], q])));
+    const inkOwn = (q, e) => { const bb = area4(q[1], q[2], q[3], q[4]); return bb < 1 ? 0 : q[9] * area4(...isect4([q[5], q[6], q[7], q[8]], e)) / bb; };
+    const inkPlace = (f, place) => Math.max(0, ...(f.k ?? []).map((k) => k[5] < 1 ? 0 : k[4] * area4(...isect4(isect4([k[0], k[1], k[2], k[3]], place), f.e)) / k[5]));
+    const rows = [];
+    for (const [id, q0] of maps[0]) {
+        if (inkOwn(q0, frames[0].e) < LEAVE_HI) continue;
+        const place = [q0[5], q0[6], q0[7], q0[8]];
+        let box = [q0[1], q0[2], q0[3], q0[4]];
+        const ser = frames.map((f, i) => {
+            const q = maps[i].get(id);
+            if (q) box = [q[1], q[2], q[3], q[4]];
+            const ink = Math.max(q ? inkOwn(q, f.e) : 0, inkPlace(f, place));
+            const bb = area4(...box);
+            return { t: f.t, ink, cov: bb < 1 ? 0 : area4(...isect4(box, f.e)) / bb };
+        });
+        if (ser.at(-1).ink > LEAVE_LO) continue;
+        const deficit = Math.max(0, ...ser.map((x) => x.cov - x.ink));
+        const i1 = ser.findIndex((x) => x.ink <= LEAVE_LO);
+        let i0 = Math.max(0, i1 - 1); while (i0 > 0 && ser[i0].ink < LEAVE_HI) i0--;
+        const spanMs = ser[i1].t - ser[i0].t, spanFrames = i1 - i0;
+        const tracks = deficit <= LEAVE_TRACK_TOL, fades = spanFrames >= LEAVE_MIN_FRAMES && spanMs >= LEAVE_FRAC * lengthMs;
+        rows.push({ seat: id, ok: tracks || fades, tracks, deficit: +deficit.toFixed(3), fades, spanMs: +spanMs.toFixed(1), spanFrames, path: ser.slice(i0, i1 + 1).map((x) => +x.ink.toFixed(3)) });
+    }
+    const bad = rows.filter((r) => !r.ok);
+    const w = bad[0] ?? rows.reduce((m, r) => (!m || r.spanMs < m.spanMs ? r : m), null);
+    const bound = +(LEAVE_FRAC * lengthMs).toFixed(1);
+    return { ok: bad.length === 0, leaving: rows.length, failing: bad.length, lengthMs: +lengthMs.toFixed(1), rows,
+        why: rows.length ? `${rows.length} leaving seat(s), ${bad.length} failing${w ? `; ${bad.length ? "worst" : "tightest"} seat ${w.seat}: ink ${w.path.join(" → ")} over ${w.spanMs} ms / ${w.spanFrames} frame(s) (fade bound ≥ ${LEAVE_MIN_FRAMES} frames and ≥ ${bound} ms), coverage deficit ${w.deficit} (track bound ${LEAVE_TRACK_TOL})` : ""}` : "no seat leaves" };
+}
+
 // ── reporting ────────────────────────────────────────────────────────────────
 export function makeReport(witness, target) {
     const cells = [];
     const only = parseArgs().cells ? new RegExp(String(parseArgs().cells)) : null;   // --cells <regex>: run only the blocks that record a matching cell
     const rep = {
         cells,
-        add(cell) { cell.load = loadAvg(); cells.push(cell); const tag = cell.record ? "RECORD" : cell.pass ? "PASS" : cell.unmeasured ? "UNMEASURED" : "FAIL"; console.log(`${tag}  ${witness}  ${ENGINE_LABEL[cell.engine] ?? cell.engine}  ${cell.cell}  ${cell.summary}  [load ${cell.load}]`); },
+        add(cell) { cell.load = loadAvg(); cells.push(cell); const tag = cell.record ? "RECORD" : cell.pass ? "PASS" : cell.unmeasured ? "UNMEASURED" : cell.ownerBlocked ? "OWNER-BLOCKED" : "FAIL"; console.log(`${tag}  ${witness}  ${ENGINE_LABEL[cell.engine] ?? cell.engine}  ${cell.cell}  ${cell.summary}  [load ${cell.load}]`); },
         /**
          * Run one scene's block; if it throws (a page crash, a missing hook), every
          * named cell it did not record FAILS with the error, so an unshimmed WebKit
@@ -738,9 +856,10 @@ export function makeReport(witness, target) {
             }
         },
         finish(dir) {
-            const failed = cells.filter((c) => !c.pass && !c.unmeasured && !c.record);
+            const failed = cells.filter(counts).filter((c) => !c.pass);
             fs.writeFileSync(path.join(dir, `${witness}.json`), JSON.stringify({ witness, target: target.label, when: new Date().toISOString(), load: loadAvg(), cells }, null, 1));
-            console.log(`${failed.length ? "FAIL" : "PASS"}  ${witness}  ${target.label}  ${cells.filter((c) => c.pass).length}/${cells.length} cells pass${cells.some((c) => c.unmeasured) ? `, ${cells.filter((c) => c.unmeasured).length} UNMEASURED` : ""}  (json: ${path.join(dir, witness + ".json")})`);
+            const ob = cells.filter((c) => c.ownerBlocked && !c.pass).length;
+            console.log(`${failed.length ? "FAIL" : "PASS"}  ${witness}  ${target.label}  ${cells.filter((c) => c.pass).length}/${cells.length} cells pass${cells.some((c) => c.unmeasured) ? `, ${cells.filter((c) => c.unmeasured).length} UNMEASURED` : ""}${ob ? `, ${ob} OWNER-BLOCKED` : ""}  (json: ${path.join(dir, witness + ".json")})`);
             process.exitCode = failed.length ? 1 : 0;
             return failed.length === 0;
         },
@@ -748,6 +867,9 @@ export function makeReport(witness, target) {
     return rep;
 }
 export const r2 = (v) => (Number.isFinite(v) ? +v.toFixed(2) : v);
+/** A cell that counts as a verdict: not RECORD, not UNMEASURED, not OWNER-BLOCKED (H3-11: a cell
+ *  whose only failure waits on an owner ruling is reported, never counted as a route defect). */
+export const counts = (c) => !c.record && !c.unmeasured && !c.ownerBlocked;
 
 // ── the morph analysis (W3, W6): one transition's frame strip against the pinned rung ──
 export const K_JITTER = 1.5;
@@ -769,7 +891,12 @@ export const TRAJ_TOL = 0.04;
  *   terminal    (H-3c) the last step into the target ≤ 1.5 × the step before it (dt-scaled) + 0.5 px
  *   seats       (H-3b) the seat row, when the strip carries seats
  */
-export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = true } = {}) {
+/** H3-11 · Q-4's most lenient reading, until the owner rules: (c) a dock-only clock of about 0.27 s,
+ *  (a) the flag may close at the 2 % band with the sub-band tail painting after it, and a reversal's
+ *  allowance measured from its release velocity. A window that fails the pinned clock but holds
+ *  under this reading is OWNER-BLOCKED (Q-4), never a route defect; one that fails both is FAIL. */
+export const Q4_DOCK_CLOCK_MS = 270;
+export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = true, paintFloor = false } = {}) {
     const spec = springSpec(rung);
     const clockMs = spec.settleS * 1000;
     const len = (f) => ax === "y" ? f.e[3] - f.e[1] : f.e[2] - f.e[0];
@@ -811,7 +938,7 @@ export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = 
     const iClose = iOpen < 0 ? -1 : frames.findIndex((f, i) => i > iOpen && !f.m);
     const t = (i) => i < 0 || i >= frames.length ? null : frames[i].t - frames[0].t;
     const win = { open: t(iOpen), close: t(iClose), land: t(iLand), motionStart: t(iStart), clockMs: r2(clockMs), frameMs: r2(F) };
-    let windowOk = true, windowWhy = "";
+    let windowOk = true, windowWhy = "", q4 = null;
     if (D >= 0.5 && iOpen < 0) { windowOk = false; windowWhy = "no window opened for the change (O-64 R-2)"; }
     else if (iOpen >= 0) {
         const end = iClose < 0 ? frames.length - 1 : iClose;
@@ -822,6 +949,7 @@ export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = 
         win.duration = r2(frames[end].t - frames[iOpen].t); win.fromRetargetMs = iR > 0 ? r2(dur) : undefined; win.allowMs = r2(allow);
         if (iClose < 0) { windowOk = false; windowWhy = "window never closed"; }
         else if (dur > allow) { windowOk = false; windowWhy = `window ${r2(dur)} ms${iR > 0 ? " after the retarget" : ""} > clock ${r2(clockMs)} + 2×${r2(F)} + stall ${r2(stall)} = ${r2(allow)} ms (O-64 R-4, H-3d)`; }
+        if (iClose >= 0) q4 = { dur, stall, from };
         if (windowOk && Dnet >= 0.5 && iClose >= 0) {
             const gapFrames = iClose - iLand;
             win.closeMinusLandFrames = gapFrames;
@@ -846,6 +974,7 @@ export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = 
                 const f2 = trajectoryFit(seg2, rung, { x0: xr, v0: vr, to: tgt, tLo: tr, tHi: tr });
                 if (f2.dev < best2.dev) best2 = { ...f2, xr, vr };
             }
+            if (q4) { q4.xr = best2.xr; q4.vr = best2.vr; }
             const D1 = Math.abs(reversal.to1 - start) * Math.min(1, Math.abs(L[iR] - start) / Math.max(1e-6, Math.abs(reversal.to1 - start)));
             const D2 = Math.max(Math.abs(tgt - best2.xr), ...pts.slice(iR).map((p) => Math.abs(p.L - tgt)));
             const tol1 = TRAJ_TOL * Math.abs(reversal.to1 - start) + 1, tol2 = TRAJ_TOL * D2 + 1;
@@ -865,6 +994,24 @@ export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = 
         if (st.length < 2) terminal = { ok: false, why: `the motion is ${st.length} step(s): ${r2(st[0]?.s ?? 0)} px` };
         else { const a = st.at(-2), b = st.at(-1); const bound = 1.5 * a.s * (b.dt / a.dt) + 0.5; terminal = { ok: b.s <= bound, last: r2(b.s), prev: r2(a.s), bound: r2(bound), why: `last step ${r2(b.s)} px after ${r2(a.s)} px (bound ${r2(bound)})` }; }
     }
+    // H3-11 · the Q-4 lenient reading (only where the pinned-clock window failed)
+    if (!windowOk && q4 && iOpen >= 0) {
+        const w0 = (2 * Math.PI) / rung.response, z = rung.dampingFraction;
+        let allowL = Math.max(clockMs, Q4_DOCK_CLOCK_MS) + 2 * F + q4.stall;
+        if (iR > 0 && Number.isFinite(q4.xr)) {
+            const e0 = q4.xr - tgt, band = rung.settleBand * Math.max(Math.abs(e0), Math.abs(tgt - start));
+            let T = 0; for (let tt = 0; tt < 3; tt += 5e-4) if (Math.abs(springErr(w0, z, e0, q4.vr, tt)) > band) T = tt;
+            allowL = Math.max(allowL, T * 1000 + 2 * F + q4.stall);
+        }
+        let ok = q4.dur <= allowL;
+        if (ok && Dnet >= 0.5) {
+            const gap = iClose - iLand;
+            const Dl2 = iR > 0 ? Math.abs(tgt - L[iR]) : Dnet;
+            if (gap > 2) ok = false;
+            else if (gap < -1) ok = Math.abs(L[iClose] - tgt) <= rung.settleBand * Dl2 + 0.5;
+        }
+        win.q4 = ok; win.q4AllowMs = r2(allowL);
+    }
     // owners
     const dupFrames = frames.filter((f) => f.dup);
     const owners = { ok: dupFrames.length === 0, frames: dupFrames.length, first: dupFrames[0]?.dup };
@@ -876,11 +1023,17 @@ export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = 
     };
     const exc = Math.max(1e-6, ...L.map((v) => Math.abs(v - start)));
     if (seats && frames.some((f) => f.s)) out.seats = seatRow(frames, ax, spec, reversal ? Math.max(1, D / exc) : 1);
+    if (paintFloor && frames.some((f) => f.s)) {
+        out.blank = blankRow(frames, ax);
+        out.leaving = leavingRow(frames, out.travelMs != null && D >= 0.5 ? out.travelMs : clockMs);
+    }
     return out;
 }
 export function morphChecks(a) {
     const c = { continuity: a.continuity.ok, landing: a.landing.ok, window: a.window.ok, owners: a.owners.ok, trajectory: a.trajectory.ok, terminal: a.terminal.ok };
     if (a.seats) { c.seatStep = a.seats.step.ok; c.seatOverlap = a.seats.overlap.ok; }
+    if (a.blank) c.blank = a.blank.ok;
+    if (a.leaving) c.leaving = a.leaving.ok;
     if (a.faces) c.faces = a.faces.ok;
     return c;
 }
@@ -889,6 +1042,9 @@ export function morphSummary(a) {
         `window ${a.window.duration ?? "none"} ms (allow ${a.window.allowMs ?? "-"}, clock ${a.window.clockMs})${a.window.why ? " — " + a.window.why : ""}`,
         `trajectory ${a.trajectory.why}`, `terminal ${a.terminal.why}`, `owners ${a.owners.frames}${a.owners.first ? " (" + a.owners.first[0] + ")" : ""}`];
     if (a.seats) s.push(`seat step ×${a.seats.step.ratio ?? 0}${a.seats.step.step != null ? ` (${a.seats.step.step} px)` : ""}, seat overlap ${a.seats.overlap.frames} frame(s)`);
+    if (a.blank) s.push(`blank ${a.blank.why}`);
+    if (a.leaving) s.push(`leaving ${a.leaving.why}`);
+    if (a.window.q4 != null) s.push(`Q-4 lenient window ${a.window.q4 ? "holds" : "fails"} (allow ${a.window.q4AllowMs} ms)`);
     if (a.faces) s.push(`faces ${a.faces.why}`);
     return s.join("; ");
 }

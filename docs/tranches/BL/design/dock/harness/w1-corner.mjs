@@ -21,6 +21,16 @@
 //                (Playwright WebKit screencast: 2.5 px against the rest radius read from the
 //                same video's landed tail; calibrate.mjs CAST measures the codec's spread on a static card)
 //   rail end     the last seat is fully inside the plate when the end is read
+// H3 (pass-3/H3.md):
+//   H3-5   a Playwright WebKit screencast `agree` is calibrated at the static rest: the video's
+//          static head (painted main length before the trigger) minus the rAF strip's first
+//          extent() is subtracted from every frame before [range ± 1 px] is judged, when that
+//          offset is within the screencast corner bound (a larger offset is not calibrated away;
+//          the lossless rest cell judges it)
+//   H3-11  a card cell whose ONLY failure is `card`, whose two lossless rest radii differ, and
+//          whose every frame's fitted radius lies between them (± the bound) is OWNER-BLOCKED
+//          (Q-12: does a card's corner change with its posture?), never FAIL; a radius outside
+//          the two rests fails
 import fs from "node:fs";
 import path from "node:path";
 import { parseArgs, engines, openTarget, launch, openScene, probeMode, shoot, magentaCoverage, cornerRead, makeReport, outDir, engineTag, waitRest, dockCenter, extentNow, screencast, readFrame, interiorGreen, startLog, stopLog, r2 } from "./lib.mjs";
@@ -96,9 +106,11 @@ function staticEnds(ok, ax) {
 }
 const lerpAt = (a, b, L, k) => { if (!a) return b?.[k]; if (!b) return a[k]; if (Math.abs(b.L - a.L) < 1) return Math.max(a[k], b[k]); const u = Math.min(1, Math.max(0, (L - a.L) / (b.L - a.L))); return a[k] + (b[k] - a[k]) * u; };
 
-function judgeMorph(engine, name, samples, { bound, fitR, restR = null, adapterRange = null, endpoints = null, how, restTrue = null, logInflight = null, videoScale = null }) {
+function judgeMorph(engine, name, samples, { bound, fitR, restR = null, restPairR = null, adapterRange = null, endpoints = null, how, restTrue = null, logInflight = null, videoScale = null, headOffset = null }) {
     const ok = samples.filter((s) => !s.empty);
     const ax = samples[0]?.ax ?? "x";
+    // H3-5: the screencast's static-rest offset (painted − extent() at the rest before the trigger)
+    const cal = headOffset != null && Math.abs(headOffset) <= BOUND_SCREENCAST_PX ? headOffset : 0;
     // screencast: the video's trusted static head and tail give the card's reference radius
     let ends = null, unjudged = [];
     const boundAt = () => bound;
@@ -117,7 +129,7 @@ function judgeMorph(engine, name, samples, { bound, fitR, restR = null, adapterR
     const disagree = ok.map((s) => {
         const L = mainLen(s, ax);
         if (s.pre != null) { const lo = Math.min(s.pre, s.post) - AGREE_PX, hi = Math.max(s.pre, s.post) + AGREE_PX; return L < lo ? lo - L : L > hi ? L - hi : 0; }
-        if (adapterRange) { const lo = adapterRange[0] - AGREE_PX, hi = adapterRange[1] + AGREE_PX; return L < lo ? lo - L : L > hi ? L - hi : 0; }
+        if (adapterRange) { const Lc = L - cal; const lo = adapterRange[0] - AGREE_PX, hi = adapterRange[1] + AGREE_PX; return Lc < lo ? lo - Lc : Lc > hi ? Lc - hi : 0; }
         return 0;
     });
     const worstDis = Math.max(0, ...disagree);
@@ -148,10 +160,21 @@ function judgeMorph(engine, name, samples, { bound, fitR, restR = null, adapterR
     if (fitR) checks.card = unjudged.includes("card") || (rSpread <= cardBound && (restPair == null || restPair <= BOUND_PX));
     const failed = Object.entries(checks).filter(([, v]) => !v).map(([k]) => k);
     const unmeasured = failed.length === 0 && unjudged.length > 0;
+    // H3-11 · Q-12: the card corner moves between its two rest radii and nowhere else
+    const pair = fitR ? (how === "screencast" ? [restTrue?.rc, restTrue?.re] : restPairR) : null;
+    let ownerBlocked;
+    if (failed.length === 1 && failed[0] === "card" && pair && pair.every((v) => v != null)) {
+        const lo = Math.min(...pair) - bound, hi = Math.max(...pair) + bound;
+        // lossless frames: every fitted radius between the rests; screencast frames: the spread from the
+        // video's own head→tail lerp (the codec's width-dependent bias cancels there) within its bound
+        const between = how === "screencast" ? rSpread <= CARD_SCREENCAST_PX : ok.every((x) => x.rExpected >= lo && x.rExpected <= hi);
+        if (Math.abs(pair[0] - pair[1]) > BOUND_PX && between) ownerBlocked = "Q-12";   // the rests differ by more than the lossless bound
+    }
+    const calNote = how === "screencast" && headOffset != null ? `; static-rest offset ${r2(headOffset)} px${cal ? " (calibrated)" : " (not calibrated: beyond the bound)"}` : "";
     const liftNote = how === "screencast" && ends ? `; video static ends head ${ends.head ? r2(ends.head.err) : "untrusted"} / tail ${ends.tail ? r2(ends.tail.err) : "untrusted"} px; video scale ${videoScale != null ? videoScale.toFixed(4) : "-"}` : "";
-    rep.add({ engine, cell: name + engineTag(target, engine), pass: failed.length === 0 && !unmeasured, unmeasured, failed, unjudged, videoScale: videoScale != null ? +videoScale.toFixed(4) : undefined, samples: ok.length, how, distinctExtents: distinct, inflight, logInflight, adapterTravelPx: r2(travel), worst: worst && { maxErr: worst.maxErr, bound: r2(boundAt(worst)), corner: worst.worstCorner, w: worst.w, h: worst.h, rExpected: worst.rExpected }, disagreePx: r2(worstDis), rSpread: r2(rSpread), restPairPx: restPair != null ? r2(restPair) : undefined, noise: ends ? { head: ends.head, tail: ends.tail } : undefined,
+    rep.add({ engine, cell: name + engineTag(target, engine), pass: failed.length === 0 && !unmeasured, unmeasured, ownerBlocked, restPairR: pair ?? undefined, headOffsetPx: headOffset != null ? r2(headOffset) : undefined, failed, unjudged, videoScale: videoScale != null ? +videoScale.toFixed(4) : undefined, samples: ok.length, how, distinctExtents: distinct, inflight, logInflight, adapterTravelPx: r2(travel), worst: worst && { maxErr: worst.maxErr, bound: r2(boundAt(worst)), corner: worst.worstCorner, w: worst.w, h: worst.h, rExpected: worst.rExpected }, disagreePx: r2(worstDis), rSpread: r2(rSpread), restPairPx: restPair != null ? r2(restPair) : undefined, noise: ends ? { head: ends.head, tail: ends.tail } : undefined,
         frames: ok.map((s) => ({ t: s.tMs, w: s.w, h: s.h, maxErr: s.maxErr, r: s.rExpected, pre: s.pre != null ? r2(s.pre) : undefined, post: s.post != null ? r2(s.post) : undefined })),
-        summary: `${unmeasured ? "UNMEASURED " + unjudged.join(", ") + ": " : ""}${ok.length} ${how} sample(s)${inflight != null ? ` (${inflight} in flight; rAF log ${logInflight ?? "-"} frames in flight)` : ""}, ${distinct} distinct painted extents over an adapter travel of ${r2(travel)} px (moves: ≥ ${MOVES_MIN} when ≥ 20 px); worst corner ${worst?.maxErr ?? "n/a"} px at ${worst?.worstCorner ?? "-"} (plate ${worst?.w}x${worst?.h}, r ${worst?.rExpected}; bound ${worst ? r2(boundAt(worst)) : bound})${liftNote}; silhouette outside the adapter's extent by ${r2(worstDis)} px${fitR ? `; fitted r spread ${r2(rSpread)} px from the reference (bound ${cardBound})${restPair != null ? `, lossless rest radii differ by ${r2(restPair)} px (bound ${BOUND_PX})` : ""}` : ""}${failed.length ? "  ⟶ FAILED: " + failed.join(", ") : ""}` });
+        summary: `${unmeasured ? "UNMEASURED " + unjudged.join(", ") + ": " : ""}${ok.length} ${how} sample(s)${inflight != null ? ` (${inflight} in flight; rAF log ${logInflight ?? "-"} frames in flight)` : ""}, ${distinct} distinct painted extents over an adapter travel of ${r2(travel)} px (moves: ≥ ${MOVES_MIN} when ≥ 20 px); worst corner ${worst?.maxErr ?? "n/a"} px at ${worst?.worstCorner ?? "-"} (plate ${worst?.w}x${worst?.h}, r ${worst?.rExpected}; bound ${worst ? r2(boundAt(worst)) : bound})${liftNote}; silhouette outside the adapter's extent by ${r2(worstDis)} px${calNote}${fitR ? `; fitted r spread ${r2(rSpread)} px from the reference (bound ${cardBound})${restPair != null ? `, lossless rest radii differ by ${r2(restPair)} px (bound ${BOUND_PX})` : ""}` : ""}${failed.length ? `  ⟶ ${ownerBlocked ? "OWNER-BLOCKED (" + ownerBlocked + ", rest radii " + pair.map(r2).join(" / ") + " px)" : "FAILED"}: ` + failed.join(", ") : ""}` });
 }
 
 /** Chromium: screenshot continuously from the trigger until the plate is still, bracketing each shot with adapter reads. */
@@ -186,7 +209,7 @@ async function sampleByShots(page, engine, name, trigger, opts = {}) {
     // the rAF log says whether the extent had in-between frames at all (a jump has none)
     const lo = Math.min(main(before), main(after)) + 0.5, hi = Math.max(main(before), main(after)) - 0.5;
     const logInflight = (await stopLog(page)).filter((f) => { const L = before.axis === "x" ? f.e[2] - f.e[0] : f.e[3] - f.e[1]; return L > lo && L < hi; }).length;
-    judgeMorph(engine, name, samples, { bound: BOUND_PX, fitR: opts.fitR, restR: opts.restR, endpoints: [main(before), main(after)], how: "screenshot", logInflight });
+    return (extra = {}) => judgeMorph(engine, name, samples, { bound: BOUND_PX, fitR: opts.fitR, restR: opts.restR, endpoints: [main(before), main(after)], how: "screenshot", logInflight, ...extra });
 }
 
 /** Playwright WebKit: one screencast per scene, the rests read by screenshot between transitions. */
@@ -242,7 +265,15 @@ function webkitJudge(engine, prefix, w, fitR, only = null) {
             continue;
         }
         const restTrue = { c: R.cOk, e: R.eOk, cL: R.cL, eL: R.eL, rc: fitR ? R.c : null, re: fitR ? R.e : null };
-        judgeMorph(engine, `${prefix}·${k}`, samples, { bound: BOUND_SCREENCAST_PX, fitR, adapterRange: range, how: "screencast", restTrue, videoScale: scale });
+        // H3-5: the static head's painted main length (the frames before the plate first moves)
+        // against the strip's first extent() read
+        let headOffset = null;
+        if (strip.length) {
+            const okS = samples.filter((x) => !x.empty); const L0 = okS.length ? mainLen(okS[0], w.ax) : null; const head = [];
+            for (const x of okS) { if (Math.abs(mainLen(x, w.ax) - L0) > 0.5) break; head.push(mainLen(x, w.ax)); }
+            if (head.length >= 2) { head.sort((p, q) => p - q); headOffset = head[Math.floor(head.length / 2)] - strip[0]; }
+        }
+        judgeMorph(engine, `${prefix}·${k}`, samples, { bound: BOUND_SCREENCAST_PX, fitR, adapterRange: range, how: "screencast", restTrue, videoScale: scale, headOffset });
     }
     void order;
 }
@@ -292,12 +323,14 @@ for (const engine of engines(args)) {
                 const s = await openScene(browser, target, scene, { query });
                 const r0 = await atRest(s.page, engine, `${prefix}·collapsed-rest`, { fitR });
                 const c = await dockCenter(s.page);
-                await sampleByShots(s.page, engine, `${prefix}·first-expand`, () => s.page.mouse.move(c.x, c.y, { steps: 3 }), { fitR, restR: r0?.rExpected });
+                const j1 = await sampleByShots(s.page, engine, `${prefix}·first-expand`, () => s.page.mouse.move(c.x, c.y, { steps: 3 }), { fitR, restR: r0?.rExpected });
                 const r1 = await atRest(s.page, engine, `${prefix}·expanded-rest`, { fitR });
-                await sampleByShots(s.page, engine, `${prefix}·warm-collapse`, () => s.page.mouse.move(4, 4), { fitR, restR: r1?.rExpected });
+                const pair = { restPairR: fitR ? [r0?.rExpected ?? null, r1?.rExpected ?? null] : null };
+                j1(pair);
+                (await sampleByShots(s.page, engine, `${prefix}·warm-collapse`, () => s.page.mouse.move(4, 4), { fitR, restR: r1?.rExpected }))(pair);
                 await waitRest(s.page);
                 const c2 = await dockCenter(s.page);
-                await sampleByShots(s.page, engine, `${prefix}·warm-expand`, () => s.page.mouse.move(c2.x, c2.y, { steps: 3 }), { fitR, restR: r1?.rExpected });
+                (await sampleByShots(s.page, engine, `${prefix}·warm-expand`, () => s.page.mouse.move(c2.x, c2.y, { steps: 3 }), { fitR, restR: r1?.rExpected }))(pair);
                 await s.close();
             });
         }

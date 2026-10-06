@@ -1,0 +1,60 @@
+{
+ "step": "S44 R-3 colocation of the tests the gate's B16 still homes elsewhere (frozen from its reading, F-9)",
+ "moves": [
+  {
+   "from": "tests/components/custom/dock/lattice/reach.test.ts",
+   "to": "src/components/dock/__tests__/reach.test.ts"
+  },
+  {
+   "from": "tests/components/easing/product.test.ts",
+   "to": "src/components/easing/__tests__/product.test.ts"
+  },
+  {
+   "from": "tests/components/sortable-list/guard.test.ts",
+   "to": "src/components/sortable-list/__tests__/guard.test.ts"
+  },
+  {
+   "from": "tests/components/sortable-list/receive.test.ts",
+   "to": "src/components/sortable-list/__tests__/receive.test.ts"
+  },
+  {
+   "from": "tests/composables/dark/sync-script.test.ts",
+   "to": "src/composables/dark/__tests__/sync-script.test.ts"
+  }
+ ],
+ "scanDeltas": [],
+ "reasons": [
+  {
+   "from": "tests/components/custom/dock/lattice/reach.test.ts",
+   "to": "src/components/dock/__tests__/reach.test.ts",
+   "why": "R-3: its subject is src/components/dock"
+  },
+  {
+   "from": "tests/components/easing/product.test.ts",
+   "to": "src/components/easing/__tests__/product.test.ts",
+   "why": "R-3: its subject is src/components/easing"
+  },
+  {
+   "from": "tests/components/sortable-list/guard.test.ts",
+   "to": "src/components/sortable-list/__tests__/guard.test.ts",
+   "why": "R-3: its subject is src/components/sortable-list"
+  },
+  {
+   "from": "tests/components/sortable-list/receive.test.ts",
+   "to": "src/components/sortable-list/__tests__/receive.test.ts",
+   "why": "R-3: its subject is src/components/sortable-list"
+  },
+  {
+   "from": "tests/composables/dark/sync-script.test.ts",
+   "to": "src/composables/dark/__tests__/sync-script.test.ts",
+   "why": "R-3: its subject is src/composables/dark"
+  }
+ ],
+ "stays": [
+  {
+   "test": "tests/styles/route-motion/alpha.test.ts",
+   "home": "src/composables/motion/route",
+   "why": "fd2 (the move adds src/composables/motion <-> src/composables/motion/route)"
+  }
+ ]
+}

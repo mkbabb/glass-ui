@@ -1,0 +1,31 @@
+{
+ "step": "B11 (LAW §5): an internal door publishes only names something outside its module reads. diskRecord's one outside reader was the forwarding @import writer that P5-F2 deleted (P4-R4 arm (a)); the floor library reads it inside entries.mjs, so both floor doors drop it",
+ "files": {
+  "scripts/structure/index.mjs": {
+   "hunks": [
+    [
+     "    declarationProgram,\n    diskRecord,\n    libraryEntryMap,\n",
+     "    declarationProgram,\n    libraryEntryMap,\n"
+    ]
+   ]
+  },
+  "scripts/structure/lib/index.mjs": {
+   "hunks": [
+    [
+     "    declarationProgram,\n    diskRecord,\n    libraryEntryMap,\n",
+     "    declarationProgram,\n    libraryEntryMap,\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "scripts/structure/index.mjs",
+   "why": "the floor runtime's door drops diskRecord: no reader outside scripts/structure"
+  },
+  {
+   "file": "scripts/structure/lib/index.mjs",
+   "why": "the floor library's door drops diskRecord: entries.mjs reads it in place"
+  }
+ ]
+}

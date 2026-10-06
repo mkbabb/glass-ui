@@ -16,11 +16,22 @@
 //   E      D3-E: a thin card-pole frost (α 0.20); every glyph carries a 6 px card stroke (3 px outside the outline) under its fill, every
 //          indicator an ink band inside a card band.
 //   F      D3-F: the field layer carves a well under each registered surface rect (the pole at 82% over the field).
+//   G      D3-G: a luminosity pole under every content rung and the dock (a child painted with mix-blend-mode:
+//          luminosity over the field), the chrome rungs opaque; inside an isolated group the page stamps the flat
+//          state (lib.mjs FLAT_ATTR) on the group, as W-G asks.
+// Every profile also lays out the H2 scenes (held, hostile, state, isolated) with the same ids as the specimen app,
+// and the dock's inks as H-2 reads them: the active tab is the fg run, the inactive tab the "muted-tab" run.
+// Under prefers-reduced-motion: no-preference the aurora frame scrolls (rAF-driven), so the motion windows see a
+// moving field; under reduce it is still.
 //
 // Violation hooks read by the page at run time (selftest.mjs injects them with capture.mjs --inject):
 //   --fx-readback: 1          the page runs a 2D-canvas getImageData every frame (M-5's violation)
 //   --fx-publish-delay: <n>   B publishes n frames after the field changes (W-B's violation)
 //   --fx-well-spill: <px>     F's wells extend past each rect (W-F's violation)
+//   --fx-writer: rename|attr  the page writes a custom property every frame: by setProperty under a new name, or by
+//                             rewriting a style attribute (H-3's violations, which a name grep misses)
+//   --fx-motion-thin: 1       with motion on, every surface goes transparent for 300 ms of every 600 ms (M-2m leg 1)
+//   --fx-step-dip: 1          on a ceiling step, every surface goes transparent for 400 ms (M-2m leg 2, Q-8)
 // The aurora grounds are real field pixels: the frozen aurora (PRM, one frame) captured by the HEAD run's empty
 // scene in Chromium, per theme and ceiling (--fields <capdir>). Profile B paints a flat field instead.
 import fs from "node:fs";
@@ -36,8 +47,10 @@ function oklabHex(L, a, b) {
 const polar = (L, C, hdeg) => oklabHex(L, C * Math.cos((hdeg * Math.PI) / 180), C * Math.sin((hdeg * Math.PI) / 180));
 
 const SPECS = ["wash", "quiet", "resting", "card", "floating", "overlay", "dialog-rung", "opaque"];
-const BAND = { wash: "content", quiet: "content", resting: "content", card: "content", floating: "chrome", overlay: "chrome", "dialog-rung": "chrome", opaque: "escape", dock: "chrome", popover: "chrome", dialog: "chrome" };
-const ALL = [...SPECS, "dock", "popover", "dialog"];
+const BAND = { wash: "content", quiet: "content", resting: "content", card: "content", floating: "chrome", overlay: "chrome", "dialog-rung": "chrome", opaque: "escape", dock: "chrome", popover: "chrome", dialog: "chrome",
+  "wash-held": "content", "floating-held": "chrome", "dock-held": "chrome", "dock-collapsed": "chrome" };
+const ALL = [...SPECS, "dock", "popover", "dialog", "wash-held", "floating-held", "dock-held", "dock-collapsed"];
+export { oklabHex, polar };
 
 // The shared theme: page, card, inks. Light ink clears ≥ 5.4:1 on the lightest plate; dark likewise.
 const THEME = {
@@ -47,8 +60,10 @@ const THEME = {
 
 // The green profile's plates: light tints on a 0.013 circle around paper (adjacent chord 0.0153), dark tones stepping L.
 function greenPlates() {
-  const angle = { wash: 0, quiet: 72, resting: 144, floating: 216, overlay: 288, card: 36, "dialog-rung": 108, opaque: 180, dock: 252, popover: 324, dialog: 0 };
-  const Ld = { wash: 0.22, quiet: 0.235, resting: 0.25, floating: 0.265, overlay: 0.28, card: 0.242, "dialog-rung": 0.272, opaque: 0.3, dock: 0.257, popover: 0.227, dialog: 0.29 };
+  const angle = { wash: 0, quiet: 72, resting: 144, floating: 216, overlay: 288, card: 36, "dialog-rung": 108, opaque: 180, dock: 252, popover: 324, dialog: 0,
+    "wash-held": 0, "floating-held": 216, "dock-held": 252, "dock-collapsed": 252 };
+  const Ld = { wash: 0.22, quiet: 0.235, resting: 0.25, floating: 0.265, overlay: 0.28, card: 0.242, "dialog-rung": 0.272, opaque: 0.3, dock: 0.257, popover: 0.227, dialog: 0.29,
+    "wash-held": 0.22, "floating-held": 0.265, "dock-held": 0.257, "dock-collapsed": 0.257 };
   const light = {}, dark = {};
   for (const id of ALL) {
     const r = id === "dialog" ? 0.008 : 0.013, t = (angle[id] * Math.PI) / 180;
@@ -71,6 +86,9 @@ export function fixtureProfile(profile, o = {}) {
       const a = alphas[theme]?.[id] ?? (id === "opaque" ? 1 : 0.9);
       css += `html${theme === "dark" ? ".dark" : ":not(.dark)"} ${plate(id, `background: color-mix(in srgb, var(--card) ${(a * 100).toFixed(1)}%, transparent);`)}`;
     }
+    // H-4: the bound as the cascade would compute it (FL-5), one number per band per theme, on every plate.
+    for (const theme of ["light", "dark"]) for (const [band, v] of Object.entries(o.bounds?.[theme] || {}))
+      css += `html${theme === "dark" ? ".dark" : ":not(.dark)"} [data-band="${band}"] { --glass-bound: ${v}; }\n`;
     css += `.fx-well { background: var(--card); }\n`;
   } else if (profile === "C") {
     // A per-level plate between card and page; the muted ink solves 5.0:1 against it (OKLab l³ = Y for achromatic).
@@ -79,7 +97,7 @@ export function fixtureProfile(profile, o = {}) {
     css += `:root { --background: var(--page); }
 [data-spec] { --muted-solved: oklch(from var(--plate) calc(pow(max(0, (pow(l, 3) + 0.05) / 5 - 0.05), 1 / 3)) 0 0); }
 html.dark [data-spec] { --muted-solved: oklch(from var(--plate) calc(pow(min(1, 5 * (pow(l, 3) + 0.05) - 0.05), 1 / 3)) 0 0); }
-[data-spec] .fx-muted, [data-spec] .fx-muted *, [data-spec] .fx-well::placeholder { color: var(--muted-solved); }
+[data-spec] .fx-muted, [data-spec] .fx-muted *, [data-spec] .fx-mutedtab, [data-spec] .fx-mutedtab *, [data-spec] .fx-well::placeholder { color: var(--muted-solved); }
 body { background: var(--background); }\n`;
   } else if (profile === "E") {
     for (const id of ALL) css += plate(id, id === "opaque" ? "background: var(--card);" : "background: color-mix(in srgb, var(--card) 20%, transparent);");
@@ -90,7 +108,16 @@ body { background: var(--background); }\n`;
     for (const id of ALL) css += plate(id, id === "opaque" ? "background: var(--card);" : "background: color-mix(in srgb, var(--card) 20%, transparent);");
     css += `.fx-wellfield { position: absolute; background: color-mix(in srgb, var(--wellpole) 82%, transparent); }
 :root { --wellpole: #fbf6ef; } html.dark { --wellpole: #1a1512; }\n`;
-  } else throw new Error(`unknown profile ${profile} (green, A, B, C, E, F)`);
+  } else if (profile === "G") {
+    // The luminosity pole (W T8b): the composite takes the pole's luminosity and the field's hue and saturation.
+    const content = ["wash", "quiet", "resting", "card", "dock", "wash-held", "dock-held", "dock-collapsed"];
+    for (const id of ALL) css += plate(id, content.includes(id) ? "background: transparent;" : "background: var(--card);");
+    css += `:root { --gpole: ${o.gpole?.light || "#c9c3bd"}; --fg: #16120f; --muted: #3b342e; --edge: #3b342e; --ring: #16120f; }
+html.dark { --gpole: ${o.gpole?.dark || "#342c26"}; }
+.fx-pole { position: absolute; inset: 0; border-radius: inherit; background: var(--gpole); mix-blend-mode: luminosity; pointer-events: none; }
+.fx-plate > :not(.fx-pole):not(.fx-sample), .fx-dock > :not(.fx-pole) { position: relative; }
+.fx-well { background: var(--card); }\n`;
+  } else throw new Error(`unknown profile ${profile} (green, A, B, C, E, F, G)`);
   return css;
 }
 
@@ -102,6 +129,27 @@ html[data-ground="black"] #field { background: #000; }
 html[data-ground="white"] #field { background: #fff; }
 html[data-ground="checker"] #field { background: repeating-conic-gradient(#000 0 25%, #fff 0 50%) 0 0 / 16px 16px; }
 html[data-ground="stripes"] #field { background: repeating-linear-gradient(90deg, #7c3aed 0 24px, #facc15 24px 48px); }
+html[data-ground="red"] #field { background: #761617; }
+.fx-band { position: absolute; left: 0; width: 1280px; background: #0b1020; }
+html.dark .fx-band { background: #f4f1ea; }
+.fx-declared { position: absolute; left: 920px; top: 500px; width: 330px; height: 220px; background: #000; }
+html.dark .fx-declared { background: #fff; }
+.fx-tabpill { border-radius: 999px; }
+.fx-tabpill.fx-active, .fx-tabpill[data-fill="active"] { background: color-mix(in oklab, var(--fg) 14%, transparent); }
+.fx-tabpill[data-fill="hover"]:hover { background: color-mix(in oklab, var(--fg) 8%, transparent); }
+.fx-tab.fx-mutedtab { color: var(--muted); font-weight: 400; }
+/* A dock layer that sets visibility: visible under a hidden surface, as dock/styles/layers.css does (H-1's leak). */
+[data-spec="dock"] .fx-tab { visibility: visible; }
+.fx-check { display: inline-block; width: 20px; height: 20px; border-radius: 6px; background: var(--fg); }
+.fx-seg { display: inline-flex; gap: 4px; padding: 3px; border-radius: 999px; background: color-mix(in oklab, var(--fg) 6%, transparent); }
+.fx-seg span { padding: 3px 12px; border-radius: 999px; }
+.fx-seg [data-fill="selected"] { background: color-mix(in oklab, var(--fg) 16%, transparent); }
+.fx-staterow { display: flex; align-items: center; gap: 16px; margin-top: 12px; }
+.fx-veil { position: fixed; inset: 0; pointer-events: none; background: rgb(0 0 0 / 0.12);
+  -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent) ; mask-image: radial-gradient(closest-side, #000 60%, transparent);
+  -webkit-mask-size: 360px 240px; mask-size: 360px 240px; -webkit-mask-position: 720px 80px; mask-position: 720px 80px; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+.fx-veilprobe { position: absolute; left: 870px; top: 180px; width: 60px; height: 40px; }
+.fx-collapsed { width: 56px; height: 56px; padding: 0; justify-content: center; }
 .fx-page { position: relative; width: 1280px; height: 900px; }
 .fx-bare { position: absolute; left: 24px; top: 844px; width: 280px; height: 36px; }
 .fx-plate { position: absolute; width: 280px; height: 188px; box-sizing: border-box; padding: 14px 16px; border-radius: 20px; }
@@ -132,11 +180,12 @@ const PAGE_JS = `(() => {
 const q = new URLSearchParams(location.search);
 const ground = q.get("ground") || "paper", scene = q.get("scene") || "ladder", theme = q.get("theme") || "light", nodock = q.get("nodock") === "1";
 const PROFILE = document.documentElement.dataset.profile;
-document.documentElement.dataset.ground = ground;
+document.documentElement.dataset.ground = ground; document.documentElement.dataset.scene = scene;
 const field = document.getElementById("field");
 const FLAT = { light: [228, 106, 60], dark: [228, 106, 60] }, PAGE = { light: [251, 250, 248], dark: [11, 10, 9] };
 let ceiling = ground === "aurora50" ? 0.5 : 1;
 const isField = ground === "aurora" || ground === "aurora50";
+const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const paintField = () => {
   if (!isField) return;
   if (PROFILE === "B") { field.style.background = "rgb(" + FLAT[theme].join(" ") + ")"; field.style.opacity = String(ceiling); }
@@ -148,8 +197,11 @@ const lin = (c) => { c /= 255; return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 
 const publishedY = () => { const c = FLAT[theme].map((v, i) => ceiling * v + (1 - ceiling) * PAGE[theme][i]); return 0.2126 * lin(c[0]) + 0.7152 * lin(c[1]) + 0.0722 * lin(c[2]); };
 const publish = () => { const d = document.querySelector('[data-spec="dock"]'); if (!d || PROFILE !== "B" || !isField) return;
   d.setAttribute("data-backdrop-sample-state", "published"); d.style.setProperty("--glass-backdrop-luma", publishedY().toFixed(4)); };
+let dipUntil = 0;
+const setThin = (on) => document.querySelectorAll("[data-spec]").forEach((e) => { e.style.background = on ? "transparent" : ""; e.style.backgroundColor = on ? "transparent" : ""; });
 window.__harness = { setCeiling(v) {
   ceiling = v; paintField();
+  if (cssVar("--fx-step-dip") === "1") { dipUntil = performance.now() + 400; setThin(true); }
   const delay = parseInt(cssVar("--fx-publish-delay") || "0", 10) || 0;
   if (!delay) return publish();
   let n = 0; const tick = () => (++n >= delay ? publish() : requestAnimationFrame(tick)); requestAnimationFrame(tick);
@@ -158,22 +210,44 @@ const h = (tag, attrs = {}, kids = []) => { const e = document.createElement(tag
   for (const [k, v] of Object.entries(attrs)) if (k === "text") e.textContent = v; else if (k === "style") e.style.cssText = v; else e.setAttribute(k, v);
   for (const k of kids) e.append(k); return e; };
 const BAND = ${JSON.stringify(BAND)};
+const G_POLE = ${JSON.stringify(["wash", "quiet", "resting", "card", "dock", "wash-held", "dock-held", "dock-collapsed"])};
 const root = document.getElementById("root");
+if (scene === "isolated") root.style.isolation = "isolate";
 const wells = () => h("div", { class: "fx-wells" }, [
   h("input", { class: "fx-well", value: "Lot 42", "aria-label": "Lot", "data-ink": "well-fg", "data-edge": "well", "data-ring": "well" }),
   h("input", { class: "fx-well", placeholder: "Search lots", "aria-label": "Search", "data-ink": "well-muted" })]);
-if (scene === "ladder") {
-  ${JSON.stringify(SPECS)}.forEach((id, i) => root.append(h("section", { class: "fx-plate", "data-spec": id, "data-band": BAND[id],
-    style: "left:" + (24 + (i % 4) * 304) + "px;top:" + (24 + Math.floor(i / 4) * 212) + "px" }, [
-    h("p", { class: "fx-fg" }, [h("span", { "data-ink": "fg", text: id + " Aa foreground" })]),
-    h("p", { class: "fx-muted" }, [h("span", { "data-ink": "muted", text: "Muted caption ink" })]),
-    wells(), h("div", { class: "fx-sample", "data-sample": "" })])));
-  if (!nodock) root.append(h("div", { class: "fx-dock", "data-spec": "dock", "data-band": "chrome" }, [
-    h("span", { class: "fx-tab", text: "Photos" }), h("span", { class: "fx-tab" }, [h("span", { "data-ink": "fg", text: "Lots" })]),
-    h("span", { class: "fx-muted" }, [h("span", { "data-ink": "muted", text: "12 lots" })]), h("span", { class: "fx-docksample", "data-sample": "" })]));
-  root.append(h("div", { class: "fx-pop", "data-spec": "popover", "data-band": "chrome" }, [
+const plateEl = (id, style, extra = {}, kids) => h("section", { class: "fx-plate", "data-spec": id, "data-band": BAND[id], style, ...extra }, kids || [
+  h("p", { class: "fx-fg" }, [h("span", { "data-ink": "fg", text: id + " Aa foreground" })]),
+  h("p", { class: "fx-muted" }, [h("span", { "data-ink": "muted", text: "Muted caption ink" })]),
+  wells(), h("div", { class: "fx-sample", "data-sample": "" })]);
+const dockEl = (id, top, extra = {}, fills = false) => h("div", { class: "fx-dock", "data-spec": id, "data-band": "chrome", style: "top:" + top + "px", ...extra }, [
+  h("span", { class: "fx-tab fx-tabpill", "data-fill": "active" }, [h("span", { "data-ink": "fg", text: "Photos" })]),
+  h("span", { class: "fx-tab fx-mutedtab fx-tabpill", ...(fills ? { "data-fill": "hover", "data-hover": "" } : {}) }, [h("span", { "data-ink": "muted-tab", text: "Lots" })]),
+  ...(fills ? [] : [h("span", { class: "fx-muted" }, [h("span", { "data-ink": "muted", text: "12 lots" })])]),
+  h("span", { class: "fx-docksample", "data-sample": "", ...(id === "dock-held" ? { "data-press": "" } : {}) })]);
+const heldKids = (el) => { el.prepend(h("span", { class: "glass-grasp-carrier", "data-grasp": "grasp", style: "display:none" })); return el; };
+if (["ladder", "hostile", "isolated"].includes(scene)) {
+  if (scene === "hostile") root.append(h("div", { class: "fx-band", "data-hx-band": "", style: "top:36px;height:52px" }), h("div", { class: "fx-band", "data-hx-band": "", style: "top:474px;height:48px;width:900px" }),
+    h("div", { class: "fx-declared", "data-hx-declared": theme === "dark" ? "light" : "dark" }));
+  ${JSON.stringify(SPECS)}.forEach((id, i) => root.append(plateEl(id, "left:" + (24 + (i % 4) * 304) + "px;top:" + (24 + Math.floor(i / 4) * 212) + "px")));
+  if (!nodock) { const d = dockEl("dock", 470); d.querySelector("[data-fill=active]").removeAttribute("data-fill"); d.querySelector(".fx-tabpill").classList.add("fx-active"); root.append(d); }
+  if (scene !== "isolated") root.append(h("div", { class: "fx-pop", "data-spec": "popover", "data-band": "chrome" }, [
     h("p", { class: "fx-fg" }, [h("span", { "data-ink": "fg", text: "Popover Aa foreground" })]),
     h("p", { class: "fx-muted" }, [h("span", { "data-ink": "muted", text: "Muted caption ink" })]), h("div", { class: "fx-popsample", "data-sample": "" })]));
+} else if (scene === "held") {
+  root.append(heldKids(plateEl("wash-held", "left:24px;top:24px", { "data-held": "" })), heldKids(plateEl("floating-held", "left:328px;top:24px", { "data-held": "" })));
+  if (!nodock) {
+    root.append(heldKids(dockEl("dock-held", 300, { "data-held": "" })));
+    root.append(h("div", { class: "fx-dock fx-collapsed", "data-spec": "dock-collapsed", "data-band": "chrome", style: "top:440px" }, [h("span", { class: "fx-fg" }, [h("span", { "data-ink": "fg", text: "Aa" })])]));
+  }
+} else if (scene === "state") {
+  root.append(plateEl("resting", "left:24px;top:24px", {}, [
+    h("p", { class: "fx-fg" }, [h("span", { "data-ink": "fg", text: "resting Aa foreground" })]),
+    h("div", { class: "fx-staterow" }, [h("span", { class: "fx-check", "data-fill": "checked" }), h("span", { class: "fx-seg" }, [h("span", { "data-fill": "selected", text: "Grid" }), h("span", { text: "List" })])]),
+    h("div", { class: "fx-sample", "data-sample": "" })]));
+  if (!nodock) root.append(dockEl("dock", 300, {}, true));
+  document.body.append(h("div", { class: "fx-veil", "data-raw-hide": "" }));
+  root.append(h("div", { class: "fx-veilprobe", "data-veil-probe": "" }));
 } else if (scene === "dialog") {
   root.append(h("div", { class: "fx-dialog", "data-spec": "dialog", "data-band": "chrome", role: "dialog" }, [
     h("h2", {}, [h("span", { "data-ink": "fg", text: "Dialog Aa title" })]),
@@ -186,6 +260,12 @@ if (scene === "ladder") {
     [h("button", { class: "fx-capsule", "data-halo-capsule": "", text: "Pause" })])));
   root.append(h("div", { class: "fx-host", "data-halo-ref": "", style: "top:640px" }, [h("button", { class: "fx-capsule", "data-halo-capsule": "", text: "Pause" })]));
 }
+// G: a luminosity pole under each content rung and the dock; inside an isolated group the pole goes flat, and the
+// page says so on the group (W-G leg 2). --fx-g-nostamp removes the stamp (the silent-flat plant).
+if (PROFILE === "G") {
+  for (const s of document.querySelectorAll("[data-spec]")) if (G_POLE.includes(s.dataset.spec)) s.prepend(h("span", { class: "fx-pole" }));
+  if (scene === "isolated") root.setAttribute("data-glass-flat", "");
+}
 // F: the field layer carves a well under every registered surface (the dock and popover included).
 if (PROFILE === "F" && isField && scene !== "empty") requestAnimationFrame(() => {
   const layer = document.getElementById("wells"), sp = "var(--fx-well-spill, 0px)";
@@ -193,14 +273,26 @@ if (PROFILE === "F" && isField && scene !== "empty") requestAnimationFrame(() =>
     layer.append(h("div", { class: "fx-wellfield", style: "left:calc(" + r.left + "px - " + sp + ");top:calc(" + r.top + "px - " + sp + ");width:calc(" + r.width + "px + 2 * " + sp + ");height:calc(" + r.height + "px + 2 * " + sp + ")" })); }
 });
 publish();
-// The M-5 violation: a synchronous readback every frame when the page is told to.
+// The per-frame loop: the moving field (motion on only), the planted readback and writers, and the planted dips.
 const cv = document.createElement("canvas"); cv.width = cv.height = 8; const cx = cv.getContext("2d");
-const loop = () => { if (cssVar("--fx-readback") === "1") { cx.fillRect(0, 0, 8, 8); cx.getImageData(0, 0, 8, 8); } requestAnimationFrame(loop); };
+const t0 = performance.now(); let n = 0;
+const loop = () => { const now = performance.now(); n++;
+  if (isField && !still && PROFILE !== "B") field.style.backgroundPosition = Math.round(((now - t0) / 25) % 1280) + "px 0px";
+  if (cssVar("--fx-readback") === "1") { cx.fillRect(0, 0, 8, 8); cx.getImageData(0, 0, 8, 8); }
+  const w = cssVar("--fx-writer"), d = document.querySelector("[data-spec]");
+  if (w === "rename" && d) d.style.setProperty("--x-field-y", String(n % 100 / 100));
+  if (w === "attr" && d) d.setAttribute("style", (d.getAttribute("style") || "").replace(/--x-tone:[^;]*;?/, "") + "--x-tone:" + (n % 7) + ";");
+  if (!still && cssVar("--fx-motion-thin") === "1") setThin(Math.floor((now - t0) / 300) % 2 === 1);
+  if (dipUntil && now >= dipUntil) { dipUntil = 0; setThin(false); }
+  // The plant styles arrive after load (capture.mjs injects them), so the silent-flat plant is read per frame.
+  if (PROFILE === "G" && scene === "isolated" && cssVar("--fx-g-nostamp") === "1") root.removeAttribute("data-glass-flat");
+  requestAnimationFrame(loop); };
 requestAnimationFrame(loop);
 })();`;
 
 export function writeFixture(profile, o = {}) {
   const dir = path.resolve(o.out || path.join(OUT, "fixtures", profile));
+  fs.rmSync(dir, { recursive: true, force: true });
   fs.mkdirSync(dir, { recursive: true });
   const html = `<!doctype html><html lang="en" data-profile="${profile}"><head><meta charset="utf-8"><meta name="viewport" content="width=1280, initial-scale=1">
 <title>D3 fixture ${profile}</title>
@@ -215,7 +307,7 @@ export function writeFixture(profile, o = {}) {
     if (!fs.existsSync(src)) throw new Error(`no field capture ${src} (run the HEAD capture first)`);
     fs.copyFileSync(src, path.join(dir, `field-${theme}-${g}.png`));
   }
-  fs.writeFileSync(path.join(dir, "build.json"), JSON.stringify({ label: `fixture-${profile}`, fixture: profile, alphas: o.alphas || null, fields: o.fields || null }, null, 1));
+  fs.writeFileSync(path.join(dir, "build.json"), JSON.stringify({ label: `fixture-${profile}`, fixture: profile, alphas: o.alphas || null, bounds: o.bounds || null, fields: o.fields || null }, null, 1));
   return dir;
 }
 

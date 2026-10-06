@@ -10,9 +10,17 @@
 //   [data-ring="<id>"]   a focusable whose focus outline is a non-text ring
 //   [data-sample]        an empty region of the surface (the composite)
 //   [data-bare]          an empty region of the page (the bare ground)
-//   [data-raw-hide]      anything the raw capture must hide besides [data-spec] (the modal scrim)
-//   window.__harness.setCeiling(v)   steps the field's opacity ceiling (W-B's step)
-// URL: ?scene=ladder|dialog|halo|empty &ground=<GROUNDS> &theme=light|dark &nodock=1 &feed=1
+//   [data-raw-hide]      anything the raw capture must hide besides [data-spec] (the modal scrim, the focus veil)
+//   [data-fill="<id>"]   an element whose painted fill is a state register (M-9: active, hover, checked, selected)
+//   [data-veil-probe]    a region of the page under an engaged focus veil (M-9: the veil must dim it)
+//   [data-hover]         the element the capture's pointer rests on (the hover register)
+//   [data-press]         the element the capture presses and holds through every capture (the held dock, H-5)
+//   [data-hx-band]       an opaque band interposed between the field and the glass (H-10); part of the ground
+//   [data-hx-declared]   a page region a consumer declares ("dark" or "light"); class .hx-declared is the route's hook
+//   window.__harness.setCeiling(v)   steps the field's opacity ceiling (W-B's step, M-2m's ground step)
+// URL: ?scene=<SCENES> &ground=<GROUNDS|red> &theme=light|dark &nodock=1
+// The ink ids: "fg" and "muted" on every surface; the dock's fg run is the ACTIVE tab and its inactive tab is
+// "muted-tab" (S-9, H-2: an inactive DockControl paints --muted-foreground by design, so it is a muted run).
 import { CHECKOUT } from "./lib.mjs";
 
 export function specimenApp(wt) {
@@ -36,17 +44,22 @@ import { Aurora } from "@glass/components/aurora";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@glass/components/dialog";
 import { Popover, PopoverTrigger, PopoverContent } from "@glass/components/popover";
 import { Input } from "@glass/components/input";
+import { Checkbox } from "@glass/components/checkbox";
+import { SegmentedTabs } from "@glass/components/tabs";
+import { Slider } from "@glass/components/slider";
 
 const q = new URLSearchParams(location.search);
 const ground = q.get("ground") ?? "paper";
 const scene = q.get("scene") ?? "ladder";
 const nodock = q.get("nodock") === "1";
-const feed = q.get("feed") === "1";
 const field = ground === "aurora" || ground === "aurora50";
 const ceiling = ref(ground === "aurora50" ? 0.5 : 1);
 (window as any).__harness = { setCeiling: (v: number) => { ceiling.value = v; } };
-const fieldCanvas = (): HTMLCanvasElement | null => document.querySelector("[data-glass-field-canvas] canvas");
 const keep = (e: Event) => e.preventDefault();
+const declared = q.get("theme") === "dark" ? "light" : "dark";
+const LADDERISH = ["ladder", "hostile", "isolated"].includes(scene);
+const seg = ref("a");
+const SEG = [{ label: "Grid", value: "a" }, { label: "List", value: "b" }];
 
 const LEVELS = [
   { id: "wash", cls: "glass-wash", band: "content" },
@@ -59,23 +72,30 @@ const LEVELS = [
   { id: "dialog-rung", cls: "glass-floating", band: "chrome", style: { "--glass-veil-tier": "var(--glass-veil-dialog)" } },
   { id: "opaque", cls: "glass-resting glass-opaque", band: "escape" },
 ].map((L, i) => ({ ...L, pos: { left: 24 + (i % 4) * 304 + "px", top: 24 + Math.floor(i / 4) * 212 + "px" } }));
+const HELD = [{ id: "wash-held", cls: "glass-wash", band: "content" }, { id: "floating-held", cls: "glass-floating", band: "chrome" }];
 const HALO = ["wash", "quiet", "resting", "card"].map((id, i) => ({ id, cls: "glass-" + id, top: 40 + i * 150 + "px" }));
 
 onMounted(() => {
   const stamp = () => {
     document.querySelectorAll(".bg-overlay-scrim, .glass-focus-veil").forEach((e) => e.setAttribute("data-raw-hide", ""));
     document.querySelector('[data-slot="dialog-close"]')?.setAttribute("data-ring", "close");
+    document.querySelector(".hx-seg .segmented-indicator")?.setAttribute("data-fill", "selected");
   };
   stamp(); setTimeout(stamp, 200); setTimeout(stamp, 1000);
 });
 </script>
 
 <template>
-  <Aurora v-if="field && scene !== 'halo'" class="fixed inset-0 -z-10" data-glass-field-canvas :opacity-ceiling="ceiling" aria-hidden="true" />
+  <Aurora v-if="field && scene !== 'halo'" class="fixed inset-0 -z-10" :opacity-ceiling="ceiling" aria-hidden="true" />
   <div v-else-if="ground !== 'paper'" class="hx-stand" :data-ground="ground" aria-hidden="true"></div>
   <div class="hx-bare" data-bare aria-hidden="true"></div>
 
-  <main v-if="scene === 'ladder'" class="hx-page">
+  <main v-if="LADDERISH" class="hx-page" :style="scene === 'isolated' ? { isolation: 'isolate' } : {}">
+    <template v-if="scene === 'hostile'">
+      <div class="hx-band" data-hx-band style="top: 36px; height: 52px" aria-hidden="true"></div>
+      <div class="hx-band" data-hx-band style="top: 474px; height: 48px; width: 900px" aria-hidden="true"></div>
+      <div class="hx-declared" :data-hx-declared="declared" aria-hidden="true"></div>
+    </template>
     <section v-for="L in LEVELS" :key="L.id" :class="['hx-plate', L.cls]" :data-spec="L.id" :data-band="L.band" :style="{ ...L.pos, ...(L.style || {}) }">
       <p class="hx-fg"><span data-ink="fg">{{ L.id }} Aa foreground</span></p>
       <p class="text-muted-foreground"><span data-ink="muted">Muted caption ink</span></p>
@@ -86,15 +106,15 @@ onMounted(() => {
       <div class="hx-sample" data-sample></div>
     </section>
     <div v-if="!nodock" class="hx-dockcell">
-      <GlassDock data-spec="dock" data-band="chrome" orientation="horizontal" fit-content :collapse="false" aria-label="Specimen dock" :background-canvas="feed ? fieldCanvas : undefined">
-        <DockControl shape="tab" :active="true">Photos</DockControl>
-        <DockControl shape="tab"><span data-ink="fg">Lots</span></DockControl>
+      <GlassDock data-spec="dock" data-band="chrome" orientation="horizontal" fit-content :collapse="false" aria-label="Specimen dock">
+        <DockControl shape="tab" :active="true"><span data-ink="fg">Photos</span></DockControl>
+        <DockControl shape="tab"><span data-ink="muted-tab">Lots</span></DockControl>
         <DockSeparator />
         <span class="hx-docklabel text-muted-foreground"><span data-ink="muted">12 lots</span></span>
         <span class="hx-docksample" data-sample></span>
       </GlassDock>
     </div>
-    <div class="hx-popcell">
+    <div v-if="scene !== 'isolated'" class="hx-popcell">
       <Popover default-open>
         <PopoverTrigger class="hx-poptrigger">Filters</PopoverTrigger>
         <PopoverContent data-spec="popover" data-band="chrome" side="bottom" align="start" :side-offset="8" @focus-outside="keep" @interact-outside="keep" @pointer-down-outside="keep">
@@ -106,6 +126,58 @@ onMounted(() => {
         </PopoverContent>
       </Popover>
     </div>
+  </main>
+
+  <main v-else-if="scene === 'held'" class="hx-page">
+    <section v-for="(H, i) in HELD" :key="H.id" :class="['hx-plate', H.cls]" :data-spec="H.id" :data-band="H.band" data-held :style="{ left: 24 + i * 304 + 'px', top: '24px' }">
+      <span class="glass-grasp-carrier" data-grasp="rest"></span>
+      <span class="glass-grasp-carrier" data-grasp="grasp"></span>
+      <p class="hx-fg"><span data-ink="fg">{{ H.id }} Aa foreground</span></p>
+      <p class="text-muted-foreground"><span data-ink="muted">Muted caption ink</span></p>
+      <div class="hx-wells">
+        <Input model-value="Lot 42" aria-label="Lot" data-ink="well-fg" data-edge="well" data-ring="well" />
+        <Input placeholder="Search lots" aria-label="Search" data-ink="well-muted" />
+      </div>
+      <div class="hx-sample" data-sample></div>
+    </section>
+    <div v-if="!nodock" class="hx-dockcell" style="top: 300px">
+      <GlassDock data-spec="dock-held" data-band="chrome" orientation="horizontal" fit-content :collapse="false" aria-label="Held dock">
+        <DockControl shape="tab" :active="true"><span data-ink="fg">Photos</span></DockControl>
+        <DockControl shape="tab"><span data-ink="muted-tab">Lots</span></DockControl>
+        <DockSeparator />
+        <span class="hx-docklabel text-muted-foreground"><span data-ink="muted">12 lots</span></span>
+        <span class="hx-docksample" data-sample></span>
+        <Slider :default-value="[40]" class="hx-dockslider" data-press aria-label="Volume" />
+      </GlassDock>
+    </div>
+    <div v-if="!nodock" class="hx-dockcell" style="top: 440px">
+      <GlassDock data-spec="dock-collapsed" data-band="chrome" orientation="horizontal" :collapse="true" aria-label="Collapsed dock">
+        <DockControl shape="tab" :active="true">Photos</DockControl>
+        <DockControl shape="tab">Lots</DockControl>
+        <template #collapsed><span class="hx-collapsedglyph"><span data-ink="fg">Aa</span></span></template>
+      </GlassDock>
+    </div>
+  </main>
+
+  <main v-else-if="scene === 'state'" class="hx-page">
+    <section class="hx-plate glass-resting" data-spec="resting" data-band="content" style="left: 24px; top: 24px">
+      <p class="hx-fg"><span data-ink="fg">resting Aa foreground</span></p>
+      <div class="hx-staterow">
+        <Checkbox :model-value="true" aria-label="Checked" data-fill="checked" />
+        <SegmentedTabs v-model="seg" class="hx-seg" :options="SEG" aria-label="View" />
+      </div>
+      <div class="hx-sample" data-sample></div>
+    </section>
+    <div v-if="!nodock" class="hx-dockcell" style="top: 300px">
+      <GlassDock data-spec="dock" data-band="chrome" orientation="horizontal" fit-content :collapse="false" aria-label="State dock">
+        <DockControl shape="tab" :active="true" data-fill="active"><span data-ink="fg">Photos</span></DockControl>
+        <DockControl shape="tab" data-fill="hover" data-hover><span data-ink="muted-tab">Lots</span></DockControl>
+        <DockSeparator />
+        <span class="hx-docksample" data-sample></span>
+      </GlassDock>
+    </div>
+    <div class="glass-focus-veil" data-engaged data-raw-hide aria-hidden="true" style="--veil-x: 70.3125%; --veil-y: 22.2222%; --glass-focus-veil-core-x: 90px; --glass-focus-veil-core-y: 60px"></div>
+    <div class="hx-veilprobe" data-veil-probe aria-hidden="true"></div>
   </main>
 
   <Dialog v-else-if="scene === 'dialog'" default-open>
@@ -143,6 +215,15 @@ body { background: var(--background); color: var(--foreground); font-family: sys
 .hx-stand[data-ground="white"] { background: #fff; }
 .hx-stand[data-ground="checker"] { background: repeating-conic-gradient(#000 0 25%, #fff 0 50%) 0 0 / 16px 16px; }
 .hx-stand[data-ground="stripes"] { background: repeating-linear-gradient(90deg, #7c3aed 0 24px, #facc15 24px 48px); }
+.hx-stand[data-ground="red"] { background: #761617; }
+.hx-band { position: absolute; left: 0; width: 1280px; background: #0b1020; }
+html.dark .hx-band { background: #f4f1ea; }
+.hx-declared { position: absolute; left: 920px; top: 500px; width: 330px; height: 220px; background: #000; }
+html.dark .hx-declared { background: #fff; }
+.hx-staterow { display: flex; align-items: center; gap: 16px; margin-top: 12px; }
+.hx-collapsedglyph { font-weight: 600; }
+.hx-dockslider { width: 120px; margin-inline: 10px; }
+.hx-veilprobe { position: absolute; left: 870px; top: 180px; width: 60px; height: 40px; pointer-events: none; }
 .hx-bare { position: absolute; left: 24px; top: 844px; width: 280px; height: 36px; pointer-events: none; }
 .hx-plate { position: absolute; width: 280px; height: 188px; box-sizing: border-box; padding: 14px 16px; }
 .hx-plate p, .hx-popbody p { margin: 0 0 6px; font-size: 15px; line-height: 20px; }

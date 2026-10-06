@@ -1,0 +1,163 @@
+{
+ "step": "B-S14 (R-5, §P4-4 'settled by text'): the story manifest reads nested story directories, so a category over twelve files can move a family into a named group. A story is the one `<id>.vue` under its category at any depth; story ids are kebab-case, so a story's own PascalCase components are keys no row names. The story-card tests read the same rule through the harness (R-3, B-S12): their story and chassis reads are zone-rooted literals F-1 resolves, and the story universe is F-1's file set",
+ "files": {
+  "demo/stories/manifest.ts": {
+   "hunks": [
+    [
+     "import { makeLazy } from \"./manifest/lazy\";\n",
+     "import { makeLazy, storyKey } from \"./manifest/lazy\";\n"
+    ],
+    [
+     "// ── The δ5/δ6 manifest-carve+glob DECISION ( δ5/δ6). ────────────────────────\n// δ6 (glob `./*/*.vue` → `./*/*/index.vue` + per-story-dir moves) is DROPPED — the\n// family table is authoritative,\n// and KISS keeps ~80 trivial single-file stories FLAT `<category>/<id>.vue`. The glob\n// below stays flat by DESIGN; a change to `./*/*/index.vue` renders every flat story\n// blank (the runtime route-walk hazard the wave warns about).\n",
+     "// ── Where a story's SFC lives. ──────────────────────────────────────────────────\n// A story is the SFC named for its id, anywhere under its category's directory:\n// `<category>/<id>.vue`, or `<category>/<group>/<id>.vue` when the category's directory\n// would pass R-5's twelve files and a family moves into a named group. The glob below\n// keys every SFC under the stories; the loader (`./manifest/lazy.ts`) looks a story up by\n// its id, which is kebab-case, so a story's own PascalCase components beside it\n// (`dock/overview/TriggerSection.vue`) sit in the map as keys no row names, as tile files\n// always have. The file layout is the one record of where a story lives: the loader finds\n// the one `<id>.vue` under the category and refuses none or several.\n"
+    ],
+    [
+     "// The typed route rows live one file per category in `./manifest/categories/`, and the\n// glob-resolved SFC loader in `./manifest/lazy.ts`; no generated catalogue or parallel\n// route registry exists.\nconst modules = import.meta.glob<{ default: Component }>(\"./*/*.vue\");\n",
+     "// The typed route rows live one file per category in `./manifest/categories/`; no\n// generated catalogue or parallel route registry exists.\nconst modules = import.meta.glob<{ default: Component }>(\"./**/*.vue\");\n"
+    ],
+    [
+     "// co-located `<cat>/<id>.tile.vue` resolves the story row's `tile` loader; a story\n",
+     "// co-located `<id>.tile.vue` beside the story's SFC resolves the story row's `tile` loader; a story\n"
+    ],
+    [
+     "const tileModules = import.meta.glob<{ default: Component }>(\"./*/*.tile.vue\");\n",
+     "const tileModules = import.meta.glob<{ default: Component }>(\"./**/*.tile.vue\");\n"
+    ],
+    [
+     "    const loader = tileModules[`./${cat}/${id}.tile.vue`];\n",
+     "    const key = storyKey(tileModules, cat, `${id}.tile.vue`);\n    const loader = key ? tileModules[key] : undefined;\n"
+    ],
+    [
+     "        // `./*/*.tile.vue` glob (undefined when no co-located tile file exists, so\n",
+     "        // `./**/*.tile.vue` glob (undefined when no co-located tile file exists, so\n"
+    ]
+   ]
+  },
+  "demo/stories/manifest/lazy.ts": {
+   "hunks": [
+    [
+     "/** The glob-resolved SFC module map: `<category>/<id>.vue` key → its lazy import. */\n",
+     "/** The glob-resolved SFC module map: `./<category>/[<group>/]<id>.vue` key → its lazy import. */\n"
+    ],
+    [
+     "\n/** Build a resolver that rejects invalid manifest rows immediately. */\n",
+     "\n/**\n * The one key under `./<category>/` whose file is `file`, at the category's root or in a\n * group directory below it; `undefined` when there is none. Two files of the same name\n * under one category is an error, never a choice.\n */\nexport function storyKey(modules: Record<string, unknown>, category: string, file: string): string | undefined {\n    const hits = Object.keys(modules).filter((k) => k.startsWith(`./${category}/`) && k.endsWith(`/${file}`));\n    if (hits.length > 1) throw new Error(`Story ${category}/${file} is named twice: ${hits.join(\", \")}`);\n    return hits[0];\n}\n\n/** Build a resolver that rejects invalid manifest rows immediately. */\n"
+    ],
+    [
+     "        const key = `./${category}/${id}.vue`;\n",
+     "        const key = storyKey(modules, category, `${id}.vue`);\n        if (!key) throw new Error(`Missing story module: ${category}/${id}`);\n"
+    ],
+    [
+     "        const loader = modules[key];\n        if (!loader) throw new Error(`Missing story module: ${category}/${id}`);\n        return () => loader().then((m) => m.default);\n",
+     "        const loader = modules[key];\n        return () => loader().then((m) => m.default);\n"
+    ]
+   ]
+  },
+  "tests/demo/story-card/names.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readdirSync, readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { DEMO, readRaw, code, catalogSrc, landingSrc, ROWS } from \"./sources\";\n",
+     "import { readRaw, code, catalogSrc, landingSrc, ROWS, storyFile, storySfcs } from \"./sources\";\n"
+    ],
+    [
+     "const heroSrc = code(\"chassis/hero/StoryHero.vue\");\nconst heroCss = code(\"chassis/hero/story-hero.css\");\nconst vizStudioRaw = readRaw(\"stories/substrates/_frame/VizStudio.vue\");\n",
+     "const heroSrc = code(\"demo/chassis/hero/StoryHero.vue\");\nconst heroCss = code(\"demo/chassis/hero/story-hero.css\");\nconst vizStudioRaw = readRaw(\"demo/stories/substrates/_frame/VizStudio.vue\");\n"
+    ],
+    [
+     "/** Every one-level-deep `<cat>/<id>.vue` the manifest glob can load — its universe. */\nconst globbedStorySfcs = (): { cat: string; id: string; rel: string }[] => {\n    const out: { cat: string; id: string; rel: string }[] = [];\n    for (const cat of readdirSync(join(DEMO, \"stories\"), { withFileTypes: true })) {\n        // The glob is exactly one level deep and takes no `_`-prefixed directory.\n        if (!cat.isDirectory() || cat.name.startsWith(\"_\")) continue;\n        for (const file of readdirSync(join(DEMO, \"stories\", cat.name))) {\n            if (!file.endsWith(\".vue\") || file.endsWith(\".tile.vue\")) continue;\n            out.push({\n                cat: cat.name,\n                id: file.slice(0, -4),\n                rel: `stories/${cat.name}/${file}`,\n            });\n        }\n    }\n    return out;\n};\n",
+     "/** Every story SFC the manifest glob can load — its universe (`./sources.ts`). */\nconst globbedStorySfcs = storySfcs;\n"
+    ],
+    [
+     "    const body = code(`stories/${cat}/${id}.vue`);\n",
+     "    const body = code(storyFile(cat, id));\n"
+    ],
+    [
+     "        for (const id of STUDIOS) {\n            const src = code(`stories/substrates/${id}.vue`);\n            const row = ROWS.find((r) => r.story.id === id);\n",
+     "        for (const id of STUDIOS) {\n            const src = code(storyFile(\"substrates\", id));\n            const row = ROWS.find((r) => r.story.id === id);\n"
+    ],
+    [
+     "        for (const id of STUDIOS) {\n            const src = code(`stories/substrates/${id}.vue`);\n            expect(src).toMatch(/<VizStudio[\\s\\S]{0,400}?\\slabel=\"/);\n",
+     "        for (const id of STUDIOS) {\n            const src = code(storyFile(\"substrates\", id));\n            expect(src).toMatch(/<VizStudio[\\s\\S]{0,400}?\\slabel=\"/);\n"
+    ],
+    [
+     "                read(`stories/${category.id}/${story.id}.vue`).length,\n",
+     "                read(storyFile(category.id, story.id)).length,\n"
+    ],
+    [
+     "        const manifestSrc = readFileSync(\n            join(process.cwd(), \"demo/stories/manifest.ts\"),\n            \"utf8\",\n        )\n",
+     "        const manifestSrc = readRaw(\"demo/stories/manifest.ts\")\n"
+    ]
+   ]
+  },
+  "tests/demo/story-card/sources.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { CATEGORIES } from \"../../../demo/stories/manifest\";\n",
+     "\nimport { CATEGORIES } from \"../../../demo/stories/manifest\";\n"
+    ],
+    [
+     "import { CATEGORIES } from \"../../../demo/stories/manifest\";\n\n",
+     "import { CATEGORIES } from \"../../../demo/stories/manifest\";\nimport { files, read } from \"../../harness/source\";\n\n"
+    ],
+    [
+     "export const DEMO = join(process.cwd(), \"demo\");\nexport const readRaw = (rel: string): string => readFileSync(join(DEMO, rel), \"utf8\");\n",
+     "/** A demo file's text, by its repo path (the harness reads F-1's file set, R-3). */\nexport const readRaw = (file: string): string => read(file);\n\n/**\n * The SFC a manifest row routes to: the one `<id>.vue` under its category's directory,\n * at the root or in a group directory, which is the manifest's own rule\n * (`demo/stories/manifest/lazy.ts`). None or several is an error.\n */\nexport const storyFile = (cat: string, id: string): string => {\n    const hits = files({ under: `demo/stories/${cat}`, suffix: `/${id}.vue` });\n    if (hits.length !== 1) throw new Error(`story ${cat}/${id}: ${hits.length} files named ${id}.vue (${hits.join(\", \")})`);\n    return hits[0];\n};\n\n/** Every story SFC the manifest can route: a kebab-case SFC (a story id) at any depth under a\n *  category, tiles aside. A story's PascalCase components are keys no row names. */\nexport const storySfcs = (): { cat: string; id: string; rel: string }[] =>\n    files({ under: \"demo/stories\", suffix: \".vue\" })\n        .filter((f) => /^demo\\/stories\\/[^/]+\\/(?:[^/]+\\/)*[a-z][^/]*\\.vue$/.test(f) && !f.endsWith(\".tile.vue\"))\n        .map((f) => ({ cat: f.split(\"/\")[2], id: f.slice(f.lastIndexOf(\"/\") + 1, -4), rel: f }));\n"
+    ],
+    [
+     "export const code = (rel: string): string =>\n    readRaw(rel)\n",
+     "export const code = (file: string): string =>\n    readRaw(file)\n"
+    ],
+    [
+     "export const cardSrc = code(\"chassis/landing/SectionPreviewCard.vue\");\nexport const catalogSrc = code(\"chassis/landing/CatalogLanding.vue\");\nexport const introSrc = code(\"stories/foundations/intro.vue\");\nexport const landingSrc = code(\"chassis/landing/SectionLanding.vue\");\n",
+     "export const cardSrc = code(\"demo/chassis/landing/SectionPreviewCard.vue\");\nexport const catalogSrc = code(\"demo/chassis/landing/CatalogLanding.vue\");\nexport const introSrc = code(\"demo/stories/foundations/intro.vue\");\nexport const landingSrc = code(\"demo/chassis/landing/SectionLanding.vue\");\n"
+    ]
+   ]
+  },
+  "tests/demo/story-card/still.test.ts": {
+   "hunks": [
+    [
+     "const tocSrc = code(\"stories/navigation/toc-tracking.vue\");\nconst stillSrc = code(\"chassis/landing/vizPreviewStill.ts\");\n",
+     "const tocSrc = code(\"demo/stories/navigation/toc-tracking.vue\");\nconst stillSrc = code(\"demo/chassis/landing/vizPreviewStill.ts\");\n"
+    ]
+   ]
+  },
+  "tests/demo/story-card/tiles.test.ts": {
+   "hunks": [
+    [
+     "const storyTileSrc = code(\"chassis/landing/storyTile.ts\");\nconst storyTileRaw = readRaw(\"chassis/landing/storyTile.ts\");\n",
+     "const storyTileSrc = code(\"demo/chassis/landing/storyTile.ts\");\nconst storyTileRaw = readRaw(\"demo/chassis/landing/storyTile.ts\");\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "demo/stories/manifest.ts",
+   "why": "the route glob keys every SFC at any depth under the stories (`./**/*.vue`; F-1's glob grammar has no character class, and the id lookup alone separates a story from a component) and the tile glob `./**/*.tile.vue`; both are looked up by the story's file name under its category, so the flat layout and a group directory read the same way"
+  },
+  {
+   "file": "demo/stories/manifest/lazy.ts",
+   "why": "storyKey: the one module key under `./<category>/` whose file is `<id>.vue`; none is a missing story, several is an error, never a choice"
+  },
+  {
+   "file": "tests/demo/story-card/names.test.ts",
+   "why": "the story SFC census and every story read use storyFile/storySfcs (a nested story is found where the manifest finds it); chassis reads name their repo path"
+  },
+  {
+   "file": "tests/demo/story-card/sources.ts",
+   "why": "the demo reads go through the harness (F-1's file set, R-3) by repo path; storyFile resolves a row's SFC by the manifest's rule; storySfcs is the routable universe (kebab-case SFCs under a category, tiles aside) read from the file set, not a directory walk"
+  },
+  {
+   "file": "tests/demo/story-card/still.test.ts",
+   "why": "the toc and still reads name their repo path (harness read, F-1 resolves the literal)"
+  },
+  {
+   "file": "tests/demo/story-card/tiles.test.ts",
+   "why": "the storyTile reads name their repo path (harness read, F-1 resolves the literal)"
+  }
+ ]
+}

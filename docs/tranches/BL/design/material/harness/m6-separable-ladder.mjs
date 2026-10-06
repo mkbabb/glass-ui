@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 // M-6 · A separable ladder. Adjacent levels differ by ΔE_OK ≥ 0.01 over paper and over the dark page, and every
-// plate separates from the dark page by ΔE_OK ≥ 0.05. Adjacent: wash→quiet→resting→floating→overlay. Every
-// plate: every spec of the dark paper cells (ladder and the real Dialog).
+// plate separates from the dark page by ΔE_OK ≥ 0.05 AND sits at or above it: OKLab L(plate) ≥ L(page) (H-9, signed;
+// a plate that sinks below the page reads as a hole, D-crit §5.3). Adjacent: wash→quiet→resting→floating→overlay.
+// Every plate: every spec of the dark paper cells (ladder and the real Dialog).
 //   node m6-separable-ladder.mjs <capdir> [--gate chromium[,webkit]]
-import { cli, loadCapture, gateEngines, report, composite, bare, dE, hex, f, tag, THEMES, LADDER } from "./lib.mjs";
+import { cli, loadCapture, gateEngines, report, composite, bare, dE, lch, hex, f, tag, THEMES, LADDER } from "./lib.mjs";
 import { need, tally } from "./rows.mjs";
 
 const a = cli(), cap = loadCapture(a._[0]), gate = gateEngines(a);
@@ -22,8 +23,9 @@ for (const { cell, gated } of have) {
   const sep = [];
   if (cell.theme === "dark") for (const [id, c] of Object.entries(comp)) {
     const d = dE(c, page), ok = d >= 0.05; t.add(gated, ok);
-    sep.push(`${id} ${hex(c)} ${f(d, 3)}${ok ? "" : " ✗"}`);
+    const dL = lch(c)[0] - lch(page)[0], up = dL >= 0; t.add(gated, up);
+    sep.push(`${id} ${hex(c)} ${f(d, 3)}${ok ? "" : " ✗"} ΔL ${dL >= 0 ? "+" : ""}${f(dL, 3)}${up ? "" : " (below the page) ✗"}`);
   }
   lines.push(`${tag(cell)}${gated ? "" : " [info]"}: page ${hex(page)}${parts.length ? ` · adjacent ΔE ${parts.join(", ")}` : ""}${sep.length ? ` · ΔE from the page: ${sep.join(", ")}` : ""}`);
 }
-report(cap, { id: "M-6", title: "a separable ladder (adjacent ΔE_OK ≥ 0.01 on paper and the dark page; every dark plate ≥ 0.05 from the page)", lines, ...t, gate });
+report(cap, { id: "M-6", title: "a separable ladder (adjacent ΔE_OK ≥ 0.01 on paper and the dark page; every dark plate ≥ 0.05 from the page and L ≥ the page's)", lines, ...t, gate });

@@ -27,23 +27,60 @@ GENERIC = {"index.ts", "README.md", "styles.css", "types.ts", "constants.ts", "p
            "docs/"}
 
 
-def deletions(w):
-    s4 = section(w, 4)
-    out = set()
-    for m in re.finditer(r"Deleted:([^\n]*)", s4):
-        clause = re.split(r"\b(?:New|Edited|Moved)\b[^:]*:", m.group(1))[0]
-        out.update(BACKTICK.findall(clause))
-    for m in re.finditer(r"`([^`]+)`\s*\(deleted", s4):
-        out.add(m.group(1))
-    for m in re.finditer(r"`([^`]+)`\s+deleted\b", s4):
-        out.add(m.group(1))
+BRACE = re.compile(r"^(.*?)\{([^{}]*)\}(.*)$")
+
+
+def expand(p):
+    """A brace list in a backticked path, one level, as written in the specs:
+    `dir/{a,b (deleted),c→d}.ts` -> [(`dir/a.ts`, None), (`dir/b.ts`, 'deleted'), (`dir/c.ts`, 'renamed')].
+    A path with no brace is itself. Pass 8 (FH-01): the fix-8 parser read a brace list as one literal string,
+    so `shaders/{metaball.frag,…}.ts` never matched the `metaball.frag.ts` another wave plants into."""
+    m = BRACE.match(p)
+    if not m:
+        return [(p, None)]
+    head, body, tail = m.groups()
+    out = []
+    for item in body.split(","):
+        item = item.strip()
+        mark = None
+        if re.search(r"\(deleted\)", item):
+            mark = "deleted"
+        elif re.search(r"\((new|moved out)\)", item):
+            mark = "new" if "new" in item else "moved"
+        item = re.sub(r"\s*\([^)]*\)", "", item).strip()
+        if "→" in item:
+            item, mark = item.split("→", 1)[0].strip(), "renamed"
+        out.append((head + item + tail, mark))
+    return out
+
+
+def _clean(found):
     keep = set()
-    for p in out:
-        p = re.sub(r":\d+(-\d+)?$", "", p.strip())
+    for p in found:
+        p = re.sub(r":\d+(-\d+)?(,\d+)*$", "", p.strip())
         if p.startswith("{") or " " in p or p in GENERIC or not re.search(r"[/.:]", p):
             continue
         keep.add(p)
     return keep
+
+
+def deletions(w):
+    """Every path a spec deletes, in each form the specs write it (§3 and §4):
+    `Deleted:` lists; `<path>` (deleted…); `<path>` deleted; deleted/delete/deletes `<path>`; `<npm script>` removed;
+    and, inside any brace list, `name (deleted)`. Each brace list is expanded (FH-01)."""
+    out = set()
+    for n in (4,):
+        s = section(w, n)
+        for m in re.finditer(r"Deleted:([^\n]*)", s):
+            clause = re.split(r"\b(?:New|Edited|Moved)\b[^:]*:", m.group(1))[0]
+            out.update(x for p in BACKTICK.findall(clause) for x, mark in expand(p) if mark not in ("new",))
+        for rx in (r"`([^`]+)`\s*\((?:split into|deleted)", r"`([^`]+)`\s+deleted\b", r"\bdelete[sd]?\s+`([^`]+)`",
+                   r"`([^`]+)`\s+(?:is |are )?(?:removed|deleted)\b"):
+            for m in re.finditer(rx, s):
+                out.update(x for x, mark in expand(m.group(1)) if mark not in ("new",))
+        for p in BACKTICK.findall(s):
+            out.update(x for x, mark in expand(p) if mark == "deleted")
+    return _clean(out)
 
 
 # W-D.1's moves are its move ledger and W-D.2's join it (PLAN §1, "Gate paths and the base re-run"): the
@@ -55,9 +92,18 @@ def moves(w):
     if w in LEDGER_MOVERS:
         return set()
     out = set()
-    for m in re.finditer(r"Moved[^:\n]*:([^\n]*)", section(w, 4)):
+    s4 = section(w, 4)
+    for m in re.finditer(r"Moved[^:\n]*:([^\n]*)", s4):
         out.update(p for p in BACKTICK.findall(m.group(1)) if "." in p.split("/")[-1] and " " not in p and "<" not in p and not p.endswith(".md"))
-    return out
+    # `<path>` (moved out) and every `old→new` rename, inside a brace list or bare (pass 8 notes, FH-01's class)
+    for m in re.finditer(r"`([^`]+)`\s*\(moved", s4):
+        out.add(m.group(1))
+    for p in BACKTICK.findall(s4):
+        if "{" in p:
+            out.update(x for x, mark in expand(p) if mark == "renamed")
+        elif "→" in p:
+            out.add(p.split("→", 1)[0].strip())
+    return {p for p in out if " " not in p}
 
 
 def workflow_creator(w):

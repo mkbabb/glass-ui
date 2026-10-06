@@ -1,4 +1,4 @@
-// selftest.mjs: proves every check CAN pass and CAN fail (H2).
+// selftest.mjs: proves every check CAN pass and CAN fail (H2, extended by H3: pass-3/H3.md).
 //
 //   node selftest.mjs [--only W1,W3] [--engine chromium|webkit|all] [--out <dir>] [--faults a,b]
 //
@@ -8,6 +8,9 @@
 // in EVERY engine run. A fault run executes only the blocks its pattern names (--cells).
 // Also: the adapter law (adapter-law.mjs) passes adapter-head.mjs and fails the planted
 // adapter, and the safaridriver target reports its status. Exits non-zero on any violation.
+// H3-11: an expectation whose check is "OWNER-BLOCKED" requires a matching cell reported
+// OWNER-BLOCKED (not PASS, not FAIL) in every engine run: the reading that waits on an owner
+// ruling is itself proven, and the plants beside it (late, slowclock, cardspread) still FAIL.
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -20,6 +23,7 @@ const outRoot = args.out ?? process.env.DOCK_HARNESS_OUT;
 const want = args.engine && args.engine !== "all" ? String(args.engine).split(",") : ["chromium", "webkit"];
 
 // [witness, fault, cell pattern that must FAIL, sub-check(s) that must be in `failed` (null: the cell fails)]
+const OB = "OWNER-BLOCKED";
 const EXPECT = [
     ["W1", "lens", /fit·rest|morph·expanded-rest|rail·rest/, ["corner"]],
     ["W1", "squash", /morph·first-expand|morph·warm-collapse|morph·collapsed-rest/, ["corner"]],
@@ -30,6 +34,7 @@ const EXPECT = [
     ["W1", "endlens", /rail·scrolled-end|rail·focus-end/, ["corner"]],
     ["W1", "endout", /rail·scrolled-end|rail·focus-end/, ["end"]],
     ["W1", "cardspread", /card·warm-expand|card·warm-collapse|card·first-expand/, ["card"]],
+    ["W1", "cardlerp", /card·warm-expand|card·warm-collapse|card·first-expand/, [OB]],   // H3-11 · Q-12
     ["W2", "scroller", /route2|route3|route4/, ["scroller"]],
     ["W2", "ringclip", /route1/, ["ring"]],
     ["W2", "noring", /route1|route4/, ["paint"]],
@@ -54,7 +59,18 @@ const EXPECT = [
     ["W3", "seatjump", /^lead-add/, ["seatStep"]],
     ["W3", "doublex", /^lead-add/, ["seatOverlap"]],
     ["W3", "hiddengrow", /^hidden-shown/, null],
-    ["W3", "resizemorph", /^viewport-resize/, null],
+    ["W3", "resizemorph", /^viewport-resize/, ["window"]],
+    ["W3", "resizenorest", /^viewport-resize/, ["rest"]],            // H3-10
+    ["W3", "blankswap", /^swap-long|^swap-short/, ["blank"]],          // H3-1
+    ["W3", "pop", /^content-remove|^lead-remove/, ["leaving"]],        // H3-3
+    ["W3", "slipfade", /^content-remove|^lead-remove/, ["leaving"]],   // H3-3 (B′ V-3's path)
+    ["W3", "latsnap", /^lattice/, ["seatWidth"]],                      // H3-2
+    ["W3", "infhold", /^infanim/, ["window"]],                         // H3-2
+    ["W3", "infthrow", /^infanim/, ["errors"]],                        // H3-2
+    ["W3", "deadmorph", /^vagree·/, ["vagree"]],                       // H3-5
+    ["W3", "nostretch", /^stretch·lead-add/, ["seatStep"]],            // H3-6
+    ["W3", "nbjump", /^neighbour·/, ["neighbour"]],                    // H3-7
+    ["W3", "bandclose", /^warm-expand|^warm-collapse/, [OB]],          // H3-11 · Q-4
     ["W3", "anchordrift", /^anchor-end/, ["anchor"]],
     ["W3", "wideout", /^wide·collapsed-rest/, null],
     ["W3", "twoowners", /^seat-transition/, ["owners"]],
@@ -90,12 +106,15 @@ const EXPECT = [
     ["W7", "gutterless", /^(side|canvas)·/, ["gutter"]],
     ["W7", "badgeover", /^side·/, ["badge"]],
     ["W7", "lens", /^(top|side)·/, ["radius"]],
+    ["W7", "nocaps", /^(top|side|canvas)·dark·dpr2/, ["whole"]],      // H3-9: the dark DPR-2 escape is closed
     ["W8", "squash", /^expand|^collapse/, ["sharp"]],
     ["W8", "jank", /^expand|^collapse/, ["pacing"]],
     ["R6", "backdropmotion", /ring·static/, null],
+    ["ST", "leap", /^stall·/, ["leap"]],                               // H3-4
+    ["FM", "deadhooks", /^film·/, ["tiles"]],                          // H3-8
 ];
-const PASS_VARIANTS = [["W1", "csscarrier"]];
-const SCRIPT = { W1: "w1-corner.mjs", W2: "w2-run.mjs", W3: "w3-morph.mjs", W4: "w4-state.mjs", W5: "w5-rim.mjs", W6: "w6-collapsed-form.mjs", W7: "w7-edge.mjs", W8: "w8-motion.mjs", R6: "r6-probe.mjs" };
+const PASS_VARIANTS = [["W1", "csscarrier"], ["W7", "splitcaps"]];
+const SCRIPT = { W1: "w1-corner.mjs", W2: "w2-run.mjs", W3: "w3-morph.mjs", W4: "w4-state.mjs", W5: "w5-rim.mjs", W6: "w6-collapsed-form.mjs", W7: "w7-edge.mjs", W8: "w8-motion.mjs", R6: "r6-probe.mjs", ST: "stall.mjs", FM: "film.mjs" };
 
 const rows = [];
 function run(w, fixture, cells = null) {
@@ -127,10 +146,12 @@ for (const w of Object.keys(SCRIPT)) {
         if (ew !== w) continue;
         if (onlyFaults && !onlyFaults.includes(fault)) continue;
         const f = run(w, fault, pat.source);
-        const hit = f.cells.filter((c) => pat.test(c.cell) && !c.pass && !c.unmeasured && !c.record && (!check || check.some((k) => (c.failed ?? []).includes(k))));
+        const ob = check?.includes(OB);
+        const hit = ob ? f.cells.filter((c) => pat.test(c.cell) && !c.pass && c.ownerBlocked)
+            : f.cells.filter((c) => pat.test(c.cell) && !c.pass && !c.unmeasured && !c.record && !c.ownerBlocked && (!check || check.some((k) => (c.failed ?? []).includes(k))));
         const engs = new Set(hit.map((c) => c.engine));
-        const ok = f.code !== 0 && want.every((e) => engs.has(e));
-        log({ witness: w, fixture: fault, expect: `exit ≠ 0; ${check ? check.join("|") + " fails in " : ""}${pat.source}`, got: `exit ${f.code}, ${f.cells.filter((c) => !c.pass).length}/${f.cells.length} FAIL; matching ${hit.length} (${[...engs].join("+") || "none"})${ok ? "" : f.err ? " · " + f.err : ""}`, ok, ms: f.ms, load: f.load });
+        const ok = (ob || f.code !== 0) && want.every((e) => engs.has(e));
+        log({ witness: w, fixture: fault, expect: ob ? `an OWNER-BLOCKED cell in ${pat.source}` : `exit ≠ 0; ${check ? check.join("|") + " fails in " : ""}${pat.source}`, got: `exit ${f.code}, ${f.cells.filter((c) => !c.pass).length}/${f.cells.length} FAIL; matching ${hit.length} (${[...engs].join("+") || "none"})${ok ? "" : f.err ? " · " + f.err : ""}`, ok, ms: f.ms, load: f.load });
     }
 }
 if (!only || only.includes("H6")) {

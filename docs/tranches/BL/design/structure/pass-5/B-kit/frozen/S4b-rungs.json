@@ -1,0 +1,17 @@
+{
+ "step": "B-S4b the one rung move the one-door rule forces (LAW §6)",
+ "files": {
+  "src/styles/index.css": {
+   "hunks": [
+    [
+     "@import \"../components/card/styles.css\";\n@import \"../components/_shared/feedback/feedback-tone.css\";\n",
+     "@import \"../components/card/styles.css\";\n/* Component-owned real-box contraction for <CardHeader shrink>, and the scroll\n   owner + edge feather it requires. It joins card's rung (one door per unit, B3); no\n   sheet between here and its old rung (after scroll-choreography) targets its rules. */\n@import \"../components/card/scroll.css\";\n@import \"../components/_shared/feedback/feedback-tone.css\";\n"
+    ],
+    [
+     "@import \"./scroll/scroll-choreography.css\";\n/* Component-owned real-box contraction for <CardHeader shrink>, and the scroll\n   owner + edge feather it requires. */\n@import \"../components/card/scroll.css\";\n@import \"./scroll/scroll-chrome.css\";\n",
+     "@import \"./scroll/scroll-choreography.css\";\n@import \"./scroll/scroll-chrome.css\";\n"
+    ]
+   ]
+  }
+ }
+}

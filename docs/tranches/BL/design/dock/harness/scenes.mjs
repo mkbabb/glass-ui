@@ -35,6 +35,10 @@
 //   form     the collapsed form (O-65): face in #collapsed; track, count, dismiss in #persistent-end
 //   edge     &kind=top|side|canvas[&clip=1] with a [data-testid=surface-above] (O-67); seat e1
 //            carries a consumer-composed badge (HEAD has no reserved badge seat)
+// H3 variants (pass-3/H3.md):
+//   morph    &neighbour=1 (H3-7: the dock in flow in a left-aligned row, a [data-testid=neighbour]
+//            box after it, read per frame) · __scene.stretch(px) (H3-6: the root held px wider
+//            than its natural width, so a prepended seat does not change the run's size)
 export function sceneFiles(wt) {
     const nm = `${wt}/node_modules`;
     return {
@@ -90,6 +94,8 @@ const resolve = (o: Record<string, unknown> | null | undefined): Record<string, 
 const lead = ref(false);
 const wide = q.get("wide") === "1";
 const anchorEnd = q.get("anchor") === "end";
+const neighbour = q.get("neighbour") === "1";
+const stretchW = ref<number | null>(null);
 const shown = ref(scene !== "hidden");
 const grow = ref(false);
 const twinOn = ref(q.get("twin") === "1");
@@ -126,7 +132,11 @@ w.__scene = {
   scrollMax: () => { const s = srcGetter(); if (!s) return 0; return s === window ? document.documentElement.scrollHeight - innerHeight : (s as HTMLElement).scrollHeight - (s as HTMLElement).clientHeight; },
   dropA: () => { twinOn.value = false; },
   consumerBudget: scene === "cwidth" ? 240 : scene === "nested" ? 360 : undefined,
+  stretch: (px: number) => { const r = document.querySelector("[data-testid=dock]") as HTMLElement; stretchW.value = r.offsetWidth + px; },
 };
+const morphHost = scene === "vmorph" ? "position: fixed; left: 16px; top: 0; bottom: 0; display: flex; align-items: center;"
+  : neighbour ? "position: fixed; left: 40px; right: 0; bottom: 24px; display: flex; align-items: center; justify-content: flex-start; gap: 12px;"
+  : "position: fixed; left: 0; right: 0; bottom: 24px; display: flex; justify-content: " + (anchorEnd ? "flex-end; padding-right: 40px" : "center") + ";";
 </script>
 
 <template>
@@ -165,8 +175,8 @@ w.__scene = {
     </template>
 
     <template v-else-if="scene === 'morph' || scene === 'vmorph'">
-      <div :style="scene === 'morph' ? 'position: fixed; left: 0; right: 0; bottom: 24px; display: flex; justify-content: ' + (anchorEnd ? 'flex-end; padding-right: 40px' : 'center') + ';' : 'position: fixed; left: 16px; top: 0; bottom: 0; display: flex; align-items: center;'">
-        <GlassDock ref="dockRef" data-testid="dock" :orientation="scene === 'morph' ? 'horizontal' : 'vertical'" :shape="shape" collapse="closed" aria-label="Morph dock">
+      <div :style="morphHost">
+        <GlassDock ref="dockRef" data-testid="dock" :orientation="scene === 'morph' ? 'horizontal' : 'vertical'" :shape="shape" collapse="closed" aria-label="Morph dock" :style="stretchW ? { width: stretchW + 'px' } : undefined">
           <template #persistent><DockControl aria-label="Home" data-testid="home">H</DockControl></template>
           <DockControl v-if="lead" :shape="scene === 'morph' ? 'tab' : 'icon'" aria-label="Lead" data-testid="lead">{{ scene === 'morph' ? 'Lead' : '0' }}</DockControl>
           <DockControl aria-label="One" data-testid="f1">1</DockControl>
@@ -188,6 +198,7 @@ w.__scene = {
           </template>
           <template #collapsed><DockControl v-if="wide" shape="tab" data-testid="cplay">Now playing</DockControl><DockControl v-else aria-label="Play" data-testid="cplay">P</DockControl></template>
         </GlassDock>
+        <div v-if="neighbour" data-testid="neighbour" style="flex: 0 0 auto; width: 80px; height: 40px; border-radius: 8px; background: #3a53e6;"></div>
       </div>
     </template>
 

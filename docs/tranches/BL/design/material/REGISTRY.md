@@ -538,3 +538,18 @@ A route converges when its critic finds zero open gaps against a finite checklis
 **A green counts only if the route's mechanism-removal plant turns it red.** That plant is E-crit's "no plate" counterexample, generalized: remove the declaration, the solve, the pole or the α and re-run. Critics may not add rows mid-pass; a new defect class is recorded for pass 3's checklist.
 
 No winner is declared until all three routes are measured under the same H2. Convergence is not contemplated before pass 3 (the charter's floor of three passes).
+
+---
+
+## Owner ruling O-87 (2026-10-06, in-session): a deft refinement and de-slopification
+
+The owner, verbatim: "ios27 everywhere, but a bit flatter, more refined, deft, and slightly less blur." Then: "This is a deft refinement and de-slopification." Source letter: `docs/tranches/BK/coordination/valuejs-outbound-2026-10-06-flat-lighting.md`; row O-87 in `docs/tranches/BL/audit/INBOUND.md`.
+
+This binds every pass from now on, on top of this registry's checklist:
+- The iOS-27 liquid-glass canon still governs. This is not a flat redesign.
+- Flatter and more refined: strip affectation. That means stacked shadows on chrome, glow halos, coloured drop-glow, gleam or specular beyond one quiet edge, inner top-light bevels that read as decoration, and idle shimmer, pulse or breathe that carries no state.
+- Keep the material, its single edge, its motion and its engagement (D-1..D-3). An effect earns its place by carrying state or depth, never by ornament.
+- Slightly less blur than the current tokens.
+- Judge each route's paint with frames against this ruling. A route that adds lighting layers fails it.
+
+Landing: the token-level refinement rides 10.2.0, as a band-0 token wave. Deeper changes ride this loop.

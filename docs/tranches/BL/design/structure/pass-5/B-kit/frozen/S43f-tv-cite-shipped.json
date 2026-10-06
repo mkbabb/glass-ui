@@ -1,0 +1,19 @@
+{
+ "step": "B-S16 citations in shipped files (their own datum row, P4-R3)",
+ "files": {
+  "src/styles/tokens/surface/color-radius.css": {
+   "hunks": [
+    [
+     "tests-visual/no-gray.spec.ts",
+     "tests-visual/color/no-gray.spec.ts"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/styles/tokens/surface/color-radius.css",
+   "why": "cites the no-gray spec, now in tests-visual/color/"
+  }
+ ]
+}
