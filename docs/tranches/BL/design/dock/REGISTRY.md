@@ -753,3 +753,24 @@ This binds every pass from now on, on top of this registry's checklist:
 - Judge each route's paint with frames against this ruling. A route that adds lighting layers fails it.
 
 Landing: the token-level refinement rides 10.2.0, as a band-0 token wave. Deeper changes ride this loop.
+
+---
+
+## Owner ruling O-88 (2026-10-06, in-session): the collapse system lands in 10.2.0
+
+The owner, verbatim: "the shrunken and dock animations, and all facilities thereof--are still broken in the demos. Mark and communicate." Letter: `docs/tranches/BK/coordination/valuejs-outbound-2026-10-06-dock-collapse-motion.md`; row O-88 in `docs/tranches/BL/audit/INBOUND.md`. Ruled in-session: all of it in 10.2.0.
+
+This binds the next fixed checklist (the pass-3 agglomeration's pass-4 list), in addition to the rows already fixed:
+- The collapsed form is content-sized, keeps the same material and one edge (O-87), and anchors its summary. It is never a bare square tile with an orphan glyph.
+- Collapse and expand are one continuous morph (size, radius and content cross-fade) with no jump, flash, double render or layout pop. Reduced motion gives an instant, correct state change. Rapid toggles leave no stale state.
+- Every facility is a witness row in both engines:
+  - pointer enter and leave, focus, coarse tap, and scroll-driven collapse;
+  - `#persistent` in both postures;
+  - keyboard open and close with focus kept;
+  - the accessible name and expanded state;
+  - menus and popovers opened from a collapsed or expanding dock;
+  - the side and vertical variant;
+  - 390 px and coarse pointers.
+- The witness suite is born RED in glass's own demo app, with frames at each morph step.
+
+D2's convergence now gates 10.2.0, alongside D3's.
