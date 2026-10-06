@@ -1,0 +1,63 @@
+## before: W-H.1 at HEAD e64da115 (git show), checkout = worktree at e64da115
+spec W-H.1.head.md; appendix C reader ABSENT; item 8 cites 19 lines
+OPEN    src/components/_shared/feedback/feedback-tone.css:64 :: no reader, not cited in item 8
+named   src/components/_shared/menu/menu.css:10 :: cited in item 8
+OPEN    src/components/avatar/styles.css:78 :: no reader, not cited in item 8
+OPEN    src/components/configurator/styles.css:529 :: no reader, not cited in item 8
+named   src/components/dock/styles/controls/icon-button.css:202 :: cited in item 8
+named   src/components/dock/styles/layer-group.css:353 :: cited in item 8
+OPEN    src/components/metric/styles.css:143 :: no reader, not cited in item 8
+OPEN    src/components/sheet/styles.css:365 :: no reader, not cited in item 8
+OPEN    src/components/sheet/styles.css:366 :: no reader, not cited in item 8
+OPEN    src/components/sheet/styles.css:367 :: no reader, not cited in item 8
+OPEN    src/components/sheet/styles.css:368 :: no reader, not cited in item 8
+OPEN    src/components/tabs/styles/segmented.css:228 :: no reader, not cited in item 8
+OPEN    src/styles/glass/control-surfaces.css:121 :: no reader, not cited in item 8
+OPEN    src/styles/glass/glass-capsule.css:80 :: no reader, not cited in item 8
+OPEN    src/styles/theme/bridges.css:157 :: no reader, not cited in item 8
+OPEN    src/styles/tokens/dark-arm.css:286 :: no reader, not cited in item 8
+OPEN    src/styles/tokens/glass.css:116 :: no reader, not cited in item 8
+OPEN    src/styles/tokens/glass.css:254 :: no reader, not cited in item 8
+named   src/styles/tokens/glass.css:257 :: cited in item 8
+named   src/styles/tokens/glass.css:257 :: cited in item 8
+named   src/styles/tokens/scale-paper.css:106 :: cited in item 8
+named   src/styles/tokens/sizing.css:206 :: cited in item 8
+named   src/styles/tokens/sizing.css:207 :: cited in item 8
+named   src/styles/tokens/sizing.css:225 :: cited in item 8
+named   src/styles/tokens/sizing.css:263 :: cited in item 8
+OPEN    src/styles/utilities/base-misc.css:266 :: no reader, not cited in item 8
+OPEN    src/styles/utilities/components.css:22 :: no reader, not cited in item 8
+reads 27, open 17
+exit=1
+
+## after: W-H.1 as fix-8 leaves it, same checkout
+spec W-H.1.md; appendix C reader present; item 8 cites 30 lines
+surface src/components/_shared/feedback/feedback-tone.css:64 :: passed by H1-G23 (a SURFACES rule)
+named   src/components/_shared/menu/menu.css:10 :: flagged by H1-G23, cited in item 8
+surface src/components/avatar/styles.css:78 :: passed by H1-G23 (a SURFACES rule)
+named   src/components/configurator/styles.css:529 :: flagged by H1-G23, cited in item 8
+named   src/components/dock/styles/controls/icon-button.css:202 :: flagged by H1-G23, cited in item 8
+named   src/components/dock/styles/layer-group.css:353 :: flagged by H1-G23, cited in item 8
+surface src/components/metric/styles.css:143 :: passed by H1-G23 (a SURFACES rule)
+named   src/components/sheet/styles.css:365 :: flagged by H1-G23, cited in item 8
+named   src/components/sheet/styles.css:366 :: flagged by H1-G23, cited in item 8
+named   src/components/sheet/styles.css:367 :: flagged by H1-G23, cited in item 8
+named   src/components/sheet/styles.css:368 :: flagged by H1-G23, cited in item 8
+named   src/components/tabs/styles/segmented.css:228 :: flagged by H1-G23, cited in item 8
+named   src/styles/glass/control-surfaces.css:121 :: flagged by H1-G23, cited in item 8
+named   src/styles/glass/glass-capsule.css:80 :: flagged by H1-G23, cited in item 8
+surface src/styles/theme/bridges.css:157 :: passed by H1-G23 (a SURFACES rule)
+named   src/styles/tokens/dark-arm.css:286 :: flagged by H1-G23, cited in item 8
+named   src/styles/tokens/glass.css:116 :: flagged by H1-G23, cited in item 8
+surface src/styles/tokens/glass.css:254 :: passed by H1-G23 (a SURFACES rule)
+named   src/styles/tokens/glass.css:257 :: flagged by H1-G23, cited in item 8
+named   src/styles/tokens/glass.css:257 :: flagged by H1-G23, cited in item 8
+named   src/styles/tokens/scale-paper.css:106 :: flagged by H1-G23, cited in item 8
+named   src/styles/tokens/sizing.css:206 :: flagged by H1-G23, cited in item 8
+named   src/styles/tokens/sizing.css:207 :: flagged by H1-G23, cited in item 8
+named   src/styles/tokens/sizing.css:225 :: flagged by H1-G23, cited in item 8
+named   src/styles/tokens/sizing.css:263 :: flagged by H1-G23, cited in item 8
+surface src/styles/utilities/base-misc.css:266 :: passed by H1-G23 (a SURFACES rule)
+surface src/styles/utilities/components.css:22 :: passed by H1-G23 (a SURFACES rule)
+reads 27, open 0
+exit=0

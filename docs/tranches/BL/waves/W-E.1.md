@@ -66,7 +66,7 @@ $ grep -q -- '--safe-block-end' src/components/dock/README.md; echo $?
 
 ## 4 · Files it touches
 
-`src/styles/tokens/offsets.css`; `src/components/sheet/styles.css`; `src/components/toast/Toaster.vue` and the toast styles; `src/components/expandable-container/styles.css`; `src/components/_shared/overlay/content.ts`; `src/components/select/SelectContent.vue`; `src/components/deck/styles/stage.css`; `demo/shell/dock-nav.css`; `src/components/dock/README.md`. New: `tests-visual/wired/safe-edge.spec.ts` (appendix A ported), and the band's fixture app `tests-visual/fixtures/band-e/` (appendix B) that every band-E wired spec drives. W-A.3's `visual.yml` builds it against the packed library alongside `dist-demo/`.
+`src/styles/tokens/offsets.css`; `src/components/sheet/styles.css`; `src/components/toast/Toaster.vue` and the toast styles; `src/components/expandable-container/styles.css`; `src/components/_shared/overlay/content.ts`; `src/components/select/SelectContent.vue`; `src/components/deck/styles/stage.css`; `demo/shell/dock-nav.css`; `src/components/dock/README.md`. New: `tests-visual/wired/safe-edge.spec.ts` (appendix A ported), and the band's fixture app `tests-visual/fixtures/band-e/` (appendix B) that every band-E wired spec drives. Edited: `.github/workflows/visual.yml` gains the step that builds it against the packed library alongside `dist-demo/` (W-A.3's workflow; W-D.2 keeps the step where it stands, W-D.2 §3 item 6).
 
 ## 5 · Acceptance gates
 

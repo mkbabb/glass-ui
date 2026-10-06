@@ -1,0 +1,21 @@
+## before: PLAN.md and waves/ at HEAD e64da115 (git archive), SWEEP_RAW=1 (no readings)
+OPEN RESTATED W-A.5 A5-G1 :: same command as W-L.8:G-L8-4
+OPEN BORROWED W-B.14 B14-G2 :: scripts/tranche/verify-recap.mjs landed by W-B.3
+OPEN RESTATED W-B.14 B14-G2 :: same command as W-B.3:B3-G2, W-H.3:G4, W-I.4:G6
+OPEN RESTATED W-B.3 B3-G2 :: same command as W-B.14:B14-G2, W-H.3:G4, W-I.4:G6
+OPEN BORROWED W-H.3 G4 :: scripts/tranche/verify-recap.mjs landed by W-B.3
+OPEN RESTATED W-H.3 G4 :: same command as W-B.14:B14-G2, W-B.3:B3-G2, W-I.4:G6
+OPEN BORROWED W-I.4 G6 :: scripts/tranche/verify-recap.mjs landed by W-B.3
+OPEN RESTATED W-I.4 G6 :: same command as W-B.14:B14-G2, W-B.3:B3-G2, W-H.3:G4
+OPEN BORROWED W-L.8 G-L8-4 :: scripts/payload.mjs landed by W-A.5
+OPEN RESTATED W-L.8 G-L8-4 :: same command as W-A.5:A5-G1
+OPEN BORROWED W-L.8 G-L8-7 :: scripts/tranche/verify-ledger.mjs landed by W-B.1
+rows 11, open 11, stale 0
+exit=1
+
+## after: the plan folder as fix-8 leaves it, with ADJUDICATED
+rows 0, open 0, stale 0
+exit=0
+
+## after, SWEEP_RAW=1 (the same rows with no readings; every one is listed above with its reading)
+rows 0, open 0, stale 0

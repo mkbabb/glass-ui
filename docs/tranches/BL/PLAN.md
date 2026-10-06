@@ -8,7 +8,7 @@
 | inputs, read in full | `CHARTER.md`; `FORMATION-PROGRESS.md`; `audit/REGISTRY.md` (§1 families F-01..F-85 whole; §3 remaining gaps; §6.5-§6.8; §14.7-§14.8); `audit/INBOUND.md`; `audit/INBOUND-MAP.md` (rounds 6 and 8 sections, the O-74 ruling rows); `audit/PROMPT-RECAP-SEED.md`; `ledger/CENSUS.md` and `ledger/census-{register-a,register-b,carries-recap}.md`; `BK/FINAL.md` §7; `design/structure/REGISTRY.md` (P2-0, P2-1, P2-6, P2-7); `design/dock/REGISTRY.md` (§0, §1, §5-§7); `design/tile/REGISTRY.md` (§0, §1, §5, §7); `design/material/PORTFOLIO.md` (§0, §7; D3 has no REGISTRY yet) |
 | commands run here | `npm view @mkbabb/value.js version` → `4.0.0`; `plutil -p ~/Library/WebDriver/com.apple.Safari.plist` → `AllowRemoteAutomation => false`, mtime `Sep 17 18:51:49 2026`; `grep -c emphasis MIGRATION.md` → 0; `grep -c paper-aged MIGRATION.md` → 0; source reads cited inline |
 | fences | no source edit, no git write, no build; the only writes are this file and `waves/INDEX.md` |
-| amended | formation fix seat 2 (`formation-audit/fix-2.md`), against critic pass 1's 21 findings: band 0 gains W-0.8, W-0.9, W-0.10; seven disease rows get waves of their own (W-E.14, W-H.5, W-I.5, W-I.6, W-I.7, W-K.11, and W-I.4 moves into loop D2); §1 gains the evidence-root, decide-wave and gate rules; §5 is the one DAG. 99 waves. Amended again by formation fix seat 3 (`formation-audit/fix-3.md`) against critic pass 2's FB-01..FB-18: W-0.8 is O-83 alone (O-84 and O-84a to W-I.1, CUR:78); OW-12 retired; W-C.1 moves every loop harness and W-H.1/H.2/H.5/I.1/I.7 wait on it; W-B.9 and W-I.7 enact their disease rows themselves. Amended again by formation fix seat 4 (`formation-audit/fix-4.md`) against critic pass 3's FC-01..FC-11: the gate-path rule and base re-run (§1), W-0.2's band-0 terminal as the edge (§5), W-H.5 on D3's FL-11 (§3). Amended again by formation fix seat 5 (`formation-audit/fix-5.md`) against critic pass 4's FD-01..FD-03: G-L1-7 reads the in-place anchor move (W-L.1); state fills leave W-E.2 and W-E.6 for W-H.1 on D3's floor row FL-6 (§3, §4); four within-band edges (§5). Amended again by formation fix seat 6 (`formation-audit/fix-6.md`) against critic pass 5's FE-01..FE-03: the shared-kit edges and two ordered pairs (§5), W-H.1's state-fill captures (W-H.1 §6), and edge lists struck from the specs that restated §5. Amended again by formation fix seat 7 (`formation-audit/fix-7.md`) against critic pass 6's FF-01..FF-03: one lander per shared kit in bands 0, E, F, G and K with its edges (§5), the W-L.4 → W-L.3 order with the fork's check as the fixture alone, and H1-G23 read across lines |
+| amended | formation fix seat 2 (`formation-audit/fix-2.md`), against critic pass 1's 21 findings: band 0 gains W-0.8, W-0.9, W-0.10; seven disease rows get waves of their own (W-E.14, W-H.5, W-I.5, W-I.6, W-I.7, W-K.11, and W-I.4 moves into loop D2); §1 gains the evidence-root, decide-wave and gate rules; §5 is the one DAG. 99 waves. Amended again by formation fix seat 3 (`formation-audit/fix-3.md`) against critic pass 2's FB-01..FB-18: W-0.8 is O-83 alone (O-84 and O-84a to W-I.1, CUR:78); OW-12 retired; W-C.1 moves every loop harness and W-H.1/H.2/H.5/I.1/I.7 wait on it; W-B.9 and W-I.7 enact their disease rows themselves. Amended again by formation fix seat 4 (`formation-audit/fix-4.md`) against critic pass 3's FC-01..FC-11: the gate-path rule and base re-run (§1), W-0.2's band-0 terminal as the edge (§5), W-H.5 on D3's FL-11 (§3). Amended again by formation fix seat 5 (`formation-audit/fix-5.md`) against critic pass 4's FD-01..FD-03: G-L1-7 reads the in-place anchor move (W-L.1); state fills leave W-E.2 and W-E.6 for W-H.1 on D3's floor row FL-6 (§3, §4); four within-band edges (§5). Amended again by formation fix seat 6 (`formation-audit/fix-6.md`) against critic pass 5's FE-01..FE-03: the shared-kit edges and two ordered pairs (§5), W-H.1's state-fill captures (W-H.1 §6), and edge lists struck from the specs that restated §5. Amended again by formation fix seat 7 (`formation-audit/fix-7.md`) against critic pass 6's FF-01..FF-03: one lander per shared kit in bands 0, E, F, G and K with its edges (§5), the W-L.4 → W-L.3 order with the fork's check as the fixture alone, and H1-G23 read across lines. Amended again by formation fix seat 8 (`formation-audit/fix-8.md`) against critic pass 7's FG-01..FG-03: the workflow order and four more ordered pairs (§5), H1-G23 by exclusion over every plate read, G-L8-4 struck and G-L8-3 read from the provenance, and three borrowed recap gates struck |
 
 Short cites: `REG:n` is `audit/REGISTRY.md` line n; `CUR:n` is `FORMATION-PROGRESS.md`; `CEN:n` is `ledger/CENSUS.md`; `CH:n` is `CHARTER.md`; `IN:n` is `audit/INBOUND.md`; `D1:n`, `D2:n`, `D4:n` are the structure, dock and tile `REGISTRY.md`; `D3P:n` is `design/material/PORTFOLIO.md`.
 
@@ -30,7 +30,7 @@ Short cites: `REG:n` is `audit/REGISTRY.md` line n; `CUR:n` is `FORMATION-PROGRE
 - **Decide waves.** The formation LEDGER holds each decided row's terminal. A decide wave's gates are its enactment in the tree: the file, symbol or paint the ruling removes or builds. A row the owner rules adds one docket gate, `! grep -qE '^\| OW-n \|.*\| pending \|' docs/tranches/BL/LEDGER.md`, which is RED while the docket row reads `pending`. No gate re-reads the ledger for a terminal word.
 - **Hand-offs.** When a spec hands an item to another wave, the receiving spec names it in its §1 with the sender. A hand-off the receiver does not carry is a defect of the receiver.
 - **π and DELTA.** Every visual claim ships a captured paint delta: a screenshot plus the paired π reading, before and after, on disk under the one evidence root and cited by the wave record (P-2, F-06). The root is `.cache/evidence/<wave>/` (git-ignored, `.gitignore:29-32`; W-C.1 extends it to every probe). Harness output under `.cache/visual/` (W-A.1 step 6) is cited by path and sha256 from there. Every band probe library (`W-E.1.md`, `W-F.2.md`, `W-G.1.md`, `W-K.1.md` appendices) takes its root from `WAVE=<wave id>` and throws without it; a session scratchpad is never an evidence path.
-- **fix-2's probe.** A spec row that reads "fix-2's probe, scene `x`" names the fixture app printed in full in `formation-audit/fix-2.md` appendix P (`App.vue`, `build.mjs`, `measure.mjs`, `acc.mjs`). The wave that owns the row moves its scene into that wave's wired spec or `scripts/probes/` and runs it there; the reading at `183e021a` is the born-RED or hold figure. "fix-3's probe" is the same, for the fixture apps printed in `formation-audit/fix-3.md` appendix Q (readings at `be1969ea`), "fix-5's probe" for `formation-audit/fix-5.md` appendix R (readings at `c42aee9d`), "fix-6's probe" for `formation-audit/fix-6.md` appendix S (readings at `958ca517`), and "fix-7's probe" for `formation-audit/fix-7.md` appendix T (readings at `8397fcae`).
+- **fix-2's probe.** A spec row that reads "fix-2's probe, scene `x`" names the fixture app printed in full in `formation-audit/fix-2.md` appendix P (`App.vue`, `build.mjs`, `measure.mjs`, `acc.mjs`). The wave that owns the row moves its scene into that wave's wired spec or `scripts/probes/` and runs it there; the reading at `183e021a` is the born-RED or hold figure. "fix-3's probe" is the same, for the fixture apps printed in `formation-audit/fix-3.md` appendix Q (readings at `be1969ea`), "fix-5's probe" for `formation-audit/fix-5.md` appendix R (readings at `c42aee9d`), "fix-6's probe" for `formation-audit/fix-6.md` appendix S (readings at `958ca517`), "fix-7's probe" for `formation-audit/fix-7.md` appendix T (readings at `8397fcae`), and "fix-8's probe" for `formation-audit/fix-8.md` appendix U (readings at `e64da115`).
 - **Engines.** Chromium cells are measured. Playwright WebKit cells are labelled Playwright WebKit. Real-Safari cells are UNMEASURED until W-A.6's step 0 passes (the owner's safaridriver checkbox, OW-3; D-4).
 - **Clean breaks.** No alias, shim, dual path or masking fallback (E-1, E-2). A removed or renamed public surface gets a MIGRATION row in the same wave, and a silent binding gets an E-11 guard.
 - **Three gestalt passes.** Each implemented wave records a tranche-fit pass, a wave pass and a feature pass before it closes (P-1).
@@ -185,7 +185,7 @@ F-13's mechanism is a chronic that waits on a ruling nobody was seated to make a
 
 | wave | families | scope |
 |---|---|---|
-| **W-H.1** (loop D3) | F-23, F-24 remainder, F-75, F-21 split (#84a), F-28 split (X-G1's selected fill) | W-INK-COMPOSITE from D3's converged spec: no state fill or dim reads a plate token (D3 floor row FL-6: ToggleGroup's on state from W-E.2, the chip's selected fill from W-E.6, the six plate-reading state tokens; fix-5, FD-02); ink rungs derived against the painted composite (text, perimeter and ring), one rendered-contrast invariant with a ring leg and a `::selection` register; the dock's ink keeps its register (M-4); state, value and emphasis separate in D, DK, PRT, PCM and PRM (the Command cursor ring, a PCM ink arm, a capsule hover that survives PRM, a slider value mark in both variants including spectrum, O-61 R-2); the PRT arm recedes the field (F-75); the live dock legible with no DOM readback (M-5, C-2 row 1), and, if D3 converges on D3-B, the field-luma publisher and the dock's subscription (moved here from W-G.1 and W-G.3) |
+| **W-H.1** (loop D3) | F-23, F-24 remainder, F-75, F-21 split (#84a), F-28 split (X-G1's selected fill) | W-INK-COMPOSITE from D3's converged spec: no state fill or dim reads a plate token (D3 floor row FL-6: ToggleGroup's on state from W-E.2, the chip's selected fill from W-E.6, and every plate read outside the plate surfaces, listed once in W-H.1 §3.2 item 8 and held by H1-G23; fix-5, FD-02; fix-8, FG-02); ink rungs derived against the painted composite (text, perimeter and ring), one rendered-contrast invariant with a ring leg and a `::selection` register; the dock's ink keeps its register (M-4); state, value and emphasis separate in D, DK, PRT, PCM and PRM (the Command cursor ring, a PCM ink arm, a capsule hover that survives PRM, a slider value mark in both variants including spectrum, O-61 R-2); the PRT arm recedes the field (F-75); the live dock legible with no DOM readback (M-5, C-2 row 1), and, if D3 converges on D3-B, the field-luma publisher and the dock's subscription (moved here from W-G.1 and W-G.3) |
 | **W-H.2** (loop D3) | F-31 remainder | W-FROST-II from D3's converged spec: one frost detector over the rungs and both modes with a nested-lens arm (no backdrop-root former, `mask-image` included, between a lens and its backdrop); the blur rungs composed at the reading element; the F48 blur ladder with paired π (OW-8); the dock press `filter` (#7) and the sheet halo lens (RT-39G) |
 | **W-H.5** (loop D3) | F-31 split (#25, a disease row; #82 G-F2) | The transmissive well from D3's converged spec: a well transmits its ground (W-H.2's former G5, 0.0000 in both themes at HEAD) and no well is inert under the frost detector, because the well carries no `backdrop-filter` of its own (D3 floor row FL-11; W-H.5 G2, fix-4). Decided and built here |
 | **W-H.3** | F-14 split (R2-06-02) | W-GLASS-REGISTER-DECIDE against D3's converged ladder: the CLEAR variant, IconChip, GlassControl disc, Maps-card composite and expand, the coverage law, a control track, iOS-27 control deltas, deep glass on heroes, dashed ghost, #24 RT-24C/D, #71 RT-71A; each BUILT here with a born-RED e2e or RETIRED with an owner quote (OW-9c) |
@@ -281,8 +281,8 @@ This table is the one record of edges. A wave spec cites it and does not restate
 | W-A.2 | W-A.1 |
 | W-A.3 | W-A.1, W-A.2 |
 | W-A.4 | W-A.3 |
-| W-A.5 | W-A.2 |
-| W-A.6 | W-A.1, OW-3 (owner) |
+| W-A.5 | W-A.2, W-A.3, W-A.4 |
+| W-A.6 | W-A.1, W-A.3, W-A.4, W-A.5, OW-3 (owner) |
 | W-B.1 | — (formation) |
 | W-B.2 | W-B.1 |
 | W-B.3 | W-B.1 |
@@ -295,16 +295,16 @@ This table is the one record of edges. A wave spec cites it and does not restate
 | W-B.10 | W-B.1 |
 | W-B.11 | W-B.1 |
 | W-B.12 | W-B.1, W-A.2 |
-| W-B.13 | W-B.1, OW-1 (owner) |
+| W-B.13 | W-B.1, W-A.3, W-A.4, W-A.5, OW-1 (owner) |
 | W-B.14 | W-B.1, W-B.3 |
 | W-B.15 | W-B.1, W-B.3 |
-| W-C.1 | W-A.1 |
-| W-C.2 | W-A.2 |
-| W-C.3 | W-A.2, W-0.5, W-B.11, W-C.2 |
+| W-C.1 | W-A.1, W-A.2, W-A.3, W-A.4, W-A.5 |
+| W-C.2 | W-A.2, W-A.3, W-A.4, W-A.5, W-C.1 |
+| W-C.3 | W-A.2, W-A.3, W-0.5, W-B.11, W-C.2 |
 | W-C.4 | W-A.2 |
 | W-C.5 | W-C.4, W-0.6 |
-| W-D.1 | D1 gate, W-A.2, W-C.1, W-C.2 |
-| W-D.2 | W-D.1, W-A.1, W-A.3, W-A.4, W-B.13 |
+| W-D.1 | D1 gate, W-A.2, W-C.1, W-C.2, W-C.3 |
+| W-D.2 | W-D.1, W-A.1, W-A.3, W-A.4, W-A.5, W-B.13 |
 | W-E.1 | W-A.3 |
 | W-E.2 | W-A.3, W-C.4, W-E.1 |
 | W-E.3 | W-E.1, W-E.2, W-C.5 |
@@ -326,7 +326,7 @@ This table is the one record of edges. A wave spec cites it and does not restate
 | W-F.5 | W-F.3, W-E.3 |
 | W-F.6 | W-A.3, W-F.1 |
 | W-F.7 | W-A.3, W-F.1 |
-| W-G.1 | W-A.4, W-B.9, W-C.5 |
+| W-G.1 | W-A.4, W-B.9, W-C.5, W-F.1 |
 | W-G.2 | W-A.3, W-G.1 |
 | W-G.3 | W-G.1, W-G.6 |
 | W-G.4 | W-G.1, W-B.5, W-G.3, W-G.7 |
@@ -347,7 +347,7 @@ This table is the one record of edges. A wave spec cites it and does not restate
 | W-I.7 | D2 gate, W-C.1, W-E.2 |
 | W-J.1 | D4 gate, W-E.6, W-E.8, W-H.1, W-A.3, W-C.1 |
 | W-J.2 | D5 gate, W-I.1, W-I.6, W-J.1, W-I.3, W-F.1, W-F.6, W-A.2 |
-| W-K.1 | W-A.3, W-C.5 |
+| W-K.1 | W-A.3, W-C.5, W-E.1 |
 | W-K.2 | W-E.4, W-K.1 |
 | W-K.3 | W-F.2, W-E.4, W-K.1 |
 | W-K.4 | W-H.1, W-I.1, W-K.5 |
@@ -359,8 +359,8 @@ This table is the one record of edges. A wave spec cites it and does not restate
 | W-K.10 | W-F.4, W-K.1 |
 | W-K.11 | W-E.4, W-K.2 |
 | W-L.1 | W-B.2, W-E.4, W-K.6, W-H.1, W-B.4, W-B.8, W-0.10 |
-| W-L.2 | W-K.8, W-L.1, W-I.2 |
-| W-L.3 | W-A.5, W-G.7, W-K.6, W-L.2, W-L.4 |
+| W-L.2 | W-K.8, W-L.1, W-I.2, W-D.2 |
+| W-L.3 | W-A.5, W-G.7, W-K.6, W-L.2, W-L.4, W-D.2 |
 | W-L.4 | W-F.2, W-E.7 |
 | W-L.5 | — (re-trigger: value.js 4.1.0 or later on npm) |
 | W-L.6 | every wave of bands C to K |
@@ -391,6 +391,14 @@ Notes on edges:
 - W-E.4 depends on W-E.2 because W-E.4 §3 item 8 rewrites SelectContent's classes on the tree where W-E.2 has removed the side-translate utilities (E2-G12) (fix-6, FE-01).
 - W-K.4 depends on W-K.5 because W-K.5 lands the pointer-origin ring selector (`utilities/base.css`, W-K.5 §4) and W-K.4 points every ring register at it (fix-6, FE-01).
 - W-L.3 depends on W-L.4 because W-L.3's consumer matrix runs W-L.4's declaration-floor fixture (`tests/_support/declaration-floor/`) as its types leg and deletes `scripts/verify-export-types.mjs` and `verify:package`. W-L.4 builds the fork's declaration check as that fixture only and edits neither (fix-7, FF-02).
+- **The workflow files have one order** (fix-8, FG-01). W-A.3 reshapes them first (`visual.yml` new, the `pixel-floor` job out of `ci.yml`, `release.yml`'s `needs`), and W-D.2 reshapes them last (`verify.yml` takes the verify job's steps out of `ci.yml` and `release.yml`). Every wave that writes a workflow line is ordered against both:
+  - after W-A.3 and before W-D.2: W-A.4 (the GPU receipt check), W-A.5 (the payload step; after W-A.4), W-B.13 (the token `env:` pair; after W-A.4 and W-A.5), W-C.1 (`fetch-depth`; after W-A.4 and W-A.5), W-C.2 (the brackets; after W-A.4, W-A.5 and W-C.1) and W-C.3 (the generated CI-step block; W-D.2 reaches it through W-D.1). W-D.2 carries the verify steps they leave into `verify.yml` (W-D.2 §3 item 6). W-K.1 lands after W-E.1, the other writer of a fixture-app step in `visual.yml`;
+  - after W-D.2: W-L.2 (`check:consumer` in `verify.yml`), W-L.3 (the consumer-matrix job; `verify:package` out of `verify.yml`), W-L.7 and W-L.8 (through W-L.6);
+  - unordered against W-D.2, by design: W-A.6 (it waits on OW-3, and the cut must not), W-E.1 and W-K.1 (bands E to K must not wait on loop D1, §2). Each adds a step W-D.2 keeps where it stands: W-A.6 a receipt check in `release.yml`'s `publish` job, W-E.1 and W-K.1 a fixture-app build in `visual.yml`. W-D.2 §3 item 6 moves only the verify steps and keeps every other step, so both orders give one workflow set;
+  - the owner-gated pair W-A.6 and W-B.13 stay unordered against each other and against W-C.1, W-C.2 and W-L.3, so no wave waits on an owner act it does not need: each pair writes disjoint lines of `release.yml` (W-B.13 deletes `:13-20` and `:65-66`, W-C.1 edits `:35`, W-C.2 strikes the bracket at `:13` only, W-A.6 adds one step to `publish`, W-L.3 adds the matrix job and drops `verify:package`), and no gate of one reads the other's lines. W-C.2's detector (E-10) reads every workflow file as a test, so W-E.1's and W-K.1's `visual.yml` steps, written before or after it, are read by it the same way. The sweep `formation-audit/sweeps/reshape-order.py` lists each unordered pair with this reading.
+- W-C.1 depends on W-A.2 and W-A.5 because both delete a script that reads a tranche record (`scripts/gate-register.mjs`, `scripts/profile-bundle.mjs`), the read W-C.1 §3 step 5 removes; with the order, W-C.1 reads neither and its step 5 has one path (fix-8, FG-01).
+- W-D.1 depends on W-C.3 because W-C.3 §3 item 8 edits `scripts/lib/subpath-policy.mjs`, which W-D.1 deletes (fix-8, FG-01).
+- W-G.1 depends on W-F.1 because W-F.1 edits `src/composables/glass/webgl/createCanvasLifecycle.ts` and its time test imports it from there (`W-F.1.md` appendix B), and W-G.1 moves that file into `webgpu/` and deletes `webgl/`; W-G.1 re-points the import (W-G.1 §4) (fix-8, FG-01).
 
 ## 6 · Formation gaps this plan names
 

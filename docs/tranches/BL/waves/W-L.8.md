@@ -69,11 +69,11 @@ W-L.6's census runs on the release commit's pack, on the owner's machine where t
 
 In order, each step's exit code read from its own run, never through a pipe:
 
-1. **Entry.** W-L.7 closed, every band's gates green, its π pairs on disk and cited (P-1, P-2).
+1. **Entry.** W-L.7 closed; every gate of bands A to L green on the release commit, its π pairs on disk and cited (P-1, P-2). Band 0's gates are the 10.2.0 cut's: W-0.7 step 1 read them at `v10.2.0`, and they are not re-run here, since two of them read files later waves delete (W-0.1 G5 runs `scripts/verify-export-types.mjs`, which W-L.3 deletes; W-0.7's datum is `.bundle-ratchet`, which W-A.5 deletes) (fix-8, FG-01).
 2. **Records.** `CHANGELOG.md` `## 11.0.0 — <date>` and `MIGRATION.md` `## 11.0.0`, with no wave ids, tranche ids or dated brackets (E-10), and G-L7-3's closure check green over the new section.
 3. **Version.** `npm version 11.0.0 --no-git-tag-version`, committed as the release commit.
-4. **Datum.** On the committed, clean release commit, after `npm run build`, run W-A.5's payload invariant (`node scripts/payload.mjs --enforce`, W-A.5 §3 item 3) and record each entry's reading in the wave record. It is the one datum: W-A.5 deletes `.bundle-ratchet` and W-L.3 deletes `scripts/verify-export-types.mjs`, and both land before this wave (PLAN §5). A dirty tree never binds a reading.
-5. **The release run, not a local subset.** On the release commit: `release.yml`'s steps in order as W-A.5 and W-L.3 leave them (`npm ci`, `typecheck`, `build`, `payload.mjs --enforce`, the consumer matrix, `demo:dist:build`, `test`), then `scripts/release.sh v11.0.0`'s real-GPU arms (`gate:pixel-floor`, `:planted`, `:planted:flood`) and W-A.3's wired visual suite and W-A.4's GPU leg. An earlier close that ran a local subset shipped gate drift that only the release set would have caught (`docs/tranches/AX/audit/hardening/CHRONIC-miss-release.md:6-8`, `:192-196`); this step runs the release set.
+4. **Datum.** On the committed, clean release commit, after `npm run build`, run W-A.5's payload invariant (`node scripts/payload.mjs --enforce`, W-A.5 §3 item 3) and record each entry's reading in the wave record. It is the one datum: W-A.5 deletes `.bundle-ratchet` and W-L.3 deletes `scripts/verify-export-types.mjs`, and both land before this wave (PLAN §5). A dirty tree never binds a reading. The step is a record, not a gate of this wave: A5-G1 is the gate, and `verify.yml` runs the same command inside the release run G-L8-5 reads. That the registry tarball is this commit's build is G-L8-3 (fix-8, FG-03).
+5. **The release run, not a local subset.** On the release commit: `release.yml`'s jobs as W-D.2, W-A.5, W-L.2 and W-L.3 leave them: `verify` (W-D.2's `verify.yml`: `npm ci`, `typecheck`, `build`, `payload.mjs --enforce`, `check:consumer`, `demo:dist:build`, `test`), the consumer-matrix job, `visual`, and `publish` with its receipt checks; then `scripts/release.sh v11.0.0`'s real-GPU arms (`gate:pixel-floor`, `:planted`, `:planted:flood`) and W-A.3's wired visual suite and W-A.4's GPU leg. An earlier close that ran a local subset shipped gate drift that only the release set would have caught (`docs/tranches/AX/audit/hardening/CHRONIC-miss-release.md:6-8`, `:192-196`); this step runs the release set.
 6. **The owner's confirmation.** The owner sees the close glance (the band captures W-B.4 rules, the CHANGELOG entry, §3.3's three retirements, W-L.7's orphan list for L06-12, OW-1 and OW-3 at their state) and confirms in-session. The reply is quoted verbatim with its time, before the tag.
 7. **Tag and publish.** `git tag -a v11.0.0` on the release commit, pushed; `release.yml` publishes with provenance. It authenticates with OIDC if W-B.13's Trusted Publisher step is done, otherwise with `NPM_TOKEN`; FINAL.md states which, and OW-1's state is its terminal record.
 8. **The artefact check.** The registry tarball is packed back and read for each band's cure markers, as W-0.7's G5 did for 10.2.0: a marker list is collected from each wave record's "artefact marker" line.
@@ -85,7 +85,7 @@ In order, each step's exit code read from its own run, never through a pipe:
 
 ## 4 · Files it touches
 
-`CHANGELOG.md`, `MIGRATION.md`, `package.json`, `package-lock.json`; new `scripts/tranche/close-check.mjs` and `scripts/tranche/cite-check.mjs` (appendix A promoted); `docs/tranches/BL/FINAL.md`; the close receipt in the evidence path.
+`CHANGELOG.md`, `MIGRATION.md`, `package.json`, `package-lock.json`; new `scripts/tranche/close-check.mjs`, `scripts/tranche/cite-check.mjs` (appendix A promoted) and `scripts/tranche/artefact-origin.mjs` (appendix B); `docs/tranches/BL/FINAL.md`; the close receipt in the evidence path.
 
 ## 5 · Acceptance gates
 
@@ -95,11 +95,11 @@ Each gate's exit code is read on its own.
 |---|---|---|---|
 | G-L8-1 · version | `test "$(node -p "require('./package.json').version")" = 11.0.0` | exit 0 | **exit 1** (`10.1.0`) |
 | G-L8-2 · records | `grep -q '^## 11.0.0' CHANGELOG.md && grep -q '^## 11.0.0' MIGRATION.md && ! sed -n '/^## 11.0.0/,/^## 10\./p' CHANGELOG.md MIGRATION.md \| grep -qE '\bW-[0-9A-L]\.[0-9]\|\[20[0-9]{2}-[0-9]{2}-[0-9]{2}'` | exit 0 | **exit 1** (no section) |
-| G-L8-3 · published with provenance | `test "$(npm view @mkbabb/glass-ui@11.0.0 dist.attestations.provenance.predicateType)" = https://slsa.dev/provenance/v1` | exit 0 | **exit 1** (`E404`); `@10.1.0` passes the same read |
-| G-L8-4 · the datum is the committed tree's | on the release commit after `npm run build`: `git diff --quiet HEAD && node scripts/payload.mjs --enforce` | exit 0 | **exit 1** (fix-7, `8397fcae`: `Cannot find module …/scripts/payload.mjs`; W-A.5 lands it) |
+| G-L8-3 · the registry tarball is the tag's build, with provenance | `node scripts/tranche/artefact-origin.mjs @mkbabb/glass-ui 11.0.0 v11.0.0` (appendix B): the SLSA provenance names the tag's commit and `release.yml` at the tag, and its subject sha512 is the tarball the registry serves | exit 0 | **exit 1** (fix-8, appendix B run from scratch at `e64da115`: `FAIL no tag v11.0.0`; there is no 11.0.0 on the registry either). It passes on `10.1.0 v10.1.0` and `10.0.1 v10.0.1` (3 PASS each) and bites on `10.1.0 v10.0.1` (source commit `d8bda2a9…` against `3f9ea884…`, workflow ref `v10.1.0` against `v10.0.1`: exit 1). It replaces the predicate-type read, which passed on any provenance whatever tree it named |
+| ~~G-L8-4~~ | struck (fix-8, FG-03) | | It restated A5-G1 (`npm run build && node scripts/payload.mjs --enforce`) behind `git diff --quiet HEAD`, so it entered this wave green on any clean commit after W-A.5, and its recorded RED was W-A.5's absent script. The payload reading is step 4's record; A5-G1 and the release run (G-L8-5) gate it; G-L8-3 holds the shipped bytes to the tag's tree |
 | G-L8-5 · the release run | `gh run list --workflow release.yml --json headBranch,conclusion --jq '.[] \| select(.headBranch=="v11.0.0") \| .conclusion'` prints `success` | `success` | **fails**: latest runs are `v10.1.0`, `v10.0.1`, `v10.0.0` |
 | G-L8-6 · the close checklist | `node scripts/tranche/close-check.mjs docs/tranches/BL --tag v11.0.0` | exit 0 | **fails**: the script does not exist; its items fail today (G-L8-7 to G-L8-10) |
-| G-L8-7 · the ledger | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --close` | exit 0 | **fails**: the checker is absent (W-B.1 builds it). `LEDGER.md` exists (committed at `ae8370e0`; `test -f` exits 0 at `183e021a`, fix-2) |
+| G-L8-7 · the ledger | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL --close` | exit 0 | **fails** on this wave's own act: `--close` exits 1 while any owner-docket row reads `pending` (W-B.1 §3 item 2), and this wave is the one that records each still-open owner act as its wave's terminal (§3.1, step 6). At `e64da115`, 11 docket rows read `pending` (`grep -cE '^\| OW-[0-9a-z]+ \|.*\| pending \|' docs/tranches/BL/LEDGER.md`, fix-8); OW-1 and OW-3 have no act at HEAD. The checker itself is W-B.1's and exists at this wave's base, so its absence is not the reading (fix-8, FG-03) |
 | G-L8-8 · P-6 | W-L.6's census on the release pack, exit 0, sha256 in FINAL.md | both | **exit 1**: 227 names with no reader |
 | G-L8-9 · cites resolve | `node scripts/tranche/cite-check.mjs docs/tranches/BL/FINAL.md v11.0.0`, and over `waves/*.md` | exit 0 | **fails**: FINAL.md absent. The checker bites today on BL's own census at HEAD (2 unqualified sibling cites) and passes BK's FINAL at its HEAD (8/8), so it can do both |
 | G-L8-10 · the hooks path | `d=$(git config --get core.hooksPath); test -z "$d" -o -d "$d"` | exit 0 | **exit 1**: points at the deleted `.githooks` |
@@ -133,3 +133,39 @@ const RE = /`?((?:src|tests|tests-visual|scripts|demo|docs|\.github)\/[\w./@-]+\
 ```
 
 Output: `BK/FINAL.md d856e136` → `cites 8, unresolved 0`, exit 0. `census-register-a.md HEAD` → `cites 47, unresolved 0`. `census-register-b.md HEAD` → `src/components/equation/ConvergencePlot.vue:136 … absent at HEAD`, `cites 45, unresolved 1`, exit 1. `census-carries-recap.md HEAD` → `demo/scenes/amiga/utils.ts:2 … absent at HEAD`, `cites 44, unresolved 1`, exit 1. The wave adds the repo-qualified sibling form and the bare-filename failure (§3.4).
+
+## Appendix B · `artefact-origin.mjs` (G-L8-3; run by fix-8 from its scratchpad at `e64da115`)
+
+```js
+// artefact-origin.mjs <package> <version> <tag> — the registry tarball is the tag's tree, built by the release workflow:
+// its SLSA provenance names the tag's commit and release.yml, and its subject digest is the tarball the registry serves.
+import { execFileSync } from "node:child_process";
+const [pkg, ver, tag] = process.argv.slice(2);
+const sh = (cmd, args) => execFileSync(cmd, args, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+const fail = (m) => { console.log(`FAIL ${m}`); process.exit(1); };
+let commit, meta;
+try { commit = sh("git", ["rev-parse", `${tag}^{commit}`]); } catch { fail(`no tag ${tag}`); }
+try { meta = JSON.parse(sh("npm", ["view", `${pkg}@${ver}`, "dist", "--json"])); } catch { fail(`${pkg}@${ver} not on the registry`); }
+if (!meta.attestations?.url) fail(`${pkg}@${ver} has no attestations`);
+const res = await fetch(meta.attestations.url); if (!res.ok) fail(`attestations ${res.status}`);
+const slsa = (await res.json()).attestations.find((a) => a.predicateType === "https://slsa.dev/provenance/v1");
+if (!slsa) fail("no SLSA provenance");
+const st = JSON.parse(Buffer.from(slsa.bundle.dsseEnvelope.payload, "base64"));
+const src = st.predicate.buildDefinition.resolvedDependencies.find((d) => d.digest?.gitCommit)?.digest.gitCommit;
+const wf = st.predicate.buildDefinition.externalParameters.workflow;
+const sha512 = Buffer.from(meta.integrity.replace(/^sha512-/, ""), "base64").toString("hex");
+const subj = st.subject.find((s) => s.digest?.sha512)?.digest.sha512;
+const rows = [["source commit", src, commit], ["workflow", `${wf.path}@${wf.ref}`, `.github/workflows/release.yml@refs/tags/${tag}`], ["subject sha512", subj, sha512]];
+for (const [k, got, want] of rows) console.log(`${got === want ? "PASS" : "FAIL"} ${k} :: ${got} ${got === want ? "==" : "!="} ${want}`);
+process.exit(rows.every(([, g, w]) => g === w) ? 0 : 1);
+```
+
+Readings (`node artefact-origin.mjs @mkbabb/glass-ui <version> <tag>` in a worktree at `e64da115`):
+
+| version, tag | exit | rows |
+|---|---|---|
+| `11.0.0`, `v11.0.0` | 1 | `FAIL no tag v11.0.0` |
+| `10.1.0`, `v10.1.0` | 0 | source commit `d8bda2a99e06…` = `git rev-parse v10.1.0^{commit}`; workflow `.github/workflows/release.yml@refs/tags/v10.1.0`; subject sha512 `d027721107…` = `dist.integrity` |
+| `10.1.0`, `v10.0.1` | 1 | source commit and workflow ref FAIL; subject sha512 PASS |
+| `10.0.1`, `v10.0.1` | 0 | 3 PASS (source commit `3f9ea884dccf…`) |
+

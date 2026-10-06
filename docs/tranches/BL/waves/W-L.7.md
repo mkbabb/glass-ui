@@ -91,11 +91,11 @@ L06-12's orphaned copies are named in the owner's close glance (W-L.8) as a hygi
 
 ### 3.3 MIGRATION closes over itself
 
-`MIGRATION.md:2534`'s successor becomes `@mkbabb/glass-ui/menu`; `:2675`'s successor drops `:show-close="false"` for the close control DialogContent declares at the release commit. `migration-closure.mjs` moves to `scripts/audit/` and runs in CI (it reads only this repo), over every section including `## 11.0.0`, so W-L.6's removal rows and every break row of bands A-L are closed when written.
+`MIGRATION.md:2534`'s successor becomes `@mkbabb/glass-ui/menu`; `:2675`'s successor drops `:show-close="false"` for the close control DialogContent declares at the release commit. `migration-closure.mjs` moves to `scripts/audit/` and runs in CI through `tests/gates/migration-closure.test.ts`, which `npm test` runs in W-D.2's `verify.yml` (it reads only this repo; no workflow line of its own, fix-8, FG-01), over every section including `## 11.0.0`, so W-L.6's removal rows and every break row of bands A-L are closed when written.
 
 ## 4 · Files it touches
 
-New: `scripts/audit/landing-packets.mjs`, `scripts/audit/migration-closure.mjs` (appendix B), `tests/gates/migration-closure.test.ts` (runs it); the 13 letters under `docs/tranches/BL/outbox/`. Edited: `MIGRATION.md` (`:2534`, `:2675`, and the `## 11.0.0` table's successor cells); `.github/workflows/ci.yml` (the closure check).
+New: `scripts/audit/landing-packets.mjs`, `scripts/audit/migration-closure.mjs` (appendix B), `tests/gates/migration-closure.test.ts` (runs it); the 13 letters under `docs/tranches/BL/outbox/`. Edited: `MIGRATION.md` (`:2534`, `:2675`, and the `## 11.0.0` table's successor cells).
 
 ## 5 · Acceptance gates
 

@@ -35,7 +35,7 @@ R2-06-03's seven owner asks (`audit/round-2/R2-06.md:52`): BDU R36 the album-art
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
 | B14-G1 · the owner has ruled the registers | `! grep -qE '^\\| OW-9a \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (OW-9a `pending`; fix-2 split OW-9a per wave, LEDGER §4) |
-| B14-G2 · carried in the recap | `node scripts/tranche/verify-recap.mjs docs/tranches/BL` (the seven ids present, terminal W-B.14) | exit 0 | **exit 1** (absent) |
+| ~~B14-G2~~ | struck (fix-8, FG-03) | | It ran W-B.3's whole-tranche checker, which W-B.3 lands before this wave with every row's terminal written into `ledger/RECAP.md`, so it entered this wave green; its recorded RED was W-B.3's absent script; and it re-read a ledger for a terminal word, which PLAN §1 (decide waves) rules out. B3-G2 holds the carry (it fails when a RECAP terminal names a wave missing from `waves/INDEX.md`); this wave's gate is its enactment, B14-G1, the owner's docket line |
 
 The seven subjects have no code at HEAD, so no code gate can be RED for a RETIRE. The gate is the owner's ruling (B14-G1, the docket line); an answer of BUILD for any subject carries a born-RED e2e into W-G.4 (`W-G.4.md` §3 item 8).
 

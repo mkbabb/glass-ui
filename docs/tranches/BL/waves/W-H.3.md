@@ -69,7 +69,7 @@ The one BUILD row is built in this wave: the coverage invariant is W-H.2's detec
 |---|---|---|---|
 | G1 · the owner has ruled the RETIREs | `! grep -qE '^\\| OW-9c \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (OW-9c `pending`; fix-2) |
 | G3 · S5, the coverage invariant | `node scripts/probes/band-H/frost-routes.mjs <dist-demo>` over every route in `demo/stories/manifest.ts`, both themes | 0 dead visible lenses | **41 of 72** dead on the six cells W-H.2 measured; W-H.2 G3 brings those to 0, and this gate widens the set to the catalog, where the remaining routes are unmeasured at this seat |
-| G4 · the carry | `node scripts/tranche/verify-recap.mjs docs/tranches/BL` (the 19 rows present, terminal W-H.3) | exit 0 | **exit 1**: `Cannot find module` (W-B.3 builds it) |
+| ~~G4~~ | struck (fix-8, FG-03) | | It ran W-B.3's whole-tranche checker, which W-B.3 lands before this wave with every row's terminal written into `ledger/RECAP.md`, so it entered this wave green; its recorded RED was W-B.3's absent script; and it re-read a ledger for a terminal word, which PLAN §1 (decide waves) rules out. B3-G2 holds the carry (it fails when a RECAP terminal names a wave missing from `waves/INDEX.md`); this wave's gate is its enactment, G1, the owner's docket line, with G3 for the coverage invariant |
 
 No RETIRE has a code gate: the subjects have no code at HEAD, so no code gate can be RED for a RETIRE (the same reading W-B.14 records). G1, the owner's docket line, is their gate. A BUILD answered by the owner for S1, S2 or S6 adds its born-RED from the table in §3 before its code lands.
 
