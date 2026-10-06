@@ -17,6 +17,7 @@
 | #23 / F-30a | the role spine is floor 4, tick 6, control 10, card 16, room 24, pill 9999 (`radius-role-canon.test.ts:381-388`); three tokens sit on an off-role 12 px rung: `--radius-xl` (`theme/radius.css:111`), `--radius-panel` (`:124`, `var(--radius-xl)`), `--radius-strip` (`:156`, `0.75rem`) |
 | the latch | `it.fails("has no off-role 12px rung left …")` at `radius-role-canon.test.ts:458` |
 | UIA-KF-130, UIA-V-485 | the menu row's corner: the off-ladder half is cured at HEAD; the concentric half is answered here (§3.4) |
+| W-A.2's hand-off (sender W-A.2, §3 item 7) | the `radius-role-canon.test.ts:458` latch's assertion, which W-A.2 moves to `tests/owed/radius-role-canon.test.ts` with a fence; this wave brings it home (§3 item 3) |
 
 ## 2 · The defect at HEAD
 
@@ -49,12 +50,12 @@
 
    Each of the 53 reads is assigned one of the two by its role, the wave record lists the assignment, and the reader switches to the 10 px role token or to `--radius-card`/`rounded-card`. The 10 px role token is `--radius-button`, which W-C.4 §3.8 declares `0.625rem` directly. `--radius-control` is the stadium (`var(--radius-pill)`, `theme/radius.css:168`), not the 10 px rung, and is not a target.
 2. **The tokens go.** `--radius-panel` and `--radius-strip` are deleted from `theme/radius.css`. The library's own `--radius-xl: 12px` declaration at `:111` is deleted, and no `src` rule reads `--radius-xl` or `rounded-xl`. A consumer's `rounded-xl` keeps Tailwind's own 0.75rem; the library does not use it.
-3. **The role invariant replaces the latch.** The latch at `:458` is replaced by an `it` that asserts two things. First, every radius a `src` rule reads resolves to a role value in `ROLE_PX` or to the relay. Second, `OFF_ROLE_12` names nothing `RADIUS_DECLS` holds. The test is G-RADIUS-ROLE's executable in the roster. The paint half is appendix A G1, wired.
+3. **The role invariant replaces the latch.** On this wave's base the `:458` assertion is in `tests/owed/radius-role-canon.test.ts`, with a fence at the old site (W-A.2 §3 item 7, the one record of the hand-off; fix-9, FH-01). It is replaced by an `it` in `radius-role-canon.test.ts` that asserts two things, and the owed file, its `vitest.config.ts` exclusion and the fence are deleted. First, every radius a `src` rule reads resolves to a role value in `ROLE_PX` or to the relay. Second, `OFF_ROLE_12` names nothing `RADIUS_DECLS` holds. The test is G-RADIUS-ROLE's executable in the roster. The paint half is appendix A G1, wired.
 4. **The menu row is answered, not gated.** A menu row is a control, not a nested plate, so its corner is the control role (10). That is the off-ladder half of UIA-KF-130, cured at HEAD (`row: 10`). The concentric relay (`r_inner = r_outer − inset`) applies to a plate nested in a plate, not to a control on a plate. Applying it here would take the row to the 4 px floor at the current 13 px inset. The row stays 10, and the inset stays the listbox pad.
 
 ## 4 · Files it touches
 
-`src/styles/theme/radius.css`, `src/styles/glass/overlay-plate.css`, `src/styles/utilities/base.css`, `src/components/tabs/styles/segmented.css`, `src/components/music-staff/styles.css`, `src/components/configurator/Configurator.vue`, the demo files carrying `rounded-panel`/`rounded-xl` (the 27-file list from the `rg` above), `tests/styles/radius-role-canon.test.ts`. New: `tests-visual/wired/radius-role.spec.ts` (appendix A G1), which imports the band-E `lib.mjs` W-E.1 lands (PLAN §5 notes).
+`src/styles/theme/radius.css`, `src/styles/glass/overlay-plate.css`, `src/styles/utilities/base.css`, `src/components/tabs/styles/segmented.css`, `src/components/music-staff/styles.css`, `src/components/configurator/Configurator.vue`, the demo files carrying `rounded-panel`/`rounded-xl` (the 27-file list from the `rg` above), `tests/styles/radius-role-canon.test.ts`, `tests/owed/radius-role-canon.test.ts` (deleted), `vitest.config.ts` (its exclusion removed). New: `tests-visual/wired/radius-role.spec.ts` (appendix A G1), which imports the band-E `lib.mjs` W-E.1 lands (PLAN §5 notes).
 
 ## 5 · Acceptance gates
 

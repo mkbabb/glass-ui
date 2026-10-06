@@ -17,6 +17,7 @@
 | C-13c / R11 | the studio configurator's controls region is starved to 0 px at 390×844 (`/substrates/aurora`): decided here, BUILD |
 | R4-02-07 | the same envelope collapses at 640×400 and under a 24 px root |
 | the `layout-canon.test.ts:390` latch | one width-keyed `matchMedia` in `demo/stories/containers/configurator.vue` (`matchMedia("(max-width: 720px)")`) |
+| W-A.2's hand-off (sender W-A.2, §3 item 7) | the `:390` assertion's row in `tests/owed/layout-canon.test.ts`, the last after W-E.9; this wave brings it home and deletes the owed file (§3 item 3) |
 
 ## 2 · The defect at HEAD
 
@@ -39,13 +40,13 @@ The `:390` latch fails when run as `it` (W-E.9 §2).
 
 1. The configurator host is a size container, `container: studio / size`. Its rows become `auto minmax(0, 1fr) minmax(min(3 * var(--control-h-md), 40cqb), auto)`: the controls region keeps at least three control rows or 40 % of the envelope, whichever is less, and scrolls inside that port.
 2. `--configurator-stage-min` is deleted. `--stage-block` becomes a `min-block-size` for the envelope, not a cap on it.
-3. The `matchMedia("(max-width: 720px)")` in `demo/stories/containers/configurator.vue` is deleted; the story reads the container. The `:390` latch becomes an ordinary `it`.
+3. The `matchMedia("(max-width: 720px)")` in `demo/stories/containers/configurator.vue` is deleted; the story reads the container. The `:390` assertion becomes an ordinary `it` in `layout-canon.test.ts`: on this wave's base it is the last row of `tests/owed/layout-canon.test.ts` (W-E.9 moved the other two), so this wave deletes the owed file, its `vitest.config.ts` exclusion and the `:390` fence (W-A.2 §3 item 7, the one record of the hand-off; fix-9, FH-01).
 
 It builds on W-E.9's cel containers (PLAN §5).
 
 ## 4 · Files it touches
 
-`src/components/configurator/styles.css:317-321`, `demo/chassis/layout.css:59`, `demo/stories/containers/configurator.vue`, `tests/styles/layout-canon.test.ts:390`, `tests-visual/wired/cel-container.spec.ts` (W-E.9's, cells G1 and G2).
+`src/components/configurator/styles.css:317-321`, `demo/chassis/layout.css:59`, `demo/stories/containers/configurator.vue`, `tests/styles/layout-canon.test.ts:390`, `tests/owed/layout-canon.test.ts` (deleted), `vitest.config.ts` (its exclusion removed), `tests-visual/wired/cel-container.spec.ts` (W-E.9's, cells G1 and G2).
 
 ## 5 · Acceptance gates
 

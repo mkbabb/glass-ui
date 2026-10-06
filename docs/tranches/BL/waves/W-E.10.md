@@ -24,6 +24,7 @@
 | R2-06-08 | one aurora per category, not per page; the header rung never stepped down |
 | F-25 | the preview stills feed OKLCH-scale hues to `hsla()` (`demo/chassis/landing/vizPreviewStill.ts:132`) |
 | F-20 | the shell story strip is 6 px wide at the phone cell and never shows the current story (`demo/shell/BottomDock.vue:185-197`); at 320×256 the sticky chrome and the dock cover most of the viewport |
+| W-A.2's hand-off (sender W-A.2, §3 item 7) | the `story-preview-card.test.ts:487` and `:556` latches' assertions, which W-A.2 moves to `tests/owed/story-preview-card.test.ts` with fences; this wave brings them home (§3 item 2) |
 
 ## 2 · The defect at HEAD
 
@@ -62,7 +63,7 @@ $ rg -c 'function plateField' demo | wc -l
 ## 3 · The cure
 
 1. **A preview on every card.** The preview ladder has two steps. The first is a live CSS specimen: the story's component rendered small and static in the card through a `preview` slot the manifest row names. The second is a still, for the substrates. The "none" step is retired: a row without a preview is a manifest type error. The size ladder is fixed: the specimen scales by the card's container (W-E.9's cel), at three rungs.
-2. **The orphans.** Each of the 10 SFCs is checked against the consolidated story that superseded it. The wave record names the successor route per file. A file whose successor renders its component is deleted. A file with no successor gets a manifest row, so its component keeps a story. `substrates/aurora`'s `heading="Aurora"` is deleted: the chassis prints the title once. Both latches become ordinary `it`s.
+2. **The orphans.** Each of the 10 SFCs is checked against the consolidated story that superseded it. The wave record names the successor route per file. A file whose successor renders its component is deleted. A file with no successor gets a manifest row, so its component keeps a story. `substrates/aurora`'s `heading="Aurora"` is deleted: the chassis prints the title once. Both latches become ordinary `it`s in `story-preview-card.test.ts`. On this wave's base both assertions are in `tests/owed/story-preview-card.test.ts`, with fences at the old sites; this wave moves them home and deletes the owed file, its `vitest.config.ts` exclusion and the fences (W-A.2 §3 item 7, the one record of the hand-off; fix-9, FH-01).
 3. **The configurator expression (#52)** builds the unbuilt list from BJ `DESIGN-NOW.md` §3.8 and the W-CONFIG-EXPRESS ruling, with the census's words as the checklist:
    - MOVE 1: the height overrides, the L1 φ split, the L2 368 px aside floor, X6 and X7;
    - MOVE 2a: the detail region;
@@ -83,7 +84,7 @@ $ rg -c 'function plateField' demo | wc -l
 
 ## 4 · Files it touches
 
-`demo/chassis/landing/storyTile.ts`, `demo/chassis/landing/vizPreviewStill.ts`, `demo/chassis/showcase/ShowcaseFrame.vue`, `demo/chassis/hero/story-hero.css`, `demo/stories/manifest.ts`, `demo/shell/BottomDock.vue`, `demo/stories/forms/slider.vue`, `demo/stories/navigation/tabs.vue`, `demo/stories/substrates/aurora.vue`, `demo/stories/substrates/aurora/PresetPickerRow.vue` (deleted), `demo/stories/compositions/` (deleted), the 10 orphan SFCs (deleted or routed), `src/components/configurator/Configurator.vue` and the configurator styles (MOVE 1-4, `#transport`), `tests/demo/story-preview-card.test.ts`. New: `tests/demo/aurora-per-page.test.ts`; `tests-visual/wired/demo-remainder.spec.ts` (appendix A).
+`demo/chassis/landing/storyTile.ts`, `demo/chassis/landing/vizPreviewStill.ts`, `demo/chassis/showcase/ShowcaseFrame.vue`, `demo/chassis/hero/story-hero.css`, `demo/stories/manifest.ts`, `demo/shell/BottomDock.vue`, `demo/stories/forms/slider.vue`, `demo/stories/navigation/tabs.vue`, `demo/stories/substrates/aurora.vue`, `demo/stories/substrates/aurora/PresetPickerRow.vue` (deleted), `demo/stories/compositions/` (deleted), the 10 orphan SFCs (deleted or routed), `src/components/configurator/Configurator.vue` and the configurator styles (MOVE 1-4, `#transport`), `tests/demo/story-preview-card.test.ts`, `tests/owed/story-preview-card.test.ts` (deleted), `vitest.config.ts` (its exclusion removed). New: `tests/demo/aurora-per-page.test.ts`; `tests-visual/wired/demo-remainder.spec.ts` (appendix A).
 
 ## 5 · Acceptance gates
 

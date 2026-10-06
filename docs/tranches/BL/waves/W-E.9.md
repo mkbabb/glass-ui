@@ -22,6 +22,7 @@
 | A2-FO-L3-7 (F-33 mechanism row) | LabeledSwitch's horizontal arm collapses on `@media (max-width: 36rem)` (`labeled-field/LabeledField.vue:127-133`): E9-G6 and E9-G7 |
 | UIA-F-136 (F-33 mechanism row) | EasingCurve's axis captions are `text-micro` at every specimen size (`easing/EasingCurve.vue:186-187`); they do not follow the specimen's container |
 | R2-08-15 | the compositions settings story: closed by W-E.10's compositions prune, not here |
+| W-A.2's hand-off (sender W-A.2, §3 item 7) | the `layout-canon.test.ts:371` and `:403` latches' assertions, which W-A.2 moves to `tests/owed/layout-canon.test.ts` with fences; this wave brings them home (§3 item 6); `:390` is W-E.14's |
 
 ## 2 · The defect at HEAD
 
@@ -50,12 +51,12 @@ Note on `--configurator-size`: the latch comment at `:390` says the container sh
 3. **The nested-family seam.** `.story-nested-body` is `display: grid; gap: var(--space-family)`. A family with one member renders its member without a tablist.
 4. **SegmentedTabs folds on its own inline size.** `useTabResponsive` observes the strip's own box (ResizeObserver) and compares its `max-content` inline size with the box. It drops `matchMedia`. The fold is on by default (`responsive: true`). Its collapse mode is the existing Select fold: when the strip does not fit, it renders the Select. The `breakpoint` prop is deleted.
 5. **LabeledField is container-keyed.** `.labeled-field` is `container: field / inline-size`. The horizontal arm's `@media (max-width: 36rem)` becomes `@container field (max-width: 36rem)`. The horizontal grid is `minmax(0, 1fr) auto` with the control `justify-self: end`, so the switch ends at the field's end.
-6. **The latches become born-REDs.** `:371` and `:403` become ordinary `it`s, green when this wave lands. `:390` (the configurator story's `matchMedia`) is W-E.14's.
+6. **The latches become born-REDs.** `:371` and `:403` become ordinary `it`s in `layout-canon.test.ts`, green when this wave lands. On this wave's base both are in `tests/owed/layout-canon.test.ts` with fences at their old sites (W-A.2 §3 item 7, the one record of the hand-off; fix-9, FH-01); this wave moves the two home, deletes their rows from the owed file and their fences, and leaves `:390`'s row, its fence and the file's `vitest.config.ts` exclusion to W-E.14, which lands after it (PLAN §5). `:390` (the configurator story's `matchMedia`) is W-E.14's.
 7. **Specimen captions follow the specimen.** `EasingCurve`'s root is `container: curve / size`; its axis captions size from the container (`clamp(var(--type-micro) * 0.8, 8cqi, var(--type-small))`), so a thumbnail's caption shrinks with it.
 
 ## 4 · Files it touches
 
-`src/components/configurator/styles.css`, `src/components/tabs/SegmentedTabs.vue`, `src/components/tabs/types.ts` (the `breakpoint` prop at `:43-47`), `src/components/tabs/composables/useTabResponsive.ts`, `src/components/labeled-field/LabeledField.vue`, `demo/chassis/layout.css`, the demo chassis component that emits `.story-nested-body` and the family tablist, `demo/stories/containers/configurator.vue`, the 32 story files the latch at `:371` lists, `tests/styles/layout-canon.test.ts`. New: `tests-visual/wired/cel-container.spec.ts` (appendix A).
+`src/components/configurator/styles.css`, `src/components/tabs/SegmentedTabs.vue`, `src/components/tabs/types.ts` (the `breakpoint` prop at `:43-47`), `src/components/tabs/composables/useTabResponsive.ts`, `src/components/labeled-field/LabeledField.vue`, `demo/chassis/layout.css`, the demo chassis component that emits `.story-nested-body` and the family tablist, `demo/stories/containers/configurator.vue`, the 32 story files the latch at `:371` lists, `tests/styles/layout-canon.test.ts`, `tests/owed/layout-canon.test.ts` (the `:371` and `:403` rows out). New: `tests-visual/wired/cel-container.spec.ts` (appendix A).
 
 ## 5 · Acceptance gates
 

@@ -6,6 +6,9 @@ A gate in wave Y enters Y green, or reads RED only for a reason Y does not cure,
   BORROWED  its command runs a file another wave X lands (X's §4 lists it as new), X lands before Y, Y's §4
             does not edit that file, and Y's HEAD reading is the file's absence. At Y's base the file exists,
             so the recorded RED is not Y's defect.
+  CURED-EARLIER  its command greps a pattern over a scope, and a gate of a wave X that lands before Y greps the
+            same pattern over a scope that contains Y's (X's gate requires 0 hits there). At Y's base X has zeroed
+            the pattern, so Y's grep enters green (fix-9: W-I.1 G13 against W-A.2 A2-G7, the latch class of FH-01).
 Each listed row needs a reading in ADJUDICATED (key 'Y|gate id|kind'); a row with none is OPEN.
 Exit 1 while any OPEN row stands, 0 when none does.
 """
@@ -47,6 +50,31 @@ def norm(cmd):
     return c if len(c) > 25 else None
 
 
+GREP = re.compile(r"""(?:git grep|grep)\s+((?:-[\w]+\s+)*)(?:-e\s+)?(['"])(.+?)\2\s*(?:--\s*)?([^|&;)`]*)""")
+LSFILES = re.compile(r"git ls-files\s+([^|&;)`]*)")
+
+
+def greps(cmd):
+    """(pattern, scope paths) for every grep in a gate's spans; a piped `git ls-files <scope> | grep` takes the
+    ls-files scope."""
+    out = []
+    for span in TICK.findall(cmd):
+        ls = LSFILES.search(span)
+        lscope = ls.group(1).split() if ls else []
+        for g in GREP.finditer(span):
+            paths = [p for p in g.group(4).split() if not p.startswith("-")] or lscope
+            out.append((g.group(3), paths))
+    return out
+
+
+def covers(outer, inner):
+    if not outer:
+        return True
+    if not inner:
+        return False
+    return all(any(p == q or p.startswith(q.rstrip("/") + "/") for q in outer) for p in inner)
+
+
 def new_files(w):
     s4 = section(w, 4)
     out = set()
@@ -60,6 +88,8 @@ def new_files(w):
 
 # Each row read by fix-8 (formation-audit/fix-8.md, FG-03): key 'Y|gate|kind' -> the reason it is not OPEN.
 ADJUDICATED = {
+    'W-I.1|G13|CURED-EARLIER':
+        "re-founded by fix-9 (FH-01): `test ! -e tests/owed/g-dock-lattice.test.ts && …`; W-A.2's owed file holds it RED at the wave's base, and only W-I.1's move home clears it",
 }
 # SWEEP_RAW=1 drops every reading, so the run is the bare enumeration (the record of the class before a cure).
 if os.environ.get("SWEEP_RAW"):
@@ -95,6 +125,15 @@ def main():
                         continue
                     if any(p == q or p.startswith(q.rstrip("*").rstrip("/") + "/") for q in landers[x]) and p not in s4y:
                         rows.append((y, gid, "BORROWED", f"{p} landed by {x}"))
+    for y in ids:
+        for gid, cmd, head in allg[y]:
+            for pat, paths in greps(cmd):
+                for x in ids:
+                    if x == y or not before(x, y):
+                        continue
+                    for gx, cx, _ in allg[x]:
+                        if any(px == pat and covers(ppx, paths) for px, ppx in greps(cx)):
+                            rows.append((y, gid, "CURED-EARLIER", f"`{pat}` over {paths or 'the tree'} is zeroed by {x}:{gx}"))
     open_n = 0
     for y, gid, kind, why in sorted(set(rows)):
         verdict = ADJUDICATED.get(f"{y}|{gid}|{kind}")

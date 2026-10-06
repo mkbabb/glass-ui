@@ -61,7 +61,7 @@ Sources behind the SSR readings: `useGlobalDark.ts:168-174` (an immediate `watch
    |---|---|---|
    | install | `npm install <tgz>` and `pnpm add <tgz>`, required peers at their declared floors (vue 3.5.0, reka-ui 2.0.0, @vueuse/core 14.0.0, tailwindcss 4.0.0, @lucide/vue 1.16.0) and at `latest`, optional peers absent | a peer warning or an install error |
    | closure | appendix B over the installed `dist` | the root reaches an optional peer, or any entry reaches an undeclared package |
-   | css | a Vite app compiling the README recipe with `@tailwindcss/vite`; a second app importing `./styles.css` alone | a compile error; `.text-sm` absent from a page that uses it; a README-documented utility absent |
+   | css | a Vite app compiling the README recipe with `@tailwindcss/vite` through `./styles`, the one CSS entry (W-G.7 removes `./styles.css`, G7-G7, and lands before this wave; fix-9) | a compile error; `.text-sm` absent from a page that uses it; a README-documented utility absent |
    | types | W-L.2's `tests/consumer/strict/` and W-L.4's `tests/_support/declaration-floor/` against the installed package | any `vue-tsc` error; any glass-owned declaration error at the peer floors |
    | ssr | a Vite SSR server and a Nuxt 4 app, each on a cold process, rendering a page with DarkModeToggle, Popover (`trigger="hover"`), SegmentedTabs and Slider; hydrated in Chromium under {fine, coarse} × {no-preference, reduce} | a non-200 first response; any hydration warning; an `aria-labelledby` or `aria-controls` in the hydrated page that resolves to no element |
    | dev | the Vite app in dev with `<Button variant="outline">`; the same app's production build | the dev console lacks the Button warning; the production bundle contains any guard message |

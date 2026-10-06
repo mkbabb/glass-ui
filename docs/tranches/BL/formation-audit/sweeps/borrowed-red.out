@@ -19,3 +19,20 @@ exit=0
 
 ## after, SWEEP_RAW=1 (the same rows with no readings; every one is listed above with its reading)
 rows 0, open 0, stale 0
+
+# ===== fix-9 (FH-01), HEAD 5e8b43ad =====
+## before: PLAN.md and waves/ at HEAD 5e8b43ad (git archive; the plan as pass 8 read it), this sweep as fix-9 widens it, SWEEP_RAW=1 (no readings)
+OPEN CURED-EARLIER W-I.1 G13 :: `it\.fails(` over ['tests/components/custom/dock/g-dock-lattice.test.ts'] is zeroed by W-A.2:A2-G7
+rows 1, open 1, stale 0
+exit=1
+
+## before, with the readings applied (a reading is keyed text, so it applies to the HEAD plan too; the rows below are the ones whose cure is a plan edit the sweep reads)
+rows 1, open 0, stale 0
+
+## after: the plan folder as fix-9 leaves it
+read CURED-EARLIER W-I.1 G13 :: `it\.fails(` over ['tests/components/custom/dock/g-dock-lattice.test.ts'] is zeroed by W-A.2:A2-G7  [re-founded by fix-9 (FH-01): `test ! -e tests/owed/g-dock-lattice.test.ts && …`; W-A.2's owed file holds it RED at the wave's base, and only W-I.1's move home clears it]
+rows 1, open 0, stale 0
+exit=0
+
+## after, SWEEP_RAW=1
+rows 1, open 1, stale 0

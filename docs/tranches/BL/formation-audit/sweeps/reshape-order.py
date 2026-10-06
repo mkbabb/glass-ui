@@ -1,11 +1,20 @@
 """Class sweep: a wave deletes or reshapes an artefact another wave builds on, and PLAN §5 does not order them
 (FF-02, FG-01; the same class as FE-01/FF-01's shared kits, which the kit list in PLAN §5 now holds).
 
-Two kinds of reshaper X, read mechanically from every spec's §4:
-  DELETE    a path or npm script X's §4 lists under `Deleted:`, or as `<path>` (deleted) / `<path>` deleted;
-  MOVE      a file X's §4 moves (W-D.1's and W-D.2's moves are the move ledger, PLAN §1, and are not read here);
+The kinds of reshaper X, read mechanically from every spec's §4:
+  DELETE    a path, npm script or export X's §4 deletes, in every form the specs write (fix-9, FH-01): a `Deleted:`
+            list; `<path>` (deleted…) or (split into…); `<path>` deleted / removed; delete(s) `<path>`; and inside a
+            brace list `name (deleted)`. Every brace list `dir/{a,b}.ts` is expanded to its paths;
+  MOVE      a file X's §4 moves: a `Moved…:` list (brace lists expanded), `<path>` (moved…), or an `old→new` rename
+            inside or outside a brace list (W-D.1's and W-D.2's moves are the move ledger, PLAN §1, and are not
+            read here, nor is a path marked "moved per W-D.1");
+  LATCH     W-A.2 moves each latch's assertion into an owed file (W-A.2 §3 item 7's table, read mechanically): the
+            latch file is P, and every later wave naming it is a row. The owner wave's row is read only if its §4
+            names the table's owed file and `vitest.config.ts` (the hand-off carried, fix-9);
   WFEDIT    X's §4 edits a workflow file another wave's §4 also edits (two writers of one small file);
   WORKFLOW  X's §4 creates a `.github/workflows/*.yml`, which moves steps between workflow files.
+A second table, UNLISTED, reads every spec's §3 for a whole-file deletion (a path with an extension or a trailing
+slash and no line cite) that its own §4 does not delete: a deletion the reshaper rows above cannot see.
 For each X and artefact P, every other wave Y whose §3, §4 or §5 names P is listed:
   OPEN      Y and X are unordered in PLAN §5's closure (either order breaks one of them);
   AFTER     Y lands after X and names P (a wave reading a deleted file, or writing into a moved workflow step);
@@ -65,22 +74,27 @@ def _clean(found):
 
 
 def deletions(w):
-    """Every path a spec deletes, in each form the specs write it (§3 and §4):
-    `Deleted:` lists; `<path>` (deleted…); `<path>` deleted; deleted/delete/deletes `<path>`; `<npm script>` removed;
-    and, inside any brace list, `name (deleted)`. Each brace list is expanded (FH-01)."""
+    """Every path a spec's §4 deletes, in each form the specs write it: `Deleted:` lists; `<path>` (deleted…) or
+    (split into…); `<path>` deleted/removed; delete(s) `<path>`; and, inside any brace list, `name (deleted)`.
+    Each brace list is expanded (fix-9, FH-01)."""
+    return _clean(_deleted_in(section(w, 4)))
+
+
+DEL_FORMS = (r"`([^`]+)`\s*\((?:split into|deleted)", r"`([^`]+)`\s+deleted\b", r"\bdelete[sd]?\s+`([^`]+)`",
+             r"`([^`]+)`\s+(?:is |are )?(?:removed|deleted)\b", r"`([^`]+)`\s+and\s+`[^`]+`\s+are\s+(?:removed|deleted)\b")
+
+
+def _deleted_in(s):
     out = set()
-    for n in (4,):
-        s = section(w, n)
-        for m in re.finditer(r"Deleted:([^\n]*)", s):
-            clause = re.split(r"\b(?:New|Edited|Moved)\b[^:]*:", m.group(1))[0]
-            out.update(x for p in BACKTICK.findall(clause) for x, mark in expand(p) if mark not in ("new",))
-        for rx in (r"`([^`]+)`\s*\((?:split into|deleted)", r"`([^`]+)`\s+deleted\b", r"\bdelete[sd]?\s+`([^`]+)`",
-                   r"`([^`]+)`\s+(?:is |are )?(?:removed|deleted)\b"):
-            for m in re.finditer(rx, s):
-                out.update(x for x, mark in expand(m.group(1)) if mark not in ("new",))
-        for p in BACKTICK.findall(s):
-            out.update(x for x, mark in expand(p) if mark == "deleted")
-    return _clean(out)
+    for m in re.finditer(r"Deleted:([^\n]*)", s):
+        clause = re.split(r"\b(?:New|Edited|Moved)\b[^:]*:", m.group(1))[0]
+        out.update(x for p in BACKTICK.findall(clause) for x, mark in expand(p) if mark != "new")
+    for rx in DEL_FORMS:
+        for m in re.finditer(rx, s):
+            out.update(x for x, mark in expand(m.group(1)) if mark != "new")
+    for p in BACKTICK.findall(s):
+        out.update(x for x, mark in expand(p) if mark == "deleted")
+    return out
 
 
 # W-D.1's moves are its move ledger and W-D.2's join it (PLAN §1, "Gate paths and the base re-run"): the
@@ -94,16 +108,45 @@ def moves(w):
     out = set()
     s4 = section(w, 4)
     for m in re.finditer(r"Moved[^:\n]*:([^\n]*)", s4):
-        out.update(p for p in BACKTICK.findall(m.group(1)) if "." in p.split("/")[-1] and " " not in p and "<" not in p and not p.endswith(".md"))
-    # `<path>` (moved out) and every `old→new` rename, inside a brace list or bare (pass 8 notes, FH-01's class)
-    for m in re.finditer(r"`([^`]+)`\s*\(moved", s4):
-        out.add(m.group(1))
+        out.update(x for p in BACKTICK.findall(m.group(1)) for x, _ in expand(p)
+                   if "." in x.split("/")[-1] and " " not in x and "<" not in x and not x.endswith(".md"))
+    # `<path>` (moved…) and every `old→new` rename, inside a brace list or bare (fix-9, FH-01's class)
+    for m in re.finditer(r"`([^`]+)`\s*\(moved(?! per W-D\.1)", s4):
+        out.update(x for x, _ in expand(m.group(1)))
     for p in BACKTICK.findall(s4):
         if "{" in p:
             out.update(x for x, mark in expand(p) if mark == "renamed")
         elif "→" in p:
             out.add(p.split("→", 1)[0].strip())
     return {p for p in out if " " not in p}
+
+
+def latches():
+    """W-A.2 §3 item 7's table: (latch file, owed file, owner waves). Before fix-9 the table had no owed-file
+    column; such a row reads owed None, so no owner can be shown to carry the hand-off."""
+    out = []
+    for line in section("W-A.2", 3).splitlines():
+        m = re.match(r"^\s*\| `([\w.-]+\.test\.ts):\d+`[^|]*\|(.*)\|\s*$", line)
+        if not m:
+            continue
+        cells = [c.strip() for c in m.group(2).split("|")]
+        owed = next((c.strip("`") for c in cells if c.startswith("`tests/owed/")), None)
+        out.append((m.group(1), owed, set(re.findall(r"W-[0-9A-L]\.\d+", cells[-1]))))
+    return out
+
+
+def unlisted(w):
+    """Whole-file deletions a spec's §3 states and its own §4 does not delete."""
+    d4 = deletions(w)
+    out = set()
+    for p in _deleted_in(section(w, 3)):
+        p = p.strip()
+        if re.search(r":\d", p) or not re.search(r"\.[a-z]{1,5}$|/$", p) or p.startswith((".", "-", "@")) or " " in p:
+            continue
+        base = p.rstrip("/").split("/")[-1]
+        if not any(base in x for x in d4):
+            out.add(p)
+    return out
 
 
 def workflow_creator(w):
@@ -121,6 +164,8 @@ def names(y, p, secs=(3, 4, 5)):
         return bool(WF.search(body))
     if p in body:
         return True
+    if p.startswith("tests/owed/"):  # an owed file shares its latch file's basename; only its full path names it
+        return False
     base = p.rstrip("/").split("/")[-1]
     # a bare file name is matched as a file name (it carries an extension), never as a word
     return re.fullmatch(r"[^.].*\.[A-Za-z0-9]+", base) and base not in GENERIC and re.search(rf"(?<![\w-]){re.escape(base)}(?![\w-])", body)
@@ -147,7 +192,7 @@ ADJUDICATED = {
     'W-A.3|WORKFLOWS|W-C.2':
         "W-C.2 item 8 rewritten for the order by fix-8: the ci.yml:58,60 brackets leave with W-A.3's pixel-floor job",
     'W-A.3|WORKFLOWS|W-C.3':
-        "W-C.3's generator writes the CI-step block from the workflows at its landing; its --check runs in the suite, so a later workflow edit regenerates it (W-D.2 §3 item 6)",
+        "W-C.3's generator writes the CI-step block from the workflows at its landing; its --check runs in the suite, and W-C.3 item 2 is the one record that every later workflow or scripts edit regenerates it in the same commit (fix-9)",
     'W-A.3|WORKFLOWS|W-D.2':
         "W-D.2 §3 item 6 rewrites W-A.3's visual.yml to take the verify artifact; the order is PLAN §5's",
     'W-A.3|WORKFLOWS|W-E.1':
@@ -230,6 +275,53 @@ ADJUDICATED = {
         "CONVERGES: disjoint lines of the workflow, no gate of one reads the other's lines (PLAN §5, the workflow note, fix-8); W-C.2's E-10 detector reads every workflow as a test",
     'W-C.2|visual.yml|W-K.1':
         "CONVERGES: disjoint lines of the workflow, no gate of one reads the other's lines (PLAN §5, the workflow note, fix-8); W-C.2's E-10 detector reads every workflow as a test",
+    # fix-9 (formation-audit/fix-9.md, FH-01): the rows the widened parser lists
+    'W-G.1|src/components/blob/shaders/metaball.frag.ts|W-A.2':
+        "A2-G8's webgl2 leg lives as long as the gl-excise fence it bites; W-G.1 deletes both (W-G.1 item 7), and W-L.8 §3.5 step 1 records the leg as not re-run at the release commit; G1-G1 holds the class (fix-9)",
+    'W-G.1|composables/auroraFallbackGround.ts|W-G.6':
+        "G6-G6 greps `src` for `.toDataURL(`; `auroraFallbackGround.ts:360` is its HEAD reading, not an input, so the rename does not move the gate",
+    'W-G.7|./styles.css|W-D.1':
+        "CONVERGES: W-D.1 changes no byte of either CSS entry and cites W-G.7 as the one record of whether `./styles.css` exists (W-D.1 item 5, fix-9); D1-G9 reads the entries its base carries",
+    'W-G.7|./styles.css|W-L.3':
+        "W-L.3's css leg compiles the README recipe through `./styles`, the one CSS entry W-G.7 leaves (fix-9); PLAN §3's W-L.3 row says the same",
+    'W-A.2|radius-role-canon.test.ts|W-B.7':
+        "CONVERGES: W-B.7 edits comments at `:246,262`; W-A.2's edit of the file is the `:458` latch and its fence, disjoint lines",
+    'W-A.2|radius-role-canon.test.ts|W-J.1':
+        "W-J.1 adds role rows beside W-E.8's; its §2 names `:458` as W-E.8's latch (a HEAD reading); G14 is RED by its absent rows, not by the latch",
+    'W-A.2|engage-ladder.test.ts|W-I.3':
+        "W-I.3 deletes the G7 row at `:249-253`; the latch is `:134`, which W-A.2 moves and W-J.2 brings home; disjoint",
+    'W-A.2|g-dock-lattice.test.ts|W-I.2':
+        "W-I.2 edits the G-DOCK-REACH/STATE fixture at `:432-444`; the latch is `:925`, W-I.1's; disjoint",
+    'W-A.2|layout-canon.test.ts|W-D.2':
+        "W-D.2's move engine re-points the path reader at `:81`; the latches are `:371`, `:390`, `:403`; disjoint",
+    'W-A.2|layout-canon.test.ts|W-E.9':
+        "owner of `:371` and `:403`: §3 item 6 and §4 name `tests/owed/layout-canon.test.ts` (its two rows out); the file and its `vitest.config.ts` exclusion are W-E.14's, which lands after it (fix-9)",
+    'W-A.5|verify-export-types.mjs|UNLISTED':
+        "§3 item 5 deletes `ratchetEvidence` and its callers inside the file, not the file (§4: Edited); W-L.3 deletes the file",
+    'W-B.9|canvas2d/|UNLISTED':
+        "W-B.9 §3 states that W-G.1 deletes it; W-G.1 §4 lists it",
+    'W-C.1|scripts/loops/<loop>/|UNLISTED':
+        "a template: each loop's last wave deletes its own dir (W-C.1 step 4); G-L8-14 reads the close",
+    'W-D.1|Surface.vue|UNLISTED':
+        "the alias inside `Surface.vue` is deleted, not the file",
+    'W-E.11|vite.style-fold.ts|UNLISTED':
+        "the base64 inlining step inside the file is deleted, not the file",
+    'W-E.14|demo/stories/containers/configurator.vue|UNLISTED':
+        "the `matchMedia` call inside the story is deleted, not the file",
+    'W-G.1|resolveCanvasColor.ts|UNLISTED':
+        "W-G.1 §3 states W-C.5 has already deleted it; W-C.5 §4 lists it",
+    'W-G.4|aurora.wgsl.ts|UNLISTED':
+        "the closed-form orbit inside the shader module is removed, not the file",
+    'W-G.7|dist/component-styles.css|UNLISTED':
+        "a build output, not a tracked file; §4 names its emission removed and `./styles.css` removed",
+    'W-I.2|useDeckSnap.ts|UNLISTED':
+        "`members()` inside the file is deleted, not the file",
+    'W-K.4|accessibility.css|UNLISTED':
+        "the `border-width: 2px !important` rules inside the file are deleted, not the file",
+    'W-L.4|scripts/verify-export-types.mjs|UNLISTED':
+        "W-L.4 §3 states W-L.3 deletes it; W-L.3 §4 lists it",
+    'W-L.8|scripts/verify-export-types.mjs|UNLISTED':
+        "W-L.8 step 4 states W-A.5 and W-L.3 delete these; their §4s list them",
 }
 # SWEEP_RAW=1 drops every reading, so the run is the bare enumeration (the record of the class before a cure).
 if os.environ.get("SWEEP_RAW"):
@@ -279,6 +371,26 @@ def main():
                     verdict = ADJUDICATED.get(key)
                     status = "read" if verdict and verdict.startswith("CONVERGES") else "OPEN"
                     rows.append((status, "OPEN", "WFEDIT", x, f + ".yml", y, verdict or ""))
+    # LATCH: W-A.2 moves each latch's assertion into an owed file; every later wave naming the latch file is a row.
+    for latch, owed, owners in latches():
+        for y in ids:
+            if y == "W-A.2" or not names(y, latch):
+                continue
+            rel = "OPEN" if not ordered("W-A.2", y) else ("AFTER" if before("W-A.2", y) else "BEFORE")
+            if rel == "BEFORE" and not names(y, latch, (5,)):
+                continue
+            verdict = ADJUDICATED.get(f"W-A.2|{latch}|{y}")
+            if y in owners and not os.environ.get("SWEEP_RAW"):
+                s4 = section(y, 4)
+                if owed and owed in s4 and "vitest.config.ts" in s4:
+                    verdict = f"owner: §4 names {owed} and vitest.config.ts (the hand-off, W-A.2 §3 item 7)"
+            ok = verdict and (rel != "OPEN" or verdict.startswith("CONVERGES"))
+            rows.append(("read" if ok else "OPEN", rel, "LATCH", "W-A.2", latch, y, verdict or ""))
+    # UNLISTED: a whole-file deletion §3 states and §4 does not delete.
+    for w in ids:
+        for p in sorted(unlisted(w)):
+            verdict = ADJUDICATED.get(f"{w}|{p}|UNLISTED")
+            rows.append(("read" if verdict else "OPEN", "-", "UNLISTED", w, p, "UNLISTED", verdict or ""))
     open_n = 0
     for status, rel, kind, x, p, y, why in rows:
         open_n += status == "OPEN"
