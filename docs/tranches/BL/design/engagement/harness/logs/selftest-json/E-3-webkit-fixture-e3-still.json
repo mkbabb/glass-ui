@@ -1,0 +1,62 @@
+{
+ "id": "E-3",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e3-still"
+ },
+ "loadStart": "10.5/11.5/9.9",
+ "loadEnd": "10.0/11.4/9.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-3 slider desk pointer-held light",
+   "status": "FAIL",
+   "line": "rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 1) · bound ×1.03 sustained at 450 ms",
+   "load": "10.0/11.4/9.9"
+  },
+  {
+   "name": "E-3 slider desk keyboard-focused light",
+   "status": "FAIL",
+   "line": "rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03",
+   "load": "10.0/11.4/9.9"
+  },
+  {
+   "name": "E-3 slider phone touch-held light",
+   "status": "UNMEASURED",
+   "line": "Playwright WebKit has no held-touch input (a tap only); real Safari UNMEASURED (owner's safaridriver checkbox)",
+   "load": "10.0/11.4/9.9"
+  },
+  {
+   "name": "E-3 slider phone gutter light",
+   "status": "UNMEASURED",
+   "line": "as above",
+   "load": "10.0/11.4/9.9"
+  },
+  {
+   "name": "E-3 slider desk pointer-held dark",
+   "status": "FAIL",
+   "line": "rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 1) · bound ×1.03 sustained at 450 ms",
+   "load": "10.0/11.4/9.9"
+  },
+  {
+   "name": "E-3 slider desk keyboard-focused dark",
+   "status": "FAIL",
+   "line": "rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03",
+   "load": "10.0/11.4/9.9"
+  },
+  {
+   "name": "E-3 slider phone touch-held dark",
+   "status": "UNMEASURED",
+   "line": "Playwright WebKit has no held-touch input (a tap only); real Safari UNMEASURED (owner's safaridriver checkbox)",
+   "load": "10.0/11.4/9.9"
+  },
+  {
+   "name": "E-3 slider phone gutter dark",
+   "status": "UNMEASURED",
+   "line": "as above",
+   "load": "10.0/11.4/9.9"
+  }
+ ]
+}

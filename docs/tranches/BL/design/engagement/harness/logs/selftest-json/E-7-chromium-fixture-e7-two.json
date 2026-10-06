@@ -1,0 +1,32 @@
+{
+ "id": "E-7",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e7-two"
+ },
+ "loadStart": "10.2/11.4/10.1",
+ "loadEnd": "10.2/11.4/10.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-7 writers (static)",
+   "status": "FAIL",
+   "line": "2 writer file(s): src/components/dialog/ModalOverlay.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/two-writers",
+   "load": "10.2/11.4/10.1"
+  },
+  {
+   "name": "E-7 slider held",
+   "status": "PASS",
+   "line": "[data-engaged] nodes while pointer-held 1 · bound ≥ 1",
+   "load": "10.2/11.4/10.1"
+  },
+  {
+   "name": "E-7 modal open, nothing held",
+   "status": "PASS",
+   "line": "dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0",
+   "load": "10.2/11.4/10.1"
+  }
+ ]
+}

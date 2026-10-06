@@ -1,0 +1,25 @@
+{
+ "id": "E-4",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/r0/battery/out/builds/head"
+ },
+ "loadStart": "28.2/18.2/12.9",
+ "loadEnd": "30.9/19.1/13.3",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "FAIL",
+   "line": "fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 239 frames, median 8.3 ms",
+   "load": "31.1/19.0/13.2"
+  },
+  {
+   "name": "E-4 tabsdrag fling carries velocity",
+   "status": "FAIL",
+   "line": "fling: carry 40.03 px, settles -54.53 px past release · still: carry 36.73 px, settles -54.53 px · difference: carry 3.30 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 247.8 px, still 245.6 px · 241 frames, median 8.3 ms",
+   "load": "30.9/19.1/13.3"
+  }
+ ]
+}

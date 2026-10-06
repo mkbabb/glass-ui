@@ -1,0 +1,31 @@
+{
+ "id": "E-7",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/r0/battery/out/builds/head"
+ },
+ "loadStart": "7.0/8.7/9.5",
+ "loadEnd": "7.2/8.7/9.5",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-7 writers (static)",
+   "status": "FAIL",
+   "line": "2 writer file(s): src/components/dialog/ModalOverlay.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/r0/battery/wt",
+   "load": "7.2/8.7/9.5"
+  },
+  {
+   "name": "E-7 slider held",
+   "status": "PASS",
+   "line": "[data-engaged] nodes while pointer-held 2 · bound ≥ 1",
+   "load": "7.2/8.7/9.5"
+  },
+  {
+   "name": "E-7 modal open, nothing held",
+   "status": "FAIL",
+   "line": "dialog open true · veil nodes 1 · [data-engaged] nodes 1 (glass-focus-veil) · bound 0",
+   "load": "7.2/8.7/9.5"
+  }
+ ]
+}

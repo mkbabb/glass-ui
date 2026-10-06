@@ -1,0 +1,132 @@
+Tue Oct  6 11:50:01 EDT 2026
+11:50  up  1:56, 2 users, load averages: 4.77 5.23 7.36
+OK     E-1 chromium clean exit 0 · E-1 chromium PASS · 6 pass, 0 fail, 0 unmeasured of 6 gating cells (0 reported) · load 4.8/5.2/7.4 at start, 4.8/5.2/7.4 at end
+OK     E-1 chromium fault   e1-undeclared (a component directory (delta) has no class row) exit 1
+         first planted FAIL: FAIL       E-1 denominator declared · 3 of 4 directories declared; undeclared: delta · load 4.8/5.2/7.4
+OK     E-1 chromium fault   e1-norung (the static class names no rung and gives no reason) exit 1
+         first planted FAIL: FAIL       E-1 class carries a rung · failing: static (rung none, no reason) · members per class: pressed 1, held 1, static 2 · ladder rungs rest/hover/press/engaged/modal · load 5.3/5.3/7.4
+OK     E-1 chromium fault   e1-dead (the pressed class's exemplar (alpha → pop) answers a press with nothing: the declaration holds on paper only) exit 1
+         first planted FAIL: FAIL       E-1 runtime pressed (alpha) · scene pop, rung press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 5.4/5.4/7.4
+OK     E-1 chromium control e1-stale (CONTROL, must PASS: the declaration lists the directories in another order and carries a comment field; order and extra fields are not the census) exit 0
+OK     E-1 webkit   clean exit 0 · E-1 webkit PASS · 6 pass, 0 fail, 0 unmeasured of 6 gating cells (0 reported) · load 5.4/5.4/7.4 at start, 5.4/5.4/7.4 at end
+OK     E-1 webkit   fault   e1-undeclared (a component directory (delta) has no class row) exit 1
+         first planted FAIL: FAIL       E-1 denominator declared · 3 of 4 directories declared; undeclared: delta · load 5.4/5.4/7.4
+OK     E-1 webkit   fault   e1-norung (the static class names no rung and gives no reason) exit 1
+         first planted FAIL: FAIL       E-1 class carries a rung · failing: static (rung none, no reason) · members per class: pressed 1, held 1, static 2 · ladder rungs rest/hover/press/engaged/modal · load 5.4/5.4/7.4
+OK     E-1 webkit   fault   e1-dead (the pressed class's exemplar (alpha → pop) answers a press with nothing: the declaration holds on paper only) exit 1
+         first planted FAIL: FAIL       E-1 runtime pressed (alpha) · scene pop, rung press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 6.3/5.6/7.4
+OK     E-1 webkit   control e1-stale (CONTROL, must PASS: the declaration lists the directories in another order and carries a comment field; order and extra fields are not the census) exit 0
+OK     E-2 chromium clean exit 0 · E-2 chromium PASS · 36 pass, 0 fail, 0 unmeasured of 36 gating cells (0 reported) · load 7.7/5.8/7.5 at start, 6.7/5.8/7.4 at end
+OK     E-2 chromium fault   e2-fade (the commit is a 120 ms linear fade; the selection body jumps: no pop, no travel) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 6.7/5.8/7.4
+OK     E-2 chromium fault   e2-tabpop (the pop also fires when Tab enters the control) exit 1
+         first planted FAIL: FAIL       E-2 pop Tab-entry light · scale range 0.095 body moved 0.00 px · focus on switch · load 7.3/6.1/7.4
+OK     E-2 chromium fault   e2-prog (the pop fires from pointer and key handlers only: a programmatic model change commits with none) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·programmatic light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 7.9/6.4/7.5
+OK     E-2 chromium fault   e2-glide (the selection body glides on a linear path and lands without overshoot (travel with no weight)) exit 1
+         first planted FAIL: FAIL       E-2 travel commit·keyboard(ArrowRight) light · peak 1.000 trough 1.000 settle 1.000 · body travel 78.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 7.4/6.4/7.5
+OK     E-2 chromium fault   e2-mountpop (a control that mounts already committed pops on mount (H-8)) exit 1
+         first planted FAIL: FAIL       E-2 pop mount(committed) light · after mount: scale range 0.095 body moved 0.00 px over 97 of 97 frames with the target present · load 12.2/7.7/7.9
+OK     E-2 chromium fault   e2-nocoarse (the pop is keyed on mouse events: a touch tap commits with none) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·tap(coarse) light · peak 1.002 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 20.7/10.4/8.9
+OK     E-2 webkit   clean exit 0 · E-2 webkit PASS · 36 pass, 0 fail, 0 unmeasured of 36 gating cells (0 reported) · load 15.8/10.2/8.9 at start, 12.2/10.0/8.8 at end
+OK     E-2 webkit   fault   e2-fade (the commit is a 120 ms linear fade; the selection body jumps: no pop, no travel) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 49 frames, median 17.0 ms · load 12.2/10.0/8.8
+OK     E-2 webkit   fault   e2-tabpop (the pop also fires when Tab enters the control) exit 1
+         first planted FAIL: FAIL       E-2 pop Tab-entry light · scale range 0.094 body moved 0.00 px · focus on switch · load 14.0/10.7/9.2
+OK     E-2 webkit   fault   e2-prog (the pop fires from pointer and key handlers only: a programmatic model change commits with none) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·programmatic light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 49 frames, median 17.0 ms · load 13.3/10.9/9.3
+OK     E-2 webkit   fault   e2-glide (the selection body glides on a linear path and lands without overshoot (travel with no weight)) exit 1
+         first planted FAIL: FAIL       E-2 travel commit·keyboard(ArrowRight) light · peak 1.000 trough 1.000 settle 1.000 · body travel 75.33 px overshoot 0.00 px · 49 frames, median 17.0 ms · load 11.9/11.0/9.4
+OK     E-2 webkit   fault   e2-mountpop (a control that mounts already committed pops on mount (H-8)) exit 1
+         first planted FAIL: FAIL       E-2 pop mount(committed) light · after mount: scale range 0.094 body moved 0.00 px over 47 of 47 frames with the target present · load 15.1/11.8/9.8
+OK     E-2 webkit   fault   e2-nocoarse (the pop is keyed on mouse events: a touch tap commits with none) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·tap(coarse) light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 49 frames, median 17.0 ms · load 15.3/12.3/10.1
+OK     E-3 chromium clean exit 0 · E-3 chromium PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (0 reported) · load 12.1/11.8/10.0 at start, 11.7/11.8/10.0 at end
+OK     E-3 chromium fault   e3-still (the slider never grows) exit 1
+         first planted FAIL: FAIL       E-3 slider desk pointer-held light · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 1) · bound ×1.03 sustained at 450 ms · load 11.6/11.8/10.0
+OK     E-3 chromium fault   e3-kbd (the slider grows under the pointer only; keyboard focus leaves it at rest) exit 1
+         first planted FAIL: FAIL       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 10.9/11.6/9.9
+OK     E-3 chromium fault   e3-gutter (the phone slider is full width and grows ×1.06 in place, past the 16 px gutter) exit 1
+         first planted FAIL: FAIL       E-3 slider phone gutter light · engaged box 5.3..384.7 px in a 390 px viewport · bound 16..374 px · load 11.2/11.6/9.9
+OK     E-3 webkit   clean exit 0 · E-3 webkit PASS · 4 pass, 0 fail, 4 unmeasured of 8 gating cells (0 reported) · load 11.2/11.6/9.9 at start, 10.5/11.5/9.9 at end
+OK     E-3 webkit   fault   e3-still (the slider never grows) exit 1
+         first planted FAIL: FAIL       E-3 slider desk pointer-held light · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 1) · bound ×1.03 sustained at 450 ms · load 10.0/11.4/9.9
+OK     E-3 webkit   fault   e3-kbd (the slider grows under the pointer only; keyboard focus leaves it at rest) exit 1
+         first planted FAIL: FAIL       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 9.7/11.3/9.8
+N/A    E-3 webkit   fault   e3-gutter exit 0: the planted cell has no input in Playwright webkit (H-4) · E-3 webkit PASS · 4 pass, 0 fail, 4 unmeasured of 8 gating cells (0 reported) · load 9.7/11.3/9.8 at start, 12.7/11.9/10.1 at end
+OK     E-4 chromium clean exit 0 · E-4 chromium PASS · 1 pass, 0 fail, 0 unmeasured of 1 gating cells (0 reported) · load 12.7/11.9/10.1 at start, 11.9/11.7/10.0 at end
+OK     E-4 chromium fault   e4-drop (the release drops the drag velocity: the thumb stops where the pointer let go) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles -0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4) · 85 frames, median 8.3 ms · load 11.
+OK     E-4 chromium control e4-snap (CONTROL, must PASS: the release snaps to a detent and the release velocity picks the detent (a fling lands one detent further than a still release, the Sheet's projection and the tabs drag at HEAD)) exit 0
+OK     E-4 webkit   clean exit 0 · E-4 webkit PASS · 1 pass, 0 fail, 0 unmeasured of 1 gating cells (0 reported) · load 11.9/11.7/10.0 at start, 12.2/11.8/10.1 at end
+OK     E-4 webkit   fault   e4-drop (the release drops the drag velocity: the thumb stops where the pointer let go) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · fling: carry 0.00 px, settles -0.00 px past release · still: carry 0.00 px, settles -0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4) · 43 frames, median 17.0 ms · load 1
+OK     E-4 webkit   control e4-snap (CONTROL, must PASS: the release snaps to a detent and the release velocity picks the detent (a fling lands one detent further than a still release, the Sheet's projection and the tabs drag at HEAD)) exit 0
+OK     E-5 chromium clean exit 0 · E-5 chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 11.7/11.7/10.0 at start, 11.2/11.6/10.0 at end
+OK     E-5 chromium fault   e5-hover (a held touch answers only through the hover background, leaked by sticky touch hover (the accordion trigger at HEAD)) exit 1
+         first planted FAIL: FAIL       E-5 pop press light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 10.8/11.5/10.0
+N/A    E-5 webkit   clean exit 3 · E-5 webkit UNMEASURED · 0 pass, 0 fail, 2 unmeasured of 2 gating cells (0 reported) · load 10.8/11.5/10.0 at start, 10.8/11.5/10.0 at end
+N/A    E-5 webkit   fault   e5-hover exit 3: the planted cell has no input in Playwright webkit (H-4) · E-5 webkit UNMEASURED · 0 pass, 0 fail, 2 unmeasured of 2 gating cells (0 reported) · load 12.8/11.9/10.1 at start, 12.8/11.9/10.1 at end
+OK     E-6 chromium clean exit 0 · E-6 chromium PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (0 reported) · load 12.8/11.9/10.1 at start, 12.4/11.9/10.1 at end
+OK     E-6 chromium fault   e6-absent (no idle rung) exit 1
+         first planted FAIL: FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 12.3/11.8/10.2
+OK     E-6 chromium fault   e6-dim (the round-0 plant: the host's opacity breathes to .9 over 4 s, dimming the control's own ink (H-5)) exit 1
+         first planted FAIL: FAIL       E-6 s6 channel light · disallowed: opacity on the subject (dims its ink) · load 11.0/11.6/10.1
+OK     E-6 chromium fault   e6-layout (the idle rung animates width (a layout channel)) exit 1
+         first planted FAIL: FAIL       E-6 s6 channel light · disallowed: width (not a compositor channel) · load 13.4/12.1/10.3
+OK     E-6 chromium fault   e6-prm (the breathing keeps its scale under reduced motion) exit 1
+         first planted FAIL: FAIL       E-6 s6 PRM light · 1 idle animation(s) under reduced motion, 1 spatial: fx-breathe · load 12.4/11.9/10.2
+OK     E-6 chromium fault   e6-fast (the breathing runs a 600 ms period (a flicker, not a breath)) exit 1
+         first planted FAIL: FAIL       E-6 s6 period light · iteration 600 ms (bound 2400..8000 ms) · load 10.9/11.6/10.1
+OK     E-6 webkit   clean exit 0 · E-6 webkit PASS · 10 pass, 0 fail, 0 unmeasured of 10 gating cells (2 reported) · load 10.3/11.5/10.1 at start, 10.9/11.6/10.1 at end
+OK     E-6 webkit   fault   e6-absent (no idle rung) exit 1
+         first planted FAIL: FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 10.9/11.6/10.1
+OK     E-6 webkit   fault   e6-dim (the round-0 plant: the host's opacity breathes to .9 over 4 s, dimming the control's own ink (H-5)) exit 1
+         first planted FAIL: FAIL       E-6 s6 channel light · disallowed: opacity on the subject (dims its ink) · load 10.9/11.5/10.1
+OK     E-6 webkit   fault   e6-layout (the idle rung animates width (a layout channel)) exit 1
+         first planted FAIL: FAIL       E-6 s6 channel light · disallowed: width (not a compositor channel) · load 10.6/11.5/10.1
+OK     E-6 webkit   fault   e6-prm (the breathing keeps its scale under reduced motion) exit 1
+         first planted FAIL: FAIL       E-6 s6 PRM light · 1 idle animation(s) under reduced motion, 1 spatial: fx-breathe · load 10.1/11.3/10.1
+OK     E-6 webkit   fault   e6-fast (the breathing runs a 600 ms period (a flicker, not a breath)) exit 1
+         first planted FAIL: FAIL       E-6 s6 period light · iteration 600 ms (bound 2400..8000 ms) · load 10.8/11.5/10.1
+OK     E-7 chromium clean exit 0 · E-7 chromium PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (0 reported) · load 10.8/11.5/10.1 at start, 10.2/11.4/10.1 at end
+OK     E-7 chromium fault   e7-veil (the modal's scrim carries a bare data-engaged (presence) beside the held meaning) exit 1
+         first planted FAIL: FAIL       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 1 (fx-scrim) · bound 0 · load 10.2/11.4/10.1
+OK     E-7 chromium fault   e7-two (two source files write data-engaged, one outside the register's owner) exit 1
+         first planted FAIL: FAIL       E-7 writers (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/two-writers · load 10.2/11.4/10.1
+OK     E-7 webkit   clean exit 0 · E-7 webkit PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (0 reported) · load 10.2/11.4/10.1 at start, 9.7/11.2/10.1 at end
+OK     E-7 webkit   fault   e7-veil (the modal's scrim carries a bare data-engaged (presence) beside the held meaning) exit 1
+         first planted FAIL: FAIL       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 1 (fx-scrim) · bound 0 · load 9.7/11.2/10.1
+OK     E-7 webkit   fault   e7-two (two source files write data-engaged, one outside the register's owner) exit 1
+         first planted FAIL: FAIL       E-7 writers (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/two-writers · load 9.5/11.2/10.0
+OK     E-8 chromium clean exit 0 · E-8 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 9.5/11.2/10.0 at start, 9.1/11.1/10.0 at end
+OK     E-8 chromium fault   e8-drift (the emitted --engage-press-drain-attack is 56ms against its row's 55) exit 1
+         first planted FAIL: FAIL       E-8 mirror · 2 rows, 4 --engage-* tokens on :root · drift [--engage-press-drain-attack 56ms ≠ 55ms] · orphans [] · load 8.6/10.9/10.0
+OK     E-8 chromium control e8-units (CONTROL, must PASS: a token spelled .18s (a minifier's respelling of 180ms, as the HEAD build does) equals its 180 ms row) exit 0
+OK     E-8 chromium fault   e8-literal (the control's press transition spells 230ms, a literal no token carries) exit 1
+         first planted FAIL: FAIL       E-8 literal pop · 8 animation(s) ran [background-color@55ms, scale@230ms, script@350ms] against 5 clock tokens · minted [CSSTransition scale 230ms on ctl] · load 8.2/10.7/9.9
+OK     E-8 webkit   clean exit 0 · E-8 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 8.4/10.7/9.9 at start, 8.2/10.7/9.9 at end
+OK     E-8 webkit   fault   e8-drift (the emitted --engage-press-drain-attack is 56ms against its row's 55) exit 1
+         first planted FAIL: FAIL       E-8 mirror · 2 rows, 4 --engage-* tokens on :root · drift [--engage-press-drain-attack 56ms ≠ 55ms] · orphans [] · load 8.0/10.6/9.9
+OK     E-8 webkit   control e8-units (CONTROL, must PASS: a token spelled .18s (a minifier's respelling of 180ms, as the HEAD build does) equals its 180 ms row) exit 0
+OK     E-8 webkit   fault   e8-literal (the control's press transition spells 230ms, a literal no token carries) exit 1
+         first planted FAIL: FAIL       E-8 literal pop · 8 animation(s) ran [background-color@55ms, scale@230ms, script@350ms] against 5 clock tokens · minted [CSSTransition scale 230ms on ctl] · load 8.0/10.4/9.8
+OK     E-9 chromium clean exit 0 · E-9 chromium PASS · 24 pass, 0 fail, 0 unmeasured of 24 gating cells (0 reported) · load 8.1/10.4/9.8 at start, 10.8/10.9/10.0 at end
+OK     E-9 chromium fault   e9-scale (under reduced motion the press still squishes) exit 1
+         first planted FAIL: FAIL       E-9 pop press-spatial light · scale range while pressed 0.042 over 36 frames (bound < 0.002) · load 10.8/10.9/10.0
+OK     E-9 chromium fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer) exit 1
+         first planted FAIL: FAIL       E-9 pop press-light light · press-only paint changes [] (bound ≥ 1) · load 14.8/11.7/10.3
+OK     E-9 chromium fault   e9-glide (under reduced motion the selection body still glides) exit 1
+         first planted FAIL: FAIL       E-9 travel commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 78.00 px with 25 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 12.9/11.5/10.3
+OK     E-9 webkit   clean exit 0 · E-9 webkit PASS · 24 pass, 0 fail, 0 unmeasured of 24 gating cells (0 reported) · load 12.3/11.4/10.3 at start, 10.0/10.9/10.1 at end
+OK     E-9 webkit   fault   e9-scale (under reduced motion the press still squishes) exit 1
+         first planted FAIL: FAIL       E-9 pop press-spatial light · scale range while pressed 0.042 over 20 frames (bound < 0.002) · load 9.8/10.9/10.1
+OK     E-9 webkit   fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer) exit 1
+         first planted FAIL: FAIL       E-9 pop press-light light · press-only paint changes [] (bound ≥ 1) · load 10.1/10.9/10.1
+OK     E-9 webkit   fault   e9-glide (under reduced motion the selection body still glides) exit 1
+         first planted FAIL: FAIL       E-9 travel commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 78.00 px with 12 frame(s) in flight (bound ≤ 1 frame each) · 37 frames · load 9.9/10.8/10.1
+selftest: 76 runs, 2 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+EXIT 0
+Tue Oct  6 12:06:00 EDT 2026
+12:06  up  2:12, 2 users, load averages: 9.41 10.65 10.08

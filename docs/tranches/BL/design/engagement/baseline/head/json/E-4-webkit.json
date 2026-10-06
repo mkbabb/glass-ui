@@ -1,0 +1,25 @@
+{
+ "id": "E-4",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/r0/battery/out/builds/head"
+ },
+ "loadStart": "30.9/19.1/13.3",
+ "loadEnd": "27.2/18.9/13.4",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "FAIL",
+   "line": "fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 121 frames, median 17.0 ms",
+   "load": "29.0/19.1/13.4"
+  },
+  {
+   "name": "E-4 tabsdrag fling carries velocity",
+   "status": "PASS",
+   "line": "fling: carry 44.37 px, settles -54.34 px past release · still: carry 36.93 px, settles -54.34 px · difference: carry 7.44 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 240.5 px, still 239.7 px · 121 frames, median 17.0 ms",
+   "load": "27.2/18.9/13.4"
+  }
+ ]
+}
