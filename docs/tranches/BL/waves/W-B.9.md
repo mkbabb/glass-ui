@@ -35,11 +35,11 @@
 
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
-| B9-G1 · off Canvas2D | `test "$(git grep -c useCanvas2D -- 'src/components/constellation/*.ts' 'src/components/constellation/**/*.ts' \| awk -F: '{s+=$2} END {print s+0}')" -eq 0` | exit 0 | **exit 1**: 3 code lines in `useConstellation.ts` (fix-3 re-ran it at `be1969ea`) |
+| B9-G1 · off Canvas2D | `test "$(git grep -cE 'useCanvas2D\|getContext\( *.2d.' -- 'src/components/constellation/*.ts' 'src/components/constellation/**/*.ts' \| awk -F: '{s+=$2} END {print s+0}')" -eq 0` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 4 lines in 2 files, first `useConstellation.ts:11`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1**: 3 code lines in `useConstellation.ts` (fix-3 re-ran it at `be1969ea`) |
 | B9-G2 · the route asks for WebGPU only | W-G.1 appendix B's context tally on `/substrates/constellation`, the constellation's canvas | 0 `2d` requests from the constellation host | **FAIL**: the route tallies `{"2d":12,"webgl2":2,"webgpu":1}` (W-G.1 §2); the `2d` requests are the constellation's `useCanvas2D` |
 | ~~B9-G2 (fix-2)~~ | struck (fix-3, FB-18): `git grep -qE 'pinned' -- src/components/constellation/types.ts` read a file that does not exist, so it was red by a wrong path; the subject is cured at HEAD (§3 item 2) | — | — |
 
-| B9-G3 · no 2D skin seam (static) | `! git grep -n drawOverlay -- src demo tests` | exit 0 | **exit 1** (fix-4, `715912fa`): 42 lines in 8 files (`constellationTypes.ts` 7, `useConstellation.ts` 2, `Constellation.vue` 1, `README.md` 22, `PROCEDURAL-SUITE.md` 1, the demo story 6, `manifest.ts` 1, the palette-lifecycle test 2) |
+| B9-G3 · no 2D skin seam (static) | `! git grep -nE 'drawOverlay\|draw-overlay' -- src demo tests` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 54 lines in 9 files, first `StoryHero.vue:126`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (fix-4, `715912fa`): 42 lines in 8 files (`constellationTypes.ts` 7, `useConstellation.ts` 2, `Constellation.vue` 1, `README.md` 22, `PROCEDURAL-SUITE.md` 1, the demo story 6, `manifest.ts` 1, the palette-lifecycle test 2) |
 
 All three are this wave's own act. W-G.1's G1-G4 keeps the route in its no-WebGL tally for the aurora ground's `webgl2` requests.
 

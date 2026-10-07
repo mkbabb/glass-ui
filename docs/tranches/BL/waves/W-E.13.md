@@ -54,7 +54,7 @@ Measured with appendix A (`node e13.mjs`), Chromium, `page.pdf({ preferCSSPageSi
 | E13-G3 · overlays hidden | appendix A G3, open Dialog | scrim, veil, plate each hidden or absent | **all shown** |
 | E13-G4 · substrates hidden, glass flat | appendix A G4 | 0 canvases, 0 backdrop-filtered elements | **1, 102** |
 | E13-G5 · the deck (hold line) | appendix A G5 | every page 960 × 540 pt | **PASS**; bite: delete `page: deck` from the stage |
-| E13-G6 · one print arm | `test "$(rg -l '@media print' src/styles \| grep -v '^src/styles/print.css$' \| wc -l)" -eq 0` | exit 0 | **exit 1** (`src/styles/paper.css`) |
+| E13-G6 · one print arm | `test "$(rg -l --pcre2 '@media[^{]*\bprint\b' src/styles \| grep -v '^src/styles/print.css$' \| wc -l)" -eq 0` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 2 lines in 1 file, first `paper.css:137`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (`src/styles/paper.css`) |
 
 Can each fail and pass? G1-G4 fail at HEAD. G5 passes at HEAD and is a hold line with its bite. G6 is static. `capture.css` is under `src/components`, so G6 does not count it: the deck's named page is not a print arm.
 

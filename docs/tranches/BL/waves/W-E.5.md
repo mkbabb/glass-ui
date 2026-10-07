@@ -71,12 +71,12 @@ Measured with appendix A (`node e5.mjs`), Chromium, AX reads over CDP `Accessibi
 | E5-G6 · placement below `sm` | appendix A G6 | bottom ≥ 724 at 390×844 | **top 16, bottom 122.2** |
 | E5-G7 · stack gap | appendix A G7 | ≥ 8 px | **0** |
 | E5-G8 · deck once | appendix A G8 | 1 exposed region | **2** |
-| E5-G9 · no slice | `! grep -q 'slice(0, TOAST_LIMIT)' src/components/toast/use-toast.ts` | exit 0 | **exit 1** (`use-toast.ts:62`) |
-| E5-G10 · one title weight (static, #33b) | `! grep -q 'text-small font-semibold' src/components/toast/ToastTitle.vue` | exit 0 | **exit 1** (`:14`) |
+| E5-G9 · no slice | `! grep -qE '\.s(p)?lice\([^)]*TOAST_LIMIT' src/components/toast/use-toast.ts` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 1 line in 1 file, first `use-toast.ts:62`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (`use-toast.ts:62`) |
+| E5-G10 · one title weight (static, #33b) | `! grep -qE 'font-(thin\|extralight\|light\|normal\|medium\|semibold\|bold\|extrabold\|black)([^-a-z]\|$)\|font-weight' src/components/toast/ToastTitle.vue` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 1 line in 1 file, first `ToastTitle.vue:14`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (`:14`) |
 | E5-G11 · replace in place (UIA-KF-221) | fix-2's probe scene `mtoast`: `toast({ id: 'same', title: 'first' })`, then `toast({ id: 'same', title: 'second' })` | one toast titled "second" | **FAIL**, both engines: 2 toasts, "second" and "first" both rendered |
 | E5-G12 · the tone glyph (UIA-KF-221) | the same scene: a `tone: 'success'` toast's svg count, excluding the close | ≥ 1 | **FAIL**, both engines: 1 svg in the item, the close only |
 | E5-G13 · the close keeps its ink (UIA-F-227, static) | `! grep -qF '[&_svg]:text-(--tone)' src/components/toast/Toast.vue` | exit 0 | **exit 1** (`:138`) |
-| E5-G14 · one stack order (UIA-F-227, static) | `! grep -q 'flex-col-reverse' src/components/toast/Toaster.vue` | exit 0 | **exit 1** (`:83`, `:87`, `:91`) |
+| E5-G14 · one stack order (UIA-F-227, static) | `! grep -rqE 'flex-col-reverse\|column-reverse' src/components/toast` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 3 lines in 1 file, first `Toaster.vue:83`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (`:83`, `:87`, `:91`) |
 | E5-G15 · tone ink holds (#31f) | fix-2's probe scene `toast`, rows `W-E.5/TOAST-INK`: title and description on each tone plate, light and dark | 10 of 10 ≥ 4.5:1 | hold line: 10 of 10, lowest 7.66. Bite: a tone wash that pushes a description under 4.5 |
 
 Can each fail and pass? All nine browser rows fail at HEAD. The AX row G5 has a passing shape on any page with one named `status` item; its planted twin sets the list back to `aria-live="polite"`, which adds a second region. G9, G10, G13 and G14 are static and exit 1 at HEAD; G11 and G12 fail in both engines; G15 is a hold line with its bite.

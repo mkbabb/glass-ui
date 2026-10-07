@@ -61,7 +61,7 @@ All run after `npm run build`; appendix A for G7-G1 to G7-G7, appendix B for G7-
 | G7-G1 · the derive subpath exists | `exports` has `./aurora-palette` | present | **FAIL**: `./aurora` only |
 | G7-G2 · the derive graph is shader-free | the `./aurora-palette` closure has 0 `@fragment`, 0 `@vertex`, 0 `@compute`, 0 `#version 300 es` | all 0 | **FAIL**: no subpath; `./aurora`'s closure carries 2 `@fragment`, 3 `#version 300 es` |
 | G7-G3 · the derive budget | the closure's gzip ≤ 8,192 B (value.js's 12,288 B less the headroom W-A.5 ratchets) | ≤ 8,192 | **FAIL**: 78,420 B through `./aurora` |
-| G7-G4 · one door (static) | `! grep -qwE 'deriveAurora\|paletteToCssGradient' src/components/aurora/index.ts` | exit 0 | **exit 1**: `index.ts:78`, `:81` |
+| G7-G4 · one door (static) | `! grep -qwE 'deriveAurora\|paletteToCssGradient' src/components/aurora/index.ts && ! grep -qE '^export \* from' src/components/aurora/index.ts` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 2 lines in 1 file, first `index.ts:78`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1**: `index.ts:78`, `:81` |
 | G7-G5 · CSS ships with its entry | every JS entry whose source graph has a stylesheet imports a `.css` file; `./button` at least | 63 of 63 applicable | **FAIL**: 0 of 63 |
 | G7-G6 · no scan backstop | `dist/styles/index.css` has no `@source` | 0 | **FAIL**: `@source "../*.js";` |
 | G7-G7 · one CSS entry | `exports` has no `./styles.css` | absent | **FAIL**: `./dist/component-styles.css` |

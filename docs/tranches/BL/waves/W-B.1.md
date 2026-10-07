@@ -101,7 +101,7 @@ Run at `19bf6569` in the scratch worktree; the battery is `scratchpad/formation/
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
 | B1-G2 · every row terminal, every route real | `node scripts/tranche/verify-ledger.mjs docs/tranches/BL` | exit 0 | **exit 1**: `Error: Cannot find module '…/scripts/tranche/verify-ledger.mjs'` |
-| B1-G3 · no in-tree route to a dead row | `! git grep -nE '(fenced on\|routed? (to\|→)\|rides\|owed to\|OWED\|→) *`?(B[A-Z]\.)?W-[A-Z]{2,}' -- src tests scripts` | exit 0 | **exit 1**: 4 lines (§2) |
+| B1-G3 · no in-tree route to a dead row | `! rg -n "(fenced on\|routed? (to\|→)\|rides\|owed to\|OWED\|→) *\x60?(B[A-Z]\.)?W-[A-Z]{2,}" src tests scripts` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 4 lines in 3 files, first `forms-seam.test.ts:83`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1**: 4 lines (§2) |
 | B1-G4 · the checker bites | a copy of `LEDGER.md` with one BUILD row's wave set to `W-Z.9`, then `verify-ledger.mjs` on the copy's dir; again with one terminal set to `OPEN`; again with one census row deleted | exit 1 each, naming the row | the checker is absent |
 
 B1-G1 (`test -f LEDGER.md`) is struck: it exits 0 at `183e021a` (the ledger was committed at `ae8370e0`). B1-G5 is struck: the orphan names and the BG block are rows of LEDGER §6.1, and B1-G2's run over the whole file reads them. B1-G2 alone could pass on a ledger whose expected set was typed short. The expected set is derived from the census and map files (§3.2), and B1-G4's third plant (a deleted census row) proves the derivation is read.

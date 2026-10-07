@@ -79,7 +79,7 @@ With `CONTROL=1` (the `.dark` class added, as the controller does), D1 reads 7.2
 | C5-G4 · the colour leaf returns sRGB | D4 | `/^rgba?\(/` | **RED** `oklch(0.739 0.134 318.1)` |
 | C5-G5 · an open Collapsible rotates its icon | D5 | equal and not `none` | **RED** `none` vs `180deg` |
 | C5-G6 · one dark arm | `dark-one-arm.test.ts`: `.dark` appears in exactly one selector in `dist/styles/index.css`, which declares no colour; `rg -c 'light-dark\(' dark-arm.css` is 0 | pass | **fail**: 20 rules in 15 files; 52 re-declared tokens |
-| C5-G7 · one randomness source | `! rg -n 'Math\.random' src` less comment lines | exit 0 | **exit 1**: 24 lines |
+| C5-G7 · one randomness source | `! rg -n 'Math\.random\|getRandomValues\|randomUUID' src` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 28 lines in 10 files, first `README.md:43`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1**: 24 lines |
 | C5-G8 · one table per constant | `node scripts/regen-tokens.mjs --check` and `twin-data.test.ts` (each of the 16 pairs read from the TS table equals the emitted CSS) | exit 0 | **exit 1**: the script does not exist; the 16 pairs are hand-kept |
 | C5-G9 · one colour leaf, one luminance | `! rg -n 'resolveCanvasColor\|0\.03928' src` | exit 0 | **exit 1** |
 

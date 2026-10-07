@@ -92,7 +92,7 @@ In the table cells below, `\|` is the Markdown escape for `|`: the command itsel
 | id | gate | passes when | HEAD reading (run here) |
 |---|---|---|---|
 | G1 · the census, bound | `npx vitest run tests/styles/engage-ladder.test.ts` with the census as a plain `it` over the declared denominator | passes; `! grep -n 'it\.fails(' tests/styles/engage-ladder.test.ts` exits 0 | **FAIL**: 38 of 55 directories rungless (the plain-`it` copy, §2.2); the shipped file carries the `:134` latch |
-| G2 · one writer | `test $(git grep -l 'data-engaged' -- 'src/**/*.vue' \| wc -l) -le 1` | exit 0, and the one file is the register's owner | **exit 1**: 2 writers |
+| G2 · one writer | `test $(git grep -lE 'data-engaged\|dataset\.engaged' -- 'src/*.vue' 'src/*.ts' \| wc -l) -le 1` | exit 0, and the one file is the register's owner | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 3 lines in 2 files, first `ModalOverlay.vue:74`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1**: 2 writers |
 | G3 · the slider exemplar (if BUILT) | `node scripts/probes/band-J/slider.mjs <dist> <wt>` | exit 0, 4/4 cells | **exit 1**: 4/4 FAIL at ×1.000; the planted grow reads 4/4 PASS, so the gate can pass. If D5 RETIREs T1 GROW, the probe is deleted with the owner's quote in the #27 row and G3 is recorded "retired", not green |
 | G6 · one clock authority | `npx vitest run tests/styles/engage-ladder.test.ts -t "mirror"` plus W-F.1's spring-authority suite | passes with every new rung reading the envelope tokens | passes at HEAD for the existing tokens (a hold line; its own drift test at `:190-200` shows it can fail) |
 

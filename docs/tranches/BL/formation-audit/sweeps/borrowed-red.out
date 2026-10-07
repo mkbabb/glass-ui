@@ -51,3 +51,15 @@ exit=0
 read CURED-EARLIER W-I.1 G13 :: `it\.fails(` over ['tests/components/custom/dock/g-dock-lattice.test.ts'] is zeroed by W-A.2:A2-G7  [re-founded by fix-9 (FH-01): `test ! -e tests/owed/g-dock-lattice.test.ts && …`; W-A.2's owed file holds it RED at the wave's base, and only W-I.1's move home clears it]
 rows 1, open 0, stale 0
 exit=0
+
+# ===== fix-13 (CURED-EARLIER widened: an earlier wave's grep whose HEAD hits over the later scope contain the later grep's; the literal test lost W-I.1 G13 once A2-G7 was widened)
+## before: the plan at 3ce80b06 (BL_ROOT)
+OPEN CURED-EARLIER W-G.6 G6-G6 :: `\.toDataURL(` over ['src'] is zeroed by W-G.1:G1-G3
+read CURED-EARLIER W-I.1 G13 :: `it\.fails(` over ['tests/components/custom/dock/g-dock-lattice.test.ts'] is zeroed by W-A.2:A2-G7  [re-founded by fix-9 (FH-01): `test ! -e tests/owed/g-dock-lattice.test.ts && …`; W-A.2's owed file holds it RED at the wave's base, and only W-I.1's move home clears it]
+rows 2, open 1, stale 0
+exit=1
+
+## after
+read CURED-EARLIER W-I.1 G13 :: `it\.fails(` over ['tests/components/custom/dock/g-dock-lattice.test.ts'] is zeroed by W-A.2:A2-G7  [re-founded by fix-9 (FH-01): `test ! -e tests/owed/g-dock-lattice.test.ts && …`; W-A.2's owed file holds it RED at the wave's base, and only W-I.1's move home clears it]
+rows 1, open 0, stale 0
+exit=0

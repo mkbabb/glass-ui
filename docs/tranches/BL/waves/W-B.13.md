@@ -46,7 +46,7 @@ Rotation is waived by the owner ("No rotation necessary", `CHARTER.md:9`; C-2 an
 | B13-G1 · OIDC publisher of record | `V=$(node -p 'require("./package.json").version'); test "$(npm view @mkbabb/glass-ui@$V _npmUser.name)" = "GitHub Actions"` | exit 0 | **exit 1**: `mkbabb` for 10.1.0 |
 | B13-G2 · no token env in the workflow | `! grep -n NODE_AUTH_TOKEN .github/workflows/release.yml` | exit 0 | **exit 1**: `:18` (prose) and `:66` |
 | B13-G3 · no secret | `! gh secret list \| grep NPM_TOKEN` | exit 0 | **exit 1**: `NPM_TOKEN 2026-09-17T20:26:20Z` |
-| B13-G4 · no interim paragraph | `! grep -n 'TRUSTED PUBLISHING' .github/workflows/release.yml` | exit 0 | **exit 1**: `:13` |
+| B13-G4 · no interim paragraph | `! grep -ni 'TRUSTED PUBLISHING' .github/workflows/release.yml` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 3 lines in 1 file, first `release.yml:13`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1**: `:13` |
 | B13-G5 · ordering | B13-G2 passes on a commit whose tag published with B13-G1 green before B13-G3 is run | the ledger row cites both commits and the `npm view` reading | — |
 
 B13-G2 and B13-G4 can pass by editing the file alone; B13-G1 is the gate that proves the path works, and the ordering in §3 is what keeps the next cut from breaking.

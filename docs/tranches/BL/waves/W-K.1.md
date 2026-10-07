@@ -63,7 +63,7 @@ Measured with appendix A (`node k1.mjs`, both fixture builds and Playwright WebK
 | K1-G2 | appendix A G2 | the shadow input is reached within 5 Tabs and no Tab leaves the Dialog | **FAIL**: Chromium never reaches it; WebKit reaches it and leaks to `BODY` twice |
 | K1-G3 | appendix A G3, top level and shadow root | 4 of 4 in both mounts | top level PASS 4 of 4 (control); shadow **FAIL** 2 of 4 |
 | K1-G4 | appendix A G4 | `--primary`, `--background`, `--space-body` non-empty inside a shadow-only mount | **FAIL** all three `""` |
-| K1-S | `test "$(rg -c 'document\.activeElement' src \| awk -F: '{s+=$2} END {print s+0}')" = 0 && ! rg -q 'isEditableTarget\(e\.target\)' src && rg -q ':host' src/styles` | exit 0 | **exit 1** (9 reads; the `e.target` test at `:328`; 0 `:host`) |
+| K1-S | `test "$(rg -c '(document\|ownerDocument)\.activeElement' src \| awk -F: '{s+=$2} END {print s+0}')" = 0 && ! rg -q 'isEditableTarget\(e\.target\)' src && rg -q ':host' src/styles` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 10 lines in 9 files, first `DataTable.vue:101`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (9 reads; the `e.target` test at `:328`; 0 `:host`) |
 
 Each browser gate has a passing control on the same page (the top-level Input in G1, the top-level mount in G3), so each can pass; each fails at HEAD on the shadow leg.
 

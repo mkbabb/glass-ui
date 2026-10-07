@@ -12,7 +12,9 @@ This lists every instance of the class it can read:
                or while its rationale marks it DISEASE (a carry to an event, not a decision)
   NO-WAVE      a LEDGER row whose terminal is not RETIRE and whose wave cell is empty
   NO-RETRIGGER a BANKED row with no named re-trigger
-  SHARED       a DISEASE row whose rationale says the deciding wave is shared
+  SHARED       a DISEASE row whose rationale says "shared" or does not say "own" (LEDGER §0: every disease row is
+               decided by a wave of its own, so either word but "own" is open; pass 12 FL-05), or whose
+               "decided in W-x (own" names a wave other than its wave cell (two homes for one row)
   NO-HOME      a BUILD or FOLD row marked DISEASE whose wave has no spec, or whose spec names neither the row nor
                the id its source cites
   L04-ROW      a row of L04's master ledger (`audit/round-1/L04.md`, "Master ledger", every carried item traced, keyed
@@ -108,8 +110,15 @@ def main():
         if term == "BANKED" and not re.search(r"[Rr]e-trigger", why):
             out.append(f"OPEN NO-RETRIGGER LEDGER.md:{n} `{rid}` is BANKED with no named re-trigger")
         disease = why.startswith("DISEASE")
-        if disease and re.search(r"\(shared\b|\bshared\)", why):
-            out.append(f"OPEN SHARED       LEDGER.md:{n} `{rid}` is a DISEASE row decided in a shared wave")
+        if disease:
+            if re.search(r"\bshared\b", why) or not re.search(r"\bown\b", why):
+                out.append(f"OPEN SHARED       LEDGER.md:{n} `{rid}` is a DISEASE row whose rationale does not say its deciding wave is its own")
+            if wave not in ("—", "-", ""):
+                m = re.search(r"decided (?:with [^,;()]+? )?in (W-[0-9A-L]\.\d+) \(own", why)
+                if not m:
+                    out.append(f"OPEN SHARED       LEDGER.md:{n} `{rid}` is a DISEASE row whose rationale names no \"decided in W-x (own\" wave")
+                elif m.group(1) != wave:
+                    out.append(f"OPEN SHARED       LEDGER.md:{n} `{rid}` is decided in {m.group(1)} (own) by its rationale while its wave cell is {wave}")
         if disease and term in ("BUILD", "FOLD"):
             if wave not in spec_text:
                 out.append(f"OPEN NO-HOME      LEDGER.md:{n} `{rid}` DISEASE names wave `{wave}`, which has no spec")

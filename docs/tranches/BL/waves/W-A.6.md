@@ -68,7 +68,7 @@
 | A6-G3 · every cell's route resolves | `node -e` over `tests-visual/safari/cells.mjs` through `_support/scene.ts` (the check of §2) | exit 0 | on the untracked battery: **2 dead routes** of 29 (`/forms/select`, `/foundations/paper-texture`) |
 | A6-G4 · the receipt covers the roster | `node scripts/visual/verify-safari-receipt.mjs --coverage`: every roster cell has both halves or is `owed` with the reason "step 0 failed" | exit 0 | absent |
 | A6-G5 · the inert probe is gone | `test ! -e scripts/safari-probe.mjs` | exit 0 | **exit 1** |
-| A6-G6 · no deferral prose | `! grep -rqE "KNOWN-LIVE, NOT GATED\|pending row-6's Safari" tests src` | exit 0 | **exit 1** (`color-mix-endpoints.test.ts:13-20`) |
+| A6-G6 · no deferral prose | `! grep -rqiE "KNOWN-LIVE, NOT GATED\|pending row-6's Safari" tests src` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 2 lines in 1 file, first `color-mix-endpoints.test.ts:13`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (`color-mix-endpoints.test.ts:13-20`) |
 | A6-G7 · the release reads the receipt | `grep -q verify-safari-receipt .github/workflows/release.yml`, and the verifier exits 1 on a receipt with one `bound` cell's hash edited | both | **exit 1** |
 
 A6-G6 could pass by deleting the comment without the decision; step 4 requires the `colormix-census` cell in the receipt, and A6-G4 fails without it. A6-G4 could pass with every cell `owed`; it does, honestly, when step 0 has not passed, and W-L.8 records that terminal state rather than a pass.

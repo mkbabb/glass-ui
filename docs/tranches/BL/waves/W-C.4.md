@@ -70,7 +70,7 @@ token-hygiene: fallbacks 326 (masking 256, knob 70) · phantom 5 · dead 27 · d
 | C4-G4 · one declaration site | class U, less the light-dark twins W-C.5 owns | 0 plain | **22** plain (77 total) |
 | C4-G5 · no dead selectors | class S, with the adjudicated false positives listed in the test | 0 | **49** |
 | C4-G6 · no engine ladders | class L | 0 | **6** |
-| C4-G7 · utilities are `@utility` | `rg -c '^\s*\.[a-z][\w-]*\s*\{' src/styles/utilities` inside `@layer` | 0 | **20** |
+| C4-G7 · utilities are `@utility` | `rg -c --pcre2 '^\s*\.[a-z][\w-]*[^{;]*\{' src/styles/utilities` | 0 | **prints 2, 19, 12, 18, 13** (fix-13, `3ce80b06`, the span as re-written: 64 lines in 5 files, first `metal.css:39`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **20** |
 | C4-G8 · no shadcn radius base, no shadow size overrides | `! rg -n -- '--radius\s*:\|--radius-lg\s*:\|--shadow-(sm\|md\|lg\|xl\|2xl)\s*:' src/styles` | exit 0 | **exit 1** (`radius.css`, `shadow.css:22-26`) |
 | C4-G9 · one control size authority | `! rg -n 'controlSizeClass\|--control-pill-h\|data-reparse-ok\|input-pill' src` | exit 0 | **exit 1** (5 + 6 + 1 + the `.input-pill` rule) |
 | C4-G10 · the hold line | appendix B, HEAD vs wave, all routes, light and dark: `--diff` prints only the cells in the wave's allowed-delta list | the list | at HEAD the tool is new; the HEAD-vs-HEAD run reads `0 changed values over 1268 elements` on 20 routes, and a planted `--radius-2xl` change reads `254 changed values` |

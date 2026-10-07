@@ -77,7 +77,7 @@ $ grep -q -- '--safe-block-end' src/components/dock/README.md; echo $?
 | E1-G3 · toast | appendix A G3: the toast and its close disc inside the safe rect, 6 positions × 2 cells | 12 of 12 | **8 of 12 FAIL**; under the plant, the 390×844 rows still fail on the disc (10.4 px) |
 | E1-G4 · ExpandableContainer | appendix A G4: the collapse trigger inside the safe rect, 2 cells | 2 of 2 | **2 of 2 FAIL** (39 px into the top inset; 39 px into the right notch) |
 | E1-G5 · popper | appendix A G5: Popover and menu from triggers flush with each safe inline edge at 844×390 | 4 of 4 | **3 of 4 FAIL** (Popover 508..844 and 0..336; menu ..812) |
-| E1-G6 · one reader | `test "$(grep -rln 'env(safe-area-inset' src demo \| grep -v '^src/styles/tokens/offsets.css$' \| wc -l)" -eq 0` | exit 0 | **exit 1** (`stage.css`, `dock-nav.css`) |
+| E1-G6 · one reader | `test "$(grep -rlniE 'env\( *safe-area-inset' src demo \| grep -v '^src/styles/tokens/offsets.css$' \| wc -l)" -eq 0` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 5 lines in 2 files, first `stage.css:33`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (`stage.css`, `dock-nav.css`) |
 | E1-G7 · dock placement documented | `grep -q -- '--safe-block-end' src/components/dock/README.md` | exit 0 | **exit 1** |
 
 Can each fail and pass? G1-G5 fail at HEAD (22 of 24 rows), and the `--plant` run shows G1, G2 and G4 passing with the cure's CSS injected. G3's plant run stays red at 390×844, which is why §3.3 adds the disc outset to the pad. The `PI_PLANT` bite for the wired spec is the reverse: a style tag setting the four tokens to `0px` turns G1-G5 red on a cured tree.

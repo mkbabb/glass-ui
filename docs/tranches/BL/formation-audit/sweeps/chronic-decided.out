@@ -49,3 +49,16 @@ exit=0
 OPEN L04-ROW      L04 master row 33 (Morph discontinuity `layers.css:348`): no traced row's wave spec names the item (/layers\.css:34[4-9]/)
 members 51, ledger rows 824, L04 master rows 45, open 1
 exit=1
+
+# ===== fix-13 (SHARED arm widened, pass 12 FL-05: a DISEASE rationale must say "own" and its "decided in W-x (own" must be its wave cell)
+## before: the plan at 3ce80b06 (BL_ROOT)
+OPEN SHARED       LEDGER.md:234 `C-11` is decided in W-G.5 (own) by its rationale while its wave cell is W-G.1
+OPEN SHARED       LEDGER.md:236 `C-13a` is decided in W-G.4 (own) by its rationale while its wave cell is W-G.1
+OPEN SHARED       LEDGER.md:423 `L04-M33` is a DISEASE row whose rationale does not say its deciding wave is its own
+OPEN SHARED       LEDGER.md:423 `L04-M33` is a DISEASE row whose rationale names no "decided in W-x (own" wave
+members 51, ledger rows 825, L04 master rows 45, open 4
+exit=1
+
+## after
+members 51, ledger rows 825, L04 master rows 45, open 0
+exit=0

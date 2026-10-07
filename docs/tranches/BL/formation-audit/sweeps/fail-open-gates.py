@@ -29,7 +29,7 @@ import sys
 from gates import gates
 from plan_dag import BL
 
-HEAVY = re.compile(r"\b(npx|npm|vitest|playwright|vite|gh|curl)\b|\$H\b|\$D3_OUT|\bdist/|\.cache/|<[^>]*>|…")
+HEAVY = re.compile(r"\b(npx|npm|vitest|playwright|vite|gh|curl)\b|\$H\b|\$D3_OUT|\bdist/|\.cache/|<(?!/?style\b)[A-Za-z][^<>]*>|…")  # a `<placeholder>`; an awk `/<style/` or a regex `[<>]` is not one
 CMD = re.compile(r"^\s*(?:!\s*)?(?:test|grep|git|rg|node|sed|awk|find|ls|diff|cat|wc|python3|bash|sh)\b")
 FAILOPEN = re.compile(r"^\s*!|test -z|-eq 0\b|\b= 0\b|\|\s*grep -c|\bgrep -c\b|\brg -c\b|\|\s*wc -l")
 READER = re.compile(r"^\s*!?\s*(?:node|bash|sh|python3)\s+[\w./-]+\.(?:m?js|sh|py)\b[^|]*\|")

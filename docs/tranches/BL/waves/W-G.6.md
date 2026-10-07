@@ -62,8 +62,8 @@ The machine ran at load average 48-60 through every reading; the absolute times 
 | G6-G2 · one tempo read | appendix A: mounting 20 Buttons reads `--motion-tempo` ≤ 1 time | ≤ 1 | **FAIL**: 20 |
 | G6-G3 · `cn()` memoised | appendix B: ≤ 5 µs per repeated call | ≤ 5 | **FAIL**: 23.67-111.58 |
 | G6-G5 · no synchronous pipeline | `! git grep -nE '\.create(Render\|Compute)Pipeline\(' -- src` | exit 0 | **exit 1**: 5 lines |
-| G6-G6 · no raster ground (guard on W-G.1) | `! git grep -n '\.toDataURL(' -- src` | exit 0 | **exit 1** (`auroraFallbackGround.ts:360`); closes with W-G.1 G1-G8 |
-| G6-G7 · no per-item label scan | `! git grep -nE 'items\.value\.find\(' -- src/components/sortable-list` and `! git grep -nE 'ordered\.value\.indexOf\(' -- src/components/toggle-group` | both exit 0 | **exit 1** each (`useSortable.ts:64`; `ToggleGroup.vue:132,133`) |
+| ~~G6-G6~~ | struck (fix-13, the CURED-EARLIER class of `formation-audit/sweeps/borrowed-red.py`): W-G.1 G1-G3 forbids `toDataURL` over `src` (the two sampler files are W-G.3 G3-G7's) and lands before this wave, so this copy entered the wave green; its one HEAD hit, `auroraFallbackGround.ts:360`, is a hit of G1-G3's. W-G.1 G1-G3 is the one source of record for the raster ground | — | — |
+| G6-G7 · no per-item label scan | `! git grep -nE 'items\.value\.(find\|findIndex\|indexOf\|filter\|some)\(' -- src/components/sortable-list`, and `! git grep -nE 'ordered\.value\.(indexOf\|findIndex\|find\|includes)\(' -- src/components/toggle-group` | both exit 0 | **exit 1/1** (fix-13, `3ce80b06`, the span as re-written: 1 line in 1 file, first `useSortable.ts:64`; 2 lines in 1 file, first `ToggleGroup.vue:132`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** each (`useSortable.ts:64`; `ToggleGroup.vue:132,133`) |
 
 G6-G1 and G6-G7 bite together: an index that is rebuilt per item passes G6-G7 and fails G6-G1.
 

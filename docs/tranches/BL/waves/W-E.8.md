@@ -64,7 +64,7 @@
 | E8-G1 · the role invariant | `npx vitest run tests/styles/radius-role-canon.test.ts` with `:458` as an ordinary `it` | passes | **fails**: `["--radius-xl","--radius-panel","--radius-strip"]` |
 | E8-G2 · no off-role reads | `test "$(rg -c -- '--radius-(xl\|panel\|strip)\b\|rounded-(xl\|panel\|strip)\b' src demo \| awk -F: '{s+=$2} END{print s+0}')" -eq 0` | exit 0 | **exit 1** (53 in 27 files) |
 | E8-G3 · paint census | appendix A G1 over the 80 story routes | 0 selectors paint 12 px | **23 selectors on 14 routes** |
-| E8-G4 · Metric reads the context radius (static; UIA-F-149) | `! grep -qE -- 'var\(--radius-(sm\|card)\)' src/components/metric/styles.css` | exit 0 | **exit 1** (`:123` `--radius-sm`, `:142` `--radius-card`; the cure reads `--radius-ctx`) |
+| E8-G4 · Metric reads the context radius (static; UIA-F-149) | `! grep -qE -- 'var\(--radius-(sm\|card)[,)]' src/components/metric/styles.css` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 2 lines in 1 file, first `styles.css:123`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (`:123` `--radius-sm`, `:142` `--radius-card`; the cure reads `--radius-ctx`) |
 
 Can each fail and pass? All four fail at HEAD. UIA-V-194 (nested plates not concentric: 12 px inside a 16 px card) is an E8-G3 cell: the 12 px plates are among its 23 selectors. G1's bite is re-declaring `--radius-strip: 0.75rem`, and G3's is the style tag `.segmented-tab{border-radius:12px}`.
 

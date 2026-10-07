@@ -66,7 +66,7 @@ Measured with appendix A (`node e3.mjs`), Chromium, every cell with `inj=fixed`:
 | E3-G6 · body pull | appendix A G6 | ≥ 100 px of a 150 px pull | **0** |
 | E3-G7 · live span | appendix A G7 | ratio 0.95-1.05 | **0.763** |
 | E3-G8 · anchored-edge bleed | appendix A G8: gap from the anchored edge ≤ 1 px on every frame of open and close, 4 sides × 2 cells | 8 of 8 | **8 of 8 FAIL** (12.2-16.2 px) |
-| E3-G9 · one floor authority | `! grep -q 'min-block-size: calc(' src/components/sheet/styles.css` and `! grep -q 'window.innerHeight' src/components/sheet/detents/use.ts` | exit 0 | **exit 1** (`styles.css:531`, `use.ts:85`) |
+| E3-G9 · one floor authority | `! grep -qE 'min-block-size: *calc\(' src/components/sheet/styles.css`, and `! grep -qE 'inner(Height\|Width)' src/components/sheet/detents/use.ts` | exit 0 | **exit 1/1** (fix-13, `3ce80b06`, the span as re-written: 1 line in 1 file, first `styles.css:531`; 1 line in 1 file, first `use.ts:85`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (`styles.css:531`, `use.ts:85`) |
 | E3-G10 · the grip opens on tap (UIA-KF-216) | fix-2's probe scene `mgrip`: a bottom `SheetContent` with detents `[0.12, 0.36, 1]` at 390×844 with touch; tap the grip's centre, wait 1.2 s | the detent reads 0.36 and the plate grows | **FAIL**, both engines: 0.12 → 0.12, height 171 → 171 |
 
 Can each fail and pass? Nineteen of the 20 browser rows fail at HEAD; G3 at 390×844 is the passing control that shows the gate can pass. G9 is static and fails at HEAD. G10 fails in both engines. The `PI_PLANT` bite is `[data-slot=sheet-content]{min-block-size:60dvh !important}`, which reintroduces a floor over the ladder and turns G3-G5 red on a cured tree.

@@ -39,9 +39,9 @@ Read at `183e021a`: `run.css:357` and `:366` are `transition: inline-size var(--
 
 | id | gate | passes when | HEAD (fix-2, `183e021a`) |
 |---|---|---|---|
-| I7-G1 · seat transition | `! grep -qnE '^\s*transition: inline-size' src/components/dock/styles/run.css` | exit 0 | **exit 1** (`run.css:357,366`) |
-| I7-G2 · C-8 | `test "$(rg -c 'box-sizing:\s*content-box' src \| wc -l)" -eq 0` | exit 0 | **exit 1** (`run.css:250`) |
-| I7-G3 · ring reserve | `! grep -q 'padding-block: var(--dock-ring-reserve)' src/components/dock/styles/run.css` | exit 0 | **exit 1** (`run.css:251`) |
+| I7-G1 · seat transition | `! grep -qnE 'transition(-property)?: *(inline-size\|width)' src/components/dock/styles/run.css` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 2 lines in 1 file, first `run.css:357`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (`run.css:357,366`) |
+| I7-G2 · C-8 | `test "$(rg -c 'box-sizing:\s*content-box\|(^\|[^-\w])box-content([^-\w]\|$)' src \| wc -l)" -eq 0` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 2 lines in 1 file, first `run.css:250`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (`run.css:250`) |
+| I7-G3 · ring reserve | `! grep -qE 'padding[a-z-]*: *[^;]*--dock-ring-reserve' src/components/dock/styles/run.css` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 2 lines in 1 file, first `run.css:251`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (`run.css:251`) |
 | I7-G4 · the rings are whole | the D2 harness rows for the first and last seats' focus rings, D and DK (the rows W-I.1 G7 also reads), run by this wave on its own candidate (`$H` = `scripts/loops/dock/harness/`, PLAN §5 orders this wave after W-C.1), both engines | PASS | **FAIL**, inside W-I.1 G7's 6/18 Chromium at HEAD. W-I.1 lands after this wave, so its G7 holds these rows rather than building their cure |
 
 ## 6 · π and DELTA obligations

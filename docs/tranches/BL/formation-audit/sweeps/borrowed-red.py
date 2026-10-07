@@ -14,7 +14,9 @@ Exit 1 while any OPEN row stands, 0 when none does.
 """
 import os
 import re
+import subprocess
 import sys
+from pathlib import Path
 
 from plan_dag import before, section, spec_ids
 
@@ -55,16 +57,34 @@ LSFILES = re.compile(r"git ls-files\s+([^|&;)`]*)")
 
 
 def greps(cmd):
-    """(pattern, scope paths) for every grep in a gate's spans; a piped `git ls-files <scope> | grep` takes the
-    ls-files scope."""
+    """(pattern, scope paths, flags) for every grep in a gate's spans; a piped `git ls-files <scope> | grep` takes
+    the ls-files scope (and is a file-name grep, flagged 'L')."""
     out = []
     for span in TICK.findall(cmd):
         ls = LSFILES.search(span)
         lscope = ls.group(1).split() if ls else []
         for g in GREP.finditer(span):
-            paths = [p for p in g.group(4).split() if not p.startswith("-")] or lscope
-            out.append((g.group(3), paths))
+            own = [p for p in g.group(4).split() if not p.startswith("-")]
+            fl = "".join(sorted(set(c for c in g.group(1) if c in "EiwFP")))
+            out.append((g.group(3), own or lscope, fl + ("" if own else "L")))
     return out
+
+
+ROOT = Path(__file__).resolve().parents[5]
+_hits = {}
+
+
+def head_hits(pat, flags, paths):
+    """the `file:line` set a content grep matches at the checkout's HEAD over paths (git grep reads the index, so
+    the run writes nothing); None for a file-name grep or a grep git grep cannot read."""
+    if "L" in flags or not paths:
+        return None
+    key = (pat, flags, tuple(paths))
+    if key not in _hits:
+        args = ["git", "grep", "-n", "-I"] + [f"-{c}" for c in flags if c in "EiwFP"] + ["-e", pat, "--"] + [p.split("**")[0].rstrip("*") or "." for p in paths]
+        r = subprocess.run(args, cwd=ROOT, capture_output=True, text=True)
+        _hits[key] = None if r.returncode > 1 else {":".join(l.split(":", 2)[:2]) for l in r.stdout.splitlines()}
+    return _hits[key]
 
 
 def covers(outer, inner):
@@ -127,13 +147,22 @@ def main():
                         rows.append((y, gid, "BORROWED", f"{p} landed by {x}"))
     for y in ids:
         for gid, cmd, head in allg[y]:
-            for pat, paths in greps(cmd):
+            for pat, paths, fl in greps(cmd):
+                mine = head_hits(pat, fl, paths)
                 for x in ids:
                     if x == y or not before(x, y):
                         continue
                     for gx, cx, _ in allg[x]:
-                        if any(px == pat and covers(ppx, paths) for px, ppx in greps(cx)):
-                            rows.append((y, gid, "CURED-EARLIER", f"`{pat}` over {paths or 'the tree'} is zeroed by {x}:{gx}"))
+                        for px, ppx, fx in greps(cx):
+                            if not covers(ppx, paths) or ("L" in fl) != ("L" in fx):
+                                continue
+                            # the same pattern, or (fix-13) a pattern whose HEAD hits over Y's scope contain every
+                            # HEAD hit of Y's: X's 0-hit acceptance then zeroes Y's grep before Y opens, whatever
+                            # the spelling (pass 12 widened A2-G7's `it.fails` form, which the literal test lost)
+                            same = px == pat
+                            wider = bool(mine) and (head_hits(px, fx, paths) or set()) >= mine
+                            if same or wider:
+                                rows.append((y, gid, "CURED-EARLIER", f"`{pat}` over {paths or 'the tree'} is zeroed by {x}:{gx}"))
     open_n = 0
     for y, gid, kind, why in sorted(set(rows)):
         verdict = ADJUDICATED.get(f"{y}|{gid}|{kind}")

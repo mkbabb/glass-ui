@@ -53,7 +53,7 @@ With the 12 px dot the token intends, the bound would be 52. The gate uses the m
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
 | E12-G1 · G-33 neck bounded | appendix A, 1440×900 and 390×844 | max neck ≤ hop + 2 × pip, both cells | **300.6 > 76; 300.4 > 76** |
-| E12-G2 · no string-parsed dot | `! grep -q 'getPropertyValue("--pager-dot-size")' src/components/pager-dots/worm.ts` | exit 0 | **exit 1** (`worm.ts:134`) |
+| E12-G2 · no string-parsed dot | `! grep -qE 'getPropertyValue\( *.--pager-dot-size' src/components/pager-dots/worm.ts` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 1 line in 1 file, first `worm.ts:134`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** (`worm.ts:134`) |
 
 Can each fail and pass? Both fail at HEAD. The `PI_PLANT` bite for G1 is a style tag setting `--pager-worm-max-stretch: 40` on the rail. The stretch cap then lets the neck outgrow the hop on a cured tree, and G1 turns red on its own assertion.
 

@@ -66,7 +66,7 @@ Note on `--configurator-size`: the latch comment at `:390` says the container sh
 | E9-G4 · nested families | appendix A G3 | every nested body grid or flex with a gap; no one-tab tablist | **5 of 5 families bad** |
 | E9-G5 · fold | appendix A G4, plus the 8-tab strip in a 384 px seat that W-E.7 hands over (`s=count`, `[data-probe=c-seg]`) | strip ≤ box, both | **352 > 328**; **592 > 384** |
 | E9-G6 · LabeledSwitch | appendix A G5 | switch end within 2 px of the field end | **371 vs 657** |
-| E9-G7 · no viewport keys in the fold | `! grep -q 'matchMedia' src/components/tabs/composables/useTabResponsive.ts && ! grep -q '@media (max-width: 36rem)' src/components/labeled-field/LabeledField.vue` | exit 0 | **exit 1** |
+| E9-G7 · no viewport keys in the fold | `! grep -qE 'matchMedia\|useMediaQuery\|useBreakpoints\|innerWidth' src/components/tabs/composables/useTabResponsive.ts && ! grep -qE '@media[^{]*max-width: *36rem' src/components/labeled-field/LabeledField.vue` | exit 0 | **exit 1** (fix-13, `3ce80b06`, the span as re-written: 6 lines in 2 files, first `useTabResponsive.ts:13`; the spellings it is held to are its `formation-audit/sweeps/hold-line-claim.py` CLAIMS entry). Before fix-13: **exit 1** |
 | E9-G8 · captions follow the specimen (UIA-F-136) | fix-2's probe scene `mease`: the axis caption's computed font size in a 120 px and a 480 px `EasingCurve`, 1440×900 | the 120 px caption is smaller than the 480 px caption | **FAIL**, both engines: 11 = 11 |
 
 Can each fail and pass? Every row fails at HEAD. G1 runs the latches and G7 is static. The envelope's passing control and its `PI_PLANT` bite moved with the envelope to W-E.14.

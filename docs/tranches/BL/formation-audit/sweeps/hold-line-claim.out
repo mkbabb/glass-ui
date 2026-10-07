@@ -26,3 +26,133 @@ exit=1
 NOTE  waves/W-L.1.md:193 G-L1-5 · the glyph is one drawing is not a hold line (a born-RED row); its CLAIMS entry is not run
 static hold lines 6, plants 36, open 0
 exit=0
+
+# ===== fix-13 (sweep rewritten, pass 12 FL-01/FL-02/FL-03: every unstruck static gate that forbids, born RED or hold line; a cured base per gate, then each spelling planted)
+## before: the plan at 3ce80b06 (BL_ROOT=the fix-13 worktree's docs/tranches/BL), commands run in the fix-13 worktree at 3ce80b06
+OPEN NARROW  waves/W-0.4.md:81 G3 · no bare `data-reveal` left in the overl: passes with a writer through `dataset` planted in src/components/_shared/overlay/content.ts: 'el.dataset.reveal = "menu";'
+OPEN NARROW  waves/W-0.4.md:81 G3 · no bare `data-reveal` left in the overl: passes with a reader §3 item 2 lists in the demo (`foundations/motion.vue:42`) planted in demo/stories/foundations/motion.vue: '<!-- rides the register bound by data-reveal -->'
+OPEN NARROW  waves/W-0.4.md:81 G3 · no bare `data-reveal` left in the overl: passes with the capture reader §4 lists (`demo/capture/capture.css:60`) planted in demo/capture/capture.css: 'html[data-capture] [data-reveal] { opacity: 1; }'
+OPEN NARROW  waves/W-0.4.md:82 G4 · one z site: passes with a single-quoted class string planted in src/components/popover/PopoverContent.vue: "        class: ['z-popover', props.class],"
+OPEN NARROW  waves/W-0.4.md:82 G4 · one z site: passes with the rung inside a template class list planted in src/components/tooltip/TooltipContent.vue: '<div class="rounded z-tooltip">x</div>'
+OPEN NARROW  waves/W-0.7.md:84 G2 · the records: passes with a row ref planted in CHANGELOG.md@## 10.2.0: '- closes BK #48'
+OPEN NARROW  waves/W-0.7.md:84 G2 · the records: passes with an inbound id planted in CHANGELOG.md@## 10.2.0: '- answers O-88'
+OPEN NARROW  waves/W-0.7.md:84 G2 · the records: passes with a strike planted in CHANGELOG.md@## 10.2.0: '- ~~the old cap~~'
+OPEN NARROW  waves/W-0.7.md:84 G2 · the records: passes with a record cite planted in CHANGELOG.md@## 10.2.0: '- see docs/tranches/BL/PLAN.md'
+OPEN NARROW  waves/W-0.8.md:184 G16 · one scroll source (static, O-55 R-1): passes with the second removed option planted in src/components/dock/composables/useDockSearch.ts: '    scrollContainer?: Ref<HTMLElement | null>;'
+OPEN NARROW  waves/W-0.8.md:184 G16 · one scroll source (static, O-55 R-1): passes with the third removed option planted in src/components/dock/composables/useDockSearch.ts: '    chromeRef?: Ref<HTMLElement | null>;'
+OPEN NARROW  waves/W-0.8.md:184 G16 · one scroll source (static, O-55 R-1): passes with the removed return planted in src/components/dock/composables/useDockSearch.ts: '    return { scrollChrome };'
+OPEN NARROW  waves/W-0.8.md:184 G16 · one scroll source (static, O-55 R-1): passes with the option re-published from the dock barrel planted in src/components/dock/index.ts: 'export type { CollapseOnScrollOptions } from "./composables/useDockSea'
+OPEN UNREAD  waves/W-0.8.md:186 G19 · no zero-width morph window (static, L0: an in-scope static gate with no CLAIMS entry
+OPEN NARROW  waves/W-0.9.md:48 G1 · no anonymous rung (static): passes with the factor written first planted in src/components/card/styles.css: '.x { font-size: calc(1.272 * var(--type-body)); }'
+OPEN NARROW  waves/W-0.9.md:48 G1 · no anonymous rung (static): passes with unspaced planted in src/components/card/styles.css: '.x { font-size: calc(var(--type-body)*1.272); }'
+OPEN NARROW  waves/W-A.1.md:69 A1-G5 · absence fails: passes with `it.skip` planted in tests-visual/motion2.spec.ts: 'it.skip("x", async () => {});'
+OPEN NARROW  waves/W-A.1.md:69 A1-G5 · absence fails: passes with a parked describe planted in tests-visual/motion2.spec.ts: 'test.describe.fixme("x", () => {});'
+OPEN NARROW  waves/W-A.1.md:69 A1-G5 · absence fails: passes with `describe.fixme` planted in tests-visual/motion2.spec.ts: 'describe.fixme("x", () => {});'
+OPEN NARROW  waves/W-A.1.md:73 A1-G9 · one OKLab: passes with the coefficient without its leading zero planted in tests-visual/motion2.spec.ts: '    const l = .4122214708 * R + 0.5363325363 * G;'
+OPEN NARROW  waves/W-A.1.md:74 A1-G10 · no output into records: passes with the archive planted in tests-visual/motion2.spec.ts: 'const out = "docs/archive/x.png";'
+OPEN NARROW  waves/W-A.1.md:74 A1-G10 · no output into records: passes with a joined path planted in tests-visual/motion2.spec.ts: 'const out = path.join(ROOT, "docs", "tranches", "x.png");'
+OPEN NARROW  waves/W-A.1.md:74 A1-G10 · no output into records: passes with an `.mjs` helper planted in tests-visual/pi-gate-verify.mjs: 'const out = "docs/tranches/x.png";'
+OPEN NARROW  waves/W-A.2.md:107 A2-G7 · no latch: passes with `test.fails` planted in tests/gates/comment-ratio.test.ts: 'test.fails("x", () => {});'
+OPEN NARROW  waves/W-A.2.md:107 A2-G7 · no latch: passes with `it.fails.each` planted in tests/gates/comment-ratio.test.ts: 'it.fails.each([1])("x", () => {});'
+OPEN NARROW  waves/W-A.4.md:57 A4-G2 · no forcing remains: passes with unspaced planted in tests-visual/no-gray.spec.ts: 'Object.defineProperty(navigator,"gpu",{value:undefined});'
+OPEN NARROW  waves/W-A.4.md:57 A4-G2 · no forcing remains: passes with single quotes planted in tests-visual/no-gray.spec.ts: "Object.defineProperty(navigator, 'gpu', { value: undefined });"
+OPEN NARROW  waves/W-A.4.md:57 A4-G2 · no forcing remains: passes with a delete planted in tests-visual/no-gray.spec.ts: 'delete (navigator as any).gpu;'
+OPEN NARROW  waves/W-A.4.md:62 A4-G7 · no preset literal: passes with `toHaveLength` planted in tests-visual/no-gray.spec.ts: 'expect(presetKeys).toHaveLength(14);'
+OPEN NARROW  waves/W-A.4.md:62 A4-G7 · no preset literal: passes with `toEqual` planted in tests-visual/no-gray.spec.ts: 'expect(presetKeys.length).toEqual(14);'
+OPEN NARROW  waves/W-A.4.md:63 A4-G8 · no software substrate leg: passes with mixed case planted in .github/workflows/ci.yml: '      - run: npx playwright test --use-angle=SwiftShader'
+OPEN NARROW  waves/W-A.4.md:63 A4-G8 · no software substrate leg: passes with llvmpipe planted in .github/workflows/ci.yml: '      LIBGL_ALWAYS_SOFTWARE: 1 # llvmpipe'
+OPEN NARROW  waves/W-A.6.md:71 A6-G6 · no deferral prose: passes with lower case planted in tests/plant.ts: '// known-live, not gated'
+OPEN CURE    waves/W-B.1.md:104 B1-G3 · no in-tree route to a dead row: the cured base does not pass
+OPEN NARROW  waves/W-B.13.md:49 B13-G4 · no interim paragraph: passes with title case planted in .github/workflows/release.yml: '# Trusted Publishing (interim)'
+OPEN NARROW  waves/W-B.9.md:38 B9-G1 · off Canvas2D: passes with a direct 2D context planted in src/components/constellation/constellationField.ts: 'const ctx = canvas.getContext("2d");'
+OPEN NARROW  waves/W-B.9.md:38 B9-G1 · off Canvas2D: passes with single quotes planted in src/components/constellation/constellationField.ts: "const ctx = canvas.getContext('2d');"
+OPEN NARROW  waves/W-B.9.md:42 B9-G3 · no 2D skin seam (static): passes with the seam as a kebab-case template event planted in demo/stories/substrates/constellation.vue: '<GlassConstellation @draw-overlay="paint" />'
+OPEN NARROW  waves/W-C.1.md:64 C1-G1 · no tooling under `docs/`: passes with a TypeScript module planted in LS: 'docs/x/run.mts'
+OPEN NARROW  waves/W-C.1.md:64 C1-G1 · no tooling under `docs/`: passes with a CommonJS TypeScript module planted in LS: 'docs/x/run.cts'
+OPEN NARROW  waves/W-C.1.md:64 C1-G1 · no tooling under `docs/`: passes with TSX planted in LS: 'docs/x/run.tsx'
+OPEN NARROW  waves/W-C.1.md:64 C1-G1 · no tooling under `docs/`: passes with a bash script planted in LS: 'docs/x/run.bash'
+OPEN NARROW  waves/W-C.1.md:64 C1-G1 · no tooling under `docs/`: passes with a zsh script planted in LS: 'docs/x/run.zsh'
+OPEN NARROW  waves/W-C.1.md:65 C1-G2 · no media under `docs/`: passes with AVIF planted in LS: 'docs/x/shot.avif'
+OPEN NARROW  waves/W-C.1.md:65 C1-G2 · no media under `docs/`: passes with MKV planted in LS: 'docs/x/clip.mkv'
+OPEN NARROW  waves/W-C.1.md:68 C1-G5 · one-commit clones: passes with a quoted zero planted in .github/workflows/ci.yml: '          fetch-depth: "0"'
+OPEN NARROW  waves/W-C.1.md:68 C1-G5 · one-commit clones: passes with unspaced planted in .github/workflows/ci.yml: '          fetch-depth:0'
+OPEN NARROW  waves/W-C.4.md:73 C4-G7 · utilities are `@utility`: passes with a class rule with a pseudo-class planted in src/styles/utilities/a11y-overrides.css: '.plant:hover {\n  color: red;\n}'
+OPEN NARROW  waves/W-C.5.md:82 C5-G7 · one randomness source: passes with the platform's other random source planted in src/components/typewriter/plant.ts: 'const r = crypto.getRandomValues(new Uint32Array(1))[0];'
+OPEN NARROW  waves/W-E.1.md:80 E1-G6 · one reader: passes with a spaced `env(` planted in src/components/sheet/styles.css: '.x { padding-bottom: env( safe-area-inset-bottom ); }'
+OPEN NARROW  waves/W-E.1.md:80 E1-G6 · one reader: passes with upper case planted in src/components/sheet/styles.css: '.x { padding-bottom: ENV(safe-area-inset-bottom); }'
+OPEN NARROW  waves/W-E.11.md:67 E11-G6 · one face per fallback name: passes with a second face, single quotes planted in src/styles/typography/scale.css: "@font-face {\n    font-family: 'Plus Jakarta Sans Fallback';\n}"
+OPEN NARROW  waves/W-E.11.md:67 E11-G6 · one face per fallback name: passes with a second face, unspaced with no semicolon planted in src/styles/typography/scale.css: '@font-face {\n    font-family:"Plus Jakarta Sans Fallback"\n}'
+OPEN NARROW  waves/W-E.12.md:56 E12-G2 · no string-parsed dot: passes with single quotes planted in src/components/pager-dots/worm.ts: "const d = parseFloat(cs.getPropertyValue('--pager-dot-size'));"
+OPEN NARROW  waves/W-E.12.md:56 E12-G2 · no string-parsed dot: passes with a template literal planted in src/components/pager-dots/worm.ts: 'const d = parseFloat(cs.getPropertyValue(`--pager-dot-size`));'
+OPEN NARROW  waves/W-E.13.md:57 E13-G6 · one print arm: passes with print in a media list planted in src/styles/glass/material.css: '@media screen, print { .x { color: black; } }'
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with a bare `innerHeight` planted in src/components/sheet/detents/use.ts: 'const h = innerHeight;'
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with `globalThis` planted in src/components/sheet/detents/use.ts: 'const h = globalThis.innerHeight;'
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with an unspaced `calc(` planted in src/components/sheet/styles.css: '.x { min-block-size:calc(50vh - 1rem); }'
+OPEN NARROW  waves/W-E.4.md:94 E4-G19 · no off-scale z and no literal offse: passes with unspaced planted in src/styles/tokens/scheme-motion.css: ':root { --z-toggle:999; }'
+OPEN NARROW  waves/W-E.4.md:94 E4-G19 · no off-scale z and no literal offse: passes with a kebab-case template prop planted in src/components/popover/PopoverContent.vue: '<PopperContent :side-offset="4" />'
+OPEN NARROW  waves/W-E.5.md:74 E5-G9 · no slice: passes with unspaced planted in src/components/toast/use-toast.ts: 'state.toasts = state.toasts.slice(0,TOAST_LIMIT);'
+OPEN NARROW  waves/W-E.5.md:74 E5-G9 · no slice: passes with a splice planted in src/components/toast/use-toast.ts: 'state.toasts.splice(TOAST_LIMIT);'
+OPEN NARROW  waves/W-E.5.md:74 E5-G9 · no slice: passes with a slice from the end planted in src/components/toast/use-toast.ts: 'state.toasts = state.toasts.slice(-TOAST_LIMIT);'
+OPEN NARROW  waves/W-E.5.md:75 E5-G10 · one title weight (static, #33b): passes with the class order swapped planted in src/components/toast/ToastTitle.vue: '<div class="font-semibold text-small">x</div>'
+OPEN NARROW  waves/W-E.5.md:79 E5-G14 · one stack order (UIA-F-227, static): passes with the stylesheet form planted in src/components/toast/styles.css: '.x { flex-direction: column-reverse; }'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with range syntax planted in src/components/progress/Progress.vue: '<style>\n@media (width < 40rem) { .x { display: none; } }\n</style>'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with a media type before the feature planted in src/components/progress/Progress.vue: '<style>\n@media screen and (max-width: 40rem) { .x { display: none; } }'
+OPEN NARROW  waves/W-E.8.md:67 E8-G4 · Metric reads the context radius (sta: passes with the token with a fallback planted in src/components/metric/styles.css: '.x { border-radius: var(--radius-card, 0.75rem); }'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with vueuse `useMediaQuery` planted in src/components/tabs/composables/useTabResponsive.ts: 'const narrow = useMediaQuery("(max-width: 36rem)");'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with the window width planted in src/components/tabs/composables/useTabResponsive.ts: 'const narrow = window.innerWidth < 576;'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with unspaced planted in src/components/labeled-field/LabeledField.vue: '<style>\n@media (max-width:36rem) { .x { display: block; } }\n</style>'
+OPEN NARROW  waves/W-G.1.md:91 G1-G2 · no GLSL module: passes with a raw `.glsl` file planted in LS: 'src/components/blob/shaders/metaball.glsl'
+OPEN NARROW  waves/W-G.1.md:91 G1-G2 · no GLSL module: passes with a raw `.frag` file planted in LS: 'src/components/blob/shaders/metaball.frag'
+OPEN NARROW  waves/W-G.1.md:92 G1-G3 · no Canvas2D engine: passes with single quotes planted in src/components/blob/composables/easing.ts: "const ctx = canvas.getContext('2d');"
+OPEN NARROW  waves/W-G.1.md:92 G1-G3 · no Canvas2D engine: passes with a template literal planted in src/components/blob/composables/easing.ts: 'const ctx = canvas.getContext(`2d`);'
+OPEN NARROW  waves/W-G.3.md:66 G3-G7 · the sampler is canvas-free: passes with single quotes planted in src/composables/glass/backdropLuminanceSample.ts: "const ctx = c.getContext('2d');"
+OPEN NARROW  waves/W-G.3.md:67 G3-G8 · the prop is gone: passes with the prop in kebab case in a template planted in demo/stories/substrates/aurora.vue: '<GlassAurora :background-canvas="c" />'
+OPEN NARROW  waves/W-G.3.md:67 G3-G8 · the prop is gone: passes with the prop in kebab case in the library planted in src/components/aurora/Aurora.vue: '<GlassField :background-canvas="c" />'
+OPEN UNREAD  waves/W-G.6.md:65 G6-G6 · no raster ground (guard on W-G.1): an in-scope static gate with no CLAIMS entry
+OPEN NARROW  waves/W-G.6.md:66 G6-G7 · no per-item label scan: passes with `findIndex` planted in src/components/sortable-list/useSortable.ts: 'const i = items.value.findIndex((x) => x.id === id);'
+OPEN NARROW  waves/W-G.6.md:66 G6-G7 · no per-item label scan: passes with `findIndex` planted in src/components/toggle-group/ToggleGroup.vue: 'const i = ordered.value.findIndex((x) => x === v);'
+OPEN NARROW  waves/W-G.7.md:64 G7-G4 · one door (static): passes with a star re-export of the derive module planted in src/components/aurora/index.ts: 'export * from "./derive";'
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with unspaced planted in src/components/dialog/styles.css: '.x { box-shadow: 0 0 0 2px color-mix(in oklab, var(--foreground)48%, t'
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with another literal mix planted in src/components/dialog/styles.css: '.x { box-shadow: 0 0 0 2px color-mix(in oklab, var(--foreground) 40%, '
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with a literal laundered through a custom property planted in src/styles/glass/material.css: '.x { --glass-overshoot: -32px; }\n.x::after { inset: var(--glass-oversh'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with a read of a custom property that is not the rung's blur radius planted in src/styles/glass/material.css: '.x::after { inset: var(--glass-overshoot); }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with a negative literal length declared as a custom property (a reader may sit in any stylesheet) planted in src/styles/glass/material.css: '.x { --glass-overshoot: -32px; }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with a negative margin planted in src/styles/glass/material.css: '.x::after { margin: -32px; }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with a negative logical margin planted in src/styles/glass/material.css: '.x::after { margin-block-start: -1rem; }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with the value on the line after its property planted in src/styles/glass/material.css: '.x::after {\n  inset:\n  -32px;\n}'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with an upper-case unit planted in src/styles/glass/material.css: '.x::after { inset: -32PX; }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with an upper-case property planted in src/styles/glass/material.css: '.x::after { INSET: -2rem; }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with a literal beside a token in calc() planted in src/styles/glass/material.css: '.x::after { inset: calc(var(--radius-ctx) * -1 - 32px); }'
+OPEN NARROW  waves/W-I.1.md:225 G18 · one pointer model (static, O-81 (3)): passes with unspaced planted in src/components/dock/styles/run.css: '@media (pointer:coarse) { .x { inline-size: 3rem; } }'
+OPEN NARROW  waves/W-I.2.md:84 G1 · one member query (static): passes with a spread planted in src/components/carousel/useCarousel.ts: 'const members = [...el.children];'
+OPEN NARROW  waves/W-I.2.md:84 G1 · one member query (static): passes with another element name planted in src/components/deck/composables/useDeckSnap.ts: 'const members = Array.from(host.children);'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with unspaced planted in src/components/dock/styles/run.css: '.dock-run>* {\n    scroll-snap-align: start;\n}'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with the snap two lines into the rule planted in src/components/dock/styles/run.css: '.dock-run > * {\n    color: red;\n    scroll-snap-align: start;\n}'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with mid-line planted in src/components/dock/styles/run.css: '.x { color: red; transition: inline-size 200ms; }'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with `transition-property` planted in src/components/dock/styles/run.css: '.x {\n    transition-property: inline-size;\n}'
+OPEN NARROW  waves/W-I.7.md:43 I7-G2 · C-8: passes with the Tailwind utility planted in src/components/dock/GlassDock.vue: '<div class="box-content">x</div>'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with the shorthand planted in src/components/dock/styles/run.css: '.x { padding: var(--dock-ring-reserve) 0; }'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with the inline axis planted in src/components/dock/styles/run.css: '.x { padding-inline: var(--dock-ring-reserve); }'
+OPEN NARROW  waves/W-J.1.md:187 G11 · Card is not an option (TF-5): passes with a capitalised type planted in src/components/card/Card.vue: '    selected?: Boolean;'
+OPEN NARROW  waves/W-J.1.md:187 G11 · Card is not an option (TF-5): passes with a required prop planted in src/components/card/Card.vue: '    selected: boolean;'
+OPEN NARROW  waves/W-J.1.md:188 G12 · no Chip cell (Q-8 (a)): passes with single quotes planted in src/components/chip/Chip.vue: "const shape = props.shape === 'cell';"
+OPEN NARROW  waves/W-J.1.md:189 G13 · one ARIA answer (TF-4): passes with a template binding planted in src/components/tabs/SegmentedTabs.vue: '<button :aria-pressed="on">x</button>'
+OPEN NARROW  waves/W-J.1.md:189 G13 · one ARIA answer (TF-4): passes with double quotes planted in src/components/tabs/SegmentedTabs.vue: 'const a = { "aria-pressed": on };'
+OPEN NARROW  waves/W-J.2.md:95 G2 · one writer: passes with a writer in a composable planted in src/composables/color/index.ts: "el.dataset.engaged = 'true';"
+OPEN NARROW  waves/W-K.1.md:66 K1-S: passes with through `ownerDocument` planted in src/components/menu/plant.ts: 'const a = el.ownerDocument.activeElement;'
+OPEN CURE    waves/W-L.4.md:108 G-L4-3 · one closer: the cured base does not pass
+OPEN NARROW  waves/W-L.8.md:106 G-L8-2 · records: passes with a row ref planted in CHANGELOG.md@## 11.0.0: '- closes BK #48'
+OPEN NARROW  waves/W-L.8.md:106 G-L8-2 · records: passes with an inbound id planted in CHANGELOG.md@## 11.0.0: '- answers O-85'
+OPEN NARROW  waves/W-L.8.md:106 G-L8-2 · records: passes with a strike planted in MIGRATION.md@## 11.0.0: '- ~~`--dock-cap-rest`~~'
+OPEN NARROW  waves/W-L.8.md:106 G-L8-2 · records: passes with a record cite planted in MIGRATION.md@## 11.0.0: '- see docs/tranches/BL/FINAL.md'
+OPEN NARROW  waves/W-L.8.md:115 G-L8-14 · no loop tooling is tracked at the : passes with a TypeScript module planted in LS: 'scripts/loops/dock/run.mts'
+OPEN NARROW  waves/W-L.8.md:115 G-L8-14 · no loop tooling is tracked at the : passes with a bash script planted in LS: 'docs/tranches/BL/design/dock/harness/x.bash'
+OPEN STALE   CLAIMS entry ('W-0.12', 'G1') matches no in-scope row
+OPEN STALE   CLAIMS entry ('W-A.1', 'A1-G3') matches no in-scope row
+OPEN STALE   CLAIMS entry ('W-C.1', 'C1-G4') matches no in-scope row
+in-scope static gates 136 (hold lines 6; S 62, L 67, H 5), plants 311, open 121
+exit=1
+
+## after: the plan as fix-13 leaves it, commands run in the same worktree
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 352, open 0
+exit=0
