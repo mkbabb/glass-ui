@@ -1,0 +1,18 @@
+# R-A driftprobe · proto · chromium 149.0.7827.55 · load 31.1/59.2/79.7
+MATCH  switch                                   computed --rung-class "chosen" · declared "chosen" · load 31.1/59.2/79.7
+MATCH  accordion                                computed --rung-class "disclosed" · declared "disclosed" · load 31.1/59.2/79.7
+MATCH  slider                                   computed --rung-class "held" · declared "held" · load 31.1/59.2/79.7
+MATCH  separator                                computed --rung-class "static" · declared "static" · load 31.1/59.2/79.7
+MATCH  skeleton                                 computed --rung-class "static" · declared "static" · load 31.1/59.2/79.7
+DRIFT  separator (plant: static → chosen)       computed --rung-class "chosen" · declared "static" · load 31.1/59.2/79.7
+MATCH  switch thumb (child: must not inherit)   computed --rung-class "unclassed" · declared (child: expects initial) · load 31.1/59.2/79.7
+# 1 drift(s)
+# R-A driftprobe · proto · webkit 26.5 · load 30.6/58.6/79.3
+MATCH  switch                                   computed --rung-class "chosen" · declared "chosen" · load 30.6/58.6/79.3
+MATCH  accordion                                computed --rung-class "disclosed" · declared "disclosed" · load 30.6/58.6/79.3
+MATCH  slider                                   computed --rung-class "held" · declared "held" · load 29.7/58.0/79.0
+MATCH  separator                                computed --rung-class "static" · declared "static" · load 29.7/58.0/79.0
+MATCH  skeleton                                 computed --rung-class "static" · declared "static" · load 29.7/58.0/79.0
+DRIFT  separator (plant: static → chosen)       computed --rung-class "chosen" · declared "static" · load 29.7/58.0/79.0
+MATCH  switch thumb (child: must not inherit)   computed --rung-class "unclassed" · declared (child: expects initial) · load 29.7/58.0/79.0
+# 1 drift(s)

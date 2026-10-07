@@ -1,0 +1,37 @@
+{
+ "id": "E-7",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rA/out/builds/proto"
+ },
+ "loadStart": "153.9/122.3/101.8",
+ "loadEnd": "149.5/122.3/102.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-7 writers (static)",
+   "status": "FAIL",
+   "line": "2 writer file(s): src/components/dialog/ModalOverlay.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rA/wt",
+   "load": "149.7/121.9/101.8"
+  },
+  {
+   "name": "E-7 slider held",
+   "status": "PASS",
+   "line": "[data-engaged] nodes while pointer-held 2 · bound ≥ 1",
+   "load": "149.7/121.9/101.8"
+  },
+  {
+   "name": "E-7 slider held PRM",
+   "status": "PASS",
+   "line": "reduce · [data-engaged] nodes while pointer-held 2 · bound ≥ 1",
+   "load": "149.7/121.9/101.8"
+  },
+  {
+   "name": "E-7 modal open, nothing held",
+   "status": "FAIL",
+   "line": "dialog open true · veil nodes 1 · [data-engaged] nodes 1 (glass-focus-veil) · bound 0",
+   "load": "149.5/122.3/102.1"
+  }
+ ]
+}

@@ -1,0 +1,85 @@
+{
+ "id": "E-3",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rA/out/builds/proto"
+ },
+ "loadStart": "73.1/61.4/78.4",
+ "loadEnd": "89.3/65.2/79.5",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-3 slider desk pointer-held light",
+   "status": "PASS",
+   "line": "rest 360.0 px → held 381.6 px (×1.060; [data-engaged] 2) · bound ×1.03 sustained at 450 ms",
+   "load": "73.1/61.4/78.4"
+  },
+  {
+   "name": "E-3 slider desk keyboard-focused light",
+   "status": "PASS",
+   "line": "rest 360.0 px → focused 381.6 px (×1.060; focus on slider) · bound ×1.03",
+   "load": "73.1/61.4/78.4"
+  },
+  {
+   "name": "E-3 slider phone touch-held light",
+   "status": "FAIL",
+   "line": "390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03",
+   "load": "78.4/62.7/78.7"
+  },
+  {
+   "name": "E-3 slider phone gutter light",
+   "status": "PASS",
+   "line": "engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px",
+   "load": "78.4/62.7/78.7"
+  },
+  {
+   "name": "E-3 slider keyboard-focused PRM light",
+   "status": "PASS",
+   "line": "reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002",
+   "load": "78.4/62.7/78.7"
+  },
+  {
+   "name": "E-3 slider phone touch-held PRM light",
+   "status": "PASS",
+   "line": "reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002",
+   "load": "78.4/62.7/78.7"
+  },
+  {
+   "name": "E-3 slider desk pointer-held dark",
+   "status": "PASS",
+   "line": "rest 360.0 px → held 381.6 px (×1.060; [data-engaged] 2) · bound ×1.03 sustained at 450 ms",
+   "load": "89.3/65.2/79.5"
+  },
+  {
+   "name": "E-3 slider desk keyboard-focused dark",
+   "status": "PASS",
+   "line": "rest 360.0 px → focused 381.6 px (×1.060; focus on slider) · bound ×1.03",
+   "load": "89.3/65.2/79.5"
+  },
+  {
+   "name": "E-3 slider phone touch-held dark",
+   "status": "FAIL",
+   "line": "390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03",
+   "load": "89.3/65.2/79.5"
+  },
+  {
+   "name": "E-3 slider phone gutter dark",
+   "status": "PASS",
+   "line": "engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px",
+   "load": "89.3/65.2/79.5"
+  },
+  {
+   "name": "E-3 slider keyboard-focused PRM dark",
+   "status": "PASS",
+   "line": "reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002",
+   "load": "89.3/65.2/79.5"
+  },
+  {
+   "name": "E-3 slider phone touch-held PRM dark",
+   "status": "PASS",
+   "line": "reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002",
+   "load": "89.3/65.2/79.5"
+  }
+ ]
+}

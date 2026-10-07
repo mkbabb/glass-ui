@@ -1,0 +1,70 @@
+# battery start Wed Oct  7 11:15:41 EDT 2026 11:15  up 1 day,  1:21, 2 users, load averages: 84.04 84.70 97.97
+E-1 chromium exit 1 · E-1 chromium FAIL · 12 pass, 4 fail, 0 unmeasured of 16 gating cells (0 reported) · load 84.0/84.7/98.0 at start, 77.7/83.3/97.3 at end · 11 s, load at start 84.0/84.7/98.0
+    FAIL       E-1 runtime dragged (carousel) · no harness scene exemplifies carousel (H-2: add one to the scene app) · load 77.7/83.3/97.3
+    FAIL       E-1 runtime presented (sheet) · no harness scene exemplifies sheet (H-2: add one to the scene app) · load 77.7/83.3/97.3
+    FAIL       E-1 runtime field (input) · no harness scene exemplifies input (H-2: add one to the scene app) · load 77.7/83.3/97.3
+    FAIL       E-1 runtime ambient (aurora) · no harness scene exemplifies aurora (H-2: add one to the scene app) · load 77.7/83.3/97.3
+E-1 webkit   exit 1 · E-1 webkit FAIL · 10 pass, 6 fail, 0 unmeasured of 16 gating cells (0 reported) · load 77.7/83.3/97.3 at start, 51.6/71.8/87.7 at end · 371 s, load at start 77.7/83.3/97.3
+    FAIL       E-1 runtime dragged (carousel) · no harness scene exemplifies carousel (H-2: add one to the scene app) · load 75.4/82.6/96.9
+    FAIL       E-1 runtime disclosed (accordion) · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 81.8/82.2/94.0
+    FAIL       E-1 runtime disclosed (accordion) PRM press-light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 51.6/71.8/87.7
+    FAIL       E-1 runtime presented (sheet) · no harness scene exemplifies sheet (H-2: add one to the scene app) · load 51.6/71.8/87.7
+    FAIL       E-1 runtime field (input) · no harness scene exemplifies input (H-2: add one to the scene app) · load 51.6/71.8/87.7
+    FAIL       E-1 runtime ambient (aurora) · no harness scene exemplifies aurora (H-2: add one to the scene app) · load 51.6/71.8/87.7
+E-2 chromium exit 0 · E-2 chromium PASS · 24 pass, 0 fail, 0 unmeasured of 24 gating cells (0 reported) · load 51.6/71.8/87.7 at start, 44.9/68.3/85.9 at end · 29 s, load at start 51.6/71.8/87.7
+E-2 webkit   exit 1 · E-2 webkit FAIL · 20 pass, 4 fail, 0 unmeasured of 24 gating cells (0 reported) · load 44.9/68.3/85.9 at start, 73.1/61.4/78.4 at end · 213 s, load at start 44.9/68.3/85.9
+    FAIL       E-2 accordion commit·pointer light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 45 s; then CELL TIMEOUT 45 s) · load 44.3/60.6/80.7
+    FAIL       E-2 accordion commit·tap(coarse) light · ENGINE CLOSED, REPRODUCED 2/2 (page.evaluate: Target page, context or browser has been closed; then page.evaluate: Target page, context or browser has been closed) · load 43.4/60.1/80.4
+    FAIL       E-2 accordion commit·pointer dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 45 s; then CELL TIMEOUT 45 s) · load 65.8/59.8/77.9
+    FAIL       E-2 accordion commit·tap(coarse) dark · ENGINE CLOSED, REPRODUCED 2/2 (page.evaluate: Target page, context or browser has been closed; then page.evaluate: Target page, context or browser has been closed) · load 65.8/59.8/77.9
+E-3 chromium exit 1 · E-3 chromium FAIL · 10 pass, 2 fail, 0 unmeasured of 12 gating cells (0 reported) · load 73.1/61.4/78.4 at start, 89.3/65.2/79.5 at end · 13 s, load at start 73.1/61.4/78.4
+    FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 78.4/62.7/78.7
+    FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 89.3/65.2/79.5
+E-3 webkit   exit 1 · E-3 webkit FAIL · 10 pass, 2 fail, 0 unmeasured of 12 gating cells (0 reported) · load 89.3/65.2/79.5 at start, 109.7/71.2/81.4 at end · 20 s, load at start 89.3/65.2/79.5
+    FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 95.7/67.3/80.1
+    FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 109.7/71.2/81.4
+E-4 chromium exit 1 · E-4 chromium FAIL · 1 pass, 1 fail, 0 unmeasured of 2 gating cells (0 reported) · load 119.0/73.8/82.2 at start, 120.6/75.6/82.7 at end · 15 s, load at start 119.0/73.8/82.2
+    FAIL       E-4 slider fling carries velocity · axis x · fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 238 frames, median 8.3 ms · load 120.1/74.8/82.5
+E-4 webkit   exit 1 · E-4 webkit FAIL · 1 pass, 1 fail, 0 unmeasured of 2 gating cells (0 reported) · load 121.8/76.6/83.1 at start, 117.0/77.1/83.1 at end · 11 s, load at start 121.8/76.6/83.1
+    FAIL       E-4 slider fling carries velocity · axis x · fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 121 frames, median 17.0 ms · load 120.2/77.1/83.2
+E-5 chromium exit 0 · E-5 chromium PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (0 reported) · load 117.0/77.1/83.1 at start, 113.3/78.7/83.6 at end · 25 s, load at start 117.0/77.1/83.1
+E-5 webkit   exit 1 · E-5 webkit FAIL · 4 pass, 2 fail, 0 unmeasured of 6 gating cells (0 reported) · load 121.5/81.0/84.4 at start, 152.1/119.2/100.2 at end · 378 s, load at start 121.5/81.0/84.4
+    FAIL       E-5 accordion press light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 107.7/87.9/86.5
+    FAIL       E-5 accordion press dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 142.8/115.8/98.7
+E-6 chromium exit 1 · E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 152.1/119.2/100.2 at start, 151.4/120.7/101.0 at end · 13 s, load at start 152.1/119.2/100.2
+    FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 153.8/120.7/100.9
+    UNMEASURED E-6 s6 channel light · no idle animation to read · load 153.8/120.7/100.9
+    UNMEASURED E-6 s6 shape light · no idle animation to read · load 153.8/120.7/100.9
+    UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 153.8/120.7/100.9
+    UNMEASURED E-6 s6 period light · no idle animation to read · load 153.8/120.7/100.9
+    FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 151.4/120.7/101.0
+    UNMEASURED E-6 s6 channel dark · no idle animation to read · load 151.4/120.7/101.0
+    UNMEASURED E-6 s6 shape dark · no idle animation to read · load 151.4/120.7/101.0
+    UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 151.4/120.7/101.0
+    UNMEASURED E-6 s6 period dark · no idle animation to read · load 151.4/120.7/101.0
+E-6 webkit   exit 1 · E-6 webkit FAIL · 2 pass, 2 fail, 8 unmeasured of 12 gating cells (2 reported) · load 151.4/120.7/101.0 at start, 152.6/121.5/101.4 at end · 6 s, load at start 151.4/120.7/101.0
+    FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 152.6/121.5/101.4
+    UNMEASURED E-6 s6 channel light · no idle animation to read · load 152.6/121.5/101.4
+    UNMEASURED E-6 s6 shape light · no idle animation to read · load 152.6/121.5/101.4
+    UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 152.6/121.5/101.4
+    UNMEASURED E-6 s6 period light · no idle animation to read · load 152.6/121.5/101.4
+    FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 152.6/121.5/101.4
+    UNMEASURED E-6 s6 channel dark · no idle animation to read · load 152.6/121.5/101.4
+    UNMEASURED E-6 s6 shape dark · no idle animation to read · load 152.6/121.5/101.4
+    UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 152.6/121.5/101.4
+    UNMEASURED E-6 s6 period dark · no idle animation to read · load 152.6/121.5/101.4
+E-7 chromium exit 1 · E-7 chromium FAIL · 2 pass, 2 fail, 0 unmeasured of 4 gating cells (0 reported) · load 152.6/121.5/101.4 at start, 153.9/122.3/101.8 at end · 6 s, load at start 152.6/121.5/101.4
+    FAIL       E-7 writers (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rA/wt · load 152.6/121.5/101.4
+    FAIL       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 1 (glass-focus-veil) · bound 0 · load 153.9/122.3/101.8
+E-7 webkit   exit 1 · E-7 webkit FAIL · 2 pass, 2 fail, 0 unmeasured of 4 gating cells (0 reported) · load 153.9/122.3/101.8 at start, 149.5/122.3/102.1 at end · 6 s, load at start 153.9/122.3/101.8
+    FAIL       E-7 writers (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rA/wt · load 149.7/121.9/101.8
+    FAIL       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 1 (glass-focus-veil) · bound 0 · load 149.5/122.3/102.1
+E-8 chromium exit 0 · E-8 chromium PASS · 5 pass, 0 fail, 0 unmeasured of 5 gating cells (0 reported) · load 149.5/122.3/102.1 at start, 150.8/123.9/103.0 at end · 15 s, load at start 149.5/122.3/102.1
+E-8 webkit   exit 1 · E-8 webkit FAIL · 3 pass, 2 fail, 0 unmeasured of 5 gating cells (0 reported) · load 150.8/123.9/103.0 at start, 73.8/96.0/96.1 at end · 247 s, load at start 150.8/123.9/103.0
+    FAIL       E-8 literal accordion · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 76.7/108.9/100.2
+    FAIL       E-8 literal accordion PRM · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 73.8/96.0/96.1
+E-9 chromium exit 0 · E-9 chromium PASS · 18 pass, 0 fail, 0 unmeasured of 18 gating cells (0 reported) · load 73.8/96.0/96.1 at start, 71.4/94.3/95.5 at end · 17 s, load at start 73.8/96.0/96.1
+E-9 webkit   exit 1 · E-9 webkit FAIL · 12 pass, 2 fail, 0 unmeasured of 14 gating cells (0 reported) · load 71.4/94.3/95.5 at start, 29.9/59.4/79.9 at end · 255 s, load at start 71.4/94.3/95.5
+    FAIL       E-9 accordion press-spatial light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 42.0/76.7/88.4
+    FAIL       E-9 accordion press-spatial dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 29.1/59.8/80.1
+# battery end Wed Oct  7 11:43:15 EDT 2026 11:43  up 1 day,  1:49, 2 users, load averages: 29.85 59.43 79.87

@@ -1,0 +1,29 @@
+# R-A mountprobe · chromium 149.0.7827.55 · load 333.0/354.8/367.1
+switch V0_head                      mount range 0.000 QUIET · commit range 0.000 peak 1.000 SILENT · [data-state=checked] · load 334.0/354.6/367.0
+switch V1_keyframes                 mount range 0.060 POPS · commit range 0.060 peak 1.050 POPS · [data-state=checked] · load 323.1/352.0/366.0
+switch V2_keyframes_starting_style  mount range 0.060 POPS · commit range 0.060 peak 1.050 POPS · [data-state=checked] · load 323.1/352.0/366.0
+switch V3_keyframes_ready_guard     mount range 0.000 QUIET · commit range 0.000 peak 1.000 SILENT · [data-state=checked] · load 298.7/346.5/364.0
+switch V4_registered_transition     mount range 0.000 QUIET · commit range 0.023 peak 1.020 POPS · [data-state=checked] · load 283.1/342.5/362.5
+chip   V0_head                      mount range 0.000 QUIET · commit range 0.092 peak 1.090 POPS · [aria-pressed=true data-state=on] · load 277.4/340.3/361.6
+chip   V1_keyframes                 mount range 0.064 POPS · commit range 0.125 peak 1.125 POPS · [aria-pressed=true data-state=on] · load 277.4/340.3/361.6
+chip   V2_keyframes_starting_style  mount range 0.064 POPS · commit range 0.125 peak 1.125 POPS · [aria-pressed=true data-state=on] · load 275.9/338.9/361.0
+chip   V3_keyframes_ready_guard     mount range 0.000 QUIET · commit range 0.092 peak 1.090 POPS · [aria-pressed=true data-state=on] · load 275.8/337.9/360.5
+chip   V4_registered_transition     mount range 0.000 QUIET · commit range 0.024 peak 1.096 POPS · [aria-pressed=true data-state=on] · load 273.5/335.3/359.3
+# R-A mountprobe · webkit 26.5 · load 270.5/332.6/358.1
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.goto: Timeout 30000ms exceeded.
+Call log:
+[2m  - navigating to "http://127.0.0.1:53626/?scene=switch&theme=light&on=1&defer=1", waiting until "load"[22m
+
+    at cell (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-1/R-A/mountprobe.mjs:37:14)
+    at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-1/R-A/mountprobe.mjs:49:13 {
+  log: [
+    '  - navigating to "http://127.0.0.1:53626/?scene=switch&theme=light&on=1&defer=1", waiting until "load"'
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v26.0.0

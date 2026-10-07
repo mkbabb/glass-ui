@@ -1,0 +1,25 @@
+{
+ "id": "E-4",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rA/out/builds/proto"
+ },
+ "loadStart": "121.8/76.6/83.1",
+ "loadEnd": "117.0/77.1/83.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "FAIL",
+   "line": "axis x · fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 121 frames, median 17.0 ms",
+   "load": "120.2/77.1/83.2"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "117.0/77.1/83.1"
+  }
+ ]
+}
