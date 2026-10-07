@@ -66,6 +66,22 @@ plants its nouns require.
                      `block-size: max(…)` floors as `min-block-size` does)
             token    a custom property `src` declares under a prefix the span forbids members of (FN-04: every
                      `--radius-*` rung beside `--radius-sm` and `--radius-card`)
+          Pass 15 (FO-01 to FO-06) found the four kinds read names only. Six more read the FORM `src` writes a
+          subject in; each is carried only by a red or green plant (never the C plant) written in that form:
+            split      a property of a touched family that `src` declares with its value on the next line
+                       (FO-01: `transition:` at `dock/styles/layer-group.css:354-355`)
+            listpos    a comma-list property of a touched family that `src` writes as a list, so the subject can
+                       follow another member (FO-01: `layer-group.css:259-261`)
+            redeclare  a token the span lets through in a `(?!…var(--t)…)` allow-list and `src` declares: a rule
+                       that sets it re-points every allowed read (FO-02: `--radius-ctx` at `overlay-plate.css:64`)
+            default    a prop the span forbids a numeric default on, defaulted in script as `props.x ?? n`, the
+                       idiom `src` writes (FO-03: `progress/Progress.vue:40`)
+            variant    a Tailwind viewport variant `src` writes (`sm:`, `md:`, `lg:`), wherever the span reads the
+                       viewport over a file that holds script or template (FO-04: `toast/Toaster.vue:84`)
+            matchmedia a media feature the span reads in CSS that `src` reads through `matchMedia`, when the span
+                       does not name `matchMedia` (FO-05: `deck/composables/useEdgeZones.ts:40`)
+            value      every value `src` gives a pointer or hover feature, when the span reads one (FO-05:
+                       `(pointer: fine)`)
           Each sibling must be carried by a plant, red if it is the defect in another spelling, green if it is not;
           the plant then runs as every other plant does, so a red sibling the gate passes is open NARROW.
 
@@ -414,6 +430,7 @@ CLAIMS = {
         G("src/components/sheet/styles.css", "@media (min-width: 40rem) { .x { color: red; } }", "HEAD's media feature (`styles.css:483`, W-E.7's), not a declaration"),
         G("src/components/sheet/styles.css", ".x { min-block-size: 0; }", "HEAD's zero floors (`styles.css:118`)"),
         G("src/components/sheet/styles.css", ".x { min-block-size: var(--touch-target); }", "HEAD's grip floor (`styles.css:259`)"),
+        R("src/components/sheet/styles.css", '[data-slot="sheet-content"] { --touch-target: 50vh; min-block-size: var(--touch-target); }', "the one token the floor arm allows, re-declared to floor the content (pass 15 FO-06 SIBLING)"),
         C("src/components/sheet/detents/use.ts", "const span = window.visualViewport?.height ?? 0;\nel.style.setProperty(\"--sheet-floor\", `${floor}px`);", "§3 item 3: the span from `visualViewport`, the floor published as `--sheet-floor`"),
     ),
     ("W-E.4", "E4-G15"): L(GONE),
@@ -425,6 +442,11 @@ CLAIMS = {
         R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: 170; }", "a literal that is not `999` (pass 14 hardening note; fix-15 named the rung)"),
         R("src/styles/theme/bridges.css", ":root { --z-toggle: var(--z-toast); }", "another rung, re-declared outside the scale file"),
         R("src/components/menu/DropdownMenuSubContent.vue", "    sideOffset: 0,", "HEAD's zero default (`DropdownMenuSubContent.vue:20`)"),
+        R("src/components/select/SelectContent.vue", "    sideOffset: props.sideOffset ?? 4,", "a default in the script idiom of `progress/Progress.vue:40` (pass 15 FO-03)"),
+        R("src/components/select/SelectContent.vue", "const o = props.sideOffset || 4;", "a default through `||` (pass 15 FO-03)"),
+        R("src/styles/theme/bridges.css", ":root { --z-max: 170; }", "the allowed rung re-pointed outside the scale file (pass 15 FO-06 SIBLING)"),
+        R("src/components/toggle-group/styles.css", ".x { --z-toggle: 999; }", "the toggle's rung declared in a component stylesheet (pass 15 hardening note)"),
+        G("src/components/select/SelectContent.vue", "    sideOffset: props.sideOffset,", "the consumer's own offset passed through, HEAD's form (`SelectContent.vue:52`)"),
         R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-background); }", "`--z-background`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
         R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-bar); }", "`--z-bar`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
         R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-behind); }", "`--z-behind`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
@@ -479,6 +501,13 @@ CLAIMS = {
         R("src/components/progress/Progress.vue", "<style>\n@media (max-height: 480px) { .x { display: none; } }\n</style>", "a viewport height query (pass 14 FN-05 SIBLING)"),
         R("src/components/progress/Progress.vue", "<style>\n@media (max-aspect-ratio: 1 / 1) { .x { display: none; } }\n</style>", "an aspect-ratio query (pass 14 FN-05 SIBLING)"),
         R("src/components/progress/Progress.vue", "<style>\n@media (orientation: portrait) { .x { display: none; } }\n</style>", "an orientation query"),
+        R("src/components/progress/Progress.vue", '<div class="max-sm:hidden">x</div>', "a Tailwind `max-` viewport variant (pass 15 FO-04)"),
+        R("src/components/progress/Progress.vue", '<div class="sm:hidden">x</div>', "`sm:` (pass 15 FO-04)"),
+        R("src/components/progress/Progress.vue", '<div class="md:hidden">x</div>', "`md:` (pass 15 FO-04)"),
+        R("src/components/progress/Progress.vue", '<div class="lg:flex">x</div>', "`lg:` (pass 15 FO-04)"),
+        R("src/components/progress/Progress.vue", '<script setup lang="ts">\nconst wide = window.matchMedia("(min-width: 640px)").matches;\n</script>', "a width read through `matchMedia`, the form of `useTabResponsive.ts:105` (pass 15 FO-06 SIBLING)"),
+        G("src/components/progress/Progress.vue", '<div class="@sm:hidden">x</div>', "a container variant"),
+        R("src/components/progress/Progress.vue", '<script setup lang="ts">\nconst { matches } = useBreakpoint("(min-width: 640px)");\n</script>', "the library's `matchMedia` wrapper (`composables/dom/useBreakpoint.ts:46`) (pass 15 FO-06 SIBLING)"),
         G("src/components/progress/Progress.vue", "<style>\n@media (prefers-reduced-motion: reduce) { .x { transition: none; } }\n</style>", "a preference query, not a viewport key"),
         G("src/components/progress/Progress.vue", "<style>\n@container (width < 40rem) { .x { display: none; } }\n</style>", "a container query"),
     ),
@@ -513,6 +542,8 @@ CLAIMS = {
         R("src/components/metric/styles.css", ".x { border-top-left-radius: var(--radius-3xl); }", "a physical corner"),
         G("src/components/metric/styles.css", ".x { border-end-end-radius: var(--radius-ctx); }", "a corner on the context radius"),
         G("src/components/metric/styles.css", ".x { border-radius: var(--radius-ctx); }", "the context radius"),
+        R("src/components/metric/styles.css", '.metric[data-posture="cell"] { --radius-ctx: var(--radius-card); }', "the context token pinned to a rung, the declaration of `overlay-plate.css:64` (pass 15 FO-02)"),
+        R("src/components/metric/styles.css", ".metric { --radius-ctx: 16px; }", "the context token pinned to a literal (pass 15 FO-02)"),
     ),
     ("W-E.9", "E9-G7"): S(  # "no viewport keys in the fold"
         R("src/components/tabs/composables/useTabResponsive.ts", 'const narrow = useMediaQuery("(max-width: 36rem)");', "vueuse `useMediaQuery`"),
@@ -532,6 +563,11 @@ CLAIMS = {
         R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (max-height: 480px) { .x { display: block; } }\n</style>", "a viewport height query (pass 14 FN-05 SIBLING)"),
         R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (max-aspect-ratio: 1 / 1) { .x { display: block; } }\n</style>", "an aspect-ratio query (pass 14 FN-05 SIBLING)"),
         R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (orientation: portrait) { .x { display: block; } }\n</style>", "an orientation query"),
+        R("src/components/labeled-field/LabeledField.vue", '<div class="labeled-field max-sm:grid-cols-1">x</div>', "a Tailwind `max-` viewport variant (pass 15 FO-04)"),
+        R("src/components/labeled-field/LabeledField.vue", '<div class="flex sm:flex-col">x</div>', "`sm:`, the form of `toast/Toaster.vue:84` (pass 15 FO-04)"),
+        R("src/components/labeled-field/LabeledField.vue", '<div class="md:max-w-[420px]">x</div>', "`md:`, the form of `toast/Toaster.vue:74` (pass 15 FO-04)"),
+        R("src/components/labeled-field/LabeledField.vue", '<div class="lg:border-l">x</div>', "`lg:`, the form of `configurator/Configurator.vue:351` (pass 15 FO-04)"),
+        G("src/components/labeled-field/LabeledField.vue", '<div class="@sm:grid-cols-1">x</div>', "a container variant"),
         C("src/components/labeled-field/LabeledField.vue", "<style>\n.labeled-field { container: field / inline-size; }\n@container field (max-width: 36rem) { .x { display: block; } }\n</style>", "§3 item 5's container form"),
         C("src/components/tabs/composables/useTabResponsive.ts", "const ro = new ResizeObserver(([e]) => { fits.value = e.contentRect.width >= strip.value!.scrollWidth; });", "§3 item 4's observer on the strip's own box"),
     ),
@@ -579,6 +615,8 @@ CLAIMS = {
         R("src/components/dialog/styles.css", ".x { box-shadow: 0 0 0 2px color-mix(in oklab, var(--foreground)48%, transparent); }", "unspaced"),
         R("src/components/dialog/styles.css", ".x { box-shadow: 0 0 0 2px color-mix(in oklab, var(--foreground) 40%, transparent); }", "another literal mix"),
         G("src/components/dialog/styles.css", ".x { box-shadow: 0 0 0 2px var(--ring-rung); }", "the rung"),
+        R("src/components/dialog/styles.css", ".x {\n    box-shadow:\n        0 0 0 2px color-mix(in oklab, var(--foreground) 48%, transparent);\n}", "the value on the next line, the form `src` writes `box-shadow` in 23 times (pass 15 FO-06 SIBLING)"),
+        R("src/components/dialog/styles.css", ".x { box-shadow: 0 1px 2px rgb(0 0 0 / 0.1), 0 0 0 2px color-mix(in oklab, var(--foreground) 40%, transparent); }", "the mix second in a shadow list (pass 15 FO-06 SIBLING)"),
     ),
     ("W-H.2", "G9"): L(GONE),
     ("W-H.2", "G10"): DOCKET,
@@ -651,6 +689,9 @@ CLAIMS = {
         R("src/components/dock/styles/run.css", "@media (hover: none) { .x { inline-size: 3rem; } }", "the touch device keyed on `hover` (pass 14 FN-05 SIBLING)"),
         R("src/components/dock/styles/run.css", "@media (any-hover:none) { .x { inline-size: 3rem; } }", "`any-hover`, unspaced"),
         G("src/components/dock/styles/run.css", "@media (hover: hover) { .x:hover { color: red; } }", "a hover effect gated on a hover device, not a size model"),
+        R("src/components/dock/composables/useDockHold.ts", 'export const coarse = () => !window.matchMedia("(pointer: fine)").matches;', "the other value through `matchMedia`, the form of `deck/composables/useEdgeZones.ts:40` (pass 15 FO-05)"),
+        R("src/components/dock/styles/density.css", "@media not (pointer: fine) { .glass-dock { --x: 1; } }", "the other value, inverted (pass 15 FO-05)"),
+        R("src/components/dock/composables/useDockHold.ts", 'export const coarse = () => window.matchMedia("(pointer: coarse)").matches;', "`(pointer: coarse)` through `matchMedia`, the form of `popover/Popover.vue:84`"),
     ),
     ("W-I.2", "G1"): S(  # "no member set read from element children"
         R("src/components/carousel/useCarousel.ts", "const members = [...el.children];", "a spread"),
@@ -688,6 +729,9 @@ CLAIMS = {
         R("src/components/dock/styles/run.css", ".x {\n    transition: block-size var(--spring-dock-duration) var(--spring-dock);\n}", "the vertical dock's seat transition (`run.css:376,384`) (pass 14 FN-05 SIBLING)"),
         C("src/components/dock/styles/run.css", ".x {\n    transition: var(--icon-button-transition), block-size var(--spring-dock-duration) var(--spring-dock);\n}", "§3 item 1's appended form on a vertical dock"),
         G("src/components/dock/styles/run.css", ".x { transition: flex-direction 0s; }", "`flex-direction`, not a size"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > .x { transition:\n    inline-size var(--spring-dock-duration) var(--spring-dock); }", "the value on the next line, the form of `layer-group.css:354-355` (pass 15 FO-01)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > .x { transition: background var(--dock-motion-fast), inline-size var(--spring-dock-duration) var(--spring-dock); }", "a list that opens on another property, the form of `layer-group.css:259-261` (pass 15 FO-01)"),
+        R("src/components/dock/styles/run.css", ".x { transition-property: opacity, inline-size; }", "`transition-property` as a list, the size second (pass 15 FO-06 SIBLING)"),
         G("src/components/dock/styles/run.css", ".x {\n    transition: var(--icon-button-transition), inline-size var(--spring-dock-duration) var(--spring-dock);\n}", "§3 item 1's appended form"),
     ),
     ("W-I.7", "I7-G2"): S(  # "C-8": no content-box in `src`
@@ -1266,6 +1310,8 @@ FAMILIES = [
 MEDIA_VIEWPORT = ["width", "min-width", "max-width", "height", "min-height", "max-height", "inline-size", "block-size",
                   "aspect-ratio", "min-aspect-ratio", "max-aspect-ratio", "orientation"]
 MEDIA_POINTER = ["pointer", "any-pointer", "hover", "any-hover"]
+LISTY = {"transition", "transition-property", "box-shadow", "font-family", "animation", "animation-name", "will-change",
+         "background", "background-image", "mask", "mask-image"}  # properties whose value is a comma list
 _SRC = {}
 
 
@@ -1298,6 +1344,15 @@ def _src(root):
         "media": set(x.lower() for q in re.findall(r"@media([^{]*)\{", sheet) for x in re.findall(r"\(\s*([a-z-]+)\s*[:<>=)]", q)),
         "tokens": set(re.findall(r"(?:^|[{;])\s*(--[a-z][\w-]*)\s*:", sheet, re.M)),
         "scripts": scripts,
+        # pass 15 FO-01 to FO-05: the forms `src` writes a declaration, a default, a breakpoint and a media read in
+        "split": set(x.lower() for x in re.findall(r"(?:^|[{;])\s*([a-zA-Z-]+)\s*:[ \t]*\n", sheet, re.M)),
+        "listdecl": set(m.group(1).lower() for m in re.finditer(r"(?:^|[{;])\s*([a-zA-Z-]+)\s*:([^;{}]*)", sheet, re.M)
+                        if not m.group(1).startswith("--") and "," in re.sub(r"\([^()]*(?:\([^()]*\)[^()]*)*\)", "", m.group(2))),
+        "values": set((a.lower(), b.lower()) for t in [sheet] + list(scripts.values())
+                      for a, b in re.findall(r"\(\s*((?:any-)?(?:pointer|hover))\s*:\s*([a-z]+)", t)),
+        "mm": set(x.lower() for t in scripts.values() for x in re.findall(r"matchMedia\(\s*[`'\"]\(\s*([a-z-]+)", t)),
+        "variants": set(x for t in scripts.values() for x in re.findall(r"(?<![\w@:\[-])((?:max-)?(?:sm|md|lg|xl|2xl)):(?=[a-z\[!])", t)),
+        "defaults": set(x for t in scripts.values() for x in re.findall(r"props\.(\w+)\s*(?:\?\?|\|\|)\s*-?\d", t)),
     }
     _SRC[root] = out
     return out
@@ -1386,6 +1441,49 @@ def siblings(g, entry, spans, root):
         for p in MEDIA_POINTER:
             if p in src["media"]:
                 out.append(("family", p, "a pointer media feature `src` queries; the span reads `pointer`"))
+    fam_props = set()
+    if "@media" not in span:
+        axes = touched(SIZE_W) or touched(SIZE_H)
+        for fam in FAMILIES:
+            if touched(fam) or (axes and fam in (SIZE_W, SIZE_H)):
+                fam_props |= set(fam)
+    # split (pass 15 FO-01): a property of a touched family that `src` writes with its value on the next line
+    for p in sorted(fam_props & src["split"]):
+        out.append(("split", p, f"`src` writes `{p}:` with its value on the next line"))
+    # listpos (pass 15 FO-01): a property of a touched family that `src` writes as a comma list, so the subject can
+    # sit after another member
+    for p in sorted(fam_props & src["listdecl"] & LISTY):
+        out.append(("listpos", p, f"`src` writes `{p}` as a list; the subject can follow another member"))
+    # redeclare (pass 15 FO-02): a token the span lets through as `var(--t)`, which `src` declares: a rule that sets
+    # it re-points every read the span allows
+    raw = " ".join(spans).replace("\\", "")
+    allowed = set()
+    for m in re.finditer(r"\(\?!", raw):  # the allow-list: what a negative lookahead lets through after the property
+        allowed |= set(re.findall(r"var\(\s*(--[a-z][a-z0-9-]*[a-z0-9])", raw[m.end():m.end() + 80]))
+    for t in sorted(allowed):
+        if t in src["tokens"]:
+            out.append(("redeclare", t, f"`src` declares `{t}`, the token the span allows"))
+    # default (pass 15 FO-03): a prop the span forbids a numeric default on, which `src` could default in script as
+    # `props.x ?? n` (the idiom `src` writes: `props.{…} ?? n`)
+    if src["defaults"]:
+        for nm in sorted(set(re.findall(r"(?<![\w-])([a-z]+[A-Z]\w*)[^\n]{0,40}?\[:=\][^\n]{0,24}?\[0-9\]", span))):
+            out.append(("default", nm, f"`src` writes prop defaults in script as `props.x ?? n` ({', '.join(sorted(src['defaults'])[:3])}, …)"))
+    reads_scripts = any(f == x or f.startswith(x + "/") for x in scope for f in src["scripts"])
+    viewport = ("@media" in span and touched(MEDIA_VIEWPORT)) or re.search(r"matchMedia|useMediaQuery", span)
+    # variant (pass 15 FO-04): a Tailwind viewport variant compiles to a media query; read wherever the span reads
+    # the viewport over a file that carries a template or a class string
+    if viewport and reads_scripts:
+        for v in sorted(src["variants"]):
+            out.append(("variant", v + ":", f"`src` writes the viewport variant `{v}:` in class strings"))
+    # matchmedia (pass 15 FO-05): a media feature the span reads in CSS, read through `matchMedia` in script
+    if "matchMedia" not in span and reads_scripts:
+        for f in sorted(src["mm"]):
+            if (viewport and f in MEDIA_VIEWPORT) or (re.search(r"pointer|hover", span) and f in MEDIA_POINTER):
+                out.append(("matchmedia", f, f"`src` reads `({f}: …)` through `matchMedia`"))
+    # value (pass 15 FO-05): every value `src` gives a pointer or hover feature, when the span reads one
+    if re.search(r"pointer|hover", span):
+        for f, v in sorted(src["values"]):
+            out.append(("value", f"{f}: {v}", f"`src` queries `({f}: {v})`"))
     # token: a prefix whose members the span forbids by name
     raw = " ".join(spans).replace("\\", "")  # a regex may open groups between `--` and the name: `--(?!(?:glass-blur-(?:…`
     pres = {"--" + x for x in re.findall(r"--(?:\(\?[:!=]|\()*([a-z][a-z0-9]*(?:-[a-z0-9]+)*-)(?:\(|\[|\*|<)", raw)}
@@ -1403,13 +1501,28 @@ def siblings(g, entry, spans, root):
     return uniq
 
 
+SHAPED = {
+    "split": lambda p: re.compile(r"(?<![\w-])" + re.escape(p) + r"\s*:[ \t]*\n", re.I),
+    "listpos": lambda p: re.compile(r"(?<![\w-])" + re.escape(p) + r"\s*:(?!\s*var\()\s*(?:[^;{},()]|\((?:[^()]|\([^()]*\))*\))+,", re.I),
+    "redeclare": lambda t: re.compile(r"(?<![\w-])" + re.escape(t) + r"\s*:", re.I),
+    "default": lambda n: re.compile(r"\b" + re.escape(n) + r"\s*(?:\?\?|\|\|)\s*-?\d"),
+    "variant": lambda v: re.compile(r"(?<![\w@:\[-])" + re.escape(v) + r"[a-z\[!]"),
+    "matchmedia": lambda f: re.compile(r"matchMedia\(\s*[`'\"]\(\s*(?:not\s+)?" + re.escape(f) + r"\b"),
+    "value": lambda fv: re.compile(r"\(\s*" + re.escape(fv.split(":")[0]) + r"\s*:\s*" + re.escape(fv.split(": ")[1]) + r"\b"),
+}
+
+
 def sibling_arm(g, entry, spans, root, where):
     texts = [p[1] for p in entry["plants"]]
     res = []
+    own = [p[1] for p in entry["plants"] if p[2] != "cure"]
     for kind, name, how in siblings(g, entry, spans, root):
         bare = name.lstrip(".")
         rx = re.compile(r"(?<![\w-])" + re.escape(bare) + r"(?![\w-])" if kind != "carrier" else r"(?<![\w-])\.?" + re.escape(bare) + r"(?![\w-])", re.I)
-        if not any(rx.search(t) for t in texts):
+        pool = texts
+        if kind in SHAPED:  # these kinds are a form, not a name: a plant carries one only in that form
+            rx, pool = SHAPED[kind](name), own
+        if not any(rx.search(t) for t in pool):
             res.append(f"OPEN SIBLING {where}: `{name}` ({kind}: {how}) is in no plant")
     return res
 

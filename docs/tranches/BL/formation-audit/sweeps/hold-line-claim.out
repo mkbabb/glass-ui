@@ -396,3 +396,58 @@ exit=1
 ## after: the plan as fix-15 leaves it; plants ran in the same worktree
 in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 589, open 0
 exit=0
+
+# ===== fix-16 (pass 15 FO-01 to FO-06: the SIBLING arm gains six form kinds read from `src`: split, listpos, redeclare, default, variant, matchmedia, value; HEAD `b58c5357`; worktree .claude/worktrees/bl/formation/fix-16/wt)
+
+## before (1): the new SIBLING arm alone, before any plant was added, on the plan at `b58c5357` (enumeration of every instance of the class)
+OPEN SIBLING W-E.3 E3-G9 · one floor authority: `--touch-target` (redeclare: `src` declares `--touch-target`, the token the span allows) is in no plant
+OPEN SIBLING W-E.4 E4-G19 · no off-scale z and no: `--z-max` (redeclare: `src` declares `--z-max`, the token the span allows) is in no plant
+OPEN SIBLING W-E.4 E4-G19 · no off-scale z and no: `sideOffset` (default: `src` writes prop defaults in script as `props.x ?? n` (count, link, max, …)) is in no plant
+OPEN SIBLING W-E.7 E7-G9 · one width query: `lg:` (variant: `src` writes the viewport variant `lg:` in class strings) is in no plant
+OPEN SIBLING W-E.7 E7-G9 · one width query: `md:` (variant: `src` writes the viewport variant `md:` in class strings) is in no plant
+OPEN SIBLING W-E.7 E7-G9 · one width query: `sm:` (variant: `src` writes the viewport variant `sm:` in class strings) is in no plant
+OPEN SIBLING W-E.7 E7-G9 · one width query: `min-width` (matchmedia: `src` reads `(min-width: …)` through `matchMedia`) is in no plant
+OPEN SIBLING W-E.8 E8-G4 · Metric reads the conte: `--radius-ctx` (redeclare: `src` declares `--radius-ctx`, the token the span allows) is in no plant
+OPEN SIBLING W-E.9 E9-G7 · no viewport keys in th: `lg:` (variant: `src` writes the viewport variant `lg:` in class strings) is in no plant
+OPEN SIBLING W-E.9 E9-G7 · no viewport keys in th: `md:` (variant: `src` writes the viewport variant `md:` in class strings) is in no plant
+OPEN SIBLING W-E.9 E9-G7 · no viewport keys in th: `sm:` (variant: `src` writes the viewport variant `sm:` in class strings) is in no plant
+OPEN SIBLING W-H.1 G15 · the Close ring is the ru: `box-shadow` (split: `src` writes `box-shadow:` with its value on the next line) is in no plant
+OPEN SIBLING W-H.1 G15 · the Close ring is the ru: `box-shadow` (listpos: `src` writes `box-shadow` as a list; the subject can follow another member) is in no plant
+OPEN SIBLING W-I.1 G18 · one pointer model (stati: `pointer` (matchmedia: `src` reads `(pointer: …)` through `matchMedia`) is in no plant
+OPEN SIBLING W-I.1 G18 · one pointer model (stati: `pointer: fine` (value: `src` queries `(pointer: fine)`) is in no plant
+OPEN SIBLING W-I.7 I7-G1 · seat transition: `transition` (split: `src` writes `transition:` with its value on the next line) is in no plant
+OPEN SIBLING W-I.7 I7-G1 · seat transition: `transition` (listpos: `src` writes `transition` as a list; the subject can follow another member) is in no plant
+OPEN SIBLING W-I.7 I7-G1 · seat transition: `transition-property` (listpos: `src` writes `transition-property` as a list; the subject can follow another member) is in no plant
+open sibling 18
+exit=1 (any OPEN line makes the sweep exit 1)
+
+## before (2): the new sweep with its plants, on the plan at `b58c5357` (BL_ROOT = a copy of the worktree plan folder); plants ran in the fix-16 worktree
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with the one token the floor arm allows, re-declared to floor the content (pass 15 FO-06 SIBLING) planted in src/components/sheet/styles.css: '[data-slot="sheet-content"] { --touch-target: 50vh; min-block-size: va'
+OPEN NARROW  waves/W-E.4.md:95 E4-G19 · no off-scale z and no literal offse: passes with a default in the script idiom of `progress/Progress.vue:40` (pass 15 FO-03) planted in src/components/select/SelectContent.vue: '    sideOffset: props.sideOffset ?? 4,'
+OPEN NARROW  waves/W-E.4.md:95 E4-G19 · no off-scale z and no literal offse: passes with a default through `||` (pass 15 FO-03) planted in src/components/select/SelectContent.vue: 'const o = props.sideOffset || 4;'
+OPEN NARROW  waves/W-E.4.md:95 E4-G19 · no off-scale z and no literal offse: passes with the allowed rung re-pointed outside the scale file (pass 15 FO-06 SIBLING) planted in src/styles/theme/bridges.css: ':root { --z-max: 170; }'
+OPEN NARROW  waves/W-E.4.md:95 E4-G19 · no off-scale z and no literal offse: passes with the toggle's rung declared in a component stylesheet (pass 15 hardening note) planted in src/components/toggle-group/styles.css: '.x { --z-toggle: 999; }'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with a Tailwind `max-` viewport variant (pass 15 FO-04) planted in src/components/progress/Progress.vue: '<div class="max-sm:hidden">x</div>'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with `sm:` (pass 15 FO-04) planted in src/components/progress/Progress.vue: '<div class="sm:hidden">x</div>'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with `md:` (pass 15 FO-04) planted in src/components/progress/Progress.vue: '<div class="md:hidden">x</div>'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with `lg:` (pass 15 FO-04) planted in src/components/progress/Progress.vue: '<div class="lg:flex">x</div>'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with a width read through `matchMedia`, the form of `useTabResponsive.ts:105` (pass 15 FO-06 SIBLING) planted in src/components/progress/Progress.vue: '<script setup lang="ts">\nconst wide = window.matchMedia("(min-width: 6'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with the library's `matchMedia` wrapper (`composables/dom/useBreakpoint.ts:46`) (pass 15 FO-06 SIBLING) planted in src/components/progress/Progress.vue: '<script setup lang="ts">\nconst { matches } = useBreakpoint("(min-width'
+OPEN NARROW  waves/W-E.8.md:68 E8-G4 · Metric reads the context radius (sta: passes with the context token pinned to a rung, the declaration of `overlay-plate.css:64` (pass 15 FO-02) planted in src/components/metric/styles.css: '.metric[data-posture="cell"] { --radius-ctx: var(--radius-card); }'
+OPEN NARROW  waves/W-E.8.md:68 E8-G4 · Metric reads the context radius (sta: passes with the context token pinned to a literal (pass 15 FO-02) planted in src/components/metric/styles.css: '.metric { --radius-ctx: 16px; }'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with a Tailwind `max-` viewport variant (pass 15 FO-04) planted in src/components/labeled-field/LabeledField.vue: '<div class="labeled-field max-sm:grid-cols-1">x</div>'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with `sm:`, the form of `toast/Toaster.vue:84` (pass 15 FO-04) planted in src/components/labeled-field/LabeledField.vue: '<div class="flex sm:flex-col">x</div>'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with `md:`, the form of `toast/Toaster.vue:74` (pass 15 FO-04) planted in src/components/labeled-field/LabeledField.vue: '<div class="md:max-w-[420px]">x</div>'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with `lg:`, the form of `configurator/Configurator.vue:351` (pass 15 FO-04) planted in src/components/labeled-field/LabeledField.vue: '<div class="lg:border-l">x</div>'
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with the value on the next line, the form `src` writes `box-shadow` in 23 times (pass 15 FO-06 SIBLING) planted in src/components/dialog/styles.css: '.x {\n    box-shadow:\n        0 0 0 2px color-mix(in oklab, var(--foreg'
+OPEN NARROW  waves/W-I.1.md:225 G18 · one pointer model (static, O-81 (3)): passes with the other value through `matchMedia`, the form of `deck/composables/useEdgeZones.ts:40` (pass 15 FO-05) planted in src/components/dock/composables/useDockHold.ts: 'export const coarse = () => !window.matchMedia("(pointer: fine)").matc'
+OPEN NARROW  waves/W-I.1.md:225 G18 · one pointer model (static, O-81 (3)): passes with the other value, inverted (pass 15 FO-05) planted in src/components/dock/styles/density.css: '@media not (pointer: fine) { .glass-dock { --x: 1; } }'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with the value on the next line, the form of `layer-group.css:354-355` (pass 15 FO-01) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run > .x { transition:\n    inline-size var(--spring-'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with a list that opens on another property, the form of `layer-group.css:259-261` (pass 15 FO-01) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run > .x { transition: background var(--dock-motion-'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with `transition-property` as a list, the size second (pass 15 FO-06 SIBLING) planted in src/components/dock/styles/run.css: '.x { transition-property: opacity, inline-size; }'
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 617, open 23
+exit=1
+
+## after: the plan as fix-16 leaves it; plants ran in the same worktree
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 617, open 0
+exit=0
