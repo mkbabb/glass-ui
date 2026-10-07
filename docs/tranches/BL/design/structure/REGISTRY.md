@@ -1648,3 +1648,247 @@ These continue S-1..S-32.
 **Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
 
 No route converged in pass 4. The kept declaration is B's, and pass 4's critique is its first clean pass.
+
+---
+---
+
+# D1 · pass 5 · REGISTRY: the route after pass 5
+
+| field | value |
+|---|---|
+| seat | D1 pass-5 agglomeration. Closes pass 5 with B's status and convergence, the two-clean-passes count, G's re-trigger, the rulings still owed, the floor's open gaps and the pass-6 plan. Passes 1-4 above are kept intact |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `8d911018`. `git diff b100cc80 HEAD -- . ':!docs'` is empty and `git diff b100cc80 HEAD -- pass-5/B-kit` is empty: the critic judged the kit as committed at `b100cc80`, on 10.1.0's code (base code digest `35f7b831…`) |
+| inputs, read in full | `pass-5/`: `FLOOR-P5.md`, `B-proto.md`, `critique-B.md`, `critique-B/results/RESULTS.md`; the five `splits/*.md` by their result and open-gap sections; this file §P2-6.5, §P2-7, §P3-8.4, §P3-9, §P4-0..§P4-9; `RULINGS.md` |
+| instruments | none re-run. Read-only checks: `git log`, the two empty diffs above, `B-kit/results/p5/b2-open.txt`, `B-kit/authored/dock-tests-merge.json` (`why`), `grep unparsed B-kit/lib/row.mjs` (the kit's writer calls the floor's parse check) |
+| fences | no source edit, no git write; this part is the only write. `critique-B.md` and `critique-B/` are untracked at this HEAD; the closures this part takes from them (S-11, S-12) are committed with this part |
+
+Short citations: `FP5` is `pass-5/FLOOR-P5.md`, `Bp5` is `pass-5/B-proto.md`, `cB5` is `pass-5/critique-B.md`, `cB5-R` is `pass-5/critique-B/results/RESULTS.md`.
+
+---
+
+## P5-0 · In brief
+
+| id | route | status | conv. (critic) | critic's verdict | re-opened by the critic | reason in one line |
+|---|---|---|---:|---|---|---|
+| D1-B | sealed modules, flat | **ADVANCE** | 22/27 = 81.5% | ADVANCE | **2** (S-10, B-07) | exact replay from committed bytes (`4678be8f…`, 1,564 files); 17 of 18 clauses GREEN; 0 new browser failures over 68 bands; FD-4 cannot judge its own migration, and B15 passes placeholder split names |
+| D1-G | eponymous closures | BANK (unchanged) | 44% (pass 3) | — | — | re-trigger not fired (§P5-3) |
+
+**Not converged, and the count restarts.** B has 5 open items: S-14, B-01 and B-10 carried open, S-10 and B-07 re-opened. By §P2-6.5 (3) and §P4-8.5, a re-opening restarts the count: **the two-clean-passes count for B is 0.** The earliest convergence is the pass-7 agglomeration: pass 6 closes the five items and its critique re-opens nothing (count 1), and pass 7's critique re-opens nothing (count 2).
+
+Five findings shape pass 6.
+
+1. **The bulk of the R-5 work is done and replays.** 103 steps; B0 444 → 0, B6 62 → 0; every file over 500 lines split into a named module (`src/index.ts` by moving its prose, 585 → 494); `tests-visual` carved with all 169 Playwright files in the program; the full graph-selected browser run on the final tree reads 0 new failures (cB5 §3, cB5-R §8). What is left of B-01 is B2 alone, 61 lines, and every one of them waits on a ruling or on R-3 colocation (§P5-4).
+2. **The floor's FD-4 is the blocker, not the route.** A value-identical migration reads RED because `verify` numbers SFC scope ids by first appearance, so the Timeline split cannot be listed. Its coverage arm reads a spec at `tests-visual/<basename>` and swallows the miss as `""`, so the readback spec placed in chip's unit to be its evidence (FP4-3's cure) can never count (cB5-R §7). Both are floor work (§P5-5).
+3. **The masking-fallback class lives in the instruments.** Three of the four live S-14 sites the critic found are the floor's own readers (`cascade.mjs:219`, `lib/graph/graph.mjs:37`, `lib/recipes.mjs:58`), and the first of them is what hides the coverage fault. The gate that judges masking fallbacks must not run on tools that use them.
+4. **Names are judged only where the gate looks.** B15's file pattern lacks its directory pattern's provenance forms (`-N`, `part-N`, wave ids), and B15 skips every test file. Two live instances came through the carve unrenamed (`suffuse2.spec.ts`, `motion2.spec.ts`).
+5. **The law and the gate diverge.** LAW.md still says "pass 4"; §10 declares unseen shapes the gate now reads; §11 says B15 judges test stems, which it does not (cB5 §5.6). A literal reading of the law no longer gives the gate's verdict.
+
+---
+
+## P5-1 · Registry
+
+| id | unit set declared by | enforced between units | status | conv. | re-trigger / refutation | pass-6 role |
+|---|---|---|---|---:|---|---|
+| D1-B | a module is a code dir in `src` or `scripts` with a door (B7), recursively; containers and kind slots excepted | privacy: the recursive door seal, kernel included (B1); direction (B8); sibling acyclicity, value and type, same-dir files included (B4); no masking fallback (B17); names (B15) | ADVANCE | 81.5% | — | the one live route; fifth full pass |
+| D1-G | first-level component units; eponymous roots | B1 into component units only | BANK | 44% | not fired (§P5-3) | none |
+| D1-D′ | — | — | BANK (unchanged) | 7% | not fired: no plant found a rank inversion B4 and B8 both miss | none |
+| D1-A | — | — | BLOCK (unchanged) | 35% | — | none |
+| D1-C, D1-E, D1-F | — | — | BANK (unchanged) | 40/35/30% | no trigger fired | none |
+
+---
+
+## P5-2 · D1-B · Sealed modules, flat: ADVANCE, 81.5%
+
+**What ran** (Bp5 §0-§4, confirmed by cB5 §2-§4 and cB5-R §1-§8).
+
+| item | result |
+|---|---|
+| chain | 103 steps from the P5 floor cut (S1 `025409f8…`) to S59. The five zone split seats authored rows in parallel; one route seat landed them |
+| replay | final code digest `4678be8f…801ac` over 1,564 files. The route's R1 ran `--twice` in full (20,547 s); the critic's ran `--twice` for S1..S2b and plain thereafter, every step's digest equal to the chain's, rerun a no-op (cB5-R §1). Disclosed by both: load 300-550 |
+| toolchain | build, demo build, both `vue-tsc`: 0. 69 export keys, `./aurora-config` present; `./styles/theme` → `dist/styles/theme/index.css`, no file at the old name (P4-R4) |
+| gate | 17 of 18 GREEN; RED B2 61. Census: 0 dirs over 12, 0 zone files over 500 lines |
+| vitest | critic: 262 files, 2,331 of 2,333 passed, 1 failed (seal B2), 1 pending. The route's own run lost files to load timeouts and needed `dist-demo` (no `pretest`; a HEAD defect, §P5-6) |
+| package | verify:package CLEAN at 2,959,588 against the datum S59 wrote (+46,042 B over the floor): declarations +40,140 (wiring +16,099, JSDoc prose +18,687, body +5,354), MIGRATION.md +7,545, CSS +643, JS −2,518. By step: the S5-1 doors +20,386; the S39-12 blob shader split +13,678, all prose |
+| cascade | RED: content changed on `./styles` and `./styles.css` against a floor base byte-equal to the committed snapshot. With scope ids erased the rule multisets are equal and no pair is risky (argued from text by both seats, not a verifier verdict). P5-F3 holds on the route's tree: an unlisted reorder reads RED with 4 UNLISTED rules; the listed risky accent-tone pair reads RED |
+| browser | committed 154-spec selection, 68 bands: floor 864 tests (428 / 392 / 44), migrated 866 (429 / 393 / 44), **0 new failures**; 44 bands with a base-green count, 24 named with none. The chip readback spec passes on the migrated tree |
+
+**The critic's items** (cB5 §3): 22 CLOSED, 5 OPEN. Of the route's claimed closures, S-14 is refuted a third time with new live counterexamples; B-S11 and B-S12 confirmed; P4-G10 confirmed for non-test files only. S-11 and S-12 close on the critic's own runs, which the route had left OPEN (Bp5 §2.4).
+
+**This registry's reading.** It agrees with every verdict. Four need a sentence.
+
+- **S-10 re-opens on its text.** S-10 reads "FD-3, FD-4 and FD-5 on the floor". FD-4 on the floor cannot give a verdict on the one migration it exists to judge: a move reads as a content change, and its coverage arm cannot see a carved spec. Both faults show only on a migrated tree, which pass 4's tree (no SFC split, no carve) did not exercise. This is a listed item failing on new evidence, so it re-opens.
+- **B-07 re-opens on its text.** B-07 reads "file names are judged", and §P4-8.4 named the plant ("a split file's new module given a placeholder name"). `dock/part-1.ts` passes. The tree holds two instances in test stems, which B15 skips although LAW §11 says it judges them.
+- **S-12 closes on the critic's run.** §P4-8.4 asked for the full graph-selected run with per-band base-green counts and 0 new failures. The critic ran it from committed selection bytes; the run is replayable by `browser.mjs` on the same selection. The selection did not re-derive from the committed `changed` list alone (it needs the move lists, also committed); that is noted, not a defect (§P5-5, P5-G6).
+- **B-08 holds.** `accent-tone.css` sits at its HEAD rung, the readback passes, and the chip band reads 22 base-green, 0 new. FD-4's fault blocks a verifier verdict on Timeline, not on chip.
+
+**The critic's outside findings** (cB5 §5), read under §P2-6.5:
+
+| finding | maps to | effect |
+|---|---|---|
+| 1 · FD-4's coverage arm unreachable after the carve | S-10 | re-opened (above) |
+| 2 · masking fallbacks outside S-14's two forms: `armAsync().catch(() => undefined)` in the aurora, blob and fourier-field renderers; ~90 Playwright page-operation `.catch(() => {})` | S-14, already open | no new item. S-14's frozen text names a swallowed read of a missing file and a swallowed load of a live target. The renderer arms and page waits are runtime behaviour under the edict's "no masking fallbacks", which the tranche owes outside D1's structure checklist; logged P5-G3 to the tranche cursor. S-14's closure requires B17's law to state its scope (reads and loads) so a literal reading gives the gate's verdict |
+| 3 · B16 cannot place a page-driving visual spec; skips the tests-visual zone | B-10 (B-S16) | open already; route law (§P5-8.3) |
+| 4 · `dock/__tests__` reached 12 by merging 8 files into 3 | P4-R5, arm (a) in form | ruling owed, P5-R1 |
+| 5 · the datum row self-rebound | P4-R3 | ruling owed, P5-R2 |
+| 6 · LAW.md stale | B-07, S-14 | closes with them; the law re-stated to the gate |
+| 7 · `vite.style-fold.ts` 588 lines, a root config outside R-5's zones | R-5's zone list | ruling owed, P5-R4. Not an item: R-5 rules the zones, and the edict's long-running clause is in the list through B-01/B-10 |
+| 8 · 38 one-line `@import` CSS doors in dist | B-12 (doors decided, §P3-4) | none; they are LAW §5 doors, not forwarders at a moved name, so P4-R4 holds |
+| 9 · battery defects (pw-program path, 6 control FALSE+ via B0, strict mark match, selection inputs) | — | disclosed; no verdict rests on them |
+
+No finding maps to an edict clause the list leaves out. **No item is added; the checklist stays at 27.**
+
+**Why ADVANCE, not BLOCK.** Every open item has a stated cure at cause and none needs a new primitive. Two are floor work on an instrument that already exists (FD-4), two are gate widenings (B17, B15) with plants already written, and B2's 61 lines wait on one list of rulings and on R-3 colocation.
+
+---
+
+## P5-3 · G's re-trigger: not fired
+
+§P3-2.2's first condition is a conjunction: B's doors buy no catch G's E3 and B1 would not also make, **and** the owner rules the door bytes too high.
+
+- **The first arm fails again.** The critic re-ran pass 4's door plants as regressions on the migrated tree: K-INT, K-INT-T, N-INT caught by B1; T-CYC, T-CYC-N, V-CYC, F-CYC, F-CYC-T by B4; K-DOOR-L, T-OWN-L, LOCAL-L clean (cB5-R §4.2). G's law has no kernel seal and no module-grain cycle clause (§P4-3).
+- **The second arm has no ruling to act on**, but it now has a number. The S5-1 doors step adds +20,386 B of declarations, +13,874 B of it wiring (Bp5 §2.2); pass 4 measured +2,572 B over a different class set. The door wiring is the largest single class in the route's datum row, so P5-R2 is where the owner would rule the door bytes, if at all.
+
+G stays banked. The second re-trigger (the owner asks for eponymy as the declaration) has not fired.
+
+---
+
+## P5-4 · Rulings: P5-R1..P5-R5, owed
+
+P4-R1..P4-R5 were ruled before pass 5 (`RULINGS.md`) and held: no seat found one unbuildable. Five are owed now. Each carries this registry's recommendation, which the driver may override.
+
+| id | question | arms | evidence | recommendation |
+|---|---|---|---|---|
+| **P5-R1** | `dock/__tests__` after the GlassDock split (P4-R5's deferral) | (a) accept S56: eight single-concern files merged into three by what they test, 17 → 12; (b) a sub-slot or an exemption | the slot takes no sub-directory (B5); the `dock/shell` carve is refused at FD-2 (`splits/src.md` §5); 140 tests before and after; no merged file carries a module mock or a browser, and the two that do stay alone (`dock-tests-merge.json`) | **(a).** The merged files are named by concept (`GlassDock.press`, `GlassDock.motion`, …), every assertion is kept, and no test's environment changes. P3-R3 stays strict |
+| **P5-R2** | the route's datum row, 2,959,588 B (+46,042 over the floor), self-rebound at S59 | (a) rule it as measured; (b) hold the prose share until cured | P4-G9 explained (`decl-diff.mjs --doors --chain`): JSDoc prose +18,687 B, of which the S39-12 blob shader split alone +13,678 B; wiring +16,099 B; MIGRATION.md +7,545 B; JS −2,518 B | **(b), then (a).** A split that ships 13,678 B of new declaration prose has copied doc text into the new modules' public declarations; the cure is one source of record (the prose stays where the symbol is published, or leaves the declarations). Rule the remainder as measured once that cure lands. S59 as the one rebind at the migration's landing step satisfies P4-R3's "rebound once" |
+| **P5-R3** | B2's 61 lines (Bp5 §4, `b2-open.txt`) | per name: re-point, publish on the owning entry (P4-R2), or colocate the reader | demo 21, tests 31, tests-visual 8, scripts 1; `consumer-entries.mjs` finds nothing to re-point, because every target is private | **One list, ruled together.** Tests and the aurora visual specs: colocate into the subject unit's `__tests__/` (inside the unit is not a crossing, P4-R1); a test whose subjects are several units splits. Publish only a published component's contract: `useDockState` and the dock search types (`useDockSearch`'s contract) on `./dock`, `SectionHierarchy` on `./sidebar`. `mulberry32`/`hashString`: a demo-local prng. The rest (`useFuzzySearch`, `useGlassBackdropLuminance` + `GLASS_BACKDROP_SHARED_ATTR`, `useScrollScene`, `springProjection` + `motionTempo` with `regen-spring-tokens`, `isAuroraPointerEnabled`, `pendingRenderer`, `MAX_SATS`, `FOURIER_STROKE_RUNGS`): the route measures both arms per name (the reader re-written to the public surface, or the name published with its MIGRATION and pin rows), and the driver rules on that table |
+| **P5-R4** | do hand-written root configs join R-5's zones | (a) yes, bounds only (500 lines; the root dir is not counted against 12); (b) no | `vite.style-fold.ts` 588 lines, over 500 at HEAD; the edict's "the same for backend files" | **(a).** A build plugin is backend code; its length is the edict's concern regardless of where it sits. One file is affected; it splits into named modules beside it |
+| **P5-R5** | the subject of a page-driving visual spec | (a) the unit whose story or route the spec drives; (b) the harness | B16 reads a spec that imports no sealed file as the harness's (VIS-in-L FALSE+); 2 of 169 Playwright files sit in a unit slot | **(a).** R-3 places a visual spec with its subject; a spec that drives one unit's story has that unit as subject. The law states how the subject is read (the story path the spec opens, through the story manifest), and B16 judges the tests-visual zone by it |
+
+---
+
+## P5-5 · The floor: open gaps
+
+FLOOR-P5's battery went 0/6 → 6/6, its two regressions 2/2, pass 4's 8/8, and the graph batteries 59/59 and 18/18 (FP5 §1). FP5's own open gaps:
+
+| id | gap | state after pass 5 |
+|---|---|---|
+| FP5-1 | B-kit named the removed dist machinery (S20, S25, `test-edits.mjs`) | **closed**: the chain re-derived from the P5 cut and replays to MATCH |
+| FP5-2 | B-kit's own writer not parsed | **closed**: `B-kit/lib/row.mjs` calls the floor's `unparsed` before the first write and refuses a tree with no parse check |
+| FP5-3 | F4m plants an already-broken importer | declared limit; no build |
+| FP5-4 | P5-F3's moved set is one longest kept subsequence | safe direction (a hand-written listing of the other side reads RED); no build |
+| FP5-5 | verify:package RED at −5,511 B on the floor | ruled by P4-R3 at landing; the route row is P5-R2 |
+| FP5-6 | F47 not re-run; the full browser run | **closed** by the critic's full run (S-12) |
+| FP5-7 | the parse check reads syntax only | declared limit; no build |
+| FP5-9 | the floor uncommitted | **closed**: `3108676a` |
+
+New, from the critique, each an S-10 or S-14 cure at cause:
+
+| id | gap | source | pass-6 disposition |
+|---|---|---|---|
+| P5-G1 | `cascade verify` numbers SFC scope ids by first appearance, so a value-identical SFC style move reads as a content change and cannot be listed | cB5-R §7, Bp5 §2.3 | **P6-F1** |
+| P5-G2 | FD-4's coverage arm reads `tests-visual/<basename>`, swallows the miss as `""` (`cascade.mjs:219`), and keys results by basename against bands keyed by path | cB5-R §7 | **P6-F2** |
+| P5-G4 | the floor's other swallowed reads: `lib/graph/graph.mjs:37` (absent or malformed ledger = empty), `lib/recipes.mjs:58` (unreadable file = no classes) | cB5-R §5 | **P6-F3** |
+
+---
+
+## P5-6 · Open gaps outside the floor
+
+| id | gap | source | pass-6 disposition |
+|---|---|---|---|
+| P5-G3 | renderer `armAsync().catch(() => undefined)` (aurora, blob, fourier-field) and ~90 Playwright page-operation swallows | cB5 §5.2 | outside D1's checklist; logged to the tranche cursor as an edict defect class ("no masking fallbacks"). Not route work in D1 |
+| P5-G5 | `boot-graph/build.test.ts` needs `dist-demo`; `package.json` has no `pretest` | Bp5 §2.1 | a HEAD defect outside D1; logged to the tranche cursor |
+| P5-G6 | the browser selection does not re-derive from the committed `changed` list alone (it also needs the move lists) | cB5 §5.9 | the route's selection record names every input it read; no build |
+| P5-G7 | vitest and Playwright under load: hook timeouts, the base arm at 119/864 in 60 min at load 300-470 | Bp5 §2.1, §2.4 | P4-G8 holds: gate and browser verdicts are read on a quiet machine. The pass-6 seats state load with each verdict |
+| P5-G8 | 392 browser failures common to both trees, unclassified (many π-lane GPU readbacks in headless Chromium) | cB5-R §8 | outside D1 (0 new); logged to the tranche cursor |
+
+---
+
+## P5-7 · Facts pass 5 established
+
+These continue S-1..S-37.
+
+**S-38 · R-5 holds at 12/500 with named modules.** Every file over 500 lines in the five zones split into named modules with no counterexample, `src/index.ts` included, and the chain replays (Bp5 §1, cB5 §3). R-5's "report the counterexample before formation" clause has no remaining instance except the root config P5-R4 asks about.
+
+**S-39 · A slot bound can be met by merging by concept.** `dock/__tests__` went 17 → 12 by merging eight single-concern files into three, with every assertion kept (P5-R1).
+
+**S-40 · An instrument that swallows a miss cannot judge the class it swallows.** FD-4's coverage arm returned `""` for a spec that had moved, so no evidence could reach it, and nothing said so (cB5-R §7). The instruments are held to the same no-masking law as the tree.
+
+**S-41 · A migration's verifier must read its own moves.** Scope-id renumbering made a value-identical SFC split read as a content change. A verifier that cannot read a move the migration makes forces either an unlistable RED or a listing that over-reaches.
+
+**S-42 · Name rules must judge every stem the law names.** B15's directory pattern caught provenance names its file pattern missed, and its test-file skip let two through the carve.
+
+---
+
+## P5-8 · Pass-6 plan
+
+### P5-8.1 Routes
+
+| route | status | pass-6 work |
+|---|---|---|
+| D1-B | ADVANCE | fifth full pass: close S-10, S-14, B-01, B-07, B-10 |
+| D1-G, D1-D′, D1-A, D1-C, D1-E, D1-F | unchanged | none; triggers watched |
+
+### P5-8.2 Order
+
+1. **Rulings.** P5-R1..P5-R5 ruled into `RULINGS.md` as one list, before the floor and route seats. P5-R3's residual names are ruled on the route's both-arm table when it returns; the rest are ruled first.
+2. **Floor.** P6-F1..P6-F3 built once on one seat, each with a plant RED before and GREEN after; `FLOOR-P6.md`; committed before the route re-derives.
+3. **Route.** B re-derives from the P6 floor cut. Seats by model declared.
+4. **Critique.** A fresh critic who authored nothing in passes 2-6 writes and hashes the battery before reading the kit.
+5. **Pass-6 agglomeration.**
+
+### P5-8.3 Floor and route work
+
+| id | build | closes |
+|---|---|---|
+| P6-F1 | `cascade verify` reads an SFC style move as a move: scope ids are compared by the component they scope, not by first appearance, so a rule that keeps its text and its rung under a renamed scope is unmoved; a value change under a scope still reads RED | S-10 (P5-G1) |
+| P6-F2 | FD-4's coverage arm keys results and bands by the spec's path relative to the config's `testDir`, reads the spec at that path, and a missing spec fails the verdict loud | S-10, S-14 (P5-G2, `cascade.mjs:219`) |
+| P6-F3 | `lib/graph/graph.mjs:37` and `lib/recipes.mjs:58` cured at cause: an absent input is a caller's explicit statement, an unreadable or malformed one fails loud | S-14 (P5-G4) |
+| route · S-14 | B17 reads a named loader called with an argument (literal and parameter, all zones); a swallowed read through any reader the tree defines (`tree.read`, `T.read`), or B17's law names which readers count and the tree uses only those; the promise form `readFile(…).catch(h)`. `vite.style-fold.ts:412` and `vite.utility-emit.ts:94` fail loud on a missing SFC bundle. LAW §10 re-stated to the gate, including its scope (reads and loads) | S-14 |
+| route · B-07 | B15's file pattern takes its directory pattern's provenance forms (`-N`, `part-N`, wave ids, an eponym plus a digit or `Part`/`Split`); B15 judges test stems; `suffuse2.spec.ts` and `motion2.spec.ts` renamed by concept; LAW §11 matches the gate | B-07 |
+| route · B-S14 | B2 61 → 0 per P5-R3: test and aurora visual lines colocated into their units, contract names published with MIGRATION and pin rows, the rest per the ruled table | B-01, B-10 |
+| route · B-S16 | the gate guards Playwright-program membership (every Playwright file in a zone is in `playwright --list`); B16 reads a page-driving spec's subject per P5-R5 and judges the tests-visual zone; unit visual specs move into their slots | B-10 |
+| route | the S39-12 prose duplication cured and the datum row re-measured (P5-R2); `vite.style-fold.ts` split if P5-R4 is (a); LAW.md's header and sections re-stated so a literal reading gives the gate's verdict | P5-R2, P5-R4, B-07, S-14 |
+
+### P5-8.4 What pass 6 must prove
+
+§P4-8.4's bar unchanged, plus:
+- `cascade verify` GREEN on the migrated tree against the floor base, with every moved rule listed and no risky pair;
+- FD-4's coverage arm counts the carved chip readback spec as evidence (the critic's `fd4-cover-probe.mjs` reads covered=true on arm A);
+- B17 = 0 with the floor's own swallowed reads cured, and B2 = 0.
+
+**The battery must plant:** every X5 shape of cB5-R §4.3 in each zone; placeholder split names (`part-1.ts`, `GlassDock-2.ts`, `GlassDock2.ts`, `GlassDockPart2.ts`, `bs11.ts`, `GlassDockSplit.ts`) and a placeholder test stem; a Playwright file outside the program; a spec moved out from under FD-4's coverage (it must fail loud, not read empty); an SFC style split with values kept (GREEN once listed) and one with a value changed (RED); a legal page-driving `*.visual.ts` in its unit (clean). It re-runs pass 4's and pass 5's batteries as regressions.
+
+### P5-8.5 Convergence criterion
+
+§P2-6.5 unchanged. The checklist is §P3-9's 27 items, frozen, with the status in §P5-9. **B's two-clean-passes count is 0.** The pass-6 critique is the first of the two consecutive clean passes if it re-opens nothing and maps no finding to an edict clause the list leaves out; D1-B converges no earlier than the pass-7 agglomeration, and then only with all 27 items closed by committed, replayable measurements.
+
+---
+
+## P5-9 · Open gaps, enumerated (the pass-6 checklist)
+
+§P3-9's list carries forward with its text frozen. No item is added in pass 5.
+
+| item | pass-5 critic | entering pass 6 | what closes it |
+|---|---|---|---|
+| S-01 | CLOSED | CLOSED | re-met by the pass-6 kit's commit before judgment |
+| S-02 | CLOSED | CLOSED | — |
+| S-03 | CLOSED | CLOSED | — (P5-R1, P5-R2 owed as rulings, not as items) |
+| S-04..S-09 | CLOSED | CLOSED | — |
+| **S-10** | OPEN (re-opened) | **OPEN** | P6-F1, P6-F2; cascade GREEN on the migrated tree with the Timeline rules listed; the carved readback spec counted as evidence |
+| S-11 | CLOSED | CLOSED | — |
+| S-12 | CLOSED | CLOSED | — |
+| S-13 | CLOSED | CLOSED | — |
+| **S-14** | OPEN | **OPEN** | §P5-8.3 route · S-14 and P6-F2, P6-F3; the X5 plants caught |
+| **B-01** | OPEN | **OPEN** | B2 0 per P5-R3 (B0 and B6 already 0) |
+| B-02..B-06 | CLOSED | CLOSED | — |
+| **B-07** | OPEN (re-opened) | **OPEN** | §P5-8.3 route · B-07; the placeholder split-name and test-stem plants caught |
+| B-08, B-09 | CLOSED | CLOSED | — |
+| **B-10** | OPEN | **OPEN** | B-S14 run (B2 0); B-S16's program guard and P5-R5's subject reading (B-S10..B-S12, B-S15 done) |
+| B-11..B-13 | CLOSED | CLOSED | — |
+
+**Count entering pass 6:** 27 items, 22 closed, 5 open (S-10, S-14, B-01, B-07, B-10). Two-clean-passes count: 0.
+
+**Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
+
+No route converged in pass 5. The kept declaration is B's; the pass-5 critique re-opened two items, so its convergence record is not written.
