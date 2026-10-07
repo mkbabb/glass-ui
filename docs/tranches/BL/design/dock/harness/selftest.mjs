@@ -70,6 +70,7 @@ const EXPECT = [
     ["W3", "deadmorph", /^vagree·/, ["vagree"]],                       // H3-5
     ["W3", "nostretch", /^stretch·lead-add/, ["seatStep"]],            // H3-6
     ["W3", "nbjump", /^neighbour·/, ["neighbour"]],                    // H3-7
+    ["W3", "nboverlap", /^neighbour·warm-expand/, ["overlap"]],       // H3-7
     ["W3", "bandclose", /^warm-expand|^warm-collapse/, [OB]],          // H3-11 · Q-4
     ["W3", "anchordrift", /^anchor-end/, ["anchor"]],
     ["W3", "wideout", /^wide·collapsed-rest/, null],

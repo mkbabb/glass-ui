@@ -7,15 +7,17 @@
 // never by a hover whose out-delay the tool would have to outwait (B′ V-1: 11 identical tiles,
 // a 900 ms wait against a 3.6 s delay). Each runs in its own context under the screencast
 // (lib.mjs screencast: 25 fps, one video px per CSS px). The trigger is ALIGNED on the video
-// itself, in both engines, as stall.mjs does: a small black marker (MARK_PX square, just above the
-// plate's start corner, inside the crop) is shown in the same task as the trigger hooks, so the
-// first video frame that shows it is the first frame painted after the trigger. The strip starts
+// itself, in both engines, as stall.mjs does: a small black marker (MARK_PX square at the viewport's
+// top-left corner, where the video's own scale moves nothing: Playwright WebKit paints its video
+// scaled by 0.98-1.0, which moved a marker placed beside the plate off its expected pixels) is shown
+// in the same task as the trigger hooks, so the first video frame that shows it is the first frame
+// painted after the trigger. It is read from a second decode of the corner alone. The strip starts
 // one frame before it. The wall-clock mark misplaced Playwright WebKit's strips in pass 2, and a
 // search for "the first frame that differs" let a page still settling after load pass as a
 // trigger (a planted dead trigger passed two WebKit strips that way in the H3 self-test draft).
 //
 // One gated check per strip:
-//   tiles   the strip COUNTS only when its tiles differ OUTSIDE the marker: ≥ 2 distinct
+//   tiles   the strip COUNTS only when its tiles differ: ≥ 2 distinct
 //           consecutive tiles from the marker frame on. A strip of identical tiles is not a strip
 //           (the trigger did nothing) and fails, so it is re-run, never read.
 // RECORD: the strip PNG (<out>/runs/FM-*/strip-<engine>-<seq>.png), the tiles that differ, the
@@ -56,7 +58,7 @@ for (const engine of engines(args)) {
                     for (const h of q.pre ?? []) { await hook(page, h); await page.waitForTimeout(200); await waitRest(page, { quiet: 500, cap: 7000 }); }
                     await page.waitForTimeout(400);
                     const e0 = await extentNow(page);
-                    mk = { x: Math.round(e0.l), y: Math.max(0, Math.round(e0.t) - 4 - MARK_PX) };
+                    mk = { x: 0, y: 0 };
                     await page.evaluate(({ x, y, s }) => { const m = document.createElement("div"); m.id = "hp-film-mark"; m.style.cssText = `position:fixed;left:${x}px;top:${y}px;width:${s}px;height:${s}px;background:#000;z-index:2147483647;pointer-events:none;visibility:hidden;`; document.body.appendChild(m); }, { ...mk, s: MARK_PX });
                     await page.waitForTimeout(200);
                     mark("go");
@@ -64,16 +66,21 @@ for (const engine of engines(args)) {
                     await page.waitForTimeout(1200); await waitRest(page, { quiet: 400, cap: 7000 });
                     const e1 = await extentNow(page);
                     const vp = page.viewportSize();
-                    const l = Math.max(0, Math.min(e0.l, e1.l, mk.x) - 24), t = Math.max(0, Math.min(e0.t, e1.t, mk.y) - 24), r = Math.min(vp.width, Math.max(e0.r, e1.r) + 24), b = Math.min(vp.height, Math.max(e0.b, e1.b) + 24);
+                    const l = Math.max(0, Math.min(e0.l, e1.l) - 24), t = Math.max(0, Math.min(e0.t, e1.t) - 24), r = Math.min(vp.width, Math.max(e0.r, e1.r) + 24), b = Math.min(vp.height, Math.max(e0.b, e1.b) + 24);
                     box = { x: l, y: t, width: r - l, height: b - t };
                 });
                 const imgs = cast.frames.map((f) => readFrame(f));
                 const goF = Math.max(0, Math.floor(cast.marks.go / FRAME_MS));
-                const m = { x: mk.x - cast.frames[0].origin.x, y: mk.y - cast.frames[0].origin.y, w: MARK_PX, h: MARK_PX };
-                const skip = { x: m.x - 2, y: m.y - 2, w: m.w + 4, h: m.h + 4 };
+                // the marker corner, decoded on its own (the same -vsync 0 decode, so frame k is frame k)
+                const mdir = path.join(dir, "mark"); fs.mkdirSync(mdir, { recursive: true });
+                execFileSync("ffmpeg", ["-v", "error", "-i", cast.video, "-vsync", "0", "-vf", `crop=${MARK_PX}:${MARK_PX}:0:0`, path.join(mdir, "m%05d.png")]);
+                const mk_ = fs.readdirSync(mdir).filter((f) => /^m\d+\.png$/.test(f)).sort().map((f) => readFrame({ file: path.join(mdir, f), origin: { x: 0, y: 0 } }));
+                if (mk_.length !== imgs.length) throw new Error(`the marker decode has ${mk_.length} frames against ${imgs.length}`);
+                const m = { x: 0, y: 0, w: MARK_PX, h: MARK_PX };
+                const skip = null;
                 // a video opens on black frames before the first paint: the marker counts only after the page has painted its place light
-                const lit = imgs.findIndex((img) => !marked(img, m));
-                const start = lit < 0 ? -1 : imgs.findIndex((img, i) => i > lit && marked(img, m));
+                const lit = mk_.findIndex((img) => !marked(img, m));
+                const start = lit < 0 ? -1 : mk_.findIndex((img, i) => i > lit && marked(img, m));
                 if (start < 0) throw new Error("the video shows no trigger marker");
                 const s0 = Math.max(0, start - 1);
                 const pick = cast.frames.slice(s0, s0 + TILES);
@@ -86,7 +93,7 @@ for (const engine of engines(args)) {
                 execFileSync("ffmpeg", ["-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", list, "-vf", `tile=1x${pick.length}:padding=2:color=red`, "-frames:v", "1", png]);
                 const pass = distinct >= 2 && moved;
                 rep.add({ engine, cell: "film·" + q.name + tag, pass, failed: pass ? [] : ["tiles"], strip: png, tiles: pick.length, distinctTiles: distinct, markerFrame: start, wallClockFrame: goF, alignShiftMs: (start - goF) * FRAME_MS, motionFrames: end - start + 1,
-                    summary: `${pick.length} tiles from frame ${s0} (the trigger marker first shows on frame ${start}, ${(start - goF) * FRAME_MS} ms from the wall-clock mark), ${distinct} distinct outside the marker; motion to frame ${end} (${(end - start + 1) * FRAME_MS} ms); strip ${path.basename(png)}${pass ? "" : "  ⟶ FAILED: tiles (the strip does not count)"}` });
+                    summary: `${pick.length} tiles from frame ${s0} (the trigger marker first shows on frame ${start}, ${(start - goF) * FRAME_MS} ms from the wall-clock mark), ${distinct} distinct; motion to frame ${end} (${(end - start + 1) * FRAME_MS} ms); strip ${path.basename(png)}${pass ? "" : "  ⟶ FAILED: tiles (the strip does not count)"}` });
             });
         }
     } finally {

@@ -1,0 +1,936 @@
+{
+ "when": "2026-10-06T17:09:27.221Z",
+ "engines": [
+  "chromium",
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "W1",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 1, 43/44 PASS; failing: webkit:card·warm-expand[card]",
+   "ok": false,
+   "ms": 52069,
+   "load": 7.75
+  },
+  {
+   "witness": "W1",
+   "fixture": "csscarrier",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 44/44 PASS",
+   "ok": true,
+   "ms": 53723,
+   "load": 7.53
+  },
+  {
+   "witness": "W1",
+   "fixture": "lens",
+   "expect": "exit ≠ 0; corner fails in fit·rest|morph·expanded-rest|rail·rest",
+   "got": "exit 1, 26/30 FAIL; matching 8 (chromium+webkit)",
+   "ok": true,
+   "ms": 33525,
+   "load": 7.16
+  },
+  {
+   "witness": "W1",
+   "fixture": "squash",
+   "expect": "exit ≠ 0; corner fails in morph·first-expand|morph·warm-collapse|morph·collapsed-rest",
+   "got": "exit 1, 16/20 FAIL; matching 12 (chromium+webkit)",
+   "ok": true,
+   "ms": 21770,
+   "load": 7.11
+  },
+  {
+   "witness": "W1",
+   "fixture": "cssbend",
+   "expect": "exit ≠ 0; corner fails in morph·warm-expand|morph·warm-collapse",
+   "got": "exit 1, 12/20 FAIL; matching 8 (chromium+webkit)",
+   "ok": true,
+   "ms": 21556,
+   "load": 7.84
+  },
+  {
+   "witness": "W1",
+   "fixture": "deadmorph",
+   "expect": "exit ≠ 0; agree|moves fails in morph·warm-expand|morph·warm-collapse",
+   "got": "exit 1, 11/20 FAIL; matching 8 (chromium+webkit)",
+   "ok": true,
+   "ms": 20605,
+   "load": 8.56
+  },
+  {
+   "witness": "W1",
+   "fixture": "dot",
+   "expect": "exit ≠ 0; cover fails in fit·rest",
+   "got": "exit 1, 4/4 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 6821,
+   "load": 7.99
+  },
+  {
+   "witness": "W1",
+   "fixture": "cardlens",
+   "expect": "exit ≠ 0; corner fails in card·",
+   "got": "exit 1, 8/10 FAIL; matching 8 (chromium+webkit)",
+   "ok": true,
+   "ms": 12324,
+   "load": 11.2
+  },
+  {
+   "witness": "W1",
+   "fixture": "endlens",
+   "expect": "exit ≠ 0; corner fails in rail·scrolled-end|rail·focus-end",
+   "got": "exit 1, 4/6 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 6599,
+   "load": 9.94
+  },
+  {
+   "witness": "W1",
+   "fixture": "endout",
+   "expect": "exit ≠ 0; end fails in rail·scrolled-end|rail·focus-end",
+   "got": "exit 1, 6/6 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 6484,
+   "load": 10.13
+  },
+  {
+   "witness": "W1",
+   "fixture": "cardspread",
+   "expect": "exit ≠ 0; card fails in card·warm-expand|card·warm-collapse|card·first-expand",
+   "got": "exit 1, 6/10 FAIL; matching 6 (chromium+webkit)",
+   "ok": true,
+   "ms": 12108,
+   "load": 9.4
+  },
+  {
+   "witness": "W1",
+   "fixture": "cardlerp",
+   "expect": "an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand",
+   "got": "exit 1, 6/10 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 10942,
+   "load": 8.42
+  },
+  {
+   "witness": "W2",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 16/16 PASS",
+   "ok": true,
+   "ms": 45518,
+   "load": 8.42
+  },
+  {
+   "witness": "W2",
+   "fixture": "scroller",
+   "expect": "exit ≠ 0; scroller fails in route2|route3|route4",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium+webkit)",
+   "ok": true,
+   "ms": 20882,
+   "load": 9.41
+  },
+  {
+   "witness": "W2",
+   "fixture": "ringclip",
+   "expect": "exit ≠ 0; ring fails in route1",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 15812,
+   "load": 11.05
+  },
+  {
+   "witness": "W2",
+   "fixture": "noring",
+   "expect": "exit ≠ 0; paint fails in route1|route4",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium+webkit)",
+   "ok": true,
+   "ms": 26634,
+   "load": 10.16
+  },
+  {
+   "witness": "W2",
+   "fixture": "foldtail",
+   "expect": "exit ≠ 0; pointer|keyboard|at fails in route1",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 15758,
+   "load": 9.27
+  },
+  {
+   "witness": "W2",
+   "fixture": "notab",
+   "expect": "exit ≠ 0; keyboard fails in route1|route5|route6|route7",
+   "got": "exit 1, 10/10 FAIL; matching 10 (chromium+webkit)",
+   "ok": true,
+   "ms": 25629,
+   "load": 7.62
+  },
+  {
+   "witness": "W2",
+   "fixture": "noname",
+   "expect": "exit ≠ 0; at fails in route1|route5|route6|route7",
+   "got": "exit 1, 10/10 FAIL; matching 10 (chromium+webkit)",
+   "ok": true,
+   "ms": 25451,
+   "load": 6.49
+  },
+  {
+   "witness": "W2",
+   "fixture": "cwidth",
+   "expect": "exit ≠ 0; plateOut fails in route5",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 3124,
+   "load": 6.52
+  },
+  {
+   "witness": "W2",
+   "fixture": "depthscroll",
+   "expect": "exit ≠ 0; scroller fails in route6",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 5357,
+   "load": 6.52
+  },
+  {
+   "witness": "W2",
+   "fixture": "nestgrow",
+   "expect": "exit ≠ 0; fits|faces|pointer fails in route7",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 3038,
+   "load": 7.04
+  },
+  {
+   "witness": "W3",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 58/58 PASS",
+   "ok": true,
+   "ms": 197120,
+   "load": 8.56
+  },
+  {
+   "witness": "W3",
+   "fixture": "jump",
+   "expect": "exit ≠ 0; continuity fails in ^first-expand",
+   "got": "exit 1, 2/16 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 57451,
+   "load": 7.63
+  },
+  {
+   "witness": "W3",
+   "fixture": "subpx",
+   "expect": "exit ≠ 0; landing fails in ^warm-expand|^content-add",
+   "got": "exit 1, 16/16 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 68227,
+   "load": 8.03
+  },
+  {
+   "witness": "W3",
+   "fixture": "late",
+   "expect": "exit ≠ 0; window fails in ^warm-expand",
+   "got": "exit 1, 14/16 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 68541,
+   "load": 6.54
+  },
+  {
+   "witness": "W3",
+   "fixture": "owners",
+   "expect": "exit ≠ 0; owners fails in ^warm-expand",
+   "got": "exit 1, 16/16 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 58839,
+   "load": 7.95
+  },
+  {
+   "witness": "W3",
+   "fixture": "overhang",
+   "expect": "exit ≠ 0; faces fails in ^warm-expand",
+   "got": "exit 1, 5/16 FAIL; matching 1 (chromium)",
+   "ok": false,
+   "ms": 57044,
+   "load": 11.46
+  },
+  {
+   "witness": "W3",
+   "fixture": "content",
+   "expect": "exit ≠ 0; window fails in ^content-add|^content-remove",
+   "got": "exit 1, 8/16 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 105711,
+   "load": 9.25
+  },
+  {
+   "witness": "W3",
+   "fixture": "content",
+   "expect": "exit ≠ 0; ^ticking",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 7448,
+   "load": 9.36
+  },
+  {
+   "witness": "W3",
+   "fixture": "linear",
+   "expect": "exit ≠ 0; trajectory fails in ^warm-expand",
+   "got": "exit 1, 16/16 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 59127,
+   "load": 9.33
+  },
+  {
+   "witness": "W3",
+   "fixture": "ease",
+   "expect": "exit ≠ 0; trajectory fails in ^warm-expand",
+   "got": "exit 1, 16/16 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 60327,
+   "load": 10.22
+  },
+  {
+   "witness": "W3",
+   "fixture": "snap",
+   "expect": "exit ≠ 0; terminal fails in ^warm-expand",
+   "got": "exit 1, 13/16 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 58638,
+   "load": 26.79
+  },
+  {
+   "witness": "W3",
+   "fixture": "wall",
+   "expect": "exit ≠ 0; trajectory fails in ^reversal",
+   "got": "exit 1, 2/16 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 21025,
+   "load": 21.58
+  },
+  {
+   "witness": "W3",
+   "fixture": "slowclock",
+   "expect": "exit ≠ 0; window fails in ^warm-expand",
+   "got": "exit 1, 16/16 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 109978,
+   "load": 19.99
+  },
+  {
+   "witness": "W3",
+   "fixture": "seatjump",
+   "expect": "exit ≠ 0; seatStep fails in ^lead-add",
+   "got": "exit 1, 4/16 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 65068,
+   "load": 30.69
+  },
+  {
+   "witness": "W3",
+   "fixture": "doublex",
+   "expect": "exit ≠ 0; seatOverlap fails in ^lead-add",
+   "got": "exit 1, 4/16 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 61974,
+   "load": 30.13
+  },
+  {
+   "witness": "W3",
+   "fixture": "hiddengrow",
+   "expect": "exit ≠ 0; ^hidden-shown",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 5077,
+   "load": 23.53
+  },
+  {
+   "witness": "W3",
+   "fixture": "resizemorph",
+   "expect": "exit ≠ 0; window fails in ^viewport-resize",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 5448,
+   "load": 23.25
+  },
+  {
+   "witness": "W3",
+   "fixture": "resizenorest",
+   "expect": "exit ≠ 0; rest fails in ^viewport-resize",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 16363,
+   "load": 22.43
+  },
+  {
+   "witness": "W3",
+   "fixture": "blankswap",
+   "expect": "exit ≠ 0; blank fails in ^swap-long|^swap-short",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 46719,
+   "load": 18.01
+  },
+  {
+   "witness": "W3",
+   "fixture": "pop",
+   "expect": "exit ≠ 0; leaving fails in ^content-remove|^lead-remove",
+   "got": "exit 1, 4/16 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 59488,
+   "load": 21.14
+  },
+  {
+   "witness": "W3",
+   "fixture": "slipfade",
+   "expect": "exit ≠ 0; leaving fails in ^content-remove|^lead-remove",
+   "got": "exit 1, 4/16 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 60866,
+   "load": 19.31
+  },
+  {
+   "witness": "W3",
+   "fixture": "latsnap",
+   "expect": "exit ≠ 0; seatWidth fails in ^lattice",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 10168,
+   "load": 18.11
+  },
+  {
+   "witness": "W3",
+   "fixture": "infhold",
+   "expect": "exit ≠ 0; window fails in ^infanim",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 8710,
+   "load": 17.04
+  },
+  {
+   "witness": "W3",
+   "fixture": "infthrow",
+   "expect": "exit ≠ 0; errors fails in ^infanim",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 8759,
+   "load": 20.73
+  },
+  {
+   "witness": "W3",
+   "fixture": "deadmorph",
+   "expect": "exit ≠ 0; vagree fails in ^vagree·",
+   "got": "exit 1, 8/8 FAIL; matching 8 (chromium+webkit)",
+   "ok": true,
+   "ms": 57294,
+   "load": 19.49
+  },
+  {
+   "witness": "W3",
+   "fixture": "nostretch",
+   "expect": "exit ≠ 0; seatStep fails in ^stretch·lead-add",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 9524,
+   "load": 16.19
+  },
+  {
+   "witness": "W3",
+   "fixture": "nbjump",
+   "expect": "exit ≠ 0; neighbour fails in ^neighbour·",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 10262,
+   "load": 14.63
+  },
+  {
+   "witness": "W3",
+   "fixture": "bandclose",
+   "expect": "an OWNER-BLOCKED cell in ^warm-expand|^warm-collapse",
+   "got": "exit 0, 11/16 FAIL; matching 3 (chromium+webkit)",
+   "ok": true,
+   "ms": 61608,
+   "load": 15.51
+  },
+  {
+   "witness": "W3",
+   "fixture": "anchordrift",
+   "expect": "exit ≠ 0; anchor fails in ^anchor-end",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 12676,
+   "load": 22.73
+  },
+  {
+   "witness": "W3",
+   "fixture": "wideout",
+   "expect": "exit ≠ 0; ^wide·collapsed-rest",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 39938,
+   "load": 19.78
+  },
+  {
+   "witness": "W3",
+   "fixture": "twoowners",
+   "expect": "exit ≠ 0; owners fails in ^seat-transition",
+   "got": "exit 1, 2/2 FAIL; matching 0 (none)",
+   "ok": false,
+   "ms": 5492,
+   "load": 19.68
+  },
+  {
+   "witness": "W3",
+   "fixture": "adapterclip",
+   "expect": "exit ≠ 0; faces fails in ^warm-expand",
+   "got": "exit 1, 7/16 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 65080,
+   "load": 18.82
+  },
+  {
+   "witness": "W3",
+   "fixture": "wrongrung",
+   "expect": "exit ≠ 0; rung fails in ^warm-expand",
+   "got": "exit 1, 16/16 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 65684,
+   "load": 29.31
+  },
+  {
+   "witness": "W4",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 26/26 PASS",
+   "ok": true,
+   "ms": 105565,
+   "load": 36.58
+  },
+  {
+   "witness": "W4",
+   "fixture": "nohyst",
+   "expect": "exit ≠ 0; no-threshold-bounce",
+   "got": "exit 1, 2/8 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 27860,
+   "load": 20.64
+  },
+  {
+   "witness": "W4",
+   "fixture": "latch",
+   "expect": "exit ≠ 0; no-hover-latch",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 8122,
+   "load": 23.25
+  },
+  {
+   "witness": "W4",
+   "fixture": "menucollapse",
+   "expect": "exit ≠ 0; menu-holds",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 19450,
+   "load": 22.27
+  },
+  {
+   "witness": "W4",
+   "fixture": "noprm",
+   "expect": "exit ≠ 0; prm·posture-morph|prm·compact",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 25510,
+   "load": 20.23
+  },
+  {
+   "witness": "W4",
+   "fixture": "tapthrough",
+   "expect": "exit ≠ 0; tap-pins",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 17165,
+   "load": 23.67
+  },
+  {
+   "witness": "W4",
+   "fixture": "ungatedafter",
+   "expect": "exit ≠ 0; no-hover-latch",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 8071,
+   "load": 31.24
+  },
+  {
+   "witness": "W4",
+   "fixture": "pressgate",
+   "expect": "exit ≠ 0; press-then-scroll",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 7107,
+   "load": 30.1
+  },
+  {
+   "witness": "W4",
+   "fixture": "lategetter",
+   "expect": "exit ≠ 0; late-getter",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 10096,
+   "load": 27.17
+  },
+  {
+   "witness": "W4",
+   "fixture": "norefcount",
+   "expect": "exit ≠ 0; shared-scroller",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 8869,
+   "load": 29.02
+  },
+  {
+   "witness": "W4",
+   "fixture": "seatshrink",
+   "expect": "exit ≠ 0; seat-scale",
+   "got": "exit 1, 2/8 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 29346,
+   "load": 28.68
+  },
+  {
+   "witness": "W4",
+   "fixture": "prmscrub",
+   "expect": "exit ≠ 0; prm·compact",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 8698,
+   "load": 24.8
+  },
+  {
+   "witness": "W4",
+   "fixture": "compactjump",
+   "expect": "exit ≠ 0; non-first-current",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 7044,
+   "load": 25.7
+  },
+  {
+   "witness": "W4",
+   "fixture": "nocompact",
+   "expect": "exit ≠ 0; compact·compacts",
+   "got": "exit 1, 4/8 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 27562,
+   "load": 25.77
+  },
+  {
+   "witness": "W4",
+   "fixture": "noengage",
+   "expect": "exit ≠ 0; engagement-expands",
+   "got": "exit 1, 2/8 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 29740,
+   "load": 38.19
+  },
+  {
+   "witness": "W5",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 12/12 PASS",
+   "ok": true,
+   "ms": 37791,
+   "load": 51.88
+  },
+  {
+   "witness": "W5",
+   "fixture": "rimout",
+   "expect": "exit ≠ 0; inside fails in expanded|collapsed",
+   "got": "exit 1, 10/10 FAIL; matching 10 (chromium+webkit)",
+   "ok": true,
+   "ms": 30848,
+   "load": 58.82
+  },
+  {
+   "witness": "W5",
+   "fixture": "deadfill",
+   "expect": "exit ≠ 0; fill fails in h·expanded|v·expanded",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium+webkit)",
+   "ok": true,
+   "ms": 18439,
+   "load": 41.04
+  },
+  {
+   "witness": "W5",
+   "fixture": "rimshift",
+   "expect": "exit ≠ 0; whole fails in expanded|collapsed",
+   "got": "exit 1, 10/10 FAIL; matching 10 (chromium+webkit)",
+   "ok": true,
+   "ms": 31946,
+   "load": 35.84
+  },
+  {
+   "witness": "W5",
+   "fixture": "winonly",
+   "expect": "exit ≠ 0; fill fails in el-source",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 7029,
+   "load": 30.57
+  },
+  {
+   "witness": "W6",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 8/8 PASS",
+   "ok": true,
+   "ms": 20462,
+   "load": 30.76
+  },
+  {
+   "witness": "W6",
+   "fixture": "formout",
+   "expect": "exit ≠ 0; wraps fails in form·collapsed-rest",
+   "got": "exit 1, 6/8 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 22418,
+   "load": 28.35
+  },
+  {
+   "witness": "W6",
+   "fixture": "dismissout",
+   "expect": "exit ≠ 0; wraps fails in form·collapsed-rest",
+   "got": "exit 1, 8/8 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 25689,
+   "load": 33.64
+  },
+  {
+   "witness": "W6",
+   "fixture": "twoplates",
+   "expect": "exit ≠ 0; onePlate fails in form·collapsed-rest",
+   "got": "exit 1, 4/8 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 20580,
+   "load": 42.94
+  },
+  {
+   "witness": "W6",
+   "fixture": "formgone",
+   "expect": "exit ≠ 0; present fails in form·collapsed-rest",
+   "got": "exit 1, 2/8 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 25111,
+   "load": 42.69
+  },
+  {
+   "witness": "W6",
+   "fixture": "dismissspan",
+   "expect": "exit ≠ 0; dismissSeat fails in form·collapsed-rest",
+   "got": "exit 1, 2/8 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 20999,
+   "load": 42.99
+  },
+  {
+   "witness": "W6",
+   "fixture": "plateswap",
+   "expect": "exit ≠ 0; samePlate fails in form·expanded-rest",
+   "got": "exit 1, 4/8 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 25414,
+   "load": 41.66
+  },
+  {
+   "witness": "W6",
+   "fixture": "jump",
+   "expect": "exit ≠ 0; continuity fails in form·expand",
+   "got": "exit 1, 2/8 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 20664,
+   "load": 39.44
+  },
+  {
+   "witness": "W7",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 36/36 PASS",
+   "ok": true,
+   "ms": 65224,
+   "load": 42.54
+  },
+  {
+   "witness": "W7",
+   "fixture": "splitcaps",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 36/36 PASS",
+   "ok": true,
+   "ms": 66917,
+   "load": 25.94
+  },
+  {
+   "witness": "W7",
+   "fixture": "edgecut",
+   "expect": "exit ≠ 0; whole fails in ^(top|side|canvas)·",
+   "got": "exit 1, 36/36 FAIL; matching 36 (chromium+webkit)",
+   "ok": true,
+   "ms": 61895,
+   "load": 26.54
+  },
+  {
+   "witness": "W7",
+   "fixture": "sideedge",
+   "expect": "exit ≠ 0; same fails in ^side·",
+   "got": "exit 1, 12/12 FAIL; matching 12 (chromium+webkit)",
+   "ok": true,
+   "ms": 43854,
+   "load": 44.74
+  },
+  {
+   "witness": "W7",
+   "fixture": "gutterless",
+   "expect": "exit ≠ 0; gutter fails in ^(side|canvas)·",
+   "got": "exit 1, 24/24 FAIL; matching 24 (chromium+webkit)",
+   "ok": true,
+   "ms": 64147,
+   "load": 61.08
+  },
+  {
+   "witness": "W7",
+   "fixture": "badgeover",
+   "expect": "exit ≠ 0; badge fails in ^side·",
+   "got": "exit 1, 6/12 FAIL; matching 6 (chromium+webkit)",
+   "ok": true,
+   "ms": 42032,
+   "load": 70.97
+  },
+  {
+   "witness": "W7",
+   "fixture": "lens",
+   "expect": "exit ≠ 0; radius fails in ^(top|side)·",
+   "got": "exit 1, 24/24 FAIL; matching 24 (chromium+webkit)",
+   "ok": true,
+   "ms": 44205,
+   "load": 61.9
+  },
+  {
+   "witness": "W7",
+   "fixture": "nocaps",
+   "expect": "exit ≠ 0; whole fails in ^(top|side|canvas)·dark·dpr2",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium+webkit)",
+   "ok": true,
+   "ms": 10978,
+   "load": 60.43
+  },
+  {
+   "witness": "W8",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 12/12 PASS",
+   "ok": true,
+   "ms": 25218,
+   "load": 61.03
+  },
+  {
+   "witness": "W8",
+   "fixture": "squash",
+   "expect": "exit ≠ 0; sharp fails in ^expand|^collapse",
+   "got": "exit 1, 9/9 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 12314,
+   "load": 52.13
+  },
+  {
+   "witness": "W8",
+   "fixture": "jank",
+   "expect": "exit ≠ 0; pacing fails in ^expand|^collapse",
+   "got": "exit 1, 9/9 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 12280,
+   "load": 49.27
+  },
+  {
+   "witness": "R6",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 2/2 PASS",
+   "ok": true,
+   "ms": 10460,
+   "load": 46.94
+  },
+  {
+   "witness": "R6",
+   "fixture": "backdropmotion",
+   "expect": "exit ≠ 0; ring·static",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 9889,
+   "load": 43.45
+  },
+  {
+   "witness": "ST",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 1, 9/10 PASS; failing: webkit:stall·same-task[leap]",
+   "ok": false,
+   "ms": 69007,
+   "load": 42.36
+  },
+  {
+   "witness": "ST",
+   "fixture": "leap",
+   "expect": "exit ≠ 0; leap fails in ^stall·",
+   "got": "exit 1, 8/10 FAIL; matching 8 (chromium+webkit)",
+   "ok": true,
+   "ms": 77381,
+   "load": 33.26
+  },
+  {
+   "witness": "FM",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 12/12 PASS",
+   "ok": true,
+   "ms": 53843,
+   "load": 65.57
+  },
+  {
+   "witness": "FM",
+   "fixture": "deadhooks",
+   "expect": "exit ≠ 0; tiles fails in ^film·",
+   "got": "exit 1, 12/12 FAIL; matching 10 (chromium+webkit)",
+   "ok": true,
+   "ms": 52834,
+   "load": 44.39
+  },
+  {
+   "witness": "H6",
+   "fixture": "adapter-head",
+   "expect": "the law holds (exit 0)",
+   "got": "exit 0: PASS  adapter-law  ../../../../../../../../../Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/harness/adapter-head.mjs  L-1..L-5 hold",
+   "ok": true,
+   "ms": 411,
+   "load": 55.89
+  },
+  {
+   "witness": "H6",
+   "fixture": "adapter-preclip",
+   "expect": "L-1, L-2 and L-3 fail (exit ≠ 0)",
+   "got": "exit 1: FAIL  adapter-law  ../../../../../../../../../Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/harness/plants/adapter-preclip.mjs  L-1 extent() reads a custom property · L-2 paintingSeats() refers to extent()/plate() (a pre-clip) · L-3 the probe writes into the page",
+   "ok": true,
+   "ms": 1157,
+   "load": 55.89
+  },
+  {
+   "witness": "H8",
+   "fixture": "safaridriver",
+   "expect": "reports ENABLED, or UNMEASURED (owner's safaridriver checkbox) with safaridriver's reason",
+   "got": "UNMEASURED (owner's safaridriver checkbox)  Safari 26.4 (Darwin 25.4.0): session not created: Could not create a session: You must enable 'Allow remote automation' in the Developer section of Safari Settings to control Safari via WebDriver.",
+   "ok": true,
+   "ms": 1122,
+   "load": 55.5
+  }
+ ]
+}

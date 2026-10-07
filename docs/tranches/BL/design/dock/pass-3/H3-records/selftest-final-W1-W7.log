@@ -1,0 +1,24 @@
+12:48  up 1 day,  2:55, 2 users, load averages: 44.74 62.15 77.73
+OK   W1  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 44/44 PASS  [86 s, load 44.74]
+OK   W1  csscarrier      expect: exit 0, all cells PASS  ·  got: exit 0, 44/44 PASS  [68 s, load 95.43]
+OK   W1  lens            expect: exit ≠ 0; corner fails in fit·rest|morph·expanded-rest|rail·rest  ·  got: exit 1, 26/30 FAIL; matching 8 (chromium+webkit)  [44 s, load 80.23]
+OK   W1  squash          expect: exit ≠ 0; corner fails in morph·first-expand|morph·warm-collapse|morph·collapsed-rest  ·  got: exit 1, 16/20 FAIL; matching 12 (chromium+webkit)  [27 s, load 70.85]
+OK   W1  cssbend         expect: exit ≠ 0; corner fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 12/20 FAIL; matching 8 (chromium+webkit)  [27 s, load 67]
+OK   W1  deadmorph       expect: exit ≠ 0; agree|moves fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 12/20 FAIL; matching 8 (chromium+webkit)  [25 s, load 59.11]
+OK   W1  dot             expect: exit ≠ 0; cover fails in fit·rest  ·  got: exit 1, 4/4 FAIL; matching 2 (chromium+webkit)  [8 s, load 52.67]
+OK   W1  cardlens        expect: exit ≠ 0; corner fails in card·  ·  got: exit 1, 8/10 FAIL; matching 8 (chromium+webkit)  [17 s, load 50.45]
+OK   W1  endlens         expect: exit ≠ 0; corner fails in rail·scrolled-end|rail·focus-end  ·  got: exit 1, 4/6 FAIL; matching 4 (chromium+webkit)  [7 s, load 50.99]
+OK   W1  endout          expect: exit ≠ 0; end fails in rail·scrolled-end|rail·focus-end  ·  got: exit 1, 6/6 FAIL; matching 4 (chromium+webkit)  [8 s, load 48.51]
+OK   W1  cardspread      expect: exit ≠ 0; card fails in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 1, 6/10 FAIL; matching 6 (chromium+webkit)  [20 s, load 45.27]
+OK   W1  cardlerp        expect: an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 0, 6/10 FAIL; matching 6 (chromium+webkit)  [15 s, load 49.63]
+OK   W7  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 36/36 PASS  [67 s, load 49.27]
+OK   W7  splitcaps       expect: exit 0, all cells PASS  ·  got: exit 0, 36/36 PASS  [67 s, load 45.34]
+OK   W7  edgecut         expect: exit ≠ 0; whole fails in ^(top|side|canvas)·  ·  got: exit 1, 36/36 FAIL; matching 36 (chromium+webkit)  [61 s, load 43.94]
+OK   W7  sideedge        expect: exit ≠ 0; same fails in ^side·  ·  got: exit 1, 12/12 FAIL; matching 12 (chromium+webkit)  [41 s, load 45.44]
+OK   W7  gutterless      expect: exit ≠ 0; gutter fails in ^(side|canvas)·  ·  got: exit 1, 24/24 FAIL; matching 24 (chromium+webkit)  [61 s, load 31.66]
+OK   W7  badgeover       expect: exit ≠ 0; badge fails in ^side·  ·  got: exit 1, 6/12 FAIL; matching 6 (chromium+webkit)  [41 s, load 55.2]
+OK   W7  lens            expect: exit ≠ 0; radius fails in ^(top|side)·  ·  got: exit 1, 24/24 FAIL; matching 24 (chromium+webkit)  [41 s, load 51.47]
+OK   W7  nocaps          expect: exit ≠ 0; whole fails in ^(top|side|canvas)·dark·dpr2  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium+webkit)  [11 s, load 50.45]
+SELFTEST PASS  20/20 expectations hold
+exit 0
+13:01  up 1 day,  3:07, 2 users, load averages: 47.75 51.55 64.05

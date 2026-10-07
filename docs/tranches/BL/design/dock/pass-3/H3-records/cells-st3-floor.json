@@ -1,0 +1,122 @@
+{
+ "label": "floor",
+ "tag": "st3",
+ "runsRoot": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p3/h3/out/st3",
+ "when": "2026-10-07T16:47:52.225Z",
+ "cells": [
+  {
+   "w": "ST",
+   "engine": "chromium",
+   "pass": "main",
+   "cell": "stall·same-task",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 78.25,
+   "summary": "same-task: a 1200 ms block 0 ms after the flip (video: trigger marker → block-end marker 1200 ms); D 379.95 px (101.95 → 481.9); first leaves its rest at 1200 ms, travels 0 px before the block-end marker, lands at 1200 ms (RECORD; video scale 1.000); worst one-frame step 379.98 px at 1200 ms (dt 40 ms) vs bound 192.85 px (×1.97)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "ST",
+   "engine": "chromium",
+   "pass": "main",
+   "cell": "stall·1raf",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 85.14,
+   "summary": "1raf: a 1200 ms block 5 ms after the flip (video: trigger marker → block-end marker 1200 ms); D 379.97 px (101.94 → 481.9); first leaves its rest at 1200 ms, travels 0 px before the block-end marker, lands at 1200 ms (RECORD; video scale 1.000); worst one-frame step 379.99 px at 1200 ms (dt 40 ms) vs bound 192.86 px (×1.97)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "ST",
+   "engine": "chromium",
+   "pass": "main",
+   "cell": "stall·2raf",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 86.49,
+   "summary": "2raf: a 1200 ms block 14.1 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.95 px (101.95 → 481.9); first leaves its rest at 40 ms, travels 0 px before the block-end marker, lands at 1240 ms (RECORD; video scale 1.000); worst one-frame step 361.21 px at 1240 ms (dt 40 ms) vs bound 192.85 px (×1.87)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "ST",
+   "engine": "chromium",
+   "pass": "main",
+   "cell": "stall·100ms",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 86.58,
+   "summary": "100ms: a 1200 ms block 101.6 ms after the flip (video: trigger marker → block-end marker 1320 ms); D 379.9 px (101.95 → 481.85); first leaves its rest at 40 ms, travels 269.14 px before the block-end marker, lands at 1320 ms (RECORD; video scale 1.001); worst one-frame step 110.89 px at 1320 ms (dt 40 ms) vs bound 192.83 px (×0.58)"
+  },
+  {
+   "w": "ST",
+   "engine": "chromium",
+   "pass": "main",
+   "cell": "stall·mid-flight",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 88.52,
+   "summary": "mid-flight: a 1200 ms block 55.9 ms after the flip (video: trigger marker → block-end marker 1280 ms); D 379.9 px (101.89 → 481.79); first leaves its rest at 40 ms, travels 140.57 px before the block-end marker, lands at 1280 ms (RECORD; video scale 1.001); worst one-frame step 239.25 px at 1280 ms (dt 40 ms) vs bound 192.83 px (×1.24)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "ST",
+   "engine": "webkit",
+   "pass": "main",
+   "cell": "stall·same-task",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 90.32,
+   "summary": "same-task: a 1200 ms block 0 ms after the flip (video: trigger marker → block-end marker 1200 ms); D 379.48 px (101.74 → 481.22); first leaves its rest at 1000 ms, travels 8.26 px before the block-end marker, lands at 2800 ms (RECORD; video scale 0.982); worst one-frame step 182.88 px at 1280 ms (dt 40 ms) vs bound 192.61 px (×0.95)"
+  },
+  {
+   "w": "ST",
+   "engine": "webkit",
+   "pass": "main",
+   "cell": "stall·1raf",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 87.96,
+   "summary": "1raf: a 1200 ms block 3 ms after the flip (video: trigger marker → block-end marker 1200 ms); D 379.77 px (101.79 → 481.56); first leaves its rest at 1000 ms, travels 8.26 px before the block-end marker, lands at 2280 ms (RECORD; video scale 0.981); worst one-frame step 358.98 px at 1240 ms (dt 40 ms) vs bound 192.76 px (×1.86)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "ST",
+   "engine": "webkit",
+   "pass": "main",
+   "cell": "stall·2raf",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 83.15,
+   "summary": "2raf: a 1200 ms block 10 ms after the flip (video: trigger marker → block-end marker 1280 ms); D 379.46 px (101.73 → 481.19); first leaves its rest at 40 ms, travels 27.24 px before the block-end marker, lands at 2320 ms (RECORD; video scale 0.982); worst one-frame step 362.13 px at 1280 ms (dt 40 ms) vs bound 192.6 px (×1.88)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "ST",
+   "engine": "webkit",
+   "pass": "main",
+   "cell": "stall·100ms",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 98.23,
+   "summary": "100ms: a 1200 ms block 101 ms after the flip (video: trigger marker → block-end marker 1320 ms); D 378.99 px (101.65 → 480.64); first leaves its rest at 40 ms, travels 236.43 px before the block-end marker, lands at 2360 ms (RECORD; video scale 0.983); worst one-frame step 144.41 px at 80 ms (dt 40 ms) vs bound 192.37 px (×0.75)"
+  },
+  {
+   "w": "ST",
+   "engine": "webkit",
+   "pass": "main",
+   "cell": "stall·mid-flight",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 94.29,
+   "summary": "mid-flight: a 1200 ms block 61 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.25 px (101.66 → 480.91); first leaves its rest at 40 ms, travels 141.77 px before the block-end marker, lands at 2320 ms (RECORD; video scale 0.982); worst one-frame step 193.02 px at 1280 ms (dt 40 ms) vs bound 192.5 px (×1)  ⟶ FAILED: leap"
+  }
+ ]
+}

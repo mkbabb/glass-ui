@@ -56,6 +56,8 @@ export const FACES_PX_SCREENCAST = 2.0;
 export const VAGREE_PX = 1.0;
 /** H3-6 · the stretch: the root held this much wider than its natural width. */
 export const STRETCH_PX = 160;
+/** H3-7 · the plate may not paint over the in-flow neighbour (anti-aliasing allowance). */
+export const NB_OVERLAP_PX = 0.5;
 /** the strip options every seat-bearing W3 cell logs (H3-1, H3-3 read the ink leaves) */
 const STRIP = { seats: true, owners: true, ink: true };
 const args = parseArgs();
@@ -107,6 +109,7 @@ function segment(frames, names, name) {
     return fr;
 }
 function dump(engine, name, fr, ax) {
+    if (process.env.DOCK_HARNESS_RAW) fs.writeFileSync(`${out}/${engine}-${name}.raw.json`, JSON.stringify(fr));   // the whole strip (seat rows, ink leaves), for reading a verdict by hand
     fs.writeFileSync(`${out}/${engine}-${name}.json`, JSON.stringify(fr.map((f) => ({ t: r2(f.t - fr[0].t), len: r2(ax === "y" ? f.e[3] - f.e[1] : f.e[2] - f.e[0]), e: f.e, m: f.m, dup: f.dup }))));
 }
 
@@ -453,9 +456,15 @@ for (const engine of engines(args)) {
                 if (fr.length < 3) { rep.add({ engine, cell: name + tag, pass: false, summary: `only ${fr.length} frames with a neighbour` }); continue; }
                 const nb = seriesStep(fr, fr.map((f) => ax === "y" ? f.nb[1] : f.nb[0]));
                 const Dext = r2(Math.abs((fr.at(-1).e[2] - fr.at(-1).e[0]) - (fr[0].e[2] - fr[0].e[0])));
-                const pass = nb.ratio <= 1;
-                rep.add({ engine, cell: name + tag, pass, failed: pass ? [] : ["neighbour"], neighbour: nb, extentD: Dext,
-                    summary: `the in-flow neighbour travels ${nb.D} px over ${nb.distinct} distinct positions (the extent ${Dext} px); worst one-frame step ${nb.step} px vs bound ${nb.bound} (×${nb.ratio}) at ${nb.atMs ?? "-"} ms${pass ? "" : "  ⟶ FAILED: neighbour"}` });
+                // the plate never paints over the neighbour: the main-axis overlap of extent() and the
+                // neighbour's rect, worst frame (a neighbour that does not move while the plate grows
+                // toward it is a pass only if the plate never reaches it)
+                const ov = Math.max(0, ...fr.map((f) => { const a = ax === "y" ? [f.e[1], f.e[3]] : [f.e[0], f.e[2]], b = ax === "y" ? [f.nb[1], f.nb[3]] : [f.nb[0], f.nb[2]]; const c = ax === "y" ? Math.min(f.e[2], f.nb[2]) - Math.max(f.e[0], f.nb[0]) : Math.min(f.e[3], f.nb[3]) - Math.max(f.e[1], f.nb[1]); return c > 0.5 ? Math.min(a[1], b[1]) - Math.max(a[0], b[0]) : 0; }));
+                const gap = Math.min(...fr.map((f) => ax === "y" ? f.nb[1] - f.e[3] : f.nb[0] - f.e[2]));
+                const checks = { neighbour: nb.ratio <= 1, overlap: ov <= NB_OVERLAP_PX };
+                const failed = Object.entries(checks).filter(([, v]) => !v).map(([k]) => k);
+                rep.add({ engine, cell: name + tag, pass: !failed.length, failed, neighbour: nb, extentD: Dext, overlapPx: r2(ov), minGapPx: r2(gap),
+                    summary: `the in-flow neighbour travels ${nb.D} px over ${nb.distinct} distinct positions (the extent ${Dext} px); worst one-frame step ${nb.step} px vs bound ${nb.bound} (×${nb.ratio}) at ${nb.atMs ?? "-"} ms; the plate overlaps it by ${r2(ov)} px at worst (bound ${NB_OVERLAP_PX}), smallest gap ${r2(gap)} px (recorded)${failed.length ? "  ⟶ FAILED: " + failed.join(", ") : ""}` });
             }
             await s.close();
         });
@@ -526,7 +535,10 @@ for (const engine of engines(args)) {
         });
         // ── pass 2 · faces from pixels ──────────────────────────────────────
         const FACE_CELLS = [...MORPH_SEQ, ...SWAP_SEQ, ...WIDE_SEQ].map(([n]) => n + tag).concat(["wide·collapsed-rest" + tag]);
-        await rep.guard(engine, FACE_CELLS, async () => { faces = await facesPass(browser, engine); });
+        // --no-faces: the pixel pass is skipped (its screencasts take hours at load averages in the hundreds);
+        // every strip cell that would otherwise pass is then UNMEASURED (faces not read), never green
+        if (args["no-faces"]) faces = Object.fromEntries([...MORPH_SEQ, ...SWAP_SEQ, ...WIDE_SEQ].map(([n]) => n).concat(["wide·collapsed-rest"]).map((n) => [n, { ok: null, why: "UNMEASURED (--no-faces: the pixel pass was not run)" }]));
+        else await rep.guard(engine, FACE_CELLS, async () => { faces = await facesPass(browser, engine); });
     } finally {
         await browser.close();
     }

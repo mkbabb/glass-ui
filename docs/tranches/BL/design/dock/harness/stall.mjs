@@ -38,6 +38,8 @@ export const ARMS = ["same-task", "1raf", "2raf", "100ms", "mid-flight"];
 export const BLOCK_MS = 1200, FRAME_MS = 40, MID_FRAC = 0.35;
 /** VP8 noise on a static stadium's length reaches ~2 px (pass-2/H2.md §1); the bound's floor. */
 export const LEAP_SLACK_PX = 2.0;
+/** the video's static rests against the DOM's: the screencast's static-length noise (~2 px) plus margin */
+export const REST_AGREE_PX = 4.0;
 const args = parseArgs();
 const target = await openTarget(args);
 const out = outDir(args, "ST");
@@ -77,7 +79,7 @@ for (const engine of engines(args)) {
                         requestAnimationFrame(poll);
                     }), { arm, BLOCK: BLOCK_MS, frac: MID_FRAC, Lc: rest.w, Le: big.w });
                     mark("blockEnd");
-                    await page.waitForTimeout(1300);   // the probe paint stays on to the end of the video: its last frames are the landed rest
+                    await page.waitForTimeout(1800);   // the probe paint stays on to the end of the video: its last frames are the landed rest
                 });
                 // the video's own frame times (s → ms), one per decoded frame (lib.mjs decodes with -vsync 0)
                 let T = [];
@@ -91,13 +93,16 @@ for (const engine of engines(args)) {
                     const dark = (x0) => { let lo = 255; for (let y = 0; y < img.h; y++) { let sum = 0; for (let x = x0; x < x0 + 10; x++) { const i = (y * img.w + x) * 4; sum += (img.data[i] + img.data[i + 1] + img.data[i + 2]) / 3; } lo = Math.min(lo, sum / 10); } return lo < 90; };
                     return { Lv: best, cross, a: dark(5), b: dark(28) };
                 });
-                const crosses = reads.map((r) => r.cross).filter((v) => v > 10);
-                const scale = crosses.length ? med(crosses) / (rest.b - rest.t) : 1;
-                const L = reads.map((r) => r.Lv / scale);
                 // a video opens on black frames before the first paint: a marker counts only once the page has painted it light
                 const lit = reads.findIndex((r) => !r.a && !r.b);
                 const goF = reads.findIndex((r, i) => i > lit && r.a), endF = reads.findIndex((r, i) => i > goF && goF >= 0 && r.b);
                 if (goF < 0 || endF < 0) throw new Error(`the video shows no ${goF < 0 ? "trigger" : "block-end"} marker`);
+                // the video's scale, from the frames after the trigger marker only: before it the page spends the
+                // warm cycle in its own colours (no probe paint), and under load those frames outnumber the rest
+                // (the median then read a 12 px "cross" and a scale of 0.2: pass-3/H3.md §3.0)
+                const crosses = reads.slice(goF).map((r) => r.cross).filter((v) => v > 10);
+                const scale = crosses.length ? med(crosses) / (rest.b - rest.t) : 1;
+                const L = reads.map((r) => r.Lv / scale);
                 const tAt = (i) => r2(T[i] - T[goF]);
                 const pre = L.slice(Math.max(0, goF - 6), goF + 1).filter((v) => v > 0);
                 const L0 = med(pre), L1 = med(L.slice(-6));
@@ -112,12 +117,16 @@ for (const engine of engines(args)) {
                 const bound = worst.bound;
                 const inBlock = L.slice(goF, endF);
                 const travelInBlock = inBlock.length ? Math.max(...inBlock) - Math.min(...inBlock) : 0;
+                // the instrument read itself: the video's two rests must be the DOM's (± REST_AGREE_PX) and its
+                // scale near 1, or the video is not a reading of this dock (a truncated or blank tail under load
+                // read scale 0.196 and a 0 px rest in the H3 self-test): UNMEASURED, re-run, never judged
+                const instrumentOk = Math.abs(scale - 1) <= 0.1 && Math.abs(L0 - rest.w) <= REST_AGREE_PX && Math.abs(L1 - big.w) <= REST_AGREE_PX;
                 const checks = { travel: D >= 20, leap: D >= 20 && worst.ratio <= 1 };
-                const failed = Object.entries(checks).filter(([, v]) => !v).map(([k]) => k);
-                rep.add({ engine, cell: "stall·" + arm + tag, pass: !failed.length, failed, videoScale: +scale.toFixed(4), D: r2(D), rests: [r2(L0), r2(L1)], restsDom: [r2(rest.w), r2(big.w)], blockMs: marks ? r2(marks.b1 - marks.b0) : null, callToBlockMs: marks ? r2(marks.b0 - marks.t0) : null,
+                const failed = instrumentOk ? Object.entries(checks).filter(([, v]) => !v).map(([k]) => k) : [];
+                rep.add({ engine, cell: "stall·" + arm + tag, pass: instrumentOk && !failed.length, unmeasured: instrumentOk ? undefined : true, failed, videoScale: +scale.toFixed(4), D: r2(D), rests: [r2(L0), r2(L1)], restsDom: [r2(rest.w), r2(big.w)], blockMs: marks ? r2(marks.b1 - marks.b0) : null, callToBlockMs: marks ? r2(marks.b0 - marks.t0) : null,
                     blockEndMs: tAt(endF), firstMoveMs: i0 < 0 ? null : tAt(i0), landMs: tAt(iLand), travelInBlockPx: r2(travelInBlock), worstStepPx: r2(worst.step), worstStepAtMs: worst.at != null ? tAt(worst.at) : null, worstStepDtMs: worst.at != null ? r2(T[worst.at] - T[worst.at - 1]) : null, boundPx: r2(bound), ratio: r2(worst.ratio),
                     trace: L.slice(Math.max(0, goF - 2), Math.min(L.length, iLand + 3)).map((v, k) => [tAt(Math.max(0, goF - 2) + k), r2(v)]),
-                    summary: `${arm}: a ${marks ? Math.round(marks.b1 - marks.b0) : "?"} ms block ${marks ? r2(marks.b0 - marks.t0) : "?"} ms after the flip (video: trigger marker → block-end marker ${tAt(endF)} ms); D ${r2(D)} px (${r2(L0)} → ${r2(L1)}); first leaves its rest at ${i0 < 0 ? "never" : tAt(i0) + " ms"}, travels ${r2(travelInBlock)} px before the block-end marker, lands at ${tAt(iLand)} ms (RECORD; video scale ${scale.toFixed(3)}); worst one-frame step ${r2(worst.step)} px at ${worst.at != null ? tAt(worst.at) + " ms" : "-"} (dt ${worst.at != null ? r2(T[worst.at] - T[worst.at - 1]) : "-"} ms) vs bound ${r2(bound)} px (×${r2(worst.ratio)})${failed.length ? "  ⟶ FAILED: " + failed.join(", ") : ""}` });
+                    summary: `${instrumentOk ? "" : `UNMEASURED (the video's rests ${r2(L0)} / ${r2(L1)} px against the DOM's ${r2(rest.w)} / ${r2(big.w)} px, scale ${scale.toFixed(3)}: re-run) · `}${arm}: a ${marks ? Math.round(marks.b1 - marks.b0) : "?"} ms block ${marks ? r2(marks.b0 - marks.t0) : "?"} ms after the flip (video: trigger marker → block-end marker ${tAt(endF)} ms); D ${r2(D)} px (${r2(L0)} → ${r2(L1)}); first leaves its rest at ${i0 < 0 ? "never" : tAt(i0) + " ms"}, travels ${r2(travelInBlock)} px before the block-end marker, lands at ${tAt(iLand)} ms (RECORD; video scale ${scale.toFixed(3)}); worst one-frame step ${r2(worst.step)} px at ${worst.at != null ? tAt(worst.at) + " ms" : "-"} (dt ${worst.at != null ? r2(T[worst.at] - T[worst.at - 1]) : "-"} ms) vs bound ${r2(bound)} px (×${r2(worst.ratio)})${failed.length ? "  ⟶ FAILED: " + failed.join(", ") : ""}` });
             });
         }
     } finally {

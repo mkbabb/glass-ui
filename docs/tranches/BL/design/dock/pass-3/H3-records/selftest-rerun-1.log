@@ -1,0 +1,12 @@
+13:10  up  3:16, 3 users, load averages: 54.92 50.70 41.71
+BAD  W3  pass            expect: exit 0, all cells PASS  ·  got: exit 1, 55/58 PASS; failing: webkit:content-remove[faces] webkit:lead-add[faces] webkit:lead-remove[faces]  [209 s, load 54.92]
+OK   W3  overhang        expect: exit ≠ 0; faces fails in ^warm-expand  ·  got: exit 1, 6/16 FAIL; matching 2 (chromium+webkit)  [66 s, load 39.09]
+OK   W3  latsnap         expect: exit ≠ 0; seatWidth fails in ^lattice  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [11 s, load 45.61]
+OK   W3  infhold         expect: exit ≠ 0; window fails in ^infanim  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [10 s, load 51.13]
+OK   W3  infthrow        expect: exit ≠ 0; errors fails in ^infanim  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [10 s, load 50.64]
+OK   W3  twoowners       expect: exit ≠ 0; owners fails in ^seat-transition  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [7 s, load 55.86]
+SELFTEST FAIL  5/6 expectations hold
+OK   ST  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 9/9 PASS  [86 s, load 58.76]
+OK   ST  leap            expect: exit ≠ 0; leap fails in ^stall·  ·  got: exit 1, 9/10 FAIL; matching 9 (chromium+webkit)  [90 s, load 85.01]
+SELFTEST PASS  2/2 expectations hold
+13:18  up  3:24, 3 users, load averages: 127.57 86.69 59.81

@@ -1,0 +1,15 @@
+load gate: waited 0s (of a 0s budget for the whole script, 0s spent), load 435.90 (max 200)
+ 8:19  up 22:26, 3 users, load averages: 451.85 414.02 388.21
+PASS  FM  Chromium  film·first-expand  14 tiles from frame 1097 (the trigger marker first shows on frame 1098, -80 ms from the wall-clock mark), 6 distinct outside the marker; motion to frame 1112 (600 ms); strip strip-chromium-first-expand.png  [load 381.46]
+PASS  FM  Chromium  film·warm-collapse  14 tiles from frame 65 (the trigger marker first shows on frame 66, -280 ms from the wall-clock mark), 6 distinct outside the marker; motion to frame 87 (880 ms); strip strip-chromium-warm-collapse.png  [load 365.4]
+PASS  FM  Chromium  film·warm-expand  14 tiles from frame 96 (the trigger marker first shows on frame 97, -40 ms from the wall-clock mark), 9 distinct outside the marker; motion to frame 133 (1480 ms); strip strip-chromium-warm-expand.png  [load 350.86]
+UNMEASURED  FM  Chromium  film·swap-long  UNMEASURED: HARNESS-TIMEOUT: the block did not return in 480000 ms  [load 331.27]
+PASS  FM  Chromium  film·swap-short  14 tiles from frame 67 (the trigger marker first shows on frame 68, 0 ms from the wall-clock mark), 6 distinct outside the marker; motion to frame 72 (200 ms); strip strip-chromium-swap-short.png  [load 332.77]
+UNMEASURED  FM  Chromium  film·content-add  UNMEASURED: HARNESS-TIMEOUT: the block did not return in 480000 ms  [load 312.44]
+PASS  FM  Playwright WebKit  film·first-expand+shim  14 tiles from frame 42 (the trigger marker first shows on frame 43, 160 ms from the wall-clock mark), 6 distinct outside the marker; motion to frame 57 (600 ms); strip strip-webkit-first-expand.png  [load 288.87]
+UNMEASURED  FM  Playwright WebKit  film·warm-collapse+shim  UNMEASURED: HARNESS-TIMEOUT: the block did not return in 480000 ms  [load 288.87]
+PASS  FM  Playwright WebKit  film·warm-collapse+shim  14 tiles from frame 60 (the trigger marker first shows on frame 61, -1058560 ms from the wall-clock mark), 8 distinct outside the marker; motion to frame 75 (600 ms); strip strip-webkit-warm-collapse.png  [load 288.87]
+UNMEASURED  FM  Playwright WebKit  film·warm-expand+shim  UNMEASURED: HARNESS-TIMEOUT: the block did not return in 480000 ms  [load 267.5]
+WATCHDOG: killed after 3600s
+exit 137
+ 9:20  up 23:27, 3 users, load averages: 267.50 365.40 372.87

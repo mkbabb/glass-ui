@@ -1,0 +1,7 @@
+12:08  up  2:14, 2 users, load averages: 13.13 11.53 10.50
+OK   ST  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 10/10 PASS  [63 s, load 13.13]
+OK   ST  leap            expect: exit ≠ 0; leap fails in ^stall·  ·  got: exit 1, 8/10 FAIL; matching 8 (chromium+webkit)  [62 s, load 11.94]
+OK   FM  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 12/12 PASS  [51 s, load 9.84]
+OK   FM  deadhooks       expect: exit ≠ 0; tiles fails in ^film·  ·  got: exit 1, 12/12 FAIL; matching 12 (chromium+webkit)  [49 s, load 9.2]
+SELFTEST PASS  4/4 expectations hold
+12:12  up  2:18, 3 users, load averages: 8.00 10.19 10.20

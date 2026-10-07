@@ -790,12 +790,13 @@ export const LEAVE_HI = 0.9, LEAVE_LO = 0.1, LEAVE_FRAC = 0.25, LEAVE_MIN_FRAMES
  * A seat LEAVES when its visible ink is ≥ LEAVE_HI on the strip's first frame (the rest before the
  * trigger) and ≤ LEAVE_LO on its last. Its ink per frame, "whoever paints it":
  *   own    opacity × (its clipped rect ∩ the plate) / its transform-aware box
- *   place  the largest, over the non-seat ink leaves (frames[i].k: a carrier's clones), of
- *          opacity × (leaf ∩ the seat's painted place at rest ∩ the plate) / the leaf's box
+ *   place  the largest, over the non-seat ink leaves (frames[i].k) and the seats the first frame
+ *          did not have (a carrier's clones, declared or not), of
+ *          opacity × (it ∩ the seat's painted place at rest ∩ the plate) / its box
  *   ink    max(own, place)
  * It passes when EITHER
  *   (a) it travels with the glass: in every frame its ink ≥ its coverage − LEAVE_TRACK_TOL, where
- *       coverage = (its box ∩ the plate) / its box (its last known box once it is gone): the
+ *       coverage = (its box ∩ the plate) / its box (its last known box once it is gone or boxless): the
  *       closing edge takes it, nothing takes it ahead of the edge; OR
  *   (b) it fades on the plate's time: from the last frame with ink ≥ LEAVE_HI to the first with
  *       ink ≤ LEAVE_LO spans ≥ LEAVE_MIN_FRAMES frames and ≥ LEAVE_FRAC × the plate morph's own
@@ -806,7 +807,12 @@ export const LEAVE_HI = 0.9, LEAVE_LO = 0.1, LEAVE_FRAC = 0.25, LEAVE_MIN_FRAMES
 export function leavingRow(frames, lengthMs) {
     const maps = frames.map((f) => new Map((f.s ?? []).map((q) => [q[0], q])));
     const inkOwn = (q, e) => { const bb = area4(q[1], q[2], q[3], q[4]); return bb < 1 ? 0 : q[9] * area4(...isect4([q[5], q[6], q[7], q[8]], e)) / bb; };
-    const inkPlace = (f, place) => Math.max(0, ...(f.k ?? []).map((k) => k[5] < 1 ? 0 : k[4] * area4(...isect4(isect4([k[0], k[1], k[2], k[3]], place), f.e)) / k[5]));
+    // a stand-in at the seat's place: a non-seat ink leaf (f.k), or a seat the strip's first frame did
+    // not have (a carrier's clone that the adapter's own selectors match, as D2-G's ghosts do)
+    const born = new Set(maps[0].keys());
+    const inkPlace = (f, place) => Math.max(0,
+        ...(f.k ?? []).map((k) => k[5] < 1 ? 0 : k[4] * area4(...isect4(isect4([k[0], k[1], k[2], k[3]], place), f.e)) / k[5]),
+        ...(f.s ?? []).filter((q) => !born.has(q[0])).map((q) => { const bb = area4(q[1], q[2], q[3], q[4]); return bb < 1 ? 0 : q[9] * area4(...isect4(isect4([q[5], q[6], q[7], q[8]], place), f.e)) / bb; }));
     const rows = [];
     for (const [id, q0] of maps[0]) {
         if (inkOwn(q0, frames[0].e) < LEAVE_HI) continue;
@@ -814,7 +820,7 @@ export function leavingRow(frames, lengthMs) {
         let box = [q0[1], q0[2], q0[3], q0[4]];
         const ser = frames.map((f, i) => {
             const q = maps[i].get(id);
-            if (q) box = [q[1], q[2], q[3], q[4]];
+            if (q && area4(q[1], q[2], q[3], q[4]) >= 1) box = [q[1], q[2], q[3], q[4]];   // a seat taken out of the box tree (display: none) keeps its last box, as a removed one does
             const ink = Math.max(q ? inkOwn(q, f.e) : 0, inkPlace(f, place));
             const bb = area4(...box);
             return { t: f.t, ink, cov: bb < 1 ? 0 : area4(...isect4(box, f.e)) / bb };
@@ -849,11 +855,22 @@ export function makeReport(witness, target) {
         async guard(engine, names, fn) {
             if (only && !names.some((n) => only.test(n))) return;
             const before = new Set(cells.map((c) => c.cell));
-            try { await fn(); }
+            // DOCK_HARNESS_BLOCK_TIMEOUT_MS: a block that has not returned by then is abandoned and its
+            // unrecorded cells are UNMEASURED (the harness hung, the dock was not read). Headless
+            // Chromium's rAF was seen to stop for 30 s and more at load averages near 400 (pass-3/H3.md §3.0)
+            const cap = +(process.env.DOCK_HARNESS_BLOCK_TIMEOUT_MS ?? 0);
+            let timer = null;
+            try {
+                const p = fn();
+                if (cap > 0) { p.catch(() => { }); await Promise.race([p, new Promise((_, rej) => { timer = setTimeout(() => rej(new Error(`HARNESS-TIMEOUT: the block did not return in ${cap} ms`)), cap); })]); }
+                else await p;
+            }
             catch (e) {
                 const msg = String(e?.message ?? e).split("\n")[0].slice(0, 200);
-                for (const n of names) if (!before.has(n) && !cells.some((c) => c.cell === n && c.engine === engine)) rep.add({ engine, cell: n, pass: false, crashed: true, summary: `not measured: ${msg}` });
+                const hung = msg.startsWith("HARNESS-TIMEOUT");
+                for (const n of names) if (!before.has(n) && !cells.some((c) => c.cell === n && c.engine === engine)) rep.add(hung ? { engine, cell: n, pass: false, unmeasured: true, timedOut: true, summary: `UNMEASURED: ${msg}` } : { engine, cell: n, pass: false, crashed: true, summary: `not measured: ${msg}` });
             }
+            finally { if (timer) clearTimeout(timer); }
         },
         finish(dir) {
             const failed = cells.filter(counts).filter((c) => !c.pass);
@@ -861,6 +878,8 @@ export function makeReport(witness, target) {
             const ob = cells.filter((c) => c.ownerBlocked && !c.pass).length;
             console.log(`${failed.length ? "FAIL" : "PASS"}  ${witness}  ${target.label}  ${cells.filter((c) => c.pass).length}/${cells.length} cells pass${cells.some((c) => c.unmeasured) ? `, ${cells.filter((c) => c.unmeasured).length} UNMEASURED` : ""}${ob ? `, ${ob} OWNER-BLOCKED` : ""}  (json: ${path.join(dir, witness + ".json")})`);
             process.exitCode = failed.length ? 1 : 0;
+            // an abandoned (timed-out) block may still hold a browser: the record is written, so leave
+            if (cells.some((c) => c.timedOut)) setTimeout(() => process.exit(process.exitCode), 2000);
             return failed.length === 0;
         },
     };

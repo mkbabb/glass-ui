@@ -53,9 +53,9 @@ export const FAULTS = {
     W7: ["edgecut", "sideedge", "gutterless", "badgeover", "lens"],
     W8: ["squash", "jank"],
     R6: ["backdropmotion"],
-    // H3 (pass-3/H3.md): W3 blankswap, pop, slipfade, latsnap, infhold, infthrow, nostretch, nbjump,
+    // H3 (pass-3/H3.md): W3 blankswap, pop, slipfade, latsnap, infhold, infthrow, nostretch, nbjump, nboverlap,
     // bandclose, resizenorest; W1 cardlerp; W7 nocaps; ST leap; FM deadhooks
-    H3: ["blankswap", "pop", "slipfade", "latsnap", "infhold", "infthrow", "nostretch", "nbjump", "bandclose", "resizenorest", "cardlerp", "nocaps", "leap", "deadhooks"],
+    H3: ["blankswap", "pop", "slipfade", "latsnap", "infhold", "infthrow", "nostretch", "nbjump", "nboverlap", "bandclose", "resizenorest", "cardlerp", "nocaps", "leap", "deadhooks"],
     // variants that must PASS (they change the carrier, not the property)
     PASS: ["csscarrier", "splitcaps"],
 };
@@ -417,6 +417,7 @@ const kick = () => { dock.setAttribute("data-morphing", ""); if (!raf) { lastTic
 function morph(to) {
   const now = vnow();
   if (fault === "nbjump" && Q.get("neighbour") === "1") dock.style[V ? "height" : "width"] = to + "px";   // nbjump: the dock's layout box takes the target at once
+  if (fault === "nboverlap" && Q.get("neighbour") === "1" && !dock.style[V ? "height" : "width"]) dock.style[V ? "height" : "width"] = crossOf() + "px";   // nboverlap: the dock's layout box keeps its collapsed size, so the plate paints over the neighbour
   if (cur == null) { set(to); return; }
   if (Math.abs(to - cur) < 0.01 && !ext) return;
   if (PRM.matches && fault !== "noprm") { ext = null; set(to); dock.removeAttribute("data-morphing"); return; }
@@ -481,7 +482,7 @@ const infinite = () => document.getAnimations().filter((a) => inRun(a) && !a.tra
 function follow() {
   const inf = infinite();
   if (inf.length && fault === "infthrow") inf.forEach((a) => a.finish());
-  const sizing = document.getAnimations().some((a) => inRun(a) && a.transitionProperty && SIZE_RE.test(a.transitionProperty));
+  const sizing = holdingExchange();
   const useInf = inf.length > 0 && fault !== "infhold" && fault !== "infthrow";
   if (!sizing && !useInf) return false;
   if (useInf) ext = null;
@@ -515,12 +516,19 @@ addEventListener("resize", () => {
 const SIZE_RE = /^(width|inline-size|height|block-size|min-width|max-width|flex-basis|grid-template-columns)$/;
 const MAIN_RE = V ? /^(height|block-size|min-height|max-height|flex-basis)$/ : /^(width|inline-size|min-width|max-width|flex-basis)$/;
 const camel = (p) => p.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
-if (fault !== "twoowners") dock.addEventListener("transitionrun", (e) => {
-  if (!SIZE_RE.test(e.propertyName) || !e.target.closest(".seat")) return;
+/** the running seat size transitions in the run, and the sum of their main-axis deltas */
+function sizeRuns() {
   const runs = document.getAnimations().filter((a) => a.transitionProperty && SIZE_RE.test(a.transitionProperty) && a.effect?.target && run.contains(a.effect.target) && a.playState !== "finished");
-  if (fault === "latsnap") { runs.forEach((a) => a.finish()); return; }
   let delta = 0;
   for (const a of runs) { if (!MAIN_RE.test(a.transitionProperty)) continue; const k = a.effect.getKeyframes(), key = camel(a.transitionProperty); delta += parseFloat(k.at(-1)[key]) - parseFloat(k[0][key]); }
+  return { runs, delta };
+}
+/** an exchange the scoped hand-off let run: size transitions that hold the run's main extent */
+const holdingExchange = () => { const { runs, delta } = sizeRuns(); return runs.length > 0 && Math.abs(delta) <= 0.5; };
+if (fault !== "twoowners") dock.addEventListener("transitionrun", (e) => {
+  if (!SIZE_RE.test(e.propertyName) || !e.target.closest(".seat")) return;
+  const { runs, delta } = sizeRuns();
+  if (fault === "latsnap") { runs.forEach((a) => a.finish()); return; }
   if (Math.abs(delta) > 0.5) runs.forEach((a) => a.finish());
 });
 // a size transition the hand-off let run moved its seats continuously itself: the settled layout is the rest

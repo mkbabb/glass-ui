@@ -1,0 +1,17 @@
+11:54  up 2 hrs, 2 users, load averages: 20.71 10.42 8.86
+OK   W3  late            expect: exit ≠ 0; window fails in ^warm-expand  ·  got: exit 1, 14/16 FAIL; matching 2 (chromium+webkit)  [67 s, load 20.71]
+OK   W3  slowclock       expect: exit ≠ 0; window fails in ^warm-expand  ·  got: exit 1, 16/16 FAIL; matching 2 (chromium+webkit)  [99 s, load 12.06]
+OK   W3  resizemorph     expect: exit ≠ 0; window fails in ^viewport-resize  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [5 s, load 15.22]
+OK   W3  resizenorest    expect: exit ≠ 0; rest fails in ^viewport-resize  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [16 s, load 14.72]
+OK   W3  blankswap       expect: exit ≠ 0; blank fails in ^swap-long|^swap-short  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [45 s, load 13.2]
+OK   W3  pop             expect: exit ≠ 0; leaving fails in ^content-remove|^lead-remove  ·  got: exit 1, 4/16 FAIL; matching 4 (chromium+webkit)  [59 s, load 12.59]
+OK   W3  slipfade        expect: exit ≠ 0; leaving fails in ^content-remove|^lead-remove  ·  got: exit 1, 4/16 FAIL; matching 4 (chromium+webkit)  [57 s, load 13.88]
+OK   W3  latsnap         expect: exit ≠ 0; seatWidth fails in ^lattice  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [10 s, load 10.5]
+OK   W3  infhold         expect: exit ≠ 0; window fails in ^infanim  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [9 s, load 9.66]
+OK   W3  infthrow        expect: exit ≠ 0; errors fails in ^infanim  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [9 s, load 11.95]
+OK   W3  deadmorph       expect: exit ≠ 0; vagree fails in ^vagree·  ·  got: exit 1, 8/8 FAIL; matching 8 (chromium+webkit)  [56 s, load 12.2]
+OK   W3  nostretch       expect: exit ≠ 0; seatStep fails in ^stretch·lead-add  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [10 s, load 13.33]
+OK   W3  nbjump          expect: exit ≠ 0; neighbour fails in ^neighbour·  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [10 s, load 11.59]
+OK   W3  bandclose       expect: an OWNER-BLOCKED cell in ^warm-expand|^warm-collapse  ·  got: exit 0, 12/16 FAIL; matching 4 (chromium+webkit)  [57 s, load 10.35]
+SELFTEST PASS  14/14 expectations hold
+12:02  up  2:08, 2 users, load averages: 8.18 10.74 9.92
