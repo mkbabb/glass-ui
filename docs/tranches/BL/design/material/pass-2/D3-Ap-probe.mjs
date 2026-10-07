@@ -1,10 +1,12 @@
 #!/usr/bin/env node
-// D3-Ap-probe.mjs · A′ pass-2 spec probe: is the level-0 escape (`.glass-opaque`) a paint-equal replacement for
-// GlassDock's `backdropMode="opaque"` (REGISTRY §7.3 A′ item 4)? Builds a three-dock page against a worktree's `src`
+// D3-Ap-probe.mjs · A′ pass-2 probe: is the level-0 escape (`.glass-opaque`) a paint-equal replacement for
+// GlassDock's `backdropMode="opaque"` (REGISTRY §7.3 A′ item 4)? On a tree where the prop is deleted (the A′
+// prototype) the `mode` dock carries a dead attribute and paints the default, and `class-l1` is the item's plant: the
+// escape class with `--glass-level` held at 1, which must paint the bound plate, not the escape. Builds a three-dock page against a worktree's `src`
 // and reads, per engine × theme × ground: the plate composite in an empty dock region, the plate's computed
 // `backdrop-filter`, `background-color` and border colour, and the dock-scoped `--dock-surface-blur`.
 //   node D3-Ap-probe.mjs <worktree> [--out <dir>] [--engines chromium,webkit]
-// Docks: `default` (glass), `mode` (backdrop-mode="opaque"), `class` (class="glass-opaque"). Grounds: black, white,
+// Docks: `default` (glass), `mode` (backdrop-mode="opaque"), `class` (class="glass-opaque"), `class-l1` (the plant). Grounds: black, white,
 // aurora (c1). Playwright WebKit mounts GlassDock only under the H-14 shim; its rows are "webkit+shim".
 // Nothing is written into the worktree; the app, vite cache and dist live under --out.
 import fs from "node:fs";
@@ -25,7 +27,8 @@ fs.writeFileSync(path.join(app, "App.vue"), `<script setup lang="ts">
 import { GlassDock, DockControl } from "@glass/components/dock";
 import { Aurora } from "@glass/components/aurora";
 const q = new URLSearchParams(location.search); const ground = q.get("ground") ?? "black";
-const DOCKS = [{ id: "default", attrs: {} }, { id: "mode", attrs: { "backdrop-mode": "opaque" } }, { id: "class", attrs: { class: "glass-opaque" } }];
+const DOCKS = [{ id: "default", attrs: {} }, { id: "mode", attrs: { "backdrop-mode": "opaque" } }, { id: "class", attrs: { class: "glass-opaque" } },
+  { id: "class-l1", attrs: { class: "glass-opaque", style: "--glass-level: 1" } }];
 </script>
 <template>
   <Aurora v-if="ground === 'aurora'" class="fixed inset-0 -z-10" :opacity-ceiling="1" aria-hidden="true" />
@@ -84,9 +87,9 @@ for (const engine of list(a.engines, ["chromium", "webkit"])) {
 }
 srv.close();
 fs.writeFileSync(path.join(out, "probe.json"), JSON.stringify(rows, null, 1));
-console.log("| engine | theme | ground | dock | composite | L | ΔE vs `mode` | plate backdrop-filter | border | `--dock-surface-blur` |");
-console.log("|---|---|---|---|---|---:|---:|---|---|---|");
+console.log("| engine | theme | ground | dock | composite | L | ΔE vs `mode` | ΔE vs `class` | plate backdrop-filter | border | `--dock-surface-blur` |");
+console.log("|---|---|---|---|---|---:|---:|---:|---|---|---|");
 for (const r of rows) {
-  const m = rows.find((x) => x.engine === r.engine && x.theme === r.theme && x.ground === r.ground && x.id === "mode");
-  console.log(`| ${r.engine} | ${r.theme} | ${r.ground} | ${r.id} | \`${hex(r.composite)}\` | ${lch(r.composite)[0].toFixed(3)} | ${dE(r.composite, m.composite).toFixed(4)} | \`${r.bf}\` | \`${r.border}\` | \`${r.blurVar}\` |`);
+  const at = (id) => rows.find((x) => x.engine === r.engine && x.theme === r.theme && x.ground === r.ground && x.id === id);
+  console.log(`| ${r.engine} | ${r.theme} | ${r.ground} | ${r.id} | \`${hex(r.composite)}\` | ${lch(r.composite)[0].toFixed(3)} | ${dE(r.composite, at("mode").composite).toFixed(4)} | ${dE(r.composite, at("class").composite).toFixed(4)} | \`${r.bf}\` | \`${r.border}\` | \`${r.blurVar}\` |`);
 }

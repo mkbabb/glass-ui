@@ -1,0 +1,625 @@
+diff --git a/demo/stories/dock/overview.vue b/demo/stories/dock/overview.vue
+index e6675b1f..c620085e 100644
+--- a/demo/stories/dock/overview.vue
++++ b/demo/stories/dock/overview.vue
+@@ -179,15 +179,16 @@ function togglePlay() {
+ 
+         <StorySection heading="Opaque backdrop" gap="md">
+             <p class="text-small text-muted-foreground">
+-                <code class="rounded bg-muted px-1">backdrop-mode="opaque"</code>
++                <code class="rounded bg-muted px-1">class="glass-opaque"</code>
+                 keeps the dock controls and morph behavior while replacing the glass
+-                plate with solid, filter-free <code class="rounded bg-muted px-1">--card</code>.
++                plate with the level-0 escape, a solid
++                <code class="rounded bg-muted px-1">--card</code> plate.
+             </p>
+             <div
+                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
+             >
+                 <GlassDock
+-                    backdrop-mode="opaque"
++                    class="glass-opaque"
+                     :collapse="false"
+                     data-testid="dock-static-backdrop"
+                 >
+diff --git a/demo/stories/feedback/progress.vue b/demo/stories/feedback/progress.vue
+index 0ff2c467..613ea3c7 100644
+--- a/demo/stories/feedback/progress.vue
++++ b/demo/stories/feedback/progress.vue
+@@ -232,7 +232,7 @@ onUnmounted(stopAnimated);
+                     :key="`dock-${value}`"
+                     class="relative inline-grid rounded-[var(--radius-dock)]"
+                 >
+-                    <GlassDock :collapse="false" backdrop-mode="opaque">
++                    <GlassDock :collapse="false" class="glass-opaque">
+                         <span class="px-3 font-mono text-micro tabular-nums">
+                             {{ value }}%
+                         </span>
+@@ -250,7 +250,7 @@ onUnmounted(stopAnimated);
+                          idle timer to stretch. -->
+                     <GlassDock
+                         :collapse="'closed'"
+-                        backdrop-mode="opaque"
++                        class="glass-opaque"
+                         style="pointer-events: none"
+                     >
+                         <span class="px-3 font-mono text-micro">Expanded</span>
+diff --git a/src/components/_shared/field/control.css b/src/components/_shared/field/control.css
+index 99090164..49c021d8 100644
+--- a/src/components/_shared/field/control.css
++++ b/src/components/_shared/field/control.css
+@@ -45,11 +45,11 @@
+         --field-control-height: var(--control-h-md);
+ 
+         /* ── THE ONE INK ──
+-           A control's own edge is the PERIMETER rung (`--ink-perimeter`, 0.48 —
+-           tokens/color-radius.css §1.2, the 3.0:1 rung landed by #68). HEAD wrote
+-           1.5px at 0.05, a composited boundary mass of 0.075 against the 0.48 the
+-           ladder rules — 6.4× short, and a HALF-PIXEL stroke on top of it. One
+-           rung, one width: −0.5px of stroke buys 6.4× of mass. */
++           A control's own edge is the PERIMETER rung (`--ink-perimeter`,
++           tokens/color-radius.css §1.2 and its dark arm in tokens/dark-arm.css, the
++           3.0:1 rung landed by #68). The predecessor wrote 1.5px at 0.05, a composited
++           boundary mass of 0.075 against the rung's 0.48 at the time — 6.4× short, and
++           a HALF-PIXEL stroke on top of it. One rung, one width. */
+         --field-control-ink: color-mix(
+             in oklab,
+             var(--foreground) calc(var(--ink-perimeter) * 100%),
+@@ -120,7 +120,7 @@
+         /* The ring's RESTING colour, at ZERO alpha. `outline-color`'s initial
+            value is `currentColor` — fully opaque `--foreground` — so without
+            this the transition below ran the ring from opaque INK down to the
+-           0.48 rung: the ring flashed in at full mass and faded back (measured
++           perimeter rung: the ring flashed in at full mass and faded back (measured
+            mid-flight at 0.571). Interpolation is premultiplied, so a zero-alpha
+            start fades IN without passing through a colour. */
+         outline-color: transparent;
+diff --git a/src/components/card/styles.css b/src/components/card/styles.css
+index 77256aff..94607040 100644
+--- a/src/components/card/styles.css
++++ b/src/components/card/styles.css
+@@ -107,7 +107,7 @@
+ 
+        THE EDGE lifts seam → edge, which is the elevated arm a flush card does
+        not otherwise wear; an already-elevated card is already there and this is
+-       a no-op for it. It does NOT go on to `--ink-perimeter` (0.48): the
++       a no-op for it. It does NOT go on to `--ink-perimeter`: the
+        register reserves that rung for a CONTROL's own edge and the focus ring,
+        and a group that merely CONTAINS a focused control must not out-shout the
+        control's own ring. (`.glass-card`'s predecessor lifted 4% → 5%, a step
+diff --git a/src/components/dialog/styles.css b/src/components/dialog/styles.css
+index 0ba80941..12002bf5 100644
+--- a/src/components/dialog/styles.css
++++ b/src/components/dialog/styles.css
+@@ -229,8 +229,8 @@
+     }
+ }
+ 
+-/* Reduced motion keeps the REFUSAL and drops the GEOMETRY: one perimeter flash at ink
+- * α 0.48 on the same clock, no translate. Not a masking fallback — the affordance is
++/* Reduced motion keeps the REFUSAL and drops the GEOMETRY: one perimeter flash at the
++ * perimeter rung on the same clock, no translate. Not a masking fallback — the affordance is
+  * intact and equally perceptible, only its channel changes. The outline is used rather
+  * than the plate's own `border-color` so the glass tier's edge recipe is never a
+  * moving part. */
+diff --git a/src/components/dock/GlassDock.vue b/src/components/dock/GlassDock.vue
+index 08ab9975..ac27a7e6 100644
+--- a/src/components/dock/GlassDock.vue
++++ b/src/components/dock/GlassDock.vue
+@@ -72,7 +72,6 @@ defineOptions({ inheritAttrs: false });
+    defeats the cast: `hasDefault` short-circuits the absent-branch, and `"closed"` is
+    neither `""` nor `"collapse"`, so the cast-true branch cannot fire either. */
+ const props = withDefaults(defineProps<DockProps>(), {
+-    backdropMode: "glass",
+     collapse: "closed",
+ });
+ 
+@@ -306,7 +305,6 @@ defineExpose({
+             `shape-${shape}`,
+             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded },
+         ]"
+-        :data-backdrop-mode="props.backdropMode"
+         :data-held="graspHeld || undefined"
+         @mouseenter="onMouseEnter"
+         @mouseleave="onMouseLeave($event)"
+diff --git a/src/components/dock/README.md b/src/components/dock/README.md
+index 3e3d54da..b863b179 100644
+--- a/src/components/dock/README.md
++++ b/src/components/dock/README.md
+@@ -39,7 +39,6 @@ the existing Reka-backed menu, select, or popover families.
+ | `layout` | `linear`, `grid` | `linear` |
+ | `position` | `fixed`, `inline`, `sticky` | `inline` |
+ | `overflow` | `grow`, `wrap` | `grow` |
+-| `backdropMode` | `glass`, `opaque` | `glass` |
+ | `alwaysExpanded` | boolean | `false` |
+ | `startCollapsed` | boolean | `true` |
+ | `collapseDelay` | milliseconds | `2000` |
+@@ -48,9 +47,9 @@ the existing Reka-backed menu, select, or popover families.
+ 
+ `layout="grid"` is always expanded. `overflow="wrap"` applies to horizontal docks;
+ capped horizontal and vertical runs otherwise use native scrolling only when measured
+-content exceeds the relevant size cap. `backdropMode="opaque"` paints solid `--card` with no
+-backdrop filter; the default `"glass"` plate sits on the chrome bound, legible over any
+-backdrop with no sampling.
++content exceeds the relevant size cap. The plate sits on the chrome bound, legible over
++any backdrop with no sampling; `class="glass-opaque"` paints the level-0 escape, a solid
++`--card` plate.
+ 
+ ## Slots
+ 
+diff --git a/src/components/dock/composables/useDockShellProps.ts b/src/components/dock/composables/useDockShellProps.ts
+index 7ed4bd0f..27e7cf66 100644
+--- a/src/components/dock/composables/useDockShellProps.ts
++++ b/src/components/dock/composables/useDockShellProps.ts
+@@ -24,8 +24,6 @@
+ 
+ import { computed, type ComputedRef } from "vue";
+ 
+-export type DockBackdropMode = "glass" | "opaque";
+-
+ /**
+  * Collapse posture. `"closed"` (default) mounts collapsed, `"open"` mounts
+  * expanded, and `false` never collapses at all — the single opt-out of the
+@@ -40,12 +38,6 @@ export type DockCollapse = false | "closed" | "open";
+  */
+ export interface DockProps {
+     fitContent?: boolean;
+-    /**
+-     * Backdrop material mode. `"glass"` (default) paints the chrome-bound veil over a
+-     * filtered backdrop; `"opaque"` paints the level-0 escape (solid `--card`, no
+-     * backdrop-filter).
+-     */
+-    backdropMode?: DockBackdropMode;
+     /**
+      * Corner treatment.
+      *   `"pill"`    — the stadium silhouette (default).
+diff --git a/src/components/dock/index.ts b/src/components/dock/index.ts
+index ef1bed20..07ab490d 100644
+--- a/src/components/dock/index.ts
++++ b/src/components/dock/index.ts
+@@ -3,7 +3,6 @@ export { default as GlassDock } from "./GlassDock.vue";
+    prop (a type-only export — the runtime `/dock` barrel is unmoved). `DockCollapse`
+    takes its place on the surface as the folded collapse member's union. */
+ export type {
+-    DockBackdropMode,
+     DockCollapse,
+     DockProps,
+ } from "./composables/useDockShellProps";
+diff --git a/src/components/dock/styles/adaptive-legibility.css b/src/components/dock/styles/adaptive-legibility.css
+index 8468bab6..79ae3b1c 100644
+--- a/src/components/dock/styles/adaptive-legibility.css
++++ b/src/components/dock/styles/adaptive-legibility.css
+@@ -1,10 +1,10 @@
+ /* Dock adaptive-legibility styles (a partial held
+  * under the 500-line no-god-module bound).
+  *
+- * This partial owns the dock's FOREGROUND over an unknown backdrop and the opaque
+- * (`data-backdrop-mode="opaque"`) arm. The plate needs no signal: both morph endpoints
+- * sit on the chrome bound (tokens/glass.css), where the static inks clear 4.5:1 over
+- * any input.
++ * This partial owns the dock's FOREGROUND over an unknown backdrop. The plate needs no
++ * signal: both morph endpoints sit on the chrome bound (tokens/glass.css), where the
++ * static inks clear 4.5:1 over any input. A dock that wants a solid plate carries the
++ * level-0 escape class `.glass-opaque` (glass/ladder-undershadow.css), as any surface does.
+  *
+  * @import-ed by dock.css in cascade order, in the SAME `@layer components` as morph.css
+  * (the carve is isomorphic — same layer, source order preserved → ZERO visual delta). */
+@@ -17,25 +17,4 @@
+         --dock-fg-on-aurora: var(--foreground);
+         --muted-foreground: var(--on-glass-muted);
+     }
+-
+-    /* The public opaque arm: the per-instance level-0 escape of the same material.
+-       Both morph endpoints read solid `--card`, and no backdrop-filter surface is
+-       allocated. */
+-    .glass-dock[data-backdrop-mode="opaque"] {
+-        --glass-level: 0;
+-    }
+-
+-    /* No plate-colour re-point: `--glass-level: 0` above resolves the veil recipe to
+-       solid `--card` through the SAME machinery every plate uses (glass/veil.css), so
+-       re-declaring the endpoints as `--card` here would be a parallel recipe for the
+-       value the one recipe already produces. Only the border and the lens are
+-       per-instance. */
+-    .glass-dock[data-backdrop-mode="opaque"] .dock-plate {
+-        /* The EXPANDED endpoint only — the collapsed one already resolves to
+-           `--glass-border-floating` on the shell (shell.css), so re-declaring it here
+-           was a byte-identical no-op. */
+-        --dock-plate-expanded-border: var(--glass-border-floating);
+-        backdrop-filter: none;
+-        -webkit-backdrop-filter: none;
+-    }
+ }
+diff --git a/src/styles/glass/control-bit.css b/src/styles/glass/control-bit.css
+index ff36ae14..4d82b089 100644
+--- a/src/styles/glass/control-bit.css
++++ b/src/styles/glass/control-bit.css
+@@ -107,8 +107,8 @@
+            L* 0.15 and a page at L* 0.99, and the token that tries is this defect
+            re-minted at library scope. */
+         --control-bit-fill: color-mix(in oklab, var(--foreground) 4%, transparent);
+-        /* The PERIMETER rung — a control's own edge AND its focus ring, 0.48, 3.0:1
+-           (tokens/color-radius.css §1.2). This retires `--control-ring`, whose only
++        /* The PERIMETER rung — a control's own edge AND its focus ring, 3.0:1
++           (tokens/color-radius.css §1.2; the dark arm in tokens/dark-arm.css). This retires `--control-ring`, whose only
+            two readers were the two faces this register replaces. It was a
+            COLOUR-VALUED ink at a hand-set alpha sitting beside the one-ink register,
+            which is the fork §1.2 exists to forbid; when it shipped at 12% it
+diff --git a/src/styles/glass/grasp.css b/src/styles/glass/grasp.css
+index f6bc39e6..3db8acb6 100644
+--- a/src/styles/glass/grasp.css
++++ b/src/styles/glass/grasp.css
+@@ -29,7 +29,9 @@
+    ONE PRECONDITION below). The five ladder rungs and the card are NOT graspable as they
+    stand: the rung's own `backdrop-filter` (glass/ladder.css) and the grain `::after`'s
+    `mix-blend-mode` (glass/grain-overlay.css) are backdrop-root formers nobody has stood
+-   down, so a carrier mounted on a `.glass-card` today would blur the card's own plate. THE
++   down, so a carrier mounted on a `.glass-card` today would sample nothing past the
++   card's own backdrop root. (A plate's VEIL is not the obstacle: a held plate paints it
++   on its carriers, below its content and above their filter, glass/veil.css.) THE
+    LAW, generically: a host mounting the carriers must stand down EVERY backdrop-root
+    former it or its ancestors declare, under this same carrier gate, for the duration of
+    the hold. The arm in tests/styles/glass-subtlety.test.ts DISCOVERS the hosts from the
+@@ -74,13 +76,12 @@
+    A partial of the glass.css cascade; @import-ed AFTER rim.css, its own
+    @layer components. */
+ @layer components {
+-    /* ── THE HOST — always-opaque, never-filtering, for the whole gesture ──────────
++    /* ── THE HOST — never-filtering, for the whole gesture ──────────────────────────
+        While the carriers are mounted the host's own filter is suppressed, held AND
+-       releasing alike. That makes the host §0.S clause 1's ONE always-opaque veil
+-       layer: its ink lerps on a registered `<number>` (monotone by construction, exact
+-       at both endpoints), and there is no second filtering layer beneath the carriers
+-       to compose with — the stacking identity 1−(1−α_rest)(1−α_grasp) has nothing to
+-       act on, because there is only ever one veil.
++       releasing alike, so there is no second filtering layer beneath the carriers to
++       compose with. The ink lerps on a registered `<number>` (`--glass-veil-rung`,
++       monotone by construction, exact at both endpoints); a plate paints that ink on
++       its carriers for the duration (glass/veil.css), a non-plate host on itself.
+ 
+        THE HOST'S ONE PRECONDITION: while the carriers are mounted, NEITHER IT NOR ANY
+        ANCESTOR may form a BACKDROP ROOT. A `backdrop-filter` samples only as far back
+@@ -134,12 +135,14 @@
+         --glass-veil-rung: max(calc(var(--glass-veil-rest) * 0.6), var(--glass-veil-floor, 0));
+     }
+ 
+-    /* ── THE CARRIERS — filter-only, mounted on engage, gone on release ────────────
+-       Two absolutely-positioned children carrying NOTHING but a `backdrop-filter`: no
+-       background, no border, no veil, no rim, no pointer surface. They exist so the
+-       release can CROSS-COVER — one filter is always at full opacity, at every frame,
+-       so the un-frosted leak (1−o_grasp)(1−o_rest) is identically 0 and the surface
+-       never flashes through to sharp.
++    /* ── THE CARRIERS — mounted on engage, gone on release ─────────────────────────
++       Two absolutely-positioned children carrying a `backdrop-filter` and, on a plate,
++       the plate's veil (glass/veil.css): no border, no rim, no pointer surface. They
++       exist so the release can CROSS-COVER — one filter is always at full opacity, at
++       every frame, so the un-frosted leak (1−o_grasp)(1−o_rest) is identically 0 and
++       the surface never flashes through to sharp. On a plate the veil cross-covers with
++       them: while both are visible mid-release the two veils compose to
++       1 − (1 − α)(1 − α·o_grasp), thicker than α and never thinner.
+ 
+        A consumer mounts them under `[data-held]` and unmounts them on `transitionend`
+        — never on a JS timer, which drifts against the actual paint. Rest cost is
+diff --git a/src/styles/glass/overlay-plate.css b/src/styles/glass/overlay-plate.css
+index 0185b0c6..5e272807 100644
+--- a/src/styles/glass/overlay-plate.css
++++ b/src/styles/glass/overlay-plate.css
+@@ -170,7 +170,7 @@
+            ring vanishes entirely.
+ 
+            The recipe RESTATES `.focus-ring:focus-visible` (`utilities/base.css:144`, the
+-           source of record — the `--ink-perimeter` 0.48 rung BK #80 measured at 3.0:1
++           source of record — the `--ink-perimeter` rung, which BK #80 measured at 3.0:1
+            against the retired shadow's 1.91:1) rather than composing the class, and the
+            reason is the cascade, not preference: `.focus-ring` is authored LATER than
+            `dock/styles/index.css` at equal specificity, so putting the utility on the
+diff --git a/src/styles/glass/veil.css b/src/styles/glass/veil.css
+index a1c14420..3c767dc3 100644
+--- a/src/styles/glass/veil.css
++++ b/src/styles/glass/veil.css
+@@ -45,7 +45,19 @@
+    (glass/grasp.css) can express its band as a factor of the rest α.
+    `--glass-veil-floor` is the α a HELD plate may not shed below: the bound. It is
+    declared here, on the plate, so a host that is not a plate (glass/liquid-fill.css)
+-   has none and sheds its whole band. */
++   has none and sheds its whole band.
++
++   A HELD PLATE PAINTS ITS VEIL ON ITS CARRIERS. While the grasp carriers
++   (glass/grasp.css) are mounted, the plate drops its own background and each carrier
++   paints `--glass-veil` (the host's, inherited) below the host's content. The order is
++   then filter, veil, content. Left on the host, the veil sat under the carriers'
++   dilated filter, which blurred the ground around the plate into it: the held dock's
++   muted tab read 4.46:1 over black (light, Chromium) against 4.83 with the veil on the
++   carriers (D3 pass 2, A′). Only a plate does this; a non-plate host (the slider's
++   liquid fill) keeps its own paint under the carriers. The carriers sit at
++   `z-index: -1`, so the host must be a stacking context, as `.dock-plate` is; on a
++   host that is not one they fall behind the nearest opaque ancestor (the carrier-host
++   arm in tests/styles/glass-subtlety.test.ts reds a plate host with no z-index). */
+ @utility glass-plate {
+     --glass-veil-floor: var(--glass-bound);
+     --glass-veil-rest: var(--glass-veil-tier, var(--glass-veil-resting));
+@@ -56,6 +68,14 @@
+         transparent
+     );
+     background: var(--glass-veil);
++
++    &:has(> .glass-grasp-carrier[data-grasp="grasp"]) {
++        background: none;
++    }
++    & > .glass-grasp-carrier {
++        background: var(--glass-veil);
++        z-index: -1;
++    }
+ }
+ 
+ @layer components {
+diff --git a/src/styles/tokens/color-radius.css b/src/styles/tokens/color-radius.css
+index 2513dcfd..2aa960a7 100644
+--- a/src/styles/tokens/color-radius.css
++++ b/src/styles/tokens/color-radius.css
+@@ -126,8 +126,8 @@
+          gap ≥ 32 (--space-section) → NO line, ever
+          gap   20 (--space-family)  → seam
+          gap ≤ 12 (--space-body)    → edge
+-       Control perimeter and focus ring are GAP-INDEPENDENT — always 0.52, because
+-       WCAG 1.4.11 does not care what is beside them.
++       Control perimeter and focus ring are GAP-INDEPENDENT — always the perimeter
++       rung, because WCAG 1.4.11 does not care what is beside them.
+ 
+        DERIVATIONS, NOT MEMBERS (do NOT mint a token for either — §6 is 6 net):
+          · the "both" fill rung = --fill-hover + --fill-selected = 0.17
+@@ -142,12 +142,10 @@
+        control perimeter and is 1.43× the plate edge for a grouping line. It sits
+        between two rungs and belongs to neither; two inks is a second colour system.
+ 
+-       DARK ARM OWED, NOT INVENTED. Every α below is a light-arm Chromium dpr1
+-       measurement (§7b item 5: the census is "a light dpr1 floor"), and §7b item 1
+-       — "dark mode across `forms` entirely" — is the named owed cell, routed to
+-       #10's paired capture. The dark arm therefore INHERITS these scalars rather
+-       than carrying a guessed twin: a fabricated dark α would be a value minted
+-       against no measurement. */
++       THE DARK ARM IS MEASURED, NOT INHERITED. Every α below is a light-arm
++       Chromium dpr1 measurement. Inherited into dark, the perimeter read 2.78-2.88:1
++       on every ground, so tokens/dark-arm.css declares its own three scalars from
++       the dark capture (perimeter 0.60, seam and edge at the same 1 : 2 : 6.5). */
+     --ink-seam: 0.08;      /* in-content rule · group ↔ group · a FLUSH plate's own edge (break-even 0.0705) */
+     --ink-edge: 0.16;      /* a FLOATING plate's boundary — where a drop shadow sits outside it */
+     --ink-perimeter: 0.52; /* a control's own edge · the focus ring · the selection indicator — 3.0:1 on the chrome composite (≈0.505), with margin */
+diff --git a/src/styles/tokens/dark-arm.css b/src/styles/tokens/dark-arm.css
+index 811fd2ea..64343c04 100644
+--- a/src/styles/tokens/dark-arm.css
++++ b/src/styles/tokens/dark-arm.css
+@@ -276,6 +276,19 @@
+     --glass-bound-ground: 1;
+     --glass-well-toward:  var(--background);
+ 
++    /* ── The one-ink stroke register's DARK arm (PROPORTION §1.2, Q-6 a) ─────────
++       The light scalars (tokens/color-radius.css) were measured on the light chrome
++       composite; inherited into dark, the perimeter at 0.52 reads 2.78-2.88:1 on the
++       well over every ground (Chromium; 2.81-2.92 Playwright WebKit), under the 3:1 of
++       WCAG 1.4.11. 0.60 is the smallest measured dark perimeter whose margin is no
++       thinner than light's: 3.29-3.42:1 over black, white, stripes and the c1 aurora
++       (Chromium; 3.37-3.50 Playwright WebKit), against light's 3.08-3.15 (D3 pass 2,
++       A′ spec §2 item 3). Seam and edge keep 1 : 2 : 6.5, so the rungs stay ONE ink at
++       three alphas in each theme: 0.60 / 6.5 and 0.60 / 3.25, rounded to four places. */
++    --ink-seam:      0.0923;
++    --ink-edge:      0.1846;
++    --ink-perimeter: 0.60;
++
+ 
+     /* The surface-aware FOREGROUND register, DARK arm (the N13
+        whisper collapse where it bites hardest). The dark page-muted --neutral-5 (L62,
+diff --git a/src/styles/tokens/scale-paper.css b/src/styles/tokens/scale-paper.css
+index 21b3a141..2579ff4b 100644
+--- a/src/styles/tokens/scale-paper.css
++++ b/src/styles/tokens/scale-paper.css
+@@ -87,7 +87,7 @@
+        2026-08-05.~~ [2026-08-08 · BK #83 W-CONTROL-BIT: DELETED. The token had
+        exactly two readers — the Checkbox face and the RadioGroupItem face — and both
+        are now the ONE `.control-bit` register (styles/glass/control-bit.css), which
+-       reads the perimeter rung `--ink-perimeter` (0.48) off the one-ink register
++       reads the perimeter rung `--ink-perimeter` (then 0.48) off the one-ink register
+        (tokens/color-radius.css §1.2) instead. A colour-valued ink at a hand-set alpha
+        beside a scalar ink register is the FORK §1.2 exists to forbid, and #31's own
+        sweep is what makes the swap safe rather than lossy: its arithmetic floor was
+diff --git a/src/styles/utilities/base.css b/src/styles/utilities/base.css
+index dc12f8c1..ea36e8fc 100644
+--- a/src/styles/utilities/base.css
++++ b/src/styles/utilities/base.css
+@@ -134,8 +134,9 @@
+        all snapped from their own corner to a stadium the moment they were tabbed to.
+        A focus indicator may not restate the element's shape.
+ 
+-       The ink is the PERIMETER rung (`--ink-perimeter`, 0.48 — a control's own edge,
+-       the focus ring, the selection indicator; 3.0:1), which clears the 3:1 bar alone.
++       The ink is the PERIMETER rung (`--ink-perimeter` — a control's own edge, the
++       focus ring, the selection indicator; 3.0:1 in each theme's arm), which clears
++       the 3:1 bar alone.
+        The retired `--focus-ring-shadow` recipe carried a 0.30 ring measuring 1.91:1
+        plus an 8px bloom whose whole job was rescuing it — the bloom is gone with the
+        thing it was rescuing, and its own mass spread over 8px was sub-edge (1.17:1)
+diff --git a/tests/components/custom/dock/GlassDock.backdrop-mode.test.ts b/tests/components/custom/dock/GlassDock.backdrop-mode.test.ts
+deleted file mode 100644
+index b8028eb5..00000000
+--- a/tests/components/custom/dock/GlassDock.backdrop-mode.test.ts
++++ /dev/null
+@@ -1,21 +0,0 @@
+-import { mount } from "@vue/test-utils";
+-import { describe, expect, it } from "vitest";
+-
+-import { GlassDock, type DockBackdropMode } from "@glass/components/dock";
+-
+-describe("GlassDock backdrop mode", () => {
+-    it("paints the glass plate by default", () => {
+-        const wrapper = mount(GlassDock);
+-
+-        expect(wrapper.get(".glass-dock").attributes("data-backdrop-mode")).toBe("glass");
+-        wrapper.unmount();
+-    });
+-
+-    it("witnesses the opaque escape", () => {
+-        const mode: DockBackdropMode = "opaque";
+-        const wrapper = mount(GlassDock, { props: { backdropMode: mode } });
+-
+-        expect(wrapper.get(".glass-dock").attributes("data-backdrop-mode")).toBe(mode);
+-        wrapper.unmount();
+-    });
+-});
+diff --git a/tests/components/custom/dock/GlassDock.posture.test.ts b/tests/components/custom/dock/GlassDock.posture.test.ts
+index 9b457cfe..49109fb7 100644
+--- a/tests/components/custom/dock/GlassDock.posture.test.ts
++++ b/tests/components/custom/dock/GlassDock.posture.test.ts
+@@ -141,7 +141,7 @@ function mountDock(
+     return wrapper;
+ }
+ 
+-describe("GlassDock — the W1 six-prop surface is what the root emits", () => {
++describe("GlassDock — the four-prop surface is what the root emits", () => {
+     it("stamps NONE of the seven struck props' hooks", () => {
+         // The falsifier for the cut: restore any struck prop's emission and one of
+         // these flips. `data-size`/`data-interaction`/`data-search` were prop-driven
+@@ -150,6 +150,9 @@ describe("GlassDock — the W1 six-prop surface is what the root emits", () => {
+         expect(root.attributes("data-size")).toBeUndefined();
+         expect(root.attributes("data-interaction")).toBeUndefined();
+         expect(root.attributes("data-search")).toBeUndefined();
++        // `backdropMode` is struck: the dock paints the chrome bound, and
++        // the solid plate is the level-0 escape class, so no mode is stamped.
++        expect(root.attributes("data-backdrop-mode")).toBeUndefined();
+         const classes = root.classes();
+         expect(classes).not.toContain("layout-linear");
+         expect(classes).not.toContain("layout-grid");
+@@ -158,13 +161,12 @@ describe("GlassDock — the W1 six-prop surface is what the root emits", () => {
+         expect(classes).not.toContain("dock-overflow-wrap");
+     });
+ 
+-    it("keeps the six survivors observable on the root", () => {
++    it("keeps the four survivors observable on the root", () => {
+         const root = mountDock({
+             collapse: false,
+             shape: "card",
+             orientation: "vertical",
+             fitContent: true,
+-            backdropMode: "opaque",
+         }).get(".glass-dock");
+         expect(root.classes()).toEqual(
+             expect.arrayContaining([
+@@ -175,7 +177,6 @@ describe("GlassDock — the W1 six-prop surface is what the root emits", () => {
+                 "pinned",
+             ]),
+         );
+-        expect(root.attributes("data-backdrop-mode")).toBe("opaque");
+ 
+         /* [2026-08-10 · BK #47 W1 CURE] …and the SAME root with `collapse` ABSENT is
+            the OTHER pole. This is the falsifier for the boolean-cast trap: because
+diff --git a/tests/styles/glass-subtlety.test.ts b/tests/styles/glass-subtlety.test.ts
+index f630d1f5..8694e2b0 100644
+--- a/tests/styles/glass-subtlety.test.ts
++++ b/tests/styles/glass-subtlety.test.ts
+@@ -199,6 +199,20 @@ describe("glass veil ladder — every rung on the one computed bound", () => {
+         );
+         expect(stripCss(read("src/styles/glass/veil.css"))).toMatch(/--glass-veil-floor:\s*var\(--glass-bound\)/);
+     });
++
++    it("paints a HELD plate's veil on its carriers, below its content", () => {
++        // Left on the host, the veil sits under the carriers' dilated filter, which
++        // blurs the ground around the plate into it (held dock muted tab 4.46:1 over
++        // black, light, Chromium; 4.83 with the veil on the carriers). The plate drops
++        // its own background under the carrier gate, and each carrier paints the
++        // host's veil at z-index -1, so the order is filter, veil, content.
++        const veil = stripCss(read("src/styles/glass/veil.css"));
++        const plate = /@utility glass-plate\s*\{([\s\S]*)\n\}/.exec(veil)?.[1] ?? "";
++        expect(plate).toMatch(/&:has\(> \.glass-grasp-carrier\[data-grasp="grasp"\]\)\s*\{\s*background:\s*none;\s*\}/);
++        const carrier = /& > \.glass-grasp-carrier\s*\{([^}]*)\}/.exec(plate)?.[1] ?? "";
++        expect(carrier).toMatch(/background:\s*var\(--glass-veil\)/);
++        expect(carrier).toMatch(/z-index:\s*-1/);
++    });
+ });
+ 
+ describe("glass blur ladder — five in-band radii, one calibration anchor", () => {
+@@ -1083,6 +1097,21 @@ describe("grasp register — the material answers the hand", () => {
+         }
+     });
+ 
++    it("seats every PLATE host as a stacking context, so its carriers' veil stays under its content", () => {
++        // A plate paints its held veil on its carriers at `z-index: -1` (glass/veil.css).
++        // On a host that is not a stacking context they fall to the nearest one's
++        // negative layer, behind any opaque ancestor between, and the held text loses
++        // its veil. `.dock-plate` declares `z-index: -1` inside the dock's own stack.
++        for (const host of graspHosts) {
++            const bodies = hostRules(host.classes).map((r) => r.body);
++            if (!bodies.some((b) => /@apply[^;]*\bglass-plate\b/.test(b))) continue;
++            expect(
++                bodies.some((b) => /(?:^|[;{\s])z-index\s*:\s*-?\d/.test(b)),
++                `${host.file}: ${host.classes.join("/")} composes the plate and mounts the carriers but declares no z-index`,
++            ).toBe(true);
++        }
++    });
++
+     it("keeps the ONE unlayered scoped exception COMPOSING the register's ink", () => {
+         // An SFC-scoped block is unlayered, and unlayered author declarations beat every
+         // `@layer` rule at any specificity — the one hole in the outrank-by-specificity
+diff --git a/tests/styles/proportion-register.test.ts b/tests/styles/proportion-register.test.ts
+index 7e211090..3e465c56 100644
+--- a/tests/styles/proportion-register.test.ts
++++ b/tests/styles/proportion-register.test.ts
+@@ -120,13 +120,19 @@ describe("the CWT-2:1533 tranche-wide register — PROPORTION §6, the six ADDED
+         expect(forked, "α rung is not a bare <number> — the ink has forked").toEqual([]);
+     });
+ 
+-    it("holds the §1.2 stroke ratio seam : edge : perimeter = 1 : 2 : 6.5, by computation", () => {
+-        const seam = num(decl(colorRadius, "--ink-seam"));
+-        const edge = num(decl(colorRadius, "--ink-edge"));
+-        const perimeter = num(decl(colorRadius, "--ink-perimeter"));
+-
+-        expect(close(edge / seam, 2), `edge : seam = ${edge / seam}, not 2`).toBe(true);
+-        expect(close(perimeter / seam, 6.5), `perimeter : seam = ${perimeter / seam}, not 6.5`).toBe(true);
++    it.each([
++        ["light", "src/styles/tokens/color-radius.css"],
++        ["dark", "src/styles/tokens/dark-arm.css"],
++    ])("holds the §1.2 stroke ratio seam : edge : perimeter = 1 : 2 : 6.5 in the %s arm, by computation", (_arm, file) => {
++        // The dark arm is rounded to four places (0.60 / 6.5 = 0.0923…), so the ratio
++        // is read to 1e-3, not to float equality.
++        const css = read(file);
++        const seam = num(decl(css, "--ink-seam"));
++        const edge = num(decl(css, "--ink-edge"));
++        const perimeter = num(decl(css, "--ink-perimeter"));
++
++        expect(close(edge / seam, 2, 1e-3), `edge : seam = ${edge / seam}, not 2`).toBe(true);
++        expect(close(perimeter / seam, 6.5, 1e-3), `perimeter : seam = ${perimeter / seam}, not 6.5`).toBe(true);
+     });
+ 
+     it("holds the §1.2 indicator mass identity — 2px @ 0.26 == the 1px perimeter", () => {
+@@ -160,7 +166,7 @@ describe("the CWT-2:1533 tranche-wide register — PROPORTION §6, the six ADDED
+         // §6 is "6 net". The "both" fill rung (0.05 + 0.12 = 0.16) and the 2px @ 0.24
+         // indicator are arithmetic products of stated laws, so they are legal VALUES
+         // and illegal NAMES.
+-        const family = Array.from(tokenLayer.matchAll(/^\s*(--(?:ink|fill)[a-z0-9-]*)\s*:/gm), (m) => m[1]).sort();
++        const family = [...new Set(Array.from(tokenLayer.matchAll(/^\s*(--(?:ink|fill)[a-z0-9-]*)\s*:/gm), (m) => m[1]))].sort();
+         expect(family).toEqual([
+             "--fill-hover",
+             "--fill-selected",
+@@ -170,15 +176,16 @@ describe("the CWT-2:1533 tranche-wide register — PROPORTION §6, the six ADDED
+         ]);
+     });
+ 
+-    it("invents NO dark-arm α — §7b item 1 is OWED, not guessed", () => {
+-        // Every α is a light-arm Chromium dpr1 measurement (§7b item 5: the census is
+-        // "a light dpr1 floor"). "dark mode across `forms` entirely" is the named owed
+-        // cell, routed to #10's paired capture. A dark twin authored before that
+-        // capture would be a value minted against no measurement, so the dark arm
+-        // INHERITS. This arm reds if someone fabricates one.
++    it("the dark arm declares the three stroke rungs from its own capture, and no fill rung", () => {
++        // Inherited, the light perimeter (0.52) read 2.78-2.88:1 on the dark well over
++        // every ground (D3 pass 2, A′ spec §2 item 3), under WCAG 1.4.11's 3:1. The dark
++        // arm therefore carries its own perimeter and the seam and edge that keep the
++        // ratio (asserted above). The fill rungs were not re-measured, so they inherit;
++        // a dark fill twin reds here.
+         const darkArm = strip(read("src/styles/tokens/dark-arm.css"));
+-        const fabricated = Array.from(darkArm.matchAll(/^\s*(--(?:ink|fill)[a-z0-9-]*)\s*:/gm), (m) => m[1]);
+-        expect(fabricated, "dark α fabricated ahead of the §7b item 1 capture").toEqual([]);
++        const declared = Array.from(darkArm.matchAll(/^\s*(--(?:ink|fill)[a-z0-9-]*)\s*:/gm), (m) => m[1]).sort();
++        expect(declared).toEqual(["--ink-edge", "--ink-perimeter", "--ink-seam"]);
++        expect(num(decl(darkArm, "--ink-perimeter"))).toBeGreaterThan(INK.perimeter);
+     });
+ });
+ 

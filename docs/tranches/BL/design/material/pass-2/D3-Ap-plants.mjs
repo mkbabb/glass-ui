@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// D3-Ap-plants.mjs · the A′ pass-2 spec seat's injected variants: the mechanism-removal plants, the held diagnostic,
-// the held cure probe and the dark perimeter sweep (D3-Ap-spec.md §2-§3). Each variant is captured over an existing
+// D3-Ap-plants.mjs · the A′ pass-2 injected variants: the mechanism-removal plants, the held diagnostic,
+// the held cure probe and the dark perimeter sweep (D3-Ap-spec.md §2-§3), and the prototype's own plants and the
+// carriers' stacking-risk probe (D3-Ap-proto.md §3). Each variant is captured over an existing
 // specimen build into its own capdir, relabelled `base` so the unmodified witnesses read it, and the cells it did not
 // take print as MISSING (ignore them; read the rows the variant touches).
 //   node D3-Ap-plants.mjs <dist> <worktree> [--only id,id] [--out <dir>]      ($D3_OUT/caps/<id> by default)
@@ -25,6 +26,22 @@ export const VARIANTS = {
   "cure-carrier-veil": { ...HELD, css: ':has(> .glass-grasp-carrier[data-grasp="grasp"]) { background: none; }\n.glass-grasp-carrier { background: var(--glass-veil); z-index: -1; }' },
   // The dark perimeter sweep (item 3), PROPORTION 1 : 2 : 6.5 kept.
   "perim-0.56": { ...PERIM, css: perim(0.56) }, "perim-0.60": { ...PERIM, css: perim(0.6) }, "perim-0.64": { ...PERIM, css: perim(0.64) },
+  // The prototype's own mechanism-removal plants (D3-Ap-proto.md §3), over the A′ build.
+  // The held veil back on the host and off the carriers (the floor's paint) → H-5 rows red.
+  "plant-carrierveil": { ...HELD, css: ':has(> .glass-grasp-carrier[data-grasp="grasp"]):is(.dock-plate, .glass-wash, .glass-floating) { background: var(--glass-veil) !important; }\n.glass-grasp-carrier { background: none !important; z-index: auto !important; }' },
+  // The dark stroke arm removed (the light scalars inherited, as on the floor) → M-3 dark red.
+  "plant-darkperim": { ...PERIM, css: ".dark { --ink-perimeter: 0.52; --ink-edge: 0.16; --ink-seam: 0.08; }" },
+  // The carriers' stacking precondition (veil.css): an opaque ancestor (ink-coloured, the worst case) under held hosts
+  // that are not stacking contexts (the specimen rungs), then the same with the hosts seated at z-index 0.
+  "risk-opaque-ancestor": { scenes: "held", grounds: "white", css: ".hx-page { background: #000; } .dark .hx-page { background: #fff; }" },
+  // The held dock's 0.025 painted-α residual (Chromium only): every shadow and filter in the held dock cell off but the
+  // carriers' own; then the slider's own carriers' filter off.
+  "diag-held-noshadow": { engines: "chromium", themes: "light", scenes: "held", grounds: "black,white", css: ".hx-dockcell *, .hx-dockcell *::before, .hx-dockcell *::after { box-shadow: none !important; filter: none !important; }" },
+  "diag-held-nosliderblur": { engines: "chromium", themes: "light", scenes: "held", grounds: "black,white", css: ".slider-range > .glass-grasp-carrier { backdrop-filter: none !important; }" },
+  "diag-held-nodockblur": { engines: "chromium", themes: "light", scenes: "held", grounds: "black,white", css: ".dock-plate > .glass-grasp-carrier { backdrop-filter: none !important; }" },
+  "diag-held-nobright": { engines: "chromium", themes: "light", scenes: "held", grounds: "black,white", css: '.dock-plate > .glass-grasp-carrier[data-grasp="grasp"] { backdrop-filter: blur(calc(var(--glass-blur-resting-radius) * 1.625)) !important; }' },
+  "diag-held-noanyblur": { engines: "chromium", themes: "light", scenes: "held", grounds: "black,white", css: ".hx-dockcell, .hx-dockcell *, .hx-dockcell *::before, .hx-dockcell *::after { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }" },
+  "risk-opaque-ancestor-z0": { scenes: "held", grounds: "white", css: ".hx-page { background: #000; } .dark .hx-page { background: #fff; } .hx-plate { z-index: 0; }" },
 };
 
 function relabel(capdir) {
@@ -51,6 +68,6 @@ for (const id of list(a.only, Object.keys(VARIANTS))) {
   const v = VARIANTS[id], capdir = path.join(root, id), css = path.join(root, `${id}.css`);
   fs.mkdirSync(root, { recursive: true }); fs.writeFileSync(css, v.css + "\n");
   console.log(`== ${id} · load ${(await import("node:os")).loadavg().map((x) => x.toFixed(1)).join(" ")}`);
-  await capture(path.resolve(a._[0]), { out: capdir, themes: v.themes, scenes: v.scenes, grounds: v.grounds, variant: id, inject: css, worktree: a._[1] && path.resolve(a._[1]), quiet: true });
+  await capture(path.resolve(a._[0]), { out: capdir, engines: v.engines, themes: v.themes, scenes: v.scenes, grounds: v.grounds, variant: id, inject: css, worktree: a._[1] && path.resolve(a._[1]), quiet: true });
   relabel(capdir);
 }
