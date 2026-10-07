@@ -1,5 +1,5 @@
-"""Class sweep: a static gate whose pattern catches fewer spellings than the claim it states (pass 11 FK-01; pass 12
-FL-01, FL-02, FL-03).
+"""Class sweep: a static gate whose pattern catches fewer spellings than the claim it states, or that forbids the
+cure its own spec writes (pass 11 FK-01; pass 12 FL-01, FL-02, FL-03; pass 13 FM-01 to FM-05).
 
 A static gate that forbids something holds its cure once its wave lands: a born-RED row goes green and becomes the
 line that keeps the cure in place, exactly as a labelled hold line does today. Its bite is the regression its claim
@@ -29,7 +29,8 @@ For each entry the sweep, in a checkout of HEAD:
 
   1. builds a CURED base: the entry's cure ops, then, for each absence clause it can read, the lines its own
      search reports are deleted (the search re-run with `-n`, `-q`/`-c`/`-l` dropped), and a `test ! -e` path is
-     removed; this repeats until the gate passes or nothing is left to strip;
+     removed; this repeats until the gate passes or nothing is left to strip. Text a cure op wrote must survive
+     the strip: a gate whose own search deletes the spec's cure is open CURE (pass 13 FM-04);
   2. re-plants the first stripped line (the row's own bite, on the cured base; not for a bounded count, whose bite
      is a red plant) and each red plant: each must fail the gate; each green plant must pass it;
   3. restores every file byte for byte and removes every file it created.
@@ -43,6 +44,15 @@ For each entry the sweep, in a checkout of HEAD:
   WIDE    a green plant fails the gate on the cured base
   HELD    an H entry whose named gate is not a measured row of the same wave
   STALE   a CLAIMS entry that matches no in-scope row
+  NOSPEC  an S entry with no quote of its cure from the wave spec (outside §5), or a quote the spec does not hold
+  NOCURE  an S entry with no C plant (the spec's cure form, which must pass) and no `deletion` mark
+  NOUN    a class, custom property or dotted or called name that the gate's title, pass cell or the spec quote
+          names in backticks, and that no plant of the entry carries
+
+The last three are pass 13 FM-05's cure: an entry's plants were this seat's guesses, so a spelling no seat thought
+of passed both gate and sweep, and a gate that forbade the spec's own cure passed, because the cured base was the
+gate's hits deleted, never the spec's form. SPEC (after CLAIMS) carries each S entry's quote, cure form and the
+plants its nouns require.
 
 A gate that reads the index (`git ls-files`) is planted through its listing: the span is run with each
 `git ls-files <args>` replaced by that listing less the entry's `ls_cure` names, plus the planted path. Plants go
@@ -57,6 +67,7 @@ import subprocess
 import sys
 
 from gates import gates
+from plan_dag import text
 
 STATIC = re.compile(r"^\s*(?:!\s*)?(?:test|grep|git grep|rg|sed|awk)\b")
 HEAVY = re.compile(r"\b(npx|npm|vitest|playwright|vite|gh|curl|node|plutil)\b|\$H\b|\$D3_OUT|\bdist/|dist-demo/|\.cache/|<(?!/?style\b)[A-Za-z][^<>]*>|…")  # a `<placeholder>`; an awk `/<style/` or a regex `[<>]` is not one
@@ -68,8 +79,9 @@ LY = "src/components/dock/styles/layers.css"
 T6 = ".x::after { %s }"
 
 
-def S(*plants, cure=(), only=None, printed=False, ls_cure=None):
-    return {"kind": "S", "plants": list(plants), "cure": list(cure), "only": only, "printed": printed, "ls_cure": ls_cure}
+def S(*plants, cure=(), only=None, printed=False, ls_cure=None, spec=None, deletion=None):
+    return {"kind": "S", "plants": list(plants), "cure": list(cure), "only": only, "printed": printed, "ls_cure": ls_cure,
+            "spec": spec, "deletion": deletion}
 
 
 def L(why, *plants, cure=(), only=None, ls_cure=None):
@@ -86,6 +98,11 @@ def R(f, text, what):
 
 def G(f, text, what):
     return (f, text, "green", what)
+
+
+def C(f, text, what):
+    """A green plant that is the spec's own cure form, written as the spec writes it (pass 13 FM-05)."""
+    return (f, text, "cure", what)
 
 
 DOCKET = L("PLAN §1 fixes the docket template and LEDGER §4 writes the answer cell as a bare `pending`; fail-open-gates.py arm DOCKET holds the cell's form")
@@ -169,7 +186,15 @@ CLAIMS = {
         R(LY, ".glass-dock.collapsed :is(.dock-layer--summary) { width: 0 }", "the layer inside `:is()`"),
         R(LY, ".glass-dock.expanded .dock-layer--full:not([data-morphing]) { width: 0 }", "the morph gate on the layer, which never carries it"),
         R("src/components/dock/GlassDock.vue", "<style>\n.glass-dock.collapsed :deep(.dock-layer--summary) { width: 0 }\n</style>", "a component <style> block"),
-        G(LY, ".glass-dock.expanded:not(.fit-content):not([data-morphing]) .dock-layer--full { width: 100% }", "the rule gated as its sibling `:344-346` is"),
+        R(LY, ".glass-dock.collapsed .dock-layer { width: 0 }", "the base class both layers carry (`GlassDock.vue:464,478`; pass 13 FM-01)"),
+        R(LY, ".glass-dock.collapsed .dock-layer.is-active { inline-size: 0 }", "the base class with a state of its own"),
+        R(LY, ".glass-dock.collapsed .dock-layers > * { width: 0 }", "any child of the group"),
+        R(LY, ".glass-dock.collapsed .dock-layers > .dock-layer { width: 0 }", "the base class as a child of the group"),
+        R(LY, ".glass-dock.collapsed { --x: 0px }\n.dock-layer--full { width: var(--x) }", "a width laundered through a state-set custom property"),
+        R(LY, ".glass-dock.collapsed { --x: 0px }\n.glass-dock { --y: calc(var(--x) * 2) }\n.dock-layer { min-height: var(--y) }", "the same through a second custom property"),
+        C(LY, ".glass-dock.expanded:not(.fit-content):not([data-morphing]) .dock-layer--full { width: 100% }", "§3 item 1: the rule takes the gate its sibling `:344-346` carries"),
+        G(LY, ".glass-dock.collapsed { --x: 0px }\n.glass-dock:not([data-morphing]) .dock-layer--full { width: var(--x) }", "a state-set property read by a gated layer rule"),
+        G(LY, ".glass-dock.collapsed:not([data-morphing]) { --x: 0px }\n.dock-layer--full { width: var(--x) }", "a property set under the morph gate"),
         G(LY, ".glass-dock[data-morphing] .dock-layer--full { width: 0 }", "the carrier's own sizing while morphing (no state class)"),
         G(LY, ".glass-dock.collapsed .dock-layer--summary svg { width: 1em }", "a glyph inside a layer (the subject is the svg)"),
         G(LY, ".dock-layer-group.collapsed .dock-layer-switcher { width: 0 }", "the layer group, which is not a layer"),
@@ -303,7 +328,12 @@ CLAIMS = {
     ("W-C.4", "C4-G9"): L(GONE),
     ("W-C.5", "C5-G7"): S(  # "one randomness source": the seeded PRNG
         R("src/components/typewriter/plant.ts", "const r = crypto.getRandomValues(new Uint32Array(1))[0];", "the platform's other random source"),
-    ),
+        R("src/composables/glass/procedural/prng.ts", "const extra = crypto.getRandomValues(new Uint32Array(2));", "a second `crypto.getRandomValues` read in `prng.ts`"),
+        R("src/composables/glass/procedural/prng.ts", "const r = Math.random();", "`Math.random` inside `prng.ts`"),
+        R("src/components/typewriter/plant.ts", "const id = crypto.randomUUID();", "`randomUUID`"),
+        C("src/components/typewriter/utils/timing.ts", "const rand = mulberry32(seed ?? freshSeed());", "§3 item 7: a caller with no seed takes `freshSeed()` through `mulberry32`; the cure op writes `freshSeed()`, the one read, into `prng.ts` (pass 13 FM-04)"),
+        cure=[("striphits", "rg -n 'Math\\.random|getRandomValues|randomUUID' src"),
+              ("append", "src/composables/glass/procedural/prng.ts", "export function freshSeed(): number { return crypto.getRandomValues(new Uint32Array(1))[0]; }")]),
     ("W-C.5", "C5-G9"): L(GONE),
     ("W-D.1", "D1-G8"): L(GONE),
     # ---------------------------------------------------------------- band E
@@ -319,6 +349,8 @@ CLAIMS = {
         R("src/styles/typography/scale.css", '@font-face {\n    font-family: "Plus Jakarta Sans Fallback";\n}', "a second face (the row's bite)"),
         R("src/styles/typography/scale.css", "@font-face {\n    font-family: 'Plus Jakarta Sans Fallback';\n}", "a second face, single quotes"),
         R("src/styles/typography/scale.css", '@font-face {\n    font-family:"Plus Jakarta Sans Fallback"\n}', "a second face, unspaced with no semicolon"),
+        R("src/styles/typography/scale.css", '@font-face {\n    font-family: "Plus Jakarta Sans Fallback SF";\n}\n@font-face {\n    FONT-FAMILY: \'plus jakarta sans fallback sf\';\n}', "one platform name declared twice, quotes and case changed"),
+        C("src/styles/typography/scale.css", '@font-face {\n    font-family: "Plus Jakarta Sans Fallback SF";\n}\n@font-face {\n    font-family: "Plus Jakarta Sans Fallback Segoe";\n}\n@font-face {\n    font-family: "Plus Jakarta Sans Fallback Roboto";\n}\n@font-face {\n    font-family: "Plus Jakarta Sans Fallback Arial";\n}', "§3 item 4's four platform faces, each its own name"),
         cure=[("striphits", "grep -nH 'Plus Jakarta Sans Fallback' src/styles/typography/scale.css", None, 1)]),
     ("W-E.12", "E12-G2"): S(  # "no string-parsed dot"
         R("src/components/pager-dots/worm.ts", "const d = parseFloat(cs.getPropertyValue('--pager-dot-size'));", "single quotes"),
@@ -336,6 +368,16 @@ CLAIMS = {
         R("src/components/sheet/detents/use.ts", "const h = innerHeight;", "a bare `innerHeight`"),
         R("src/components/sheet/detents/use.ts", "const h = globalThis.innerHeight;", "`globalThis`"),
         R("src/components/sheet/styles.css", ".x { min-block-size:calc(50vh - 1rem); }", "an unspaced `calc(`"),
+        R("src/components/sheet/styles.css", ".x { min-block-size: var(--sheet-floor); }", "the floor read back from `--sheet-floor` (pass 13 FM-03)"),
+        R("src/components/sheet/styles.css", ".x { min-height: calc(50vh - 1rem); }", "`min-height`"),
+        R("src/components/sheet/styles.css", ".x { min-block-size: max(12rem, 30dvh); }", "`max()`"),
+        R("src/components/sheet/styles.css", ".x {\n  MIN-BLOCK-SIZE:\n    12rem;\n}", "upper case, the value on the next line"),
+        R("src/components/sheet/SheetContent.vue", '<div class="min-h-[50vh]">x</div>', "a Tailwind floor"),
+        R("src/components/sheet/detents/use.ts", "el.style.minHeight = `${floor}px`;", "a script-written floor"),
+        R("src/components/sheet/detents/use.ts", "const h = document.documentElement.clientHeight;", "the root's client height"),
+        G("src/components/sheet/styles.css", ".x { min-block-size: 0; }", "HEAD's zero floors (`styles.css:118`)"),
+        G("src/components/sheet/styles.css", ".x { min-block-size: var(--touch-target); }", "HEAD's grip floor (`styles.css:259`)"),
+        C("src/components/sheet/detents/use.ts", "const span = window.visualViewport?.height ?? 0;\nel.style.setProperty(\"--sheet-floor\", `${floor}px`);", "§3 item 3: the span from `visualViewport`, the floor published as `--sheet-floor`"),
     ),
     ("W-E.4", "E4-G15"): L(GONE),
     ("W-E.4", "E4-G19"): S(  # "no off-scale z and no literal offsets"
@@ -373,6 +415,17 @@ CLAIMS = {
         R("src/components/tabs/composables/useTabResponsive.ts", 'const narrow = useMediaQuery("(max-width: 36rem)");', "vueuse `useMediaQuery`"),
         R("src/components/tabs/composables/useTabResponsive.ts", "const narrow = window.innerWidth < 576;", "the window width"),
         R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (max-width:36rem) { .x { display: block; } }\n</style>", "unspaced"),
+        R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (width < 36rem) { .x { display: block; } }\n</style>", "range syntax (pass 13 FM-03)"),
+        R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (width <= 36rem) { .x { display: block; } }\n</style>", "range syntax, inclusive"),
+        R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (max-inline-size: 36rem) { .x { display: block; } }\n</style>", "the logical feature"),
+        R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (max-width: 576px) { .x { display: block; } }\n</style>", "the bound in px"),
+        R("src/components/labeled-field/LabeledField.vue", "<style>\n@media screen and\n  (MAX-WIDTH: 36rem) { .x { display: block; } }\n</style>", "across lines, upper case"),
+        R("src/components/tabs/composables/useTabResponsive.ts", "const { width } = useWindowSize();", "vueuse `useWindowSize`"),
+        R("src/components/tabs/composables/useTabResponsive.ts", "const w = window.visualViewport?.width ?? 0;", "the visual viewport"),
+        R("src/components/tabs/composables/useTabResponsive.ts", "const w = screen.width;", "the screen"),
+        R("src/components/tabs/composables/useTabResponsive.ts", "const w = document.documentElement.clientWidth;", "the root's client width"),
+        C("src/components/labeled-field/LabeledField.vue", "<style>\n.labeled-field { container: field / inline-size; }\n@container field (max-width: 36rem) { .x { display: block; } }\n</style>", "§3 item 5's container form"),
+        C("src/components/tabs/composables/useTabResponsive.ts", "const ro = new ResizeObserver(([e]) => { fits.value = e.contentRect.width >= strip.value!.scrollWidth; });", "§3 item 4's observer on the strip's own box"),
     ),
     # ---------------------------------------------------------------- band G
     ("W-G.1", "G1-G1"): L("the register's own words (`webgl`, `glsl`, `setupGL`), case-blind, over `src`"),
@@ -441,7 +494,15 @@ CLAIMS = {
         R(GL, T6 % "inset: -32PX;", "an upper-case unit"),
         R(GL, T6 % "INSET: -2rem;", "an upper-case property"),
         R(GL, T6 % "inset: calc(var(--radius-ctx) * -1 - 32px);", "a literal beside a token in calc()"),
-        G(GL, T6 % "inset: calc(var(--glass-blur-resting-radius) * -2);", "the cure: two blur radii from the rung's own token (§3 item 1)"),
+        R(GL, ".x { --glass-blur-pad: 32px; }\n.x::after { inset: calc(var(--glass-blur-pad) * -1); }", "a positive literal laundered through a `--glass-blur-` name (pass 13 FM-02)"),
+        R(GL, ".x { --glass-blur-resting-radius: 32px; }\n.x::after { inset: calc(var(--glass-blur-resting-radius) * -2); }", "the rung's own token re-declared beside the overshoot"),
+        R(GL, ".x {\n  color: red;\n  --GLASS-BLUR-quiet-radius:\n    3px;\n}", "a rung token re-declared, upper case, across lines"),
+        R(GL, ".x { --glass-level: 4; }", "the level re-declared in a seat file"),
+        R(GL, T6 % "inset: calc(var(--glass-blur-resting-radius, 32px) * -2);", "a literal as the token's fallback"),
+        R(GL, T6 % "inset: calc(var(--glass-blur-tier-radius) * -2);", "a token that is not one of the five rung radii"),
+        R(GL, T6 % "inset: calc(var(--glass-blur-resting) * -2);", "the composed filter token, not the radius"),
+        C(GL, T6 % "inset: calc(var(--glass-blur-resting-radius) * var(--glass-level) * -2);", "§3 item 1: two radii of the rung's own token at the element's `--glass-level`"),
+        G(GL, T6 % "inset: calc(var(--glass-blur-resting-radius) * -2);", "two blur radii from the rung's own token"),
         G(GL, T6 % "inset: 0;", "HEAD's own `inset: 0` (`material.css:146`)"),
         G(GL, ".x { padding-top: 4px; scroll-margin: -2px; }", "a padding side and a scroll margin (not an inset, side or margin property)"),
     ),
@@ -548,6 +609,135 @@ CLAIMS = {
         ls_cure=r"\.(mjs|js|ts|cjs|sh|py|mts|cts|tsx|jsx|bash|zsh)$"),
     ("W-L.8", "G-L8-15"): L("the retired items, each by its own name, case-blind", R("docs/tranches/BL/FINAL.md", "- W-ATLAS carried", "a retired item re-booked (the row's bite)"), cure=[("write", "docs/tranches/BL/FINAL.md", "# BL close\n")]),
 }
+
+
+# Each S entry's cure, read from its wave spec (pass 13 FM-05). `spec` is a quote from the wave spec outside §5 (or
+# "W-x.n: quote" when the cure is stated in another wave); every class, custom property and dotted or called name in
+# it, or in the gate's title and pass cell, must appear in some plant. The cure form is a C plant, planted on the
+# cured base and required to pass; `deletion` says the cure writes nothing in the gate's files, so the cured base,
+# which must pass, is the cure.
+DEL = True
+SPEC = {
+    ("W-0.10", "G3"): dict(spec="No `PopoverAnchor` part is added: one door for the anchor (E-1).",
+        plants=[C("src/components/popover/PopoverContent.vue", "    reference?: ReferenceElement;", "the declared `reference` prop")]),
+    ("W-0.12", "G1"): dict(spec="the `.dock-layer--full` rule takes the same `:not([data-morphing])` gate its sibling carries"),
+    ("W-0.2", "G3"): dict(spec="The pressed rule reads one optional per-item input, `--toggle-tint`, through the three channels the ask names.",
+        plants=[C("src/components/toggle-group/styles.css", '.toggle-group__item[data-state="on"]:hover:not(:disabled) {\n    background-color: color-mix(in oklab, var(--toggle-tint, var(--foreground)) 16%, transparent);\n}', "§3's hover line")]),
+    ("W-0.4", "G3"): dict(spec="The overlay register moves to `data-glass-reveal`.",
+        plants=[C("src/components/_shared/overlay/content.ts", '    "data-glass-reveal": "menu",', "the namespaced attribute")]),
+    ("W-0.4", "G4"): dict(spec="const ROLE_Z: Record<OverlayRole, string>",
+        plants=[C("src/components/_shared/overlay/content.ts", 'const ROLE_Z: Record<OverlayRole, string> = { hint: "z-tooltip", menu: "z-popover", panel: "z-popover" };', "§3 item 1's table")]),
+    ("W-0.7", "G2"): dict(spec="Neither record carries tranche ids, wave ids or dated brackets (E-10).",
+        plants=[C("CHANGELOG.md@## 10.2.0", "- The light glass plates read lighter over paper.", "a bullet in the record's own words")]),
+    ("W-0.8", "G16"): dict(spec="is the one scroll source",
+        plants=[C("src/components/dock/GlassDock.vue", "    scroll?: { source: HTMLElement; compact?: boolean; rim?: boolean };", "the grouped `scroll` prop")]),
+    ("W-0.9", "G1"): dict(spec="reads `font-size: var(--type-card-title)`",
+        plants=[C("src/components/card/styles.css", ".card-title { font-size: var(--type-card-title); }", "the named rung")]),
+    ("W-A.1", "A1-G3"): dict(spec="`gotoScene` resolves through the manifest and throws on a miss.",
+        plants=[C("tests-visual/motion2.spec.ts", 'await gotoScene(page, "forms", "select-family-member");', "a manifest navigation")]),
+    ("W-A.1", "A1-G5"): dict(spec="After the wave `tests-visual/` holds no `test.skip`, `test.fixme` or `describe.skip`.",
+        plants=[R("tests-visual/motion2.spec.ts", 'test.fixme("x", async () => {});', "`test.fixme`"),
+                R("tests-visual/motion2.spec.ts", 'describe.skip("x", () => {});', "`describe.skip`"),
+                C("tests-visual/motion2.spec.ts", 'await expect(page.locator("[data-slot=dock]")).toHaveCount(1);', "§3 item 3's presence assertion")]),
+    ("W-A.1", "A1-G9"): dict(spec="import the one module",
+        plants=[C("tests-visual/motion2.spec.ts", 'import { oklab } from "./_support/color";', "a reader of the one module")]),
+    ("W-A.1", "A1-G10"): dict(spec="exports `PI_OUT`, which is",
+        plants=[C("tests-visual/motion2.spec.ts", 'const out = path.join(PI_OUT, "x.png");', "the one output root")]),
+    ("W-A.2", "A2-G7"): dict(spec="Each `it.fails` is replaced by (a) an `owed` roster entry",
+        plants=[C("tests/gates/comment-ratio.test.ts", 'it("the share stays under the bound", () => {});', "the latch as a plain `it`")]),
+    ("W-A.4", "A4-G2"): dict(spec="no `navigator.gpu` removal",
+        plants=[R("tests-visual/no-gray.spec.ts", "delete navigator.gpu;", "a bare delete"),
+                C("tests-visual/no-gray.spec.ts", "const adapter = await navigator.gpu.requestAdapter();", "§3 item 1's adapter assertion")]),
+    ("W-A.4", "A4-G7"): dict(spec="The literal at `:593` goes; the tile count must equal the sourced key count",
+        plants=[C("tests-visual/no-gray.spec.ts", "expect(tiles).toHaveLength(presetKeys.length);", "the sourced count")]),
+    ("W-A.4", "A4-G8"): dict(spec="no job runs a substrate floor on SwiftShader, and no job retries", deletion=DEL),
+    ("W-A.6", "A6-G6"): dict(spec="`resolvedNested` fence and its", deletion=DEL),
+    ("W-B.1", "B1-G3"): dict(spec="never a comment", deletion=DEL),
+    ("W-B.13", "B13-G4"): dict(spec="drops the `env:` pair at `:65-66` and the paragraph at `:13-20`", deletion=DEL),
+    ("W-B.15", "B15-G3"): dict(spec="native scrolling on the target engines already carries the platform's inertia and overscroll", deletion=DEL),
+    ("W-B.9", "B9-G1"): dict(spec="moves off `useCanvas2D` onto the shared WebGPU device",
+        plants=[C("src/components/constellation/constellationField.ts", 'import { acquireSharedDevice } from "../../composables/glass/webgpu/webgpuDevice";', "the shared device")]),
+    ("W-B.9", "B9-G3"): dict(spec="the consumer stacks its own layer over the host and reads the exposed `field`",
+        plants=[C("demo/stories/substrates/constellation.vue", '<div class="story-skin" :style="skinFor(field)" />', "the story's own layer over the exposed field")]),
+    ("W-C.1", "C1-G1"): dict(spec="`git rm` every executable file under `docs/`", deletion=DEL),
+    ("W-C.1", "C1-G2"): dict(spec="`git rm` every media file under `docs/`", deletion=DEL),
+    ("W-C.1", "C1-G4"): dict(spec="Code never reads a record.", deletion=DEL),
+    ("W-C.1", "C1-G5"): dict(spec="drop `fetch-depth: 0`", deletion=DEL),
+    ("W-C.4", "C4-G7"): dict(spec="The 20 raw rules become `@utility` or are deleted when Tailwind already ships them",
+        plants=[C("src/styles/utilities/a11y-overrides.css", "@utility preserve-3d-plant {\n  transform-style: preserve-3d;\n}", "the `@utility` form")]),
+    ("W-C.5", "C5-G7"): dict(spec="`prng.ts` gains `freshSeed()` (one `crypto.getRandomValues` read), used where a caller gives no seed."),
+    ("W-E.1", "E1-G6"): dict(spec="This file is the only reader of `env(safe-area-inset-*)` in `src` and `demo`.",
+        plants=[C("src/components/sheet/styles.css", ".x { padding-block-end: max(var(--space-family), var(--safe-block-end)); }", "§3 item 2's pad")]),
+    ("W-E.11", "E11-G6"): dict(spec="Each platform fallback gets its own family name"),
+    ("W-E.12", "E12-G2"): dict(spec="takes `geometry.dot` from the first bed dot's",
+        plants=[C("src/components/pager-dots/worm.ts", "geometry.dot = beds[0].getBoundingClientRect().width;", "the measured dot")]),
+    ("W-E.13", "E13-G6"): dict(spec="is the only `@media print` block in `src/styles`",
+        plants=[C("src/styles/print.css", "@media print { :root { color-scheme: light; } }", "the one arm")]),
+    ("W-E.3", "E3-G9"): dict(spec="published as `--sheet-floor`"),
+    ("W-E.4", "E4-G19"): dict(spec="no component passes a literal `sideOffset`",
+        plants=[C("src/components/_shared/overlay/content.ts", "const sideOffset = readOffsetToken(el);", "the seam's one offset, read from a token"),
+                C("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-raised); }", "a rung of the z scale")]),
+    ("W-E.5", "E5-G9"): dict(spec="The viewport renders the first `TOAST_VISIBLE = 5`, oldest first.",
+        plants=[C("src/components/toast/use-toast.ts", "const visible = computed(() => state.toasts.slice(0, TOAST_VISIBLE));", "the visible window over the queue")]),
+    ("W-E.5", "E5-G10"): dict(spec="`font-semibold` leaves `ToastTitle.vue:14`",
+        plants=[C("src/components/toast/ToastTitle.vue", '<div class="toast-title">x</div>', "the title on its one type role")]),
+    ("W-E.5", "E5-G14"): dict(spec="`flex-col-reverse` and the `sm:flex-col` override leave `Toaster.vue`.",
+        plants=[C("src/components/toast/Toaster.vue", '<ol class="flex flex-col">', "one direction at every width")]),
+    ("W-E.7", "E7-G9"): dict(spec="re-keyed to a container query by W-E.9 (LabeledField, SegmentedTabs)",
+        plants=[C("src/components/progress/Progress.vue", "<style>\n@container (width < 40rem) { .x { display: none; } }\n</style>", "a container query")]),
+    ("W-E.8", "E8-G4"): dict(spec="read `--radius-ctx` in place of `--radius-sm` and `--radius-card`",
+        plants=[R("src/components/metric/styles.css", ".x { border-radius: var(--radius-sm); }", "`--radius-sm`"),
+                C("src/components/metric/styles.css", ".x { border-radius: var(--radius-ctx); }", "the context radius")]),
+    ("W-E.9", "E9-G7"): dict(spec="becomes `@container field (max-width: 36rem)`"),
+    ("W-G.1", "G1-G2"): dict(spec="`webgl/` is deleted",
+        plants=[C("LS", "src/composables/glass/webgpu/shaders/flow.wgsl.ts", "the WGSL module")]),
+    ("W-G.1", "G1-G3"): dict(spec="and so is `canvas2d/useCanvas2D.ts` with its directory", deletion=DEL),
+    ("W-G.2", "G2-G4"): dict(spec="the library never calls `destroy()` on the shared device",
+        plants=[C("src/composables/glass/webgpu/useWebGPUCanvas.ts", "const off = onDeviceLoss(rebuild);", "§3 item 2's removable handle")]),
+    ("W-G.3", "G3-G7"): dict(spec="no `drawImage`, no `getImageData`, no 2D canvas and no `FIELD_ALPHA_FLOOR`", deletion=DEL),
+    ("W-G.3", "G3-G8"): dict(spec="`backgroundCanvas` prop is deleted", deletion=DEL),
+    ("W-G.6", "G6-G7"): dict(spec="`useSortable` keeps a `Map<SortableId, Item>` computed once per `items` change",
+        plants=[C("src/components/sortable-list/useSortable.ts", "const byId = computed(() => new Map(items.value.map((x) => [x.id, x])));", "the membership index")]),
+    ("W-G.7", "G7-G4"): dict(spec="a new subpath with a shader-free graph",
+        plants=[C("src/components/aurora-palette/index.ts", 'export { deriveAurora, paletteToCssGradient } from "../aurora/derive";', "the bindings through `./aurora-palette`")]),
+    ("W-H.1", "G15"): dict(spec="read the ring token; no hand literal remains (S-12)",
+        plants=[C("src/components/dialog/styles.css", ".x { box-shadow: 0 0 0 2px var(--ink-perimeter); }", "the perimeter rung")]),
+    ("W-H.6", "H6-G3"): dict(spec="The radius it reads is the rung's own token (`--glass-blur-<rung>-radius` at the element's `--glass-level`), never a second value."),
+    ("W-I.1", "G18"): dict(spec="are replaced by the tokens W-E.7's coarse-pointer type model publishes",
+        plants=[C("src/components/dock/styles/run.css", ".x { font-size: var(--control-text); }", "the shared coarse model's token")]),
+    ("W-I.2", "G1"): dict(spec="A single helper, `membersOf(container, marker)`",
+        plants=[C("src/components/carousel/useCarousel.ts", 'const members = membersOf(el, "[data-carousel-item]");', "the one member query")]),
+    ("W-I.2", "G10"): dict(spec="the snap rule is `.dock-run [data-dock-seat]`",
+        plants=[C("src/components/dock/styles/run.css", ".dock-run [data-dock-seat] {\n    scroll-snap-align: start;\n}", "the marker's snap rule")]),
+    ("W-I.7", "I7-G1"): dict(spec="The seat's width transition appends to the control's own list",
+        plants=[C("src/components/dock/styles/run.css", ".x {\n    transition: var(--icon-button-transition), inline-size var(--spring-dock-duration) var(--spring-dock);\n}", "the appended form")]),
+    ("W-I.7", "I7-G2"): dict(spec="The run's box is `border-box` like every other box in the layer contract.",
+        plants=[C("src/components/dock/styles/run.css", ".x { box-sizing: border-box; }", "the border box")]),
+    ("W-I.7", "I7-G3"): dict(spec="The ring reserve moves out of padding into `outline-offset` on the seats",
+        plants=[C("src/components/dock/styles/run.css", ".x { outline-offset: var(--dock-ring-reserve); }", "the outline offset")]),
+    ("W-J.1", "G11"): dict(spec="Card's `selected` arm goes", deletion=DEL),
+    ("W-J.1", "G12"): dict(spec='Chip `shape="cell"` goes', deletion=DEL),
+    ("W-J.1", "G13"): dict(spec="becomes `radiogroup` / `radio` / `aria-checked`",
+        plants=[C("src/components/tabs/SegmentedTabs.vue", '<button role="radio" :aria-checked="on">x</button>', "the radio answer")]),
+    ("W-J.2", "G2"): dict(spec="a modal's veil keys on the overlay's open state through its own attribute or class",
+        plants=[C("src/components/dialog/DialogContent.vue", "<div class=\"focus-veil\" :data-state=\"open ? 'open' : 'closed'\" />", "the veil on the overlay's own state")]),
+    ("W-K.1", "K1-S"): dict(spec="Each site reads `deepActiveElement()` or `activeWithin(el)`.",
+        plants=[C("src/components/menu/plant.ts", "const a = deepActiveElement();", "the root module's read")]),
+    ("W-L.1", "G-L1-5"): dict(spec="It is the one drawing of the glyph",
+        plants=[C("src/components/dark-mode-toggle/DarkModeToggle.vue", "<template><DarkModeGlyph /></template>", "the toggle rendering the one glyph")]),
+    ("W-L.3", "G-L3-9"): dict(spec="The library's own rule (no static `text-sm`/`text-xs` in its sources)", deletion=DEL),
+    ("W-L.4", "G-L4-3"): dict(spec="release path, not through the spring's frame stream",
+        plants=[C("src/composables/motion/morph/useDragMorph.ts", "const end = useGestureEnd(el, { onRelease: settle });", "the end-of-gesture closer")]),
+    ("W-L.8", "G-L8-2"): dict(spec="with no wave ids, tranche ids or dated brackets (E-10)",
+        plants=[C("CHANGELOG.md@## 11.0.0", "- `GlassDock`'s plate is a stadium at every rest", "a plain entry")]),
+    ("W-L.8", "G-L8-14"): dict(spec="W-C.1: the last of a loop's waves to land deletes", deletion=DEL),
+}
+for _k, _v in SPEC.items():
+    if _k not in CLAIMS or CLAIMS[_k]["kind"] != "S":
+        raise SystemExit(f"SPEC entry {_k} names no S entry of CLAIMS")
+    CLAIMS[_k]["spec"] = _v["spec"]
+    CLAIMS[_k]["deletion"] = _v.get("deletion")
+    CLAIMS[_k]["plants"] += _v.get("plants", [])
 
 
 def sh(span, root, timeout=120):
@@ -797,7 +987,7 @@ def cure(tree, spans, entry, root, ok):
     bite = None
     for _ in range(4):
         if ok(spans) == 0:
-            return 0, bite, None
+            break
         found, paths = [], []
         for s in spans:
             a, b = hits(s, root, entry["printed"])
@@ -813,7 +1003,13 @@ def cure(tree, spans, entry, root, ok):
         if bite is None and found:
             bite = ("line",) + found[0][::2]
         strip_lines(tree, root, found)
-    return ok(spans), bite, None
+    code = ok(spans)
+    for op in entry["cure"]:  # the gate's own searches may not strip what a cure op wrote: that text is the spec's cure
+        if op[0] in ("append", "write") and code == 0:
+            body = tree.read(op[1]) if os.path.exists(os.path.join(root, op[1])) else ""
+            if any(x.strip() and x not in body for x in op[2].split("\n")):
+                return 1, bite, f"the gate's own search strips the cure op's text from {op[1]}: {op[2][:60]!r}"
+    return code, bite, None
 
 
 def plant(tree, rel, text):
@@ -828,6 +1024,62 @@ def plant(tree, rel, text):
     else:
         tree.write(rel, body + "\n" + text + "\n")
     return {rel: prior}
+
+
+def norm(s):
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def spec_prose(w):
+    """The wave spec less its §5 table, so a quote of the gate itself never counts as the spec's cure."""
+    t = text(w)
+    m = re.search(r"^## 5 · .*?(?=^## (?:\d+ · |Appendix)|\Z)", t, re.M | re.S)
+    return norm(t[: m.start()] + t[m.end():] if m else t)
+
+
+FILEISH = re.compile(r"\.(?:ts|js|mjs|cjs|mts|cts|tsx|css|vue|md|json|ya?ml|sh|py|html|svg|png)$")
+
+
+def nouns(*cells):
+    """The classes, custom properties and dotted or called identifiers a cell names in backticks."""
+    out = []
+    for c in cells:
+        for s in re.findall(r"`([^`]+)`", c):
+            s = s.strip()
+            if FILEISH.search(s) or "/" in s:
+                continue
+            if (re.fullmatch(r"\.[a-z][\w<>*-]*", s) or re.fullmatch(r"--[a-z][\w<>*-]*", s)
+                    or re.fullmatch(r"[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)+(?:\(\))?", s)
+                    or re.fullmatch(r"[A-Za-z_$][\w$]*\(\)", s)):
+                out.append(s)
+    return list(dict.fromkeys(out))
+
+
+def noun_re(s):
+    s = re.sub(r"\(\)$", "", s)
+    r = re.escape(s)
+    r = re.sub(r"\\<[^>]*\\>|<[^>]*>", r"[\\w-]+", r)
+    return r.replace(r"\*", r"[\w-]*")
+
+
+def spec_arms(g, entry, where):
+    """S entries: the spec's cure form is planted green, quoted from the spec, and every noun the pass cell or the
+    quote names is planted (pass 13 FM-05)."""
+    out = []
+    q = entry.get("spec")
+    m = re.match(r"(W-[0-9A-L]\.\d+): (.*)$", q or "", re.S)
+    sw, q = (m.group(1), m.group(2)) if m else (g.wave, q)
+    if not q:
+        out.append(f"OPEN NOSPEC  {where}: the entry quotes no cure text from the wave spec")
+    elif norm(q) not in spec_prose(sw):
+        out.append(f"OPEN NOSPEC  {where}: the quoted cure text is not in {sw} outside §5: {q[:70]!r}")
+    if not entry.get("deletion") and not any(p[2] == "cure" for p in entry["plants"]):
+        out.append(f"OPEN NOCURE  {where}: no green plant of the spec's cure form, and the entry does not say the cure is a deletion")
+    texts = [p[1] for p in entry["plants"]]
+    for nn in nouns(g.gid, g.passes, q or ""):
+        if not any(re.search(noun_re(nn), x) for x in texts):
+            out.append(f"OPEN NOUN    {where}: `{nn}`, named by the pass cell or the spec quote, is in no plant")
+    return out
 
 
 def main():
@@ -857,6 +1109,8 @@ def main():
         kinds[entry["kind"]] += 1
         if entry["only"]:
             spans = spans[: entry["only"]]
+        if entry["kind"] == "S":
+            out += spec_arms(g, entry, where)
         if entry["kind"] == "H" and (g.wave, entry["held"]) not in measured:
             out.append(f"OPEN HELD    {where}: the entry names {entry['held']}, which is no measured row of {g.wave}")
         ok = runner(entry, root)
@@ -899,6 +1153,8 @@ def main():
                     out.append(f"OPEN NARROW  {where}: passes with {what} planted in {rel}: {text[:70]!r}")
                 if want == "green" and code != 0:
                     out.append(f"OPEN WIDE    {where}: fails with {what} planted in {rel}: {text[:70]!r}")
+                if want == "cure" and code != 0:
+                    out.append(f"OPEN WIDE    {where}: fails on the spec's own cure form, {what}, planted in {rel}: {text[:70]!r}")
         finally:
             tree.restore()
             if os.path.exists(lsf):

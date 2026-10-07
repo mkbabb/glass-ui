@@ -156,3 +156,45 @@ exit=1
 ## after: the plan as fix-13 leaves it, commands run in the same worktree
 in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 352, open 0
 exit=0
+
+# ===== fix-14 (`f9cf010e`; worktree .claude/worktrees/bl/formation/fix-14/wt at f9cf010e; NOSPEC/NOCURE/NOUN arms and the cure-op survival check added)
+## before: the plan at f9cf010e (BL_ROOT=<worktree>/docs/tranches/BL), the extended sweep, commands run in the same worktree
+OPEN NARROW  waves/W-0.12.md:41 G1 · no zero-width morph window (static, L04: passes with the base class both layers carry (`GlassDock.vue:464,478`; pass 13 FM-01) planted in src/components/dock/styles/layers.css: '.glass-dock.collapsed .dock-layer { width: 0 }'
+OPEN NARROW  waves/W-0.12.md:41 G1 · no zero-width morph window (static, L04: passes with the base class with a state of its own planted in src/components/dock/styles/layers.css: '.glass-dock.collapsed .dock-layer.is-active { inline-size: 0 }'
+OPEN NARROW  waves/W-0.12.md:41 G1 · no zero-width morph window (static, L04: passes with any child of the group planted in src/components/dock/styles/layers.css: '.glass-dock.collapsed .dock-layers > * { width: 0 }'
+OPEN NARROW  waves/W-0.12.md:41 G1 · no zero-width morph window (static, L04: passes with the base class as a child of the group planted in src/components/dock/styles/layers.css: '.glass-dock.collapsed .dock-layers > .dock-layer { width: 0 }'
+OPEN NARROW  waves/W-0.12.md:41 G1 · no zero-width morph window (static, L04: passes with a width laundered through a state-set custom property planted in src/components/dock/styles/layers.css: '.glass-dock.collapsed { --x: 0px }\n.dock-layer--full { width: var(--x)'
+OPEN NARROW  waves/W-0.12.md:41 G1 · no zero-width morph window (static, L04: passes with the same through a second custom property planted in src/components/dock/styles/layers.css: '.glass-dock.collapsed { --x: 0px }\n.glass-dock { --y: calc(var(--x) * '
+OPEN CURE    waves/W-C.5.md:82 C5-G7 · one randomness source: the cured base does not pass (the gate's own search strips the cure op's text from src/composables/glass/procedural/prng.ts: 'export function freshSeed(): number { return crypto.getRando')
+OPEN WIDE    waves/W-E.11.md:67 E11-G6 · one face per fallback name: fails on the spec's own cure form, §3 item 4's four platform faces, each its own name, planted in src/styles/typography/scale.css: '@font-face {\n    font-family: "Plus Jakarta Sans Fallback SF";\n}\n@font'
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with the floor read back from `--sheet-floor` (pass 13 FM-03) planted in src/components/sheet/styles.css: '.x { min-block-size: var(--sheet-floor); }'
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with `min-height` planted in src/components/sheet/styles.css: '.x { min-height: calc(50vh - 1rem); }'
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with `max()` planted in src/components/sheet/styles.css: '.x { min-block-size: max(12rem, 30dvh); }'
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with upper case, the value on the next line planted in src/components/sheet/styles.css: '.x {\n  MIN-BLOCK-SIZE:\n    12rem;\n}'
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with a Tailwind floor planted in src/components/sheet/SheetContent.vue: '<div class="min-h-[50vh]">x</div>'
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with a script-written floor planted in src/components/sheet/detents/use.ts: 'el.style.minHeight = `${floor}px`;'
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with the root's client height planted in src/components/sheet/detents/use.ts: 'const h = document.documentElement.clientHeight;'
+OPEN NOSPEC  waves/W-E.4.md:94 E4-G19 · no off-scale z and no literal offse: the quoted cure text is not in W-E.4 outside §5: 'no component passes a literal `sideOffset`'
+OPEN NOSPEC  waves/W-E.8.md:67 E8-G4 · Metric reads the context radius (sta: the quoted cure text is not in W-E.8 outside §5: 'read `--radius-ctx` in place of `--radius-sm` and `--radius-card`'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with range syntax (pass 13 FM-03) planted in src/components/labeled-field/LabeledField.vue: '<style>\n@media (width < 36rem) { .x { display: block; } }\n</style>'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with range syntax, inclusive planted in src/components/labeled-field/LabeledField.vue: '<style>\n@media (width <= 36rem) { .x { display: block; } }\n</style>'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with the logical feature planted in src/components/labeled-field/LabeledField.vue: '<style>\n@media (max-inline-size: 36rem) { .x { display: block; } }\n</s'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with the bound in px planted in src/components/labeled-field/LabeledField.vue: '<style>\n@media (max-width: 576px) { .x { display: block; } }\n</style>'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with across lines, upper case planted in src/components/labeled-field/LabeledField.vue: '<style>\n@media screen and\n  (MAX-WIDTH: 36rem) { .x { display: block; '
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with vueuse `useWindowSize` planted in src/components/tabs/composables/useTabResponsive.ts: 'const { width } = useWindowSize();'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with the visual viewport planted in src/components/tabs/composables/useTabResponsive.ts: 'const w = window.visualViewport?.width ?? 0;'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with the screen planted in src/components/tabs/composables/useTabResponsive.ts: 'const w = screen.width;'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with the root's client width planted in src/components/tabs/composables/useTabResponsive.ts: 'const w = document.documentElement.clientWidth;'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with a positive literal laundered through a `--glass-blur-` name (pass 13 FM-02) planted in src/styles/glass/material.css: '.x { --glass-blur-pad: 32px; }\n.x::after { inset: calc(var(--glass-blu'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with the rung's own token re-declared beside the overshoot planted in src/styles/glass/material.css: '.x { --glass-blur-resting-radius: 32px; }\n.x::after { inset: calc(var('
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with a rung token re-declared, upper case, across lines planted in src/styles/glass/material.css: '.x {\n  color: red;\n  --GLASS-BLUR-quiet-radius:\n    3px;\n}'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with the level re-declared in a seat file planted in src/styles/glass/material.css: '.x { --glass-level: 4; }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with a token that is not one of the five rung radii planted in src/styles/glass/material.css: '.x::after { inset: calc(var(--glass-blur-tier-radius) * -2); }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): passes with the composed filter token, not the radius planted in src/styles/glass/material.css: '.x::after { inset: calc(var(--glass-blur-resting) * -2); }'
+OPEN WIDE    waves/W-H.6.md:66 H6-G3 · no second radius (static): fails on the spec's own cure form, §3 item 1: two radii of the rung's own token at the element's `--glass-level`, planted in src/styles/glass/material.css: '.x::after { inset: calc(var(--glass-blur-resting-radius) * var(--glass'
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 437, open 33
+exit=1
+
+## after: the plan as fix-14 leaves it
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 442, open 0
+exit=0

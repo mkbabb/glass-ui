@@ -64,6 +64,7 @@ The contract lives in one module, `src/components/_shared/overlay/layer.ts`, rea
 8. **One cast.** `glass/overlay-plate.css` writes the plate's `box-shadow` once: the inset rim layers, the 0-offset hairline and one outer cast, `var(--shadow-plate)` (W-C.4's role shadow). SelectContent drops `glass-floating`, `rounded-card`, `overflow-hidden` and its own z class, and composes `overlayContentAttrs({ role: "menu", slot: "select-content" })` (#89 residue). The side-translate utilities are already gone in W-E.2.
 9. **Content-fit width (UIA-F-77).** The panel role sizes to its content: `inline-size: max-content; max-inline-size: min(21rem, calc(100dvw - 2 * var(--overlay-pad)))`.
 10. **G-38 stays a hold line.** Its R2-05 bites are B12 (rename `@escape-key-down="refuse"` in `DialogContent.vue`) and B13 (drop the `@pointer-down-outside` guard). The stack reads `dismiss: "locked"` from the Dialog, so the bite path becomes the stack's `locked` check. The roster's bite patch is re-pointed to that line.
+11. **On-scale z and offsets (UIA-V-676, UIA-F-219).** `--z-toggle` takes a rung of the z scale in `tokens/scheme-motion.css`, not `999`. The content seam passes one side offset, read from a token in `tokens/offsets.css`, to every popper, so no component passes a literal `sideOffset` (fix-14: E4-G19's cure, which §3 did not state).
 
 ## 4 · Files it touches
 
