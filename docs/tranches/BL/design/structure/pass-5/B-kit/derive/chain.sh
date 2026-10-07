@@ -23,7 +23,7 @@ RL() { node derive/reland.mjs --root "$W" --id "$1" --out "frozen/$1-gate.json";
 # a hand-authored row (derive/diff-row.mjs froze it from an edited worktree, with a why per
 # file in authored/<reasons>.json): re-derivation lands the frozen exact-text row again
 FR() { node derive/land-row.mjs --root "$W" --row "frozen/$2" --id "$1" --out "frozen/$2"; }
-ORDER="start S1 S1b S1d S2 S2b S3 S4a S4g S4b S4c S5a S4d S4f S4e S5-1 S5-2 S6 S7 S8 S9 S10 S11 S12 S13 S14 S15 S16 S17 S18 S19 S20 S22 S23 S24 S25 S26 S27 S28 S29 S30 S31 S32 S33 S33b S33c S34 S35 S36 S37 S38 S39-01 S39-02m S39-02 S39-03 S39-04 S39-05 S39-06 S39-07 S39-08 S39-09 S39-10 S39-11 S39-12 S39-13 S39-14 S39-15 S40-01 S40-02 S40-03 S41-01 S41-02 S41-03 S41-04 S41-05 S41-06 S41-07 S41-08 S42 S42s S43a S43b S43c S43d S43e S43f S44 S45 S46 S48 S49 S50 S51 S52 S53 S54 S55 S56"
+ORDER="start S1 S1b S1d S2 S2b S3 S4a S4g S4b S4c S5a S4d S4f S4e S5-1 S5-2 S6 S7 S8 S9 S10 S11 S12 S13 S14 S15 S16 S17 S18 S19 S20 S22 S23 S24 S25 S26 S27 S28 S29 S30 S31 S32 S33 S33b S33c S34 S35 S36 S37 S38 S39-01 S39-02m S39-02 S39-03 S39-04 S39-05 S39-06 S39-07 S39-08 S39-09 S39-10 S39-11 S39-12 S39-13 S39-14 S39-15 S40-01 S40-02 S40-03 S41-01 S41-02 S41-03 S41-04 S41-05 S41-06 S41-07 S41-08 S42 S42s S43a S43b S43c S43d S43e S43f S44 S45 S46 S48 S49 S50 S51 S52 S53 S54 S55 S56 S57 S58 S59"
 step() {
 case "$1" in
  start) node record-step.mjs --root "$W" --start "$(git -C "$W" rev-parse --short=8 HEAD)";;
@@ -69,6 +69,9 @@ case "$1" in
  S54) AM S54 harness-dirs.json S54-harness-dirs.json;;
  S55) FR S55 S55-barrel-prose.json;;
  S56) FR S56 S56-dock-tests-merge.json;;
+ S57) node derive/land-gate.mjs --root "$W" --id S57 --out frozen/S57-gate.json --why "gate re-land (pass 5): B0's walk arm reads directory listings from the syntax (walks.mjs, B-S12); B17 reads an empty catch and a skipped suite (S-14); the pin after S48-S56";;
+ S58) FR S58 S58-browser-keys.json;;
+ S59) FR S59 S59-datum.json;;
  S24|S26|S44|S46) node derive/colocate-rest.mjs --root "$W" --id "$1" --out "frozen/$1-colocate.json";;
  S28) node derive/test-doors.mjs --root "$W" --id S28 --out frozen/S28-test-doors.json;;
  S29) node derive/consumer-entries.mjs --root "$W" --id S29 --out frozen/S29-consumer-entries.json --partial;;

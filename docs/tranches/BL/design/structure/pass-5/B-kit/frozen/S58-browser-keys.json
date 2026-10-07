@@ -1,0 +1,35 @@
+{
+ "step": "F-10 (P4-F4): the browser seat's base-green accounting keyed a test by its spec's file name but compared that name against the selected specs' paths, so after the tests-visual carve (S43) every spec in a directory matched nothing: each band read 'no browser signal' and newFailures was empty whatever failed, a vacuous GREEN. The comparison now reads file names on both sides (a carve keeps a spec's name). The selection's text read no longer swallows a failed read: every file it reads is in the tree",
+ "files": {
+  "scripts/structure/browser.mjs": {
+   "hunks": [
+    [
+     "        reach.set(spec, { reads, text: [...seen].map((f) => { try { return g.tree.read(f); } catch { return \"\"; } }).join(\"\\n\") });\n",
+     "        reach.set(spec, { reads, text: [...seen].map((f) => g.tree.read(f)).join(\"\\n\") });\n"
+    ],
+    [
+     "// base-green (P4-F4): a band's signal is the tests that passed on the base tree\nconst key = (t) => `${t.spec} :: ${t.title}`;\n",
+     "// base-green (P4-F4): a band's signal is the tests that passed on the base tree\n// a test is keyed by its spec's file name and title: a carve moves a spec between\n// directories and keeps its name, so a base report from before the carve still matches\nconst key = (t) => `${t.spec} :: ${t.title}`;\n"
+    ],
+    [
+     "const key = (t) => `${t.spec} :: ${t.title}`;\nconst base = opt(\"--base-report\") ? JSON.parse(readFileSync(opt(\"--base-report\"), \"utf8\")) : null;\n",
+     "const key = (t) => `${t.spec} :: ${t.title}`;\nconst specOf = (k) => k.split(\" :: \")[0];\nconst base = opt(\"--base-report\") ? JSON.parse(readFileSync(opt(\"--base-report\"), \"utf8\")) : null;\n"
+    ],
+    [
+     "const newFailures = baseGreen ? [...baseGreen].filter((k) => specs.includes(k.split(\" :: \")[0]) && nowStatus.get(k) !== \"expected\") : [];\n",
+     "const selectedNames = new Set(specs.map((s) => basename(s)));\nconst newFailures = baseGreen ? [...baseGreen].filter((k) => selectedNames.has(specOf(k)) && nowStatus.get(k) !== \"expected\") : [];\n"
+    ],
+    [
+     "    const green = baseGreen ? [...baseGreen].filter((k) => bs.includes(k.split(\" :: \")[0])) : null;\n",
+     "    const names = new Set(bs.map((s) => basename(s)));\n    const green = baseGreen ? [...baseGreen].filter((k) => names.has(specOf(k))) : null;\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "scripts/structure/browser.mjs",
+   "why": "newFailures and each band's base-green compare a key's spec name with the selected specs' file names; the reach text reads each tree file directly (the try/catch that returned an empty string is gone)"
+  }
+ ]
+}

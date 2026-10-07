@@ -1,0 +1,30 @@
+rules 1970 1970 multiset equal (scope ids erased): true
+rules outside the longest kept order: 28
+  moved 711 -> 610 @layer components :: .card-scroll-host {contain:layout style paint;overflow-y:auto;mask-image:linear-gradient( to bottom,black calc(100% - v
+  moved 712 -> 611 @layer components > @supports (animation-timeline: scroll()) :: .card-scroll-host {animation:gl-fade-end-out linear both;animation-timeline:
+  moved 713 -> 612 @layer components :: .card-header--shrink {position:relative;isolation:isolate}
+  moved 714 -> 613 @layer components :: .card-header--shrink::before {content:"";position:absolute;inset:0 0 calc(var(--card-gap) * -1);z-index:-1;border-radiu
+  moved 715 -> 614 @layer components :: .card-header--shrink > [data-slot="card-title"] {font-size:calc(var(--type-body) * 2.058);transform-origin:0 50%}
+  moved 716 -> 615 @layer components :: .card-header--shrink[data-condensed="true"] {padding-block-start:var(--card-gap)}
+  moved 717 -> 616 @layer components :: .card-header--shrink[data-condensed="true"]::before {opacity:1}
+  moved 718 -> 617 @layer components :: .card-header--shrink[data-condensed="true"] > [data-slot="card-title"] {font-size:calc(var(--type-body) * 1.618)}
+  moved 719 -> 618 @layer components > @keyframes card-title-condense :: from {scale:1.272}
+  moved 720 -> 619 @layer components > @keyframes card-title-condense :: to {scale:1}
+  moved 721 -> 620 @layer components > @keyframes card-title-release :: from {scale:0.786151}
+  moved 722 -> 621 @layer components > @keyframes card-title-release :: to {scale:1}
+  moved 723 -> 622 @layer components :: .card-header--shrink[data-shrink-glide][data-condensed="true"] > [data-slot="card-title"] {animation:card-title-condens
+  moved 724 -> 623 @layer components :: .card-header--shrink[data-shrink-glide][data-condensed="false"] > [data-slot="card-title"] {animation:card-title-releas
+  moved 725 -> 624 @layer components :: .card-header--shrink > [data-slot="card-description"] {transition:opacity var(--duration-normal) var(--ease-standard),v
+  moved 726 -> 625 @layer components :: .card-header--shrink[data-condensed="true"] > [data-slot="card-description"] {visibility:hidden;opacity:0}
+  moved 727 -> 626 @layer components > @media (prefers-reduced-motion: reduce) :: .card-header--shrink::before,.card-header--shrink > [data-slot="card-descript
+  moved 728 -> 627 @layer components > @media (prefers-reduced-motion: reduce) :: .card-header--shrink[data-shrink-glide] > [data-slot="card-title"] {animation
+  moved 1566 -> 1584 @layer components :: .tl[data-v] {row-gap:var(--space-body);grid-template-columns:100%;display:grid;position:relative}
+  moved 1567 -> 1585 @layer components :: .tl__track[data-v],.tl__marks[data-v] {grid-area:1/1;align-self:center}
+  moved 1568 -> 1586 @layer components :: .tl__track[data-v] {block-size:var(--timeline-track-h);background:oklch(from var(--card) calc(l - .04) c h)}
+  moved 1572 -> 1587 @layer components :: .tl__span[data-v] {inset-block:0;left:calc(var(--tl-l) * 100%);width:calc(var(--tl-w) * 100%);position:absolute;overflo
+  moved 1573 -> 1588 @layer components :: .tl__fill[data-v] {background:var(--tl-accent);transform:translateX(calc((var(--tl-f) - 1) * 100%));position:absolute;i
+  moved 1574 -> 1589 @layer components :: .tl__track[data-advancing] .tl__fill[data-v] {will-change:transform}
+  moved 1575 -> 1590 @layer components :: .tl__cap[data-v] {inset-block:0;inline-size:var(--timeline-track-h);border-radius:var(--radius-pill);background:var(--t
+  moved 1576 -> 1591 @layer components :: .tl .track-flow[data-v] {--track-flow-peak:var(--fill-selected)}
+  moved 1590 -> 1592 @layer components :: .tl__detail[data-v] {animation:tl-detail-#6 var(--spring-dock-duration) var(--spring-dock) both;grid-area:2/1}
+  moved 1592 -> 1593 @layer components > @media (prefers-reduced-motion:reduce) :: .tl__detail[data-v] {animation-duration:.01ms}

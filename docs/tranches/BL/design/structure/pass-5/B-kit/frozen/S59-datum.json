@@ -1,0 +1,19 @@
+{
+ "step": "P4-R3: the ratchet is one two-sided total, rebound once at the migration's landing, with its bytes broken down by class. HEAD 2,919,057 B; the floor row 2,913,546 (−5,511, ruled as measured); the route row 2,959,588 (+46,042 over the floor, +40,531 over HEAD). By class (tools/pack-diff.mjs, results/p5/pack-diff-route.json): declarations +40,140 (other +37,860, doors +2,280), MIGRATION.md +7,545, CSS +643, JS −2,518, other +232. The held 'other declarations' line is explained by kind and by step (tools/decl-diff.mjs --doors --chain, results/p5/decl-diff-all.json): of the +40,140 declaration bytes, wiring (import and export-from statements) is +16,099, JSDoc prose +18,687, declarations +5,354. By step: S5-1 (the JS doors) +20,386, of it +13,874 wiring: every new door restates its names; S39-12 (the blob shader split) +13,678, all prose: the field chunks became exported constants and their comments became JSDoc in the .d.ts; the S39 splits +12,000 together, each new file with its own wiring and header; S5a (code out of doors) −6,385. No private code ships: JS falls by 2,518 B",
+ "files": {
+  ".bundle-ratchet": {
+   "hunks": [
+    [
+     "2919057\n",
+     "2959588\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": ".bundle-ratchet",
+   "why": "the datum rebinds from 2,919,057 to 2,959,588, the replayed chain's unpacked content total (two builds of the final tree read the same number)"
+  }
+ ]
+}

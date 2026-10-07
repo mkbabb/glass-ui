@@ -1,0 +1,43 @@
+{
+ "baseline": null,
+ "verdict": "RED",
+ "staleListings": [],
+ "entries": [
+  {
+   "key": "./styles",
+   "identical": false,
+   "class": "content",
+   "rulesBase": 1970,
+   "rulesNow": 1970,
+   "onlyBase": 17,
+   "onlyNow": 17,
+   "firstDivergence": 610,
+   "base": "@layer components :: :root {--feedback-tone-strength:18%;--feedback-tone-rung:var(--glass-plate-floating);--feedback-tone-border-strength:40%}",
+   "now": "@layer components :: .card-scroll-host {contain:layout style paint;overflow-y:auto;mask-image:linear-gradient( to bottom,black calc(100% - var(--fade-end)),transparent 100% )}",
+   "verdict": "RED: content changed"
+  },
+  {
+   "key": "./styles/fonts",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles/theme",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles.css",
+   "identical": false,
+   "class": "content",
+   "rulesBase": 365,
+   "rulesNow": 365,
+   "onlyBase": 17,
+   "onlyNow": 17,
+   "firstDivergence": 310,
+   "base": "@layer components :: .tl[data-v-#15] {row-gap:var(--space-body);grid-template-columns:100%;display:grid;position:relative}",
+   "now": "@layer components :: .tl__marks[data-v-#15] {pointer-events:none;min-block-size:1.5rem;margin:0;padding:0;list-style:none;position:relative}",
+   "verdict": "RED: content changed"
+  }
+ ]
+}
