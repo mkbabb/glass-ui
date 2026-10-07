@@ -1,0 +1,86 @@
+/* D3 pass 2 · C′ spec probe (v2): the C′ mechanism as an injection over the floor specimen build
+   (`capture.mjs <floor dist> --inject`). `.cp-claim` is the claim scope; the probe runs replaced it with
+   `main.hx-page` and appended `main.hx-page { --glass-ground-lo: <lo>; --glass-ground-hi: <hi>; }` per ground.
+   Probe literals the spec derives from tokens: --glass-reach-l (= --foreground-l ± 0.09), --glass-veil-lift
+   (dark 0.415: M-6's 0.05 + 0.015 over the dark page), --cp-well-l, --cp-fg-l. Source of record for its readings:
+   D3-Cp-spec.md §3. */
+@property --glass-ground-lo { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --glass-ground-hi { syntax: "<number>"; inherits: true; initial-value: 1; }
+@property --glass-content-bound { syntax: "<number>"; inherits: true; initial-value: 1; }
+
+:root { --glass-reach-l: 0.3061; --glass-veil-lift: 0; --on-glass-muted-c: 0.046; --on-glass-muted-h: 66.37; }
+.dark { --glass-reach-l: 0.8352; --glass-veil-lift: 0.415; --on-glass-muted-c: 0.0213; --on-glass-muted-h: 74.62; }
+
+:root, .dark, .cp-claim {
+    --glass-host-e: var(--glass-ground-e);
+    --glass-ground-e: calc(
+        (1 - var(--glass-bound-ground)) * min(var(--glass-ground-lo), var(--glass-pole-e)) +
+            var(--glass-bound-ground) * max(var(--glass-ground-hi), var(--glass-pole-e))
+    );
+    --glass-content-bound: var(--glass-bound);
+}
+
+.cp-claim {
+    --glass-reach-y: pow(var(--glass-reach-l), 3);
+    --glass-band-y: calc(
+        (1 - var(--glass-bound-ground)) * (var(--glass-ink-target) * (var(--glass-reach-y) + 0.05) - 0.05) +
+            var(--glass-bound-ground) * ((var(--glass-reach-y) + 0.05) / var(--glass-ink-target) - 0.05)
+    );
+    --glass-band-e: calc(1.055 * pow(var(--glass-band-y), 0.416667) - 0.055);
+    --glass-dir: calc(1 - 2 * var(--glass-bound-ground));
+    --glass-content-bound: max(
+        var(--glass-veil-lift),
+        clamp(0, calc(var(--glass-dir) * (var(--glass-band-e) - var(--glass-ground-e)) /
+            max(var(--glass-dir) * (var(--glass-pole-e) - var(--glass-ground-e)), 0.0001)), 1)
+    );
+    --glass-veil-wash: var(--glass-content-bound);
+    --glass-veil-quiet: calc(var(--glass-content-bound) + (1 - var(--glass-content-bound)) / 3);
+    --glass-veil-resting: calc(var(--glass-content-bound) + 2 * (1 - var(--glass-content-bound)) / 3);
+}
+
+.glass-wash, .glass-quiet, .glass-resting, .glass-card, .glass-floating, .glass-overlay {
+    --glass-veil-floor: var(--glass-content-bound);
+    --glass-paint-a: calc(1 - (1 - var(--glass-veil-rung)) * var(--glass-level));
+    --glass-comp-e: calc(var(--glass-paint-a) * var(--glass-pole-e) + (1 - var(--glass-paint-a)) * var(--glass-ground-e));
+    --glass-comp-y: pow(calc((var(--glass-comp-e) + 0.055) / 1.055), 2.4);
+    --glass-solve-y: max(0, calc(
+        (1 - var(--glass-bound-ground)) * ((var(--glass-comp-y) + 0.05) / var(--glass-ink-target) - 0.05) +
+            var(--glass-bound-ground) * (var(--glass-ink-target) * (var(--glass-comp-y) + 0.05) - 0.05)
+    ));
+    --glass-solve-l: calc(
+        (1 - var(--glass-bound-ground)) * max(var(--glass-reach-l), pow(var(--glass-solve-y), 0.333333)) +
+            var(--glass-bound-ground) * min(var(--glass-reach-l), pow(var(--glass-solve-y), 0.333333))
+    );
+    --glass-host-e: var(--glass-comp-e);
+    --on-glass-muted: oklch(var(--glass-solve-l) var(--on-glass-muted-c) var(--on-glass-muted-h));
+    --muted-foreground: var(--on-glass-muted);
+}
+
+/* v2: the field well, a leaf surface: ground = its host plate's composite, own pole, α at the bound (FL-11);
+   its own placeholder ink, and (Q-6 b) its perimeter α solved against the host. */
+:root { --cp-well-l: 0.9188; --cp-fg-l: 0.2161; --cp-edge-target: 3.3; }
+.dark { --cp-well-l: 0.2830; --cp-fg-l: 0.9252; }
+.field-control {
+    --cp-pole-e: calc(1.055 * pow(pow(var(--cp-well-l), 3), 0.416667) - 0.055);
+    --cp-a: calc(1 - (1 - var(--glass-bound)) * var(--glass-level));
+    --cp-in-e: calc(var(--cp-a) * var(--cp-pole-e) + (1 - var(--cp-a)) * var(--glass-host-e));
+    --cp-in-y: pow(calc((var(--cp-in-e) + 0.055) / 1.055), 2.4);
+    --cp-ink-y: max(0, calc(
+        (1 - var(--glass-bound-ground)) * ((var(--cp-in-y) + 0.05) / var(--glass-ink-target) - 0.05) +
+            var(--glass-bound-ground) * (var(--glass-ink-target) * (var(--cp-in-y) + 0.05) - 0.05)
+    ));
+    --cp-ink-l: calc(
+        (1 - var(--glass-bound-ground)) * max(var(--glass-reach-l), pow(var(--cp-ink-y), 0.333333)) +
+            var(--glass-bound-ground) * min(var(--glass-reach-l), pow(var(--cp-ink-y), 0.333333))
+    );
+    --muted-foreground: oklch(var(--cp-ink-l) var(--on-glass-muted-c) var(--on-glass-muted-h));
+    --cp-out-y: pow(calc((var(--glass-host-e) + 0.055) / 1.055), 2.4);
+    --cp-b-y: clamp(0, calc(
+        (1 - var(--glass-bound-ground)) * ((var(--cp-out-y) + 0.05) / var(--cp-edge-target) - 0.05) +
+            var(--glass-bound-ground) * (var(--cp-edge-target) * (var(--cp-out-y) + 0.05) - 0.05)
+    ), 1);
+    --cp-b-e: calc(1.055 * pow(var(--cp-b-y), 0.416667) - 0.055);
+    --cp-fg-e: calc(1.055 * pow(pow(var(--cp-fg-l), 3), 0.416667) - 0.055);
+    --cp-p: clamp(var(--ink-perimeter), calc((var(--cp-in-e) - var(--cp-b-e)) / (var(--cp-in-e) - var(--cp-fg-e))), 1);
+    --field-control-ink: color-mix(in oklab, var(--foreground) calc(var(--cp-p) * 100%), transparent);
+}
