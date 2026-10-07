@@ -1,0 +1,24 @@
+critique-B pass 5 · battery hash · seat claude-opus-5-5 · 2026-10-07T07:57:25Z
+Recorded BEFORE reading pass-5/B-kit/ or pass-5/B-proto.md.
+Method: cd pass-5/critique-B/battery && cat $(ls | sort) | shasum -a 256   (files sorted by name, concatenated)
+
+d5b13d5cf6888f4cb5dc3ac73be9e6f8172ad84160bdac075a78bae9b1c6e792  battery (concatenated, sorted)
+
+cfbf1c5c4efbb11c8bcfe0df5795074666123a1470c80b1503c9b82da338c92a  ITEMS.md
+9ebe58c09b443707d3e1fa5c67478a33c77a8f61f1602933bf4819d462e8186c  plants.mjs
+a982577743fee232837815a15b5f7783ae706247f8535a79dc80cb2f4a041ece  probes.mjs
+c6609d6ca48b754b27c3f02dd36089124ddacc28b909d702d34ff64a97450378  pw-program.mjs
+9b593523fd317756d7c020161ab0e7ac8e7d8665ce9b1df1e25e3c5064624d6e  regress.mjs
+e755311f7404f2fe884d92d95db4779ed954c45732f6df9921bbf1e435d692e3  reorder.mjs
+c65ec27c8a17cb2355e2e1074e7d0f50fa345fbdbb2b09ef08777138cc567b7d  run-plants.mjs
+7dc8055f02758d77aab64b03e39665dbc74c7a43b201501ded410946a0000666  tree-probes.sh
+
+Imported by regress.mjs (pass 4, committed):
+fcdbbc8a4042c09a00bf79638f78e3952af68be229f830ffc9a174c3e431a19a  ../../../pass-4/critique-B/battery/plants.mjs
+1d41cd2f63da2e11396d1291d668dd999dd5be2054db441017e49dc431ac6bd4  ../../../pass-4/critique-B/tools/extra-plants.mjs
+
+Amendment 1 (2026-10-07T14:48:42Z, after reading the kit, before any verdict on PW-PROGRAM): pw-program.mjs passed the
+config path relative to the repo root while running in the config's directory, so playwright --list could not find it
+(every file read MISSING). The config path is now absolute. No plant, probe verdict or other file changed.
+84686d2f2ce25ef925223e61c6c70f3db673efe38376ac694b26feaa73756b31  battery (concatenated, sorted), amendment 1
+b3942119cdda13ae7d4d825c4d1e086dc606a70d484ff4dead6813b218c0e3f1  pw-program.mjs  (amendment 1)
