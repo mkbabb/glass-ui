@@ -1,0 +1,6710 @@
+[
+ {
+  "engine": "chromium",
+  "theme": "light",
+  "scene": "ladder",
+  "ground": "aurora",
+  "load": 317.6,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-wash[spec=wash]",
+    "own": [
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-quiet[spec=quiet]",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting[spec=resting]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-card[spec=card]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=floating]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-overlay[spec=overlay]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=dialog-rung]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting.glass-opaque[spec=opaque]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-floating.glass-overlay-plate.glass-reveal.z-popover[slot=popover-content][spec=popover]",
+    "own": [
+     "z-index:130",
+     "translate:0px",
+     "scale:1",
+     "filter:blur(0px)",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     936,
+     510,
+     336,
+     156
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div",
+      "causes": [
+       "position:fixed",
+       "z-index:130",
+       "transform:matrix(1, 0, 0, 1, 936, 510)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div {position:fixed, z-index:130, transform:matrix(1, 0, 0, 1, 936, 510)}"
+    ]
+   }
+  ]
+ },
+ {
+  "engine": "chromium",
+  "theme": "light",
+  "scene": "dialog",
+  "ground": "aurora",
+  "load": 318.2,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "span.glass-focus-veil",
+    "own": [
+     "position:fixed",
+     "z-index:49",
+     "backdropFilter:blur(16px) saturate(1.5)",
+     "maskImage:linear-gradient(to right, rgba(0, 0, 0, 0) calc("
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     0,
+     0,
+     1280,
+     900
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.fixed.inset-0.z-overlay.bg-overlay-scrim",
+      "causes": [
+       "position:fixed",
+       "z-index:50"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.fixed.inset-0.z-overlay.bg-overlay-scrim {position:fixed, z-index:50}"
+    ]
+   },
+   {
+    "el": "div.fixed.left-1/2.top-1/2.z-modal[slot=dialog-content][spec=dialog]",
+    "own": [
+     "position:fixed",
+     "z-index:140",
+     "translate:-50% -50%",
+     "scale:1",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     384,
+     270,
+     512,
+     360
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "chromium",
+  "theme": "light",
+  "scene": "held",
+  "ground": "aurora",
+  "load": 317.6,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-wash[spec=wash-held]",
+    "own": [],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     25,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(9.75px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(9.75px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     25,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=floating-held]",
+    "own": [],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     328,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     329,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(26px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(26px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     329,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     551,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     551,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     25,
+     301,
+     549,
+     54
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.dock-plate",
+      "causes": [
+       "z-index:-1"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.dock-plate {z-index:-1}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(19.5px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(19.5px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     25,
+     301,
+     549,
+     54
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.dock-plate",
+      "causes": [
+       "z-index:-1"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.dock-plate {z-index:-1}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     433,
+     318,
+     60,
+     19
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "span.slider-range.glass-liquid-fill",
+      "causes": [
+       "transform:matrix(1, 0, 0, 0.97, 0, 0)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "span.glass-slider[slot=slider]",
+      "causes": [
+       "z-index:50"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "span.slider-range.glass-liquid-fill {transform:matrix(1, 0, 0, 0.97, 0, 0)}",
+     "span.glass-slider[slot=slider] {z-index:50}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(16.25px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(16.25px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     433,
+     318,
+     60,
+     19
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "span.slider-range.glass-liquid-fill",
+      "causes": [
+       "transform:matrix(1, 0, 0, 0.97, 0, 0)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "span.glass-slider[slot=slider]",
+      "causes": [
+       "z-index:50"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "span.slider-range.glass-liquid-fill {transform:matrix(1, 0, 0, 0.97, 0, 0)}",
+     "span.glass-slider[slot=slider] {z-index:50}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.collapsed[spec=dock-collapsed]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     440,
+     56,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     440,
+     56,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.collapsed[spec=dock-collapsed]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.collapsed[spec=dock-collapsed] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-focus-veil",
+    "own": [
+     "position:fixed",
+     "z-index:49",
+     "backdropFilter:blur(16px) saturate(1.5)",
+     "maskImage:linear-gradient(to right, rgba(0, 0, 0, 0) calc("
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     0,
+     0,
+     1280,
+     900
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "chromium",
+  "theme": "light",
+  "scene": "state",
+  "ground": "aurora",
+  "load": 318.7,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-resting[spec=resting]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.segmented-tabs.segmented-tabs--pill.glass-capsule-track",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     101,
+     74,
+     117,
+     38
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-resting[spec=resting]",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "section.glass-resting[spec=resting] {backdropFilter:blur(12px) saturate(1.5)}"
+    ]
+   },
+   {
+    "el": "div.segmented-indicator.segmented-indicator--js.glass-capsule",
+    "own": [
+     "z-index:0",
+     "translate:4px 4px",
+     "scale:1",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     105,
+     78,
+     55,
+     30
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.segmented-tabs.segmented-tabs--pill.glass-capsule-track",
+      "causes": [
+       "backdropFilter:blur(10px) saturate(1.5)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "section.glass-resting[spec=resting]",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.segmented-tabs.segmented-tabs--pill.glass-capsule-track {backdropFilter:blur(10px) saturate(1.5)}",
+     "section.glass-resting[spec=resting] {backdropFilter:blur(12px) saturate(1.5)}"
+    ]
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     331,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     331,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-focus-veil",
+    "own": [
+     "position:fixed",
+     "z-index:49",
+     "backdropFilter:blur(16px) saturate(1.5)",
+     "maskImage:linear-gradient(to right, rgba(0, 0, 0, 0) calc("
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     0,
+     0,
+     1280,
+     900
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "chromium",
+  "theme": "light",
+  "scene": "hostile",
+  "ground": "aurora",
+  "load": 311.5,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-wash[spec=wash]",
+    "own": [
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-quiet[spec=quiet]",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting[spec=resting]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-card[spec=card]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=floating]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-overlay[spec=overlay]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=dialog-rung]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting.glass-opaque[spec=opaque]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-floating.glass-overlay-plate.glass-reveal.z-popover[slot=popover-content][spec=popover]",
+    "own": [
+     "z-index:130",
+     "translate:0px",
+     "scale:1",
+     "filter:blur(0px)",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     936,
+     510,
+     336,
+     156
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div",
+      "causes": [
+       "position:fixed",
+       "z-index:130",
+       "transform:matrix(1, 0, 0, 1, 936, 510)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div {position:fixed, z-index:130, transform:matrix(1, 0, 0, 1, 936, 510)}"
+    ]
+   }
+  ]
+ },
+ {
+  "engine": "chromium",
+  "theme": "light",
+  "scene": "halo",
+  "ground": "paper",
+  "load": 311.5,
+  "errs": [],
+  "field": "root background",
+  "rows": [
+   {
+    "el": "section.glass-wash",
+    "own": [
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     40,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     81,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-wash",
+      "causes": [
+       "backdropFilter:blur(6px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-quiet",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     190,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     231,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-quiet",
+      "causes": [
+       "backdropFilter:blur(10px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     340,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     381,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-resting",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-card",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     490,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     531,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-card",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     122,
+     680,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "chromium",
+  "theme": "dark",
+  "scene": "ladder",
+  "ground": "aurora",
+  "load": 299,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-wash[spec=wash]",
+    "own": [
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-quiet[spec=quiet]",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting[spec=resting]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-card[spec=card]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=floating]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-overlay[spec=overlay]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=dialog-rung]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting.glass-opaque[spec=opaque]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-floating.glass-overlay-plate.glass-reveal.z-popover[slot=popover-content][spec=popover]",
+    "own": [
+     "z-index:130",
+     "translate:0px",
+     "scale:1",
+     "filter:blur(0px)",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     936,
+     510,
+     336,
+     156
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div",
+      "causes": [
+       "position:fixed",
+       "z-index:130",
+       "transform:matrix(1, 0, 0, 1, 936, 510)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div {position:fixed, z-index:130, transform:matrix(1, 0, 0, 1, 936, 510)}"
+    ]
+   }
+  ]
+ },
+ {
+  "engine": "chromium",
+  "theme": "dark",
+  "scene": "dialog",
+  "ground": "aurora",
+  "load": 326.7,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "span.glass-focus-veil",
+    "own": [
+     "position:fixed",
+     "z-index:49",
+     "backdropFilter:blur(16px) saturate(1.5)",
+     "maskImage:linear-gradient(to right, rgba(0, 0, 0, 0) calc("
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     0,
+     0,
+     1280,
+     900
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.fixed.inset-0.z-overlay.bg-overlay-scrim",
+      "causes": [
+       "position:fixed",
+       "z-index:50"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.fixed.inset-0.z-overlay.bg-overlay-scrim {position:fixed, z-index:50}"
+    ]
+   },
+   {
+    "el": "div.fixed.left-1/2.top-1/2.z-modal[slot=dialog-content][spec=dialog]",
+    "own": [
+     "position:fixed",
+     "z-index:140",
+     "translate:-50% -50%",
+     "scale:1",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     384,
+     270,
+     512,
+     360
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "chromium",
+  "theme": "dark",
+  "scene": "held",
+  "ground": "aurora",
+  "load": 349.4,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-wash[spec=wash-held]",
+    "own": [],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     25,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(9.75px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(9.75px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     25,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=floating-held]",
+    "own": [],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     328,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     329,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(26px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(26px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     329,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     551,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     551,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     25,
+     301,
+     549,
+     54
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.dock-plate",
+      "causes": [
+       "z-index:-1"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.dock-plate {z-index:-1}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(19.5px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(19.5px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     25,
+     301,
+     549,
+     54
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.dock-plate",
+      "causes": [
+       "z-index:-1"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.dock-plate {z-index:-1}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     433,
+     318,
+     60,
+     19
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "span.slider-range.glass-liquid-fill",
+      "causes": [
+       "transform:matrix(1, 0, 0, 0.97, 0, 0)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "span.glass-slider[slot=slider]",
+      "causes": [
+       "z-index:50"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "span.slider-range.glass-liquid-fill {transform:matrix(1, 0, 0, 0.97, 0, 0)}",
+     "span.glass-slider[slot=slider] {z-index:50}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(16.25px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(16.25px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     433,
+     318,
+     60,
+     19
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "span.slider-range.glass-liquid-fill",
+      "causes": [
+       "transform:matrix(1, 0, 0, 0.97, 0, 0)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "span.glass-slider[slot=slider]",
+      "causes": [
+       "z-index:50"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "span.slider-range.glass-liquid-fill {transform:matrix(1, 0, 0, 0.97, 0, 0)}",
+     "span.glass-slider[slot=slider] {z-index:50}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.collapsed[spec=dock-collapsed]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     440,
+     56,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     440,
+     56,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.collapsed[spec=dock-collapsed]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.collapsed[spec=dock-collapsed] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-focus-veil",
+    "own": [
+     "position:fixed",
+     "z-index:49",
+     "backdropFilter:blur(16px) saturate(1.5)",
+     "maskImage:linear-gradient(to right, rgba(0, 0, 0, 0) calc("
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     0,
+     0,
+     1280,
+     900
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "chromium",
+  "theme": "dark",
+  "scene": "state",
+  "ground": "aurora",
+  "load": 372.6,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-resting[spec=resting]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.segmented-tabs.segmented-tabs--pill.glass-capsule-track",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     101,
+     74,
+     117,
+     38
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-resting[spec=resting]",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "section.glass-resting[spec=resting] {backdropFilter:blur(12px) saturate(1.5)}"
+    ]
+   },
+   {
+    "el": "div.segmented-indicator.segmented-indicator--js.glass-capsule",
+    "own": [
+     "z-index:0",
+     "translate:4px 4px",
+     "scale:1",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     105,
+     78,
+     55,
+     30
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.segmented-tabs.segmented-tabs--pill.glass-capsule-track",
+      "causes": [
+       "backdropFilter:blur(10px) saturate(1.5)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "section.glass-resting[spec=resting]",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.segmented-tabs.segmented-tabs--pill.glass-capsule-track {backdropFilter:blur(10px) saturate(1.5)}",
+     "section.glass-resting[spec=resting] {backdropFilter:blur(12px) saturate(1.5)}"
+    ]
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     331,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     331,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-focus-veil",
+    "own": [
+     "position:fixed",
+     "z-index:49",
+     "backdropFilter:blur(16px) saturate(1.5)",
+     "maskImage:linear-gradient(to right, rgba(0, 0, 0, 0) calc("
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     0,
+     0,
+     1280,
+     900
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "chromium",
+  "theme": "dark",
+  "scene": "hostile",
+  "ground": "aurora",
+  "load": 381.2,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-wash[spec=wash]",
+    "own": [
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-quiet[spec=quiet]",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting[spec=resting]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-card[spec=card]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=floating]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-overlay[spec=overlay]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=dialog-rung]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting.glass-opaque[spec=opaque]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-floating.glass-overlay-plate.glass-reveal.z-popover[slot=popover-content][spec=popover]",
+    "own": [
+     "z-index:130",
+     "translate:0px",
+     "scale:1",
+     "filter:blur(0px)",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     936,
+     510,
+     336,
+     156
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div",
+      "causes": [
+       "position:fixed",
+       "z-index:130",
+       "transform:matrix(1, 0, 0, 1, 936, 510)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div {position:fixed, z-index:130, transform:matrix(1, 0, 0, 1, 936, 510)}"
+    ]
+   }
+  ]
+ },
+ {
+  "engine": "chromium",
+  "theme": "dark",
+  "scene": "halo",
+  "ground": "paper",
+  "load": 389.8,
+  "errs": [],
+  "field": "root background",
+  "rows": [
+   {
+    "el": "section.glass-wash",
+    "own": [
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     40,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     81,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-wash",
+      "causes": [
+       "backdropFilter:blur(6px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-quiet",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     190,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     231,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-quiet",
+      "causes": [
+       "backdropFilter:blur(10px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     340,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     381,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-resting",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-card",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     490,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     531,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-card",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     122,
+     680,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "webkit",
+  "theme": "light",
+  "scene": "ladder",
+  "ground": "aurora",
+  "load": 420.8,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-wash[spec=wash]",
+    "own": [
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-quiet[spec=quiet]",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting[spec=resting]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-card[spec=card]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=floating]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-overlay[spec=overlay]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=dialog-rung]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting.glass-opaque[spec=opaque]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-floating.glass-overlay-plate.glass-reveal.z-popover[slot=popover-content][spec=popover]",
+    "own": [
+     "z-index:130",
+     "translate:0px",
+     "scale:1",
+     "filter:blur(0px)",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     936,
+     510,
+     336,
+     156
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div",
+      "causes": [
+       "position:fixed",
+       "z-index:130",
+       "transform:matrix(1, 0, 0, 1, 936, 510)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div {position:fixed, z-index:130, transform:matrix(1, 0, 0, 1, 936, 510)}"
+    ]
+   }
+  ]
+ },
+ {
+  "engine": "webkit",
+  "theme": "light",
+  "scene": "dialog",
+  "ground": "aurora",
+  "load": 429.3,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "span.glass-focus-veil",
+    "own": [
+     "position:fixed",
+     "z-index:49",
+     "backdropFilter:blur(16px) saturate(1.5)",
+     "maskImage:linear-gradient(to right, rgba(0, 0, 0, 0) calc("
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     0,
+     0,
+     1280,
+     900
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.fixed.inset-0.z-overlay.bg-overlay-scrim",
+      "causes": [
+       "position:fixed",
+       "z-index:50"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.fixed.inset-0.z-overlay.bg-overlay-scrim {position:fixed, z-index:50}"
+    ]
+   },
+   {
+    "el": "div.fixed.left-1/2.top-1/2.z-modal[slot=dialog-content][spec=dialog]",
+    "own": [
+     "position:fixed",
+     "z-index:140",
+     "translate:-50% -50%",
+     "scale:1",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     384,
+     270,
+     512,
+     360
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "webkit",
+  "theme": "light",
+  "scene": "held",
+  "ground": "aurora",
+  "load": 435.3,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-wash[spec=wash-held]",
+    "own": [],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     25,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(9.75px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(9.75px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     25,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=floating-held]",
+    "own": [],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     328,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     329,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(26px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(26px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     329,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     551,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     551,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     25,
+     301,
+     549,
+     54
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.dock-plate",
+      "causes": [
+       "z-index:-1"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.dock-plate {z-index:-1}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(19.5px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(19.5px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     25,
+     301,
+     549,
+     54
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.dock-plate",
+      "causes": [
+       "z-index:-1"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.dock-plate {z-index:-1}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     433,
+     318,
+     60,
+     19
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "span.slider-range.glass-liquid-fill",
+      "causes": [
+       "transform:matrix(1, 0, 0, 0.97, 0, 0)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "span.glass-slider[slot=slider]",
+      "causes": [
+       "z-index:50"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "span.slider-range.glass-liquid-fill {transform:matrix(1, 0, 0, 0.97, 0, 0)}",
+     "span.glass-slider[slot=slider] {z-index:50}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(16.25px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(16.25px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     433,
+     318,
+     60,
+     19
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "span.slider-range.glass-liquid-fill",
+      "causes": [
+       "transform:matrix(1, 0, 0, 0.97, 0, 0)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "span.glass-slider[slot=slider]",
+      "causes": [
+       "z-index:50"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "span.slider-range.glass-liquid-fill {transform:matrix(1, 0, 0, 0.97, 0, 0)}",
+     "span.glass-slider[slot=slider] {z-index:50}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.collapsed[spec=dock-collapsed]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     440,
+     56,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     440,
+     56,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.collapsed[spec=dock-collapsed]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.collapsed[spec=dock-collapsed] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-focus-veil",
+    "own": [
+     "position:fixed",
+     "z-index:49",
+     "backdropFilter:blur(16px) saturate(1.5)",
+     "maskImage:linear-gradient(to right, rgba(0, 0, 0, 0) calc("
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     0,
+     0,
+     1280,
+     900
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "webkit",
+  "theme": "light",
+  "scene": "state",
+  "ground": "aurora",
+  "load": 435.2,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-resting[spec=resting]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.segmented-tabs.segmented-tabs--pill.glass-capsule-track",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     101,
+     74,
+     117,
+     38
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-resting[spec=resting]",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "section.glass-resting[spec=resting] {backdropFilter:blur(12px) saturate(1.5)}"
+    ]
+   },
+   {
+    "el": "div.segmented-indicator.segmented-indicator--js.glass-capsule",
+    "own": [
+     "z-index:0",
+     "translate:4px 4px",
+     "scale:1",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     105,
+     78,
+     55,
+     30
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.segmented-tabs.segmented-tabs--pill.glass-capsule-track",
+      "causes": [
+       "backdropFilter:blur(10px) saturate(1.5)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "section.glass-resting[spec=resting]",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.segmented-tabs.segmented-tabs--pill.glass-capsule-track {backdropFilter:blur(10px) saturate(1.5)}",
+     "section.glass-resting[spec=resting] {backdropFilter:blur(12px) saturate(1.5)}"
+    ]
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     331,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     331,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-focus-veil",
+    "own": [
+     "position:fixed",
+     "z-index:49",
+     "backdropFilter:blur(16px) saturate(1.5)",
+     "maskImage:linear-gradient(to right, rgba(0, 0, 0, 0) calc("
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     0,
+     0,
+     1280,
+     900
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "webkit",
+  "theme": "light",
+  "scene": "hostile",
+  "ground": "aurora",
+  "load": 441.8,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-wash[spec=wash]",
+    "own": [
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-quiet[spec=quiet]",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting[spec=resting]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-card[spec=card]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=floating]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-overlay[spec=overlay]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=dialog-rung]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting.glass-opaque[spec=opaque]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-floating.glass-overlay-plate.glass-reveal.z-popover[slot=popover-content][spec=popover]",
+    "own": [
+     "z-index:130",
+     "translate:0px",
+     "scale:1",
+     "filter:blur(0px)",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     936,
+     510,
+     336,
+     156
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div",
+      "causes": [
+       "position:fixed",
+       "z-index:130",
+       "transform:matrix(1, 0, 0, 1, 936, 510)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div {position:fixed, z-index:130, transform:matrix(1, 0, 0, 1, 936, 510)}"
+    ]
+   }
+  ]
+ },
+ {
+  "engine": "webkit",
+  "theme": "light",
+  "scene": "halo",
+  "ground": "paper",
+  "load": 447.4,
+  "errs": [],
+  "field": "root background",
+  "rows": [
+   {
+    "el": "section.glass-wash",
+    "own": [
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     40,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     81,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-wash",
+      "causes": [
+       "backdropFilter:blur(6px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-quiet",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     190,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     231,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-quiet",
+      "causes": [
+       "backdropFilter:blur(10px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     340,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     381,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-resting",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-card",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     490,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     531,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-card",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     122,
+     680,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "webkit",
+  "theme": "dark",
+  "scene": "ladder",
+  "ground": "aurora",
+  "load": 451.3,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-wash[spec=wash]",
+    "own": [
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-quiet[spec=quiet]",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting[spec=resting]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-card[spec=card]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=floating]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-overlay[spec=overlay]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=dialog-rung]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting.glass-opaque[spec=opaque]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-floating.glass-overlay-plate.glass-reveal.z-popover[slot=popover-content][spec=popover]",
+    "own": [
+     "z-index:130",
+     "translate:0px",
+     "scale:1",
+     "filter:blur(0px)",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     936,
+     510,
+     336,
+     156
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div",
+      "causes": [
+       "position:fixed",
+       "z-index:130",
+       "transform:matrix(1, 0, 0, 1, 936, 510)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div {position:fixed, z-index:130, transform:matrix(1, 0, 0, 1, 936, 510)}"
+    ]
+   }
+  ]
+ },
+ {
+  "engine": "webkit",
+  "theme": "dark",
+  "scene": "dialog",
+  "ground": "aurora",
+  "load": 469.5,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "span.glass-focus-veil",
+    "own": [
+     "position:fixed",
+     "z-index:49",
+     "backdropFilter:blur(16px) saturate(1.5)",
+     "maskImage:linear-gradient(to right, rgba(0, 0, 0, 0) calc("
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     0,
+     0,
+     1280,
+     900
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.fixed.inset-0.z-overlay.bg-overlay-scrim",
+      "causes": [
+       "position:fixed",
+       "z-index:50"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.fixed.inset-0.z-overlay.bg-overlay-scrim {position:fixed, z-index:50}"
+    ]
+   },
+   {
+    "el": "div.fixed.left-1/2.top-1/2.z-modal[slot=dialog-content][spec=dialog]",
+    "own": [
+     "position:fixed",
+     "z-index:140",
+     "translate:-50% -50%",
+     "scale:1",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     384,
+     270,
+     512,
+     360
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "webkit",
+  "theme": "dark",
+  "scene": "held",
+  "ground": "aurora",
+  "load": 483.1,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-wash[spec=wash-held]",
+    "own": [],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     25,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(9.75px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(9.75px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     25,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=floating-held]",
+    "own": [],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     328,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     329,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(26px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(26px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     329,
+     25,
+     278,
+     186
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     551,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     551,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     25,
+     301,
+     549,
+     54
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.dock-plate",
+      "causes": [
+       "z-index:-1"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.dock-plate {z-index:-1}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(19.5px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(19.5px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     25,
+     301,
+     549,
+     54
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.dock-plate",
+      "causes": [
+       "z-index:-1"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.dock-plate {z-index:-1}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "opacity:0",
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     433,
+     318,
+     60,
+     19
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "span.slider-range.glass-liquid-fill",
+      "causes": [
+       "transform:matrix(1, 0, 0, 0.97, 0, 0)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "span.glass-slider[slot=slider]",
+      "causes": [
+       "z-index:50"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "span.slider-range.glass-liquid-fill {transform:matrix(1, 0, 0, 0.97, 0, 0)}",
+     "span.glass-slider[slot=slider] {z-index:50}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-grasp-carrier",
+    "own": [
+     "backdropFilter:blur(16.25px) saturate(1.75) brightness(0.96)"
+    ],
+    "bf": "blur(16.25px) saturate(1.75) brightness(0.96)",
+    "portal": false,
+    "rect": [
+     433,
+     318,
+     60,
+     19
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "span.slider-range.glass-liquid-fill",
+      "causes": [
+       "transform:matrix(1, 0, 0, 0.97, 0, 0)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "span.glass-slider[slot=slider]",
+      "causes": [
+       "z-index:50"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "span.slider-range.glass-liquid-fill {transform:matrix(1, 0, 0, 0.97, 0, 0)}",
+     "span.glass-slider[slot=slider] {z-index:50}",
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock-held] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.collapsed[spec=dock-collapsed]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     440,
+     56,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     440,
+     56,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.collapsed[spec=dock-collapsed]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.collapsed[spec=dock-collapsed] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "span.glass-focus-veil",
+    "own": [
+     "position:fixed",
+     "z-index:49",
+     "backdropFilter:blur(16px) saturate(1.5)",
+     "maskImage:linear-gradient(to right, rgba(0, 0, 0, 0) calc("
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     0,
+     0,
+     1280,
+     900
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "webkit",
+  "theme": "dark",
+  "scene": "state",
+  "ground": "aurora",
+  "load": 486,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-resting[spec=resting]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.segmented-tabs.segmented-tabs--pill.glass-capsule-track",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     101,
+     74,
+     117,
+     38
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-resting[spec=resting]",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "section.glass-resting[spec=resting] {backdropFilter:blur(12px) saturate(1.5)}"
+    ]
+   },
+   {
+    "el": "div.segmented-indicator.segmented-indicator--js.glass-capsule",
+    "own": [
+     "z-index:0",
+     "translate:4px 4px",
+     "scale:1",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     105,
+     78,
+     55,
+     30
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.segmented-tabs.segmented-tabs--pill.glass-capsule-track",
+      "causes": [
+       "backdropFilter:blur(10px) saturate(1.5)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "section.glass-resting[spec=resting]",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.segmented-tabs.segmented-tabs--pill.glass-capsule-track {backdropFilter:blur(10px) saturate(1.5)}",
+     "section.glass-resting[spec=resting] {backdropFilter:blur(12px) saturate(1.5)}"
+    ]
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     331,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     300,
+     331,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-focus-veil",
+    "own": [
+     "position:fixed",
+     "z-index:49",
+     "backdropFilter:blur(16px) saturate(1.5)",
+     "maskImage:linear-gradient(to right, rgba(0, 0, 0, 0) calc("
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     0,
+     0,
+     1280,
+     900
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ },
+ {
+  "engine": "webkit",
+  "theme": "dark",
+  "scene": "hostile",
+  "ground": "aurora",
+  "load": 488.6,
+  "errs": [],
+  "field": "div.aurora-root.h-full.w-full.overflow-hidden",
+  "rows": [
+   {
+    "el": "section.glass-wash[spec=wash]",
+    "own": [
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-quiet[spec=quiet]",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting[spec=resting]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-card[spec=card]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     24,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=floating]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-overlay[spec=overlay]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     328,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-floating[spec=dialog-rung]",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     632,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting.glass-opaque[spec=opaque]",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     936,
+     236,
+     280,
+     188
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+    "own": [
+     "z-index:0",
+     "contain:layout style"
+    ],
+    "bf": "none",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "div.dock-plate",
+    "own": [
+     "z-index:-1",
+     "backdropFilter:blur(12px) saturate(1.5)",
+     "clipPath:inset(0px)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     24,
+     470,
+     403,
+     56
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div.glass-dock.horizontal.shape-pill.expanded[spec=dock]",
+      "causes": [
+       "z-index:0",
+       "contain:layout style"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div.glass-dock.horizontal.shape-pill.expanded[spec=dock] {z-index:0, contain:layout style}"
+    ]
+   },
+   {
+    "el": "div.glass-floating.glass-overlay-plate.glass-reveal.z-popover[slot=popover-content][spec=popover]",
+    "own": [
+     "z-index:130",
+     "translate:0px",
+     "scale:1",
+     "filter:blur(0px)",
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": true,
+    "rect": [
+     936,
+     510,
+     336,
+     156
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "div",
+      "causes": [
+       "position:fixed",
+       "z-index:130",
+       "transform:matrix(1, 0, 0, 1, 936, 510)"
+      ],
+      "holdsField": false
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": [
+     "div {position:fixed, z-index:130, transform:matrix(1, 0, 0, 1, 936, 510)}"
+    ]
+   }
+  ]
+ },
+ {
+  "engine": "webkit",
+  "theme": "dark",
+  "scene": "halo",
+  "ground": "paper",
+  "load": 488.7,
+  "errs": [],
+  "field": "root background",
+  "rows": [
+   {
+    "el": "section.glass-wash",
+    "own": [
+     "backdropFilter:blur(6px) saturate(1.5)"
+    ],
+    "bf": "blur(6px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     40,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     81,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-wash",
+      "causes": [
+       "backdropFilter:blur(6px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-quiet",
+    "own": [
+     "backdropFilter:blur(10px) saturate(1.5)"
+    ],
+    "bf": "blur(10px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     190,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     231,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-quiet",
+      "causes": [
+       "backdropFilter:blur(10px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-resting",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     340,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     381,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-resting",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "section.glass-card",
+    "own": [
+     "backdropFilter:blur(12px) saturate(1.5)"
+    ],
+    "bf": "blur(12px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     120,
+     490,
+     300,
+     120
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     123,
+     531,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "section.glass-card",
+      "causes": [
+       "backdropFilter:blur(12px) saturate(1.5)"
+      ],
+      "holdsField": true
+     },
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   },
+   {
+    "el": "button.glass-capsule",
+    "own": [
+     "backdropFilter:blur(16px) saturate(1.5)"
+    ],
+    "bf": "blur(16px) saturate(1.5)",
+    "portal": false,
+    "rect": [
+     122,
+     680,
+     78,
+     36
+    ],
+    "visible": true,
+    "chain": [
+     {
+      "el": "html.dark",
+      "causes": [
+       "root"
+      ],
+      "holdsField": true
+     }
+    ],
+    "between": []
+   }
+  ]
+ }
+]
