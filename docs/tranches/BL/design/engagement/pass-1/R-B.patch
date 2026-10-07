@@ -1,0 +1,778 @@
+diff --git a/src/components/_shared/disclosure/disclosure.css b/src/components/_shared/disclosure/disclosure.css
+index 754c6ca4..a4aa5aab 100644
+--- a/src/components/_shared/disclosure/disclosure.css
++++ b/src/components/_shared/disclosure/disclosure.css
+@@ -76,6 +76,15 @@
+         background: var(--control-surface-bg-hover);
+     }
+ 
++    /* The press's light leg: the trigger takes the resting plate while the press part is
++       down, on the trigger's own control clock. It is the press's answer under a held
++       touch (where hover is sticky) and its whole answer under reduced motion (the
++       primitive drops the geometry there). It ties the hover rule's specificity and
++       follows it, so a sticky hover cannot hide it. */
++    .disclosure-group-trigger[data-press]:not(:disabled, [data-disabled]) {
++        background: var(--glass-plate-resting);
++    }
++
+     .disclosure-icon {
+         flex: none;
+         inline-size: 1rem;
+diff --git a/src/components/accordion/AccordionTrigger.vue b/src/components/accordion/AccordionTrigger.vue
+index 26edfad1..7ae14c65 100644
+--- a/src/components/accordion/AccordionTrigger.vue
++++ b/src/components/accordion/AccordionTrigger.vue
+@@ -1,11 +1,12 @@
+ <script setup lang="ts">
+-import { computed, useAttrs, type HTMLAttributes } from "vue";
++import { computed, useAttrs, useTemplateRef, type HTMLAttributes } from "vue";
+ import {
+     AccordionHeader as RekaAccordionHeader,
+     AccordionTrigger as RekaAccordionTrigger,
+     injectAccordionItemContext,
+ } from "reka-ui";
+ import { ChevronDown } from "@lucide/vue";
++import { useEngage } from "../../composables/motion/engage/useEngage";
+ import { cn } from "../_shared/class-names";
+ import { useDisclosureIds } from "../_shared/disclosure/disclosure-context";
+ 
+@@ -35,11 +36,21 @@ const forwardedAttrs = computed(() => {
+     } = attrs;
+     return forwarded;
+ });
++
++/* The press (the spring, with its light leg on `data-press`) and the commit (the
++ * trigger's `data-state` flips open or closed, by any path) are the primitive's. */
++const trigger = useTemplateRef<{ $el: HTMLElement }>("trigger");
++useEngage(() => trigger.value?.$el ?? null, {
++    component: "accordion",
++    press: true,
++    commit: true,
++});
+ </script>
+ 
+ <template>
+     <RekaAccordionHeader as="h3" data-slot="accordion-header" class="disclosure-header">
+         <RekaAccordionTrigger
++            ref="trigger"
+             v-bind="forwardedAttrs"
+             as="button"
+             data-slot="accordion-trigger"
+diff --git a/src/components/dialog/ModalOverlay.vue b/src/components/dialog/ModalOverlay.vue
+index 9cb477a9..134f5ef3 100644
+--- a/src/components/dialog/ModalOverlay.vue
++++ b/src/components/dialog/ModalOverlay.vue
+@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<ModalOverlayProps>(), {
+         "
+         :style="props.opacity == null ? undefined : { opacity: props.opacity }"
+     >
+-        <span v-if="props.veil" class="glass-focus-veil" data-engaged aria-hidden="true" />
++        <span v-if="props.veil" class="glass-focus-veil" aria-hidden="true" />
+         <slot />
+     </DialogOverlay>
+ </template>
+diff --git a/src/components/separator/Separator.vue b/src/components/separator/Separator.vue
+index 2502d6fe..c79ea7b5 100644
+--- a/src/components/separator/Separator.vue
++++ b/src/components/separator/Separator.vue
+@@ -2,6 +2,7 @@
+ import { computed, type HTMLAttributes, useAttrs, useId } from "vue";
+ import { Separator as RekaSeparator } from "reka-ui";
+ import type { Orientation } from "../_shared/axes";
++import { useEngage } from "../../composables/motion/engage/useEngage";
+ import { cn } from "../_shared/class-names";
+ import { fixedHostAttrs } from "../_shared/primitive";
+ 
+@@ -19,6 +20,11 @@ const props = withDefaults(defineProps<SeparatorProps>(), {
+     decorative: false,
+ });
+ 
++useEngage(() => null, {
++    component: "separator",
++    exempt: "a rule between regions: nothing presses it and it reports no state",
++});
++
+ const attrs = useAttrs();
+ const labelId = `${useId()}-label`;
+ const visibleLabel = computed(() => props.label?.trim());
+diff --git a/src/components/slider/Slider.vue b/src/components/slider/Slider.vue
+index fc7b5de1..c24e6f6e 100644
+--- a/src/components/slider/Slider.vue
++++ b/src/components/slider/Slider.vue
+@@ -16,8 +16,7 @@ import {
+     SliderTrack,
+     useForwardPropsEmits,
+ } from "reka-ui";
+-import { useDragVelocity } from "../../composables/dom/useDragVelocity";
+-import { useDockHold } from "../dock/composables/useDockHold";
++import { useEngage } from "../../composables/motion/engage/useEngage";
+ import { resolveValueMarks } from "../_shared/field/valueDomain";
+ import { useMotionAxis } from "../_shared/useMotionAxis";
+ import type { SliderProps, SliderSize, SliderVariant } from "./types";
+@@ -56,17 +55,10 @@ const delegatedProps = computed(() => {
+ 
+ const forwarded = useForwardPropsEmits(delegatedProps, emits);
+ 
+-/* The host-native drag hold — one owner, one acquire path. `useDockHold` attaches
+-   NATIVE `pointerdown`/`touchstart` on the RESOLVED host, and not because a template
+-   binding would be lost: reka's `<SliderRoot>` sets `inheritAttrs: false` and then
+-   re-merges `$attrs` by hand through `mergeProps` (SliderRoot.js:149), which CHAINS
+-   `onX` handlers, so a consumer `@pointerdown` does land. It lands LAST — after reka's
+-   own slide start — which is the one real limit: it cannot `preventDefault` ahead of
+-   the slide. The native listeners earn their place on three other counts:
+-   `pointerdown` AND `touchstart` fold onto ONE acquire, the release is window-scoped
+-   and survives reka's `setPointerCapture` retarget, and the acquire is
+-   capture-independent instant-on. `data-held` reflects THIS slider's own hand, never
+-   the dock's posture count. */
++/* The engage primitive owns the hand (a native pointer/touch hold with a window-scoped
++   release), the velocity (the live smear and the release carry) and every engagement
++   attribute: `data-held` on the root and the range, `data-engaged` on the veil and the
++   loupe. Nothing in this template writes either. */
+ const sliderRootRef = useTemplateRef<{ $el: HTMLElement } | HTMLElement | null>(
+     "sliderRootRef",
+ );
+@@ -78,19 +70,24 @@ function getRootEl(): HTMLElement | null {
+     return (ref.$el as HTMLElement | undefined) ?? null;
+ }
+ 
+-const { isHeld } = useDockHold(getRootEl);
+-
+ const loupeRef = useTemplateRef<HTMLElement>("loupeRef");
+-
+-/* The weight-train velocity bridge. Writes the bounded `--atom-drag-v` and the ONE
+-   registered velocity term `--flex-vel` on the resolved host during the drag window
+-   only; the rAF tears down on release. The loupe is mirrored because it is teleported
+-   out of the host's inheritance. */
++const focusVeilRef = useTemplateRef<HTMLElement>("focusVeilRef");
+ const motionAxis = useMotionAxis(() => props.motion);
+-useDragVelocity({
+-    host: () => (motionAxis.armed.value ? getRootEl() : null),
+-    mirror: () => loupeRef.value,
+-    axis: () => (props.orientation === "vertical" ? "y" : "x"),
++
++const { isHeld } = useEngage(getRootEl, {
++    component: "slider",
++    hold: true,
++    drag: {
++        axis: () => (props.orientation === "vertical" ? "y" : "x"),
++        body: () =>
++            getRootEl()?.querySelector<HTMLElement>(".slider-thumb:focus") ??
++            getRootEl()?.querySelector<HTMLElement>(".slider-thumb") ??
++            null,
++        mirror: () => loupeRef.value,
++        enabled: () => motionAxis.armed.value,
++    },
++    heldOn: () => [getRootEl()?.querySelector(".slider-range")],
++    engagedOn: () => [focusVeilRef.value, loupeRef.value],
+ });
+ 
+ // ── The GRASP mount (glass/grasp.css) ────────────────────────────────────────────
+@@ -120,8 +117,6 @@ function onGraspReleaseEnd(event: TransitionEvent): void {
+ // is. The re-take rides a capture-phase `scroll` listener on `window` — `scroll` does
+ // not bubble from a scroller, capture still reaches it, so one listener covers every
+ // scroller.
+-const focusVeilRef = useTemplateRef<HTMLElement>("focusVeilRef");
+-
+ function writeVeilCentre(): void {
+     const host = getRootEl();
+     const veil = focusVeilRef.value;
+@@ -266,7 +261,6 @@ onMounted(() => {
+         :data-variant="v"
+         :data-size="s"
+         :data-invalid="props.invalid || undefined"
+-        :data-held="isHeld || undefined"
+         :data-inverted="props.inverted || undefined"
+         :data-focus-veil="(grasping && graspable) || undefined"
+         :data-motion="motionAxis.dataMotion.value"
+@@ -286,7 +280,6 @@ onMounted(() => {
+                 v-if="grasping && graspable"
+                 ref="focusVeilRef"
+                 class="glass-focus-veil"
+-                :data-engaged="isHeld || undefined"
+                 aria-hidden="true"
+             />
+         </Teleport>
+@@ -304,7 +297,6 @@ onMounted(() => {
+                 v-if="loupeShown"
+                 ref="loupeRef"
+                 class="glass-loupe glass-plate"
+-                :data-engaged="isHeld || undefined"
+                 aria-hidden="true"
+             >
+                 <span class="glass-loupe-clone">
+@@ -342,7 +334,6 @@ onMounted(() => {
+             <SliderRange
+                 class="slider-range"
+                 :class="v !== 'spectrum' && 'glass-liquid-fill'"
+-                :data-held="isHeld || undefined"
+             >
+                 <template v-if="grasping && graspable">
+                     <span class="glass-grasp-carrier" data-grasp="rest"></span>
+diff --git a/src/components/sortable-list/drag.ts b/src/components/sortable-list/drag.ts
+index 9ce10ada..a9f5096e 100644
+--- a/src/components/sortable-list/drag.ts
++++ b/src/components/sortable-list/drag.ts
+@@ -20,11 +20,12 @@
+  * and clearing a transform animates home instead of snapping.
+  */
+ 
++import { ACKNOWLEDGE_WINDOW_MS } from "../../composables/motion/engage/engageEnvelopes";
++import { VelocitySampler } from "../../composables/motion/engage/release";
+ import { createGhost, type Ghost } from "./ghost";
+ import {
+     ACTIVATION_HOLD_MS,
+     ACTIVATION_SLOP_PX,
+-    VelocitySampler,
+     flyProgress,
+     type Flight,
+ } from "./motion";
+@@ -351,7 +352,7 @@ export function createDragController(deps: DragControllerDeps): DragController {
+         const dx = dest.x - from.x;
+         const dy = dest.y - from.y;
+         const distance = Math.hypot(dx, dy);
+-        const v = sampler.velocity();
++        const v = sampler.velocity(ACKNOWLEDGE_WINDOW_MS);
+         const along = distance === 0 ? 0 : (v.x * dx + v.y * dy) / distance;
+         plate.land();
+         const retire = (): void => {
+@@ -573,6 +574,8 @@ export function createDragController(deps: DragControllerDeps): DragController {
+ 
+     function onPointerUp(event: PointerEvent): void {
+         if (event.pointerId !== pointerId) return;
++        // the release is a sample: a finger held still before it lifts carries nothing
++        sampler.push(event.clientX, event.clientY);
+         commit();
+     }
+ 
+diff --git a/src/components/sortable-list/motion.ts b/src/components/sortable-list/motion.ts
+index 453a759e..81c584bb 100644
+--- a/src/components/sortable-list/motion.ts
++++ b/src/components/sortable-list/motion.ts
+@@ -67,42 +67,6 @@ export function prefersReducedMotion(): boolean {
+     );
+ }
+ 
+-/** A pointer sample: position and the clock it was taken on. */
+-interface Sample {
+-    x: number;
+-    y: number;
+-    t: number;
+-}
+-
+-/**
+- * A small ring buffer over the last few pointer samples. Release velocity is the
+- * chord across the window rather than the last frame's delta, so one stalled frame
+- * cannot fling the ghost.
+- */
+-export class VelocitySampler {
+-    private readonly ring: Sample[] = [];
+-    private readonly size = 5;
+-
+-    push(x: number, y: number, t: number = performance.now()): void {
+-        this.ring.push({ x, y, t });
+-        if (this.ring.length > this.size) this.ring.shift();
+-    }
+-
+-    reset(): void {
+-        this.ring.length = 0;
+-    }
+-
+-    /** px/s across the sample window; `{x:0,y:0}` when the window is degenerate. */
+-    velocity(): { x: number; y: number } {
+-        const first = this.ring[0];
+-        const last = this.ring[this.ring.length - 1];
+-        if (!first || !last) return { x: 0, y: 0 };
+-        const dt = (last.t - first.t) / 1000;
+-        if (dt <= 0) return { x: 0, y: 0 };
+-        return { x: (last.x - first.x) / dt, y: (last.y - first.y) / dt };
+-    }
+-}
+-
+ /**
+  * Velocity-derived tilt on the shared tanh register, capped at the existing ceiling.
+  * A static rotation is width-dependent and says nothing; this one says how hard the
+diff --git a/src/components/switch/Switch.vue b/src/components/switch/Switch.vue
+index aecb2fa1..528d20e9 100644
+--- a/src/components/switch/Switch.vue
++++ b/src/components/switch/Switch.vue
+@@ -1,6 +1,7 @@
+ <script setup lang="ts">
+-import { computed, type HTMLAttributes } from "vue";
++import { computed, useTemplateRef, type HTMLAttributes } from "vue";
+ import { SwitchRoot, SwitchThumb, useForwardPropsEmits } from "reka-ui";
++import { useEngage } from "../../composables/motion/engage/useEngage";
+ import { cn } from "../_shared/class-names";
+ import { type ControlProps, controlStateAttrs } from "../_shared/control";
+ import type { FormFieldProps, PrimitiveProps } from "../_shared/primitive";
+@@ -31,6 +32,11 @@ const delegatedProps = computed(() => {
+     return { ...delegated, value: value === undefined ? undefined : String(value) };
+ });
+ const forwarded = useForwardPropsEmits(delegatedProps, emit);
++
++/* The commit fires from the model: the root's `data-state` flips whoever flipped it. The
++ * press stays the register's `.tap-squish` floor. */
++const root = useTemplateRef<{ $el: HTMLElement }>("root");
++useEngage(() => root.value?.$el ?? null, { component: "switch", commit: true });
+ </script>
+ 
+ <template>
+@@ -41,6 +47,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emit);
+          pad against a 1px perimeter is symmetric at rest AND checked, and always
+          was; the refuted "fix" to 48 × 24 / pad 2 is what would have broken it. -->
+     <SwitchRoot
++        ref="root"
+         data-slot="switch"
+         v-bind="{ ...forwarded, ...controlStateAttrs(props.invalid) }"
+         :class="cn('switch control-bit tap-squish', props.class)"
+diff --git a/src/composables/dom/useDragVelocity.ts b/src/composables/dom/useDragVelocity.ts
+index d7950531..ad30e947 100644
+--- a/src/composables/dom/useDragVelocity.ts
++++ b/src/composables/dom/useDragVelocity.ts
+@@ -29,6 +29,8 @@
+ // drives is `transform`/`scale`/`translate` in the consuming CSS — the §L7 paint-fence.
+ 
+ import { onMounted, onScopeDispose, readonly, ref, type Ref } from "vue";
++import { ACKNOWLEDGE_WINDOW_MS } from "../motion/engage/engageEnvelopes";
++import { VelocitySampler } from "../motion/engage/release";
+ 
+ export interface UseDragVelocityParams {
+     /**
+@@ -62,6 +64,12 @@ export interface UseDragVelocityParams {
+     clamp?: number;
+     /** Honor `prefers-reduced-motion: reduce` (no rAF, value pinned 0). Default true. */
+     respectReducedMotion?: boolean;
++    /**
++     * Called once per release with the release velocity along the axis, px/s, through
++     * the same saturating pole as `--flex-vel` (`V0 · tanh(v / V0)`): the release rule's
++     * input (`motion/engage/release.ts`). 0 under reduced motion (no samples are taken).
++     */
++    onRelease?: (velocity: number) => void;
+ }
+ 
+ export interface UseDragVelocityReturn {
+@@ -126,6 +134,7 @@ export function useDragVelocity(
+     const FLEX_V0 = 900;
+     const FLEX_TAU_MS = 100;
+     let flexSmoothed = 0;
++    const sampler = new VelocitySampler();
+ 
+     function write(el: HTMLElement | null, smear: number, flex: number): void {
+         if (!el) return;
+@@ -175,6 +184,7 @@ export function useDragVelocity(
+         const pos = axisOf() === "y" ? e.clientY : e.clientX;
+         frameDelta += pos - lastPos;
+         lastPos = pos;
++        sampler.push(e.clientX, e.clientY, e.timeStamp);
+     }
+ 
+     function onPointerDown(e: PointerEvent): void {
+@@ -185,6 +195,8 @@ export function useDragVelocity(
+         frameDelta = 0;
+         smoothed = 0;
+         flexSmoothed = 0;
++        sampler.reset();
++        sampler.push(e.clientX, e.clientY, e.timeStamp);
+         // PRM: pin the vars at 0 and NEVER open the rAF (no smear; the value still
+         // tracks via reka). The no-idle-cost contract is trivially honored.
+         if (respectPRM && prefersReducedMotion()) {
+@@ -215,8 +227,14 @@ export function useDragVelocity(
+         setVar(0);
+     }
+ 
+-    function onPointerUp(): void {
++    function onPointerUp(e: PointerEvent): void {
+         if (!pointerActive) return;
++        if (params.onRelease) {
++            sampler.push(e.clientX, e.clientY, e.timeStamp);
++            const v = sampler.velocity(ACKNOWLEDGE_WINDOW_MS);
++            const along = axisOf() === "y" ? v.y : v.x;
++            params.onRelease(FLEX_V0 * Math.tanh(along / FLEX_V0));
++        }
+         teardown();
+     }
+ 
+diff --git a/src/styles/glass/focus-veil.css b/src/styles/glass/focus-veil.css
+index 07c5262d..19b2f215 100644
+--- a/src/styles/glass/focus-veil.css
++++ b/src/styles/glass/focus-veil.css
+@@ -149,15 +149,19 @@
+         transition: opacity var(--duration-fast) var(--ease-standard);
+     }
+ 
+-    /* THE IN CLOCK — behind the geometry by one rank-6 beat. */
+-    .glass-focus-veil[data-engaged] {
++    /* THE IN CLOCK — behind the geometry by one rank-6 beat. Two readers, two meanings:
++       a held control's veil carries `data-engaged` (the engage primitive writes it); a
++       modal's veil reads its overlay's own open state. */
++    .glass-focus-veil[data-engaged],
++    [data-state="open"] > .glass-focus-veil {
+         opacity: 1;
+         transition: opacity var(--duration-normal) var(--ease-standard)
+             var(--duration-instant);
+     }
+ 
+     @starting-style {
+-        .glass-focus-veil[data-engaged] {
++        .glass-focus-veil[data-engaged],
++        [data-state="open"] > .glass-focus-veil {
+             opacity: 0;
+         }
+     }
+diff --git a/tests/styles/focus-veil.test.ts b/tests/styles/focus-veil.test.ts
+index c87c45e4..b140c498 100644
+--- a/tests/styles/focus-veil.test.ts
++++ b/tests/styles/focus-veil.test.ts
+@@ -234,7 +234,7 @@ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — applied at its named consumers",
+         // PORTALLED, not nested — the plate is a body child and NOT inside the host.
+         expect(veil!.parentElement).toBe(document.body);
+         expect(root.contains(veil!)).toBe(false);
+-        expect(veil!.getAttribute("data-engaged")).toBe("true");
++        expect(veil!.hasAttribute("data-engaged")).toBe(true);
+         // The centre is written from the host's own rect on the mount tick.
+         expect(veil!.style.getPropertyValue("--veil-x")).not.toBe("");
+         expect(veil!.style.getPropertyValue("--veil-y")).not.toBe("");
+diff --git a/src/composables/motion/engage/release.ts b/src/composables/motion/engage/release.ts
+new file mode 100644
+index 00000000..3cf3b1ae
+--- /dev/null
++++ b/src/composables/motion/engage/release.ts
+@@ -0,0 +1,102 @@
++// The release rule: hallmark 6's one owner.
++//
++// "A release carries its velocity into the settle" is one sentence with two halves,
++// and both live here so no surface writes its own:
++//   · the MEASUREMENT — `VelocitySampler`, the chord across the last few pointer
++//     samples (one stalled frame cannot fling anything). It was the sortable list's;
++//     the list now reads it from here.
++//   · the SETTLE — `impulseFrames`, a named spring row's response to an initial
++//     velocity with no displacement, sampled into keyframes the compositor plays. The
++//     row is named, never restated; the clock is the row's own CSS token.
++//
++// Nothing here mints a response, a damping fraction or a duration.
++
++import { SpringProgress } from "@mkbabb/keyframes.js";
++
++import { motionTempo } from "../core/motionTempo";
++import { springPreset, type SpringPresetName } from "../spring/springPresets";
++
++/** A pointer sample: position and the clock it was taken on. */
++interface Sample {
++    x: number;
++    y: number;
++    t: number;
++}
++
++/**
++ * A small ring buffer over the last few pointer samples. Release velocity is the chord
++ * across the window rather than the last frame's delta.
++ */
++export class VelocitySampler {
++    private readonly ring: Sample[] = [];
++    private readonly size = 5;
++
++    push(x: number, y: number, t: number = performance.now()): void {
++        this.ring.push({ x, y, t });
++        if (this.ring.length > this.size) this.ring.shift();
++    }
++
++    reset(): void {
++        this.ring.length = 0;
++    }
++
++    /**
++     * px/s across the sample window; `{x:0,y:0}` when the window is degenerate. With
++     * `withinMs`, only samples that young (against the last) count, so a finger held
++     * still before it lets go releases with no velocity.
++     */
++    velocity(withinMs?: number): { x: number; y: number } {
++        const last = this.ring[this.ring.length - 1];
++        const first =
++            withinMs == null || !last
++                ? this.ring[0]
++                : this.ring.find((s) => last.t - s.t <= withinMs);
++        if (!first || !last) return { x: 0, y: 0 };
++        const dt = (last.t - first.t) / 1000;
++        if (dt <= 0) return { x: 0, y: 0 };
++        return { x: (last.x - first.x) / dt, y: (last.y - first.y) / dt };
++    }
++}
++
++/**
++ * The settle clock of a row, in ms, read from its CSS token on `el` — the same clock a
++ * CSS transition on that row runs, tempo included.
++ */
++export function rowClockMs(row: SpringPresetName, el?: Element | null): number {
++    const source = el ?? document.documentElement;
++    const raw = getComputedStyle(source).getPropertyValue(`--spring-${row}-settle`).trim();
++    const s = Number.parseFloat(raw);
++    return Number.isFinite(s) && s > 0 ? s * 1000 * motionTempo(el) : 0;
++}
++
++/**
++ * A row's response to an impulse: displacement 0, velocity `v0` (units per second),
++ * target 0. Returns the displacement sampled at `n + 1` evenly spaced instants over
++ * `ms`, the last forced to 0 (the row's clock is its settle; the residue is inside the
++ * row's own band).
++ */
++export function impulseFrames(
++    row: SpringPresetName,
++    v0: number,
++    ms: number,
++    n = 24,
++): number[] {
++    const r = springPreset(row);
++    const spring = new SpringProgress({
++        response: r.response * motionTempo(),
++        dampingFraction: r.dampingFraction,
++        initial: 0,
++        initialVelocity: v0,
++        respectReducedMotion: false,
++    });
++    spring.target = 0;
++    const out: number[] = [];
++    for (let k = 0; k <= n; k++) out.push(k === n ? 0 : spring.tickToTime((k / n) * (ms / 1000)));
++    spring.dispose();
++    return out;
++}
++
++/** The peak of a row's unit-velocity impulse response, so a caller can ask for a peak. */
++export function impulsePeak(row: SpringPresetName, ms: number): number {
++    return Math.max(...impulseFrames(row, 1, ms, 96));
++}
+diff --git a/src/composables/motion/engage/useEngage.ts b/src/composables/motion/engage/useEngage.ts
+new file mode 100644
+index 00000000..ffaaf027
+--- /dev/null
++++ b/src/composables/motion/engage/useEngage.ts
+@@ -0,0 +1,231 @@
++// useEngage — the one engage primitive (D5-B).
++//
++// Engagement is behaviour, so it has one door. A component hands it its host and says
++// which parts it has; the primitive owns the state and is the ONLY writer of the
++// engagement attributes:
++//   · data-held     the hand is down on this host (the grasp register reads it)
++//   · data-engaged  the held control's organs (veil, loupe) are live — it means held,
++//                   and nothing else writes it (E-7)
++//   · data-press    the press part is down (the press light leg reads it)
++//   · data-commit   one commit edge, present while its impulse plays
++//
++// Three parts behind the door, each the shipped leaf, composed rather than copied:
++//   · the hand      `useDockHold` (pointer + touch acquire, window-scoped release,
++//                   the dock posture token)
++//   · the press     `useLiquidPress` (the interruptible press spring); the primitive
++//                   binds its handlers natively and writes its style, so an adopter
++//                   binds nothing in its template
++//   · the velocity  `useDragVelocity` (the live smear) plus the release rule
++//                   (`release.ts`): the release velocity seeds the settle
++//
++// THE COMMIT FIRES FROM THE MODEL. A reka host reflects its model in `data-state`
++// (checked/unchecked, open/closed, on/off, active/inactive), whoever changed it —
++// keyboard, pointer or a programmatic write. The primitive watches that one attribute,
++// so the commit edge is the same for all three paths and an adopter passes no model
++// getter. A host whose model is not on `data-state` passes `model`.
++//
++// THE CENSUS (Q-1, the default (c)): every directory mounts this door exactly once per
++// exemplar. An interactive component mounts it with parts; a passive one mounts it with
++// `exempt: "<reason>"` and gets nothing written. A census page that defines
++// `globalThis.__glassEngageCensus` (a Map) receives one row per mount: directory → parts
++// or reason. Without that global nothing is recorded.
++
++import {
++    onBeforeUnmount,
++    onMounted,
++    shallowRef,
++    toValue,
++    watch,
++    type MaybeRefOrGetter,
++    type Ref,
++} from "vue";
++
++import { useDockHold } from "../../../components/dock/composables/useDockHold";
++import { useDragVelocity } from "../../dom/useDragVelocity";
++import { HOVER_GEOMETRY_BUDGET } from "./engageLadder";
++import { impulseFrames, impulsePeak, rowClockMs } from "./release";
++import { useLiquidPress } from "../spring/useLiquidPress";
++
++export type EngageState = "rest" | "press" | "held";
++
++export interface UseEngageOptions {
++    /** The component directory this host belongs to: the census key. */
++    component: string;
++    /** A passive component: the reason it carries no rung. Nothing else applies. */
++    exempt?: string;
++    /** The hand: a pointer or touch hold on the host lights `data-held`. */
++    hold?: boolean;
++    /** The press: the interruptible press spring on the host. */
++    press?: boolean;
++    /** The commit edge. `true` reads the host's `data-state`; a getter reads that. */
++    commit?: boolean | MaybeRefOrGetter<unknown>;
++    /** A drag surface: the axis its velocity is read on, and the body the release carries. */
++    drag?: {
++        axis: () => "x" | "y";
++        body: () => HTMLElement | null;
++        mirror?: () => HTMLElement | null;
++        enabled?: () => boolean;
++    };
++    /** Elements that carry `data-held` with the host (the grasp register's own host). */
++    heldOn?: () => (Element | null | undefined)[];
++    /** The held control's organs: they carry `data-engaged` while the hand is down. */
++    engagedOn?: () => (Element | null | undefined)[];
++}
++
++export interface UseEngageReturn {
++    state: Readonly<Ref<EngageState>>;
++    isHeld: Readonly<Ref<boolean>>;
++}
++
++type Census = Map<string, { parts: string[]; exempt?: string }>;
++
++const reduced = (): boolean =>
++    typeof window !== "undefined" &&
++    typeof window.matchMedia === "function" &&
++    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
++
++
++/** The commit impulse: the `panel` row (the one row whose rebound is intrinsic) kicked
++ *  so its peak meets the ladder's geometry budget. Composited onto the host's transform. */
++function fireCommit(el: HTMLElement): void {
++    if (reduced()) {
++        // the spatial leg retires; the edge stays for the light leg
++        el.setAttribute("data-commit", "");
++        requestAnimationFrame(() => el.removeAttribute("data-commit"));
++        return;
++    }
++    const ms = rowClockMs("panel", el);
++    if (!ms) return;
++    const peak = HOVER_GEOMETRY_BUDGET - 1;
++    const xs = impulseFrames("panel", peak / impulsePeak("panel", ms), ms);
++    el.setAttribute("data-commit", "");
++    const a = el.animate(
++        xs.map((x) => ({ transform: `scale(${1 + x})` })),
++        { duration: ms, composite: "add" },
++    );
++    a.onfinish = a.oncancel = () => el.removeAttribute("data-commit");
++}
++
++/** The release carry: the drag body leaves the finger at the finger's velocity and the
++ *  `dock` row (the engaged rung's spring) brings it home. */
++function carry(body: HTMLElement, axis: "x" | "y", v: number): void {
++    if (!v || reduced()) return;
++    const ms = rowClockMs("dock", body);
++    if (!ms) return;
++    const xs = impulseFrames("dock", v, ms);
++    body.animate(
++        xs.map((d) => ({ translate: axis === "x" ? `${d}px 0` : `0 ${d}px` })),
++        { duration: ms, composite: "add" },
++    );
++}
++
++export function useEngage(
++    host: () => HTMLElement | null,
++    o: UseEngageOptions,
++): UseEngageReturn {
++    const census = (globalThis as { __glassEngageCensus?: Census }).__glassEngageCensus;
++    const parts = ["hold", "press", "commit", "drag"].filter(
++        (k) => !o.exempt && o[k as keyof UseEngageOptions],
++    );
++    onMounted(() => census?.set(o.component, { parts, exempt: o.exempt }));
++
++    const state = shallowRef<EngageState>("rest");
++    if (o.exempt) return { state, isHeld: shallowRef(false) };
++
++    // ── the hand ───────────────────────────────────────────────────────────────
++    const isHeld: Ref<boolean> = o.hold ? useDockHold(host).isHeld : shallowRef(false);
++    if (o.hold) {
++        watch(
++            [isHeld, () => o.heldOn?.(), () => o.engagedOn?.()],
++            ([held]) => {
++                state.value = held ? "held" : "rest";
++                for (const el of [host(), ...(o.heldOn?.() ?? [])]) el?.toggleAttribute("data-held", held);
++                for (const el of o.engagedOn?.() ?? []) el?.toggleAttribute("data-engaged", held);
++            },
++            { flush: "post" },
++        );
++    }
++
++    // ── the press ──────────────────────────────────────────────────────────────
++    if (o.press) {
++        const el = shallowRef<HTMLElement | null>(null);
++        const p = useLiquidPress({ el, squish: false });
++        watch(
++            () => p.pressStyle.value,
++            (s) => {
++                const h = el.value;
++                if (!h) return;
++                const rec = s as Record<string, string | undefined>;
++                h.style.setProperty("--press-t", rec["--press-t"] ?? "0");
++                // under reduce the press keeps its light and drops its geometry
++                h.style.scale = !reduced() && rec.scale ? rec.scale : "";
++            },
++            { flush: "sync" },
++        );
++        const isKey = (e: Event) => ["Enter", " "].includes((e as KeyboardEvent).key);
++        const press = (down: boolean) => {
++            state.value = down ? "press" : isHeld.value ? "held" : "rest";
++            el.value?.toggleAttribute("data-press", down);
++        };
++        const on: [string, (e: Event) => void][] = [
++            ["pointerdown", (e) => { p.handlers.onPointerdown(e as PointerEvent); press(true); }],
++            ["pointerup", () => { p.handlers.onPointerup(); press(false); }],
++            ["pointercancel", () => { p.handlers.onPointercancel(); press(false); }],
++            ["pointerleave", () => { p.handlers.onPointerleave(); press(false); }],
++            ["keydown", (e) => { p.handlers.onKeydown(e as KeyboardEvent); if (isKey(e)) press(true); }],
++            ["keyup", (e) => { p.handlers.onKeyup(e as KeyboardEvent); if (isKey(e)) press(false); }],
++            ["blur", () => { p.handlers.onBlur(); press(false); }],
++        ];
++        onMounted(() => {
++            el.value = host();
++            el.value?.setAttribute("data-press-armed", "");
++            for (const [n, f] of on) el.value?.addEventListener(n, f);
++        });
++        onBeforeUnmount(() => {
++            for (const [n, f] of on) el.value?.removeEventListener(n, f);
++        });
++    }
++
++    // ── the velocity, and the release that carries it ───────────────────────────
++    if (o.drag) {
++        const d = o.drag;
++        useDragVelocity({
++            host: () => (d.enabled?.() === false ? null : host()),
++            mirror: d.mirror,
++            axis: d.axis,
++            onRelease: (v) => {
++                const body = d.body();
++                if (body) carry(body, d.axis(), v);
++            },
++        });
++    }
++
++    // ── the commit edge, from the model ─────────────────────────────────────────
++    if (o.commit) {
++        let ready = false;
++        const fire = () => {
++            const h = host();
++            if (ready && h) fireCommit(h);
++        };
++        if (o.commit === true) {
++            let mo: MutationObserver | null = null;
++            onMounted(() => {
++                const h = host();
++                if (!h) return;
++                mo = new MutationObserver((rs) => {
++                    if (rs.some((r) => r.oldValue !== h.getAttribute("data-state"))) fire();
++                });
++                mo.observe(h, { attributes: true, attributeFilter: ["data-state"], attributeOldValue: true });
++                // a model that lands before the first paint is the mount, not a commit
++                requestAnimationFrame(() => (ready = true));
++            });
++            onBeforeUnmount(() => mo?.disconnect());
++        } else {
++            const model = o.commit;
++            onMounted(() => requestAnimationFrame(() => (ready = true)));
++            watch(() => toValue(model), fire, { flush: "post" });
++        }
++    }
++
++    return { state, isHeld };
++}

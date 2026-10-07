@@ -1,0 +1,298 @@
+### rb chromium e7-one-writer.mjs  12:14  up 1 day,  2:20, 2 users, load averages: 166.69 156.39 145.86
+# E-7 · one writer of data-engaged, meaning held
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine chromium · lock wait 0.0 s · other headless processes: chromium 19, webkit 4 · load 166.7/156.4/145.9 at start
+# chromium 149.0.7827.55
+  PASS       E-7 writers (static) · 1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/wt · load 166.7/156.4/145.9
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 2 · bound ≥ 1 · load 166.7/156.4/145.9
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 2 · bound ≥ 1 · load 166.7/156.4/145.9
+  PASS       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0 · load 162.1/155.6/145.6
+E-7 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 166.7/156.4/145.9 at start, 162.1/155.6/145.6 at end
+### exit 0 12:14  up 1 day,  2:20, 2 users, load averages: 162.07 155.60 145.64
+### rb chromium e2-commit.mjs --scenes switch,accordion 12:14  up 1 day,  2:20, 2 users, load averages: 162.07 155.60 145.64
+# E-2 · the commit bar, generalized
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine chromium · lock wait 0.0 s · other headless processes: chromium 19, webkit 4 · load 162.1/155.6/145.6 at start
+# chromium 149.0.7827.55
+# narrowed to scenes switch, accordion
+  PASS       E-2 switch Tab-entry light · scale range 0.000 body moved 0.00 px · focus on switch · load 162.1/155.6/145.6
+  PASS       E-2 switch commit·keyboard(Space) light · peak 1.080 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.15 px · 97 frames, median 8.3 ms · load 162.1/155.6/145.6
+  PASS       E-2 switch commit·programmatic light · peak 1.080 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.15 px · 97 frames, median 8.3 ms · load 158.8/155.0/145.5
+  PASS       E-2 switch commit·pointer light · peak 1.071 trough 0.997 settle 1.000 · body travel 19.60 px overshoot 0.15 px · 97 frames, median 8.4 ms · load 158.8/155.0/145.5
+  PASS       E-2 switch commit·tap(coarse) light · peak 1.051 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.04 px · 97 frames, median 8.4 ms · load 158.8/155.0/145.5
+  PASS       E-2 switch mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 97 of 97 frames with the target present · load 158.8/155.0/145.5
+  PASS       E-2 switch Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on switch · load 152.1/153.7/145.1
+  PASS       E-2 switch commit·keyboard(Space) dark · peak 1.080 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.15 px · 97 frames, median 8.3 ms · load 152.1/153.7/145.1
+  PASS       E-2 switch commit·programmatic dark · peak 1.080 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.16 px · 97 frames, median 8.3 ms · load 152.1/153.7/145.1
+  PASS       E-2 switch commit·pointer dark · peak 1.071 trough 0.997 settle 1.000 · body travel 19.60 px overshoot 0.15 px · 97 frames, median 8.3 ms · load 152.1/153.7/145.1
+  PASS       E-2 switch commit·tap(coarse) dark · peak 1.051 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.03 px · 97 frames, median 8.3 ms · load 148.9/153.0/144.9
+  PASS       E-2 switch mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 97 of 97 frames with the target present · load 148.9/153.0/144.9
+  PASS       E-2 accordion Tab-entry light · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 148.9/153.0/144.9
+  PASS       E-2 accordion commit·keyboard(Enter) light · peak 1.080 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 148.9/153.0/144.9
+  PASS       E-2 accordion commit·programmatic light · peak 1.080 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 148.9/153.0/144.9
+  PASS       E-2 accordion commit·pointer light · peak 1.074 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 142.1/151.5/144.4
+  PASS       E-2 accordion commit·tap(coarse) light · peak 1.080 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 142.1/151.5/144.4
+  PASS       E-2 accordion mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 97 of 97 frames with the target present · load 142.1/151.5/144.4
+  PASS       E-2 accordion Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 137.6/150.4/144.1
+  PASS       E-2 accordion commit·keyboard(Enter) dark · peak 1.075 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 137.6/150.4/144.1
+  PASS       E-2 accordion commit·programmatic dark · peak 1.080 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 137.6/150.4/144.1
+  PASS       E-2 accordion commit·pointer dark · peak 1.074 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 137.6/150.4/144.1
+  PASS       E-2 accordion commit·tap(coarse) dark · peak 1.080 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 137.6/150.4/144.1
+  PASS       E-2 accordion mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 97 of 97 frames with the target present · load 133.0/149.3/143.7
+E-2 chromium PASS · 24 pass, 0 fail, 0 unmeasured of 24 gating cells (0 reported) · load 162.1/155.6/145.6 at start, 133.0/149.3/143.7 at end
+### exit 0 12:14  up 1 day,  2:21, 2 users, load averages: 132.96 149.27 143.70
+### head chromium e2-commit.mjs --scenes switch,accordion --themes light 12:14  up 1 day,  2:21, 2 users, load averages: 132.96 149.27 143.70
+# E-2 · the commit bar, generalized
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/head · engine chromium · lock wait 0.0 s · other headless processes: chromium 14, webkit 4 · load 133.0/149.3/143.7 at start
+# chromium 149.0.7827.55
+# narrowed to scenes switch, accordion
+  PASS       E-2 switch Tab-entry light · scale range 0.000 body moved 0.00 px · focus on switch · load 133.0/149.3/143.7
+  FAIL       E-2 switch commit·keyboard(Space) light · peak 1.000 trough 1.000 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 133.0/149.3/143.7
+  FAIL       E-2 switch commit·programmatic light · peak 1.000 trough 1.000 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 128.2/148.0/143.3
+  FAIL       E-2 switch commit·pointer light · peak 1.000 trough 1.000 settle 1.000 · body travel 19.60 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 128.2/148.0/143.3
+  FAIL       E-2 switch commit·tap(coarse) light · peak 1.000 trough 0.960 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 96 frames, median 8.4 ms · load 128.2/148.0/143.3
+  PASS       E-2 switch mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 97 of 97 frames with the target present · load 128.2/148.0/143.3
+  PASS       E-2 accordion Tab-entry light · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 123.7/146.7/142.9
+  FAIL       E-2 accordion commit·keyboard(Enter) light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 123.7/146.7/142.9
+  FAIL       E-2 accordion commit·programmatic light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 123.7/146.7/142.9
+  FAIL       E-2 accordion commit·pointer light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 96 frames, median 8.3 ms · load 123.7/146.7/142.9
+  FAIL       E-2 accordion commit·tap(coarse) light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 119.3/145.5/142.4
+  PASS       E-2 accordion mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 97 of 97 frames with the target present · load 119.3/145.5/142.4
+E-2 chromium FAIL · 4 pass, 8 fail, 0 unmeasured of 12 gating cells (0 reported) · load 133.0/149.3/143.7 at start, 119.3/145.5/142.4 at end
+### exit 1 12:15  up 1 day,  2:21, 2 users, load averages: 119.28 145.45 142.43
+### rb chromium e4-momentum.mjs --scenes slider,sortable 12:15  up 1 day,  2:21, 2 users, load averages: 119.28 145.45 142.43
+# E-4 · momentum: a release carries its velocity into the settle
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine chromium · lock wait 0.0 s · other headless processes: chromium 23, webkit 2 · load 119.3/145.5/142.4 at start
+# chromium 149.0.7827.55
+# narrowed to scenes slider, sortable
+  PASS       E-4 slider fling carries velocity · axis x · fling: carry 13.15 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 13.15 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 6.3 px, still 0.0 px · 239 frames, median 8.4 ms · load 117.8/144.7/142.2
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 114.5/143.6/141.8
+  FAIL       E-4 sortable fling carries velocity · axis y · fling: carry 19.08 px, settles -36.69 px past release · still: carry 34.89 px, settles -36.69 px · difference: carry -15.81 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 72.5 px, still 26.3 px · 241 frames, median 8.3 ms · load 110.1/142.2/141.3
+  PASS       E-4 sortable release PRM · reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.5 px · load 110.1/142.2/141.3
+E-4 chromium FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (0 reported) · load 119.3/145.5/142.4 at start, 110.1/142.2/141.3 at end
+### exit 1 12:15  up 1 day,  2:21, 2 users, load averages: 110.10 142.18 141.32
+### head chromium e4-momentum.mjs --scenes slider 12:15  up 1 day,  2:21, 2 users, load averages: 110.10 142.18 141.32
+# E-4 · momentum: a release carries its velocity into the settle
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/head · engine chromium · lock wait 0.0 s · other headless processes: chromium 17, webkit 4 · load 107.2/141.1/140.9 at start
+# chromium 149.0.7827.55
+# narrowed to scenes slider
+  FAIL       E-4 slider fling carries velocity · axis x · fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 238 frames, median 8.4 ms · load 102.3/139.5/140.4
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 100.8/138.5/140.0
+E-4 chromium FAIL · 1 pass, 1 fail, 0 unmeasured of 2 gating cells (0 reported) · load 107.2/141.1/140.9 at start, 100.8/138.5/140.0 at end
+### exit 1 12:15  up 1 day,  2:21, 2 users, load averages: 100.76 138.53 140.03
+### rb chromium e5-touch.mjs --scenes accordion,press_switch 12:15  up 1 day,  2:21, 2 users, load averages: 100.76 138.53 140.03
+# E-5 · a held touch answers through a press rung
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine chromium · lock wait 0.0 s · other headless processes: chromium 15, webkit 4 · load 100.8/138.5/140.0 at start
+# chromium 149.0.7827.55
+# narrowed to scenes accordion, press_switch
+  PASS       E-5 accordion press light · :active true · Δscale -0.030 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 101.3/138.0/139.8
+  FAIL       E-5 accordion press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 101.3/138.0/139.8
+  PASS       E-5 accordion press dark · :active true · Δscale -0.030 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 100.0/137.1/139.5
+  FAIL       E-5 accordion press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 100.0/137.1/139.5
+  PASS       E-5 press_switch press light · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 98.5/136.2/139.2
+  PASS       E-5 press_switch press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 98.5/136.2/139.2
+  PASS       E-5 press_switch press dark · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 97.5/135.4/138.9
+  PASS       E-5 press_switch press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 97.5/135.4/138.9
+E-5 chromium FAIL · 6 pass, 2 fail, 0 unmeasured of 8 gating cells (0 reported) · load 100.8/138.5/140.0 at start, 97.5/135.4/138.9 at end
+### exit 1 12:16  up 1 day,  2:22, 2 users, load averages: 97.51 135.38 138.87
+### rb chromium e9-prm.mjs --scenes switch,accordion,slider 12:16  up 1 day,  2:22, 2 users, load averages: 97.51 135.38 138.87
+# E-9 · the PRM arm
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine chromium · lock wait 0.0 s · other headless processes: chromium 18, webkit 6 · load 97.5/135.4/138.9 at start
+# chromium 149.0.7827.55
+# narrowed to scenes switch, accordion, slider
+  PASS       E-9 switch press-spatial light · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 95.6/134.4/138.5
+  PASS       E-9 switch press-light light · press-only paint changes [child0 bg] (bound ≥ 1) · load 95.6/134.4/138.5
+  PASS       E-9 switch commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 95.6/134.4/138.5
+  PASS       E-9 switch press-spatial dark · scale range while pressed 0.000 over 38 frames (bound < 0.002) · load 95.6/134.4/138.5
+  PASS       E-9 switch press-light dark · press-only paint changes [child0 bg] (bound ≥ 1) · load 95.6/134.4/138.5
+  PASS       E-9 switch commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 74 frames · load 95.6/134.4/138.5
+  PASS       E-9 accordion press-spatial light · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 92.8/133.1/138.0
+  FAIL       E-9 accordion press-light light · press-only paint changes [] (bound ≥ 1) · load 92.8/133.1/138.0
+  PASS       E-9 accordion commit-spatial light · commit(Enter): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 74 frames · load 92.8/133.1/138.0
+  PASS       E-9 accordion press-spatial dark · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 92.1/132.3/137.7
+  FAIL       E-9 accordion press-light dark · press-only paint changes [] (bound ≥ 1) · load 92.1/132.3/137.7
+  PASS       E-9 accordion commit-spatial dark · commit(Enter): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 74 frames · load 92.1/132.3/137.7
+  PASS       E-9 slider press-spatial light · scale range while pressed 0.000 over 36 frames (bound < 0.002) · load 92.1/132.3/137.7
+  PASS       E-9 slider press-light light · press-only paint changes [child1 bg] (bound ≥ 1) · load 92.1/132.3/137.7
+  PASS       E-9 slider commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 92.1/132.3/137.7
+  PASS       E-9 slider press-spatial dark · scale range while pressed 0.000 over 36 frames (bound < 0.002) · load 94.9/132.2/137.6
+  PASS       E-9 slider press-light dark · press-only paint changes [child1 bg] (bound ≥ 1) · load 94.9/132.2/137.6
+  PASS       E-9 slider commit-spatial dark · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 94.9/132.2/137.6
+E-9 chromium FAIL · 16 pass, 2 fail, 0 unmeasured of 18 gating cells (0 reported) · load 97.5/135.4/138.9 at start, 94.9/132.2/137.6 at end
+### exit 1 12:16  up 1 day,  2:22, 2 users, load averages: 94.87 132.22 137.65
+### rb chromium e8-clock.mjs --scenes switch,accordion 12:16  up 1 day,  2:22, 2 users, load averages: 94.87 132.22 137.65
+# E-8 · one clock authority; no rung literal
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine chromium · lock wait 0.0 s · other headless processes: chromium 14, webkit 8 · load 94.9/132.2/137.6 at start
+# chromium 149.0.7827.55
+# narrowed to scenes switch, accordion
+  PASS       E-8 mirror · 4 rows, 8 --engage-* tokens on :root · drift [] · orphans [] · load 94.9/132.2/137.6
+  PASS       E-8 literal switch · 20 animation(s) ran [background-color@200ms, scale@120ms, border-bottom-color@200ms, border-left-color@200ms, border-right-color@200ms, border-top-color@200ms, translate@210ms, script@450ms, outline-color@200ms] against 54 clock tokens · minted [] · load 94.9/132.2/137.6
+  PASS       E-8 literal switch PRM · 0 animation(s) ran [] against 0 clock tokens · minted [] · load 91.7/130.9/137.2
+  PASS       E-8 literal accordion · 11 animation(s) ran [background-color@120ms, rotate@200ms, disclosure-open@200ms, script@450ms, box-shadow@120ms, disclosure-close@200ms] against 54 clock tokens · minted [] · load 91.7/130.9/137.2
+  PASS       E-8 literal accordion PRM · 2 animation(s) ran [disclosure-open@0ms, disclosure-close@0ms] against 0 clock tokens · minted [] · load 90.8/130.1/136.8
+E-8 chromium PASS · 5 pass, 0 fail, 0 unmeasured of 5 gating cells (0 reported) · load 94.9/132.2/137.6 at start, 90.8/130.1/136.8 at end
+### exit 0 12:16  up 1 day,  2:22, 2 users, load averages: 90.82 130.11 136.83
+### rb chromium e3-slider.mjs  12:16  up 1 day,  2:22, 2 users, load averages: 90.82 130.11 136.83
+# E-3 · the slider exemplar (T1 GROW) and its phone arm
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine chromium · lock wait 0.0 s · other headless processes: chromium 19, webkit 4 · load 90.8/130.1/136.8 at start
+# chromium 149.0.7827.55
+  FAIL       E-3 slider desk pointer-held light · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 90.8/130.1/136.8
+  FAIL       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 90.8/130.1/136.8
+  FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 90.1/129.3/136.5
+  PASS       E-3 slider phone gutter light · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 90.1/129.3/136.5
+  PASS       E-3 slider keyboard-focused PRM light · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 90.1/129.3/136.5
+  PASS       E-3 slider phone touch-held PRM light · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 90.1/129.3/136.5
+  FAIL       E-3 slider desk pointer-held dark · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 92.4/129.1/136.4
+  FAIL       E-3 slider desk keyboard-focused dark · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 92.4/129.1/136.4
+  FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 92.4/129.1/136.4
+  PASS       E-3 slider phone gutter dark · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 92.4/129.1/136.4
+  PASS       E-3 slider keyboard-focused PRM dark · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 92.4/129.1/136.4
+  PASS       E-3 slider phone touch-held PRM dark · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 92.4/129.1/136.4
+E-3 chromium FAIL · 6 pass, 6 fail, 0 unmeasured of 12 gating cells (0 reported) · load 90.8/130.1/136.8 at start, 92.4/129.1/136.4 at end
+### exit 1 12:16  up 1 day,  2:22, 2 users, load averages: 92.43 129.14 136.41
+### rb webkit e7-one-writer.mjs  12:16  up 1 day,  2:22, 2 users, load averages: 92.43 129.14 136.41
+# E-7 · one writer of data-engaged, meaning held
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine webkit · lock wait 0.0 s · other headless processes: chromium 17, webkit 6 · load 92.2/128.5/136.1 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  PASS       E-7 writers (static) · 1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/wt · load 92.2/128.5/136.1
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 2 · bound ≥ 1 · load 92.2/128.5/136.1
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 2 · bound ≥ 1 · load 92.2/128.5/136.1
+  PASS       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0 · load 90.7/127.6/135.8
+E-7 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 92.2/128.5/136.1 at start, 90.7/127.6/135.8 at end
+### exit 0 12:16  up 1 day,  2:23, 2 users, load averages: 90.69 127.57 135.77
+### rb webkit e2-commit.mjs --scenes switch,accordion 12:16  up 1 day,  2:23, 2 users, load averages: 90.69 127.57 135.77
+# E-2 · the commit bar, generalized
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine webkit · lock wait 0.0 s · other headless processes: chromium 20, webkit 4 · load 90.7/127.6/135.8 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes switch, accordion
+  PASS       E-2 switch Tab-entry light · scale range 0.000 body moved 0.00 px · focus on switch · load 90.7/127.6/135.8
+  PASS       E-2 switch commit·keyboard(Space) light · peak 1.079 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.16 px · 80 frames, median 10.0 ms · load 90.7/127.6/135.8
+  PASS       E-2 switch commit·programmatic light · peak 1.079 trough 0.997 settle 1.000 · body travel 19.97 px overshoot 0.18 px · 79 frames, median 10.0 ms · load 87.3/126.2/135.3
+  PASS       E-2 switch commit·pointer light · peak 1.071 trough 0.997 settle 1.000 · body travel 19.60 px overshoot 0.16 px · 79 frames, median 10.0 ms · load 87.3/126.2/135.3
+  PASS       E-2 switch commit·tap(coarse) light · peak 1.080 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.14 px · 79 frames, median 10.0 ms · load 87.3/126.2/135.3
+  PASS       E-2 switch mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 79 of 79 frames with the target present · load 91.1/126.4/135.3
+  PASS       E-2 switch Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on switch · load 91.1/126.4/135.3
+  PASS       E-2 switch commit·keyboard(Space) dark · peak 1.079 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.17 px · 80 frames, median 10.0 ms · load 91.1/126.4/135.3
+  PASS       E-2 switch commit·programmatic dark · peak 1.079 trough 0.997 settle 1.000 · body travel 20.01 px overshoot 0.16 px · 80 frames, median 10.0 ms · load 91.1/126.4/135.3
+  PASS       E-2 switch commit·pointer dark · peak 1.071 trough 0.997 settle 1.000 · body travel 19.60 px overshoot 0.17 px · 79 frames, median 10.0 ms · load 89.1/125.4/134.8
+  PASS       E-2 switch commit·tap(coarse) dark · peak 1.079 trough 0.997 settle 1.000 · body travel 20.02 px overshoot 0.16 px · 80 frames, median 10.0 ms · load 89.1/125.4/134.8
+  PASS       E-2 switch mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 79 of 79 frames with the target present · load 89.1/125.4/134.8
+node:internal/process/promises:332
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.evaluate: Target page, context or browser has been closed
+    at sample (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e2-commit.mjs:24:42)
+    at /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e2-commit.mjs:43:23
+    at async reread (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e2-commit.mjs:26:13)
+    at async once (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/lib.mjs:209:18)
+    at async guard (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/lib.mjs:212:20)
+    at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e2-commit.mjs:37:18
+    at async witness (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/lib.mjs:226:5)
+    at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e2-commit.mjs:20:1 {
+  log: []
+}
+
+Node.js v26.0.0
+### exit 1 12:17  up 1 day,  2:23, 2 users, load averages: 89.09 125.39 134.84
+### head webkit e2-commit.mjs --scenes switch,accordion --themes light 12:17  up 1 day,  2:23, 2 users, load averages: 89.09 125.39 134.84
+# E-2 · the commit bar, generalized
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/head · engine webkit · lock wait 0.0 s · other headless processes: chromium 18, webkit 4 · load 89.1/125.4/134.8 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes switch, accordion
+  PASS       E-2 switch Tab-entry light · scale range 0.000 body moved 0.00 px · focus on switch · load 87.2/124.4/134.4
+  FAIL       E-2 switch commit·keyboard(Space) light · peak 1.000 trough 1.000 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 80 frames, median 10.0 ms · load 87.2/124.4/134.4
+  FAIL       E-2 switch commit·programmatic light · peak 1.000 trough 1.000 settle 1.000 · body travel 19.74 px overshoot 0.00 px · 79 frames, median 10.0 ms · load 87.2/124.4/134.4
+  FAIL       E-2 switch commit·pointer light · peak 1.000 trough 1.000 settle 1.000 · body travel 19.60 px overshoot 0.00 px · 79 frames, median 10.0 ms · load 85.5/123.4/134.0
+  FAIL       E-2 switch commit·tap(coarse) light · peak 1.000 trough 1.000 settle 1.000 · body travel 19.95 px overshoot 0.00 px · 79 frames, median 10.0 ms · load 85.5/123.4/134.0
+  PASS       E-2 switch mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 80 of 80 frames with the target present · load 85.5/123.4/134.0
+  PASS       E-2 accordion Tab-entry light · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 83.0/122.3/133.6
+  FAIL       E-2 accordion commit·keyboard(Enter) light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 80 frames, median 10.0 ms · load 83.0/122.3/133.6
+  FAIL       E-2 accordion commit·programmatic light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 79 frames, median 10.0 ms · load 83.0/122.3/133.6
+  FAIL       E-2 accordion commit·pointer light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 45 s; then CELL TIMEOUT 45 s) · load 46.4/99.4/123.6
+  FAIL       E-2 accordion commit·tap(coarse) light · ENGINE CLOSED, REPRODUCED 2/2 (page.evaluate: Target page, context or browser has been closed; then page.evaluate: Target page, context or browser has been closed) · load 46.4/99.4/123.6
+  PASS       E-2 accordion mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 78 of 78 frames with the target present · load 47.7/98.8/123.2
+E-2 webkit FAIL · 4 pass, 8 fail, 0 unmeasured of 12 gating cells (0 reported) · load 89.1/125.4/134.8 at start, 47.7/98.8/123.2 at end
+### exit 1 12:18  up 1 day,  2:25, 2 users, load averages: 47.66 98.82 123.24
+### rb webkit e4-momentum.mjs --scenes slider,sortable 12:18  up 1 day,  2:25, 2 users, load averages: 47.66 98.82 123.24
+# E-4 · momentum: a release carries its velocity into the settle
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine webkit · lock wait 0.0 s · other headless processes: chromium 19, webkit 4 · load 47.7/98.8/123.2 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes slider, sortable
+  PASS       E-4 slider fling carries velocity · axis x · fling: carry 14.62 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 14.62 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 6.3 px, still 0.0 px · 197 frames, median 10.0 ms · load 47.5/97.9/122.8
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 47.2/97.0/122.3
+  FAIL       E-4 sortable fling carries velocity · axis y · fling: carry 31.90 px, settles -36.69 px past release · still: carry 48.06 px, settles -36.69 px · difference: carry -16.16 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 79.4 px, still 34.8 px · 197 frames, median 10.0 ms · load 48.3/96.4/122.0
+  PASS       E-4 sortable release PRM · reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.5 px · load 46.5/95.3/121.4
+E-4 webkit FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (0 reported) · load 47.7/98.8/123.2 at start, 46.5/95.3/121.4 at end
+### exit 1 12:19  up 1 day,  2:25, 2 users, load averages: 46.50 95.27 121.39
+### head webkit e4-momentum.mjs --scenes slider 12:19  up 1 day,  2:25, 2 users, load averages: 46.50 95.27 121.39
+# E-4 · momentum: a release carries its velocity into the settle
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/head · engine webkit · lock wait 0.0 s · other headless processes: chromium 11, webkit 4 · load 46.5/95.3/121.4 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes slider
+  FAIL       E-4 slider fling carries velocity · axis x · fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 197 frames, median 10.0 ms · load 46.4/94.4/120.9
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 45.6/93.5/120.5
+E-4 webkit FAIL · 1 pass, 1 fail, 0 unmeasured of 2 gating cells (0 reported) · load 46.5/95.3/121.4 at start, 45.6/93.5/120.5 at end
+### exit 1 12:19  up 1 day,  2:25, 2 users, load averages: 45.63 93.48 120.45
+### rb webkit e5-touch.mjs --scenes accordion,press_switch 12:19  up 1 day,  2:25, 2 users, load averages: 45.63 93.48 120.45
+# E-5 · a held touch answers through a press rung
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine webkit · lock wait 0.0 s · other headless processes: chromium 15, webkit 4 · load 45.6/93.5/120.5 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes accordion, press_switch
+  FAIL       E-5 accordion press light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 45.8/76.8/108.6
+  FAIL       E-5 accordion press dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 27.6/56.1/94.0
+  PASS       E-5 press_switch press light · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 29.9/55.7/93.4
+  PASS       E-5 press_switch press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 29.9/55.7/93.4
+  PASS       E-5 press_switch press dark · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 28.2/54.9/92.9
+  PASS       E-5 press_switch press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 28.2/54.9/92.9
+E-5 webkit FAIL · 4 pass, 2 fail, 0 unmeasured of 6 gating cells (0 reported) · load 45.6/93.5/120.5 at start, 28.2/54.9/92.9 at end
+### exit 1 12:25  up 1 day,  2:31, 2 users, load averages: 28.23 54.93 92.90
+### rb webkit e9-prm.mjs --scenes switch,accordion,slider 12:25  up 1 day,  2:31, 2 users, load averages: 28.23 54.93 92.90
+# E-9 · the PRM arm
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine webkit · lock wait 0.0 s · other headless processes: chromium 11, webkit 8 · load 27.4/54.3/92.5 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes switch, accordion, slider
+  PASS       E-9 switch press-spatial light · scale range while pressed 0.000 over 31 frames (bound < 0.002) · load 27.4/54.3/92.5
+  PASS       E-9 switch press-light light · press-only paint changes [child0 bg] (bound ≥ 1) · load 27.4/54.3/92.5
+  PASS       E-9 switch commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 60 frames · load 27.4/54.3/92.5
+  PASS       E-9 switch press-spatial dark · scale range while pressed 0.000 over 31 frames (bound < 0.002) · load 26.6/53.7/92.0
+  PASS       E-9 switch press-light dark · press-only paint changes [child0 bg] (bound ≥ 1) · load 26.6/53.7/92.0
+  PASS       E-9 switch commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 60 frames · load 26.6/53.7/92.0
+  FAIL       E-9 accordion press-spatial light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 55.3/54.7/87.3
+  FAIL       E-9 accordion press-spatial dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 74.8/63.6/86.6
+  PASS       E-9 slider press-spatial light · scale range while pressed 0.000 over 28 frames (bound < 0.002) · load 72.8/63.3/86.4
+  PASS       E-9 slider press-light light · press-only paint changes [child1 bg] (bound ≥ 1) · load 72.8/63.3/86.4
+  PASS       E-9 slider commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 3.59 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 54 frames · load 72.8/63.3/86.4
+  PASS       E-9 slider press-spatial dark · scale range while pressed 0.000 over 31 frames (bound < 0.002) · load 81.2/65.2/86.9
+  PASS       E-9 slider press-light dark · press-only paint changes [child1 bg] (bound ≥ 1) · load 81.2/65.2/86.9
+  PASS       E-9 slider commit-spatial dark · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 56 frames · load 81.2/65.2/86.9
+E-9 webkit FAIL · 12 pass, 2 fail, 0 unmeasured of 14 gating cells (0 reported) · load 27.4/54.3/92.5 at start, 81.2/65.2/86.9 at end
+### exit 1 12:30  up 1 day,  2:36, 2 users, load averages: 81.21 65.25 86.93
+### rb webkit e8-clock.mjs --scenes switch,accordion 12:30  up 1 day,  2:36, 2 users, load averages: 81.21 65.25 86.93
+# E-8 · one clock authority; no rung literal
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine webkit · lock wait 0.0 s · other headless processes: chromium 48, webkit 4 · load 81.2/65.2/86.9 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes switch, accordion
+  PASS       E-8 mirror · 4 rows, 8 --engage-* tokens on :root · drift [] · orphans [] · load 91.8/68.1/87.7
+  PASS       E-8 literal switch · 20 animation(s) ran [background-color@200ms, scale@120ms, border-bottom-color@200ms, border-left-color@200ms, border-right-color@200ms, border-top-color@200ms, translate@210ms, script@450ms, outline-color@200ms] against 54 clock tokens · minted [] · load 91.8/68.1/87.7
+  PASS       E-8 literal switch PRM · 0 animation(s) ran [] against 0 clock tokens · minted [] · load 91.8/68.1/87.7
+  FAIL       E-8 literal accordion · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 96.9/73.9/87.2
+  FAIL       E-8 literal accordion PRM · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 153.2/101.6/96.4
+E-8 webkit FAIL · 3 pass, 2 fail, 0 unmeasured of 5 gating cells (0 reported) · load 81.2/65.2/86.9 at start, 153.2/101.6/96.4 at end
+### exit 1 12:34  up 1 day,  2:40, 2 users, load averages: 153.17 101.58 96.36
+### rb webkit e3-slider.mjs  12:34  up 1 day,  2:40, 2 users, load averages: 153.17 101.58 96.36
+# E-3 · the slider exemplar (T1 GROW) and its phone arm
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rB/out/builds/rb · engine webkit · lock wait 0.0 s · other headless processes: chromium 43, webkit 0 · load 150.0/101.8/96.5 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       E-3 slider desk pointer-held light · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 143.1/101.1/96.3
+  FAIL       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 143.1/101.1/96.3
+  FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 138.6/100.9/96.2
+  PASS       E-3 slider phone gutter light · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 138.6/100.9/96.2
+  PASS       E-3 slider keyboard-focused PRM light · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 138.6/100.9/96.2
+  PASS       E-3 slider phone touch-held PRM light · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 133.8/100.5/96.1
+  FAIL       E-3 slider desk pointer-held dark · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 133.8/100.5/96.1
+  FAIL       E-3 slider desk keyboard-focused dark · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 133.8/100.5/96.1
+  FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 131.7/100.6/96.2
+  PASS       E-3 slider phone gutter dark · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 131.7/100.6/96.2
+  PASS       E-3 slider keyboard-focused PRM dark · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 131.7/100.6/96.2
+  PASS       E-3 slider phone touch-held PRM dark · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 127.3/100.3/96.1
+E-3 webkit FAIL · 6 pass, 6 fail, 0 unmeasured of 12 gating cells (0 reported) · load 150.0/101.8/96.5 at start, 127.3/100.3/96.1 at end
+### exit 1 12:34  up 1 day,  2:40, 2 users, load averages: 127.29 100.26 96.06
