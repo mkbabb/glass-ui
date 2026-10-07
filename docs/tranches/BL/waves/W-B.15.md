@@ -39,7 +39,7 @@ R3-01-16 measured the only library smoothing loop: `useScrollScene`'s `scrubToDa
 |---|---|---|---|
 | ~~B15-G1~~ | struck (fix-3, FB-05): it grepped a loop document for a word. R56's gate is its receiver's, W-I.1 G26 | — | — |
 | B15-G2 · the owner has ruled R11 | `! grep -qE '^\\| OW-9b \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (OW-9b `pending`; fix-2) |
-| B15-G3 · the page scroller stays native (a guard on the RETIRE, not a born-RED) | `! git grep -nE "addEventListener\\(['\"](wheel\|touchmove)['\"]" -- src \| grep -v 'passive: true'` | exit 0 | exit 0 at HEAD: the one wheel listener is passive (`composables/sidebar/useSidebarFollow.ts:191`). No defect is live, so this is the RETIRE's regression line; it can fail: appending a non-passive `wheel` listener to any `src` file makes it exit 1. It enters W-A.2's roster with that plant as its bite |
+| B15-G3 · the page scroller stays native (a guard on the RETIRE, not a born-RED) | `! git grep -nE "addEventListener\\(['\"](wheel\|touchmove)['\"]" -- src \| grep -v 'passive: true'` | exit 0 | hold line: exit 0 at HEAD; the one wheel listener is passive (`composables/sidebar/useSidebarFollow.ts:191`). No defect is live, so this is the RETIRE's regression line; it can fail: appending a non-passive `wheel` listener to any `src` file makes it exit 1. It enters W-A.2's roster with that plant as its bite |
 
 ## 6 · π and DELTA obligations
 

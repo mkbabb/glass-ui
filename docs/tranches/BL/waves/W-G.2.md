@@ -58,7 +58,7 @@ Probe `g2-loss.mjs` (appendix B), `/substrates/blob`: the page calls `destroy()`
 | G2-G1 · the route cycle holds flat | appendix A, 4 cycles: nodes after GC at cycle 4 ≤ cycle 1 × 1.05 | ≤ 5 % | **9,541 vs 3,214** (+2,109 per cycle) |
 | G2-G2 · one subscription per device | appendix A: reads of `GPUDevice.prototype.lost` equal the devices requested | equal | **18 reads, 1 device** |
 | G2-G3 · a page-forced destroy re-arms | appendix B: after `destroy()`, a second device is requested and submits/s > 0 within 3 s | both | **FAIL**: 1 device, 0 submits/s |
-| G2-G4 · the library never destroys the shared device | `test -z "$(git grep -nE '(device\|dev\|shared\w*)\.destroy\(' -- src/composables/glass/webgpu \| grep -vE '^[^:]+:[0-9]+:\s*(//\|\*)')"` (code lines only) | exit 0 | exit 0 at HEAD: the one hit is the comment at `useWebGPUCanvas.ts:500`. A guard on step 3's premise, not a born-RED; its bite is a planted `device.destroy()` in `dispose` |
+| G2-G4 · the library never destroys the shared device | `test -z "$(git grep -nE '(device\|dev\|shared\w*)\.destroy\(' -- src/composables/glass/webgpu \| grep -vE '^[^:]+:[0-9]+:\s*(//\|\*)')"` (code lines only) | exit 0 | hold line: exit 0 at HEAD; the one hit is the comment at `useWebGPUCanvas.ts:500`. A guard on step 3's premise, not a born-RED; its bite is a planted `device.destroy()` in `dispose` |
 | G2-G5 · the unit fan-out | `npx vitest run tests/composables/glass/webgpu/device-loss.test.ts` | exit 0 | **exit 1** (the file does not exist; `onDeviceLoss` has 0 hits in `src`) |
 
 Planted bite: restore a per-arm `dev.lost.then` in `useWebGPUCanvas.ts` → G2-G1 and G2-G2 fail. Restore the `"destroyed"` early return → G2-G3 fails.

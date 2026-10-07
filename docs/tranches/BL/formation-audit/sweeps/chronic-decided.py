@@ -14,6 +14,11 @@ This lists every instance of the class it can read:
   SHARED       a DISEASE row whose rationale says the deciding wave is shared
   NO-HOME      a BUILD or FOLD row marked DISEASE whose wave has no spec, or whose spec names neither the row nor
                the id its source cites
+  L04-ROW      a row of L04's master ledger (`audit/round-1/L04.md`, "Master ledger", every carried item traced, keyed
+               by number) that MAP below does not trace to a LEDGER row, whose traced id is not a LEDGER row with a
+               terminal, whose item no traced row or its wave's spec names (an id named for a different item does
+               not decide this one), or, for a row marked **D** (rode two or more closes), whose traced rows all lack
+               a wave (a disease row is decided by a wave, CHARTER.md:23)
   CONDITIONAL  a spec sentence "if W-x cures K" where W-x's spec does not name K (a cure hung on a wave that
                does not carry it)
 
@@ -28,6 +33,25 @@ from plan_dag import BL, WAVES, spec_ids
 FIND = re.compile(r"\| ((?:L\d\d[ab]?-F?\d+[a-z]?)|(?:R\d+-\d+-\d+)) \|")
 CHRONIC = re.compile(r"DEFERRED|deferred at|silent drop|dropped from|re-book|rebook|undecided|never (?:started|decided|executed|ran|fired)|"
                      r"disease row|(?<![\w-])N-2\b|owner-revivable|absent from (?:every|BJ|BK)", re.I)
+# L04 master-ledger row -> (LEDGER row ids that decide it, a pattern naming the item in those rows or their waves' specs)
+MAP = {
+    1: (["#10c", "C-10", "#87"], r"Safari"), 2: (["N-1a"], r"net-indirection"),
+    3: (["BG-ONWARD-1", "BG-ONWARD-2", "BG-ONWARD-3", "BG-ONWARD-4", "BG-ONWARD-8"], r"gyroscope|squircle|GU-1"),
+    4: (["C-4", "#49d"], r"V-A95|non-reproduc"), 5: (["#43"], r"W-CHIP"), 6: (["#48"], r"Q-9"),
+    7: (["#54a"], r"webgl2|W-ONE-ENGINE"), 8: (["#62"], r"loop D1"), 9: (["#63"], r"history rewrite"),
+    10: (["#20"], r"fallback"), 11: (["#60a", "#69"], r"boot shell|low-power"), 12: (["#61"], r"W-DOC-TRUTH"),
+    13: (["#67a"], r"hallmark"), 14: (["#90a", "#67d"], r"R-7"), 15: (["#34", "#45a", "#64b"], r"W-TOAST|one engine|IDIOM"),
+    16: (["#44"], r"0 consumers"), 17: (["#6"], r"Safari"), 18: (["#25"], r"well"), 19: (["#78"], r"canon"),
+    20: (["#90a", "#90b", "#90c", "#90d"], r"R-7|canon|Safari"), 21: (["#29a"], r"popstate"), 22: (["#15"], r"hook"),
+    23: (["#70"], r"archaeology"), 24: (["Q063"], r"exemplar|recording"), 25: (["#71a", "#32c"], r"RT-71A|RT-32A"),
+    26: (["#17b", "#23", "#58b", "#47a"], r"latch"), 27: (["#51a", "C-7"], r"π-SCROLL"), 28: (["C-8"], r"content-box"),
+    29: (["C-9"], r"focus model"), 30: (["C-5", "C-6"], r"window|chroma"), 31: (["C-11", "C-12", "#50b"], r"π-W1|W2-W6"),
+    32: (["#49a", "#49b", "#49c", "#49g", "C-13a"], r"R9|R11|F3|π-FIELD"), 33: (["#48"], r"layers\.css:348"),
+    34: (["C-16"], r"capture-death"), 35: (["C-1"], r"Trusted Publisher"), 36: (["C-14", "C-15"], r"smell|same law"),
+    37: (["#76a", "L04-M37"], r"g10"), 38: (["L04-M38"], r"GREENFIELD-TERMINAL"), 39: (["C-17"], r"precepts"),
+    40: (["L04-M40"], r"\./drawer"), 41: (["L04-M41"], r"W-ATLAS"), 42: (["C-2", "C-3"], r"rotation|NPM_TOKEN"),
+    43: (["P-6b"], r"close"), 44: (["O-53 R-1", "O-53 R-2", "O-54 R-1"], r"O-5[34]"), 45: (["N-2"], r"DISEASE"),
+}
 KEY = re.compile(r"(?<![\w-])(#\d+[a-z]?|C-\d+|E-\d+|OW-\d+[a-d]?|T-\d+|V-A\d+)(?![\w-])")
 
 
@@ -92,6 +116,32 @@ def main():
                 if not any(re.search(rf"(?<![\w-]){re.escape(k)}(?![\w-]|\d)", spec_text[wave]) for k in [rid, base] + src_ids):
                     out.append(f"OPEN NO-HOME      LEDGER.md:{n} `{rid}` DISEASE → {wave}, whose spec names neither the row nor its source ids")
 
+    # L04-ROW
+    rows = {}
+    master = (BL / "audit/round-1/L04.md").read_text().split("## Master ledger", 1)[1].split("\n## ", 1)[0]
+    for line in master.splitlines():
+        c = cells(line)
+        if len(c) >= 7 and c[0].isdigit():
+            rows[int(c[0])] = c
+    by_id = {c[0]: (n, c) for n, c in led}
+    for k, c in sorted(rows.items()):
+        item = c[1][:70]
+        if k not in MAP:
+            out.append(f"OPEN L04-ROW      L04 master row {k} ({item}): traced to no LEDGER row")
+            continue
+        ids, pat = MAP[k]
+        missing = [i for i in ids if i not in by_id]
+        if missing:
+            out.append(f"OPEN L04-ROW      L04 master row {k} ({item}): {', '.join(missing)} is no LEDGER row with a terminal")
+            continue
+        texts = [" ".join(by_id[i][1]) for i in ids] + [spec_text[by_id[i][1][4]] for i in ids if by_id[i][1][4] in spec_text]
+        if not any(re.search(pat, t) for t in texts):
+            out.append(f"OPEN L04-ROW      L04 master row {k} ({item}): no traced row or its wave's spec names the item (/{pat}/)")
+        if "**D**" in " ".join(c) and not any(by_id[i][1][4] in spec_text for i in ids):
+            out.append(f"OPEN L04-ROW      L04 master row {k} ({item}) is DISEASE; every traced row ({', '.join(ids)}) has no wave")
+    if len(rows) != 45:
+        out.append(f"OPEN L04-ROW      L04's master ledger reads {len(rows)} rows, not 45: the table changed shape")
+
     # CONDITIONAL
     for w in specs:
         for n, line in enumerate(spec_text[w].splitlines(), 1):
@@ -101,7 +151,7 @@ def main():
                     out.append(f"OPEN CONDITIONAL  waves/{w}.md:{n} hangs {key} on \"if {tgt} cures {key}\"; {tgt}'s spec does not name {key}")
     for r in out:
         print(r)
-    print(f"members {n_members}, ledger rows {len(led)}, open {len(out)}")
+    print(f"members {n_members}, ledger rows {len(led)}, L04 master rows {len(rows)}, open {len(out)}")
     return 1 if out else 0
 
 

@@ -1,0 +1,19 @@
+# fail-open-gates.py — class sweep, formation fix seat 11
+
+## before: the plan at HEAD 734b38a1 (a `git archive` copy, BL_ROOT), run by fix-11; commands ran in the fix-11 worktree at 734b38a1 (`.claude/worktrees/bl/formation/fix-11/wt`)
+OPEN PIPE-MASK    waves/W-0.11.md:72 G1 · slightly less blur (static): `node scripts/probes/band-0/lighting-census.mjs . | grep -c '^BLUR'` pipes a script reader into a count or a negation
+OPEN PIPE-MASK    waves/W-0.11.md:73 G2 · no stacked shadow token on chrome (: `node scripts/probes/band-0/lighting-census.mjs . | grep -c '^STACKED'` pipes a script reader into a count or a negation
+OPEN PIPE-MASK    waves/W-0.11.md:74 G3 · no glow halo token (static): `node scripts/probes/band-0/lighting-census.mjs . | grep -c '^HALO'` pipes a script reader into a count or a negation
+OPEN DOCKET       waves/W-0.8.md:181 G18 · the owner's word on the breaks: `! grep -qE '^| DOCKET-O-88 |.*| pending |' docs/tranches/BL/LEDGER.md` reads a docket row outside the PLAN §1 template's rendered form
+OPEN PASS-AT-HEAD waves/W-0.11.md:72 G1 · slightly less blur (static): every span reads its pass value at HEAD (exit [1]); HEAD cell: "**5** (each radius equals its 10.1.0 value)"
+OPEN PASS-AT-HEAD waves/W-0.11.md:73 G2 · no stacked shadow token on chrome (: every span reads its pass value at HEAD (exit [1]); HEAD cell: "**2** (`shadow.css:17`, `dark-arm.css:230`)"
+OPEN PASS-AT-HEAD waves/W-0.11.md:74 G3 · no glow halo token (static): every span reads its pass value at HEAD (exit [1]); HEAD cell: "**2** (`shadow.css:34`, `:35`)"
+OPEN PASS-AT-HEAD waves/W-0.8.md:181 G18 · the owner's word on the breaks: every span reads its pass value at HEAD (exit [0]); HEAD cell: "**exit 1**: the docket row reads `pending`"
+OPEN PASS-AT-HEAD waves/W-B.15.md:42 B15-G3 · the page scroller stays native : every span reads its pass value at HEAD (exit [0]); HEAD cell: "exit 0 at HEAD: the one wheel listener is passive (`composables/sideba"
+OPEN PASS-AT-HEAD waves/W-G.2.md:61 G2-G4 · the library never destroys the s: every span reads its pass value at HEAD (exit [0]); HEAD cell: "exit 0 at HEAD: the one hit is the comment at `useWebGPUCanvas.ts:500`"
+gate rows 729, fail-open rows run 129, docket rows 20, open 10
+exit=1
+
+## after: the plan as fix-11 leaves it; commands ran in the fix-11 worktree at 734b38a1 (`.claude/worktrees/bl/formation/fix-11/wt`)
+gate rows 730, fail-open rows run 126, docket rows 20, open 0
+exit=0

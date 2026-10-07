@@ -115,7 +115,7 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | #46c | a:53 | PARTIAL | RETIRE | — | seat | "STAYS DIRTY" is false at HEAD (`git status --porcelain src` empty; F-12) |
 | #47a | a:54 | PARTIAL | BUILD | W-I.1 | seat | `data-dock-state`, the `g-dock-lattice.test.ts:925` latch subject, and the ten enqueued π cells in the frame strips; W-I.1 §8 |
 | #47b | a:54 | PARTIAL | BUILD | W-C.4 | seat | the dead `--dock-morph-max-stretch` and the phantom `--dock-vertical-*` reads; W-C.4 §8 |
-| #48 | a:55 | OPEN | BUILD | W-I.5 | seat | DISEASE, 3 closes, decided in W-I.5 (own) by loop D2's Q-9 ruling; I5-G1. The zero-width morph window goes with it |
+| #48 | a:55 | OPEN | BUILD | W-I.5 | seat | DISEASE, 3 closes, decided in W-I.5 (own) by loop D2's Q-9 ruling; I5-G1. The zero-width morph window goes with it: the morph discontinuity at `layers.css:348` (the ungated `width: 100%`, a:55; L04-F27, L04 master row 33) |
 | #49a | a:56 | PARTIAL (W0 only) | BUILD | W-G.4 | seat | DISEASE, 3 closes, decided in W-G.4 (own: "the disease row decided", W-G.4 §9); π-FIELD is its capture |
 | #49b | a:56 | PARTIAL | BUILD | W-G.1 | seat | R9's delete half and D5 (the two probe contexts on mount); W-G.1 §9 |
 | #49c | a:56 | PARTIAL | BUILD | W-E.14 | seat | R11, the starved configurator (C-13c); W-E.14 §8 (W-E.9 hands it there, `W-E.9.md:18`) |
@@ -236,8 +236,8 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | C-13a | c:38 | BLOCKED | BUILD | W-G.1 | seat | DISEASE, 2 closes, decided with #49 in W-G.4 (own). R9's delete half is W-G.1's; its paint half W-G.4's |
 | C-13b | c:39 | OPEN | BUILD | W-G.4 | seat | DISEASE, 2 closes, decided in W-G.4 (own): `DEP_MIN` (0 hits in `src`) |
 | C-13c | c:40 | OPEN | BUILD | W-E.14 | seat | DISEASE, 2 closes, decided in W-E.14 (own): the configurator envelope at 390×844, E14-G1 to E14-G3 and E14-S |
-| C-14 | c:41 | RETIRED | RETIRE | — | seat | a smell without a reproduction is not a finding (BK EP:6242-6243); 0 `run.css` commits at 15:29:40 |
-| C-15 | c:42 | RETIRED | RETIRE | — | seat | the same law; 0 hits in the α records |
+| C-14 | c:41 | RETIRED | RETIRE | W-L.8 | seat | a smell without a reproduction is not a finding (BK EP:6242-6243); 0 `run.css` commits at 15:29:40. L04 master row 36 (L04-F24) counts it re-booked across two closes against its own rule, so W-L.8 §3.3 decides it and G-L8-15 holds it out of FINAL.md's carries |
+| C-15 | c:42 | RETIRED | RETIRE | W-L.8 | seat | the same law; 0 hits in the α records (the aspect-ratio/flex-basis smell). Decided with C-14 in W-L.8 §3.3 |
 | C-16 | c:43 | OPEN | BUILD | W-A.4 | seat | both capture-death signatures onto the GPU leg, no retry policy; W-A.4 §8 |
 | C-17 | c:44 | OPEN | RETIRE | W-C.3 | seat | 1 close. The `docs/precepts` copy retires on glass-ui's side with a relay letter to precepts, a sibling tree (P-7); W-C.3 §8 |
 | C-18 | c:45 | RETIRED | RETIRE | — | seat | ANSWERED: the Q051 rows were dispositioned into BK rows (`BK/PORT.md:31-34`) |
@@ -315,7 +315,7 @@ Recap rows are standing edicts or 2026-09-23 asks; none rode a close, so none is
 
 ## 4 · Owner docket (the OW items, `CEN:218-234`)
 
-W-B.1 §3.1 puts the owner docket in this file. `pending` means no owner word is on record at `dabfc26f`.
+W-B.1 §3.1 puts the owner docket in this file. `pending` means no owner word is on record at `dabfc26f`. A pending answer cell reads `pending` and nothing else, so the PLAN §1 docket gate matches it; when an answer is partial, the cell quotes the answer and names what is still owed (OW-2, DOCKET-10.2.0-TAG), and no gate reads those two rows (fix-11, FJ-03).
 
 | row | question | seat default | owner answer, verbatim, with date | terminal | wave |
 |---|---|---|---|---|---|
@@ -337,7 +337,7 @@ W-B.1 §3.1 puts the owner docket in this file. `pending` means no owner word is
 | DOCKET-10.2.0-TAG | the in-session go for the 10.2.0 tag | — | ruling "yes" to the minor (CUR:48, 2026-09-24); the tag go itself pending (CUR:78) | FOLD | W-0.7 |
 | DOCKET-11.0.0-TAG | the in-session go for the 11.0.0 tag | — | pending | FOLD | W-L.8 |
 | DOCKET-Q-10 | D2 rules Q-10 (the collapsed summary's square) with O-84's ask and O-88 (1)'s "content-sized" | per W-0.8 §3.1 | pending | FOLD | W-0.8 |
-| DOCKET-O-88 | the O-88 collapse unit replaces two published dock surfaces (`useDockSearch`'s scroll options; the summary's `aspect-ratio` under Q-10 (b)). Do they land as clean breaks in 10.2.0, a minor, or does the unit wait for 11.0.0? | they land in 10.2.0 with MIGRATION rows: the owner ruled "ALL OF IT IN 10.2.0", every consumer pins 10.1.0 exact, and keeping both forms is a dual path (W-0.8 §3.6) | pending; asked with the 10.2.0 publish go | BUILD | W-0.8 |
+| DOCKET-O-88 | the O-88 collapse unit replaces two published dock surfaces (`useDockSearch`'s scroll options; the summary's `aspect-ratio` under Q-10 (b)). Do they land as clean breaks in 10.2.0, a minor, or does the unit wait for 11.0.0? Asked with the 10.2.0 publish go | they land in 10.2.0 with MIGRATION rows: the owner ruled "ALL OF IT IN 10.2.0", every consumer pins 10.1.0 exact, and keeping both forms is a dual path (W-0.8 §3.6) | pending | BUILD | W-0.8 |
 | DOCKET-Q063 | the 07-27 exemplar recording preservation | RETIRE, shown to the owner (W-L.8 §3.3) | pending | RETIRE | W-L.8 |
 
 OW-9 is one row per deciding wave (OW-9a..d), so each wave's docket gate turns green on its own ruling. W-I.4's subset (R2-06-01, OW-9d) and W-H.3's (R2-06-02, OW-9c) retire only with the owner's words; W-B.1's checker enforces that. OW-12 is retired (fix-3): its option (b) would have renamed a published display rung at 11.0.0 with no owning wave, and band 0 would have waited on an answer scheduled inside its own cut.
@@ -420,6 +420,10 @@ OW-9 is one row per deciding wave (OW-9a..d), so each wave's docket gate turns g
 | #70 | W-L.8 §3.3 | duty | RETIRE | W-L.8 | seat | archaeology regeneration per close: `FINAL.md` §1-§2 print the `git log` commands, one record |
 | #15 | W-L.8 §3.3 | duty | RETIRE | W-L.8 | seat | provenance hooks: BI deleted the hook farm (`d17153ec`); provenance is the SLSA attestation; the stale `core.hooksPath` is unset at the close |
 | Q063 | W-L.8 §3.3 | duty | RETIRE | W-L.8 | owner (docket) | unverified since 07-28; shown to the owner in the close confirmation |
+| L04-M37 | L04 master row 37 (`audit/round-1/L04.md:86`, `:450`, L04-F25) · `BK/ASK.md:41` | carried (3 closes with #76) | RETIRE | W-L.8 | seat | g10, the value.js `glass-ui-pinned` fenced worktree at `2e559f7a`: a consumer act (E-6); BK's own ask retires it at value.js's adopt. #76's L2 adopts are `#76a` (FOLD, W-L.7). W-L.8 §3.3 |
+| L04-M38 | L04 master row 38 (`L04.md:87`, `:450`, L04-F25) | re-booked five times (`BK/EXECUTION-PROGRESS.md:4994,5173,5463,5652,5836,6281`) | RETIRE | W-L.8 | seat | DISEASE, 3 closes, decided in W-L.8 (own: F-12's close records, of which L04-F25 is a member): the GREENFIELD-TERMINAL `:233/:239` dock figures are a superseded planning spec's census; the dock is measured at HEAD by W-0.8 and W-I.1, and the old figures are never trued. G-L8-15 |
+| L04-M40 | L04 master row 40 (`L04.md:89`, `:450`, L04-F25) | carried | RETIRE | W-L.8 | seat | CURED: the `./drawer` MIGRATION item was discharged by register wave N-6 (`MIGRATION.md:747`); no `./drawer` export, 0 `Drawer` in `src` outside prose (L04.md:442-444). W-L.8 §3.3 |
+| L04-M41 | L04 master row 41 (`L04.md:90`, `:450`, L04-F25) | carried | RETIRE | W-L.8 | seat | not a glass-ui row: BA's W-ATLAS-RECONCILE landed (`useGlobalDark.ts:157`), BC's W-ATLAS-ASK is superseded by atlas's `^6.0.0`, and M.W-ATLAS is slides'. W-L.8 §3.3 |
 | REKA-TRAP-WALKER | W-K.1 §8 | outbound ask | FOLD | W-K.1 | seat | the report to reka that FocusScope's walker does not descend shadow roots (reka 2.10.1 `FocusScope/utils.js:42`); W-K.1 owns it |
 | VREVEAL-HOOK | W-0.4 §3 decision 3 | open | FOLD | W-L.6 | seat | G-L6-1, the per-symbol census (W-L.6 §8) [N] |
 | WEBKIT-ACCORDION-CRASH | W-I.3 §8 | recorded | BUILD | W-A.1 | seat | the minimal reproduction and its cure, A1-G13: at `183e021a` Playwright WebKit tap → `Page crashed` 3 of 3, click → timeout 3 of 3; Chromium opens 6 of 6 (fix-2) |
@@ -540,12 +544,12 @@ Counted by a script over this file's row tables (§4 is the docket and is counte
 | §2 BK §7 carries | 11 | 1 | 0 | 8 | 20 |
 | §3 recap rows and charter laws | 43 | 11 | 0 | 10 | 64 |
 | §5 carried obligations and PLAN §6 gaps | 12 | 19 | 0 | 6 | 37 |
-| §6 rows the specs hand to the ledger | 14 | 30 | 0 | 14 | 58 |
+| §6 rows the specs hand to the ledger | 14 | 30 | 0 | 18 | 62 |
 | §7 inbound outside the map | 15 | 10 | 0 | 1 | 26 |
 | Appendix A, INBOUND-MAP | 293 | 27 | 7 | 115 | 442 |
-| **total** | **499** | **131** | **7** | **183** | **820** |
+| **total** | **499** | **131** | **7** | **187** | **824** |
 
-Recounted by fix-2 after its placements; fix-3 moved A2-KE-L1-27 from BUILD to RETIRE (NOT-REPRODUCED) and CUR:79 from BUILD to FOLD (O-84b is not an owner word); fix-4 moved O-84 from BUILD to FOLD (D2 rules Q-10, FC-05). fix-10 added 12 rows (#37, T-45, CUR:110, CUR:112, CUR:113, five O-87 rows, O-88, O-89), moved BG-ONWARD-4 from BANKED to RETIRE, and re-pointed 37 rows from W-I.1 to W-0.8 with the owner's O-88 ruling; `formation-audit/sweeps/ledger-terminal.py` recounts this table against the rows. No row reads UNPLACED. Rows marked DISEASE: 45. Owner docket: 20 lines (OW-9 split into OW-9a..d; OW-12 added by fix-2 and retired by fix-3). 15 read `pending` at fix-10 (DOCKET-O-88 added) (`grep -cE '^\| (OW\|DOCKET)-[^\|]*\|.*\| pending \|' LEDGER.md`).
+Recounted by fix-2 after its placements; fix-3 moved A2-KE-L1-27 from BUILD to RETIRE (NOT-REPRODUCED) and CUR:79 from BUILD to FOLD (O-84b is not an owner word); fix-4 moved O-84 from BUILD to FOLD (D2 rules Q-10, FC-05). fix-10 added 12 rows (#37, T-45, CUR:110, CUR:112, CUR:113, five O-87 rows, O-88, O-89), moved BG-ONWARD-4 from BANKED to RETIRE, and re-pointed 37 rows from W-I.1 to W-0.8 with the owner's O-88 ruling; fix-11 added four RETIRE rows from L04's master ledger (L04-M37, L04-M38, L04-M40, L04-M41) and gave C-14 and C-15 their deciding wave (W-L.8); `formation-audit/sweeps/ledger-terminal.py` recounts this table against the rows. No row reads UNPLACED. Rows marked DISEASE: 46. Owner docket: 20 lines (OW-9 split into OW-9a..d; OW-12 added by fix-2 and retired by fix-3). 15 read `pending` at fix-10 (DOCKET-O-88 added) (`grep -cE '^\| (OW\|DOCKET)-[^\|]*\|.*\| pending \|' LEDGER.md`).
 
 Appendix A by coverage tag: `[N]` 375, `[R]` 67, `[G]` 0, `[M]` 0 (fix-3 named a gate or a RETIRE for each of the 18 `[G]` rows and retagged it `[N]`). By INBOUND-MAP status: FAMILY 359, CURED-AT-HEAD 52, CONSUMER-SIDE 21, NOT-REPRODUCED 7, NEW 3.
 

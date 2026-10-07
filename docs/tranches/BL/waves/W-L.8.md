@@ -17,7 +17,9 @@
 |---|---|
 | L04-F01, L01b-49b, L01b-55 | the remainder re-booked by class list under a "no deferring" order |
 | L04-F05, L04-F16, L04-F22, L01a-07, L01a-11, L05a-09, L05b-17 | SEALED and OWNER-GATED words over substance that had not landed |
-| L04-F24, L04-F25, L04-F26 | close duties that never fired: #70 archaeology, the P-6 audit at 10.0.0, #15 provenance hooks, Q063 |
+| L04-F24 | two unverified smells re-booked against their own "not carried" rule (L04 master row 36): the `run.css` 15:29:40 rewrite (C-14) and the α aspect-ratio/flex-basis smell (C-15); RETIRE (§3.3) |
+| L04-F25 | moot items still carried (L04 master rows 25, 37, 38, 40, 41): the dispersion rims (RT-71A and RT-32A, LEDGER `#71a` in W-H.3 and `#32c`), g10 (`L04-M37`; #76's L2 adopts are `#76a`, W-L.7), the GREENFIELD-TERMINAL `:233/:239` dock figures (`L04-M38`, DISEASE), `./drawer` (`L04-M40`) and W-ATLAS (`L04-M41`); RETIRE (§3.3) |
+| L04-F26 | close duties that never fired: #70 archaeology, the P-6 audit at 10.0.0, #15 provenance hooks, Q063 |
 | L08-26, L09-14, L01b-66b, L01b-70, L01b-90 | close and wave records cite lines the tree no longer has (`DialogContent.vue:404` in a 237-line file) |
 | R2-06-13 | the 09-17 census's PARTIAL word stale on #30 and #89 (both LANDED), 5 of 49 misread |
 | L06-11 | the consumer census of record by memory (its roster half is W-L.6's; its record half is here) |
@@ -53,13 +55,20 @@ The checklist is `scripts/tranche/close-check.mjs docs/tranches/BL --tag v11.0.0
 
 W-L.6's census runs on the release commit's pack, on the owner's machine where the siblings are, and writes `P6-CENSUS.tsv` into the evidence path W-C.1 fixes. The item passes when the census exits 0 and the file's sha256 is in FINAL.md.
 
-### 3.3 The three duties no census holds
+### 3.3 The duties and the carried items no census holds
 
 | duty | terminal | rationale |
 |---|---|---|
 | #70 archaeology regeneration per close | RETIRE | it never fired and its script is not at the cited path (L04 row 23). What it was for, a reproducible record of what the tranche changed, is FINAL.md §1 and §2 here: each commit ledger and tag chain is printed by the `git log` command written beside it, so a reader can re-run it. One record, no second generator |
 | #15 provenance hooks (Z-4, X-4a, X-4e, X-4f) | RETIRE; the stale `core.hooksPath` is unset | BI deleted the hook farm (`d17153ec`); provenance is the registry's SLSA attestation (§3.6). `core.hooksPath` still names the deleted `.githooks`, so a hook added under it would silently not run: the close unsets it (`git config --unset core.hooksPath`, a local-config act the owner confirms with the tag) |
 | Q063 the 07-27 exemplar recording preservation | RETIRE, shown to the owner in the close confirmation | unverified since 07-28, and #4 sealed without it (L04 row 24). The owner may overrule in the same reply; the reply is quoted either way |
+| C-14, C-15 the two unverified smells (L04-F24, L04 row 36) | RETIRE | a smell without a reproduction is not a finding (BK EP:6242-6243): 0 `run.css` commits at 15:29:40, 0 hits in the α records. BK restated both at three later closes against that rule; they end here and FINAL.md carries neither (G-L8-15) |
+| g10 (L04-F25, L04 row 37; `L04-M37`) | RETIRE | the value.js `glass-ui-pinned` fenced worktree (`BK/ASK.md:41`) is a consumer act (E-6), retired by BK's own ask at value.js's adopt |
+| the GREENFIELD-TERMINAL `:233/:239` dock figures (L04-F25, L04 row 38; `L04-M38`, DISEASE) | RETIRE | restated five times as "owed, out of fence" across three closes. A superseded planning spec's census is never trued; the dock is measured at HEAD by W-0.8 and W-I.1. This wave decides the row (F-12, its family) |
+| `./drawer` (L04-F25, L04 row 40; `L04-M40`) | RETIRE (CURED) | discharged by register wave N-6 (`MIGRATION.md:747`): no `./drawer` export |
+| W-ATLAS (L04-F25, L04 row 41; `L04-M41`) | RETIRE | not a glass-ui row: BA's reconcile landed (`useGlobalDark.ts:157`), BC's ask is superseded by atlas's `^6.0.0`, M.W-ATLAS is slides' |
+
+The dispersion rims, L04-F25's fifth item, are decided by W-H.3 (`#71a`) and retired in code (`#32c`).
 
 ### 3.4 Every cite in the close records resolves
 
@@ -106,6 +115,7 @@ Each gate's exit code is read on its own.
 | G-L8-14 · no loop tooling is tracked at the close | `test "$(git ls-files docs/tranches/BL/design scripts/loops \| grep -cE '\.(mjs\|js\|ts\|cjs\|sh\|py)$')" -eq 0` | exit 0 | **exit 1**: 414 at `be1969ea` (fix-3: `design/structure` 329, `design/dock` 33, `design/tile` 29, `design/material` 23; `scripts/loops` absent). W-C.1 moves them to `scripts/loops/`, each loop's last wave deletes its dir; the gate reads both roots, so a move alone does not pass it. Replaces W-C.1's struck C1-G7 |
 | G-L8-12 · the owner's words | the wave record quotes the confirmation with its time, earlier than `git log -1 --format=%cI v11.0.0` | present and earlier | **absent** |
 | G-L8-13 · nothing carries | FINAL.md's carry-forward section has no row whose terminal is not one of LEDGER §0's four (BUILD, FOLD, BANKED with its re-trigger, RETIRE with its class), or an owner act named at its wave | holds | **absent** |
+| G-L8-15 · the retired carried items stay retired | `test -f docs/tranches/BL/FINAL.md && ! grep -qiE 'GREENFIELD-TERMINAL\|W-ATLAS\|\./drawer\|\bg10\b\|run\.css 15:29:40\|flex-basis' docs/tranches/BL/FINAL.md` | exit 0: FINAL.md exists and carries none of §3.3's retired items (their RETIREs are cited by LEDGER row id) | **exit 1** (fix-11, `734b38a1`): FINAL.md is absent. Bite: a FINAL.md with a carry line naming W-ATLAS fails it |
 
 ## 6 · π and DELTA obligations
 
@@ -122,7 +132,7 @@ This wave writes the `## 11.0.0` section heading and its introduction; the rows 
 
 ## 8 · Ledger rows
 
-Closes F-12 (all twenty members), P-4 (the close checklist has an executable), P-6 (its close item, with W-L.6's artefact), L06-11's record half, R2-06-13 (no inherited word, §3.1), census #66's `FINAL.md` gate for BL, and #15, #70 and Q063 (RETIRE, §3.3; their rows are LEDGER:414-416). G-L8-11 is struck: it read the three rows, which exist; G-L8-7's whole-file run covers them. OW-1 and OW-3 are recorded at their tag-day state as the terminals of W-B.13 and W-A.6.
+Closes F-12 (all twenty members), P-4 (the close checklist has an executable), P-6 (its close item, with W-L.6's artefact), L06-11's record half, R2-06-13 (no inherited word, §3.1), census #66's `FINAL.md` gate for BL, and #15, #70 and Q063 (RETIRE, §3.3; their rows are in LEDGER §6.2), C-14 and C-15 (L04-F24), and L04-F25's carried items `L04-M37`, `L04-M38` (DISEASE, decided here), `L04-M40` and `L04-M41` (RETIRE, §3.3, G-L8-15). G-L8-11 is struck: it read the three rows, which exist; G-L8-7's whole-file run covers them. OW-1 and OW-3 are recorded at their tag-day state as the terminals of W-B.13 and W-A.6.
 
 ## Appendix A · `cite-check.mjs` as run here
 

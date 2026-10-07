@@ -1,0 +1,10 @@
+# hold-line-scope.py — class sweep, formation fix seat 11
+
+## before: the plan at HEAD 734b38a1 (a `git archive` copy, BL_ROOT), run by fix-11
+OPEN SCOPE  waves/W-H.6.md:66 H6-G3 · no second radius (static): reads src/styles/glass/ladder.css; §4 lists `src/styles/glass/material.css`, which it does not read
+static hold lines with paths 3, open 1
+exit=1
+
+## after: the plan as fix-11 leaves it
+static hold lines with paths 4, open 0
+exit=0

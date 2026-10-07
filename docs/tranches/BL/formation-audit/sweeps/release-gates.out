@@ -9,3 +9,14 @@ exit=1
 ## after: the plan as fix-10 leaves it
 waves 101, band-0 loop gates {D2, D3}, open 0
 exit=0
+
+# ===== fix-11 (arm added: CHECKLIST-7)
+
+## before: the plan at HEAD 734b38a1 (a `git archive` copy, BL_ROOT), run by fix-11
+OPEN CHECKLIST-7 PLAN.md: "Five band-0 waves are loop waves" against 4 ruled band-0 loop waves
+waves 101, band-0 loop gates {D2, D3}, open 1
+exit=1
+
+## after: the plan as fix-11 leaves it
+waves 101, band-0 loop gates {D2, D3}, open 0
+exit=0

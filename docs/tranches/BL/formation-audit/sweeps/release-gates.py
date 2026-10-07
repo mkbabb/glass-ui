@@ -12,6 +12,9 @@ gates a wave, a band or a release is a second record, and this lists each one th
               loop gate §5 puts on a band-0 wave (or names one §5 does not)
   EXCEPTION   a sentence that claims an owner-ratified exception to a loop's ownership for a wave §5 already
               gates on that loop (a loop wave is no exception), or "the one exception" while §5 shows none
+  CHECKLIST-7 a band-0 wave whose loop gates differ from the owner-ruled set (D3 for W-0.1, W-0.2 and W-0.11 by O-87
+              and the veil rulings; D2 for W-0.8 by O-88; checklist row 7 as amended, pass 10 FJ-01), or a band-0 wave
+              with a §5 edge to a wave outside band 0; and PLAN §1's count of band-0 loop waves against that set
   INBOUND     audit/INBOUND.md or FORMATION-PROGRESS.md rules that 10.2.0 is gated on a loop that §5 puts on no
               band-0 wave
 
@@ -20,7 +23,7 @@ Exit 1 while any row is open. BL_ROOT reads another copy.
 import re
 import sys
 
-from plan_dag import BL, WAVES, band, spec_ids
+from plan_dag import BL, WAVES, band, edges, spec_ids
 
 LOOP = re.compile(r"\bD([1-5])\b")
 
@@ -102,6 +105,17 @@ def main():
                         out.append(f"OPEN EXCEPTION  {rel}:{n}: claims an exception to a loop for {', '.join(bad)}, which §5 gates on {fmt(set().union(*[gate[w] for w in bad]))}: \"{sent.strip()[:110]}\"")
                     elif not ws:
                         out.append(f"OPEN EXCEPTION  {rel}:{n}: claims an exception and names no wave: \"{sent.strip()[:110]}\"")
+    ruled = {"W-0.1": {"D3"}, "W-0.2": {"D3"}, "W-0.11": {"D3"}, "W-0.8": {"D2"}}
+    for w in sorted(x for x in rows5 if band(x) == "0"):
+        if gate.get(w, set()) != ruled.get(w, set()):
+            out.append(f"OPEN CHECKLIST-7 {w}: §5 gates it on {fmt(gate.get(w))}; the owner-ruled set gives {fmt(ruled.get(w))}")
+        outside = [d for d in edges().get(w, ()) if band(d) != "0"]
+        if outside:
+            out.append(f"OPEN CHECKLIST-7 {w}: §5 edge to {', '.join(sorted(outside))}, outside band 0")
+    words = {"Two": 2, "Three": 3, "Four": 4, "Five": 5, "Six": 6}
+    for m in re.finditer(r"(\w+) band-0 waves are loop waves", plan):
+        if words.get(m.group(1)) != len(ruled):
+            out.append(f"OPEN CHECKLIST-7 PLAN.md: \"{m.group(0)}\" against {len(ruled)} ruled band-0 loop waves")
     for name in ("audit/INBOUND.md", "FORMATION-PROGRESS.md"):
         for n, line in enumerate((BL / name).read_text().splitlines(), 1):
             for m in re.finditer(r"10\.2\.0 is (?:therefore )?gated on (D[1-5])(?: converging)?(?: as well as| AND| and) (D[1-5])", line):

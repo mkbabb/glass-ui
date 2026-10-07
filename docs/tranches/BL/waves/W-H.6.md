@@ -51,7 +51,7 @@ Static: `git grep -c 'backdrop-filter:' -- src` sums to 56 lines in 34 files; th
 
 ## 4 · Files it touches
 
-- `src/styles/glass/ladder.css` (the five rungs), `src/styles/glass/material.css` (the pseudo-element the seat uses), and the four files of §3 item 4.
+- `src/styles/glass/ladder.css` (the five rungs), `src/styles/glass/material.css` (the pseudo-element the seat uses), and the four files of §3 item 4: `src/styles/glass/glass-capsule.css`, `src/styles/glass/surfaces.css`, `src/styles/glass/surfaces-pager.css`, `src/styles/utilities/components.css`. H6-G3 reads all six.
 - `scripts/probes/band-H/` (the probe W-H.1 lands): this wave adds the scene `edge` and its rows from `formation-audit/fix-10.md` appendix V.
 - `MIGRATION.md` and `CHANGELOG.md` only if the seat changes a published class's box (§7).
 
@@ -63,7 +63,7 @@ Static: `git grep -c 'backdrop-filter:' -- src` sums to 56 lines in 34 files; th
 |---|---|---|---|
 | H6-G1 · the edge sample | rows `W-H.6/T45-EDGE`, Chromium, light and dark, depths 6, 10 and 16 px, for each of the five ladder rungs | \|ΔL\| ≤ 0.02 between the shipped rung and its oversampled reference at every depth | **FAIL 6 of 6** on `.glass-resting` (ΔL +0.0239 to +0.0493, §2). Playwright WebKit: ΔL 0.0000, recorded, not gated (it paints no `backdrop-filter`) |
 | H6-G2 · the gate can pass | the same rows with `FIXTURE=1`, which builds the card as the reference is built | 0 FAIL | **0 FAIL of 6** in Chromium at `31f3c5ea` (fix-10): ΔL 0.0000 at every depth in both themes. The fixture is a gate plant, not a design |
-| H6-G3 · no second radius (static) | `! git grep -nE 'inset: *-?[0-9.]+px' -- src/styles/glass/ladder.css` | exit 0: the overshoot is computed from the rung's radius token, not written as a length | hold line: exits 0 at HEAD (no overshoot exists). Bite: an overshoot written `inset: -32px` fails it |
+| H6-G3 · no second radius (static) | `! git grep -nE '(^\|[^-a-z])(inset\|inset-block\|inset-inline\|top\|right\|bottom\|left)(-start\|-end)?: *-[0-9.]+px' -- src/styles/glass/ladder.css src/styles/glass/material.css src/styles/glass/glass-capsule.css src/styles/glass/surfaces.css src/styles/glass/surfaces-pager.css src/styles/utilities/components.css` | exit 0: the overshoot is computed from the rung's radius token, not written as a negative length, in any of the six files §4 says the seat may write | hold line: exits 0 at HEAD (fix-11, `734b38a1`; no overshoot exists). Bite: `.x::after { inset: -32px; }` appended to each of the six files in turn makes it exit 1 (6 of 6), and `inset-inline-start: -8px` in `surfaces.css` does too; each plant removed after. The fix-10 form read `ladder.css` only, and a plant in `material.css` left it at exit 0 (pass 10, FJ-04) |
 | H6-G4 · the ladder still frosts | W-H.2's frost detector rows for the five rungs (`H2/*`, the band-H probe) | every row that passes on W-H.2's tree passes here | hold line on W-H.2's result |
 | H6-G5 · the converged witness | the D3 family witness rows the converged split table gives this wave (as W-H.1 G6) | exit 0 | exit 1 (D3's witnesses are RED at HEAD, W-H.1 §2) |
 

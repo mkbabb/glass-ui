@@ -17,3 +17,19 @@ exit=1
 ## after: the plan as fix-10 leaves it
 members 51, ledger rows 820, open 0
 exit=0
+
+# ===== fix-11 (arm added: L04-ROW)
+
+## before: the plan at HEAD 734b38a1 (a `git archive` copy, BL_ROOT), run by fix-11
+OPEN L04-ROW      L04 master row 33 (Morph discontinuity `layers.css:348`): no traced row or its wave's spec names the item (/layers\.css:348/)
+OPEN L04-ROW      L04 master row 36 (Two unverified smells (run.css 15:29:40; α aspect-ratio/flex-basis)) is DISEASE; every traced row (C-14, C-15) has no wave
+OPEN L04-ROW      L04 master row 37 (#76 L2 consumer adopts + g10): L04-M37 is no LEDGER row with a terminal
+OPEN L04-ROW      L04 master row 38 (GREENFIELD-TERMINAL `:233/:239` dock figures): L04-M38 is no LEDGER row with a terminal
+OPEN L04-ROW      L04 master row 40 (`./drawer` MIGRATION item): L04-M40 is no LEDGER row with a terminal
+OPEN L04-ROW      L04 master row 41 (W-ATLAS): L04-M41 is no LEDGER row with a terminal
+members 51, ledger rows 820, L04 master rows 45, open 6
+exit=1
+
+## after: the plan as fix-11 leaves it
+members 51, ledger rows 824, L04 master rows 45, open 0
+exit=0
