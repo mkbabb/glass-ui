@@ -1,0 +1,12 @@
+2026-10-07 13:35:49 · load { 149.17 95.16 68.55 } · start /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-2/D4-F-crit/probes/crit.mjs --build /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-F-crit/out/builds/crit-src --part a11yvalid
+D4-F critic probe · part a11yvalid · crit-src (flavor src) · load 143.07 / 94.79 / 68.57 at start
+engine Chromium 149.0.7827.55
+  PASS chromium a11yvalid single [data-item][data-state=on] under contrast-more (applied) · border 2px solid (want 2px: the arm still applies) · exempting rules parsed into the CSSOM 2 · load 143.07 / 94.79 / 68.57
+  PASS chromium a11yvalid tabs [aria-checked=true] under contrast-more (applied) · border 2px solid (want 2px: the arm still applies) · exempting rules parsed into the CSSOM 2 · load 143.07 / 94.79 / 68.57
+  PASS chromium a11yvalid preset-migrated [data-item][data-state=on] under contrast-more (applied) · border 1px solid (want not 2px: the tile is exempt) · exempting rules parsed into the CSSOM 2 · load 143.07 / 94.79 / 68.57
+engine Playwright WebKit 26.5
+  PASS webkit a11yvalid single [data-item][data-state=on] under contrast-more (applied) · border 2px solid (want 2px: the arm still applies) · exempting rules parsed into the CSSOM 2 · load 138.90 / 94.72 / 68.71
+  PASS webkit a11yvalid tabs [aria-checked=true] under contrast-more (applied) · border 2px solid (want 2px: the arm still applies) · exempting rules parsed into the CSSOM 2 · load 138.90 / 94.72 / 68.71
+  PASS webkit a11yvalid preset-migrated [data-item][data-state=on] under contrast-more (applied) · border 1px solid (want not 2px: the tile is exempt) · exempting rules parsed into the CSSOM 2 · load 138.90 / 94.72 / 68.71
+6/6 cells pass · load 138.90 / 94.72 / 68.71 at end
+exit 0 · 2026-10-07 13:36:01 · load { 136.91 95.04 68.97 } · end

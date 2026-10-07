@@ -1,0 +1,23 @@
+2026-10-07 12:08:39 · load { 80.00 150.76 142.86 } · battery crit-src start
+T-1  chromium exit 1 · T-1 FAIL · 17/39 gating cells pass, 12 unmeasured [migrated 12/12 · library 5/27 · unmigrated 3/6] · 81 s, load at start 80.00 / 150.76 / 142.86
+T-1  webkit   exit 1 · T-1 FAIL · 20/42 gating cells pass, 12 unmeasured [migrated 15/15 · library 5/27 · unmigrated 3/6] · 87 s, load at start 95.77 / 137.28 / 138.30
+T-2  chromium exit 0 · T-2 PASS · 22/22 gating cells pass [library 22/22] · 12 s, load at start 120.35 / 133.99 / 136.87
+T-2  webkit   exit 0 · T-2 PASS · 22/22 gating cells pass [library 22/22] · 8 s, load at start 124.60 / 134.24 / 136.91
+T-3  chromium exit 1 · T-3 FAIL · 17/60 gating cells pass [library 2/39 · unmigrated 12/48 · migrated 15/18] · 146 s, load at start 127.12 / 134.60 / 137.02
+T-3  webkit   exit 2 · T-3 HARNESS ERROR Error: openPage preset-contents (light) stalled twice, REPRODUCED: page.goto: Timeout 60000ms exceeded. / page.goto: Timeout 60000ms exceeded. · 1083 s, load at start ?
+T-4  chromium exit 1 · T-4 FAIL · 24/36 gating cells pass [library 8/20 · unmigrated 3/24 · migrated 16/16] · 186 s, load at start 108.49 / 77.12 / 88.20
+T-4  webkit   exit 1 · T-4 FAIL · 24/36 gating cells pass [library 8/20 · unmigrated 3/24 · migrated 16/16] · 138 s, load at start 93.03 / 94.72 / 94.22
+T-5  chromium exit 1 · T-5 FAIL · 72/104 gating cells pass [library 42/72 · unmigrated 19/37 · migrated 30/32] · 103 s, load at start 102.32 / 98.53 / 95.82
+T-5  webkit   exit 1 · T-5 FAIL · 72/104 gating cells pass [library 42/72 · unmigrated 19/37 · migrated 30/32] · 107 s, load at start 75.54 / 90.48 / 93.00
+T-6  chromium exit 1 · T-6 FAIL · 52/72 gating cells pass [library 27/45 · unmigrated 32/40 · migrated 25/27] · 260 s, load at start 87.96 / 90.07 / 92.50
+T-6  webkit   exit 1 · T-6 FAIL · 54/72 gating cells pass [library 27/45 · unmigrated 32/40 · migrated 27/27] · 371 s, load at start 47.25 / 70.50 / 83.80
+T-7  chromium exit 0 · T-7 PASS · 24/24 gating cells pass [unmigrated 4/32 · migrated 24/24] · 70 s, load at start 72.53 / 72.93 / 79.72
+T-7  webkit   exit 0 · T-7 PASS · 24/24 gating cells pass [unmigrated 4/32 · migrated 24/24] · 69 s, load at start 61.91 / 70.19 / 78.18
+T-8  chromium exit 1 · T-8 FAIL · 0/12 gating cells pass, 13 unmeasured [library 0/12] · 42 s, load at start 48.51 / 64.65 / 75.47
+2026-10-07 12:54:43 · load { 50.16 62.85 74.30 } · battery crit-src end (exit 1)
+T-5 FAIL · 72/104 gating cells pass [library 42/72 · unmigrated 19/37 · migrated 30/32]
+  json /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-F-crit/out/runs/crit-dist/T-5-chromium.json
+T-5 FAIL · 72/104 gating cells pass [library 42/72 · unmigrated 19/37 · migrated 30/32]
+  json /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-F-crit/out/runs/crit-dist/T-5-webkit.json
+2026-10-07 12:57:52 · load { 44.52 53.65 68.07 } · BATTERY-DONE
+2026-10-07 13:39:41 · load { 60.74 73.55 65.30 } · PROBE-CHAIN-DONE
