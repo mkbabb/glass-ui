@@ -1,0 +1,38 @@
+2026-10-06 19:59:51 · load { 436.72 405.48 371.19 } · unit re-run (testTimeout 120 s), F applied
+
+ RUN  v4.1.10 /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-F-spec/wt
+
+
+ Test Files  3 passed (3)
+      Tests  65 passed | 1 expected fail (66)
+   Start at  20:06:16
+   Duration  25.71s (transform 13.28s, setup 705ms, import 14.39s, tests 10.64s, environment 3.69s)
+
+2026-10-06 20:06:43 · load { 520.79 428.25 380.60 } · vue-tsc src+demo, F applied
+vue-tsc exit 0
+2026-10-06 20:15:13 · load { 475.16 445.89 392.96 } · dist with F (built 18:44, before the DEV-guard edit, which a production build strips)
+HEAD+floor+F: files 837 · bytes 2540889 · js gzip-9 of the concatenation 277145 · css bytes 462705 · toggle-group chunk(s) 4392 B js, 45934 B css
+2026-10-06 20:18:39 · load { 475.16 445.89 392.96 } · reverse F, library build of HEAD+floor
+load 475.16 / 445.89 / 392.96 at start
+declaration entries: projected 63 public entries
+gen-component-styles: wrote /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-F-spec/wt/.glass-generation-ZQnnYh/component-styles.css
+{"type":"glass-ui:ready","generation":"4b8f645671e6e0f4d09792c429067e94d7f9439fdbefe99536c2ba6c7a810989","output":"/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-F-spec/wt/dist","tuple":"js/sfc-css/declarations/relays/styles/fonts/utilities/component-styles"}
+lib build done in 293.9 s · load 429.04 / 437.08 / 397.12 at end
+libbuild exit 0
+HEAD+floor: files 837 · bytes 2537228 · js gzip-9 of the concatenation 276900 · css bytes 460038 · toggle-group chunk(s) 3892 B js, 43267 B css
+2026-10-06 20:23:44 · load { 430.80 437.20 397.63 } · re-apply F, library build again (the dist the worktree leaves)
+load 438.59 / 438.62 / 398.83 at start
+[33m[PLUGIN_TIMINGS] [0mYour build spent significant time in plugins. Here is a breakdown:
+  - vite:vue (85%)
+  - @tailwindcss/vite:generate:build (5%)
+  - vite:css (5%)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+declaration entries: projected 63 public entries
+gen-component-styles: wrote /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-F-spec/wt/.glass-generation-nRxsJN/component-styles.css
+{"type":"glass-ui:ready","generation":"1cca841c975693ad3be0ae308f8e9c482f575fdc0c9bc2ad3746965fa1edb11e","output":"/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-F-spec/wt/dist","tuple":"js/sfc-css/declarations/relays/styles/fonts/utilities/component-styles"}
+lib build done in 1107.1 s · load 526.03 / 469.97 / 415.98 at end
+libbuild exit 0
+HEAD+floor+F (rebuilt): files 837 · bytes 2540889 · js gzip-9 of the concatenation 277145 · css bytes 462705 · toggle-group chunk(s) 4392 B js, 45934 B css
+files in dist carrying the DEV name text: 0
+2026-10-06 20:42:30 · load { 526.03 469.97 415.98 } · done

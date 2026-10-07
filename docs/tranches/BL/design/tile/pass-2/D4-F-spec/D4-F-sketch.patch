@@ -1,0 +1,346 @@
+diff -ruN a/src/components/tabs/composables/useTabRovingFocus.ts b/src/components/tabs/composables/useTabRovingFocus.ts
+--- a/src/components/tabs/composables/useTabRovingFocus.ts	2026-10-06 19:40:54
++++ b/src/components/tabs/composables/useTabRovingFocus.ts	2026-10-06 19:40:52
+@@ -154,31 +154,41 @@
+     }
+ 
+     // The enabled item in the adjacent visual row in `dir` (+1 below, -1 above) whose
+-    // inline centre is nearest `fromIdx`'s, or -1 when no row lies that way. A row is
+-    // another row when it starts past the origin's centre line, so items of unequal
+-    // height in one row stay one row.
++    // inline centre is nearest `fromIdx`'s, or -1 when no row lies that way. An item
++    // lies that way when it starts past the origin's centre line. The adjacent row is
++    // the nearest such item together with every item whose block extent holds that
++    // item's centre line (or whose centre line it holds), so items of unequal height
++    // stay one row whether the row aligns them by their tops or by their centres.
+     function rowNeighbour(fromIdx: number, dir: 1 | -1): number {
+         const els = buttonRefs.value;
+         const at = els[fromIdx]?.getBoundingClientRect();
+         if (!at) return -1;
+         const mid = at.top + at.height / 2;
+         const cx = at.left + at.width / 2;
+-        let best = -1;
+-        let bestGap = Infinity;
+-        let bestDx = Infinity;
++        const beyond: { idx: number; r: DOMRect; gap: number }[] = [];
+         els.forEach((el, idx) => {
+             if (idx === fromIdx || stripOptions.value[idx]?.disabled) return;
+             const r = el.getBoundingClientRect();
+             const gap = dir === 1 ? r.top - mid : mid - r.bottom;
+-            if (gap <= 0) return;
+-            const dx = Math.abs(r.left + r.width / 2 - cx);
+-            // the nearest row first; within it, the nearest centre
+-            if (gap < bestGap - 0.5 || (Math.abs(gap - bestGap) <= 0.5 && dx < bestDx)) {
+-                best = idx;
+-                bestGap = gap;
++            if (gap > 0) beyond.push({ idx, r, gap });
++        });
++        const lead = beyond.reduce<(typeof beyond)[number] | null>(
++            (near, c) => (near === null || c.gap < near.gap ? c : near),
++            null,
++        );
++        if (!lead) return -1;
++        const centre = (r: DOMRect) => r.top + r.height / 2;
++        const holds = (a: DOMRect, b: DOMRect) => centre(b) >= a.top && centre(b) <= a.bottom;
++        let best = -1;
++        let bestDx = Infinity;
++        for (const c of beyond) {
++            if (!holds(lead.r, c.r) && !holds(c.r, lead.r)) continue;
++            const dx = Math.abs(c.r.left + c.r.width / 2 - cx);
++            if (dx < bestDx) {
++                best = c.idx;
+                 bestDx = dx;
+             }
+-        });
++        }
+         return best;
+     }
+ 
+diff -ruN a/src/components/toggle-group/ToggleGroupItem.vue b/src/components/toggle-group/ToggleGroupItem.vue
+--- a/src/components/toggle-group/ToggleGroupItem.vue	2026-10-06 19:40:50
++++ b/src/components/toggle-group/ToggleGroupItem.vue	2026-10-06 19:40:50
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { computed, onBeforeUnmount, onMounted, ref, type HTMLAttributes } from "vue";
++import { computed, onBeforeUnmount, onMounted, ref, watch, type HTMLAttributes } from "vue";
+ import { cn } from "../_shared/class-names";
+ import type { SelectionValue } from "../_shared/selection";
+ import { useOptionalToggleGroupContext, type ToggleItemEntry } from "./context";
+@@ -35,6 +35,10 @@
+  * in: this is a slot, not a travelling mark. */
+ defineSlots<{
+     default?: () => unknown;
++    /** A row above the label: a glyph, a thumbnail, a stage. Filling it makes the item a tile. */
++    media?: () => unknown;
++    /** A row below the label: a readout, a description. Filling it makes the item a tile. */
++    meta?: () => unknown;
+     indicator?: (props: { selected: boolean }) => unknown;
+ }>();
+ 
+@@ -72,6 +76,48 @@
+ 
+ const selected = computed(() => group?.isSelected(props.value) ?? false);
+ const isDisabled = computed(() => entry.disabled());
++
++/* THE COMMIT. The kick is keyed on the MODEL, not on focus and not on the pointer: a
++ * keyboard commit, a pointer commit and a programmatic write all turn `selected` from
++ * false to true, and each stamps `data-commit` for the one run of the kick
++ * (styles.css). Mount stamps nothing, and neither does focus entering a group whose
++ * choice is made, so a selected item that merely appears does not pretend to have been
++ * chosen. The stamp is an attribute on the library's own button: no slot re-renders. */
++const committed = ref(false);
++watch(selected, (on, was) => {
++    committed.value = on && was === false;
++});
++
++/* THE TWO NAMES A BUILD CAN GIVE A MISUSE (development only; production refuses both
++ * structurally: the pill is clamped to one row, and a key typed in an editable
++ * descendant stays the descendant's). */
++if (import.meta.env.DEV) {
++    onMounted(() =>
++        requestAnimationFrame(() => {
++            const b = el.value;
++            if (!b) return;
++            const ANATOMY = ".toggle-group__media, .toggle-group__meta";
++            const tile =
++                b.querySelector(`:scope > :is(${ANATOMY})`) !== null ||
++                (b.closest(".toggle-group")?.querySelector(ANATOMY) ?? null) !== null;
++            /* a row that leaves the plate (`overflow: clip` keeps `scrollHeight` at the
++               rung, so the children's own boxes are read), or a pill laid out as a column */
++            const box = b.getBoundingClientRect();
++            const cut = [...b.children].some((c) => {
++                const r = c.getBoundingClientRect();
++                return r.height > 0 && r.width > 1 && (r.bottom > box.bottom + 1 || r.top < box.top - 1);
++            });
++            if (!tile && (cut || getComputedStyle(b).flexDirection.startsWith("column")))
++                console.error(
++                    `[ToggleGroupItem] value=${JSON.stringify(props.value)} holds a second row in its default slot. A pill is one row and clips the rest. Put the row above the label in #media or the row below it in #meta: the item is then a tile.`,
++                );
++            if (b.querySelector("a[href], button, input, select, textarea, [contenteditable], [tabindex]"))
++                console.error(
++                    `[ToggleGroupItem] value=${JSON.stringify(props.value)} holds an interactive descendant. The item is one button: nothing inside it can take focus or a click of its own.`,
++                );
++        }),
++    );
++}
+ </script>
+ 
+ <template>
+@@ -86,13 +132,17 @@
+             )
+         "
+         :data-state="selected ? 'on' : 'off'"
++        :data-commit="committed ? '' : undefined"
+         :disabled="isDisabled || undefined"
+         :tabindex="group?.tabindex(entry) ?? 0"
+         v-bind="group?.itemAttrs(props.value)"
+         @click="group?.select(entry)"
++        @animationend.self="committed = false"
+     >
+         <slot name="indicator" :selected="selected" />
++        <span v-if="$slots.media" class="toggle-group__media"><slot name="media" /></span>
+         <slot />
++        <span v-if="$slots.meta" class="toggle-group__meta"><slot name="meta" /></span>
+     </button>
+ </template>
+ 
+diff -ruN a/src/components/toggle-group/styles.css b/src/components/toggle-group/styles.css
+--- a/src/components/toggle-group/styles.css	2026-10-06 19:40:54
++++ b/src/components/toggle-group/styles.css	2026-10-06 19:40:51
+@@ -90,6 +90,11 @@
+            label is an anonymous flex item `text-overflow` cannot reach, so it clips;
+            a label element ellipsizes (below). A tile rule lifts all four. */
+         max-inline-size: 100%;
++        /* ...and ONE ROW: the block size is the rung and nothing else, so no content
++           and no consumer class can grow the stadium into a lozenge. A second row in
++           the default slot is clipped at the plate, in production as in development;
++           a row belongs in `#media` or `#meta`, and then the item is a tile. */
++        max-block-size: var(--toggle-group-item-size);
+         justify-content: safe center;
+         white-space: nowrap;
+         overflow: clip;
+@@ -102,6 +107,8 @@
+            hold on a bare label. A tile rule sets 1, because a tile's content brings
+            its own ink and weight and overrides both. */
+         --selection-perimeter: 0;
++        /* the ink a tile's media reads: the item's own ink at rest, the edge when on */
++        --selection-ink: currentColor;
+     }
+ 
+     .dark .toggle-group__item {
+@@ -116,6 +123,131 @@
+         padding-block: 0.15em;
+     }
+ 
++    /* THE ANATOMY DECLARES THE TILE. An item that fills `#media` (a row above its
++       label) or `#meta` (a row below it) is a tile: the card rung, a column, body
++       leading, the pad pair, the selected perimeter. Nothing declares the shape; the
++       content's structure is the shape, read by `:has()` with no script. A group that
++       holds one tile is a set of tiles, so every sibling takes the same corner and the
++       row stretches them to one height: a one-row option beside a two-row one is a
++       shorter card's worth of content, never a stadium beside a card. An item outside
++       any group reads its own anatomy. */
++    .toggle-group:has(.toggle-group__media, .toggle-group__meta) {
++        align-items: stretch;
++    }
++
++    .toggle-group:has(.toggle-group__media, .toggle-group__meta) .toggle-group__item,
++    .toggle-group__item:has(> .toggle-group__media, > .toggle-group__meta) {
++        --selection-perimeter: 1;
++        border-radius: var(--radius-field);
++        flex-direction: column;
++        align-items: flex-start;
++        justify-content: flex-start;
++        gap: 0.25rem;
++        max-block-size: none;
++        white-space: normal;
++        overflow: visible;
++        line-height: var(--type-leading-body);
++        padding-block: 0.625rem;
++        text-align: start;
++
++        & > * {
++            overflow: visible;
++            padding-block: 0;
++        }
++    }
++
++    .toggle-group__media {
++        display: flex;
++        /* a media row spans the tile: a stage or a thumbnail takes the row's width */
++        align-self: stretch;
++        /* the media's ink follows the state: a stroke that reads `currentColor` needs
++           no `[data-state="on"]` rule of the consumer's */
++        color: var(--selection-ink);
++    }
++
++    /* the meta row is muted at rest and takes the label's ink when chosen, so the
++       selected state reaches the secondary line whatever type the content brings */
++    .toggle-group__meta {
++        color: var(--muted-foreground);
++        font-weight: 400;
++    }
++
++    .toggle-group__item[data-state="on"] > .toggle-group__meta {
++        color: var(--foreground);
++    }
++
++    /* THE MARK: a check in the tile's corner at `md` and up, drawn in the edge ink. It
++       is the carrier that is neither a colour nor an outline, so a selected tile does
++       not read as a focused one. It lives on `::after` (the perimeter holds `::before`). */
++    .toggle-group:not([data-size="sm"]):has(.toggle-group__media, .toggle-group__meta)
++        .toggle-group__item::after {
++        content: "";
++        position: absolute;
++        inset-block-start: 0.5rem;
++        inset-inline-end: 0.5rem;
++        inline-size: 1rem;
++        block-size: 1rem;
++        background: var(--selection-edge);
++        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")
++            center / contain no-repeat;
++        opacity: 0;
++        scale: 0.4;
++        pointer-events: none;
++        transition:
++            opacity var(--engage-control-engage-release) var(--ease-standard),
++            scale var(--spring-press-duration) var(--spring-press);
++    }
++
++    .toggle-group:not([data-size="sm"]):has(.toggle-group__media, .toggle-group__meta)
++        .toggle-group__item[data-state="on"]::after {
++        opacity: 1;
++        scale: 1;
++    }
++
++    /* THE COMMIT KICK. `data-commit` is stamped when the model turns the item on
++       (ToggleGroupItem.vue), for one run. The curve is a spring's impulse response
++       (ζ 0.5): it leaves 0, peaks at 1, dips to −0.163 and lands back on 0, so the
++       item pops by the amplitude, bounces under its rest and settles where it stood.
++       It rides `transform`, which composes with the hover lift and the press squish on
++       `scale`. The amplitude is scaled by `--motion-weight`, which reduced motion
++       zeroes: the perimeter's fade is then the whole commit. */
++    .toggle-group__item[data-commit] {
++        animation: toggle-group-commit 450ms
++            linear(
++                0,
++                0.4703 4.17%,
++                0.7811 8.33%,
++                0.9497 12.5%,
++                1 16.67%,
++                0.9589 20.83%,
++                0.8535 25%,
++                0.7087 29.17%,
++                0.5463 33.33%,
++                0.3835 37.5%,
++                0.2331 41.67%,
++                0.1037 45.83%,
++                0 50%,
++                -0.0767 54.17%,
++                -0.1274 58.33%,
++                -0.1548 62.5%,
++                -0.163 66.67%,
++                -0.1563 70.83%,
++                -0.1391 75%,
++                -0.1155 79.17%,
++                -0.0891 83.33%,
++                -0.0625 87.5%,
++                -0.038 91.67%,
++                -0.0169 95.83%,
++                0
++            );
++    }
++
++    @keyframes toggle-group-commit {
++        to {
++            transform: scale(calc(1 + 0.045 * var(--motion-weight, 0.618)));
++        }
++    }
++
+     /* THE SELECTED PERIMETER: a layer of its own over the border, 2 px of the edge
+        ink. It spends neither `outline` (the ring's) nor `box-shadow` (the ring's and
+        the rim's) nor the item's `border` (the invalid grammar's, a sibling state's and
+@@ -177,13 +309,22 @@
+        carrying less than §3.5 assumed. That is #82 W-FIELD's register to answer, not
+        this lane's to patch locally with a literal. */
+     .toggle-group__item[data-state="on"] {
+-        background-color: color-mix(in oklab, var(--foreground) 12%, transparent);
++        background-color: color-mix(
++            in oklab,
++            var(--selection-tone, var(--foreground)) 12%,
++            transparent
++        );
+         color: var(--foreground);
+         font-weight: 600;
++        --selection-ink: var(--selection-edge);
+     }
+ 
+     .toggle-group__item[data-state="on"]:hover:not(:disabled) {
+-        background-color: color-mix(in oklab, var(--foreground) 16%, transparent);
++        background-color: color-mix(
++            in oklab,
++            var(--selection-tone, var(--foreground)) 16%,
++            transparent
++        );
+     }
+ 
+     .toggle-group__item:disabled {
+diff -ruN a/tests/components/custom/tabs/roving-grid.test.ts b/tests/components/custom/tabs/roving-grid.test.ts
+--- a/tests/components/custom/tabs/roving-grid.test.ts	2026-10-06 19:40:54
++++ b/tests/components/custom/tabs/roving-grid.test.ts	2026-10-06 19:40:53
+@@ -98,6 +98,15 @@
+         expect(s.press(1, "ArrowDown")).toBe(2);
+     });
+ 
++    it("a short item centred beside a tall one is still that row", () => {
++        // two rows of [tall, short], the short one centred on its row (a pill beside a tile)
++        const s = strip([[0, 0, 200, 70], [210, 15, 200, 40], [0, 78, 200, 70], [210, 93, 200, 40]]);
++        expect(s.press(1, "ArrowDown")).toBe(3);
++        expect(s.press(3, "ArrowUp")).toBe(1);
++        expect(s.press(0, "ArrowDown")).toBe(2);
++        expect(s.press(2, "ArrowUp")).toBe(0);
++    });
++
+     it("a disabled item is skipped by the row walk and by the step", () => {
+         const s = strip(GRID, { disabled: [2] });
+         expect(s.press(0, "ArrowDown")).toBe(3);

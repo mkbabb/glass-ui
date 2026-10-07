@@ -1,0 +1,30 @@
+Tue Oct  6 19:30:35 EDT 2026 load { 312.54 337.09 334.75 }
+
+ RUN  v4.1.10 /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-F-spec/wt
+
+ ❯ tests/components/ui/toggle-group/ToggleGroup.test.ts (11 tests | 1 failed) 11903ms
+     × after a keyed reorder the arrows walk the new DOM order 10570ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/ui/toggle-group/ToggleGroup.test.ts > W-TOGGLE-ROW — the selection row > after a keyed reorder the arrows walk the new DOM order
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/components/ui/toggle-group/ToggleGroup.test.ts:131:5
+    129|     });
+    130|
+    131|     it("after a keyed reorder the arrows walk the new DOM order", asyn…
+       |     ^
+    132|         const order = ref(["one", "two", "three"]);
+    133|         const model = ref("one");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 64 passed | 1 expected fail (66)
+   Start at  19:30:54
+   Duration  35.89s (transform 13.31s, setup 6.19s, import 12.73s, tests 17.49s, environment 22.23s)
+
+exit 
+Tue Oct  6 19:31:30 EDT 2026 load { 361.64 345.96 338.09 }

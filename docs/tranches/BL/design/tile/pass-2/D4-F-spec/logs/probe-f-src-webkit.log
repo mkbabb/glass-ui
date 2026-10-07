@@ -1,0 +1,144 @@
+D4-F spec probe · f-src (ad94e27f, flavor src) · lock waited 0s · load 436.72 / 405.48 / 371.19 at start
+
+Playwright WebKit 26.5 · load 436.72 / 405.48 / 371.19
+ [q2] load 436.72 / 405.48 / 371.19
+  PASS q2 · K1 migrated, #meta removed from items 1 and 3 (a one-row item beside a two-row one) → cell 4/4; heights [70.59, 70.59, 70.59, 70.59]; #0 204×70.59 rung 40 16px→16 column perim 1 | #1 204×70.59 rung 40 16px→16 column perim 1
+  PASS q2 · mixed 2×2 walk (Q-4 b) 0R→1 0L→3 0D→2 0U→3 1R→2 1L→0 1D→3 1U→0 2R→3 2L→1 2D→3 2U→0 3R→0 3L→2 3D→0 3U→1
+  PASS q2 · the same row centred by the consumer (unequal heights): 1D→3 (h 70.6,43.4,70.6,43.4) 3U→1 (h 70.6,43.4,70.6,43.4) 0D→2 (h 70.6,43.4,70.6,43.4) 2U→0 (h 70.6,43.4,70.6,43.4)
+  PASS q2 · single (no anatomy) → pill 4/4; group align-items center; #0 36×36 rung 36 9999px→18 row perim 0
+  PASS q2 · vertical (no anatomy) → pill 4/4; group align-items stretch; #0 56×40 rung 40 9999px→20 row perim 0
+  PASS q2 · pill-icon (no anatomy) → pill 3/3; group align-items center; #0 80.16×40 rung 40 9999px→20 row perim 0
+  PASS q2 · pill-badge (no anatomy) → pill 3/3; group align-items center; #0 95.45×40 rung 40 9999px→20 row perim 0
+  PASS q2 · family-d-undeclared (no anatomy) → pill 4/4; group align-items center; #0 195.28×40 rung 40 9999px→20 row perim 0
+  PASS q2 · live flip, a #meta row appended to item 0 of 'single' then removed · before 36×36.0 9999px | 58×36.0 9999px | 49×36.0 9999px | 60×36.0 9999px · added 57×66.3 16px | 58×66.3 16px | 49×66.3 16px | 60×66.3 16px · removed 36×36.0 9999px | 58×36.0 9999px | 49×36.0 9999px | 60×36.0 9999px
+ [q3] load 513.00 / 439.44 / 386.98
+  PASS q3 · preset-migrated · rows present → cell 4/4 (#0 204×70.59 rung 40 16px→16 column perim 1) · rows removed → pill 4/4 (#0 204×40 rung 40 9999px→20 row perim 0) · attributes of the group and 4 items identical
+  PASS q3 · specimen-migrated · rows present → cell 8/8 (#0 205×98.16 rung 36 16px→16 column perim 1) · rows removed → pill 8/8 (#0 205×36 rung 36 9999px→18 row perim 0) · attributes of the group and 8 items identical
+  PASS q3 · strip-migrated · rows present → cell 6/6 (#0 40×58.8 rung 36 16px→16 column perim 1) · rows removed → pill 6/6 (#0 36×36 rung 36 9999px→18 row perim 0) · attributes of the group and 6 items identical
+  PASS q3 · f1-migrated · rows present → cell 6/6 (#0 74×91.48 rung 40 16px→16 column perim 1) · rows removed → pill 6/6 (#0 50.86×40 rung 40 9999px→20 row perim 0) · attributes of the group and 6 items identical
+  PASS q3 · v2-migrated · rows present → cell 4/4 (#0 452×106.34 rung 40 16px→16 column perim 1) · rows removed → pill 4/4 (#0 452×40 rung 40 9999px→20 row perim 0) · attributes of the group and 4 items identical
+ [q4] load 543.50 / 449.83 / 391.61
+  INFO q4 · corner preset → pill 4/4; #0 204×40 rung 40 9999px→20 column perim 0; content rows 2, a row cut by the plate on 0/4; console errors 0
+  INFO q4 · corner preset-verbatim → cell 4/4; #0 208×40 rung 40 16px→16 column perim 0; content rows 2, a row cut by the plate on 0/4; console errors 0
+  INFO q4 · corner specimen → pill 8/8; #0 207×36 rung 36 9999px→18 column perim 0; content rows 2, a row cut by the plate on 0/8; console errors 0
+  INFO q4 · corner specimen-verbatim → cell 8/8; #0 207×36 rung 36 16px→16 column perim 0; content rows 2, a row cut by the plate on 0/8; console errors 0
+  INFO q4 · corner preset-migrated → cell 4/4; #0 204×70.59 rung 40 16px→16 column perim 1; content rows 2, a row cut by the plate on 0/4; console errors 0
+  INFO q4 · corner specimen-migrated → cell 8/8; #0 205×98.16 rung 36 16px→16 column perim 1; content rows 2, a row cut by the plate on 0/8; console errors 0
+  INFO q4 · corner strip-migrated → cell 6/6; #0 40×58.8 rung 36 16px→16 column perim 1; content rows 2, a row cut by the plate on 0/6; console errors 0
+  INFO q4 · corner f1-migrated → cell 6/6; #0 74×91.48 rung 40 16px→16 column perim 1; content rows 2, a row cut by the plate on 0/6; console errors 0
+  INFO q4 · corner v2-migrated → cell 4/4; #0 452×106.34 rung 40 16px→16 column perim 1; content rows 3, a row cut by the plate on 0/4; console errors 0
+  INFO q4 · corner c1-migrated → pill 5/5; #0 184×40 rung 40 9999px→20 row perim 0; content rows 1, a row cut by the plate on 0/5; console errors 0
+  INFO q4 · T-3 unmigrated preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.21:1; p95 1.22; items 1/0 204×40
+  INFO q4 · T-3 unmigrated preset-verbatim light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 248.00 px²; fill 1.10:1; p95 1.22; items 1/0 208×40
+  INFO q4 · T-3 unmigrated specimen light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.21:1; p95 1.22; items 1/0 207×36
+  INFO q4 · T-3 unmigrated specimen-verbatim light · carrier ≥3:1 area 591.25 px² (perimeter band 566.25, interior 25.00) vs the bar 243.00 px²; fill 1.00:1; p95 8.38; items 1/0 207×36
+  PASS q4 · T-3 migrated preset-migrated light · carrier ≥3:1 area 981.50 px² (perimeter band 914.50, interior 67.00) vs the bar 274.00 px²; fill 1.22:1; p95 9.10; items 1/0 204×70
+  PASS q4 · T-3 migrated specimen-migrated light · carrier ≥3:1 area 572.00 px² (perimeter band 549.00, interior 23.00) vs the bar 303.00 px²; fill 1.20:1; p95 1.23; items 1/0 205×98
+  PASS q4 · T-3 migrated strip-migrated light · carrier ≥3:1 area 321.00 px² (perimeter band 291.00, interior 30.00) vs the bar 98.00 px²; fill 1.22:1; p95 12.42; items 1/0 40×58
+  PASS q4 · T-3 migrated f1-migrated light · carrier ≥3:1 area 335.00 px² (perimeter band 278.50, interior 56.50) vs the bar 165.00 px²; fill 1.22:1; p95 2.78; items 1/0 74×91
+  PASS q4 · T-3 migrated v2-migrated light · carrier ≥3:1 area 1991.00 px² (perimeter band 1920.00, interior 71.00) vs the bar 558.00 px²; fill 1.22:1; p95 1.25; items 1/0 452×106
+  INFO q4 · T-3 migrated c1-migrated (one-row pills, Q-10 b: reported) light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 224.00 px²; fill 1.20:1; p95 1.23; items 1/0 184×40
+  PASS q4 · T-3 H-3 invalid on preset-migrated light · carrier ≥3:1 area 974.00 px² (perimeter band 907.00, interior 67.00) vs the bar 274.00 px²; fill 1.21:1; p95 3.57; items 1/0 204×70
+  PASS q4 · T-3 H-3 sibling on preset-migrated light · carrier ≥3:1 area 553.50 px² (perimeter band 497.00, interior 56.50) vs the bar 274.00 px²; fill 1.21:1; p95 1.21; items 1/0 204×70
+  PASS q4 · T-3 H-3 toneTranslucent on preset-migrated light · carrier ≥3:1 area 966.00 px² (perimeter band 901.00, interior 65.00) vs the bar 274.00 px²; fill 1.05:1; p95 4.80; items 1/0 204×70
+  PASS q4 · T-3 H-3 toneUnresolvable on preset-migrated light · carrier ≥3:1 area 981.50 px² (perimeter band 914.50, interior 67.00) vs the bar 274.00 px²; fill 1.21:1; p95 9.03; items 1/0 204×70
+  INFO q4 · T-3 unmigrated preset dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.20:1; p95 1.27; items 1/0 204×40
+  INFO q4 · T-3 unmigrated preset-verbatim dark · carrier ≥3:1 area 217.00 px² (perimeter band 213.50, interior 3.50) vs the bar 248.00 px²; fill 1.07:1; p95 1.13; items 1/0 208×40
+  INFO q4 · T-3 unmigrated specimen dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.20:1; p95 1.26; items 1/0 207×36
+  INFO q4 · T-3 unmigrated specimen-verbatim dark · carrier ≥3:1 area 603.50 px² (perimeter band 578.00, interior 25.50) vs the bar 243.00 px²; fill 1.00:1; p95 11.06; items 1/0 207×36
+  PASS q4 · T-3 migrated preset-migrated dark · carrier ≥3:1 area 991.50 px² (perimeter band 922.50, interior 69.00) vs the bar 274.00 px²; fill 1.21:1; p95 11.10; items 1/0 204×70
+  PASS q4 · T-3 migrated specimen-migrated dark · carrier ≥3:1 area 583.00 px² (perimeter band 557.50, interior 25.50) vs the bar 303.00 px²; fill 1.20:1; p95 1.26; items 1/0 205×98
+  PASS q4 · T-3 migrated strip-migrated dark · carrier ≥3:1 area 328.00 px² (perimeter band 298.00, interior 30.00) vs the bar 98.00 px²; fill 1.19:1; p95 12.91; items 1/0 40×58
+  PASS q4 · T-3 migrated f1-migrated dark · carrier ≥3:1 area 338.00 px² (perimeter band 279.50, interior 58.50) vs the bar 165.00 px²; fill 1.21:1; p95 3.14; items 1/0 74×91
+  PASS q4 · T-3 migrated v2-migrated dark · carrier ≥3:1 area 2000.50 px² (perimeter band 1927.50, interior 73.00) vs the bar 558.00 px²; fill 1.20:1; p95 1.21; items 1/0 452×106
+  INFO q4 · T-3 migrated c1-migrated (one-row pills, Q-10 b: reported) dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 224.00 px²; fill 1.20:1; p95 1.26; items 1/0 184×40
+  PASS q4 · T-3 H-3 invalid on preset-migrated dark · carrier ≥3:1 area 567.50 px² (perimeter band 509.00, interior 58.50) vs the bar 274.00 px²; fill 1.22:1; p95 2.31; items 1/0 204×70
+  PASS q4 · T-3 H-3 sibling on preset-migrated dark · carrier ≥3:1 area 556.00 px² (perimeter band 497.50, interior 58.50) vs the bar 274.00 px²; fill 1.22:1; p95 1.23; items 1/0 204×70
+  PASS q4 · T-3 H-3 toneTranslucent on preset-migrated dark · carrier ≥3:1 area 978.00 px² (perimeter band 911.00, interior 67.00) vs the bar 274.00 px²; fill 1.02:1; p95 6.65; items 1/0 204×70
+  PASS q4 · T-3 H-3 toneUnresolvable on preset-migrated dark · carrier ≥3:1 area 991.50 px² (perimeter band 922.50, interior 69.00) vs the bar 274.00 px²; fill 1.21:1; p95 11.10; items 1/0 204×70
+  INFO q4 · T-3 unmigrated preset prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  INFO q4 · T-3 unmigrated preset-verbatim prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 248.00 px²; fill 1.07:1; p95 1.08; items 1/0 208×40
+  INFO q4 · T-3 unmigrated specimen prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.00:1; p95 1.00; items 1/0 207×36
+  INFO q4 · T-3 unmigrated specimen-verbatim prt (forced level-0 path) · carrier ≥3:1 area 595.50 px² (perimeter band 570.00, interior 25.50) vs the bar 243.00 px²; fill 1.00:1; p95 12.15; items 1/0 207×36
+  PASS q4 · T-3 migrated preset-migrated prt (forced level-0 path) · carrier ≥3:1 area 981.25 px² (perimeter band 914.25, interior 67.00) vs the bar 274.00 px²; fill 1.01:1; p95 12.15; items 1/0 204×70
+  PASS q4 · T-3 migrated specimen-migrated prt (forced level-0 path) · carrier ≥3:1 area 571.00 px² (perimeter band 548.00, interior 23.00) vs the bar 303.00 px²; fill 1.00:1; p95 1.00; items 1/0 205×98
+  PASS q4 · T-3 migrated strip-migrated prt (forced level-0 path) · carrier ≥3:1 area 318.00 px² (perimeter band 290.00, interior 28.00) vs the bar 98.00 px²; fill 1.00:1; p95 15.86; items 1/0 40×58
+  PASS q4 · T-3 migrated f1-migrated prt (forced level-0 path) · carrier ≥3:1 area 335.50 px² (perimeter band 279.00, interior 56.50) vs the bar 165.00 px²; fill 1.01:1; p95 2.90; items 1/0 74×91
+  PASS q4 · T-3 migrated v2-migrated prt (forced level-0 path) · carrier ≥3:1 area 1988.25 px² (perimeter band 1917.25, interior 71.00) vs the bar 558.00 px²; fill 1.00:1; p95 1.02; items 1/0 452×106
+  INFO q4 · T-3 migrated c1-migrated (one-row pills, Q-10 b: reported) prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 224.00 px²; fill 1.00:1; p95 1.00; items 1/0 184×40
+  PASS q4 · T-3 H-3 invalid on preset-migrated prt (forced level-0 path) · carrier ≥3:1 area 973.75 px² (perimeter band 906.75, interior 67.00) vs the bar 274.00 px²; fill 1.01:1; p95 3.57; items 1/0 204×70
+  PASS q4 · T-3 H-3 sibling on preset-migrated prt (forced level-0 path) · carrier ≥3:1 area 553.25 px² (perimeter band 496.75, interior 56.50) vs the bar 274.00 px²; fill 1.01:1; p95 1.00; items 1/0 204×70
+  PASS q4 · T-3 H-3 toneTranslucent on preset-migrated prt (forced level-0 path) · carrier ≥3:1 area 966.25 px² (perimeter band 901.00, interior 65.25) vs the bar 274.00 px²; fill 1.00:1; p95 6.41; items 1/0 204×70
+  PASS q4 · T-3 H-3 toneUnresolvable on preset-migrated prt (forced level-0 path) · carrier ≥3:1 area 981.25 px² (perimeter band 914.25, interior 67.00) vs the bar 274.00 px²; fill 1.01:1; p95 12.15; items 1/0 204×70
+ [q5] load 436.30 / 439.15 / 396.65
+  PASS q5 · T-1 preset-migrated fine · rung 40 · 204.00×70.59 16px→16.00 (÷h/2 0.45) | 204.00×93.80 16px→16.00 (÷h/2 0.34) | 204.00×116.98 16px→16.00 (÷h/2 0.27) · bound root --radius-field = 16.00
+  PASS q5 · T-1 specimen-migrated fine · rung 36 · 205.00×98.16 16px→16.00 (÷h/2 0.33) | 205.00×116.31 16px→16.00 (÷h/2 0.28) | 205.00×134.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00
+  PASS q5 · T-1 strip-migrated fine · rung 36 · 40.00×58.80 16px→16.00 (÷h/2 0.54) | 90.00×69.59 16px→16.00 (÷h/2 0.46) | 90.00×80.39 16px→16.00 (÷h/2 0.40) · bound root --radius-field = 16.00
+  PASS q5 · T-1 f1-migrated fine · rung 40 · 74.00×91.48 16px→16.00 (÷h/2 0.35) | 133.69×108.97 16px→16.00 (÷h/2 0.29) | 133.69×126.45 16px→16.00 (÷h/2 0.25) · bound root --radius-field = 16.00
+  PASS q5 · T-1 v2-migrated fine · rung 40 · 452.00×106.34 16px→16.00 (÷h/2 0.30) | 452.00×129.28 16px→16.00 (÷h/2 0.25) | 452.00×152.22 16px→16.00 (÷h/2 0.21) · bound root --radius-field = 16.00
+  PASS q5 · T-1 preset-migrated coarse · rung 60 · 204.00×81.81 16px→16.00 (÷h/2 0.39) | 204.00×116.22 16px→16.00 (÷h/2 0.28) | 204.00×150.63 16px→16.00 (÷h/2 0.21) · bound root --radius-field = 16.00
+  PASS q5 · T-1 specimen-migrated coarse · rung 54 · 205.00×98.16 16px→16.00 (÷h/2 0.33) | 205.00×116.31 16px→16.00 (÷h/2 0.28) | 205.00×134.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00
+  PASS q5 · T-1 strip-migrated coarse · rung 54 · 54.00×58.80 16px→16.00 (÷h/2 0.54) | 90.00×69.59 16px→16.00 (÷h/2 0.46) | 90.00×80.39 16px→16.00 (÷h/2 0.40) · bound root --radius-field = 16.00
+  PASS q5 · T-1 f1-migrated coarse · rung 60 · 74.00×91.48 16px→16.00 (÷h/2 0.35) | 133.69×108.97 16px→16.00 (÷h/2 0.29) | 133.69×126.45 16px→16.00 (÷h/2 0.25) · bound root --radius-field = 16.00
+  PASS q5 · T-1 v2-migrated coarse · rung 60 · 452.00×117.81 16px→16.00 (÷h/2 0.27) | 452.00×152.22 16px→16.00 (÷h/2 0.21) | 452.00×186.63 16px→16.00 (÷h/2 0.17) · bound root --radius-field = 16.00
+  PASS q5 · T-1 preset-migrated ui-scale 1.25 · rung 50 · 204.00×76.09 16px→16.00 (÷h/2 0.42) | 204.00×104.78 16px→16.00 (÷h/2 0.31) | 204.00×133.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00
+  PASS q5 · T-1 specimen-migrated ui-scale 1.25 · rung 45 · 205.00×98.16 16px→16.00 (÷h/2 0.33) | 205.00×116.31 16px→16.00 (÷h/2 0.28) | 205.00×134.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00
+  PASS q5 · T-1 strip-migrated ui-scale 1.25 · rung 45 · 45.00×58.80 16px→16.00 (÷h/2 0.54) | 90.00×69.59 16px→16.00 (÷h/2 0.46) | 90.00×80.39 16px→16.00 (÷h/2 0.40) · bound root --radius-field = 16.00
+  PASS q5 · T-1 f1-migrated ui-scale 1.25 · rung 50 · 74.00×91.48 16px→16.00 (÷h/2 0.35) | 133.69×108.97 16px→16.00 (÷h/2 0.29) | 133.69×126.45 16px→16.00 (÷h/2 0.25) · bound root --radius-field = 16.00
+  PASS q5 · T-1 v2-migrated ui-scale 1.25 · rung 50 · 452.00×112.09 16px→16.00 (÷h/2 0.29) | 452.00×140.78 16px→16.00 (÷h/2 0.23) | 452.00×169.47 16px→16.00 (÷h/2 0.19) · bound root --radius-field = 16.00
+  PASS q5 · pill single coarse → pill 4/4; #0 54×54 rung 54 9999px→27 row perim 0
+  PASS q5 · pill pill-icon coarse → pill 3/3; #0 93.13×60 rung 60 9999px→30 row perim 0
+  PASS q5 · pill pill-badge coarse → pill 3/3; #0 112.05×60 rung 60 9999px→30 row perim 0
+  PASS q5 · pill c1-migrated coarse → pill 5/5; #0 210.06×60 rung 60 9999px→30 row perim 0
+  PASS q5 · pill single ui-scale 1.25 → pill 4/4; #0 45×45 rung 45 9999px→22.5 row perim 0
+  PASS q5 · pill pill-icon ui-scale 1.25 → pill 3/3; #0 86.77×50 rung 50 9999px→25 row perim 0
+  PASS q5 · pill pill-badge ui-scale 1.25 → pill 3/3; #0 104×50 rung 50 9999px→25 row perim 0
+  PASS q5 · pill c1-migrated ui-scale 1.25 → pill 5/5; #0 184×50 rung 50 9999px→25 row perim 0
+ [commit] load 427.25 / 436.27 / 398.23
+  PASS commit · preset-migrated Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · median frame 17.0 ms · load 427.25 / 436.27 / 398.23
+  PASS commit · preset-migrated keyboard commit (ArrowRight) · pop peak 1.03 at 80 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 14-197 ms; 50 frames, median 17.00 ms · median frame 17.0 ms · load 417.22 / 434.04 / 397.67
+  PASS commit · preset-migrated programmatic commit (focus on the sentinel) · pop peak 1.03 at 88 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 58-205 ms; 48 frames, median 17.00 ms · median frame 17.0 ms · load 417.22 / 434.04 / 397.67
+  PASS commit · preset-migrated pointer commit (click) · pop peak 1.04 at 158 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 49-242 ms; 35 frames, median 20.00 ms · median frame 20.0 ms · load 426.76 / 435.49 / 398.61
+  PASS commit · specimen-migrated Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · median frame 17.0 ms · load 487.29 / 448.93 / 404.73
+  PASS commit · specimen-migrated keyboard commit (ArrowRight) · pop peak 1.03 at 97 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 16-197 ms; 50 frames, median 17.00 ms · median frame 17.0 ms · load 484.31 / 448.95 / 405.00
+  PASS commit · specimen-migrated programmatic commit (focus on the sentinel) · pop peak 1.03 at 96 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 48-198 ms; 48 frames, median 17.00 ms · median frame 17.0 ms · load 484.31 / 448.95 / 405.00
+  PASS commit · specimen-migrated pointer commit (click) · pop peak 1.04 at 145 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 63-222 ms; 39 frames, median 17.00 ms · median frame 17.0 ms · load 469.39 / 446.44 / 404.37
+  PASS commit · single Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · median frame 17.0 ms · load 469.39 / 446.44 / 404.37
+  PASS commit · single keyboard commit (ArrowRight) · pop peak 1.03 at 103 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 36-340 ms; 19 frames, median 39.00 ms · median frame 39.0 ms · load 484.81 / 450.02 / 405.88
+  PASS commit · single programmatic commit (focus on the sentinel) · pop peak 1.03 at 150 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 76-265 ms; 39 frames, median 17.00 ms · median frame 17.0 ms · load 501.88 / 454.13 / 407.59
+  PASS commit · single pointer commit (click) · pop peak 1.04 at 139 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 25-205 ms; 48 frames, median 17.00 ms · median frame 17.0 ms · load 512.14 / 457.05 / 408.89
+  PASS commit · preset-migrated programmatic commit under reduced motion · scale range 0.0000 (no pop; the perimeter and the mark carry it)
+ [hover] load 524.14 / 460.46 / 410.37
+  PASS hover · preset-migrated light hover light on unselected #0 · 87.55 % of pixels move (scale pinned)
+  PASS hover · preset-migrated light selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 977.00 px² (band 910.00, interior 67.00) vs the bar 274 px²
+  PASS hover · specimen-migrated light hover light on unselected #0 · 77.52 % of pixels move (scale pinned)
+  PASS hover · specimen-migrated light selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 567.00 px² (band 544.50, interior 22.50) vs the bar 303 px²
+  PASS hover · preset-migrated dark hover light on unselected #0 · 88.63 % of pixels move (scale pinned)
+  PASS hover · preset-migrated dark selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 981.00 px² (band 914.00, interior 67.00) vs the bar 274 px²
+  PASS hover · specimen-migrated dark hover light on unselected #0 · 90.15 % of pixels move (scale pinned)
+  PASS hover · specimen-migrated dark selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 568.00 px² (band 545.25, interior 22.75) vs the bar 303 px²
+ [ink] load 517.62 / 469.16 / 416.01
+  PASS ink · specimen-migrated · media stroke on oklch(0.216115 0.006126 56.043385) / off rgb(112, 89, 66) · edge oklch(0.216115 0.006126 56.043385) · tint oklab(0.216115 0.003422 0.005081 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0
+  PASS ink · specimen-migrated with --selection-tone: oklch(0.62 0.2 300) on the group · media stroke on oklch(0.42 0.2 300) / off rgb(112, 89, 66) · edge oklch(0.42 0.2 300) · tint oklab(0.62 0.1 -0.173205 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0
+  PASS ink · strip-migrated · media stroke on oklch(0.216115 0.006126 56.043385) / off rgb(124, 102, 80) · edge oklch(0.216115 0.006126 56.043385) · tint oklab(0.216115 0.003422 0.005081 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0
+  PASS ink · strip-migrated with --selection-tone: oklch(0.62 0.2 300) on the group · media stroke on oklch(0.42 0.2 300) / off rgb(124, 102, 80) · edge oklch(0.42 0.2 300) · tint oklab(0.62 0.1 -0.173205 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0
+  PASS ink · f1-migrated · media stroke on oklch(0.216115 0.006126 56.043385) / off rgb(112, 89, 66) · edge oklch(0.216115 0.006126 56.043385) · tint oklab(0.216115 0.003422 0.005081 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0
+  PASS ink · f1-migrated with --selection-tone: oklch(0.62 0.2 300) on the group · media stroke on oklch(0.42 0.2 300) / off rgb(112, 89, 66) · edge oklch(0.42 0.2 300) · tint oklab(0.62 0.1 -0.173205 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0
+ [cost] load 501.54 / 467.97 / 416.51
+  INFO cost · 200 tiles, 40 forced style+layout passes per round, 9 rounds · :has() rules min 0.0 ms, median 0.0 ms · the same 4 rules keyed on a class min 0.0 ms, median 0.0 ms (tile corner still 16px) · ratio of minima NaN · load 499.02 / 468.01 / 416.82
+ [guard] load 499.02 / 468.01 / 416.82
+  PASS guard · preset [src] · pill 4/4 (#0 204×40 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · specimen [src] · pill 8/8 (#0 207×36 at rung 36) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · preset-input [src] · pill 4/4 (#0 204×40 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · preset-migrated [src] · cell 4/4 (#0 204×70.59 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · specimen-migrated [src] · cell 8/8 (#0 205×98.16 at rung 36) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · strip-migrated [src] · cell 6/6 (#0 40×58.8 at rung 36) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · v2-migrated [src] · cell 4/4 (#0 452×106.34 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · single [src] · pill 4/4 (#0 36×36 at rung 36) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  retry pill-icon after: page.goto: Timeout 30000ms exceeded. · load 487.59 / 467.30 / 417.75
+  PASS guard · pill-icon [src] · pill 3/3 (#0 80.16×40 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · pill-badge [src] · pill 3/3 (#0 95.45×40 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · c1-migrated [src] · pill 5/5 (#0 184×40 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  load 479.22 / 465.90 / 417.55 at end
+
+102/102 gating cells pass · load 479.22 / 465.90 / 417.55 at end

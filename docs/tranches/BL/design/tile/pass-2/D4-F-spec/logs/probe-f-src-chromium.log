@@ -1,0 +1,103 @@
+D4-F spec probe · f-src (ad94e27f, flavor src) · lock waited 0s · load 341.13 / 346.18 / 336.88 at start
+
+Chromium 149.0.7827.55 · load 332.39 / 344.29 / 336.27
+ [q2] load 332.39 / 344.29 / 336.27
+  PASS q2 · K1 migrated, #meta removed from items 1 and 3 (a one-row item beside a two-row one) → cell 4/4; heights [70.58, 70.58, 70.58, 70.58]; #0 204×70.58 rung 40 16px→16 column perim 1 | #1 204×70.58 rung 40 16px→16 column perim 1
+  PASS q2 · mixed 2×2 walk (Q-4 b) 0R→1 0L→3 0D→2 0U→3 1R→2 1L→0 1D→3 1U→0 2R→3 2L→1 2D→3 2U→0 3R→0 3L→2 3D→0 3U→1
+  PASS q2 · the same row centred by the consumer (unequal heights): 1D→3 (h 70.6,43.4,70.6,43.4) 3U→1 (h 70.6,43.4,70.6,43.4) 0D→2 (h 70.6,43.4,70.6,43.4) 2U→0 (h 70.6,43.4,70.6,43.4)
+  PASS q2 · single (no anatomy) → pill 4/4; group align-items center; #0 36×36 rung 36 9999px→18 row perim 0
+  PASS q2 · vertical (no anatomy) → pill 4/4; group align-items stretch; #0 56×40 rung 40 9999px→20 row perim 0
+  PASS q2 · pill-icon (no anatomy) → pill 3/3; group align-items center; #0 80.14×40 rung 40 9999px→20 row perim 0
+  PASS q2 · pill-badge (no anatomy) → pill 3/3; group align-items center; #0 95.34×40 rung 40 9999px→20 row perim 0
+  PASS q2 · family-d-undeclared (no anatomy) → pill 4/4; group align-items center; #0 195.28×40 rung 40 9999px→20 row perim 0
+  PASS q2 · live flip, a #meta row appended to item 0 of 'single' then removed · before 36×36.0 9999px | 58×36.0 9999px | 49×36.0 9999px | 60×36.0 9999px · added 57×66.3 16px | 58×66.3 16px | 49×66.3 16px | 60×66.3 16px · removed 36×36.0 9999px | 58×36.0 9999px | 49×36.0 9999px | 60×36.0 9999px
+ [q3] load 330.62 / 339.58 / 335.69
+  PASS q3 · preset-migrated · rows present → cell 4/4 (#0 204×70.58 rung 40 16px→16 column perim 1) · rows removed → pill 4/4 (#0 204×40 rung 40 9999px→20 row perim 0) · attributes of the group and 4 items identical
+  PASS q3 · specimen-migrated · rows present → cell 8/8 (#0 205×98.16 rung 36 16px→16 column perim 1) · rows removed → pill 8/8 (#0 205×36 rung 36 9999px→18 row perim 0) · attributes of the group and 8 items identical
+  PASS q3 · strip-migrated · rows present → cell 6/6 (#0 40×58.8 rung 36 16px→16 column perim 1) · rows removed → pill 6/6 (#0 36×36 rung 36 9999px→18 row perim 0) · attributes of the group and 6 items identical
+  PASS q3 · f1-migrated · rows present → cell 6/6 (#0 74×91.48 rung 40 16px→16 column perim 1) · rows removed → pill 6/6 (#0 50.86×40 rung 40 9999px→20 row perim 0) · attributes of the group and 6 items identical
+  PASS q3 · v2-migrated · rows present → cell 4/4 (#0 452×106.34 rung 40 16px→16 column perim 1) · rows removed → pill 4/4 (#0 452×40 rung 40 9999px→20 row perim 0) · attributes of the group and 4 items identical
+ [q4] load 354.91 / 344.39 / 337.50
+  INFO q4 · corner preset → pill 4/4; #0 204×40 rung 40 9999px→20 column perim 0; clipped 0/4 (scroll 39 vs client 38); console errors 0
+  INFO q4 · corner preset-verbatim → cell 4/4; #0 208×40 rung 40 16px→16 column perim 0; clipped 0/4 (scroll 39 vs client 38); console errors 0
+  INFO q4 · corner specimen → pill 8/8; #0 207×36 rung 36 9999px→18 column perim 0; clipped 0/8 (scroll 35 vs client 34); console errors 0
+  INFO q4 · corner specimen-verbatim → cell 8/8; #0 207×36 rung 36 16px→16 column perim 0; clipped 0/8 (scroll 35 vs client 34); console errors 0
+  INFO q4 · corner preset-migrated → cell 4/4; #0 204×70.58 rung 40 16px→16 column perim 1; clipped 0/4 (scroll 70 vs client 69); console errors 0
+  INFO q4 · corner specimen-migrated → cell 8/8; #0 205×98.16 rung 36 16px→16 column perim 1; clipped 0/8 (scroll 97 vs client 96); console errors 0
+  INFO q4 · corner strip-migrated → cell 6/6; #0 40×58.8 rung 36 16px→16 column perim 1; clipped 0/6 (scroll 58 vs client 57); console errors 0
+  INFO q4 · corner f1-migrated → cell 6/6; #0 74×91.48 rung 40 16px→16 column perim 1; clipped 0/6 (scroll 90 vs client 89); console errors 0
+  INFO q4 · corner v2-migrated → cell 4/4; #0 452×106.34 rung 40 16px→16 column perim 1; clipped 0/4 (scroll 105 vs client 104); console errors 0
+  INFO q4 · corner c1-migrated → pill 5/5; #0 184×40 rung 40 9999px→20 row perim 0; clipped 0/5 (scroll 39 vs client 38); console errors 0
+  INFO q4 · T-3 unmigrated preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.20:1; p95 1.20; items 1/0 204×40
+  FAIL q4 · HARNESS ERROR page.screenshot: Timeout 30000ms exceeded.
+ [q5] load 410.56 / 361.15 / 344.13
+  PASS q5 · T-1 preset-migrated fine · rung 40 · 204.00×70.58 16px→16.00 (÷h/2 0.45) | 204.00×93.75 16px→16.00 (÷h/2 0.34) | 204.00×116.92 16px→16.00 (÷h/2 0.27) · bound root --radius-field = 16.00
+  PASS q5 · T-1 specimen-migrated fine · rung 36 · 205.00×98.16 16px→16.00 (÷h/2 0.33) | 205.00×116.31 16px→16.00 (÷h/2 0.28) | 205.00×134.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00
+  PASS q5 · T-1 strip-migrated fine · rung 36 · 40.00×58.80 16px→16.00 (÷h/2 0.54) | 90.00×69.59 16px→16.00 (÷h/2 0.46) | 90.00×80.39 16px→16.00 (÷h/2 0.40) · bound root --radius-field = 16.00
+  PASS q5 · T-1 f1-migrated fine · rung 40 · 74.00×91.48 16px→16.00 (÷h/2 0.35) | 133.69×108.97 16px→16.00 (÷h/2 0.29) | 133.69×126.45 16px→16.00 (÷h/2 0.25) · bound root --radius-field = 16.00
+  PASS q5 · T-1 v2-migrated fine · rung 40 · 452.00×106.34 16px→16.00 (÷h/2 0.30) | 452.00×129.28 16px→16.00 (÷h/2 0.25) | 452.00×152.22 16px→16.00 (÷h/2 0.21) · bound root --radius-field = 16.00
+  PASS q5 · T-1 preset-migrated coarse · rung 60 · 204.00×81.83 16px→16.00 (÷h/2 0.39) | 204.00×116.25 16px→16.00 (÷h/2 0.28) | 204.00×150.67 16px→16.00 (÷h/2 0.21) · bound root --radius-field = 16.00
+  PASS q5 · T-1 specimen-migrated coarse · rung 54 · 205.00×98.16 16px→16.00 (÷h/2 0.33) | 205.00×116.31 16px→16.00 (÷h/2 0.28) | 205.00×134.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00
+  PASS q5 · T-1 strip-migrated coarse · rung 54 · 54.00×58.80 16px→16.00 (÷h/2 0.54) | 90.00×69.59 16px→16.00 (÷h/2 0.46) | 90.00×80.39 16px→16.00 (÷h/2 0.40) · bound root --radius-field = 16.00
+  PASS q5 · T-1 f1-migrated coarse · rung 60 · 74.00×91.48 16px→16.00 (÷h/2 0.35) | 133.69×108.97 16px→16.00 (÷h/2 0.29) | 133.69×126.45 16px→16.00 (÷h/2 0.25) · bound root --radius-field = 16.00
+  PASS q5 · T-1 v2-migrated coarse · rung 60 · 452.00×117.83 16px→16.00 (÷h/2 0.27) | 452.00×152.25 16px→16.00 (÷h/2 0.21) | 452.00×186.67 16px→16.00 (÷h/2 0.17) · bound root --radius-field = 16.00
+  PASS q5 · T-1 preset-migrated ui-scale 1.25 · rung 50 · 204.00×76.09 16px→16.00 (÷h/2 0.42) | 204.00×104.78 16px→16.00 (÷h/2 0.31) | 204.00×133.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00
+  PASS q5 · T-1 specimen-migrated ui-scale 1.25 · rung 45 · 205.00×98.16 16px→16.00 (÷h/2 0.33) | 205.00×116.31 16px→16.00 (÷h/2 0.28) | 205.00×134.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00
+  PASS q5 · T-1 strip-migrated ui-scale 1.25 · rung 45 · 45.00×58.80 16px→16.00 (÷h/2 0.54) | 90.00×69.59 16px→16.00 (÷h/2 0.46) | 90.00×80.39 16px→16.00 (÷h/2 0.40) · bound root --radius-field = 16.00
+  PASS q5 · T-1 f1-migrated ui-scale 1.25 · rung 50 · 74.00×91.48 16px→16.00 (÷h/2 0.35) | 133.69×108.97 16px→16.00 (÷h/2 0.29) | 133.69×126.45 16px→16.00 (÷h/2 0.25) · bound root --radius-field = 16.00
+  PASS q5 · T-1 v2-migrated ui-scale 1.25 · rung 50 · 452.00×112.09 16px→16.00 (÷h/2 0.29) | 452.00×140.78 16px→16.00 (÷h/2 0.23) | 452.00×169.47 16px→16.00 (÷h/2 0.19) · bound root --radius-field = 16.00
+  PASS q5 · pill single coarse → pill 4/4; #0 54×54 rung 54 9999px→27 row perim 0
+  PASS q5 · pill pill-icon coarse → pill 3/3; #0 93.09×60 rung 60 9999px→30 row perim 0
+  PASS q5 · pill pill-badge coarse → pill 3/3; #0 111.91×60 rung 60 9999px→30 row perim 0
+  PASS q5 · pill c1-migrated coarse → pill 5/5; #0 209.94×60 rung 60 9999px→30 row perim 0
+  PASS q5 · pill single ui-scale 1.25 → pill 4/4; #0 45×45 rung 45 9999px→22.5 row perim 0
+  PASS q5 · pill pill-icon ui-scale 1.25 → pill 3/3; #0 86.73×50 rung 50 9999px→25 row perim 0
+  PASS q5 · pill pill-badge ui-scale 1.25 → pill 3/3; #0 103.86×50 rung 50 9999px→25 row perim 0
+  PASS q5 · pill c1-migrated ui-scale 1.25 → pill 5/5; #0 184×50 rung 50 9999px→25 row perim 0
+ [commit] load 451.56 / 391.68 / 358.15
+  PASS commit · preset-migrated Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · median frame 8.4 ms · load 435.20 / 390.15 / 358.00
+  PASS commit · preset-migrated keyboard commit (ArrowRight) · pop peak 1.03 at 118 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 46-226 ms; 95 frames, median 8.30 ms · median frame 8.3 ms · load 426.46 / 389.09 / 357.81
+  PASS commit · preset-migrated programmatic commit (focus on the sentinel) · pop peak 1.03 at 111 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 31-219 ms; 97 frames, median 8.30 ms · median frame 8.3 ms · load 412.69 / 387.36 / 357.56
+  PASS commit · preset-migrated pointer commit (click) · pop peak 1.04 at 147 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 80-255 ms; 90 frames, median 8.30 ms · median frame 8.3 ms · load 407.91 / 386.79 / 357.54
+  PASS commit · specimen-migrated Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · median frame 8.3 ms · load 402.87 / 386.09 / 357.46
+  PASS commit · specimen-migrated keyboard commit (ArrowRight) · pop peak 1.03 at 81 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 7-188 ms; 98 frames, median 8.30 ms · median frame 8.3 ms · load 389.67 / 383.64 / 356.76
+  PASS commit · specimen-migrated programmatic commit (focus on the sentinel) · pop peak 1.03 at 102 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 20-211 ms; 98 frames, median 8.30 ms · median frame 8.3 ms · load 387.83 / 383.42 / 357.00
+  PASS commit · specimen-migrated pointer commit (click) · pop peak 1.04 at 194 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 85-269 ms; 91 frames, median 8.30 ms · median frame 8.3 ms · load 394.45 / 384.97 / 357.86
+  PASS commit · single Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · median frame 8.3 ms · load 404.58 / 387.47 / 359.06
+  PASS commit · single keyboard commit (ArrowRight) · pop peak 1.03 at 84 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 10-193 ms; 95 frames, median 8.30 ms · median frame 8.3 ms · load 407.28 / 388.62 / 359.80
+  PASS commit · single programmatic commit (focus on the sentinel) · pop peak 1.03 at 84 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 17-193 ms; 96 frames, median 8.40 ms · median frame 8.4 ms · load 408.94 / 389.28 / 360.20
+  PASS commit · single pointer commit (click) · pop peak 1.04 at 125 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 45-225 ms; 94 frames, median 8.30 ms · median frame 8.3 ms · load 408.94 / 389.28 / 360.20
+  PASS commit · preset-migrated programmatic commit under reduced motion · scale range 0.0000 (no pop; the perimeter and the mark carry it)
+ [hover] load 407.02 / 389.20 / 360.35
+  PASS hover · preset-migrated light hover light on unselected #0 · 83.28 % of pixels move (scale pinned)
+  PASS hover · preset-migrated light selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 881.75 px² (band 824.50, interior 57.25) vs the bar 274 px²
+  PASS hover · specimen-migrated light hover light on unselected #0 · 8.14 % of pixels move (scale pinned)
+  PASS hover · specimen-migrated light selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 567.00 px² (band 544.00, interior 23.00) vs the bar 303 px²
+  PASS hover · preset-migrated dark hover light on unselected #0 · 89.30 % of pixels move (scale pinned)
+  PASS hover · preset-migrated dark selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 892.50 px² (band 829.25, interior 63.25) vs the bar 274 px²
+  PASS hover · specimen-migrated dark hover light on unselected #0 · 90.28 % of pixels move (scale pinned)
+  PASS hover · specimen-migrated dark selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 568.00 px² (band 545.00, interior 23.00) vs the bar 303 px²
+ [ink] load 406.29 / 390.08 / 362.21
+  PASS ink · specimen-migrated · media stroke on oklch(0.216114 0.00613456 55.9893) / off rgb(112, 89, 66) · edge oklch(0.216114 0.00613456 55.9893) · tint oklab(0.216114 0.00343135 0.00508514 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0
+  PASS ink · specimen-migrated with --selection-tone: oklch(0.62 0.2 300) on the group · media stroke on oklch(0.42 0.2 300) / off rgb(112, 89, 66) · edge oklch(0.42 0.2 300) · tint oklab(0.62 0.1 -0.173205 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0
+  PASS ink · strip-migrated · media stroke on oklch(0.216114 0.00613456 55.9893) / off rgb(124, 102, 80) · edge oklch(0.216114 0.00613456 55.9893) · tint oklab(0.216114 0.00343135 0.00508514 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0
+  PASS ink · strip-migrated with --selection-tone: oklch(0.62 0.2 300) on the group · media stroke on oklch(0.42 0.2 300) / off rgb(124, 102, 80) · edge oklch(0.42 0.2 300) · tint oklab(0.62 0.1 -0.173205 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0
+  PASS ink · f1-migrated · media stroke on oklch(0.216114 0.00613456 55.9893) / off rgb(112, 89, 66) · edge oklch(0.216114 0.00613456 55.9893) · tint oklab(0.216114 0.00343135 0.00508514 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0
+  PASS ink · f1-migrated with --selection-tone: oklch(0.62 0.2 300) on the group · media stroke on oklch(0.42 0.2 300) / off rgb(112, 89, 66) · edge oklch(0.42 0.2 300) · tint oklab(0.62 0.1 -0.173205 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0
+ [cost] load 450.61 / 402.00 / 367.62
+  INFO cost · 200 tiles, 40 forced style+layout passes per round, 9 rounds · :has() rules min 9.9 ms, median 12.5 ms · the same 4 rules keyed on a class min 8.8 ms, median 12.8 ms (tile corner still 16px) · ratio of minima 1.13 · load 464.09 / 405.60 / 369.10
+ [guard] load 464.09 / 405.60 / 369.10
+  PASS guard · preset [src] · pill 4/4 (#0 204×40 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · specimen [src] · pill 8/8 (#0 207×36 at rung 36) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · preset-input [src] · pill 4/4 (#0 204×40 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · preset-migrated [src] · cell 4/4 (#0 204×70.58 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · specimen-migrated [src] · cell 8/8 (#0 205×98.16 at rung 36) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · strip-migrated [src] · cell 6/6 (#0 40×58.8 at rung 36) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · v2-migrated [src] · cell 4/4 (#0 452×106.34 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · single [src] · pill 4/4 (#0 36×36 at rung 36) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · pill-icon [src] · pill 3/3 (#0 80.14×40 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · pill-badge [src] · pill 3/3 (#0 95.34×40 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  PASS guard · c1-migrated [src] · pill 5/5 (#0 184×40 at rung 40) · named: 0 second-row, 0 interactive-descendant (a production build names nothing)
+  load 419.06 / 399.53 / 367.95 at end
+
+75/76 gating cells pass · load 419.06 / 399.53 / 367.95 at end
