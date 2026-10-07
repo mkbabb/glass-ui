@@ -46,7 +46,7 @@
 |---|---|---|---|
 | B4-G1 · the glance record exists | `test -f docs/tranches/BL/ledger/GLANCES.md` | exit 0 | **exit 1** |
 | B4-G2 · every glance captured | for each GLANCES row, every cited capture exists and its sha256 matches | exit 0 | absent |
-| B4-G3 · the owner has ruled the glances | `! grep -qE '^\\| OW-7 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER:327, OW-7 `pending`; run by fix-2 at `183e021a`) |
+| B4-G3 · the owner has ruled the glances | `! grep -qE '^\\| OW-7 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER `OW-7` reads `pending`; run by fix-2 at `183e021a`) |
 | B4-G4 · the overlay stack (handed to W-E.4) | count of comma-separated layers in the computed `box-shadow` of an open `.glass-overlay-plate` on the Chromium engine lane | ≤ 2 (rim + one cast) | at source, 4 layers (`overlay-plate.css:316-318`); the engine reading is taken in the wave |
 
 ## 6 · π and DELTA obligations

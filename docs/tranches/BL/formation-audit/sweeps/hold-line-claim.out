@@ -1,0 +1,28 @@
+# hold-line-claim.py — class sweep, formation fix seat 12
+
+## before: the plan at HEAD ebcc691e (the fix-12 worktree's copy, BL_ROOT); plants ran in the fix-12 worktree at ebcc691e (`.claude/worktrees/bl/formation/fix-12/wt`)
+OPEN NARROW  waves/W-0.10.md:45 G3 · one door: exit 0 with the part re-exported from the root barrel planted in src/index.ts: 'export { PopoverAnchor } from "reka-ui";'
+OPEN NARROW  waves/W-0.10.md:45 G3 · one door: exit 0 with the anchor published under the tooltip planted in src/components/tooltip/index.ts: 'export { PopperAnchor as TooltipAnchor } from "reka-ui";'
+OPEN NARROW  waves/W-0.2.md:73 G3 · no fallback literal: exit 0 with a mix of a token and a literal planted in src/components/toggle-group/styles.css: '.x { color: var(--toggle-tint, color-mix(in oklab, var(--foreground) 4'
+OPEN NARROW  waves/W-B.15.md:42 B15-G3 · the page scroller stays native : exit 0 with addEventListener over several lines (the tree's prettier form, `useDockState.ts:394`) planted in src/composables/sidebar/useSidebarFollow.ts: 'window.addEventListener(\n    "wheel",\n    () => {},\n);'
+OPEN NARROW  waves/W-B.15.md:42 B15-G3 · the page scroller stays native : exit 0 with vueuse useEventListener planted in src/composables/sidebar/useSidebarFollow.ts: 'useEventListener(window, "touchmove", () => {});'
+OPEN NARROW  waves/W-B.15.md:42 B15-G3 · the page scroller stays native : exit 0 with a template @wheel handler planted in src/components/dock/GlassDock.vue: '<div @wheel="() => {}"></div>'
+OPEN NARROW  waves/W-B.15.md:42 B15-G3 · the page scroller stays native : exit 0 with a render-function onWheel planted in src/composables/sidebar/useSidebarFollow.ts: 'h("div", { onWheel: () => {} });'
+OPEN NARROW  waves/W-G.2.md:61 G2-G4 · the library never destroys the s: exit 0 with an optional call (W-G.2 §2's own reading uses `device\??`) planted in src/composables/glass/webgpu/useWebGPUCanvas.ts: 'device?.destroy();'
+OPEN NARROW  waves/W-G.2.md:61 G2-G4 · the library never destroys the s: exit 0 with a prefixed device name planted in src/composables/glass/webgpu/useWebGPUCanvas.ts: 'gpuDevice.destroy();'
+OPEN NARROW  waves/W-G.2.md:61 G2-G4 · the library never destroys the s: exit 0 with a destroy outside `webgpu/` (the claim is the library's) planted in src/composables/glass/webgl/visibility.ts: 'sharedDevice.destroy();'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): exit 0 with another unit planted in src/styles/glass/material.css: '.x::after { inset: -2rem; }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): exit 0 with another unit, unspaced planted in src/styles/glass/material.css: '.x::after { inset:-2rem; }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): exit 0 with after a first value planted in src/styles/glass/material.css: '.x::after { inset: 0 -32px; }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): exit 0 with a literal in calc() planted in src/styles/glass/material.css: '.x::after { inset: calc(-1 * 32px); }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): exit 0 with a literal difference in calc() planted in src/styles/glass/material.css: '.x::after { inset: calc(0px - 32px); }'
+OPEN NARROW  waves/W-H.6.md:66 H6-G3 · no second radius (static): exit 0 with a percentage planted in src/styles/glass/material.css: '.x::after { top: -10%; }'
+OPEN NARROW  waves/W-L.1.md:193 G-L1-5 · the glyph is one drawing: exit 0 with the glyph re-drawn by a menu row outside the directory planted in src/components/menu/DropdownMenuItem.vue: '<svg viewBox="0 0 472.39 472.39" aria-hidden="true"></svg>'
+OPEN NARROW  waves/W-L.3.md:89 G-L3-9 · the library keeps its own rule: exit 0 with an @apply in a stylesheet planted in src/styles/glass/material.css: '.x { @apply text-sm; }'
+static hold lines 7, plants 38, open 18
+exit=1
+
+## after: the plan as fix-12 leaves it; plants ran in the same worktree
+NOTE  waves/W-L.1.md:193 G-L1-5 · the glyph is one drawing is not a hold line (a born-RED row); its CLAIMS entry is not run
+static hold lines 6, plants 36, open 0
+exit=0

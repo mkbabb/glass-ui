@@ -7,7 +7,7 @@
 | HEAD | `183e021a` (fix-2's readings of G1 and G4); W-I.1's readings at its seat |
 | ships in | 11.0.0 |
 | loop | D2 dock. The hallmark witnesses are D2's (W-I.1 §3.1 item 1's obligation) |
-| families | F-54 split: #67a (hallmarks 1, 2 and 5, and OWED-3) and #67d, #90a and #90d (the R-7 captures, device fps and loupe L-3), disease rows (open at three closes, LEDGER:171, :174, :213, :216). F-13's members L01b-67 (the OWED-3 ruling and the R-7 footage) and L04-F15 (the R-7 ask) are decided here |
+| families | F-54 split: #67a (hallmarks 1, 2 and 5, and OWED-3) and #67d, #90a and #90d (the R-7 captures, device fps and loupe L-3), disease rows (open at three closes, LEDGER `#67a`, `#67d`, `#90a`, `#90d`). F-13's members L01b-67 (the OWED-3 ruling and the R-7 footage) and L04-F15 (the R-7 ask) are decided here |
 | owner row | OW-5, the three R-7 captures |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
@@ -26,7 +26,7 @@
 
 - **Hallmarks.** No witness exists: `git grep -qniw overpull -- src tests` exits 1 and `test -f tests-visual/wired/dock-hallmarks.spec.ts` exits 1 (fix-2, `183e021a`). The stagger exists (`layers.css:238-257`); D2's E and F families deleted it with nothing in its place (`design/dock/REGISTRY.md:222-223`, F-8, F-9).
 - **OWED-3.** `node docs/tranches/IOS27-MICRO/prototypes/spine-conductor/check.mjs` → 87/87 PASS at HEAD (W-I.1 §2.2). Not a defect: a hold line. W-C.1 moves the check to `scripts/loops/dock/owed-3/`, where I6-G3 runs it.
-- **R-7.** OW-5 reads `pending` (LEDGER:325). With Q-9 (a) the Siri capture has no consumer, and the loupe belongs to no dock facility.
+- **R-7.** OW-5 reads `pending` (LEDGER `OW-5`). With Q-9 (a) the Siri capture has no consumer, and the loupe belongs to no dock facility.
 
 ## 3 · The ruling and the cure
 
@@ -45,7 +45,7 @@ The converged carrier's hallmark code in `src/components/dock/` (per D2's spec),
 | I6-G1 · the hallmark witnesses exist | `test -f tests-visual/wired/dock-hallmarks.spec.ts` | exit 0 (one test per hallmark ruled BUILD) | **exit 1** (fix-2) |
 | I6-G2 · the hallmarks pass | `npx playwright test -c tests-visual wired/dock-hallmarks`, both engines | 0 failed | the spec does not exist (RED by absence with I6-G1) |
 | I6-G3 · OWED-3 (hold line) | `node scripts/loops/dock/owed-3/check.mjs` on the landed rung (W-C.1 §3 step 4 moves it there from `docs/tranches/IOS27-MICRO/prototypes/spine-conductor/`; this wave lands after W-C.1 through W-I.1, PLAN §5) | 87/87 PASS | 87/87 at HEAD at its `docs/` path (W-I.1 §2.2). Bite: a rung pair off the derivation (the C2 rows) |
-| I6-G4 · OW-5 ruled | `! grep -qE '^\\| OW-5 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER:325, fix-2) |
+| I6-G4 · OW-5 ruled | `! grep -qE '^\\| OW-5 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER `OW-5`, fix-2) |
 
 ## 6 · π and DELTA obligations
 

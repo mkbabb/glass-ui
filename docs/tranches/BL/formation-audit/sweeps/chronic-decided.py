@@ -6,7 +6,8 @@ This lists every instance of the class it can read:
 
   MEMBER       a member of the chronic family F-13 (audit/REGISTRY.md), or an audit finding whose row says the
                item was deferred, dropped, never started, never decided or re-booked, that no LEDGER row and no
-               wave spec names, and whose title names no id a decided LEDGER row carries
+               wave spec names, and whose title names no id a decided LEDGER row carries. A member a BUILD or FOLD
+               row names is held to that row's wave spec by `ledger-terminal.py` arm COVER (fix-12, FK-03)
   BANKED       a LEDGER row that is BANKED while its HEAD word is deferred, OPEN, BLOCKED, OWNER-GATED or PARTIAL,
                or while its rationale marks it DISEASE (a carry to an event, not a decision)
   NO-WAVE      a LEDGER row whose terminal is not RETIRE and whose wave cell is empty
@@ -16,9 +17,11 @@ This lists every instance of the class it can read:
                the id its source cites
   L04-ROW      a row of L04's master ledger (`audit/round-1/L04.md`, "Master ledger", every carried item traced, keyed
                by number) that MAP below does not trace to a LEDGER row, whose traced id is not a LEDGER row with a
-               terminal, whose item no traced row or its wave's spec names (an id named for a different item does
-               not decide this one), or, for a row marked **D** (rode two or more closes), whose traced rows all lack
-               a wave (a disease row is decided by a wave, CHARTER.md:23)
+               terminal, whose item no traced row's wave spec names (an id named for a different item does not
+               decide this one; the LEDGER row's own words are not coverage, pass 11 FK-03: a seat that writes the
+               item's name into the folding row passes nothing), or, for a row marked **D** (rode two or more
+               closes), whose traced rows all lack a wave (a disease row is decided by a wave, CHARTER.md:23). A
+               traced row that is RETIRE with no wave is decided by the ledger itself and is read from its own text
   CONDITIONAL  a spec sentence "if W-x cures K" where W-x's spec does not name K (a cure hung on a wave that
                does not carry it)
 
@@ -41,16 +44,16 @@ MAP = {
     7: (["#54a"], r"webgl2|W-ONE-ENGINE"), 8: (["#62"], r"loop D1"), 9: (["#63"], r"history rewrite"),
     10: (["#20"], r"fallback"), 11: (["#60a", "#69"], r"boot shell|low-power"), 12: (["#61"], r"W-DOC-TRUTH"),
     13: (["#67a"], r"hallmark"), 14: (["#90a", "#67d"], r"R-7"), 15: (["#34", "#45a", "#64b"], r"W-TOAST|one engine|IDIOM"),
-    16: (["#44"], r"0 consumers"), 17: (["#6"], r"Safari"), 18: (["#25"], r"well"), 19: (["#78"], r"canon"),
+    16: (["#44"], r"0 consumers|#44 W-TAGS-FIELD"), 17: (["#6"], r"Safari"), 18: (["#25"], r"well"), 19: (["#78"], r"canon"),
     20: (["#90a", "#90b", "#90c", "#90d"], r"R-7|canon|Safari"), 21: (["#29a"], r"popstate"), 22: (["#15"], r"hook"),
     23: (["#70"], r"archaeology"), 24: (["Q063"], r"exemplar|recording"), 25: (["#71a", "#32c"], r"RT-71A|RT-32A"),
     26: (["#17b", "#23", "#58b", "#47a"], r"latch"), 27: (["#51a", "C-7"], r"π-SCROLL"), 28: (["C-8"], r"content-box"),
     29: (["C-9"], r"focus model"), 30: (["C-5", "C-6"], r"window|chroma"), 31: (["C-11", "C-12", "#50b"], r"π-W1|W2-W6"),
-    32: (["#49a", "#49b", "#49c", "#49g", "C-13a"], r"R9|R11|F3|π-FIELD"), 33: (["#48"], r"layers\.css:348"),
-    34: (["C-16"], r"capture-death"), 35: (["C-1"], r"Trusted Publisher"), 36: (["C-14", "C-15"], r"smell|same law"),
+    32: (["#49a", "#49b", "#49c", "#49g", "C-13a"], r"R9|R11|F3|π-FIELD"), 33: (["L04-M33"], r"layers\.css:34[4-9]"),
+    34: (["C-16"], r"capture-death|captureScreenshot"), 35: (["C-1"], r"Trusted Publisher"), 36: (["C-14", "C-15"], r"smell|same law"),
     37: (["#76a", "L04-M37"], r"g10"), 38: (["L04-M38"], r"GREENFIELD-TERMINAL"), 39: (["C-17"], r"precepts"),
     40: (["L04-M40"], r"\./drawer"), 41: (["L04-M41"], r"W-ATLAS"), 42: (["C-2", "C-3"], r"rotation|NPM_TOKEN"),
-    43: (["P-6b"], r"close"), 44: (["O-53 R-1", "O-53 R-2", "O-54 R-1"], r"O-5[34]"), 45: (["N-2"], r"DISEASE"),
+    43: (["P-6b"], r"close"), 44: (["O-53 R-1", "O-53 R-2", "O-54 R-1"], r"O-5[34]"), 45: (["N-2"], r"DISEASE|every carried row terminal"),
 }
 KEY = re.compile(r"(?<![\w-])(#\d+[a-z]?|C-\d+|E-\d+|OW-\d+[a-d]?|T-\d+|V-A\d+)(?![\w-])")
 
@@ -134,9 +137,10 @@ def main():
         if missing:
             out.append(f"OPEN L04-ROW      L04 master row {k} ({item}): {', '.join(missing)} is no LEDGER row with a terminal")
             continue
-        texts = [" ".join(by_id[i][1]) for i in ids] + [spec_text[by_id[i][1][4]] for i in ids if by_id[i][1][4] in spec_text]
+        texts = [spec_text[by_id[i][1][4]] if by_id[i][1][4] in spec_text else " ".join(by_id[i][1])
+                 for i in ids if by_id[i][1][4] in spec_text or (by_id[i][1][3] == "RETIRE" and by_id[i][1][4] in ("—", "-", ""))]
         if not any(re.search(pat, t) for t in texts):
-            out.append(f"OPEN L04-ROW      L04 master row {k} ({item}): no traced row or its wave's spec names the item (/{pat}/)")
+            out.append(f"OPEN L04-ROW      L04 master row {k} ({item}): no traced row's wave spec names the item (/{pat}/)")
         if "**D**" in " ".join(c) and not any(by_id[i][1][4] in spec_text for i in ids):
             out.append(f"OPEN L04-ROW      L04 master row {k} ({item}) is DISEASE; every traced row ({', '.join(ids)}) has no wave")
     if len(rows) != 45:

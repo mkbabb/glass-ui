@@ -31,7 +31,7 @@ R2-06-01's 11 owner rows (`audit/round-2/R2-06.md:28,48`), grouped by subject. H
 
 ## 2 · The defect at HEAD
 
-Eleven owner asks with no terminal disposition since BD. BI's dock-retire JSON disposed eight other dock items, and BK #47's spec omitted these (L05b-06). The formation LEDGER carries the subject row (R2-06-01, LEDGER:455) and the owner docket row this wave answers (OW-9d, LEDGER §4); the per-subject rulings are this wave's, inside D2.
+Eleven owner asks with no terminal disposition since BD. BI's dock-retire JSON disposed eight other dock items, and BK #47's spec omitted these (L05b-06). The formation LEDGER carries the subject row (LEDGER `R2-06-01`) and the owner docket row this wave answers (OW-9d, LEDGER §4); the per-subject rulings are this wave's, inside D2.
 
 The two subjects that exist in code fail in paint on the demo (`seq-probe.mjs`, Chromium, run here on the HEAD demo build):
 

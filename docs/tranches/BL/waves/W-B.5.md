@@ -49,7 +49,7 @@ What is still not exercised: an OS-level or human pointer. That is the re-trigge
 | B5-G1 · the e2e exists and passes | `test -f tests-visual/aurora/nucleus-drag.spec.ts && npx playwright test -c tests-visual aurora/nucleus-drag` | exit 0 | **exit 1**: the spec is absent. The defect it guards is not live: 3 of 3 legs match (§2) |
 | B5-G2 · the e2e can fail | apply `nucleus-drag.patch`, rebuild the demo, run B5-G1 | exit 1 | measured with the probe: 3 of 3 legs mismatch under the plant |
 
-C-4's terminal (RETIRE with its re-trigger) is LEDGER:226. B5-G1 and B5-G2 enact it; no gate re-reads the ledger (PLAN §1, decide waves).
+C-4's terminal (RETIRE with its re-trigger) is LEDGER `C-4`. B5-G1 and B5-G2 enact it; no gate re-reads the ledger (PLAN §1, decide waves).
 
 B5-G1 is RED only by absence, because the defect is not live; the seat says so with the evidence above. B5-G2 is what shows the gate can fail.
 

@@ -7,7 +7,7 @@
 | HEAD | W-H.2's readings (the band-H probe, `W-H.2.md` §2) |
 | ships in | 11.0.0 |
 | loop | D3 material. The well rung, its α and its law come from D3's converged spec (D3 common floor row 5, `design/material/PORTFOLIO.md:237`) |
-| families | F-31 split: #25 W-FIELD-WELL, a disease row (BLOCKED through BK on riders that had all landed, three closes, LEDGER:67), with #82's G-F2 and L01a-25 |
+| families | F-31 split: #25 W-FIELD-WELL, a disease row (BLOCKED through BK on riders that had all landed, three closes, LEDGER `#25`), with #82's G-F2 and L01a-25 |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
 
@@ -18,7 +18,7 @@
 | #25 W-FIELD-WELL, L01a-25 | the well law unbuilt; the field fill opaque: decided here, BUILD from D3's converged rung |
 | #82 G-F2 | the opaque fill leaves the field's own blur inert: cured by deleting that filter, since D3's floor gives the well no `backdrop-filter` of its own (FL-11, `design/material/REGISTRY.md:323`) |
 | UIA-V-234, UIA-V-431 | the opaque wells consumers saw (`INBOUND-MAP.md:350,358`); this wave is their one owner |
-| #56d | the σ admissibility of welled specimens under the frost detector (LEDGER:148, moved here from W-H.2's mechanism set) |
+| #56d | the σ admissibility of welled specimens under the frost detector (LEDGER `#56d`, moved here from W-H.2's mechanism set) |
 
 ## 2 · The defect at HEAD
 

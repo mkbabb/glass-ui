@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | W-E.9's readings (scratch worktree, `src`/`demo` identical to `f3ad78d0`); appendix A is W-E.9's `e9.mjs`, cells G1 and G2 |
 | ships in | 11.0.0 |
-| families | F-33 split: C-13c, a disease row (BK FINAL §7 carry, open at two closes, LEDGER:237), with R11 and R4-02-07 |
+| families | F-33 split: C-13c, a disease row (BK FINAL §7 carry, open at two closes, LEDGER `C-13c`), with R11 and R4-02-07 |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
 

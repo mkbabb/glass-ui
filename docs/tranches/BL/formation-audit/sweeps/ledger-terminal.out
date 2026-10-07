@@ -12,3 +12,45 @@ exit=0
 # ===== fix-11 (unchanged sweep, re-run after)
 ledger rows 824, open 0
 exit=0
+
+# ===== fix-12 (arm changed: see the docstring)
+
+## before: the plan at HEAD ebcc691e (the fix-12 worktree's copy, BL_ROOT)
+OPEN COVER    LEDGER.md:118 `#48` BUILD → W-I.5 names L04-F27, which W-I.5's spec does not name
+OPEN COVER    LEDGER.md:207 `#86a` BUILD → W-E.2 names R2-06-15, which W-E.2's spec does not name
+OPEN COVER    LEDGER.md:939 `A2-FO-L2-2` BUILD → W-E.1 names A2-FO-L2-2, which W-E.1's spec does not name
+OPEN COVER    LEDGER.md:940 `A2-VA-L2-12` BUILD → W-E.1 names A2-VA-L2-12, which W-E.1's spec does not name
+OPEN COVER    LEDGER.md:941 `A2-KE-L2-15 (erratum E-4)` BUILD → W-E.1 names A2-KE-L2-15, which W-E.1's spec does not name
+OPEN COVER    LEDGER.md:978 `A2-KE-L3-4` BUILD → W-0.1 names A2-KE-L3-4, which W-0.1's spec does not name
+OPEN LINECITE waves/W-B.1.md:107 cites `LEDGER:388-406`; cite the row id or the section
+OPEN LINECITE waves/W-B.10.md:37 cites `LEDGER:326`; cite the row id or the section
+OPEN LINECITE waves/W-B.11.md:42 cites `LEDGER:190`; cite the row id or the section
+OPEN LINECITE waves/W-B.12.md:44 cites `LEDGER:163`; cite the row id or the section
+OPEN LINECITE waves/W-B.4.md:49 cites `LEDGER:327`; cite the row id or the section
+OPEN LINECITE waves/W-B.5.md:52 cites `LEDGER:226`; cite the row id or the section
+OPEN LINECITE waves/W-B.6.md:47 cites `LEDGER:324`; cite the row id or the section
+OPEN LINECITE waves/W-B.6.md:49 cites `LEDGER:227-229`; cite the row id or the section
+OPEN LINECITE waves/W-B.7.md:38 cites `LEDGER:109`; cite the row id or the section
+OPEN LINECITE waves/W-E.14.md:9 cites `LEDGER:237`; cite the row id or the section
+OPEN LINECITE waves/W-G.1.md:9 cites `LEDGER.md:110-111`; cite the row id or the section
+OPEN LINECITE waves/W-H.2.md:124 cites `LEDGER:328`; cite the row id or the section
+OPEN LINECITE waves/W-H.3.md:37 cites `LEDGER:456`; cite the row id or the section
+OPEN LINECITE waves/W-H.5.md:10 cites `LEDGER:67`; cite the row id or the section
+OPEN LINECITE waves/W-H.5.md:21 cites `LEDGER:148`; cite the row id or the section
+OPEN LINECITE waves/W-I.1.md:26 cites `LEDGER:577`; cite the row id or the section
+OPEN LINECITE waves/W-I.1.md:229 cites `LEDGER:592`; cite the row id or the section
+OPEN LINECITE waves/W-I.4.md:34 cites `LEDGER:455`; cite the row id or the section
+OPEN LINECITE waves/W-I.5.md:10 cites `LEDGER:117`; cite the row id or the section
+OPEN LINECITE waves/W-I.5.md:19 cites `LEDGER:117`; cite the row id or the section
+OPEN LINECITE waves/W-I.6.md:10 cites `LEDGER:171`; cite the row id or the section
+OPEN LINECITE waves/W-I.6.md:29 cites `LEDGER:325`; cite the row id or the section
+OPEN LINECITE waves/W-I.6.md:48 cites `LEDGER:325`; cite the row id or the section
+OPEN LINECITE waves/W-I.7.md:10 cites `LEDGER:230`; cite the row id or the section
+OPEN LINECITE waves/W-K.11.md:9 cites `LEDGER:231`; cite the row id or the section
+OPEN LINECITE waves/W-L.8.md:44 cites `LEDGER:414-416`; cite the row id or the section
+ledger rows 824, open 32
+exit=1
+
+## after: the plan as fix-12 leaves it
+ledger rows 825, open 0
+exit=0

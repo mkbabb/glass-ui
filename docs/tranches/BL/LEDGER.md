@@ -115,7 +115,7 @@ Every row below rode 3 closes. Word changes against BK's census are the census's
 | #46c | a:53 | PARTIAL | RETIRE | — | seat | "STAYS DIRTY" is false at HEAD (`git status --porcelain src` empty; F-12) |
 | #47a | a:54 | PARTIAL | BUILD | W-I.1 | seat | `data-dock-state`, the `g-dock-lattice.test.ts:925` latch subject, and the ten enqueued π cells in the frame strips; W-I.1 §8 |
 | #47b | a:54 | PARTIAL | BUILD | W-C.4 | seat | the dead `--dock-morph-max-stretch` and the phantom `--dock-vertical-*` reads; W-C.4 §8 |
-| #48 | a:55 | OPEN | BUILD | W-I.5 | seat | DISEASE, 3 closes, decided in W-I.5 (own) by loop D2's Q-9 ruling; I5-G1. The zero-width morph window goes with it: the morph discontinuity at `layers.css:348` (the ungated `width: 100%`, a:55; L04-F27, L04 master row 33) |
+| #48 | a:55 | OPEN | BUILD | W-I.5 | seat | DISEASE, 3 closes, decided in W-I.5 (own) by loop D2's Q-9 ruling; I5-G1. The zero-width morph window that L04 proposed folding here is `L04-M33`'s (W-0.8) |
 | #49a | a:56 | PARTIAL (W0 only) | BUILD | W-G.4 | seat | DISEASE, 3 closes, decided in W-G.4 (own: "the disease row decided", W-G.4 §9); π-FIELD is its capture |
 | #49b | a:56 | PARTIAL | BUILD | W-G.1 | seat | R9's delete half and D5 (the two probe contexts on mount); W-G.1 §9 |
 | #49c | a:56 | PARTIAL | BUILD | W-E.14 | seat | R11, the starved configurator (C-13c); W-E.14 §8 (W-E.9 hands it there, `W-E.9.md:18`) |
@@ -420,6 +420,7 @@ OW-9 is one row per deciding wave (OW-9a..d), so each wave's docket gate turns g
 | #70 | W-L.8 §3.3 | duty | RETIRE | W-L.8 | seat | archaeology regeneration per close: `FINAL.md` §1-§2 print the `git log` commands, one record |
 | #15 | W-L.8 §3.3 | duty | RETIRE | W-L.8 | seat | provenance hooks: BI deleted the hook farm (`d17153ec`); provenance is the SLSA attestation; the stale `core.hooksPath` is unset at the close |
 | Q063 | W-L.8 §3.3 | duty | RETIRE | W-L.8 | owner (docket) | unverified since 07-28; shown to the owner in the close confirmation |
+| L04-M33 | L04 master row 33 (`audit/round-1/L04.md:82`, L04-F27 `:41`, `:471`) | banked as an observation for two closes (BK ⊕⁸⁰, `EXECUTION-PROGRESS.md:6210-6219`), never adjudicated | BUILD | W-0.8 | seat | DISEASE, 2 closes, decided in W-0.8 (F-16's morph wave): the zero-width morph window, `layers.css:348-350` sizing `.dock-layer--full` while the dock morphs, goes with D2's endpoint model (W-0.8 §1, §3.2; G19, born RED). L04 proposed folding it into #48; #48's wave strikes words and does not touch the morph (pass 11, FK-02) |
 | L04-M37 | L04 master row 37 (`audit/round-1/L04.md:86`, `:450`, L04-F25) · `BK/ASK.md:41` | carried (3 closes with #76) | RETIRE | W-L.8 | seat | g10, the value.js `glass-ui-pinned` fenced worktree at `2e559f7a`: a consumer act (E-6); BK's own ask retires it at value.js's adopt. #76's L2 adopts are `#76a` (FOLD, W-L.7). W-L.8 §3.3 |
 | L04-M38 | L04 master row 38 (`L04.md:87`, `:450`, L04-F25) | re-booked five times (`BK/EXECUTION-PROGRESS.md:4994,5173,5463,5652,5836,6281`) | RETIRE | W-L.8 | seat | DISEASE, 3 closes, decided in W-L.8 (own: F-12's close records, of which L04-F25 is a member): the GREENFIELD-TERMINAL `:233/:239` dock figures are a superseded planning spec's census; the dock is measured at HEAD by W-0.8 and W-I.1, and the old figures are never trued. G-L8-15 |
 | L04-M40 | L04 master row 40 (`L04.md:89`, `:450`, L04-F25) | carried | RETIRE | W-L.8 | seat | CURED: the `./drawer` MIGRATION item was discharged by register wave N-6 (`MIGRATION.md:747`); no `./drawer` export, 0 `Drawer` in `src` outside prose (L04.md:442-444). W-L.8 §3.3 |
@@ -544,12 +545,12 @@ Counted by a script over this file's row tables (§4 is the docket and is counte
 | §2 BK §7 carries | 11 | 1 | 0 | 8 | 20 |
 | §3 recap rows and charter laws | 43 | 11 | 0 | 10 | 64 |
 | §5 carried obligations and PLAN §6 gaps | 12 | 19 | 0 | 6 | 37 |
-| §6 rows the specs hand to the ledger | 14 | 30 | 0 | 18 | 62 |
+| §6 rows the specs hand to the ledger | 15 | 30 | 0 | 18 | 63 |
 | §7 inbound outside the map | 15 | 10 | 0 | 1 | 26 |
 | Appendix A, INBOUND-MAP | 293 | 27 | 7 | 115 | 442 |
-| **total** | **499** | **131** | **7** | **187** | **824** |
+| **total** | **500** | **131** | **7** | **187** | **825** |
 
-Recounted by fix-2 after its placements; fix-3 moved A2-KE-L1-27 from BUILD to RETIRE (NOT-REPRODUCED) and CUR:79 from BUILD to FOLD (O-84b is not an owner word); fix-4 moved O-84 from BUILD to FOLD (D2 rules Q-10, FC-05). fix-10 added 12 rows (#37, T-45, CUR:110, CUR:112, CUR:113, five O-87 rows, O-88, O-89), moved BG-ONWARD-4 from BANKED to RETIRE, and re-pointed 37 rows from W-I.1 to W-0.8 with the owner's O-88 ruling; fix-11 added four RETIRE rows from L04's master ledger (L04-M37, L04-M38, L04-M40, L04-M41) and gave C-14 and C-15 their deciding wave (W-L.8); `formation-audit/sweeps/ledger-terminal.py` recounts this table against the rows. No row reads UNPLACED. Rows marked DISEASE: 46. Owner docket: 20 lines (OW-9 split into OW-9a..d; OW-12 added by fix-2 and retired by fix-3). 15 read `pending` at fix-10 (DOCKET-O-88 added) (`grep -cE '^\| (OW\|DOCKET)-[^\|]*\|.*\| pending \|' LEDGER.md`).
+Recounted by fix-2 after its placements; fix-3 moved A2-KE-L1-27 from BUILD to RETIRE (NOT-REPRODUCED) and CUR:79 from BUILD to FOLD (O-84b is not an owner word); fix-4 moved O-84 from BUILD to FOLD (D2 rules Q-10, FC-05). fix-10 added 12 rows (#37, T-45, CUR:110, CUR:112, CUR:113, five O-87 rows, O-88, O-89), moved BG-ONWARD-4 from BANKED to RETIRE, and re-pointed 37 rows from W-I.1 to W-0.8 with the owner's O-88 ruling; fix-11 added four RETIRE rows from L04's master ledger (L04-M37, L04-M38, L04-M40, L04-M41) and gave C-14 and C-15 their deciding wave (W-L.8); fix-12 added L04-M33 (BUILD, W-0.8; DISEASE) and took the morph window out of #48; `formation-audit/sweeps/ledger-terminal.py` recounts this table against the rows. No row reads UNPLACED. Rows marked DISEASE: 47. Owner docket: 20 lines (OW-9 split into OW-9a..d; OW-12 added by fix-2 and retired by fix-3). 15 read `pending` at fix-10 (DOCKET-O-88 added) (`grep -cE '^\| (OW\|DOCKET)-[^\|]*\|.*\| pending \|' LEDGER.md`).
 
 Appendix A by coverage tag: `[N]` 375, `[R]` 67, `[G]` 0, `[M]` 0 (fix-3 named a gate or a RETIRE for each of the 18 `[G]` rows and retagged it `[N]`). By INBOUND-MAP status: FAMILY 359, CURED-AT-HEAD 52, CONSUMER-SIDE 21, NOT-REPRODUCED 7, NEW 3.
 

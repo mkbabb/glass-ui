@@ -34,7 +34,7 @@
 | id | gate | passes when | HEAD reading |
 |---|---|---|---|
 | ~~B10-G1~~ | struck (fix-3, FB-05): it grepped a loop document for a word. The hand-off is carried by its receiver, W-I.6 (§1 row and I6-G1/I6-G2, the hallmark-1 witness) | — | — |
-| B10-G2 · the owner has ruled the denominator | `! grep -qE '^\\| OW-6 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER:326, OW-6 `pending`; fix-2) |
+| B10-G2 · the owner has ruled the denominator | `! grep -qE '^\\| OW-6 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER `OW-6` reads `pending`; fix-2) |
 | B10-G3 · the kept denominator stays pinned | `npx vitest run tests/components/custom/timeline/timeline.partition.test.ts` | exit 0 | exit 0 at HEAD: the kept behaviour, not a defect. Its bite (divide by 1) turns it red, as its own comment states (`:66-68`) |
 
 ## 6 · π and DELTA obligations

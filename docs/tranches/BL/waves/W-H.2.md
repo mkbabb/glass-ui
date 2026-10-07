@@ -121,7 +121,7 @@ Setup as W-H.1 §5, plus a demo production build of the candidate: `npx vite bui
 | G6 · blur at the element | rows `H2/BLUR-AT-ELEMENT` | `--glass-level: 0.5` on a floating plate computes half the floating radius (10 px at today's radius, or half the ruled one) | **FAIL 2 of 2**: 20 px |
 | G7 · the opaque host stands down (computed) | rows `H2/OPAQUE-HOST-LENS(computed)` | `none` or `blur(0px)` | **FAIL 2 of 2**: `blur(20px) saturate(1.5)` |
 | G9 · the depth budget is gone (static) | `test ! -e tests-visual/nested-backdrop-budget.spec.ts` | exit 0 | **exit 1** (194 lines; `DEPTH_CEILING = 4` at `:39`) |
-| G10 · OW-8 ruled | `! grep -qE '^\\| OW-8 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER:328, OW-8 `pending`; fix-2) |
+| G10 · OW-8 ruled | `! grep -qE '^\\| OW-8 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER `OW-8` reads `pending`; fix-2) |
 | G11 · the converged family's witness | as W-H.1 G6, on the rows the split table gives this wave | exit 0 | all six exit 1 |
 | G12 · holds | M-1 and M-7 at `h2` (cured by W-0.1 and W-E.2); `H2/PRESS-FILTER-ON-LENS(hold)`; `alert-specular.mjs` | PASS, 0 elements with both a `filter` and a lens, 0 pure-white rim pixels | hold lines: HEAD M-1 11/11 and M-7 8/8 FAIL (cured upstream); press rows and the Alert rows pass at HEAD (§2) |
 

@@ -41,7 +41,7 @@
 | B12-G2 · the three holders carry the ruling | `node -e 'const r=require("./tests/gates/roster.json");for (const id of ["G-13","G-42","G-01"]){const e=r.find(e=>e.id===id);if(!(e&&String(e.law).includes("#64b")))process.exit(1)}'` (no pipe character, so the raw and rendered forms are one command) | exit 0 | **exit 1** at `715912fa`: `roster.json` absent. At this wave's base (W-A.2 landed) it is still exit 1, because no entry's `law` names `#64b`. Fixture (fix-4): the three entries with `#64b` in `law` read 0; with it removed from G-13 alone, 1 |
 | ~~B12-G3~~ | struck (fix-3, FB-18): the DECLARATION column is W-C.2's (§3 item 2), and C2-G7 is the one source of record for the 27 lines; a copy here went green only when W-C.2 landed | — | — |
 
-The IDIOM-CLEARED column's terminal is LEDGER:163 (`#64b`). B12-G2 reads the wave's own edit, not W-A.2's.
+The IDIOM-CLEARED column's terminal is LEDGER `#64b`. B12-G2 reads the wave's own edit, not W-A.2's.
 
 ## 6 · π and DELTA obligations
 

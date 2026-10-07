@@ -7,7 +7,7 @@
 | HEAD | `183e021a` (fix-2's reading of G1); W-I.1's readings at its seat |
 | ships in | 11.0.0 |
 | loop | D2 dock. Q-9 is D2's question (`design/dock/REGISTRY.md:303`); this wave lands its ruling |
-| families | F-16 split: #48 W-DOCK-FISSION, a disease row (OPEN at three closes, LEDGER:117) |
+| families | F-16 split: #48 W-DOCK-FISSION, a disease row (OPEN at three closes, LEDGER `#48`). The zero-width morph window L04 proposed folding into #48 is W-0.8's (LEDGER `L04-M33`; fix-12, FK-02) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
 
@@ -16,7 +16,6 @@
 | id | what |
 |---|---|
 | #48 W-DOCK-FISSION | fission, the V↔H morph and Siri read retired in code (`GlassDock.vue:19-20`, `:542-543`; `dock/index.ts:105-111` records them DEFINITION-ABSENT) and OPEN in BK; 16 lines in the dock and its motion token still name fission or Siri. Decided here by D2's Q-9 |
-| the zero-width morph window | goes with #48 (LEDGER:117) |
 
 ## 2 · The defect at HEAD
 

@@ -41,7 +41,7 @@
 | cites in records | `node tests/_bandL/cite-check.mjs <record> <commit>` (appendix A) | `BK/FINAL.md` at its own HEAD `d856e136`: 8 cites, 0 unresolved (BK's close used full paths; the checker passes a record that is right). `BL/ledger/census-register-b.md` at HEAD: 45 cites, **1 unresolved** (`src/components/equation/ConvergencePlot.vue:136`, a fourier-analysis file cited without its repo). `census-carries-recap.md`: 44, **1 unresolved** (`demo/scenes/amiga/utils.ts:2`, a keyframes.js file, same class). `census-register-a.md`: 47, 0 |
 | the stale L08-26 cite | `grep -n 'DialogContent.vue:404' docs/tranches/BK/execution/2026-08-05-row31-a11y/RECORD.md` | `:36`, written as a bare filename, which appendix A's path rule does not match; the rule in §3.4 makes a bare filename cite a failure |
 
-Three BK close duties are in no census file: #15 (provenance hooks), #70 (archaeology per close) and Q063 (07-27 exemplar recording preservation) (`audit/round-1/L04.md:72-74`, table rows 22-24; `grep -n 'Q063\|#70\b\|#15\b' ledger/*.md` → nothing). `verify-ledger.mjs` reads its expected set from the census files, so it would not see them. §3.3 decides them; the formation LEDGER carries their rows at LEDGER:414-416 (§6.2).
+Three BK close duties are in no census file: #15 (provenance hooks), #70 (archaeology per close) and Q063 (07-27 exemplar recording preservation) (`audit/round-1/L04.md:72-74`, table rows 22-24; `grep -n 'Q063\|#70\b\|#15\b' ledger/*.md` → nothing). `verify-ledger.mjs` reads its expected set from the census files, so it would not see them. §3.3 decides them; the formation LEDGER carries their rows in LEDGER §6.2.
 
 ## 3 · The cure: the close checklist, each item a command with an artefact
 

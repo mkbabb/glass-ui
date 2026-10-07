@@ -17,7 +17,7 @@ This spec also carries the band's probe kit (appendix B). Every band-E wave's ap
 | id | what |
 |---|---|
 | F-85 | no library surface reads `env(safe-area-inset-*)` except the deck stage; the Sheet, the Toaster, ExpandableContainer's host and every popper sit inside a notch or home indicator on an edge-to-edge page |
-| O-74 F-85 rows | the consumer report that the bottom Sheet's action and the toast sit under the home indicator on a `viewport-fit=cover` page |
+| O-74 F-85 rows: A2-FO-L2-2, A2-VA-L2-12, A2-KE-L2-15 (erratum E-4) | the consumer report that the bottom Sheet's action and the toast sit under the home indicator on a `viewport-fit=cover` page. A2-FO-L2-2 and A2-VA-L2-12: bottom docks read no `env(safe-area-inset-bottom)` and the demo shell adds its own (§3 items 7 and 8; value.js's own shell half is the consumer's); A2-KE-L2-15: keyframes' glass docks join the same ask (item 8). A2-FO-L2-2's "Configurator stage overlay slot" names no `src` surface at HEAD (`git grep -n -i overlay -- src/components/configurator` hits one comment, `styles.css:297`; fix-12), so that half is the consumer's |
 | demo re-derivation | `demo/shell/dock-nav.css:34,173-174` re-derives the bottom inset the library should own |
 
 ## 2 · The defect at HEAD

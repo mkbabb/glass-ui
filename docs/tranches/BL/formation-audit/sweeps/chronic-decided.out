@@ -33,3 +33,19 @@ exit=1
 ## after: the plan as fix-11 leaves it
 members 51, ledger rows 824, L04 master rows 45, open 0
 exit=0
+
+# ===== fix-12 (arm changed: see the docstring)
+
+## before: the plan at HEAD ebcc691e (the fix-12 worktree's copy, BL_ROOT)
+OPEN L04-ROW      L04 master row 33 (Morph discontinuity `layers.css:348`): L04-M33 is no LEDGER row with a terminal
+members 51, ledger rows 824, L04 master rows 45, open 1
+exit=1
+
+## after: the plan as fix-12 leaves it
+members 51, ledger rows 825, L04 master rows 45, open 0
+exit=0
+
+## fix-12, the L04-ROW arm as changed, run on the HEAD plan with fix-11's trace of row 33 (`#48`, W-I.5) put back, to show the arm now reads the spec only
+OPEN L04-ROW      L04 master row 33 (Morph discontinuity `layers.css:348`): no traced row's wave spec names the item (/layers\.css:34[4-9]/)
+members 51, ledger rows 824, L04 master rows 45, open 1
+exit=1

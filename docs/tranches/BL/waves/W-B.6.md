@@ -44,9 +44,9 @@
 |---|---|---|---|
 | B6-G1 · the kept lag is held | `npx vitest run tests/components/custom/handmark/ink-lag.test.ts` | exit 0 | **exit 1**: no such file |
 | B6-G2 · the test bites | apply the cap-3.0 patch, run B6-G1 | exit 1 | absent |
-| B6-G3 · the owner has ruled π-SCROLL | `! grep -qE '^\\| OW-4 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER:324, OW-4 `pending`; fix-2) |
+| B6-G3 · the owner has ruled π-SCROLL | `! grep -qE '^\\| OW-4 \\|.*\\| pending \\|' docs/tranches/BL/LEDGER.md` | exit 0 | **exit 1** (LEDGER `OW-4` reads `pending`; fix-2) |
 
-B6-G4 (`grep -qi handmark W-H.1.md`) is struck: a grep of a plan file is not a gate on the tree. The band's dark window is held in paint by W-H.1 G18 (HandMark `shape="highlight"` ink on band: 10.86 light, 6.37 dark in both engines at `183e021a`). C-5, C-6, C-7 and #51a-c's terminals are LEDGER:227-229 and :128-130.
+B6-G4 (`grep -qi handmark W-H.1.md`) is struck: a grep of a plan file is not a gate on the tree. The band's dark window is held in paint by W-H.1 G18 (HandMark `shape="highlight"` ink on band: 10.86 light, 6.37 dark in both engines at `183e021a`). C-5, C-6, C-7 and #51a-c's terminals are LEDGER `C-5`, `C-6`, `C-7`, `#51a`, `#51b` and `#51c`.
 
 ## 6 · π and DELTA obligations
 

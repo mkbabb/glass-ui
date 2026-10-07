@@ -15,7 +15,7 @@
 | id | what |
 |---|---|
 | G-27 CASCADE-GEOMETRY | a material rung's `position: relative` beats the Sheet's `position: fixed`; the rung's `border-radius` beats the Dialog's own corner |
-| N-11a, O-61 R-1, O-66 §1 (the pane's clipped left-edge shadow) | shadows on the left clip: `contain: paint` on four content rungs cuts every child halo at the host edge |
+| N-11a, O-61 R-1, O-66 §1 (the pane's clipped left-edge shadow), R2-06-15 (LEDGER `#86a`) | shadows on the left clip: `contain: paint` on four content rungs (`material.css:104-109`) cuts every child halo at the host edge, the halo of a shadowed control seated in a card included (R2-06-15) |
 | the F-21 mechanism rows | A2-KE-L2-2 and UIA-V-325 (the Sheet's cascade position and phone geometry) close on E2-G1; KFA-163 (R2-02-11, the Select never slides) on E2-G2 and E2-G12; UIA-KF-222 (closed triggers show up-chevrons inside an open drawer) on E2-G11 |
 | ~~#84 (P4, R3-02-08)~~ | moved to W-H.1 (fix-5, FD-02). The state-fill mechanism is D3's floor row FL-6 ("no state fill or dim reads a plate token … read the one-ink fill register", `design/material/REGISTRY.md:318`), and PLAN §1 gives a loop's floor row to that loop's wave. The G3 reading below is W-H.1's H1-G21 HEAD reading |
 | #86, F-21 item | the surface material's layering row |

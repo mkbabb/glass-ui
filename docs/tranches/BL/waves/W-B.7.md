@@ -35,7 +35,7 @@
 |---|---|---|---|
 | B7-G1 · no tags residue in `src` | `test "$(git grep -ciE 'tags-input\|TagsInput' -- src \| awk -F: '{s+=$2} END {print s+0}')" -eq 0` | exit 0 | **exit 1**: 8 |
 
-#44's terminal (RETIRE) is LEDGER:109; B7-G1 enacts it.
+#44's terminal (RETIRE) is LEDGER `#44`; B7-G1 enacts it.
 
 B7-G1 could pass by deleting comments without the decision; B7-G2 holds the decision.
 

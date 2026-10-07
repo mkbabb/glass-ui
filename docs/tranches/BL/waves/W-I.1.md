@@ -23,7 +23,7 @@
 | F-16 split: O-67's witness family, O-66 §2 | the side, vertical and canvas docks as a witness family (W7), and the witness scope's headed real-GPU cells (W8 headed) | `INBOUND-MAP.md:626,632` |
 | O-85 DOCK-PRIORITY-OVERFLOW | a per-control priority with the lowest-priority controls folding into the dock's own More menu, container-driven (IN:41; ruled to this band with O-65 as a D2 question, CUR:80). D2 rules it against the scrolling run and the cap (§3.1 item 6) | `audit/INBOUND.md:41` |
 | R56 scroll glide in the dock run, handed from W-B.15 | the dock run's scroll is native; D2 rules a glide or keeps native (§3.1 item 7); G26 | `W-B.15.md` |
-| UIA-KF-052, UIA-F-132 | the DockControl tone seat and loading state (W-B.2 §3.5): D2 checklist items (§3.1 item 8) | LEDGER:577, :592 |
+| UIA-KF-052, UIA-F-132 | the DockControl tone seat and loading state (W-B.2 §3.5): D2 checklist items (§3.1 item 8) | LEDGER `UIA-KF-052`, `UIA-F-132` |
 | W-0.8's cure | the cap rest (O-83) shipped in 10.2.0, kept or superseded here (§3.4) | `W-0.8.md` |
 | F-71 split | O-67 R-3, the reserved badge seat (an API ask decided here as a dock seat) | `audit/INBOUND-MAP.md:631` |
 | inbound, F-18 | O-56 G-2 (producer half); O-63; O-64 R-6; O-67 R-1, R-2; C-2 rows 2 and 3; UIA-V-159, UIA-V-399, UIA-V-618; A2-VA-L2-7, A2-KE-L2-16 | `INBOUND-MAP.md:310-322,537,549-552,565,590,629-630,678,682` |
@@ -226,7 +226,7 @@ In the table cells below, `\|` is the Markdown escape for `|`: the command itsel
 | G19 · the summary wraps no control (L08-16) | `demo-aria.mjs`, row `D1/SUMMARY-NESTED` | 0, every route mounted, both engines | **FAIL**: 3 (Chromium); WebKit mounted 0 of 8 routes |
 | G24 · O-85, the priority seat | `grep -qE '^\s+priority\?:' src/components/dock/DockControl.vue` | exit 0 under D2's BUILD (with D2's fold witness wired beside it); under a RETIRE the row is recorded "retired with D2's ruling" and the owner's words, as I5-G2 | **exit 1** (fix-3, `be1969ea`: `DockControl.vue` declares no `priority`) |
 | G26 · R56, the run glide | D2's run-glide witness row (a fling on an overflowing run, `scrollLeft` per frame against D2's converged curve), both engines | PASS under a glide ruling; under a native ruling the row is recorded "retired with D2's ruling" and its reason | the witness does not exist at HEAD (RED by absence) |
-| G25 · the loading seat | `grep -qE '^\s+loading\?:' src/components/dock/DockControl.vue`, or D2's RETIRE quoted in LEDGER:592 | exit 0 | **exit 1** (fix-2) |
+| G25 · the loading seat | `grep -qE '^\s+loading\?:' src/components/dock/DockControl.vue`, or D2's RETIRE quoted in LEDGER `UIA-F-132` | exit 0 | **exit 1** (fix-2) |
 | G23 · the harness can fail | `node $H/selftest.mjs --engine all` | SELFTEST PASS (85/85 at H2), every plant FAIL in both engines | 85/85 at `44099fdb` (`pass-2/H2.md` §4). The band-I probe's control rows (`I1` `where: out` PASS, `I1` `where: dock` FAIL) show G14 can pass and fail on one page |
 
 **Real GPU and consumer cells (O-66 §2).** W8's 60 fps verdict and the value.js, keyframes and fourier docks are UNMEASURED headless. The glass demo's cells run headed on a real GPU in W-A.4's GPU leg (`node $H/w8-motion.mjs … --headed`); each consumer's dock is judged in its own repin addendum, named in W-L.7's packets (value.js's tree is read-only to glass seats). Until then those cells are recorded UNMEASURED with the reason, never green.

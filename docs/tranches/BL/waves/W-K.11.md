@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | W-K.5's readings at `9866d229` (`src` = published 10.1.0) and fix-2's at `183e021a` |
 | ships in | 11.0.0 |
-| families | F-40 split: C-9, a disease row (BK FINAL §7 carry; open at the 9.0.0 and 10.0.0 closes, LEDGER:231), with L01a-42, L04-F09 and L08-12 |
+| families | F-40 split: C-9, a disease row (BK FINAL §7 carry; open at the 9.0.0 and 10.0.0 closes, LEDGER `C-9`), with L01a-42, L04-F09 and L08-12 |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
 

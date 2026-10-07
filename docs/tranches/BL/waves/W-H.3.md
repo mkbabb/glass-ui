@@ -34,7 +34,7 @@ R2-06-02's 19 owner rows (`audit/round-2/R2-06.md:29,50`), grouped by subject, p
 
 ## 2 · The defect at HEAD
 
-Nineteen owner asks and three register remnants with no terminal disposition since BD. Each rode at least two closes: F-14's mechanism is "recap rows routed only into declined or abrogated P-waves" (`REGISTRY.md:324`), and L05b-01 counts 89 of 261 BI recap rows lost that way. The formation LEDGER carries the subject row (R2-06-02, LEDGER:456) and the owner docket row this wave answers (OW-9c, LEDGER §4).
+Nineteen owner asks and three register remnants with no terminal disposition since BD. Each rode at least two closes: F-14's mechanism is "recap rows routed only into declined or abrogated P-waves" (`REGISTRY.md:324`), and L05b-01 counts 89 of 261 BI recap rows lost that way. The formation LEDGER carries the subject row (LEDGER `R2-06-02`) and the owner docket row this wave answers (OW-9c, LEDGER §4).
 
 ## 3 · The cure: one terminal per subject
 

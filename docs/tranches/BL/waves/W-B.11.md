@@ -39,7 +39,7 @@
 | ~~B11-G2~~ | struck (fix-3, FB-18): W-C.3's C3-G2 (every named token exists) is the one source of record for the dead-cite invariant; a copy here went green only when W-C.3 landed | — | — |
 | ~~B11-G3~~ | struck (fix-3, FB-18): W-C.1's C1-G1 (no tooling under `docs/`) is the one source of record; a copy here went green only when W-C.1 landed | — | — |
 
-B11-G1 is this wave's own enactment of the RETIRE. #78's terminal (RETIRE, W-C.3 named for the derived canon) is LEDGER:190.
+B11-G1 is this wave's own enactment of the RETIRE. #78's terminal (RETIRE, W-C.3 named for the derived canon) is LEDGER `#78`.
 
 ## 6 · π and DELTA obligations
 

@@ -9,6 +9,13 @@ a terminal for a row the ledger sources from it is a second record. This lists:
             form NAME-n) states a different terminal
   COUNT     LEDGER §9's count table disagrees with a count of the row tables (a derived copy that drifted)
   DOCKET    a docket row (§4) whose wave has no spec
+  COVER     a BUILD or FOLD row whose cells name an audit or inbound finding id (L.., R..-..-.., UIA-.., A2-..,
+            KFA-..) that the row's own wave spec does not name (pass 11, FK-02: `#48` folded L04-F27's
+            `layers.css:348` into W-I.5, whose spec never names it). The ledger row's words are not coverage; the
+            receiving spec must carry the item. A spec's abbreviated run ("UIA-V-200, -349, -367") names each id
+  LINECITE  a plan file (PLAN.md, waves/*.md, LEDGER.md) that cites a LEDGER row by line number (`LEDGER:117`).
+            A line number is derived data that drifts with every inserted row (pass 11: W-I.5's `LEDGER:117`
+            had become `#47b`); the row id is the one record, so a cite names the id or the section
 
 Terminal words are folded to the charter's four: CURED, ANSWERED, DECLINE(D) and NOT-REPRODUCED are RETIRE classes
 (LEDGER §0). Exit 1 while any row is open. BL_ROOT reads another copy.
@@ -84,6 +91,28 @@ def main():
                 t = WORD.search(r[col]) if col < len(r) else None
                 if t and FOLD[t.group(1)] != c[3]:
                     out.append(f"OPEN DISAGREE LEDGER.md:{n} `{c[0]}` is {c[3]}; its source {w} §{k} says \"{r[col][:60]}\" for \"{r[0][:50]}\"")
+
+    # COVER: the ledger row's words are not the wave covering the item
+    fid = re.compile(r"(?<![\w-])(L\d\d[ab]?-F?M?\d+[a-z]?|R\d+-\d+-\d+|UIA-[A-Z]+-\d+|A2-[A-Z]+-L\d-\d+|KFA-\d+)(?![\w-])")
+    run = re.compile(r"((?:UIA|A2|R\d+|L\d\d[ab]?)-(?:[A-Z]+-(?:L\d-)?)?)(\d+)((?:,\s*(?:and\s+)?-\d+)+)")
+
+    def expand(t):
+        extra = [p + n for m in run.finditer(t) for p, n in [(m.group(1), m.group(2))] + [(m.group(1), x) for x in re.findall(r"-(\d+)", m.group(3))]]
+        return t + "\n" + " ".join(extra)
+
+    spec_text = {w: expand((WAVES / f"{w}.md").read_text()) for w in specs}
+    for n, c in led:
+        if c[3] not in ("BUILD", "FOLD") or c[4] not in spec_text:
+            continue
+        for k in sorted(set(fid.findall(" ".join((c[0], c[1], c[6]))))):
+            if not re.search(rf"(?<![\w-]){re.escape(k)}(?![\w-])", spec_text[c[4]]):
+                out.append(f"OPEN COVER    LEDGER.md:{n} `{c[0]}` {c[3]} → {c[4]} names {k}, which {c[4]}'s spec does not name")
+
+    # LINECITE: a LEDGER row cited by line number
+    for f in [BL / "PLAN.md", BL / "LEDGER.md"] + sorted(WAVES.glob("W-*.md")):
+        for k, line in enumerate(f.read_text().splitlines(), 1):
+            for m in re.finditer(r"(?<![/\w])LEDGER(?:\.md)?:\d+(?:-\d+)?", line):
+                out.append(f"OPEN LINECITE {f.relative_to(BL)}:{k} cites `{m.group(0)}`; cite the row id or the section")
 
     # §9's table against the rows
     name = {"1": "§1", "2": "§2", "3": "§3", "5": "§5", "6": "§6", "7": "§7", "Appendix A": "Appendix A"}
