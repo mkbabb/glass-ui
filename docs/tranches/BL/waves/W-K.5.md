@@ -59,7 +59,7 @@ The menu trigger and the pointer-opened Dialog do not paint the ring at HEAD; UI
 
 ## 6 · π and DELTA obligations
 
-- **Surfaces:** fixture `k.html?s=menu` (two lit rows), `?s=listbox`; demo `/containers/dropdown-menu`, `/data/search`, `/forms/select` at 1440×900.
+- **Surfaces:** fixture `k.html?s=menu` (two lit rows), `?s=listbox`; demo `/containers/dropdown-menu`, `/data/search`, `/forms/inputs` (its `Select` member chosen; fix-15: `/forms/select` is not a route) at 1440×900.
 - **Themes:** light and dark.
 - **Engines:** Chromium and Playwright WebKit; real Safari UNMEASURED (OW-3).
 - **Paired capture:** HEAD shots `cap/head/k5-menu-two-rows-{light,dark}.png` (Item 1 under the pointer and Item 3 highlighted, both filled; π reading is G2's `lit` list). The wave records the same frame with one filled row.

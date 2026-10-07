@@ -64,7 +64,7 @@ Each row is a gate on appendix A's cell of the same id. HEAD readings are §2's.
 
 ## 6 · π and DELTA obligations
 
-- **Surfaces:** fixture `k.html?s=text` (typewriter mid-typing and settled, open tooltip, SortableList, Chip, interactive row); demo `/display/typewriter`, `/data/sortable-list`, `/forms/chip`, `/data/infinite-scroll`, at 1440×900 and 390×844.
+- **Surfaces:** fixture `k.html?s=text` (typewriter mid-typing and settled, open tooltip, SortableList, Chip, interactive row); demo `/motion/text-motion` (its `Typewriter` member, the default; fix-15: `/display/typewriter` is not a route), `/data/sortable-list`, `/forms/chip`, `/data/infinite-scroll`, at 1440×900 and 390×844.
 - **Themes:** light and dark.
 - **Engines:** Chromium and Playwright WebKit; real Safari UNMEASURED (OW-3).
 - **Paired capture:** HEAD `cap/head/k10-text-{light,dark}.png`; the wave records the same frames. The π claim is that the typewriter paints identically (overlay glyphs where the text node was): the pair's pixel difference over the typewriter box at the settled frame is 0 px at 3:1, and a mid-typing frame shows the same prefix.
@@ -86,7 +86,7 @@ Closes F-84 (R7-01-04, R7-01-05, R7-01-06, R8-01-06, R8-01-07). R7-01-05's spill
 
 - **Tranche fit:** each phrase is one DOM text node, and only a control or a lifted row refuses selection.
 - **Wave:** §2's rows and K10-S green in one run, both engines.
-- **Feature:** select-all and copy on `/display/typewriter` and `/data/sortable-list`, then translate the page in Chrome: each phrase copies once and the typewriter settles on its final glyph. One capture after translation.
+- **Feature:** select-all and copy on `/motion/text-motion` and `/data/sortable-list`, then translate the page in Chrome: each phrase copies once and the typewriter settles on its final glyph. One capture after translation.
 
 ## Appendix A · `k10.mjs` (lands as `tests-visual/wired/text-once.spec.ts`)
 

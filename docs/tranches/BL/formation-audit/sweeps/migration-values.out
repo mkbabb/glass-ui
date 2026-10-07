@@ -1,0 +1,18 @@
+# migration-values.py — class sweep, formation fix seat 15 (pass 14 FN-06: §3 changes a published value at rest and §7 does not name it)
+
+## before: the plan at HEAD 2967ce43 (BL_ROOT=the fix-15 worktree's docs/tranches/BL), src read from the fix-15 worktree. READS (12 entries, each a reader or an owned row) closes the rest of the 52 candidates in both runs
+$ BL_ROOT=<wt>/docs/tranches/BL python3 migration-values.py <wt>
+OPEN TOKEN waves/W-0.1.md §3: `--glass-veil-ink` changes in "**The light veil at the token.** The light arm of the veil (the ink `--glass-veil-ink`, the base and step at `…", and §7 does not name it
+OPEN TOKEN waves/W-0.11.md §3: `--shadow-dock` changes in "`--shadow-dock` and `--shadow-dock-collapsed` lose the zero-offset glow and take the converged one-layer cast,…", and §7 does not name it
+OPEN TOKEN waves/W-0.11.md §3: `--shadow-dock-collapsed` changes in "`--shadow-dock` and `--shadow-dock-collapsed` lose the zero-offset glow and take the converged one-layer cast,…", and §7 does not name it
+OPEN TOKEN waves/W-0.11.md §3: `--shadow-modal` changes in "**One quiet shadow, only where a surface floats.** `--shadow-modal` (both arms) becomes one layer.…", and §7 does not name it
+OPEN PROP  waves/W-E.4.md §3: `sideOffset` changes in "The content seam passes one side offset, read from a token in `tokens/offsets.css`, to every popper, so no com…", and §7 does not name it
+OPEN TOKEN waves/W-E.4.md §3: `--z-toggle` changes in "**On-scale z and offsets (UIA-V-676, UIA-F-219).** `--z-toggle` takes a rung of the z scale in `tokens/scheme-…", and §7 does not name it
+OPEN PROP  waves/W-E.5.md §3: `duration` changes in "The rest wait, and a waiting toast's `duration` timer starts when it becomes visible.…", and §7 does not name it
+published tokens 902, props with defaults 109, candidates 52, open 7
+exit=1
+
+## after: the plan as fix-15 leaves it
+$ python3 migration-values.py <wt>
+published tokens 902, props with defaults 109, candidates 52, open 0
+exit=0

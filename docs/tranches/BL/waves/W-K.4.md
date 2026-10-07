@@ -86,7 +86,7 @@ A 2 px outline at `outline-offset` ≥ 1 px covers more than 2 × the element's 
 
 ## 6 · π and DELTA obligations
 
-- **Surfaces:** fixture `k.html?s=ring` (Slider, triad, SegmentedTabs, ToggleGroup, DockControl, AccordionTrigger, invalid Input) and `?s=text` (sortable handle); demo `/forms/checks`, `/forms/slider`, `/navigation/tabs`, `/dock/overview` at 1440×900 and 390×844.
+- **Surfaces:** fixture `k.html?s=ring` (Slider, triad, SegmentedTabs, ToggleGroup, DockControl, AccordionTrigger, invalid Input) and `?s=text` (sortable handle); demo `/forms/checks`, `/forms/slider`, `/navigation/tabs`, `/dock/overview`, and for the three components §4 also edits, `/display/atoms` (its DarkModeToggle member), `/data/data-table` (a DataTable row and header) and `/data/sortable-list` (the SortableList handle), at 1440×900 and 390×844 (fix-15, the π sweep `formation-audit/sweeps/pi-surface.py`).
 - **Themes and modes:** D, DK, PCM, FCL, FCD.
 - **Engines:** Chromium all five; Playwright WebKit D and DK (no forced-colours emulation there, recorded as not emulated); real Safari UNMEASURED (OW-3).
 - **Paired capture:** `node k4.mjs --shots` writes `k4-<target>-<cell>-chromium-{rest,focus}.png`; the 32 before pairs are taken at the wave's base with `WAVE=W-K.4`, into `.cache/evidence/W-K.4/` (formation's HEAD set sat in a session scratchpad and is not evidence; there `k4-segtab-FCD-chromium-focus.png` showed the focused selected tab with only the `Highlight` edge). Each pair's π reading is its G1 row (`any`, `c3`, `need`). The wave records the same pairs after the cure.

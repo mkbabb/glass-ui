@@ -96,7 +96,7 @@ Every row is RED at HEAD, and each of G1-G3, G6-G11 has a control leg that passe
 
 ## 6 · π and DELTA obligations
 
-- **Reveal (G1, G2):** `/containers/popover` and `/overlays/dropdown-menu` (the menu arm R4-01 measured: 0.513 → 1.000), 1440×900, light and dark. Paired capture at `<F2-base>` and at the wave: a frame strip from the click to +500 ms (every 16 ms) with the Escape at +40 ms, and the reopen strip. HEAD shows the plate snapping back to full before it fades; the wave shows the fade continuing from where it stood.
+- **Reveal (G1, G2):** `/containers/popover` and `/containers/dropdown-menu` (fix-15: the seat's `/overlays/dropdown-menu` is not a route; the menu arm R4-01 measured: 0.513 → 1.000), 1440×900, light and dark. Paired capture at `<F2-base>` and at the wave: a frame strip from the click to +500 ms (every 16 ms) with the Escape at +40 ms, and the reopen strip. HEAD shows the plate snapping back to full before it fades; the wave shows the fade continuing from where it stood.
 - **Disclosure (G3):** `/containers/collapsible` and `/containers/accordion`, the reversal at +43 ms, light and dark, frame strip.
 - **Indicator (G4):** `/navigation/tabs`, the 0 → 3 → 1 strip beside the direct 0 → 1 strip, both themes.
 - **Dock (G6, G7):** `/dock/overview` "Starts compact" (`[data-testid=dock-horizontal-collapsed-first-paint]`) and the R4-01 harness dock, one still at +1.8 s and one at +7 s; these stills are D2's born-REDs too, so the wave record cites the same files W-I.1 reads.

@@ -214,7 +214,7 @@ Each row's before capture is taken on the wave's base commit, the after on its l
 | surface | themes | engines | paired capture | π |
 |---|---|---|---|---|
 | CardHeader with `#actions`, rest and condensed over a scrolled list | light, dark | Chromium; Playwright WebKit labelled | the band-L fixture's `card` page at 1440 and 390 | G-L1-1, G-L1-2 readouts |
-| the spectrum scrubber with the fill set and unset | light, dark | Chromium; WebKit labelled | fixture `fields` page (appendix B) | G-L1-3 readout; the unset capture equals the HEAD capture (sha256) |
+| the spectrum Slider (the scrubber, `slider/styles.css`) with the fill set and unset (fix-15, the π sweep `formation-audit/sweeps/pi-surface.py`) | light, dark | Chromium; WebKit labelled | fixture `fields` page (appendix B) | G-L1-3 readout; the unset capture equals the HEAD capture (sha256) |
 | the toolbar with a SelectTrigger | light | Chromium; WebKit labelled | fixture `fields` page; before at HEAD: `fields-head.png` (sha256 `764138fd25a5a0b8…`, re-taken by the wave on its base) | G-L1-8 readout |
 | the theme row in an open account menu; the menu rows with leading, description and an unchecked checkbox item; a destructive row | light, dark | Chromium; WebKit labelled | fixture `menu` page | G-L1-4, G-L1-10 readouts |
 | Badge soft × two tones | light, dark | Chromium | fixture `badge` page | G-L1-13's contrast readout |

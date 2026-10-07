@@ -64,6 +64,7 @@ Planted bites for the wired twins: a style tag restoring `animation: music-staff
 - `/display/music-staff` in loading mode, light and dark, 1440×900: a 2 s frame strip at rest before and after, showing the strike, the breath and the reel read the same (the DELTA is in the numbers, the strip shows no loss of life), plus the Performance-panel trace pair (layouts/s) as the paired artefact.
 - `/navigation/tabs`: a strip of one switch, light and dark, showing the pill's corners stay round across the stretch (the three-part indicator's risk).
 - The card condense on `/display/card` scroll, and the track flow on the progress track, one strip each.
+- The Configurator's preset shimmer (`configurator/styles.css:488-490`) on `/containers/configurator`, light and dark, a strip before and after: the same sweep on the shared layer and keyframes, linear (fix-15, the π sweep `formation-audit/sweeps/pi-surface.py`).
 - Engines: Chromium measured. Playwright WebKit crashes on the demo routes (W-F.1 §2); record each cell as a crash or a reading. Real Safari UNMEASURED (OW-3). WebKit also lays out SVG on CSS transforms, so the real-Safari cell is owed at the close.
 - R2-09-07's 6× CPU cell (976 ms/s) is re-read after the wave with the same throttle.
 

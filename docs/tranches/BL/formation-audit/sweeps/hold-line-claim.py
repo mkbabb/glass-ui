@@ -54,6 +54,21 @@ of passed both gate and sweep, and a gate that forbade the spec's own cure passe
 gate's hits deleted, never the spec's form. SPEC (after CLAIMS) carries each S entry's quote, cure form and the
 plants its nouns require.
 
+  SIBLING a spelling of the gate's subject that `src` itself uses and that no plant of the S entry carries (pass 14
+          FN-05). NOUN reached only the nouns the gate's own text names; this arm reads `src` for the rest, in four
+          kinds, each enumerated from the tree at run time (`siblings`):
+            carrier  a class that `src` styles and writes in the same static class list as a class the gate's
+                     cells or spans name (FN-01: `.dock-run` rides the full layer beside `.dock-layer--full`)
+            wrapper  an exported `src` function that passes one of its own parameters into an API the gate's
+                     span names (FN-02: `useBreakpoint(query)` calls `matchMedia(query)`)
+            family   a CSS property, or a media feature for a span that reads `@media` or a pointer query, of the
+                     same family as one the span names, that `src` declares and the span does not name (FN-03:
+                     `block-size: max(…)` floors as `min-block-size` does)
+            token    a custom property `src` declares under a prefix the span forbids members of (FN-04: every
+                     `--radius-*` rung beside `--radius-sm` and `--radius-card`)
+          Each sibling must be carried by a plant, red if it is the defect in another spelling, green if it is not;
+          the plant then runs as every other plant does, so a red sibling the gate passes is open NARROW.
+
 A gate that reads the index (`git ls-files`) is planted through its listing: the span is run with each
 `git ls-files <args>` replaced by that listing less the entry's `ls_cure` names, plus the planted path. Plants go
 into tracked files, so a `git grep` span reads them. Usage: hold-line-claim.py <root>, where <root> is a checkout
@@ -192,6 +207,15 @@ CLAIMS = {
         R(LY, ".glass-dock.collapsed .dock-layers > .dock-layer { width: 0 }", "the base class as a child of the group"),
         R(LY, ".glass-dock.collapsed { --x: 0px }\n.dock-layer--full { width: var(--x) }", "a width laundered through a state-set custom property"),
         R(LY, ".glass-dock.collapsed { --x: 0px }\n.glass-dock { --y: calc(var(--x) * 2) }\n.dock-layer { min-height: var(--y) }", "the same through a second custom property"),
+        R(LY, ".glass-dock.collapsed .dock-layers .dock-run { width: 0 }", "the full layer's third class, `.dock-run` (`GlassDock.vue:464`; pass 14 FN-01)"),
+        R(LY, ".glass-dock.collapsed .dock-run { inline-size: 0 }", "`.dock-run` as the subject, no group"),
+        R(LY, ".glass-dock.collapsed .dock-layer--full { min-inline-size: 0 }", "min-inline-size (pass 14 FN-05 SIBLING)"),
+        R(LY, ".glass-dock.collapsed .dock-layer--full { flex: 0 0 0 }", "the flex shorthand (pass 14 FN-05 SIBLING)"),
+        R(LY, ".glass-dock.collapsed.vertical .dock-layer--summary { height: 0 }", "height (pass 14 FN-05 SIBLING)"),
+        R(LY, ".glass-dock.collapsed.vertical .dock-layer--summary { min-block-size: 0 }", "min-block-size (pass 14 FN-05 SIBLING)"),
+        R(LY, ".glass-dock.collapsed.vertical .dock-layer--summary { max-height: 0 }", "max-height (pass 14 FN-05 SIBLING)"),
+        R(LY, ".glass-dock.collapsed.vertical .dock-layer--summary { max-block-size: 0 }", "max-block-size (pass 14 FN-05 SIBLING)"),
+        G(LY, ".glass-dock.vertical .dock-run { min-block-size: 0 }", "HEAD's own `.dock-run` floor (`run.css:287-292`): `.vertical` is an orientation, not a dock state"),
         C(LY, ".glass-dock.expanded:not(.fit-content):not([data-morphing]) .dock-layer--full { width: 100% }", "§3 item 1: the rule takes the gate its sibling `:344-346` carries"),
         G(LY, ".glass-dock.collapsed { --x: 0px }\n.glass-dock:not([data-morphing]) .dock-layer--full { width: var(--x) }", "a state-set property read by a gated layer rule"),
         G(LY, ".glass-dock.collapsed:not([data-morphing]) { --x: 0px }\n.dock-layer--full { width: var(--x) }", "a property set under the morph gate"),
@@ -349,6 +373,7 @@ CLAIMS = {
         R("src/styles/typography/scale.css", '@font-face {\n    font-family: "Plus Jakarta Sans Fallback";\n}', "a second face (the row's bite)"),
         R("src/styles/typography/scale.css", "@font-face {\n    font-family: 'Plus Jakarta Sans Fallback';\n}", "a second face, single quotes"),
         R("src/styles/typography/scale.css", '@font-face {\n    font-family:"Plus Jakarta Sans Fallback"\n}', "a second face, unspaced with no semicolon"),
+        G("src/styles/typography/scale.css", ".x { font: inherit; }", "the `font` shorthand, which declares no face name (pass 14 FN-05 SIBLING)"),
         R("src/styles/typography/scale.css", '@font-face {\n    font-family: "Plus Jakarta Sans Fallback SF";\n}\n@font-face {\n    FONT-FAMILY: \'plus jakarta sans fallback sf\';\n}', "one platform name declared twice, quotes and case changed"),
         C("src/styles/typography/scale.css", '@font-face {\n    font-family: "Plus Jakarta Sans Fallback SF";\n}\n@font-face {\n    font-family: "Plus Jakarta Sans Fallback Segoe";\n}\n@font-face {\n    font-family: "Plus Jakarta Sans Fallback Roboto";\n}\n@font-face {\n    font-family: "Plus Jakarta Sans Fallback Arial";\n}', "§3 item 4's four platform faces, each its own name"),
         cure=[("striphits", "grep -nH 'Plus Jakarta Sans Fallback' src/styles/typography/scale.css", None, 1)]),
@@ -375,6 +400,18 @@ CLAIMS = {
         R("src/components/sheet/SheetContent.vue", '<div class="min-h-[50vh]">x</div>', "a Tailwind floor"),
         R("src/components/sheet/detents/use.ts", "el.style.minHeight = `${floor}px`;", "a script-written floor"),
         R("src/components/sheet/detents/use.ts", "const h = document.documentElement.clientHeight;", "the root's client height"),
+        R("src/components/sheet/styles.css", '[data-slot="sheet-content"] { block-size: max(var(--sheet-floor), calc(clamp(0, var(--detent-t), 1) * 100dvh)); }', "the floor folded into `block-size` with `max()` (pass 14 FN-03)"),
+        R("src/components/sheet/styles.css", '[data-slot="sheet-content"] { block-size: clamp(var(--sheet-floor), calc(var(--detent-t) * 100dvh), 100dvh); }', "the floor folded into `block-size` with `clamp()` (pass 14 FN-03)"),
+        R("src/components/sheet/styles.css", ".x { height: max(12rem, 30dvh); }", "`height` with an outer `max()` (pass 14 FN-05 SIBLING)"),
+        R("src/components/sheet/styles.css", ".x { flex: 0 0 var(--sheet-floor); }", "a flex basis that reads the floor (pass 14 FN-05 SIBLING)"),
+        R("src/components/sheet/styles.css", ".x { inline-size: max(var(--sheet-floor), 50vw); }", "a side sheet's inline size floored (§3 item 3: the span is height or width) (pass 14 FN-05 SIBLING)"),
+        R("src/components/sheet/styles.css", ".x { min-inline-size: var(--sheet-floor); }", "a side sheet's inline floor (pass 14 FN-05 SIBLING)"),
+        R("src/components/sheet/styles.css", ".x { min-width: 40vw; }", "min-width (pass 14 FN-05 SIBLING)"),
+        R("src/components/sheet/detents/use.ts", "const w = document.documentElement.clientWidth;", "the root's client width (the side arm)"),
+        G("src/components/sheet/styles.css", ".x { block-size: calc(clamp(0, var(--detent-t), 1) * 100dvh); }", "HEAD's detent span (`styles.css:530`), which no floor wraps"),
+        G("src/components/sheet/styles.css", ".x { max-block-size: 100dvh; max-height: 100dvh; }", "a ceiling, not a floor (pass 14 FN-05 SIBLING)"),
+        G("src/components/sheet/styles.css", ".x { width: 100%; max-width: 32rem; max-inline-size: 32rem; }", "widths that floor nothing (pass 14 FN-05 SIBLING)"),
+        G("src/components/sheet/styles.css", "@media (min-width: 40rem) { .x { color: red; } }", "HEAD's media feature (`styles.css:483`, W-E.7's), not a declaration"),
         G("src/components/sheet/styles.css", ".x { min-block-size: 0; }", "HEAD's zero floors (`styles.css:118`)"),
         G("src/components/sheet/styles.css", ".x { min-block-size: var(--touch-target); }", "HEAD's grip floor (`styles.css:259`)"),
         C("src/components/sheet/detents/use.ts", "const span = window.visualViewport?.height ?? 0;\nel.style.setProperty(\"--sheet-floor\", `${floor}px`);", "§3 item 3: the span from `visualViewport`, the floor published as `--sheet-floor`"),
@@ -385,7 +422,41 @@ CLAIMS = {
         R("src/components/popover/PopoverContent.vue", '<PopperContent :side-offset="4" />', "a kebab-case template prop"),
         R("src/components/popover/PopoverContent.vue", "const p = { sideOffset:8 };", "unspaced"),
         G("src/components/popover/PopoverContent.vue", "const p = { sideOffset: offsetFor(role) };", "an offset read from the scale"),
-    ),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: 170; }", "a literal that is not `999` (pass 14 hardening note; fix-15 named the rung)"),
+        R("src/styles/theme/bridges.css", ":root { --z-toggle: var(--z-toast); }", "another rung, re-declared outside the scale file"),
+        R("src/components/menu/DropdownMenuSubContent.vue", "    sideOffset: 0,", "HEAD's zero default (`DropdownMenuSubContent.vue:20`)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-background); }", "`--z-background`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-bar); }", "`--z-bar`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-behind); }", "`--z-behind`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-content); }", "`--z-content`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-controls); }", "`--z-controls`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-dock); }", "`--z-dock`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-fullscreen); }", "`--z-fullscreen`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-header); }", "`--z-header`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-modal); }", "`--z-modal`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-overlay); }", "`--z-overlay`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-panel); }", "`--z-panel`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-popover); }", "`--z-popover`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-tooltip); }", "`--z-tooltip`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-toast); }", "`--z-toast`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-background); }", "`--z-index-background`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-bar); }", "`--z-index-bar`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-behind); }", "`--z-index-behind`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-content); }", "`--z-index-content`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-controls); }", "`--z-index-controls`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-dock); }", "`--z-index-dock`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-fullscreen); }", "`--z-index-fullscreen`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-header); }", "`--z-index-header`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-max); }", "`--z-index-max`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-modal); }", "`--z-index-modal`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-overlay); }", "`--z-index-overlay`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-panel); }", "`--z-index-panel`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-popover); }", "`--z-index-popover`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-toast); }", "`--z-index-toast`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-toggle); }", "`--z-index-toggle`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        R("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-index-tooltip); }", "`--z-index-tooltip`, a rung or bridge other than §3 item 11's `--z-max` (pass 14 FN-05 SIBLING)"),
+        cure=[("sub", "src/styles/tokens/scheme-motion.css", "--z-toggle: 999;", "--z-toggle: var(--z-max);"),
+              ("append", "src/styles/tokens/offsets.css", ":root { --overlay-side-offset: 4px; }")]),
     ("W-E.5", "E5-G9"): S(  # "no slice": the queue keeps every toast
         R("src/components/toast/use-toast.ts", "state.toasts = state.toasts.slice(0,TOAST_LIMIT);", "unspaced"),
         R("src/components/toast/use-toast.ts", "state.toasts.splice(TOAST_LIMIT);", "a splice"),
@@ -404,11 +475,43 @@ CLAIMS = {
     ("W-E.7", "E7-G9"): S(  # "one width query": the four controls fold on container size
         R("src/components/progress/Progress.vue", "<style>\n@media (width < 40rem) { .x { display: none; } }\n</style>", "range syntax"),
         R("src/components/progress/Progress.vue", "<style>\n@media screen and (max-width: 40rem) { .x { display: none; } }\n</style>", "a media type before the feature"),
+        R("src/components/progress/Progress.vue", "<style>\n@media (min-width: 40rem) { .x { display: none; } }\n</style>", "min-width (pass 14 FN-05 SIBLING)"),
+        R("src/components/progress/Progress.vue", "<style>\n@media (max-height: 480px) { .x { display: none; } }\n</style>", "a viewport height query (pass 14 FN-05 SIBLING)"),
+        R("src/components/progress/Progress.vue", "<style>\n@media (max-aspect-ratio: 1 / 1) { .x { display: none; } }\n</style>", "an aspect-ratio query (pass 14 FN-05 SIBLING)"),
+        R("src/components/progress/Progress.vue", "<style>\n@media (orientation: portrait) { .x { display: none; } }\n</style>", "an orientation query"),
+        G("src/components/progress/Progress.vue", "<style>\n@media (prefers-reduced-motion: reduce) { .x { transition: none; } }\n</style>", "a preference query, not a viewport key"),
         G("src/components/progress/Progress.vue", "<style>\n@container (width < 40rem) { .x { display: none; } }\n</style>", "a container query"),
     ),
     ("W-E.8", "E8-G2"): L("the three off-role radius names, as token and as utility"),
     ("W-E.8", "E8-G4"): S(  # "Metric reads the context radius"
         R("src/components/metric/styles.css", ".x { border-radius: var(--radius-card, 0.75rem); }", "the token with a fallback"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-2xl); }", "`--radius-2xl`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-3xl); }", "`--radius-3xl`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-badge); }", "`--radius-badge`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-button); }", "`--radius-button`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-control); }", "`--radius-control`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-dialog); }", "`--radius-dialog`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-dock); }", "`--radius-dock`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-dock-card); }", "`--radius-dock-card`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-field); }", "`--radius-field`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-floor); }", "`--radius-floor`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-inset); }", "`--radius-inset`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-lg); }", "`--radius-lg`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-md); }", "`--radius-md`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-media); }", "`--radius-media`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-panel); }", "`--radius-panel`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-pill); }", "`--radius-pill`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-strip); }", "`--radius-strip`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-tab); }", "`--radius-tab`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-xl); }", "`--radius-xl`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: var(--radius-xs); }", "`--radius-xs`, a fixed rung, not the context radius (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-radius: 0.75rem; }", "a literal radius (pass 14 FN-04)"),
+        R("src/components/metric/styles.css", ".x { border-start-start-radius: var(--radius-sm); }", "a logical corner (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-start-end-radius: var(--radius-card); }", "a logical corner (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-end-start-radius: 4px; }", "a logical corner (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { BORDER-END-END-RADIUS: var(--radius-panel); }", "a logical corner, upper case (pass 14 FN-05 SIBLING)"),
+        R("src/components/metric/styles.css", ".x { border-top-left-radius: var(--radius-3xl); }", "a physical corner"),
+        G("src/components/metric/styles.css", ".x { border-end-end-radius: var(--radius-ctx); }", "a corner on the context radius"),
         G("src/components/metric/styles.css", ".x { border-radius: var(--radius-ctx); }", "the context radius"),
     ),
     ("W-E.9", "E9-G7"): S(  # "no viewport keys in the fold"
@@ -424,6 +527,11 @@ CLAIMS = {
         R("src/components/tabs/composables/useTabResponsive.ts", "const w = window.visualViewport?.width ?? 0;", "the visual viewport"),
         R("src/components/tabs/composables/useTabResponsive.ts", "const w = screen.width;", "the screen"),
         R("src/components/tabs/composables/useTabResponsive.ts", "const w = document.documentElement.clientWidth;", "the root's client width"),
+        R("src/components/tabs/composables/useTabResponsive.ts", 'const { matches: isDesktop } = useBreakpoint("(min-width: 640px)");', "the library's own `matchMedia` wrapper (`composables/dom/useBreakpoint.ts:46`; pass 14 FN-02)"),
+        R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (min-width: 36rem) { .x { display: flex; } }\n</style>", "min-width (pass 14 FN-05 SIBLING)"),
+        R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (max-height: 480px) { .x { display: block; } }\n</style>", "a viewport height query (pass 14 FN-05 SIBLING)"),
+        R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (max-aspect-ratio: 1 / 1) { .x { display: block; } }\n</style>", "an aspect-ratio query (pass 14 FN-05 SIBLING)"),
+        R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (orientation: portrait) { .x { display: block; } }\n</style>", "an orientation query"),
         C("src/components/labeled-field/LabeledField.vue", "<style>\n.labeled-field { container: field / inline-size; }\n@container field (max-width: 36rem) { .x { display: block; } }\n</style>", "§3 item 5's container form"),
         C("src/components/tabs/composables/useTabResponsive.ts", "const ro = new ResizeObserver(([e]) => { fits.value = e.contentRect.width >= strip.value!.scrollWidth; });", "§3 item 4's observer on the strip's own box"),
     ),
@@ -463,6 +571,7 @@ CLAIMS = {
     ("W-G.7", "G7-G4"): S(  # "one door": `./aurora` no longer exports the derive bindings
         R("src/components/aurora/index.ts", 'export * from "./derive";', "a star re-export of the derive module"),
         R("src/components/aurora/index.ts", 'export { deriveAurora as derive } from "./derive";', "a renamed re-export (the stated bite)"),
+        G("src/components/aurora/index.ts", 'export { resolveAtoms } from "./composables/atoms";', "`resolveAtoms` (`aurora/composables/atoms.ts`) passes its argument to `deriveAurora` but is another symbol, the runtime's; whether it is published is W-L.6's census, not this door (pass 14 FN-05 SIBLING)"),
     ),
     # ---------------------------------------------------------------- band H
     ("W-H.1", "G5"): L("`contrast-color(` is the binary ink's one CSS function"),
@@ -501,6 +610,32 @@ CLAIMS = {
         R(GL, T6 % "inset: calc(var(--glass-blur-resting-radius, 32px) * -2);", "a literal as the token's fallback"),
         R(GL, T6 % "inset: calc(var(--glass-blur-tier-radius) * -2);", "a token that is not one of the five rung radii"),
         R(GL, T6 % "inset: calc(var(--glass-blur-resting) * -2);", "the composed filter token, not the radius"),
+        R(GL, T6 % "inset-inline: -32px;", "`inset-inline`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "inset-block: -32px;", "`inset-block`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "inset-inline-end: -2rem;", "`inset-inline-end`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "inset-block-start: -2rem;", "`inset-block-start`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "inset-block-end: calc(-1 * 32px);", "`inset-block-end`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "right: -32px;", "`right`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "bottom: -1rem;", "`bottom`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "left: -8px;", "`left`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "margin-top: -32px;", "`margin-top`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "margin-left: -32px;", "`margin-left`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "margin-inline: -1rem;", "`margin-inline`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "margin-block: -1rem;", "`margin-block`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "margin-inline-start: -8px;", "`margin-inline-start`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "margin-inline-end: -8px;", "`margin-inline-end`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "margin-block-end: -8px;", "`margin-block-end`, a side the overshoot can take (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "inset: calc(var(--glass-blur-wash) * -2);", "`--glass-blur-wash`, a composed filter token, not a radius (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "inset: calc(var(--glass-blur-quiet) * -2);", "`--glass-blur-quiet`, a composed filter token (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "inset: calc(var(--glass-blur-floating) * -2);", "`--glass-blur-floating`, a composed filter token (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "inset: calc(var(--glass-blur-overlay) * -2);", "`--glass-blur-overlay`, a composed filter token (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "inset: calc(var(--glass-blur-deep) * -2);", "`--glass-blur-deep`, the deep tier's filter token (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "inset: calc(var(--glass-blur-deep-boost) * -2);", "`--glass-blur-deep-boost`, the deep tier's boost (pass 14 FN-05 SIBLING)"),
+        R(GL, T6 % "inset: calc(var(--glass-blur-deep-active-radius) * -2);", "`--glass-blur-deep-active-radius`, a radius that is not one of the five rung radii (pass 14 FN-05 SIBLING)"),
+        G(GL, T6 % "inset: calc(var(--glass-blur-wash-radius) * var(--glass-level) * -2);", "`--glass-blur-wash-radius`, a rung's own radius (§3 item 1 at another rung) (pass 14 FN-05 SIBLING)"),
+        G(GL, T6 % "inset: calc(var(--glass-blur-floating-radius) * var(--glass-level) * -2);", "`--glass-blur-floating-radius`, a rung's own radius (§3 item 1 at another rung) (pass 14 FN-05 SIBLING)"),
+        G(GL, T6 % "inset: calc(var(--glass-blur-overlay-radius) * var(--glass-level) * -2);", "`--glass-blur-overlay-radius`, a rung's own radius (§3 item 1 at another rung) (pass 14 FN-05 SIBLING)"),
+        G(GL, T6 % "translate: -32px -32px;", "`translate` moves the pseudo-element and grows it past no edge; the overshoot is a growth, read in the inset and margin families (pass 14 FN-05 SIBLING)"),
         C(GL, T6 % "inset: calc(var(--glass-blur-resting-radius) * var(--glass-level) * -2);", "§3 item 1: two radii of the rung's own token at the element's `--glass-level`"),
         G(GL, T6 % "inset: calc(var(--glass-blur-resting-radius) * -2);", "two blur radii from the rung's own token"),
         G(GL, T6 % "inset: 0;", "HEAD's own `inset: 0` (`material.css:146`)"),
@@ -513,6 +648,9 @@ CLAIMS = {
     ("W-I.1", "G18"): S(  # "one pointer model"
         R("src/components/dock/styles/run.css", "@media (pointer:coarse) { .x { inline-size: 3rem; } }", "unspaced"),
         R("src/components/dock/styles/run.css", "@media (any-pointer: coarse) { .x { inline-size: 3rem; } }", "`any-pointer`"),
+        R("src/components/dock/styles/run.css", "@media (hover: none) { .x { inline-size: 3rem; } }", "the touch device keyed on `hover` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", "@media (any-hover:none) { .x { inline-size: 3rem; } }", "`any-hover`, unspaced"),
+        G("src/components/dock/styles/run.css", "@media (hover: hover) { .x:hover { color: red; } }", "a hover effect gated on a hover device, not a size model"),
     ),
     ("W-I.2", "G1"): S(  # "no member set read from element children"
         R("src/components/carousel/useCarousel.ts", "const members = [...el.children];", "a spread"),
@@ -522,15 +660,34 @@ CLAIMS = {
         R("src/components/dock/styles/run.css", ".dock-run > * {\n    scroll-snap-align: start;\n}", "the stated bite"),
         R("src/components/dock/styles/run.css", ".dock-run>* {\n    scroll-snap-align: start;\n}", "unspaced"),
         R("src/components/dock/styles/run.css", ".dock-run > * {\n    color: red;\n    scroll-snap-align: start;\n}", "the snap two lines into the rule"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-layer--full > * {\n    scroll-snap-align: start;\n}", "the run's children through the full layer's class (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-layer > * {\n    scroll-snap-align: start;\n}", "the run's children through the base class both layers carry (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run[data-overflowing] > * {\n    scroll-snap-align: start;\n}", "a compound on the run"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-layer--summary > * {\n    scroll-snap-align: start;\n}", "the summary layer's children: no marker declares them, and the title claims every snap target is declared (pass 14 FN-05 SIBLING)"),
         G("src/components/dock/styles/run.css", ".dock-run[data-overflowing] [data-dock-seat] {\n    scroll-snap-align: start;\n}", "the declared targets"),
         cure=[("striphits", "git grep -n 'scroll-snap-align' -- src/components/dock/styles")]),
     ("W-I.3", "G4"): L(GONE),
     ("W-I.4", "G1"): DOCKET,
     ("W-I.5", "I5-G1"): L("the two retired facilities' names, case-blind"),
     ("W-I.6", "I6-G4"): DOCKET,
-    ("W-I.7", "I7-G1"): S(  # "seat transition": the seat's width transition appends to the control's own list
+    ("W-I.7", "I7-G1"): S(  # "seat transition": the seat's size transition, on either axis, appends to the control's own list
         R("src/components/dock/styles/run.css", ".x { color: red; transition: inline-size 200ms; }", "mid-line"),
         R("src/components/dock/styles/run.css", ".x {\n    transition-property: inline-size;\n}", "`transition-property`"),
+        R("src/components/dock/styles/run.css", ".x { transition: width 200ms; }", "`width` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { transition: min-width 200ms; }", "`min-width` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { transition: min-inline-size 200ms; }", "`min-inline-size` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { transition: max-width 200ms; }", "`max-width` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { transition: max-inline-size 200ms; }", "`max-inline-size` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { transition: flex 200ms; }", "`flex` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { transition: flex-basis 200ms; }", "`flex-basis` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { transition: height 200ms; }", "`height` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { transition: min-height 200ms; }", "`min-height` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { transition: min-block-size 200ms; }", "`min-block-size` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { transition: max-height 200ms; }", "`max-height` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { transition: max-block-size 200ms; }", "`max-block-size` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x {\n    transition: block-size var(--spring-dock-duration) var(--spring-dock);\n}", "the vertical dock's seat transition (`run.css:376,384`) (pass 14 FN-05 SIBLING)"),
+        C("src/components/dock/styles/run.css", ".x {\n    transition: var(--icon-button-transition), block-size var(--spring-dock-duration) var(--spring-dock);\n}", "§3 item 1's appended form on a vertical dock"),
+        G("src/components/dock/styles/run.css", ".x { transition: flex-direction 0s; }", "`flex-direction`, not a size"),
         G("src/components/dock/styles/run.css", ".x {\n    transition: var(--icon-button-transition), inline-size var(--spring-dock-duration) var(--spring-dock);\n}", "§3 item 1's appended form"),
     ),
     ("W-I.7", "I7-G2"): S(  # "C-8": no content-box in `src`
@@ -540,6 +697,12 @@ CLAIMS = {
     ("W-I.7", "I7-G3"): S(  # "ring reserve": out of padding
         R("src/components/dock/styles/run.css", ".x { padding: var(--dock-ring-reserve) 0; }", "the shorthand"),
         R("src/components/dock/styles/run.css", ".x { padding-inline: var(--dock-ring-reserve); }", "the inline axis"),
+        R("src/components/dock/styles/run.css", ".x { padding-bottom: var(--dock-ring-reserve); }", "`padding-bottom` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { padding-block: var(--dock-ring-reserve); }", "`padding-block` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { padding-inline-start: var(--dock-ring-reserve); }", "`padding-inline-start` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { padding-inline-end: var(--dock-ring-reserve); }", "`padding-inline-end` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { padding-block-start: var(--dock-ring-reserve); }", "`padding-block-start` (pass 14 FN-05 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { padding-block-end: var(--dock-ring-reserve); }", "`padding-block-end` (pass 14 FN-05 SIBLING)"),
         G("src/components/dock/styles/run.css", ".x { outline-offset: var(--dock-ring-reserve); }", "§3 item 2's outline offset"),
     ),
     # ---------------------------------------------------------------- band J
@@ -674,9 +837,9 @@ SPEC = {
     ("W-E.13", "E13-G6"): dict(spec="is the only `@media print` block in `src/styles`",
         plants=[C("src/styles/print.css", "@media print { :root { color-scheme: light; } }", "the one arm")]),
     ("W-E.3", "E3-G9"): dict(spec="published as `--sheet-floor`"),
-    ("W-E.4", "E4-G19"): dict(spec="no component passes a literal `sideOffset`",
+    ("W-E.4", "E4-G19"): dict(spec="`--z-toggle` is `var(--z-max)` in `tokens/scheme-motion.css`, not `999`",
         plants=[C("src/components/_shared/overlay/content.ts", "const sideOffset = readOffsetToken(el);", "the seam's one offset, read from a token"),
-                C("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-raised); }", "a rung of the z scale")]),
+                C("src/styles/tokens/scheme-motion.css", ":root { --z-toggle: var(--z-max); }", "§3 item 11's rung")]),
     ("W-E.5", "E5-G9"): dict(spec="The viewport renders the first `TOAST_VISIBLE = 5`, oldest first.",
         plants=[C("src/components/toast/use-toast.ts", "const visible = computed(() => state.toasts.slice(0, TOAST_VISIBLE));", "the visible window over the queue")]),
     ("W-E.5", "E5-G10"): dict(spec="`font-semibold` leaves `ToastTitle.vue:14`",
@@ -709,7 +872,7 @@ SPEC = {
         plants=[C("src/components/carousel/useCarousel.ts", 'const members = membersOf(el, "[data-carousel-item]");', "the one member query")]),
     ("W-I.2", "G10"): dict(spec="the snap rule is `.dock-run [data-dock-seat]`",
         plants=[C("src/components/dock/styles/run.css", ".dock-run [data-dock-seat] {\n    scroll-snap-align: start;\n}", "the marker's snap rule")]),
-    ("W-I.7", "I7-G1"): dict(spec="The seat's width transition appends to the control's own list",
+    ("W-I.7", "I7-G1"): dict(spec="The seat's size transition appends to the control's own list",
         plants=[C("src/components/dock/styles/run.css", ".x {\n    transition: var(--icon-button-transition), inline-size var(--spring-dock-duration) var(--spring-dock);\n}", "the appended form")]),
     ("W-I.7", "I7-G2"): dict(spec="The run's box is `border-box` like every other box in the layer contract.",
         plants=[C("src/components/dock/styles/run.css", ".x { box-sizing: border-box; }", "the border box")]),
@@ -1082,6 +1245,175 @@ def spec_arms(g, entry, where):
     return out
 
 
+# ---------------------------------------------------------------- SIBLING (pass 14 FN-05)
+SIZE_W = ["width", "inline-size", "min-width", "min-inline-size", "max-width", "max-inline-size", "flex", "flex-basis"]
+SIZE_H = ["height", "block-size", "min-height", "min-block-size", "max-height", "max-block-size", "flex", "flex-basis"]
+FAMILIES = [
+    SIZE_W, SIZE_H,
+    ["border-radius"] + [f"border-{a}-{b}-radius" for a, b in (("top", "left"), ("top", "right"), ("bottom", "left"), ("bottom", "right"),
+                                                                ("start", "start"), ("start", "end"), ("end", "start"), ("end", "end"))],
+    ["inset", "inset-inline", "inset-block", "inset-inline-start", "inset-inline-end", "inset-block-start", "inset-block-end",
+     "top", "right", "bottom", "left", "translate"],
+    ["margin"] + [f"margin-{s}" for s in ("top", "right", "bottom", "left", "inline", "block", "inline-start", "inline-end", "block-start", "block-end")],
+    ["padding"] + [f"padding-{s}" for s in ("top", "right", "bottom", "left", "inline", "block", "inline-start", "inline-end", "block-start", "block-end")],
+    ["transition", "transition-property"],
+    ["font-family", "font"],
+    ["box-shadow"],
+    ["scroll-snap-align"],
+    ["box-sizing"],
+    ["flex-direction", "flex-flow"],
+]
+MEDIA_VIEWPORT = ["width", "min-width", "max-width", "height", "min-height", "max-height", "inline-size", "block-size",
+                  "aspect-ratio", "min-aspect-ratio", "max-aspect-ratio", "orientation"]
+MEDIA_POINTER = ["pointer", "any-pointer", "hover", "any-hover"]
+_SRC = {}
+
+
+def _src(root):
+    """What `src` writes, read once per root: styled classes, static class lists, declared properties, media
+    features, declared custom properties, and the text of every script file."""
+    if root in _SRC:
+        return _SRC[root]
+    ls = subprocess.run(["git", "ls-files", "src"], cwd=root, capture_output=True, text=True).stdout.split()
+    css, lists, scripts = [], [], {}
+    for f in ls:
+        if not f.endswith((".css", ".vue", ".ts")):
+            continue
+        t = open(os.path.join(root, f), encoding="utf-8").read()
+        if f.endswith(".css"):
+            css.append(t)
+        if f.endswith(".vue"):
+            css += re.findall(r"<style[^>]*>(.*?)</style>", t, re.S)
+        if f.endswith((".ts", ".vue")):
+            scripts[f] = t
+            for m in re.finditer(r"""(?:class=|['"`])([a-z][\w-]*(?:\s+[a-z][\w:/\[\]().%-]*)+)(?=['"`])""", t):
+                toks = m.group(1).split()
+                if all(re.fullmatch(r"[\w:/\[\]().%-]+", x) for x in toks):
+                    lists.append((f, toks))
+    sheet = re.sub(r"/\*.*?\*/", "", "\n".join(css), flags=re.S)
+    out = {
+        "styled": set(re.findall(r"\.([a-z][\w-]*[a-z0-9])", re.sub(r"\{[^{}]*\}", "{}", sheet))),
+        "lists": lists,
+        "props": set(x.lower() for x in re.findall(r"(?:^|[{;])\s*([a-zA-Z-]+)\s*:", sheet, re.M)),
+        "media": set(x.lower() for q in re.findall(r"@media([^{]*)\{", sheet) for x in re.findall(r"\(\s*([a-z-]+)\s*[:<>=)]", q)),
+        "tokens": set(re.findall(r"(?:^|[{;])\s*(--[a-z][\w-]*)\s*:", sheet, re.M)),
+        "scripts": scripts,
+    }
+    _SRC[root] = out
+    return out
+
+
+_SIG = re.compile(r"export\s+(?:async\s+)?function\s+(\w+)\s*(?:<[^()]*>)?\s*\(([^)]*)\)"
+                  r"|export\s+const\s+(\w+)\s*=\s*(?:async\s*)?(?:<[^()]*>)?\(([^)]*)\)\s*(?::[^=]*)?=>")
+
+
+def _body(t, i):
+    j = t.find("{", i)
+    if j < 0:
+        return ""
+    d = 0
+    for k in range(j, len(t)):
+        d += {"{": 1, "}": -1}.get(t[k], 0)
+        if d == 0:
+            return t[j:k + 1]
+    return t[j:]
+
+
+def _wrappers(src, api):
+    """(file, name) for every exported function that passes one of its own parameters into `api(…)`."""
+    out = []
+    for f, t in src["scripts"].items():
+        if api not in t:
+            continue
+        for m in _SIG.finditer(t):
+            name, params = (m.group(1), m.group(2)) if m.group(1) else (m.group(3), m.group(4))
+            if name == api:
+                continue
+            ps = [re.match(r"\s*(?:\.\.\.)?(\w+)", p).group(1) for p in params.split(",") if re.match(r"\s*(?:\.\.\.)?\w", p)]
+            for c in re.finditer(r"\b" + re.escape(api) + r"\s*\(([^()]*(?:\([^()]*\)[^()]*)*)\)", _body(t, m.end())):
+                if any(re.search(r"\b" + re.escape(p) + r"\b", c.group(1)) for p in ps):
+                    out.append((f, name))
+                    break
+    return out
+
+
+def _word(x):
+    return re.compile(r"(?<![\w-])" + re.escape(x) + r"(?![\w-])", re.I)
+
+
+def siblings(g, entry, spans, root):
+    """Every sibling spelling `src` uses for the S entry's subject: [(kind, name, how)]."""
+    src = _src(root)
+    span = re.sub(r"\S*/\S*\.\w+\S*|\b(?:src|demo|tests)/\S*", " ", " ".join(spans))  # paths name files, not subjects
+    cells = [g.gid, g.passes, entry.get("spec") or ""]
+    out = []
+    # carrier: classes the cells name in backticks or the span names, then their static co-classes
+    subj = set()
+    for c in cells:
+        for s in re.findall(r"`([^`]+)`", c):
+            subj |= set(re.findall(r"\.([a-z][\w*-]*[a-z0-9*])", s))
+    subj |= {x for x in re.findall(r"(?<![\w-])([a-z][a-z0-9]*(?:-{1,2}[a-z0-9]+)+)", span.replace("\\", "")) if x in src["styled"]}
+    for s in sorted(subj):
+        rx = re.compile("^" + re.escape(s).replace(r"\*", r"[\w-]*") + "$")
+        for f, toks in src["lists"]:
+            if any(rx.match(x) for x in toks):
+                for x in toks:
+                    if not rx.match(x) and x in src["styled"] and x not in subj:
+                        out.append(("carrier", "." + x, f"rides `{f}`'s class list beside `.{s}`"))
+    # wrapper: APIs the span names, wrapped outside the files the gate reads (a wrapper inside them is read by the gate)
+    scope = [x.strip("'\"").rstrip("/") for x in re.findall(r"(?:src|demo|tests)/[^\s'\")|]*", " ".join(spans))]
+    for api in sorted(set(re.findall(r"(?<![\w$.-])([a-z]+[A-Z]\w*)", span))):
+        for f, name in _wrappers(src, api):
+            if any(f == x or f.startswith(x + "/") for x in scope):
+                continue
+            out.append(("wrapper", name, f"`{f}` exports `{name}`, which passes its parameter to `{api}`"))
+    # family: every member `src` uses of a property family (or a media-feature family) the span touches; CSS names
+    # are lower case, so the match is case-sensitive (`innerWidth` touches no family)
+    touched = lambda fam: any(re.search(r"(?<![\w-])" + re.escape(p) + r"(?![\w-])", span) for p in fam)
+    if "@media" in span:
+        if touched(MEDIA_VIEWPORT):
+            for p in MEDIA_VIEWPORT:
+                if p in src["media"]:
+                    out.append(("family", p, "a viewport media feature `src` queries; the span reads `@media` on the viewport"))
+    else:
+        axes = touched(SIZE_W) or touched(SIZE_H)  # the two size axes are one family: a dock and a sheet rotate
+        for fam in FAMILIES:
+            if touched(fam) or (axes and fam in (SIZE_W, SIZE_H)):
+                for p in fam:
+                    if p in src["props"]:
+                        out.append(("family", p, f"a property `src` declares, of the family `{fam[0]}` the span reads"))
+    if re.search(r"pointer", span):
+        for p in MEDIA_POINTER:
+            if p in src["media"]:
+                out.append(("family", p, "a pointer media feature `src` queries; the span reads `pointer`"))
+    # token: a prefix whose members the span forbids by name
+    raw = " ".join(spans).replace("\\", "")  # a regex may open groups between `--` and the name: `--(?!(?:glass-blur-(?:…`
+    pres = {"--" + x for x in re.findall(r"--(?:\(\?[:!=]|\()*([a-z][a-z0-9]*(?:-[a-z0-9]+)*-)(?:\(|\[|\*|<)", raw)}
+    for m in re.finditer(r"\(\?!", raw):  # an allow-list: a token the gate lets through names the family it shuts out
+        pres |= {re.sub(r"[a-z0-9]+$", "", t) for t in re.findall(r"--[a-z][a-z0-9]*(?:-[a-z0-9]+)+", raw[m.end():m.end() + 80])}
+    for pre in sorted(pres):
+        for t in sorted(src["tokens"]):
+            if t.startswith(pre) and not _word(t).search(span):
+                out.append(("token", t, f"declared in `src` under the prefix `{pre}` the span reads"))
+    seen, uniq = set(), []
+    for k in out:
+        if (k[0], k[1]) not in seen:
+            seen.add((k[0], k[1]))
+            uniq.append(k)
+    return uniq
+
+
+def sibling_arm(g, entry, spans, root, where):
+    texts = [p[1] for p in entry["plants"]]
+    res = []
+    for kind, name, how in siblings(g, entry, spans, root):
+        bare = name.lstrip(".")
+        rx = re.compile(r"(?<![\w-])" + re.escape(bare) + r"(?![\w-])" if kind != "carrier" else r"(?<![\w-])\.?" + re.escape(bare) + r"(?![\w-])", re.I)
+        if not any(rx.search(t) for t in texts):
+            res.append(f"OPEN SIBLING {where}: `{name}` ({kind}: {how}) is in no plant")
+    return res
+
+
 def main():
     if len(sys.argv) != 2 or not os.path.isdir(sys.argv[1]):
         print("usage: hold-line-claim.py <root: a checkout of HEAD>")
@@ -1111,6 +1443,7 @@ def main():
             spans = spans[: entry["only"]]
         if entry["kind"] == "S":
             out += spec_arms(g, entry, where)
+            out += sibling_arm(g, entry, spans, root, where)
         if entry["kind"] == "H" and (g.wave, entry["held"]) not in measured:
             out.append(f"OPEN HELD    {where}: the entry names {entry['held']}, which is no measured row of {g.wave}")
         ok = runner(entry, root)

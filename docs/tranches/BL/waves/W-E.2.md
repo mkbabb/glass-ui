@@ -93,7 +93,7 @@ Can each fail and pass? G1, G2 and G4-G11 fail at HEAD (18 of 18 rows; G3, struc
 
 ## 6 · π and DELTA obligations
 
-- **Surfaces:** the band-E fixture scenes `sheet`, `selslide`, `halo`, `disc`, `topdlg`, `toast`, `rung`, `esc&ov=dsel`; demo `/containers/command`, `/display/surface`, `/containers/dialog`.
+- **Surfaces:** the band-E fixture scenes `sheet`, `selslide`, `halo`, `disc`, `topdlg`, `toast`, `rung`, `esc&ov=dsel`; demo `/containers/command`, `/display/surface`, `/containers/dialog`, and `/dock/overview` at 390 and 1440 for the GlassDock shell label that wraps at its container (UIA-F-226, `dock/styles/shell.css`), paired before and after (fix-15, the π sweep `formation-audit/sweeps/pi-surface.py`).
 - **Themes:** light and dark for every row. G9 adds prefers-reduced-motion.
 - **Engines:** Chromium measured. Playwright WebKit measured through G5 and labelled as the engine build; the demo-route rows (G6 onward) crash its page at HEAD, recorded as crashes, not findings. Real Safari is UNMEASURED (OW-3).
 - **Paired capture:** `node e2.mjs --shots` at `<E2-base>` and at the wave: `sheet-*-390-bottom.png`, `halo-*-on.png`, `sheet-floor-*-390.png`. Also a demo pair of `/containers/dialog` at 390 and 1440 showing the Dialog corner move from 16 to 24 px. The halo pair is also D3's M-7 witness input. The before set is taken at `<E2-base>` with `WAVE=W-E.2`, into `.cache/evidence/W-E.2/e2/`; formation's HEAD shots sat in a session scratchpad and are not evidence.

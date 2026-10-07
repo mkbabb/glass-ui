@@ -88,7 +88,7 @@ Before = the band-I probe build of `8536f2cc` (`out/bi-head/shots/hover-*-latche
 
 | surface | themes | engines | paired capture | π |
 |---|---|---|---|---|
-| Button, ToggleGroup, Accordion, SelectTrigger, SegmentedTabs underline, DarkModeToggle at the coarse cell | light (the probe's default) and dark (`?theme=dark`) | Chromium mobile emulation; Playwright WebKit `hasTouch`, labelled | latched vs released, before and after | G2 rows (latched px per control) |
+| Button, ToggleGroup, Accordion, SelectTrigger, SegmentedTabs underline, DarkModeToggle, and the DataTable row, ExpandableContainer trigger, Slider thumb, Timeline and Blob whose hover rules §4 also edits (fix-15, the π sweep `formation-audit/sweeps/pi-surface.py`), at the coarse cell | light (the probe's default) and dark (`?theme=dark`) | Chromium mobile emulation; Playwright WebKit `hasTouch`, labelled | latched vs released, before and after | G2 rows (latched px per control) |
 | the same controls on a fine pointer, hovered | light, dark | Chromium, Playwright WebKit | hover vs rest | a no-regression read: the hover rung still paints on `(hover: hover)` (changed px > 0 on each control) |
 | iOS Safari, real Safari | both | — | UNMEASURED (OW-3; WebDriver has no touch) | — |
 

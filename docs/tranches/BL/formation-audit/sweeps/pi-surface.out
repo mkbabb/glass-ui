@@ -1,0 +1,42 @@
+# pi-surface.py — class sweep, formation fix seat 15 (pass 14 FN-07: a visual change with no π surface that renders it; the dead routes found curing it)
+
+## before: the plan at HEAD 2967ce43 (BL_ROOT=the fix-15 worktree's docs/tranches/BL); manifest and stories read from the fix-15 worktree at 2967ce43
+$ BL_ROOT=<wt>/docs/tranches/BL python3 pi-surface.py <wt>
+OPEN STYLE  waves/W-E.1.md §6: §4 changes a stylesheet of `src/components/deck`, and §6 names neither the component nor a route that renders it
+OPEN STYLE  waves/W-E.1.md §6: §4 changes a stylesheet of `src/components/expandable-container`, and §6 names neither the component nor a route that renders it
+OPEN ROUTE  waves/W-E.10.md:45: `/forms/buttons` is not a manifest route (it renders the not-found page)
+OPEN ROUTE  waves/W-E.10.md:48: `/forms/buttons` is not a manifest route (it renders the not-found page)
+OPEN ROUTE  waves/W-E.10.md:104: `/forms/buttons` is not a manifest route (it renders the not-found page)
+OPEN ROUTE  waves/W-E.10.md:108: `/forms/buttons` is not a manifest route (it renders the not-found page)
+OPEN ROUTE  waves/W-E.10.md:159: `/forms/buttons` is not a manifest route (it renders the not-found page)
+OPEN ROUTE  waves/W-E.10.md:170: `/forms/buttons` is not a manifest route (it renders the not-found page)
+OPEN STYLE  waves/W-E.14.md §6: §4 changes a stylesheet of `src/components/configurator`, and §6 names neither the component nor a route that renders it
+OPEN STYLE  waves/W-E.2.md §6: §4 changes a stylesheet of `src/components/dock`, and §6 names neither the component nor a route that renders it
+OPEN ROUTE  waves/W-E.4.md:120: `/overlays/popover` is not a manifest route (it renders the not-found page)
+OPEN ROUTE  waves/W-E.4.md:120: `/overlays/menu` is not a manifest route (it renders the not-found page)
+OPEN ROUTE  waves/W-E.4.md:120: `/forms/select` is not a manifest route (it renders the not-found page)
+OPEN STYLE  waves/W-E.7.md §6: §4 changes a stylesheet of `src/components/deck`, and §6 names neither the component nor a route that renders it
+OPEN STYLE  waves/W-E.7.md §6: §4 changes a stylesheet of `src/components/dock`, and §6 names neither the component nor a route that renders it
+OPEN STYLE  waves/W-E.7.md §6: §4 changes a stylesheet of `src/components/toggle-group`, and §6 names neither the component nor a route that renders it
+OPEN STYLE  waves/W-E.8.md §6: §4 changes a stylesheet of `src/components/metric`, and §6 names neither the component nor a route that renders it
+OPEN ROUTE  waves/W-F.2.md:99: `/overlays/dropdown-menu` is not a manifest route (it renders the not-found page)
+OPEN ROUTE  waves/W-F.5.md:67: `/forms/select` is not a manifest route (it renders the not-found page)
+OPEN ROUTE  waves/W-F.5.md:150: `/forms/select` is not a manifest route (it renders the not-found page)
+OPEN STYLE  waves/W-F.6.md §6: §4 changes a stylesheet of `src/components/configurator`, and §6 names neither the component nor a route that renders it
+OPEN STYLE  waves/W-I.3.md §6: §4 changes a stylesheet of `src/components/data-table`, and §6 names neither the component nor a route that renders it
+OPEN STYLE  waves/W-I.3.md §6: §4 changes a stylesheet of `src/components/expandable-container`, and §6 names neither the component nor a route that renders it
+OPEN STYLE  waves/W-I.3.md §6: §4 changes a stylesheet of `src/components/slider`, and §6 names neither the component nor a route that renders it
+OPEN ROUTE  waves/W-K.10.md:67: `/display/typewriter` is not a manifest route (it renders the not-found page)
+OPEN ROUTE  waves/W-K.10.md:89: `/display/typewriter` is not a manifest route (it renders the not-found page)
+OPEN STYLE  waves/W-K.4.md §6: §4 changes a stylesheet of `src/components/dark-mode-toggle`, and §6 names neither the component nor a route that renders it
+OPEN STYLE  waves/W-K.4.md §6: §4 changes a stylesheet of `src/components/data-table`, and §6 names neither the component nor a route that renders it
+OPEN STYLE  waves/W-K.4.md §6: §4 changes a stylesheet of `src/components/sortable-list`, and §6 names neither the component nor a route that renders it
+OPEN ROUTE  waves/W-K.5.md:62: `/forms/select` is not a manifest route (it renders the not-found page)
+OPEN STYLE  waves/W-L.1.md §6: §4 changes a stylesheet of `src/components/slider`, and §6 names neither the component nor a route that renders it
+component stylesheets 55, demo route mentions 455, manifest routes 80, open 31
+exit=1
+
+## after: the plan as fix-15 leaves it
+$ python3 pi-surface.py <wt>
+component stylesheets 55, demo route mentions 487, manifest routes 80, open 0
+exit=0

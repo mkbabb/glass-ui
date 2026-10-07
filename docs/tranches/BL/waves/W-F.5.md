@@ -34,7 +34,7 @@ The library already holds the correct shapes: `useTabRovingFocus.ts:166-179` map
 | G1 RTL pager at rest, `/navigation/pager-dots` | body offsets from the active dot **[0, 84]**; neck opacity **1**, scale **"112 1"** |
 | G2 RTL CarouselPager Next, `/navigation/carousel` | pitch 145; `scrollLeft` **0 → 0** |
 | G3 RTL dock, `/dock/overview` (the `.dock-run.is-active` run, 9 seats, port [532, 828]) | ArrowRight moves focus **788 → 740** (left); End focuses **[404, 444]**, outside the port; `scrollLeft` **0** |
-| G4 RTL document, 5 battery routes | **25** `[dir="ltr"]` nodes (slider 18, checks 3, dock 3, command 1, select 0) |
+| G4 RTL document, 5 battery routes | **28** `[dir="ltr"]` nodes (slider 18, checks 3, dock 3, select 3, command 1). Fix-15 re-read at `2967ce43` (Chromium, demo dev server in a worktree, `dir="rtl"` on `<html>` before load): slider 18, checks 3, dock 3 and command 1 as recorded; the seat's select 0 was `/forms/select`, which is not in the manifest and renders the not-found page. Select is the `Select` member of `/forms/inputs`; with that tab chosen it carries 3 `[dir="ltr"]` nodes |
 | G5 RTL Slider with no `dir` prop | stamped `dir` **ltr**; track [927, 1310]; the fill is left-anchored |
 | G6 RTL PagerDots ArrowRight; Next chevron | focus **1107 → 1079** (left); chevron not mirrored |
 | G7 `writing-mode: vertical-rl`, `.carousel-strip` | `scroll-snap-type` **x mandatory** |
@@ -64,7 +64,7 @@ All seven are appendix A's rows; each FAILs at HEAD as recorded in §2 and passe
 | F5-G1 | RTL pager at rest: every body within 0.5 px of the active dot, neck opacity 0 |
 | F5-G2 | RTL CarouselPager Next: the strip moves one pitch toward the inline end within 1 s (`scrollLeft = −pitch ± 2`) |
 | F5-G3 | RTL dock: ArrowRight moves focus to the physically right neighbour, and End leaves the last seat inside the port |
-| F5-G4 | 0 `[dir="ltr"]` nodes on `/forms/slider`, `/forms/select`, `/forms/checks`, `/dock/overview`, `/containers/command` in an RTL document |
+| F5-G4 | 0 `[dir="ltr"]` nodes on `/forms/slider`, `/forms/inputs` (its `Select` member chosen), `/forms/checks`, `/dock/overview`, `/containers/command` in an RTL document |
 | F5-G5 | an RTL Slider with no prop anchors its fill at the right edge (±1 px) |
 | F5-G6 | RTL PagerDots ArrowRight moves the active dot right, and the Next chevron is mirrored |
 | F5-G7 | under `writing-mode: vertical-rl`, `.carousel-strip` snaps on `inline` or `block` |
@@ -147,8 +147,9 @@ if (want('G3')) {
 // G4 — no reka root stamps dir="ltr" inside an RTL document (battery routes)
 if (want('G4')) {
   const counts = {};
-  for (const route of ['/forms/slider', '/forms/select', '/forms/checks', '/dock/overview', '/containers/command']) {
+  for (const route of ['/forms/slider', '/forms/inputs', '/forms/checks', '/dock/overview', '/containers/command']) {
     const { browser, page } = await open(route, { htmlAttrs: ' dir="rtl"', settle: 900 });
+    if (route === '/forms/inputs') { await page.getByRole('tab', { name: 'Select' }).click(); await page.waitForTimeout(900); } // Select is a member of the inputs family, not a route
     counts[route] = await page.evaluate(() => document.querySelectorAll('[dir="ltr"]').length);
     await browser.close();
   }

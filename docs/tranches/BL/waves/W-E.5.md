@@ -93,7 +93,7 @@ Can each fail and pass? All nine browser rows fail at HEAD. The AX row G5 has a 
 | before | after | note |
 |---|---|---|
 | every mounted `<Toaster>` renders a viewport | the first mounted owns it; others render nothing and log a dev error | mount one Toaster per page |
-| at most 5 toasts exist; a sixth evicts the oldest | all admitted toasts queue; 5 are visible | a toast is never removed while open |
+| at most 5 toasts exist; a sixth evicts the oldest | all admitted toasts queue; 5 are visible | a toast is never removed while open; a waiting toast's `duration` starts when it becomes visible, not when it is added (fix-15) |
 | the toast list is the live region (polite) | one polite `status` and one assertive `alert` region; `destructive` toasts announce assertively | assistive tech hears an error toast at once |
 | `bottom-*` positions anchor at the top below `sm` | they anchor at the bottom at every width | |
 | PagerDots announces inside a deck | the deck announces; PagerDots announces only outside one | |

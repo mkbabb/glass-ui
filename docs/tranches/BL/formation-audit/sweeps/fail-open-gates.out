@@ -34,3 +34,8 @@ exit=0
 # ===== fix-14 (`f9cf010e`, the plan as fix-14 leaves it)
 gate rows 730, fail-open rows run 124, docket rows 20, open 0
 exit=0
+
+# ===== fix-15
+## after: the plan as fix-15 leaves it (`python3 fail-open-gates.py <fix-15 worktree>`)
+gate rows 730, fail-open rows run 124, docket rows 20, open 0
+exit=0

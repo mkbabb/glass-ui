@@ -61,7 +61,7 @@ Can each fail and pass? The `/substrates/blob` cell of E14-G1 passes at HEAD: th
 
 ## 6 · π and DELTA obligations
 
-The aurora studio at 390×844 and 640×400, light and dark, Chromium (Playwright WebKit crashes on demo routes at HEAD, recorded; real Safari UNMEASURED, OW-3): HEAD with no controls, then the wave with a scrolling controls region. W-E.9 appendix A writes `envelope-*-{1440,390}.png`; captures under `.cache/evidence/W-E.14/`.
+The aurora studio (the Configurator host on `/substrates/aurora`, whose `configurator/styles.css:317-321` this wave changes; also `/containers/configurator` (fix-15, the π sweep `formation-audit/sweeps/pi-surface.py`)) at 390×844 and 640×400, light and dark, Chromium (Playwright WebKit crashes on demo routes at HEAD, recorded; real Safari UNMEASURED, OW-3): HEAD with no controls, then the wave with a scrolling controls region. W-E.9 appendix A writes `envelope-*-{1440,390}.png`; captures under `.cache/evidence/W-E.14/`.
 
 ## 7 · MIGRATION rows
 

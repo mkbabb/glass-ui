@@ -84,7 +84,7 @@ Can each fail and pass? G1-G5 fail at HEAD (22 of 24 rows), and the `--plant` ru
 
 ## 6 · π and DELTA obligations
 
-- **Surface:** the band-E fixture app (appendix B), scenes `sheet`, `toast`, `ec`, `pop`, `menu`, at 390×844 and 844×390, with the emulated insets.
+- **Surface:** the band-E fixture app (appendix B), scenes `sheet`, `toast`, `ec` (ExpandableContainer's collapse trigger, §3), `pop`, `menu`, at 390×844 and 844×390, with the emulated insets. The deck stage (`deck/styles/stage.css:33-34`, §3) is a fifth surface: `/motion/deck` at the same two cells, whose DELTA is the stage's inset against the emulated safe rect, the same before as after on a device with no insets (fix-15, the π sweep `formation-audit/sweeps/pi-surface.py`).
 - **Themes:** light and dark (`&theme=dark`). The claim is geometric, so both themes must read the same rows.
 - **Engines:** Chromium measured (CDP insets). Playwright WebKit has no safe-area emulation, so it has no cell for this wave, and that is labelled. Real Safari on an iPhone with a notch is UNMEASURED (OW-3, the owner's safaridriver checkbox): the claim that `env()` resolves on a real device is the owner's cell.
 - **Paired capture:** `node e1.mjs --shots` at `<E1-base>` and at the wave writes `sheet-{P,L}-*.png`, `toast-{P,L}-top-right.png`, `ec-{P,L}.png`, `{pop,menu}-L-rs.png`. The DELTA is each pair side by side with the safe rect outlined, plus the appendix A JSON of both runs. The before set is taken at `<E1-base>` with `WAVE=W-E.1`, into `.cache/evidence/W-E.1/e1/`; formation's HEAD shots sat in a session scratchpad and are not evidence.

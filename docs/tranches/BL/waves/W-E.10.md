@@ -42,10 +42,10 @@ Measured with appendix A (`node e10.mjs`), Chromium: **9 rows, 8 FAIL**. Load wa
 | G1 preview ladder | 10 of 80 cards over 11 category landings carry a preview | `storyTile.ts:35-39` |
 | G2 stills in band, light | 5 of 6 stills have chromatic pixels outside [25°, 95°] OKLCH: aurora, glass-material, glass-panel 100 %; constellation 15.2 % | `vizPreviewStill.ts:132` `hsla(${h}, …)` fed the OKLCH band at `:38` |
 | G2 stills in band, dark | 5 of 6; the same three at 100 %; constellation 23.7 % | same |
-| G4 header one rung down | h1 23.67 px on `/forms/buttons`, 41.89 on `/forms/chip` and `/display/badge`, against ceilings 18.61 and 32.93 (HEAD / 1.272) | `heroScaleForDepth` (`manifest.ts:317-324`) |
+| G4 header one rung down | h1 41.89 px on `/display/buttons`, `/forms/chip` and `/display/badge`, against the ceiling 32.93 (HEAD / 1.272). Fix-15 re-read `/display/buttons` at `2967ce43` (Chromium, the demo dev server in a worktree): the route the seat read, `/forms/buttons`, is not in the manifest, and its 23.67 px h1 is the "Page not found" heading (pass 14 FN-07 class) | `heroScaleForDepth` (`manifest.ts:317-324`) |
 | G5 opaque showcase frames | 86 of 153 frames on 19 routes paint `data-surface="opaque"` | `ShowcaseFrame.vue:45` |
 | G6 shell strip at 390 | strip 6 px wide and the current story not shown, on 80 of 80 routes | `BottomDock.vue:185-197`: the strip takes the remainder after six fixed controls grow to the coarse floor, and never scrolls to `aria-current` |
-| G7 320×256 after a scroll | chrome and dock cover `/forms/buttons` 0.25 (PASS), `/containers/dialog` 0.715, `/forms/slider` 0.645 | `demo/chassis/hero/story-hero.css:196` `position: sticky` with no block-size arm |
+| G7 320×256 after a scroll | chrome and dock cover `/display/buttons` 0.645, `/containers/dialog` 0.715, `/forms/slider` 0.645; no route passes. Fix-15 read `/display/buttons` at `2967ce43`; the 0.25 "passing control" the seat recorded was `/forms/buttons`, the not-found page, which fix-15 also read at 0.25 | `demo/chassis/hero/story-hero.css:196` `position: sticky` with no block-size arm |
 
 Static RED:
 
@@ -94,18 +94,18 @@ $ rg -c 'function plateField' demo | wc -l
 | E10-G1 · preview ladder | appendix A G1 | 80 of 80 | **10 of 80** |
 | E10-G2 · stills in band | appendix A G2, light and dark | 0 % outside [25°, 95°] for every still | **5 of 6** in both arms |
 | E10-G3 · per-page aurora | `npx vitest run tests/demo/aurora-per-page.test.ts`: for each category, the aurora stories resolve as many distinct palettes as there are stories | pass | **fails**: navigation 4 stories, 1 palette |
-| E10-G4 · header one rung down | appendix A G4 | each h1 ≤ HEAD / 1.272 | **23.67 > 18.61; 41.89 > 32.93 (×2)** |
+| E10-G4 · header one rung down | appendix A G4 | each h1 ≤ HEAD / 1.272 | **41.89 > 32.93 (×3)** (fix-15: `/display/buttons`; before, `/forms/buttons`, the not-found page) |
 | E10-G5 · no opaque frames | appendix A G5 | 0 | **86 of 153 on 19 routes** |
 | E10-G6 · shell strip | appendix A G6 at coarse 390 | 0 bad routes (strip ≥ 88 px, current tab visible) | **80 of 80 bad** |
-| E10-G7 · short viewport | appendix A G7 at 320×256 | ≤ 25 % covered on 3 routes | **2 of 3 FAIL** (0.715, 0.645) |
+| E10-G7 · short viewport | appendix A G7 at 320×256 | ≤ 25 % covered on 3 routes | **3 of 3 FAIL** (0.645, 0.715, 0.645; fix-15: `/display/buttons` replaces the not-found `/forms/buttons`) |
 | E10-G8 · configurator and prune | `! test -e demo/stories/substrates/aurora/PresetPickerRow.vue && grep -q 'name="transport"' src/components/configurator/Configurator.vue && ! test -d demo/stories/compositions && test "$(rg -c 'function plateField' demo \| wc -l)" -eq 0` | exit 0 | **exit 1** (present; 0 slots; present; 2) |
 | E10-G9 · the row's inline mode (static; UIA-V-397, A2-VA-L3-3) | `! grep -q "configurator-row flex flex-col" src/components/configurator/ConfiguratorRow.vue` | exit 0 | **exit 1** (`:119`) |
 
-Can each fail and pass? Every browser row fails at HEAD except G7's `/forms/buttons` cell, the passing control. The unit rows fail when flipped. G8 and G9 are static and exit 1. The MOVE 1-4 acts have no single born-RED in this table. Their π is the configurator capture in §6, and their checklist is the census line quoted in §1.
+Can each fail and pass? Every browser row fails at HEAD, G7 on all three routes (fix-15: the passing cell the seat recorded was the not-found page at `/forms/buttons`). The unit rows fail when flipped. G8 and G9 are static and exit 1. The MOVE 1-4 acts have no single born-RED in this table. Their π is the configurator capture in §6, and their checklist is the census line quoted in §1.
 
 ## 6 · π and DELTA obligations
 
-- **Surfaces:** the 11 category landings (G1); `/substrates` (G2); `/forms/buttons`, `/forms/chip`, `/display/badge` (G4); every story route (G5, G6); `/containers/dialog` and `/forms/slider` at 320×256 (G7); `/containers/configurator` and `/substrates/aurora` for #52.
+- **Surfaces:** the 11 category landings (G1); `/substrates` (G2); `/display/buttons`, `/forms/chip`, `/display/badge` (G4); every story route (G5, G6); `/containers/dialog` and `/forms/slider` at 320×256 (G7); `/containers/configurator` and `/substrates/aurora` for #52.
 - **Themes:** light and dark for every row. G2 runs both arms.
 - **Engines:** Chromium measured. Playwright WebKit crashes on demo routes at HEAD, recorded as crashes; the wired spec runs it and records the crash rather than a result. Real Safari is UNMEASURED (OW-3).
 - **Paired capture** at `<E10-base>` and at the wave:
@@ -155,8 +155,8 @@ for (const scheme of ['light', 'dark']) { const ctx = await b.newContext({ viewp
   row(`E10-G2 stills in band ${scheme}`, r.length > 0 && r.every((x) => x.outside === 0), { stills: r.length, over0: r.filter((x) => x.outside > 0).length, worst: r.sort((a, b) => b.outside - a.outside).slice(0, 4) });
   await ctx.close(); }
 // G3 · per-page aurora is a unit read over the manifest (tests/demo/aurora-per-page.test.ts); not measured here
-// G4 · the story header one √φ rung down: each h1 ≤ its HEAD size / 1.272 (HEAD sizes measured at 4d2e3123)
-{ const HEAD = { '/forms/buttons': 23.6694, '/forms/chip': 41.888, '/display/badge': 41.888 }; const sizes = {};
+// G4 · the story header one √φ rung down: each h1 ≤ its HEAD size / 1.272 (HEAD sizes measured at 4d2e3123; `/display/buttons` at 2967ce43, fix-15)
+{ const HEAD = { '/display/buttons': 41.888, '/forms/chip': 41.888, '/display/badge': 41.888 }; const sizes = {};
   for (const r of Object.keys(HEAD)) { await desk.goto(DEMO + r, { waitUntil: 'networkidle' }); await sleep(500); sizes[r] = await desk.evaluate(() => { const h = document.querySelector('main h1'); return h ? +parseFloat(getComputedStyle(h).fontSize).toFixed(2) : null; }); }
   row('E10-G4 header one rung down', Object.entries(HEAD).every(([r, v]) => sizes[r] != null && sizes[r] <= v / 1.272 + 0.1), { h1px: sizes, ceilings: Object.fromEntries(Object.entries(HEAD).map(([r, v]) => [r, +(v / 1.272).toFixed(2)])) }); }
 // G5 · ShowcaseFrame paints no opaque resting plate: count opaque frames across story routes
@@ -167,7 +167,7 @@ for (const scheme of ['light', 'dark']) { const ctx = await b.newContext({ viewp
   for (const r of stories) { try { await ph.goto(DEMO + r, { waitUntil: 'networkidle', timeout: 20000 }); await sleep(400); const m = await ph.evaluate(() => { const s = document.querySelector('.demo-bottom-dock__tabs'); if (!s) return null; const sr = s.getBoundingClientRect(); const a = s.querySelector('[aria-current=page]'); const ar = a?.getBoundingClientRect(); return { w: +sr.width.toFixed(1), shown: !!ar && ar.left >= sr.left - 1 && ar.right <= sr.right + 1 }; }); if (!m) continue; n++; if (m.w < 88 || !m.shown) { bad++; if (ex.length < 5) ex.push([r, m]); } } catch {} }
   row('E10-G6 shell strip at 390', n > 0 && bad === 0, { routes: n, bad, examples: ex }); }
 // G7 · the short viewport (320×256, 400 % reflow): after a scroll, the sticky story chrome and the shell dock cover ≤ 25 % of the viewport
-for (const r of ['/forms/buttons', '/containers/dialog', '/forms/slider']) { const sp = await (await b.newContext({ viewport: { width: 320, height: 256 } })).newPage(); await sp.goto(DEMO + r, { waitUntil: 'networkidle' }); await sleep(800);
+for (const r of ['/display/buttons', '/containers/dialog', '/forms/slider']) { const sp = await (await b.newContext({ viewport: { width: 320, height: 256 } })).newPage(); await sp.goto(DEMO + r, { waitUntil: 'networkidle' }); await sleep(800);
   await sp.evaluate(() => { const ports = [...document.querySelectorAll('*')].filter((e) => e.scrollHeight > e.clientHeight + 50 && /(auto|scroll)/.test(getComputedStyle(e).overflowY)); (ports[0] || document.scrollingElement).scrollBy(0, 400); }); await sleep(700);
   const m = await sp.evaluate(() => { const vh = innerHeight; const rows = new Array(vh).fill(0); for (const e of document.querySelectorAll('.story-page-chrome, nav.demo-bottom-dock')) { const x = e.getBoundingClientRect(); for (let y = Math.max(0, Math.floor(x.top)); y < Math.min(vh, Math.ceil(x.bottom)); y++) rows[y] = 1; } return { covered: +(rows.reduce((a, v) => a + v, 0) / vh).toFixed(3) }; });
   await sp.screenshot({ path: `${CAP}/e10/short-320x256-${r.replace(/\//g, '_')}.png` });
