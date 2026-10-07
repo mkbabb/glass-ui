@@ -435,3 +435,301 @@ This binds every pass from now on, on top of this registry's checklist:
 - Judge each route's paint with frames against this ruling. A route that adds lighting layers fails it.
 
 Landing: the token-level refinement rides 10.2.0, as a band-0 token wave. Deeper changes ride this loop.
+
+---
+---
+
+# D4 · pass 2 · REGISTRY: the routes after pass 2
+
+| field | value |
+|---|---|
+| seat | D4 pass-2 agglomeration. Closes pass 2 with each route's status on §7.5's fixed checklist, the vacuous greens found, the merges and cross-pollination pass 2 earned, the owner's open rulings, and the pass-3 plan with its fixed checklist. It picks no winner (§P2-0) |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `b58c5357`. `git diff --stat 04929544 HEAD -- src package.json` touches only the 10.1.0 Configurator (`src/components/configurator/*`, `src/index.ts`), no tile file, so every pass-2 seat measured the same tile source |
+| inputs, read in full | pass 1 of this file; `pass-2/H2.md`, `FLOOR.md`, `D4-F-block.md`, `D4-G-block.md`, `glance-G/GLANCE.md`, `D4-Dp-spec.md`, `D4-Dp-proto.md`, `D4-Dp-critique.md`, `D4-F-spec.md`, `D4-F-proto.md`, `D4-F-critique.md`; both pass-1 B critiques (`pass-1/D4-B-critique.md` and `git show b433a706^:…/pass-1/D4-B-critique.md`); `pass-1/X.md` §4.4 for the census rows; `git show b4999f1b -- …/harness` for the harness delta between the routes; `D4-F-crit/logs/crit-tone.log` for the X-7 re-score; `audit/INBOUND.md` for owner rulings (none on §5 since pass 1; O-87 binds) |
+| instruments | none run. Every number cites the report that measured it, which stays the source of record (P-3) |
+| fences | no source edit, no git write; this part is the only write |
+| engines | every WebKit number is **Playwright WebKit 26.5**. Every real-Safari cell is **UNMEASURED (owner's safaridriver checkbox)**; the driver now answers "You must enable 'Allow remote automation'" (`D4-Dp-proto.md` §2.2, `D4-F-proto.md` header), where H2 saw a session timeout |
+
+Short citations: `H2` is `H2.md`, `FLOOR` is `FLOOR.md`, `Fb` is `D4-F-block.md`, `Gb` is `D4-G-block.md`, `D′s` / `D′p` / `D′c` are the D′ spec, prototype and critique, `Fs` / `Fp` / `Fc` the F ones.
+
+---
+
+## P2-0 · In brief
+
+| id | route | status | checklist (§7.5) | convergence | reason in one line |
+|---|---|---|---:|---:|---|
+| D4-D′ | the declared cell | **ADVANCE** | 23 / 35 | 66 % | every number reproduced cell for cell; 12 open rows, none needing a missing primitive; a second row inside the rung is neither cut nor named, and no DEV name reaches a consumer |
+| D4-F | the anatomy declares the tile | **ADVANCE** | 22 / 34 (strict) | 65 % | the block test's reading 2 held (14/14) and §9 passes; 12 open rows, the same CX-1 class as D′ one level down (a `<br>` inside a label), and the unmigrated K2 stage sliced in production with no signal |
+| D4-G | the selection is a body | **BLOCK** (and the owner's Q-11 glance owed) | not scored | — | the engine's one rect writer cannot follow a tile that moves inside an unchanged box (dir flip: 212 px off on 12/12 frames, both engines) or a content-visibility reveal (25.84 px for 1 frame, Playwright WebKit); anchor positioning cures both and loses its anchor in Chromium when the tile is skipped |
+| D4-B | the choice card | **RETIRE** (folded into F) | — | — | its §9 divergence record had two rows; floor item 1 closed the chassis row and F's reading 2 put the anatomy on ToggleGroupItem. The pass-1 split is ruled in §P2-2 |
+| D4-A, D4-C | | BANK, unchanged | — | 55 %, 50 % | pass 2 did not touch them; A1 stays the wrapped-control sub-choice under Q-1 (a) |
+| D4-E | | RETIRE, unchanged | — | 30 % | |
+
+**No winner.** The rule is that one may be declared only when every route was measured under the same H2. G was never run through the battery (its questions 3-5 were not reached). D′ and F were measured under H2 revisions that differ: the F prototype edited `harness/lib.mjs`, `measure.mjs` and `t3-selected-separates.mjs` in place (`b4999f1b`: a stalled `openPage` re-opens once; an absent migrated arm reads UNMEASURED). Neither branch fires on a route that migrates all six sites without a stall, which is both routes' case in their banked batteries, so their tallies are comparable cell for cell. They still were not byte-identical. Pass 3 records the harness hash in every run (§P2-6, H3-10).
+
+Five findings shape pass 3.
+
+1. **D′ and F built the same tile.** Independently, both arrived at the floor perimeter switched on by a tile rule, the 16 px field corner, a pill held by a `max-block-size` clamp, a commit pop keyed on the model and riding `transform`, the Q-9 (a) exemption and a tone-aware state ink (`D′p` §1, `Fp` §1). On the battery they read identically: migrated T-1 12/12 · 15/15, T-3 15/18 · 15/18, T-4 16/16, T-5 30/32, T-6 25/27 · 27/27, T-7 24/24 (`D′c` §1, `Fc` §1). They still differ on one axis only, PORTFOLIO question 2: whether a tile is declared (`shape="cell"`) or follows from the content (`#media` / `#meta`).
+2. **Both routes share one open defect class, a second row inside the rung.** Two lines at the pill's `line-height: 1` are about 31-35 px, which fits under a 36 or 40 px rung. So the clamp never engages, nothing is cut, and the DEV observer does not trip. D′ fails on an appended row (`D′c` CX-1, 8/8 on `src-dev`, 4/4 on `dist`). F's row-lock closes the consumer's `flex-col` on the item and fails one level down, on a `<br>` or a block child inside the label (`Fc` CX-1, 8/8 on each flavour). It is the pass-1 D-crit C-2, still open.
+3. **Neither route's guards reach a consumer.** Every DEV name in both routes is absent from `dist`, and Q-5 (d) is unbuilt (FL-1). A consumer who upgrades without migrating gets a broken control with no signal anywhere. In D′ that is K1 sheared to 40 px (`D′c` CX-2). In F it is K2's 52 px stage sliced by a 36 px plate on 8/8 items (`Fc` CX-2). Q-5 is now the crux of E-2 for this problem.
+4. **The gestalt fails the same way on both.** The selected 2 px edge reads as a second focus ring: a focused selected tile shows two concentric outlines, and at `sm` in dark the selected edge and the ring look alike. Neither route built Q-2 (b), the flush arm that pass 2's default asked for. The commit is a 2.8-3.7 % pop with no travel and no flood, which is not iOS-27 grade (`D′c` §5, `Fc` §5). This is Q-3's and Q-2's to rule, with frames.
+5. **G's real hole is wider than its blocking cell.** The verdict cell is one Playwright WebKit frame. The stress cell outside the six is a body that stays 212 px off its tile on every frame in both engines whenever tiles move inside an unchanged container (a locale flip, CSS `order`, a column-template change) (`Gb` §3.3). The writer hears the container's size, the model and the options, and nothing else.
+
+---
+
+## P2-1 · Registry
+
+Pass-2 baseline, HEAD under H2, gating cells, Chromium (H2 §4.1): T-1 10/32, T-2 22/22, T-3 2/39 (+0/3 shipped), T-4 12/20, T-5 26/72, T-6 20/45 (Playwright WebKit 14/35, PF-1), T-7 UNMEASURED, T-8 0/27, W-A 2/9, W-B 5/25, W-C 0/8, W-D 4/8, W-E 0/3 (`dist` 0/6). HEAD+floor: T-5 42/72 and Playwright WebKit T-6 21/45 in both engines; the rest unchanged except the retired `card` and `chipcell` rows (FLOOR §3).
+
+| id | status | checklist | migrated arm, Chromium · Playwright WebKit (critic's re-run) | vacuous greens found | strongest counterexample |
+|---|---|---:|---|---|---|
+| D4-D′ | ADVANCE | 23/35 | T-1 12/12 · 15/15; T-2 22/22 · 22/22; T-3 15/18 · 15/18; T-4 16/16 · 16/16; T-5 30/32 · 30/32; T-6 25/27 · 27/27; T-7 24/24 · 24/24; W-D 8/8 · 8/8; `states` 108/108 | canon unit passes plant S (`[data-size="sm"]` tile arm on `--radius-panel`) and plant H (`:has(> * + *)` at 12 px), 45/45; the prototype's "refused in paint" for a row that fits the rung; T-1 marks a clamped pill UNMEASURED, so no witness fails cut content (HF-5) | `D′c` CX-1: `family-d-undeclared` with one appended line stays 40.00 px at `9999px`, the new row painted at 20.00-33.45 px inside the plate, 0 errors, both engines, `src-dev` and `dist` |
+| D4-F | ADVANCE | 22/34 | identical to D′ on every witness; T-3 Playwright WebKit gave no verdict in 2 of 2 critic runs (load 55-127; `Fp`'s re-run at load 49 read 15/18); probe 200/206; plants 76/76 | the row-lock probe's "one row, nothing cut" for rows inside a label; the DEV name read once, one frame after mount (`late` 0/4); the critic's X-7 "PASS (ruled)" against its own probe's 0/24 (§P2-3.2) | `Fc` CX-1: `label.innerHTML = "Smooth<br>0.5 s"` on `single`, `pill-badge`, `family-d-undeclared`, `vertical`: two rows inside a 36 or 40 px stadium, 0 errors, 8/8 on `src-dev` and on `dist` |
+| D4-G | BLOCK | not scored | registration 40/44 per run (runs 3, 4): 0.00 px drift on mount, scroll port, resize, auto-fill reflow, keyed reorder and K2 font swap, both engines, both travel forms | the K1 font-swap cell exercises no move (the tile never moved); the Chromium content-visibility cell "as transcribed" passes on a tile already rendered (100.16 → 100.16); runs 1-2 read inside the frame callback and false-failed | `Gb` §3.3: `dir="rtl"` on the group, container 424.00×139.16 before and after, body 212 px (K1) / 215 px (K2) off its tile on 12 of 12 frames, both engines |
+
+---
+
+## P2-2 · The pass-1 split on D4-B, ruled on measurements
+
+Pass 1 has two critiques of B. The first (`b433a706^`, load 36-42) gave ADVANCE at 66 %. The second (the current file, load 9-14) gave BANK at 55 %, and pass 1 adopted it.
+
+**Where they agree.** The battery reproduces cell for cell in both: T-1 4/7, T-2 12/12, T-3 15/15, T-4 16/20, T-5 37/38, T-6 24/24, T-8 16/16, W-B 13/13. Both found T-6's commit cell vacuous: the first with `p-t6a` (only the flood's opacity transition left, 24/24), the second with P3b (one 120 ms linear fill fade, 24/24). Both found the perimeter load-bearing: removing it sends T-3 to 0/15.
+
+**Where they differ, and what each measured.**
+- **Only the second ran the unmigrated consumer.** HEAD's `scenes.mjs` against B's `src` gave T-1 1/10 (preset 30.79 px at ÷h/2 1.00), T-3 2/15, W-B 2/13, and T-5 19/38 with the card board at 0 tab stops. It also showed that W-B's 13/13 reads scenes B's own patch rewrote. The first critic flagged the re-authored `card` and `chipcell` scenes but never ran HEAD's scenes on B's `src`.
+- **Only the first measured five defects in B's own code:**
+  - the pop on first paint (`choice-commit` running 38-101 ms after load with no input);
+  - the mark's glyph against its disc at 1.17:1 (pale yellow, light) and 1.68:1 (navy, dark);
+  - the registry gone stale after a re-sort (`a,b,c,d` → `d,c,b,a`, then ArrowRight from `a` selects `b`);
+  - consumer `role` and `tabindex` overriding the engine (N tab stops, no radio);
+  - a late interactive child refused 0 times.
+
+  The second never re-tested these.
+- **Only the second measured the tone's silent failures:** band 0 against a 291 px² bar for `rgb(120 80 200 / 0.35)` and for an unresolvable tone, with no console output.
+
+**Ruling.** The two critiques measured different things, and nothing either one measured is contradicted by the other. So the record is their union: the second's 14 gaps plus the first's five defects. Neither percentage is a count against a fixed checklist (pass 1 had none); each is a weighting.
+
+The first's ADVANCE rests on "gaps 1-5 have small in-family fixes". That is true of what it measured. It does not hold against the one measurement it did not take: B changes nothing on a site that does not adopt it. That is a structural property of B, not a fixable defect. **BANK stands on the measurements, and the 66 % is struck** because it was computed without the unmigrated arm. The 55 % stays as the pass-1 figure. It is not comparable to a pass-2 checklist count.
+
+**What pass 2 did to B, measured.** B's own §9 record (`pass-1/D4-B.md` Q3) said B folds into a ToggleGroup cell that grows the named slots and a non-capsule chassis. The first critic's dominance re-trigger said the same thing. Both conditions are now met:
+- The chassis row is closed. Floor item 1 returns the ToggleGroupItem hover in 1.5 s, 6/6 cells in Playwright WebKit, where HEAD hung (FLOOR §2.1).
+- The anatomy row is on the item. Reading 2 passes 14/14, with a chassis class delta of `[]` between the pill and the tile, one ARIA contract and one engine (`Fb` §3, §4).
+
+So B is a twin with no recorded divergence, and **B is RETIRED, folded into F.** Its harvest is complete: the perimeter and grid model went to the floor in pass 1; the anatomy and meta ink went to F. One input could re-open the chassis row alone, real Safari reproducing the SF-8 hang after the floor fix, and that would not restore an anatomy divergence.
+
+The first critique's five defects carry into pass 3 by class:
+- the first-paint pop is cured in both routes: both kick on the model, and the unit pins "mount stamps nothing";
+- the mark's contrast is cured by construction in F, whose mark paints `--selection-edge`, which is floored;
+- the re-sort is cured by floor item 3;
+- consumer `role` / `tabindex` on a ToggleGroupItem is **unmeasured** on either route and becomes pass-3 row E-9;
+- the late child is `Fc`'s `late` 0/4 and becomes row E-2.
+
+---
+
+## P2-3 · Route entries
+
+### P2-3.1 · D4-D′ · the declared cell: ADVANCE, 23/35 (66 %)
+
+**What held** (`D′p`, reproduced by `D′c` cell for cell):
+- CX-1 from pass 1 is closed on the floor register. 108/108 cells: three sites × valid, invalid, sibling, consumer border, two tone faults × three modes × two engines. The invalid preset reads 820.00 px² light and 519.00 dark against 267.
+- H-2's pair passes: W-D 8/8 · 8/8, T-2 22/22 · 22/22.
+- The commit passes H-4 on keyboard, programmatic and pointer, with Tab entry still. It is not vacuous: with the pop planted at 0, Chromium falls 25/27 → 16/27 and the pointer reads 1.01 flat.
+- `cell` carries no grid (CX-5 closed).
+- `--selection-ink` reaches the media (X-2).
+- The canon unit reads the parsed selector, and pass 1's unquoted evasion now fails.
+- The `max-block-size` clamp holds shipped K2 at 36.00 px on `dist`, where the spec's `block-size` let it grow to 120.33.
+- The bundle is stated as ruled row R-1: +4,026 B unpacked over HEAD+floor, made of `dist` +2,125 B and MIGRATION.md +1,901 B.
+
+**Open rows, with counterexamples** (`D′c` §6):
+1. **T-3.** `c1-migrated` reads 22.50 px² against a 224 px² bar in every mode in both engines. The shipped `preset-verbatim` gating arm reads 0.00 / 233.00 / 0.00 against 248. *Owner: Q-10.*
+2. **T-5.** FadingScroll's own tab stop on `specimen-migrated` and `strip-migrated`, both engines. *FadingScroll's owner (TF-6).*
+3. **T-6.** `f1-migrated` hover light reads 0.52 % in Chromium, and its PRM arm fails with it. The floor's 5 % hover rung sits on the witness's 10-level threshold. *Floor.*
+4. **T-8.** 0/12, because the witness reads library arms only. Safari is UNMEASURED. *Harness; owner.*
+5. **X-5.** No DEV name for an interactive descendant. `preset-input` on `src-dev` logs 4 errors, none of them about the `<input>`. *Route.*
+6. **X-7.** The tone does not reach the tint: 0/24, painted interior Δ 0.00 levels. *Route; the cure exists in F.*
+7. **Item 8.** The canon unit passes plants S and H. *Route.*
+8. **Item 9.** CX-1 above. Q-5 (d) is unbuilt. *Route; owner Q-5.*
+9. **H-10 scenes.** C1 and F1 fail (rows 1 and 3). *Owner; floor.*
+10. **MIGRATION / E-11.** The corner guard is DEV-only and reads at mount only. On `dist` a consumer corner is neither named nor refused. *Route; owner Q-5.*
+11. **Real Safari.** UNMEASURED. *Owner.*
+12. **Gestalt.** The selected edge reads as a ring, doubled when the tile is focused. Q-2 (b) is unbuilt. The commit is not iOS-27 grade. *Owner Q-2, Q-3; route.*
+
+**How far.** 12 rows. Four are the route's alone (5, 7, 8, 10). Four wait on another owner or the harness (2, 3, 4, 6). Four wait on the owner (1, 9, 11, 12). On floor v2 (§P2-6), rows 3, 5 and 6 move to the floor, and row 8's CX-1 half moves with them.
+
+### P2-3.2 · D4-F · the anatomy declares the tile: ADVANCE, 22/34 strict (65 %)
+
+**The block test** (`Fb`). Reading 1 (structural `:has()` over the item's children) cannot tell a row from an adornment without a marker. V1's glyph over its label paints as a pill, 6/6, in both engines. It also makes false cells of a consumer count span and of fourier's glyph beside a label element, and its passes already lean on `.badge-atom` and `.sr-only`. Reading 2 (library-marked `#media` / `#meta`) passes 14/14 and passes design-idioms §9: one item, two content models, chassis class delta `[]`, one radiogroup holding both with one tab stop. **PROCEED with reading 2** stands.
+
+**What held** (`Fp`, reproduced by `Fc`):
+- Every battery tally matches D′'s on the migrated arm.
+- Q-2: the group-level `:has()` makes a mixed grid one height; the walk's row-clustering fix gives 16/16 moves on the mixed 2×2, and so cures the block test's F1-2 misroute in the floor walk.
+- Q-3: the paired witness passes by construction, attributes byte-identical while the corner flips between 16 px and 9999 px.
+- Q-5: 46/46 on the comfort axis.
+- X-1..X-6 pass. X-5 has its interactive-descendant name, 1 per engine on `src-dev`.
+- R-7 / Q-9 (a): the tile keeps 1 px under contrast-more, and the plant fails.
+- The kick double-commits correctly.
+- Plants: 76/76 cells fail when planted (kick, perimeter, corner, pair, contrast exemption).
+- Bundle: `dist` +4,196 B, JS gzip-9 +259 B.
+
+**The X-7 re-score.** The census row reads "a per-item tone input reaches the selected edge, tint and ink" (`X.md` §4.4). The shared probe (the D′ critic's `crit.mjs --part tone`, copied unchanged) passes a cell only when the edge, the tint and the label ink each move. On F it reads **0/24** (`D4-F-crit/logs/crit-tone.log`): the edge and tint move (Δ 3.33-21.50 levels), and the label ink stays at `--foreground` by design. F's critic ruled the row a PASS because the media ink follows the tone. Scored strictly on the instrument both routes share, **X-7 FAILS on F**, which takes F from the critic's 23/34 to 22/34.
+
+D′ fails the same row on the other half: its label ink moves, its tint does not. The union of the two (F's tone-on-tint and D′'s `--selection-ink` on the label) closes X-7 for both, and moves to floor v2.
+
+**Open rows, with counterexamples** (`Fc` §6, plus X-7):
+1. **T-3.** `c1-migrated` reads 0.00 px² against 224 in every mode. The shipped `preset-verbatim` reads 0.00 / 233.00 / 0.00 against 248. Playwright WebKit gave no verdict. *Owner Q-10; harness.*
+2. **T-5.** FadingScroll's tab stop. *FadingScroll's owner.*
+3. **T-6.** `f1-migrated` hover reads 0.70 % in Chromium. *Floor.*
+4. **T-8.** Library arms only; Safari UNMEASURED. *Harness; owner.*
+5. **X-7.** Label ink 0/24 (above). *Route; the cure exists in D′.*
+6. **Q-4, the unmigrated consumer.** K2's 52 px stage is cut by the 36 px plate on 8/8 items, both engines, silent on `dist`. Shipped K1 carries no selected state in light or PRT. *Route; owner Q-5.*
+7. **D′ item 9.** CX-1 above; the DEV name runs at mount only (`late` 0/4); Q-5 (d) is unbuilt. *Route; owner Q-5.*
+8. **Every cell in both engines.** Playwright WebKit T-3 hung 2 of 2 times at load 55-127. *Harness (F1-3 / HF-2).*
+9. **H-10 scenes.** C1 and F1. *Owner; floor.*
+10. **MIGRATION / E-11.** The row's claim "a pill is one rung tall and lays its content out in one row whatever classes it carries" is falsified by CX-1. The silent change is named in DEV only. *Route.*
+11. **Real Safari.** UNMEASURED. *Owner.*
+12. **Gestalt.** The ring reads alike at `sm` and doubled when the tile is focused. At `sm` there is no mark (R-3). Q-2 (b) is unbuilt. The commit is not iOS-27 grade. *Owner Q-2, Q-3; route (`sm` mark).*
+
+**Instrument note on row 8.** The routed Playwright WebKit T-3 stall hit D′'s spec too, 3 of 3 runs at load 28-63 (`D′s` HF-2). D′'s prototype and critic ran it at load 11-20 and it finished. So row 8 separates the routes by the load each critic drew, not by their CSS. If it were scored as the harness's row, F would read 23/34 (68 %). The registry keeps the strict 22/34. Under either scoring the two routes are within one row of each other.
+
+**How far.** 12 rows. Four are the route's alone (5 via the floor, 6, 7, 10). Four belong to the harness, the floor or FadingScroll (2, 3, 4, 8). Four wait on the owner (1, 9, 11, 12). The P-3 cost is recorded, not scored: the tile reading is spelled in four CSS places plus the DEV script (`Fp` R-10), and only the tile rule's two forms are pinned by a unit.
+
+### P2-3.3 · D4-G · the selection is a body: BLOCK
+
+- **Question 1 (the owner's glance on Q-11)** is prepared and not answered: 8 videos and 8 frame strips in `pass-2/glance-G/` (§P2-5). The default, (a) hold the header, stands.
+- **Question 2 (registration)** BLOCKS:
+  - the blocking cell: Playwright WebKit, `content-visibility: auto` on K2, a skipped tile revealed by scrolling paints one frame at 100.16 px while the body is still 126 px. That is 25.84 px of body below the tile, in every run, with both travel forms, and visible in paint at video frame 50;
+  - the frame ledger shows why no ResizeObserver can hear it: layout has the rendered size one frame before the ResizeObserver step that delivers it;
+  - the stress cell (dir flip) is the wider hole: 212 / 215 px on every frame in both engines.
+- **The candidate primitive was measured.** CSS anchor positioning passes 23 of 24 cells, including the content-visibility reveal and the dir flip, in both engines. In Chromium it loses its anchor when the tile is skipped: 2013.53 px off at mount, and a 16 px speck painted in the port with or without `position-visibility: anchors-valid`.
+- **Questions 3-5** (T-3 on the body, the commit bar, cost and glass) were not run. G was not run through the battery.
+- **Status: BLOCK pending Q-11.** If the owner rules (a), G is RETIRED for grids and survives only as SegmentedTabs' indicator. If (b) or (c), G returns only when a rect that is both layout-carried and skip-proof is green on Gb §2.2's cells, the dir flip and the phantom read (Gb §4).
+- **What G gave the other routes:** the body needs flush tiles (Q-2 (b)), so G built the flush arm (`D4-G-block/route-common.mjs`); the selected tile's hover is withheld under a body; `harness/film.mjs`; and the post-paint registration read, which superseded two in-callback probes that false-failed.
+
+### P2-3.4 · The floor (`FLOOR.md`)
+
+- **Built.** Items 1-5. The SF-8 fix is one hunk in `glass.css` and cures the Playwright WebKit hang: PF-1 is not carried. With the switch on, the perimeter passes 54/54. The floor adds +1,317 B to `dist` and is +3,667 B over the ratchet datum.
+- **Defects it carries into pass 3, each measured by a pass-2 seat:**
+  - under PRT the hover moves 0.00 % on every tile, 16/16 cells: at `--glass-level` 0 the hover rung mixes fully to `--card`, which is the rest plate (`D′s` HF-4, `D′c` §7);
+  - the light-mode hover rung sits on T-6's 10-level threshold, so F1 reads 0.52-0.70 % in Chromium and 73-75 % in Playwright WebKit with identical computed values (`Fp` §6.4);
+  - the walk misroutes Down and Up between items of unequal height in one row (`Fb` F1-2; F's row-clustering fix cures it);
+  - FL-1: Q-5 (d) unbuilt;
+  - FL-5: K2's unlayered `padding: 2px 2px 1rem`.
+- **A silent binding the floor introduced.** The `tabs` scene still spells `semantics="toggle"`, which is no longer a value, and SegmentedTabs falls to the default `radio` with no signal (FLOOR §3.2). T-5's `tabs` 6/6 is therefore read on a retired binding's fall-through. Chip throws on an unknown shape in production, while SegmentedTabs and ToggleGroup accept unknown values silently (`D′c` §7). That is two guard policies for one class.
+
+---
+
+## P2-4 · Merges and cross-pollination earned in pass 2
+
+- **M-8 · D′ ∩ F → floor v2.** Each of these was built by both routes or measured green in one and absent in the other. They move to the floor so that pass 3's routes differ only in how a tile is decided:
+  - the pill's `max-block-size` clamp (both);
+  - one commit kick keyed on the model and riding `transform` (both pass H-4, both non-vacuous). The floor takes F's form, a CSS keyframe on a script-stamped `data-commit` with reduced motion through `--motion-weight`, because it needs no per-commit `getComputedStyle` (D′ R-6). It carries `Fc` §7's open reconciliation: `--motion-weight: 0` on calm observers would kill a programmatic kick;
+  - the Q-9 (a) exemption (both);
+  - X-7 whole: F's tone-on-tint plus D′'s `--selection-ink` on the label;
+  - F's interactive-descendant DEV name (X-5);
+  - F's row-clustering walk fix;
+  - D′'s parsed-selector canon unit, with fixtures that carry a size, an orientation and children, so plants S and H fail;
+  - F's `animationend` name filter (R-6).
+- **M-9 · B → F.** §P2-2. The anatomy slots and the meta ink lift are F's. ChoiceCard has no divergence left.
+- **G → floor v2 and both routes:** the flush arm (Q-2 (b)) from `route-common.mjs`, so plated and flush can be measured on D′ and F; the withheld hover on a selected tile under any overlay; `film.mjs` for owner glances; the post-paint read method.
+- **Not earned:** G's body on D′'s or F's tile (G is blocked); F's mark on D′ (the mark is anatomy, and D′ taking anatomy is F, per B-crit re-trigger (c)); merging D′ and F into one route (that is the choice PORTFOLIO question 2 leaves open, and the owner can make it, §P2-5 Q-13).
+
+---
+
+## P2-5 · What the owner must rule
+
+No §5 question has been ruled since pass 1 (`audit/INBOUND.md`: O-87 is the only owner ruling to arrive, and it binds every route's paint). Pass 2 built every default. Pass-2 evidence, per question:
+
+| id | state after pass 2 | pass-2 evidence |
+|---|---|---|
+| Q-1 multi-line corner | default (a) built in both routes: 16 px at every rung | 16.00 flat at fine, coarse and `--ui-scale 1.25` (`D′c` T-1, `Fc` Q-5). V1 reads 16 px on 44×44 (D′, 0.73 of h/2) and 40×58.8 (F, 0.80 of w/2), a rounded square; whether that is "card like" is the owner's glance |
+| **Q-2 plate in a plate** | **owed and unmeasured**: the default was "build flush, measure both, glance". Neither D′ nor F built flush; G built it | both critics: "four slabs in a slab" on K1. The G films' **edge** panel is the flush form of the floor register (flush tiles, 16 px, perimeter), so the owner has a flush frame now, though not the plated / flush pair. Pass 3 films the pair (H3-13) |
+| **Q-3 the register's look** | **pressing** | both gestalt critics: the 2 px edge reads as a second focus ring; focused-and-selected shows two concentric outlines; at `sm` in dark they read alike, and F's check (`md`, `lg`) is the only cue that separates them. Option (c), a raised body, is blocked with G |
+| Q-4 arrows | default (b) built and green | T-5 green on every migrated grid; F's row-clustering fix for unequal heights |
+| **Q-5 DEV-only guards** | **the crux.** (b) is built; (d) is not (FL-1) | every DEV name in both routes is absent from `dist`. The unmigrated consumer breaks silently in production on both routes (`D′c` CX-2, `Fc` CX-2). The floor's Chip guard throws in production, while every route name is DEV-only and SegmentedTabs is silent: three policies. The owner rules one: (a) guards ship; (b)+(d) as defaulted, with (d) built; (c) DEV-only accepted as E-2-compliant |
+| Q-6 deselectable single | default (a) built and green | X-6 2/2 on both routes |
+| Q-7 N-of-M in scope | default (a) built and green | V2 `type="multiple"` passes T-1, T-3 and T-7 on both |
+| Q-8 Chip `cell` | default (a) built | `chipcell` throws `TypeError` 4 times per scene on `src` and `dist`; the chips render at 9999 px (FLOOR §1 item 5) |
+| Q-9 `accessibility.css` | default (a) built in both routes | F's plant fails; D′'s exemption is selector-keyed |
+| **Q-10 the edge on a selected pill** | **pressing: the one T-3 row both routes fail** | C1, one-line radios with a mark, reads 22.50 (D′) / 0.00 (F) px² against 224 in every mode. (a) puts the edge on every selected pill in the library (about 1,130 px per demo shot, pass-1 evidence); (b) leaves C1 RED, or C1 declares a tile at a 16 px corner on a 40 px row |
+| **Q-11 a travelling body** | **owed.** The glance is ready | `pass-2/glance-G/GLANCE.md`: glide \| land \| edge side by side on K1 (2×2) and K2 (an auto-fill grid in FadingScroll), light and dark, Chromium and Playwright WebKit (8 videos); 8 frame strips at 0-700 ms. (a) retires G for grids. Choosing (b) or (c) does not unblock G (§P2-3.3), and the dir-flip hole is the one the owner should weigh |
+| Q-12 what the harness measures | default (c) built | every witness prints library, unmigrated and migrated arms |
+| **Q-13 (new) declaration or anatomy** | the one axis D′ and F still compete on | equal on the battery; 23/35 and 22/34 (or 23/34, §P2-3.2) on the checklist. D′: one attribute decides, one selector spelling, the shipped K1 sheared without migration. F: the slots decide, passes the H-2 pair by construction, carries the mark and meta ink, four CSS spellings, shipped K2 sliced without migration. Ruling it collapses pass 3 to one route on floor v2 |
+| **Q-14 (new) the bundle datum** | floor +3,667 B over `.bundle-ratchet` (2,919,057 at `a1732a48`); a route adds `dist` +2,125 B (D′) or +4,196 B (F) | a deliberate rebind at the cut, the owner's (D′p R-1). The floor's hover value also changes the Select and disclosure triggers' hover (FLOOR §1 item 1, MIGRATION row) |
+
+**Owner actions, not rulings:**
+- **The safaridriver checkbox.** The driver now asks for exactly that (Develop ▸ Allow Remote Automation). Every Safari cell is UNMEASURED, including whether the SF-8 cure holds in Safari and the G content-visibility frame.
+- **An on-device capture of Apple's option cards.** Still owed from pass 1.
+
+---
+
+## P2-6 · Pass-3 plan
+
+### P2-6.1 · Routes
+
+| route | entering pass 3 | what differs |
+|---|---|---|
+| **D4-D′** | ADVANCE, on floor v2 | `shape="cell"` decides the tile |
+| **D4-F** | ADVANCE, on floor v2 | `#media` / `#meta` decide the tile |
+| **D4-G** | BLOCK; runs only if Q-11 is ruled (b) or (c) | its gate is registration (G-1..G-3 below) before any checklist row is scored |
+
+If the owner rules Q-13, pass 3 runs the one route. Banked: A and C. Retired: B (into F) and E.
+
+### P2-6.2 · Order
+
+1. **Floor v2 and H3**, built once. Each new check ships with a fixture PASS and a planted FAIL in both engines. HEAD+floor v2 is re-baselined under H3.
+2. **Owner rulings** fold in when they arrive (Q-2, Q-3, Q-5, Q-10, Q-11, Q-13, Q-14). A route that finds a default unbuildable reports it with measurements.
+3. **Routes in parallel:** spec, prototype and critique, one seat each. Harness runs are serialized under the lock. A witness that gives no verdict is re-run under the lock at the lower load and both loads are reported; it is not scored as a route FAIL unless it reproduces at the lower load.
+4. **Agglomeration.**
+
+**Floor v2** (on `floor.patch`, sha1 `f1476eba`):
+- **FV-1.** Pass-2 floor items 1-5, kept.
+- **FV-2.** The pill's one-row law: the `max-block-size` clamp, plus a label-level rule that keeps line breaks and block children inside a pill's label on one row (or a `1lh` block clamp per label element). It closes the CX-1 class in both routes without a new primitive (`Fc` §6).
+- **FV-3.** One commit kick (M-8), with the calm-observer law reconciled.
+- **FV-4.** X-7 whole: the tone on edge, tint, label ink and media ink.
+- **FV-5.** The Q-9 (a) exemption, keyed on the route's one tile selector.
+- **FV-6.** F's row-clustering walk.
+- **FV-7.** The interactive-descendant name and a late-content re-check, under the Q-5 policy.
+- **FV-8.** The hover rung: a PRT arm that moves (HF-4), and an amplitude that clears T-6 in both engines on a light thumbnail tile (F1).
+- **FV-9.** The flush arm (Q-2 (b)) beside the plated one.
+- **FV-10.** One guard policy (Q-5) for unknown values: SegmentedTabs `semantics`, a route's tile input, Chip `shape`.
+
+**H3** (the harness revision):
+- **H3-1.** Root-cause the routed Playwright WebKit T-3 stall (F1-3 / HF-2). A re-open is not a cure.
+- **H3-2.** T-8 reads the route's migrated arms.
+- **H3-3.** A row-count witness inside a held pill (HF-5): it fails a pill whose content is cut, or stacked and unnamed. Cases: `<br>`, a block child of the label, an appended `div`.
+- **H3-4.** The canon unit's fixtures, as in FV and M-8.
+- **H3-5.** A hover-light read that does not sit on the floor rung's threshold, with a plant.
+- **H3-6.** A late-content cell: a second row added after mount.
+- **H3-7.** A paint-containment cell: the perimeter halves to 1 css px under `content-visibility: auto` (`D′c` §5, `Fc` §5).
+- **H3-8.** A forced-colours ring-reach cell (`D′c` §7: 1.00 px on one side).
+- **H3-9.** A calm-observer programmatic-commit cell.
+- **H3-10.** The harness hash recorded in every run JSON, with one H3 for every route. The `tabs` scene re-spelled `semantics="radio"`, and a separate cell for the retired value.
+- **H3-11.** The H-3 states (invalid, sibling, tones, `display: contents`) gate on the migrated markup too, so the battery reads a route's carrier, not only its probes.
+- **H3-12.** A consumer `role` and `tabindex` on a ToggleGroupItem (B first critique CX-4).
+- **H3-13.** A `film.mjs` glance pair, plated against flush and focused-selected against selected, for Q-2 and Q-3.
+
+### P2-6.3 · The fixed checklist (40 rows, one list for every route)
+
+A route is **CONVERGED only at 0 open rows** on this list. Critics may not add rows mid-pass; a new defect class is recorded for pass 4. Rows are scored on the migrated arm, the gating unmigrated arm and the non-transcription library scenes, as both pass-2 critics scored them. Each verdict cites the shared instrument. A critic may not rule a row PASS against its own instrument's reading (§P2-3.2).
+
+| block | rows |
+|---|---|
+| **T** (8) | T-1..T-8 under H3, both engines |
+| **X** (7) | X-1..X-7. X-7 is scored on the shared tone probe: the edge, the tint and the label ink each move |
+| **FV** (10) | FV-1..FV-10, each read under the route |
+| **R** (10) | R-1: the unmigrated consumer (shipped K1 and K2) is legible, and its fault is named under the Q-5 ruling on `dist`. R-2: the H-2 pair. R-3: the commit on H-4, all three sources, Tab entry still, plant-checked. R-4: hover against selected in light, dark and PRT. R-5: X-2 media ink, with the dark stroke contrast reported. R-6: the comfort axis (16 px tiles, pills at h/2). R-7: the canon unit fails plants A, S and H. R-8: the refusal per Q-5 on `dist`, including the CX-1 class and late content. R-9: the bundle datum row. R-10: P-3, "is a tile" spelled once, with every other reader derived from or pinned to it |
+| **E** (4) | E-1: every cell readable in both engines. E-2: the H-10 scenes (F1, V2, C1, the sibling state, the interactive descendant in production, the keyed reorder, the deselectable single). E-3: MIGRATION rows with E-11 guards per Q-5, falsifiable claims only. E-4: real Safari |
+| **G** (1) | the gestalt, with frames, light and dark, fine and coarse: card-like; selection unmistakable without colour at every size; apart from the ring when focused; uncluttered (plated against flush, per Q-2); iOS-27 grade under O-87 (no lighting layer, a commit that carries state) |
+
+**D4-G's gate, before any of the 40 is scored:**
+- **G-1.** The six registration cells (Gb §2.2) at 0.5 px on every post-paint frame in both engines.
+- **G-2.** The dir flip, CSS `order` and a column-template change at a fixed container size.
+- **G-3.** The phantom read: no paint while the tile is skipped or offscreen.
+
+**How far each route stands from CONVERGED on this list, by the pass-2 evidence:**
+- **E-4 (Safari)** cannot pass until the owner ticks the checkbox. Until then no route can converge in pass 3.
+- **T-3 / E-2 (C1)** cannot pass for either route until Q-10 is ruled.
+- **The G row** waits on Q-2 and Q-3.
+- **R-1 and R-8** wait on Q-5.
+- **Everything else** is buildable now: on floor v2 and H3, D′'s route-owned rows (X-5, X-7, item 8, item 9's CX-1 half) and F's (X-7's label half, CX-1, late content, the MIGRATION claim) are all in FV-2..FV-7 or H3. That leaves each route's own residue at R-1 (the unmigrated consumer), R-10 (F's four spellings) and the `sm` mark (F).
