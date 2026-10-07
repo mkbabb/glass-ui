@@ -1,0 +1,1625 @@
+{
+ "id": "T-4",
+ "title": "focus paints whole, is the library's ring, and stands apart from selection",
+ "engine": "webkit",
+ "engineLabel": "Playwright WebKit 26.5",
+ "target": "f-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "preset light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "preset light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "preset dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "preset dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "preset forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "preset forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "dashed 1px offset -1px",
+    "outlineStyle": "dashed",
+    "cov": {
+     "top": 0,
+     "right": 0,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "line": "preset-verbatim light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline dashed 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "dashed 1px offset -1px",
+    "outlineStyle": "dashed",
+    "cov": {
+     "top": 0,
+     "right": 0,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "line": "preset-verbatim light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline dashed 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "dashed 1px offset -1px",
+    "outlineStyle": "dashed",
+    "cov": {
+     "top": 0,
+     "right": 0,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "line": "preset-verbatim dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline dashed 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "dashed 1px offset -1px",
+    "outlineStyle": "dashed",
+    "cov": {
+     "top": 0,
+     "right": 0,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "line": "preset-verbatim dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline dashed 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "dashed 1px offset -1px",
+    "outlineStyle": "dashed",
+    "cov": {
+     "top": 0,
+     "right": 0,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "line": "preset-verbatim forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline dashed 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "dashed 1px offset -1px",
+    "outlineStyle": "dashed",
+    "cov": {
+     "top": 0,
+     "right": 0,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "line": "preset-verbatim forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline dashed 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "preset-migrated light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "preset-migrated light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "preset-migrated dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "preset-migrated dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "preset-migrated forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "preset-migrated forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0.5
+    }
+   },
+   "line": "specimen light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.50 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 0.5,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "specimen light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 0.50 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0.5
+    }
+   },
+   "line": "specimen dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.50 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 0.5,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "specimen dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 0.50 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0.5
+    }
+   },
+   "line": "specimen forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.50 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "library",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 0.5,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "specimen forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 0.50 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0.5
+    }
+   },
+   "line": "specimen-verbatim light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.50 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 1.5px offset -1.5px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 0,
+     "right": 0.5,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "line": "specimen-verbatim light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 1.5px offset -1.5px; painted ring px top 0.00 right 0.50 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0.5
+    }
+   },
+   "line": "specimen-verbatim dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.50 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 1.5px offset -1.5px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 0,
+     "right": 0.5,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "line": "specimen-verbatim dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 1.5px offset -1.5px; painted ring px top 0.00 right 0.50 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0.5
+    }
+   },
+   "line": "specimen-verbatim forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.50 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 1.5px offset -1.5px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 0,
+     "right": 0.5,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "line": "specimen-verbatim forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 1.5px offset -1.5px; painted ring px top 0.00 right 0.50 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "specimen-migrated light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "specimen-migrated light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "specimen-migrated dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "specimen-migrated dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "specimen-migrated forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "specimen-migrated forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0
+    }
+   },
+   "line": "f1 light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0
+    }
+   },
+   "line": "f1 light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0
+    }
+   },
+   "line": "f1 dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0
+    }
+   },
+   "line": "f1 dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0
+    }
+   },
+   "line": "f1 forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0
+    }
+   },
+   "line": "f1 forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0
+    }
+   },
+   "line": "f1-verbatim light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0
+    }
+   },
+   "line": "f1-verbatim light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0
+    }
+   },
+   "line": "f1-verbatim dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0
+    }
+   },
+   "line": "f1-verbatim dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0
+    }
+   },
+   "line": "f1-verbatim forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 0
+    }
+   },
+   "line": "f1-verbatim forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "f1-migrated light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "f1-migrated light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "f1-migrated dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "f1-migrated dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "f1-migrated forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "f1-migrated forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1 light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1 light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1 dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1 dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1 forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "c1",
+   "arm": "library",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1 forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1-verbatim light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 0,
+     "left": 2
+    }
+   },
+   "line": "c1-verbatim light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 0.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1-verbatim dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 0,
+     "left": 2
+    }
+   },
+   "line": "c1-verbatim dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 0.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1-verbatim forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 0,
+     "left": 2
+    }
+   },
+   "line": "c1-verbatim forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 0.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "c1-migrated",
+   "arm": "migrated",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1-migrated light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "c1-migrated",
+   "arm": "migrated",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1-migrated light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "c1-migrated",
+   "arm": "migrated",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1-migrated dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "c1-migrated",
+   "arm": "migrated",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1-migrated dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "c1-migrated",
+   "arm": "migrated",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "idx": 0,
+    "on": false,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1-migrated forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "c1-migrated",
+   "arm": "migrated",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "idx": 1,
+    "on": true,
+    "outline": "solid 2px offset 2px",
+    "outlineStyle": "solid",
+    "cov": {
+     "top": 2,
+     "right": 2,
+     "bottom": 2,
+     "left": 2
+    }
+   },
+   "line": "c1-migrated forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "light",
+   "sel": "none",
+   "m": {
+    "error": "Alt+Tab landed on after, not an item"
+   },
+   "line": "card light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · Alt+Tab landed on after, not an item"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "light",
+   "sel": "1",
+   "m": {
+    "error": "Alt+Tab landed on after, not an item"
+   },
+   "line": "card light sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · Alt+Tab landed on after, not an item"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "dark",
+   "sel": "none",
+   "m": {
+    "error": "Alt+Tab landed on after, not an item"
+   },
+   "line": "card dark sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · Alt+Tab landed on after, not an item"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "dark",
+   "sel": "1",
+   "m": {
+    "error": "Alt+Tab landed on after, not an item"
+   },
+   "line": "card dark sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · Alt+Tab landed on after, not an item"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "forced",
+   "sel": "none",
+   "m": {
+    "error": "Alt+Tab landed on after, not an item"
+   },
+   "line": "card forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · Alt+Tab landed on after, not an item"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "mode": "forced",
+   "sel": "1",
+   "m": {
+    "error": "Alt+Tab landed on after, not an item"
+   },
+   "line": "card forced sel=1 (Option+Tab: Playwright WebKit's Tab skips buttons) · Alt+Tab landed on after, not an item"
+  }
+ ],
+ "flavor": "src",
+ "run": {
+  "loadStart": "36.54 / 60.55 / 158.31",
+  "loadEnd": "70.99 / 70.08 / 149.44",
+  "census": {
+   "n": 27,
+   "sample": [
+    "1176 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "26356 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-h",
+    "26357 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-h"
+   ],
+   "waitedS": 0.2
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "24/36 gating cells pass [library 8/20 · unmigrated 3/24 · migrated 16/16]",
+ "arms": {
+  "library": {
+   "pass": 8,
+   "of": 20
+  },
+  "unmigrated": {
+   "pass": 3,
+   "of": 24
+  },
+  "migrated": {
+   "pass": 16,
+   "of": 16
+  }
+ }
+}

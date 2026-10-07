@@ -1,0 +1,17 @@
+2026-10-07 11:06:39 · load { 97.71 87.59 111.09 } · start W-C chromium
+W-C · selection is a behaviour, not a component (D4-C)
+  target f-src (flavor src) · Chromium 149.0.7827.55
+  load 97.57 / 87.73 / 111.00 at start, 93.12 / 86.97 / 110.60 at end · other headless browser processes at start: 23 (waited 0.6 s) · browser lock waited 0 s
+  FAIL       exports · RED by absence: no SelectionGroup/SelectionItem in the bundle (exports seen: [none])
+  FAIL       card · group listbox · items generic (CDP AX tree) · tab stops 0
+  FAIL       card stamp values at rest (role/aria-checked/tabindex, * = group-stamped; selected #-1) · null/null/null null/null/null null/null/null null/null/null
+  FAIL       card grid ArrowRight from #0 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)
+  FAIL       card grid ArrowLeft from #1 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)
+  FAIL       card grid ArrowDown from #0 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)
+  FAIL       card grid ArrowUp from #2 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)
+  info-fail  card grid edge ArrowDown from #2 (no item that way; reported) · focus body → body · moved false · checked false (the click did not focus; focus placed by script)
+  info-fail  card grid edge ArrowUp from #0 (no item that way; reported) · focus body → body · moved false · checked false (the click did not focus; focus placed by script)
+  FAIL       card stamp values after the arrow commits (selected #-1) · null/null/null null/null/null null/null/null null/null/null
+W-C FAIL · 0/8 gating cells pass [library 0/8]
+  json /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-F-proto/out/runs/f-src/W-C-chromium.json
+exit 1 · 2026-10-07 11:06:47 · load { 93.12 86.97 110.60 }

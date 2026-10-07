@@ -21,6 +21,13 @@ export async function t3Cells(target, engine, scenes, { save, modes = [...T3_MOD
     const j = judgeT3(m);
     const gating = sc.gating && T3_MODES.includes(mode);
     const label = `${sc.id} ${P.modeLabel}${P.modeOk ? "" : " (MODE NOT APPLIED)"}`;
+    // HARNESS §1.4: a migrated arm the route did not supply renders no items; it is UNMEASURED, never a FAIL
+    // (D4-F block test F1-4, which counted 15 absent arms as FAILs)
+    if (sc.arm === "migrated" && m.items === 0) {
+      cells.push({ gating, pass: null, scene: sc.id, arm: sc.arm, mode, m, line: `${label} · no migration for this site (0 items): UNMEASURED` });
+      await P.close();
+      continue;
+    }
     cells.push({ gating, pass: P.modeOk ? j.pass : false, scene: sc.id, arm: sc.arm, mode, m, line: `${label} · ${j.line}` });
     if (fill) cells.push({ gating: false, pass: j.fillPass ?? false, scene: sc.id, arm: sc.arm, mode, fillOnly: true, line: `${label} · ${j.fillLine}` });
     await P.close();

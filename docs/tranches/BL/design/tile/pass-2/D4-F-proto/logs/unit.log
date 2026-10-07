@@ -1,0 +1,16 @@
+2026-10-07 04:17:47 · load { 372.04 311.68 317.02 } · vitest run (whole suite, dist built), HEAD+floor+F
+vitest exit 1
+      Tests  8 failed | 2179 passed | 9 expected fail | 1 skipped (2197)
+ FAIL  tests/components/menu/contract.test.ts > DropdownMenu contract > keeps the click branch to one portaled menu and restores focus on execute
+ FAIL  tests/components/menu/contract.test.ts > DropdownMenu contract > keeps the context branch to one pointer-anchored portal
+ FAIL  tests/composables/dark/darkModeSyncScript.test.ts > G-NO-FLASH — the parse-time stamp: precedence, determinism, write-back > G-NO-FLASH · glass-ui's OWN demo stamps at parse time — vite.config.ts injects it first in <head>
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+ FAIL  tests/gates/gate-register.test.ts > the gate register binds (G-GATE-BUDGET) > BITE — a seat register that is not exactly 60 rows REDs the budget
+ FAIL  tests/styles/glass-subtlety.test.ts > glass material — the structural invariants > carries ONE static white leg per plate, and dark sits at or below light
+ Test Files  5 failed | 229 passed (234)
+2026-10-07 04:21:36 · load { 387.75 326.63 322.12 } · vue-tsc -p tsconfig.test.json
+vue-tsc test exit 2
+tests/components/ui/toggle-group/ToggleGroup.test.ts(440,64): error TS2339: Property 'exists' does not exist on type 'Omit<DOMWrapper<Element>, "exists">'.
+2026-10-07 04:27:54 · load { 450.15 354.80 332.90 }

@@ -1,0 +1,215 @@
+2026-10-07 09:25:39 · load { 298.73 346.49 363.99 } · start T-3 chromium
+T-3 · the selected state separates ≥ 3:1 on painted pixels (light, dark, PRT), fill reported apart
+  target f-src (flavor src) · Chromium 149.0.7827.55
+  load 283.14 / 342.47 / 362.47 at start, 188.81 / 254.55 / 316.38 at end · other headless browser processes at start: 10 (waited 2.2 s) · browser lock waited 0 s
+  FAIL       preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.20:1; p95 1.20; items 1/0 204×40
+  info-fail  preset light · fill alone 1.20:1 (#b8b4ac vs #c9c5bb) — decoration, reported apart from the edge
+  FAIL       preset dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.23:1; p95 1.28; items 1/0 204×40
+  info-fail  preset dark · fill alone 1.23:1 (#27231c vs #140e08) — decoration, reported apart from the edge
+  FAIL       preset prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  info-fail  preset prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  preset forced · carrier ≥3:1 area 7371.00 px² (perimeter band 1156.00, interior 6215.00) vs the bar 244.00 px²; fill 11.31:1; p95 16.42; items 1/0 204×40
+  info-pass  preset forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       [unmigrated] preset-verbatim light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 248.00 px²; fill 1.09:1; p95 1.22; items 1/0 208×40
+  info-fail  [unmigrated] preset-verbatim light · fill alone 1.09:1 (#f1edf4 vs #e7e5e0) — decoration, reported apart from the edge
+  FAIL       [unmigrated] preset-verbatim dark · carrier ≥3:1 area 233.00 px² (perimeter band 227.75, interior 5.25) vs the bar 248.00 px²; fill 1.06:1; p95 1.14; items 1/0 208×40
+  info-fail  [unmigrated] preset-verbatim dark · fill alone 1.06:1 (#19151b vs #120f0b) — decoration, reported apart from the edge
+  FAIL       [unmigrated] preset-verbatim prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 248.00 px²; fill 1.07:1; p95 1.07; items 1/0 208×40
+  info-fail  [unmigrated] preset-verbatim prt · fill alone 1.07:1 (#f1edf4 vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [unmigrated] preset-verbatim forced · carrier ≥3:1 area 762.50 px² (perimeter band 734.25, interior 28.25) vs the bar 248.00 px²; fill 1.00:1; p95 11.31; items 1/0 208×40
+  info-fail  [unmigrated] preset-verbatim forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] preset-migrated light · carrier ≥3:1 area 891.00 px² (perimeter band 827.75, interior 63.25) vs the bar 274.00 px²; fill 1.21:1; p95 7.83; items 1/0 204×70
+  info-fail  [migrated] preset-migrated light · fill alone 1.21:1 (#b8b3ac vs #c9c5bc) — decoration, reported apart from the edge
+  PASS       [migrated] preset-migrated dark · carrier ≥3:1 area 903.75 px² (perimeter band 839.00, interior 64.75) vs the bar 274.00 px²; fill 1.23:1; p95 10.96; items 1/0 204×70
+  info-fail  [migrated] preset-migrated dark · fill alone 1.23:1 (#28241d vs #140e08) — decoration, reported apart from the edge
+  PASS       [migrated] preset-migrated prt · carrier ≥3:1 area 891.75 px² (perimeter band 828.50, interior 63.25) vs the bar 274.00 px²; fill 1.01:1; p95 12.17; items 1/0 204×70
+  info-fail  [migrated] preset-migrated prt · fill alone 1.01:1 (#fcf4eb vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] preset-migrated forced · carrier ≥3:1 area 11404.25 px² (perimeter band 1609.50, interior 9794.75) vs the bar 274.00 px²; fill 6.03:1; p95 11.31; items 1/0 204×70
+  info-pass  [migrated] preset-migrated forced · fill alone 6.03:1 (#615e8c vs #ffffff) — decoration, reported apart from the edge
+  FAIL       specimen light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.19:1; p95 1.19; items 1/0 207×36
+  info-fail  specimen light · fill alone 1.19:1 (#c1bcb5 vs #d0cdc5) — decoration, reported apart from the edge
+  FAIL       specimen dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.22:1; p95 1.29; items 1/0 207×36
+  info-fail  specimen dark · fill alone 1.22:1 (#27221c vs #140e09) — decoration, reported apart from the edge
+  FAIL       specimen prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.00:1; p95 1.00; items 1/0 207×36
+  info-fail  specimen prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  specimen forced · carrier ≥3:1 area 6726.00 px² (perimeter band 1186.00, interior 5540.00) vs the bar 243.00 px²; fill 11.32:1; p95 17.80; items 1/0 207×36
+  info-pass  specimen forced · fill alone 11.32:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  info-pass  [unmigrated] specimen-verbatim light · carrier ≥3:1 area 456.00 px² (perimeter band 444.00, interior 12.00) vs the bar 243.00 px²; fill 1.00:1; p95 8.34; items 1/0 207×36
+  info-fail  [unmigrated] specimen-verbatim light · fill alone 1.00:1 (#d0cdc6 vs #d0cdc6) — decoration, reported apart from the edge
+  info-pass  [unmigrated] specimen-verbatim dark · carrier ≥3:1 area 466.00 px² (perimeter band 452.00, interior 14.00) vs the bar 243.00 px²; fill 1.00:1; p95 10.91; items 1/0 207×36
+  info-fail  [unmigrated] specimen-verbatim dark · fill alone 1.00:1 (#140e09 vs #140e09) — decoration, reported apart from the edge
+  info-pass  [unmigrated] specimen-verbatim prt · carrier ≥3:1 area 458.00 px² (perimeter band 446.00, interior 12.00) vs the bar 243.00 px²; fill 1.00:1; p95 12.17; items 1/0 207×36
+  info-fail  [unmigrated] specimen-verbatim prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [unmigrated] specimen-verbatim forced · carrier ≥3:1 area 451.00 px² (perimeter band 428.00, interior 23.00) vs the bar 243.00 px²; fill 1.00:1; p95 11.31; items 1/0 207×36
+  info-fail  [unmigrated] specimen-verbatim forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] specimen-migrated light · carrier ≥3:1 area 573.00 px² (perimeter band 550.00, interior 23.00) vs the bar 303.00 px²; fill 1.19:1; p95 1.19; items 1/0 205×98
+  info-fail  [migrated] specimen-migrated light · fill alone 1.19:1 (#c1bcb5 vs #d0cdc6) — decoration, reported apart from the edge
+  PASS       [migrated] specimen-migrated dark · carrier ≥3:1 area 583.00 px² (perimeter band 558.00, interior 25.00) vs the bar 303.00 px²; fill 1.22:1; p95 1.29; items 1/0 205×98
+  info-fail  [migrated] specimen-migrated dark · fill alone 1.22:1 (#27221c vs #140e09) — decoration, reported apart from the edge
+  PASS       [migrated] specimen-migrated prt · carrier ≥3:1 area 573.00 px² (perimeter band 550.00, interior 23.00) vs the bar 303.00 px²; fill 1.00:1; p95 1.00; items 1/0 205×98
+  info-fail  [migrated] specimen-migrated prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] specimen-migrated forced · carrier ≥3:1 area 19299.00 px² (perimeter band 1584.00, interior 17715.00) vs the bar 303.00 px²; fill 11.31:1; p95 11.31; items 1/0 205×98
+  info-pass  [migrated] specimen-migrated forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       strip light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.49:1; p95 1.50; items 1/0 44×44
+  info-fail  strip light · fill alone 1.49:1 (#fefefc vs #dbd1c2) — decoration, reported apart from the edge
+  PASS       strip dark · carrier ≥3:1 area 849.50 px² (perimeter band 0.00, interior 849.50) vs the bar 88.00 px²; fill 3.21:1; p95 3.54; items 1/0 44×44
+  info-pass  strip dark · fill alone 3.21:1 (#7d5f6e vs #1b150c) — decoration, reported apart from the edge
+  FAIL       strip prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.13:1; p95 1.13; items 1/0 44×44
+  info-fail  strip prt · fill alone 1.13:1 (#fefefc vs #fceedc) — decoration, reported apart from the edge
+  info-pass  strip forced · carrier ≥3:1 area 254.00 px² (perimeter band 175.00, interior 79.00) vs the bar 88.00 px²; fill 1.03:1; p95 11.31; items 1/0 44×44
+  info-fail  strip forced · fill alone 1.03:1 (#fcfcfd vs #ffffff) — decoration, reported apart from the edge
+  info-fail  [unmigrated] strip-verbatim light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.49:1; p95 1.50; items 1/0 44×44
+  info-fail  [unmigrated] strip-verbatim light · fill alone 1.49:1 (#fefefc vs #dbd1c2) — decoration, reported apart from the edge
+  info-pass  [unmigrated] strip-verbatim dark · carrier ≥3:1 area 849.50 px² (perimeter band 0.00, interior 849.50) vs the bar 88.00 px²; fill 3.21:1; p95 3.54; items 1/0 44×44
+  info-pass  [unmigrated] strip-verbatim dark · fill alone 3.21:1 (#7d5f6e vs #1b150c) — decoration, reported apart from the edge
+  info-fail  [unmigrated] strip-verbatim prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.13:1; p95 1.13; items 1/0 44×44
+  info-fail  [unmigrated] strip-verbatim prt · fill alone 1.13:1 (#fefefc vs #fceedc) — decoration, reported apart from the edge
+  info-pass  [unmigrated] strip-verbatim forced · carrier ≥3:1 area 254.00 px² (perimeter band 175.00, interior 79.00) vs the bar 88.00 px²; fill 1.03:1; p95 11.31; items 1/0 44×44
+  info-fail  [unmigrated] strip-verbatim forced · fill alone 1.03:1 (#fcfcfd vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] strip-migrated light · carrier ≥3:1 area 317.00 px² (perimeter band 288.50, interior 28.50) vs the bar 98.00 px²; fill 1.20:1; p95 12.19; items 1/0 40×58
+  info-fail  [migrated] strip-migrated light · fill alone 1.20:1 (#d3d1cb vs #e7e4e0) — decoration, reported apart from the edge
+  PASS       [migrated] strip-migrated dark · carrier ≥3:1 area 329.00 px² (perimeter band 299.00, interior 30.00) vs the bar 98.00 px²; fill 1.21:1; p95 12.68; items 1/0 40×58
+  info-fail  [migrated] strip-migrated dark · fill alone 1.21:1 (#25221e vs #120e0b) — decoration, reported apart from the edge
+  PASS       [migrated] strip-migrated prt · carrier ≥3:1 area 317.00 px² (perimeter band 288.50, interior 28.50) vs the bar 98.00 px²; fill 1.00:1; p95 16.20; items 1/0 40×58
+  info-fail  [migrated] strip-migrated prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] strip-migrated forced · carrier ≥3:1 area 1979.00 px² (perimeter band 389.50, interior 1589.50) vs the bar 98.00 px²; fill 11.31:1; p95 17.80; items 1/0 40×58
+  info-pass  [migrated] strip-migrated forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       f1 light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.01:1; p95 1.05; items 1/0 82×75
+  info-fail  f1 light · fill alone 1.01:1 (#c3b6a5 vs #c4b6a6) — decoration, reported apart from the edge
+  FAIL       f1 dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.02:1; p95 1.07; items 1/0 82×75
+  info-fail  f1 dark · fill alone 1.02:1 (#1f160c vs #1d140a) — decoration, reported apart from the edge
+  FAIL       f1 prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.00:1; p95 1.00; items 1/0 82×75
+  info-fail  f1 prt · fill alone 1.00:1 (#fdefdd vs #fdefdd) — decoration, reported apart from the edge
+  info-fail  f1 forced · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.00:1; p95 1.00; items 1/0 82×75
+  info-fail  f1 forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  info-pass  [unmigrated] f1-verbatim light · carrier ≥3:1 area 232.25 px² (perimeter band 216.75, interior 15.50) vs the bar 157.00 px²; fill 1.01:1; p95 1.22; items 1/0 82×75
+  info-fail  [unmigrated] f1-verbatim light · fill alone 1.01:1 (#fdf6ed vs #fdf5ec) — decoration, reported apart from the edge
+  info-fail  [unmigrated] f1-verbatim dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.02:1; p95 1.41; items 1/0 82×75
+  info-fail  [unmigrated] f1-verbatim dark · fill alone 1.02:1 (#372c23 vs #352a22) — decoration, reported apart from the edge
+  info-pass  [unmigrated] f1-verbatim prt · carrier ≥3:1 area 230.75 px² (perimeter band 215.75, interior 15.00) vs the bar 157.00 px²; fill 1.00:1; p95 1.20; items 1/0 82×75
+  info-fail  [unmigrated] f1-verbatim prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-fail  [unmigrated] f1-verbatim forced · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.00:1; p95 1.00; items 1/0 82×75
+  info-fail  [unmigrated] f1-verbatim forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] f1-migrated light · carrier ≥3:1 area 735.75 px² (perimeter band 666.00, interior 69.75) vs the bar 192.00 px²; fill 1.17:1; p95 6.98; items 1/0 74×118
+  info-fail  [migrated] f1-migrated light · fill alone 1.17:1 (#afaaa2 vs #bfb8b1) — decoration, reported apart from the edge
+  PASS       [migrated] f1-migrated dark · carrier ≥3:1 area 751.75 px² (perimeter band 680.00, interior 71.75) vs the bar 192.00 px²; fill 1.23:1; p95 11.04; items 1/0 74×118
+  info-fail  [migrated] f1-migrated dark · fill alone 1.23:1 (#29231c vs #150e08) — decoration, reported apart from the edge
+  PASS       [migrated] f1-migrated prt · carrier ≥3:1 area 739.75 px² (perimeter band 670.00, interior 69.75) vs the bar 192.00 px²; fill 1.01:1; p95 12.17; items 1/0 74×118
+  info-fail  [migrated] f1-migrated prt · fill alone 1.01:1 (#fcf4eb vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] f1-migrated forced · carrier ≥3:1 area 8130.25 px² (perimeter band 920.00, interior 7210.25) vs the bar 192.00 px²; fill 11.16:1; p95 11.31; items 1/0 74×118
+  info-pass  [migrated] f1-migrated forced · fill alone 11.16:1 (#38346e vs #ffffff) — decoration, reported apart from the edge
+  FAIL       v2 light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71
+  info-fail  v2 light · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge
+  FAIL       v2 dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71
+  info-fail  v2 dark · fill alone 1.00:1 (#0b0a09 vs #0b0a09) — decoration, reported apart from the edge
+  FAIL       v2 prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71
+  info-fail  v2 prt · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge
+  info-pass  v2 forced · carrier ≥3:1 area 1196.00 px² (perimeter band 1196.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71 (sizes differ by 4.0 px; cropped to the smaller)
+  info-fail  v2 forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  info-fail  [unmigrated] v2-verbatim light · carrier ≥3:1 area 61.50 px² (perimeter band 61.50, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71
+  info-fail  [unmigrated] v2-verbatim light · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge
+  info-fail  [unmigrated] v2-verbatim dark · carrier ≥3:1 area 61.50 px² (perimeter band 61.50, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71
+  info-fail  [unmigrated] v2-verbatim dark · fill alone 1.00:1 (#0b0a09 vs #0b0a09) — decoration, reported apart from the edge
+  info-fail  [unmigrated] v2-verbatim prt · carrier ≥3:1 area 61.50 px² (perimeter band 61.50, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71
+  info-fail  [unmigrated] v2-verbatim prt · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge
+  info-pass  [unmigrated] v2-verbatim forced · carrier ≥3:1 area 1173.00 px² (perimeter band 1155.50, interior 17.50) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71 (sizes differ by 4.0 px; cropped to the smaller)
+  info-fail  [unmigrated] v2-verbatim forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] v2-migrated light · carrier ≥3:1 area 1781.75 px² (perimeter band 1718.50, interior 63.25) vs the bar 558.00 px²; fill 1.21:1; p95 1.20; items 1/0 452×106
+  info-fail  [migrated] v2-migrated light · fill alone 1.21:1 (#d3d0cb vs #e7e4df) — decoration, reported apart from the edge
+  PASS       [migrated] v2-migrated dark · carrier ≥3:1 area 1791.25 px² (perimeter band 1726.50, interior 64.75) vs the bar 558.00 px²; fill 1.22:1; p95 1.22; items 1/0 452×106
+  info-fail  [migrated] v2-migrated dark · fill alone 1.22:1 (#25221e vs #120e0a) — decoration, reported apart from the edge
+  PASS       [migrated] v2-migrated prt · carrier ≥3:1 area 1780.75 px² (perimeter band 1717.50, interior 63.25) vs the bar 558.00 px²; fill 1.00:1; p95 1.00; items 1/0 452×106
+  info-fail  [migrated] v2-migrated prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] v2-migrated forced · carrier ≥3:1 area 45786.25 px² (perimeter band 3146.00, interior 42640.25) vs the bar 558.00 px²; fill 10.68:1; p95 11.31; items 1/0 452×106
+  info-pass  [migrated] v2-migrated forced · fill alone 10.68:1 (#3b3770 vs #ffffff) — decoration, reported apart from the edge
+  FAIL       c1 light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 475.00 px²; fill 1.00:1; p95 1.00; items 1/0 442×33
+  info-fail  c1 light · fill alone 1.00:1 (#dfdcd7 vs #dfdcd7) — decoration, reported apart from the edge
+  FAIL       c1 dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 475.00 px²; fill 1.00:1; p95 1.00; items 1/0 442×33
+  info-fail  c1 dark · fill alone 1.00:1 (#0d0a07 vs #0d0a07) — decoration, reported apart from the edge
+  FAIL       c1 prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 475.00 px²; fill 1.00:1; p95 1.00; items 1/0 442×33
+  info-fail  c1 prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  c1 forced · carrier ≥3:1 area 1007.50 px² (perimeter band 1007.50, interior 0.00) vs the bar 475.00 px²; fill 1.00:1; p95 11.31; items 1/0 442×33 (sizes differ by 4.0 px; cropped to the smaller)
+  info-fail  c1 forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  info-fail  [unmigrated] c1-verbatim light · carrier ≥3:1 area 17.00 px² (perimeter band 0.00, interior 17.00) vs the bar 475.00 px²; fill 1.23:1; p95 1.24; items 1/0 442×33
+  info-fail  [unmigrated] c1-verbatim light · fill alone 1.23:1 (#f5f2ee vs #dfdcd7) — decoration, reported apart from the edge
+  info-fail  [unmigrated] c1-verbatim dark · carrier ≥3:1 area 22.50 px² (perimeter band 0.00, interior 22.50) vs the bar 475.00 px²; fill 1.17:1; p95 1.16; items 1/0 442×33
+  info-fail  [unmigrated] c1-verbatim dark · fill alone 1.17:1 (#1f1c19 vs #0d0a07) — decoration, reported apart from the edge
+  info-fail  [unmigrated] c1-verbatim prt · carrier ≥3:1 area 22.50 px² (perimeter band 0.00, interior 22.50) vs the bar 475.00 px²; fill 1.03:1; p95 1.02; items 1/0 442×33
+  info-fail  [unmigrated] c1-verbatim prt · fill alone 1.03:1 (#f5f2ee vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [unmigrated] c1-verbatim forced · carrier ≥3:1 area 1021.00 px² (perimeter band 998.50, interior 22.50) vs the bar 475.00 px²; fill 1.01:1; p95 11.31; items 1/0 442×33 (sizes differ by 4.0 px; cropped to the smaller)
+  info-fail  [unmigrated] c1-verbatim forced · fill alone 1.01:1 (#fefefe vs #ffffff) — decoration, reported apart from the edge
+  FAIL       [migrated] c1-migrated light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 224.00 px²; fill 1.16:1; p95 1.17; items 1/0 184×40
+  info-fail  [migrated] c1-migrated light · fill alone 1.16:1 (#b0aba2 vs #bfb8b0) — decoration, reported apart from the edge
+  FAIL       [migrated] c1-migrated dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 224.00 px²; fill 1.22:1; p95 1.30; items 1/0 184×40
+  info-fail  [migrated] c1-migrated dark · fill alone 1.22:1 (#28221b vs #150e08) — decoration, reported apart from the edge
+  FAIL       [migrated] c1-migrated prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 224.00 px²; fill 1.00:1; p95 1.00; items 1/0 184×40
+  info-fail  [migrated] c1-migrated prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] c1-migrated forced · carrier ≥3:1 area 6611.00 px² (perimeter band 1036.00, interior 5575.00) vs the bar 224.00 px²; fill 11.32:1; p95 16.42; items 1/0 184×40
+  info-pass  [migrated] c1-migrated forced · fill alone 11.32:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       preset-invalid light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.21:1; p95 1.21; items 1/0 204×40
+  info-fail  preset-invalid light · fill alone 1.21:1 (#b8b3ac vs #c9c5bc) — decoration, reported apart from the edge
+  FAIL       preset-invalid dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.22:1; p95 1.25; items 1/0 204×40
+  info-fail  preset-invalid dark · fill alone 1.22:1 (#28231c vs #140e09) — decoration, reported apart from the edge
+  FAIL       preset-invalid prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  info-fail  preset-invalid prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  preset-invalid forced · carrier ≥3:1 area 7295.00 px² (perimeter band 1144.00, interior 6151.00) vs the bar 242.00 px²; fill 11.31:1; p95 16.42; items 1/0 202×40
+  info-pass  preset-invalid forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       preset-sibling light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.21:1; p95 1.21; items 1/0 204×40
+  info-fail  preset-sibling light · fill alone 1.21:1 (#b8b3ac vs #c9c5bc) — decoration, reported apart from the edge
+  FAIL       preset-sibling dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.22:1; p95 1.25; items 1/0 204×40
+  info-fail  preset-sibling dark · fill alone 1.22:1 (#28231d vs #140e09) — decoration, reported apart from the edge
+  FAIL       preset-sibling prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  info-fail  preset-sibling prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  preset-sibling forced · carrier ≥3:1 area 7371.00 px² (perimeter band 1156.00, interior 6215.00) vs the bar 244.00 px²; fill 11.31:1; p95 16.42; items 1/0 204×40
+  info-pass  preset-sibling forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       preset-tone-translucent light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.03:1; p95 1.03; items 1/0 204×40
+  info-fail  preset-tone-translucent light · fill alone 1.03:1 (#c7c2bc vs #c9c5bb) — decoration, reported apart from the edge
+  FAIL       preset-tone-translucent dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.02:1; p95 1.04; items 1/0 204×40
+  info-fail  preset-tone-translucent dark · fill alone 1.02:1 (#17110e vs #140e08) — decoration, reported apart from the edge
+  FAIL       preset-tone-translucent prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  info-fail  preset-tone-translucent prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  preset-tone-translucent forced · carrier ≥3:1 area 7371.00 px² (perimeter band 1156.00, interior 6215.00) vs the bar 244.00 px²; fill 11.31:1; p95 16.42; items 1/0 204×40
+  info-pass  preset-tone-translucent forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       preset-tone-unresolvable light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.20:1; p95 1.20; items 1/0 204×40
+  info-fail  preset-tone-unresolvable light · fill alone 1.20:1 (#b8b4ac vs #c9c5bb) — decoration, reported apart from the edge
+  FAIL       preset-tone-unresolvable dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.23:1; p95 1.28; items 1/0 204×40
+  info-fail  preset-tone-unresolvable dark · fill alone 1.23:1 (#27231c vs #140e08) — decoration, reported apart from the edge
+  FAIL       preset-tone-unresolvable prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  info-fail  preset-tone-unresolvable prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  preset-tone-unresolvable forced · carrier ≥3:1 area 7371.00 px² (perimeter band 1156.00, interior 6215.00) vs the bar 244.00 px²; fill 11.31:1; p95 16.42; items 1/0 204×40
+  info-pass  preset-tone-unresolvable forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       preset-contents light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.20:1; p95 1.20; items 1/0 204×40
+  info-fail  preset-contents light · fill alone 1.20:1 (#b8b4ac vs #c9c5bb) — decoration, reported apart from the edge
+  FAIL       preset-contents dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.23:1; p95 1.28; items 1/0 204×40
+  info-fail  preset-contents dark · fill alone 1.23:1 (#27231c vs #140e08) — decoration, reported apart from the edge
+  FAIL       preset-contents prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  info-fail  preset-contents prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  preset-contents forced · carrier ≥3:1 area 7371.00 px² (perimeter band 1156.00, interior 6215.00) vs the bar 244.00 px²; fill 11.31:1; p95 16.42; items 1/0 204×40
+  info-pass  preset-contents forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       card light · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  info-fail  card light · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  FAIL       card dark · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  info-fail  card dark · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  FAIL       card prt · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  info-fail  card prt · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  info-fail  card forced · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  info-fail  card forced · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  FAIL       chipcell light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 99.00 px²; fill 1.49:1; p95 1.50; items 1/0 53×46 (sizes differ by 1.8 px; cropped to the smaller)
+  info-fail  chipcell light · fill alone 1.49:1 (#fffefc vs #dcd2c2) — decoration, reported apart from the edge
+  PASS       chipcell dark · carrier ≥3:1 area 1096.50 px² (perimeter band 14.25, interior 1082.25) vs the bar 99.00 px²; fill 3.21:1; p95 3.54; items 1/0 53×46 (sizes differ by 1.8 px; cropped to the smaller)
+  info-pass  chipcell dark · fill alone 3.21:1 (#7c5e6e vs #1a140a) — decoration, reported apart from the edge
+  FAIL       chipcell prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 99.00 px²; fill 1.13:1; p95 1.13; items 1/0 53×46 (sizes differ by 1.8 px; cropped to the smaller)
+  info-fail  chipcell prt · fill alone 1.13:1 (#fffefc vs #fdefdd) — decoration, reported apart from the edge
+  info-pass  chipcell forced · carrier ≥3:1 area 292.00 px² (perimeter band 204.25, interior 87.75) vs the bar 105.00 px²; fill 1.01:1; p95 11.31; items 1/3 55×50 (sizes differ by 1.3 px; cropped to the smaller)
+  info-fail  chipcell forced · fill alone 1.01:1 (#fefefe vs #ffffff) — decoration, reported apart from the edge
+  info-fail  single light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 94.00 px²; fill 1.20:1; p95 1.22; items 1/3 58×36 (sizes differ by 1.6 px; cropped to the smaller)
+  info-fail  single light · fill alone 1.20:1 (#d3d1cb vs #e7e4de) — decoration, reported apart from the edge
+  info-fail  single dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 94.00 px²; fill 1.21:1; p95 1.30; items 1/3 58×36 (sizes differ by 1.6 px; cropped to the smaller)
+  info-fail  single dark · fill alone 1.21:1 (#25221d vs #120e0a) — decoration, reported apart from the edge
+  info-fail  single prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 94.00 px²; fill 1.00:1; p95 1.06; items 1/3 58×36 (sizes differ by 1.6 px; cropped to the smaller)
+  info-fail  single prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  single forced · carrier ≥3:1 area 1728.00 px² (perimeter band 304.00, interior 1424.00) vs the bar 96.00 px²; fill 11.34:1; p95 17.80; items 1/3 60×36
+  info-pass  single forced · fill alone 11.34:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+T-3 FAIL · 17/60 gating cells pass [library 2/39 · unmigrated 12/48 · migrated 15/18]
+  json /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-F-proto/out/runs/f-src/T-3-chromium.json
+exit 1 · 2026-10-07 09:40:57 · load { 165.78 243.88 310.74 }

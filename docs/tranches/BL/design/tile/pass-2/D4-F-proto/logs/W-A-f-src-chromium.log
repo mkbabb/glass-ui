@@ -1,0 +1,16 @@
+2026-10-07 11:05:10 · load { 101.21 83.76 112.45 } · start W-A chromium
+W-A · curvature never tracks content (D4-A), fine, coarse, --ui-scale
+  target f-src (flavor src) · Chromium 149.0.7827.55
+  load 98.55 / 83.50 / 112.19 at start, 92.58 / 82.51 / 111.68 at end · other headless browser processes at start: 24 (waited 0.2 s) · browser lock waited 0 s
+  PASS       wrap light ToggleGroupItem · 70.05×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×40.00 9999px→20.00 (÷h/2 1.00) · one line at h/2 true, unchanged by lines true (Δ 0.00 px)
+  FAIL       wrap light Chip pill · 53.91×33.41 9999px→16.70 (÷h/2 1.00) | 110.00×76.22 9999px→38.11 (÷h/2 1.00) | 110.00×119.03 9999px→55.00 (÷h/2 0.92) · one line at h/2 true, unchanged by lines false (Δ 38.30 px)
+  PASS       wrap light Button · 98.36×40.00 20px→20.00 (÷h/2 1.00) | 110.00×52.44 20px→20.00 (÷h/2 0.76) | 110.00×86.06 20px→20.00 (÷h/2 0.46) · one line at h/2 true, unchanged by lines true (Δ 0.00 px)
+  PASS       wrap light coarse ToggleGroupItem · 88.88×60.00 9999px→30.00 (÷h/2 1.00) | 110.00×60.00 9999px→30.00 (÷h/2 1.00) | 110.00×60.00 9999px→30.00 (÷h/2 1.00) · one line at h/2 true, unchanged by lines true (Δ 0.00 px)
+  FAIL       wrap light coarse Chip pill · 53.91×44.00 9999px→22.00 (÷h/2 1.00) | 110.00×76.22 9999px→38.11 (÷h/2 1.00) | 110.00×119.03 9999px→55.00 (÷h/2 0.92) · one line at h/2 true, unchanged by lines false (Δ 33.00 px)
+  FAIL       wrap light coarse Button · 110.00×44.00 30px→22.00 (÷h/2 1.00) | 110.00×102.94 30px→30.00 (÷h/2 0.58) | 110.00×178.64 30px→30.00 (÷h/2 0.34) · one line at h/2 true, unchanged by lines false (Δ 8.00 px)
+  PASS       wrap light --ui-scale 1.25 ToggleGroupItem · 79.64×50.00 9999px→25.00 (÷h/2 1.00) | 110.00×50.00 9999px→25.00 (÷h/2 1.00) | 110.00×50.00 9999px→25.00 (÷h/2 1.00) · one line at h/2 true, unchanged by lines true (Δ 0.00 px)
+  FAIL       wrap light --ui-scale 1.25 Chip pill · 53.91×33.41 9999px→16.70 (÷h/2 1.00) | 110.00×76.22 9999px→38.11 (÷h/2 1.00) | 110.00×119.03 9999px→55.00 (÷h/2 0.92) · one line at h/2 true, unchanged by lines false (Δ 38.30 px)
+  PASS       wrap light --ui-scale 1.25 Button · 110.00×50.00 25px→25.00 (÷h/2 1.00) | 110.00×86.13 25px→25.00 (÷h/2 0.58) | 110.00×149.22 25px→25.00 (÷h/2 0.34) · one line at h/2 true, unchanged by lines true (Δ 0.00 px)
+W-A FAIL · 5/9 gating cells pass [library 5/9]
+  json /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4/p2/D4-F-proto/out/runs/f-src/W-A-chromium.json
+exit 1 · 2026-10-07 11:05:17 · load { 92.58 82.51 111.68 }

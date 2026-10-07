@@ -1,0 +1,8 @@
+2026-10-07 04:39:45 · load { 370.37 347.11 331.25 } · CONTROL: the 5 failing files on HEAD+floor (route patch reversed), dist present
+vitest exit 1
+      Tests  3 failed | 103 passed (106)
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+ Test Files  1 failed | 4 passed (5)
+2026-10-07 04:40:00 · load { 335.07 340.19 329.05 }

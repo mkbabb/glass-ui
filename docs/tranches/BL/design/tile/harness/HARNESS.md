@@ -53,6 +53,8 @@ A browser process that dies mid-run (Chromium did, under load, during the first 
 
 One level up, `run.mjs`'s `runOne` (which `selftest.mjs` and the battery both use) re-runs a witness process once when it ends in a HARNESS ERROR because its engine closed: a Playwright WebKit page died under load during the H2 self-test (`t1-coarse`, exit 2, "page.waitForTimeout: Target page, context or browser has been closed"; `../pass-2/logs/aborted-run5-selftest-driver-killed.log`). The re-run's verdict stands and the line carries `NOT-REPRODUCED: engine closed during the first run …`; a crash that repeats carries `REPRODUCED` and stays exit 2. A run that exits 0 or 1 is never re-run, and the self-test prints every re-run in its summary.
 
+A page load that stalls (the scene never reports ready, or `goto` times out) is re-opened once on a fresh context by `openPage` (D4-F prototype, `../pass-2/D4-F-proto.md` §6.2). The D4-F block test's F1-3 and the prototype's first routed Playwright WebKit T-3 run both died in `openPage` without naming the scene. A stall that does not reproduce is printed as a note, NOT-REPRODUCED, with its scene, mode and load; one that reproduces throws with the scene named. Like the engine-closed relaunch, it is a recovery path, not a check, and every use is printed. T-3 reads a migrated arm the route did not supply (0 items) as UNMEASURED, not FAIL (F1-4).
+
 ### 1.3 The DOM contract (scenes and fixture alike)
 
 - `[data-scene]`: the scene root, with `data-arm="library|verbatim|migrated|stripped"`.

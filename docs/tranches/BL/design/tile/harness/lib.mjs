@@ -184,7 +184,31 @@ const LEVEL0 = ":root{--glass-level:0 !important;--glass-grain-opacity:0 !import
  * PRT: Chromium emulates `prefers-reduced-transparency` over CDP; Playwright WebKit
  * cannot, so it takes the forced level-0 path and the cell says so.
  */
-export async function openPage(target, engine, scene, { mode = "light", prm = false, coarse = false, uiScale = null, query = {} } = {}) {
+/**
+ * Page loads that stalled (the scene never reported ready, or `goto` timed out) and were re-opened once on a fresh
+ * context. D4-F prototype: under `--route`, a Playwright WebKit T-3 run stalled in `openPage` in every routed run of
+ * the D4-F block test (F1-3) and again in the prototype's first battery (`waitForFunction` on `__tile.ready`, 30 s).
+ * The stall does not name its scene and does not reproduce on a fresh page, so `openPage` now re-opens once: a stall
+ * that does not reproduce is printed NOT-REPRODUCED with its scene, mode and load; one that reproduces throws with
+ * its scene named. It is a recovery path like the engine-closed relaunch, not a check, and every use is printed.
+ */
+export const stalls = [];
+export async function openPage(target, engine, scene, opts = {}) {
+  try { return await openPageOnce(target, engine, scene, opts); }
+  catch (e) {
+    if (engineClosed(e)) throw e;
+    const first = String(e.message ?? e).split("\n")[0];
+    try {
+      const P = await openPageOnce(target, engine, scene, opts);
+      stalls.push({ engine, scene, mode: opts.mode ?? "light", load: load(), first, reproduced: false });
+      return P;
+    } catch (e2) {
+      stalls.push({ engine, scene, mode: opts.mode ?? "light", load: load(), first, reproduced: true });
+      throw new Error(`openPage ${scene} (${opts.mode ?? "light"}) stalled twice, REPRODUCED: ${first} / ${String(e2.message ?? e2).split("\n")[0]}`);
+    }
+  }
+}
+async function openPageOnce(target, engine, scene, { mode = "light", prm = false, coarse = false, uiScale = null, query = {} } = {}) {
   const b = await browser(engine);
   const opts = {
     viewport: VIEWPORT, deviceScaleFactor: DSF,
@@ -213,8 +237,10 @@ export async function openPage(target, engine, scene, { mode = "light", prm = fa
   const q = new URLSearchParams({ scene });
   if (mode === "dark") q.set("mode", "dark");
   for (const [k, v] of Object.entries(query)) q.set(k, String(v));
-  await page.goto(target.url(q.toString()), { waitUntil: "load" });
-  await page.waitForFunction(() => window.__tile && window.__tile.ready === true, null, { timeout: 30000 });
+  try {
+    await page.goto(target.url(q.toString()), { waitUntil: "load", timeout: 60000 });
+    await page.waitForFunction(() => window.__tile && window.__tile.ready === true, null, { timeout: 30000 });
+  } catch (e) { await ctx.close().catch(() => {}); throw e; }
   if (mode === "prt" && engine !== "chromium") await page.addStyleTag({ content: LEVEL0 });
   if (uiScale !== null) await page.addStyleTag({ content: `:root{--ui-scale:${uiScale} !important}` });
   await page.evaluate(() => document.fonts.ready.then(() => true));
@@ -588,6 +614,7 @@ export async function cli(id, runFn) {
     res.flavor = target.meta.flavor ?? (target.meta.dev ? "src-dev" : "src");
     res.run = { loadStart, loadEnd: load(), census, lockWaitS: lock.waitedS };
     for (const d of disconnects) (res.notes ??= []).push(`${ENGINE_LABEL[d.engine]} disconnected (the browser process died) and was relaunched; load ${d.load}`);
+    for (const t of stalls) (res.notes ??= []).push(`${ENGINE_LABEL[t.engine]} page load stalled on ${t.scene} (${t.mode}): ${t.first}; re-opened on a fresh context, ${t.reproduced ? "REPRODUCED" : "NOT-REPRODUCED"}; load ${t.load}`);
     verdict(res);
     print(res);
     const dir = path.join(outRoot(args), "runs", target.label);

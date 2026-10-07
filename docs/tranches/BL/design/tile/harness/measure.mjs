@@ -77,7 +77,7 @@ export async function selectedSeparation(P, { save } = {}) {
     its.forEach((e, i) => { if (i === s || th.on(e) || !sr) return; const z = th.size(e), d = Math.abs(z.w - sr.w) + Math.abs(z.h - sr.h); if (d < best) { best = d; u = i; } });
     return { s, u, sizeDelta: best, corner: s >= 0 ? th.corner(its[s]).used : 0 };
   });
-  if (info.s < 0 || info.u < 0) return { error: `no selected/unselected pair among ${n} items (sel ${info.s}, unsel ${info.u})` };
+  if (info.s < 0 || info.u < 0) return { items: n, error: `no selected/unselected pair among ${n} items (sel ${info.s}, unsel ${info.u})` };
   await P.page.evaluate(({ s, u }) => { const th = window.__th; th.hideInk(true); for (const i of [s, u]) th.pin(document.querySelector(`[data-th-idx="${i}"]`), true); }, info);
   await wait(P, 350);
   const rects = await P.page.evaluate(({ s, u }) => [s, u].map((i) => window.__th.rect(document.querySelector(`[data-th-idx="${i}"]`))), info);
