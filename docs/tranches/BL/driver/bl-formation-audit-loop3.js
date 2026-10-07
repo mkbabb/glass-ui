@@ -1,6 +1,6 @@
 export const meta = {
   name: 'bl-formation-audit-loop3',
-  description: 'BL formation audit loop, third leg: class-sweep fix then fresh critic on the fixed 9-row checklist (row 7 amended to the owner-ruled band-0 dependencies, O-87 and O-88), until two consecutive clean passes (passes 12-15); seat worktrees under the repo, not /tmp',
+  description: 'BL formation audit loop, third leg: class-sweep fix then fresh critic on the fixed 9-row checklist (row 7 amended to the owner-ruled band-0 dependencies, O-87 and O-88), until two consecutive clean passes (passes 11-15); seat worktrees under the repo, not /tmp',
   phases: [{ title: 'Fix' }, { title: 'Critique' }],
 }
 const ROOT = '/Users/mkbabb/Programming/glass-ui'
@@ -14,7 +14,7 @@ const INBOUND = `Inbound rows that arrived after the plan seat (read their rows 
 const CRIT = { type: 'object', properties: { model_id: { type: 'string' }, report_path: { type: 'string' }, report_markdown: { type: 'string' }, clean: { type: 'boolean' }, findings: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' }, row: { type: 'number' }, where: { type: 'string' }, defect: { type: 'string' }, evidence: { type: 'string' } }, required: ['id', 'row', 'where', 'defect', 'evidence'] } }, summary: { type: 'string' } }, required: ['model_id', 'report_path', 'clean', 'findings', 'summary'] }
 const REP = { type: 'object', properties: { model_id: { type: 'string' }, report_path: { type: 'string' }, summary: { type: 'string' }, artifacts: { type: 'array', items: { type: 'string' } }, open: { type: 'array', items: { type: 'string' } } }, required: ['model_id', 'report_path', 'summary', 'artifacts', 'open'] }
 const retry = async (fn) => { const a = await fn(); return a ?? await fn() }
-let clean = 0, pass = 12, prev = `${T}/formation-audit/pass-11.md`
+let clean = 0, pass = 11, prev = `${T}/formation-audit/pass-10.md`
 const log2 = []
 while (clean < 2 && pass <= 15) {
   const fix = await retry(() => agent(`You are the FORMATION FIX seat before audit pass ${pass} of BL (glass-ui ${ROOT}). ${ID}\n${FENCE('fix-' + pass)}\n${LAW}\nRead ${prev} in full (the open findings), then ${T}/PLAN.md, ${T}/waves/INDEX.md, the wave specs the findings cite, and ${T}/LEDGER.md.\nWHY THIS LOOP WAS RELAUNCHED: passes 3-7 each cured the instances a critic NAMED, and the next critic found the same defect CLASS at sites nobody named (FE-01 → FF-01 missing DAG edges in other kits; FE-02 → FF-03 state-fill holes on other dock fills). Read every earlier ${T}/formation-audit/pass-*.md to see the recurring classes. CLASS-SWEEP LAW: for each open finding, name its CLASS, write a mechanical sweep (a script that enumerates EVERY instance of that class across the whole plan folder, and where the class is about source, across the source it cites) to ${T}/formation-audit/sweeps/<class-slug>.{py,mjs,sh} with its output beside it (<class-slug>.out), and cure EVERY instance the sweep lists, not only the named ones. A sweep must exit non-zero while any instance is open and zero when the class is clean; record both runs. Reuse and extend existing sweeps in that folder rather than duplicating.
