@@ -1,0 +1,26 @@
+# selftest re-runs start 16:53:05 · 16:53  up  6:59, 3 users, load averages: 282.62 296.49 319.96
+## re-run 1: E-7 webkit (clean and its faults)
+OK     E-7 webkit   clean exit 0 · E-7 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 275.6/294.8/319.2 at start, 275.0/294.4/318.9 at end
+OK     E-7 webkit   fault   e7-veil (the modal's scrim carries a bare data-engaged (presence) beside the held meaning) exit 1
+         first planted FAIL: FAIL       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 1 (fx-scrim) · bound 0 · load 272.5/293.5/318.5
+OK     E-7 webkit   fault   e7-two (two source files write data-engaged, one outside the register's owner) exit 1
+         first planted FAIL: FAIL       E-7 writers (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/two-writers · load 272.5/293.5/318.5
+OK     E-7 webkit   fault   e7-prm (under reduced motion the held slider writes no data-engaged: held is gated on motion (H-9)) exit 1
+         first planted FAIL: FAIL       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 0 · bound ≥ 1 · load 247.6/287.6/316.1
+selftest: 4 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+## re-run 1: E-8 webkit control e8-units
+OK     E-8 webkit   control e8-units (CONTROL, must PASS: a token spelled .18s (a minifier's respelling of 180ms, as the HEAD build does) equals its 180 ms row) exit 0
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+## re-run 2: E-7 webkit (clean and its faults)
+OK     E-7 webkit   clean exit 0 · E-7 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 284.8/291.8/316.2 at start, 280.1/290.7/315.6 at end
+OK     E-7 webkit   fault   e7-veil (the modal's scrim carries a bare data-engaged (presence) beside the held meaning) exit 1
+         first planted FAIL: FAIL       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 1 (fx-scrim) · bound 0 · load 274.5/289.4/315.0
+OK     E-7 webkit   fault   e7-two (two source files write data-engaged, one outside the register's owner) exit 1
+         first planted FAIL: FAIL       E-7 writers (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/two-writers · load 274.5/289.4/315.0
+OK     E-7 webkit   fault   e7-prm (under reduced motion the held slider writes no data-engaged: held is gated on motion (H-9)) exit 1
+         first planted FAIL: FAIL       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 0 · bound ≥ 1 · load 265.4/287.2/314.1
+selftest: 4 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+## re-run 2: E-8 webkit control e8-units
+OK     E-8 webkit   control e8-units (CONTROL, must PASS: a token spelled .18s (a minifier's respelling of 180ms, as the HEAD build does) equals its 180 ms row) exit 0
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest re-runs end 17:09:53 · 17:09  up  7:16, 3 users, load averages: 233.17 278.44 310.34

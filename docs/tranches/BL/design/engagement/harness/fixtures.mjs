@@ -49,7 +49,15 @@ export const FAULTS = {
   "e4-snap": { why: "CONTROL, must PASS: the release snaps to a detent and the release velocity picks the detent (a fling lands one detent further than a still release, the Sheet's projection and the tabs drag at HEAD)", witnesses: ["E-4"], expect: "pass" },
   "e8-literal": { why: "the control's press transition spells 230ms, a literal no token carries", witnesses: ["E-8"], cell: /literal pop/ },
   "e9-scale": { why: "under reduced motion the press still squishes", witnesses: ["E-9"], cell: /press-spatial/ },
-  "e9-dark": { why: "under reduced motion the press retires its scale and keeps no light answer", witnesses: ["E-9"], cell: /press-light/ },
+  "e9-dark": { why: "under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)", witnesses: ["E-9", "E-1", "E-5"], cell: /press-light/ },
+  "e3-prmgrow": { why: "under reduced motion the slider still grows, on its spring (H-9)", witnesses: ["E-3"], cell: /PRM/ },
+  "e4-prmbounce": { why: "under reduced motion the slider's release keeps its velocity spring and overshoots its rest (H-9)", witnesses: ["E-4"], cell: /slider release PRM/ },
+  "e4-vdrop": { why: "the vertical detent sheet resolves its release by position alone: a fling lands on the detent a still release lands on (H-7)", witnesses: ["E-4"], cell: /vsheet fling/ },
+  "e4-stripstop": { why: "the scroll-snap strip kills the platform fling at touchend and snaps to the nearest member (H-7)", witnesses: ["E-4"], cell: /strip fling/, engines: ["chromium"] },
+  "e6-spin": { why: "the idle rung is a spinner: rotate 360° every 4 s, linear (a loop, not a breath; H-5)", witnesses: ["E-6"], cell: /channel/ },
+  "e6-saw": { why: "the idle rung ramps scale 1 → 1.012 linearly and jumps back at the seam (a sawtooth on a legal channel, amplitude and period; H-5)", witnesses: ["E-6"], cell: /shape/ },
+  "e7-prm": { why: "under reduced motion the held slider writes no data-engaged: held is gated on motion (H-9)", witnesses: ["E-7"], cell: /held PRM/ },
+  "e8-prmliteral": { why: "the reduce arm's press transition spells 100ms, a literal no token carries (H-9)", witnesses: ["E-8"], cell: /literal pop PRM/ },
   "e9-glide": { why: "under reduced motion the selection body still glides", witnesses: ["E-9"], cell: /commit-spatial/ },
 };
 
@@ -59,6 +67,8 @@ export const FIXTURE_INDEX = {
   travel: { gates: CONTROL_GATES, key: "ArrowRight", target: '.seg[data-v="b"]' },
   rest: { gates: CONTROL_GATES, key: "Space", target: ".ctl" },
   slider: { gates: ["E-3", "E-4", "E-7", "E-9"], key: "ArrowRight" },
+  vsheet: { gates: ["E-4"], axis: "y", dir: -1 },
+  strip: { gates: ["E-4"], input: "touch", dir: -1 },
   modal: { gates: ["E-7"] },
   s6: { gates: ["E-6"], subject: "the fixture's switch track" },
   passive: { gates: [] },
@@ -102,6 +112,7 @@ ${nopress ? "" : `.ctl:active, .seg:active { scale: 0.96; background-color: var(
 @media (prefers-reduced-motion: reduce) {
   ${F("e9-scale") ? "" : `.ctl:active, .seg:active, .rest .ctl[data-state="on"]:active { scale: 1; } .ctl, .seg { transition: background-color var(--engage-press-drain-attack) linear; }`}
   ${F("e9-dark") ? `.ctl:active, .seg:active { background-color: var(--ctl-hover); }` : ""}
+  ${F("e8-prmliteral") ? `.ctl, .seg { transition: background-color 100ms linear; }` : ""}
 }
 .segs { position: relative; display: inline-flex; gap: 0; padding: 4px; border-radius: 24px; background: var(--ctl); }
 .seg { background-color: transparent; position: relative; z-index: 1; width: 78px; padding: 0; }
@@ -111,7 +122,7 @@ ${nopress ? "" : `.ctl:active, .seg:active { scale: 0.96; background-color: var(
 .fx-slider${F("e3-still") ? ".never" : F("e3-kbd") ? ":where(:active, [data-held])" : ":where(:active, [data-held], :has(:focus-visible))"} { scale: 1.06; }
 .fx-thumb { position: absolute; top: -4px; left: 0; width: 28px; height: 28px; margin-left: -14px; border-radius: 14px; background: #fff; box-shadow: 0 1px 3px #0005; touch-action: none; }
 .fx-thumb:active { box-shadow: 0 0 0 6px #3b6cf055; }
-@media (prefers-reduced-motion: reduce) { .fx-slider:where(:active, [data-held], :has(:focus-visible)) { scale: 1; } .fx-slider { transition: none; } }
+${F("e3-prmgrow") ? "" : "@media (prefers-reduced-motion: reduce) { .fx-slider:where(:active, [data-held], :has(:focus-visible)) { scale: 1; } .fx-slider { transition: none; } }"}
 .fx-veil { position: fixed; inset: 0; pointer-events: none; background: #0001; }
 .fx-scrim { position: fixed; inset: 0; background: #0006; }
 .fx-dialog { position: fixed; left: 50%; top: 50%; translate: -50% -50%; width: 280px; padding: 24px; border-radius: 20px; background: var(--bg); }
@@ -120,7 +131,15 @@ ${nopress ? "" : `.ctl:active, .seg:active { scale: 0.96; background-color: var(
 @keyframes fx-breathe { 50% { scale: 1.012; } }
 @keyframes fx-dim { 50% { opacity: 0.9; } }
 @keyframes fx-wide { 50% { width: 54px; } }
-.fx-switch { animation: ${F("e6-absent") ? "none" : F("e6-dim") ? "fx-dim 4s ease-in-out infinite" : F("e6-layout") ? "fx-wide 4s ease-in-out infinite" : F("e6-fast") ? "fx-breathe 600ms ease-in-out infinite" : "fx-breathe 4s ease-in-out infinite"}; }
+@keyframes fx-spin { to { rotate: 360deg; } }
+@keyframes fx-saw { from { scale: 1; } to { scale: 1.012; } }
+.fx-vroot { position: fixed; inset: 0; pointer-events: none; }
+.fx-sheet { position: fixed; bottom: 0; left: 50%; width: 300px; margin-left: -150px; border-radius: 20px 20px 0 0; background: var(--ctl); }
+.fx-grip { width: 120px; height: 28px; margin: 0 auto; border-radius: 14px; background: #fff8; touch-action: none; }
+.fx-strip { width: 600px; height: 160px; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.fx-cell { flex: 0 0 100%; height: 160px; scroll-snap-align: start; scroll-snap-stop: always; background: var(--ctl); }
+.fx-cell + .fx-cell { background: var(--ctl-press); }
+.fx-switch { animation: ${F("e6-absent") ? "none" : F("e6-dim") ? "fx-dim 4s ease-in-out infinite" : F("e6-layout") ? "fx-wide 4s ease-in-out infinite" : F("e6-fast") ? "fx-breathe 600ms ease-in-out infinite" : F("e6-spin") ? "fx-spin 4s linear infinite" : F("e6-saw") ? "fx-saw 4s linear infinite" : "fx-breathe 4s ease-in-out infinite"}; }
 ${F("e6-prm") ? "" : "@media (prefers-reduced-motion: reduce) { .fx-switch { animation: none; } }"}
 `;
 
@@ -131,6 +150,8 @@ ${F("e6-prm") ? "" : "@media (prefers-reduced-motion: reduce) { .fx-switch { ani
   else if (scene === "modal") body = `<div class="fx-scrim" data-state="open" data-e="veil"${F("e7-veil") ? " data-engaged" : ""}></div><div class="fx-dialog" role="dialog" aria-label="Probe" data-e="modal">Body</div>`;
   else if (scene === "s6") body = `<span class="fx-switch" role="switch" aria-checked="false" aria-label="Probe" data-e="target"></span>`;
   else if (scene === "passive") body = `<hr data-e="target">`;
+  else if (scene === "vsheet") body = `<div class="fx-vroot" data-e="root"></div><div class="fx-sheet"><div class="fx-grip" role="slider" aria-label="Probe" aria-valuenow="25" tabindex="0" data-e="thumb"></div></div>`;
+  else if (scene === "strip") body = `<div class="fx-strip" data-e="root">${[0, 1, 2, 3].map((i) => `<div class="fx-cell"${i ? "" : ' data-e="thumb"'}></div>`).join("")}</div>`;
 
   const script = `
 const FAULT = ${JSON.stringify(fault)}; const SCENE = ${JSON.stringify(scene)}; const DEFER = ${defer}; const ON = ${on};
@@ -178,26 +199,55 @@ function mountScene() {
     const W = () => root.offsetWidth; let x = 0.4 * W(); const put = () => { th.style.left = x + "px"; th.setAttribute("aria-valuenow", String(Math.round(100 * x / W()))); }; put();
     let veil = null, drag = null, raf = 0;
     th.addEventListener("pointerdown", (e) => { cancelAnimationFrame(raf); th.setPointerCapture(e.pointerId); root.dataset.held = "";
-      veil = document.createElement("span"); veil.className = "fx-veil"; veil.setAttribute("data-engaged", ""); document.body.appendChild(veil);
+      veil = document.createElement("span"); veil.className = "fx-veil"; if (!(FAULT === "e7-prm" && prm())) veil.setAttribute("data-engaged", ""); document.body.appendChild(veil);
       drag = { x0: x, cx: e.clientX, hist: [{ t: performance.now(), x }] }; });
     th.addEventListener("pointermove", (e) => { if (!drag) return; x = Math.max(0, Math.min(W(), drag.x0 + e.clientX - drag.cx)); put(); drag.hist.push({ t: performance.now(), x }); if (drag.hist.length > 6) drag.hist.shift(); });
     const release = () => { if (!drag) return; delete root.dataset.held; veil?.remove(); veil = null;
       const now = performance.now(), h = drag.hist.filter((p) => now - p.t < 80); drag = null;
       let v = h.length > 1 ? (h.at(-1).x - h[0].x) / Math.max(1, h.at(-1).t - h[0].t) * 1000 : 0; // px/s
-      if (FAULT === "e4-drop" || prm()) v = 0;
+      if (FAULT === "e4-drop" || (prm() && FAULT !== "e4-prmbounce")) v = 0;
       if (FAULT === "e4-hold") { const D3 = W() / 3, tgt = Math.round(x / D3) * D3; const k = 322, c = 2 * 0.75 * Math.sqrt(k); let vv = 0, t1;
         const go = (t) => { const dt = Math.min(0.032, (t - (t1 ?? t)) / 1000); t1 = t; vv += (-k * (x - tgt) - c * vv) * dt; x += vv * dt; put();
           if (Math.abs(vv) > 1 || Math.abs(x - tgt) > 0.2) raf = requestAnimationFrame(go); else { x = tgt; put(); } };
         setTimeout(() => { raf = requestAnimationFrame(go); }, v ? 750 : 600); return; }
       const D = W() / 4; // e4-snap: four detents; the projected point picks one
       if (!v && FAULT !== "e4-snap") return;
-      const target = FAULT === "e4-snap" ? Math.round(Math.max(0, Math.min(W(), x + v * 0.15)) / D) * D : Math.max(0, Math.min(W(), x + v * 0.15)); const k = 322, c = 2 * 0.75 * Math.sqrt(k); let t0 = performance.now();
+      const target = FAULT === "e4-snap" ? Math.round(Math.max(0, Math.min(W(), x + v * 0.15)) / D) * D : Math.max(0, Math.min(W(), x + v * 0.15));
+      if (prm() && FAULT !== "e4-prmbounce") { x = target; put(); return; } // reduce: the release lands, it does not bounce
+      const k = 322, c = 2 * 0.75 * Math.sqrt(k); let t0 = performance.now();
       const step = (t) => { const dt = Math.min(0.032, (t - t0) / 1000); t0 = t; v += (-k * (x - target) - c * v) * dt; x += v * dt; put();
         if (Math.abs(v) > 1 || Math.abs(x - target) > 0.2) raf = requestAnimationFrame(step); else { x = target; put(); } };
       raf = requestAnimationFrame(step); };
     th.addEventListener("pointerup", release); th.addEventListener("pointercancel", release);
     th.addEventListener("keydown", (e) => { if (e.key === "ArrowRight") { x = Math.min(W(), x + W() / 100); put(); } });
     E.commit = () => { x = 0.7 * W(); put(); };
+  }
+  if (SCENE === "vsheet") {
+    // a bottom sheet sized by its rung; the grip drags it; the release projects 0.15 s of velocity and picks a detent
+    const sheet = stage.querySelector(".fx-sheet"), grip = stage.querySelector(".fx-grip");
+    const VH = () => innerHeight, D = [0.25, 0.5, 0.75, 1]; let h = 0.25 * VH(), drag = null, raf = 0;
+    const put = () => { sheet.style.height = h + "px"; }; put();
+    grip.addEventListener("pointerdown", (e) => { cancelAnimationFrame(raf); grip.setPointerCapture(e.pointerId); drag = { h0: h, cy: e.clientY, hist: [{ t: performance.now(), h }] }; });
+    grip.addEventListener("pointermove", (e) => { if (!drag) return; h = Math.max(0, Math.min(VH(), drag.h0 - (e.clientY - drag.cy))); put(); drag.hist.push({ t: performance.now(), h }); if (drag.hist.length > 6) drag.hist.shift(); });
+    const release = () => { if (!drag) return; const now = performance.now(), hs = drag.hist.filter((p) => now - p.t < 80); drag = null;
+      let v = hs.length > 1 ? (hs.at(-1).h - hs[0].h) / Math.max(1, hs.at(-1).t - hs[0].t) * 1000 : 0;
+      if (FAULT === "e4-vdrop") v = 0; // the plant: the release forgets its velocity (no projection, no seeded spring)
+      const proj = Math.max(0, Math.min(VH(), h + v * 0.15));
+      const target = D.map((d) => d * VH()).reduce((a, b) => (Math.abs(b - proj) < Math.abs(a - proj) ? b : a));
+      if (prm()) { h = target; put(); return; }
+      const k = 322, c = 2 * 0.75 * Math.sqrt(k); let t0 = performance.now();
+      const step = (t) => { const dt = Math.min(0.032, (t - t0) / 1000); t0 = t; v += (-k * (h - target) - c * v) * dt; h += v * dt; put();
+        if (Math.abs(v) > 1 || Math.abs(h - target) > 0.2) raf = requestAnimationFrame(step); else { h = target; put(); } };
+      raf = requestAnimationFrame(step); };
+    grip.addEventListener("pointerup", release); grip.addEventListener("pointercancel", release);
+  }
+  if (SCENE === "strip" && FAULT === "e4-stripstop") {
+    // the plant: the strip takes the gesture from the platform (touch-action: none) and follows the finger itself; at
+    // touchend it snaps to the nearest member at once, so the release velocity is dropped
+    const s = stage.querySelector(".fx-strip"); s.style.touchAction = "none"; let sx = 0, s0 = 0;
+    s.addEventListener("touchstart", (e) => { s.style.scrollSnapType = "none"; sx = e.touches[0].clientX; s0 = s.scrollLeft; }, { passive: true });
+    s.addEventListener("touchmove", (e) => { s.scrollLeft = s0 - (e.touches[0].clientX - sx); }, { passive: true });
+    s.addEventListener("touchend", () => { s.scrollLeft = Math.round(s.scrollLeft / s.clientWidth) * s.clientWidth; s.style.scrollSnapType = ""; });
   }
 }
 E.mount = async () => { mountScene(); await new Promise((r) => requestAnimationFrame(r)); };

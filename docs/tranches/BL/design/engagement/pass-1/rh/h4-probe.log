@@ -1,0 +1,16 @@
+# h4-probe · 22:50:09 · 18 cpus · other headless processes: chromium 5, webkit 2 · load 753.4/679.1/551.5 at start
+## chromium 149.0.7827.55
+media {"hoverNone":true,"pointerCoarse":true}
+raw CDP touchStart held 300 ms: {"active":false,"hover":false,"outline":"none","events":"pointerdown:touch touchstart"}
+long-tap gesture held 300 ms:   {"active":true,"hover":true,"outline":"solid","events":"pointerdown:touch touchstart pointerup:touch touchend click:touch pointerdown:touch touchstart"}
+strip touch drag, fling: scrollLeft at release 105 → 0 0 0 0 0 0 0 0 · load 762.2/684.6/555.7
+strip touch drag, still: scrollLeft at release 105 → 0 0 0 0 0 0 0 0 · load 788.5/694.1/561.3
+## webkit 26.5 (Playwright WebKit, not Safari)
+Playwright page: media {"hoverNone":true,"pointerCoarse":true}
+Playwright touchscreen.tap (its only touch input; Input.dispatchTapEvent): {"active":false,"hover":true,"outline":"none","events":"pointerdown:touch touchstart pointerup:touch touchend click:mouse"}
+wktouch page: media {"hoverNone":true,"pointerCoarse":true}
+Input.dispatchTouchEvent touchStart held 300 ms: {"active":true,"hover":true,"outline":"solid","events":"pointerdown:touch touchstart"}
+after touchEnd:                                  {"active":false,"hover":false,"outline":"none","events":"pointerdown:touch touchstart pointerup:touch touchend"}
+strip touch drag, fling: scrollLeft at release 0 → 0 0 0 0 0 0 0 0 · load 772.4/709.8/577.1
+strip touch drag, still: scrollLeft at release 0 → 0 0 0 0 0 0 0 0 · load 772.4/709.8/577.1
+# load 772.4/709.8/577.1 at end

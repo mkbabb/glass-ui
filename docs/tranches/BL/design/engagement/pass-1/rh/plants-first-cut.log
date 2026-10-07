@@ -1,0 +1,55 @@
+12:56  up  3:02, 3 users, load averages: 41.13 36.17 27.76
+OK     E-1 chromium fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-1 runtime pressed (alpha) PRM press-light · scene pop, reduce: Δscale 0.000 · press-only paint [] (bound ≥ 1 property) · load 41.1/36.2/27.8
+OK     E-1 webkit   fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-1 runtime pressed (alpha) PRM press-light · scene pop, reduce: Δscale 0.000 · press-only paint [] (bound ≥ 1 property) · load 40.9/36.3/27.9
+OK     E-3 chromium fault   e3-prmgrow (under reduced motion the slider still grows, on its spring (H-9)) exit 1
+         first planted FAIL: FAIL       E-3 slider keyboard-focused PRM light · reduce · rest 360.0 px → focused 381.6 px (×1.060; focus on slider) · bound ×1 ± 0.002 · load 39.3/36.0/27.8
+OK     E-3 webkit   fault   e3-prmgrow (under reduced motion the slider still grows, on its spring (H-9)) exit 1
+         first planted FAIL: FAIL       E-3 slider keyboard-focused PRM light · reduce · rest 360.0 px → focused 381.6 px (×1.060; focus on slider) · bound ×1 ± 0.002 · load 40.1/36.3/28.1
+OK     E-4 chromium fault   e4-prmbounce (under reduced motion the slider's release keeps its velocity spring and overshoots its rest (H-9)) exit 1
+         first planted FAIL: FAIL       E-4 slider release PRM · reduce · fling: carry 99.55 px, settles 96.00 px past release, overshoot past its rest 3.55 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 11.2 px · load 40.
+BROKEN E-4 chromium fault   e4-vdrop (the vertical detent sheet resolves its release by position alone: a fling lands on the detent a still release lands on (H-7)) exit 0
+         PASS       E-4 strip fling carries velocity · axis x, dir −1, touch · fling: carry 495.00 px, settles 495.00 px past release · still: carry 0.00 px, settles -105.00 px · difference: carry 495.00 px, settle 600.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 40.0 px, still 8.0 px · 242 frames, median 8.3 ms · load 26.1/32.7/27.6
+         PASS       E-4 strip release PRM · reduce · fling: carry 495.00 px, settles 495.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 40.0 px · load 27.0/32.7/27.7
+         E-4 chromium PASS · 6 pass, 0 fail, 0 unmeasured of 6 gating cells (0 reported) · load 25.9/33.1/27.6 at start, 27.0/32.7/27.7 at end
+         
+BROKEN E-4 chromium fault   e4-stripstop (the scroll-snap strip kills the platform fling at touchend and snaps to the nearest member (H-7)) exit 0
+         PASS       E-4 strip fling carries velocity · axis x, dir −1, touch · fling: carry 495.00 px, settles 495.00 px past release · still: carry 0.00 px, settles -105.00 px · difference: carry 495.00 px, settle 600.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 164.0 px, still 105.0 px · 242 frames, median 8.3 ms · load 23.4/31.5/27.3
+         PASS       E-4 strip release PRM · reduce · fling: carry 495.00 px, settles 495.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 164.0 px · load 23.9/31.5/27.4
+         E-4 chromium PASS · 6 pass, 0 fail, 0 unmeasured of 6 gating cells (0 reported) · load 27.0/32.7/27.7 at start, 23.9/31.5/27.4 at end
+         
+OK     E-4 webkit   fault   e4-prmbounce (under reduced motion the slider's release keeps its velocity spring and overshoots its rest (H-9)) exit 1
+         first planted FAIL: FAIL       E-4 slider release PRM · reduce · fling: carry 97.02 px, settles 96.00 px past release, overshoot past its rest 1.02 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 37.2 px · load 22.
+BROKEN E-4 webkit   fault   e4-vdrop (the vertical detent sheet resolves its release by position alone: a fling lands on the detent a still release lands on (H-7)) exit 0
+         UNMEASURED E-4 strip fling carries velocity · the touch drag moved the thumb 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox) · load 46.8/36.3/29.4
+         UNMEASURED E-4 strip release PRM · the surface is not driven in this engine (above) · load 46.8/36.3/29.4
+         E-4 webkit PASS · 4 pass, 0 fail, 2 unmeasured of 6 gating cells (0 reported) · load 39.6/34.3/28.5 at start, 46.8/36.3/29.4 at end
+         
+N/A    E-4 webkit   fault   e4-stripstop exit 0: the planted cell has no input in Playwright webkit (FAULTS engines) · E-4 webkit PASS · 4 pass, 0 fail, 2 unmeasured of 6 gating cells (0 reported) · load 46.8/36.3/29.4 at start, 49.6/37.9/30.2 at end
+OK     E-5 chromium fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-5 pop press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 50.3/38.2/30.4
+OK     E-5 webkit   fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-5 pop press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 55.3/39.9/31.1
+OK     E-6 chromium fault   e6-spin (the idle rung is a spinner: rotate 360° every 4 s, linear (a loop, not a breath; H-5)) exit 1
+         first planted FAIL: FAIL       E-6 s6 channel light · disallowed: rotate (not a breathing channel) (breathing channels: scale, a scale transform, opacity on a pseudo-element) · load 56.0/40.6/31.4
+OK     E-6 chromium fault   e6-saw (the idle rung ramps scale 1 → 1.012 linearly and jumps back at the seam (a sawtooth on a legal channel, amplitude and period; H-5)) exit 1
+         first planted FAIL: FAIL       E-6 s6 shape light · not a breath: fx-saw scale 1 → 1.012 at the seam; fx-saw linear · load 74.1/45.4/33.3
+OK     E-6 webkit   fault   e6-spin (the idle rung is a spinner: rotate 360° every 4 s, linear (a loop, not a breath; H-5)) exit 1
+         first planted FAIL: FAIL       E-6 s6 channel light · disallowed: rotate (not a breathing channel) (breathing channels: scale, a scale transform, opacity on a pseudo-element) · load 76.6/46.9/34.0
+OK     E-6 webkit   fault   e6-saw (the idle rung ramps scale 1 → 1.012 linearly and jumps back at the seam (a sawtooth on a legal channel, amplitude and period; H-5)) exit 1
+         first planted FAIL: FAIL       E-6 s6 shape light · not a breath: fx-saw scale 1 → 1.012 at the seam; fx-saw linear · load 73.2/49.1/35.3
+OK     E-7 chromium fault   e7-prm (under reduced motion the held slider writes no data-engaged: held is gated on motion (H-9)) exit 1
+         first planted FAIL: FAIL       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 0 · bound ≥ 1 · load 70.3/50.6/36.3
+OK     E-7 webkit   fault   e7-prm (under reduced motion the held slider writes no data-engaged: held is gated on motion (H-9)) exit 1
+         first planted FAIL: FAIL       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 0 · bound ≥ 1 · load 59.4/50.0/36.5
+OK     E-8 chromium fault   e8-prmliteral (the reduce arm's press transition spells 100ms, a literal no token carries (H-9)) exit 1
+         first planted FAIL: FAIL       E-8 literal pop PRM · 4 animation(s) ran [background-color@100ms] against 5 clock tokens · minted [CSSTransition background-color 100ms on ctl] · load 55.2/51.2/38.0
+OK     E-8 webkit   fault   e8-prmliteral (the reduce arm's press transition spells 100ms, a literal no token carries (H-9)) exit 1
+         first planted FAIL: FAIL       E-8 literal pop PRM · 4 animation(s) ran [background-color@100ms] against 5 clock tokens · minted [CSSTransition background-color 100ms on ctl] · load 52.1/50.7/38.0
+OK     E-9 chromium fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-9 pop press-light light · press-only paint changes [] (bound ≥ 1) · load 47.9/49.8/38.0
+OK     E-9 webkit   fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-9 pop press-light light · press-only paint changes [] (bound ≥ 1) · load 44.1/48.8/37.9
+selftest: 3 of 22 runs BROKEN (1 N/A)
+13:05  up  3:11, 3 users, load averages: 35.83 46.63 37.37

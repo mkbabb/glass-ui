@@ -15,8 +15,10 @@ const only = typeof a.only === "string" ? new Set(a.only.split(",")) : null;
 const onlyFaults = typeof a.faults === "string" ? new Set(a.faults.split(",")) : null;
 const engines = typeof a.engines === "string" ? a.engines.split(",") : ["chromium", "webkit"];
 const out = typeof a.out === "string" ? ["--out", a.out] : [];
-// Chromium-only inputs: the held touch (a long-tap gesture) exists in Chromium alone (H-4)
-const ENGINE_ONLY = { "E-5": ["chromium"], "e3-gutter": ["chromium"] };
+// A fault whose planted cell has no input in an engine names its engines in FAULTS (`engines`). Since H-4 the held
+// touch has an input in both engines (lib.mjs openTouchPage); a touch DRAG does not scroll in macOS WebKit, so the
+// scroll-snap strip's plant is Chromium's alone.
+const ENGINE_ONLY = Object.fromEntries(Object.entries(FAULTS).filter(([, fl]) => fl.engines).map(([n, fl]) => [n, fl.engines]));
 let broken = 0, runs = 0, na = 0; const retried = [];
 const failLines = (o) => o.split("\n").filter((l) => /^\s+FAIL\s/.test(l));
 for (const [id, file] of WITNESSES) {
@@ -42,7 +44,7 @@ for (const [id, file] of WITNESSES) {
       const hit = !fl.cell || fails.some((l) => fl.cell.test(l));
       if (faultNA) {
         na++;
-        console.log(`N/A    ${tag} ${expectPass ? "control" : "fault  "} ${name} exit ${r.code}: the planted cell has no input in Playwright ${engine} (H-4) · ${r.last.trim()}`);
+        console.log(`N/A    ${tag} ${expectPass ? "control" : "fault  "} ${name} exit ${r.code}: the planted cell has no input in Playwright ${engine} (FAULTS engines) · ${r.last.trim()}`);
         continue;
       }
       const ok = expectPass ? r.code === 0 : r.code === 1 && hit;

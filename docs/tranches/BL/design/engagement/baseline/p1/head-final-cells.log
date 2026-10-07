@@ -1,0 +1,40 @@
+## E-3 webkit 26.5 · build · FAIL · load 829.8/643.5/517.6 → 782.4/655.1/528.2
+  FAIL       E-3 slider desk pointer-held light · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 807.2/641.9/517.8
+  FAIL       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 807.2/641.9/517.8
+  FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 788.9/640.9/518.1
+  PASS       E-3 slider phone gutter light · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 788.9/640.9/518.1
+  PASS       E-3 slider keyboard-focused PRM light · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 779.3/641.3/519.0
+  PASS       E-3 slider phone touch-held PRM light · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 776.5/643.0/520.3
+  FAIL       E-3 slider desk pointer-held dark · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 778.3/645.6/522.0
+  FAIL       E-3 slider desk keyboard-focused dark · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 778.3/645.6/522.0
+  FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 778.3/650.0/525.0
+  PASS       E-3 slider phone gutter dark · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 778.3/650.0/525.0
+  PASS       E-3 slider keyboard-focused PRM dark · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 781.2/652.7/526.7
+  PASS       E-3 slider phone touch-held PRM dark · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 782.4/655.1/528.2
+## E-5 webkit 26.5 · build · FAIL · load 503.1/482.3/442.8 → 830.1/634.1/512.1
+  PASS       E-5 tabs press light · :active true · Δscale -0.030 · touch-changed [] · hover-changed [] · press-only [] · load 536.4/490.1/446.0
+  FAIL       E-5 tabs press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 536.4/490.1/446.0
+  PASS       E-5 tabs press dark · :active true · Δscale -0.030 · touch-changed [] · hover-changed [] · press-only [] · load 596.0/506.8/453.0
+  FAIL       E-5 tabs press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 596.0/506.8/453.0
+  PASS       E-5 chip press light · :active true · Δscale -0.030 · touch-changed [] · hover-changed [] · press-only [] · load 612.3/513.2/455.9
+  FAIL       E-5 chip press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 612.3/513.2/455.9
+  PASS       E-5 chip press dark · :active true · Δscale -0.030 · touch-changed [] · hover-changed [] · press-only [] · load 661.9/530.5/463.4
+  FAIL       E-5 chip press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 661.9/530.5/463.4
+  PASS       E-5 button press light · :active true · Δscale 0.000 · touch-changed [::before opacity] · hover-changed [::before opacity, ::before background] · press-only [::before opacity] · load 750.9/559.2/475.3
+  PASS       E-5 button press-light(PRM) light · :active true · Δscale -0.030 · touch-changed [::before opacity] · hover-changed [::before opacity, ::before background] · press-only [::before opacity] (bound ≥ 1 press-only property under reduce) · load 750.9/559.2/475.3
+  FAIL       E-5 button press dark · :active true · Δscale 0.000 · touch-changed [] · hover-changed [::before opacity, ::before background] · press-only [] · load 798.8/579.2/483.9
+  PASS       E-5 button press-light(PRM) dark · :active true · Δscale -0.030 · touch-changed [::before opacity] · hover-changed [::before opacity, ::before background] · press-only [::before opacity] (bound ≥ 1 press-only property under reduce) · load 798.8/579.2/483.9
+  FAIL       E-5 press_switch press light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [child0 bg] · press-only [] · load 808.9/588.6/488.3
+  PASS       E-5 press_switch press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 808.9/588.6/488.3
+  PASS       E-5 press_switch press dark · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 809.2/596.0/492.1
+  PASS       E-5 press_switch press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 809.2/596.0/492.1
+  FAIL       E-5 press_checkbox press light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [child0 bg] · press-only [] · load 810.5/606.7/497.8
+  PASS       E-5 press_checkbox press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 810.5/606.7/497.8
+  PASS       E-5 press_checkbox press dark · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 828.2/630.4/510.1
+  PASS       E-5 press_checkbox press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 828.2/630.4/510.1
+## E-8 chromium 149.0.7827.55 · build · PASS · load 779.7/656.7/529.5 → 746.9/658.9/534.0
+  PASS       E-8 mirror · 4 rows, 8 --engage-* tokens on :root · drift [] · orphans [] · load 773.2/657.4/530.5
+  PASS       E-8 literal tabs · 16 animation(s) ran [background-color@60ms, scale@210ms, translate@210ms, color@200ms, script@220ms, background-color@180ms] against 56 clock tokens · minted [] · load 773.2/657.4/530.5
+  PASS       E-8 literal tabs PRM · 2 animation(s) ran [color@0ms] against 0 clock tokens · minted [] · load 764.6/657.5/531.3
+  PASS       E-8 literal accordion · 7 animation(s) ran [background-color@120ms, rotate@200ms, disclosure-open@200ms, box-shadow@120ms, disclosure-close@200ms] against 54 clock tokens · minted [] · load 760.1/658.4/532.4
+  PASS       E-8 literal accordion PRM · 2 animation(s) ran [disclosure-open@0ms, disclosure-close@0ms] against 0 clock tokens · minted [] · load 753.8/658.7/533.2

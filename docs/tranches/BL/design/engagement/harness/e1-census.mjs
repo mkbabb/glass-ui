@@ -16,7 +16,9 @@
 //   runtime <class> (<dir>)     for every class with a rung: its exemplar directory has a harness scene, and on it a
 //                               press (pointer down 250 ms; 450 ms for the engaged rung) moves the target's scale
 //                               ≥ 0.01 or changes a paint property hover alone does not change
-// Light only; fine pointer (E-5 owns the coarse press, E-9 the PRM arm).
+//   runtime … PRM press-light   H-9: the same press under reduced motion changes ≥ 1 press-only paint property (the
+//                               rung's light leg survives reduce; E-9 owns retiring its spatial leg)
+// Light only; fine pointer (E-5 owns the coarse press).
 //   node e1-census.mjs --build <dir> | --fixture [--fault e1-undeclared] [--engine webkit]
 import { witness, openPage, center, paintDiff, f } from "./lib.mjs";
 
@@ -43,9 +45,10 @@ await witness("E-1", "the census over a declared denominator", async ({ E, T, ce
     if (c.rung == null) continue;
     const ex = c.exemplar; const sc = ex ? R.sceneOfDir[ex] : null;
     if (!sc) { cell(`E-1 runtime ${k} (${ex ?? "no exemplar"})`, "FAIL", `no harness scene exemplifies ${ex ?? "the class (no exemplar named)"} (H-2: add one to the scene app)`); continue; }
-    const r = await guard(`runtime ${k}`, async () => {
-      const Q = await openPage(E, T, sc);
+    const press = (prm) => guard(`runtime ${k}${prm ? " PRM" : ""}`, async () => {
+      const Q = await openPage(E, T, sc, { prm });
       try {
+        if (prm && !Q.modeOk) return { mode: Q.modeLine };
         const at = (await Q.page.$('[data-e~="thumb"]')) ? '[data-e~="thumb"]' : '[data-e~="target"]';
         const snap = () => Q.page.evaluate(() => ({ p: window.__paint('[data-e~="target"]'), s: window.__eff(document.querySelector('[data-e~="target"]')).s }));
         const p0 = await snap(); const cc = await center(Q.page, at);
@@ -54,8 +57,15 @@ await witness("E-1", "the census over a declared denominator", async ({ E, T, ce
         return { hov: paintDiff(p0.p, h.p), press: paintDiff(h.p, p.p), ds: p.s - h.s };
       } finally { await Q.close(); }
     });
-    if (r.crashed) { cell(`E-1 runtime ${k} (${ex})`, "FAIL", r.line); continue; }
-    const pass = Math.abs(r.ds) >= 0.01 || r.press.length > 0;
-    cell(`E-1 runtime ${k} (${ex})`, pass ? "PASS" : "FAIL", `scene ${sc}, rung ${c.rung}: Δscale ${f(r.ds)} · press-only paint [${r.press.join(", ").slice(0, 160)}] (bound |Δscale| ≥ 0.01 or ≥ 1 property)`);
+    const r = await press(false);
+    if (r.crashed) cell(`E-1 runtime ${k} (${ex})`, "FAIL", r.line);
+    else {
+      const pass = Math.abs(r.ds) >= 0.01 || r.press.length > 0;
+      cell(`E-1 runtime ${k} (${ex})`, pass ? "PASS" : "FAIL", `scene ${sc}, rung ${c.rung}: Δscale ${f(r.ds)} · press-only paint [${r.press.join(", ").slice(0, 160)}] (bound |Δscale| ≥ 0.01 or ≥ 1 property)`);
+    }
+    // H-9: under reduced motion the class's rung keeps its light leg (its spatial leg is E-9's to retire)
+    const q = await press(true);
+    if (q.crashed || q.mode) cell(`E-1 runtime ${k} (${ex}) PRM press-light`, "FAIL", q.line ?? `MODE NOT APPLIED ${q.mode}`);
+    else cell(`E-1 runtime ${k} (${ex}) PRM press-light`, q.press.length ? "PASS" : "FAIL", `scene ${sc}, reduce: Δscale ${f(q.ds)} · press-only paint [${q.press.join(", ").slice(0, 160)}] (bound ≥ 1 property)`);
   }
 });

@@ -9,10 +9,46 @@
 | run | `node harness/run.mjs --build <out>/builds/head --wt <wt> --out <out>/runs/head --verbose`, 12:06:05-12:31:24 local, exit 1 (`baseline/head/head.log:1,220-221`). E-4 again after its fix, 12:34:02, exit 1 (`baseline/head/head-e4.log`) |
 | engines | Chromium 149.0.7827.55 and Playwright WebKit 26.5, headless. **Playwright WebKit is not Safari.** Real Safari: **UNMEASURED (owner's safaridriver checkbox)** in every row |
 | load | 8.90/10.52/10.03 at the start, 23.10/12.12/10.10 at the end (`head.log:2,222`); 28.21/18.19/12.94 at the E-4 re-run (`head-e4.log:2`). Other seats' browsers shared the machine; every cell line carries its own load |
-| self-test | GREEN, `harness/SELFTEST.md` (76 runs + 8 for E-4 after its fix) |
+| self-test | GREEN, `harness/SELFTEST.md` (pass 1: 98 runs, both engines; it supersedes round 0's 76) |
+| pass-1 re-run | §0 below: pass 1's harness (H-1..H-9 landed) at `5d078ca4`, `src/` still the 10.1.0 bytes. §§1-6 are round 0's reading at `a1732a48`, kept because §0 restates none of it |
 | artefacts | `baseline/head/head.log` (every FAIL and UNMEASURED line), `baseline/head/json/<id>-<engine>.json` (every cell, PASS included, with its load), `head-e4.log`, `e4-tabsdrag-repeat.log`, `tabsprobe.mjs` + `tabsprobe.log` (the tabs drag filmed per frame) |
 
-## 1 · Verdicts
+## 0 · Pass 1: HEAD under the landed harness (R-H)
+
+| field | value |
+|---|---|
+| seat | D5 pass 1, R-H; model `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `5d078ca4`, in a scratch worktree (removed after the run); `git diff --stat v10.1.0 HEAD -- src` prints nothing |
+| run | `run.mjs --build <out>/builds/head --wt <wt> --verbose --only E-1,E-3,E-4,E-5,E-6,E-7,E-8,E-9`, 17:09:54 on (`baseline/p1/head.log`); the WebKit E-3, E-5 and the E-8 PRM re-runs in `baseline/p1/head-final.log`. Every cell with its load: `baseline/p1/head-cells.log`, `head-final-cells.log` |
+| load | **233-830 (1-minute) throughout**: other seats' browsers, test suites and builds (`head.log:1`, `head-final.log:1,19`). Every cell carries its load. Timing-sensitive cells read under this load are marked; none is called a defect on this run alone |
+| not re-read | **E-2** (stopped: at this load one witness took 25-80 min; round 0's §1-§2 reading stands, the harness did not change E-2). **E-8 WebKit, E-9 WebKit**: hung past the 1500 s deadline twice (`head.log:84,98`), before the harness's bounded engine kill landed. Round 0's WebKit readings stand for them |
+
+| witness | Chromium | Playwright WebKit | what is new against round 0 |
+|---|---|---|---|
+| E-1 | FAIL 0/3 (`head.log:2`) | FAIL 0/3 (`:6`) | unchanged: no declaration; the PRM cell is not reached |
+| E-3 | FAIL 6 / 6 of 12 (`:10`) | FAIL 6 / 6 of 12 (`head-final.log:10`) | **the WebKit phone arm reads (H-4)**: touch-held 358.0 → 358.0 px (×1.000), light and dark; all four **PRM cells PASS** in both engines (nothing grows, so nothing grows under reduce: vacuous at HEAD) |
+| E-4 | FAIL 4 / 6 of 10 (`:24`) | FAIL 3 / 5, 2 UNMEASURED of 10 (`:31`) | five surfaces (H-7), table below |
+| E-5 | FAIL 18 / 10 of 28 (`:39`) | FAIL 13 / 7 of 20, five scenes (`head-final.log:2`) | **WebKit reads (H-4)**. The accordion trigger fails as in round 0 (Chromium `:46,48`). **PRM press-light FAILs** on SegmentedTabs, ToggleGroupItem, Chip and the accordion trigger in Chromium (`:40-49`), and on SegmentedTabs and Chip in WebKit (`head-final.log:3-6`) |
+| E-6 | FAIL (`:54`) | FAIL (`:65`) | unchanged: 0 idle animations; `shape` UNMEASURED with the others; PRM vacuous |
+| E-7 | FAIL 2 / 2 (`:76`) | FAIL 2 / 2 (`:79`) | unchanged (2 writers; the open modal's veil carries `data-engaged`); **held PRM PASS** in both (2 nodes under reduce) |
+| E-8 | first read FAIL 16 / 1 of 17 (`:82`); after the fix PASS 5/5 on the two scenes concerned (`head-final.log:17`) | not re-read | the one FAIL was the harness: the accordion's reduce arm runs `disclosure-open`/`-close` at 0 ms, an instant, and the witness called it a minted figure. Durations ≤ 1 ms are now instants. The PRM cells are otherwise GREEN: a hold line, as E-8 is |
+| E-9 | FAIL 45 / 9 of 54 (`:88`) | not re-read | Chromium as round 0: four controls keep no press-only light answer under reduce (SegmentedTabs, ToggleGroupItem, Chip, the accordion trigger). New: **Button press-spatial dark FAILs in Chromium** (range 0.030, `:97`; round 0 read it in WebKit only), light passes; read at load 427, so it is load-suspect until re-read |
+
+### 0.1 E-4 across the five surfaces (H-7)
+
+| surface | Chromium | Playwright WebKit | reading |
+|---|---|---|---|
+| slider | FAIL: carry 0.00, settle 0.00 both releases (`:25`) | FAIL, same (`:32`) | as round 0. PRM PASS (vacuous: nothing moves after release) |
+| tabs drag | FAIL: difference carry 1.96 px, settle 1.82 px; largest one-frame jump 247.8 px both releases (`:26`) | PASS: difference carry 4.60 px, settle 0.00 (`head-cells.log:48`), the round-0 split again: a coast the landing discards, just over the bound | as round 0. **PRM FAILs NOT DRIVEN** in both engines: under reduce the indicator does not follow the drag at all (moved 0.0 px, `:27,33`). Reduce took the drag away, not only its spring |
+| Sheet detents | FAIL: the press point (350, 535) lies outside the 700×500 viewport (`:28`) | FAIL, same (`:34`) | **the detented sheet paints in flow.** `.glass-floating { position: relative }` (0,1,0, `src/styles/glass/ladder.css:124-131`) beats `:where([data-slot="sheet-content"]) { position: fixed }` (0,0,0, `src/components/sheet/styles.css:29-32`), both in `@layer components`. Computed `position: relative` with the class, `fixed` without it; the sheet's top sits at 500 px (the end of the document) instead of 328 px, both engines, four reads (`../pass-1/rh/film.log`). This is the harness build (`src` through `@glass`); the shipped package and the demo were not opened. Momentum on the sheet is unreadable until the sheet is on screen |
+| sortable list | FAIL: difference carry −2.91 px, settle 0.00; largest one-frame jump 75.2 px (fling) vs 16.7 px (still) (`:30`) | FAIL: −0.01 / 0.00; jump 81.2 vs 14.1 px (`:36`) | **the fling's ghost flies home and the row teleports.** Filmed (`../pass-1/rh/film.log`, 3 readable flings of 4, both engines): after a fling the ghost flies back toward row a's original slot (y ≈ 21-31 px), then is replaced in one frame by the row at its new slot (y = 105 px): a 74-84 px jump. After a still release the ghost flies to 105 and hands over without a jump. Order after both is `bcadef`. The filmed loads were 570-780; the same shape was read at load 56 earlier in this session and in both engines, so it is not load-only. PRM PASS |
+| Carousel (scroll-snap, touch) | **PASS**: fling carries 507 px, still settles back −105 px (`head-cells.log`, E-4 chromium) | UNMEASURED: macOS WebKit does not scroll on touch (`:37`) | the platform's own momentum and snap carry the velocity. PRM PASS (no overshoot) |
+
+### 0.2 Load-suspect cells (not counted as readings)
+
+E-5 WebKit `button press dark`, `press_switch press light`, `press_checkbox press light` read `touch-changed []` with `:active true` at load 799-811 (`head-final.log:7-9`), while their other theme passed in the same run; the round-0 Chromium cells for the same controls pass. Re-read at a sane load before any of them is called a defect. Same for E-9 `button press-spatial dark` in Chromium (§0 table).
+
+## 1 · Verdicts (round 0, `a1732a48`)
 
 | witness | Chromium | Playwright WebKit | the live defect it reads | HEAD |
 |---|---|---|---|---|

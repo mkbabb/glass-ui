@@ -3,9 +3,14 @@
 // defined (H-5) so a trivial loop cannot pass it. The subject is the scene gated "E-6" ([data-e=target]); every
 // running infinite animation on it or its subtree, pseudo-elements included, at rest, light and dark:
 //   present   ≥ 1 running infinite animation on the subject at rest
-//   channel   every animated property is a compositor channel (scale, transform, translate, rotate, filter, or
-//             opacity on a pseudo-element); opacity on the subject or a descendant element dims the control's own ink
-//             and fails; a layout property (width, height, inset, margin, padding, …) fails
+//   channel   every animated property is a BREATHING channel: scale (or a transform that is a scale alone), or opacity
+//             on a pseudo-element (a light layer). Opacity on the subject or a descendant element dims the control's
+//             own ink and fails; a layout property (width, height, inset, margin, padding, …) fails; rotate, translate,
+//             filter and a non-scale transform fail (a spinner, a drift and a pulse of brightness are loops, not a
+//             breath, and their amplitude has no bound here: a route that needs one argues the bound first)
+//   shape     a breath returns: every leg's value at the loop seam is continuous (the 0 % and 100 % keyframes equal,
+//             an omitted one being the underlying value, or the direction alternates), and it is eased (some easing
+//             on the effect or a keyframe is not linear). A sawtooth or a linear ramp fails
 //   amplitude a scale leg moves 0.004..0.03 from rest (perceptible, below the hover geometry budget); an opacity leg on
 //             a light layer moves ≥ 0.05
 //   period    one iteration lasts 2400..8000 ms (a breath, not a flicker and not a drift)
@@ -16,7 +21,8 @@
 //   node e6-idle.mjs --build <dir> | --fixture [--fault e6-dim] [--engine webkit]
 import { witness, openPage, scenesFor, f } from "./lib.mjs";
 
-const COMPOSITOR = new Set(["scale", "transform", "translate", "rotate", "filter", "opacity"]);
+const BREATH = new Set(["scale", "transform", "opacity"]);
+const SCALE_ONLY = /^(none|scale\([^)]*\)|matrix\(\s*([-\d.e]+),\s*0,\s*0,\s*\2,\s*0,\s*0\s*\))$/;
 const SPATIAL = new Set(["scale", "transform", "translate", "rotate"]);
 const readIdle = (P) => P.page.evaluate(() => {
   const s = document.querySelector('[data-e~="target"]'); if (!s) return null;
@@ -24,9 +30,13 @@ const readIdle = (P) => P.page.evaluate(() => {
     const e = a.effect; const kf = e.getKeyframes(); const props = [...new Set(kf.flatMap((k) => Object.keys(k).filter((p) => !["offset", "easing", "composite", "computedOffset"].includes(p))))];
     const host = e.target === s; const pseudo = e.pseudoElement ?? null;
     const vals = {}; for (const p of props) vals[p] = kf.map((k) => k[p]).filter((v) => v !== undefined);
+    // the seam: each leg's value at offset 0 and at offset 1 (null when that keyframe omits it: the underlying value)
+    const at = (o, p) => { const k = kf.find((x) => (x.computedOffset ?? x.offset) === o && x[p] !== undefined); return k ? String(k[p]) : null; };
+    const seam = {}; for (const p of props) seam[p] = [at(0, p), at(1, p)];
+    const timing = e.getComputedTiming(); const easings = [timing.easing ?? "linear", ...kf.map((k) => k.easing ?? "linear")];
     // a keyframe list omitting the rest value animates from the underlying value: read it
     const cs = pseudo ? getComputedStyle(e.target, pseudo) : getComputedStyle(e.target);
-    return { name: a.animationName ?? a.id ?? a.constructor.name, props, vals, host, pseudo, onElement: !pseudo, dur: e.getComputedTiming().duration, rest: { scale: cs.scale, opacity: cs.opacity } };
+    return { name: a.animationName ?? a.id ?? a.constructor.name, props, vals, seam, easings, dir: timing.direction, host, pseudo, onElement: !pseudo, dur: timing.duration, rest: { scale: cs.scale, opacity: cs.opacity } };
   });
 });
 const num = (v) => { if (v == null || v === "none") return 1; const m = String(v).match(/-?[\d.]+/); return m ? +m[0] : NaN; };
@@ -59,10 +69,14 @@ await witness("E-6", "the idle rung under the compositor-only bound", async ({ E
       const desc = A.map((x) => `${x.name}[${x.props.join("+")}${x.pseudo ? ` on ${x.pseudo}` : x.host ? " on the subject" : " on a descendant"}, ${f(x.dur, 0)} ms]`).join(", ");
       cell(name("present"), A.length ? "PASS" : "FAIL", `${A.length} running infinite animation(s) at rest${A.length ? `: ${desc}` : ""}${r.idle === null ? " (subject absent)" : ""}`);
       if (!A.length) {
-        for (const c of ["channel", "amplitude", "period"]) cell(name(c), "UNMEASURED", "no idle animation to read");
+        for (const c of ["channel", "shape", "amplitude", "period"]) cell(name(c), "UNMEASURED", "no idle animation to read");
       } else {
-        const badCh = A.flatMap((x) => x.props.filter((p) => !COMPOSITOR.has(p) || (p === "opacity" && x.onElement)).map((p) => `${p}${p === "opacity" ? (x.host ? " on the subject (dims its ink)" : " on a descendant element") : " (not a compositor channel)"}`));
-        cell(name("channel"), badCh.length ? "FAIL" : "PASS", badCh.length ? `disallowed: ${badCh.join(", ")}` : `channels ${[...new Set(A.flatMap((x) => x.props))].join(", ")}`);
+        const badCh = A.flatMap((x) => x.props.filter((p) => !BREATH.has(p) || (p === "opacity" && x.onElement) || (p === "transform" && !x.vals[p].every((v) => SCALE_ONLY.test(String(v).trim())))).map((p) => `${p}${p === "opacity" ? (x.host ? " on the subject (dims its ink)" : " on a descendant element") : p === "transform" ? " (not a scale alone)" : " (not a breathing channel)"}`));
+        cell(name("channel"), badCh.length ? "FAIL" : "PASS", badCh.length ? `disallowed: ${badCh.join(", ")} (breathing channels: scale, a scale transform, opacity on a pseudo-element)` : `channels ${[...new Set(A.flatMap((x) => x.props))].join(", ")}`);
+        const val = (p, v) => (p === "opacity" ? num(v) : scaleOf(v));
+        const seamBad = A.flatMap((x) => (/alternate/.test(x.dir) ? [] : x.props.filter((p) => { const [a0, a1] = x.seam[p]; return a0 !== null && a1 !== null ? Math.abs(val(p, a0) - val(p, a1)) > 1e-4 : a0 !== a1 && Math.abs(val(p, a0 ?? (p === "opacity" ? x.rest.opacity : x.rest.scale)) - val(p, a1 ?? (p === "opacity" ? x.rest.opacity : x.rest.scale))) > 1e-4; }).map((p) => `${x.name} ${p} ${x.seam[p][0] ?? "underlying"} → ${x.seam[p][1] ?? "underlying"} at the seam`)));
+        const linear = A.filter((x) => x.easings.every((e) => e === "linear")).map((x) => `${x.name} linear`);
+        cell(name("shape"), seamBad.length || linear.length ? "FAIL" : "PASS", seamBad.length || linear.length ? `not a breath: ${[...seamBad, ...linear].join("; ")}` : `continuous at the seam, eased (${[...new Set(A.flatMap((x) => x.easings.filter((e) => e !== "linear")))].join(", ").slice(0, 80)})`);
         const amps = A.flatMap((x) => x.props.filter((p) => p === "scale" || p === "transform" || p === "opacity").map((p) => {
           if (p === "opacity") { const v = [...x.vals[p].map(num), num(x.rest.opacity)]; const a = Math.max(...v) - Math.min(...v); return { p, a, ok: a >= 0.05 }; }
           const v = [...x.vals[p].map(scaleOf), scaleOf(x.rest.scale)]; const a = Math.max(...v.map((y) => Math.abs(y - 1))); return { p, a, ok: a >= 0.004 && a <= 0.03 };

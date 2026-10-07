@@ -1,0 +1,13 @@
+13:01  up  3:07, 3 users, load averages: 76.70 46.39 33.73
+OK     E-4 chromium fault   e4-vdrop (the vertical detent sheet resolves its release by position alone: a fling lands on the detent a still release lands on (H-7)) exit 1
+         first planted FAIL: FAIL       E-4 vsheet fling carries velocity · axis y, dir −1 · fling: carry 5.06 px, settles 5.00 px past release · still: carry 5.06 px, settles 5.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · large
+BROKEN E-4 chromium fault   e4-stripstop (the scroll-snap strip kills the platform fling at touchend and snaps to the nearest member (H-7)) exit 0
+         PASS       E-4 strip fling carries velocity · axis x, dir −1, touch · fling: carry 495.00 px, settles 495.00 px past release · still: carry 0.00 px, settles -105.00 px · difference: carry 495.00 px, settle 600.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 540.0 px, still 105.0 px · 242 frames, median 8.3 ms · load 68.5/49.9/35.9
+         PASS       E-4 strip release PRM · reduce · moved 105.0 px · fling: carry 495.00 px, settles 495.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 540.0 px · load 68.5/49.9/35.9
+         E-4 chromium PASS · 6 pass, 0 fail, 0 unmeasured of 6 gating cells (0 reported) · load 73.2/49.1/35.3 at start, 68.5/49.9/35.9 at end
+         
+OK     E-4 webkit   fault   e4-vdrop (the vertical detent sheet resolves its release by position alone: a fling lands on the detent a still release lands on (H-7)) exit 1
+         first planted FAIL: FAIL       E-4 vsheet fling carries velocity · axis y, dir −1 · fling: carry 5.00 px, settles 5.00 px past release · still: carry 5.00 px, settles 5.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · large
+N/A    E-4 webkit   fault   e4-stripstop exit 0: the planted cell has no input in Playwright webkit (FAULTS engines) · E-4 webkit PASS · 4 pass, 0 fail, 2 unmeasured of 6 gating cells (0 reported) · load 58.7/50.0/36.6 at start, 64.0/52.0/37.8 at end
+selftest: 1 of 4 runs BROKEN (1 N/A)
+13:03  up  3:09, 3 users, load averages: 63.97 52.04 37.76

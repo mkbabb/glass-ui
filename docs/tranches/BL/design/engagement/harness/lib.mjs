@@ -8,6 +8,7 @@ import path from "node:path";
 import http from "node:http";
 import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { WkTouch } from "./wktouch.mjs";
 
 export const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const GLASS = process.env.GLASS_UI ?? "/Users/mkbabb/Programming/glass-ui";
@@ -81,9 +82,11 @@ export async function serveTarget(a) {
 }
 
 // ── engines ─────────────────────────────────────────────────────────────────────────────────────────
-export const isClosed = (e) => /Target page, context or browser has been closed|Page closed|Browser closed|browser has disconnected|Target closed|crashed|CELL TIMEOUT/i.test(String(e?.message ?? e));
+// an engine that closed, hung, or could not bring a page up in time (a 60 s ready wait, a navigation timeout): the
+// cell is re-run once on a fresh browser, and only a repeat stands
+export const isClosed = (e) => /Target page, context or browser has been closed|Page closed|Browser closed|browser has disconnected|Target closed|crashed|CELL TIMEOUT|Timeout \d+ms exceeded|raw WebKit|Cannot find page proxy/i.test(String(e?.message ?? e));
 export class Engine {
-  constructor(name) { this.name = name; this.b = null; this.notes = []; this.version = "?"; }
+  constructor(name) { this.name = name; this.b = null; this.notes = []; this.version = "?"; this.raw = null; }
   async browser() {
     if (this.b && this.b.isConnected()) return this.b;
     if (this.b) this.notes.push(`${this.name} disconnected; relaunched (load ${load()})`);
@@ -91,7 +94,14 @@ export class Engine {
     this.version = this.b.version();
     return this.b;
   }
-  async kill() { try { await this.b?.close(); } catch {} this.b = null; }
+  /** WebKit's touch driver (H-4, wktouch.mjs): the same build over its own pipe, launched on first use. */
+  rawTouch() { if (!this.raw) this.raw = new WkTouch(pw.webkit.executablePath()); return this.raw; }
+  // a crashed engine may never answer close(): 5 s, then its process is killed (a hang here stalled a whole witness)
+  async kill() {
+    const b = this.b; this.b = null;
+    if (b) { try { await Promise.race([b.close(), new Promise((r) => setTimeout(r, 5000))]); } catch {} try { b.process?.()?.kill("SIGKILL"); } catch {} }
+    await this.raw?.kill();
+  }
   async close() { await this.kill(); }
 }
 
@@ -104,13 +114,15 @@ export const INIT = () => {
     const cs = getComputedStyle(el); let w0 = parseFloat(cs.width);
     if (!Number.isFinite(w0)) w0 = el.offsetWidth;
     else if (cs.boxSizing !== "border-box") w0 += parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
-    return { s: w0 ? r.width / w0 : 1, x: r.x + r.width / 2, y: r.y + r.height / 2, w: r.width, h: r.height, l: r.left, r: r.right };
+    return { s: w0 ? r.width / w0 : 1, x: r.x + r.width / 2, y: r.y + r.height / 2, w: r.width, h: r.height, l: r.left, r: r.right, t: r.top };
   };
+  // a selector, or a list read in order: the first that matches (E-4's sortable ghost, then the landed row)
+  const pick = (sel) => (Array.isArray(sel) ? sel.map((x) => document.querySelector(x)).find(Boolean) ?? null : sel ? document.querySelector(sel) : null);
   window.__eff = eff;
   window.__q = (sel) => (sel ? document.querySelector(sel) : null);
   window.__sample = (selA, selB, ms) => new Promise((ok) => {
     const fr = []; const t0 = performance.now();
-    const tick = () => { const t = performance.now() - t0; fr.push({ t, a: eff(document.querySelector(selA)), b: selB ? eff(document.querySelector(selB)) : null }); if (t < ms) requestAnimationFrame(tick); else ok(fr); };
+    const tick = () => { const t = performance.now() - t0; fr.push({ t, a: eff(pick(selA)), b: selB ? eff(pick(selB)) : null }); if (t < ms) requestAnimationFrame(tick); else ok(fr); };
     requestAnimationFrame(tick);
   });
   const PROPS = ["background-color", "background-image", "box-shadow", "color", "border-top-color", "opacity", "filter", "outline-style", "outline-color", "backdrop-filter"];
@@ -143,13 +155,13 @@ export async function openPage(E, T, scene, o = {}) {
   await page.addInitScript(INIT);
   const q = new URLSearchParams({ scene, theme: o.theme ?? "light", ...(o.q ?? {}) });
   await page.goto(`${T.url}?${q}`);
-  await page.waitForFunction(() => window.__e && window.__e.ready === true, null, { timeout: 20000 });
+  await page.waitForFunction(() => window.__e && window.__e.ready === true, null, { timeout: 60000 });
   const m = await page.evaluate(() => ({ hn: matchMedia("(hover: none)").matches, pc: matchMedia("(pointer: coarse)").matches, prm: matchMedia("(prefers-reduced-motion: reduce)").matches, dark: document.documentElement.classList.contains("dark") }));
   let modeOk = true; const bits = [];
   if (o.coarse) { if (!(m.hn && m.pc)) modeOk = false; bits.push(`(hover:none) ${m.hn} (pointer:coarse) ${m.pc}`); }
   if (o.prm) { if (!m.prm) modeOk = false; bits.push(`PRM ${m.prm}`); }
   if (o.theme === "dark" && !m.dark) { modeOk = false; bits.push("dark class absent"); }
-  return { page, ctx, close: () => ctx.close().catch(() => {}), modeOk, modeLine: bits.join(" ") };
+  return { page, ctx, close: () => Promise.race([ctx.close().catch(() => {}), new Promise((r) => setTimeout(r, 5000))]), modeOk, modeLine: bits.join(" ") };
 }
 
 /** The scene index a target serves: { scene: { gates: [...], key, ... } }. */
@@ -208,7 +220,9 @@ export async function witness(id, title, body) {
         }
       }
     };
-    const idx = await sceneIndex(E, T);
+    let idx = await sceneIndex(E, T);
+    // --scenes a,b narrows any witness to those scenes (the verdict then covers only them; the header says so)
+    if (typeof a.scenes === "string") { const keep = new Set(a.scenes.split(",")); idx = Object.fromEntries(Object.entries(idx).filter(([k]) => keep.has(k))); console.log(`# narrowed to scenes ${[...keep].join(", ")}`); }
     await body({ a, T, E, cell, guard, idx, engine });
   } catch (e) {
     console.log(`  HARNESS ERROR ${String(e?.stack ?? e).split("\n").slice(0, 3).join(" | ")}`);
@@ -258,17 +272,50 @@ export function quiet(fr) {
 }
 export const tabKey = (engine) => (engine === "webkit" ? "Alt+Tab" : "Tab");
 export async function center(page, sel) {
-  const bx = await page.locator(sel).first().boundingBox();
+  const bx = page.locator ? await page.locator(sel).first().boundingBox()
+    : await page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; }, sel);
   if (!bx) throw new Error(`no box for ${sel}`);
   return { x: bx.x + bx.width / 2, y: bx.y + bx.height / 2, bx };
 }
-/** A held touch (Chromium only): a long-tap gesture; `:active` and a sticky `:hover` are both set (PORTFOLIO §1.3 item 8). */
+/**
+ * A coarse page with touch input, in both engines (H-4). Returns openPage's shape ({ page, close, modeOk, modeLine })
+ * plus touch(type, x, y) (touchStart | touchMove | touchEnd) and hold(x, y, readAtMs, read).
+ *   Chromium: openPage with coarse; the hold is the long-tap gesture (Input.synthesizeTapGesture, the only CDP input
+ *             that sets `:active` under touch: a raw CDP touchStart does not, PORTFOLIO §1.3 item 8); a drag is CDP
+ *             Input.dispatchTouchEvent (which scrolls and flings natively).
+ *   WebKit:   Playwright's touchscreen only taps, so the page is opened on the same WebKit build through wktouch.mjs,
+ *             whose Input.dispatchTouchEvent holds `:active` from touchStart to touchEnd. A touch drag reaches the DOM
+ *             but does not scroll: macOS WebKit has no touch scrolling (measured, pass-1/RH.md §2 H-4).
+ * Both set a sticky `:hover` under the held touch, so every touch read subtracts hover.
+ */
+export async function openTouchPage(E, T, scene, o = {}) {
+  if (E.name === "chromium") {
+    const P = await openPage(E, T, scene, { ...o, coarse: true });
+    const cdp = await P.ctx.newCDPSession(P.page);
+    P.touch = (type, x, y) => cdp.send("Input.dispatchTouchEvent", { type, touchPoints: type === "touchEnd" ? [] : [{ x, y }] });
+    P.hold = async (x, y, readAtMs, read) => {
+      const g = cdp.send("Input.synthesizeTapGesture", { x, y, duration: readAtMs + 550, tapCount: 1, gestureSourceType: "touch" });
+      await P.page.waitForTimeout(readAtMs); const r = await read(); await g; return r;
+    };
+    return P;
+  }
+  const W = E.rawTouch();
+  const q = new URLSearchParams({ scene, theme: o.theme ?? "light", ...(o.q ?? {}) });
+  const R = await W.open(`${T.url}?${q}`, { vp: o.vp ?? { width: 700, height: 500 }, prm: !!o.prm, theme: o.theme, init: INIT.toString() });
+  let ready = false;
+  for (let k = 0; k < 500 && !ready; k++) { ready = await R.page.evaluate(() => !!(window.__e && window.__e.ready === true)); if (!ready) await R.page.waitForTimeout(40); }
+  if (!ready) throw new Error("raw WebKit: the scene never became ready (CELL TIMEOUT)");
+  const m = await R.page.evaluate(() => ({ hn: matchMedia("(hover: none)").matches, pc: matchMedia("(pointer: coarse)").matches, prm: matchMedia("(prefers-reduced-motion: reduce)").matches, dark: document.documentElement.classList.contains("dark") }));
+  let modeOk = m.hn && m.pc; const bits = [`(hover:none) ${m.hn} (pointer:coarse) ${m.pc}`, "raw WebKit touch"];
+  if (o.prm) { if (!m.prm) modeOk = false; bits.push(`PRM ${m.prm}`); }
+  if (o.theme === "dark" && !m.dark) { modeOk = false; bits.push("dark class absent"); }
+  return {
+    page: R.page, touch: R.touch, close: R.close, modeOk, modeLine: bits.join(" "),
+    hold: async (x, y, readAtMs, read) => { await R.touch("touchStart", x, y); await R.page.waitForTimeout(readAtMs); const r = await read(); await R.touch("touchEnd", x, y); return r; },
+  };
+}
+/** A held touch on `sel`, read at readAtMs; `:active` and a sticky `:hover` are both set (PORTFOLIO §1.3 item 8). */
 export async function touchHold(P, sel, readAtMs, read) {
   const { x, y } = await center(P.page, sel);
-  const cdp = await P.ctx.newCDPSession(P.page);
-  const g = cdp.send("Input.synthesizeTapGesture", { x, y, duration: readAtMs + 550, tapCount: 1, gestureSourceType: "touch" });
-  await P.page.waitForTimeout(readAtMs);
-  const r = await read();
-  await g;
-  return r;
+  return P.hold(x, y, readAtMs, read);
 }

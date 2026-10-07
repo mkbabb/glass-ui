@@ -21,7 +21,7 @@ function spawn(file, argv) {
   const last = out.trim().split("\n").reverse().find((l) => VERDICT.test(l) || /HARNESS ERROR/.test(l)) ?? "(no verdict line)";
   return { code: r.status, last, out };
 }
-const engineClosed = (l) => /closed|crash|disconnected|CELL TIMEOUT|deadline/i.test(l);
+const engineClosed = (l) => /closed|crash|disconnected|CELL TIMEOUT|deadline|Timeout \d+ms exceeded|raw WebKit|Cannot find page proxy/i.test(l);
 export function runOne(file, argv) {
   const r = spawn(file, argv);
   if (r.code !== 2 || !engineClosed(r.last)) return { ...r, retried: null };
@@ -36,7 +36,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const only = typeof a.only === "string" ? new Set(a.only.split(",")) : null;
   const engines = typeof a.engines === "string" ? a.engines.split(",") : ["chromium", "webkit"];
   const pass = [];
-  for (const k of ["build", "out", "fault", "wt", "deadline"]) if (typeof a[k] === "string") pass.push(`--${k}`, a[k]);
+  for (const k of ["build", "out", "fault", "wt", "deadline", "scenes"]) if (typeof a[k] === "string") pass.push(`--${k}`, a[k]);
   if (a.fixture) pass.push("--fixture");
   let bad = 0;
   for (const [id, file] of WITNESSES) {

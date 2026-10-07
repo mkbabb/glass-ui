@@ -1,0 +1,38 @@
+# post-change selftest start 23:10:08 · 23:10  up 13:16, 3 users, load averages: 484.92 649.59 569.86
+OK     E-5 chromium clean exit 0 · E-5 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 484.9/649.6/569.9 at start, 406.8/621.0/561.4 at end
+OK     E-5 chromium fault   e5-hover (a held touch answers only through the hover background, leaked by sticky touch hover (the accordion trigger at HEAD)) exit 1
+         first planted FAIL: FAIL       E-5 pop press light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 395.4/615.1/559.7
+OK     E-5 chromium fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-5 pop press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 376.3/599.8/555.2
+OK     E-5 webkit   clean exit 0 · E-5 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 407.0/582.4/550.6 at start, 378.1/562.2/544.3 at end
+OK     E-5 webkit   fault   e5-hover (a held touch answers only through the hover background, leaked by sticky touch hover (the accordion trigger at HEAD)) exit 1
+         first planted FAIL: FAIL       E-5 pop press light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 355.0/551.2/540.6
+OK     E-5 webkit   fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-5 pop press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 338.3/534.4/534.8
+OK     E-8 chromium clean exit 0 · E-8 chromium PASS · 7 pass, 0 fail, 0 unmeasured of 7 gating cells (0 reported) · load 351.4/527.7/532.4 at start, 374.4/513.8/527.2 at end
+OK     E-8 chromium fault   e8-drift (the emitted --engage-press-drain-attack is 56ms against its row's 55) exit 1
+         first planted FAIL: FAIL       E-8 mirror · 2 rows, 4 --engage-* tokens on :root · drift [--engage-press-drain-attack 56ms ≠ 55ms] · orphans [] · load 392.9/511.0/525.9
+BROKEN E-8 chromium control e8-units (CONTROL, must PASS: a token spelled .18s (a minifier's respelling of 180ms, as the HEAD build does) equals its 180 ms row) exit 1
+         FAIL       E-8 literal pop · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 393.5/502.2/522.4
+OK     E-8 chromium fault   e8-literal (the control's press transition spells 230ms, a literal no token carries) exit 1
+         first planted FAIL: FAIL       E-8 literal pop · 8 animation(s) ran [background-color@55ms, scale@230ms, script@350ms] against 5 clock tokens · minted [CSSTransition scale 230ms on ctl] · load 371.1/485.7/515.6
+OK     E-8 chromium fault   e8-prmliteral (the reduce arm's press transition spells 100ms, a literal no token carries (H-9)) exit 1
+         first planted FAIL: FAIL       E-8 literal pop PRM · 4 animation(s) ran [background-color@100ms] against 5 clock tokens · minted [CSSTransition background-color 100ms on ctl] · NOT-REPRODUCED: engine closed on the first run (CELL TIMEOUT 60 s) · load 356.9/471
+OK     E-8 webkit   clean exit 0 · E-8 webkit PASS · 7 pass, 0 fail, 0 unmeasured of 7 gating cells (0 reported) · load 332.3/456.5/502.9 at start, 364.1/451.8/499.6 at end
+OK     E-8 webkit   fault   e8-drift (the emitted --engage-press-drain-attack is 56ms against its row's 55) exit 1
+         first planted FAIL: FAIL       E-8 mirror · 2 rows, 4 --engage-* tokens on :root · drift [--engage-press-drain-attack 56ms ≠ 55ms] · orphans [] · load 401.4/453.5/498.8
+OK     E-8 webkit   control e8-units (CONTROL, must PASS: a token spelled .18s (a minifier's respelling of 180ms, as the HEAD build does) equals its 180 ms row) exit 0
+OK     E-8 webkit   fault   e8-literal (the control's press transition spells 230ms, a literal no token carries) exit 1
+         first planted FAIL: FAIL       E-8 literal pop · 8 animation(s) ran [background-color@55ms, scale@230ms, script@350ms] against 5 clock tokens · minted [CSSTransition scale 230ms on ctl] · load 400.9/443.0/491.1
+OK     E-8 webkit   fault   e8-prmliteral (the reduce arm's press transition spells 100ms, a literal no token carries (H-9)) exit 1
+         first planted FAIL: FAIL       E-8 literal pop PRM · 4 animation(s) ran [background-color@100ms] against 5 clock tokens · minted [CSSTransition background-color 100ms on ctl] · load 328.3/422.1/481.9
+engine-closed re-runs (2): E-8 chromium e8-prmliteral: not-reproduced; E-8 webkit e8-prmliteral: not-reproduced
+selftest: 1 of 16 runs BROKEN (0 N/A)
+# post-change selftest exit 1 at 02:18:58 ·  2:18  up 16:25, 3 users, load averages: 300.51 413.02 477.99
+## re-run 1: E-8 chromium control e8-units ·  2:22  up 16:28, 3 users, load averages: 241.57 390.08 467.83
+OK     E-8 chromium control e8-units (CONTROL, must PASS: a token spelled .18s (a minifier's respelling of 180ms, as the HEAD build does) equals its 180 ms row) exit 0
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+## re-run 2: E-8 chromium control e8-units ·  2:23  up 16:29, 3 users, load averages: 227.55 369.89 457.32
+OK     E-8 chromium control e8-units (CONTROL, must PASS: a token spelled .18s (a minifier's respelling of 180ms, as the HEAD build does) equals its 180 ms row) exit 0
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# end 02:39:16 ·  2:39  up 16:45, 3 users, load averages: 204.00 354.99 449.93

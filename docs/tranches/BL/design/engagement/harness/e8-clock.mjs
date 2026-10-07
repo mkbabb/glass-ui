@@ -10,6 +10,8 @@
 //             A CSS transition is read at its declared duration (the element's computed transition-duration for its
 //             property), because a reversed transition runs a spec-shortened one (measured: WebKit 348 ms of 350).
 //             A duration no token carries is a minted figure. Offenders are named (property or animation name).
+//   literal PRM (H-9) the same press and commit under reduced motion: whatever still runs (a reduce arm's light
+//             transition) reads a clock token too.
 // Light only: clocks do not change with the theme.
 //   node e8-clock.mjs --build <dir> | --fixture [--fault e8-drift|e8-literal] [--engine webkit]
 import { witness, openPage, scenesFor, center, tabKey } from "./lib.mjs";
@@ -56,10 +58,11 @@ const CLOCKS = () => {
 
 await witness("E-8", "one clock authority; no rung literal", async ({ E, T, cell, guard, idx, engine }) => {
   let mirrored = false;
-  for (const [sc, m] of scenesFor(idx, "E-8")) {
-    const r = await guard(sc, async () => {
-      const P = await openPage(E, T, sc);
+  for (const [sc, m] of scenesFor(idx, "E-8")) for (const prm of [false, true]) {
+    const r = await guard(`${sc}${prm ? " PRM" : ""}`, async () => {
+      const P = await openPage(E, T, sc, { prm });
       try {
+        if (prm && !P.modeOk) return { mode: P.modeLine };
         const env = await P.page.evaluate(() => window.__e.envelopes ?? null);
         const ck = await P.page.evaluate(CLOCKS);
         await P.page.evaluate(COLLECT);
@@ -71,8 +74,9 @@ await witness("E-8", "one clock authority; no rung literal", async ({ E, T, cell
         return { env, ck, anims };
       } finally { await P.close(); }
     }, 60000);
-    if (r.crashed) { cell(`E-8 literal ${sc}`, "FAIL", r.line); continue; }
-    if (!mirrored) {
+    const lit = `E-8 literal ${sc}${prm ? " PRM" : ""}`;
+    if (r.crashed || r.mode) { cell(lit, "FAIL", r.line ?? `MODE NOT APPLIED ${r.mode}`); continue; }
+    if (!mirrored && !prm) {
       mirrored = true;
       if (!r.env) cell("E-8 mirror", "FAIL", "the build exposes no envelope table (window.__e.envelopes)");
       else {
@@ -89,8 +93,9 @@ await witness("E-8", "one clock authority; no rung literal", async ({ E, T, cell
       }
     }
     const clockMs = r.ck.clocks.map(([, x]) => x);
-    const off = r.anims.filter((x) => Number.isFinite(x.dur) && x.dur > 0 && !clockMs.some((c) => Math.abs(c - x.dur) <= 1));
+    // a duration of ≤ 1 ms is an instant, not a clock (a reduce arm's 0.01 ms convention; the comparison's own tolerance)
+    const off = r.anims.filter((x) => Number.isFinite(x.dur) && x.dur > 1 && !clockMs.some((c) => Math.abs(c - x.dur) <= 1));
     const seen = [...new Set(r.anims.map((x) => `${x.name}@${Math.round(x.dur)}ms`))];
-    cell(`E-8 literal ${sc}`, off.length ? "FAIL" : "PASS", `${r.anims.length} animation(s) ran [${seen.join(", ").slice(0, 300)}] against ${r.ck.clocks.length} clock tokens · minted [${[...new Set(off.map((x) => `${x.kind} ${x.name} ${Math.round(x.dur)}ms on ${String(x.el).slice(0, 40)}`))].join("; ")}]${r.note ? ` · ${r.note}` : ""}`);
+    cell(lit, off.length ? "FAIL" : "PASS", `${r.anims.length} animation(s) ran [${seen.join(", ").slice(0, 300)}] against ${r.ck.clocks.length} clock tokens · minted [${[...new Set(off.map((x) => `${x.kind} ${x.name} ${Math.round(x.dur)}ms on ${String(x.el).slice(0, 40)}`))].join("; ")}]${r.note ? ` · ${r.note}` : ""}`);
   }
 });

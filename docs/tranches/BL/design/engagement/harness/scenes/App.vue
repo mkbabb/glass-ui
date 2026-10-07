@@ -17,6 +17,9 @@ import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
 import { Separator } from "@glass/components/separator";
 import { Skeleton } from "@glass/components/skeleton";
 import { Dialog, DialogContent, DialogTitle } from "@glass/components/dialog";
+import { SheetContent } from "@glass/components/sheet";
+import { SortableList, SortableItem, SortableHandle } from "@glass/components/sortable-list";
+import { Carousel, CarouselContent, CarouselItem } from "@glass/components/carousel";
 import { ENGAGE_LADDER, ENGAGE_ENVELOPES } from "@glass/composables/motion";
 import DIRS from "./dirs";
 import DECL from "./decl";
@@ -43,6 +46,11 @@ const INDEX: Record<string, Record<string, unknown>> = {
   press_checkbox: { gates: ["E-5"], target: '[role="checkbox"]' },
   slider: { gates: ["E-3", "E-4", "E-7", "E-9"], key: "ArrowRight", target: ".glass-slider", root: ".glass-slider", thumb: '[role="slider"]', body: '[role="slider"]' },
   tabsdrag: { gates: ["E-4"], root: ".segmented-tabs, [role=tablist]", thumb: ".segmented-indicator", target: ".segmented-indicator" },
+  // H-7: the Sheet's detents (a bottom sheet dragged up by its grip), the sortable list (row a's handle dragged down;
+  // the drag ghost is read while it flies, then the landed row), one scroll-snap surface (the Carousel, a touch drag)
+  sheet: { gates: ["E-4"], axis: "y", dir: -1, root: "main[data-scene]", thumb: '[data-slot="sheet-detent-handle"]', target: '[data-slot="sheet-detent-handle"]' },
+  sortable: { gates: ["E-4"], axis: "y", dir: 1, root: ".sortable-list", grip: '[data-sortable-id="a"] [data-sortable-handle]', thumb: ".sortable-ghost", land: '[data-sortable-id="a"]', target: '[data-sortable-id="a"]' },
+  carousel: { gates: ["E-4"], input: "touch", dir: -1, root: '[data-slot="carousel-content"]', thumb: '[data-slot="carousel-item"]', target: '[data-slot="carousel-item"]' },
   modal: { gates: ["E-7"], modal: '[role="dialog"]', veil: ".glass-focus-veil" },
   s6: { gates: ["E-6"], target: '[role="switch"]', subject: "the glass track (W-H.3.md:46 S6): the Switch's control bit" },
   passive: { gates: [], target: '[data-t="sep"]' },
@@ -55,7 +63,8 @@ const SCENE_OF_DIR: Record<string, string> = {
 
 const v = ref([40]); const sw = ref(on); const cb = ref(on); const rg = ref(on ? "b" : "a"); const tab = ref(on ? "b" : "a");
 const acc = ref<string | undefined>(on ? "one" : undefined); const chip = ref(on); const tg = ref(on ? "b" : "a"); const clicks = ref(0);
-const open = ref(false);
+const open = ref(false); const detent = ref(0.25);
+const rows = ref(["a", "b", "c", "d", "e", "f"].map((id) => ({ id, label: id.toUpperCase() }))); const slide = ref(0);
 const commit: Record<string, () => void> = {
   switch: () => (sw.value = !sw.value), checkbox: () => (cb.value = !cb.value), radio: () => (rg.value = "b"),
   tabs: () => (tab.value = "b"), accordion: () => (acc.value = acc.value ? undefined : "one"), chip: () => (chip.value = !chip.value),
@@ -65,7 +74,7 @@ const base = scene.replace(/^press_/, "").replace(/^s6$/, "switch");
 
 function tag() {
   const m = INDEX[scene]; if (!m) return;
-  for (const k of ["target", "body", "root", "thumb", "modal", "veil"]) {
+  for (const k of ["target", "body", "root", "thumb", "grip", "land", "modal", "veil"]) {
     const sel = m[k] as string | undefined; if (!sel) continue;
     const el = document.querySelector(sel); if (!el) continue;
     const have = (el.getAttribute("data-e") ?? "").split(" ").filter(Boolean);
@@ -76,8 +85,8 @@ const tabs3 = [{ label: "Alpha", value: "a" }, { label: "Beta", value: "b" }, { 
 
 onMounted(async () => {
   new MutationObserver(tag).observe(document.body, { childList: true, subtree: true });
-  if (scene === "modal") open.value = true;
-  await nextTick(); await new Promise((r) => setTimeout(r, scene === "modal" ? 700 : 300)); tag();
+  if (scene === "modal" || scene === "sheet") open.value = true;
+  await nextTick(); await new Promise((r) => setTimeout(r, scene === "modal" || scene === "sheet" ? 900 : 300)); tag();
   (window as any).__e = {
     ready: true, kind: "build", scene, index: INDEX, sceneOfDir: SCENE_OF_DIR, dirs: DIRS, decl: DECL,
     rungs: ENGAGE_LADDER.map((r) => r.rung), envelopes: ENGAGE_ENVELOPES.map((r) => ({ role: r.role, attackMs: r.attackMs, releaseMs: r.releaseMs })),
@@ -110,6 +119,21 @@ onMounted(async () => {
       <Dialog v-else-if="scene === 'modal'" v-model:open="open">
         <DialogContent><DialogTitle>Probe</DialogTitle><p>Body</p></DialogContent>
       </Dialog>
+      <Dialog v-else-if="scene === 'sheet'" v-model:open="open">
+        <SheetContent side="bottom" :detents="[0.25, 0.5, 0.75, 1]" v-model:detent="detent"><DialogTitle>Probe</DialogTitle><p>Body</p></SheetContent>
+      </Dialog>
+      <div v-else-if="scene === 'sortable'" style="width:320px">
+        <SortableList :items="rows" :get-id="(r) => r.id" :get-label="(r) => r.label" label="Probe" @reorder="rows = $event">
+          <SortableItem v-for="r in rows" :key="r.id" :id="r.id"><SortableHandle />{{ r.label }}</SortableItem>
+        </SortableList>
+      </div>
+      <div v-else-if="scene === 'carousel'" style="width:600px">
+        <Carousel v-model:active="slide" aria-label="Probe">
+          <CarouselContent>
+            <CarouselItem v-for="i in 4" :key="i" :index="i - 1" :label="`Slide ${i}`"><div style="height:160px;display:grid;place-items:center">Slide {{ i }}</div></CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </div>
     </div>
     <button data-sentinel="after" data-t="after">after</button>
   </main>

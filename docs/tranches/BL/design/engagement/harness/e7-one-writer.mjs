@@ -10,6 +10,7 @@
 //   modal (runtime)   a modal open with nothing held ([data-e=modal] present): 0 [data-engaged] nodes. The veil
 //                     keys on the overlay's own open state.
 //   held (runtime)    the slider pointer-held 450 ms: ≥ 1 [data-engaged] node (the held meaning survives the split).
+//   held PRM          H-9: the same under reduced motion. Held is a state, not a motion: reduce does not retire it.
 // Light only: the reads are attributes, not paint.
 //   node e7-one-writer.mjs --build <dir> --wt <worktree> | --fixture [--fault e7-veil|e7-two] [--engine webkit]
 import fs from "node:fs";
@@ -55,15 +56,19 @@ await witness("E-7", "one writer of data-engaged, meaning held", async ({ a, E, 
       if (r.crashed) { cell("E-7 modal open, nothing held", "FAIL", r.line); continue; }
       cell("E-7 modal open, nothing held", r.open && r.eng.length === 0 ? "PASS" : "FAIL", `dialog open ${r.open} · veil nodes ${r.veil} · [data-engaged] nodes ${r.eng.length}${r.eng.length ? ` (${r.eng.join(" | ").slice(0, 120)})` : ""} · bound 0`);
     } else {
-      const r = await guard("held", async () => {
-        const P = await openPage(E, T, sc);
-        try {
-          const c = await center(P.page, '[data-e~="thumb"]'); await P.page.mouse.move(c.x, c.y); await P.page.mouse.down(); await P.page.waitForTimeout(450);
-          const n = await P.page.evaluate(() => document.querySelectorAll("[data-engaged]").length); await P.page.mouse.up(); return { n };
-        } finally { await P.close(); }
-      });
-      if (r.crashed) { cell(`E-7 ${sc} held`, "FAIL", r.line); continue; }
-      cell(`E-7 ${sc} held`, r.n >= 1 ? "PASS" : "FAIL", `[data-engaged] nodes while pointer-held ${r.n} · bound ≥ 1`);
+      for (const prm of [false, true]) {
+        const nm = `E-7 ${sc} held${prm ? " PRM" : ""}`;
+        const r = await guard(nm, async () => {
+          const P = await openPage(E, T, sc, { prm });
+          try {
+            if (prm && !P.modeOk) return { mode: P.modeLine };
+            const c = await center(P.page, '[data-e~="thumb"]'); await P.page.mouse.move(c.x, c.y); await P.page.mouse.down(); await P.page.waitForTimeout(450);
+            const n = await P.page.evaluate(() => document.querySelectorAll("[data-engaged]").length); await P.page.mouse.up(); return { n };
+          } finally { await P.close(); }
+        });
+        if (r.crashed || r.mode) { cell(nm, "FAIL", r.line ?? `MODE NOT APPLIED ${r.mode}`); continue; }
+        cell(nm, r.n >= 1 ? "PASS" : "FAIL", `${prm ? "reduce · " : ""}[data-engaged] nodes while pointer-held ${r.n} · bound ≥ 1`);
+      }
     }
   }
 });
