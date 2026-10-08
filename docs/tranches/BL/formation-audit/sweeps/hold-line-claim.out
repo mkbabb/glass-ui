@@ -662,3 +662,55 @@ exit=1
 ## after: the plan as fix-20 leaves it
 in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 732, open 0
 exit=0
+
+# ===== fix-21 (HEAD `d95b5248`; arm extended: kind `nesting`, `readvia` made transitive, pass 20 FT-01 to FT-03; worktree .claude/worktrees/bl/formation/fix-21/wt)
+
+## before (1): the widened sweep, fix-20 plants, HEAD plan
+OPEN SIBLING waves/W-0.12.md:41 G1 · no zero-width morph window (static, L04: `amp after decl` (nesting: `src` writes a nested rule as `amp after decl`; the row claims to read nesting) is in no plant
+OPEN SIBLING waves/W-0.12.md:41 G1 · no zero-width morph window (static, L04: `amp after rule` (nesting: `src` writes a nested rule as `amp after rule`; the row claims to read nesting) is in no plant
+OPEN SIBLING waves/W-0.12.md:41 G1 · no zero-width morph window (static, L04: `at after decl` (nesting: `src` writes a nested rule as `at after decl`; the row claims to read nesting) is in no plant
+OPEN SIBLING waves/W-E.8.md:68 E8-G4 · Metric reads the context radius (sta: `--radius-2xl` (readvia: `src` reads `--radius-2xl` as a whole value of border-end-end-radius, border-end-start-radius, border-radius in a rule of `src/components/metric`) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `amp after decl` (nesting: `src` writes a nested rule as `amp after decl`; the row claims to read nesting) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `amp after rule` (nesting: `src` writes a nested rule as `amp after rule`; the row claims to read nesting) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `at after decl` (nesting: `src` writes a nested rule as `at after decl`; the row claims to read nesting) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `amp after decl` (nesting: `src` writes a nested rule as `amp after decl`; the row claims to read nesting) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `amp after rule` (nesting: `src` writes a nested rule as `amp after rule`; the row claims to read nesting) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `at after decl` (nesting: `src` writes a nested rule as `at after decl`; the row claims to read nesting) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--control-icon-padding` (readvia: `src` reads `--control-icon-padding` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 732, open 11
+exit=1
+
+## before (2): fix-21 plants added, gates as pass 20 read them
+OPEN NARROW  waves/W-0.12.md:41 G1 · no zero-width morph window (static, L04: passes with nested after a declaration, the shape `controls/icon-button.css:26-112` writes (pass 20 FT-01 SIBLING nesting) planted in src/components/dock/styles/layers.css: '.glass-dock.collapsed .dock-layer--summary {\n    color: red;\n    &.is-'
+OPEN NARROW  waves/W-0.12.md:41 G1 · no zero-width morph window (static, L04: passes with nested after a sibling nested rule, `icon-button.css:122-126` (pass 20 FT-01 SIBLING nesting) planted in src/components/dock/styles/layers.css: '.glass-dock.collapsed .dock-layer--summary {\n    &:hover { color: red;'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with nested after a declaration, the shape `controls/icon-button.css:26-112` writes (pass 20 FT-01 SIBLING nesting) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run {\n    flex: 0 0 auto;\n    & > :not([aria-current'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with nested after a sibling nested rule, `icon-button.css:122-126` (pass 20 FT-01 SIBLING nesting) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run {\n    &:hover { color: red; }\n    & > * { scroll'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with an at-rule nested after a declaration, the shape `styles/animations.css` writes (pass 20 FT-01 SIBLING nesting) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run > * {\n    flex: 0 0 auto;\n    @media (min-width:'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with a parent selector list (pass 20 FT-01) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run, .x {\n    gap: 0;\n    & > * { scroll-snap-align:'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with the marker inside a negation, which picks the non-seats (pass 20 hardening note) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run > :not([data-dock-seat]) {\n    scroll-snap-align'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with outside the dock, nested after a sibling nested rule (pass 20 FT-01 SIBLING nesting) planted in src/styles/glass/glass-capsule.css: '.glass-dock .dock-icon-button {\n    &:focus { color: red; }\n    &:hove'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with two hops: `--control-icon-padding` sets `--dark-mode-toggle-padding` (`dark-mode-toggle.css:54`), read as padding at `:11` (pass 20 FT-02 SIBLING readvia) planted in src/components/dark-mode-toggle/dark-mode-toggle.css: '.glass-dock .dark-mode-toggle-button[data-size="control"] { --control-'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with two hops, a ring term, value on the next line (pass 20 FT-02) planted in src/styles/glass/glass-capsule.css: '.glass-dock {\n    --control-icon-padding:\n        var(--dock-ring-widt'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with the reserve inside the glyph term the docked toggle's padding subtracts (`dark-mode-toggle.css:62-68`) (pass 20 hardening note) planted in src/styles/glass/glass-capsule.css: '.glass-dock { --dock-control-glyph-size: calc(var(--dock-control-size)'
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 754, open 11
+exit=1
+
+## intermediate: gates re-written; G10 named an awk variable `top`, read by the `family` kind as the inset property (renamed `lv`; no sibling)
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `inset` (family: a property `src` declares, of the family `inset` the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `inset-inline` (family: a property `src` declares, of the family `inset` the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `inset-block` (family: a property `src` declares, of the family `inset` the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `inset-inline-start` (family: a property `src` declares, of the family `inset` the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `inset-inline-end` (family: a property `src` declares, of the family `inset` the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `inset-block-start` (family: a property `src` declares, of the family `inset` the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `inset-block-end` (family: a property `src` declares, of the family `inset` the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `top` (family: a property `src` declares, of the family `inset` the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `right` (family: a property `src` declares, of the family `inset` the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `bottom` (family: a property `src` declares, of the family `inset` the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `left` (family: a property `src` declares, of the family `inset` the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `translate` (family: a property `src` declares, of the family `inset` the span reads) is in no plant
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 755, open 12
+exit=1
+
+## after: the plan as fix-21 leaves it
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 755, open 0
+exit=0

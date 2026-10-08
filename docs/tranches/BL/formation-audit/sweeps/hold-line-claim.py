@@ -133,7 +133,10 @@ plants its nouns require.
                        declared in such a rule (FS-01: `--dock-icon-padding` at `glass/glass-capsule.css:169`,
                        `--dark-mode-toggle-padding` set under `.glass-dock` at `dark-mode-toggle.css:62`); the plant
                        declares `--x`. It widens `carried`, which fires only on a carrier whose value the span
-                       already fails
+                       already fails. Pass 20 (FT-02, FT-03 (a)) made it transitive: a property `src` sets a listed
+                       one from, as a whole value member, anywhere in `src`, is listed too, until the list stops
+                       growing (`--control-icon-padding`, read by `--dark-mode-toggle-padding` at
+                       `dark-mode-toggle.css:54`)
             inline     a token the span reads in a declaration value (`:[^;{}]*--t`, not inside a `(?!…)`
                        allow-list, which fails closed on any other spelling), which `src` declares as an expression
                        of other tokens (FS-01: `--dock-ring-reserve: calc(var(--dock-ring-width) +
@@ -142,6 +145,12 @@ plants its nouns require.
                        (`*`, `:not(`, `:has(`, `[aria-current`, `.class`, a tag) (FS-02: `.dock-run > :not(…)`,
                        `> [aria-current]`, `> :has(…)` at `dock/styles/run.css:358-383`); the plant writes that head
                        after that class and `>`
+          Pass 20 (FT-01, FT-03 (b)) found a gate that claims to read nesting reads a nested rule only as its
+          parent's first content. One more kind, enumerated from `src` and carried only by a plant in that shape:
+            nesting    a shape `src` writes a nested rule in, inside a rule: `&` after a declaration, `&` after a
+                       sibling nested rule, an at-rule after a declaration (`dock/styles/controls/icon-button.css:26-126`,
+                       `styles/animations.css`'s `@starting-style`), enumerated wherever the row's title or pass cell
+                       names nesting
           Each sibling must be carried by a plant, red if it is the defect in another spelling, green if it is not;
           the plant then runs as every other plant does, so a red sibling the gate passes is open NARROW.
 
@@ -274,6 +283,9 @@ CLAIMS = {
         R(LY, ".glass-dock.collapsed { & .dock-layer--summary { width: 0 } }", "a nested rule"),
         R(LY, ".dock-layer--summary { .glass-dock.collapsed & { width: 0 } }", "a nested rule with the state on the parent side of `&`"),
         R(LY, ".glass-dock.collapsed .dock-layer--summary { @media (min-width: 1px) { width: 0 } }", "a declaration inside a nested at-rule"),
+        R(LY, ".glass-dock.collapsed .dock-layer--summary {\n    color: red;\n    &.is-active {\n        inline-size: 0;\n    }\n}", "nested after a declaration, the shape `controls/icon-button.css:26-112` writes (pass 20 FT-01 SIBLING nesting)"),
+        R(LY, ".glass-dock.collapsed .dock-layer--summary {\n    &:hover { color: red; }\n    &.is-active { inline-size: 0; }\n}", "nested after a sibling nested rule, `icon-button.css:122-126` (pass 20 FT-01 SIBLING nesting)"),
+        R(LY, ".glass-dock.collapsed .dock-layer--summary {\n    color: red;\n    @media (min-width: 1px) { inline-size: 0; }\n}", "an at-rule nested after a declaration, the shape `styles/animations.css` writes (pass 20 FT-01 SIBLING nesting)"),
         R(LY, ".glass-dock.collapsed :is(.dock-layer--summary) { width: 0 }", "the layer inside `:is()`"),
         R(LY, ".glass-dock.expanded .dock-layer--full:not([data-morphing]) { width: 0 }", "the morph gate on the layer, which never carries it"),
         R("src/components/dock/GlassDock.vue", "<style>\n.glass-dock.collapsed :deep(.dock-layer--summary) { width: 0 }\n</style>", "a component <style> block"),
@@ -629,6 +641,7 @@ CLAIMS = {
         G("src/components/metric/MetricRow.vue", '<div class="rounded-(--radius-ctx)">x</div>', "a corner utility reading the context radius (fix-17)"),
         G("src/components/metric/styles.css", ".metric { --radius-card: var(--radius-2xl); }", "`--radius-card` re-declared on Metric: the context radius Metric reads after the cure (`--radius-ctx`) is computed where it is declared (`theme/radius.css:203`, `glass/overlay-plate.css:64`), so this moves no Metric corner (pass 19 FS-03 SIBLING readvia)"),
         G("src/components/metric/styles.css", ".metric { --radius-sm: var(--radius-2xl); }", "`--radius-sm` re-declared on Metric, read by no corner once the cure lands (pass 19 FS-03 SIBLING readvia)"),
+        G("src/components/metric/styles.css", ".metric { --radius-2xl: 0.5rem; }", "`--radius-2xl`, which `--radius-card` is set from (`theme/radius.css:123`), re-declared on Metric: `--radius-ctx` is computed at `:root` (`radius.css:203`) and inherited as a value, so this moves no Metric corner (pass 20 FT-03 SIBLING readvia, transitive)"),
     ),
     ("W-E.9", "E9-G7"): S(  # "no viewport keys in the fold"
         R("src/components/tabs/composables/useTabResponsive.ts", 'const narrow = useMediaQuery("(max-width: 36rem)");', "vueuse `useMediaQuery`"),
@@ -829,6 +842,14 @@ CLAIMS = {
         R("src/components/dock/styles/run.css", ".glass-dock.vertical\n    .dock-run\n    > :not([aria-current]) {\n    scroll-snap-align: start;\n}", "the vertical pair's three-line form, `run.css:380-382` (pass 19 FS-02)"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run button {\n    scroll-snap-align: start;\n}", "a descendant combinator, not `>`"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run {\n    & > :not([x]) { scroll-snap-align: start; }\n}", "nested under the run with `&`"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run {\n    flex: 0 0 auto;\n    & > :not([aria-current]) {\n        scroll-snap-align: start;\n    }\n}", "nested after a declaration, the shape `controls/icon-button.css:26-112` writes (pass 20 FT-01 SIBLING nesting)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run {\n    &:hover { color: red; }\n    & > * { scroll-snap-align: start; }\n}", "nested after a sibling nested rule, `icon-button.css:122-126` (pass 20 FT-01 SIBLING nesting)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > * {\n    flex: 0 0 auto;\n    @media (min-width: 1px) { scroll-snap-align: start; }\n}", "an at-rule nested after a declaration, the shape `styles/animations.css` writes (pass 20 FT-01 SIBLING nesting)"),
+        R("src/components/dock/styles/run.css", ".glass-dock {\n    color: red;\n    .dock-run > * { scroll-snap-align: start; }\n}", "a relative nested rule (no `&`) after a declaration (pass 20 FT-01)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run, .x {\n    gap: 0;\n    & > * { scroll-snap-align: start; }\n}", "a parent selector list (pass 20 FT-01)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > :not([data-dock-seat]) {\n    scroll-snap-align: start;\n}", "the marker inside a negation, which picks the non-seats (pass 20 hardening note)"),
+        G("src/components/dock/styles/run.css", ".glass-dock .dock-run {\n    gap: 0;\n    &:hover { color: red; }\n    & > [data-dock-seat] { scroll-snap-align: start; }\n}", "the marker, nested after a declaration and a sibling rule (pass 20 FT-01)"),
+        G("src/components/dock/styles/run.css", ".glass-dock .dock-run {\n    scroll-snap-type: x mandatory;\n    &:hover { color: red; }\n}", "a nested rule with no snap target (pass 20 FT-01)"),
         G("src/components/dock/styles/run.css", ".glass-dock .dock-run > [data-dock-seat] {\n    scroll-snap-align: start;\n}", "the marker on a direct child"),
         G("src/components/dock/styles/run.css", ".glass-dock .dock-layers > .dock-layer {\n    scroll-snap-align: start;\n}", "the layer stack's own children, which are layers, not the run's"),
         cure=[("subre", "src/components/dock/styles/run.css", r"\.glass-dock \.dock-run > \* \{\n(\s*)scroll-snap-align", r".glass-dock .dock-run [data-dock-seat] {\n\1scroll-snap-align")]),
@@ -870,6 +891,14 @@ CLAIMS = {
         G("src/components/dock/styles/layer-group.css", ".dock-layer-group.vertical .dock-layer-switcher .dock-layer-tab-indicator { transition: height var(--spring-dock-duration) var(--spring-dock); }", "the switcher indicator's glide, the one size transition the dock keeps (`layer-group.css:341-358`) (pass 17 FQ-03)"),
         R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-run > .dock-icon-button { transition: inline-size var(--spring-dock-duration) var(--spring-dock); }", "a seat transition in the global sheet that pads the seat (`glass-capsule.css:167`) (pass 18 FR-02 SIBLING outsheet)"),
         R("src/styles/glass/glass-capsule.css", "@layer components {\n    :where(.glass-dock) .x { transition-property: opacity, width; }\n}", "a zero-specificity dock rule under a layer, the size second (pass 18 FR-02 SIBLING outsheet)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > .x {\n    color: red;\n    &:hover {\n        transition: inline-size var(--spring-dock-duration) var(--spring-dock);\n    }\n}", "nested after a declaration, the shape `controls/icon-button.css:26-112` writes (pass 20 FT-01 SIBLING nesting)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > .x {\n    &:focus { color: red; }\n    &:hover { transition: inline-size 200ms; }\n}", "nested after a sibling nested rule, `icon-button.css:122-126` (pass 20 FT-01 SIBLING nesting)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > .x {\n    color: red;\n    @media (hover: hover) { transition: inline-size 200ms; }\n}", "an at-rule nested after a declaration, the shape `styles/animations.css` writes (pass 20 FT-01 SIBLING nesting)"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button {\n    &:focus { color: red; }\n    &:hover { transition: inline-size 200ms; }\n}", "outside the dock, nested after a sibling nested rule (pass 20 FT-01 SIBLING nesting)"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button {\n    &:focus { color: red; }\n    transition: width 200ms;\n}", "outside the dock, the parent's own declaration after a nested rule (pass 20 FT-01)"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button {\n    color: red;\n    &:hover { transition: inline-size 200ms; }\n}", "outside the dock, nested after a declaration (pass 20 FT-01 SIBLING nesting)"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button {\n    color: red;\n    @media (hover: hover) { transition: width 200ms; }\n}", "outside the dock, an at-rule nested after a declaration (pass 20 FT-01 SIBLING nesting)"),
+        G("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button {\n    &:focus { color: red; }\n    &:hover { transition: var(--icon-button-transition), inline-size 200ms; }\n}", "outside the dock, §3 item 1's appended form nested after a sibling rule (pass 20 FT-01)"),
         R("src/styles/glass/material.css", ".glass-dock .dock-icon-button { transition: inline-size var(--spring-dock-duration) var(--spring-dock); }", "a seat transition in `material.css`, which W-I.1 §4 edits (pass 18 FR-02 SIBLING outsheet)"),
         R("src/styles/glass/rim.css", ".dock-icon-button {\n    transition:\n        width 200ms;\n}", "the rim list's seat (`rim.css:63`), value on the next line (pass 18 FR-02 SIBLING outsheet)"),
         R("src/styles/utilities/a11y-overrides.css", ".glass-dock .dock-icon-button { transition: background 120ms, block-size 200ms; }", "the size second in the list, in `a11y-overrides.css` (`:116`) (pass 18 FR-02 SIBLING outsheet)"),
@@ -923,6 +952,9 @@ CLAIMS = {
         R("src/components/dock/styles/controls/triggers.css", ".glass-dock { --dock-trigger-padding-block: var(--dock-ring-reserve); }", "`--dock-trigger-padding-block` (`triggers.css:32`) (pass 19 FS-03 SIBLING readvia)"),
         R("src/components/dock/styles/controls/triggers.css", ".glass-dock { --dock-trigger-padding-inline: calc(var(--dock-ring-width) + var(--dock-ring-offset)); }", "`--dock-trigger-padding-inline` (`triggers.css:32-33`), carrying the reserve's definition (pass 19 FS-03 SIBLING readvia)"),
         G("src/components/dock/styles/index.css", ".glass-dock.compact { --dock-ring-reserve: calc(var(--dock-ring-width) * 2); }", "the reserve re-declared: no padding reads it once the cure lands (pass 19 FS-03 SIBLING readvia)"),
+        R("src/components/dark-mode-toggle/dark-mode-toggle.css", ".glass-dock .dark-mode-toggle-button[data-size=\"control\"] { --control-icon-padding: var(--dock-ring-reserve); }", "two hops: `--control-icon-padding` sets `--dark-mode-toggle-padding` (`dark-mode-toggle.css:54`), read as padding at `:11` (pass 20 FT-02 SIBLING readvia)"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock {\n    --control-icon-padding:\n        var(--dock-ring-width);\n}", "two hops, a ring term, value on the next line (pass 20 FT-02)"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock { --dock-control-glyph-size: calc(var(--dock-control-size) - 2 * var(--dock-ring-reserve)); }", "the reserve inside the glyph term the docked toggle's padding subtracts (`dark-mode-toggle.css:62-68`) (pass 20 hardening note)"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run { padding-block: calc(var(--dock-ring-width) + var(--dock-ring-offset)); }", "the reserve written as its definition, `index.css:240` (pass 19 FS-01 SIBLING inline)"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run { padding: var(--dock-ring-width); }", "one term of the reserve as padding (pass 19 FS-01)"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run { padding-inline: calc(2 * var(--focus-ring-width)); }", "the definition one level further: both terms are `--focus-ring-width` (`index.css:227-228`) (pass 19 FS-01 SIBLING inline)"),
@@ -1570,6 +1602,29 @@ def _src(root):
     # pass 19 FS-01: every declaration, by file and the selector chain of its block
     out["decls"] = [(f, sel, m.group(1).lower(), m.group(2)) for f, st in out["styletexts"].items()
                     for sel, body in _blocks(st) for m in re.finditer(r"(?:^|;)\s*(--[\w-]+|[a-zA-Z-]+)\s*:([^;]*)", body)]
+    # pass 20 FT-01: the shapes `src` writes a nested rule in, inside a rule (not under an at-rule alone)
+    out["nesting"] = set()
+    for st in out["styletexts"].values():
+        stack, seg = [], ""
+        for ch in st:
+            if ch == "{":
+                sel = seg.strip()
+                seg = ""
+                if any(not x[0].startswith("@") for x in stack) and not stack[-1][0].startswith("@") and stack[-1][1]:
+                    kind = "at" if sel.startswith("@") else ("amp" if "&" in sel else None)
+                    if kind:
+                        out["nesting"].add(f"{kind} after {stack[-1][1]}")
+                stack.append([sel, None])
+            elif ch in ";}":
+                if stack and seg.strip():
+                    stack[-1][1] = "decl"
+                seg = ""
+                if ch == "}" and stack:
+                    stack.pop()
+                    if stack:
+                        stack[-1][1] = "rule"
+            else:
+                seg += ch
     _SRC[root] = out
     return out
 
@@ -1853,6 +1908,10 @@ def siblings(g, entry, spans, root):
                 heads.add(h)
         for h in sorted(heads):
             out.append(("compound", f"{c} > {h}", f"`src` writes `.{c} > {h}…`; the span reads `.{c}` before `>`"))
+    # pass 20 FT-01, FT-03 (b): a row that claims to read nesting reads every nesting shape `src` writes
+    if re.search(r"\bnesting\b", g.gid + " " + g.passes):
+        for shp in sorted(src["nesting"]):
+            out.append(("nesting", shp, f"`src` writes a nested rule as `{shp}`; the row claims to read nesting"))
     seen, uniq = set(), []
     for k in out:
         if (k[0], k[1]) not in seen:
@@ -1878,6 +1937,8 @@ SHAPED = {
     "inline": lambda n: re.compile("".join(r"(?=[\s\S]*var\(\s*" + re.escape(x) + r"(?![\w-]))" for x in n.split(": ", 1)[1].split())),
     "compound": lambda n: re.compile(r"\." + re.escape(n.split(" > ")[0]) + r"(?![\w-])[^\s{},>]*\s*>\s*" + re.escape(n.split(" > ")[1])
                                      + (r"(?![\w-])" if re.fullmatch(r"\.?[\w-]+", n.split(" > ")[1]) else "")),
+    "nesting": lambda n: re.compile({"amp after decl": r"\{[^{}]*;\s*&[^{};]*\{", "amp after rule": r"\{[^{}]*\{[^{}]*\}\s*&[^{};]*\{",
+                                     "at after decl": r"\{[^{}]*;\s*@[a-z-]+[^{};]*\{"}[n]),
     "value": lambda fv: re.compile(r"\(\s*" + re.escape(fv.split(":")[0]) + r"\s*:\s*" + re.escape(fv.split(": ")[1]) + r"\b"),
 }
 
@@ -1962,7 +2023,14 @@ def _readvia(src, d, props):
                 reads[x] = reads.get(x, False) or ind(f, sel)
         if p.startswith("--") and ind(f, sel):
             decl.add(p)
-    return sorted(x for x, w in reads.items() if w or x in decl)
+    got = {x for x, w in reads.items() if w or x in decl}
+    # pass 20 FT-02, FT-03 (a): transitive over `src`'s own `--a: var(--b …)` declarations, wherever written
+    # (`--dark-mode-toggle-padding: var(--control-icon-padding, 0.375rem)`, `dark-mode-toggle.css:54`)
+    while True:
+        more = {y for f, sel, p, v in src["decls"] if p in got for y in _members(p, v)} - got
+        if not more:
+            return sorted(got)
+        got |= more
 
 
 def _filed(kind, name, plants):
