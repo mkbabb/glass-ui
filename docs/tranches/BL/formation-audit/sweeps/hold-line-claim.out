@@ -606,3 +606,59 @@ exit=1
 ## after: the plan as fix-19 leaves it
 in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 704, open 0
 exit=0
+
+# ===== fix-20 (HEAD `a4ea8339`; arm extended: kinds `readvia`, `inline`, `compound`, pass 19 FS-01 to FS-03; worktree .claude/worktrees/bl/formation/fix-20/wt)
+
+## before (1): enumeration alone (the fix-20 sweep with HEAD's CLAIMS, on the HEAD plan via BL_ROOT)
+OPEN SIBLING waves/W-E.8.md:68 E8-G4 · Metric reads the context radius (sta: `--radius-card` (readvia: `src` reads `--radius-card` as a whole value of border-end-end-radius, border-end-start-radius, border-radius in a rule of `src/components/metric`) is in no plant
+OPEN SIBLING waves/W-E.8.md:68 E8-G4 · Metric reads the context radius (sta: `--radius-sm` (readvia: `src` reads `--radius-sm` as a whole value of border-end-end-radius, border-end-start-radius, border-radius in a rule of `src/components/metric`) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `dock-run > :has(` (compound: `src` writes `.dock-run > :has(…`; the span reads `.dock-run` before `>`) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `dock-run > :not(` (compound: `src` writes `.dock-run > :not(…`; the span reads `.dock-run` before `>`) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `dock-run > [aria-current` (compound: `src` writes `.dock-run > [aria-current…`; the span reads `.dock-run` before `>`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dark-mode-toggle-padding` (readvia: `src` reads `--dark-mode-toggle-padding` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-compact-control-padding` (readvia: `src` reads `--dock-compact-control-padding` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-control-safe-inset` (readvia: `src` reads `--dock-control-safe-inset` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-icon-padding` (readvia: `src` reads `--dock-icon-padding` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-layer-switcher-padding` (readvia: `src` reads `--dock-layer-switcher-padding` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-padding-block` (readvia: `src` reads `--dock-padding-block` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-padding-inline` (readvia: `src` reads `--dock-padding-inline` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-ring-reserve` (readvia: `src` reads `--dock-ring-reserve` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-tab-padding-block` (readvia: `src` reads `--dock-tab-padding-block` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-tab-padding-inline` (readvia: `src` reads `--dock-tab-padding-inline` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-trigger-padding-block` (readvia: `src` reads `--dock-trigger-padding-block` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-trigger-padding-inline` (readvia: `src` reads `--dock-trigger-padding-inline` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-vertical-padding` (readvia: `src` reads `--dock-vertical-padding` as a whole value of padding, padding-block, padding-block-end in a rule of `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-ring-reserve: --dock-ring-width --dock-ring-offset` (inline: `src/components/dock/styles/index.css` declares `--dock-ring-reserve:calc(var(--dock-ring-width) + var(--dock-ring-offset))`; the span reads `--dock-ring-reserve` by name) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `--dock-ring-reserve: --focus-ring-width` (inline: the terms of `--dock-ring-reserve` are declared from --focus-ring-width) is in no plant
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 704, open 20
+exit=1
+
+## before (2): the fix-20 plants on the HEAD plan (BL_ROOT), gates as pass 19 read them
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with a child picked by `:not(…)`, the compound `run.css:362` writes after the run (pass 19 FS-02 SIBLING compound) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run > :not([aria-current]:not([aria-current="false"]'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with a child picked by `[aria-current]`, the compound `run.css:358` writes (pass 19 FS-02 SIBLING compound) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run > [aria-current] {\n    scroll-snap-align: start;'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with a child picked by `:has(…)`, the compound `run.css:359` writes (pass 19 FS-02 SIBLING compound) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run > :has([aria-current]) {\n    scroll-snap-align: '
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with the vertical pair's three-line form, `run.css:380-382` (pass 19 FS-02) planted in src/components/dock/styles/run.css: '.glass-dock.vertical\n    .dock-run\n    > :not([aria-current]) {\n    sc'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with a descendant combinator, not `>` planted in src/components/dock/styles/run.css: '.glass-dock .dock-run button {\n    scroll-snap-align: start;\n}'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with nested under the run with `&` planted in src/components/dock/styles/run.css: '.glass-dock .dock-run {\n    & > :not([x]) { scroll-snap-align: start; '
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with the reserve on the seat through `--dock-icon-padding`, which `glass-capsule.css:169` reads as its padding (pass 19 FS-01 SIBLING readvia) planted in src/styles/glass/glass-capsule.css: '.glass-dock .dock-icon-button { --dock-icon-padding: var(--dock-ring-r'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with the same carrier set on the run's seats (pass 19 FS-01) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run > [data-dock-seat] { --dock-icon-padding: var(--'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with through the fallback `--dock-control-safe-inset` (`glass-capsule.css:169`), value on the next line (pass 19 FS-01 SIBLING readvia) planted in src/styles/glass/glass-capsule.css: '.glass-dock .dock-icon-button {\n    --dock-control-safe-inset:\n       '
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with the docked toggle's padding carrier (`dark-mode-toggle.css:62`, read at `:11`) (pass 19 FS-01 SIBLING readvia) planted in src/components/dark-mode-toggle/dark-mode-toggle.css: '.glass-dock .dark-mode-toggle-button { --dark-mode-toggle-padding: var'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with `--dock-compact-control-padding` (`icon-button.css:239`) (pass 19 FS-03 SIBLING readvia) planted in src/components/dock/styles/controls/icon-button.css: '.glass-dock { --dock-compact-control-padding: var(--dock-ring-reserve)'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with `--dock-layer-switcher-padding` (`layer-group.css:195`) (pass 19 FS-03 SIBLING readvia) planted in src/components/dock/styles/layer-group.css: '.glass-dock { --dock-layer-switcher-padding: var(--dock-ring-reserve);'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with `--dock-padding-block` (`shell.css:228`, `morph.css:118`) (pass 19 FS-03 SIBLING readvia) planted in src/components/dock/styles/shell.css: '.glass-dock { --dock-padding-block: var(--dock-ring-reserve); }'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with `--dock-padding-inline` (`shell.css:228`, `morph.css:149`) (pass 19 FS-03 SIBLING readvia) planted in src/components/dock/styles/shell.css: '.glass-dock { --dock-padding-inline: var(--dock-ring-reserve); }'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with `--dock-vertical-padding` (`shell.css:431`) (pass 19 FS-03 SIBLING readvia) planted in src/components/dock/styles/shell.css: '.glass-dock.vertical { --dock-vertical-padding: var(--dock-ring-reserv'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with `--dock-tab-padding-block` (`tab-button.css:28`) (pass 19 FS-03 SIBLING readvia) planted in src/components/dock/styles/controls/tab-button.css: '.glass-dock { --dock-tab-padding-block: var(--dock-ring-reserve); }'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with `--dock-tab-padding-inline` (`tab-button.css:27`) (pass 19 FS-03 SIBLING readvia) planted in src/components/dock/styles/controls/tab-button.css: '.glass-dock { --dock-tab-padding-inline: var(--dock-ring-reserve); }'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with `--dock-trigger-padding-block` (`triggers.css:32`) (pass 19 FS-03 SIBLING readvia) planted in src/components/dock/styles/controls/triggers.css: '.glass-dock { --dock-trigger-padding-block: var(--dock-ring-reserve); '
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with `--dock-trigger-padding-inline` (`triggers.css:32-33`), carrying the reserve's definition (pass 19 FS-03 SIBLING readvia) planted in src/components/dock/styles/controls/triggers.css: '.glass-dock { --dock-trigger-padding-inline: calc(var(--dock-ring-widt'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with the reserve written as its definition, `index.css:240` (pass 19 FS-01 SIBLING inline) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run { padding-block: calc(var(--dock-ring-width) + v'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with one term of the reserve as padding (pass 19 FS-01) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run { padding: var(--dock-ring-width); }'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with the definition one level further: both terms are `--focus-ring-width` (`index.css:227-228`) (pass 19 FS-01 SIBLING inline) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run { padding-inline: calc(2 * var(--focus-ring-widt'
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 732, open 22
+exit=1
+
+## after: the plan as fix-20 leaves it
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 732, open 0
+exit=0

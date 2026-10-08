@@ -122,6 +122,26 @@ plants its nouns require.
                        name as a hyphenated word: `.dock-icon-button`, `.glass-dock`) (FR-01, FR-02: `.glass-dock .dock-icon-button { padding: … }` at
                        `styles/glass/glass-capsule.css:167-169`); red where the spec holds the claim on that rule,
                        green where it does not
+          Pass 19 (FS-01 to FS-03) found a static gate passes its subject read through a custom property, written as
+          the definition of the token it names, and written after the combinator it reads with a compound it does
+          not list. Three more kinds, each enumerated from `src` and carried only by a red or green plant in that
+          form:
+            readvia    a custom property `src` reads as a whole value member (`padding: var(--x, var(--y, 0))`, a
+                       `transition` list member `var(--x)`) of a property the entry's red plants declare and the
+                       span touches, in a rule of a component directory the row names (a file under it, or a
+                       selector naming a class it both styles and writes and names for itself), or read anywhere and
+                       declared in such a rule (FS-01: `--dock-icon-padding` at `glass/glass-capsule.css:169`,
+                       `--dark-mode-toggle-padding` set under `.glass-dock` at `dark-mode-toggle.css:62`); the plant
+                       declares `--x`. It widens `carried`, which fires only on a carrier whose value the span
+                       already fails
+            inline     a token the span reads in a declaration value (`:[^;{}]*--t`, not inside a `(?!…)`
+                       allow-list, which fails closed on any other spelling), which `src` declares as an expression
+                       of other tokens (FS-01: `--dock-ring-reserve: calc(var(--dock-ring-width) +
+                       var(--dock-ring-offset))` at `dock/styles/index.css:240`); the plant writes those terms
+            compound   a compound `src` writes after a class the span reads before a `>` combinator, by its head
+                       (`*`, `:not(`, `:has(`, `[aria-current`, `.class`, a tag) (FS-02: `.dock-run > :not(…)`,
+                       `> [aria-current]`, `> :has(…)` at `dock/styles/run.css:358-383`); the plant writes that head
+                       after that class and `>`
           Each sibling must be carried by a plant, red if it is the defect in another spelling, green if it is not;
           the plant then runs as every other plant does, so a red sibling the gate passes is open NARROW.
 
@@ -607,6 +627,8 @@ CLAIMS = {
         R("src/components/metric/Metric.vue", "<div :class=\"cn('metric rounded-card', $props.class)\">x</div>", "a Tailwind corner class on the root, the form of `select/SelectContent.vue:84` (pass 16 FP-04)"),
         R("src/components/metric/MetricRow.vue", '<div class="rounded-(--radius-sm)">x</div>', "a corner utility reading a rung (pass 16 FP-04)"),
         G("src/components/metric/MetricRow.vue", '<div class="rounded-(--radius-ctx)">x</div>', "a corner utility reading the context radius (fix-17)"),
+        G("src/components/metric/styles.css", ".metric { --radius-card: var(--radius-2xl); }", "`--radius-card` re-declared on Metric: the context radius Metric reads after the cure (`--radius-ctx`) is computed where it is declared (`theme/radius.css:203`, `glass/overlay-plate.css:64`), so this moves no Metric corner (pass 19 FS-03 SIBLING readvia)"),
+        G("src/components/metric/styles.css", ".metric { --radius-sm: var(--radius-2xl); }", "`--radius-sm` re-declared on Metric, read by no corner once the cure lands (pass 19 FS-03 SIBLING readvia)"),
     ),
     ("W-E.9", "E9-G7"): S(  # "no viewport keys in the fold"
         R("src/components/tabs/composables/useTabResponsive.ts", 'const narrow = useMediaQuery("(max-width: 36rem)");', "vueuse `useMediaQuery`"),
@@ -801,7 +823,15 @@ CLAIMS = {
         R("src/styles/glass-specular-track.css", ".glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}", "a snap rule on the run's children in `glass-specular-track.css` (pass 18 FR-03 SIBLING outsheet)"),
         R("src/components/dark-mode-toggle/dark-mode-toggle.css", ".glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}", "a snap rule on the run's children in `dark-mode-toggle.css` (pass 18 FR-03 SIBLING outsheet)"),
         G("src/styles/glass/glass-capsule.css", ".dock-run[data-overflowing] [data-dock-seat] {\n    scroll-snap-align: start;\n}", "the declared targets, in a global sheet (pass 18 FR-03 SIBLING outsheet)"),
-        cure=[("striphits", "git grep -n 'scroll-snap-align' -- src/components/dock/styles")]),
+        R("src/components/dock/styles/run.css", '.glass-dock .dock-run > :not([aria-current]:not([aria-current="false"])) {\n    scroll-snap-align: start;\n}', "a child picked by `:not(…)`, the compound `run.css:362` writes after the run (pass 19 FS-02 SIBLING compound)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > [aria-current] {\n    scroll-snap-align: start;\n}", "a child picked by `[aria-current]`, the compound `run.css:358` writes (pass 19 FS-02 SIBLING compound)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > :has([aria-current]) {\n    scroll-snap-align: start;\n}", "a child picked by `:has(…)`, the compound `run.css:359` writes (pass 19 FS-02 SIBLING compound)"),
+        R("src/components/dock/styles/run.css", ".glass-dock.vertical\n    .dock-run\n    > :not([aria-current]) {\n    scroll-snap-align: start;\n}", "the vertical pair's three-line form, `run.css:380-382` (pass 19 FS-02)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run button {\n    scroll-snap-align: start;\n}", "a descendant combinator, not `>`"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run {\n    & > :not([x]) { scroll-snap-align: start; }\n}", "nested under the run with `&`"),
+        G("src/components/dock/styles/run.css", ".glass-dock .dock-run > [data-dock-seat] {\n    scroll-snap-align: start;\n}", "the marker on a direct child"),
+        G("src/components/dock/styles/run.css", ".glass-dock .dock-layers > .dock-layer {\n    scroll-snap-align: start;\n}", "the layer stack's own children, which are layers, not the run's"),
+        cure=[("subre", "src/components/dock/styles/run.css", r"\.glass-dock \.dock-run > \* \{\n(\s*)scroll-snap-align", r".glass-dock .dock-run [data-dock-seat] {\n\1scroll-snap-align")]),
     ("W-I.3", "G4"): L(GONE),
     ("W-I.4", "G1"): DOCKET,
     ("W-I.5", "I5-G1"): L("the two retired facilities' names, case-blind"),
@@ -879,6 +909,26 @@ CLAIMS = {
         G("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button { outline-offset: var(--dock-ring-reserve); }", "§3 item 2's offset in a global sheet (pass 18 FR-01 SIBLING outsheet)"),
         G("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button { padding: var(--dock-icon-padding, var(--dock-control-safe-inset, 0)); }", "HEAD's seat padding (`glass-capsule.css:168`), not the reserve (pass 18 FR-01 SIBLING outsheet)"),
         G("src/components/dock/styles/run.css", ".x { margin-block: calc(-1 * var(--dock-ring-reserve)); }", "HEAD's margin pair (`run.css:252`), not padding"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button { --dock-icon-padding: var(--dock-ring-reserve); }", "the reserve on the seat through `--dock-icon-padding`, which `glass-capsule.css:169` reads as its padding (pass 19 FS-01 SIBLING readvia)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > [data-dock-seat] { --dock-icon-padding: var(--dock-ring-reserve); }", "the same carrier set on the run's seats (pass 19 FS-01)"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button {\n    --dock-control-safe-inset:\n        var(--dock-ring-reserve);\n}", "through the fallback `--dock-control-safe-inset` (`glass-capsule.css:169`), value on the next line (pass 19 FS-01 SIBLING readvia)"),
+        R("src/components/dark-mode-toggle/dark-mode-toggle.css", ".glass-dock .dark-mode-toggle-button { --dark-mode-toggle-padding: var(--dock-ring-reserve); }", "the docked toggle's padding carrier (`dark-mode-toggle.css:62`, read at `:11`) (pass 19 FS-01 SIBLING readvia)"),
+        R("src/components/dock/styles/controls/icon-button.css", ".glass-dock { --dock-compact-control-padding: var(--dock-ring-reserve); }", "`--dock-compact-control-padding` (`icon-button.css:239`) (pass 19 FS-03 SIBLING readvia)"),
+        R("src/components/dock/styles/layer-group.css", ".glass-dock { --dock-layer-switcher-padding: var(--dock-ring-reserve); }", "`--dock-layer-switcher-padding` (`layer-group.css:195`) (pass 19 FS-03 SIBLING readvia)"),
+        R("src/components/dock/styles/shell.css", ".glass-dock { --dock-padding-block: var(--dock-ring-reserve); }", "`--dock-padding-block` (`shell.css:228`, `morph.css:118`) (pass 19 FS-03 SIBLING readvia)"),
+        R("src/components/dock/styles/shell.css", ".glass-dock { --dock-padding-inline: var(--dock-ring-reserve); }", "`--dock-padding-inline` (`shell.css:228`, `morph.css:149`) (pass 19 FS-03 SIBLING readvia)"),
+        R("src/components/dock/styles/shell.css", ".glass-dock.vertical { --dock-vertical-padding: var(--dock-ring-reserve); }", "`--dock-vertical-padding` (`shell.css:431`) (pass 19 FS-03 SIBLING readvia)"),
+        R("src/components/dock/styles/controls/tab-button.css", ".glass-dock { --dock-tab-padding-block: var(--dock-ring-reserve); }", "`--dock-tab-padding-block` (`tab-button.css:28`) (pass 19 FS-03 SIBLING readvia)"),
+        R("src/components/dock/styles/controls/tab-button.css", ".glass-dock { --dock-tab-padding-inline: var(--dock-ring-reserve); }", "`--dock-tab-padding-inline` (`tab-button.css:27`) (pass 19 FS-03 SIBLING readvia)"),
+        R("src/components/dock/styles/controls/triggers.css", ".glass-dock { --dock-trigger-padding-block: var(--dock-ring-reserve); }", "`--dock-trigger-padding-block` (`triggers.css:32`) (pass 19 FS-03 SIBLING readvia)"),
+        R("src/components/dock/styles/controls/triggers.css", ".glass-dock { --dock-trigger-padding-inline: calc(var(--dock-ring-width) + var(--dock-ring-offset)); }", "`--dock-trigger-padding-inline` (`triggers.css:32-33`), carrying the reserve's definition (pass 19 FS-03 SIBLING readvia)"),
+        G("src/components/dock/styles/index.css", ".glass-dock.compact { --dock-ring-reserve: calc(var(--dock-ring-width) * 2); }", "the reserve re-declared: no padding reads it once the cure lands (pass 19 FS-03 SIBLING readvia)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run { padding-block: calc(var(--dock-ring-width) + var(--dock-ring-offset)); }", "the reserve written as its definition, `index.css:240` (pass 19 FS-01 SIBLING inline)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run { padding: var(--dock-ring-width); }", "one term of the reserve as padding (pass 19 FS-01)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run { padding-inline: calc(2 * var(--focus-ring-width)); }", "the definition one level further: both terms are `--focus-ring-width` (`index.css:227-228`) (pass 19 FS-01 SIBLING inline)"),
+        G("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button { --seat-ring-gap: var(--dock-ring-reserve); outline-offset: var(--seat-ring-gap); }", "the reserve carried to `outline-offset`, §3 item 2's home (pass 19 FS-01)"),
+        G("src/components/dock/styles/run.css", ".x { outline: var(--dock-ring-width) solid var(--dock-ring-color); outline-offset: var(--dock-ring-offset); }", "the ring's own terms on the ring (`index.css:286-287`), not padding (pass 19 FS-01)"),
+        cure=[("striphits", "rg -n --pcre2 'padding[a-z-]*\\s*:[^;{}]*--dock-ring-reserve' src")],
     ),
     # ---------------------------------------------------------------- band J
     ("W-J.1", "G11"): S(  # "Card is not an option"
@@ -1517,6 +1567,9 @@ def _src(root):
                  | set((m.group(1) or m.group(3)) for f, t in scripts.items() if re.search(TOUCH, t) and not f.endswith("index.ts")
                        for m in _SIG.finditer(t)),
     }
+    # pass 19 FS-01: every declaration, by file and the selector chain of its block
+    out["decls"] = [(f, sel, m.group(1).lower(), m.group(2)) for f, st in out["styletexts"].items()
+                    for sel, body in _blocks(st) for m in re.finditer(r"(?:^|;)\s*(--[\w-]+|[a-zA-Z-]+)\s*:([^;]*)", body)]
     _SRC[root] = out
     return out
 
@@ -1760,6 +1813,46 @@ def siblings(g, entry, spans, root):
         for d in sorted({m.group(1) for x in scope for m in [re.match(r"(src/components/[^/]+)", x)] if m}):
             for f in sorted(_outsheets(src, d)):
                 out.append(("outsheet", f, f"`{f}` styles `{d}`'s own classes outside `{d}`, the directory the span reads"))
+    # pass 19 FS-01, FS-03 (a): a custom property `src` reads as a whole member of a property the entry's red plants
+    # declare and the span touches, in a rule of a directory the row names; `carried` fired only on a carrier whose
+    # value the span already fails, so `padding: var(--dock-icon-padding, …)` (`glass/glass-capsule.css:169`) let
+    # the reserve through on `--dock-icon-padding`
+    reds = {x.lower() for rel, text, want, _ in entry["plants"] if want == "red"
+            for x in re.findall(r"(?:^|[{;\s])([a-zA-Z][a-zA-Z-]*)\s*:(?!:)", text)}
+    via = fam_props & reds
+    if via:
+        dirs = sorted(set(re.findall(r"src/components/[a-z0-9-]+", " ".join(spans) + " " + g.passes)))
+        for d in dirs:
+            for x in _readvia(src, d, via):
+                out.append(("readvia", x, f"`src` reads `{x}` as a whole value of {', '.join(sorted(via)[:3])} in a rule of `{d}`"))
+    # pass 19 FS-01: a token the span reads in a declaration value, which `src` declares as an expression of other
+    # tokens (`--dock-ring-reserve: calc(var(--dock-ring-width) + var(--dock-ring-offset))`, `dock/styles/index.css:240`)
+    raw = " ".join(spans).replace("\\", "")
+    for tok in sorted(set(re.findall(r":\[\^;\{\}\]\*\??[^|]{0,12}?(--[a-z][a-z0-9]*(?:-[a-z0-9]+)+)", raw))):
+        defs = {}
+        for f, sel, p, v in src["decls"]:
+            if p.startswith("--") and re.search(r"var\(\s*--", v):
+                defs.setdefault(p, []).append((f, v))
+        for f, v in defs.get(tok, []):
+            terms = re.findall(r"var\(\s*(--[\w-]+)", v)
+            out.append(("inline", tok + ": " + " ".join(terms), f"`{f}` declares `{tok}:{v.strip()[:60]}`; the span reads `{tok}` by name"))
+            # one level further: each term that `src` also declares from a token, spelled as that token
+            deep = sorted({y for x in terms for y in (re.findall(r"var\(\s*(--[\w-]+)", defs[x][0][1]) if x in defs else [x])})
+            if deep != sorted(set(terms)):
+                out.append(("inline", tok + ": " + " ".join(deep), f"the terms of `{tok}` are declared from {', '.join(deep)}"))
+    # pass 19 FS-02, FS-03 (b): a compound `src` writes after a class the span reads before a `>` combinator
+    cls = set()
+    for m in re.finditer(r"\.([a-z][\w-]*?)(?:\(((?:[\w-]+\|)+[\w-]+)\)([\w-]*))?(?![\w(-])", raw):
+        win = re.sub(r"\[[^\]]*\]", "", raw[m.end():m.end() + 40])[:24]
+        if ">" in win:
+            cls |= {m.group(1) + a + (m.group(3) or "") for a in m.group(2).split("|")} if m.group(2) else {m.group(1)}
+    for c in sorted(x for x in cls if x in src["styled"]):
+        heads = set()
+        for st in src["styletexts"].values():
+            for h in re.findall(r"\." + re.escape(c) + r"(?![\w-])[^\s{},>]*\s*>\s*(\*|:[a-z-]+\(?|\[[a-z-]+|\.[a-z][\w-]*|&|[a-z]+)", st):
+                heads.add(h)
+        for h in sorted(heads):
+            out.append(("compound", f"{c} > {h}", f"`src` writes `.{c} > {h}…`; the span reads `.{c}` before `>`"))
     seen, uniq = set(), []
     for k in out:
         if (k[0], k[1]) not in seen:
@@ -1781,22 +1874,18 @@ SHAPED = {
     "touch": lambda x: re.compile(r"\b" + re.escape(x) + r"\b"),
     "utility": lambda fam: re.compile(r"""(?:class=|:class=|cn\(|['"`])[^'"`<>]*?(?<![\w-])(?:[a-z0-9-]+:)*!?(?:""" + UTILITY[fam] + r")(?:-[\w\[\]./()%-]+)?(?![\w-])"),
     "mixother": lambda t: re.compile(r"var\(\s*" + re.escape(t) + r"\s*\)[\s_]*,[^;{}(),\]]*?[\s_][0-9.]+%"),
+    "readvia": lambda x: re.compile(r"(?<![\w-])" + re.escape(x) + r"\s*:", re.I),
+    "inline": lambda n: re.compile("".join(r"(?=[\s\S]*var\(\s*" + re.escape(x) + r"(?![\w-]))" for x in n.split(": ", 1)[1].split())),
+    "compound": lambda n: re.compile(r"\." + re.escape(n.split(" > ")[0]) + r"(?![\w-])[^\s{},>]*\s*>\s*" + re.escape(n.split(" > ")[1])
+                                     + (r"(?![\w-])" if re.fullmatch(r"\.?[\w-]+", n.split(" > ")[1]) else "")),
     "value": lambda fv: re.compile(r"\(\s*" + re.escape(fv.split(":")[0]) + r"\s*:\s*" + re.escape(fv.split(": ")[1]) + r"\b"),
 }
 
 
 def _outsheets(src, d):
     """pass 18 FR-01 to FR-03: the style files outside `d` whose selectors name a class `d` both styles and writes and
-    names for itself (its folder name as a hyphenated word of the class)."""
-    base = os.path.basename(d)
-    styled, written = set(), set()
-    for f, t in src["styletexts"].items():
-        if f.startswith(d + "/"):
-            styled |= set(re.findall(r"\.([a-z][\w-]*[a-z0-9])", re.sub(r"\{[^{}]*\}", "{}", t)))
-    for f, q in src["quoted"].items():
-        if f.startswith(d + "/"):
-            written |= q
-    own = {c for c in styled & written if re.search(r"(?:^|-)" + re.escape(base) + r"(?:-|$)", c)}
+    names for itself (`_own`)."""
+    own = _own(src, d)
     return {f for f, t in src["styletexts"].items() if not f.startswith(d + "/")
             and any(re.search(r"\." + re.escape(c) + r"(?![\w-])", t) for c in own)}
 
@@ -1805,6 +1894,75 @@ def _sheetdir(x):
     """The directory a stylesheet belongs to: its component's root under `src/components`, else its own folder."""
     m = re.match(r"(src/components/[^/]+)/", x)
     return m.group(1) if m else os.path.dirname(x)
+
+
+def _blocks(t):
+    """pass 19 FS-01: (selector chain, declaration text) for every block level of a style text, nesting joined."""
+    out, stack, last = [], [], 0
+    for m in re.finditer(r"[{}]", t):
+        seg = t[last:m.start()]
+        if m.group() == "{":
+            parts = seg.rsplit(";", 1)
+            if stack and len(parts) == 2:
+                out.append((" ".join(stack), parts[0]))
+            stack.append(parts[-1].strip())
+        elif stack:
+            out.append((" ".join(stack), seg))
+            stack.pop()
+        last = m.end()
+    return out
+
+
+def _members(prop, value):
+    """pass 19 FS-01: the custom properties a declaration reads as a whole value member: a top-level `var(--x, …)`
+    (a list member for a comma-list property, a space token otherwise), and through its fallback, recursively."""
+    out, depth, cur, items = [], 0, "", []
+    sep = "," if prop in LISTY else None
+    for ch in value.strip() + (sep or " "):
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+        if depth == 0 and (ch == sep if sep else ch.isspace()):
+            items.append(cur.strip())
+            cur = ""
+        else:
+            cur += ch
+    for it in items:
+        m = re.fullmatch(r"var\(\s*(--[\w-]+)\s*(?:,(.*))?\)", it, re.S)
+        if m:
+            out.append(m.group(1))
+            if m.group(2):
+                out += _members(prop, m.group(2))
+    return out
+
+
+def _own(src, d):
+    """The classes `d` both styles and writes and names for itself (its folder name as a hyphenated word)."""
+    base = os.path.basename(d)
+    styled, written = set(), set()
+    for f, t in src["styletexts"].items():
+        if f.startswith(d + "/"):
+            styled |= set(re.findall(r"\.([a-z][\w-]*[a-z0-9])", re.sub(r"\{[^{}]*\}", "{}", t)))
+    for f, q in src["quoted"].items():
+        if f.startswith(d + "/"):
+            written |= q
+    return {c for c in styled & written if re.search(r"(?:^|-)" + re.escape(base) + r"(?:-|$)", c)}
+
+
+def _readvia(src, d, props):
+    """pass 19 FS-01: custom properties read as a whole member of a `props` declaration in a rule of `d` (a file under
+    it, or a selector naming one of its own classes), or read so anywhere and declared in a rule of `d`."""
+    own = _own(src, d)
+    ind = lambda f, sel: f.startswith(d + "/") or any(re.search(r"\." + re.escape(c) + r"(?![\w-])", sel) for c in own)
+    reads, decl = {}, set()
+    for f, sel, p, v in src["decls"]:
+        if p in props:
+            for x in _members(p, v):
+                reads[x] = reads.get(x, False) or ind(f, sel)
+        if p.startswith("--") and ind(f, sel):
+            decl.add(p)
+    return sorted(x for x, w in reads.items() if w or x in decl)
 
 
 def _filed(kind, name, plants):
