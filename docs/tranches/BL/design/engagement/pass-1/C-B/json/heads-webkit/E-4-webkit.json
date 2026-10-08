@@ -1,0 +1,25 @@
+{
+ "id": "E-4",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/cB/out/builds/heads"
+ },
+ "loadStart": "40.2/34.3/34.8",
+ "loadEnd": "37.6/33.9/34.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 sheet fling carries velocity",
+   "status": "FAIL",
+   "line": "axis y, dir −1 · fling: carry 255.00 px, settles 255.00 px past release · still: carry 255.00 px, settles 255.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 25.5 px, still 35.4 px · 197 frames, median 10.0 ms",
+   "load": "38.5/34.0/34.7"
+  },
+  {
+   "name": "E-4 sheet release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 328.1 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "37.6/33.9/34.7"
+  }
+ ]
+}

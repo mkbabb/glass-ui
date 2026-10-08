@@ -218,3 +218,8 @@ Outage log:
   - Commit crest is ×1.020 on --scale-commit-pop (the same token as P-A).
   - E-1, E-3 and E-6 stay RED by B's own row.
   CB launched.
+- 2026-10-08 — D5 pass 1 C-B banked: ADVANCE at 9/33 (0.27). P-B's main numbers reproduced in both engines. Three of P-B's claims fail under measurement:
+  1. data-held="key" fires the library's pointer-only [data-held] rules, so Tab squishes the slider 1.020×0.940.
+  2. A modifier key alone after a drag engages the slider and leaves it stuck.
+  3. E-4's slider PASS measures the invisible reka thumb; the visible edge carries the same 0.04-0.12 px as HEAD.
+  The census plant passes vacuously. The "only writer" header is false (GlassDock data-held, PagerDots data-press). The crest token is fitted to frame sampling and bounces geometry on 'panel'. On the gestalt read, the commit cannot be seen. P-E launched.

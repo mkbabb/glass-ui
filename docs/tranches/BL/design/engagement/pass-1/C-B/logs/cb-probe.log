@@ -1,0 +1,96 @@
+### cb-probe pb chromium · load { 30.01 32.24 33.82 } · 18:53:29
+# C-B · family B critic probe (pb)
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/cB/out/builds/pb · engine chromium · lock wait 0.0 s · other headless processes: chromium 21, webkit 6 · load 30.0/32.2/33.8 at start
+# chromium 149.0.7827.55
+  FAIL       kbdpaint light tab · keyboard focus paints the hand's register? data-held "key" (range "key") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 0 · load 29.0/32.0/33.7
+  REPORT     kbdpaint light arrow · data-held "key" (range "key") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 0 · load 29.0/32.0/33.7
+  REPORT     kbdpaint light tab-out · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 29.0/32.0/33.7
+  REPORT     kbdpaint light pointer-held · data-held "" (range "") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 2 · load 29.0/32.0/33.7
+  REPORT     kbdpaint light released · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 29.0/32.0/33.7
+  FAIL       kbdpaint dark tab · keyboard focus paints the hand's register? data-held "key" (range "key") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 0 · load 29.0/32.0/33.7
+  REPORT     kbdpaint dark arrow · data-held "key" (range "key") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 0 · load 29.0/32.0/33.7
+  REPORT     kbdpaint dark tab-out · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 29.0/32.0/33.7
+  REPORT     kbdpaint dark pointer-held · data-held "" (range "") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 2 · load 29.0/32.0/33.7
+  REPORT     kbdpaint dark released · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 29.0/32.0/33.7
+  FAIL       modifier Shift · after a drag: before null · Shift down "key" (range 1.020 × 0.940) · Shift up "key" · load 28.3/31.8/33.6
+  FAIL       modifier Meta · after a drag: before null · Meta down "key" (range 1.020 × 0.940) · Meta up "key" · load 28.3/31.8/33.6
+  FAIL       modifier Escape · after a drag: before null · Escape down "key" (range 1.020 × 0.940) · Escape up "key" · load 29.3/32.0/33.7
+  PASS       unreadable · crest token 1 on the host: commits state checked, crest animations 0, data-commit false | state unchecked, crest animations 0, data-commit false · useEngage console errors 1 over 2 commits · load 29.3/32.0/33.7
+  REPORT     carryvis fling · thumb (E-4's body): carry 13.94 px, settles 0.00 px, opacity 0.00 max, width 0.00 px max · range leading edge (the visible handle): carry 0.04 px, settles -3.63 px · 133 frames · load 29.3/32.0/33.7
+  REPORT     carryvis still · thumb (E-4's body): carry 0.00 px, settles 0.00 px, opacity 0.00 max, width 0.00 px max · range leading edge (the visible handle): carry 0.11 px, settles -3.83 px · 121 frames · load 30.0/32.0/33.7
+  REPORT     shots light · pb-chromium-light-slider-{1-rest,2-keyboard}.png · load 30.0/32.0/33.7
+  REPORT     shots dark · pb-chromium-dark-slider-{1-rest,2-keyboard}.png · load 30.0/32.0/33.7
+C-B chromium FAIL · 1 pass, 5 fail, 0 unmeasured of 6 gating cells (12 reported) · load 30.0/32.2/33.8 at start, 30.0/32.0/33.7 at end
+### exit 1
+### cb-probe head chromium · load { 29.95 32.04 33.71 } · 18:53:52
+# C-B · family B critic probe (head)
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/cB/out/builds/head · engine chromium · lock wait 0.0 s · other headless processes: chromium 20, webkit 8 · load 30.0/32.0/33.7 at start
+# chromium 149.0.7827.55
+  PASS       kbdpaint light tab · keyboard focus paints the hand's register? data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 29.2/31.8/33.6
+  REPORT     kbdpaint light arrow · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 29.2/31.8/33.6
+  REPORT     kbdpaint light tab-out · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 29.2/31.8/33.6
+  REPORT     kbdpaint light pointer-held · data-held "true" (range "true") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 2 · load 29.2/31.8/33.6
+  REPORT     kbdpaint light released · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 29.2/31.8/33.6
+  PASS       kbdpaint dark tab · keyboard focus paints the hand's register? data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 28.5/31.7/33.6
+  REPORT     kbdpaint dark arrow · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 28.5/31.7/33.6
+  REPORT     kbdpaint dark tab-out · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 28.5/31.7/33.6
+  REPORT     kbdpaint dark pointer-held · data-held "true" (range "true") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 2 · load 28.5/31.7/33.6
+  REPORT     kbdpaint dark released · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 28.5/31.7/33.6
+  PASS       modifier Shift · after a drag: before null · Shift down null (range 1.000 × 1.000) · Shift up null · load 28.5/31.7/33.6
+  PASS       modifier Meta · after a drag: before null · Meta down null (range 1.000 × 1.000) · Meta up null · load 28.1/31.5/33.5
+  PASS       modifier Escape · after a drag: before null · Escape down null (range 1.000 × 1.000) · Escape up null · load 28.1/31.5/33.5
+  FAIL       unreadable · crest token 1 on the host: commits state checked, crest animations 0, data-commit false | state unchecked, crest animations 0, data-commit false · useEngage console errors 0 over 2 commits · load 28.5/31.5/33.5
+  REPORT     carryvis fling · thumb (E-4's body): carry 0.00 px, settles 0.00 px, opacity 0.00 max, width 0.00 px max · range leading edge (the visible handle): carry 0.12 px, settles -4.23 px · 131 frames · load 28.5/31.5/33.5
+  REPORT     carryvis still · thumb (E-4's body): carry 0.00 px, settles 0.00 px, opacity 0.00 max, width 0.00 px max · range leading edge (the visible handle): carry 0.10 px, settles -3.85 px · 121 frames · load 28.5/31.5/33.5
+  REPORT     shots light · head-chromium-light-slider-{1-rest,2-keyboard}.png · load 27.1/31.2/33.4
+  REPORT     shots dark · head-chromium-dark-slider-{1-rest,2-keyboard}.png · load 27.1/31.2/33.4
+C-B chromium FAIL · 5 pass, 1 fail, 0 unmeasured of 6 gating cells (12 reported) · load 30.0/32.0/33.7 at start, 27.1/31.2/33.4 at end
+### exit 1
+### cb-probe pb webkit · load { 27.14 31.21 33.36 } · 18:54:14
+# C-B · family B critic probe (pb)
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/cB/out/builds/pb · engine webkit · lock wait 0.0 s · other headless processes: chromium 17, webkit 8 · load 27.1/31.2/33.4 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       kbdpaint light tab · keyboard focus paints the hand's register? data-held "key" (range "key") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 0 · load 28.9/31.5/33.5
+  REPORT     kbdpaint light arrow · data-held "key" (range "key") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 0 · load 28.9/31.5/33.5
+  REPORT     kbdpaint light tab-out · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 28.9/31.5/33.5
+  REPORT     kbdpaint light pointer-held · data-held "" (range "") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 2 · load 28.9/31.5/33.5
+  REPORT     kbdpaint light released · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 28.9/31.5/33.5
+  FAIL       kbdpaint dark tab · keyboard focus paints the hand's register? data-held "key" (range "key") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 0 · load 28.3/31.3/33.4
+  REPORT     kbdpaint dark arrow · data-held "key" (range "key") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 0 · load 28.3/31.3/33.4
+  REPORT     kbdpaint dark tab-out · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 28.3/31.3/33.4
+  REPORT     kbdpaint dark pointer-held · data-held "" (range "") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 2 · load 28.3/31.3/33.4
+  REPORT     kbdpaint dark released · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 28.3/31.3/33.4
+  FAIL       modifier Shift · after a drag: before null · Shift down "key" (range 1.020 × 0.940) · Shift up "key" · load 28.3/31.3/33.4
+  FAIL       modifier Meta · after a drag: before null · Meta down "key" (range 1.020 × 0.940) · Meta up "key" · load 30.5/31.7/33.5
+  FAIL       modifier Escape · after a drag: before null · Escape down "key" (range 1.020 × 0.940) · Escape up "key" · load 30.5/31.7/33.5
+  PASS       unreadable · crest token 1 on the host: commits state checked, crest animations 0, data-commit false | state unchecked, crest animations 0, data-commit false · useEngage console errors 1 over 2 commits · load 30.4/31.7/33.5
+  REPORT     carryvis fling · thumb (E-4's body): carry 14.96 px, settles 0.00 px, opacity 0.00 max, width 0.00 px max · range leading edge (the visible handle): carry 0.11 px, settles -3.54 px · 99 frames · load 30.4/31.7/33.5
+  REPORT     carryvis still · thumb (E-4's body): carry 0.00 px, settles 0.00 px, opacity 0.00 max, width 0.00 px max · range leading edge (the visible handle): carry 0.12 px, settles -3.58 px · 99 frames · load 30.4/31.7/33.5
+  REPORT     shots light · pb-webkit-light-slider-{1-rest,2-keyboard}.png · load 29.7/31.5/33.4
+  REPORT     shots dark · pb-webkit-dark-slider-{1-rest,2-keyboard}.png · load 29.7/31.5/33.4
+C-B webkit FAIL · 1 pass, 5 fail, 0 unmeasured of 6 gating cells (12 reported) · load 27.1/31.2/33.4 at start, 29.7/31.5/33.4 at end
+### exit 1
+### cb-probe head webkit · load { 29.69 31.53 33.42 } · 18:54:40
+# C-B · family B critic probe (head)
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/cB/out/builds/head · engine webkit · lock wait 0.0 s · other headless processes: chromium 20, webkit 6 · load 29.7/31.5/33.4 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  PASS       kbdpaint light tab · keyboard focus paints the hand's register? data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 32.2/32.0/33.6
+  REPORT     kbdpaint light arrow · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 32.2/32.0/33.6
+  REPORT     kbdpaint light tab-out · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 32.2/32.0/33.6
+  REPORT     kbdpaint light pointer-held · data-held "true" (range "true") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 2 · load 32.2/32.0/33.6
+  REPORT     kbdpaint light released · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 32.2/32.0/33.6
+  PASS       kbdpaint dark tab · keyboard focus paints the hand's register? data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 33.5/32.3/33.7
+  REPORT     kbdpaint dark arrow · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 33.5/32.3/33.7
+  REPORT     kbdpaint dark tab-out · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 33.5/32.3/33.7
+  REPORT     kbdpaint dark pointer-held · data-held "true" (range "true") · range scale 1.020 × 0.940 · cursor grabbing · [data-engaged] 2 · load 33.5/32.3/33.7
+  REPORT     kbdpaint dark released · data-held null (range null) · range scale 1.000 × 1.000 · cursor grab · [data-engaged] 0 · load 33.5/32.3/33.7
+  PASS       modifier Shift · after a drag: before null · Shift down null (range 1.000 × 1.000) · Shift up null · load 33.5/32.3/33.7
+  PASS       modifier Meta · after a drag: before null · Meta down null (range 1.000 × 1.000) · Meta up null · load 36.9/33.0/33.9
+  PASS       modifier Escape · after a drag: before null · Escape down null (range 1.000 × 1.000) · Escape up null · load 36.9/33.0/33.9
+  FAIL       unreadable · crest token 1 on the host: commits state checked, crest animations 0, data-commit false | state unchecked, crest animations 0, data-commit false · useEngage console errors 0 over 2 commits · load 35.7/32.8/33.8
+  REPORT     carryvis fling · thumb (E-4's body): carry 0.00 px, settles 0.00 px, opacity 0.00 max, width 0.00 px max · range leading edge (the visible handle): carry 0.16 px, settles -4.36 px · 98 frames · load 35.7/32.8/33.8
+  REPORT     carryvis still · thumb (E-4's body): carry 0.00 px, settles 0.00 px, opacity 0.00 max, width 0.00 px max · range leading edge (the visible handle): carry 0.13 px, settles -3.57 px · 99 frames · load 36.1/33.0/33.9
+  REPORT     shots light · head-webkit-light-slider-{1-rest,2-keyboard}.png · load 36.1/33.0/33.9
+  REPORT     shots dark · head-webkit-dark-slider-{1-rest,2-keyboard}.png · load 36.1/33.0/33.9
+C-B webkit FAIL · 5 pass, 1 fail, 0 unmeasured of 6 gating cells (12 reported) · load 29.7/31.5/33.4 at start, 36.1/33.0/33.9 at end
+### exit 1
