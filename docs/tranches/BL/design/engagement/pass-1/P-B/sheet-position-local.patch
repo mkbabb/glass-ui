@@ -1,0 +1,15 @@
+diff --git a/src/components/sheet/styles.css b/src/components/sheet/styles.css
+--- a/src/components/sheet/styles.css
++++ b/src/components/sheet/styles.css
+@@ -27,7 +27,10 @@
+  * name — no logical-vs-physical cascade ambiguity.
+  */
+ @layer components {
+-    :where([data-slot="sheet-content"]) {
++    /* D5 P-B LOCAL MEASUREMENT FIX, not D5's (RH §3 item 1, the Sheet's owner): the
++       floating plate's `position: relative` (0,1,0) otherwise beats this rule and the
++       sheet paints in flow, off screen. */
++    .glass-floating[data-slot="sheet-content"] {
+         position: fixed;
+         z-index: var(--z-modal);
+     }

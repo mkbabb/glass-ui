@@ -1,0 +1,26 @@
+# P-B · family B prototype probe (pb)
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pB/out/builds/pb · engine chromium · lock wait 0.0 s · other headless processes: chromium 25, webkit 2 · load 47.3/43.2/47.7 at start
+# chromium 149.0.7827.55
+  PASS       census switch · parts [commit] · load 47.4/43.3/47.7
+  PASS       census accordion · parts [press, commit] · load 47.4/43.3/47.7
+  PASS       census slider · parts [hold, drag] · load 47.4/43.3/47.7
+  PASS       census button · parts [press, commit] · load 47.4/43.3/47.7
+  PASS       census separator · exempt: "a rule between regions: nothing presses it and it reports no state" · load 47.4/43.3/47.7
+  FAIL       census skeleton · no row: the directory mounted no engage primitive on its exemplar · load 47.4/43.3/47.7
+  FAIL       census dialog · no row: the directory mounted no engage primitive on its exemplar · load 47.4/43.3/47.7
+  PASS       commits switch · edges per commit: keyboard 1, programmatic 1, pointer 1, model A→B→A in one task 0 · commit in the mount's own task 0 · commit two frames after mount 1 (REPORT: the async-arrival case) · load 46.3/43.2/47.6
+  PASS       commits accordion · edges per commit: keyboard 1, programmatic 1, pointer 1, model A→B→A in one task 0 · commit in the mount's own task 0 · commit two frames after mount 1 (REPORT: the async-arrival case) · load 46.0/43.2/47.6
+  FAIL       commits button · edges per commit: keyboard 1, programmatic 1, pointer 1, two activations in one task 1 · commit in the mount's own task 0 · commit two frames after mount 1 (REPORT: the async-arrival case) · load 43.8/42.8/47.4
+  REPORT     crest switch · box 44.0×44.0 px · peak ×1.0199 at 97 ms (+0.88 px wide) · trough ×0.9974 at 284 ms · rest ×1.0000 · median frame 7.6 ms · load 43.8/42.8/47.4
+  REPORT     crest accordion · box 320.0×56.9 px · peak ×1.0198 at 89 ms (+6.35 px wide) · trough ×0.9974 at 284 ms · rest ×1.0000 · median frame 7.7 ms · load 43.8/42.8/47.4
+  REPORT     crest button · box 74.8×40.0 px · peak ×1.0199 at 97 ms (+1.49 px wide) · trough ×0.9974 at 285 ms · rest ×1.0000 · median frame 7.7 ms · load 43.8/42.8/47.4
+  PASS       modality Tab entry · data-held "key" · thumb:focus-visible true · look 1.06 · [data-engaged] 0 · load 42.4/42.5/47.3
+  PASS       modality arrow key · data-held "key" · thumb:focus-visible true · look 1.06 · [data-engaged] 0 · load 42.4/42.5/47.3
+  PASS       modality Tab out · data-held absent · thumb:focus-visible false · look none · [data-engaged] 0 · load 42.4/42.5/47.3
+  PASS       modality pointer held · data-held "" · thumb:focus-visible false · look 1.06 · [data-engaged] 2 · load 42.4/42.5/47.3
+  PASS       modality after drag 50 ms · data-held absent · thumb:focus-visible true · look none · [data-engaged] 0 · load 42.4/42.5/47.3
+  PASS       modality after drag 600 ms · data-held absent · thumb:focus-visible true · look none · [data-engaged] 0 · load 42.4/42.5/47.3
+  PASS       modality after drag 1500 ms · data-held absent · thumb:focus-visible true · look none · [data-engaged] 0 · load 42.4/42.5/47.3
+  PASS       modality key after drag · data-held "key" · thumb:focus-visible true · look 1.06 · [data-engaged] 0 · load 42.4/42.5/47.3
+  PASS       modality blur · data-held absent · thumb:focus-visible false · look none · [data-engaged] 0 · load 42.4/42.5/47.3
+P-B chromium FAIL · 16 pass, 3 fail, 0 unmeasured of 19 gating cells (3 reported) · load 47.3/43.2/47.7 at start, 42.4/42.5/47.3 at end

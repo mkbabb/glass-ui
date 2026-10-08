@@ -1,0 +1,37 @@
+{
+ "id": "E-4",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pB/out/builds/pb"
+ },
+ "loadStart": "21.2/36.3/45.2",
+ "loadEnd": "20.5/35.4/44.7",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x · fling: carry 12.12 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 12.12 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 9.0 px, still 0.0 px · 257 frames, median 8.0 ms",
+   "load": "20.6/36.0/45.0"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "20.6/36.0/45.0"
+  },
+  {
+   "name": "E-4 sortable fling carries velocity",
+   "status": "PASS",
+   "line": "axis y · fling: carry 10.74 px, settles -36.69 px past release · still: carry 0.00 px, settles -36.69 px · difference: carry 10.74 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 67.4 px, still 2.4 px · 266 frames, median 7.7 ms",
+   "load": "20.5/35.4/44.7"
+  },
+  {
+   "name": "E-4 sortable release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.5 px",
+   "load": "20.5/35.4/44.7"
+  }
+ ]
+}

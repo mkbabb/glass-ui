@@ -1,0 +1,108 @@
+### pb chromium e7-one-writer.mjs  · load { 38.76 51.76 52.25 } · 18:10:49
+# E-7 · one writer of data-engaged, meaning held
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pB/out/builds/pb · engine chromium · lock wait 0.0 s · other headless processes: chromium 9, webkit 6 · load 38.8/51.8/52.2 at start
+# chromium 149.0.7827.55
+  PASS       E-7 writers (static) · 1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pB/wt · load 38.8/51.8/52.2
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 2 · bound ≥ 1 · load 38.8/51.8/52.2
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 2 · bound ≥ 1 · load 37.5/51.3/52.1
+  PASS       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0 · load 37.5/51.3/52.1
+E-7 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 38.8/51.8/52.2 at start, 37.5/51.3/52.1 at end
+### exit 0 · load { 37.49 51.28 52.07 } · 18:10:54
+### pb chromium e2-commit.mjs --scenes switch,accordion,button · load { 37.49 51.28 52.07 } · 18:10:54
+# E-2 · the commit bar, generalized
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pB/out/builds/pb · engine chromium · lock wait 0.0 s · other headless processes: chromium 9, webkit 6 · load 37.5/51.3/52.1 at start
+# chromium 149.0.7827.55
+# narrowed to scenes switch, accordion, button
+  PASS       E-2 switch Tab-entry light · scale range 0.000 body moved 0.00 px · focus on switch · load 35.7/50.7/51.9
+  PASS       E-2 switch commit·keyboard(Space) light · peak 1.020 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 108 frames, median 7.7 ms · load 35.7/50.7/51.9
+  PASS       E-2 switch commit·programmatic light · peak 1.020 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 106 frames, median 7.9 ms · load 35.7/50.7/51.9
+  PASS       E-2 switch commit·pointer light · peak 1.017 trough 0.997 settle 1.000 · body travel 19.60 px overshoot 0.00 px · 109 frames, median 7.6 ms · load 35.7/50.7/51.9
+  FAIL       E-2 switch commit·tap(coarse) light · peak 1.000 trough 0.968 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 106 frames, median 7.6 ms · load 35.7/50.7/51.9
+  PASS       E-2 switch mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 107 of 107 frames with the target present · load 37.6/50.8/51.9
+  PASS       E-2 switch Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on switch · load 37.6/50.8/51.9
+  PASS       E-2 switch commit·keyboard(Space) dark · peak 1.020 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 109 frames, median 7.6 ms · load 37.6/50.8/51.9
+  PASS       E-2 switch commit·programmatic dark · peak 1.020 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 105 frames, median 7.9 ms · load 37.6/50.8/51.9
+  PASS       E-2 switch commit·pointer dark · peak 1.017 trough 0.997 settle 1.000 · body travel 19.60 px overshoot 0.00 px · 108 frames, median 7.7 ms · load 35.5/50.2/51.7
+  FAIL       E-2 switch commit·tap(coarse) dark · peak 1.000 trough 0.969 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 107 frames, median 7.9 ms · load 35.5/50.2/51.7
+  PASS       E-2 switch mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 107 of 107 frames with the target present · load 35.5/50.2/51.7
+  PASS       E-2 accordion Tab-entry light · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 33.6/49.5/51.4
+  PASS       E-2 accordion commit·keyboard(Enter) light · peak 1.018 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 110 frames, median 7.5 ms · load 33.6/49.5/51.4
+  PASS       E-2 accordion commit·programmatic light · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 107 frames, median 7.6 ms · load 33.6/49.5/51.4
+  PASS       E-2 accordion commit·pointer light · peak 1.018 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 105 frames, median 7.9 ms · load 33.6/49.5/51.4
+  PASS       E-2 accordion commit·tap(coarse) light · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 107 frames, median 7.7 ms · load 33.6/49.5/51.4
+  PASS       E-2 accordion mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 108 of 108 frames with the target present · load 35.3/49.6/51.4
+  PASS       E-2 accordion Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 35.3/49.6/51.4
+  PASS       E-2 accordion commit·keyboard(Enter) dark · peak 1.018 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 107 frames, median 7.8 ms · load 35.3/49.6/51.4
+  PASS       E-2 accordion commit·programmatic dark · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 108 frames, median 7.4 ms · load 35.3/49.6/51.4
+  PASS       E-2 accordion commit·pointer dark · peak 1.018 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 107 frames, median 7.5 ms · load 35.3/49.4/51.4
+  PASS       E-2 accordion commit·tap(coarse) dark · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 108 frames, median 7.7 ms · load 35.3/49.4/51.4
+  PASS       E-2 accordion mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 107 of 107 frames with the target present · load 35.3/49.4/51.4
+  PASS       E-2 button Tab-entry light · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 35.3/49.4/51.4
+  PASS       E-2 button commit·keyboard(Space) light · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 108 frames, median 7.8 ms · load 35.3/49.4/51.4
+  PASS       E-2 button commit·programmatic light · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 107 frames, median 7.8 ms · load 34.8/49.0/51.2
+  PASS       E-2 button commit·pointer light · peak 1.031 trough 1.012 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 107 frames, median 7.7 ms · load 34.8/49.0/51.2
+  PASS       E-2 button commit·tap(coarse) light · peak 1.034 trough 1.012 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 109 frames, median 7.6 ms · load 34.8/49.0/51.2
+  PASS       E-2 button mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 106 of 106 frames with the target present · load 34.0/48.6/51.1
+  PASS       E-2 button Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 34.0/48.6/51.1
+  PASS       E-2 button commit·keyboard(Space) dark · peak 1.021 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 109 frames, median 7.6 ms · load 34.0/48.6/51.1
+  PASS       E-2 button commit·programmatic dark · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 107 frames, median 7.7 ms · load 34.0/48.6/51.1
+  PASS       E-2 button commit·pointer dark · peak 1.031 trough 1.012 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 105 frames, median 7.9 ms · load 34.0/48.6/51.1
+  PASS       E-2 button commit·tap(coarse) dark · peak 1.034 trough 1.012 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 109 frames, median 7.7 ms · load 35.3/48.7/51.1
+  PASS       E-2 button mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 108 of 108 frames with the target present · load 35.3/48.7/51.1
+E-2 chromium FAIL · 34 pass, 2 fail, 0 unmeasured of 36 gating cells (0 reported) · load 37.5/51.3/52.1 at start, 35.3/48.7/51.1 at end
+### exit 1 · load { 35.30 48.67 51.06 } · 18:11:40
+### head chromium e2-commit.mjs --scenes button · load { 35.30 48.67 51.06 } · 18:11:40
+# E-2 · the commit bar, generalized
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pB/out/builds/head · engine chromium · lock wait 0.0 s · other headless processes: chromium 12, webkit 6 · load 35.3/48.7/51.1 at start
+# chromium 149.0.7827.55
+# narrowed to scenes button
+  PASS       E-2 button Tab-entry light · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 34.9/48.4/50.9
+  FAIL       E-2 button commit·keyboard(Space) light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 110 frames, median 7.6 ms · load 34.9/48.4/50.9
+  FAIL       E-2 button commit·programmatic light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 106 frames, median 7.7 ms · load 34.9/48.4/50.9
+  FAIL       E-2 button commit·pointer light · peak 1.015 trough 1.015 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 108 frames, median 7.7 ms · load 34.9/48.4/50.9
+  FAIL       E-2 button commit·tap(coarse) light · peak 1.015 trough 1.015 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 107 frames, median 7.6 ms · load 33.0/47.7/50.7
+  PASS       E-2 button mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 107 of 107 frames with the target present · load 33.0/47.7/50.7
+  PASS       E-2 button Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 33.0/47.7/50.7
+  FAIL       E-2 button commit·keyboard(Space) dark · peak 1.001 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 104 frames, median 7.8 ms · load 33.0/47.7/50.7
+  FAIL       E-2 button commit·programmatic dark · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 107 frames, median 7.9 ms · load 33.0/47.7/50.7
+  FAIL       E-2 button commit·pointer dark · peak 1.015 trough 1.015 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 105 frames, median 7.6 ms · load 34.3/47.8/50.7
+  FAIL       E-2 button commit·tap(coarse) dark · peak 1.015 trough 1.015 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 108 frames, median 7.7 ms · load 34.3/47.8/50.7
+  PASS       E-2 button mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 108 of 108 frames with the target present · load 34.3/47.8/50.7
+E-2 chromium FAIL · 4 pass, 8 fail, 0 unmeasured of 12 gating cells (0 reported) · load 35.3/48.7/51.1 at start, 34.3/47.8/50.7 at end
+### exit 1 · load { 34.33 47.78 50.70 } · 18:11:57
+### pb chromium e4-momentum.mjs --scenes slider,sortable · load { 34.33 47.78 50.70 } · 18:11:57
+# E-4 · momentum: a release carries its velocity into the settle
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pB/out/builds/pb · engine chromium · lock wait 0.0 s · other headless processes: chromium 16, webkit 4 · load 34.3/47.8/50.7 at start
+# chromium 149.0.7827.55
+# narrowed to scenes slider, sortable
+  PASS       E-4 slider fling carries velocity · axis x · fling: carry 10.23 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 10.23 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 8.1 px, still 0.0 px · 253 frames, median 7.6 ms · load 34.8/47.4/50.5
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 34.8/47.4/50.5
+  PASS       E-4 sortable fling carries velocity · axis y · fling: carry 10.14 px, settles -36.69 px past release · still: carry 0.00 px, settles -36.69 px · difference: carry 10.14 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 69.5 px, still 2.8 px · 263 frames, median 7.8 ms · load 35.2/47.1/50.4
+  PASS       E-4 sortable release PRM · reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.5 px · load 35.2/47.1/50.4
+E-4 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 34.3/47.8/50.7 at start, 35.2/47.1/50.4 at end
+### exit 0 · load { 35.21 47.10 50.39 } · 18:12:16
+### pbs chromium e4-momentum.mjs --scenes sheet · load { 35.21 47.10 50.39 } · 18:12:16
+# E-4 · momentum: a release carries its velocity into the settle
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pB/out/builds/pbs · engine chromium · lock wait 0.0 s · other headless processes: chromium 16, webkit 4 · load 35.2/47.1/50.4 at start
+# chromium 149.0.7827.55
+# narrowed to scenes sheet
+  PASS       E-4 sheet fling carries velocity · axis y, dir −1 · fling: carry 130.41 px, settles 130.00 px past release · still: carry 5.00 px, settles 5.00 px · difference: carry 125.41 px, settle 125.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 25.7 px, still 0.7 px · 203 frames, median 8.1 ms · load 37.3/47.1/50.4
+  PASS       E-4 sheet release PRM · reduce · moved 73.1 px · fling: carry 255.00 px, settles 255.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 255.0 px · load 40.2/47.6/50.5
+E-4 chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 35.2/47.1/50.4 at start, 40.2/47.6/50.5 at end
+### exit 0 · load { 40.23 47.59 50.50 } · 18:12:28
+### heads chromium e4-momentum.mjs --scenes sheet · load { 40.23 47.59 50.50 } · 18:12:28
+# E-4 · momentum: a release carries its velocity into the settle
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pB/out/builds/heads · engine chromium · lock wait 0.0 s · other headless processes: chromium 15, webkit 4 · load 40.2/47.6/50.5 at start
+# chromium 149.0.7827.55
+# narrowed to scenes sheet
+  FAIL       E-4 sheet fling carries velocity · axis y, dir −1 · fling: carry 255.00 px, settles 255.00 px past release · still: carry 255.00 px, settles 255.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 50.7 px, still 34.8 px · 216 frames, median 7.9 ms · load 38.4/47.1/50.3
+  PASS       E-4 sheet release PRM · reduce · moved 328.1 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 40.8/47.4/50.4
+E-4 chromium FAIL · 1 pass, 1 fail, 0 unmeasured of 2 gating cells (0 reported) · load 40.2/47.6/50.5 at start, 40.8/47.4/50.4 at end
+### exit 1 · load { 40.82 47.44 50.42 } · 18:12:41
+### pb chromium e5-touch.mjs --scenes accordion,press_switch,button · load { 40.82 47.44 50.42 } · 18:12:41
+# E-5 · a held touch answers through a press rung
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pB/out/builds/pb · engine chromium · lock wait 0.0 s · other headless processes: chromium 13, webkit 4 · load 40.8/47.4/50.4 at start
+# chromium 149.0.7827.55
+# narrowed to scenes accordion, press_switch, button
+  PASS       E-5 accordion press light · :active true · Δscale -0.030 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] · NOT-REPRODUCED: engine closed on the first run (cdpSession.send: Target page, context or browser has been closed) · load 40.4/47.1/50.3
+  PASS       E-5 accordion press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] (bound ≥ 1 press-only property under reduce) · NOT-REPRODUCED: engine closed on the first run (cdpSession.send: Target page, context or browser has been closed) · load 40.4/47.1/50.3

@@ -211,3 +211,10 @@ Outage log:
   - Selftest 142/142 in both engines; the M-4 signed plant was re-cut, because the first never separated signed from unsigned.
   - HEAD under H3: O-66 reproduces W-0.1 §2 within 0.002. M-1x REPORTED: 23/33 off-paper light composites read grey in Chromium. The light dock's muted is #000 (ΔL −0.229).
   FLOOR-V2 launched next.
+- 2026-10-08 — D5 pass 1 P-B banked (family B: the release-velocity rule, one data-engaged writer, the stateless commit). The patch is 18 files, +579/−119, and passes apply --check at 5631b287. Build and typecheck exit 0; vitest 2319 passed.
+  - E-2 reads 36/36 per engine; HEAD's Button reads 4/12.
+  - E-5 12/12, E-7 4/4, E-8 7/7, E-9 24/24 per engine; the Button's reduce squish is cured.
+  - E-4 passes on slider, sortable and Sheet. At HEAD a still release lands on the same far detent as a fling (255 px); with the windowed rule it settles 5 px. The Sheet reading uses a local position fix that is not in the patch.
+  - Commit crest is ×1.020 on --scale-commit-pop (the same token as P-A).
+  - E-1, E-3 and E-6 stay RED by B's own row.
+  CB launched.
