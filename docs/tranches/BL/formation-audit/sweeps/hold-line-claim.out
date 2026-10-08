@@ -714,3 +714,23 @@ exit=1
 ## after: the plan as fix-21 leaves it
 in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 755, open 0
 exit=0
+
+# ===== fix-22 (HEAD `8becaac7`; kind `nesting` listed per CSS scope of each `&&` arm, plus `decl after amp` and `decl after at`, and fired by `_walks_rules`; pass 21 FU-01, FU-02; worktree .claude/worktrees/bl/formation/fix-22/wt)
+## before (1): enumeration only, the widened kind against fix-21 plants (scratchpad enum.py over sibling_arm)
+OPEN SIBLING waves/W-0.12.md:41 G1: `decl after amp @ src` (nesting) is in no plant
+OPEN SIBLING waves/W-0.12.md:41 G1: `decl after at @ src` (nesting) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10: `decl after amp @ src` (nesting) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10: `decl after at @ src` (nesting) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1: `decl after amp @ src/components/dock` (nesting) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1: `decl after at @ src/components/dock` (nesting) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1: `decl after at @ src !src/components/dock` (nesting) is in no plant
+nesting rows open 7
+## before (2): fix-22 plants added, HEAD plan (BL_ROOT = the worktree's plan, I7-G1 as pass 21 read it)
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with the parent's own declaration after a nested rule, in the dock (pass 21 FU-01, FU-02 SIBLING nesting) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run > * {\n    &:focus { color: red; }\n    transition'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with the parent's own declaration after a nested at-rule, in the dock (pass 21 FU-01, FU-02 SIBLING nesting) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run > * {\n    color: red;\n    @media (min-width: 1px'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with the parent's own declaration after a two-level nested block, in the dock (fix-22) planted in src/components/dock/styles/run.css: '.glass-dock .dock-run > * {\n    &:focus { &:hover { color: red; } }\n  '
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 767, open 3
+exit=1
+## after: the plan as fix-22 leaves it
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 767, open 0
+exit=0

@@ -150,7 +150,16 @@ plants its nouns require.
             nesting    a shape `src` writes a nested rule in, inside a rule: `&` after a declaration, `&` after a
                        sibling nested rule, an at-rule after a declaration (`dock/styles/controls/icon-button.css:26-126`,
                        `styles/animations.css`'s `@starting-style`), enumerated wherever the row's title or pass cell
-                       names nesting
+                       names nesting. Pass 21 (FU-01, FU-02) found the kind planted per row, so a shape held on one
+                       arm's files passed on another arm's: I7-G1's first arm (`src/components/dock`) passed the
+                       parent's own declaration after a nested rule, planted only in `glass/glass-capsule.css`, which
+                       the third arm reads. The kind now lists each shape once per CSS scope the row's spans read (an
+                       `&&` arm that names `.css`, its path arguments less its `-g '!…'` exclusions), and adds the
+                       two shapes in which the parent's own declaration follows a closed nested block (`decl after
+                       amp`, `decl after at`), which a rule body may take though `src` writes neither; a plant carries
+                       a shape on a scope only when its file lies in that scope. The kind also fires on a row
+                       that reads a declaration inside a rule (a regex across the rule's `{`, or an awk walk of
+                       braces) whether or not it names nesting (`_walks_rules`)
           Each sibling must be carried by a plant, red if it is the defect in another spelling, green if it is not;
           the plant then runs as every other plant does, so a red sibling the gate passes is open NARROW.
 
@@ -286,6 +295,9 @@ CLAIMS = {
         R(LY, ".glass-dock.collapsed .dock-layer--summary {\n    color: red;\n    &.is-active {\n        inline-size: 0;\n    }\n}", "nested after a declaration, the shape `controls/icon-button.css:26-112` writes (pass 20 FT-01 SIBLING nesting)"),
         R(LY, ".glass-dock.collapsed .dock-layer--summary {\n    &:hover { color: red; }\n    &.is-active { inline-size: 0; }\n}", "nested after a sibling nested rule, `icon-button.css:122-126` (pass 20 FT-01 SIBLING nesting)"),
         R(LY, ".glass-dock.collapsed .dock-layer--summary {\n    color: red;\n    @media (min-width: 1px) { inline-size: 0; }\n}", "an at-rule nested after a declaration, the shape `styles/animations.css` writes (pass 20 FT-01 SIBLING nesting)"),
+        R(LY, ".glass-dock.collapsed .dock-layer--summary {\n    &:hover { color: red; }\n    inline-size: 0;\n}", "the parent's own declaration after a nested rule (pass 21 FU-02 SIBLING nesting)"),
+        R(LY, ".glass-dock.collapsed .dock-layer--summary {\n    color: red;\n    @media (min-width: 1px) { color: blue; }\n    inline-size: 0;\n}", "the parent's own declaration after a nested at-rule (pass 21 FU-02 SIBLING nesting)"),
+        G(LY, ".glass-dock.collapsed:not([data-morphing]) .dock-layer--summary {\n    &:hover { color: red; }\n    inline-size: 0;\n}", "the same under the morph gate (pass 21 FU-02)"),
         R(LY, ".glass-dock.collapsed :is(.dock-layer--summary) { width: 0 }", "the layer inside `:is()`"),
         R(LY, ".glass-dock.expanded .dock-layer--full:not([data-morphing]) { width: 0 }", "the morph gate on the layer, which never carries it"),
         R("src/components/dock/GlassDock.vue", "<style>\n.glass-dock.collapsed :deep(.dock-layer--summary) { width: 0 }\n</style>", "a component <style> block"),
@@ -845,6 +857,9 @@ CLAIMS = {
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run {\n    flex: 0 0 auto;\n    & > :not([aria-current]) {\n        scroll-snap-align: start;\n    }\n}", "nested after a declaration, the shape `controls/icon-button.css:26-112` writes (pass 20 FT-01 SIBLING nesting)"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run {\n    &:hover { color: red; }\n    & > * { scroll-snap-align: start; }\n}", "nested after a sibling nested rule, `icon-button.css:122-126` (pass 20 FT-01 SIBLING nesting)"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run > * {\n    flex: 0 0 auto;\n    @media (min-width: 1px) { scroll-snap-align: start; }\n}", "an at-rule nested after a declaration, the shape `styles/animations.css` writes (pass 20 FT-01 SIBLING nesting)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > * {\n    &:hover { color: red; }\n    scroll-snap-align: start;\n}", "the parent's own snap declaration after a nested rule (pass 21 FU-02 SIBLING nesting)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > * {\n    flex: 0 0 auto;\n    @media (min-width: 1px) { color: blue; }\n    scroll-snap-align: start;\n}", "the parent's own snap declaration after a nested at-rule (pass 21 FU-02 SIBLING nesting)"),
+        G("src/components/dock/styles/run.css", ".glass-dock .dock-run [data-dock-seat] {\n    &:hover { color: red; }\n    scroll-snap-align: start;\n}", "the marker, its snap declaration after a nested rule (pass 21 FU-02)"),
         R("src/components/dock/styles/run.css", ".glass-dock {\n    color: red;\n    .dock-run > * { scroll-snap-align: start; }\n}", "a relative nested rule (no `&`) after a declaration (pass 20 FT-01)"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run, .x {\n    gap: 0;\n    & > * { scroll-snap-align: start; }\n}", "a parent selector list (pass 20 FT-01)"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run > :not([data-dock-seat]) {\n    scroll-snap-align: start;\n}", "the marker inside a negation, which picks the non-seats (pass 20 hardening note)"),
@@ -894,6 +909,12 @@ CLAIMS = {
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run > .x {\n    color: red;\n    &:hover {\n        transition: inline-size var(--spring-dock-duration) var(--spring-dock);\n    }\n}", "nested after a declaration, the shape `controls/icon-button.css:26-112` writes (pass 20 FT-01 SIBLING nesting)"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run > .x {\n    &:focus { color: red; }\n    &:hover { transition: inline-size 200ms; }\n}", "nested after a sibling nested rule, `icon-button.css:122-126` (pass 20 FT-01 SIBLING nesting)"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run > .x {\n    color: red;\n    @media (hover: hover) { transition: inline-size 200ms; }\n}", "an at-rule nested after a declaration, the shape `styles/animations.css` writes (pass 20 FT-01 SIBLING nesting)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > * {\n    &:focus { color: red; }\n    transition: inline-size 1s;\n}", "the parent's own declaration after a nested rule, in the dock (pass 21 FU-01, FU-02 SIBLING nesting)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > * {\n    color: red;\n    @media (min-width: 1px) { color: blue; }\n    transition: width 1s;\n}", "the parent's own declaration after a nested at-rule, in the dock (pass 21 FU-01, FU-02 SIBLING nesting)"),
+        R("src/components/dock/styles/run.css", ".glass-dock .dock-run > * {\n    &:focus { &:hover { color: red; } }\n    transition: width 1s;\n}", "the parent's own declaration after a two-level nested block, in the dock (fix-22)"),
+        G("src/components/dock/styles/run.css", ".glass-dock .dock-run > * {\n    &:focus { color: red; }\n    transition: var(--icon-button-transition), inline-size 1s;\n}", "§3 item 1's appended form after a nested rule, in the dock (pass 21 FU-01)"),
+        G("src/components/dock/styles/run.css", ".dock-layer-group {\n    &:focus { color: red; }\n    .dock-layer-tab-indicator { transition: width 1s; }\n}", "the indicator glide nested after a sibling rule, in the dock (fix-22)"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button {\n    color: red;\n    @media (hover: hover) { color: blue; }\n    transition: width 200ms;\n}", "outside the dock, the parent's own declaration after a nested at-rule (pass 21 FU-02 SIBLING nesting)"),
         R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button {\n    &:focus { color: red; }\n    &:hover { transition: inline-size 200ms; }\n}", "outside the dock, nested after a sibling nested rule (pass 20 FT-01 SIBLING nesting)"),
         R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button {\n    &:focus { color: red; }\n    transition: width 200ms;\n}", "outside the dock, the parent's own declaration after a nested rule (pass 20 FT-01)"),
         R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button {\n    color: red;\n    &:hover { transition: inline-size 200ms; }\n}", "outside the dock, nested after a declaration (pass 20 FT-01 SIBLING nesting)"),
@@ -1909,9 +1930,12 @@ def siblings(g, entry, spans, root):
         for h in sorted(heads):
             out.append(("compound", f"{c} > {h}", f"`src` writes `.{c} > {h}…`; the span reads `.{c}` before `>`"))
     # pass 20 FT-01, FT-03 (b): a row that claims to read nesting reads every nesting shape `src` writes
-    if re.search(r"\bnesting\b", g.gid + " " + g.passes):
-        for shp in sorted(src["nesting"]):
-            out.append(("nesting", shp, f"`src` writes a nested rule as `{shp}`; the row claims to read nesting"))
+    # pass 21 FU-01, FU-02: once per CSS scope an arm reads, with the parent's own declaration after a nested block
+    if re.search(r"\bnesting\b", g.gid + " " + g.passes) or any(_walks_rules(s) for s in spans):
+        for sc in _css_scopes(spans):
+            for shp in sorted(src["nesting"] | DECL_AFTER):
+                how = "a rule body may hold it" if shp in DECL_AFTER else "`src` writes a nested rule that way"
+                out.append(("nesting", f"{shp} @ {sc}", f"{how}; the row claims to read nesting, and an arm reads `{sc}`"))
     seen, uniq = set(), []
     for k in out:
         if (k[0], k[1]) not in seen:
@@ -1938,9 +1962,67 @@ SHAPED = {
     "compound": lambda n: re.compile(r"\." + re.escape(n.split(" > ")[0]) + r"(?![\w-])[^\s{},>]*\s*>\s*" + re.escape(n.split(" > ")[1])
                                      + (r"(?![\w-])" if re.fullmatch(r"\.?[\w-]+", n.split(" > ")[1]) else "")),
     "nesting": lambda n: re.compile({"amp after decl": r"\{[^{}]*;\s*&[^{};]*\{", "amp after rule": r"\{[^{}]*\{[^{}]*\}\s*&[^{};]*\{",
-                                     "at after decl": r"\{[^{}]*;\s*@[a-z-]+[^{};]*\{"}[n]),
+                                     "at after decl": r"\{[^{}]*;\s*@[a-z-]+[^{};]*\{",
+                                     "decl after amp": r"\{[^{}]*&[^{};]*\{[^{}]*\}\s*-?-?[a-zA-Z][\w-]*\s*:",
+                                     "decl after at": r"\{[^{}]*@[a-z-]+[^{};]*\{[^{}]*\}\s*-?-?[a-zA-Z][\w-]*\s*:"}[n.split(" @ ")[0]]),
     "value": lambda fv: re.compile(r"\(\s*" + re.escape(fv.split(":")[0]) + r"\s*:\s*" + re.escape(fv.split(": ")[1]) + r"\b"),
 }
+
+
+DECL_AFTER = {"decl after amp", "decl after at"}
+
+
+def _arms(span):
+    """pass 21 FU-01: a span's `&&` arms, split outside single and double quotes."""
+    arms, cur, q, i = [], "", None, 0
+    while i < len(span):
+        c = span[i]
+        if q:
+            q = None if c == q else q
+        elif c in "'\"":
+            q = c
+        elif span.startswith("&&", i):
+            arms.append(cur)
+            cur, i = "", i + 2
+            continue
+        cur += c
+        i += 1
+    return arms + [cur]
+
+
+def _css_scopes(spans):
+    """pass 21 FU-01, FU-02: every CSS scope the spans read, one per `&&` arm that names `.css`: its path arguments
+    (a glob cut at its first wildcard component), less its `-g '!…'` exclusions, as `inc !exc …`."""
+    out = []
+    for s in spans:
+        for arm in _arms(s):
+            if ".css" not in arm:
+                continue
+            try:
+                toks = [x.rstrip(")") for x in shlex.split(arm)]
+            except ValueError:
+                continue
+            inc = sorted({re.sub(r"/[^/]*\*.*$", "", x).rstrip("/") for x in toks if re.match(r"^(?:src|demo|tests)(?:/|$)", x)})
+            exc = sorted({re.sub(r"/\*\*$", "", toks[k + 1][1:]) for k in range(len(toks) - 1)
+                          if toks[k] == "-g" and toks[k + 1].startswith("!")})
+            for x in inc:
+                sc = " ".join([x] + ["!" + e for e in exc if e.startswith(x + "/")])
+                if sc not in out:
+                    out.append(sc)
+    return out
+
+
+def _walks_rules(span):
+    """pass 21 FU-01: a span that reads a declaration inside a CSS rule, by a regex across the rule's `{` (`[^{};]*\\{`
+    then `[^{}]`) or by an awk walk of braces, whether or not its row names nesting."""
+    if re.match(r"\s*!?\s*awk\b", span) and re.search(r'"\{"|/\{/', span):
+        return True
+    return bool(re.search(r"\\\{(?:\(\?:)?\[\^\{\}", span))
+
+
+def _inscope(rel, sc):
+    inc, *exc = sc.split(" ")
+    return (rel == inc or rel.startswith(inc + "/")) and not any(rel.startswith(e[1:] + "/") for e in exc)
 
 
 def _outsheets(src, d):
@@ -2064,6 +2146,8 @@ def sibling_arm(g, entry, spans, root, where):
         pool = texts
         if kind in SHAPED:  # these kinds are a form, not a name: a plant carries one only in that form
             rx, pool = SHAPED[kind](name), own
+        if kind == "nesting":  # pass 21 FU-02: and only in a file of the scope it is listed for
+            pool = [p[1] for p in entry["plants"] if p[2] != "cure" and _inscope(p[0], name.split(" @ ")[1])]
         if not any(rx.search(t) for t in pool):
             res.append(f"OPEN SIBLING {where}: `{name}` ({kind}: {how}) is in no plant")
     return res
