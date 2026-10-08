@@ -1,0 +1,8 @@
+/* D3 C′ plant · Q-8 c removed (obligation 6): the solve reads the lagged tones only, so a worsening ground also
+   arrives on the spring. Expected under ?claim=honest: M-2m RED on the 0.5 → 1 step windows. */
+:root, .dark, [data-glass-ground] {
+    --glass-ground-e: calc(
+        (1 - var(--glass-bound-ground)) * min(var(--glass-ground-lo-lag), var(--glass-pole-e)) +
+            var(--glass-bound-ground) * max(var(--glass-ground-hi-lag), var(--glass-pole-e))
+    );
+}

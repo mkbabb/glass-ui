@@ -42,6 +42,8 @@ node $H/glance.mjs --base $D3_OUT/builds/head/dist --route $D3_OUT/builds/<route
 node $H/selftest.mjs --fields $D3_OUT/caps/head [--only M-2,W-G]    # 1 h 5 min at load 7-70 (100 expectations)
 ```
 
+**Consumer switches (D3 pass 2, C′ prototype).** `capture.mjs` and `run.mjs` take `--query <k=v>`, appended to every page URL the capture opens (cells, live and motion windows, the unshimmed probe); the cells keep their variant, so every witness reads the run it is pointed at. The specimen page reads `claim=`: `honest` (each `<main>` claims what the page paints under it: paper → `data-glass-ground="page"`, the aurora → `"field"`, a stand → its colours' tones through the library's `glassGroundTone`, the hostile scene → the worst of its band and declared region), `field-false` (the hostile scene claims the field and hides its band) and `root-page` (`<html>` claims the page ground: pass 1's page default). A library without the claim ignores the attribute, so HEAD and the floor read the same under any `claim=`. `glance.mjs` takes `--ground`, `--ids` and `--route-query` to widen the pair beyond H-13's paper chrome crops; its default pair is unchanged. Records: `../pass-2/D3-Cp-proto.md`.
+
 Every check exits 0 on PASS and 1 on FAIL; its last line is the verdict and the lines above it are the measured rows. `--gate` names the gate engines (default Chromium); rows of any other captured engine print as information. `--cells <regex>` restricts a check to the cells whose `engine theme ground scene` matches; only the self-test's planted captures use it.
 
 ## 2 · The instrument

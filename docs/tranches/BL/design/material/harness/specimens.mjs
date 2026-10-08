@@ -18,13 +18,24 @@
 //   [data-hx-band]       an opaque band interposed between the field and the glass (H-10); part of the ground
 //   [data-hx-declared]   a page region a consumer declares ("dark" or "light"); class .hx-declared is the route's hook
 //   window.__harness.setCeiling(v)   steps the field's opacity ceiling (W-B's step, M-2m's ground step)
-// URL: ?scene=<SCENES> &ground=<GROUNDS|red> &theme=light|dark &nodock=1
+//   [data-glass-ground]  a consumer's claim on the ground under a scope (D3 C′, tokens/glass.css); written only
+//                        under ?claim=, and inert on a build whose library has no claim
+// URL: ?scene=<SCENES> &ground=<GROUNDS|red> &theme=light|dark &nodock=1 &claim=honest|field-false|root-page
+//   claim=honest       the page claims what it paints under every <main>, as a consumer would: paper → "page", the
+//                      aurora → "field" (the field's own publication), a stand → its colours' tones, and the hostile
+//                      scene → the worst of its band and declared region (both painted under <main>). Portals and the
+//                      Dialog stay unclaimed.
+//   claim=field-false  as honest, except the hostile scene claims the field and hides its band (a false claim)
+//   claim=root-page    <html> claims the page ground everywhere (pass 1's page default, the masking plant)
 // The ink ids: "fg" and "muted" on every surface; the dock's fg run is the ACTIVE tab and its inactive tab is
 // "muted-tab" (S-9, H-2: an inactive DockControl paints --muted-foreground by design, so it is a muted run).
+import fs from "node:fs";
 import { CHECKOUT } from "./lib.mjs";
 
 export function specimenApp(wt) {
   const nm = `${CHECKOUT}/node_modules`;
+  // The claim's tone function, where the worktree's library has one; a library without it gets no tones.
+  const hasTone = fs.existsSync(`${wt}/src/composables/glass/groundTone.ts`);
   const indexHtml = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=1280, initial-scale=1">
 <title>D3 material specimens</title>
 <script>const q=new URLSearchParams(location.search); if(q.get('theme')==='dark'){document.documentElement.classList.add('dark');}</script>
@@ -47,6 +58,7 @@ import { Input } from "@glass/components/input";
 import { Checkbox } from "@glass/components/checkbox";
 import { SegmentedTabs } from "@glass/components/tabs";
 import { Slider } from "@glass/components/slider";
+${hasTone ? 'import { glassGroundTone, readGlassSaturate } from "@glass/composables/glass/groundTone";' : "const glassGroundTone = null as any, readGlassSaturate = null as any;"}
 
 const q = new URLSearchParams(location.search);
 const ground = q.get("ground") ?? "paper";
@@ -60,6 +72,17 @@ const declared = q.get("theme") === "dark" ? "light" : "dark";
 const LADDERISH = ["ladder", "hostile", "isolated"].includes(scene);
 const seg = ref("a");
 const SEG = [{ label: "Grid", value: "a" }, { label: "List", value: "b" }];
+
+// The consumer's claim (?claim=). The stands' colours and the hostile scene's band + declared region are what
+// this page paints under <main>; the field is the aurora's own publication.
+const claim = q.get("claim");
+const STAND: Record<string, string[]> = { black: ["#000000"], white: ["#ffffff"], checker: ["#000000", "#ffffff"], stripes: ["#7c3aed", "#facc15"], red: ["#761617"] };
+const HOSTILE = q.get("theme") === "dark" ? ["#f4f1ea", "#ffffff"] : ["#0b1020", "#000000"];
+const claimMode = !claim || claim === "root-page" ? undefined
+  : scene === "hostile" ? (claim === "field-false" ? "field" : "")
+  : field ? "field" : ground === "paper" ? "page" : "";
+const claimColors = claimMode === "" ? (scene === "hostile" ? HOSTILE : STAND[ground] ?? null) : null;
+const claimStyle = ref<Record<string, string>>({});
 
 const LEVELS = [
   { id: "wash", cls: "glass-wash", band: "content" },
@@ -76,6 +99,13 @@ const HELD = [{ id: "wash-held", cls: "glass-wash", band: "content" }, { id: "fl
 const HALO = ["wash", "quiet", "resting", "card"].map((id, i) => ({ id, cls: "glass-" + id, top: 40 + i * 150 + "px" }));
 
 onMounted(() => {
+  if (claim === "root-page") document.documentElement.setAttribute("data-glass-ground", "page");
+  if (claimColors && glassGroundTone) {
+    const saturate = readGlassSaturate(document.documentElement);
+    let lo = 1, hi = 0;
+    for (const c of claimColors) { const t = glassGroundTone(c, { saturate }); lo = Math.min(lo, t.lo); hi = Math.max(hi, t.hi); }
+    claimStyle.value = { "--glass-ground-lo": lo.toFixed(4), "--glass-ground-hi": hi.toFixed(4) };
+  }
   const stamp = () => {
     document.querySelectorAll(".bg-overlay-scrim, .glass-focus-veil").forEach((e) => e.setAttribute("data-raw-hide", ""));
     document.querySelector('[data-slot="dialog-close"]')?.setAttribute("data-ring", "close");
@@ -90,7 +120,7 @@ onMounted(() => {
   <div v-else-if="ground !== 'paper'" class="hx-stand" :data-ground="ground" aria-hidden="true"></div>
   <div class="hx-bare" data-bare aria-hidden="true"></div>
 
-  <main v-if="LADDERISH" class="hx-page" :style="scene === 'isolated' ? { isolation: 'isolate' } : {}">
+  <main v-if="LADDERISH" class="hx-page" :data-glass-ground="claimMode" :style="[scene === 'isolated' ? { isolation: 'isolate' } : {}, claimStyle]">
     <template v-if="scene === 'hostile'">
       <div class="hx-band" data-hx-band style="top: 36px; height: 52px" aria-hidden="true"></div>
       <div class="hx-band" data-hx-band style="top: 474px; height: 48px; width: 900px" aria-hidden="true"></div>
@@ -128,7 +158,7 @@ onMounted(() => {
     </div>
   </main>
 
-  <main v-else-if="scene === 'held'" class="hx-page">
+  <main v-else-if="scene === 'held'" class="hx-page" :data-glass-ground="claimMode" :style="claimStyle">
     <section v-for="(H, i) in HELD" :key="H.id" :class="['hx-plate', H.cls]" :data-spec="H.id" :data-band="H.band" data-held :style="{ left: 24 + i * 304 + 'px', top: '24px' }">
       <span class="glass-grasp-carrier" data-grasp="rest"></span>
       <span class="glass-grasp-carrier" data-grasp="grasp"></span>
@@ -159,7 +189,7 @@ onMounted(() => {
     </div>
   </main>
 
-  <main v-else-if="scene === 'state'" class="hx-page">
+  <main v-else-if="scene === 'state'" class="hx-page" :data-glass-ground="claimMode" :style="claimStyle">
     <section class="hx-plate glass-resting" data-spec="resting" data-band="content" style="left: 24px; top: 24px">
       <p class="hx-fg"><span data-ink="fg">resting Aa foreground</span></p>
       <div class="hx-staterow">
@@ -192,7 +222,7 @@ onMounted(() => {
     </DialogContent>
   </Dialog>
 
-  <main v-else-if="scene === 'halo'" class="hx-page">
+  <main v-else-if="scene === 'halo'" class="hx-page" :data-glass-ground="claimMode" :style="claimStyle">
     <section v-for="H in HALO" :key="H.id" :class="['hx-halohost', H.cls]" :data-halo-host="H.id" :style="{ top: H.top }">
       <button class="glass-capsule hx-capsule" data-halo-capsule>Pause</button>
     </section>

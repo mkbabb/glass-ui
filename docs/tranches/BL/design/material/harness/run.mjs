@@ -3,6 +3,7 @@
 // live windows, the motion windows, the unshimmed-WebKit probe and the consumer retune variant, then every witness.
 // Each witness's full output lands in <capdir>/results/<id>.log.
 //   node run.mjs <worktree> [--label head] [--engines chromium,webkit] [--skip-build] [--skip-capture] [--live-ms 9000] [--demo]
+//     [--query claim=honest]   extra URL parameters for every page (the specimen page's consumer switches)
 // --demo also builds the worktree's demo for the owner-glance story pair (glance.mjs --story-base/--story-route).
 import fs from "node:fs";
 import path from "node:path";
@@ -36,14 +37,14 @@ export function runWitnesses(capdir, extraArgs = []) {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const a = cli({ label: { type: "string" }, engines: { type: "string" }, "skip-build": { type: "boolean" }, "skip-capture": { type: "boolean" }, "live-ms": { type: "string" }, demo: { type: "boolean" } });
+  const a = cli({ label: { type: "string" }, engines: { type: "string" }, "skip-build": { type: "boolean" }, "skip-capture": { type: "boolean" }, "live-ms": { type: "string" }, demo: { type: "boolean" }, query: { type: "string" } });
   if (!a._[0]) { console.error("usage: node run.mjs <worktree> [--label head]"); process.exit(2); }
   const label = a.label || "head", capdir = path.join(OUT, "caps", label), dist = path.join(OUT, "builds", label, "dist");
   if (!a["skip-build"]) { const { meta } = await buildSpecimens(a._[0], label); console.log(`built ${label} @ ${meta.sha}`); if (a.demo) console.log(`built demo → ${await buildDemo(a._[0], label)}`); }
   if (!a["skip-capture"]) {
-    await capture(dist, { out: capdir, engines: a.engines, live: true, liveMs: a["live-ms"], motion: true, probeUnshimmed: true, worktree: path.resolve(a._[0]) });
+    await capture(dist, { out: capdir, engines: a.engines, live: true, liveMs: a["live-ms"], motion: true, probeUnshimmed: true, worktree: path.resolve(a._[0]), query: a.query });
     const retune = path.join(OUT, "retune.css"); fs.writeFileSync(retune, RETUNE_CSS);
-    await capture(dist, { out: capdir, engines: a.engines, grounds: "paper", scenes: "ladder,dialog", variant: "retune", inject: retune });
+    await capture(dist, { out: capdir, engines: a.engines, grounds: "paper", scenes: "ladder,dialog", variant: "retune", inject: retune, query: a.query });
   }
   const res = runWitnesses(capdir);
   fs.writeFileSync(path.join(capdir, "results", "summary.json"), JSON.stringify(res, null, 1));

@@ -156,6 +156,9 @@ export async function capture(target, o = {}) {
   const shim = !o.noWebkitShim;
   const geomOpts = JSON.stringify({ boundProp: o.boundProp || BOUND_PROP, flatAttr: FLAT_ATTR });
   const inject = o.inject ? fs.readFileSync(path.resolve(o.inject), "utf8") : "";
+  // --query: extra URL parameters for every page this capture opens (the specimen page's consumer switches, e.g.
+  // `claim=honest`). The cells keep their variant: a witness reads the run it is pointed at.
+  const qs = o.query ? "&" + String(o.query).replace(/^[&?]/, "") : "";
   const pw = await playwright();
   const server = await serve(target);
   const cells = [], live = [], motion = [], versions = {}, unshimmed = {};
@@ -188,7 +191,7 @@ export async function capture(target, o = {}) {
       page.on("pageerror", (e) => errs.push(String(e).slice(0, 200)));
       page.on("crash", () => { crashed = true; });
       try {
-        await page.goto(`${server.url}index.html?scene=${scene}&ground=${ground}&theme=${theme}${base.nodock ? "&nodock=1" : ""}`, { waitUntil: "load", timeout: 120000 });
+        await page.goto(`${server.url}index.html?scene=${scene}&ground=${ground}&theme=${theme}${base.nodock ? "&nodock=1" : ""}${qs}`, { waitUntil: "load", timeout: 120000 });
         await page.addStyleTag({ content: MODE_CSS + inject });
         await page.evaluate(() => document.fonts.ready);
         await page.waitForTimeout(FIELD_GROUNDS.includes(ground) ? waitField : waitFlat);
@@ -239,7 +242,7 @@ export async function capture(target, o = {}) {
       const ctx = await browser.newContext({ viewport: VIEW, deviceScaleFactor: 1, colorScheme: theme, reducedMotion: "reduce" });
       const page = await ctx.newPage(); let crashed = false; page.on("crash", () => { crashed = true; });
       let error = null;
-      try { await page.goto(`${server.url}index.html?scene=ladder&ground=paper&theme=${theme}`, { waitUntil: "load", timeout: 60000 }); await page.waitForTimeout(2500); await page.evaluate(() => 1); }
+      try { await page.goto(`${server.url}index.html?scene=ladder&ground=paper&theme=${theme}${qs}`, { waitUntil: "load", timeout: 60000 }); await page.waitForTimeout(2500); await page.evaluate(() => 1); }
       catch (e) { error = String(e).split("\n")[0].slice(0, 160); crashed = true; }
       unshimmed[theme] = { crashed, error };
       log(`webkit ${theme} ladder paper UNSHIMMED: ${crashed ? "CRASH " + (error || "") : "no crash"}`);
@@ -250,7 +253,7 @@ export async function capture(target, o = {}) {
         const { ctx, page } = await newPage(browser, engine, theme, "no-preference");
         const rec = { engine, theme, ground, variant, liveMs };
         try {
-          await page.goto(`${server.url}index.html?scene=ladder&ground=${ground}&theme=${theme}`, { waitUntil: "load", timeout: 120000 });
+          await page.goto(`${server.url}index.html?scene=ladder&ground=${ground}&theme=${theme}${qs}`, { waitUntil: "load", timeout: 120000 });
           await page.addStyleTag({ content: MODE_CSS + inject });
           await page.mouse.move(VIEW.width - 1, VIEW.height - 1);
           await page.waitForTimeout(1500);
@@ -285,7 +288,7 @@ export async function capture(target, o = {}) {
       const rec = { engine, theme, ground, variant, shim: engine === "webkit" && shim, motionMs, stepMs, frames: [], source: engine === "chromium" ? "CDP Page.startScreencast (png, every frame)" : "page.screenshot loop" };
       const stem = `motion-${engine}-${theme}-${ground}-${variant}`;
       try {
-        await page.goto(`${server.url}index.html?scene=ladder&ground=${ground}&theme=${theme}`, { waitUntil: "load", timeout: 120000 });
+        await page.goto(`${server.url}index.html?scene=ladder&ground=${ground}&theme=${theme}${qs}`, { waitUntil: "load", timeout: 120000 });
         await page.addStyleTag({ content: MODE_CSS + inject });
         await page.evaluate(() => document.fonts.ready);
         await page.mouse.move(VIEW.width - 1, VIEW.height - 1);
@@ -332,7 +335,7 @@ export async function capture(target, o = {}) {
     meta: { ...(prev.meta || {}), target, label, worktree: o.worktree || buildMeta.worktree || prev.meta?.worktree || null, sha: buildMeta.sha || prev.meta?.sha || null,
       versions: { ...(prev.meta?.versions || {}), ...versions }, webkitShim: shim ? WEBKIT_SHIM : null,
       webkitUnshimmed: { ...(prev.meta?.webkitUnshimmed || {}), ...unshimmed },
-      captured: new Date().toISOString(), load: os.loadavg().map((v) => +v.toFixed(1)), seconds: +((Date.now() - t0) / 1000).toFixed(1) },
+      captured: new Date().toISOString(), query: o.query || null, load: os.loadavg().map((v) => +v.toFixed(1)), seconds: +((Date.now() - t0) / 1000).toFixed(1) },
     cells: keep(prev.cells || [], cells, cellKey), live: keep(prev.live || [], live, liveKey), motion: keep(prev.motion || [], motion, liveKey) };
   fs.writeFileSync(cellsFile, JSON.stringify(doc, null, 1));
   log(`captured ${cells.length} cells, ${live.length} live windows and ${motion.length} motion windows in ${doc.meta.seconds}s (load ${doc.meta.load.join(" ")}) → ${capdir}`);
@@ -346,7 +349,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const a = cli({ out: { type: "string" }, engines: { type: "string" }, themes: { type: "string" }, grounds: { type: "string" }, scenes: { type: "string" },
     live: { type: "boolean" }, "live-ms": { type: "string" }, motion: { type: "boolean" }, "motion-ms": { type: "string" }, "step-ms": { type: "string" },
     variant: { type: "string" }, inject: { type: "string" }, worktree: { type: "string" }, "no-webkit-shim": { type: "boolean" }, "probe-unshimmed": { type: "boolean" },
-    "signal-props": { type: "string" }, "wait-field": { type: "string" }, "wait-flat": { type: "string" }, label: { type: "string" }, quiet: { type: "boolean" } });
+    "signal-props": { type: "string" }, "wait-field": { type: "string" }, "wait-flat": { type: "string" }, label: { type: "string" }, quiet: { type: "boolean" }, query: { type: "string" } });
   if (!a._[0]) { console.error("usage: node capture.mjs <dist-or-fixture-dir> [--out capdir] …"); process.exit(2); }
   await capture(a._[0], { ...a, liveMs: a["live-ms"], motionMs: a["motion-ms"], stepMs: a["step-ms"], noWebkitShim: a["no-webkit-shim"], probeUnshimmed: a["probe-unshimmed"],
     signalProps: a["signal-props"], waitField: a["wait-field"], waitFlat: a["wait-flat"] });

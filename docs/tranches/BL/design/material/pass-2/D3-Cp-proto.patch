@@ -1,0 +1,1221 @@
+diff --git a/.published-roster b/.published-roster
+index a0e86608..eb65ba2a 100644
+--- a/.published-roster
++++ b/.published-roster
+@@ -246,6 +246,7 @@ utility dock-label
+ utility fira-code
+ utility fourier-f
+ utility ghost-slot
++utility glass-ink
+ utility glass-plate
+ utility paper-grain-overlay
+ utility paper-underpaint
+diff --git a/DESIGN.md b/DESIGN.md
+index 54399560..6225deba 100644
+--- a/DESIGN.md
++++ b/DESIGN.md
+@@ -518,7 +518,11 @@ Five tiers compose background opacity, backdrop-blur, border, shadow, grain. Dar
+ 
+ ### Plate register
+ 
+-`@utility glass-plate` (`src/styles/glass/veil.css`) is the plate paint, composed at the element. It reads `--glass-veil-tier` (unset resolves `resting`), clamps it upward by the measured backdrop luminance into `--glass-veil-rest` → `--glass-veil-rung`, mixes that into `--glass-veil`, and writes exactly one declaration: `background: var(--glass-veil)`. The five tier classes above apply it and add their own blur, border and shadow; `--glass-veil` is published as a nestable value token for a surface composing the plate inside a larger mix.
++`@utility glass-plate` (`src/styles/glass/veil.css`) is the plate paint, composed at the element. It reads `--glass-veil-tier` (unset resolves `resting`) into `--glass-veil-rest` → `--glass-veil-rung`, paints `--card` at that α as `--glass-veil`, and writes exactly one declaration: `background: var(--glass-veil)`. The five tier classes above apply it and add their own blur, border and shadow; `--glass-veil` is published as a nestable value token for a surface composing the plate inside a larger mix.
++
++The plate also solves its own muted ink. The utility `glass-ink` (same file) reads the encoded tone of the surface under the text (`--glass-ink-e`) and writes `--on-glass-muted` at exactly `--glass-ink-target` against it, stopping `--glass-ink-reach` short of `--foreground`. `glass-plate` applies it to its composite; the field components (Input, Textarea, NumberFieldInput) carry the class for their placeholder, solved against the plate that holds them.
++
++**The ground claim.** A surface that does not know its ground paints the bound. A consumer that knows what it paints under a scope says so with `data-glass-ground` (`src/styles/tokens/glass.css`): `="page"` for the page itself, `="field"` for a substrate that publishes its tones (`<Aurora>` does, on its parent: `data-glass-field`), or bare with `--glass-ground-lo/-hi` written beside it (`glassGroundTone()` turns a colour into both). Inside a claim the content rungs (wash, quiet, resting) thin to the α the claimed ground licenses; chrome, the dock and the dialog stay on the bound. The library never claims.
+ 
+ It deliberately supplies **no position, no z-index, no radius, no size**. A plate is paint, not a box. `.dock-plate` is the worked example: it composes `glass-plate` and declares `position: absolute; inset: 0; z-index: -1` itself, because only the surface knows which box it is lining.
+ 
+diff --git a/src/components/_shared/field/control.css b/src/components/_shared/field/control.css
+index 99090164..e2c30749 100644
+--- a/src/components/_shared/field/control.css
++++ b/src/components/_shared/field/control.css
+@@ -76,6 +76,21 @@
+            α, transmissive. */
+         --control-surface-bg: var(--glass-well);
+ 
++        /* ── THE PLACEHOLDER INK ──
++           The well is a leaf surface: its ground is the composite of the plate that
++           holds it (`--glass-host-e`, exported by `@utility glass-plate`; the page's
++           ground tone outside any plate), its pole is the well pole, its α the bound.
++           It solves its own muted ink against that composite: the components put
++           `glass-ink` (glass/veil.css) on the same element, which reads
++           `--glass-ink-e` here, so a placeholder follows its host instead of the
++           host's ink. A well never holds a plate, so the hand-off is one level deep. */
++        --glass-paint-a: calc(1 - (1 - var(--glass-bound)) * var(--glass-level));
++        --glass-ink-e: calc(
++            var(--glass-paint-a) * var(--glass-well-pole-e) +
++                (1 - var(--glass-paint-a)) * var(--glass-host-e)
++        );
++        --muted-foreground: var(--on-glass-muted);
++
+         /* ── THE CLOCK ──
+            Liquid weight on every channel the field can change. `--spring-press`
+            is the house press curve (a `linear()` spring, not a bezier), settling
+diff --git a/src/components/aurora/Aurora.vue b/src/components/aurora/Aurora.vue
+index 4a8c4f09..ef3b477f 100644
+--- a/src/components/aurora/Aurora.vue
++++ b/src/components/aurora/Aurora.vue
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { computed, getCurrentInstance, ref, watch } from "vue";
++import { computed, getCurrentInstance, onBeforeUnmount, onMounted, ref, watch } from "vue";
+ import { useAurora } from "./composables/useAurora";
+ import { auroraFallbackGround } from "./composables/auroraFallbackGround";
+ import type { AuroraRuntimeOptions } from "./composables/runtime";
+@@ -125,6 +125,21 @@ const resolvedRenderMode = resolveRenderMode(props.renderMode, {
+ const ceilingVar = computed(() => String(Math.max(0, Math.min(1, props.opacityCeiling))));
+ 
+ const canvasRef = ref<HTMLCanvasElement | null>(null);
++const rootRef = ref<HTMLElement | null>(null);
++
++// The ceiling the field composites at, as the page sees it: the reduced-transparency arm
++// below lifts it to 1, so the published ground follows it.
++const reducedTransparency = ref(false);
++let transparencyQuery: MediaQueryList | null = null;
++const onTransparency = (e: MediaQueryListEvent): void => {
++    reducedTransparency.value = e.matches;
++};
++onMounted(() => {
++    transparencyQuery = window.matchMedia?.("(prefers-reduced-transparency: reduce)") ?? null;
++    reducedTransparency.value = transparencyQuery?.matches ?? false;
++    transparencyQuery?.addEventListener("change", onTransparency);
++});
++onBeforeUnmount(() => transparencyQuery?.removeEventListener("change", onTransparency));
+ // Top-level `onInitError` prop wins over `runtimeOptions.onInitError` —
+ // the prop is the ergonomic surface, runtimeOptions stays the
+ // pass-through for fully-composed AuroraRuntimeOptions objects (e.g.
+@@ -149,6 +164,8 @@ const mergedRuntimeOptions: AuroraRuntimeOptions = {
+ // GPU initialization entirely.
+ const api = useAurora(canvasRef, () => props.config, mergedRuntimeOptions, {
+     renderMode: resolvedRenderMode,
++    groundHost: () => rootRef.value?.parentElement ?? null,
++    groundCeiling: () => (reducedTransparency.value ? 1 : Number(ceilingVar.value)),
+ });
+ watch(api.rendererStatus, (status) => emit("rendererStatus", status), {
+     immediate: true,
+@@ -204,6 +221,7 @@ defineExpose({
+       identical across every medium with no way to tell from the picture.
+     -->
+     <div
++        ref="rootRef"
+         class="aurora-root h-full w-full overflow-hidden"
+         :data-aurora-substrate="resolvedRenderMode"
+         :data-aurora-settled="api.isSettled.value ? '' : undefined"
+diff --git a/src/components/aurora/composables/auroraFallbackGround.ts b/src/components/aurora/composables/auroraFallbackGround.ts
+index 25613675..2cf725eb 100644
+--- a/src/components/aurora/composables/auroraFallbackGround.ts
++++ b/src/components/aurora/composables/auroraFallbackGround.ts
+@@ -40,6 +40,7 @@
+ import { oklchToLinear } from "../../../composables/color";
+ import type { OklchStop } from "../../../composables/color";
+ import type { AuroraConfig, AuroraNucleus } from "../constants/presets";
++import { glassGroundTone, type GlassGroundTones } from "../../../composables/glass/groundTone";
+ 
+ /** A linear-sRGB triple in [0,1]. */
+ type Lin = [number, number, number];
+@@ -366,3 +367,25 @@ function rasterizeField(
+         return null;
+     }
+ }
++
++/**
++ * The field's ground tones for a glass claim (`composables/glass/groundTone.ts`): the
++ * darkest luma and the brightest saturated Y-tone over the SAME static lattice the
++ * fallback ground samples, at the finest grid (16 × 16). The bound, not a decile: a claim
++ * that missed the darkest texel would thin glass over it. `null` for an image source,
++ * whose photo the CPU mirror cannot see.
++ */
++export function auroraGroundTones(config: AuroraConfig, saturate: number): GlassGroundTones | null {
++    if (config.source === "image" || !Number.isFinite(saturate)) return null;
++    const grid = 16;
++    let lo = 1;
++    let hi = 0;
++    for (let iy = 0; iy < grid; iy++) {
++        for (let ix = 0; ix < grid; ix++) {
++            const t = glassGroundTone(sampleAuroraField(config, (ix + 0.5) / grid, (iy + 0.5) / grid), { saturate });
++            lo = Math.min(lo, t.lo);
++            hi = Math.max(hi, t.hi);
++        }
++    }
++    return { lo, hi };
++}
+diff --git a/src/components/aurora/composables/useAurora.ts b/src/components/aurora/composables/useAurora.ts
+index c2025b77..8534d0c7 100644
+--- a/src/components/aurora/composables/useAurora.ts
++++ b/src/components/aurora/composables/useAurora.ts
+@@ -13,6 +13,12 @@ import { asGetter, type ConfigSource } from "./configSource";
+ import { useIntersectionPause } from "../../../composables/motion/core/useIntersectionPause";
+ import { useScrollProgress } from "../../../composables/motion/scroll/useScrollProgress";
+ import type { AuroraConfig } from "../constants/presets";
++import { auroraGroundTones } from "./auroraFallbackGround";
++import {
++    publishGlassField,
++    readGlassSaturate,
++    type GlassFieldPublisher,
++} from "../../../composables/glass/groundTone";
+ import {
+     cssRenderer,
+     pendingRenderer,
+@@ -32,6 +38,15 @@ export interface UseAuroraAdaptiveOptions {
+      * (default) arms the deferred GPU runtime.
+      */
+     renderMode?: "webgl" | "css";
++    /**
++     * The element the field's ground tones are published on (`--glass-field-lo/-hi/
++     * -ceiling` and `data-glass-field`, `composables/glass/groundTone.ts`). Glass that a
++     * consumer claims with `data-glass-ground="field"` inside it reads them. Defaults to
++     * the canvas's parent. The substrate publishes; it never claims.
++     */
++    groundHost?: () => HTMLElement | null;
++    /** The field's compositing ceiling over the page (default 1). */
++    groundCeiling?: () => number;
+ }
+ 
+ /**
+@@ -179,6 +194,8 @@ export function useAurora(
+     let stopScrollWatch: (() => void) | null = null;
+     let cancelSchedule: (() => void) | null = null;
+     let intersection: ReturnType<typeof useIntersectionPause> | null = null;
++    let groundPublisher: GlassFieldPublisher | null = null;
++    let stopGroundWatch: (() => void) | null = null;
+     // Guards a single arm attempt (success OR failure both consume it).
+     let armAttempted = false;
+     // Exposed to `Aurora.vue` so it can cross-fade the canvas in over the
+@@ -294,9 +311,43 @@ export function useAurora(
+         );
+     }
+ 
++    /**
++     * Publish the field's ground tones on its host: on mount and on every config or
++     * ceiling change, never per frame (the tones are config arithmetic, the same on every
++     * renderer arm). `flush: "sync"` lands a worsening ceiling in the frame that paints it.
++     */
++    function armGroundPublication(canvas: HTMLCanvasElement): void {
++        const host = adaptiveOptions.groundHost?.() ?? canvas.parentElement;
++        if (!host) return;
++        // No glass stylesheet in the cascade: there is no glass to claim, so nothing to
++        // publish for.
++        const saturate = readGlassSaturate(host);
++        if (!Number.isFinite(saturate)) return;
++        const publisher = publishGlassField(host);
++        groundPublisher = publisher;
++        const ceiling = adaptiveOptions.groundCeiling ?? (() => 1);
++        let tones = auroraGroundTones(getCfg(), saturate);
++        const publish = (): void => publisher.set(tones && { ...tones, ceiling: ceiling() });
++        const stopTones = watch(
++            getCfg,
++            (next) => {
++                tones = auroraGroundTones(next, saturate);
++                publish();
++            },
++            { deep: true, flush: "sync" },
++        );
++        const stopCeiling = watch(ceiling, publish, { flush: "sync" });
++        publish();
++        stopGroundWatch = () => {
++            stopTones();
++            stopCeiling();
++        };
++    }
++
+     onMounted(() => {
+         const canvas = canvasRef.value;
+         if (!canvas) return;
++        armGroundPublication(canvas);
+ 
+         // Adaptive substrate `"css"`: never arm the GPU runtime. We skip runtime
+         // construction, the intersection gate, and the idle arm schedule
+@@ -392,6 +443,8 @@ export function useAurora(
+     });
+ 
+     onBeforeUnmount(() => {
++        stopGroundWatch?.();
++        groundPublisher?.dispose();
+         cancelSettle();
+         cancelSchedule?.();
+         stopArmWatch?.();
+diff --git a/src/components/aurora/index.ts b/src/components/aurora/index.ts
+index f481692f..79ad409f 100644
+--- a/src/components/aurora/index.ts
++++ b/src/components/aurora/index.ts
+@@ -94,6 +94,7 @@ export {
+ // static composite mirror the certify π measures.
+ export {
+     auroraFallbackGround,
++    auroraGroundTones,
+     sampleAuroraField,
+     nucleiFieldStatic,
+     relativeLuminance,
+diff --git a/src/components/dock/styles/dock.css b/src/components/dock/styles/dock.css
+index fe45c93e..d5abe28a 100644
+--- a/src/components/dock/styles/dock.css
++++ b/src/components/dock/styles/dock.css
+@@ -113,6 +113,10 @@
+                 ) * var(--dock-expand-t)
+         );
+         @apply glass-plate;
++        /* The dock's text reads the static inks of its own scope
++           (adaptive-legibility.css), not this plate's solved ink, so a held dock may
++           not shed below the any-input bound even inside a claim. */
++        --glass-veil-floor: var(--glass-bound);
+         /* The grasp register's host inputs (glass/grasp.css): the dock plate is one of
+            the two named consumers, and its 16px resting radius IS the calibration host
+            the 1.625× held optic derives from. */
+diff --git a/src/components/input/Input.vue b/src/components/input/Input.vue
+index 4b6b149e..f584b529 100644
+--- a/src/components/input/Input.vue
++++ b/src/components/input/Input.vue
+@@ -41,7 +41,7 @@ const { ariaInvalid, forwardedAttrs, state } = useFieldControlState(props, attrs
+         :data-size="size"
+         :data-state="state"
+         :aria-invalid="ariaInvalid"
+-        :class="cn('field-control glass-control-edge', props.class)"
++        :class="cn('field-control glass-control-edge glass-ink', props.class)"
+     />
+ </template>
+ 
+diff --git a/src/components/number-field/NumberFieldInput.vue b/src/components/number-field/NumberFieldInput.vue
+index 784f28a9..111fee56 100644
+--- a/src/components/number-field/NumberFieldInput.vue
++++ b/src/components/number-field/NumberFieldInput.vue
+@@ -34,7 +34,7 @@ const state = computed(() =>
+         :data-state="state"
+         :aria-invalid="context.ariaInvalid.value"
+         :aria-required="context.required.value || undefined"
+-        :class="cn('number-field__input field-control glass-control-edge')"
++        :class="cn('number-field__input field-control glass-control-edge glass-ink')"
+     />
+ </template>
+ 
+diff --git a/src/components/textarea/Textarea.vue b/src/components/textarea/Textarea.vue
+index 1b14fe2a..f970887a 100644
+--- a/src/components/textarea/Textarea.vue
++++ b/src/components/textarea/Textarea.vue
+@@ -53,7 +53,7 @@ const rowsStyle = computed(() => {
+         :data-resize="resize"
+         :aria-invalid="ariaInvalid"
+         :style="rowsStyle"
+-        :class="cn('field-control glass-control-edge', props.class)"
++        :class="cn('field-control glass-control-edge glass-ink', props.class)"
+     />
+ </template>
+ 
+diff --git a/src/composables/glass/groundTone.ts b/src/composables/glass/groundTone.ts
+new file mode 100644
+index 00000000..5bce9d36
+--- /dev/null
++++ b/src/composables/glass/groundTone.ts
+@@ -0,0 +1,125 @@
++// The ground a glass claim reads (tokens/glass.css `[data-glass-ground]`), in the one unit
++// the CSS solve composites in: the encoded sRGB tone of the neutral that bounds the ground.
++//
++//   lo  the darkest Rec. 709 luma of the encoded channels. Under a dark (light-theme) ink
++//       it is the conservative statistic: the EOTF is convex, so a composite's Y is never
++//       below the Y of its luma tone (Jensen).
++//   hi  the brightest encoded tone of Y after `saturate(--glass-saturate)`, the filter the
++//       backdrop passes through. Under a light (dark-theme) ink it is the conservative
++//       statistic: the encoded mix with a neutral plate is concave in Y.
++//
++// A consumer turns its palette stops into tones with `glassGroundTone` and writes the
++// worst of them (min lo, max hi) as `--glass-ground-lo/-hi` beside `data-glass-ground`. A substrate
++// publishes its tones on a host with `publishGlassField`; it never claims. Only the
++// consumer knows what it paints between a substrate and its glass.
++import { cssToOklch, oklchToLinear } from "../color";
++
++/** An encoded (gamma) sRGB triple, each channel in [0, 1]. */
++export type EncodedRgb = readonly [number, number, number];
++
++/** The two tones a claim reads. */
++export interface GlassGroundTones {
++    lo: number;
++    hi: number;
++}
++
++const clamp01 = (v: number): number => Math.max(0, Math.min(1, v));
++const eotf = (c: number): number => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
++const oetf = (y: number): number => (y <= 0.0031308 ? 12.92 * y : 1.055 * y ** (1 / 2.4) - 0.055);
++
++function encoded(color: string | EncodedRgb): EncodedRgb {
++    if (typeof color !== "string") return color;
++    return oklchToLinear(cssToOklch(color)).map((c) => oetf(clamp01(c))) as unknown as EncodedRgb;
++}
++
++/**
++ * The tones of one colour as a ground under glass. `saturate` is the backdrop's
++ * `--glass-saturate` (read it from the cascade; it is a token, not a constant).
++ */
++export function glassGroundTone(
++    color: string | EncodedRgb,
++    { saturate }: { saturate: number },
++): GlassGroundTones {
++    const [r, g, b] = encoded(color);
++    const lo = 0.2126 * r + 0.7152 * g + 0.0722 * b;
++    // The Filter Effects saturate matrix, on the encoded channels the engines filter.
++    const s = saturate;
++    const sr = clamp01((0.213 + 0.787 * s) * r + (0.715 - 0.715 * s) * g + (0.072 - 0.072 * s) * b);
++    const sg = clamp01((0.213 - 0.213 * s) * r + (0.715 + 0.285 * s) * g + (0.072 - 0.072 * s) * b);
++    const sb = clamp01((0.213 - 0.213 * s) * r + (0.715 - 0.715 * s) * g + (0.072 + 0.928 * s) * b);
++    const y = 0.2126 * eotf(sr) + 0.7152 * eotf(sg) + 0.0722 * eotf(sb);
++    return { lo: clamp01(lo), hi: clamp01(oetf(y)) };
++}
++
++/** One substrate's publication: its tones at full presence and its opacity ceiling. */
++export interface GlassFieldPublication extends GlassGroundTones {
++    ceiling: number;
++}
++
++export interface GlassFieldPublisher {
++    /** Publish (or, with `null`, mark unpublished and warn once). Not per frame. */
++    set(publication: GlassFieldPublication | null): void;
++    /** Withdraw this substrate's tones; the host keeps the rest's. */
++    dispose(): void;
++}
++
++// One host can hold several substrates. It carries the worst of them (min lo, max hi, max
++// ceiling), so the claim's page mix stays conservative, and an unmount recomputes from
++// the rest. Nothing is document-global.
++const hosts = new WeakMap<HTMLElement, Map<symbol, GlassFieldPublication | null>>();
++const PROPS = ["--glass-field-lo", "--glass-field-hi", "--glass-field-ceiling"] as const;
++
++function write(host: HTMLElement): void {
++    const pubs = hosts.get(host);
++    const all = pubs ? [...pubs.values()] : [];
++    if (all.length === 0) {
++        for (const p of PROPS) host.style.removeProperty(p);
++        host.removeAttribute("data-glass-field");
++        hosts.delete(host);
++        return;
++    }
++    if (all.some((p) => p === null)) {
++        // One substrate cannot state its tones: the host publishes nothing, so a claim
++        // over it reads the any-input tones.
++        for (const p of PROPS) host.style.removeProperty(p);
++        host.setAttribute("data-glass-field", "unpublished");
++        return;
++    }
++    const known = all as GlassFieldPublication[];
++    const lo = Math.min(...known.map((p) => p.lo));
++    const hi = Math.max(...known.map((p) => p.hi));
++    const ceiling = Math.max(...known.map((p) => p.ceiling));
++    host.style.setProperty("--glass-field-lo", lo.toFixed(4));
++    host.style.setProperty("--glass-field-hi", hi.toFixed(4));
++    host.style.setProperty("--glass-field-ceiling", clamp01(ceiling).toFixed(4));
++    host.setAttribute("data-glass-field", "published");
++}
++
++/** Register one substrate's publication on `host`. */
++export function publishGlassField(host: HTMLElement): GlassFieldPublisher {
++    const id = Symbol("glass-field");
++    let warned = false;
++    return {
++        set(publication) {
++            const live = hosts.get(host) ?? new Map();
++            hosts.set(host, live);
++            if (publication === null && !warned) {
++                warned = true;
++                console.warn(
++                    "[glass-ui] a substrate could not publish its ground tones; glass claimed over it solves against the any-input tones",
++                );
++            }
++            live.set(id, publication);
++            write(host);
++        },
++        dispose() {
++            hosts.get(host)?.delete(id);
++            write(host);
++        },
++    };
++}
++
++/** The backdrop saturate a ground passes through, read once from the cascade (NaN when absent). */
++export function readGlassSaturate(el: Element): number {
++    return parseFloat(getComputedStyle(el).getPropertyValue("--glass-saturate"));
++}
+diff --git a/src/composables/glass/index.ts b/src/composables/glass/index.ts
+index c7395176..a6bc39bc 100644
+--- a/src/composables/glass/index.ts
++++ b/src/composables/glass/index.ts
+@@ -36,3 +36,13 @@ export type {
+     Canvas2DOptions,
+     Canvas2DSuspendReason,
+ } from "./canvas2d";
++// The ground a glass claim reads (tokens/glass.css `[data-glass-ground]`): a consumer
++// turns a palette stop into tones with `glassGroundTone`; a substrate publishes its own
++// on a host with `publishGlassField` (the aurora does, `useAurora`).
++export { glassGroundTone, publishGlassField, readGlassSaturate } from "./groundTone";
++export type {
++    EncodedRgb,
++    GlassGroundTones,
++    GlassFieldPublication,
++    GlassFieldPublisher,
++} from "./groundTone";
+diff --git a/src/index.ts b/src/index.ts
+index ca7c490c..82cbe1a4 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -474,6 +474,9 @@ export {
+ } from "./composables/dom";
+ export {
+     createSpecularWriter,
++    glassGroundTone,
++    publishGlassField,
++    readGlassSaturate,
+     resolveCanvasColor,
+     useCanvas2D,
+     useSpecularTracking,
+@@ -486,6 +489,10 @@ export {
+     // `<FourierField>`, `<Aurora>`, `<Blob>` and `<Constellation>` all emit
+     // `rendererStatus`; only FourierField also exposes `backend: () => GpuBackend`. One
+     // shared door serves all four rather than four copies on four component barrels.
++    type EncodedRgb,
++    type GlassFieldPublication,
++    type GlassFieldPublisher,
++    type GlassGroundTones,
+     type GpuBackend,
+     type RendererStatus,
+     type SpecularWriter,
+diff --git a/src/styles/glass/ladder.css b/src/styles/glass/ladder.css
+index 92c55af3..c3c5801c 100644
+--- a/src/styles/glass/ladder.css
++++ b/src/styles/glass/ladder.css
+@@ -48,7 +48,10 @@
+        THE CLOCK: a material with no transition snaps between states. The house
+        idiom is the PAIR — `--spring-press` is a `linear()` EASING, so it needs
+        `--spring-press-duration` beside it; a bare `var(--spring-press)` in the
+-       duration slot is invalid as written.
++       duration slot is invalid as written. The clock carries the shadow only: the
++       plate's α moves by the claim's spring (tokens/glass.css, thinning only) or by the
++       grasp register's own lerp, and a background transition here would ease a
++       thickening while the ink re-solves at once — a contrast dip (Q-8 c).
+ 
+        Every rung is the SAME medium at a different THICKNESS. The plate paint comes
+        from `@utility glass-plate` (glass/veil.css) — one recipe, composed at the
+@@ -61,9 +64,7 @@
+         position: relative;
+         @apply glass-plate;
+         border-radius: var(--radius-ctx);
+-        transition:
+-            background-color var(--spring-press-duration) var(--spring-press),
+-            box-shadow var(--spring-press-duration) var(--spring-press);
++        transition: box-shadow var(--spring-press-duration) var(--spring-press);
+         backdrop-filter: var(--glass-blur-wash);
+         /* The rung border ink feeds the accent-composed
+            `--glass-border-accent` (rim group above); byte-identical at 0%. */
+@@ -87,9 +88,7 @@
+         position: relative;
+         @apply glass-plate;
+         border-radius: var(--radius-ctx);
+-        transition:
+-            background-color var(--spring-press-duration) var(--spring-press),
+-            box-shadow var(--spring-press-duration) var(--spring-press);
++        transition: box-shadow var(--spring-press-duration) var(--spring-press);
+         backdrop-filter: var(--glass-blur-quiet);
+         --glass-border-rung: var(--glass-border-quiet);
+         border: 1px solid var(--glass-border-accent);
+@@ -103,9 +102,7 @@
+         position: relative;
+         @apply glass-plate;
+         border-radius: var(--radius-ctx);
+-        transition:
+-            background-color var(--spring-press-duration) var(--spring-press),
+-            box-shadow var(--spring-press-duration) var(--spring-press);
++        transition: box-shadow var(--spring-press-duration) var(--spring-press);
+         backdrop-filter: var(--glass-blur-resting);
+         --glass-border-rung: var(--glass-border-resting);
+         border: 1px solid var(--glass-border-accent);
+@@ -124,9 +121,7 @@
+         position: relative;
+         @apply glass-plate;
+         border-radius: var(--radius-ctx);
+-        transition:
+-            background-color var(--spring-press-duration) var(--spring-press),
+-            box-shadow var(--spring-press-duration) var(--spring-press);
++        transition: box-shadow var(--spring-press-duration) var(--spring-press);
+         backdrop-filter: var(--glass-blur-floating);
+         --glass-border-rung: var(--glass-border-floating);
+         border: 1px solid var(--glass-border-accent);
+@@ -140,9 +135,7 @@
+         position: relative;
+         @apply glass-plate;
+         border-radius: var(--radius-ctx);
+-        transition:
+-            background-color var(--spring-press-duration) var(--spring-press),
+-            box-shadow var(--spring-press-duration) var(--spring-press);
++        transition: box-shadow var(--spring-press-duration) var(--spring-press);
+         backdrop-filter: var(--glass-blur-overlay);
+         --glass-border-rung: var(--glass-border-overlay);
+         border: 1px solid var(--glass-border-accent);
+@@ -153,8 +146,9 @@
+        rest. The page-muted ink is calibrated against the OPAQUE canvas; on a
+        translucent plate it composites toward the lifted backdrop and its contrast
+        collapses (1.15-3.29:1 measured in dark). `--on-glass-muted` is the register
+-       BETWEEN page-muted and full ink — legible AND subordinate, and each band's α is
+-       solved against it (tokens/glass.css). */
++       BETWEEN page-muted and full ink — legible AND subordinate. Each rung's plate
++       solves its own `--on-glass-muted` against its composite (glass/veil.css
++       `@utility glass-ink`), and this re-point reads it at the same element. */
+     :where(
+         .glass-card,
+         .glass-resting,
+diff --git a/src/styles/glass/veil.css b/src/styles/glass/veil.css
+index a1c14420..2717ef4a 100644
+--- a/src/styles/glass/veil.css
++++ b/src/styles/glass/veil.css
+@@ -34,7 +34,8 @@
+    THE RECIPE. The plate is `--card` at α = 1 − (1 − α_rung)·level: level 1 paints the
+    rung, level 0 the opaque escape (α 1), level 0.3 the firmer plate
+    `prefers-contrast: more` rides. No luma term and no clamp — nothing samples, so
+-   nothing can fail to arrive; no rung is thinner than the bound.
++   nothing can fail to arrive; no rung is thinner than its band's bound, which is the
++   any-input bound unless a consumer claims the ground (tokens/glass.css).
+ 
+    `--glass-veil` is published as a nestable VALUE token so a consumer composing the
+    plate INSIDE a bigger mix (the capsule's warm floor, a tone-tinted feedback panel)
+@@ -43,21 +44,59 @@
+    TWO NAMES, ONE ARITHMETIC. `--glass-veil-rest` is the rung at rest;
+    `--glass-veil-rung` is what the plate PAINTS. The split exists so the grasp register
+    (glass/grasp.css) can express its band as a factor of the rest α.
+-   `--glass-veil-floor` is the α a HELD plate may not shed below: the bound. It is
++   `--glass-veil-floor` is the α a HELD plate may not shed below: its band's bound
++   (`--glass-content-bound`, which is `--glass-bound` unless a claim thinned it). It is
+    declared here, on the plate, so a host that is not a plate (glass/liquid-fill.css)
+-   has none and sheds its whole band. */
++   has none and sheds its whole band. A held plate's ink re-solves from the painted
++   rung every frame, through the registered `--glass-veil-rung` lerp.
++
++   THE PLATE SOLVES ITS OWN INK. `--glass-paint-a` is the one α the paint and the solve
++   share. `--glass-host-e` is the encoded tone of this plate's composite over the
++   scope's worst ground (`--glass-ground-e`, tokens/glass.css): the ground its own ink
++   sits on (`--glass-ink-e`, read by `@utility glass-ink`) and the ground the field wells
++   it holds sit on (a well is a leaf: it never holds a plate, so the hand-off is one
++   level and never reads a grandparent). Unclaimed at a rung on the bound, the solve
++   reproduces the static ink; on a thicker rung it lands on the target exactly. */
+ @utility glass-plate {
+-    --glass-veil-floor: var(--glass-bound);
++    --glass-veil-floor: var(--glass-content-bound);
+     --glass-veil-rest: var(--glass-veil-tier, var(--glass-veil-resting));
+     --glass-veil-rung: var(--glass-veil-rest);
+-    --glass-veil: color-mix(
+-        in srgb,
+-        var(--card) calc((1 - (1 - var(--glass-veil-rung)) * var(--glass-level)) * 100%),
+-        transparent
++    --glass-paint-a: calc(1 - (1 - var(--glass-veil-rung)) * var(--glass-level));
++    --glass-veil: color-mix(in srgb, var(--card) calc(var(--glass-paint-a) * 100%), transparent);
++    --glass-host-e: calc(
++        var(--glass-paint-a) * var(--glass-pole-e) + (1 - var(--glass-paint-a)) * var(--glass-ground-e)
+     );
++    --glass-ink-e: var(--glass-host-e);
++    @apply glass-ink;
+     background: var(--glass-veil);
+ }
+ 
++/* ── @utility glass-ink — the muted ink solved against a composite ────────────────
++   Reads `--glass-ink-e` (the encoded tone of the surface it sits on) and writes
++   `--on-glass-muted`: the ink whose WCAG ratio against that tone is exactly
++   `--glass-ink-target`, stopped at the reach (`--glass-reach-l`). Two composers: the
++   plate (above, by `@apply`) and the field components (Input, Textarea,
++   NumberFieldInput carry the class; _shared/field/control.css declares their
++   `--glass-ink-e`). Unregistered on
++   purpose: a dead chain leaves `--on-glass-muted` invalid, the muted run inherits the
++   foreground, and M-4's every-plate check reads ΔL 0 (loud, legible, never a fainter
++   ink). */
++@utility glass-ink {
++    --glass-comp-y: pow(calc((var(--glass-ink-e) + 0.055) / 1.055), 2.4);
++    --glass-solve-y: max(
++        0,
++        calc(
++            (1 - var(--glass-bound-ground)) * ((var(--glass-comp-y) + 0.05) / var(--glass-ink-target) - 0.05) +
++                var(--glass-bound-ground) * (var(--glass-ink-target) * (var(--glass-comp-y) + 0.05) - 0.05)
++        )
++    );
++    --glass-solve-l: calc(
++        (1 - var(--glass-bound-ground)) * max(var(--glass-reach-l), pow(var(--glass-solve-y), 0.333333)) +
++            var(--glass-bound-ground) * min(var(--glass-reach-l), pow(var(--glass-solve-y), 0.333333))
++    );
++    --on-glass-muted: oklch(var(--glass-solve-l) var(--on-glass-muted-c) var(--on-glass-muted-h));
++}
++
+ @layer components {
+     /* The five calm rungs name their tier here, in ONE table, so the ladder reads as a
+        ladder in source. Each rung's own rule (ladder.css) applies `glass-plate` and
+diff --git a/src/styles/tokens/color-radius.css b/src/styles/tokens/color-radius.css
+index 2513dcfd..06ccb3a0 100644
+--- a/src/styles/tokens/color-radius.css
++++ b/src/styles/tokens/color-radius.css
+@@ -37,7 +37,11 @@
+        carry 0.020 at L90 without a visible cast — the triumvirate "tinted not
+        warm" trigger), so it lifts to a materially-warm C≈0.013.
+        Machine-locked by proof:no-gray + tests-visual/no-gray.spec.ts. */
+-    --neutral-0: hsl(40 30% 98%);   /* L 98 — page surface (warm-cream, KEEP-NEUTRAL surface) */
++    /* The page carries its L as its own token: a claim on the page (`data-glass-ground="page"`,
++       tokens/glass.css) reads the page's real tone, so a retune sets the number. The colour is
++       hsl(40 30% 98%), #fbfaf8. */
++    --background-l: 0.9865;
++    --neutral-0: oklch(var(--background-l) 0.0029 84.56);   /* L 98 — page surface (warm-cream, KEEP-NEUTRAL surface) */
+     --neutral-1: hsl(38 26% 95%);   /* L 95 — soft field bg */
+     --neutral-2: hsl(34 28% 90%);   /* L 90 — chip / tab-inactive bg (warm, gamut-bound C≈0.013) */
+     --neutral-3: hsl(33 30% 82%);   /* L 82 — hover / highlight bg (warm, C≈0.025) */
+@@ -56,7 +60,10 @@
+     --neutral-6: hsl(28 24% 30%);   /* L 30 — strong-muted text (secondary register, warm) */
+ 
+     --background: var(--neutral-0);
+-    --foreground: hsl(24 10% 10%);
++    /* The ink carries its L as its own token: a solved muted ink stops `--glass-ink-reach`
++       short of it (tokens/glass.css). The colour is hsl(24 10% 10%), #1c1917. */
++    --foreground-l: 0.2161;
++    --foreground: oklch(var(--foreground-l) 0.0062 56.04);
+     /* The warm-bias glass PLATE. --card was `var(--neutral-0)`
+        (the near-achromatic L98 page, OKLab C 0.0017) — so every glass plate
+        (Card/Button/Toast/Popover/Dialog/Sheet, all --card-derived) composited a
+diff --git a/src/styles/tokens/dark-arm.css b/src/styles/tokens/dark-arm.css
+index 811fd2ea..a27b76fb 100644
+--- a/src/styles/tokens/dark-arm.css
++++ b/src/styles/tokens/dark-arm.css
+@@ -53,7 +53,8 @@
+        OKLab C off the gray floor on the NEW dark base — chip→border C 0.0138-0.0286, muted-fg
+        C 0.0255). The --neutral-0 page (hsl 24 9% 4%) is the luminance floor —
+        KEEP (chroma-only on the rungs above it). L held — the dark AA contract preserved. */
+-    --neutral-0: hsl(24 9% 4%);    /* L 4 — page surface (dark, deepened) */
++    --background-l: 0.1459;        /* the page's L (the light arm and the reason: color-radius.css); hsl(24 9% 4%), #0b0a09 */
++    --neutral-0: oklch(var(--background-l) 0.0025 56.88);    /* L 4 — page surface (dark, deepened) */
+     --neutral-1: hsl(28 12% 11%);  /* L 11 — soft field (warm) */
+     --neutral-2: hsl(28 14% 16%);  /* L 16 — chip / tab-inactive (warm, C≈0.014) */
+     --neutral-3: hsl(30 18% 22%);  /* L 22 — hover / highlight (warm, C≈0.022) */
+@@ -83,7 +84,8 @@
+        warm in lockstep, zero per-site edit. LOCKSTEP light-dark.css ~~:92~~ --foreground
+        [2026-09-22 · O-32 CT2: twin by token name] (the §2c discipline —
+        both mode arms warm together or the FOUC/enhancement split paints two inks). */
+-    --foreground: hsl(30 14% 90%);
++    --foreground-l: 0.9252;        /* hsl(30 14% 90%), #e9e6e2 (its G channel sits on the half step, 229.5) */
++    --foreground: oklch(var(--foreground-l) 0.0062 67.75);
+     /* The --card plate LIFTS L10→~~L16~~ (a warm-dark elevated
+        surface, macOS-window territory) so it ~~sits ~5×~~ sits ≈ 8× the deepened L4 page relL — a
+        clearly distinct surface the five glass rungs ladder up from. LOCKSTEP light-dark.css
+@@ -275,6 +277,7 @@
+        `--card-l` / `--on-glass-muted-l` above. The well deepens toward the page. */
+     --glass-bound-ground: 1;
+     --glass-well-toward:  var(--background);
++    --glass-well-toward-l: var(--background-l);
+ 
+ 
+     /* The surface-aware FOREGROUND register, DARK arm (the N13
+@@ -291,7 +294,9 @@
+        (the deck is the REFERENCE; the library re-derives against its own --card). The
+        light arm lives in tokens/glass.css (the plain per-mode pair — the house idiom). */
+     --on-glass-muted-l:      0.7904;   /* the dark muted ink's L (the light arm and the reason: on-glass-fg.css); the colour is hsl(34 16% 72%), #c3b9ac */
+-    --on-glass-muted:        oklch(var(--on-glass-muted-l) 0.0213 74.62);
++    --on-glass-muted-c:      0.0213;
++    --on-glass-muted-h:      74.62;
++    --on-glass-muted:        oklch(var(--on-glass-muted-l) var(--on-glass-muted-c) var(--on-glass-muted-h));
+     --on-glass-muted-strong: hsl(36 13% 81%);   /* the -strong rung, one step more present. Held at L81: at L78 the BRIGHTEST on-glass mid-tone plate (the configurator preset-label glass-capsule, composited [100,85,68] L≈0.10) drives the -strong caption to WCAG 4.33 — below AA. L81 clears the whole plate set (configurator 4.68 · shadow-stage 6.89 · texture-panel 6.47 · feedback-tone 6.74 · selected-chip 5.10) while STAYING subordinate to the L90 --foreground ink (L0.634 < L0.794). One register re-point lifts all -strong consumers in lockstep — the DRY register-level fix, NOT a per-site paste. */
+     /* (the recessed meter track's dark arm RETIRED — `--track-well-recess` is one
+        derivation off `--background`, declared on `.track-well`/`.track-ground`
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+index f133a4f0..80ce585e 100644
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -30,8 +30,13 @@
+          dialog              16px    1                 the room
+          opaque (level 0)      0     1
+ 
++       Wash, quiet and resting step from `--glass-content-bound`: the bound, unless a
++       claim thins it. The chassis rides the bound always.
++
+        A surface may paint THINNER than the bound only where a mechanism knows its
+-       ground. None ships here.
++       ground. One does: a consumer's CLAIM (`data-glass-ground`, the ground block at
++       the foot of this file) thins the content band (wash, quiet, resting) to the α
++       its claimed ground licenses. Chrome, the dock and the dialog do not move.
+        ═══════════════════════════════════════════════ */
+ 
+     /* The solve's two authored inputs. The target is WCAG 4.5:1 plus 0.3 of raster
+@@ -41,6 +46,12 @@
+        dark ink, 1 (white) under a light one (tokens/dark-arm.css). */
+     --glass-ink-target: 4.8;
+     --glass-bound-ground: 0;
++    /* The claim's two authored margins (the claim: the ground block at the foot of this
++       file). The reach: a solved muted ink stops this far short of `--foreground`
++       (M-4's 0.08 fg/muted split plus 0.01). The lift gap: a claimed dark plate stays
++       this far above the page in L (M-6's 0.05 plus 0.015). */
++    --glass-ink-reach: 0.09;
++    --glass-lift-gap: 0.065;
+ 
+     /* THICKNESS — the rung's radius. The band is [6, 16]: blur is decoupled from
+        legibility (α carries it), so the ladder buys only calm — M-8's bleed half on
+@@ -147,13 +158,16 @@
+        brand-overlay fence). ONE knob, bounded to [6%, 10%] — below 6% reads flat, above
+        10% reads like a filled plate. `.glass-well` (glass/surface-axis.css) composes it
+        AT the element so a per-scope override re-resolves. */
+-    --glass-well-tone: 8%;
++    --glass-well-tone: 0.08;
+     /* THE FIELD WELL is a rung, not an opaque token: the pole one tone toward the
+        recess (`--glass-well-toward`: the foreground in light, the page in dark, so the
+        recess always DEEPENS), at the bound. It carries no `backdrop-filter` of its
+-       own: a well sits inside a plate, and its backdrop is that plate's paint. */
++       own: a well sits inside a plate, and its backdrop is that plate's paint. The
++       toward colour carries its L (`--glass-well-toward-l`) so the well's own ink can
++       solve against it (`--glass-well-l`, in the bound block below). */
+     --glass-well-toward: var(--foreground);
+-    --glass-well-pole: color-mix(in oklab, var(--card), var(--glass-well-toward) var(--glass-well-tone));
++    --glass-well-toward-l: var(--foreground-l);
++    --glass-well-pole: color-mix(in oklab, var(--card), var(--glass-well-toward) calc(var(--glass-well-tone) * 100%));
+     --glass-well: color-mix(in srgb, var(--glass-well-pole) calc((1 - (1 - var(--glass-bound)) * var(--glass-level)) * 100%), transparent);
+ 
+     /* THE PER-INSTANCE PLATE-FILL TINT AXIS (`--glass-fill-tint` /
+@@ -247,7 +261,12 @@
+ 
+    `--glass-bound` is registered `<number>` (below), so every plate carries the
+    computed number, and an unreachable or invalid solve computes to its initial value,
+-   1: an opaque plate, legible and visibly not glass. */
++   1: an opaque plate, legible and visibly not glass.
++
++   THE REACH. `--glass-reach-l` is how far toward `--foreground` a solved muted ink may
++   travel: `--glass-ink-reach` short of it (M-4's 0.08 split between fg and muted, plus
++   0.01). Every plate solves its own muted ink against its composite and stops there
++   (glass/veil.css `@utility glass-ink`); a claim solves its content α against it. */
+ :root,
+ .dark {
+     --glass-ink-y: pow(var(--on-glass-muted-l), 3);
+@@ -267,14 +286,19 @@
+         1
+     );
+ 
++    --glass-ink-dir: calc(1 - 2 * var(--glass-bound-ground));
++    --glass-reach-l: calc(var(--foreground-l) + var(--glass-ink-dir) * var(--glass-ink-reach));
++    /* The well's pole L: the oklab mix is linear in L. */
++    --glass-well-l: calc(var(--card-l) + (var(--glass-well-toward-l) - var(--card-l)) * var(--glass-well-tone));
++    --glass-well-pole-e: calc(1.055 * pow(pow(var(--glass-well-l), 3), 0.416667) - 0.055);
++
+     /* One step: a third of what the bound leaves. Each band's thinnest rung IS the
+-       bound; thicker rungs add whole steps. The dialog is a room: its plate composes
+-       over the modal scrim, and any thinner α transmits that scrim as grey. */
++       bound; thicker rungs add whole steps. The content band (wash, quiet, resting)
++       steps from `--glass-content-bound` in the ground block below. The dialog is a
++       room: its plate composes over the modal scrim, and any thinner α transmits that
++       scrim as grey. */
+     --glass-veil-step: calc((1 - var(--glass-bound)) / 3);
+ 
+-    --glass-veil-wash:     var(--glass-bound);
+-    --glass-veil-quiet:    calc(var(--glass-bound) + 1 * var(--glass-veil-step));
+-    --glass-veil-resting:  calc(var(--glass-bound) + 2 * var(--glass-veil-step));
+     --glass-veil-floating: var(--glass-bound);
+     --glass-veil-overlay:  calc(var(--glass-bound) + 1 * var(--glass-veil-step));
+ 
+@@ -285,12 +309,166 @@
+     --glass-veil-dialog:   1;
+ }
+ 
++/* ── THE GROUND, and the content band that steps from it ──────────────────────────
++   `--glass-ground-e` is the encoded tone of the worst ground a plate in this scope can
++   sit on: the scope's `--glass-ground-lo` in light, `-hi` in dark (registered, initial 0
++   and 1: the any-input poles). It is clamped to the pole, so a plate nested in a plate
++   is still modelled conservatively (its real ground, the outer composite, lies between
++   the claimed tone and the pole). Unclaimed, it is 0 / 1, `--glass-content-bound` is the
++   bound, and the content band is the floor's.
++
++   Declared on the token roots and on every claim, in one layered rule: a claim is an
++   element below the token roots, and the layer is what lets it re-derive. (A claim on
++   the root element itself loses to nothing and gains nothing: the roots' content bound
++   is the bound.) */
++@layer base {
++    :root,
++    .dark,
++    [data-glass-ground] {
++        /* The lag twins (Q-8 c): a worse tone wins in the same frame, a kinder one
++           arrives on the claim's spring. */
++        --glass-ground-e: calc(
++            (1 - var(--glass-bound-ground)) *
++                min(var(--glass-ground-lo), var(--glass-ground-lo-lag), var(--glass-pole-e)) +
++                var(--glass-bound-ground) *
++                max(var(--glass-ground-hi), var(--glass-ground-hi-lag), var(--glass-pole-e))
++        );
++        --glass-host-e: var(--glass-ground-e);
++        --glass-content-bound: var(--glass-bound);
++        --glass-content-step: calc((1 - var(--glass-content-bound)) / 3);
++        --glass-veil-wash:    var(--glass-content-bound);
++        --glass-veil-quiet:   calc(var(--glass-content-bound) + 1 * var(--glass-content-step));
++        --glass-veil-resting: calc(var(--glass-content-bound) + 2 * var(--glass-content-step));
++    }
++
++    /* ── THE CLAIM — a consumer declares the ground under a scope ───────────────────
++       The library never claims. Only the consumer knows what it paints between a
++       substrate and its glass, so only the consumer may say so:
++
++         data-glass-ground            the consumer writes `--glass-ground-lo/-hi` beside
++                                      it (`glassGroundTone()` turns a colour into both)
++         data-glass-ground="page"     the page itself: both tones are `--background-l`'s
++         data-glass-ground="field"    a substrate's publication on an ancestor
++                                      (`--glass-field-lo/-hi/-ceiling`, `useAurora`),
++                                      mixed with the page at the field's ceiling. An
++                                      absent publication reads the any-input tones.
++
++       `lo` is the darkest Rec. 709 luma (encoded channels) of what paints under the
++       scope; `hi` is the brightest encoded tone of Y(saturate(px, --glass-saturate)).
++       Each is the conservative statistic for its theme (a convex EOTF under light ink,
++       a concave mix under dark ink).
++
++       Inside a claim the content band thins to the α where the REACH ink meets the
++       target over the claimed tone, never below `--glass-veil-lift` (a dark plate's
++       separation from the page: `--glass-lift-gap` in L). Chrome does not move: it stays
++       on the any-input bound (Q-3 a). A portal leaves the claim and paints the bound. A
++       malformed tone is invalid at computed time and inherits the parent's, and an
++       invalid content solve computes to 1 (opaque): neither is ever kinder. */
++    [data-glass-ground] {
++        --glass-ground-lo-lag: var(--glass-ground-lo);
++        --glass-ground-hi-lag: var(--glass-ground-hi);
++        transition:
++            --glass-ground-lo-lag var(--spring-panel-duration) var(--spring-panel),
++            --glass-ground-hi-lag var(--spring-panel-duration) var(--spring-panel);
++
++        --glass-page-e: calc(1.055 * pow(pow(var(--background-l), 3), 0.416667) - 0.055);
++        --glass-lift-e: calc(
++            1.055 * pow(pow(calc(var(--background-l) + var(--glass-lift-gap)), 3), 0.416667) - 0.055
++        );
++        --glass-veil-lift: calc(
++            var(--glass-bound-ground) *
++                clamp(0, (var(--glass-lift-e) - var(--glass-page-e)) / (var(--glass-pole-e) - var(--glass-page-e)), 1)
++        );
++
++        --glass-reach-y: pow(var(--glass-reach-l), 3);
++        --glass-band-y: calc(
++            (1 - var(--glass-bound-ground)) * (var(--glass-ink-target) * (var(--glass-reach-y) + 0.05) - 0.05) +
++                var(--glass-bound-ground) * ((var(--glass-reach-y) + 0.05) / var(--glass-ink-target) - 0.05)
++        );
++        --glass-band-e: calc(1.055 * pow(var(--glass-band-y), 0.416667) - 0.055);
++        --glass-content-bound: max(
++            var(--glass-veil-lift),
++            clamp(
++                0,
++                calc(
++                    var(--glass-ink-dir) * (var(--glass-band-e) - var(--glass-ground-e)) /
++                        max(var(--glass-ink-dir) * (var(--glass-pole-e) - var(--glass-ground-e)), 0.0001)
++                ),
++                1
++            )
++        );
++    }
++
++    [data-glass-ground="page"] {
++        --glass-ground-lo: var(--glass-page-e);
++        --glass-ground-hi: var(--glass-page-e);
++    }
++
++    [data-glass-ground="field"] {
++        --glass-ground-lo: calc(
++            var(--glass-field-ceiling) * min(var(--glass-field-lo), var(--glass-page-e)) +
++                (1 - var(--glass-field-ceiling)) * var(--glass-page-e)
++        );
++        --glass-ground-hi: calc(
++            var(--glass-field-ceiling) * max(var(--glass-field-hi), var(--glass-page-e)) +
++                (1 - var(--glass-field-ceiling)) * var(--glass-page-e)
++        );
++    }
++}
++
+ @property --glass-bound {
+     syntax: "<number>";
+     inherits: true;
+     initial-value: 1;
+ }
+ 
++/* The claim's numbers. The tones' initial values are the any-input poles, so an
++   unclaimed scope (`:root`, every portal) solves exactly the bound. The content bound's
++   initial is 1: a dead solve paints an opaque plate. */
++@property --glass-content-bound {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 1;
++}
++@property --glass-ground-lo {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 0;
++}
++@property --glass-ground-hi {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 1;
++}
++@property --glass-ground-lo-lag {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 0;
++}
++@property --glass-ground-hi-lag {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 1;
++}
++/* A substrate's publication (`publishGlassField`, written on its host). The initial
++   values are the any-input tones at full presence: an absent publication licenses
++   nothing. */
++@property --glass-field-lo {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 0;
++}
++@property --glass-field-hi {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 1;
++}
++@property --glass-field-ceiling {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 1;
++}
++
+ /* The typed per-instance axes — @property no-op floors. Registered here beside the §8
+    ladder they compose (the canonical @property home is tokens/property-regs.css) so the
+    foundation is one self-contained partial. Each is a `<color>` HUE + a `<percentage>`
+diff --git a/src/styles/tokens/light-dark.css b/src/styles/tokens/light-dark.css
+index 0c259e56..15349e40 100644
+--- a/src/styles/tokens/light-dark.css
++++ b/src/styles/tokens/light-dark.css
+@@ -90,21 +90,17 @@
+            the NEW dark page/card — secondary→border C 0.0138-0.0286, muted-fg C 0.0255). The
+            dark page --neutral-0 hsl(24 9% 4%) is the (KEEP — its luminance floor).
+            Chroma-only at constant L — the AA contract preserved. */
+-        --neutral-0: light-dark(hsl(40 30% 98%), hsl(24 9% 4%));
+         --neutral-1: light-dark(hsl(38 26% 95%), hsl(28 12% 11%));
+         --neutral-2: light-dark(hsl(34 28% 90%), hsl(28 14% 16%));
+         --neutral-3: light-dark(hsl(33 30% 82%), hsl(30 18% 22%));
+         --neutral-4: light-dark(hsl(32 26% 70%), hsl(30 16% 34%));
+         /* `--neutral-5` (the muted ink) is NOT in this fold: it is declared once per mode
+-           (color-radius.css + dark-arm.css), so a retune lands where it is read. */
++           (color-radius.css + dark-arm.css), so a retune lands where it is read. Nor are
++           `--neutral-0` (the page) and `--foreground`: each carries its L as a number the
++           glass solve reads (`--background-l`, `--foreground-l`), and a number cannot ride
++           light-dark(). */
+         --neutral-6: light-dark(hsl(28 24% 30%), hsl(36 14% 72%));
+ 
+-        /* Core surfaces + ink. The DARK arg warmed off the H95.1°
+-           yellow-green hsl(48 10% 90%) onto the no-gray identity hsl(30 14% 90%) (OKLab
+-           H75.4°, L held) in LOCKSTEP with the .dark fallback floor (dark-arm.css ~~:60~~
+-           --foreground [2026-09-22 · O-32 CT2: twin by token name]). The
+-           LIGHT arg hsl(24 10% 10%) is already the warm-amber identity (H56°) — untouched. */
+-        --foreground:                 light-dark(hsl(24 10% 10%), hsl(30 14% 90%));
+         /* The dark --card plate LIFTS L10→~~L16~~
+            [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%)] (LOCKSTEP
+            dark-arm.css ~~:51~~ --card [2026-09-22 · O-32 CT2: twin by token name]); the
+diff --git a/src/styles/tokens/on-glass-fg.css b/src/styles/tokens/on-glass-fg.css
+index 7e34f2fc..841d45b9 100644
+--- a/src/styles/tokens/on-glass-fg.css
++++ b/src/styles/tokens/on-glass-fg.css
+@@ -33,7 +33,12 @@
+        solves against it, deriving Y = L³ from `--on-glass-muted-l`. The colour is
+        hsl(30 26% 35%), #705942. */
+     --on-glass-muted-l:      0.4811;
+-    --on-glass-muted:        oklch(var(--on-glass-muted-l) 0.046 66.37);
++    --on-glass-muted-c:      0.046;
++    --on-glass-muted-h:      66.37;
++    /* The root constant: the static ink every non-plate reader takes (the dock, the dock
++       search). Inside a plate `--on-glass-muted` is that plate's solved ink
++       (glass/veil.css `@utility glass-ink`); its L input stays this token. */
++    --on-glass-muted:        oklch(var(--on-glass-muted-l) var(--on-glass-muted-c) var(--on-glass-muted-h));
+     --on-glass-muted-strong: hsl(28 28% 28%);   /* the -strong secondary rung, one step more present (7.79:1 vs plate) */
+     /* (`--track-well-recess` is NOT declared here. It is a HOST-RELATIVE
+        derivation, and an unregistered custom property substitutes its `var()`
+diff --git a/tests/components/field/forms-seam.test.ts b/tests/components/field/forms-seam.test.ts
+index 382ae675..746e88a7 100644
+--- a/tests/components/field/forms-seam.test.ts
++++ b/tests/components/field/forms-seam.test.ts
+@@ -289,14 +289,17 @@ describe("W-FIELD — the forms-seam lane battery", () => {
+         );
+         expect(read("src/components/textarea/Textarea.vue")).not.toContain("autosize");
+ 
+-        // Live: the shells render the register, and only it.
++        // Live: the shells render the register, and only it (with the placeholder's
++        // ink solve, `glass-ink`, glass/veil.css).
+         expect(mount(Input).classes()).toEqual([
+             "field-control",
+             "glass-control-edge",
++            "glass-ink",
+         ]);
+         expect(mount(Textarea).classes()).toEqual([
+             "field-control",
+             "glass-control-edge",
++            "glass-ink",
+         ]);
+     });
+ });
+diff --git a/tests/components/textarea.contract.test.ts b/tests/components/textarea.contract.test.ts
+index cbb43e26..db385c6c 100644
+--- a/tests/components/textarea.contract.test.ts
++++ b/tests/components/textarea.contract.test.ts
+@@ -93,6 +93,7 @@ describe("Textarea contract", () => {
+             expect(wrapper.classes()).toEqual([
+                 "field-control",
+                 "glass-control-edge",
++                "glass-ink",
+             ]);
+         },
+     );
+diff --git a/tests/composables/glass/groundTone.test.ts b/tests/composables/glass/groundTone.test.ts
+new file mode 100644
+index 00000000..953e5958
+--- /dev/null
++++ b/tests/composables/glass/groundTone.test.ts
+@@ -0,0 +1,78 @@
++// The ground a glass claim reads: the tone arithmetic and the per-host publication.
++import { afterEach, describe, expect, it, vi } from "vitest";
++import { glassGroundTone, publishGlassField } from "@glass/composables/glass/groundTone";
++import { auroraGroundTones } from "@glass/components/aurora/composables/auroraFallbackGround";
++import { DEFAULT_AURORA_CONFIG } from "@glass/components/aurora/constants/presets";
++
++const read = (el: HTMLElement) => ({
++    lo: el.style.getPropertyValue("--glass-field-lo"),
++    hi: el.style.getPropertyValue("--glass-field-hi"),
++    ceiling: el.style.getPropertyValue("--glass-field-ceiling"),
++    state: el.getAttribute("data-glass-field"),
++});
++
++describe("glassGroundTone", () => {
++    it("reads the any-input poles at black and white", () => {
++        expect(glassGroundTone("#000000", { saturate: 1.5 })).toEqual({ lo: 0, hi: 0 });
++        const w = glassGroundTone("#ffffff", { saturate: 1.5 });
++        expect(w.lo).toBeCloseTo(1, 4);
++        expect(w.hi).toBeCloseTo(1, 4);
++    });
++
++    it("lo is the encoded luma; hi rises with the backdrop's saturate on a chromatic ground", () => {
++        const [r, g, b] = [0x76 / 255, 0x16 / 255, 0x17 / 255];
++        const t1 = glassGroundTone([r, g, b], { saturate: 1 });
++        const t15 = glassGroundTone([r, g, b], { saturate: 1.5 });
++        expect(t1.lo).toBeCloseTo(0.2126 * r + 0.7152 * g + 0.0722 * b, 6);
++        expect(t15.lo).toBeCloseTo(t1.lo, 6);
++        expect(t15.hi).toBeGreaterThan(t1.hi);
++    });
++});
++
++describe("publishGlassField", () => {
++    afterEach(() => vi.restoreAllMocks());
++
++    it("a host carries the worst of its substrates, and an unmount recomputes from the rest", () => {
++        const host = document.createElement("div");
++        const a = publishGlassField(host);
++        const b = publishGlassField(host);
++        a.set({ lo: 0.4, hi: 0.7, ceiling: 0.5 });
++        b.set({ lo: 0.6, hi: 0.9, ceiling: 1 });
++        expect(read(host)).toEqual({ lo: "0.4000", hi: "0.9000", ceiling: "1.0000", state: "published" });
++        b.dispose();
++        expect(read(host)).toEqual({ lo: "0.4000", hi: "0.7000", ceiling: "0.5000", state: "published" });
++        a.dispose();
++        expect(read(host)).toEqual({ lo: "", hi: "", ceiling: "", state: null });
++    });
++
++    it("one substrate that cannot state its tones unpublishes the host, loudly", () => {
++        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
++        const host = document.createElement("div");
++        const a = publishGlassField(host);
++        const b = publishGlassField(host);
++        a.set({ lo: 0.4, hi: 0.7, ceiling: 1 });
++        b.set(null);
++        expect(read(host)).toEqual({ lo: "", hi: "", ceiling: "", state: "unpublished" });
++        expect(warn).toHaveBeenCalledTimes(1);
++    });
++
++    it("two hosts never share a publication (nothing is document-global)", () => {
++        const h1 = document.createElement("div");
++        const h2 = document.createElement("div");
++        publishGlassField(h1).set({ lo: 0.1, hi: 0.2, ceiling: 1 });
++        publishGlassField(h2).set({ lo: 0.5, hi: 0.6, ceiling: 1 });
++        expect(read(h1).lo).toBe("0.1000");
++        expect(read(h2).lo).toBe("0.5000");
++    });
++});
++
++describe("auroraGroundTones", () => {
++    it("bounds the default field's lattice, and refuses an image source", () => {
++        const t = auroraGroundTones(DEFAULT_AURORA_CONFIG, 1.5);
++        expect(t).not.toBeNull();
++        expect(t!.lo).toBeGreaterThan(0);
++        expect(t!.lo).toBeLessThan(t!.hi);
++        expect(auroraGroundTones({ ...DEFAULT_AURORA_CONFIG, source: "image" }, 1.5)).toBeNull();
++        expect(auroraGroundTones(DEFAULT_AURORA_CONFIG, Number.NaN)).toBeNull();
++    });
++});
+diff --git a/tests/public-surface.spec.ts b/tests/public-surface.spec.ts
+index 2662fafc..7edb4a60 100644
+--- a/tests/public-surface.spec.ts
++++ b/tests/public-surface.spec.ts
+@@ -252,7 +252,10 @@ const rootRuntimeExports = [
+     "constellationWellMapping",
+     "createSpecularWriter",
+     "createTokenColorCache",
++    "glassGroundTone",
+     "provideConfiguratorSize",
++    "publishGlassField",
++    "readGlassSaturate",
+     "resolveCanvasColor",
+     "resolveTokenColor",
+     "snapshotField",
+diff --git a/tests/styles/glass-subtlety.test.ts b/tests/styles/glass-subtlety.test.ts
+index f630d1f5..a2276b7e 100644
+--- a/tests/styles/glass-subtlety.test.ts
++++ b/tests/styles/glass-subtlety.test.ts
+@@ -68,7 +68,12 @@ const blurRadius = (map: Map<string, string>, token: string): number => {
+     throw new Error(`no blur radius in ${token}: ${flat}`);
+ };
+ 
+-const light = declMap(read("src/styles/tokens/glass.css"));
++// The token ROOT scope: a consumer's claim (`[data-glass-ground]`, tokens/glass.css)
++// re-derives the content band on its own scope, so its rules are dropped here and
++// the ladder below is the one an unclaimed surface paints.
++const rootScope = (css: string): string =>
++    stripCss(css).replace(/\}\s*\[data-glass-ground[^\]]*\]\s*\{[^}]*\}/g, "}");
++const light = declMap(rootScope(read("src/styles/tokens/glass.css")));
+ // The dark arm moves the ink and the base; every rung is derived from them, so the
+ // dark map is the light primitives under the dark overrides. Two files carry `.dark`
+ // glass declarations — the ink/base pair (dark-arm.css) and the deep tier
+@@ -170,15 +175,20 @@ describe("glass veil ladder — every rung on the one computed bound", () => {
+     });
+ 
+     it("derives EVERY rung from the bound — no hand alpha, in either mode", () => {
++        // The content band steps from `--glass-content-bound`, which IS the bound on
++        // the token roots (a claim re-derives it on its own scope).
++        expect(light.get("--glass-content-bound")).toBe("var(--glass-bound)");
+         for (const rung of [...RUNGS, ...FOOTPRINTS]) {
+             const raw = light.get(`--glass-veil-${rung}`);
+             expect(raw, `no declaration for --glass-veil-${rung}`).toBeDefined();
+-            if (rung !== "dialog") expect(raw, rung).toMatch(/var\(--glass-bound\)/);
++            const content = ["wash", "quiet", "resting"].includes(rung);
++            if (rung !== "dialog")
++                expect(raw, rung).toMatch(content ? /var\(--glass-content-bound\)/ : /var\(--glass-bound\)/);
+         }
+         expect(darkArm).not.toMatch(
+             /--glass-veil-(?:wash|quiet|resting|floating|overlay|dock|crown|sheet|chassis|dialog|step)\s*:/,
+         );
+-        expect(darkArm).not.toMatch(/--glass-bound\s*:/);
++        expect(darkArm).not.toMatch(/--glass-(?:content-)?bound\s*:/);
+     });
+ 
+     it("paints ONE pole — the plate is `--card` at α, with no ink token and no luma term", () => {
+@@ -197,7 +207,10 @@ describe("glass veil ladder — every rung on the one computed bound", () => {
+         expect(grasp).toMatch(
+             /--glass-veil-rung:\s*max\(\s*calc\(var\(--glass-veil-rest\) \* 0\.6\),\s*var\(--glass-veil-floor, 0\)\s*\)/,
+         );
+-        expect(stripCss(read("src/styles/glass/veil.css"))).toMatch(/--glass-veil-floor:\s*var\(--glass-bound\)/);
++        // A plate's floor is its band's bound: the bound, unless a claim thinned the
++        // content band (and then its ink re-solves against the painted rung).
++        expect(stripCss(read("src/styles/glass/veil.css"))).toMatch(/--glass-veil-floor:\s*var\(--glass-content-bound\)/);
++        expect(light.get("--glass-content-bound")).toBe("var(--glass-bound)");
+     });
+ });
+ 
+@@ -1064,9 +1077,10 @@ describe("grasp register — the material answers the hand", () => {
+         // host it was written for. A host now has to earn the claim one of two ways —
+         // compose the plate utility (whose veil resolves the rung, glass/veil.css), or
+         // declare the rest endpoint itself AND scale a painted value by the rung.
+-        expect(read("src/styles/glass/veil.css")).toMatch(
+-            /--glass-veil:[\s\S]*?var\(--glass-veil-rung\)/,
+-        );
++        // The veil reads the rung through the one α the paint and the ink solve share.
++        const veil = stripCss(read("src/styles/glass/veil.css"));
++        expect(veil).toMatch(/--glass-paint-a:[^;]*var\(--glass-veil-rung\)/);
++        expect(veil).toMatch(/--glass-veil:[^;]*var\(--glass-paint-a\)/);
+         for (const host of graspHosts) {
+             const bodies = hostRules(host.classes).map((r) => r.body);
+             const composesPlate = bodies.some((b) => /@apply[^;]*\bglass-plate\b/.test(b));

@@ -7,6 +7,10 @@
 // one crop box; glance-<name>.json holds each half's composite and ink readings and the pair's pixel delta.
 //   node glance.mjs --base <dist> (--route <dist> | --overlay <css>) --out <dir> [--name route] [--themes light,dark]
 //        [--engine chromium|webkit] [--story-base <demo-dist> --story-route <demo-dist>] [--require-delta]
+//        [--ground paper] [--ids dock,dialog,floating] [--route-query claim=honest]
+// --ground, --ids and --route-query widen the pair for a route whose change lives off paper or on the content rungs
+// (D3 C′: the claimed content band over the c1 aurora). --route-query rides the route half's URL only. The default
+// pair is H-13's: paper; dock, Dialog, floating.
 // --require-delta is the pair's own sanity check: exit 1 when any pair's halves are the same picture (under 0.1% of
 // the crop's pixels differ by more than 8/255), i.e. the pair captured one build twice or the route changed nothing
 // the owner would see.
@@ -17,9 +21,10 @@ import { capture } from "./capture.mjs";
 import { inkRows } from "./rows.mjs";
 
 const a = cli({ base: { type: "string" }, route: { type: "string" }, overlay: { type: "string" }, out: { type: "string" }, name: { type: "string" }, themes: { type: "string" },
-  "story-base": { type: "string" }, "story-route": { type: "string" }, "require-delta": { type: "boolean" }, engine: { type: "string" } });
+  "story-base": { type: "string" }, "story-route": { type: "string" }, "require-delta": { type: "boolean" }, engine: { type: "string" }, ground: { type: "string" }, ids: { type: "string" }, "route-query": { type: "string" } });
 if (!a.base || !(a.route || a.overlay) || !a.out) { console.error("usage: node glance.mjs --base <dist> (--route <dist> | --overlay <css>) --out <dir> [--name route] [--themes light,dark] [--story-base d --story-route d] [--require-delta]"); process.exit(2); }
 const out = path.resolve(a.out), name = a.name || "route", themes = list(a.themes, ["light", "dark"]), engine = a.engine || "chromium";
+const ground = a.ground || "paper", ids = list(a.ids, ["dock", "dialog", "floating"]);
 fs.mkdirSync(out, { recursive: true });
 const PAD = 28, GAP = 16, doc = { base: path.resolve(a.base), route: a.route ? path.resolve(a.route) : null, overlay: a.overlay ? path.resolve(a.overlay) : null, pairs: [] };
 
@@ -35,15 +40,15 @@ function writePair(file, pngs, box) {
 }
 
 for (const theme of themes) {
-  const sel = { engines: engine, themes: theme, grounds: "paper", scenes: "ladder,dialog", quiet: true };
-  const cb = path.join(OUT, "caps", `glance-base-${engine}-${theme}`), cr = path.join(OUT, "caps", `glance-${name}-${engine}-${theme}`);
+  const sel = { engines: engine, themes: theme, grounds: ground, scenes: "ladder,dialog", quiet: true };
+  const cb = path.join(OUT, "caps", `glance-base-${engine}-${theme}-${ground}`), cr = path.join(OUT, "caps", `glance-${name}-${engine}-${theme}-${ground}`);
   for (const d of [cb, cr]) fs.rmSync(d, { recursive: true, force: true });
   await capture(a.base, { ...sel, out: cb });
-  await capture(a.route || a.base, { ...sel, out: cr, inject: a.overlay });
+  await capture(a.route || a.base, { ...sel, out: cr, inject: a.overlay, query: a["route-query"] });
   const caps = [loadCapture(cb), loadCapture(cr)];
-  for (const [id, scene] of [["dock", "ladder"], ["dialog", "dialog"], ["floating", "ladder"]]) {
+  for (const [id, scene] of ids.map((id) => [id, id === "dialog" ? "dialog" : "ladder"])) {
     const halves = caps.map((cap) => {
-      const cell = pick(cap, { engine, theme, ground: "paper", scene, variant: "base" })[0];
+      const cell = pick(cap, { engine, theme, ground, scene, variant: "base" })[0];
       const spec = cell?.specs?.find((s) => s.id === id);
       if (!spec) return null;
       const png = cap.img(cell, "full"), paper = bare(cap, cell), comp = composite(cap, cell, spec), [L, C] = lch(comp);
@@ -54,7 +59,7 @@ for (const theme of themes) {
     if (halves.some((h) => !h)) { doc.pairs.push({ theme, id, error: "specimen missing in one half" }); console.log(`${theme} ${id}: specimen missing ✗`); continue; }
     const x0 = Math.max(0, Math.floor(Math.min(...halves.map((h) => h.rect[0])) - PAD)), y0 = Math.max(0, Math.floor(Math.min(...halves.map((h) => h.rect[1])) - PAD));
     const x1 = Math.min(VIEW.width, Math.ceil(Math.max(...halves.map((h) => h.rect[0] + h.rect[2])) + PAD)), y1 = Math.min(VIEW.height, Math.ceil(Math.max(...halves.map((h) => h.rect[1] + h.rect[3])) + PAD));
-    const box = [x0, y0, x1 - x0, y1 - y0], file = path.join(out, `glance-${engine}-${theme}-${id}-base-vs-${name}.png`);
+    const box = [x0, y0, x1 - x0, y1 - y0], file = path.join(out, `glance-${engine}-${theme}${ground === "paper" ? "" : "-" + ground}-${id}-base-vs-${name}.png`);
     writePair(file, halves.map((h) => h.png), box);
     const delta = diffFrac(halves[0].png, halves[1].png, box);
     doc.pairs.push({ engine, theme, id, file, crop: box, delta: +delta.toFixed(4), base: halves[0].read, [name]: halves[1].read });
@@ -84,6 +89,6 @@ for (const theme of themes) {
     console.log(`${theme} story: ${path.basename(file)} · delta ${f(delta * 100, 2)}%${shots.some((s) => s.err) ? " · " + shots.map((s) => s.err).join(" | ") : ""}`);
   }
 }
-fs.writeFileSync(path.join(out, `glance-${engine}-${name}.json`), JSON.stringify(doc, null, 1));
+fs.writeFileSync(path.join(out, `glance-${engine}-${name}${ground === "paper" ? "" : "-" + ground}.json`), JSON.stringify(doc, null, 1));
 const flat = doc.pairs.filter((p) => p.error || p.errors?.some(Boolean) || !(p.delta >= 0.001));
 if (a["require-delta"]) { console.log(flat.length ? `GLANCE FAIL: ${flat.length} of ${doc.pairs.length} pairs show no delta or failed (${flat.map((p) => p.theme + " " + p.id).join(", ")})` : `GLANCE PASS: ${doc.pairs.length} pairs, each with a visible delta`); process.exitCode = flat.length ? 1 : 0; }
