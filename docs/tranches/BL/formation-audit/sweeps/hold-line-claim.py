@@ -82,6 +82,24 @@ plants its nouns require.
                        does not name `matchMedia` (FO-05: `deck/composables/useEdgeZones.ts:40`)
             value      every value `src` gives a pointer or hover feature, when the span reads one (FO-05:
                        `(pointer: fine)`)
+          Pass 16 (FP-01 to FP-05) found five forms the eleven kinds did not read. Each is enumerated from `src` and
+          carried only by a red or green plant in that form:
+            relalpha   a share of a token written as a relative color's alpha (`oklch(from var(--t) l c h / 0.15)`),
+                       when the span reads a literal `color-mix` share of that token (FP-01: `card/styles.css:161`)
+            carried    a custom property `src` declares whose value the span's own regex fails when it is written on
+                       a property the span reads, so a rule can set the defect value on the custom property and read
+                       it back (FP-01: `--dock-selected-accent` at `tokens/sizing.css:249`); the plant declares a
+                       custom property and reads it back
+            viewread   a script read of the viewport `src` writes (`innerWidth`, `innerHeight`, `visualViewport`,
+                       `screen.width`, `documentElement.clientWidth`, `useWindowSize`), wherever the span reads the
+                       viewport over a script file or names one such read (FP-02: `sheet/detents/use.ts:85`)
+            touch      a touch-capability test `src` writes (`ontouchstart`, `maxTouchPoints`) and the exported names
+                       of the modules that write one (`useTouchGate`), wherever the span reads a pointer or hover
+                       feature over a script file (FP-03: `composables/dom/useTouchGate.ts:63`)
+            utility    a Tailwind utility of a property family the span reads (`rounded*` for a radius, `ring*` and
+                       `shadow*` for a shadow, `p*-` for padding, …) that `src` writes in a class list, wherever a
+                       component directory the span reads from holds a template or class string (FP-04:
+                       `select/SelectContent.vue:84`)
           Each sibling must be carried by a plant, red if it is the defect in another spelling, green if it is not;
           the plant then runs as every other plant does, so a red sibling the gate passes is open NARROW.
 
@@ -424,6 +442,12 @@ CLAIMS = {
         R("src/components/sheet/styles.css", ".x { min-inline-size: var(--sheet-floor); }", "a side sheet's inline floor (pass 14 FN-05 SIBLING)"),
         R("src/components/sheet/styles.css", ".x { min-width: 40vw; }", "min-width (pass 14 FN-05 SIBLING)"),
         R("src/components/sheet/detents/use.ts", "const w = document.documentElement.clientWidth;", "the root's client width (the side arm)"),
+        R("src/components/sheet/detents/use.ts", "const w = innerWidth;", "a bare `innerWidth`, the side arm of `use.ts:85` (pass 16 FP-05 SIBLING viewread)"),
+        R("src/components/sheet/SheetContent.vue", "<script setup lang=\"ts\">\nconst span = window.innerHeight;\n</script>", "a viewport read in another sheet file (pass 16 FP-05 SIBLING viewread)"),
+        R("src/components/sheet/SheetContent.vue", '<div class="min-w-[40vw]">x</div>', "a Tailwind inline floor (pass 16 FP-05 SIBLING utility)"),
+        R("src/components/sheet/styles.css", '[data-slot="sheet-content"] { --sheet-span: max(12rem, 30dvh); block-size: var(--sheet-span); }', "a `max()` floor carried on a custom property (pass 16 FP-05 SIBLING carried)"),
+        R("src/components/sheet/styles.css", ".x { --x: var(--sheet-floor); block-size: var(--x); }", "the floor carried on a second custom property (pass 16 FP-05 SIBLING carried)"),
+        G("src/components/sheet/styles.css", ".x { --sheet-seam-width: 1px; }", "HEAD's own custom property (`styles.css:78`), which floors nothing"),
         G("src/components/sheet/styles.css", ".x { block-size: calc(clamp(0, var(--detent-t), 1) * 100dvh); }", "HEAD's detent span (`styles.css:530`), which no floor wraps"),
         G("src/components/sheet/styles.css", ".x { max-block-size: 100dvh; max-height: 100dvh; }", "a ceiling, not a floor (pass 14 FN-05 SIBLING)"),
         G("src/components/sheet/styles.css", ".x { width: 100%; max-width: 32rem; max-inline-size: 32rem; }", "widths that floor nothing (pass 14 FN-05 SIBLING)"),
@@ -508,6 +532,12 @@ CLAIMS = {
         R("src/components/progress/Progress.vue", '<script setup lang="ts">\nconst wide = window.matchMedia("(min-width: 640px)").matches;\n</script>', "a width read through `matchMedia`, the form of `useTabResponsive.ts:105` (pass 15 FO-06 SIBLING)"),
         G("src/components/progress/Progress.vue", '<div class="@sm:hidden">x</div>', "a container variant"),
         R("src/components/progress/Progress.vue", '<script setup lang="ts">\nconst { matches } = useBreakpoint("(min-width: 640px)");\n</script>', "the library's `matchMedia` wrapper (`composables/dom/useBreakpoint.ts:46`) (pass 15 FO-06 SIBLING)"),
+        R("src/components/progress/Progress.vue", '<script setup lang="ts">\nconst narrow = window.innerWidth < 768;\n</script>', "the window width, the form of `sheet/detents/use.ts:85` (pass 16 FP-02)"),
+        R("src/components/progress/Progress.vue", '<script setup lang="ts">\nconst short = window.innerHeight < 480;\n</script>', "the window height (pass 16 FP-05 SIBLING viewread)"),
+        R("src/components/progress/Progress.vue", '<script setup lang="ts">\nconst { width } = useWindowSize();\n</script>', "vueuse `useWindowSize` (pass 16 hardening note)"),
+        R("src/components/progress/Progress.vue", '<script setup lang="ts">\nconst w = screen.width;\n</script>', "the screen (fix-17: the set E9-G7 reads)"),
+        R("src/components/progress/Progress.vue", '<script setup lang="ts">\nconst w = document.documentElement.clientWidth;\n</script>', "the root's client width (fix-17: the set E9-G7 reads)"),
+        R("src/components/progress/Progress.vue", '<script setup lang="ts">\nconst w = window.visualViewport?.width ?? 0;\n</script>', "the visual viewport (fix-17: the set E9-G7 reads)"),
         G("src/components/progress/Progress.vue", "<style>\n@media (prefers-reduced-motion: reduce) { .x { transition: none; } }\n</style>", "a preference query, not a viewport key"),
         G("src/components/progress/Progress.vue", "<style>\n@container (width < 40rem) { .x { display: none; } }\n</style>", "a container query"),
     ),
@@ -544,6 +574,10 @@ CLAIMS = {
         G("src/components/metric/styles.css", ".x { border-radius: var(--radius-ctx); }", "the context radius"),
         R("src/components/metric/styles.css", '.metric[data-posture="cell"] { --radius-ctx: var(--radius-card); }', "the context token pinned to a rung, the declaration of `overlay-plate.css:64` (pass 15 FO-02)"),
         R("src/components/metric/styles.css", ".metric { --radius-ctx: 16px; }", "the context token pinned to a literal (pass 15 FO-02)"),
+        R("src/components/metric/styles.css", ".metric { --cell-r: var(--radius-card); border-radius: var(--cell-r); }", "a rung carried on another custom property (pass 16 FP-05 SIBLING carried)"),
+        R("src/components/metric/Metric.vue", "<div :class=\"cn('metric rounded-card', $props.class)\">x</div>", "a Tailwind corner class on the root, the form of `select/SelectContent.vue:84` (pass 16 FP-04)"),
+        R("src/components/metric/MetricRow.vue", '<div class="rounded-(--radius-sm)">x</div>', "a corner utility reading a rung (pass 16 FP-04)"),
+        G("src/components/metric/MetricRow.vue", '<div class="rounded-(--radius-ctx)">x</div>', "a corner utility reading the context radius (fix-17)"),
     ),
     ("W-E.9", "E9-G7"): S(  # "no viewport keys in the fold"
         R("src/components/tabs/composables/useTabResponsive.ts", 'const narrow = useMediaQuery("(max-width: 36rem)");', "vueuse `useMediaQuery`"),
@@ -558,6 +592,10 @@ CLAIMS = {
         R("src/components/tabs/composables/useTabResponsive.ts", "const w = window.visualViewport?.width ?? 0;", "the visual viewport"),
         R("src/components/tabs/composables/useTabResponsive.ts", "const w = screen.width;", "the screen"),
         R("src/components/tabs/composables/useTabResponsive.ts", "const w = document.documentElement.clientWidth;", "the root's client width"),
+        R("src/components/tabs/composables/useTabResponsive.ts", "const h = window.innerHeight;", "the window height, which E9-G7's `@media` arm reads as `height` (pass 16 FP-05 SIBLING viewread)"),
+        R("src/components/tabs/composables/useTabResponsive.ts", "const h = screen.height;", "the screen height (fix-17)"),
+        R("src/components/tabs/composables/useTabResponsive.ts", "const h = document.documentElement.clientHeight;", "the root's client height (fix-17)"),
+        R("src/components/tabs/composables/useTabResponsive.ts", "const w = window.outerWidth;", "the outer window width (fix-17)"),
         R("src/components/tabs/composables/useTabResponsive.ts", 'const { matches: isDesktop } = useBreakpoint("(min-width: 640px)");', "the library's own `matchMedia` wrapper (`composables/dom/useBreakpoint.ts:46`; pass 14 FN-02)"),
         R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (min-width: 36rem) { .x { display: flex; } }\n</style>", "min-width (pass 14 FN-05 SIBLING)"),
         R("src/components/labeled-field/LabeledField.vue", "<style>\n@media (max-height: 480px) { .x { display: block; } }\n</style>", "a viewport height query (pass 14 FN-05 SIBLING)"),
@@ -617,6 +655,16 @@ CLAIMS = {
         G("src/components/dialog/styles.css", ".x { box-shadow: 0 0 0 2px var(--ring-rung); }", "the rung"),
         R("src/components/dialog/styles.css", ".x {\n    box-shadow:\n        0 0 0 2px color-mix(in oklab, var(--foreground) 48%, transparent);\n}", "the value on the next line, the form `src` writes `box-shadow` in 23 times (pass 15 FO-06 SIBLING)"),
         R("src/components/dialog/styles.css", ".x { box-shadow: 0 1px 2px rgb(0 0 0 / 0.1), 0 0 0 2px color-mix(in oklab, var(--foreground) 40%, transparent); }", "the mix second in a shadow list (pass 15 FO-06 SIBLING)"),
+        R("src/components/dialog/styles.css", ".x { outline: 2px solid color-mix(in oklab, var(--foreground) 40%, transparent); }", "an `outline` mix (pass 16 FP-01 control)"),
+        R("src/components/dialog/styles.css", ".x { outline-color: color-mix(in oklab, var(--foreground) 48%, transparent); }", "`outline-color`, HEAD's own form (`styles.css:243`) (pass 16 FP-05 SIBLING family)"),
+        G("src/components/dialog/styles.css", ".x { outline-offset: 2px; }", "`outline-offset`, which carries no colour (pass 16 FP-05 SIBLING family)"),
+        R("src/components/dialog/styles.css", ".x { outline: 2px solid oklch(from var(--foreground) l c h / 0.48); }", "a relative color's alpha, the form of `card/styles.css:161` (pass 16 FP-01)"),
+        R("src/components/dialog/styles.css", ".x { box-shadow: 0 0 0 2px oklch(from var(--foreground) l c h / 48%); }", "a relative color's alpha as a percentage (pass 16 FP-01)"),
+        R("src/components/dialog/styles.css", ".x { --dialog-close-ring: color-mix(in oklab, var(--foreground) 48%, transparent); outline: 2px solid var(--dialog-close-ring); }", "the mix carried on a custom property, the form of `tokens/sizing.css:249` (pass 16 FP-01)"),
+        R("src/components/dialog/styles.css", ".x { --dialog-close-ring: oklch(from var(--foreground) l c h / 0.48); box-shadow: 0 0 0 2px var(--dialog-close-ring); }", "a relative alpha carried on a custom property (pass 16 FP-01)"),
+        R("src/components/dialog/DialogContent.vue", '<button class="ring-2 ring-foreground/48">x</button>', "a Tailwind ring utility with a literal share (pass 16 FP-05 SIBLING utility)"),
+        R("src/components/dialog/DialogContent.vue", '<button class="focus-visible:shadow-[0_0_0_2px_color-mix(in_oklab,var(--foreground)_48%,transparent)]">x</button>', "an arbitrary shadow utility with the mix (pass 16 FP-05 SIBLING utility)"),
+        G("src/components/dialog/DialogContent.vue", '<button class="ring-2 ring-(--ink-perimeter)">x</button>', "a ring utility that reads the rung (pass 16 FP-05 SIBLING utility)"),
     ),
     ("W-H.2", "G9"): L(GONE),
     ("W-H.2", "G10"): DOCKET,
@@ -692,6 +740,9 @@ CLAIMS = {
         R("src/components/dock/composables/useDockHold.ts", 'export const coarse = () => !window.matchMedia("(pointer: fine)").matches;', "the other value through `matchMedia`, the form of `deck/composables/useEdgeZones.ts:40` (pass 15 FO-05)"),
         R("src/components/dock/styles/density.css", "@media not (pointer: fine) { .glass-dock { --x: 1; } }", "the other value, inverted (pass 15 FO-05)"),
         R("src/components/dock/composables/useDockHold.ts", 'export const coarse = () => window.matchMedia("(pointer: coarse)").matches;', "`(pointer: coarse)` through `matchMedia`, the form of `popover/Popover.vue:84`"),
+        R("src/components/dock/composables/useDockHold.ts", 'export const coarse = () => typeof window !== "undefined" && "ontouchstart" in window;', "a touch-capability test, the form of `composables/dom/useTouchGate.ts:63` (pass 16 FP-03)"),
+        R("src/components/dock/composables/useDockHold.ts", 'import { useTouchGate } from "../../../composables/dom/useTouchGate";', "the library's touch gate (`src/index.ts:449`) (pass 16 FP-03)"),
+        R("src/components/dock/composables/useDockHold.ts", "export const coarse = () => navigator.maxTouchPoints > 0;", "`maxTouchPoints` (pass 16 FP-03)"),
     ),
     ("W-I.2", "G1"): S(  # "no member set read from element children"
         R("src/components/carousel/useCarousel.ts", "const members = [...el.children];", "a spread"),
@@ -732,6 +783,10 @@ CLAIMS = {
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run > .x { transition:\n    inline-size var(--spring-dock-duration) var(--spring-dock); }", "the value on the next line, the form of `layer-group.css:354-355` (pass 15 FO-01)"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run > .x { transition: background var(--dock-motion-fast), inline-size var(--spring-dock-duration) var(--spring-dock); }", "a list that opens on another property, the form of `layer-group.css:259-261` (pass 15 FO-01)"),
         R("src/components/dock/styles/run.css", ".x { transition-property: opacity, inline-size; }", "`transition-property` as a list, the size second (pass 15 FO-06 SIBLING)"),
+        R("src/components/dock/styles/run.css", ".x { --seat-transition: inline-size var(--spring-dock-duration) var(--spring-dock); transition: var(--seat-transition); }", "the seat transition carried on a custom property (pass 16 FP-05 SIBLING carried)"),
+        R("src/components/dock/GlassDock.vue", '<div class="transition-[inline-size] duration-300">x</div>', "an arbitrary Tailwind transition on the seat size (pass 16 FP-05 SIBLING utility)"),
+        R("src/components/dock/GlassDock.vue", '<div class="transition-all">x</div>', "`transition-all`, which carries every size (pass 16 FP-05 SIBLING utility)"),
+        G("src/components/dock/GlassDock.vue", '<div class="w-8 h-8 transition-colors">x</div>', "size and colour utilities, not a size transition (pass 16 FP-05 SIBLING utility)"),
         G("src/components/dock/styles/run.css", ".x {\n    transition: var(--icon-button-transition), inline-size var(--spring-dock-duration) var(--spring-dock);\n}", "§3 item 1's appended form"),
     ),
     ("W-I.7", "I7-G2"): S(  # "C-8": no content-box in `src`
@@ -748,6 +803,10 @@ CLAIMS = {
         R("src/components/dock/styles/run.css", ".x { padding-block-start: var(--dock-ring-reserve); }", "`padding-block-start` (pass 14 FN-05 SIBLING)"),
         R("src/components/dock/styles/run.css", ".x { padding-block-end: var(--dock-ring-reserve); }", "`padding-block-end` (pass 14 FN-05 SIBLING)"),
         G("src/components/dock/styles/run.css", ".x { outline-offset: var(--dock-ring-reserve); }", "§3 item 2's outline offset"),
+        R("src/components/dock/GlassDock.vue", '<div class="px-(--dock-ring-reserve)">x</div>', "a Tailwind padding utility (pass 16 FP-05 SIBLING utility)"),
+        R("src/components/dock/GlassDock.vue", '<div class="py-[var(--dock-ring-reserve)]">x</div>', "an arbitrary padding utility (pass 16 FP-05 SIBLING utility)"),
+        R("src/components/dock/styles/layers.css", ".x {\n    padding-block:\n        var(--dock-ring-reserve);\n}", "another dock stylesheet, the value on the next line"),
+        G("src/components/dock/styles/run.css", ".x { margin-block: calc(-1 * var(--dock-ring-reserve)); }", "HEAD's margin pair (`run.css:252`), not padding"),
     ),
     # ---------------------------------------------------------------- band J
     ("W-J.1", "G11"): S(  # "Card is not an option"
@@ -1306,7 +1365,19 @@ FAMILIES = [
     ["scroll-snap-align"],
     ["box-sizing"],
     ["flex-direction", "flex-flow"],
+    ["outline", "outline-color", "outline-width", "outline-style", "outline-offset"],
 ]
+# pass 16 FP-04: the Tailwind utilities that write each family, keyed by the family's first member
+UTILITY = {
+    "border-radius": r"rounded", "box-shadow": r"shadow|ring", "outline": r"outline|ring",
+    "padding": r"p[xytrblse]?", "margin": r"-?m[xytrblse]?", "transition": r"transition",
+    "width": r"w|min-w|max-w|size|basis", "height": r"h|min-h|max-h|size|basis",
+    "inset": r"-?(?:inset(?:-[xy])?|top|right|bottom|left|start|end|translate-[xy])", "box-sizing": r"box-(?:border|content)",
+    "flex-direction": r"flex-(?:col|row)(?:-reverse)?", "scroll-snap-align": r"snap-(?:start|center|end|align-none)",
+    "font-family": r"font-(?:sans|mono|serif)",
+}
+VIEWREAD = r"\b(innerWidth|innerHeight|outerWidth|outerHeight|visualViewport|screen\.(?:avail)?(?:[wW]idth|[hH]eight)|documentElement\.client(?:Width|Height)|useWindowSize)\b"
+TOUCH = r"\b(ontouchstart|maxTouchPoints|msMaxTouchPoints)\b"
 MEDIA_VIEWPORT = ["width", "min-width", "max-width", "height", "min-height", "max-height", "inline-size", "block-size",
                   "aspect-ratio", "min-aspect-ratio", "max-aspect-ratio", "orientation"]
 MEDIA_POINTER = ["pointer", "any-pointer", "hover", "any-hover"]
@@ -1353,6 +1424,13 @@ def _src(root):
         "mm": set(x.lower() for t in scripts.values() for x in re.findall(r"matchMedia\(\s*[`'\"]\(\s*([a-z-]+)", t)),
         "variants": set(x for t in scripts.values() for x in re.findall(r"(?<![\w@:\[-])((?:max-)?(?:sm|md|lg|xl|2xl)):(?=[a-z\[!])", t)),
         "defaults": set(x for t in scripts.values() for x in re.findall(r"props\.(\w+)\s*(?:\?\?|\|\|)\s*-?\d", t)),
+        # pass 16 FP-01 to FP-04: relative-color alphas, custom-property carriers, script viewport reads, touch tests
+        "relalpha": sorted(set(re.findall(r"from\s+var\(\s*(--[a-z][\w-]*)\s*\)[^;{}]*/\s*[0-9.]+%?", sheet))),
+        "carriers": [(m.group(1), m.group(2).strip()) for m in re.finditer(r"(?:^|[{;])\s*(--[a-z][\w-]*)\s*:([^;{}]+);", sheet, re.M)],
+        "viewreads": set(x for t in scripts.values() for x in re.findall(VIEWREAD, t)),
+        "touch": set(x for t in scripts.values() for x in re.findall(TOUCH, t))
+                 | set((m.group(1) or m.group(3)) for f, t in scripts.items() if re.search(TOUCH, t) and not f.endswith("index.ts")
+                       for m in _SIG.finditer(t)),
     }
     _SRC[root] = out
     return out
@@ -1394,6 +1472,48 @@ def _wrappers(src, api):
 
 def _word(x):
     return re.compile(r"(?<![\w-])" + re.escape(x) + r"(?![\w-])", re.I)
+
+
+def span_regexes(spans):
+    """The search patterns of a span's `rg`, `grep` and `git grep` stages, compiled in Python (pass 16 FP-01). A
+    pattern Python cannot compile is left out; `carried` then reads the patterns that compile."""
+    out = []
+    for s in spans:
+        for c in split_top(s, "&&"):
+            for st in split_top(re.sub(r"^!\s*", "", c), "|"):
+                try:
+                    t = shlex.split(st)
+                except ValueError:
+                    continue
+                if not t or t[0] not in ("rg", "grep", "git"):
+                    continue
+                flags, pat, args = 0, None, t[2:] if t[:2] == ["git", "grep"] else t[1:]
+                i = 0
+                while i < len(args):
+                    a = args[i]
+                    if a == "-e" and i + 1 < len(args):
+                        pat = args[i + 1]
+                        break
+                    if a == "--":
+                        i += 1
+                        continue
+                    if a.startswith("-"):
+                        if re.fullmatch(r"-[A-Za-z]+", a) and "i" in a:
+                            flags |= re.I
+                        if a in ("--glob", "-g", "--type", "-t", "-A", "-B", "-C", "-m"):
+                            i += 1
+                        i += 1
+                        continue
+                    pat = a
+                    break
+                if not pat:
+                    continue
+                pat = pat.replace("[[:space:]]", r"\s").replace("[[:alpha:]]", "[A-Za-z]").replace("[[:digit:]]", r"\d")
+                try:
+                    out.append(re.compile(pat, flags | re.M))
+                except re.error:
+                    pass
+    return out
 
 
 def siblings(g, entry, spans, root):
@@ -1493,6 +1613,43 @@ def siblings(g, entry, spans, root):
         for t in sorted(src["tokens"]):
             if t.startswith(pre) and not _word(t).search(span):
                 out.append(("token", t, f"declared in `src` under the prefix `{pre}` the span reads"))
+    # pass 16 FP-01: a literal share of a token, read by the span as a `color-mix` percentage
+    shared = sorted(set(re.findall(r"var\(\s*(?:\\s\*)?(--[a-z][\w-]*)\s*\)[^'|]{0,24}?%", raw)))
+    if shared and src["relalpha"]:
+        for t in shared:
+            out.append(("relalpha", t, f"`src` writes a share as a relative color's alpha (`from var({src['relalpha'][0]}) … / n`)"))
+    # pass 16 FP-01: a custom property `src` declares whose value the span's regex fails on a property the span reads
+    rxs = span_regexes(spans)
+    if fam_props and rxs:
+        hit = next(((p, n, v) for p in sorted(fam_props) for n, v in sorted(src["carriers"], key=lambda c: ("url(" in c[1], len(c[1])))
+                    if any(rx.search(f".x {{ {p}: {v}; }}") for rx in rxs)), None)
+        if hit:
+            out.append(("carried", hit[0], f"`src` declares `{hit[1]}: {hit[2][:48]}`, a value the span fails on `{hit[0]}`; a rule can set it on a custom property and read it back"))
+    # pass 16 FP-02: a script read of the viewport, wherever the span reads the viewport over a script or names one
+    if (viewport and reads_scripts) or re.search(VIEWREAD, span):
+        for x in sorted(src["viewreads"]):
+            out.append(("viewread", x, f"`src` reads the viewport in script as `{x}`"))
+    # pass 16 FP-03: a touch-capability test standing in for a pointer query
+    if re.search(r"pointer|hover", span) and reads_scripts:
+        for x in sorted(src["touch"]):
+            out.append(("touch", x, f"`src` keys a touch model on `{x}`"))
+    # pass 16 FP-04: the Tailwind utility of a gated property family, beside the stylesheet the span reads
+    comp = set()
+    for x in scope:
+        m = re.match(r"(src/components/[^/]+)", x)
+        if m and any(f.startswith(m.group(1) + "/") and f.endswith(".vue") for f in src["scripts"]):
+            comp.add(m.group(1))
+    if comp and fam_props:
+        toks = {t.split(":")[-1].lstrip("!") for _, ts in src["lists"] for t in ts}
+        for fam in FAMILIES:
+            u = UTILITY.get(fam[0])
+            if u and set(fam) & fam_props:
+                urx = re.compile(r"(?:" + u + r")(?:-[\w\[\]./()%-]+)?")
+                if fam[0] not in ("box-shadow", "outline", "transition"):  # `ring`, `shadow` and `transition` are whole utilities
+                    urx = re.compile(r"(?:" + u + r")-[\w\[\]./()%-]+")
+                used = sorted(t for t in toks if urx.fullmatch(t))
+                if used:
+                    out.append(("utility", fam[0], f"`src` writes `{fam[0]}` as a utility ({', '.join(used[:3])}, …) in class lists; the span reads {', '.join(sorted(comp))}"))
     seen, uniq = set(), []
     for k in out:
         if (k[0], k[1]) not in seen:
@@ -1508,6 +1665,11 @@ SHAPED = {
     "default": lambda n: re.compile(r"\b" + re.escape(n) + r"\s*(?:\?\?|\|\|)\s*-?\d"),
     "variant": lambda v: re.compile(r"(?<![\w@:\[-])" + re.escape(v) + r"[a-z\[!]"),
     "matchmedia": lambda f: re.compile(r"matchMedia\(\s*[`'\"]\(\s*(?:not\s+)?" + re.escape(f) + r"\b"),
+    "relalpha": lambda t: re.compile(r"from\s+var\(\s*" + re.escape(t) + r"\s*\)[^;{}]*/\s*[0-9.]+"),
+    "carried": lambda p: re.compile(r"(--[\w-]+)\s*:[^;{}]*;[\s\S]*?(?<![\w-])[a-z][a-z-]*\s*:[^;{}]*var\(\s*\1(?![\w-])", re.I),
+    "viewread": lambda x: re.compile(re.escape(x).replace(r"\[wW\]", "[wW]")),
+    "touch": lambda x: re.compile(r"\b" + re.escape(x) + r"\b"),
+    "utility": lambda fam: re.compile(r"""(?:class=|:class=|cn\(|['"`])[^'"`<>]*?(?<![\w-])(?:[a-z0-9-]+:)*!?(?:""" + UTILITY[fam] + r")(?:-[\w\[\]./()%-]+)?(?![\w-])"),
     "value": lambda fv: re.compile(r"\(\s*" + re.escape(fv.split(":")[0]) + r"\s*:\s*" + re.escape(fv.split(": ")[1]) + r"\b"),
 }
 

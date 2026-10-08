@@ -451,3 +451,68 @@ exit=1
 ## after: the plan as fix-16 leaves it; plants ran in the same worktree
 in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 617, open 0
 exit=0
+
+# ===== fix-17 (pass 16 FP-01 to FP-05: the SIBLING arm gains five form kinds read from `src`: relalpha, carried, viewread, touch, utility; HEAD `a115850c`; worktree .claude/worktrees/bl/formation/fix-17/wt)
+
+## before (1): enumeration alone (the fix-17 sweep with every plant fix-17 added removed), on the plan at `a115850c`
+OPEN SIBLING waves/W-E.3.md:69 E3-G9 · one floor authority: `innerWidth` (viewread: `src` reads the viewport in script as `innerWidth`) is in no plant
+OPEN SIBLING waves/W-E.3.md:69 E3-G9 · one floor authority: `width` (utility: `src` writes `width` as a utility (min-w-(--overlay-min-width), min-w-(--reka-select-trigger-width), min-w-0, …) in class lists; the span reads src/components/sheet) is in no plant
+OPEN SIBLING waves/W-E.7.md:78 E7-G9 · one width query: `innerHeight` (viewread: `src` reads the viewport in script as `innerHeight`) is in no plant
+OPEN SIBLING waves/W-E.7.md:78 E7-G9 · one width query: `innerWidth` (viewread: `src` reads the viewport in script as `innerWidth`) is in no plant
+OPEN SIBLING waves/W-E.8.md:68 E8-G4 · Metric reads the context radius (sta: `border-bottom-left-radius` (carried: `src` declares `--dot-ring-extent: 1`, a value the span fails on `border-bottom-left-radius`; a rule can set it on a custom property and read it back) is in no plant
+OPEN SIBLING waves/W-E.8.md:68 E8-G4 · Metric reads the context radius (sta: `border-radius` (utility: `src` writes `border-radius` as a utility (rounded-card, rounded-panel, rounded-pill, …) in class lists; the span reads src/components/metric) is in no plant
+OPEN SIBLING waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: `innerHeight` (viewread: `src` reads the viewport in script as `innerHeight`) is in no plant
+OPEN SIBLING waves/W-H.1.md:162 G15 · the Close ring is the rung (static): `outline` (family: a property `src` declares, of the family `outline` the span reads) is in no plant
+OPEN SIBLING waves/W-H.1.md:162 G15 · the Close ring is the rung (static): `outline-color` (family: a property `src` declares, of the family `outline` the span reads) is in no plant
+OPEN SIBLING waves/W-H.1.md:162 G15 · the Close ring is the rung (static): `outline-offset` (family: a property `src` declares, of the family `outline` the span reads) is in no plant
+OPEN SIBLING waves/W-H.1.md:162 G15 · the Close ring is the rung (static): `--foreground` (relalpha: `src` writes a share as a relative color's alpha (`from var(--dot-ring-tint) … / n`)) is in no plant
+OPEN SIBLING waves/W-H.1.md:162 G15 · the Close ring is the rung (static): `box-shadow` (carried: `src` declares `--configurator-section-tint: color-mix(in srgb, var(--foreground) 3%, transpa`, a value the span fails on `box-shadow`; a rule can set it on a custom property and read it back) is in no plant
+OPEN SIBLING waves/W-H.1.md:162 G15 · the Close ring is the rung (static): `box-shadow` (utility: `src` writes `box-shadow` as a utility (ring, shadow-cartoon, shadow-lg, …) in class lists; the span reads src/components/dialog) is in no plant
+OPEN SIBLING waves/W-H.1.md:162 G15 · the Close ring is the rung (static): `outline` (utility: `src` writes `outline` as a utility (ring, …) in class lists; the span reads src/components/dialog) is in no plant
+OPEN SIBLING waves/W-I.1.md:225 G18 · one pointer model (static, O-81 (3)): `ontouchstart` (touch: `src` keys a touch model on `ontouchstart`) is in no plant
+OPEN SIBLING waves/W-I.1.md:225 G18 · one pointer model (static, O-81 (3)): `useTouchGate` (touch: `src` keys a touch model on `useTouchGate`) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `transition` (carried: `src` declares `--paper-clean-texture: url("data:image/svg+xml,%3Csvg width='200' heigh`, a value the span fails on `transition`; a rule can set it on a custom property and read it back) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `width` (utility: `src` writes `width` as a utility (min-w-(--overlay-min-width), min-w-(--reka-select-trigger-width), min-w-0, …) in class lists; the span reads src/components/dock) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `height` (utility: `src` writes `height` as a utility (h-(--control-h-md), h-2, h-3, …) in class lists; the span reads src/components/dock) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `transition` (utility: `src` writes `transition` as a utility (transition-control, transition-disclosure, transition-none, …) in class lists; the span reads src/components/dock) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `padding` (utility: `src` writes `padding` as a utility (p-0, p-1, p-3, …) in class lists; the span reads src/components/dock) is in no plant
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 617, open 21
+exit=1
+
+## before (2): the fix-17 sweep with its plants, on the plan at `a115850c` (BL_ROOT = `git archive HEAD` of the plan folder)
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with a viewport read in another sheet file (pass 16 FP-05 SIBLING viewread) planted in src/components/sheet/SheetContent.vue: '<script setup lang="ts">\nconst span = window.innerHeight;\n</script>'
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with a `max()` floor carried on a custom property (pass 16 FP-05 SIBLING carried) planted in src/components/sheet/styles.css: '[data-slot="sheet-content"] { --sheet-span: max(12rem, 30dvh); block-s'
+OPEN NARROW  waves/W-E.3.md:69 E3-G9 · one floor authority: passes with the floor carried on a second custom property (pass 16 FP-05 SIBLING carried) planted in src/components/sheet/styles.css: '.x { --x: var(--sheet-floor); block-size: var(--x); }'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with the window width, the form of `sheet/detents/use.ts:85` (pass 16 FP-02) planted in src/components/progress/Progress.vue: '<script setup lang="ts">\nconst narrow = window.innerWidth < 768;\n</scr'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with the window height (pass 16 FP-05 SIBLING viewread) planted in src/components/progress/Progress.vue: '<script setup lang="ts">\nconst short = window.innerHeight < 480;\n</scr'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with vueuse `useWindowSize` (pass 16 hardening note) planted in src/components/progress/Progress.vue: '<script setup lang="ts">\nconst { width } = useWindowSize();\n</script>'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with the screen (fix-17: the set E9-G7 reads) planted in src/components/progress/Progress.vue: '<script setup lang="ts">\nconst w = screen.width;\n</script>'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with the root's client width (fix-17: the set E9-G7 reads) planted in src/components/progress/Progress.vue: '<script setup lang="ts">\nconst w = document.documentElement.clientWidt'
+OPEN NARROW  waves/W-E.7.md:78 E7-G9 · one width query: passes with the visual viewport (fix-17: the set E9-G7 reads) planted in src/components/progress/Progress.vue: '<script setup lang="ts">\nconst w = window.visualViewport?.width ?? 0;\n'
+OPEN NARROW  waves/W-E.8.md:68 E8-G4 · Metric reads the context radius (sta: passes with a Tailwind corner class on the root, the form of `select/SelectContent.vue:84` (pass 16 FP-04) planted in src/components/metric/Metric.vue: '<div :class="cn(\'metric rounded-card\', $props.class)">x</div>'
+OPEN NARROW  waves/W-E.8.md:68 E8-G4 · Metric reads the context radius (sta: passes with a corner utility reading a rung (pass 16 FP-04) planted in src/components/metric/MetricRow.vue: '<div class="rounded-(--radius-sm)">x</div>'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with the window height, which E9-G7's `@media` arm reads as `height` (pass 16 FP-05 SIBLING viewread) planted in src/components/tabs/composables/useTabResponsive.ts: 'const h = window.innerHeight;'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with the screen height (fix-17) planted in src/components/tabs/composables/useTabResponsive.ts: 'const h = screen.height;'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with the root's client height (fix-17) planted in src/components/tabs/composables/useTabResponsive.ts: 'const h = document.documentElement.clientHeight;'
+OPEN NARROW  waves/W-E.9.md:69 E9-G7 · no viewport keys in the fold: passes with the outer window width (fix-17) planted in src/components/tabs/composables/useTabResponsive.ts: 'const w = window.outerWidth;'
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with a relative color's alpha, the form of `card/styles.css:161` (pass 16 FP-01) planted in src/components/dialog/styles.css: '.x { outline: 2px solid oklch(from var(--foreground) l c h / 0.48); }'
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with a relative color's alpha as a percentage (pass 16 FP-01) planted in src/components/dialog/styles.css: '.x { box-shadow: 0 0 0 2px oklch(from var(--foreground) l c h / 48%); '
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with the mix carried on a custom property, the form of `tokens/sizing.css:249` (pass 16 FP-01) planted in src/components/dialog/styles.css: '.x { --dialog-close-ring: color-mix(in oklab, var(--foreground) 48%, t'
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with a relative alpha carried on a custom property (pass 16 FP-01) planted in src/components/dialog/styles.css: '.x { --dialog-close-ring: oklch(from var(--foreground) l c h / 0.48); '
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with a Tailwind ring utility with a literal share (pass 16 FP-05 SIBLING utility) planted in src/components/dialog/DialogContent.vue: '<button class="ring-2 ring-foreground/48">x</button>'
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with an arbitrary shadow utility with the mix (pass 16 FP-05 SIBLING utility) planted in src/components/dialog/DialogContent.vue: '<button class="focus-visible:shadow-[0_0_0_2px_color-mix(in_oklab,var('
+OPEN NARROW  waves/W-I.1.md:225 G18 · one pointer model (static, O-81 (3)): passes with a touch-capability test, the form of `composables/dom/useTouchGate.ts:63` (pass 16 FP-03) planted in src/components/dock/composables/useDockHold.ts: 'export const coarse = () => typeof window !== "undefined" && "ontouchs'
+OPEN NARROW  waves/W-I.1.md:225 G18 · one pointer model (static, O-81 (3)): passes with the library's touch gate (`src/index.ts:449`) (pass 16 FP-03) planted in src/components/dock/composables/useDockHold.ts: 'import { useTouchGate } from "../../../composables/dom/useTouchGate";'
+OPEN NARROW  waves/W-I.1.md:225 G18 · one pointer model (static, O-81 (3)): passes with `maxTouchPoints` (pass 16 FP-03) planted in src/components/dock/composables/useDockHold.ts: 'export const coarse = () => navigator.maxTouchPoints > 0;'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with the seat transition carried on a custom property (pass 16 FP-05 SIBLING carried) planted in src/components/dock/styles/run.css: '.x { --seat-transition: inline-size var(--spring-dock-duration) var(--'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with an arbitrary Tailwind transition on the seat size (pass 16 FP-05 SIBLING utility) planted in src/components/dock/GlassDock.vue: '<div class="transition-[inline-size] duration-300">x</div>'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with `transition-all`, which carries every size (pass 16 FP-05 SIBLING utility) planted in src/components/dock/GlassDock.vue: '<div class="transition-all">x</div>'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with a Tailwind padding utility (pass 16 FP-05 SIBLING utility) planted in src/components/dock/GlassDock.vue: '<div class="px-(--dock-ring-reserve)">x</div>'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with an arbitrary padding utility (pass 16 FP-05 SIBLING utility) planted in src/components/dock/GlassDock.vue: '<div class="py-[var(--dock-ring-reserve)]">x</div>'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with another dock stylesheet, the value on the next line planted in src/components/dock/styles/layers.css: '.x {\n    padding-block:\n        var(--dock-ring-reserve);\n}'
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 658, open 30
+exit=1
+
+## after: the plan as fix-17 leaves it
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 658, open 0
+exit=0
