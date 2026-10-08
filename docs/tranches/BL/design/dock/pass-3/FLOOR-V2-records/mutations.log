@@ -1,0 +1,16 @@
+margin-auto =>      × N-1 · no rule in the band gives the dock an auto margin 7ms|
+fixed-centre =>      × N-1 · no rule in the band gives the dock an auto margin 4ms|
+centre-origin =>      × N-1 · the morph scales from the anchor the layout reports 1ms|
+no-anchor-read =>      × an end-anchored dock grows from its end edge 19ms|     × a start-anchored dock grows from its start edge 2ms|
+second-MO =>      × N-2 · the dock constructs exactly one MutationObserver, in useDockContent 5ms|
+no-subscriber =>      × notifies every subscriber on a delivery, and stops on unsubscribe 3ms|
+unread-publish =>      × N-2 · every custom property the dock's script writes has a reader in the band 6ms|
+unscoped-finish =>      × N-3 · no dock script finishes an animation outside the size hand-off 6ms|
+infinite-taken =>      × never finishes an infinite effect: it is followed 4ms|
+exchange-taken =>      × holds the open-seat exchange: deltas that cancel are not finished 5ms|     × judges the main axis only: a cross-axis effect alone holds 1ms|
+no-gutter =>      × N-4 · the dock's gutter is its pad, laid as its margin 1ms|
+badge-unclamped =>      × N-4 · the seat badge sits in the padding corner, clamped to it 1ms|
+roving-stays =>      × returns the stop to the first seat when none is open 85ms|     × returns the stop to the open seat when one is open 15ms|
+badge-dropped =>      × paints the badge in the seat's reserved corner cell 19ms|
+status after the plants (must list no source file):
+14:15  up 1 day,  4:21, 2 users, load averages: 56.98 57.49 57.17

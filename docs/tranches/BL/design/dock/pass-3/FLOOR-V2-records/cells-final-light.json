@@ -1,0 +1,2032 @@
+{
+ "tag": "final-light",
+ "runsRoot": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p3/floor2/out/runs/light",
+ "when": "2026-10-08T15:46:34.249Z",
+ "cells": [
+  {
+   "w": "FM",
+   "engine": "chromium",
+   "cell": "film·first-expand",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 48.57,
+   "summary": "14 tiles from frame 37 (the trigger marker first shows on frame 38, -80 ms from the wall-clock mark), 8 distinct; motion to frame 52 (600 ms); strip strip-chromium-first-expand.png"
+  },
+  {
+   "w": "FM",
+   "engine": "chromium",
+   "cell": "film·warm-collapse",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 46.44,
+   "summary": "14 tiles from frame 63 (the trigger marker first shows on frame 64, -80 ms from the wall-clock mark), 8 distinct; motion to frame 78 (600 ms); strip strip-chromium-warm-collapse.png"
+  },
+  {
+   "w": "FM",
+   "engine": "chromium",
+   "cell": "film·warm-expand",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 43.69,
+   "summary": "14 tiles from frame 89 (the trigger marker first shows on frame 90, -80 ms from the wall-clock mark), 8 distinct; motion to frame 129 (1600 ms); strip strip-chromium-warm-expand.png"
+  },
+  {
+   "w": "FM",
+   "engine": "chromium",
+   "cell": "film·swap-long",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 43.15,
+   "summary": "14 tiles from frame 36 (the trigger marker first shows on frame 37, -40 ms from the wall-clock mark), 7 distinct; motion to frame 42 (240 ms); strip strip-chromium-swap-long.png"
+  },
+  {
+   "w": "FM",
+   "engine": "chromium",
+   "cell": "film·swap-short",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 43.15,
+   "summary": "14 tiles from frame 54 (the trigger marker first shows on frame 55, -80 ms from the wall-clock mark), 7 distinct; motion to frame 60 (240 ms); strip strip-chromium-swap-short.png"
+  },
+  {
+   "w": "FM",
+   "engine": "chromium",
+   "cell": "film·content-add",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 41.38,
+   "summary": "14 tiles from frame 63 (the trigger marker first shows on frame 64, -40 ms from the wall-clock mark), 2 distinct; motion to frame 64 (40 ms); strip strip-chromium-content-add.png"
+  },
+  {
+   "w": "FM",
+   "engine": "webkit",
+   "cell": "film·first-expand",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 39.26,
+   "summary": "14 tiles from frame 42 (the trigger marker first shows on frame 43, 160 ms from the wall-clock mark), 7 distinct; motion to frame 49 (280 ms); strip strip-webkit-first-expand.png"
+  },
+  {
+   "w": "FM",
+   "engine": "webkit",
+   "cell": "film·warm-collapse",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 38.36,
+   "summary": "14 tiles from frame 68 (the trigger marker first shows on frame 69, 80 ms from the wall-clock mark), 6 distinct; motion to frame 83 (600 ms); strip strip-webkit-warm-collapse.png"
+  },
+  {
+   "w": "FM",
+   "engine": "webkit",
+   "cell": "film·warm-expand",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 38.25,
+   "summary": "14 tiles from frame 97 (the trigger marker first shows on frame 98, 160 ms from the wall-clock mark), 8 distinct; motion to frame 129 (1280 ms); strip strip-webkit-warm-expand.png"
+  },
+  {
+   "w": "FM",
+   "engine": "webkit",
+   "cell": "film·swap-long",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 40.47,
+   "summary": "14 tiles from frame 43 (the trigger marker first shows on frame 44, 160 ms from the wall-clock mark), 6 distinct; motion to frame 77 (1360 ms); strip strip-webkit-swap-long.png"
+  },
+  {
+   "w": "FM",
+   "engine": "webkit",
+   "cell": "film·swap-short",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 39.8,
+   "summary": "14 tiles from frame 60 (the trigger marker first shows on frame 61, 120 ms from the wall-clock mark), 5 distinct; motion to frame 94 (1360 ms); strip strip-webkit-swap-short.png"
+  },
+  {
+   "w": "FM",
+   "engine": "webkit",
+   "cell": "film·content-add",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 38.13,
+   "summary": "14 tiles from frame 71 (the trigger marker first shows on frame 72, 160 ms from the wall-clock mark), 2 distinct; motion to frame 99 (1120 ms); strip strip-webkit-content-add.png"
+  },
+  {
+   "w": "ST",
+   "engine": "chromium",
+   "cell": "stall·same-task",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 42.98,
+   "summary": "same-task: a 1200 ms block 0 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.19 px (101.88 → 481.07); first leaves its rest at 1240 ms, travels 0.02 px before the block-end marker, lands at 1240 ms (RECORD; video scale 1.002); worst one-frame step 379.2 px at 1240 ms (dt 40 ms) vs bound 192.47 px (×1.97)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "ST",
+   "engine": "chromium",
+   "cell": "stall·1raf",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 38.37,
+   "summary": "1raf: a 1200 ms block 7.3 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.2 px (101.87 → 481.07); first leaves its rest at 1240 ms, travels 0.01 px before the block-end marker, lands at 1240 ms (RECORD; video scale 1.002); worst one-frame step 379.2 px at 1240 ms (dt 40 ms) vs bound 192.47 px (×1.97)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "ST",
+   "engine": "chromium",
+   "cell": "stall·2raf",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 36.82,
+   "summary": "2raf: a 1200 ms block 15.7 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.16 px (101.87 → 481.03); first leaves its rest at 40 ms, travels 18.78 px before the block-end marker, lands at 1240 ms (RECORD; video scale 1.002); worst one-frame step 360.39 px at 1240 ms (dt 40 ms) vs bound 192.45 px (×1.87)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "ST",
+   "engine": "chromium",
+   "cell": "stall·100ms",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 33.63,
+   "summary": "100ms: a 1200 ms block 100.6 ms after the flip (video: trigger marker → block-end marker 1320 ms); D 379.2 px (101.87 → 481.07); first leaves its rest at 40 ms, travels 271.45 px before the block-end marker, lands at 1320 ms (RECORD; video scale 1.002); worst one-frame step 124.27 px at 80 ms (dt 40 ms) vs bound 192.47 px (×0.65)"
+  },
+  {
+   "w": "ST",
+   "engine": "chromium",
+   "cell": "stall·mid-flight",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 33.02,
+   "summary": "mid-flight: a 1200 ms block 56.9 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 378.97 px (101.82 → 480.8); first leaves its rest at 40 ms, travels 78.8 px before the block-end marker, lands at 1240 ms (RECORD; video scale 1.003); worst one-frame step 238.52 px at 1240 ms (dt 40 ms) vs bound 192.36 px (×1.24)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "ST",
+   "engine": "webkit",
+   "cell": "stall·same-task",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 37.92,
+   "summary": "same-task: a 1200 ms block 0 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.57 px (101.93 → 481.5); first leaves its rest at 1240 ms, travels 0.34 px before the block-end marker, lands at 1480 ms (RECORD; video scale 1.001); worst one-frame step 137.86 px at 1280 ms (dt 40 ms) vs bound 192.66 px (×0.72)"
+  },
+  {
+   "w": "ST",
+   "engine": "webkit",
+   "cell": "stall·1raf",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 46.24,
+   "summary": "1raf: a 1200 ms block 3 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.51 px (101.71 → 481.22); first leaves its rest at 1240 ms, travels 0.28 px before the block-end marker, lands at 1440 ms (RECORD; video scale 1.002); worst one-frame step 379.49 px at 1240 ms (dt 40 ms) vs bound 192.63 px (×1.97)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "ST",
+   "engine": "webkit",
+   "cell": "stall·2raf",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 50.62,
+   "summary": "2raf: a 1200 ms block 22 ms after the flip (video: trigger marker → block-end marker 1280 ms); D 379.95 px (101.88 → 481.83); first leaves its rest at 40 ms, travels 1.18 px before the block-end marker, lands at 1280 ms (RECORD; video scale 1.001); worst one-frame step 361.32 px at 1280 ms (dt 40 ms) vs bound 192.85 px (×1.87)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "ST",
+   "engine": "webkit",
+   "cell": "stall·100ms",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 52.96,
+   "summary": "100ms: a 1200 ms block 100 ms after the flip (video: trigger marker → block-end marker 1280 ms); D 379.34 px (101.8 → 481.14); first leaves its rest at 40 ms, travels 203.32 px before the block-end marker, lands at 1400 ms (RECORD; video scale 1.003); worst one-frame step 120.17 px at 40 ms (dt 40 ms) vs bound 192.55 px (×0.62)"
+  },
+  {
+   "w": "ST",
+   "engine": "webkit",
+   "cell": "stall·mid-flight",
+   "verdict": "FAIL",
+   "failed": [
+    "leap"
+   ],
+   "load": 53.93,
+   "summary": "mid-flight: a 1200 ms block 53 ms after the flip (video: trigger marker → block-end marker 1280 ms); D 379.19 px (101.68 → 480.87); first leaves its rest at 40 ms, travels 62.55 px before the block-end marker, lands at 1360 ms (RECORD; video scale 1.003); worst one-frame step 245.27 px at 1280 ms (dt 40 ms) vs bound 192.47 px (×1.27)  ⟶ FAILED: leap"
+  },
+  {
+   "w": "W1",
+   "engine": "chromium",
+   "cell": "vmorph·collapsed-rest",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 56.96,
+   "summary": "plate 64x116, r 32, worst 0.137 px at tl (bound 1); silhouette vs extent() Δ 0 px (bound 1); root outside the silhouette 0 px, seats 0 px (bound 1)"
+  },
+  {
+   "w": "W1",
+   "engine": "chromium",
+   "cell": "vmorph·expanded-rest",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 54.4,
+   "summary": "plate 64x281, r 32, worst 0.137 px at tl (bound 1); silhouette vs extent() Δ 0 px (bound 1); root outside the silhouette 0.5 px, seats 0 px (bound 1)"
+  },
+  {
+   "w": "W1",
+   "engine": "chromium",
+   "cell": "vmorph·first-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "corner"
+   ],
+   "load": 54.4,
+   "summary": "15 screenshot sample(s) (6 in flight; rAF log 29 frames in flight), 7 distinct painted extents over an adapter travel of 165 px (moves: ≥ 3 when ≥ 20 px); worst corner 4.05 px at bl (plate 64x165.54, r 32; bound 1); silhouette outside the adapter's extent by 0 px  ⟶ FAILED: corner"
+  },
+  {
+   "w": "W1",
+   "engine": "chromium",
+   "cell": "vmorph·warm-collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "corner"
+   ],
+   "load": 54.4,
+   "summary": "26 screenshot sample(s) (7 in flight; rAF log 29 frames in flight), 15 distinct painted extents over an adapter travel of 165 px (moves: ≥ 3 when ≥ 20 px); worst corner 6.104 px at tl (plate 64x116, r 32; bound 1); silhouette outside the adapter's extent by 0 px  ⟶ FAILED: corner"
+  },
+  {
+   "w": "W1",
+   "engine": "chromium",
+   "cell": "vmorph·warm-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "corner"
+   ],
+   "load": 51.65,
+   "summary": "17 screenshot sample(s) (8 in flight; rAF log 29 frames in flight), 8 distinct painted extents over an adapter travel of 165 px (moves: ≥ 3 when ≥ 20 px); worst corner 4.956 px at tl (plate 64x142.94, r 32; bound 1); silhouette outside the adapter's extent by 0 px  ⟶ FAILED: corner"
+  },
+  {
+   "w": "W1",
+   "engine": "chromium",
+   "cell": "card·collapsed-rest",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 51.65,
+   "summary": "plate 101.98x56, r 27.93 (fitted), worst 0.114 px at tl (bound 1); silhouette vs extent() Δ 0.02 px (bound 1); root outside the silhouette 0.01 px, seats 0 px (bound 1)"
+  },
+  {
+   "w": "W1",
+   "engine": "chromium",
+   "cell": "card·expanded-rest",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 51.65,
+   "summary": "plate 482x56, r 23.93 (fitted), worst 0.086 px at bl (bound 1); silhouette vs extent() Δ 0.34 px (bound 1); root outside the silhouette 0 px, seats 0 px (bound 1)"
+  },
+  {
+   "w": "W1",
+   "engine": "chromium",
+   "cell": "card·first-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "corner",
+    "card"
+   ],
+   "load": 51.65,
+   "summary": "8 screenshot sample(s) (3 in flight; rAF log 30 frames in flight), 4 distinct painted extents over an adapter travel of 379.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 1.299 px at bl (plate 188.82x56, r 15.93; bound 1); silhouette outside the adapter's extent by 0 px; fitted r spread 12 px from the reference (bound 1)  ⟶ FAILED: corner, card"
+  },
+  {
+   "w": "W1",
+   "engine": "chromium",
+   "cell": "card·warm-collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "card"
+   ],
+   "load": 51.33,
+   "summary": "1 screenshot sample(s) (1 in flight; rAF log 30 frames in flight), 1 distinct painted extents over an adapter travel of 379.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 0.471 px at br (plate 394.8x436, r 22.55; bound 1); silhouette outside the adapter's extent by 0 px; fitted r spread 1.38 px from the reference (bound 1)  ⟶ FAILED: card"
+  },
+  {
+   "w": "W1",
+   "engine": "chromium",
+   "cell": "card·warm-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "corner",
+    "card"
+   ],
+   "load": 51.33,
+   "summary": "8 screenshot sample(s) (3 in flight; rAF log 30 frames in flight), 4 distinct painted extents over an adapter travel of 379.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 1.321 px at bl (plate 189.14x56, r 16.05; bound 1); silhouette outside the adapter's extent by 0 px; fitted r spread 7.88 px from the reference (bound 1)  ⟶ FAILED: corner, card"
+  },
+  {
+   "w": "W1",
+   "engine": "webkit",
+   "cell": "vmorph·collapsed-rest",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 49.78,
+   "summary": "plate 64x115.99, r 32, worst 0.011 px at tl (bound 1); silhouette vs extent() Δ 0.01 px (bound 1); root outside the silhouette 0.01 px, seats 0 px (bound 1)"
+  },
+  {
+   "w": "W1",
+   "engine": "webkit",
+   "cell": "vmorph·expanded-rest",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 49.78,
+   "summary": "plate 64x280.99, r 32, worst 0.011 px at tl (bound 1); silhouette vs extent() Δ 0.01 px (bound 1); root outside the silhouette 0.01 px, seats 0 px (bound 1)"
+  },
+  {
+   "w": "W1",
+   "engine": "webkit",
+   "cell": "vmorph·first-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "corner"
+   ],
+   "load": 45.86,
+   "summary": "29 screencast sample(s), 7 distinct painted extents over an adapter travel of 165 px (moves: ≥ 3 when ≥ 20 px); worst corner 5.872 px at tl (plate 64.02x123.88, r 32.01; bound 2.5); video static ends head 0.44 / tail 0.4 px; video scale 1.0000; silhouette outside the adapter's extent by 0 px; static-rest offset -0.23 px (calibrated)  ⟶ FAILED: corner"
+  },
+  {
+   "w": "W1",
+   "engine": "webkit",
+   "cell": "vmorph·warm-collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "corner"
+   ],
+   "load": 45.86,
+   "summary": "122 screencast sample(s), 12 distinct painted extents over an adapter travel of 233.11 px (moves: ≥ 3 when ≥ 20 px); worst corner 6.068 px at tr (plate 63.99x115.64, r 31.99; bound 2.5); video static ends head 0.42 / tail 0.44 px; video scale 1.0000; silhouette outside the adapter's extent by 0 px; static-rest offset -0.25 px (calibrated)  ⟶ FAILED: corner"
+  },
+  {
+   "w": "W1",
+   "engine": "webkit",
+   "cell": "vmorph·warm-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "corner"
+   ],
+   "load": 44.99,
+   "summary": "28 screencast sample(s), 6 distinct painted extents over an adapter travel of 165 px (moves: ≥ 3 when ≥ 20 px); worst corner 5.532 px at tr (plate 64.01x128.95, r 32; bound 2.5); video static ends head 0.44 / tail 0.41 px; video scale 1.0000; silhouette outside the adapter's extent by 0 px; static-rest offset -0.21 px (calibrated)  ⟶ FAILED: corner"
+  },
+  {
+   "w": "W1",
+   "engine": "webkit",
+   "cell": "card·collapsed-rest",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 44.99,
+   "summary": "plate 101.99x56, r 27.93 (fitted), worst 0.058 px at tl (bound 1); silhouette vs extent() Δ 0.01 px (bound 1); root outside the silhouette 0.01 px, seats 0 px (bound 1)"
+  },
+  {
+   "w": "W1",
+   "engine": "webkit",
+   "cell": "card·expanded-rest",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 44.99,
+   "summary": "plate 481.5x56, r 23.3 (fitted), worst 0.359 px at tr (bound 1); silhouette vs extent() Δ 0.22 px (bound 1); root outside the silhouette 0.36 px, seats 0 px (bound 1)"
+  },
+  {
+   "w": "W1",
+   "engine": "webkit",
+   "cell": "card·first-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "card"
+   ],
+   "load": 43.63,
+   "summary": "29 screencast sample(s), 7 distinct painted extents over an adapter travel of 379.72 px (moves: ≥ 3 when ≥ 20 px); worst corner 1.641654778887304 px at bl (plate 139.77032810271044x56, r 14.279600570613411; bound 2.5); video static ends head 0.39 / tail 0.46 px; video scale 1.0014; silhouette outside the adapter's extent by 0 px; static-rest offset -0.09 px (calibrated); fitted r spread 13.06 px from the reference (bound 2.5), lossless rest radii differ by 4.63 px (bound 1)  ⟶ FAILED: card"
+  },
+  {
+   "w": "W1",
+   "engine": "webkit",
+   "cell": "card·warm-collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "corner",
+    "card"
+   ],
+   "load": 40.96,
+   "summary": "117 screencast sample(s), 7 distinct painted extents over an adapter travel of 379.72 px (moves: ≥ 3 when ≥ 20 px); worst corner 4.576462196861627 px at bl (plate 101.93437945791727x434.8887303851641, r 22.497860199714697; bound 2.5); video static ends head 0.47 / tail 0.35 px; video scale 1.0014; silhouette outside the adapter's extent by 0 px; static-rest offset -0.82 px (calibrated); fitted r spread 5.47 px from the reference (bound 2.5), lossless rest radii differ by 4.63 px (bound 1)  ⟶ FAILED: corner, card"
+  },
+  {
+   "w": "W1",
+   "engine": "webkit",
+   "cell": "card·warm-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "card"
+   ],
+   "load": 40.96,
+   "summary": "28 screencast sample(s), 8 distinct painted extents over an adapter travel of 379.72 px (moves: ≥ 3 when ≥ 20 px); worst corner 1.2479942948832232 px at br (plate 267.18060260295954x56, r 19.518630771973612; bound 2.5); video static ends head 0.35 / tail 0.45 px; video scale 1.0016; silhouette outside the adapter's extent by 0 px; static-rest offset -0.21 px (calibrated); fitted r spread 16.02 px from the reference (bound 2.5), lossless rest radii differ by 4.63 px (bound 1)  ⟶ FAILED: card"
+  },
+  {
+   "w": "W2",
+   "engine": "chromium",
+   "cell": "route1·long-run-h",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 93.51,
+   "summary": "seats need 680 px vs budget 360 (EXCEED: scrolling allowed); scroller frames 36/36; ring reach clipped 4.25/4.25 vs free 4.25/4.25 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true; reach 14 seats: pointer 14/14, keyboard (Tab, arrows) 14/14, AT 14/14"
+  },
+  {
+   "w": "W2",
+   "engine": "chromium",
+   "cell": "route1·long-run-v",
+   "verdict": "FAIL",
+   "failed": [
+    "keyboard"
+   ],
+   "load": 90.99,
+   "summary": "seats need 592 px vs budget 536 (EXCEED: scrolling allowed); scroller frames 36/36; ring reach clipped 4.25/4.25 vs free 4.25/4.25 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true; reach 11 seats: pointer 11/11, keyboard (Tab, arrows) 10/11 (missing Seat 1), AT 11/11  ⟶ FAILED: keyboard"
+  },
+  {
+   "w": "W2",
+   "engine": "chromium",
+   "cell": "route2·collapsed-layer",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 90.99,
+   "summary": "seats need 465.66 px vs budget 1424 (fit); frames with a seat scroll container 0/73, with range > 0.5px 0 (max 0px); none"
+  },
+  {
+   "w": "W2",
+   "engine": "chromium",
+   "cell": "route3·aria-current",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 87.46,
+   "summary": "seats need 434.88 px vs budget 1424 (fit); frames with a seat scroll container 0/241, with range 0 (max 0px); none"
+  },
+  {
+   "w": "W2",
+   "engine": "chromium",
+   "cell": "route4·hover-scale",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 83.9,
+   "summary": "seats need 376.47 px vs budget 1424 (fit); frames with a seat scroll container 0/218, with range 0 (max 0px) ; ring reach clipped 4.35/4.35 vs free 4.35/4.35 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true"
+  },
+  {
+   "w": "W2",
+   "engine": "chromium",
+   "cell": "route5·consumer-width",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 83.9,
+   "summary": "consumer width 240 px: seats need 392 px vs the scene's budget 240 (exceed); plate outside the root 0 px (bound 0.5); face ink beyond the plate 0 px (bound 1); reach 8 seats: pointer 8/8, keyboard (Tab, arrows) 8/8, AT 8/8"
+  },
+  {
+   "w": "W2",
+   "engine": "chromium",
+   "cell": "route6·depth",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 91.44,
+   "summary": "seats at depth need 214.3 px vs budget 1424 (fit); scroller frames 0/144 (none); reach 4 seats: pointer 4/4, keyboard (Tab, arrows) 4/4, AT 4/4"
+  },
+  {
+   "w": "W2",
+   "engine": "chromium",
+   "cell": "route7·nested-scroller",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 91.44,
+   "summary": "plate 360 px under a 360 px budget (bound: fits); face ink beyond the plate 0 px (bound 1); reach 4 seats: pointer 4/4, keyboard (Tab, arrows) 4/4, AT 4/4"
+  },
+  {
+   "w": "W2",
+   "engine": "webkit",
+   "cell": "route1·long-run-h",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 89.32,
+   "summary": "seats need 680 px vs budget 360 (EXCEED: scrolling allowed); scroller frames 29/29; ring reach clipped 4.25/4.25 vs free 4.25/4.25 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true; reach 14 seats: pointer 14/14, keyboard (Alt+Tab, arrows) 14/14, AT 14/14"
+  },
+  {
+   "w": "W2",
+   "engine": "webkit",
+   "cell": "route1·long-run-v",
+   "verdict": "FAIL",
+   "failed": [
+    "keyboard"
+   ],
+   "load": 88.73,
+   "summary": "seats need 592 px vs budget 536 (EXCEED: scrolling allowed); scroller frames 27/27; ring reach clipped 4.25/4.25 vs free 4.25/4.25 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true; reach 11 seats: pointer 11/11, keyboard (Alt+Tab, arrows) 10/11 (missing Seat 1), AT 11/11  ⟶ FAILED: keyboard"
+  },
+  {
+   "w": "W2",
+   "engine": "webkit",
+   "cell": "route2·collapsed-layer",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 88.73,
+   "summary": "seats need 465.72 px vs budget 1424 (fit); frames with a seat scroll container 0/59, with range > 0.5px 0 (max 0px); none"
+  },
+  {
+   "w": "W2",
+   "engine": "webkit",
+   "cell": "route3·aria-current",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 85.47,
+   "summary": "seats need 434.92 px vs budget 1424 (fit); frames with a seat scroll container 0/196, with range 0 (max 0px); none"
+  },
+  {
+   "w": "W2",
+   "engine": "webkit",
+   "cell": "route4·hover-scale",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 89.52,
+   "summary": "seats need 376.53 px vs budget 1424 (fit); frames with a seat scroll container 0/187, with range 0 (max 0px) ; ring reach clipped 4.35/4.35 vs free 4.35/4.35 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true"
+  },
+  {
+   "w": "W2",
+   "engine": "webkit",
+   "cell": "route5·consumer-width",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 89.52,
+   "summary": "consumer width 240 px: seats need 392 px vs the scene's budget 240 (exceed); plate outside the root 0 px (bound 0.5); face ink beyond the plate 0 px (bound 1); reach 8 seats: pointer 8/8, keyboard (Alt+Tab, arrows) 8/8, AT 8/8"
+  },
+  {
+   "w": "W2",
+   "engine": "webkit",
+   "cell": "route6·depth",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 89.8,
+   "summary": "seats at depth need 214.33 px vs budget 1424 (fit); scroller frames 0/119 (none); reach 4 seats: pointer 4/4, keyboard (Alt+Tab, arrows) 4/4, AT 4/4"
+  },
+  {
+   "w": "W2",
+   "engine": "webkit",
+   "cell": "route7·nested-scroller",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 89.8,
+   "summary": "plate 360 px under a 360 px budget (bound: fits); face ink beyond the plate 0 px (bound 1); reach 4 seats: pointer 4/4, keyboard (Alt+Tab, arrows) 4/4, AT 4/4"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "first-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "window",
+    "seatStep",
+    "seatOverlap",
+    "leaving"
+   ],
+   "load": 48.33,
+   "summary": "D 379.66 px (102→481.66); step ×0.66; dead; window 543.1 ms (allow 257.9, clock 214.2) — window 543.1 ms > clock 214.2 + 2×16.7 + stall 10.3 = 257.9 ms (O-64 R-4, H-3d); trajectory worst 5.06 px (1.33 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.42 px after 0.7 px (bound 1.57); owners 0; seat step ×11.23 (207.06 px), seat overlap 21 frame(s); blank 0 blank of 31 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 1 failing; worst seat 8: ink 1 → 0 over 6.9 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 60.8 ms), coverage deficit 1 (track bound 0.1); Q-4 lenient window fails (allow 313.7 ms)  ⟶ FAILED: window, seatStep, seatOverlap, leaving; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "warm-collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "window",
+    "seatOverlap",
+    "leaving"
+   ],
+   "load": 48.33,
+   "summary": "D 379.66 px (481.66→102); step ×0.66; dead; window 542.1 ms (allow 257.7, clock 214.2) — window 542.1 ms > clock 214.2 + 2×16.7 + stall 10.1 = 257.7 ms (O-64 R-4, H-3d); trajectory worst 4.49 px (1.18 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.52 px after 0.74 px (bound 1.61); owners 0; seat step ×0.9 (22.07 px), seat overlap 21 frame(s); blank 0 blank of 31 moving frame(s), longest run 0 (bound 1); leaving 6 leaving seat(s), 2 failing; worst seat 2: ink 0.95 → 0.899 → 0.847 → 0.774 → 0.553 → 0.278 → 0.048 over 50 ms / 6 frame(s) (fade bound ≥ 3 frames and ≥ 62.5 ms), coverage deficit 1 (track bound 0.1); Q-4 lenient window fails (allow 313.5 ms)  ⟶ FAILED: window, seatOverlap, leaving; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "warm-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "window",
+    "seatStep",
+    "seatOverlap",
+    "leaving"
+   ],
+   "load": 48.33,
+   "summary": "D 379.66 px (102→481.66); step ×0.66; dead; window 543.3 ms (allow 257.9, clock 214.2) — window 543.3 ms > clock 214.2 + 2×16.7 + stall 10.3 = 257.9 ms (O-64 R-4, H-3d); trajectory worst 3.95 px (1.04 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.42 px after 0.88 px (bound 1.38); owners 0; seat step ×9.27 (207.06 px), seat overlap 21 frame(s); blank 0 blank of 31 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 1 failing; worst seat 8: ink 1 → 0 over 8.4 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 60.8 ms), coverage deficit 1 (track bound 0.1); Q-4 lenient window fails (allow 313.7 ms)  ⟶ FAILED: window, seatStep, seatOverlap, leaving; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "content-add",
+   "verdict": "FAIL",
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep"
+   ],
+   "load": 48.33,
+   "summary": "D 179.33 px (481.66→660.98); step ×10.73; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 162.56 px (90.65 % of D) from the rung's analytic spring (tol 8.17); terminal the motion is 1 step(s): 179.33 px; owners 0; seat step ×10.42 (89.67 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving no seat leaves  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "content-remove",
+   "verdict": "FAIL",
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "leaving"
+   ],
+   "load": 48.33,
+   "summary": "D 179.33 px (660.98→481.66); step ×8.28; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 159.86 px (89.14 % of D) from the rung's analytic spring (tol 8.17); terminal the motion is 1 step(s): 179.33 px; owners 0; seat step ×8.09 (89.67 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 1 failing; worst seat 12: ink 1 → 0 over 9.4 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 0.523 (track bound 0.1)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, leaving; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "lead-add",
+   "verdict": "FAIL",
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep"
+   ],
+   "load": 48.33,
+   "summary": "D 70.3 px (481.66→551.95); step ×9.19; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 63.3 px (90.04 % of D) from the rung's analytic spring (tol 3.81); terminal the motion is 1 step(s): 70.3 px; owners 0; seat step ×8.62 (35.14 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving no seat leaves  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "lead-remove",
+   "verdict": "FAIL",
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "leaving"
+   ],
+   "load": 48.33,
+   "summary": "D 70.3 px (551.95→481.66); step ×7.83; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 62.57 px (89 % of D) from the rung's analytic spring (tol 3.81); terminal the motion is 1 step(s): 70.3 px; owners 0; seat step ×7.42 (35.15 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 1 failing; worst seat 13: ink 1 → 0 over 9.6 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 1 (track bound 0.1)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, leaving; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "reversal",
+   "verdict": "FAIL",
+   "failed": [
+    "window",
+    "trajectory",
+    "seatStep",
+    "seatOverlap"
+   ],
+   "load": 48.33,
+   "summary": "D 0 px (481.66→481.66); step ×0.79; dead, 1 reversal(s); window 599.9 ms (allow 257.8, clock 214.2) — window 549.8 ms after the retarget > clock 214.2 + 2×16.7 + stall 10.2 = 257.8 ms (O-64 R-4, H-3d); trajectory before the retarget 3.95 px (tol 16.19); after it, released at 355.61 px with -3.17 px/ms: 12.62 px (tol 7.98); terminal last step 0.26 px after 0.35 px (bound 1.02); owners 0; seat step ×4.33 (189.83 px), seat overlap 27 frame(s); blank 0 blank of 40 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; Q-4 lenient window fails (allow 313.6 ms); retargeted at 341.85 px  ⟶ FAILED: window, trajectory, seatStep, seatOverlap"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "swap-long",
+   "verdict": "FAIL",
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "seatOverlap"
+   ],
+   "load": 39.89,
+   "summary": "D 244.98 px (102→346.98); step ×10.13; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 221.25 px (90.31 % of D) from the rung's analytic spring (tol 10.8); terminal the motion is 1 step(s): 244.98 px; owners 0; seat step ×9.92 (122.5 px), seat overlap 20 frame(s); blank 1 blank of 1 moving frame(s), longest run 1 (bound 1); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 0.95 → 0.894 → 0.836 → 0.764 → 0.697 → 0.627 → 0.559 → 0.498 → 0.434 → 0.38 → 0.328 → 0.285 → 0.241 → 0.206 → 0.172 → 0.144 → 0.122 → 0.098 over 142.6 ms / 17 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 1 (track bound 0.1)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, seatOverlap; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "swap-short",
+   "verdict": "FAIL",
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "seatOverlap"
+   ],
+   "load": 39.89,
+   "summary": "D 244.98 px (346.98→102); step ×8.24; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 218.22 px (89.07 % of D) from the rung's analytic spring (tol 10.8); terminal the motion is 1 step(s): 244.98 px; owners 0; seat step ×8.11 (122.5 px), seat overlap 20 frame(s); blank 1 blank of 1 moving frame(s), longest run 1 (bound 1); leaving 5 leaving seat(s), 0 failing; tightest seat 5: ink 1 → 0 over 9.5 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 0 (track bound 0.1)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, seatOverlap; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "anchor-end·warm-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "window"
+   ],
+   "load": 38.15,
+   "summary": "D 379.66 px (102→481.66); step ×0.66; dead; window 541.8 ms (allow 257.5, clock 214.2) — window 541.8 ms > clock 214.2 + 2×16.7 + stall 9.9 = 257.5 ms (O-64 R-4, H-3d); trajectory worst 2.97 px (0.78 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.59 px after 0.69 px (bound 1.67); owners 0; Q-4 lenient window fails (allow 313.3 ms); anchored edge drift 0 px (bound 0.5)  ⟶ FAILED: window"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "anchor-end·warm-collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "window"
+   ],
+   "load": 38.15,
+   "summary": "D 379.66 px (481.66→102); step ×0.66; dead; window 542.4 ms (allow 257.7, clock 214.2) — window 542.4 ms > clock 214.2 + 2×16.7 + stall 10.1 = 257.7 ms (O-64 R-4, H-3d); trajectory worst 4.49 px (1.18 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.48 px after 0.72 px (bound 1.6); owners 0; Q-4 lenient window fails (allow 313.5 ms); anchored edge drift 0 px (bound 0.5)  ⟶ FAILED: window"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "hidden-shown",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 38.86,
+   "summary": "98 painted frame(s) after show(): shortest main extent 206.13 px (cross 56), farthest edge from its rest 0 px (bound 0.5: it appears at its rest)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "viewport-resize",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 38.86,
+   "summary": "1440 → 1200 px viewport: 0 morph-window frame(s) (bound 0); the new rest reached (410 ms); main extent span 6.09 px, rest delta -6.09 px (recorded)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "ticking",
+   "verdict": "FAIL",
+   "failed": [],
+   "load": 39.67,
+   "summary": "8 ticks over a 11 px content span; worst step 9.58 px vs bound 1.66 (×5.77); two-owner frames 0; window open 0/254 frames (recorded)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "seat-transition",
+   "verdict": "FAIL",
+   "failed": [
+    "window"
+   ],
+   "load": 39.67,
+   "summary": "D 80 px (192→272); step ×0.57; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 4.17 px (5.21 % of D) from the rung's analytic spring (tol 4.2); terminal last step 0.09 px after 0.19 px (bound 0.77); owners 0  ⟶ FAILED: window"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "lattice",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 38.17,
+   "summary": "D 0 px (577.66→577.66); step ×0.03; dead, 1 reversal(s); window none ms (allow -, clock 214.2); trajectory no motion; terminal no motion; owners 0; seat step ×0.6 (3.27 px), seat overlap 0 frame(s); blank 0 blank of 0 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; the open-seat exchange: One 96 px over 27 distinct widths, worst step 6.55 px vs bound 10.39 (×0.63); Two 96 px over 27, worst 6.55 px vs 10.39 (×0.63); page errors 0"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "infanim",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 38.64,
+   "summary": "a seat with an infinite width animation over 2 s: page errors 0 (bound 0); window open 0/241 frames (bound 15: one clock + 2 frames); extent span 23.99 px over 98 distinct extents (recorded)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "stretch·lead-add",
+   "verdict": "FAIL",
+   "failed": [
+    "seatStep"
+   ],
+   "load": 42.03,
+   "summary": "D 0 px (642→642); step ×0; dead; window none ms (allow -, clock 214.2); trajectory no motion; terminal no motion; owners 0; seat step ×10.67 (70.3 px), seat overlap 0 frame(s); blank 0 blank of 0 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; root held 160 px wide of its natural width: 642 → 642 px across the insertion  ⟶ FAILED: seatStep"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "neighbour·warm-collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "neighbour"
+   ],
+   "load": 42,
+   "summary": "the in-flow neighbour travels 379.66 px over 2 distinct positions (the extent 379.66 px); worst one-frame step 379.66 px vs bound 38.16 (×9.95) at 4158.6 ms; the plate overlaps it by 0 px at worst (bound 0.5), smallest gap 20 px (recorded)  ⟶ FAILED: neighbour"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "neighbour·warm-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "neighbour"
+   ],
+   "load": 42,
+   "summary": "the in-flow neighbour travels 379.66 px over 2 distinct positions (the extent 379.66 px); worst one-frame step 379.66 px vs bound 34.83 (×10.9) at 90.9 ms; the plate overlaps it by 0 px at worst (bound 0.5), smallest gap 20 px (recorded)  ⟶ FAILED: neighbour"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "vagree·morph·warm-collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "vagree"
+   ],
+   "load": 42.21,
+   "summary": "52 lossless shot(s), 20 in flight (both bracketing reads strictly between the rests 102 / 481.66 px): painted main length outside [pre, post] by 74.98 px in flight (bound 1.5: 1 + 1 device px), 67.81 px otherwise (recorded)  ⟶ FAILED: vagree"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "vagree·morph·warm-expand",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 44.27,
+   "summary": "50 lossless shot(s), 21 in flight (both bracketing reads strictly between the rests 102 / 481.66 px): painted main length outside [pre, post] by 0.29 px in flight (bound 1.5: 1 + 1 device px), 0.33 px otherwise (recorded)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "vagree·vmorph·warm-collapse",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 44.77,
+   "summary": "58 lossless shot(s), 24 in flight (both bracketing reads strictly between the rests 116 / 281 px): painted main length outside [pre, post] by 0.11 px in flight (bound 1.5: 1 + 1 device px), 0.28 px otherwise (recorded)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "vagree·vmorph·warm-expand",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 39.97,
+   "summary": "62 lossless shot(s), 27 in flight (both bracketing reads strictly between the rests 116 / 281 px): painted main length outside [pre, post] by 0.15 px in flight (bound 1.5: 1 + 1 device px), 0.08 px otherwise (recorded)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "compaction",
+   "verdict": "FAIL",
+   "failed": [
+    "leaving"
+   ],
+   "load": 39.97,
+   "summary": "D 133.59 px (206.13→72.53); step ×10.21; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 120.83 px (90.45 % of D) from the rung's analytic spring (tol 6.34); terminal the motion is 1 step(s): 133.59 px; owners 0; seat step ×8.28 (18.79 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving 2 leaving seat(s), 1 failing; worst seat 1: ink 1 → 0 over 7.5 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 0.242 (track bound 0.1); judged: leaving, blank (the rest recorded)  ⟶ FAILED: leaving"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "wide·collapsed-rest",
+   "verdict": "UNMEASURED",
+   "failed": [],
+   "load": 37.97,
+   "summary": "faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "wide·warm-expand",
+   "verdict": "UNMEASURED",
+   "failed": [],
+   "load": 37.97,
+   "summary": "faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "chromium",
+   "cell": "wide·warm-collapse",
+   "verdict": "UNMEASURED",
+   "failed": [],
+   "load": 37.97,
+   "summary": "faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "first-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "window",
+    "seatStep",
+    "seatOverlap",
+    "leaving"
+   ],
+   "load": 35.49,
+   "summary": "D 379.72 px (102→481.72); step ×0.66; dead; window 546 ms (allow 260.6, clock 214.2) — window 546 ms > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d); trajectory worst 1.12 px (0.3 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.66 px after 0.86 px (bound 2.21); owners 0; seat step ×5.24 (207.09 px), seat overlap 18 frame(s); blank 0 blank of 26 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 1 failing; worst seat 8: ink 1 → 0 over 15 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 63 ms), coverage deficit 1 (track bound 0.1); Q-4 lenient window fails (allow 316.4 ms)  ⟶ FAILED: window, seatStep, seatOverlap, leaving; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "warm-collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "window",
+    "seatOverlap",
+    "leaving"
+   ],
+   "load": 35.49,
+   "summary": "D 379.72 px (481.72→102); step ×0.66; dead; window 550 ms (allow 260.6, clock 214.2) — window 550 ms > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d); trajectory worst 2.11 px (0.56 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.28 px after 0.92 px (bound 1.76); owners 0; seat step ×0.91 (22.16 px), seat overlap 17 frame(s); blank 0 blank of 26 moving frame(s), longest run 0 (bound 1); leaving 6 leaving seat(s), 1 failing; worst seat 2: ink 0.95 → 0.88 → 0.812 → 0.688 → 0.394 → 0.049 over 50 ms / 5 frame(s) (fade bound ≥ 3 frames and ≥ 61.3 ms), coverage deficit 1 (track bound 0.1); Q-4 lenient window fails (allow 316.4 ms)  ⟶ FAILED: window, seatOverlap, leaving; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "warm-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "window",
+    "seatStep",
+    "seatOverlap",
+    "leaving"
+   ],
+   "load": 35.49,
+   "summary": "D 379.72 px (102→481.72); step ×0.66; dead; window 546 ms (allow 260.6, clock 214.2) — window 546 ms > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d); trajectory worst 1.12 px (0.3 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.58 px after 1.05 px (bound 1.93); owners 0; seat step ×5.24 (207.09 px), seat overlap 17 frame(s); blank 0 blank of 26 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 1 failing; worst seat 8: ink 1 → 0 over 15 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 62.8 ms), coverage deficit 1 (track bound 0.1); Q-4 lenient window fails (allow 316.4 ms)  ⟶ FAILED: window, seatStep, seatOverlap, leaving; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "content-add",
+   "verdict": "FAIL",
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep"
+   ],
+   "load": 35.49,
+   "summary": "D 179.39 px (481.72→661.11); step ×7.79; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 159.16 px (88.72 % of D) from the rung's analytic spring (tol 8.18); terminal the motion is 1 step(s): 179.39 px; owners 0; seat step ×7.62 (89.7 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving no seat leaves  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "content-remove",
+   "verdict": "FAIL",
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "leaving"
+   ],
+   "load": 35.49,
+   "summary": "D 179.39 px (661.11→481.72); step ×8.64; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 160.42 px (89.42 % of D) from the rung's analytic spring (tol 8.18); terminal the motion is 1 step(s): 179.39 px; owners 0; seat step ×8.43 (89.7 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 1 failing; worst seat 12: ink 1 → 0 over 9 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 0.523 (track bound 0.1)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, leaving; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "lead-add",
+   "verdict": "FAIL",
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep"
+   ],
+   "load": 35.49,
+   "summary": "D 70.31 px (481.72→552.03); step ×7.54; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 62.38 px (88.72 % of D) from the rung's analytic spring (tol 3.81); terminal the motion is 1 step(s): 70.31 px; owners 0; seat step ×7.15 (35.16 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving no seat leaves  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "lead-remove",
+   "verdict": "FAIL",
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "leaving"
+   ],
+   "load": 35.49,
+   "summary": "D 70.31 px (552.03→481.72); step ×7.54; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 62.38 px (88.72 % of D) from the rung's analytic spring (tol 3.81); terminal the motion is 1 step(s): 70.31 px; owners 0; seat step ×7.15 (35.16 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 1 failing; worst seat 13: ink 1 → 0 over 10 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 1 (track bound 0.1)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, leaving; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "reversal",
+   "verdict": "FAIL",
+   "failed": [
+    "window",
+    "trajectory",
+    "seatStep",
+    "seatOverlap"
+   ],
+   "load": 35.49,
+   "summary": "D 0 px (481.72→481.72); step ×0.67; dead, 1 reversal(s); window 607 ms (allow 260.6, clock 214.2) — window 549 ms after the retarget > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d); trajectory before the retarget 1.09 px (tol 16.19); after it, released at 334.61 px with -3.11 px/ms: 15.95 px (tol 8.61); terminal last step 0.2 px after 0.49 px (bound 1.1); owners 0; seat step ×3.97 (189.87 px), seat overlap 24 frame(s); blank 0 blank of 33 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; Q-4 lenient window fails (allow 316.4 ms); retargeted at 322.4 px  ⟶ FAILED: window, trajectory, seatStep, seatOverlap"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "swap-long",
+   "verdict": "FAIL",
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "seatOverlap"
+   ],
+   "load": 31.75,
+   "summary": "D 245.06 px (102→347.06); step ×8.69; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 219.14 px (89.42 % of D) from the rung's analytic spring (tol 10.8); terminal the motion is 1 step(s): 245.06 px; owners 0; seat step ×8.54 (122.53 px), seat overlap 16 frame(s); blank 1 blank of 1 moving frame(s), longest run 1 (bound 1); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 0.95 → 0.887 → 0.795 → 0.721 → 0.638 → 0.557 → 0.466 → 0.396 → 0.334 → 0.284 → 0.226 → 0.185 → 0.149 → 0.122 → 0.094 over 144 ms / 14 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 1 (track bound 0.1)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, seatOverlap; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "swap-short",
+   "verdict": "FAIL",
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "seatOverlap"
+   ],
+   "load": 31.75,
+   "summary": "D 245.06 px (347.06→102); step ×7.13; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 215.67 px (88.01 % of D) from the rung's analytic spring (tol 10.8); terminal the motion is 1 step(s): 245.06 px; owners 0; seat step ×7.03 (122.53 px), seat overlap 16 frame(s); blank 1 blank of 1 moving frame(s), longest run 1 (bound 1); leaving 5 leaving seat(s), 0 failing; tightest seat 5: ink 1 → 0 over 11 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 0 (track bound 0.1)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, seatOverlap; faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "anchor-end·warm-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "window"
+   ],
+   "load": 29.5,
+   "summary": "D 379.72 px (102→481.72); step ×0.66; dead; window 548 ms (allow 260.6, clock 214.2) — window 548 ms > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d); trajectory worst 1.12 px (0.3 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.5 px after 0.91 px (bound 1.86); owners 0; Q-4 lenient window fails (allow 316.4 ms); anchored edge drift 0.16 px (bound 0.5)  ⟶ FAILED: window"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "anchor-end·warm-collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "window"
+   ],
+   "load": 29.5,
+   "summary": "D 379.72 px (481.72→102); step ×0.66; dead; window 558 ms (allow 261.6, clock 214.2) — window 558 ms > clock 214.2 + 2×16.7 + stall 14 = 261.6 ms (O-64 R-4, H-3d); trajectory worst 2.11 px (0.56 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.42 px after 0.98 px (bound 1.84); owners 0; Q-4 lenient window fails (allow 317.4 ms); anchored edge drift 0.17 px (bound 0.5)  ⟶ FAILED: window"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "hidden-shown",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 29.38,
+   "summary": "80 painted frame(s) after show(): shortest main extent 206.16 px (cross 56), farthest edge from its rest 0 px (bound 0.5: it appears at its rest)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "viewport-resize",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 29.38,
+   "summary": "1440 → 1200 px viewport: 0 morph-window frame(s) (bound 0); the new rest reached (411 ms); main extent span 6.09 px, rest delta -6.09 px (recorded)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "ticking",
+   "verdict": "FAIL",
+   "failed": [],
+   "load": 27.83,
+   "summary": "8 ticks over a 11 px content span; worst step 9.58 px vs bound 1.88 (×5.09); two-owner frames 0; window open 0/208 frames (recorded)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "seat-transition",
+   "verdict": "FAIL",
+   "failed": [
+    "window",
+    "trajectory"
+   ],
+   "load": 27.83,
+   "summary": "D 80 px (192→272); step ×0.57; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 4.33 px (5.41 % of D) from the rung's analytic spring (tol 4.2); terminal last step 0.13 px after 0.2 px (bound 0.83); owners 0  ⟶ FAILED: window, trajectory"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "lattice",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 31.33,
+   "summary": "D 0 px (577.72→577.72); step ×0.03; dead, 1 reversal(s); window none ms (allow -, clock 214.2); trajectory no motion; terminal no motion; owners 0; seat step ×0.61 (4 px), seat overlap 0 frame(s); blank 0 blank of 0 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; the open-seat exchange: One 96 px over 22 distinct widths, worst step 8 px vs bound 12.56 (×0.64); Two 96 px over 22, worst 8 px vs 12.56 (×0.64); page errors 0"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "infanim",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 31.33,
+   "summary": "a seat with an infinite width animation over 2 s: page errors 0 (bound 0); window open 0/177 frames (bound 15: one clock + 2 frames); extent span 30 px over 124 distinct extents (recorded)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "stretch·lead-add",
+   "verdict": "FAIL",
+   "failed": [
+    "seatStep"
+   ],
+   "load": 37.23,
+   "summary": "D 0 px (642→642); step ×0; dead; window none ms (allow -, clock 214.2); trajectory no motion; terminal no motion; owners 0; seat step ×9.3 (70.31 px), seat overlap 0 frame(s); blank 0 blank of 0 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; root held 160 px wide of its natural width: 642 → 642 px across the insertion  ⟶ FAILED: seatStep"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "neighbour·warm-collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "neighbour"
+   ],
+   "load": 45.4,
+   "summary": "the in-flow neighbour travels 379.72 px over 2 distinct positions (the extent 379.72 px); worst one-frame step 379.72 px vs bound 52.95 (×7.17) at 4174 ms; the plate overlaps it by 0 px at worst (bound 0.5), smallest gap 20 px (recorded)  ⟶ FAILED: neighbour"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "neighbour·warm-expand",
+   "verdict": "FAIL",
+   "failed": [
+    "neighbour"
+   ],
+   "load": 45.4,
+   "summary": "the in-flow neighbour travels 379.72 px over 2 distinct positions (the extent 379.72 px); worst one-frame step 379.72 px vs bound 62.49 (×6.08) at 83 ms; the plate overlaps it by 0 px at worst (bound 0.5), smallest gap 20 px (recorded)  ⟶ FAILED: neighbour"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "vagree·morph·warm-collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "vagree"
+   ],
+   "load": 49.99,
+   "summary": "44 lossless shot(s), 19 in flight (both bracketing reads strictly between the rests 102 / 481.72 px): painted main length outside [pre, post] by 59.7 px in flight (bound 1.5: 1 + 1 device px), 74.43 px otherwise (recorded)  ⟶ FAILED: vagree"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "vagree·morph·warm-expand",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 54.36,
+   "summary": "37 lossless shot(s), 15 in flight (both bracketing reads strictly between the rests 102 / 481.72 px): painted main length outside [pre, post] by 0.28 px in flight (bound 1.5: 1 + 1 device px), 0.22 px otherwise (recorded)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "vagree·vmorph·warm-collapse",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 50.28,
+   "summary": "76 lossless shot(s), 35 in flight (both bracketing reads strictly between the rests 116 / 281 px): painted main length outside [pre, post] by 0.39 px in flight (bound 1.5: 1 + 1 device px), 0.19 px otherwise (recorded)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "vagree·vmorph·warm-expand",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 46.7,
+   "summary": "75 lossless shot(s), 35 in flight (both bracketing reads strictly between the rests 116 / 281 px): painted main length outside [pre, post] by 0.29 px in flight (bound 1.5: 1 + 1 device px), 0.22 px otherwise (recorded)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "compaction",
+   "verdict": "FAIL",
+   "failed": [
+    "leaving"
+   ],
+   "load": 46.7,
+   "summary": "D 133.61 px (206.16→72.55); step ×4.6; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 111.56 px (83.5 % of D) from the rung's analytic spring (tol 6.34); terminal the motion is 1 step(s): 133.61 px; owners 0; seat step ×4.17 (18.81 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving 2 leaving seat(s), 1 failing; worst seat 1: ink 1 → 0 over 17 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 0.242 (track bound 0.1); judged: leaving, blank (the rest recorded)  ⟶ FAILED: leaving"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "wide·collapsed-rest",
+   "verdict": "UNMEASURED",
+   "failed": [],
+   "load": 46.88,
+   "summary": "faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "wide·warm-expand",
+   "verdict": "UNMEASURED",
+   "failed": [],
+   "load": 46.88,
+   "summary": "faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W3",
+   "engine": "webkit",
+   "cell": "wide·warm-collapse",
+   "verdict": "UNMEASURED",
+   "failed": [],
+   "load": 46.88,
+   "summary": "faces UNMEASURED (--no-faces: the pixel pass was not run)"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "compact·compacts",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 89.33,
+   "summary": "rest 206.13 px → past threshold 93.59 px, posture compact"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "compact·seat-scale",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 89.33,
+   "summary": "compact rest: plate cross-axis ratio 1, smallest painting-seat scale 1 (Photos); bound: no seat below the plate's ratio − 0.02 (cross 56 px at rest)"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "compact·engagement-expands",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 89.33,
+   "summary": "rest 206.13; hover 206.13, leave 93.59, focus 206.13, blur 93.59, top 206.13 px"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "compact·no-threshold-bounce",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 86.74,
+   "summary": "enter at 88 px, exit at 40 px (band 48 px); 24 moves of ±4 px around enter flipped the posture 1 time(s) (bound 1)"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "compact·non-first-current",
+   "verdict": "FAIL",
+   "failed": [],
+   "load": 89.49,
+   "summary": "compaction with the second seat current: worst seat step ×7.43 (18.79 px vs 2.53), overlap frames 0"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "compact·late-getter",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 88.25,
+   "summary": "a source element mounted 600 ms late: scrolled → compact (206.13 → 93.59 px), back → pinned; page errors 0"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "compact·shared-scroller",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 88.25,
+   "summary": "after the other dock on the same source unmounts: at 0 pinned, at 900 compact, back at 0 pinned (bound: not compact, compact, not compact)"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "coarse·press-then-scroll",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 90.47,
+   "summary": "a coarse press on a seat, then a scroll to 900: posture compact (bound: compact)"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "prm·compact",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 90.47,
+   "summary": "reduced motion, scroll stepped 25 px at a time to 900: 206.13 → 93.59 px with 0 frame(s) strictly between (bound 0; canon P6 on scroll-scrubbed change is pending the owner)"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "prm·posture-morph",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 90.49,
+   "summary": "reduced motion: expand 102→481.66 px with 0 intermediate frame(s); collapse 481.66→102 px with 0 (bound 0)"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "coarse·no-hover-latch",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 90.49,
+   "summary": "(hover: hover) false, (pointer: coarse) true; 1.5 s after a tap the seat, its pseudos and its descendants' pseudos are back to rest; :hover true"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "coarse·tap-pins",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 87.01,
+   "summary": "tap on the collapsed face's \"Play\": posture collapsed → pinned (+0.7 s) → pinned (+5.5 s); clicks fired 0 (bound: pinned, 0 clicks)"
+  },
+  {
+   "w": "W4",
+   "engine": "chromium",
+   "cell": "coarse·menu-holds",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 86.73,
+   "summary": "menu opened (posture pinned); 5.5 s later menu open, posture pinned, extent 177.47 px"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "compact·compacts",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 85.15,
+   "summary": "rest 206.16 px → past threshold 93.61 px, posture compact"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "compact·seat-scale",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 85.15,
+   "summary": "compact rest: plate cross-axis ratio 1, smallest painting-seat scale 1 (Photos); bound: no seat below the plate's ratio − 0.02 (cross 56 px at rest)"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "compact·engagement-expands",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 85.15,
+   "summary": "rest 206.16; hover 206.16, leave 93.61, focus 206.16, blur 93.61, top 206.16 px"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "compact·no-threshold-bounce",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 88.52,
+   "summary": "enter at 88 px, exit at 40 px (band 48 px); 24 moves of ±4 px around enter flipped the posture 1 time(s) (bound 1)"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "compact·non-first-current",
+   "verdict": "FAIL",
+   "failed": [],
+   "load": 88.52,
+   "summary": "compaction with the second seat current: worst seat step ×3.77 (18.81 px vs 4.99), overlap frames 0"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "compact·late-getter",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 89.68,
+   "summary": "a source element mounted 600 ms late: scrolled → compact (206.16 → 93.61 px), back → pinned; page errors 0"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "compact·shared-scroller",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 90.26,
+   "summary": "after the other dock on the same source unmounts: at 0 pinned, at 900 compact, back at 0 pinned (bound: not compact, compact, not compact)"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "coarse·press-then-scroll",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 90.26,
+   "summary": "a coarse press on a seat, then a scroll to 900: posture compact (bound: compact)"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "prm·compact",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 88.24,
+   "summary": "reduced motion, scroll stepped 25 px at a time to 900: 206.16 → 93.61 px with 0 frame(s) strictly between (bound 0; canon P6 on scroll-scrubbed change is pending the owner)"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "prm·posture-morph",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 90.86,
+   "summary": "reduced motion: expand 102→481.72 px with 0 intermediate frame(s); collapse 481.72→102 px with 0 (bound 0)"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "coarse·no-hover-latch",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 87.67,
+   "summary": "(hover: hover) false, (pointer: coarse) true; 1.5 s after a tap the seat, its pseudos and its descendants' pseudos are back to rest; :hover true"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "coarse·tap-pins",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 86.74,
+   "summary": "tap on the collapsed face's \"Play\": posture collapsed → pinned (+0.7 s) → pinned (+5.5 s); clicks fired 0 (bound: pinned, 0 clicks)"
+  },
+  {
+   "w": "W4",
+   "engine": "webkit",
+   "cell": "coarse·menu-holds",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 82.07,
+   "summary": "menu opened (posture pinned); 5.5 s later menu open, posture pinned, extent 177.5 px"
+  },
+  {
+   "w": "W5",
+   "engine": "chromium",
+   "cell": "h·expanded",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 81.27,
+   "summary": "posture pinned; rim ink 1348 device px, 0 outside the silhouette (depth 0 px); clip lifted: 0 px beyond the plate box, the clip keeps 75 % of its ink (bound ≥ 20 %); fill vs progress 0 at 0/.25/.5/.75/1: 0/234/684/1134/1368 (bound: never falls, > 0 at .5, rises .5 → 1)"
+  },
+  {
+   "w": "W5",
+   "engine": "chromium",
+   "cell": "h·collapsed",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 81.41,
+   "summary": "posture collapsed; rim ink 196 device px, 0 outside the silhouette (depth 0 px); clip lifted: 0 px beyond the plate box, the clip keeps 30 % of its ink (bound ≥ 20 %); fill vs progress 0 at 0/.25/.5/.75/1: 0/0/108/216/216 (bound: never falls, > 0 at .5, rises .5 → 1)"
+  },
+  {
+   "w": "W5",
+   "engine": "chromium",
+   "cell": "v·expanded",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 81.41,
+   "summary": "posture pinned; rim ink 1360 device px, 0 outside the silhouette (depth 0 px); clip lifted: 0 px beyond the plate box, the clip keeps 72 % of its ink (bound ≥ 20 %); fill vs progress 0 at 0/.25/.5/.75/1: 0/217/691/1165/1382 (bound: never falls, > 0 at .5, rises .5 → 1)"
+  },
+  {
+   "w": "W5",
+   "engine": "chromium",
+   "cell": "v·collapsed",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 79.37,
+   "summary": "posture collapsed; rim ink 208 device px, 0 outside the silhouette (depth 0 px); clip lifted: 0 px beyond the plate box, the clip keeps 28 % of its ink (bound ≥ 20 %); fill vs progress 0 at 0/.25/.5/.75/1: 0/0/115/230/230 (bound: never falls, > 0 at .5, rises .5 → 1)"
+  },
+  {
+   "w": "W5",
+   "engine": "chromium",
+   "cell": "h·expanded·el-source",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 75.34,
+   "summary": "posture pinned; rim ink 1348 device px, 0 outside the silhouette (depth 0 px); clip lifted: 0 px beyond the plate box, the clip keeps 75 % of its ink (bound ≥ 20 %); fill vs progress 0 at 0/.25/.5/.75/1: 0/234/684/1134/1368 (bound: never falls, > 0 at .5, rises .5 → 1)"
+  },
+  {
+   "w": "W5",
+   "engine": "chromium",
+   "cell": "h·compact",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 75.34,
+   "summary": "compact rung; rim ink 655, 0 outside (depth 0 px); clip lifted: 0 px beyond the plate box, kept 59 % (the fill is read on the expanded rungs; a compact rung sits past the threshold)"
+  },
+  {
+   "w": "W5",
+   "engine": "webkit",
+   "cell": "h·expanded",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 70.99,
+   "summary": "posture pinned; rim ink 1346 device px, 0 outside the silhouette (depth 0 px); clip lifted: 0 px beyond the plate box, the clip keeps 75 % of its ink (bound ≥ 20 %); fill vs progress 0 at 0/.25/.5/.75/1: 0/238/682/1132/1364 (bound: never falls, > 0 at .5, rises .5 → 1)"
+  },
+  {
+   "w": "W5",
+   "engine": "webkit",
+   "cell": "h·collapsed",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 70.99,
+   "summary": "posture collapsed; rim ink 194 device px, 0 outside the silhouette (depth 0 px); clip lifted: 0 px beyond the plate box, the clip keeps 31 % of its ink (bound ≥ 20 %); fill vs progress 0 at 0/.25/.5/.75/1: 0/0/106/212/212 (bound: never falls, > 0 at .5, rises .5 → 1)"
+  },
+  {
+   "w": "W5",
+   "engine": "webkit",
+   "cell": "v·expanded",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 68.82,
+   "summary": "posture pinned; rim ink 1362 device px, 0 outside the silhouette (depth 0 px); clip lifted: 0 px beyond the plate box, the clip keeps 72 % of its ink (bound ≥ 20 %); fill vs progress 0 at 0/.25/.5/.75/1: 0/222/690/1164/1380 (bound: never falls, > 0 at .5, rises .5 → 1)"
+  },
+  {
+   "w": "W5",
+   "engine": "webkit",
+   "cell": "v·collapsed",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 66.36,
+   "summary": "posture collapsed; rim ink 210 device px, 0 outside the silhouette (depth 0 px); clip lifted: 0 px beyond the plate box, the clip keeps 29 % of its ink (bound ≥ 20 %); fill vs progress 0 at 0/.25/.5/.75/1: 0/0/114/228/228 (bound: never falls, > 0 at .5, rises .5 → 1)"
+  },
+  {
+   "w": "W5",
+   "engine": "webkit",
+   "cell": "h·expanded·el-source",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 66.36,
+   "summary": "posture pinned; rim ink 1346 device px, 0 outside the silhouette (depth 0 px); clip lifted: 0 px beyond the plate box, the clip keeps 75 % of its ink (bound ≥ 20 %); fill vs progress 0 at 0/.25/.5/.75/1: 0/238/682/1132/1364 (bound: never falls, > 0 at .5, rises .5 → 1)"
+  },
+  {
+   "w": "W5",
+   "engine": "webkit",
+   "cell": "h·compact",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 64.48,
+   "summary": "compact rung; rim ink 650, 0 outside (depth 0 px); clip lifted: 0 px beyond the plate box, kept 60 % (the fill is read on the expanded rungs; a compact rung sits past the threshold)"
+  },
+  {
+   "w": "W6",
+   "engine": "chromium",
+   "cell": "form·collapsed-rest",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 63.73,
+   "summary": "form ink beyond the plate 0 px (bound 1); present 4/4; dismiss is a seat: true; backdrop plates 1 [div.dock-plate]"
+  },
+  {
+   "w": "W6",
+   "engine": "chromium",
+   "cell": "form·expanded-rest",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 64.63,
+   "summary": "form ink beyond the plate 0 px (bound 1); present 3/4 (missing [data-testid=form-face]); dismiss is a seat: true; backdrop plates 1 [div.dock-plate]; plate div.dock-plate (collapsed div.dock-plate); the same element: true"
+  },
+  {
+   "w": "W6",
+   "engine": "chromium",
+   "cell": "form·expand",
+   "verdict": "FAIL",
+   "failed": [
+    "window",
+    "faces"
+   ],
+   "load": 63.14,
+   "summary": "D 142.19 px (190.88→333.06); step ×0.64; dead; window 549.8 ms (allow 257.8, clock 214.2) — window 549.8 ms > clock 214.2 + 2×16.7 + stall 10.2 = 257.8 ms (O-64 R-4, H-3d); trajectory worst 1.48 px (1.04 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.19 px after 0.32 px (bound 0.92); owners 0; Q-4 lenient window fails (allow 313.6 ms); faces 7.5 px of form ink beyond the plate over 15 screenshot sample(s) (5 in flight) (bound 1)  ⟶ FAILED: window, faces"
+  },
+  {
+   "w": "W6",
+   "engine": "chromium",
+   "cell": "form·collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "window"
+   ],
+   "load": 63.14,
+   "summary": "D 142.19 px (333.06→190.88); step ×0.64; dead; window 550.5 ms (allow 257.7, clock 214.2) — window 550.5 ms > clock 214.2 + 2×16.7 + stall 10.1 = 257.7 ms (O-64 R-4, H-3d); trajectory worst 1.29 px (0.91 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.2 px after 0.28 px (bound 0.92); owners 0; Q-4 lenient window fails (allow 313.5 ms); faces 0 px of form ink beyond the plate over 21 screenshot sample(s) (0 in flight) (bound 1)  ⟶ FAILED: window"
+  },
+  {
+   "w": "W6",
+   "engine": "webkit",
+   "cell": "form·collapsed-rest",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 64.01,
+   "summary": "form ink beyond the plate 0 px (bound 1); present 4/4; dismiss is a seat: true; backdrop plates 1 [div.dock-plate]"
+  },
+  {
+   "w": "W6",
+   "engine": "webkit",
+   "cell": "form·expanded-rest",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 63.28,
+   "summary": "form ink beyond the plate 0 px (bound 1); present 3/4 (missing [data-testid=form-face]); dismiss is a seat: true; backdrop plates 1 [div.dock-plate]; plate div.dock-plate (collapsed div.dock-plate); the same element: true"
+  },
+  {
+   "w": "W6",
+   "engine": "webkit",
+   "cell": "form·expand",
+   "verdict": "FAIL",
+   "failed": [
+    "window",
+    "faces"
+   ],
+   "load": 61.93,
+   "summary": "D 142.22 px (190.88→333.09); step ×0.65; dead; window 549 ms (allow 262.6, clock 214.2) — window 549 ms > clock 214.2 + 2×16.7 + stall 15 = 262.6 ms (O-64 R-4, H-3d); trajectory worst 0.55 px (0.39 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.11 px after 0.34 px (bound 0.97); owners 0; Q-4 lenient window fails (allow 318.4 ms); faces 12 px of form ink beyond the plate over 30 screencast sample(s) (bound 2)  ⟶ FAILED: window, faces"
+  },
+  {
+   "w": "W6",
+   "engine": "webkit",
+   "cell": "form·collapse",
+   "verdict": "FAIL",
+   "failed": [
+    "window",
+    "faces"
+   ],
+   "load": 61.93,
+   "summary": "D 142.22 px (333.09→190.88); step ×0.65; dead; window 552 ms (allow 262.6, clock 214.2) — window 552 ms > clock 214.2 + 2×16.7 + stall 15 = 262.6 ms (O-64 R-4, H-3d); trajectory worst 0.79 px (0.56 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.11 px after 0.34 px (bound 0.97); owners 0; Q-4 lenient window fails (allow 318.4 ms); faces 8 px of form ink beyond the plate over 118 screencast sample(s) (bound 2)  ⟶ FAILED: window, faces"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "top·light·dpr1",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 39,
+   "summary": "edge median 6/255, weakest bin 5/255 at -172° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.252 px (bound 1)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "side·light·dpr1",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 40.12,
+   "summary": "edge median 6/255, weakest bin 4/255 at -112° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.317 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 12 px (bound ≥ 8); badge ink 60, glyph ink 166, shared 0 px (bound 0)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "canvas·light·dpr1",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 40.12,
+   "summary": "edge median 6/255, weakest bin 5/255 at -172° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.252 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 8 px (bound ≥ 8)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "top·light·dpr2",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 40.12,
+   "summary": "edge median 7/255, weakest bin 7/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.137 px (bound 1)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "side·light·dpr2",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 40.11,
+   "summary": "edge median 7/255, weakest bin 7/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.137 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 12 px (bound ≥ 8); badge ink 218, glyph ink 648, shared 0 px (bound 0)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "canvas·light·dpr2",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 40.11,
+   "summary": "edge median 7/255, weakest bin 7/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.137 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 8 px (bound ≥ 8)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "top·light·dpr3",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 40.11,
+   "summary": "edge median 7/255, weakest bin 7/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.069 px (bound 1)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "side·light·dpr3",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 43.47,
+   "summary": "edge median 7/255, weakest bin 7/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.067 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 12 px (bound ≥ 8); badge ink 478, glyph ink 1420, shared 0 px (bound 0)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "canvas·light·dpr3",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 43.47,
+   "summary": "edge median 7/255, weakest bin 7/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.069 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 8 px (bound ≥ 8)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "top·dark·dpr1",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 43.47,
+   "summary": "edge median 10/255, weakest bin 8/255 at -150° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.252 px (bound 1)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "side·dark·dpr1",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 48.55,
+   "summary": "edge median 10/255, weakest bin 6/255 at -120° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.317 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 12 px (bound ≥ 8); badge ink 60, glyph ink 0, shared 0 px (bound 0)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "canvas·dark·dpr1",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 48.55,
+   "summary": "edge median 10/255, weakest bin 8/255 at -150° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.252 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 8 px (bound ≥ 8)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "top·dark·dpr2",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 48.55,
+   "summary": "edge median 10/255, weakest bin 10/255 at -172° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.137 px (bound 1)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "side·dark·dpr2",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 56.12,
+   "summary": "edge median 10/255, weakest bin 10/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.137 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 12 px (bound ≥ 8); badge ink 218, glyph ink 0, shared 0 px (bound 0)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "canvas·dark·dpr2",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 56.12,
+   "summary": "edge median 10/255, weakest bin 10/255 at -172° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.137 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 8 px (bound ≥ 8)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "top·dark·dpr3",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 56.12,
+   "summary": "edge median 10/255, weakest bin 10/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.069 px (bound 1)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "side·dark·dpr3",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 56.12,
+   "summary": "edge median 10/255, weakest bin 10/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.067 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 12 px (bound ≥ 8); badge ink 478, glyph ink 0, shared 0 px (bound 0)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "canvas·dark·dpr3",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 68.92,
+   "summary": "edge median 10/255, weakest bin 10/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.069 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 8 px (bound ≥ 8)"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "canvas-clipped·light·dpr2",
+   "verdict": "RECORD",
+   "failed": [],
+   "load": 68.92,
+   "summary": "RECORD (the panel clips its children, the O-63 / O-61 R-1 family): edge median 7/255, weakest 7/255 at -180°"
+  },
+  {
+   "w": "W7",
+   "engine": "chromium",
+   "cell": "canvas-clipped·dark·dpr2",
+   "verdict": "RECORD",
+   "failed": [],
+   "load": 68.92,
+   "summary": "RECORD (the panel clips its children, the O-63 / O-61 R-1 family): edge median 10/255, weakest 10/255 at -172°"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "top·light·dpr1",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 72.45,
+   "summary": "edge median 5/255, weakest bin 4/255 at -172° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.033 px (bound 1)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "side·light·dpr1",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 71.29,
+   "summary": "edge median 5/255, weakest bin 2/255 at -135° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.038 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 12 px (bound ≥ 8); badge ink 60, glyph ink 164, shared 0 px (bound 0)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "canvas·light·dpr1",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 71.29,
+   "summary": "edge median 5/255, weakest bin 4/255 at -172° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.033 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 8 px (bound ≥ 8)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "top·light·dpr2",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 71.29,
+   "summary": "edge median 7/255, weakest bin 7/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.027 px (bound 1)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "side·light·dpr2",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 69.19,
+   "summary": "edge median 7/255, weakest bin 7/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.011 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 12 px (bound ≥ 8); badge ink 216, glyph ink 648, shared 0 px (bound 0)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "canvas·light·dpr2",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 69.19,
+   "summary": "edge median 7/255, weakest bin 7/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.027 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 8 px (bound ≥ 8)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "top·light·dpr3",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 65.17,
+   "summary": "edge median 7/255, weakest bin 7/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.009 px (bound 1)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "side·light·dpr3",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 65.17,
+   "summary": "edge median 7/255, weakest bin 7/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.011 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 12 px (bound ≥ 8); badge ink 484, glyph ink 1436, shared 0 px (bound 0)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "canvas·light·dpr3",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 65.17,
+   "summary": "edge median 7/255, weakest bin 7/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.009 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 8 px (bound ≥ 8)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "top·dark·dpr1",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 63.07,
+   "summary": "edge median 11/255, weakest bin 9/255 at -172° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.033 px (bound 1)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "side·dark·dpr1",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 63.07,
+   "summary": "edge median 10/255, weakest bin 10/255 at -157° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.038 px (bound 1); edge vs the top dock ×0.91 (bound 0.67-1.5); gutter 12 px (bound ≥ 8); badge ink 60, glyph ink 0, shared 0 px (bound 0)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "canvas·dark·dpr1",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 63.07,
+   "summary": "edge median 11/255, weakest bin 9/255 at -172° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.033 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 8 px (bound ≥ 8)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "top·dark·dpr2",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 60.58,
+   "summary": "edge median 11/255, weakest bin 11/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.027 px (bound 1)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "side·dark·dpr2",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 60.58,
+   "summary": "edge median 11/255, weakest bin 11/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.011 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 12 px (bound ≥ 8); badge ink 216, glyph ink 0, shared 0 px (bound 0)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "canvas·dark·dpr2",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 60.58,
+   "summary": "edge median 11/255, weakest bin 11/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.027 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 8 px (bound ≥ 8)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "top·dark·dpr3",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 58.21,
+   "summary": "edge median 11/255, weakest bin 11/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.009 px (bound 1)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "side·dark·dpr3",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 58.21,
+   "summary": "edge median 11/255, weakest bin 11/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.011 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 12 px (bound ≥ 8); badge ink 484, glyph ink 0, shared 0 px (bound 0)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "canvas·dark·dpr3",
+   "verdict": "PASS",
+   "failed": [],
+   "load": 58.21,
+   "summary": "edge median 11/255, weakest bin 11/255 at -180° (bound ≥ max(0.25 × median, 2/255), median ≥ 4/255) over 48 bins; corner 0.009 px (bound 1); edge vs the top dock ×1 (bound 0.67-1.5); gutter 8 px (bound ≥ 8)"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "canvas-clipped·light·dpr2",
+   "verdict": "RECORD",
+   "failed": [],
+   "load": 60.44,
+   "summary": "RECORD (the panel clips its children, the O-63 / O-61 R-1 family): edge median 7/255, weakest 7/255 at -180°"
+  },
+  {
+   "w": "W7",
+   "engine": "webkit",
+   "cell": "canvas-clipped·dark·dpr2",
+   "verdict": "RECORD",
+   "failed": [],
+   "load": 60.44,
+   "summary": "RECORD (the panel clips its children, the O-63 / O-61 R-1 family): edge median 11/255, weakest 11/255 at -180°"
+  }
+ ]
+}

@@ -34,7 +34,8 @@
 //   seatgrow a seat with its own CSS width transition (K-13); __scene.grow(bool)
 //   form     the collapsed form (O-65): face in #collapsed; track, count, dismiss in #persistent-end
 //   edge     &kind=top|side|canvas[&clip=1] with a [data-testid=surface-above] (O-67); seat e1
-//            carries a consumer-composed badge (HEAD has no reserved badge seat)
+//            carries its badge in DockControl's #badge slot (floor v2 N-4); a build without the
+//            slot renders no badge, and W7 reads `badge` absent there
 // H3 variants (pass-3/H3.md):
 //   morph    &neighbour=1 (H3-7: the dock in flow in a left-aligned row, a [data-testid=neighbour]
 //            box after it, read per frame) · __scene.stretch(px) (H3-6: the root held px wider
@@ -353,7 +354,7 @@ const morphHost = scene === "vmorph" ? "position: fixed; left: 16px; top: 0; bot
       <div :data-testid="kind === 'canvas' ? 'surface-above' : undefined" data-edge="top" :style="kind === 'canvas' ? 'position: fixed; left: 200px; top: 140px; width: 800px; height: 480px; background: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.2);' + (clipPanel ? ' overflow: hidden;' : '') : kind === 'side' ? 'position: fixed; left: 0; top: 56px;' : 'position: fixed; left: 0; right: 0; top: 16px; display: flex; justify-content: center;'">
         <div :style="kind === 'canvas' ? 'position: absolute; left: 0; top: 0; display: flex;' : 'display: flex;'">
           <GlassDock data-testid="dock" :orientation="kind === 'side' ? 'vertical' : 'horizontal'" fit-content :collapse="false" aria-label="Edge dock">
-            <DockControl aria-label="Expand" data-testid="e1"><svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="currentColor"/></svg><span data-testid="badge" style="position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; border-radius: 4px; background: #f59e0b;"></span></DockControl>
+            <DockControl aria-label="Expand" data-testid="e1"><svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="currentColor"/></svg><template #badge><span data-testid="badge" style="display: block; width: 8px; height: 8px; border-radius: 4px; background: #f59e0b;"></span></template></DockControl>
             <DockControl aria-label="Edit" data-testid="e2"><svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="currentColor"/></svg></DockControl>
           </GlassDock>
         </div>
