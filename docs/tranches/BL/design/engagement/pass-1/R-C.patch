@@ -1,0 +1,411 @@
+diff --git a/src/components/_shared/disclosure/disclosure.css b/src/components/_shared/disclosure/disclosure.css
+index 754c6ca4..d15de761 100644
+--- a/src/components/_shared/disclosure/disclosure.css
++++ b/src/components/_shared/disclosure/disclosure.css
+@@ -69,11 +69,35 @@
+         transition:
+             background-color var(--duration-control) var(--ease-standard),
+             color var(--duration-control) var(--ease-standard),
+-            box-shadow var(--duration-control) var(--ease-standard);
++            box-shadow var(--duration-control) var(--ease-standard),
++            var(--scalar-legs);
++        /* A row presses shallower than a bit: the softer press rung. */
++        --rung-press-depth: calc(1 - var(--scale-press-sm));
++        --commit-pop: var(--rung-press-depth);
++        scale: var(--scalar-scale);
++        /* The press's light leg: a seam-ink veil over whatever the hover paints. It is
++           a press-only paint (hover never writes background-image) and it survives
++           reduced motion, where the spatial budgets are 0. */
++        background-image: linear-gradient(
++            color-mix(
++                in oklab,
++                var(--foreground) calc(var(--engage) * var(--ink-seam) * 100%),
++                transparent
++            )
++            0 0
++        );
+     }
+ 
++    @media (prefers-reduced-motion: reduce) {
++        .disclosure-group-trigger {
++            --rung-press-depth: 0;
++        }
++    }
++
++    /* `background-color`, not the shorthand: the shorthand reset the press veil's
++       `background-image` under hover, and a touch carries a sticky hover. */
+     .disclosure-group-trigger:hover:not(:disabled, [data-disabled]) {
+-        background: var(--control-surface-bg-hover);
++        background-color: var(--control-surface-bg-hover);
+     }
+ 
+     .disclosure-icon {
+diff --git a/src/components/accordion/AccordionTrigger.vue b/src/components/accordion/AccordionTrigger.vue
+index 26edfad1..f5efdcb4 100644
+--- a/src/components/accordion/AccordionTrigger.vue
++++ b/src/components/accordion/AccordionTrigger.vue
+@@ -43,6 +43,7 @@ const forwardedAttrs = computed(() => {
+             v-bind="forwardedAttrs"
+             as="button"
+             data-slot="accordion-trigger"
++            data-engage="press"
+             :id="ids.trigger"
+             :aria-controls="ids.content"
+             :class="cn('disclosure-trigger disclosure-group-trigger', props.class)"
+diff --git a/src/components/separator/Separator.vue b/src/components/separator/Separator.vue
+index 2502d6fe..1d0b6e01 100644
+--- a/src/components/separator/Separator.vue
++++ b/src/components/separator/Separator.vue
+@@ -97,11 +97,18 @@ const labelledAttrs = computed(() => {
+    adjective) is DELETED: it was the fifth of five divider implementations wearing
+    five different inks, none of them on the ladder. */
+ @layer components {
++    /* PASSIVE ENGAGEMENT (D5-C, Q-1 (a)): a separator answers the host it sits in.
++       Inside an engaged host (inherited `--engage` 1) the seam ink steps up one rung to
++       the edge ink; at rest, or outside any host, it is the seam. */
+     .separator,
+     .separator-segment {
+         background: color-mix(
+             in oklab,
+-            var(--foreground) calc(var(--ink-seam) * 100%),
++            var(--foreground)
++                calc(
++                    (var(--ink-seam) + var(--engage) * (var(--ink-edge) - var(--ink-seam))) *
++                        100%
++                ),
+             transparent
+         );
+     }
+diff --git a/src/components/slider/Slider.vue b/src/components/slider/Slider.vue
+index fc7b5de1..4703448f 100644
+--- a/src/components/slider/Slider.vue
++++ b/src/components/slider/Slider.vue
+@@ -17,6 +17,9 @@ import {
+     useForwardPropsEmits,
+ } from "reka-ui";
+ import { useDragVelocity } from "../../composables/dom/useDragVelocity";
++import { springPreset } from "../../composables/motion/spring/springPresets";
++import { springSettleDurationSeconds } from "../../composables/motion/spring/springProjection";
++import { throwDistance } from "../sheet/detents/projection";
+ import { useDockHold } from "../dock/composables/useDockHold";
+ import { resolveValueMarks } from "../_shared/field/valueDomain";
+ import { useMotionAxis } from "../_shared/useMotionAxis";
+@@ -91,8 +94,53 @@ useDragVelocity({
+     host: () => (motionAxis.armed.value ? getRootEl() : null),
+     mirror: () => loupeRef.value,
+     axis: () => (props.orientation === "vertical" ? "y" : "x"),
++    onRelease: carry,
+ });
+ 
++/* MOMENTUM (D5-C, the one script write). A release projects the value through the
++   detent sheet's rule (`throwDistance`: the throw coasts for as long as the engaged
++   rung's spring takes to settle), writes the projected value once, and hands the
++   distance back to the scalar `--carry`: one WAAPI animation from −D to 0 on the
++   `dock` row, seeded with the release velocity, so the handle leaves the finger at the
++   finger's speed and lands on the value. A CSS transition cannot take an initial slope,
++   so this leg is WAAPI. Horizontal, LTR, single-thumb, controlled only (prototype). */
++function carry(vPx: number): void {
++    const root = getRootEl();
++    const track = root?.querySelector<HTMLElement>(".slider-track");
++    const values = props.modelValue;
++    if (!root || !track || !values || values.length !== 1) return;
++    if (props.orientation === "vertical" || props.inverted) return;
++    if (getComputedStyle(root).direction === "rtl") return;
++    const w = track.getBoundingClientRect().width;
++    const min = props.min ?? 0;
++    const max = props.max ?? 100;
++    const step = props.step ?? 1;
++    const row = springPreset("dock");
++    const throwPx = throwDistance(vPx, row);
++    const raw = values[0]! + (throwPx / w) * (max - min);
++    const target = Math.min(max, Math.max(min, min + Math.round((raw - min) / step) * step));
++    const d = ((target - values[0]!) / (max - min)) * w;
++    if (Math.abs(d) < 0.5) return;
++    emits("update:modelValue", [target]);
++    emits("valueCommit", [target]);
++    // The dock row's closed form from x0 = −d with x'(0) = v (scaled when the end clamps).
++    const omega = (2 * Math.PI) / row.response;
++    const zeta = row.dampingFraction;
++    const omegaD = omega * Math.sqrt(1 - zeta * zeta);
++    const v0 = throwPx === 0 ? 0 : vPx * (d / throwPx);
++    const a = -d;
++    const b = (v0 + zeta * omega * a) / omegaD;
++    const seconds = springSettleDurationSeconds(row);
++    const n = 48;
++    const frames: Keyframe[] = [];
++    for (let i = 0; i <= n; i++) {
++        const t = (i / n) * seconds;
++        const x = i === n ? 0 : Math.exp(-zeta * omega * t) * (a * Math.cos(omegaD * t) + b * Math.sin(omegaD * t));
++        frames.push({ offset: i / n, "--carry": `${x.toFixed(2)}px` } as Keyframe);
++    }
++    root.animate(frames, { duration: seconds * 1000, easing: "linear" });
++}
++
+ // ── The GRASP mount (glass/grasp.css) ────────────────────────────────────────────
+ // The carriers exist exactly as long as the gesture's optic does: mounted the frame
+ // the hold begins, unmounted on the release fade's OWN `transitionend` — never a
+@@ -259,6 +307,7 @@ onMounted(() => {
+     <SliderRoot
+         v-slot="{ modelValue: values }"
+         data-slot="slider"
++        data-engage="press focus"
+         ref="sliderRootRef"
+         class="glass-slider"
+         data-control-target
+diff --git a/src/components/slider/styles.css b/src/components/slider/styles.css
+index bdf256dd..16b2ce84 100644
+--- a/src/components/slider/styles.css
++++ b/src/components/slider/styles.css
+@@ -30,7 +30,31 @@
+     align-items: center;
+     touch-action: none;
+     user-select: none;
+-    transition: color var(--duration-fast) var(--ease-standard);
++    /* The engaged rung rides the dock row (ENGAGE_LADDER "engaged"). */
++    transition:
++        color var(--duration-fast) var(--ease-standard),
++        --engage var(--spring-dock-duration) var(--spring-dock);
++    /* THE ENGAGED RUNG, IN PLACE (D5-C, Q-3 (c)). On a fine pointer the held or focused
++       slider grows by the press's reciprocal. On a coarse pointer the slider RESTS inset
++       by the same ratio and grows to its column when held, so the engaged box never
++       leaves the gutter. */
++    scale: calc(1 + var(--engage) * var(--rung-grow));
++}
++
++@media (pointer: coarse) {
++    .glass-slider {
++        scale: calc((1 + var(--engage) * var(--rung-grow)) / (1 + var(--rung-grow)));
++    }
++}
++
++/* MOMENTUM'S PAINT: the carry offsets the value-follow box and the fill's leading edge
++   by `--carry` until the spring lands it at 0. */
++.glass-slider .slider-thumb {
++    translate: var(--carry) 0;
++}
++
++.glass-slider .slider-range {
++    margin-inline-end: calc(-1 * var(--carry));
+ }
+ 
+ /* THE DRAG AFFORDANCE. The scrubber is the library's most-consumed dragging surface and
+diff --git a/src/components/switch/Switch.vue b/src/components/switch/Switch.vue
+index aecb2fa1..9a461278 100644
+--- a/src/components/switch/Switch.vue
++++ b/src/components/switch/Switch.vue
+@@ -42,8 +42,9 @@ const forwarded = useForwardPropsEmits(delegatedProps, emit);
+          was; the refuted "fix" to 48 × 24 / pad 2 is what would have broken it. -->
+     <SwitchRoot
+         data-slot="switch"
++        data-engage="press"
+         v-bind="{ ...forwarded, ...controlStateAttrs(props.invalid) }"
+-        :class="cn('switch control-bit tap-squish', props.class)"
++        :class="cn('switch control-bit', props.class)"
+     >
+         <span class="control-bit__face" aria-hidden="true">
+             <!-- The thumb IS the switch's mark and keeps its own translate channel;
+diff --git a/src/components/switch/styles.css b/src/components/switch/styles.css
+index 982fd8f6..2e1c61d1 100644
+--- a/src/components/switch/styles.css
++++ b/src/components/switch/styles.css
+@@ -13,6 +13,9 @@
+      * (24 − 20)/2 − 1 = 1 — is the SHIPPED byte, not a correction to it. Seven
+      * external `<Switch>` sites keep their paint. */
+     .switch {
++        /* The switch maps the scalar: the press takes its depth, the commit gives it
++           back with the impulse's rebound. */
++        scale: var(--scalar-scale);
+         --control-bit-face-inline: 2.75rem; /* 44 */
+         --control-bit-face-block: 1.5rem; /* 24 */
+         --control-bit-face-pad: 0.0625rem; /* 1 — it IS the law, see above */
+diff --git a/src/composables/dom/useDragVelocity.ts b/src/composables/dom/useDragVelocity.ts
+index d7950531..d00eeb2a 100644
+--- a/src/composables/dom/useDragVelocity.ts
++++ b/src/composables/dom/useDragVelocity.ts
+@@ -62,6 +62,12 @@ export interface UseDragVelocityParams {
+     clamp?: number;
+     /** Honor `prefers-reduced-motion: reduce` (no rAF, value pinned 0). Default true. */
+     respectReducedMotion?: boolean;
++    /**
++     * Called once per release with the signed release velocity along the axis, in px/s
++     * (the mean over the last `RELEASE_WINDOW_MS` of moves; 0 after a stop). The one
++     * measurement a momentum carry reads (D5-C).
++     */
++    onRelease?: (velocityPxPerS: number) => void;
+ }
+ 
+ export interface UseDragVelocityReturn {
+@@ -123,6 +129,17 @@ export function useDragVelocity(
+     //   V0 = 900 px/s pole through a τ = 100 ms one-pole, and it is NOT clamped — a
+     //   consumer that reads it wants the whole [0,1) range (the loupe's magnification
+     //   backs off across all of it). Two terms, never two engines.
++    // The release window: the moves inside the last 80 ms are the throw.
++    const RELEASE_WINDOW_MS = 80;
++    let samples: Array<[number, number]> = [];
++    function releaseVelocity(): number {
++        const now = performance.now();
++        const recent = samples.filter(([, t]) => now - t <= RELEASE_WINDOW_MS);
++        if (recent.length < 2) return 0;
++        const [p0, t0] = recent[0]!;
++        const [p1, t1] = recent[recent.length - 1]!;
++        return t1 > t0 ? ((p1 - p0) / (t1 - t0)) * 1000 : 0;
++    }
+     const FLEX_V0 = 900;
+     const FLEX_TAU_MS = 100;
+     let flexSmoothed = 0;
+@@ -175,6 +192,8 @@ export function useDragVelocity(
+         const pos = axisOf() === "y" ? e.clientY : e.clientX;
+         frameDelta += pos - lastPos;
+         lastPos = pos;
++        samples.push([pos, performance.now()]);
++        if (samples.length > 16) samples.shift();
+     }
+ 
+     function onPointerDown(e: PointerEvent): void {
+@@ -185,6 +204,7 @@ export function useDragVelocity(
+         frameDelta = 0;
+         smoothed = 0;
+         flexSmoothed = 0;
++        samples = [[lastPos, performance.now()]];
+         // PRM: pin the vars at 0 and NEVER open the rAF (no smear; the value still
+         // tracks via reka). The no-idle-cost contract is trivially honored.
+         if (respectPRM && prefersReducedMotion()) {
+@@ -217,7 +237,10 @@ export function useDragVelocity(
+ 
+     function onPointerUp(): void {
+         if (!pointerActive) return;
++        const v = releaseVelocity();
++        samples = [];
+         teardown();
++        params.onRelease?.(v);
+     }
+ 
+     // The host is a reka forwardRef element (`SliderRoot.$el`) — null at SETUP, live
+diff --git a/src/styles/glass.css b/src/styles/glass.css
+index f4af6c1e..bb9edf93 100644
+--- a/src/styles/glass.css
++++ b/src/styles/glass.css
+@@ -70,6 +70,9 @@
+ /* The GRASP register — the material's answer to the hand. AFTER rim.css (it reads the
+    rung recipes and the one saturate); its own @layer components. */
+ @import "./glass/grasp.css";
++/* The ENGAGEMENT SCALAR — `--engage` and `--commit` per `[data-engage]` host; every
++   engaged component maps them (D5-C). Its own @layer components. */
++@import "./glass/engage.css";
+ /* The FOCUS VEIL — the gradient-blur focus primitive (MOTION-CANON §5). The grasp
+    register is the material's answer to the hand; this is the WORLD's answer to the same
+    hand, so the two engagement registers sit adjacent. Its selector (`.glass-focus-veil`)
+diff --git a/src/styles/glass/engage.css b/src/styles/glass/engage.css
+new file mode 100644
+index 00000000..3629796d
+--- /dev/null
++++ b/src/styles/glass/engage.css
+@@ -0,0 +1,92 @@
++/* glass/engage.css — THE ENGAGEMENT SCALAR (D5-C prototype).
++
++   Engagement is one number per host. `--engage` is 0 at rest and 1 while the hand is
++   on the host (`:active`, `[data-held]`) or, for a host that declares `focus`, while
++   keyboard focus is inside it. `--commit` is the host's committed state as a level
++   (0 off, 1 on); it is transitioned on the one row whose rebound is intrinsic
++   (`--spring-panel`), and a component reads the IMPULSE `4c(1 − c)` from it: 0 at
++   either end, 1 half way, negative while the level overshoots 1. One transition of a
++   level therefore yields a pop and a rebound below the settle, with no keyframe, and a
++   host that MOUNTS committed has no before-change style, so it pops nothing (H-8).
++
++   A host opts in with `data-engage` (a token list: `press`, plus `focus` for hosts
++   whose engaged rung includes keyboard focus). A host resets both scalars to 0, so a
++   control nested in an engaged host is not engaged by inheritance; anything that is
++   NOT a host inherits its nearest host's scalars (the passive answer, Q-1).
++
++   No component writes a figure. The three budgets below are derived from the shipped
++   press scale and nothing else; under reduced motion they are 0 in one place, so every
++   spatial mapping retires and every light mapping stays. */
++
++@property --engage {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 0;
++}
++
++@property --commit {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 0;
++}
++
++@property --carry {
++    syntax: "<length>";
++    inherits: true;
++    initial-value: 0px;
++}
++
++:root {
++    /* The press rung's depth: 1 − 0.96. */
++    --rung-press-depth: calc(1 - var(--scale-press));
++    /* The engaged rung's in-place grow is the press's reciprocal: 1/0.96 − 1. */
++    --rung-grow: calc(1 / var(--scale-press) - 1);
++    /* The commit gives back what the press took. */
++    --commit-pop: var(--rung-press-depth);
++    /* The two scalar legs every host runs, appended to a host's own transition list
++       (a `transition` shorthand on a host would otherwise clobber the host's legs). */
++    --scalar-legs:
++        --engage var(--spring-press-duration) var(--spring-press),
++        --commit var(--spring-panel-duration) var(--spring-panel);
++}
++
++@media (prefers-reduced-motion: reduce) {
++    :root {
++        --rung-press-depth: 0;
++        --rung-grow: 0;
++        --commit-pop: 0;
++    }
++}
++
++@layer components {
++    [data-engage] {
++        --engage: 0;
++        --commit: 0;
++        --carry: 0px;
++        /* The commit impulse, read by a mapping: 4c(1 − c). */
++        --commit-bump: calc(4 * var(--commit) * (1 - var(--commit)));
++        /* The press-and-commit scale every bit-sized host maps: the press takes its
++           depth, the commit gives it back with the impulse's rebound, and a commit in
++           flight pre-empts the press (a tap commits before its press has drained). */
++        --scalar-scale: calc(
++            1 + var(--commit-bump) * var(--commit-pop) - var(--engage) *
++                var(--rung-press-depth) * (1 - var(--commit-bump))
++        );
++        transition: var(--scalar-legs);
++    }
++
++    [data-engage]:active,
++    [data-engage][data-held],
++    [data-engage~="focus"]:has(:focus-visible) {
++        --engage: 1;
++    }
++
++    [data-engage]:is(
++            [data-state="checked"],
++            [data-state="open"],
++            [data-state="on"],
++            [aria-pressed="true"]
++        ) {
++        --commit: 1;
++    }
++}
+diff --git a/tests/components/control-bit/binary-triad.test.ts b/tests/components/control-bit/binary-triad.test.ts
+index 903b1e5d..b8e6ba14 100644
+--- a/tests/components/control-bit/binary-triad.test.ts
++++ b/tests/components/control-bit/binary-triad.test.ts
+@@ -301,7 +301,10 @@ describe("W-CONTROL-BIT — the binary triad", () => {
+         ];
+         for (const root of roots) {
+             expect(root.classList.contains("control-bit")).toBe(true);
+-            expect(root.classList.contains("tap-squish")).toBe(true);
++            // The press is the scalar's on the switch (D5-C prototype) and the
++            // utility's on the two not yet migrated: exactly one press owner each.
++            const scalar = root.getAttribute("data-engage") === "press";
++            expect(scalar !== root.classList.contains("tap-squish")).toBe(true);
+             expect(root.querySelectorAll(".control-bit__face")).toHaveLength(1);
+         }
+     });

@@ -1,0 +1,42 @@
+# C-0 · the engagement scalar: born-RED witness, passive census, channel budget
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc2 · engine chromium · lock wait 0.0 s · other headless processes: chromium 10, webkit 6 · load 88.4/76.3/67.7 at start
+# chromium 149.0.7827.55
+  PASS       C-0 switch --engage:1 moves the root · Δscale -0.040 · paint changed [] · computed scale 1 → 0.96 · load 88.4/76.3/67.7
+  PASS       C-0 switch --commit:0.5 pops the root · Δscale 0.040 · computed scale 1.04 · bound |Δscale| ≥ 0.01 · load 88.4/76.3/67.7
+  PASS       C-0 accordion --engage:1 moves the root · Δscale -0.030 · paint changed [background-image] · computed scale 1 → 0.97 · load 88.4/76.3/67.7
+  PASS       C-0 accordion --commit:0.5 pops the root · Δscale 0.030 · computed scale 1.03 · bound |Δscale| ≥ 0.01 · load 88.4/76.3/67.7
+  PASS       C-0 slider --engage:1 moves the root · Δscale 0.042 · paint changed [] · computed scale 1 → 1.04167 · load 83.3/75.5/67.5
+  PASS       Q-1 separator static (host --engage:1) · paint changed [background-color] · oklab(0.216114 0.00343135 0.00508514 / 0.08) none → oklab(0.216114 0.00343135 0.00508514 / 0.16) none · load 83.3/75.5/67.5
+  PASS       Q-1 separator live (pressed host) · rest oklab(0.216114 0.00343135 0.00508514 / 0.08) → pressed oklab(0.216114 0.00343135 0.00508514 / 0.16) (inherited --engage 1) → released oklab(0.216114 0.00343135 0.00508514 / 0.08) · load 83.3/75.5/67.5
+  REPORT     Q-1 skeleton static (host --engage:1) · paint changed [] (the prototype maps the Separator only) · load 83.3/75.5/67.5
+  REPORT     Q-3 mapping [data-engage] · [--commit-bump, --scalar-scale] → (token only) · load 83.3/75.5/67.5
+  REPORT     Q-3 mapping .disclosure-group-trigger · [--commit-pop, background-image] → luminance · load 83.3/75.5/67.5
+  REPORT     Q-3 mapping .separator[data-v-b6421c41], .separator-segment[data-v-b6421c41] · [background] → luminance · load 83.3/75.5/67.5
+  REPORT     Q-3 mapping :root · [--commit-pop] → (token only) · load 83.3/75.5/67.5
+  REPORT     Q-3 mapping .glass-slider · [scale] → geometry · load 83.3/75.5/67.5
+  REPORT     Q-3 mapping .glass-slider @(pointer: coarse) · [scale] → geometry · load 83.3/75.5/67.5
+  REPORT     Q-3 mapping .glass-slider .slider-thumb · [translate] → geometry · load 83.3/75.5/67.5
+  REPORT     Q-3 mapping .glass-slider .slider-range · [margin-inline-end] → geometry · load 83.3/75.5/67.5
+  PASS       Q-3 channel budget (≤ 2 channels per mapping selector) · 5 mapping selectors · none over budget · load 83.3/75.5/67.5
+C-0 chromium PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (9 reported) · load 88.4/76.3/67.7 at start, 83.3/75.5/67.5 at end
+# C-0 · the engagement scalar: born-RED witness, passive census, channel budget
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc2 · engine webkit · lock wait 0.0 s · other headless processes: chromium 10, webkit 6 · load 83.3/75.5/67.5 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  PASS       C-0 switch --engage:1 moves the root · Δscale -0.040 · paint changed [] · computed scale 1 → 0.96 · load 83.3/75.5/67.5
+  PASS       C-0 switch --commit:0.5 pops the root · Δscale 0.040 · computed scale 1.04 · bound |Δscale| ≥ 0.01 · load 83.3/75.5/67.5
+  PASS       C-0 accordion --engage:1 moves the root · Δscale -0.030 · paint changed [background-image] · computed scale 1 → 0.97 · load 83.3/75.5/67.5
+  PASS       C-0 accordion --commit:0.5 pops the root · Δscale 0.030 · computed scale 1.03 · bound |Δscale| ≥ 0.01 · load 83.3/75.5/67.5
+  PASS       C-0 slider --engage:1 moves the root · Δscale 0.042 · paint changed [] · computed scale 1 → 1.041667 · load 87.0/76.4/67.8
+  PASS       Q-1 separator static (host --engage:1) · paint changed [background-color] · oklab(0.216115 0.003422 0.005081 / 0.08) none → oklab(0.216115 0.003422 0.005081 / 0.16) none · load 87.0/76.4/67.8
+  PASS       Q-1 separator live (pressed host) · rest oklab(0.216115 0.003422 0.005081 / 0.08) → pressed oklab(0.216115 0.003422 0.005081 / 0.16) (inherited --engage 1) → released oklab(0.216115 0.003422 0.005081 / 0.08) · load 87.0/76.4/67.8
+  REPORT     Q-1 skeleton static (host --engage:1) · paint changed [] (the prototype maps the Separator only) · load 87.0/76.4/67.8
+  REPORT     Q-3 mapping [data-engage] · [--commit-bump, --scalar-scale] → (token only) · load 87.0/76.4/67.8
+  REPORT     Q-3 mapping .disclosure-group-trigger · [--commit-pop, background-image] → luminance · load 87.0/76.4/67.8
+  REPORT     Q-3 mapping .separator[data-v-b6421c41], .separator-segment[data-v-b6421c41] · [background] → luminance · load 87.0/76.4/67.8
+  REPORT     Q-3 mapping :root · [--commit-pop] → (token only) · load 87.0/76.4/67.8
+  REPORT     Q-3 mapping .glass-slider · [scale] → geometry · load 87.0/76.4/67.8
+  REPORT     Q-3 mapping .glass-slider @(pointer: coarse) · [scale] → geometry · load 87.0/76.4/67.8
+  REPORT     Q-3 mapping .glass-slider .slider-thumb · [translate] → geometry · load 87.0/76.4/67.8
+  REPORT     Q-3 mapping .glass-slider .slider-range · [margin-inline-end] → geometry · load 87.0/76.4/67.8
+  PASS       Q-3 channel budget (≤ 2 channels per mapping selector) · 5 mapping selectors · none over budget · load 87.0/76.4/67.8
+C-0 webkit PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (9 reported) · load 83.3/75.5/67.5 at start, 87.0/76.4/67.8 at end

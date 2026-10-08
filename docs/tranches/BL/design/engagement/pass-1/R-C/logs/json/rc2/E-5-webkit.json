@@ -1,0 +1,49 @@
+{
+ "id": "E-5",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc2"
+ },
+ "loadStart": "45.8/50.5/57.7",
+ "loadEnd": "82.4/63.9/60.8",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-5 accordion press light",
+   "status": "FAIL",
+   "line": "ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s)",
+   "load": "45.5/50.6/56.5"
+  },
+  {
+   "name": "E-5 accordion press dark",
+   "status": "FAIL",
+   "line": "ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s)",
+   "load": "75.4/61.6/59.9"
+  },
+  {
+   "name": "E-5 press_switch press light",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg]",
+   "load": "87.1/64.5/61.0"
+  },
+  {
+   "name": "E-5 press_switch press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce)",
+   "load": "87.1/64.5/61.0"
+  },
+  {
+   "name": "E-5 press_switch press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg]",
+   "load": "82.4/63.9/60.8"
+  },
+  {
+   "name": "E-5 press_switch press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce)",
+   "load": "82.4/63.9/60.8"
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+# c-cost · engine chromium · N 200 descendants · lock wait 0.0 s · other headless processes: chromium 10, webkit 6 · load 87.0/76.4/67.8 at start
+# chromium 149.0.7827.55
+  REPORT     scale-only · forced recalc per frame: median 0.000 ms, p95 0.100 ms over 517 frames · CDP over 20 toggles: RecalcStyleCount +333, RecalcStyleDuration +14.7 ms, LayoutCount +19 · load 97.7/78.8/68.7
+  REPORT     noinh      · forced recalc per frame: median 0.100 ms, p95 0.200 ms over 502 frames · CDP over 20 toggles: RecalcStyleCount +327, RecalcStyleDuration +23.1 ms, LayoutCount +0 · load 92.4/78.0/68.5
+  REPORT     inh-none   · forced recalc per frame: median 0.100 ms, p95 0.200 ms over 505 frames · CDP over 20 toggles: RecalcStyleCount +326, RecalcStyleDuration +50.3 ms, LayoutCount +0 · load 91.5/78.0/68.6
+  REPORT     inh-map    · forced recalc per frame: median 0.200 ms, p95 0.300 ms over 518 frames · CDP over 20 toggles: RecalcStyleCount +335, RecalcStyleDuration +68.8 ms, LayoutCount +19 · load 91.5/78.0/68.6
+# done · load 93.0/78.8/69.0 at end
+# c-cost · engine chromium · N 2000 descendants · lock wait 0.0 s · other headless processes: chromium 10, webkit 4 · load 93.0/78.8/69.0 at start
+# chromium 149.0.7827.55
+  REPORT     scale-only · forced recalc per frame: median 0.100 ms, p95 0.200 ms over 503 frames · CDP over 20 toggles: RecalcStyleCount +328, RecalcStyleDuration +23.1 ms, LayoutCount +19 · load 96.5/79.8/69.4
+  REPORT     noinh      · forced recalc per frame: median 0.100 ms, p95 0.200 ms over 466 frames · CDP over 20 toggles: RecalcStyleCount +307, RecalcStyleDuration +31.0 ms, LayoutCount +0 · load 112.1/87.3/72.8
+  REPORT     inh-none   · forced recalc per frame: median 0.800 ms, p95 0.900 ms over 449 frames · CDP over 20 toggles: RecalcStyleCount +298, RecalcStyleDuration +235.7 ms, LayoutCount +0 · load 102.4/87.4/73.4
+  REPORT     inh-map    · forced recalc per frame: median 1.300 ms, p95 1.500 ms over 502 frames · CDP over 20 toggles: RecalcStyleCount +327, RecalcStyleDuration +427.8 ms, LayoutCount +19 · load 99.0/86.9/73.3
+# done · load 99.0/86.9/73.3 at end
+# c-cost · engine webkit · N 200 descendants · lock wait 0.0 s · other headless processes: chromium 12, webkit 4 · load 99.0/86.9/73.3 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  REPORT     scale-only · forced recalc per frame: median 0.000 ms, p95 1.000 ms over 380 frames · CDP n/a (WebKit) · load 107.0/88.8/74.0
+  REPORT     noinh      · forced recalc per frame: median 0.000 ms, p95 1.000 ms over 381 frames · CDP n/a (WebKit) · load 106.5/89.0/74.2
+  REPORT     inh-none   · forced recalc per frame: median 0.000 ms, p95 1.000 ms over 382 frames · CDP n/a (WebKit) · load 101.7/88.3/74.0
+  REPORT     inh-map    · forced recalc per frame: median 0.000 ms, p95 1.000 ms over 305 frames · CDP n/a (WebKit) · load 98.5/87.8/74.0
+# done · load 98.5/87.8/74.0 at end
+# c-cost · engine webkit · N 2000 descendants · lock wait 0.0 s · other headless processes: chromium 6, webkit 6 · load 98.5/87.8/74.0 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  REPORT     scale-only · forced recalc per frame: median 0.000 ms, p95 1.000 ms over 380 frames · CDP n/a (WebKit) · load 94.8/87.3/73.8
+  REPORT     noinh      · forced recalc per frame: median 0.000 ms, p95 1.000 ms over 382 frames · CDP n/a (WebKit) · load 90.2/86.4/73.6
+  REPORT     inh-none   · forced recalc per frame: median 2.000 ms, p95 3.000 ms over 380 frames · CDP n/a (WebKit) · load 90.2/86.4/73.6
+  REPORT     inh-map    · forced recalc per frame: median 4.000 ms, p95 5.000 ms over 88 frames · CDP n/a (WebKit) · load 84.0/85.2/73.3
+# done · load 84.0/85.2/73.3 at end

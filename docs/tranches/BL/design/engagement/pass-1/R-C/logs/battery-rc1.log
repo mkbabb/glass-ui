@@ -1,0 +1,143 @@
+=== E-1 chromium · 11:22:52 · load { 60.68 72.16 94.13 }
+# E-1 · the census over a declared denominator
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc · engine chromium · lock wait 0.0 s · other headless processes: chromium 10, webkit 2 · load 60.7/72.2/94.1 at start
+# chromium 149.0.7827.55
+  FAIL       E-1 declaration present · no declaration in the build (the export does not exist); 55 directories to declare · load 60.7/72.2/94.1
+  FAIL       E-1 denominator declared · 0 of 55 directories declared: accordion alert aurora avatar badge blob button card carousel checkbox chip collapsible command configurator constellation dark-mode-toggle data-table deck dialog dock easing expandable-container fading-scroll fourier-field handmark infinite-scroll input label labeled-field menu metric music-staff number-field pager-dots popover progress radio-group scroll-progress-rim select separator sheet skeleton slider sortable-list status-dot surface switch table tabs textarea timeline toast toggle-group tooltip typewriter · load 60.7/72.2/94.1
+  FAIL       E-1 class carries a rung · no classes declared · load 60.7/72.2/94.1
+E-1 chromium FAIL · 0 pass, 3 fail, 0 unmeasured of 3 gating cells (0 reported) · load 60.7/72.2/94.1 at start, 60.7/72.2/94.1 at end
+=== exit 1 · 11:22:53
+=== E-1 webkit · 11:22:53 · load { 60.68 72.16 94.13 }
+# E-1 · the census over a declared denominator
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc · engine webkit · lock wait 0.0 s · other headless processes: chromium 10, webkit 2 · load 60.7/72.2/94.1 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       E-1 declaration present · no declaration in the build (the export does not exist); 55 directories to declare · load 60.7/72.2/94.1
+  FAIL       E-1 denominator declared · 0 of 55 directories declared: accordion alert aurora avatar badge blob button card carousel checkbox chip collapsible command configurator constellation dark-mode-toggle data-table deck dialog dock easing expandable-container fading-scroll fourier-field handmark infinite-scroll input label labeled-field menu metric music-staff number-field pager-dots popover progress radio-group scroll-progress-rim select separator sheet skeleton slider sortable-list status-dot surface switch table tabs textarea timeline toast toggle-group tooltip typewriter · load 60.7/72.2/94.1
+  FAIL       E-1 class carries a rung · no classes declared · load 60.7/72.2/94.1
+E-1 webkit FAIL · 0 pass, 3 fail, 0 unmeasured of 3 gating cells (0 reported) · load 60.7/72.2/94.1 at start, 60.7/72.2/94.1 at end
+=== exit 1 · 11:22:55
+=== E-3 chromium · 11:22:55 · load { 60.68 72.16 94.13 }
+# E-3 · the slider exemplar (T1 GROW) and its phone arm
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc · engine chromium · lock wait 0.0 s · other headless processes: chromium 18, webkit 2 · load 59.7/71.8/93.9 at start
+# chromium 149.0.7827.55
+  PASS       E-3 slider desk pointer-held light · rest 360.0 px → held 375.0 px (×1.042; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 59.7/71.8/93.9
+  PASS       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 375.0 px (×1.042; focus on slider) · bound ×1.03 · load 59.7/71.8/93.9
+  PASS       E-3 slider phone touch-held light · 390×844 coarse · rest 343.7 px → touch-held 358.0 px (×1.042; [data-engaged] 2) · bound ×1.03 · load 59.7/71.8/93.9
+  PASS       E-3 slider phone gutter light · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 59.7/71.8/93.9
+  PASS       E-3 slider keyboard-focused PRM light · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 57.4/71.1/93.5
+  PASS       E-3 slider phone touch-held PRM light · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 57.4/71.1/93.5
+  PASS       E-3 slider desk pointer-held dark · rest 360.0 px → held 375.0 px (×1.042; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 57.4/71.1/93.5
+  PASS       E-3 slider desk keyboard-focused dark · rest 360.0 px → focused 375.0 px (×1.042; focus on slider) · bound ×1.03 · load 57.4/71.1/93.5
+  PASS       E-3 slider phone touch-held dark · 390×844 coarse · rest 343.7 px → touch-held 358.0 px (×1.042; [data-engaged] 2) · bound ×1.03 · load 56.8/70.7/93.2
+  PASS       E-3 slider phone gutter dark · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 56.8/70.7/93.2
+  PASS       E-3 slider keyboard-focused PRM dark · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 56.8/70.7/93.2
+  PASS       E-3 slider phone touch-held PRM dark · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 56.8/70.7/93.2
+E-3 chromium PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (0 reported) · load 59.7/71.8/93.9 at start, 56.8/70.7/93.2 at end
+=== exit 0 · 11:23:08
+=== E-3 webkit · 11:23:08 · load { 56.77 70.73 93.23 }
+# E-3 · the slider exemplar (T1 GROW) and its phone arm
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc · engine webkit · lock wait 0.0 s · other headless processes: chromium 14, webkit 4 · load 56.8/70.7/93.2 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  PASS       E-3 slider desk pointer-held light · rest 360.0 px → held 375.0 px (×1.042; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 55.3/70.2/92.9
+  PASS       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 375.0 px (×1.042; focus on slider) · bound ×1.03 · load 55.3/70.2/92.9
+  PASS       E-3 slider phone touch-held light · 390×844 coarse · rest 343.7 px → touch-held 358.0 px (×1.042; [data-engaged] 2) · bound ×1.03 · load 53.4/69.6/92.6
+  PASS       E-3 slider phone gutter light · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 53.4/69.6/92.6
+  PASS       E-3 slider keyboard-focused PRM light · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 53.4/69.6/92.6
+  PASS       E-3 slider phone touch-held PRM light · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 53.4/69.6/92.6
+  PASS       E-3 slider desk pointer-held dark · rest 360.0 px → held 375.0 px (×1.042; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 52.3/69.1/92.2
+  PASS       E-3 slider desk keyboard-focused dark · rest 360.0 px → focused 375.0 px (×1.042; focus on slider) · bound ×1.03 · load 52.3/69.1/92.2
+  PASS       E-3 slider phone touch-held dark · 390×844 coarse · rest 343.7 px → touch-held 358.0 px (×1.042; [data-engaged] 2) · bound ×1.03 · load 52.3/69.1/92.2
+  PASS       E-3 slider phone gutter dark · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 52.3/69.1/92.2
+  PASS       E-3 slider keyboard-focused PRM dark · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 52.3/69.1/92.2
+  PASS       E-3 slider phone touch-held PRM dark · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 50.1/68.3/91.8
+E-3 webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (0 reported) · load 56.8/70.7/93.2 at start, 50.1/68.3/91.8 at end
+=== exit 0 · 11:23:28
+=== E-4 chromium · 11:23:28 · load { 50.14 68.33 91.85 }
+# E-4 · momentum: a release carries its velocity into the settle
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc · engine chromium · lock wait 0.0 s · other headless processes: chromium 6, webkit 6 · load 50.1/68.3/91.8 at start
+# chromium 149.0.7827.55
+# narrowed to scenes slider
+  PASS       E-4 slider fling carries velocity · axis x · fling: carry 142.20 px, settles 142.20 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 142.20 px, settle 142.20 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 19.7 px, still 0.0 px · 241 frames, median 8.4 ms · load 49.2/67.8/91.5
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 47.2/67.1/91.1
+E-4 chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 50.1/68.3/91.8 at start, 47.2/67.1/91.1 at end
+=== exit 0 · 11:23:37
+=== E-4 webkit · 11:23:37 · load { 47.15 67.10 91.14 }
+# E-4 · momentum: a release carries its velocity into the settle
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc · engine webkit · lock wait 0.0 s · other headless processes: chromium 6, webkit 2 · load 47.2/67.1/91.1 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes slider
+  PASS       E-4 slider fling carries velocity · axis x · fling: carry 142.22 px, settles 142.22 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 142.22 px, settle 142.22 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 14.7 px, still 0.0 px · 197 frames, median 10.0 ms · load 44.9/66.3/90.7
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 45.0/66.0/90.5
+E-4 webkit PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 47.2/67.1/91.1 at start, 45.0/66.0/90.5 at end
+=== exit 0 · 11:23:48
+=== E-5 chromium · 11:23:48 · load { 44.99 65.96 90.45 }
+# E-5 · a held touch answers through a press rung
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc · engine chromium · lock wait 0.0 s · other headless processes: chromium 10, webkit 0 · load 45.0/66.0/90.5 at start
+# chromium 149.0.7827.55
+# narrowed to scenes accordion, press_switch
+  PASS       E-5 accordion press light · :active true · Δscale -0.030 · touch-changed [background-color, background-image] · hover-changed [background-color, background-image] · press-only [] · load 43.0/65.2/90.0
+  FAIL       E-5 accordion press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color, background-image] · hover-changed [background-color, background-image] · press-only [] (bound ≥ 1 press-only property under reduce) · load 43.0/65.2/90.0
+  PASS       E-5 accordion press dark · :active true · Δscale -0.030 · touch-changed [background-color, background-image] · hover-changed [background-color, background-image] · press-only [] · load 40.6/64.3/89.6
+  FAIL       E-5 accordion press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [background-color, background-image] · hover-changed [background-color, background-image] · press-only [] (bound ≥ 1 press-only property under reduce) · load 40.6/64.3/89.6
+  PASS       E-5 press_switch press light · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 38.4/63.5/89.1
+  PASS       E-5 press_switch press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 38.4/63.5/89.1
+  PASS       E-5 press_switch press dark · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 36.8/62.7/88.7
+  PASS       E-5 press_switch press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 36.8/62.7/88.7
+E-5 chromium FAIL · 6 pass, 2 fail, 0 unmeasured of 8 gating cells (0 reported) · load 45.0/66.0/90.5 at start, 36.8/62.7/88.7 at end
+=== exit 1 · 11:24:06
+=== E-5 webkit · 11:24:06 · load { 36.82 62.74 88.73 }
+# E-5 · a held touch answers through a press rung
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc · engine webkit · lock wait 0.0 s · other headless processes: chromium 8, webkit 2 · load 36.8/62.7/88.7 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes accordion, press_switch
+  FAIL       E-5 accordion press light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 42.2/54.9/80.6
+  FAIL       E-5 accordion press dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 46.9/49.4/73.2
+  PASS       E-5 press_switch press light · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 46.4/49.2/72.9
+  PASS       E-5 press_switch press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 46.4/49.2/72.9
+  PASS       E-5 press_switch press dark · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 43.7/48.6/72.5
+  PASS       E-5 press_switch press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 43.7/48.6/72.5
+E-5 webkit FAIL · 4 pass, 2 fail, 0 unmeasured of 6 gating cells (0 reported) · load 36.8/62.7/88.7 at start, 43.7/48.6/72.5 at end
+=== exit 1 · 11:30:23
+=== E-7 chromium · 11:30:23 · load { 43.69 48.61 72.50 }
+# E-7 · one writer of data-engaged, meaning held
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc · engine chromium · lock wait 0.0 s · other headless processes: chromium 12, webkit 6 · load 43.7/48.6/72.5 at start
+# chromium 149.0.7827.55
+  FAIL       E-7 writers (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/wt · load 43.7/48.6/72.5
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 2 · bound ≥ 1 · load 43.7/48.6/72.5
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 2 · bound ≥ 1 · load 43.2/48.4/72.3
+  FAIL       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 1 (glass-focus-veil) · bound 0 · load 43.2/48.4/72.3
+E-7 chromium FAIL · 2 pass, 2 fail, 0 unmeasured of 4 gating cells (0 reported) · load 43.7/48.6/72.5 at start, 43.2/48.4/72.3 at end
+=== exit 1 · 11:30:27
+=== E-7 webkit · 11:30:27 · load { 43.15 48.41 72.30 }
+# E-7 · one writer of data-engaged, meaning held
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc · engine webkit · lock wait 0.0 s · other headless processes: chromium 12, webkit 6 · load 43.2/48.4/72.3 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       E-7 writers (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/wt · load 43.2/48.4/72.3
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 2 · bound ≥ 1 · load 43.2/48.4/72.3
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 2 · bound ≥ 1 · load 41.4/48.0/72.0
+  FAIL       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 1 (glass-focus-veil) · bound 0 · load 41.4/48.0/72.0
+E-7 webkit FAIL · 2 pass, 2 fail, 0 unmeasured of 4 gating cells (0 reported) · load 43.2/48.4/72.3 at start, 41.4/48.0/72.0 at end
+=== exit 1 · 11:30:32
+=== E-8 chromium · 11:30:32 · load { 41.38 47.96 72.00 }
+# E-8 · one clock authority; no rung literal
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc · engine chromium · lock wait 0.0 s · other headless processes: chromium 12, webkit 6 · load 41.4/48.0/72.0 at start
+# chromium 149.0.7827.55
+# narrowed to scenes switch, accordion, slider
+  FAIL       E-8 mirror · 4 rows, 12 --engage-* tokens on :root · drift [] · orphans [--engage-carry, --engage-press-depth, --engage-grow, --engage-legs] · load 39.3/47.4/71.7
+  PASS       E-8 literal switch · 20 animation(s) ran [background-color@200ms, --engage@120ms, --commit@450ms, border-bottom-color@200ms, border-left-color@200ms, border-right-color@200ms, border-top-color@200ms, translate@210ms, outline-color@200ms] against 54 clock tokens · minted [] · load 39.3/47.4/71.7
+  PASS       E-8 literal switch PRM · 0 animation(s) ran [] against 0 clock tokens · minted [] · load 39.3/47.4/71.7
+  PASS       E-8 literal accordion · 11 animation(s) ran [background-color@120ms, --engage@120ms, --commit@450ms, rotate@200ms, disclosure-open@200ms, box-shadow@120ms, disclosure-close@200ms] against 54 clock tokens · minted [] · load 39.3/47.4/71.7
+  PASS       E-8 literal accordion PRM · 2 animation(s) ran [disclosure-open@0ms, disclosure-close@0ms] against 0 clock tokens · minted [] · load 38.4/47.1/71.4
+E-8 chromium FAIL · 4 pass, 1 fail, 0 unmeasured of 5 gating cells (0 reported) · load 41.4/48.0/72.0 at start, 38.4/47.1/71.4 at end
+=== exit 1 · 11:30:41
+=== E-8 webkit · 11:30:42 · load { 38.36 47.09 71.41 }
+# E-8 · one clock authority; no rung literal
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc · engine webkit · lock wait 0.0 s · other headless processes: chromium 2, webkit 12 · load 38.4/47.1/71.4 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes switch, accordion, slider
+  FAIL       E-8 mirror · 4 rows, 12 --engage-* tokens on :root · drift [] · orphans [--engage-carry, --engage-press-depth, --engage-grow, --engage-legs] · load 38.3/46.9/71.2
+  PASS       E-8 literal switch · 20 animation(s) ran [background-color@200ms, --engage@120ms, --commit@450ms, border-bottom-color@200ms, border-left-color@200ms, border-right-color@200ms, border-top-color@200ms, translate@210ms, outline-color@200ms] against 54 clock tokens · minted [] · load 38.3/46.9/71.2
+  PASS       E-8 literal switch PRM · 0 animation(s) ran [] against 0 clock tokens · minted [] · load 38.3/46.9/71.2
+  FAIL       E-8 literal accordion · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 49.8/50.6/69.6
+  FAIL       E-8 literal accordion PRM · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then mouse.move: Protocol error (Input.dispatchMouseEvent): Page closed) · load 39.2/46.4/65.7
+E-8 webkit FAIL · 2 pass, 3 fail, 0 unmeasured of 5 gating cells (0 reported) · load 38.4/47.1/71.4 at start, 39.2/46.4/65.7 at end

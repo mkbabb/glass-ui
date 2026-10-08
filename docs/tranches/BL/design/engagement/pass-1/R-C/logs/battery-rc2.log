@@ -1,0 +1,181 @@
+=== E-2 chromium rc2 · 11:55:58 · load { 41.02 47.18 58.94 }
+# E-2 · the commit bar, generalized
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc2 · engine chromium · lock wait 0.0 s · other headless processes: chromium 14, webkit 6 · load 41.0/47.2/58.9 at start
+# chromium 149.0.7827.55
+# narrowed to scenes switch, accordion
+  PASS       E-2 switch Tab-entry light · scale range 0.000 body moved 0.00 px · focus on switch · load 39.0/46.7/58.7
+  PASS       E-2 switch commit·keyboard(Space) light · peak 1.040 trough 0.993 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 39.0/46.7/58.7
+  PASS       E-2 switch commit·programmatic light · peak 1.040 trough 0.993 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 96 frames, median 8.3 ms · load 39.0/46.7/58.7
+  PASS       E-2 switch commit·pointer light · peak 1.040 trough 0.993 settle 1.000 · body travel 19.60 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 39.0/46.7/58.7
+  PASS       E-2 switch commit·tap(coarse) light · peak 1.040 trough 0.987 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 39.0/46.7/58.7
+  PASS       E-2 switch mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 97 of 97 frames with the target present · load 38.1/46.4/58.5
+  PASS       E-2 switch Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on switch · load 38.1/46.4/58.5
+  PASS       E-2 switch commit·keyboard(Space) dark · peak 1.040 trough 0.993 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 38.1/46.4/58.5
+  PASS       E-2 switch commit·programmatic dark · peak 1.040 trough 0.993 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 38.1/46.4/58.5
+  PASS       E-2 switch commit·pointer dark · peak 1.040 trough 0.993 settle 1.000 · body travel 19.60 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 38.1/46.4/58.5
+  PASS       E-2 switch commit·tap(coarse) dark · peak 1.040 trough 0.987 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 97 frames, median 8.4 ms · load 39.1/46.4/58.5
+  PASS       E-2 switch mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 97 of 97 frames with the target present · load 39.1/46.4/58.5
+  PASS       E-2 accordion Tab-entry light · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 39.1/46.4/58.5
+  PASS       E-2 accordion commit·keyboard(Enter) light · peak 1.030 trough 0.995 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 39.1/46.4/58.5
+  PASS       E-2 accordion commit·programmatic light · peak 1.030 trough 0.995 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.4 ms · load 42.2/46.9/58.6
+  PASS       E-2 accordion commit·pointer light · peak 1.030 trough 0.995 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 42.2/46.9/58.6
+  PASS       E-2 accordion commit·tap(coarse) light · peak 1.030 trough 0.990 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 96 frames, median 8.3 ms · load 42.2/46.9/58.6
+  PASS       E-2 accordion mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 97 of 97 frames with the target present · load 42.2/46.9/58.6
+  PASS       E-2 accordion Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 42.0/46.8/58.5
+  PASS       E-2 accordion commit·keyboard(Enter) dark · peak 1.030 trough 0.995 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 42.0/46.8/58.5
+  PASS       E-2 accordion commit·programmatic dark · peak 1.030 trough 0.995 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 42.0/46.8/58.5
+  PASS       E-2 accordion commit·pointer dark · peak 1.030 trough 0.995 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 42.0/46.8/58.5
+  PASS       E-2 accordion commit·tap(coarse) dark · peak 1.030 trough 0.990 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 43.5/47.1/58.5
+  PASS       E-2 accordion mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 97 of 97 frames with the target present · load 43.5/47.1/58.5
+E-2 chromium PASS · 24 pass, 0 fail, 0 unmeasured of 24 gating cells (0 reported) · load 41.0/47.2/58.9 at start, 43.5/47.1/58.5 at end
+=== exit 0 · 11:56:28
+=== E-2 webkit rc2 · 11:56:28 · load { 43.54 47.06 58.48 }
+# E-2 · the commit bar, generalized
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc2 · engine webkit · lock wait 0.0 s · other headless processes: chromium 8, webkit 6 · load 43.5/47.1/58.5 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes switch, accordion
+  PASS       E-2 switch Tab-entry light · scale range 0.000 body moved 0.00 px · focus on switch · load 47.0/47.7/58.6
+  PASS       E-2 switch commit·keyboard(Space) light · peak 1.040 trough 0.993 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 76 frames, median 10.0 ms · load 47.0/47.7/58.6
+  PASS       E-2 switch commit·programmatic light · peak 1.040 trough 0.993 settle 1.000 · body travel 19.85 px overshoot 0.00 px · 78 frames, median 10.0 ms · load 47.0/47.7/58.6
+  PASS       E-2 switch commit·pointer light · peak 1.038 trough 0.993 settle 1.000 · body travel 19.60 px overshoot 0.01 px · 77 frames, median 10.0 ms · load 49.7/48.3/58.8
+  PASS       E-2 switch commit·tap(coarse) light · peak 1.040 trough 0.993 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 75 frames, median 10.0 ms · load 49.7/48.3/58.8
+  PASS       E-2 switch mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 73 of 73 frames with the target present · load 49.7/48.3/58.8
+  PASS       E-2 switch Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on switch · load 46.8/47.7/58.5
+  PASS       E-2 switch commit·keyboard(Space) dark · peak 1.040 trough 0.993 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 79 frames, median 10.0 ms · load 46.8/47.7/58.5
+  PASS       E-2 switch commit·programmatic dark · peak 1.040 trough 0.993 settle 1.000 · body travel 19.90 px overshoot 0.00 px · 79 frames, median 10.0 ms · load 46.8/47.7/58.5
+  PASS       E-2 switch commit·pointer dark · peak 1.040 trough 0.993 settle 1.000 · body travel 19.60 px overshoot 0.01 px · 80 frames, median 10.0 ms · load 46.8/47.7/58.5
+  PASS       E-2 switch commit·tap(coarse) dark · peak 1.040 trough 0.993 settle 1.000 · body travel 19.95 px overshoot 0.00 px · 79 frames, median 10.0 ms · load 50.3/48.4/58.7
+  PASS       E-2 switch mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 80 of 80 frames with the target present · load 50.3/48.4/58.7
+  PASS       E-2 accordion Tab-entry light · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 50.3/48.4/58.7
+  PASS       E-2 accordion commit·keyboard(Enter) light · peak 1.030 trough 0.995 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 80 frames, median 10.0 ms · load 50.3/48.4/58.7
+  PASS       E-2 accordion commit·programmatic light · peak 1.030 trough 0.995 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 79 frames, median 10.0 ms · load 55.5/49.5/59.0
+  FAIL       E-2 accordion commit·pointer light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 45 s; then CELL TIMEOUT 45 s) · load 60.1/53.0/59.5
+  FAIL       E-2 accordion commit·tap(coarse) light · ENGINE CLOSED, REPRODUCED 2/2 (page.evaluate: Target page, context or browser has been closed; then page.evaluate: Target page, context or browser has been closed) · load 60.1/53.0/59.5
+  PASS       E-2 accordion mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 79 of 79 frames with the target present · load 60.1/53.0/59.5
+  PASS       E-2 accordion Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 59.0/52.9/59.4
+  PASS       E-2 accordion commit·keyboard(Enter) dark · peak 1.030 trough 0.995 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 80 frames, median 10.0 ms · load 59.0/52.9/59.4
+  PASS       E-2 accordion commit·programmatic dark · peak 1.030 trough 0.995 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 79 frames, median 10.0 ms · load 59.0/52.9/59.4
+  FAIL       E-2 accordion commit·pointer dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 45 s; then CELL TIMEOUT 45 s) · load 46.3/50.9/58.0
+  FAIL       E-2 accordion commit·tap(coarse) dark · ENGINE CLOSED, REPRODUCED 2/2 (page.evaluate: Target page, context or browser has been closed; then page.evaluate: Target page, context or browser has been closed) · load 44.5/50.5/57.8
+  PASS       E-2 accordion mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 79 of 79 frames with the target present · load 44.5/50.5/57.8
+E-2 webkit FAIL · 20 pass, 4 fail, 0 unmeasured of 24 gating cells (0 reported) · load 43.5/47.1/58.5 at start, 44.5/50.5/57.8 at end
+=== exit 1 · 12:00:03
+=== E-5 chromium rc2 · 12:00:03 · load { 44.52 50.49 57.82 }
+# E-5 · a held touch answers through a press rung
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc2 · engine chromium · lock wait 0.0 s · other headless processes: chromium 12, webkit 0 · load 44.5/50.5/57.8 at start
+# chromium 149.0.7827.55
+# narrowed to scenes accordion, press_switch
+  PASS       E-5 accordion press light · :active true · Δscale -0.030 · touch-changed [background-color, background-image] · hover-changed [background-color] · press-only [background-image] · load 47.8/51.1/58.0
+  PASS       E-5 accordion press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color, background-image] · hover-changed [background-color] · press-only [background-image] (bound ≥ 1 press-only property under reduce) · load 47.8/51.1/58.0
+  PASS       E-5 accordion press dark · :active true · Δscale -0.030 · touch-changed [background-color, background-image] · hover-changed [background-color] · press-only [background-image] · load 49.5/51.4/58.0
+  PASS       E-5 accordion press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [background-color, background-image] · hover-changed [background-color] · press-only [background-image] (bound ≥ 1 press-only property under reduce) · load 49.5/51.4/58.0
+  PASS       E-5 press_switch press light · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 46.6/50.7/57.8
+  PASS       E-5 press_switch press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 46.6/50.7/57.8
+  PASS       E-5 press_switch press dark · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 45.8/50.5/57.7
+  PASS       E-5 press_switch press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 45.8/50.5/57.7
+E-5 chromium PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (0 reported) · load 44.5/50.5/57.8 at start, 45.8/50.5/57.7 at end
+=== exit 0 · 12:00:22
+=== E-5 webkit rc2 · 12:00:22 · load { 45.77 50.49 57.65 }
+# E-5 · a held touch answers through a press rung
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc2 · engine webkit · lock wait 0.0 s · other headless processes: chromium 10, webkit 0 · load 45.8/50.5/57.7 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes accordion, press_switch
+  FAIL       E-5 accordion press light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 45.5/50.6/56.5
+  FAIL       E-5 accordion press dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 75.4/61.6/59.9
+  PASS       E-5 press_switch press light · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 87.1/64.5/61.0
+  PASS       E-5 press_switch press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 87.1/64.5/61.0
+  PASS       E-5 press_switch press dark · :active true · Δscale -0.040 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 82.4/63.9/60.8
+  PASS       E-5 press_switch press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 82.4/63.9/60.8
+E-5 webkit FAIL · 4 pass, 2 fail, 0 unmeasured of 6 gating cells (0 reported) · load 45.8/50.5/57.7 at start, 82.4/63.9/60.8 at end
+=== exit 1 · 12:06:39
+=== E-8 chromium rc2 · 12:06:39 · load { 82.36 63.86 60.76 }
+# E-8 · one clock authority; no rung literal
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc2 · engine chromium · lock wait 0.0 s · other headless processes: chromium 22, webkit 0 · load 82.4/63.9/60.8 at start
+# chromium 149.0.7827.55
+# narrowed to scenes switch, accordion, slider
+  PASS       E-8 mirror · 4 rows, 8 --engage-* tokens on :root · drift [] · orphans [] · load 79.5/63.6/60.7
+  PASS       E-8 literal switch · 20 animation(s) ran [background-color@200ms, --engage@120ms, --commit@450ms, border-bottom-color@200ms, border-left-color@200ms, border-right-color@200ms, border-top-color@200ms, translate@210ms, outline-color@200ms] against 54 clock tokens · minted [] · load 79.5/63.6/60.7
+  PASS       E-8 literal switch PRM · 0 animation(s) ran [] against 0 clock tokens · minted [] · load 79.5/63.6/60.7
+  PASS       E-8 literal accordion · 11 animation(s) ran [background-color@120ms, --engage@120ms, --commit@450ms, rotate@200ms, disclosure-open@200ms, box-shadow@120ms, disclosure-close@200ms] against 54 clock tokens · minted [] · load 78.3/63.6/60.7
+  PASS       E-8 literal accordion PRM · 2 animation(s) ran [disclosure-open@0ms, disclosure-close@0ms] against 0 clock tokens · minted [] · load 78.3/63.6/60.7
+E-8 chromium PASS · 5 pass, 0 fail, 0 unmeasured of 5 gating cells (0 reported) · load 82.4/63.9/60.8 at start, 78.3/63.6/60.7 at end
+=== exit 0 · 12:06:49
+=== E-8 webkit rc2 · 12:06:49 · load { 78.28 63.59 60.70 }
+# E-8 · one clock authority; no rung literal
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc2 · engine webkit · lock wait 0.0 s · other headless processes: chromium 21, webkit 0 · load 78.3/63.6/60.7 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes switch, accordion, slider
+  PASS       E-8 mirror · 4 rows, 8 --engage-* tokens on :root · drift [] · orphans [] · load 77.1/63.6/60.7
+  PASS       E-8 literal switch · 20 animation(s) ran [background-color@200ms, --engage@120ms, --commit@450ms, border-bottom-color@200ms, border-left-color@200ms, border-right-color@200ms, border-top-color@200ms, translate@210ms, outline-color@200ms] against 54 clock tokens · minted [] · load 77.1/63.6/60.7
+  PASS       E-8 literal switch PRM · 0 animation(s) ran [] against 0 clock tokens · minted [] · load 77.1/63.6/60.7
+  FAIL       E-8 literal accordion · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 45.1/55.8/58.0
+  FAIL       E-8 literal accordion PRM · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 71.1/61.8/60.0
+E-8 webkit FAIL · 3 pass, 2 fail, 0 unmeasured of 5 gating cells (0 reported) · load 78.3/63.6/60.7 at start, 71.1/61.8/60.0 at end
+=== exit 1 · 12:10:56
+=== E-9 chromium rc2 · 12:10:56 · load { 76.57 63.05 60.45 }
+# E-9 · the PRM arm
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc2 · engine chromium · lock wait 0.0 s · other headless processes: chromium 17, webkit 4 · load 76.6/63.0/60.5 at start
+# chromium 149.0.7827.55
+# narrowed to scenes switch, accordion, slider
+  PASS       E-9 switch press-spatial light · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 76.6/63.0/60.5
+  PASS       E-9 switch press-light light · press-only paint changes [child0 bg] (bound ≥ 1) · load 76.6/63.0/60.5
+  PASS       E-9 switch commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 76.6/63.0/60.5
+  PASS       E-9 switch press-spatial dark · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 73.5/62.6/60.3
+  PASS       E-9 switch press-light dark · press-only paint changes [child0 bg] (bound ≥ 1) · load 73.5/62.6/60.3
+  PASS       E-9 switch commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 73.5/62.6/60.3
+  PASS       E-9 accordion press-spatial light · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 73.5/62.6/60.3
+  PASS       E-9 accordion press-light light · press-only paint changes [background-image] (bound ≥ 1) · load 73.5/62.6/60.3
+  PASS       E-9 accordion commit-spatial light · commit(Enter): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 73.5/62.6/60.3
+  PASS       E-9 accordion press-spatial dark · scale range while pressed 0.000 over 38 frames (bound < 0.002) · load 74.1/62.9/60.4
+  PASS       E-9 accordion press-light dark · press-only paint changes [background-image] (bound ≥ 1) · load 74.1/62.9/60.4
+  PASS       E-9 accordion commit-spatial dark · commit(Enter): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 74.1/62.9/60.4
+  PASS       E-9 slider press-spatial light · scale range while pressed 0.000 over 38 frames (bound < 0.002) · load 74.1/62.9/60.4
+  PASS       E-9 slider press-light light · press-only paint changes [child1 bg] (bound ≥ 1) · load 74.1/62.9/60.4
+  PASS       E-9 slider commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 74.1/62.9/60.4
+  PASS       E-9 slider press-spatial dark · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 72.3/62.8/60.4
+  PASS       E-9 slider press-light dark · press-only paint changes [child1 bg] (bound ≥ 1) · load 72.3/62.8/60.4
+  PASS       E-9 slider commit-spatial dark · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 72.3/62.8/60.4
+E-9 chromium PASS · 18 pass, 0 fail, 0 unmeasured of 18 gating cells (0 reported) · load 76.6/63.0/60.5 at start, 72.3/62.8/60.4 at end
+=== exit 0 · 12:11:13
+=== E-9 webkit rc2 · 12:11:13 · load { 72.32 62.75 60.39 }
+# E-9 · the PRM arm
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/rc2 · engine webkit · lock wait 0.0 s · other headless processes: chromium 14, webkit 4 · load 72.3/62.8/60.4 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes switch, accordion, slider
+  PASS       E-9 switch press-spatial light · scale range while pressed 0.000 over 31 frames (bound < 0.002) · load 69.3/62.3/60.2
+  PASS       E-9 switch press-light light · press-only paint changes [child0 bg] (bound ≥ 1) · load 69.3/62.3/60.2
+  PASS       E-9 switch commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 61 frames · load 69.3/62.3/60.2
+  PASS       E-9 switch press-spatial dark · scale range while pressed 0.000 over 31 frames (bound < 0.002) · load 65.9/61.7/60.0
+  PASS       E-9 switch press-light dark · press-only paint changes [child0 bg] (bound ≥ 1) · load 65.9/61.7/60.0
+  PASS       E-9 switch commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 61 frames · load 65.9/61.7/60.0
+  FAIL       E-9 accordion press-spatial light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 76.4/64.0/60.9
+  FAIL       E-9 accordion press-spatial dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 61.3/63.1/61.0
+  PASS       E-9 slider press-spatial light · scale range while pressed 0.000 over 31 frames (bound < 0.002) · load 61.3/63.1/61.0
+  PASS       E-9 slider press-light light · press-only paint changes [child1 bg] (bound ≥ 1) · load 61.3/63.1/61.0
+  PASS       E-9 slider commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 3.59 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 61 frames · load 61.3/63.1/61.0
+  PASS       E-9 slider press-spatial dark · scale range while pressed 0.000 over 31 frames (bound < 0.002) · load 63.1/63.4/61.1
+  PASS       E-9 slider press-light dark · press-only paint changes [child1 bg] (bound ≥ 1) · load 63.1/63.4/61.1
+  PASS       E-9 slider commit-spatial dark · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 3.59 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 60 frames · load 63.1/63.4/61.1
+E-9 webkit FAIL · 12 pass, 2 fail, 0 unmeasured of 14 gating cells (0 reported) · load 72.3/62.8/60.4 at start, 63.1/63.4/61.1 at end
+=== exit 1 · 12:15:28
+=== HEAD webkit accordion E-2 · 12:15:28 · load { 63.14 63.42 61.09 }
+# E-2 · the commit bar, generalized
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/head · engine webkit · lock wait 0.0 s · other headless processes: chromium 18, webkit 8 · load 63.1/63.4/61.1 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes accordion
+  PASS       E-2 accordion Tab-entry light · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 63.8/63.5/61.1
+  FAIL       E-2 accordion commit·keyboard(Enter) light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 80 frames, median 10.0 ms · load 63.8/63.5/61.1
+  FAIL       E-2 accordion commit·programmatic light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 79 frames, median 10.0 ms · load 63.8/63.5/61.1
+  FAIL       E-2 accordion commit·pointer light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 45 s; then CELL TIMEOUT 45 s) · load 32.0/54.2/57.9
+  FAIL       E-2 accordion commit·tap(coarse) light · ENGINE CLOSED, REPRODUCED 2/2 (page.evaluate: Target page, context or browser has been closed; then page.evaluate: Target page, context or browser has been closed) · load 32.0/54.2/57.9
+  PASS       E-2 accordion mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 79 of 79 frames with the target present · load 30.2/53.5/57.6
+E-2 webkit FAIL · 2 pass, 4 fail, 0 unmeasured of 6 gating cells (0 reported) · load 63.1/63.4/61.1 at start, 30.2/53.5/57.6 at end
+=== HEAD webkit accordion E-5 · 12:17:07 · load { 30.16 53.46 57.58 }
+# E-5 · a held touch answers through a press rung
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rC/out/builds/head · engine webkit · lock wait 0.0 s · other headless processes: chromium 35, webkit 2 · load 30.2/53.5/57.6 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes accordion
+  FAIL       E-5 accordion press light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 89.5/71.5/64.5
+  FAIL       E-5 accordion press dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 83.3/75.2/67.3
+E-5 webkit FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 30.2/53.5/57.6 at start, 83.3/75.2/67.3 at end
+=== done 12:23:08
