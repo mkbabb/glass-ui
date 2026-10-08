@@ -1,0 +1,5 @@
+/* D3 C′ critic probe · library paint inside a page claim. A consumer claims its <main> as the page
+   (data-glass-ground="page") and the library paints an opaque `--secondary` region inside it (a tab list, a chip
+   tray, a table header: `bg-secondary`). The claim then reads the page while the plates sit on `--secondary`.
+   This is the false-claim class at the library's own tokens. Expected: M-2 red where the claim thins. */
+main.hx-page[data-glass-ground="page"] { background: var(--secondary) !important; }

@@ -1,0 +1,9 @@
+/* D3 C′ critic probe · the second on-glass register on a thinned content plate (REGISTRY §7.3 C′ item 7: the
+   `.glass-capsule` / `.feedback-tone` scope kinds). ladder.css re-points `--muted-foreground-strong` inside every rung to
+   the static `--on-glass-muted-strong`, and `:where(.feedback-tone, .glass-capsule, .glass-capsule-track)` re-points
+   their muted run to it as well. Neither is solved by `@utility glass-ink`. This probe paints the content plates'
+   muted run in that register, as a capsule or feedback-tone caption seated on the plate would paint.
+   Expected if C′ covers the scope kinds: M-2 green under ?claim=honest exactly where it is green unclaimed. */
+[data-spec="wash"] [data-ink="muted"],
+[data-spec="quiet"] [data-ink="muted"],
+[data-spec="resting"] [data-ink="muted"] { color: var(--muted-foreground-strong) !important; }

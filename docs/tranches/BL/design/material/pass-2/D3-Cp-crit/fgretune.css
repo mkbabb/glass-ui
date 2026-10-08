@@ -1,0 +1,5 @@
+/* D3 C′ critic probe · a consumer retunes the ink as a colour (the form every pre-C′ retune used). `--foreground-l`
+   stays the library's, so `--glass-reach-l` (= fg L ± 0.09) is stale: the solved muted ink may land darker than the
+   painted fg in light. M-4 reads |ΔL_OK|, unsigned, so it cannot see an inverted hierarchy. */
+html:root:not(.dark) { --foreground: oklch(0.42 0.02 56); }
+html.dark:root { --foreground: oklch(0.74 0.01 68); }
