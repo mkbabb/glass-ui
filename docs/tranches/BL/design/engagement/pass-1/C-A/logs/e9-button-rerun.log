@@ -1,0 +1,18 @@
+# E-9 · the PRM arm
+# narrowed to scenes button
+  FAIL       E-9 button press-spatial light · scale range while pressed 0.030 over 41 frames (bound < 0.002) · load 61.9/71.4/63.3
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 61.9/71.4/63.3
+  PASS       E-9 button commit-spatial light · commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 79 frames · load 61.9/71.4/63.3
+  PASS       E-9 button press-spatial dark · scale range while pressed 0.000 over 40 frames (bound < 0.002) · load 59.4/70.7/63.1
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 59.4/70.7/63.1
+  PASS       E-9 button commit-spatial dark · commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 82 frames · load 59.4/70.7/63.1
+E-9 chromium FAIL · 5 pass, 1 fail, 0 unmeasured of 6 gating cells (0 reported) · load 65.6/72.2/63.5 at start, 59.4/70.7/63.1 at end
+# E-9 · the PRM arm
+# narrowed to scenes button
+  PASS       E-9 button press-spatial light · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 56.0/69.8/62.8
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 56.0/69.8/62.8
+  PASS       E-9 button commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 81 frames · load 56.0/69.8/62.8
+  PASS       E-9 button press-spatial dark · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 56.0/69.8/62.8
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 56.0/69.8/62.8
+  PASS       E-9 button commit-spatial dark · commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames · load 56.0/69.8/62.8
+E-9 chromium PASS · 6 pass, 0 fail, 0 unmeasured of 6 gating cells (0 reported) · load 59.4/70.7/63.1 at start, 56.0/69.8/62.8 at end

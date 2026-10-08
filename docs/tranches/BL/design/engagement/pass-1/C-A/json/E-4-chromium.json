@@ -1,0 +1,73 @@
+{
+ "id": "E-4",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/cA/out/builds/final"
+ },
+ "loadStart": "79.3/40.8/35.8",
+ "loadEnd": "73.8/43.5/37.0",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "FAIL",
+   "line": "axis x · fling: carry 0.00 px, settles -0.00 px past release · still: carry 0.00 px, settles -0.00 px · difference: carry -0.00 px, settle -0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 260 frames, median 7.8 ms",
+   "load": "75.2/40.6/35.8"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "70.8/40.3/35.7"
+  },
+  {
+   "name": "E-4 tabsdrag fling carries velocity",
+   "status": "PASS",
+   "line": "axis x · fling: carry 40.82 px, settles -54.53 px past release · still: carry 34.91 px, settles -56.35 px · difference: carry 5.90 px, settle 1.82 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 246.0 px, still 247.8 px · 267 frames, median 7.6 ms",
+   "load": "67.1/40.0/35.6"
+  },
+  {
+   "name": "E-4 tabsdrag release PRM",
+   "status": "FAIL",
+   "line": "NOT DRIVEN under reduce: the drag moved the thumb 0.0 px (bound ≥ 20 px)",
+   "load": "67.1/40.0/35.6"
+  },
+  {
+   "name": "E-4 sheet fling carries velocity",
+   "status": "FAIL",
+   "line": "unreadable: the press point (350, 535) lies outside the 700×500 viewport: the surface is not on screen",
+   "load": "63.9/39.8/35.6"
+  },
+  {
+   "name": "E-4 sheet release PRM",
+   "status": "FAIL",
+   "line": "unreadable: the press point (350, 535) lies outside the 700×500 viewport: the surface is not on screen",
+   "load": "63.9/39.8/35.6"
+  },
+  {
+   "name": "E-4 sortable fling carries velocity",
+   "status": "FAIL",
+   "line": "axis y · fling: carry 19.30 px, settles -36.69 px past release · still: carry 26.22 px, settles -36.69 px · difference: carry -6.92 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 74.8 px, still 20.3 px · 270 frames, median 7.5 ms",
+   "load": "63.6/40.2/35.7"
+  },
+  {
+   "name": "E-4 sortable release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.5 px",
+   "load": "66.2/41.1/36.1"
+  },
+  {
+   "name": "E-4 carousel fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, dir −1, touch · fling: carry 507.00 px, settles 507.00 px past release · still: carry 0.00 px, settles -105.00 px · difference: carry 507.00 px, settle 612.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 64.0 px, still 8.0 px · 265 frames, median 7.6 ms",
+   "load": "70.1/42.3/36.5"
+  },
+  {
+   "name": "E-4 carousel release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 105.0 px · fling: carry 507.00 px, settles 507.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 49.0 px",
+   "load": "70.1/42.3/36.5"
+  }
+ ]
+}

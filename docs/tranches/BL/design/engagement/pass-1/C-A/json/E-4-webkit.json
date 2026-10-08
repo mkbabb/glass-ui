@@ -1,0 +1,73 @@
+{
+ "id": "E-4",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/cA/out/builds/final"
+ },
+ "loadStart": "73.8/43.5/37.0",
+ "loadEnd": "96.0/54.5/41.4",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "FAIL",
+   "line": "axis x · fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles -0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 197 frames, median 10.0 ms",
+   "load": "87.7/47.5/38.5"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "92.3/49.1/39.1"
+  },
+  {
+   "name": "E-4 tabsdrag fling carries velocity",
+   "status": "FAIL",
+   "line": "axis x · fling: carry 40.09 px, settles -54.34 px past release · still: carry 36.93 px, settles -54.34 px · difference: carry 3.16 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 243.5 px, still 237.9 px · 197 frames, median 10.0 ms",
+   "load": "98.6/51.2/39.9"
+  },
+  {
+   "name": "E-4 tabsdrag release PRM",
+   "status": "FAIL",
+   "line": "NOT DRIVEN under reduce: the drag moved the thumb 0.0 px (bound ≥ 20 px)",
+   "load": "98.6/51.2/39.9"
+  },
+  {
+   "name": "E-4 sheet fling carries velocity",
+   "status": "FAIL",
+   "line": "unreadable: the press point (350, 535) lies outside the 700×500 viewport: the surface is not on screen",
+   "load": "101.6/52.6/40.4"
+  },
+  {
+   "name": "E-4 sheet release PRM",
+   "status": "FAIL",
+   "line": "unreadable: the press point (350, 535) lies outside the 700×500 viewport: the surface is not on screen",
+   "load": "101.6/52.6/40.4"
+  },
+  {
+   "name": "E-4 sortable fling carries velocity",
+   "status": "FAIL",
+   "line": "axis y · fling: carry 30.78 px, settles -36.69 px past release · still: carry 35.16 px, settles -36.69 px · difference: carry -4.38 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 80.5 px, still 26.4 px · 197 frames, median 10.0 ms",
+   "load": "103.0/53.7/40.9"
+  },
+  {
+   "name": "E-4 sortable release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.5 px",
+   "load": "101.1/54.1/41.1"
+  },
+  {
+   "name": "E-4 carousel fling carries velocity",
+   "status": "UNMEASURED",
+   "line": "the touch drag moved the thumb 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox)",
+   "load": "96.0/54.5/41.4"
+  },
+  {
+   "name": "E-4 carousel release PRM",
+   "status": "UNMEASURED",
+   "line": "the surface is not driven in this engine (above)",
+   "load": "96.0/54.5/41.4"
+  }
+ ]
+}

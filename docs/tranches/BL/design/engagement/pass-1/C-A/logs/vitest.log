@@ -1,0 +1,42 @@
+17:16  up 1 day,  2:44, 2 users, load averages: 26.37 29.73 34.65
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:570:34
+    568|
+    569|     it("the dist-demo it measures is NEWER than every source it is bui…
+    570|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    571|         const builtAt = statSync(indexHtml).mtimeMs;
+    572|         const newestSrc = newestSourceMtime();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:580:34
+    578|
+    579|     it("the eager graph stays under the modulepreload and byte ceiling…
+    580|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    581|         const html = readFileSync(indexHtml, "utf8");
+    582|         const graph = measureEagerGraph(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 238 passed (239)
+      Tests  3 failed | 2319 passed | 9 expected fail | 1 skipped (2332)
+   Start at  17:16:42
+   Duration  25.39s (transform 38.06s, setup 29.93s, import 129.32s, tests 63.09s, environment 131.29s)
+
+17:17  up 1 day,  2:44, 2 users, load averages: 49.99 35.05 36.40

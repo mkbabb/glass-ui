@@ -195,3 +195,13 @@ Outage log:
   - The route's hit arm never sampled the corner lunes (Q-7); the critic's lune arm reads 0/40.
   The G prototype is launched next.
 - 2026-10-08 — D5 pass 1 P-A banked (family A, the declared register). The patch is 31 files, +514/−150, and passes apply --check at 49db558e. Build, typecheck and vitest pass (2321). E-2 reads 167/168 cells in both engines; the one miss is the radio's ArrowDown, unchanged from HEAD. Mount is quiet 14/14 with no guard. E-8 passes 19/19 in Chromium. E-1 reads 16/18 per engine. The census probe passes with 3/3 plants caught. The X-1 slider stick is gone (×1.000 by 600 ms). Still RED, with carriers named: the E-3 keyboard and phone arms (B, E), E-4 velocity (B), E-7. Critique CA launched.
+- 2026-10-08 — D5 pass 1 C-A banked: family A scores ADVANCE at 0.29 convergence (closed items over all items, many carried by other families). Open items:
+  - E-1: 7 rendered roots read 'unclassed' (tabs, toggle-group, dialog, sheet, carousel); the selectable Card is declared static.
+  - E-7: Slider.vue still writes data-engaged.
+  - E-9: Button squishes under reduce in Chromium too.
+  - FL-1: .tap-squish, .interactive-item and .glass-capsule-hover not retired (overridden rather than removed).
+  - FL-2: minted --scale-commit-pop and --scale-engage ride the panel row, against the spring table's one-job rule.
+  - FL-3: no forced-colors or reduced-transparency arm.
+  - FL-6: Skeleton's loop not measured.
+  - FL-7: Safari unmeasured.
+  E-3 and E-4 belong to B and E; E-6 needs the owner's words for the S6 RETIRE. P-B launched.
