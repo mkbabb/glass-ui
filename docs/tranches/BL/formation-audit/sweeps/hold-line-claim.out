@@ -516,3 +516,41 @@ exit=1
 ## after: the plan as fix-17 leaves it
 in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 658, open 0
 exit=0
+
+# ===== fix-18 (pass 17 FQ-01 to FQ-04: the SIBLING arm gains three kinds read from `src`: mixother, sfcstyle, sibsheet; HEAD `3fbaa0e7`; worktree .claude/worktrees/bl/formation/fix-18/wt)
+
+## before (1): enumeration alone (the fix-18 sweep before any fix-18 plant), on the plan at `3fbaa0e7`
+OPEN SIBLING waves/W-E.11.md:67 E11-G6 · one face per fallback name: `src/styles/typography/scale.css` (sibsheet: `src/styles/typography` holds other stylesheets beside `src/styles/typography/scale.css`, the one the span names) is in no plant
+OPEN SIBLING waves/W-E.3.md:69 E3-G9 · one floor authority: `src/components/sheet` (sfcstyle: `src` declares block-size, flex, height in SFC `<style>` blocks; the span reads `src/components/sheet`) is in no plant
+OPEN SIBLING waves/W-E.8.md:68 E8-G4 · Metric reads the context radius (sta: `src/components/metric` (sfcstyle: `src` declares border-radius in SFC `<style>` blocks; the span reads `src/components/metric`) is in no plant
+OPEN SIBLING waves/W-H.1.md:162 G15 · the Close ring is the rung (static): `--foreground` (mixother: `src` writes a mix share on the other operand (`color-mix(in …, var(--card), transparent n%)`)) is in no plant
+OPEN SIBLING waves/W-H.1.md:162 G15 · the Close ring is the rung (static): `src/components/dialog` (sfcstyle: `src` declares box-shadow, outline, outline-offset in SFC `<style>` blocks; the span reads `src/components/dialog`) is in no plant
+OPEN SIBLING waves/W-H.6.md:66 H6-G3 · no second radius (static): `src/styles/glass/material.css` (sibsheet: `src/styles/glass` holds other stylesheets beside `src/styles/glass/material.css`, the one the span names) is in no plant
+OPEN SIBLING waves/W-H.6.md:66 H6-G3 · no second radius (static): `src/styles/utilities/components.css` (sibsheet: `src/styles/utilities` holds other stylesheets beside `src/styles/utilities/components.css`, the one the span names) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `src/components/dock` (sfcstyle: `src` declares block-size, flex, height in SFC `<style>` blocks; the span reads `src/components/dock`) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `src/components/dock/styles/run.css` (sibsheet: `src/components/dock` holds other stylesheets beside `src/components/dock/styles/run.css`, the one the span names) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `src/components/dock` (sfcstyle: `src` declares padding, padding-block, padding-inline in SFC `<style>` blocks; the span reads `src/components/dock`) is in no plant
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 658, open 10
+exit=1
+
+## before (2): the fix-18 plants on the plan at `3fbaa0e7` (BL_ROOT = `git archive HEAD` of the plan folder)
+OPEN NARROW  waves/W-E.11.md:67 E11-G6 · one face per fallback name: passes with a second face of the name in another typography stylesheet (pass 17 FQ-04 SIBLING sibsheet) planted in src/styles/typography/semantic.css: '@font-face {\n    font-family: "Plus Jakarta Sans Fallback";\n}'
+OPEN NARROW  waves/W-E.11.md:67 E11-G6 · one face per fallback name: passes with a second face of the name in `fonts.css`, which §4 also writes (pass 17 FQ-04 SIBLING sibsheet) planted in src/styles/fonts.css: '@font-face {\n    font-family: "Plus Jakarta Sans Fallback";\n}'
+OPEN NARROW  waves/W-E.11.md:67 E11-G6 · one face per fallback name: passes with a second face in an SFC `<style>` block (pass 17 FQ-04 SIBLING sibsheet) planted in src/components/card/Card.vue: '<style>\n@font-face {\n    font-family: "Plus Jakarta Sans Fallback";\n}\n'
+OPEN NARROW  waves/W-E.8.md:68 E8-G4 · Metric reads the context radius (sta: passes with a corner in an SFC `<style>` block, the form of `pager-dots/PagerDots.vue:493` (pass 17 FQ-02) planted in src/components/metric/Metric.vue: '<style>\n.metric[data-posture="cell"] { border-radius: var(--radius-car'
+OPEN NARROW  waves/W-E.8.md:68 E8-G4 · Metric reads the context radius (sta: passes with the context token pinned in an SFC `<style>` block (pass 17 FQ-02) planted in src/components/metric/MetricRow.vue: '<style>\n.x { --radius-ctx: var(--radius-card); }\n</style>'
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with the share on the other operand, the form of `styles/utilities/base-misc.css:266` (pass 17 FQ-01) planted in src/components/dialog/styles.css: '.x:focus-visible { outline: 2px solid color-mix(in oklab, var(--foregr'
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with the other-operand share carried on a custom property (pass 17 FQ-01) planted in src/components/dialog/styles.css: '.x { --r: color-mix(in oklab, var(--foreground), transparent 52%); out'
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with a share on the first operand, `--foreground` second (pass 17 FQ-01) planted in src/components/dialog/styles.css: '.x { box-shadow: 0 0 0 2px color-mix(in oklab, transparent 52%, var(--'
+OPEN NARROW  waves/W-H.1.md:162 G15 · the Close ring is the rung (static): passes with the other operand as a hex, unspaced (pass 17 FQ-01) planted in src/components/dialog/styles.css: '.x { outline: 2px solid color-mix(in oklab, var(--foreground),#fff0 52'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with a seat transition in another dock stylesheet (pass 17 FQ-03) planted in src/components/dock/styles/layers.css: '.glass-dock .dock-run > .dock-icon-button { transition: inline-size va'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with a seat transition beside the indicator, in the indicator's own form (pass 17 FQ-03) planted in src/components/dock/styles/layer-group.css: '.glass-dock .dock-run > .x {\n    transition:\n        width var(--sprin'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with a seat transition in W-0.8's new carrier file (pass 17 FQ-03) planted in src/components/dock/styles/scroll-rungs.css: '.glass-dock .dock-run > .dock-icon-button { transition: inline-size va'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with a seat transition in an SFC `<style>` block (pass 17 FQ-04 SIBLING sfcstyle) planted in src/components/dock/GlassDock.vue: '<style>\n.glass-dock .dock-run > .dock-icon-button { transition: block-'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with the carried seat transition in another dock stylesheet (pass 17 FQ-03) planted in src/components/dock/styles/layers.css: '.x { --seat-transition: inline-size var(--spring-dock-duration) var(--'
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 679, open 14
+exit=1
+
+## after: the plan as fix-18 leaves it
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 679, open 0
+exit=0

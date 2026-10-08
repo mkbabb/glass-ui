@@ -100,6 +100,21 @@ plants its nouns require.
                        `shadow*` for a shadow, `p*-` for padding, …) that `src` writes in a class list, wherever a
                        component directory the span reads from holds a template or class string (FP-04:
                        `select/SelectContent.vue:84`)
+          Pass 17 (FQ-01 to FQ-04) found three more forms. Each is enumerated from `src` and carried only by a red or
+          green plant in that form (for the two file kinds, a plant in that kind of file):
+            mixother   a `color-mix` share written on the other operand (`color-mix(in oklab, var(--t), transparent 52%)`),
+                       when the span reads a literal share after the token and `src` writes a share that way (FQ-01:
+                       `styles/utilities/base-misc.css:266`); the plant writes `var(--t), <colour> n%`
+            sfcstyle   a declaration of a property of a touched family in an SFC `<style>` block of a component
+                       directory the span reads, when `src` declares that family in SFC `<style>` blocks (FQ-02:
+                       `pager-dots/PagerDots.vue:493`); the plant goes into a `.vue` file of that directory and opens
+                       a `<style` block
+            sibsheet   a declaration of a property of a touched family in another stylesheet of the directory (a
+                       component's root, else the file's folder), when the span names one stylesheet of a directory
+                       that holds others (FQ-03:
+                       `dock/styles/layer-group.css:354-355` beside `run.css`); the plant goes into another `.css`
+                       file of that directory, red where the spec holds the claim beyond the named file, green where
+                       it does not
           Each sibling must be carried by a plant, red if it is the defect in another spelling, green if it is not;
           the plant then runs as every other plant does, so a red sibling the gate passes is open NARROW.
 
@@ -406,6 +421,9 @@ CLAIMS = {
     ("W-E.11", "E11-G6"): S(  # "one face per fallback name"
         R("src/styles/typography/scale.css", '@font-face {\n    font-family: "Plus Jakarta Sans Fallback";\n}', "a second face (the row's bite)"),
         R("src/styles/typography/scale.css", "@font-face {\n    font-family: 'Plus Jakarta Sans Fallback';\n}", "a second face, single quotes"),
+        R("src/styles/typography/semantic.css", '@font-face {\n    font-family: "Plus Jakarta Sans Fallback";\n}', "a second face of the name in another typography stylesheet (pass 17 FQ-04 SIBLING sibsheet)"),
+        R("src/styles/fonts.css", '@font-face {\n    font-family: "Plus Jakarta Sans Fallback";\n}', "a second face of the name in `fonts.css`, which §4 also writes (pass 17 FQ-04 SIBLING sibsheet)"),
+        R("src/components/card/Card.vue", '<style>\n@font-face {\n    font-family: "Plus Jakarta Sans Fallback";\n}\n</style>', "a second face in an SFC `<style>` block (pass 17 FQ-04 SIBLING sibsheet)"),
         R("src/styles/typography/scale.css", '@font-face {\n    font-family:"Plus Jakarta Sans Fallback"\n}', "a second face, unspaced with no semicolon"),
         G("src/styles/typography/scale.css", ".x { font: inherit; }", "the `font` shorthand, which declares no face name (pass 14 FN-05 SIBLING)"),
         R("src/styles/typography/scale.css", '@font-face {\n    font-family: "Plus Jakarta Sans Fallback SF";\n}\n@font-face {\n    FONT-FAMILY: \'plus jakarta sans fallback sf\';\n}', "one platform name declared twice, quotes and case changed"),
@@ -453,6 +471,7 @@ CLAIMS = {
         G("src/components/sheet/styles.css", ".x { width: 100%; max-width: 32rem; max-inline-size: 32rem; }", "widths that floor nothing (pass 14 FN-05 SIBLING)"),
         G("src/components/sheet/styles.css", "@media (min-width: 40rem) { .x { color: red; } }", "HEAD's media feature (`styles.css:483`, W-E.7's), not a declaration"),
         G("src/components/sheet/styles.css", ".x { min-block-size: 0; }", "HEAD's zero floors (`styles.css:118`)"),
+        R("src/components/sheet/SheetContent.vue", "<style>\n.x { min-block-size: 40vh; }\n</style>", "a floor in an SFC `<style>` block, the form of `pager-dots/PagerDots.vue:493` (pass 17 FQ-04 SIBLING sfcstyle)"),
         G("src/components/sheet/styles.css", ".x { min-block-size: var(--touch-target); }", "HEAD's grip floor (`styles.css:259`)"),
         R("src/components/sheet/styles.css", '[data-slot="sheet-content"] { --touch-target: 50vh; min-block-size: var(--touch-target); }', "the one token the floor arm allows, re-declared to floor the content (pass 15 FO-06 SIBLING)"),
         C("src/components/sheet/detents/use.ts", "const span = window.visualViewport?.height ?? 0;\nel.style.setProperty(\"--sheet-floor\", `${floor}px`);", "§3 item 3: the span from `visualViewport`, the floor published as `--sheet-floor`"),
@@ -573,6 +592,9 @@ CLAIMS = {
         G("src/components/metric/styles.css", ".x { border-end-end-radius: var(--radius-ctx); }", "a corner on the context radius"),
         G("src/components/metric/styles.css", ".x { border-radius: var(--radius-ctx); }", "the context radius"),
         R("src/components/metric/styles.css", '.metric[data-posture="cell"] { --radius-ctx: var(--radius-card); }', "the context token pinned to a rung, the declaration of `overlay-plate.css:64` (pass 15 FO-02)"),
+        R("src/components/metric/Metric.vue", '<style>\n.metric[data-posture="cell"] { border-radius: var(--radius-card); }\n</style>', "a corner in an SFC `<style>` block, the form of `pager-dots/PagerDots.vue:493` (pass 17 FQ-02)"),
+        R("src/components/metric/MetricRow.vue", "<style>\n.x { --radius-ctx: var(--radius-card); }\n</style>", "the context token pinned in an SFC `<style>` block (pass 17 FQ-02)"),
+        G("src/components/metric/MetricStack.vue", "<style>\n.x { border-radius: var(--radius-ctx); }\n</style>", "the context radius in an SFC `<style>` block (pass 17 FQ-02)"),
         R("src/components/metric/styles.css", ".metric { --radius-ctx: 16px; }", "the context token pinned to a literal (pass 15 FO-02)"),
         R("src/components/metric/styles.css", ".metric { --cell-r: var(--radius-card); border-radius: var(--cell-r); }", "a rung carried on another custom property (pass 16 FP-05 SIBLING carried)"),
         R("src/components/metric/Metric.vue", "<div :class=\"cn('metric rounded-card', $props.class)\">x</div>", "a Tailwind corner class on the root, the form of `select/SelectContent.vue:84` (pass 16 FP-04)"),
@@ -665,6 +687,12 @@ CLAIMS = {
         R("src/components/dialog/DialogContent.vue", '<button class="ring-2 ring-foreground/48">x</button>', "a Tailwind ring utility with a literal share (pass 16 FP-05 SIBLING utility)"),
         R("src/components/dialog/DialogContent.vue", '<button class="focus-visible:shadow-[0_0_0_2px_color-mix(in_oklab,var(--foreground)_48%,transparent)]">x</button>', "an arbitrary shadow utility with the mix (pass 16 FP-05 SIBLING utility)"),
         G("src/components/dialog/DialogContent.vue", '<button class="ring-2 ring-(--ink-perimeter)">x</button>', "a ring utility that reads the rung (pass 16 FP-05 SIBLING utility)"),
+        R("src/components/dialog/styles.css", ".x:focus-visible { outline: 2px solid color-mix(in oklab, var(--foreground), transparent 52%); }", "the share on the other operand, the form of `styles/utilities/base-misc.css:266` (pass 17 FQ-01)"),
+        R("src/components/dialog/styles.css", ".x { --r: color-mix(in oklab, var(--foreground), transparent 52%); outline: 2px solid var(--r); }", "the other-operand share carried on a custom property (pass 17 FQ-01)"),
+        R("src/components/dialog/styles.css", ".x { box-shadow: 0 0 0 2px color-mix(in oklab, transparent 52%, var(--foreground)); }", "a share on the first operand, `--foreground` second (pass 17 FQ-01)"),
+        R("src/components/dialog/styles.css", ".x { outline: 2px solid color-mix(in oklab, var(--foreground),#fff0 52%); }", "the other operand as a hex, unspaced (pass 17 FQ-01)"),
+        R("src/components/dialog/DialogContent.vue", "<style>\n.x { outline: 2px solid color-mix(in oklab, var(--foreground) 48%, transparent); }\n</style>", "the ring in an SFC `<style>` block (pass 17 FQ-04 SIBLING sfcstyle)"),
+        C("src/components/dialog/styles.css", ".x:focus-visible { outline: 2px solid color-mix(in oklab, var(--foreground) calc(var(--ink-perimeter) * 100%), transparent); }", "the rung, read as the mix's share"),
     ),
     ("W-H.2", "G9"): L(GONE),
     ("W-H.2", "G10"): DOCKET,
@@ -693,6 +721,8 @@ CLAIMS = {
         R(GL, ".x { --glass-blur-resting-radius: 32px; }\n.x::after { inset: calc(var(--glass-blur-resting-radius) * -2); }", "the rung's own token re-declared beside the overshoot"),
         R(GL, ".x {\n  color: red;\n  --GLASS-BLUR-quiet-radius:\n    3px;\n}", "a rung token re-declared, upper case, across lines"),
         R(GL, ".x { --glass-level: 4; }", "the level re-declared in a seat file"),
+        G("src/styles/glass/dissolve.css", ".x::after { inset: calc((var(--corner-affordance-size) - var(--touch-target)) / 2); }", "another glass stylesheet, the form HEAD writes at `dissolve.css:242`: §3 item 4 and §4 bound the seat to six files (\"H6-G3 reads all six\"), so a declaration elsewhere is not the claim's subject; `hold-line-scope.py` holds the file axis (pass 17 FQ-04 SIBLING sibsheet)"),
+        G("src/styles/utilities/base-misc.css", ".x { --glass-blur-tier-radius: var(--glass-blur-resting-radius); }", "another utilities stylesheet, the tier read HEAD writes at `glass/deep.css:44`: outside the six files §4 bounds the seat to (pass 17 FQ-04 SIBLING sibsheet)"),
         R(GL, T6 % "inset: calc(var(--glass-blur-resting-radius, 32px) * -2);", "a literal as the token's fallback"),
         R(GL, T6 % "inset: calc(var(--glass-blur-tier-radius) * -2);", "a token that is not one of the five rung radii"),
         R(GL, T6 % "inset: calc(var(--glass-blur-resting) * -2);", "the composed filter token, not the radius"),
@@ -788,7 +818,16 @@ CLAIMS = {
         R("src/components/dock/GlassDock.vue", '<div class="transition-all">x</div>', "`transition-all`, which carries every size (pass 16 FP-05 SIBLING utility)"),
         G("src/components/dock/GlassDock.vue", '<div class="w-8 h-8 transition-colors">x</div>', "size and colour utilities, not a size transition (pass 16 FP-05 SIBLING utility)"),
         G("src/components/dock/styles/run.css", ".x {\n    transition: var(--icon-button-transition), inline-size var(--spring-dock-duration) var(--spring-dock);\n}", "§3 item 1's appended form"),
-    ),
+        R("src/components/dock/styles/layers.css", ".glass-dock .dock-run > .dock-icon-button { transition: inline-size var(--spring-dock-duration) var(--spring-dock); }", "a seat transition in another dock stylesheet (pass 17 FQ-03)"),
+        R("src/components/dock/styles/layer-group.css", ".glass-dock .dock-run > .x {\n    transition:\n        width var(--spring-dock-duration) var(--spring-dock);\n}", "a seat transition beside the indicator, in the indicator's own form (pass 17 FQ-03)"),
+        R("src/components/dock/styles/scroll-rungs.css", ".glass-dock .dock-run > .dock-icon-button { transition: inline-size var(--spring-dock-duration) var(--spring-dock); }", "a seat transition in W-0.8's new carrier file (pass 17 FQ-03)"),
+        R("src/components/dock/GlassDock.vue", "<style>\n.glass-dock .dock-run > .dock-icon-button { transition: block-size 200ms; }\n</style>", "a seat transition in an SFC `<style>` block (pass 17 FQ-04 SIBLING sfcstyle)"),
+        R("src/components/dock/styles/layers.css", ".x { --seat-transition: inline-size var(--spring-dock-duration) var(--spring-dock); transition: var(--seat-transition); }", "the carried seat transition in another dock stylesheet (pass 17 FQ-03)"),
+        G("src/components/dock/styles/layer-group.css", ".dock-layer-group.vertical .dock-layer-switcher .dock-layer-tab-indicator { transition: height var(--spring-dock-duration) var(--spring-dock); }", "the switcher indicator's glide, the one size transition the dock keeps (`layer-group.css:341-358`) (pass 17 FQ-03)"),
+        cure=[("subre", "src/components/dock/styles/run.css", r"transition: (inline-size|block-size) var\(", r"transition: var(--icon-button-transition), \1 var("),
+             ("subre", "src/components/dock/styles/run.css", r"transition: (inline-size|block-size) var\(", r"transition: var(--icon-button-transition), \1 var("),
+             ("subre", "src/components/dock/styles/run.css", r"transition: (inline-size|block-size) var\(", r"transition: var(--icon-button-transition), \1 var("),
+             ("subre", "src/components/dock/styles/run.css", r"transition: (inline-size|block-size) var\(", r"transition: var(--icon-button-transition), \1 var(")]),
     ("W-I.7", "I7-G2"): S(  # "C-8": no content-box in `src`
         R("src/components/dock/GlassDock.vue", '<div class="box-content">x</div>', "the Tailwind utility"),
         R("src/components/dock/styles/run.css", ".x { box-sizing:content-box; }", "unspaced (the stated bite's other form)"),
@@ -806,6 +845,7 @@ CLAIMS = {
         R("src/components/dock/GlassDock.vue", '<div class="px-(--dock-ring-reserve)">x</div>', "a Tailwind padding utility (pass 16 FP-05 SIBLING utility)"),
         R("src/components/dock/GlassDock.vue", '<div class="py-[var(--dock-ring-reserve)]">x</div>', "an arbitrary padding utility (pass 16 FP-05 SIBLING utility)"),
         R("src/components/dock/styles/layers.css", ".x {\n    padding-block:\n        var(--dock-ring-reserve);\n}", "another dock stylesheet, the value on the next line"),
+        R("src/components/dock/GlassDock.vue", "<style>\n.x { padding-block: var(--dock-ring-reserve); }\n</style>", "the reserve as padding in an SFC `<style>` block (pass 17 FQ-04 SIBLING sfcstyle)"),
         G("src/components/dock/styles/run.css", ".x { margin-block: calc(-1 * var(--dock-ring-reserve)); }", "HEAD's margin pair (`run.css:252`), not padding"),
     ),
     # ---------------------------------------------------------------- band J
@@ -1428,6 +1468,12 @@ def _src(root):
         "relalpha": sorted(set(re.findall(r"from\s+var\(\s*(--[a-z][\w-]*)\s*\)[^;{}]*/\s*[0-9.]+%?", sheet))),
         "carriers": [(m.group(1), m.group(2).strip()) for m in re.finditer(r"(?:^|[{;])\s*(--[a-z][\w-]*)\s*:([^;{}]+);", sheet, re.M)],
         "viewreads": set(x for t in scripts.values() for x in re.findall(VIEWREAD, t)),
+        # pass 17 FQ-01, FQ-02: a mix share on the second operand; the properties SFC `<style>` blocks declare
+        "mixother": sorted(set(re.findall(r"color-mix\(\s*in\s+[a-z-]+\s*,\s*var\(\s*(--[a-z][\w-]*)\s*\)\s*,[^;{}(),]*?\s[0-9.]+%\s*\)", sheet))),
+        "sfcprops": set(x.lower() for f, t in scripts.items() if f.endswith(".vue")
+                        for b in re.findall(r"<style[^>]*>(.*?)</style>", t, re.S)
+                        for x in re.findall(r"(?:^|[{;])\s*([a-zA-Z-]+)\s*:", re.sub(r"/\*.*?\*/", "", b, flags=re.S), re.M)),
+        "sheets": [f for f in ls if f.endswith(".css")],
         "touch": set(x for t in scripts.values() for x in re.findall(TOUCH, t))
                  | set((m.group(1) or m.group(3)) for f, t in scripts.items() if re.search(TOUCH, t) and not f.endswith("index.ts")
                        for m in _SIG.finditer(t)),
@@ -1650,6 +1696,22 @@ def siblings(g, entry, spans, root):
                 used = sorted(t for t in toks if urx.fullmatch(t))
                 if used:
                     out.append(("utility", fam[0], f"`src` writes `{fam[0]}` as a utility ({', '.join(used[:3])}, …) in class lists; the span reads {', '.join(sorted(comp))}"))
+    # pass 17 FQ-01: a share on the other operand of the mix, for every token whose share the span reads
+    if shared and src["mixother"]:
+        for t in shared:
+            out.append(("mixother", t, f"`src` writes a mix share on the other operand (`color-mix(in …, var({src['mixother'][0]}), transparent n%)`)"))
+    # pass 17 FQ-02: a declaration of a touched property in an SFC `<style>` block of a component directory the span reads
+    if comp and fam_props and fam_props & src["sfcprops"]:
+        for d in sorted(comp):
+            out.append(("sfcstyle", d, f"`src` declares {', '.join(sorted(fam_props & src['sfcprops'])[:3])} in SFC `<style>` blocks; the span reads `{d}`"))
+    # pass 17 FQ-03: another stylesheet of the component directory, where the span names one stylesheet of it
+    if fam_props:
+        for x in sorted(set(scope)):
+            if not x.endswith(".css"):
+                continue
+            d = _sheetdir(x)
+            if any(f != x and f.startswith(d + "/") for f in src["sheets"]):
+                out.append(("sibsheet", x, f"`{d}` holds other stylesheets beside `{x}`, the one the span names"))
     seen, uniq = set(), []
     for k in out:
         if (k[0], k[1]) not in seen:
@@ -1670,8 +1732,30 @@ SHAPED = {
     "viewread": lambda x: re.compile(re.escape(x).replace(r"\[wW\]", "[wW]")),
     "touch": lambda x: re.compile(r"\b" + re.escape(x) + r"\b"),
     "utility": lambda fam: re.compile(r"""(?:class=|:class=|cn\(|['"`])[^'"`<>]*?(?<![\w-])(?:[a-z0-9-]+:)*!?(?:""" + UTILITY[fam] + r")(?:-[\w\[\]./()%-]+)?(?![\w-])"),
+    "mixother": lambda t: re.compile(r"var\(\s*" + re.escape(t) + r"\s*\)[\s_]*,[^;{}(),\]]*?[\s_][0-9.]+%"),
     "value": lambda fv: re.compile(r"\(\s*" + re.escape(fv.split(":")[0]) + r"\s*:\s*" + re.escape(fv.split(": ")[1]) + r"\b"),
 }
+
+
+def _sheetdir(x):
+    """The directory a stylesheet belongs to: its component's root under `src/components`, else its own folder."""
+    m = re.match(r"(src/components/[^/]+)/", x)
+    return m.group(1) if m else os.path.dirname(x)
+
+
+def _filed(kind, name, plants):
+    """pass 17 FQ-02, FQ-03: a plant in the kind of file the sibling names (an SFC of the directory with a `<style`
+    block, or another stylesheet of the directory), not the cure plant."""
+    for rel, text, want, _ in plants:
+        if want == "cure":
+            continue
+        if kind == "sfcstyle" and rel.startswith(name + "/") and rel.endswith(".vue") and "<style" in text:
+            return True
+        if kind == "sibsheet":
+            d = _sheetdir(name)
+            if rel != name and rel.startswith(d + "/") and rel.endswith(".css"):
+                return True
+    return False
 
 
 def sibling_arm(g, entry, spans, root, where):
@@ -1679,6 +1763,10 @@ def sibling_arm(g, entry, spans, root, where):
     res = []
     own = [p[1] for p in entry["plants"] if p[2] != "cure"]
     for kind, name, how in siblings(g, entry, spans, root):
+        if kind in ("sfcstyle", "sibsheet"):
+            if not _filed(kind, name, entry["plants"]):
+                res.append(f"OPEN SIBLING {where}: `{name}` ({kind}: {how}) is in no plant")
+            continue
         bare = name.lstrip(".")
         rx = re.compile(r"(?<![\w-])" + re.escape(bare) + r"(?![\w-])" if kind != "carrier" else r"(?<![\w-])\.?" + re.escape(bare) + r"(?![\w-])", re.I)
         pool = texts
